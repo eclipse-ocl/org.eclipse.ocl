@@ -11,7 +11,7 @@
 package org.eclipse.ocl.xtext.essentialocl.validation;
 
 
-public class EssentialOCLJavaValidator extends EssentialOCLValidator {
+public class EssentialOCLJavaValidator extends AbstractEssentialOCLJavaValidator {
 
 //	@Check
 //	public void checkTypeNameStartsWithCapital(Type type) {

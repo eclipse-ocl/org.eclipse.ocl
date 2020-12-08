@@ -5,20 +5,17 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
  *
- * SPDX-License-Identifier: EPL-2.0
- *
  * Contributors:
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.xtext.completeocl.parser.antlr;
 
 import com.google.inject.Inject;
-import org.eclipse.ocl.xtext.completeocl.parser.antlr.internal.InternalCompleteOCLParser;
-import org.eclipse.ocl.xtext.completeocl.services.CompleteOCLGrammarAccess;
-import org.eclipse.xtext.parser.antlr.AbstractAntlrParser;
-import org.eclipse.xtext.parser.antlr.XtextTokenStream;
 
-public class CompleteOCLParser extends AbstractAntlrParser {
+import org.eclipse.xtext.parser.antlr.XtextTokenStream;
+import org.eclipse.ocl.xtext.completeocl.services.CompleteOCLGrammarAccess;
+
+public class CompleteOCLParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrParser {
 
 	@Inject
 	private CompleteOCLGrammarAccess grammarAccess;
@@ -28,10 +25,9 @@ public class CompleteOCLParser extends AbstractAntlrParser {
 		tokenStream.setInitialHiddenTokens("RULE_WS", "RULE_ML_COMMENT", "RULE_SL_COMMENT");
 	}
 
-
 	@Override
-	protected InternalCompleteOCLParser createParser(XtextTokenStream stream) {
-		return new InternalCompleteOCLParser(stream, getGrammarAccess());
+	protected org.eclipse.ocl.xtext.completeocl.parser.antlr.internal.InternalCompleteOCLParser createParser(XtextTokenStream stream) {
+		return new org.eclipse.ocl.xtext.completeocl.parser.antlr.internal.InternalCompleteOCLParser(stream, getGrammarAccess());
 	}
 
 	@Override
@@ -46,4 +42,5 @@ public class CompleteOCLParser extends AbstractAntlrParser {
 	public void setGrammarAccess(CompleteOCLGrammarAccess grammarAccess) {
 		this.grammarAccess = grammarAccess;
 	}
+
 }

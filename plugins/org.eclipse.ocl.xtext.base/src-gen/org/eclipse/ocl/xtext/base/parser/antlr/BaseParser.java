@@ -5,20 +5,17 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
  *
- * SPDX-License-Identifier: EPL-2.0
- *
  * Contributors:
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.parser.antlr;
 
 import com.google.inject.Inject;
-import org.eclipse.ocl.xtext.base.parser.antlr.internal.InternalBaseParser;
-import org.eclipse.ocl.xtext.base.services.BaseGrammarAccess;
-import org.eclipse.xtext.parser.antlr.AbstractAntlrParser;
-import org.eclipse.xtext.parser.antlr.XtextTokenStream;
 
-public class BaseParser extends AbstractAntlrParser {
+import org.eclipse.xtext.parser.antlr.XtextTokenStream;
+import org.eclipse.ocl.xtext.base.services.BaseGrammarAccess;
+
+public class BaseParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrParser {
 
 	@Inject
 	private BaseGrammarAccess grammarAccess;
@@ -28,10 +25,9 @@ public class BaseParser extends AbstractAntlrParser {
 		tokenStream.setInitialHiddenTokens("RULE_WS", "RULE_ML_COMMENT", "RULE_SL_COMMENT");
 	}
 
-
 	@Override
-	protected InternalBaseParser createParser(XtextTokenStream stream) {
-		return new InternalBaseParser(stream, getGrammarAccess());
+	protected org.eclipse.ocl.xtext.base.parser.antlr.internal.InternalBaseParser createParser(XtextTokenStream stream) {
+		return new org.eclipse.ocl.xtext.base.parser.antlr.internal.InternalBaseParser(stream, getGrammarAccess());
 	}
 
 	@Override
@@ -46,4 +42,5 @@ public class BaseParser extends AbstractAntlrParser {
 	public void setGrammarAccess(BaseGrammarAccess grammarAccess) {
 		this.grammarAccess = grammarAccess;
 	}
+
 }

@@ -5,18 +5,17 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
  *
- * SPDX-License-Identifier: EPL-2.0
- *
  * Contributors:
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.xtext.markup.ui;
 
-import com.google.inject.Injector;
-import org.eclipse.ocl.xtext.markup.ui.internal.MarkupActivator;
 import org.eclipse.xtext.ui.guice.AbstractGuiceAwareExecutableExtensionFactory;
 import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
+
+import com.google.inject.Injector;
+
+import org.eclipse.ocl.xtext.markup.ui.internal.MarkupActivator;
 
 /**
  * This class was generated. Customizations should only happen in a newly
@@ -26,13 +25,12 @@ public class MarkupExecutableExtensionFactory extends AbstractGuiceAwareExecutab
 
 	@Override
 	protected Bundle getBundle() {
-		return FrameworkUtil.getBundle(MarkupActivator.class);
+		return MarkupActivator.getInstance().getBundle();
 	}
 
 	@Override
 	protected Injector getInjector() {
-		MarkupActivator activator = MarkupActivator.getInstance();
-		return activator != null ? activator.getInjector(MarkupActivator.ORG_ECLIPSE_OCL_XTEXT_MARKUP_MARKUP) : null;
+		return MarkupActivator.getInstance().getInjector(MarkupActivator.ORG_ECLIPSE_OCL_XTEXT_MARKUP_MARKUP);
 	}
 
 }

@@ -5,18 +5,17 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
  *
- * SPDX-License-Identifier: EPL-2.0
- *
  * Contributors:
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.xtext.oclinecore.ui;
 
-import com.google.inject.Injector;
-import org.eclipse.ocl.xtext.oclinecore.ui.internal.OCLinEcoreActivator;
 import org.eclipse.xtext.ui.guice.AbstractGuiceAwareExecutableExtensionFactory;
 import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
+
+import com.google.inject.Injector;
+
+import org.eclipse.ocl.xtext.oclinecore.ui.internal.OCLinEcoreActivator;
 
 /**
  * This class was generated. Customizations should only happen in a newly
@@ -26,13 +25,12 @@ public class OCLinEcoreExecutableExtensionFactory extends AbstractGuiceAwareExec
 
 	@Override
 	protected Bundle getBundle() {
-		return FrameworkUtil.getBundle(OCLinEcoreActivator.class);
+		return OCLinEcoreActivator.getInstance().getBundle();
 	}
 
 	@Override
 	protected Injector getInjector() {
-		OCLinEcoreActivator activator = OCLinEcoreActivator.getInstance();
-		return activator != null ? activator.getInjector(OCLinEcoreActivator.ORG_ECLIPSE_OCL_XTEXT_OCLINECORE_OCLINECORE) : null;
+		return OCLinEcoreActivator.getInstance().getInjector(OCLinEcoreActivator.ORG_ECLIPSE_OCL_XTEXT_OCLINECORE_OCLINECORE);
 	}
 
 }

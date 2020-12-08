@@ -5,20 +5,17 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
  *
- * SPDX-License-Identifier: EPL-2.0
- *
  * Contributors:
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.xtext.essentialocl.parser.antlr;
 
 import com.google.inject.Inject;
-import org.eclipse.ocl.xtext.essentialocl.parser.antlr.internal.InternalEssentialOCLParser;
-import org.eclipse.ocl.xtext.essentialocl.services.EssentialOCLGrammarAccess;
-import org.eclipse.xtext.parser.antlr.AbstractAntlrParser;
-import org.eclipse.xtext.parser.antlr.XtextTokenStream;
 
-public class EssentialOCLParser extends AbstractAntlrParser {
+import org.eclipse.xtext.parser.antlr.XtextTokenStream;
+import org.eclipse.ocl.xtext.essentialocl.services.EssentialOCLGrammarAccess;
+
+public class EssentialOCLParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrParser {
 
 	@Inject
 	private EssentialOCLGrammarAccess grammarAccess;
@@ -28,10 +25,9 @@ public class EssentialOCLParser extends AbstractAntlrParser {
 		tokenStream.setInitialHiddenTokens("RULE_WS", "RULE_ML_COMMENT", "RULE_SL_COMMENT");
 	}
 
-
 	@Override
-	protected InternalEssentialOCLParser createParser(XtextTokenStream stream) {
-		return new InternalEssentialOCLParser(stream, getGrammarAccess());
+	protected org.eclipse.ocl.xtext.essentialocl.parser.antlr.internal.InternalEssentialOCLParser createParser(XtextTokenStream stream) {
+		return new org.eclipse.ocl.xtext.essentialocl.parser.antlr.internal.InternalEssentialOCLParser(stream, getGrammarAccess());
 	}
 
 	@Override
@@ -46,4 +42,5 @@ public class EssentialOCLParser extends AbstractAntlrParser {
 	public void setGrammarAccess(EssentialOCLGrammarAccess grammarAccess) {
 		this.grammarAccess = grammarAccess;
 	}
+
 }

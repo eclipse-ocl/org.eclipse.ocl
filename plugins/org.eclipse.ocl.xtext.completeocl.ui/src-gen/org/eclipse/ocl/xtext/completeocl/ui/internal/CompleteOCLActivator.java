@@ -5,25 +5,24 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
  *
- * SPDX-License-Identifier: EPL-2.0
- *
  * Contributors:
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.xtext.completeocl.ui.internal;
 
-import com.google.common.collect.Maps;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
 import java.util.Collections;
 import java.util.Map;
+
 import org.apache.log4j.Logger;
-import org.eclipse.ocl.xtext.completeocl.CompleteOCLRuntimeModule;
-import org.eclipse.ocl.xtext.completeocl.ui.CompleteOCLUiModule;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.xtext.ui.shared.SharedStateModule;
 import org.eclipse.xtext.util.Modules2;
 import org.osgi.framework.BundleContext;
+
+import com.google.common.collect.Maps;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.google.inject.Module;
 
 /**
  * This class was generated. Customizations should only happen in a newly
@@ -31,7 +30,6 @@ import org.osgi.framework.BundleContext;
  */
 public class CompleteOCLActivator extends AbstractUIPlugin {
 
-	public static final String PLUGIN_ID = "org.eclipse.ocl.xtext.completeocl.ui";
 	public static final String ORG_ECLIPSE_OCL_XTEXT_COMPLETEOCL_COMPLETEOCL = "org.eclipse.ocl.xtext.completeocl.CompleteOCL";
 
 	private static final Logger logger = Logger.getLogger(CompleteOCLActivator.class);
@@ -69,10 +67,10 @@ public class CompleteOCLActivator extends AbstractUIPlugin {
 
 	protected Injector createInjector(String language) {
 		try {
-			com.google.inject.Module runtimeModule = getRuntimeModule(language);
-			com.google.inject.Module sharedStateModule = getSharedStateModule();
-			com.google.inject.Module uiModule = getUiModule(language);
-			com.google.inject.Module mergedModule = Modules2.mixin(runtimeModule, sharedStateModule, uiModule);
+			Module runtimeModule = getRuntimeModule(language);
+			Module sharedStateModule = getSharedStateModule();
+			Module uiModule = getUiModule(language);
+			Module mergedModule = Modules2.mixin(runtimeModule, sharedStateModule, uiModule);
 			return Guice.createInjector(mergedModule);
 		} catch (Exception e) {
 			logger.error("Failed to create injector for " + language);
@@ -81,23 +79,24 @@ public class CompleteOCLActivator extends AbstractUIPlugin {
 		}
 	}
 
-	protected com.google.inject.Module getRuntimeModule(String grammar) {
+	protected Module getRuntimeModule(String grammar) {
 		if (ORG_ECLIPSE_OCL_XTEXT_COMPLETEOCL_COMPLETEOCL.equals(grammar)) {
-			return new CompleteOCLRuntimeModule();
+			return new org.eclipse.ocl.xtext.completeocl.CompleteOCLRuntimeModule();
 		}
+
 		throw new IllegalArgumentException(grammar);
 	}
 
-	protected com.google.inject.Module getUiModule(String grammar) {
+	protected Module getUiModule(String grammar) {
 		if (ORG_ECLIPSE_OCL_XTEXT_COMPLETEOCL_COMPLETEOCL.equals(grammar)) {
-			return new CompleteOCLUiModule(this);
+			return new org.eclipse.ocl.xtext.completeocl.ui.CompleteOCLUiModule(this);
 		}
+
 		throw new IllegalArgumentException(grammar);
 	}
 
-	protected com.google.inject.Module getSharedStateModule() {
+	protected Module getSharedStateModule() {
 		return new SharedStateModule();
 	}
-
 
 }

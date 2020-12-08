@@ -5,26 +5,23 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
  *
- * SPDX-License-Identifier: EPL-2.0
- *
  * Contributors:
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.xtext.completeocl.ui.contentassist;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.ocl.xtext.essentialocl.ui.contentassist.EssentialOCLProposalProvider;
-import org.eclipse.xtext.Assignment;
-import org.eclipse.xtext.RuleCall;
-import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
+import org.eclipse.xtext.*;
 import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
+import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
 
 /**
- * Represents a generated, default implementation of superclass {@link EssentialOCLProposalProvider}.
+ * Represents a generated, default implementation of superclass {@link org.eclipse.ocl.xtext.essentialocl.ui.contentassist.EssentialOCLProposalProvider}.
  * Methods are dynamically dispatched on the first parameter, i.e., you can override them
  * with a more concrete subtype.
  */
-public abstract class AbstractCompleteOCLProposalProvider extends EssentialOCLProposalProvider {
+@SuppressWarnings("all")
+public class AbstractCompleteOCLProposalProvider extends org.eclipse.ocl.xtext.essentialocl.ui.contentassist.EssentialOCLProposalProvider {
 
 	public void completeCompleteOCLDocumentCS_OwnedImports(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		completeRuleCall(((RuleCall)assignment.getTerminal()), context, acceptor);

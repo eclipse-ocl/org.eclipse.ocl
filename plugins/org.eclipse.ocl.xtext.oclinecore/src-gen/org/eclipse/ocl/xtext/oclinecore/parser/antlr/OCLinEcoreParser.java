@@ -5,20 +5,17 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
  *
- * SPDX-License-Identifier: EPL-2.0
- *
  * Contributors:
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.xtext.oclinecore.parser.antlr;
 
 import com.google.inject.Inject;
-import org.eclipse.ocl.xtext.oclinecore.parser.antlr.internal.InternalOCLinEcoreParser;
-import org.eclipse.ocl.xtext.oclinecore.services.OCLinEcoreGrammarAccess;
-import org.eclipse.xtext.parser.antlr.AbstractAntlrParser;
-import org.eclipse.xtext.parser.antlr.XtextTokenStream;
 
-public class OCLinEcoreParser extends AbstractAntlrParser {
+import org.eclipse.xtext.parser.antlr.XtextTokenStream;
+import org.eclipse.ocl.xtext.oclinecore.services.OCLinEcoreGrammarAccess;
+
+public class OCLinEcoreParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrParser {
 
 	@Inject
 	private OCLinEcoreGrammarAccess grammarAccess;
@@ -28,10 +25,9 @@ public class OCLinEcoreParser extends AbstractAntlrParser {
 		tokenStream.setInitialHiddenTokens("RULE_WS", "RULE_ML_COMMENT", "RULE_SL_COMMENT");
 	}
 
-
 	@Override
-	protected InternalOCLinEcoreParser createParser(XtextTokenStream stream) {
-		return new InternalOCLinEcoreParser(stream, getGrammarAccess());
+	protected org.eclipse.ocl.xtext.oclinecore.parser.antlr.internal.InternalOCLinEcoreParser createParser(XtextTokenStream stream) {
+		return new org.eclipse.ocl.xtext.oclinecore.parser.antlr.internal.InternalOCLinEcoreParser(stream, getGrammarAccess());
 	}
 
 	@Override
@@ -46,4 +42,5 @@ public class OCLinEcoreParser extends AbstractAntlrParser {
 	public void setGrammarAccess(OCLinEcoreGrammarAccess grammarAccess) {
 		this.grammarAccess = grammarAccess;
 	}
+
 }
