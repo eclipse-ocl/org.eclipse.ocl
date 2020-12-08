@@ -14,55 +14,44 @@
  *******************************************************************************/
 module GenerateMarkupEditor
 
-import org.eclipse.xtext.xtext.generator.*
-import org.eclipse.xtext.xtext.generator.model.project.*
-import org.eclipse.xtext.xtext.generator.ui.codemining.CodeMiningFragment
+import org.eclipse.emf.mwe.utils.*
+import org.eclipse.ocl.examples.build.*
+import org.eclipse.ocl.examples.build.utilities.*
+import org.eclipse.ocl.examples.build.xtend.*
+import org.eclipse.xtext.generator.*
+import org.eclipse.xtext.ui.generator.*
 
+var markup.file.extensions = "markupocl"
 var markupProjectName = "org.eclipse.ocl.xtext.markup"
 var markupRuntimeProject = "../../plugins/${markupProjectName}"
-
-var rootPath = "../../plugins"
 
 /**
  *	Generate the markup Editor.
  */
 Workflow {
-    bean = org.eclipse.emf.mwe.utils.StandaloneSetup {
+    bean = StandaloneSetup {
 		scanClassPath = true
 		platformUri = ".."
 		registerGeneratedEPackage = "org.eclipse.ocl.xtext.markupcs.MarkupPackage"
 		registerGenModelFile = "platform:/resource/org.eclipse.ocl.xtext.markup/model/Markup.genmodel"
 	}
 	
-	component = XtextGenerator {
-		standaloneSetup = XtextGeneratorStandaloneSetup {
-			scanClasspath = false
-		}
-		configuration = org.eclipse.ocl.examples.build.fragments.MyDefaultGeneratorModule {
-			project = org.eclipse.ocl.examples.build.fragments.MyStandardProjectConfig {
-				activatorName = "MarkupActivator"
-				baseName = "${markupProjectName}"
-				rootPath = rootPath
-				runtimeTest = {
-					enabled = false
-				}
-				eclipsePlugin = {
-					enabled = true
-				}
-				eclipsePluginTest = {
-					enabled = false
-				}
-				genericIde = {
-					enabled = true
-					name = "${markupProjectName}.ui"
-				}
-				createEclipseMetaData = true
-			}
-			code = {
-				preferXtendStubs = false
-				lineDelimiter = "\n"
-				encoding = "UTF-8"
-				fileHeader =
+	component = DirectoryCleaner {
+		directory = "${markupRuntimeProject}/src-gen"
+	}
+	
+	component = DirectoryCleaner {
+		directory = "${markupRuntimeProject}.ui/src-gen"
+	}
+	
+	component = Generator {
+		pathRtProject = markupRuntimeProject
+		pathUiProject = "${markupRuntimeProject}.ui"
+		projectNameRt = markupProjectName
+		projectNameUi = "${markupProjectName}.ui"
+		mergeManifest = false
+
+		fileHeader =
 "/*******************************************************************************
  * Copyright (c) 2011, \${year} Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
@@ -70,68 +59,82 @@ Workflow {
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
  *
- * SPDX-License-Identifier: EPL-2.0
- *
  * Contributors:
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/"
+
+		language = {
+			uri = "classpath:/org/eclipse/ocl/xtext/markup/Markup.xtext"
+			fileExtensions = markup.file.extensions
+			
+			// Java API to access grammar elements (required by several other fragments)
+			fragment = grammarAccess.GrammarAccessFragment {}
+			
+			
+			// the serialization component
+			fragment = serializer.SerializerFragment {}
+			
+			// a custom ResourceFactory for use with EMF 
+			fragment = resourceFactory.ResourceFactoryFragment {
+				fileExtensions = markup.file.extensions
 			}
-		}
-		language = StandardLanguage {
-			name = "${markupProjectName}.Markup"
-			fileExtensions = "markupocl"
-			generator = null
-			serializer = org.eclipse.ocl.examples.xtext.build.fragments.DeclarativeSerializerFragmentXtend {
-				generateStub = true
+				
+			fragment = parser.antlr.XtextAntlrGeneratorFragment {
+				options = { backtrack = true classSplitting = true }			
 			}
-			validator = {
-				// composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
-				generateDeprecationValidation = false
+			
+			// check-based API for validation
+			/*
+			fragment = validation.CheckFragment {}
+			*/
+			 
+			// java-based API for validation 
+			fragment = validation.JavaValidatorFragment {
+                composedCheck = "org.eclipse.xtext.validation.ImportUriValidator"
+//                composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
+            }
+			
+			// scoping and exporting API 
+			fragment = scoping.ImportNamespacesScopingFragment {}
+			fragment = exporting.QualifiedNamesFragment {}
+			
+			// formatter API 
+			fragment = formatting.FormatterFragment {}
+
+			// labeling API 
+			fragment = labeling.LabelProviderFragment {}
+
+			// outline API 
+			fragment = outline.OutlineTreeProviderFragment {}
+			fragment = outline.QuickOutlineFragment {}
+
+			// java-based API for content assistance 
+			fragment = contentAssist.JavaBasedContentAssistFragment {}
+			
+			fragment = parser.antlr.XtextAntlrUiGeneratorFragment {
+				options = { backtrack = true classSplitting = true}			
 			}
-		/*	fragment = CodeMiningFragment {
-				generateStub = true
-				generateXtendStub = false
-			} */
-			parserGenerator = parser.antlr.XtextAntlrGeneratorFragment2 {
-				options = parser.antlr.AntlrOptions {
-					backtrack = true
-					classSplitting = true
-				}
-			}
-			formatter = org.eclipse.ocl.examples.xtext.build.fragments.DeclarativeFormatterFragmentXtend {
-				generateStub = true
-			}
+
+			fragment = builder.BuilderIntegrationFragment {}
+
+			// quickfix API 
+			fragment = quickfix.QuickfixProviderFragment {}			
 			// *.xtextbin support on Xtext 2.3		
-			fragment = org.eclipse.ocl.examples.build.fragments.CompatibilityFragment {}
+			fragment = org.eclipse.ocl.examples.build.fragments.CompatibilityFragment {}			
 		}
 	}
-	component = org.eclipse.ocl.examples.build.xtend.GenerateGrammarXtend {
+	component = GenerateGrammarXtend {
 		javaFolder = "${markupRuntimeProject}/src-gen"
 		javaPackageName = "${markupProjectName}"
 		grammarFileStem = "Markup"
 	}
-	component = org.eclipse.ocl.examples.build.utilities.InjectCompatibilityAbstractInternalAntlrParser {
+	component = InjectCompatibilityAbstractInternalAntlrParser {
 		fileName = "${markupRuntimeProject}/src-gen/org/eclipse/ocl/xtext/markup/parser/antlr/internal/InternalMarkupParser.java"
 	}
-	component = org.eclipse.ocl.examples.build.utilities.ConvertToUnixLineEndings {
-		directory = "${markupRuntimeProject}/META-INF"
-	}
-	component = org.eclipse.ocl.examples.build.utilities.ConvertToUnixLineEndings {
-		directory = "${markupRuntimeProject}/emf-gen"
-	}
-	component = org.eclipse.ocl.examples.build.utilities.ConvertToUnixLineEndings {
-		directory = "${markupRuntimeProject}/src"
-	}
-	component = org.eclipse.ocl.examples.build.utilities.ConvertToUnixLineEndings {
+	component = ConvertToUnixLineEndings {
 		directory = "${markupRuntimeProject}/src-gen"
 	}
-	component = org.eclipse.ocl.examples.build.utilities.ConvertToUnixLineEndings {
-		directory = "${markupRuntimeProject}.ui/META-INF"
-	}
-	component = org.eclipse.ocl.examples.build.utilities.ConvertToUnixLineEndings {
-		directory = "${markupRuntimeProject}.ui/src"
-	}
-	component = org.eclipse.ocl.examples.build.utilities.ConvertToUnixLineEndings {
+	component = ConvertToUnixLineEndings {
 		directory = "${markupRuntimeProject}.ui/src-gen"
 	}
 }
