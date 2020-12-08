@@ -46,6 +46,8 @@
 
     <!-- plugin versions -->
     <!-- use the "Build OCL - Versions" launch to check for the latest -->
+    <!-- interctively see e.g. https://mvnrepository.com/artifact/org.eclipse.jdt/ecj -->
+    <ecj-version>3.23.0</ecj-version>
     <eclipse-jarsigner-version>1.1.2</eclipse-jarsigner-version>
     <exec-maven-version>3.0.0</exec-maven-version>
     <findbugs-maven-version>3.0.0</findbugs-maven-version>
@@ -276,9 +278,16 @@
               <arg>-annotationpath</arg>
               <arg>${project.basedir}/../../plugins/org.eclipse.ocl.pivot/annotations</arg>
             </compilerArgs>
+            <log>plain</log>
+            <verbose>true</verbose>
           </configuration>
-          <!--dependencies>
+          <dependencies>
             <dependency>
+              <groupId>org.eclipse.jdt</groupId>
+              <artifactId>ecj</artifactId>
+              <version>${ecj-version}</version>
+            </dependency>
+            <!--dependency>
               <groupId>org.eclipse.jdt</groupId>
               <artifactId>org.eclipse.jdt.core</artifactId>
               <version>${cbi-jdt-version}</version>
@@ -287,8 +296,8 @@
               <groupId>org.eclipse.jdt</groupId>
               <artifactId>org.eclipse.jdt.compiler.apt</artifactId>
               <version>${cbi-jdt-apt-version}</version>
-            </dependency>
-          </dependencies-->
+            </dependency-->
+          </dependencies>
           <!--configuration>
             <encoding>${java-source-encoding}</encoding>
             <source>${source-java-version}</source>
