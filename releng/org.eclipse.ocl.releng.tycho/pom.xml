@@ -67,7 +67,7 @@
     <maven-resources-version>3.2.0</maven-resources-version>
     <maven-site-version>3.9.1</maven-site-version>
     <maven-surefire-version>3.0.0-M5</maven-surefire-version>
-    <tycho-version>1.6.0</tycho-version>
+    <tycho-version>2.1.0</tycho-version>
     <tycho-extras-version>${tycho-version}</tycho-extras-version>
     
     <BUILD_ALIAS></BUILD_ALIAS>
@@ -273,7 +273,10 @@
           <groupId>org.eclipse.tycho</groupId>
           <artifactId>tycho-compiler-plugin</artifactId>
           <version>${tycho-version}</version>
-          <configuration><!-- Workaround Bug 526011 -->
+          <configuration>
+            <!-- Workaround Bug 569379 -->
+            <deriveReleaseCompilerArgumentFromTargetLevel>false</deriveReleaseCompilerArgumentFromTargetLevel>
+            <!-- Workaround Bug 526011 -->
             <compilerArgs>
               <arg>-annotationpath</arg>
               <arg>${project.basedir}/../../plugins/org.eclipse.ocl.pivot/annotations</arg>
@@ -282,6 +285,7 @@
             <verbose>true</verbose>
           </configuration>
           <dependencies>
+            <!-- Investigate Bug 569379 -->
             <dependency>
               <groupId>org.eclipse.jdt</groupId>
               <artifactId>ecj</artifactId>
