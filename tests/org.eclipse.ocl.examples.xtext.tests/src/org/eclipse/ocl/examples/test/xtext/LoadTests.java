@@ -65,6 +65,7 @@ import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
 import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.DebugTimestamp;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -236,8 +237,11 @@ public class LoadTests extends XtextTestCase
 			}
 		}
 		finally {
-			xtextResource.dispose();
+			if (xtextResource != null) {
+				xtextResource.dispose();
+			}
 		}
+		assert xtextResource != null;
 		Resource xmiResource = resourceSet.createResource(outputURI);
 		xmiResource.getContents().addAll(xtextResource.getContents());
 		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " save()");
@@ -355,7 +359,7 @@ public class LoadTests extends XtextTestCase
 			TestCase.fail("No such resource + '" + inputURI + "'");
 		}
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
-			StandaloneProjectMap.IProjectDescriptor projectDescriptor = getProjectMap().getProjectDescriptor("org.eclipse.uml2.uml");
+			StandaloneProjectMap.IProjectDescriptor projectDescriptor = ClassUtil.nonNullState(getProjectMap().getProjectDescriptor("org.eclipse.uml2.uml"));
 			projectDescriptor.initializeURIMap(URIConverter.URI_MAP);		// *.ecore2xml must be global
 		}
 		String extension = inputURI.fileExtension();
@@ -1257,14 +1261,14 @@ public class LoadTests extends XtextTestCase
 		URI uri = getTestModelURI("models/uml/NullFree.uml");
 		Model model = doLoadUML(ocl, uri, false, true, NO_MESSAGES, null);
 		org.eclipse.ocl.pivot.Package asPackage = model.getOwnedPackages().get(0);
-		org.eclipse.ocl.pivot.Class asInheritedNullFree = NameUtil.getNameable(asPackage.getOwnedClasses(), "InheritedNullFree");
-		org.eclipse.ocl.pivot.Class asNonNullFree = NameUtil.getNameable(asPackage.getOwnedClasses(), "NonNullFree");
-		Property inf_nf = NameUtil.getNameable(asInheritedNullFree.getOwnedProperties(), "nf");
-		Property inf_nnf = NameUtil.getNameable(asInheritedNullFree.getOwnedProperties(), "nnf");
-		Property inf_inf = NameUtil.getNameable(asInheritedNullFree.getOwnedProperties(), "inf");
-		Property nnf_nf = NameUtil.getNameable(asNonNullFree.getOwnedProperties(), "nf");
-		Property nnf_nnf = NameUtil.getNameable(asNonNullFree.getOwnedProperties(), "nnf");
-		Property nnf_inf = NameUtil.getNameable(asNonNullFree.getOwnedProperties(), "inf");
+		org.eclipse.ocl.pivot.Class asInheritedNullFree = ClassUtil.nonNullState(NameUtil.getNameable(asPackage.getOwnedClasses(), "InheritedNullFree"));
+		org.eclipse.ocl.pivot.Class asNonNullFree = ClassUtil.nonNullState(NameUtil.getNameable(asPackage.getOwnedClasses(), "NonNullFree"));
+		Property inf_nf = ClassUtil.nonNullState(NameUtil.getNameable(asInheritedNullFree.getOwnedProperties(), "nf"));
+		Property inf_nnf = ClassUtil.nonNullState(NameUtil.getNameable(asInheritedNullFree.getOwnedProperties(), "nnf"));
+		Property inf_inf = ClassUtil.nonNullState(NameUtil.getNameable(asInheritedNullFree.getOwnedProperties(), "inf"));
+		Property nnf_nf = ClassUtil.nonNullState(NameUtil.getNameable(asNonNullFree.getOwnedProperties(), "nf"));
+		Property nnf_nnf = ClassUtil.nonNullState(NameUtil.getNameable(asNonNullFree.getOwnedProperties(), "nnf"));
+		Property nnf_inf = ClassUtil.nonNullState(NameUtil.getNameable(asNonNullFree.getOwnedProperties(), "inf"));
 		assertEquals(true, ((CollectionType)inf_nf.getType()).isIsNullFree());
 		assertEquals(false, ((CollectionType)inf_nnf.getType()).isIsNullFree());
 		assertEquals(true, ((CollectionType)inf_inf.getType()).isIsNullFree());
@@ -1511,8 +1515,7 @@ public class LoadTests extends XtextTestCase
 			EObject eObject = tit.next();
 			String id = reloadedAsResource.getID(eObject);
 			if (id != null) {
-				EObject eObject2 = id2eObject.get(id);
-				assertNotNull(eObject2);
+				EObject eObject2 = ClassUtil.nonNullState(id2eObject.get(id));
 				assertEquals(eObject2.getClass(), eObject.getClass());
 				newIdCount++;
 			}

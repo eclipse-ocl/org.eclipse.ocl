@@ -31,6 +31,7 @@ import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ParserException;
@@ -97,9 +98,9 @@ public class FlowAnalysisTests extends XtextTestCase
 			createOCLinEcoreFile(fileName + ".oclinecore", testContext);
 			Resource asResource = doLoad_Concrete(fileName, "oclinecore");
 			Model model = PivotUtil.getModel(asResource);
-			org.eclipse.ocl.pivot.Package deductionsPackage = NameUtil.getNameable(model.getOwnedPackages(), "deductions");
-			org.eclipse.ocl.pivot.Class deductionsClass = NameUtil.getNameable(deductionsPackage.getOwnedClasses(), "Deductions");
-			Constraint asInvariant = NameUtil.getNameable(deductionsClass.getOwnedInvariants(), invariantName);
+			org.eclipse.ocl.pivot.Package deductionsPackage = ClassUtil.nonNullState(NameUtil.getNameable(model.getOwnedPackages(), "deductions"));
+			org.eclipse.ocl.pivot.Class deductionsClass = ClassUtil.nonNullState(NameUtil.getNameable(deductionsPackage.getOwnedClasses(), "Deductions"));
+			Constraint asInvariant = ClassUtil.nonNullState(NameUtil.getNameable(deductionsClass.getOwnedInvariants(), invariantName));
 			return ((EnvironmentFactoryInternalExtension)environmentFactory).parseSpecification(asInvariant.getOwnedSpecification()).getOwnedBody();
 		}
 

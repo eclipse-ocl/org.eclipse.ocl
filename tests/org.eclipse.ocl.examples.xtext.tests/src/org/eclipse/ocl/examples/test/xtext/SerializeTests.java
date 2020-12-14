@@ -657,7 +657,7 @@ public class SerializeTests extends XtextTestCase
 	public void testSerialize_BaseCST() throws Exception {
 		OCL ocl = OCL.newInstance(getProjectMap());
 		URI uri = URI.createPlatformResourceURI("/org.eclipse.ocl.xtext.base/model/BaseCS.ecore", true);
-		@SuppressWarnings("null")@NonNull String stem = uri.trimFileExtension().lastSegment();
+		@NonNull String stem = ClassUtil.nonNullState(uri.trimFileExtension().lastSegment());
 		doSerialize(ocl, uri, stem, uri, null, ModelComparator.NONE, NO_MESSAGES, NO_MESSAGES);		// FIXME URIs don't quite compare
 		ocl.dispose();
 	}
@@ -665,7 +665,7 @@ public class SerializeTests extends XtextTestCase
 	public void testSerialize_EssentialOCLCST() throws Exception {
 		OCL ocl = OCL.newInstance(getProjectMap());
 		URI uri = URI.createPlatformResourceURI("/org.eclipse.ocl.xtext.essentialocl/model/EssentialOCLCS.ecore", true);
-		@SuppressWarnings("null")@NonNull String stem = uri.trimFileExtension().lastSegment();
+		@NonNull String stem = ClassUtil.nonNullState(uri.trimFileExtension().lastSegment());
 		Map<Object, Object> options = createLoadedEcoreOptions();
 		doSerialize(ocl, uri, stem, uri, options, ModelComparator.NONE, NO_MESSAGES, NO_MESSAGES);		// FIXME URIs don't quite compare
 	}
@@ -673,7 +673,7 @@ public class SerializeTests extends XtextTestCase
 	public void testSerialize_OCLinEcoreCST() throws Exception {
 		OCL ocl = OCL.newInstance(getProjectMap());
 		URI uri = URI.createPlatformResourceURI("/org.eclipse.ocl.xtext.oclinecore/model/OCLinEcoreCS.ecore", true);
-		@SuppressWarnings("null")@NonNull String stem = uri.trimFileExtension().lastSegment();
+		@NonNull String stem = ClassUtil.nonNullState(uri.trimFileExtension().lastSegment());
 		Map<Object, Object> options = createLoadedEcoreOptions();
 		doSerialize(ocl, uri, stem, uri, options, ModelComparator.NONE, NO_MESSAGES, NO_MESSAGES);		// FIXME URIs don't quite compare
 		//		doSerialize(ocl, "OCLinEcoreCST");

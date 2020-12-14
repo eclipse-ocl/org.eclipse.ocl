@@ -195,7 +195,7 @@ public class EvaluateClassifierOperationsTest4 extends PivotTestSuite
 		try {
 			IdResolver idResolver = environmentFactory.getIdResolver();
 			org.eclipse.ocl.pivot.Class classType = environmentFactory.getStandardLibrary().getClassType();
-			@SuppressWarnings("null") @NonNull Type packageType = environmentFactory.getASClass("Package");
+			@NonNull Type packageType = ClassUtil.nonNullState(environmentFactory.getASClass("Package"));
 			CollectionTypeId typeId = TypeId.SET.getSpecializedId(packageType.getTypeId());
 			ocl.assertSemanticErrorQuery(classType, "invalid.oclContents()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "OclInvalid", "oclContents");
 			ocl.assertQueryInvalid(ocl.pkg2, "let s : OclElement = invalid in s.oclContents()");

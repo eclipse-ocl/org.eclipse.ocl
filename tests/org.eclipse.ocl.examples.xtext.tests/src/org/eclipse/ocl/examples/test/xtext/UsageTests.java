@@ -1170,7 +1170,9 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		EObject backlog = eFactory.create(eBacklogClass);
 		EObject workItem = eFactory.create(eWorkItemClass);
 		workItem.eSet(eWorkItem_effort, 3);
-		((List<EObject>)backlog.eGet(eBacklog_workItems)).add(workItem);
+		@SuppressWarnings("unchecked")
+		List<EObject> castWorkItems = (List<EObject>)backlog.eGet(eBacklog_workItems);
+		castWorkItems.add(workItem);
 		plan.eSet(ePlan_backlog, backlog);
 
 		int count = (int) plan.eGet(ePlan_derivedMinSprintCount);

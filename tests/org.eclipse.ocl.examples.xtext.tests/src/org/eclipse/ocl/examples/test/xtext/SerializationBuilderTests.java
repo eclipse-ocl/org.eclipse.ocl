@@ -18,9 +18,9 @@ public class SerializationBuilderTests extends XtextTestCase
 {
 	private static final @NonNull String WE = SerializationBuilder.WRAP_END;
 	private static final @NonNull String WH = SerializationBuilder.WRAP_HERE;
-	private static final @NonNull String SS = SerializationBuilder.SOFT_SPACE;
+//	private static final @NonNull String SS = SerializationBuilder.SOFT_SPACE;
 	private static final @NonNull String WBA = SerializationBuilder.WRAP_BEGIN_ALL;
-	private static final @NonNull String WA = SerializationBuilder.WRAP_ANCHOR;
+//	private static final @NonNull String WA = SerializationBuilder.WRAP_ANCHOR;
 	private static final @NonNull String POP = SerializationBuilder.POP;
 	private static final @NonNull String NL = SerializationBuilder.NEW_LINE;
 	private static final @NonNull String PUSH = SerializationBuilder.PUSH;

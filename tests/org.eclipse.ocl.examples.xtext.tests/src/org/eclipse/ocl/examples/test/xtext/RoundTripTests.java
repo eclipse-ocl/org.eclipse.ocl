@@ -105,7 +105,7 @@ public class RoundTripTests extends XtextTestCase
 		ResourceSet resourceSet = environmentFactory.getResourceSet();
 		XtextResource xtextResource = (XtextResource) resourceSet.createResource(xtextURI, OCLinEcoreCSPackage.eCONTENT_TYPE);
 		((BaseCSResource) xtextResource).updateFrom(asResource, environmentFactory);
-		DebugTimestamp debugTimestamp = new DebugTimestamp(xtextResource.getURI().toString());
+		DebugTimestamp debugTimestamp = new DebugTimestamp(ClassUtil.nonNullState(xtextResource.getURI().toString()));
 		xtextResource.save(XMIUtil.createSaveOptions());
 		debugTimestamp.log("Serialization save done");
 		assertNoResourceErrors("Conversion failed", xtextResource);
@@ -126,7 +126,7 @@ public class RoundTripTests extends XtextTestCase
 		ResourceSet resourceSet = environmentFactory.getResourceSet();
 		CSResource xtextResource = (CSResource) resourceSet.createResource(xtextURI, OCLinEcoreCSPackage.eCONTENT_TYPE);
 		xtextResource.updateFrom(asResource, environmentFactory);
-		DebugTimestamp debugTimestamp = new DebugTimestamp(xtextResource.getURI().toString());
+		DebugTimestamp debugTimestamp = new DebugTimestamp(ClassUtil.nonNullState(xtextResource.getURI().toString()));
 		xtextResource.save(XMIUtil.createSaveOptions());
 		debugTimestamp.log("Serialization save done");
 		assertNoResourceErrors("Conversion failed", xtextResource);

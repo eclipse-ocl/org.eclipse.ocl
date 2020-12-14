@@ -277,7 +277,7 @@ public class TestOCL extends OCLInternal
 			return result;
 		} catch (Exception e) {
 			PivotTestSuite.failOn(expression, e);
-			@SuppressWarnings("null")@NonNull ExpressionInOCL nullReturn = null;
+			@SuppressWarnings("null")@NonNull ExpressionInOCL nullReturn = (@NonNull ExpressionInOCL)null;
 			return nullReturn;				// Never happens
 		}
 	}
@@ -321,10 +321,9 @@ public class TestOCL extends OCLInternal
 	 * Assert that the result of evaluating an expression as a query is equal to expected.
 	 * @return the evaluation result
 	 */
-	@SuppressWarnings("null")
 	public @Nullable Object assertQueryEquals(@Nullable Object context, @NonNull BigDecimal expected, @NonNull BigDecimal delta, @NonNull String expression) {
 		try {
-			BigDecimal value = (BigDecimal) evaluate(null, context, expression);
+			BigDecimal value = ClassUtil.nonNullState((BigDecimal) evaluate(null, context, expression));
 			TestCase.assertTrue(expression, (value.compareTo(expected.add(delta)) >= 0) && (value.compareTo(expected.subtract(delta)) >= 0));
 			PivotTestSuite.appendLog(testName, context, expression, null, expected.toString(), delta.toString());
 			return value;
@@ -341,12 +340,10 @@ public class TestOCL extends OCLInternal
 	public Object assertQueryEquals(Object context, @NonNull Number expected, @NonNull String expression, double tolerance) {
 		try {
 			IdResolver idResolver = getIdResolver();
-			Object expectedValue = idResolver.boxedValueOf(expected);
-			Object value = evaluate(null, context, expression);
-			@SuppressWarnings("null")
-			BigDecimal expectedVal = ((RealValue)expectedValue).bigDecimalValue();
-			@SuppressWarnings("null")
-			BigDecimal val = ((RealValue)value).bigDecimalValue();
+			@NonNull Object expectedValue = ClassUtil.nonNullState(idResolver.boxedValueOf(expected));
+			@NonNull Object value = ClassUtil.nonNullState(evaluate(null, context, expression));
+			BigDecimal expectedVal = ClassUtil.nonNullState(((RealValue)expectedValue).bigDecimalValue());
+			BigDecimal val = ClassUtil.nonNullState(((RealValue)value).bigDecimalValue());
 			double delta = val.subtract(expectedVal).doubleValue();
 			if ((delta < -tolerance) || (tolerance < delta)) {
 				TestCase.assertEquals(expression, expected, value);
@@ -587,10 +584,9 @@ public class TestOCL extends OCLInternal
 	 *            Expression that is to be evaluated. Note that we'll use
 	 *            {@link EClass} as this expression's context.
 	 */
-	@SuppressWarnings("null")
 	public Object assertResultContainsAll(Object context, @NonNull CollectionValue expectedResult, @NonNull String expression) {
 		try {
-			Object result = evaluate(null, context, expression);
+			Object result = ClassUtil.nonNullState(evaluate(null, context, expression));
 			TestCase.assertTrue(expectedResult.getClass().isInstance(result));
 			TestCase.assertSame(expectedResult.intSize(), ((CollectionValue) result).intSize());
 			Object actualResult = ((CollectionValue) result).includesAll(expectedResult);

@@ -30,6 +30,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.xtext.tests.TestUIUtil;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.xtext.base.ui.BaseUIActivator;
 import org.eclipse.ocl.xtext.base.ui.builder.MultiValidationJob;
@@ -39,7 +40,6 @@ import org.eclipse.xtext.ui.editor.XtextEditor;
 /**
  * Tests that the MultiValidationJob does some validating.
  */
-@SuppressWarnings("null")
 public abstract class AbstractBuilderTests extends XtextTestCase
 {
 	public static int VALIDATION_TIMEOUT = 20000; // Time in millisecionds before validation test fails. may be set to 0 for debugging
@@ -85,7 +85,7 @@ public abstract class AbstractBuilderTests extends XtextTestCase
 	}
 	protected void doValidation(@NonNull IFile file, @Nullable Class<?> exceptionClass, @Nullable List<@NonNull String> expectedMarkerTexts) {
 		ValidationEntry validationEntry = new ValidationEntry(file, EValidator.MARKER);
-		MultiValidationJob multiValidationJob = BaseUIActivator.getMultiValidationJob();
+		MultiValidationJob multiValidationJob = ClassUtil.nonNullState(BaseUIActivator.getMultiValidationJob());
 		multiValidationJob.addValidations(Collections.singletonList(validationEntry));
 		try {
 			Throwable throwable = null;
@@ -97,7 +97,9 @@ public abstract class AbstractBuilderTests extends XtextTestCase
 			}
 			if (exceptionClass != null) {
 				assertNotNull("The expected " + exceptionClass.getName() + " exception was not thrown", throwable);
-				assertTrue("Expected a " + exceptionClass.getName() + " exception rather than a " + throwable.getClass().getName(), exceptionClass.isAssignableFrom(throwable.getClass()));
+				assert throwable != null;
+				Class<? extends @NonNull Throwable> throwableClass = throwable.getClass();
+				assertTrue("Expected a " + exceptionClass.getName() + " exception rather than a " + throwableClass.getName(), exceptionClass.isAssignableFrom(throwableClass));
 			}
 			else {
 				if (throwable != null) {

@@ -742,7 +742,7 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 		MyOCL ocl = createOCL();
 		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
 		StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
-		@SuppressWarnings("null") @NonNull Type packageType = environmentFactory.getASClass("Package");
+		@NonNull Type packageType = ClassUtil.nonNullState(environmentFactory.getASClass("Package"));
 		ocl.assertQueryEquals(ocl.pkg1, packageType, "self.oclType()");
 		ocl.assertQueryEquals(ocl.pkg1, "Package", "self.oclType().name");
 		ocl.assertQueryEquals(null, packageType, "Package");
@@ -784,7 +784,7 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 		MyOCL ocl = createOCL();
 		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
 		StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
-		@SuppressWarnings("null") @NonNull Type collectionKindType = environmentFactory.getASClass("CollectionKind");
+		@NonNull Type collectionKindType = ClassUtil.nonNullState(environmentFactory.getASClass("CollectionKind"));
 		org.eclipse.ocl.pivot.Class enumerationType = useCodeGen ? standardLibrary.getClassType() : standardLibrary.getEnumerationType();
 		//    	ocl.assertQueryEquals(null, metamodelManager.getPivotType("EnumerationLiteral"), "CollectionKind::Set.oclType()");
 		// NB this is not EnumerationLiteral: cf. 4.oclType() is Integer not IntegerLiteral.

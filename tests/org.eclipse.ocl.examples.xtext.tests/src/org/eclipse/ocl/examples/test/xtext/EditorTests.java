@@ -133,6 +133,7 @@ public class EditorTests extends XtextTestCase
 		FileEditorInput fileEditorInput = createFileEditorInput("test", testFile, inputStream);
 		XtextEditor editor = doTestEditor(editorId, fileEditorInput);
 		IXtextDocument document = editor.getDocument();
+		@SuppressWarnings("unused")
 		String content = document.get();
 	//	assertEquals(testFileContent, content);
 		return editor;
@@ -203,6 +204,7 @@ public class EditorTests extends XtextTestCase
 		{
 			@Override
 			public Object exec(@Nullable XtextResource resource) throws Exception {
+				assert resource != null;
 				resource.setValidationDisabled(false);
 				PivotResourceValidator resourceValidator = new PivotResourceValidator();
 				resourceValidator.setDiagnostician(Diagnostician.INSTANCE);
@@ -241,6 +243,7 @@ public class EditorTests extends XtextTestCase
 		{
 			@Override
 			public Object exec(@Nullable XtextResource resource) throws Exception {
+				assert resource != null;
 				//				assertNoResourceErrors("Loaded CS", resource);
 				CS2AS cs2as = ((BaseCSResource)resource).getCS2AS();
 				if (cs2as != null) {

@@ -182,7 +182,7 @@ public class PivotTestCase extends TestCase
 
 		assertNoDiagnosticErrors("Concrete Syntax validation failed", xtextResource);
 		try {
-			DebugTimestamp debugTimestamp = new DebugTimestamp(xtextResource.getURI().toString());
+			DebugTimestamp debugTimestamp = new DebugTimestamp(ClassUtil.nonNullState(xtextResource.getURI().toString()));
 			xtextResource.save(null);
 			debugTimestamp.log("Serialization save done");
 		}
@@ -422,7 +422,7 @@ public class PivotTestCase extends TestCase
 		}
 	}
 
-	public static @NonNull List<Diagnostic> assertValidationDiagnostics(@NonNull String prefix, @NonNull Resource resource, @NonNull String @NonNull [] messages) {
+	public static @NonNull List<Diagnostic> assertValidationDiagnostics(@NonNull String prefix, @NonNull Resource resource, @NonNull String @Nullable [] messages) {
 		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
 		return assertValidationDiagnostics(prefix, resource, validationContext, messages);
 	}

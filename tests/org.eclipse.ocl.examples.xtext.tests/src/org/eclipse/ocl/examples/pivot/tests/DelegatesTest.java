@@ -1566,7 +1566,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 					}
 					s.append(diagnostic.getMessage());
 				}
-				@SuppressWarnings("null")
+				assert s != null;
 				String string = s.toString();
 				fail(string);
 			}

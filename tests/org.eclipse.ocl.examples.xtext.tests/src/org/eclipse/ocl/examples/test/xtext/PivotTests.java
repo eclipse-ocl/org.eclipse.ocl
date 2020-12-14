@@ -28,6 +28,7 @@ import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.resource.AS2ID;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.DebugTimestamp;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -218,14 +219,13 @@ public class PivotTests extends XtextTestCase
 		return xtextResource;
 	}
 
-	@SuppressWarnings("null")
 	protected void doPivotTestOCLstdlib(@NonNull OCL ocl, @NonNull URI inputURI) throws IOException {
-		URI pivotURI = getTestFileURI(inputURI.trimFileExtension().appendFileExtension(PivotConstants.OCL_AS_FILE_EXTENSION).lastSegment());
+		URI pivotURI = getTestFileURI(ClassUtil.nonNullState(inputURI.trimFileExtension().appendFileExtension(PivotConstants.OCL_AS_FILE_EXTENSION).lastSegment()));
 		BaseCSResource csResource = doLoadOCLstdlib(ocl, inputURI);
 		//
 		//	Create Pivot model from CS
 		//
-		CS2AS cs2as = csResource.findCS2AS();
+		CS2AS cs2as = ClassUtil.nonNullState(csResource.findCS2AS());
 		Resource asResource = cs2as.getASResource();
 		OCLstdlibCS2AS creator = (OCLstdlibCS2AS) cs2as;
 		//

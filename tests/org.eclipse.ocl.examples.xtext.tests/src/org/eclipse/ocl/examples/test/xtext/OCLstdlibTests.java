@@ -45,6 +45,7 @@ import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.model.OCLmetamodel;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
@@ -76,6 +77,7 @@ public class OCLstdlibTests extends XtextTestCase
 	public Map<String, Element> computeMoniker2ASMap(Collection<? extends Resource> pivotResources) {
 		Map<String, Element> map = new HashMap<String, Element>();
 		for (Resource asResource : pivotResources) {
+			assert asResource != null;
 			for (Iterator<EObject> it = asResource.getAllContents(); it.hasNext();) {
 				EObject eObject = it.next();
 				assert eObject.eResource() == asResource;
@@ -137,6 +139,8 @@ public class OCLstdlibTests extends XtextTestCase
 			}
 			assertNotNull("Missing java element for '" + moniker + "'", javaElement);
 			//			@SuppressWarnings("null")	// Can be null and we'll have an NPE as the test failure.
+			assert javaElement != null;
+			assert fileElement != null;
 			Class<? extends Element> javaElementClass = javaElement.getClass();
 			assertEquals(fileElement.getClass(), javaElementClass);
 			if (fileElement instanceof TypedElement) {
@@ -277,7 +281,7 @@ public class OCLstdlibTests extends XtextTestCase
 		ocl.getEnvironmentFactory().adapt(xtextResource);
 		InputStream inputStream = ocl.getResourceSet().getURIConverter().createInputStream(libraryURI);
 		xtextResource.load(inputStream, null);
-		CS2AS cs2as = xtextResource.findCS2AS();
+		CS2AS cs2as = ClassUtil.nonNullState(xtextResource.findCS2AS());
 		assertNoResourceErrors("Load failed", xtextResource);
 		Resource fileResource = cs2as.getASResource();
 		assertNoResourceErrors("File Model", fileResource);
@@ -320,6 +324,8 @@ public class OCLstdlibTests extends XtextTestCase
 			}
 			assertNotNull("Missing java element for '" + moniker + "'", javaElement);
 			//			@SuppressWarnings("null")	// Can be null and we'll have an NPE as the test failure.
+			assert javaElement != null;
+			assert fileElement != null;
 			Class<? extends Element> javaElementClass = javaElement.getClass();
 			assertEquals(fileElement.getClass(), javaElementClass);
 			if (fileElement instanceof TypedElement) {

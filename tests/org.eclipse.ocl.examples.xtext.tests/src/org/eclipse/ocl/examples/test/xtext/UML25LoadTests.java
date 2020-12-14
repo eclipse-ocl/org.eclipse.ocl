@@ -60,7 +60,7 @@ public class UML25LoadTests extends LoadTests
 	public @NonNull TestOCL createOCLWithProjectMap() {
 		UMLStandaloneSetup.init();
 		TestOCL ocl = new TestOCL(getTestFileSystem(), "UML25LoadTests", getName(), getProjectMap());
-		ResourceSet resourceSet = ocl.getResourceSet();
+	//	ResourceSet resourceSet = ocl.getResourceSet();
 	//	XMI252UMLResourceFactoryImpl.install(resourceSet, URI.createPlatformResourceURI("/org.eclipse.ocl.examples.uml25/model/", true));
 		return ocl;
 	}

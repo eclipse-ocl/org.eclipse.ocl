@@ -39,11 +39,13 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.IdResolver;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
 import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
@@ -315,7 +317,7 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		Model pivotModel = (Model) metamodel.getContents().get(0);
 		org.eclipse.ocl.pivot.Package pivotPackage = pivotModel.getOwnedPackages().get(0);
 		org.eclipse.ocl.pivot.Class pivotType = pivotPackage.getOwnedClasses().get(0);
-		EClass eClass = ocl.getMetamodelManager().getEcoreOfPivot(EClass.class, pivotType);
+		EClass eClass = ClassUtil.nonNullState(ocl.getMetamodelManager().getEcoreOfPivot(EClass.class, pivotType));
 		Object testObject = eClass.getEPackage().getEFactoryInstance().create(eClass);
 		ocl.assertQueryFalse(testObject, "kind = 'kind'");
 		ocl.assertQueryFalse(testObject, "'kind' = kind");
@@ -386,7 +388,7 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		Model pivotModel = (Model) metamodel.getContents().get(0);
 		org.eclipse.ocl.pivot.Package pivotPackage = pivotModel.getOwnedPackages().get(0);
 		org.eclipse.ocl.pivot.Class pivotType = pivotPackage.getOwnedClasses().get(0);
-		EClass eClass = metamodelManager.getEcoreOfPivot(EClass.class, pivotType);
+		EClass eClass = ClassUtil.nonNullState(metamodelManager.getEcoreOfPivot(EClass.class, pivotType));
 		Object testObject = eClass.getEPackage().getEFactoryInstance().create(eClass);
 		String textQuery = "self.derivedDerivedInteger";
 		ocl.assertQueryEquals(testObject, 198, textQuery);
@@ -424,14 +426,14 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		Resource metamodel = cs2as(ocl, metamodelText);
 		Model pivotModel = (Model) metamodel.getContents().get(0);
 		org.eclipse.ocl.pivot.Package pivotPackage = pivotModel.getOwnedPackages().get(0);
-		org.eclipse.ocl.pivot.Class pivotTypeA = NameUtil.getNameable(pivotPackage.getOwnedClasses(), "A");
-		org.eclipse.ocl.pivot.Class pivotTypeB = NameUtil.getNameable(pivotPackage.getOwnedClasses(), "B");
-		EPackage ePackage = metamodelManager.getEcoreOfPivot(EPackage.class, pivotPackage);
+		org.eclipse.ocl.pivot.Class pivotTypeA = ClassUtil.nonNullState(NameUtil.getNameable(pivotPackage.getOwnedClasses(), "A"));
+		org.eclipse.ocl.pivot.Class pivotTypeB = ClassUtil.nonNullState(NameUtil.getNameable(pivotPackage.getOwnedClasses(), "B"));
+		EPackage ePackage = ClassUtil.nonNullState(metamodelManager.getEcoreOfPivot(EPackage.class, pivotPackage));
 		EClass eClassA = metamodelManager.getEcoreOfPivot(EClass.class, pivotTypeA);
 		EClass eClassB = metamodelManager.getEcoreOfPivot(EClass.class, pivotTypeB);
-		EAttribute eAttributeAd = metamodelManager.getEcoreOfPivot(EAttribute.class, NameUtil.getNameable(pivotTypeA.getOwnedProperties(), "d"));
-		EAttribute eAttributeAe = metamodelManager.getEcoreOfPivot(EAttribute.class, NameUtil.getNameable(pivotTypeA.getOwnedProperties(), "e"));
-		EReference eReferenceBas = metamodelManager.getEcoreOfPivot(EReference.class, NameUtil.getNameable(pivotTypeB.getOwnedProperties(), "as"));
+		EAttribute eAttributeAd = metamodelManager.getEcoreOfPivot(EAttribute.class, ClassUtil.nonNullState(NameUtil.getNameable(pivotTypeA.getOwnedProperties(), "d")));
+		EAttribute eAttributeAe = metamodelManager.getEcoreOfPivot(EAttribute.class, ClassUtil.nonNullState(NameUtil.getNameable(pivotTypeA.getOwnedProperties(), "e")));
+		EReference eReferenceBas = metamodelManager.getEcoreOfPivot(EReference.class, ClassUtil.nonNullState(NameUtil.getNameable(pivotTypeB.getOwnedProperties(), "as")));
 		EFactory eFactory = ePackage.getEFactoryInstance();
 		Resource resource = new ResourceImpl();
 		EObject testObjectA1 = eFactory.create(eClassA);
@@ -491,9 +493,9 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		Type pivotTree = metamodelManager.getASOfEcore(Type.class, tree);
 		//
 		ocl.assertQueryEquals(redApple, color_red, "let aFruit : fruit::Fruit = self in aFruit.color");
-		ocl.assertQueryEquals(aTree, idResolver.createOrderedSetOfEach(null, redApple), "let aTree : fruit::Tree = self in aTree.fruits");
-		ocl.assertQueryEquals(aTree, idResolver.createOrderedSetOfEach(null, redApple), "self.fruits");
-		ocl.assertQueryEquals(aTree, idResolver.createOrderedSetOfEach(null, redApple), "fruits");
+		ocl.assertQueryEquals(aTree, idResolver.createOrderedSetOfEach(TypeId.SET, redApple), "let aTree : fruit::Tree = self in aTree.fruits");
+		ocl.assertQueryEquals(aTree, idResolver.createOrderedSetOfEach(TypeId.SET, redApple), "self.fruits");
+		ocl.assertQueryEquals(aTree, idResolver.createOrderedSetOfEach(TypeId.SET, redApple), "fruits");
 		ocl.assertQueryEquals(redApple, aTree, "self.oclContainer()");
 		ocl.assertQueryEquals(redApple, aTree, "self.Tree");
 		//
@@ -540,8 +542,8 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		ocl.assertQueryFalse(redApple, "self.color = 'red'");
 		ocl.assertQueryEquals(redApple, redApple, "self.oclAsType(Apple)");
 		ocl.assertQueryEquals(redApple, redApple, "self.oclAsType(fruit::Apple)");
-		ocl.assertQueryEquals(redApple, idResolver.createSetOfEach(null, redApple), "self->oclAsType(Set(Fruit))");
-		ocl.assertQueryEquals(redApple, idResolver.createSetOfEach(null, redApple), "self->oclAsType(Set(fruit::Apple))");
+		ocl.assertQueryEquals(redApple, idResolver.createSetOfEach(TypeId.SET, redApple), "self->oclAsType(Set(Fruit))");
+		ocl.assertQueryEquals(redApple, idResolver.createSetOfEach(TypeId.SET, redApple), "self->oclAsType(Set(fruit::Apple))");
 		ocl.assertSemanticErrorQuery(appleType, "self.oclAsType(fruit::fruit::Apple)", PivotMessagesInternal.UnresolvedNamespace_ERROR_, "", "fruit");	// Demonstrates Bug 353985
 		ocl.assertSemanticErrorQuery(appleType, "self->oclAsType(Set(fruit::apple::BadApple))", PivotMessagesInternal.UnresolvedType_ERROR_, "", "BadApple");
 		ocl.assertSemanticErrorQuery(appleType, "self->oclAsType(Set(fruit::apple::BadApple))", PivotMessagesInternal.UnresolvedType_ERROR_, "", "BadApple");
@@ -550,16 +552,16 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		ocl.assertQueryInvalid(redApple, "self->oclAsType(Set(fruit::apple::EatingApple))");
 		ocl.assertQueryInvalid(redApple, "self->oclAsType(Set(fruit::Tree))");
 		//
-		ocl.assertQueryEquals(redApple, idResolver.createSetOfEach(null, appleTree), "Tree.allInstances()");
-		ocl.assertQueryEquals(redApple, idResolver.createSetOfEach(null, appleTree), "fruit::Tree.allInstances()");
+		ocl.assertQueryEquals(redApple, idResolver.createSetOfEach(TypeId.SET, appleTree), "Tree.allInstances()");
+		ocl.assertQueryEquals(redApple, idResolver.createSetOfEach(TypeId.SET, appleTree), "fruit::Tree.allInstances()");
 		EObject orphanFruit = fruitEFactory.create(apple);	// FIXME Bug 548225 comment 4 null has no metamodel and so gives UOE
 		ocl.assertQueryEquals(orphanFruit, ocl.getEmptySetValue(), "fruit::Tree.allInstances()");
 		//
 		metamodelManager.addGlobalNamespace("zz", fruitPackage);
-		ocl.assertQueryEquals(redApple, idResolver.createSetOfEach(null, appleTree), "zz::Tree.allInstances()");
+		ocl.assertQueryEquals(redApple, idResolver.createSetOfEach(TypeId.SET, appleTree), "zz::Tree.allInstances()");
 		//
-		ocl.assertQueryEquals(redApple, idResolver.createBagOfEach(null, redApple), "Fruit.allInstances().oclAsType(Apple)");
-		ocl.assertQueryEquals(redApple, idResolver.createSetOfEach(null, redApple), "Fruit.allInstances()->oclAsType(Set(Apple))");
+		ocl.assertQueryEquals(redApple, idResolver.createBagOfEach(TypeId.BAG, redApple), "Fruit.allInstances().oclAsType(Apple)");
+		ocl.assertQueryEquals(redApple, idResolver.createSetOfEach(TypeId.SET, redApple), "Fruit.allInstances()->oclAsType(Set(Apple))");
 		ocl.dispose();
 	}
 
@@ -604,7 +606,7 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		UML2AS.initialize(resourceSet);
 		MetamodelManagerInternal metamodelManager = ocl.getMetamodelManager();
 		URI uri = getTestModelURI("models/uml/Fruit.uml");
-		Element element = metamodelManager.loadResource(uri, null, resourceSet);
+		Element element = ClassUtil.nonNullState(metamodelManager.loadResource(uri, null, resourceSet));
 		org.eclipse.ocl.pivot.Package fruitPackage = ((Model)element).getOwnedPackages().get(0);
 		org.eclipse.ocl.pivot.Class treeClass = NameUtil.getNameable(fruitPackage.getOwnedClasses(), "Tree");
 		ExpressionInOCL query = ocl.createQuery(treeClass, "self.height>20");
@@ -670,14 +672,14 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		Resource metamodel = cs2as(ocl, metamodelText);
 		Model pivotModel = (Model) metamodel.getContents().get(0);
 		org.eclipse.ocl.pivot.Package pivotPackage = pivotModel.getOwnedPackages().get(0);
-		org.eclipse.ocl.pivot.Class pivotTypeDomain = NameUtil.getNameable(pivotPackage.getOwnedClasses(), "Domain");
+		org.eclipse.ocl.pivot.Class pivotTypeDomain = ClassUtil.nonNullState(NameUtil.getNameable(pivotPackage.getOwnedClasses(), "Domain"));
 		//		org.eclipse.ocl.pivot.Class pivotTypeT1 = ClassUtil.getNamedElement(pivotPackage.getOwnedType(), "T1");
 		org.eclipse.ocl.pivot.Class pivotTypeT2a = NameUtil.getNameable(pivotPackage.getOwnedClasses(), "T2a");
 		org.eclipse.ocl.pivot.Class pivotTypeT2b = NameUtil.getNameable(pivotPackage.getOwnedClasses(), "T2b");
 		org.eclipse.ocl.pivot.Class pivotTypeT3a = NameUtil.getNameable(pivotPackage.getOwnedClasses(), "T3a");
 		org.eclipse.ocl.pivot.Class pivotTypeT3b = NameUtil.getNameable(pivotPackage.getOwnedClasses(), "T3b");
 		org.eclipse.ocl.pivot.Class pivotTypeT4 = NameUtil.getNameable(pivotPackage.getOwnedClasses(), "T4");
-		EPackage ePackage = metamodelManager.getEcoreOfPivot(EPackage.class, pivotPackage);
+		EPackage ePackage = ClassUtil.nonNullState(metamodelManager.getEcoreOfPivot(EPackage.class, pivotPackage));
 		EClass eClassDomain = metamodelManager.getEcoreOfPivot(EClass.class, pivotTypeDomain);
 		//		EClass eClassT1 = metamodelManager.getEcoreOfPivot(EClass.class, pivotTypeT1);
 		EClass eClassT2a = metamodelManager.getEcoreOfPivot(EClass.class, pivotTypeT2a);
@@ -685,15 +687,15 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		EClass eClassT3a = metamodelManager.getEcoreOfPivot(EClass.class, pivotTypeT3a);
 		EClass eClassT3b = metamodelManager.getEcoreOfPivot(EClass.class, pivotTypeT3b);
 		EClass eClassT4 = metamodelManager.getEcoreOfPivot(EClass.class, pivotTypeT4);
-		EReference eReferenceDomain_types = metamodelManager.getEcoreOfPivot(EReference.class, NameUtil.getNameable(pivotTypeDomain.getOwnedProperties(), "types"));
-		EReference eReferenceDomain_t1_2a = metamodelManager.getEcoreOfPivot(EReference.class, NameUtil.getNameable(pivotTypeDomain.getOwnedProperties(), "t1_2a"));
-		EReference eReferenceDomain_t1_3a = metamodelManager.getEcoreOfPivot(EReference.class, NameUtil.getNameable(pivotTypeDomain.getOwnedProperties(), "t1_3a"));
-		EReference eReferenceDomain_t1_3b = metamodelManager.getEcoreOfPivot(EReference.class, NameUtil.getNameable(pivotTypeDomain.getOwnedProperties(), "t1_3b"));
-		EReference eReferenceDomain_t1_4 = metamodelManager.getEcoreOfPivot(EReference.class, NameUtil.getNameable(pivotTypeDomain.getOwnedProperties(), "t1_4"));
-		EReference eReferenceDomain_t2a_2a = metamodelManager.getEcoreOfPivot(EReference.class, NameUtil.getNameable(pivotTypeDomain.getOwnedProperties(), "t2a_2a"));
-		EReference eReferenceDomain_t2a_3a = metamodelManager.getEcoreOfPivot(EReference.class, NameUtil.getNameable(pivotTypeDomain.getOwnedProperties(), "t2a_3a"));
-		EReference eReferenceDomain_t2b_2b = metamodelManager.getEcoreOfPivot(EReference.class, NameUtil.getNameable(pivotTypeDomain.getOwnedProperties(), "t2b_2b"));
-		EReference eReferenceDomain_t3a = metamodelManager.getEcoreOfPivot(EReference.class, NameUtil.getNameable(pivotTypeDomain.getOwnedProperties(), "t3a"));
+		EReference eReferenceDomain_types = metamodelManager.getEcoreOfPivot(EReference.class, ClassUtil.nonNullState(NameUtil.getNameable(pivotTypeDomain.getOwnedProperties(), "types")));
+		EReference eReferenceDomain_t1_2a = metamodelManager.getEcoreOfPivot(EReference.class, ClassUtil.nonNullState(NameUtil.getNameable(pivotTypeDomain.getOwnedProperties(), "t1_2a")));
+		EReference eReferenceDomain_t1_3a = metamodelManager.getEcoreOfPivot(EReference.class, ClassUtil.nonNullState(NameUtil.getNameable(pivotTypeDomain.getOwnedProperties(), "t1_3a")));
+		EReference eReferenceDomain_t1_3b = metamodelManager.getEcoreOfPivot(EReference.class, ClassUtil.nonNullState(NameUtil.getNameable(pivotTypeDomain.getOwnedProperties(), "t1_3b")));
+		EReference eReferenceDomain_t1_4 = metamodelManager.getEcoreOfPivot(EReference.class, ClassUtil.nonNullState(NameUtil.getNameable(pivotTypeDomain.getOwnedProperties(), "t1_4")));
+		EReference eReferenceDomain_t2a_2a = metamodelManager.getEcoreOfPivot(EReference.class, ClassUtil.nonNullState(NameUtil.getNameable(pivotTypeDomain.getOwnedProperties(), "t2a_2a")));
+		EReference eReferenceDomain_t2a_3a = metamodelManager.getEcoreOfPivot(EReference.class, ClassUtil.nonNullState(NameUtil.getNameable(pivotTypeDomain.getOwnedProperties(), "t2a_3a")));
+		EReference eReferenceDomain_t2b_2b = metamodelManager.getEcoreOfPivot(EReference.class, ClassUtil.nonNullState(NameUtil.getNameable(pivotTypeDomain.getOwnedProperties(), "t2b_2b")));
+		EReference eReferenceDomain_t3a = metamodelManager.getEcoreOfPivot(EReference.class, ClassUtil.nonNullState(NameUtil.getNameable(pivotTypeDomain.getOwnedProperties(), "t3a")));
 		EFactory eFactory = ePackage.getEFactoryInstance();
 		Resource resource = new ResourceImpl();
 		EObject testObjectDomain = eFactory.create(eClassDomain);
