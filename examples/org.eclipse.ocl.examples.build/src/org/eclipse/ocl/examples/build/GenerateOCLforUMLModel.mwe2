@@ -7,6 +7,9 @@
  *
  * Contributors:
  *     E.D.Willink - initial API and implementation
+ * ----------------------
+ * See Bug 570012 - regeration requires three minor warnings fixups to accommodate the not worth the effort fixes to
+ * OCLBuildUMLGenPackageGeneratorAdapter to support static templates.
  * 
  *******************************************************************************/
 module GenerateOCLforUMLModels

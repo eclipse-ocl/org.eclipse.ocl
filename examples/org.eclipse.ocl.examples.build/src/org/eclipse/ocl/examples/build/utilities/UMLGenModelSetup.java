@@ -13,10 +13,6 @@ package org.eclipse.ocl.examples.build.utilities;
 import org.eclipse.emf.codegen.ecore.generator.GeneratorAdapterFactory;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.ocl.examples.build.genmodel.OCLBuildUMLGenModelGeneratorAdapterFactory;
-import org.eclipse.uml2.codegen.ecore.genmodel.GenModelPackage;
-import org.eclipse.uml2.codegen.ecore.genmodel.generator.GenModelGeneratorAdapterFactory;
-import org.eclipse.uml2.codegen.ecore.genmodel.generator.UML2GenModelGeneratorAdapterFactory;
 
 /**
  * Initializes the UML-based genmodel support for GenerateModel.mwe2.
@@ -27,19 +23,19 @@ public class UMLGenModelSetup
 	public static final GeneratorAdapterFactory.Descriptor UML_DESCRIPTOR1 = new GeneratorAdapterFactory.Descriptor() {
 		@Override
 		public GeneratorAdapterFactory createAdapterFactory() {
-			return new GenModelGeneratorAdapterFactory();
+			return new org.eclipse.uml2.codegen.ecore.genmodel.generator.GenModelGeneratorAdapterFactory();
 		}
 	};
 
 	public static final GeneratorAdapterFactory.Descriptor UML_DESCRIPTOR2 = new GeneratorAdapterFactory.Descriptor() {
 		@Override
 		public GeneratorAdapterFactory createAdapterFactory() {
-			return new UML2GenModelGeneratorAdapterFactory();
+			return new org.eclipse.uml2.codegen.ecore.genmodel.generator.UML2GenModelGeneratorAdapterFactory();
 		}
 	};
 
 	private ResourceSet resourceSet = null;
-	
+
 	public UMLGenModelSetup() {
 //		UMLImporter.class.getClass();		// Dummy reference to enforce class path
 	}
@@ -50,16 +46,15 @@ public class UMLGenModelSetup
 		}
 		return resourceSet;
 	}
-	
+
 	public void setResourceSet(ResourceSet resourceSet) {
 		this.resourceSet = resourceSet;
-		resourceSet.getPackageRegistry().put(GenModelPackage.eNS_URI, GenModelPackage.eINSTANCE);
-		GeneratorAdapterFactory.Descriptor.Registry.INSTANCE.addDescriptor
-	     (GenModelPackage.eNS_URI, UML_DESCRIPTOR1);
-		GeneratorAdapterFactory.Descriptor.Registry.INSTANCE.addDescriptor
-	     (GenModelPackage.eNS_URI, UML_DESCRIPTOR2);
-		GeneratorAdapterFactory.Descriptor.Registry.INSTANCE.addDescriptor
-	     (GenModelPackage.eNS_URI, OCLBuildUMLGenModelGeneratorAdapterFactory.DESCRIPTOR);
+		String umlGenModelNsURI = org.eclipse.uml2.codegen.ecore.genmodel.GenModelPackage.eNS_URI;
+		resourceSet.getPackageRegistry().put(umlGenModelNsURI, org.eclipse.uml2.codegen.ecore.genmodel.GenModelPackage.eINSTANCE);
+		GeneratorAdapterFactory.Descriptor.Registry.INSTANCE.addDescriptor(umlGenModelNsURI, UML_DESCRIPTOR1);
+		GeneratorAdapterFactory.Descriptor.Registry.INSTANCE.addDescriptor(umlGenModelNsURI, UML_DESCRIPTOR2);
+		// See Bug 570012 - fixing static templates for UML is too hard. Manual @Nullable is far easier to fix Bug 485089.
+	//	GeneratorAdapterFactory.Descriptor.Registry.INSTANCE.addDescriptor(umlGenModelNsURI, OCLBuildUMLGenModelGeneratorAdapterFactory.DESCRIPTOR);
 		org.eclipse.ocl.xtext.essentialocl.EssentialOCLStandaloneSetup.doSetup();
 	}
 }

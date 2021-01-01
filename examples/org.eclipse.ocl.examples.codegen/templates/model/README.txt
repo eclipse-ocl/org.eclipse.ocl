@@ -1,8 +1,11 @@
-See https://bugs.eclipse.org/bugs/show_bug.cgi?id=522565 and https://bugs.eclipse.org/bugs/show_bug.cgi?id=471114
+See https://bugs.eclipse.org/bugs/show_bug.cgi?id=471114
+and https://bugs.eclipse.org/bugs/show_bug.cgi?id=522565
+and https://bugs.eclipse.org/bugs/show_bug.cgi?id=543870
+and https://bugs.eclipse.org/bugs/show_bug.cgi?id=570012
 
 NB. The tweaks here provide an enhanced EMF genmodel capability when /org.eclipse.ocl.examples.build/templates
 is in use as a genmodel templateDirectory. The JET is compiled so dynamicTemplates are not required, however
-the builder doesn't understand the dependenies so deleting the generated *.java may make an obscure problem go away.
+the builder doesn't understand the dependencies so deleting the generated *.java may make an obscure problem go away.
 
 The org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreGeneratorAdapterFactory provides orthogonal capabilities;
 reifying OCL bodies as inline Java. OCLinEcoreGeneratorAdapterFactory is always in use within
