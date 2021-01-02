@@ -385,7 +385,7 @@ public class FixedPointImpl
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
+		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (bitTrue: "); //$NON-NLS-1$
 		result.append(bitTrue);
 		result.append(", fractionalBits: "); //$NON-NLS-1$

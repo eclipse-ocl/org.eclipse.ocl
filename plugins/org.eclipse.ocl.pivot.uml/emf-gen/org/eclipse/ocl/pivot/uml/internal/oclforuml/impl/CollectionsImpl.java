@@ -332,7 +332,7 @@ public class CollectionsImpl
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
+		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (isNullFree: "); //$NON-NLS-1$
 		if (isNullFreeESet) result.append(isNullFree); else result.append("<unset>"); //$NON-NLS-1$
 		result.append(')');

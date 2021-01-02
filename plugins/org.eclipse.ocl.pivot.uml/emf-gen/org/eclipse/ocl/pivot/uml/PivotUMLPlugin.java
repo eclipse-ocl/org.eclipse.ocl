@@ -102,15 +102,17 @@ public final class PivotUMLPlugin
 		}
 
 		@Override
-		public void start(BundleContext context) throws Exception {
-			OCLforUMLPackage.eINSTANCE.getName();		// Bug 469609 An NPE occurs in here when installed on Juno (UML2 4.0.0)	
-			UMLASResourceFactory.getInstance();			//  and so we must not register the UML2ASResource factory
+		public void start(BundleContext context)
+				throws Exception {
+			OCLforUMLPackage.eINSTANCE.getName(); // Bug 469609 An NPE occurs in here when installed on Juno (UML2 4.0.0)	
+			UMLASResourceFactory.getInstance(); //  and so we must not register the UML2ASResource factory
 			UML2AS.initialize();
 			super.start(context);
 		}
 
 		@Override
-		public void stop(BundleContext context) throws Exception {
+		public void stop(BundleContext context)
+				throws Exception {
 			super.stop(context);
 		}
 	}

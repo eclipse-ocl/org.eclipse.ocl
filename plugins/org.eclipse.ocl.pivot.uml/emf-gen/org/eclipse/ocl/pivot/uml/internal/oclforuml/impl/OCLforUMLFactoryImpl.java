@@ -37,8 +37,8 @@ import org.eclipse.ocl.pivot.uml.internal.oclforuml.Validations;
  * @generated
  */
 public class OCLforUMLFactoryImpl
-extends EFactoryImpl
-implements OCLforUMLFactory {
+		extends EFactoryImpl
+		implements OCLforUMLFactory {
 
 	/**
 	 * Creates the default factory implementation.
@@ -77,6 +77,7 @@ implements OCLforUMLFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("null")
 	@Override
 	public @NonNull EObject create(EClass eClass) {
 		switch (eClass.getClassifierID())
@@ -137,7 +138,7 @@ implements OCLforUMLFactory {
 	 * @generated
 	 */
 	@Override
-	public @NonNull BoundedInteger createBoundedInteger() {
+	public BoundedInteger createBoundedInteger() {
 		BoundedIntegerImpl boundedInteger = new BoundedIntegerImpl();
 		return boundedInteger;
 	}
@@ -148,7 +149,7 @@ implements OCLforUMLFactory {
 	 * @generated
 	 */
 	@Override
-	public org.eclipse.ocl.pivot.uml.internal.oclforuml.@NonNull Integer createInteger() {
+	public org.eclipse.ocl.pivot.uml.internal.oclforuml.Integer createInteger() {
 		IntegerImpl integer = new IntegerImpl();
 		return integer;
 	}
@@ -159,7 +160,7 @@ implements OCLforUMLFactory {
 	 * @generated
 	 */
 	@Override
-	public @NonNull Collection createCollection() {
+	public Collection createCollection() {
 		CollectionImpl collection = new CollectionImpl();
 		return collection;
 	}
@@ -170,7 +171,7 @@ implements OCLforUMLFactory {
 	 * @generated
 	 */
 	@Override
-	public @NonNull Collections createCollections() {
+	public Collections createCollections() {
 		CollectionsImpl collections = new CollectionsImpl();
 		return collections;
 	}
@@ -181,7 +182,7 @@ implements OCLforUMLFactory {
 	 * @generated
 	 */
 	@Override
-	public @NonNull FixedPoint createFixedPoint() {
+	public FixedPoint createFixedPoint() {
 		FixedPointImpl fixedPoint = new FixedPointImpl();
 		return fixedPoint;
 	}
@@ -192,7 +193,7 @@ implements OCLforUMLFactory {
 	 * @generated
 	 */
 	@Override
-	public @NonNull Real createReal() {
+	public Real createReal() {
 		RealImpl real = new RealImpl();
 		return real;
 	}
@@ -203,7 +204,7 @@ implements OCLforUMLFactory {
 	 * @generated
 	 */
 	@Override
-	public @NonNull FloatingPoint createFloatingPoint() {
+	public FloatingPoint createFloatingPoint() {
 		FloatingPointImpl floatingPoint = new FloatingPointImpl();
 		return floatingPoint;
 	}
@@ -214,7 +215,7 @@ implements OCLforUMLFactory {
 	 * @generated
 	 */
 	@Override
-	public @NonNull Validation createValidation() {
+	public Validation createValidation() {
 		ValidationImpl validation = new ValidationImpl();
 		return validation;
 	}
@@ -225,7 +226,7 @@ implements OCLforUMLFactory {
 	 * @generated
 	 */
 	@Override
-	public @NonNull Validations createValidations() {
+	public Validations createValidations() {
 		ValidationsImpl validations = new ValidationsImpl();
 		return validations;
 	}

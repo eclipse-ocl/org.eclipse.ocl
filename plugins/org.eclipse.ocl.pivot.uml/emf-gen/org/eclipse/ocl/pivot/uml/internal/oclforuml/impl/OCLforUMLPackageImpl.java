@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.ocl.pivot.uml.internal.oclforuml.BoundedInteger;
 import org.eclipse.ocl.pivot.uml.internal.oclforuml.Collection;
@@ -37,10 +38,8 @@ import org.eclipse.uml2.uml.UMLPackage;
  * <!-- end-user-doc -->
  * @generated
  */
-public class OCLforUMLPackageImpl
-		extends EPackageImpl
-		implements OCLforUMLPackage {
-
+public class OCLforUMLPackageImpl extends EPackageImpl implements OCLforUMLPackage
+{
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -133,7 +132,8 @@ public class OCLforUMLPackageImpl
 	 * @see #init()
 	 * @generated
 	 */
-	private OCLforUMLPackageImpl() {
+	private OCLforUMLPackageImpl()
+	{
 		super(eNS_URI, OCLforUMLFactory.eINSTANCE);
 	}
 
@@ -146,7 +146,7 @@ public class OCLforUMLPackageImpl
 
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-	 * 
+	 *
 	 * <p>This method is used to initialize {@link OCLforUMLPackage#eINSTANCE} when that field is accessed.
 	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
@@ -156,17 +156,20 @@ public class OCLforUMLPackageImpl
 	 * @see #initializePackageContents()
 	 * @generated
 	 */
-	public static OCLforUMLPackage init() {
+	public static OCLforUMLPackage init()
+	{
 		if (isInited) return (OCLforUMLPackage)EPackage.Registry.INSTANCE.getEPackage(OCLforUMLPackage.eNS_URI);
 
 		// Obtain or create and register package
-		Object ePackage = EPackage.Registry.INSTANCE.get(eNS_URI);
-		OCLforUMLPackageImpl theOCLforUMLPackage = (OCLforUMLPackageImpl)(ePackage instanceof OCLforUMLPackageImpl ? ePackage : new OCLforUMLPackageImpl());
+		Object registeredOCLforUMLPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+		OCLforUMLPackageImpl theOCLforUMLPackage = registeredOCLforUMLPackage instanceof OCLforUMLPackageImpl ? (OCLforUMLPackageImpl)registeredOCLforUMLPackage : new OCLforUMLPackageImpl();
 
 		isInited = true;
 
 		// Initialize simple dependencies
 		UMLPackage.eINSTANCE.eClass();
+		EcorePackage.eINSTANCE.eClass();
+		TypesPackage.eINSTANCE.eClass();
 
 		// Create package meta-data objects
 		theOCLforUMLPackage.createPackageContents();
@@ -177,7 +180,6 @@ public class OCLforUMLPackageImpl
 		// Mark meta-data to indicate it can't be changed
 		theOCLforUMLPackage.freeze();
 
-  
 		// Update the registry and return the package
 		EPackage.Registry.INSTANCE.put(OCLforUMLPackage.eNS_URI, theOCLforUMLPackage);
 		return theOCLforUMLPackage;
@@ -189,7 +191,8 @@ public class OCLforUMLPackageImpl
 	 * @generated
 	 */
 	@Override
-	public EClass getBoundedInteger() {
+	public EClass getBoundedInteger()
+	{
 		return boundedIntegerEClass;
 	}
 
@@ -199,7 +202,8 @@ public class OCLforUMLPackageImpl
 	 * @generated
 	 */
 	@Override
-	public EAttribute getBoundedInteger_Overflow() {
+	public EAttribute getBoundedInteger_Overflow()
+	{
 		return (EAttribute)boundedIntegerEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -209,7 +213,8 @@ public class OCLforUMLPackageImpl
 	 * @generated
 	 */
 	@Override
-	public EClass getInteger() {
+	public EClass getInteger()
+	{
 		return integerEClass;
 	}
 
@@ -219,7 +224,8 @@ public class OCLforUMLPackageImpl
 	 * @generated
 	 */
 	@Override
-	public EReference getInteger_Base_DataType() {
+	public EReference getInteger_Base_DataType()
+	{
 		return (EReference)integerEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -229,7 +235,8 @@ public class OCLforUMLPackageImpl
 	 * @generated
 	 */
 	@Override
-	public EAttribute getInteger_Maximum() {
+	public EAttribute getInteger_Maximum()
+	{
 		return (EAttribute)integerEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -239,7 +246,8 @@ public class OCLforUMLPackageImpl
 	 * @generated
 	 */
 	@Override
-	public EAttribute getInteger_Minimum() {
+	public EAttribute getInteger_Minimum()
+	{
 		return (EAttribute)integerEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -249,7 +257,8 @@ public class OCLforUMLPackageImpl
 	 * @generated
 	 */
 	@Override
-	public EClass getCollection() {
+	public EClass getCollection()
+	{
 		return collectionEClass;
 	}
 
@@ -259,7 +268,8 @@ public class OCLforUMLPackageImpl
 	 * @generated
 	 */
 	@Override
-	public EReference getCollection_Base_MultiplicityElement() {
+	public EReference getCollection_Base_MultiplicityElement()
+	{
 		return (EReference)collectionEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -269,7 +279,8 @@ public class OCLforUMLPackageImpl
 	 * @generated
 	 */
 	@Override
-	public EAttribute getCollection_IsNullFree() {
+	public EAttribute getCollection_IsNullFree()
+	{
 		return (EAttribute)collectionEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -279,7 +290,8 @@ public class OCLforUMLPackageImpl
 	 * @generated
 	 */
 	@Override
-	public EClass getCollections() {
+	public EClass getCollections()
+	{
 		return collectionsEClass;
 	}
 
@@ -289,7 +301,8 @@ public class OCLforUMLPackageImpl
 	 * @generated
 	 */
 	@Override
-	public EReference getCollections_Base_Class() {
+	public EReference getCollections_Base_Class()
+	{
 		return (EReference)collectionsEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -299,7 +312,8 @@ public class OCLforUMLPackageImpl
 	 * @generated
 	 */
 	@Override
-	public EReference getCollections_Base_Package() {
+	public EReference getCollections_Base_Package()
+	{
 		return (EReference)collectionsEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -309,7 +323,8 @@ public class OCLforUMLPackageImpl
 	 * @generated
 	 */
 	@Override
-	public EAttribute getCollections_IsNullFree() {
+	public EAttribute getCollections_IsNullFree()
+	{
 		return (EAttribute)collectionsEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -319,7 +334,8 @@ public class OCLforUMLPackageImpl
 	 * @generated
 	 */
 	@Override
-	public EClass getFixedPoint() {
+	public EClass getFixedPoint()
+	{
 		return fixedPointEClass;
 	}
 
@@ -329,7 +345,8 @@ public class OCLforUMLPackageImpl
 	 * @generated
 	 */
 	@Override
-	public EAttribute getFixedPoint_BitTrue() {
+	public EAttribute getFixedPoint_BitTrue()
+	{
 		return (EAttribute)fixedPointEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -339,7 +356,8 @@ public class OCLforUMLPackageImpl
 	 * @generated
 	 */
 	@Override
-	public EAttribute getFixedPoint_FractionalBits() {
+	public EAttribute getFixedPoint_FractionalBits()
+	{
 		return (EAttribute)fixedPointEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -349,7 +367,8 @@ public class OCLforUMLPackageImpl
 	 * @generated
 	 */
 	@Override
-	public EAttribute getFixedPoint_IntegerBits() {
+	public EAttribute getFixedPoint_IntegerBits()
+	{
 		return (EAttribute)fixedPointEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -359,7 +378,8 @@ public class OCLforUMLPackageImpl
 	 * @generated
 	 */
 	@Override
-	public EAttribute getFixedPoint_Overflow() {
+	public EAttribute getFixedPoint_Overflow()
+	{
 		return (EAttribute)fixedPointEClass.getEStructuralFeatures().get(3);
 	}
 
@@ -369,7 +389,8 @@ public class OCLforUMLPackageImpl
 	 * @generated
 	 */
 	@Override
-	public EAttribute getFixedPoint_Rounding() {
+	public EAttribute getFixedPoint_Rounding()
+	{
 		return (EAttribute)fixedPointEClass.getEStructuralFeatures().get(4);
 	}
 
@@ -379,7 +400,8 @@ public class OCLforUMLPackageImpl
 	 * @generated
 	 */
 	@Override
-	public EClass getReal() {
+	public EClass getReal()
+	{
 		return realEClass;
 	}
 
@@ -389,7 +411,8 @@ public class OCLforUMLPackageImpl
 	 * @generated
 	 */
 	@Override
-	public EReference getReal_Base_DataType() {
+	public EReference getReal_Base_DataType()
+	{
 		return (EReference)realEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -399,7 +422,8 @@ public class OCLforUMLPackageImpl
 	 * @generated
 	 */
 	@Override
-	public EAttribute getReal_Epsilon() {
+	public EAttribute getReal_Epsilon()
+	{
 		return (EAttribute)realEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -409,7 +433,8 @@ public class OCLforUMLPackageImpl
 	 * @generated
 	 */
 	@Override
-	public EAttribute getReal_Maximum() {
+	public EAttribute getReal_Maximum()
+	{
 		return (EAttribute)realEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -419,7 +444,8 @@ public class OCLforUMLPackageImpl
 	 * @generated
 	 */
 	@Override
-	public EAttribute getReal_Minimum() {
+	public EAttribute getReal_Minimum()
+	{
 		return (EAttribute)realEClass.getEStructuralFeatures().get(3);
 	}
 
@@ -429,7 +455,8 @@ public class OCLforUMLPackageImpl
 	 * @generated
 	 */
 	@Override
-	public EClass getFloatingPoint() {
+	public EClass getFloatingPoint()
+	{
 		return floatingPointEClass;
 	}
 
@@ -439,27 +466,8 @@ public class OCLforUMLPackageImpl
 	 * @generated
 	 */
 	@Override
-	public EAttribute getFloatingPoint_Overflow() {
-		return (EAttribute)floatingPointEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EAttribute getFloatingPoint_Rounding() {
-		return (EAttribute)floatingPointEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EAttribute getFloatingPoint_ExponentBits() {
+	public EAttribute getFloatingPoint_ExponentBits()
+	{
 		return (EAttribute)floatingPointEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -469,7 +477,8 @@ public class OCLforUMLPackageImpl
 	 * @generated
 	 */
 	@Override
-	public EAttribute getFloatingPoint_MantissaBits() {
+	public EAttribute getFloatingPoint_MantissaBits()
+	{
 		return (EAttribute)floatingPointEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -479,7 +488,30 @@ public class OCLforUMLPackageImpl
 	 * @generated
 	 */
 	@Override
-	public EClass getValidation() {
+	public EAttribute getFloatingPoint_Overflow()
+	{
+		return (EAttribute)floatingPointEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EAttribute getFloatingPoint_Rounding()
+	{
+		return (EAttribute)floatingPointEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EClass getValidation()
+	{
 		return validationEClass;
 	}
 
@@ -489,7 +521,8 @@ public class OCLforUMLPackageImpl
 	 * @generated
 	 */
 	@Override
-	public EReference getValidation_Base_InstanceSpecification() {
+	public EReference getValidation_Base_InstanceSpecification()
+	{
 		return (EReference)validationEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -499,7 +532,8 @@ public class OCLforUMLPackageImpl
 	 * @generated
 	 */
 	@Override
-	public EAttribute getValidation_Validate() {
+	public EAttribute getValidation_Validate()
+	{
 		return (EAttribute)validationEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -509,7 +543,8 @@ public class OCLforUMLPackageImpl
 	 * @generated
 	 */
 	@Override
-	public EClass getValidations() {
+	public EClass getValidations()
+	{
 		return validationsEClass;
 	}
 
@@ -519,7 +554,8 @@ public class OCLforUMLPackageImpl
 	 * @generated
 	 */
 	@Override
-	public EReference getValidations_Base_Package() {
+	public EReference getValidations_Base_Package()
+	{
 		return (EReference)validationsEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -529,7 +565,8 @@ public class OCLforUMLPackageImpl
 	 * @generated
 	 */
 	@Override
-	public EAttribute getValidations_ValidateInstanceSpecifications() {
+	public EAttribute getValidations_ValidateInstanceSpecifications()
+	{
 		return (EAttribute)validationsEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -539,7 +576,8 @@ public class OCLforUMLPackageImpl
 	 * @generated
 	 */
 	@Override
-	public EEnum getOverflow() {
+	public EEnum getOverflow()
+	{
 		return overflowEEnum;
 	}
 
@@ -549,7 +587,8 @@ public class OCLforUMLPackageImpl
 	 * @generated
 	 */
 	@Override
-	public EEnum getRounding() {
+	public EEnum getRounding()
+	{
 		return roundingEEnum;
 	}
 
@@ -559,7 +598,8 @@ public class OCLforUMLPackageImpl
 	 * @generated
 	 */
 	@Override
-	public OCLforUMLFactory getOCLforUMLFactory() {
+	public OCLforUMLFactory getOCLforUMLFactory()
+	{
 		return (OCLforUMLFactory)getEFactoryInstance();
 	}
 
@@ -577,7 +617,8 @@ public class OCLforUMLPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void createPackageContents() {
+	public void createPackageContents()
+	{
 		if (isCreated) return;
 		isCreated = true;
 
@@ -645,7 +686,8 @@ public class OCLforUMLPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void initializePackageContents() {
+	public void initializePackageContents()
+	{
 		if (isInitialized) return;
 		isInitialized = true;
 
@@ -738,14 +780,15 @@ public class OCLforUMLPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void createUMLAnnotations() {
-		String source = "http://www.eclipse.org/uml2/2.0.0/UML"; //$NON-NLS-1$	
+	protected void createUMLAnnotations()
+	{
+		String source = "http://www.eclipse.org/uml2/2.0.0/UML"; //$NON-NLS-1$
 		addAnnotation
-		  (this, 
-		   source, 
-		   new String[] 
+		  (this,
+		   source,
+		   new String[]
 		   {
-			 "originalName", "OCLforUML" //$NON-NLS-1$ //$NON-NLS-2$
+			   "originalName", "OCLforUML" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 	}
 

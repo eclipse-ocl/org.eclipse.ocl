@@ -26,7 +26,9 @@ import org.eclipse.emf.common.util.Enumerator;
  * @generated
  */
 public enum Rounding
-	implements Enumerator {
+		implements
+		Enumerator {
+
 	/**
 	 * The '<em><b>Nearest</b></em>' literal object.
 	 * <!-- begin-user-doc -->

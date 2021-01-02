@@ -26,7 +26,9 @@ import org.eclipse.emf.common.util.Enumerator;
  * @generated
  */
 public enum Overflow
-	implements Enumerator {
+		implements
+		Enumerator {
+
 	/**
 	 * The '<em><b>Invalid</b></em>' literal object.
 	 * <!-- begin-user-doc -->

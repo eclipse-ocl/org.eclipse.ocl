@@ -359,7 +359,7 @@ public class IntegerImpl
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
+		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (maximum: "); //$NON-NLS-1$
 		if (maximumESet) result.append(maximum); else result.append("<unset>"); //$NON-NLS-1$
 		result.append(", minimum: "); //$NON-NLS-1$

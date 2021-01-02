@@ -33,9 +33,8 @@ import org.eclipse.emf.ecore.EReference;
  *        annotation="http://www.eclipse.org/uml2/2.0.0/UML originalName='OCLforUML'"
  * @generated
  */
-public interface OCLforUMLPackage
-		extends EPackage {
-
+public interface OCLforUMLPackage extends EPackage
+{
 	/**
 	 * The package name.
 	 * <!-- begin-user-doc -->
@@ -673,6 +672,7 @@ public interface OCLforUMLPackage
 	 */
 	int ROUNDING = 10;
 
+
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.uml.internal.oclforuml.BoundedInteger <em>Bounded Integer</em>}'.
 	 * <!-- begin-user-doc -->
@@ -942,28 +942,6 @@ public interface OCLforUMLPackage
 	EClass getFloatingPoint();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.pivot.uml.internal.oclforuml.FloatingPoint#getOverflow <em>Overflow</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Overflow</em>'.
-	 * @see org.eclipse.ocl.pivot.uml.internal.oclforuml.FloatingPoint#getOverflow()
-	 * @see #getFloatingPoint()
-	 * @generated
-	 */
-	EAttribute getFloatingPoint_Overflow();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.pivot.uml.internal.oclforuml.FloatingPoint#getRounding <em>Rounding</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Rounding</em>'.
-	 * @see org.eclipse.ocl.pivot.uml.internal.oclforuml.FloatingPoint#getRounding()
-	 * @see #getFloatingPoint()
-	 * @generated
-	 */
-	EAttribute getFloatingPoint_Rounding();
-
-	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.pivot.uml.internal.oclforuml.FloatingPoint#getExponentBits <em>Exponent Bits</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -984,6 +962,28 @@ public interface OCLforUMLPackage
 	 * @generated
 	 */
 	EAttribute getFloatingPoint_MantissaBits();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.pivot.uml.internal.oclforuml.FloatingPoint#getOverflow <em>Overflow</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Overflow</em>'.
+	 * @see org.eclipse.ocl.pivot.uml.internal.oclforuml.FloatingPoint#getOverflow()
+	 * @see #getFloatingPoint()
+	 * @generated
+	 */
+	EAttribute getFloatingPoint_Overflow();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.pivot.uml.internal.oclforuml.FloatingPoint#getRounding <em>Rounding</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Rounding</em>'.
+	 * @see org.eclipse.ocl.pivot.uml.internal.oclforuml.FloatingPoint#getRounding()
+	 * @see #getFloatingPoint()
+	 * @generated
+	 */
+	EAttribute getFloatingPoint_Rounding();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.uml.internal.oclforuml.Validation <em>Validation</em>}'.
@@ -1091,8 +1091,8 @@ public interface OCLforUMLPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	interface Literals {
-
+	interface Literals
+	{
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.uml.internal.oclforuml.impl.BoundedIntegerImpl <em>Bounded Integer</em>}' class.
 		 * <!-- begin-user-doc -->
@@ -1308,22 +1308,6 @@ public interface OCLforUMLPackage
 		EClass FLOATING_POINT = eINSTANCE.getFloatingPoint();
 
 		/**
-		 * The meta object literal for the '<em><b>Overflow</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute FLOATING_POINT__OVERFLOW = eINSTANCE.getFloatingPoint_Overflow();
-
-		/**
-		 * The meta object literal for the '<em><b>Rounding</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute FLOATING_POINT__ROUNDING = eINSTANCE.getFloatingPoint_Rounding();
-
-		/**
 		 * The meta object literal for the '<em><b>Exponent Bits</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1338,6 +1322,22 @@ public interface OCLforUMLPackage
 		 * @generated
 		 */
 		EAttribute FLOATING_POINT__MANTISSA_BITS = eINSTANCE.getFloatingPoint_MantissaBits();
+
+		/**
+		 * The meta object literal for the '<em><b>Overflow</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute FLOATING_POINT__OVERFLOW = eINSTANCE.getFloatingPoint_Overflow();
+
+		/**
+		 * The meta object literal for the '<em><b>Rounding</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute FLOATING_POINT__ROUNDING = eINSTANCE.getFloatingPoint_Rounding();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.uml.internal.oclforuml.impl.ValidationImpl <em>Validation</em>}' class.
