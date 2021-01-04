@@ -124,7 +124,7 @@ then
 
     fi
 
-    mkdir ${buildFolder}/newlatest
+    mkdir -p ${buildFolder}/newlatest
     pushd ${buildFolder}/newlatest
       ${manageComposite} add -Dchild.repository=${latestRelativeReference} -Dcomposite.name="${projectRepoName} Latest ${PUBLISH__VERSION} ${buildRepoName} Repository"
     popd
