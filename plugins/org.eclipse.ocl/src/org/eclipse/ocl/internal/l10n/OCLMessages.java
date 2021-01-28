@@ -7,7 +7,7 @@
  *
  * Contributors:
  *   IBM - Initial API and implementation
- *   E.D.Willink - Bugs 176110, 191689 
+ *   E.D.Willink - Bugs 176110, 191689
  *   Zeligsoft - Bug 253512
  *   Borland - Bug 242880
  *******************************************************************************/
@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
 
 /**
  * An accessor class for externalized strings.
- * 
+ *
  * @author Christian Vogt (cvogt)
  */
 public class OCLMessages {
@@ -30,12 +30,12 @@ public class OCLMessages {
 
 	public static String no_message;
     public static String Input_ERROR_;
-    
+
     public static String EnvRegistry_missingClass_ERROR_;
     public static String EnvRegistry_missingNsURI_ERROR_;
     public static String EnvRegistry_unknownElement_ERROR_;
 
-    
+
 	public static String BindingExist_ERROR_;
 	public static String UnknownOperation_ERROR_;
 	public static String IteratorNotImpl_ERROR_;
@@ -90,22 +90,22 @@ public class OCLMessages {
 	public static String MissingTypeInTupleLiteralPart_ERROR_;
 	public static String TuplePartType_ERROR_;
 	public static String TypeConformanceTuplePartValue_ERROR_;
-	
+
 	public static String TypeConformanceTypeExp_ERROR_;
 	public static String TypeExpMissingType_ERROR_;
-	
+
 	public static String IllegalSignature_ERROR_;
 	public static String IteratorSource_ERROR_;
 	public static String IterateExpLoopVarInit_ERROR_;
 	public static String TooManyIteratorVariables_ERROR_;
-    
+
 	public static String IncompleteVariableExp_ERROR_;
 	public static String IncompleteLetExp_ERROR_;
 	public static String IncompleteIterateExp_ERROR_;
 	public static String IncompleteIfExp_ERROR_;
 	public static String IncompleteIteratorExp_ERROR_;
 	public static String MissingInitIterateExp_ERROR_;
-	
+
 	public static String ErrorMessage_ERROR_;
 	public static String ProblemMessage_ERROR_;
     public static String Severity_Cancel;
@@ -121,8 +121,8 @@ public class OCLMessages {
 	public static String Phase_Analyzer;
 	public static String Phase_Validator;
 	public static String Phase_Utility;
-	
-	
+
+
 	public static String VariableUsed_ERROR_;
 	public static String VariableDeclaration_ERROR_;
 	public static String OperationNotFound_ERROR_;
@@ -130,7 +130,7 @@ public class OCLMessages {
 	public static String PackageNotFound_ERROR_;
 	public static String UnrecognizedContext_ERROR_;
 	public static String PropertyConstraints_ERROR_;
-	
+
 	public static String BooleanForIf_ERROR_;
 	public static String VarInNavExp_ERROR_;
 	public static String UnrecognizedVar_ERROR_;
@@ -138,18 +138,19 @@ public class OCLMessages {
 	public static String DeclarationNoInitExp_ERROR_;
 	public static String DeclarationInitExp_ERROR_;
 	public static String UnrecognizedType_ERROR_;
-	
+	public static String UnrecognizedUMLType_ERROR_;
+
 	public static String DuplicateNameInTuple_ERROR_;
 	public static String InitExpNotAllowed_ERROR_;
 	public static String UnrecognizedEnum_ERROR_;
 	public static String FirstLastTypeMismatch_ERROR_;
-	
+
 	public static String NullArgExpectEObj_ERROR_;
 	public static String NullArgExpectlist_ERROR_;
 	public static String BooleanQuery_ERROR_;
-	
+
 	public static String EvaluationFailed_ERROR_;
-	
+
 	public static String Noncomforming_ERROR_;
 	public static String SourceEClass_ERROR_;
 	public static String SourceOperationCompareTo_ERROR_;
@@ -165,7 +166,7 @@ public class OCLMessages {
 	public static String TupleFieldNumMismatch_ERROR_;
 	public static String RemoveUnsupported_ERROR_;
 	public static String OCLCollectionKindNotImpl_ERROR_;
-	
+
 	public static String IsInStateSignature_ERROR_;
 	public static String NoSuchState_ERROR_;
 	public static String AmbiguousState_ERROR_;
@@ -178,7 +179,7 @@ public class OCLMessages {
 	public static String MissingSignalInCallAction_ERROR_;
 	public static String MessageArgumentCount_ERROR_;
 	public static String MessageArgConformance_ERROR_;
-	
+
 	public static String DefinitionConstraintFeature_ERROR_;
 	public static String DefinitionConstraintConformance_ERROR_;
 	public static String DuplicateProperty_ERROR_;
@@ -186,7 +187,7 @@ public class OCLMessages {
 	public static String UnimplementedStatic_ERROR_;
 	public static String DuplicateOperation_ERROR_;
 	public static String InitOrDerConstraintConformance_ERROR_;
-	
+
 	public static String IllegalAtPre_ERROR_;
 	public static String AtPreInPostcondition_ERROR_;
 	public static String BodyConditionNotAllowed_ERROR_;
@@ -198,7 +199,7 @@ public class OCLMessages {
 	public static String AssociationClassQualifierCount_ERROR_;
 	public static String AssociationClassQualifierType_ERROR_;
 	public static String AssociationClassAmbiguous_ERROR_;
-	
+
 	public static String WrongContextClassifier_ERROR_;
 	public static String BodyConditionForm_ERROR_;
 	public static String OperationConstraintBoolean_ERROR_;
@@ -210,10 +211,10 @@ public class OCLMessages {
     public static String MismatchedResultVariable_ERROR_;
     public static String MissingResultVariable_ERROR_;
     public static String MissingBodyExpression_ERROR_;
-    
+
     public static String NonStaticAttribute_ERROR_;
     public static String NonStaticOperation_ERROR_;
-    
+
 	public static String InvalidOCL_ERROR_;
 	public static String ParseCSTNodeType_ERROR_;
 
@@ -229,9 +230,9 @@ public class OCLMessages {
 	public static String OCLParseErrorCodes_SCOPE;
 	public static String OCLParseErrorCodes_EOF;
 	public static String OCLParseErrorCodes_INVALID_TOKEN;
-	
+
 	public static String ErrorReport_RowColumn;
-	
+
 	public static String Conceptual_Operation_Name_;
 	public static String NonStd_DQuote_Escape_;
 	public static String NonStd_SQuote_Escape_;
@@ -239,37 +240,37 @@ public class OCLMessages {
     public static String NonStd_Iterator_;
     public static String NonStd_InheritedFeatureContext_;
     public static String NonStd_CompareTo_;
-    
+
     public static String Ambig_AssocEnd_;
-    
+
     public static String StringNotProperlyClosed_ERROR;
     public static String InvalidEscapeSequence_ERROR;
-    
+
     public static String XorOrAndPrecedence_WARNING;
-	
-	public static String EvaluationResultIsInvalid_ERROR_;	
-	public static String MissingBodyForInvocationDelegate_ERROR_;	
-	public static String MissingDerivationForSettingDelegate_ERROR_;	
-	public static String ValidationConstraintIsNotBoolean_ERROR_;	
-	public static String ValidationResultIsInvalid_ERROR_;	
-	public static String ValidationResultIsNull_ERROR_;	
+
+	public static String EvaluationResultIsInvalid_ERROR_;
+	public static String MissingBodyForInvocationDelegate_ERROR_;
+	public static String MissingDerivationForSettingDelegate_ERROR_;
+	public static String ValidationConstraintIsNotBoolean_ERROR_;
+	public static String ValidationResultIsInvalid_ERROR_;
+	public static String ValidationResultIsNull_ERROR_;
 	public static String ValidationResultIsNotBoolean_ERROR_;
-	
+
 	public static String HiddenOppositeOf;
 
 	public static String NoOperationReflection_WARNING_;
 	public static String ExtraArg_ERROR_;
-	
+
 	private static IMessages messagesImpl;
-	
+
 	public static String bind(String message, Object arg) {
 		return messagesImpl.bind(message, arg);
 	}
-	
+
 	public static String bind(String message, Object arg1, Object arg2) {
 		return messagesImpl.bind(message, arg1, arg2);
 	}
-	
+
 	public static String bind(String message, Object[] args) {
 		return messagesImpl.bind(message, args);
 	}
@@ -285,7 +286,7 @@ public class OCLMessages {
 		} catch (Exception e) {
 			// expected in non-Eclipse environment
 		}
-		
+
 		if (messagesImpl == null) {
 			// could not find the NLS class.  Try initializing the messages,
 			//    ourselves
@@ -293,23 +294,23 @@ public class OCLMessages {
 			messagesImpl = new IMessages.Default();
 		}
 	}
-	
+
 	private static void initializeMessages() {
 		ResourceBundle bundle = ResourceBundle.getBundle(BUNDLE_NAME);
 		int publicStatic = Modifier.PUBLIC | Modifier.STATIC;
-		
+
 		Class<OCLMessages> clazz = OCLMessages.class;
-		
+
 		if (bundle != null) {
 			Field[] fields = clazz.getDeclaredFields();
-			
+
 			for (int i = 0; i < fields.length; i++) {
 				Field next = fields[i];
-				
+
 				if (((next.getModifiers() & publicStatic) == publicStatic)
 						&& (next.getType() == String.class)) {
 					String name = next.getName();
-					
+
 					try {
 						try {
 							next.set(null, bundle.getString(name));

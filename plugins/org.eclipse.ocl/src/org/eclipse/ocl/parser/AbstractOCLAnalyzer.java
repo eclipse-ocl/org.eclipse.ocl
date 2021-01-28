@@ -4,8 +4,8 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
- * Contributors: 
+ *
+ * Contributors:
  *   IBM - Initial API and implementation
  *   E.D.Willink - refactored to separate from OCLAnalyzer and OCLParser
  *               - Bugs 184048, 237126, 245586, 213886, 242236, 259818, 259819, 297541, 298128
@@ -155,10 +155,10 @@ import org.eclipse.ocl.utilities.UMLReflection;
  * AST. It is necessary that syntactic parsing and semantic analysis are
  * performed in two steps because LPG is a bottom up parser and cannot provide
  * enough contextual information to create the AST on the first pass.
- * 
+ *
  * Derived classes should extend the abstract support for EssentialOCL to full
  * support for whatever language in which EssentialOCL is embedded.
- * 
+ *
  * @since 1.2
  */
 public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E>
@@ -181,7 +181,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 	 * implicitly for a <code>-&gt;</code> set conversion. In this case,
 	 * if the single item evaluates to <code>null</code> it must not be
 	 * added to the resulting collection by an evaluator.
-	 * 
+	 *
 	 * @since 3.1
 	 */
 	public static final String IMPLICIT_SET_CONVERSION = "IMPLICIT_SET_CONVERSION"; //$NON-NLS-1$
@@ -208,10 +208,10 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 	/**
 	 * Creates/obtains the {@link OCLFactory} that I use to create OCL AST
 	 * elements.
-	 * 
+	 *
 	 * @param env
 	 *            my OCL environment
-	 * 
+	 *
 	 * @return an appropriate factory
 	 */
 	protected OCLFactory createOCLFactory(
@@ -253,7 +253,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 	/**
 	 * Returns true if the token kind is an identifier or keyword, otherwise
 	 * false.
-	 * 
+	 *
 	 * @param tokenKind
 	 *            the token kind to compare
 	 * @return true if the token kind is an identifier or keyword, otherwise
@@ -313,12 +313,12 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * Constructs the string representation of an operation call.
-	 * 
+	 *
 	 * @param operName
 	 *            the operation name
 	 * @param args
 	 *            the arguments in the operation call
-	 * 
+	 *
 	 * @return the string representation
 	 */
 	protected String operationString(
@@ -352,7 +352,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 	/**
 	 * Sets the specified navigation call's qualifiers, if they are compatible
 	 * with the navigated association end or association class.
-	 * 
+	 *
 	 * @param rule
 	 *            the rule name that parsed the qualifiers
 	 * @param nc
@@ -474,7 +474,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 	/**
 	 * Asserts that the specified association class is not a reflexive
 	 * association.
-	 * 
+	 *
 	 * @param env
 	 *            the current environment
 	 * @param rule
@@ -554,7 +554,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 	 * Generate an OperationCallExp node. operName is the input name of the
 	 * operation, which must be matched against the datatype of the operation
 	 * source.
-	 * 
+	 *
 	 * @param env
 	 *            the current environment
 	 * @param operationCallExpCS
@@ -654,12 +654,12 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * Analyzes a top-level document CS.
-	 * 
+	 *
 	 * @param documentCS
 	 *            the document
 	 * @param constraints
 	 *            the constraints list to populate
-	 * 
+	 *
 	 * @since 1.3
 	 */
 	protected void documentCS(OCLDocumentCS documentCS, List<CT> constraints) {
@@ -671,14 +671,14 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 	/**
 	 * Analyzes a package declaration in the context of the environment created
 	 * for an {@link OCLDocumentCS}.
-	 * 
+	 *
 	 * @param packageDeclarationCS
 	 *            the package declaration to analyze
 	 * @param env
 	 *            the OCL document environment in which to analyze it
 	 * @param constraints
 	 *            the constraints list to populate
-	 * 
+	 *
 	 * @since 1.3
 	 */
 	protected void packageDeclarationCS(
@@ -733,7 +733,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 	/**
 	 * Parses a top-level package declaration that is not nested in an
 	 * {@link OCLDocumentCS}.
-	 * 
+	 *
 	 * @param packageDeclarationCS
 	 *            the package declaration
 	 * @param constraints
@@ -748,7 +748,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * ContextDeclCS
-	 * 
+	 *
 	 * @param contextDeclCS
 	 *            the <code>ContextDeclCS</code> <code>CSTNode</code>
 	 * @param env
@@ -774,7 +774,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * OperationContextDeclCS
-	 * 
+	 *
 	 * @param operationContextDeclCS
 	 *            the <code>OperationContextDeclCS</code> <code>CSTNode</code>
 	 * @param env
@@ -804,7 +804,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * OperationCS
-	 * 
+	 *
 	 * @param operationCS
 	 *            the <code>OperationCS</code> <code>CSTNode</code>
 	 * @param env
@@ -937,7 +937,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * ParametersCS
-	 * 
+	 *
 	 * @param parameters
 	 *            the list of parameters as <code>VariableDeclarationCS</code>
 	 *            objects
@@ -953,7 +953,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * PrePostOrBodyDeclCS
-	 * 
+	 *
 	 * @param prePostOrBodyDeclCS
 	 *            the <code>PrePostOrBodyDeclCS</code> <code>CSTNode</code>
 	 * @param env
@@ -1104,14 +1104,14 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * PropertyContextCS
-	 * 
+	 *
 	 * @param propertyContextCS
 	 *            the <code>PropertyContextCS</code> <code>CSTNode</code>
 	 * @param env
 	 *            the package environment
 	 * @param constraints
 	 *            the constraints list to populate
-	 * 
+	 *
 	 * @return the context property, or <code>null</code> if it could not be
 	 *         resolved
 	 */
@@ -1167,7 +1167,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 		env = environmentFactory.createAttributeContext(env, property);
 
 		InitValueCS initCS = null;
-		DerValueCS derCS = null;	
+		DerValueCS derCS = null;
 		for (InitOrDerValueCS initOrDerValueCS : propertyContextCS.getConstraints()) {
 			if (initOrDerValueCS instanceof InitValueCS) {
 				if (initCS != null) {
@@ -1180,7 +1180,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 					initCS = (InitValueCS) initOrDerValueCS;
 					CT astNode = initOrDerValueCS(env, initOrDerValueCS);
 					constraints.add(astNode);
-				}					
+				}
 			}
 			else if (initOrDerValueCS instanceof DerValueCS) {
 				if (derCS != null) {
@@ -1193,7 +1193,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 					derCS = (DerValueCS) initOrDerValueCS;
 					CT astNode = initOrDerValueCS(env, initOrDerValueCS);
 					constraints.add(astNode);
-				}					
+				}
 			}
 		}
 		return property;
@@ -1221,7 +1221,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * InitOrDerValueCS
-	 * 
+	 *
 	 * @param initOrDerValueCS
 	 *            the <code>InitOrDerValueCS</code> <code>CSTNode</code>
 	 * @param env
@@ -1311,7 +1311,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * ClassifierContextDeclCS
-	 * 
+	 *
 	 * @param classifierContextDeclCS
 	 *            the <code>ClassifierContextDeclCS</code> <code>CSTNode</code>
 	 * @param env
@@ -1383,7 +1383,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * InvOrDefCS
-	 * 
+	 *
 	 * @param invOrDefCS
 	 *            the <code>InvOrDefCS</code> <code>CSTNode</code>
 	 * @param env
@@ -1411,7 +1411,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * InvCS
-	 * 
+	 *
 	 * @param invCS
 	 *            the <code>InvCS</code> <code>CSTNode</code>
 	 * @param env
@@ -1454,7 +1454,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * DefCS
-	 * 
+	 *
 	 * @param defCS
 	 *            the <code>DefCS</code> <code>CSTNode</code>
 	 * @param env
@@ -1568,7 +1568,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 					expression = oclExpressionCS(defExpr.getExpressionCS(),
 						contextEnv);
 				}
-				
+
 				if ((feature != null) && defCS.isStatic()) {
 					Boolean supportStatic = getEnvironment().getValue(
 						ParsingOptions.SUPPORT_STATIC_FEATURES);
@@ -1616,7 +1616,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * VariableDeclarationCS
-	 * 
+	 *
 	 * @param variableDeclarationCS
 	 *            the <code>VariableDeclarationCS</code> <code>CSTNode</code>
 	 * @param env
@@ -1691,7 +1691,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * VariableDeclarationListCS
-	 * 
+	 *
 	 * @param variableDeclarationCS
 	 *            list of <code>VariableDeclarationCS</code>s
 	 * @param env
@@ -1718,7 +1718,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * TypeCS
-	 * 
+	 *
 	 * @param typeCS
 	 *            the <code>TypeCS</code> <code>CSTNode</code>
 	 * @param env
@@ -1737,8 +1737,9 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 			EList<String> pathName = createSequenceOfNames((PathNameCS) typeCS, null);
 			astNode = lookupClassifier(typeCS, env, pathName);
 			if (astNode == null) {
+				String unrecognizedTypeMessage = getUnrecognizedTypeMessage(env, pathName);
 				String message = OCLMessages.bind(
-					OCLMessages.UnrecognizedType_ERROR_,
+					unrecognizedTypeMessage,
 					formatPath(pathName));
 				ERROR(typeCS, "typeCS", message);//$NON-NLS-1$
 				astNode = createDummyInvalidType(env, typeCS, message);
@@ -1759,7 +1760,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * stateExpCS
-	 * 
+	 *
 	 * @param source
 	 *            the source expression of the oclIsInState operation
 	 * @param stateExpCS
@@ -1808,7 +1809,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * CollectionTypeCS
-	 * 
+	 *
 	 * @param collectionTypeCS
 	 *            the <code>CollectionTypeCS</code> <code>CSTNode</code>
 	 * @param env
@@ -1833,7 +1834,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * CollectionTypeIdentifierCS
-	 * 
+	 *
 	 * @param collectionTypeIdentifier
 	 *            the <code>CollectionTypeIdentifierEnum</code> representing the
 	 *            collection type
@@ -1886,7 +1887,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * TupleTypeCS
-	 * 
+	 *
 	 * @param tupleTypeCS
 	 *            the <code>TupleTypeCS</code> <code>CSTNode</code>
 	 * @param env
@@ -1945,7 +1946,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * OCLExpressionCS
-	 * 
+	 *
 	 * @param oclExpressionCS
 	 *            the <code>OCLExpressionCS</code> <code>CSTNode</code>
 	 * @param env
@@ -1981,7 +1982,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * VariableExpCS
-	 * 
+	 *
 	 * @param variableExpCS
 	 *            the <code>VariableExpCS</code> <code>CSTNode</code>
 	 * @param env
@@ -2034,12 +2035,12 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 	/**
 	 * Queries whether the specified call expression is adorned with
 	 * <tt>{@literal @pre}</tt>.
-	 * 
+	 *
 	 * @param callExp
 	 *            a call expression
-	 * 
+	 *
 	 * @return whether the expression is marked pre
-	 * 
+	 *
 	 * @since 1.3
 	 */
 	protected boolean isAtPre(FeatureCallExpCS callExp) {
@@ -2050,29 +2051,29 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 	/**
 	 * Queries whether the specified variable expression is adorned with
 	 * <tt>{@literal @pre}</tt>.
-	 * 
+	 *
 	 * @param variableExp
 	 *            a variable expression
-	 * 
+	 *
 	 * @return whether the expression is marked pre
-	 * 
+	 *
 	 * @since 1.3
 	 */
 	protected boolean isAtPre(VariableExpCS variableExp) {
 		IsMarkedPreCS atPre = variableExp.getIsMarkedPreCS();
 		return atPre != null;
 	}
-	
+
 	/**
 	 * Creates a variable expression with the variable that it references.
-	 * 
+	 *
 	 * @param env
 	 *            the current parsing environment
 	 * @param cst
 	 *            the concrete syntax that produces the variable expression
 	 * @param var
 	 *            the referred variable
-	 * 
+	 *
 	 * @return the variable expression
 	 * @since 1.3
 	 */
@@ -2094,7 +2095,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * QualifiersCS
-	 * 
+	 *
 	 * @param arguments
 	 *            the <code>OCLExpressionCS</code> arguments list
 	 * @param env
@@ -2183,7 +2184,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * IfExpCS
-	 * 
+	 *
 	 * @param ifExpCS
 	 *            the <code>IfExpCS</code> <code>CSTNode</code>
 	 * @param env
@@ -2241,13 +2242,13 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * LetExpCS
-	 * 
+	 *
 	 * @param letExpCS
 	 *            the <code>LetExpCS</code> <code>CSTNode</code>
 	 * @param env
 	 *            the OCL environment
 	 * @return the parsed <code>LetExpCS</code>
-	 * 
+	 *
 	 * @deprecated Since 1.3, use {@link #letExp(LetExpCS, Environment)},
 	 *             instead.
 	 */
@@ -2261,14 +2262,14 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * LetExpCS
-	 * 
+	 *
 	 * @param letExpCS
 	 *            the <code>LetExpCS</code> <code>CSTNode</code>
 	 * @param env
 	 *            the OCL environment
-	 * 
+	 *
 	 * @return the parsed <code>LetExpCS</code>
-	 * 
+	 *
 	 * @since 1.3
 	 */
 	protected OCLExpression<C> letExp(LetExpCS letExpCS,
@@ -2279,7 +2280,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * Constructs the LetExp
-	 * 
+	 *
 	 * @param letExpCS
 	 *            the <code>LetExpCS</code> <code>CSTNode</code>
 	 * @param index
@@ -2339,7 +2340,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 	 * Parses a <tt>simpleNameCS</tt> token. This method is largely a
 	 * <i>template</i>, delegating to helpers that may be separately overridden
 	 * to resolve simple names to various kinds of expression.
-	 * 
+	 *
 	 * @param simpleNameCS
 	 *            the <code>simpleNameCS</code> <code>CSTNode</code>
 	 * @param env
@@ -2347,7 +2348,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 	 * @param source
 	 *            the source of the <code>simpleNameCS</code>
 	 * @return the parsed <code>OCLExpression</code>
-	 * 
+	 *
 	 * @see #simpleAssociationClassName(SimpleNameCS, Environment,
 	 *      OCLExpression, Object, String)
 	 * @see #simplePropertyName(SimpleNameCS, Environment, OCLExpression,
@@ -2456,7 +2457,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 	/**
 	 * Attempts to parse a <tt>simpleNameCS</tt> as an association-class call
 	 * expression.
-	 * 
+	 *
 	 * @param simpleNameCS
 	 *            the simple name
 	 * @param env
@@ -2471,9 +2472,9 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 	 *            the simple name, as a string
 	 * @return the parsed association-class call, or <code>null</code> if the
 	 *         simple name does not resolve to a related association class
-	 * 
+	 *
 	 * @see #simpleNameCS(SimpleNameCS, Environment, OCLExpression)
-	 * 
+	 *
 	 * @since 1.3
 	 */
 	protected AssociationClassCallExp<C, P> simpleAssociationClassName(
@@ -2541,7 +2542,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 	/**
 	 * Allows subclasses to return calls that are not necessarily a {@link PropertyCallExp} but some
 	 * other {@link NavigationCallExp}.
-	 * 
+	 *
 	 * @since 3.1
 	 */
 	protected NavigationCallExp<C, P> simpleNavigationName(
@@ -2553,7 +2554,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * Attempts to parse a <tt>simpleNameCS</tt> as a property call expression.
-	 * 
+	 *
 	 * @param simpleNameCS
 	 *            the simple name
 	 * @param env
@@ -2568,9 +2569,9 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 	 *            the simple name, as a string
 	 * @return the parsed property call, or <code>null</code> if the simple name
 	 *         does not resolve to an available property
-	 * 
+	 *
 	 * @see #simpleNameCS(SimpleNameCS, Environment, OCLExpression)
-	 * 
+	 *
 	 * @since 1.3
 	 */
 	protected PropertyCallExp<C, P> simplePropertyName(
@@ -2614,7 +2615,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 	 * inappropriate to attempt to resolve the simple name as a type expression.
 	 * Also, the referenced <code>classifier</code> may already be determined to
 	 * be a member of the OCL Standard Library.
-	 * 
+	 *
 	 * @param simpleNameCS
 	 *            the simple name
 	 * @param env
@@ -2629,9 +2630,9 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 	 *            the simple name, as a string
 	 * @return the parsed type expression, or <code>null</code> if the simple
 	 *         name does not resolve to an accessible type
-	 * 
+	 *
 	 * @see #simpleNameCS(SimpleNameCS, Environment, OCLExpression)
-	 * 
+	 *
 	 * @since 1.3
 	 */
 	protected TypeExp<C> simpleTypeName(SimpleNameCS simpleNameCS,
@@ -2669,7 +2670,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 	 * navigation <code>source</code>, if any, is provided for completeness and
 	 * generality. If there is a navigation source, then it is not usually
 	 * appropriate to attempt to resolve the simple name as a variable.
-	 * 
+	 *
 	 * @param simpleNameCS
 	 *            the simple name
 	 * @param env
@@ -2681,9 +2682,9 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 	 *            the simple name, as a string
 	 * @return the parsed variable call, or <code>null</code> if the simple name
 	 *         does not resolve to an accessible variable
-	 * 
+	 *
 	 * @see #simpleNameCS(SimpleNameCS, Environment, OCLExpression)
-	 * 
+	 *
 	 * @since 1.3
 	 */
 	protected VariableExp<C, PM> simpleVariableName(SimpleNameCS simpleNameCS,
@@ -2711,7 +2712,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 	 * cannot be resolved to any suitable expression. The result is a
 	 * {@linkplain #createDummyInvalidLiteralExp(Environment, CSTNode) dummy}
 	 * expression.
-	 * 
+	 *
 	 * @param simpleNameCS
 	 *            the simple name
 	 * @param env
@@ -2723,9 +2724,9 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 	 *            the simple name, as a string
 	 * @return the dummy expression that is a placeholder for the unresolved
 	 *         reference
-	 * 
+	 *
 	 * @see #simpleNameCS(SimpleNameCS, Environment, OCLExpression)
-	 * 
+	 *
 	 * @since 1.3
 	 */
 	protected OCLExpression<C> simpleUndefinedName(SimpleNameCS simpleNameCS,
@@ -2748,14 +2749,14 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 	/**
 	 * Creates an implicit <code>collect</code> iterator expression for a
 	 * property call on a collection-type source expression.
-	 * 
+	 *
 	 * @param source
 	 *            the property call source expression
 	 * @param propertyCall
 	 *            the property call expression
 	 * @param env
 	 *            the current environment
-	 * 
+	 *
 	 * @return the collect expression
 	 */
 	protected IteratorExp<C, PM> createImplicitCollect(OCLExpression<C> source,
@@ -2823,7 +2824,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * PrimitiveTypeCS
-	 * 
+	 *
 	 * @param simpleType
 	 *            the <code>SimpleTypeEnum</code> representing the primitive
 	 *            type
@@ -2877,7 +2878,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * PrimitiveLiteralExpCS
-	 * 
+	 *
 	 * @param primitiveLiteralExpCS
 	 *            the <code>PrimitiveLiteralExpCS</code> <code>CSTNode</code>
 	 * @param env
@@ -2912,7 +2913,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * IntegerLiteralExpCS
-	 * 
+	 *
 	 * @param integerLiteralExpCS
 	 *            the <code>IntegerLiteralExpCS</code> <code>CSTNode</code>
 	 * @param env
@@ -2936,7 +2937,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * UnlimitedNaturalLiteralExpCS
-	 * 
+	 *
 	 * @param unlimitedNaturalLiteralExpCS
 	 *            the <code>UnlimitedNaturalLiteralExpCS</code>
 	 *            <code>CSTNode</code>
@@ -2962,7 +2963,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * RealLiteralExpCS
-	 * 
+	 *
 	 * @param realLiteralExpCS
 	 *            the <code>RealLiteralExpCS</code> <code>CSTNode</code>
 	 * @param env
@@ -2985,7 +2986,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * StringLiteralExpCS
-	 * 
+	 *
 	 * @param stringLiteralExpCS
 	 *            the <code>StringLiteralExpCS</code> <code>CSTNode</code>
 	 * @param env
@@ -3008,7 +3009,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * BooleanLiteralExpCS
-	 * 
+	 *
 	 * @param booleanLiteralExpCS
 	 *            the <code>BooleanLiteralExpCS</code> <code>CSTNode</code>
 	 * @param env
@@ -3031,7 +3032,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * NullLiteralExpCS
-	 * 
+	 *
 	 * @param nullLiteralExpCS
 	 *            the <code>NullLiteralExpCS</code> <code>CSTNode</code>
 	 * @param env
@@ -3053,7 +3054,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * InvalidLiteralExpCS
-	 * 
+	 *
 	 * @param invalidLiteralExpCS
 	 *            the <code>InvalidLiteralExpCS</code> <code>CSTNode</code>
 	 * @param env
@@ -3075,7 +3076,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * LiteralExpCS
-	 * 
+	 *
 	 * @param literalExpCS
 	 *            the <code>LiteralExpCS</code> <code>CSTNode</code>
 	 * @param env
@@ -3109,7 +3110,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * TupleLiteralExpCS
-	 * 
+	 *
 	 * @param tupleLiteralExpCS
 	 *            the <code>TupleLiteralExpCS</code> <code>CSTNode</code>
 	 * @param env
@@ -3188,12 +3189,12 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * tupleLiteralPartListCS
-	 * 
+	 *
 	 * @param variableDeclarations
 	 *            list of <code>VariableDeclarationCS</code>es
 	 * @param env
 	 *            the OCL environment
-	 * 
+	 *
 	 * @return list of <code>TupleLiteralPart</code>s
 	 */
 	protected EList<TupleLiteralPart<C, P>> tupleLiteralPartListCS(
@@ -3212,7 +3213,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * tupleLiteralPartCS
-	 * 
+	 *
 	 * @param variableDeclarationCS
 	 *            the <code>VariableDeclarationCS</code> <code>CSTNode</code>
 	 * @param env
@@ -3257,7 +3258,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * EnumLiteralExpCS
-	 * 
+	 *
 	 * @param enumLiteralExpCS
 	 *            the <code>EnumLiteralExpCS</code> <code>CSTNode</code>
 	 * @param env
@@ -3279,7 +3280,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * CollectionLiteralExpCS
-	 * 
+	 *
 	 * @param collectionLiteralExpCS
 	 *            the <code>CollectionLiteralExpCS</code> <code>CSTNode</code>
 	 * @param env
@@ -3356,7 +3357,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * CollectionLiteralPartCS
-	 * 
+	 *
 	 * @param collectionLiteralPartCS
 	 *            the <code>CollectionLiteralPartCS</code> <code>CSTNode</code>
 	 * @param env
@@ -3423,7 +3424,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * PropertyCallExpCS
-	 * 
+	 *
 	 * @param propertyCallExpCS
 	 *            the <code>PropertyCallExpCS</code> <code>CSTNode</code>
 	 * @param env
@@ -3449,7 +3450,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * LoopExpCS
-	 * 
+	 *
 	 * @param loopExpCS
 	 *            the <code>LoopExpCS</code> <code>CSTNode</code>
 	 * @param env
@@ -3472,7 +3473,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * OCLExpressionCS
-	 * 
+	 *
 	 * @param oclExpressionCS
 	 *            the <code>OCLExpressionCS</code> <code>CSTNode</code>
 	 * @param env
@@ -3536,7 +3537,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * IteratorExpCS
-	 * 
+	 *
 	 * @param iteratorExpCS
 	 *            the <code>IteratorExpCS</code> <code>CSTNode</code>
 	 * @param env
@@ -3680,10 +3681,10 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 				if (bodyType instanceof CollectionType<?, ?>) {
 					@SuppressWarnings("unchecked")
 					CollectionType<C, O> ct = (CollectionType<C, O>) bodyType;
-	
+
 					bodyType = ct.getElementType();
 				}
-	
+
 				astNode.setType(getSetType(exprCS, env, bodyType));
 			}
 		}
@@ -3702,12 +3703,12 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 	/**
 	 * Ovverridden by subclasses to assign the AST Operation target for an
 	 * iterator reference from the CST. The default implementation does nothing.
-	 * 
+	 *
 	 * @param simpleNameCS
 	 *            the iterator name
 	 * @param env
 	 *            the current OCL environment
-	 * 
+	 *
 	 * @since 1.3
 	 */
 	protected void resolveIteratorOperation(SimpleNameCS simpleNameCS,
@@ -3717,7 +3718,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * IterateExpCS
-	 * 
+	 *
 	 * @param iterateExpCS
 	 *            the <code>IterateExpCS</code> <code>CSTNode</code>
 	 * @param env
@@ -3822,7 +3823,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * ModelPropertyCallExpCS
-	 * 
+	 *
 	 * @param modelPropertyCallExpCS
 	 *            the <code>ModelPropertyCallExpCS</code> <code>CSTNode</code>
 	 * @param env
@@ -3857,8 +3858,9 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 					C type = lookupClassifier(modelPropertyCallExpCS.getSimpleNameCS(), env,
 						sequenceOfNames);
 					if (type == null) {
+						String unrecognizedTypeMessage = getUnrecognizedTypeMessage(env, sequenceOfNames);
 						String message = OCLMessages.bind(
-							OCLMessages.UnrecognizedType_ERROR_, sequenceOfNames);
+							unrecognizedTypeMessage, sequenceOfNames);
 						ERROR(modelPropertyCallExpCS,
 							"enumerationOrClassLiteralExpCS", message);//$NON-NLS-1$
 					} else {
@@ -3950,9 +3952,9 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 				TRACE("enumerationOrClassLiteralExpCS", traceText); //$NON-NLS-1$
 
 				return astNode;
-				
+
 			}
-					
+
 			astNode = simpleNameCS(modelPropertyCallExpCS.getSimpleNameCS(),
 				env, source);
 
@@ -4007,7 +4009,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * OperationCallExpCS
-	 * 
+	 *
 	 * @param operationCallExpCS
 	 *            the <code>OperationCallExpCS</code> <code>CSTNode</code>
 	 * @param env
@@ -4133,7 +4135,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * OperationCallExpCS for an -&gt;
-	 * 
+	 *
 	 * @param operationCallExpCS
 	 *            the <code>OperationCallExpCS</code> <code>CSTNode</code>
 	 * @param env
@@ -4147,7 +4149,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 		OCLExpression<C> source = getCollectionSourceExpression(operationCallExpCS.getSource(), env);
 		List<OCLExpression<C>> args = argumentsCS(operationCallExpCS, env);
-		
+
 		String operationName = operationCallExpCS.getSimpleNameCS().getValue();
 		C operationSourceType = source.getType();
 		OperationCallExp<C, O> astNode = genOperationCallExp(env, operationCallExpCS,
@@ -4166,7 +4168,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 	}
 	/**
 	 * OperationCallExpCS for oclIsInState
-	 * 
+	 *
 	 * @param operationCallExpCS
 	 *            the <code>OperationCallExpCS</code> <code>CSTNode</code>
 	 * @param env
@@ -4225,7 +4227,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 		}
 		return astNode;
 	}
-	
+
 	/**
 	 * @since 3.0
 	 */
@@ -4240,8 +4242,9 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 	EList<String> pathNames = createSequenceOfNames(pathNameCS, null);
 	C sourceType = lookupClassifier(pathNameCS, env, pathNames);
 	if (sourceType == null) {
+		String unrecognizedTypeMessage = getUnrecognizedTypeMessage(env, pathNames);
 		String message = OCLMessages.bind(
-			OCLMessages.UnrecognizedType_ERROR_, pathNames);
+			unrecognizedTypeMessage, pathNames);
 		ERROR(operationCallExpCS, "operatonCallExpCS", message);//$NON-NLS-1$
 	} else {
 		source = typeCS(pathNameCS, env, sourceType);
@@ -4337,7 +4340,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * MessageExpCS
-	 * 
+	 *
 	 * @param messageExpCS
 	 *            the <code>MessageExpCS</code> <code>CSTNode</code>
 	 * @param env
@@ -4494,7 +4497,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 	 * Obtains the current environment's representation of the collection type
 	 * of the specified kind on the given element type. As a side-effect, the
 	 * specified CST note is linked to the result, as its AST node mapping.
-	 * 
+	 *
 	 * @param cstNode
 	 *            the concrete syntax of a collection-type reference
 	 * @param env
@@ -4503,9 +4506,9 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 	 *            the collection kind to retrieve
 	 * @param elementType
 	 *            the collection type's element type
-	 * 
+	 *
 	 * @return the current environment's matching collection type
-	 * 
+	 *
 	 * @since 1.3
 	 */
 	protected C getCollectionType(CSTNode cstNode,
@@ -4519,16 +4522,16 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 	/**
 	 * Obtains the current environment's representation of the collection type
 	 * of the specified kind on the given element type.
-	 * 
+	 *
 	 * @param env
 	 *            the current environment
 	 * @param kind
 	 *            the collection kind to retrieve
 	 * @param elementType
 	 *            the collection type's element type
-	 * 
+	 *
 	 * @return the current environment's matching collection type
-	 * 
+	 *
 	 * @deprecated Since 1.3, use the
 	 *             {@link #getCollectionType(CSTNode, Environment, CollectionKind, Object)}
 	 *             method, instead.
@@ -4579,7 +4582,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 	 * Obtains the type, in the current environment, of the specified property.
 	 * As a side-effect, the CST node is configured with traceability to the
 	 * resulting type and the referenced property.
-	 * 
+	 *
 	 * @param cstNode
 	 *            a property-call or property-context concrete syntax
 	 * @param env
@@ -4589,7 +4592,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 	 * @param property
 	 *            the referenced property
 	 * @return the property's type
-	 * 
+	 *
 	 * @since 1.3
 	 */
 	protected C getPropertyType(CSTNode cstNode,
@@ -4624,11 +4627,11 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 	 * for a (sub)expression that could not be parsed. The resulting expression
 	 * is {@linkplain #markAsErrorNode(TypedElement) marked} as an error
 	 * place-holder expression.
-	 * 
+	 *
 	 * @return the dummy invalid-literal expression
-	 * 
+	 *
 	 * @see #markAsErrorNode(TypedElement)
-	 * 
+	 *
 	 * @deprecated Use the
 	 *             {@link #createDummyInvalidLiteralExp(Environment, CSTNode)}
 	 *             method, instead
@@ -4648,17 +4651,17 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 	 * for a (sub)expression that could not be parsed. The resulting expression
 	 * is {@linkplain #markAsErrorNode(TypedElement) marked} as an error
 	 * place-holder expression.
-	 * 
+	 *
 	 * @param env
 	 *            the contextual parsing environment
 	 * @param cstNode
 	 *            the concrete-syntax node that could not be analyzed
-	 * 
+	 *
 	 * @return the dummy invalid-literal expression
-	 * 
+	 *
 	 * @see #markAsErrorNode(TypedElement)
 	 * @see #createDummyInvalidLiteralExp()
-	 * 
+	 *
 	 * @since 1.3
 	 */
 	protected InvalidLiteralExp<C> createDummyInvalidLiteralExp(
@@ -4673,7 +4676,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 	/**
 	 * Return the type used to terminate the AST reference from cstNode that
 	 * failed to be resolved due to message.
-	 * 
+	 *
 	 * @param env
 	 *            the current OCL parsing environment
 	 * @param cstNode
@@ -4681,9 +4684,9 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 	 * @param message
 	 *            the reason for the failure to resolve. Subclasses may choose
 	 *            to log this message in some way
-	 * 
+	 *
 	 * @return the dummy Invalid type
-	 * 
+	 *
 	 * @since 1.3
 	 */
 	protected C createDummyInvalidType(
@@ -4699,14 +4702,14 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 	 * PackageDeclarationCS. This default implementation simply returns
 	 * <code>null</code>. Subclasses may override to create a more interesting
 	 * package.
-	 * 
+	 *
 	 * @param env
 	 *            the current OCL parsing environment
 	 * @param packageDeclarationCS
 	 *            the concrete syntax of the package declaration
-	 * 
+	 *
 	 * @return the dumy package, or <code>null</code> if non is required
-	 * 
+	 *
 	 * @since 1.3
 	 */
 	protected Object createDummyPackage(
@@ -4726,14 +4729,14 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 	 * should override if necessary, in conjunction with the
 	 * {@link #markAsErrorNode(TypedElement)} method.
 	 * </p>
-	 * 
+	 *
 	 * @param expr
 	 *            a (sub)expression
 	 * @return whether the <tt>expr</tt> is a placeholder for an unparseable
 	 *         (sub)expression
-	 * 
+	 *
 	 * @see #markAsErrorNode(TypedElement)
-	 * 
+	 *
 	 * @since 1.2
 	 */
 	protected boolean isErrorNode(TypedElement<C> expr) {
@@ -4752,13 +4755,13 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 	 * The default implementation does nothing; subclasses should override if
 	 * necessary, in conjunction with the <tt>isErrorPlaceholder</tt> method.
 	 * </p>
-	 * 
+	 *
 	 * @param expr
 	 *            an expression that takes the place of a (sub)expression that
 	 *            could not be parsed
-	 * 
+	 *
 	 * @see #isErrorNode(TypedElement)
-	 * 
+	 *
 	 * @since 1.2
 	 */
 	protected void markAsErrorNode(TypedElement<C> expr) {
@@ -4773,6 +4776,18 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 		EnvironmentFactory.Lookup<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> lookup = OCLUtil
 			.getAdapter(environmentFactory, EnvironmentFactory.Lookup.class);
 		return lookup.tryCreatePackageContext(parent, packageName);
+	}
+
+	/**
+	 * Return the error mrssage template for a type name lookup failure.
+	 *
+	 * This may be overridden in accordance with Bug 570598 to provide a better error message for the user
+	 * who is attempting to use Classic OCL in an unsupported context.
+	 *
+	 * @since 3.16
+	 */
+	protected String getUnrecognizedTypeMessage(Environment<PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E> env, List<String> pathNames) {
+		return OCLMessages.UnrecognizedType_ERROR_;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -4918,7 +4933,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * Creates an <tt>ExpressionInOcl</tt> instance. Subclasses may override.
-	 * 
+	 *
 	 * @return an new expression-in-OCL
 	 */
 	protected ExpressionInOCL<C, PM> createExpressionInOCL() {
@@ -4927,7 +4942,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 
 	/**
 	 * Creates an <tt>Constraint</tt> instance. Subclasses may override.
-	 * 
+	 *
 	 * @return an new constraint
 	 */
 	protected CT createConstraint() {
@@ -4940,7 +4955,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 	 * messages exploiting the CST context, or to support incremental AST/CST
 	 * update. Any pre-existing mapping is preserved. Mappings involving a null
 	 * object are ignored.
-	 * 
+	 *
 	 * @param env
 	 *            the current OCL parsing environment
 	 * @param astNode
@@ -4962,7 +4977,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 	 * update. Any pre-existing mapping is preserved. Each mapping involving a
 	 * null object is ignored, so that for instance the toAstNode may be set
 	 * null to establish only the fromAstNode to cstNode mapping.
-	 * 
+	 *
 	 * @param env
 	 *            the current OCL parsing environment
 	 * @param fromAstNode
@@ -4972,7 +4987,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 	 *            CST-to-AST mapping
 	 * @param toAstNode
 	 *            the target of the CST-to-AST mapping
-	 * 
+	 *
 	 * @since 1.3
 	 */
 	protected void initASTMapping(
@@ -5000,7 +5015,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 	/**
 	 * Queries whether the specified name is escaped with an initial underscore
 	 * (<code>'_'</code>) character.
-	 * 
+	 *
 	 * @param name
 	 *            a name
 	 * @return whether it begins with the underscore escape prefix
@@ -5013,7 +5028,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 	 * Obtains the unescaped name (assuming that it
 	 * {@linkplain #isEscaped(String) is escaped}) for another attempt to look
 	 * it up.
-	 * 
+	 *
 	 * @param name
 	 *            an OCL-escaped name
 	 * @return the unescaped name
@@ -5025,12 +5040,12 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 	/**
 	 * Checks whether the names are equal, accounting for possibility of
 	 * underscore-escaped names.
-	 * 
+	 *
 	 * @param name
 	 *            a possibly underscore-escaped name
 	 * @param elementName
 	 *            name of an element in the model
-	 * 
+	 *
 	 * @return whether the element name is equivalent to this name
 	 */
 	public static boolean equalName(String name, String elementName) {

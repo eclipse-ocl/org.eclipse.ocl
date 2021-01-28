@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.ocl.ecore.parser;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EEnumLiteral;
@@ -19,6 +22,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.LookupException;
 import org.eclipse.ocl.cst.CSTNode;
@@ -34,6 +38,7 @@ import org.eclipse.ocl.expressions.OCLExpression;
 import org.eclipse.ocl.expressions.PropertyCallExp;
 import org.eclipse.ocl.expressions.Variable;
 import org.eclipse.ocl.expressions.VariableExp;
+import org.eclipse.ocl.internal.l10n.OCLMessages;
 import org.eclipse.ocl.parser.AbstractOCLParser;
 
 /**
@@ -55,10 +60,10 @@ public class OCLAnalyzer
 			String input) {
 		super(rootEnvironment, input);
 	}
-	
+
 	/**
 	 * Attempts to parse a <tt>simpleNameCS</tt> as a property call expression.
-	 * 
+	 *
 	 * @param simpleNameCS
 	 *            the simple name
 	 * @param env
@@ -73,7 +78,7 @@ public class OCLAnalyzer
 	 *            the simple name, as a string
 	 * @return the parsed property call, or <code>null</code> if the simple name
 	 *         does not resolve to an available property
-	 * 
+	 *
 	 * @see #simpleNameCS(SimpleNameCS, Environment, OCLExpression)
 	 */
 	@Override
@@ -160,6 +165,29 @@ public class OCLAnalyzer
 
 		initPropertyPositions(result, simpleNameCS);
 		return result;
+	}
+
+	/**
+	 * In accordance with Bug 570598, provide a better error message for the user who is attempting to use
+	 * Classic OCL to evaluate an expression such as oclIsKindf(UML::Comment) and finding that the UML2Ecore
+	 * generator corrupted the spelling of UML in Ecore.
+	 */
+	@Override
+	protected String getUnrecognizedTypeMessage(Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env, List<String> pathNames) {
+		String trueUMLname = "UML"; //$NON-NLS-1$
+		if ((pathNames.size() >= 1) && trueUMLname.equals(pathNames.get(0))) {
+			String corruptUMLname = "uml"; //$NON-NLS-1$
+			EPackage umlPackage = env.lookupPackage(Collections.singletonList(corruptUMLname));
+			if (umlPackage != null) {
+				String originalNameSource = "http://www.eclipse.org/uml2/2.0.0/UML"; //$NON-NLS-1$
+				String originalNameDetail = "originalName"; //$NON-NLS-1$
+				String originalName = EcoreUtil.getAnnotation(umlPackage, originalNameSource, originalNameDetail);
+				if (trueUMLname.equals(originalName)) {
+					return OCLMessages.UnrecognizedUMLType_ERROR_;
+				}
+			}
+		}
+		return OCLMessages.UnrecognizedType_ERROR_;
 	}
 
 	/**
