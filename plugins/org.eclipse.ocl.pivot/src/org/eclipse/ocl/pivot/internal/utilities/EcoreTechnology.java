@@ -14,6 +14,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
@@ -27,7 +28,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 public class EcoreTechnology extends AbstractTechnology
 {
 	public static final @NonNull EcoreTechnology INSTANCE = new EcoreTechnology();
-	
+
 	protected EcoreTechnology() {}
 
 	@Override
@@ -37,8 +38,8 @@ public class EcoreTechnology extends AbstractTechnology
 
 	@Override
 	public RootPackageId getMetamodelId(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull EPackage ePackage) {
-		assert !"http://www.eclipse.org/uml2/5.0.0/UML".equals(ePackage.getNsURI());
-		assert !"http://www.eclipse.org/uml2/5.0.0/Types".equals(ePackage.getNsURI());
+		// assert !"http://www.eclipse.org/uml2/5.0.0/UML".equals(ePackage.getNsURI()); -- occurs for static profile
+		// assert !"http://www.eclipse.org/uml2/5.0.0/Types".equals(ePackage.getNsURI());
 		RootPackageId metamodel = null;
 		if (ClassUtil.basicGetMetamodelAnnotation(ePackage) != null) {
 			metamodel = IdManager.METAMODEL;
@@ -72,11 +73,15 @@ public class EcoreTechnology extends AbstractTechnology
 	@Override
 	public boolean isStereotype(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull EClass eClass) {
 		for (EStructuralFeature eFeature : eClass.getEAllStructuralFeatures()) {
-			EClassifier eType = eFeature.getEType();
-			if (eType != null) {
-				assert !eType.eIsProxy() : "Unresolved proxy: '" + EcoreUtil.getURI(eType) + "'";
-				EPackage ePackage = eType.getEPackage();
-				assert !"http://www.eclipse.org/uml2/5.0.0/UML".equals(ePackage.getNsURI());
+			if ((eFeature instanceof EReference) && eFeature.getName().startsWith("base_")) {
+				EClassifier eType = eFeature.getEType();
+				if (eType != null) {
+					assert !eType.eIsProxy() : "Unresolved proxy: '" + EcoreUtil.getURI(eType) + "'";
+					EPackage ePackage = eType.getEPackage();
+					if ("http://www.eclipse.org/uml2/5.0.0/UML".equals(ePackage.getNsURI())) {
+						return true;
+					}
+				}
 			}
 		}
 		return false;
