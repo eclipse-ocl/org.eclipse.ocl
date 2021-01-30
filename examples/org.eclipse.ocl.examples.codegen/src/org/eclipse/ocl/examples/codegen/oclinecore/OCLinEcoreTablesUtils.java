@@ -341,9 +341,9 @@ public class OCLinEcoreTablesUtils
 			return name;
 		}
 
-		public @NonNull List<String> getClassReferences() {
+		public @NonNull List<@NonNull String> getClassReferences() {
 			//	List<String> names = new ArrayList<>(classReferences.values());
-			List<String> names = new ArrayList<>(importNameManager.getLong2ShortImportNames().keySet());
+			List<@NonNull String> names = new ArrayList<>(importNameManager.getLong2ShortImportNames().keySet());
 			Collections.sort(names);
 			return names;
 		}

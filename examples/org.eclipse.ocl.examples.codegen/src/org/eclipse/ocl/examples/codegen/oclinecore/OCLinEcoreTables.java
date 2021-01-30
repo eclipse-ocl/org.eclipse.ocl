@@ -1224,6 +1224,8 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 
 	@Override
 	public @NonNull String toString() {
+		String tablesPackageName = getTablesPackageName();
+		int tablesPackageNameLength = tablesPackageName.length();
 		String copyright = genPackage.getCopyright(" * ");
 		StringBuilder s1 = new StringBuilder();
 		s1.append("/*******************************************************************************\n");
@@ -1248,11 +1250,14 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s1.append(" *******************************************************************************/\n");
 
 		s1.append("package ");
-		s1.append(getTablesPackageName());
+		s1.append(tablesPackageName);
 		s1.append(";\n");
 
 		s1.append("\n");
-		for (String classReference : s.getClassReferences()) {
+		for (@NonNull String classReference : s.getClassReferences()) {
+			if (classReference.startsWith(tablesPackageName) && (classReference.indexOf('.', tablesPackageNameLength+1) < 0)) {
+				s1.append("// ");
+			}
 			s1.append("import ");
 			s1.append(classReference);
 			s1.append(";\n");
