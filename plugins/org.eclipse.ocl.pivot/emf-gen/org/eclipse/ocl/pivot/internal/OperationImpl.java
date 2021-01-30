@@ -1593,7 +1593,7 @@ implements Operation {
 		for (int i = 0; i < iMax; i++) {
 			Type parameterType = ownedParameter.get(i).getType();
 			assert parameterType != null;
-			types[i] = parameterType;
+			types[i] = PivotUtil.getBehavioralReturnType(parameterType);
 		}
 		return TypeUtil.createParameterTypes(types);
 	}

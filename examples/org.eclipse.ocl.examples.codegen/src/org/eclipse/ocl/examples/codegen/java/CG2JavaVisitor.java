@@ -11,8 +11,6 @@
 package org.eclipse.ocl.examples.codegen.java;
 
 import java.lang.reflect.Method;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -22,7 +20,6 @@ import java.util.Set;
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
 import org.eclipse.emf.codegen.ecore.genmodel.GenParameter;
 import org.eclipse.emf.codegen.util.CodeGenUtil;
-import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -1559,8 +1556,8 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		if (!js.appendLocalStatements(boxedValue)) {
 			return false;
 		}
-		EClassifier eClassifier = cgEcoreExp.getEClassifier();
-		if (eClassifier != null) {
+	/*	EClassifier eClassifier = cgEcoreExp.getEClassifier();
+		if (eClassifier != null) {		// FIXME ignores Collections
 			Class<?> ecoreClass = eClassifier.getInstanceClass();
 			if (ecoreClass != null) {
 				String functionName = null;
@@ -1606,7 +1603,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 					return true;
 				}
 			}
-		}
+		} */
 		//		return boxedTypeDescriptor.getEcoreDescriptor(context, null).appendEcore(js, localContext2, cgEcoreExp, boxedValue);
 		return boxedTypeDescriptor.appendEcoreStatements(js, localContext2, cgEcoreExp, boxedValue);
 	}

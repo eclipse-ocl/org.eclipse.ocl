@@ -77,9 +77,10 @@ public class UnboxedMapDescriptor extends /*AbstractCollectionDescriptor*/Abstra
 	}
 
 	@Override
-	public @NonNull Boolean appendEcore(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext, @NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement nonEcoreValue) {
-		// FIXME It seems unliklely that weshould ever want to create an EMap. Rather we might want to unbox a MapValue into an existing EMap.
-		return super.appendEcore(js, localContext, cgEcoreExp, nonEcoreValue);
+	public @NonNull Boolean appendEcore(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext, @NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement unboxedValue) {
+		// FIXME It seems unlikely that we should ever want to create an EMap. Rather we might want to unbox a MapValue into an existing EMap.
+		// return appendEcoreLegacy(js, localContext, cgEcoreExp, unboxedValue);
+		throw new UnsupportedOperationException("UnboxedMapDescriptor::appendEcore");
 	}
 
 	@Override
@@ -103,8 +104,7 @@ public class UnboxedMapDescriptor extends /*AbstractCollectionDescriptor*/Abstra
 	}
 
 	@Override
-	@NonNull
-	public Class<?> getJavaClass() {
+	public @NonNull Class<?> getJavaClass() {
 		return Object.class;
 	}
 

@@ -4,11 +4,14 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.java.types;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.jdt.annotation.NonNull;
@@ -36,9 +39,9 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
  */
 public class BoxedValuesDescriptor extends AbstractValueDescriptor implements BoxedDescriptor
 {
-	private /*@LazyNonNull*/ CollectionDescriptor unboxedDescriptor;
-	private /*@LazyNonNull*/ CollectionDescriptor ecoreDescriptor;
-	
+	private /*@LazyNonNull*/ UnboxedDescriptor unboxedDescriptor;
+	private /*@LazyNonNull*/ Map</*@NonNull*/ Class<?>, @NonNull EcoreDescriptor> javaClass2ecoreDescriptor;
+
 	public BoxedValuesDescriptor(@NonNull CollectionTypeId elementId, @NonNull Class<?> javaClass) {
 		super(elementId, javaClass);
 	}
@@ -59,7 +62,7 @@ public class BoxedValuesDescriptor extends AbstractValueDescriptor implements Bo
 			js.append(".asEcoreObjects(");
 			js.appendReferenceTo(localContext.getIdResolverVariable(cgUnboxExp));
 			js.append(", ");
-			unboxedDescriptor.appendElement(js, true);
+			((CollectionDescriptor)unboxedDescriptor).appendElement(js, true);
 			js.append(".class);\n");
 			//
 			js.append("assert ");
@@ -81,24 +84,28 @@ public class BoxedValuesDescriptor extends AbstractValueDescriptor implements Bo
 
 	@Override
 	public @NonNull EcoreDescriptor getEcoreDescriptor(@NonNull CodeGenerator codeGenerator, @Nullable Class<?> instanceClass) {
-		CollectionDescriptor ecoreDescriptor2 = ecoreDescriptor;
-		if (ecoreDescriptor2 == null) {
-			Type type;
-			CollectionTypeId id = (CollectionTypeId)elementId;
-			TypeId typeId = id.getElementTypeId();
-			TypeId generalizedId = id.getGeneralizedId();
+		Map</*@NonNull*/ Class<?>, @NonNull EcoreDescriptor> javaClass2ecoreDescriptor2 = javaClass2ecoreDescriptor;
+		if (javaClass2ecoreDescriptor2 == null) {
+			javaClass2ecoreDescriptor2 = javaClass2ecoreDescriptor = new HashMap<>();
+		}
+		EcoreDescriptor ecoreDescriptor = javaClass2ecoreDescriptor2.get(instanceClass);
+		if (ecoreDescriptor == null) {
+			CollectionTypeId collectionTypeId = (CollectionTypeId)elementId;
+			TypeId elementTypeId = collectionTypeId.getElementTypeId();
+			TypeId generalizedId = collectionTypeId.getGeneralizedId();
 			EnvironmentFactoryInternal environmentFactory = codeGenerator.getEnvironmentFactory();
 			IdResolver idResolver = environmentFactory.getIdResolver();
-			if (generalizedId == id) {
-				type = idResolver.getClass(id, null);
+			Type type;
+			if (generalizedId == collectionTypeId) {
+				type = idResolver.getClass(collectionTypeId, null);
 			}
-			else if (typeId instanceof TemplateParameterId) {
+			else if (elementTypeId instanceof TemplateParameterId) {
 				CollectionType collectionType = (CollectionType) idResolver.getClass(generalizedId, null);
 				type = collectionType.getElementType();
 				assert type != null;
 			}
 			else {
-				type = idResolver.getClass(typeId, null);
+				type = idResolver.getClass(elementTypeId, null);
 			}
 /*			EClassifier eClassifier = getEClassifier(environmentFactory.getMetamodelManager(), type);
 			if (eClassifier != null) {
@@ -117,18 +124,19 @@ public class BoxedValuesDescriptor extends AbstractValueDescriptor implements Bo
 					}
 				}
 			} */
-//			if (ecoreDescriptor2 == null) {
-				ecoreDescriptor2 = new EcoreListDescriptor(id, environmentFactory.getStandardLibrary(), type);
-//			}
-			ecoreDescriptor = ecoreDescriptor2;
+			EcoreDescriptor rawEcoreElementTypeDescriptor = codeGenerator.getEcoreDescriptor(elementTypeId, instanceClass);
+			Class<?> templateElementInstanceJavaClass = rawEcoreElementTypeDescriptor.getNonPrimitiveJavaClass();
+			@NonNull EcoreDescriptor nonPrimitiveEcoreElementTypeDescriptor2 = codeGenerator.getEcoreDescriptor(elementTypeId, templateElementInstanceJavaClass);
+			ecoreDescriptor = new EcoreListDescriptor(collectionTypeId, environmentFactory.getStandardLibrary(), type, nonPrimitiveEcoreElementTypeDescriptor2);
+			javaClass2ecoreDescriptor2.put(instanceClass, ecoreDescriptor);
 		}
-		return (EcoreDescriptor) ecoreDescriptor2;
+		return ecoreDescriptor;
 	}
 
 
 	@Override
 	public @NonNull UnboxedDescriptor getUnboxedDescriptor(@NonNull CodeGenerator codeGenerator) {
-		CollectionDescriptor unboxedDescriptor2 = unboxedDescriptor;
+		UnboxedDescriptor unboxedDescriptor2 = unboxedDescriptor;
 		if (unboxedDescriptor2 == null) {
 			org.eclipse.ocl.pivot.Class type;
 			CollectionTypeId id = (CollectionTypeId)elementId;

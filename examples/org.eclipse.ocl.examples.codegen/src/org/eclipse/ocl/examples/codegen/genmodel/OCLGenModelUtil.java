@@ -65,6 +65,20 @@ public abstract class OCLGenModelUtil
 	public static final @NonNull String VISITABLE_CLASSES = "Visitable Classes";
 	public static final @NonNull String VISITABLE_INTERFACE = "Visitable Interface";
 
+	private static final GeneratorAdapterFactory.Descriptor UML_DESCRIPTOR1 = new GeneratorAdapterFactory.Descriptor() {
+		@Override
+		public GeneratorAdapterFactory createAdapterFactory() {
+			return new org.eclipse.uml2.codegen.ecore.genmodel.generator.GenModelGeneratorAdapterFactory();
+		}
+	};
+
+	private static final GeneratorAdapterFactory.Descriptor UML_DESCRIPTOR2 = new GeneratorAdapterFactory.Descriptor() {
+		@Override
+		public GeneratorAdapterFactory createAdapterFactory() {
+			return new org.eclipse.uml2.codegen.ecore.genmodel.generator.UML2GenModelGeneratorAdapterFactory();
+		}
+	};
+
 	public static @NonNull String atNonNull(@NonNull GenModel genModel) {
 		GenAnnotation genAnnotation = genModel.getGenAnnotation(OCLinEcoreGenModelGeneratorAdapter.OCL_GENMODEL_URI);
 		if (genAnnotation != null) {
@@ -259,6 +273,10 @@ public abstract class OCLGenModelUtil
 				registry.addDescriptor(GenModelPackage.eNS_URI, descriptor);
 			}
 		}
+		String umlGenModelNsURI = org.eclipse.uml2.codegen.ecore.genmodel.GenModelPackage.eNS_URI;
+		registry.addDescriptor(umlGenModelNsURI, UML_DESCRIPTOR1);
+		registry.addDescriptor(umlGenModelNsURI, UML_DESCRIPTOR2);
+		registry.addDescriptor(umlGenModelNsURI, OCLinEcoreGeneratorAdapterFactory.DESCRIPTOR);
 	}
 
 	public static boolean isGenerateClassifierInts(@NonNull GenModel genModel) {

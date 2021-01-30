@@ -13,6 +13,7 @@ package org.eclipse.ocl.examples.codegen.java.types;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBoxExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.JavaLocalContext;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
@@ -41,5 +42,18 @@ public class BooleanPrimitiveDescriptor extends AbstractPrimitiveDescriptor
 	public void appendCast(@NonNull JavaStream js, @Nullable Boolean isRequired, @Nullable Class<?> actualJavaClass, @NonNull SubStream subStream) {
 		appendCast(js, actualJavaClass, subStream);
 		js.append(".booleanValue()");
+	}
+
+	@Override
+	public @NonNull Boolean appendEcore(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext, @NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement unboxedValue) {
+		js.appendDeclaration(cgEcoreExp);
+		js.append(" = ");
+		assert unboxedValue.isNonNull();
+//		js.appendClassReference(null, ValueUtil.class);
+//		js.append(".intValueOf(");
+		js.appendReferenceTo(unboxedValue);
+//		js.append(");\n");
+		js.append(";\n");
+		return true;
 	}
 }

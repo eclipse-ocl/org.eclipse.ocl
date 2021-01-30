@@ -77,10 +77,10 @@ public class Orphanage extends PackageImpl
 	 * WeakEList enables a WeakHashMap to be used as a Package.ownedType. The weakness allows stale synthesized types to vanish.
 	 * The Map ensures that duplicates are avoided.
 	 * <br>
-	 * Only the minimal suupport necessary to make aType.setPackage() and subsequent usage is provided.
+	 * Only the minimal support necessary to make aType.setPackage() and subsequent usage is provided.
 	 * <br>
 	 * A cached sorted list copy of the map is created on demand and may be shared by multiple iterators. However it must not be modified
-	 * since its staleness is detectesd by a simple size comparison with the map.
+	 * since its staleness is detected by a simple size comparison with the map.
 	 */
 	private static class WeakEList<T> extends AbstractEList<T> implements InternalEList<T>
 	{

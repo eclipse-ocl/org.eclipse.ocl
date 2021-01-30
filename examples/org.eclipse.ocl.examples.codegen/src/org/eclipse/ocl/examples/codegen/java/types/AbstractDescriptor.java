@@ -154,8 +154,9 @@ public abstract class AbstractDescriptor implements TypeDescriptor
 		js.appendReferenceTo(cgElement);
 	}
 
-	@Override
-	public @NonNull Boolean appendEcore(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext, @NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement unboxedValue) {
+	@Deprecated		// This generic code used to be inherited as appendEcore
+	protected @NonNull Boolean appendEcoreLegacy(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext, @NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement unboxedValue) {
+
 		TypeId typeId = unboxedValue.getASTypeId();
 		js.appendDeclaration(cgEcoreExp);
 		js.append(" = ");
@@ -240,7 +241,10 @@ public abstract class AbstractDescriptor implements TypeDescriptor
 	@Override
 	public @NonNull Boolean appendEcoreStatements(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext,
 			@NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement boxedValue) {
-		return getEcoreDescriptor(js.getCodeGenerator(), null).appendEcore(js, localContext, cgEcoreExp, boxedValue);
+		EClassifier eClassifier = cgEcoreExp.getEClassifier();
+		Class<?> ecoreClass = eClassifier != null ? eClassifier.getInstanceClass() : null;
+		EcoreDescriptor ecoreDescriptor = getEcoreDescriptor(js.getCodeGenerator(), ecoreClass);
+		return ecoreDescriptor.appendEcore(js, localContext, cgEcoreExp, boxedValue);
 		/*		UnboxedDescriptor unboxedTypeDescriptor = getUnboxedDescriptor(js.getCodeGenerator());
 		CollectionDescriptor collectionDescriptor = unboxedTypeDescriptor.asCollectionDescriptor();
 		if (collectionDescriptor != null) {
@@ -374,6 +378,11 @@ public abstract class AbstractDescriptor implements TypeDescriptor
 
 	public @NonNull ElementId getElementId() {
 		return elementId;
+	}
+
+//	@Override
+	public @NonNull Class<?> getNonPrimitiveJavaClass() {
+		return getJavaClass(); // throw new UnsupportedOperationException(); //
 	}
 
 	@Override

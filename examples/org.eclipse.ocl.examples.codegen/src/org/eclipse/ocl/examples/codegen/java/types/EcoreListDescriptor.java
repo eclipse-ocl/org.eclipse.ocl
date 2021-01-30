@@ -30,26 +30,26 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 public class EcoreListDescriptor extends AbstractCollectionDescriptor implements EcoreDescriptor, UnboxedDescriptor
 {
 	protected final @NonNull StandardLibrary standardLibrary;
-	protected final @NonNull Type type;
+	protected final @NonNull Type elementType;
+	protected final @NonNull EcoreDescriptor ecoreElementTypeDescriptor;
 
-	public EcoreListDescriptor(@NonNull CollectionTypeId collectionTypeId, @NonNull StandardLibrary standardLibrary, @NonNull Type type) {
+	public EcoreListDescriptor(@NonNull CollectionTypeId collectionTypeId, @NonNull StandardLibrary standardLibrary, @NonNull Type elementType, @NonNull EcoreDescriptor ecoreElementTypeDescriptor) {
 		super(collectionTypeId);
 		this.standardLibrary = standardLibrary;
-		this.type = type;
+		this.elementType = elementType;
+		this.ecoreElementTypeDescriptor = ecoreElementTypeDescriptor;
 	}
 
 	@Override
 	public void append(@NonNull JavaStream js, @Nullable Boolean isRequired) {
-		BoxedDescriptor elementTypeDescriptor = js.getCodeGenerator().getBoxedDescriptor(((CollectionTypeId)elementId).getElementTypeId());
-		js.appendClassReference(isRequired, /*E*/List.class, false, elementTypeDescriptor);
+		js.appendClassReference(isRequired, /*E*/List.class, false, ecoreElementTypeDescriptor);
 	}
 
 	@Override
 	public void appendEcoreValue(@NonNull JavaStream js, @NonNull String requiredClassName, @NonNull CGValuedElement cgValue) {
 		if (requiredClassName.startsWith(EList.class.getName())) {
-			BoxedDescriptor boxedElementDescriptor = js.getCodeGenerator().getBoxedDescriptor(type.getTypeId());
 			js.append("(");
-			js.appendClassReference(null, EList.class, false, boxedElementDescriptor);
+			js.appendClassReference(null, EList.class, false, ecoreElementTypeDescriptor);
 			js.append(")");
 		}
 		js.appendValueName(cgValue);
@@ -62,7 +62,7 @@ public class EcoreListDescriptor extends AbstractCollectionDescriptor implements
 
 	@Override
 	public @NonNull String getClassName() {
-		return ClassUtil.nonNullModel(type.getName());
+		return ClassUtil.nonNullModel(elementType.getName());
 	}
 
 	@Override
@@ -92,12 +92,12 @@ public class EcoreListDescriptor extends AbstractCollectionDescriptor implements
 		if (!(typeDescriptor instanceof EcoreListDescriptor)) {
 			return false;
 		}
-		Type thatType = ((EcoreListDescriptor)typeDescriptor).type;
-		return thatType.conformsTo(standardLibrary, type);
+		Type thatType = ((EcoreListDescriptor)typeDescriptor).elementType;
+		return thatType.conformsTo(standardLibrary, elementType);
 	}
 
 	@Override
 	public @NonNull String toString() {
-		return elementId + " => /*E*/List<Object/*" + type.getName() + "*/>";
+		return elementId + " => EList<Object/*" + elementType.getName() + "*/>";
 	}
 }

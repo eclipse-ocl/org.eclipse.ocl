@@ -114,6 +114,7 @@ import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorManager;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreReflectiveType;
 import org.eclipse.ocl.pivot.internal.manager.PivotExecutorManager;
+import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
@@ -125,8 +126,10 @@ import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.messages.StatusCodes.Severity;
 import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.resource.CSResource;
+import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.Unlimited;
+import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 public class PivotUtil
 {
@@ -1023,7 +1026,28 @@ public class PivotUtil
 	 * @since 1.7
 	 */
 	public static @NonNull Type getBehavioralType(@NonNull Type type) {
-		if (type instanceof DataType) {
+		if (type instanceof CollectionType) {
+			CollectionType asCollectionType = (CollectionType)type;
+			Type asElementType = asCollectionType.getElementType();
+			if (asElementType != null) {
+				Type asBehavioralType = getBehavioralType(asElementType);
+				if (asBehavioralType != asElementType) {
+					ResourceSet resourceSet = asCollectionType.eResource().getResourceSet();
+					if (resourceSet != null) {
+						PivotMetamodelManager metamodelManager = PivotMetamodelManager.findAdapter(resourceSet);
+						if (metamodelManager != null) {
+							CollectionType unspecializedElement = (CollectionType)asCollectionType.getUnspecializedElement();
+							assert unspecializedElement != null;
+							boolean isNullFree = asCollectionType.isIsNullFree();
+							IntegerValue lowerValue = asCollectionType.getLowerValue();
+							UnlimitedNaturalValue upperValue = asCollectionType.getUpperValue();
+							return metamodelManager.getCompleteEnvironment().getCollectionType(unspecializedElement, asBehavioralType, isNullFree, lowerValue, upperValue);
+						}
+					}
+				}
+			}
+		}
+		else if (type instanceof DataType) {
 			DataType asDataType = (DataType)type;
 			Type resolvedClass = asDataType.getBehavioralClass();
 			if (resolvedClass != null) {

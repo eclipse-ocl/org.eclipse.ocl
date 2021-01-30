@@ -75,4 +75,9 @@ public abstract class AbstractPrimitiveDescriptor extends SimpleValueDescriptor 
 		js.appendValueName(thatValue);
 		//		super.appendEqualsValue(js, thisValue, thatValue, notEquals);
 	}
+
+	@Override
+	public @NonNull Class<?> getNonPrimitiveJavaClass() {
+		return nonPrimitiveJavaClass;
+	}
 }

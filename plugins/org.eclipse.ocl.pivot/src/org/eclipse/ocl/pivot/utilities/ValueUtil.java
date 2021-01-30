@@ -439,6 +439,18 @@ public abstract class ValueUtil
 		}
 	}
 
+	/**
+	 * @since 1.14
+	 */
+	public static char charValueOf(@Nullable Object anObject) {
+		if (anObject instanceof Number) {
+			return (char)((Number)anObject).intValue();
+		}
+		else {
+			throw new InvalidValueException(PivotMessages.InvalidInteger, anObject);
+		}
+	}
+
 	@SuppressWarnings("null")
 	public static @NonNull Character characterValueOf(@NonNull Object anObject) {
 		if (anObject instanceof Character) {

@@ -45,6 +45,24 @@
           <body>Enumeration1::EnumerationLiteral2</body>
         </defaultValue>
       </ownedAttribute>
+      <ownedAttribute xmi:id="_LZFa0GK3EeutDq-J8nQl6w" name="int0" isReadOnly="true" isDerived="true">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_LZFa0WK3EeutDq-J8nQl6w"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_LZFa0mK3EeutDq-J8nQl6w" value="1"/>
+        <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_dPjGEGK3EeutDq-J8nQl6w">
+          <language>OCL</language>
+          <body>5</body>
+        </defaultValue>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_ixj9IGK3EeutDq-J8nQl6w" name="int1" isReadOnly="true" isDerived="true">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_ixj9IWK3EeutDq-J8nQl6w"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ixj9ImK3EeutDq-J8nQl6w" value="*"/>
+        <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_ixj9I2K3EeutDq-J8nQl6w">
+          <language>OCL</language>
+          <body>Set{5}</body>
+        </defaultValue>
+      </ownedAttribute>
     </packagedElement>
     <packagedElement xmi:type="uml:Stereotype" xmi:id="_ov85AGEIEeu3-bh5n6XVFQ" name="Depends">
       <ownedRule xmi:id="_7jolAGEJEeu3-bh5n6XVFQ" name="client_is_Stereotype1">

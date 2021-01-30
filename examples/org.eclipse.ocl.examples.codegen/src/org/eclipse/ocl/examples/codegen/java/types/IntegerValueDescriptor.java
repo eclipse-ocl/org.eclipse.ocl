@@ -11,13 +11,11 @@
 package org.eclipse.ocl.examples.codegen.java.types;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGUnboxExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.JavaLocalContext;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.pivot.ids.ElementId;
-import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 
 /**
@@ -29,7 +27,7 @@ public class IntegerValueDescriptor extends BoxedValueDescriptor
 		super(elementId, IntegerValue.class);
 	}
 
-	@Override
+/*	@Override
 	public @NonNull Boolean appendEcore(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext, @NonNull CGEcoreExp cgEcoreExp,
 			@NonNull CGValuedElement unboxedValue) {
 		js.appendDeclaration(cgEcoreExp);
@@ -44,7 +42,7 @@ public class IntegerValueDescriptor extends BoxedValueDescriptor
 		js.append(")");
 		js.append(";\n");
 		return true;
-	}
+	} */
 
 	@Override
 	public @NonNull Boolean appendUnboxStatements(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext,

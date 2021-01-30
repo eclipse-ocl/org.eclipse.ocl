@@ -28,7 +28,7 @@ import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
  * <p>
  * There is no EClassifier available to perform type conformance checks since thie Java class name was provided as an instanceClassName.
  */
-public class FutureEnumerationValueDescriptor extends BoxedValueDescriptor //implements EcoreDescriptor
+public class FutureEnumerationValueDescriptor extends BoxedValueDescriptor implements EcoreDescriptor
 {
 	protected final @NonNull EClassifier eClassifier;
 	protected final @NonNull String className;
@@ -47,6 +47,14 @@ public class FutureEnumerationValueDescriptor extends BoxedValueDescriptor //imp
 	@Override
 	public @NonNull Boolean appendEcoreStatements(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext,
 			@NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement boxedValue) {
+		EClassifier eClassifier = cgEcoreExp.getEClassifier();
+		Class<?> ecoreClass = eClassifier != null ? eClassifier.getInstanceClass() : null;
+		EcoreDescriptor ecoreDescriptor = getEcoreDescriptor(js.getCodeGenerator(), ecoreClass);
+	//	return ecoreDescriptor.appendEcore(js, localContext, cgEcoreExp, boxedValue);
+
+
+
+
 		js.appendDeclaration(cgEcoreExp);
 		js.append(" = (");
 		js.appendClassReference(null, className);
@@ -56,6 +64,23 @@ public class FutureEnumerationValueDescriptor extends BoxedValueDescriptor //imp
 		js.appendClassReference(null, Enumerator.class);
 		js.append(".class, ");
 		js.appendValueName(boxedValue);
+		js.append(");\n");
+		return true;
+	}
+
+	@Override
+	public @NonNull Boolean appendEcore(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext,
+			@NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement unboxedValue) {
+//		return super.appendEcore(js, localContext, cgEcoreExp, unboxedValue);
+		js.appendDeclaration(cgEcoreExp);
+		js.append(" = (");
+		js.appendClassReference(null, className);
+		js.append(")");
+		js.appendReferenceTo(localContext.getIdResolverVariable(cgEcoreExp));
+		js.append(".ecoreValueOf(");
+		js.appendClassReference(null, Enumerator.class);
+		js.append(".class, ");
+		js.appendValueName(unboxedValue);
 		js.append(");\n");
 		return true;
 	}

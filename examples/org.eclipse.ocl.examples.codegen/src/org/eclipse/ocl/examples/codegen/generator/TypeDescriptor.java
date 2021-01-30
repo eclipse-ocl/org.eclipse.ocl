@@ -48,13 +48,6 @@ public interface TypeDescriptor
 	void appendCast(@NonNull JavaStream js, @Nullable Boolean isRequired, @Nullable Class<?> actualJavaClass, @NonNull SubStream subStream);
 
 	/**
-	 * Append a conversion to an Ecore value.
-	 */
-	@NonNull Boolean appendEcore(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext,
-			@NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement ecoreValue);
-
-
-	/**
 	 * Append a cgElement to js wrapped in a cast to this type
 	 */
 	void appendCastTerm(@NonNull JavaStream js, @NonNull CGValuedElement cgElement);

@@ -514,17 +514,22 @@ public class JavaStream
 	}
 	public void appendClassReference(@Nullable Boolean isRequired, @Nullable Class<?> javaClass) {
 		if (javaClass != null) {
-			appendClassReference(isRequired, javaClass.getName());
-			TypeVariable<?>[] typeParameters = javaClass.getTypeParameters();
-			if (typeParameters.length > 0) {
-				append("<");
-				for (int i = 0; i < typeParameters.length; i++) {
-					if (i != 0) {
-						append(",");
+			if (JavaCodeGenerator.javaPrimitiveClasses.containsKey(javaClass)) {
+				append(javaClass.getName());
+			}
+			else {
+				appendClassReference(isRequired, javaClass.getName());
+				TypeVariable<?>[] typeParameters = javaClass.getTypeParameters();
+				if (typeParameters.length > 0) {
+					append("<");
+					for (int i = 0; i < typeParameters.length; i++) {
+						if (i != 0) {
+							append(",");
+						}
+						append("?");
 					}
-					append("?");
+					append(">");
 				}
-				append(">");
 			}
 		}
 		else {
@@ -690,7 +695,14 @@ public class JavaStream
 	}
 
 	public void appendDeclaration(@NonNull CGValuedElement cgElement) {
-		boxedTypeRepresentation.appendDeclaration(cgElement);
+		TypeDescriptor javaTypeDescriptor = codeGenerator.getTypeDescriptor(cgElement);
+		TypeRepresentation typeRepresentation = boxedTypeRepresentation;
+		if (cgElement.isEcore()) {
+			typeRepresentation = boxedTypeRepresentation;
+		}
+		typeRepresentation.appendDeclaration(cgElement);
+	//	typeRepresentation.appendTypeDeclaration(cgElement);
+	//	javaTypeDescriptor.append
 	}
 
 	/**
