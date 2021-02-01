@@ -338,8 +338,17 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 						Type actualType = ownedTemplateParameterSubstitution.getActual();
 						if (actualType != null) {
 							actualType = specializeType(actualType);
-							templateArguments.add(actualType);
 						}
+						else {
+							TemplateParameter formalParameter = ownedTemplateParameterSubstitution.getFormal();
+							if (formalParameter != null) {
+								actualType = PivotUtil.basicGetLowerBound(formalParameter);
+							}
+						}
+						if (actualType == null) {
+							actualType = metamodelManager.getStandardLibrary().getOclAnyType();
+						}
+						templateArguments.add(actualType);
 					}
 				}
 				return metamodelManager.getLibraryType(unspecializedType, templateArguments);

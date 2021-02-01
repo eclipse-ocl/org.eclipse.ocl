@@ -1361,7 +1361,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 			return libraryType;
 		}
 		if (templateArguments.size() != templateParameters.size()) {
-			throw new IllegalArgumentException("Incorrect template bindings for template type");
+			throw new IllegalArgumentException("Incorrect template bindings for template type " + libraryType.getName());
 		}
 		boolean isUnspecialized = isUnspecialized(templateParameters, templateArguments);
 		if (isUnspecialized) {
