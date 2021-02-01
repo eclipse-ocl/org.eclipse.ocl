@@ -624,11 +624,14 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				+ "    datatype ENumber : 'java.lang.Number' { serializable };\n"
 				+ "    class EcoreLists\n"
 				+ "    {\n"
-/*				+ "        attribute eBigDecimal : ecore::EBigDecimal { derived readonly volatile } { derivation: negEBigDecimal(1); }\n"
+				+ "        attribute eBigDecimal : ecore::EBigDecimal { derived readonly volatile } { derivation: negEBigDecimal(1); }\n"
+				+ "        attribute eBigDecimals : ecore::EBigDecimal[*] { derived readonly volatile } { derivation: negEBigDecimals(Set{1}); }\n"
 				+ "        attribute eBigInteger : ecore::EBigInteger { derived readonly volatile } { derivation: negEBigInteger(1); }\n"
-				+ "        attribute eBooleanObject : ecore::EBooleanObject { derived readonly volatile } { derivation: notEBooleanObject(true); }\n"
+				+ "        attribute eBigIntegers : ecore::EBigInteger[*] { derived readonly volatile } { derivation: negEBigIntegers(Set{1}); }\n"
 				+ "        attribute eBoolean : ecore::EBoolean { derived readonly volatile } { derivation: notEBoolean(true); }\n"
-*/
+				+ "        attribute eBooleans : ecore::EBoolean[*] { derived readonly volatile } { derivation: notEBooleans(Set{true}); }\n"
+				+ "        attribute eBooleanObject : ecore::EBooleanObject { derived readonly volatile } { derivation: notEBooleanObject(true); }\n"
+				+ "        attribute eBooleanObjects : ecore::EBooleanObject[*] { derived readonly volatile } { derivation: notEBooleanObjects(Set{true}); }\n"
 				+ "        attribute eChar : ecore::EChar { derived readonly volatile } { derivation: negEChar(1); }\n"
 				+ "        attribute eChars : ecore::EChar[*] { derived readonly volatile } { derivation: negEChars(Set{1}); }\n"
 				+ "        attribute eCharacterObject : ecore::ECharacterObject { derived readonly volatile } { derivation: negECharacterObject(1); }\n"
@@ -654,12 +657,18 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				+ "        attribute eShortObject : ecore::EShortObject { derived readonly volatile } { derivation: negEShortObject(1); }\n"
 				+ "        attribute eShortObjects : ecore::EShortObject[*] { derived readonly volatile } { derivation: negEShortObjects(Set{1}); }\n"
 				//			+ "        attribute eNumber : ENumber { derived readonly volatile } { derivation: negENumber(ENumber{'1'}); }\n"
-/*				+ "        attribute eString : ecore::EString { derived readonly volatile } { derivation: upCase('abc'); }\n"
+				+ "        attribute eString : ecore::EString { derived readonly volatile } { derivation: upCase('abc'); }\n"
+				+ "        attribute eStrings : ecore::EString[*] { derived readonly volatile } { derivation: upCases(Set{'abc'}); }\n"
 				+ "        operation negEBigDecimal(b : ecore::EBigDecimal) : ecore::EBigDecimal { body: -b; }\n"
+				+ "        operation negEBigDecimals(b : ecore::EBigDecimal[*]) : ecore::EBigDecimal[*] { body: b->collect(e | -e)->asSet(); }\n"
 				+ "        operation negEBigInteger(b : ecore::EBigInteger) : ecore::EBigInteger { body: -b; }\n"
-*/
+				+ "        operation negEBigIntegers(b : ecore::EBigInteger[*]) : ecore::EBigInteger[*] { body: b->collect(e | -e)->asSet(); }\n"
+				+ "        operation notEBoolean(b : ecore::EBoolean) : ecore::EBoolean { body: not b; }\n"
+				+ "        operation notEBooleans(b : ecore::EBoolean[*]) : ecore::EBoolean[*] { body: b->collect(e | not e)->asSet(); }\n"
+				+ "        operation notEBooleanObject(b : ecore::EBooleanObject) : ecore::EBooleanObject { body: not b; }\n"
+				+ "        operation notEBooleanObjects(b : ecore::EBooleanObject[*]) : ecore::EBooleanObject[*] { body: b->collect(e | not e)->asSet(); }\n"
 				+ "        operation negEChar(b : ecore::EChar) : ecore::EChar { body: -b; }\n"
-				+ "        operation negEChars(b : ecore::EChar[*]) : ecore::EChar[*] { body: b->collect(e | -e)->asSet(); }\n"
+				+ "        operation negEChars(b : ecore::EChar[*]) : ecore::EChar[*] { body: b->collect(e | (-e).oclAsType(ecore::EChar))->asSet(); }\n"
 				+ "        operation negECharacterObject(b : ecore::ECharacterObject) : ecore::ECharacterObject { body: -b; }\n"
 				+ "        operation negECharacterObjects(b : ecore::ECharacterObject[*]) : ecore::ECharacterObject[*] { body: b->collect(e | -e)->asSet(); }\n"
 				+ "        operation negEDouble(b : ecore::EDouble) : ecore::EDouble { body: -b; }\n"
@@ -683,10 +692,9 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				+ "        operation negEShortObject(b : ecore::EShortObject) : ecore::EShortObject { body: -b; }\n"
 				+ "        operation negEShortObjects(b : ecore::EShortObject[*]) : ecore::EShortObject[*] { body: b->collect(e | -e)->asSet(); }\n"
 				//			+ "        operation negENumber(b : ENumber) : ENumber { body: (-(b.oclAsType(Integer))).oclAsType(ENumber); }\n"
-/*				+ "        operation notEBoolean(b : ecore::EBoolean) : ecore::EBoolean { body: not b; }\n"
-				+ "        operation notEBooleanObject(b : ecore::EBooleanObject) : ecore::EBooleanObject { body: not b; }\n"
 				+ "        operation upCase(b : ecore::EString) : ecore::EString { body: b.toUpper(); }\n"
-*/				+ "    }\n" + "}\n";
+				+ "        operation upCases(b : ecore::EString[*]) : ecore::EString[*] { body: b->collect(e | e.toUpper())->asSet(); }\n"
+				+ "    }\n" + "}\n";
 		String genmodelFile = createEcoreGenModelContent("Bug570717", null);
 		createManifestFile();
 		URI genModelURI = createModels(testFileStem, oclinecoreFile, genmodelFile);
@@ -701,10 +709,19 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		EFactory eFactory = ePackage.getEFactoryInstance();
 		//
 		EObject eObject = eFactory.create(eClass);
-//		ocl.assertQueryTrue(eObject, "eChars = Set{eChar}");
-//		ocl.assertQueryTrue(eObject, "negEChars(eChars) = Set{negEChar(eChar)}");
-//		ocl.assertQueryTrue(eObject, "eCharacterObjects = Set{eCharacterObject}");
-//		ocl.assertQueryTrue(eObject, "negECharacterObjects(eCharacterObjects) = Set{negECharacterObject(eCharacterObject)}");
+// FIXME BUG 570800		ocl.assertQueryTrue(eObject, "eChars = Set{eChar}");
+// FIXME BUG 570800		ocl.assertQueryTrue(eObject, "negEChars(eChars) = Set{negEChar(eChar)}");
+// FIXME BUG 570800		ocl.assertQueryTrue(eObject, "eCharacterObjects = Set{eCharacterObject}");
+// FIXME BUG 570800		ocl.assertQueryTrue(eObject, "negECharacterObjects(eCharacterObjects) = Set{negECharacterObject(eCharacterObject)}");
+		ocl.assertQueryTrue(eObject, "eBigDecimals = Set{eBigDecimal}");
+		ocl.assertQueryTrue(eObject, "negEBigDecimals(eBigDecimals) = Set{negEBigDecimal(eBigDecimal)}");
+		ocl.assertQueryTrue(eObject, "eBigIntegers = Set{eBigInteger}");
+		ocl.assertQueryTrue(eObject, "negEBigIntegers(eBigIntegers) = Set{negEBigInteger(eBigInteger)}");
+		ocl.assertQueryTrue(eObject, "eBoolean = eBooleanObject");
+		ocl.assertQueryTrue(eObject, "eBooleans = eBooleanObjects");
+		ocl.assertQueryTrue(eObject, "notEBooleans(eBooleans) = Set{notEBoolean(eBoolean)}");
+		ocl.assertQueryTrue(eObject, "eBooleanObjects = Set{eBooleanObject}");
+		ocl.assertQueryTrue(eObject, "notEBooleanObjects(eBooleanObjects) = Set{notEBooleanObject(eBooleanObject)}");
 		ocl.assertQueryTrue(eObject, "eDoubles = Set{eDouble}");
 		ocl.assertQueryTrue(eObject, "negEDoubles(eDoubles) = Set{negEDouble(eDouble)}");
 		ocl.assertQueryTrue(eObject, "eDoubleObjects = Set{eDoubleObject}");
@@ -725,11 +742,11 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		ocl.assertQueryTrue(eObject, "negEShorts(eShorts) = Set{negEShort(eShort)}");
 		ocl.assertQueryTrue(eObject, "eShortObjects = Set{eShortObject}");
 		ocl.assertQueryTrue(eObject, "negEShortObjects(eShortObjects) = Set{negEShortObject(eShortObject)}");
-	/*	ocl.assertQueryTrue(eObject, "eBigInteger = eBigDecimal");
-		ocl.assertQueryTrue(eObject, "eBoolean = eBooleanObject");
+		ocl.assertQueryTrue(eObject, "eBigInteger = eBigDecimal");
 		//			ocl.assertQueryTrue(eObject, "eNumber = eFloat");				-- waiting for BUG 370087
 		ocl.assertQueryTrue(eObject, "eString = 'ABC'");
-	*/	ocl.dispose();
+		ocl.assertQueryTrue(eObject, "eStrings = Set{eString}");
+		ocl.dispose();
 	}
 
 	public void testEcoreTypes412736() throws Exception {
@@ -1465,7 +1482,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 
 	/**
 	 * Verify that the static profile in Bug570717.uml model can be generateed and compiled.
-	 */
+	 * FIXME gives an orphan NamedElement with Maven Surefire
 	public void testBug570717_uml() throws Exception {
 		TestOCL ocl = createOCL();
 		String testFileStem = "Bug570717";
@@ -1488,5 +1505,5 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		// Execute the profile
 
 		ocl.dispose();
-	}
+	} */
 }
