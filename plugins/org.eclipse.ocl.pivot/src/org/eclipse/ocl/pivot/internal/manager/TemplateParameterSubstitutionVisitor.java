@@ -332,12 +332,14 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 			org.eclipse.ocl.pivot.Class unspecializedType = PivotUtil.getUnspecializedTemplateableElement(partiallySpecializedType);
 			List<TemplateBinding> ownedTemplateBindings = partiallySpecializedType.getOwnedBindings();
 			if (ownedTemplateBindings.size() > 0) {
+			//	boolean hasActual = false;
 				List<@NonNull Type> templateArguments = new ArrayList<@NonNull Type>();
 				for (TemplateBinding ownedTemplateBinding : ownedTemplateBindings) {
 					for (TemplateParameterSubstitution ownedTemplateParameterSubstitution : ownedTemplateBinding.getOwnedSubstitutions()) {
 						Type actualType = ownedTemplateParameterSubstitution.getActual();
 						if (actualType != null) {
 							actualType = specializeType(actualType);
+			//				hasActual = true;
 						}
 						else {
 							TemplateParameter formalParameter = ownedTemplateParameterSubstitution.getFormal();
@@ -351,7 +353,12 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 						templateArguments.add(actualType);
 					}
 				}
-				return metamodelManager.getLibraryType(unspecializedType, templateArguments);
+			//	if (hasActual) {
+					return metamodelManager.getLibraryType(unspecializedType, templateArguments);
+			//	}
+			//	else {
+			//		return unspecializedType;
+			//	}
 			}
 			TemplateSignature ownedTemplateSignature = partiallySpecializedType.getOwnedSignature();
 			if (ownedTemplateSignature != null) {

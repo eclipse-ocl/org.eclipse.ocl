@@ -215,9 +215,10 @@ public final class IdManager
 		if (aType.eIsProxy()) {
 			return getUnspecifiedTypeId(aType);		// FIXME This occurs for underspecified/wildcard types
 		}
+		org.eclipse.ocl.pivot.Class unspecializedType = PivotUtil.getUnspecializedTemplateableElement(aType);
 		String name = aType.getName();
 		assert name != null;
-		org.eclipse.ocl.pivot.Package parentPackage = aType.getOwningPackage();
+		org.eclipse.ocl.pivot.Package parentPackage = unspecializedType.getOwningPackage();
 		if (parentPackage != null) {
 			TemplateParameters typeParameters = aType.getTypeParameters();
 			PackageId packageId = parentPackage.getPackageId();

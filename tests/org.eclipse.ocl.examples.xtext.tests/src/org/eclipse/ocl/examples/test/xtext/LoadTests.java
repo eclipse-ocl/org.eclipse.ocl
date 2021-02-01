@@ -893,7 +893,7 @@ public class LoadTests extends XtextTestCase
 	}
 
 	public void testLoad_Wildcard_oclinecore() throws IOException, InterruptedException {
-		OCL ocl = createOCL();
+		OCL ocl = createOCLWithProjectMap();
 		doLoad_Concrete(ocl, getTestModelURI("models/oclinecore/Wildcard.oclinecore"));
 		ocl.dispose();
 	}
