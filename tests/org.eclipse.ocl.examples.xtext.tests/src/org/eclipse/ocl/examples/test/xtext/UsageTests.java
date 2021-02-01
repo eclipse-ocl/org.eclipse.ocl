@@ -1506,4 +1506,26 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 
 		ocl.dispose();
 	} */
+
+	public void testBug570802() throws Exception {
+		TestOCL ocl = createOCL();
+		String testFileStem = "Bug570802";
+		String oclinecoreFile = "package bug570802 : bug570802 = 'http://Bug570802'\n"
+				+ "{\n"
+				+ "	class Bug570802\n"
+				+ "	{\n"
+				+ "		property generics : BaseGeneric(?)[*|1] { ordered composes };\n"
+				+ "		property genericsA : BaseGeneric(?)[*|1] { ordered derived readonly transient volatile }\n"
+				+ "		{\n"
+				+ "			initial: self.generics;\n"
+				+ "		}\n"
+				+ "	}\n"
+				+ "	abstract class BaseGeneric(T);\n"
+				+ "}";
+		String genmodelFile = createEcoreGenModelContent("Bug570802", null);
+		createManifestFile();
+		URI genModelURI = createModels(testFileStem, oclinecoreFile, genmodelFile);
+		doGenModel(genModelURI);
+		ocl.dispose();
+	}
 }
