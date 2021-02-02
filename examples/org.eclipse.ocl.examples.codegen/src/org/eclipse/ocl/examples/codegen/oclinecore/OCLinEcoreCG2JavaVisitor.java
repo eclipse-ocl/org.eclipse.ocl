@@ -261,6 +261,11 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 		return String.valueOf(EcoreUtil.getURI(element).fragment());
 	}
 
+	@Override
+	public @Nullable GenPackage getGenPackage() {
+		return genPackage;
+	}
+
 	protected @NonNull OCLinEcoreGlobalContext getGlobalContext() {
 		return (OCLinEcoreGlobalContext) globalContext;
 	}

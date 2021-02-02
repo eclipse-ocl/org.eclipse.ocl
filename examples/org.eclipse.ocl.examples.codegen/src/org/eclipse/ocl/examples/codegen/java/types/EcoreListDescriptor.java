@@ -12,6 +12,8 @@ package org.eclipse.ocl.examples.codegen.java.types;
 
 import java.util.List;
 
+import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
+import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -47,9 +49,18 @@ public class EcoreListDescriptor extends AbstractCollectionDescriptor implements
 
 	@Override
 	public void appendEcoreValue(@NonNull JavaStream js, @NonNull String requiredClassName, @NonNull CGValuedElement cgValue) {
-		if (requiredClassName.startsWith(EList.class.getName())) {
+		boolean suppressEMFTypes = true;
+		GenPackage genPackage = js.getGenPackage();
+		if (genPackage != null) {
+			GenModel genModel = genPackage.getGenModel();
+			if (genModel != null) {
+				suppressEMFTypes = genModel.isSuppressEMFTypes();
+			}
+		}
+		Class<?> listClass = suppressEMFTypes ? List.class : EList.class;
+		if (requiredClassName.startsWith(listClass.getName())) {
 			js.append("(");
-			js.appendClassReference(null, EList.class, false, ecoreElementTypeDescriptor);
+			js.appendClassReference(null, listClass, false, ecoreElementTypeDescriptor);
 			js.append(")");
 		}
 		js.appendValueName(cgValue);
@@ -98,6 +109,6 @@ public class EcoreListDescriptor extends AbstractCollectionDescriptor implements
 
 	@Override
 	public @NonNull String toString() {
-		return elementId + " => EList<Object/*" + elementType.getName() + "*/>";
+		return elementId + " => EList<" + elementType.getName() + ">";
 	}
 }

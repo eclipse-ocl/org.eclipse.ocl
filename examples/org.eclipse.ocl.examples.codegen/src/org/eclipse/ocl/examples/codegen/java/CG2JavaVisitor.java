@@ -819,6 +819,10 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		return genModelHelper;
 	}
 
+	public @Nullable GenPackage getGenPackage() {
+		return null;
+	}
+
 	public @NonNull ImportNameManager getImportNameManager() {
 		return globalContext.getImportNameManager();
 	}

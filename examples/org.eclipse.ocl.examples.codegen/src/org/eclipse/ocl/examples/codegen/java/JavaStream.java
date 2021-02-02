@@ -1191,6 +1191,10 @@ public class JavaStream
 		return new EcoreTypeRepresentation(this, instanceClass);
 	}
 
+	public @Nullable GenPackage getGenPackage() {
+		return cg2java.getGenPackage();
+	}
+
 	public @NonNull TypeRepresentation getUnboxedTypeRepresentation() {
 		return unboxedTypeRepresentation;
 	}
