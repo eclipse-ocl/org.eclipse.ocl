@@ -10,8 +10,11 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.java.types;
 
+import java.util.List;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.ETypeParameter;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreExp;
@@ -43,6 +46,17 @@ public class FutureEObjectDescriptor extends AbstractDescriptor implements Simpl
 	@Override
 	public void append(@NonNull JavaStream js, @Nullable Boolean isRequired) {
 		js.appendClassReference(isRequired, className);
+		List<ETypeParameter> eTypeParameters = eClassifier.getETypeParameters();
+		if ((eTypeParameters != null) && (eTypeParameters.size() > 0)) {
+			js.append("<");
+			for (int i = 0; i < eTypeParameters.size(); i++) {
+				if (i != 0) {
+					js.append(",");
+				}
+				js.append("?");
+			}
+			js.append(">");
+		}
 	}
 
 	@Override

@@ -559,6 +559,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	public void testBug370824() throws Exception {
 		TestOCL ocl = createOCL();
 		String testFileStem = "Bug370824";
+		String testProjectName = "bug370824";
 		String oclinecoreFile = "package bug370824 : bug370824 = 'http://bug370824'\n"
 				+ "{\n"
 				+ "    class Clase1\n"
@@ -571,6 +572,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		createManifestFile();
 		URI genModelURI = createModels(testFileStem, oclinecoreFile, genmodelFile);
 		doGenModel(genModelURI);
+		doEcoreCompile(ocl, testProjectName);
 		ocl.dispose();
 	}
 
@@ -1481,8 +1483,8 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	} */
 
 	/**
-	 * Verify that the static profile in Bug570717.uml model can be generateed and compiled.
-	 * FIXME gives an orphan NamedElement with Maven Surefire
+	 * Verify that the static profile in Bug570717.uml model can be generated and compiled.
+	 */
 	public void testBug570717_uml() throws Exception {
 		TestOCL ocl = createOCL();
 		String testFileStem = "Bug570717";
@@ -1505,11 +1507,12 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		// Execute the profile
 
 		ocl.dispose();
-	} */
+	}
 
 	public void testBug570802() throws Exception {
 		TestOCL ocl = createOCL();
 		String testFileStem = "Bug570802";
+		String testProjectName = "bug570802";
 		String oclinecoreFile = "package bug570802 : bug570802 = 'http://Bug570802'\n"
 				+ "{\n"
 				+ "	class Bug570802\n"
@@ -1526,6 +1529,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		createManifestFile();
 		URI genModelURI = createModels(testFileStem, oclinecoreFile, genmodelFile);
 		doGenModel(genModelURI);
+		doEcoreCompile(ocl, testProjectName);
 		ocl.dispose();
 	}
 }
