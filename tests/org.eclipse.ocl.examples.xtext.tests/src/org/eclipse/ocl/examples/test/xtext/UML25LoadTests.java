@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.pivot.tests.TestOCL;
-import org.eclipse.ocl.examples.uml25.XMI252UMLResourceFactoryImpl;
+//import org.eclipse.ocl.examples.uml25.XMI252UMLResourceFactoryImpl;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.utilities.GlobalEnvironmentFactory;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
@@ -51,7 +51,7 @@ public class UML25LoadTests extends LoadTests
 		UMLStandaloneSetup.init();
 		TestOCL ocl = new TestOCL(getTestFileSystem(), "UML25LoadTests", getName(), OCL.NO_PROJECTS);
 		ResourceSet resourceSet = ocl.getResourceSet();
-		extraURImap = XMI252UMLResourceFactoryImpl.install(resourceSet, modelFolderURI);
+//		extraURImap = XMI252UMLResourceFactoryImpl.install(resourceSet, modelFolderURI);
 		initializeExtraURIMappings(resourceSet);
 		return ocl;
 	}
