@@ -1533,4 +1533,31 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		doEcoreCompile(ocl, testProjectName);
 		ocl.dispose();
 	}
+
+	/**
+	 * Verify that the static profile in Bug570717.uml model can be generated and compiled.
+	 */
+	public void testBug570717a_uml() throws Exception {
+		TestOCL ocl = createOCL();
+		String testFileStem = "Bug570717a";
+		String testProjectName = "bug570717a";
+		getTestFile("Bug570717a.uml", ocl, getTestModelURI("models/uml/Bug570717a.uml"));
+		String ecoreFileContent = createUMLEcoreModelContent(testFileStem, testProjectName);
+		String genmodelFileContent = createUMLGenModelContent(testFileStem, testProjectName, null);
+		createManifestFile();
+		createTestFileWithContent(getTestProject().getOutputFile(testFileStem + ".ecore"), ecoreFileContent);
+		URI genModelURI = createTestFileWithContent(getTestProject().getOutputFile(testFileStem + ".genmodel"), genmodelFileContent);
+		Path genModelPath = new Path("/" + getTestProject().getName() + "/" + testFileStem + ".genmodel");
+		//
+		TestUMLImporter importer = new TestUMLImporter();
+		importer.reloadGenModel(genModelPath);
+		//
+		doGenModel(genModelURI);
+		//
+		doUMLCompile(ocl, testProjectName);
+
+		// Execute the profile
+
+		ocl.dispose();
+	}
 }
