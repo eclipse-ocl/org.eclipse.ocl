@@ -84,6 +84,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.intro.IIntroManager;
 import org.eclipse.uml2.uml.Model;
+import org.eclipse.uml2.uml.Stereotype;
 import org.eclipse.uml2.uml.ecore.importer.UMLImporter;
 import org.eclipse.uml2.uml.editor.presentation.UMLEditor;
 import org.eclipse.uml2.uml.resources.util.UMLResourcesUtil;
@@ -343,22 +344,59 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		return testFile.getURI();
 	}
 
-	public @NonNull String createUMLEcoreModelContent(@NonNull String fileName, @NonNull String packageName) throws Exception {
+	/**
+	 * Create a seed *.ecore from the *.uml profile with correct genPackage declarations s that a
+	 * reload / reconcile corrects the genClasses etc.
+	 */
+	public @NonNull String createUMLEcoreModelContent(@NonNull Resource umlProfileResource) throws Exception {
 		StringBuilder s = new StringBuilder();
 		s.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-		s.append("<ecore:EPackage xmi:version=\"2.0\"\n");
+		s.append("<xmi:XMI xmi:version=\"2.0\"\n");
 		s.append("    xmlns:xmi=\"http://www.omg.org/XMI\"\n");
 		s.append("    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n");
-		s.append("    xmlns:ecore=\"http://www.eclipse.org/emf/2002/Ecore\"\n");
-		s.append("    name=\"" + packageName + "\"\n");
-		s.append("    nsPrefix=\"" + packageName + "\"\n");
-		s.append("    nsURI=\"http://" + fileName + "\">\n");
-		s.append("  <eClassifiers xsi:type=\"ecore:EClass\" name=\"Dummy\"/>\n");
-		s.append("</ecore:EPackage>\n");
+		s.append("    xmlns:ecore=\"http://www.eclipse.org/emf/2002/Ecore\">\n");
+		for (EObject eRootObject : umlProfileResource.getContents()) {
+			if (eRootObject instanceof Model) {
+				for (org.eclipse.uml2.uml.Package umlPackage : ((Model)eRootObject).getNestedPackages()) {
+					assert umlPackage != null;
+					appendEcorePackage(s, umlPackage);
+				}
+			}
+			else if (eRootObject instanceof org.eclipse.uml2.uml.Package) {
+				appendEcorePackage(s, (org.eclipse.uml2.uml.Package)eRootObject);
+			}
+		}
+		s.append("</xmi:XMI>\n");
 		return s.toString();
 	}
 
-	public @NonNull String createUMLGenModelContent(@NonNull String fileName, @NonNull String packageName, @Nullable Map<@NonNull String, @Nullable String> genOptions) throws Exception {
+	private void appendEcorePackage(@NonNull StringBuilder s, org.eclipse.uml2.uml.@NonNull Package umlPackage) {
+		Stereotype ecoreStereotype = umlPackage.getAppliedStereotype("Ecore::EPackage");
+		String basePackage = (String)umlPackage.getValue(ecoreStereotype, "basePackage");
+		String nsPrefix = (String)umlPackage.getValue(ecoreStereotype, "nsPrefix");
+		String nsURI = (String)umlPackage.getValue(ecoreStereotype, "nsURI");
+		String packageName = (String)umlPackage.getValue(ecoreStereotype, "packageName");
+		String prefix = (String)umlPackage.getValue(ecoreStereotype, "prefix");
+		s.append("  <ecore:EPackage");
+		s.append(" name=\"" + (packageName != null ? packageName : umlPackage.getName()) + "\"");
+		if (basePackage != null) {
+			s.append(" basePackage=\"" + basePackage + "\"");
+		}
+		if (nsPrefix != null) {
+			s.append(" nsPrefix=\"" + nsPrefix + "\"");
+		}
+		if (nsURI != null) {
+			s.append(" nsURI=\"" + nsURI + "\"");
+		}
+		if (prefix != null) {
+			s.append(" prefix=\"" + prefix + "\"");
+		}
+		s.append(">\n");
+		s.append("    <eClassifiers xsi:type=\"ecore:EClass\" name=\"Dummy\"/>\n");
+		s.append("  </ecore:EPackage>\n");
+	}
+
+	public @NonNull String createUMLGenModelContent(@NonNull Resource umlProfileResource, @NonNull String fileName, @Nullable Map<@NonNull String, @Nullable String> genOptions) throws Exception {
 		String interfacePackageSuffix = genOptions != null ? genOptions.get("interfacePackageSuffix") : null;
 		String metaDataPackageSuffix = genOptions != null ? genOptions.get("metaDataPackageSuffix") : null;
 		String usedGenPackages = genOptions != null ? genOptions.get("usedGenPackages") : null;
@@ -420,17 +458,17 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		s.append("    <details key=\"Use Null Annotations\" value=\"true\"/>\n");
 		s.append("  </genAnnotations>\n");
 		s.append("  <foreignModel>" + fileName + ".uml</foreignModel>\n");
-		s.append("  <genPackages xsi:type=\"genmodel:GenPackage\" prefix=\"" + packageName + "\"\n");
-		s.append("    disposableProviderFactory=\"true\"\n");
-		s.append("    ecorePackage=\"" + fileName + ".ecore#/\"\n");
-		s.append("    basePackage=\"" + packageName + "\"\n");
-		if (interfacePackageSuffix != null) {
-			s.append("    interfacePackageSuffix=\"" + interfacePackageSuffix + "\"\n");
+		for (EObject eRootObject : umlProfileResource.getContents()) {
+			if (eRootObject instanceof Model) {
+				for (org.eclipse.uml2.uml.Package umlPackage : ((Model)eRootObject).getNestedPackages()) {
+					assert umlPackage != null;
+					appendGenModelPackage(s, umlPackage, interfacePackageSuffix, metaDataPackageSuffix, fileName);
+				}
+			}
+			else if (eRootObject instanceof org.eclipse.uml2.uml.Package) {
+				appendGenModelPackage(s, (org.eclipse.uml2.uml.Package)eRootObject, interfacePackageSuffix, metaDataPackageSuffix, fileName);
+			}
 		}
-		if (metaDataPackageSuffix != null) {
-			s.append("    metaDataPackageSuffix=\"" + metaDataPackageSuffix + "\"\n");
-		}
-		s.append("  />\n");
 		if (usedGenPackages != null) {
 			for (String usedGenPackage : usedGenPackages.split(" ")) {
 				s.append("  <usedGenPackages href=\"" + usedGenPackage + "\"/>\\n");
@@ -442,6 +480,21 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	//	s.append("  <usedGenPackages href=\"platform:/resource/org.eclipse.ocl.pivot/model/oclstdlib.genmodel#//oclstdlib\"/>\n");
 		s.append("</genmodel:GenModel>\n");
 		return s.toString();
+	}
+
+	private void appendGenModelPackage(StringBuilder s, org.eclipse.uml2.uml.@NonNull Package umlPackage, String interfacePackageSuffix, String metaDataPackageSuffix, @NonNull String fileName) {
+		String packageName = umlPackage.getName();
+		s.append("  <genPackages xsi:type=\"genmodel:GenPackage\" prefix=\"" + packageName + "\"\n");
+		s.append("    disposableProviderFactory=\"true\"\n");
+		s.append("    ecorePackage=\"" + fileName + ".ecore#/\"\n");
+		s.append("    basePackage=\"" + packageName + "\"\n");
+		if (interfacePackageSuffix != null) {
+			s.append("    interfacePackageSuffix=\"" + interfacePackageSuffix + "\"\n");
+		}
+		if (metaDataPackageSuffix != null) {
+			s.append("    metaDataPackageSuffix=\"" + metaDataPackageSuffix + "\"\n");
+		}
+		s.append("  />\n");
 	}
 
 	protected boolean doCompile(@NonNull OCL ocl, @NonNull JavaClasspath classpath, @NonNull String... testProjectNames) throws Exception {
@@ -555,6 +608,13 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		classpath.addClass(org.eclipse.uml2.types.TypesPackage.class);
 		classpath.addClass(org.eclipse.uml2.uml.UMLPackage.class);
 		doCompile(ocl, classpath, testProjectName);
+	}
+
+	protected @NonNull Resource loadUmlProfile(@NonNull TestOCL ocl, @NonNull URI umlProfileURI) {
+		UMLResourcesUtil.init(ocl.getResourceSet());
+		Resource umlProfileResource = ocl.getResourceSet().getResource(umlProfileURI, true);
+		assert umlProfileResource != null;
+		return umlProfileResource;
 	}
 
 	public void testBug370824() throws Exception {
@@ -1490,9 +1550,10 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		TestOCL ocl = createOCL();
 		String testFileStem = "Bug570717";
 		String testProjectName = "bug570717";
-		getTestFile("Bug570717.uml", ocl, getTestModelURI("models/uml/Bug570717.uml"));
-		String ecoreFileContent = createUMLEcoreModelContent(testFileStem, testProjectName);
-		String genmodelFileContent = createUMLGenModelContent(testFileStem, testProjectName, null);
+		TestFile umlProfileFile = getTestFile(testFileStem + ".uml", ocl, getTestModelURI("models/uml/" + testFileStem + ".uml"));
+		Resource umlProfileResource = loadUmlProfile(ocl, umlProfileFile.getURI());
+		String ecoreFileContent = createUMLEcoreModelContent(umlProfileResource);
+		String genmodelFileContent = createUMLGenModelContent(umlProfileResource, testFileStem, null);
 		createManifestFile();
 		createTestFileWithContent(getTestProject().getOutputFile(testFileStem + ".ecore"), ecoreFileContent);
 		URI genModelURI = createTestFileWithContent(getTestProject().getOutputFile(testFileStem + ".genmodel"), genmodelFileContent);
@@ -1541,9 +1602,10 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		TestOCL ocl = createOCL();
 		String testFileStem = "Bug570717a";
 		String testProjectName = "bug570717a";
-		getTestFile("Bug570717a.uml", ocl, getTestModelURI("models/uml/Bug570717a.uml"));
-		String ecoreFileContent = createUMLEcoreModelContent(testFileStem, testProjectName);
-		String genmodelFileContent = createUMLGenModelContent(testFileStem, testProjectName, null);
+		TestFile umlProfileFile = getTestFile(testFileStem + ".uml", ocl, getTestModelURI("models/uml/" + testFileStem + ".uml"));
+		Resource umlProfileResource = loadUmlProfile(ocl, umlProfileFile.getURI());
+		String ecoreFileContent = createUMLEcoreModelContent(umlProfileResource);
+		String genmodelFileContent = createUMLGenModelContent(umlProfileResource, testFileStem, null);
 		createManifestFile();
 		createTestFileWithContent(getTestProject().getOutputFile(testFileStem + ".ecore"), ecoreFileContent);
 		URI genModelURI = createTestFileWithContent(getTestProject().getOutputFile(testFileStem + ".genmodel"), genmodelFileContent);
