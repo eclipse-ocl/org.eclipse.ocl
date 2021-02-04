@@ -1571,6 +1571,34 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		ocl.dispose();
 	}
 
+	/**
+	 * Verify that the static profile in Bug570717.uml model can be generated and compiled.
+	 */
+	public void testBug570717a_uml() throws Exception {
+		TestOCL ocl = createOCL();
+		String testFileStem = "Bug570717a";
+		String testProjectName = "bug570717a";
+		TestFile umlProfileFile = getTestFile(testFileStem + ".uml", ocl, getTestModelURI("models/uml/" + testFileStem + ".uml"));
+		Resource umlProfileResource = loadUmlProfile(ocl, umlProfileFile.getURI());
+		String ecoreFileContent = createUMLEcoreModelContent(umlProfileResource);
+		String genmodelFileContent = createUMLGenModelContent(umlProfileResource, testFileStem, null);
+		createManifestFile();
+		createTestFileWithContent(getTestProject().getOutputFile(testFileStem + ".ecore"), ecoreFileContent);
+		URI genModelURI = createTestFileWithContent(getTestProject().getOutputFile(testFileStem + ".genmodel"), genmodelFileContent);
+		Path genModelPath = new Path("/" + getTestProject().getName() + "/" + testFileStem + ".genmodel");
+		//
+		TestUMLImporter importer = new TestUMLImporter();
+		importer.reloadGenModel(genModelPath);
+		//
+		doGenModel(genModelURI);
+		//
+		doUMLCompile(ocl, testProjectName);
+
+		// Execute the profile
+
+		ocl.dispose();
+	}
+
 	public void testBug570802() throws Exception {
 		TestOCL ocl = createOCL();
 		String testFileStem = "Bug570802";
@@ -1598,10 +1626,10 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	/**
 	 * Verify that the static profile in Bug570717.uml model can be generated and compiled.
 	 */
-	public void testBug570717a_uml() throws Exception {
+	public void testBug570892_uml() throws Exception {
 		TestOCL ocl = createOCL();
-		String testFileStem = "Bug570717a";
-		String testProjectName = "bug570717a";
+		String testFileStem = "Bug570892";
+		String testProjectName = "bug570892";
 		TestFile umlProfileFile = getTestFile(testFileStem + ".uml", ocl, getTestModelURI("models/uml/" + testFileStem + ".uml"));
 		Resource umlProfileResource = loadUmlProfile(ocl, umlProfileFile.getURI());
 		String ecoreFileContent = createUMLEcoreModelContent(umlProfileResource);
