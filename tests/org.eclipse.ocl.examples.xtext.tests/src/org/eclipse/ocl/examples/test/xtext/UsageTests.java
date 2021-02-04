@@ -457,7 +457,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		s.append("    <details key=\"Use Delegates\" value=\"false\"/>\n");
 		s.append("    <details key=\"Use Null Annotations\" value=\"true\"/>\n");
 		s.append("  </genAnnotations>\n");
-		s.append("  <foreignModel>" + fileName + ".uml</foreignModel>\n");
+		s.append("  <foreignModel>" + umlProfileResource.getURI().lastSegment() + "</foreignModel>\n");
 		for (EObject eRootObject : umlProfileResource.getContents()) {
 			if (eRootObject instanceof Model) {
 				for (org.eclipse.uml2.uml.Package umlPackage : ((Model)eRootObject).getNestedPackages()) {
@@ -482,12 +482,12 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		return s.toString();
 	}
 
-	private void appendGenModelPackage(StringBuilder s, org.eclipse.uml2.uml.@NonNull Package umlPackage, String interfacePackageSuffix, String metaDataPackageSuffix, @NonNull String fileName) {
+	private void appendGenModelPackage(StringBuilder s, org.eclipse.uml2.uml.@NonNull Package umlPackage, String interfacePackageSuffix, String metaDataPackageSuffix, @NonNull String fileStem) {
 		String packageName = umlPackage.getName();
 		s.append("  <genPackages xsi:type=\"genmodel:GenPackage\" prefix=\"" + packageName + "\"\n");
 		s.append("    disposableProviderFactory=\"true\"\n");
-		s.append("    ecorePackage=\"" + fileName + ".ecore#/\"\n");
-		s.append("    basePackage=\"" + packageName + "\"\n");
+		s.append("    ecorePackage=\"" + fileStem + ".profile.ecore#/\"\n");
+		s.append("    basePackage=\"" + fileStem + "\"\n");
 		if (interfacePackageSuffix != null) {
 			s.append("    interfacePackageSuffix=\"" + interfacePackageSuffix + "\"\n");
 		}
@@ -615,6 +615,13 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		Resource umlProfileResource = ocl.getResourceSet().getResource(umlProfileURI, true);
 		assert umlProfileResource != null;
 		return umlProfileResource;
+	}
+
+	protected @NonNull Resource validateUmlModel(@NonNull TestOCL ocl, @NonNull URI umlModelURI) {
+		Resource umlModelResource = ocl.getResourceSet().getResource(umlModelURI, true);
+		assert umlModelResource != null;
+		assertNoValidationErrors("Model", umlModelResource);
+		return umlModelResource;
 	}
 
 	public void testBug370824() throws Exception {
@@ -1549,15 +1556,15 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	public void testBug570717_uml() throws Exception {
 		TestOCL ocl = createOCL();
 		String testFileStem = "Bug570717";
-		String testProjectName = "bug570717";
-		TestFile umlProfileFile = getTestFile(testFileStem + ".uml", ocl, getTestModelURI("models/uml/" + testFileStem + ".uml"));
+		String testProjectName = testFileStem; //"bug570717";
+		TestFile umlProfileFile = getTestFile(testFileStem + ".profile.uml", ocl, getTestModelURI("models/uml/" + testFileStem + ".profile.uml"));
 		Resource umlProfileResource = loadUmlProfile(ocl, umlProfileFile.getURI());
 		String ecoreFileContent = createUMLEcoreModelContent(umlProfileResource);
 		String genmodelFileContent = createUMLGenModelContent(umlProfileResource, testFileStem, null);
 		createManifestFile();
-		createTestFileWithContent(getTestProject().getOutputFile(testFileStem + ".ecore"), ecoreFileContent);
-		URI genModelURI = createTestFileWithContent(getTestProject().getOutputFile(testFileStem + ".genmodel"), genmodelFileContent);
-		Path genModelPath = new Path("/" + getTestProject().getName() + "/" + testFileStem + ".genmodel");
+		createTestFileWithContent(getTestProject().getOutputFile(testFileStem + ".profile.ecore"), ecoreFileContent);
+		URI genModelURI = createTestFileWithContent(getTestProject().getOutputFile(testFileStem + ".profile.genmodel"), genmodelFileContent);
+		Path genModelPath = new Path("/" + getTestProject().getName() + "/" + testFileStem + ".profile.genmodel");
 		//
 		TestUMLImporter importer = new TestUMLImporter();
 		importer.reloadGenModel(genModelPath);
@@ -1577,15 +1584,15 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	public void testBug570717a_uml() throws Exception {
 		TestOCL ocl = createOCL();
 		String testFileStem = "Bug570717a";
-		String testProjectName = "bug570717a";
-		TestFile umlProfileFile = getTestFile(testFileStem + ".uml", ocl, getTestModelURI("models/uml/" + testFileStem + ".uml"));
+		String testProjectName = testFileStem; //"bug570717a";
+		TestFile umlProfileFile = getTestFile(testFileStem + ".profile.uml", ocl, getTestModelURI("models/uml/" + testFileStem + ".profile.uml"));
 		Resource umlProfileResource = loadUmlProfile(ocl, umlProfileFile.getURI());
 		String ecoreFileContent = createUMLEcoreModelContent(umlProfileResource);
 		String genmodelFileContent = createUMLGenModelContent(umlProfileResource, testFileStem, null);
 		createManifestFile();
-		createTestFileWithContent(getTestProject().getOutputFile(testFileStem + ".ecore"), ecoreFileContent);
-		URI genModelURI = createTestFileWithContent(getTestProject().getOutputFile(testFileStem + ".genmodel"), genmodelFileContent);
-		Path genModelPath = new Path("/" + getTestProject().getName() + "/" + testFileStem + ".genmodel");
+		createTestFileWithContent(getTestProject().getOutputFile(testFileStem + ".profile.ecore"), ecoreFileContent);
+		URI genModelURI = createTestFileWithContent(getTestProject().getOutputFile(testFileStem + ".profile.genmodel"), genmodelFileContent);
+		Path genModelPath = new Path("/" + getTestProject().getName() + "/" + testFileStem + ".profile.genmodel");
 		//
 		TestUMLImporter importer = new TestUMLImporter();
 		importer.reloadGenModel(genModelPath);
@@ -1629,15 +1636,16 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	public void testBug570892_uml() throws Exception {
 		TestOCL ocl = createOCL();
 		String testFileStem = "Bug570892";
-		String testProjectName = "bug570892";
-		TestFile umlProfileFile = getTestFile(testFileStem + ".uml", ocl, getTestModelURI("models/uml/" + testFileStem + ".uml"));
+		String testProjectName = testFileStem; //"bug570892";
+		TestFile umlModelFile = getTestFile(testFileStem + ".uml", ocl, getTestModelURI("models/uml/" + testFileStem + ".uml"));
+		TestFile umlProfileFile = getTestFile(testFileStem + ".profile.uml", ocl, getTestModelURI("models/uml/" + testFileStem + ".profile.uml"));
 		Resource umlProfileResource = loadUmlProfile(ocl, umlProfileFile.getURI());
 		String ecoreFileContent = createUMLEcoreModelContent(umlProfileResource);
 		String genmodelFileContent = createUMLGenModelContent(umlProfileResource, testFileStem, null);
 		createManifestFile();
-		createTestFileWithContent(getTestProject().getOutputFile(testFileStem + ".ecore"), ecoreFileContent);
-		URI genModelURI = createTestFileWithContent(getTestProject().getOutputFile(testFileStem + ".genmodel"), genmodelFileContent);
-		Path genModelPath = new Path("/" + getTestProject().getName() + "/" + testFileStem + ".genmodel");
+		createTestFileWithContent(getTestProject().getOutputFile(testFileStem + ".profile.ecore"), ecoreFileContent);
+		URI genModelURI = createTestFileWithContent(getTestProject().getOutputFile(testFileStem + ".profile.genmodel"), genmodelFileContent);
+		Path genModelPath = new Path("/" + getTestProject().getName() + "/" + testFileStem + ".profile.genmodel");
 		//
 		TestUMLImporter importer = new TestUMLImporter();
 		importer.reloadGenModel(genModelPath);
@@ -1647,7 +1655,8 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		doUMLCompile(ocl, testProjectName);
 
 		// Execute the profile
-
+		Resource umlModelResource = validateUmlModel(ocl, umlModelFile.getURI());
+		Model model = (Model)umlModelResource.getContents().get(0);
 		ocl.dispose();
 	}
 }
