@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:ValidationProblem="Bug570892.profile.uml#_9qywsGEHEeu3-bh5n6XVFQ" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML">
+<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:ValidationProblem="http://www.papyrus.com/ValidationProblem/1" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML">
   <uml:Model xmi:id="_wWxjoGEMEeuARqXYJDgAdA" name="ValidationProblemApp">
     <packageImport xmi:type="uml:PackageImport" xmi:id="_wYQKUGEMEeuARqXYJDgAdA">
       <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
@@ -12,7 +12,10 @@
     <packagedElement xmi:type="uml:Class" xmi:id="_wVE-0GHuEeu0wfTqfXXyUQ" name="chicken1"/>
     <packagedElement xmi:type="uml:Dependency" xmi:id="_xVjkYGHuEeu0wfTqfXXyUQ" client="_apRf8GENEeusZPn9AqGX4w" supplier="_wVE-0GHuEeu0wfTqfXXyUQ"/>
     <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_YkQUMGENEeusZPn9AqGX4w">
-      <appliedProfile xmi:type="uml:Profile" href="Bug570892.profile.uml#_9qywsGEHEeu3-bh5n6XVFQ"/>
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_YkVMsGENEeusZPn9AqGX4w" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="http://www.papyrus.com/ValidationProblem/1#/"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://VALIDATIONPROBLEM_PROFILE/Bug570892.profile.uml#_9qywsGEHEeu3-bh5n6XVFQ"/>
     </profileApplication>
   </uml:Model>
   <ValidationProblem:Farm xmi:id="_yazvwGYhEeuyrpcK13ZdKA" base_NamedElement="_apRf8GENEeusZPn9AqGX4w"/>

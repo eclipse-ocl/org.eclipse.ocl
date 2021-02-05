@@ -16,6 +16,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.lang.reflect.Field;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -479,6 +482,8 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		s.append("  <usedGenPackages href=\"platform:/resource/org.eclipse.uml2.uml/model/UML.genmodel#//uml\"/>\n");
 	//	s.append("  <usedGenPackages href=\"platform:/resource/org.eclipse.ocl.pivot/model/oclstdlib.genmodel#//oclstdlib\"/>\n");
 		s.append("</genmodel:GenModel>\n");
+
+
 		return s.toString();
 	}
 
@@ -614,13 +619,33 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		UMLResourcesUtil.init(ocl.getResourceSet());
 		Resource umlProfileResource = ocl.getResourceSet().getResource(umlProfileURI, true);
 		assert umlProfileResource != null;
+		assertNoResourceErrors("Profile load", umlProfileResource);
+		assertNoValidationErrors("Profile validation", umlProfileResource);
 		return umlProfileResource;
 	}
 
-	protected @NonNull Resource validateUmlModel(@NonNull TestOCL ocl, @NonNull URI umlModelURI) {
-		Resource umlModelResource = ocl.getResourceSet().getResource(umlModelURI, true);
+	protected @NonNull Resource validateUmlModel(@NonNull URI umlModelURI, @NonNull String qualifiedPackageClassName, @NonNull String pathMapName) throws Exception, IllegalAccessException {
+		File projectFile = getTestProject().getFile();
+		File explicitClassPath = new File(projectFile, "test-bin");
+		URL url = explicitClassPath.toURI().toURL();
+		URLClassLoader urlClassLoader = new URLClassLoader(new URL[]{url}, getClass().getClassLoader());
+		Class<?> packageImplClass = urlClassLoader.loadClass(qualifiedPackageClassName);
+		Field field = packageImplClass.getField("eINSTANCE");
+		EPackage packageImpl = (EPackage)field.get(null);
+		assert packageImpl != null;
+		String nsURI = packageImpl.getNsURI();
+		//
+		ResourceSet resourceSet = new ResourceSetImpl(); //ocl.getResourceSet();
+		UMLResourcesUtil.init(resourceSet);
+		resourceSet.getPackageRegistry().put(nsURI, packageImpl);
+		URI pathMapURI = URI.createURI(pathMapName, true);
+		URI profileFolderURI = umlModelURI.trimSegments(1).appendSegment("");
+		resourceSet.getURIConverter().getURIMap().put(pathMapURI, profileFolderURI);
+		//
+		Resource umlModelResource = resourceSet.getResource(umlModelURI, true);
 		assert umlModelResource != null;
-		assertNoValidationErrors("Model", umlModelResource);
+		assertNoResourceErrors("Model load", umlModelResource);
+	// XXX	assertNoValidationErrors("Model validation", umlModelResource);
 		return umlModelResource;
 	}
 
@@ -1655,7 +1680,9 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		doUMLCompile(ocl, testProjectName);
 
 		// Execute the profile
-		Resource umlModelResource = validateUmlModel(ocl, umlModelFile.getURI());
+		String qualifiedPackageClassName = "Bug570892.validationproblem.ValidationProblemPackage";
+		String pathMapName = "pathmap://VALIDATIONPROBLEM_PROFILE/";
+		Resource umlModelResource = validateUmlModel(umlModelFile.getURI(), qualifiedPackageClassName, pathMapName);
 		Model model = (Model)umlModelResource.getContents().get(0);
 		ocl.dispose();
 	}
