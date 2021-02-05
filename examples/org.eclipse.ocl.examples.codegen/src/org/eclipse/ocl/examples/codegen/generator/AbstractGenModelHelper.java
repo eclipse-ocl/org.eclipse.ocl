@@ -20,6 +20,7 @@ import org.eclipse.emf.codegen.ecore.genmodel.GenOperation;
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
 import org.eclipse.emf.codegen.ecore.genmodel.GenParameter;
 import org.eclipse.emf.codegen.util.CodeGenUtil;
+import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
@@ -36,6 +37,7 @@ import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
+import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.library.AbstractBinaryOperation;
 import org.eclipse.ocl.pivot.library.AbstractOperation;
 import org.eclipse.ocl.pivot.library.AbstractTernaryOperation;
@@ -396,10 +398,11 @@ public class AbstractGenModelHelper implements GenModelHelper
 
 	@Override
 	public @NonNull GenFeature getGenFeature(@NonNull EStructuralFeature eStructuralFeature) throws GenModelException {
-		EClass eClass = eStructuralFeature.getEContainingClass();
+		EStructuralFeature eFeature = resolveRedefinition(eStructuralFeature);
+		EClass eClass = eFeature.getEContainingClass();
 		if (eClass != null) {
 			GenClass genClass = getGenClass(eClass);
-			String name = eStructuralFeature.getName();
+			String name = eFeature.getName();
 			for (GenFeature genFeature : genClass.getGenFeatures()) {
 				String featureName = genFeature.getEcoreFeature().getName();
 				if (name.equals(featureName)) {
@@ -675,5 +678,18 @@ public class AbstractGenModelHelper implements GenModelHelper
 	@Override
 	public @NonNull String getTablesClassName(@NonNull GenPackage genPackage) {
 		return ImportUtils.getAffixedName(genPackage.getReflectionPackageName() + "." + genPackage.getPrefix() + TABLES_CLASS_SUFFIX);
+	}
+
+	protected @NonNull EStructuralFeature resolveRedefinition(@NonNull EStructuralFeature eStructuralFeature) {
+		EStructuralFeature eFeature = eStructuralFeature;
+		for (EAnnotation eAnnotation; (eAnnotation = eFeature.getEAnnotation(PivotConstantsInternal.REDEFINES_ANNOTATION_SOURCE)) != null; ) {
+			for (EObject reference : eAnnotation.getReferences()) {
+				if (reference instanceof EStructuralFeature) {
+					eFeature = (EStructuralFeature) reference;
+					break;
+				}
+			}
+		}
+		return eFeature;
 	}
 }

@@ -25,9 +25,12 @@ import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
 import org.eclipse.emf.codegen.util.CodeGenUtil;
 import org.eclipse.emf.codegen.util.ImportManager;
+import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.generator.AbstractGenModelHelper;
 import org.eclipse.ocl.examples.codegen.genmodel.OCLGenModelUtil;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.CollectionType;
@@ -273,7 +276,15 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 	}
 
 	protected void appendUpperName(@NonNull NamedElement namedElement) {
-		s.append(ClassUtil.nonNullModel(CodeGenUtil.upperName(namedElement.getName())));
+		String name = null;
+		EObject esObject = namedElement.getESObject();
+		if (esObject instanceof ENamedElement) {
+			name = ((ENamedElement)esObject).getName();
+		}
+		if (name == null) {
+			name = namedElement.getName();
+		}
+		s.append(ClassUtil.nonNullModel(CodeGenUtil.upperName(name)));
 	}
 
 	protected @NonNull String atNonNull() {
@@ -762,9 +773,17 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 						s.append("(");
 						s.append(getGenPackagePrefix());
 						s.append("Package.Literals." );
-						appendUpperName(owningType);
-						s.append("__" );
-						appendUpperName(prop);
+						EObject esObject = prop.getESObject();
+						if (esObject instanceof EStructuralFeature) {
+							AbstractGenModelHelper genModelHelper = new AbstractGenModelHelper(metamodelManager);
+							String literalName = genModelHelper.getEcoreLiteralName((EStructuralFeature)esObject);
+							s.append(literalName);
+						}
+						else {
+							appendUpperName(owningType);
+							s.append("__" );
+							appendUpperName(prop);
+						}
 						s.append(", " );
 						pClass.accept(emitLiteralVisitor);
 						s.append(", " + i + ")");

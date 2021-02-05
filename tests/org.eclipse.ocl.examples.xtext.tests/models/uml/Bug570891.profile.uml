@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Ecore="http://www.eclipse.org/uml2/schemas/Ecore/5" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xsi:schemaLocation="http://www.eclipse.org/uml2/schemas/Ecore/5 pathmap://UML_PROFILES/Ecore.profile.uml#_z1OFcHjqEdy8S4Cr8Rc_NA">
+  <uml:Profile xmi:id="_9qywsGEHEeu3-bh5n6XVFQ" name="ValidationProblem" metaclassReference="_CtE-0GEIEeu3-bh5n6XVFQ _oTto8GEIEeu3-bh5n6XVFQ _SpPEEGEJEeu3-bh5n6XVFQ">
+    <elementImport xmi:id="_CtE-0GEIEeu3-bh5n6XVFQ" alias="Element">
+      <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Element"/>
+    </elementImport>
+    <elementImport xmi:id="_oTto8GEIEeu3-bh5n6XVFQ" alias="Dependency">
+      <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Dependency"/>
+    </elementImport>
+    <elementImport xmi:id="_SpPEEGEJEeu3-bh5n6XVFQ" alias="NamedElement">
+      <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#NamedElement"/>
+    </elementImport>
+    <packageImport xmi:id="_9tQ14GEHEeu3-bh5n6XVFQ">
+      <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
+    </packageImport>
+    <packageImport xmi:id="_9tRc8GEHEeu3-bh5n6XVFQ">
+      <importedPackage xmi:type="uml:Model" href="pathmap://UML_METAMODELS/UML.metamodel.uml#_0"/>
+    </packageImport>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_DZkRYGEIEeu3-bh5n6XVFQ" name="Farm">
+      <ownedAttribute xmi:id="_TTuLgGEJEeu3-bh5n6XVFQ" name="base_NamedElement" association="_TTsWUGEJEeu3-bh5n6XVFQ">
+        <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#NamedElement"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_TTuLgWEJEeu3-bh5n6XVFQ"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_Hr1IQGYgEeuLiryWOk9R1g" name="animal" type="_BfN1AGYgEeuLiryWOk9R1g" isReadOnly="true" isDerived="true">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_KvOAwGYgEeuLiryWOk9R1g"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_KvS5QGYgEeuLiryWOk9R1g" value="*"/>
+        <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_mKYVYGYgEeuLiryWOk9R1g" name="spec" type="_BfN1AGYgEeuLiryWOk9R1g">
+          <language>OCL</language>
+          <body>let supplierElement : Set(UML::NamedElement) =
+    Has.allInstances()->select(base_Dependency.client->includes(self.base_NamedElement)).base_Dependency.supplier->asSet()
+    in Animal.allInstances()->select(supplierElement->includes(base_NamedElement))</body>
+        </defaultValue>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_rd_kEGYgEeuLiryWOk9R1g" name="chicken" type="_NgdZUGYgEeuLiryWOk9R1g" isReadOnly="true" isDerived="true">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_suzrsGYgEeuLiryWOk9R1g"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_su9csGYgEeuLiryWOk9R1g" value="*"/>
+        <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_x_lo0GYgEeuLiryWOk9R1g" name="spec" type="_NgdZUGYgEeuLiryWOk9R1g">
+          <language>OCL</language>
+          <body>self.animal->selectByKind(Chicken)</body>
+        </defaultValue>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_zCTqEGYgEeuLiryWOk9R1g" name="duck" type="_OjZdAGYgEeuLiryWOk9R1g" isReadOnly="true" isDerived="true">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_0yGMsGYgEeuLiryWOk9R1g"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_0yPWoGYgEeuLiryWOk9R1g" value="*"/>
+        <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_4RymsGYgEeuLiryWOk9R1g" name="spec" type="_OjZdAGYgEeuLiryWOk9R1g">
+          <language>OCL</language>
+          <body>self.animal->selectByKind(Duck)</body>
+        </defaultValue>
+      </ownedAttribute>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_ov85AGEIEeu3-bh5n6XVFQ" name="Has">
+      <ownedAttribute xmi:id="_v4vgoWEIEeu3-bh5n6XVFQ" name="base_Dependency" association="_v4u5kGEIEeu3-bh5n6XVFQ">
+        <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Dependency"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_v4vgomEIEeu3-bh5n6XVFQ"/>
+      </ownedAttribute>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Extension" xmi:id="_v4u5kGEIEeu3-bh5n6XVFQ" name="E_Has_Dependency1" memberEnd="_v4vgoGEIEeu3-bh5n6XVFQ _v4vgoWEIEeu3-bh5n6XVFQ">
+      <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_v4vgoGEIEeu3-bh5n6XVFQ" name="extension_Has" type="_ov85AGEIEeu3-bh5n6XVFQ" aggregation="composite" association="_v4u5kGEIEeu3-bh5n6XVFQ"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Extension" xmi:id="_TTsWUGEJEeu3-bh5n6XVFQ" name="E_Farm_NamedElement1" memberEnd="_TTtkcGEJEeu3-bh5n6XVFQ _TTuLgGEJEeu3-bh5n6XVFQ">
+      <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_TTtkcGEJEeu3-bh5n6XVFQ" name="extension_Farm" type="_DZkRYGEIEeu3-bh5n6XVFQ" aggregation="composite" association="_TTsWUGEJEeu3-bh5n6XVFQ"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_BfN1AGYgEeuLiryWOk9R1g" name="Animal" isAbstract="true">
+      <ownedAttribute xmi:id="_CqswsGYgEeuLiryWOk9R1g" name="base_NamedElement" association="_CqrikGYgEeuLiryWOk9R1g">
+        <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#NamedElement"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_CqswsWYgEeuLiryWOk9R1g"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_64rwUGeoEeuCjPVOe7inow" name="dummy">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_METAMODELS/Ecore.metamodel.uml#ELong"/>
+      </ownedAttribute>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Extension" xmi:id="_CqrikGYgEeuLiryWOk9R1g" name="E_Animal_NamedElement1" memberEnd="_CqsJoGYgEeuLiryWOk9R1g _CqswsGYgEeuLiryWOk9R1g">
+      <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_CqsJoGYgEeuLiryWOk9R1g" name="extension_Animal" type="_BfN1AGYgEeuLiryWOk9R1g" aggregation="composite" association="_CqrikGYgEeuLiryWOk9R1g"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_NgdZUGYgEeuLiryWOk9R1g" name="Chicken">
+      <generalization xmi:id="_SRmNEGYgEeuLiryWOk9R1g" general="_BfN1AGYgEeuLiryWOk9R1g"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_OjZdAGYgEeuLiryWOk9R1g" name="Duck">
+      <generalization xmi:id="_S8e9IGYgEeuLiryWOk9R1g" general="_BfN1AGYgEeuLiryWOk9R1g"/>
+      <generalization xmi:id="_EyaR0GYlEeuLiryWOk9R1g" general="_7Sk6UGYkEeuLiryWOk9R1g"/>
+      <ownedAttribute xmi:id="_OCFtcGYlEeuLiryWOk9R1g" name="base_NamedElement" redefinedProperty="_CqswsGYgEeuLiryWOk9R1g _ArgG0WYlEeuLiryWOk9R1g" association="_OCEfUGYlEeuLiryWOk9R1g">
+        <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#NamedElement"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_OCFtcWYlEeuLiryWOk9R1g"/>
+      </ownedAttribute>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_7Sk6UGYkEeuLiryWOk9R1g" name="CanFly" isAbstract="true">
+      <ownedAttribute xmi:id="_ArgG0WYlEeuLiryWOk9R1g" name="base_NamedElement" association="_ArffwGYlEeuLiryWOk9R1g">
+        <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#NamedElement"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_ArgG0mYlEeuLiryWOk9R1g"/>
+      </ownedAttribute>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Extension" xmi:id="_ArffwGYlEeuLiryWOk9R1g" name="E_CanFly_NamedElement17" memberEnd="_ArgG0GYlEeuLiryWOk9R1g _ArgG0WYlEeuLiryWOk9R1g">
+      <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_ArgG0GYlEeuLiryWOk9R1g" name="extension_CanFly" type="_7Sk6UGYkEeuLiryWOk9R1g" aggregation="composite" association="_ArffwGYlEeuLiryWOk9R1g"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Extension" xmi:id="_OCEfUGYlEeuLiryWOk9R1g" name="E_Duck_NamedElement17" memberEnd="_OCFGYGYlEeuLiryWOk9R1g _OCFtcGYlEeuLiryWOk9R1g">
+      <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_OCFGYGYlEeuLiryWOk9R1g" name="extension_Duck" type="_OjZdAGYgEeuLiryWOk9R1g" aggregation="composite" association="_OCEfUGYlEeuLiryWOk9R1g"/>
+    </packagedElement>
+    <profileApplication xmi:id="_9rIH4GEHEeu3-bh5n6XVFQ">
+      <eAnnotations xmi:id="_9rIH4WEHEeu3-bh5n6XVFQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="pathmap://UML_PROFILES/Ecore.profile.uml#_z1OFcHjqEdy8S4Cr8Rc_NA"/>
+      </eAnnotations>
+      <appliedProfile href="pathmap://UML_PROFILES/Ecore.profile.uml#_0"/>
+    </profileApplication>
+  </uml:Profile>
+  <Ecore:EPackage xmi:id="_g7qLYGEKEeu3-bh5n6XVFQ" base_Package="_9qywsGEHEeu3-bh5n6XVFQ" packageName="validationproblem" nsPrefix="ValidationProblem" nsURI="http://www.papyrus.com/ValidationProblem/1" basePackage="com.validationproblem.profile" prefix="ValidationProblem"/>
+</xmi:XMI>

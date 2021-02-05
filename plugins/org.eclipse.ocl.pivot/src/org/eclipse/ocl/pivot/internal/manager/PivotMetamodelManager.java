@@ -1252,7 +1252,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 					if (eTarget instanceof EOperation) {
 						eOperation = (EOperation) eTarget;
 						while (eOperation.eContainer() instanceof EAnnotation) {
-							EAnnotation redefines = eOperation.getEAnnotation("redefines");
+							EAnnotation redefines = eOperation.getEAnnotation(PivotConstantsInternal.REDEFINES_ANNOTATION_SOURCE);
 							if (redefines != null) {
 								List<EObject> references = redefines.getReferences();
 								if (references.size() > 0) {

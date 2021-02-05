@@ -645,7 +645,8 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		Resource umlModelResource = resourceSet.getResource(umlModelURI, true);
 		assert umlModelResource != null;
 		assertNoResourceErrors("Model load", umlModelResource);
-	// XXX	assertNoValidationErrors("Model validation", umlModelResource);
+		assertNoValidationErrors("Model validation", umlModelResource);
+		urlClassLoader.close();
 		return umlModelResource;
 	}
 
@@ -1652,6 +1653,38 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		URI genModelURI = createModels(testFileStem, oclinecoreFile, genmodelFile);
 		doGenModel(genModelURI);
 		doEcoreCompile(ocl, testProjectName);
+		ocl.dispose();
+	}
+
+	/**
+	 * Verify that the static profile in Bug570717.uml model can be generated and compiled.
+	 */
+	public void testBug570891_uml() throws Exception {
+		TestOCL ocl = createOCL();
+		String testFileStem = "Bug570891";
+		String testProjectName = testFileStem; //"bug570891";
+//		TestFile umlModelFile = getTestFile(testFileStem + ".uml", ocl, getTestModelURI("models/uml/" + testFileStem + ".uml"));
+		TestFile umlProfileFile = getTestFile(testFileStem + ".profile.uml", ocl, getTestModelURI("models/uml/" + testFileStem + ".profile.uml"));
+		Resource umlProfileResource = loadUmlProfile(ocl, umlProfileFile.getURI());
+		String ecoreFileContent = createUMLEcoreModelContent(umlProfileResource);
+		String genmodelFileContent = createUMLGenModelContent(umlProfileResource, testFileStem, null);
+		createManifestFile();
+		createTestFileWithContent(getTestProject().getOutputFile(testFileStem + ".profile.ecore"), ecoreFileContent);
+		URI genModelURI = createTestFileWithContent(getTestProject().getOutputFile(testFileStem + ".profile.genmodel"), genmodelFileContent);
+		Path genModelPath = new Path("/" + getTestProject().getName() + "/" + testFileStem + ".profile.genmodel");
+		//
+		TestUMLImporter importer = new TestUMLImporter();
+		importer.reloadGenModel(genModelPath);
+		//
+		doGenModel(genModelURI);
+		//
+		doUMLCompile(ocl, testProjectName);
+
+		// Execute the profile
+		String qualifiedPackageClassName = "Bug570891.validationproblem.ValidationProblemPackage";
+		String pathMapName = "pathmap://VALIDATIONPROBLEM_PROFILE/";
+//		Resource umlModelResource = validateUmlModel(umlModelFile.getURI(), qualifiedPackageClassName, pathMapName);
+//		Model model = (Model)umlModelResource.getContents().get(0);
 		ocl.dispose();
 	}
 

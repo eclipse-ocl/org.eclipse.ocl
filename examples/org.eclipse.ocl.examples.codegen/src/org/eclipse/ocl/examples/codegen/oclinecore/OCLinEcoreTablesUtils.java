@@ -79,11 +79,11 @@ import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
+import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
-import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.xtext.util.Strings;
 
@@ -231,7 +231,7 @@ public class OCLinEcoreTablesUtils
 		if (eNamedElement == null) {
 			return "";
 		}
-		String name = EcoreUtil.getAnnotation(eNamedElement, PivotConstants.UML2_UML_PACKAGE_2_0_NS_URI, PivotConstants.ANNOTATION_DETAIL__ORIGINAL_NAME);
+		String name = EcoreUtil.getAnnotation(eNamedElement, DerivedConstants.UML2_UML_PACKAGE_2_0_NS_URI, DerivedConstants.ANNOTATION_DETAIL__ORIGINAL_NAME);
 		if (name == null) {
 			name = eNamedElement.getName();
 		}

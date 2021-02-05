@@ -32,7 +32,7 @@ public interface PivotConstantsInternal
 	static final @NonNull String PIVOT_ECORE = PLUGIN_ID + "/model/Pivot.ecore";
 	static final @NonNull URI GEN_MODEL_URI = URI.createPlatformPluginURI("/" + PLUGIN_ID + "/model/Pivot.genmodel", true); //$NON-NLS-1$
 
-	static final @SuppressWarnings("null")@NonNull String DOCUMENTATION_ANNOTATION_SOURCE = GenModelPackage.eNS_URI;
+	static final @NonNull String DOCUMENTATION_ANNOTATION_SOURCE = GenModelPackage.eNS_URI;
 	static final @NonNull String DOCUMENTATION_ANNOTATION_KEY = "documentation";
 
 	/**
@@ -40,7 +40,10 @@ public interface PivotConstantsInternal
 	 */
 	static final @NonNull String DUPLICATES_ANNOTATION_SOURCE = "duplicates"; // UMLUtil.ANNOTATION__DUPLICATES
 	static final @NonNull String REDEFINES_ANNOTATION_SOURCE = "redefines"; // UMLUtil.ANNOTATION__REDEFINES
-	//	static final @NonNull String SUBSETS_ANNOTATION_SOURCE = "subsets"; // UMLUtil.ANNOTATION__SUBSETS
+	/**
+	 * @since 1.14
+	 */
+	static final @NonNull String SUBSETS_ANNOTATION_SOURCE = "subsets"; // UMLUtil.ANNOTATION__SUBSETS
 	//	static final @NonNull String UNION_ANNOTATION_SOURCE = "union"; // UMLUtil.ANNOTATION__UNION
 
 	/**
