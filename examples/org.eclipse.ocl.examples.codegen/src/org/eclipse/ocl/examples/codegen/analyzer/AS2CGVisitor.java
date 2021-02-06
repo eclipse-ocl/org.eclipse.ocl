@@ -854,7 +854,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			}
 		}
 		else {
-			throw new UnsupportedOperationException();
+	//		throw new UnsupportedOperationException();
 		}
 		if (cgPropertyCallExp == null) {
 			CGExecutorOppositePropertyCallExp cgExecutorPropertyCallExp = CGModelFactory.eINSTANCE.createCGExecutorOppositePropertyCallExp();

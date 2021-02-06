@@ -25,9 +25,9 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
 
 public class EcoreExecutorProperty extends ExecutorProperty implements LibraryProperty.LibraryPropertyExtension
 {			// FIXME Eliminate spurious ExecutorProperty rather than AbstractExecutorProperty once API has evolved publicly
-	
+
 	protected final @NonNull EStructuralFeature eFeature;
-	
+
 	public EcoreExecutorProperty(/*@NonNull*/ EStructuralFeature eFeature, @NonNull Type executorType, int propertyIndex) {
 		super(ClassUtil.nonNullModel(eFeature.getName()), executorType, propertyIndex);
 		this.eFeature = eFeature;
@@ -49,7 +49,7 @@ public class EcoreExecutorProperty extends ExecutorProperty implements LibraryPr
 		Object eValue = eObject.eGet(eFeature);
 		return eValue != null ? executor.getIdResolver().boxedValueOf(eValue, eFeature, returnTypeId) : null;
 	}
-	
+
 	public @NonNull EStructuralFeature getEFeature() {
 		return eFeature;
 	}
@@ -62,5 +62,15 @@ public class EcoreExecutorProperty extends ExecutorProperty implements LibraryPr
 	@Override
 	public void initValue(@NonNull Object objectValue, @Nullable Object propertyValue) {
 		((EObject)objectValue).eSet(eFeature, propertyValue);
+	}
+
+	@Override
+	public boolean isIsMany() {
+		return eFeature.isMany();
+	}
+
+	@Override
+	public boolean isIsRequired() {
+		return eFeature.isRequired();
 	}
 }

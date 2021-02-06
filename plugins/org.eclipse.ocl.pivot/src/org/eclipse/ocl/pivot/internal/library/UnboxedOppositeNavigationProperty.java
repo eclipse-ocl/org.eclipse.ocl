@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -31,15 +31,15 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 public class UnboxedOppositeNavigationProperty extends AbstractProperty
 {
 	protected @NonNull PropertyId oppositePropertyId;
-	
+
 	public UnboxedOppositeNavigationProperty(@NonNull PropertyId oppositePropertyId) {
 		this.oppositePropertyId = oppositePropertyId;
 	}
-	
+
 	@Override
 	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
 		IdResolver idResolver = executor.getIdResolver();
-		Property oppositeProperty = idResolver.getProperty(oppositePropertyId);		
+		Property oppositeProperty = idResolver.getProperty(oppositePropertyId);
 		ModelManager.ModelManagerExtension modelManager = (ModelManager.ModelManagerExtension)executor.getModelManager();
 		Type thatType = ClassUtil.nonNullModel(oppositeProperty.getType());
 		if (thatType instanceof CollectionType) {
@@ -57,6 +57,15 @@ public class UnboxedOppositeNavigationProperty extends AbstractProperty
 				}
 			}
 		}
-		return results;
+		if (oppositeProperty.isIsMany()) {
+			return results;
+		}
+		int size = results.size();
+		if (size > 1) {
+			throw new IllegalStateException("Too many " + oppositeProperty.getName());
+		}
+		else {
+			return size == 1 ? results.get(0) : null;
+		}
 	}
 }
