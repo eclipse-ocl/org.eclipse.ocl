@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Ecore="http://www.eclipse.org/uml2/schemas/Ecore/5" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xsi:schemaLocation="http://www.eclipse.org/uml2/schemas/Ecore/5 pathmap://UML_PROFILES/Ecore.profile.uml#_z1OFcHjqEdy8S4Cr8Rc_NA">
+  <uml:Profile xmi:id="_9qywsGEHEeu3-bh5n6XVFQ" name="Bug570717a" metaclassReference="_CtE-0GEIEeu3-bh5n6XVFQ _oTto8GEIEeu3-bh5n6XVFQ _SpPEEGEJEeu3-bh5n6XVFQ">
+    <elementImport xmi:id="_CtE-0GEIEeu3-bh5n6XVFQ" alias="Element">
+      <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Element"/>
+    </elementImport>
+    <elementImport xmi:id="_oTto8GEIEeu3-bh5n6XVFQ" alias="Dependency">
+      <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Dependency"/>
+    </elementImport>
+    <elementImport xmi:id="_SpPEEGEJEeu3-bh5n6XVFQ" alias="NamedElement">
+      <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#NamedElement"/>
+    </elementImport>
+    <packageImport xmi:id="_9tQ14GEHEeu3-bh5n6XVFQ">
+      <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
+    </packageImport>
+    <packageImport xmi:id="_9tRc8GEHEeu3-bh5n6XVFQ">
+      <importedPackage xmi:type="uml:Model" href="pathmap://UML_METAMODELS/UML.metamodel.uml#_0"/>
+    </packageImport>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_DZkRYGEIEeu3-bh5n6XVFQ" name="Stereotype1">
+      <ownedAttribute xmi:id="_TTuLgGEJEeu3-bh5n6XVFQ" name="base_NamedElement" association="_TTsWUGEJEeu3-bh5n6XVFQ">
+        <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#NamedElement"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_TTuLgWEJEeu3-bh5n6XVFQ"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_xoj4cGEIEeu3-bh5n6XVFQ" name="depends" type="_DZkRYGEIEeu3-bh5n6XVFQ" isReadOnly="true" isDerived="true">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_3Ake8GEIEeu3-bh5n6XVFQ"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_3AqlkGEIEeu3-bh5n6XVFQ" value="*"/>
+        <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_4c1YQGFuEeutDq-J8nQl6w">
+          <language>OCL</language>
+          <body>let supplierElement : Set(UML::NamedElement) = Depends.allInstances()->select(base_Dependency.client->includes(self.base_NamedElement)).base_Dependency.supplier->asSet() in Stereotype1.allInstances()->select(supplierElement->includes(base_NamedElement))</body>
+        </defaultValue>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_iFn_IGFBEeu3-bh5n6XVFQ" name="enum1" type="_eJbPUGFBEeu3-bh5n6XVFQ" isReadOnly="true" isDerived="true">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_lG-3UGFBEeu3-bh5n6XVFQ"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_lHAsgGFBEeu3-bh5n6XVFQ" value="*"/>
+        <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_YYG3gGFuEeutDq-J8nQl6w">
+          <language>OCL</language>
+          <body>Set(Enumeration1){Enumeration1::EnumerationLiteral2}</body>
+        </defaultValue>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_sJnP8GFqEeutDq-J8nQl6w" name="enum0" type="_eJbPUGFBEeu3-bh5n6XVFQ" isReadOnly="true" isDerived="true">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_sJnP8WFqEeutDq-J8nQl6w"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_sJnP8mFqEeutDq-J8nQl6w" value="1"/>
+        <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_1GlK8GFqEeutDq-J8nQl6w">
+          <language>OCL</language>
+          <body>Enumeration1::EnumerationLiteral2</body>
+        </defaultValue>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_z_wekGKjEeuBRb3wqcRYCA" name="integerSet" isReadOnly="true" isDerived="true">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_34kjMGKjEeuBRb3wqcRYCA"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_34rQ4GKjEeuBRb3wqcRYCA" value="*"/>
+        <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_AFJjEGKkEeuBRb3wqcRYCA" name="spec">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+          <language>OCL</language>
+          <body>Set(UML::Integer){101}</body>
+        </defaultValue>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_DwPUwGKkEeuBRb3wqcRYCA" name="integerSingle" isReadOnly="true" isDerived="true">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+        <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_KYs2gGKkEeuBRb3wqcRYCA" name="spec">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+          <language>OCL</language>
+          <body>101</body>
+        </defaultValue>
+      </ownedAttribute>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_ov85AGEIEeu3-bh5n6XVFQ" name="Depends">
+      <ownedRule xmi:id="_7jolAGEJEeu3-bh5n6XVFQ" name="client_is_Stereotype1" constrainedElement="_ov85AGEIEeu3-bh5n6XVFQ">
+        <specification xmi:type="uml:OpaqueExpression" xmi:id="_7jqaMGEJEeu3-bh5n6XVFQ" name="spec">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+          <language>OCL</language>
+          <body>Stereotype1.allInstances()->exists(self.base_Dependency.client->includes(base_NamedElement))</body>
+        </specification>
+      </ownedRule>
+      <ownedRule xmi:id="_AoPHUGEKEeu3-bh5n6XVFQ" name="supplier_is_Stereotype1" constrainedElement="_ov85AGEIEeu3-bh5n6XVFQ">
+        <specification xmi:type="uml:OpaqueExpression" xmi:id="_AoPHUWEKEeu3-bh5n6XVFQ" name="spec">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+          <language>OCL</language>
+          <body>Stereotype1.allInstances()->exists(self.base_Dependency.supplier->includes(base_NamedElement))</body>
+        </specification>
+      </ownedRule>
+      <ownedAttribute xmi:id="_v4vgoWEIEeu3-bh5n6XVFQ" name="base_Dependency" association="_v4u5kGEIEeu3-bh5n6XVFQ">
+        <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Dependency"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_v4vgomEIEeu3-bh5n6XVFQ"/>
+      </ownedAttribute>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Extension" xmi:id="_v4u5kGEIEeu3-bh5n6XVFQ" name="E_Depends_Dependency9" memberEnd="_v4vgoGEIEeu3-bh5n6XVFQ _v4vgoWEIEeu3-bh5n6XVFQ">
+      <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_v4vgoGEIEeu3-bh5n6XVFQ" name="extension_Depends" type="_ov85AGEIEeu3-bh5n6XVFQ" aggregation="composite" association="_v4u5kGEIEeu3-bh5n6XVFQ"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Extension" xmi:id="_TTsWUGEJEeu3-bh5n6XVFQ" name="E_Stereotype1_NamedElement10" memberEnd="_TTtkcGEJEeu3-bh5n6XVFQ _TTuLgGEJEeu3-bh5n6XVFQ">
+      <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_TTtkcGEJEeu3-bh5n6XVFQ" name="extension_Stereotype1" type="_DZkRYGEIEeu3-bh5n6XVFQ" aggregation="composite" association="_TTsWUGEJEeu3-bh5n6XVFQ"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Enumeration" xmi:id="_eJbPUGFBEeu3-bh5n6XVFQ" name="Enumeration1">
+      <ownedLiteral xmi:id="_fkdp8GFBEeu3-bh5n6XVFQ" name="EnumerationLiteral1"/>
+      <ownedLiteral xmi:id="_gJEL0GFBEeu3-bh5n6XVFQ" name="EnumerationLiteral2"/>
+      <ownedLiteral xmi:id="_ggdYIGFBEeu3-bh5n6XVFQ" name="EnumerationLiteral3"/>
+    </packagedElement>
+    <profileApplication xmi:id="_9rIH4GEHEeu3-bh5n6XVFQ">
+      <eAnnotations xmi:id="_9rIH4WEHEeu3-bh5n6XVFQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="pathmap://UML_PROFILES/Ecore.profile.uml#_z1OFcHjqEdy8S4Cr8Rc_NA"/>
+      </eAnnotations>
+      <appliedProfile href="pathmap://UML_PROFILES/Ecore.profile.uml#_0"/>
+    </profileApplication>
+  </uml:Profile>
+  <Ecore:EPackage xmi:id="_g7qLYGEKEeu3-bh5n6XVFQ" base_Package="_9qywsGEHEeu3-bh5n6XVFQ" packageName="validationproblem" nsPrefix="bug570717" nsURI="http://Bug570717a" basePackage="bug570717a" prefix="Bug570717a"/>
+</xmi:XMI>
