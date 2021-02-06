@@ -10,12 +10,26 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.generator;
 
+import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 
 public class EcoreGenModelHelper extends AbstractGenModelHelper
 {
 	public EcoreGenModelHelper(@NonNull PivotMetamodelManager metamodelManager) {
 		super(metamodelManager);
+	}
+
+	@Override
+	public @NonNull String getName(@Nullable ENamedElement eNamedElement) {
+		if (eNamedElement == null) {
+			return "";
+		}
+		String name = eNamedElement.getName();
+		if (name == null) {
+			name = "";
+		}
+		return name;
 	}
 }

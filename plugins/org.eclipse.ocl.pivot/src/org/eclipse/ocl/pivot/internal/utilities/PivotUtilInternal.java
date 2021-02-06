@@ -33,6 +33,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionLiteralExp;
 import org.eclipse.ocl.pivot.CollectionLiteralPart;
+import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Import;
@@ -64,6 +65,7 @@ import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
+import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -703,6 +705,15 @@ public class PivotUtilInternal //extends PivotUtil
 
 	public static boolean isASURI(@Nullable URI uri) {
 		return (uri != null) && isASURI(uri.toString());
+	}
+
+	/**
+	 * Return true if completeClass conforms to elementType but not to oclVoidType.
+	 *
+	 * @since 1.14
+	 */
+	public static boolean isElementType(@NonNull CompleteClass completeClass, @NonNull Type elementType, @NonNull VoidType oclVoidType) {
+		return completeClass.conformsTo(elementType) && !completeClass.conformsTo(oclVoidType);
 	}
 
 	/**

@@ -32,6 +32,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.examples.codegen.generator.AbstractCodeGenerator;
 import org.eclipse.ocl.examples.codegen.generator.AbstractGenModelHelper;
 import org.eclipse.ocl.examples.codegen.generator.CodeGenOptions;
+import org.eclipse.ocl.examples.codegen.generator.GenModelHelper;
 import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
 import org.eclipse.ocl.examples.codegen.java.types.EObjectDescriptor;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
@@ -967,7 +968,8 @@ public class JavaStream
 	public void appendQualifiedLiteralName(@NonNull Operation anOperation) {
 		org.eclipse.ocl.pivot.Class type = anOperation.getOwningClass();
 		if (type != null) {
-			GenPackage genPackage = codeGenerator.getGenModelHelper().getGenPackage(type);
+			GenModelHelper genModelHelper = codeGenerator.getGenModelHelper();
+			GenPackage genPackage = genModelHelper.getGenPackage(type);
 			if (genPackage != null) {
 				String qualifiedPackageName = genPackage.getQualifiedPackageName() + AbstractGenModelHelper.TABLES_PACKAGE_NAME;
 				String tablesClassName = genPackage.getPrefix() + AbstractGenModelHelper.TABLES_CLASS_SUFFIX;

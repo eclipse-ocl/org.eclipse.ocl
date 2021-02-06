@@ -86,12 +86,12 @@ public abstract class GenerateGrammar extends AbstractWorkflowComponent
 	}
 
 	protected @NonNull String emitEClassifierLiteral(@NonNull EClassifier eClassifier) {
-		EPackage ePackage = ClassUtil.nonNullEMF(eClassifier.getEPackage());
-		GenPackage genPackage = genModelHelper.getGenPackage(ePackage);
-		if (genPackage == null) {
-			return "<<" + ePackage.getNsURI() + ">>";
-		}
-		return genPackage.getQualifiedPackageInterfaceName() + ".Literals" + "." + genModelHelper.getLiteralName(eClassifier);
+	//	EPackage ePackage = ClassUtil.nonNullEMF(eClassifier.getEPackage());
+	//	GenPackage genPackage = genModelHelper.getGenPackage(ePackage);
+	//	if (genPackage == null) {
+	//		return "<<" + ePackage.getNsURI() + ">>";
+	//	}
+		return genModelHelper.getFullyQualifiedEcoreLiteralName(eClassifier);
 	}
 
 	protected @NonNull String emitEPackageLiteral(@NonNull EPackage ePackage) {
@@ -103,13 +103,13 @@ public abstract class GenerateGrammar extends AbstractWorkflowComponent
 	}
 
 	protected @NonNull String emitEEnumLiteral(@NonNull EEnumLiteral enumLiteral) {
-		EClassifier eClassifier = enumLiteral.getEEnum();
-		EPackage ePackage = ClassUtil.nonNullEMF(eClassifier.getEPackage());
-		GenPackage genPackage = genModelHelper.getGenPackage(ePackage);
-		if (genPackage == null) {
-			return "<<" + ePackage.getNsURI() + ">>";
-		}
-		return genPackage.getQualifiedPackageInterfaceName() + ".Literals" + "." + genModelHelper.getLiteralName(eClassifier)+".getEEnumLiteral(\""+ enumLiteral.getName() + "\")";
+		EClassifier eClassifier = ClassUtil.nonNullState(enumLiteral.getEEnum());
+	//	EPackage ePackage = ClassUtil.nonNullEMF(eClassifier.getEPackage());
+	//	GenPackage genPackage = genModelHelper.getGenPackage(ePackage);
+	//	if (genPackage == null) {
+	//		return "<<" + ePackage.getNsURI() + ">>";
+	//	}
+		return genModelHelper.getQualifiedEcoreLiteralName(eClassifier)+".getEEnumLiteral(\""+ enumLiteral.getName() + "\")";
 	}
 
 	/*

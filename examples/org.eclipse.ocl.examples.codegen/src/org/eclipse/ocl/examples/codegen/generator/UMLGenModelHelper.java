@@ -12,11 +12,15 @@ package org.eclipse.ocl.examples.codegen.generator;
 
 import org.eclipse.emf.codegen.ecore.genmodel.GenFeature;
 import org.eclipse.emf.ecore.EAnnotation;
+import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
+import org.eclipse.ocl.pivot.util.DerivedConstants;
 
 public class UMLGenModelHelper extends AbstractGenModelHelper
 {
@@ -28,6 +32,21 @@ public class UMLGenModelHelper extends AbstractGenModelHelper
 	public @NonNull GenFeature getGenFeature(@NonNull EStructuralFeature eStructuralFeature) throws GenModelException {
 		EStructuralFeature eFeature = resolveRedefinition(eStructuralFeature);
 		return super.getGenFeature(eFeature);
+	}
+
+	@Override
+	public @NonNull String getName(@Nullable ENamedElement eNamedElement) {
+		if (eNamedElement == null) {
+			return "";
+		}
+		String name = EcoreUtil.getAnnotation(eNamedElement, DerivedConstants.UML2_UML_PACKAGE_2_0_NS_URI, DerivedConstants.ANNOTATION_DETAIL__ORIGINAL_NAME);
+		if (name == null) {
+			name = eNamedElement.getName();
+		}
+		if (name == null) {
+			name = "";
+		}
+		return name;
 	}
 
 	protected @NonNull EStructuralFeature resolveRedefinition(@NonNull EStructuralFeature eStructuralFeature) {

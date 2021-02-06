@@ -863,7 +863,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		return Collections.singletonList(pivotProperty);
 	}
 
-	public @NonNull Iterable<CompleteClass> getAllSuperCompleteClasses(@NonNull Type type) {
+	public @NonNull Iterable<@NonNull CompleteClass> getAllSuperCompleteClasses(@NonNull Type type) {
 		CompleteClass completeClass = completeModel.getCompleteClass(type);
 		return completeClass.getSuperCompleteClasses();
 	}
