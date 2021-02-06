@@ -80,7 +80,7 @@ public abstract class AutoCodeGenerator extends JavaCodeGenerator
 			@NonNull GenPackage genPackage,
 			@Nullable GenPackage superGenPackage,
 			@Nullable GenPackage baseGenPackage) {
-		super(environmentFactory);
+		super(environmentFactory, genPackage.getGenModel());
 		this.helper = new PivotHelper(environmentFactory);
 		this.genModel = ClassUtil.nonNullState(genPackage.getGenModel());
 		getOptions().setUseNullAnnotations(OCLinEcoreGenModelGeneratorAdapter.useNullAnnotations(genModel));

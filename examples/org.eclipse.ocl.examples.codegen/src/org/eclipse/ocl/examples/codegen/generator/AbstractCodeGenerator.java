@@ -15,6 +15,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AnalysisVisitor;
@@ -42,11 +43,11 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 	private /*@LazyNonNull*/ List<@NonNull Exception> problems = null;
 	private @NonNull String defaultIndent = "    ";
 
-	protected AbstractCodeGenerator(@NonNull EnvironmentFactoryInternal environmentFactory) {
+	protected AbstractCodeGenerator(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable GenModel genModel) {
 		this.environmentFactory = (EnvironmentFactoryInternalExtension) environmentFactory;
 		this.metamodelManager = environmentFactory.getMetamodelManager();
 		this.nameManager = createNameManager();
-		this.genModelHelper = createGenModelHelper();
+		this.genModelHelper = createGenModelHelper(genModel);
 	}
 
 	protected AbstractCodeGenerator(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull NameManager nameManager,
@@ -79,7 +80,7 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 		return new AnalysisVisitor(getAnalyzer());
 	}
 
-	protected abstract @NonNull GenModelHelper createGenModelHelper();
+	protected abstract @NonNull GenModelHelper createGenModelHelper(@Nullable GenModel genModel);
 
 	public abstract @NonNull ImportNameManager createImportNameManager();
 

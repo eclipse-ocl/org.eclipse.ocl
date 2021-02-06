@@ -16,6 +16,7 @@ import org.eclipse.emf.codegen.ecore.genmodel.GenClass;
 import org.eclipse.emf.codegen.ecore.genmodel.GenClassifier;
 import org.eclipse.emf.codegen.ecore.genmodel.GenDataType;
 import org.eclipse.emf.codegen.ecore.genmodel.GenFeature;
+import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.emf.codegen.ecore.genmodel.GenOperation;
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
 import org.eclipse.emf.codegen.ecore.genmodel.GenParameter;
@@ -47,10 +48,19 @@ import org.eclipse.ocl.pivot.library.LibraryUnaryOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 
-public class AbstractGenModelHelper implements GenModelHelper
+public abstract class AbstractGenModelHelper implements GenModelHelper
 {
 	public static final @NonNull String TABLES_CLASS_SUFFIX = "Tables";
 	public static final @NonNull String TABLES_PACKAGE_NAME = "";
+
+	public static @NonNull GenModelHelper create(@NonNull PivotMetamodelManager metamodelManager, @Nullable GenModel genModel) {
+		if (genModel instanceof org.eclipse.uml2.codegen.ecore.genmodel.GenModel) {
+			return new UMLGenModelHelper(metamodelManager);
+		}
+		else {
+			return new EcoreGenModelHelper(metamodelManager);
+		}
+	}
 
 	public static @NonNull String encodeName(@NonNull NamedElement element) {
 		int arity = element instanceof Operation ? ((Operation)element).getOwnedParameters().size() : 0;
@@ -132,7 +142,7 @@ public class AbstractGenModelHelper implements GenModelHelper
 
 	protected final @NonNull PivotMetamodelManager metamodelManager;
 
-	public AbstractGenModelHelper(@NonNull PivotMetamodelManager metamodelManager) {
+	protected AbstractGenModelHelper(@NonNull PivotMetamodelManager metamodelManager) {
 		this.metamodelManager = metamodelManager;
 	}
 
@@ -492,6 +502,7 @@ public class AbstractGenModelHelper implements GenModelHelper
 		return getGenPackage(ePackage);
 	}
 
+	@Override
 	public @Nullable GenPackage getGenPackage(@NonNull EPackage ePackage) {
 		String nsURI = ePackage.getNsURI();
 		if (nsURI == null) {

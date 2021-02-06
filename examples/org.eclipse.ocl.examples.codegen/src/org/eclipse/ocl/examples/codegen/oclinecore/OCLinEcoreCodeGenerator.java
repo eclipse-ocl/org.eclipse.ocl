@@ -368,7 +368,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 	private @Nullable Map<@NonNull ExpressionInOCL, @NonNull ExpressionInOCL> newQuery2oldQuery = null;
 
 	protected OCLinEcoreCodeGenerator(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull GenPackage genPackage) {
-		super(environmentFactory);
+		super(environmentFactory, genPackage.getGenModel());
 		this.standardLibrary = environmentFactory.getStandardLibrary();
 		GenModel genModel = ClassUtil.nonNullModel(genPackage.getGenModel());
 		genModel.reconcile();

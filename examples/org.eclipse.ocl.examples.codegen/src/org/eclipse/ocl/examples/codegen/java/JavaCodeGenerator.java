@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
@@ -199,8 +200,13 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	private @NonNull Map<ElementId, BoxedDescriptor> boxedDescriptors = new HashMap<ElementId, BoxedDescriptor>();
 	private /*@LazyNonNull*/ ASM5JavaAnnotationReader annotationReader = null;
 
+	@Deprecated /* @deprecated pass a genmodel - necessary for UML support */
 	public JavaCodeGenerator(@NonNull EnvironmentFactoryInternal environmentFactory) {
-		super(environmentFactory);
+		this(environmentFactory, null);
+	}
+
+	public JavaCodeGenerator(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable GenModel genModel) {
+		super(environmentFactory, genModel);
 	}
 
 	@Override
@@ -239,8 +245,8 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	}
 
 	@Override
-	protected @NonNull GenModelHelper createGenModelHelper() {
-		return new AbstractGenModelHelper(metamodelManager);
+	protected @NonNull GenModelHelper createGenModelHelper(@Nullable GenModel genModel) {
+		return AbstractGenModelHelper.create(metamodelManager, genModel);
 	}
 
 	protected @NonNull Id2EClassVisitor createId2EClassVisitor() {

@@ -37,7 +37,8 @@ import org.eclipse.emf.mwe.core.lib.AbstractWorkflowComponent;
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 import org.eclipse.emf.mwe.utils.StandaloneSetup;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.examples.codegen.generator.AbstractGenModelHelper;
+import org.eclipse.ocl.examples.codegen.generator.EcoreGenModelHelper;
+import org.eclipse.ocl.examples.codegen.generator.GenModelHelper;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
@@ -63,7 +64,7 @@ public abstract class GenerateGrammar extends AbstractWorkflowComponent
 
 	protected String sourceFile;
 
-	protected AbstractGenModelHelper genModelHelper;
+	protected GenModelHelper genModelHelper;
 	private Map<EClassifier, Map<Notifier, String>> nameMaps = new HashMap<EClassifier, Map<Notifier, String>>();
 	private Map<String, Grammar> name2grammar = new HashMap<String, Grammar>();
 	private int indent = 0;
@@ -278,7 +279,7 @@ public abstract class GenerateGrammar extends AbstractWorkflowComponent
 	protected void invokeInternal(WorkflowContext ctx, ProgressMonitor monitor, Issues issues) {
 		OCL ocl = OCL.newInstance();
 		PivotMetamodelManager metamodelManager = (PivotMetamodelManager) ocl.getMetamodelManager();
-		genModelHelper = new AbstractGenModelHelper(metamodelManager);
+		genModelHelper = new EcoreGenModelHelper(metamodelManager);
 		String rootPath = StandaloneSetup.getPlatformRootPath();
 		File folder = new File(rootPath + javaFolder + "/" + javaPackageName.replace(".", "/"));
 		try {

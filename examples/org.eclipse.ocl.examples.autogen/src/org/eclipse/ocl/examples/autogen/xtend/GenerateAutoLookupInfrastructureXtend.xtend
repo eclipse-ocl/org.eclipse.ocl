@@ -561,7 +561,7 @@ class GenerateAutoLookupInfrastructureXtend extends GenerateVisitorsXtend
 	
 	private def GenModelHelper createGenModelHelper(GenPackage genPackage) {
 		var PivotMetamodelManager mManager = PivotUtilInternal.getEnvironmentFactory(genPackage.getEcorePackage().eResource).metamodelManager;
-		return new AbstractGenModelHelper(mManager);
+		return AbstractGenModelHelper.create(mManager, genPackage.getGenModel());
 	}
 	
 	private def String getTypeLiteral(Type type) {

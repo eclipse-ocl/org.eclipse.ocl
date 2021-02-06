@@ -13,6 +13,7 @@ package org.eclipse.ocl.examples.codegen.oclinjunit;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
@@ -50,7 +51,7 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		boolean savedIsCodeGenerator = completeEnvironment.isCodeGeneration();
 		try {
 			completeEnvironment.setCodeGeneration(true);		// Workaround for BUG 452621
-			JUnitCodeGenerator expressionInOCL2Class = new JUnitCodeGenerator(environmentFactory, true);
+			JUnitCodeGenerator expressionInOCL2Class = new JUnitCodeGenerator(environmentFactory, null, true);
 			return expressionInOCL2Class.generate(query, packageName, className);
 		}
 		finally {
@@ -61,8 +62,8 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 	protected final @NonNull JavaGlobalContext<@NonNull JUnitCodeGenerator> globalContext = new JavaGlobalContext<>(this);
 	protected final @NonNull CodeGenAnalyzer cgAnalyzer;
 
-	protected JUnitCodeGenerator(@NonNull EnvironmentFactoryInternal environmentFactory, boolean useNullAnnotations) {
-		super(environmentFactory);
+	protected JUnitCodeGenerator(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable GenModel genModel, boolean useNullAnnotations) {
+		super(environmentFactory, genModel);
 		getOptions().setUseNullAnnotations(useNullAnnotations);
 		cgAnalyzer = new CodeGenAnalyzer(this);
 	}

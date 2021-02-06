@@ -49,6 +49,7 @@ public interface GenModelHelper
 	@Nullable GenClassifier getGenClassifier(org.eclipse.ocl.pivot.@NonNull Class type);
 	@NonNull GenFeature getGenFeature(@NonNull EStructuralFeature eStructuralFeature) throws GenModelException;
 	@Nullable GenOperation getGenOperation(@NonNull Operation operation);
+	@Nullable GenPackage getGenPackage(@NonNull EPackage ePackage);
 	@Nullable GenPackage getGenPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage);
 	@Nullable GenPackage getGenPackage(org.eclipse.ocl.pivot.@NonNull Class type);
 	@Nullable GenParameter getGenParameter(@NonNull Parameter parameter);
