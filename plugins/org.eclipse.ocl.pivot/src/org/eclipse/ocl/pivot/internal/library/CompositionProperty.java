@@ -18,6 +18,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.PropertyId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.library.AbstractProperty;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
@@ -29,15 +30,15 @@ public class CompositionProperty extends AbstractProperty
 {
 	protected final @NonNull EReference eContainmentFeature;
 	protected final @NonNull PropertyId propertyId;
-	
+
 	public CompositionProperty(@NonNull EReference eContainmentFeature, @NonNull PropertyId propertyId) {
 		this.eContainmentFeature = eContainmentFeature;
 		this.propertyId = propertyId;
 	}
-	
+
 	@Override
 	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
-		EObject eObject = asNavigableObject(sourceValue, eContainmentFeature, executor); 
+		EObject eObject = asNavigableObject(sourceValue, eContainmentFeature, executor);
 		EObject eContainer = eObject.eContainer();
 		if (eContainer == null) {
 			return null;				// No container
@@ -57,7 +58,7 @@ public class CompositionProperty extends AbstractProperty
 	}
 
 	protected boolean isReferenced(EReference eObject) {
-		EAnnotation eAnnotation = eObject.getEAnnotation("subsets");
+		EAnnotation eAnnotation = eObject.getEAnnotation(PivotConstantsInternal.SUBSETS_ANNOTATION_SOURCE);
 		if (eAnnotation == null) {
 			return false;
 		}

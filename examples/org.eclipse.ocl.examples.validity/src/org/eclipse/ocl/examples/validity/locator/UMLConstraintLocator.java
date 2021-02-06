@@ -44,6 +44,7 @@ import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.uml2.uml.Constraint;
@@ -288,7 +289,7 @@ public class UMLConstraintLocator extends AbstractPivotConstraintLocator
 	public @Nullable Set<@NonNull TypeURI> getTypeURIs(@NonNull ValidityManager validityManager, @NonNull EObject validatableObject) {
 		EClass eClass = validatableObject.eClass();
 		if (eClass != null) {
-			EAnnotation eAnnotation = eClass.getEAnnotation("http://www.eclipse.org/uml2/2.0.0/UML");
+			EAnnotation eAnnotation = eClass.getEAnnotation(DerivedConstants.UML2_UML_PACKAGE_2_0_NS_URI);
 			if ((eAnnotation != null) && (eAnnotation.getReferences().size() > 0)) { // Stereotype application
 				EObject umlClass = eAnnotation.getReferences().get(0);
 				if (umlClass != null) {

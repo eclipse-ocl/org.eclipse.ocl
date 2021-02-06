@@ -167,24 +167,24 @@ public interface PivotConstants
 	 * Original xmi:id approach using AS2XMIID to generate long unique hierarchical moniker-based xmi:ids.
 	 * @since 1.4
 	 */
-	public static final int XMIIDS_USING_MONIKERS = 0;
+	static final int XMIIDS_USING_MONIKERS = 0;
 
 	/**
 	 * New xmi:id approach using AS2ID and LUSSIDS to generate nominally 5-letter xmi:ids based on unique-ish hierarchical hashcodes.
 	 * @since 1.4
 	 */
-	public static final int XMIIDS_USING_LUSSIDS = 1;
+	static final int XMIIDS_USING_LUSSIDS = 1;
 
 	/**
 	 * Current xmi:id approach.
 	 * @since 1.4
 	 */
-	public static final int XMIIDS_CURRENT = XMIIDS_USING_LUSSIDS;
+	static final int XMIIDS_CURRENT = XMIIDS_USING_LUSSIDS;
 
 	/**
 	 * The delegate URI for Ecore annotations using the Pivot evaluator.
 	 */
-	@NonNull String OCL_DELEGATE_URI_PIVOT = OCLConstants.OCL_DELEGATE_URI_SLASH + "Pivot"; //$NON-NLS-1$
+	static final @NonNull String OCL_DELEGATE_URI_PIVOT = OCLConstants.OCL_DELEGATE_URI_SLASH + "Pivot"; //$NON-NLS-1$
 
-	@NonNull String OCL_DELEGATE_URI_DEBUG = OCLConstants.OCL_DELEGATE_URI_SLASH + "Debug"; //$NON-NLS-1$
+	static final @NonNull String OCL_DELEGATE_URI_DEBUG = OCLConstants.OCL_DELEGATE_URI_SLASH + "Debug"; //$NON-NLS-1$
 }
