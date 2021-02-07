@@ -83,6 +83,12 @@ public abstract class LazyModelManager extends AbstractModelManager implements M
 			roots = Collections.singleton(context); // can only search this object tree
 		}
 	}
+	/**
+	 * @since 1.14
+	 */
+	public LazyModelManager(@NonNull Collection<@NonNull EObject> allContents) {
+		roots = allContents;
+	}
 
 	/**
 	 * Lazily computes the extent of the specified class <code>key</code>.

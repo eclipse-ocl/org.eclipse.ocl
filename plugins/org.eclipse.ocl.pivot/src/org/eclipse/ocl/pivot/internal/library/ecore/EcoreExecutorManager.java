@@ -149,7 +149,24 @@ public class EcoreExecutorManager extends ExecutorManager
 				modelManager2 = modelManager;
 				if (modelManager2 == null) {
 					if (contextObject instanceof EObject) {
-						modelManager2 = new LazyModelManager((EObject)contextObject)
+						EObject contextEObject = (EObject)contextObject;
+						List<@NonNull EObject> allContents = new ArrayList<>();
+						Resource contextResource = contextEObject.eResource();
+						if (contextResource != null) {
+							ResourceSet resourceSet = contextResource.getResourceSet();
+							if (resourceSet != null) {
+								for (Resource resource : resourceSet.getResources()) {
+									allContents.addAll(resource.getContents());
+								}
+							}
+							else {
+								allContents.addAll(contextResource.getContents());
+							}
+						}
+						else {
+							allContents.add(contextEObject);
+						}
+						modelManager2 = new LazyModelManager(allContents)
 						{
 							@Override
 							protected boolean isInstance(@NonNull Type type, @NonNull EObject element) {
