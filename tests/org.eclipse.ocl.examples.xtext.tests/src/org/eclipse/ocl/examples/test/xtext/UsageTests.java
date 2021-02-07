@@ -20,6 +20,7 @@ import java.lang.reflect.Field;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,9 +73,13 @@ import org.eclipse.ocl.examples.xtext.tests.TestFile;
 import org.eclipse.ocl.examples.xtext.tests.TestUIUtil;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.evaluation.AbstractModelManager;
+import org.eclipse.ocl.pivot.internal.evaluation.AbstractExecutor;
+import org.eclipse.ocl.pivot.internal.library.executor.ExecutorManager;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
+import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
@@ -624,7 +629,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		return umlProfileResource;
 	}
 
-	protected @NonNull Resource validateUmlModel(@NonNull URI umlModelURI, @NonNull String qualifiedPackageClassName, @NonNull String pathMapName) throws Exception, IllegalAccessException {
+	protected @NonNull Resource validateUmlModel(@NonNull URI umlModelURI, @NonNull String qualifiedPackageClassName, @NonNull String pathMapName, @Nullable Map<URI, URI> extraUriMap) throws Exception, IllegalAccessException {
 		File projectFile = getTestProject().getFile();
 		File explicitClassPath = new File(projectFile, "test-bin");
 		URL url = explicitClassPath.toURI().toURL();
@@ -635,12 +640,16 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		assert packageImpl != null;
 		String nsURI = packageImpl.getNsURI();
 		//
-		ResourceSet resourceSet = new ResourceSetImpl(); //ocl.getResourceSet();
+		ResourceSet resourceSet = new ResourceSetImpl();
 		UMLResourcesUtil.init(resourceSet);
 		resourceSet.getPackageRegistry().put(nsURI, packageImpl);
 		URI pathMapURI = URI.createURI(pathMapName, true);
 		URI profileFolderURI = umlModelURI.trimSegments(1).appendSegment("");
-		resourceSet.getURIConverter().getURIMap().put(pathMapURI, profileFolderURI);
+		Map<URI, URI> uriMap = resourceSet.getURIConverter().getURIMap();
+		uriMap.put(pathMapURI, profileFolderURI);
+		if (extraUriMap != null) {
+			uriMap.putAll(extraUriMap);
+		}
 		//
 		Resource umlModelResource = resourceSet.getResource(umlModelURI, true);
 		assert umlModelResource != null;
@@ -1712,11 +1721,76 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		//
 		doUMLCompile(ocl, testProjectName);
 
+		//
+		int oldAbstractEnvironmentFactory_CONSTRUCTION_COUNT = AbstractEnvironmentFactory.CONSTRUCTION_COUNT;
+		int oldAbstractModelManager_CONSTRUCTION_COUNT = AbstractModelManager.CONSTRUCTION_COUNT;
+		int oldExecutorManager_CONSTRUCTION_COUNT = ExecutorManager.CONSTRUCTION_COUNT;
+		int oldAbstractExecutor_CONSTRUCTION_COUNT = AbstractExecutor.CONSTRUCTION_COUNT;
 		// Execute the profile
 		String qualifiedPackageClassName = "Bug570892.validationproblem.ValidationProblemPackage";
 		String pathMapName = "pathmap://VALIDATIONPROBLEM_PROFILE/";
-		Resource umlModelResource = validateUmlModel(umlModelFile.getURI(), qualifiedPackageClassName, pathMapName);
+		Resource umlModelResource = validateUmlModel(umlModelFile.getURI(), qualifiedPackageClassName, pathMapName, null);
+		assertEquals("AbstractEnvironmentFactory.CONSTRUCTION_COUNT", 0, AbstractEnvironmentFactory.CONSTRUCTION_COUNT-oldAbstractEnvironmentFactory_CONSTRUCTION_COUNT);
+		assertEquals("AbstractModelManager.CONSTRUCTION_COUNT", 18, AbstractModelManager.CONSTRUCTION_COUNT-oldAbstractModelManager_CONSTRUCTION_COUNT);
+		assertEquals("ExecutorManager.CONSTRUCTION_COUNT", 30, ExecutorManager.CONSTRUCTION_COUNT-oldExecutorManager_CONSTRUCTION_COUNT);
+		assertEquals("AbstractExecutor.CONSTRUCTION_COUNT", 0, AbstractExecutor.CONSTRUCTION_COUNT-oldAbstractExecutor_CONSTRUCTION_COUNT);
 		Model model = (Model)umlModelResource.getContents().get(0);
+		ocl.dispose();
+	}
+
+	/**
+	 * Verify that the static profile in Bug570717.uml model can be generated and compiled.
+	 */
+	public void testBug570894_uml() throws Exception {
+		TestOCL ocl = createOCL();
+		String testFileStem = "Bug570894";
+		String testProjectName = testFileStem; //"bug570894";
+		TestFile umlModelFile = getTestFile(testFileStem + ".uml", ocl, getTestModelURI("models/uml/" + testFileStem + ".uml"));
+		TestFile umlLibraryFile = getTestFile(testFileStem + ".library.uml", ocl, getTestModelURI("models/uml/" + testFileStem + ".library.uml"));
+		TestFile umlProfileFile = getTestFile(testFileStem + ".profile.uml", ocl, getTestModelURI("models/uml/" + testFileStem + ".profile.uml"));
+		Resource umlProfileResource = loadUmlProfile(ocl, umlProfileFile.getURI());
+		String ecoreFileContent = createUMLEcoreModelContent(umlProfileResource);
+		String genmodelFileContent = createUMLGenModelContent(umlProfileResource, testFileStem, null);
+		createManifestFile();
+		createTestFileWithContent(getTestProject().getOutputFile(testFileStem + ".profile.ecore"), ecoreFileContent);
+		URI genModelURI = createTestFileWithContent(getTestProject().getOutputFile(testFileStem + ".profile.genmodel"), genmodelFileContent);
+		Path genModelPath = new Path("/" + getTestProject().getName() + "/" + testFileStem + ".profile.genmodel");
+		//
+		TestUMLImporter importer = new TestUMLImporter();
+		importer.reloadGenModel(genModelPath);
+		//
+		doGenModel(genModelURI);
+		//
+		doUMLCompile(ocl, testProjectName);
+
+		//
+		int oldAbstractEnvironmentFactory_CONSTRUCTION_COUNT = AbstractEnvironmentFactory.CONSTRUCTION_COUNT;
+		int oldAbstractModelManager_CONSTRUCTION_COUNT = AbstractModelManager.CONSTRUCTION_COUNT;
+		int oldExecutorManager_CONSTRUCTION_COUNT = ExecutorManager.CONSTRUCTION_COUNT;
+		int oldAbstractExecutor_CONSTRUCTION_COUNT = AbstractExecutor.CONSTRUCTION_COUNT;
+		// Execute the profile
+		String qualifiedPackageClassName = "Bug570894.validationproblem.ValidationProblemPackage";
+		String pathMapName = "pathmap://VALIDATIONPROBLEM_PROFILE/";
+		Map<URI, URI> extraUriMap = new HashMap<URI, URI>();
+		extraUriMap.put(URI.createURI("pathmap://VALIDATIONPROBLEM_LIBRARY/ValidationProblem-Library.uml"), umlLibraryFile.getURI());
+		extraUriMap.put(URI.createURI("pathmap://VALIDATIONPROBLEM_PROFILE/ValidationProblem.profile.uml"), umlProfileFile.getURI());
+		Resource umlModelResource = validateUmlModel(umlModelFile.getURI(), qualifiedPackageClassName, pathMapName, extraUriMap);
+		assertEquals("AbstractEnvironmentFactory.CONSTRUCTION_COUNT", 0, AbstractEnvironmentFactory.CONSTRUCTION_COUNT-oldAbstractEnvironmentFactory_CONSTRUCTION_COUNT);
+		assertEquals("AbstractModelManager.CONSTRUCTION_COUNT", 30, AbstractModelManager.CONSTRUCTION_COUNT-oldAbstractModelManager_CONSTRUCTION_COUNT);
+		assertEquals("ExecutorManager.CONSTRUCTION_COUNT", 42, ExecutorManager.CONSTRUCTION_COUNT-oldExecutorManager_CONSTRUCTION_COUNT);
+		assertEquals("AbstractExecutor.CONSTRUCTION_COUNT", 0, AbstractExecutor.CONSTRUCTION_COUNT-oldAbstractExecutor_CONSTRUCTION_COUNT);
+		for (@NonNull EObject eObject : umlModelResource.getContents()) {
+			EClass eClass = eObject.eClass();
+			if ("Farm".equals(eClass.getName())) {
+				EStructuralFeature animalFeature = eClass.getEStructuralFeature("animal");
+				EStructuralFeature chickenFeature = eClass.getEStructuralFeature("chicken");
+				EStructuralFeature duckFeature = eClass.getEStructuralFeature("duck");
+				Object animals = eObject.eGet(animalFeature);
+				assertEquals(4, ((Collection<?>)animals).size());
+				Object chicken = eObject.eGet(chickenFeature);
+				Object duck = eObject.eGet(duckFeature);
+			}
+		}
 		ocl.dispose();
 	}
 }
