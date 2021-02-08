@@ -1335,6 +1335,46 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	}
 
 	/**
+	 * Verify that the static profile in Bug571005.uml model can be generated and compiled.
+	 * @throws Throwable
+	 */
+	public void testBug571005_uml() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() throws Exception {
+				TestOCL ocl1 = createOCL();
+				String testFileStem = "Bug571005";
+				String testProjectName = testFileStem; //"bug571005";
+				//		TestFile umlModelFile = getTestFile(testFileStem + ".uml", ocl, getTestModelURI("models/uml/" + testFileStem + ".uml"));
+				TestFile umlProfileFile = getTestFile(testFileStem + ".profile.uml", ocl1, getTestModelURI("models/uml/" + testFileStem + ".profile.uml"));
+				Resource umlProfileResource = loadUmlProfile(ocl1.getResourceSet(), umlProfileFile.getURI());
+				String ecoreFileContent = createUMLEcoreModelContent(umlProfileResource);
+				String genmodelFileContent = createUMLGenModelContent(umlProfileResource, testFileStem, null);
+				createManifestFile();
+				createTestFileWithContent(getTestProject().getOutputFile(testFileStem + ".profile.ecore"), ecoreFileContent);
+				URI genModelURI = createTestFileWithContent(getTestProject().getOutputFile(testFileStem + ".profile.genmodel"), genmodelFileContent);
+				Path genModelPath = new Path("/" + getTestProject().getName() + "/" + testFileStem + ".profile.genmodel");
+				//
+				TestUMLImporter importer = new TestUMLImporter(ocl1.getResourceSet().getPackageRegistry());
+				importer.reloadGenModel(genModelPath);
+				ocl1.dispose();
+				//
+				doGenModel(genModelURI);
+				//
+				TestOCL ocl2 = createOCL();
+				doUMLCompile(ocl2, testProjectName);
+
+				// Execute the profile
+				String qualifiedPackageClassName = "Bug571005.validationproblem.ValidationProblemPackage";
+				String pathMapName = "pathmap://VALIDATIONPROBLEM_PROFILE/";
+				//		Resource umlModelResource = validateUmlModel(umlModelFile.getURI(), qualifiedPackageClassName, pathMapName);
+				//		Model model = (Model)umlModelResource.getContents().get(0);
+				ocl2.dispose();
+			}
+		});
+	}
+
+	/**
 	 * Verify that the static profile in Bug571407.profile.uml model can be generated and compiled.
 	 */
 	public void testBug571407_uml() throws Throwable {
