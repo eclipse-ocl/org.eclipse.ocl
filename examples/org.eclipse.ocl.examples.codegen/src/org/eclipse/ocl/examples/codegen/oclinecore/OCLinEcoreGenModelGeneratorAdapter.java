@@ -645,6 +645,7 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 			List<GenPackage> genPackages = genModel.getAllGenPackagesWithClassifiers();
 			for (@SuppressWarnings("null")@NonNull GenPackage genPackage : genPackages) {
 				OCLinEcoreTables generateTables = new OCLinEcoreTables(genPackage);
+				generateTables.analyzeExpressions();
 				String tablesClass = generateTables.getTablesClassName();
 				String dir = genPackage.getReflectionPackageName().replace(".", "/");
 				String constants = constantTexts.get(genPackage);

@@ -24,21 +24,28 @@ import java.util.Set;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
 import org.eclipse.emf.codegen.util.ImportManager;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.genmodel.OCLGenModelUtil;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.OperationCallExp;
+import org.eclipse.ocl.pivot.OppositePropertyCallExp;
 import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.ParameterTypes;
+import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
@@ -48,8 +55,10 @@ import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.ids.IdManager;
+import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorEnumeration;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorEnumerationLiteral;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorInvalidType;
@@ -65,14 +74,17 @@ import org.eclipse.ocl.pivot.internal.library.executor.ExecutorPropertyWithImple
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorStandardLibrary;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorType;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorTypeParameter;
+import org.eclipse.ocl.pivot.utilities.AbstractTables;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 
 public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 {
 	/**
-	 * Proces a nested <%...%> to return its equivalent string and request any necessary imports.
+	 * Process a nested <%...%> to return its equivalent string and request any necessary imports.
 	 */
 	private class NestedImport
 	{
@@ -143,12 +155,51 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 	private @Nullable String precedingPackageName = null;		// Initialization linkage
 	private @Nullable String currentPackageName = null;			// Initialization linkage
 	protected final @NonNull ImportManager importManager;
+	private final @NonNull Set<@NonNull CompleteClass> allInstancesCompleteClasses = new HashSet<>();
+	private final @NonNull Set<@NonNull Property> implicitOppositeProperties = new HashSet<>();
 
 	public OCLinEcoreTables(@NonNull GenPackage genPackage) {
 		super(genPackage);
 		GenModel genModel = ClassUtil.nonNullState(genPackage.getGenModel());
 		this.tablesPostamble = OCLinEcoreGenModelGeneratorAdapter.tablesPostamble(genModel);
 		this.importManager = new ImportManager(getTablesPackageName());
+	}
+
+	public void analyzeExpressions() {
+		StandardLibraryInternal standardLibrary = environmentFactory.getStandardLibrary();
+		Type oclElementType = standardLibrary.getOclElementType();
+		OperationId allInstancesOperationId = oclElementType.getTypeId().getOperationId(0, "allInstances", IdManager.getParametersId());
+		for (EObject eObject : new TreeIterable(asPackage, true)) {
+			if (eObject instanceof OppositePropertyCallExp) {
+				OppositePropertyCallExp oppositePropertyCallExp = (OppositePropertyCallExp)eObject;
+				Property navigableProperty = oppositePropertyCallExp.getReferredProperty();
+				if ((navigableProperty != null) && !navigableProperty.isIsComposite()) {
+					implicitOppositeProperties.add(navigableProperty);
+				}
+			}
+			else if (eObject instanceof OperationCallExp) {
+				OperationCallExp operationCallExp = (OperationCallExp)eObject;
+				Operation referredOperation = operationCallExp.getReferredOperation();
+				if (referredOperation != null) {
+					OperationId operationId = referredOperation.getOperationId();
+					if (operationId == allInstancesOperationId) {
+						OCLExpression source = operationCallExp.getOwnedSource();
+						if (source != null) {
+							Type asType = source.getTypeValue();
+							if (asType == null) {
+								asType = source.getType();
+							}
+							if (asType instanceof org.eclipse.ocl.pivot.Class) {
+								assert !(asType instanceof PrimitiveType);
+								assert !(asType instanceof CollectionType);
+								CompleteClass completeClass = environmentFactory.getCompleteModel().getCompleteClass(asType);
+								allInstancesCompleteClasses.add(completeClass);
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 
 	public void appendClassSuperClassName(org.eclipse.ocl.pivot.@NonNull Class asClass, org.eclipse.ocl.pivot.@NonNull Class asSuperClass) {
@@ -289,6 +340,17 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		}
 	}
 
+	protected @NonNull String atNullable() {
+		if (useNullAnnotations) {
+			//	s.addClassReference("NonNull", "org.eclipse.jdt.annotation.NonNull");
+			s.addClassReference(null, Nullable.class);
+			return "@Nullable";
+		}
+		else {
+			return "/*@Nullable*/";
+		}
+	}
+
 	protected @NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Operation>>> computeFragmentOperations() {
 		LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Operation>>> fragmentOperations = new LinkedHashMap<>();
 		for (org.eclipse.ocl.pivot.@NonNull Class pClass : activeClassesSortedByName) {
@@ -323,6 +385,42 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 			fragmentProperties.put(pClass, sortedProperties);
 		}
 		return fragmentProperties;
+	}
+
+	protected void declareAllInstances() {
+		if (allInstancesCompleteClasses.size() > 0) {
+			List<@NonNull EClass> allInstancesEClasses = new ArrayList<>();
+			for (@NonNull CompleteClass completeClass : allInstancesCompleteClasses) {
+				EObject esObject = completeClass.getESObject();
+				if (esObject == null) {
+					esObject = completeClass.getPrimaryClass().getESObject();
+				}
+				allInstancesEClasses.add((EClass)esObject);
+			}
+			Collections.sort(allInstancesEClasses, NameUtil.ENAMED_ELEMENT_COMPARATOR);
+			s.append("\n");
+			s.append("	private static final ");
+			s.appendClassReference(true, EClass.class);
+			s.append(" allInstancesEClasses " + atNonNull() + " [] = {\n");
+			boolean isFirst = true;
+			for (@NonNull EClass eClass : allInstancesEClasses) {
+				if (!isFirst) {
+					s.append(",\n");
+				}
+				s.append("		");
+				s.append(genModelHelper.getQualifiedEcoreLiteralName(eClass));
+				isFirst = false;
+			}
+			s.append("\n");
+			s.append("	};\n");
+			s.append("\n");
+			s.append("	@Override\n");
+			s.append("	public ");
+			s.appendClassReference(true, EClass.class);
+			s.append(" " + atNonNull() + " [] basicGetAllInstancesClasses() {\n");
+			s.append("		return allInstancesEClasses;\n");
+			s.append("	}\n");
+		}
 	}
 
 	protected void declareEnumerationLiterals() {
@@ -543,6 +641,39 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 			s.append("	}\n");
 			s.append("\n");
 			page++;
+		}
+	}
+
+	protected void declareImplicitOpposites() {
+		if (implicitOppositeProperties.size() > 0) {
+			List<@NonNull EReference> implicitOppositeEReferences = new ArrayList<>();
+			for (@NonNull Property implicitOppositeProperty : implicitOppositeProperties) {
+				EObject esObject = implicitOppositeProperty.getESObject();
+				implicitOppositeEReferences.add((EReference)esObject);
+			}
+			Collections.sort(implicitOppositeEReferences, NameUtil.ENAMED_ELEMENT_COMPARATOR);	// Qualified
+			s.append("\n");
+			s.append("	private static final ");
+			s.appendClassReference(true, EReference.class);
+			s.append(" implicitOppositeEReferences " + atNonNull() + " [] = {\n");
+			boolean isFirst = true;
+			for (@NonNull EReference eReference : implicitOppositeEReferences) {
+				if (!isFirst) {
+					s.append(",\n");
+				}
+				s.append("		");
+				s.append(genModelHelper.getQualifiedEcoreLiteralName(eReference));
+				isFirst = false;
+			}
+			s.append("\n");
+			s.append("	};\n");
+			s.append("\n");
+			s.append("	@Override\n");
+			s.append("	public ");
+			s.appendClassReference(true, EReference.class);
+			s.append(" " + atNonNull() + " [] basicGetImplicitOpposites() {\n");
+			s.append("		return implicitOppositeEReferences;\n");
+			s.append("	}\n");
 		}
 	}
 
@@ -1036,7 +1167,9 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append(" * before any nested class element. Therefore an access to PACKAGE.getClass() is recommended.\n");
 		s.append(" */\n");
 		//		s.append("@SuppressWarnings(\"nls\")\n");
-		s.append("public class " + tablesClassName + "\n");
+		s.append("public class " + tablesClassName + " extends ");
+		s.appendClassReference(null, AbstractTables.class);
+		s.append("\n");
 		s.append("{\n");
 		s.append("	static {\n");
 		//		s.append("		System.out.println(\"" + getTablesClassName() + " Start\");\n");
@@ -1114,7 +1247,15 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("	/*\n");
 		s.append("	 * Force initialization of outer fields. Inner fields are lazily initialized.\n");
 		s.append("	 */\n");
-		s.append("	public static void init() {}\n");
+		s.append("	public static void init() {\n");
+		s.append("		new " + tablesClassName + "();\n");
+		s.append("	}\n");
+		s.append("\n");
+		s.append("	private " + tablesClassName + "() {\n");
+		s.append("		super(" + getGenPackagePrefix() + "Package.eNS_URI);\n");
+		s.append("	}\n");
+		declareAllInstances();
+		declareImplicitOpposites();
 		if (tablesPostamble != null) {
 			s.append(tablesPostamble);
 		}
