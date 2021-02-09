@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -22,6 +24,7 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
+import org.eclipse.ocl.pivot.evaluation.ModelManager.EcoreModelManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PropertyId;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -40,20 +43,32 @@ public class UnboxedOppositeNavigationProperty extends AbstractProperty
 	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
 		IdResolver idResolver = executor.getIdResolver();
 		Property oppositeProperty = idResolver.getProperty(oppositePropertyId);
-		ModelManager.ModelManagerExtension modelManager = (ModelManager.ModelManagerExtension)executor.getModelManager();
-		Type thatType = ClassUtil.nonNullModel(oppositeProperty.getType());
-		if (thatType instanceof CollectionType) {
-			thatType = ((CollectionType)thatType).getElementType();
-		}
+		EObject esObject = oppositeProperty.getESObject();
 		List<Object> results = new ArrayList<Object>();
-		if (thatType instanceof org.eclipse.ocl.pivot.Class) {
-			for (@NonNull Object eObject : modelManager.get((org.eclipse.ocl.pivot.Class)thatType)) {	// FIXME Use a cache
-				EClass eClass = modelManager.eClass(eObject);
-				EStructuralFeature eFeature = eClass.getEStructuralFeature(oppositeProperty.getName());
-				assert eFeature != null;
-				Object eGet = modelManager.eGet(eObject, eFeature);
-				if (eGet == sourceValue) {
-					results.add(eObject);
+		ModelManager.ModelManagerExtension modelManager = (ModelManager.ModelManagerExtension)executor.getModelManager();
+		if ((modelManager instanceof EcoreModelManager) && (esObject instanceof EReference) && (sourceValue instanceof EObject)) {
+			Iterable<@NonNull EObject> opposites = ((EcoreModelManager)modelManager).getOpposites((EReference)esObject, (EObject)sourceValue);
+			if (opposites != null) {
+				for (@NonNull EObject opposite :opposites) {
+					results.add(idResolver.boxedValueOf(opposite));
+				}
+			}
+		}
+		else {
+			Type thatType = ClassUtil.nonNullModel(oppositeProperty.getType());
+			if (thatType instanceof CollectionType) {
+				thatType = ((CollectionType)thatType).getElementType();
+			}
+			if (thatType instanceof org.eclipse.ocl.pivot.Class) {
+				org.eclipse.ocl.pivot.Class thatClass = (org.eclipse.ocl.pivot.Class)thatType;
+				for (@NonNull Object eObject : modelManager.get(thatClass)) {	// FIXME Use a cache
+					EClass eClass = modelManager.eClass(eObject);
+					EStructuralFeature eFeature = eClass.getEStructuralFeature(oppositeProperty.getName());
+					assert eFeature != null;
+					Object eGet = modelManager.eGet(eObject, eFeature);
+					if (eGet == sourceValue) {
+						results.add(eObject);
+					}
 				}
 			}
 		}

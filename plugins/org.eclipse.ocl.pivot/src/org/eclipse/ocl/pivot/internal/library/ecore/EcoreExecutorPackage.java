@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -47,6 +48,11 @@ public class EcoreExecutorPackage extends ExecutorPackage
 
 	@Override
 	public final EPackage getEPackage() {
+		return ePackage;
+	}
+
+	@Override
+	public EObject getESObject() {
 		return ePackage;
 	}
 

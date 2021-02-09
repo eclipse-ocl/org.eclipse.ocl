@@ -31,32 +31,32 @@ public class EcoreExecutorType extends ExecutorType
 {
 	protected @Nullable EClassifier eClassifier;
 	private @Nullable TypeId typeId = null;
-	
+
 	/**
 	 * Construct an executable type descriptor in the absence of a known EClassifier. A subsequent
 	 * call of {@link #initFragments(ExecutorFragment[], int[], EClassifier)} may define an EClassifier.
 	 */
 	public EcoreExecutorType(@NonNull String name, @NonNull ExecutorPackage evaluationPackage, int flags, @NonNull ExecutorTypeParameter @NonNull ... typeParameters) {
 		super(name, evaluationPackage, flags, typeParameters);
-		this.eClassifier = null;		
+		this.eClassifier = null;
 	}
-	
+
 	/**
 	 * Construct an executable type descriptor in the absence of a known EClassifier. A subsequent
 	 * call of {@link #initFragments(ExecutorFragment[], int[], EClassifier)} may define an EClassifier.
 	 */
 	public EcoreExecutorType(@NonNull BuiltInTypeId typeId, @NonNull ExecutorPackage evaluationPackage, int flags, @NonNull ExecutorTypeParameter @NonNull ... typeParameters) {
 		super(typeId.getName(), evaluationPackage, flags, typeParameters);
-		this.eClassifier = null;		
-		this.typeId = typeId;		
+		this.eClassifier = null;
+		this.typeId = typeId;
 	}
-	
+
 	/**
 	 * Construct an executable type descriptor for a known EClassifier.
 	 */
 	public EcoreExecutorType(/*@NonNull*/ EClassifier eClassifier, @NonNull EcoreExecutorPackage evaluationPackage, int flags, @NonNull ExecutorTypeParameter @NonNull ... typeParameters) {
 		super(ClassUtil.nonNullModel(eClassifier.getName()), evaluationPackage, flags, typeParameters);
-		this.eClassifier = eClassifier;		
+		this.eClassifier = eClassifier;
 	}
 
 	@Override
@@ -87,6 +87,11 @@ public class EcoreExecutorType extends ExecutorType
 	}
 
 	@Override
+	public EObject getESObject() {
+		return eClassifier;
+	}
+
+	@Override
 	public @NonNull String getMetaTypeName() {
 		if (eClassifier != null) {					// FIXME Enforce @NonNull
 			return ClassUtil.nonNullModel(ClassUtil.nonNullState(eClassifier).getName());
@@ -95,7 +100,7 @@ public class EcoreExecutorType extends ExecutorType
 			return getTypeId().getMetaTypeName();
 		}
 	}
-	
+
 	@Override
 	public @NonNull TypeId getTypeId() {
 		TypeId typeId2 = typeId;
@@ -134,7 +139,7 @@ public class EcoreExecutorType extends ExecutorType
 		assert eClassifier != null;
 		assert this.eClassifier == null;
 		assert name.equals(eClassifier.getName());
-		this.eClassifier = ClassUtil.nonNullState(eClassifier);		
+		this.eClassifier = ClassUtil.nonNullState(eClassifier);
 		initFragments(fragments, depthCounts);
 		return this;
 	}

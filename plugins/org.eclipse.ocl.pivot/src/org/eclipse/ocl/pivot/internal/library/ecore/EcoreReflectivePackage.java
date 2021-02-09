@@ -17,6 +17,7 @@ import java.util.Map;
 
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EEnum;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -34,14 +35,14 @@ public class EcoreReflectivePackage extends ExecutorPackage
 	protected final EPackage ePackage;
 	protected @Nullable Map<EClassifier, org.eclipse.ocl.pivot.Class> types = null;
 	protected @Nullable Map<String, EcoreReflectivePackage> nestedPackages = null;
-	
+
 	public EcoreReflectivePackage(@NonNull EPackage ePackage, @NonNull IdResolver idResolver, @NonNull PackageId packageId) {
 		super(ClassUtil.nonNullEMF(ePackage.getName()), ePackage.getNsPrefix(), ePackage.getNsURI(), packageId);
 		this.idResolver = idResolver;
 //		this.standardLibrary = idResolver.getStandardLibrary();
 		this.ePackage = ePackage;
 	}
-	
+
 	protected synchronized @NonNull Map<EClassifier, org.eclipse.ocl.pivot.Class> computeClasses() {
 		Map<EClassifier, org.eclipse.ocl.pivot.Class> types2 = types = new HashMap<EClassifier, org.eclipse.ocl.pivot.Class>();
 		for (EClassifier eClassifier : ePackage.getEClassifiers()) {
@@ -68,6 +69,11 @@ public class EcoreReflectivePackage extends ExecutorPackage
 //	protected @NonNull Iterable<? extends DomainType> getDomainTypes() {
 //		throw new UnsupportedOperationException();		// FIXME
 //	}
+
+	@Override
+	public EObject getESObject() {
+		return ePackage;
+	}
 
 	public @NonNull IdResolver getIdResolver() {
 		return idResolver;

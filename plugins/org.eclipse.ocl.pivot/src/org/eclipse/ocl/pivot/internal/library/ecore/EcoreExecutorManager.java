@@ -19,6 +19,7 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -29,9 +30,9 @@ import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorManager;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorStandardLibrary;
-import org.eclipse.ocl.pivot.internal.library.executor.LazyModelManager;
+import org.eclipse.ocl.pivot.internal.library.executor.LazyAnalyzedModelManager;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.AbstractTables;
 import org.eclipse.ocl.pivot.utilities.PivotObject;
 
 /**
@@ -43,7 +44,7 @@ import org.eclipse.ocl.pivot.utilities.PivotObject;
 public class EcoreExecutorManager extends ExecutorManager
 {
 	private final @Nullable Object contextObject;
-	private ModelManager modelManager = null;
+	private /*LazyAnalyzed*/ModelManager modelManager = null;
 	private /*@LazyNonNull*/ IdResolver idResolver = null;
 
 	/**
@@ -150,32 +151,48 @@ public class EcoreExecutorManager extends ExecutorManager
 				if (modelManager2 == null) {
 					if (contextObject instanceof EObject) {
 						EObject contextEObject = (EObject)contextObject;
-						List<@NonNull EObject> allContents = new ArrayList<>();
+						List<@NonNull EObject> allRootContents = new ArrayList<>();
 						Resource contextResource = contextEObject.eResource();
 						if (contextResource != null) {
 							ResourceSet resourceSet = contextResource.getResourceSet();
 							if (resourceSet != null) {
 								for (Resource resource : resourceSet.getResources()) {
-									allContents.addAll(resource.getContents());
+									allRootContents.addAll(resource.getContents());
 								}
 							}
 							else {
-								allContents.addAll(contextResource.getContents());
+								allRootContents.addAll(contextResource.getContents());
 							}
 						}
 						else {
-							allContents.add(contextEObject);
+							allRootContents.add(contextEObject);
 						}
-						modelManager2 = new LazyModelManager(allContents)
-						{
-							@Override
-							protected boolean isInstance(@NonNull Type type, @NonNull EObject element) {
-								EClass eClass = ClassUtil.nonNullEMF(element.eClass());
-								Type elementType = idResolver.getInheritance(eClass).getPivotClass();
-								return elementType.conformsTo(standardLibrary, type);
+						List<@NonNull EClass> allInstancesClassesList = null;
+						List<@NonNull EReference> implicitOppositesList = null;
+						for (@NonNull String nsURI : standardLibrary.getNsURIs()) {
+							AbstractTables tables = AbstractTables.basicGet(nsURI);
+							if (tables != null) {
+								@NonNull EClass[] allInstancesClasses = tables.basicGetAllInstancesClasses();
+								@NonNull EReference[] implicitOpposites = tables.basicGetImplicitOpposites();
+								if (allInstancesClasses != null) {
+									if (allInstancesClassesList == null) {
+										allInstancesClassesList = new ArrayList<>();
+									}
+									for (@NonNull EClass allInstancesClass : allInstancesClasses) {
+										allInstancesClassesList.add(allInstancesClass);
+									}
+								}
+								if (implicitOpposites != null) {
+									if (implicitOppositesList == null) {
+										implicitOppositesList = new ArrayList<>();
+									}
+									for (@NonNull EReference implicitOpposite : implicitOpposites) {
+										implicitOppositesList.add(implicitOpposite);
+									}
+								}
 							}
-
-						};
+						}
+						modelManager2 = new LazyAnalyzedModelManager(allRootContents, allInstancesClassesList, implicitOppositesList);
 					}
 					else {
 						modelManager2 = ModelManager.NULL;

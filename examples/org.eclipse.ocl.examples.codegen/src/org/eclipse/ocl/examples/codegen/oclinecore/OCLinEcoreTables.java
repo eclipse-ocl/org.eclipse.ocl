@@ -399,6 +399,9 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 			}
 			Collections.sort(allInstancesEClasses, NameUtil.ENAMED_ELEMENT_COMPARATOR);
 			s.append("\n");
+			s.append("	/*\n");
+			s.append("	 * The EClasses whose instances should be cached to support allInstances().\n");
+			s.append("	 */\n");
 			s.append("	private static final ");
 			s.appendClassReference(true, EClass.class);
 			s.append(" allInstancesEClasses " + atNonNull() + " [] = {\n");
@@ -653,6 +656,9 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 			}
 			Collections.sort(implicitOppositeEReferences, NameUtil.ENAMED_ELEMENT_COMPARATOR);	// Qualified
 			s.append("\n");
+			s.append("	/*\n");
+			s.append("	 * The EReferences whose opposites should be cached to support implicit opposite navigation.\n");
+			s.append("	 */\n");
 			s.append("	private static final ");
 			s.appendClassReference(true, EReference.class);
 			s.append(" implicitOppositeEReferences " + atNonNull() + " [] = {\n");
@@ -693,7 +699,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("		private static int initCount = 0;\n");
 		s.append("\n");
 		s.append("		/**\n");
-		s.append("		 * Invoked at the start of a static construction to defer residual cobstruction until primary constructions complete.\n");
+		s.append("		 * Invoked at the start of a static construction to defer residual construction until primary constructions complete.\n");
 		s.append("		 */\n");
 		s.append("		private static void initStart() {\n");
 		s.append("			if (initCount >= 0) {\n");
@@ -703,7 +709,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("		}\n");
 		s.append("\n");
 		s.append("		/**\n");
-		s.append("		 * Invoked at the end of a static construction to activate residual cobstruction once primary constructions complete.\n");
+		s.append("		 * Invoked at the end of a static construction to activate residual construction once primary constructions complete.\n");
 		s.append("		 */\n");
 		s.append("		private static void initEnd() {\n");
 		s.append("			if (initCount > 0) {\n");

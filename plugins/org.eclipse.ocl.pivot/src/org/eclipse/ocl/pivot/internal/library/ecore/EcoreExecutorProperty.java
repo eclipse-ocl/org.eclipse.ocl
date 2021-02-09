@@ -55,6 +55,11 @@ public class EcoreExecutorProperty extends ExecutorProperty implements LibraryPr
 	}
 
 	@Override
+	public EObject getESObject() {
+		return eFeature;
+	}
+
+	@Override
 	public @NonNull LibraryProperty getImplementation() {
 		return this;
 	}

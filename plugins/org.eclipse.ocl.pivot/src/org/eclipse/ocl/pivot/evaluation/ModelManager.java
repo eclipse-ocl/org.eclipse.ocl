@@ -15,6 +15,8 @@ import java.util.Set;
 
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -45,6 +47,47 @@ public interface ModelManager
 	public interface ModelManagerExtension2 extends ModelManagerExtension
 	{
 		@NonNull Iterable<@NonNull Object> getOpposite(@NonNull Property target2sourceProperty, @NonNull Object sourceObject);
+	}
+
+	/**
+	 * @since 1.14
+	 */
+	public interface EcoreModelManager extends ModelManagerExtension2
+	{
+		/**
+		 * Register allInstancesEClass as an EClass for which allInstances may be invoked.
+		 * This invokes resetAnalysis to force a lazy reanlysis.
+		 */
+		void addAllInstancesEClass(@NonNull EClass allInstancesEClass);
+
+		/**
+		 * Register implicitOppositeEReference as an EReference for which implicit opposite navigation may be invoked.
+		 * This invokes resetAnalysis to force a lazy reanlysis.
+		 */
+		void addImplicitOppositeEReference(@NonNull EReference implicitOppositeEReference);
+
+		/**
+		 *  Eagerly perform the totla ResourceSet travesal to discover allInstances/implicitOpposites.
+		 */
+		void analyze();
+
+		/**
+		 * Return the instances of eClass and its subtypes, returning null for none.
+		 * A lazy analyze() is triggered.
+		 */
+		@Nullable Iterable<@NonNull EObject> getInstances(@NonNull EClass eClass);
+
+		/**
+		 * Return the source EObjects for which the opposite of eReference navigates to eTarget, returning null if none.
+		 * A lazy analyze() is triggered.
+		 */
+		@Nullable Iterable<@NonNull EObject> getOpposites(@NonNull EReference eReference, @NonNull EObject eTarget);
+
+		/**
+		 * Reset the analysis forcing a re-analysis of the model. This may be necessary after a late discovery of
+		 * an allInstances/implicitOpposites from uncompiled OCL.
+		 */
+		void resetAnalysis();
 	}
 
 	@NonNull ModelManager NULL = new ModelManager()

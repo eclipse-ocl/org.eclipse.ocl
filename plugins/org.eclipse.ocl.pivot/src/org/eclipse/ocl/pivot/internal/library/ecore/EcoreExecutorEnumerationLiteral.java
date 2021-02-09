@@ -12,6 +12,7 @@ package org.eclipse.ocl.pivot.internal.library.ecore;
 
 import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.emf.ecore.EEnumLiteral;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorEnumerationLiteral;
@@ -20,10 +21,15 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 public class EcoreExecutorEnumerationLiteral extends ExecutorEnumerationLiteral
 {
 	protected final EEnumLiteral eEnumLiteral;
-	
+
 	public EcoreExecutorEnumerationLiteral(/*@NonNull*/ EEnumLiteral eEnumLiteral, @NonNull Enumeration enumeration, int ordinal) {
 		super(ClassUtil.nonNullEMF(eEnumLiteral.getName()), enumeration, ordinal);
 		this.eEnumLiteral = eEnumLiteral;
+	}
+
+	@Override
+	public EObject getESObject() {
+		return eEnumLiteral;
 	}
 
 //	@Override

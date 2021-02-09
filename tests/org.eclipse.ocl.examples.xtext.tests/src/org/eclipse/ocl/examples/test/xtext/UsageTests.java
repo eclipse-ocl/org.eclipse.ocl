@@ -1731,8 +1731,8 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		String pathMapName = "pathmap://VALIDATIONPROBLEM_PROFILE/";
 		Resource umlModelResource = validateUmlModel(umlModelFile.getURI(), qualifiedPackageClassName, pathMapName, null);
 		assertEquals("AbstractEnvironmentFactory.CONSTRUCTION_COUNT", 0, AbstractEnvironmentFactory.CONSTRUCTION_COUNT-oldAbstractEnvironmentFactory_CONSTRUCTION_COUNT);
-		assertEquals("AbstractModelManager.CONSTRUCTION_COUNT", 18, AbstractModelManager.CONSTRUCTION_COUNT-oldAbstractModelManager_CONSTRUCTION_COUNT);
-		assertEquals("ExecutorManager.CONSTRUCTION_COUNT", 30, ExecutorManager.CONSTRUCTION_COUNT-oldExecutorManager_CONSTRUCTION_COUNT);
+		assertEquals("AbstractModelManager.CONSTRUCTION_COUNT", 12, AbstractModelManager.CONSTRUCTION_COUNT-oldAbstractModelManager_CONSTRUCTION_COUNT);
+		assertEquals("ExecutorManager.CONSTRUCTION_COUNT", 20, ExecutorManager.CONSTRUCTION_COUNT-oldExecutorManager_CONSTRUCTION_COUNT);
 		assertEquals("AbstractExecutor.CONSTRUCTION_COUNT", 0, AbstractExecutor.CONSTRUCTION_COUNT-oldAbstractExecutor_CONSTRUCTION_COUNT);
 		Model model = (Model)umlModelResource.getContents().get(0);
 		ocl.dispose();
@@ -1776,8 +1776,8 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		extraUriMap.put(URI.createURI("pathmap://VALIDATIONPROBLEM_PROFILE/ValidationProblem.profile.uml"), umlProfileFile.getURI());
 		Resource umlModelResource = validateUmlModel(umlModelFile.getURI(), qualifiedPackageClassName, pathMapName, extraUriMap);
 		assertEquals("AbstractEnvironmentFactory.CONSTRUCTION_COUNT", 0, AbstractEnvironmentFactory.CONSTRUCTION_COUNT-oldAbstractEnvironmentFactory_CONSTRUCTION_COUNT);
-		assertEquals("AbstractModelManager.CONSTRUCTION_COUNT", 30, AbstractModelManager.CONSTRUCTION_COUNT-oldAbstractModelManager_CONSTRUCTION_COUNT);
-		assertEquals("ExecutorManager.CONSTRUCTION_COUNT", 42, ExecutorManager.CONSTRUCTION_COUNT-oldExecutorManager_CONSTRUCTION_COUNT);
+		assertEquals("AbstractModelManager.CONSTRUCTION_COUNT", 20, AbstractModelManager.CONSTRUCTION_COUNT-oldAbstractModelManager_CONSTRUCTION_COUNT);
+		assertEquals("ExecutorManager.CONSTRUCTION_COUNT", 28, ExecutorManager.CONSTRUCTION_COUNT-oldExecutorManager_CONSTRUCTION_COUNT);
 		assertEquals("AbstractExecutor.CONSTRUCTION_COUNT", 0, AbstractExecutor.CONSTRUCTION_COUNT-oldAbstractExecutor_CONSTRUCTION_COUNT);
 		for (@NonNull EObject eObject : umlModelResource.getContents()) {
 			EClass eClass = eObject.eClass();

@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.ocl.pivot" version="2">
+    <resource path="emf-gen/org/eclipse/ocl/pivot/StandardLibrary.java" type="org.eclipse.ocl.pivot.StandardLibrary">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.StandardLibrary"/>
+                <message_argument value="getNsURIs()"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.StandardLibrary"/>
+                <message_argument value="getNsURIs()"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/internal/StandardLibraryImpl.java" type="org.eclipse.ocl.pivot.internal.StandardLibraryImpl">
         <filter comment="Bug 512402 workaround" id="576725006">
             <message_arguments>

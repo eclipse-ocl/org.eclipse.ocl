@@ -106,6 +106,11 @@ public class EcoreReflectiveType extends AbstractReflectiveInheritanceType
 	}
 
 	@Override
+	public EObject getESObject() {
+		return eClassifier;
+	}
+
+	@Override
 	public @NonNull Iterable<@NonNull ? extends CompleteInheritance> getInitialSuperInheritances() {
 		List<EClass> eSuperTypes = eClassifier instanceof EClass ? ((EClass)eClassifier).getESuperTypes() : Collections.<EClass>emptyList();
 		final Iterator<EClass> iterator = eSuperTypes.iterator();

@@ -10,6 +10,9 @@
  */
 package org.eclipse.ocl.pivot;
 
+import java.util.Collections;
+import java.util.Set;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
@@ -152,6 +155,13 @@ public interface StandardLibrary extends Element
 	Type getMetaType(@NonNull Type type);
 
 	org.eclipse.ocl.pivot.Package getNsURIPackage(@NonNull String nsURI);
+
+	/**
+	 * Return the known nsURIs
+	 *
+	 * @since 1.14
+	 */
+	default @NonNull Set<@NonNull String> getNsURIs() { return Collections.emptySet(); }
 
 	/**
 	 * Obtains the single instance of the AnyType metatype, named
