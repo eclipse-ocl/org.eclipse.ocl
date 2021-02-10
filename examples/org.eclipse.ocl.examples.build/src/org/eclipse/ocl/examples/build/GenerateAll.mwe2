@@ -18,6 +18,7 @@ import org.eclipse.ocl.examples.build.utilities.*
  * Generate all auto-generated files for the OCL Examples Editors
  */
 Workflow {
+  component = @GenerateControlModel {}
   component = @GeneratePivotModel {}
   component = @GenerateAnnotationModel {}
   component = @GenerateCSModels {}

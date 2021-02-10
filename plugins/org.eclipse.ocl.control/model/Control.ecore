@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="control" nsURI="http://www.eclipse.org/ocl/1.0.0/Control" nsPrefix="oclctl">
+  <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+    <details key="documentation" value="The control model provides ResourceSet-specific settings to control OCL validation and show OCL diagnostics."/>
+  </eAnnotations>
+  <eAnnotations source="http://www.eclipse.org/OCL/Import">
+    <details key="ecore" value="http://www.eclipse.org/emf/2002/Ecore"/>
+  </eAnnotations>
+  <eClassifiers xsi:type="ecore:EClass" name="ControlElement" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ControlModel" eSuperTypes="#//ControlElement">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The ControlModel provides ResourceSet-specific settings to control OCL validation and show OCL diagnostics."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="settings" ordered="false"
+        lowerBound="1" eType="#//ControlSettings" containment="true" resolveProxies="false"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ControlSettings" eSuperTypes="#//ControlElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="cacheIsValid" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        defaultValueLiteral="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="When the cache is valid, allInstances/implicitOpposites re-sue previous values. Set invalid if a model change undermines this re-use."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+</ecore:EPackage>

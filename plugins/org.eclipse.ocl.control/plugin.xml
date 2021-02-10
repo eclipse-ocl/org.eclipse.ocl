@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.core.contenttype.contentTypes">
+      <content-type
+            base-type="org.eclipse.emf.ecore.xmi"
+            file-extensions="oclctl"
+            id="org.eclipse.ocl.oclctl"
+            name="%_UI_Control_content_type"
+            priority="normal">
+         <describer class="org.eclipse.emf.ecore.xmi.impl.RootXMLContentHandlerImpl$Describer">
+            <parameter name="namespace" value="http://www.eclipse.org/ocl/1.0.0/Control"/>
+            <parameter name="kind" value="xmi"/>
+         </describer>
+      </content-type>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated Control -->
+      <package
+            uri="http://www.eclipse.org/ocl/1.0.0/Control"
+            class="org.eclipse.ocl.control.ControlPackage"
+            genModel="model/Control.genmodel"/>
+   </extension>
+
+  <extension point="org.eclipse.team.core.fileTypes">
+    <fileTypes extension="oclctl" type="text" />
+  </extension>
+
+</plugin>
