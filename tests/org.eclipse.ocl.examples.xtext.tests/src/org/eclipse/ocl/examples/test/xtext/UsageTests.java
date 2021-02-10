@@ -2059,4 +2059,32 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 			}
 		});
 	}
+
+	/**
+	 * Verify that the static profile in Bug570717.uml model can be generated and compiled.
+	 */
+	public void testBug571074_uml() throws Exception {
+		TestOCL ocl = createOCL();
+		String testFileStem = "Bug571074";
+		String testProjectName = testFileStem;
+	//	TestFile umlModelFile = getTestFile(testFileStem + ".uml", ocl, getTestModelURI("models/uml/" + testFileStem + ".uml"));
+	//	TestFile umlLibraryFile = getTestFile(testFileStem + ".library.uml", ocl, getTestModelURI("models/uml/" + testFileStem + ".library.uml"));
+		TestFile umlProfileFile = getTestFile(testFileStem + ".profile.uml", ocl, getTestModelURI("models/uml/" + testFileStem + ".profile.uml"));
+		Resource umlProfileResource = loadUmlProfile(ocl, umlProfileFile.getURI());
+		String ecoreFileContent = createUMLEcoreModelContent(umlProfileResource);
+		String genmodelFileContent = createUMLGenModelContent(umlProfileResource, testFileStem, null);
+		createManifestFile();
+		createTestFileWithContent(getTestProject().getOutputFile(testFileStem + ".profile.ecore"), ecoreFileContent);
+		URI genModelURI = createTestFileWithContent(getTestProject().getOutputFile(testFileStem + ".profile.genmodel"), genmodelFileContent);
+		Path genModelPath = new Path("/" + getTestProject().getName() + "/" + testFileStem + ".profile.genmodel");
+		//
+		TestUMLImporter importer = new TestUMLImporter();
+		importer.reloadGenModel(genModelPath);
+		//
+		doGenModel(genModelURI);
+		//
+		doUMLCompile(ocl, testProjectName);
+		//
+		ocl.dispose();
+	}
 }
