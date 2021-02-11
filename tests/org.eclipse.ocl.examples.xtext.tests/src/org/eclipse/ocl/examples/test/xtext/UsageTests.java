@@ -1666,7 +1666,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	}
 
 	/**
-	 * Verify that the static profile in Bug570717.uml model can be generated and compiled.
+	 * Verify that the static profile in Bug570891.uml model can be generated and compiled.
 	 */
 	public void testBug570891_uml() throws Exception {
 		TestOCL ocl = createOCL();
@@ -1688,25 +1688,20 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		doGenModel(genModelURI);
 		//
 		doUMLCompile(ocl, testProjectName);
-
-		// Execute the profile
-		String qualifiedPackageClassName = "Bug570891.validationproblem.ValidationProblemPackage";
-		String pathMapName = "pathmap://VALIDATIONPROBLEM_PROFILE/";
-//		Resource umlModelResource = validateUmlModel(umlModelFile.getURI(), qualifiedPackageClassName, pathMapName);
-//		Model model = (Model)umlModelResource.getContents().get(0);
 		ocl.dispose();
 	}
 
 	/**
-	 * Verify that the static profile in Bug570717.uml model can be generated and compiled.
+	 * Verify that the static profile in 570892.profile.uml model can be generated and compiled
+	 * and that the 570892.uml model can then validate.
 	 */
 	public void testBug570892_uml() throws Exception {
-		TestOCL ocl = createOCL();
+		TestOCL ocl1 = createOCL();
 		String testFileStem = "Bug570892";
 		String testProjectName = testFileStem; //"bug570892";
-		TestFile umlModelFile = getTestFile(testFileStem + ".uml", ocl, getTestModelURI("models/uml/" + testFileStem + ".uml"));
-		TestFile umlProfileFile = getTestFile(testFileStem + ".profile.uml", ocl, getTestModelURI("models/uml/" + testFileStem + ".profile.uml"));
-		Resource umlProfileResource = loadUmlProfile(ocl, umlProfileFile.getURI());
+		TestFile umlModelFile = getTestFile(testFileStem + ".uml", ocl1, getTestModelURI("models/uml/" + testFileStem + ".uml"));
+		TestFile umlProfileFile = getTestFile(testFileStem + ".profile.uml", ocl1, getTestModelURI("models/uml/" + testFileStem + ".profile.uml"));
+		Resource umlProfileResource = loadUmlProfile(ocl1, umlProfileFile.getURI());
 		String ecoreFileContent = createUMLEcoreModelContent(umlProfileResource);
 		String genmodelFileContent = createUMLGenModelContent(umlProfileResource, testFileStem, null);
 		createManifestFile();
@@ -1718,8 +1713,10 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		importer.reloadGenModel(genModelPath);
 		//
 		doGenModel(genModelURI);
+		ocl1.dispose();
 		//
-		doUMLCompile(ocl, testProjectName);
+		TestOCL ocl2 = createOCL();
+		doUMLCompile(ocl2, testProjectName);
 
 		//
 		int oldAbstractEnvironmentFactory_CONSTRUCTION_COUNT = AbstractEnvironmentFactory.CONSTRUCTION_COUNT;
@@ -1729,26 +1726,28 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		// Execute the profile
 		String qualifiedPackageClassName = "Bug570892.validationproblem.ValidationProblemPackage";
 		String pathMapName = "pathmap://VALIDATIONPROBLEM_PROFILE/";
+		@SuppressWarnings("unused")
 		Resource umlModelResource = validateUmlModel(umlModelFile.getURI(), qualifiedPackageClassName, pathMapName, null);
 		assertEquals("AbstractEnvironmentFactory.CONSTRUCTION_COUNT", 0, AbstractEnvironmentFactory.CONSTRUCTION_COUNT-oldAbstractEnvironmentFactory_CONSTRUCTION_COUNT);
 		assertEquals("AbstractModelManager.CONSTRUCTION_COUNT", 12, AbstractModelManager.CONSTRUCTION_COUNT-oldAbstractModelManager_CONSTRUCTION_COUNT);
 		assertEquals("ExecutorManager.CONSTRUCTION_COUNT", 20, ExecutorManager.CONSTRUCTION_COUNT-oldExecutorManager_CONSTRUCTION_COUNT);
 		assertEquals("AbstractExecutor.CONSTRUCTION_COUNT", 0, AbstractExecutor.CONSTRUCTION_COUNT-oldAbstractExecutor_CONSTRUCTION_COUNT);
-		Model model = (Model)umlModelResource.getContents().get(0);
-		ocl.dispose();
+	//	Model model = (Model)umlModelResource.getContents().get(0);
+		ocl2.dispose();
 	}
 
 	/**
-	 * Verify that the static profile in Bug570717.uml model can be generated and compiled.
+	 * Verify that the static profile in Bug570894.profile.uml model can be generated and compiled
+	 * and that the Bug570894.uml model can then validate.
 	 */
 	public void testBug570894_uml() throws Exception {
-		TestOCL ocl = createOCL();
+		TestOCL ocl1 = createOCL();
 		String testFileStem = "Bug570894";
 		String testProjectName = testFileStem; //"bug570894";
-		TestFile umlModelFile = getTestFile(testFileStem + ".uml", ocl, getTestModelURI("models/uml/" + testFileStem + ".uml"));
-		TestFile umlLibraryFile = getTestFile(testFileStem + ".library.uml", ocl, getTestModelURI("models/uml/" + testFileStem + ".library.uml"));
-		TestFile umlProfileFile = getTestFile(testFileStem + ".profile.uml", ocl, getTestModelURI("models/uml/" + testFileStem + ".profile.uml"));
-		Resource umlProfileResource = loadUmlProfile(ocl, umlProfileFile.getURI());
+		TestFile umlModelFile = getTestFile(testFileStem + ".uml", ocl1, getTestModelURI("models/uml/" + testFileStem + ".uml"));
+		TestFile umlLibraryFile = getTestFile(testFileStem + ".library.uml", ocl1, getTestModelURI("models/uml/" + testFileStem + ".library.uml"));
+		TestFile umlProfileFile = getTestFile(testFileStem + ".profile.uml", ocl1, getTestModelURI("models/uml/" + testFileStem + ".profile.uml"));
+		Resource umlProfileResource = loadUmlProfile(ocl1, umlProfileFile.getURI());
 		String ecoreFileContent = createUMLEcoreModelContent(umlProfileResource);
 		String genmodelFileContent = createUMLGenModelContent(umlProfileResource, testFileStem, null);
 		createManifestFile();
@@ -1760,8 +1759,10 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		importer.reloadGenModel(genModelPath);
 		//
 		doGenModel(genModelURI);
+		ocl1.dispose();
 		//
-		doUMLCompile(ocl, testProjectName);
+		TestOCL ocl2 = createOCL();
+		doUMLCompile(ocl2, testProjectName);
 
 		//
 		int oldAbstractEnvironmentFactory_CONSTRUCTION_COUNT = AbstractEnvironmentFactory.CONSTRUCTION_COUNT;
@@ -1787,10 +1788,12 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				EStructuralFeature duckFeature = eClass.getEStructuralFeature("duck");
 				Object animals = eObject.eGet(animalFeature);
 				assertEquals(4, ((Collection<?>)animals).size());
+				@SuppressWarnings("unused")
 				Object chicken = eObject.eGet(chickenFeature);
+				@SuppressWarnings("unused")
 				Object duck = eObject.eGet(duckFeature);
 			}
 		}
-		ocl.dispose();
+		ocl2.dispose();
 	}
 }
