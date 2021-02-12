@@ -142,7 +142,7 @@ public interface CollectionType extends IterableType {
 	void setLowerValue(@NonNull IntegerValue lower);
 	void setUpperValue(@NonNull UnlimitedNaturalValue upper);
 
-	org.eclipse.ocl.pivot.@NonNull Class getContainerType();		// NB There is no ExecutorCollectionType
+	org.eclipse.ocl.pivot.@NonNull Class getContainerType();
 	@NonNull IntegerValue getLowerValue();
 	@Override
 	@NonNull CollectionTypeId getTypeId();

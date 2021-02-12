@@ -23,6 +23,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteInheritance;
+import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
@@ -122,6 +123,12 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 				return containerType.getInheritance(this);
 			}
 		}
+		if (domainClass instanceof MapType) {
+			Type containerType = ((MapType)domainClass).getContainerType();
+			if (containerType != domainClass) {
+				return containerType.getInheritance(this);
+			}
+		}
 		org.eclipse.ocl.pivot.Package domainPackage = domainClass.getOwningPackage();
 		Map<org.eclipse.ocl.pivot.Package, WeakReference<DomainReflectivePackage>> domainPackageMap2;
 		synchronized (this) {
@@ -186,6 +193,7 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 	/**
 	 * @since 1.14
 	 */
+	@Override
 	public @NonNull Set<@NonNull String> getNsURIs() {
 		return ePackageMap.keySet();
 	}

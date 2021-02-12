@@ -668,4 +668,10 @@ public class MapTypeImpl extends IterableTypeImpl implements MapType
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, 27, oldValuesAreNullFree, newValuesAreNullFree));
 	}
+
+	@Override
+	public @NonNull MapType getContainerType() {
+		TemplateableElement unspecializedElement2 = unspecializedElement;
+		return unspecializedElement2 != null ? (MapType)unspecializedElement2 : this;
+	}
 } //MapTypeImpl

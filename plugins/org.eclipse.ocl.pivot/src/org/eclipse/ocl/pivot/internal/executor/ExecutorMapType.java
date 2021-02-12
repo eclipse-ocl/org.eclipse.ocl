@@ -71,8 +71,8 @@ public class ExecutorMapType extends AbstractSpecializedType implements MapType
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getContainerType() {
-		return containerType;
+	public @NonNull MapType getContainerType() {
+		return (MapType)containerType;
 	}
 
 	@Override

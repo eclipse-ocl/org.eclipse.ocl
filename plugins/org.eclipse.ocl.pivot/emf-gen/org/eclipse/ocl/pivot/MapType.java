@@ -10,6 +10,7 @@
  */
 package org.eclipse.ocl.pivot;
 
+import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * <!-- begin-user-doc -->
@@ -163,5 +164,10 @@ public interface MapType extends IterableType
 	 * @generated NOT
 	 */
 	default void setValuesAreNullFree(boolean value) {}
+
+	/**
+	 * @since 1.14
+	 */
+	default @NonNull MapType getContainerType() { return this; } // A slightly better default that abstrct / UsupporteOperationException
 
 } // MapType
