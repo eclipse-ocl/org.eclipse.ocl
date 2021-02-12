@@ -47,24 +47,26 @@ public class ClassifierAllInstancesOperation extends AbstractUnaryOperation
 	@Override
 	public @NonNull SetValue evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceVal) {
 		org.eclipse.ocl.pivot.Class type = asClass(sourceVal);
-		EObject esObject = type.getESObject();
-		Set<Object> results = new HashSet<Object>();
-		IdResolver idResolver = executor.getIdResolver();
+		Iterable<?> instances = null;
 		ModelManager modelManager = executor.getModelManager();
-		if ((modelManager instanceof EcoreModelManager) && (esObject instanceof EClass)) {
-			Iterable<@NonNull EObject> instances = ((EcoreModelManager)modelManager).getInstances((EClass)esObject);
-			if (instances != null) {
-				for (EObject instance : instances) {
-					results.add(idResolver.boxedValueOf(instance));
-				}
+		if (modelManager instanceof EcoreModelManager) {
+			EcoreModelManager ecoreModelManager = (EcoreModelManager)modelManager;
+			EObject esObject = type.getESObject();
+			if (esObject instanceof EClass) {
+				instances = ecoreModelManager.getInstances((EClass)esObject);
+			}
+			else {
+				instances = ecoreModelManager.getInstances(type.getTypeId());
 			}
 		}
-		else {
-			Set<?> instances = modelManager.get(type);
+		else {	// Never happens always an EcoreModelManager
+			instances = modelManager.get(type);
+		}
+		Set<Object> results = new HashSet<Object>();
+		if (instances != null) {
+			IdResolver idResolver = executor.getIdResolver();
 			for (Object instance : instances) {
-				if (instance != null){
-					results.add(idResolver.boxedValueOf(instance));	// FIXME Move to model manager
-				}
+				results.add(idResolver.boxedValueOf(instance));
 			}
 		}
 		return createSetValue((CollectionTypeId)returnTypeId, results);

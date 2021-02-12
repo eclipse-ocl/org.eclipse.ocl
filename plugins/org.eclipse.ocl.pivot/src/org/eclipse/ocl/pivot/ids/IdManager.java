@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EEnumLiteral;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypeParameter;
@@ -52,6 +53,7 @@ import org.eclipse.ocl.pivot.internal.ids.WeakHashMapOfListOfWeakReference2;
 import org.eclipse.ocl.pivot.internal.ids.WeakHashMapOfListOfWeakReference3;
 import org.eclipse.ocl.pivot.internal.ids.WeakHashMapOfListOfWeakReference4;
 import org.eclipse.ocl.pivot.internal.ids.WeakHashMapOfWeakReference;
+import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -456,8 +458,32 @@ public final class IdManager
 			//			else if (nsURI.equals(TypesPackage.eNS_URI)) {		// FIXME use extension point
 			//				return getRootPackageId(PivotConstants.TYPES_METAMODEL_NAME);
 			//			}
-			if (aPackage.eContainer() instanceof EAnnotation) {
-				System.out.println("Looks like a UML Profile has not been used in place of its EPackage for " + nsURI);
+			EObject eContainer1 = aPackage.eContainer();
+			if (eContainer1 instanceof EAnnotation) {
+				EAnnotation eAnnotation = (EAnnotation)eContainer1;
+				if (DerivedConstants.UML2_UML_PACKAGE_2_0_NS_URI.equals(eAnnotation.getSource())) {
+					EObject eContainer2 = eAnnotation.eContainer();
+					if (eContainer2 != null) {
+						EClass eClass2 = eContainer2.eClass();
+						if ("Profile".equals(eClass2.getName())) {
+							EStructuralFeature eStructuralFeature = eClass2.getEStructuralFeature("URI");
+							if (eStructuralFeature != null) {
+								Object uri = eContainer2.eGet(eStructuralFeature);
+								if (uri != null) {
+									return getNsURIPackageId(String.valueOf(uri), aPackage.getNsPrefix(), aPackage);
+								}
+								eStructuralFeature = eClass2.getEStructuralFeature("name");
+								if (eStructuralFeature != null) {
+									Object name = eContainer2.eGet(eStructuralFeature);
+									if (name != null) {
+										return getRootPackageId(String.valueOf(name));
+									}
+								}
+							}
+						}
+					}
+				}
+			//	System.out.println("Looks like a UML Profile has not been used in place of its EPackage for " + nsURI);
 			}
 			return getNsURIPackageId(nsURI, aPackage.getNsPrefix(), aPackage);
 		}

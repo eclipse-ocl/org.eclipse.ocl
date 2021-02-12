@@ -84,6 +84,10 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		return new TestOCL(getTestFileSystem(), getTestPackageName(), getName(), useCodeGen ? getProjectMap() : OCL.NO_PROJECTS);
 	}
 
+	protected @NonNull TestOCL createOCLWithProjectMap() {
+		return new TestOCL(getTestFileSystem(), getTestPackageName(), getName(), getProjectMap());
+	}
+
 	@Override
 	protected @NonNull String getTestPackageName() {
 		return "EvaluateNameVisibility";
@@ -514,7 +518,7 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 	 * Tests the nested name accesses
 	 */
 	@Test public void test_nested_names() throws InvocationTargetException {
-		TestOCL ocl = createOCL();
+		TestOCL ocl = createOCLWithProjectMap();
 		initFruitPackage(ocl);
 		MetamodelManagerInternal metamodelManager = ocl.getMetamodelManager();
 		IdResolver idResolver = ocl.getIdResolver();

@@ -35,7 +35,7 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 {
 	private @NonNull Map<@NonNull String, WeakReference<EcoreExecutorPackage>> ePackageMap = new WeakHashMap<>();
-	private Map<org.eclipse.ocl.pivot.@NonNull Package, WeakReference<DomainReflectivePackage>> domainPackageMap = null;
+	private Map<org.eclipse.ocl.pivot.@NonNull Package, WeakReference<DomainReflectivePackage>> asPackageMap = null;
 	private /*@LazyNonNull*/ Map<EcoreExecutorPackage, List<EcoreExecutorPackage>> extensions = null;
 	private /*@LazyNonNull*/ org.eclipse.ocl.pivot.Class classType = null;
 	private /*@LazyNonNull*/ org.eclipse.ocl.pivot.Class enumerationType = null;
@@ -107,9 +107,9 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 	}
 
 	@Override
-	public @NonNull CompleteInheritance getInheritance(org.eclipse.ocl.pivot.@NonNull Class domainClass) {
-		if (domainClass instanceof CompleteInheritance) {
-			return (CompleteInheritance) domainClass;
+	public @NonNull CompleteInheritance getInheritance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		if (asClass instanceof CompleteInheritance) {
+			return (CompleteInheritance) asClass;
 		}
 		/*		if (type instanceof DomainMetaclass) {
 			DomainType instanceType = ClassUtil.nonNullPivot(((DomainMetaclass)type).getInstanceType());
@@ -117,25 +117,25 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 			DomainType containerType = metaclass;//.getContainerType();
 			return containerType.getInheritance(this);
 		} */
-		if (domainClass instanceof CollectionType) {
-			Type containerType = ((CollectionType)domainClass).getContainerType();
-			if (containerType != domainClass) {
+		if (asClass instanceof CollectionType) {
+			Type containerType = ((CollectionType)asClass).getContainerType();
+			if (containerType != asClass) {
 				return containerType.getInheritance(this);
 			}
 		}
-		if (domainClass instanceof MapType) {
-			Type containerType = ((MapType)domainClass).getContainerType();
-			if (containerType != domainClass) {
+		if (asClass instanceof MapType) {
+			Type containerType = ((MapType)asClass).getContainerType();
+			if (containerType != asClass) {
 				return containerType.getInheritance(this);
 			}
 		}
-		org.eclipse.ocl.pivot.Package domainPackage = domainClass.getOwningPackage();
-		Map<org.eclipse.ocl.pivot.Package, WeakReference<DomainReflectivePackage>> domainPackageMap2;
+		org.eclipse.ocl.pivot.Package asPackage = asClass.getOwningPackage();
+		Map<org.eclipse.ocl.pivot.Package, WeakReference<DomainReflectivePackage>> asPackageMap2;
 		synchronized (this) {
-			String nsURI = domainPackage.getURI();
+			String nsURI = asPackage.getURI();
 			EcoreExecutorPackage ecoreExecutorPackage = nsURI != null ? weakGet(ePackageMap, nsURI) : null;
 			if (ecoreExecutorPackage != null) {
-				String name = domainClass.getName();
+				String name = asClass.getName();
 				CompleteInheritance executorType = ecoreExecutorPackage.getOwnedClass(name);
 				if (executorType != null) {
 					return executorType;
@@ -156,18 +156,18 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 					return executorType;
 				}
 			}
-			domainPackageMap2 = domainPackageMap;
-			if (domainPackageMap2 == null) {
-				domainPackageMap2 = domainPackageMap = new WeakHashMap<>();
+			asPackageMap2 = asPackageMap;
+			if (asPackageMap2 == null) {
+				asPackageMap2 = asPackageMap = new WeakHashMap<>();
 			}
 		}
-		synchronized (domainPackageMap2) {
-			DomainReflectivePackage domainExecutorPackage = weakGet(domainPackageMap2, domainPackage);
-			if (domainExecutorPackage == null) {
-				domainExecutorPackage = new DomainReflectivePackage(this, domainPackage);
-				domainPackageMap2.put(domainPackage, new WeakReference<>(domainExecutorPackage));
+		synchronized (asPackageMap2) {
+			DomainReflectivePackage executorPackage = weakGet(asPackageMap2, asPackage);
+			if (executorPackage == null) {
+				executorPackage = new DomainReflectivePackage(this, asPackage);
+				asPackageMap2.put(asPackage, new WeakReference<>(executorPackage));
 			}
-			return domainExecutorPackage.getInheritance(domainClass);
+			return executorPackage.getInheritance(asClass);
 		}
 	}
 

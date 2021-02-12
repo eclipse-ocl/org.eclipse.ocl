@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.ids.TypeId;
 
 /**
  * ModelManager provides the models to be used during evaluation. In particular
@@ -46,6 +47,7 @@ public interface ModelManager
 	 */
 	public interface ModelManagerExtension2 extends ModelManagerExtension
 	{
+		@Deprecated /* @deprecated Use EcoreModelManager.getOpposites */
 		@NonNull Iterable<@NonNull Object> getOpposite(@NonNull Property target2sourceProperty, @NonNull Object sourceObject);
 	}
 
@@ -78,6 +80,12 @@ public interface ModelManager
 		@Nullable Iterable<@NonNull EObject> getInstances(@NonNull EClass eClass);
 
 		/**
+		 * Return the instances of the class whose id is typeId and its subtypes, returning null for none.
+		 * A lazy analyze() is triggered.
+		 */
+		@Nullable Iterable<@NonNull EObject> getInstances(@NonNull TypeId typeId);
+
+		/**
 		 * Return the source EObjects for which the opposite of eReference navigates to eTarget, returning null if none.
 		 * A lazy analyze() is triggered.
 		 */
@@ -98,5 +106,6 @@ public interface ModelManager
 		}
 	};
 
+	@Deprecated /* @deprecated Use getInstances() */
 	@NonNull Set<@NonNull ? extends Object> get(org.eclipse.ocl.pivot.@NonNull Class type);
 }

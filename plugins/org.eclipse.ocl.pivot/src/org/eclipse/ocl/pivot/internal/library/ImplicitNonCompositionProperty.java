@@ -10,11 +10,19 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.library;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
+import org.eclipse.ocl.pivot.evaluation.ModelManager.EcoreModelManager;
+import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.library.AbstractProperty;
@@ -41,21 +49,40 @@ public class ImplicitNonCompositionProperty extends AbstractProperty
 		if (sourceValue == null) {
 			return null;
 		}
-		ModelManager.ModelManagerExtension2 modelManager = (ModelManager.ModelManagerExtension2)executor.getModelManager();
-		Iterable<@NonNull Object> results = modelManager.getOpposite(property, sourceValue);
-		if (property.isIsMany()) {
-			return executor.getIdResolver().createCollectionOfAll(PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_ORDERED,
+		IdResolver idResolver = executor.getIdResolver();
+		Property oppositeProperty = property.getOpposite();
+		Iterable<Object> results = null;
+		ModelManager modelManager = executor.getModelManager();
+		if (modelManager instanceof EcoreModelManager) {
+			EObject esObject = oppositeProperty.getESObject();
+			if (esObject instanceof EReference) {
+				List<Object> resultList = new ArrayList<>();
+				if (sourceValue instanceof EObject) {
+					EReference oppositeEReference = (EReference)esObject;
+					results = new ArrayList<Object>();
+					Iterable<@NonNull EObject> opposites = ((EcoreModelManager)modelManager).getOpposites(oppositeEReference, (EObject)sourceValue);
+					if (opposites != null) {
+						for (@NonNull EObject opposite :opposites) {
+							resultList.add(idResolver.boxedValueOf(opposite));
+						}
+					}
+				}
+				results = resultList;
+			}
+		}
+		if (results == null) {	// Never happens always an EcoreModelManager
+			results = new ArrayList<>();
+			ModelManager.ModelManagerExtension2 modelManager2 = (ModelManager.ModelManagerExtension2)modelManager;
+			results = modelManager2.getOpposite(oppositeProperty, sourceValue);
+		}
+		if (returnTypeId instanceof CollectionTypeId) { // property.isIsMany()
+			return idResolver.createCollectionOfAll(PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_ORDERED,
 				PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_UNIQUE, returnTypeId, results);
 		}
 		int size = Iterables.size(results);
-		if (size == 0) {
-			return null;
+		if (size <= 1) {
+			return size == 1 ? results.iterator().next() : null;
 		}
-		else if (size == 1) {
-			return results.iterator().next();
-		}
-		else {
-			throw new InvalidValueException("Multiple opposites for " + property);
-		}
+		throw new InvalidValueException("Multiple opposites for '" + oppositeProperty + "'");
 	}
 }

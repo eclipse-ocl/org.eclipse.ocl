@@ -49,22 +49,27 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  * Moreover, this isn't strictly a violation of any contract because there is
  * no way to distinguish this behaviour from concurrent updates.
  * </p>
+ * @deprecated Use LazyEcoreModelManager to enable configuration of what needscaching
  */
+@Deprecated
 public abstract class LazyModelManager extends AbstractModelManager implements ModelManager.ModelManagerExtension2
 {
 	/**
 	 * Map from a Type to allInstances() of exactly that type and its subtypes.
 	 */
+	@Deprecated
 	private final @NonNull Map<@NonNull Type, @NonNull Set<@NonNull EObject>> type2instances = new HashMap<>();
 
 	/**
 	 * Map from an (opposite) Property to a Map from an object to the targets of that unnavigable (opposite) Property.
 	 */
+	@Deprecated
 	private final @NonNull Map<@NonNull Property, @NonNull Map<@NonNull Object, @NonNull Set<@NonNull Object>>> oppositeProperty2opposite2objects = new HashMap<>();
 
 	/**
 	 * The EObjects that together with their transitive containment descendants comprise allInstances() of all non-DataType types.
 	 */
+	@Deprecated
 	private final @NonNull Collection<@NonNull EObject> roots;
 
 	/**
@@ -83,11 +88,14 @@ public abstract class LazyModelManager extends AbstractModelManager implements M
 			roots = Collections.singleton(context); // can only search this object tree
 		}
 	}
+
 	/**
+	 * Dummy constructor to allow LazyEcoreModelManager to override while totally ignoring this abstract level.
+	 *
 	 * @since 1.14
 	 */
-	public LazyModelManager(@NonNull Collection<@NonNull EObject> allContents) {
-		roots = allContents;
+	protected LazyModelManager() {
+		roots = Collections.emptyList();
 	}
 
 	/**
@@ -95,6 +103,7 @@ public abstract class LazyModelManager extends AbstractModelManager implements M
 	 *
 	 * @param type a class in the model
 	 */
+	@Deprecated
 	@Override
 	public @NonNull Set<@NonNull ? extends Object> get(org.eclipse.ocl.pivot.@NonNull Class type) {
 		// TODO: Optimize by parsing ahead of time to find all EClasses that we will query
@@ -121,6 +130,7 @@ public abstract class LazyModelManager extends AbstractModelManager implements M
 	/**
 	 * @since 1.7
 	 */
+	@Deprecated
 	@Override
 	public @NonNull Iterable<@NonNull Object> getOpposite(@NonNull Property target2sourceProperty, @NonNull Object sourceObject) {
 		Map<@NonNull Object, @NonNull Set<@NonNull Object>> opposite2objects = oppositeProperty2opposite2objects.get(target2sourceProperty);
@@ -183,6 +193,7 @@ public abstract class LazyModelManager extends AbstractModelManager implements M
 	 * @return <code>true</code> if this element is an instance of the given
 	 *    class; <code>false</code> otherwise
 	 */
+	@Deprecated
 	protected abstract boolean isInstance(@NonNull Type type, @NonNull EObject element);
 
 	@Override

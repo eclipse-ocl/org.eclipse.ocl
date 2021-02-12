@@ -37,6 +37,7 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
+import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
 import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -70,6 +71,15 @@ public class EvaluateUMLTest4 extends PivotTestSuite
 
 		public MyOCL(@NonNull TestFileSystem testFileSystem, @NonNull String testPackageName, @NonNull String name) {
 			super(testFileSystem, testPackageName, name, useCodeGen ? getProjectMap() : OCL.NO_PROJECTS);
+			MetamodelManagerInternal metamodelManager = getMetamodelManager();
+			Package asMetamodel = metamodelManager.getASmetamodel();
+			if (asMetamodel != null) {
+				metamodelManager.addGlobalNamespace(PivotConstants.OCL_NAME, asMetamodel);
+			}
+		}
+
+		public MyOCL(@NonNull TestFileSystem testFileSystem, @NonNull String testPackageName, @NonNull String name, @NonNull ProjectManager projectManager) {
+			super(testFileSystem, testPackageName, name, projectManager);
 			MetamodelManagerInternal metamodelManager = getMetamodelManager();
 			Package asMetamodel = metamodelManager.getASmetamodel();
 			if (asMetamodel != null) {
@@ -141,6 +151,10 @@ public class EvaluateUMLTest4 extends PivotTestSuite
 	@Override
 	protected @NonNull MyOCL createOCL() {
 		return new MyOCL(getTestFileSystem(), getTestPackageName(), getName());
+	}
+
+	protected @NonNull MyOCL createOCLWithProjectMap() {
+		return new MyOCL(getTestFileSystem(), getTestPackageName(), getName(), getProjectMap());
 	}
 
 	@Override
@@ -254,7 +268,7 @@ public class EvaluateUMLTest4 extends PivotTestSuite
 	 */
 	@Test public void test_stereotype_allinstances_Bug485225() throws Exception {
 		UMLStandaloneSetup.init();
-		MyOCL ocl = createOCL();
+		MyOCL ocl = createOCLWithProjectMap();
 		IdResolver idResolver = ocl.getIdResolver();
 		EObject train1 = doLoadUML(ocl, getTestModelURI("models/uml/Bug485225.uml"), "_zKtRgLUyEeWSV7DXeOPrdA"); //RootElement.Train1");
 		org.eclipse.ocl.pivot.Class contextType = idResolver.getStaticTypeOfValue(null, train1);

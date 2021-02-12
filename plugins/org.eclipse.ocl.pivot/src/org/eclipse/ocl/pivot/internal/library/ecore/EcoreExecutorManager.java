@@ -30,7 +30,7 @@ import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorManager;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorStandardLibrary;
-import org.eclipse.ocl.pivot.internal.library.executor.LazyAnalyzedModelManager;
+import org.eclipse.ocl.pivot.internal.library.executor.LazyEcoreModelManager;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.utilities.AbstractTables;
 import org.eclipse.ocl.pivot.utilities.PivotObject;
@@ -150,23 +150,7 @@ public class EcoreExecutorManager extends ExecutorManager
 				modelManager2 = modelManager;
 				if (modelManager2 == null) {
 					if (contextObject instanceof EObject) {
-						EObject contextEObject = (EObject)contextObject;
-						List<@NonNull EObject> allRootContents = new ArrayList<>();
-						Resource contextResource = contextEObject.eResource();
-						if (contextResource != null) {
-							ResourceSet resourceSet = contextResource.getResourceSet();
-							if (resourceSet != null) {
-								for (Resource resource : resourceSet.getResources()) {
-									allRootContents.addAll(resource.getContents());
-								}
-							}
-							else {
-								allRootContents.addAll(contextResource.getContents());
-							}
-						}
-						else {
-							allRootContents.add(contextEObject);
-						}
+						List<@NonNull EObject> allRootContents = LazyEcoreModelManager.computeRoots((EObject)contextObject);
 						List<@NonNull EClass> allInstancesClassesList = null;
 						List<@NonNull EReference> implicitOppositesList = null;
 						for (@NonNull String nsURI : standardLibrary.getNsURIs()) {
@@ -192,7 +176,7 @@ public class EcoreExecutorManager extends ExecutorManager
 								}
 							}
 						}
-						modelManager2 = new LazyAnalyzedModelManager(allRootContents, allInstancesClassesList, implicitOppositesList);
+						modelManager2 = new LazyEcoreModelManager(allRootContents, allInstancesClassesList, implicitOppositesList);
 					}
 					else {
 						modelManager2 = ModelManager.NULL;

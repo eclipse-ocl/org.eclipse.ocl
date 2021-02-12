@@ -32,6 +32,7 @@ import org.eclipse.ocl.pivot.Profile;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.library.executor.LazyEcoreModelManager;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
@@ -292,22 +293,40 @@ public class StereotypesTest extends PivotTestSuite
 	/**
 	 * Tests allInstances in a stereotyped context.
 	 * @throws ParserException
+	 *
+	 * Bug 382981 - static profile allInstances fails
 	 */
 	public void test_stereotyped_allInstances_382981() throws ParserException {
-		MyOCL ocl = createOCL();
-		IdResolver idResolver = ocl.getIdResolver();
-		//M0
-		ocl.assertQueryEquals(ocl.m.eEnglishObject, idResolver.createSetOfEach(TypeId.SET, ocl.m.eEnglishObject), "EnglishClass.allInstances()");
-		ocl.assertQueryEquals(ocl.m.eEnglishObject, idResolver.createSetOfEach(TypeId.SET, ocl.m.eGermanObject), "GermanClass.allInstances()");
-		//M1
-		ocl.assertQueryEquals(ocl.mm.umlEnglishClass, idResolver.createSetOfEach(TypeId.SET), "Model::EnglishClass.allInstances()");
-		ocl.assertQueryEquals(ocl.mm.umlEnglishClass, idResolver.createSetOfEach(TypeId.SET, ocl.mm.umlPlainClass, ocl.mm.umlEnglishClass, ocl.mm.umlLanguageClass, ocl.mm.umlFrenchClass, ocl.mm.umlGermanClass), "Class.allInstances()");
-		ocl.assertQueryEquals(ocl.mm.asEnglishClass, idResolver.createSetOfEach(TypeId.SET, ocl.mm.asEnglishClassInEnglish, ocl.mm.asFrenchClassInEnglish, ocl.mm.asGermanClassInEnglish), "ocl::ElementExtension.allInstances()");
-		//
-		//    	ocl.assertQueryEquals(ocl.mm.umlMMM, metamodelManager.createSetValueOf(null, ocl.mm.string, ocl.mm.plainClass, ocl.mm.englishClass, ocl.mm.languageClass, ocl.mm.frenchClass, ocl.mm.germanClass), "uml::Stereotype.allInstances()");
-		//    	ocl.assertQueryEquals(metamodelManager.getOclAnyType(), metamodelManager.createSetValueOf(null, ocl.mm.string, ocl.mm.plainClass, ocl.mm.englishClass, ocl.mm.languageClass, ocl.mm.frenchClass, ocl.mm.germanClass), "ocl::Stereotype.allInstances()");
-		//    	ocl.assertQueryEquals(ocl.mm.englishClass, getEmptySetValue(), "InEnglish.allInstances()");
-		ocl.dispose();
+		// The M0/M1/Pivot distinction uses a distinct ModelManager to offer an e.g. M0-only extent to allInstances().
+		//M0 - EClass
+		{
+			MyOCL ocl1 = createOCL();
+			IdResolver idResolver1 = ocl1.getIdResolver();
+			ocl1.assertQueryEquals(ocl1.m.eEnglishObject, idResolver1.createSetOfEach(TypeId.SET, ocl1.m.eEnglishObject), "EnglishClass.allInstances()");
+			ocl1.assertQueryEquals(ocl1.m.eEnglishObject, idResolver1.createSetOfEach(TypeId.SET, ocl1.m.eGermanObject), "GermanClass.allInstances()");
+			ocl1.dispose();
+		}
+		//M1 - UML
+		{
+			MyOCL ocl2 = createOCL();
+			IdResolver idResolver2 = ocl2.getIdResolver();
+			ocl2.setModelManager(new LazyEcoreModelManager(ocl2.mm.umlEnglishClass.eResource().getContents(), null, null));
+			ocl2.assertQueryEquals(ocl2.mm.umlEnglishClass, idResolver2.createSetOfEach(TypeId.SET), "Model::EnglishClass.allInstances()");
+			ocl2.assertQueryEquals(ocl2.mm.umlEnglishClass, idResolver2.createSetOfEach(TypeId.SET, ocl2.mm.umlPlainClass, ocl2.mm.umlEnglishClass, ocl2.mm.umlLanguageClass, ocl2.mm.umlFrenchClass, ocl2.mm.umlGermanClass), "Class.allInstances()");
+			ocl2.dispose();
+		}
+		//M1 - Pivot
+		{
+			MyOCL ocl3 = createOCL();
+			IdResolver idResolver3 = ocl3.getIdResolver();
+			ocl3.setModelManager(new LazyEcoreModelManager(ocl3.mm.asEnglishClass.eResource().getContents(), null, null));
+			ocl3.assertQueryEquals(ocl3.mm.asEnglishClass, idResolver3.createSetOfEach(TypeId.SET, ocl3.mm.asEnglishClassInEnglish, ocl3.mm.asFrenchClassInEnglish, ocl3.mm.asGermanClassInEnglish), "ocl::ElementExtension.allInstances()");
+			//
+			//    	ocl.assertQueryEquals(ocl.mm.umlMMM, metamodelManager.createSetValueOf(null, ocl.mm.string, ocl.mm.plainClass, ocl.mm.englishClass, ocl.mm.languageClass, ocl.mm.frenchClass, ocl.mm.germanClass), "uml::Stereotype.allInstances()");
+			//    	ocl.assertQueryEquals(metamodelManager.getOclAnyType(), metamodelManager.createSetValueOf(null, ocl.mm.string, ocl.mm.plainClass, ocl.mm.englishClass, ocl.mm.languageClass, ocl.mm.frenchClass, ocl.mm.germanClass), "ocl::Stereotype.allInstances()");
+			//    	ocl.assertQueryEquals(ocl.mm.englishClass, getEmptySetValue(), "InEnglish.allInstances()");
+			ocl3.dispose();
+		}
 	}
 
 	/**

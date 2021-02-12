@@ -13,7 +13,6 @@ package org.eclipse.ocl.pivot.internal.manager;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -24,7 +23,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorManager;
-import org.eclipse.ocl.pivot.internal.library.executor.LazyModelManager;
+import org.eclipse.ocl.pivot.internal.library.executor.LazyEcoreModelManager;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
@@ -159,17 +158,7 @@ public class PivotExecutorManager extends ExecutorManager
 			synchronized (this) {
 				modelManager2 = modelManager;
 				if (modelManager2 == null) {
-					modelManager2 = new LazyModelManager(contextObject)
-					{
-						@Override
-						protected boolean isInstance(@NonNull Type type, @NonNull EObject element) {
-							EClass eClass = ClassUtil.nonNullEMF(element.eClass());
-							Type elementType = idResolver.getInheritance(eClass).getPivotClass();
-							return elementType.conformsTo(standardLibrary, type);
-						}
-
-					};
-					modelManager = modelManager2;
+					modelManager2 = modelManager = new LazyEcoreModelManager(contextObject);
 				}
 			}
 		}

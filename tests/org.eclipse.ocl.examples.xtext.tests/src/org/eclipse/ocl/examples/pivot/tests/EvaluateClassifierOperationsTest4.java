@@ -110,7 +110,7 @@ public class EvaluateClassifierOperationsTest4 extends PivotTestSuite
 	 * Tests the allInstances() operator.
 	 */
 	@Test public void test_allInstances() {
-		MyOCL ocl = createOCL(OCL.NO_PROJECTS);
+		MyOCL ocl = createOCL(OCL.CLASS_PATH);
 		MetamodelManager metamodelManager = ocl.getMetamodelManager();
 		try {
 			org.eclipse.ocl.pivot.Class classType = metamodelManager.getStandardLibrary().getClassType();
