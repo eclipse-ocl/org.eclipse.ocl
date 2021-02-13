@@ -39,13 +39,9 @@ import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.Model;
-import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.OperationCallExp;
-import org.eclipse.ocl.pivot.OppositePropertyCallExp;
 import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.ParameterTypes;
-import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
@@ -55,10 +51,8 @@ import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.ids.IdManager;
-import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorEnumeration;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorEnumerationLiteral;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorInvalidType;
@@ -78,7 +72,6 @@ import org.eclipse.ocl.pivot.utilities.AbstractTables;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 
 public class OCLinEcoreTables extends OCLinEcoreTablesUtils
@@ -166,40 +159,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 	}
 
 	public void analyzeExpressions() {
-		StandardLibraryInternal standardLibrary = environmentFactory.getStandardLibrary();
-		Type oclElementType = standardLibrary.getOclElementType();
-		OperationId allInstancesOperationId = oclElementType.getTypeId().getOperationId(0, "allInstances", IdManager.getParametersId());
-		for (EObject eObject : new TreeIterable(asPackage, true)) {
-			if (eObject instanceof OppositePropertyCallExp) {
-				OppositePropertyCallExp oppositePropertyCallExp = (OppositePropertyCallExp)eObject;
-				Property navigableProperty = oppositePropertyCallExp.getReferredProperty();
-				if ((navigableProperty != null) && !navigableProperty.isIsComposite()) {
-					implicitOppositeProperties.add(navigableProperty);
-				}
-			}
-			else if (eObject instanceof OperationCallExp) {
-				OperationCallExp operationCallExp = (OperationCallExp)eObject;
-				Operation referredOperation = operationCallExp.getReferredOperation();
-				if (referredOperation != null) {
-					OperationId operationId = referredOperation.getOperationId();
-					if (operationId == allInstancesOperationId) {
-						OCLExpression source = operationCallExp.getOwnedSource();
-						if (source != null) {
-							Type asType = source.getTypeValue();
-							if (asType == null) {
-								asType = source.getType();
-							}
-							if (asType instanceof org.eclipse.ocl.pivot.Class) {
-								assert !(asType instanceof PrimitiveType);
-								assert !(asType instanceof CollectionType);
-								CompleteClass completeClass = environmentFactory.getCompleteModel().getCompleteClass(asType);
-								allInstancesCompleteClasses.add(completeClass);
-							}
-						}
-					}
-				}
-			}
-		}
+		environmentFactory.analyzeExpressions(asPackage, allInstancesCompleteClasses, implicitOppositeProperties);
 	}
 
 	public void appendClassSuperClassName(org.eclipse.ocl.pivot.@NonNull Class asClass, org.eclipse.ocl.pivot.@NonNull Class asSuperClass) {
@@ -375,7 +335,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 			for (org.eclipse.ocl.pivot.@NonNull Class pSuperClass : getAllSupertypesSortedByName(pClass)) {
 				for (/*@NonNull*/ Property prop : getLocalPropertiesSortedByName(pSuperClass)) {
 					assert prop != null;
-					if (isProperty(prop) && !prop.isIsImplicit()) {			// FIXME need implicits too
+					if (isProperty(prop) && !prop.isIsImplicit()) {			// FIXME maybe implicits too
 						allProperties.add(prop);
 					}
 				}
@@ -395,7 +355,9 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 				if (esObject == null) {
 					esObject = completeClass.getPrimaryClass().getESObject();
 				}
-				allInstancesEClasses.add((EClass)esObject);
+				if (esObject instanceof EClass) {
+					allInstancesEClasses.add((EClass)esObject);
+				}
 			}
 			Collections.sort(allInstancesEClasses, NameUtil.ENAMED_ELEMENT_COMPARATOR);
 			s.append("\n");
@@ -652,7 +614,9 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 			List<@NonNull EReference> implicitOppositeEReferences = new ArrayList<>();
 			for (@NonNull Property implicitOppositeProperty : implicitOppositeProperties) {
 				EObject esObject = implicitOppositeProperty.getESObject();
-				implicitOppositeEReferences.add((EReference)esObject);
+				if (esObject instanceof EReference) {
+					implicitOppositeEReferences.add((EReference)esObject);
+				}
 			}
 			Collections.sort(implicitOppositeEReferences, NameUtil.ENAMED_ELEMENT_COMPARATOR);	// Qualified
 			s.append("\n");
@@ -948,7 +912,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append(");\n");
 	}
 
-	protected void declareTypes(@NonNull List<LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Operation>>>> paginatedFragmentOperations, @NonNull List<LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, List<@NonNull Property>>> paginatedFragmentProperties) {
+	protected void declareTypes(@NonNull List<@NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Operation>>>> paginatedFragmentOperations, @NonNull List<@NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Property>>> paginatedFragmentProperties) {
 		s.append("	/**\n");
 		s.append("	 *	The type descriptors for each type.\n");
 		s.append("	 */\n");
@@ -1006,11 +970,11 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 			for (Integer aDepth : allSuperTypes.values()) {
 				typesPerDepth[aDepth]++;
 			}
-			List<Type> superTypes = new ArrayList<>(allSuperTypes.keySet());
-			Collections.sort(superTypes, new Comparator<@NonNull Type>()
+			List<org.eclipse.ocl.pivot.@NonNull Class> superTypes = new ArrayList<>(allSuperTypes.keySet());
+			Collections.sort(superTypes, new Comparator<org.eclipse.ocl.pivot.@NonNull Class>()
 			{
 				@Override
-				public int compare(@NonNull Type o1, @NonNull Type o2) {
+				public int compare(org.eclipse.ocl.pivot.@NonNull Class o1, org.eclipse.ocl.pivot.@NonNull Class o2) {
 					Integer d1 = allSuperTypes.get(o1);
 					Integer d2 = allSuperTypes.get(o2);
 					assert (d1 != null) && (d2 != null);

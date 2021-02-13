@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.common.EMFPlugin;
@@ -31,6 +32,8 @@ import org.eclipse.emf.ecore.xmi.impl.EMOFResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -44,6 +47,7 @@ import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.OppositePropertyCallExp;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.Slot;
@@ -53,7 +57,9 @@ import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
+import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
+import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
@@ -224,6 +230,44 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 					if ((contextResourceMap != null) && (contextResourceMap != uriResourceMap)) {
 						for (URI uri : contextResourceMap.keySet()) {
 							uriResourceMap.put(uri, contextResourceMap.get(uri));
+						}
+					}
+				}
+			}
+		}
+	}
+
+	@Override
+	public void analyzeExpressions(@NonNull EObject eRootObject,
+			@NonNull Set<@NonNull CompleteClass> allInstancesCompleteClasses, @NonNull Set<@NonNull Property> implicitOppositeProperties) {
+		Type oclElementType = standardLibrary.getOclElementType();
+		OperationId allInstancesOperationId = oclElementType.getTypeId().getOperationId(0, "allInstances", IdManager.getParametersId());
+		for (EObject eObject : new TreeIterable(eRootObject, true)) {
+			if (eObject instanceof OppositePropertyCallExp) {
+				OppositePropertyCallExp oppositePropertyCallExp = (OppositePropertyCallExp)eObject;
+				Property navigableProperty = oppositePropertyCallExp.getReferredProperty();
+				if ((navigableProperty != null) && !navigableProperty.isIsComposite()) {
+					implicitOppositeProperties.add(navigableProperty);
+				}
+			}
+			else if (eObject instanceof OperationCallExp) {
+				OperationCallExp operationCallExp = (OperationCallExp)eObject;
+				Operation referredOperation = operationCallExp.getReferredOperation();
+				if (referredOperation != null) {
+					OperationId operationId = referredOperation.getOperationId();
+					if (operationId == allInstancesOperationId) {
+						OCLExpression source = operationCallExp.getOwnedSource();
+						if (source != null) {
+							Type asType = source.getTypeValue();
+							if (asType == null) {
+								asType = source.getType();
+							}
+							if (asType instanceof org.eclipse.ocl.pivot.Class) {
+								assert !(asType instanceof PrimitiveType);
+								assert !(asType instanceof CollectionType);
+								CompleteClass completeClass = completeModel.getCompleteClass(asType);
+								allInstancesCompleteClasses.add(completeClass);
+							}
 						}
 					}
 				}

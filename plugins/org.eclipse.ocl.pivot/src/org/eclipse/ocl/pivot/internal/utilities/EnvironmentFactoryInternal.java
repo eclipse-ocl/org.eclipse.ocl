@@ -11,6 +11,8 @@
 
 package org.eclipse.ocl.pivot.internal.utilities;
 
+import java.util.Set;
+
 import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -20,8 +22,10 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
@@ -64,7 +68,7 @@ public interface EnvironmentFactoryInternal extends EnvironmentFactory
 		/**
 		 * Create a visitor to resolve TemplateParameter specializations. The visitor is normally created
 		 * by the ASResourceFactory override of a relevant ASResource, but in the event that the ASResource is null,
-		 * this altrernative creation mechanism is available via an EnvironmentFactory override.
+		 * this alternative creation mechanism is available via an EnvironmentFactory override.
 		 */
 		@NonNull TemplateParameterSubstitutionVisitor createTemplateParameterSubstitutionVisitor(@Nullable Type selfType, @Nullable Type selfTypeValue);
 	}
@@ -75,6 +79,16 @@ public interface EnvironmentFactoryInternal extends EnvironmentFactory
 	 * Add all resources in ResourceSet to the externalResourceSet.
 	 */
 	void addExternalResources(@NonNull ResourceSet externalResourceSet);
+
+	/**
+	 * Analyze all OCL functioality below eRootObject,typically a pivot Package, to populate the
+	 * allInstancesCompleteClasses and implicitOppositeProperties with the identies of all
+	 * Classes that source an allInstances() call and all unidirectional Properties that are
+	 * opposite navigated.
+	 *
+	 * @since 1.14
+	 */
+	default void analyzeExpressions(@NonNull EObject eRootObject, @NonNull Set<@NonNull CompleteClass> allInstancesCompleteClasses, @NonNull Set<@NonNull Property> implicitOppositeProperties) {}
 
 	void attach(Object object);
 
