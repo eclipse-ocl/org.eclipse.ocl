@@ -73,13 +73,16 @@ public class EcoreTechnology extends AbstractTechnology
 	@Override
 	public boolean isStereotype(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull EClass eClass) {
 		for (EStructuralFeature eFeature : eClass.getEAllStructuralFeatures()) {
-			if ((eFeature instanceof EReference) && eFeature.getName().startsWith("base_")) {
-				EClassifier eType = eFeature.getEType();
-				if (eType != null) {
-					assert !eType.eIsProxy() : "Unresolved proxy: '" + EcoreUtil.getURI(eType) + "'";
-					EPackage ePackage = eType.getEPackage();
-					if ("http://www.eclipse.org/uml2/5.0.0/UML".equals(ePackage.getNsURI())) {
-						return true;
+			if (eFeature instanceof EReference) {
+				String name = eFeature.getName();
+				if ((name != null) && name.startsWith("base_")) {
+					EClassifier eType = eFeature.getEType();
+					if (eType != null) {
+						assert !eType.eIsProxy() : "Unresolved proxy: '" + EcoreUtil.getURI(eType) + "'";
+						EPackage ePackage = eType.getEPackage();
+						if ("http://www.eclipse.org/uml2/5.0.0/UML".equals(ePackage.getNsURI())) {
+							return true;
+						}
 					}
 				}
 			}
