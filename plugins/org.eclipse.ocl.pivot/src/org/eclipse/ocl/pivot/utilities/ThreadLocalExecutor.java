@@ -46,7 +46,15 @@ public class ThreadLocalExecutor
 	}
 
 	/**
-	 * Locate an OCL Executor from the Resource containing an eObject, else create a default one.
+	 * Return the prevailing thread-unique EnvironmentFactory or null if none/many.
+	 */
+	public static @Nullable EnvironmentFactory basicGetEnvironmentFactory() {
+		ThreadLocalExecutor threadLocalExecutor = INSTANCE.get();
+		return threadLocalExecutor.localBasicGetEnvironmentFactory();
+	}
+
+	/**
+	 * Return the prevailing thread-unique Executor or null if none/many.
 	 */
 	public static @Nullable Executor basicGetExecutor() {
 		ThreadLocalExecutor threadLocalExecutor = INSTANCE.get();
@@ -78,6 +86,11 @@ public class ThreadLocalExecutor
 		threadLocalExecutor.localSetExecutor(executor);
 	}
 
+	public static @NonNull String toDebugString() {
+		ThreadLocalExecutor threadLocalExecutor = INSTANCE.get();
+		return threadLocalExecutor.toString();
+	}
+
 	/**
 	 * Set true once multiple EnvironmentFactory instances are constructed on this thread. Reset by reset().
 	 */
@@ -98,10 +111,12 @@ public class ThreadLocalExecutor
 	private void localAddEnvironmentFactory(@NonNull EnvironmentFactory environmentFactory) {
 		if (!concurrentEnvironmentFactories) {
 			if (this.environmentFactory == null) {
+				assert this.executor == null;		// ?? lightweight Executor promoted to non-lightweight ??
 				this.environmentFactory = environmentFactory;
 			}
 			else if (this.environmentFactory != environmentFactory) {
 				this.environmentFactory = null;
+				this.executor = null;
 				this.concurrentEnvironmentFactories = true;
 				String message = "Concurrent EnvironmentFactory instances inhibit LocalThread Executor passing.\n" +
 						"\tSee https://wiki.eclipse.org/OCL/FAQ#Concurrent_EnvironmentFactory_instances";
@@ -109,21 +124,30 @@ public class ThreadLocalExecutor
 				logger.warn(message);
 			}
 		}
+		else {
+			assert this.executor == null;
+		}
+	}
+
+	private @Nullable EnvironmentFactory localBasicGetEnvironmentFactory() {
+		if (concurrentEnvironmentFactories) {
+			assert environmentFactory == null;
+		}
+		return environmentFactory;
 	}
 
 	private @Nullable Executor localBasicGetExecutor() {
-		if (!concurrentEnvironmentFactories) {
-			return executor;
+		if (concurrentEnvironmentFactories) {
+			assert executor == null;
 		}
-		else {
-			return null;
-		}
+		return executor;
 	}
 
 	private void localRemoveEnvironmentFactory(@NonNull EnvironmentFactory environmentFactory) {
 		if (!concurrentEnvironmentFactories) {
 			if (this.environmentFactory == environmentFactory) {
 				this.environmentFactory = null;
+				this.executor = null;
 			}
 		}
 	}
@@ -138,5 +162,10 @@ public class ThreadLocalExecutor
 		if (!concurrentEnvironmentFactories) {
 			this.executor = executor;
 		}
+	}
+
+	@Override
+	public @NonNull String toString() {
+		return "environmentFactory=" + String.valueOf(environmentFactory) + " executor=" + String.valueOf(executor) + " concurrentEnvironmentFactories=" + concurrentEnvironmentFactories;
 	}
 }
