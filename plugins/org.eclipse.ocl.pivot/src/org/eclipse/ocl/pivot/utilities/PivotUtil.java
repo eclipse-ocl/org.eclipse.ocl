@@ -208,20 +208,14 @@ public class PivotUtil
 	/**
 	 * Locate an OCL Executor from the Resource containing an eObject, else create a default one.
 	 *
-	 * @since 1.7
+	 * @since 1.14
 	 */
+	public static @Nullable Executor basicGetExecutor() {
+		return ThreadLocalExecutor.basicGetExecutor();
+	}
+	@Deprecated /* @deprecated omit obsolete argument */
 	public static @Nullable Executor basicGetExecutor(@NonNull EObject eObject) {
-		Resource eResource = eObject.eResource();
-		if (eResource != null) {
-			ResourceSet resourceSet = eResource.getResourceSet();
-			if (resourceSet != null) {
-				Executor executor = PivotExecutorManager.findAdapter(resourceSet);
-				if (executor != null) {
-					return executor;
-				}
-			}
-		}
-		return null;
+		return ThreadLocalExecutor.basicGetExecutor();
 	}
 
 	/**
@@ -1240,15 +1234,25 @@ public class PivotUtil
 	 *
 	 * @since 1.7
 	 */
-	public static @NonNull Executor getExecutor(@NonNull EObject eObject) {
-		Resource eResource = eObject.eResource();
-		if (eResource != null) {
-			EnvironmentFactory environmentFactory = PivotUtilInternal.findEnvironmentFactory(eResource);
-			if (environmentFactory != null) {
-				return new PivotExecutorManager(environmentFactory, eObject);
+	public static @NonNull Executor getExecutor(@Nullable EObject eObject) {
+		Executor executor = ThreadLocalExecutor.basicGetExecutor();
+		if (executor != null) {
+			return executor;
+		}
+		if (eObject != null) {
+			Resource eResource = eObject.eResource();
+			if (eResource != null) {
+				EnvironmentFactory environmentFactory = PivotUtilInternal.findEnvironmentFactory(eResource);
+				if (environmentFactory != null) {
+					executor = new PivotExecutorManager(environmentFactory, eObject);
+				}
 			}
 		}
-		return new EcoreExecutorManager(eObject, PivotTables.LIBRARY);
+		if (executor == null) {
+			executor = new EcoreExecutorManager(eObject, PivotTables.LIBRARY);
+		}
+		ThreadLocalExecutor.setExecutor(executor);
+		return executor;
 	}
 
 	/**
@@ -1260,27 +1264,38 @@ public class PivotUtil
 	 * @since 1.7
 	 */
 	public static @NonNull Executor getExecutor(@NonNull EObject eObject, @Nullable Map<Object, Object> validationContext) {
+		Executor executor = ThreadLocalExecutor.basicGetExecutor();
+		//	if (executor != null) {
+		//		validationContext.put(Executor.class, executor);
+		//		return executor;
+		//	}
 		if (validationContext != null) {
-			Executor executor = (Executor) validationContext.get(Executor.class);
-			if (executor != null) {
-				return executor;
+			Executor validationContextExecutor = (Executor) validationContext.get(Executor.class);
+			if (validationContextExecutor != null) {
+				assert (executor == null) || (validationContextExecutor == executor);
+				return validationContextExecutor;
 			}
+		}
+		if (executor != null) {
+			if (validationContext != null) {
+				validationContext.put(Executor.class, executor);
+			}
+			return executor;
 		}
 		Resource asResource = eObject.eResource();
 		if (asResource != null) {
 			EnvironmentFactory environmentFactory = PivotUtilInternal.findEnvironmentFactory(asResource);
 			if (environmentFactory != null) {
-				Executor executor = new PivotExecutorManager(environmentFactory, eObject);
-				if (validationContext != null) {
-					validationContext.put(Executor.class, executor);
-				}
-				return executor;
+				executor = new PivotExecutorManager(environmentFactory, eObject);
 			}
 		}
-		Executor executor = new EcoreExecutorManager(eObject, PivotTables.LIBRARY);
+		if (executor == null) {
+			executor = new EcoreExecutorManager(eObject, PivotTables.LIBRARY);
+		}
 		if (validationContext != null) {
 			validationContext.put(Executor.class, executor);
 		}
+		ThreadLocalExecutor.setExecutor(executor);
 		return executor;
 	}
 
@@ -2006,6 +2021,13 @@ public class PivotUtil
 				|| PivotConstants.SAFE_AGGREGATE_NAVIGATION_OPERATOR.equals(operatorName);
 	}
 
+	/**
+	 * @since 1.11
+	 */
+	public static boolean isDataType(@NonNull CompleteClass completeClass) {
+		return completeClass.getPrimaryClass() instanceof DataType;
+	}
+
 	public static boolean isObjectNavigationOperator(/*@NonNull*/ String operatorName) {
 		return PivotConstants.OBJECT_NAVIGATION_OPERATOR.equals(operatorName)
 				|| PivotConstants.SAFE_OBJECT_NAVIGATION_OPERATOR.equals(operatorName);
@@ -2057,7 +2079,10 @@ public class PivotUtil
 	 * re-use of the cached context of an earlier executor after a change to the models.
 	 *
 	 * @since 1.7
+	 *
+	 * @deprecated use resetExecutor
 	 */
+	@Deprecated
 	public static void removeExecutor(@NonNull EObject eObject) {
 		Resource eResource = eObject.eResource();
 		if (eResource != null) {
@@ -2066,6 +2091,18 @@ public class PivotUtil
 				PivotExecutorManager.removeAdapter(resourceSet);
 			}
 		}
+		resetExecutor();
+	}
+
+	/**
+	 * Eliminate the executor for this thread in order to force a new Executor and ModelManager to be
+	 * created. This is necessary to lose the caches created prior to a model change. It may also be
+	 * invoked to avoid waiting for a stale Exector to be garbage collected.
+	 *
+	 * @since 1.14
+	 */
+	public static void resetExecutor() {
+		ThreadLocalExecutor.reset();
 	}
 
 	/**
@@ -2113,12 +2150,5 @@ public class PivotUtil
 			csResource.setParserContext(parserContext);
 			return true;
 		}
-	}
-
-	/**
-	 * @since 1.11
-	 */
-	public static boolean isDataType(@NonNull CompleteClass completeClass) {
-		return completeClass.getPrimaryClass() instanceof DataType;
 	}
 }

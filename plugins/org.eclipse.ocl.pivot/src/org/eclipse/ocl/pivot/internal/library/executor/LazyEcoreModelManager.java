@@ -463,6 +463,19 @@ public class LazyEcoreModelManager extends LazyModelManager implements ModelMana
 	 */
 	@Override
 	public synchronized void analyze() {
+		Map<@NonNull EClass, @NonNull EClassAnalysis> eClass2eClassAnalysis2 = eClass2eClassAnalysis;
+		if (eClass2eClassAnalysis2 == null) {
+			//
+			//	Create the map eagerly seeded by the known allInstances() classes.
+			//
+			eClass2eClassAnalysis2 = eClass2eClassAnalysis = new HashMap<>();
+			for (@NonNull EClass allInstancesEClass : allInstancesEClasses) {
+				eClass2eClassAnalysis2.put(allInstancesEClass, new EClassAnalysisWithInstances(this, allInstancesEClass));
+			}
+			for (@NonNull EClassAnalysis eClassAnalysis : eClass2eClassAnalysis2.values()) {
+				((EClassAnalysisWithInstances)eClassAnalysis).analyzeInheritance();
+			}
+		}
 		if (((allInstancesEClasses.size() + implicitOppositeEReferences.size()) > 0) || (classId2eClass != null)) {
 			//
 			//	Analyze the extent.
@@ -476,11 +489,15 @@ public class LazyEcoreModelManager extends LazyModelManager implements ModelMana
 				eClassAnalysis.analyzeEObject(eObject);
 			}
 		}
-		if (eClass2eClassAnalysis == null) {
-			eClass2eClassAnalysis = new HashMap<>();
-		}
+	//	if (eClass2eClassAnalysis == null) {
+	//		eClass2eClassAnalysis = new HashMap<>();
+	//	}
 		if (eReference2eReferenceAnalysis == null) {
 			eReference2eReferenceAnalysis = new HashMap<>();
+		}
+		for (@NonNull EClass eClass : allInstancesEClasses) {
+			assert (eClass2eClassAnalysis != null) && eClass2eClassAnalysis.containsKey(eClass) : "No eClass2eClassAnalysis for " + eClass;
+
 		}
 	}
 
@@ -496,18 +513,7 @@ public class LazyEcoreModelManager extends LazyModelManager implements ModelMana
 	 */
 	protected @NonNull EClassAnalysis getEClassAnalysis(@NonNull EClass eClass) {
 		Map<@NonNull EClass, @NonNull EClassAnalysis> eClass2eClassAnalysis2 = eClass2eClassAnalysis;
-		if (eClass2eClassAnalysis2 == null) {
-			//
-			//	Create the map eagerly seeded by the known allInstances() classes.
-			//
-			eClass2eClassAnalysis2 = eClass2eClassAnalysis = new HashMap<>();
-			for (@NonNull EClass allInstancesEClass : allInstancesEClasses) {
-				eClass2eClassAnalysis2.put(allInstancesEClass, new EClassAnalysisWithInstances(this, allInstancesEClass));
-			}
-			for (@NonNull EClassAnalysis eClassAnalysis : eClass2eClassAnalysis2.values()) {
-				((EClassAnalysisWithInstances)eClassAnalysis).analyzeInheritance();
-			}
-		}
+		assert eClass2eClassAnalysis2 != null;
 		EClassAnalysis eClassAnalysis = eClass2eClassAnalysis2.get(eClass);
 		if (eClassAnalysis == null) {
 			//
@@ -566,7 +572,8 @@ public class LazyEcoreModelManager extends LazyModelManager implements ModelMana
 			eClass2eClassAnalysis2 = eClass2eClassAnalysis;
 			assert eClass2eClassAnalysis2 != null;
 			eClassAnalysis = eClass2eClassAnalysis2.get(eClass);
-			assert eClassAnalysis != null;
+			assert allInstancesEClasses.contains(eClass) : "No allInstancesEClasses for " + eClass;
+			assert eClassAnalysis != null : "No EClassAnalysis for " + eClass;
 		}
 		return eClassAnalysis.getInstances();
 	}

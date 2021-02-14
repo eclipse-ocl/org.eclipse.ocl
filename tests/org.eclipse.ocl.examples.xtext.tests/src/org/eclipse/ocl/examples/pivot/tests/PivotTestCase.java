@@ -79,6 +79,7 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotStandaloneSetup;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.pivot.values.Bag;
@@ -752,6 +753,7 @@ public class PivotTestCase extends TestCase
 	protected void setUp() throws Exception {
 		PivotUtilInternal.debugReset();
 		GlobalEnvironmentFactory.resetSafeNavigationValidations();
+		ThreadLocalExecutor.reset();
 		//		EssentialOCLLinkingService.DEBUG_RETRY = true;
 		ASResourceImpl.CHECK_IMMUTABILITY.setState(true);
 		if (DEBUG_GC) {
@@ -772,6 +774,7 @@ public class PivotTestCase extends TestCase
 		//		if (DEBUG_ID) {
 		//			PivotUtilInternal.debugPrintln("==> Done " + getName());
 		//		}
+		ThreadLocalExecutor.reset();
 		if (DEBUG_GC) {
 			uninstall();
 			makeCopyOfGlobalState.restoreGlobalState();

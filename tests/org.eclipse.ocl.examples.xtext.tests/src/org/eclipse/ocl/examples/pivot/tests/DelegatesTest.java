@@ -111,6 +111,7 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.SemanticException;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.xtext.oclinecore.validation.OCLinEcoreEObjectValidator;
 import org.junit.AfterClass;
 
@@ -391,9 +392,8 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		assertTrue(amyAllReports.contains(employee("Sally")));
 
 		// change the set of all instances of Employee
-		set(create(acme, companyEmployees, employeeClass, "Manuel"),
-			employeeManager, employee("Bob"));
-
+		set(create(acme, companyEmployees, employeeClass, "Manuel"), employeeManager, employee("Bob"));
+		ThreadLocalExecutor.reset();		// invalidate ModelManager caches
 		amyAllReports = allReports(employee("Amy"));
 		assertEquals(6, amyAllReports.size());
 		assertTrue(amyAllReports.contains(employee("Manuel")));

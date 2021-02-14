@@ -182,6 +182,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		this.standardLibrary = completeEnvironment.getOwnedStandardLibrary();
 		this.completeModel = completeEnvironment.getOwnedCompleteModel();
 		PivotUtil.initializeLoadOptionsToSupportSelfReferences(getResourceSet());
+		ThreadLocalExecutor.addEnvironmentFactory(this);
 	}
 
 	@Override
@@ -348,8 +349,8 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		// can determine a more appropriate context from the context
 		// variable of the expression, to account for stereotype constraints
 		//		context = HelperUtil.getConstraintContext(rootEnvironment, context, expression);
-		ExecutorInternal executor = createExecutor(modelManager);
-		EvaluationEnvironment evaluationEnvironment = executor.initializeEvaluationEnvironment(expression);
+		ExecutorInternal executorInternal = createExecutor(modelManager);
+		EvaluationEnvironment evaluationEnvironment = executorInternal.initializeEvaluationEnvironment(expression);
 		Variable contextVariable = expression.getOwnedContext();
 		if (contextVariable != null) {
 			IdResolver idResolver = getIdResolver();
@@ -361,7 +362,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 				evaluationEnvironment.add(parameterVariable, null);
 			}
 		}
-		return executor.getEvaluationVisitor();
+		return executorInternal.getEvaluationVisitor();
 	}
 
 	@Override
@@ -607,6 +608,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 
 	protected void disposeInternal() {
 		assert isDisposed();
+		ThreadLocalExecutor.removeEnvironmentFactory(this);
 		boolean isGlobal = this == GlobalEnvironmentFactory.basicGetInstance();
 		if (metamodelManager != null) {
 			metamodelManager.dispose();
