@@ -29,11 +29,12 @@ import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
-import org.eclipse.ocl.pivot.internal.helper.QueryImpl;
+import org.eclipse.ocl.pivot.internal.helper.BasicQueryImpl;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.SemanticException;
@@ -117,7 +118,7 @@ public class OCLSettingDelegate extends BasicSettingDelegate.Stateless
 		if (modelManager == null) {
 			modelManager = environmentFactory.createModelManager(unboxedObject);
 		}
-		QueryImpl query2 = new QueryImpl(ocl, query);
+		BasicQueryImpl query2 = new BasicQueryImpl(environmentFactory, query);
 		return query2.evaluateEcore(eStructuralFeature.getEType().getInstanceClass(), unboxedObject);
 	}
 
@@ -125,21 +126,9 @@ public class OCLSettingDelegate extends BasicSettingDelegate.Stateless
 	protected Object get(InternalEObject ecoreObject, boolean resolve, boolean coreType) {
 		assert ecoreObject != null;
 		try {
-			EnvironmentFactory environmentFactory = null;
-			ModelManager modelManager = null;
-			Executor executor = PivotUtil.basicGetExecutor(ecoreObject);
-			if (executor != null) {
-				environmentFactory = executor.getEnvironmentFactory();
-				modelManager = executor.getModelManager();
-			}
-			else {
-				OCL ocl = delegateDomain.getOCL();
-				environmentFactory = ocl.getEnvironmentFactory();
-				modelManager = ocl.getModelManager();
-				if (modelManager == null) {
-					modelManager = environmentFactory.createModelManager(ecoreObject);
-				}
-			}
+			EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(ecoreObject.eResource());
+			Executor executor = PivotUtil.getExecutor(ecoreObject);
+			ModelManager modelManager = executor.getModelManager();
 			ExpressionInOCL query = getQuery();
 			VariableDeclaration contextVariable = PivotUtil.getOwnedContext(query);
 			OCLExpression expression = PivotUtil.getOwnedBody(query);
@@ -178,10 +167,11 @@ public class OCLSettingDelegate extends BasicSettingDelegate.Stateless
 	protected @NonNull ExpressionInOCL getQuery() {
 		ExpressionInOCL query2 = query;
 		if (query2 == null) {
-			OCL ocl = delegateDomain.getOCL();
-			MetamodelManager metamodelManager = ocl.getMetamodelManager();
+		//	OCL ocl = delegateDomain.getOCL();
+		//	MetamodelManager metamodelManager = ocl.getMetamodelManager();
+			EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(null);
 			Property property2 = getProperty();
-			query2 = query = SettingBehavior.INSTANCE.getQueryOrThrow(metamodelManager, property2);
+			query2 = query = SettingBehavior.INSTANCE.getQueryOrThrow(environmentFactory.getMetamodelManager(), property2);
 			SettingBehavior.INSTANCE.validate(property2);
 		}
 		return query2;

@@ -41,6 +41,7 @@ import org.eclipse.ocl.pivot.internal.values.BagImpl;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.Value;
 import org.junit.After;
@@ -68,7 +69,7 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 	}
 
 	protected @NonNull TestOCL createOCLWithProjectMap() {
-		return new TestOCL(getTestFileSystem(), getTestPackageName(), getName(), getProjectMap());
+		return new TestOCL(getTestFileSystem(), getTestPackageName(), getName(), getProjectMap(), null);
 	}
 
 	@Override
@@ -331,8 +332,6 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 	 * Test container/containment navigation.
 	 */
 	@Test public void test_containment_navigation() throws Exception {
-		TestOCL ocl = createOCL();
-		IdResolver idResolver = ocl.getIdResolver();
 		String metamodelText =
 				"package containment : pfx = 'http://containment'\n" +
 						"{\n" +
@@ -375,6 +374,10 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 		eSet(parent, "child2", child2);
 		eAdd(parent, "children1", children1);
 		eAdd(parent, "children2", children2);
+		ThreadLocalExecutor.resetEnvironmentFactory();
+
+		TestOCL ocl = createOCL();
+		IdResolver idResolver = ocl.getIdResolver();
 
 		org.eclipse.ocl.pivot.Class parentType = idResolver.getType(parentClass);
 		org.eclipse.ocl.pivot.Class child1Type = idResolver.getType(child1Class);

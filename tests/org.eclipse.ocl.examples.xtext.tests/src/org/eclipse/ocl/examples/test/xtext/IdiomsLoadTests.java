@@ -68,11 +68,11 @@ public class IdiomsLoadTests extends XtextTestCase
 	}
 
 	public @NonNull TestOCL createOCL() {
-		return new TestOCL(getTestFileSystem(), "LoadTests", getName(), OCL.NO_PROJECTS);
+		return new TestOCL(getTestFileSystem(), "LoadTests", getName(), OCL.NO_PROJECTS, null);
 	}
 
 	public @NonNull TestOCL createOCLWithProjectMap() {
-		return new TestOCL(getTestFileSystem(), "LoadTests", getName(), getProjectMap());
+		return new TestOCL(getTestFileSystem(), "LoadTests", getName(), getProjectMap(), null);
 	}
 
 	public Resource doLoad_Idioms(@NonNull OCL ocl, URI inputURI) throws IOException {

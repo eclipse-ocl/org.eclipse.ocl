@@ -20,7 +20,9 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.OCL;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.xtext.resource.XtextResource;
 
@@ -31,6 +33,7 @@ import org.eclipse.xtext.resource.XtextResource;
 @SuppressWarnings("deprecation")
 public class BaseDocumentProvider extends DeferredDocumentProvider
 {
+	@Deprecated /* @deprecated now uses getEnvironmentFactoryLocalxExecutor */
 	private @Nullable OCLInternal ocl;
 
 	protected @NonNull OCLInternal createOCL() {
@@ -48,6 +51,10 @@ public class BaseDocumentProvider extends DeferredDocumentProvider
 	}
 
 	protected @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
+		EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		if (environmentFactory != null) {
+			return (EnvironmentFactoryInternal) environmentFactory;
+		}
 		return getOCL().getEnvironmentFactory();
 	}
 

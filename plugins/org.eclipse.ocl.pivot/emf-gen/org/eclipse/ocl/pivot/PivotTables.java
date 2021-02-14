@@ -49,6 +49,7 @@ import org.eclipse.ocl.pivot.internal.library.executor.ExecutorPropertyWithImple
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorStandardLibrary;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorType;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
+import org.eclipse.ocl.pivot.utilities.AbstractTables;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -59,7 +60,7 @@ import org.eclipse.ocl.pivot.values.IntegerValue;
  * In order to ensure correct static initialization, a top level class element must be accessed
  * before any nested class element. Therefore an access to PACKAGE.getClass() is recommended.
  */
-public class PivotTables
+public class PivotTables extends AbstractTables
 {
 	static {
 		Init.initStart();
@@ -13293,7 +13294,7 @@ public class PivotTables
 		private static int initCount = 0;
 
 		/**
-		 * Invoked at the start of a static construction to defer residual cobstruction until primary constructions complete.
+		 * Invoked at the start of a static construction to defer residual construction until primary constructions complete.
 		 */
 		private static void initStart() {
 			if (initCount >= 0) {
@@ -13302,7 +13303,7 @@ public class PivotTables
 		}
 
 		/**
-		 * Invoked at the end of a static construction to activate residual cobstruction once primary constructions complete.
+		 * Invoked at the end of a static construction to activate residual construction once primary constructions complete.
 		 */
 		private static void initEnd() {
 			if (initCount > 0) {
@@ -13321,5 +13322,11 @@ public class PivotTables
 	/*
 	 * Force initialization of outer fields. Inner fields are lazily initialized.
 	 */
-	public static void init() {}
+	public static void init() {
+		new PivotTables();
+	}
+
+	private PivotTables() {
+		super(PivotPackage.eNS_URI);
+	}
 }

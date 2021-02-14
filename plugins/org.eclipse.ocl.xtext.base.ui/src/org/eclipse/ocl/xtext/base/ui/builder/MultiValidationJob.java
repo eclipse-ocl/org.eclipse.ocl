@@ -64,6 +64,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.xtext.base.ui.BaseUiModule;
 import org.eclipse.ocl.xtext.base.ui.BaseUiPluginHelper;
@@ -634,6 +635,7 @@ public class MultiValidationJob extends Job
 			if ((project == null) || !project.isOpen()) {
 				return;
 			}
+			ThreadLocalExecutor.reset();
 			//
 			//	Ensure entry's project's class loader is useable (to resolve JavaClassCS references)
 			//
@@ -690,6 +692,8 @@ public class MultiValidationJob extends Job
 				// cancelled by user; ok
 			}
 			monitor.worked(1);			// Work Item 5 - Add Markers 'done'
+			ocl.dispose();
+			ThreadLocalExecutor.reset();
 		}
 		catch (Throwable e) {
 			if (throwable == null) {

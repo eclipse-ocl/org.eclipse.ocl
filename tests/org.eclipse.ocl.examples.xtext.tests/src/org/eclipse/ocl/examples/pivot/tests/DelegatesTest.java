@@ -160,7 +160,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		if (delegateDomain == null) {
 			delegateDomain = adapter.loadDelegateDomain(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		}
-		EnvironmentFactory environmentFactory = ((OCLDelegateDomain)delegateDomain).getOCL().getEnvironmentFactory();
+		EnvironmentFactory environmentFactory = ((OCLDelegateDomain)delegateDomain).getEnvironmentFactory();
 		return OCLInternal.newInstance((EnvironmentFactoryInternal)environmentFactory);
 	}
 
@@ -330,6 +330,9 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	//
 	@Override
 	protected void setUp() throws Exception {
+	//	TEST_START.setState(true);
+	//	AbstractEnvironmentFactory.ENVIRONMENT_FACTORY_ATTACH.setState(true);
+	//	ThreadLocalExecutor.THREAD_LOCAL_ENVIRONMENT_FACTORY.setState(true);
 		super.setUp();
 		TestCaseAppender.INSTANCE.install();
 		TestUtil.doEssentialOCLSetup();
@@ -374,6 +377,8 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		}
 		autoTearDown();
 		super.tearDown();
+		System.gc();
+		System.runFinalization();
 	}
 
 	@AfterClass
@@ -598,137 +603,208 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		ocl.dispose();
 	}
 
-	public void test_allInstances() {
-		GlobalEnvironmentFactory.disposeInstance();
-		ResourceSet resourceSet = createResourceSet();
-		doTest_allInstances(resourceSet, COMPANY_XMI);
-		assertTrue(usedLocalRegistry);
+	public void test_allInstances() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() {
+				GlobalEnvironmentFactory.disposeInstance();
+				ResourceSet resourceSet = createResourceSet();
+				doTest_allInstances(resourceSet, COMPANY_XMI);
+				assertTrue(usedLocalRegistry);
+				unloadResourceSet(resourceSet);
+			}
+		});
 	}
 
-	public void test_allInstances_registered() {
-		GlobalEnvironmentFactory.disposeInstance();
-		ResourceSet resourceSet = createResourceSet();
-		initPackageRegistrations(resourceSet);
-		doTest_allInstances(resourceSet, COMPANY_XMI);
-		assertFalse(usedLocalRegistry);
+	public void test_allInstances_registered() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() {
+				GlobalEnvironmentFactory.disposeInstance();
+				ResourceSet resourceSet = createResourceSet();
+				initPackageRegistrations(resourceSet);
+				doTest_allInstances(resourceSet, COMPANY_XMI);
+				assertFalse(usedLocalRegistry);
+				unloadResourceSet(resourceSet);
+			}
+		});
 	}
 
-	public void test_allInstances_codeGenerated() {
-		ResourceSet resourceSet = createResourceSet();
-		initCodeGeneratedPackageRegistrations(resourceSet);
-		doTest_allInstances(resourceSet, COMPANY_XMI);
-		assertFalse(usedLocalRegistry);
+	public void test_allInstances_codeGenerated() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() {
+				ResourceSet resourceSet = createResourceSet();
+				initCodeGeneratedPackageRegistrations(resourceSet);
+				doTest_allInstances(resourceSet, COMPANY_XMI);
+				assertFalse(usedLocalRegistry);
+				unloadResourceSet(resourceSet);
+			}
+		});
 	}
 
-	public void test_cossReferences_codeGenerated() {
-		PivotTables.PACKAGE.getClass();
-		ResourceSet resourceSet = createResourceSet();
-		initCodeGeneratedPackageRegistrations(resourceSet);
-		doTest_crossReferences(resourceSet, COMPANY_XMI);	// Verify Bug 412690 comment 2
+	public void test_attributeDefinedWithDerivationAndInitial() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() {
+				ResourceSet resourceSet = createResourceSet();
+				initModelWithErrors(resourceSet);
+				EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
+				Object actual = get(badClassInstance, (EAttribute)badClassClass.getEStructuralFeature("attributeDefinedWithDerivationAndInitial"));
+				assertEquals(42, actual);
+				unloadResourceSet(resourceSet);
+			}
+		});
 	}
 
-	public void test_attributeDefinedWithDerivationAndInitial() {
-		ResourceSet resourceSet = createResourceSet();
-		initModelWithErrors(resourceSet);
-		EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
-		Object actual = get(badClassInstance, (EAttribute)badClassClass.getEStructuralFeature("attributeDefinedWithDerivationAndInitial"));
-		assertEquals(42, actual);
+	public void test_attributeDefinedWithInitial() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() {
+				ResourceSet resourceSet = createResourceSet();
+				initModelWithErrors(resourceSet);
+				EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
+				Object actual = get(badClassInstance, (EAttribute)badClassClass.getEStructuralFeature("attributeDefinedWithInitial"));
+				assertEquals(-42, actual);
+				unloadResourceSet(resourceSet);
+			}
+		});
 	}
 
-	public void test_attributeDefinedWithInitial() {
-		ResourceSet resourceSet = createResourceSet();
-		initModelWithErrors(resourceSet);
-		EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
-		Object actual = get(badClassInstance, (EAttribute)badClassClass.getEStructuralFeature("attributeDefinedWithInitial"));
-		assertEquals(-42, actual);
+	public void test_attributeDefinedWithoutDerivation() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() {
+				ResourceSet resourceSet = createResourceSet();
+				initModelWithErrors(resourceSet);
+				OCL ocl = OCL.newInstance(getProjectMap(), resourceSet);
+				MetamodelManager metamodelManager = ocl.getMetamodelManager();
+				EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
+				EStructuralFeature eStructuralFeature = getStructuralFeature(badClassClass, "attributeDefinedWithoutDerivation");
+				Property property = metamodelManager.getASOfEcore(Property.class, eStructuralFeature);
+				getWithException(badClassInstance, eStructuralFeature.getName(),
+					StringUtil.bind(PivotMessagesInternal.MissingDerivationForSettingDelegate_ERROR_, property));
+				ocl.dispose();
+				unloadResourceSet(resourceSet);
+			}
+		});
 	}
 
-	public void test_attributeDefinedWithoutDerivation() {
-		ResourceSet resourceSet = createResourceSet();
-		initModelWithErrors(resourceSet);
-		OCL ocl = OCL.newInstance(getProjectMap(), resourceSet);
-		MetamodelManager metamodelManager = ocl.getMetamodelManager();
-		EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
-		EStructuralFeature eStructuralFeature = getStructuralFeature(badClassClass, "attributeDefinedWithoutDerivation");
-		Property property = metamodelManager.getASOfEcore(Property.class, eStructuralFeature);
-		getWithException(badClassInstance, eStructuralFeature.getName(),
-			StringUtil.bind(PivotMessagesInternal.MissingDerivationForSettingDelegate_ERROR_, property));
-		ocl.dispose();
+	public void test_attributeDefinedWithoutDerivationBody() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() {
+				ResourceSet resourceSet = createResourceSet();
+				initModelWithErrors(resourceSet);
+				OCL ocl = OCL.newInstance(getProjectMap(), resourceSet);
+				MetamodelManager metamodelManager = ocl.getMetamodelManager();
+				EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
+				EStructuralFeature eStructuralFeature = getStructuralFeature(badClassClass, "attributeDefinedWithoutDerivationBody");
+				Property property = metamodelManager.getASOfEcore(Property.class, eStructuralFeature);
+				getWithException(badClassInstance, eStructuralFeature.getName(),
+					StringUtil.bind(PivotMessagesInternal.MissingSpecificationBody_ERROR_, property, PivotConstantsInternal.INITIALIZER_ROLE));
+				ocl.dispose();
+				unloadResourceSet(resourceSet);
+			}
+		});
 	}
 
-	public void test_attributeDefinedWithoutDerivationBody() {
-		ResourceSet resourceSet = createResourceSet();
-		initModelWithErrors(resourceSet);
-		OCL ocl = OCL.newInstance(getProjectMap(), resourceSet);
-		MetamodelManager metamodelManager = ocl.getMetamodelManager();
-		EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
-		EStructuralFeature eStructuralFeature = getStructuralFeature(badClassClass, "attributeDefinedWithoutDerivationBody");
-		Property property = metamodelManager.getASOfEcore(Property.class, eStructuralFeature);
-		getWithException(badClassInstance, eStructuralFeature.getName(),
-			StringUtil.bind(PivotMessagesInternal.MissingSpecificationBody_ERROR_, property, PivotConstantsInternal.INITIALIZER_ROLE));
-		ocl.dispose();
+	public void test_attributeEvaluatingToInvalid() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() {
+				ResourceSet resourceSet = createResourceSet();
+				initModelWithErrors(resourceSet);
+				OCL ocl = OCL.newInstance(getProjectMap(), resourceSet);
+				MetamodelManager metamodelManager = ocl.getMetamodelManager();
+				EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
+				EStructuralFeature eStructuralFeature = getStructuralFeature(badClassClass, "attributeEvaluatingToInvalid");
+				Property property = metamodelManager.getASOfEcore(Property.class, eStructuralFeature);
+				getWithException(badClassInstance, eStructuralFeature.getName(),
+					StringUtil.bind(PivotMessagesInternal.EvaluationResultIsInvalid_ERROR_, property));
+				ocl.dispose();
+				unloadResourceSet(resourceSet);
+			}
+		});
 	}
 
-	public void test_attributeEvaluatingToInvalid() {
-		ResourceSet resourceSet = createResourceSet();
-		initModelWithErrors(resourceSet);
-		OCL ocl = OCL.newInstance(getProjectMap(), resourceSet);
-		MetamodelManager metamodelManager = ocl.getMetamodelManager();
-		EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
-		EStructuralFeature eStructuralFeature = getStructuralFeature(badClassClass, "attributeEvaluatingToInvalid");
-		Property property = metamodelManager.getASOfEcore(Property.class, eStructuralFeature);
-		getWithException(badClassInstance, eStructuralFeature.getName(),
-			StringUtil.bind(PivotMessagesInternal.EvaluationResultIsInvalid_ERROR_, property));
-		ocl.dispose();
+	public void test_attributeEvaluatingToNull() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() {
+				ResourceSet resourceSet = createResourceSet();
+				initModelWithErrors(resourceSet);
+				EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
+				EStructuralFeature eStructuralFeature = badClassInstance.eClass().getEStructuralFeature("attributeEvaluatingToNull");
+				assertEquals(null, get(badClassInstance, eStructuralFeature));
+				unloadResourceSet(resourceSet);
+			}
+		});
 	}
 
-	public void test_attributeEvaluatingToNull() {
-		ResourceSet resourceSet = createResourceSet();
-		initModelWithErrors(resourceSet);
-		EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
-		EStructuralFeature eStructuralFeature = badClassInstance.eClass().getEStructuralFeature("attributeEvaluatingToNull");
-		assertEquals(null, get(badClassInstance, eStructuralFeature));
+	public void test_attributeEvaluatingToWrongType() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() {
+				ResourceSet resourceSet = createResourceSet();
+				initModelWithErrors(resourceSet);
+				EObject testEObject = create(acme, companyDetritus, badClassClass, null);
+				EStructuralFeature structuralFeature = getStructuralFeature(badClassClass, "attributeEvaluatingToWrongType");
+				EStructuralFeature.Internal.SettingDelegate settingDelegate = ((EStructuralFeature.Internal)structuralFeature).getSettingDelegate();
+				Property property = ((OCLSettingDelegate) settingDelegate).getProperty();
+				String objectLabel = LabelUtil.getLabel(property);
+				getWithException(testEObject, "attributeEvaluatingToWrongType",
+					StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Property::CompatibleDefaultExpression", objectLabel));
+				//			ClassUtil.bind(OCLMessages.InitOrDerConstraintConformance_ERROR_, "String", "attributeEvaluatingToWrongType", "Boolean"));
+				unloadResourceSet(resourceSet);
+			}
+		});
 	}
 
-	public void test_attributeEvaluatingToWrongType() {
-		ResourceSet resourceSet = createResourceSet();
-		initModelWithErrors(resourceSet);
-		EObject testEObject = create(acme, companyDetritus, badClassClass, null);
-		EStructuralFeature structuralFeature = getStructuralFeature(badClassClass, "attributeEvaluatingToWrongType");
-		EStructuralFeature.Internal.SettingDelegate settingDelegate = ((EStructuralFeature.Internal)structuralFeature).getSettingDelegate();
-		Property property = ((OCLSettingDelegate) settingDelegate).getProperty();
-		String objectLabel = LabelUtil.getLabel(property);
-		getWithException(testEObject, "attributeEvaluatingToWrongType",
-			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Property::CompatibleDefaultExpression", objectLabel));
-		//			ClassUtil.bind(OCLMessages.InitOrDerConstraintConformance_ERROR_, "String", "attributeEvaluatingToWrongType", "Boolean"));
+	public void test_attributeParsingToLexicalError() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() {
+				ResourceSet resourceSet = createResourceSet();
+				initModelWithErrors(resourceSet);
+				EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
+				getWithException(badClassInstance, "attributeParsingToLexicalError",
+					getErrorsInMessage(PivotConstantsInternal.INITIALIZER_ROLE, "modelWithErrors::BadClass::attributeParsingToLexicalError", "gh##jk") +
+					StringUtil.bind("1:3: missing EOF at ''{0}''", "#"));
+				unloadResourceSet(resourceSet);
+			}
+		});
 	}
 
-	public void test_attributeParsingToLexicalError() {
-		ResourceSet resourceSet = createResourceSet();
-		initModelWithErrors(resourceSet);
-		EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
-		getWithException(badClassInstance, "attributeParsingToLexicalError",
-			getErrorsInMessage(PivotConstantsInternal.INITIALIZER_ROLE, "modelWithErrors::BadClass::attributeParsingToLexicalError", "gh##jk") +
-			StringUtil.bind("1:3: missing EOF at ''{0}''", "#"));
+	public void test_attributeParsingToSemanticError() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() {
+				ResourceSet resourceSet = createResourceSet();
+				initModelWithErrors(resourceSet);
+				EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
+				getWithException(badClassInstance, "attributeParsingToSemanticError",
+					getErrorsInMessage(PivotConstantsInternal.INITIALIZER_ROLE, "modelWithErrors::BadClass::attributeParsingToSemanticError", "'5' and 6") +
+					StringUtil.bind("1: " + PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "String", "and", "Integer"));
+				unloadResourceSet(resourceSet);
+			}
+		});
 	}
 
-	public void test_attributeParsingToSemanticError() {
-		ResourceSet resourceSet = createResourceSet();
-		initModelWithErrors(resourceSet);
-		EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
-		getWithException(badClassInstance, "attributeParsingToSemanticError",
-			getErrorsInMessage(PivotConstantsInternal.INITIALIZER_ROLE, "modelWithErrors::BadClass::attributeParsingToSemanticError", "'5' and 6") +
-			StringUtil.bind("1: " + PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "String", "and", "Integer"));
-	}
-
-	public void test_attributeParsingToSyntacticError() {
-		ResourceSet resourceSet = createResourceSet();
-		initModelWithErrors(resourceSet);
-		EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
-		String location = XtextVersionUtil.hasXtextSyntaxDiagnosticColumn() ? "1:9" : "1";
-		getWithException(badClassInstance, "attributeParsingToSyntacticError",
-			getErrorsInMessage(PivotConstantsInternal.INITIALIZER_ROLE, "modelWithErrors::BadClass::attributeParsingToSyntacticError", "invalid null") +
-			StringUtil.bind(location + ": extraneous input ''{0}'' expecting EOF", "null"));
+	public void test_attributeParsingToSyntacticError() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() {
+				ResourceSet resourceSet = createResourceSet();
+				initModelWithErrors(resourceSet);
+				EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
+				String location = XtextVersionUtil.hasXtextSyntaxDiagnosticColumn() ? "1:9" : "1";
+				getWithException(badClassInstance, "attributeParsingToSyntacticError",
+					getErrorsInMessage(PivotConstantsInternal.INITIALIZER_ROLE, "modelWithErrors::BadClass::attributeParsingToSyntacticError", "invalid null") +
+					StringUtil.bind(location + ": extraneous input ''{0}'' expecting EOF", "null"));
+				unloadResourceSet(resourceSet);
+			}
+		});
 	}
 
 	/**
@@ -750,45 +826,93 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		assertNull(bodyStillNull);
 	} */
 
-	public void test_constraintValidation() {
-		ResourceSet resourceSet = createResourceSet();
-		doTest_constraintValidation(resourceSet, COMPANY_XMI);
-		assertTrue(usedLocalRegistry);
+	public void test_constraintValidation() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() {
+				ResourceSet resourceSet = createResourceSet();
+				doTest_constraintValidation(resourceSet, COMPANY_XMI);
+				assertTrue(usedLocalRegistry);
+				unloadResourceSet(resourceSet);
+			}
+		});
 	}
 
-	public void test_constraintValidation_withoutReflection() {
-		ResourceSet resourceSet = createResourceSet();
-		doTest_constraintValidation(resourceSet, NO_REFLECTION_COMPANY_XMI);
+	public void test_constraintValidation_withoutReflection() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() {
+				ResourceSet resourceSet = createResourceSet();
+				doTest_constraintValidation(resourceSet, NO_REFLECTION_COMPANY_XMI);
+				unloadResourceSet(resourceSet);
+			}
+		});
 	}
 
-	public void test_constraintValidation_registered() {
-		GlobalEnvironmentFactory.disposeInstance();
-		ResourceSet resourceSet = createResourceSet();
-		initPackageRegistrations(resourceSet);
-		doTest_constraintValidation(resourceSet, COMPANY_XMI);
-		assertFalse(usedLocalRegistry);
+	public void test_constraintValidation_registered() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() {
+				GlobalEnvironmentFactory.disposeInstance();
+				ResourceSet resourceSet = createResourceSet();
+				initPackageRegistrations(resourceSet);
+				doTest_constraintValidation(resourceSet, COMPANY_XMI);
+				assertFalse(usedLocalRegistry);
+				unloadResourceSet(resourceSet);
+			}
+		});
 	}
 
-	public void test_constraintValidation_codeGenerated() {
-		//		PivotTables.PACKAGE.getClass();
-		ResourceSet resourceSet = createResourceSet();
-		initCodeGeneratedPackageRegistrations(resourceSet);
-		doTest_constraintValidation(resourceSet, COMPANY_XMI);
-		assertFalse(usedLocalRegistry);
+	public void test_constraintValidation_codeGenerated() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() {
+				//		PivotTables.PACKAGE.getClass();
+				ResourceSet resourceSet = createResourceSet();
+				initCodeGeneratedPackageRegistrations(resourceSet);
+				doTest_constraintValidation(resourceSet, COMPANY_XMI);
+				assertFalse(usedLocalRegistry);
+				unloadResourceSet(resourceSet);
+			}
+		});
 	}
 
-	public void test_defaultIsLPG() {
-		assertEquals(OCLConstants.OCL_DELEGATE_URI_LPG, CommonOptions.DEFAULT_DELEGATION_MODE.getPreferredValue());
+	public void test_crossReferences_codeGenerated() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() {
+				PivotTables.PACKAGE.getClass();
+				ResourceSet resourceSet = createResourceSet();
+				initCodeGeneratedPackageRegistrations(resourceSet);
+				doTest_crossReferences(resourceSet, COMPANY_XMI);	// Verify Bug 412690 comment 2
+				unloadResourceSet(resourceSet);
+			}
+		});
+	}
+
+	public void test_defaultIsLPG() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() {
+				assertEquals(OCLConstants.OCL_DELEGATE_URI_LPG, CommonOptions.DEFAULT_DELEGATION_MODE.getPreferredValue());
+			}
+		});
 	}
 
 	//	public void test_defaultIsPivot() {
 	//		assertEquals(OCLDelegateDomain.OCL_DELEGATE_URI_PIVOT, CommonOptions.DEFAULT_DELEGATION_MODE.getPreferredValue());
 	//	}
 
-	public void test_eAttributeDerivation() {
-		GlobalEnvironmentFactory.disposeInstance();
-		ResourceSet resourceSet = createResourceSet();
-		doTest_eAttributeDerivation(resourceSet, COMPANY_XMI);
+	public void test_eAttributeDerivation() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() {
+				GlobalEnvironmentFactory.disposeInstance();
+				ResourceSet resourceSet = createResourceSet();
+				doTest_eAttributeDerivation(resourceSet, COMPANY_XMI);
+				unloadResourceSet(resourceSet);
+			}
+		});
 	}
 
 	/*	public void test_eAttributeDerivation_registered() {
@@ -798,23 +922,41 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		ocl.dispose();
 	} */
 
-	public void test_eReferenceDerivation() {
-		GlobalEnvironmentFactory.disposeInstance();
-		ResourceSet resourceSet = createResourceSet();
-		doTest_eReferenceDerivation(resourceSet, COMPANY_XMI);
+	public void test_eReferenceDerivation() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() {
+				GlobalEnvironmentFactory.disposeInstance();
+				ResourceSet resourceSet = createResourceSet();
+				doTest_eReferenceDerivation(resourceSet, COMPANY_XMI);
+				unloadResourceSet(resourceSet);
+			}
+		});
 	}
 
-	public void test_eReferenceDerivation_registered() {
-		GlobalEnvironmentFactory.disposeInstance();
-		ResourceSet resourceSet = createResourceSet();
-		initPackageRegistrations(resourceSet);
-		doTest_eReferenceDerivation(resourceSet, COMPANY_XMI);
+	public void test_eReferenceDerivation_registered() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() {
+				GlobalEnvironmentFactory.disposeInstance();
+				ResourceSet resourceSet = createResourceSet();
+				initPackageRegistrations(resourceSet);
+				doTest_eReferenceDerivation(resourceSet, COMPANY_XMI);
+				unloadResourceSet(resourceSet);
+			}
+		});
 	}
 
-	public void test_eReferenceDerivation_codeGenerated() {
-		ResourceSet resourceSet = createResourceSet();
-		initCodeGeneratedPackageRegistrations(resourceSet);
-		doTest_eReferenceDerivation(resourceSet, COMPANY_XMI);
+	public void test_eReferenceDerivation_codeGenerated() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() {
+				ResourceSet resourceSet = createResourceSet();
+				initCodeGeneratedPackageRegistrations(resourceSet);
+				doTest_eReferenceDerivation(resourceSet, COMPANY_XMI);
+				unloadResourceSet(resourceSet);
+			}
+		});
 	}
 
 	/**
@@ -909,31 +1051,55 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		ocl.dispose();
 	} */
 
-	public void test_invariantValidation() {
-		GlobalEnvironmentFactory.disposeInstance();
-		ResourceSet resourceSet = createResourceSet();
-		doTest_invariantValidation(resourceSet, COMPANY_XMI, false, Diagnostic.WARNING);
-		assertTrue(usedLocalRegistry);
+	public void test_invariantValidation() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() throws InvocationTargetException {
+				GlobalEnvironmentFactory.disposeInstance();
+				ResourceSet resourceSet = createResourceSet();
+				doTest_invariantValidation(resourceSet, COMPANY_XMI, false, Diagnostic.WARNING);
+				assertTrue(usedLocalRegistry);
+				unloadResourceSet(resourceSet);
+			}
+		});
 	}
 
-	public void test_invariantValidation_registered() {
-		GlobalEnvironmentFactory.disposeInstance();
-		ResourceSet resourceSet = createResourceSet();
-		initPackageRegistrations(resourceSet);
-		doTest_invariantValidation(resourceSet, COMPANY_XMI, true, Diagnostic.ERROR);
-		assertFalse(usedLocalRegistry);
+	public void test_invariantValidation_registered() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() throws InvocationTargetException {
+				GlobalEnvironmentFactory.disposeInstance();
+				ResourceSet resourceSet = createResourceSet();
+				initPackageRegistrations(resourceSet);
+				doTest_invariantValidation(resourceSet, COMPANY_XMI, true, Diagnostic.ERROR);
+				assertFalse(usedLocalRegistry);
+				unloadResourceSet(resourceSet);
+			}
+		});
 	}
 
-	public void test_invariantValidation_codeGenerated() {
-		ResourceSet resourceSet = createResourceSet();
-		initCodeGeneratedPackageRegistrations(resourceSet);
-		doTest_invariantValidation(resourceSet, COMPANY_XMI, false, Diagnostic.WARNING);
-		assertFalse(usedLocalRegistry);
+	public void test_invariantValidation_codeGenerated() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() throws InvocationTargetException {
+				ResourceSet resourceSet = createResourceSet();
+				initCodeGeneratedPackageRegistrations(resourceSet);
+				doTest_invariantValidation(resourceSet, COMPANY_XMI, false, Diagnostic.WARNING);
+				assertFalse(usedLocalRegistry);
+				unloadResourceSet(resourceSet);
+			}
+		});
 	}
 
-	public void test_invariantValidation_withoutReflection() {
-		ResourceSet resourceSet = createResourceSet();
-		doTest_invariantValidation(resourceSet, NO_REFLECTION_COMPANY_XMI, false, Diagnostic.WARNING);
+	public void test_invariantValidation_withoutReflection() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() throws InvocationTargetException {
+				ResourceSet resourceSet = createResourceSet();
+				doTest_invariantValidation(resourceSet, NO_REFLECTION_COMPANY_XMI, false, Diagnostic.WARNING);
+				unloadResourceSet(resourceSet);
+			}
+		});
 	}
 	/*	public void test_invariantValidation_withoutReflection_registered() {
 		OCL ocl = OCL.newInstance();
@@ -942,72 +1108,108 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		ocl.dispose();
 	} */
 
-	public void test_operationDefinedWithoutBody() throws InvocationTargetException {
-		ResourceSet resourceSet = createResourceSet();
-		initModelWithErrors(resourceSet);
-		OCL ocl = OCL.newInstance(getProjectMap(), resourceSet);
-		MetamodelManager metamodelManager = ocl.getMetamodelManager();
-		EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
-		EOperation eOperation = getOperation(badClassClass, "operationDefinedWithoutBody");
-		Operation operation = metamodelManager.getASOfEcore(Operation.class, eOperation);
-		invokeWithException(badClassInstance, eOperation.getName(),
-			StringUtil.bind(PivotMessagesInternal.MissingSpecificationBody_ERROR_, NameUtil.qualifiedNameFor(operation), PivotConstantsInternal.BODY_ROLE));
-		ocl.dispose();
+	public void test_operationDefinedWithoutBody() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() throws InvocationTargetException {
+				ResourceSet resourceSet = createResourceSet();
+				initModelWithErrors(resourceSet);
+				OCL ocl = OCL.newInstance(getProjectMap(), resourceSet);
+				MetamodelManager metamodelManager = ocl.getMetamodelManager();
+				EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
+				EOperation eOperation = getOperation(badClassClass, "operationDefinedWithoutBody");
+				Operation operation = metamodelManager.getASOfEcore(Operation.class, eOperation);
+				invokeWithException(badClassInstance, eOperation.getName(),
+					StringUtil.bind(PivotMessagesInternal.MissingSpecificationBody_ERROR_, NameUtil.qualifiedNameFor(operation), PivotConstantsInternal.BODY_ROLE));
+				ocl.dispose();
+				unloadResourceSet(resourceSet);
+			}
+		});
 	}
 
-	public void test_operationDefinedWithoutBodyBody() throws InvocationTargetException {
-		ResourceSet resourceSet = createResourceSet();
-		initModelWithErrors(resourceSet);
-		OCL ocl = OCL.newInstance(getProjectMap(), resourceSet);
-		MetamodelManager metamodelManager = ocl.getMetamodelManager();
-		EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
-		EOperation eOperation = getOperation(badClassClass, "operationDefinedWithoutBodyBody");
-		Operation operation = metamodelManager.getASOfEcore(Operation.class, eOperation);
-		invokeWithException(badClassInstance, eOperation.getName(),
-			StringUtil.bind(PivotMessagesInternal.MissingSpecificationBody_ERROR_, NameUtil.qualifiedNameFor(operation), PivotConstantsInternal.BODY_ROLE));
-		ocl.dispose();
+	public void test_operationDefinedWithoutBodyBody() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() throws InvocationTargetException {
+				ResourceSet resourceSet = createResourceSet();
+				initModelWithErrors(resourceSet);
+				OCL ocl = OCL.newInstance(getProjectMap(), resourceSet);
+				MetamodelManager metamodelManager = ocl.getMetamodelManager();
+				EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
+				EOperation eOperation = getOperation(badClassClass, "operationDefinedWithoutBodyBody");
+				Operation operation = metamodelManager.getASOfEcore(Operation.class, eOperation);
+				invokeWithException(badClassInstance, eOperation.getName(),
+					StringUtil.bind(PivotMessagesInternal.MissingSpecificationBody_ERROR_, NameUtil.qualifiedNameFor(operation), PivotConstantsInternal.BODY_ROLE));
+				ocl.dispose();
+				unloadResourceSet(resourceSet);
+			}
+		});
 	}
 
-	public void test_operationEvaluatingToInvalid() throws InvocationTargetException {
-		ResourceSet resourceSet = createResourceSet();
-		initModelWithErrors(resourceSet);
-		OCL ocl = OCL.newInstance(getProjectMap(), resourceSet);
-		MetamodelManager metamodelManager = ocl.getMetamodelManager();
-		EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
-		EOperation eOperation = getOperation(badClassClass, "operationEvaluatingToInvalid");
-		Operation operation = metamodelManager.getASOfEcore(Operation.class, eOperation);
-		invokeWithException(badClassInstance, eOperation.getName(),
-			StringUtil.bind(PivotMessagesInternal.EvaluationResultIsInvalid_ERROR_, operation));
-		ocl.dispose();
+	public void test_operationEvaluatingToInvalid() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() throws InvocationTargetException {
+				ResourceSet resourceSet = createResourceSet();
+				initModelWithErrors(resourceSet);
+				OCL ocl = OCL.newInstance(getProjectMap(), resourceSet);
+				MetamodelManager metamodelManager = ocl.getMetamodelManager();
+				EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
+				EOperation eOperation = getOperation(badClassClass, "operationEvaluatingToInvalid");
+				Operation operation = metamodelManager.getASOfEcore(Operation.class, eOperation);
+				invokeWithException(badClassInstance, eOperation.getName(),
+					StringUtil.bind(PivotMessagesInternal.EvaluationResultIsInvalid_ERROR_, operation));
+				ocl.dispose();
+				unloadResourceSet(resourceSet);
+			}
+		});
 	}
 
-	public void test_operationEvaluatingToNull() throws InvocationTargetException {
-		TestUtil.doEssentialOCLSetup();
-		ResourceSet resourceSet = createResourceSet();
-		initModelWithErrors(resourceSet);
-		EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
-		EOperation operation = getOperation(badClassInstance.eClass(), "operationEvaluatingToNull");
-		assertEquals(null, invoke(badClassInstance, operation));
+	public void test_operationEvaluatingToNull() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() throws InvocationTargetException {
+				TestUtil.doEssentialOCLSetup();
+				ResourceSet resourceSet = createResourceSet();
+				initModelWithErrors(resourceSet);
+				EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
+				EOperation operation = getOperation(badClassInstance.eClass(), "operationEvaluatingToNull");
+				assertEquals(null, invoke(badClassInstance, operation));
+				unloadResourceSet(resourceSet);
+			}
+		});
 	}
 
-	public void test_operationEvaluatingToWrongType() throws InvocationTargetException {
-		ResourceSet resourceSet = createResourceSet();
-		initModelWithErrors(resourceSet);
-		EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
-		EOperation eOperation = getOperation(badClassClass, "operationEvaluatingToWrongType");
-		EOperation.Internal.InvocationDelegate invocationDelegate = ((EOperation.Internal)eOperation).getInvocationDelegate();
-		Operation operation = ((OCLInvocationDelegate) invocationDelegate).getOperation();
-		String objectLabel = LabelUtil.getLabel(operation);
-		invokeWithException(badClassInstance, "operationEvaluatingToWrongType",
-			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Operation::CompatibleReturn", objectLabel));
-		//			OCLMessages.BodyConditionConformance_ERROR_, "operationEvaluatingToWrongType", "Integer", "Boolean");
+	public void test_operationEvaluatingToWrongType() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() throws InvocationTargetException {
+				ResourceSet resourceSet = createResourceSet();
+				initModelWithErrors(resourceSet);
+				EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
+				EOperation eOperation = getOperation(badClassClass, "operationEvaluatingToWrongType");
+				EOperation.Internal.InvocationDelegate invocationDelegate = ((EOperation.Internal)eOperation).getInvocationDelegate();
+				Operation operation = ((OCLInvocationDelegate) invocationDelegate).getOperation();
+				String objectLabel = LabelUtil.getLabel(operation);
+				invokeWithException(badClassInstance, "operationEvaluatingToWrongType",
+					StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Operation::CompatibleReturn", objectLabel));
+				//			OCLMessages.BodyConditionConformance_ERROR_, "operationEvaluatingToWrongType", "Integer", "Boolean");
+				unloadResourceSet(resourceSet);
+			}
+		});
 	}
 
-	public void test_operationInvocation() throws InvocationTargetException {
-		GlobalEnvironmentFactory.disposeInstance();
-		ResourceSet resourceSet = createResourceSet();
-		doTest_operationInvocation(resourceSet, COMPANY_XMI);
-		assertTrue(usedLocalRegistry);
+	public void test_operationInvocation() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() throws InvocationTargetException {
+				GlobalEnvironmentFactory.disposeInstance();
+				ResourceSet resourceSet = createResourceSet();
+				doTest_operationInvocation(resourceSet, COMPANY_XMI);
+				assertTrue(usedLocalRegistry);
+				unloadResourceSet(resourceSet);
+			}
+		});
 	}
 
 	/*	public void test_operationInvocation_registered() throws InvocationTargetException {
@@ -1018,30 +1220,48 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		ocl.dispose();
 	} */
 
-	public void test_operationParsingToLexicalError() throws InvocationTargetException {
-		ResourceSet resourceSet = createResourceSet();
-		initModelWithErrors(resourceSet);
-		EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
-		String location = XtextVersionUtil.hasXtextSyntaxDiagnosticColumn() ? "1:1" : "1";
-		invokeWithException(badClassInstance, "operationParsingToLexicalError",
-			getErrorsInMessage(PivotConstantsInternal.BODY_ROLE, "modelWithErrors::BadClass::operationParsingToLexicalError", "@@") + StringUtil.bind(location + ": no viable alternative at input ''{0}''", "@"));
+	public void test_operationParsingToLexicalError() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() throws InvocationTargetException {
+				ResourceSet resourceSet = createResourceSet();
+				initModelWithErrors(resourceSet);
+				EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
+				String location = XtextVersionUtil.hasXtextSyntaxDiagnosticColumn() ? "1:1" : "1";
+				invokeWithException(badClassInstance, "operationParsingToLexicalError",
+					getErrorsInMessage(PivotConstantsInternal.BODY_ROLE, "modelWithErrors::BadClass::operationParsingToLexicalError", "@@") + StringUtil.bind(location + ": no viable alternative at input ''{0}''", "@"));
+				unloadResourceSet(resourceSet);
+			}
+		});
 	}
 
-	public void test_operationParsingToSemanticError() throws InvocationTargetException {
-		ResourceSet resourceSet = createResourceSet();
-		initModelWithErrors(resourceSet);
-		EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
-		invokeWithException(badClassInstance, "operationParsingToSemanticError",
-			getErrorsInMessage(PivotConstantsInternal.BODY_ROLE, "modelWithErrors::BadClass::operationParsingToSemanticError", "self->at(1)") + StringUtil.bind("1:7: " + PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Set(modelWithErrors::BadClass)", "at", "1"));
+	public void test_operationParsingToSemanticError() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() throws InvocationTargetException {
+				ResourceSet resourceSet = createResourceSet();
+				initModelWithErrors(resourceSet);
+				EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
+				invokeWithException(badClassInstance, "operationParsingToSemanticError",
+					getErrorsInMessage(PivotConstantsInternal.BODY_ROLE, "modelWithErrors::BadClass::operationParsingToSemanticError", "self->at(1)") + StringUtil.bind("1:7: " + PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Set(modelWithErrors::BadClass)", "at", "1"));
+				unloadResourceSet(resourceSet);
+			}
+		});
 	}
 
-	public void test_operationParsingToSyntacticError() throws InvocationTargetException {
-		ResourceSet resourceSet = createResourceSet();
-		initModelWithErrors(resourceSet);
-		EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
-		String location = XtextVersionUtil.hasXtextSyntaxDiagnosticColumn() ? "1:5" : "1";
-		invokeWithException(badClassInstance, "operationParsingToSyntacticError",
-			getErrorsInMessage(PivotConstantsInternal.BODY_ROLE, "modelWithErrors::BadClass::operationParsingToSyntacticError", "let in") + StringUtil.bind(location + ": no viable alternative at input ''{0}''", "in"));
+	public void test_operationParsingToSyntacticError() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() throws InvocationTargetException {
+				ResourceSet resourceSet = createResourceSet();
+				initModelWithErrors(resourceSet);
+				EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
+				String location = XtextVersionUtil.hasXtextSyntaxDiagnosticColumn() ? "1:5" : "1";
+				invokeWithException(badClassInstance, "operationParsingToSyntacticError",
+					getErrorsInMessage(PivotConstantsInternal.BODY_ROLE, "modelWithErrors::BadClass::operationParsingToSyntacticError", "let in") + StringUtil.bind(location + ": no viable alternative at input ''{0}''", "in"));
+				unloadResourceSet(resourceSet);
+			}
+		});
 	}
 
 	/**
@@ -1050,29 +1270,35 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	 * have a body defined at all instead of returning an <code>invalid</code> literal.
 	 * @throws ParserException
 	 */
-	public void test_operationDefinedInStdlibBodyRemainsNull() throws ParserException {
-		ResourceSet resourceSet = createResourceSet();
-		OCL ocl = OCL.newInstance(getProjectMap(), resourceSet);
-		MetamodelManager metamodelManager = ocl.getMetamodelManager();
-		ExpressionInOCL expr = ocl.createQuery(null, "'abc'.oclAsType(String)");
-		OperationCallExp oce = (OperationCallExp) expr.getOwnedBody();
-		Operation o = oce.getReferredOperation();
-		try {
-			@SuppressWarnings({"unused", "null"})
-			ExpressionInOCL body = InvocationBehavior.INSTANCE.getQueryOrThrow(metamodelManager, o);
-			fail("Expected to catch OCLDelegateException");
-		}
-		catch (OCLDelegateException e) {
-		}
-		// and again, now reading from cache
-		try {
-			@SuppressWarnings({"unused", "null"})
-			ExpressionInOCL bodyStillNull = InvocationBehavior.INSTANCE.getQueryOrThrow(metamodelManager, o);
-			fail("Expected to catch OCLDelegateException");
-		}
-		catch (OCLDelegateException e) {
-		}
-		ocl.dispose();
+	public void test_operationDefinedInStdlibBodyRemainsNull() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() throws ParserException {
+				ResourceSet resourceSet = createResourceSet();
+				OCL ocl = OCL.newInstance(getProjectMap(), resourceSet);
+				MetamodelManager metamodelManager = ocl.getMetamodelManager();
+				ExpressionInOCL expr = ocl.createQuery(null, "'abc'.oclAsType(String)");
+				OperationCallExp oce = (OperationCallExp) expr.getOwnedBody();
+				Operation o = oce.getReferredOperation();
+				try {
+					@SuppressWarnings({"unused", "null"})
+					ExpressionInOCL body = InvocationBehavior.INSTANCE.getQueryOrThrow(metamodelManager, o);
+					fail("Expected to catch OCLDelegateException");
+				}
+				catch (OCLDelegateException e) {
+				}
+				// and again, now reading from cache
+				try {
+					@SuppressWarnings({"unused", "null"})
+					ExpressionInOCL bodyStillNull = InvocationBehavior.INSTANCE.getQueryOrThrow(metamodelManager, o);
+					fail("Expected to catch OCLDelegateException");
+				}
+				catch (OCLDelegateException e) {
+				}
+				ocl.dispose();
+				unloadResourceSet(resourceSet);
+			}
+		});
 	}
 
 	/**
@@ -1135,65 +1361,125 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		ocl.dispose();
 	} */
 
-	public void test_queryExecution() {
-		GlobalEnvironmentFactory.disposeInstance();
-		ResourceSet resourceSet = createResourceSet();
-		doTest_queryExecution(resourceSet, COMPANY_XMI);
-		assertTrue(usedLocalRegistry);
+	public void test_queryExecution() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() {
+				GlobalEnvironmentFactory.disposeInstance();
+				ResourceSet resourceSet = createResourceSet();
+				doTest_queryExecution(resourceSet, COMPANY_XMI);
+				assertTrue(usedLocalRegistry);
+				unloadResourceSet(resourceSet);
+			}
+		});
 	}
 
-	public void test_queryExecution_registered() {
-		GlobalEnvironmentFactory.disposeInstance();
-		ResourceSet resourceSet = createResourceSet();
-		initPackageRegistrations(resourceSet);
-		doTest_queryExecution(resourceSet, COMPANY_XMI);
-		assertFalse(usedLocalRegistry);
+	public void test_queryExecution_registered() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() {
+				GlobalEnvironmentFactory.disposeInstance();
+				ResourceSet resourceSet = createResourceSet();
+				initPackageRegistrations(resourceSet);
+				doTest_queryExecution(resourceSet, COMPANY_XMI);
+				assertFalse(usedLocalRegistry);
+				unloadResourceSet(resourceSet);
+			}
+		});
 	}
 
-	public void test_queryExecution_codeGenerated() {
-		GlobalEnvironmentFactory.disposeInstance();
-		ResourceSet resourceSet = createResourceSet();
-		initCodeGeneratedPackageRegistrations(resourceSet);
-		doTest_queryExecution(resourceSet, COMPANY_XMI);
-		assertFalse(usedLocalRegistry);
+	public void test_queryExecution_codeGenerated() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() {
+				GlobalEnvironmentFactory.disposeInstance();
+				ResourceSet resourceSet = createResourceSet();
+				initCodeGeneratedPackageRegistrations(resourceSet);
+				doTest_queryExecution(resourceSet, COMPANY_XMI);
+				assertFalse(usedLocalRegistry);
+				unloadResourceSet(resourceSet);
+			}
+		});
 	}
 
-	public void test_queryExecutionWithExceptions() throws InvocationTargetException {
-		ResourceSet resourceSet = createResourceSet();
-		doTest_queryExecutionWithExceptions(resourceSet, COMPANY_XMI);
-		assertTrue(usedLocalRegistry);
+	public void test_queryExecutionWithExceptions() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() throws InvocationTargetException {
+				ResourceSet resourceSet = createResourceSet();
+				doTest_queryExecutionWithExceptions(resourceSet, COMPANY_XMI);
+				assertTrue(usedLocalRegistry);
+				unloadResourceSet(resourceSet);
+			}
+		});
 	}
 
-	public void test_queryExecutionWithExceptions_registered() throws InvocationTargetException {
-		ResourceSet resourceSet = createResourceSet();
-		initPackageRegistrations(resourceSet);
-		doTest_queryExecutionWithExceptions(resourceSet, COMPANY_XMI);
-		assertFalse(usedLocalRegistry);
+	public void test_queryExecutionWithExceptions_registered() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() throws InvocationTargetException {
+				ResourceSet resourceSet = createResourceSet();
+				initPackageRegistrations(resourceSet);
+				doTest_queryExecutionWithExceptions(resourceSet, COMPANY_XMI);
+				assertFalse(usedLocalRegistry);
+				unloadResourceSet(resourceSet);
+			}
+		});
 	}
 
-	public void test_queryExecutionWithExceptions_codeGenerated() throws InvocationTargetException {
-		ResourceSet resourceSet = createResourceSet();
-		initCodeGeneratedPackageRegistrations(resourceSet);
-		doTest_queryExecutionWithExceptions(resourceSet, COMPANY_XMI);
-		assertFalse(usedLocalRegistry);
+	public void test_queryExecutionWithExceptions_codeGenerated() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() throws InvocationTargetException {
+				ResourceSet resourceSet = createResourceSet();
+				initCodeGeneratedPackageRegistrations(resourceSet);
+				doTest_queryExecutionWithExceptions(resourceSet, COMPANY_XMI);
+				assertFalse(usedLocalRegistry);
+				unloadResourceSet(resourceSet);
+			}
+		});
 	}
 
 	/**
 	 * Verify that query delegates work independently of other EAnnotation declared delegates.
+	 * @throws Throwable
 	 */
-	public void test_queryExecution_Bug353171() {
-		QueryDelegate.Factory factory = QueryDelegate.Factory.Registry.INSTANCE.getFactory(PivotConstants.OCL_DELEGATE_URI_PIVOT);
-		String n = "n";
-		String expression = "self.name";
-		Library library = EXTLibraryFactory.eINSTANCE.createLibrary();
-		library.setName("test");
-		Map<String, EClassifier> parameters = new HashMap<String, EClassifier>();
-		parameters.put(n, EcorePackage.Literals.ESTRING);
-		QueryDelegate delegate = factory.createQueryDelegate(EXTLibraryPackage.Literals.LIBRARY, parameters, expression);
-		Map<String, Object> bindings = new HashMap<String, Object>();
-		bindings.put(n, "test");
-		Object result = execute(delegate, library, bindings);
-		assertEquals(result, "test");
+	public void test_queryExecution_Bug353171() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() {
+				QueryDelegate.Factory factory = QueryDelegate.Factory.Registry.INSTANCE.getFactory(PivotConstants.OCL_DELEGATE_URI_PIVOT);
+				String n = "n";
+				String expression = "self.name";
+				Library library = EXTLibraryFactory.eINSTANCE.createLibrary();
+				library.setName("test");
+				Map<String, EClassifier> parameters = new HashMap<String, EClassifier>();
+				parameters.put(n, EcorePackage.Literals.ESTRING);
+				QueryDelegate delegate = factory.createQueryDelegate(EXTLibraryPackage.Literals.LIBRARY, parameters, expression);
+				Map<String, Object> bindings = new HashMap<String, Object>();
+				bindings.put(n, "test");
+				Object result = execute(delegate, library, bindings);
+				assertEquals(result, "test");
+			}
+		});
+	}
+
+	public void test_tutorialValidationMessage() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() throws InterruptedException {
+				GlobalEnvironmentFactory.disposeInstance();
+				validateTutorial("models/documentation/Tutorial1.ecore", "There are 3 loans for the 2 copies of b2");
+				ThreadLocalExecutor.resetEnvironmentFactory();
+				GlobalEnvironmentFactory.disposeInstance();
+				validateTutorial("models/documentation/Tutorial2.ecore", "There are 3 loans for the 2 copies of ''b2''");		// Doubled quotes for NLS.bind
+				ThreadLocalExecutor.resetEnvironmentFactory();
+				GlobalEnvironmentFactory.disposeInstance();
+				validateTutorial("models/documentation/Tutorial1.ecore", "There are 3 loans for the 2 copies of b2");
+				ThreadLocalExecutor.resetEnvironmentFactory();
+				GlobalEnvironmentFactory.disposeInstance();
+			}
+		});
 	}
 
 	/**
@@ -1218,115 +1504,158 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		ocl.dispose();
 	} */
 
-	public void test_validationEvaluatingToInvalid() {
-		ResourceSet resourceSet = createResourceSet();
-		initModelWithErrors(resourceSet);
-		EObject badClassInstance = create(acme, companyDetritus, (EClass) companyPackage.getEClassifier("ValidationEvaluatingToInvalid"), null);
-		validateWithDelegationSeverity("evaluatingToInvalid", Diagnostic.ERROR, badClassInstance, null,
-			EvaluationException.class, PivotMessagesInternal.ValidationResultIsInvalid_ERROR_, "ValidationEvaluatingToInvalid", "evaluatingToInvalid", LabelUtil.getLabel(badClassInstance), "invalid");
+	public void test_validationEvaluatingToInvalid() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() {
+				ResourceSet resourceSet = createResourceSet();
+				initModelWithErrors(resourceSet);
+				EObject badClassInstance = create(acme, companyDetritus, (EClass) companyPackage.getEClassifier("ValidationEvaluatingToInvalid"), null);
+				validateWithDelegationSeverity("evaluatingToInvalid", Diagnostic.ERROR, badClassInstance, null,
+					EvaluationException.class, PivotMessagesInternal.ValidationResultIsInvalid_ERROR_, "ValidationEvaluatingToInvalid", "evaluatingToInvalid", LabelUtil.getLabel(badClassInstance), "invalid");
+				unloadResourceSet(resourceSet);
+			}
+		});
 	}
 
-	public void test_validationEvaluatingToNull() {
-		ResourceSet resourceSet = createResourceSet();
-		initModelWithErrors(resourceSet);
-		EObject badClassInstance = create(acme, companyDetritus, (EClass) companyPackage.getEClassifier("ValidationEvaluatingToNull"), null);
-		validateWithDelegationSeverity("evaluatingToNull", Diagnostic.ERROR, badClassInstance, null,
-			EvaluationException.class, PivotMessagesInternal.ValidationResultIsNull_ERROR_, badClassInstance.eClass().getName(), "evaluatingToNull", LabelUtil.getLabel(badClassInstance));
+	public void test_validationEvaluatingToNull() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() {
+				ResourceSet resourceSet = createResourceSet();
+				initModelWithErrors(resourceSet);
+				EObject badClassInstance = create(acme, companyDetritus, (EClass) companyPackage.getEClassifier("ValidationEvaluatingToNull"), null);
+				validateWithDelegationSeverity("evaluatingToNull", Diagnostic.ERROR, badClassInstance, null,
+					EvaluationException.class, PivotMessagesInternal.ValidationResultIsNull_ERROR_, badClassInstance.eClass().getName(), "evaluatingToNull", LabelUtil.getLabel(badClassInstance));
+				unloadResourceSet(resourceSet);
+			}
+		});
 	}
 
-	public void test_validationEvaluatingToWrongType() {
-		ResourceSet resourceSet = createResourceSet();
-		initModelWithErrors(resourceSet);
-		EObject badClassInstance = create(acme, companyDetritus, (EClass) companyPackage.getEClassifier("ValidationEvaluatingToWrongType"), null);
-		validateWithDelegationSeverity("evaluatingToWrongType", Diagnostic.ERROR, badClassInstance, null,
-			EvaluationException.class, PivotMessagesInternal.ValidationConstraintIsNotBooleanType_ERROR_, "ValidationEvaluatingToWrongType", "evaluatingToWrongType", "OclInvalid");
+	public void test_validationEvaluatingToWrongType() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() {
+				ResourceSet resourceSet = createResourceSet();
+				initModelWithErrors(resourceSet);
+				EObject badClassInstance = create(acme, companyDetritus, (EClass) companyPackage.getEClassifier("ValidationEvaluatingToWrongType"), null);
+				validateWithDelegationSeverity("evaluatingToWrongType", Diagnostic.ERROR, badClassInstance, null,
+					EvaluationException.class, PivotMessagesInternal.ValidationConstraintIsNotBooleanType_ERROR_, "ValidationEvaluatingToWrongType", "evaluatingToWrongType", "OclInvalid");
+				unloadResourceSet(resourceSet);
+			}
+		});
 	}
 
-	public void test_validationParsingToLexicalError() {
-		ResourceSet resourceSet = createResourceSet();
-		initModelWithErrors(resourceSet);
-		String location = XtextVersionUtil.hasXtextSyntaxDiagnosticColumn() ? "1:1" : "1";
-		EObject badClassInstance = create(acme, companyDetritus, (EClass) companyPackage.getEClassifier("ValidationParsingToLexicalError"), null);
-		validateWithDelegationSeverity("modelWithErrors::ValidationParsingToLexicalError::parsingToLexicalError", Diagnostic.ERROR, badClassInstance, "'part",
-			SemanticException.class, location + ": Invalid token {0}", "'part");
+	public void test_validationParsingToLexicalError() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() {
+				ResourceSet resourceSet = createResourceSet();
+				initModelWithErrors(resourceSet);
+				String location = XtextVersionUtil.hasXtextSyntaxDiagnosticColumn() ? "1:1" : "1";
+				EObject badClassInstance = create(acme, companyDetritus, (EClass) companyPackage.getEClassifier("ValidationParsingToLexicalError"), null);
+				validateWithDelegationSeverity("modelWithErrors::ValidationParsingToLexicalError::parsingToLexicalError", Diagnostic.ERROR, badClassInstance, "'part",
+					SemanticException.class, location + ": Invalid token {0}", "'part");
+				unloadResourceSet(resourceSet);
+			}
+		});
 	}
 
-	public void test_validationParsingToSemanticError() {
-		ResourceSet resourceSet = createResourceSet();
-		initModelWithErrors(resourceSet);
-		EObject badClassInstance = create(acme, companyDetritus, (EClass) companyPackage.getEClassifier("ValidationParsingToSemanticError"), null);
-		validateWithDelegationSeverity("modelWithErrors::ValidationParsingToSemanticError::parsingToSemanticError", Diagnostic.ERROR, badClassInstance, "not '5'",
-			SemanticException.class, "1: " + PivotMessagesInternal.UnresolvedOperation_ERROR_, "String", "not");
+	public void test_validationParsingToSemanticError() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() {
+				ResourceSet resourceSet = createResourceSet();
+				initModelWithErrors(resourceSet);
+				EObject badClassInstance = create(acme, companyDetritus, (EClass) companyPackage.getEClassifier("ValidationParsingToSemanticError"), null);
+				validateWithDelegationSeverity("modelWithErrors::ValidationParsingToSemanticError::parsingToSemanticError", Diagnostic.ERROR, badClassInstance, "not '5'",
+					SemanticException.class, "1: " + PivotMessagesInternal.UnresolvedOperation_ERROR_, "String", "not");
+				unloadResourceSet(resourceSet);
+			}
+		});
 	}
 
-	public void test_validationParsingToSyntacticError() {
-		ResourceSet resourceSet = createResourceSet();
-		initModelWithErrors(resourceSet);
-		EObject badClassInstance = create(acme, companyDetritus, (EClass) companyPackage.getEClassifier("ValidationParsingToSyntacticError"), null);
-		String location = XtextVersionUtil.hasXtextSyntaxDiagnosticColumn() ? "1:1" : "1";
-		validateWithDelegationSeverity("modelWithErrors::ValidationParsingToSyntacticError::parsingToSyntacticError", Diagnostic.ERROR, badClassInstance, "else",
-			SemanticException.class, location + ": no viable alternative at input ''{0}''", "else");
+	public void test_validationParsingToSyntacticError() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() {
+				ResourceSet resourceSet = createResourceSet();
+				initModelWithErrors(resourceSet);
+				EObject badClassInstance = create(acme, companyDetritus, (EClass) companyPackage.getEClassifier("ValidationParsingToSyntacticError"), null);
+				String location = XtextVersionUtil.hasXtextSyntaxDiagnosticColumn() ? "1:1" : "1";
+				validateWithDelegationSeverity("modelWithErrors::ValidationParsingToSyntacticError::parsingToSyntacticError", Diagnostic.ERROR, badClassInstance, "else",
+					SemanticException.class, location + ": no viable alternative at input ''{0}''", "else");
+				unloadResourceSet(resourceSet);
+			}
+		});
 	}
 
-	public void test_validationWithMessage() {
-		ResourceSet resourceSet = createResourceSet();
-		initModelWithErrors(resourceSet);
-		EObject badClassInstance = create(acme, companyDetritus, (EClass) companyPackage.getEClassifier("ValidationWithMessage"), null);
-		validateWithSeverity("ValidationWithMessage", Diagnostic.WARNING, badClassInstance,
-				"custom message ");
+	public void test_validationWithMessage() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() {
+				ResourceSet resourceSet = createResourceSet();
+				initModelWithErrors(resourceSet);
+				EObject badClassInstance = create(acme, companyDetritus, (EClass) companyPackage.getEClassifier("ValidationWithMessage"), null);
+				validateWithSeverity("ValidationWithMessage", Diagnostic.WARNING, badClassInstance,
+						"custom message ");
+				unloadResourceSet(resourceSet);
+			}
+		});
 	}
 
-	public void test_validationWithCompleteOCL() {
-		ResourceSet resourceSet = createResourceSet();
-		initModelWithErrorsAndOcl(resourceSet);
-		EClass eClassifier = (EClass) companyPackage.getEClassifier("Detritus");
-		EObject badClassInstance = create(acme, companyDetritus, eClassifier, null);
-		validateWithSeverity("CompleteOCLInvariant", Diagnostic.WARNING, badClassInstance,
-			"Failure on " + eClassifier.getName());
+	public void test_validationWithCompleteOCL() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() {
+				ResourceSet resourceSet = createResourceSet();
+				initModelWithErrorsAndOcl(resourceSet);
+				EClass eClassifier = (EClass) companyPackage.getEClassifier("Detritus");
+				EObject badClassInstance = create(acme, companyDetritus, eClassifier, null);
+				validateWithSeverity("CompleteOCLInvariant", Diagnostic.WARNING, badClassInstance,
+					"Failure on " + eClassifier.getName());
+				unloadResourceSet(resourceSet);
+			}
+		});
 	}
 
-	public void test_tutorialValidationMessage() {
-		GlobalEnvironmentFactory.disposeInstance();
-		validateTutorial("models/documentation/Tutorial1.ecore", "There are 3 loans for the 2 copies of b2");
-		GlobalEnvironmentFactory.disposeInstance();
-		validateTutorial("models/documentation/Tutorial2.ecore", "There are 3 loans for the 2 copies of ''b2''");		// Doubled quotes for NLS.bind
-		GlobalEnvironmentFactory.disposeInstance();
-		validateTutorial("models/documentation/Tutorial1.ecore", "There are 3 loans for the 2 copies of b2");
-		GlobalEnvironmentFactory.disposeInstance();
-	}
-
-	public void testDelegates_Import_476968() {
+	public void testDelegates_Import_476968() throws Throwable {
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {			// No test files standalone, this is a standalone test so just bypass it.
-			GlobalEnvironmentFactory environmentFactory = GlobalEnvironmentFactory.getInstance();
-			OCL ocl = environmentFactory.createOCL();
-			//
-			//	Projects on classpath should be accessible as platform:/plugin or platform:/project
-			//
-			URI uri1 = URI.createPlatformPluginURI("org.eclipse.ocl.examples.project.royalandloyal/model/RoyalAndLoyal.ecore", true);
-			Resource resource1 = ocl.getResourceSet().getResource(uri1, true);
-			assertNotNull(resource1);
-			URI uri2 = URI.createPlatformResourceURI("org.eclipse.ocl.examples.project.royalandloyal/model/RoyalAndLoyal.ecore", true);
-			Resource resource2 = ocl.getResourceSet().getResource(uri2, true);
-			assertNotNull(resource2);
-			//
-			//	Projects not on classpath should not be accessible as platform:/plugin or platform:/project
-			//
-			try {
-				URI uri8 = URI.createPlatformPluginURI("org.eclipse.ocl.examples.project.oclinecoretutorial/models/documentation/Tutorial.ecore", true);
-				ocl.getResourceSet().getResource(uri8, true);
-				TestCase.fail("Should have thrown a MalformedURLException");	// unknown protocol: platform
-			}
-			catch (WrappedException e) {
-				assertTrue(e.getCause() instanceof MalformedURLException);
-			}
-			try {
-				URI uri9 = URI.createPlatformResourceURI("org.eclipse.ocl.examples.project.oclinecoretutorial/models/documentation/Tutorial.ecore", true);
-				ocl.getResourceSet().getResource(uri9, true);
-				TestCase.fail("Should have thrown an IOException");				// The path '/org.eclipse.ocl.examples.project.oclinecoretutorial/models/documentation/Tutorial.ecore' is unmapped
-			}
-			catch (WrappedException e) {
-				assertTrue(e.getCause() instanceof IOException);
-			}
+			doTestRunnable(new TestRunnable() {
+				@Override
+				public void runWithThrowable() {
+					/*Global*/EnvironmentFactory environmentFactory = PivotUtilInternal.getEnvironmentFactory(null); //GlobalEnvironmentFactory.getInstance();
+					OCL ocl = environmentFactory.createOCL();
+					//
+					//	Projects on classpath should be accessible as platform:/plugin or platform:/project
+					//
+					URI uri1 = URI.createPlatformPluginURI("org.eclipse.ocl.examples.project.royalandloyal/model/RoyalAndLoyal.ecore", true);
+					Resource resource1 = ocl.getResourceSet().getResource(uri1, true);
+					assertNotNull(resource1);
+					URI uri2 = URI.createPlatformResourceURI("org.eclipse.ocl.examples.project.royalandloyal/model/RoyalAndLoyal.ecore", true);
+					Resource resource2 = ocl.getResourceSet().getResource(uri2, true);
+					assertNotNull(resource2);
+					//
+					//	Projects not on classpath should not be accessible as platform:/plugin or platform:/project
+					//
+					try {
+						URI uri8 = URI.createPlatformPluginURI("org.eclipse.ocl.examples.project.oclinecoretutorial/models/documentation/Tutorial.ecore", true);
+						ocl.getResourceSet().getResource(uri8, true);
+						TestCase.fail("Should have thrown a MalformedURLException");	// unknown protocol: platform
+					}
+					catch (WrappedException e) {
+						assertTrue(e.getCause() instanceof MalformedURLException);
+					}
+					try {
+						URI uri9 = URI.createPlatformResourceURI("org.eclipse.ocl.examples.project.oclinecoretutorial/models/documentation/Tutorial.ecore", true);
+						ocl.getResourceSet().getResource(uri9, true);
+						TestCase.fail("Should have thrown an IOException");				// The path '/org.eclipse.ocl.examples.project.oclinecoretutorial/models/documentation/Tutorial.ecore' is unmapped
+					}
+					catch (WrappedException e) {
+						assertTrue(e.getCause() instanceof IOException);
+					}
+				}
+			});
 		}
 	}
 
@@ -1360,6 +1689,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 			unloadResourceSet(resourceSet);
 		} finally {
 			ocl.dispose();
+			unloadResourceSet(resourceSet);
 		}
 	}
 

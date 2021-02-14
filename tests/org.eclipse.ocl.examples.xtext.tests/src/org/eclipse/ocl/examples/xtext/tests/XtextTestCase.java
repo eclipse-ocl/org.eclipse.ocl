@@ -22,7 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
@@ -35,7 +34,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.ETypedElement;
-import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter;
@@ -61,7 +59,6 @@ import org.eclipse.ocl.pivot.internal.context.ModelContext;
 import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateDomain;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
-import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.values.BagImpl;
@@ -524,26 +521,6 @@ public class XtextTestCase extends PivotTestCaseWithAutoTearDown
 		}
 	}
 
-	@SuppressWarnings("deprecation")
-	protected @NonNull Resource loadEcore(@NonNull URI inputURI) {
-		ResourceSet resourceSet = new ResourceSetImpl();
-		ProjectMap.initializeURIResourceMap(resourceSet);
-		Map<URI, URI> uriMap = resourceSet.getURIConverter().getURIMap();
-		if (EMFPlugin.IS_ECLIPSE_RUNNING) {
-			uriMap.putAll(EcorePlugin.computePlatformURIMap());
-		}
-		Resource ecoreResource = ClassUtil.nonNullState(resourceSet.getResource(inputURI, true));
-		mapOwnURI(ecoreResource);
-		//		List<String> conversionErrors = new ArrayList<String>();
-		//		RootPackageCS documentCS = Ecore2OCLinEcore.importFromEcore(resourceSet, null, ecoreResource);
-		//		Resource eResource = documentCS.eResource();
-		assertNoResourceErrors("Load failed", ecoreResource);
-		//		Resource xtextResource = resourceSet.createResource(outputURI, OCLinEcoreCSPackage.eCONTENT_TYPE);
-		//		XtextResource xtextResource = (XtextResource) resourceSet.createResource(outputURI);
-		//		xtextResource.getContents().add(documentCS);
-		return ecoreResource;
-	}
-
 	/**
 	 * Some example files have inconsistent self references so map the URI back to
 	 * the resource.
@@ -568,7 +545,6 @@ public class XtextTestCase extends PivotTestCaseWithAutoTearDown
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
@@ -576,12 +552,12 @@ public class XtextTestCase extends PivotTestCaseWithAutoTearDown
 		TestUtil.doCompleteOCLSetup();
 		TestUtil.doOCLinEcoreSetup();
 		TestUtil.doOCLstdlibSetup();
-		ResourceSet resourceSet = new ResourceSetImpl();
-		ProjectMap.initializeURIResourceMap(resourceSet);
-		Map<URI, URI> uriMap = resourceSet.getURIConverter().getURIMap();
-		if (EMFPlugin.IS_ECLIPSE_RUNNING) {
-			uriMap.putAll(EcorePlugin.computePlatformURIMap());
-		}
+	//	ResourceSet resourceSet = new ResourceSetImpl();
+	//	ProjectMap.initializeURIResourceMap(resourceSet);
+	//	Map<URI, URI> uriMap = resourceSet.getURIConverter().getURIMap();
+	//	if (EMFPlugin.IS_ECLIPSE_RUNNING) {
+	//		uriMap.putAll(EcorePlugin.computePlatformURIMap());
+	//	}
 		//		for (Map.Entry<URI,URI> entry : uriMap.entrySet()) {
 		//			System.out.println(entry.getKey() + " => " + entry.getValue());
 		//		}

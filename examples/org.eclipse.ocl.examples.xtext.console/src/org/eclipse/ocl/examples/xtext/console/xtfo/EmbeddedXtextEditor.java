@@ -63,6 +63,7 @@ import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.OCL;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
@@ -741,6 +742,9 @@ public class EmbeddedXtextEditor
 				}
 			}
 			ocl.dispose();
+			try {
+				ThreadLocalExecutor.waitForGC();
+			} catch (InterruptedException e) {}
 			//
 			//	Create new OCL facade/handle
 			//

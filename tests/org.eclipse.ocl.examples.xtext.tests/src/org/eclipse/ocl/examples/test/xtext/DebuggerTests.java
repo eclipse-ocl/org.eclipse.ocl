@@ -57,6 +57,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.xtext.base.ui.model.BaseEditorCallback;
 import org.eclipse.ocl.xtext.completeocl.ui.internal.CompleteOCLActivator;
 
@@ -163,6 +164,8 @@ public class DebuggerTests extends XtextTestCase
 	}
 
 	public void testDebugger_Launch() throws Exception {
+	//			AbstractEnvironmentFactory.ENVIRONMENT_FACTORY_ATTACH.setState(true);
+	//			ThreadLocalExecutor.THREAD_LOCAL_ENVIRONMENT_FACTORY.setState(true);
 		TestUIUtil.closeIntro();
 		TestUIUtil.enableSwitchToDebugPerspectivePreference();
 		//
@@ -194,6 +197,8 @@ public class DebuggerTests extends XtextTestCase
 		org.eclipse.ocl.pivot.Class customerClass = ClassUtil.nonNullState(environmentFactory.getASOf(org.eclipse.ocl.pivot.Class.class, eObject.eClass()));
 		Iterable<Constraint> customerInvariants = environmentFactory.getMetamodelManager().getAllInvariants(customerClass);
 		Constraint constraint = ClassUtil.nonNullState(NameUtil.getNameable(customerInvariants, "invariant_sizesAgree"));
+
+		ThreadLocalExecutor.resetEnvironmentFactory();
 
 		IProject iProject = testProject.getIProject();
 		ILaunchConfigurationWorkingCopy launchConfiguration = createLaunchConfiguration(iProject, constraint, eObject);

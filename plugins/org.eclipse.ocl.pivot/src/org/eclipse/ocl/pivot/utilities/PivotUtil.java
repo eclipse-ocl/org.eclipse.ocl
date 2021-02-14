@@ -236,10 +236,13 @@ public class PivotUtil
 		Resource asResource = eObject.eResource();
 		if (asResource != null) {
 			EnvironmentFactory environmentFactory = PivotUtilInternal.findEnvironmentFactory(asResource);
-			if (environmentFactory != null) {
+			if ((environmentFactory != null) && !environmentFactory.isDisposed()) {
 				Executor executor = PivotExecutorManager.createAdapter(environmentFactory, eObject);
 				if (validationContext != null) {
 					validationContext.put(Executor.class, executor);
+				}
+				if (executor != null) {
+					ThreadLocalExecutor.setExecutor(executor);
 				}
 				return executor;
 			}
@@ -630,12 +633,21 @@ public class PivotUtil
 
 	public static @NonNull <T extends org.eclipse.ocl.pivot.Package> T createPackage(@NonNull Class<T> pivotClass,
 			@NonNull EClass pivotEClass, @NonNull String name, @Nullable String nsURI, @Nullable PackageId packageId) {
+		return createPackage(pivotClass, pivotEClass, name, nsURI, null, packageId);
+	}
+
+	/**
+	 * @since 1.14
+	 */
+	public static @NonNull <T extends org.eclipse.ocl.pivot.Package> T createPackage(@NonNull Class<T> pivotClass,
+			@NonNull EClass pivotEClass, @NonNull String name, @Nullable String nsURI, @Nullable String nsPrefix, @Nullable PackageId packageId) {
 		@SuppressWarnings("unchecked")
 		T asPackage = (T) pivotEClass.getEPackage().getEFactoryInstance().create(pivotEClass);
 		asPackage.setName(name);
 		if (packageId != null) {
 			((PackageImpl)asPackage).setPackageId(packageId);
 		}
+		asPackage.setNsPrefix(nsPrefix);		// Before setURI accesses it.
 		asPackage.setURI(nsURI);
 		return asPackage;
 	}

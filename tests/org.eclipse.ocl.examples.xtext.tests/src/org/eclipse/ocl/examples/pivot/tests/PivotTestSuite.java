@@ -163,7 +163,7 @@ public abstract class PivotTestSuite extends PivotTestCaseWithAutoTearDown
 	}
 
 	protected @NonNull TestOCL createOCL() throws Exception {
-		return new TestOCL(getTestFileSystem(), getTestPackageName(), getName(), useCodeGen ? getProjectMap() : OCL.NO_PROJECTS);
+		return new TestOCL(getTestFileSystem(), getTestPackageName(), getName(), useCodeGen ? getProjectMap() : OCL.NO_PROJECTS, null);
 	}
 
 	public @NonNull ResourceSet createResourceSet() {
@@ -240,12 +240,14 @@ public abstract class PivotTestSuite extends PivotTestCaseWithAutoTearDown
 		//
 		//	Unload any resources that a test may have loaded.
 		//
-		for (ListIterator<Resource> i = resourceSet.getResources().listIterator(); i.hasNext(); ) {
-			Resource res = i.next();
-			if (!standardResources.contains(res)) {
-				i.remove();
-				res.unload();
-				res.eAdapters().clear();
+		if (resourceSet != null) {
+			for (ListIterator<Resource> i = resourceSet.getResources().listIterator(); i.hasNext(); ) {
+				Resource res = i.next();
+				if (!standardResources.contains(res)) {
+					i.remove();
+					res.unload();
+					res.eAdapters().clear();
+				}
 			}
 		}
 		autoTearDown();

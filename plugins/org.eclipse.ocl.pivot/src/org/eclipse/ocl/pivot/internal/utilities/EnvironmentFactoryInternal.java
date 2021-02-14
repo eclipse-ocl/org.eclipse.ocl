@@ -90,7 +90,7 @@ public interface EnvironmentFactoryInternal extends EnvironmentFactory
 	 */
 	default void analyzeExpressions(@NonNull EObject eRootObject, @NonNull Set<@NonNull CompleteClass> allInstancesCompleteClasses, @NonNull Set<@NonNull Property> implicitOppositeProperties) {}
 
-	void attach(Object object);
+	void attach(@NonNull Object attachOwner);
 
 	/**
 	 * Configure the PackageRegistry associated with the (external) ResourceSet to use a load strategy that uses whichever of
@@ -139,7 +139,14 @@ public interface EnvironmentFactoryInternal extends EnvironmentFactory
 	@Deprecated /* @deprecated not used - evolving towards createParserContext(@NonNull Element) */
 	@NonNull ParserContext createParserContext(@Nullable EObject context) throws ParserException;
 
-	void detach(Object object);
+	void detach(@NonNull Object attachOwner);
+
+	/**
+	 * Detach the ThreadLocal reference to this EnvironmentFactory if that is the sole remaining attach.
+	 *
+	 * @since 1.14
+	 */
+	default void detachRedundantThreadLocal() {}
 
 	void dispose();
 

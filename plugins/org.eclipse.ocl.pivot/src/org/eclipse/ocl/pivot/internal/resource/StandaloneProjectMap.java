@@ -273,7 +273,7 @@ public class StandaloneProjectMap implements ProjectManager
 					System.out.println(projectMap.getClass().getSimpleName() + "-" +  projectMap.instanceCount + ": install EPackageDescriptor-" + instanceCount + " for '" + uri + "'");
 				}
 			}
-			packageRegistry.put(uri.toString(), this);
+			packageRegistry.put(uri.toString(), this);		// ?? exploit an existing already resolved content
 			if (PROJECT_MAP_INSTALL.isActive()) {
 				PROJECT_MAP_INSTALL.println(toString());
 			}

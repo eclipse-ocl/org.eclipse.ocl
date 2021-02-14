@@ -13,6 +13,7 @@ package org.eclipse.ocl.examples.test.xtext;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.pivot.tests.TestOCL;
@@ -63,7 +64,7 @@ public class ImportTests extends XtextTestCase
 
 	protected @NonNull TestOCL createOCL() {
 		TestCaseAppender.INSTANCE.uninstall();
-		return new TestOCL(getTestFileSystem(), "ImportTests", getName(), getProjectMap());
+		return new TestOCL(getTestFileSystem(), "ImportTests", getName(), getProjectMap(), null);
 	}
 
 	protected void createTestImport_OCLinEcore_Bug353793_Files()
@@ -253,7 +254,6 @@ public class ImportTests extends XtextTestCase
 	}
 
 	public void testImport_OCLinEcore_Bug353793_Good() throws Exception {
-		OCL ocl = createOCL();
 		createTestImport_OCLinEcore_Bug353793_Files();
 		String testFileGood =
 				"import 'http://www.eclipse.org/emf/2002/Ecore';\n" +
@@ -270,12 +270,12 @@ public class ImportTests extends XtextTestCase
 						"    class FD01 extends F0::F1::F;\n" +
 						"    class GD0 extends G0::F;\n" +
 						"}\n";
+		OCL ocl = createOCL();
 		doLoadFromString(ocl, "Bug353793good.oclinecore", testFileGood);
 		ocl.dispose();
 	}
 
 	public void testImport_OCLinEcore_Bug353793_Bad() throws Exception {
-		TestOCL ocl = createOCL();
 		createTestImport_OCLinEcore_Bug353793_Files();
 		String testFileBad =
 				"import 'http://www.eclipse.org/emf/2002/Ecore';\n" +
@@ -323,6 +323,7 @@ public class ImportTests extends XtextTestCase
 		bag.add(StringUtil.bind(PivotMessagesInternal.UnresolvedNamespace_ERROR_, "", "C1"));
 		// class GD01 extends G0::F1::F;
 		bag.add(StringUtil.bind(PivotMessagesInternal.UnresolvedNamespace_ERROR_, "", "F1"));
+		TestOCL ocl = createOCL();
 		doBadLoadFromString(ocl, "Bug353793bad.oclinecore", testFileBad, bag);
 		ocl.dispose();
 	}
@@ -517,8 +518,8 @@ public class ImportTests extends XtextTestCase
 	}
 
 	public void testImport_CompleteOCL_NestedPackage_477283() throws Exception {
-		Bug477283APackage.eINSTANCE.getClass();
-		Bug477283BPackage.eINSTANCE.getClass();
+		EPackage.Registry.INSTANCE.put(Bug477283APackage.eNS_URI, Bug477283APackage.eINSTANCE);
+		EPackage.Registry.INSTANCE.put(Bug477283BPackage.eNS_URI, Bug477283BPackage.eINSTANCE);
 		TestOCL ocl = createOCL();
 		String testFile =
 				"import 'http://www.eclipse.org/ocl/Bug477283b'\n" +
@@ -540,8 +541,8 @@ public class ImportTests extends XtextTestCase
 		 * 		 depends on the iteration order of es2ases.values() in
 		 * 		 PivotMetamodelManager.dispose()).
 		 */
-		Bug477283APackage.eINSTANCE.getClass();
-		Bug477283BPackage.eINSTANCE.getClass();
+		EPackage.Registry.INSTANCE.put(Bug477283APackage.eNS_URI, Bug477283APackage.eINSTANCE);
+		EPackage.Registry.INSTANCE.put(Bug477283BPackage.eNS_URI, Bug477283BPackage.eINSTANCE);
 		TestOCL ocl = createOCL();
 		String testFile =
 				"import 'http://www.eclipse.org/ocl/Bug477283b'\n" +

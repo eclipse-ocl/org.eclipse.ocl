@@ -52,6 +52,10 @@ public class BasicProjectManager extends AdapterImpl implements ProjectManager
 		return null;
 	}
 
+	public BasicProjectManager() {
+		super();
+	}
+
 	@Override
 	public void addResourceDescriptor(@NonNull IResourceDescriptor resourceDescriptor) {
 	}

@@ -29,7 +29,7 @@ public class PrettyPrinterTest extends PivotTestSuite
 	public static class MyOCL extends TestOCL
 	{
 		public MyOCL(@NonNull TestFileSystem testFileSystem, @NonNull String testPackageName, @NonNull String name) {
-			super(testFileSystem, testPackageName, name, OCL.NO_PROJECTS);
+			super(testFileSystem, testPackageName, name, OCL.NO_PROJECTS, null);
 		}
 
 		protected @Nullable Object assertPrintResults(@Nullable Object context, @NonNull String expression) {

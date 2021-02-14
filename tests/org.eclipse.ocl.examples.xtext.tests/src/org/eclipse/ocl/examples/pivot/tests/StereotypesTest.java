@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.xtext.tests.TestFileSystem;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.Enumeration;
@@ -172,8 +173,8 @@ public class StereotypesTest extends PivotTestSuite
 		InternationalizedMetamodel mm = null;
 		InternationalizedModel m = null;
 
-		public MyOCL(@NonNull TestFileSystem testFileSystem, @NonNull String testPackageName, @NonNull String name) throws ParserException {
-			super(testFileSystem, testPackageName, name, OCL.NO_PROJECTS);
+		public MyOCL(@NonNull TestFileSystem testFileSystem, @NonNull String testPackageName, @NonNull String name, @Nullable ResourceSet externalResourceSet) throws ParserException {
+			super(testFileSystem, testPackageName, name, OCL.NO_PROJECTS, externalResourceSet);
 			ResourceSet resourceSet = getResourceSet();
 			ProjectMap.getAdapter(resourceSet);
 			String problem = UML2AS.initialize(resourceSet);
@@ -209,7 +210,7 @@ public class StereotypesTest extends PivotTestSuite
 
 	@Override
 	protected @NonNull MyOCL createOCL() throws ParserException {
-		return new MyOCL(getTestFileSystem(), getTestPackageName(), getName());
+		return new MyOCL(getTestFileSystem(), getTestPackageName(), getName(), null);
 	}
 
 	@Override

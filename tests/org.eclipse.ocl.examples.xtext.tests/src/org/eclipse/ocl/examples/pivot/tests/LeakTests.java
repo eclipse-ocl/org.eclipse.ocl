@@ -30,10 +30,10 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateDomain;
-import org.eclipse.ocl.pivot.internal.utilities.GlobalEnvironmentFactory;
 import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
 import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
-import org.eclipse.ocl.pivot.utilities.ParserException;
+import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.uml2.common.util.UML2Util;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Package;
@@ -137,53 +137,83 @@ public class LeakTests extends PivotTestCaseWithAutoTearDown
 		}
 	}
 
+	public static abstract class LeakTestRunnable extends TestRunnable
+	{
+		WeakReference<org.eclipse.uml2.uml.Profile> umlProfileRef = null;
+		WeakReference<org.eclipse.ocl.pivot.Profile> asProfileRef = null;
+	}
+
+	@Override
+	protected void setUp() throws Exception {
+	/*	TEST_START.setState(true);
+		AbstractEnvironmentFactory.ENVIRONMENT_FACTORY_ATTACH.setState(true);
+		ThreadLocalExecutor.THREAD_LOCAL_ENVIRONMENT_FACTORY.setState(true);
+		PivotUtilInternal.noDebug = false;
+		DEBUG_GC = true;
+		DEBUG_ID = true;
+		AbstractEnvironmentFactory.liveEnvironmentFactories = new WeakHashMap<>();	// Prints the create/finalize of each EnvironmentFactory
+		//	PivotMetamodelManager.liveMetamodelManagers = new WeakHashMap<>();			// Prints the create/finalize of each MetamodelManager
+		//	StandaloneProjectMap.liveStandaloneProjectMaps = new WeakHashMap<>();		// Prints the create/finalize of each StandaloneProjectMap
+		ResourceSetImpl.liveResourceSets = new WeakHashMap<>();						// Requires edw-debug private EMF branch
+	*/
+		UMLStandaloneSetup.init();
+		super.setUp();
+	}
+
 	/**
 	 * A test that demonstrates the memory leak from validation of the model.
-	 * @throws ParserException
+	 * @throws Throwable
 	 */
-	public void testValidateProfileLeak() throws InterruptedException, ParserException {	// Bug 459276
-		GlobalEnvironmentFactory.disposeInstance();
-		//		PartialModels.PARTIAL_MODELS.setState(true);
-		//		UML2AS.CONVERT_RESOURCE.setState(true);
-		UMLStandaloneSetup.init();
-		ResourceSet resourceSet = new ResourceSetImpl();
-		UML2AS.initializeUML(resourceSet);
-		URI testModelURI = getTestModelURI("models/uml/Bug459276.uml");
-		EClass package1 = UMLPackage.Literals.PACKAGE;
-		Package umlModel = UML2Util.load(resourceSet, testModelURI, package1);
-		EcoreUtil.resolveAll(resourceSet);
-		Profile umlProfile = umlModel.getAppliedProfile("j2ee");
-		assertNotNull("No UML Profile for leak test", umlProfile);
+	public void testValidateProfileLeak() throws Throwable {	// Bug 459276
+		LeakTestRunnable leakTestRunnable = new LeakTestRunnable() {
+			@Override
+			public void runWithThrowable() throws Exception {
+				ResourceSet resourceSet = new ResourceSetImpl();
+				getProjectMap().initializeResourceSet(resourceSet);
+				UML2AS.initializeUML(resourceSet);
+				URI testModelURI = getTestModelURI("models/uml/Bug459276.uml");
+				EClass package1 = UMLPackage.Literals.PACKAGE;
+				Package umlModel = UML2Util.load(resourceSet, testModelURI, package1);
+				EcoreUtil.resolveAll(resourceSet);
+				Profile umlProfile = umlModel.getAppliedProfile("j2ee");
+				assertNotNull("No UML Profile for leak test", umlProfile);
 
-		// Validate the model
-		Diagnostician diagnostician = new MyDiagnostician();
-		diagnostician.validate(umlModel);
+				// Validate the model
+				Diagnostician diagnostician = new MyDiagnostician();
+				diagnostician.validate(umlModel);
 
-		// It doesn't matter what the results of validation are, only that
-		// OCL constraints were parsed by the OCL validation delegate
+				// It doesn't matter what the results of validation are, only that
+				// OCL constraints were parsed by the OCL validation delegate
 
-		GlobalEnvironmentFactory globalEnvironmentFactory = GlobalEnvironmentFactory.getInstance();
-		org.eclipse.ocl.pivot.Profile asProfile = globalEnvironmentFactory.getASOf(org.eclipse.ocl.pivot.Profile.class, umlProfile);
-		assertNotNull("No AS Profile for leak", asProfile);
-		WeakReference<org.eclipse.uml2.uml.Profile> umlProfileRef = new WeakReference<org.eclipse.uml2.uml.Profile>(umlProfile);
-		WeakReference<org.eclipse.ocl.pivot.Profile> asProfileRef = new WeakReference<org.eclipse.ocl.pivot.Profile>(asProfile);
-		assertNotNull("No UML Profile for leak test", umlProfileRef.get());
-		assertNotNull("No AS Profile for leak", asProfileRef.get());
-		//
-		// Eliminate our references
-		//
-		diagnostician = null; // There is no "dispose" API
-		umlModel = null;
-		umlProfile = null;
-		asProfile = null;
-		disposeResourceSet(resourceSet);
-		resourceSet = null;
-		globalEnvironmentFactory = null;
+				AbstractEnvironmentFactory environmentFactory = (AbstractEnvironmentFactory) ThreadLocalExecutor.basicGetEnvironmentFactory();
+				assert environmentFactory != null;
+				org.eclipse.ocl.pivot.Profile asProfile = environmentFactory.getASOf(org.eclipse.ocl.pivot.Profile.class, umlProfile);
+				assertNotNull("No AS Profile for leak", asProfile);
+				umlProfileRef = new WeakReference<org.eclipse.uml2.uml.Profile>(umlProfile);
+				asProfileRef = new WeakReference<org.eclipse.ocl.pivot.Profile>(asProfile);
+				assertNotNull("No UML Profile for leak test", umlProfileRef.get());
+				assertNotNull("No AS Profile for leak", asProfileRef.get());
+				//
+				// Eliminate our references
+				//
+				getProjectMap().unload(resourceSet);	// FIXME Can this be automatic ?
+				disposeResourceSet(resourceSet);		// ?? a second test using a non-manual ResourcceSet via an OCL
+				ThreadLocalExecutor.detachEnvironmentFactory(environmentFactory);		// emulate local thread termination
+			}
+		};
+		doTestRunnable(leakTestRunnable);
 		//
 		// Garbage collect and check that there are no other references
 		//
-		System.gc();
-		assertNull("UML Profile has leaked", umlProfileRef.get());
-		assertNull("AS Profile has leaked", asProfileRef.get());
+		for (int i = 0; i < 100; i++) {
+			if ((leakTestRunnable.umlProfileRef.get() == null) && (leakTestRunnable.asProfileRef.get() == null)) {
+				break;
+			}
+			System.gc();
+			Thread.sleep(10);
+			System.out.println("Slept " + 10*i + " ms");
+		}
+		assertNull("UML Profile has leaked", leakTestRunnable.umlProfileRef.get());
+		assertNull("AS Profile has leaked", leakTestRunnable.asProfileRef.get());
 	}
 }

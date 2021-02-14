@@ -69,8 +69,8 @@ public class EvaluateUMLTest4 extends PivotTestSuite
 		EFactory statefulEFactory;
 		EClass c1Class;
 
-		public MyOCL(@NonNull TestFileSystem testFileSystem, @NonNull String testPackageName, @NonNull String name) {
-			super(testFileSystem, testPackageName, name, useCodeGen ? getProjectMap() : OCL.NO_PROJECTS);
+		public MyOCL(@NonNull TestFileSystem testFileSystem, @NonNull String testPackageName, @NonNull String name, @Nullable ResourceSet externalResourceSet) {
+			super(testFileSystem, testPackageName, name, useCodeGen ? getProjectMap() : OCL.NO_PROJECTS, externalResourceSet);
 			MetamodelManagerInternal metamodelManager = getMetamodelManager();
 			Package asMetamodel = metamodelManager.getASmetamodel();
 			if (asMetamodel != null) {
@@ -78,8 +78,8 @@ public class EvaluateUMLTest4 extends PivotTestSuite
 			}
 		}
 
-		public MyOCL(@NonNull TestFileSystem testFileSystem, @NonNull String testPackageName, @NonNull String name, @NonNull ProjectManager projectManager) {
-			super(testFileSystem, testPackageName, name, projectManager);
+		public MyOCL(@NonNull TestFileSystem testFileSystem, @NonNull String testPackageName, @NonNull String name, @NonNull ProjectManager projectManager, @Nullable ResourceSet externalResourceSet) {
+			super(testFileSystem, testPackageName, name, projectManager, externalResourceSet);
 			MetamodelManagerInternal metamodelManager = getMetamodelManager();
 			Package asMetamodel = metamodelManager.getASmetamodel();
 			if (asMetamodel != null) {
@@ -150,11 +150,11 @@ public class EvaluateUMLTest4 extends PivotTestSuite
 
 	@Override
 	protected @NonNull MyOCL createOCL() {
-		return new MyOCL(getTestFileSystem(), getTestPackageName(), getName());
+		return new MyOCL(getTestFileSystem(), getTestPackageName(), getName(), null);
 	}
 
 	protected @NonNull MyOCL createOCLWithProjectMap() {
-		return new MyOCL(getTestFileSystem(), getTestPackageName(), getName(), getProjectMap());
+		return new MyOCL(getTestFileSystem(), getTestPackageName(), getName(), getProjectMap(), null);
 	}
 
 	@Override

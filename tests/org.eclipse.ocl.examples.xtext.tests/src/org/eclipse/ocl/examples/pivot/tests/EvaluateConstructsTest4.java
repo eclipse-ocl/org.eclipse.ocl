@@ -45,7 +45,7 @@ public class EvaluateConstructsTest4 extends PivotTestSuite
 
 	@Override
 	protected @NonNull MyOCL createOCL() {
-		return new MyOCL(getTestFileSystem(), getTestPackageName(), getName());
+		return new MyOCL(getTestFileSystem(), getTestPackageName(), getName(), null);
 	}
 
 	@Override

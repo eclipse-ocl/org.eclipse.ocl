@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Map;
 
+import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -27,6 +29,11 @@ import org.eclipse.ocl.xtext.oclinecore.cs2as.OCLinEcoreCS2AS;
 
 public class OCLinEcoreCSResource extends EssentialOCLCSResource
 {
+	@Override
+	public NotificationChain basicSetResourceSet(ResourceSet resourceSet, NotificationChain notifications) {
+		return super.basicSetResourceSet(resourceSet, notifications);
+	}
+
 	@Override
 	public @NonNull AS2CS createAS2CS(@NonNull Map<@NonNull ? extends BaseCSResource, @NonNull ? extends ASResource> cs2asResourceMap,
 			@NonNull EnvironmentFactoryInternal environmentFactory) {

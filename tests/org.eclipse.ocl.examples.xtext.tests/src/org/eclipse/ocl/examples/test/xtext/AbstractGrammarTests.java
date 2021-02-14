@@ -60,5 +60,7 @@ public abstract class AbstractGrammarTests extends XtextTestCase
 		//	Check similar content
 		//
 		TestUtil.assertSameModel(binaryResource, javaResource);
+		disposeResourceSet(resourceSet);
+		resourceSet = null;
 	}
 }

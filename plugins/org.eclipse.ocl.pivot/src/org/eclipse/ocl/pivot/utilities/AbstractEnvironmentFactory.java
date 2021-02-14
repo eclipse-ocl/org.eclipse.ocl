@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.WeakHashMap;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.common.EMFPlugin;
@@ -128,7 +129,12 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	 */
 	private int attachCount = 0;
 
-	//    private List<WeakReference<Object>> attachers = null;;
+	/**
+	 * Debug lust of the System.identityHashCode of each active owners of an attach
+	 *
+	 * System.identityHashCode avoids problmes with finalized attachOwners.
+	 */
+	private List<@NonNull Integer> attachOwners = new ArrayList<>();
 
 	private @NonNull Technology technology = ASResourceFactoryRegistry.INSTANCE.getTechnology();
 
@@ -136,6 +142,13 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	 * Configuration of validation preferences.
 	 */
 	private /*LazyNonNull*/ Map<Object, StatusCodes.Severity> validationKey2severity = null;
+
+	/**
+	 * Leak debugging aid. Set non-null to diagnose EnvironmentFactory construction and finalization.
+	 *
+	 * @since 1.14
+	 */
+	public static WeakHashMap<@NonNull AbstractEnvironmentFactory, @Nullable Object> liveEnvironmentFactories = null;
 
 	/**
 	 * @since 1.7
@@ -152,6 +165,11 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	 */
 	protected AbstractEnvironmentFactory(@NonNull ProjectManager projectManager, @Nullable ResourceSet externalResourceSet, @Nullable ResourceSet asResourceSet) {
 		CONSTRUCTION_COUNT++;
+		if (liveEnvironmentFactories != null) {
+			liveEnvironmentFactories.put(this, null);
+			PivotUtilInternal.debugPrintln("Create " + NameUtil.debugSimpleName(this)
+			+ " " + NameUtil.debugSimpleName(externalResourceSet) + " " + NameUtil.debugSimpleName(asResourceSet));
+		}
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {			// This is the unique start point for OCL so
 			PivotStandaloneSetup.doSetup();				//  do the non-UI initialization (guarded in doSetup())
 		}
@@ -182,7 +200,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		this.standardLibrary = completeEnvironment.getOwnedStandardLibrary();
 		this.completeModel = completeEnvironment.getOwnedCompleteModel();
 		PivotUtil.initializeLoadOptionsToSupportSelfReferences(getResourceSet());
-		ThreadLocalExecutor.addEnvironmentFactory(this);
+		ThreadLocalExecutor.attachEnvironmentFactory(this);
 	}
 
 	@Override
@@ -277,21 +295,18 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	}
 
 	@Override
-	public synchronized void attach(Object object) {
+	public synchronized void attach(@NonNull Object attachOwner) {
 		if (isDisposed()) {
 			if (ENVIRONMENT_FACTORY_ATTACH.isActive()) {
-				ENVIRONMENT_FACTORY_ATTACH.println("[" + Thread.currentThread().getName() + "] Attach(" + attachCount + ") " + NameUtil.debugSimpleName(this));
+				ENVIRONMENT_FACTORY_ATTACH.println("[" + Thread.currentThread().getName() + "] Attach(" + attachCount + ") " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(attachOwner));
 			}
 			throw new IllegalStateException(getClass().getName() + " disposed");
 		}
 		attachCount++;
+		attachOwners.add(System.identityHashCode(attachOwner));
 		if (ENVIRONMENT_FACTORY_ATTACH.isActive()) {
-			ENVIRONMENT_FACTORY_ATTACH.println("[" + Thread.currentThread().getName() + "] Attach(" + (attachCount-1) + ":" + attachCount + ") " + NameUtil.debugSimpleName(this));
+			ENVIRONMENT_FACTORY_ATTACH.println("[" + Thread.currentThread().getName() + "] Attach(" + (attachCount-1) + ":" + attachCount + ") " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(attachOwner));
 		}
-		//		if (attachers == null) {
-		//			attachers = new ArrayList<WeakReference<Object>>();
-		//		}
-		//		attachers.add(new WeakReference<Object>(object));
 	}
 
 	protected @Nullable PivotMetamodelManager basicGetMetamodelManager() {
@@ -570,9 +585,9 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	}
 
 	@Override
-	public synchronized void detach(Object zobject) {
+	public synchronized void detach(@NonNull Object attachOwner) {
 		if (ENVIRONMENT_FACTORY_ATTACH.isActive()) {
-			ENVIRONMENT_FACTORY_ATTACH.println("[" + Thread.currentThread().getName() + "] Detach(" + attachCount + ":" + (attachCount-1) + ") " + NameUtil.debugSimpleName(this));
+			ENVIRONMENT_FACTORY_ATTACH.println("[" + Thread.currentThread().getName() + "] Detach(" + attachCount + ":" + (attachCount-1) + ") " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(attachOwner));
 		}
 		if (isDisposed()) {
 			return;					// Ignore detach after dispose
@@ -580,18 +595,18 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		if (attachCount == 0) {
 			throw new IllegalStateException(getClass().getName() + " not attached");
 		}
-		//		if (attachers != null) {
-		//			for (WeakReference<Object> attacher : attachers) {
-		//				if (attacher.get() == object) {
-		//					attachers.remove(attacher);
-		//					break;
-		//				}
-		//			}
-		//		}
+		boolean wasRemoved = attachOwners.remove(Integer.valueOf(System.identityHashCode(attachOwner)));
+		assert wasRemoved;
 		if (--attachCount <= 0) {
 			dispose();
 		}
-		//		ENVIRONMENT_FACTORY_ATTACH.println("[" + Thread.currentThread().getName() + "] gc() " + NameUtil.debugSimpleName(this));
+	}
+
+	@Override
+	public void detachRedundantThreadLocal() {
+		if ((attachCount == 1) && (ThreadLocalExecutor.basicGetEnvironmentFactory() == this)) {
+			ThreadLocalExecutor.detachEnvironmentFactory(this);
+		}
 	}
 
 	@Override
@@ -608,7 +623,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 
 	protected void disposeInternal() {
 		assert isDisposed();
-		ThreadLocalExecutor.removeEnvironmentFactory(this);
+	//	ThreadLocalExecutor.removeEnvironmentFactory(this);  -- maybe wrong thread if GCed - wait for lazy isDisposwed() test
 		boolean isGlobal = this == GlobalEnvironmentFactory.basicGetInstance();
 		if (metamodelManager != null) {
 			metamodelManager.dispose();
@@ -676,9 +691,36 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			csi2asMapping.dispose();
 			csi2asMapping = null;
 		}
+	//	completeEnvironment = null;
+	//	standardLibrary = null;
+	//	completeModel = null;
 		//		if (ENVIRONMENT_FACTORY_ATTACH.isActive()) {
 		//			ENVIRONMENT_FACTORY_ATTACH.println("[" + Thread.currentThread().getName() + "] disposeInternal " + NameUtil.debugSimpleName(this) + " => " + NameUtil.debugSimpleName(PivotUtilInternal.findEnvironmentFactory(externalResourceSet)));
 		//		}
+
+		projectManager.unload(asResourceSet);
+		projectManager.unload(externalResourceSet);
+
+		ThreadLocalExecutor.detachEnvironmentFactory(this);
+		System.gc();
+		System.runFinalization();
+	}
+
+	@Override
+	protected void finalize() throws Throwable {
+//		PivotUtilInternal.debugPrintln("Finalize " + NameUtil.debugSimpleName(this));
+		if (liveEnvironmentFactories != null) {
+	PivotUtilInternal.debugPrintln("Finalize " + NameUtil.debugSimpleName(this));
+			List<@NonNull EnvironmentFactory> keySet = new ArrayList<>(liveEnvironmentFactories.keySet());
+			if (!keySet.isEmpty()) {
+				StringBuilder s = new StringBuilder();
+				s.append(" live");
+				for (@NonNull EnvironmentFactory environmentFactory : keySet) {
+					s.append(" @" + Integer.toHexString(environmentFactory.hashCode()));
+				}
+				System.out.println(s.toString());
+			}
+		}
 	}
 
 	/**

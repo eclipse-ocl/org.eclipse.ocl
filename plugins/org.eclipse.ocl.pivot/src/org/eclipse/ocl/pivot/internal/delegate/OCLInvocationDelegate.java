@@ -34,8 +34,10 @@ import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
@@ -69,21 +71,9 @@ public class OCLInvocationDelegate extends BasicInvocationDelegate
 	public Object dynamicInvoke(InternalEObject target, EList<?> arguments) throws InvocationTargetException {
 		assert target != null;
 		try {
-			EnvironmentFactory environmentFactory = null;
-			ModelManager modelManager = null;
-			Executor executor = PivotUtil.basicGetExecutor(target);
-			if (executor != null) {
-				environmentFactory = executor.getEnvironmentFactory();
-				modelManager = executor.getModelManager();
-			}
-			else {
-				OCL ocl = delegateDomain.getOCL();
-				environmentFactory = ocl.getEnvironmentFactory();
-				modelManager = ocl.getModelManager();
-				if (modelManager == null) {
-					modelManager = environmentFactory.createModelManager(target);
-				}
-			}
+			EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(target.eResource());
+			Executor executor = PivotUtil.getExecutor(target);
+			ModelManager modelManager = executor.getModelManager();
 			MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 			ExpressionInOCL query2 = query;
 			if (query2 == null) {

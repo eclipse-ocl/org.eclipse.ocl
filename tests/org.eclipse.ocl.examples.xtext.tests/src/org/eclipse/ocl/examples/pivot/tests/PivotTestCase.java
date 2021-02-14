@@ -30,7 +30,6 @@ import java.util.Set;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.codegen.ecore.generator.GeneratorAdapterFactory;
-import org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.TreeIterator;
@@ -55,6 +54,7 @@ import org.eclipse.emf.ecore.xml.namespace.XMLNamespacePackage;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.common.OCLConstants;
+import org.eclipse.ocl.examples.xtext.idioms.IdiomsStandaloneSetup;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.pivot.evaluation.EvaluationException;
 import org.eclipse.ocl.pivot.internal.delegate.ValidationDelegate;
@@ -118,12 +118,13 @@ public class PivotTestCase extends TestCase
 	public static boolean DEBUG_GC = false;			// True performs an enthusuastic resource release and GC at the end of each test
 	public static boolean DEBUG_ID = false;			// True prints the start and end of each test.
 	{
-		//		PivotUtilInternal.noDebug = false;
-		//		DEBUG_GC = true;
-		//		DEBUG_ID = true;
-		//		PivotMetamodelManager.liveMetamodelManagers = new WeakHashMap<PivotMetamodelManager,Object>();	// Prints the create/finalize of each MetamodelManager
-		//		StandaloneProjectMap.liveStandaloneProjectMaps = new WeakHashMap<StandaloneProjectMap,Object>();	// Prints the create/finalize of each StandaloneProjectMap
-		//		ResourceSetImpl.liveResourceSets = new WeakHashMap<ResourceSet,Object>();				// Requires edw-debug private EMF branch
+	//	PivotUtilInternal.noDebug = false;
+	//	DEBUG_GC = true;
+	//	DEBUG_ID = true;
+	//	AbstractEnvironmentFactory.liveEnvironmentFactories = new WeakHashMap<>();	// Prints the create/finalize of each EnvironmentFactory
+	//	PivotMetamodelManager.liveMetamodelManagers = new WeakHashMap<>();			// Prints the create/finalize of each MetamodelManager
+	//	StandaloneProjectMap.liveStandaloneProjectMaps = new WeakHashMap<>();		// Prints the create/finalize of each StandaloneProjectMap
+	//	ResourceSetImpl.liveResourceSets = new WeakHashMap<>();						// Requires edw-debug private EMF branch
 	}
 
 	public static void appendLog(String name, Object context, String testExpression, String parseVerdict, String evaluationVerdict, String evaluationTolerance) {
@@ -162,7 +163,8 @@ public class PivotTestCase extends TestCase
 		}
 	}
 
-	public static @NonNull XtextResource as2cs(@NonNull OCL ocl, @NonNull ResourceSet resourceSet, @NonNull ASResource asResource, @NonNull URI outputURI) throws IOException {
+	public static @NonNull XtextResource as2cs(@NonNull OCL ocl, @NonNull ASResource asResource, @NonNull URI outputURI) throws IOException {
+		@NonNull ResourceSet resourceSet = ocl.getResourceSet();
 		XtextResource xtextResource = ClassUtil.nonNullState((XtextResource) resourceSet.createResource(outputURI, OCLinEcoreCSPackage.eCONTENT_TYPE));
 		//		ResourceSet csResourceSet = resourceSet; //new ResourceSetImpl();
 		//		csResourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("cs", new EcoreResourceFactoryImpl());
@@ -681,6 +683,71 @@ public class PivotTestCase extends TestCase
 		resourceSet.eAdapters().clear();
 	}
 
+	protected static abstract class TestRunnable implements Runnable
+	{
+		static int count = 0;
+
+		String name = null;
+		Throwable throwable = null;
+
+		protected TestRunnable() {
+			name = "test" + count++;
+		}
+
+		@Override
+		public void run() {
+			try {
+				runWithThrowable();
+			}
+			catch (Throwable t) {
+				throwable = t;
+			}
+		}
+		protected abstract void runWithThrowable() throws Throwable;
+	}
+
+	/**
+	 * Execute the test as a Runnable on its own thread so that the thread terminates and the
+	 * release of resources by the finalizr is demonstrated.
+	 * @throws Throwable
+	 */
+	protected void doTestRunnable(@NonNull TestRunnable testRunnable) throws Throwable {
+		if (EcorePlugin.IS_ECLIPSE_RUNNING) {
+			testRunnable.run();		// Use directly -- too hard to interact with UI thread otherwise
+		}
+		else {
+			Thread testThread = new Thread(testRunnable, testRunnable.name)
+			{
+				@Override
+				public void run() {
+					try {
+						super.run();
+					}
+					finally {
+						synchronized (this) {
+							this.notify();
+						}
+					}
+				}
+			};
+			testThread.start();
+			synchronized (testThread) {
+				try {
+					testThread.wait(1000000);		// Needlessly long wait to avoid confusing debug session
+				} catch (InterruptedException e) {
+					// Don't care -- e.printStackTrace();
+				}
+				if (DEBUG_GC) {
+					System.gc();
+					System.runFinalization();
+				}
+				if (testRunnable.throwable != null) {
+					throw testRunnable.throwable;
+				}
+			}
+		}
+	}
+
 	@Deprecated /* @deprecated not used */
 	protected @NonNull File getProjectFile() {
 		String projectName = getProjectName();
@@ -807,6 +874,7 @@ public class PivotTestCase extends TestCase
 	}
 
 	protected void uninstall() {
+		IdiomsStandaloneSetup.doTearDown();
 		PivotStandaloneSetup.doTearDown();
 		BaseStandaloneSetup.doTearDown();
 		CompleteOCLStandaloneSetup.doTearDown();
@@ -815,7 +883,8 @@ public class PivotTestCase extends TestCase
 		OCLinEcoreStandaloneSetup.doTearDown();
 		OCLstdlibStandaloneSetup.doTearDown();
 		GlobalEnvironmentFactory.disposeInstance();
-		GeneratorAdapterFactory.Descriptor.Registry.INSTANCE.removeDescriptors(GenModelPackage.eNS_URI);
+		GeneratorAdapterFactory.Descriptor.Registry.INSTANCE.removeDescriptors(org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage.eNS_URI);
+		GeneratorAdapterFactory.Descriptor.Registry.INSTANCE.removeDescriptors(org.eclipse.uml2.codegen.ecore.genmodel.GenModelPackage.eNS_URI);
 		//		OCLstdlib.uninstall(); // should be able to persist
 		//		if (projectMap != null) {
 		//			projectMap.dispose();

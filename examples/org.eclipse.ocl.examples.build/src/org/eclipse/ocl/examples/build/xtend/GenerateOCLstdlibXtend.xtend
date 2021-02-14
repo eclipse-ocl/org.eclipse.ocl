@@ -86,6 +86,7 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 			import org.eclipse.emf.common.util.TreeIterator;
 			import org.eclipse.emf.common.util.URI;
 			import org.eclipse.emf.ecore.EObject;
+			import org.eclipse.emf.ecore.EPackage;
 			import org.eclipse.emf.ecore.EReference;
 			import org.eclipse.emf.ecore.impl.BasicEObjectImpl;
 			import org.eclipse.emf.ecore.resource.Resource;
@@ -204,6 +205,7 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 				 * extension when running within Eclipse.
 				 */
 				public static void install() {
+					EPackage.Registry.INSTANCE.put(OCLstdlibPackage.eNS_URI, OCLstdlibPackage.eINSTANCE);
 					Loader contribution = new Loader();
 					StandardLibraryContribution.REGISTRY.put(STDLIB_URI, contribution);
 					OCLASResourceFactory.REGISTRY.put(STDLIB_AS_URI, contribution);

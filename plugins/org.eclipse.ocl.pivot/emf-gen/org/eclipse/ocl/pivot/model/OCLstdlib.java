@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2020 Willink Transformations and others.
+ * Copyright (c) 2010, 2021 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -29,6 +29,7 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.BasicEObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -141,6 +142,7 @@ public class OCLstdlib extends ASResourceImpl
 	 * extension when running within Eclipse.
 	 */
 	public static void install() {
+		EPackage.Registry.INSTANCE.put(OCLstdlibPackage.eNS_URI, OCLstdlibPackage.eINSTANCE);
 		Loader contribution = new Loader();
 		StandardLibraryContribution.REGISTRY.put(STDLIB_URI, contribution);
 		OCLASResourceFactory.REGISTRY.put(STDLIB_AS_URI, contribution);

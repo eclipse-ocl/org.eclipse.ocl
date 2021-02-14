@@ -319,7 +319,7 @@ public abstract class BaseCSorASDocumentProvider extends BaseDocumentProvider
 	@Override
 	protected void loadResource(XtextResource resource, String document, String encoding) throws CoreException {
 		assert resource != null;
-		getOCL().getEnvironmentFactory().adapt(resource);
+		getEnvironmentFactory().adapt(resource);
 		super.loadResource(resource, document, encoding);
 	}
 
@@ -348,7 +348,7 @@ public abstract class BaseCSorASDocumentProvider extends BaseDocumentProvider
 			boolean isXML = isXML(inputStream, encoding);
 			String persistAs = PERSIST_AS_TEXT;
 			if (isXML) {
-				ResourceSet asResourceSet = getOCL().getMetamodelManager().getASResourceSet();
+				ResourceSet asResourceSet = getEnvironmentFactory().getMetamodelManager().getASResourceSet();
 				StandaloneProjectMap projectMap = StandaloneProjectMap.getAdapter(asResourceSet);
 				StandaloneProjectMap.IConflictHandler conflictHandler = StandaloneProjectMap.MapToFirstConflictHandlerWithLog.INSTANCE; //null; 			// FIXME
 				projectMap.configure(asResourceSet, StandaloneProjectMap.LoadFirstStrategy.INSTANCE, conflictHandler);
@@ -435,7 +435,7 @@ public abstract class BaseCSorASDocumentProvider extends BaseDocumentProvider
 					return;		// Never happens
 				}
 				//
-				ResourceSetImpl csResourceSet = (ResourceSetImpl)getOCL().getResourceSet();
+				ResourceSetImpl csResourceSet = (ResourceSetImpl)getEnvironmentFactory().getResourceSet();
 				csResourceSet.getPackageRegistry().put(PivotPackage.eNS_URI, PivotPackage.eINSTANCE);
 				URI textURI = xmiResource.getURI().appendFileExtension(getFileExtension());
 				CSResource csResource = (CSResource) csResourceSet.getResource(textURI, false);
@@ -450,7 +450,7 @@ public abstract class BaseCSorASDocumentProvider extends BaseDocumentProvider
 				//		Ecore XMI resource with *.ecore URI, possibly in URIResourceMap as *.ecore
 				//		CS resource with *.ecore URI, in URIResourceMap as *.ecore.oclinecore
 				//
-				csResource.updateFrom(asResource, getOCL().getEnvironmentFactory());
+				csResource.updateFrom(asResource, getEnvironmentFactory());
 				ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 				inputStream = new ByteArrayInputStream(outputStream.toByteArray());
 				//				StringWriter writer = new StringWriter();

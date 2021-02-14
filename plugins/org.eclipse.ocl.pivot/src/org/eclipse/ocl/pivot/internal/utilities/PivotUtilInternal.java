@@ -92,6 +92,7 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 
 public class PivotUtilInternal //extends PivotUtil
 {
@@ -158,23 +159,31 @@ public class PivotUtilInternal //extends PivotUtil
 	}
 
 	public static @Nullable EnvironmentFactoryInternal findEnvironmentFactory(@NonNull ResourceSet resourceSet) {
+		EnvironmentFactory localEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		if (localEnvironmentFactory != null) {
+			return (EnvironmentFactoryInternal)localEnvironmentFactory;
+		}
+		EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension environmentFactory = null;
 		synchronized (resourceSet) {
 			for (Adapter adapter : resourceSet.eAdapters()) {
 				if (adapter instanceof EnvironmentFactoryAdapter) {
-					EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension)((EnvironmentFactoryAdapter)adapter).getEnvironmentFactory();
+					environmentFactory = (EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension)((EnvironmentFactoryAdapter)adapter).getEnvironmentFactory();
 					if (!environmentFactory.isDisposed()) {
-						return environmentFactory;
+						break;
 					}
 				}
 				else if (adapter instanceof PivotMetamodelManager) {
-					EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension)((PivotMetamodelManager)adapter).getEnvironmentFactory();
+					environmentFactory = (EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension)((PivotMetamodelManager)adapter).getEnvironmentFactory();
 					if (!environmentFactory.isDisposed()) {
-						return environmentFactory;
+						break;
 					}
 				}
 			}
-			return null;
 		}
+	//	if (localEnvironmentFactory != null) {
+	//		assert localEnvironmentFactory == environmentFactory;
+	//	}
+		return environmentFactory;
 	}
 
 	public static @Nullable PivotMetamodelManager findMetamodelManager(@NonNull Resource resource) {
@@ -271,7 +280,11 @@ public class PivotUtilInternal //extends PivotUtil
 		return umlBody;
 	}
 
-	public static @NonNull EnvironmentFactoryInternal getEnvironmentFactory(@NonNull Resource resource) {
+	public static @NonNull EnvironmentFactoryInternal getEnvironmentFactory(@Nullable Resource resource) {
+		EnvironmentFactoryInternal environmentFactory2 = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		if (environmentFactory2 != null) {
+			return environmentFactory2;
+		}
 		if (resource instanceof ASResource) {							// ASResource has a MetamodelManager adapting its ResourceSet
 			ResourceSet resourceSet = ClassUtil.nonNullState(resource.getResourceSet());
 			PivotMetamodelManager metamodelManager = PivotMetamodelManager.findAdapter(resourceSet);
@@ -292,8 +305,18 @@ public class PivotUtilInternal //extends PivotUtil
 			ResourceSet resourceSet = ClassUtil.nonNullState(resource.getResourceSet());
 			return OCLAdapter.createEnvironmentFactory(resourceSet);
 		}
-		else {															// other (e.g. ecore/genmodel)  must have an EnvironmentFactoryAdapter adapting its ResourceSet
-			return ClassUtil.nonNullState(PivotUtilInternal.findEnvironmentFactory(resource));
+		else {															// other (e.g. ecore/genmodel) may have an EnvironmentFactoryAdapter adapting its ResourceSet
+			if (resource != null) {
+				EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.findEnvironmentFactory(resource);
+				if (environmentFactory != null) {							// The environmentFactory may be missing for an Xtext ResourceSet
+					return environmentFactory;
+				}
+			}
+			EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+			if (environmentFactory != null) {							// The environmentFactory may be missing for an Xtext ResourceSet
+				return (EnvironmentFactoryInternal) environmentFactory;
+			}
+			return ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(ProjectManager.CLASS_PATH, null, null);
 		}
 	}
 

@@ -21,12 +21,12 @@ import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
 import org.eclipse.ocl.pivot.internal.utilities.HTMLBuffer;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.SemanticException;
-import org.eclipse.ocl.xtext.markup.MarkupStandaloneSetup;
 import org.eclipse.ocl.xtext.markup.MarkupToHTML;
 import org.eclipse.ocl.xtext.markup.MarkupToString;
 import org.eclipse.ocl.xtext.markup.MarkupToTree;
@@ -36,11 +36,16 @@ import org.eclipse.ocl.xtext.markupcs.MarkupElement;
 import org.eclipse.ocl.xtext.markupcs.NewLineElement;
 
 public class MarkupTests extends XtextTestCase
-{	
+{
 	@Override
 	protected void setUp() throws Exception {
+		TestUtil.doMarkupSetup();
 		super.setUp();
-		MarkupStandaloneSetup.doSetup();
+	}
+
+	@Override
+	protected void tearDown() throws Exception {
+		super.tearDown();
 	}
 
 	protected @NonNull OCLInternal createOCL() {
@@ -93,7 +98,7 @@ public class MarkupTests extends XtextTestCase
 
 	protected void doNewlineCountTest(int expectedCount, @NonNull String testString) throws IOException {
 		OCLInternal ocl = createOCL();
-		Markup markup = doDecode(ocl, testString);		
+		Markup markup = doDecode(ocl, testString);
 		List<MarkupElement> elements = markup.getElements();
 		assert elements.size() == 1;
 		NewLineElement newLineElement = (NewLineElement) elements.get(0);

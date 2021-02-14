@@ -34,11 +34,12 @@ import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
-import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.SemanticException;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
@@ -294,10 +295,12 @@ public class OCLValidationDelegate implements ValidationDelegate
 				return Boolean.FALSE;
 			}
 		};
-		OCL ocl = delegateDomain.getOCL();
+	//	OCL ocl = delegateDomain.getOCL();
+		EnvironmentFactory environmentFactory = PivotUtilInternal.getEnvironmentFactory(value instanceof EObject ? ((EObject)value).eResource() :  null);
 		Executor executor = (Executor)context.get(Executor.class);
 		ModelManager modelManager = executor != null ? executor.getModelManager() : null;
-		EvaluationVisitor evaluationVisitor = ocl.getEnvironmentFactory().createEvaluationVisitor(value, query, modelManager);
+	//	EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
+		EvaluationVisitor evaluationVisitor = environmentFactory.createEvaluationVisitor(value, query, modelManager);
 		return constraintEvaluator.evaluate(evaluationVisitor);
 	}
 

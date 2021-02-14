@@ -347,6 +347,7 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 		if (cs2as != null) {
 			cs2as.dispose();
 		}
+		parserContext = null;
 		//		unload();
 	}
 

@@ -31,8 +31,10 @@ import org.eclipse.ocl.pivot.internal.context.EInvocationContext;
 import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateDomain;
 import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateException;
 import org.eclipse.ocl.pivot.internal.delegate.OCLQueryDelegateFactory;
+import org.eclipse.ocl.pivot.internal.helper.BasicQueryImpl;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
-import org.eclipse.ocl.pivot.utilities.OCL;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.Query;
 import org.eclipse.ocl.pivot.utilities.SemanticException;
@@ -65,7 +67,8 @@ public class OCLQueryDelegate implements QueryDelegate
 	 */
 	public OCLQueryDelegate(@NonNull OCLDelegateDomain delegateDomain, @NonNull EClassifier context, @Nullable Map<String, EClassifier> parameters, @NonNull String expression) {
 		this.delegateDomain = delegateDomain;
-		this.parserContext = new EInvocationContext(delegateDomain.getOCL().getEnvironmentFactory(), null, context, parameters);
+		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(context.eResource());
+		this.parserContext = new EInvocationContext(environmentFactory, null, context, parameters);
 		this.expression = expression;
 	}
 
@@ -95,12 +98,12 @@ public class OCLQueryDelegate implements QueryDelegate
 			}
 			@SuppressWarnings("null")
 			@NonNull ExpressionInOCL nonNullSpecification = specification;
-			OCL ocl = delegateDomain.getOCL();
-			IdResolver idResolver = ocl.getIdResolver();
+			EnvironmentFactoryInternal environmentFactory = parserContext.getEnvironmentFactory();
+			IdResolver idResolver = environmentFactory.getIdResolver();
 			Object targetValue = idResolver.boxedValueOf(target);
 			Type requiredType = PivotUtil.getType(PivotUtil.getOwnedContext(nonNullSpecification));
 			Type targetType = idResolver.getStaticTypeOfValue(requiredType, targetValue);
-			if ((requiredType == null) || !targetType.conformsTo(ocl.getStandardLibrary(), requiredType)) {
+			if ((requiredType == null) || !targetType.conformsTo(environmentFactory.getStandardLibrary(), requiredType)) {
 				String message = StringUtil.bind(PivotMessagesInternal.WrongContextClassifier_ERROR_, targetType, requiredType);
 				throw new OCLDelegateException(new SemanticException(message));
 			}
@@ -110,7 +113,7 @@ public class OCLQueryDelegate implements QueryDelegate
 				String message = StringUtil.bind(PivotMessagesInternal.MismatchedArgumentCount_ERROR_, argCount, parameterVariables.size());
 				throw new OCLDelegateException(new SemanticException(message));
 			}
-			Query query = ocl.createQuery(nonNullSpecification);
+			Query query = new BasicQueryImpl(environmentFactory, nonNullSpecification);
 			EvaluationEnvironment env = query.getEvaluationEnvironment(target);
 			for (Variable parameterVariable : parameterVariables) {
 				// bind arguments to parameter names
@@ -123,7 +126,7 @@ public class OCLQueryDelegate implements QueryDelegate
 				Object value = idResolver.boxedValueOf(object);
 				requiredType = PivotUtil.getType(parameterVariable);
 				targetType = idResolver.getStaticTypeOfValue(requiredType, value);
-				if (!targetType.conformsTo(ocl.getStandardLibrary(), requiredType)) {
+				if (!targetType.conformsTo(environmentFactory.getStandardLibrary(), requiredType)) {
 					String message = StringUtil.bind(PivotMessagesInternal.MismatchedArgumentType_ERROR_, name, targetType, requiredType);
 					throw new OCLDelegateException(new SemanticException(message));
 				}

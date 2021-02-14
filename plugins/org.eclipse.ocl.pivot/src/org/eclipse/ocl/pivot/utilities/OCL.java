@@ -167,6 +167,24 @@ public class OCL
 	}
 
 	/**
+	 * Configure this OCL as the provider of the Endeactivation provided by deactivate().vironmentFactory for the current thread. This may be used to
+	 * reverse the deactivation provided by deactivate().
+	 *
+	 * @since 1.14
+	 */
+	public void activate() {
+		if (ThreadLocalExecutor.basicGetEnvironmentFactory() != null) {
+			try {
+				ThreadLocalExecutor.waitForGC();
+			} catch (InterruptedException e) {
+				// e.printStackTrace();
+			}
+		}
+		assert environmentFactory != null;
+		ThreadLocalExecutor.attachEnvironmentFactory(environmentFactory);
+	}
+
+	/**
 	 * Update the CS resource from a asResource.
 	 *
 	 * For a first update, the csResource may be created by something like
@@ -343,6 +361,19 @@ public class OCL
 	}
 
 	/**
+	 * Remove the construction/activate() configuration of this OCL as the provider of the vironmentFactory for the current thread.
+	 * This may be used to allow another OCL to be used for perhaps a nested validation, or to switch between concurrent OCLs that
+	 * provide perhaps competing new/old functionality.
+	 *
+	 * @since 1.14
+	 */
+	public void deactivate() {
+		if (environmentFactory != null) {
+			ThreadLocalExecutor.detachEnvironmentFactory(environmentFactory);
+		}
+	}
+
+	/**
 	 * <p>Disposes any objects that I have created while I have been in use. This
 	 * detaches the {@link OCL} instance from the corresponding environment
 	 * factory which will release its resources once there are no further
@@ -355,6 +386,7 @@ public class OCL
 		if (environmentFactory2 != null) {
 			environmentFactory = null;
 			environmentFactory2.detach(this);
+			environmentFactory2.detachRedundantThreadLocal();
 		}
 	}
 

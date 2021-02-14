@@ -251,7 +251,7 @@ public class OCLinEcoreDocumentProvider extends BaseCSorASDocumentProvider
 					return; 	// never happens
 				}
 				//
-				ResourceSetImpl csResourceSet = (ResourceSetImpl)getOCL().getResourceSet();
+				ResourceSetImpl csResourceSet = (ResourceSetImpl)getEnvironmentFactory().getResourceSet();
 				csResourceSet.getPackageRegistry().put(PivotPackage.eNS_URI, PivotPackage.eINSTANCE);
 				URI textURI = xmiResource.getURI().appendFileExtension(getFileExtension());
 				CSResource csResource = (CSResource) csResourceSet.getResource(textURI, false);

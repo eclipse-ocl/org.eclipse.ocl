@@ -65,6 +65,9 @@ public class EcoreWithOCLFileNewWizard extends AbstractOCLinEcoreFileNewWizard
 		} catch (IOException e) {
 			logger.error("Failed to create " + ecoreURI, e);
 		}
+		finally {
+			ocl.dispose();
+		}
 		return initialContentsAsString;
 	}
 

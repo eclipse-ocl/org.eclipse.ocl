@@ -53,6 +53,7 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.pivot.values.CollectionTypeParameters;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
@@ -522,7 +523,6 @@ public class EditTests extends XtextTestCase
 	}
 
 	public void testEdit_Reclass_ecore_383285() throws Exception {
-		OCL ocl = OCL.newInstance(getProjectMap());
 		String testDocument_class =
 				"package p1 : p2 = 'p3' {\n" +
 						"    class C : 'java.lang.Object';\n" +
@@ -534,9 +534,12 @@ public class EditTests extends XtextTestCase
 		URI ecoreURI_class = getTestFileURI("test-class.ecore");
 		URI ecoreURI_datatype = getTestFileURI("test-datatype.ecore");
 		OCL ocl_class = OCL.newInstance(getProjectMap());
-		OCL ocl_datatype = OCL.newInstance(getProjectMap());
 		Resource ecoreResource_class = getEcoreFromCS(ocl_class, testDocument_class, ecoreURI_class);
+		ThreadLocalExecutor.resetEnvironmentFactory();
+		OCL ocl_datatype = OCL.newInstance(getProjectMap());
 		Resource ecoreResource_datatype = getEcoreFromCS(ocl_datatype, testDocument_datatype, ecoreURI_datatype);
+		ThreadLocalExecutor.resetEnvironmentFactory();
+		OCL ocl = OCL.newInstance(getProjectMap());
 		CSResource xtextResource;
 		Resource asResource;
 		{
@@ -573,7 +576,6 @@ public class EditTests extends XtextTestCase
 	}
 
 	public void testEdit_Comments() throws Exception {
-		OCL ocl = OCL.newInstance(getProjectMap());
 		String testDocument_uncommented =
 				"package p1 : p2 = 'p3' {\n" +
 						"    class C : 'java.lang.Object';\n" +
@@ -596,14 +598,18 @@ public class EditTests extends XtextTestCase
 		URI ecoreURI_commented = getTestFileURI("test-commented.ecore");
 		URI ecoreURI_recommented = getTestFileURI("test-recommented.ecore");
 		OCL ocl_uncommented = OCL.newInstance(getProjectMap());
-		OCL ocl_commented = OCL.newInstance(getProjectMap());
-		OCL ocl_recommented = OCL.newInstance(getProjectMap());
 		Resource ecoreResource_uncommented = getEcoreFromCS(ocl_uncommented, testDocument_uncommented, ecoreURI_uncommented);
+		ThreadLocalExecutor.resetEnvironmentFactory();
+		OCL ocl_commented = OCL.newInstance(getProjectMap());
 		Resource ecoreResource_commented = getEcoreFromCS(ocl_commented, testDocument_commented, ecoreURI_commented);
+		ThreadLocalExecutor.resetEnvironmentFactory();
+		OCL ocl_recommented = OCL.newInstance(getProjectMap());
 		Resource ecoreResource_recommented = getEcoreFromCS(ocl_recommented, testDocument_recommented, ecoreURI_recommented);
+		ThreadLocalExecutor.resetEnvironmentFactory();
 		assertHasComments(ecoreResource_uncommented, new @NonNull String @NonNull []{});
 		assertHasComments(ecoreResource_commented, new @NonNull String @NonNull []{"a comment"});
 		assertHasComments(ecoreResource_recommented, new @NonNull String @NonNull []{"yet\nanother\ncomment"});
+		OCL ocl = OCL.newInstance(getProjectMap());
 		CSResource xtextResource;
 		Resource asResource;
 		{
@@ -651,7 +657,6 @@ public class EditTests extends XtextTestCase
 	}
 
 	public void testEdit_Refresh_ecore_382230() throws Exception {
-		OCL ocl = OCL.newInstance(getProjectMap());
 		//		OCLDelegateDomain.initialize(null);
 		//		OCLDelegateDomain.initialize(null, OCLConstants.OCL_DELEGATE_URI);
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
@@ -746,11 +751,9 @@ public class EditTests extends XtextTestCase
 			assertEquals(loadPivotContent.size(), reparsePivotContent.size());
 			assertEquals(loadPivotContent, reparsePivotContent);
 		}
-		ocl.dispose();
 	}
 
 	public void testEdit_Rename_ecore() throws Exception {
-		OCL ocl = OCL.newInstance(getProjectMap());
 		String testDocument =
 				"module m1 \n" +
 						"package p1 : p2 = 'p3' {\n" +
@@ -758,6 +761,8 @@ public class EditTests extends XtextTestCase
 		URI ecoreURI0 = getTestFileURI("test0.ecore");
 		OCL ocl1 = OCL.newInstance(getProjectMap());
 		Resource ecoreResource0 = getEcoreFromCS(ocl1, testDocument, ecoreURI0);
+		ThreadLocalExecutor.resetEnvironmentFactory();
+		OCL ocl = OCL.newInstance(getProjectMap());
 		CSResource xtextResource;
 		Resource asResource;
 		{
@@ -804,7 +809,6 @@ public class EditTests extends XtextTestCase
 	}
 
 	public void testEdit_Rename_Restore_ecore() throws Exception {
-		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
 		String testDocument =
 				"package TestPackage : tp = 'TestPackage'\n" +
 						"{\n" +
@@ -822,6 +826,8 @@ public class EditTests extends XtextTestCase
 		URI ecoreURI0 = getTestFileURI("test0.ecore");
 		OCL ocl1 = OCL.newInstance(getProjectMap());
 		Resource ecoreResource0 = getEcoreFromCS(ocl1, testDocument, ecoreURI0);
+		ThreadLocalExecutor.resetEnvironmentFactory();
+		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
 		URI ecoreURI1 = getTestFileURI("test1.ecore");
 		URI outputURI = getTestFileURI("test.oclinecore");
 		CSResource xtextResource = ClassUtil.nonNullState(ocl.getCSResource(outputURI, testDocument));
@@ -896,7 +902,6 @@ public class EditTests extends XtextTestCase
 			System.err.println(getTestName() + " skipped for " + targetRelease + " - parse failure");
 			return;
 		}
-		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
 		String testDocument =
 				"package TestPackage : tp = 'TestPackage'\n" +
 						"{\n" +
@@ -914,8 +919,10 @@ public class EditTests extends XtextTestCase
 		//		System.out.println("*************load-reference*********************************************************");
 		OCL ocl1 = OCL.newInstance(getProjectMap());
 		Resource ecoreResource0 = getEcoreFromCS(ocl1, testDocument, ecoreURI0);
+		ThreadLocalExecutor.resetEnvironmentFactory();
 		URI ecoreURI1 = getTestFileURI("test1.ecore");
 		URI outputURI = getTestFileURI("test.oclinecore");
+		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
 		CSResource xtextResource = ocl.getCSResource(outputURI, testDocument);
 		Resource asResource = cs2as(ocl, xtextResource, null);
 		{

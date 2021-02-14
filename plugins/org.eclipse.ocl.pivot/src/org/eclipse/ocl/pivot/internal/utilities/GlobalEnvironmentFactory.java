@@ -40,6 +40,7 @@ import com.google.common.collect.MapMaker;
  * global ProjectManager providing access to all models on the standalone classpath or in the
  * Eclipse workspace.
  */
+@Deprecated /* @deprecated obsoleted by ThreadLocalExecutor's EnvironmentFactory */
 public class GlobalEnvironmentFactory extends AbstractEnvironmentFactory
 {
 	/**

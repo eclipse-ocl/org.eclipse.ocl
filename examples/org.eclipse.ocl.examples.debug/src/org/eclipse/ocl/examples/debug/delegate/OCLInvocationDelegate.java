@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
@@ -30,10 +30,12 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.internal.delegate.InvocationBehavior;
 import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateDomain;
 import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateException;
+import org.eclipse.ocl.pivot.internal.helper.BasicQueryImpl;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
-import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.Query;
 import org.eclipse.ocl.pivot.utilities.SemanticException;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
@@ -50,7 +52,7 @@ public class OCLInvocationDelegate extends BasicInvocationDelegate
 
 	/**
 	 * Initializes me with my operation.
-	 * 
+	 *
 	 * @param operation
 	 *            the operation that I handle
 	 */
@@ -62,9 +64,9 @@ public class OCLInvocationDelegate extends BasicInvocationDelegate
 	@Override
 	public Object dynamicInvoke(InternalEObject target, EList<?> arguments) throws InvocationTargetException {
 		try {
-			OCL ocl = delegateDomain.getOCL();
-			MetamodelManager metamodelManager = ocl.getMetamodelManager();
-			IdResolver idResolver = ocl.getIdResolver();
+			EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(target.eResource());
+			MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+			IdResolver idResolver = environmentFactory.getIdResolver();
 			ExpressionInOCL specification2 = specification;
 			if (specification2 == null) {
 				Operation operation2 = operation;
@@ -86,7 +88,7 @@ public class OCLInvocationDelegate extends BasicInvocationDelegate
 					throw new OCLDelegateException(new SemanticException("Unsupported InvocationDelegate for null")) ;
 				}
 			}
-			Query query = ocl.createQuery(specification2);
+			Query query = new BasicQueryImpl(environmentFactory, specification2);
 			EvaluationEnvironment env = query.getEvaluationEnvironment(target);
 			Object object = target;
 			Object value = idResolver.boxedValueOf(target);
@@ -134,7 +136,7 @@ public class OCLInvocationDelegate extends BasicInvocationDelegate
 		}
 		return operation2;
 	}
-	
+
 	@Override
 	public String toString() {
 		if (operation != null) {

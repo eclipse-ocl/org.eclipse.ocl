@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.test.xtext;
 
+import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.xtext.base.BaseGrammarResource;
 import org.eclipse.ocl.xtext.completeocl.CompleteOCLGrammarResource;
 import org.eclipse.ocl.xtext.essentialocl.EssentialOCLGrammarResource;
@@ -24,6 +25,7 @@ public class GrammarTests extends AbstractGrammarTests
 {
 	@Override
 	protected void setUp() throws Exception {
+		TestUtil.doMarkupSetup();
 		super.setUp();
 	}
 

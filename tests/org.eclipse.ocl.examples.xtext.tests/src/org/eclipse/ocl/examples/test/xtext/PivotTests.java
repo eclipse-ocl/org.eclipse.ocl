@@ -258,8 +258,8 @@ public class PivotTests extends XtextTestCase
 		//		damager.update();
 		//		damager.assertSameContents();
 		//
-		assertPivotIsValid(pivotURI);
 		ocl.dispose();
+		assertPivotIsValid(pivotURI);
 	}
 
 	@SuppressWarnings("null")

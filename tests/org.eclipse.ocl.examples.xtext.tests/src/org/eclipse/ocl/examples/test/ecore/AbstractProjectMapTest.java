@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.pivot.tests.PivotTestCaseWithAutoTearDown;
 import org.eclipse.ocl.examples.xtext.tests.TestCaseAppender;
 import org.eclipse.ocl.examples.xtext.tests.TestCaseLogger;
@@ -66,7 +67,7 @@ public abstract class AbstractProjectMapTest extends PivotTestCaseWithAutoTearDo
 			getProjectMap().initializeResourceSet(resourceSet);
 			packageDescriptor.configure(resourceSet, StandaloneProjectMap.LoadEPackageStrategy.INSTANCE, null);
 			Resource resource = resourceSet.getPackageRegistry().getEPackage(nsURI.toString()).eResource();
-			assertTrue(ClassUtil.isRegistered(resource));	
+			assertTrue(ClassUtil.isRegistered(resource));
 			assertEquals(nsURI, resource.getURI());
 			EObject platformPluginEObject = resourceSet.getEObject(platformPluginEObjectURI, true);
 			EObject platformResourceEObject = resourceSet.getEObject(platformResourceEObjectURI, true);
@@ -78,7 +79,7 @@ public abstract class AbstractProjectMapTest extends PivotTestCaseWithAutoTearDo
 			getProjectMap().initializeResourceSet(resourceSet);
 			packageDescriptor.configure(resourceSet, StandaloneProjectMap.LoadModelStrategy.INSTANCE, null);
 			Resource resource = resourceSet.getPackageRegistry().getEPackage(nsURI.toString()).eResource();
-			assertFalse(ClassUtil.isRegistered(resource));	
+			assertFalse(ClassUtil.isRegistered(resource));
 			assertEquals(platformResourceURI, resource.getURI());
 			EObject platformPluginEObject = resourceSet.getEObject(platformPluginEObjectURI, true);
 			EObject platformResourceEObject = resourceSet.getEObject(platformResourceEObjectURI, true);
@@ -91,6 +92,12 @@ public abstract class AbstractProjectMapTest extends PivotTestCaseWithAutoTearDo
 	protected void setUp() throws Exception {
 		super.setUp();
     	TestCaseAppender.INSTANCE.install();
+	}
+
+	public @Nullable ResourceSet destroyResourceSet(@NonNull ResourceSet resourceSet) {
+		getProjectMap().unload(resourceSet);
+		disposeResourceSet(resourceSet);
+		return null;
 	}
 
 	protected void doTestProjectMap_LoadBoth(/*@NonNull*/ EPackage ePackage, @NonNull String project, @NonNull String modelPath, @NonNull String fragment) {
@@ -111,12 +118,13 @@ public abstract class AbstractProjectMapTest extends PivotTestCaseWithAutoTearDo
 			EPackage nsEPackage = resourceSet.getPackageRegistry().getEPackage(nsURI.toString());
 			EObject platformPluginEObject = resourceSet.getEObject(platformPluginEObjectURI, true);
 			EObject platformResourceEObject = resourceSet.getEObject(platformResourceEObjectURI, true);
-			assertTrue(ClassUtil.isRegistered(nsEPackage.eResource()));	
-			assertFalse(ClassUtil.isRegistered(platformPluginEObject.eResource()));	
+			assertTrue(ClassUtil.isRegistered(nsEPackage.eResource()));
+			assertFalse(ClassUtil.isRegistered(platformPluginEObject.eResource()));
 			assertEquals(nsURI.toString(), nsEPackage.getNsURI());
 			assertEquals(platformPluginURI, platformPluginEObject.eResource().getURI());
 			assertFalse(nsEPackage == platformPluginEObject);
 			assertEquals(platformPluginEObject, platformResourceEObject);
+			resourceSet = destroyResourceSet(resourceSet);
 		}
 		{
 			ResourceSet resourceSet = new ResourceSetImpl();
@@ -125,12 +133,13 @@ public abstract class AbstractProjectMapTest extends PivotTestCaseWithAutoTearDo
 			EObject platformPluginEObject = resourceSet.getEObject(platformPluginEObjectURI, true);
 			EObject platformResourceEObject = resourceSet.getEObject(platformResourceEObjectURI, true);
 			EPackage nsEPackage = resourceSet.getPackageRegistry().getEPackage(nsURI.toString());
-			assertTrue(ClassUtil.isRegistered(nsEPackage.eResource()));	
-			assertFalse(ClassUtil.isRegistered(platformPluginEObject.eResource()));	
+			assertTrue(ClassUtil.isRegistered(nsEPackage.eResource()));
+			assertFalse(ClassUtil.isRegistered(platformPluginEObject.eResource()));
 			assertEquals(nsURI.toString(), nsEPackage.getNsURI());
 			assertEquals(platformPluginURI, platformPluginEObject.eResource().getURI());
 			assertFalse(nsEPackage == platformPluginEObject);
 			assertEquals(platformPluginEObject, platformResourceEObject);
+			resourceSet = destroyResourceSet(resourceSet);
 		}
 		{
 			ResourceSet resourceSet = new ResourceSetImpl();
@@ -139,12 +148,13 @@ public abstract class AbstractProjectMapTest extends PivotTestCaseWithAutoTearDo
 			EObject platformResourceEObject = resourceSet.getEObject(platformResourceEObjectURI, true);
 			EObject platformPluginEObject = resourceSet.getEObject(platformPluginEObjectURI, true);
 			EPackage nsEPackage = resourceSet.getPackageRegistry().getEPackage(nsURI.toString());
-			assertTrue(ClassUtil.isRegistered(nsEPackage.eResource()));	
-			assertFalse(ClassUtil.isRegistered(platformPluginEObject.eResource()));	
+			assertTrue(ClassUtil.isRegistered(nsEPackage.eResource()));
+			assertFalse(ClassUtil.isRegistered(platformPluginEObject.eResource()));
 			assertEquals(nsURI.toString(), nsEPackage.getNsURI());
 			assertEquals(platformResourceURI, platformPluginEObject.eResource().getURI());
 			assertFalse(nsEPackage == platformPluginEObject);
 			assertEquals(platformPluginEObject, platformResourceEObject);
+			resourceSet = destroyResourceSet(resourceSet);
 		}
 	}
 
@@ -163,11 +173,12 @@ public abstract class AbstractProjectMapTest extends PivotTestCaseWithAutoTearDo
 				EPackage nsEPackage = resourceSet.getPackageRegistry().getEPackage(nsURI.toString());
 				EObject platformPluginEObject = resourceSet.getEObject(platformPluginEObjectURI, true);
 				EObject platformResourceEObject = resourceSet.getEObject(platformResourceEObjectURI, true);
-				assertTrue(ClassUtil.isRegistered(nsEPackage.eResource()));	
+				assertTrue(ClassUtil.isRegistered(nsEPackage.eResource()));
 				assertEquals(nsURI.toString(), nsEPackage.getNsURI());
 				assertEquals(nsEPackage, platformPluginEObject);
 				assertEquals(nsEPackage, platformResourceEObject);
 				assertEquals("Conflicting access to '" + platformResourceURI + "' or '" + platformPluginURI + "' already accessed as '" + nsURI + "'", TestCaseLogger.INSTANCE.get());
+				resourceSet = destroyResourceSet(resourceSet);
 			}
 			TestCaseLogger.INSTANCE.clear();
 			{
@@ -176,13 +187,14 @@ public abstract class AbstractProjectMapTest extends PivotTestCaseWithAutoTearDo
 				EObject platformPluginEObject = resourceSet.getEObject(platformPluginEObjectURI, true);
 				EObject platformResourceEObject = resourceSet.getEObject(platformResourceEObjectURI, true);
 				EPackage nsEPackage = resourceSet.getPackageRegistry().getEPackage(nsURI.toString());
-				assertEquals(selfReferential, ClassUtil.isRegistered(nsEPackage.eResource()));	
+				assertEquals(selfReferential, ClassUtil.isRegistered(nsEPackage.eResource()));
 				assertEquals(selfReferential, !platformPluginURI.equals(nsEPackage.eResource().getURI()));
 				assertEquals(selfReferential, nsEPackage != platformPluginEObject);
 				assertEquals(platformPluginEObject, platformResourceEObject);
 				if (!selfReferential) {
 					assertEquals(selfReferential ? "" : "Conflicting access to '" + nsURI + "' already accessed as '" + platformPluginURI + "'", TestCaseLogger.INSTANCE.get());
 				}
+				resourceSet = destroyResourceSet(resourceSet);
 			}
 			TestCaseLogger.INSTANCE.clear();
 			{
@@ -191,13 +203,14 @@ public abstract class AbstractProjectMapTest extends PivotTestCaseWithAutoTearDo
 				EObject platformResourceEObject = resourceSet.getEObject(platformResourceEObjectURI, true);
 				EObject platformPluginEObject = resourceSet.getEObject(platformPluginEObjectURI, true);
 				EPackage nsEPackage = resourceSet.getPackageRegistry().getEPackage(nsURI.toString());
-				assertEquals(selfReferential, ClassUtil.isRegistered(nsEPackage.eResource()));	
+				assertEquals(selfReferential, ClassUtil.isRegistered(nsEPackage.eResource()));
 				assertEquals(selfReferential, !platformResourceURI.equals(nsEPackage.eResource().getURI()));
 				assertEquals(selfReferential, nsEPackage != platformPluginEObject);
 				assertEquals(platformPluginEObject, platformResourceEObject);
 				if (!selfReferential) {
 					assertEquals(selfReferential ? "" : "Conflicting access to '" + nsURI + "' already accessed as '" + platformResourceURI + "'", TestCaseLogger.INSTANCE.get());
 				}
+				resourceSet = destroyResourceSet(resourceSet);
 			}
 		} finally {
 			TestCaseLogger.INSTANCE.uninstall(savedAppenders);
@@ -222,10 +235,11 @@ public abstract class AbstractProjectMapTest extends PivotTestCaseWithAutoTearDo
 			EPackage nsEPackage = resourceSet.getPackageRegistry().getEPackage(nsURI.toString());
 			EObject platformPluginEObject = resourceSet.getEObject(platformPluginEObjectURI, true);
 			EObject platformResourceEObject = resourceSet.getEObject(platformResourceEObjectURI, true);
-			assertTrue(ClassUtil.isRegistered(nsEPackage.eResource()));	
+			assertTrue(ClassUtil.isRegistered(nsEPackage.eResource()));
 			assertEquals(nsURI.toString(), nsEPackage.getNsURI());
 			assertEquals(nsEPackage, platformPluginEObject);
 			assertEquals(nsEPackage, platformResourceEObject);
+			resourceSet = destroyResourceSet(resourceSet);
 		}
 		{
 			ResourceSet resourceSet = new ResourceSetImpl();
@@ -234,10 +248,11 @@ public abstract class AbstractProjectMapTest extends PivotTestCaseWithAutoTearDo
 			EObject platformPluginEObject = resourceSet.getEObject(platformPluginEObjectURI, true);
 			EObject platformResourceEObject = resourceSet.getEObject(platformResourceEObjectURI, true);
 			EPackage nsEPackage = resourceSet.getPackageRegistry().getEPackage(nsURI.toString());
-			assertTrue(ClassUtil.isRegistered(nsEPackage.eResource()));	
+			assertTrue(ClassUtil.isRegistered(nsEPackage.eResource()));
 			assertEquals(nsURI.toString(), nsEPackage.getNsURI());
 			assertEquals(nsEPackage, platformPluginEObject);
 			assertEquals(nsEPackage, platformResourceEObject);
+			resourceSet = destroyResourceSet(resourceSet);
 		}
 		{
 			ResourceSet resourceSet = new ResourceSetImpl();
@@ -246,10 +261,11 @@ public abstract class AbstractProjectMapTest extends PivotTestCaseWithAutoTearDo
 			EObject platformResourceEObject = resourceSet.getEObject(platformResourceEObjectURI, true);
 			EObject platformPluginEObject = resourceSet.getEObject(platformPluginEObjectURI, true);
 			EPackage nsEPackage = resourceSet.getPackageRegistry().getEPackage(nsURI.toString());
-			assertTrue(ClassUtil.isRegistered(nsEPackage.eResource()));	
+			assertTrue(ClassUtil.isRegistered(nsEPackage.eResource()));
 			assertEquals(nsURI.toString(), nsEPackage.getNsURI());
 			assertEquals(nsEPackage, platformPluginEObject);
 			assertEquals(nsEPackage, platformResourceEObject);
+			resourceSet = destroyResourceSet(resourceSet);
 		}
 	}
 
@@ -271,11 +287,12 @@ public abstract class AbstractProjectMapTest extends PivotTestCaseWithAutoTearDo
 			EPackage nsEPackage = resourceSet.getPackageRegistry().getEPackage(nsURI.toString());
 			EObject platformPluginEObject = resourceSet.getEObject(platformPluginEObjectURI, true);
 			EObject platformResourceEObject = resourceSet.getEObject(platformResourceEObjectURI, true);
-			assertTrue(ClassUtil.isRegistered(nsEPackage.eResource()));	
+			assertTrue(ClassUtil.isRegistered(nsEPackage.eResource()));
 			assertEquals(nsURI.toString(), nsEPackage.getNsURI());
 			assertEquals(nsEPackage, platformPluginEObject);
 			assertEquals(nsEPackage, platformResourceEObject);
 			resourceSet.eAdapters().remove(getProjectMap());
+			resourceSet = destroyResourceSet(resourceSet);
 		}
 		{
 			ResourceSet resourceSet = new ResourceSetImpl();
@@ -284,11 +301,12 @@ public abstract class AbstractProjectMapTest extends PivotTestCaseWithAutoTearDo
 			EObject platformPluginEObject = resourceSet.getEObject(platformPluginEObjectURI, true);
 			EObject platformResourceEObject = resourceSet.getEObject(platformResourceEObjectURI, true);
 			EPackage nsEPackage = resourceSet.getPackageRegistry().getEPackage(nsURI.toString());
-			assertEquals(selfReferential, ClassUtil.isRegistered(nsEPackage.eResource()));	
+			assertEquals(selfReferential, ClassUtil.isRegistered(nsEPackage.eResource()));
 			assertEquals(selfReferential, !platformPluginURI.equals(nsEPackage.eResource().getURI()));
 			assertEquals(selfReferential, nsEPackage != platformPluginEObject);
 			assertEquals(platformPluginEObject, platformResourceEObject);
 			resourceSet.eAdapters().remove(getProjectMap());
+			resourceSet = destroyResourceSet(resourceSet);
 		}
 		{
 			ResourceSet resourceSet = new ResourceSetImpl();
@@ -297,11 +315,12 @@ public abstract class AbstractProjectMapTest extends PivotTestCaseWithAutoTearDo
 			EObject platformResourceEObject = resourceSet.getEObject(platformResourceEObjectURI, true);
 			EObject platformPluginEObject = resourceSet.getEObject(platformPluginEObjectURI, true);
 			EPackage nsEPackage = resourceSet.getPackageRegistry().getEPackage(nsURI.toString());
-			assertEquals(selfReferential, ClassUtil.isRegistered(nsEPackage.eResource()));	
+			assertEquals(selfReferential, ClassUtil.isRegistered(nsEPackage.eResource()));
 			assertEquals(selfReferential, !platformResourceURI.equals(nsEPackage.eResource().getURI()));
 			assertEquals(selfReferential, nsEPackage != platformPluginEObject);
 			assertEquals(platformPluginEObject, platformResourceEObject);
 			resourceSet.eAdapters().remove(getProjectMap());
+			resourceSet = destroyResourceSet(resourceSet);
 		}
 	}
 
@@ -325,11 +344,12 @@ public abstract class AbstractProjectMapTest extends PivotTestCaseWithAutoTearDo
 				EPackage nsEPackage = resourceSet.getPackageRegistry().getEPackage(nsURI.toString());
 				EObject platformPluginEObject = resourceSet.getEObject(platformPluginEObjectURI, true);
 				EObject platformResourceEObject = resourceSet.getEObject(platformResourceEObjectURI, true);
-				assertFalse(ClassUtil.isRegistered(nsEPackage.eResource()));	
+				assertFalse(ClassUtil.isRegistered(nsEPackage.eResource()));
 				assertEquals(platformResourceURI, nsEPackage.eResource().getURI());
 				assertEquals(nsEPackage, platformPluginEObject);
 				assertEquals(nsEPackage, platformResourceEObject);
 				assertEquals(selfReferential ? "Attempt to load self-referential '" + nsURI + "' as model replaced by registered EPackage" : "", TestCaseLogger.INSTANCE.get());
+				resourceSet = destroyResourceSet(resourceSet);
 			}
 			TestCaseLogger.INSTANCE.clear();
 			{
@@ -339,11 +359,12 @@ public abstract class AbstractProjectMapTest extends PivotTestCaseWithAutoTearDo
 				EObject platformPluginEObject = resourceSet.getEObject(platformPluginEObjectURI, true);
 				EObject platformResourceEObject = resourceSet.getEObject(platformResourceEObjectURI, true);
 				EPackage nsEPackage = resourceSet.getPackageRegistry().getEPackage(nsURI.toString());
-				assertEquals(false/*selfReferential*/, ClassUtil.isRegistered(nsEPackage.eResource()));	
+				assertEquals(false/*selfReferential*/, ClassUtil.isRegistered(nsEPackage.eResource()));
 				assertEquals(false/*selfReferential*/, !platformPluginURI.equals(nsEPackage.eResource().getURI()));
 				assertEquals(false/*selfReferential*/, nsEPackage != platformPluginEObject);
 				assertEquals(platformPluginEObject, platformResourceEObject);
 	//			assertEquals(false/*selfReferential*/ ? "Attempt to load self-referential '" + nsURI + "' as model replaced by registered EPackage" : "", TestCaseLogger.INSTANCE.get());
+				resourceSet = destroyResourceSet(resourceSet);
 			}
 			TestCaseLogger.INSTANCE.clear();
 			{
@@ -353,11 +374,12 @@ public abstract class AbstractProjectMapTest extends PivotTestCaseWithAutoTearDo
 				EObject platformResourceEObject = resourceSet.getEObject(platformResourceEObjectURI, true);
 				EObject platformPluginEObject = resourceSet.getEObject(platformPluginEObjectURI, true);
 				EPackage nsEPackage = resourceSet.getPackageRegistry().getEPackage(nsURI.toString());
-				assertEquals(false/*selfReferential*/, ClassUtil.isRegistered(nsEPackage.eResource()));	
+				assertEquals(false/*selfReferential*/, ClassUtil.isRegistered(nsEPackage.eResource()));
 				assertEquals(false/*selfReferential*/, !platformResourceURI.equals(nsEPackage.eResource().getURI()));
 				assertEquals(false/*selfReferential*/, nsEPackage != platformPluginEObject);
 				assertEquals(platformPluginEObject, platformResourceEObject);
 	//			assertEquals(false/*selfReferential*/ ? "Attempt to load self-referential '" + nsURI + "' as model replaced by registered EPackage" : "", TestCaseLogger.INSTANCE.get());
+				resourceSet = destroyResourceSet(resourceSet);
 			}
 		} finally {
 			TestCaseLogger.INSTANCE.uninstall(savedAppenders);

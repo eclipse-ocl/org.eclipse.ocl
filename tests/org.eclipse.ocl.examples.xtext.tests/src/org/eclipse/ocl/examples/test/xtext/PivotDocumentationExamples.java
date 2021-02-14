@@ -111,6 +111,7 @@ public class PivotDocumentationExamples extends XtextTestCase
 			OCL ocl = OCL.newInstance(myResourceSet);
 
 			assert (ocl != null) && (myResourceSet != null); /* Suppress the unused variable markers */
+			ocl.dispose();
 		}
 
 		// create an OCL instance exploiting registered models on the Java classpath
@@ -210,6 +211,7 @@ public class PivotDocumentationExamples extends XtextTestCase
 	 */
 	public void test_parsingDocumentsExample() throws IOException, ParserException {
 		OCL ocl1 = OCL.newInstance(OCL.CLASS_PATH);
+		ocl1.dispose();
 		//-------------------------------------------------------------------------
 		//	The OCL Input
 		//-------------------------------------------------------------------------
@@ -287,7 +289,6 @@ public class PivotDocumentationExamples extends XtextTestCase
 		assertEquals(Diagnostic.ERROR, diagnostics.getSeverity());
 		assertEquals(4, diagnostics.getChildren().size());		// 2 ObjectEValiador missing authors, 2 CompleteOCLEObjectValidator non-unique titles
 		ocl.dispose();
-		ocl1.dispose();
 	}
 
 	public class MyDiagnostician extends Diagnostician
