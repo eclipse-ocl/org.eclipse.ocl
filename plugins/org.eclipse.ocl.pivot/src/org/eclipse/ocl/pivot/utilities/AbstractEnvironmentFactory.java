@@ -182,7 +182,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		this.standardLibrary = completeEnvironment.getOwnedStandardLibrary();
 		this.completeModel = completeEnvironment.getOwnedCompleteModel();
 		PivotUtil.initializeLoadOptionsToSupportSelfReferences(getResourceSet());
-		ThreadLocalExecutor.addEnvironmentFactory(this);
+		ThreadLocalExecutor.setEnvironmentFactory(this);
 	}
 
 	@Override
@@ -608,7 +608,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 
 	protected void disposeInternal() {
 		assert isDisposed();
-		ThreadLocalExecutor.removeEnvironmentFactory(this);
+	//	ThreadLocalExecutor.removeEnvironmentFactory(this);  -- maybe wrong thread if GCed - wait for lazy isDisposwed() test
 		boolean isGlobal = this == GlobalEnvironmentFactory.basicGetInstance();
 		if (metamodelManager != null) {
 			metamodelManager.dispose();

@@ -63,7 +63,7 @@ public class ImportTests extends XtextTestCase
 
 	protected @NonNull TestOCL createOCL() {
 		TestCaseAppender.INSTANCE.uninstall();
-		return new TestOCL(getTestFileSystem(), "ImportTests", getName(), getProjectMap());
+		return new TestOCL(getTestFileSystem(), "ImportTests", getName(), getProjectMap(), null);
 	}
 
 	protected void createTestImport_OCLinEcore_Bug353793_Files()

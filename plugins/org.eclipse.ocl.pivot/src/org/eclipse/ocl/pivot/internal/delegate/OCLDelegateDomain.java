@@ -33,8 +33,10 @@ import org.eclipse.ocl.common.delegate.DelegateResourceSetAdapter;
 import org.eclipse.ocl.common.delegate.VirtualDelegateMapping;
 import org.eclipse.ocl.common.internal.options.CommonOptions;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.GlobalEnvironmentFactory;
+import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
@@ -42,6 +44,7 @@ import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 
 /**
  * An implementation of a delegate domain for an OCL enhanced package. The domain
@@ -258,6 +261,7 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 
 	protected final @NonNull String uri;
 	protected final @NonNull EPackage ePackage;
+	@Deprecated /* @deprecated replaced getEnvironmentFactory() frpm loacal thread */
 	protected OCL ocl = null;				// Lazily initialized and re-initialized
 	// FIXME Introduce a lightweight function (? a lambda function) to avoid the need for a CompleteEnvironment for queries
 	//	private Map<CompletePackage, org.eclipse.ocl.pivot.Package> queryPackages = null;
@@ -282,6 +286,14 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 	@Override
 	public void environmentFactoryDisposed(@NonNull EnvironmentFactory environmentFactory) {
 		reset();
+	}
+
+	private @NonNull EnvironmentFactory getEnvironmentFactory() {
+		EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		if (environmentFactory == null) {
+			environmentFactory = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(ProjectManager.NO_PROJECTS, null, null);
+		}
+		return environmentFactory;
 	}
 
 	/*	private @NonNull EnvironmentFactory getEnvironmentFactory() {
@@ -314,24 +326,31 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 	} */
 
 	public final @NonNull MetamodelManager getMetamodelManager() {
-		return getOCL().getMetamodelManager();
+		return getEnvironmentFactory().getMetamodelManager();
 	}
 
+	@Deprecated /* @deprecated use getEnvironmentFactory() */
 	public @NonNull OCL getOCL() {
 		OCL ocl2 = ocl;
 		if (ocl2 == null) {
-			// Delegates are an application-independent extension of EMF
-			//  so we must use the neutral/global context see Bug 338501
-			//			EnvironmentFactory environmentFactory = getEnvironmentFactory();
-			GlobalEnvironmentFactory environmentFactory = GlobalEnvironmentFactory.getInstance();
-			ocl2 = ocl = environmentFactory.createOCL();
-			environmentFactory.addListener(this);
+			EnvironmentFactory localEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+			if (localEnvironmentFactory != null) {
+				ocl2 = ocl = localEnvironmentFactory.createOCL();
+			}
+			else {
+				// Delegates are an application-independent extension of EMF
+				//  so we must use the neutral/global context see Bug 338501
+				//			EnvironmentFactory environmentFactory = getEnvironmentFactory();
+				GlobalEnvironmentFactory environmentFactory = GlobalEnvironmentFactory.getInstance();
+				ocl2 = ocl = environmentFactory.createOCL();
+				environmentFactory.addListener(this);
+			}
 		}
 		return ocl2;
 	}
 
 	public <T extends Element> @Nullable T getPivot(@NonNull Class<T> requiredClass, @NonNull EObject eObject) {
-		EnvironmentFactoryInternalExtension eEnvironmentFactory = (EnvironmentFactoryInternalExtension) getOCL().getEnvironmentFactory();
+		EnvironmentFactoryInternalExtension eEnvironmentFactory = (EnvironmentFactoryInternalExtension)getEnvironmentFactory();
 		try {
 			return eEnvironmentFactory.getASOf(requiredClass, eObject);
 		} catch (ParserException e) {
@@ -367,8 +386,10 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 					}
 				}
 			}
-			GlobalEnvironmentFactory environmentFactory = (GlobalEnvironmentFactory) ocl2.getEnvironmentFactory();
-			environmentFactory.removeListener(this);
+			EnvironmentFactory environmentFactory = ocl2.getEnvironmentFactory();
+			if (environmentFactory instanceof GlobalEnvironmentFactory) {
+				((GlobalEnvironmentFactory)environmentFactory).removeListener(this);
+			}
 			ocl2.dispose();
 		}
 	}

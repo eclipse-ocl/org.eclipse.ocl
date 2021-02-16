@@ -50,6 +50,7 @@ import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLLoader;
 import org.eclipse.ocl.xtext.oclinecore.validation.OCLinEcoreEObjectValidator;
 import org.eclipse.uml2.uml.Enumeration;
@@ -414,6 +415,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		org.eclipse.uml2.uml.Stereotype umlStereotype1 = (org.eclipse.uml2.uml.Stereotype)umlProfile.getOwnedType("ParentRealization");
 		assert (umlRealization1 != null) && (umlStereotype1 != null);
 		String label = NameUtil.qualifiedNameFor(getStereotypeApplication(umlRealization1, umlStereotype1));
+		ThreadLocalExecutor.resetEnvironmentFactory();;
 		assertValidationDiagnostics("Loading", umlResource, validationContext, getMessages(
 			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "ParentRealization::In case of a ParentRealization relationship, the supplier should be a child of the client", label)));
 		//		disposeResourceSet(resourceSet);

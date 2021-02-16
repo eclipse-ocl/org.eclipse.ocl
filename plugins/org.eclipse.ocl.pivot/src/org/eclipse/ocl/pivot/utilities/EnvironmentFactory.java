@@ -93,13 +93,6 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 		@Nullable <T extends Element> T getASOf(@NonNull Class<T> pivotClass, @Nullable EObject eObject) throws ParserException;
 
 		/**
-		 * Return true if this EnvironmentFactory's life cycle has completed.
-		 *
-		 * @since 1.4
-		 */
-		boolean isDisposed();
-
-		/**
 		 * Return the compiled query for a specification resolving a String body into a non-null bodyExpression.
 		 * Throws a ParserException if conversion fails.
 		 * @since 1.4
@@ -221,6 +214,13 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	 * Return the (OCL) Standard Library that provides the build-in language facilities such as the OclAny and Set types.
 	 */
 	@NonNull StandardLibrary getStandardLibrary();
+
+	/**
+	 * Return true if this EnvironmentFactory's life cycle has completed.
+	 *
+	 * @since 1.14
+	 */
+	default boolean isDisposed() { return false; }
 
 	/**
 	 * Define the StatusCodes severity with which the validation identified by validationKey is reported.

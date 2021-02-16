@@ -85,8 +85,8 @@ public class TestOCL extends OCLInternal
 	protected final @NonNull String testName;
 	private int testCounter = 0;
 
-	public TestOCL(@NonNull TestFileSystem testFileSystem, @NonNull String testPackageName, @NonNull String testName, @NonNull ProjectManager projectManager) {
-		super(ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(projectManager, null));
+	public TestOCL(@NonNull TestFileSystem testFileSystem, @NonNull String testPackageName, @NonNull String testName, @NonNull ProjectManager projectManager, @Nullable ResourceSet externalResourceSet) {
+		super(ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(projectManager, externalResourceSet));
 		this.testFileSystem = testFileSystem;
 		ResourceSet resourceSet = getResourceSet();
 		NoHttpURIHandlerImpl.install(resourceSet);

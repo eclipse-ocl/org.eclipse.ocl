@@ -59,6 +59,7 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
 import org.eclipse.ocl.xtext.basecs.ModelElementCS;
 import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLLoader;
@@ -108,14 +109,15 @@ public class ValidateTests extends AbstractValidateTests
 	}
 
 	public void testValidate_Bug366229_oclinecore() throws IOException, InterruptedException {
+		AbstractEnvironmentFactory.ENVIRONMENT_FACTORY_ATTACH.setState(true);
 		//
 		//	Create model
 		//
 		OCL ocl1 = createOCL();
-		OCL ocl2 = createOCL();
 		Resource ecoreResource = doLoadOCLinEcore(ocl1, getTestModelURI("models/oclinecore/Bug366229.oclinecore"));
+		ThreadLocalExecutor.resetEnvironmentFactory();
+		OCL ocl2 = createOCL();
 		ocl2.getResourceSet().getResources().add(ecoreResource);
-		ocl1.dispose();
 		EPackage overloadsPackage = (EPackage) ecoreResource.getContents().get(0);
 		EObject testInstance = eCreate(overloadsPackage, "SubClass");
 		//
@@ -123,6 +125,7 @@ public class ValidateTests extends AbstractValidateTests
 		//
 		EValidator.Registry.INSTANCE.put(overloadsPackage, EObjectValidator.INSTANCE);
 		checkValidationDiagnostics(testInstance, Diagnostic.ERROR);
+		ocl1.dispose();
 		ocl2.dispose();
 	}
 
@@ -295,18 +298,21 @@ public class ValidateTests extends AbstractValidateTests
 		//	1 - the evolving complemented type system under test
 		//	2 - the stable complemented type system under test
 		//
-		OCL ocl0 = createOCL();
-		URI inputURI = getTestFile("Validate.oclinecore", ocl0, getTestModelURI("models/oclinecore/Validate.oclinecore")).getFileURI();
-		URI ecoreURI = getTestFile("Validate.ecore").getFileURI();
-		URI oclURI = getTestFile("Validate.ocl", ocl0, getTestModelURI("models/oclinecore/Validate.ocl")).getFileURI();
 		OCL ocl1 = createOCL();
-		OCL ocl2 = createOCL();
+		URI inputURI = getTestFile("Validate.oclinecore", ocl1, getTestModelURI("models/oclinecore/Validate.oclinecore")).getFileURI();
+		URI ecoreURI = getTestFile("Validate.ecore").getFileURI();
 		Resource ecoreResource1 = doLoadOCLinEcore(ocl1, inputURI, ecoreURI);
-		Resource ecoreResource2 = doLoadOCLinEcore(ocl2, inputURI, ecoreURI);
 		EPackage validatePackage1 = ClassUtil.nonNullState((EPackage) ecoreResource1.getContents().get(0));
+		ThreadLocalExecutor.resetEnvironmentFactory();
+		OCL ocl2 = createOCL();
+		Resource ecoreResource2 = doLoadOCLinEcore(ocl2, inputURI, ecoreURI);
 		EPackage validatePackage2 = ClassUtil.nonNullState((EPackage) ecoreResource2.getContents().get(0));
+		ThreadLocalExecutor.resetEnvironmentFactory();
+		OCL ocl0 = createOCL();
+		URI oclURI = getTestFile("Validate.ocl", ocl0, getTestModelURI("models/oclinecore/Validate.ocl")).getFileURI();
 		CompleteOCLEObjectValidator completeOCLEObjectValidator = new CompleteOCLEObjectValidator(validatePackage1, oclURI, ocl0.getEnvironmentFactory());
 		EValidator.Registry.INSTANCE.put(validatePackage1, completeOCLEObjectValidator);
+		ThreadLocalExecutor.resetEnvironmentFactory();
 		try {
 			EObject testInstance1 = eCreate(validatePackage1, "Level3");
 			EObject testInstance2 = eCreate(validatePackage2, "Level3");
@@ -516,6 +522,7 @@ public class ValidateTests extends AbstractValidateTests
 		eSet(testInstance, "l2b", "l2b");
 		eSet(testInstance, "l3", "l3");
 		String objectLabel = LabelUtil.getLabel(testInstance);
+		ThreadLocalExecutor.resetEnvironmentFactory();
 		//
 		//	Check EObjectValidator errors
 		//

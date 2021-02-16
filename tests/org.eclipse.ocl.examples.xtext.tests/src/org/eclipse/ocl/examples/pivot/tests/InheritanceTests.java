@@ -40,7 +40,7 @@ public class InheritanceTests extends PivotTestSuite
 
 	@Override
 	protected @NonNull TestOCL createOCL() {
-		return new TestOCL(getTestFileSystem(), getTestPackageName(), getName(), useCodeGen ? getProjectMap() : OCL.NO_PROJECTS);
+		return new TestOCL(getTestFileSystem(), getTestPackageName(), getName(), useCodeGen ? getProjectMap() : OCL.NO_PROJECTS, null);
 	}
 
 	public @NonNull String installLibraryClone() {

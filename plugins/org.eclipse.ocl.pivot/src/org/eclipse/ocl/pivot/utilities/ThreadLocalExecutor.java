@@ -16,11 +16,12 @@ import org.apache.log4j.Logger;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.util.PivotPlugin;
 
 /**
  * The ThreadLocalExecutor enables a standard EMF operation such as getXXX() to locate its OCL Executor
  * despite the inability of the EMF API to pass it directly, provided only one OCL environment is active
- * on the prevailing thread. If the LOcalThread access fails the caller should fall back to the
+ * on the prevailing thread. If the local thread access fails the caller should fall back to the
  * initial / legacy approach to discover an Executor via a ResourceSet adapter.
  *
  * See Bug 570995 for the design considerations.
@@ -29,21 +30,14 @@ import org.eclipse.ocl.pivot.evaluation.Executor;
  */
 public class ThreadLocalExecutor
 {
+	public static final @NonNull TracingOption THREAD_LOCAL_ENVIRONMENT_FACTORY = new TracingOption(PivotPlugin.PLUGIN_ID, "environmentFactory/threadLocal");
+
 	private static final @NonNull ThreadLocal</*@NonNull*/ ThreadLocalExecutor> INSTANCE = new ThreadLocal<>();
 	static {
 		INSTANCE.set(new ThreadLocalExecutor());
 	}
 
 	private static final Logger logger = Logger.getLogger(ThreadLocalExecutor.class);
-
-	/**
-	 * Register the start of environmentFactory's activity. If another EnvironmentFactory is already
-	 * registered concurrentEnvironmentFactories is set and basicGetExecutor() returns null until reset().
-	 */
-	public static void addEnvironmentFactory(@NonNull EnvironmentFactory environmentFactory) {
-		ThreadLocalExecutor threadLocalExecutor = INSTANCE.get();
-		threadLocalExecutor.localAddEnvironmentFactory(environmentFactory);
-	}
 
 	/**
 	 * Return the prevailing thread-unique EnvironmentFactory or null if none/many.
@@ -62,19 +56,32 @@ public class ThreadLocalExecutor
 	}
 
 	/**
-	 * Register the end of environmentFactory's activity.
-	 */
-	public static void removeEnvironmentFactory(@NonNull EnvironmentFactory environmentFactory) {
-		ThreadLocalExecutor threadLocalExecutor = INSTANCE.get();
-		threadLocalExecutor.localRemoveEnvironmentFactory(environmentFactory);
-	}
-
-	/**
 	 * Reset to the initial no-EnvironmentFactory or Executor instances active state.
 	 */
 	public static void reset() {
 		ThreadLocalExecutor threadLocalExecutor = INSTANCE.get();
 		threadLocalExecutor.localReset();
+	}
+
+	/**
+	 * Register the end of the current environmentFactory's activity. This may be used before
+	 * environmentFactory is disposed to avoid invalidating its ResourceSet content.
+	 *
+	 * This must not be used during environmentFactory
+	 * disposal by the GC since this would be on the wrong thread.
+	 */
+	public static void resetEnvironmentFactory() {
+		ThreadLocalExecutor threadLocalExecutor = INSTANCE.get();
+		threadLocalExecutor.localResetEnvironmentFactory();
+	}
+
+	/**
+	 * Register the start of environmentFactory's activity. If another EnvironmentFactory is already
+	 * registered concurrentEnvironmentFactories is set and basicGetExecutor() returns null until reset().
+	 */
+	public static void setEnvironmentFactory(@NonNull EnvironmentFactory environmentFactory) {
+		ThreadLocalExecutor threadLocalExecutor = INSTANCE.get();
+		threadLocalExecutor.localSetEnvironmentFactory(environmentFactory);
 	}
 
 	/**
@@ -89,6 +96,16 @@ public class ThreadLocalExecutor
 	public static @NonNull String toDebugString() {
 		ThreadLocalExecutor threadLocalExecutor = INSTANCE.get();
 		return threadLocalExecutor.toString();
+	}
+
+	/**
+	 * Perform up to 10 garbage collects followed by 10 millisecond sleep until basicGetEnvironmentFactory
+	 * returns false indicating that GC of an EnvironmentFactory held by a WeakOCLReference has succeeded.
+	 * Retirn false if an EnvironmentFactory remains active.
+	 */
+	public static boolean waitForGC() throws InterruptedException {
+		ThreadLocalExecutor threadLocalExecutor = INSTANCE.get();
+		return threadLocalExecutor.localWaitForGC();
 	}
 
 	/**
@@ -108,13 +125,52 @@ public class ThreadLocalExecutor
 
 	private ThreadLocalExecutor() {}
 
-	private void localAddEnvironmentFactory(@NonNull EnvironmentFactory environmentFactory) {
+	private @Nullable EnvironmentFactory localBasicGetEnvironmentFactory() {
+		if (concurrentEnvironmentFactories) {
+			assert environmentFactory == null;
+		}
+		return (environmentFactory != null) && !environmentFactory.isDisposed() ? environmentFactory : null;
+	}
+
+	private @Nullable Executor localBasicGetExecutor() {
+		if (concurrentEnvironmentFactories) {
+			assert executor == null;
+		}
+		EnvironmentFactory environmentFactory2 = environmentFactory;
+		return (environmentFactory2 == null) || !environmentFactory2.isDisposed() ? executor : null;
+	}
+
+	private void localReset() {
+		environmentFactory = null;
+		executor = null;
+		concurrentEnvironmentFactories = false;
+		if (THREAD_LOCAL_ENVIRONMENT_FACTORY.isActive()) {
+			THREAD_LOCAL_ENVIRONMENT_FACTORY.println("[" + Thread.currentThread().getName() + "] " + toString());
+		}
+	}
+
+	private void localResetEnvironmentFactory() {
 		if (!concurrentEnvironmentFactories) {
-			if (this.environmentFactory == null) {
+			this.environmentFactory = null;
+			this.executor = null;
+		}
+		if (THREAD_LOCAL_ENVIRONMENT_FACTORY.isActive()) {
+			THREAD_LOCAL_ENVIRONMENT_FACTORY.println("[" + Thread.currentThread().getName() + "] " + toString());
+		}
+	}
+
+	private void localSetEnvironmentFactory(@NonNull EnvironmentFactory environmentFactory) {
+		if (!concurrentEnvironmentFactories && !environmentFactory.isDisposed()) {
+			EnvironmentFactory environmentFactory2 = this.environmentFactory;
+			if (environmentFactory2 == null) {
 				assert this.executor == null;		// ?? lightweight Executor promoted to non-lightweight ??
 				this.environmentFactory = environmentFactory;
 			}
-			else if (this.environmentFactory != environmentFactory) {
+			else if (environmentFactory2.isDisposed()) {
+				this.environmentFactory = environmentFactory;
+				this.executor = null;
+			}
+			else if (environmentFactory2 != environmentFactory) {
 				this.environmentFactory = null;
 				this.executor = null;
 				this.concurrentEnvironmentFactories = true;
@@ -127,45 +183,47 @@ public class ThreadLocalExecutor
 		else {
 			assert this.executor == null;
 		}
-	}
-
-	private @Nullable EnvironmentFactory localBasicGetEnvironmentFactory() {
-		if (concurrentEnvironmentFactories) {
-			assert environmentFactory == null;
+		if (THREAD_LOCAL_ENVIRONMENT_FACTORY.isActive()) {
+			THREAD_LOCAL_ENVIRONMENT_FACTORY.println("[" + Thread.currentThread().getName() + "] " + toString());
 		}
-		return environmentFactory;
-	}
-
-	private @Nullable Executor localBasicGetExecutor() {
-		if (concurrentEnvironmentFactories) {
-			assert executor == null;
-		}
-		return executor;
-	}
-
-	private void localRemoveEnvironmentFactory(@NonNull EnvironmentFactory environmentFactory) {
-		if (!concurrentEnvironmentFactories) {
-			if (this.environmentFactory == environmentFactory) {
-				this.environmentFactory = null;
-				this.executor = null;
-			}
-		}
-	}
-
-	private void localReset() {
-		environmentFactory = null;
-		executor = null;
-		concurrentEnvironmentFactories = false;
 	}
 
 	private void localSetExecutor(@NonNull Executor executor) {
 		if (!concurrentEnvironmentFactories) {
 			this.executor = executor;
 		}
+		if (THREAD_LOCAL_ENVIRONMENT_FACTORY.isActive()) {
+			THREAD_LOCAL_ENVIRONMENT_FACTORY.println("[" + Thread.currentThread().getName() + "] " + toString());
+		}
 	}
 
 	@Override
 	public @NonNull String toString() {
-		return "environmentFactory=" + String.valueOf(environmentFactory) + " executor=" + String.valueOf(executor) + " concurrentEnvironmentFactories=" + concurrentEnvironmentFactories;
+		if (!concurrentEnvironmentFactories) {
+			return (environmentFactory != null ? NameUtil.debugSimpleName(environmentFactory) : "no-environmentFactory")
+					+ " " + (executor != null ? NameUtil.debugSimpleName(executor) : "no-executor");
+		}
+		else {
+			return "**** CONCURRENT ENVIRONMENT FACTORIES ****";
+		}
+	}
+
+	public boolean localWaitForGC() throws InterruptedException {
+		if (concurrentEnvironmentFactories) {
+			return false;
+		}
+		EnvironmentFactory environmentFactory2 = environmentFactory;
+		if (environmentFactory2 == null) {
+			return true;
+		}
+		for (int i = 0; i < 10; i++) {
+			System.gc();
+			if (environmentFactory2.isDisposed()) {
+				return true;
+			}
+			System.out.println("Waiting for EnvironmentFactory GC");
+			Thread.sleep(10);
+		}
+		return false;
 	}
 }

@@ -271,7 +271,7 @@ public class RoundTripTests extends XtextTestCase
 		BaseCSResource xtextResource1 = createXtextFromURI(environmentFactory1, inputURI);
 		ASResource pivotResource1 = createPivotFromXtext(environmentFactory1, xtextResource1, 1);
 		Resource ecoreResource = createEcoreFromPivot(environmentFactory1, pivotResource1, ecoreURI);
-		ThreadLocalExecutor.removeEnvironmentFactory(ocl1.getEnvironmentFactory());
+		ThreadLocalExecutor.resetEnvironmentFactory();
 		//
 		OCLInternal ocl2 = OCLInternal.newInstance(getProjectMap(), null);
 		EnvironmentFactoryInternal environmentFactory2 = ocl2.getEnvironmentFactory();

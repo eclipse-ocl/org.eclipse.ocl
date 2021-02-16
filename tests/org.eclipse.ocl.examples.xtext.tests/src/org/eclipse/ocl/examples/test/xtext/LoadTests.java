@@ -138,11 +138,15 @@ public class LoadTests extends XtextTestCase
 	}
 
 	public @NonNull TestOCL createOCL() {
-		return new TestOCL(getTestFileSystem(), "LoadTests", getName(), OCL.NO_PROJECTS);
+		return createOCL(null);
+	}
+
+	public @NonNull TestOCL createOCL(@Nullable ResourceSet externalResourceSet) {
+		return new TestOCL(getTestFileSystem(), "LoadTests", getName(), OCL.NO_PROJECTS, externalResourceSet);
 	}
 
 	public @NonNull TestOCL createOCLWithProjectMap() {
-		return new TestOCL(getTestFileSystem(), "LoadTests", getName(), getProjectMap());
+		return new TestOCL(getTestFileSystem(), "LoadTests", getName(), getProjectMap(), null);
 	}
 
 	public Resource doLoad(@NonNull OCL ocl, @NonNull URI inputURI) throws IOException {
@@ -291,7 +295,7 @@ public class LoadTests extends XtextTestCase
 		//		return xmiResource;
 	}
 
-	public Model doLoadUML(@NonNull OCL ocl, @NonNull URI inputURI, boolean ignoreNonExistence, boolean validateEmbeddedOCL, @NonNull String @Nullable [] validateCompleteOCLMessages, @NonNull String @Nullable [] messages) throws IOException, ParserException {
+	public Model doLoadUML(@Nullable TestOCL ocl, @NonNull URI inputURI, boolean ignoreNonExistence, boolean validateEmbeddedOCL, @NonNull String @Nullable [] validateCompleteOCLMessages, @NonNull String @Nullable [] messages) throws IOException, ParserException {
 		assert !ignoreNonExistence;
 		assert validateEmbeddedOCL;
 		AbstractLoadCallBack loadCallBacks = new AbstractLoadCallBack(ignoreNonExistence, validateCompleteOCLMessages, validateEmbeddedOCL);
@@ -344,11 +348,13 @@ public class LoadTests extends XtextTestCase
 		void validateEmbeddedOCL(@NonNull OCL ocl, @NonNull Constraint eObject) throws ParserException;
 	}
 
-	public Model doLoadUML(@NonNull OCL ocl, @NonNull URI inputURI, @NonNull ILoadCallBack loadCallBacks, @NonNull String @Nullable [] messages) throws IOException, ParserException {
+	public Model doLoadUML(@Nullable TestOCL externalOCL, @NonNull URI inputURI, @NonNull ILoadCallBack loadCallBacks, @NonNull String @Nullable [] messages) throws IOException, ParserException {
 		UMLStandaloneSetup.init();
+		OCLInternal internalOCL = externalOCL != null ? externalOCL : createOCL();
+	//	UMLASResourceFactory.getInstance();
 		//		long startTime = System.currentTimeMillis();
 		//		System.out.println("Start at " + startTime);
-		ResourceSet resourceSet = ocl.getResourceSet();
+		ResourceSet resourceSet = internalOCL.getResourceSet();
 		UML2AS.initializeUML(resourceSet);
 		getProjectMap().initializeResourceSet(resourceSet);
 		//		XMI252UMLResourceFactoryImpl.install(resourceSet, URI.createPlatformResourceURI("/org.eclipse.ocl.examples.uml25/model/", true));
@@ -370,7 +376,7 @@ public class LoadTests extends XtextTestCase
 		//		URI outputURI = getProjectFileURI(outputName);
 		URI output2URI = getTestFileURI(output2Name);
 		URI oclURI = getTestFileURI(oclName);
-		EnvironmentFactoryInternal environmentFactory = (EnvironmentFactoryInternal) ocl.getEnvironmentFactory();
+		EnvironmentFactoryInternal environmentFactory = internalOCL.getEnvironmentFactory();
 		//		EnvironmentFactoryResourceSetAdapter.getAdapter(resourceSet, environmentFactory);
 		Resource umlResource = null;
 		try {
@@ -428,7 +434,7 @@ public class LoadTests extends XtextTestCase
 						Constraint constraint = (Constraint)eObject;
 						//						boolean donePrint = false;
 						try {
-							loadCallBacks.validateEmbeddedOCL(ocl, constraint);
+							loadCallBacks.validateEmbeddedOCL(internalOCL, constraint);
 							//							parses++;
 						} catch (ParserException e) {
 							//							if (!donePrint) {
@@ -447,14 +453,14 @@ public class LoadTests extends XtextTestCase
 				assertValidationDiagnostics("Overall validation", asResource, messages);
 			}
 			assertEquals(s.toString(), 0, exceptions);
-			loadCallBacks.postLoad(ocl, asResource);
+			loadCallBacks.postLoad(internalOCL, asResource);
 			//
 			//	Split off any embedded OCL to a separate file
 			//
 			ASResource oclResource = (ASResource)allResources.get(0);//CompleteOCLSplitter.separate(environmentFactory, allResources.get(0));
 			if (oclResource != null) {
 				URI xtextURI = oclURI;// != null ? URI.createPlatformResourceURI(oclURI, true) : uri.trimFileExtension().appendFileExtension("ocl");
-				ResourceSet csResourceSet = ocl.getResourceSet();
+				ResourceSet csResourceSet = internalOCL.getResourceSet();
 				environmentFactory.adapt(csResourceSet);
 				boolean hasOCLcontent = false;
 				BaseCSResource xtextResource = (BaseCSResource) csResourceSet.createResource(xtextURI, OCLinEcoreCSPackage.eCONTENT_TYPE);
@@ -473,6 +479,9 @@ public class LoadTests extends XtextTestCase
 							}
 						}
 					}
+				}
+				if (externalOCL == null) {
+					internalOCL.dispose();
 				}
 				//
 				//	Check that the split off file is loadable
@@ -1247,17 +1256,16 @@ public class LoadTests extends XtextTestCase
 	}
 
 	public void testLoad_Internationalized_profile_uml() throws IOException, InterruptedException, ParserException {
-		OCL ocl = createOCL();
 		//		EPackage.Registry.INSTANCE.put("http://www.omg.org/spec/MOF/20110701", UMLPackage.eINSTANCE);
 		//		EPackage.Registry.INSTANCE.put("http://www.omg.org/spec/UML/20120801", UMLPackage.eINSTANCE);
 		//		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xmi", XMI2UMLResource.Factory.INSTANCE);
 		URI uri = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.xtext.tests/models/uml/Internationalized.profile.uml", true);
-		doLoadUML(ocl, uri, false, true, null, null);
-		ocl.dispose();
+		doLoadUML(null, uri, false, true, null, null);
 	}
 
 	public void testLoad_NullFree_uml() throws IOException, InterruptedException, ParserException {
-		OCLInternal ocl = createOCL();
+		UMLStandaloneSetup.init();
+		TestOCL ocl = createOCL();
 		URI uri = getTestModelURI("models/uml/NullFree.uml");
 		Model model = doLoadUML(ocl, uri, false, true, NO_MESSAGES, null);
 		org.eclipse.ocl.pivot.Package asPackage = model.getOwnedPackages().get(0);
@@ -1279,12 +1287,11 @@ public class LoadTests extends XtextTestCase
 	}
 
 	public void testLoad_StereotypeApplications_uml() throws IOException, InterruptedException, ParserException {
-		OCLInternal ocl = createOCL();
 		//		EPackage.Registry.INSTANCE.put("http://www.omg.org/spec/MOF/20110701", UMLPackage.eINSTANCE);
 		//		EPackage.Registry.INSTANCE.put("http://www.omg.org/spec/UML/20120801", UMLPackage.eINSTANCE);
 		//		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xmi", XMI2UMLResource.Factory.INSTANCE);
 		URI uri = getTestModelURI("models/uml/StereotypeApplications.uml");
-		doLoadUML(ocl, uri, new AbstractLoadCallBack(false, NO_MESSAGES, false) {
+		doLoadUML(null, uri, new AbstractLoadCallBack(false, NO_MESSAGES, false) {
 			@Override
 			public void postLoad(@NonNull OCL ocl, @NonNull ASResource asResource) {
 				for (TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
@@ -1295,7 +1302,6 @@ public class LoadTests extends XtextTestCase
 				}
 			}
 		}, null);
-		ocl.dispose();
 	}
 
 	public void testReload_AsReload() throws Exception {

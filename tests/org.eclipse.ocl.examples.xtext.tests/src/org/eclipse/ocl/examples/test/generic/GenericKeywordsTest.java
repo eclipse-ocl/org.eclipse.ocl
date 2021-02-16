@@ -14,7 +14,9 @@ package org.eclipse.ocl.examples.test.generic;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.pivot.tests.PivotTestSuite;
 import org.eclipse.ocl.examples.pivot.tests.TestOCL;
 import org.eclipse.ocl.examples.xtext.tests.TestFileSystem;
@@ -45,8 +47,8 @@ public abstract class GenericKeywordsTest extends PivotTestSuite
 		org.eclipse.ocl.pivot.Class property;
 		org.eclipse.ocl.pivot.Class constraint;
 
-		public MyOCL(@NonNull TestFileSystem testFileSystem, @NonNull String testPackageName, @NonNull String name) {
-			super(testFileSystem, testPackageName, name, OCL.NO_PROJECTS);
+		public MyOCL(@NonNull TestFileSystem testFileSystem, @NonNull String testPackageName, @NonNull String name, @Nullable ResourceSet externalResourceSet) {
+			super(testFileSystem, testPackageName, name, OCL.NO_PROJECTS, externalResourceSet);
 			MetamodelManager metamodelManager = getMetamodelManager();
 			StandardLibrary standardLibrary = metamodelManager.getStandardLibrary();
 
@@ -114,7 +116,7 @@ public abstract class GenericKeywordsTest extends PivotTestSuite
 
 	@Override
 	protected @NonNull MyOCL createOCL() {
-		return new MyOCL(getTestFileSystem(), getTestPackageName(), getName());
+		return new MyOCL(getTestFileSystem(), getTestPackageName(), getName(), null);
 	}
 
 	public void test_isUnique_162300() {

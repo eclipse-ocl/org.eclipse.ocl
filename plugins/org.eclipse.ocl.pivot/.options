@@ -39,6 +39,9 @@ org.eclipse.ocl.pivot/ecore2as/notOptional=false
 # Trace creation/attach/detach/dispose of EnvironmentFactory instances
 org.eclipse.ocl.pivot/environmentFactory/attach=false
 
+# Trace update of EnvironmentFactory/Executor thread local state
+org.eclipse.ocl.pivot/environmentFactory/threadLocal=false
+
 # Trace maintenance of cached evaluations 
 org.eclipse.ocl.pivot/evaluations=false
 

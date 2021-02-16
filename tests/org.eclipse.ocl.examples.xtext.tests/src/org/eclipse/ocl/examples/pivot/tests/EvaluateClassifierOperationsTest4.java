@@ -15,7 +15,9 @@ package org.eclipse.ocl.examples.pivot.tests;
 import java.util.Arrays;
 import java.util.Collection;
 
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.xtext.tests.TestFileSystem;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Type;
@@ -71,8 +73,8 @@ public class EvaluateClassifierOperationsTest4 extends PivotTestSuite
 		org.eclipse.ocl.pivot.@NonNull Package pkg5 = PivotUtil.createOwnedPackage(pkg3, "pkg5");
 		org.eclipse.ocl.pivot.@NonNull Package george = PivotUtil.createOwnedPackage(pkg5, "george");
 
-		public MyOCL(@NonNull TestFileSystem testFileSystem, @NonNull String testPackageName, @NonNull String name, @NonNull ProjectManager projectManager) {
-			super(testFileSystem, testPackageName, name, projectManager);
+		public MyOCL(@NonNull TestFileSystem testFileSystem, @NonNull String testPackageName, @NonNull String name, @NonNull ProjectManager projectManager, @Nullable ResourceSet externalResourceSet) {
+			super(testFileSystem, testPackageName, name, projectManager, externalResourceSet);
 			MetamodelManagerInternal metamodelManager = getMetamodelManager();
 			//			metamodelManager.addGlobalNamespace(PivotConstants.OCL_NAME, ClassUtil.nonNullState(metamodelManager.getASmetamodel()));
 
@@ -86,8 +88,8 @@ public class EvaluateClassifierOperationsTest4 extends PivotTestSuite
 	}
 
 	//	@Override
-	protected @NonNull MyOCL createOCL(@NonNull ProjectManager classPath) {
-		return new MyOCL(getTestFileSystem(), getTestPackageName(), getName(), classPath);
+	protected @NonNull MyOCL createOCL(@NonNull ProjectManager classPath, @Nullable ResourceSet externalResourceSet) {
+		return new MyOCL(getTestFileSystem(), getTestPackageName(), getName(), classPath, externalResourceSet);
 	}
 
 	@Override
@@ -110,7 +112,7 @@ public class EvaluateClassifierOperationsTest4 extends PivotTestSuite
 	 * Tests the allInstances() operator.
 	 */
 	@Test public void test_allInstances() {
-		MyOCL ocl = createOCL(OCL.CLASS_PATH);
+		MyOCL ocl = createOCL(OCL.CLASS_PATH, null);
 		MetamodelManager metamodelManager = ocl.getMetamodelManager();
 		try {
 			org.eclipse.ocl.pivot.Class classType = metamodelManager.getStandardLibrary().getClassType();
@@ -140,7 +142,7 @@ public class EvaluateClassifierOperationsTest4 extends PivotTestSuite
 	 * Tests the conformsTo() operator.
 	 */
 	@Test public void test_conformsTo() {
-		MyOCL ocl = createOCL(OCL.NO_PROJECTS);
+		MyOCL ocl = createOCL(OCL.NO_PROJECTS, null);
 		try {
 			//		ocl.assertQueryTrue(null, "true.conformsTo(Boolean)");
 			ocl.assertQueryTrue(null, "Boolean.conformsTo(Boolean)");
@@ -162,7 +164,7 @@ public class EvaluateClassifierOperationsTest4 extends PivotTestSuite
 	 * Tests the oclContainer() operator.
 	 */
 	@Test public void test_oclContainer() {
-		MyOCL ocl = createOCL(OCL.CLASS_PATH);
+		MyOCL ocl = createOCL(OCL.CLASS_PATH, null);
 		MetamodelManager metamodelManager = ocl.getMetamodelManager();
 		try {
 			org.eclipse.ocl.pivot.Class classType = metamodelManager.getStandardLibrary().getClassType();
@@ -190,7 +192,7 @@ public class EvaluateClassifierOperationsTest4 extends PivotTestSuite
 	 * Tests the oclContents() operator.
 	 */
 	@Test public void test_oclContents() {
-		MyOCL ocl = createOCL(OCL.NO_PROJECTS);
+		MyOCL ocl = createOCL(OCL.NO_PROJECTS, null);
 		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
 		try {
 			IdResolver idResolver = environmentFactory.getIdResolver();
