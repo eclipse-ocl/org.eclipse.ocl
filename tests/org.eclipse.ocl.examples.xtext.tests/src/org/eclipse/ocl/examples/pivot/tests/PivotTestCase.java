@@ -56,6 +56,7 @@ import org.eclipse.emf.ecore.xml.namespace.XMLNamespacePackage;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.common.OCLConstants;
+import org.eclipse.ocl.examples.xtext.idioms.IdiomsStandaloneSetup;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.pivot.evaluation.EvaluationException;
 import org.eclipse.ocl.pivot.internal.delegate.ValidationDelegate;
@@ -810,6 +811,7 @@ public class PivotTestCase extends TestCase
 	}
 
 	protected void uninstall() {
+		IdiomsStandaloneSetup.doTearDown();
 		PivotStandaloneSetup.doTearDown();
 		BaseStandaloneSetup.doTearDown();
 		CompleteOCLStandaloneSetup.doTearDown();
