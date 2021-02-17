@@ -24,7 +24,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.xtext.tests.TestCaseAppender;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.pivot.PivotPackage;
@@ -241,12 +240,14 @@ public abstract class PivotTestSuite extends PivotTestCaseWithAutoTearDown
 		//
 		//	Unload any resources that a test may have loaded.
 		//
-		for (ListIterator<Resource> i = resourceSet.getResources().listIterator(); i.hasNext(); ) {
-			Resource res = i.next();
-			if (!standardResources.contains(res)) {
-				i.remove();
-				res.unload();
-				res.eAdapters().clear();
+		if (resourceSet != null) {
+			for (ListIterator<Resource> i = resourceSet.getResources().listIterator(); i.hasNext(); ) {
+				Resource res = i.next();
+				if (!standardResources.contains(res)) {
+					i.remove();
+					res.unload();
+					res.eAdapters().clear();
+				}
 			}
 		}
 		autoTearDown();

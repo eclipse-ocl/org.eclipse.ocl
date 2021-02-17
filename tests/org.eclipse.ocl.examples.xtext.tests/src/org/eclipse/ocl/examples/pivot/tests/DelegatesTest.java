@@ -160,7 +160,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		if (delegateDomain == null) {
 			delegateDomain = adapter.loadDelegateDomain(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		}
-		EnvironmentFactory environmentFactory = ((OCLDelegateDomain)delegateDomain).getOCL().getEnvironmentFactory();
+		EnvironmentFactory environmentFactory = ((OCLDelegateDomain)delegateDomain).getEnvironmentFactory();
 		return OCLInternal.newInstance((EnvironmentFactoryInternal)environmentFactory);
 	}
 
@@ -603,6 +603,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		ResourceSet resourceSet = createResourceSet();
 		doTest_allInstances(resourceSet, COMPANY_XMI);
 		assertTrue(usedLocalRegistry);
+		unloadResourceSet(resourceSet);
 	}
 
 	public void test_allInstances_registered() {
@@ -611,6 +612,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		initPackageRegistrations(resourceSet);
 		doTest_allInstances(resourceSet, COMPANY_XMI);
 		assertFalse(usedLocalRegistry);
+		unloadResourceSet(resourceSet);
 	}
 
 	public void test_allInstances_codeGenerated() {
@@ -618,6 +620,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		initCodeGeneratedPackageRegistrations(resourceSet);
 		doTest_allInstances(resourceSet, COMPANY_XMI);
 		assertFalse(usedLocalRegistry);
+		unloadResourceSet(resourceSet);
 	}
 
 	public void test_cossReferences_codeGenerated() {
@@ -625,6 +628,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		ResourceSet resourceSet = createResourceSet();
 		initCodeGeneratedPackageRegistrations(resourceSet);
 		doTest_crossReferences(resourceSet, COMPANY_XMI);	// Verify Bug 412690 comment 2
+		unloadResourceSet(resourceSet);
 	}
 
 	public void test_attributeDefinedWithDerivationAndInitial() {
@@ -633,6 +637,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
 		Object actual = get(badClassInstance, (EAttribute)badClassClass.getEStructuralFeature("attributeDefinedWithDerivationAndInitial"));
 		assertEquals(42, actual);
+		unloadResourceSet(resourceSet);
 	}
 
 	public void test_attributeDefinedWithInitial() {
@@ -641,6 +646,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
 		Object actual = get(badClassInstance, (EAttribute)badClassClass.getEStructuralFeature("attributeDefinedWithInitial"));
 		assertEquals(-42, actual);
+		unloadResourceSet(resourceSet);
 	}
 
 	public void test_attributeDefinedWithoutDerivation() {
@@ -654,6 +660,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		getWithException(badClassInstance, eStructuralFeature.getName(),
 			StringUtil.bind(PivotMessagesInternal.MissingDerivationForSettingDelegate_ERROR_, property));
 		ocl.dispose();
+		unloadResourceSet(resourceSet);
 	}
 
 	public void test_attributeDefinedWithoutDerivationBody() {
@@ -667,6 +674,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		getWithException(badClassInstance, eStructuralFeature.getName(),
 			StringUtil.bind(PivotMessagesInternal.MissingSpecificationBody_ERROR_, property, PivotConstantsInternal.INITIALIZER_ROLE));
 		ocl.dispose();
+		unloadResourceSet(resourceSet);
 	}
 
 	public void test_attributeEvaluatingToInvalid() {
@@ -680,6 +688,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		getWithException(badClassInstance, eStructuralFeature.getName(),
 			StringUtil.bind(PivotMessagesInternal.EvaluationResultIsInvalid_ERROR_, property));
 		ocl.dispose();
+		unloadResourceSet(resourceSet);
 	}
 
 	public void test_attributeEvaluatingToNull() {
@@ -688,6 +697,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
 		EStructuralFeature eStructuralFeature = badClassInstance.eClass().getEStructuralFeature("attributeEvaluatingToNull");
 		assertEquals(null, get(badClassInstance, eStructuralFeature));
+		unloadResourceSet(resourceSet);
 	}
 
 	public void test_attributeEvaluatingToWrongType() {
@@ -701,6 +711,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		getWithException(testEObject, "attributeEvaluatingToWrongType",
 			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Property::CompatibleDefaultExpression", objectLabel));
 		//			ClassUtil.bind(OCLMessages.InitOrDerConstraintConformance_ERROR_, "String", "attributeEvaluatingToWrongType", "Boolean"));
+		unloadResourceSet(resourceSet);
 	}
 
 	public void test_attributeParsingToLexicalError() {
@@ -710,6 +721,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		getWithException(badClassInstance, "attributeParsingToLexicalError",
 			getErrorsInMessage(PivotConstantsInternal.INITIALIZER_ROLE, "modelWithErrors::BadClass::attributeParsingToLexicalError", "gh##jk") +
 			StringUtil.bind("1:3: missing EOF at ''{0}''", "#"));
+		unloadResourceSet(resourceSet);
 	}
 
 	public void test_attributeParsingToSemanticError() {
@@ -719,6 +731,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		getWithException(badClassInstance, "attributeParsingToSemanticError",
 			getErrorsInMessage(PivotConstantsInternal.INITIALIZER_ROLE, "modelWithErrors::BadClass::attributeParsingToSemanticError", "'5' and 6") +
 			StringUtil.bind("1: " + PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "String", "and", "Integer"));
+		unloadResourceSet(resourceSet);
 	}
 
 	public void test_attributeParsingToSyntacticError() {
@@ -729,6 +742,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		getWithException(badClassInstance, "attributeParsingToSyntacticError",
 			getErrorsInMessage(PivotConstantsInternal.INITIALIZER_ROLE, "modelWithErrors::BadClass::attributeParsingToSyntacticError", "invalid null") +
 			StringUtil.bind(location + ": extraneous input ''{0}'' expecting EOF", "null"));
+		unloadResourceSet(resourceSet);
 	}
 
 	/**
@@ -754,11 +768,13 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		ResourceSet resourceSet = createResourceSet();
 		doTest_constraintValidation(resourceSet, COMPANY_XMI);
 		assertTrue(usedLocalRegistry);
+		unloadResourceSet(resourceSet);
 	}
 
 	public void test_constraintValidation_withoutReflection() {
 		ResourceSet resourceSet = createResourceSet();
 		doTest_constraintValidation(resourceSet, NO_REFLECTION_COMPANY_XMI);
+		unloadResourceSet(resourceSet);
 	}
 
 	public void test_constraintValidation_registered() {
@@ -767,6 +783,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		initPackageRegistrations(resourceSet);
 		doTest_constraintValidation(resourceSet, COMPANY_XMI);
 		assertFalse(usedLocalRegistry);
+		unloadResourceSet(resourceSet);
 	}
 
 	public void test_constraintValidation_codeGenerated() {
@@ -775,6 +792,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		initCodeGeneratedPackageRegistrations(resourceSet);
 		doTest_constraintValidation(resourceSet, COMPANY_XMI);
 		assertFalse(usedLocalRegistry);
+		unloadResourceSet(resourceSet);
 	}
 
 	public void test_defaultIsLPG() {
@@ -789,6 +807,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		GlobalEnvironmentFactory.disposeInstance();
 		ResourceSet resourceSet = createResourceSet();
 		doTest_eAttributeDerivation(resourceSet, COMPANY_XMI);
+		unloadResourceSet(resourceSet);
 	}
 
 	/*	public void test_eAttributeDerivation_registered() {
@@ -802,6 +821,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		GlobalEnvironmentFactory.disposeInstance();
 		ResourceSet resourceSet = createResourceSet();
 		doTest_eReferenceDerivation(resourceSet, COMPANY_XMI);
+		unloadResourceSet(resourceSet);
 	}
 
 	public void test_eReferenceDerivation_registered() {
@@ -809,12 +829,14 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		ResourceSet resourceSet = createResourceSet();
 		initPackageRegistrations(resourceSet);
 		doTest_eReferenceDerivation(resourceSet, COMPANY_XMI);
+		unloadResourceSet(resourceSet);
 	}
 
 	public void test_eReferenceDerivation_codeGenerated() {
 		ResourceSet resourceSet = createResourceSet();
 		initCodeGeneratedPackageRegistrations(resourceSet);
 		doTest_eReferenceDerivation(resourceSet, COMPANY_XMI);
+		unloadResourceSet(resourceSet);
 	}
 
 	/**
@@ -914,6 +936,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		ResourceSet resourceSet = createResourceSet();
 		doTest_invariantValidation(resourceSet, COMPANY_XMI, false, Diagnostic.WARNING);
 		assertTrue(usedLocalRegistry);
+		unloadResourceSet(resourceSet);
 	}
 
 	public void test_invariantValidation_registered() {
@@ -922,6 +945,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		initPackageRegistrations(resourceSet);
 		doTest_invariantValidation(resourceSet, COMPANY_XMI, true, Diagnostic.ERROR);
 		assertFalse(usedLocalRegistry);
+		unloadResourceSet(resourceSet);
 	}
 
 	public void test_invariantValidation_codeGenerated() {
@@ -929,11 +953,13 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		initCodeGeneratedPackageRegistrations(resourceSet);
 		doTest_invariantValidation(resourceSet, COMPANY_XMI, false, Diagnostic.WARNING);
 		assertFalse(usedLocalRegistry);
+		unloadResourceSet(resourceSet);
 	}
 
 	public void test_invariantValidation_withoutReflection() {
 		ResourceSet resourceSet = createResourceSet();
 		doTest_invariantValidation(resourceSet, NO_REFLECTION_COMPANY_XMI, false, Diagnostic.WARNING);
+		unloadResourceSet(resourceSet);
 	}
 	/*	public void test_invariantValidation_withoutReflection_registered() {
 		OCL ocl = OCL.newInstance();
@@ -953,6 +979,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		invokeWithException(badClassInstance, eOperation.getName(),
 			StringUtil.bind(PivotMessagesInternal.MissingSpecificationBody_ERROR_, NameUtil.qualifiedNameFor(operation), PivotConstantsInternal.BODY_ROLE));
 		ocl.dispose();
+		unloadResourceSet(resourceSet);
 	}
 
 	public void test_operationDefinedWithoutBodyBody() throws InvocationTargetException {
@@ -966,6 +993,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		invokeWithException(badClassInstance, eOperation.getName(),
 			StringUtil.bind(PivotMessagesInternal.MissingSpecificationBody_ERROR_, NameUtil.qualifiedNameFor(operation), PivotConstantsInternal.BODY_ROLE));
 		ocl.dispose();
+		unloadResourceSet(resourceSet);
 	}
 
 	public void test_operationEvaluatingToInvalid() throws InvocationTargetException {
@@ -979,6 +1007,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		invokeWithException(badClassInstance, eOperation.getName(),
 			StringUtil.bind(PivotMessagesInternal.EvaluationResultIsInvalid_ERROR_, operation));
 		ocl.dispose();
+		unloadResourceSet(resourceSet);
 	}
 
 	public void test_operationEvaluatingToNull() throws InvocationTargetException {
@@ -988,6 +1017,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
 		EOperation operation = getOperation(badClassInstance.eClass(), "operationEvaluatingToNull");
 		assertEquals(null, invoke(badClassInstance, operation));
+		unloadResourceSet(resourceSet);
 	}
 
 	public void test_operationEvaluatingToWrongType() throws InvocationTargetException {
@@ -1001,6 +1031,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		invokeWithException(badClassInstance, "operationEvaluatingToWrongType",
 			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Operation::CompatibleReturn", objectLabel));
 		//			OCLMessages.BodyConditionConformance_ERROR_, "operationEvaluatingToWrongType", "Integer", "Boolean");
+		unloadResourceSet(resourceSet);
 	}
 
 	public void test_operationInvocation() throws InvocationTargetException {
@@ -1008,6 +1039,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		ResourceSet resourceSet = createResourceSet();
 		doTest_operationInvocation(resourceSet, COMPANY_XMI);
 		assertTrue(usedLocalRegistry);
+		unloadResourceSet(resourceSet);
 	}
 
 	/*	public void test_operationInvocation_registered() throws InvocationTargetException {
@@ -1025,6 +1057,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		String location = XtextVersionUtil.hasXtextSyntaxDiagnosticColumn() ? "1:1" : "1";
 		invokeWithException(badClassInstance, "operationParsingToLexicalError",
 			getErrorsInMessage(PivotConstantsInternal.BODY_ROLE, "modelWithErrors::BadClass::operationParsingToLexicalError", "@@") + StringUtil.bind(location + ": no viable alternative at input ''{0}''", "@"));
+		unloadResourceSet(resourceSet);
 	}
 
 	public void test_operationParsingToSemanticError() throws InvocationTargetException {
@@ -1033,6 +1066,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
 		invokeWithException(badClassInstance, "operationParsingToSemanticError",
 			getErrorsInMessage(PivotConstantsInternal.BODY_ROLE, "modelWithErrors::BadClass::operationParsingToSemanticError", "self->at(1)") + StringUtil.bind("1:7: " + PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Set(modelWithErrors::BadClass)", "at", "1"));
+		unloadResourceSet(resourceSet);
 	}
 
 	public void test_operationParsingToSyntacticError() throws InvocationTargetException {
@@ -1042,6 +1076,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		String location = XtextVersionUtil.hasXtextSyntaxDiagnosticColumn() ? "1:5" : "1";
 		invokeWithException(badClassInstance, "operationParsingToSyntacticError",
 			getErrorsInMessage(PivotConstantsInternal.BODY_ROLE, "modelWithErrors::BadClass::operationParsingToSyntacticError", "let in") + StringUtil.bind(location + ": no viable alternative at input ''{0}''", "in"));
+		unloadResourceSet(resourceSet);
 	}
 
 	/**
@@ -1073,6 +1108,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		catch (OCLDelegateException e) {
 		}
 		ocl.dispose();
+		unloadResourceSet(resourceSet);
 	}
 
 	/**
@@ -1140,6 +1176,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		ResourceSet resourceSet = createResourceSet();
 		doTest_queryExecution(resourceSet, COMPANY_XMI);
 		assertTrue(usedLocalRegistry);
+		unloadResourceSet(resourceSet);
 	}
 
 	public void test_queryExecution_registered() {
@@ -1148,6 +1185,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		initPackageRegistrations(resourceSet);
 		doTest_queryExecution(resourceSet, COMPANY_XMI);
 		assertFalse(usedLocalRegistry);
+		unloadResourceSet(resourceSet);
 	}
 
 	public void test_queryExecution_codeGenerated() {
@@ -1156,12 +1194,14 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		initCodeGeneratedPackageRegistrations(resourceSet);
 		doTest_queryExecution(resourceSet, COMPANY_XMI);
 		assertFalse(usedLocalRegistry);
+		unloadResourceSet(resourceSet);
 	}
 
 	public void test_queryExecutionWithExceptions() throws InvocationTargetException {
 		ResourceSet resourceSet = createResourceSet();
 		doTest_queryExecutionWithExceptions(resourceSet, COMPANY_XMI);
 		assertTrue(usedLocalRegistry);
+		unloadResourceSet(resourceSet);
 	}
 
 	public void test_queryExecutionWithExceptions_registered() throws InvocationTargetException {
@@ -1169,6 +1209,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		initPackageRegistrations(resourceSet);
 		doTest_queryExecutionWithExceptions(resourceSet, COMPANY_XMI);
 		assertFalse(usedLocalRegistry);
+		unloadResourceSet(resourceSet);
 	}
 
 	public void test_queryExecutionWithExceptions_codeGenerated() throws InvocationTargetException {
@@ -1176,6 +1217,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		initCodeGeneratedPackageRegistrations(resourceSet);
 		doTest_queryExecutionWithExceptions(resourceSet, COMPANY_XMI);
 		assertFalse(usedLocalRegistry);
+		unloadResourceSet(resourceSet);
 	}
 
 	/**
@@ -1224,6 +1266,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		EObject badClassInstance = create(acme, companyDetritus, (EClass) companyPackage.getEClassifier("ValidationEvaluatingToInvalid"), null);
 		validateWithDelegationSeverity("evaluatingToInvalid", Diagnostic.ERROR, badClassInstance, null,
 			EvaluationException.class, PivotMessagesInternal.ValidationResultIsInvalid_ERROR_, "ValidationEvaluatingToInvalid", "evaluatingToInvalid", LabelUtil.getLabel(badClassInstance), "invalid");
+		unloadResourceSet(resourceSet);
 	}
 
 	public void test_validationEvaluatingToNull() {
@@ -1232,6 +1275,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		EObject badClassInstance = create(acme, companyDetritus, (EClass) companyPackage.getEClassifier("ValidationEvaluatingToNull"), null);
 		validateWithDelegationSeverity("evaluatingToNull", Diagnostic.ERROR, badClassInstance, null,
 			EvaluationException.class, PivotMessagesInternal.ValidationResultIsNull_ERROR_, badClassInstance.eClass().getName(), "evaluatingToNull", LabelUtil.getLabel(badClassInstance));
+		unloadResourceSet(resourceSet);
 	}
 
 	public void test_validationEvaluatingToWrongType() {
@@ -1240,6 +1284,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		EObject badClassInstance = create(acme, companyDetritus, (EClass) companyPackage.getEClassifier("ValidationEvaluatingToWrongType"), null);
 		validateWithDelegationSeverity("evaluatingToWrongType", Diagnostic.ERROR, badClassInstance, null,
 			EvaluationException.class, PivotMessagesInternal.ValidationConstraintIsNotBooleanType_ERROR_, "ValidationEvaluatingToWrongType", "evaluatingToWrongType", "OclInvalid");
+		unloadResourceSet(resourceSet);
 	}
 
 	public void test_validationParsingToLexicalError() {
@@ -1249,6 +1294,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		EObject badClassInstance = create(acme, companyDetritus, (EClass) companyPackage.getEClassifier("ValidationParsingToLexicalError"), null);
 		validateWithDelegationSeverity("modelWithErrors::ValidationParsingToLexicalError::parsingToLexicalError", Diagnostic.ERROR, badClassInstance, "'part",
 			SemanticException.class, location + ": Invalid token {0}", "'part");
+		unloadResourceSet(resourceSet);
 	}
 
 	public void test_validationParsingToSemanticError() {
@@ -1257,6 +1303,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		EObject badClassInstance = create(acme, companyDetritus, (EClass) companyPackage.getEClassifier("ValidationParsingToSemanticError"), null);
 		validateWithDelegationSeverity("modelWithErrors::ValidationParsingToSemanticError::parsingToSemanticError", Diagnostic.ERROR, badClassInstance, "not '5'",
 			SemanticException.class, "1: " + PivotMessagesInternal.UnresolvedOperation_ERROR_, "String", "not");
+		unloadResourceSet(resourceSet);
 	}
 
 	public void test_validationParsingToSyntacticError() {
@@ -1266,6 +1313,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		String location = XtextVersionUtil.hasXtextSyntaxDiagnosticColumn() ? "1:1" : "1";
 		validateWithDelegationSeverity("modelWithErrors::ValidationParsingToSyntacticError::parsingToSyntacticError", Diagnostic.ERROR, badClassInstance, "else",
 			SemanticException.class, location + ": no viable alternative at input ''{0}''", "else");
+		unloadResourceSet(resourceSet);
 	}
 
 	public void test_validationWithMessage() {
@@ -1274,6 +1322,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		EObject badClassInstance = create(acme, companyDetritus, (EClass) companyPackage.getEClassifier("ValidationWithMessage"), null);
 		validateWithSeverity("ValidationWithMessage", Diagnostic.WARNING, badClassInstance,
 				"custom message ");
+		unloadResourceSet(resourceSet);
 	}
 
 	public void test_validationWithCompleteOCL() {
@@ -1283,6 +1332,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		EObject badClassInstance = create(acme, companyDetritus, eClassifier, null);
 		validateWithSeverity("CompleteOCLInvariant", Diagnostic.WARNING, badClassInstance,
 			"Failure on " + eClassifier.getName());
+		unloadResourceSet(resourceSet);
 	}
 
 	public void test_tutorialValidationMessage() {
@@ -1360,6 +1410,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 			unloadResourceSet(resourceSet);
 		} finally {
 			ocl.dispose();
+			unloadResourceSet(resourceSet);
 		}
 	}
 

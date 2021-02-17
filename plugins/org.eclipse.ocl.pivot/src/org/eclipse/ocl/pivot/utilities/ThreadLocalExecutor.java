@@ -32,7 +32,7 @@ public class ThreadLocalExecutor
 {
 	public static final @NonNull TracingOption THREAD_LOCAL_ENVIRONMENT_FACTORY = new TracingOption(PivotPlugin.PLUGIN_ID, "environmentFactory/threadLocal");
 
-	private static final @NonNull ThreadLocal</*@NonNull*/ ThreadLocalExecutor> INSTANCE = new ThreadLocal<>();
+	private static final @NonNull ThreadLocal<@Nullable ThreadLocalExecutor> INSTANCE = new ThreadLocal<>();
 	static {
 		INSTANCE.set(new ThreadLocalExecutor());
 	}
@@ -44,7 +44,7 @@ public class ThreadLocalExecutor
 	 */
 	public static @Nullable EnvironmentFactory basicGetEnvironmentFactory() {
 		ThreadLocalExecutor threadLocalExecutor = INSTANCE.get();
-		return threadLocalExecutor.localBasicGetEnvironmentFactory();
+		return threadLocalExecutor != null ? threadLocalExecutor.localBasicGetEnvironmentFactory() : null;
 	}
 
 	/**
@@ -52,7 +52,7 @@ public class ThreadLocalExecutor
 	 */
 	public static @Nullable Executor basicGetExecutor() {
 		ThreadLocalExecutor threadLocalExecutor = INSTANCE.get();
-		return threadLocalExecutor.localBasicGetExecutor();
+		return threadLocalExecutor != null ? threadLocalExecutor.localBasicGetExecutor() : null;
 	}
 
 	/**
@@ -60,7 +60,9 @@ public class ThreadLocalExecutor
 	 */
 	public static void reset() {
 		ThreadLocalExecutor threadLocalExecutor = INSTANCE.get();
-		threadLocalExecutor.localReset();
+		if (threadLocalExecutor != null) {
+			threadLocalExecutor.localReset();
+		}
 	}
 
 	/**
@@ -72,7 +74,16 @@ public class ThreadLocalExecutor
 	 */
 	public static void resetEnvironmentFactory() {
 		ThreadLocalExecutor threadLocalExecutor = INSTANCE.get();
-		threadLocalExecutor.localResetEnvironmentFactory();
+		if (threadLocalExecutor != null) {
+			threadLocalExecutor.localResetEnvironmentFactory();
+		}
+	}
+
+	public static void resetEnvironmentFactory(@NonNull EnvironmentFactory environmentFactory) {
+		ThreadLocalExecutor threadLocalExecutor = INSTANCE.get();
+		if (threadLocalExecutor != null) {
+			threadLocalExecutor.localResetEnvironmentFactory(environmentFactory);
+		}
 	}
 
 	/**
@@ -81,7 +92,9 @@ public class ThreadLocalExecutor
 	 */
 	public static void setEnvironmentFactory(@NonNull EnvironmentFactory environmentFactory) {
 		ThreadLocalExecutor threadLocalExecutor = INSTANCE.get();
-		threadLocalExecutor.localSetEnvironmentFactory(environmentFactory);
+		if (threadLocalExecutor != null) {
+			threadLocalExecutor.localSetEnvironmentFactory(environmentFactory);
+		}
 	}
 
 	/**
@@ -90,12 +103,14 @@ public class ThreadLocalExecutor
 	 */
 	public static void setExecutor(@NonNull Executor executor) {
 		ThreadLocalExecutor threadLocalExecutor = INSTANCE.get();
-		threadLocalExecutor.localSetExecutor(executor);
+		if (threadLocalExecutor != null) {
+			threadLocalExecutor.localSetExecutor(executor);
+		}
 	}
 
 	public static @NonNull String toDebugString() {
 		ThreadLocalExecutor threadLocalExecutor = INSTANCE.get();
-		return threadLocalExecutor.toString();
+		return threadLocalExecutor != null ? threadLocalExecutor.toString() : "*** FINALIZED ***";
 	}
 
 	/**
@@ -105,7 +120,7 @@ public class ThreadLocalExecutor
 	 */
 	public static boolean waitForGC() throws InterruptedException {
 		ThreadLocalExecutor threadLocalExecutor = INSTANCE.get();
-		return threadLocalExecutor.localWaitForGC();
+		return (threadLocalExecutor != null) && threadLocalExecutor.localWaitForGC() ;
 	}
 
 	/**
@@ -156,6 +171,12 @@ public class ThreadLocalExecutor
 		}
 		if (THREAD_LOCAL_ENVIRONMENT_FACTORY.isActive()) {
 			THREAD_LOCAL_ENVIRONMENT_FACTORY.println("[" + Thread.currentThread().getName() + "] " + toString());
+		}
+	}
+
+	private void localResetEnvironmentFactory(@NonNull EnvironmentFactory environmentFactory) {
+		if (this.environmentFactory == environmentFactory) {
+			localResetEnvironmentFactory();
 		}
 	}
 
@@ -218,6 +239,7 @@ public class ThreadLocalExecutor
 		}
 		for (int i = 0; i < 10; i++) {
 			System.gc();
+			System.runFinalization();
 			if (environmentFactory2.isDisposed()) {
 				return true;
 			}

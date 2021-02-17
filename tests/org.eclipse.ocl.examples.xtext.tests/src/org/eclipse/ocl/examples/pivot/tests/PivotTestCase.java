@@ -26,6 +26,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.WeakHashMap;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
@@ -70,6 +71,7 @@ import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
+import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.DebugTimestamp;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
@@ -118,12 +120,13 @@ public class PivotTestCase extends TestCase
 	public static boolean DEBUG_GC = false;			// True performs an enthusuastic resource release and GC at the end of each test
 	public static boolean DEBUG_ID = false;			// True prints the start and end of each test.
 	{
-		//		PivotUtilInternal.noDebug = false;
-		//		DEBUG_GC = true;
-		//		DEBUG_ID = true;
-		//		PivotMetamodelManager.liveMetamodelManagers = new WeakHashMap<PivotMetamodelManager,Object>();	// Prints the create/finalize of each MetamodelManager
-		//		StandaloneProjectMap.liveStandaloneProjectMaps = new WeakHashMap<StandaloneProjectMap,Object>();	// Prints the create/finalize of each StandaloneProjectMap
-		//		ResourceSetImpl.liveResourceSets = new WeakHashMap<ResourceSet,Object>();				// Requires edw-debug private EMF branch
+		PivotUtilInternal.noDebug = false;
+		DEBUG_GC = true;
+		DEBUG_ID = true;
+		AbstractEnvironmentFactory.liveEnvironmentFactories = new WeakHashMap<>();	// Prints the create/finalize of each EnvironmentFactory
+	//	PivotMetamodelManager.liveMetamodelManagers = new WeakHashMap<>();			// Prints the create/finalize of each MetamodelManager
+		StandaloneProjectMap.liveStandaloneProjectMaps = new WeakHashMap<>();		// Prints the create/finalize of each StandaloneProjectMap
+		ResourceSetImpl.liveResourceSets = new WeakHashMap<>();						// Requires edw-debug private EMF branch
 	}
 
 	public static void appendLog(String name, Object context, String testExpression, String parseVerdict, String evaluationVerdict, String evaluationTolerance) {

@@ -252,6 +252,7 @@ public class RoundTripTests extends XtextTestCase
 			StandaloneProjectMap.getAdapter(resourceSet).initializeResourceSet(resourceSet2);
 			Resource referenceResource = ClassUtil.nonNullState(resourceSet2.getResource(referenceURI, true));
 			TestUtil.assertSameModel(referenceResource, outputResource);
+			unloadResourceSet(resourceSet2);
 		}
 	}
 

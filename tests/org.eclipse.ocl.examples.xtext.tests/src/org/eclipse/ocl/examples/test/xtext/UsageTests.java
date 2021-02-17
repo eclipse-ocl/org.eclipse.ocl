@@ -544,11 +544,11 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 
 	protected void doGenModel(@NonNull URI genmodelURI) throws Exception {
 		OCL ocl= createOCL();
+		ResourceSet resourceSet = ocl.getResourceSet();
 		try {
 			URI fileURI = genmodelURI; //getProjectFileURI(testFileStem + ".genmodel");
 			// System.out.println("Generating Ecore Model using '" + fileURI + "'");
 			//		metamodelManager2.dispose();
-			ResourceSet resourceSet = ocl.getResourceSet();
 			ProjectManager projectMap = ocl.getProjectManager();
 		//	ocl.dispose();
 			projectMap.configure(resourceSet, StandaloneProjectMap.LoadFirstStrategy.INSTANCE, StandaloneProjectMap.MapToFirstConflictHandler.INSTANCE);
@@ -617,6 +617,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		}
 		finally {
 			ocl.dispose();
+			unloadResourceSet(resourceSet);
 			boolean waitedOK = ThreadLocalExecutor.waitForGC();		// Ensure that the Diagnostician's validateContext releases its WeakOCLReference.
 			assertTrue(waitedOK);
 		}
@@ -634,6 +635,12 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		classpath.addClass(org.eclipse.uml2.types.TypesPackage.class);
 		classpath.addClass(org.eclipse.uml2.uml.UMLPackage.class);
 		doCompile(ocl, classpath, testProjectName);
+	}
+
+	@Override
+	protected void initializeResourceSet() {
+		resourceSet = null; //createResourceSet();
+	//	standardResources = new ArrayList<Resource>(resourceSet.getResources());
 	}
 
 	protected @NonNull Resource loadUmlProfile(@NonNull TestOCL ocl, @NonNull URI umlProfileURI) {

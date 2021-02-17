@@ -244,6 +244,7 @@ public class LoadTests extends XtextTestCase
 			if (xtextResource != null) {
 				xtextResource.dispose();
 			}
+			unloadResourceSet(resourceSet);
 		}
 		assert xtextResource != null;
 		Resource xmiResource = resourceSet.createResource(outputURI);
@@ -350,7 +351,7 @@ public class LoadTests extends XtextTestCase
 
 	public Model doLoadUML(@Nullable TestOCL externalOCL, @NonNull URI inputURI, @NonNull ILoadCallBack loadCallBacks, @NonNull String @Nullable [] messages) throws IOException, ParserException {
 		UMLStandaloneSetup.init();
-		OCLInternal internalOCL = externalOCL != null ? externalOCL : createOCL();
+		OCLInternal internalOCL = externalOCL != null ? externalOCL : createOCLWithProjectMap();
 	//	UMLASResourceFactory.getInstance();
 		//		long startTime = System.currentTimeMillis();
 		//		System.out.println("Start at " + startTime);
@@ -494,6 +495,7 @@ public class LoadTests extends XtextTestCase
 					ocl2.getEnvironmentFactory().adapt(reloadCS);
 					loadCallBacks.validateCompleteOCL(ocl2, reloadCS);
 					ocl2.dispose();
+					unloadResourceSet(resourceSet2);
 				}
 			}
 			return pivotModel;

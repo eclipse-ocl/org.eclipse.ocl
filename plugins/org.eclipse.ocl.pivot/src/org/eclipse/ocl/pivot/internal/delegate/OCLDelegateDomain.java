@@ -288,7 +288,10 @@ public class OCLDelegateDomain implements DelegateDomain, GlobalEnvironmentFacto
 		reset();
 	}
 
-	private @NonNull EnvironmentFactory getEnvironmentFactory() {
+	/**
+	 * @since 1.14
+	 */
+	public @NonNull EnvironmentFactory getEnvironmentFactory() {
 		EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 		if (environmentFactory == null) {
 			environmentFactory = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(ProjectManager.NO_PROJECTS, null, null);

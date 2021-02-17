@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.WeakHashMap;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.common.EMFPlugin;
@@ -112,13 +113,13 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	private final @NonNull ResourceSet asResourceSet;
 	protected final boolean externalResourceSetWasNull;
 	private /*@LazyNonNull*/ PivotMetamodelManager metamodelManager = null;
-	private final @NonNull CompleteEnvironmentInternal completeEnvironment;
-	private final @NonNull StandardLibraryInternal standardLibrary;
+	private /*final @NonNull*/ CompleteEnvironmentInternal completeEnvironment;
+	private /*final @NonNull*/ StandardLibraryInternal standardLibrary;
 	private @Nullable ICSI2ASMapping csi2asMapping;
 	/**
 	 * The known packages.
 	 */
-	private final @NonNull CompleteModelInternal completeModel;
+	private /*final @NonNull*/ CompleteModelInternal completeModel;
 
 	private /*@LazyNonNull*/ IdResolver idResolver;
 
@@ -138,6 +139,13 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	private /*LazyNonNull*/ Map<Object, StatusCodes.Severity> validationKey2severity = null;
 
 	/**
+	 * Leak debugging aid. Set non-null to diagnose EnvironmentFactory construction and finalization.
+	 *
+	 * @since 1.14
+	 */
+	public static WeakHashMap<@NonNull AbstractEnvironmentFactory, @Nullable Object> liveEnvironmentFactories = null;
+
+	/**
 	 * @since 1.7
 	 */
 	public static int CONSTRUCTION_COUNT = 0;
@@ -152,6 +160,11 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	 */
 	protected AbstractEnvironmentFactory(@NonNull ProjectManager projectManager, @Nullable ResourceSet externalResourceSet, @Nullable ResourceSet asResourceSet) {
 		CONSTRUCTION_COUNT++;
+		if (liveEnvironmentFactories != null) {
+			liveEnvironmentFactories.put(this, null);
+			PivotUtilInternal.debugPrintln("Create " + NameUtil.debugSimpleName(this)
+			+ " " + NameUtil.debugSimpleName(externalResourceSet) + " " + NameUtil.debugSimpleName(asResourceSet));
+		}
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {			// This is the unique start point for OCL so
 			PivotStandaloneSetup.doSetup();				//  do the non-UI initialization (guarded in doSetup())
 		}
@@ -676,9 +689,36 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			csi2asMapping.dispose();
 			csi2asMapping = null;
 		}
+		completeEnvironment = null;
+		standardLibrary = null;
+		completeModel = null;
 		//		if (ENVIRONMENT_FACTORY_ATTACH.isActive()) {
 		//			ENVIRONMENT_FACTORY_ATTACH.println("[" + Thread.currentThread().getName() + "] disposeInternal " + NameUtil.debugSimpleName(this) + " => " + NameUtil.debugSimpleName(PivotUtilInternal.findEnvironmentFactory(externalResourceSet)));
 		//		}
+
+		projectManager.unload(asResourceSet);
+		projectManager.unload(externalResourceSet);
+
+		ThreadLocalExecutor.resetEnvironmentFactory(this);
+		System.gc();
+		System.runFinalization();
+	}
+
+	@Override
+	protected void finalize() throws Throwable {
+//		PivotUtilInternal.debugPrintln("Finalize " + NameUtil.debugSimpleName(this));
+		if (liveEnvironmentFactories != null) {
+	PivotUtilInternal.debugPrintln("Finalize " + NameUtil.debugSimpleName(this));
+			List<@NonNull EnvironmentFactory> keySet = new ArrayList<>(liveEnvironmentFactories.keySet());
+			if (!keySet.isEmpty()) {
+				StringBuilder s = new StringBuilder();
+				s.append(" live");
+				for (@NonNull EnvironmentFactory environmentFactory : keySet) {
+					s.append(" @" + Integer.toHexString(environmentFactory.hashCode()));
+				}
+				System.out.println(s.toString());
+			}
+		}
 	}
 
 	/**

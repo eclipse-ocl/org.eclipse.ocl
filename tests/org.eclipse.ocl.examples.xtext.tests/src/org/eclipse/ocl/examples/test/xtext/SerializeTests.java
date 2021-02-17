@@ -21,7 +21,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -39,6 +38,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.basecs.ImportCS;
@@ -54,6 +54,23 @@ public class SerializeTests extends XtextTestCase
 	protected interface ResourceSetInitializer
 	{
 		void initializeResourceSet(@NonNull ResourceSet resourceSet);
+	}
+
+	@Override
+	protected void setUp() throws Exception {
+	//	AbstractEnvironmentFactory.ENVIRONMENT_FACTORY_ATTACH.setState(true);
+	//	ThreadLocalExecutor.THREAD_LOCAL_ENVIRONMENT_FACTORY.setState(true);
+		super.setUp();
+	}
+
+	@Override
+	protected void tearDown() throws Exception {
+		System.gc();
+		System.runFinalization();
+		ThreadLocalExecutor.reset();
+		System.gc();
+		System.runFinalization();
+		super.tearDown();
 	}
 
 	protected Map<Object, Object> createLoadedEcoreOptions() {
@@ -99,23 +116,38 @@ public class SerializeTests extends XtextTestCase
 	public XtextResource doSerialize(@NonNull URI inputURI, @NonNull URI referenceURI, @Nullable Map<Object, Object> options,
 			@Nullable ModelComparator modelComparator, @NonNull String @NonNull [] asValidationMessages, @NonNull String @NonNull [] asValidationMessages2) throws Exception {
 		ResourceSetInitializer resourceSetInitializer = options != null ? (ResourceSetInitializer)options.get(ResourceSetInitializer.class) : null;
-		ResourceSet resourceSet = new ResourceSetImpl();
-		getProjectMap().initializeResourceSet(resourceSet);
+
+
 		String stem = inputURI.trimFileExtension().lastSegment();
 		String outputName = stem + ".serialized.oclinecore";
 		URI outputURI = getTestFileURI(outputName);
+		{
+			System.out.println("1: Load " + outputName);
+			OCL ocl0 = OCL.newInstance(getProjectMap());
+			ResourceSet resourceSet0 = ocl0.getResourceSet();
+		//	getProjectMap().initializeResourceSet(resourceSet);
+			resourceSet0 = null;
+			getProjectMap().unload(ocl0.getEnvironmentFactory().getResourceSet());
+			getProjectMap().unload(ocl0.getEnvironmentFactory().getMetamodelManager().getASResourceSet());
+			ocl0.dispose();
+
+			ocl0 = null;
+		}
 		//
 		//	Load as Ecore
 		//
+		System.out.println("2: Load " + inputURI);
 		Resource ecoreResource = loadEcore(inputURI);
 		//
 		//	Ecore to Pivot
 		//
+		System.out.println("3: Load Pivot " );
 		OCL ocl1 = OCL.newInstance(getProjectMap());
 		XtextResource xtextResource1 = null;
 		try {
+			ResourceSet resourceSet1 = ocl1.getResourceSet();
 			if (resourceSetInitializer != null) {
-				resourceSetInitializer.initializeResourceSet(ocl1.getResourceSet());
+				resourceSetInitializer.initializeResourceSet(resourceSet1);
 			}
 			ASResource asResource = ocl1.ecore2as(ecoreResource);
 			assertNoResourceErrors("Normalisation failed", asResource);
@@ -125,19 +157,27 @@ public class SerializeTests extends XtextTestCase
 			//
 			//	Pivot to CS
 			//
-			xtextResource1 = as2cs(ocl1, resourceSet, asResource, outputURI);
-			resourceSet.getResources().clear();
+			xtextResource1 = as2cs(ocl1, resourceSet1, asResource, outputURI);
+			resourceSet1.getResources().clear();
 		}
 		finally {
 			ocl1.dispose();
 			ocl1 = null;
 		}
+		for (int i = 0; i < 10; i++) {
+			System.gc();
+			Thread.sleep(10);
+			System.runFinalization();
+		}
+		System.out.println("4: Load CS " + outputURI);
 		OCL ocl2 = OCL.newInstance(getProjectMap());
+		BaseCSResource xtextResource2 = null;
 		try {
+			ResourceSet resourceSet2 = ocl2.getResourceSet();
 			if (resourceSetInitializer != null) {
-				resourceSetInitializer.initializeResourceSet(ocl2.getResourceSet());
+				resourceSetInitializer.initializeResourceSet(resourceSet2);
 			}
-			BaseCSResource xtextResource2 = (BaseCSResource) resourceSet.createResource(outputURI);
+			xtextResource2 = (BaseCSResource) resourceSet2.createResource(outputURI);
 			assert xtextResource2 != null;
 			ocl2.getEnvironmentFactory().adapt(xtextResource2);
 			xtextResource2.load(null);
@@ -165,10 +205,12 @@ public class SerializeTests extends XtextTestCase
 			String inputName2 = stem + "2.ecore";
 			URI ecoreURI2 = getTestFileURI(inputName2);
 			Resource ecoreResource2 = as2ecore(ocl2, pivotResource2, ecoreURI2, asValidationMessages2);
+			ThreadLocalExecutor.resetEnvironmentFactory();
 			//
 			//
 			//
 			//		TestUtil.TestUtil.assertSameModel(asResource, pivotResource2);
+			System.out.println("5: Load " + referenceURI);
 			Resource referenceResource = loadEcore(referenceURI);
 			if (modelComparator != null) {	// Workaround for Bug 354621
 				modelComparator.assertSameModel(referenceResource, ecoreResource2);
@@ -176,6 +218,9 @@ public class SerializeTests extends XtextTestCase
 			return xtextResource1;
 		}
 		finally {
+			if (xtextResource2 != null) {
+				xtextResource2.eAdapters().remove(ocl2.getEnvironmentFactory().adapt(xtextResource2));
+			}
 			ocl2.dispose();
 			ocl2 = null;
 		}
@@ -537,6 +582,9 @@ public class SerializeTests extends XtextTestCase
 
 
 	public void testSerialize_Company() throws Exception {
+		//	TEST_START.setState(true);
+		//	AbstractEnvironmentFactory.ENVIRONMENT_FACTORY_ATTACH.setState(true);
+		//	ThreadLocalExecutor.THREAD_LOCAL_ENVIRONMENT_FACTORY.setState(true);
 		//		Logger logger = Logger.getLogger(AbstractParseTreeConstructor.class);
 		//		logger.setLevel(Level.TRACE);
 		//		logger.addAppender(new ConsoleAppender(new SimpleLayout()));

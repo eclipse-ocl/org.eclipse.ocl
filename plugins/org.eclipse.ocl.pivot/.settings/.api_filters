@@ -182,6 +182,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/utilities/AbstractEnvironmentFactory.java" type="org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory"/>
+                <message_argument value="liveEnvironmentFactories"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/utilities/EnvironmentFactory.java" type="org.eclipse.ocl.pivot.utilities.EnvironmentFactory">
         <filter id="404000815">
             <message_arguments>
