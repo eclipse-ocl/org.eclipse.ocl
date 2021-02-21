@@ -640,6 +640,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 
 	protected void doUMLCompile(@NonNull TestOCL ocl, @NonNull String testProjectName) throws Exception {
 		JavaClasspath classpath = JavaFileUtil.createDefaultOCLClasspath();
+		classpath.addClass(org.eclipse.uml2.common.util.UML2Util.class);
 		classpath.addClass(org.eclipse.uml2.types.TypesPackage.class);
 		classpath.addClass(org.eclipse.uml2.uml.UMLPackage.class);
 		doCompile(ocl, classpath, testProjectName);
@@ -1314,6 +1315,72 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				assertEquals("AbstractEnvironmentFactory.CONSTRUCTION_COUNT", 0, AbstractEnvironmentFactory.CONSTRUCTION_COUNT-oldAbstractEnvironmentFactory_CONSTRUCTION_COUNT);
 				assertEquals("AbstractModelManager.CONSTRUCTION_COUNT", 1, AbstractModelManager.CONSTRUCTION_COUNT-oldAbstractModelManager_CONSTRUCTION_COUNT);
 				assertEquals("ExecutorManager.CONSTRUCTION_COUNT", 1, ExecutorManager.CONSTRUCTION_COUNT-oldExecutorManager_CONSTRUCTION_COUNT);
+				assertEquals("AbstractExecutor.CONSTRUCTION_COUNT", 0, AbstractExecutor.CONSTRUCTION_COUNT-oldAbstractExecutor_CONSTRUCTION_COUNT);
+				for (@NonNull EObject eObject : umlModelResource.getContents()) {
+					EClass eClass = eObject.eClass();
+					if ("Farm".equals(eClass.getName())) {
+						EStructuralFeature animalFeature = eClass.getEStructuralFeature("animal");
+						EStructuralFeature chickenFeature = eClass.getEStructuralFeature("chicken");
+						EStructuralFeature duckFeature = eClass.getEStructuralFeature("duck");
+						Object animals = eObject.eGet(animalFeature);
+						assertEquals(4, ((Collection<?>)animals).size());
+						@SuppressWarnings("unused")
+						Object chicken = eObject.eGet(chickenFeature);
+						@SuppressWarnings("unused")
+						Object duck = eObject.eGet(duckFeature);
+					}
+				}
+				ocl2.dispose();
+			}
+		});
+	}
+
+	/*
+	 * Verify that the static profile in Bug571198.profile.uml model can be generated and compiled
+	 * and that the Bug571198.uml model can then validate.
+	 */
+	public void testBug571198_uml() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() throws Exception {
+				TestOCL ocl1 = createOCL();
+				String testFileStem = "Bug571198";
+				String testProjectName = testFileStem; //"bug570894";
+				TestFile umlModelFile = getTestFile(testFileStem + ".uml", ocl1, getTestModelURI("models/uml/" + testFileStem + ".uml"));
+			//	TestFile umlLibraryFile = getTestFile(testFileStem + ".library.uml", ocl1, getTestModelURI("models/uml/" + testFileStem + ".library.uml"));
+				TestFile umlProfileFile = getTestFile(testFileStem + ".profile.uml", ocl1, getTestModelURI("models/uml/" + testFileStem + ".profile.uml"));
+				Resource umlProfileResource = loadUmlProfile(ocl1.getResourceSet(), umlProfileFile.getURI());
+				String ecoreFileContent = createUMLEcoreModelContent(umlProfileResource);
+				String genmodelFileContent = createUMLGenModelContent(umlProfileResource, testFileStem, null);
+				createManifestFile();
+				createTestFileWithContent(getTestProject().getOutputFile(testFileStem + ".profile.ecore"), ecoreFileContent);
+				URI genModelURI = createTestFileWithContent(getTestProject().getOutputFile(testFileStem + ".profile.genmodel"), genmodelFileContent);
+				Path genModelPath = new Path("/" + getTestProject().getName() + "/" + testFileStem + ".profile.genmodel");
+				//
+				TestUMLImporter importer = new TestUMLImporter(ocl1.getResourceSet().getPackageRegistry());
+				importer.reloadGenModel(genModelPath);
+				ocl1.dispose();
+				//
+				doGenModel(genModelURI);
+				//
+				int oldAbstractEnvironmentFactory_CONSTRUCTION_COUNT = AbstractEnvironmentFactory.CONSTRUCTION_COUNT;
+				int oldAbstractModelManager_CONSTRUCTION_COUNT = AbstractModelManager.CONSTRUCTION_COUNT;
+				int oldExecutorManager_CONSTRUCTION_COUNT = ExecutorManager.CONSTRUCTION_COUNT;
+				int oldAbstractExecutor_CONSTRUCTION_COUNT = AbstractExecutor.CONSTRUCTION_COUNT;
+				TestOCL ocl2 = createOCL();
+				doUMLCompile(ocl2, testProjectName);
+
+				//
+				// Execute the profile
+				String qualifiedPackageClassName = "Bug571198.bug571198.ValidationProblemPackage";
+				String pathMapName = "pathmap://VALIDATIONPROBLEM_PROFILE/";
+				Map<URI, URI> extraUriMap = new HashMap<URI, URI>();
+			//	extraUriMap.put(URI.createURI("pathmap://VALIDATIONPROBLEM_LIBRARY/ValidationProblem-Library.uml"), umlLibraryFile.getURI());
+				extraUriMap.put(URI.createURI("pathmap://VALIDATIONPROBLEM_PROFILE/ValidationProblem.profile.uml"), umlProfileFile.getURI());
+				Resource umlModelResource = validateUmlModel(umlModelFile.getURI(), qualifiedPackageClassName, pathMapName, extraUriMap);
+				assertEquals("AbstractEnvironmentFactory.CONSTRUCTION_COUNT", 1, AbstractEnvironmentFactory.CONSTRUCTION_COUNT-oldAbstractEnvironmentFactory_CONSTRUCTION_COUNT);
+				assertEquals("AbstractModelManager.CONSTRUCTION_COUNT", 0, AbstractModelManager.CONSTRUCTION_COUNT-oldAbstractModelManager_CONSTRUCTION_COUNT);
+				assertEquals("ExecutorManager.CONSTRUCTION_COUNT", 0, ExecutorManager.CONSTRUCTION_COUNT-oldExecutorManager_CONSTRUCTION_COUNT);
 				assertEquals("AbstractExecutor.CONSTRUCTION_COUNT", 0, AbstractExecutor.CONSTRUCTION_COUNT-oldAbstractExecutor_CONSTRUCTION_COUNT);
 				for (@NonNull EObject eObject : umlModelResource.getContents()) {
 					EClass eClass = eObject.eClass();
