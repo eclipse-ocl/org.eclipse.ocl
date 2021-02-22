@@ -49,14 +49,25 @@ public class UMLGenModelHelper extends AbstractGenModelHelper
 		return name;
 	}
 
+	/**
+	 * If eStructuralFeature is a same-Ecore-named redefinition of a super-feature return the redefined feature for
+	 * which a GenFeature will  be available.
+	 */
 	protected @NonNull EStructuralFeature resolveRedefinition(@NonNull EStructuralFeature eStructuralFeature) {
-		EStructuralFeature eFeature = eStructuralFeature;
+		String name = eStructuralFeature.getName();
+		assert name != null;
+		EStructuralFeature eFeature = eStructuralFeature;	// See Bug 570891/571407 - no need to trace changed name redefinitions
 		for (EAnnotation eAnnotation; (eAnnotation = eFeature.getEAnnotation(PivotConstantsInternal.REDEFINES_ANNOTATION_SOURCE)) != null; ) {
+			boolean gotOne = false;
 			for (EObject reference : eAnnotation.getReferences()) {
-				if (reference instanceof EStructuralFeature) {
+				if ((reference instanceof EStructuralFeature) && name.equals(((EStructuralFeature)reference).getName())) {
 					eFeature = (EStructuralFeature) reference;
+					gotOne = true;
 					break;
 				}
+			}
+			if (!gotOne) {
+				break;
 			}
 		}
 		return eFeature;
