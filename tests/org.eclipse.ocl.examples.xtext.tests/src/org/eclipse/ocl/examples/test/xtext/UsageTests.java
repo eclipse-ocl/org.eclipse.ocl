@@ -21,6 +21,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -82,9 +83,11 @@ import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
+import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ui.IWorkbench;
@@ -93,6 +96,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.intro.IIntroManager;
 import org.eclipse.uml2.uml.Model;
+import org.eclipse.uml2.uml.NamedElement;
 import org.eclipse.uml2.uml.Stereotype;
 import org.eclipse.uml2.uml.ecore.importer.UMLImporter;
 import org.eclipse.uml2.uml.editor.presentation.UMLEditor;
@@ -1395,6 +1399,87 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 					}
 				}
 				ocl2.dispose(); */
+			}
+		});
+	}
+
+	/**
+	 * Verify that the static profile in Bug571462.profile.uml model can be generated and compiled
+	 * and that the Bug571462.uml model can then validate.
+	 */
+	public void testBug571462_uml() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() throws Exception {
+				TestOCL ocl1 = createOCL();
+				String testFileStem = "Bug571462";
+				String testProjectName = testFileStem; //"bug571462";
+				TestFile umlModelFile = getTestFile(testFileStem + ".uml", ocl1, getTestModelURI("models/uml/" + testFileStem + ".uml"));
+			//	TestFile umlLibraryFile = getTestFile(testFileStem + ".library.uml", ocl1, getTestModelURI("models/uml/" + testFileStem + ".library.uml"));
+				TestFile umlProfileFile = getTestFile(testFileStem + ".profile.uml", ocl1, getTestModelURI("models/uml/" + testFileStem + ".profile.uml"));
+				Resource umlProfileResource = loadUmlProfile(ocl1.getResourceSet(), umlProfileFile.getURI());
+				String ecoreFileContent = createUMLEcoreModelContent(umlProfileResource);
+				String genmodelFileContent = createUMLGenModelContent(umlProfileResource, testFileStem, null);
+				createManifestFile();
+				createTestFileWithContent(getTestProject().getOutputFile(testFileStem + ".profile.ecore"), ecoreFileContent);
+				URI genModelURI = createTestFileWithContent(getTestProject().getOutputFile(testFileStem + ".profile.genmodel"), genmodelFileContent);
+				Path genModelPath = new Path("/" + getTestProject().getName() + "/" + testFileStem + ".profile.genmodel");
+				//
+				TestUMLImporter importer = new TestUMLImporter(ocl1.getResourceSet().getPackageRegistry());
+				importer.reloadGenModel(genModelPath);
+				ocl1.dispose();
+				//
+				doGenModel(genModelURI);
+				//
+				TestOCL ocl2 = createOCL();
+				doUMLCompile(ocl2, testProjectName);
+
+				//
+				int oldAbstractEnvironmentFactory_CONSTRUCTION_COUNT = AbstractEnvironmentFactory.CONSTRUCTION_COUNT;
+				int oldAbstractModelManager_CONSTRUCTION_COUNT = AbstractModelManager.CONSTRUCTION_COUNT;
+				int oldExecutorManager_CONSTRUCTION_COUNT = ExecutorManager.CONSTRUCTION_COUNT;
+				int oldAbstractExecutor_CONSTRUCTION_COUNT = AbstractExecutor.CONSTRUCTION_COUNT;
+				// Execute the profile
+				String qualifiedPackageClassName = "Bug571462.validationproblem.ValidationProblemPackage";
+				String pathMapName = "pathmap://VALIDATIONPROBLEM_PROFILE/";
+				Map<URI, URI> extraUriMap = new HashMap<URI, URI>();
+			//	extraUriMap.put(URI.createURI("pathmap://VALIDATIONPROBLEM_LIBRARY/ValidationProblem-Library.uml"), umlLibraryFile.getURI());
+				extraUriMap.put(URI.createURI("pathmap://VALIDATIONPROBLEM_PROFILE/ValidationProblem.profile.uml"), umlProfileFile.getURI());
+				Resource umlModelResource = validateUmlModel(umlModelFile.getURI(), qualifiedPackageClassName, pathMapName, extraUriMap);
+				assertEquals("AbstractEnvironmentFactory.CONSTRUCTION_COUNT", 0, AbstractEnvironmentFactory.CONSTRUCTION_COUNT-oldAbstractEnvironmentFactory_CONSTRUCTION_COUNT);
+			//	assertEquals("AbstractModelManager.CONSTRUCTION_COUNT", 1, AbstractModelManager.CONSTRUCTION_COUNT-oldAbstractModelManager_CONSTRUCTION_COUNT);
+			//	assertEquals("ExecutorManager.CONSTRUCTION_COUNT", 1, ExecutorManager.CONSTRUCTION_COUNT-oldExecutorManager_CONSTRUCTION_COUNT);
+				assertEquals("AbstractExecutor.CONSTRUCTION_COUNT", 0, AbstractExecutor.CONSTRUCTION_COUNT-oldAbstractExecutor_CONSTRUCTION_COUNT);
+				for (@NonNull EObject eRoot : umlModelResource.getContents()) {
+					if (eRoot instanceof org.eclipse.uml2.uml.Package) {
+						for (@NonNull EObject eObject : new TreeIterable(eRoot, true)) {
+							if (eObject != eRoot) {
+								System.out.println();
+							}
+							EClass eClass = eObject.eClass();
+							String id = "@" + Integer.toHexString(System.identityHashCode(eObject));
+							if (eObject instanceof NamedElement) {
+								System.out.println(eClass.getName() + id);
+								id = "'" + ((NamedElement)eObject).getName() + "'";
+							}
+							List<EStructuralFeature> eAllStructuralFeatures = new ArrayList<>(eClass.getEAllStructuralFeatures());
+							Collections.sort(eAllStructuralFeatures, NameUtil.ENAMED_ELEMENT_COMPARATOR);
+							for (EStructuralFeature eFeature : eAllStructuralFeatures) {
+								Object value = eObject.eGet(eFeature);
+								System.out.println(eClass.getName() + id + "::" + eFeature.getName() + " => " + value);
+							}
+						}
+					}
+					else {
+						System.out.println();
+						EClass eClass = eRoot.eClass();
+						for (EStructuralFeature eFeature : eClass.getEAllStructuralFeatures()) {
+							Object value = eRoot.eGet(eFeature);
+							System.out.println(eClass.getName() + "@" + Integer.toHexString(System.identityHashCode(eRoot)) + "::" + eFeature.getName() + " => " + value);
+						}
+					}
+				}
+				ocl2.dispose();
 			}
 		});
 	}
