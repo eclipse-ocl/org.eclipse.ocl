@@ -1431,12 +1431,12 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				doUMLCompile(ocl2, testProjectName);
 
 				//
-				int oldAbstractEnvironmentFactory_CONSTRUCTION_COUNT = AbstractEnvironmentFactory.CONSTRUCTION_COUNT;
+			/*	int oldAbstractEnvironmentFactory_CONSTRUCTION_COUNT = AbstractEnvironmentFactory.CONSTRUCTION_COUNT;
 				int oldAbstractModelManager_CONSTRUCTION_COUNT = AbstractModelManager.CONSTRUCTION_COUNT;
 				int oldExecutorManager_CONSTRUCTION_COUNT = ExecutorManager.CONSTRUCTION_COUNT;
 				int oldAbstractExecutor_CONSTRUCTION_COUNT = AbstractExecutor.CONSTRUCTION_COUNT;
 				// Execute the profile
-			/*	String qualifiedPackageClassName = "Bug571494.validationproblem.ValidationProblemPackage";
+				String qualifiedPackageClassName = "Bug571494.validationproblem.ValidationProblemPackage";
 				String pathMapName = "pathmap://VALIDATIONPROBLEM_PROFILE/";
 				Map<URI, URI> extraUriMap = new HashMap<URI, URI>();
 			//	extraUriMap.put(URI.createURI("pathmap://VALIDATIONPROBLEM_LIBRARY/ValidationProblem-Library.uml"), umlLibraryFile.getURI());

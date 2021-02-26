@@ -424,10 +424,9 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 		EClass eClass = eStructuralFeature.getEContainingClass();
 		if (eClass != null) {
 			GenClass genClass = getGenClass(eClass);
-			String name = getName(eStructuralFeature);
-			for (GenFeature genFeature : genClass.getGenFeatures()) {
-				String featureName = getName(genFeature.getEcoreFeature());
-				if (name.equals(featureName)) {
+			for (GenFeature genFeature : genClass.getAllGenFeatures()) {
+				EStructuralFeature genEcoreFeature = genFeature.getEcoreFeature();
+				if (eStructuralFeature == genEcoreFeature) {
 					return genFeature;
 				}
 			}

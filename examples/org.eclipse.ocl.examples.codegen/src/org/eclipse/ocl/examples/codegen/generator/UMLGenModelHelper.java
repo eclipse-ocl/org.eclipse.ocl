@@ -10,8 +10,12 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.generator;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.emf.codegen.ecore.genmodel.GenFeature;
 import org.eclipse.emf.ecore.EAnnotation;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -28,9 +32,40 @@ public class UMLGenModelHelper extends AbstractGenModelHelper
 		super(metamodelManager);
 	}
 
+	/**
+	 * Return the EClass-contained EStructuralFeature lements in the transitive clozure of the
+	 * 'redefines' EAnnotation of eStructuralFeature.
+	 */
+	protected @Nullable List<@NonNull EStructuralFeature> gatherDefinitions(@Nullable List<@NonNull EStructuralFeature> definingFeatures, @NonNull EStructuralFeature eStructuralFeature) {
+		if (eStructuralFeature.eContainer() instanceof EClass) {
+			if (definingFeatures == null) {
+				definingFeatures = new ArrayList<>();
+			}
+			if (!definingFeatures.contains(eStructuralFeature)) {
+				definingFeatures.add(eStructuralFeature);
+			}
+		}
+		else {
+			EAnnotation eAnnotation = eStructuralFeature.getEAnnotation(PivotConstantsInternal.REDEFINES_ANNOTATION_SOURCE);
+			if (eAnnotation != null) {
+				for (EObject reference : eAnnotation.getReferences()) {
+					if (reference instanceof EStructuralFeature) {
+						definingFeatures = gatherDefinitions(definingFeatures, (EStructuralFeature)reference);
+					}
+				}
+			}
+		}
+		return definingFeatures;
+	}
+
 	@Override
 	public @NonNull GenFeature getGenFeature(@NonNull EStructuralFeature eStructuralFeature) throws GenModelException {
-		EStructuralFeature eFeature = resolveRedefinition(eStructuralFeature);
+		EStructuralFeature eFeature = eStructuralFeature;
+		if (!(eStructuralFeature.eContainer() instanceof EClass)) {
+			List<@NonNull EStructuralFeature> definingFeatures = gatherDefinitions(null, eStructuralFeature);
+			assert (definingFeatures != null) && (definingFeatures.size() > 0);
+			eFeature = definingFeatures.get(0);			// Any of the features should hit the same virtual resolution.
+		}
 		return super.getGenFeature(eFeature);
 	}
 
@@ -47,29 +82,5 @@ public class UMLGenModelHelper extends AbstractGenModelHelper
 			name = "";
 		}
 		return name;
-	}
-
-	/**
-	 * If eStructuralFeature is a same-Ecore-named redefinition of a super-feature return the redefined feature for
-	 * which a GenFeature will  be available.
-	 */
-	protected @NonNull EStructuralFeature resolveRedefinition(@NonNull EStructuralFeature eStructuralFeature) {
-		String name = eStructuralFeature.getName();
-		assert name != null;
-		EStructuralFeature eFeature = eStructuralFeature;	// See Bug 570891/571407 - no need to trace changed name redefinitions
-		for (EAnnotation eAnnotation; (eAnnotation = eFeature.getEAnnotation(PivotConstantsInternal.REDEFINES_ANNOTATION_SOURCE)) != null; ) {
-			boolean gotOne = false;
-			for (EObject reference : eAnnotation.getReferences()) {
-				if ((reference instanceof EStructuralFeature) && name.equals(((EStructuralFeature)reference).getName())) {
-					eFeature = (EStructuralFeature) reference;
-					gotOne = true;
-					break;
-				}
-			}
-			if (!gotOne) {
-				break;
-			}
-		}
-		return eFeature;
 	}
 }
