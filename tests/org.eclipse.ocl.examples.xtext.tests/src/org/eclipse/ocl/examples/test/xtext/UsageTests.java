@@ -1189,6 +1189,10 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	 * Verify that the static profile in Bug570891.uml model can be generated and compiled.
 	 */
 	public void testBug570891_uml() throws Throwable {
+		if (OCLGenModelUtil.INSTANCE.hasDoubleOverrideBug547424()) {				// Avoid UML BUG 547424
+			System.err.println(getName() + " has been disabled -see UML Bug 547424");
+			return;
+		}
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws Exception {

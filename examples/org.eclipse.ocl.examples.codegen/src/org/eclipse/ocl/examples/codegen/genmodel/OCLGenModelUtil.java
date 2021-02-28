@@ -48,9 +48,10 @@ import org.eclipse.ocl.pivot.util.DerivedConstants;
 public abstract class OCLGenModelUtil
 {
 	public static @NonNull OCLGenModelUtil INSTANCE =
-			GenRuntimeVersion.get("2.17") != null ? new EMF_CodeGen_2_17() :
-			GenRuntimeVersion.get("2.16") != null ? new EMF_CodeGen_2_16() :
-			GenRuntimeVersion.get("2.14") != null ? new EMF_CodeGen_2_14() :
+			GenRuntimeVersion.get("2.25") != null ? new EMF_CodeGen_2_25() :			// 2021-03
+			GenRuntimeVersion.get("2.17") != null ? new EMF_CodeGen_2_17() :			// 2019-03
+			GenRuntimeVersion.get("2.16") != null ? new EMF_CodeGen_2_16() :			// 2018-12
+			GenRuntimeVersion.get("2.14") != null ? new EMF_CodeGen_2_14() :			// Photon
 			new EMF_CodeGen_Default();
 
 	public static final @NonNull String OCL_GENMODEL_COPY_AND_PASTE_URI = OCLinEcoreGenModelGeneratorAdapter.OCL_GENMODEL_URI + "/CopyAndPaste";
@@ -329,6 +330,7 @@ public abstract class OCLGenModelUtil
 	public abstract boolean hasAPIDeprecatedTag(GenBase genBase);
 	public abstract boolean hasAPIDeprecatedTag(Collection<?>... elements);
 	public abstract boolean hasAPITags(GenBase genBase);
+	public abstract boolean hasDoubleOverrideBug547424();
 	public abstract boolean hasImplicitAPITags(GenBase genBase);
 	public abstract boolean hasImplicitAPITags(GenBase genBase, boolean excludeOwnDocumentation);
 	public abstract boolean hasImplicitAPIDeprecatedTag(GenBase genBase);
@@ -390,6 +392,11 @@ public abstract class OCLGenModelUtil
 
 		@Override
 		public boolean hasAPITags(GenBase genBase) {
+			return false;
+		}
+
+		@Override
+		public boolean hasDoubleOverrideBug547424() {
 			return false;
 		}
 
@@ -493,6 +500,11 @@ public abstract class OCLGenModelUtil
 	private static class EMF_CodeGen_2_16 extends EMF_CodeGen_2_14
 	{
 		@Override
+		public boolean hasDoubleOverrideBug547424() {
+			return true;	// Pre 2018-12 there were no overrides at all.
+		}
+
+		@Override
 		public boolean useInterfaceOverrideAnnotation(GenModel genModel) {
 			return genModel.useInterfaceOverrideAnnotation();
 		}
@@ -507,6 +519,18 @@ public abstract class OCLGenModelUtil
 		@Override
 		public boolean useNestedImports() {
 			return true;
+		}
+	}
+
+	/**
+	 * EMF_CodeGen_2_25 redirects GenModel facilities available in an EMF >= 2.25 platform to the
+	 * standard implementation.
+	 */
+	private static class EMF_CodeGen_2_25 extends EMF_CodeGen_2_17
+	{
+		@Override
+		public boolean hasDoubleOverrideBug547424() {
+			return false;			// Fixed in UML 5.6.0 for 2021-03
 		}
 	}
 }
