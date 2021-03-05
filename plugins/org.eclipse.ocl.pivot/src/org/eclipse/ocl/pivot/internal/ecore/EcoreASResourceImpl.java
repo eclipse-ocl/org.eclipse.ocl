@@ -23,6 +23,7 @@ public class EcoreASResourceImpl extends ASResourceImpl
 {
 	public EcoreASResourceImpl(@NonNull URI uri, @NonNull ASResourceFactory asResourceFactory) {
 		super(uri, asResourceFactory);
+	//	setSaveable(false);		-- FIXME change to require explicit srtSaveable(true) policy
 	}
 
 	@Override

@@ -83,9 +83,17 @@ public class Ecore2AS extends AbstractExternal2AS
 	 */
 	public static final @NonNull TracingOption NOT_OPTIONAL = new TracingOption(PivotPlugin.PLUGIN_ID, "ecore2as/notOptional");
 
-	public static @NonNull Ecore2AS getAdapter(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
+	/**
+	 * @since 1.14
+	 */
+	public static @Nullable Ecore2AS basicGetAdapter(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
 		External2AS adapter = findAdapter(resource, environmentFactory);
 		Ecore2AS castAdapter = (Ecore2AS) adapter;
+		return castAdapter;
+	}
+
+	public static @NonNull Ecore2AS getAdapter(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
+		Ecore2AS castAdapter = basicGetAdapter(resource, environmentFactory);
 		if (castAdapter == null) {
 			castAdapter = new Ecore2AS(resource, environmentFactory);
 		}
@@ -471,6 +479,7 @@ public class Ecore2AS extends AbstractExternal2AS
 			return ClassUtil.nonNullModel(containingRoot);
 		}
 		@NonNull ASResource asResource = metamodelManager.getResource(pivotURI, ASResource.ECORE_CONTENT_TYPE);
+		asResource.setSaveable(false);
 		//		try {
 		if ((metamodelManager.getLibraryResource() == null) && isPivot(ecoreContents)) {
 			String nsURI = ((EPackage)ecoreContents.iterator().next()).getNsURI();
