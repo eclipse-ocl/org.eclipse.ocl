@@ -44,7 +44,7 @@ import org.eclipse.ocl.examples.standalone.StandaloneApplication;
 import org.eclipse.ocl.examples.standalone.StandaloneCommand;
 import org.eclipse.ocl.examples.standalone.StandaloneResponse;
 import org.eclipse.ocl.examples.standalone.messages.StandaloneMessages;
-import org.eclipse.ocl.pivot.internal.validation.PivotEObjectValidator.ValidationAdapter;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLLoader;
 
 /**
@@ -540,7 +540,7 @@ public class ValidateCommand extends StandaloneCommand
 			logger.error(StandaloneMessages.OCLValidatorApplication_Aborted);
 			return StandaloneResponse.FAIL;
 		}
-		if (ValidationAdapter.findAdapter(standaloneApplication.getResourceSet()) == null) {
+		if (ThreadLocalExecutor.basicGetEnvironmentFactory() == null) {
 			logger.error(StandaloneMessages.OCLValidatorApplication_Aborted);
 			return StandaloneResponse.FAIL;
 		}

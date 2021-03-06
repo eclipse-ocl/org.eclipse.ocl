@@ -7,7 +7,7 @@
  *
  * Contributors:
  *	E.D.Willink (CEA LIST) - initial API and implementation
- *  Obeo - Implement constraints validation 
+ *  Obeo - Implement constraints validation
  *******************************************************************************/
 package org.eclipse.ocl.examples.validity.locator;
 
@@ -41,7 +41,7 @@ import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
-import org.eclipse.ocl.pivot.internal.validation.PivotEObjectValidator.ValidationAdapter;
+import org.eclipse.ocl.pivot.internal.validation.PivotEObjectValidator;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
@@ -203,14 +203,11 @@ public class PivotConstraintLocator extends AbstractConstraintLocator
 				try {
 					ResourceSet resourceSet = eObject.eResource().getResourceSet();
 					if (resourceSet != null) {
-						ValidationAdapter validationAdapter = ValidationAdapter.findAdapter(resourceSet);
-						if (validationAdapter != null) {
-							Map<Object, Object> context = validityManager.createDefaultContext();
-							context.put(Monitor.class,  monitor);
-							Diagnostic diagnostic = validationAdapter.validate(constraint, eObject, context);
-							result.setDiagnostic(diagnostic);
-							severity = diagnostic != null ? getSeverity(diagnostic) : Severity.OK;
-						}
+						Map<Object, Object> context = validityManager.createDefaultContext();
+						context.put(Monitor.class,  monitor);
+						Diagnostic diagnostic = PivotEObjectValidator.INSTANCE.validate(constraint, eObject, context);
+						result.setDiagnostic(diagnostic);
+						severity = diagnostic != null ? getSeverity(diagnostic) : Severity.OK;
 					}
 				} catch (Throwable e) {
 					result.setException(e);

@@ -15,7 +15,6 @@ package org.eclipse.ocl.pivot.internal.validation;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
@@ -47,11 +46,11 @@ import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
-import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.validation.ComposedEValidator;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 
@@ -64,200 +63,69 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
  * PivotEObjectValidator.eValidators and installing PivotEObjectValidator.INSTANCE in its stead.
  *
  * When validation occurs, the static INSTANCE first invokes the displaced functionality and
- * then looks for a ValidationAdapter in the ResourceSet for the object to be validated.
- * This ValidationAdapter is only available if the ResourceSet is for an application for which
- * Pivot invariants were defined. Other applications see only a small overhead in their
- * processing time.
+ * then looks for an EnvironmentFactory for the current thread.
+ * This EnvironmentFactory is only available for Pivot OCL applications.
+ * Other applications see only a small overhead in their processing time.
  */
 public class PivotEObjectValidator implements EValidator
 {
 	/**
-	 * A ValidationAdapter is installed in the ResourceSet of applications that register for additional
-	 * PIvot-defined constraints. The standard validation is performed by PivotEObjectValidator.INSTANCE
-	 * before additional functionality is provided by the ValidationAdapter.
+	 * ValidationAdapter is an obsolete class that used to provide stateful context for a ResourceSet
+	 * for which Complete OCL validation was necessary. stateless works much better with the stste coming
+	 * from ThreadLocalExecutor.basicGetEnvironmentFactory(). This class is therefore no longer used.
+	 * Its functionality might provide some compatibility for applications that continue to use it.
 	 *
-	 * For non-Pivot applications the ValidationAdapter adapts the ResourceSet containing the validatable
-	 * (Ecore) instances. Validation is invoked for validatable (Ecore) instances.
-	 *
-	 * For Pivot applications the ValidationAdapter adapts the ResourceSet containing the validatable
-	 * metamodel elements. Validation is invoked for validatable (Pivot) elements so a redirection via
-	 * the MetamodelManager is needed to find the ValidationAdapter on the externalResourceSet.
+	 * @deprecated no longer used - pass EnvironmentFactory to PivotEObjectValidator.validate()
 	 */
+	@Deprecated
 	public static class ValidationAdapter extends AdapterImpl
 	{
-		public static ValidationAdapter findAdapter(@NonNull ResourceSet resourceSet) {
-			for (Adapter adapter : resourceSet.eAdapters()) {
-				if (adapter instanceof ValidationAdapter) {
-					return (ValidationAdapter)adapter;
-				}
-			}
-			EnvironmentFactory environmentFactory = PivotUtilInternal.findEnvironmentFactory(resourceSet);
-			if (environmentFactory != null) {
-				ResourceSet externalResourceSet = environmentFactory.getResourceSet();
-				for (Adapter adapter : externalResourceSet.eAdapters()) {
-					if (adapter instanceof ValidationAdapter) {
-						return (ValidationAdapter)adapter;
-					}
-				}
-			}
-			return null;
+		public static @Nullable ValidationAdapter findAdapter(@NonNull ResourceSet resourceSet) {
+			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+			return environmentFactory != null ? new ValidationAdapter(environmentFactory) : null;
 		}
 
 		protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 
-		public ValidationAdapter(@NonNull EnvironmentFactoryInternal environmentFactory) {
-			this.environmentFactory = environmentFactory;
+		public ValidationAdapter(@Nullable EnvironmentFactoryInternal environmentFactory) {
+			this.environmentFactory = environmentFactory != null ? environmentFactory : PivotUtilInternal.getEnvironmentFactory(null);
 		}
 
 		public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
 			return environmentFactory;
 		}
 
-		/**
-		 * Validate all of eClassifier's constraints for object, appending warnings and at most one error to diagnostics
-		 * using context to elaborate the validation context.
-		 */
-		@Deprecated		// Temporary internal API preservation for Mars RC3
 		public boolean validate(@NonNull EClassifier eClassifier, @Nullable Object object, @Nullable DiagnosticChain diagnostics, @Nullable Map<Object, Object> context) {
-			return validate(eClassifier, object, null, diagnostics, context);
+			return INSTANCE.validate(eClassifier, object, null, diagnostics, context);
 		}
+
 		public boolean validate(@NonNull EClassifier eClassifier, @Nullable Object object, @Nullable List<Model> complementingModels,
 				@Nullable DiagnosticChain diagnostics, @Nullable Map<Object, Object> context) {
-			boolean allOk = true;
-			PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-			Type type = metamodelManager.getASOfEcore(Type.class, eClassifier);
-			if (type != null) {
-				for (Constraint constraint : metamodelManager.getAllInvariants(type)) {
-					if (constraint !=  null) {
-						if (complementingModels != null) {
-							Model containingModel = PivotUtil.getContainingModel(constraint);
-							if (!complementingModels.contains(containingModel)) {
-								continue;
-							}
-						}
-						Diagnostic diagnostic = validate(constraint, object, context);
-						if (diagnostic != null) {
-							if (diagnostics != null) {
-								diagnostics.add(diagnostic);
-							}
-							allOk = false;
-							if (diagnostic.getSeverity() == Diagnostic.ERROR) {
-								return allOk;		// Generate many warnings but only one error
-							}
-						}
-					}
-				}
-			}
-			return allOk;
+			return INSTANCE.validate(eClassifier, object, complementingModels, diagnostics, context);
 		}
 
-		/**
-		 * Validate constraint for object using context to elaborate the validation context.
-		 * Returns null for no problem or a warning/error severity diagnostic for a problem.
-		 */
 		public @Nullable Diagnostic validate(final @NonNull Constraint constraint, final @Nullable Object object, final @Nullable Map<Object, Object> context) {
-			LanguageExpression specification = constraint.getOwnedSpecification();
-			if (specification == null) {
-				return null;
-			}
-			if (specification.getBody() == null) {	// May be null for declations of hand coded Java
-				return null;
-			}
-			//			if ((specification.getBodyExpression() == null) && (specification.getBody().size() <= 0)) {	// May be null for declations of hand coded Java
-			//				return null;
-			//			}
-			ExpressionInOCL query;
-			try {
-				query = ((EnvironmentFactoryInternalExtension)environmentFactory).parseSpecification(specification);
-			} catch (ParserException e) {
-				String message = e.getLocalizedMessage();
-				return new BasicDiagnostic(Diagnostic.ERROR, EObjectValidator.DIAGNOSTIC_SOURCE, 0, message, new Object [] { object });
-			}
-			Variable contextVariable = query.getOwnedContext();
-			if (contextVariable == null) {
-				return null;
-			}
-			//			OCLExpression bodyExpression = query.getBodyExpression();
-			//			if (bodyExpression == null) {	// May be null for declations of hand coded Java
-			//				return null;
-			//			}
-			ModelManager oldModelManager = null;
-			if (context != null) {
-				oldModelManager = (ModelManager) context.get(ModelManager.class);
-			}
-			EvaluationVisitor.EvaluationVisitorExtension evaluationVisitor = (EvaluationVisitor.EvaluationVisitorExtension)environmentFactory.createEvaluationVisitor(object, query, oldModelManager);
-			if (context != null) {
-				ModelManager newModelManager = evaluationVisitor.getExecutor().getModelManager();
-				if (newModelManager != oldModelManager) {
-					context.put(ModelManager.class, newModelManager);
-				}
-				Object monitor = context.get(Monitor.class);
-				if (monitor instanceof Monitor) {
-					evaluationVisitor.setMonitor((Monitor) monitor);
-				}
-			}
-			final PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-			AbstractConstraintEvaluator<Diagnostic> constraintEvaluator = new AbstractConstraintEvaluator<Diagnostic>(query)
-			{
-				@Override
-				protected String getObjectLabel() {
-					Type type = PivotUtil.getContainingType(constraint);
-					Type primaryType = type != null ? metamodelManager.getPrimaryType(type) : null;
-					EObject eTarget = primaryType != null ? primaryType.getESObject() : null;
-					EClassifier eClassifier = eTarget instanceof EClassifier ?  (EClassifier)eTarget : null;
-					return LabelUtil.getLabel(eClassifier, object, context);
-				}
-
-				@Override
-				protected Diagnostic handleExceptionResult(@NonNull Throwable e) {
-					String message = StringUtil.bind(PivotMessagesInternal.ValidationConstraintException_ERROR_,
-						getConstraintTypeName(), getConstraintName(), getObjectLabel(), e);
-					return new BasicDiagnostic(Diagnostic.ERROR, EObjectValidator.DIAGNOSTIC_SOURCE, 0, message, new Object [] { object });
-				}
-
-				@Override
-				protected Diagnostic handleFailureResult(@Nullable Object result) {
-					String message = getConstraintResultMessage(result);
-					int severity = getConstraintResultSeverity(result);
-					return new BasicDiagnostic(severity, EObjectValidator.DIAGNOSTIC_SOURCE, 0, message, new Object [] { object });
-				}
-
-				@Override
-				protected Diagnostic handleInvalidExpression(@NonNull String message) {
-					return new BasicDiagnostic(Diagnostic.ERROR, EObjectValidator.DIAGNOSTIC_SOURCE, 0, message, new Object [] { object });
-				}
-
-				@Override
-				protected Diagnostic handleInvalidResult(@NonNull InvalidValueException e) {
-					String message = StringUtil.bind(PivotMessagesInternal.ValidationResultIsInvalid_ERROR_,
-						getConstraintTypeName(), getConstraintName(), getObjectLabel(), e.getLocalizedMessage());
-					return new BasicDiagnostic(Diagnostic.ERROR, EObjectValidator.DIAGNOSTIC_SOURCE, 0, message, new Object [] { object });
-				}
-
-				@Override
-				protected Diagnostic handleSuccessResult() {
-					return null;
-				}
-			};
-			Diagnostic diagnostic = constraintEvaluator.evaluate(evaluationVisitor);
-			//			if (diagnostic != null) {			// FIXME Debugging
-			//				constraintEvaluator.evaluate(evaluationVisitor);
-			//			}
-			return diagnostic;
+			return INSTANCE.validate(environmentFactory, constraint, object,  context);
 		}
 	}
 
 	/**
 	 * The static instance that is installed in the EValidator.Registry.INSTANCE to compose
 	 * Pivot validation with whatever other validation was installed.
+	 *
+	 * @since 1.14
 	 */
-	private static final @NonNull PivotEObjectValidator INSTANCE = new PivotEObjectValidator();
+	public static final @NonNull PivotEObjectValidator INSTANCE = new PivotEObjectValidator(null);
 
 	/**
 	 * Install Complete OCL validation support in resourceSet for metamodelManager.
-	 */
-	public static @NonNull ValidationAdapter install(@NonNull ResourceSet resourceSet, @NonNull EnvironmentFactoryInternal environmentFactory) {
-		ValidationAdapter validationAdapter = ValidationAdapter.findAdapter(resourceSet);
+	 * /
+	@Deprecated		/* @deprecated no longer used */
+	public static @Nullable ValidationAdapter install(@NonNull ResourceSet resourceSet, @NonNull EnvironmentFactoryInternal environmentFactory) {
+		return new ValidationAdapter(environmentFactory);
+	}
+/*	public static @NonNull ValidationAdapter install(@NonNull ResourceSet resourceSet, @NonNull EnvironmentFactoryInternal environmentFactory) {
+		ValidationAdapter validationAdapter = new ValidationAdapter(environmentFactory);
 		if (validationAdapter != null) {
 			if (validationAdapter.getEnvironmentFactory() != environmentFactory) {
 				throw new IllegalArgumentException("Inconsistent EnvironmentFactory");
@@ -265,10 +133,10 @@ public class PivotEObjectValidator implements EValidator
 		}
 		else {
 			validationAdapter = new ValidationAdapter(environmentFactory);
-			resourceSet.eAdapters().add(validationAdapter);
+		//	resourceSet.eAdapters().add(validationAdapter);
 		}
 		return validationAdapter;
-	}
+	} */
 
 	/**
 	 * Install Pivot-defined validation support for ePackage.
@@ -323,7 +191,7 @@ public class PivotEObjectValidator implements EValidator
 		return resourceSet;
 	}
 
-	protected final @Nullable List<Model> complementingModels;
+	protected final @Nullable List<Model> complementingModels;	// FIXME substantially redundant
 
 	@Deprecated		// Temporary internal API preservation for Mars RC3
 	protected PivotEObjectValidator() {
@@ -334,9 +202,163 @@ public class PivotEObjectValidator implements EValidator
 		this.complementingModels = complementingModels;
 	}
 
+	/**
+	 * @since 1.14
+	 */
+	protected boolean validate(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull EClassifier eClassifier, @Nullable Object object, @Nullable List<Model> complementingModels,
+			@Nullable DiagnosticChain diagnostics, @Nullable Map<Object, Object> context) {
+		boolean allOk = true;
+		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+		Type type = metamodelManager.getASOfEcore(Type.class, eClassifier);
+		if (type != null) {
+			for (Constraint constraint : metamodelManager.getAllInvariants(type)) {
+				if (constraint !=  null) {
+					if (complementingModels != null) {
+						Model containingModel = PivotUtil.getContainingModel(constraint);
+						if (!complementingModels.contains(containingModel)) {
+							continue;
+						}
+					}
+					Diagnostic diagnostic = validate(environmentFactory, constraint, object, context);
+					if (diagnostic != null) {
+						if (diagnostics != null) {
+							diagnostics.add(diagnostic);
+						}
+						allOk = false;
+						if (diagnostic.getSeverity() == Diagnostic.ERROR) {
+							return allOk;		// Generate many warnings but only one error
+						}
+					}
+				}
+			}
+		}
+		return allOk;
+	}
+
+	/**
+	 * Validate constraint for object using context to elaborate the validation context.
+	 * Returns null for no problem or a warning/error severity diagnostic for a problem.
+	 */
+	private @Nullable Diagnostic validate(@NonNull EnvironmentFactoryInternal environmentFactory, final @NonNull Constraint constraint, final @Nullable Object object, final @Nullable Map<Object, Object> context) {
+		LanguageExpression specification = constraint.getOwnedSpecification();
+		if (specification == null) {
+			return null;
+		}
+		if (specification.getBody() == null) {	// May be null for declations of hand coded Java
+			return null;
+		}
+		//			if ((specification.getBodyExpression() == null) && (specification.getBody().size() <= 0)) {	// May be null for declations of hand coded Java
+		//				return null;
+		//			}
+		ExpressionInOCL query;
+		try {
+			query = ((EnvironmentFactoryInternalExtension)environmentFactory).parseSpecification(specification);
+		} catch (ParserException e) {
+			String message = e.getLocalizedMessage();
+			return new BasicDiagnostic(Diagnostic.ERROR, EObjectValidator.DIAGNOSTIC_SOURCE, 0, message, new Object [] { object });
+		}
+		Variable contextVariable = query.getOwnedContext();
+		if (contextVariable == null) {
+			return null;
+		}
+		//			OCLExpression bodyExpression = query.getBodyExpression();
+		//			if (bodyExpression == null) {	// May be null for declations of hand coded Java
+		//				return null;
+		//			}
+		ModelManager oldModelManager = null;
+		if (context != null) {
+			oldModelManager = (ModelManager) context.get(ModelManager.class);
+		}
+		EvaluationVisitor.EvaluationVisitorExtension evaluationVisitor = (EvaluationVisitor.EvaluationVisitorExtension)environmentFactory.createEvaluationVisitor(object, query, oldModelManager);
+		if (context != null) {
+			ModelManager newModelManager = evaluationVisitor.getExecutor().getModelManager();
+			if (newModelManager != oldModelManager) {
+				context.put(ModelManager.class, newModelManager);
+			}
+			Object monitor = context.get(Monitor.class);
+			if (monitor instanceof Monitor) {
+				evaluationVisitor.setMonitor((Monitor) monitor);
+			}
+		}
+		final PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+		AbstractConstraintEvaluator<Diagnostic> constraintEvaluator = new AbstractConstraintEvaluator<Diagnostic>(query)
+		{
+			@Override
+			protected String getObjectLabel() {
+				Type type = PivotUtil.getContainingType(constraint);
+				Type primaryType = type != null ? metamodelManager.getPrimaryType(type) : null;
+				EObject eTarget = primaryType != null ? primaryType.getESObject() : null;
+				EClassifier eClassifier = eTarget instanceof EClassifier ?  (EClassifier)eTarget : null;
+				return LabelUtil.getLabel(eClassifier, object, context);
+			}
+
+			@Override
+			protected Diagnostic handleExceptionResult(@NonNull Throwable e) {
+				String message = StringUtil.bind(PivotMessagesInternal.ValidationConstraintException_ERROR_,
+					getConstraintTypeName(), getConstraintName(), getObjectLabel(), e);
+				return new BasicDiagnostic(Diagnostic.ERROR, EObjectValidator.DIAGNOSTIC_SOURCE, 0, message, new Object [] { object });
+			}
+
+			@Override
+			protected Diagnostic handleFailureResult(@Nullable Object result) {
+				String message = getConstraintResultMessage(result);
+				int severity = getConstraintResultSeverity(result);
+				return new BasicDiagnostic(severity, EObjectValidator.DIAGNOSTIC_SOURCE, 0, message, new Object [] { object });
+			}
+
+			@Override
+			protected Diagnostic handleInvalidExpression(@NonNull String message) {
+				return new BasicDiagnostic(Diagnostic.ERROR, EObjectValidator.DIAGNOSTIC_SOURCE, 0, message, new Object [] { object });
+			}
+
+			@Override
+			protected Diagnostic handleInvalidResult(@NonNull InvalidValueException e) {
+				String message = StringUtil.bind(PivotMessagesInternal.ValidationResultIsInvalid_ERROR_,
+					getConstraintTypeName(), getConstraintName(), getObjectLabel(), e.getLocalizedMessage());
+				return new BasicDiagnostic(Diagnostic.ERROR, EObjectValidator.DIAGNOSTIC_SOURCE, 0, message, new Object [] { object });
+			}
+
+			@Override
+			protected Diagnostic handleSuccessResult() {
+				return null;
+			}
+		};
+		Diagnostic diagnostic = constraintEvaluator.evaluate(evaluationVisitor);
+		//			if (diagnostic != null) {			// FIXME Debugging
+		//				constraintEvaluator.evaluate(evaluationVisitor);
+		//			}
+		return diagnostic;
+	}
+
+	/**
+	 * @since 1.14
+	 */
 	@Override
-	public boolean validate(EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context) {
+	public boolean validate(EObject eObject, DiagnosticChain diagnostics, @Nullable Map<Object, Object> context) {
 		return validate(eObject.eClass(), eObject, diagnostics, context);
+	}
+
+	/**
+	 * Validate constraint for object using context to elaborate the validation context.
+	 * Returns null for no problem or a warning/error severity diagnostic for a problem.
+	 *
+	 * @since 1.14
+	 */
+	public @Nullable Diagnostic validate(@NonNull Constraint constraint, @Nullable Object object, @Nullable Map<Object, Object> context) {
+		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(object);
+		return validate(environmentFactory, constraint, object,  context);
+	}
+
+	/**
+	 * @since 1.14
+	 */
+	protected boolean validate(@NonNull EClassifier eClassifier, @Nullable Object object, @Nullable List<Model> complementingModels,
+			@Nullable DiagnosticChain diagnostics, @Nullable Map<Object, Object> validationContext) {
+		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		if (environmentFactory == null) {
+			return true;
+		}
+		return validate(environmentFactory, eClassifier, object, complementingModels, diagnostics, validationContext);
 	}
 
 	/**
@@ -377,14 +399,16 @@ public class PivotEObjectValidator implements EValidator
 	/**
 	 * Perform the additional Pivot-defined validation.
 	 */
-	protected boolean validatePivot(@NonNull EClassifier eClassifier, @Nullable Object object, @Nullable DiagnosticChain diagnostics, Map<Object, Object> context) {
+	protected boolean validatePivot(@NonNull EClassifier eClassifier, @Nullable Object object, @Nullable DiagnosticChain diagnostics, Map<Object, Object> validationContext) {
+		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		if (environmentFactory == null) {
+			return true;
+		}
 		ResourceSet resourceSet = getResourceSet(eClassifier, object, diagnostics);
 		if (resourceSet != null) {
-			ValidationAdapter validationAdapter = ValidationAdapter.findAdapter(resourceSet);
-			if (validationAdapter != null) {
-				boolean allOk = validationAdapter.validate(eClassifier, object, complementingModels, diagnostics, context);
-				return allOk || (diagnostics != null);
-			}
+		//	EnvironmentFactoryInternal environmentFactory = validationContext != null ? (EnvironmentFactoryInternal)validationContext.get(EnvironmentFactory.class) : null;
+			boolean allOk = validate(environmentFactory, eClassifier, object, complementingModels, diagnostics, validationContext);
+			return allOk || (diagnostics != null);
 		}
 		return true;
 	}

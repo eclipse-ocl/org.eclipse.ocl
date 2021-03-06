@@ -32,7 +32,7 @@ import org.eclipse.ocl.examples.emf.validation.validity.manager.ValidityModel;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
-import org.eclipse.ocl.pivot.internal.validation.PivotEObjectValidator.ValidationAdapter;
+import org.eclipse.ocl.pivot.internal.validation.PivotEObjectValidator;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
@@ -129,14 +129,11 @@ public class CompleteOCLCSConstraintLocator extends PivotConstraintLocator
 				try {
 					ResourceSet resourceSet = eObject.eResource().getResourceSet();
 					if (resourceSet != null) {
-						ValidationAdapter validationAdapter = ValidationAdapter.findAdapter(resourceSet);
-						if (validationAdapter != null) {
-							Map<Object, Object> context = validityManager.createDefaultContext();
-							context.put(Monitor.class,  monitor);
-							Diagnostic diagnostic = validationAdapter.validate(constraint, eObject, context);
-							result.setDiagnostic(diagnostic);
-							severity = diagnostic != null ? getSeverity(diagnostic) : Severity.OK;
-						}
+						Map<Object, Object> context = validityManager.createDefaultContext();
+						context.put(Monitor.class,  monitor);
+						Diagnostic diagnostic = PivotEObjectValidator.INSTANCE.validate(constraint, eObject, context);
+						result.setDiagnostic(diagnostic);
+						severity = diagnostic != null ? getSeverity(diagnostic) : Severity.OK;
 					}
 				} catch (Throwable e) {
 					result.setException(e);

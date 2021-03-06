@@ -38,7 +38,6 @@ import org.eclipse.ocl.examples.validity.test.ecoreTest.EcoreTestPackage;
 import org.eclipse.ocl.examples.validity.test.ecoreTest2.EcoreTest2Package;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
-import org.eclipse.ocl.pivot.internal.validation.PivotEObjectValidator.ValidationAdapter;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
@@ -216,7 +215,6 @@ public abstract class AbstractValidityTestCase extends TestCase
 	protected Resource ecoreResource3;
 	protected Resource oclResource;
 	protected Resource oclResource2;
-	protected ValidationAdapter validationAdapter;
 	protected ValidityModel validityModel;
 	protected ValidityManager validityManager;
 	protected RootNode rootNode;
@@ -258,8 +256,6 @@ public abstract class AbstractValidityTestCase extends TestCase
 		assertTrue(helper.loadMetamodels());
 		helper.installPackages();
 
-		validationAdapter = ValidationAdapter.findAdapter(resourceSet);
-		assertNotNull(validationAdapter);
 		helper.dispose();
 	}
 
@@ -302,7 +298,6 @@ public abstract class AbstractValidityTestCase extends TestCase
 		} */
 		ocl.dispose();
 		ocl = null;
-		validationAdapter = null;
 		rootNode = null;
 		ecoreResource = null;
 		validityModel = null;
