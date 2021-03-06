@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClassifier;
@@ -22,18 +21,16 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.URIConverter;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.internal.validation.PivotEObjectValidator;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
@@ -47,44 +44,28 @@ public class CompleteOCLEObjectValidator extends PivotEObjectValidator
 {
 	private static final Logger logger = Logger.getLogger(CompleteOCLEObjectValidator.class);
 
-	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 	protected final @NonNull EPackage ePackage;
 	protected final @NonNull URI oclURI;
-	private Ecore2AS ecore2as = null;
 
 	/**
 	 * Construct a validator to apply the CompleteOCL invariants from oclURI to ePackage
 	 * for the meta-models managed by a newly created environmentFactory.
-	 *
-	 * @deprecated Use the three argument constructor
 	 */
-	@Deprecated
+	@SuppressWarnings("deprecation")
 	public CompleteOCLEObjectValidator(@NonNull EPackage ePackage, @NonNull URI oclURI) {
-		this(ePackage, oclURI, OCL.newInstance().getEnvironmentFactory());
+		this.ePackage = ePackage;
+		this.oclURI = oclURI;
 	}
 
 	/**
 	 * Construct a validator to apply the CompleteOCL invariants from oclURI to ePackage
 	 * for the meta-models managed by environmentFactory.
+	 *
+	 * @deprecated environmentFactory is not used. Use ThreadLocalExecutor.getEnvironmentFactory()
 	 */
+	@Deprecated
 	public CompleteOCLEObjectValidator(@NonNull EPackage ePackage, @NonNull URI oclURI, @NonNull EnvironmentFactory environmentFactory) {
-		super(null);
-		this.environmentFactory = (EnvironmentFactoryInternal) environmentFactory;
-		this.ePackage = ePackage;
-		if (EMFPlugin.IS_ECLIPSE_RUNNING) {
-			URIConverter uriConverter = this.environmentFactory.getResourceSet().getURIConverter();
-			this.oclURI = uriConverter.normalize(oclURI);	// Convert platform:/resource to platform:/plugin if no project
-		}
-		else {
-			this.oclURI = oclURI;
-		}
-		ResourceSet resourceSet = ePackage.eResource().getResourceSet();
-		if (resourceSet != null) {
-			install(resourceSet, this.environmentFactory);
-		}
-		else {
-			this.environmentFactory.loadEPackage(ePackage);
-		}
+		this(ePackage, oclURI);
 	}
 
 	//	@Override
@@ -92,21 +73,25 @@ public class CompleteOCLEObjectValidator extends PivotEObjectValidator
 		return ePackage;
 	}
 
+	@Deprecated
 	public @NonNull PivotMetamodelManager getMetamodelManager() {
-		return environmentFactory.getMetamodelManager();
+		return PivotUtilInternal.getEnvironmentFactory(null).getMetamodelManager();	// Better than nothing compatibility
 	}
 
 	/**
 	 * Perform the loading and installation of the Complete OCL, returning true if successful.
 	 */
-	public boolean initialize() {
+	public boolean initialize(@NonNull EnvironmentFactoryInternal environmentFactory) {
 		Resource ecoreResource = ePackage.eResource();
 		if (ecoreResource == null) {
 			return false;
 		}
+		Ecore2AS ecore2as = Ecore2AS.basicGetAdapter(ecoreResource, environmentFactory);
+		if (ecore2as != null) {
+			return true;
+		}
 		ecore2as = Ecore2AS.getAdapter(ecoreResource, environmentFactory);
-		ResourceSet resourceSet = new ResourceSetImpl();
-		environmentFactory.adapt(resourceSet);
+		ResourceSet resourceSet = environmentFactory.getResourceSet(); // new ResourceSetImpl();
 		List<Diagnostic> errors = ecoreResource.getErrors();
 		assert errors != null;
 		String message = PivotUtil.formatResourceDiagnostics(errors, "", "\n");
@@ -143,17 +128,12 @@ public class CompleteOCLEObjectValidator extends PivotEObjectValidator
 
 	@Override
 	protected boolean validatePivot(@NonNull EClassifier eClassifier, @Nullable Object object,
-			@Nullable DiagnosticChain diagnostics, Map<Object, Object> context) {
-		if (ecore2as == null) {
-			initialize();
-		}
+			@Nullable DiagnosticChain diagnostics, Map<Object, Object> validationContext) {
+		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(object);
+		initialize(environmentFactory);
 		ResourceSet resourceSet = getResourceSet(eClassifier, object, diagnostics);
 		if (resourceSet != null) {
-			ValidationAdapter validationAdapter = ValidationAdapter.findAdapter(resourceSet);
-			if (validationAdapter == null) {
-				validationAdapter = install(resourceSet, environmentFactory);
-			}
-			boolean allOk = validationAdapter.validate(eClassifier, object, complementingModels, diagnostics, context);
+			boolean allOk = validate(environmentFactory, eClassifier, object, complementingModels, diagnostics, validationContext);
 			return allOk || (diagnostics != null);
 		}
 		return true;
