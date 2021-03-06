@@ -61,6 +61,7 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
 import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician.BasicDiagnosticWithRemove;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
@@ -535,6 +536,9 @@ public class MultiValidationJob extends Job
 
 	public MultiValidationJob() {
 		super(BaseUIMessages.MultiValidationJob_Name);
+//        ResourceSetImpl.liveResourceSets = new WeakHashMap<>();
+//    	PivotMetamodelManager.liveMetamodelManagers = new WeakHashMap<>();
+//		StandaloneProjectMap.liveStandaloneProjectMaps = new WeakHashMap<>();
 	}
 
 	/**
@@ -640,9 +644,10 @@ public class MultiValidationJob extends Job
 			//	Ensure entry's project's class loader is useable (to resolve JavaClassCS references)
 			//
 			OCL ocl = entry.createOCL();
+			EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
 			ClassLoader classLoader = getClassLoader(project);
 			if (classLoader != null) {
-				((MetamodelManagerInternal)ocl.getMetamodelManager()).addClassLoader(classLoader);
+				((MetamodelManagerInternal)environmentFactory.getMetamodelManager()).addClassLoader(classLoader);
 			}
 			monitor.worked(1);			// Work Item 1 - Initialize done
 			final @NonNull String markerType = entry.getMarkerId();
@@ -716,6 +721,7 @@ public class MultiValidationJob extends Job
 				}
 				entry.notifyAll();
 			}
+			ThreadLocalExecutor.reset();
 		}
 	}
 

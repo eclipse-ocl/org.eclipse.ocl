@@ -36,6 +36,8 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.labels.LabelSubstitutionLabelProvider;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.labels.AbstractLabelGenerator;
 //import org.eclipse.ocl.ecore.Constraint;
 //import org.eclipse.ocl.ecore.delegate.InvocationBehavior;
@@ -116,6 +118,8 @@ public class LabelUtil
 		Map<Object, Object> context = new HashMap<Object, Object>();
 		context.put(EValidator.SubstitutionLabelProvider.class, LabelUtil.SUBSTITUTION_LABEL_PROVIDER);
 		context.put(EValidator.class, eValidator);
+		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(null);
+		context.put(EnvironmentFactory.class, environmentFactory);
 		return context;
 	}
 

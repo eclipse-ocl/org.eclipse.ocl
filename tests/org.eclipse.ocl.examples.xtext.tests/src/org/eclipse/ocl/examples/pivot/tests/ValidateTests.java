@@ -310,7 +310,6 @@ public class ValidateTests extends AbstractValidateTests
 		URI oclURI = getTestFile("Validate.ocl", ocl0, getTestModelURI("models/oclinecore/Validate.ocl")).getFileURI();
 		CompleteOCLEObjectValidator completeOCLEObjectValidator = new CompleteOCLEObjectValidator(validatePackage1, oclURI, ocl0.getEnvironmentFactory());
 		EValidator.Registry.INSTANCE.put(validatePackage1, completeOCLEObjectValidator);
-		ThreadLocalExecutor.resetEnvironmentFactory();
 		try {
 			EObject testInstance1 = eCreate(validatePackage1, "Level3");
 			EObject testInstance2 = eCreate(validatePackage2, "Level3");
@@ -319,6 +318,7 @@ public class ValidateTests extends AbstractValidateTests
 			//
 			//	No errors
 			//
+			ThreadLocalExecutor.resetEnvironmentFactory();
 			eSet(testInstance1, "ref", "xx");
 			eSet(testInstance1, "l1", "xx");
 			eSet(testInstance1, "l2a", "xx");
@@ -334,6 +334,7 @@ public class ValidateTests extends AbstractValidateTests
 			//
 			//	CompleteOCL errors all round
 			//
+			ThreadLocalExecutor.resetEnvironmentFactory();
 			eSet(testInstance1, "ref", "xxx");
 			eSet(testInstance1, "l1", "xxx");
 			eSet(testInstance1, "l2a", "xxx");
@@ -354,6 +355,7 @@ public class ValidateTests extends AbstractValidateTests
 			//
 			//	One CompleteOCl and one OCLinEcore
 			//
+			ThreadLocalExecutor.resetEnvironmentFactory();
 			eSet(testInstance1, "ref", "ok");
 			eSet(testInstance1, "l1", "ok");
 			eSet(testInstance1, "l2a", "bad");

@@ -16,6 +16,7 @@ import org.apache.log4j.Logger;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.internal.manager.PivotExecutorManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 
@@ -158,17 +159,17 @@ public class ThreadLocalExecutor
 		localReset();
 	}
 
-	private void localAttachEnvironmentFactory(@NonNull EnvironmentFactoryInternal newenvironmentFactory) {
-		if (!concurrentEnvironmentFactories && !newenvironmentFactory.isDisposed()) {
+	private void localAttachEnvironmentFactory(@NonNull EnvironmentFactoryInternal newEnvironmentFactory) {
+		if (!concurrentEnvironmentFactories && !newEnvironmentFactory.isDisposed()) {
 			EnvironmentFactory oldEnvironmentFactory = this.environmentFactory;
 			if (oldEnvironmentFactory == null) {
 			//	assert this.executor == null;		// ?? lightweight Executor promoted to non-lightweight ??
-				setEnvironmentFactory(newenvironmentFactory);
+				setEnvironmentFactory(newEnvironmentFactory);
 			}
 			else if (oldEnvironmentFactory.isDisposed()) {
-				setEnvironmentFactory(newenvironmentFactory);
+				setEnvironmentFactory(newEnvironmentFactory);
 			}
-			else if (oldEnvironmentFactory != newenvironmentFactory) {	// FIXME we coold help caller by doing a localWaitForGC
+			else if (oldEnvironmentFactory != newEnvironmentFactory) {	// FIXME we could help caller by doing a localWaitForGC
 				setEnvironmentFactory(null);
 				this.executor = null;
 				this.concurrentEnvironmentFactories = true;
@@ -231,6 +232,9 @@ public class ThreadLocalExecutor
 		}
 		if (THREAD_LOCAL_ENVIRONMENT_FACTORY.isActive()) {
 			THREAD_LOCAL_ENVIRONMENT_FACTORY.println("[" + Thread.currentThread().getName() + "] " + toString());
+		}
+		if (executor instanceof PivotExecutorManager) {
+			localAttachEnvironmentFactory((EnvironmentFactoryInternal) ((PivotExecutorManager)executor).getEnvironmentFactory());
 		}
 	}
 
