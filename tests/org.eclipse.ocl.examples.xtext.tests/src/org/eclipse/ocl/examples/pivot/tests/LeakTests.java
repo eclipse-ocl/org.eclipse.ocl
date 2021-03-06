@@ -211,7 +211,7 @@ public class LeakTests extends PivotTestCaseWithAutoTearDown
 			}
 			System.gc();
 			Thread.sleep(10);
-			System.out.println("Slept " + 10*i + " ms");
+		//	System.out.println("Slept " + 10*i + " ms");
 		}
 		assertNull("UML Profile has leaked", leakTestRunnable.umlProfileRef.get());
 		assertNull("AS Profile has leaked", leakTestRunnable.asProfileRef.get());

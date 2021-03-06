@@ -128,7 +128,7 @@ import java.util.Collections
 			{
 				/**
 				 * Initializes me with an initial value for my result.
-				 * 
+				 *
 				 * @param context my initial result value
 				 */
 				protected «className»(@NonNull CS2ASConversion context) {

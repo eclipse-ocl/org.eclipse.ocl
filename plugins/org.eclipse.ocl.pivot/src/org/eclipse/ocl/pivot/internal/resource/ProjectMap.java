@@ -343,7 +343,7 @@ public class ProjectMap extends StandaloneProjectMap implements IResourceChangeL
 	}
 
 	/**
-	 * Internal cCall-back from a resoyrceChanged() add/s/removes IProjectDescriptor for newly opened/closed projects.
+	 * Internal cCall-back from a resourceChanged() add/s/removes IProjectDescriptor for newly opened/closed projects.
 	 */
 	@Override
 	public boolean visit(IResourceDelta delta) throws CoreException {
