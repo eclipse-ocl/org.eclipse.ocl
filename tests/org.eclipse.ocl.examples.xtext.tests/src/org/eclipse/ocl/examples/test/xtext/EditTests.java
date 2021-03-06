@@ -46,7 +46,6 @@ import org.eclipse.ocl.pivot.internal.values.CollectionTypeParametersImpl;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
-import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -1063,17 +1062,10 @@ public class EditTests extends XtextTestCase
 		OCL ocl = OCL.newInstance(getProjectMap());
 		String goodString = "coercion toUnlimitedNatural";
 		String badString = "coer cion toUnlimitedNatural";
-		//		OCLDelegateDomain.initialize(null);
-		//		OCLDelegateDomain.initialize(null, OCLConstants.OCL_DELEGATE_URI);
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		CSResource xtextResource;
 		Resource asResource;
 		{
-			//			URI ecoreURI1 = getTestFileURI("test1.ecore");
-			//			InputStream inputStream = new URIConverter.ReadableInputStream(testDocument, "UTF-8");
-			//			URI outputURI = getTestFileURI("test.ocl");
-			ProjectManager projectMap = ocl.getProjectManager();
-			projectMap.initializeResourceSet(ocl.getResourceSet());
 			@NonNull URI libURI = URI.createPlatformResourceURI("org.eclipse.ocl.pivot/model/OCL-2.5.oclstdlib", true);
 			xtextResource = ocl.getCSResource(libURI);
 			asResource = cs2as(ocl, xtextResource, null);

@@ -274,7 +274,6 @@ public class OCLstdlibTests extends XtextTestCase
 		//	Load OCL stdlib as a file.
 		//
 		ResourceSet resourceSet = ocl.getResourceSet();
-		getProjectMap().initializeResourceSet(resourceSet);
 		URI libraryURI = URI.createPlatformResourceURI("org.eclipse.ocl.pivot/model/OCL-2.5.oclstdlib", true);
 		BaseCSResource xtextResource = (BaseCSResource) resourceSet.createResource(libraryURI);
 		JavaClassScope.getAdapter(xtextResource, getClass().getClassLoader());

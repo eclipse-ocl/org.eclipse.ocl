@@ -208,7 +208,6 @@ public class LoadTests extends XtextTestCase
 		//		long startTime = System.currentTimeMillis();
 		//		System.out.println("Start at " + startTime);
 		ResourceSet resourceSet = ocl.getResourceSet();
-		getProjectMap().initializeResourceSet(resourceSet);
 		String extension = inputURI.fileExtension();
 		String stem = inputURI.trimFileExtension().lastSegment();
 		String outputName = stem + "." + extension + ".xmi";
@@ -357,7 +356,6 @@ public class LoadTests extends XtextTestCase
 		//		System.out.println("Start at " + startTime);
 		ResourceSet resourceSet = internalOCL.getResourceSet();
 		UML2AS.initializeUML(resourceSet);
-		getProjectMap().initializeResourceSet(resourceSet);
 		//		XMI252UMLResourceFactoryImpl.install(resourceSet, URI.createPlatformResourceURI("/org.eclipse.ocl.examples.uml25/model/", true));
 		if (!resourceSet.getURIConverter().exists(inputURI, null)) {
 			if (loadCallBacks.ignoreNonExistence()) {
@@ -913,7 +911,6 @@ public class LoadTests extends XtextTestCase
 		StandaloneProjectMap projectMap = getProjectMap();
 		OCL ocl = OCL.newInstance(projectMap);
 		ResourceSet resourceSet = ocl.getResourceSet();
-		projectMap.initializeResourceSet(resourceSet);
 		projectMap.configureLoadFirst(resourceSet, EcorePackage.eNS_URI);
 		URI uri = URI.createPlatformResourceURI("/org.eclipse.ocl.xtext.base/model/BaseCS.ecore", true);
 		try {
@@ -1221,7 +1218,7 @@ public class LoadTests extends XtextTestCase
 	}
 
 	public void testLoad_MiniPivot_ocl() throws IOException, InterruptedException {
-		TestOCL ocl = createOCL();
+		TestOCL ocl = createOCLWithProjectMap();
 		ocl.getEnvironmentFactory().setSafeNavigationValidationSeverity(StatusCodes.Severity.WARNING);
 		doLoad_OCL(ocl, getTestModelURI("models/ocl/MiniPivot.ocl"));
 		ocl.dispose();
@@ -1242,7 +1239,7 @@ public class LoadTests extends XtextTestCase
 	}
 
 	public void testLoad_Pivot_ocl() throws IOException, InterruptedException {
-		TestOCL ocl = createOCL();
+		TestOCL ocl = createOCLWithProjectMap();
 		ocl.getEnvironmentFactory().setSafeNavigationValidationSeverity(StatusCodes.Severity.WARNING);
 		//		Abstract2Moniker.TRACE_MONIKERS.setState(true);
 		doLoad_OCL(ocl, URI.createPlatformResourceURI("/org.eclipse.ocl.pivot/model/Pivot.ocl", true));
@@ -1477,10 +1474,11 @@ public class LoadTests extends XtextTestCase
 		Ecore2AS conversion = Ecore2AS.getAdapter(ecoreResource, (EnvironmentFactoryInternal) ocl2.getEnvironmentFactory());
 		ASResource asResource = (ASResource) conversion.getASModel().eResource();
 		//
-		//	Save the *.oclas and cache that the xmi:ids
+		//	Save the *.oclas and cache the xmi:ids
 		//
 		URI esasURI = getTestFileURI(ecoreFileName + ".oclas");
 		asResource.setURI(esasURI);
+		asResource.setSaveable(true);
 		Map<String, Object> options = new HashMap<String, Object>();
 		//		options.put(ASResource.OPTION_INTERNAL_UUIDS, Boolean.TRUE);
 		asResource.save(options);

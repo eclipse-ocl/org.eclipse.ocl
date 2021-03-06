@@ -141,7 +141,6 @@ public class RoundTripTests extends XtextTestCase
 		MessageBinder savedMessageBinder = CS2AS.setMessageBinder(CS2AS.MessageBinderWithLineContext.INSTANCE);
 		StandaloneProjectMap projectMap = getProjectMap(); //(StandaloneProjectMap)ocl0.getEnvironmentFactory().getProjectManager();
 		try {
-			projectMap.initializeResourceSet(resourceSet);
 			ocl0.dispose();
 			if (!resourceSet.getURIConverter().exists(inputURI, null)) {
 				;				System.err.println(getTestName() + " skipped since '" + inputURI + "' is missing.");
