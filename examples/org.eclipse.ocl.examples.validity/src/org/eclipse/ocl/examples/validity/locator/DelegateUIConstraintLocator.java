@@ -198,11 +198,7 @@ public class DelegateUIConstraintLocator extends DelegateConstraintLocator imple
 	@Override
 	public boolean debug(@NonNull ResultConstrainingNode resultConstrainingNode, final @NonNull ValidityView validityView, @NonNull IProgressMonitor monitor) throws CoreException {
 		EObject constrainedObject = getConstrainedObject(resultConstrainingNode);
-		Resource eResource = constrainedObject.eResource();
-		if (eResource == null) {
-			return false;
-		}
-		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(eResource);
+		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(constrainedObject);
 		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		Constraint asConstraint = null;
 		try {

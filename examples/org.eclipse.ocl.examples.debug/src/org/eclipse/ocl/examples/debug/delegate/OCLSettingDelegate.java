@@ -54,7 +54,7 @@ public class OCLSettingDelegate extends BasicSettingDelegate.Stateless
 	@Override
 	protected Object get(InternalEObject owner, boolean resolve, boolean coreType) {
 		try {
-			EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(owner.eResource());
+			EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(owner);
 			MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 			ExpressionInOCL specification2 = specification;
 			if (specification2 == null) {

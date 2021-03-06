@@ -296,7 +296,7 @@ public class OCLValidationDelegate implements ValidationDelegate
 			}
 		};
 	//	OCL ocl = delegateDomain.getOCL();
-		EnvironmentFactory environmentFactory = PivotUtilInternal.getEnvironmentFactory(value instanceof EObject ? ((EObject)value).eResource() :  null);
+		EnvironmentFactory environmentFactory = PivotUtilInternal.getEnvironmentFactory(value);
 		Executor executor = (Executor)context.get(Executor.class);
 		ModelManager modelManager = executor != null ? executor.getModelManager() : null;
 	//	EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();

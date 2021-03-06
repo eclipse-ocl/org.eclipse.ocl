@@ -23,7 +23,6 @@ import org.eclipse.debug.core.ILaunchConfigurationType;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.debug.core.ILaunchManager;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jface.dialogs.ErrorDialog;
@@ -131,11 +130,7 @@ public class PivotUIConstraintLocator extends PivotConstraintLocator implements 
 		ValidatableNode validatableNode = resultConstrainingNode.getResultValidatableNode().getParent();
 		assert validatableNode != null;
 		EObject constrainedObject = validatableNode.getConstrainedObject();
-		Resource eResource = constrainedObject.eResource();
-		if (eResource == null) {
-			return false;
-		}
-		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) PivotUtilInternal.getEnvironmentFactory(eResource);
+		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) PivotUtilInternal.getEnvironmentFactory(constrainedObject);
 		Constraint asConstraint = null;
 		Object constrainingObject = resultConstrainingNode.getParent().getConstrainingObject();
 		if (constrainingObject instanceof Constraint) {

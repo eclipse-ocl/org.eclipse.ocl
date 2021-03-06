@@ -64,7 +64,7 @@ public class OCLInvocationDelegate extends BasicInvocationDelegate
 	@Override
 	public Object dynamicInvoke(InternalEObject target, EList<?> arguments) throws InvocationTargetException {
 		try {
-			EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(target.eResource());
+			EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(target);
 			MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 			IdResolver idResolver = environmentFactory.getIdResolver();
 			ExpressionInOCL specification2 = specification;

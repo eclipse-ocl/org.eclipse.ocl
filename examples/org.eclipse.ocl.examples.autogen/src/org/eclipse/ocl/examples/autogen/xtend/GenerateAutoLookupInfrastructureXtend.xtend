@@ -514,7 +514,7 @@ class GenerateAutoLookupInfrastructureXtend extends GenerateVisitorsXtend
 	private def List<Operation> getLookupMethods(GenPackage genPackage) {
 		
 		var List<Operation> result = new ArrayList<Operation>;
-		var EnvironmentFactory envFact = PivotUtilInternal.getEnvironmentFactory(genPackage.getEcorePackage.eResource)
+		var EnvironmentFactory envFact = PivotUtilInternal.getEnvironmentFactory(genPackage.getEcorePackage)
 		for (oclPackage : LookupCGUtil.getTargetPackages(genPackage, envFact, lookupFilePath, projectName)) {
 			for (oclClass : oclPackage.ownedClasses) {
 				for (oclOp : oclClass.ownedOperations) {
@@ -560,7 +560,7 @@ class GenerateAutoLookupInfrastructureXtend extends GenerateVisitorsXtend
 	}
 	
 	private def GenModelHelper createGenModelHelper(GenPackage genPackage) {
-		var PivotMetamodelManager mManager = PivotUtilInternal.getEnvironmentFactory(genPackage.getEcorePackage().eResource).metamodelManager;
+		var PivotMetamodelManager mManager = PivotUtilInternal.getEnvironmentFactory(genPackage.getEcorePackage()).metamodelManager;
 		return AbstractGenModelHelper.create(mManager, genPackage.getGenModel());
 	}
 	

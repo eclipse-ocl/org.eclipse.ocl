@@ -23,7 +23,6 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jface.dialogs.Dialog;
@@ -64,28 +63,25 @@ public class DebugDialog extends Dialog
 				String selectedText = constraintsCombo.getItem(selectedIndex);
 				URI selectedURI = constraintsText2resourceURI.get(selectedText);
 				if (selectedURI != null) {
-					Resource eResource = selectedObject.eResource();
-					if (eResource != null) {
-						EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(eResource);
-						MetamodelManagerInternal metamodelManager = environmentFactory.getMetamodelManager();
-						Element resource = null;
-						try {
-							resource = metamodelManager.loadResource(selectedURI, null, null);
-						} catch (ParserException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
-						if (resource != null) {
-							for (TreeIterator<EObject> tit = resource.eAllContents(); tit.hasNext(); ) {
-								EObject eObject = tit.next();
-								if (eObject instanceof Constraint) {
-									String constraintText = eObject.toString();
-									constraints.add(constraintText);
-									constraintText2constraint.put(constraintText, (Constraint)eObject);
-								}
+					EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(selectedObject);
+					MetamodelManagerInternal metamodelManager = environmentFactory.getMetamodelManager();
+					Element resource = null;
+					try {
+						resource = metamodelManager.loadResource(selectedURI, null, null);
+					} catch (ParserException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					if (resource != null) {
+						for (TreeIterator<EObject> tit = resource.eAllContents(); tit.hasNext(); ) {
+							EObject eObject = tit.next();
+							if (eObject instanceof Constraint) {
+								String constraintText = eObject.toString();
+								constraints.add(constraintText);
+								constraintText2constraint.put(constraintText, (Constraint)eObject);
 							}
-							Collections.sort(constraints);
 						}
+						Collections.sort(constraints);
 					}
 				}
 			}
@@ -116,8 +112,8 @@ public class DebugDialog extends Dialog
 	}
 
 	protected final @NonNull CompleteOCLRegistry completeOCLRegistry;
-	protected final @NonNull EObject selectedObject; 
-	protected @Nullable Constraint selectedConstraint; 
+	protected final @NonNull EObject selectedObject;
+	protected @Nullable Constraint selectedConstraint;
 	private Text elementName;
 	private Text elementNsURI;
 	private Text elementClass;
@@ -126,11 +122,11 @@ public class DebugDialog extends Dialog
 	private Combo constraintCombo;
 	private final @NonNull Map<String, URI> constraintsText2resourceURI = new HashMap<String, URI>();
 	private final @NonNull Map<String, Constraint> constraintText2constraint = new HashMap<String, Constraint>();
-	
+
 	/**
 	 * Create the dialog.
 	 * @param parentShell
-	 * @param selectedObject 
+	 * @param selectedObject
 	 */
 	public DebugDialog(Shell parentShell, @NonNull EObject selectedObject) {
 		super(parentShell);
@@ -148,56 +144,56 @@ public class DebugDialog extends Dialog
 		Composite container = (Composite) super.createDialogArea(parent);
 		GridLayout gridLayout = (GridLayout) container.getLayout();
 		gridLayout.numColumns = 2;
-		
+
 //		Composite elementRow = new Composite(container, SWT.NONE);
 //		GridData gd_elementRow = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 //		gd_elementRow.heightHint = 80;
 //		elementRow.setLayoutData(gd_elementRow);
 //		elementRow.setLayout(new GridLayout(2, false));
-		
+
 		Label elementLabel = new Label(container, SWT.NONE);
 		elementLabel.setSize(43, 15);
 		elementLabel.setText("Element");
-		
+
 		elementName = new Text(container, SWT.BORDER);
 		elementName.setEditable(false);
 		elementName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		elementName.setText("");
-		
+
 		Label eClassLabel = new Label(container, SWT.NONE);
 		eClassLabel.setBounds(0, 0, 55, 15);
 		eClassLabel.setText("EClass");
-		
+
 		elementClass = new Text(container, SWT.BORDER);
 		elementClass.setEditable(false);
 		elementClass.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		elementClass.setBounds(0, 0, 76, 21);
-		
+
 		Label nsURILabel = new Label(container, SWT.NONE);
 		nsURILabel.setLayoutData(new GridData(SWT.LEFT, SWT.BOTTOM, false, false, 1, 1));
 		nsURILabel.setBounds(0, 0, 55, 15);
 		nsURILabel.setText("Ns URI");
-		
+
 		elementNsURI = new Text(container, SWT.BORDER);
 		elementNsURI.setEditable(false);
 		elementNsURI.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		elementNsURI.setBounds(0, 0, 76, 21);
-		
+
 		Label constraintsLabel = new Label(container, SWT.NONE);
 		constraintsLabel.setBounds(0, 0, 55, 15);
 		constraintsLabel.setText("Constraints");
-		
+
 		constraintsCombo = new Combo(container, SWT.NONE);
 		constraintsCombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		constraintsCombo.setBounds(0, 0, 91, 23);
-		
+
 		Label constraintLabel = new Label(container, SWT.NONE);
 		constraintLabel.setBounds(0, 0, 55, 15);
 		constraintLabel.setText("Constraint");
-		
+
 		constraintCombo = new Combo(container, SWT.NONE);
 		constraintCombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
+
 		constraintText = new Text(container, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL | SWT.CANCEL | SWT.MULTI);
 		constraintText.setEditable(false);
 		GridData gd_constraintText = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);

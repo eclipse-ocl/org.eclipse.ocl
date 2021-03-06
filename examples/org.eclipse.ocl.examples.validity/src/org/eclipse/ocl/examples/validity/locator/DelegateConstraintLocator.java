@@ -182,15 +182,11 @@ public class DelegateConstraintLocator extends AbstractPivotConstraintLocator
 	@Override
 	public void validate(@NonNull Result result, @NonNull ValidityManager validityManager, @Nullable Monitor monitor) {
 		EObject constrainedObject = result.getValidatableNode().getConstrainedObject();
-		Resource eResource = constrainedObject.eResource();
-		if (eResource == null) {
-			return;
-		}
 		ResultConstrainingNode resultConstrainingNode = result.getResultConstrainingNode();
 		if (resultConstrainingNode == null) {
 			return;
 		}
-		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(eResource);
+		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(constrainedObject);
 		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		Constraint asConstraint = null;
 		try {

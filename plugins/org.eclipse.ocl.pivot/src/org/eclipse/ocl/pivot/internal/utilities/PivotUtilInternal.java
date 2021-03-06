@@ -280,6 +280,17 @@ public class PivotUtilInternal //extends PivotUtil
 		return umlBody;
 	}
 
+	/**
+	 * @since 1.14
+	 */
+	public static @NonNull EnvironmentFactoryInternal getEnvironmentFactory(@Nullable Object object) {
+		EnvironmentFactoryInternal environmentFactory2 = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		if (environmentFactory2 != null) {
+			return environmentFactory2;
+		}
+		return getEnvironmentFactory(object instanceof EObject ? ((EObject)object).eResource() : null);
+	}
+
 	public static @NonNull EnvironmentFactoryInternal getEnvironmentFactory(@Nullable Resource resource) {
 		EnvironmentFactoryInternal environmentFactory2 = ThreadLocalExecutor.basicGetEnvironmentFactory();
 		if (environmentFactory2 != null) {

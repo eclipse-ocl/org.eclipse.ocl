@@ -67,7 +67,7 @@ public class OCLQueryDelegate implements QueryDelegate
 	 */
 	public OCLQueryDelegate(@NonNull OCLDelegateDomain delegateDomain, @NonNull EClassifier context, @Nullable Map<String, EClassifier> parameters, @NonNull String expression) {
 		this.delegateDomain = delegateDomain;
-		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(context.eResource());
+		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(context);
 		this.parserContext = new EInvocationContext(environmentFactory, null, context, parameters);
 		this.expression = expression;
 	}

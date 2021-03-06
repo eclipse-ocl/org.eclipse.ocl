@@ -268,8 +268,7 @@ public class QVToTransformationExecutor extends AbstractWorkflowComponent
 	public static void validate(@NonNull Resource resource) throws IOException {
 		for (EObject eObject : resource.getContents()) {
 			Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
-			Resource eResource = ClassUtil.nonNullState(eObject.eResource());
-			PivotUtilInternal.getEnvironmentFactory(eResource);	// FIXME oclIsKindOf fails because ExecutableStandardLibrary.getMetaclass is bad
+			PivotUtilInternal.getEnvironmentFactory(resource);	// FIXME oclIsKindOf fails because ExecutableStandardLibrary.getMetaclass is bad
 			Diagnostic diagnostic = Diagnostician.INSTANCE.validate(eObject, validationContext);
 			List<Diagnostic> children = diagnostic.getChildren();
 			if (children.size() <= 0) {

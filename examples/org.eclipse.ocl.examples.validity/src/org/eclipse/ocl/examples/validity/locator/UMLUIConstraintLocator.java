@@ -208,11 +208,7 @@ public class UMLUIConstraintLocator extends UMLConstraintLocator implements Cons
 			//			return false;
 		}
 		org.eclipse.uml2.uml.Constraint umlConstraint = (org.eclipse.uml2.uml.Constraint)object;
-		Resource eResource = umlConstraint.eResource();
-		if (eResource == null) {
-			return false;
-		}
-		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) PivotUtilInternal.getEnvironmentFactory(eResource);
+		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) PivotUtilInternal.getEnvironmentFactory(umlConstraint);
 		Constraint constraint = null;
 		try {
 			constraint = environmentFactory.getASOf(Constraint.class, umlConstraint);

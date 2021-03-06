@@ -71,7 +71,7 @@ public class OCLInvocationDelegate extends BasicInvocationDelegate
 	public Object dynamicInvoke(InternalEObject target, EList<?> arguments) throws InvocationTargetException {
 		assert target != null;
 		try {
-			EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(target.eResource());
+			EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(target);
 			Executor executor = PivotUtil.getExecutor(target);
 			ModelManager modelManager = executor.getModelManager();
 			MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();

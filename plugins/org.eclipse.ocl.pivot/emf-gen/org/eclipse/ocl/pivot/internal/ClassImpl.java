@@ -23,7 +23,6 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
@@ -1409,18 +1408,17 @@ implements org.eclipse.ocl.pivot.Class {
 
 	@Override
 	public @NonNull Type specializeIn(/*@NonNull*/ CallExp callExpr, @Nullable Type selfType) {
+		assert callExpr != null;
 		if (selfType != null) {
 			TemplateSignature templateSignature = getOwnedSignature();
 			if (templateSignature != null) {
-				Resource asResource = ClassUtil.nonNullState(callExpr.eResource());
-				EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(asResource);
+				EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(callExpr);
 				PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 				return metamodelManager.specializeType(this, callExpr, selfType, null);
 			}
 			List<TemplateBinding> templateBindings = getOwnedBindings();
 			if ((templateBindings != null) && !templateBindings.isEmpty()) {
-				Resource asResource = ClassUtil.nonNullState(callExpr.eResource());
-				EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(asResource);
+				EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(callExpr);
 				PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 				return metamodelManager.specializeType(this, callExpr, selfType, null);
 			}

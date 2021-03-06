@@ -126,7 +126,7 @@ public class OCLSettingDelegate extends BasicSettingDelegate.Stateless
 	protected Object get(InternalEObject ecoreObject, boolean resolve, boolean coreType) {
 		assert ecoreObject != null;
 		try {
-			EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(ecoreObject.eResource());
+			EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(ecoreObject);
 			Executor executor = PivotUtil.getExecutor(ecoreObject);
 			ModelManager modelManager = executor.getModelManager();
 			ExpressionInOCL query = getQuery();
