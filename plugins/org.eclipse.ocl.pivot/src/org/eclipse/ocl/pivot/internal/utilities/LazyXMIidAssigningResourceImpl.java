@@ -45,7 +45,7 @@ public class LazyXMIidAssigningResourceImpl extends XMIResourceImpl
 		//	during loading by the attchedHelper are done.
 		//
 		List<EObject> contents2 = getContents();
-		if (contents.size() <= 0) {
+		if (contents2.size() > 0) {
 			EObject eContent = contents2.get(0);
 			if (eContent instanceof EPackage) {
 				EPackage ePackage = (EPackage)eContent;
