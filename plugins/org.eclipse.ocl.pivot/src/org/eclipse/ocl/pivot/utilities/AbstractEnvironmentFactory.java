@@ -328,10 +328,11 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	public @NonNull ResourceSetImpl createASResourceSet() {
 		ResourceSetImpl asResourceSet = new ResourceSetImpl();
 		asResourceSet.setResourceFactoryRegistry(new ContentTypeFirstResourceFactoryRegistry(asResourceSet));
-		StandaloneProjectMap.initializeURIResourceMap(asResourceSet);
+	//	StandaloneProjectMap.initializeURIResourceMap(asResourceSet);
 		EPackage.Registry packageRegistry = asResourceSet.getPackageRegistry();
-		packageRegistry.put(PivotPackage.eNS_URI, PivotPackage.eINSTANCE);
+	//	packageRegistry.put(PivotPackage.eNS_URI, PivotPackage.eINSTANCE);
 		projectManager.initializeResourceSet(asResourceSet);
+		packageRegistry.put(PivotPackage.eNS_URI, PivotPackage.eINSTANCE);
 		return asResourceSet;
 	}
 
