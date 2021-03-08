@@ -564,14 +564,14 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 			resourceSet.getPackageRegistry().put(org.eclipse.uml2.codegen.ecore.genmodel.GenModelPackage.eNS_URI,  org.eclipse.uml2.codegen.ecore.genmodel.GenModelPackage.eINSTANCE);
 			resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("genmodel", new EcoreResourceFactoryImpl());
 			OCLGenModelUtil.initializeGeneratorAdapterFactoryRegistry();
-			if (resourceSet instanceof ResourceSetImpl) {
+		/*	if (resourceSet instanceof ResourceSetImpl) {
 				ResourceSetImpl resourceSetImpl = (ResourceSetImpl) resourceSet;
 				Map<URI, Resource> uriResourceMap = resourceSetImpl.getURIResourceMap();
 				if (uriResourceMap != null) {
 					uriResourceMap.clear();
 				}
-			}
-			resourceSet.getResources().clear();
+			} */
+		//	resourceSet.getResources().clear();
 			Resource resource = resourceSet.getResource(fileURI, true);
 			// EcoreUtil.resolveAll(resourceSet); -- genModel can fail if
 			// proxies resolved here

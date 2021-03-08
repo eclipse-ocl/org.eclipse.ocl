@@ -131,6 +131,10 @@ public class PivotUtilInternal //extends PivotUtil
 	}
 
 	public static @Nullable EnvironmentFactoryInternal findEnvironmentFactory(@Nullable EObject eObject) {
+		EnvironmentFactoryInternal environmentFactory2 = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		if (environmentFactory2 != null) {
+			return environmentFactory2;
+		}
 		if (eObject == null) {
 			return null;
 		}
@@ -146,6 +150,10 @@ public class PivotUtilInternal //extends PivotUtil
 	}
 
 	public static @Nullable EnvironmentFactoryInternal findEnvironmentFactory(@NonNull Resource resource) {
+		EnvironmentFactoryInternal environmentFactory2 = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		if (environmentFactory2 != null) {
+			return environmentFactory2;
+		}
 		for (Adapter adapter : resource.eAdapters()) {
 			if (adapter instanceof EnvironmentFactoryAdapter) {
 				return ((EnvironmentFactoryAdapter)adapter).getEnvironmentFactory();

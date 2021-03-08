@@ -60,6 +60,7 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.library.LibraryUnaryOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
+import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.resource.ProjectManager.IPackageDescriptor;
@@ -111,6 +112,7 @@ public class TestOCL extends OCLInternal
 		//
 		configureGeneratedPackage(EcorePackage.eNS_URI);
 		configureGeneratedPackage(PivotPackage.eNS_URI);
+		configureGeneratedPackage(OCLstdlibPackage.eNS_URI);
 	}
 
 	private void configureGeneratedPackage( /*@NonNull*/ String uriString) {

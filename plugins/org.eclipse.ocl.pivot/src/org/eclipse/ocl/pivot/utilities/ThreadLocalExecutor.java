@@ -173,7 +173,7 @@ public class ThreadLocalExecutor
 				setEnvironmentFactory(null);
 				this.executor = null;
 				this.concurrentEnvironmentFactories = true;
-				String message = "Concurrent EnvironmentFactory instances inhibit LocalThread Executor passing.\n" +
+				String message = "Concurrent EnvironmentFactory instances inhibit local thread Executor passing.\n" +
 						"\tSee https://wiki.eclipse.org/OCL/FAQ#Concurrent_EnvironmentFactory_instances";
 //				System.out.println(message);
 				logger.warn(message);
