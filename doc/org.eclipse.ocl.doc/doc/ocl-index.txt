@@ -62,6 +62,7 @@
 5210-standalone.textile
 
 6000-pivot-programmers-guide.textile
+6050-pivot-ocl-environment.textile
 6110-pivot-validators.textile
 6200-pivot-evaluator.textile
 6210-pivot-standalone.textile

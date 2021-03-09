@@ -1,0 +1,60 @@
+h2(#OCL-Environment). OCL Environment
+
+The Pivot-based Eclips OCL maintains signifcant amount of working state to cache aspects of the user metamodels and models.
+
+The OCL working meta-state used for OCL parsing and analysis comprises at least a <code>CompleteEnvironment</code>, <code>CompleteModel</code>, <code>EnvironmentFactory</code>, <code>MetamodelManager</code>, <code>Orphanage</code> and <code>StandardLibrary</code>.
+
+The additional OCL working state for OCL execution comprises an <code>Executor</code> and a <code>ModelManager</code>.
+
+h3(#OCLproblem). OCL Implementation Problem
+
+Eclipse OCL exploits the Eclipse Modeling Framework (EMF) and so has to comply with EMF APIs. Unfortunately the most basic EMF API <code>getXXX()</code> to access the feature <code>xxx</code> provides no ability to pass any OCL working state to an OCL implementation of <code>getXXX()</code>. There is also no ability to create or destroy the OCL working state before and after a sequence of activities for which the OCL requirement of model invariance is satisfied.
+
+h3(#OCLwithAdapters). OCL adapters pre-2021-03
+
+Prior to the 2021-03 (6.14.0) release, the OCL working meta-state was lazily created on demand and eventually garbage collected. The working meta-state was persisted by use of an <code>EnvironmentFactoryAdapter</code> to attach the state to the <code>ResourceSet</code> containing the user model / metamodel. The state could be recovered by a hiearchical search of the user model's containment hierarchy. The <code>OCL</code> facade supports multiple usage of the state via a share count so that GC only kicks in once all usage is done. A <code>WeakOCLRef</code> provides another mechanism for sharing. 
+
+The OCL working state is similarly maintained via <code>ResourceSet</code> adapters and also by an entry in the validation context of the EMF <code>validate()</code> API.
+
+The above approaches work for straightforward usage. But...
+
+When OCL invariants or getters are executed from an installed model, there is no <code>ResourceSet</code> and so the user's OCL context is not available. Rather a special global OCL working meta-state is used; it ignores any Complete OCL contributions from the user's application.
+
+Models shared between applications are isolated by careful use of <code>ValidationAdapter</code>s to identify which OCL is involved.
+
+Multi-threaded applications may successfully share the working state provided the user has resolved all other threading hazards.
+
+Applications using multiple OCLs such as one reference OCL for an old-way, and another experimental OCL for a new way, may successfully use distinct adapters.
+
+However from a developer's perspective it's all very fragile and complicated and metamodel schizophrenia is always waiting for an opportunity to bite.
+
+Avoiding leakage with EMF applications is quite hard since a single refernce from one of the global registries can easily lock everything into memory,
+
+Identifying when the user model analysis in the working state can be re-used and when it must be recomputed is hard since there is no mechanism for a user to delimit the duration of model invariance.
+
+Investigation of a bug in the implicit opposites underpinning a stereotype in a static UMLprofioe revealed that the analyses supporting _allInstances_ and _implicitOpposites_ was very very pessimitic and consequently very inefficient.
+
+The major use cases for OCL applications are model validation and model transformation. For the latter, the transformation tool can easily initialize the OCL state prior to transformation and clean up afterwards. For the former case, a massive performance improvement is possible if the one working state can be re-used throughout the model validation.
+
+h3(#OCLperThread). OCL per Thread post-2021-03
+
+For the 2021-03 (6.14.0) release a new approach is taken. The OCL working state is referenced by a thread local variable making discovery easy and cleanup inherent in the demise of the thread. Lazy creation is fairly easy too.
+
+There is no need for a special global OCL context with defective capabilities; the <code>GlobalEnvironmentFactory</code> and its <code>INSTANCE</code> is obsolete.
+
+But, by default multi-threaded applications have a distinct OCL working state per-thread, which may be beneficial or inefficient. if the programmer is able to manage thread safety, then the <code>ThreadLocalExecutor.set</code> API may be used to share the same OCL state on more than one theead. NB the current OCL code has some synchronizations that may help with thread safety but overall there is no guarantee of thread safety.
+
+But, multi-OCL applications cannot have more than one active OCL per-thread.
+
+One variation of the multi-OCL use case was prevalent in the OCL JUnit tests where one OCL processed a reference model while another OCL processed an application model. The solution for interleaved usages is to invoke <code>OCL.deactivate</code> or <code>ThreadLocalExecutor.detachEnvironmentFactory</code> to suspend one OCL before <code>OCL.activate</code> or <code>ThreadLocalExecutor.attachEnvironmentFactory</code> resumes another OCL. The multiple OCLs can therefore co=exist till eventually <code>OCL.dispose()</code> cleans up.
+
+Another variation of the multi-OCL use case was prevalent in the QVTd JUnit tests where one main extended OCL processed an application model while a nested OCL validated/serialized intermediate results. The same <code>deactivate</code>/<code>activate</code> solution again ensures that only one OCL is actve.
+
+The use of concurrent OCLs on the same thread is diagnosed and results in a log message such as _Concurrent EnvironmentFactory instances inhibit local thread Executor passing_ forcing th code to fall back on the old adapter mased approach. The solution, as described above, is to use <code>deactivate</code>/<code>activate</code> to eliminate the concuurent activity.
+
+But, whereas the old approach was very pessimistic creating a new OCL working state far too often, the thread-based OCL state must be invalidated by invoking <code>ThreadLocalExecutor.reset()</code> whenever the user models are changed in any way that might undermine the OCL assumption that models do not change. (This change could be automated using EMF's TrackingModificatinAdapters but the cost is considered too high compared to a manual reset).
+
+But, there is currently no support for sharing the UI thread across many <code>IWorkbenchPart</code>. i.e if two views both use OCL on the UI thread, the state of one view may confuse the other. Fortunately OCL activity such as validation is generally delegated to a worker thread avoiding the confusion and guaranteeing a new OCL per usage.
+
+The adapters associated with the old approach are now obsolete but remain for now as legacy/compatibility clutter. They will be removed in a future release.
+

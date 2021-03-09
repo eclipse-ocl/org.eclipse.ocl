@@ -546,9 +546,14 @@
 </topic>
 </topic>
 <topic href="help/PivotProgrammersGuide.html" label="Unified or Pivot Programmers Guide">
-<topic href="help/PivotProgrammersGuide.html#Validators" label="Validators">
-<topic href="help/PivotProgrammersGuide.html#OCLinEcoreEObjectValidator" label="OCLinEcoreEObjectValidator"></topic>
-<topic href="help/PivotProgrammersGuide.html#CompleteOCLEObjectValidator" label="CompleteOCLEObjectValidator"></topic>
+<topic href="help/PivotProgrammersGuide.html#OCL-Environment" label="OCL Environment">
+<topic href="help/PivotProgrammersGuide.html#OCLproblem" label="OCL Implementation Problem"></topic>
+<topic href="help/PivotProgrammersGuide.html#OCLwithAdapters" label="OCL adapters pre-2021-03"></topic>
+<topic href="help/PivotProgrammersGuide.html#OCLperThread" label="OCL per Thread post-2021-03"></topic>
+</topic>
+<topic href="help/Validators.html" label="Validators">
+<topic href="help/Validators.html#OCLinEcoreEObjectValidator" label="OCLinEcoreEObjectValidator"></topic>
+<topic href="help/Validators.html#CompleteOCLEObjectValidator" label="CompleteOCLEObjectValidator"></topic>
 </topic>
 <topic href="help/PivotEvaluator.html" label="The Pivot Evaluator">
 <topic href="help/PivotEvaluator.html#PivotValue-History" label="The Evolving Pivot Value System"></topic>

@@ -436,6 +436,9 @@
 <dd>
 <dl>
 <dt>
+<span class="section"><a href="#OCL-Environment">OCL Environment</a></span>
+</dt>
+<dt>
 <span class="section"><a href="#Validators">Validators</a></span>
 </dt>
 <dt>
@@ -16915,12 +16918,12 @@ System.out.println(ocl.evaluate(myBook,&nbsp;query));<br>
 &nbsp;&nbsp;&lt;ocl.ecore:PropertyCallExp&nbsp;xmi:id="_897fVPfmEduCQ48h829a5g"&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;eType&nbsp;xsi:type="ocl.ecore:PrimitiveType"&nbsp;href="http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/String"/&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;source&nbsp;xsi:type="ocl.ecore:VariableExp"&nbsp;xmi:id="_897fVvfmEduCQ48h829a5g"&nbsp;name="self"&nbsp;referredVariable="_897fUvfmEduCQ48h829a5g"&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;eType&nbsp;xsi:type="ecore:EClass"&nbsp;href="http:///org/eclipse/emf/examples/library/extlibrary.ecore/1.0.0#//Book"/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;eType&nbsp;xsi:type="ecore:EClass"&nbsp;href="http://www.org.eclipse/ocl/examples/library/extlibrary.ecore/1.0.0#//Book"/&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;/source&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;referredProperty&nbsp;xsi:type="ecore:EAttribute"&nbsp;href="http:///org/eclipse/emf/examples/library/extlibrary.ecore/1.0.0#//Book/title"/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;referredProperty&nbsp;xsi:type="ecore:EAttribute"&nbsp;href="http://www.org.eclipse/ocl/examples/library/extlibrary.ecore/1.0.0#//Book/title"/&gt;<br>
 &nbsp;&nbsp;&lt;/ocl.ecore:PropertyCallExp&gt;<br>
 &nbsp;&nbsp;&lt;ocl.ecore:Variable&nbsp;xmi:id="_897fUvfmEduCQ48h829a5g"&nbsp;name="self"&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;eType&nbsp;xsi:type="ecore:EClass"&nbsp;href="http:///org/eclipse/emf/examples/library/extlibrary.ecore/1.0.0#//Book"/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;eType&nbsp;xsi:type="ecore:EClass"&nbsp;href="http://www.org.eclipse/ocl/examples/library/extlibrary.ecore/1.0.0#//Book"/&gt;<br>
 &nbsp;&nbsp;&lt;/ocl.ecore:Variable&gt;<br>
 &lt;/xmi:XMI&gt;<br>
 
@@ -21117,6 +21120,77 @@ private&nbsp;Revalidator&nbsp;revalidator;		//&nbsp;&nbsp;from&nbsp;collecting&n
 </li>
 </ul>
 </div>
+<div class="section" title="OCL Environment">
+<div class="titlepage">
+<div>
+<div>
+<h2 class="title" style="clear: both">
+<a name="OCL-Environment"></a>OCL Environment</h2>
+</div>
+</div>
+</div>
+<p>The Pivot-based Eclips OCL maintains signifcant amount of working state to cache aspects of the user metamodels and models.</p>
+<p>The OCL working meta-state used for OCL parsing and analysis comprises at least a <code class="code">CompleteEnvironment</code>, <code class="code">CompleteModel</code>, <code class="code">EnvironmentFactory</code>, <code class="code">MetamodelManager</code>, <code class="code">Orphanage</code> and <code class="code">StandardLibrary</code>.</p>
+<p>The additional OCL working state for OCL execution comprises an <code class="code">Executor</code> and a <code class="code">ModelManager</code>.</p>
+<div class="section" title="OCL Implementation Problem">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title">
+<a name="OCLproblem"></a>OCL Implementation Problem</h3>
+</div>
+</div>
+</div>
+<p>Eclipse OCL exploits the Eclipse Modeling Framework (EMF) and so has to comply with EMF APIs. Unfortunately the most basic EMF API <code class="code">getXXX()</code> to access the feature <code class="code">xxx</code> provides no ability to pass any OCL working state to an OCL implementation of <code class="code">getXXX()</code>. There is also no ability to create or destroy the OCL working state before and after a sequence of activities for which the OCL requirement of model invariance is satisfied.</p>
+</div>
+<div class="section" title="OCL adapters pre-2021-03">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title">
+<a name="OCLwithAdapters"></a>OCL adapters pre-2021-03</h3>
+</div>
+</div>
+</div>
+<p>Prior to the 2021-03 (6.14.0) release, the OCL working meta-state was lazily created on demand and eventually garbage collected. The working meta-state was persisted by use of an <code class="code">EnvironmentFactoryAdapter</code> to attach the state to the <code class="code">ResourceSet</code> containing the user model / metamodel. The state could be recovered by a hiearchical search of the user model&rsquo;s containment hierarchy. The <code class="code">OCL</code> facade supports multiple usage of the state via a share count so that GC only kicks in once all usage is done. A <code class="code">WeakOCLRef</code> provides another mechanism for sharing. </p>
+<p>The OCL working state is similarly maintained via <code class="code">ResourceSet</code> adapters and also by an entry in the validation context of the EMF <code class="code">validate()</code> API.</p>
+<p>The above approaches work for straightforward usage. But...</p>
+<p>When OCL invariants or getters are executed from an installed model, there is no <code class="code">ResourceSet</code> and so the user&rsquo;s OCL context is not available. Rather a special global OCL working meta-state is used; it ignores any Complete OCL contributions from the user&rsquo;s application.</p>
+<p>Models shared between applications are isolated by careful use of <code class="code">ValidationAdapter</code>s to identify which OCL is involved.</p>
+<p>Multi-threaded applications may successfully share the working state provided the user has resolved all other threading hazards.</p>
+<p>Applications using multiple OCLs such as one reference OCL for an old-way, and another experimental OCL for a new way, may successfully use distinct adapters.</p>
+<p>However from a developer&rsquo;s perspective it&rsquo;s all very fragile and complicated and metamodel schizophrenia is always waiting for an opportunity to bite.</p>
+<p>Avoiding leakage with EMF applications is quite hard since a single refernce from one of the global registries can easily lock everything into memory,</p>
+<p>Identifying when the user model analysis in the working state can be re-used and when it must be recomputed is hard since there is no mechanism for a user to delimit the duration of model invariance.</p>
+<p>Investigation of a bug in the implicit opposites underpinning a stereotype in a static UMLprofioe revealed that the analyses supporting 
+					<span class="emphasis"><em>allInstances</em></span> and 
+					<span class="emphasis"><em>implicitOpposites</em></span> was very very pessimitic and consequently very inefficient.
+				</p>
+<p>The major use cases for OCL applications are model validation and model transformation. For the latter, the transformation tool can easily initialize the OCL state prior to transformation and clean up afterwards. For the former case, a massive performance improvement is possible if the one working state can be re-used throughout the model validation.</p>
+</div>
+<div class="section" title="OCL per Thread post-2021-03">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title">
+<a name="OCLperThread"></a>OCL per Thread post-2021-03</h3>
+</div>
+</div>
+</div>
+<p>For the 2021-03 (6.14.0) release a new approach is taken. The OCL working state is referenced by a thread local variable making discovery easy and cleanup inherent in the demise of the thread. Lazy creation is fairly easy too.</p>
+<p>There is no need for a special global OCL context with defective capabilities; the <code class="code">GlobalEnvironmentFactory</code> and its <code class="code">INSTANCE</code> is obsolete.</p>
+<p>But, by default multi-threaded applications have a distinct OCL working state per-thread, which may be beneficial or inefficient. if the programmer is able to manage thread safety, then the <code class="code">ThreadLocalExecutor.set</code> API may be used to share the same OCL state on more than one theead. NB the current OCL code has some synchronizations that may help with thread safety but overall there is no guarantee of thread safety.</p>
+<p>But, multi-OCL applications cannot have more than one active OCL per-thread.</p>
+<p>One variation of the multi-OCL use case was prevalent in the OCL JUnit tests where one OCL processed a reference model while another OCL processed an application model. The solution for interleaved usages is to invoke <code class="code">OCL.deactivate</code> or <code class="code">ThreadLocalExecutor.detachEnvironmentFactory</code> to suspend one OCL before <code class="code">OCL.activate</code> or <code class="code">ThreadLocalExecutor.attachEnvironmentFactory</code> resumes another OCL. The multiple OCLs can therefore co=exist till eventually <code class="code">OCL.dispose()</code> cleans up.</p>
+<p>Another variation of the multi-OCL use case was prevalent in the QVTd JUnit tests where one main extended OCL processed an application model while a nested OCL validated/serialized intermediate results. The same <code class="code">deactivate</code>/<code class="code">activate</code> solution again ensures that only one OCL is actve.</p>
+<p>The use of concurrent OCLs on the same thread is diagnosed and results in a log message such as 
+					<span class="emphasis"><em>Concurrent EnvironmentFactory instances inhibit local thread Executor passing</em></span> forcing th code to fall back on the old adapter mased approach. The solution, as described above, is to use <code class="code">deactivate</code>/<code class="code">activate</code> to eliminate the concuurent activity.
+				</p>
+<p>But, whereas the old approach was very pessimistic creating a new OCL working state far too often, the thread-based OCL state must be invalidated by invoking <code class="code">ThreadLocalExecutor.reset()</code> whenever the user models are changed in any way that might undermine the OCL assumption that models do not change. (This change could be automated using EMF&rsquo;s TrackingModificatinAdapters but the cost is considered too high compared to a manual reset).</p>
+<p>But, there is currently no support for sharing the UI thread across many <code class="code">IWorkbenchPart</code>. i.e if two views both use OCL on the UI thread, the state of one view may confuse the other. Fortunately OCL activity such as validation is generally delegated to a worker thread avoiding the confusion and guaranteeing a new OCL per usage.</p>
+<p>The adapters associated with the old approach are now obsolete but remain for now as legacy/compatibility clutter. They will be removed in a future release.</p>
+</div>
+</div>
 <div class="section" title="Validators">
 <div class="titlepage">
 <div>
@@ -22291,7 +22365,7 @@ org.eclipse.xtext<br>
 </li>
 </ul>
 </div>
-<table id="N15A2B">
+<table id="N15ADB">
 <tr>
 						
 <th>OCL</th>
