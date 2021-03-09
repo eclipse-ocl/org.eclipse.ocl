@@ -17,6 +17,7 @@
 		<javadoc 
 			access="public" 
 			author="true" 
+			failonerror="false" 
 			nodeprecated="false" 
 			nodeprecatedlist="false" 
 			noindex="false" 
@@ -68,15 +69,15 @@
 			        <include name="org.eclipse.pde.core_*.jar"/>
 			        <include name="org.eclipse.swt*.jar"/>
 			        <include name="org.eclipse.text_*.jar"/>
-			        <include name="org.eclipse.ui_*.jar"/>
-			        <include name="org.eclipse.ui.console_*.jar"/>
-			        <include name="org.eclipse.ui.editors_*.jar"/>
-			        <include name="org.eclipse.ui.forms_*.jar"/>
-			        <include name="org.eclipse.ui.ide_*.jar"/>
-			        <include name="org.eclipse.ui.navigator_*.jar"/>
-			        <include name="org.eclipse.ui.views_*.jar"/>
-			        <include name="org.eclipse.ui.workbench_*.jar"/>
-			        <include name="org.eclipse.ui.workbench.texteditor_*.jar"/>
+			        <exclude name="org.eclipse.ui_*.jar"/>
+			        <exclude name="org.eclipse.ui.console_*.jar"/>
+			        <exclude name="org.eclipse.ui.editors_*.jar"/>
+			        <exclude name="org.eclipse.ui.forms_*.jar"/>
+			        <exclude name="org.eclipse.ui.ide_*.jar"/>
+			        <exclude name="org.eclipse.ui.navigator_*.jar"/>
+			        <exclude name="org.eclipse.ui.views_*.jar"/>
+			        <exclude name="org.eclipse.ui.workbench_*.jar"/>
+			        <exclude name="org.eclipse.ui.workbench.texteditor_*.jar"/>
 			        <include name="org.eclipse.emf.codegen_*.jar"/>
 			        <include name="org.eclipse.emf.codegen.ecore_*.jar"/>
 			        <include name="org.eclipse.emf.common_*.jar"/>
