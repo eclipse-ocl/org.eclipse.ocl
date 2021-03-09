@@ -13,7 +13,7 @@
 		<echo message="Javadoc output location: ${generatedJavadoc}" />
 		<echo message="target.platform path: ${target.platform}" />
 		<echo message="ZIP output location: ${zipFile}" />
-
+		<mkdir dir="${generatedJavadoc}"/>
 		<javadoc 
 			access="public" 
 			author="true" 
