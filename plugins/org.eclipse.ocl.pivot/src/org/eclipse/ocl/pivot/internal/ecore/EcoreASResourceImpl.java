@@ -23,6 +23,9 @@ public class EcoreASResourceImpl extends ASResourceImpl
 {
 	public EcoreASResourceImpl(@NonNull URI uri, @NonNull ASResourceFactory asResourceFactory) {
 		super(uri, asResourceFactory);
+		if (uri.toString().contains("Pivot")) {
+			getClass();
+		}
 	//	setSaveable(false);		-- FIXME change to require explicit srtSaveable(true) policy
 	}
 

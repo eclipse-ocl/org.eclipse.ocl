@@ -348,6 +348,9 @@ public class Ecore2AS extends AbstractExternal2AS
 		Model pivotModel2 = pivotModel;
 		if (pivotModel2 == null) {
 			loadImports(ecoreResource);
+			if ((ecoreURI != null) && ecoreURI.toString().contains("QVTtemplate")) {
+				getClass();
+			}
 			pivotModel2 = pivotModel = importObjects(ClassUtil.nonNullEMF(ecoreResource.getContents()), createPivotURI());
 			installImports();
 		}
@@ -914,6 +917,9 @@ public class Ecore2AS extends AbstractExternal2AS
 	 * Define the loadableURI to be used to form the AS URI that is then used as part of the serialized XMI.
 	 */
 	public void setEcoreURI(URI ecoreURI) {
+		if ((ecoreURI != null) && ecoreURI.toString().contains("QVTtemplate")) {
+			getClass();
+		}
 		this.ecoreURI = ecoreURI;
 	}
 

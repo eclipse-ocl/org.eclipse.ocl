@@ -1257,8 +1257,18 @@ public class StandaloneProjectMap implements ProjectManager
 			return eObject;
 		}
 
+		@Override
+		public EList<Diagnostic> getErrors() {
+			return eResource != null ? eResource.getErrors() : super.getErrors();
+		}
+
 		public @NonNull Resource getResource() {
 			return eResource != null ? eResource : this;
+		}
+
+		@Override
+		public EList<Diagnostic> getWarnings() {
+			return eResource != null ? eResource.getWarnings() : super.getWarnings();
 		}
 	}
 

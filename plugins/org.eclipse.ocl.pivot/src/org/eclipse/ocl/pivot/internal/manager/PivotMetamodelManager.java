@@ -119,6 +119,8 @@ import org.eclipse.ocl.pivot.library.UnsupportedOperation;
 import org.eclipse.ocl.pivot.model.OCLmetamodel;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.resource.ProjectManager.IPackageDescriptor;
+import org.eclipse.ocl.pivot.resource.ProjectManager.IResourceDescriptor;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
@@ -2030,6 +2032,9 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 
 	@Override
 	public @Nullable Element loadResource(@NonNull URI uri, String zzalias, @Nullable ResourceSet resourceSet) throws ParserException {
+		if (uri.toString().contains("Pivot")) {
+			getClass();
+		}
 		// FIXME alias not used
 		URI resourceURI = uri.trimFragment();
 		if (PivotUtilInternal.isASURI(resourceURI)) {
@@ -2046,6 +2051,18 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 			}
 			return asElement;
 		}
+		URI normalizedURI = environmentFactory.getResourceSet().getURIConverter().normalize(resourceURI);
+		URI nsURI = null;
+		IResourceDescriptor resourceDescriptor = environmentFactory.getProjectManager().getResourceDescriptor(resourceURI);
+		if  (resourceDescriptor != null) {
+			for (IPackageDescriptor packageDescriptor : resourceDescriptor.getPackageDescriptors()) {
+				nsURI = packageDescriptor.getNsURI();
+			//	resourceURI = nsURI;
+				break;
+			}
+		}
+		IPackageDescriptor packageDescriptor1 = environmentFactory.getProjectManager().getPackageDescriptor(resourceURI);
+		IPackageDescriptor packageDescriptor2 = environmentFactory.getProjectManager().getPackageDescriptor(normalizedURI);
 		// if (EPackage.Registry.INSTANCE.containsKey(resourceOrNsURI))
 		// return EPackage.Registry.INSTANCE.getEPackage(resourceOrNsURI);
 		ResourceSet externalResourceSet = resourceSet != null ? resourceSet : environmentFactory.getResourceSet();
