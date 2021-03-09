@@ -61,6 +61,7 @@
 			        <include name="org.eclipse.equinox.registry_*.jar"/>
 			        <include name="org.eclipse.jdt.annotation_*.jar"/>
 			        <include name="org.eclipse.jdt.core_*.jar"/>
+			        <include name="org.eclipse.jdt.launching_*.jar"/>
 			        <include name="org.eclipse.jface_*.jar"/>
 			        <include name="org.eclipse.jface.text_*.jar"/>
 			        <include name="org.eclipse.osgi_*.jar"/>
@@ -89,6 +90,7 @@
 			        <include name="org.eclipse.emf.edit.ui_*.jar"/>
 			        <include name="org.eclipse.emf.validation_*.jar"/>
 			        <include name="org.eclipse.uml2.codegen_*.jar"/>
+			        <include name="org.eclipse.uml2.codegen.ecore_*.jar"/>
 			        <include name="org.eclipse.uml2.common_*.jar"/>
 			        <include name="org.eclipse.uml2.types_*.jar"/>
 			        <include name="org.eclipse.uml2.uml_*.jar"/>
@@ -129,6 +131,7 @@
 				<pathelement location=".\..\..\examples\org.eclipse.ocl.examples.ui\src"/>
 				<pathelement location=".\..\..\examples\org.eclipse.ocl.examples.validity\src"/>
 				<pathelement location=".\..\..\examples\org.eclipse.ocl.examples.xtext.console\src"/>
+				<pathelement location=".\..\..\examples\org.eclipse.ocl.examples.xtext.serializer\src"/>
 				<pathelement location=".\..\..\plugins\org.eclipse.ocl.pivot\emf-gen"/>
 				<pathelement location=".\..\..\plugins\org.eclipse.ocl.pivot\src"/>
 				<pathelement location=".\..\..\plugins\org.eclipse.ocl.pivot.ui\src"/>
@@ -138,6 +141,7 @@
 				<pathelement location=".\..\..\plugins\org.eclipse.ocl.xtext.base\emf-gen"/>
 				<pathelement location=".\..\..\plugins\org.eclipse.ocl.xtext.base\src"/>
 				<pathelement location=".\..\..\plugins\org.eclipse.ocl.xtext.base\src-gen"/>
+				<pathelement location=".\..\..\plugins\org.eclipse.ocl.xtext.base.serializer\src"/>
 				<pathelement location=".\..\..\plugins\org.eclipse.ocl.xtext.base.ui\src"/>
 				<pathelement location=".\..\..\plugins\org.eclipse.ocl.xtext.base.ui\src-gen"/>
 				<pathelement location=".\..\..\plugins\org.eclipse.ocl.xtext.completeocl\emf-gen"/>
