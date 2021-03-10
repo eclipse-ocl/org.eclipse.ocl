@@ -68,7 +68,6 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
-import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
@@ -227,7 +226,7 @@ public class EcoreOCLEValidator implements EValidator
 	 *
 	 * @deprecated use PivotDiagnostician.getOCL
 	 */
-	@Deprecated
+	@Deprecated /* no longer used */
 	protected static final class WeakOCLReference extends WeakReference<OCLInternal>
 	{
 		protected final @NonNull OCLInternal ocl;
@@ -479,7 +478,7 @@ public class EcoreOCLEValidator implements EValidator
 	 * @deprecated not used - use PivotDiagnostician.getOCL
 	 * @since 1.3
 	 */
-	@Deprecated
+	@Deprecated /* no longer used */
 	protected @NonNull OCLInternal getOCL(@NonNull Map<Object, Object> context) {
 		return (OCLInternal)PivotDiagnostician.getOCL(context, null);
 	}
@@ -601,8 +600,7 @@ public class EcoreOCLEValidator implements EValidator
 		boolean allOk = true;
 		EAnnotation eAnnotation = OCLCommon.getDelegateAnnotation(eClassifier);
 		if (eAnnotation != null) {
-			OCL ocl = PivotDiagnostician.getOCL(context, eClassifier);
-			EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension)ocl.getEnvironmentFactory();
+			EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension)PivotUtilInternal.getEnvironmentFactory(null);
 			org.eclipse.ocl.pivot.Class asClass = getASOf(environmentFactory, org.eclipse.ocl.pivot.Class.class, eClassifier, diagnostics, context);
 			if (asClass == null) {
 				return false;
@@ -684,8 +682,7 @@ public class EcoreOCLEValidator implements EValidator
 		boolean needsInvocationDelegates = false;
 		boolean needsSettingDelegates = false;
 		boolean needsValidationDelegates = false;
-		OCL ocl = PivotDiagnostician.getOCL(context, ePackage);
-		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension)ocl.getEnvironmentFactory();
+		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension)PivotUtilInternal.getEnvironmentFactory(null);
 		for (EClassifier eClassifier : ePackage.getEClassifiers()) {
 			if (OCLCommon.getDelegateAnnotation(eClassifier) != null) {
 				needsValidationDelegates = true;
@@ -749,8 +746,7 @@ public class EcoreOCLEValidator implements EValidator
 		if (eAnnotation == null) {
 			return true;
 		}
-		OCL ocl = PivotDiagnostician.getOCL(context, eOperation);		// Shares a weak referen ce that garbage collects
-		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension)ocl.getEnvironmentFactory();
+		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension)PivotUtilInternal.getEnvironmentFactory(null);
 		NamedElement asElement = getASOf(environmentFactory, NamedElement.class, eOperation, diagnostics, context);
 		if (asElement == null) {
 			return false;
@@ -798,8 +794,7 @@ public class EcoreOCLEValidator implements EValidator
 		boolean allOk = true;
 		EAnnotation eAnnotation = OCLCommon.getDelegateAnnotation(eStructuralFeature);
 		if (eAnnotation != null) {
-			OCL ocl = PivotDiagnostician.getOCL(context, eStructuralFeature);
-			EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension)ocl.getEnvironmentFactory();
+			EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension)PivotUtilInternal.getEnvironmentFactory(null);
 			EMap<String, String> details = eAnnotation.getDetails();
 			int entries = 0;
 			String value = null;

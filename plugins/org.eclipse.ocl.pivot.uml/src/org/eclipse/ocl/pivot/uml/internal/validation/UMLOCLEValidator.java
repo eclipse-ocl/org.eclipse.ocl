@@ -38,11 +38,12 @@ import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.evaluation.AbstractConstraintEvaluator;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
+import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractConversion;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
-import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
@@ -51,7 +52,6 @@ import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
-import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -318,11 +318,7 @@ public class UMLOCLEValidator implements EValidator
 				if (umlStereotypeApplications.size() > 0) {
 					Resource umlResource = umlStereotypeApplications.get(0).eClass().eResource();
 					if (umlResource != null) {
-						EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) PivotUtilInternal.findEnvironmentFactory(umlResource);
-						if (environmentFactory == null) {
-							OCL ocl = PivotDiagnostician.getOCL(context, eObject);
-							environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
-						}
+						EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension)PivotUtilInternal.getEnvironmentFactory(null);
 						External2AS external2as = UML2AS.findAdapter(umlResource, environmentFactory);
 						if (external2as == null) {
 							external2as = UML2AS.getAdapter(umlResource, environmentFactory);
@@ -594,8 +590,7 @@ public class UMLOCLEValidator implements EValidator
 	 * cached results between successive validations. Returns true if successful, false otherwise.
 	 */
 	protected boolean validateSyntax1(@NonNull String body, org.eclipse.uml2.uml.@NonNull Element opaqueElement, final @Nullable DiagnosticChain diagnostics, @NonNull Map<Object, Object> context) {
-		OCL ocl = PivotDiagnostician.getOCL(context, opaqueElement);
-		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension)ocl.getEnvironmentFactory();
+		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension)PivotUtilInternal.getEnvironmentFactory(null);
 		try {
 			org.eclipse.ocl.pivot.ExpressionInOCL asSpecification = environmentFactory.getASOf(org.eclipse.ocl.pivot.ExpressionInOCL.class, opaqueElement);
 			if (asSpecification == null) {
@@ -658,9 +653,8 @@ public class UMLOCLEValidator implements EValidator
 	}
 
 	protected boolean validateSyntax2(@NonNull EObject instance, @NonNull String body, org.eclipse.uml2.uml.@NonNull Element opaqueElement, final @Nullable DiagnosticChain diagnostics, @NonNull Map<Object, Object> context) {
-		OCL ocl = PivotDiagnostician.getOCL(context, opaqueElement);
+		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension)PivotUtilInternal.getEnvironmentFactory(null);
 		ExpressionInOCL asQuery = null;
-		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension)ocl.getEnvironmentFactory();
 		try {
 			org.eclipse.ocl.pivot.ExpressionInOCL asSpecification = environmentFactory.getASOf(org.eclipse.ocl.pivot.ExpressionInOCL.class, opaqueElement);
 			if (asSpecification == null) {
@@ -691,7 +685,9 @@ public class UMLOCLEValidator implements EValidator
 			}
 			return false;
 		}
-		EvaluationVisitor evaluationVisitor = ocl.createEvaluationVisitor(instance, asQuery);
+		Executor executor = PivotUtil.getExecutor(instance);
+		ModelManager modelManager = executor.getModelManager();
+		EvaluationVisitor evaluationVisitor = environmentFactory.createEvaluationVisitor(instance, asQuery, modelManager);
 		AbstractConstraintEvaluator<Boolean> constraintEvaluator;
 		if (diagnostics != null) {
 			constraintEvaluator = new ConstraintEvaluatorWithDiagnostics(asQuery, instance, diagnostics, instance, mayUseNewLines);

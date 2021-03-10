@@ -121,9 +121,9 @@ public abstract class PivotDiagnostician extends Diagnostician
 	 * Return the OCL context for the validation, caching the created value in the validation context for re-use by
 	 * further validations. The cached reference is weak to ensure that the OCL context is disposed once no longer in use.
 	 *
-	 * @deprecated pass a null eObject to getOCL(context, eObject)
+	 * @deprecated OCL now managed by OCLThread / ThreadLocalExecutor
 	 */
-	@Deprecated
+	@Deprecated /* no longer used */
 	public static @NonNull OCL getOCL(@NonNull Map<Object, Object> context) {
 		return getOCL(context, null);
 	}
@@ -136,29 +136,21 @@ public abstract class PivotDiagnostician extends Diagnostician
 	 * a non-null eObject's Rsource or ResourceSet. Otherwise by creating a new global OCL.
 	 *
 	 * @since 1.4
+	 * @deprecated OCL now managed by OCLThread / ThreadLocalExecutor
 	 */
+	@Deprecated /* no longer used */
 	public static @NonNull OCL getOCL(@NonNull  Map<Object, Object> context, @Nullable EObject eObject) {
-		OCL ocl = null;
-		Object oclRef = context.get(WeakOCLReference.class);
-		if (oclRef instanceof WeakOCLReference) {
-			ocl = ((WeakOCLReference)oclRef).get();
-		}
-		if (ocl == null) {
-			if (eObject != null) {
-				EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.findEnvironmentFactory(eObject);
-				if (environmentFactory != null) {
-					ocl = environmentFactory.createOCL();
-				}
-			}
-			if (ocl == null) {
-				ocl = OCL.newInstance();
-			}
-			context.put(WeakOCLReference.class, new WeakOCLReference(ocl));
-		}
-		return ocl;
+		assert false;
+		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(eObject);
+		return environmentFactory.createOCL();
 	}
 
+	/**
+	 * @deprecated OCL now managed by OCLThread / ThreadLocalExecutor
+	 */
+	@Deprecated
 	public static void setOCL(@NonNull Map<Object, Object> context, @NonNull OCL ocl) {
+		assert false;
 		context.put(WeakOCLReference.class, new WeakOCLReference(ocl));
 	}
 
@@ -217,25 +209,17 @@ public abstract class PivotDiagnostician extends Diagnostician
 	/**
 	 * WeakOCLReference maintains the reference to the OCL context within the Diagnostician context and
 	 * disposes of it once the Diagnostician is done.
+	 *
+	 * @deprecated OCL now managed by OCLThread / ThreadLocalExecutor
 	 */
+	@Deprecated /* no longer used */
 	public static final class WeakOCLReference extends WeakReference<OCL>
 	{
-		protected final @NonNull OCL ocl;
+		protected final @Nullable OCL ocl = null;
 
 		protected WeakOCLReference(@NonNull OCL ocl) {
-			super(ocl);
-			this.ocl = ocl;
-		}
-
-		@Override
-		public void finalize() {
-			new Thread("OCL-Finalizer")
-			{
-				@Override
-				public void run() {
-					ocl.dispose();
-				}
-			}.start();
+			super(null);
+			throw new UnsupportedOperationException();
 		}
 	}
 
