@@ -444,7 +444,13 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 
 	@Override
 	public @NonNull CS2AS getCS2AS() {
-		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(this);
+		EnvironmentFactoryInternal environmentFactory;
+		if (parserContext != null) {
+			environmentFactory = (EnvironmentFactoryInternal) parserContext.getEnvironmentFactory(); 	// PivotUtilInternal.getEnvironmentFactory(this);
+		}
+		else {
+			environmentFactory = PivotUtilInternal.getEnvironmentFactory(this);
+		}
 		CSI2ASMapping csi2asMapping = CSI2ASMapping.basicGetCSI2ASMapping(environmentFactory);
 		if (csi2asMapping != null) {
 			CS2AS cs2as = csi2asMapping.getCS2AS(this);

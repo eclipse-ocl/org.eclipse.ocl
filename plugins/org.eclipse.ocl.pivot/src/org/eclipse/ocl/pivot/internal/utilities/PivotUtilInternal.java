@@ -17,7 +17,6 @@ import java.util.Collection;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -28,7 +27,6 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionLiteralExp;
@@ -75,7 +73,6 @@ import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.manager.PivotExecutorManager;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
-import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.resource.OCLAdapter;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.scoping.Attribution;
@@ -132,9 +129,9 @@ public class PivotUtilInternal //extends PivotUtil
 
 	public static @Nullable EnvironmentFactoryInternal findEnvironmentFactory(@Nullable EObject eObject) {
 		EnvironmentFactoryInternal environmentFactory2 = ThreadLocalExecutor.basicGetEnvironmentFactory();
-		if (environmentFactory2 != null) {
+	//	if (environmentFactory2 != null) {
 			return environmentFactory2;
-		}
+	/*	}
 		if (eObject == null) {
 			return null;
 		}
@@ -146,14 +143,14 @@ public class PivotUtilInternal //extends PivotUtil
 		if (eResource == null) {
 			return null;
 		}
-		return findEnvironmentFactory(eResource);
+		return findEnvironmentFactory(eResource); */
 	}
 
 	public static @Nullable EnvironmentFactoryInternal findEnvironmentFactory(@NonNull Resource resource) {
 		EnvironmentFactoryInternal environmentFactory2 = ThreadLocalExecutor.basicGetEnvironmentFactory();
-		if (environmentFactory2 != null) {
+	//	if (environmentFactory2 != null) {
 			return environmentFactory2;
-		}
+	/*	}
 		for (Adapter adapter : resource.eAdapters()) {
 			if (adapter instanceof EnvironmentFactoryAdapter) {
 				return ((EnvironmentFactoryAdapter)adapter).getEnvironmentFactory();
@@ -163,14 +160,14 @@ public class PivotUtilInternal //extends PivotUtil
 		if (resourceSet == null) {
 			return null;
 		}
-		return findEnvironmentFactory(resourceSet);
+		return findEnvironmentFactory(resourceSet); */
 	}
 
 	public static @Nullable EnvironmentFactoryInternal findEnvironmentFactory(@NonNull ResourceSet resourceSet) {
 		EnvironmentFactory localEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
-		if (localEnvironmentFactory != null) {
+	//	if (localEnvironmentFactory != null) {
 			return (EnvironmentFactoryInternal)localEnvironmentFactory;
-		}
+	/*	}
 		EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension environmentFactory = null;
 		synchronized (resourceSet) {
 			for (Adapter adapter : resourceSet.eAdapters()) {
@@ -191,7 +188,7 @@ public class PivotUtilInternal //extends PivotUtil
 	//	if (localEnvironmentFactory != null) {
 	//		assert localEnvironmentFactory == environmentFactory;
 	//	}
-		return environmentFactory;
+		return environmentFactory; */
 	}
 
 	public static @Nullable PivotMetamodelManager findMetamodelManager(@NonNull Resource resource) {
@@ -340,16 +337,20 @@ public class PivotUtilInternal //extends PivotUtil
 	}
 
 	/** @deprecated use getExecutor() */
-	@Deprecated
+	@Deprecated /* no longer used */
 	public static @NonNull Evaluator getEvaluator(@NonNull EObject eObject) {
+		assert false;
 		return getExecutor(eObject);
 	}
 
 	/**
 	 * @since 1.1
+	 *
+	 * @deprecated promoted to PivotUtil
 	 */
-	@Deprecated /* @deprecated promoted to PivotUtil */
+	@Deprecated /* no longer used */
 	public static @NonNull Executor getExecutor(@NonNull EObject eObject) {
+		assert false;
 		Resource asResource = eObject.eResource();
 		if (asResource != null) {
 			EnvironmentFactory environmentFactory = findEnvironmentFactory(asResource);

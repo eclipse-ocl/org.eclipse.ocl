@@ -1252,13 +1252,8 @@ public class PivotUtil
 			return executor;
 		}
 		if (eObject != null) {
-			Resource eResource = eObject.eResource();
-			if (eResource != null) {
-				EnvironmentFactory environmentFactory = PivotUtilInternal.findEnvironmentFactory(eResource);
-				if (environmentFactory != null) {
-					executor = new PivotExecutorManager(environmentFactory, eObject);
-				}
-			}
+			EnvironmentFactory environmentFactory = PivotUtilInternal.getEnvironmentFactory(eObject);
+			executor = new PivotExecutorManager(environmentFactory, eObject);
 		}
 		if (executor == null) {
 			executor = new EcoreExecutorManager(eObject, PivotTables.LIBRARY);
@@ -1276,39 +1271,10 @@ public class PivotUtil
 	 * @since 1.7
 	 */
 	public static @NonNull Executor getExecutor(@NonNull EObject eObject, @Nullable Map<Object, Object> validationContext) {
-		Executor executor = ThreadLocalExecutor.basicGetExecutor();
-		//	if (executor != null) {
-		//		validationContext.put(Executor.class, executor);
-		//		return executor;
-		//	}
 		if (validationContext != null) {
-			Executor validationContextExecutor = (Executor) validationContext.get(Executor.class);
-			if (validationContextExecutor != null) {
-				assert (executor == null) || (validationContextExecutor == executor);
-				return validationContextExecutor;
-			}
+			assert validationContext.get(Executor.class) == null;
 		}
-		if (executor != null) {
-			if (validationContext != null) {
-				validationContext.put(Executor.class, executor);
-			}
-			return executor;
-		}
-		Resource asResource = eObject.eResource();
-		if (asResource != null) {
-			EnvironmentFactory environmentFactory = PivotUtilInternal.findEnvironmentFactory(asResource);
-			if (environmentFactory != null) {
-				executor = new PivotExecutorManager(environmentFactory, eObject);
-			}
-		}
-		if (executor == null) {
-			executor = new EcoreExecutorManager(eObject, PivotTables.LIBRARY);
-		}
-		if (validationContext != null) {
-			validationContext.put(Executor.class, executor);
-		}
-		ThreadLocalExecutor.setExecutor(executor);
-		return executor;
+		return getExecutor(eObject);
 	}
 
 	/**
