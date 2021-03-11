@@ -215,7 +215,7 @@ public class ThreadLocalExecutor
 		executor = null;
 		concurrentEnvironmentFactories = false;
 		if (THREAD_LOCAL_ENVIRONMENT_FACTORY.isActive()) {
-			THREAD_LOCAL_ENVIRONMENT_FACTORY.println("[" + Thread.currentThread().getName() + "] " + toString());
+			THREAD_LOCAL_ENVIRONMENT_FACTORY.println("[" + Thread.currentThread().getName() + "] Reset " + toString());
 		}
 	}
 
@@ -258,11 +258,11 @@ public class ThreadLocalExecutor
 	@Override
 	public @NonNull String toString() {
 		if (!concurrentEnvironmentFactories) {
-			return (environmentFactory != null ? NameUtil.debugSimpleName(environmentFactory) : "no-environmentFactory")
+			return NameUtil.debugSimpleName(this) + " " + (environmentFactory != null ? NameUtil.debugSimpleName(environmentFactory) : "no-environmentFactory")
 					+ " " + (executor != null ? NameUtil.debugSimpleName(executor) : "no-executor");
 		}
 		else {
-			return "**** CONCURRENT ENVIRONMENT FACTORIES ****";
+			return NameUtil.debugSimpleName(this) + " " + "**** CONCURRENT ENVIRONMENT FACTORIES ****";
 		}
 	}
 

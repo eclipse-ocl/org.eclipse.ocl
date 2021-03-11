@@ -19,9 +19,9 @@ import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
  *
  * @since 1.14
  */
-public abstract class OCLThread<R> extends Thread
+public abstract class OCLThread<R, O extends OCLInternal> extends Thread
 {
-	protected /*@NonNull*/ OCLInternal ocl;
+	protected /*@NonNull*/ O ocl;
 	protected Throwable throwable = null;
 	protected R result;
 
@@ -33,7 +33,16 @@ public abstract class OCLThread<R> extends Thread
 	/**
 	 * Create the OCL for use on the OCL thread.
 	 */
-	protected abstract @NonNull OCLInternal createOCL() throws ParserException;
+	protected abstract @NonNull O createOCL() throws ParserException;
+
+	protected @NonNull O getOCL() {
+		assert ocl != null;
+		return ocl;
+	}
+
+	public R getResult() {
+		return result;
+	}
 
 	@Override
 	public final void run() {
@@ -47,9 +56,10 @@ public abstract class OCLThread<R> extends Thread
 		}
 		finally {
 			try {
+				assert ocl != null;
 				ocl.dispose();				// Release the no longer required OCL working state.
 											// - side effect: ThreadLocalExecutor detaches the EnvironmentFactory
-				ocl = null;
+			//	ocl = null;
 			}
 			finally {
 				synchronized (this) {

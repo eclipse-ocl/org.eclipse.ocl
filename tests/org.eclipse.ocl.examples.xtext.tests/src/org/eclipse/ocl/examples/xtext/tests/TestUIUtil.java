@@ -47,6 +47,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.intro.IIntroManager;
@@ -125,9 +126,14 @@ public class TestUIUtil
 	}
 
 	public static void flushEvents() {
-		IWorkbench workbench = PlatformUI.getWorkbench();
-		for (int i = 0; i < 10; i++) {
-			while (workbench.getDisplay().readAndDispatch());
+		if (Display.findDisplay(Thread.currentThread()) != null) {
+			IWorkbench workbench = PlatformUI.getWorkbench();
+			for (int i = 0; i < 10; i++) {
+				while (workbench.getDisplay().readAndDispatch());
+			}
+		}
+		else {
+			Thread.yield();
 		}
 		/*		for (int i = 0; i < 10; i++) {
 			IWorkbench workbench = PlatformUI.getWorkbench();
