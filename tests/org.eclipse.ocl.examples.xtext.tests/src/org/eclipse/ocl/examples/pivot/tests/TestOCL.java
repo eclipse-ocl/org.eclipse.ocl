@@ -91,7 +91,7 @@ public class TestOCL extends OCLInternal
 
 	public TestOCL(@NonNull TestFileSystem testFileSystem, @NonNull String testPackageName, @NonNull String testName, @NonNull ProjectManager projectManager, @Nullable ResourceSet externalResourceSet) {
 		super(ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(projectManager, externalResourceSet));
-		assert !"main".equals(Thread.currentThread().getName());
+//		assert !"main".equals(Thread.currentThread().getName());
 		this.testFileSystem = testFileSystem;
 		ResourceSet resourceSet = getResourceSet();
 		NoHttpURIHandlerImpl.install(resourceSet);

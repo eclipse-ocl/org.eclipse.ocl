@@ -31,6 +31,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.xtext.tests.TestCaseAppender;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.pivot.internal.utilities.GlobalEnvironmentFactory;
+import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
 //import org.eclipse.ocl.pivot.internal.validation.BasicEAnnotationValidator2;
 import org.eclipse.ocl.pivot.internal.values.BagImpl;
@@ -81,7 +82,8 @@ public abstract class AbstractValidateTests extends PivotTestCaseWithAutoTearDow
 		}
 	}
 
-	protected @NonNull OCL createOCL() {
+//	@Override
+	protected @NonNull OCLInternal createOCL() {
 		OCL ocl = OCL.newInstance(getProjectMap());
 		//		ResourceSet resourceSet = ocl.getResourceSet();
 		//		ProjectMap.initializeURIResourceMap(resourceSet);
@@ -89,7 +91,7 @@ public abstract class AbstractValidateTests extends PivotTestCaseWithAutoTearDow
 		//    	if (EMFPlugin.IS_ECLIPSE_RUNNING) {
 		//    		uriMap.putAll(EcorePlugin.computePlatformURIMap());
 		//    	}
-		return ocl;
+		return (OCLInternal) ocl;
 	}
 
 	public @NonNull Resource doLoadOCLinEcore(@NonNull OCL ocl, @NonNull URI inputURI) throws IOException {

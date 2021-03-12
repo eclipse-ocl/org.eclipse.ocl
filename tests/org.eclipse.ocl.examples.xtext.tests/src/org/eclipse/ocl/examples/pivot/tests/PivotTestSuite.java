@@ -33,7 +33,7 @@ import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
-import org.eclipse.ocl.pivot.utilities.OCL;
+import org.eclipse.ocl.pivot.utilities.ParserException;
 
 import junit.framework.TestSuite;
 
@@ -162,8 +162,10 @@ public abstract class PivotTestSuite extends PivotTestCaseWithAutoTearDown
 		}
 	}
 
-	protected @NonNull TestOCL createOCL() throws Exception {
-		return new TestOCL(getTestFileSystem(), getTestPackageName(), getName(), useCodeGen ? getProjectMap() : OCL.NO_PROJECTS, null);
+//	@Override
+	protected @NonNull TestOCL createOCL() throws ParserException {
+//		return new TestOCL(getTestFileSystem(), getTestPackageName(), getName(), useCodeGen ? getProjectMap() : OCL.NO_PROJECTS, null);
+		throw new UnsupportedOperationException();
 	}
 
 	public @NonNull ResourceSet createResourceSet() {

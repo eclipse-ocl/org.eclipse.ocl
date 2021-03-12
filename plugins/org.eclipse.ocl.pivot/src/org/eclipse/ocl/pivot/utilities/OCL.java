@@ -172,6 +172,7 @@ public class OCL
 	 *
 	 * @since 1.14
 	 */
+	@Deprecated /* @deprecated use OCLThreads to manage concurrent OCLs */
 	public void activate() {
 		if (ThreadLocalExecutor.basicGetEnvironmentFactory() != null) {
 			try {
@@ -367,6 +368,7 @@ public class OCL
 	 *
 	 * @since 1.14
 	 */
+	@Deprecated /* @deprecated use OCLThreads to manage concurrent OCLs */
 	public void deactivate() {
 		if (environmentFactory != null) {
 			ThreadLocalExecutor.detachEnvironmentFactory(environmentFactory);

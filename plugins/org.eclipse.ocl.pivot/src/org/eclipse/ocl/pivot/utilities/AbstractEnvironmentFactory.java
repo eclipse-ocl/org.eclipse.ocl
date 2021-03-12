@@ -708,7 +708,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	}
 
 	@Override
-	protected void finalize() throws Throwable {
+	protected void finalize() {
 //		PivotUtilInternal.debugPrintln("Finalize " + NameUtil.debugSimpleName(this));
 		if (liveEnvironmentFactories != null) {
 	PivotUtilInternal.debugPrintln("Finalize " + NameUtil.debugSimpleName(this));

@@ -688,7 +688,7 @@ public class PivotTestCase extends TestCase
 		static int count = 0;
 
 		String name = null;
-		Throwable throwable = null;
+		Exception exception = null;
 
 		protected TestRunnable() {
 			name = "test" + count++;
@@ -699,19 +699,18 @@ public class PivotTestCase extends TestCase
 			try {
 				runWithThrowable();
 			}
-			catch (Throwable t) {
-				throwable = t;
+			catch (Exception t) {
+				exception = t;
 			}
 		}
-		protected abstract void runWithThrowable() throws Throwable;
+		protected abstract void runWithThrowable() throws Exception;
 	}
 
 	/**
 	 * Execute the test as a Runnable on its own thread so that the thread terminates and the
 	 * release of resources by the finalizr is demonstrated.
-	 * @throws Throwable
 	 */
-	protected void doTestRunnable(@NonNull TestRunnable testRunnable) throws Throwable {
+	protected void doTestRunnable(@NonNull TestRunnable testRunnable) throws Exception {
 		if (EcorePlugin.IS_ECLIPSE_RUNNING) {
 			testRunnable.run();		// Use directly -- too hard to interact with UI thread otherwise
 		}
@@ -741,8 +740,8 @@ public class PivotTestCase extends TestCase
 					System.gc();
 					System.runFinalization();
 				}
-				if (testRunnable.throwable != null) {
-					throw testRunnable.throwable;
+				if (testRunnable.exception != null) {
+					throw testRunnable.exception;
 				}
 			}
 		}

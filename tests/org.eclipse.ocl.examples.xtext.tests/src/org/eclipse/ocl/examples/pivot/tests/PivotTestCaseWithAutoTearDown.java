@@ -39,12 +39,15 @@ import org.eclipse.ocl.examples.xtext.tests.TestFile;
 import org.eclipse.ocl.examples.xtext.tests.TestFileSystem;
 import org.eclipse.ocl.examples.xtext.tests.TestFileSystemHelper;
 import org.eclipse.ocl.examples.xtext.tests.TestProject;
+import org.eclipse.ocl.examples.xtext.tests.TestUIUtil;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
+import org.eclipse.ocl.pivot.utilities.OCLThread;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
@@ -54,6 +57,21 @@ import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
  */
 public abstract class PivotTestCaseWithAutoTearDown extends PivotTestCase
 {
+	public abstract static class OCLTestThread<R, O extends OCLInternal> extends OCLThread<R, O>
+	{
+		public OCLTestThread(@NonNull String oclThreadName) {
+			super(oclThreadName);
+			if (EMFPlugin.IS_ECLIPSE_RUNNING) {
+				TestUIUtil.flushEvents();
+			}
+		}
+
+		public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
+			assert ocl != null;
+			return ocl.getEnvironmentFactory();
+		}
+	}
+
 	public @Nullable TestFileSystem testFileSystem = null;
 	public @Nullable TestProject testProject = null;
 	public @Nullable ProjectManager testProjectManager = null;
@@ -126,6 +144,10 @@ public abstract class PivotTestCaseWithAutoTearDown extends PivotTestCase
 		ecoreResource.save(XMIUtil.createSaveOptions());
 		return ecoreURI;
 	}
+
+//	protected @NonNull OCLInternal createOCL() throws ParserException {
+//		return new TestOCL(getTestFileSystem(), getTestPackageName(), getName(), getTestProjectManager(), null);
+//	}
 
 	public @NonNull TestFile createOCLinEcoreFile(@NonNull String filePath, @NonNull String fileContent) throws IOException {
 		TestProject testProject = getTestProject();

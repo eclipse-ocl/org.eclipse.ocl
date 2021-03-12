@@ -162,9 +162,8 @@ public class LeakTests extends PivotTestCaseWithAutoTearDown
 
 	/**
 	 * A test that demonstrates the memory leak from validation of the model.
-	 * @throws Throwable
 	 */
-	public void testValidateProfileLeak() throws Throwable {	// Bug 459276
+	public void testValidateProfileLeak() throws Exception {	// Bug 459276
 		LeakTestRunnable leakTestRunnable = new LeakTestRunnable() {
 			@Override
 			public void runWithThrowable() throws Exception {

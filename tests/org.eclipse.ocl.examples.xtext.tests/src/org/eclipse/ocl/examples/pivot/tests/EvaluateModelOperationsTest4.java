@@ -41,6 +41,7 @@ import org.eclipse.ocl.pivot.internal.values.BagImpl;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
+import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.Value;
@@ -90,6 +91,11 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 	@Override
 	@After public void tearDown() throws Exception {
 		super.tearDown();
+	}
+
+//	@Override
+	protected @NonNull TestOCL createOCL() throws ParserException {
+		return new TestOCL(getTestFileSystem(), getTestPackageName(), getName(), useCodeGen ? getProjectMap() : OCL.NO_PROJECTS, null);
 	}
 
 	@SuppressWarnings("unchecked")

@@ -154,7 +154,7 @@ public class ThreadLocalExecutor
 	}
 
 	@Override
-	protected void finalize() throws Throwable {
+	protected void finalize() {
 		if (THREAD_LOCAL_ENVIRONMENT_FACTORY.isActive()) {
 			THREAD_LOCAL_ENVIRONMENT_FACTORY.println("[" + Thread.currentThread().getName() + "] Finalize " + toString());
 		}

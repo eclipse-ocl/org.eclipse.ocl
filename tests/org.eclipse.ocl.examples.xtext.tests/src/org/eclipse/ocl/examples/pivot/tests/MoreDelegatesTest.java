@@ -12,10 +12,9 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.pivot.tests;
 
-import java.lang.reflect.InvocationTargetException;
-
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * Tests for the OCL delegate implementations.
@@ -23,24 +22,42 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 public class MoreDelegatesTest extends DelegatesTest
 {
 	// Passes in isolation; probably an adapter clean-up problem
-	public void test_eAttributeDerivation_registered() {
-		ResourceSet resourceSet = createResourceSet();
-		initPackageRegistrations(resourceSet);
-		doTest_eAttributeDerivation(resourceSet, COMPANY_XMI);
+	public void test_eAttributeDerivation_registered() throws Exception {
+		EagerDelegatesOCLTestThread delegatesThread = new EagerDelegatesOCLTestThread(getTestName())
+		{
+			@Override
+			public void runWithModel(@NonNull ResourceSet resourceSet) throws Exception {
+				initPackageRegistrations(resourceSet);
+				doTest_eAttributeDerivation(resourceSet, COMPANY_XMI);
+			}
+		};
+		delegatesThread.syncExec();
 	}
 
 	// Passes in isolation; probably an adapter clean-up problem
-	public void test_invariantValidation_withoutReflection_registered() {
-		ResourceSet resourceSet = createResourceSet();
-		initPackageRegistrations(resourceSet);
-		doTest_invariantValidation(resourceSet, NO_REFLECTION_COMPANY_XMI, true, Diagnostic.ERROR);
+	public void test_invariantValidation_withoutReflection_registered() throws Exception {
+		EagerDelegatesOCLTestThread delegatesThread = new EagerDelegatesOCLTestThread(getTestName())
+		{
+			@Override
+			public void runWithModel(@NonNull ResourceSet resourceSet) throws Exception {
+				initPackageRegistrations(resourceSet);
+				doTest_invariantValidation(resourceSet, NO_REFLECTION_COMPANY_XMI, true, Diagnostic.ERROR);
+			}
+		};
+		delegatesThread.syncExec();
 	}
 
 	// Passes in isolation; probably an adapter clean-up problem
-	public void test_operationInvocation_registered() throws InvocationTargetException {
-		ResourceSet resourceSet = createResourceSet();
-		initPackageRegistrations(resourceSet);
-		doTest_operationInvocation(resourceSet, COMPANY_XMI);
-		assertFalse(usedLocalRegistry);
+	public void test_operationInvocation_registered() throws Exception {
+		EagerDelegatesOCLTestThread delegatesThread = new EagerDelegatesOCLTestThread(getTestName())
+		{
+			@Override
+			public void runWithModel(@NonNull ResourceSet resourceSet) throws Exception {
+				initPackageRegistrations(resourceSet);
+				doTest_operationInvocation(resourceSet, COMPANY_XMI);
+				assertFalse(usedLocalRegistry);
+			}
+		};
+		delegatesThread.syncExec();
 	}
 }

@@ -84,8 +84,7 @@ import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
-import org.eclipse.ocl.pivot.utilities.OCLThread;
-import org.eclipse.ocl.pivot.utilities.ParserException;
+import org.eclipse.ocl.pivot.utilities.OCLThread.Resumable;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
@@ -145,16 +144,19 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		}
 	}
 
-	public abstract class OCLTestThread<R> extends OCLThread<R, @NonNull TestOCL>
+	/**
+	 * UsagesTestThread provides shared facilities for use on a test thread.
+	 */
+	public abstract class UsagesTestThread<R> extends OCLTestThread<R, @NonNull TestOCL>
 	{
-		public OCLTestThread(@NonNull String oclThreadName) {
+		public UsagesTestThread(@NonNull String oclThreadName) {
 			super(oclThreadName);
-			TestUIUtil.flushEvents();
 		}
 
 		@Override
-		protected @NonNull TestOCL createOCL() throws ParserException {
-			return UsageTests.this.createOCL();
+		protected @NonNull TestOCL createOCL() {
+//			return UsageTests.this.createOCL();
+			return new TestOCL(getTestFileSystem(), getTestPackageName(), getName(), getTestProjectManager(), null);
 		}
 	}
 
@@ -199,11 +201,6 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		if (errorCount > 0) {
 			throw new RuntimeException(errorCount + " errors in ResourceSet");
 		}
-	}
-
-	@Override
-	public @NonNull TestOCL createOCL() {
-		return new TestOCL(getTestFileSystem(), getTestPackageName(), getName(), getTestProjectManager(), null);
 	}
 
 	/**
@@ -364,8 +361,8 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		writer.close();
 	}
 
-	protected @NonNull URI createModels(@NonNull String testFileStem, @Nullable String oclinecoreFile, @NonNull String genmodelContent) throws Throwable {
-		OCLTestThread<@NonNull  URI> creationThread = new OCLTestThread<@NonNull URI>("Models-Creation")
+	protected @NonNull URI createModels(@NonNull String testFileStem, @Nullable String oclinecoreFile, @NonNull String genmodelContent) throws Exception {
+		UsagesTestThread<@NonNull URI> creationThread = new UsagesTestThread<@NonNull URI>("Models-Creation")
 		{
 			@Override
 			public @NonNull URI runWithThrowable() throws Exception {
@@ -566,8 +563,8 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		return true;
 	}
 
-	protected boolean doEcoreCompile(@NonNull String... testProjectNames) throws Throwable {
-		OCLTestThread<@NonNull Boolean> compileThread = new OCLTestThread<@NonNull Boolean>("Model-Compile")
+	protected boolean doEcoreCompile(@NonNull String... testProjectNames) throws Exception {
+		UsagesTestThread<@NonNull Boolean> compileThread = new UsagesTestThread<@NonNull Boolean>("Model-Compile")
 		{
 			@Override
 			public @NonNull Boolean runWithThrowable() throws Exception {
@@ -578,8 +575,8 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		return compileThread.syncExec();
 	}
 
-	protected void doGenModel(@NonNull URI genmodelURI) throws Throwable {
-		OCLTestThread<?> reconcileThread = new OCLTestThread<Object>("GenModel-Reconcile")
+	protected void doGenModel(@NonNull URI genmodelURI) throws Exception {
+		UsagesTestThread<?> reconcileThread = new UsagesTestThread<Object>("GenModel-Reconcile")
 		{
 			@Override
 			public Object runWithThrowable() {
@@ -669,7 +666,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		};
 		reconcileThread.syncExec();
 		//
-		OCLTestThread<?> genmodelThread = new OCLTestThread<Object>("GenModel-Generate")
+		UsagesTestThread<?> genmodelThread = new UsagesTestThread<Object>("GenModel-Generate")
 		{
 			@Override
 			public Object runWithThrowable() {
@@ -770,8 +767,8 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		return (EPackage) eInstance;
 	}
 
-	protected boolean doUMLCompile(@NonNull String testProjectName) throws Throwable {
-		OCLTestThread<@NonNull Boolean> compileThread = new OCLTestThread<@NonNull Boolean>("Model-Compile")
+	protected boolean doUMLCompile(@NonNull String testProjectName) throws Exception {
+		UsagesTestThread<@NonNull Boolean> compileThread = new UsagesTestThread<@NonNull Boolean>("Model-Compile")
 		{
 			@Override
 			public @NonNull Boolean runWithThrowable() throws Exception {
@@ -800,9 +797,9 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		return umlProfileResource;
 	}
 
-	protected @NonNull OCLTestThread<@NonNull Resource> validateUmlModel(@NonNull URI umlModelURI,@NonNull String qualifiedPackageClassName,
-			@NonNull String pathMapName, @Nullable Map<URI, URI> extraUriMap) throws Throwable {
-		OCLTestThread<@NonNull Resource> validationThread = new OCLTestThread<@NonNull Resource>("Model-Compile")
+	protected @NonNull Resumable<@NonNull Resource> validateUmlModel(@NonNull URI umlModelURI,@NonNull String qualifiedPackageClassName,
+			@NonNull String pathMapName, @Nullable Map<URI, URI> extraUriMap) throws Exception {
+		UsagesTestThread<@NonNull Resource> validationThread = new UsagesTestThread<@NonNull Resource>("Model-Compile")
 		{
 			@Override
 			public @NonNull Resource runWithThrowable() throws Exception {
@@ -836,11 +833,10 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				return umlModelResource;
 			}
 		};
-		validationThread.syncExec();
-		return validationThread;
+		return validationThread.syncStart();
 	}
 
-	public void testBug370824() throws Throwable {
+	public void testBug370824() throws Exception {
 		String testFileStem = "Bug370824";
 		String testProjectName = "bug370824";
 		String oclinecoreFile
@@ -856,7 +852,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		doEcoreCompile(testProjectName);
 	}
 
-	public void testBug409650() throws Throwable {
+	public void testBug409650() throws Exception {
 		String testFileStem = "Bug409650";
 		String testProjectName = "bug409650";
 		String oclinecoreFile = "package bug409650 : bug409650 = 'http://bug409650'\n"
@@ -874,7 +870,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		doGenModel(genModelURI);
 		doEcoreCompile(testProjectName);
 		//
-		OCLTestThread<?> evaluationThread = new OCLTestThread<Object>("Model-Evaluation")
+		UsagesTestThread<?> evaluationThread = new UsagesTestThread<Object>("Model-Evaluation")
 		{
 			@Override
 			public Object runWithThrowable() throws Exception {
@@ -901,7 +897,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		evaluationThread.syncExec();
 	}
 
-	public void testBug415782() throws Throwable {
+	public void testBug415782() throws Exception {
 		String testFileStem = "Bug415782";
 		String testProjectName = "bug415782";
 		String oclinecoreFile = "import ecore : 'http://www.eclipse.org/emf/2002/Ecore#/';\n"
@@ -921,7 +917,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		doEcoreCompile(testProjectName);
 	}
 
-	public void testBug416421() throws Throwable {
+	public void testBug416421() throws Exception {
 		String testFileStemA = "Bug416421A";
 		String testProjectNameA = "bug416421A";
 		String oclinecoreFileA = "package bug416421A : bug416421A = 'example.org/bug416421A'\n"
@@ -953,7 +949,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		doEcoreCompile(testProjectNameA, testProjectNameB);
 	}
 
-	public void testBug458722() throws Throwable {
+	public void testBug458722() throws Exception {
 		String testFileStem = "Bug458722";
 		String testProjectName = "bug458722";
 		String oclinecoreFile = "import ecore : 'http://www.eclipse.org/emf/2002/Ecore';\n"
@@ -982,7 +978,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		doEcoreCompile(testProjectName);
 	}
 
-	public void testBug458723() throws Throwable {
+	public void testBug458723() throws Exception {
 		String testFileStem = "Bug458723";
 		String testProjectName = "bug458723";
 		String oclinecoreFile = "import ecore : 'http://www.eclipse.org/emf/2002/Ecore';\n"
@@ -1008,7 +1004,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		doEcoreCompile(testProjectName);
 	}
 
-	public void testBug458724() throws Throwable {
+	public void testBug458724() throws Exception {
 		String testFileStem = "Bug458724";
 		String testProjectName = "bug458724";
 		String oclinecoreFile = "import ecore : 'http://www.eclipse.org/emf/2002/Ecore';\n"
@@ -1046,7 +1042,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		doEcoreCompile(testProjectName);
 	}
 
-	public void testBug567919() throws Throwable {
+	public void testBug567919() throws Exception {
 		String testFileStem = "Bug567919";
 		String testProjectName = "bug567919";
 		String oclinecoreFile = "import ecore : 'http://www.eclipse.org/emf/2002/Ecore#/';\n"
@@ -1068,7 +1064,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		doGenModel(genModelURI);
 		doEcoreCompile(testProjectName);
 
-		OCLTestThread<?> evaluationThread = new OCLTestThread<Object>("Model-Evaluation")
+		UsagesTestThread<?> evaluationThread = new UsagesTestThread<Object>("Model-Evaluation")
 		{
 			@Override
 			public Object runWithThrowable() throws Exception {
@@ -1122,10 +1118,10 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	 * Verify that the static profile in Bug570717.uml model can be generated
 	 * and compiled.
 	 */
-	public void testBug570717_uml() throws Throwable {
+	public void testBug570717_uml() throws Exception {
 		String testFileStem = "Bug570717";
 		String testProjectName = testFileStem; // "bug570717";
-		OCLTestThread<@NonNull URI> creationThread = new OCLTestThread<@NonNull URI>("Model-Creation")
+		UsagesTestThread<@NonNull URI> creationThread = new UsagesTestThread<@NonNull URI>("Model-Creation")
 		{
 			@Override
 			public @NonNull URI runWithThrowable() throws Exception {
@@ -1153,10 +1149,10 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	 * Verify that the static profile in Bug570717.uml model can be generated
 	 * and compiled.
 	 */
-	public void testBug570717a_uml() throws Throwable {
+	public void testBug570717a_uml() throws Exception {
 		String testFileStem = "Bug570717a";
 		String testProjectName = testFileStem; // "bug570717a";
-		OCLTestThread<@NonNull URI> creationThread = new OCLTestThread<@NonNull URI>("Model-Creation")
+		UsagesTestThread<@NonNull URI> creationThread = new UsagesTestThread<@NonNull URI>("Model-Creation")
 		{
 			@Override
 			public @NonNull URI runWithThrowable() throws Exception {
@@ -1179,7 +1175,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		doUMLCompile(testProjectName);
 	}
 
-	public void testBug570802() throws Throwable {
+	public void testBug570802() throws Exception {
 		String testFileStem = "Bug570802";
 		String testProjectName = "bug570802";
 		String oclinecoreFile = "package bug570802 : bug570802 = 'http://Bug570802'\n"
@@ -1200,14 +1196,14 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	 * Verify that the static profile in Bug570891.uml model can be generated
 	 * and compiled.
 	 */
-	public void testBug570891_uml() throws Throwable {
+	public void testBug570891_uml() throws Exception {
 		if (OCLGenModelUtil.INSTANCE.hasDoubleOverrideBug547424()) { // Avoid UML BUG 547424
 			System.err.println(getName() + " has been disabled -see UML Bug 547424");
 			return;
 		}
 		String testFileStem = "Bug570891";
 		String testProjectName = testFileStem; // "bug570891";
-		OCLTestThread<@NonNull URI> creationThread = new OCLTestThread<@NonNull URI>("Model-Creation")
+		UsagesTestThread<@NonNull URI> creationThread = new UsagesTestThread<@NonNull URI>("Model-Creation")
 		{
 			@Override
 			public @NonNull URI runWithThrowable() throws Exception {
@@ -1238,13 +1234,13 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	 * Verify that the static profile in 570892.profile.uml model can be
 	 * generated and compiled and that the 570892.uml model can then validate.
 	 */
-	public void testBug570892_uml() throws Throwable {
+	public void testBug570892_uml() throws Exception {
 		String testFileStem = "Bug570892";
 		String testProjectName = testFileStem; // "bug570892";
 		URIConverter uriConverter = getURIConverter();
 		TestFile umlModelFile = getTestFile(testFileStem + ".uml", uriConverter, getTestModelURI("models/uml/" + testFileStem + ".uml"));
 		TestFile umlProfileFile = getTestFile(testFileStem + ".profile.uml", uriConverter, getTestModelURI("models/uml/" + testFileStem + ".profile.uml"));
-		OCLTestThread<@NonNull URI> creationThread = new OCLTestThread<@NonNull URI>("Model-Creation")
+		UsagesTestThread<@NonNull URI> creationThread = new UsagesTestThread<@NonNull URI>("Model-Creation")
 		{
 			@Override
 			public @NonNull URI runWithThrowable() throws Exception {
@@ -1286,14 +1282,14 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	 * generated and compiled and that the Bug570894.uml model can then
 	 * validate.
 	 */
-	public void testBug570894_uml() throws Throwable {
+	public void testBug570894_uml() throws Exception {
 		String testFileStem = "Bug570894";
 		String testProjectName = testFileStem; // "bug570894";
 		URIConverter uriConverter = getURIConverter();
 		TestFile umlModelFile = getTestFile(testFileStem + ".uml", uriConverter, getTestModelURI("models/uml/" + testFileStem + ".uml"));
 		TestFile umlLibraryFile = getTestFile(testFileStem + ".library.uml", uriConverter, getTestModelURI("models/uml/" + testFileStem + ".library.uml"));
 		TestFile umlProfileFile = getTestFile(testFileStem + ".profile.uml", uriConverter, getTestModelURI("models/uml/" + testFileStem + ".profile.uml"));
-		OCLTestThread<@NonNull  URI> creationThread = new OCLTestThread<@NonNull URI>("Models-Creation")
+		UsagesTestThread<@NonNull URI> creationThread = new UsagesTestThread<@NonNull URI>("Models-Creation")
 		{
 			@Override
 			public @NonNull URI runWithThrowable() throws Exception {
@@ -1325,7 +1321,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		Map<URI, URI> extraUriMap = new HashMap<URI, URI>();
 		extraUriMap.put(URI.createURI("pathmap://VALIDATIONPROBLEM_LIBRARY/ValidationProblem-Library.uml"), umlLibraryFile.getURI());
 		extraUriMap.put(URI.createURI( "pathmap://VALIDATIONPROBLEM_PROFILE/ValidationProblem.profile.uml"),umlProfileFile.getURI());
-		OCLTestThread<@NonNull Resource> validateionThread = validateUmlModel(umlModelFile.getURI(), qualifiedPackageClassName, pathMapName, extraUriMap);
+		Resumable<@NonNull Resource> validateionThread = validateUmlModel(umlModelFile.getURI(), qualifiedPackageClassName, pathMapName, extraUriMap);
 		Resource umlModelResource = validateionThread.getResult();
 		assertEquals("AbstractEnvironmentFactory.CONSTRUCTION_COUNT", 1, AbstractEnvironmentFactory.CONSTRUCTION_COUNT - oldAbstractEnvironmentFactory_CONSTRUCTION_COUNT);
 		assertEquals("AbstractModelManager.CONSTRUCTION_COUNT", 1, AbstractModelManager.CONSTRUCTION_COUNT - oldAbstractModelManager_CONSTRUCTION_COUNT);
@@ -1345,16 +1341,17 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				Object duck = eObject.eGet(duckFeature);
 			}
 		}
+		validateionThread.syncResume();
 	}
 
 	/**
 	 * Verify that the static profile in Bug571407.profile.uml model can be
 	 * generated and compiled.
 	 */
-	public void testBug571407_uml() throws Throwable {
+	public void testBug571407_uml() throws Exception {
 		String testFileStem = "Bug571407";
 		String testProjectName = testFileStem; // "bug571407";
-		OCLTestThread<@NonNull URI> creationThread = new OCLTestThread<@NonNull URI>("Model-Creation")
+		UsagesTestThread<@NonNull URI> creationThread = new UsagesTestThread<@NonNull URI>("Model-Creation")
 		{
 			@Override
 			public @NonNull URI runWithThrowable() throws Exception {
@@ -1434,7 +1431,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		 */
 	}
 
-	public void testCSE() throws Throwable {
+	public void testCSE() throws Exception {
 		// CommonSubexpressionEliminator.CSE_PLACES.setState(true);
 		// CommonSubexpressionEliminator.CSE_PRUNE.setState(true);
 		// CommonSubexpressionEliminator.CSE_PULL_UP.setState(true);
@@ -1457,7 +1454,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		doGenModel(genModelURI);
 		doEcoreCompile(testProjectName);
 		//
-		OCLTestThread<?> evaluationThread = new OCLTestThread<Object>("Model-Evaluation")
+		UsagesTestThread<?> evaluationThread = new UsagesTestThread<Object>("Model-Evaluation")
 		{
 			@Override
 			public Object runWithThrowable() throws Exception {
@@ -1485,11 +1482,11 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		evaluationThread.syncExec();
 	}
 
-	public void testCodegenCompany() throws Throwable {
+	public void testCodegenCompany() throws Exception {
 		String testProjectName = "org/eclipse/ocl/examples/xtext/tests/codegen/company";
 		URI sourceGenModelURI = getTestModelURI("models/genmodel/CodeGenCompany.genmodel");
 		URI targetGenModelURI = getTestURI("CodeGenCompany.genmodel");
-		OCLTestThread<?> creationThread = new OCLTestThread<Object>("Model-Creation")
+		UsagesTestThread<?> creationThread = new UsagesTestThread<Object>("Model-Creation")
 		{
 			@Override
 			public Object runWithThrowable() throws Exception {
@@ -1515,7 +1512,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		doEcoreCompile(testProjectName);
 	}
 
-	public void testEcoreLists570717() throws Throwable {
+	public void testEcoreLists570717() throws Exception {
 		String testFileStem = "Bug570717";
 		String testProjectName = "bug570717";
 		String oclinecoreFile = "import ecore : 'http://www.eclipse.org/emf/2002/Ecore#/';\n"
@@ -1604,7 +1601,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		doGenModel(genModelURI);
 		doEcoreCompile(testProjectName);
 		//
-		OCLTestThread<?> evaluationThread = new OCLTestThread<Object>("Model-Evaluation")
+		UsagesTestThread<?> evaluationThread = new UsagesTestThread<Object>("Model-Evaluation")
 		{
 			@Override
 			public Object runWithThrowable() throws Exception {
@@ -1666,7 +1663,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		evaluationThread.syncExec();
 	}
 
-	public void testEcoreTypes412736() throws Throwable {
+	public void testEcoreTypes412736() throws Exception {
 		String testFileStem = "Bug412736";
 		String testProjectName = "bug412736";
 		String oclinecoreFile = "import ecore : 'http://www.eclipse.org/emf/2002/Ecore#/';\n"
@@ -1719,7 +1716,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		doGenModel(genModelURI);
 		doEcoreCompile(testProjectName);
 		//
-		OCLTestThread<?> evaluationThread = new OCLTestThread<Object>("Model-Evaluation")
+		UsagesTestThread<?> evaluationThread = new UsagesTestThread<Object>("Model-Evaluation")
 		{
 			@Override
 			public Object runWithThrowable() throws Exception {
@@ -1749,7 +1746,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		evaluationThread.syncExec();
 	}
 
-	public void testEnumTypes412685() throws Throwable {
+	public void testEnumTypes412685() throws Exception {
 		// FIXME next line compensates an uninstall overenthusiasm
 		EPackage.Registry.INSTANCE.put(OCLstdlibPackage.eNS_URI, OCLstdlibPackage.eINSTANCE);
 		String testFileStem = "Bug412685";
@@ -1771,7 +1768,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		doGenModel(genModelURI);
 		doEcoreCompile(testProjectName);
 		//
-		OCLTestThread<?> evaluationThread = new OCLTestThread<Object>("Model-Evaluation")
+		UsagesTestThread<?> evaluationThread = new UsagesTestThread<Object>("Model-Evaluation")
 		{
 			@Override
 			public Object runWithThrowable() throws Exception {
@@ -1794,7 +1791,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		evaluationThread.syncExec();
 	}
 
-	public void testEvaluators() throws Throwable {
+	public void testEvaluators() throws Exception {
 		// CommonSubexpressionEliminator.CSE_BUILD.setState(true);
 		// CommonSubexpressionEliminator.CSE_PLACES.setState(true);
 		// CommonSubexpressionEliminator.CSE_PRUNE.setState(true);
@@ -1819,7 +1816,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		doGenModel(genModelURI);
 		doEcoreCompile(testProjectName);
 		//
-		OCLTestThread<?> evaluationThread = new OCLTestThread<Object>("Model-Evaluation")
+		UsagesTestThread<?> evaluationThread = new UsagesTestThread<Object>("Model-Evaluation")
 		{
 			@Override
 			public Object runWithThrowable() throws Exception {
@@ -1839,10 +1836,10 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		evaluationThread.syncExec();
 	}
 
-	public void testSysML_QUDV() throws Throwable {
+	public void testSysML_QUDV() throws Exception {
 		String testProjectName = "SysML_ValueTypes_QUDV";
 		URI targetGenModelURI = getTestURI("SysML_ValueTypes_QUDV.genmodel");
-		OCLTestThread<?> creationThread = new OCLTestThread<Object>("Model-Creation")
+		UsagesTestThread<?> creationThread = new UsagesTestThread<Object>("Model-Creation")
 		{
 			@Override
 			public Object runWithThrowable() throws Exception {
@@ -1874,7 +1871,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		doGenModel(targetGenModelURI);
 		doEcoreCompile(testProjectName);
 		//
-		OCLTestThread<?> evaluationThread = new OCLTestThread<Object>("Model-Evaluation")
+		UsagesTestThread<?> evaluationThread = new UsagesTestThread<Object>("Model-Evaluation")
 		{
 			@Override
 			public Object runWithThrowable() throws Exception {
@@ -1912,10 +1909,8 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	/**
 	 * Verify that the Pivot metamodel can be loaded and validated as a *.oclas
 	 * file by the Sample Reflective Ecore Editor.
-	 *
-	 * @throws Throwable
 	 */
-	public void testOpen_Pivot_oclas() throws Throwable {
+	public void testOpen_Pivot_oclas() throws Exception {
 	//	TestOCL ocl = createOCL();
 		if (EMFPlugin.IS_ECLIPSE_RUNNING) {
 			TestCaseAppender.INSTANCE.uninstall();
@@ -1963,14 +1958,12 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	/**
 	 * Verify that the Bug469251.uml model can be loaded and validated as a
 	 * *.uml file by the UML MOdel Ecore Editor.
-	 *
-	 * @throws Throwable
 	 */
-	public void testOpen_Bug469251_uml() throws Throwable {
+	public void testOpen_Bug469251_uml() throws Exception {
 	//	doTestRunnable(new TestRunnable() {
 
 	//		@Override
-	//		public void runWithThrowable() throws Throwable {
+	//		public void runWithThrowable() throws Exception {
 			//	TestOCL ocl = createOCL();
 				if (EMFPlugin.IS_ECLIPSE_RUNNING) {
 					TestCaseAppender.INSTANCE.uninstall();
@@ -2027,7 +2020,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	//	});
 	}
 
-	public void testPivotMetamodelImport414855() throws Throwable {
+	public void testPivotMetamodelImport414855() throws Exception {
 		String testFileStem = "Bug414855";
 		String testProjectName = "bug414855";
 		String oclinecoreFile = "import pivot : 'http://www.eclipse.org/ocl/2015/Pivot#/';\n"
@@ -2047,7 +2040,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		doEcoreCompile(testProjectName);
 	}
 
-	public void testTemplateTypes471201() throws Throwable {
+	public void testTemplateTypes471201() throws Exception {
 		// FIXME next line compensates an uninstall overenthusiasm
 		EPackage.Registry.INSTANCE.put(OCLstdlibPackage.eNS_URI, OCLstdlibPackage.eINSTANCE);
 		String testFileStem = "Bug471201";
