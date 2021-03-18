@@ -12,7 +12,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.eclipse.ocl</groupId>
   <artifactId>org.eclipse.ocl.releng.tycho</artifactId>
-  <version>6.14.0-SNAPSHOT</version>
+  <version>6.15.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <licenses>
     <license>
@@ -132,7 +132,7 @@
             <artifact>
               <groupId>org.eclipse.ocl</groupId>
               <artifactId>org.eclipse.ocl.releng.tycho</artifactId>
-              <version>6.14.0-SNAPSHOT</version>
+              <version>6.15.0-SNAPSHOT</version>
               <classifier>${targetPlatform}</classifier>
             </artifact>
           </target>
