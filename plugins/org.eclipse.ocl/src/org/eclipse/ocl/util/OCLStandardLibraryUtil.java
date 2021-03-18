@@ -2183,23 +2183,23 @@ public final class OCLStandardLibraryUtil {
 			NOT_EQUAL_NAME, stdlib.getSequence(), "s")); //$NON-NLS-1$
 		result.add(createBinaryOperation(uml, stdlib.getSequence(), UNION_NAME,
 			stdlib.getSequence(), "s")); //$NON-NLS-1$
-		result.add(createBinaryOperation(uml, stdlib.getBoolean(), APPEND_NAME,
+		result.add(createBinaryOperation(uml, stdlib.getSequence(), APPEND_NAME,
 			stdlib.getT(), "object"));//$NON-NLS-1$
-		result.add(createBinaryOperation(uml, stdlib.getBoolean(),
+		result.add(createBinaryOperation(uml, stdlib.getSequence(),
 			PREPEND_NAME, stdlib.getT(), "object"));//$NON-NLS-1$
-		result.add(createTernaryOperation(uml, stdlib.getBoolean(),
+		result.add(createTernaryOperation(uml, stdlib.getSequence(),
 			INSERT_AT_NAME, stdlib.getInteger(), "index", //$NON-NLS-1$
 			stdlib.getT(), "object"));//$NON-NLS-1$
-		result.add(createTernaryOperation(uml, stdlib.getBoolean(),
+		result.add(createTernaryOperation(uml, stdlib.getSequence(),
 			SUB_SEQUENCE_NAME, stdlib.getInteger(), "lower", //$NON-NLS-1$
 			stdlib.getInteger(), "upper"));//$NON-NLS-1$
 		result.add(createBinaryOperation(uml, stdlib.getT(), AT_NAME, stdlib
 			.getInteger(), "index")); //$NON-NLS-1$
 		result.add(createBinaryOperation(uml, stdlib.getInteger(),
 			INDEX_OF_NAME, stdlib.getT(), "object"));//$NON-NLS-1$
-		result.add(createBinaryOperation(uml, stdlib.getBoolean(),
+		result.add(createBinaryOperation(uml, stdlib.getSequence(),
 			INCLUDING_NAME, stdlib.getT(), "object"));//$NON-NLS-1$
-		result.add(createBinaryOperation(uml, stdlib.getBoolean(),
+		result.add(createBinaryOperation(uml, stdlib.getSequence(),
 			EXCLUDING_NAME, stdlib.getT(), "object"));//$NON-NLS-1$
 		result.add(createUnaryOperation(uml, stdlib.getT(), FIRST_NAME));
 		result.add(createUnaryOperation(uml, stdlib.getT(), LAST_NAME));

@@ -1585,20 +1585,20 @@
         <ownedParameter xmi:id="_awXV3KjQEdu4LJng8Rasow" name="s" type="_awXVuKjQEdu4LJng8Rasow"/>
       </ownedOperation>
       <ownedOperation xmi:id="_awXV3ajQEdu4LJng8Rasow" name="append" isQuery="true">
-        <ownedParameter xmi:id="_awXV3qjQEdu4LJng8Rasow" type="_ak_zNKjQEdu4LJng8Rasow" direction="return"/>
+        <ownedParameter xmi:id="_awXV3qjQEdu4LJng8Rasow" type="_awXVuKjQEdu4LJng8Rasow" direction="return"/>
         <ownedParameter xmi:id="_awXV36jQEdu4LJng8Rasow" name="object" type="_awji1ajQEdu4LJng8Rasow"/>
       </ownedOperation>
       <ownedOperation xmi:id="_awXV4KjQEdu4LJng8Rasow" name="prepend" isQuery="true">
-        <ownedParameter xmi:id="_awXV4ajQEdu4LJng8Rasow" type="_ak_zNKjQEdu4LJng8Rasow" direction="return"/>
+        <ownedParameter xmi:id="_awXV4ajQEdu4LJng8Rasow" type="_awXVuKjQEdu4LJng8Rasow" direction="return"/>
         <ownedParameter xmi:id="_awXV4qjQEdu4LJng8Rasow" name="object" type="_awji1ajQEdu4LJng8Rasow"/>
       </ownedOperation>
       <ownedOperation xmi:id="_awXV46jQEdu4LJng8Rasow" name="insertAt" isQuery="true">
-        <ownedParameter xmi:id="_awXV5KjQEdu4LJng8Rasow" type="_ak_zNKjQEdu4LJng8Rasow" direction="return"/>
+        <ownedParameter xmi:id="_awXV5KjQEdu4LJng8Rasow" type="_awXVuKjQEdu4LJng8Rasow" direction="return"/>
         <ownedParameter xmi:id="_awXV5ajQEdu4LJng8Rasow" name="index" type="_alYNtqjQEdu4LJng8Rasow"/>
         <ownedParameter xmi:id="_awXV5qjQEdu4LJng8Rasow" name="object" type="_awji1ajQEdu4LJng8Rasow"/>
       </ownedOperation>
       <ownedOperation xmi:id="_awXV56jQEdu4LJng8Rasow" name="subSequence" isQuery="true">
-        <ownedParameter xmi:id="_awXV6KjQEdu4LJng8Rasow" type="_ak_zNKjQEdu4LJng8Rasow" direction="return"/>
+        <ownedParameter xmi:id="_awXV6KjQEdu4LJng8Rasow" type="_awXVuKjQEdu4LJng8Rasow" direction="return"/>
         <ownedParameter xmi:id="_awXV6ajQEdu4LJng8Rasow" name="lower" type="_alYNtqjQEdu4LJng8Rasow"/>
         <ownedParameter xmi:id="_awXV6qjQEdu4LJng8Rasow" name="upper" type="_alYNtqjQEdu4LJng8Rasow"/>
       </ownedOperation>
@@ -1611,11 +1611,11 @@
         <ownedParameter xmi:id="_awXV8KjQEdu4LJng8Rasow" name="object" type="_awji1ajQEdu4LJng8Rasow"/>
       </ownedOperation>
       <ownedOperation xmi:id="_awXV8ajQEdu4LJng8Rasow" name="including" isQuery="true">
-        <ownedParameter xmi:id="_awXV8qjQEdu4LJng8Rasow" type="_ak_zNKjQEdu4LJng8Rasow" direction="return"/>
+        <ownedParameter xmi:id="_awXV8qjQEdu4LJng8Rasow" type="_awXVuKjQEdu4LJng8Rasow" direction="return"/>
         <ownedParameter xmi:id="_awXV86jQEdu4LJng8Rasow" name="object" type="_awji1ajQEdu4LJng8Rasow"/>
       </ownedOperation>
       <ownedOperation xmi:id="_awXV9KjQEdu4LJng8Rasow" name="excluding" isQuery="true">
-        <ownedParameter xmi:id="_awXV9ajQEdu4LJng8Rasow" type="_ak_zNKjQEdu4LJng8Rasow" direction="return"/>
+        <ownedParameter xmi:id="_awXV9ajQEdu4LJng8Rasow" type="_awXVuKjQEdu4LJng8Rasow" direction="return"/>
         <ownedParameter xmi:id="_awXV9qjQEdu4LJng8Rasow" name="object" type="_awji1ajQEdu4LJng8Rasow"/>
       </ownedOperation>
       <ownedOperation xmi:id="_awXV96jQEdu4LJng8Rasow" name="first" isQuery="true">
