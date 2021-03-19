@@ -83,7 +83,6 @@ import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
-import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.OCLThread.Resumable;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
@@ -367,7 +366,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 			@Override
 			public @NonNull URI runWithThrowable() throws Exception {
 				if (oclinecoreFile != null) {
-					createEcoreFile(getOCL(), testFileStem, oclinecoreFile);
+					createEcoreFile(getEnvironmentFactory(), testFileStem, oclinecoreFile);
 				}
 				URI genModelURI = createTestFileWithContent(getTestProject().getOutputFile(testFileStem + ".genmodel"), genmodelContent);
 				// System.out.println("Generating Ecore Model using '" + genModelURI + "'");
@@ -540,7 +539,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		s.append("  />\n");
 	}
 
-	protected boolean doCompile(@NonNull OCL ocl, @NonNull JavaClasspath classpath, @NonNull String... testProjectNames) throws Exception {
+	protected boolean doCompile(@NonNull JavaClasspath classpath, @NonNull String... testProjectNames) throws Exception {
 		List<@NonNull JavaFileObject> compilationUnits = new ArrayList<>();
 		StringBuilder sources = new StringBuilder();
 		if (testProjectNames != null) {
@@ -569,7 +568,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 			@Override
 			public @NonNull Boolean runWithThrowable() throws Exception {
 				JavaClasspath classpath = JavaFileUtil.createDefaultOCLClasspath();
-				return doCompile(getOCL(), classpath, testProjectNames);
+				return doCompile(classpath, testProjectNames);
 			}
 		};
 		return compileThread.syncExec();
@@ -775,7 +774,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				JavaClasspath classpath = JavaFileUtil.createDefaultOCLClasspath();
 				classpath.addClass(org.eclipse.uml2.types.TypesPackage.class);
 				classpath.addClass(org.eclipse.uml2.uml.UMLPackage.class);
-				return doCompile(getOCL(), classpath, testProjectName);
+				return doCompile(classpath, testProjectName);
 			}
 		};
 		return compileThread.syncExec();

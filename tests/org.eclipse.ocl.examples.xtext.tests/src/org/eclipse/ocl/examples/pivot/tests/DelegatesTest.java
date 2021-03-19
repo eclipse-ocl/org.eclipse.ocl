@@ -750,7 +750,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 			@Override
 			protected void runWithModel(@NonNull ResourceSet resourceSet) {
 				initModelWithErrors(resourceSet);
-				MetamodelManager metamodelManager = getOCL().getMetamodelManager();
+				MetamodelManager metamodelManager = getMetamodelManager();
 				EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
 				EStructuralFeature eStructuralFeature = getStructuralFeature(badClassClass, "attributeDefinedWithoutDerivation");
 				Property property = metamodelManager.getASOfEcore(Property.class, eStructuralFeature);
@@ -767,7 +767,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 			@Override
 			protected void runWithModel(@NonNull ResourceSet resourceSet) {
 				initModelWithErrors(resourceSet);
-				MetamodelManager metamodelManager = getOCL().getMetamodelManager();
+				MetamodelManager metamodelManager = getMetamodelManager();
 				EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
 				EStructuralFeature eStructuralFeature = getStructuralFeature(badClassClass, "attributeDefinedWithoutDerivationBody");
 				Property property = metamodelManager.getASOfEcore(Property.class, eStructuralFeature);
@@ -784,7 +784,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 			@Override
 			protected void runWithModel(@NonNull ResourceSet resourceSet) {
 				initModelWithErrors(resourceSet);
-				MetamodelManager metamodelManager = getOCL().getMetamodelManager();
+				MetamodelManager metamodelManager = getMetamodelManager();
 				EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
 				EStructuralFeature eStructuralFeature = getStructuralFeature(badClassClass, "attributeEvaluatingToInvalid");
 				Property property = metamodelManager.getASOfEcore(Property.class, eStructuralFeature);
@@ -1177,7 +1177,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 			@Override
 			protected void runWithModel(@NonNull ResourceSet resourceSet) throws InvocationTargetException {
 				initModelWithErrors(resourceSet);
-				MetamodelManager metamodelManager = getOCL().getMetamodelManager();
+				MetamodelManager metamodelManager = getMetamodelManager();
 				EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
 				EOperation eOperation = getOperation(badClassClass, "operationDefinedWithoutBody");
 				Operation operation = metamodelManager.getASOfEcore(Operation.class, eOperation);
@@ -1194,7 +1194,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 			@Override
 			protected void runWithModel(@NonNull ResourceSet resourceSet) throws InvocationTargetException {
 				initModelWithErrors(resourceSet);
-				MetamodelManager metamodelManager = getOCL().getMetamodelManager();
+				MetamodelManager metamodelManager = getMetamodelManager();
 				EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
 				EOperation eOperation = getOperation(badClassClass, "operationDefinedWithoutBodyBody");
 				Operation operation = metamodelManager.getASOfEcore(Operation.class, eOperation);
@@ -1211,7 +1211,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 			@Override
 			protected void runWithModel(@NonNull ResourceSet resourceSet) throws InvocationTargetException {
 				initModelWithErrors(resourceSet);
-				MetamodelManager metamodelManager = getOCL().getMetamodelManager();
+				MetamodelManager metamodelManager = getMetamodelManager();
 				EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
 				EOperation eOperation = getOperation(badClassClass, "operationEvaluatingToInvalid");
 				Operation operation = metamodelManager.getASOfEcore(Operation.class, eOperation);
@@ -1331,9 +1331,10 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		{
 			@Override
 			public void runWithModel(@NonNull ResourceSet resourceSet) throws ParserException {
-				OCLInternal ocl = getOCL();
-				MetamodelManager metamodelManager = ocl.getMetamodelManager();
+				OCL ocl = getEnvironmentFactory().createOCL();		// Continue using legacy API
+				MetamodelManager metamodelManager = getMetamodelManager();
 				ExpressionInOCL expr = ocl.createQuery(null, "'abc'.oclAsType(String)");
+				ocl.dispose();
 				OperationCallExp oce = (OperationCallExp) expr.getOwnedBody();
 				Operation o = oce.getReferredOperation();
 				try {

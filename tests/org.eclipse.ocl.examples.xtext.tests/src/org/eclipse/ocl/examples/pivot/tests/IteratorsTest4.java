@@ -407,7 +407,7 @@ public class IteratorsTest4 extends PivotTestSuite
 						"    	property name : String;\n" +
 						"	 }\n" +
 						"}\n";
-		URI uri = createEcoreFile(ocl, "NodeModel", nodeModel);
+		URI uri = createEcoreFile(ocl.getEnvironmentFactory(), "NodeModel", nodeModel);
 		Resource ecoreResource = ocl.getResourceSet().getResource(uri, true);
 		EPackage nodesEPackage = (EPackage) ecoreResource.getContents().get(0);
 		//		EClass rootEClass = (EClass) nodesEPackage.getEClassifier("Root");

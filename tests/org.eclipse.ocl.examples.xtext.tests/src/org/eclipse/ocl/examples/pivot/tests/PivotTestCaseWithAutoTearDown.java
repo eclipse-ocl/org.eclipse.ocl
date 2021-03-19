@@ -46,6 +46,7 @@ import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.OCLThread;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
@@ -66,6 +67,7 @@ public abstract class PivotTestCaseWithAutoTearDown extends PivotTestCase
 			}
 		}
 
+		@Override
 		public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
 			assert ocl != null;
 			return ocl.getEnvironmentFactory();
@@ -117,23 +119,23 @@ public abstract class PivotTestCaseWithAutoTearDown extends PivotTestCase
 		}
 	}
 
-	public @NonNull URI createEcoreFile(@NonNull OCL ocl, @NonNull String fileName, @NonNull String fileContent) throws IOException {
-		return createEcoreFile(ocl, fileName, fileContent, false);
+	public @NonNull URI createEcoreFile(@NonNull EnvironmentFactory environmentFactory, @NonNull String fileName, @NonNull String fileContent) throws IOException {
+		return createEcoreFile(environmentFactory, fileName, fileContent, false);
 	}
 
-	public @NonNull URI createEcoreFile(@NonNull OCL ocl, @NonNull String fileName, @NonNull String fileContent, boolean assignIds) throws IOException {
+	public @NonNull URI createEcoreFile(@NonNull EnvironmentFactory environmentFactory, @NonNull String fileName, @NonNull String fileContent, boolean assignIds) throws IOException {
 		String inputName = fileName + ".oclinecore";
 		TestFile oclInEcoreFile = createOCLinEcoreFile(inputName, fileContent);
 		URI inputURI = oclInEcoreFile.getFileURI();
 		URI ecoreURI = getTestFileURI(fileName + ".ecore");
-		ResourceSet resourceSet2 = ocl.getResourceSet();
+		ResourceSet resourceSet2 = environmentFactory.getResourceSet();
 		BaseCSResource xtextResource = ClassUtil.nonNullState((BaseCSResource) resourceSet2.getResource(inputURI, true));
 		assertNoResourceErrors("Load failed", xtextResource);
 		CS2AS cs2as = xtextResource.getCS2AS();
 		ASResource asResource = cs2as.getASResource();
 		assertNoUnresolvedProxies("Unresolved proxies", xtextResource);
 		assertNoValidationErrors("Pivot validation errors", ClassUtil.nonNullState(asResource.getContents().get(0)));
-		XMLResource ecoreResource = AS2Ecore.createResource((EnvironmentFactoryInternal) ocl.getEnvironmentFactory(), asResource, ecoreURI, null);
+		XMLResource ecoreResource = AS2Ecore.createResource((EnvironmentFactoryInternal) environmentFactory, asResource, ecoreURI, null);
 		assertNoResourceErrors("To Ecore errors", ecoreResource);
 		if (assignIds) {
 			for (TreeIterator<EObject> tit = ecoreResource.getAllContents(); tit.hasNext(); ) {

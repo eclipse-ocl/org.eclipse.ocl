@@ -364,7 +364,7 @@ public class RoundTripTests extends XtextTestCase
 						"class A;\n" +
 						"}\n";
 		OCLInternal ocl1 = OCLInternal.newInstance(getProjectMap(), null);
-		createEcoreFile(ocl1, "Bug350894A", testFileContentsA);
+		createEcoreFile(ocl1.getEnvironmentFactory(), "Bug350894A", testFileContentsA);
 		ocl1.dispose();
 		String testFileContentsB =
 				"import aa : 'Bug350894A.ecore#/';\n" +

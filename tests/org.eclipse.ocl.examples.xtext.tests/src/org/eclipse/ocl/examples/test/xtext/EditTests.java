@@ -674,7 +674,7 @@ public class EditTests extends XtextTestCase
 						"		invariant NameNotEmpty: name->notEmpty();\n" +
 						"	}\n" +
 						"}\n";
-		URI ecoreURI = createEcoreFile(ocl0, "RefreshTest.ecore", testDocument, true);
+		URI ecoreURI = createEcoreFile(ocl0.getEnvironmentFactory(), "RefreshTest.ecore", testDocument, true);
 		ocl0.dispose();
 		//
 		//	Load and instrument test document

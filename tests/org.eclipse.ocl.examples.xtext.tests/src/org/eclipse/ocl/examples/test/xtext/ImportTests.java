@@ -84,12 +84,12 @@ public class ImportTests extends XtextTestCase
 				"package E1 : E2 = 'http://E3'{\n" +
 						"    class E;\n" +
 						"}\n";
-		createEcoreFile(ocl, "Bug353793E", testFileE);
+		createEcoreFile(ocl.getEnvironmentFactory(), "Bug353793E", testFileE);
 		String testFileF =
 				"package F1 : F2 = 'http://F3'{\n" +
 						"    class F;\n" +
 						"}\n";
-		createEcoreFile(ocl, "Bug353793F", testFileF);
+		createEcoreFile(ocl.getEnvironmentFactory(), "Bug353793F", testFileF);
 		ocl.dispose();
 	}
 

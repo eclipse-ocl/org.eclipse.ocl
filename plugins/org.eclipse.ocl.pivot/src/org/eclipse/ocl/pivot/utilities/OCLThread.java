@@ -18,7 +18,7 @@ import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
  * An OCLThread is a thread that has a unique OCL working state associated with the lifetime of the thread
  * which may be synchronsly executed from some control thread.
  *
- * @since 1.14
+ * @since 1.15
  */
 public abstract class OCLThread<R, O extends OCLInternal> extends Thread
 {
@@ -46,7 +46,7 @@ public abstract class OCLThread<R, O extends OCLInternal> extends Thread
 		}
 
 		public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
-			return oclThread.getOCL().getEnvironmentFactory();
+			return oclThread.getEnvironmentFactory();
 		}
 
 		public R getResult() {
@@ -86,9 +86,13 @@ public abstract class OCLThread<R, O extends OCLInternal> extends Thread
 		}
 	}
 
-	protected @NonNull O getOCL() {
+	protected @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
 		assert ocl != null;
-		return ocl;
+		return ocl.getEnvironmentFactory();
+	}
+
+	protected @NonNull /*Pivot*/MetamodelManager getMetamodelManager() {
+		return getEnvironmentFactory().getMetamodelManager();
 	}
 
 	@Override
