@@ -328,10 +328,10 @@ public class PivotUtilInternal //extends PivotUtil
 					return environmentFactory;
 				}
 			}
-			EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
-			if (environmentFactory != null) {							// The environmentFactory may be missing for an Xtext ResourceSet
-				return (EnvironmentFactoryInternal) environmentFactory;
-			}
+		//	EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		//	if (environmentFactory != null) {							// The environmentFactory may be missing for an Xtext ResourceSet
+		//		return (EnvironmentFactoryInternal) environmentFactory;
+		//	}
 			return ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(ProjectManager.CLASS_PATH, null, null);
 		}
 	}

@@ -43,7 +43,7 @@ import org.eclipse.ui.internal.Workbench;
 @SuppressWarnings("restriction")
 public class ConsoleTests extends AbstractConsoleTests
 {
-	public void testConsole_oclLog() throws Exception {
+	public void zztestConsole_oclLog() throws Exception {
 		assertConsoleResult(consolePage, null, "7", "7\n");
 		assertConsoleResult(consolePage, null, "7.oclLog('seven = ')", "seven = 7\n7\n");
 	}
@@ -141,7 +141,7 @@ public class ConsoleTests extends AbstractConsoleTests
 		}
 	}
 
-	public void testConsole_printCollections_474933() {
+	public void zztestConsole_printCollections_474933() {
 		// plain collections
 		assertConsoleResult(consolePage, null, "Set{}", "");
 		assertConsoleResult(consolePage, null, "Set{1}", "1\n");

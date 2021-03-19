@@ -90,7 +90,10 @@ public class TestOCL extends OCLInternal
 	private int testCounter = 0;
 
 	public TestOCL(@NonNull TestFileSystem testFileSystem, @NonNull String testPackageName, @NonNull String testName, @NonNull ProjectManager projectManager, @Nullable ResourceSet externalResourceSet) {
-		super(ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(projectManager, externalResourceSet));
+		this(ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(projectManager, externalResourceSet), testFileSystem, testPackageName, testName, projectManager, externalResourceSet);
+	}
+	public TestOCL(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull TestFileSystem testFileSystem, @NonNull String testPackageName, @NonNull String testName, @NonNull ProjectManager projectManager, @Nullable ResourceSet externalResourceSet) {
+			super(environmentFactory);
 //		assert !"main".equals(Thread.currentThread().getName());
 		this.testFileSystem = testFileSystem;
 		ResourceSet resourceSet = getResourceSet();

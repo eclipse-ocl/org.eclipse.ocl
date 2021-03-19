@@ -45,10 +45,14 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
+import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentThread;
+import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentThread.AbstractEagerEnvironmentThreadRunnable;
+import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentThread.AbstractEnvironmentThreadRunnable;
+import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentThread.EnvironmentThreadResult;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.OCL;
-import org.eclipse.ocl.pivot.utilities.OCLThread;
+import org.eclipse.ocl.pivot.utilities.PivotEnvironmentThreadFactory;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
@@ -58,19 +62,35 @@ import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
  */
 public abstract class PivotTestCaseWithAutoTearDown extends PivotTestCase
 {
-	public abstract static class OCLTestThread<R, O extends OCLInternal> extends OCLThread<R, O>
+	public abstract static class AbstractTestThread<R, @NonNull EF extends EnvironmentFactoryInternal, O extends OCLInternal> extends AbstractEnvironmentThread<R, EF, O>
 	{
-		public OCLTestThread(@NonNull String oclThreadName) {
-			super(oclThreadName);
+		protected AbstractTestThread(@NonNull String threadName, @NonNull EnvironmentThreadFactory<@NonNull EF> environmentThreadFactory) {
+			super(environmentThreadFactory, threadName);
 			if (EMFPlugin.IS_ECLIPSE_RUNNING) {
 				TestUIUtil.flushEvents();
 			}
 		}
 
+		protected AbstractTestThread(@NonNull AbstractEnvironmentThreadRunnable<R> runnable, @NonNull String threadName, @NonNull EnvironmentThreadFactory<EF> environmentThreadFactory) {
+			super(runnable, threadName, environmentThreadFactory);
+			if (EMFPlugin.IS_ECLIPSE_RUNNING) {
+				TestUIUtil.flushEvents();
+			}
+		}
+	}
+
+	/**
+	 * A OCLTestThread creates an OCL Environment for use on a dedicated thread.
+	 */
+	public static class OCLTestThread<R> extends AbstractTestThread<R, @NonNull EnvironmentFactoryInternal, @Nullable OCLInternal>
+	{
+		public OCLTestThread(@NonNull AbstractEnvironmentThreadRunnable<R> runnable, @NonNull String threadName, @NonNull EnvironmentThreadFactory<@NonNull EnvironmentFactoryInternal> environmentThreadFactory) {
+			super(runnable, threadName, environmentThreadFactory);
+		}
+
 		@Override
-		public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
-			assert ocl != null;
-			return ocl.getEnvironmentFactory();
+		protected R runWithThrowable() throws Exception {
+			throw new UnsupportedOperationException();		// Uses runnable
 		}
 	}
 
@@ -159,6 +179,10 @@ public abstract class PivotTestCaseWithAutoTearDown extends PivotTestCase
 		writer.append(fileContent);
 		writer.close();
 		return outFile;
+	}
+
+	protected @NonNull PivotEnvironmentThreadFactory createTestEnvironmentThreadFactory() {
+		return new PivotEnvironmentThreadFactory(getTestProjectManager());
 	}
 
 	/**
@@ -272,6 +296,18 @@ public abstract class PivotTestCaseWithAutoTearDown extends PivotTestCase
 		TestProject testProject = getTestProject();
 		TestFile outFile = testProject.getOutputFile(filePath);
 		return outFile.getURI();
+	}
+
+	protected <R> R syncExec(@NonNull String threadName, @NonNull AbstractEnvironmentThreadRunnable<R> runnable) throws Exception {
+		PivotEnvironmentThreadFactory testEnvironmentThreadFactory = createTestEnvironmentThreadFactory();
+		OCLTestThread<R> thread = new OCLTestThread<R>(runnable, threadName, testEnvironmentThreadFactory);
+		return thread.invoke();
+	}
+
+	protected <R> @NonNull EnvironmentThreadResult<R, ?> syncStart(@NonNull String threadName, @NonNull AbstractEagerEnvironmentThreadRunnable<R> runnable) throws Exception {
+		PivotEnvironmentThreadFactory testEnvironmentThreadFactory = createTestEnvironmentThreadFactory();
+		OCLTestThread<R> thread = new OCLTestThread<R>(runnable, threadName, testEnvironmentThreadFactory);
+		return thread.syncStart();
 	}
 
 	protected void tearDownField(@NonNull Field field) throws IllegalAccessException {

@@ -1,0 +1,18 @@
+Goal:
+
+Evolve per-thread EnvironmentFactory with activate/decativate concyrrency to
+  per-EnvironmentThread EnvironmentFactory with deferred GC
+  
+Problem: individual QVTd standalone tests okm but in aggreagte fail
+-- seems that some REsource got unloaded
+  
+  
+Oddity: why QVTbaseMetamodel.java but no QVTcoreMetamodel.java?
+
+Oddity: why does a LUSSID getEObject silently return null after a lookup failure?
+
+Follow-on: Eliminate EnvironmentFactory strategy - perhaps not
+
+Tidy configureGeneratedPackages -- ?? scan all usedGenModels
+
+Eliminate waitForGC

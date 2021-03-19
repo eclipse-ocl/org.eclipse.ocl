@@ -51,7 +51,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecore.util.QueryDelegate;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.common.OCLConstants;
 import org.eclipse.ocl.common.internal.options.CommonOptions;
 import org.eclipse.ocl.examples.extlibrary.EXTLibraryFactory;
@@ -95,12 +94,16 @@ import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.evaluation.OCLEvaluationVisitor;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
+import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.resource.CSResource;
+import org.eclipse.ocl.pivot.resource.ProjectManager;
+import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentThread.AbstractEagerEnvironmentThreadRunnable;
+import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentThread.AbstractLazyEnvironmentThreadRunnable;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
@@ -129,200 +132,19 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	protected static final @NonNull String MODEL_WITH_ERRORS_XMI = "/models/ecore/ModelWithErrors.xmi";
 	protected static final @NonNull String MODEL_WITH_ERRORS_OCL = "/models/ecore/ModelWithErrors.ocl";
 
-	/**
-	 * AbstractDelegatesOCLTestThread provides shared facilities for use on a test thread.
-	 */
-	public abstract static class AbstractDelegatesOCLTestThread extends OCLTestThread<Object, @Nullable OCLInternal>
+	public abstract class InstrumentedEnvironmentThreadRunnable<R> extends AbstractLazyEnvironmentThreadRunnable<R>
 	{
-		public boolean usedLocalRegistry = false;
-
-		public AbstractDelegatesOCLTestThread(@NonNull String oclThreadName) {
-			super(oclThreadName);
-		}
-
-		protected @NonNull ResourceSet createResourceSet() {
-			ResourceSet resourceSet = new ResourceSetImpl();
-			getProjectMap().initializeResourceSet(resourceSet);
-			Map<String, Object> extensionToFactoryMap = resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap();
-			extensionToFactoryMap.put("xmi", new EcoreResourceFactoryImpl());
-			extensionToFactoryMap.put("ecore", new EcoreResourceFactoryImpl());
-
-			OCLDelegateDomain.lazyInitializeLocals(resourceSet, PivotConstants.OCL_DELEGATE_URI_PIVOT, true, new OCLDelegateDomain.FactoryFactory()
-			{
-				@Override
-				public @NonNull OCLInvocationDelegateFactory createInvocationDelegateFactory(@NonNull String oclDelegateURI) {
-					return new OCLInvocationDelegateFactory(oclDelegateURI)
-					{
-						@Override
-						public EOperation.Internal.InvocationDelegate createInvocationDelegate(EOperation operation) {
-							usedLocalRegistry = true;
-							return super.createInvocationDelegate(operation);
-						}
-					};
-				}
-
-				@Override
-				public @NonNull OCLQueryDelegateFactory createQueryDelegateFactory(@NonNull String oclDelegateURI) {
-					return new OCLQueryDelegateFactory(oclDelegateURI)
-					{
-						@Override
-						public QueryDelegate createQueryDelegate(EClassifier context, Map<String, EClassifier> parameters, String expression) {
-							usedLocalRegistry = true;
-							return super.createQueryDelegate(context, parameters, expression);
-						}
-					};
-				}
-
-				@Override
-				public @NonNull OCLSettingDelegateFactory createSettingDelegateFactory(@NonNull String oclDelegateURI) {
-					return new OCLSettingDelegateFactory(oclDelegateURI)
-					{
-						@Override
-						public EStructuralFeature.Internal.SettingDelegate createSettingDelegate(EStructuralFeature structuralFeature) {
-							usedLocalRegistry = true;
-							return super.createSettingDelegate(structuralFeature);
-						}
-					};
-				}
-
-				@Override
-				public @NonNull OCLValidationDelegateFactory createValidationDelegateFactory(@NonNull String oclDelegateURI) {
-					return new OCLValidationDelegateFactory(oclDelegateURI)
-					{
-						@Override
-						public ValidationDelegate createValidationDelegate(@NonNull EClassifier classifier) {
-							usedLocalRegistry = true;
-							return super.createValidationDelegate(classifier);
-						}
-					};
-				}
-			});
-			//		EcorePlugin.ExtensionProcessor.process(null);
-			//		resourceSet.getURIConverter().getURIMap().putAll(EcorePlugin.computePlatformURIMap(false));
-			return resourceSet;
-		}
-
-		protected void initCodeGeneratedPackageRegistrations(@NonNull ResourceSet resourceSet) {
-			resourceSet.getPackageRegistry().put(CodegencompanyPackage.eNS_URI, CodegencompanyPackage.eINSTANCE);
-			EValidator.Registry.INSTANCE.put(CodegencompanyPackage.eINSTANCE, CodegencompanyValidator.INSTANCE);
-		}
-
-		protected void initPackageRegistrations(@NonNull ResourceSet resourceSet) {
-			Registry packageRegistry = resourceSet.getPackageRegistry();
-			packageRegistry.put(CompanyPackage.eNS_URI, CompanyPackage.eINSTANCE);
-			packageRegistry.put(NoreflectioncompanyPackage.eNS_URI, NoreflectioncompanyPackage.eINSTANCE);
-			EValidator.Registry.INSTANCE.put(CompanyPackage.eINSTANCE, CompanyValidator.INSTANCE);
-			EValidator.Registry.INSTANCE.put(NoreflectioncompanyPackage.eINSTANCE, NoreflectioncompanyValidator.INSTANCE);
-		}
-
-		/*	protected void removePackageRegistrations() {
-			resourceSet.getPackageRegistry().remove(CompanyPackage.eNS_URI);
-			resourceSet.getPackageRegistry().remove(NoreflectioncompanyPackage.eNS_URI);
-			resourceSet.getPackageRegistry().remove(CodegencompanyPackage.eNS_URI);
-			EValidator.Registry.INSTANCE.remove(CompanyPackage.eNS_URI);
-			EValidator.Registry.INSTANCE.remove(NoreflectioncompanyPackage.eNS_URI);
-			EValidator.Registry.INSTANCE.remove(CodegencompanyPackage.eNS_URI);
-		} */
-
-		protected  abstract void runWithModel(@NonNull ResourceSet resourceSet) throws Exception;
-	}
-
-	/**
-	 * A EagerDelegatesOCLTestThread creates the OCL before delegate invocation.
-	 */
-	public abstract class EagerDelegatesOCLTestThread extends AbstractDelegatesOCLTestThread
-	{
-		public EagerDelegatesOCLTestThread(@NonNull String oclThreadName) {
-			super(oclThreadName);
-		}
-
 		@Override
-		protected OCLInternal createOCL() throws ParserException {
-			ResourceSet resourceSet = createResourceSet();
-			return (OCLInternal) OCL.newInstance(getProjectMap(), resourceSet);
-		}
-
-		@Override
-		public Object runWithThrowable() throws Exception {
-			assert ocl != null;
-			ResourceSet resourceSet = ocl.getResourceSet();
-			runWithModel(resourceSet);
-			unloadResourceSet(resourceSet);
-			return null;
-		}
-	}
-
-	/**
-	 * A LazyDelegatesOCLTestThread leaves OCL creation to be performed on demand by the  OCL delegates
-	 * emulating the user scenario that has no initialization.
-	 */
-	public abstract class LazyDelegatesOCLTestThread extends AbstractDelegatesOCLTestThread
-	{
-		public LazyDelegatesOCLTestThread(@NonNull String oclThreadName) {
-			super(oclThreadName);
-		}
-
-		@Override
-		protected OCLInternal createOCL() throws ParserException {
-			return null;
-		}
-
-		@Override
-		public Object runWithThrowable() throws Exception {
-			ResourceSet resourceSet = createResourceSet();
-			runWithModel(resourceSet);
-			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
-			assert environmentFactory != null;
-			ocl = environmentFactory.createOCL();
-			assert ocl != null;
-			unloadResourceSet(resourceSet);
-			return null;
-		}
-	}
-
-	public abstract class DelegatesCompleteOCLTestThread extends AbstractDelegatesOCLTestThread
-	{
-		public DelegatesCompleteOCLTestThread(@NonNull String oclThreadName) {
-			super(oclThreadName);
-		}
-
-		@Override
-		protected @NonNull OCLInternal createOCL() throws ParserException {
-			ResourceSet resourceSet = createResourceSet();
-			TestUtil.doCompleteOCLSetup();
-			Resource ecoreResource = initModelWithErrors(resourceSet);
-			EnvironmentFactoryInternal environmentFactory = configureEnvironmentFactoryForDelegate(companyPackage);
-			OCLInternal ocl = OCLInternal.newInstance(environmentFactory);
-			MetamodelManagerInternal metamodelManager = ocl.getMetamodelManager();
-			environmentFactory.adapt(resourceSet);
-			String message = PivotUtil.formatResourceDiagnostics(ecoreResource.getErrors(), "Model load", "\n\t");
-			if (message != null) fail(message);
-			Ecore2AS ecore2as = Ecore2AS.getAdapter(ecoreResource, environmentFactory);
-			Model pivotModel = ecore2as.getASModel();
-			message = PivotUtil.formatResourceDiagnostics(pivotModel.eResource().getErrors(), "Pivot load", "\n\t");
-			if (message != null) fail(message);
-			URI oclURI = getTestModelURI(MODEL_WITH_ERRORS_OCL);
-			CSResource xtextResource = (CSResource) resourceSet.getResource(oclURI, true);
-			message = PivotUtil.formatResourceDiagnostics(xtextResource.getErrors(), "OCL load", "\n\t");
-			if (message != null) fail(message);
-			Resource asResource = xtextResource.getASResource();
-			message = PivotUtil.formatResourceDiagnostics(asResource.getErrors(), "Pivot OCL load", "\n\t");
-			if (message != null) fail(message);
-			DelegateInstaller pivotInstaller = new DelegateInstaller(environmentFactory, null);
-			for (org.eclipse.ocl.pivot.Package nestedPackage : pivotModel.getOwnedPackages()) {
-				pivotInstaller.installDelegates(metamodelManager.getCompletePackage(nestedPackage));
+		public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
+			EnvironmentFactoryInternal environmentFactory2 = ThreadLocalExecutor.basicGetEnvironmentFactory();
+			if (environmentFactory2 == null) {
+				ResourceSet resourceSet = createInstrumentedResourceSet();
+				return ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(ProjectManager.CLASS_PATH, resourceSet, null);
 			}
-			return ocl;
+			return environmentFactory2;
 		}
 
-		@Override
-		public Object runWithThrowable() throws Exception {
-			assert ocl != null;
-			ResourceSet resourceSet = ocl.getResourceSet();
-			runWithModel(resourceSet);
-			unloadResourceSet(resourceSet);
-			return null;
-		}
+//			unloadResourceSet(resourceSet);
 	}
 
 	public Resource testResource;
@@ -346,6 +168,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	public Map<String, EObject> employees;
 	public EClass badClassClass;
 	public EReference companyDetritus;
+	public boolean usedLocalRegistry = false;
 
 	protected @NonNull EnvironmentFactoryInternal configureEnvironmentFactoryForDelegate(@NonNull EPackage ePackage) {
 		DelegateEPackageAdapter adapter = DelegateEPackageAdapter.getAdapter(ePackage);
@@ -354,6 +177,68 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 			delegateDomain = adapter.loadDelegateDomain(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		}
 		return (EnvironmentFactoryInternal) ((OCLDelegateDomain)delegateDomain).getEnvironmentFactory();
+	}
+
+	protected @NonNull ResourceSet createInstrumentedResourceSet() {
+		ResourceSet resourceSet = new ResourceSetImpl();
+		getProjectMap().initializeResourceSet(resourceSet);
+		Map<String, Object> extensionToFactoryMap = resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap();
+		extensionToFactoryMap.put("xmi", new EcoreResourceFactoryImpl());
+		extensionToFactoryMap.put("ecore", new EcoreResourceFactoryImpl());
+
+		OCLDelegateDomain.lazyInitializeLocals(resourceSet, PivotConstants.OCL_DELEGATE_URI_PIVOT, true, new OCLDelegateDomain.FactoryFactory()
+		{
+			@Override
+			public @NonNull OCLInvocationDelegateFactory createInvocationDelegateFactory(@NonNull String oclDelegateURI) {
+				return new OCLInvocationDelegateFactory(oclDelegateURI)
+				{
+					@Override
+					public EOperation.Internal.InvocationDelegate createInvocationDelegate(EOperation operation) {
+						usedLocalRegistry = true;
+						return super.createInvocationDelegate(operation);
+					}
+				};
+			}
+
+			@Override
+			public @NonNull OCLQueryDelegateFactory createQueryDelegateFactory(@NonNull String oclDelegateURI) {
+				return new OCLQueryDelegateFactory(oclDelegateURI)
+				{
+					@Override
+					public QueryDelegate createQueryDelegate(EClassifier context, Map<String, EClassifier> parameters, String expression) {
+						usedLocalRegistry = true;
+						return super.createQueryDelegate(context, parameters, expression);
+					}
+				};
+			}
+
+			@Override
+			public @NonNull OCLSettingDelegateFactory createSettingDelegateFactory(@NonNull String oclDelegateURI) {
+				return new OCLSettingDelegateFactory(oclDelegateURI)
+				{
+					@Override
+					public EStructuralFeature.Internal.SettingDelegate createSettingDelegate(EStructuralFeature structuralFeature) {
+						usedLocalRegistry = true;
+						return super.createSettingDelegate(structuralFeature);
+					}
+				};
+			}
+
+			@Override
+			public @NonNull OCLValidationDelegateFactory createValidationDelegateFactory(@NonNull String oclDelegateURI) {
+				return new OCLValidationDelegateFactory(oclDelegateURI)
+				{
+					@Override
+					public ValidationDelegate createValidationDelegate(@NonNull EClassifier classifier) {
+						usedLocalRegistry = true;
+						return super.createValidationDelegate(classifier);
+					}
+				};
+			}
+		});
+		//		EcorePlugin.ExtensionProcessor.process(null);
+		//		resourceSet.getURIConverter().getURIMap().putAll(EcorePlugin.computePlatformURIMap(false));
+		return resourceSet;
 	}
 
 	protected void initModel(@NonNull ResourceSet resourceSet, @NonNull String testModelName) {
@@ -401,6 +286,20 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		companyDetritus = (EReference) companyClass .getEStructuralFeature("detritus");
 		return companyPackage.eResource();
 	}
+
+	protected void initCodeGeneratedPackageRegistrations(@NonNull ResourceSet resourceSet) {
+		resourceSet.getPackageRegistry().put(CodegencompanyPackage.eNS_URI, CodegencompanyPackage.eINSTANCE);
+		EValidator.Registry.INSTANCE.put(CodegencompanyPackage.eINSTANCE, CodegencompanyValidator.INSTANCE);
+	}
+
+	protected void initPackageRegistrations(@NonNull ResourceSet resourceSet) {
+		Registry packageRegistry = resourceSet.getPackageRegistry();
+		packageRegistry.put(CompanyPackage.eNS_URI, CompanyPackage.eINSTANCE);
+		packageRegistry.put(NoreflectioncompanyPackage.eNS_URI, NoreflectioncompanyPackage.eINSTANCE);
+		EValidator.Registry.INSTANCE.put(CompanyPackage.eINSTANCE, CompanyValidator.INSTANCE);
+		EValidator.Registry.INSTANCE.put(NoreflectioncompanyPackage.eINSTANCE, NoreflectioncompanyValidator.INSTANCE);
+	}
+
 
 	//
 	// Test framework
@@ -676,79 +575,85 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	}
 
 	public void test_allInstances() throws Exception {
-		LazyDelegatesOCLTestThread delegatesThread = new LazyDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new InstrumentedEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			public void runWithModel(@NonNull ResourceSet resourceSet) {
+			public Object runWithThrowable() {
+				ResourceSet resourceSet = getResourceSet();
 				initModel(resourceSet, COMPANY_XMI);
 				doTest_allInstances(resourceSet);
 				assertTrue(usedLocalRegistry);
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	public void test_allInstances_registered() throws Exception {
-		LazyDelegatesOCLTestThread delegatesThread = new LazyDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new InstrumentedEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			public void runWithModel(@NonNull ResourceSet resourceSet) {
+			public Object runWithThrowable() {
+				ResourceSet resourceSet = getResourceSet();
 				initPackageRegistrations(resourceSet);
 				initModel(resourceSet, COMPANY_XMI);
 				doTest_allInstances(resourceSet);
 				assertFalse(usedLocalRegistry);
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	public void test_allInstances_codeGenerated() throws Exception {
-		LazyDelegatesOCLTestThread delegatesThread = new LazyDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new InstrumentedEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			public void runWithModel(@NonNull ResourceSet resourceSet) {
+			public Object runWithThrowable() {
+				ResourceSet resourceSet = getResourceSet();
 				initCodeGeneratedPackageRegistrations(resourceSet);
 				initModel(resourceSet, COMPANY_XMI);
 				doTest_allInstances(resourceSet);
 				assertFalse(usedLocalRegistry);
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	public void test_attributeDefinedWithDerivationAndInitial() throws Exception {
-		LazyDelegatesOCLTestThread delegatesThread = new LazyDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new InstrumentedEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			public void runWithModel(@NonNull ResourceSet resourceSet) {
+			public Object runWithThrowable() {
+				ResourceSet resourceSet = getResourceSet();
 				initModelWithErrors(resourceSet);
 				EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
 				Object actual = get(badClassInstance, (EAttribute)badClassClass.getEStructuralFeature("attributeDefinedWithDerivationAndInitial"));
 				assertEquals(42, actual);
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	public void test_attributeDefinedWithInitial() throws Exception {
-		LazyDelegatesOCLTestThread delegatesThread = new LazyDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new InstrumentedEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			public void runWithModel(@NonNull ResourceSet resourceSet) {
+			public Object runWithThrowable() {
+				ResourceSet resourceSet = getResourceSet();
 				initModelWithErrors(resourceSet);
 				EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
 				Object actual = get(badClassInstance, (EAttribute)badClassClass.getEStructuralFeature("attributeDefinedWithInitial"));
 				assertEquals(-42, actual);
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	public void test_attributeDefinedWithoutDerivation() throws Exception {
-		EagerDelegatesOCLTestThread delegatesThread = new EagerDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new AbstractEagerEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			protected void runWithModel(@NonNull ResourceSet resourceSet) {
+			public Object runWithThrowable() throws Exception {
+				ResourceSet resourceSet = getResourceSet();
 				initModelWithErrors(resourceSet);
 				MetamodelManager metamodelManager = getMetamodelManager();
 				EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
@@ -756,16 +661,17 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 				Property property = metamodelManager.getASOfEcore(Property.class, eStructuralFeature);
 				getWithException(badClassInstance, eStructuralFeature.getName(),
 					StringUtil.bind(PivotMessagesInternal.MissingDerivationForSettingDelegate_ERROR_, property));
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	public void test_attributeDefinedWithoutDerivationBody() throws Exception {
-		EagerDelegatesOCLTestThread delegatesThread = new EagerDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new AbstractEagerEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			protected void runWithModel(@NonNull ResourceSet resourceSet) {
+			public Object runWithThrowable() throws Exception {
+				ResourceSet resourceSet = getResourceSet();
 				initModelWithErrors(resourceSet);
 				MetamodelManager metamodelManager = getMetamodelManager();
 				EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
@@ -773,16 +679,17 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 				Property property = metamodelManager.getASOfEcore(Property.class, eStructuralFeature);
 				getWithException(badClassInstance, eStructuralFeature.getName(),
 					StringUtil.bind(PivotMessagesInternal.MissingSpecificationBody_ERROR_, property, PivotConstantsInternal.INITIALIZER_ROLE));
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	public void test_attributeEvaluatingToInvalid() throws Exception {
-		EagerDelegatesOCLTestThread delegatesThread = new EagerDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new AbstractEagerEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			protected void runWithModel(@NonNull ResourceSet resourceSet) {
+			public Object runWithThrowable() throws Exception {
+				ResourceSet resourceSet = getResourceSet();
 				initModelWithErrors(resourceSet);
 				MetamodelManager metamodelManager = getMetamodelManager();
 				EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
@@ -790,30 +697,32 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 				Property property = metamodelManager.getASOfEcore(Property.class, eStructuralFeature);
 				getWithException(badClassInstance, eStructuralFeature.getName(),
 					StringUtil.bind(PivotMessagesInternal.EvaluationResultIsInvalid_ERROR_, property));
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	public void test_attributeEvaluatingToNull() throws Exception {
-		LazyDelegatesOCLTestThread delegatesThread = new LazyDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new InstrumentedEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			public void runWithModel(@NonNull ResourceSet resourceSet) {
+			public Object runWithThrowable() {
+				ResourceSet resourceSet = getResourceSet();
 				initModelWithErrors(resourceSet);
 				EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
 				EStructuralFeature eStructuralFeature = badClassInstance.eClass().getEStructuralFeature("attributeEvaluatingToNull");
 				assertEquals(null, get(badClassInstance, eStructuralFeature));
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	public void test_attributeEvaluatingToWrongType() throws Exception {
-		LazyDelegatesOCLTestThread delegatesThread = new LazyDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new InstrumentedEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			public void runWithModel(@NonNull ResourceSet resourceSet) {
+			public Object runWithThrowable() {
+				ResourceSet resourceSet = getResourceSet();
 				initModelWithErrors(resourceSet);
 				EObject testEObject = create(acme, companyDetritus, badClassClass, null);
 				EStructuralFeature structuralFeature = getStructuralFeature(badClassClass, "attributeEvaluatingToWrongType");
@@ -823,55 +732,58 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 				getWithException(testEObject, "attributeEvaluatingToWrongType",
 					StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Property::CompatibleDefaultExpression", objectLabel));
 				//			ClassUtil.bind(OCLMessages.InitOrDerConstraintConformance_ERROR_, "String", "attributeEvaluatingToWrongType", "Boolean"));
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	public void test_attributeParsingToLexicalError() throws Exception {
-		LazyDelegatesOCLTestThread delegatesThread = new LazyDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new InstrumentedEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			public void runWithModel(@NonNull ResourceSet resourceSet) {
+			public Object runWithThrowable() {
+				ResourceSet resourceSet = getResourceSet();
 				initModelWithErrors(resourceSet);
 				EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
 				getWithException(badClassInstance, "attributeParsingToLexicalError",
 					getErrorsInMessage(PivotConstantsInternal.INITIALIZER_ROLE, "modelWithErrors::BadClass::attributeParsingToLexicalError", "gh##jk") +
 					StringUtil.bind("1:3: missing EOF at ''{0}''", "#"));
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	public void test_attributeParsingToSemanticError() throws Exception {
-		LazyDelegatesOCLTestThread delegatesThread = new LazyDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new InstrumentedEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			public void runWithModel(@NonNull ResourceSet resourceSet) {
+			public Object runWithThrowable() {
+				ResourceSet resourceSet = getResourceSet();
 				initModelWithErrors(resourceSet);
 				EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
 				getWithException(badClassInstance, "attributeParsingToSemanticError",
 					getErrorsInMessage(PivotConstantsInternal.INITIALIZER_ROLE, "modelWithErrors::BadClass::attributeParsingToSemanticError", "'5' and 6") +
 					StringUtil.bind("1: " + PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "String", "and", "Integer"));
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	public void test_attributeParsingToSyntacticError() throws Exception {
-		LazyDelegatesOCLTestThread delegatesThread = new LazyDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new InstrumentedEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			public void runWithModel(@NonNull ResourceSet resourceSet) {
+			public Object runWithThrowable() {
+				ResourceSet resourceSet = getResourceSet();
 				initModelWithErrors(resourceSet);
 				EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
 				String location = XtextVersionUtil.hasXtextSyntaxDiagnosticColumn() ? "1:9" : "1";
 				getWithException(badClassInstance, "attributeParsingToSyntacticError",
 					getErrorsInMessage(PivotConstantsInternal.INITIALIZER_ROLE, "modelWithErrors::BadClass::attributeParsingToSyntacticError", "invalid null") +
 					StringUtil.bind(location + ": extraneous input ''{0}'' expecting EOF", "null"));
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	/**
@@ -894,77 +806,75 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	} */
 
 	public void test_constraintValidation() throws Exception {
-		LazyDelegatesOCLTestThread delegatesThread = new LazyDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new InstrumentedEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			public void runWithModel(@NonNull ResourceSet resourceSet) {
+			public Object runWithThrowable() {
+				ResourceSet resourceSet = getResourceSet();
 				doTest_constraintValidation(resourceSet, COMPANY_XMI);
 				assertTrue(usedLocalRegistry);
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	public void test_constraintValidation_withoutReflection() throws Exception {
-		LazyDelegatesOCLTestThread delegatesThread = new LazyDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new InstrumentedEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			public void runWithModel(@NonNull ResourceSet resourceSet) {
+			public Object runWithThrowable() {
+				ResourceSet resourceSet = getResourceSet();
 				doTest_constraintValidation(resourceSet, NO_REFLECTION_COMPANY_XMI);
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	public void test_constraintValidation_registered() throws Exception {
-		LazyDelegatesOCLTestThread delegatesThread = new LazyDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new InstrumentedEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			public void runWithModel(@NonNull ResourceSet resourceSet) {
+			public Object runWithThrowable() {
+				ResourceSet resourceSet = getResourceSet();
 				initPackageRegistrations(resourceSet);
 				doTest_constraintValidation(resourceSet, COMPANY_XMI);
 				assertFalse(usedLocalRegistry);
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	public void test_constraintValidation_codeGenerated() throws Exception {
-		LazyDelegatesOCLTestThread delegatesThread = new LazyDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new InstrumentedEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			public void runWithModel(@NonNull ResourceSet resourceSet) {
+			public Object runWithThrowable() {
 				//		PivotTables.PACKAGE.getClass();
+				ResourceSet resourceSet = getResourceSet();
 				initCodeGeneratedPackageRegistrations(resourceSet);
 				doTest_constraintValidation(resourceSet, COMPANY_XMI);
 				assertFalse(usedLocalRegistry);
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	public void test_crossReferences_codeGenerated() throws Exception {
-		LazyDelegatesOCLTestThread delegatesThread = new LazyDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new InstrumentedEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			public void runWithModel(@NonNull ResourceSet resourceSet) {
+			public Object runWithThrowable() {
+				ResourceSet resourceSet = getResourceSet();
 				PivotTables.PACKAGE.getClass();
 				initCodeGeneratedPackageRegistrations(resourceSet);
 				doTest_crossReferences(resourceSet, COMPANY_XMI);	// Verify Bug 412690 comment 2
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	public void test_defaultIsLPG() throws Exception {
-		LazyDelegatesOCLTestThread delegatesThread = new LazyDelegatesOCLTestThread(getTestName())
-		{
-			@Override
-			public void runWithModel(@NonNull ResourceSet resourceSet) throws InvocationTargetException {
-				assertEquals(OCLConstants.OCL_DELEGATE_URI_LPG, CommonOptions.DEFAULT_DELEGATION_MODE.getPreferredValue());
-			}
-		};
-	//	delegatesThread.syncExec();
+		assertEquals(OCLConstants.OCL_DELEGATE_URI_LPG, CommonOptions.DEFAULT_DELEGATION_MODE.getPreferredValue());
 	}
 
 	//	public void test_defaultIsPivot() {
@@ -972,14 +882,15 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	//	}
 
 	public void test_eAttributeDerivation() throws Exception {
-		LazyDelegatesOCLTestThread delegatesThread = new LazyDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new InstrumentedEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			public void runWithModel(@NonNull ResourceSet resourceSet) {
+			public Object runWithThrowable() {
+				ResourceSet resourceSet = getResourceSet();
 				doTest_eAttributeDerivation(resourceSet, COMPANY_XMI);
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	/*	public void test_eAttributeDerivation_registered() {
@@ -990,38 +901,41 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	} */
 
 	public void test_eReferenceDerivation() throws Exception {
-		LazyDelegatesOCLTestThread delegatesThread = new LazyDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new InstrumentedEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			public void runWithModel(@NonNull ResourceSet resourceSet) {
+			public Object runWithThrowable() {
+				ResourceSet resourceSet = getResourceSet();
 				doTest_eReferenceDerivation(resourceSet, COMPANY_XMI);
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	public void test_eReferenceDerivation_registered() throws Exception {
-		LazyDelegatesOCLTestThread delegatesThread = new LazyDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new InstrumentedEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			public void runWithModel(@NonNull ResourceSet resourceSet) {
+			public Object runWithThrowable() {
+				ResourceSet resourceSet = getResourceSet();
 				initPackageRegistrations(resourceSet);
 				doTest_eReferenceDerivation(resourceSet, COMPANY_XMI);
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	public void test_eReferenceDerivation_codeGenerated() throws Exception {
-		LazyDelegatesOCLTestThread delegatesThread = new LazyDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new InstrumentedEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			public void runWithModel(@NonNull ResourceSet resourceSet) {
+			public Object runWithThrowable() {
+				ResourceSet resourceSet = getResourceSet();
 				initCodeGeneratedPackageRegistrations(resourceSet);
 				doTest_eReferenceDerivation(resourceSet, COMPANY_XMI);
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	/**
@@ -1117,52 +1031,56 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	} */
 
 	public void test_invariantValidation() throws Exception {
-		LazyDelegatesOCLTestThread delegatesThread = new LazyDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new InstrumentedEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			public void runWithModel(@NonNull ResourceSet resourceSet) {
+			public Object runWithThrowable() {
+				ResourceSet resourceSet = getResourceSet();
 				doTest_invariantValidation(resourceSet, COMPANY_XMI, false, Diagnostic.WARNING);
 				assertTrue(usedLocalRegistry);
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	public void test_invariantValidation_registered() throws Exception {
-		LazyDelegatesOCLTestThread delegatesThread = new LazyDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new InstrumentedEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			public void runWithModel(@NonNull ResourceSet resourceSet) {
+			public Object runWithThrowable() {
+				ResourceSet resourceSet = getResourceSet();
 				initPackageRegistrations(resourceSet);
 				doTest_invariantValidation(resourceSet, COMPANY_XMI, true, Diagnostic.ERROR);
 				assertFalse(usedLocalRegistry);
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	public void test_invariantValidation_codeGenerated() throws Exception {
-		LazyDelegatesOCLTestThread delegatesThread = new LazyDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new InstrumentedEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			public void runWithModel(@NonNull ResourceSet resourceSet) {
+			public Object runWithThrowable() {
+				ResourceSet resourceSet = getResourceSet();
 				initCodeGeneratedPackageRegistrations(resourceSet);
 				doTest_invariantValidation(resourceSet, COMPANY_XMI, false, Diagnostic.WARNING);
 				assertFalse(usedLocalRegistry);
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	public void test_invariantValidation_withoutReflection() throws Exception {
-		LazyDelegatesOCLTestThread delegatesThread = new LazyDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new InstrumentedEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			public void runWithModel(@NonNull ResourceSet resourceSet) {
+			public Object runWithThrowable() {
+				ResourceSet resourceSet = getResourceSet();
 				doTest_invariantValidation(resourceSet, NO_REFLECTION_COMPANY_XMI, false, Diagnostic.WARNING);
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 	/*	public void test_invariantValidation_withoutReflection_registered() {
 		OCL ocl = OCL.newInstance();
@@ -1172,10 +1090,10 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	} */
 
 	public void test_operationDefinedWithoutBody() throws Exception {
-		EagerDelegatesOCLTestThread delegatesThread = new EagerDelegatesOCLTestThread(getTestName())
-		{
+		syncExec(getTestName(), new AbstractEagerEnvironmentThreadRunnable<Object>()		{
 			@Override
-			protected void runWithModel(@NonNull ResourceSet resourceSet) throws InvocationTargetException {
+			public Object runWithThrowable() throws Exception {
+				ResourceSet resourceSet = getResourceSet();
 				initModelWithErrors(resourceSet);
 				MetamodelManager metamodelManager = getMetamodelManager();
 				EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
@@ -1183,16 +1101,17 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 				Operation operation = metamodelManager.getASOfEcore(Operation.class, eOperation);
 				invokeWithException(badClassInstance, eOperation.getName(),
 					StringUtil.bind(PivotMessagesInternal.MissingSpecificationBody_ERROR_, NameUtil.qualifiedNameFor(operation), PivotConstantsInternal.BODY_ROLE));
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	public void test_operationDefinedWithoutBodyBody() throws Exception {
-		EagerDelegatesOCLTestThread delegatesThread = new EagerDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new AbstractEagerEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			protected void runWithModel(@NonNull ResourceSet resourceSet) throws InvocationTargetException {
+			public Object runWithThrowable() throws Exception {
+				ResourceSet resourceSet = getResourceSet();
 				initModelWithErrors(resourceSet);
 				MetamodelManager metamodelManager = getMetamodelManager();
 				EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
@@ -1200,16 +1119,17 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 				Operation operation = metamodelManager.getASOfEcore(Operation.class, eOperation);
 				invokeWithException(badClassInstance, eOperation.getName(),
 					StringUtil.bind(PivotMessagesInternal.MissingSpecificationBody_ERROR_, NameUtil.qualifiedNameFor(operation), PivotConstantsInternal.BODY_ROLE));
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	public void test_operationEvaluatingToInvalid() throws Exception {
-		EagerDelegatesOCLTestThread delegatesThread = new EagerDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new AbstractEagerEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			protected void runWithModel(@NonNull ResourceSet resourceSet) throws InvocationTargetException {
+			public Object runWithThrowable() throws Exception {
+				ResourceSet resourceSet = getResourceSet();
 				initModelWithErrors(resourceSet);
 				MetamodelManager metamodelManager = getMetamodelManager();
 				EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
@@ -1217,31 +1137,33 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 				Operation operation = metamodelManager.getASOfEcore(Operation.class, eOperation);
 				invokeWithException(badClassInstance, eOperation.getName(),
 					StringUtil.bind(PivotMessagesInternal.EvaluationResultIsInvalid_ERROR_, operation));
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	public void test_operationEvaluatingToNull() throws Exception {
-		LazyDelegatesOCLTestThread delegatesThread = new LazyDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new InstrumentedEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			public void runWithModel(@NonNull ResourceSet resourceSet) throws InvocationTargetException {
+			public Object runWithThrowable() throws Exception {
+				ResourceSet resourceSet = getResourceSet();
 				TestUtil.doEssentialOCLSetup();
 				initModelWithErrors(resourceSet);
 				EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
 				EOperation operation = getOperation(badClassInstance.eClass(), "operationEvaluatingToNull");
 				assertEquals(null, invoke(badClassInstance, operation));
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	public void test_operationEvaluatingToWrongType() throws Exception {
-		LazyDelegatesOCLTestThread delegatesThread = new LazyDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new InstrumentedEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			public void runWithModel(@NonNull ResourceSet resourceSet) throws InvocationTargetException {
+			public Object runWithThrowable() throws InvocationTargetException {
+				ResourceSet resourceSet = getResourceSet();
 				initModelWithErrors(resourceSet);
 				EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
 				EOperation eOperation = getOperation(badClassClass, "operationEvaluatingToWrongType");
@@ -1251,21 +1173,22 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 				invokeWithException(badClassInstance, "operationEvaluatingToWrongType",
 					StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Operation::CompatibleReturn", objectLabel));
 				//			OCLMessages.BodyConditionConformance_ERROR_, "operationEvaluatingToWrongType", "Integer", "Boolean");
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	public void test_operationInvocation() throws Exception {
-		LazyDelegatesOCLTestThread delegatesThread = new LazyDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new InstrumentedEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			public void runWithModel(@NonNull ResourceSet resourceSet) throws InvocationTargetException {
+			public Object runWithThrowable() throws InvocationTargetException {
+				ResourceSet resourceSet = getResourceSet();
 				doTest_operationInvocation(resourceSet, COMPANY_XMI);
 				assertTrue(usedLocalRegistry);
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	/*	public void test_operationInvocation_registered() throws InvocationTargetException {
@@ -1277,47 +1200,50 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	} */
 
 	public void test_operationParsingToLexicalError() throws Exception {
-		LazyDelegatesOCLTestThread delegatesThread = new LazyDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new InstrumentedEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			public void runWithModel(@NonNull ResourceSet resourceSet) throws InvocationTargetException {
+			public Object runWithThrowable() throws InvocationTargetException {
+				ResourceSet resourceSet = getResourceSet();
 				initModelWithErrors(resourceSet);
 				EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
 				String location = XtextVersionUtil.hasXtextSyntaxDiagnosticColumn() ? "1:1" : "1";
 				invokeWithException(badClassInstance, "operationParsingToLexicalError",
 					getErrorsInMessage(PivotConstantsInternal.BODY_ROLE, "modelWithErrors::BadClass::operationParsingToLexicalError", "@@") + StringUtil.bind(location + ": no viable alternative at input ''{0}''", "@"));
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	public void test_operationParsingToSemanticError() throws Exception {
-		LazyDelegatesOCLTestThread delegatesThread = new LazyDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new InstrumentedEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			public void runWithModel(@NonNull ResourceSet resourceSet) throws InvocationTargetException {
+			public Object runWithThrowable() throws InvocationTargetException {
+				ResourceSet resourceSet = getResourceSet();
 				initModelWithErrors(resourceSet);
 				EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
 				invokeWithException(badClassInstance, "operationParsingToSemanticError",
 					getErrorsInMessage(PivotConstantsInternal.BODY_ROLE, "modelWithErrors::BadClass::operationParsingToSemanticError", "self->at(1)") + StringUtil.bind("1:7: " + PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Set(modelWithErrors::BadClass)", "at", "1"));
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	public void test_operationParsingToSyntacticError() throws Exception {
-		LazyDelegatesOCLTestThread delegatesThread = new LazyDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new InstrumentedEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			public void runWithModel(@NonNull ResourceSet resourceSet) throws InvocationTargetException {
+			public Object runWithThrowable() throws InvocationTargetException {
+				ResourceSet resourceSet = getResourceSet();
 				initModelWithErrors(resourceSet);
 				EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
 				String location = XtextVersionUtil.hasXtextSyntaxDiagnosticColumn() ? "1:5" : "1";
 				invokeWithException(badClassInstance, "operationParsingToSyntacticError",
 					getErrorsInMessage(PivotConstantsInternal.BODY_ROLE, "modelWithErrors::BadClass::operationParsingToSyntacticError", "let in") + StringUtil.bind(location + ": no viable alternative at input ''{0}''", "in"));
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	/**
@@ -1327,10 +1253,10 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	 * @throws ParserException
 	 */
 	public void test_operationDefinedInStdlibBodyRemainsNull() throws Exception {
-		EagerDelegatesOCLTestThread delegatesThread = new EagerDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new AbstractEagerEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			public void runWithModel(@NonNull ResourceSet resourceSet) throws ParserException {
+			public Object runWithThrowable() throws Exception {
 				OCL ocl = getEnvironmentFactory().createOCL();		// Continue using legacy API
 				MetamodelManager metamodelManager = getMetamodelManager();
 				ExpressionInOCL expr = ocl.createQuery(null, "'abc'.oclAsType(String)");
@@ -1352,9 +1278,9 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 				}
 				catch (OCLDelegateException e) {
 				}
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	/**
@@ -1418,79 +1344,85 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	} */
 
 	public void test_queryExecution() throws Exception {
-		LazyDelegatesOCLTestThread delegatesThread = new LazyDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new InstrumentedEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			public void runWithModel(@NonNull ResourceSet resourceSet) {
+			public Object runWithThrowable() {
+				ResourceSet resourceSet = getResourceSet();
 				doTest_queryExecution(resourceSet, COMPANY_XMI);
 				assertTrue(usedLocalRegistry);
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	public void test_queryExecution_registered() throws Exception {
-		LazyDelegatesOCLTestThread delegatesThread = new LazyDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new InstrumentedEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			public void runWithModel(@NonNull ResourceSet resourceSet) {
+			public Object runWithThrowable() {
+				ResourceSet resourceSet = getResourceSet();
 				initPackageRegistrations(resourceSet);
 				doTest_queryExecution(resourceSet, COMPANY_XMI);
 				assertFalse(usedLocalRegistry);
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	public void test_queryExecution_codeGenerated() throws Exception {
-		LazyDelegatesOCLTestThread delegatesThread = new LazyDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new InstrumentedEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			public void runWithModel(@NonNull ResourceSet resourceSet) {
+			public Object runWithThrowable() {
+				ResourceSet resourceSet = getResourceSet();
 				initCodeGeneratedPackageRegistrations(resourceSet);
 				doTest_queryExecution(resourceSet, COMPANY_XMI);
 				assertFalse(usedLocalRegistry);
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	public void test_queryExecutionWithExceptions() throws Exception {
-		LazyDelegatesOCLTestThread delegatesThread = new LazyDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new InstrumentedEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			public void runWithModel(@NonNull ResourceSet resourceSet) throws InvocationTargetException {
+			public Object runWithThrowable() throws InvocationTargetException {
+				ResourceSet resourceSet = getResourceSet();
 				doTest_queryExecutionWithExceptions(resourceSet, COMPANY_XMI);
 				assertTrue(usedLocalRegistry);
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	public void test_queryExecutionWithExceptions_registered() throws Exception {
-		LazyDelegatesOCLTestThread delegatesThread = new LazyDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new InstrumentedEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			public void runWithModel(@NonNull ResourceSet resourceSet) throws InvocationTargetException {
+			public Object runWithThrowable() throws InvocationTargetException {
+				ResourceSet resourceSet = getResourceSet();
 				initPackageRegistrations(resourceSet);
 				doTest_queryExecutionWithExceptions(resourceSet, COMPANY_XMI);
 				assertFalse(usedLocalRegistry);
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	public void test_queryExecutionWithExceptions_codeGenerated() throws Exception {
-		LazyDelegatesOCLTestThread delegatesThread = new LazyDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new InstrumentedEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			public void runWithModel(@NonNull ResourceSet resourceSet) throws InvocationTargetException {
+			public Object runWithThrowable() throws InvocationTargetException {
+				ResourceSet resourceSet = getResourceSet();
 				initCodeGeneratedPackageRegistrations(resourceSet);
 				doTest_queryExecutionWithExceptions(resourceSet, COMPANY_XMI);
 				assertFalse(usedLocalRegistry);
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	/**
@@ -1498,10 +1430,10 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	 * @throws Exception
 	 */
 	public void test_queryExecution_Bug353171() throws Exception {
-		LazyDelegatesOCLTestThread delegatesThread = new LazyDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new InstrumentedEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			public void runWithModel(@NonNull ResourceSet resourceSet) throws InvocationTargetException {
+			public Object runWithThrowable() throws InvocationTargetException {
 				QueryDelegate.Factory factory = QueryDelegate.Factory.Registry.INSTANCE.getFactory(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 				String n = "n";
 				String expression = "self.name";
@@ -1514,9 +1446,9 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 				bindings.put(n, "test");
 				Object result = execute(delegate, library, bindings);
 				assertEquals(result, "test");
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	public void test_tutorialValidationMessage() throws Exception {
@@ -1548,125 +1480,156 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	} */
 
 	public void test_validationEvaluatingToInvalid() throws Exception {
-		LazyDelegatesOCLTestThread delegatesThread = new LazyDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new InstrumentedEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			public void runWithModel(@NonNull ResourceSet resourceSet) {
+			public Object runWithThrowable() {
+				ResourceSet resourceSet = getResourceSet();
 				initModelWithErrors(resourceSet);
 				EObject badClassInstance = create(acme, companyDetritus, (EClass) companyPackage.getEClassifier("ValidationEvaluatingToInvalid"), null);
 				validateWithDelegationSeverity("evaluatingToInvalid", Diagnostic.ERROR, badClassInstance, null,
 					EvaluationException.class, PivotMessagesInternal.ValidationResultIsInvalid_ERROR_, "ValidationEvaluatingToInvalid", "evaluatingToInvalid", LabelUtil.getLabel(badClassInstance), "invalid");
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	public void test_validationEvaluatingToNull() throws Exception {
-		LazyDelegatesOCLTestThread delegatesThread = new LazyDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new InstrumentedEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			public void runWithModel(@NonNull ResourceSet resourceSet) {
+			public Object runWithThrowable() {
+				ResourceSet resourceSet = getResourceSet();
 				initModelWithErrors(resourceSet);
 				EObject badClassInstance = create(acme, companyDetritus, (EClass) companyPackage.getEClassifier("ValidationEvaluatingToNull"), null);
 				validateWithDelegationSeverity("evaluatingToNull", Diagnostic.ERROR, badClassInstance, null,
 					EvaluationException.class, PivotMessagesInternal.ValidationResultIsNull_ERROR_, badClassInstance.eClass().getName(), "evaluatingToNull", LabelUtil.getLabel(badClassInstance));
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	public void test_validationEvaluatingToWrongType() throws Exception {
-		LazyDelegatesOCLTestThread delegatesThread = new LazyDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new InstrumentedEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			public void runWithModel(@NonNull ResourceSet resourceSet) {
+			public Object runWithThrowable() {
+				ResourceSet resourceSet = getResourceSet();
 				initModelWithErrors(resourceSet);
 				EObject badClassInstance = create(acme, companyDetritus, (EClass) companyPackage.getEClassifier("ValidationEvaluatingToWrongType"), null);
 				validateWithDelegationSeverity("evaluatingToWrongType", Diagnostic.ERROR, badClassInstance, null,
 					EvaluationException.class, PivotMessagesInternal.ValidationConstraintIsNotBooleanType_ERROR_, "ValidationEvaluatingToWrongType", "evaluatingToWrongType", "OclInvalid");
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	public void test_validationParsingToLexicalError() throws Exception {
-		LazyDelegatesOCLTestThread delegatesThread = new LazyDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new InstrumentedEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			public void runWithModel(@NonNull ResourceSet resourceSet) {
+			public Object runWithThrowable() {
+				ResourceSet resourceSet = getResourceSet();
 				initModelWithErrors(resourceSet);
 				String location = XtextVersionUtil.hasXtextSyntaxDiagnosticColumn() ? "1:1" : "1";
 				EObject badClassInstance = create(acme, companyDetritus, (EClass) companyPackage.getEClassifier("ValidationParsingToLexicalError"), null);
 				validateWithDelegationSeverity("modelWithErrors::ValidationParsingToLexicalError::parsingToLexicalError", Diagnostic.ERROR, badClassInstance, "'part",
 					SemanticException.class, location + ": Invalid token {0}", "'part");
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	public void test_validationParsingToSemanticError() throws Exception {
-		LazyDelegatesOCLTestThread delegatesThread = new LazyDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new InstrumentedEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			public void runWithModel(@NonNull ResourceSet resourceSet) {
+			public Object runWithThrowable() {
+				ResourceSet resourceSet = getResourceSet();
 				initModelWithErrors(resourceSet);
 				EObject badClassInstance = create(acme, companyDetritus, (EClass) companyPackage.getEClassifier("ValidationParsingToSemanticError"), null);
 				validateWithDelegationSeverity("modelWithErrors::ValidationParsingToSemanticError::parsingToSemanticError", Diagnostic.ERROR, badClassInstance, "not '5'",
 					SemanticException.class, "1: " + PivotMessagesInternal.UnresolvedOperation_ERROR_, "String", "not");
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	public void test_validationParsingToSyntacticError() throws Exception {
-		LazyDelegatesOCLTestThread delegatesThread = new LazyDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new InstrumentedEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			public void runWithModel(@NonNull ResourceSet resourceSet) {
+			public Object runWithThrowable() {
+				ResourceSet resourceSet = getResourceSet();
 				initModelWithErrors(resourceSet);
 				EObject badClassInstance = create(acme, companyDetritus, (EClass) companyPackage.getEClassifier("ValidationParsingToSyntacticError"), null);
 				String location = XtextVersionUtil.hasXtextSyntaxDiagnosticColumn() ? "1:1" : "1";
 				validateWithDelegationSeverity("modelWithErrors::ValidationParsingToSyntacticError::parsingToSyntacticError", Diagnostic.ERROR, badClassInstance, "else",
 					SemanticException.class, location + ": no viable alternative at input ''{0}''", "else");
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	public void test_validationWithMessage() throws Exception {
-		LazyDelegatesOCLTestThread delegatesThread = new LazyDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new InstrumentedEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			public void runWithModel(@NonNull ResourceSet resourceSet) {
+			public Object runWithThrowable() {
+				ResourceSet resourceSet = getResourceSet();
 				initModelWithErrors(resourceSet);
 				EObject badClassInstance = create(acme, companyDetritus, (EClass) companyPackage.getEClassifier("ValidationWithMessage"), null);
 				validateWithSeverity("ValidationWithMessage", Diagnostic.WARNING, badClassInstance,
 						"custom message ");
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	public void test_validationWithCompleteOCL() throws Exception {
-		DelegatesCompleteOCLTestThread delegatesThread = new DelegatesCompleteOCLTestThread(getTestName())
+		syncExec(getTestName(), new InstrumentedEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			public void runWithModel(@NonNull ResourceSet resourceSet) {
+			public Object runWithThrowable() {
+				ResourceSet resourceSet = getResourceSet();
+				TestUtil.doCompleteOCLSetup();
+				Resource ecoreResource = initModelWithErrors(resourceSet);
+				EnvironmentFactoryInternal environmentFactory = configureEnvironmentFactoryForDelegate(companyPackage);
+				OCLInternal ocl = OCLInternal.newInstance(environmentFactory);
+				MetamodelManagerInternal metamodelManager = ocl.getMetamodelManager();
+				environmentFactory.adapt(resourceSet);
+				String message = PivotUtil.formatResourceDiagnostics(ecoreResource.getErrors(), "Model load", "\n\t");
+				if (message != null) fail(message);
+				Ecore2AS ecore2as = Ecore2AS.getAdapter(ecoreResource, environmentFactory);
+				Model pivotModel = ecore2as.getASModel();
+				message = PivotUtil.formatResourceDiagnostics(pivotModel.eResource().getErrors(), "Pivot load", "\n\t");
+				if (message != null) fail(message);
+				URI oclURI = getTestModelURI(MODEL_WITH_ERRORS_OCL);
+				CSResource xtextResource = (CSResource) resourceSet.getResource(oclURI, true);
+				message = PivotUtil.formatResourceDiagnostics(xtextResource.getErrors(), "OCL load", "\n\t");
+				if (message != null) fail(message);
+				Resource asResource = xtextResource.getASResource();
+				message = PivotUtil.formatResourceDiagnostics(asResource.getErrors(), "Pivot OCL load", "\n\t");
+				if (message != null) fail(message);
+				DelegateInstaller pivotInstaller = new DelegateInstaller(environmentFactory, null);
+				for (org.eclipse.ocl.pivot.Package nestedPackage : pivotModel.getOwnedPackages()) {
+					pivotInstaller.installDelegates(metamodelManager.getCompletePackage(nestedPackage));
+				}
 				EClass eClassifier = (EClass) companyPackage.getEClassifier("Detritus");
 				EObject badClassInstance = create(acme, companyDetritus, eClassifier, null);
 				validateWithSeverity("CompleteOCLInvariant", Diagnostic.WARNING, badClassInstance,
 					"Failure on " + eClassifier.getName());
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	public void testDelegates_Import_476968() throws Exception {
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {			// No test files standalone, this is a standalone test so just bypass it.
-			LazyDelegatesOCLTestThread delegatesThread = new LazyDelegatesOCLTestThread(getTestName())
+			syncExec(getTestName(), new InstrumentedEnvironmentThreadRunnable<Object>()
 			{
 				@Override
-				public void runWithModel(@NonNull ResourceSet resourceSet) {
+				public Object runWithThrowable() {
 					/*Global*/EnvironmentFactory environmentFactory = PivotUtilInternal.getEnvironmentFactory(null); //GlobalEnvironmentFactory.getInstance();
 					OCL ocl = environmentFactory.createOCL();
 					//
@@ -1697,17 +1660,18 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 					catch (WrappedException e) {
 						assertTrue(e.getCause() instanceof IOException);
 					}
+					return null;
 				}
-			};
-			delegatesThread.syncExec();
+			});
 		}
 	}
 
 	public void validateTutorial(@NonNull String ecoreURI, @NonNull String message) throws Exception {
-		EagerDelegatesOCLTestThread delegatesThread = new EagerDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new AbstractEagerEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			protected void runWithModel(@NonNull ResourceSet resourceSet) {
+			public Object runWithThrowable() throws Exception {
+				ResourceSet resourceSet = getResourceSet();
 				initModelWithErrors(resourceSet);
 	//			ocl.getEnvironmentFactory().adapt(resourceSet);
 				URI xmiURI = getTestModelURI("models/documentation/Tutorial.xmi");
@@ -1732,9 +1696,9 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 					}
 				}
 				validateWithSeverity("ValidationWithMessage", Diagnostic.WARNING, book, message);
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	void add(EObject owner, EStructuralFeature feature, Object value) {

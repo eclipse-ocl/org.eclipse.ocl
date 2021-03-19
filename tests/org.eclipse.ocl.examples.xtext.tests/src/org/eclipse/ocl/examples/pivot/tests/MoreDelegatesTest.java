@@ -14,7 +14,7 @@ package org.eclipse.ocl.examples.pivot.tests;
 
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentThread.AbstractEagerEnvironmentThreadRunnable;
 
 /**
  * Tests for the OCL delegate implementations.
@@ -23,41 +23,44 @@ public class MoreDelegatesTest extends DelegatesTest
 {
 	// Passes in isolation; probably an adapter clean-up problem
 	public void test_eAttributeDerivation_registered() throws Exception {
-		EagerDelegatesOCLTestThread delegatesThread = new EagerDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new AbstractEagerEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			public void runWithModel(@NonNull ResourceSet resourceSet) throws Exception {
+			public Object runWithThrowable() throws Exception {
+				ResourceSet resourceSet = getResourceSet();
 				initPackageRegistrations(resourceSet);
 				doTest_eAttributeDerivation(resourceSet, COMPANY_XMI);
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	// Passes in isolation; probably an adapter clean-up problem
 	public void test_invariantValidation_withoutReflection_registered() throws Exception {
-		EagerDelegatesOCLTestThread delegatesThread = new EagerDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new AbstractEagerEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			public void runWithModel(@NonNull ResourceSet resourceSet) throws Exception {
+			public Object runWithThrowable() throws Exception {
+				ResourceSet resourceSet = getResourceSet();
 				initPackageRegistrations(resourceSet);
 				doTest_invariantValidation(resourceSet, NO_REFLECTION_COMPANY_XMI, true, Diagnostic.ERROR);
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 
 	// Passes in isolation; probably an adapter clean-up problem
 	public void test_operationInvocation_registered() throws Exception {
-		EagerDelegatesOCLTestThread delegatesThread = new EagerDelegatesOCLTestThread(getTestName())
+		syncExec(getTestName(), new AbstractEagerEnvironmentThreadRunnable<Object>()
 		{
 			@Override
-			public void runWithModel(@NonNull ResourceSet resourceSet) throws Exception {
+			public Object runWithThrowable() throws Exception {
+				ResourceSet resourceSet = getResourceSet();
 				initPackageRegistrations(resourceSet);
 				doTest_operationInvocation(resourceSet, COMPANY_XMI);
 				assertFalse(usedLocalRegistry);
+				return null;
 			}
-		};
-		delegatesThread.syncExec();
+		});
 	}
 }

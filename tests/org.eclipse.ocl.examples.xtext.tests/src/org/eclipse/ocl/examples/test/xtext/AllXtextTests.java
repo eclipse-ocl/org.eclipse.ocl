@@ -15,37 +15,9 @@ import java.io.File;
 import java.util.Arrays;
 
 import org.eclipse.emf.common.EMFPlugin;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.ocl.examples.pivot.tests.DelegatesTest;
-import org.eclipse.ocl.examples.pivot.tests.EvaluateBooleanOperationsTest;
-import org.eclipse.ocl.examples.pivot.tests.EvaluateClassifierOperationsTest;
-import org.eclipse.ocl.examples.pivot.tests.EvaluateCollectionOperationsTest;
-import org.eclipse.ocl.examples.pivot.tests.EvaluateConstructsTest;
-import org.eclipse.ocl.examples.pivot.tests.EvaluateMapOperationsTest;
-import org.eclipse.ocl.examples.pivot.tests.EvaluateModelOperationsTest;
-import org.eclipse.ocl.examples.pivot.tests.EvaluateNameVisibilityTest;
-import org.eclipse.ocl.examples.pivot.tests.EvaluateNumericOperationsTest;
-import org.eclipse.ocl.examples.pivot.tests.EvaluateOclAnyOperationsTest;
-import org.eclipse.ocl.examples.pivot.tests.EvaluateStringOperationsTest;
-import org.eclipse.ocl.examples.pivot.tests.EvaluateTupleOperationsTest;
-import org.eclipse.ocl.examples.pivot.tests.EvaluateUMLTest;
-import org.eclipse.ocl.examples.pivot.tests.InheritanceTests;
-import org.eclipse.ocl.examples.pivot.tests.IteratorsTest;
-import org.eclipse.ocl.examples.pivot.tests.LeakTests;
 import org.eclipse.ocl.examples.pivot.tests.PivotTestCase;
-import org.eclipse.ocl.examples.pivot.tests.PrettyPrinterTest;
-import org.eclipse.ocl.examples.pivot.tests.StereotypesTest;
-import org.eclipse.ocl.examples.pivot.tests.UMLValidateTest;
-import org.eclipse.ocl.examples.pivot.tests.ValidateTests;
-import org.eclipse.ocl.examples.test.ecore.ProjectMapTest;
-import org.eclipse.ocl.examples.test.label.PluginLabelTests;
 import org.eclipse.ocl.examples.test.label.StandaloneLabelTests;
-import org.eclipse.ocl.examples.test.standalone.StandaloneExecutionTests;
-import org.eclipse.ocl.examples.test.standalone.StandaloneParserTests;
 import org.eclipse.ocl.examples.xtext.tests.TestUIUtil;
-import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
 import org.eclipse.ocl.xtext.base.ui.BaseUIActivator;
 
 import junit.framework.Test;
@@ -76,7 +48,7 @@ extends TestCase {
 			PivotTestCase.createTestLog(new File(testLogFile));
 		}
 		TestSuite result = new TestSuite(testSuiteName);
-		result.addTestSuite(MonikerTests.class);
+	/*	result.addTestSuite(MonikerTests.class);
 		result.addTestSuite(PivotTests.class);
 		result.addTestSuite(OCLstdlibTests.class);
 		result.addTestSuite(PrecedenceTests.class);
@@ -118,33 +90,33 @@ extends TestCase {
 		result.addTestSuite(EditTests.class);
 		result.addTestSuite(InheritanceTests.class);
 		result.addTestSuite(MarkupTests.class);
-		result.addTestSuite(ValidateTests.class);
-		result.addTestSuite(PivotDocumentationExamples.class);
-		result.addTestSuite(OCLinEcoreTutorialExamples.class);
+	*///	result.addTestSuite(ValidateTests.class);
+	//	result.addTestSuite(PivotDocumentationExamples.class);
+	//	result.addTestSuite(OCLinEcoreTutorialExamples.class);
 		result.addTestSuite(UsageTests.class);
-		result.addTestSuite(StandaloneExecutionTests.class);
-		result.addTestSuite(StandaloneParserTests.class);
-		result.addTestSuite(GrammarRuleVectorTests.class);
-		result.addTestSuite(SerializationBuilderTests.class);
-		result.addTestSuite(IdiomsLoadTests.class);
-		result.addTestSuite(StringUtilTests.class);
+	//	result.addTestSuite(StandaloneExecutionTests.class);
+	//	result.addTestSuite(StandaloneParserTests.class);
+	//	result.addTestSuite(GrammarRuleVectorTests.class);
+	//	result.addTestSuite(SerializationBuilderTests.class);
+	//	result.addTestSuite(IdiomsLoadTests.class);
+	//	result.addTestSuite(StringUtilTests.class);
 		if (EMFPlugin.IS_ECLIPSE_RUNNING) {
-			result.addTestSuite(CompletionProposalTests.class);
+	//		result.addTestSuite(CompletionProposalTests.class);
 			result.addTestSuite(ConsoleTests.class);
-			result.addTestSuite(EcoreConsoleTests.class);
-			result.addTestSuite(UMLConsoleTests.class);
-			result.addTestSuite(EditorTests.class);
-			result.addTestSuite(FileNewWizardTest.class);
-			result.addTestSuite(PluginLabelTests.class);
-			result.addTestSuite(DebuggerTests.class);
-			result.addTestSuite(OCLBuilderTests.class);
+	//		result.addTestSuite(EcoreConsoleTests.class);
+	//		result.addTestSuite(UMLConsoleTests.class);
+	//		result.addTestSuite(EditorTests.class);
+	//		result.addTestSuite(FileNewWizardTest.class);
+	//		result.addTestSuite(PluginLabelTests.class);
+	//		result.addTestSuite(DebuggerTests.class);
+	//		result.addTestSuite(OCLBuilderTests.class);
 		}
 		else {
 			result.addTestSuite(StandaloneLabelTests.class);
 		}
 		String targetRelease = System.getProperty("targetRelease");
 		if (targetRelease == null) { // See Bug 527458 - GrammarTests are expected to fail when Xtext.ecore changes
-			result.addTestSuite(GrammarTests.class);
+	//		result.addTestSuite(GrammarTests.class);
 		}
 		// if (EMFPlugin.IS_ECLIPSE_RUNNING) {
 		// 	result.addTestSuite(FinalTests.class);

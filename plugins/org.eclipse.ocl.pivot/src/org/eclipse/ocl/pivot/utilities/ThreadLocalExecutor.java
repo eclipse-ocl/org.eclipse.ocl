@@ -81,6 +81,13 @@ public class ThreadLocalExecutor
 	}
 
 	/**
+	 * @since 1.15
+	 */
+	public static @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
+		return ClassUtil.nonNullState(basicGetEnvironmentFactory());
+	}
+
+	/**
 	 * Reset to the initial no-EnvironmentFactory or Executor instances active state.
 	 */
 	public static void reset() {
