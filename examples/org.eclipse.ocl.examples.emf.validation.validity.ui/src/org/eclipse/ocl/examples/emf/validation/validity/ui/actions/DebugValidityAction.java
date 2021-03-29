@@ -14,6 +14,7 @@ import java.net.URL;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -42,7 +43,7 @@ public final class DebugValidityAction extends Action implements ISelectionChang
 {
 	protected final @NonNull ValidityView validityView;
 	protected final @NonNull ISelectionProvider selectionProvider;
-	
+
 	public DebugValidityAction(@NonNull ValidityView validityView, @NonNull ISelectionProvider selectionProvider) {
 		super(ValidityUIMessages.ValidityView_Action_DebugValidity_Title);
 		this.validityView = validityView;
@@ -67,7 +68,7 @@ public final class DebugValidityAction extends Action implements ISelectionChang
 				resultConstrainingNode = resultValidatableNode.getResultConstrainingNode();
 			}
 			if (resultConstrainingNode != null) {
-				final Shell shell = validityView.getViewSite().getShell();
+				final @Nullable Shell shell = validityView.getViewSite().getShell();
 				ConstrainingNode eParent = resultConstrainingNode.getParent();
 				if (eParent instanceof LeafConstrainingNode) {
 					final ResultConstrainingNode finalResultConstrainingNode = resultConstrainingNode;
@@ -88,10 +89,11 @@ public final class DebugValidityAction extends Action implements ISelectionChang
 								}
 							}
 
-							protected void openError(final Shell shell, final String message) {
-								if (!shell.isDisposed()) {
+							protected void openError(final @Nullable Shell shell, final String message) {
+								if ((shell != null) && !shell.isDisposed()) {
 									shell.getDisplay().asyncExec(new Runnable()
 									{
+										@Override
 										public void run() {
 											MessageDialog.openError(shell, "Constraint Debug Launcher", message);
 										}

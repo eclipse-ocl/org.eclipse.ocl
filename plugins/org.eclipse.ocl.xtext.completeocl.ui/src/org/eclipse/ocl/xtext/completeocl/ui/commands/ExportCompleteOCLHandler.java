@@ -191,7 +191,9 @@ public class ExportCompleteOCLHandler extends AbstractHandler
 		SaveAsDialog dlg = new SaveAsDialog(shell);
 		dlg.setOriginalFile(outFile);
 		dlg.create();
-		dlg.getShell().setText(BaseUIMessages.Export_ShellTitle);
+		if (shell != null) {
+			shell.setText(BaseUIMessages.Export_ShellTitle);
+		}
 		dlg.setTitle(BaseUIMessages.Export_Title);
 		dlg.setMessage(BaseUIMessages.Export_Description);
 		int status = dlg.open();

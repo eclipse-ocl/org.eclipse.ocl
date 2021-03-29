@@ -51,7 +51,7 @@ public final class ExportValidationResultAction extends Action implements IMenuC
 
 	/** Menu manager for this action. */
 	private MenuManager menuManager = new MenuManager();
-	
+
 	public ExportValidationResultAction(@NonNull IDEValidityManager validityManager, @NonNull ValidityView validityView) {
 		super(ValidityUIMessages.ValidityView_Action_ExportResult_Title);
 		this.validityManager = validityManager;
@@ -67,6 +67,7 @@ public final class ExportValidationResultAction extends Action implements IMenuC
 	/* (non-Javadoc)
 	 * @see org.eclipse.jface.action.IMenuCreator#dispose()
 	 */
+	@Override
 	public void dispose() {
 		if (menuManager.getMenu() != null) {
 			menuManager.getMenu().dispose();
@@ -78,6 +79,7 @@ public final class ExportValidationResultAction extends Action implements IMenuC
 	/* (non-Javadoc)
 	 * @see org.eclipse.jface.action.IMenuCreator#getMenu(org.eclipse.swt.widgets.Control)
 	 */
+	@Override
 	public Menu getMenu(Control parent) {
 		// Creates the menu if needed, or removes all elements
 		if (menuManager.getMenu() == null) {
@@ -85,7 +87,7 @@ public final class ExportValidationResultAction extends Action implements IMenuC
 		} else {
 			menuManager.removeAll();
 		}
-		
+
 		// look for additional actions to add to the contextual menu.
 		for (IValidityExporterDescriptor descriptor : ValidityExporterRegistry.INSTANCE.getRegisteredExtensions()) {
 			if (descriptor != null) {
@@ -100,13 +102,14 @@ public final class ExportValidationResultAction extends Action implements IMenuC
 	/* (non-Javadoc)
 	 * @see org.eclipse.jface.action.IMenuCreator#getMenu(org.eclipse.swt.widgets.Menu)
 	 */
+	@Override
 	public Menu getMenu(Menu parent) {
 		if (menuManager.getMenu() != null) {
 			return menuManager.getMenu();
 		}
 		return null;
 	}
-	
+
 	private final class SpecificExportResultsAction extends Action
 	{
 		private final @NonNull IValidityExporterDescriptor exportDescriptor;
@@ -127,10 +130,10 @@ public final class ExportValidationResultAction extends Action implements IMenuC
 				ValidityUIPlugin.getPlugin().getLog().log(e.getStatus());
 			}
 		}
-		
+
 		/**
 		 * Opens the export wizard for the receiver.
-		 * 
+		 *
 		 * @param currentResource
 		 *            The current IResource selection in some part
 		 * @throws CoreException
@@ -145,10 +148,11 @@ public final class ExportValidationResultAction extends Action implements IMenuC
 				final RootNode rootNode = validityManager.getRootNode();
 				if (display != null && workbench != null && rootNode != null) {
 					display.syncExec(new Runnable() {
+						@Override
 						public void run() {
 							IValidityExporter exporter = exportDescriptor.getExporter();
 							Shell shell = window.getShell();
-							if (shell.isDisposed()) {
+							if ((shell == null) || shell.isDisposed()) {
 								return;
 							}
 							StructuredSelection structuredSelection;

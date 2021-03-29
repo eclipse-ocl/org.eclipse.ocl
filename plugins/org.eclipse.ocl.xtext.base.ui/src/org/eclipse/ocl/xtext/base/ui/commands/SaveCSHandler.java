@@ -85,7 +85,9 @@ public class SaveCSHandler extends AbstractHandler
 		SaveAsDialog dlg = new SaveAsDialog(shell);
 		dlg.setOriginalFile(outFile);
 		dlg.create();
-		dlg.getShell().setText(BaseUIMessages.SaveCS_ShellTitle);
+		if (shell != null) {
+			shell.setText(BaseUIMessages.SaveCS_ShellTitle);
+		}
 		dlg.setTitle(BaseUIMessages.SaveCS_Title);
 		dlg.setMessage(NLS.bind(BaseUIMessages.SaveCS_Description, csURI));
 		int status = dlg.open();
