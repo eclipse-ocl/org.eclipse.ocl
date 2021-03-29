@@ -642,5 +642,60 @@
         <targetRelease>2020-09</targetRelease>
       </properties>
     </profile>
+    <profile>
+      <id>2020-12</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <buildType></buildType>
+        <executionEnvironment>JavaSE-11</executionEnvironment>
+        <targetRelease>2020-12</targetRelease>
+      </properties>
+    </profile>
+    <profile>
+      <id>2021-03</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <buildType></buildType>
+        <executionEnvironment>JavaSE-11</executionEnvironment>
+        <targetRelease>2021-03</targetRelease>
+      </properties>
+    </profile>
+    <profile>
+      <id>2021-06</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <buildType></buildType>
+        <executionEnvironment>JavaSE-11</executionEnvironment>
+        <targetRelease>2021-06</targetRelease>
+      </properties>
+    </profile>
+    <profile>
+      <id>2021-09</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <buildType></buildType>
+        <executionEnvironment>JavaSE-11</executionEnvironment>
+        <targetRelease>2021-09</targetRelease>
+      </properties>
+    </profile>
+    <profile>
+      <id>2021-12</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <buildType></buildType>
+        <executionEnvironment>JavaSE-11</executionEnvironment>
+        <targetRelease>2021-12</targetRelease>
+      </properties>
+    </profile>
   </profiles>
 </project>
