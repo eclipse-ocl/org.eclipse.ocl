@@ -86,7 +86,9 @@ public class SaveASHandler extends AbstractHandler
 		SaveAsDialog dlg = new SaveAsDialog(shell);
 		dlg.setOriginalFile(outFile);
 		dlg.create();
-		dlg.getShell().setText(BaseUIMessages.SaveAS_ShellTitle);
+		if (shell != null) {
+			shell.setText(BaseUIMessages.SaveAS_ShellTitle);
+		}
 		dlg.setTitle(BaseUIMessages.SaveAS_Title);
 		dlg.setMessage(NLS.bind(BaseUIMessages.SaveAS_Description, asURI));
 		int status = dlg.open();

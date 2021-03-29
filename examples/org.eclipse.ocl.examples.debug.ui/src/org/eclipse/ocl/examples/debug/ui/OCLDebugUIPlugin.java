@@ -20,6 +20,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.swt.graphics.Image;
@@ -225,7 +226,7 @@ public class OCLDebugUIPlugin extends AbstractUIPlugin {
 	 *
 	 * @return the active workbench shell or <code>null</code> if none
 	 */
-	public static Shell getActiveWorkbenchShell() {
+	public static @Nullable Shell getActiveWorkbenchShell() {
 		IWorkbenchWindow window = getActiveWorkbenchWindow();
 		if (window != null) {
 			return window.getShell();

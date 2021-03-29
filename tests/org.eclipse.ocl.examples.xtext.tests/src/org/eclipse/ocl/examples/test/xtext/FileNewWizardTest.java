@@ -124,13 +124,16 @@ public class FileNewWizardTest extends TestCase
 						try {
 							Thread.sleep(100);
 						} catch (InterruptedException e) {}
-						getShell().getDisplay().asyncExec(new Runnable()
-						{
-							@Override
-							public void run() {
-								finishPressed();
-							}
-						});
+						Shell shell = getShell();
+						if ((shell != null) && !shell.isDisposed()) {
+							shell.getDisplay().asyncExec(new Runnable()
+							{
+								@Override
+								public void run() {
+									finishPressed();
+								}
+							});
+						}
 					}
 				};
 				thread.start();
