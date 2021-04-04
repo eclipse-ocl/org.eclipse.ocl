@@ -27,6 +27,7 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.IfExp;
 import org.eclipse.ocl.pivot.LetExp;
 import org.eclipse.ocl.pivot.LetVariable;
+import org.eclipse.ocl.pivot.LiteralExp;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NullLiteralExp;
 import org.eclipse.ocl.pivot.NumericLiteralExp;
@@ -142,7 +143,7 @@ public class SymbolicAnalysisTests extends XtextTestCase
 			}
 			expectedContentCount++;
 	//		allContents.add(eObject);
-			assertTrue("Expected contained for " + debugText(eObject), element2value.containsKey(eObject));
+			assertTrue("Expected dead for " + debugText(eObject), element2value.containsKey(eObject));
 		}
 		assertEquals("Checking contents size for " + debugText(asExpressionInOCL), element2value.size(), expectedContentCount); //allContents.size();
 		Set<@Nullable EObject> expectedMayBeNullSet = expectedMayBeNulls != null ? new UniqueList<@Nullable EObject>(expectedMayBeNulls) : Collections.emptySet();
@@ -192,6 +193,18 @@ public class SymbolicAnalysisTests extends XtextTestCase
 	}
 
 	protected @Nullable EObject @Nullable [] isInvalids(@Nullable EObject @Nullable ... elements) {
+		if (elements == null) {
+			return null;
+		}
+		int iMax = elements.length;
+		@Nullable EObject [] results = new @Nullable EObject[iMax];
+		for (int i = 0; i < iMax; i++) {
+			results[i] = elements[i];
+		}
+		return results;
+	}
+
+	protected @Nullable EObject @Nullable [] mayBeDeads(@Nullable EObject @Nullable ... elements) {
 		if (elements == null) {
 			return null;
 		}
@@ -280,6 +293,44 @@ public class SymbolicAnalysisTests extends XtextTestCase
 		// not-null / 1.0
 		SymbolicEvaluationVisitor symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, new Object[]{new SymbolicValueImpl(TypeId.REAL, false, false), 1.0});
 		checkContents(symbolicAnalysis4, asExpressionInOCL, null, mayBeNulls(contextVariable), null, null);
+
+		ocl.dispose();
+	}
+
+	public void testSymbolicAnalysis_GuardedBadDivide() throws Exception {
+		MyOCL ocl = new MyOCL();
+		ExpressionInOCL asExpressionInOCL = ocl.createQueryTestModel("GuardedBadDivide",
+			"GuardedBadDivide(num : Real, den : Real) : Real", "if den <> 0 then num / den else 999.999 endif");
+		IfExp asIfExp = (IfExp) asExpressionInOCL.getOwnedBody();
+		OperationCallExp asOperationCallExp = (OperationCallExp) PivotUtil.getOwnedThen(asIfExp);
+		VariableDeclaration contextVariable = PivotUtil.getOwnedContext(asExpressionInOCL);
+		VariableExp asNumExp = (VariableExp) PivotUtil.getOwnedSource(asOperationCallExp);
+		VariableExp asDenExp = (VariableExp) PivotUtil.getOwnedArgument(asOperationCallExp, 0);
+		LiteralExp asLiteralExp = (LiteralExp) PivotUtil.getOwnedElse(asIfExp);
+
+		// 5.0 / 0.0
+		SymbolicEvaluationVisitor symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, new Object[]{5.0, 0.0});
+		checkContents(symbolicAnalysis1, asExpressionInOCL, mayBeDeads(asOperationCallExp, asNumExp, asDenExp), mayBeNulls(contextVariable), null, null);
+
+		// 5.0 / 1.0
+		SymbolicEvaluationVisitor symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, new Object[]{5.0, 1.0});
+		checkContents(symbolicAnalysis2, asExpressionInOCL, mayBeDeads(asLiteralExp), mayBeNulls(contextVariable), null, null);
+
+		// not-null / 0.0
+		SymbolicEvaluationVisitor symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, new Object[]{new SymbolicValueImpl(TypeId.REAL, false, false), 0.0});
+		checkContents(symbolicAnalysis3, asExpressionInOCL, mayBeDeads(asOperationCallExp, asNumExp, asDenExp), mayBeNulls(contextVariable), null, null);
+
+		// not-null / 1.0
+		SymbolicEvaluationVisitor symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, new Object[]{new SymbolicValueImpl(TypeId.REAL, false, false), 1.0});
+		checkContents(symbolicAnalysis4, asExpressionInOCL, mayBeDeads(asLiteralExp), mayBeNulls(contextVariable), null, null);
+
+		// 5.0 / not-null
+		SymbolicEvaluationVisitor symbolicAnalysis5 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, new Object[]{5.0, new SymbolicValueImpl(TypeId.REAL, false, false)});
+		checkContents(symbolicAnalysis5, asExpressionInOCL, null, mayBeNulls(contextVariable), mayBeInvalids(asExpressionInOCL, asIfExp, asOperationCallExp), null);
+
+		// 5 / not-null
+		SymbolicEvaluationVisitor symbolicAnalysis6 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, new Object[]{5, new SymbolicValueImpl(TypeId.INTEGER, false, false)});
+		checkContents(symbolicAnalysis6, asExpressionInOCL, null, mayBeNulls(contextVariable), mayBeInvalids(asExpressionInOCL, asIfExp, asOperationCallExp), null);
 
 		ocl.dispose();
 	}

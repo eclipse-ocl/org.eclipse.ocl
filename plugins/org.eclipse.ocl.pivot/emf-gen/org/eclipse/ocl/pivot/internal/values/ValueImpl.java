@@ -270,6 +270,23 @@ public abstract class ValueImpl extends ValueUtil implements Value {
 		return false;
 	}
 
+	@Override
+	public boolean mayBeInvalid() {
+		return false;
+	}
+
+	@Override
+	public boolean mayBeNull() {
+		return false;
+	}
+
+	@Override
+	public /*final*/ @NonNull String toString() {
+		StringBuilder s = new StringBuilder();
+		toString(s, 100);
+		return s.toString();
+	}
+
 	/**
 	 * @generated NOT
 	 */

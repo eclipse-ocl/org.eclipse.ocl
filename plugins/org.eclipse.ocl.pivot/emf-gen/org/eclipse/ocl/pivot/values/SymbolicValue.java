@@ -32,4 +32,6 @@ public interface SymbolicValue extends Value
 	 * Update symbolicExecutor from any deductions that can be made from knowing that symbolicConstraint is observede.
 	 */
 	void deduceFrom(@NonNull SymbolicExecutor symbolicExecutor, @NonNull SimpleSymbolicConstraint symbolicConstraint);
+
+	boolean mayBeZero();
 } // SymbolicValue

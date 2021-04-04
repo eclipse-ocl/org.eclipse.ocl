@@ -125,6 +125,11 @@ public class SymbolicValueImpl extends ValueImpl implements SymbolicValue {
 	}
 
 	@Override
+	public boolean mayBeZero() {
+		return (getTypeId() == TypeId.REAL) || (getTypeId() == TypeId.INTEGER) || (getTypeId() == TypeId.UNLIMITED_NATURAL);	// FIXME Behavioral
+	}
+
+	@Override
 	public void toString(@NonNull StringBuilder s, int lengthLimit) {
 		s.append(typeId);
 		s.append("[");

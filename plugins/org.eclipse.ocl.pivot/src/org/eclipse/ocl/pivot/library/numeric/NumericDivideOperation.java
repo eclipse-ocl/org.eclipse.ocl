@@ -49,9 +49,9 @@ public class NumericDivideOperation extends AbstractSimpleBinaryOperation
 				throw new InvalidValueException("divide by zero");
 			}
 		}
-// FIXME		else if (((SymbolicValue)argumentValue).mayBeZero()) {
-//			throw new InvalidValueException("divide by zero");
-//		}
+		else if (((SymbolicValue)argumentValue).mayBeZero()) {
+			return new SymbolicOperationCallValueImpl(operationCallExp, false, true, this, Lists.newArrayList(sourceValue, argumentValue));
+		}
 		boolean mayBeInvalid = ValueUtil.mayBeInvalid(sourceValue) || ValueUtil.mayBeInvalid(argumentValue);
 		boolean mayBeNull = ValueUtil.mayBeNull(sourceValue) || ValueUtil.mayBeNull(argumentValue);
 		return new SymbolicOperationCallValueImpl(operationCallExp, false, mayBeInvalid || mayBeNull, this, Lists.newArrayList(sourceValue, argumentValue));
