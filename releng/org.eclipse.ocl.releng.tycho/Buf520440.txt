@@ -1,0 +1,33 @@
+MapType - getTypeId / getCollectionTypeId / getMapTypeId
+	TypedElementImpl
+	ValueImpl
+	TupleValueImpl
+	SparseOrderedSetValueImpl
+	SetValueImpl
+	SequenceValueImpl
+	RangeSequenceValueImpl
+	RangeOrderedSetValueImpl
+	RangeOrderedSetValueImpl
+	NullValueImpl
+	MapValueImpl
+	JavaObjectValueImpl
+	CollectionValueImpl
+	CollectionValueImpl
+	
+TemplateParameterSubstitutionVisitor.specializeType
+	TemplateParameterSubstitutionVisitor
+	TemplateParameterImpl
+	SelfTypeImpl
+	ClassImpl
+	
+SymbolicEvaluationVisitor
+	OCLExpressionImpl
+	
+tidy
+	IteratorExpImpl
+	
+toString
+	ObjectValueImpl
+	NullValueImpl
+	MapValueImpl
+	CollectionValueImpl

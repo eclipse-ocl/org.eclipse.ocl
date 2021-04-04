@@ -220,6 +220,19 @@ public interface Value
 
 	/**
 	 * @generated NOT
+	 * @since 1.15
+	 */
+	default boolean mayBeInvalid() { return true; }
+
+	/**
+	 * @generated NOT
+	 * @since 1.15
+	 */
+	default boolean mayBeNull() { return true; }
+
+
+	/**
+	 * @generated NOT
 	 */
 	void toString(@NonNull StringBuilder s, int sizeLimit);
 }
