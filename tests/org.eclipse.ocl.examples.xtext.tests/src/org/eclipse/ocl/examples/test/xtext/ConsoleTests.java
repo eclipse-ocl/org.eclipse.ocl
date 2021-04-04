@@ -35,6 +35,8 @@ import org.eclipse.ocl.pivot.NullLiteralExp;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.VariableExp;
+import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ui.internal.Workbench;
 
 /**
@@ -53,6 +55,8 @@ public class ConsoleTests extends AbstractConsoleTests
 			System.err.println(getName() + " has been disabled -see Bug 526252");
 			return;
 		}
+		AbstractEnvironmentFactory.ENVIRONMENT_FACTORY_ATTACH.setState(true);
+		ThreadLocalExecutor.THREAD_LOCAL_ENVIRONMENT_FACTORY.setState(true);
 		ILaunch launch = null;
 		try {
 			//		VMVirtualMachine.LOCATION.setState(true);

@@ -71,7 +71,7 @@ public class BaseDocumentProvider extends DeferredDocumentProvider
 		if (resource != null) {
 			ResourceSet resourceSet = resource.getResourceSet();
 			if (resourceSet != null) {
-				getEnvironmentFactory().adapt(resourceSet);
+			//	getEnvironmentFactory().adapt(resourceSet);
 			}
 		}
 		super.loadResource(resource, document, encoding);
@@ -83,8 +83,8 @@ public class BaseDocumentProvider extends DeferredDocumentProvider
 			IResource resource = ClassUtil.getAdapter(editorInput, IResource.class);
 			if (resource != null) {
 				IProject project = resource.getProject();
-				EnvironmentFactoryInternal environmentFactory = getEnvironmentFactory();
-				environmentFactory.setProject(project);
+			//	EnvironmentFactoryInternal environmentFactory = getEnvironmentFactory();
+			//	environmentFactory.setProject(project);
 			}
 		}
 		return super.setDocumentContent(document, editorInput, encoding);
