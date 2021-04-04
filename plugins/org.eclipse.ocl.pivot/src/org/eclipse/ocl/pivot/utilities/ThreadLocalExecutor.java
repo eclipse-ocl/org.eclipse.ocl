@@ -57,8 +57,7 @@ public class ThreadLocalExecutor
 	public static @Nullable EnvironmentFactoryInternal basicGetEnvironmentFactory() {
 		ThreadLocalExecutor threadLocalExecutor = INSTANCE.get();
 		if (threadLocalExecutor == null) {
-			threadLocalExecutor = new ThreadLocalExecutor();
-			INSTANCE.set(threadLocalExecutor);
+			return null;
 		}
 		return threadLocalExecutor.localBasicGetEnvironmentFactory();
 	}
@@ -69,8 +68,7 @@ public class ThreadLocalExecutor
 	public static @Nullable Executor basicGetExecutor() {
 		ThreadLocalExecutor threadLocalExecutor = INSTANCE.get();
 		if (threadLocalExecutor == null) {
-			threadLocalExecutor = new ThreadLocalExecutor();
-			INSTANCE.set(threadLocalExecutor);
+			return null;
 		}
 		return threadLocalExecutor.localBasicGetExecutor();
 	}
@@ -149,7 +147,11 @@ public class ThreadLocalExecutor
 	 */
 	private @Nullable Executor executor = null;
 
-	private ThreadLocalExecutor() {}
+	private ThreadLocalExecutor() {
+//		if (THREAD_LOCAL_ENVIRONMENT_FACTORY.isActive()) {
+//			THREAD_LOCAL_ENVIRONMENT_FACTORY.println("[" + Thread.currentThread().getName() + "] Create " + toString());
+//		}
+	}
 
 	@Override
 	protected void finalize() throws Throwable {
