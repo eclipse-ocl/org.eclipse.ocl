@@ -10,11 +10,25 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.library.oclany;
 
+import java.util.List;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.internal.manager.SymbolicExecutor;
+import org.eclipse.ocl.pivot.internal.values.SimpleSymbolicConstraintImpl;
+import org.eclipse.ocl.pivot.internal.values.SymbolicOperationCallValueImpl;
 import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.pivot.values.SimpleSymbolicConstraint;
+import org.eclipse.ocl.pivot.values.SymbolicOperationCallValue;
+import org.eclipse.ocl.pivot.values.SymbolicOperator;
+import org.eclipse.ocl.pivot.values.SymbolicValue;
+
+import com.google.common.collect.Lists;
 
 /**
  * OclAnyEqualOperation realises the OCLAny::=() library operation and
@@ -24,6 +38,60 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
 public class OclAnyEqualOperation extends AbstractSimpleBinaryOperation
 {
 	public static final @NonNull OclAnyEqualOperation INSTANCE = new OclAnyEqualOperation();
+
+	/**
+	 * @since 1.15
+	 */
+	@Override
+	public void deduceFrom(@NonNull SymbolicExecutor symbolicExecutor, @NonNull SymbolicOperationCallValue operationCallValue, @NonNull SimpleSymbolicConstraint resultConstraint) {
+		deduceFrom(symbolicExecutor, operationCallValue, resultConstraint, false);
+	}
+
+	/**
+	 * @since 1.15
+	 */
+	protected void deduceFrom(@NonNull SymbolicExecutor symbolicExecutor, @NonNull SymbolicOperationCallValue resultValue, @NonNull SimpleSymbolicConstraint simpleConstraint, boolean isInverted) {
+		SymbolicOperator thisSymbolicOperator = simpleConstraint.getSymbolicOperator();
+		SymbolicOperator nestedSymbolicOperator = null;
+		if (thisSymbolicOperator == (isInverted ? SymbolicOperator.NOT_EQUALS : SymbolicOperator.EQUALS)) {		// FIXME simplify, XOR
+			Object knownValue = simpleConstraint.getSymbolicValue();
+			if (knownValue == Boolean.TRUE) {
+				nestedSymbolicOperator = SymbolicOperator.EQUALS;
+			}
+			else if (knownValue == Boolean.FALSE) {
+				nestedSymbolicOperator = SymbolicOperator.NOT_EQUALS;
+			}
+		}
+		else if (thisSymbolicOperator == (isInverted ? SymbolicOperator.EQUALS : SymbolicOperator.NOT_EQUALS)) {
+			Object knownValue = simpleConstraint.getSymbolicValue();
+			if (knownValue == Boolean.TRUE) {
+				nestedSymbolicOperator = SymbolicOperator.NOT_EQUALS;
+			}
+			else if (knownValue == Boolean.FALSE) {
+				nestedSymbolicOperator = SymbolicOperator.EQUALS;
+			}
+		}
+		else {
+			throw new IllegalStateException(String.valueOf(thisSymbolicOperator));
+		}
+		if (nestedSymbolicOperator != null) {
+			List<@Nullable Object> boxedSourceAndArgumentValues = resultValue.getBoxedSourceAndArgumentValues();
+			Object sourceValue = boxedSourceAndArgumentValues.get(0);
+			Object argumentValue = boxedSourceAndArgumentValues.get(1);
+		//	OCLExpression expression = resultValue.getExpression();
+			if (sourceValue instanceof SymbolicValue) {
+				SymbolicValue symbolicValue = (SymbolicValue)sourceValue;
+				SimpleSymbolicConstraintImpl symbolicConstraint = new SimpleSymbolicConstraintImpl(symbolicValue.getTypeId(), false, false, nestedSymbolicOperator, argumentValue);
+			//	symbolicExecutor.replace(this, symbolicConstraint);
+				symbolicValue.deduceFrom(symbolicExecutor, symbolicConstraint);	// FIXME special case null argumentValue
+			}
+			if (argumentValue instanceof SymbolicValue) {
+				SymbolicValue symbolicValue = (SymbolicValue)argumentValue;
+				SimpleSymbolicConstraintImpl symbolicConstraint = new SimpleSymbolicConstraintImpl(symbolicValue.getTypeId(), false, false, nestedSymbolicOperator, sourceValue);
+				symbolicValue.deduceFrom(symbolicExecutor, symbolicConstraint);
+			}
+		}
+	}
 
 	@Override
 	public @NonNull Boolean evaluate(@Nullable Object left, @Nullable Object right) {
@@ -39,7 +107,7 @@ public class OclAnyEqualOperation extends AbstractSimpleBinaryOperation
 		if (left == null) {
 			return right == null;
 		}
-		else if ((left instanceof Type) && (right instanceof Type)){
+		else if ((left instanceof Type) && (right instanceof Type)) {
 			boolean result = ((Type) left).getTypeId().equals(((Type) right).getTypeId());		// FIXME is this a sound/efficient tradeoff for not boxing?
 			return result;
 		}
@@ -47,5 +115,23 @@ public class OclAnyEqualOperation extends AbstractSimpleBinaryOperation
 			boolean result = left.equals(right);
 			return result;
 		}
+	}
+
+	/**
+	 * @since 1.15
+	 */
+	@Override
+	public @Nullable Object symbolicEvaluate(@NonNull Executor executor, @NonNull OperationCallExp operationCallExp, @Nullable Object sourceValue, @Nullable Object argumentValue) {
+		if ((sourceValue instanceof SymbolicValue) || (argumentValue instanceof SymbolicValue)) {
+			if ((sourceValue == null) && !ValueUtil.mayBeNull(argumentValue)) {
+				return ValueUtil.FALSE_VALUE;
+			}
+			if ((argumentValue == null) && !ValueUtil.mayBeNull(sourceValue)) {
+				return ValueUtil.FALSE_VALUE;
+			}
+			boolean mayBeInvalid = ValueUtil.mayBeInvalid(sourceValue) || ValueUtil.mayBeInvalid(argumentValue);
+			return new SymbolicOperationCallValueImpl(operationCallExp, false, /*mayBeNull ||*/ mayBeInvalid, this, Lists.newArrayList(sourceValue, argumentValue));
+		}
+		return evaluate(sourceValue, argumentValue);
 	}
 }

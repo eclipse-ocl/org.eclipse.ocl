@@ -15,6 +15,7 @@ MapType - getTypeId / getCollectionTypeId / getMapTypeId
 	CollectionValueImpl
 	SortedByIteration
 	IteratorsTest4
+	CGStringLogDiagnosticOperation
 	
 SymbolicEvaluationVisitor
 	OCLExpressionImpl

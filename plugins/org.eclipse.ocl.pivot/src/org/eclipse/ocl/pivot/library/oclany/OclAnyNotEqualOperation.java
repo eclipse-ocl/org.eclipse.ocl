@@ -12,9 +12,19 @@ package org.eclipse.ocl.pivot.library.oclany;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.OperationCallExp;
+import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.manager.SymbolicExecutor;
+import org.eclipse.ocl.pivot.internal.values.SymbolicOperationCallValueImpl;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.pivot.values.SimpleSymbolicConstraint;
+import org.eclipse.ocl.pivot.values.SymbolicOperationCallValue;
+import org.eclipse.ocl.pivot.values.SymbolicValue;
+
+import com.google.common.collect.Lists;
 
 
 /**
@@ -25,6 +35,11 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
 public class OclAnyNotEqualOperation extends OclAnyEqualOperation
 {
 	public static final @NonNull OclAnyNotEqualOperation INSTANCE = new OclAnyNotEqualOperation();
+
+	@Override
+	public void deduceFrom(@NonNull SymbolicExecutor symbolicExecutor, @NonNull SymbolicOperationCallValue operationCallValue, @NonNull SimpleSymbolicConstraint resultConstraint) {
+		deduceFrom(symbolicExecutor, operationCallValue, resultConstraint, true);
+	}
 
 	@Override
 	public @NonNull Boolean evaluate(@Nullable Object left, @Nullable Object right) {
@@ -41,5 +56,20 @@ public class OclAnyNotEqualOperation extends OclAnyEqualOperation
 		else {
 			throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.BOOLEAN_NAME, getTypeName(right));
 		}
+	}
+
+	@Override
+	public @Nullable Object symbolicEvaluate(@NonNull Executor executor, @NonNull OperationCallExp operationCallExp, @Nullable Object sourceValue, @Nullable Object argumentValue) {
+		if ((sourceValue instanceof SymbolicValue) || (argumentValue instanceof SymbolicValue)) {
+			if ((sourceValue == null) && !ValueUtil.mayBeNull(argumentValue)) {
+				return ValueUtil.TRUE_VALUE;
+			}
+			if ((argumentValue == null) && !ValueUtil.mayBeNull(sourceValue)) {
+				return ValueUtil.TRUE_VALUE;
+			}
+			boolean mayBeInvalid = ValueUtil.mayBeInvalid(sourceValue) || ValueUtil.mayBeInvalid(argumentValue);
+			return new SymbolicOperationCallValueImpl(operationCallExp, false, /*mayBeNull ||*/ mayBeInvalid, this, Lists.newArrayList(sourceValue, argumentValue));
+		}
+		return evaluate(sourceValue, argumentValue);
 	}
 }
