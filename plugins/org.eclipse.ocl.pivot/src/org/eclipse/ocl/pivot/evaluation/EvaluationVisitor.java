@@ -14,6 +14,7 @@ package org.eclipse.ocl.pivot.evaluation;
 import org.eclipse.emf.common.util.Monitor;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CollectionLiteralPart;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.internal.evaluation.AbstractEvaluationVisitor;
@@ -35,6 +36,7 @@ public interface EvaluationVisitor extends Visitor<Object>, Evaluator
 	 */
 	public interface EvaluationVisitorExtension extends EvaluationVisitor
 	{
+		@Override
 		@NonNull Executor getExecutor();
 
 		/**
@@ -47,6 +49,13 @@ public interface EvaluationVisitor extends Visitor<Object>, Evaluator
 	@Deprecated
 	@Override
 	@NonNull EvaluationVisitor createNestedEvaluator();
+
+	/**
+	 * @since 1.15
+	 */
+	default @Nullable Object evaluate(@NonNull CollectionLiteralPart part) {
+		throw new UnsupportedOperationException();	// FIXME abstract
+	}
 
 	@Override
 	@Nullable Object evaluate(@NonNull OCLExpression body);
@@ -70,6 +79,12 @@ public interface EvaluationVisitor extends Visitor<Object>, Evaluator
 	/** @deprecated use getExecutor */
 	@Deprecated
 	@NonNull EvaluationVisitor getEvaluator();
+
+	@Override
+	default @NonNull Executor getExecutor() {
+		throw new UnsupportedOperationException();
+	}
+
 
 	/** @deprecated moved to Evaluator */
 	@Deprecated

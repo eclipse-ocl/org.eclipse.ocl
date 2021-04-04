@@ -11,7 +11,10 @@
 
 package org.eclipse.ocl.pivot.internal.evaluation;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -25,6 +28,7 @@ import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.Option;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.osgi.util.NLS;
@@ -263,11 +267,31 @@ public class BasicEvaluationEnvironment extends AbstractCustomizable implements 
 		variableValues.put(referredVariable, value);
 	}
 
+
 	/**
 	 * Returns a string representation of the bindings
 	 */
 	@Override
 	public String toString() {
-		return variableValues.toString();
+		StringBuilder s = new StringBuilder();
+		toString(s);
+		return s.toString();
+	}
+
+	@Override
+	public void toString(@NonNull StringBuilder s) {
+		if (parent != null) {
+			parent.toString(s);
+			s.append("\n");
+		}
+		List<@NonNull TypedElement> keys = new ArrayList<>(variableValues.keySet());
+		if (keys.size() > 1) {
+			Collections.sort(keys, NameUtil.NAMEABLE_COMPARATOR);
+		}
+		s.append("\t" + keys.size() + " values");
+		for (@NonNull TypedElement key : keys) {
+			Object value = variableValues.get(key);
+			s.append("\n\t\t" + key + " => " + value);
+		}
 	}
 }

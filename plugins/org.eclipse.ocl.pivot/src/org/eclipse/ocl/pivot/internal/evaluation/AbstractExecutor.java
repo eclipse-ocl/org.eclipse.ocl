@@ -36,6 +36,7 @@ import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
+import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment.EvaluationEnvironmentExtension;
 import org.eclipse.ocl.pivot.evaluation.EvaluationLogger;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
@@ -553,6 +554,14 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 	@Override
 	public @NonNull EvaluationEnvironment pushEvaluationEnvironment(@NonNull NamedElement executableObject, @Nullable OCLExpression callingObject) {
 		return pushEvaluationEnvironment(executableObject, (TypedElement)callingObject);
+	}
+
+	/**
+	 * @since 1.15
+	 */
+	protected EvaluationEnvironment pushEvaluationEnvironment(@NonNull EvaluationEnvironment nestedEvaluationEnvironment) {
+		assert nestedEvaluationEnvironment.getParentEvaluationEnvironment() == evaluationEnvironment;
+		return evaluationEnvironment = (EvaluationEnvironmentExtension) nestedEvaluationEnvironment;
 	}
 
 	@Override

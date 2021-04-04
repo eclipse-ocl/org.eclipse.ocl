@@ -14,6 +14,7 @@ MapType - getTypeId / getCollectionTypeId / getMapTypeId
 	CollectionValueImpl
 	CollectionValueImpl
 	SortedByIteration
+	IteratorsTest4
 	
 SymbolicEvaluationVisitor
 	OCLExpressionImpl
@@ -30,3 +31,4 @@ toString
 	AbstractDispatchOperation
 	MapValueImpl
 	CollectionValueImpl
+	EcoreLibraryProperty

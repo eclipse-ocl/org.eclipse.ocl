@@ -16,6 +16,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
 import org.eclipse.ocl.pivot.utilities.Adaptable;
 import org.eclipse.ocl.pivot.utilities.Customizable;
@@ -32,19 +33,21 @@ public interface EvaluationEnvironment extends Adaptable, Customizable
 	 */
 	public interface EvaluationEnvironmentExtension extends EvaluationEnvironment
 	{
+		@Override
 		@NonNull ExecutorInternal getExecutor();
+		@Override
 		EvaluationEnvironment.@Nullable EvaluationEnvironmentExtension getParentEvaluationEnvironment();
 	}
-	
+
 	/**
 	 * Adds the supplied variable declaration and value binding to the
 	 * environment. The variable declaration must not already be bound.
-	 * 
+	 *
 	 * @param referredVariable
 	 *            the variable declaration to add
 	 * @param value
 	 *            the associated binding
-	 * 
+	 *
 	 * @see #replace(TypedElement, Object)
 	 */
 	void add(@NonNull TypedElement referredVariable, @Nullable Object value);
@@ -57,8 +60,22 @@ public interface EvaluationEnvironment extends Adaptable, Customizable
 	@NonNull EnvironmentFactory getEnvironmentFactory();
 
 	/**
+	 * @since 1.15
+	 */
+	default EvaluationEnvironment.@Nullable EvaluationEnvironmentExtension getParentEvaluationEnvironment() {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * @since 1.15
+	 */
+	default @NonNull ExecutorInternal getExecutor() {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
 	 * Returns the value associated with the supplied variable declaration
-	 * 
+	 *
 	 * @param referredVariable
 	 *            the name whose value is to be returned
 	 * @return the value associated with the name
@@ -73,7 +90,7 @@ public interface EvaluationEnvironment extends Adaptable, Customizable
 	/**
 	 * Removes the supplied variable declaration and binding from the
 	 * environment (if it exists) and returns it.
-	 * 
+	 *
 	 * @param referredVariable
 	 *            the variable declaration to remove
 	 * @return the value associated with the removed variable declaration
@@ -83,7 +100,7 @@ public interface EvaluationEnvironment extends Adaptable, Customizable
 	/**
 	 * Replaces the current value of the supplied variable declaration with the
 	 * supplied value.
-	 * 
+	 *
 	 * @param referredVariable
 	 *            the variable declaration
 	 * @param value
@@ -96,4 +113,16 @@ public interface EvaluationEnvironment extends Adaptable, Customizable
 	@NonNull ModelManager getModelManager();
 
 	@NonNull NamedElement getExecutableObject();
+
+	/**
+	 * @since 1.15
+	 */
+	default @Nullable Object replaceInternal(@NonNull VariableDeclaration referredVariable, @Nullable Object value) {
+		return null;
+	}
+
+	/**
+	 * @since 1.15
+	 */
+	default void toString(@NonNull StringBuilder s) {}
 }

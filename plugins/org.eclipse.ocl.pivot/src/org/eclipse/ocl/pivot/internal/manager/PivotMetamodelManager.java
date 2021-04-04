@@ -83,8 +83,14 @@ import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
+import org.eclipse.ocl.pivot.Variable;
+import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.WildcardType;
+import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
+import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
+import org.eclipse.ocl.pivot.evaluation.ModelManager;
+import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.compatibility.EMF_2_9;
@@ -96,6 +102,8 @@ import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
+import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationVisitor;
 import org.eclipse.ocl.pivot.internal.library.ConstrainedOperation;
 import org.eclipse.ocl.pivot.internal.library.EInvokeOperation;
 import org.eclipse.ocl.pivot.internal.library.ImplementationManager;
@@ -113,6 +121,7 @@ import org.eclipse.ocl.pivot.internal.utilities.IllegalLibraryException;
 import org.eclipse.ocl.pivot.internal.utilities.OppositePropertyDetails;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.internal.values.SymbolicVariableValueImpl;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.library.UnsupportedOperation;
@@ -132,6 +141,7 @@ import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.NumberValue;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
@@ -307,6 +317,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	 * Lazily computed, eagerly invalidated static analysis of the control flow within invariants and bodies.
 	 */
 	private @Nullable Map<@NonNull OCLExpression, @NonNull FlowAnalysis> oclExpression2flowAnalysis = null;
+	private @Nullable Map<@NonNull ExpressionInOCL, @NonNull SymbolicEvaluationVisitor> expressionInOCL2symbolicAnalysis = null;
 
 	private @Nullable Map<Resource,External2AS> es2ases = null;
 
@@ -402,6 +413,21 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 				as2xmIid.assignIds((ASResource) eResource, options);
 			}
 		}
+	}
+
+	/**
+	 * @since 1.15
+	 */
+	@Override
+	public @Nullable SymbolicEvaluationVisitor basicGetSymbolicAnalysis(@NonNull Element element) {
+		ExpressionInOCL expressionInOCL = PivotUtil.getContainingExpressionInOCL(element);
+		if (expressionInOCL != null) {
+			Map<@NonNull ExpressionInOCL, @NonNull SymbolicEvaluationVisitor> expressionInOCL2symbolicAnalysis2 = expressionInOCL2symbolicAnalysis;
+			if (expressionInOCL2symbolicAnalysis2 != null) {
+				return expressionInOCL2symbolicAnalysis2.get(expressionInOCL);
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -628,6 +654,13 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		asString.setType(standardLibrary.getStringType());
 		asString.setIsRequired(true);
 		return asString;
+	}
+
+	/**
+	 * @since 1.15
+	 */
+	protected SymbolicOCLExecutor createSymbolicExecutor(@NonNull ModelManager modelManager) {
+		return new SymbolicOCLExecutor((EnvironmentFactoryInternalExtension)environmentFactory, modelManager);
 	}
 
 	public @NonNull UnlimitedNaturalLiteralExp createUnlimitedNaturalLiteralExp(@NonNull Number unlimitedNaturalSymbol) {		// FIXME move to PivotHelper
@@ -1732,6 +1765,81 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	}
 	public @NonNull Iterable<@NonNull CompleteClass> getSuperCompleteClasses(@NonNull CompleteClass completeClass) {
 		return completeClass.getProperSuperCompleteClasses();
+	}
+
+	@Override
+	public @NonNull SymbolicEvaluationVisitor getSymbolicAnalysis(@NonNull Element element) {
+		ExpressionInOCL expressionInOCL = PivotUtil.getContainingExpressionInOCL(element);
+		if (expressionInOCL != null) {
+			return getSymbolicAnalysis(expressionInOCL);
+		}
+		return MetamodelManagerInternalExtension2.super.getSymbolicAnalysis(element);
+	}
+
+	/**
+	 * @since 1.15
+	 */
+	public @NonNull SymbolicEvaluationVisitor getSymbolicAnalysis(@NonNull ExpressionInOCL expressionInOCL) {
+		Map<@NonNull ExpressionInOCL, @NonNull SymbolicEvaluationVisitor> expressionInOCL2symbolicAnalysis2 = expressionInOCL2symbolicAnalysis;
+		if (expressionInOCL2symbolicAnalysis2 == null) {
+			expressionInOCL2symbolicAnalysis = expressionInOCL2symbolicAnalysis2 = new HashMap<>();
+		}
+		SymbolicEvaluationVisitor symbolicAnalysis = expressionInOCL2symbolicAnalysis2.get(expressionInOCL);
+		if (symbolicAnalysis == null) {
+			VariableDeclaration contextVariable = PivotUtil.getOwnedContext(expressionInOCL);
+			boolean mayBeNull = !contextVariable.isIsRequired();
+			boolean mayBeInvalid = contextVariable.getTypeId() == TypeId.OCL_INVALID;
+			Object contextValue = new SymbolicVariableValueImpl(contextVariable, mayBeNull, mayBeInvalid);
+			Operation operation = PivotUtil.getContainingOperation(expressionInOCL);
+			List<@NonNull Variable> ownedParameters = PivotUtilInternal.getOwnedParametersList(expressionInOCL);
+			int iSize = ownedParameters.size();
+			@Nullable Object[] parameterValues = new @Nullable Object[iSize];
+			for (int i = 0; i < iSize; i++) {
+				VariableDeclaration parameterVariable = ownedParameters.get(i);
+				mayBeNull = !parameterVariable.isIsRequired();
+				mayBeInvalid = (operation != null) && operation.isIsValidating();
+				parameterValues[i] = new SymbolicVariableValueImpl(parameterVariable, mayBeNull, mayBeInvalid);
+			}
+			symbolicAnalysis = getSymbolicAnalysis(expressionInOCL, contextValue, parameterValues);
+			expressionInOCL2symbolicAnalysis2.put(expressionInOCL, symbolicAnalysis);
+		}
+		return symbolicAnalysis;
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	@Override
+	public @NonNull SymbolicEvaluationVisitor getSymbolicAnalysis(@NonNull ExpressionInOCL expressionInOCL, @Nullable Object context, @Nullable Object @Nullable [] parameters) {
+		ModelManager modelManager = environmentFactory.createModelManager(context);
+		ExecutorInternal executor = createSymbolicExecutor(modelManager);
+		EvaluationEnvironment evaluationEnvironment = executor.initializeEvaluationEnvironment(expressionInOCL);
+		IdResolver idResolver = environmentFactory.getIdResolver();
+		EvaluationVisitor evaluationVisitor =  executor.getEvaluationVisitor();
+		Variable contextVariable = expressionInOCL.getOwnedContext();
+	//	SymbolicEvaluationEnvironment symbolicEvaluationEnvironment = symbolicAnalysis.getEvaluationEnvironment();
+		if (contextVariable != null) {
+		//	Object value = new SymbolicVariableValueImpl(contextVariable, idResolver.boxedValueOf(context);
+		//	Object value = new SymbolicVariableValueImpl(contextVariable, idResolver.boxedValueOf(context);
+			Object contextValue = idResolver.boxedValueOf(context);
+			evaluationEnvironment.add(contextVariable, contextValue);
+		//	symbolicEvaluationEnvironment.addSymbolicResult(contextVariable, null, contextValue);
+		}
+		int i = 0;
+		assert parameters != null;
+		for (Variable parameterVariable : PivotUtil.getOwnedParameters(expressionInOCL)) {
+			Object parameterValue = idResolver.boxedValueOf(parameters[i++]);
+			evaluationEnvironment.add(parameterVariable, parameterValue);
+		//	symbolicEvaluationEnvironment.addSymbolicResult(parameterVariable, null, parameterValue);
+		}
+		SymbolicEvaluationVisitor symbolicAnalysis = new SymbolicEvaluationVisitor(expressionInOCL, evaluationVisitor, context, parameters);
+		try {
+			symbolicAnalysis.evaluate(expressionInOCL);
+		}
+		catch (InvalidValueException e) {
+			// Ok so some results are unarguably invalid.
+		}
+		return symbolicAnalysis;
 	}
 
 	@Override

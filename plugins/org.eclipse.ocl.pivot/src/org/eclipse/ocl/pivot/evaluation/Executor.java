@@ -34,7 +34,9 @@ public interface Executor extends Evaluator
 	 */
 	public interface ExecutorExtension extends Executor
 	{
+		@Override
 		@NonNull EvaluationEnvironment pushEvaluationEnvironment(@NonNull NamedElement executableObject, @Nullable Object caller);
+		@Override
 		void resetCaches();
 	}
 	void add(@NonNull TypedElement referredVariable, @Nullable Object value);
@@ -73,12 +75,20 @@ public interface Executor extends Evaluator
 		return getStaticTypeOf(value);
 	}
 	void popEvaluationEnvironment();
-	/**
-	 * @deprecated use Object argument in ExecutorInternalExtension
-	 */
-	@Deprecated
+	@Deprecated /* @deprecated use Object argument */
 	@NonNull EvaluationEnvironment pushEvaluationEnvironment(@NonNull NamedElement executableObject, @Nullable OCLExpression callingObject);
+	/**
+	 * @since 1.15
+	 */
+	default @NonNull EvaluationEnvironment pushEvaluationEnvironment(@NonNull NamedElement executableObject, @Nullable Object caller) {
+		throw new UnsupportedOperationException();
+	}
 	void replace(@NonNull TypedElement referredVariable, @Nullable Object value);
+
+	/**
+	 * @since 1.15
+	 */
+	default void resetCaches() {}
 	@Override
 	void setLogger(@Nullable EvaluationLogger logger);
 }

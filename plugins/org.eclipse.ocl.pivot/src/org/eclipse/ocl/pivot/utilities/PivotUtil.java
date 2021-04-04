@@ -67,6 +67,7 @@ import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LetExp;
 import org.eclipse.ocl.pivot.LoopExp;
+import org.eclipse.ocl.pivot.MapLiteralExp;
 import org.eclipse.ocl.pivot.MapLiteralPart;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
@@ -89,6 +90,7 @@ import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.SelfType;
 import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
+import org.eclipse.ocl.pivot.ShadowExp;
 import org.eclipse.ocl.pivot.ShadowPart;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.StringLiteralExp;
@@ -1112,6 +1114,21 @@ public class PivotUtil
 		return ClassUtil.nonNullState((org.eclipse.ocl.pivot.Class)typedElement.getType());
 	}
 
+	/**
+	 * @since 1.15
+	 */
+	public static @NonNull String getConstraintName(@NonNull Constraint constraint) {
+		String constraintName = PivotUtil.getName(constraint);
+		EObject eContainer = constraint.eContainer();
+		if (eContainer instanceof NamedElement) {
+			String containerName = ((NamedElement)eContainer).getName();
+			if (containerName != null) {
+				constraintName = containerName + "::" + constraintName;
+			}
+		}
+		return constraintName;
+	}
+
 	public static @Nullable Constraint getContainingConstraint(@Nullable Element element) {
 		for (EObject eObject = element; eObject != null; eObject = eObject.eContainer()) {
 			if (eObject instanceof Constraint) {
@@ -1570,6 +1587,14 @@ public class PivotUtil
 	}
 
 	/**
+	 * @since 1.15
+	 */
+	public static @NonNull OCLExpression getOwnedInit(@NonNull TupleLiteralPart tupleLiteralPart) {
+		return ClassUtil.nonNullState(tupleLiteralPart.getOwnedInit());
+	}
+
+
+	/**
 	 * @since 1.3
 	 */
 	public static @NonNull OCLExpression getOwnedInit(@NonNull Variable variable) {
@@ -1640,10 +1665,24 @@ public class PivotUtil
 	}
 
 	/**
+	 * @since 1.15
+	 */
+	public static @NonNull Variable getOwnedParameter(@NonNull ExpressionInOCL expressionInOCL, int index) {
+		return ClassUtil.nonNullState(expressionInOCL.getOwnedParameters().get(index));
+	}
+
+	/**
 	 * @since 1.4
 	 */
 	public static @NonNull Parameter getOwnedParameter(@NonNull Operation operation, int index) {
 		return ClassUtil.nonNullState(operation.getOwnedParameters().get(index));
+	}
+
+	/**
+	 * @since 1.15
+	 */
+	public static @NonNull Iterable<@NonNull Variable> getOwnedParameters(@NonNull ExpressionInOCL expressionInOCL) {
+		return ClassUtil.nullFree(expressionInOCL.getOwnedParameters());
 	}
 
 	/**
@@ -1658,6 +1697,20 @@ public class PivotUtil
 	 */
 	public static @NonNull Iterable<@NonNull TemplateParameter> getOwnedParameters(@NonNull TemplateSignature templateSignature) {
 		return ClassUtil.nullFree(templateSignature.getOwnedParameters());
+	}
+
+	/**
+	 * @since 1.15
+	 */
+	public static @NonNull Iterable<@NonNull MapLiteralPart> getOwnedParts(@NonNull MapLiteralExp asMapLiteralExp) {
+		return ClassUtil.nullFree(asMapLiteralExp.getOwnedParts());
+	}
+
+	/**
+	 * @since 1.15
+	 */
+	public static @NonNull Iterable<@NonNull ShadowPart> getOwnedParts(@NonNull ShadowExp asShadowExp) {
+		return ClassUtil.nullFree(asShadowExp.getOwnedParts());
 	}
 
 	/**

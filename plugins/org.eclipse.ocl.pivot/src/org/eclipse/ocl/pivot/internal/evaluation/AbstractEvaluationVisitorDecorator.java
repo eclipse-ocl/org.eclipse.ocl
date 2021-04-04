@@ -72,12 +72,12 @@ import org.eclipse.ocl.pivot.utilities.MetamodelManager;
  * this works with decorators nested to any depth.
  * </p>
  */
-public abstract class AbstractEvaluationVisitorDecorator<EV extends EvaluationVisitor> extends AbstractExtendingVisitor<Object, Object> implements EvaluationVisitor {
+public abstract class AbstractEvaluationVisitorDecorator<EV extends EvaluationVisitor> extends AbstractExtendingVisitor<Object, @NonNull ExecutorInternal> implements EvaluationVisitor {
 
 	protected final @NonNull EV delegate;
 
 	protected AbstractEvaluationVisitorDecorator(@NonNull EV decorated) {
-		super(Object.class);						// Useless dummy object as context
+		super((ExecutorInternal)decorated.getExecutor());						// Useless dummy object as context
 		assert decorated != null : "cannot decorate a null visitor"; //$NON-NLS-1$
 
 		this.delegate = decorated;

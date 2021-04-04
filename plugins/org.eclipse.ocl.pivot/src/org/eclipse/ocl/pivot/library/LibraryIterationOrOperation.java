@@ -26,8 +26,6 @@ public interface LibraryIterationOrOperation extends LibraryFeature
 	 * Return the actual type of te body of callExp for which the regular library modeling suggests bodyType.
 	 *
 	 * The default implementation just returns bodyType.
-	 *
-	 * @since 1.12
 	 */
 	default @Nullable Type resolveBodyType(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, @Nullable Type bodyType) {
 		return bodyType;
@@ -37,8 +35,6 @@ public interface LibraryIterationOrOperation extends LibraryFeature
 	 * Return the actual return nullity of callExp for which the regular library modeling suggests returnIsRequired.
 	 *
 	 * The default implementation just returns returnIsRequired.
-	 *
-	 * @since 1.12
 	 */
 	default boolean resolveReturnNullity(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, boolean returnIsRequired) {
 		return returnIsRequired;
@@ -48,8 +44,6 @@ public interface LibraryIterationOrOperation extends LibraryFeature
 	 * Return the actual return type of callExp for which the regular library modeling suggests returnType.
 	 *
 	 * The default implementation just returns returnType.
-	 *
-	 * @since 1.12
 	 */
 	default @Nullable Type resolveReturnType(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, @Nullable Type returnType) {
 		return returnType;
@@ -59,8 +53,6 @@ public interface LibraryIterationOrOperation extends LibraryFeature
 	 * Add any templateParameter substitutions to templateParameterSubstitutions that the regular library modeling omits.
 	 *
 	 * The default implementation adds nothing. The intended usage for flatten where the input/output types are irregular.
-	 *
-	 * @since 1.12
 	 */
 	default void resolveUnmodeledTemplateParameterSubstitutions(@NonNull TemplateParameterSubstitutionVisitor templateParameterSubstitutions, @NonNull CallExp callExp) {}
 }
