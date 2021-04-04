@@ -18,7 +18,7 @@ import org.eclipse.ocl.pivot.evaluation.IterationManager;
  * AbstractIteration realizes shared characteristics of library iterations by providing a
  * default iteration algorithm with a call-back at each iteration step.
  */
-public abstract class AbstractIteration extends AbstractFeature implements LibraryIteration.LibraryIterationExtension
+public abstract class AbstractIteration extends AbstractIterationOrOperation implements LibraryIteration.LibraryIterationExtension
 {
 	/**
 	 * An out-of-band value that can be returned by {@link #updateAccumulator} to signal
@@ -34,10 +34,10 @@ public abstract class AbstractIteration extends AbstractFeature implements Libra
 	/**
 	 * A MutableObject may be used as an iteration accumulatior containing a single changing value.
 	 */
-	public static class MutableObject 
+	public static class MutableObject
 	{
 		private @Nullable Object value;
-		
+
 		public MutableObject(@Nullable Object value) {
 			this.value = value;
 		}
@@ -45,7 +45,7 @@ public abstract class AbstractIteration extends AbstractFeature implements Libra
 		public @Nullable Object get() {
 			return value;
 		}
-		
+
 		public void set(@Nullable Object value) {
 			this.value = value;
 		}
@@ -67,7 +67,7 @@ public abstract class AbstractIteration extends AbstractFeature implements Libra
 		try {
 			while (true) {
 				if (!iterationManager.hasCurrent()) {
-					return resolveTerminalValue(iterationManager);			
+					return resolveTerminalValue(iterationManager);
 				}
 				Object resultVal = updateAccumulator(iterationManager);
 				if (resultVal != CARRY_ON) {
@@ -87,18 +87,18 @@ public abstract class AbstractIteration extends AbstractFeature implements Libra
 	 * override.
 	 * <br>
 	 * This method is bypassed if the iteration ends prematurely.
-	 * 
+	 *
 	 * @param iterationManager the iteration context
 	 * @return the result
 	 */
 	protected @Nullable Object resolveTerminalValue(@NonNull IterationManager iterationManager) {
 		return iterationManager.getAccumulatorValue();
 	}
-	
+
 	/**
 	 * Update the accumulatorValue with the bodyValue resulting from the current iteration
 	 * for which the iterators define the context in the environment.
-	 * 
+	 *
 	 * @param iterationManager the iteration context
 	 * @return non-CARRY_ON premature result of iteration, or CARRY_ON if complete
 	 */

@@ -12,12 +12,20 @@ package org.eclipse.ocl.pivot.library.iterator;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CallExp;
+import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.LoopExp;
+import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.IterationManager;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.AbstractIteration;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 
@@ -34,7 +42,7 @@ public class CollectIteration extends AbstractIteration
 	public CollectionValue.@NonNull Accumulator createAccumulatorValue(@NonNull Evaluator evaluator, @NonNull TypeId accumulatorTypeId, @NonNull TypeId bodyTypeId) {
 		return createAccumulatorValue(ValueUtil.getExecutor(evaluator), accumulatorTypeId, bodyTypeId);
 	}
-	
+
 	/**
 	 * @since 1.1
 	 */
@@ -43,9 +51,65 @@ public class CollectIteration extends AbstractIteration
 		return createCollectionAccumulatorValue((CollectionTypeId) accumulatorTypeId);
 	}
 
+	/**
+	 *	Special case processing for collect() body type.
+	 *
+	 * @since 1.12
+	 */
+	@Override
+	public @Nullable Type resolveBodyType(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, @Nullable Type returnType) {
+		LoopExp loopExp = (LoopExp)callExp;
+		OCLExpression body = loopExp.getOwnedBody();
+		Type asType = body != null ? body.getType() : null;
+		Type bodyType = asType != null ? PivotUtilInternal.getNonLambdaType(asType) : null;
+		if (bodyType != null) {
+			@NonNull Type elementType = bodyType;
+			//				if (bodyType instanceof CollectionType) {
+			while (elementType instanceof CollectionType) {
+				Type elementType2 = ((CollectionType)elementType).getElementType();
+				if (elementType2 != null) {
+					elementType = elementType2;
+				}
+			}
+			//				}
+			return elementType;
+		}
+		return returnType;
+	}
+
+	/**
+	 *	Special case processing for collect() return type.
+	 *
+	 * @since 1.12
+	 */
+	@Override
+	public @Nullable Type resolveReturnType(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, @Nullable Type returnType) {
+		LoopExp loopExp = (LoopExp)callExp;
+		OCLExpression body = loopExp.getOwnedBody();
+		Type asType = body != null ? body.getType() : null;
+		Type bodyType = asType != null ? PivotUtilInternal.getNonLambdaType(asType) : null;
+		if (bodyType != null) {
+			@NonNull Type elementType = bodyType;
+			//				if (bodyType instanceof CollectionType) {
+			while (elementType instanceof CollectionType) {
+				Type elementType2 = ((CollectionType)elementType).getElementType();
+				if (elementType2 != null) {
+					elementType = elementType2;
+				}
+			}
+			//				}
+			boolean isOrdered = (returnType instanceof CollectionType) && ((CollectionType)returnType).isOrdered();
+			boolean isNullFree = asType instanceof CollectionType && ((CollectionType)asType).isIsNullFree();
+			boolean isRequired = !(asType instanceof CollectionType) && (body != null) && body.isIsRequired();
+			PivotMetamodelManager metamodelManager = (PivotMetamodelManager)environmentFactory.getMetamodelManager();
+			returnType = metamodelManager.getCollectionType(isOrdered, false, elementType, isNullFree || isRequired, null, null);	// FIXME null, null
+		}
+		return returnType;
+	}
+
 	@Override
     protected @Nullable Object updateAccumulator(@NonNull IterationManager iterationManager) {
-		Object bodyVal = iterationManager.evaluateBody();		
+		Object bodyVal = iterationManager.evaluateBody();
 		CollectionValue.Accumulator accumulatorValue = (CollectionValue.Accumulator)iterationManager.getAccumulatorValue();
 		assert accumulatorValue != null;
 		if (bodyVal == null) {

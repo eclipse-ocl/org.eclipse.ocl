@@ -78,9 +78,8 @@ import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
-import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionHelper;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
-import org.eclipse.ocl.pivot.library.LibraryFeature;
+import org.eclipse.ocl.pivot.library.LibraryIterationOrOperation;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 
 import com.google.common.collect.Iterables;
@@ -740,14 +739,10 @@ public class PivotHelper
 		//	Other library operations have subtle non-null/size computations.
 		//	Therefore allow an operation-specific TemplateParameterSubstitutionHelper to adjust the regular functionality above.
 		//
-		LibraryFeature implementationClass = asOperation.getImplementation();
-		if (implementationClass != null) {
-			Class<? extends LibraryFeature> libraryClass = implementationClass.getClass();
-			TemplateParameterSubstitutionHelper substitutionHelper = TemplateParameterSubstitutionHelper.getHelper(libraryClass);
-			if (substitutionHelper != null) {
-				returnType = substitutionHelper.resolveReturnType(metamodelManager, asCallExp, returnType);
-				returnIsRequired = substitutionHelper.resolveReturnNullity(metamodelManager, asCallExp, returnIsRequired);
-			}
+		LibraryIterationOrOperation implementation = (LibraryIterationOrOperation)asOperation.getImplementation();
+		if (implementation != null) {		// Library classes have implementations, Complete OCL classes may be recursive
+			returnType = implementation.resolveReturnType(environmentFactory, asCallExp, returnType);
+			returnIsRequired = implementation.resolveReturnNullity(environmentFactory, asCallExp, returnIsRequired);
 		}
 		Type returnTypeValue;
 		if (isTypeof) {

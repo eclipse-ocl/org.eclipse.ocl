@@ -12,13 +12,23 @@ package org.eclipse.ocl.pivot.library.oclany;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CallExp;
+import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.library.AbstractUnaryOperation;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.SetValue;
+import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 /**
  * OclAnyOclAsSetOperation realises the OclAny::oclAsSet() library operation.
@@ -26,12 +36,12 @@ import org.eclipse.ocl.pivot.values.SetValue;
 public class OclAnyOclAsSetOperation extends AbstractUnaryOperation
 {
 	public static final @NonNull OclAnyOclAsSetOperation INSTANCE = new OclAnyOclAsSetOperation();
-	
+
 	/** @deprecated use Executor */
 	@Deprecated
 	@Override
 	public @NonNull SetValue evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
-		return evaluate(getExecutor(evaluator), returnTypeId, sourceValue); 
+		return evaluate(getExecutor(evaluator), returnTypeId, sourceValue);
 	}
 
 	/**
@@ -48,5 +58,27 @@ public class OclAnyOclAsSetOperation extends AbstractUnaryOperation
 		else {
 			return executor.getIdResolver().createSetOfEach((CollectionTypeId)returnTypeId, sourceVal);
 		}
+	}
+
+	// Working around Bug 512758
+	/**
+	 * @since 1.15
+	 */
+	@Override
+	public @Nullable Type resolveReturnType(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, @Nullable Type returnType) {
+		if (returnType instanceof CollectionType) {
+			OCLExpression ownedSource = callExp.getOwnedSource();
+			if (ownedSource != null) {
+				CollectionType collectionType = (CollectionType)returnType;
+				int collectionBound = ownedSource.isIsRequired() ? 1 : 0;
+				IntegerValue lowerBound = ValueUtil.integerValueOf(collectionBound);
+				UnlimitedNaturalValue upperBound = ValueUtil.unlimitedNaturalValueOf(collectionBound);
+				Type elementType = PivotUtil.getElementType(collectionType);
+				PivotMetamodelManager metamodelManager = (PivotMetamodelManager)environmentFactory.getMetamodelManager();
+				returnType = metamodelManager.getCollectionType(collectionType.isOrdered(), collectionType.isUnique(),
+					elementType, true, lowerBound, upperBound);
+			}
+		}
+		return returnType;
 	}
 }
