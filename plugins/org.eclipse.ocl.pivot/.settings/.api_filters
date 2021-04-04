@@ -257,6 +257,10 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
                 <message_argument value="_Lambda_UniqueCollection_T_OclAny"/>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/values/SymbolicValueImpl.java" type="org.eclipse.ocl.pivot.internal.values.SymbolicValueImpl">
+        <filter id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.values.SymbolicValueImpl"/>
             </message_arguments>
         </filter>
     </resource>
@@ -305,6 +309,53 @@
             <message_arguments>
                 <message_argument value="Visitor&lt;R&gt;"/>
                 <message_argument value="AbstractWrappingVisitor&lt;R, C, D, P&gt;"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/values/SymbolicValue.java" type="org.eclipse.ocl.pivot.values.SymbolicValue">
+        <filter id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.SymbolicValue"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/values/ValuesPackage.java" type="org.eclipse.ocl.pivot.values.ValuesPackage">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.ValuesPackage"/>
+                <message_argument value="getSymbolicValue()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getSymbolicValue()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/values/ValuesPackage.java" type="org.eclipse.ocl.pivot.values.ValuesPackage$Literals">
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.ValuesPackage.Literals"/>
+                <message_argument value="SYMBOLIC_VALUE"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="SYMBOLIC_VALUE"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/values/util/ValuesAdapterFactory.java" type="org.eclipse.ocl.pivot.values.util.ValuesAdapterFactory">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="createSymbolicValueAdapter()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/values/util/ValuesSwitch.java" type="org.eclipse.ocl.pivot.values.util.ValuesSwitch">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="caseSymbolicValue(SymbolicValue)"/>
             </message_arguments>
         </filter>
     </resource>

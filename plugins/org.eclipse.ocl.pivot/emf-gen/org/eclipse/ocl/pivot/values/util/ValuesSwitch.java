@@ -32,6 +32,7 @@ import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.RealValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
 import org.eclipse.ocl.pivot.values.SetValue;
+import org.eclipse.ocl.pivot.values.SymbolicValue;
 import org.eclipse.ocl.pivot.values.TupleValue;
 import org.eclipse.ocl.pivot.values.UniqueCollectionValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
@@ -269,13 +270,20 @@ public class ValuesSwitch<@Nullable T1> extends Switch<T1> {
 				return result;
 			}
 			case 16: {
+				SymbolicValue symbolicValue = (SymbolicValue)theEObject;
+				T1 result = caseSymbolicValue(symbolicValue);
+				if (result == null) result = caseValue(symbolicValue);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case 17: {
 				TupleValue tupleValue = (TupleValue)theEObject;
 				T1 result = caseTupleValue(tupleValue);
 				if (result == null) result = caseValue(tupleValue);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 17: {
+			case 18: {
 				UniqueCollectionValue uniqueCollectionValue = (UniqueCollectionValue)theEObject;
 				T1 result = caseUniqueCollectionValue(uniqueCollectionValue);
 				if (result == null) result = caseCollectionValue(uniqueCollectionValue);
@@ -284,7 +292,7 @@ public class ValuesSwitch<@Nullable T1> extends Switch<T1> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 18: {
+			case 19: {
 				UnlimitedNaturalValue unlimitedNaturalValue = (UnlimitedNaturalValue)theEObject;
 				T1 result = caseUnlimitedNaturalValue(unlimitedNaturalValue);
 				if (result == null) result = caseNumberValue(unlimitedNaturalValue);
@@ -294,7 +302,7 @@ public class ValuesSwitch<@Nullable T1> extends Switch<T1> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 19: {
+			case 20: {
 				UnlimitedValue unlimitedValue = (UnlimitedValue)theEObject;
 				T1 result = caseUnlimitedValue(unlimitedValue);
 				if (result == null) result = caseUnlimitedNaturalValue(unlimitedValue);
@@ -305,7 +313,7 @@ public class ValuesSwitch<@Nullable T1> extends Switch<T1> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 20: {
+			case 21: {
 				Value value = (Value)theEObject;
 				T1 result = caseValue(value);
 				if (result == null) result = defaultCase(theEObject);
@@ -552,6 +560,21 @@ public class ValuesSwitch<@Nullable T1> extends Switch<T1> {
 	 * @generated
 	 */
 	public T1 caseSetValue(SetValue object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Symbolic Value</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Symbolic Value</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T1 caseSymbolicValue(SymbolicValue object) {
 		return null;
 	}
 

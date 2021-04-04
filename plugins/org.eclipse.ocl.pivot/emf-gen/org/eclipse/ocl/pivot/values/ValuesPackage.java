@@ -223,6 +223,16 @@ public interface ValuesPackage extends EPackage {
 	EClass getSetValue();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.values.SymbolicValue <em>Symbolic Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Symbolic Value</em>'.
+	 * @see org.eclipse.ocl.pivot.values.SymbolicValue
+	 * @generated
+	 */
+	EClass getSymbolicValue();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.values.TupleValue <em>Tuple Value</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -453,6 +463,16 @@ public interface ValuesPackage extends EPackage {
 		 * @generated
 		 */
 		EClass SET_VALUE = eINSTANCE.getSetValue();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.values.SymbolicValueImpl <em>Symbolic Value</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.internal.values.SymbolicValueImpl
+		 * @see org.eclipse.ocl.pivot.internal.values.ValuesPackageImpl#getSymbolicValue()
+		 * @generated
+		 */
+		EClass SYMBOLIC_VALUE = eINSTANCE.getSymbolicValue();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.values.TupleValueImpl <em>Tuple Value</em>}' class.

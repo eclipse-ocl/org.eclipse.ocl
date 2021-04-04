@@ -33,6 +33,7 @@ import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.RealValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
 import org.eclipse.ocl.pivot.values.SetValue;
+import org.eclipse.ocl.pivot.values.SymbolicValue;
 import org.eclipse.ocl.pivot.values.TupleValue;
 import org.eclipse.ocl.pivot.values.UniqueCollectionValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
@@ -159,6 +160,10 @@ public class ValuesAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseSetValue(SetValue object) {
 				return createSetValueAdapter();
+			}
+			@Override
+			public Adapter caseSymbolicValue(SymbolicValue object) {
+				return createSymbolicValueAdapter();
 			}
 			@Override
 			public Adapter caseTupleValue(TupleValue object) {
@@ -421,6 +426,20 @@ public class ValuesAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createSetValueAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.values.SymbolicValue <em>Symbolic Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.values.SymbolicValue
+	 * @generated
+	 */
+	public Adapter createSymbolicValueAdapter() {
 		return null;
 	}
 

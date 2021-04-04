@@ -32,6 +32,7 @@ import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.RealValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
 import org.eclipse.ocl.pivot.values.SetValue;
+import org.eclipse.ocl.pivot.values.SymbolicValue;
 import org.eclipse.ocl.pivot.values.TupleValue;
 import org.eclipse.ocl.pivot.values.UniqueCollectionValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
@@ -158,6 +159,13 @@ public class ValuesPackageImpl extends EPackageImpl implements ValuesPackage {
 	 * @generated
 	 */
 	private EClass setValueEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass symbolicValueEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -421,6 +429,16 @@ public class ValuesPackageImpl extends EPackageImpl implements ValuesPackage {
 	 * @generated
 	 */
 	@Override
+	public EClass getSymbolicValue() {
+		return symbolicValueEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EClass getTupleValue() {
 		return tupleValueEClass;
 	}
@@ -526,15 +544,17 @@ public class ValuesPackageImpl extends EPackageImpl implements ValuesPackage {
 
 		setValueEClass = createEClass(15);
 
-		tupleValueEClass = createEClass(16);
+		symbolicValueEClass = createEClass(16);
 
-		uniqueCollectionValueEClass = createEClass(17);
+		tupleValueEClass = createEClass(17);
 
-		unlimitedNaturalValueEClass = createEClass(18);
+		uniqueCollectionValueEClass = createEClass(18);
 
-		unlimitedValueEClass = createEClass(19);
+		unlimitedNaturalValueEClass = createEClass(19);
 
-		valueEClass = createEClass(20);
+		unlimitedValueEClass = createEClass(20);
+
+		valueEClass = createEClass(21);
 	}
 
 	/**
@@ -593,6 +613,7 @@ public class ValuesPackageImpl extends EPackageImpl implements ValuesPackage {
 		realValueEClass.getESuperTypes().add(this.getNumberValue());
 		sequenceValueEClass.getESuperTypes().add(this.getOrderedCollectionValue());
 		setValueEClass.getESuperTypes().add(this.getUniqueCollectionValue());
+		symbolicValueEClass.getESuperTypes().add(this.getValue());
 		tupleValueEClass.getESuperTypes().add(this.getValue());
 		uniqueCollectionValueEClass.getESuperTypes().add(this.getCollectionValue());
 		unlimitedNaturalValueEClass.getESuperTypes().add(this.getNumberValue());
@@ -630,6 +651,8 @@ public class ValuesPackageImpl extends EPackageImpl implements ValuesPackage {
 		initEClass(sequenceValueEClass, SequenceValue.class, "SequenceValue", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(setValueEClass, SetValue.class, "SetValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(symbolicValueEClass, SymbolicValue.class, "SymbolicValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(tupleValueEClass, TupleValue.class, "TupleValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
