@@ -15,18 +15,13 @@ MapType - getTypeId / getCollectionTypeId / getMapTypeId
 	CollectionValueImpl
 	SortedByIteration
 	
-TemplateParameterSubstitutionVisitor.specializeType
-	TemplateParameterSubstitutionVisitor
-	TemplateParameterImpl
-	SelfTypeImpl
-	ClassImpl
-	PivotHelper
-	
 SymbolicEvaluationVisitor
 	OCLExpressionImpl
 	
 tidy
 	IteratorExpImpl
+	PivotUtil
+	UniqueList
 	
 toString
 	ObjectValueImpl

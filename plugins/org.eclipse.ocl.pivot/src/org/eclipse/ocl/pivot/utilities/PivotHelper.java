@@ -78,6 +78,8 @@ import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
+import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryIterationOrOperation;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
@@ -728,10 +730,10 @@ public class PivotHelper
 		boolean returnIsRequired = asOperation.isIsRequired();
 		if ((formalType != null) && (sourceType != null)) {
 			if (isTypeof) {
-				returnType = metamodelManager.specializeType(formalType, asCallExp, sourceType, null);
+				returnType = TemplateParameterSubstitutionVisitor.specializeType(formalType, asCallExp, (EnvironmentFactoryInternal)environmentFactory, sourceType, null);
 			}
 			else {
-				returnType = metamodelManager.specializeType(formalType, asCallExp, sourceType, sourceTypeValue);
+				returnType = TemplateParameterSubstitutionVisitor.specializeType(formalType, asCallExp, (EnvironmentFactoryInternal)environmentFactory, sourceType, sourceTypeValue);
 			}
 		}
 		//

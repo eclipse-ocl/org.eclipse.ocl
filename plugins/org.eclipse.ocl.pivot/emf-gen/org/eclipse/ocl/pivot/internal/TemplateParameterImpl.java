@@ -38,7 +38,7 @@ import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
+import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.util.Visitor;
@@ -436,8 +436,7 @@ public class TemplateParameterImpl
 		assert expr != null;
 		if (selfType != null) {
 			EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(expr);
-			PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-			return metamodelManager.specializeType(this, expr, selfType, null);
+			return TemplateParameterSubstitutionVisitor.specializeType(this, expr, environmentFactory, selfType, null);
 		}
 		return this;
 	}
