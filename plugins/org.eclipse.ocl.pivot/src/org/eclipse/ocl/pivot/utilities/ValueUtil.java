@@ -76,6 +76,7 @@ import org.eclipse.ocl.pivot.values.BagValue;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerRange;
 import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.InvalidValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.IterableValue;
 import org.eclipse.ocl.pivot.values.MapEntry;
@@ -89,6 +90,7 @@ import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.RealValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
 import org.eclipse.ocl.pivot.values.SetValue;
+import org.eclipse.ocl.pivot.values.SymbolicValue;
 import org.eclipse.ocl.pivot.values.TupleValue;
 import org.eclipse.ocl.pivot.values.UniqueCollectionValue;
 import org.eclipse.ocl.pivot.values.Unlimited;
@@ -898,6 +900,9 @@ public abstract class ValueUtil
 	}
 
 	public static boolean isBoxed(@Nullable Object object) {
+		if (object instanceof SymbolicValue) {
+			return true;
+		}
 		if (object instanceof NullValue) {
 			return false;
 		}
@@ -965,6 +970,15 @@ public abstract class ValueUtil
 	}
 
 	/**
+	 * Return true if value is an invalid value.
+	 *
+	 * @since 1.15
+	 */
+	public static boolean isInvalidValue(@Nullable Object value) {
+		return (value instanceof InvalidValue);
+	}
+
+	/**
 	 * @since 1.6
 	 */
 	public static @Nullable IterableValue isIterableValue(@Nullable Object value) {
@@ -974,6 +988,15 @@ public abstract class ValueUtil
 		else {
 			return null;
 		}
+	}
+
+	/**
+	 * Return true if value is a null value.
+	 *
+	 * @since 1.15
+	 */
+	public static boolean isNullValue(@Nullable Object value) {
+		return (value instanceof NullValue) && !(value instanceof InvalidValue);
 	}
 
 	/**
@@ -1014,6 +1037,29 @@ public abstract class ValueUtil
 		else {
 			throw new InvalidValueException(PivotMessages.InvalidInteger, anObject);
 		}
+	}
+
+	/**
+	 * @since 1.15
+	 */
+	public static boolean mayBeInvalid(@Nullable Object value) {
+		if (value instanceof Value) {
+			return ((Value)value).mayBeInvalid();
+		}
+		return false;
+	}
+
+	/**
+	 * @since 1.15
+	 */
+	public static boolean mayBeNull(@Nullable Object value) {
+		if (value == null) {
+			return true;
+		}
+		else if (value instanceof Value) {
+			return ((Value)value).mayBeNull();
+		}
+		return false;
 	}
 
 	/**
