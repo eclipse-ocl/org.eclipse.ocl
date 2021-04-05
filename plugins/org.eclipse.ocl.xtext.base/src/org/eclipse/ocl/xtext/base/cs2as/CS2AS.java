@@ -45,10 +45,12 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.xtext.base.scoping.AbstractJavaClassScope;
 import org.eclipse.ocl.xtext.base.scoping.BaseScopeView;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
@@ -412,8 +414,14 @@ public abstract class CS2AS extends AbstractConversion	// FIXME migrate function
 		this.asResource = asResource;
 		csi2asMapping.add(csResource, this);
 		this.parserContext = csResource.getParserContext();
-		assert parserContext != null;
-		assert parserContext.getEnvironmentFactory() == environmentFactory;
+		ParserContext parserContext2 = parserContext;
+		assert parserContext2 != null;
+		if (parserContext2.getEnvironmentFactory() != environmentFactory) {
+			System.out.println("[" + Thread.currentThread().getName() + "] Parser " + NameUtil.debugSimpleName(parserContext2.getEnvironmentFactory()));
+			System.out.println("[" + Thread.currentThread().getName() + "] CS2AS " + NameUtil.debugSimpleName(environmentFactory));
+			System.out.println("[" + Thread.currentThread().getName() + "] Thread " + NameUtil.debugSimpleName(ThreadLocalExecutor.basicGetEnvironmentFactory()));
+		}
+		assert parserContext2.getEnvironmentFactory() == environmentFactory;
 	}
 
 	protected CS2AS(@NonNull CS2AS aConverter) {

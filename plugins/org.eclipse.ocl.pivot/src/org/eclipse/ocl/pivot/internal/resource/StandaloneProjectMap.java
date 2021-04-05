@@ -3017,6 +3017,29 @@ public class StandaloneProjectMap implements ProjectManager
 		}
 	}
 
+	/**
+	 * null references to aid debugging.
+	 * @since 1.15
+	 */
+	public void reset() {
+		if (exceptionMap != null) {
+			exceptionMap.clear();
+			exceptionMap = null;
+		}
+		if (nsURI2package != null) {
+			nsURI2package.clear();
+			nsURI2package = null;
+		}
+		if (project2descriptor != null) {
+			project2descriptor.clear();
+			project2descriptor = null;
+		}
+		if (uri2resource != null) {
+			uri2resource.clear();
+			uri2resource = null;
+		}
+	}
+
 	protected void scanClassPath(@NonNull Map<@NonNull String, @NonNull IProjectDescriptor> projectDescriptors, @NonNull SAXParser saxParser) {
 		@NonNull String[] entries = getClassPathEntries();
 		for (@NonNull String entry : entries) {

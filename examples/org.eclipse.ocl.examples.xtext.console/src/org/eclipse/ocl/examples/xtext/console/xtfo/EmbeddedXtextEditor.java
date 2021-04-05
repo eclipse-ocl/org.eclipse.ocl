@@ -59,6 +59,7 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
@@ -203,7 +204,8 @@ public class EmbeddedXtextEditor
 		fAnnotationPreferences = new MarkerAnnotationPreferences();
 
 		injector.injectMembers(this);
-		ocl = OCLInternal.newInstance();
+		ThreadLocalExecutor.reset();
+		ocl = OCLInternal.newInstance(PivotUtilInternal.getEnvironmentFactory(null));
 		ResourceSet xtextResourceSet = getResourceSet();
 		if (xtextResourceSet != null) {
 			ocl.getEnvironmentFactory().adapt(xtextResourceSet);

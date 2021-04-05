@@ -28,7 +28,9 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jface.text.DocumentEvent;
 import org.eclipse.ocl.pivot.internal.context.EInvocationContext;
 import org.eclipse.ocl.pivot.internal.context.EObjectContext;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.xtext.base.attributes.RootCSAttribution;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
@@ -48,6 +50,61 @@ import com.google.inject.Inject;
 
 public class BaseDocument extends XtextDocument implements ConsoleContext
 {
+	/**
+	 * The derived BaseDocumentLocker assigns the prevailing EnvironmentFactory to the current worker thread.
+	 */
+	protected class BaseDocumentLocker extends XtextDocumentLocker
+	{
+		private EnvironmentFactoryInternal environmentFactory = null;
+
+		protected BaseDocumentLocker() {
+			super();
+		}
+
+		public void initEnvironmentFactory(@Nullable EnvironmentFactoryInternal environmentFactory) {
+			this.environmentFactory = environmentFactory;
+		}
+
+		@Override
+		public <T> T modify(IUnitOfWork<T, XtextResource> work) {
+		//	System.out.println("[" + Thread.currentThread().getName() + "] modify " + NameUtil.debugSimpleName(this));
+			EnvironmentFactoryInternal oldEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+			if ((environmentFactory != null) && (oldEnvironmentFactory != environmentFactory)) {
+			//	assert environmentFactory != null;
+				ThreadLocalExecutor.attachEnvironmentFactory(environmentFactory);
+			}
+			try {
+				return super.modify(work);
+			}
+			finally {
+				if ((environmentFactory != null) && (oldEnvironmentFactory != environmentFactory)) {
+				//	assert environmentFactory != null;
+					ThreadLocalExecutor.detachEnvironmentFactory(environmentFactory);
+				}
+			}
+		}
+
+		@Override
+		public <T> T readOnly(IUnitOfWork<T, XtextResource> work) {
+		//	System.out.println("[" + Thread.currentThread().getName() + "] readOnly " + NameUtil.debugSimpleName(this));
+			EnvironmentFactoryInternal oldEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+			if (oldEnvironmentFactory != environmentFactory) {
+				assert environmentFactory != null;
+				ThreadLocalExecutor.attachEnvironmentFactory(environmentFactory);
+			}
+			try {
+				return super.readOnly(work);
+			}
+			finally {
+				if (oldEnvironmentFactory != environmentFactory) {
+					assert environmentFactory != null;
+					ThreadLocalExecutor.detachEnvironmentFactory(environmentFactory);
+				}
+			}
+		}
+	}
+
+	private BaseDocumentLocker baseStateAccess;
 	private @Nullable EObject context;
 	private @Nullable Map<String, EClassifier> parameters;
 
@@ -101,6 +158,21 @@ public class BaseDocument extends XtextDocument implements ConsoleContext
 		}
 		super.disposeInput();
 	} */
+
+	@Override
+	protected XtextDocumentLocker createDocumentLocker() {
+		baseStateAccess = new BaseDocumentLocker();
+		return baseStateAccess;
+	}
+
+	@Override
+	public void disposeInput() {
+		if (baseStateAccess != null) {
+			baseStateAccess.initEnvironmentFactory(null);
+			baseStateAccess = null;
+		}
+		super.disposeInput();
+	}
 
 	public @Nullable ASResource getASResource() throws CoreException {
 		return readOnly(new IUnitOfWork<@Nullable ASResource, @Nullable XtextResource>()
@@ -207,5 +279,14 @@ public class BaseDocument extends XtextDocument implements ConsoleContext
 	public @Nullable Object setContext(@NonNull BaseCSResource csResource, @Nullable EObject eObject) {
 		csResource.setParserContext(new EObjectContext(csResource.getEnvironmentFactory(), csResource.getURI(), eObject));
 		return null;
+	}
+
+	@Override
+	public void setInput(XtextResource resource) {
+		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		assert environmentFactory != null;
+		assert baseStateAccess != null;
+		baseStateAccess.initEnvironmentFactory(environmentFactory);
+		super.setInput(resource);
 	}
 }

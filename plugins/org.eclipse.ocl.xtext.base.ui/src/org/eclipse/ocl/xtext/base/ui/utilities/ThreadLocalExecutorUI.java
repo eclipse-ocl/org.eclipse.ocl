@@ -82,7 +82,9 @@ public class ThreadLocalExecutorUI extends ThreadLocalExecutor implements IPartL
 	}
 
 	protected void localInitPart(@Nullable IWorkbenchPart initActivePart, @NonNull EnvironmentFactoryInternal initEnvironmentfactory) {
-		setEnvironmentFactory(null);
+		if (initEnvironmentfactory != basicGetEnvironmentFactory()) {			// == if a late not-active init
+			setEnvironmentFactory(null);
+		}
 		if (initActivePart == null) {			// If implicit OCL-bland init
 			initActivePart = this.activePart;
 			assert initActivePart != null;

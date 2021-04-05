@@ -32,9 +32,8 @@ public class BaseEditor extends XtextEditor
 	}
 
 	public @NonNull EnvironmentFactory getEnvironmentFactory() {
-		IDocumentProvider documentProvider = getDocumentProvider();
-		assert documentProvider != null;
-		return ((BaseDocumentProvider)documentProvider).getEnvironmentFactory();
+		BaseDocumentProvider documentProvider = (BaseDocumentProvider) getDocumentProvider();
+		return documentProvider.getEnvironmentFactory();
 	}
 
 	public @NonNull String getMarkerId() {

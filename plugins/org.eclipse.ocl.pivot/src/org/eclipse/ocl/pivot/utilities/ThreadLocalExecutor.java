@@ -59,11 +59,7 @@ public class ThreadLocalExecutor
 	 * registered concurrentEnvironmentFactories is set and basicGetExecutor() returns null until reset().
 	 */
 	public static void attachEnvironmentFactory(@NonNull EnvironmentFactoryInternal environmentFactory) {
-		ThreadLocalExecutor threadLocalExecutor = INSTANCE.get();
-		if (threadLocalExecutor == null) {
-			threadLocalExecutor = createThreadLocalExecutor();
-			INSTANCE.set(threadLocalExecutor);
-		}
+		ThreadLocalExecutor threadLocalExecutor = get();
 		threadLocalExecutor.localAttachEnvironmentFactory(environmentFactory);
 	}
 
@@ -109,12 +105,17 @@ public class ThreadLocalExecutor
 	}
 
 	/**
-	 * Return the current-thread-specific instance of ThreadLocalExecutor.
+	 * Return the current-thread-specific instance of ThreadLocalExecutor creating it if necessary.
 	 *
 	 * @since 1.15
 	 */
-	protected static @Nullable ThreadLocalExecutor get() {
-		return INSTANCE.get();
+	protected static @NonNull ThreadLocalExecutor get() {
+		ThreadLocalExecutor threadLocalExecutor = INSTANCE.get();
+		if (threadLocalExecutor == null) {
+			threadLocalExecutor = createThreadLocalExecutor();
+			INSTANCE.set(threadLocalExecutor);
+		}
+		return threadLocalExecutor;
 	}
 
 	private static @Nullable ThreadLocalExecutor readExtension() {
@@ -187,11 +188,7 @@ public class ThreadLocalExecutor
 	 * only a single EnvironmentFactory instance is active.
 	 */
 	public static void setExecutor(@NonNull Executor executor) {
-		ThreadLocalExecutor threadLocalExecutor = INSTANCE.get();
-		if (threadLocalExecutor == null) {
-			threadLocalExecutor = createThreadLocalExecutor();
-			INSTANCE.set(threadLocalExecutor);
-		}
+		ThreadLocalExecutor threadLocalExecutor = get();
 		threadLocalExecutor.localSetExecutor(executor);
 	}
 

@@ -296,6 +296,8 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 
 	@Override
 	public synchronized void attach(@NonNull Object attachOwner) {
+		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		assert (environmentFactory == null) || (environmentFactory == this) : "[" + Thread.currentThread().getName() + "] " + NameUtil.debugSimpleName(this) + " should be " + NameUtil.debugSimpleName(environmentFactory);
 		if (isDisposed()) {
 			if (ENVIRONMENT_FACTORY_ATTACH.isActive()) {
 				ENVIRONMENT_FACTORY_ATTACH.println("[" + Thread.currentThread().getName() + "] Attach(" + attachCount + ") " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(attachOwner));

@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.xtext.diagnostics.Severity;
 import org.eclipse.xtext.resource.XtextResource;
@@ -166,6 +167,7 @@ public class PivotResourceValidator extends ResourceValidatorImpl
 	public List<Issue> validate(Resource resource, final CheckMode mode, CancelIndicator mon) {
 		//		System.out.println(Thread.currentThread().getName() + " validate start " + NameUtil.debugSimpleName(resource));
 		//		System.out.println(new Date() + " Validate " + mode + " : " + csResource.getURI() + " on " + Thread.currentThread().getName());
+		ThreadLocalExecutor.reset();
 		final CancelIndicator monitor = mon == null ? CancelIndicator.NullImpl : mon;
 		resolveProxies(resource, monitor);
 		if (monitor.isCanceled())
@@ -258,6 +260,7 @@ public class PivotResourceValidator extends ResourceValidatorImpl
 			}
 		}
 		//		System.out.println(Thread.currentThread().getName() + " validate end " + NameUtil.debugSimpleName(resource));
+		ThreadLocalExecutor.resetEnvironmentFactory();
 		return result;
 	}
 

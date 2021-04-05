@@ -71,18 +71,21 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.internal.context.ClassContext;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
 import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.options.PivotConsoleOptions;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory.EnvironmentFactoryExtension;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.OCLHelper;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
@@ -178,65 +181,71 @@ public class OCLConsolePage extends Page //implements MetamodelManagerListener
 			monitor.subTask(ConsoleMessages.Progress_Synchronising);
 			monitor.worked(1);
 			//			CS2ASResourceAdapter csAdapter = CS2ASResourceAdapter.getAdapter((BaseCSResource)resource, metamodelManager);
-			EnvironmentFactory environmentFactory = editor.getEnvironmentFactory();
-			//			monitor.subTask(ConsoleMessages.Progress_CST);
-			//			try {
-			//				csAdapter.refreshPivotMappings();
-			//			} catch (Exception e) {
-			//				value = new ExceptionValue(valueFactory, ConsoleMessages.Result_MappingFailure, e);
-			//				return;
-			//			}
-			//			monitor.worked(2);
-			//			monitor.subTask(ConsoleMessages.Progress_AST);
-			ExpressionInOCL expressionInOCL;
+			EnvironmentFactoryInternal environmentFactory = (EnvironmentFactoryInternal) editor.getEnvironmentFactory();
+			ThreadLocalExecutor.attachEnvironmentFactory(environmentFactory);
 			try {
-				PivotUtil.checkResourceErrors("", resource); //$NON-NLS-1$
-				expressionInOCL = parserContext.getExpression(resource);
-			} catch (ParserException e) {
-				value = new InvalidValueException(e, ConsoleMessages.Result_ParsingFailure);
-				return;
-			}
-			if (expressionInOCL != null) {
+				//			monitor.subTask(ConsoleMessages.Progress_CST);
+				//			try {
+				//				csAdapter.refreshPivotMappings();
+				//			} catch (Exception e) {
+				//				value = new ExceptionValue(valueFactory, ConsoleMessages.Result_MappingFailure, e);
+				//				return;
+				//			}
 				//			monitor.worked(2);
-				monitor.subTask(ConsoleMessages.Progress_Extent);
-				ModelManager modelManager = environmentFactory.createModelManager(contextObject);
-				//				EvaluationEnvironment evaluationEnvironment = environmentFactory.createEvaluationEnvironment(expressionInOCL, modelManager);
-				ExecutorInternal executor = ((EnvironmentFactoryExtension)environmentFactory).createExecutor(modelManager);
-				executor.initializeEvaluationEnvironment(expressionInOCL);
-				EvaluationEnvironment evaluationEnvironment = executor.getRootEvaluationEnvironment();
-				Object contextValue = executor.getIdResolver().boxedValueOf(contextObject);
-				evaluationEnvironment.add(ClassUtil.nonNullModel(expressionInOCL.getOwnedContext()), contextValue);
-				monitor.worked(2);
-				monitor.subTask(ConsoleMessages.Progress_Evaluating);
+				//			monitor.subTask(ConsoleMessages.Progress_AST);
+				ExpressionInOCL expressionInOCL;
 				try {
-					//				metamodelManager.setMonitor(monitor);
-					EvaluationVisitor evaluationVisitor = executor.getEvaluationVisitor();
-					evaluationVisitor.setMonitor(BasicMonitor.toMonitor(monitor));
-					executor.setLogger(new AbstractLogger()
-					{
-						@Override
-						public void print(final @NonNull String message) {
-							OCLConsolePage.this.getControl().getDisplay().asyncExec(new Runnable()
-							{
-								@Override
-								public void run() {
-									OCLConsolePage.this.append(message, ColorManager.DEFAULT, false);
-								}
-							});
-						}
-					});
-					value = evaluationVisitor.visitExpressionInOCL(expressionInOCL);
-				} catch (EvaluationHaltedException e) {
-					value = new InvalidValueException(ConsoleMessages.Result_EvaluationTerminated);
-				} catch (InvalidValueException e) {
-					value = e;
-				} catch (Exception e) {
-					value = new InvalidValueException(e, ConsoleMessages.Result_EvaluationFailure);
-				} finally {
-					//				metamodelManager.setMonitor(null);
+					PivotUtil.checkResourceErrors("", resource); //$NON-NLS-1$
+					expressionInOCL = parserContext.getExpression(resource);
+				} catch (ParserException e) {
+					value = new InvalidValueException(e, ConsoleMessages.Result_ParsingFailure);
+					return;
 				}
+				if (expressionInOCL != null) {
+					//			monitor.worked(2);
+					monitor.subTask(ConsoleMessages.Progress_Extent);
+					ModelManager modelManager = environmentFactory.createModelManager(contextObject);
+					//				EvaluationEnvironment evaluationEnvironment = environmentFactory.createEvaluationEnvironment(expressionInOCL, modelManager);
+					ExecutorInternal executor = ((EnvironmentFactoryExtension)environmentFactory).createExecutor(modelManager);
+					executor.initializeEvaluationEnvironment(expressionInOCL);
+					EvaluationEnvironment evaluationEnvironment = executor.getRootEvaluationEnvironment();
+					Object contextValue = executor.getIdResolver().boxedValueOf(contextObject);
+					evaluationEnvironment.add(ClassUtil.nonNullModel(expressionInOCL.getOwnedContext()), contextValue);
+					monitor.worked(2);
+					monitor.subTask(ConsoleMessages.Progress_Evaluating);
+					try {
+						//				metamodelManager.setMonitor(monitor);
+						EvaluationVisitor evaluationVisitor = executor.getEvaluationVisitor();
+						evaluationVisitor.setMonitor(BasicMonitor.toMonitor(monitor));
+						executor.setLogger(new AbstractLogger()
+						{
+							@Override
+							public void print(final @NonNull String message) {
+								OCLConsolePage.this.getControl().getDisplay().asyncExec(new Runnable()
+								{
+									@Override
+									public void run() {
+										OCLConsolePage.this.append(message, ColorManager.DEFAULT, false);
+									}
+								});
+							}
+						});
+						value = evaluationVisitor.visitExpressionInOCL(expressionInOCL);
+					} catch (EvaluationHaltedException e) {
+						value = new InvalidValueException(ConsoleMessages.Result_EvaluationTerminated);
+					} catch (InvalidValueException e) {
+						value = e;
+					} catch (Exception e) {
+						value = new InvalidValueException(e, ConsoleMessages.Result_EvaluationFailure);
+					} finally {
+						//				metamodelManager.setMonitor(null);
+					}
+				}
+				monitor.worked(4);
 			}
-			monitor.worked(4);
+			finally {
+				ThreadLocalExecutor.detachEnvironmentFactory(environmentFactory);
+			}
 		}
 	}
 
@@ -382,7 +391,7 @@ public class OCLConsolePage extends Page //implements MetamodelManagerListener
 		super();
 		//		this.metamodelManager = new CancelableMetamodelManager();
 		this.console = console;
-		//		System.out.println("Create " + getClass() + "@" + Integer.toHexString(System.identityHashCode(this)));
+		System.out.println("Create " + NameUtil.debugSimpleName(this));
 	}
 
 	/**
@@ -608,7 +617,7 @@ public class OCLConsolePage extends Page //implements MetamodelManagerListener
 	 */
 	@Override
 	public void dispose() {
-		//		System.out.println("Dispose " + getClass() + "@" + Integer.toHexString(System.identityHashCode(this)));
+		System.out.println("Dispose " + NameUtil.debugSimpleName(this));
 		if (editor != null) {
 			editor.dispose();
 			editor = null;

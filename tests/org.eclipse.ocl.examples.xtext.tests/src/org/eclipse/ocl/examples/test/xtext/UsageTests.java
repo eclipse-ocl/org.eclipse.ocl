@@ -1219,6 +1219,10 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				ocl.dispose();
 			}
 		});
+		if (testProjectManager != null) {
+			((StandaloneProjectMap)testProjectManager).reset();
+			testProjectManager = null;
+		}
 	}
 
 	/**
