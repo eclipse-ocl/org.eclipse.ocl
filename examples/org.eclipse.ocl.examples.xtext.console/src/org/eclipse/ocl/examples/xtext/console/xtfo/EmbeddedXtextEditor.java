@@ -742,9 +742,7 @@ public class EmbeddedXtextEditor
 				}
 			}
 			ocl.dispose();
-			try {
-				ThreadLocalExecutor.waitForGC();
-			} catch (InterruptedException e) {}
+			ThreadLocalExecutor.reset();
 			//
 			//	Create new OCL facade/handle
 			//

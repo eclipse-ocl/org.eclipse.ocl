@@ -626,8 +626,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 			ocl.dispose();
 			ocl = null;
 			unloadResourceSet(resourceSet);
-			boolean waitedOK = ThreadLocalExecutor.waitForGC();		// Ensure that the Diagnostician's validateContext releases its WeakOCLReference.
-			assertTrue(waitedOK);
+			ThreadLocalExecutor.reset();		// Ensure that the Diagnostician's validateContext releases its WeakOCLReference.
 		}
 	}
 

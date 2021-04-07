@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2021 Willink Transformations and others.
+ * Copyright (c) 2021 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -7,8 +7,6 @@
  *
  * Contributors:
  *   E.D.Willink - initial API and implementation
- * 	 E.D.Willink (Obeo) - Bug 416287 - tuple-valued constraints
- * 	 E.D.Willink (CEA LIST) - Bug 425799 - validity view
  *******************************************************************************/
 package org.eclipse.ocl.pivot.utilities;
 
@@ -31,7 +29,9 @@ import org.eclipse.ocl.pivot.util.PivotPlugin;
  * on the prevailing thread. If the local thread access fails the caller should fall back to the
  * initial / legacy approach to discover an Executor via a ResourceSet adapter.
  *
- * See Bug 570995 for the design considerations.
+ * The derived ThreadLocalExecutorUI supports one OCL environment per IWorkbenchPart on the main UI thread.
+ *
+ * See Bug 570995 and Bug 571721 for the design considerations.
  *
  * @since 1.14
  */
@@ -108,6 +108,15 @@ public class ThreadLocalExecutor
 		}
 	}
 
+	/**
+	 * Return the current-thread-specific instance of ThreadLocalExecutor.
+	 *
+	 * @since 1.15
+	 */
+	protected static @Nullable ThreadLocalExecutor get() {
+		return INSTANCE.get();
+	}
+
 	private static @Nullable ThreadLocalExecutor readExtension() {
 		IExtensionRegistry extensionRegistry = Platform.getExtensionRegistry();
 		if (extensionRegistry == null) {
@@ -142,28 +151,11 @@ public class ThreadLocalExecutor
 				try {
 					return (ThreadLocalExecutor)maxElement.createExecutableExtension(ATT_CLASS);
 				} catch (CoreException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
 		}
 		return null;
-	}
-
-	/**
-	 * Register the end of the current environmentFactory's activity. This may be used before
-	 * environmentFactory is disposed to avoid invalidating its ResourceSet content.
-	 *
-	 * This must not be used during environmentFactory
-	 * disposal by the GC since this would be on the wrong thread.
-	 *
-	 * @since 1.15
-	 */
-	public static void removeEnvironmentFactory() {
-		ThreadLocalExecutor threadLocalExecutor = INSTANCE.get();
-		if (threadLocalExecutor != null) {
-			threadLocalExecutor.localRemoveEnvironmentFactory();
-		}
 	}
 
 	/**
@@ -176,9 +168,18 @@ public class ThreadLocalExecutor
 		}
 	}
 
-	@Deprecated /* @deprecated use rmoveEnvironmentFactory */
+	/**
+	 * Register the end of the current environmentFactory's activity. This may be used before
+	 * environmentFactory is disposed to avoid invalidating its ResourceSet content.
+	 *
+	 * This must not be used during environmentFactory
+	 * disposal by the GC since this would be on the wrong thread.
+	 */
 	public static void resetEnvironmentFactory() {
-		removeEnvironmentFactory();
+		ThreadLocalExecutor threadLocalExecutor = INSTANCE.get();
+		if (threadLocalExecutor != null) {
+			threadLocalExecutor.localRemoveEnvironmentFactory();
+		}
 	}
 
 	/**
@@ -204,6 +205,7 @@ public class ThreadLocalExecutor
 	 * returns false indicating that GC of an EnvironmentFactory held by a WeakOCLReference has succeeded.
 	 * Return false if an EnvironmentFactory remains active.
 	 */
+	@Deprecated /* @deprecated no longer used */
 	public static boolean waitForGC() throws InterruptedException {
 		ThreadLocalExecutor threadLocalExecutor = INSTANCE.get();
 		return (threadLocalExecutor != null) && threadLocalExecutor.localWaitForGC() ;
@@ -377,6 +379,7 @@ public class ThreadLocalExecutor
 		}
 	}
 
+	@Deprecated /* @deprecated no longer used */
 	public boolean localWaitForGC() throws InterruptedException {
 		if (concurrentEnvironmentFactories) {
 			return false;

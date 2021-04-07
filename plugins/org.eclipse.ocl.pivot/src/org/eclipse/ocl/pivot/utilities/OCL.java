@@ -173,13 +173,7 @@ public class OCL
 	 * @since 1.14
 	 */
 	public void activate() {
-		if (ThreadLocalExecutor.basicGetEnvironmentFactory() != null) {
-			try {
-				ThreadLocalExecutor.waitForGC();
-			} catch (InterruptedException e) {
-				// e.printStackTrace();
-			}
-		}
+		ThreadLocalExecutor.reset();
 		assert environmentFactory != null;
 		ThreadLocalExecutor.attachEnvironmentFactory(environmentFactory);
 	}
