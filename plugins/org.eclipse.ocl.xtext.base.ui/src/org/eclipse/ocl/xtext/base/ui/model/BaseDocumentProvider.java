@@ -33,7 +33,6 @@ import org.eclipse.xtext.resource.XtextResource;
 @SuppressWarnings("deprecation")
 public class BaseDocumentProvider extends DeferredDocumentProvider
 {
-	@Deprecated /* @deprecated now uses getEnvironmentFactoryLocalxExecutor */
 	private @Nullable OCLInternal ocl;
 
 	protected @NonNull OCLInternal createOCL() {
@@ -50,7 +49,7 @@ public class BaseDocumentProvider extends DeferredDocumentProvider
 		super.disconnected();
 	}
 
-	protected @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
+	public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
 		EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 		if (environmentFactory != null) {
 			return (EnvironmentFactoryInternal) environmentFactory;
