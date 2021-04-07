@@ -13,6 +13,11 @@
 package org.eclipse.ocl.pivot.utilities;
 
 import org.apache.log4j.Logger;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtensionPoint;
+import org.eclipse.core.runtime.IExtensionRegistry;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.evaluation.Executor;
@@ -32,9 +37,20 @@ import org.eclipse.ocl.pivot.util.PivotPlugin;
  */
 public class ThreadLocalExecutor
 {
+	private static final @NonNull String TAG_MANAGER = "manager";
+	private static final @NonNull String ATT_CLASS = "class";
+
 	public static final @NonNull TracingOption THREAD_LOCAL_ENVIRONMENT_FACTORY = new TracingOption(PivotPlugin.PLUGIN_ID, "environmentFactory/threadLocal");
 
+	/**
+	 * The ThreadLocal value of a ThreadLocalExecutor.
+	 */
 	private static final @NonNull ThreadLocal<@Nullable ThreadLocalExecutor> INSTANCE = new ThreadLocal<>();
+
+	/**
+	 * The ThreadLocalExecutor instance that creates thread-specific instances.
+	 */
+	private static @Nullable ThreadLocalExecutor CREATOR = null;
 
 	private static final Logger logger = Logger.getLogger(ThreadLocalExecutor.class);
 
@@ -45,7 +61,7 @@ public class ThreadLocalExecutor
 	public static void attachEnvironmentFactory(@NonNull EnvironmentFactoryInternal environmentFactory) {
 		ThreadLocalExecutor threadLocalExecutor = INSTANCE.get();
 		if (threadLocalExecutor == null) {
-			threadLocalExecutor = new ThreadLocalExecutor();
+			threadLocalExecutor = createThreadLocalExecutor();
 			INSTANCE.set(threadLocalExecutor);
 		}
 		threadLocalExecutor.localAttachEnvironmentFactory(environmentFactory);
@@ -73,10 +89,80 @@ public class ThreadLocalExecutor
 		return threadLocalExecutor.localBasicGetExecutor();
 	}
 
+	/**
+	 * @since 1.15
+	 */
+	protected static @NonNull ThreadLocalExecutor createThreadLocalExecutor() {
+		ThreadLocalExecutor CREATOR2 = CREATOR;
+		if (CREATOR2 == null) {
+			ThreadLocalExecutor readExtension = readExtension();
+			CREATOR = CREATOR2 = readExtension != null ? readExtension : new ThreadLocalExecutor();
+		}
+		return CREATOR2.createInstance();
+	}
+
 	public static void detachEnvironmentFactory(@NonNull EnvironmentFactory environmentFactory) {
 		ThreadLocalExecutor threadLocalExecutor = INSTANCE.get();
 		if (threadLocalExecutor != null) {
 			threadLocalExecutor.localDetachEnvironmentFactory(environmentFactory);
+		}
+	}
+
+	private static @Nullable ThreadLocalExecutor readExtension() {
+		IExtensionRegistry extensionRegistry = Platform.getExtensionRegistry();
+		if (extensionRegistry == null) {
+			return null;
+		}
+		String maxClassName = null;
+		IConfigurationElement maxElement = null;
+		IExtensionPoint point = extensionRegistry.getExtensionPoint(PivotPlugin.PLUGIN_ID, PivotPlugin.THREAD_LOCAL_PID);
+		if (point != null) {
+			for (IConfigurationElement element : point.getConfigurationElements()) {
+				String className = null;
+				String tagName = element.getName();
+				if (TAG_MANAGER.equals(tagName)) {
+					className = element.getAttribute(ATT_CLASS);
+				}
+				if (className != null) {
+					if (maxClassName == null) {
+						maxClassName = className;
+						maxElement = element;
+					}
+					else if (maxClassName.length() < className.length()) {
+						maxClassName = className;
+						maxElement = element;
+					}
+					else if ((maxClassName.length() == className.length()) && (className.compareTo(maxClassName) < 0)) {
+						maxClassName = className;
+						maxElement = element;
+					}
+				}
+			}
+			if (maxElement != null) {
+				try {
+					return (ThreadLocalExecutor)maxElement.createExecutableExtension(ATT_CLASS);
+				} catch (CoreException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Register the end of the current environmentFactory's activity. This may be used before
+	 * environmentFactory is disposed to avoid invalidating its ResourceSet content.
+	 *
+	 * This must not be used during environmentFactory
+	 * disposal by the GC since this would be on the wrong thread.
+	 *
+	 * @since 1.15
+	 */
+	public static void removeEnvironmentFactory() {
+		ThreadLocalExecutor threadLocalExecutor = INSTANCE.get();
+		if (threadLocalExecutor != null) {
+			threadLocalExecutor.localRemoveEnvironmentFactory();
 		}
 	}
 
@@ -90,18 +176,9 @@ public class ThreadLocalExecutor
 		}
 	}
 
-	/**
-	 * Register the end of the current environmentFactory's activity. This may be used before
-	 * environmentFactory is disposed to avoid invalidating its ResourceSet content.
-	 *
-	 * This must not be used during environmentFactory
-	 * disposal by the GC since this would be on the wrong thread.
-	 */
+	@Deprecated /* @deprecated use rmoveEnvironmentFactory */
 	public static void resetEnvironmentFactory() {
-		ThreadLocalExecutor threadLocalExecutor = INSTANCE.get();
-		if (threadLocalExecutor != null) {
-			threadLocalExecutor.localResetEnvironmentFactory();
-		}
+		removeEnvironmentFactory();
 	}
 
 	/**
@@ -111,7 +188,7 @@ public class ThreadLocalExecutor
 	public static void setExecutor(@NonNull Executor executor) {
 		ThreadLocalExecutor threadLocalExecutor = INSTANCE.get();
 		if (threadLocalExecutor == null) {
-			threadLocalExecutor = new ThreadLocalExecutor();
+			threadLocalExecutor = createThreadLocalExecutor();
 			INSTANCE.set(threadLocalExecutor);
 		}
 		threadLocalExecutor.localSetExecutor(executor);
@@ -147,10 +224,11 @@ public class ThreadLocalExecutor
 	 */
 	private @Nullable Executor executor = null;
 
-	private ThreadLocalExecutor() {
-//		if (THREAD_LOCAL_ENVIRONMENT_FACTORY.isActive()) {
-//			THREAD_LOCAL_ENVIRONMENT_FACTORY.println("[" + Thread.currentThread().getName() + "] Create " + toString());
-//		}
+	/**
+	 * @since 1.15
+	 */
+	protected @NonNull ThreadLocalExecutor createInstance() {
+		return new ThreadLocalExecutor();
 	}
 
 	@Override
@@ -161,7 +239,17 @@ public class ThreadLocalExecutor
 		localReset();
 	}
 
-	private void localAttachEnvironmentFactory(@NonNull EnvironmentFactoryInternal newEnvironmentFactory) {
+	/**
+	 * @since 1.15
+	 */
+	protected @NonNull String getThreadName() {
+		return "[" + Thread.currentThread().getName() + "]";
+	}
+
+	/**
+	 * @since 1.15
+	 */
+	protected void localAttachEnvironmentFactory(@NonNull EnvironmentFactoryInternal newEnvironmentFactory) {
 		if (!concurrentEnvironmentFactories && !newEnvironmentFactory.isDisposed()) {
 			EnvironmentFactory oldEnvironmentFactory = this.environmentFactory;
 			if (oldEnvironmentFactory == null) {
@@ -185,17 +273,23 @@ public class ThreadLocalExecutor
 			assert this.executor == null;
 		}
 		if (THREAD_LOCAL_ENVIRONMENT_FACTORY.isActive()) {
-			THREAD_LOCAL_ENVIRONMENT_FACTORY.println("[" + Thread.currentThread().getName() + "] " + toString());
+			THREAD_LOCAL_ENVIRONMENT_FACTORY.println(getThreadName() + " Attach " + toString());
 		}
 	}
 
-	private @Nullable EnvironmentFactoryInternal localBasicGetEnvironmentFactory() {
+	/**
+	 * @since 1.15
+	 */
+	protected @Nullable EnvironmentFactoryInternal localBasicGetEnvironmentFactory() {
 		if (concurrentEnvironmentFactories) {
 			assert environmentFactory == null;
 		}
 		return (environmentFactory != null) && !environmentFactory.isDisposed() ? environmentFactory : null;
 	}
 
+	/**
+	 * @since 1.15
+	 */
 	private @Nullable Executor localBasicGetExecutor() {
 		if (concurrentEnvironmentFactories) {
 			assert executor == null;
@@ -204,27 +298,39 @@ public class ThreadLocalExecutor
 		return (environmentFactory2 == null) || !environmentFactory2.isDisposed() ? executor : null;
 	}
 
-	private void localDetachEnvironmentFactory(@NonNull EnvironmentFactory environmentFactory) {
+	/**
+	 * @since 1.15
+	 */
+	protected void localDetachEnvironmentFactory(@NonNull EnvironmentFactory environmentFactory) {
 		if (this.environmentFactory == environmentFactory) {
-			localResetEnvironmentFactory();
+//			localResetEnvironmentFactory();
+			if (!concurrentEnvironmentFactories) {
+				setEnvironmentFactory(null);
+			}
+			if (THREAD_LOCAL_ENVIRONMENT_FACTORY.isActive()) {
+				THREAD_LOCAL_ENVIRONMENT_FACTORY.println(getThreadName() + " Detach " + toString());
+			}
 		}
 	}
 
-	private void localReset() {
-		setEnvironmentFactory(null);
-		executor = null;
-		concurrentEnvironmentFactories = false;
-		if (THREAD_LOCAL_ENVIRONMENT_FACTORY.isActive()) {
-			THREAD_LOCAL_ENVIRONMENT_FACTORY.println("[" + Thread.currentThread().getName() + "] " + toString());
-		}
-	}
-
-	private void localResetEnvironmentFactory() {
+	private void localRemoveEnvironmentFactory() {
 		if (!concurrentEnvironmentFactories) {
 			setEnvironmentFactory(null);
 		}
 		if (THREAD_LOCAL_ENVIRONMENT_FACTORY.isActive()) {
-			THREAD_LOCAL_ENVIRONMENT_FACTORY.println("[" + Thread.currentThread().getName() + "] " + toString());
+			THREAD_LOCAL_ENVIRONMENT_FACTORY.println(getThreadName() + " Remove " + toString());
+		}
+	}
+
+	/**
+	 * @since 1.15
+	 */
+	protected void localReset() {
+		setEnvironmentFactory(null);
+		executor = null;
+		concurrentEnvironmentFactories = false;
+		if (THREAD_LOCAL_ENVIRONMENT_FACTORY.isActive()) {
+			THREAD_LOCAL_ENVIRONMENT_FACTORY.println(getThreadName() + " Reset " + toString());
 		}
 	}
 
@@ -232,15 +338,20 @@ public class ThreadLocalExecutor
 		if (!concurrentEnvironmentFactories) {
 			this.executor = executor;
 		}
-		if (THREAD_LOCAL_ENVIRONMENT_FACTORY.isActive()) {
-			THREAD_LOCAL_ENVIRONMENT_FACTORY.println("[" + Thread.currentThread().getName() + "] " + toString());
-		}
 		if (executor instanceof PivotExecutorManager) {
 			localAttachEnvironmentFactory((EnvironmentFactoryInternal) ((PivotExecutorManager)executor).getEnvironmentFactory());
 		}
+		else {
+			if (THREAD_LOCAL_ENVIRONMENT_FACTORY.isActive()) {
+				THREAD_LOCAL_ENVIRONMENT_FACTORY.println(getThreadName() + " Set " + toString());
+			}
+		}
 	}
 
-	private void setEnvironmentFactory(@Nullable EnvironmentFactoryInternal newEnvironmentFactory) {
+	/**
+	 * @since 1.15
+	 */
+	protected void setEnvironmentFactory(@Nullable EnvironmentFactoryInternal newEnvironmentFactory) {
 		EnvironmentFactoryInternal oldEnvironmentFactory = this.environmentFactory;
 		if (newEnvironmentFactory != oldEnvironmentFactory) {
 			if ((oldEnvironmentFactory != null) && !oldEnvironmentFactory.isDisposed()) {

@@ -54,4 +54,8 @@
       </category>
    </extension>
 
+   <extension point="org.eclipse.ocl.pivot.thread_local">
+      <manager class="org.eclipse.ocl.xtext.base.ui.utilities.ThreadLocalExecutorUI"/>
+   </extension>
+
 </plugin>

@@ -39,6 +39,14 @@ public final class PivotPlugin extends EMFPlugin
 	public static final @NonNull String STANDARD_LIBRARY_PPID = "standard_library";
 	public static final @NonNull String COMPLETE_OCL_REGISTRY_PID = "complete_ocl_registry";
 	public static final @NonNull String COMPLETE_OCL_REGISTRY_QPID = PLUGIN_ID + "." + COMPLETE_OCL_REGISTRY_PID;
+	/**
+	 * @since 1.15
+	 */
+	public static final @NonNull String THREAD_LOCAL_PID = "thread_local";
+	/**
+	 * @since 1.15
+	 */
+	public static final @NonNull String THREAD_LOCAL_QPID = PLUGIN_ID + "." + THREAD_LOCAL_PID;
 
 	/**
 	 * Keep track of the singleton.
