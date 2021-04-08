@@ -188,6 +188,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/resource/CSResource.java" type="org.eclipse.ocl.pivot.resource.CSResource">
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.resource.CSResource"/>
+                <message_argument value="getEnvironmentFactory()"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/utilities/AS2MonikerVisitor.java" type="org.eclipse.ocl.pivot.utilities.AS2MonikerVisitor">
         <filter comment="Bug 512402 workaround" id="576725006">
             <message_arguments>

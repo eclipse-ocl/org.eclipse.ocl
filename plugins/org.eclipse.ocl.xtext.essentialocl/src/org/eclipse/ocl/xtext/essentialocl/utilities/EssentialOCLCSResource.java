@@ -88,6 +88,13 @@ import org.eclipse.xtext.util.Triple;
 
 public class EssentialOCLCSResource extends LazyLinkingResource implements BaseCSResource
 {
+	protected static class DefaultParserContext extends AbstractParserContext
+	{
+		protected DefaultParserContext(@NonNull EnvironmentFactory environmentFactory, @Nullable URI uri) {
+			super(environmentFactory, uri);
+		}
+	}
+
 	protected static final class UnixOutputStream extends OutputStream // FIXME Workaround for Bug 439440
 	{
 		protected final @NonNull OutputStream outputStream;
@@ -188,8 +195,12 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 
 	private static final Logger logger = Logger.getLogger(EssentialOCLCSResource.class);
 
+	/**
+	 * The ParserContext provides the prevailing EnvironmentFactory, and may be configured explicitly by an
+	 * OCL-aware application. For OCL-blind aplication a prevailing EnvironmentFactory is lazily created and
+	 * shared by the ThreadLocalExecutor.
+	 */
 	private @Nullable ParserContext parserContext = null;
-	private @Nullable ProjectManager projectMap = null;
 	private boolean isDerived = false;		// True if this CSResource is the derived form of an edited ASResource.
 
 	public EssentialOCLCSResource() {
@@ -409,11 +420,8 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 
 	@Override
 	public final @Nullable CS2AS findCS2AS() {
-		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.findEnvironmentFactory(this);
-		if (environmentFactory == null) {
-			return null;
-		}
-		CSI2ASMapping csi2asMapping = CSI2ASMapping.basicGetCSI2ASMapping(environmentFactory);
+		EnvironmentFactory environmentFactory = getEnvironmentFactory();
+		CSI2ASMapping csi2asMapping = CSI2ASMapping.basicGetCSI2ASMapping((EnvironmentFactoryInternal)environmentFactory);
 		if (csi2asMapping == null) {
 			return null;
 		}
@@ -444,7 +452,8 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 
 	@Override
 	public @NonNull CS2AS getCS2AS() {
-		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(this);
+		ParserContext parserContext = getParserContext();
+		EnvironmentFactoryInternal environmentFactory = (EnvironmentFactoryInternal) parserContext.getEnvironmentFactory();
 		CSI2ASMapping csi2asMapping = CSI2ASMapping.basicGetCSI2ASMapping(environmentFactory);
 		if (csi2asMapping != null) {
 			CS2AS cs2as = csi2asMapping.getCS2AS(this);
@@ -500,22 +509,19 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 	}
 
 	@Override
-	public final @Nullable ParserContext getParserContext() {		// FIXME only non-null for API compatibility
-		if (parserContext == null) {
-			parserContext = new AbstractParserContext(getEnvironmentFactory(), uri) {};
+	public final @NonNull ParserContext getParserContext() {		// FIXME only non-null for API compatibility
+		ParserContext parserContext2 = parserContext;
+		if (parserContext2 == null) {
+			EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(this);
+			parserContext2 = parserContext = new DefaultParserContext(environmentFactory, getURI());
 		}
-		return parserContext;
+		return parserContext2;
 	}
 
+	@Deprecated /* @deprecated no longer used - use getEnvironmentFactory()/getProjectManager() */
 	@Override
-	public @NonNull EnvironmentFactory getEnvironmentFactory() {
-		CS2AS csAdapter = getCS2AS();
-		return csAdapter.getEnvironmentFactory();
-	}
-
-	@Override
-	public @Nullable ProjectManager getProjectManager() {
-		return projectMap ;
+	public @NonNull ProjectManager getProjectManager() {
+		return getEnvironmentFactory().getProjectManager();
 	}
 
 	protected boolean hasError(ElementCS csElement) {
@@ -724,12 +730,15 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 
 	@Override
 	public final void setParserContext(@Nullable ParserContext parserContext) {
+		ParserContext parserContext2 = this.parserContext;
+		assert (parserContext == null) || (parserContext2 == null) || (parserContext2.getEnvironmentFactory() == parserContext.getEnvironmentFactory());
 		this.parserContext = parserContext;
 	}
 
+	@Deprecated /* @deprecated ProjectManager is inferred from implicit/explicit setParserContext() */
 	@Override
 	public void setProjectManager(@Nullable ProjectManager projectMap) {
-		this.projectMap = projectMap;
+		assert projectMap == getEnvironmentFactory().getProjectManager();
 	}
 
 	//	@Override

@@ -562,7 +562,6 @@ public class LoadTests extends XtextTestCase
 	}
 	protected BaseCSResource doLoad_Concrete1(@NonNull OCL ocl, @NonNull URI inputURI) throws IOException {
 		BaseCSResource xtextResource = (BaseCSResource) ocl.getResourceSet().createResource(inputURI);
-		xtextResource.setProjectManager(getProjectMap());
 		JavaClassScope.getAdapter(xtextResource,  getClass().getClassLoader());
 		ocl.getEnvironmentFactory().adapt(xtextResource);
 		InputStream inputStream = ocl.getResourceSet().getURIConverter().createInputStream(inputURI);

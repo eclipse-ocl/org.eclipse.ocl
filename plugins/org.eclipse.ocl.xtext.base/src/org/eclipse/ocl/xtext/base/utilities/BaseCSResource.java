@@ -21,7 +21,6 @@ import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
-import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.xtext.base.as2cs.AS2CS;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.xtext.diagnostics.IDiagnosticConsumer;
@@ -78,8 +77,6 @@ public interface BaseCSResource extends CSResource.CSResourceExtension2
 	 */
 	@NonNull String getEditorName();
 
-	@NonNull EnvironmentFactory getEnvironmentFactory();
-
 	/**
 	 * Return a non-null NamedElement if element is able to be accessed by a qualified path; Other elements must use a quoted URI.
 	 */
@@ -91,5 +88,4 @@ public interface BaseCSResource extends CSResource.CSResourceExtension2
 	@NonNull URI resolve(@NonNull URI uri);
 
 	void update(@NonNull IDiagnosticConsumer diagnosticsConsumer);
-
 }

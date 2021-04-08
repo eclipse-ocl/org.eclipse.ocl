@@ -170,7 +170,6 @@ public class MonikerTests extends XtextTestCase
 		String pivotName = inputURI.trimFileExtension().lastSegment() + PivotConstants.DOT_OCL_AS_FILE_EXTENSION;
 		URI pivotURI = getTestFileURI(pivotName);
 		BaseCSResource csResource = (BaseCSResource) ocl.getResourceSet().createResource(inputURI);
-		csResource.setProjectManager(getProjectMap());
 		JavaClassScope.getAdapter(csResource, getClass().getClassLoader());
 		csResource.load(null);;
 		assertNoResourceErrors("Load failed", csResource);

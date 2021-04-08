@@ -35,7 +35,7 @@ public interface CSResource extends Resource
 		 */
 		void dispose();
 	}
-	
+
 	/**
 	 * @since 1.3
 	 */
@@ -51,26 +51,35 @@ public interface CSResource extends Resource
 		 */
 		void setDerived(boolean isDerived);
 	}
-	
+
 	/**
 	 * Return the Abstract Syntax representation of this Concrete Syntax resource.
 	 */
 	@NonNull ASResource getASResource();
 
 	@NonNull ASResourceFactory getASResourceFactory();
-	
-	@Nullable ParserContext getParserContext();
-	
+
+	/**
+	 * @since 1.15
+	 */
+	default @NonNull EnvironmentFactory getEnvironmentFactory() {
+		return getParserContext().getEnvironmentFactory();
+	}
+
+	@NonNull ParserContext getParserContext();
+
 	/**
 	 * Return the map of known projects.
 	 */
-	@Nullable ProjectManager getProjectManager();
+	@Deprecated /* @deprecated no longer used - use getEnvironmentFactory().getProjectManager() */
+	@NonNull ProjectManager getProjectManager();
 
 	void setParserContext(@Nullable ParserContext parserContext);
-	
+
 	/**
 	 * Set the map of known projects.
 	 */
+	@Deprecated /* @deprecated ProjectManager is inferred from implicit/explicit setParserContext() */
 	void setProjectManager(@Nullable ProjectManager projectManager);
 
 	void updateFrom(@NonNull ASResource asResource, @NonNull EnvironmentFactory environmentFactory);
