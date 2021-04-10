@@ -31,16 +31,10 @@ public class BaseEditor extends XtextEditor
 		return super.getAdapter(adapter);
 	}
 
-	@Override
-	public @NonNull BaseDocumentProvider getDocumentProvider() {
-		IDocumentProvider documentProvider = super.getDocumentProvider();
-		assert documentProvider != null;
-		return (BaseDocumentProvider)documentProvider;
-	}
-
 	public @NonNull EnvironmentFactory getEnvironmentFactory() {
-		BaseDocumentProvider documentProvider = getDocumentProvider();
-		return documentProvider.getEnvironmentFactory();
+		IDocumentProvider documentProvider = getDocumentProvider();
+		assert documentProvider != null;
+		return ((BaseDocumentProvider)documentProvider).getEnvironmentFactory();
 	}
 
 	public @NonNull String getMarkerId() {
@@ -61,4 +55,10 @@ public class BaseEditor extends XtextEditor
 	 */
 	@Deprecated
 	protected void scheduleDeferredSetTextJob() {}
+
+	@Override
+	protected void setDocumentProvider(IDocumentProvider provider) {
+		super.setDocumentProvider(provider);
+		((BaseDocumentProvider)provider).initOCL(this);
+	}
 }

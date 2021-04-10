@@ -10,8 +10,10 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.essentialocl.ui;
 
+import org.eclipse.ocl.xtext.base.ui.model.BaseDocumentProvider;
 import org.eclipse.ocl.xtext.essentialocl.ui.internal.EssentialOCLActivator;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.eclipse.xtext.ui.editor.model.XtextDocumentProvider;
 
 /**
  * Use this class to register components to be used within the IDE.
@@ -22,5 +24,9 @@ public class EssentialOCLUiModule extends org.eclipse.ocl.xtext.essentialocl.ui.
 
 	public EssentialOCLUiModule(AbstractUIPlugin plugin) {
 		super(plugin);
+	}
+
+	public Class<? extends XtextDocumentProvider> bindXtextDocumentProvider() {
+		return BaseDocumentProvider.class;
 	}
 }

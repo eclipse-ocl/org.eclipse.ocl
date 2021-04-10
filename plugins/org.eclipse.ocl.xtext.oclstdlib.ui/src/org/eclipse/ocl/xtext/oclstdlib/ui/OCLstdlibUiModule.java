@@ -14,10 +14,12 @@
 package org.eclipse.ocl.xtext.oclstdlib.ui;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.xtext.base.ui.model.BaseDocumentProvider;
 import org.eclipse.ocl.xtext.oclstdlib.ui.internal.OCLstdlibActivator;
 import org.eclipse.ocl.xtext.oclstdlib.ui.refactoring.OCLstdlibReferenceUpdater;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.xtext.ui.editor.model.IResourceForEditorInputFactory;
+import org.eclipse.xtext.ui.editor.model.XtextDocumentProvider;
 
 /**
  * Use this class to register components to be used within the IDE.
@@ -25,7 +27,6 @@ import org.eclipse.xtext.ui.editor.model.IResourceForEditorInputFactory;
 public class OCLstdlibUiModule extends AbstractOCLstdlibUiModule
 {
 	public static final @NonNull String PLUGIN_ID = "org.eclipse.ocl.xtext.oclstdlib.ui";
-	@SuppressWarnings("null")
 	public static final @NonNull String EDITOR_ID = OCLstdlibActivator.ORG_ECLIPSE_OCL_XTEXT_OCLSTDLIB_OCLSTDLIB;
 	public static final @NonNull String MARKER_ID = "org.eclipse.ocl.xtext.oclstdlib.ui.Marker";
 
@@ -50,5 +51,9 @@ public class OCLstdlibUiModule extends AbstractOCLstdlibUiModule
 	@Override
 	public Class<? extends IResourceForEditorInputFactory> bindIResourceForEditorInputFactory() {
 		return OCLstdlibJavaClassPathResourceForIEditorInputFactory.class;
+	}
+
+	public Class<? extends XtextDocumentProvider> bindXtextDocumentProvider() {
+		return BaseDocumentProvider.class;
 	}
 }

@@ -23,6 +23,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
+import org.eclipse.ocl.xtext.base.ui.BaseEditor;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.xtext.resource.XtextResource;
 
@@ -33,7 +34,11 @@ import org.eclipse.xtext.resource.XtextResource;
 @SuppressWarnings("deprecation")
 public class BaseDocumentProvider extends DeferredDocumentProvider
 {
-	private @Nullable OCLInternal ocl;
+	private @Nullable OCLInternal ocl;		// FIXME move to BaseEditor just like EmbeddedXtextEditor
+
+	public BaseDocumentProvider() {
+		super();
+	}
 
 	protected @NonNull OCLInternal createOCL() {
 		return OCLInternal.newInstance();
@@ -63,6 +68,13 @@ public class BaseDocumentProvider extends DeferredDocumentProvider
 			ocl = ocl2 = createOCL();
 		}
 		return ocl2;
+	}
+
+	public void initOCL(@NonNull BaseEditor baseEditor) {
+		ThreadLocalExecutor.reset();
+		OCLInternal ocl = getOCL();
+	//	ThreadLocalExecutorUI.initPart(this);
+		ThreadLocalExecutor.reset();
 	}
 
 	@Override
