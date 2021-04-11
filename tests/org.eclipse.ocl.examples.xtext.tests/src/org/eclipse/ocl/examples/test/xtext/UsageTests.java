@@ -1927,11 +1927,8 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 					Resource resource2 = ClassUtil.nonNullState(resources.get(0));
 					assertNoResourceErrors("Load", resource2);
 					assertNoValidationErrors("Validate", resource2);
-					//			for (int i = 0; i < 1000; i++){
-					//				flushEvents();
-					//				Thread.sleep(100);
-					//			}
-					openEditor.dispose();
+					openEditor.getSite().getPage().closeEditor(openEditor, false);
+					TestUIUtil.flushEvents();
 				}
 				ocl.dispose();
 			}
@@ -1997,7 +1994,8 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 					assertNoResourceErrors("Load", umlResource);
 					assertValidationDiagnostics("Validate", umlResource, getMessages(
 						EcorePlugin.INSTANCE.getString("_UI_GenericInvariant_diagnostic", new Object[]{"Constraint1", "«Stereotype1»" + LabelUtil.getLabel(xx)})));
-					umlEditor.dispose();
+					umlEditor.getSite().getPage().closeEditor(umlEditor, false);
+					TestUIUtil.flushEvents();
 				}
 				ocl.dispose();
 			}
