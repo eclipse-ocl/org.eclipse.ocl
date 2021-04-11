@@ -703,8 +703,8 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		projectManager.unload(externalResourceSet);
 
 		ThreadLocalExecutor.detachEnvironmentFactory(this);
-		System.gc();
-		System.runFinalization();
+	//	System.gc();
+	//	System.runFinalization();
 	}
 
 	@Override

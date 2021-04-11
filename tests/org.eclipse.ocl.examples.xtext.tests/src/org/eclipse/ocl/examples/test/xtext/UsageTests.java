@@ -221,7 +221,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 
 	@Override
 	protected void tearDown() throws Exception {
-		ThreadLocalExecutor.waitForGC();
+	//	ThreadLocalExecutor.waitForGC();
 		log = null;
 		uninstall();
 		super.tearDown();
@@ -1890,49 +1890,56 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	 * @throws Throwable
 	 */
 	public void testOpen_Pivot_oclas() throws Throwable {
-		doTestRunnable(new TestRunnable() {
-			@Override
-			public void runWithThrowable() throws Exception {
-				TestOCL ocl = createOCL();
-				if (EMFPlugin.IS_ECLIPSE_RUNNING) {
-					TestCaseAppender.INSTANCE.uninstall();
-					TestUIUtil.suppressGitPrefixPopUp();
-					IWorkbench workbench = PlatformUI.getWorkbench();
-					IIntroManager introManager = workbench.getIntroManager();
-					introManager.closeIntro(introManager.getIntro());
-					TestUIUtil.flushEvents();
+		try {
+			doTestRunnable(new TestRunnable() {
+				@Override
+				public void runWithThrowable() throws Exception {
+					TestOCL ocl = createOCL();
+					if (EMFPlugin.IS_ECLIPSE_RUNNING) {
+						TestCaseAppender.INSTANCE.uninstall();
+						TestUIUtil.suppressGitPrefixPopUp();
+						IWorkbench workbench = PlatformUI.getWorkbench();
+						IIntroManager introManager = workbench.getIntroManager();
+						introManager.closeIntro(introManager.getIntro());
+						TestUIUtil.flushEvents();
 
-					String testProjectName = "Open_Pivot";
-					ResourceSet resourceSet1 = new ResourceSetImpl();
-					Resource resource = resourceSet1.getResource(URI.createURI(PivotPackage.eNS_URI, true), true);
-					ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-					resource.setURI(URI.createPlatformResourceURI(testProjectName + "/" + "Pivot.oclas", true));
-					resource.save(outputStream, XMIUtil.createSaveOptions());
+						String testProjectName = "Open_Pivot";
+						ResourceSet resourceSet1 = new ResourceSetImpl();
+						Resource resource = resourceSet1.getResource(URI.createURI(PivotPackage.eNS_URI, true), true);
+						ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+						resource.setURI(URI.createPlatformResourceURI(testProjectName + "/" + "Pivot.oclas", true));
+						resource.save(outputStream, XMIUtil.createSaveOptions());
 
-					IWorkspace workspace = ResourcesPlugin.getWorkspace();
-					IProject project = workspace.getRoot().getProject(testProjectName);
-					if (!project.exists()) {
-						project.create(null);
+						IWorkspace workspace = ResourcesPlugin.getWorkspace();
+						IProject project = workspace.getRoot().getProject(testProjectName);
+						if (!project.exists()) {
+							project.create(null);
+						}
+						project.open(null);
+						IFile file = project.getFile("Pivot.oclas");
+						file.create(new ByteArrayInputStream(outputStream.toByteArray()), true, null);
+
+						IWorkbenchPage activePage = workbench.getActiveWorkbenchWindow().getActivePage();
+						EcoreEditor openEditor = (EcoreEditor) IDE.openEditor(activePage, file, "org.eclipse.emf.ecore.presentation.ReflectiveEditorID", true);
+						TestUIUtil.flushEvents();
+						ResourceSet resourceSet = openEditor.getEditingDomain().getResourceSet();
+						EList<Resource> resources = resourceSet.getResources();
+						assertEquals(1, resources.size());
+						Resource resource2 = ClassUtil.nonNullState(resources.get(0));
+						assertNoResourceErrors("Load", resource2);
+						assertNoValidationErrors("Validate", resource2);
+						openEditor.getSite().getPage().closeEditor(openEditor, false);
+						TestUIUtil.flushEvents();
 					}
-					project.open(null);
-					IFile file = project.getFile("Pivot.oclas");
-					file.create(new ByteArrayInputStream(outputStream.toByteArray()), true, null);
-
-					IWorkbenchPage activePage = workbench.getActiveWorkbenchWindow().getActivePage();
-					EcoreEditor openEditor = (EcoreEditor) IDE.openEditor(activePage, file, "org.eclipse.emf.ecore.presentation.ReflectiveEditorID", true);
-					TestUIUtil.flushEvents();
-					ResourceSet resourceSet = openEditor.getEditingDomain().getResourceSet();
-					EList<Resource> resources = resourceSet.getResources();
-					assertEquals(1, resources.size());
-					Resource resource2 = ClassUtil.nonNullState(resources.get(0));
-					assertNoResourceErrors("Load", resource2);
-					assertNoValidationErrors("Validate", resource2);
-					openEditor.getSite().getPage().closeEditor(openEditor, false);
-					TestUIUtil.flushEvents();
+					ocl.dispose();
 				}
-				ocl.dispose();
+			});
+		}
+		catch (UnsupportedClassVersionError e) {
+			if (EMFPlugin.IS_ECLIPSE_RUNNING) {		// Standalone test using Java 8 fail on latest platform classes
+				throw e;
 			}
-		});
+		}
 	}
 
 	/**
@@ -1941,65 +1948,73 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	 * @throws Throwable
 	 */
 	public void testOpen_Bug469251_uml() throws Throwable {
-		doTestRunnable(new TestRunnable() {
-			@Override
-			public void runWithThrowable() throws Exception {
-				TestOCL ocl = createOCL();
-				if (EMFPlugin.IS_ECLIPSE_RUNNING) {
-					TestCaseAppender.INSTANCE.uninstall();
-					TestUIUtil.suppressGitPrefixPopUp();
-					IWorkbench workbench = PlatformUI.getWorkbench();
-					TestUIUtil.closeIntro();
-					TestUIUtil.flushEvents();
-					//
-					getTestFile("Bug469251.profile.uml", ocl, getTestModelURI("models/uml/Bug469251.profile.uml"));
-					getTestFile("Bug469251.uml", ocl, getTestModelURI("models/uml/Bug469251.uml"));
-					//
-					IProject iProject = getTestProject().getIProject();
-					IFile modelFile = iProject.getFile("Bug469251.uml");
-					IWorkbenchPage activePage = workbench.getActiveWorkbenchWindow().getActivePage();
-					UMLEditor umlEditor = (UMLEditor) IDE.openEditor(activePage, modelFile, "org.eclipse.uml2.uml.editor.presentation.UMLEditorID", true);
-					TestUIUtil.flushEvents();
-					/**
-					 * This progresses the dialog but there is no clue as to what it did.
-					 *
-			String validateName = EMFEditUIPlugin.INSTANCE.getString("_UI_Validate_menu_item");
-			IMenuManager menuManager = umlEditor.getActionBars().getMenuManager();
-			IContributionManager validateItem1 = (IContributionManager) menuManager.findUsingPath("org.eclipse.uml2.umlMenuID");
-			for (IContributionItem item : validateItem1.getItems()) {
-				if (item instanceof ActionContributionItem){
-					IAction action = ((ActionContributionItem)item).getAction();
-					if (action.getText().equals(validateName)) {
-						final Display display = Display.getCurrent();
-						display.timerExec(5000, new Runnable()
-						{
-							public void run() {
-								Event event = new Event();
-								event.type = SWT.KeyDown;
-								event.character = '\r';
-								display.post(event);
+		try {
+			doTestRunnable(new TestRunnable() {
+				@Override
+				public void runWithThrowable() throws Exception {
+					TestOCL ocl = createOCL();
+					if (EMFPlugin.IS_ECLIPSE_RUNNING) {
+						TestCaseAppender.INSTANCE.uninstall();
+						TestUIUtil.suppressGitPrefixPopUp();
+						IWorkbench workbench = PlatformUI.getWorkbench();
+						TestUIUtil.closeIntro();
+						TestUIUtil.flushEvents();
+						//
+						getTestFile("Bug469251.profile.uml", ocl, getTestModelURI("models/uml/Bug469251.profile.uml"));
+						getTestFile("Bug469251.uml", ocl, getTestModelURI("models/uml/Bug469251.uml"));
+						//
+						IProject iProject = getTestProject().getIProject();
+						IFile modelFile = iProject.getFile("Bug469251.uml");
+						IWorkbenchPage activePage = workbench.getActiveWorkbenchWindow().getActivePage();
+						UMLEditor umlEditor = (UMLEditor) IDE.openEditor(activePage, modelFile, "org.eclipse.uml2.uml.editor.presentation.UMLEditorID", true);
+						TestUIUtil.flushEvents();
+						/**
+						 * This progresses the dialog but there is no clue as to what it did.
+						 * ?? surely it was an attempt at a manual Validate menu action ??
+						 *
+						String validateName = EMFEditUIPlugin.INSTANCE.getString("_UI_Validate_menu_item");
+						IMenuManager menuManager = umlEditor.getActionBars().getMenuManager();
+						IContributionManager validateItem1 = (IContributionManager) menuManager.findUsingPath("org.eclipse.uml2.umlMenuID");
+						for (IContributionItem item : validateItem1.getItems()) {
+							if (item instanceof ActionContributionItem){
+								IAction action = ((ActionContributionItem)item).getAction();
+								if (action.getText().equals(validateName)) {
+									final Display display = Display.getCurrent();
+									display.timerExec(5000, new Runnable()
+									{
+										public void run() {
+											Event event = new Event();
+											event.type = SWT.KeyDown;
+											event.character = '\r';
+											display.post(event);
+										}
+									});
+									action.run();
+									break;
+								}
 							}
-						});
-						action.run();
-						break;
+						} */
+						ResourceSet resourceSet = umlEditor.getEditingDomain().getResourceSet();
+						EList<Resource> resources = resourceSet.getResources();
+						assertEquals(2, resources.size());
+						Resource umlResource = ClassUtil.nonNullState(resources.get(0));
+						Model model = (Model) umlResource.getContents().get(0);
+						org.eclipse.uml2.uml.Type xx = model.getOwnedType("Class1");
+						assertNoResourceErrors("Load", umlResource);
+						assertValidationDiagnostics("Validate", umlResource, getMessages(
+							EcorePlugin.INSTANCE.getString("_UI_GenericInvariant_diagnostic", new Object[]{"Constraint1", "«Stereotype1»" + LabelUtil.getLabel(xx)})));
+						umlEditor.getSite().getPage().closeEditor(umlEditor, false);
+						TestUIUtil.flushEvents();
 					}
+					ocl.dispose();
 				}
-			} */
-					ResourceSet resourceSet = umlEditor.getEditingDomain().getResourceSet();
-					EList<Resource> resources = resourceSet.getResources();
-					assertEquals(2, resources.size());
-					Resource umlResource = ClassUtil.nonNullState(resources.get(0));
-					Model model = (Model) umlResource.getContents().get(0);
-					org.eclipse.uml2.uml.Type xx = model.getOwnedType("Class1");
-					assertNoResourceErrors("Load", umlResource);
-					assertValidationDiagnostics("Validate", umlResource, getMessages(
-						EcorePlugin.INSTANCE.getString("_UI_GenericInvariant_diagnostic", new Object[]{"Constraint1", "«Stereotype1»" + LabelUtil.getLabel(xx)})));
-					umlEditor.getSite().getPage().closeEditor(umlEditor, false);
-					TestUIUtil.flushEvents();
-				}
-				ocl.dispose();
+			});
+		}
+		catch (UnsupportedClassVersionError e) {
+			if (EMFPlugin.IS_ECLIPSE_RUNNING) {		// Standalone test using Java 8 fail on latest platform classes
+				throw e;
 			}
-		});
+		}
 	}
 
 	public void testPivotMetamodelImport414855() throws Throwable {

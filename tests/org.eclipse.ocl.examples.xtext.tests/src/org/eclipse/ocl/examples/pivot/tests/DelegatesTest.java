@@ -377,8 +377,8 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		}
 		autoTearDown();
 		super.tearDown();
-		System.gc();
-		System.runFinalization();
+	//	System.gc();
+	//	System.runFinalization();
 	}
 
 	@AfterClass

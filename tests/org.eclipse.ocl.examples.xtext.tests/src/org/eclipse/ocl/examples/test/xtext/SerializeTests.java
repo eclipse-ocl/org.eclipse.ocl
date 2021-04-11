@@ -174,8 +174,8 @@ public class SerializeTests extends XtextTestCase
 			}
 			ocl2.dispose();
 			ocl2 = null;
-			System.gc();
-			System.runFinalization();
+		//	System.gc();
+		//	System.runFinalization();
 		}
 	}
 
