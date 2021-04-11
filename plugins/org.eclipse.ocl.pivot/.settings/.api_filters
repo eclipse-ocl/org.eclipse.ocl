@@ -1,35 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.ocl.pivot" version="2">
-    <resource path="emf-gen/org/eclipse/ocl/pivot/MapType.java" type="org.eclipse.ocl.pivot.MapType">
-        <filter id="404000815">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.MapType"/>
-                <message_argument value="getContainerType()"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/PivotTables.java" type="org.eclipse.ocl.pivot.PivotTables">
-        <filter id="354463860">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
-                <message_argument value="PivotTables()"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/StandardLibrary.java" type="org.eclipse.ocl.pivot.StandardLibrary">
-        <filter id="403804204">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.StandardLibrary"/>
-                <message_argument value="getNsURIs()"/>
-            </message_arguments>
-        </filter>
-        <filter id="404000815">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.StandardLibrary"/>
-                <message_argument value="getNsURIs()"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/internal/StandardLibraryImpl.java" type="org.eclipse.ocl.pivot.internal.StandardLibraryImpl">
         <filter comment="Bug 512402 workaround" id="576725006">
             <message_arguments>
@@ -527,20 +497,6 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/ocl/pivot/internal/utilities/EnvironmentFactoryInternal.java" type="org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal">
-        <filter id="404000815">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal"/>
-                <message_argument value="analyzeExpressions(EObject, Set&lt;CompleteClass&gt;, Set&lt;Property&gt;)"/>
-            </message_arguments>
-        </filter>
-        <filter id="404000815">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal"/>
-                <message_argument value="detachRedundantThreadLocal()"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="src/org/eclipse/ocl/pivot/library/LibraryBinaryOperation.java" type="org.eclipse.ocl.pivot.library.LibraryBinaryOperation">
         <filter id="403984517">
             <message_arguments>
@@ -711,38 +667,6 @@
             <message_arguments>
                 <message_argument value="PivotConstantsInternal"/>
                 <message_argument value="AS2MonikerVisitor"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/utilities/AbstractEnvironmentFactory.java" type="org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory">
-        <filter id="336658481">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory"/>
-                <message_argument value="liveEnvironmentFactories"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/utilities/EnvironmentFactory.java" type="org.eclipse.ocl.pivot.utilities.EnvironmentFactory">
-        <filter id="404000815">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.utilities.EnvironmentFactory"/>
-                <message_argument value="isDisposed()"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/utilities/NameUtil.java" type="org.eclipse.ocl.pivot.utilities.NameUtil">
-        <filter id="336658481">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.utilities.NameUtil"/>
-                <message_argument value="ENAMED_ELEMENT_COMPARATOR"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/utilities/StringUtil.java" type="org.eclipse.ocl.pivot.utilities.StringUtil">
-        <filter id="336658481">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.utilities.StringUtil"/>
-                <message_argument value="defaultIndentation"/>
             </message_arguments>
         </filter>
     </resource>
