@@ -16,6 +16,7 @@ import java.util.Map;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.swt.widgets.Display;
@@ -105,7 +106,12 @@ public class ThreadLocalExecutorUI extends ThreadLocalExecutor implements IPartL
 	@Override
 	public void partActivated(IWorkbenchPart newActivePart) {
 		assert newActivePart != null;
-		setEnvironmentFactory(part2environmentFactory.get(newActivePart));
+		EnvironmentFactoryInternal environmentFactory = part2environmentFactory.get(newActivePart);
+		setEnvironmentFactory(environmentFactory);
+		EnvironmentFactory partEnvironmentFactory = newActivePart.getAdapter(EnvironmentFactory.class);
+		if ((partEnvironmentFactory == null) && (environmentFactory != null)) {		// OCL-blind editor
+			environmentFactory.detach(this);
+		}
 		if (THREAD_LOCAL_ENVIRONMENT_FACTORY.isActive()) {
 			THREAD_LOCAL_ENVIRONMENT_FACTORY.println(getThreadName() + " partActivated [" + Thread.currentThread().getName() + ":" + NameUtil.debugSimpleName(newActivePart) + "] " + toString());
 		}
@@ -139,7 +145,11 @@ public class ThreadLocalExecutorUI extends ThreadLocalExecutor implements IPartL
 		if (oldActivePart != null) {
 			EnvironmentFactoryInternal environmentFactory = localBasicGetEnvironmentFactory();
 			if (environmentFactory != null) {
+				EnvironmentFactory partEnvironmentFactory = oldActivePart.getAdapter(EnvironmentFactory.class);
 				part2environmentFactory.put(oldActivePart, environmentFactory);    // part2environmentFactory persists for an activate
+				if (partEnvironmentFactory == null) {		// OCL-blind editor
+					environmentFactory.attach(this);
+				}
 			}
 			else {
 				part2environmentFactory.remove(oldActivePart);
