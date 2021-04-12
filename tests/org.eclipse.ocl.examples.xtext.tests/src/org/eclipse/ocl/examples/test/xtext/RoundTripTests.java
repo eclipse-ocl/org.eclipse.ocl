@@ -576,6 +576,8 @@ public class RoundTripTests extends XtextTestCase
 	}
 
 	public void testEcoreRoundTrip() throws IOException, InterruptedException, ParserException {
+		// FIXME need a private ProjectMap to avoid merging a relic Ecore EPackage and the provate copy
+		//   for now just update the provate copy to eliminate divergence
 		doRoundTripFromEcore(getTestModelURI("models/ecore/Ecore.ecore"));
 	}
 

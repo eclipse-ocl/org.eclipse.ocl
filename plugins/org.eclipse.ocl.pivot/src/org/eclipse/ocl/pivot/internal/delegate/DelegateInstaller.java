@@ -57,6 +57,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.UniqueList;
 
 public class DelegateInstaller
 {
@@ -418,19 +419,25 @@ public class DelegateInstaller
 	}
 
 	public void installDelegates(@NonNull EClassifier eClassifier, org.eclipse.ocl.pivot.@NonNull Class pivotType) {
+		Set<@NonNull String> constraintNameSet = null;
 		StringBuilder s = null;
 		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		for (Constraint pivotConstraint : metamodelManager.getLocalInvariants(pivotType)) {
 			assert pivotConstraint != null;
 			String constraintName = getAnnotationKey(pivotConstraint);
 			if (!pivotConstraint.isIsCallable()) {
-				if (s == null) {
-					s = new StringBuilder();
+				if (constraintNameSet == null) {
+					constraintNameSet = new UniqueList<>();
 				}
-				else {
-					s.append(" ");
+				if (constraintNameSet.add(constraintName)) {	// Avoid duplicates that Bug 571760 fix facilitates
+					if (s == null) {
+						s = new StringBuilder();
+					}
+					else {
+						s.append(" ");
+					}
+					s.append(constraintName);					// Preserve order for RoundTripTests
 				}
-				s.append(constraintName);
 			}
 		}
 		EAnnotation eAnnotation = eClassifier.getEAnnotation(EcorePackage.eNS_URI);
