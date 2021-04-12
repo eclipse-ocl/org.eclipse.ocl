@@ -17,6 +17,8 @@ import org.eclipse.emf.common.util.URI;
 
 /**
  * EMF_2_9 provides backwards compatible implementations of functionality first available in EMF 2.9.
+ *
+ * See OCLGenModelUtil for more general EMF/UML2 compatibility support,
  */
 @SuppressWarnings("deprecation")
 public class EMF_2_9
@@ -35,7 +37,7 @@ public class EMF_2_9
 
 		ECORE_PLUGIN_GET_EPACKAGE_NSURI_TO_GEN_MODEL_LOCATION_MAP_METHOD = ecorePlugin_getEPackageNsURIToGenModelLocationMap_Method;
 	}
-	  
+
 	public static class EcorePlugin {
 
 		/**

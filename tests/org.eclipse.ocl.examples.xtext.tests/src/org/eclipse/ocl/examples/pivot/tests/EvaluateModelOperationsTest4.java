@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.genmodel.OCLGenModelUtil;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.examples.xtext.tests.company.CompanyPackage;
 import org.eclipse.ocl.pivot.ids.IdResolver;
@@ -456,8 +457,8 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 		URI uri = URI.createPlatformResourceURI("org.eclipse.emf.ecore/model/Ecore.ecore", true);	// Java bariant has precedence
 		EObject ePackage = ocl.getResourceSet().getEObject(uri.appendFragment("/"), true);
 		//
-	//	ocl.assertQueryResults(ePackage, "Set{'baseType','constraints','name'}",	// FIXME BUG 571760 'constraints' missing from Java variant
-		ocl.assertQueryResults(ePackage, "Set{'baseType','name'}",
+		String expectedResultExpression = OCLGenModelUtil.INSTANCE.hasConstraintEAnnotations() ? "Set{'baseType','constraints','name'}" :  "Set{'baseType','name'}";
+		ocl.assertQueryResults(ePackage, expectedResultExpression,
 				"self.eClassifiers->collect(c | c.eAnnotations)->collect(a | a.details)->collect(m | m->collect(k <- v | k))->asSet()");
 		//	ocl.assertQueryResults(ePackage, "Set{'baseType','constraints','name','suppressedIsSetVisibility','suppressedUnsetVisibility'}",
 		//	"ecore::EAnnotation.allInstances().details->collect(m | m->collect(k <- v | k))->asSet()");

@@ -48,6 +48,7 @@ import org.eclipse.ocl.pivot.util.DerivedConstants;
 public abstract class OCLGenModelUtil
 {
 	public static @NonNull OCLGenModelUtil INSTANCE =
+			GenRuntimeVersion.get("2.26") != null ? new EMF_CodeGen_2_26() :			// 2021-06
 			GenRuntimeVersion.get("2.25") != null ? new EMF_CodeGen_2_25() :			// 2021-03
 			GenRuntimeVersion.get("2.17") != null ? new EMF_CodeGen_2_17() :			// 2019-03
 			GenRuntimeVersion.get("2.16") != null ? new EMF_CodeGen_2_16() :			// 2018-12
@@ -330,6 +331,7 @@ public abstract class OCLGenModelUtil
 	public abstract boolean hasAPIDeprecatedTag(GenBase genBase);
 	public abstract boolean hasAPIDeprecatedTag(Collection<?>... elements);
 	public abstract boolean hasAPITags(GenBase genBase);
+	public abstract boolean hasConstraintEAnnotations();	// Fixed by Bug 571760 in EMF 2.26 for 2021-06
 	public abstract boolean hasDoubleOverrideBug547424();
 	public abstract boolean hasImplicitAPITags(GenBase genBase);
 	public abstract boolean hasImplicitAPITags(GenBase genBase, boolean excludeOwnDocumentation);
@@ -392,6 +394,11 @@ public abstract class OCLGenModelUtil
 
 		@Override
 		public boolean hasAPITags(GenBase genBase) {
+			return false;
+		}
+
+		@Override
+		public boolean hasConstraintEAnnotations() {
 			return false;
 		}
 
@@ -531,6 +538,18 @@ public abstract class OCLGenModelUtil
 		@Override
 		public boolean hasDoubleOverrideBug547424() {
 			return false;			// Fixed in UML 5.6.0 for 2021-03
+		}
+	}
+
+	/**
+	 * EMF_CodeGen_2_25 redirects GenModel facilities available in an EMF >= 2.26 platform to the
+	 * standard implementation.
+	 */
+	private static class EMF_CodeGen_2_26 extends EMF_CodeGen_2_25
+	{
+		@Override
+		public boolean hasConstraintEAnnotations() {
+			return true;			// Fixed by Bug 571760 in EMF 2.26 for 2021-06
 		}
 	}
 }
