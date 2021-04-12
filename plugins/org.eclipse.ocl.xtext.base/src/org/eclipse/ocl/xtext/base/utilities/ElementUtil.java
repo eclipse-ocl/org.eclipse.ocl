@@ -28,7 +28,6 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
-import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
@@ -161,19 +160,7 @@ public class ElementUtil
 	}
 
 	public static @Nullable ModelElementCS getCsElement(@NonNull Element asElement) {
-		Resource asResource = asElement.eResource();
-		if (asResource == null) {
-			return null;
-		}
-		ResourceSet asResourceSet = asResource.getResourceSet();
-		if (asResourceSet == null) {
-			return null;
-		}
-		PivotMetamodelManager metamodelManager = PivotMetamodelManager.findAdapter(asResourceSet);
-		if (metamodelManager == null) {
-			return null;
-		}
-		EnvironmentFactoryInternal environmentFactory = metamodelManager.getEnvironmentFactory();
+		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(asElement);
 		ICSI2ASMapping csi2asMapping = environmentFactory.getCSI2ASMapping();
 		if (csi2asMapping == null) {
 			return null;

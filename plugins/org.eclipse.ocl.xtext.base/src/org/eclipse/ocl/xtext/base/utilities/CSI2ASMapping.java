@@ -507,12 +507,18 @@ public class CSI2ASMapping implements ICSI2ASMapping
 		return cs2asResourceMap.keySet();
 	}
 
-	public @Nullable ModelElementCS getCSElement(@NonNull Element pivotElement) {
+	public @Nullable ModelElementCS getCSElement(@NonNull Element pivotElement) {	// FIXME alternative outer/inner match options
 		Map<@NonNull Element, @NonNull ModelElementCS> as2cs2 = as2cs;
 		if (as2cs2 == null) {
 			as2cs = as2cs2 = computeAS2CSMap();
 		}
 		ModelElementCS modelElementCS = as2cs2.get(pivotElement);
+		for (EObject csContainer = modelElementCS; csContainer instanceof ModelElementCS; csContainer = csContainer.eContainer()) {
+			if (((ModelElementCS)csContainer).getPivot() != pivotElement) {
+				break;
+			}
+			modelElementCS = (ModelElementCS)csContainer;
+		}
 		if ((modelElementCS == null) && (pivotElement instanceof ExpressionInOCL)) {	// ExpressionInOCL may be created later
 			EObject eObject = ((ExpressionInOCL)pivotElement).eContainer();
 			if (eObject instanceof Element) {
