@@ -230,8 +230,11 @@ extends AbstractExtendingVisitor<@Nullable Object, ExecutorInternal.@NonNull Exe
 	 * recursively visit myself, then this decorator is cut out of the picture.
 	 *
 	 * @return my delegate visitor, which may be my own self or some other
+	 *
+	 * @since 1.15
 	 */
-	protected final @NonNull EvaluationVisitor getUndecoratedVisitor() {
+	@Override
+	public final @NonNull EvaluationVisitor getUndecoratedVisitor() {
 		return undecoratedVisitor;
 	}
 

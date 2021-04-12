@@ -1019,6 +1019,8 @@ public class EcoreOCLEValidator implements EValidator
 		Map<Object,Object> nestedContext = new HashMap<>(context);
 		nestedContext.remove(EObjectValidator.ROOT_OBJECT);
 		if (!nestedDiagnostician.validate(expressionInOCL, nestedDiagnostic, nestedContext)) {
+			nestedContext.remove(EObjectValidator.ROOT_OBJECT);
+			boolean ok2 = nestedDiagnostician.validate(expressionInOCL, nestedDiagnostic, nestedContext); 	// XXX
 			allOk = false;
 			if (diagnostics != null) {
 				String role = PivotUtilInternal.getSpecificationRole(asSpecification);

@@ -132,6 +132,9 @@ public abstract class LanguageExpressionImpl extends ValueSpecificationImpl impl
 	@Override
 	public void setBody(String newBody)
 	{
+		if ((newBody != null) && newBody.contains("Direction::_'in'")) {
+			getClass();		// XXX
+		}
 		String oldBody = body;
 		body = newBody;
 		if (eNotificationRequired())

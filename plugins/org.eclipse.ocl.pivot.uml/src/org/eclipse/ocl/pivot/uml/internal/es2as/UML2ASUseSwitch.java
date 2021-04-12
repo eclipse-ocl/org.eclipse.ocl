@@ -171,6 +171,7 @@ public class UML2ASUseSwitch extends UMLSwitch<Object>
 				}
 			}
 			((EnumLiteralExp)body).setReferredLiteral(pivotEnumerationLiteral);
+			converter.setExpressionInOCLcontext(pivotElement, umlInstanceValue);
 			converter.copyNamedElement(pivotElement, umlInstanceValue);
 			return pivotElement;
 		}
@@ -218,6 +219,7 @@ public class UML2ASUseSwitch extends UMLSwitch<Object>
 			pivotElement.setType(type);
 		}
 		((BooleanLiteralExp)body).setBooleanSymbol(umlLiteral.booleanValue());
+		converter.setExpressionInOCLcontext(pivotElement, umlLiteral);
 		converter.copyNamedElement(pivotElement, umlLiteral);
 		return pivotElement;
 	}
@@ -234,6 +236,7 @@ public class UML2ASUseSwitch extends UMLSwitch<Object>
 			body.setType(type);
 			pivotElement.setType(type);
 		}
+		converter.setExpressionInOCLcontext(pivotElement, umlLiteral);
 		((IntegerLiteralExp)body).setIntegerSymbol(umlLiteral.getValue());
 		converter.copyNamedElement(pivotElement, umlLiteral);
 		return pivotElement;
@@ -251,6 +254,7 @@ public class UML2ASUseSwitch extends UMLSwitch<Object>
 			body.setType(type);
 			pivotElement.setType(type);
 		}
+		converter.setExpressionInOCLcontext(pivotElement, umlLiteral);
 		converter.copyNamedElement(pivotElement, umlLiteral);
 		return pivotElement;
 	}
@@ -267,6 +271,7 @@ public class UML2ASUseSwitch extends UMLSwitch<Object>
 			body.setType(type);
 			pivotElement.setType(type);
 		}
+		converter.setExpressionInOCLcontext(pivotElement, umlLiteral);
 		((RealLiteralExp)body).setRealSymbol(umlLiteral.getValue());
 		converter.copyNamedElement(pivotElement, umlLiteral);
 		return pivotElement;
@@ -284,6 +289,7 @@ public class UML2ASUseSwitch extends UMLSwitch<Object>
 			body.setType(type);
 			pivotElement.setType(type);
 		}
+		converter.setExpressionInOCLcontext(pivotElement, umlLiteral);
 		String umlValue = umlLiteral.getValue();
 		((StringLiteralExp)body).setStringSymbol(umlValue != null ? umlValue : "");
 		converter.copyNamedElement(pivotElement, umlLiteral);
@@ -302,6 +308,7 @@ public class UML2ASUseSwitch extends UMLSwitch<Object>
 			body.setType(type);
 			pivotElement.setType(type);
 		}
+		converter.setExpressionInOCLcontext(pivotElement, umlLiteral);
 		long value = umlLiteral.getValue();
 		((UnlimitedNaturalLiteralExp)body).setUnlimitedNaturalSymbol(value >= 0 ? value : Unlimited.INSTANCE);
 		converter.copyNamedElement(pivotElement, umlLiteral);

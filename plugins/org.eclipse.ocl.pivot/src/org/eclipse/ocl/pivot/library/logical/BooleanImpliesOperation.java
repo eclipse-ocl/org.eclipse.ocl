@@ -123,7 +123,7 @@ public class BooleanImpliesOperation extends AbstractSimpleBinaryOperation
 		assert sourceValue instanceof SymbolicExpressionValue;
 		SymbolicExecutor symbolicExecutor = (SymbolicExecutor)evaluationVisitor.getExecutor();
 		try {
-			symbolicExecutor.pushSymbolicEvaluationEnvironment((SymbolicExpressionValue)sourceValue, Boolean.TRUE);
+			symbolicExecutor.pushSymbolicEvaluationEnvironment((SymbolicExpressionValue)sourceValue, Boolean.TRUE, callExp);
 			Object argumentValue = evaluationVisitor.evaluate(argument);
 			boolean mayBeInvalid = ValueUtil.mayBeInvalid(sourceValue) || ValueUtil.mayBeInvalid(argumentValue);
 			boolean mayBeNull = ValueUtil.mayBeNull(sourceValue) || ValueUtil.mayBeNull(argumentValue);

@@ -373,7 +373,7 @@
         <filter id="404000815">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.evaluation.EvaluationVisitor"/>
-                <message_argument value="evaluate(CollectionLiteralPart)"/>
+                <message_argument value="getUndecoratedVisitor()"/>
             </message_arguments>
         </filter>
         <filter comment="Bug 512402 workaround" id="576725006">
@@ -643,6 +643,14 @@
                 <message_argument value="org.eclipse.ocl.pivot.library.LibraryUntypedUnaryOperation"/>
                 <message_argument value="org.eclipse.ocl.pivot.library.LibraryIterationOrOperation"/>
                 <message_argument value="resolveBodyType(EnvironmentFactory, CallExp, Type)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/library/oclany/OclAnyOclIsInvalidOperation.java" type="org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation">
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation"/>
+                <message_argument value="evaluate(Object)"/>
             </message_arguments>
         </filter>
     </resource>

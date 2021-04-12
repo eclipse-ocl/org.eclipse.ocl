@@ -44,6 +44,7 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
+import org.eclipse.ocl.pivot.ParameterVariable;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.ProfileApplication;
@@ -1262,7 +1263,10 @@ public abstract class UML2AS extends AbstractExternal2AS
 				break;
 			}
 		}
+		setExpressionInOCLcontext(pivotElement, umlExpression);
 		copyNamedElement(pivotElement, umlExpression);
+	//	assert pivotElement.getOwnedContext() != null;
+	//	assert pivotElement.getBody() != null;
 		return pivotElement;
 	}
 
@@ -1428,6 +1432,24 @@ public abstract class UML2AS extends AbstractExternal2AS
 		}
 		pivotElement.setName(name);
 		return pivotElement;
+	}
+
+	/**
+	 * @since 1.15
+	 */
+	public void setExpressionInOCLcontext(@NonNull ExpressionInOCL pivotElement, org.eclipse.uml2.uml.@NonNull Element umlElement) {
+		for (EObject umlSelf = umlElement; umlSelf != null; umlSelf = umlSelf.eContainer()) {
+			if (umlSelf instanceof org.eclipse.uml2.uml.Type) {
+				Type asSelf = getCreated(Type.class, umlSelf);
+				ParameterVariable contextVariable = PivotFactory.eINSTANCE.createParameterVariable();
+				contextVariable.setName(PivotConstants.SELF_NAME);
+				contextVariable.setType(asSelf);
+				contextVariable.setIsRequired(true);
+				pivotElement.setOwnedContext(contextVariable);
+				break;
+			}
+		}
+
 	}
 
 	protected void setOriginalMapping(@NonNull Element pivotElement, @NonNull EObject umlElement) {

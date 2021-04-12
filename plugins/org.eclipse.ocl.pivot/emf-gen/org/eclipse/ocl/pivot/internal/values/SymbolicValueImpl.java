@@ -26,7 +26,7 @@ import org.eclipse.ocl.pivot.values.ValuesPackage;
  *
  * @generated NOT
  */
-public class SymbolicValueImpl extends ValueImpl implements SymbolicValue {
+public abstract class SymbolicValueImpl extends ValueImpl implements SymbolicValue {
 	/**
 	 * The number of structural features of the '<em>Symbolic Value</em>' class.
 	 * <!-- begin-user-doc -->

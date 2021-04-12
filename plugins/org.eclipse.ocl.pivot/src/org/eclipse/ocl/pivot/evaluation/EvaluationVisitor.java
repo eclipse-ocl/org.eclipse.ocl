@@ -14,7 +14,6 @@ package org.eclipse.ocl.pivot.evaluation;
 import org.eclipse.emf.common.util.Monitor;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CollectionLiteralPart;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.internal.evaluation.AbstractEvaluationVisitor;
@@ -52,10 +51,10 @@ public interface EvaluationVisitor extends Visitor<Object>, Evaluator
 
 	/**
 	 * @since 1.15
-	 */
+	 *
 	default @Nullable Object evaluate(@NonNull CollectionLiteralPart part) {
 		throw new UnsupportedOperationException();	// FIXME abstract
-	}
+	} */
 
 	@Override
 	@Nullable Object evaluate(@NonNull OCLExpression body);
@@ -101,6 +100,13 @@ public interface EvaluationVisitor extends Visitor<Object>, Evaluator
 	@Deprecated
 	@Override
 	@NonNull StandardLibrary getStandardLibrary();
+
+	/**
+	 * @since 1.15
+	 */
+	default @NonNull EvaluationVisitor getUndecoratedVisitor() {
+		return this;
+	}
 
 	@Override
 	boolean isCanceled();

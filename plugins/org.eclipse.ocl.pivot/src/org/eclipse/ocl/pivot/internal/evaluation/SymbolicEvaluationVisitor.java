@@ -24,6 +24,7 @@ import org.eclipse.ocl.pivot.CollectionItem;
 import org.eclipse.ocl.pivot.CollectionLiteralExp;
 import org.eclipse.ocl.pivot.CollectionLiteralPart;
 import org.eclipse.ocl.pivot.CollectionRange;
+import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.EnumLiteralExp;
@@ -48,6 +49,7 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.RealLiteralExp;
 import org.eclipse.ocl.pivot.ShadowExp;
+import org.eclipse.ocl.pivot.ShadowPart;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.StateExp;
 import org.eclipse.ocl.pivot.StringLiteralExp;
@@ -63,6 +65,7 @@ import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.evaluation.EvaluationHaltedException;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
@@ -74,7 +77,7 @@ import org.eclipse.ocl.pivot.internal.values.SymbolicCollectionValueImpl;
 import org.eclipse.ocl.pivot.internal.values.SymbolicExpressionValueImpl;
 import org.eclipse.ocl.pivot.internal.values.SymbolicNavigationCallValueImpl;
 import org.eclipse.ocl.pivot.internal.values.SymbolicOperationCallValueImpl;
-import org.eclipse.ocl.pivot.internal.values.SymbolicValueImpl;
+import org.eclipse.ocl.pivot.internal.values.SymbolicUnknownValueImpl;
 import org.eclipse.ocl.pivot.internal.values.SymbolicVariableValueImpl;
 import org.eclipse.ocl.pivot.labels.ILabelGenerator;
 import org.eclipse.ocl.pivot.library.LibraryBinaryOperation;
@@ -87,10 +90,12 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
+import org.eclipse.ocl.pivot.values.IntegerRange;
+import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.MapValue;
 import org.eclipse.ocl.pivot.values.NullValue;
-import org.eclipse.ocl.pivot.values.SymbolicExpressionValue;
+import org.eclipse.ocl.pivot.values.SymbolicConstraint;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 import org.eclipse.ocl.pivot.values.Value;
 
@@ -478,6 +483,26 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 		return delegate.getMetamodelManager();
 	}
 
+	protected @Nullable Object nestedEvaluate(@NonNull SymbolicValue scopeValue, @NonNull Object knownScopeValue, @NonNull OCLExpression expression) {
+			if (scopeValue instanceof SymbolicConstraint) {
+				return scopeValue;		// XXX FIXME deductions
+			}
+		//	if (scopeValue instanceof SymbolicUnknownValue) {
+		//		return scopeValue;
+		//	}
+	//	else if (scopeValue instanceof SymbolicVariableValue) {
+	//		return scopeValue;
+	//	}
+		SymbolicExecutor symbolicExecutor = (SymbolicExecutor) getExecutor();
+		try {
+			symbolicExecutor.pushSymbolicEvaluationEnvironment(scopeValue, knownScopeValue, expression);
+			return evaluate(expression);
+		}
+		finally {
+			symbolicExecutor.popEvaluationEnvironment();
+		}
+	}
+
 	@Override
 	public @NonNull String toString() {
 		StringBuilder s = new StringBuilder();
@@ -509,12 +534,12 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 
 	protected @Nullable Object trace(@NonNull Element expression, @Nullable Object value) {
 		if (value == null) {
-			assert !element2value.containsKey(expression);
+		//	assert !element2value.containsKey(expression);		-- multiple nulls seem reasonable
 			element2value.put(expression, value);
 		}
 		else {
 			Object old = element2value.put(expression, value);
-			assert old == null;
+			assert (old == null) || (old == value) || old.equals(value);
 			if (value instanceof InvalidValueException) {
 				throw (InvalidValueException)value;
 			}
@@ -550,7 +575,28 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 	public @Nullable Object visitCollectionItem(@NonNull CollectionItem item) {
 		Object result;
 		try {
-			result = delegate.visitCollectionItem(item);
+//			result = delegate.visitCollectionItem(item);
+			boolean isSymbolic = false;
+			boolean mayBeInvalid = false;
+			boolean mayBeNull = false;
+		//	Object itemValue = evaluate(item);
+			OCLExpression ownedItem = PivotUtil.getOwnedItem(item);
+			Object itemValue = delegate.evaluate(ownedItem);
+			if (itemValue instanceof SymbolicValue) {
+				isSymbolic = true;
+			}
+			if (ValueUtil.mayBeInvalid(itemValue)) {
+				mayBeInvalid = true;
+			}
+			if (ValueUtil.mayBeNull(itemValue)) {
+				mayBeNull = true;
+			}
+			if (isSymbolic) {
+				result = new SymbolicExpressionValueImpl(ownedItem, true, mayBeNull || mayBeInvalid);
+			}
+			else {
+				result = itemValue;
+			}
 		}
 		catch (InvalidValueException e) {
 			result = e;
@@ -565,15 +611,17 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 			boolean isSymbolic = false;
 			boolean mayBeInvalid = false;
 			boolean mayBeNull = false;
+			EvaluationVisitor undecoratedVisitor = delegate.getUndecoratedVisitor();
 			for (@NonNull CollectionLiteralPart part : PivotUtil.getOwnedParts(literalExp)) {
-				Object partValue = evaluate(part);
+				Object partValue = part.accept(undecoratedVisitor);
+				assert ValueUtil.isBoxed(partValue);	// Make sure Integer/Real are boxed, invalid is an exception, null is null
 				if (partValue instanceof SymbolicValue) {
 					isSymbolic = true;
 				}
 				if (ValueUtil.mayBeInvalid(partValue)) {
 					mayBeInvalid = true;
 				}
-				if (!ValueUtil.mayBeNull(partValue)) {
+				if (ValueUtil.mayBeNull(partValue)) {
 					mayBeNull = true;
 				}
 			}
@@ -601,10 +649,23 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 			if ((firstValue instanceof SymbolicValue) || (lastValue instanceof SymbolicValue)) {
 				boolean mayBeInvalid = ValueUtil.mayBeInvalid(firstValue) || ValueUtil.mayBeInvalid(firstValue);
 				boolean mayBeNull = ValueUtil.mayBeNull(lastValue) || ValueUtil.mayBeNull(lastValue);
-				result = new SymbolicValueImpl(range.getTypeId(), true, mayBeNull || mayBeInvalid);
+				TypeId typeId = range.getTypeId();
+				result = new SymbolicUnknownValueImpl(typeId, true, mayBeNull || mayBeInvalid);
 			}
 			else {
-				result = delegate.visitCollectionRange(range);
+//				result = delegate.visitCollectionRange(range);
+				CollectionType type = (CollectionType) ((CollectionLiteralExp)range.eContainer()).getType();
+				CollectionTypeId typeId = type.getTypeId();
+				IntegerValue firstInteger = ValueUtil.asIntegerValue(firstValue);
+				IntegerValue lastInteger = ValueUtil.asIntegerValue(lastValue);
+				// construct a lazy integer list for the range
+				IntegerRange integerRange = ValueUtil.createRange(firstInteger, lastInteger);
+				if (type.isUnique()) {
+					return ValueUtil.createOrderedSetRange(typeId, integerRange);
+				}
+				else {
+					return ValueUtil.createSequenceRange(typeId, integerRange);
+				}
 			}
 		}
 		catch (InvalidValueException e) {
@@ -666,34 +727,21 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 			else if (conditionValue instanceof SymbolicValue) {
 				boolean mayBeInvalid = ValueUtil.mayBeInvalid(conditionValue);
 				boolean mayBeNull = ValueUtil.mayBeNull(conditionValue);
-				SymbolicExecutor symbolicExecutor = (SymbolicExecutor) getExecutor();
-				try {
-					OCLExpression expression = PivotUtil.getOwnedThen(ifExp);
-					symbolicExecutor.pushSymbolicEvaluationEnvironment((SymbolicExpressionValue)conditionValue, Boolean.TRUE);
-					Object thenValue = evaluate(expression);
-					if (ValueUtil.mayBeInvalid(thenValue)) {
-						mayBeInvalid = true;
-					}
-					if (ValueUtil.mayBeNull(thenValue)) {
-						mayBeNull = true;
-					}
+				OCLExpression thenExpression = PivotUtil.getOwnedThen(ifExp);
+				Object thenValue = nestedEvaluate((SymbolicValue)conditionValue, Boolean.TRUE, thenExpression);
+				if (ValueUtil.mayBeInvalid(thenValue)) {
+					mayBeInvalid = true;
 				}
-				finally {
-					symbolicExecutor.popEvaluationEnvironment();
+				if (ValueUtil.mayBeNull(thenValue)) {
+					mayBeNull = true;
 				}
-				try {
-					OCLExpression expression = PivotUtil.getOwnedElse(ifExp);
-					symbolicExecutor.pushSymbolicEvaluationEnvironment((SymbolicExpressionValue)conditionValue, Boolean.FALSE);
-					Object elseValue = evaluate(expression);
-					if (ValueUtil.mayBeInvalid(elseValue)) {
-						mayBeInvalid = true;
-					}
-					if (ValueUtil.mayBeNull(elseValue)) {
-						mayBeNull = true;
-					}
+				OCLExpression elseExpression = PivotUtil.getOwnedElse(ifExp);
+				Object elseValue = nestedEvaluate((SymbolicValue)conditionValue, Boolean.FALSE, elseExpression);
+				if (ValueUtil.mayBeInvalid(elseValue)) {
+					mayBeInvalid = true;
 				}
-				finally {
-					symbolicExecutor.popEvaluationEnvironment();
+				if (ValueUtil.mayBeNull(elseValue)) {
+					mayBeNull = true;
 				}
 				result = new SymbolicExpressionValueImpl(ifExp, mayBeNull, mayBeInvalid);
 			}
@@ -780,7 +828,31 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 	public @Nullable Object visitMapLiteralExp(@NonNull MapLiteralExp literalExp) {
 		Object result;
 		try {
-			result = delegate.visitMapLiteralExp(literalExp);
+			boolean isSymbolic = false;
+			boolean mayBeInvalid = false;
+			boolean mayBeNull = false;
+			EvaluationVisitor undecoratedVisitor = delegate.getUndecoratedVisitor();
+			for (@NonNull MapLiteralPart part : PivotUtil.getOwnedParts(literalExp)) {
+				Object keyValue = PivotUtil.getOwnedKey(part).accept(undecoratedVisitor);
+				Object valueValue = PivotUtil.getOwnedValue(part).accept(undecoratedVisitor);
+				assert ValueUtil.isBoxed(keyValue);	// Make sure Integer/Real are boxed, invalid is an exception, null is null
+				assert ValueUtil.isBoxed(valueValue);	// Make sure Integer/Real are boxed, invalid is an exception, null is null
+				if ((keyValue instanceof SymbolicValue) || (valueValue instanceof SymbolicValue)) {
+					isSymbolic = true;
+				}
+				if (ValueUtil.mayBeInvalid(keyValue) || ValueUtil.mayBeInvalid(valueValue)) {
+					mayBeInvalid = true;
+				}
+				if (ValueUtil.mayBeNull(keyValue) || ValueUtil.mayBeNull(valueValue)) {
+					mayBeNull = true;
+				}
+			}
+			if (isSymbolic) {
+				result = new SymbolicExpressionValueImpl(literalExp, true, mayBeNull || mayBeInvalid);
+			}
+			else {
+				result = delegate.visitMapLiteralExp(literalExp);
+			}
 		}
 		catch (InvalidValueException e) {
 			result = e;
@@ -885,7 +957,28 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 	public @Nullable Object visitShadowExp(@NonNull ShadowExp shadowExp) {
 		Object result;
 		try {
-			result = delegate.visitShadowExp(shadowExp);
+			boolean isSymbolic = false;
+			boolean mayBeInvalid = false;
+			boolean mayBeNull = false;
+			for (@NonNull ShadowPart part : PivotUtil.getOwnedParts(shadowExp)) {
+				Object partValue = evaluate(PivotUtil.getOwnedInit(part));
+				assert ValueUtil.isBoxed(partValue);	// Make sure Integer/Real are boxed, invalid is an exception, null is null
+				if (partValue instanceof SymbolicValue) {
+					isSymbolic = true;
+				}
+				if (ValueUtil.mayBeInvalid(partValue)) {
+					mayBeInvalid = true;
+				}
+				if (ValueUtil.mayBeNull(partValue)) {
+					mayBeNull = true;
+				}
+			}
+			if (isSymbolic) {
+				result = new SymbolicExpressionValueImpl(shadowExp, true, mayBeNull || mayBeInvalid);
+			}
+			else {
+				result = delegate.visitShadowExp(shadowExp);
+			}
 		}
 		catch (InvalidValueException e) {
 			result = e;
@@ -921,7 +1014,29 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 	public @Nullable Object visitTupleLiteralExp(@NonNull TupleLiteralExp literalExp) {
 		Object result;
 		try {
-			result = delegate.visitTupleLiteralExp(literalExp);
+			boolean isSymbolic = false;
+			boolean mayBeInvalid = false;
+			boolean mayBeNull = false;
+			EvaluationVisitor undecoratedVisitor = delegate.getUndecoratedVisitor();
+			for (@NonNull TupleLiteralPart part : PivotUtil.getOwnedParts(literalExp)) {
+				Object partValue = PivotUtil.getOwnedInit(part).accept(undecoratedVisitor);
+				assert ValueUtil.isBoxed(partValue);	// Make sure Integer/Real are boxed, invalid is an exception, null is null
+				if (partValue instanceof SymbolicValue) {
+					isSymbolic = true;
+				}
+				if (ValueUtil.mayBeInvalid(partValue)) {
+					mayBeInvalid = true;
+				}
+				if (ValueUtil.mayBeNull(partValue)) {
+					mayBeNull = true;
+				}
+			}
+			if (isSymbolic) {
+				result = new SymbolicExpressionValueImpl(literalExp, true, mayBeNull || mayBeInvalid);
+			}
+			else {
+				result = delegate.visitTupleLiteralExp(literalExp);
+			}
 		}
 		catch (InvalidValueException e) {
 			result = e;

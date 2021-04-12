@@ -12,6 +12,8 @@ package org.eclipse.ocl.pivot.internal.values;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.SymbolicExpressionValue;
 
 /**
@@ -31,7 +33,8 @@ public class SymbolicExpressionValueImpl extends SymbolicValueImpl implements Sy
 	 * @generated NOT
 	 */
 	public SymbolicExpressionValueImpl(@NonNull OCLExpression expression, boolean mayBeNull, boolean mayBeInvalid) {
-		super(expression.getTypeId(), mayBeNull, mayBeInvalid);
+		// FIXME getBehavioralType needed by test_umlValidation_Bug467192
+		super(ClassUtil.nonNullState(PivotUtil.getBehavioralType(expression)).getTypeId(), mayBeNull, mayBeInvalid);
 		this.expression = expression;
 	}
 

@@ -102,7 +102,7 @@ public class BooleanAndOperation2 extends AbstractSimpleBinaryOperation
 		assert sourceValue instanceof SymbolicExpressionValue;
 		SymbolicExecutor symbolicExecutor = (SymbolicExecutor)evaluationVisitor.getExecutor();
 		try {
-			symbolicExecutor.pushSymbolicEvaluationEnvironment((SymbolicExpressionValue)sourceValue, Boolean.TRUE);
+			symbolicExecutor.pushSymbolicEvaluationEnvironment((SymbolicExpressionValue)sourceValue, Boolean.TRUE, callExp);
 			Object argumentValue = evaluationVisitor.evaluate(argument);
 			List<@Nullable Object> boxedSourceAndArgumentValues = Lists.newArrayList(sourceValue, argumentValue);
 			boolean mayBeInvalid = ValueUtil.mayBeInvalid(sourceValue) || ValueUtil.mayBeInvalid(argumentValue);

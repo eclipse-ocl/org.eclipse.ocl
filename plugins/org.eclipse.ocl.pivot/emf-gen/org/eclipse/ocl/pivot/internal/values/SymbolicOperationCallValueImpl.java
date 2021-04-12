@@ -47,7 +47,7 @@ public class SymbolicOperationCallValueImpl extends SymbolicExpressionValueImpl 
 		super(operationCallExp, mayBeNull, mayBeInvalid);
 		this.operation = operation;
 		this.boxedSourceAndArgumentValues = boxedSourceAndArgumentValues;
-		assert operation == operationCallExp.getReferredOperation().getImplementation();
+	//	assert operation == operationCallExp.getReferredOperation().getImplementation();		// XXX lazy init may not have happened
 		assert boxedSourceAndArgumentValues.size() == operationCallExp.getReferredOperation().getOwnedParameters().size()+1;
 	}
 

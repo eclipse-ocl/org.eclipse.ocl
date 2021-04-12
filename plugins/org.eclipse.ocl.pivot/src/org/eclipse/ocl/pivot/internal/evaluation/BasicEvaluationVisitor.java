@@ -139,13 +139,13 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 
 	/**
 	 * @since 1.15
-	 */
+	 *
 	@Override
 	public @Nullable Object evaluate(@NonNull CollectionLiteralPart part) {
 		Object value = part.accept(undecoratedVisitor);
 		assert ValueUtil.isBoxed(value);	// Make sure Integer/Real are boxed, invalid is an exception, null is null
 		return value;
-	}
+	} */
 
 	@Override
 	public @Nullable Object evaluate(@NonNull OCLExpression body) {
@@ -602,7 +602,7 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 	}
 
 	/**
-	 * Callback for a CollectionLiteralExp visit.
+	 * Callback for a MapLiteralExp visit.
 	 */
 	@Override
 	public Object visitMapLiteralExp(@NonNull MapLiteralExp mapLiteralExp) {

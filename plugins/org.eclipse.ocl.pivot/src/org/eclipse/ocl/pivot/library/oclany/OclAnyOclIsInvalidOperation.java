@@ -12,8 +12,11 @@ package org.eclipse.ocl.pivot.library.oclany;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.values.SymbolicUnknownValueImpl;
 import org.eclipse.ocl.pivot.library.AbstractSimpleUnaryOperation;
-import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.pivot.values.InvalidValue;
+import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
  * OclAnyOclIsInvalidOperation realises the OclAny::oclIsInvalid() library operation.
@@ -23,7 +26,16 @@ public class OclAnyOclIsInvalidOperation extends AbstractSimpleUnaryOperation
 	public static final @NonNull OclAnyOclIsInvalidOperation INSTANCE = new OclAnyOclIsInvalidOperation();
 
 	@Override
-	public @NonNull Boolean evaluate(@Nullable Object argument) {
-		return argument instanceof InvalidValueException;
+	public @NonNull Object evaluate(@Nullable Object argument) {
+		if (argument instanceof InvalidValue) {
+			return Boolean.TRUE;
+		}
+		if (argument instanceof SymbolicValue) {
+			SymbolicValue symbolicValue = (SymbolicValue)argument;
+			if (symbolicValue.mayBeInvalid()) {
+				return new SymbolicUnknownValueImpl(TypeId.BOOLEAN, false, false);
+			}
+		}
+		return Boolean.FALSE;
 	}
 }

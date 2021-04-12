@@ -11,10 +11,8 @@
 package org.eclipse.ocl.pivot.internal.values;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.VariableDeclaration;
-import org.eclipse.ocl.pivot.internal.manager.SymbolicExecutor;
-import org.eclipse.ocl.pivot.values.SimpleSymbolicConstraint;
-import org.eclipse.ocl.pivot.values.SymbolicVariableValue;
+import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.values.SymbolicUnknownValue;
 
 /**
  * <!-- begin-user-doc -->
@@ -24,10 +22,8 @@ import org.eclipse.ocl.pivot.values.SymbolicVariableValue;
  *
  * @generated
  */
-public class SymbolicVariableValueImpl extends SymbolicValueImpl implements SymbolicVariableValue {
+public class SymbolicUnknownValueImpl extends SymbolicValueImpl implements SymbolicUnknownValue {
 
-	protected final @NonNull VariableDeclaration variable;
-//	protected final @NonNull SymbolicValue value;
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -36,10 +32,8 @@ public class SymbolicVariableValueImpl extends SymbolicValueImpl implements Symb
 	 * @param object
 	 * @generated NOT
 	 */
-	public SymbolicVariableValueImpl(@NonNull VariableDeclaration variable, boolean mayBeNull, boolean mayBeInvalid) { //, @NonNull SymbolicValue value) {
-		super(variable.getTypeId(), mayBeNull, mayBeInvalid);
-		this.variable = variable;
-//		this.value = value;
+	public SymbolicUnknownValueImpl(@NonNull TypeId typeId, boolean mayBeNull, boolean mayBeInvalid) { //, @NonNull SymbolicValue value) {
+		super(typeId, mayBeNull, mayBeInvalid);
 	}
 
 //	@Override
@@ -47,24 +41,6 @@ public class SymbolicVariableValueImpl extends SymbolicValueImpl implements Symb
 //		return this;
 //	}
 
-	@Override
-	public void deduceFrom(@NonNull SymbolicExecutor symbolicExecutor, @NonNull SimpleSymbolicConstraint symbolicConstraint) {
-		symbolicExecutor.getEvaluationEnvironment().addSymbolicResult(variable, null, symbolicConstraint);
-	}
-
-//	@Override
-//	public @NonNull TypeId getTypeId2() {
-//		return variable.getTypeId();
-//	}
-
-//	public @NonNull SymbolicValue getValue() {
-//		return value;
-//	}
-
-	@Override
-	public @NonNull VariableDeclaration getVariable() {
-		return variable;
-	}
 
 //	@Override
 //	public boolean mayBeNull() {
@@ -73,14 +49,6 @@ public class SymbolicVariableValueImpl extends SymbolicValueImpl implements Symb
 //		assert !isRequired || !mayBeNull;
 //		return mayBeNull;
 //	}
-
-	@Override
-	public void toString(@NonNull StringBuilder s, int lengthLimit) {
-		s.append("\"");
-		s.append(variable.getName());
-		s.append("\":");
-		super.toString(s, lengthLimit);
-	}
 
 /*	@Override
 	public EList<Adapter> eAdapters() {
