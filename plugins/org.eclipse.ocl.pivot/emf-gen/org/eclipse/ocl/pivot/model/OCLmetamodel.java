@@ -18,7 +18,6 @@
 package	org.eclipse.ocl.pivot.model;
 
 import java.io.IOException;
-import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 
@@ -27,27 +26,34 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.*;
+import org.eclipse.ocl.pivot.AnyType;
+import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.Class;
+import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.DataType;
+import org.eclipse.ocl.pivot.Enumeration;
+import org.eclipse.ocl.pivot.EnumerationLiteral;
+import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.Package;
+import org.eclipse.ocl.pivot.Parameter;
+import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.PrimitiveType;
+import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.SequenceType;
+import org.eclipse.ocl.pivot.SetType;
+import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
-import org.eclipse.ocl.pivot.library.LibraryFeature;
-import org.eclipse.ocl.pivot.model.OCLstdlib;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
-
-import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
-import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
 /**
  * This is the pivot representation of the http://www.eclipse.org/ocl/2015/Pivot metamodel
@@ -1927,10 +1933,10 @@ public class OCLmetamodel extends ASResourceImpl
 
 			ownedOperations = _Element.getOwnedOperations();
 			ownedOperations.add(operation = op_Element_allOwnedElements);
-			operation.setBodyExpression(createExpressionInOCL(_Set_Element_NullFree, "self->closure(oclContents()->selectByKind(Element))"));
+			operation.setBodyExpression(createExpressionInOCL(_Element, "self->closure(oclContents()->selectByKind(Element))", _Set_Element_NullFree));
 			ownedOperations.add(operation = op_Element_getValue);
 			operation.setIsRequired(false);
-			operation.setBodyExpression(createExpressionInOCL(_Element, "null"));
+			operation.setBodyExpression(createExpressionInOCL(_Element, "null", _Element));
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("stereotype", _Type, true));
 			ownedParameters.add(parameter = createParameter("propertyName", _String, true));
@@ -1941,26 +1947,26 @@ public class OCLmetamodel extends ASResourceImpl
 
 			ownedOperations = _OperationCallExp.getOwnedOperations();
 			ownedOperations.add(operation = op_OperationCallExp_hasOclVoidOverload);
-			operation.setBodyExpression(createExpressionInOCL(_Boolean, "false"));
+			operation.setBodyExpression(createExpressionInOCL(_OperationCallExp, "false", _Boolean));
 
 			ownedOperations = _Property.getOwnedOperations();
 			ownedOperations.add(operation = op_Property_isAttribute);
-			operation.setBodyExpression(createExpressionInOCL(_Boolean, "--Type.allInstances()->exists(c| c.ownedAttribute->includes(p))\nlet container : ocl::OclElement = oclContainer() in container.oclIsKindOf(Class) and container.oclAsType(Class).ownedProperties->includes(self)"));
+			operation.setBodyExpression(createExpressionInOCL(_Property, "--Type.allInstances()->exists(c| c.ownedAttribute->includes(p))\nlet container : ocl::OclElement = oclContainer() in container.oclIsKindOf(Class) and container.oclAsType(Class).ownedProperties->includes(self)", _Boolean));
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("p", _Property, true));
 
 			ownedOperations = _PropertyCallExp.getOwnedOperations();
 			ownedOperations.add(operation = op_PropertyCallExp_getSpecializedReferredPropertyOwningType);
-			operation.setBodyExpression(createExpressionInOCL(_Type, "referredProperty?.owningClass"));
+			operation.setBodyExpression(createExpressionInOCL(_PropertyCallExp, "referredProperty?.owningClass", _Type));
 			ownedOperations.add(operation = op_PropertyCallExp_getSpecializedReferredPropertyType);
-			operation.setBodyExpression(createExpressionInOCL(_Type, "referredProperty?.type.oclAsType(Class)"));
+			operation.setBodyExpression(createExpressionInOCL(_PropertyCallExp, "referredProperty?.type.oclAsType(Class)", _Type));
 
 			ownedOperations = _ReferringElement.getOwnedOperations();
 			ownedOperations.add(operation = op_ReferringElement_getReferredElement);
 
 			ownedOperations = _SelfType.getOwnedOperations();
 			ownedOperations.add(operation = op_SelfType_specializeIn);
-			operation.setBodyExpression(createExpressionInOCL(_Type, "selfType"));
+			operation.setBodyExpression(createExpressionInOCL(_SelfType, "selfType", _Type));
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("expr", _CallExp, true));
 			ownedParameters.add(parameter = createParameter("selfType", _Type, true));
@@ -1968,20 +1974,20 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedOperations = _Type.getOwnedOperations();
 			ownedOperations.add(operation = op_Type_flattenedType);
 			operation.setIsRequired(false);
-			operation.setBodyExpression(createExpressionInOCL(_Type, "self"));
+			operation.setBodyExpression(createExpressionInOCL(_Type, "self", _Type));
 			ownedOperations.add(operation = op_Type_isClass);
 			operation.setIsRequired(false);
 			ownedOperations.add(operation = op_Type_isTemplateParameter);
 			operation.setIsRequired(false);
 			ownedOperations.add(operation = op_Type_specializeIn);
-			operation.setBodyExpression(createExpressionInOCL(_Type, "self"));
+			operation.setBodyExpression(createExpressionInOCL(_Type, "self", _Type));
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("expr", _CallExp, true));
 			ownedParameters.add(parameter = createParameter("selfType", _Type, true));
 
 			ownedOperations = _TypedElement.getOwnedOperations();
 			ownedOperations.add(operation = op_TypedElement_CompatibleBody);
-			operation.setBodyExpression(createExpressionInOCL(_Boolean, "bodySpecification.type?.conformsTo(self.type)"));
+			operation.setBodyExpression(createExpressionInOCL(_TypedElement, "bodySpecification.type?.conformsTo(self.type)", _Boolean));
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("bodySpecification", _ValueSpecification, true));
 

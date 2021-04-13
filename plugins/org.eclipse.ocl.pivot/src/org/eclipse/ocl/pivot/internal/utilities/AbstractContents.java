@@ -30,6 +30,7 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OrderedSetType;
+import org.eclipse.ocl.pivot.ParameterVariable;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
@@ -49,6 +50,7 @@ import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.values.Unlimited;
@@ -120,10 +122,26 @@ public abstract class AbstractContents extends PivotUtil
 		return specializedType;
 	}
 
+	@Deprecated /* @deprecated add selfType/resultType */
 	protected @NonNull ExpressionInOCL createExpressionInOCL(@NonNull Type type, @NonNull String exprString) {
 		ExpressionInOCL pivotExpression = PivotFactory.eINSTANCE.createExpressionInOCL();
 		pivotExpression.setType(type);
 		pivotExpression.setBody(exprString);
+		return pivotExpression;
+	}
+
+	/**
+	 * @since 1.15
+	 */
+	protected @NonNull ExpressionInOCL createExpressionInOCL(@NonNull Type selfType, @NonNull String exprString, @NonNull Type resultType) {
+		ExpressionInOCL pivotExpression = PivotFactory.eINSTANCE.createExpressionInOCL();
+		pivotExpression.setType(resultType);
+		pivotExpression.setBody(exprString);
+		ParameterVariable contextVariable = PivotFactory.eINSTANCE.createParameterVariable();
+		contextVariable.setName(PivotConstants.SELF_NAME);
+		contextVariable.setType(selfType);
+		contextVariable.setIsRequired(true);
+		pivotExpression.setOwnedContext(contextVariable);
 		return pivotExpression;
 	}
 
