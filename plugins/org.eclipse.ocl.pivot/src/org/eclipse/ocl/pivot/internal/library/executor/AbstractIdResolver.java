@@ -1591,6 +1591,12 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	}
 
 	@Override
+	public void removeType(@NonNull TypeId typeId) {
+		@SuppressWarnings("unused")
+		Type old = key2type.remove(typeId);
+	}
+
+	@Override
 	public @NonNull Enumerator unboxedValueOf(@NonNull EnumerationLiteralId enumerationLiteralId) {
 		if (enumerationLiteral2enumerator == null) {
 			synchronized (this) {

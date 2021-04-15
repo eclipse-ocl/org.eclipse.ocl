@@ -405,6 +405,20 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/ids/IdResolver.java" type="org.eclipse.ocl.pivot.ids.IdResolver">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.ids.IdResolver"/>
+                <message_argument value="removeType(TypeId)"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.ids.IdResolver"/>
+                <message_argument value="removeType(TypeId)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/internal/context/AbstractParserContext.java" type="org.eclipse.ocl.pivot.internal.context.AbstractParserContext">
         <filter comment="Bug 512402 workaround" id="576725006">
             <message_arguments>

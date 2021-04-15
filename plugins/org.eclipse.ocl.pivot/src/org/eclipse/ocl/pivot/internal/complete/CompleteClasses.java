@@ -320,6 +320,7 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 			CompleteClassInternal completeClass = name2completeClass.get(partialClass.getName());
 			if ((completeClass != null) && completeClass.didRemoveClass(partialClass)) {
 				remove(completeClass);
+				getCompleteModel().getEnvironmentFactory().getIdResolver().removeType(partialClass.getTypeId());
 				completeClass.dispose();
 			}
 		}
