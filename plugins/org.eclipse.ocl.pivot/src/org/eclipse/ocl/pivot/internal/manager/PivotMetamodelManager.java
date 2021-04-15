@@ -103,7 +103,7 @@ import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
-import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationVisitor;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis;
 import org.eclipse.ocl.pivot.internal.library.ConstrainedOperation;
 import org.eclipse.ocl.pivot.internal.library.EInvokeOperation;
 import org.eclipse.ocl.pivot.internal.library.ImplementationManager;
@@ -317,7 +317,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	 * Lazily computed, eagerly invalidated static analysis of the control flow within invariants and bodies.
 	 */
 	private @Nullable Map<@NonNull OCLExpression, @NonNull FlowAnalysis> oclExpression2flowAnalysis = null;
-	private @Nullable Map<@NonNull ExpressionInOCL, @NonNull SymbolicEvaluationVisitor> expressionInOCL2symbolicAnalysis = null;
+	private @Nullable Map<@NonNull ExpressionInOCL, @NonNull SymbolicAnalysis> expressionInOCL2symbolicAnalysis = null;
 
 	private @Nullable Map<Resource,External2AS> es2ases = null;
 
@@ -419,10 +419,10 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	 * @since 1.15
 	 */
 	@Override
-	public @Nullable SymbolicEvaluationVisitor basicGetSymbolicAnalysis(@NonNull Element element) {
+	public @Nullable SymbolicAnalysis basicGetSymbolicAnalysis(@NonNull Element element) {
 		ExpressionInOCL expressionInOCL = PivotUtil.getContainingExpressionInOCL(element);
 		if (expressionInOCL != null) {
-			Map<@NonNull ExpressionInOCL, @NonNull SymbolicEvaluationVisitor> expressionInOCL2symbolicAnalysis2 = expressionInOCL2symbolicAnalysis;
+			Map<@NonNull ExpressionInOCL, @NonNull SymbolicAnalysis> expressionInOCL2symbolicAnalysis2 = expressionInOCL2symbolicAnalysis;
 			if (expressionInOCL2symbolicAnalysis2 != null) {
 				return expressionInOCL2symbolicAnalysis2.get(expressionInOCL);
 			}
@@ -1768,7 +1768,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	}
 
 	@Override
-	public @NonNull SymbolicEvaluationVisitor getSymbolicAnalysis(@NonNull Element element) {
+	public @NonNull SymbolicAnalysis getSymbolicAnalysis(@NonNull Element element) {
 		ExpressionInOCL expressionInOCL = PivotUtil.getContainingExpressionInOCL(element);
 		if (expressionInOCL != null) {
 			return getSymbolicAnalysis(expressionInOCL);
@@ -1779,12 +1779,12 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	/**
 	 * @since 1.15
 	 */
-	public @NonNull SymbolicEvaluationVisitor getSymbolicAnalysis(@NonNull ExpressionInOCL expressionInOCL) {
-		Map<@NonNull ExpressionInOCL, @NonNull SymbolicEvaluationVisitor> expressionInOCL2symbolicAnalysis2 = expressionInOCL2symbolicAnalysis;
+	public @NonNull SymbolicAnalysis getSymbolicAnalysis(@NonNull ExpressionInOCL expressionInOCL) {
+		Map<@NonNull ExpressionInOCL, @NonNull SymbolicAnalysis> expressionInOCL2symbolicAnalysis2 = expressionInOCL2symbolicAnalysis;
 		if (expressionInOCL2symbolicAnalysis2 == null) {
 			expressionInOCL2symbolicAnalysis = expressionInOCL2symbolicAnalysis2 = new HashMap<>();
 		}
-		SymbolicEvaluationVisitor symbolicAnalysis = expressionInOCL2symbolicAnalysis2.get(expressionInOCL);
+		SymbolicAnalysis symbolicAnalysis = expressionInOCL2symbolicAnalysis2.get(expressionInOCL);
 		if (symbolicAnalysis == null) {
 			VariableDeclaration contextVariable = PivotUtil.getOwnedContext(expressionInOCL);
 			boolean mayBeNull = !contextVariable.isIsRequired();
@@ -1810,7 +1810,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	 * @since 1.3
 	 */
 	@Override
-	public @NonNull SymbolicEvaluationVisitor getSymbolicAnalysis(@NonNull ExpressionInOCL expressionInOCL, @Nullable Object context, @Nullable Object @Nullable [] parameters) {
+	public @NonNull SymbolicAnalysis getSymbolicAnalysis(@NonNull ExpressionInOCL expressionInOCL, @Nullable Object context, @Nullable Object @Nullable [] parameters) {
 		ModelManager modelManager = environmentFactory.createModelManager(context);
 		ExecutorInternal executor = createSymbolicExecutor(modelManager);
 		EvaluationEnvironment evaluationEnvironment = executor.initializeEvaluationEnvironment(expressionInOCL);
@@ -1832,7 +1832,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 			evaluationEnvironment.add(parameterVariable, parameterValue);
 		//	symbolicEvaluationEnvironment.addSymbolicResult(parameterVariable, null, parameterValue);
 		}
-		SymbolicEvaluationVisitor symbolicAnalysis = new SymbolicEvaluationVisitor(expressionInOCL, evaluationVisitor, context, parameters);
+		SymbolicAnalysis symbolicAnalysis = new SymbolicAnalysis(expressionInOCL, evaluationVisitor, context, parameters);
 		try {
 			symbolicAnalysis.evaluate(expressionInOCL);
 		}

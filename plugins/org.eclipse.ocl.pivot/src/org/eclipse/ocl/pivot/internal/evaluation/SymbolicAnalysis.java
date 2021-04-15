@@ -106,17 +106,21 @@ import com.google.common.collect.Lists;
  * is enabled, to trace interim evaluation results to the console.
  * @since 1.15
  */
-public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implements EvaluationVisitor
+public class SymbolicAnalysis extends EvaluationVisitorDecorator implements EvaluationVisitor
 {
 	protected final @NonNull ExpressionInOCL expressionInOCL;
 
-	private @NonNull Map<@NonNull Element, @Nullable Object> element2value = new HashMap<>();
+	/**
+	 * The known (symbolic) value of each expression element, null if not yet computed.
+	 * The null value must be represented by ValueUtil.NULL_VALUE.
+	 */
+	private @NonNull Map<@NonNull Element, @NonNull Object> element2value = new HashMap<>();
 
 
 	/**
 	 * Initializes the symbolic analysis of expressionInOCL that delegates to a non-symbolic evaluation visitor.
 	 */
-	public SymbolicEvaluationVisitor(@NonNull ExpressionInOCL expressionInOCL, @NonNull EvaluationVisitor visitor,
+	public SymbolicAnalysis(@NonNull ExpressionInOCL expressionInOCL, @NonNull EvaluationVisitor visitor,
 			@Nullable Object context, @Nullable Object @NonNull [] parameters) {
 		super(visitor);
 		this.expressionInOCL = expressionInOCL;
@@ -388,7 +392,16 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 		catch (InvalidValueException e) {
 			result = e;
 		}
-		element2value.put(expressionInOCL, result);
+		element2value.put(expressionInOCL, result != null ? result : ValueUtil.NULL_VALUE);
+	}
+
+	@Override
+	public @Nullable Object evaluate(@NonNull OCLExpression expression) {
+		Object value = element2value.get(expression);
+		if (value != null) {
+			return value == ValueUtil.NULL_VALUE ? null : value;
+		}
+		return super.evaluate(expression);
 	}
 
 	private void evaluate(@NonNull VariableDeclaration variable) {
@@ -400,11 +413,8 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 
 	public @Nullable Object get(@NonNull Element element) {
 		assert element2value.containsKey(element);
-		Object object = element2value.get(element);
-		if (object == null) {
-			assert element2value.containsKey(element);
-		}
-		return object;
+		Object value = element2value.get(element);
+		return value == ValueUtil.NULL_VALUE ? null : value;
 	}
 
 	@Override
@@ -431,7 +441,7 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 	public boolean isNull(@NonNull Element element) {
 	//	assert element2value.containsKey(element);
 		Object object = element2value.get(element);
-		return object == null;
+		return object == ValueUtil.NULL_VALUE;
 	}
 
 	public boolean isTrue(@NonNull Element element) {
@@ -443,9 +453,9 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 	public boolean mayBeInvalid(@NonNull Element element) {
 	//	assert element2value.containsKey(element);
 		Object object = element2value.get(element);
-		if (object == null) {
-			return !element2value.containsKey(element);				// null may not be invalid
-		}
+	//	if (object == null) {
+	//		return !element2value.containsKey(element);				// null may not be invalid
+	//	}
 		if (object instanceof Value) {
 			return ((Value)object).mayBeInvalid();
 		}
@@ -455,7 +465,7 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 	public boolean mayBeNull(@NonNull Element element) {
 	//	assert element2value.containsKey(element);
 		Object object = element2value.get(element);
-		if (object == null) {
+		if (object == ValueUtil.NULL_VALUE) {
 			return true;
 		}
 		if (object instanceof Value) {
@@ -464,7 +474,7 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 		return false;
 	}
 
-	public @NonNull Map<@NonNull Element, @Nullable Object> getElement2Value() {
+	public @NonNull Map<@NonNull Element, @NonNull Object> getElement2Value() {
 		return element2value;
 	}
 
@@ -534,10 +544,13 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 
 	protected @Nullable Object trace(@NonNull Element expression, @Nullable Object value) {
 		if (value == null) {
-		//	assert !element2value.containsKey(expression);		-- multiple nulls seem reasonable
-			element2value.put(expression, value);
+		//	assert !element2value.containsKey(expression);		-- multiple nulls seem reasonable ?? sign of gratuitous recursion
+			element2value.put(expression, ValueUtil.NULL_VALUE);
 		}
 		else {
+			if ("self.name".equals(expression.toString())) {
+				getClass();		// XXX
+			}
 			Object old = element2value.put(expression, value);
 			assert (old == null) || (old == value) || old.equals(value);
 			if (value instanceof InvalidValueException) {

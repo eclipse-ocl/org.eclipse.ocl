@@ -28,7 +28,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
-import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationVisitor;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
@@ -57,7 +57,7 @@ public interface MetamodelManagerInternal extends MetamodelManager
 		/**
 		 * @since 1.15
 		 */
-		default @Nullable SymbolicEvaluationVisitor basicGetSymbolicAnalysis(@NonNull Element element) {
+		default @Nullable SymbolicAnalysis basicGetSymbolicAnalysis(@NonNull Element element) {
 			return null;
 		}
 		@NonNull FinalAnalysis getFinalAnalysis();
@@ -65,13 +65,13 @@ public interface MetamodelManagerInternal extends MetamodelManager
 		/**
 		 * @since 1.15
 		 */
-		default @NonNull SymbolicEvaluationVisitor getSymbolicAnalysis(@NonNull ExpressionInOCL expressionInOCL, @Nullable Object context, @Nullable Object @Nullable [] parameters) {
+		default @NonNull SymbolicAnalysis getSymbolicAnalysis(@NonNull ExpressionInOCL expressionInOCL, @Nullable Object context, @Nullable Object @Nullable [] parameters) {
 			throw new UnsupportedOperationException();
 		}
 		/**
 		 * @since 1.15
 		 */
-		default @NonNull SymbolicEvaluationVisitor getSymbolicAnalysis(@NonNull Element element) {
+		default @NonNull SymbolicAnalysis getSymbolicAnalysis(@NonNull Element element) {
 			throw new UnsupportedOperationException();
 		}
 		void resetFinalAnalysis();

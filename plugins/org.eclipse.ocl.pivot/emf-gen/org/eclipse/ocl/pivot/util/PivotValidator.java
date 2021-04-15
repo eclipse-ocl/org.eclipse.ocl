@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.*;
-import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationVisitor;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
@@ -2495,8 +2495,8 @@ extends EObjectValidator {
 				mayBeInvalid = false;
 				parameterValues[i] = new Object[]{new SymbolicVariableValueImpl(parameter, mayBeNull, mayBeInvalid)};
 			}
-			SymbolicEvaluationVisitor symbolicAnalysis = metamodelManager.getSymbolicAnalysis(expressionInOCL, selfValue, parameterValues);
-			Map<@NonNull Element, @Nullable Object> element2Value = symbolicAnalysis.getElement2Value();
+			SymbolicAnalysis symbolicAnalysis = metamodelManager.getSymbolicAnalysis(expressionInOCL, selfValue, parameterValues);
+			Map<@NonNull Element, @NonNull Object> element2Value = symbolicAnalysis.getElement2Value();
 			for (@NonNull Element element : element2Value.keySet()) {
 				Object value = element2Value.get(element);
 				if (ValueUtil.mayBeInvalid(value)) {
