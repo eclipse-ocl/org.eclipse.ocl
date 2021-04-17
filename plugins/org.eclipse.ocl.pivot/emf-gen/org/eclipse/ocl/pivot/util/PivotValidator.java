@@ -2499,21 +2499,21 @@ extends EObjectValidator {
 			Map<@NonNull Element, @NonNull Object> element2Value = symbolicAnalysis.getElement2Value();
 			for (@NonNull Element element : element2Value.keySet()) {
 				Object value = element2Value.get(element);
-				if (ValueUtil.mayBeInvalid(value)) {
+				if (ValueUtil.mayBeInvalid(value) && !ValueUtil.isInvalidValue(value)) {
 					if (diagnostics != null) {
 						boolean isLeaf = true;
 						for (EObject childElement : element.eContents()) {
 							Object childValue = element2Value.get(childElement);
-							if (ValueUtil.mayBeInvalid(childValue)) {
+							if (ValueUtil.mayBeInvalid(childValue) && !ValueUtil.isInvalidValue(childValue)) {
 								isLeaf = false;
 								break;
 							}
 						}
 						if (isLeaf) {
-						//	diagnostics.add(new BasicDiagnostic(Diagnostic.ERROR, DIAGNOSTIC_SOURCE, 0, "May be invalid", new Object[] {element}));		// XXX
+							diagnostics.add(new BasicDiagnostic(Diagnostic.ERROR, DIAGNOSTIC_SOURCE, 0, "May be invalid", new Object[] {element}));		// XXX
 						}
 					}
-				//	allOk = false;			// XXX
+					allOk = false;			// XXX
 				}
 			}
 		}
