@@ -71,9 +71,9 @@ public interface MetamodelManagerInternal extends MetamodelManager
 		/**
 		 * @since 1.15
 		 */
-		default @NonNull SymbolicAnalysis getSymbolicAnalysis(@NonNull Element element) {
-			throw new UnsupportedOperationException();
-		}
+	//	default @NonNull SymbolicAnalysis getSymbolicAnalysis(@NonNull Element element) {
+	//		throw new UnsupportedOperationException();
+	//	}
 		void resetFinalAnalysis();
 		void resetFlowAnalysis();
 	}

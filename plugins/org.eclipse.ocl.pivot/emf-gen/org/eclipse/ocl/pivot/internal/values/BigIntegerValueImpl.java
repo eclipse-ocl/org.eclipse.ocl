@@ -178,6 +178,14 @@ public class BigIntegerValueImpl extends IntegerValueImpl
 		return value.compareTo(right.bigIntegerValue()) >= 0 ? this : right;
 	}
 
+	/**
+	 * @since 1.15
+	 */
+	@Override
+	public boolean mayBeZero() {
+		return value.signum() == 0;
+	}
+
 	@Override
 	public @NonNull IntegerValue minInteger(@NonNull IntegerValue right) {
 		return value.compareTo(right.bigIntegerValue()) <= 0 ? this : right;

@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.io.Writer;
 import java.lang.reflect.Method;
 import java.net.URL;
@@ -361,6 +362,26 @@ public class PivotTestCase extends TestCase
 				s.append("    ");
 			}
 			s.append(child.getMessage());
+			Throwable t = null;
+			for (Object data : child.getData()) {
+				if (data instanceof Throwable) {
+					s.append("\n    ");
+					((Throwable)data).printStackTrace(new PrintWriter(new Writer()
+					{
+						@Override
+						public void close() {}
+
+						@Override
+						public void flush() {}
+
+						@Override
+						public void write(char[] cbuf, int off, int len) throws IOException {
+							s.append(cbuf, off, len);
+						}
+					}));
+					s.append("at");
+				}
+			}
 			appendChildren(s, child.getChildren(), depth+1);
 		}
 	}

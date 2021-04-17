@@ -33,5 +33,4 @@ public interface SymbolicValue extends Value
 	 */
 	void deduceFrom(@NonNull SymbolicExecutor symbolicExecutor, @NonNull SimpleSymbolicConstraint symbolicConstraint);
 
-	boolean mayBeZero();
 } // SymbolicValue

@@ -1063,6 +1063,16 @@ public abstract class ValueUtil
 	}
 
 	/**
+	 * @since 1.15
+	 */
+	public static boolean mayBeZero(@Nullable Object value) {
+		if (value instanceof Value) {
+			return ((Value)value).mayBeZero();
+		}
+		return false;
+	}
+
+	/**
 	 * @since 1.1
 	 */
 	public static @NonNull NumberValue numberValueOf(@NonNull Number aNumber) {

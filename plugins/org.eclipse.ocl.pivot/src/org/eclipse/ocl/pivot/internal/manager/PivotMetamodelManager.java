@@ -1767,18 +1767,18 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		return completeClass.getProperSuperCompleteClasses();
 	}
 
-	@Override
+/*	@Override
 	public @NonNull SymbolicAnalysis getSymbolicAnalysis(@NonNull Element element) {
 		ExpressionInOCL expressionInOCL = PivotUtil.getContainingExpressionInOCL(element);
 		if (expressionInOCL != null) {
 			return getSymbolicAnalysis(expressionInOCL);
 		}
 		return MetamodelManagerInternalExtension2.super.getSymbolicAnalysis(element);
-	}
+	} */
 
 	/**
 	 * @since 1.15
-	 */
+	 *
 	public @NonNull SymbolicAnalysis getSymbolicAnalysis(@NonNull ExpressionInOCL expressionInOCL) {
 		Map<@NonNull ExpressionInOCL, @NonNull SymbolicAnalysis> expressionInOCL2symbolicAnalysis2 = expressionInOCL2symbolicAnalysis;
 		if (expressionInOCL2symbolicAnalysis2 == null) {
@@ -1804,7 +1804,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 			expressionInOCL2symbolicAnalysis2.put(expressionInOCL, symbolicAnalysis);
 		}
 		return symbolicAnalysis;
-	}
+	} */
 
 	/**
 	 * @since 1.3

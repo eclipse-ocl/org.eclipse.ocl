@@ -230,6 +230,14 @@ public class IntIntegerValueImpl extends IntegerValueImpl
 		}
 	}
 
+	/**
+	 * @since 1.15
+	 */
+	@Override
+	public boolean mayBeZero() {
+		return value == 0;
+	}
+
 	@Override
 	public @NonNull IntegerValue minInteger(@NonNull IntegerValue right) {
 		if (right instanceof IntIntegerValueImpl) {

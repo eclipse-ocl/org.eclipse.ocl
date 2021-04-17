@@ -302,6 +302,12 @@
                 <message_argument value="mayBeNull()"/>
             </message_arguments>
         </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.Value"/>
+                <message_argument value="mayBeZero()"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/values/ValuesPackage.java" type="org.eclipse.ocl.pivot.values.ValuesPackage">
         <filter id="403804204">
