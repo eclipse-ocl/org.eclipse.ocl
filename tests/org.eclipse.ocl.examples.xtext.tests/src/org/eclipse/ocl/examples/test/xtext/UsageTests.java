@@ -700,7 +700,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 						+ "{\n"
 						+ "    class Clase1\n"
 						+ "    {\n"
-						+ "        invariant : self.name.size() > 0;\n"
+						+ "        invariant : (self.name <> null) and (self.name.size() > 0);\n"
 						+ "        attribute name : String[?] { ordered };\n"
 						+ "    }\n"
 						+ "}\n";
@@ -726,7 +726,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 						+ "    class Clase1\n"
 						+ "    {\n"
 						+ "        invariant : self.name.size() > 0;\n"
-						+ "        attribute name : String[?] { ordered };\n"
+						+ "        attribute name : String[1] { ordered };\n"
 						+ "        operation copy(b : Boolean) : Boolean { body: b; }\n"
 						+ "        operation complement(b : Boolean) : Boolean { body: not b; }\n"
 						+ "        operation myPrefixedName(s1 : String, s2 : String) : String { body: s1 + name + s2; }\n"
@@ -948,7 +948,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 								"{\n" +
 								"    class Element\n" +
 								"    {\n" +
-								"        attribute name : String = '';\n" +
+								"        attribute name : String[1] = '';\n" +
 								"        invariant\n" +
 								"        elementNameNotReservedWord: \n" +
 								"            let name: String = self.name.toLower() in\n" +
