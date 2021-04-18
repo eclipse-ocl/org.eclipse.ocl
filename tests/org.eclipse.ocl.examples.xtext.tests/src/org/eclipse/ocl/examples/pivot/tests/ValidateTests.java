@@ -37,6 +37,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.common.internal.options.CommonOptions;
 import org.eclipse.ocl.examples.xtext.tests.TestFile;
+import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.evaluation.AbstractModelManager;
@@ -80,7 +81,7 @@ import junit.framework.TestCase;
 public class ValidateTests extends AbstractValidateTests
 {
 	public static @NonNull List<Diagnostic> assertEcoreOCLValidationDiagnostics(@Nullable OCL ocl, @NonNull String prefix, @NonNull Resource resource, @NonNull String... messages) {
-		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
+		Map<Object, Object> validationContext = TestUtil.createDefaultContext(Diagnostician.INSTANCE);
 		if (ocl != null) {
 			validationContext.put(OCL.class,  ocl);
 		}

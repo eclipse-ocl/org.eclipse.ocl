@@ -48,6 +48,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.jdt.annotation.NonNull;
@@ -58,6 +59,8 @@ import org.eclipse.ocl.examples.xtext.tests.XtextTestCase.EOperationsNormalizer;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase.ETypedElementNormalizer;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase.Normalizer;
 import org.eclipse.ocl.pivot.internal.validation.PivotEAnnotationValidator;
+import org.eclipse.ocl.pivot.util.PivotValidator;
+import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
@@ -93,6 +96,12 @@ public class TestUtil
 		for (Normalizer normalizer : actualNormalizations) {
 			normalizer.denormalize();
 		}
+	}
+
+	public static @NonNull Map<Object, Object> createDefaultContext(Diagnostician instance) {
+		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
+		validationContext.put(PivotValidator.SYMBOLIC_ANALYSIS_DISABLE_VALIDATION, Boolean.TRUE);
+		return validationContext;
 	}
 
 	public static void deleteDirectory(@NonNull File dir) {

@@ -75,7 +75,6 @@ import org.eclipse.ocl.pivot.util.PivotValidator;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.DebugTimestamp;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotStandaloneSetup;
@@ -340,7 +339,7 @@ public class PivotTestCase extends TestCase
 	}
 
 	public static void assertNoValidationErrors(@NonNull String string, @NonNull EObject eObject) {
-		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
+		Map<Object, Object> validationContext = TestUtil.createDefaultContext(Diagnostician.INSTANCE);
 		//		Resource eResource = ClassUtil.nonNullState(eObject.eResource());
 		//		PivotUtilInternal.getMetamodelManager(eResource);	// FIXME oclIsKindOf fails because ExecutableStandardLibrary.getMetaclass is bad
 		//		Diagnostic diagnostic = Diagnostician.INSTANCE.validate(eObject, validationContext);
@@ -447,7 +446,7 @@ public class PivotTestCase extends TestCase
 	}
 
 	public static @NonNull List<Diagnostic> assertValidationDiagnostics(@NonNull String prefix, @NonNull Resource resource, @NonNull String @Nullable [] messages) {
-		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
+		Map<Object, Object> validationContext = TestUtil.createDefaultContext(Diagnostician.INSTANCE);
 		PivotValidator.initLazyParse(validationContext, true);		// XXX Lazy deferral of ExpressionInOCL AS creation for legacy testing compatibility
 		return assertValidationDiagnostics(prefix, resource, validationContext, messages);
 	}

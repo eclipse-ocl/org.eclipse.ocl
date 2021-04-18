@@ -1020,7 +1020,7 @@ public class EcoreOCLEValidator implements EValidator
 		nestedContext.remove(EObjectValidator.ROOT_OBJECT);
 		if (!nestedDiagnostician.validate(expressionInOCL, nestedDiagnostic, nestedContext)) {
 			nestedContext.remove(EObjectValidator.ROOT_OBJECT);
-			boolean ok2 = nestedDiagnostician.validate(expressionInOCL, nestedDiagnostic, nestedContext); 	// XXX
+		//	boolean ok2 = nestedDiagnostician.validate(expressionInOCL, nestedDiagnostic, nestedContext); 	// XXX
 			allOk = false;
 			if (diagnostics != null) {
 				String role = PivotUtilInternal.getSpecificationRole(asSpecification);

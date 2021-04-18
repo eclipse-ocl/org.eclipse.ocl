@@ -48,7 +48,6 @@ import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.util.PivotValidator;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -160,7 +159,7 @@ public class OCLinEcoreTutorialExamples extends PivotTestCaseWithAutoTearDown
 		Object b2Available = queryEval.evaluate(b2Book);
 		assertFalse((Boolean)b2Available);
 
-		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
+		Map<Object, Object> validationContext = TestUtil.createDefaultContext(Diagnostician.INSTANCE);
 		Diagnostic diagnostics = Diagnostician.INSTANCE.validate(xmiLibrary, validationContext);
 		assertEquals(3, diagnostics.getChildren().size());
 
@@ -232,7 +231,7 @@ public class OCLinEcoreTutorialExamples extends PivotTestCaseWithAutoTearDown
 			Object b2Available = queryEval.evaluateEcore(b2Book);
 			assertFalse(ValueUtil.asBoolean(b2Available));
 
-			Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
+			Map<Object, Object> validationContext = TestUtil.createDefaultContext(Diagnostician.INSTANCE);
 			Diagnostic diagnostics = Diagnostician.INSTANCE.validate(xmiLibrary, validationContext);
 			assertEquals(3, diagnostics.getChildren().size());
 

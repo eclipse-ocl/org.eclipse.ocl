@@ -912,7 +912,7 @@ public class PivotUtil
 				s.append(": ");
 			}
 			s.append(diagnostic.getMessage());
-			for (Object obj : diagnostic.getData()) {
+		/*	for (Object obj : diagnostic.getData()) {	-- data should be formatted in the message
 				s.append(newLine);
 				s.append("\t");
 				//				if (obj instanceof Throwable) {
@@ -921,10 +921,11 @@ public class PivotUtil
 				//				else {
 				s.append(obj);
 				//				}
-			}
+			} */
 			for (Diagnostic childDiagnostic : diagnostic.getChildren()) {
 				if (childDiagnostic != null) {
-					formatDiagnostic(s, childDiagnostic, newLine + "\t");
+					String childNewLine = newLine + "\t";
+					formatDiagnostic(s, childDiagnostic, childNewLine);
 				}
 			}
 		}

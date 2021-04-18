@@ -1881,7 +1881,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	}
 
 	protected void validateWithoutError(EObject eObject) {
-		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
+		Map<Object, Object> validationContext = TestUtil.createDefaultContext(Diagnostician.INSTANCE);
 		Diagnostic validation = Diagnostician.INSTANCE.validate(eObject, validationContext);
 		if (validation.getSeverity() != Diagnostic.OK) {
 			List<Diagnostic> diagnostics = validation.getChildren();
@@ -1907,7 +1907,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	}
 
 	protected void validateConstraintWithSeverity(String constraintName, int severity, EObject eObject, String message) {
-		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
+		Map<Object, Object> validationContext = TestUtil.createDefaultContext(Diagnostician.INSTANCE);
 		Diagnostic validation = Diagnostician.INSTANCE.validate(eObject, validationContext);
 		List<Diagnostic> diagnostics = validation.getChildren();
 		assertEquals("Validation of '" + constraintName + "' child count:", 1, diagnostics.size());
@@ -1927,7 +1927,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	}
 
 	protected void validateWithSeverity(String constraintName, int severity, EObject eObject, String messageTemplate, Object... bindings) {
-		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
+		Map<Object, Object> validationContext = TestUtil.createDefaultContext(Diagnostician.INSTANCE);
 		Diagnostic validation = Diagnostician.INSTANCE.validate(eObject, validationContext);
 		List<Diagnostic> diagnostics = validation.getChildren();
 		assertEquals("Validation of '" + constraintName + "' child count:", 1, diagnostics.size());
@@ -1940,7 +1940,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	}
 
 	protected void validateWithDelegationSeverity(String constraintName, int severity, EObject eObject, String source, Class<? extends Exception> exceptionClass, String messageTemplate, Object... bindings) {
-		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
+		Map<Object, Object> validationContext = TestUtil.createDefaultContext(Diagnostician.INSTANCE);
 		Diagnostic validation = Diagnostician.INSTANCE.validate(eObject, validationContext);
 		assertEquals("Validation of '" + constraintName + "' severity:", severity, validation.getSeverity());
 		List<Diagnostic> diagnostics = validation.getChildren();

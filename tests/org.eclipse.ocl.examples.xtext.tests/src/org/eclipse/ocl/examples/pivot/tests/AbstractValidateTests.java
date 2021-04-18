@@ -37,7 +37,6 @@ import org.eclipse.ocl.pivot.internal.values.BagImpl;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.uml.internal.validation.UMLOCLEValidator;
-import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.values.Bag;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
@@ -51,7 +50,7 @@ public abstract class AbstractValidateTests extends PivotTestCaseWithAutoTearDow
 	public static final @NonNull String VIOLATED_TEMPLATE = "The ''{0}'' constraint is violated on ''{1}''";	// _UI_GenericConstraint_diagnostic = The ''{0}'' constraint is violated on ''{1}''
 
 	public static @NonNull List<Diagnostic> assertUMLOCLValidationDiagnostics(@Nullable OCL ocl, @NonNull String prefix, @NonNull Resource resource, @NonNull String... messages) {
-		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
+		Map<Object, Object> validationContext = TestUtil.createDefaultContext(Diagnostician.INSTANCE);
 		if (ocl != null) {
 			PivotDiagnostician.setOCL(validationContext, ocl);
 		}
@@ -71,7 +70,7 @@ public abstract class AbstractValidateTests extends PivotTestCaseWithAutoTearDow
 		for (@NonNull String message : expectedMessage) {
 			expectedMessages.add(message);
 		}
-		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
+		Map<Object, Object> validationContext = TestUtil.createDefaultContext(Diagnostician.INSTANCE);
 		Diagnostic diagnostics = PivotDiagnostician.BasicDiagnosticWithRemove.validate(testInstance, validationContext);
 		Bag<String> actualMessages = new BagImpl<>();
 		for (Diagnostic diagnostic : diagnostics.getChildren()) {

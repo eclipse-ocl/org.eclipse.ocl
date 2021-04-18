@@ -34,6 +34,7 @@ import org.eclipse.ocl.pivot.utilities.MorePivotable;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
+import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 
 /**
@@ -43,13 +44,18 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
  * @see org.eclipse.ocl.pivot.PivotPackage
  * @generated
  */
-public class PivotValidator
-extends EObjectValidator {
-
+public class PivotValidator extends EObjectValidator
+{
 	/**
 	 * Temporary validation context option to defer parsing of ExpressionInOCL bodies for legacy testing compatibility.
 	 */
-	private static final String EXPRESSION_IN_OCL_LAZY_PARSE = "ExpressionInOCL_lazy_parse";
+	private static final @NonNull String EXPRESSION_IN_OCL_LAZY_PARSE = "ExpressionInOCL_lazy_parse";
+
+	/**
+	 * Validation context option to disable symbolic validation when the caller undertakes to ensure that preconditions are satisfied by test values.
+	 * @since 1.15
+	 */
+	public static final @NonNull String SYMBOLIC_ANALYSIS_DISABLE_VALIDATION = "SymbolicAnalysis_disable_validation";;
 
 	/**
 	 * The cached model package
@@ -2469,10 +2475,11 @@ extends EObjectValidator {
 					diagnostics.add(new BasicDiagnostic(Diagnostic.ERROR, DIAGNOSTIC_SOURCE, 0, e.getLocalizedMessage(), new Object[] {expressionInOCL}));
 				}
 				return false;
+			}
 		}
-		}
+		boolean disableSymbolicValidation = (context != null) && (context.get(PivotValidator.SYMBOLIC_ANALYSIS_DISABLE_VALIDATION) == Boolean.TRUE);
 		boolean allOk = validateExpressionInOCLGen(expressionInOCL, diagnostics, context);
-		if (allOk && (expressionInOCL.getOwnedBody() != null)) {
+		if (allOk && !disableSymbolicValidation && (expressionInOCL.getOwnedBody() != null)) {
 			EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(expressionInOCL);
 			PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 			boolean isValidating = false;
@@ -2510,7 +2517,8 @@ extends EObjectValidator {
 							}
 						}
 						if (isLeaf) {
-							diagnostics.add(new BasicDiagnostic(Diagnostic.ERROR, DIAGNOSTIC_SOURCE, 0, "May be invalid", new Object[] {element}));		// XXX
+							String message = StringUtil.bind("May be invalid: ''{0}''", element);
+							diagnostics.add(new BasicDiagnostic(Diagnostic.ERROR, DIAGNOSTIC_SOURCE, 0, message, new Object[] {element}));		// XXX
 						}
 					}
 					allOk = false;			// XXX

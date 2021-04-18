@@ -282,6 +282,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/util/PivotValidator.java" type="org.eclipse.ocl.pivot.util.PivotValidator">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="SYMBOLIC_ANALYSIS_DISABLE_VALIDATION"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/values/SymbolicValue.java" type="org.eclipse.ocl.pivot.values.SymbolicValue">
         <filter id="1110441988">
             <message_arguments>
