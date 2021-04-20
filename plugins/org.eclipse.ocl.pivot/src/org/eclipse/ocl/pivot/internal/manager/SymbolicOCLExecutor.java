@@ -19,6 +19,7 @@ import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.internal.evaluation.BasicOCLExecutor;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicHypothesisEvaluationEnvironment;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.values.SimpleSymbolicConstraintImpl;
 import org.eclipse.ocl.pivot.values.SymbolicExpressionValue;
@@ -54,6 +55,22 @@ public class SymbolicOCLExecutor extends BasicOCLExecutor implements SymbolicExe
 	@Override
 	public @NonNull SymbolicEvaluationEnvironment getEvaluationEnvironment() {
 		return (SymbolicEvaluationEnvironment)super.getEvaluationEnvironment();
+	}
+
+	@Override
+	public void popSymbolicHypothesis() {
+		popEvaluationEnvironment();
+	}
+
+	@Override
+	public @NonNull SymbolicHypothesisEvaluationEnvironment pushSymbolicHypothesis(@NonNull OCLExpression caller) {
+		SymbolicEvaluationEnvironment evaluationEnvironment = getEvaluationEnvironment();
+		SymbolicHypothesisEvaluationEnvironment nestedEvaluationEnvironment = new SymbolicHypothesisEvaluationEnvironment(evaluationEnvironment, caller);
+		pushEvaluationEnvironment(nestedEvaluationEnvironment);
+		//	nestedEvaluationEnvironment.add(symbolicValue, constantValue);
+		//	SimpleSymbolicConstraintImpl symbolicConstraint = new SimpleSymbolicConstraintImpl(symbolicValue.getTypeId(), false, false, SymbolicOperator.EQUALS, constantValue);
+		//	symbolicValue.deduceFrom(this, symbolicConstraint);
+		return nestedEvaluationEnvironment;
 	}
 
 	@Override

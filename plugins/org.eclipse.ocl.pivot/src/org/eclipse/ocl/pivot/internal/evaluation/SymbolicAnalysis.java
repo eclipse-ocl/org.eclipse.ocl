@@ -11,35 +11,25 @@
 
 package org.eclipse.ocl.pivot.internal.evaluation;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.AssociationClassCallExp;
-import org.eclipse.ocl.pivot.BooleanLiteralExp;
 import org.eclipse.ocl.pivot.CollectionItem;
 import org.eclipse.ocl.pivot.CollectionLiteralExp;
 import org.eclipse.ocl.pivot.CollectionLiteralPart;
 import org.eclipse.ocl.pivot.CollectionRange;
 import org.eclipse.ocl.pivot.CollectionType;
-import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
-import org.eclipse.ocl.pivot.EnumLiteralExp;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.IfExp;
-import org.eclipse.ocl.pivot.IntegerLiteralExp;
-import org.eclipse.ocl.pivot.InvalidLiteralExp;
 import org.eclipse.ocl.pivot.IterateExp;
-import org.eclipse.ocl.pivot.LetExp;
 import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.MapLiteralExp;
 import org.eclipse.ocl.pivot.MapLiteralPart;
-import org.eclipse.ocl.pivot.MessageExp;
 import org.eclipse.ocl.pivot.NavigationCallExp;
-import org.eclipse.ocl.pivot.NullLiteralExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
@@ -47,18 +37,12 @@ import org.eclipse.ocl.pivot.OppositePropertyCallExp;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.PropertyCallExp;
-import org.eclipse.ocl.pivot.RealLiteralExp;
 import org.eclipse.ocl.pivot.ShadowExp;
 import org.eclipse.ocl.pivot.ShadowPart;
 import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.StateExp;
-import org.eclipse.ocl.pivot.StringLiteralExp;
 import org.eclipse.ocl.pivot.TupleLiteralExp;
 import org.eclipse.ocl.pivot.TupleLiteralPart;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.TypeExp;
-import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
-import org.eclipse.ocl.pivot.UnspecifiedValueExp;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
@@ -97,7 +81,6 @@ import org.eclipse.ocl.pivot.values.MapValue;
 import org.eclipse.ocl.pivot.values.NullValue;
 import org.eclipse.ocl.pivot.values.SymbolicConstraint;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
-import org.eclipse.ocl.pivot.values.Value;
 
 import com.google.common.collect.Lists;
 
@@ -109,13 +92,8 @@ import com.google.common.collect.Lists;
 public class SymbolicAnalysis extends EvaluationVisitorDecorator implements EvaluationVisitor
 {
 	protected final @NonNull ExpressionInOCL expressionInOCL;
-
-	/**
-	 * The known (symbolic) value of each expression element, null if not yet computed.
-	 * The null value must be represented by ValueUtil.NULL_VALUE.
-	 */
-	private @NonNull Map<@NonNull Element, @NonNull Object> element2value = new HashMap<>();
-
+	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
+	protected final @NonNull IdResolver idResolver;
 
 	/**
 	 * Initializes the symbolic analysis of expressionInOCL that delegates to a non-symbolic evaluation visitor.
@@ -124,7 +102,8 @@ public class SymbolicAnalysis extends EvaluationVisitorDecorator implements Eval
 			@Nullable Object context, @Nullable Object @NonNull [] parameters) {
 		super(visitor);
 		this.expressionInOCL = expressionInOCL;
-	//	IdResolver idResolver = visitor.getEnvironmentFactory().getIdResolver();
+		this.environmentFactory = (EnvironmentFactoryInternal) visitor.getEnvironmentFactory();
+		this.idResolver = environmentFactory.getIdResolver();
 		VariableDeclaration contextVariable = PivotUtil.getOwnedContext(expressionInOCL);
 	//	Object contextValue = idResolver.boxedValueOf(context);
 		trace(contextVariable, context);
@@ -135,13 +114,22 @@ public class SymbolicAnalysis extends EvaluationVisitorDecorator implements Eval
 		}
 	}
 
+	public @Nullable SymbolicValue basicGet(@NonNull Element element) {
+		return getElement2SymbolicValue().get(element);
+	}
+
 	protected @Nullable Object doNavigationCallExp(@NonNull NavigationCallExp navigationCallExp) {
 		Object result = null;
 		try {
 			Property referredProperty = PivotUtil.getReferredProperty(navigationCallExp);
 			OCLExpression source = PivotUtil.getOwnedSource(navigationCallExp);
-			Object sourceValue = evaluate(source);
+
 			SymbolicEvaluationEnvironment evaluationEnvironment = getEvaluationEnvironment();
+		//	SymbolicAnalysis.evaluateHypothesis(evaluationEnvironment, source, )
+
+
+
+			Object sourceValue = evaluate(source);
 			List<@Nullable Object> sourceAndArgumentValues = Lists.newArrayList(sourceValue);
 			Iterable<@Nullable Object> symbolicConstraints = evaluationEnvironment.getSymbolicConstraints(referredProperty, sourceAndArgumentValues);
 			if (symbolicConstraints != null) {
@@ -185,6 +173,9 @@ public class SymbolicAnalysis extends EvaluationVisitorDecorator implements Eval
 			throw new EvaluationHaltedException("Canceled");
 		}
 		Operation apparentOperation = PivotUtil.getReferredOperation(operationCallExp);
+		if ("size".equals(apparentOperation.getName())) {
+			getClass();		// XXX
+		}
 		boolean isValidating = apparentOperation.isIsValidating();
 		//
 		//	Resolve source value catching invalid values for validating operations.
@@ -225,7 +216,6 @@ public class SymbolicAnalysis extends EvaluationVisitorDecorator implements Eval
 				}
 			}
 		}
-		EnvironmentFactoryInternal environmentFactory = context.getEnvironmentFactory();
 		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		SymbolicEvaluationEnvironment evaluationEnvironment = getEvaluationEnvironment();
 		Operation actualOperation;
@@ -234,7 +224,6 @@ public class SymbolicAnalysis extends EvaluationVisitorDecorator implements Eval
 		}
 		else {
 			assert source != null;
-			IdResolver idResolver = environmentFactory.getIdResolver();
 			StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 			org.eclipse.ocl.pivot.Class actualSourceType = idResolver.getStaticTypeOfValue(source.getType(), sourceValue);
 			if (!isValidating) {  // OclSelf dispatch wrt invalid is unnecessarily hard symbolically - no Boolean overloads
@@ -392,29 +381,54 @@ public class SymbolicAnalysis extends EvaluationVisitorDecorator implements Eval
 		catch (InvalidValueException e) {
 			result = e;
 		}
-		element2value.put(expressionInOCL, result != null ? result : ValueUtil.NULL_VALUE);
+	//	SymbolicValue symbolicResultValue = getEvaluationEnvironment().getKnownValue(result);
+		//	getElement2SymbolicValue().put(expressionInOCL, symbolicResultValue);
+		trace(expressionInOCL, result);
+	}
+
+	public @Nullable Object evaluate(@NonNull CollectionLiteralPart expression) {
+		SymbolicValue symbolicValue = basicGet(expression);
+		if (symbolicValue != null) {
+			return symbolicValue;
+		}
+		Object result;
+		try {
+			result = expression.accept(getUndecoratedVisitor());
+		}
+		catch (InvalidValueException e) {
+			result = e;
+		}
+		return trace(expression, result);
 	}
 
 	@Override
 	public @Nullable Object evaluate(@NonNull OCLExpression expression) {
-		Object value = element2value.get(expression);
-		if (value != null) {
-			return value == ValueUtil.NULL_VALUE ? null : value;
+		SymbolicValue symbolicValue = basicGet(expression);
+		if (symbolicValue != null) {
+			return symbolicValue;
 		}
-		return super.evaluate(expression);
+		Object result;
+		try {
+			result = super.evaluate(expression);
+		}
+		catch (InvalidValueException e) {
+			result = e;
+		}
+		return trace(expression, result);
 	}
 
 	private void evaluate(@NonNull VariableDeclaration variable) {
 		SymbolicVariableValueImpl variableValue = new SymbolicVariableValueImpl(variable, !variable.isIsRequired(), false);
 		context.getEvaluationEnvironment().add(variable, variableValue);
-		Object old = element2value.put(variable, variableValue);
-		assert old == null;
+	//	Object old = getElement2SymbolicValue().put(variable, variableValue);
+	//	assert old == null;
+		trace(variable, variableValue);
 	}
 
-	public @Nullable Object get(@NonNull Element element) {
-		assert element2value.containsKey(element);
-		Object value = element2value.get(element);
-		return value == ValueUtil.NULL_VALUE ? null : value;
+	public @NonNull SymbolicValue get(@NonNull Element element) {
+		SymbolicValue symbolicValue = getElement2SymbolicValue().get(element);
+		assert symbolicValue != null;
+		return symbolicValue;
 	}
 
 	@Override
@@ -423,59 +437,31 @@ public class SymbolicAnalysis extends EvaluationVisitorDecorator implements Eval
 	}
 
 	public boolean isDead(@NonNull Element element) {
-		return !element2value.containsKey(element);
+		return basicGet(element) == null;
 	}
 
 	public boolean isFalse(@NonNull Element element) {
-	//	assert element2value.containsKey(element);
-		Object object = element2value.get(element);
-		return object == Boolean.FALSE;
+		return get(element).isFalse();
 	}
 
 	public boolean isInvalid(@NonNull Element element) {
-	//	assert element2value.containsKey(element);
-		Object object = element2value.get(element);
-		return object instanceof InvalidValueException;
+		return get(element).isInvalid();
 	}
 
 	public boolean isNull(@NonNull Element element) {
-	//	assert element2value.containsKey(element);
-		Object object = element2value.get(element);
-		return object == ValueUtil.NULL_VALUE;
+		return get(element).isNull();
 	}
 
 	public boolean isTrue(@NonNull Element element) {
-	//	assert element2value.containsKey(element);
-		Object object = element2value.get(element);
-		return object == Boolean.TRUE;
+		return get(element).isTrue();
 	}
 
 	public boolean mayBeInvalid(@NonNull Element element) {
-	//	assert element2value.containsKey(element);
-		Object object = element2value.get(element);
-	//	if (object == null) {
-	//		return !element2value.containsKey(element);				// null may not be invalid
-	//	}
-		if (object instanceof Value) {
-			return ((Value)object).mayBeInvalid();
-		}
-		return false;
+		return get(element).mayBeInvalid();
 	}
 
 	public boolean mayBeNull(@NonNull Element element) {
-	//	assert element2value.containsKey(element);
-		Object object = element2value.get(element);
-		if (object == ValueUtil.NULL_VALUE) {
-			return true;
-		}
-		if (object instanceof Value) {
-			return ((Value)object).mayBeNull();
-		}
-		return false;
-	}
-
-	public @NonNull Map<@NonNull Element, @NonNull Object> getElement2Value() {
-		return element2value;
+		return get(element).mayBeNull();
 	}
 
 	/** @deprecated moved to Executor
@@ -529,419 +515,230 @@ public class SymbolicAnalysis extends EvaluationVisitorDecorator implements Eval
 				s.append("  ");
 			}
 			s.append("  => ");
-			Object value = element2value.get(eObject);
-			if (value == null) {
-				s.append(element2value.containsKey(eObject) ? "null" : "dead");
+			SymbolicValue symbolicValue = getElement2SymbolicValue().get(eObject);
+			if (symbolicValue == null) {
+				s.append("not-computed");
 			}
 			else {
-				s.append(value.getClass().getSimpleName());
+				s.append(symbolicValue.getClass().getSimpleName());
 				s.append(" : ");
-				s.append(value);
+				s.append(symbolicValue);
 			}
 		}
 		return s.toString();
 	}
 
+	public @NonNull Map<@NonNull Element, @NonNull SymbolicValue> getElement2SymbolicValue() {
+		return getEvaluationEnvironment().getElement2SymbolicValue();
+	}
+
 	protected @Nullable Object trace(@NonNull Element expression, @Nullable Object value) {
-		if (value == null) {
-		//	assert !element2value.containsKey(expression);		-- multiple nulls seem reasonable ?? sign of gratuitous recursion
-			element2value.put(expression, ValueUtil.NULL_VALUE);
+		SymbolicValue symbolicValue;
+		if (value instanceof SymbolicValue) {
+			symbolicValue = (SymbolicValue) value;
 		}
 		else {
-			if ("self.name".equals(expression.toString())) {
-				getClass();		// XXX
-			}
-			Object old = element2value.put(expression, value);
-			assert (old == null) || (old == value) || old.equals(value);
-			if (value instanceof InvalidValueException) {
-				throw (InvalidValueException)value;
-			}
+			Object boxedValue = idResolver.boxedValueOf(value);
+			symbolicValue = getEvaluationEnvironment().getKnownValue(boxedValue);
+		}
+		if ("self.name".equals(expression.toString())) {
+			getClass();		// XXX
+		}
+		Object old = getElement2SymbolicValue().put(expression, symbolicValue);
+		assert (old == null);// || (old == symbolicValue) || old.equals(symbolicValue);
+		if (value instanceof InvalidValueException) {
+			throw (InvalidValueException)value;
 		}
 		return value;
 	}
 
 	@Override
-	public @Nullable Object visitAssociationClassCallExp(@NonNull AssociationClassCallExp callExp) {
-		Object result;
-		try {
-			result = delegate.visitAssociationClassCallExp(callExp);
-		}
-		catch (InvalidValueException e) {
-			result = e;
-		}
-		return trace(callExp, result);
-	}
-
-	@Override
-	public @Nullable Object visitBooleanLiteralExp(@NonNull BooleanLiteralExp literalExp) {
-		Object result;
-		try {
-			result = delegate.visitBooleanLiteralExp(literalExp);
-		}
-		catch (InvalidValueException e) {
-			result = e;
-		}
-		return trace(literalExp, result);
-	}
-
-	@Override
 	public @Nullable Object visitCollectionItem(@NonNull CollectionItem item) {
 		Object result;
-		try {
 //			result = delegate.visitCollectionItem(item);
-			boolean isSymbolic = false;
-			boolean mayBeInvalid = false;
-			boolean mayBeNull = false;
-		//	Object itemValue = evaluate(item);
-			OCLExpression ownedItem = PivotUtil.getOwnedItem(item);
-			Object itemValue = delegate.evaluate(ownedItem);
-			if (itemValue instanceof SymbolicValue) {
-				isSymbolic = true;
-			}
-			if (ValueUtil.mayBeInvalid(itemValue)) {
-				mayBeInvalid = true;
-			}
-			if (ValueUtil.mayBeNull(itemValue)) {
-				mayBeNull = true;
-			}
-			if (isSymbolic) {
-				result = new SymbolicExpressionValueImpl(ownedItem, true, mayBeNull || mayBeInvalid);
-			}
-			else {
-				result = itemValue;
-			}
+		boolean isSymbolic = false;
+		boolean mayBeInvalid = false;
+		boolean mayBeNull = false;
+	//	Object itemValue = evaluate(item);
+		OCLExpression ownedItem = PivotUtil.getOwnedItem(item);
+		Object itemValue = delegate.evaluate(ownedItem);
+		if (itemValue instanceof SymbolicValue) {
+			isSymbolic = true;
 		}
-		catch (InvalidValueException e) {
-			result = e;
+		if (ValueUtil.mayBeInvalid(itemValue)) {
+			mayBeInvalid = true;
 		}
-		return trace(item, result);
+		if (ValueUtil.mayBeNull(itemValue)) {
+			mayBeNull = true;
+		}
+		if (isSymbolic) {
+			result = new SymbolicExpressionValueImpl(ownedItem, true, mayBeNull || mayBeInvalid);
+		}
+		else {
+			result = itemValue;
+		}
+		return result;
 	}
 
 	@Override
 	public @Nullable Object visitCollectionLiteralExp(@NonNull CollectionLiteralExp literalExp) {
 		Object result;
-		try {
-			boolean isSymbolic = false;
-			boolean mayBeInvalid = false;
-			boolean mayBeNull = false;
-			EvaluationVisitor undecoratedVisitor = delegate.getUndecoratedVisitor();
-			for (@NonNull CollectionLiteralPart part : PivotUtil.getOwnedParts(literalExp)) {
-				Object partValue = part.accept(undecoratedVisitor);
-				assert ValueUtil.isBoxed(partValue);	// Make sure Integer/Real are boxed, invalid is an exception, null is null
-				if (partValue instanceof SymbolicValue) {
-					isSymbolic = true;
-				}
-				if (ValueUtil.mayBeInvalid(partValue)) {
-					mayBeInvalid = true;
-				}
-				if (ValueUtil.mayBeNull(partValue)) {
-					mayBeNull = true;
-				}
+		boolean isSymbolic = false;
+		boolean mayBeInvalid = false;
+		boolean mayBeNull = false;
+		EvaluationVisitor undecoratedVisitor = delegate.getUndecoratedVisitor();
+		for (@NonNull CollectionLiteralPart part : PivotUtil.getOwnedParts(literalExp)) {
+			Object partValue = evaluate(part);
+			assert ValueUtil.isBoxed(partValue);	// Make sure Integer/Real are boxed, invalid is an exception, null is null
+			if (partValue instanceof SymbolicValue) {
+				isSymbolic = true;
 			}
-			if (isSymbolic) {
-				result = new SymbolicExpressionValueImpl(literalExp, true, mayBeNull || mayBeInvalid);
+			if (ValueUtil.mayBeInvalid(partValue)) {
+				mayBeInvalid = true;
 			}
-			else {
-				result = delegate.visitCollectionLiteralExp(literalExp);
+			if (ValueUtil.mayBeNull(partValue)) {
+				mayBeNull = true;
 			}
 		}
-		catch (InvalidValueException e) {
-			result = e;
+		if (isSymbolic) {
+			result = new SymbolicExpressionValueImpl(literalExp, true, mayBeNull || mayBeInvalid);
 		}
-		return trace(literalExp, result);
+		else {
+			result = delegate.visitCollectionLiteralExp(literalExp);
+		}
+		return result;
 	}
 
 	@Override
 	public @Nullable Object visitCollectionRange(@NonNull CollectionRange range) {
 		Object result;
-		try {
-			OCLExpression first = PivotUtil.getOwnedFirst(range);
-			OCLExpression last = PivotUtil.getOwnedLast(range);
-			Object firstValue = evaluate(first);
-			Object lastValue = evaluate(last);
-			if ((firstValue instanceof SymbolicValue) || (lastValue instanceof SymbolicValue)) {
-				boolean mayBeInvalid = ValueUtil.mayBeInvalid(firstValue) || ValueUtil.mayBeInvalid(firstValue);
-				boolean mayBeNull = ValueUtil.mayBeNull(lastValue) || ValueUtil.mayBeNull(lastValue);
-				TypeId typeId = range.getTypeId();
-				result = new SymbolicUnknownValueImpl(typeId, true, mayBeNull || mayBeInvalid);
+		OCLExpression first = PivotUtil.getOwnedFirst(range);
+		OCLExpression last = PivotUtil.getOwnedLast(range);
+		Object firstValue = evaluate(first);
+		Object lastValue = evaluate(last);
+		if ((firstValue instanceof SymbolicValue) || (lastValue instanceof SymbolicValue)) {
+			boolean mayBeInvalid = ValueUtil.mayBeInvalid(firstValue) || ValueUtil.mayBeInvalid(firstValue);
+			boolean mayBeNull = ValueUtil.mayBeNull(lastValue) || ValueUtil.mayBeNull(lastValue);
+			TypeId typeId = range.getTypeId();
+			result = new SymbolicUnknownValueImpl(typeId, false, mayBeNull || mayBeInvalid);
+		}
+		else {
+//				result = delegate.visitCollectionRange(range);
+			CollectionType type = (CollectionType) ((CollectionLiteralExp)range.eContainer()).getType();
+			CollectionTypeId typeId = type.getTypeId();
+			IntegerValue firstInteger = ValueUtil.asIntegerValue(firstValue);
+			IntegerValue lastInteger = ValueUtil.asIntegerValue(lastValue);
+			// construct a lazy integer list for the range
+			IntegerRange integerRange = ValueUtil.createRange(firstInteger, lastInteger);
+			if (type.isUnique()) {
+				return ValueUtil.createOrderedSetRange(typeId, integerRange);
 			}
 			else {
-//				result = delegate.visitCollectionRange(range);
-				CollectionType type = (CollectionType) ((CollectionLiteralExp)range.eContainer()).getType();
-				CollectionTypeId typeId = type.getTypeId();
-				IntegerValue firstInteger = ValueUtil.asIntegerValue(firstValue);
-				IntegerValue lastInteger = ValueUtil.asIntegerValue(lastValue);
-				// construct a lazy integer list for the range
-				IntegerRange integerRange = ValueUtil.createRange(firstInteger, lastInteger);
-				if (type.isUnique()) {
-					return ValueUtil.createOrderedSetRange(typeId, integerRange);
-				}
-				else {
-					return ValueUtil.createSequenceRange(typeId, integerRange);
-				}
+				return ValueUtil.createSequenceRange(typeId, integerRange);
 			}
 		}
-		catch (InvalidValueException e) {
-			result = e;
-		}
-		return trace(range, result);
-	}
-
-	@Override
-	public @Nullable Object visitConstraint(@NonNull Constraint constraint) {
-		Object result;
-		try {
-			result = delegate.visitConstraint(constraint);
-		}
-		catch (InvalidValueException e) {
-			result = e;
-		}
-		return trace(constraint, result);
-	}
-
-	@Override
-	public @Nullable Object visitEnumLiteralExp(@NonNull EnumLiteralExp literalExp) {
-		Object result;
-		try {
-			result = delegate.visitEnumLiteralExp(literalExp);
-		}
-		catch (InvalidValueException e) {
-			result = e;
-		}
-		return trace(literalExp, result);
-	}
-
-	@Override
-	public @Nullable Object visitExpressionInOCL(@NonNull ExpressionInOCL expression) {
-		Object result;
-		try {
-			result = delegate.visitExpressionInOCL(expression);
-		}
-		catch (InvalidValueException e) {
-			result = e;
-		}
-		return trace(expression, result);
+		return result;
 	}
 
 	@Override
 	public @Nullable Object visitIfExp(@NonNull IfExp ifExp) {
 		Object result;
-		try {
-			OCLExpression condition = PivotUtil.getOwnedCondition(ifExp);
-			Object conditionValue = evaluate(condition);
-			if (conditionValue == ValueUtil.TRUE_VALUE) {
-				OCLExpression expression = PivotUtil.getOwnedThen(ifExp);
-				result = evaluate(expression);
+		OCLExpression condition = PivotUtil.getOwnedCondition(ifExp);
+		Object conditionValue = evaluate(condition);
+		if (conditionValue == ValueUtil.TRUE_VALUE) {
+			OCLExpression expression = PivotUtil.getOwnedThen(ifExp);
+			result = evaluate(expression);
+		}
+		else if (conditionValue == ValueUtil.FALSE_VALUE) {
+			OCLExpression expression = PivotUtil.getOwnedElse(ifExp);
+			result = evaluate(expression);
+		}
+		else if (conditionValue instanceof SymbolicValue) {
+			boolean mayBeInvalid = ValueUtil.mayBeInvalid(conditionValue);
+			boolean mayBeNull = ValueUtil.mayBeNull(conditionValue);
+			OCLExpression thenExpression = PivotUtil.getOwnedThen(ifExp);
+			Object thenValue = nestedEvaluate((SymbolicValue)conditionValue, Boolean.TRUE, thenExpression);
+			if (ValueUtil.mayBeInvalid(thenValue)) {
+				mayBeInvalid = true;
 			}
-			else if (conditionValue == ValueUtil.FALSE_VALUE) {
-				OCLExpression expression = PivotUtil.getOwnedElse(ifExp);
-				result = evaluate(expression);
+			if (ValueUtil.mayBeNull(thenValue)) {
+				mayBeNull = true;
 			}
-			else if (conditionValue instanceof SymbolicValue) {
-				boolean mayBeInvalid = ValueUtil.mayBeInvalid(conditionValue);
-				boolean mayBeNull = ValueUtil.mayBeNull(conditionValue);
-				OCLExpression thenExpression = PivotUtil.getOwnedThen(ifExp);
-				Object thenValue = nestedEvaluate((SymbolicValue)conditionValue, Boolean.TRUE, thenExpression);
-				if (ValueUtil.mayBeInvalid(thenValue)) {
-					mayBeInvalid = true;
-				}
-				if (ValueUtil.mayBeNull(thenValue)) {
-					mayBeNull = true;
-				}
-				OCLExpression elseExpression = PivotUtil.getOwnedElse(ifExp);
-				Object elseValue = nestedEvaluate((SymbolicValue)conditionValue, Boolean.FALSE, elseExpression);
-				if (ValueUtil.mayBeInvalid(elseValue)) {
-					mayBeInvalid = true;
-				}
-				if (ValueUtil.mayBeNull(elseValue)) {
-					mayBeNull = true;
-				}
-				result = new SymbolicExpressionValueImpl(ifExp, mayBeNull, mayBeInvalid);
+			OCLExpression elseExpression = PivotUtil.getOwnedElse(ifExp);
+			Object elseValue = nestedEvaluate((SymbolicValue)conditionValue, Boolean.FALSE, elseExpression);
+			if (ValueUtil.mayBeInvalid(elseValue)) {
+				mayBeInvalid = true;
 			}
-			else {
-				result = new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.BOOLEAN_NAME, ValueUtil.getTypeName(conditionValue));
+			if (ValueUtil.mayBeNull(elseValue)) {
+				mayBeNull = true;
 			}
+			result = new SymbolicExpressionValueImpl(ifExp, mayBeNull, mayBeInvalid);
 		}
-		catch (InvalidValueException e) {
-			result = e;
+		else {
+			result = new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.BOOLEAN_NAME, ValueUtil.getTypeName(conditionValue));
 		}
-		return trace(ifExp, result);
-	}
-
-	@Override
-	public @Nullable Object visitIntegerLiteralExp(@NonNull IntegerLiteralExp literalExp) {
-		Object result;
-		try {
-			result = delegate.visitIntegerLiteralExp(literalExp);
-		}
-		catch (InvalidValueException e) {
-			result = e;
-		}
-		return trace(literalExp, result);
-	}
-
-	@Override
-	public @Nullable Object visitInvalidLiteralExp(@NonNull InvalidLiteralExp literalExp) {
-		Object result;
-		try {
-			result = delegate.visitInvalidLiteralExp(literalExp);
-		}
-		catch (InvalidValueException e) {
-			result = e;
-		}
-		return trace(literalExp, result);
-	}
-
-	@Override
-	public @Nullable Object visitLetExp(@NonNull LetExp letExp) {
-		Object result;
-		try {
-			result = delegate.visitLetExp(letExp);
-		}
-		catch (InvalidValueException e) {
-			result = e;
-		}
-		return trace(letExp, result);
+		return result;
 	}
 
 	@Override
 	public Object visitLoopExp(@NonNull LoopExp loopExp) {
 		Object result;
+		evaluate(PivotUtil.getOwnedSource(loopExp));
+		if (loopExp.isIsMany()) {
+			result = new SymbolicCollectionValueImpl(loopExp, false, false);
+		}
+		else {
+			result = new SymbolicExpressionValueImpl(loopExp, false, false);		// FIXME null / invalid
+		}
 		try {
-			evaluate(PivotUtil.getOwnedSource(loopExp));
-			if (loopExp.isIsMany()) {
-				result = new SymbolicCollectionValueImpl(loopExp, false, false);
+			OCLExpression bodyExpression = PivotUtil.getOwnedBody(loopExp);
+			context.pushEvaluationEnvironment(bodyExpression, (Object)loopExp);
+			for (@NonNull VariableDeclaration iterator : PivotUtil.getOwnedIterators(loopExp)) {
+				evaluate(iterator);
 			}
-			else {
-				result = new SymbolicExpressionValueImpl(loopExp, false, false);		// FIXME null / invalid
+			if (loopExp instanceof IterateExp) {
+				evaluate(PivotUtil.getOwnedResult((IterateExp)loopExp));
 			}
-			try {
-				OCLExpression bodyExpression = PivotUtil.getOwnedBody(loopExp);
-				context.pushEvaluationEnvironment(bodyExpression, (Object)loopExp);
-				for (@NonNull VariableDeclaration iterator : PivotUtil.getOwnedIterators(loopExp)) {
-					evaluate(iterator);
-				}
-				if (loopExp instanceof IterateExp) {
-					evaluate(PivotUtil.getOwnedResult((IterateExp)loopExp));
-				}
-				@SuppressWarnings("unused")
-				Object bodyValue = evaluate(bodyExpression);
-			}
-			finally {
-				context.popEvaluationEnvironment();
-			}
+			@SuppressWarnings("unused")
+			Object bodyValue = evaluate(bodyExpression);
 		}
-		catch (InvalidValueException e) {
-			result = e;
+		finally {
+			context.popEvaluationEnvironment();
 		}
-		return trace(loopExp, result);
+		return result;
 	}
 
 	@Override
 	public @Nullable Object visitMapLiteralExp(@NonNull MapLiteralExp literalExp) {
-		Object result;
-		try {
-			boolean isSymbolic = false;
-			boolean mayBeInvalid = false;
-			boolean mayBeNull = false;
-			EvaluationVisitor undecoratedVisitor = delegate.getUndecoratedVisitor();
-			for (@NonNull MapLiteralPart part : PivotUtil.getOwnedParts(literalExp)) {
-				Object keyValue = PivotUtil.getOwnedKey(part).accept(undecoratedVisitor);
-				Object valueValue = PivotUtil.getOwnedValue(part).accept(undecoratedVisitor);
-				assert ValueUtil.isBoxed(keyValue);	// Make sure Integer/Real are boxed, invalid is an exception, null is null
-				assert ValueUtil.isBoxed(valueValue);	// Make sure Integer/Real are boxed, invalid is an exception, null is null
-				if ((keyValue instanceof SymbolicValue) || (valueValue instanceof SymbolicValue)) {
-					isSymbolic = true;
-				}
-				if (ValueUtil.mayBeInvalid(keyValue) || ValueUtil.mayBeInvalid(valueValue)) {
-					mayBeInvalid = true;
-				}
-				if (ValueUtil.mayBeNull(keyValue) || ValueUtil.mayBeNull(valueValue)) {
-					mayBeNull = true;
-				}
+		boolean isSymbolic = false;
+		boolean mayBeInvalid = false;
+		boolean mayBeNull = false;
+		for (@NonNull MapLiteralPart part : PivotUtil.getOwnedParts(literalExp)) {
+			Object keyValue = evaluate(PivotUtil.getOwnedKey(part));
+			Object valueValue = evaluate(PivotUtil.getOwnedValue(part));
+			assert ValueUtil.isBoxed(keyValue);	// Make sure Integer/Real are boxed, invalid is an exception, null is null
+			assert ValueUtil.isBoxed(valueValue);	// Make sure Integer/Real are boxed, invalid is an exception, null is null
+			if ((keyValue instanceof SymbolicValue) || (valueValue instanceof SymbolicValue)) {
+				isSymbolic = true;
 			}
-			if (isSymbolic) {
-				result = new SymbolicExpressionValueImpl(literalExp, true, mayBeNull || mayBeInvalid);
+			if (ValueUtil.mayBeInvalid(keyValue) || ValueUtil.mayBeInvalid(valueValue)) {
+				mayBeInvalid = true;
 			}
-			else {
-				result = delegate.visitMapLiteralExp(literalExp);
+			if (ValueUtil.mayBeNull(keyValue) || ValueUtil.mayBeNull(valueValue)) {
+				mayBeNull = true;
 			}
 		}
-		catch (InvalidValueException e) {
-			result = e;
+		if (isSymbolic) {
+			return new SymbolicExpressionValueImpl(literalExp, true, mayBeNull || mayBeInvalid);
 		}
-		return trace(literalExp, result);
-	}
-
-	@Override
-	public @Nullable Object visitMapLiteralPart(@NonNull MapLiteralPart range) {
-		Object result;
-		try {
-			result = delegate.visitMapLiteralPart(range);
+		else {
+			return delegate.visitMapLiteralExp(literalExp);
 		}
-		catch (InvalidValueException e) {
-			result = e;
-		}
-		return trace(range, result);
-	}
-
-	@Override
-	public @Nullable Object visitMessageExp(@NonNull MessageExp messageExp) {
-		Object result;
-		try {
-			result = delegate.visitMessageExp(messageExp);
-		}
-		catch (InvalidValueException e) {
-			result = e;
-		}
-		return trace(messageExp, result);
-	}
-
-	@Override
-	public @Nullable Object visitNullLiteralExp(@NonNull NullLiteralExp literalExp) {
-		Object result;
-		try {
-			result = delegate.visitNullLiteralExp(literalExp);
-		}
-		catch (InvalidValueException e) {
-			result = e;
-		}
-		return trace(literalExp, result);
 	}
 
 	@Override
 	public @Nullable Object visitOperationCallExp(@NonNull OperationCallExp callExp) {
-		Object result;
-		try {
-
-
-/*			OCLExpression source = PivotUtil.getOwnedSource(navigationCallExp);
-			Object sourceValue = evaluate(source);
-			SymbolicEvaluationEnvironment evaluationEnvironment = getEvaluationEnvironment();
-			List<@Nullable Object> sourceAndArgumentValues = Lists.newArrayList(sourceValue);
-			Iterable<@NonNull SymbolicConstraint> symbolicConstraints = evaluationEnvironment.getSymbolicConstraints(referredProperty, sourceAndArgumentValues);
-			if (symbolicConstraints != null) {
-				boolean mayBeInvalid = true;
-				boolean mayBeNull = true;
-				for (@NonNull SymbolicConstraint symbolicConstraint : symbolicConstraints) {
-					if (!symbolicConstraint.mayBeInvalid()) {
-						mayBeInvalid = false;
-					}
-					if (!symbolicConstraint.mayBeNull()) {
-						mayBeNull = false;
-					}
-				}
-				result = new SymbolicExpressionValueImpl(navigationCallExp, mayBeNull, mayBeInvalid);
-			}
-*/
-
-
-			result = doOperationCallExp(callExp);
-		}
-		catch (InvalidValueException e) {
-			result = e;
-		}
-		return trace(callExp, result);
+		return doOperationCallExp(callExp);
 	}
 
 	@Override
@@ -955,181 +752,67 @@ public class SymbolicAnalysis extends EvaluationVisitorDecorator implements Eval
 	}
 
 	@Override
-	public @Nullable Object visitRealLiteralExp(@NonNull RealLiteralExp literalExp) {
-		Object result;
-		try {
-			result = delegate.visitRealLiteralExp(literalExp);
-		}
-		catch (InvalidValueException e) {
-			result = e;
-		}
-		return trace(literalExp, result);
-	}
-
-	@Override
 	public @Nullable Object visitShadowExp(@NonNull ShadowExp shadowExp) {
 		Object result;
-		try {
-			boolean isSymbolic = false;
-			boolean mayBeInvalid = false;
-			boolean mayBeNull = false;
-			for (@NonNull ShadowPart part : PivotUtil.getOwnedParts(shadowExp)) {
-				Object partValue = evaluate(PivotUtil.getOwnedInit(part));
-				assert ValueUtil.isBoxed(partValue);	// Make sure Integer/Real are boxed, invalid is an exception, null is null
-				if (partValue instanceof SymbolicValue) {
-					isSymbolic = true;
-				}
-				if (ValueUtil.mayBeInvalid(partValue)) {
-					mayBeInvalid = true;
-				}
-				if (ValueUtil.mayBeNull(partValue)) {
-					mayBeNull = true;
-				}
+		boolean isSymbolic = false;
+		boolean mayBeInvalid = false;
+		boolean mayBeNull = false;
+		for (@NonNull ShadowPart part : PivotUtil.getOwnedParts(shadowExp)) {
+			Object partValue = evaluate(PivotUtil.getOwnedInit(part));
+			assert ValueUtil.isBoxed(partValue);	// Make sure Integer/Real are boxed, invalid is an exception, null is null
+			if (partValue instanceof SymbolicValue) {
+				isSymbolic = true;
 			}
-			if (isSymbolic) {
-				result = new SymbolicExpressionValueImpl(shadowExp, true, mayBeNull || mayBeInvalid);
+			if (ValueUtil.mayBeInvalid(partValue)) {
+				mayBeInvalid = true;
 			}
-			else {
-				result = delegate.visitShadowExp(shadowExp);
+			if (ValueUtil.mayBeNull(partValue)) {
+				mayBeNull = true;
 			}
 		}
-		catch (InvalidValueException e) {
-			result = e;
+		if (isSymbolic) {
+			result = new SymbolicExpressionValueImpl(shadowExp, true, mayBeNull || mayBeInvalid);
 		}
-		return trace(shadowExp, result);
-	}
-
-	@Override
-	public @Nullable Object visitStateExp(@NonNull StateExp stateExp) {
-		Object result;
-		try {
-			result = delegate.visitStateExp(stateExp);
+		else {
+			result = delegate.visitShadowExp(shadowExp);
 		}
-		catch (InvalidValueException e) {
-			result = e;
-		}
-		return trace(stateExp, result);
-	}
-
-	@Override
-	public @Nullable Object visitStringLiteralExp(@NonNull StringLiteralExp literalExp) {
-		Object result;
-		try {
-			result = delegate.visitStringLiteralExp(literalExp);
-		}
-		catch (InvalidValueException e) {
-			result = e;
-		}
-		return trace(literalExp, result);
+		return result;
 	}
 
 	@Override
 	public @Nullable Object visitTupleLiteralExp(@NonNull TupleLiteralExp literalExp) {
 		Object result;
-		try {
-			boolean isSymbolic = false;
-			boolean mayBeInvalid = false;
-			boolean mayBeNull = false;
-			EvaluationVisitor undecoratedVisitor = delegate.getUndecoratedVisitor();
-			for (@NonNull TupleLiteralPart part : PivotUtil.getOwnedParts(literalExp)) {
-				Object partValue = PivotUtil.getOwnedInit(part).accept(undecoratedVisitor);
-				assert ValueUtil.isBoxed(partValue);	// Make sure Integer/Real are boxed, invalid is an exception, null is null
-				if (partValue instanceof SymbolicValue) {
-					isSymbolic = true;
-				}
-				if (ValueUtil.mayBeInvalid(partValue)) {
-					mayBeInvalid = true;
-				}
-				if (ValueUtil.mayBeNull(partValue)) {
-					mayBeNull = true;
-				}
+		boolean isSymbolic = false;
+		boolean mayBeInvalid = false;
+		boolean mayBeNull = false;
+		for (@NonNull TupleLiteralPart part : PivotUtil.getOwnedParts(literalExp)) {
+			Object partValue = evaluate(PivotUtil.getOwnedInit(part));
+			assert ValueUtil.isBoxed(partValue);	// Make sure Integer/Real are boxed, invalid is an exception, null is null
+			if (partValue instanceof SymbolicValue) {
+				isSymbolic = true;
 			}
-			if (isSymbolic) {
-				result = new SymbolicExpressionValueImpl(literalExp, true, mayBeNull || mayBeInvalid);
+			if (ValueUtil.mayBeInvalid(partValue)) {
+				mayBeInvalid = true;
 			}
-			else {
-				result = delegate.visitTupleLiteralExp(literalExp);
+			if (ValueUtil.mayBeNull(partValue)) {
+				mayBeNull = true;
 			}
 		}
-		catch (InvalidValueException e) {
-			result = e;
+		if (isSymbolic) {
+			result = new SymbolicExpressionValueImpl(literalExp, true, mayBeNull || mayBeInvalid);
 		}
-		return trace(literalExp, result);
-	}
-
-	@Override
-	public @Nullable Object visitTupleLiteralPart(@NonNull TupleLiteralPart part) {
-		Object result;
-		try {
-			result = delegate.visitTupleLiteralPart(part);
+		else {
+			result = delegate.visitTupleLiteralExp(literalExp);
 		}
-		catch (InvalidValueException e) {
-			result = e;
-		}
-		return trace(part, result);
-	}
-
-	@Override
-	public @Nullable Object visitTypeExp(@NonNull TypeExp typeExp) {
-		Object result;
-		try {
-			result = delegate.visitTypeExp(typeExp);
-		}
-		catch (InvalidValueException e) {
-			result = e;
-		}
-		return trace(typeExp, result);
-	}
-
-	@Override
-	public @Nullable Object visitUnlimitedNaturalLiteralExp(@NonNull UnlimitedNaturalLiteralExp literalExp) {
-		Object result;
-		try {
-			result = delegate.visitUnlimitedNaturalLiteralExp(literalExp);
-		}
-		catch (InvalidValueException e) {
-			result = e;
-		}
-		return trace(literalExp, result);
-	}
-
-	@Override
-	public @Nullable Object visitUnspecifiedValueExp(@NonNull UnspecifiedValueExp unspecExp) {
-		Object result;
-		try {
-			result = delegate.visitUnspecifiedValueExp(unspecExp);
-		}
-		catch (InvalidValueException e) {
-			result = e;
-		}
-		return trace(unspecExp, result);
-	}
-
-	@Override
-	public @Nullable Object visitVariable(@NonNull Variable variable) {
-		Object result;
-		try {
-			result = delegate.visitVariable(variable);
-		}
-		catch (InvalidValueException e) {
-			result = e;
-		}
-		return trace(variable, result);
+		return result;
 	}
 
 	@Override
 	public @Nullable Object visitVariableExp(@NonNull VariableExp variableExp) {
-		Object result;
-		try {
-			VariableDeclaration variableDeclaration = variableExp.getReferredVariable();
-			if (variableDeclaration == null) {
-				throw new InvalidValueException("Undefined variable", null, null, variableExp);
-			}
-			result = getEvaluationEnvironment().getValueOf(variableDeclaration);
+		VariableDeclaration variableDeclaration = variableExp.getReferredVariable();
+		if (variableDeclaration == null) {
+			throw new InvalidValueException("Undefined variable", null, null, variableExp);
 		}
-		catch (InvalidValueException e) {
-			result = e;
-		}
-		return trace(variableExp, result);
+		return getEvaluationEnvironment().getValueOf(variableDeclaration);
 	}
 }

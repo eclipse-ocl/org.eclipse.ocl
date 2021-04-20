@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2010, 2021 Willink Transformations and others.
+ * Copyright (c) 2021 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -10,12 +10,10 @@
  */
 package org.eclipse.ocl.pivot.values;
 
-import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.internal.manager.SymbolicExecutor;
-
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Symbolic Value</b></em>'.
+ * A representation of the model object '<em><b>Symbolic Unknown Value</b></em>'.
+ * @since 1.15
  * <!-- end-user-doc -->
  *
  * <!-- begin-model-doc -->
@@ -26,20 +24,6 @@ import org.eclipse.ocl.pivot.internal.manager.SymbolicExecutor;
  * @see org.eclipse.ocl.pivot.values.ValuesPackage#getSymbolicValue()
  * @generated
  */
-public interface SymbolicValue extends Value
+public interface SymbolicKnownValue extends SymbolicValue
 {
-	/**
-	 * Update symbolicExecutor from any deductions that can be made from knowing that symbolicConstraint is observede.
-	 */
-	void deduceFrom(@NonNull SymbolicExecutor symbolicExecutor, @NonNull SimpleSymbolicConstraint symbolicConstraint);
-
-	boolean isFalse();
-
-//	@Override
-//	boolean isInvalid();
-
-	boolean isNull();
-
-	boolean isTrue();
-
-} // SymbolicValue
+}

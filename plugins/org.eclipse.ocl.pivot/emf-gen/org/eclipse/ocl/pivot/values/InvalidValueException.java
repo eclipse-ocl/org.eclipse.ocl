@@ -214,7 +214,7 @@ public class InvalidValueException extends UndefinedValueImpl implements Invalid
 
 	@Override
 	public boolean oclEquals(@NonNull OCLValue thatValue) {
-		return equals(thatValue);
+		return (thatValue == this); //equals(thatValue);
 	}
 
 	@Override

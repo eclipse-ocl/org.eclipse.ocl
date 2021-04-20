@@ -115,6 +115,26 @@ public abstract class SymbolicValueImpl extends ValueImpl implements SymbolicVal
 	}
 
 	@Override
+	public boolean isFalse() {
+		return false;
+	}
+
+	@Override
+	public boolean isInvalid() {
+		return false;
+	}
+
+	@Override
+	public boolean isNull() {
+		return false;
+	}
+
+	@Override
+	public boolean isTrue() {
+		return false;
+	}
+
+	@Override
 	public boolean mayBeInvalid() {
 		return mayBeInvalid;
 	}

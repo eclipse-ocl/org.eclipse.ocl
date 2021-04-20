@@ -19,14 +19,19 @@ import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.NamedElement;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.internal.manager.SymbolicExecutor;
+import org.eclipse.ocl.pivot.internal.values.SymbolicKnownValueImpl;
 import org.eclipse.ocl.pivot.internal.values.SymbolicVariableValueImpl;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.OCLValue;
+import org.eclipse.ocl.pivot.values.SymbolicKnownValue;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
@@ -40,6 +45,17 @@ import org.eclipse.ocl.pivot.values.SymbolicValue;
 public class SymbolicEvaluationEnvironment extends BasicEvaluationEnvironment
 {
 //	private final @NonNull Map<@NonNull SymbolicValue, @NonNull List<@NonNull SymbolicConstraint>> value2constraint = new HashMap<>();
+
+	/**
+	 * The known (symbolic) value of each expression element, null if not yet computed.
+	 */
+	private @NonNull Map<@NonNull Element, @NonNull SymbolicValue> element2symbolicValue = new HashMap<>();
+
+	/**
+	 * The known symbolic value of known values.
+	 */
+	private @NonNull Map<@Nullable Object, @NonNull SymbolicKnownValue> value2symbolicValue = new HashMap<>();
+
 	private final @NonNull Map<@NonNull TypedElement, @NonNull Map<@Nullable List<@Nullable Object>, @NonNull List<@Nullable Object>>> typedElement2values2constraints = new HashMap<>();
 
 	public SymbolicEvaluationEnvironment(@NonNull SymbolicExecutor executor, @NonNull NamedElement executableObject) {
@@ -81,6 +97,30 @@ public class SymbolicEvaluationEnvironment extends BasicEvaluationEnvironment
 		}
 		constraints.add(symbolicConstraint);
 	} */
+
+	public @NonNull Map<@NonNull Element, @NonNull SymbolicValue> getElement2SymbolicValue() {
+		return element2symbolicValue;
+	}
+
+	public @NonNull SymbolicValue getKnownValue(@Nullable Object boxedValue) {
+		assert ValueUtil.isBoxed(boxedValue);
+		SymbolicKnownValue symbolicKnownValue = value2symbolicValue.get(boxedValue);
+		if (symbolicKnownValue == null) {
+			if (boxedValue instanceof OCLValue) {
+				for (@Nullable Object key : value2symbolicValue.keySet()) {		// FIXME ?? smarter cache ?? Redundant OCLValue is already smart
+					if ((key instanceof OCLValue) && ((OCLValue)boxedValue).oclEquals((OCLValue)key)) {
+						symbolicKnownValue = value2symbolicValue.get(key);
+					}
+				}
+			}
+			if (symbolicKnownValue == null) {
+				Type type = getEnvironmentFactory().getIdResolver().getStaticTypeOfValue(null, boxedValue);
+				symbolicKnownValue = new SymbolicKnownValueImpl(type.getTypeId(), boxedValue);
+				value2symbolicValue.put(boxedValue, symbolicKnownValue);
+			}
+		}
+		return symbolicKnownValue;
+	}
 
 	public @Nullable Iterable<@Nullable Object> getSymbolicConstraints(@NonNull TypedElement typedElement, @Nullable List<@Nullable Object> sourceAndArgumentValues) {
 		Map<@Nullable List<@Nullable Object>, @NonNull List<@Nullable Object>> values2constraints = typedElement2values2constraints.get(typedElement);

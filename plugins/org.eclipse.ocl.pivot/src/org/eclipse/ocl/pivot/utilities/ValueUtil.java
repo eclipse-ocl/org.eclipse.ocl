@@ -903,6 +903,9 @@ public abstract class ValueUtil
 		if (object instanceof SymbolicValue) {
 			return true;
 		}
+		if (object instanceof InvalidValue) {
+			return true;
+		}
 		if (object instanceof NullValue) {
 			return false;
 		}
@@ -996,7 +999,7 @@ public abstract class ValueUtil
 	 * @since 1.15
 	 */
 	public static boolean isNullValue(@Nullable Object value) {
-		return (value instanceof NullValue) && !(value instanceof InvalidValue);
+		return (value == null) | ((value instanceof NullValue) && !(value instanceof InvalidValue));
 	}
 
 	/**

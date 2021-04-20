@@ -53,8 +53,8 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.utilities.UniqueList;
-import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
+import org.eclipse.ocl.pivot.values.SymbolicValue;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.oclstdlib.scoping.JavaClassScope;
@@ -132,7 +132,7 @@ public class SymbolicAnalysisTests extends XtextTestCase
 	public void checkContents(@NonNull SymbolicAnalysis symbolicAnalysis, @NonNull ExpressionInOCL asExpressionInOCL,
 			@Nullable EObject @Nullable[] expectedDeads, @Nullable EObject @Nullable[] expectedMayBeNulls,
 			@Nullable EObject @Nullable[] expectedMayBeInvalids, @Nullable EObject @Nullable[] expectedIsInvalids) {
-		Map<@NonNull Element, @NonNull Object> element2value = symbolicAnalysis.getElement2Value();
+		Map<@NonNull Element, @NonNull SymbolicValue> element2symbolicValue = symbolicAnalysis.getElement2SymbolicValue();
 		Set<@Nullable EObject> expectedDeadSet = expectedDeads != null ? new UniqueList<@Nullable EObject>(expectedDeads) : Collections.emptySet();
 		int expectedContentCount = 0;
 	//	List<@NonNull EObject> allContents = new ArrayList<>();
@@ -142,21 +142,22 @@ public class SymbolicAnalysisTests extends XtextTestCase
 			}
 			expectedContentCount++;
 	//		allContents.add(eObject);
-			assertTrue("Expected dead for " + debugText(eObject), element2value.containsKey(eObject));
+			assertTrue("Expected dead for " + debugText(eObject), element2symbolicValue.containsKey(eObject));
 		}
-		assertEquals("Checking contents size for " + debugText(asExpressionInOCL), element2value.size(), expectedContentCount); //allContents.size();
+		assertEquals("Checking contents size for " + debugText(asExpressionInOCL), element2symbolicValue.size(), expectedContentCount); //allContents.size();
 		Set<@Nullable EObject> expectedMayBeNullSet = expectedMayBeNulls != null ? new UniqueList<@Nullable EObject>(expectedMayBeNulls) : Collections.emptySet();
 		Set<@Nullable EObject> expectedMayBeInvalidSet = expectedMayBeInvalids != null ? new UniqueList<@Nullable EObject>(expectedMayBeInvalids) : Collections.emptySet();
 		Set<@Nullable EObject> expectedIsInvalidSet = expectedIsInvalids != null ? new UniqueList<@Nullable EObject>(expectedIsInvalids) : Collections.emptySet();
 		StringBuilder s = new StringBuilder();
-		for (Element eObject : element2value.keySet()) {
-			Object expectedValue = element2value.get(eObject);
+		for (Element eObject : element2symbolicValue.keySet()) {
+			SymbolicValue expectedValue = element2symbolicValue.get(eObject);
+			assert expectedValue != null;
 			boolean expectedMayBeNull = expectedMayBeNullSet.contains(eObject);
 			boolean expectedIsInvalid = expectedIsInvalidSet.contains(eObject);
 			boolean expectedMayBeInvalid = expectedIsInvalid || expectedMayBeInvalidSet.contains(eObject);
-			boolean okMayBeInvalid = expectedMayBeInvalid == ValueUtil.mayBeInvalid(expectedValue);
-			boolean okMayBeNull = expectedMayBeNull == ValueUtil.mayBeNull(expectedValue);
-			boolean okIsInvalid = expectedIsInvalid == ValueUtil.isInvalidValue(expectedValue);
+			boolean okMayBeInvalid = expectedMayBeInvalid == expectedValue.mayBeInvalid();
+			boolean okMayBeNull = expectedMayBeNull == expectedValue.mayBeNull();
+			boolean okIsInvalid = expectedIsInvalid == expectedValue.isInvalid();
 			if (!okMayBeInvalid || !okMayBeNull || !okIsInvalid) {
 				s.append("\n\t" + debugText(eObject));
 				if (!okMayBeInvalid) {

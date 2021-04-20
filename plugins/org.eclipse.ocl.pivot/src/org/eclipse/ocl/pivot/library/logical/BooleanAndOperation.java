@@ -19,6 +19,7 @@ import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicHypothesisEvaluationEnvironment;
 import org.eclipse.ocl.pivot.internal.manager.SymbolicExecutor;
 import org.eclipse.ocl.pivot.internal.values.SimpleSymbolicConstraintImpl;
 import org.eclipse.ocl.pivot.internal.values.SymbolicOperationCallValueImpl;
@@ -116,6 +117,7 @@ public class BooleanAndOperation extends AbstractSimpleBinaryOperation
 		if (sourceValue == Boolean.FALSE) {
 			return FALSE_VALUE;
 		}
+		OCLExpression source = PivotUtil.getOwnedSource(callExp);
 		OCLExpression argument = PivotUtil.getOwnedArgument(callExp, 0);
 		if (sourceValue == Boolean.TRUE) {
 			return evaluationVisitor.evaluate(argument);
@@ -123,14 +125,31 @@ public class BooleanAndOperation extends AbstractSimpleBinaryOperation
 		assert sourceValue instanceof SymbolicExpressionValue;
 		SymbolicExecutor symbolicExecutor = (SymbolicExecutor)evaluationVisitor.getExecutor();
 		try {
-			symbolicExecutor.pushSymbolicEvaluationEnvironment((SymbolicExpressionValue)sourceValue, Boolean.TRUE, callExp);
-			Object argumentValue = evaluationVisitor.evaluate(argument);
-			boolean mayBeInvalid = ValueUtil.mayBeInvalid(sourceValue) || ValueUtil.mayBeInvalid(argumentValue);
-			boolean mayBeNull = ValueUtil.mayBeNull(sourceValue) || ValueUtil.mayBeNull(argumentValue);
-			return new SymbolicOperationCallValueImpl(callExp, false, mayBeNull || mayBeInvalid, this, Lists.newArrayList(sourceValue, argumentValue));
+			SymbolicHypothesisEvaluationEnvironment symbolicHypothesisEvaluationEnvironment = symbolicExecutor.pushSymbolicHypothesis(callExp);
+			Object sourceValue2 = evaluationVisitor.evaluate(source);
+			symbolicHypothesisEvaluationEnvironment.addHypothesis(source, Boolean.TRUE);
+			Object argumentValue2 = evaluationVisitor.evaluate(argument);
+			if ((sourceValue instanceof SymbolicValue) || (sourceValue instanceof SymbolicValue)) {
+					boolean mayBeInvalid = ValueUtil.mayBeInvalid(sourceValue2) || ValueUtil.mayBeInvalid(argumentValue2);
+					boolean mayBeNull = ValueUtil.mayBeNull(sourceValue2) || ValueUtil.mayBeNull(argumentValue2);
+				return new SymbolicOperationCallValueImpl(callExp, false, mayBeNull || mayBeInvalid, this, Lists.newArrayList(sourceValue2, argumentValue2));
+			}
+			else {
+				return evaluate(sourceValue2, argumentValue2);
+			}
+
+
+
+
+		//	symbolicExecutor.pushSymbolicEvaluationEnvironment((SymbolicExpressionValue)sourceValue, Boolean.TRUE, callExp);
+		//	Object argumentValue = evaluationVisitor.evaluate(argument);
+		//	boolean mayBeInvalid = ValueUtil.mayBeInvalid(sourceValue) || ValueUtil.mayBeInvalid(argumentValue);
+		//	boolean mayBeNull = ValueUtil.mayBeNull(sourceValue) || ValueUtil.mayBeNull(argumentValue);
+		//	return new SymbolicOperationCallValueImpl(callExp, false, mayBeNull || mayBeInvalid, this, Lists.newArrayList(sourceValue, argumentValue));
 		}
 		finally {
-			evaluationVisitor.getExecutor().popEvaluationEnvironment();
+		//	symbolicExecutor.popEvaluationEnvironment();
+			symbolicExecutor.popSymbolicHypothesis();
 		}
 	}
 }

@@ -36,6 +36,7 @@ import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
  * <!-- begin-user-doc -->
@@ -2503,14 +2504,15 @@ public class PivotValidator extends EObjectValidator
 				parameterValues[i] = new Object[]{new SymbolicVariableValueImpl(parameter, mayBeNull, mayBeInvalid)};
 			}
 			SymbolicAnalysis symbolicAnalysis = metamodelManager.getSymbolicAnalysis(expressionInOCL, selfValue, parameterValues);
-			Map<@NonNull Element, @NonNull Object> element2Value = symbolicAnalysis.getElement2Value();
-			for (@NonNull Element element : element2Value.keySet()) {
-				Object value = element2Value.get(element);
-				if (ValueUtil.mayBeInvalid(value) && !ValueUtil.isInvalidValue(value)) {
+			Map<@NonNull Element, @NonNull SymbolicValue> element2symbolicValue = symbolicAnalysis.getElement2SymbolicValue();
+			for (@NonNull Element element : element2symbolicValue.keySet()) {
+				SymbolicValue symbolicValue = element2symbolicValue.get(element);
+				assert symbolicValue != null;
+				if (symbolicValue.mayBeInvalid() && !symbolicValue.isInvalid()) {
 					if (diagnostics != null) {
 						boolean isLeaf = true;
 						for (EObject childElement : element.eContents()) {
-							Object childValue = element2Value.get(childElement);
+							Object childValue = element2symbolicValue.get(childElement);
 							if (ValueUtil.mayBeInvalid(childValue) && !ValueUtil.isInvalidValue(childValue)) {
 								isLeaf = false;
 								break;
