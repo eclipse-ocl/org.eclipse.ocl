@@ -12,8 +12,6 @@ package org.eclipse.ocl.pivot.internal.values;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.VariableDeclaration;
-import org.eclipse.ocl.pivot.internal.manager.SymbolicExecutor;
-import org.eclipse.ocl.pivot.values.SimpleSymbolicConstraint;
 import org.eclipse.ocl.pivot.values.SymbolicVariableValue;
 
 /**
@@ -47,10 +45,10 @@ public class SymbolicVariableValueImpl extends SymbolicValueImpl implements Symb
 //		return this;
 //	}
 
-	@Override
-	public void deduceFrom(@NonNull SymbolicExecutor symbolicExecutor, @NonNull SimpleSymbolicConstraint symbolicConstraint) {
-		symbolicExecutor.getEvaluationEnvironment().addSymbolicResult(variable, null, symbolicConstraint);
-	}
+//	@Override
+//	public void deduceFrom(@NonNull SymbolicExecutor symbolicExecutor, @NonNull SimpleSymbolicConstraint symbolicConstraint) {
+//		symbolicExecutor.getEvaluationEnvironment().addSymbolicResult(variable, null, symbolicConstraint);
+//	}
 
 //	@Override
 //	public @NonNull TypeId getTypeId2() {

@@ -10,21 +10,18 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.library.oclany;
 
+import java.util.List;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OperationCallExp;
-import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.manager.SymbolicExecutor;
-import org.eclipse.ocl.pivot.internal.values.SymbolicOperationCallValueImpl;
+import org.eclipse.ocl.pivot.internal.evaluation.AbstractSymbolicEvaluationEnvironment;
+import org.eclipse.ocl.pivot.internal.values.SymbolicUnknownValueImpl;
+import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
-import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
-import org.eclipse.ocl.pivot.values.SimpleSymbolicConstraint;
-import org.eclipse.ocl.pivot.values.SymbolicOperationCallValue;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
-
-import com.google.common.collect.Lists;
 
 
 /**
@@ -36,10 +33,36 @@ public class OclAnyNotEqualOperation extends OclAnyEqualOperation
 {
 	public static final @NonNull OclAnyNotEqualOperation INSTANCE = new OclAnyNotEqualOperation();
 
+	/**
+	 * Overridden to be invalid out for any invalid in, never null, true for mismatching nullity.
+	 *
+	 * @since 1.15
+	 */
 	@Override
+	protected @NonNull SymbolicValue createChildSymbolicValue(@NonNull AbstractSymbolicEvaluationEnvironment symbolicEvaluationEnvironment, @NonNull OperationCallExp callExp,
+			@NonNull SymbolicValue sourceSymbolicValue, @NonNull LibraryOperation libraryOperation, @NonNull List<@NonNull SymbolicValue> argumentSymbolicValues) {
+		boolean mayBeInvalid = sourceSymbolicValue.mayBeInvalid();
+		int mayBeNullCount = sourceSymbolicValue.mayBeNull() ? 1: 0;
+		for (@NonNull SymbolicValue argumentSymbolicValue : argumentSymbolicValues) {
+			if (argumentSymbolicValue.mayBeInvalid()) {
+				mayBeInvalid = true;
+			}
+			if (argumentSymbolicValue.mayBeNull()) {
+				mayBeNullCount++;
+			}
+		}
+		if (!mayBeInvalid && ((mayBeNullCount & 1) != 0)) {
+			return symbolicEvaluationEnvironment.getKnownValue(Boolean.TRUE);
+		}
+		else {
+			return new SymbolicUnknownValueImpl(callExp.getTypeId(), false, mayBeInvalid);
+		}
+	}
+
+/*	@Override
 	public void deduceFrom(@NonNull SymbolicExecutor symbolicExecutor, @NonNull SymbolicOperationCallValue operationCallValue, @NonNull SimpleSymbolicConstraint resultConstraint) {
 		deduceFrom(symbolicExecutor, operationCallValue, resultConstraint, true);
-	}
+	} */
 
 	@Override
 	public @NonNull Boolean evaluate(@Nullable Object left, @Nullable Object right) {
@@ -58,7 +81,7 @@ public class OclAnyNotEqualOperation extends OclAnyEqualOperation
 		}
 	}
 
-	@Override
+/*	@Override
 	public @Nullable Object symbolicEvaluate(@NonNull Executor executor, @NonNull OperationCallExp operationCallExp, @Nullable Object sourceValue, @Nullable Object argumentValue) {
 		if ((sourceValue instanceof SymbolicValue) || (argumentValue instanceof SymbolicValue)) {
 			if ((sourceValue == null) && !ValueUtil.mayBeNull(argumentValue)) {
@@ -68,8 +91,8 @@ public class OclAnyNotEqualOperation extends OclAnyEqualOperation
 				return ValueUtil.TRUE_VALUE;
 			}
 			boolean mayBeInvalid = ValueUtil.mayBeInvalid(sourceValue) || ValueUtil.mayBeInvalid(argumentValue);
-			return new SymbolicOperationCallValueImpl(operationCallExp, false, /*mayBeNull ||*/ mayBeInvalid, this, Lists.newArrayList(sourceValue, argumentValue));
+			return new SymbolicOperationCallValueImpl(operationCallExp, false, / *mayBeNull ||* / mayBeInvalid, this, Lists.newArrayList(sourceValue, argumentValue));
 		}
 		return evaluate(sourceValue, argumentValue);
-	}
+	} */
 }

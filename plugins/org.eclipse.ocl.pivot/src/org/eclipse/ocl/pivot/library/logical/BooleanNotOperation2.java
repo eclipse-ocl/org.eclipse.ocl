@@ -10,21 +10,12 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.library.logical;
 
-import java.util.List;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.evaluation.Executor;
-import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.manager.SymbolicExecutor;
-import org.eclipse.ocl.pivot.internal.values.SimpleSymbolicConstraintImpl;
 import org.eclipse.ocl.pivot.library.AbstractSimpleUnaryOperation;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
-import org.eclipse.ocl.pivot.values.SimpleSymbolicConstraint;
-import org.eclipse.ocl.pivot.values.SymbolicOperationCallValue;
-import org.eclipse.ocl.pivot.values.SymbolicOperator;
-import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
  * BooleanNotOperation2 realises the 2-valued not() library operation.
@@ -37,7 +28,7 @@ public class BooleanNotOperation2 extends AbstractSimpleUnaryOperation
 
 	/**
 	 * @since 1.15
-	 */
+	 *
 	@Override
 	public void deduceFrom(@NonNull SymbolicExecutor symbolicExecutor, @NonNull SymbolicOperationCallValue resultValue, @NonNull SimpleSymbolicConstraint simpleConstraint) {
 		if (simpleConstraint.getSymbolicOperator() == SymbolicOperator.EQUALS) {
@@ -56,7 +47,7 @@ public class BooleanNotOperation2 extends AbstractSimpleUnaryOperation
 				}
 			}
 		}
-	}
+	} */
 
 	@Override
 	public @Nullable Object dispatch(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object sourceValue) {

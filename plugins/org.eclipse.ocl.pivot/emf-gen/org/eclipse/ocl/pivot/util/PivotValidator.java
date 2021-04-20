@@ -12,6 +12,7 @@ package org.eclipse.ocl.pivot.util;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
@@ -24,6 +25,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.*;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis;
+import org.eclipse.ocl.pivot.internal.evaluation.AbstractSymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
@@ -2504,15 +2506,17 @@ public class PivotValidator extends EObjectValidator
 				parameterValues[i] = new Object[]{new SymbolicVariableValueImpl(parameter, mayBeNull, mayBeInvalid)};
 			}
 			SymbolicAnalysis symbolicAnalysis = metamodelManager.getSymbolicAnalysis(expressionInOCL, selfValue, parameterValues);
-			Map<@NonNull Element, @NonNull SymbolicValue> element2symbolicValue = symbolicAnalysis.getElement2SymbolicValue();
-			for (@NonNull Element element : element2symbolicValue.keySet()) {
-				SymbolicValue symbolicValue = element2symbolicValue.get(element);
+			AbstractSymbolicEvaluationEnvironment evaluationEnvironment = symbolicAnalysis.getEvaluationEnvironment();
+		//	Map<@NonNull Element, @NonNull SymbolicValue> element2symbolicValue = symbolicAnalysis.getElement2SymbolicValue();
+			Set<@NonNull Element> elements = evaluationEnvironment.getElements();
+			for (@NonNull Element element : elements) {
+				SymbolicValue symbolicValue = evaluationEnvironment.getSymbolicValue1(element);
 				assert symbolicValue != null;
 				if (symbolicValue.mayBeInvalid() && !symbolicValue.isInvalid()) {
 					if (diagnostics != null) {
 						boolean isLeaf = true;
 						for (EObject childElement : element.eContents()) {
-							Object childValue = element2symbolicValue.get(childElement);
+							Object childValue = evaluationEnvironment.getSymbolicValue1((Element)childElement);
 							if (ValueUtil.mayBeInvalid(childValue) && !ValueUtil.isInvalidValue(childValue)) {
 								isLeaf = false;
 								break;

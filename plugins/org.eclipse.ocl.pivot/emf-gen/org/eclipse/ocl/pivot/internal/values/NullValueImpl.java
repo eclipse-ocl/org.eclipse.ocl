@@ -125,6 +125,14 @@ public class NullValueImpl extends UndefinedValueImpl implements NullValue
 	 * @since 1.15
 	 */
 	@Override
+	public boolean mayBeInvalidOrNull() {
+		return true;
+	}
+
+	/**
+	 * @since 1.15
+	 */
+	@Override
 	public boolean mayBeNull() {
 		return true;
 	}

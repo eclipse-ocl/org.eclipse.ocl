@@ -13,8 +13,6 @@ package org.eclipse.ocl.pivot.internal.values;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.OCLExpression;
-import org.eclipse.ocl.pivot.internal.manager.SymbolicExecutor;
-import org.eclipse.ocl.pivot.values.SimpleSymbolicConstraint;
 
 /**
  * <!-- begin-user-doc -->
@@ -40,12 +38,12 @@ public class SymbolicCollectionValueImpl extends SymbolicExpressionValueImpl {
 		assert expression.getType() instanceof CollectionType;
 	}
 
-	@Override
-	public void deduceFrom(@NonNull SymbolicExecutor symbolicExecutor, @NonNull SimpleSymbolicConstraint symbolicConstraint) {
+//	@Override
+//	public void deduceFrom(@NonNull SymbolicExecutor symbolicExecutor, @NonNull SimpleSymbolicConstraint symbolicConstraint) {
 	//	if (operation instanceof InvertibleLibraryOperation) {
 	//		((InvertibleLibraryOperation)operation).deduceFrom(symbolicExecutor, this, symbolicConstraint);
 	//	}
-	}
+//	}
 
 /*	@Override
 	public void toString(@NonNull StringBuilder s, int lengthLimit) {

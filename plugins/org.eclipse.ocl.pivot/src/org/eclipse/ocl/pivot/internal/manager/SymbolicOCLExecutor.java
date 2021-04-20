@@ -10,51 +10,82 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.manager;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.OCLExpression;
-import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment.EvaluationEnvironmentExtension;
+import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
+import org.eclipse.ocl.pivot.internal.evaluation.AbstractSymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.internal.evaluation.BasicOCLExecutor;
+import org.eclipse.ocl.pivot.internal.evaluation.BasicSymbolicEvaluationEnvironment;
+import org.eclipse.ocl.pivot.internal.evaluation.ConstrainedSymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
-import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
-import org.eclipse.ocl.pivot.internal.evaluation.SymbolicHypothesisEvaluationEnvironment;
+import org.eclipse.ocl.pivot.internal.evaluation.HypothesizedSymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
-import org.eclipse.ocl.pivot.internal.values.SimpleSymbolicConstraintImpl;
-import org.eclipse.ocl.pivot.values.SymbolicExpressionValue;
-import org.eclipse.ocl.pivot.values.SymbolicOperator;
-import org.eclipse.ocl.pivot.values.SymbolicUnknownValue;
-import org.eclipse.ocl.pivot.values.SymbolicValue;
-import org.eclipse.ocl.pivot.values.SymbolicVariableValue;
 
 /**
  * @since 1.15
  */
 public class SymbolicOCLExecutor extends BasicOCLExecutor implements SymbolicExecutor, ExecutorInternal
 {
-	public SymbolicOCLExecutor( @NonNull EnvironmentFactoryInternalExtension environmentFactory, @NonNull ModelManager modelManager) {
+	private @Nullable AbstractSymbolicEvaluationEnvironment constrainedSymbolicEvaluationEnvironment = null;
+	private @Nullable List<@NonNull HypothesizedSymbolicEvaluationEnvironment> hypothesizedEvaluationEnvironments = null;
+
+	public SymbolicOCLExecutor(@NonNull EnvironmentFactoryInternalExtension environmentFactory, @NonNull ModelManager modelManager) {
 		super(environmentFactory, modelManager);
 	}
 
 	@Override
-	protected @NonNull SymbolicEvaluationEnvironment createNestedEvaluationEnvironment(@NonNull EvaluationEnvironmentExtension evaluationEnvironment,
-			@NonNull NamedElement executableObject, @Nullable Object caller) {
-		return new SymbolicEvaluationEnvironment((SymbolicEvaluationEnvironment)evaluationEnvironment, executableObject, caller);
+	public @NonNull HypothesizedSymbolicEvaluationEnvironment createHypothesizedSymbolicEvaluationEnvironment(@NonNull TypedElement element) {
+		AbstractSymbolicEvaluationEnvironment symbolicEvaluationEnvironment = getEvaluationEnvironment();
+	//	ConstrainedSymbolicEvaluationEnvironment constrainedEvaluationEnvironment2 = constrainedSymbolicEvaluationEnvironment;
+	//	assert constrainedEvaluationEnvironment2 != null;
+		HypothesizedSymbolicEvaluationEnvironment hypothesizedEvaluationEnvironment = new HypothesizedSymbolicEvaluationEnvironment(symbolicEvaluationEnvironment, element);
+	//	pushEvaluationEnvironment(nestedEvaluationEnvironment);
+		//	nestedEvaluationEnvironment.add(symbolicValue, constantValue);
+		//	SimpleSymbolicConstraintImpl symbolicConstraint = new SimpleSymbolicConstraintImpl(symbolicValue.getTypeId(), false, false, SymbolicOperator.EQUALS, constantValue);
+		//	symbolicValue.deduceFrom(this, symbolicConstraint);
+		List<@NonNull HypothesizedSymbolicEvaluationEnvironment> hypothesizedEvaluationEnvironments2 = hypothesizedEvaluationEnvironments;
+		if (hypothesizedEvaluationEnvironments2 == null) {
+			hypothesizedEvaluationEnvironments = hypothesizedEvaluationEnvironments2 = new ArrayList<>();
+		}
+		hypothesizedEvaluationEnvironments2.add(hypothesizedEvaluationEnvironment);
+		return hypothesizedEvaluationEnvironment;
 	}
 
-//	protected @NonNullSymbolicEvaluationEnvironment createNestedEvaluationEnvironment(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment) {
-//		return new SymbolicEvaluationEnvironment((SymbolicEvaluationEnvironment)evaluationEnvironment);
+//	@Override
+//	protected @NonNull SymbolicEvaluationEnvironment createNestedEvaluationEnvironment(@NonNull EvaluationEnvironmentExtension evaluationEnvironment,
+//			@NonNull NamedElement executableObject, @Nullable Object caller) {
+//		return new SymbolicEvaluationEnvironment((SymbolicEvaluationEnvironment)evaluationEnvironment, executableObject, caller);
 //	}
 
-	@Override
-	protected @NonNull SymbolicEvaluationEnvironment createRootEvaluationEnvironment(@NonNull NamedElement executableObject) {
-		return new SymbolicEvaluationEnvironment(this, executableObject);
+	protected @NonNull AbstractSymbolicEvaluationEnvironment createNestedEvaluationEnvironment(@NonNull AbstractSymbolicEvaluationEnvironment evaluationEnvironment, @NonNull TypedElement executableObject) {
+		return new BasicSymbolicEvaluationEnvironment(evaluationEnvironment, executableObject);
 	}
 
 	@Override
-	public @NonNull SymbolicEvaluationEnvironment getEvaluationEnvironment() {
-		return (SymbolicEvaluationEnvironment)super.getEvaluationEnvironment();
+	protected @NonNull AbstractSymbolicEvaluationEnvironment createRootEvaluationEnvironment(@NonNull NamedElement executableObject) {
+		return new BasicSymbolicEvaluationEnvironment(this, executableObject);
+	}
+
+	@Override
+	public @NonNull AbstractSymbolicEvaluationEnvironment getEvaluationEnvironment() {
+		return (AbstractSymbolicEvaluationEnvironment)super.getEvaluationEnvironment();
+	}
+
+	public @Nullable List<@NonNull HypothesizedSymbolicEvaluationEnvironment> getHypothesizedEvaluationEnvironments() {
+		return hypothesizedEvaluationEnvironments;
+	}
+
+	@Override
+	public void popConstrainedSymbolicEvaluationEnvironment() {
+		AbstractSymbolicEvaluationEnvironment constrainedSymbolicEvaluationEnvironment2 = constrainedSymbolicEvaluationEnvironment;
+		assert constrainedSymbolicEvaluationEnvironment2 != null;
+		constrainedSymbolicEvaluationEnvironment = constrainedSymbolicEvaluationEnvironment2.getParent();
 	}
 
 	@Override
@@ -63,17 +94,36 @@ public class SymbolicOCLExecutor extends BasicOCLExecutor implements SymbolicExe
 	}
 
 	@Override
-	public @NonNull SymbolicHypothesisEvaluationEnvironment pushSymbolicHypothesis(@NonNull OCLExpression caller) {
-		SymbolicEvaluationEnvironment evaluationEnvironment = getEvaluationEnvironment();
-		SymbolicHypothesisEvaluationEnvironment nestedEvaluationEnvironment = new SymbolicHypothesisEvaluationEnvironment(evaluationEnvironment, caller);
-		pushEvaluationEnvironment(nestedEvaluationEnvironment);
-		//	nestedEvaluationEnvironment.add(symbolicValue, constantValue);
-		//	SimpleSymbolicConstraintImpl symbolicConstraint = new SimpleSymbolicConstraintImpl(symbolicValue.getTypeId(), false, false, SymbolicOperator.EQUALS, constantValue);
-		//	symbolicValue.deduceFrom(this, symbolicConstraint);
-		return nestedEvaluationEnvironment;
+	public @NonNull ConstrainedSymbolicEvaluationEnvironment pushConstrainedSymbolicEvaluationEnvironment(@NonNull OCLExpression expression) {
+		AbstractSymbolicEvaluationEnvironment constrainedSymbolicEvaluationEnvironment2 = constrainedSymbolicEvaluationEnvironment;
+		if (constrainedSymbolicEvaluationEnvironment2 == null) {
+			constrainedSymbolicEvaluationEnvironment2 = getEvaluationEnvironment();
+		}
+		constrainedSymbolicEvaluationEnvironment = new ConstrainedSymbolicEvaluationEnvironment(constrainedSymbolicEvaluationEnvironment2, expression);
+		return (ConstrainedSymbolicEvaluationEnvironment) constrainedSymbolicEvaluationEnvironment;
 	}
 
-	@Override
+	protected void resolveHypotheses() {
+		if (hypothesizedEvaluationEnvironments != null) {
+			for (@NonNull HypothesizedSymbolicEvaluationEnvironment hypothesizedEvaluationEnvironment : hypothesizedEvaluationEnvironments) {
+				TypedElement hypothesizedElement = hypothesizedEvaluationEnvironment.getHypothesizedElement();
+				AbstractSymbolicEvaluationEnvironment nestedEvaluationEnvironment = createNestedEvaluationEnvironment(getEvaluationEnvironment(), hypothesizedElement);		// XXX execuatbleObject?					pushEvaluationEnvironment(nestedEvaluationEnvironment);
+				hypothesizedEvaluationEnvironment.resolveHypothesis(nestedEvaluationEnvironment);
+				pushEvaluationEnvironment(nestedEvaluationEnvironment);
+
+				nestedEvaluationEnvironment.symbolicEvaluate(hypothesizedElement);
+				//	nestedEvaluationEnvironment.add(symbolicValue, constantValue);
+			//		SimpleSymbolicConstraintImpl symbolicConstraint = new SimpleSymbolicConstraintImpl(symbolicValue.getTypeId(), false, false, SymbolicOperator.EQUALS, constantValue);
+			//		symbolicValue.deduceFrom(this, symbolicConstraint);
+			//	}
+
+
+				popEvaluationEnvironment();
+			}
+		}
+	}
+
+/*	@Override
 	public @NonNull SymbolicEvaluationEnvironment pushSymbolicEvaluationEnvironment(@NonNull SymbolicValue symbolicValue, @Nullable Object constantValue, @NonNull OCLExpression caller) {
 		SymbolicEvaluationEnvironment evaluationEnvironment = getEvaluationEnvironment();
 		SymbolicEvaluationEnvironment nestedEvaluationEnvironment;
@@ -96,16 +146,16 @@ public class SymbolicOCLExecutor extends BasicOCLExecutor implements SymbolicExe
 			SimpleSymbolicConstraintImpl symbolicConstraint = new SimpleSymbolicConstraintImpl(symbolicValue.getTypeId(), false, false, SymbolicOperator.EQUALS, constantValue);
 			symbolicValue.deduceFrom(this, symbolicConstraint);
 		}
-	/*	else if (symbolicValue instanceof SymbolicConstraint) {
+	/ *	else if (symbolicValue instanceof SymbolicConstraint) {
 			@NonNull OCLExpression expression = ((SymbolicConstraint)symbolicValue).getExpression();
 			nestedEvaluationEnvironment = createNestedEvaluationEnvironment(evaluationEnvironment, expression, (Object)caller);
 			pushEvaluationEnvironment(nestedEvaluationEnvironment);
 			SimpleSymbolicConstraintImpl symbolicConstraint = new SimpleSymbolicConstraintImpl(symbolicValue.getTypeId(), false, false, SymbolicOperator.EQUALS, constantValue);
 			symbolicValue.deduceFrom(this, symbolicConstraint);
-		} */
+		} * /
 		else {
 			throw new IllegalStateException();
 		}
 		return nestedEvaluationEnvironment;
-	}
+	} */
 }

@@ -10,28 +10,14 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.library.logical;
 
-import java.util.List;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.OperationCallExp;
-import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.Executor;
-import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.manager.SymbolicExecutor;
-import org.eclipse.ocl.pivot.internal.values.SimpleSymbolicConstraintImpl;
-import org.eclipse.ocl.pivot.internal.values.SymbolicOperationCallValueImpl;
 import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
-import org.eclipse.ocl.pivot.values.SimpleSymbolicConstraint;
-import org.eclipse.ocl.pivot.values.SymbolicExpressionValue;
-import org.eclipse.ocl.pivot.values.SymbolicOperationCallValue;
-import org.eclipse.ocl.pivot.values.SymbolicOperator;
-import org.eclipse.ocl.pivot.values.SymbolicValue;
-
-import com.google.common.collect.Lists;
 
 /**
  * BooleanOrOperation2 realises the 2-valued or() library operation.
@@ -44,7 +30,7 @@ public class BooleanOrOperation2 extends AbstractSimpleBinaryOperation
 
 	/**
 	 * @since 1.15
-	 */
+	 *
 	@Override
 	public void deduceFrom(@NonNull SymbolicExecutor symbolicExecutor, @NonNull SymbolicOperationCallValue resultValue, @NonNull SimpleSymbolicConstraint simpleConstraint) {
 		if ((simpleConstraint.getSymbolicOperator() == SymbolicOperator.EQUALS) && (simpleConstraint.getSymbolicValue() == Boolean.FALSE)) {
@@ -60,7 +46,7 @@ public class BooleanOrOperation2 extends AbstractSimpleBinaryOperation
 				((SymbolicValue)argumentValue).deduceFrom(symbolicExecutor, symbolicConstraint);
 			}
 		}
-	}
+	} */
 
 	@Override
 	public @Nullable Object dispatch(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object sourceValue) {
@@ -86,7 +72,7 @@ public class BooleanOrOperation2 extends AbstractSimpleBinaryOperation
 
 	/**
 	 * @since 1.15
-	 */
+	 *
 	@Override
 	public @Nullable Object symbolicDispatch(@NonNull EvaluationVisitor evaluationVisitor, @NonNull OperationCallExp callExp, @Nullable Object sourceValue) {
 		assert sourceValue != null;
@@ -111,5 +97,5 @@ public class BooleanOrOperation2 extends AbstractSimpleBinaryOperation
 		finally {
 			evaluationVisitor.getExecutor().popEvaluationEnvironment();
 		}
-	}
+	} */
 }

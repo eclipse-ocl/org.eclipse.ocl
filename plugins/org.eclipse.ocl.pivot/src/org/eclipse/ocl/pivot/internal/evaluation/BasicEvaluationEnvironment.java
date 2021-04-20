@@ -222,7 +222,7 @@ public class BasicEvaluationEnvironment extends AbstractCustomizable implements 
 	@Override
 	public @Nullable Object getValueOf(@NonNull TypedElement referredVariable) {
 		Object object = variableValues.get(referredVariable);
-		if (object == null) {
+		if (object == null) {		// FIXME variable2value using ValueUtil.NULL_VALUE
 			if (!variableValues.containsKey(referredVariable)) {
 				EvaluationEnvironment parent2 = parent;
 				if (parent2 != null) {

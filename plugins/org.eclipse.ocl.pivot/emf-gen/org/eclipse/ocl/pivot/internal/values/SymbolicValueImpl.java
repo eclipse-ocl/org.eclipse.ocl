@@ -10,11 +10,16 @@
  */
 package org.eclipse.ocl.pivot.internal.values;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.manager.SymbolicExecutor;
-import org.eclipse.ocl.pivot.values.SimpleSymbolicConstraint;
+import org.eclipse.ocl.pivot.library.LibraryIterationOrOperation;
+import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 import org.eclipse.ocl.pivot.values.ValuesPackage;
 
@@ -61,6 +66,8 @@ public abstract class SymbolicValueImpl extends ValueImpl implements SymbolicVal
 	protected final boolean mayBeNull;
 	protected final boolean mayBeInvalid;
 
+	private /*@LazyNonNull*/ Map<@NonNull LibraryIterationOrOperation, @NonNull Map<@NonNull List<@NonNull SymbolicValue>, @NonNull SymbolicValue>> callable2arguments2symbolicValue = null;
+	private /*@LazyNonNull*/ Map<@NonNull LibraryProperty, @NonNull SymbolicValue> property2symbolicValue = null;
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -84,8 +91,30 @@ public abstract class SymbolicValueImpl extends ValueImpl implements SymbolicVal
 	}
 
 	@Override
-	public void deduceFrom(@NonNull SymbolicExecutor symbolicExecutor, @NonNull SimpleSymbolicConstraint symbolicConstraint) {
+	public @Nullable SymbolicValue basicGetChildSymbolicValue(@NonNull LibraryIterationOrOperation libraryCallable, @NonNull List<@NonNull SymbolicValue> argumentSymbolicValues) {
+		Map<@NonNull LibraryIterationOrOperation, @NonNull Map<@NonNull List<@NonNull SymbolicValue>, @NonNull SymbolicValue>> callable2arguments2symbolicValue2 = callable2arguments2symbolicValue;
+		if (callable2arguments2symbolicValue2 == null) {
+			return null;
+		}
+		Map<@NonNull List<@NonNull SymbolicValue>, @NonNull SymbolicValue> arguments2symbolicValue = callable2arguments2symbolicValue.get(libraryCallable);
+		if (arguments2symbolicValue == null) {
+			return null;
+		}
+		return arguments2symbolicValue.get(argumentSymbolicValues);
 	}
+
+	@Override
+	public @Nullable SymbolicValue basicGetChildSymbolicValue(@NonNull LibraryProperty libraryProperty) {
+		Map<@NonNull LibraryProperty, @NonNull SymbolicValue> property2symbolicValue2 = property2symbolicValue;
+		if (property2symbolicValue2 == null) {
+			return null;
+		}
+		return property2symbolicValue2.get(libraryProperty);
+	}
+
+//	@Override
+//	public void deduceFrom(@NonNull SymbolicExecutor symbolicExecutor, @NonNull SimpleSymbolicConstraint symbolicConstraint) {
+//	}
 
 /*	@Override
 	public @NonNull RealValue divideReal(@NonNull RealValue right) {
@@ -125,6 +154,11 @@ public abstract class SymbolicValueImpl extends ValueImpl implements SymbolicVal
 	}
 
 	@Override
+	public boolean isKnown() {
+		return false;
+	}
+
+	@Override
 	public boolean isNull() {
 		return false;
 	}
@@ -135,8 +169,18 @@ public abstract class SymbolicValueImpl extends ValueImpl implements SymbolicVal
 	}
 
 	@Override
+	public boolean isZero() {
+		return false;
+	}
+
+	@Override
 	public boolean mayBeInvalid() {
 		return mayBeInvalid;
+	}
+
+	@Override
+	public boolean mayBeInvalidOrNull() {
+		return mayBeInvalid || mayBeNull;
 	}
 
 	@Override
@@ -147,6 +191,38 @@ public abstract class SymbolicValueImpl extends ValueImpl implements SymbolicVal
 	@Override
 	public boolean mayBeZero() {
 		return (getTypeId() == TypeId.REAL) || (getTypeId() == TypeId.INTEGER) || (getTypeId() == TypeId.UNLIMITED_NATURAL);	// FIXME Behavioral
+	}
+
+	@Override
+	public @Nullable SymbolicValue putChildSymbolicValue(@NonNull LibraryIterationOrOperation libraryCallable, @NonNull List<@NonNull SymbolicValue> argumentSymbolicValues, @NonNull SymbolicValue childSymbolicValue) {
+		Map<@NonNull LibraryIterationOrOperation, @NonNull Map<@NonNull List<@NonNull SymbolicValue>, @NonNull SymbolicValue>> callable2arguments2symbolicValue2 = callable2arguments2symbolicValue;
+		if (callable2arguments2symbolicValue2 == null) {
+			callable2arguments2symbolicValue2 = callable2arguments2symbolicValue = new HashMap<>();
+		}
+		Map<@NonNull List<@NonNull SymbolicValue>, @NonNull SymbolicValue> arguments2symbolicValue = callable2arguments2symbolicValue.get(libraryCallable);
+		if (arguments2symbolicValue == null) {
+			arguments2symbolicValue = new HashMap<>();
+			callable2arguments2symbolicValue.put(libraryCallable, arguments2symbolicValue);
+		}
+		SymbolicValue old = arguments2symbolicValue.put(argumentSymbolicValues, childSymbolicValue);
+		assert old == null;
+		return old;
+	}
+
+	@Override
+	public @Nullable SymbolicValue putChildSymbolicValue(@NonNull LibraryProperty libraryProperty, @NonNull SymbolicValue childSymbolicValue) {
+		Map<@NonNull LibraryProperty, @NonNull SymbolicValue> property2symbolicValue2 = property2symbolicValue;
+		if (property2symbolicValue2 == null) {
+			property2symbolicValue2 = property2symbolicValue = new HashMap<>();
+		}
+		SymbolicValue old = property2symbolicValue2.put(libraryProperty, childSymbolicValue);
+		assert old == null;
+		return old;
+	}
+
+	@Override
+	public @NonNull SymbolicValue setIsNullFree() {
+		throw new UnsupportedOperationException();			// XXX
 	}
 
 	@Override

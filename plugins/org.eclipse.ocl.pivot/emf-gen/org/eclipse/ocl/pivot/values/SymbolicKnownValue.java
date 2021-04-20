@@ -10,6 +10,8 @@
  */
 package org.eclipse.ocl.pivot.values;
 
+import org.eclipse.jdt.annotation.Nullable;
+
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Symbolic Unknown Value</b></em>'.
@@ -26,4 +28,5 @@ package org.eclipse.ocl.pivot.values;
  */
 public interface SymbolicKnownValue extends SymbolicValue
 {
+	@Nullable Object getValue();
 }

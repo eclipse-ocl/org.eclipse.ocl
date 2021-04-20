@@ -10,26 +10,12 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.library.logical;
 
-import java.util.List;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.OperationCallExp;
-import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.manager.SymbolicExecutor;
-import org.eclipse.ocl.pivot.internal.values.SimpleSymbolicConstraintImpl;
-import org.eclipse.ocl.pivot.internal.values.SymbolicOperationCallValueImpl;
 import org.eclipse.ocl.pivot.library.AbstractSimpleUnaryOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
-import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
-import org.eclipse.ocl.pivot.values.SimpleSymbolicConstraint;
-import org.eclipse.ocl.pivot.values.SymbolicOperationCallValue;
-import org.eclipse.ocl.pivot.values.SymbolicOperator;
-import org.eclipse.ocl.pivot.values.SymbolicValue;
-
-import com.google.common.collect.Lists;
 
 /**
  * NotOperation realises the not() library operation.
@@ -40,7 +26,7 @@ public class BooleanNotOperation extends AbstractSimpleUnaryOperation
 
 	/**
 	 * @since 1.15
-	 */
+	 *
 	@Override
 	public void deduceFrom(@NonNull SymbolicExecutor symbolicExecutor, @NonNull SymbolicOperationCallValue resultValue, @NonNull SimpleSymbolicConstraint simpleConstraint) {
 		if (simpleConstraint.getSymbolicOperator() == SymbolicOperator.EQUALS) {
@@ -59,7 +45,7 @@ public class BooleanNotOperation extends AbstractSimpleUnaryOperation
 				}
 			}
 		}
-	}
+	} */
 
 	@Override
 	public @Nullable Boolean evaluate(@Nullable Object argument) {
@@ -82,7 +68,7 @@ public class BooleanNotOperation extends AbstractSimpleUnaryOperation
 
 	/**
 	 * @since 1.15
-	 */
+	 *
 	@Override
 	public @Nullable Object symbolicDispatch(@NonNull EvaluationVisitor evaluationVisitor, @NonNull OperationCallExp callExp, @Nullable Object sourceValue) {
 		if (sourceValue instanceof SymbolicValue) {
@@ -91,5 +77,5 @@ public class BooleanNotOperation extends AbstractSimpleUnaryOperation
 			return new SymbolicOperationCallValueImpl(callExp, mayBeNull, mayBeInvalid, this, Lists.newArrayList(sourceValue));
 		}
 		return dispatch(evaluationVisitor.getExecutor(), callExp, sourceValue);
-	}
+	} */
 }

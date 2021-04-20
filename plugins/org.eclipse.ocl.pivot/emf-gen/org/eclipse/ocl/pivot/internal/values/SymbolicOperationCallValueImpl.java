@@ -14,16 +14,10 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
-import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
-import org.eclipse.ocl.pivot.internal.manager.SymbolicExecutor;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.values.SimpleSymbolicConstraint;
 import org.eclipse.ocl.pivot.values.SymbolicOperationCallValue;
-
-import com.google.common.collect.Lists;
+import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
  * <!-- begin-user-doc -->
@@ -35,7 +29,7 @@ import com.google.common.collect.Lists;
  */
 public class SymbolicOperationCallValueImpl extends SymbolicExpressionValueImpl implements SymbolicOperationCallValue {
 	protected final @NonNull LibraryOperation operation;
-	protected final @NonNull List<@Nullable Object> boxedSourceAndArgumentValues;
+	protected final @NonNull List<@NonNull SymbolicValue> boxedSourceAndArgumentValues;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -43,7 +37,7 @@ public class SymbolicOperationCallValueImpl extends SymbolicExpressionValueImpl 
 	 * @generated NOT
 	 */
 	public SymbolicOperationCallValueImpl(@NonNull OperationCallExp operationCallExp, boolean mayBeNull, boolean mayBeInvalid,
-			@NonNull LibraryOperation operation, @NonNull List<@Nullable Object> boxedSourceAndArgumentValues) {
+			@NonNull LibraryOperation operation, @NonNull List<@NonNull SymbolicValue> boxedSourceAndArgumentValues) {
 		super(operationCallExp, mayBeNull, mayBeInvalid);
 		this.operation = operation;
 		this.boxedSourceAndArgumentValues = boxedSourceAndArgumentValues;
@@ -51,18 +45,19 @@ public class SymbolicOperationCallValueImpl extends SymbolicExpressionValueImpl 
 		assert boxedSourceAndArgumentValues.size() == operationCallExp.getReferredOperation().getOwnedParameters().size()+1;
 	}
 
-	@Override
+/*	@Override
 	public void deduceFrom(@NonNull SymbolicExecutor symbolicExecutor, @NonNull SimpleSymbolicConstraint symbolicConstraint) {
 		operation.deduceFrom(symbolicExecutor, this, symbolicConstraint);
 		SymbolicEvaluationEnvironment symbolicEvaluationEnvironment = symbolicExecutor.getEvaluationEnvironment();
 		List<@Nullable Object> sourceAndArgumentValues = Lists.newArrayList(boxedSourceAndArgumentValues);
 		Operation operation = PivotUtil.getReferredOperation((OperationCallExp)expression);
 		symbolicEvaluationEnvironment.addSymbolicResult(operation, sourceAndArgumentValues, symbolicConstraint);
-	}
+	} */
 
 	@Override
 	public @NonNull List<@Nullable Object> getBoxedSourceAndArgumentValues() {
-		return boxedSourceAndArgumentValues;
+	//	return boxedSourceAndArgumentValues;
+		throw new UnsupportedOperationException();		// XXX
 	}
 
 	@Override

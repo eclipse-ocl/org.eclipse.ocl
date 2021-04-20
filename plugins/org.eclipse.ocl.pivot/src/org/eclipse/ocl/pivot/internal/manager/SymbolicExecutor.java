@@ -11,32 +11,40 @@
 package org.eclipse.ocl.pivot.internal.manager;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OCLExpression;
-import org.eclipse.ocl.pivot.evaluation.Executor;
-import org.eclipse.ocl.pivot.evaluation.Executor.ExecutorExtension;
-import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
-import org.eclipse.ocl.pivot.internal.evaluation.SymbolicHypothesisEvaluationEnvironment;
-import org.eclipse.ocl.pivot.values.SymbolicValue;
+import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.internal.evaluation.ConstrainedSymbolicEvaluationEnvironment;
+import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal.ExecutorInternalExtension;
+import org.eclipse.ocl.pivot.internal.evaluation.HypothesizedSymbolicEvaluationEnvironment;
+import org.eclipse.ocl.pivot.internal.evaluation.AbstractSymbolicEvaluationEnvironment;
 
 /**
  * @since 1.15
  */
-public interface SymbolicExecutor extends Executor, ExecutorExtension
+public interface SymbolicExecutor extends ExecutorInternalExtension
 {
 	@Override
-	@NonNull SymbolicEvaluationEnvironment getEvaluationEnvironment();
+	@NonNull AbstractSymbolicEvaluationEnvironment getEvaluationEnvironment();
+
+	void popConstrainedSymbolicEvaluationEnvironment();
 
 	/**
 	 * Created a nested SymbolicEvaluationEnvironment on behalf of caller in which symbolicValue has a constantValue.
 	 */
-	@NonNull SymbolicEvaluationEnvironment pushSymbolicEvaluationEnvironment(@NonNull SymbolicValue symbolicValue, @Nullable Object constantValue, @NonNull OCLExpression caller);
+//	@NonNull SymbolicEvaluationEnvironment pushSymbolicEvaluationEnvironment(@NonNull SymbolicValue symbolicValue, @Nullable Object constantValue, @NonNull OCLExpression caller);
+
+	/**
+	 * Created a nested SymbolicEvaluationEnvironment on behalf of caller in which expression was computed to have expressionValue but has a knownVlue in contexte.
+	 * @param constantValue
+	 */
+//	@NonNull SymbolicEvaluationEnvironment pushSymbolicEvaluationEnvironment(@NonNull OCLExpression expression, @NonNull SymbolicValue computedValue, @NonNull SymbolicValue knownValue, @NonNull OCLExpression caller);
+	@NonNull ConstrainedSymbolicEvaluationEnvironment pushConstrainedSymbolicEvaluationEnvironment(@NonNull OCLExpression expression);
+	@NonNull HypothesizedSymbolicEvaluationEnvironment createHypothesizedSymbolicEvaluationEnvironment(@NonNull TypedElement element);
 
 	/**
 	 * Created a nested SymbolicEvaluationEnvironment on behalf of caller in which symbolicValue has a constantValue.
 	 */
-	@NonNull SymbolicHypothesisEvaluationEnvironment pushSymbolicHypothesis(@NonNull OCLExpression caller);
+//	@NonNull HypothesizedSymbolicEvaluationEnvironment pushSymbolicHypothesis(@NonNull OCLExpression caller);
 
 	void popSymbolicHypothesis();
-
 }

@@ -12,15 +12,9 @@ package org.eclipse.ocl.pivot.library;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.values.SymbolicOperationCallValueImpl;
-import org.eclipse.ocl.pivot.utilities.ValueUtil;
-import org.eclipse.ocl.pivot.values.SymbolicValue;
-
-import com.google.common.collect.Lists;
 
 /**
  * LibraryBinaryOperation defines the invocation API of a binary operation using
@@ -48,11 +42,11 @@ public interface LibraryBinaryOperation extends LibraryOperation
 	 * Evaluate an OclSelf binary operations as part of the symbolic evaluator. At least one of the source/argument values is a SymbolicValue.
 	 *
 	 * @since 1.15
-	 */
+	 *
 	default @Nullable Object symbolicEvaluate(@NonNull Executor executor, @NonNull OperationCallExp operationCallExp, @Nullable Object sourceValue, @Nullable Object argumentValue) {
 		assert (sourceValue instanceof SymbolicValue) || (argumentValue instanceof SymbolicValue);
 		boolean mayBeInvalid = ValueUtil.mayBeInvalid(sourceValue) || ValueUtil.mayBeInvalid(argumentValue);
 		boolean mayBeNull = ValueUtil.mayBeNull(sourceValue) || ValueUtil.mayBeNull(argumentValue);
 		return new SymbolicOperationCallValueImpl(operationCallExp, false, mayBeNull || mayBeInvalid, this, Lists.newArrayList(sourceValue, argumentValue));
-	}
+	} */
 }

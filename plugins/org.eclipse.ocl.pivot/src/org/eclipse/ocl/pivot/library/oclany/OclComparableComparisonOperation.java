@@ -14,20 +14,16 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.values.SimpleSymbolicConstraintImpl;
 import org.eclipse.ocl.pivot.library.AbstractUntypedBinaryOperation;
 import org.eclipse.ocl.pivot.library.LibraryBinaryOperation;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
-import org.eclipse.ocl.pivot.values.SymbolicOperator;
-import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
  * OclComparableComparisonOperation provides the abstract support for a comparison operation.
@@ -77,7 +73,7 @@ public abstract class OclComparableComparisonOperation extends AbstractUntypedBi
 
 	/**
 	 * @since 1.15
-	 */
+	 *
 	@Override
 	public @Nullable Object symbolicEvaluate(@NonNull Executor executor, @NonNull OperationCallExp operationCallExp, @Nullable Object sourceValue, @Nullable Object argumentValue) {
 		if (sourceValue instanceof SymbolicValue) {
@@ -86,5 +82,5 @@ public abstract class OclComparableComparisonOperation extends AbstractUntypedBi
 			return new SimpleSymbolicConstraintImpl(operationCallExp.getTypeId(), false, mayBeNull || mayBeInvalid, SymbolicOperator.COMPARE_TO, argumentValue);
 		}
 		return evaluate(executor, sourceValue, argumentValue);
-	}
+	} */
 }

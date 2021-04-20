@@ -34,6 +34,11 @@ public class SymbolicKnownValueImpl extends SymbolicValueImpl implements Symboli
 	}
 
 	@Override
+	public @Nullable Object getValue() {
+		return knownValue;
+	}
+
+	@Override
 	public boolean isFalse() {
 		return knownValue == Boolean.FALSE;
 	}
@@ -44,6 +49,11 @@ public class SymbolicKnownValueImpl extends SymbolicValueImpl implements Symboli
 	}
 
 	@Override
+	public boolean isKnown() {
+		return true;
+	}
+
+	@Override
 	public boolean isNull() {
 		return ValueUtil.isNullValue(knownValue);
 	}
@@ -51,6 +61,11 @@ public class SymbolicKnownValueImpl extends SymbolicValueImpl implements Symboli
 	@Override
 	public boolean isTrue() {
 		return knownValue == Boolean.TRUE;
+	}
+
+	@Override
+	public boolean isZero() {
+		return ValueUtil.ZERO_VALUE.equals(knownValue);
 	}
 
 //	@Override
@@ -66,6 +81,11 @@ public class SymbolicKnownValueImpl extends SymbolicValueImpl implements Symboli
 //		assert !isRequired || !mayBeNull;
 //		return mayBeNull;
 //	}
+
+	@Override
+	public boolean mayBeZero() {
+		return ValueUtil.ZERO_VALUE.equals(knownValue);
+	}
 
 /*	@Override
 	public EList<Adapter> eAdapters() {

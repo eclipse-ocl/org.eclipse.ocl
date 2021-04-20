@@ -10,19 +10,12 @@
  */
 package org.eclipse.ocl.pivot.internal.values;
 
-import java.util.List;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.NavigationCallExp;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
-import org.eclipse.ocl.pivot.internal.manager.SymbolicExecutor;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.values.SimpleSymbolicConstraint;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
-
-import com.google.common.collect.Lists;
 
 /**
  * <!-- begin-user-doc -->
@@ -47,12 +40,12 @@ public class SymbolicNavigationCallValueImpl extends SymbolicExpressionValueImpl
 		this.property = PivotUtil.getReferredProperty(navigationCallExp);
 	}
 
-	@Override
+/*	@Override
 	public void deduceFrom(@NonNull SymbolicExecutor symbolicExecutor, @NonNull SimpleSymbolicConstraint symbolicConstraint) {
 		SymbolicEvaluationEnvironment symbolicEvaluationEnvironment = symbolicExecutor.getEvaluationEnvironment();
 		List<@Nullable Object> sourceAndArgumentValues = Lists.newArrayList(sourceValue);
 		symbolicEvaluationEnvironment.addSymbolicResult(property, sourceAndArgumentValues, symbolicConstraint);
-	}
+	} */
 
 	public @Nullable Object getSourceValue() {
 		return sourceValue;

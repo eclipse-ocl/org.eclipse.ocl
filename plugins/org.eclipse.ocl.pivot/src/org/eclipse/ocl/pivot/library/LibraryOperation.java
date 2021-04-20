@@ -15,13 +15,13 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.EvaluationHaltedException;
-import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.internal.manager.SymbolicExecutor;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.SimpleSymbolicConstraint;
 import org.eclipse.ocl.pivot.values.SymbolicOperationCallValue;
+import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
  */
@@ -84,18 +84,7 @@ public interface LibraryOperation extends LibraryIterationOrOperation
 	/**
 	 * @since 1.15
 	 */
-	default @Nullable Object symbolicDispatch(@NonNull EvaluationVisitor evaluationVisitor, @NonNull OperationCallExp callExp, @Nullable Object sourceValue) {
-	/*	if (sourceValue instanceof SymbolicValue) {
-			Iterable<@NonNull OCLExpression> ownedArguments = PivotUtil.getOwnedArguments(callExp);
-			@Nullable Object[] argumentValues = new @Nullable Object[Iterables.size(ownedArguments)];
-			int i = 0;
-			for (@NonNull OCLExpression argument : ownedArguments) {
-				argumentValues[i++] = evaluationVisitor.evaluate(argument);
-			}
-			boolean mayBeInvalid = ValueUtil.mayBeInvalid(sourceValue);
-			boolean mayBeNull = ValueUtil.mayBeNull(sourceValue);
-			return new SymbolicOperationCallValueImpl(callExp, false, mayBeNull || mayBeInvalid, (SymbolicValue)sourceValue, this, argumentValues);
-		} */
-		return dispatch(evaluationVisitor.getExecutor(), callExp, sourceValue);
+	default @NonNull SymbolicValue symbolicEvaluate(@NonNull SymbolicExecutor symbolicExecutor, @NonNull OperationCallExp callExp) {
+		throw new UnsupportedOperationException();
 	}
 }
