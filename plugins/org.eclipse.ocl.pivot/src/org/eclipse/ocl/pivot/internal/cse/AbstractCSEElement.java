@@ -91,6 +91,11 @@ public abstract class AbstractCSEElement<E extends TypedElement, C extends OCLEx
 	}
 
 	@Override
+	public @NonNull E getElement() {
+		return exemplar;
+	}
+
+	@Override
 	public @NonNull CSEElement getIfCSE(@NonNull IfExp ifExp, @NonNull CSEElement thenCSE, @NonNull CSEElement elseCSE) {
 		Map<@Nullable Operation, @NonNull Map<@NonNull List<@Nullable CSEElement>, @NonNull CSEExpressionElement>> callable2arguments2cse2 = callable2arguments2cse;
 		if (callable2arguments2cse2 == null) {
@@ -110,11 +115,6 @@ public abstract class AbstractCSEElement<E extends TypedElement, C extends OCLEx
 			arguments2cse.put(argumentCSEs, cseElement);
 		}
 		return cseElement;
-	}
-
-	@Override
-	public @NonNull E getObject() {
-		return exemplar;
 	}
 
 	@Override

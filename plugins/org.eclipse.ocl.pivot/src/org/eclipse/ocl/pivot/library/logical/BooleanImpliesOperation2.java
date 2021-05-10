@@ -15,9 +15,9 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.evaluation.Executor;
-import org.eclipse.ocl.pivot.internal.evaluation.ConstrainedSymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.internal.evaluation.AbstractSymbolicEvaluationEnvironment;
-import org.eclipse.ocl.pivot.internal.manager.SymbolicExecutor;
+import org.eclipse.ocl.pivot.internal.evaluation.ConstrainedSymbolicEvaluationEnvironment;
+import org.eclipse.ocl.pivot.internal.manager.SymbolicOCLExecutor;
 import org.eclipse.ocl.pivot.internal.values.SymbolicUnknownValueImpl;
 import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -79,8 +79,7 @@ public class BooleanImpliesOperation2 extends AbstractSimpleBinaryOperation
 	 * @since 1.15
 	 */
 	@Override
-	public @NonNull SymbolicValue symbolicEvaluate(@NonNull SymbolicExecutor symbolicExecutor, @NonNull OperationCallExp callExp) {
-		AbstractSymbolicEvaluationEnvironment evaluationEnvironment = symbolicExecutor.getEvaluationEnvironment();
+	public @NonNull SymbolicValue symbolicEvaluate(@NonNull AbstractSymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
 		OCLExpression source = PivotUtil.getOwnedSource(callExp);
 		SymbolicValue unconstrainedSourceValue = evaluationEnvironment.symbolicEvaluate(source);
 		if (unconstrainedSourceValue.mayBeInvalidOrNull()) {
@@ -106,6 +105,7 @@ public class BooleanImpliesOperation2 extends AbstractSimpleBinaryOperation
 	//	}
 	//	assert sourceValue instanceof SymbolicExpressionValue; */
 	//	SymbolicValue computedSourceValue = evaluationEnvironment.getSymbolicValue(source);
+		SymbolicOCLExecutor symbolicExecutor = evaluationEnvironment.getSymbolicExecutor();
 		SymbolicValue knownSourceValue = evaluationEnvironment.getKnownValue(Boolean.TRUE);
 		try {
 			ConstrainedSymbolicEvaluationEnvironment constrainedEvaluationEnvironment = symbolicExecutor.pushConstrainedSymbolicEvaluationEnvironment(argument); //, computedSourceValue, knownSourceValue, callExp);

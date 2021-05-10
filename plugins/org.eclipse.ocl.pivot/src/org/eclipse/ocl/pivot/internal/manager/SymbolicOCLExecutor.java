@@ -11,7 +11,10 @@
 package org.eclipse.ocl.pivot.internal.manager;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -19,13 +22,16 @@ import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
+import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.internal.evaluation.AbstractSymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.internal.evaluation.BasicOCLExecutor;
 import org.eclipse.ocl.pivot.internal.evaluation.BasicSymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.internal.evaluation.ConstrainedSymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
 import org.eclipse.ocl.pivot.internal.evaluation.HypothesizedSymbolicEvaluationEnvironment;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
+import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
  * @since 1.15
@@ -35,16 +41,32 @@ public class SymbolicOCLExecutor extends BasicOCLExecutor implements SymbolicExe
 	private @Nullable AbstractSymbolicEvaluationEnvironment constrainedSymbolicEvaluationEnvironment = null;
 	private @Nullable List<@NonNull HypothesizedSymbolicEvaluationEnvironment> hypothesizedEvaluationEnvironments = null;
 
+	/**
+	 * The expressions for which contradicting a hypothesized value allows a more precise re-evaluation.
+	 */
+	private @Nullable Map<@NonNull TypedElement, @NonNull SymbolicValue> expression2hypothesizedValue = null;
+
 	public SymbolicOCLExecutor(@NonNull EnvironmentFactoryInternalExtension environmentFactory, @NonNull ModelManager modelManager) {
 		super(environmentFactory, modelManager);
 	}
 
 	@Override
-	public @NonNull HypothesizedSymbolicEvaluationEnvironment createHypothesizedSymbolicEvaluationEnvironment(@NonNull TypedElement element) {
+	public void addHypothesis(@NonNull TypedElement expression, @NonNull SymbolicValue symbolicValue, @NonNull SymbolicValue hypothesizedValue) {
+		assert symbolicValue == getEvaluationEnvironment().basicGetSymbolicValue(expression);
+		Map<@NonNull TypedElement, @NonNull SymbolicValue> expression2hypothesizedValue2 = expression2hypothesizedValue;
+		if (expression2hypothesizedValue2 == null) {
+			expression2hypothesizedValue = expression2hypothesizedValue2 = new HashMap<>();
+		}
+		SymbolicValue old = expression2hypothesizedValue2.put(expression, hypothesizedValue);
+		assert old == null;
+	}
+
+	@Override
+	public @NonNull HypothesizedSymbolicEvaluationEnvironment createHypothesizedSymbolicEvaluationEnvironment(@NonNull CSEElement cseElement) {
 		AbstractSymbolicEvaluationEnvironment symbolicEvaluationEnvironment = getEvaluationEnvironment();
 	//	ConstrainedSymbolicEvaluationEnvironment constrainedEvaluationEnvironment2 = constrainedSymbolicEvaluationEnvironment;
 	//	assert constrainedEvaluationEnvironment2 != null;
-		HypothesizedSymbolicEvaluationEnvironment hypothesizedEvaluationEnvironment = new HypothesizedSymbolicEvaluationEnvironment(symbolicEvaluationEnvironment, element);
+		HypothesizedSymbolicEvaluationEnvironment hypothesizedEvaluationEnvironment = new HypothesizedSymbolicEvaluationEnvironment(symbolicEvaluationEnvironment, cseElement);
 	//	pushEvaluationEnvironment(nestedEvaluationEnvironment);
 		//	nestedEvaluationEnvironment.add(symbolicValue, constantValue);
 		//	SimpleSymbolicConstraintImpl symbolicConstraint = new SimpleSymbolicConstraintImpl(symbolicValue.getTypeId(), false, false, SymbolicOperator.EQUALS, constantValue);
@@ -63,8 +85,8 @@ public class SymbolicOCLExecutor extends BasicOCLExecutor implements SymbolicExe
 //		return new SymbolicEvaluationEnvironment((SymbolicEvaluationEnvironment)evaluationEnvironment, executableObject, caller);
 //	}
 
-	protected @NonNull AbstractSymbolicEvaluationEnvironment createNestedEvaluationEnvironment(@NonNull AbstractSymbolicEvaluationEnvironment evaluationEnvironment, @NonNull TypedElement executableObject) {
-		return new BasicSymbolicEvaluationEnvironment(evaluationEnvironment, executableObject);
+	protected @NonNull AbstractSymbolicEvaluationEnvironment createNestedEvaluationEnvironment(@NonNull AbstractSymbolicEvaluationEnvironment evaluationEnvironment, @NonNull CSEElement cseElement) {
+		return new BasicSymbolicEvaluationEnvironment(evaluationEnvironment, (TypedElement)cseElement.getElement());
 	}
 
 	@Override
@@ -88,8 +110,7 @@ public class SymbolicOCLExecutor extends BasicOCLExecutor implements SymbolicExe
 		constrainedSymbolicEvaluationEnvironment = constrainedSymbolicEvaluationEnvironment2.getParent();
 	}
 
-	@Override
-	public void popSymbolicHypothesis() {
+	private void popSymbolicHypothesis() {
 		popEvaluationEnvironment();
 	}
 
@@ -104,9 +125,37 @@ public class SymbolicOCLExecutor extends BasicOCLExecutor implements SymbolicExe
 	}
 
 	protected void resolveHypotheses() {
-		if (hypothesizedEvaluationEnvironments != null) {
+		Map<@NonNull TypedElement, @NonNull SymbolicValue> expression2hypothesizedValue2 = expression2hypothesizedValue;
+		if (expression2hypothesizedValue2 != null) {
+			AbstractSymbolicEvaluationEnvironment evaluationEnvironment = getEvaluationEnvironment();
+			List<@NonNull TypedElement> expressions = new ArrayList<>(expression2hypothesizedValue2.keySet());
+			if (expressions.size() > 1) {
+				Collections.sort(expressions, ((SymbolicAnalysis)this).getHeightComparator());
+			}
+			for (@NonNull TypedElement expression : expressions) {
+				SymbolicValue symbolicValue = evaluationEnvironment.basicGetSymbolicValue(expression);
+				SymbolicValue hypothesizedValue = expression2hypothesizedValue2.get(expression);
+				CSEElement cseElement = ((SymbolicAnalysis)this).getCSEElement(expression);
+				HypothesizedSymbolicEvaluationEnvironment hypothesizedEvaluationEnvironment = createHypothesizedSymbolicEvaluationEnvironment(cseElement);
+
+				hypothesizedEvaluationEnvironment.putHypothesizedValue(expression, hypothesizedValue);
+				hypothesizedEvaluationEnvironment.putHypothesizedValue(symbolicValue, hypothesizedValue);
+				hypothesizedEvaluationEnvironment.putHypothesizedTerm((OCLExpression)expression);
+
+				pushEvaluationEnvironment(hypothesizedEvaluationEnvironment);
+
+
+				boolean isContradiction = hypothesizedEvaluationEnvironment.isContradiction();
+
+
+				popEvaluationEnvironment();
+
+			//	hypothesizedEvaluationEnvironment.resolveHypothesis(evaluationEnvironment);
+			}
+		}
+	/*	if (hypothesizedEvaluationEnvironments != null) {
 			for (@NonNull HypothesizedSymbolicEvaluationEnvironment hypothesizedEvaluationEnvironment : hypothesizedEvaluationEnvironments) {
-				TypedElement hypothesizedElement = hypothesizedEvaluationEnvironment.getHypothesizedElement();
+				CSEElement hypothesizedElement = hypothesizedEvaluationEnvironment.getHypothesizedElement();
 				AbstractSymbolicEvaluationEnvironment nestedEvaluationEnvironment = createNestedEvaluationEnvironment(getEvaluationEnvironment(), hypothesizedElement);		// XXX execuatbleObject?					pushEvaluationEnvironment(nestedEvaluationEnvironment);
 				hypothesizedEvaluationEnvironment.resolveHypothesis(nestedEvaluationEnvironment);
 				pushEvaluationEnvironment(nestedEvaluationEnvironment);
@@ -120,7 +169,7 @@ public class SymbolicOCLExecutor extends BasicOCLExecutor implements SymbolicExe
 
 				popEvaluationEnvironment();
 			}
-		}
+		} */
 	}
 
 /*	@Override

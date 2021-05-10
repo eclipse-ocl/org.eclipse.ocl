@@ -13,16 +13,20 @@ package org.eclipse.ocl.pivot.internal.manager;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.internal.cse.CSEElement;
+import org.eclipse.ocl.pivot.internal.evaluation.AbstractSymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.internal.evaluation.ConstrainedSymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal.ExecutorInternalExtension;
 import org.eclipse.ocl.pivot.internal.evaluation.HypothesizedSymbolicEvaluationEnvironment;
-import org.eclipse.ocl.pivot.internal.evaluation.AbstractSymbolicEvaluationEnvironment;
+import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
  * @since 1.15
  */
 public interface SymbolicExecutor extends ExecutorInternalExtension
 {
+	void addHypothesis(@NonNull TypedElement expression, @NonNull SymbolicValue symbolicValue, @NonNull SymbolicValue hypothesizedValue);
+
 	@Override
 	@NonNull AbstractSymbolicEvaluationEnvironment getEvaluationEnvironment();
 
@@ -39,12 +43,12 @@ public interface SymbolicExecutor extends ExecutorInternalExtension
 	 */
 //	@NonNull SymbolicEvaluationEnvironment pushSymbolicEvaluationEnvironment(@NonNull OCLExpression expression, @NonNull SymbolicValue computedValue, @NonNull SymbolicValue knownValue, @NonNull OCLExpression caller);
 	@NonNull ConstrainedSymbolicEvaluationEnvironment pushConstrainedSymbolicEvaluationEnvironment(@NonNull OCLExpression expression);
-	@NonNull HypothesizedSymbolicEvaluationEnvironment createHypothesizedSymbolicEvaluationEnvironment(@NonNull TypedElement element);
+	@NonNull HypothesizedSymbolicEvaluationEnvironment createHypothesizedSymbolicEvaluationEnvironment(@NonNull CSEElement cseElement);
 
 	/**
 	 * Created a nested SymbolicEvaluationEnvironment on behalf of caller in which symbolicValue has a constantValue.
 	 */
 //	@NonNull HypothesizedSymbolicEvaluationEnvironment pushSymbolicHypothesis(@NonNull OCLExpression caller);
 
-	void popSymbolicHypothesis();
+//	void popSymbolicHypothesis();
 }

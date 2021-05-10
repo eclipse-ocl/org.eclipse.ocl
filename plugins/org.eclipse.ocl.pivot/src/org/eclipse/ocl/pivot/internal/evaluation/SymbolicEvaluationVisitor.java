@@ -109,6 +109,7 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 
 
 		SymbolicValue sourceValue = evaluationEnvironment.symbolicEvaluate(source);
+		@SuppressWarnings("unused")
 		List<@Nullable Object> sourceAndArgumentValues = Lists.newArrayList(sourceValue);
 	/*	Iterable<@Nullable Object> symbolicConstraints = evaluationEnvironment.getSymbolicConstraints(referredProperty, sourceAndArgumentValues);
 		if (symbolicConstraints != null) {
@@ -151,6 +152,7 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 		if ("size".equals(apparentOperation.getName())) {
 			getClass();		// XXX
 		}
+		@SuppressWarnings("unused")
 		boolean isValidating = apparentOperation.isIsValidating();
 		//
 		//	Resolve source value catching invalid values for validating operations.
@@ -177,6 +179,7 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 	//		}
 	//	}
 		//
+		@SuppressWarnings("unused")
 		boolean mayBeNull = false;
 		//
 		//	Safe navigation of null source return null.
@@ -213,7 +216,7 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 				Type onlyType = onlyParameter.getType();
 				if (onlyType == standardLibrary.getOclSelfType()) {
 					List<@NonNull OCLExpression> arguments = ClassUtil.nullFree(operationCallExp.getOwnedArguments());
-					Object onlyArgumentValue = evaluationEnvironment.symbolicEvaluate(arguments.get(0));
+					SymbolicValue onlyArgumentValue = evaluationEnvironment.symbolicEvaluate(arguments.get(0));
 				//	if (onlyArgumentValue instanceof SymbolicKnownValue) {
 				//		onlyArgumentValue = ((SymbolicKnownValue)onlyArgumentValue).getValue();
 				//	}
@@ -342,7 +345,7 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 				//
 				//	Validating/short-circuit - dispatch the source for assessment before looking at the argument
 				//
-				return implementation.symbolicEvaluate(getSymbolicExecutor(), operationCallExp);
+				return implementation.symbolicEvaluate(evaluationEnvironment, operationCallExp);
 		//	}
 		}
 		catch (InvalidValueException e) {
@@ -424,8 +427,8 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 		try {
 			ConstrainedSymbolicEvaluationEnvironment constrainedSymbolicEvaluationEnvironment = symbolicExecutor.pushConstrainedSymbolicEvaluationEnvironment(expression);
 			constrainedSymbolicEvaluationEnvironment.addConstraint(constrainedExpression/*, unconstrainedValue*/, constrainedValue);
-			AbstractSymbolicEvaluationEnvironment evaluationEnvironment = getEvaluationEnvironment();
-			return evaluationEnvironment.symbolicEvaluate(expression);
+	//		AbstractSymbolicEvaluationEnvironment evaluationEnvironment = getEvaluationEnvironment();
+			return constrainedSymbolicEvaluationEnvironment.symbolicEvaluate(expression);
 		}
 		finally {
 			symbolicExecutor.popConstrainedSymbolicEvaluationEnvironment();
@@ -546,24 +549,24 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 	}
 
 	@Override
-	public @Nullable Object visitIfExp(@NonNull IfExp ifExp) {
-		Object result;
-		OCLExpression condition = PivotUtil.getOwnedCondition(ifExp);
-		Object conditionValue = evaluate(condition);
-		if (conditionValue == ValueUtil.TRUE_VALUE) {
-			OCLExpression expression = PivotUtil.getOwnedThen(ifExp);
-			result = evaluate(expression);
-		}
-		else if (conditionValue == ValueUtil.FALSE_VALUE) {
-			OCLExpression expression = PivotUtil.getOwnedElse(ifExp);
-			result = evaluate(expression);
-		}
-		else if (conditionValue instanceof SymbolicValue) {
-			boolean mayBeInvalid = ValueUtil.mayBeInvalid(conditionValue);
-			boolean mayBeNull = ValueUtil.mayBeNull(conditionValue);
+	public @NonNull SymbolicValue visitIfExp(@NonNull IfExp ifExp) {
+		AbstractSymbolicEvaluationEnvironment evaluationEnvironment = getEvaluationEnvironment();
+		OCLExpression conditionExpression = PivotUtil.getOwnedCondition(ifExp);
+		SymbolicValue conditionValue = evaluationEnvironment.symbolicEvaluate(conditionExpression);
+		if (conditionValue.isTrue()) {
 			OCLExpression thenExpression = PivotUtil.getOwnedThen(ifExp);
-			SymbolicValue knownThenValue = getEvaluationEnvironment().getKnownValue(Boolean.TRUE);
-			SymbolicValue thenValue = nestedEvaluate(condition, knownThenValue, thenExpression);
+			return evaluationEnvironment.symbolicEvaluate(thenExpression);
+		}
+		else if (conditionValue.isFalse()) {
+			OCLExpression elseExpression = PivotUtil.getOwnedElse(ifExp);
+			return evaluationEnvironment.symbolicEvaluate(elseExpression);
+		}
+		else {
+			boolean mayBeInvalid = conditionValue.mayBeInvalid();
+			boolean mayBeNull = conditionValue.mayBeNull();
+			OCLExpression thenExpression = PivotUtil.getOwnedThen(ifExp);
+			SymbolicValue knownThenValue = evaluationEnvironment.getKnownValue(Boolean.TRUE);
+			SymbolicValue thenValue = nestedEvaluate(conditionExpression, knownThenValue, thenExpression);
 			if (thenValue.mayBeInvalid()) {
 				mayBeInvalid = true;
 			}
@@ -571,20 +574,16 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 				mayBeNull = true;
 			}
 			OCLExpression elseExpression = PivotUtil.getOwnedElse(ifExp);
-			SymbolicValue knownElseValue = getEvaluationEnvironment().getKnownValue(Boolean.FALSE);
-			SymbolicValue elseValue = nestedEvaluate(condition, knownElseValue, elseExpression);
+			SymbolicValue knownElseValue = evaluationEnvironment.getKnownValue(Boolean.FALSE);
+			SymbolicValue elseValue = nestedEvaluate(conditionExpression, knownElseValue, elseExpression);
 			if (elseValue.mayBeInvalid()) {
 				mayBeInvalid = true;
 			}
 			if (elseValue.mayBeNull()) {
 				mayBeNull = true;
 			}
-			result = new SymbolicExpressionValueImpl(ifExp, mayBeNull, mayBeInvalid);
+			return new SymbolicExpressionValueImpl(ifExp, mayBeNull, mayBeInvalid);
 		}
-		else {
-			result = new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.BOOLEAN_NAME, ValueUtil.getTypeName(conditionValue));
-		}
-		return result;
 	}
 
 	@Override

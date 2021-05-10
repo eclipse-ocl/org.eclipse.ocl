@@ -25,7 +25,6 @@ import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.internal.evaluation.AbstractSymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal.ExecutorInternalExtension;
-import org.eclipse.ocl.pivot.internal.manager.SymbolicExecutor;
 import org.eclipse.ocl.pivot.internal.values.SymbolicUnknownValueImpl;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -176,8 +175,7 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 	 * @since 1.15
 	 */
 	@Override
-	public @NonNull SymbolicValue symbolicEvaluate(@NonNull SymbolicExecutor symbolicExecutor, @NonNull OperationCallExp callExp) {
-		AbstractSymbolicEvaluationEnvironment evaluationEnvironment = symbolicExecutor.getEvaluationEnvironment();
+	public @NonNull SymbolicValue symbolicEvaluate(@NonNull AbstractSymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
 		SymbolicValue symbolicPreconditionValue = checkPreconditions(evaluationEnvironment, callExp);
 		if (symbolicPreconditionValue != null) {
 			return symbolicPreconditionValue;
@@ -200,7 +198,7 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 			for (int i = 0; i < argumentsSize; i++) {
 				sourceAndArgumentValues[i+1] = ((SymbolicKnownValue)argumentSymbolicValues.get(i)).getValue();
 			}
-			Object result = ((LibraryOperationExtension2)this).evaluate(symbolicExecutor, callExp, sourceAndArgumentValues);
+			Object result = ((LibraryOperationExtension2)this).evaluate(evaluationEnvironment.getExecutor(), callExp, sourceAndArgumentValues);
 			return evaluationEnvironment.getKnownValue(result);
 		}
 		else {

@@ -44,12 +44,13 @@ import org.eclipse.ocl.pivot.values.SymbolicValue;
  */
 public abstract class AbstractSymbolicEvaluationEnvironment extends BasicEvaluationEnvironment implements SymbolicEvaluationEnvironment
 {
+	private /*@LazyNonNull*/ EvaluationVisitor undecoratedVisitor = null;
+
 //	private final @NonNull Map<@NonNull SymbolicValue, @NonNull List<@NonNull SymbolicConstraint>> value2constraint = new HashMap<>();
 
 	/**
-	 * The known (symbolic) value of each expression element, null if not yet computed.
+	 * The known (symbolic) value of each common expression element, null if not yet computed.
 	 */
-//	private @NonNull Map<@NonNull Element, @NonNull SymbolicValue> element2symbolicValue = new HashMap<>();
 	private @NonNull Map<@NonNull CSEElement, @NonNull SymbolicValue> cseElement2symbolicValue = new HashMap<>();
 
 	/**
@@ -107,6 +108,7 @@ public abstract class AbstractSymbolicEvaluationEnvironment extends BasicEvaluat
 //		return cseElement2symbolicValue.get(eObject);
 //	}
 
+	@Deprecated /* @deprecated use CSEElement */
 	public @Nullable SymbolicValue basicGetSymbolicValue(@NonNull TypedElement element) {
 		CSEElement cseElement = getSymbolicAnalysis().getCSEElement(element);
 		return cseElement2symbolicValue.get(cseElement);
@@ -149,7 +151,7 @@ public abstract class AbstractSymbolicEvaluationEnvironment extends BasicEvaluat
 		return (SymbolicAnalysis)getSymbolicExecutor();
 	}
 
-	private @NonNull SymbolicOCLExecutor getSymbolicExecutor() {
+	public @NonNull SymbolicOCLExecutor getSymbolicExecutor() {
 		return (SymbolicOCLExecutor)getExecutor();
 	}
 
@@ -165,6 +167,7 @@ public abstract class AbstractSymbolicEvaluationEnvironment extends BasicEvaluat
 		return ClassUtil.nonNullState(cseElement2symbolicValue.get(cseElement));
 	}
 
+	@Deprecated /* @deprecated use CSEElement */
 	public @NonNull SymbolicValue getSymbolicValue(@NonNull TypedElement element) {
 		CSEElement cseElement = getSymbolicAnalysis().getCSEElement(element);
 		return ClassUtil.nonNullState(cseElement2symbolicValue.get(cseElement));
@@ -253,11 +256,16 @@ public abstract class AbstractSymbolicEvaluationEnvironment extends BasicEvaluat
 		if (!symbolicValue.mayBeInvalid()) {
 			return false;
 		}
+		SymbolicAnalysis symbolicAnalysis = getSymbolicAnalysis();
+		CSEElement cseElement = symbolicAnalysis.getCSEElement(element);
+//		HypothesizedSymbolicEvaluationEnvironment hypothesizedSymbolicEvaluationEnvironment = symbolicAnalysis.createHypothesizedSymbolicEvaluationEnvironment(cseElement);
 		SymbolicExecutor symbolicExecutor = getSymbolicExecutor();
-		HypothesizedSymbolicEvaluationEnvironment hypothesizedSymbolicEvaluationEnvironment = symbolicExecutor.createHypothesizedSymbolicEvaluationEnvironment(element);
+		SymbolicValue hypothesizedValue = new SymbolicKnownValueImpl(element.getTypeId(), ValueUtil.INVALID_VALUE);
+		symbolicExecutor.addHypothesis(element, symbolicValue, hypothesizedValue);
+	//	HypothesizedSymbolicEvaluationEnvironment hypothesizedSymbolicEvaluationEnvironment = symbolicExecutor.createHypothesizedSymbolicEvaluationEnvironment(element);
 	//	try {
-			SymbolicValue hypothesizedValue = new SymbolicKnownValueImpl(element.getTypeId(), ValueUtil.INVALID_VALUE);
-			hypothesizedSymbolicEvaluationEnvironment.putHypothesizedValue(symbolicValue, hypothesizedValue);
+	//		SymbolicValue hypothesizedValue = new SymbolicKnownValueImpl(element.getTypeId(), ValueUtil.INVALID_VALUE);
+	//		hypothesizedSymbolicEvaluationEnvironment.putHypothesizedValue(symbolicValue, hypothesizedValue);
 		//	boolean isContradiction = hypothesizedSymbolicEvaluationEnvironment.isContradiction(this);
 		//	return !isContradiction;
 	//	}
@@ -278,11 +286,16 @@ public abstract class AbstractSymbolicEvaluationEnvironment extends BasicEvaluat
 		if (!symbolicValue.mayBeNull()) {
 			return false;
 		}
+		SymbolicAnalysis symbolicAnalysis = getSymbolicAnalysis();
+		CSEElement cseElement = symbolicAnalysis.getCSEElement(element);
+//		HypothesizedSymbolicEvaluationEnvironment hypothesizedSymbolicEvaluationEnvironment = symbolicAnalysis.createHypothesizedSymbolicEvaluationEnvironment(cseElement);
 		SymbolicExecutor symbolicExecutor = getSymbolicExecutor();
-		HypothesizedSymbolicEvaluationEnvironment hypothesizedSymbolicEvaluationEnvironment = symbolicExecutor.createHypothesizedSymbolicEvaluationEnvironment(element);
+		SymbolicValue hypothesizedValue = new SymbolicKnownValueImpl(element.getTypeId(), ValueUtil.NULL_VALUE);
+		symbolicExecutor.addHypothesis(element, symbolicValue, hypothesizedValue);
+	//	HypothesizedSymbolicEvaluationEnvironment hypothesizedSymbolicEvaluationEnvironment = symbolicExecutor.createHypothesizedSymbolicEvaluationEnvironment(element);
 	//	try {
-			SymbolicValue hypothesizedValue = new SymbolicKnownValueImpl(element.getTypeId(), ValueUtil.NULL_VALUE);
-			hypothesizedSymbolicEvaluationEnvironment.putHypothesizedValue(symbolicValue, hypothesizedValue);
+	//		SymbolicValue hypothesizedValue = new SymbolicKnownValueImpl(element.getTypeId(), ValueUtil.NULL_VALUE);
+	//		hypothesizedSymbolicEvaluationEnvironment.putHypothesizedValue(symbolicValue, hypothesizedValue);
 		//	boolean isContradiction = hypothesizedSymbolicEvaluationEnvironment.isContradiction(this);
 		//	return !isContradiction;
 	//	}
@@ -305,12 +318,16 @@ public abstract class AbstractSymbolicEvaluationEnvironment extends BasicEvaluat
 		if (symbolicValue.isZero()) {
 			return true;
 		}
+		SymbolicAnalysis symbolicAnalysis = getSymbolicAnalysis();
+		CSEElement cseElement = symbolicAnalysis.getCSEElement(element);
+//		HypothesizedSymbolicEvaluationEnvironment hypothesizedSymbolicEvaluationEnvironment = symbolicAnalysis.createHypothesizedSymbolicEvaluationEnvironment(cseElement);
 		SymbolicExecutor symbolicExecutor = getSymbolicExecutor();
-		HypothesizedSymbolicEvaluationEnvironment hypothesizedSymbolicEvaluationEnvironment = symbolicExecutor.createHypothesizedSymbolicEvaluationEnvironment(element);
+		SymbolicValue hypothesizedValue = new SymbolicKnownValueImpl(element.getTypeId(), ValueUtil.ZERO_VALUE);
+		symbolicExecutor.addHypothesis(element, symbolicValue, hypothesizedValue);
+	//	HypothesizedSymbolicEvaluationEnvironment hypothesizedSymbolicEvaluationEnvironment = symbolicExecutor.createHypothesizedSymbolicEvaluationEnvironment(element);
 	//	try {
-			SymbolicValue hypothesizedValue = new SymbolicKnownValueImpl(element.getTypeId(), ValueUtil.ZERO_VALUE);
-			hypothesizedSymbolicEvaluationEnvironment.putHypothesizedValue(symbolicValue, hypothesizedValue);
-			hypothesizedSymbolicEvaluationEnvironment.putHypothesizedTerm(getSymbolicAnalysis(), element);
+	//		hypothesizedSymbolicEvaluationEnvironment.putHypothesizedValue(symbolicValue, hypothesizedValue);
+	//		hypothesizedSymbolicEvaluationEnvironment.putHypothesizedTerm(getSymbolicAnalysis(), element);
 		//	boolean isContradiction = hypothesizedSymbolicEvaluationEnvironment.isContradiction(this);
 		//	return !isContradiction;
 	//	}
@@ -320,9 +337,33 @@ public abstract class AbstractSymbolicEvaluationEnvironment extends BasicEvaluat
 		return true;
 	}
 
+	@Deprecated /* @deprecated use CSEElement */
 	public @Nullable SymbolicValue putSymbolicValue(@NonNull TypedElement element, @NonNull SymbolicValue symbolicValue) {
 		CSEElement cseElement = getSymbolicAnalysis().getCSEElement(element);
 		return cseElement2symbolicValue.put(cseElement, symbolicValue);
+	}
+
+	public @Nullable SymbolicValue putSymbolicValue(@NonNull CSEElement cseElement, @NonNull SymbolicValue symbolicValue) {
+		return cseElement2symbolicValue.put(cseElement, symbolicValue);
+	}
+
+	public @NonNull SymbolicValue symbolicEvaluate(@NonNull CSEElement cseElement) {
+		SymbolicValue symbolicValue = basicGetSymbolicValue(cseElement);			// Re-use old value
+		if (symbolicValue != null) {
+			return symbolicValue;
+		}
+		Object result;
+		try {
+			EvaluationVisitor undecoratedVisitor2 = undecoratedVisitor;
+			if (undecoratedVisitor2 == null) {
+				this.undecoratedVisitor = undecoratedVisitor2 = executor.getEvaluationVisitor().getUndecoratedVisitor();
+			}
+			result = cseElement.getElement().accept(undecoratedVisitor2);
+		}
+		catch (InvalidValueException e) {
+			result = e;
+		}
+		return traceValue(cseElement, result);								// Record new value
 	}
 
 	public @NonNull SymbolicValue symbolicEvaluate(@NonNull TypedElement element) {
@@ -332,8 +373,11 @@ public abstract class AbstractSymbolicEvaluationEnvironment extends BasicEvaluat
 		}
 		Object result;
 		try {
-			EvaluationVisitor undecoratedVisitor = getSymbolicExecutor().getEvaluationVisitor().getUndecoratedVisitor();
-			result = element.accept(undecoratedVisitor);
+			EvaluationVisitor undecoratedVisitor2 = undecoratedVisitor;
+			if (undecoratedVisitor2 == null) {
+				this.undecoratedVisitor = undecoratedVisitor2 = executor.getEvaluationVisitor().getUndecoratedVisitor();
+			}
+			result = element.accept(undecoratedVisitor2);
 		}
 		catch (InvalidValueException e) {
 			result = e;
@@ -382,16 +426,30 @@ public abstract class AbstractSymbolicEvaluationEnvironment extends BasicEvaluat
 	}
 
 
+	@Deprecated /* @deprecated use CSEElement */
 	public @NonNull SymbolicValue traceSymbolicValue(@NonNull TypedElement expression, @NonNull SymbolicValue symbolicValue) {
-		if ("self.name".equals(expression.toString())) {
+		SymbolicAnalysis symbolicAnalysis = getSymbolicAnalysis();
+		CSEElement cseElement = symbolicAnalysis.getCSEElement(expression);
+		return traceSymbolicValue(cseElement, symbolicValue);
+	}
+
+	public @NonNull SymbolicValue traceSymbolicValue(@NonNull CSEElement cseElement, @NonNull SymbolicValue symbolicValue) {
+		if ("self.name".equals(cseElement.toString())) {
 			getClass();		// XXX
 		}
-		SymbolicValue old = putSymbolicValue(expression, symbolicValue);
+		SymbolicValue old = putSymbolicValue(cseElement, symbolicValue);
 		assert (old == null) || (old == symbolicValue); //old.equals(symbolicValue);
 		return symbolicValue;
 	}
 
+	@Deprecated /* @deprecated use CSEElement */
 	public @NonNull SymbolicValue traceValue(@NonNull TypedElement expression, @Nullable Object value) {
+		SymbolicAnalysis symbolicAnalysis = getSymbolicAnalysis();
+		CSEElement cseElement = symbolicAnalysis.getCSEElement(expression);
+		return traceValue(cseElement, value);
+	}
+
+	public @NonNull SymbolicValue traceValue(@NonNull CSEElement cseElement, @Nullable Object value) {
 		SymbolicValue symbolicValue;
 		if (value instanceof SymbolicValue) {
 			symbolicValue = (SymbolicValue) value;
@@ -400,6 +458,6 @@ public abstract class AbstractSymbolicEvaluationEnvironment extends BasicEvaluat
 			Object boxedValue = environmentFactory.getIdResolver().boxedValueOf(value);
 			symbolicValue = getKnownValue(boxedValue);
 		}
-		return traceSymbolicValue(expression, symbolicValue);
+		return traceSymbolicValue(cseElement, symbolicValue);
 	}
 }

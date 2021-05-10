@@ -12,19 +12,24 @@
 package org.eclipse.ocl.pivot.internal.evaluation;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.IfExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.internal.values.SymbolicKnownValueImpl;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.logical.BooleanAndOperation;
@@ -44,14 +49,16 @@ import org.eclipse.ocl.pivot.values.SymbolicValue;
  *
  * @since 1.15
  */
-public class HypothesizedSymbolicEvaluationEnvironment
+public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluationEnvironment
 {
 	protected final @NonNull AbstractSymbolicEvaluationEnvironment symbolicEvaluationEnvironment;
-	protected final @NonNull  TypedElement hypothesizedElement;
+	protected final @NonNull CSEElement hypothesizedElement;
+	private final @NonNull Map<@NonNull TypedElement, @NonNull List<@NonNull SymbolicValue>> expression2constrainingValues = new HashMap<>();
 	private final @NonNull Map<@NonNull SymbolicValue, @NonNull List<@NonNull SymbolicValue>> unconstrainedValue2constrainingvalues = new HashMap<>();
 
-	public HypothesizedSymbolicEvaluationEnvironment(@NonNull AbstractSymbolicEvaluationEnvironment symbolicEvaluationEnvironment, @NonNull TypedElement hypothesizedElement) {
-		this.symbolicEvaluationEnvironment = symbolicEvaluationEnvironment;;
+	public HypothesizedSymbolicEvaluationEnvironment(@NonNull AbstractSymbolicEvaluationEnvironment symbolicEvaluationEnvironment, @NonNull CSEElement hypothesizedElement) {
+		super(symbolicEvaluationEnvironment, (TypedElement)hypothesizedElement.getElement());
+		this.symbolicEvaluationEnvironment = symbolicEvaluationEnvironment;
 		this.hypothesizedElement = hypothesizedElement;;
 	}
 
@@ -75,7 +82,17 @@ public class HypothesizedSymbolicEvaluationEnvironment
 		expression2value.put(hypothesizedExpression, hypothesizedValue);
 	} */
 
-	public @NonNull TypedElement getHypothesizedElement() {
+	private void addAffectedExpressions(@NonNull Set<@NonNull TypedElement> expressions, @NonNull TypedElement expression) {
+		if (expressions.add(expression)) {
+			// all VariableExps for a variable
+			EObject eContainer = expression.eContainer();
+			if ((eContainer instanceof TypedElement) && !(eContainer instanceof Feature)) {
+				addAffectedExpressions(expressions, (TypedElement)eContainer);
+			}
+		}
+	}
+
+	public @NonNull CSEElement getHypothesizedElement() {
 		return hypothesizedElement;
 	}
 
@@ -104,7 +121,29 @@ public class HypothesizedSymbolicEvaluationEnvironment
 		return variableValue;
 	} */
 
-	public boolean isContradiction(@NonNull SymbolicAnalysis symbolicAnalysis) {
+	public boolean isContradiction() {
+		Set<@NonNull TypedElement> expressionsSet = new HashSet<>();
+		for (@NonNull TypedElement expression : expression2constrainingValues.keySet()) {
+			addAffectedExpressions(expressionsSet, expression);
+		}
+		List<@NonNull TypedElement> expressionsList = new ArrayList<>(expressionsSet);
+
+
+		// Add all ancestral expressions
+		if (expressionsList.size() > 1) {
+			Collections.sort(expressionsList, ((SymbolicAnalysis)getSymbolicExecutor()).getHeightComparator());
+		}
+		for (@NonNull TypedElement expression : expressionsList) {
+			List<@NonNull SymbolicValue> constrainingValues = expression2constrainingValues.get(expression);
+			assert constrainingValues != null;
+			SymbolicValue constrainedValue = symbolicEvaluate(expression);
+			for (@NonNull SymbolicValue constrainingValue : constrainingValues) {
+				if (!constrainedValue.equals(constrainingValue)) {
+					return true;
+				}
+			}
+		}
+	//	hypothesizedElement.acc
 	/*	for (ConstrainedSymbolicEvaluationEnvironment evaluationEnvironment = constrainedSymbolicEvaluationEnvironment; evaluationEnvironment != null; evaluationEnvironment = evaluationEnvironment.getParent()) {
 			ConstrainedSymbolicEvaluationEnvironment constrainedSymbolicEvaluationEnvironment = evaluationEnvironment;
 			for (@NonNull OCLExpression constrainedExpression : constrainedSymbolicEvaluationEnvironment.getConstrainedExpressions()) {
@@ -122,14 +161,15 @@ public class HypothesizedSymbolicEvaluationEnvironment
 	 * Install the control path constraints that ensure that expression is executable as part of the hypothesis.
 	 * ana//implies guards are set true, or guards false and if conditions true/false as appropriate.
 	 */
-	public void putHypothesizedTerm(@NonNull SymbolicAnalysis symbolicAnalysis, @NonNull OCLExpression expression) {
+	public void putHypothesizedTerm(@NonNull OCLExpression expression) {
 		EObject eContainer = expression.eContainer();
+		OCLExpression constrainedExpression = null;
 		SymbolicValue symbolicPathValue = null;
 		Boolean symbolicKnownValue = null;
 		if (eContainer instanceof IfExp) {
 			IfExp ifExp = (IfExp)eContainer;
-			OCLExpression condition = PivotUtil.getOwnedCondition(ifExp);
-			symbolicPathValue = symbolicAnalysis.getEvaluationEnvironment().getSymbolicValue2(condition);
+			constrainedExpression = PivotUtil.getOwnedCondition(ifExp);
+			symbolicPathValue = symbolicEvaluationEnvironment.getSymbolicValue2(constrainedExpression);
 			if (expression == ifExp.getOwnedThen()) {
 				symbolicKnownValue = Boolean.TRUE;
 			}
@@ -143,8 +183,8 @@ public class HypothesizedSymbolicEvaluationEnvironment
 			if (ownedArguments.size() == 1) {
 				OCLExpression argument = ownedArguments.get(0);
 				if (expression == argument) {
-					OCLExpression source = PivotUtil.getOwnedSource(operationCallExp);
-					symbolicPathValue = symbolicAnalysis.getEvaluationEnvironment().getSymbolicValue2(source);
+					constrainedExpression = PivotUtil.getOwnedSource(operationCallExp);
+					symbolicPathValue = symbolicEvaluationEnvironment.getSymbolicValue2(constrainedExpression);
 					Operation operation = operationCallExp.getReferredOperation();
 					LibraryFeature implementation = operation.getImplementation();
 					if ((implementation instanceof BooleanAndOperation) || (implementation instanceof BooleanAndOperation2)) {
@@ -159,12 +199,24 @@ public class HypothesizedSymbolicEvaluationEnvironment
 				}
 			}
 		}
-		if ((symbolicPathValue != null) && (symbolicKnownValue != null)) {
-			putHypothesizedValue(symbolicPathValue, new SymbolicKnownValueImpl(TypeId.BOOLEAN, symbolicKnownValue));
+		if ((constrainedExpression != null) && (symbolicPathValue != null) && (symbolicKnownValue != null)) {
+			SymbolicKnownValueImpl constrainingValue = new SymbolicKnownValueImpl(TypeId.BOOLEAN, symbolicKnownValue);
+			putHypothesizedValue(constrainedExpression, constrainingValue);
+			putHypothesizedValue(symbolicPathValue, constrainingValue);
 		}
 		if (eContainer instanceof OCLExpression) {
-			putHypothesizedTerm(symbolicAnalysis, (OCLExpression)eContainer);
+			putHypothesizedTerm((OCLExpression)eContainer);
 		}
+	}
+
+	public void putHypothesizedValue(@NonNull TypedElement expression, @NonNull SymbolicValue constrainingValue) {
+		SymbolicValue symbolicValue = symbolicEvaluationEnvironment.basicGetSymbolicValue(expression);
+		List<@NonNull SymbolicValue> constrainingValues = expression2constrainingValues.get(expression);
+		if (constrainingValues == null) {
+			constrainingValues = new ArrayList<>();
+			expression2constrainingValues.put(expression, constrainingValues);
+		}
+		constrainingValues.add(constrainingValue);
 	}
 
 	public void putHypothesizedValue(@NonNull SymbolicValue unconstrainedValue, @NonNull SymbolicValue constrainingValue) {
@@ -212,22 +264,12 @@ public class HypothesizedSymbolicEvaluationEnvironment
 	//	}
 	}
 
-	/**
-	 * Returns a string representation of the hypotheses
-	 */
-	@Override
-	public String toString() {
-		StringBuilder s = new StringBuilder();
-		toString(s, 0);
-		return s.toString();
-	}
-
 	public void toString(@NonNull StringBuilder s, int depth) {
 		List<@NonNull SymbolicValue> unconstrainedValues = new ArrayList<>(unconstrainedValue2constrainingvalues.keySet());
 	//	if (unconstrainedValues.size() > 1) {
 	//		Collections.sort(unconstrainedValues, NameUtil.NAMEABLE_COMPARATOR);
 	//	}
-		s.append("hypotheses for '" + hypothesizedElement + "' in '" + hypothesizedElement.eContainer() + "'");
+		s.append("hypotheses for '" + hypothesizedElement + /*"' in '" + hypothesizedElement.eContainer() +*/ "'");
 		for (@NonNull SymbolicValue unconstrainedValue : unconstrainedValues) {
 			StringUtil.appendIndentation(s, depth+1);
 			s.append(unconstrainedValue + " => ");
@@ -240,5 +282,18 @@ public class HypothesizedSymbolicEvaluationEnvironment
 		}
 	//	StringUtil.appendIndentation(s, depth);
 	//	basicSymbolicEvaluationEnvironment.toString(s, depth+1);
+	}
+
+	@Override
+	public @NonNull SymbolicValue traceSymbolicValue(@NonNull TypedElement expression, @NonNull SymbolicValue symbolicValue) {
+		List<@NonNull SymbolicValue> constrainingValues = expression2constrainingValues.get(expression);
+		if (constrainingValues != null) {
+			for (@NonNull SymbolicValue constrainingValue : constrainingValues) {
+				if (!symbolicValue.equals(constrainingValue)) {
+					return super.traceSymbolicValue(expression, constrainingValue);
+				}
+			}
+		}
+		return super.traceSymbolicValue(expression, symbolicValue);
 	}
 }

@@ -15,6 +15,7 @@ import java.util.List;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
+import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.IfExp;
 import org.eclipse.ocl.pivot.NavigationCallExp;
 import org.eclipse.ocl.pivot.Operation;
@@ -26,8 +27,8 @@ public interface CSEElement
 {
 	@NonNull Iterable<@NonNull CSEElement> getChildren();
 	@NonNull CommonSubExpressionAnalysis getCommonSubExpressionAnalysis();
+	@NonNull Element getElement();
 	@NonNull CSEElement getIfCSE(@NonNull IfExp ifExp, @NonNull CSEElement thenCSE, @NonNull CSEElement elseCSE);
-	@NonNull Object getObject();
 	@NonNull CSEElement getOperationCSE(@NonNull CallExp callExp, @NonNull Operation operation, @NonNull List<@Nullable CSEElement> argumentCSEs);
 	@Nullable CSEElement getParent();
 	@NonNull CSEElement getPropertyCSE(@NonNull NavigationCallExp navigationCallExp);
