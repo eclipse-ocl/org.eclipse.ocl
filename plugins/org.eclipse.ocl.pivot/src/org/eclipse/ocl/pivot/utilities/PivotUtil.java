@@ -2022,6 +2022,13 @@ public class PivotUtil
 	}
 
 	/**
+	 * @since 1.15
+	 */
+	public static @NonNull String getStringSymbol(@NonNull StringLiteralExp stringLiteralExp) {
+		return ClassUtil.nonNullState(stringLiteralExp.getStringSymbol());
+	}
+
+	/**
 	 * Return the type of a TypedElement, exploiting the known non-null characteristics.
 	 * @throws IllegalStateException for a null type
 	 *

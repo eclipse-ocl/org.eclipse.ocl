@@ -21,6 +21,7 @@ import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor.EvaluationVisitorExtension;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
+import org.eclipse.ocl.pivot.internal.cse.CommonSubExpressionAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.SymbolicOCLExecutor;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -34,6 +35,7 @@ import org.eclipse.ocl.pivot.values.SymbolicValue;
 public class SymbolicAnalysis extends SymbolicOCLExecutor	// FIXME merge SymbolicAnalysis + SymbolicOCLExecutor
 {
 	protected final @NonNull ExpressionInOCL expressionInOCL;
+	protected final @NonNull CommonSubExpressionAnalysis cseAnalysis;
 
 	/**
 	 * Initializes the symbolic analysis of expressionInOCL that delegates to a non-symbolic evaluation visitor.
@@ -41,6 +43,7 @@ public class SymbolicAnalysis extends SymbolicOCLExecutor	// FIXME merge Symboli
 	public SymbolicAnalysis(@NonNull ExpressionInOCL expressionInOCL, @NonNull EnvironmentFactoryInternalExtension environmentFactory, @NonNull ModelManager modelManager) {
 		super(environmentFactory, modelManager);
 		this.expressionInOCL = expressionInOCL;
+		this.cseAnalysis = new CommonSubExpressionAnalysis();
 	}
 
 	@Override
@@ -51,6 +54,7 @@ public class SymbolicAnalysis extends SymbolicOCLExecutor	// FIXME merge Symboli
 	}
 
 	public void initializeEvaluationEnvironment(@NonNull ExpressionInOCL expressionInOCL, @Nullable Object contextElement, @Nullable Object @Nullable [] parameters) {
+		cseAnalysis.analyze(expressionInOCL);
 		AbstractSymbolicEvaluationEnvironment symbolicEvaluationEnvironment = (AbstractSymbolicEvaluationEnvironment) initializeEvaluationEnvironment(expressionInOCL);
 		IdResolver idResolver = environmentFactory.getIdResolver();
 		Variable contextVariable = expressionInOCL.getOwnedContext();
