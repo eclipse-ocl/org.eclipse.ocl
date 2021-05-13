@@ -15,16 +15,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
+import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.internal.manager.SymbolicExecutor;
 import org.eclipse.ocl.pivot.internal.manager.SymbolicOCLExecutor;
 import org.eclipse.ocl.pivot.internal.values.SymbolicKnownValueImpl;
@@ -50,7 +49,8 @@ public abstract class AbstractSymbolicEvaluationEnvironment extends BasicEvaluat
 	/**
 	 * The known (symbolic) value of each expression element, null if not yet computed.
 	 */
-	private @NonNull Map<@NonNull Element, @NonNull SymbolicValue> element2symbolicValue = new HashMap<>();
+//	private @NonNull Map<@NonNull Element, @NonNull SymbolicValue> element2symbolicValue = new HashMap<>();
+	private @NonNull Map<@NonNull CSEElement, @NonNull SymbolicValue> cseElement2symbolicValue = new HashMap<>();
 
 	/**
 	 * The known symbolic value of known values.
@@ -99,16 +99,25 @@ public abstract class AbstractSymbolicEvaluationEnvironment extends BasicEvaluat
 		constraints.add(symbolicConstraint);
 	} */
 
-	public @Nullable SymbolicValue basicGetSymbolicValue(@NonNull EObject/*Element*/ element) {
-		return element2symbolicValue.get(element);
+	public @Nullable SymbolicValue basicGetSymbolicValue(@NonNull CSEElement cseElement) {
+		return cseElement2symbolicValue.get(cseElement);
+	}
+
+//	public @Nullable SymbolicValue basicGetSymbolicValue(EObject eObject) {
+//		return cseElement2symbolicValue.get(eObject);
+//	}
+
+	public @Nullable SymbolicValue basicGetSymbolicValue(@NonNull TypedElement element) {
+		CSEElement cseElement = getSymbolicAnalysis().getCSEElement(element);
+		return cseElement2symbolicValue.get(cseElement);
 	}
 
 //	public @NonNull Map<@NonNull Element, @NonNull SymbolicValue> getElement2SymbolicValue() {
 //		return element2symbolicValue;
 //	}
 
-	public @NonNull Set<@NonNull Element> getElements() {
-		return element2symbolicValue.keySet();
+	public @NonNull Set<@NonNull CSEElement> getCSEElements() {
+		return cseElement2symbolicValue.keySet();
 	}
 
 	public @NonNull SymbolicValue getKnownValue(@Nullable Object boxedValue) {
@@ -152,8 +161,13 @@ public abstract class AbstractSymbolicEvaluationEnvironment extends BasicEvaluat
 		return values2constraints.get(sourceAndArgumentValues);
 	} */
 
-	public @NonNull SymbolicValue getSymbolicValue1(@NonNull Element element) {
-		return ClassUtil.nonNullState(element2symbolicValue.get(element));
+	public @NonNull SymbolicValue getSymbolicValue(@NonNull CSEElement cseElement) {
+		return ClassUtil.nonNullState(cseElement2symbolicValue.get(cseElement));
+	}
+
+	public @NonNull SymbolicValue getSymbolicValue(@NonNull TypedElement element) {
+		CSEElement cseElement = getSymbolicAnalysis().getCSEElement(element);
+		return ClassUtil.nonNullState(cseElement2symbolicValue.get(cseElement));
 	}
 
 	public @NonNull SymbolicValue getSymbolicValue2(@NonNull TypedElement element) {
@@ -210,32 +224,32 @@ public abstract class AbstractSymbolicEvaluationEnvironment extends BasicEvaluat
 		return values2constraints != null;
 	} */
 
-	public boolean isDead(@NonNull TypedElement element) {
+	public boolean isDead(@NonNull OCLExpression element) {
 		return basicGetSymbolicValue(element) == null;
 	}
 
-	public boolean isFalse(@NonNull TypedElement element) {
+	public boolean isFalse(@NonNull OCLExpression element) {
 		return getSymbolicValue2(element).isFalse();
 	}
 
-	public boolean isInvalid(@NonNull TypedElement element) {
+	public boolean isInvalid(@NonNull OCLExpression element) {
 		return getSymbolicValue2(element).isInvalid();
 	}
 
-	public boolean isNull(@NonNull TypedElement element) {
+	public boolean isNull(@NonNull OCLExpression element) {
 		return getSymbolicValue2(element).isNull();
 	}
 
-	public boolean isTrue(@NonNull TypedElement element) {
+	public boolean isTrue(@NonNull OCLExpression element) {
 		return getSymbolicValue2(element).isTrue();
 	}
 
-	public boolean isZero(@NonNull TypedElement element) {
+	public boolean isZero(@NonNull OCLExpression element) {
 		return getSymbolicValue2(element).isZero();
 	}
 
-	public boolean mayBeInvalid(@NonNull TypedElement element) {
-		SymbolicValue symbolicValue = getSymbolicValue1(element);
+	public boolean mayBeInvalid(@NonNull OCLExpression element) {
+		SymbolicValue symbolicValue = getSymbolicValue(element);
 		if (!symbolicValue.mayBeInvalid()) {
 			return false;
 		}
@@ -253,14 +267,14 @@ public abstract class AbstractSymbolicEvaluationEnvironment extends BasicEvaluat
 		return true;
 	}
 
-	public boolean mayBeInvalidOrNull(@NonNull TypedElement element) {
+	public boolean mayBeInvalidOrNull(@NonNull OCLExpression element) {
 		boolean mayBeInvalid = mayBeInvalid(element);		// FIXME it would be nice to do both at once
 		boolean mayBeNull = mayBeNull(element);				// but that needs e.g. may-be-invalid + true.
 		return mayBeInvalid || mayBeNull;					// hypothesize both before the potential logiical short circuit.
 	}
 
-	public boolean mayBeNull(@NonNull TypedElement element) {
-		SymbolicValue symbolicValue = getSymbolicValue1(element);
+	public boolean mayBeNull(@NonNull OCLExpression element) {
+		SymbolicValue symbolicValue = getSymbolicValue(element);
 		if (!symbolicValue.mayBeNull()) {
 			return false;
 		}
@@ -284,7 +298,7 @@ public abstract class AbstractSymbolicEvaluationEnvironment extends BasicEvaluat
 	}
 
 	public boolean mayBeZero(@NonNull OCLExpression element) {
-		SymbolicValue symbolicValue = getSymbolicValue1(element);
+		SymbolicValue symbolicValue = getSymbolicValue(element);
 		if (!symbolicValue.mayBeZero()) {
 			return false;
 		}
@@ -307,7 +321,8 @@ public abstract class AbstractSymbolicEvaluationEnvironment extends BasicEvaluat
 	}
 
 	public @Nullable SymbolicValue putSymbolicValue(@NonNull TypedElement element, @NonNull SymbolicValue symbolicValue) {
-		return element2symbolicValue.put(element, symbolicValue);
+		CSEElement cseElement = getSymbolicAnalysis().getCSEElement(element);
+		return cseElement2symbolicValue.put(cseElement, symbolicValue);
 	}
 
 	public @NonNull SymbolicValue symbolicEvaluate(@NonNull TypedElement element) {
@@ -372,7 +387,7 @@ public abstract class AbstractSymbolicEvaluationEnvironment extends BasicEvaluat
 			getClass();		// XXX
 		}
 		SymbolicValue old = putSymbolicValue(expression, symbolicValue);
-		assert (old == null);// || (old == symbolicValue) || old.equals(symbolicValue);
+		assert (old == null) || (old == symbolicValue); //old.equals(symbolicValue);
 		return symbolicValue;
 	}
 

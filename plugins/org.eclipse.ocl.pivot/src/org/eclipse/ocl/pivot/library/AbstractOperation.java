@@ -22,9 +22,9 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.EvaluationHaltedException;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.internal.evaluation.AbstractSymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal.ExecutorInternalExtension;
-import org.eclipse.ocl.pivot.internal.evaluation.AbstractSymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.internal.manager.SymbolicExecutor;
 import org.eclipse.ocl.pivot.internal.values.SymbolicUnknownValueImpl;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -204,10 +204,11 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 			return evaluationEnvironment.getKnownValue(result);
 		}
 		else {
-			SymbolicValue childSymbolicValue = sourceSymbolicValue.basicGetChildSymbolicValue(this, argumentSymbolicValues);
+
+			SymbolicValue childSymbolicValue = null;//sourceSymbolicValue.basicGetChildSymbolicValue(this, argumentSymbolicValues);
 			if (childSymbolicValue == null) {
 				childSymbolicValue = createChildSymbolicValue(evaluationEnvironment, callExp, sourceSymbolicValue, this, argumentSymbolicValues);
-				sourceSymbolicValue.putChildSymbolicValue(this, argumentSymbolicValues, childSymbolicValue);
+			//	sourceSymbolicValue.putChildSymbolicValue(this, argumentSymbolicValues, childSymbolicValue);
 			}
 			return childSymbolicValue;
 		}

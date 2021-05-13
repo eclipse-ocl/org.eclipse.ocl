@@ -11,21 +11,14 @@
 package org.eclipse.ocl.pivot.internal.cse;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.OCLExpression;
 
-public class CSEExpressionElement extends AbstractCSEElement
+/**
+ * @since 1.15
+ */
+public class CSEExpressionElement extends AbstractCSEElement<@NonNull OCLExpression, @NonNull OCLExpression>
 {
-	public CSEExpressionElement(@NonNull AbstractCSEElement parent) {
-		super(parent);
-	}
-
-	@Override
-	public void toString(@NonNull StringBuilder s, int lengthLimit) {
-/*		s.append(typeId);
-		s.append("[");
-		s.append(mayBeNull ? "?" : "1");
-		if (mayBeInvalid) {
-			s.append("!");
-		}
-		s.append("]"); */
+	public CSEExpressionElement(@NonNull AbstractCSEElement<?, ?> parent, @NonNull OCLExpression expression) {
+		super(parent, expression);
 	}
 }

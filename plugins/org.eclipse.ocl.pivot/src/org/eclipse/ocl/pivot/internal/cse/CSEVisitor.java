@@ -17,6 +17,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.BooleanLiteralExp;
 import org.eclipse.ocl.pivot.EnumLiteralExp;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.IfExp;
 import org.eclipse.ocl.pivot.IntegerLiteralExp;
 import org.eclipse.ocl.pivot.InvalidLiteralExp;
@@ -29,7 +30,6 @@ import org.eclipse.ocl.pivot.NullLiteralExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
-import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.RealLiteralExp;
 import org.eclipse.ocl.pivot.StringLiteralExp;
 import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
@@ -41,6 +41,9 @@ import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 
+/**
+ * @since 1.15
+ */
 public class CSEVisitor extends AbstractExtendingVisitor<@NonNull CSEElement, @NonNull CommonSubExpressionAnalysis>
 {
 	public CSEVisitor(@NonNull CommonSubExpressionAnalysis cseAnalysis) {
@@ -64,12 +67,19 @@ public class CSEVisitor extends AbstractExtendingVisitor<@NonNull CSEElement, @N
 
 	@Override
 	public @NonNull CSEElement visitBooleanLiteralExp(@NonNull BooleanLiteralExp booleanLiteralExp) {
-		return context.getValueCSE(booleanLiteralExp.isBooleanSymbol());
+		return context.getValueCSE(booleanLiteralExp, booleanLiteralExp.isBooleanSymbol());
 	}
 
 	@Override
 	public @NonNull CSEElement visitEnumLiteralExp(@NonNull EnumLiteralExp enumLiteralExp) {
-		return context.getValueCSE(PivotUtil.getReferredLiteral(enumLiteralExp));
+		return context.getValueCSE(enumLiteralExp, PivotUtil.getReferredLiteral(enumLiteralExp));
+	}
+
+	@Override
+	public @NonNull CSEElement visitExpressionInOCL(@NonNull ExpressionInOCL expressionInOCL) {
+		OCLExpression bodyExp = PivotUtil.getOwnedBody(expressionInOCL);
+		CSEElement bodyCSE = context.getExpressionCSE(bodyExp);
+		return bodyCSE;
 	}
 
 	@Override
@@ -80,17 +90,17 @@ public class CSEVisitor extends AbstractExtendingVisitor<@NonNull CSEElement, @N
 		CSEElement conditionCSE = context.getExpressionCSE(conditionExp);
 		CSEElement thenCSE = context.getExpressionCSE(thenExp);
 		CSEElement elseCSE = context.getExpressionCSE(elseExp);
-		return conditionCSE.getIfCSE(thenCSE, elseCSE);
+		return conditionCSE.getIfCSE(ifExp, thenCSE, elseCSE);
 	}
 
 	@Override
 	public @NonNull CSEElement visitIntegerLiteralExp(@NonNull IntegerLiteralExp integerLiteralExp) {
-		return context.getValueCSE(ValueUtil.realValueOf(integerLiteralExp.getIntegerSymbol()));
+		return context.getValueCSE(integerLiteralExp, ValueUtil.integerValueOf(integerLiteralExp.getIntegerSymbol()));
 	}
 
 	@Override
-	public @NonNull CSEElement visitInvalidLiteralExp(@NonNull InvalidLiteralExp object) {
-		return context.getValueCSE(ValueUtil.INVALID_VALUE);
+	public @NonNull CSEElement visitInvalidLiteralExp(@NonNull InvalidLiteralExp invalidLiteralExp) {
+		return context.getValueCSE(invalidLiteralExp, ValueUtil.INVALID_VALUE);
 	}
 
 	@Override
@@ -120,20 +130,19 @@ public class CSEVisitor extends AbstractExtendingVisitor<@NonNull CSEElement, @N
 		CSEElement bodyCSE = context.getExpressionCSE(bodyExp);
 		argumentCSEs.add(bodyCSE);
 		Iteration iteration = PivotUtil.getReferredIteration(loopExp);
-		return sourceCSE.getOperationCSE(iteration, argumentCSEs);
+		return sourceCSE.getOperationCSE(loopExp, iteration, argumentCSEs);
 	}
 
 	@Override
 	public @NonNull CSEElement visitNavigationCallExp(@NonNull NavigationCallExp navigationCallExp) {
-		OCLExpression source = PivotUtil.getOwnedSource(navigationCallExp);
-		CSEElement sourceCSE = context.getExpressionCSE(source);
-		Property property = PivotUtil.getReferredProperty(navigationCallExp);
-		return sourceCSE.getPropertyCSE(property);
+		OCLExpression sourceExp = PivotUtil.getOwnedSource(navigationCallExp);
+		CSEElement sourceCSE = context.getExpressionCSE(sourceExp);
+		return sourceCSE.getPropertyCSE(navigationCallExp);
 	}
 
 	@Override
 	public @NonNull CSEElement visitNullLiteralExp(@NonNull NullLiteralExp nullLiteralExp) {
-		return context.getValueCSE(ValueUtil.NULL_VALUE);
+		return context.getValueCSE(nullLiteralExp, ValueUtil.NULL_VALUE);
 	}
 
 	@Override
@@ -146,27 +155,27 @@ public class CSEVisitor extends AbstractExtendingVisitor<@NonNull CSEElement, @N
 			argumentCSEs.add(argumentCSE);
 		}
 		Operation operation = PivotUtil.getReferredOperation(operationCallExp);
-		return sourceCSE.getOperationCSE(operation, argumentCSEs);
+		return sourceCSE.getOperationCSE(operationCallExp, operation, argumentCSEs);
 	}
 
 	@Override
 	public @NonNull CSEElement visitRealLiteralExp(@NonNull RealLiteralExp realLiteralExp) {
-		return context.getValueCSE(ValueUtil.realValueOf(realLiteralExp.getRealSymbol()));
+		return context.getValueCSE(realLiteralExp, ValueUtil.realValueOf(realLiteralExp.getRealSymbol()));
 	}
 
 	@Override
 	public @NonNull CSEElement visitStringLiteralExp(@NonNull StringLiteralExp stringLiteralExp) {
-		return context.getValueCSE(PivotUtil.getStringSymbol(stringLiteralExp));
+		return context.getValueCSE(stringLiteralExp, PivotUtil.getStringSymbol(stringLiteralExp));
 	}
 
 	@Override
 	public @NonNull CSEElement visitUnlimitedNaturalLiteralExp(@NonNull UnlimitedNaturalLiteralExp unlimitedNaturalLiteralExp) {
-		return context.getValueCSE(ValueUtil.realValueOf(unlimitedNaturalLiteralExp.getUnlimitedNaturalSymbol()));
+		return context.getValueCSE(unlimitedNaturalLiteralExp, ValueUtil.unlimitedNaturalValueOf(unlimitedNaturalLiteralExp.getUnlimitedNaturalSymbol()));
 	}
 
 	@Override
 	public @NonNull CSEElement visitVariableDeclaration(@NonNull VariableDeclaration variableDeclaration) {
-		return context.getVariableCSE(variableDeclaration);
+		return context.getVariableCSE(null, variableDeclaration);
 	}
 
 	@Override
@@ -178,8 +187,7 @@ public class CSEVisitor extends AbstractExtendingVisitor<@NonNull CSEElement, @N
 				return context.getExpressionCSE(initExp);
 			}
 		}
-		CSEVariableElement variableCSE = context.getVariableCSE(variable);
-		variableCSE.addVariableExp(variableExp);
+		CSEVariableElement variableCSE = context.getVariableCSE(variableExp, variable);
 		return variableCSE;
 	}
 

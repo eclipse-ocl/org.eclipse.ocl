@@ -24,8 +24,9 @@ import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.*;
-import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis;
+import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.internal.evaluation.AbstractSymbolicEvaluationEnvironment;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
@@ -2508,23 +2509,23 @@ public class PivotValidator extends EObjectValidator
 			SymbolicAnalysis symbolicAnalysis = metamodelManager.getSymbolicAnalysis(expressionInOCL, selfValue, parameterValues);
 			AbstractSymbolicEvaluationEnvironment evaluationEnvironment = symbolicAnalysis.getEvaluationEnvironment();
 		//	Map<@NonNull Element, @NonNull SymbolicValue> element2symbolicValue = symbolicAnalysis.getElement2SymbolicValue();
-			Set<@NonNull Element> elements = evaluationEnvironment.getElements();
-			for (@NonNull Element element : elements) {
-				SymbolicValue symbolicValue = evaluationEnvironment.getSymbolicValue1(element);
+			Set<@NonNull CSEElement> cseElements = evaluationEnvironment.getCSEElements();
+			for (@NonNull CSEElement cseElement : cseElements) {
+				SymbolicValue symbolicValue = evaluationEnvironment.getSymbolicValue(cseElement);
 				assert symbolicValue != null;
 				if (symbolicValue.mayBeInvalid() && !symbolicValue.isInvalid()) {
 					if (diagnostics != null) {
 						boolean isLeaf = true;
-						for (EObject childElement : element.eContents()) {
-							Object childValue = evaluationEnvironment.getSymbolicValue1((Element)childElement);
+						for (@NonNull CSEElement childElement : cseElement.getChildren()) {
+							Object childValue = evaluationEnvironment.getSymbolicValue(childElement);
 							if (ValueUtil.mayBeInvalid(childValue) && !ValueUtil.isInvalidValue(childValue)) {
 								isLeaf = false;
 								break;
 							}
 						}
 						if (isLeaf) {
-							String message = StringUtil.bind("May be invalid: ''{0}''", element);
-							diagnostics.add(new BasicDiagnostic(Diagnostic.ERROR, DIAGNOSTIC_SOURCE, 0, message, new Object[] {element}));		// XXX
+							String message = StringUtil.bind("May be invalid: ''{0}''", cseElement);
+							diagnostics.add(new BasicDiagnostic(Diagnostic.ERROR, DIAGNOSTIC_SOURCE, 0, message, new Object[] {cseElement}));		// XXX
 						}
 					}
 					allOk = false;			// XXX

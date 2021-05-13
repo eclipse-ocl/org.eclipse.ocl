@@ -10,38 +10,22 @@
  */
 package org.eclipse.ocl.pivot.internal.cse;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
-public class CSEVariableElement extends AbstractCSEElement
+/**
+ * @since 1.15
+ */
+public class CSEVariableElement extends AbstractCSEElement<@NonNull VariableDeclaration, @NonNull VariableExp>
 {
-	protected final @NonNull VariableDeclaration variable;
-	protected final @NonNull List<@NonNull VariableExp> variableExps = new ArrayList<>();
-
 	public CSEVariableElement(@NonNull CommonSubExpressionAnalysis cseAnalysis, @NonNull VariableDeclaration variableDeclaration) {
-		super(cseAnalysis);
-		this.variable = variableDeclaration;
+		super(cseAnalysis, variableDeclaration);
 	}
 
 	public void addVariableExp(@NonNull VariableExp variableExp) {
-		assert this.variable == PivotUtil.getReferredVariable(variableExp);
-		assert !variableExps.contains(variableExp);
-		variableExps.add(variableExp);
-	}
-
-	@Override
-	public void toString(@NonNull StringBuilder s, int lengthLimit) {
-		s.append(variable);
-	//	s.append("[");
-	//	s.append(mayBeNull ? "?" : "1");
-	//	if (mayBeInvalid) {
-	//		s.append("!");
-	//	}
-	//	s.append("]");
+		assert exemplar == PivotUtil.getReferredVariable(variableExp);
+		addClient(variableExp);
 	}
 }

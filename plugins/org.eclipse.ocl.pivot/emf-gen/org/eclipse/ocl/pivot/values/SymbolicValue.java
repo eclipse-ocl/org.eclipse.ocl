@@ -10,12 +10,7 @@
  */
 package org.eclipse.ocl.pivot.values;
 
-import java.util.List;
-
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.library.LibraryIterationOrOperation;
-import org.eclipse.ocl.pivot.library.LibraryProperty;
 
 /**
  * <!-- begin-user-doc -->
@@ -32,9 +27,6 @@ import org.eclipse.ocl.pivot.library.LibraryProperty;
  */
 public interface SymbolicValue extends Value
 {
-	@Nullable SymbolicValue basicGetChildSymbolicValue(@NonNull LibraryIterationOrOperation libraryCallable, @NonNull List<@NonNull SymbolicValue> argumentSymbolicValues);
-	@Nullable SymbolicValue basicGetChildSymbolicValue(@NonNull LibraryProperty libraryProperty);
-
 	/**
 	 * Update symbolicExecutor from any deductions that can be made from knowing that symbolicConstraint is observede.
 	 */
@@ -52,9 +44,6 @@ public interface SymbolicValue extends Value
 	boolean isTrue();
 
 	boolean isZero();
-
-	@Nullable SymbolicValue putChildSymbolicValue(@NonNull LibraryIterationOrOperation libraryCallable, @NonNull List<@NonNull SymbolicValue> argumentSymbolicValues, @NonNull SymbolicValue childSymbolicValue);
-	@Nullable SymbolicValue putChildSymbolicValue(@NonNull LibraryProperty libraryProperty, @NonNull SymbolicValue childSymbolicValue);
 
 	@NonNull SymbolicValue setIsNullFree();
 

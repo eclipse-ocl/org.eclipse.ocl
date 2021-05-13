@@ -11,31 +11,22 @@
 package org.eclipse.ocl.pivot.internal.cse;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.LiteralExp;
+import org.eclipse.ocl.pivot.OCLExpression;
 
-public class CSEValueElement extends AbstractCSEElement
+/**
+ * @since 1.15
+ */
+public class CSEValueElement extends AbstractCSEElement<@NonNull LiteralExp, @NonNull OCLExpression>
 {
 	protected final @NonNull Object value;
-//	protected final @NonNull List<@NonNull VariableExp> variableExps = new ArrayList<>();
 
-	public CSEValueElement(@NonNull CommonSubExpressionAnalysis cseAnalysis, @NonNull Object value) {
-		super(cseAnalysis);
+	public CSEValueElement(@NonNull CommonSubExpressionAnalysis cseAnalysis, @NonNull LiteralExp exemplar, @NonNull Object value) {
+		super(cseAnalysis, exemplar);
 		this.value = value;
 	}
 
-/*	public void addVariableExp(@NonNull VariableExp variableExp) {
-		assert this.variable == PivotUtil.getReferredVariable(variableExp);
-		assert !variableExps.contains(variableExp);
-		variableExps.add(variableExp);
-	} */
-
-	@Override
-	public void toString(@NonNull StringBuilder s, int lengthLimit) {
-		s.append(value);
-	//	s.append("[");
-	//	s.append(mayBeNull ? "?" : "1");
-	//	if (mayBeInvalid) {
-	//		s.append("!");
-	//	}
-	//	s.append("]");
+	public void addLiteralExp(@NonNull LiteralExp literalExp) {
+		addClient(literalExp);
 	}
 }

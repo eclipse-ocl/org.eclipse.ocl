@@ -17,10 +17,12 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor.EvaluationVisitorExtension;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
+import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.internal.cse.CommonSubExpressionAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.SymbolicOCLExecutor;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
@@ -51,6 +53,10 @@ public class SymbolicAnalysis extends SymbolicOCLExecutor	// FIXME merge Symboli
 		EvaluationVisitorExtension evaluationVisitor = super.createEvaluationVisitor();
 		SymbolicEvaluationVisitor symbolicEvaluationVisitor = new SymbolicEvaluationVisitor(evaluationVisitor);
 		return symbolicEvaluationVisitor;
+	}
+
+	public @NonNull CSEElement getCSEElement(@NonNull TypedElement element) {
+		return cseAnalysis.getElementCSE(element);
 	}
 
 	public void initializeEvaluationEnvironment(@NonNull ExpressionInOCL expressionInOCL, @Nullable Object contextElement, @Nullable Object @Nullable [] parameters) {
@@ -98,7 +104,7 @@ public class SymbolicAnalysis extends SymbolicOCLExecutor	// FIXME merge Symboli
 				s.append("  ");
 			}
 			s.append("  => ");
-			SymbolicValue symbolicValue = evaluationEnvironment.basicGetSymbolicValue(eObject);
+			SymbolicValue symbolicValue = eObject instanceof TypedElement ? evaluationEnvironment.basicGetSymbolicValue((TypedElement)eObject) : null;
 			if (symbolicValue == null) {
 				s.append("not-computed");
 			}
