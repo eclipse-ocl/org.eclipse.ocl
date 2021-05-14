@@ -16,9 +16,9 @@ import org.eclipse.ocl.pivot.OCLExpression;
 /**
  * @since 1.15
  */
-public class CSEExpressionElement extends AbstractCSEElement<@NonNull OCLExpression, @NonNull OCLExpression>
+public class CSEExpressionElement extends AbstractCSEElement<@NonNull OCLExpression>
 {
-	public CSEExpressionElement(@NonNull AbstractCSEElement<?, ?> parent, @NonNull OCLExpression expression) {
-		super(parent, expression);
+	public CSEExpressionElement(@NonNull AbstractCSEElement<?> parent, @NonNull OCLExpression expression, int height) {
+		super(parent, expression, height);
 	}
 }

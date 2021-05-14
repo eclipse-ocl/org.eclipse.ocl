@@ -11,7 +11,6 @@
 package org.eclipse.ocl.pivot.internal.cse;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,11 +29,11 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 /**
  * @since 1.15
  */
-public abstract class AbstractCSEElement<E extends TypedElement, C extends OCLExpression> implements CSEElement
+public abstract class AbstractCSEElement<E extends TypedElement> implements CSEElement
 {
 	protected final @NonNull CommonSubExpressionAnalysis cseAnalysis;
-	protected final @Nullable AbstractCSEElement<?, ?> parent;
 	protected final @NonNull E exemplar;
+	private final int height;
 
 	/**
 	 * The common sub-expressions that are an if/iteration/operation navigation away from this common sub-expression.
@@ -48,51 +47,61 @@ public abstract class AbstractCSEElement<E extends TypedElement, C extends OCLEx
 	private /*@LazyNonNull*/ Map<@NonNull Property, @NonNull CSEElement> property2cse = null;
 
 	/**
-	 * The common sub-expressions that are a property navigation away from this common sub-expression.
+	 * The CSEs used to compute this CSE. The primary source first, rest in iteratir, accumulator, argument, body order
 	 */
-	private /*@LazyNonNull*/ List<@NonNull CSEElement> children = null;
+	private final @Nullable List<@NonNull CSEElement> inputs;
 
-	private final @NonNull List<@NonNull C> clients = new ArrayList<>();
+	/**
+	 * The expressions that compute from this CSE.
+	 */
+	private final @NonNull List<@NonNull OCLExpression> outputs = new ArrayList<>();
 
 
-	protected AbstractCSEElement(@NonNull CommonSubExpressionAnalysis cseAnalysis, @NonNull E exemplar) {
+
+	protected AbstractCSEElement(@NonNull CommonSubExpressionAnalysis cseAnalysis, @NonNull E exemplar, int height) {
 		this.cseAnalysis = cseAnalysis;
-		this.parent = null;
+		this.inputs = null;
 		this.exemplar = exemplar;
+		this.height = height;
 	}
 
-	protected AbstractCSEElement(@NonNull AbstractCSEElement<?, ?> parent, @NonNull E exemplar) {
+	protected AbstractCSEElement(@NonNull AbstractCSEElement<?> parent, @NonNull E exemplar, int height) {
 		this.cseAnalysis = parent.cseAnalysis;
-		this.parent = parent;
+		this.inputs = new ArrayList<>();
+		inputs.add(parent);
 		this.exemplar = exemplar;
+		this.height = height;
 	}
 
-	private void addChild(@NonNull CSEElement cseElement) {
-		List<@NonNull CSEElement> children2 = children;
-		if (children2 == null) {
-			children2 = children = new ArrayList<>();
-		}
-		children2.add(cseElement);
+	protected void addInput(@NonNull CSEElement inputCSE) {
+		List<@NonNull CSEElement> inputs2 = inputs;
+		assert inputs2 != null;
+		inputs2.add(inputCSE);
 	}
 
-	protected void addClient(@NonNull C client) {
-		assert !clients.contains(client);
-		clients.add(client);
+	protected void addOutput(@NonNull OCLExpression outputExp) {
+		assert !outputs.contains(outputExp);
+		outputs.add(outputExp);
 	}
 
 	@Override
-	public @NonNull Iterable<@NonNull CSEElement> getChildren() {
-		if (children != null) {
-			return children;
-		}
-		else {
-			return Collections.emptyList();
-		}
+	public @NonNull CommonSubExpressionAnalysis getCommonSubExpressionAnalysis() {
+		return cseAnalysis;
+	}
+
+	@Override
+	public @Nullable Iterable<@NonNull CSEElement> getInputs() {
+		return inputs;
 	}
 
 	@Override
 	public @NonNull E getElement() {
 		return exemplar;
+	}
+
+	@Override
+	public int getHeight() {
+		return height;
 	}
 
 	@Override
@@ -111,7 +120,18 @@ public abstract class AbstractCSEElement<E extends TypedElement, C extends OCLEx
 		argumentCSEs.add(elseCSE);
 		CSEExpressionElement cseElement = arguments2cse.get(argumentCSEs);
 		if (cseElement == null) {
-			cseElement = new CSEExpressionElement(this, ifExp);
+			int maxHeight = this.height;
+			int thenHeight = thenCSE.getHeight();
+			if (thenHeight > maxHeight) {
+				maxHeight = thenHeight;
+			}
+			int elseHeight = elseCSE.getHeight();
+			if (elseHeight > maxHeight) {
+				maxHeight = elseHeight;
+			}
+			cseElement = new CSEExpressionElement(this, ifExp, maxHeight+1);
+			cseElement.addInput(thenCSE);
+			cseElement.addInput(elseCSE);
 			arguments2cse.put(argumentCSEs, cseElement);
 		}
 		return cseElement;
@@ -130,22 +150,36 @@ public abstract class AbstractCSEElement<E extends TypedElement, C extends OCLEx
 		}
 		CSEExpressionElement cseElement = arguments2cse.get(argumentCSEs);
 		if (cseElement == null) {
-			cseElement = new CSEExpressionElement(this, callExp);
+			int maxHeight = this.height;
+			for (@Nullable CSEElement argumentCSE : argumentCSEs) {
+				if (argumentCSE != null) {				// null for auto-initialized iterator variables
+					int argHeight = argumentCSE.getHeight();
+					if (argHeight > maxHeight) {
+						maxHeight = argHeight;
+					}
+				}
+			}
+			cseElement = new CSEExpressionElement(this, callExp, maxHeight+1);
+			for (@Nullable CSEElement argumentCSE : argumentCSEs) {
+				if (argumentCSE != null) {				// null for auto-initialized iterator variables
+					cseElement.addInput(argumentCSE);
+				}
+			}
 			arguments2cse.put(argumentCSEs, cseElement);
-			addChild(cseElement);
+			addOutput(callExp);
 		}
 		return cseElement;
 	}
 
 	@Override
-	public @NonNull CommonSubExpressionAnalysis getCommonSubExpressionAnalysis() {
-		return cseAnalysis;
+	public @NonNull Iterable<@NonNull OCLExpression> getOutputs() {
+		return outputs;
 	}
 
-	@Override
-	public @Nullable CSEElement getParent() {
-		return parent;
-	}
+//	@Override
+//	public @Nullable CSEElement getParent() {
+//		return parent;
+//	}
 
 	@Override
 	public @NonNull CSEElement getPropertyCSE(@NonNull NavigationCallExp navigationCallExp) {
@@ -156,9 +190,9 @@ public abstract class AbstractCSEElement<E extends TypedElement, C extends OCLEx
 		Property property = PivotUtil.getReferredProperty(navigationCallExp);
 		CSEElement cseElement = property2cse2.get(property);
 		if (cseElement == null) {
-			cseElement = new CSEExpressionElement(this, navigationCallExp);
+			cseElement = new CSEExpressionElement(this, navigationCallExp, height+1);
 			property2cse2.put(property, cseElement);
-			addChild(cseElement);
+			addOutput(navigationCallExp);
 		}
 		return cseElement;
 	}
@@ -171,6 +205,8 @@ public abstract class AbstractCSEElement<E extends TypedElement, C extends OCLEx
 	}
 
 	public void toString(@NonNull StringBuilder s, int lengthLimit) {
+		s.append(height);
+		s.append("#");
 		s.append(exemplar);
 	}
 }

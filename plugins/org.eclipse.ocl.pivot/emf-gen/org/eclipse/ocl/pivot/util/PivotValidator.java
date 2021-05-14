@@ -2516,7 +2516,9 @@ public class PivotValidator extends EObjectValidator
 				if (symbolicValue.mayBeInvalid() && !symbolicValue.isInvalid()) {
 					if (diagnostics != null) {
 						boolean isLeaf = true;
-						for (@NonNull CSEElement childElement : cseElement.getChildren()) {
+						Iterable<@NonNull CSEElement> inputs = cseElement.getInputs();
+						assert inputs != null;
+						for (@NonNull CSEElement childElement : inputs) {
 							Object childValue = evaluationEnvironment.getSymbolicValue(childElement);
 							if (ValueUtil.mayBeInvalid(childValue) && !ValueUtil.isInvalidValue(childValue)) {
 								isLeaf = false;

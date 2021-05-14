@@ -18,14 +18,14 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 /**
  * @since 1.15
  */
-public class CSEVariableElement extends AbstractCSEElement<@NonNull VariableDeclaration, @NonNull VariableExp>
+public class CSEVariableElement extends AbstractCSEElement<@NonNull VariableDeclaration>
 {
-	public CSEVariableElement(@NonNull CommonSubExpressionAnalysis cseAnalysis, @NonNull VariableDeclaration variableDeclaration) {
-		super(cseAnalysis, variableDeclaration);
+	public CSEVariableElement(@NonNull CommonSubExpressionAnalysis cseAnalysis, @NonNull VariableDeclaration variableDeclaration, int height) {
+		super(cseAnalysis, variableDeclaration, height);
 	}
 
 	public void addVariableExp(@NonNull VariableExp variableExp) {
 		assert exemplar == PivotUtil.getReferredVariable(variableExp);
-		addClient(variableExp);
+		addOutput(variableExp);
 	}
 }

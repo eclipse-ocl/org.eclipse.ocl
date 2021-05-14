@@ -15,21 +15,53 @@ import java.util.List;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
-import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.IfExp;
 import org.eclipse.ocl.pivot.NavigationCallExp;
+import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.TypedElement;
 
 /**
+ * A CSEElement defines the behaviour of a node in the Common Sub-Expression tree.
+ *
  * @since 1.15
  */
 public interface CSEElement
 {
-	@NonNull Iterable<@NonNull CSEElement> getChildren();
 	@NonNull CommonSubExpressionAnalysis getCommonSubExpressionAnalysis();
-	@NonNull Element getElement();
+
+	/**
+	 * The model element that first triggered creation of this CSE element.
+	 */
+	@NonNull TypedElement getElement();
+
+	/**
+	 * The transitive depth of getInputs().
+	 */
+	int getHeight();
+
+	/**
+	 * Add an 'if' for ifExp with this CSE as the condition.
+	 */
 	@NonNull CSEElement getIfCSE(@NonNull IfExp ifExp, @NonNull CSEElement thenCSE, @NonNull CSEElement elseCSE);
+
+	/**
+	 * The CSEs directly used by evaluation of this CSE.
+	 */
+	@Nullable Iterable<@NonNull CSEElement> getInputs();
+
+	/**
+	 * Add an iteration/operation for callExp with this CSE as the source.
+	 */
 	@NonNull CSEElement getOperationCSE(@NonNull CallExp callExp, @NonNull Operation operation, @NonNull List<@Nullable CSEElement> argumentCSEs);
-	@Nullable CSEElement getParent();
+
+	/**
+	 * The expressions whose evaluation uses this CSE.
+	 */
+	@Nullable Iterable<@NonNull OCLExpression> getOutputs();
+
+	/**
+	 * Add a navigation for navigationCallExp with this CSE as the source.
+	 */
 	@NonNull CSEElement getPropertyCSE(@NonNull NavigationCallExp navigationCallExp);
 }

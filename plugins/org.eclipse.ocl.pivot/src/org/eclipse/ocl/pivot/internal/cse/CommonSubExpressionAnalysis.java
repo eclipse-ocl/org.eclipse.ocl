@@ -19,6 +19,7 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LiteralExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -83,7 +84,15 @@ public class CommonSubExpressionAnalysis
 	public @NonNull CSEVariableElement getVariableCSE(@Nullable VariableExp variableExp, @NonNull VariableDeclaration variableDeclaration) {
 		CSEVariableElement cseElement = (CSEVariableElement) element2cse.get(variableDeclaration);
 		if (cseElement == null) {
-			cseElement = new CSEVariableElement(this, variableDeclaration);
+			int height = 0;
+			if (variableDeclaration instanceof Variable) {
+				OCLExpression initExpression = ((Variable)variableDeclaration).getOwnedInit();
+				if (initExpression != null) {
+					CSEElement initCSE = getElementCSE(initExpression);
+					height = initCSE.getHeight() + 1;
+				}
+			}
+			cseElement = new CSEVariableElement(this, variableDeclaration, height);
 			element2cse.put(variableDeclaration, cseElement);
 		}
 		if (variableExp != null) {
