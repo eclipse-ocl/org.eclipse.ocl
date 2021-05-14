@@ -24,6 +24,7 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.IfExp;
 import org.eclipse.ocl.pivot.IterateExp;
+import org.eclipse.ocl.pivot.LetExp;
 import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.MapLiteralExp;
 import org.eclipse.ocl.pivot.MapLiteralPart;
@@ -41,6 +42,7 @@ import org.eclipse.ocl.pivot.TupleLiteralExp;
 import org.eclipse.ocl.pivot.TupleLiteralPart;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.evaluation.EvaluationHaltedException;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
@@ -413,7 +415,7 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 		return (SymbolicExecutor)context;
 	}
 
-	protected @NonNull SymbolicValue nestedEvaluate(@NonNull OCLExpression constrainedExpression, @NonNull SymbolicValue constrainedValue, @NonNull OCLExpression expression) {
+/*	protected @NonNull SymbolicValue nestedEvaluate(@NonNull OCLExpression constrainedExpression, @NonNull SymbolicValue constrainedValue, @NonNull OCLExpression expression) {
 		//	if (scopeValue instanceof SymbolicConstraint) {
 		//		return scopeValue;		// XXX FIXME deductions
 		//	}
@@ -426,14 +428,14 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 		SymbolicExecutor symbolicExecutor = getSymbolicExecutor();
 		try {
 			ConstrainedSymbolicEvaluationEnvironment constrainedSymbolicEvaluationEnvironment = symbolicExecutor.pushConstrainedSymbolicEvaluationEnvironment(expression);
-			constrainedSymbolicEvaluationEnvironment.addConstraint(constrainedExpression/*, unconstrainedValue*/, constrainedValue);
+			constrainedSymbolicEvaluationEnvironment.addConstraint(constrainedExpression/ *, unconstrainedValue* /, constrainedValue);
 	//		AbstractSymbolicEvaluationEnvironment evaluationEnvironment = getEvaluationEnvironment();
 			return constrainedSymbolicEvaluationEnvironment.symbolicEvaluate(expression);
 		}
 		finally {
 			symbolicExecutor.popConstrainedSymbolicEvaluationEnvironment();
 		}
-	}
+	} */
 
 /*	public @NonNull SymbolicValue symbolicEvaluate(@NonNull TypedElement element) {
 		SymbolicEvaluationEnvironment evaluationEnvironment = getEvaluationEnvironment();
@@ -565,8 +567,9 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 			boolean mayBeInvalid = conditionValue.mayBeInvalid();
 			boolean mayBeNull = conditionValue.mayBeNull();
 			OCLExpression thenExpression = PivotUtil.getOwnedThen(ifExp);
-			SymbolicValue knownThenValue = evaluationEnvironment.getKnownValue(Boolean.TRUE);
-			SymbolicValue thenValue = nestedEvaluate(conditionExpression, knownThenValue, thenExpression);
+		//	SymbolicValue knownThenValue = evaluationEnvironment.getKnownValue(Boolean.TRUE);
+		//	SymbolicValue thenValue = nestedEvaluate(conditionExpression, knownThenValue, thenExpression);
+			SymbolicValue thenValue = evaluationEnvironment.symbolicEvaluate(thenExpression);
 			if (thenValue.mayBeInvalid()) {
 				mayBeInvalid = true;
 			}
@@ -574,8 +577,9 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 				mayBeNull = true;
 			}
 			OCLExpression elseExpression = PivotUtil.getOwnedElse(ifExp);
-			SymbolicValue knownElseValue = evaluationEnvironment.getKnownValue(Boolean.FALSE);
-			SymbolicValue elseValue = nestedEvaluate(conditionExpression, knownElseValue, elseExpression);
+		//	SymbolicValue knownElseValue = evaluationEnvironment.getKnownValue(Boolean.FALSE);
+		//	SymbolicValue elseValue = nestedEvaluate(conditionExpression, knownElseValue, elseExpression);
+			SymbolicValue elseValue = evaluationEnvironment.symbolicEvaluate(elseExpression);
 			if (elseValue.mayBeInvalid()) {
 				mayBeInvalid = true;
 			}
@@ -584,6 +588,29 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 			}
 			return new SymbolicExpressionValueImpl(ifExp, mayBeNull, mayBeInvalid);
 		}
+	}
+
+	@Override
+	public Object visitLetExp(@NonNull LetExp letExp) {
+		OCLExpression expression = letExp.getOwnedIn();		// Never null when valid
+		Variable variable = letExp.getOwnedVariable();		// Never null when valid
+		assert variable != null;
+		Object value;
+		try {
+			value = variable.accept(getUndecoratedVisitor());
+		}
+		catch (EvaluationHaltedException e) {
+			throw e;
+		}
+		catch (InvalidValueException e) {
+			value = e;
+		}
+		//		value = ValuesUtil.asValue(value);
+		assert expression != null;
+		AbstractSymbolicEvaluationEnvironment nestedEvaluationEnvironment = getEvaluationEnvironment(); //context.pushEvaluationEnvironment(expression, (TypedElement)letExp);
+		nestedEvaluationEnvironment.add(variable, value);
+		SymbolicValue inValue = nestedEvaluationEnvironment.symbolicEvaluate(expression);
+		return inValue;
 	}
 
 	@Override

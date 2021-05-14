@@ -184,8 +184,8 @@ public class SymbolicKnownValueImpl extends SymbolicValueImpl implements Symboli
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int lengthLimit) {
-		super.toString(s, lengthLimit);
-		s.append("=");
 		s.append(knownValue);
+		s.append(" : ");
+		super.toString(s, lengthLimit);
 	}
 } //SymbolicValueImpl

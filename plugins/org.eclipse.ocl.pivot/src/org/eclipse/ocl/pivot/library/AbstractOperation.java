@@ -80,7 +80,7 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 	 * @since 1.15
 	 */
 	protected @Nullable SymbolicValue checkPreconditions(@NonNull AbstractSymbolicEvaluationEnvironment symbolicEvaluationEnvironment, @NonNull OperationCallExp callExp) {
-		return null;
+		return null;					// source/argument validity
 	}
 
 	/**

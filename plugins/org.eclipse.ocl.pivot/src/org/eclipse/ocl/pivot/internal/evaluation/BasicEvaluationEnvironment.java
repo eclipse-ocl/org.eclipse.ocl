@@ -288,7 +288,7 @@ public class BasicEvaluationEnvironment extends AbstractCustomizable implements 
 		if (keys.size() > 1) {
 			Collections.sort(keys, NameUtil.NAMEABLE_COMPARATOR);
 		}
-		s.append("\t" + keys.size() + " values");
+		s.append("\t" + keys.size() + " variables");
 		for (@NonNull TypedElement key : keys) {
 			Object value = variableValues.get(key);
 			s.append("\n\t\t" + key + " => " + value);

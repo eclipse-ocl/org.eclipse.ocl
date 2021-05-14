@@ -11,24 +11,21 @@
 
 package org.eclipse.ocl.pivot.internal.evaluation;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.NamedElement;
+import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.internal.manager.SymbolicExecutor;
 import org.eclipse.ocl.pivot.internal.values.SymbolicKnownValueImpl;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.OCLValue;
+import org.eclipse.ocl.pivot.values.RefinedSymbolicValue;
 import org.eclipse.ocl.pivot.values.SymbolicKnownValue;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
@@ -47,19 +44,24 @@ public class BasicSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluati
 	/**
 	 * The known (symbolic) value of each expression element, null if not yet computed.
 	 */
-	private @NonNull Map<@NonNull Element, @NonNull SymbolicValue> element2symbolicValue = new HashMap<>();
+//	private @NonNull Map<@NonNull Element, @NonNull SymbolicValue> element2symbolicValue = new HashMap<>();
 
 	/**
 	 * The contextual constrainting value of each expression element, null if not constrained.
 	 */
-	private @NonNull Map<@NonNull Element, @NonNull SymbolicValue> element2constraintValue = new HashMap<>();
+//	private @NonNull Map<@NonNull Element, @NonNull SymbolicValue> element2constraintValue = new HashMap<>();
 
 	/**
 	 * The known symbolic value of known values.
 	 */
 	private @NonNull Map<@Nullable Object, @NonNull SymbolicKnownValue> value2symbolicValue = new HashMap<>();
 
-	private final @NonNull Map<@NonNull TypedElement, @NonNull Map<@Nullable List<@Nullable Object>, @NonNull List<@Nullable Object>>> typedElement2values2constraints = new HashMap<>();
+	/**
+	 * The expression-specific refined symbolic values established after contradicting a hypothesis.
+	 */
+	private @NonNull Map<@NonNull OCLExpression, @NonNull RefinedSymbolicValue> expression2refinedSymbolicValue = new HashMap<>();
+
+//	private final @NonNull Map<@NonNull TypedElement, @NonNull Map<@Nullable List<@Nullable Object>, @NonNull List<@Nullable Object>>> typedElement2values2constraints = new HashMap<>();
 
 	public BasicSymbolicEvaluationEnvironment(@NonNull SymbolicExecutor executor, @NonNull NamedElement executableObject) {
 		super(executor, executableObject);
@@ -105,6 +107,11 @@ public class BasicSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluati
 		}
 		constraints.add(symbolicConstraint);
 	} */
+
+	@Override
+	protected @NonNull AbstractSymbolicEvaluationEnvironment getBaseSymbolicEvaluationEnvironment() {
+		return this;
+	}
 
 //	@Override
 //	public @NonNull Map<@NonNull Element, @NonNull SymbolicValue> getElement2SymbolicValue() {
@@ -191,7 +198,7 @@ public class BasicSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluati
 	@Override
 	public void toString(@NonNull StringBuilder s) {
 		super.toString(s);
-		List<@NonNull TypedElement> features = new ArrayList<>(typedElement2values2constraints.keySet());
+/*		List<@NonNull TypedElement> features = new ArrayList<>(typedElement2values2constraints.keySet());
 		if (features.size() > 1) {
 			Collections.sort(features, NameUtil.NAMEABLE_COMPARATOR);
 		}
@@ -225,6 +232,6 @@ public class BasicSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluati
 					isFirst = false;
 				}
 			}
-		}
+		} */
 	}
 }

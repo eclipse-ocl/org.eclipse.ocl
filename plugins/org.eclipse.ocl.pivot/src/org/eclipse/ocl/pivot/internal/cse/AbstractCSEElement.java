@@ -57,7 +57,6 @@ public abstract class AbstractCSEElement<E extends TypedElement> implements CSEE
 	private final @NonNull List<@NonNull OCLExpression> outputs = new ArrayList<>();
 
 
-
 	protected AbstractCSEElement(@NonNull CommonSubExpressionAnalysis cseAnalysis, @NonNull E exemplar, int height) {
 		this.cseAnalysis = cseAnalysis;
 		this.inputs = null;

@@ -10,9 +10,13 @@
  */
 package org.eclipse.ocl.pivot.internal.cse;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -22,6 +26,7 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 
@@ -104,19 +109,50 @@ public class CommonSubExpressionAnalysis
 	@Override
 	public @NonNull String toString() {
 		StringBuilder s = new StringBuilder();
-		toString(s, 100);
+		toString(s, 0);
 		return s.toString();
 	}
 
-	public void toString(@NonNull StringBuilder s, int lengthLimit) {
-		s.append("variables");
-		StringUtil.appendIndentation(s, lengthLimit+1);
-	//	Set<@NonNull VariableDeclaration> variables = element2cse.keySet();
-	//	for (@NonNull VariableDeclaration> variable : Collections.sort(variables))
-	//	s.append(mayBeNull ? "?" : "1");
-	//	if (mayBeInvalid) {
-	//		s.append("!");
-	//	}
-	//	s.append("]");
+	public void toString(@NonNull StringBuilder s, int depth) {
+		s.append("elements");
+		List<@NonNull TypedElement> typedElements = new ArrayList<>(element2cse.keySet());
+		Collections.sort(typedElements, NameUtil.TO_STRING_COMPARATOR);
+		for (@NonNull TypedElement typedElement : typedElements) {
+			StringUtil.appendIndentation(s, depth+1);
+			CSEElement cseElement = element2cse.get(typedElement);
+			assert cseElement != null;
+			TypedElement element = cseElement.getElement();
+			s.append(typedElement.eClass().getName());
+			s.append("@");
+			s.append(Integer.toHexString(System.identityHashCode(typedElement)));
+			s.append(" | ");
+			s.append(cseElement.getHeight());
+			s.append("-");
+			s.append(Integer.toHexString(System.identityHashCode(cseElement)));
+			s.append("-");
+			s.append(element.eClass().getName());
+			s.append(": ");
+			s.append(element);
+		}
+		StringUtil.appendIndentation(s, depth);
+		s.append("values");
+		List<@NonNull Object> values = new ArrayList<>(value2cse.keySet());
+		Collections.sort(values, NameUtil.TO_STRING_COMPARATOR);
+		for (@NonNull Object value : values) {
+			StringUtil.appendIndentation(s, depth+1);
+			CSEElement cseElement = value2cse.get(value);
+			assert cseElement != null;
+			TypedElement element = cseElement.getElement();
+			if (value instanceof EObject) {
+				s.append(((EObject)value).eClass().getName());
+			}
+			else {
+				s.append(value.getClass().getSimpleName());
+			}
+			s.append("@");
+			s.append(cseElement.getHeight());
+			s.append("#");
+			s.append(element);
+		}
 	}
 }

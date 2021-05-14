@@ -14,9 +14,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.OperationCallExp;
-import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.evaluation.AbstractSymbolicEvaluationEnvironment;
-import org.eclipse.ocl.pivot.internal.values.SymbolicKnownValueImpl;
 import org.eclipse.ocl.pivot.internal.values.SymbolicUnknownValueImpl;
 import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -46,7 +44,7 @@ public class NumericDivideOperation extends AbstractSimpleBinaryOperation
 		Iterable<@NonNull OCLExpression> ownedArguments = PivotUtil.getOwnedArguments(callExp);
 		OCLExpression argument = ownedArguments.iterator().next();
 		if (symbolicEvaluationEnvironment.isZero(argument)) {
-			return new SymbolicKnownValueImpl(TypeId.OCL_INVALID, ValueUtil.INVALID_VALUE);
+			return symbolicEvaluationEnvironment.getKnownValue(ValueUtil.INVALID_VALUE); //  new SymbolicKnownValueImpl(TypeId.OCL_INVALID, ValueUtil.INVALID_VALUE);
 		}
 		else if (symbolicEvaluationEnvironment.mayBeZero(argument)) {
 			return new SymbolicUnknownValueImpl(callExp.getTypeId(), false, true);

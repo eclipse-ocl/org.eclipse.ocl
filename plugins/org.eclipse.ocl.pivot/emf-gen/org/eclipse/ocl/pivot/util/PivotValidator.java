@@ -2511,7 +2511,7 @@ public class PivotValidator extends EObjectValidator
 		//	Map<@NonNull Element, @NonNull SymbolicValue> element2symbolicValue = symbolicAnalysis.getElement2SymbolicValue();
 			Set<@NonNull CSEElement> cseElements = evaluationEnvironment.getCSEElements();
 			for (@NonNull CSEElement cseElement : cseElements) {
-				SymbolicValue symbolicValue = evaluationEnvironment.getSymbolicValue(cseElement);
+				SymbolicValue symbolicValue = evaluationEnvironment.getSymbolicValue(cseElement.getElement());
 				assert symbolicValue != null;
 				if (symbolicValue.mayBeInvalid() && !symbolicValue.isInvalid()) {
 					if (diagnostics != null) {
@@ -2519,7 +2519,7 @@ public class PivotValidator extends EObjectValidator
 						Iterable<@NonNull CSEElement> inputs = cseElement.getInputs();
 						assert inputs != null;
 						for (@NonNull CSEElement childElement : inputs) {
-							Object childValue = evaluationEnvironment.getSymbolicValue(childElement);
+							Object childValue = evaluationEnvironment.getSymbolicValue(childElement.getElement());
 							if (ValueUtil.mayBeInvalid(childValue) && !ValueUtil.isInvalidValue(childValue)) {
 								isLeaf = false;
 								break;

@@ -16,7 +16,6 @@ import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.internal.evaluation.AbstractSymbolicEvaluationEnvironment;
-import org.eclipse.ocl.pivot.internal.evaluation.ConstrainedSymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.internal.manager.SymbolicOCLExecutor;
 import org.eclipse.ocl.pivot.internal.values.SymbolicUnknownValueImpl;
 import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
@@ -106,10 +105,11 @@ public class BooleanImpliesOperation2 extends AbstractSimpleBinaryOperation
 	//	assert sourceValue instanceof SymbolicExpressionValue; */
 	//	SymbolicValue computedSourceValue = evaluationEnvironment.getSymbolicValue(source);
 		SymbolicOCLExecutor symbolicExecutor = evaluationEnvironment.getSymbolicExecutor();
-		SymbolicValue knownSourceValue = evaluationEnvironment.getKnownValue(Boolean.TRUE);
-		try {
-			ConstrainedSymbolicEvaluationEnvironment constrainedEvaluationEnvironment = symbolicExecutor.pushConstrainedSymbolicEvaluationEnvironment(argument); //, computedSourceValue, knownSourceValue, callExp);
-			constrainedEvaluationEnvironment.addConstraint(source/*, unconstrainedSourceValue*/, knownSourceValue);
+//		SymbolicValue knownSourceValue = evaluationEnvironment.getKnownValue(Boolean.TRUE);
+//		try {
+//			ConstrainedSymbolicEvaluationEnvironment constrainedEvaluationEnvironment = symbolicExecutor.pushConstrainedSymbolicEvaluationEnvironment(argument); //, computedSourceValue, knownSourceValue, callExp);
+			AbstractSymbolicEvaluationEnvironment constrainedEvaluationEnvironment = evaluationEnvironment;
+//			constrainedEvaluationEnvironment.addConstraint(source/*, unconstrainedSourceValue*/, knownSourceValue);
 		//	SymbolicValue recomputedSourceValue = nestedEvaluationEnvironment.getSymbolicValue(source);
 			SymbolicValue unconstrainedArgumentValue = constrainedEvaluationEnvironment.symbolicEvaluate(argument);
 			boolean mayBeInvalid = ValueUtil.mayBeInvalid(unconstrainedSourceValue) || ValueUtil.mayBeInvalid(unconstrainedArgumentValue);
@@ -118,9 +118,9 @@ public class BooleanImpliesOperation2 extends AbstractSimpleBinaryOperation
 			SymbolicUnknownValueImpl resultValue = new SymbolicUnknownValueImpl(callExp.getTypeId(), false, mayBeInvalidOrNull);
 		//	constrainedEvaluationEnvironment.setUnconstrainedValue(resultValue);
 			return resultValue;
-		}
-		finally {
-			symbolicExecutor.popConstrainedSymbolicEvaluationEnvironment();
-		}
+//		}
+//		finally {
+//			symbolicExecutor.popConstrainedSymbolicEvaluationEnvironment();
+//		}
 	}
 }

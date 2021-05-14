@@ -24,6 +24,13 @@ import org.eclipse.ocl.pivot.TypedElement;
 /**
  * A CSEElement defines the behaviour of a node in the Common Sub-Expression tree.
  *
+ * THe CSEElement has the same actual value wherever used since OCL's side effect-free characterisics prohibit
+ * a different evaluation having a variant result. NB this applies to a particular iteration.
+ * Eaxh iteration may have a different actual value.
+ *
+ * When evaluating a hypothesis for a particular expression, all CSEs again have the same narrower symbolic
+ * value for that hypothesis. CSEs therefore have narrower variant symbolic values that are access dependent.
+ *
  * @since 1.15
  */
 public interface CSEElement
