@@ -52,6 +52,7 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
+import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.manager.SymbolicExecutor;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
@@ -190,7 +191,7 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 			if (sourceValue == null) {
 				return null;
 			}
-			if (evaluationEnvironment.mayBeNull(source, sourceValue)) {
+			if (evaluationEnvironment.mayBeNull(source)) { //, sourceValue)) {
 				mayBeNull = true;
 			}
 			if ((sourceValue instanceof MapValue) || (source.getTypeId() instanceof MapTypeId)) {
@@ -408,6 +409,11 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 	@Deprecated
 	public @NonNull MetamodelManager getMetamodelManager() {
 		return delegate.getMetamodelManager();
+	}
+
+	public @NonNull SymbolicAnalysis getSymbolicAnalysis() {
+		assert context != null;
+		return (SymbolicAnalysis)context;
 	}
 
 	public @NonNull SymbolicExecutor getSymbolicExecutor() {
@@ -629,9 +635,11 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 		OCLExpression bodyExpression = PivotUtil.getOwnedBody(loopExp);
 	//	context.pushEvaluationEnvironment(bodyExpression, (Object)loopExp);
 	//	try {
+			SymbolicAnalysis symbolicAnalysis = getSymbolicAnalysis();
 			for (@NonNull VariableDeclaration iterator : PivotUtil.getOwnedIterators(loopExp)) {
+				CSEElement iteratorCSE = symbolicAnalysis.getCSEElement(iterator);
 				SymbolicValue iteratorValue = new SymbolicVariableValueImpl(iterator, !sourceType.isIsNullFree(), false);
-				evaluationEnvironment.traceSymbolicValue(iterator, iteratorValue);
+				evaluationEnvironment.traceSymbolicValue(iteratorCSE, iteratorValue);
 
 
 

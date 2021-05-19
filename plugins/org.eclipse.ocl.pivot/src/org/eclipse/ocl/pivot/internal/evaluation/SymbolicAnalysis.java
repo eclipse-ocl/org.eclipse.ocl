@@ -159,13 +159,17 @@ public class SymbolicAnalysis extends SymbolicOCLExecutor	// FIXME merge Symboli
 		return symbolicEvaluationVisitor;
 	}
 
+	public @NonNull BaseSymbolicEvaluationEnvironment getBaseSymbolicEvaluationEnvironment() {
+		return getEvaluationEnvironment().getBaseSymbolicEvaluationEnvironment();
+	}
+
 	public @NonNull CSEElement getCSEElement(@NonNull TypedElement element) {
 		return cseAnalysis.getElementCSE(element);
 	}
 
 	public void initializeEvaluationEnvironment(@NonNull ExpressionInOCL expressionInOCL, @Nullable Object contextElement, @Nullable Object @Nullable [] parameters) {
 		cseAnalysis.analyze(expressionInOCL);
-		AbstractSymbolicEvaluationEnvironment symbolicEvaluationEnvironment = getEvaluationEnvironment();
+		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment = getBaseSymbolicEvaluationEnvironment();
 		IdResolver idResolver = environmentFactory.getIdResolver();
 		Variable contextVariable = expressionInOCL.getOwnedContext();
 		if (contextVariable != null) {
@@ -251,7 +255,7 @@ public class SymbolicAnalysis extends SymbolicOCLExecutor	// FIXME merge Symboli
 
 	@Override
 	public @NonNull String toString() {
-		AbstractSymbolicEvaluationEnvironment evaluationEnvironment = getEvaluationEnvironment();
+		BaseSymbolicEvaluationEnvironment evaluationEnvironment = getBaseSymbolicEvaluationEnvironment();
 		StringBuilder s = new StringBuilder();
 		for (EObject eObject : new TreeIterable(expressionInOCL, true)) {
 			s.append("\n  ");

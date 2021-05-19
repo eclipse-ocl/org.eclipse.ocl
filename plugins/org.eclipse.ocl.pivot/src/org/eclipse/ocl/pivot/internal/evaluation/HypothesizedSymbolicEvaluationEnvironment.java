@@ -43,6 +43,7 @@ import org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation2;
 import org.eclipse.ocl.pivot.library.logical.BooleanOrOperation;
 import org.eclipse.ocl.pivot.library.logical.BooleanOrOperation2;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
@@ -60,6 +61,11 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 	protected final @NonNull AbstractSymbolicEvaluationEnvironment symbolicEvaluationEnvironment;
 	protected final @NonNull Hypothesis hypothesis;
 	protected final @NonNull SymbolicAnalysis symbolicAnalysis;
+
+	/**
+	 * The hypothesis-specific (symbolic) value of each common expression element, null if not yet computed.
+	 */
+	private @NonNull Map<@NonNull CSEElement, @NonNull SymbolicValue> cseElement2symbolicValue = new HashMap<>();
 
 	/**
 	 * All CSEs for a stronger value may be used while assessing the the hypothesis.
@@ -213,7 +219,6 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 		}
 	}
 
-	@Override
 	public @Nullable SymbolicValue basicGetSymbolicValue(@NonNull TypedElement element) {
 		CSEElement cseElement = getSymbolicAnalysis().getCSEElement(element);
 		SymbolicValue symbolicValue = primaryCSE2constrainingValue.get(cseElement);
@@ -224,11 +229,12 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 		if (symbolicValue != null) {
 			return symbolicValue;
 		}
-		return super.basicGetSymbolicValue(element);
+		return cseElement2symbolicValue.get(cseElement);
 	}
 
 	@Override
-	protected @NonNull AbstractSymbolicEvaluationEnvironment getBaseSymbolicEvaluationEnvironment() {
+	@NonNull
+	public BaseSymbolicEvaluationEnvironment getBaseSymbolicEvaluationEnvironment() {
 		return getParent().getBaseSymbolicEvaluationEnvironment();
 	}
 
@@ -248,8 +254,12 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 		if (symbolicValue != null) {
 			return symbolicValue;
 		}
-		return super.getSymbolicValue(element);
+		return ClassUtil.nonNullState(cseElement2symbolicValue.get(cseElement));
 	}
+
+//	private @NonNull SymbolicValue getSymbolicValue(@NonNull CSEElement cseElement) {
+//		return ClassUtil.nonNullState(cseElement2symbolicValue.get(cseElement));
+//	}
 
 	public boolean isContradiction() {
 		List<@NonNull TypedElement> typedElementsList = new ArrayList<>(affectedTypedElements);
@@ -264,7 +274,7 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 			//	assert constrainedValue == constrainingValue;
 			SymbolicValue constrainedValue2 = symbolicEvaluate(typedElement);		// XXX debugging
 			assert constrainedValue == constrainedValue2;
-			SymbolicValue reevaluatedValue = super.getSymbolicValue(typedElement);
+			SymbolicValue reevaluatedValue = getSymbolicValue(typedElement);
 			if (!constrainedValue.equals(reevaluatedValue)) {
 				return true;
 			}
@@ -305,6 +315,10 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 		addAffectedTypedElements(expression, isHypothesisPath);
 	}
 
+	public @Nullable SymbolicValue putSymbolicValue(@NonNull CSEElement cseElement, @NonNull SymbolicValue symbolicValue) {
+		return cseElement2symbolicValue.put(cseElement, symbolicValue);
+	}
+
 	public void resolveHypothesis(@NonNull AbstractSymbolicEvaluationEnvironment evaluationEnvironment) {
 		for (Entry<@NonNull CSEElement, @NonNull SymbolicValue> entry : primaryCSE2constrainingValue.entrySet()) {
 			@NonNull CSEElement cseElement = entry.getKey();
@@ -324,7 +338,7 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 
 	@Override
 	public @NonNull SymbolicValue symbolicEvaluate(@NonNull TypedElement typedElement) {
-		SymbolicValue symbolicValue = super.basicGetSymbolicValue(typedElement);			// Re-use old value
+		SymbolicValue symbolicValue = basicGetSymbolicValue(typedElement);			// Re-use old value
 		if (symbolicValue == null) {
 			CSEElement cseElement = getSymbolicAnalysis().getCSEElement(typedElement);
 			Object result = primaryCSE2constrainingValue.get(cseElement);
@@ -359,6 +373,16 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 	public void toString(@NonNull StringBuilder s, int depth) {
 		s.append("hypothesis for '" + executableObject + "' in '" + executableObject.eContainer() + "'");
 		super.toString(s);
+		StringUtil.appendIndentation(s, 0);
+		List<@NonNull CSEElement> keys = new ArrayList<>(cseElement2symbolicValue.keySet());
+		if (keys.size() > 1) {
+			Collections.sort(keys, NameUtil.TO_STRING_COMPARATOR);
+		}
+		s.append("\t" + keys.size() + " cses");
+		for (@NonNull CSEElement key : keys) {
+			Object value = cseElement2symbolicValue.get(key);
+			s.append("\n\t\t" + key + " => " + value);
+		}
 		List<@NonNull CSEElement> cseElements = new ArrayList<>(primaryCSE2constrainingValue.keySet());
 	//	if (unconstrainedValues.size() > 1) {
 	//		Collections.sort(unconstrainedValues, NameUtil.NAMEABLE_COMPARATOR);
@@ -397,13 +421,24 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 	//	basicSymbolicEvaluationEnvironment.toString(s, depth+1);
 	}
 
-	@Override
-	public @NonNull SymbolicValue traceSymbolicValue(@NonNull CSEElement cselement, @NonNull SymbolicValue symbolicValue) {
-	//	SymbolicValue constrainingValue = cseElement2constrainingValue.get(cselement);
-	//	assert constrainingValue != null;
-	//	if (!symbolicValue.equals(constrainingValue)) {
-	//		return super.traceSymbolicValue(cselement, constrainingValue);
-	//	}
-		return super.traceSymbolicValue(cselement, symbolicValue);
+	public @NonNull SymbolicValue traceSymbolicValue(@NonNull CSEElement cseElement, @NonNull SymbolicValue symbolicValue) {
+		if ("self.name".equals(cseElement.toString())) {
+			getClass();		// XXX
+		}
+		SymbolicValue old = putSymbolicValue(cseElement, symbolicValue);
+		assert (old == null) || (old == symbolicValue); //old.equals(symbolicValue);
+		return symbolicValue;
+	}
+
+	public @NonNull SymbolicValue traceValue(@NonNull CSEElement cseElement, @Nullable Object value) {
+		SymbolicValue symbolicValue;
+		if (value instanceof SymbolicValue) {
+			symbolicValue = (SymbolicValue) value;
+		}
+		else {
+			Object boxedValue = environmentFactory.getIdResolver().boxedValueOf(value);
+			symbolicValue = getKnownValue(boxedValue);
+		}
+		return traceSymbolicValue(cseElement, symbolicValue);
 	}
 }

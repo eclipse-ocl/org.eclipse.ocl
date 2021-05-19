@@ -11,8 +11,12 @@
 
 package org.eclipse.ocl.pivot.internal.evaluation;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -21,9 +25,15 @@ import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
+import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
+import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.internal.manager.SymbolicExecutor;
 import org.eclipse.ocl.pivot.internal.values.SymbolicKnownValueImpl;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.OCLValue;
 import org.eclipse.ocl.pivot.values.RefinedSymbolicValue;
 import org.eclipse.ocl.pivot.values.SymbolicKnownValue;
@@ -37,19 +47,12 @@ import org.eclipse.ocl.pivot.values.SymbolicValue;
  *
  * @since 1.15
  */
-public class BasicSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluationEnvironment
+public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluationEnvironment
 {
-//	private final @NonNull Map<@NonNull SymbolicValue, @NonNull List<@NonNull SymbolicConstraint>> value2constraint = new HashMap<>();
-
 	/**
-	 * The known (symbolic) value of each expression element, null if not yet computed.
+	 * The known control-blind (symbolic) value of each common expression element, null if not yet computed.
 	 */
-//	private @NonNull Map<@NonNull Element, @NonNull SymbolicValue> element2symbolicValue = new HashMap<>();
-
-	/**
-	 * The contextual constrainting value of each expression element, null if not constrained.
-	 */
-//	private @NonNull Map<@NonNull Element, @NonNull SymbolicValue> element2constraintValue = new HashMap<>();
+	private @NonNull Map<@NonNull CSEElement, @NonNull SymbolicValue> cseElement2symbolicValue = new HashMap<>();
 
 	/**
 	 * The known symbolic value of known values.
@@ -63,60 +66,27 @@ public class BasicSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluati
 
 //	private final @NonNull Map<@NonNull TypedElement, @NonNull Map<@Nullable List<@Nullable Object>, @NonNull List<@Nullable Object>>> typedElement2values2constraints = new HashMap<>();
 
-	public BasicSymbolicEvaluationEnvironment(@NonNull SymbolicExecutor executor, @NonNull NamedElement executableObject) {
+	public BaseSymbolicEvaluationEnvironment(@NonNull SymbolicExecutor executor, @NonNull NamedElement executableObject) {
 		super(executor, executableObject);
 	}
 
-	public BasicSymbolicEvaluationEnvironment(@NonNull AbstractSymbolicEvaluationEnvironment parent, @NonNull TypedElement executableObject) {
+	public BaseSymbolicEvaluationEnvironment(@NonNull AbstractSymbolicEvaluationEnvironment parent, @NonNull TypedElement executableObject) {
 		super(parent, executableObject);
 	}
 
-//	public BasicSymbolicEvaluationEnvironment(@NonNull BasicSymbolicEvaluationEnvironment parent, @NonNull NamedElement executableObject, @Nullable Object caller) {
-//		super(parent, executableObject, caller);
-//	}
-
-/*	@Override
-	public void addSymbolicResult(@NonNull TypedElement feature, @Nullable List<@Nullable Object> sourceAndArgumentValues, @Nullable Object symbolicConstraint) {
-		Map<@Nullable List<@Nullable Object>, @NonNull List<@Nullable Object>> values2constraints = typedElement2values2constraints.get(feature);
-		if (values2constraints == null) {
-			values2constraints = new HashMap<>();
-			typedElement2values2constraints.put(feature, values2constraints);
-		}
-		List<@Nullable Object> constraints = values2constraints.get(sourceAndArgumentValues);
-		if (constraints == null) {
-			constraints = new ArrayList<>();
-			values2constraints.put(sourceAndArgumentValues, constraints);
-		}
-		constraints.add(symbolicConstraint);
-	} */
-
-/*	public void addSymbolicConstraint(@NonNull SymbolicValue symbolicValue, @NonNull SymbolicConstraint symbolicConstraint) {
-		List<@NonNull SymbolicConstraint> constraints = value2constraint.get(symbolicValue);
-		if (constraints == null) {
-			SymbolicEvaluationEnvironment parent2 = (SymbolicEvaluationEnvironment) parent;
-			if (parent2 != null) {
-				Iterable<@NonNull SymbolicConstraint> parentConstraints = parent2.getSymbolicConstraintsOn(symbolicValue);
-				if (parentConstraints != null) {
-					constraints = Lists.newArrayList(parentConstraints);
-				}
-			}
-			if (constraints == null) {
-				constraints = new ArrayList<>();
-			}
-			value2constraint.put(symbolicValue, constraints);
-		}
-		constraints.add(symbolicConstraint);
-	} */
+	public @Nullable SymbolicValue basicGetSymbolicValue(@NonNull TypedElement element) {
+		CSEElement cseElement = getSymbolicAnalysis().getCSEElement(element);
+		return cseElement2symbolicValue.get(cseElement);
+	}
 
 	@Override
-	protected @NonNull AbstractSymbolicEvaluationEnvironment getBaseSymbolicEvaluationEnvironment() {
+	public @NonNull BaseSymbolicEvaluationEnvironment getBaseSymbolicEvaluationEnvironment() {
 		return this;
 	}
 
-//	@Override
-//	public @NonNull Map<@NonNull Element, @NonNull SymbolicValue> getElement2SymbolicValue() {
-//		return element2symbolicValue;
-//	}
+	public @NonNull Set<@NonNull CSEElement> getCSEElements() {
+		return cseElement2symbolicValue.keySet();
+	}
 
 	@Override
 	public @NonNull SymbolicValue getKnownValue(@Nullable Object boxedValue) {
@@ -139,14 +109,23 @@ public class BasicSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluati
 		return symbolicKnownValue;
 	}
 
-/*	@Override
-	public @Nullable Iterable<@Nullable Object> getSymbolicConstraints(@NonNull TypedElement typedElement, @Nullable List<@Nullable Object> sourceAndArgumentValues) {
-		Map<@Nullable List<@Nullable Object>, @NonNull List<@Nullable Object>> values2constraints = typedElement2values2constraints.get(typedElement);
-		if (values2constraints == null) {
-			return null;
+	public @NonNull SymbolicValue getSymbolicValue(@NonNull CSEElement cseElement) {
+		return ClassUtil.nonNullState(cseElement2symbolicValue.get(cseElement));
+	}
+
+	@Override
+	public @NonNull SymbolicValue getSymbolicValue(@NonNull TypedElement element) {
+		CSEElement cseElement = getSymbolicAnalysis().getCSEElement(element);
+		return ClassUtil.nonNullState(cseElement2symbolicValue.get(cseElement));
+	}
+
+	public @NonNull SymbolicValue getSymbolicValue2(@NonNull TypedElement element) {
+		SymbolicValue symbolicValue = basicGetSymbolicValue(element);
+		if (symbolicValue == null) {
+			symbolicValue = symbolicEvaluate(element);
 		}
-		return values2constraints.get(sourceAndArgumentValues);
-	} */
+		return symbolicValue;
+	}
 
 	@Override
 	public @Nullable Object getValueOf(@NonNull TypedElement variable) {
@@ -173,17 +152,6 @@ public class BasicSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluati
 		return variableValue;
 	}
 
-/*	private @Nullable Iterable<@NonNull SymbolicConstraint> getSymbolicConstraintsOn(@NonNull SymbolicValue symbolicValue) {
-		Iterable<@NonNull SymbolicConstraint> constraints = value2constraint.get(symbolicValue);
-		if (constraints == null) {
-			SymbolicEvaluationEnvironment parent2 = (SymbolicEvaluationEnvironment) parent;
-			if (parent2 != null) {
-				constraints = parent2.getSymbolicConstraintsOn(symbolicValue);
-			}
-		}
-		return constraints;
-	} */
-
 	/**
 	 * Return true if typedElement may have some symbolic constraints. Conversely avoid the need to compute the boxed source and
 	 * argument lists if there are no such constraints that have been deduced.
@@ -195,9 +163,51 @@ public class BasicSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluati
 		return values2constraints != null;
 	} */
 
+	public boolean isDead(@NonNull OCLExpression element) {
+		return basicGetSymbolicValue(element) == null;
+	}
+
+	public @Nullable SymbolicValue putSymbolicValue(@NonNull CSEElement cseElement, @NonNull SymbolicValue symbolicValue) {
+		return cseElement2symbolicValue.put(cseElement, symbolicValue);
+	}
+
+	@Deprecated /* @deprecated use CSEElement */
+	public final @Nullable SymbolicValue putSymbolicValue(@NonNull TypedElement element, @NonNull SymbolicValue symbolicValue) {
+		CSEElement cseElement = getSymbolicAnalysis().getCSEElement(element);
+		return putSymbolicValue(cseElement, symbolicValue);
+	}
+
+	@Override
+	public @NonNull SymbolicValue symbolicEvaluate(@NonNull TypedElement element) {
+		SymbolicValue symbolicValue = basicGetSymbolicValue(element);			// Re-use old value
+		if (symbolicValue != null) {
+			return symbolicValue;
+		}
+		Object result;
+		try {
+			EvaluationVisitor undecoratedVisitor = getUndecoratedVisitor();
+			result = element.accept(undecoratedVisitor);
+		}
+		catch (InvalidValueException e) {
+			result = e;
+		}
+		CSEElement cseElement = getSymbolicAnalysis().getCSEElement(element);
+		return traceValue(cseElement, result);								// Record new value
+	}
+
 	@Override
 	public void toString(@NonNull StringBuilder s) {
 		super.toString(s);
+		StringUtil.appendIndentation(s, 0);
+		List<@NonNull CSEElement> keys = new ArrayList<>(cseElement2symbolicValue.keySet());
+		if (keys.size() > 1) {
+			Collections.sort(keys, NameUtil.TO_STRING_COMPARATOR);
+		}
+		s.append("\t" + keys.size() + " cses");
+		for (@NonNull CSEElement key : keys) {
+			Object value = cseElement2symbolicValue.get(key);
+			s.append("\n\t\t" + key + " => " + value);
+		}
 /*		List<@NonNull TypedElement> features = new ArrayList<>(typedElement2values2constraints.keySet());
 		if (features.size() > 1) {
 			Collections.sort(features, NameUtil.NAMEABLE_COMPARATOR);
@@ -233,5 +243,41 @@ public class BasicSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluati
 				}
 			}
 		} */
+	}
+
+	@Deprecated /* @deprecated use CSEElement */
+	public final @NonNull SymbolicValue traceSymbolicValue(@NonNull TypedElement expression, @NonNull SymbolicValue symbolicValue) {
+		SymbolicAnalysis symbolicAnalysis = getSymbolicAnalysis();
+		CSEElement cseElement = symbolicAnalysis.getCSEElement(expression);
+		return traceSymbolicValue(cseElement, symbolicValue);
+	}
+
+	@Override
+	public @NonNull SymbolicValue traceSymbolicValue(@NonNull CSEElement cseElement, @NonNull SymbolicValue symbolicValue) {
+		if ("self.name".equals(cseElement.toString())) {
+			getClass();		// XXX
+		}
+		SymbolicValue old = putSymbolicValue(cseElement, symbolicValue);
+		assert (old == null) || (old == symbolicValue); //old.equals(symbolicValue);
+		return symbolicValue;
+	}
+
+	@Deprecated /* @deprecated use CSEElement */
+	public final @NonNull SymbolicValue traceValue(@NonNull TypedElement expression, @Nullable Object value) {
+		SymbolicAnalysis symbolicAnalysis = getSymbolicAnalysis();
+		CSEElement cseElement = symbolicAnalysis.getCSEElement(expression);
+		return traceValue(cseElement, value);
+	}
+
+	public @NonNull SymbolicValue traceValue(@NonNull CSEElement cseElement, @Nullable Object value) {
+		SymbolicValue symbolicValue;
+		if (value instanceof SymbolicValue) {
+			symbolicValue = (SymbolicValue) value;
+		}
+		else {
+			Object boxedValue = environmentFactory.getIdResolver().boxedValueOf(value);
+			symbolicValue = getKnownValue(boxedValue);
+		}
+		return traceSymbolicValue(cseElement, symbolicValue);
 	}
 }

@@ -22,7 +22,7 @@ import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.internal.evaluation.AbstractSymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.internal.evaluation.BasicOCLExecutor;
-import org.eclipse.ocl.pivot.internal.evaluation.BasicSymbolicEvaluationEnvironment;
+import org.eclipse.ocl.pivot.internal.evaluation.BaseSymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
 import org.eclipse.ocl.pivot.internal.evaluation.Hypothesis;
 import org.eclipse.ocl.pivot.internal.evaluation.HypothesizedSymbolicEvaluationEnvironment;
@@ -80,12 +80,12 @@ public abstract class SymbolicOCLExecutor extends BasicOCLExecutor implements Sy
 //	}
 
 	protected @NonNull AbstractSymbolicEvaluationEnvironment createNestedEvaluationEnvironment(@NonNull AbstractSymbolicEvaluationEnvironment evaluationEnvironment, @NonNull CSEElement cseElement) {
-		return new BasicSymbolicEvaluationEnvironment(evaluationEnvironment, cseElement.getElement());
+		return new BaseSymbolicEvaluationEnvironment(evaluationEnvironment, cseElement.getElement());
 	}
 
 	@Override
 	protected @NonNull AbstractSymbolicEvaluationEnvironment createRootEvaluationEnvironment(@NonNull NamedElement executableObject) {
-		return new BasicSymbolicEvaluationEnvironment(this, executableObject);
+		return new BaseSymbolicEvaluationEnvironment(this, executableObject);
 	}
 
 	@Override
