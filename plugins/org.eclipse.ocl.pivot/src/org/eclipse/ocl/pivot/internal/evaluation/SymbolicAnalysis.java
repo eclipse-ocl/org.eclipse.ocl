@@ -22,35 +22,36 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
-import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
+import org.eclipse.ocl.pivot.VariableExp;
+import org.eclipse.ocl.pivot.evaluation.EvaluationHaltedException;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor.EvaluationVisitorExtension;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
-import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.internal.cse.CommonSubExpressionAnalysis;
-import org.eclipse.ocl.pivot.internal.manager.SymbolicOCLExecutor;
+import org.eclipse.ocl.pivot.internal.manager.SymbolicExecutor;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
-import org.eclipse.ocl.pivot.values.SymbolicKnownValue;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
  * @since 1.15
  */
-public class SymbolicAnalysis extends SymbolicOCLExecutor	// FIXME merge SymbolicAnalysis + SymbolicOCLExecutor
+public class SymbolicAnalysis extends BasicOCLExecutor implements SymbolicExecutor, ExecutorInternal
 {
+	private @Nullable List<@NonNull HypothesizedSymbolicEvaluationEnvironment> hypothesizedEvaluationEnvironments = null;
+
 	protected final @NonNull ExpressionInOCL expressionInOCL;
 	protected final @NonNull CommonSubExpressionAnalysis cseAnalysis;
-//	protected final @NonNull Map<@NonNull VariableDeclaration, @NonNull List<@NonNull VariableExp>> variable2variableExps = new HashMap<>();
 
 	/**
 	 * The expressions for which contradicting a hypothesized value allows a more precise re-evaluation.
 	 */
-	private @Nullable Map<@NonNull OCLExpression, @NonNull Hypothesis> expression2hypothesis = null;
+	private @Nullable Map<@NonNull TypedElement, @NonNull Hypothesis> typedElement2hypothesis = null;
 
 	/**
 	 * Initializes the symbolic analysis of expressionInOCL that delegates to a non-symbolic evaluation visitor.
@@ -59,66 +60,17 @@ public class SymbolicAnalysis extends SymbolicOCLExecutor	// FIXME merge Symboli
 		super(environmentFactory, modelManager);
 		this.expressionInOCL = expressionInOCL;
 		this.cseAnalysis = new CommonSubExpressionAnalysis();
-//		analyze(expressionInOCL);
 	}
 
 	@Override
-	public void addHypothesis(@NonNull OCLExpression expression, @NonNull Hypothesis hypothesis) {
-		Map<@NonNull OCLExpression, @NonNull Hypothesis> expression2hypothesis2 = expression2hypothesis;
-		if (expression2hypothesis2 == null) {
-			expression2hypothesis = expression2hypothesis2 = new HashMap<>();
+	public void addHypothesis(@NonNull TypedElement typedElement, @NonNull Hypothesis hypothesis) {
+		Map<@NonNull TypedElement, @NonNull Hypothesis> typedElement2hypothesis2 = typedElement2hypothesis;
+		if (typedElement2hypothesis2 == null) {
+			typedElement2hypothesis = typedElement2hypothesis2 = new HashMap<>();
 		}
-		Hypothesis old = expression2hypothesis2.put(expression, hypothesis);
+		Hypothesis old = typedElement2hypothesis2.put(typedElement, hypothesis);
 		assert old == null;
 	}
-
-/*	private void analyze(@NonNull ExpressionInOCL expressionInOCL) {
-		for (@NonNull EObject eObject : new TreeIterable(expressionInOCL, true)) {
-			if (eObject instanceof VariableExp) {
-				VariableExp variableExp = (VariableExp)eObject;
-				VariableDeclaration variable = PivotUtil.getReferredVariable(variableExp);
-				List<@NonNull VariableExp> variableExps = variable2variableExps.get(variable);
-				if (variableExps == null) {
-					variableExps = new ArrayList<>();
-					variable2variableExps.put(variable, variableExps);
-				}
-				variableExps.add(variableExp);
-			}
-		//	if (eObject instanceof TypedElement) {
-		//		TypedElement typedElement = (TypedElement)eObject;
-		//		expression2height.put(typedElement, getHeight(typedElement));
-		//	}
-		}
-	//	getHeight(expressionInOCL);
-	} */
-
-/*	private int getHeight(@NonNull TypedElement typedElement) {
-		CSEElement cseElement = getCSEElement(typedElement);
-		cseElement.getHeight();
-		Integer knownHeight = cse2height.get(cseElement);
-		if (knownHeight != null) {
-			return knownHeight.intValue();
-		}
-		int maxHeight = 0;
-		if (typedElement instanceof VariableExp) {
-			VariableExp variableExp = (VariableExp)typedElement;
-			VariableDeclaration variable = PivotUtil.getReferredVariable(variableExp);
-			maxHeight = getHeight(variable) + 1;
-		}
-		else {
-			for (EObject eObject : typedElement.eContents()) {
-				if (eObject instanceof TypedElement) {
-					int height = getHeight((TypedElement)eObject) + 1;
-					if (height > maxHeight) {
-						maxHeight = height;
-					}
-				}
-			}
-		}
-		Integer old = cse2height.put(cseElement, maxHeight);
-		assert old == null;
-		return maxHeight;
-	} */
 
 	public @NonNull Comparator<@NonNull TypedElement> getTypedElementHeightComparator() {
 		return new Comparator<@NonNull TypedElement>()
@@ -131,32 +83,51 @@ public class SymbolicAnalysis extends SymbolicOCLExecutor	// FIXME merge Symboli
 				if (diff != 0) {
 					return diff;
 				}
-				return System.identityHashCode(o1) - System.identityHashCode(o2);
-			}
-		};
-	}
-
-/*	public @NonNull Comparator<@NonNull CSEElement> getHeightComparator() {
-		return new Comparator<@NonNull CSEElement>()
-		{
-			@Override
-			public int compare(@NonNull CSEElement o1, @NonNull CSEElement o2) {
-				int h1 = o1.getHeight();
-				int h2 = o2.getHeight();
-				int diff = h1 - h2;
+				if (o1 instanceof VariableExp) h1++;
+				if (o2 instanceof VariableExp) h2++;
+				if (o1 instanceof ExpressionInOCL) h1++;
+				if (o2 instanceof ExpressionInOCL) h2++;
+				diff = h1 - h2;
 				if (diff != 0) {
 					return diff;
 				}
 				return System.identityHashCode(o1) - System.identityHashCode(o2);
 			}
 		};
-	} */
+	}
 
 	@Override
 	protected @NonNull EvaluationVisitorExtension createEvaluationVisitor() {
 		EvaluationVisitorExtension evaluationVisitor = super.createEvaluationVisitor();
 		SymbolicEvaluationVisitor symbolicEvaluationVisitor = new SymbolicEvaluationVisitor(evaluationVisitor);
 		return symbolicEvaluationVisitor;
+	}
+
+	@Override
+	public @NonNull HypothesizedSymbolicEvaluationEnvironment createHypothesizedSymbolicEvaluationEnvironment(@NonNull Hypothesis hypothesis) {
+		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment = (BaseSymbolicEvaluationEnvironment) getEvaluationEnvironment();
+	//	ConstrainedSymbolicEvaluationEnvironment constrainedEvaluationEnvironment2 = constrainedSymbolicEvaluationEnvironment;
+	//	assert constrainedEvaluationEnvironment2 != null;
+		HypothesizedSymbolicEvaluationEnvironment hypothesizedEvaluationEnvironment = new HypothesizedSymbolicEvaluationEnvironment(symbolicEvaluationEnvironment, hypothesis);
+	//	pushEvaluationEnvironment(nestedEvaluationEnvironment);
+		//	nestedEvaluationEnvironment.add(symbolicValue, constantValue);
+		//	SimpleSymbolicConstraintImpl symbolicConstraint = new SimpleSymbolicConstraintImpl(symbolicValue.getTypeId(), false, false, SymbolicOperator.EQUALS, constantValue);
+		//	symbolicValue.deduceFrom(this, symbolicConstraint);
+		List<@NonNull HypothesizedSymbolicEvaluationEnvironment> hypothesizedEvaluationEnvironments2 = hypothesizedEvaluationEnvironments;
+		if (hypothesizedEvaluationEnvironments2 == null) {
+			hypothesizedEvaluationEnvironments = hypothesizedEvaluationEnvironments2 = new ArrayList<>();
+		}
+		hypothesizedEvaluationEnvironments2.add(hypothesizedEvaluationEnvironment);
+		return hypothesizedEvaluationEnvironment;
+	}
+
+	protected @NonNull AbstractSymbolicEvaluationEnvironment createNestedEvaluationEnvironment(@NonNull AbstractSymbolicEvaluationEnvironment evaluationEnvironment, @NonNull CSEElement cseElement) {
+		return new BaseSymbolicEvaluationEnvironment(evaluationEnvironment, cseElement.getElement());
+	}
+
+	@Override
+	protected @NonNull AbstractSymbolicEvaluationEnvironment createRootEvaluationEnvironment(@NonNull NamedElement executableObject) {
+		return new BaseSymbolicEvaluationEnvironment(this, executableObject);
 	}
 
 	public @NonNull BaseSymbolicEvaluationEnvironment getBaseSymbolicEvaluationEnvironment() {
@@ -167,28 +138,39 @@ public class SymbolicAnalysis extends SymbolicOCLExecutor	// FIXME merge Symboli
 		return cseAnalysis.getElementCSE(element);
 	}
 
+	@Override
+	public @NonNull AbstractSymbolicEvaluationEnvironment getEvaluationEnvironment() {
+		return (AbstractSymbolicEvaluationEnvironment)super.getEvaluationEnvironment();
+	}
+
+	public @Nullable List<@NonNull HypothesizedSymbolicEvaluationEnvironment> getHypothesizedEvaluationEnvironments() {
+		return hypothesizedEvaluationEnvironments;
+	}
+
 	public void initializeEvaluationEnvironment(@NonNull ExpressionInOCL expressionInOCL, @Nullable Object contextElement, @Nullable Object @Nullable [] parameters) {
+		initializeEvaluationEnvironment(expressionInOCL);
 		cseAnalysis.analyze(expressionInOCL);
 		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment = getBaseSymbolicEvaluationEnvironment();
-		IdResolver idResolver = environmentFactory.getIdResolver();
+	//	IdResolver idResolver = environmentFactory.getIdResolver();
 		Variable contextVariable = expressionInOCL.getOwnedContext();
 		if (contextVariable != null) {
-			Object contextValue = idResolver.boxedValueOf(contextElement);
-			symbolicEvaluationEnvironment.add(contextVariable, contextValue);
-			symbolicEvaluationEnvironment.traceValue(contextVariable, contextElement);
+		//	Object contextValue = idResolver.boxedValueOf(contextElement);
+		//	symbolicEvaluationEnvironment.add(contextVariable, contextValue);
+			CSEElement cseElement = getCSEElement(contextVariable);
+			symbolicEvaluationEnvironment.traceValue(cseElement, contextElement);
 		}
 		int i = 0;
 		assert parameters != null;
 		for (Variable parameterVariable : PivotUtil.getOwnedParameters(expressionInOCL)) {
 			Object parameter = parameters[i++];
-			Object parameterValue = idResolver.boxedValueOf(parameter);
-			symbolicEvaluationEnvironment.add(parameterVariable, parameterValue);
-			symbolicEvaluationEnvironment.traceValue(parameterVariable, parameter);
+		//	Object parameterValue = idResolver.boxedValueOf(parameter);
+		//	symbolicEvaluationEnvironment.add(parameterVariable, parameterValue);
+			CSEElement cseElement = getCSEElement(parameterVariable);
+			symbolicEvaluationEnvironment.traceValue(cseElement, parameter);
 		}
-	//	symbolicEvaluate(expressionInOCL);
 	}
 
-	public @NonNull SymbolicValue mergeValue(@NonNull SymbolicValue leftSymbolicValue, @NonNull SymbolicValue rightSymbolicValue) {
+/*	public @NonNull SymbolicValue mergeValue(@NonNull SymbolicValue leftSymbolicValue, @NonNull SymbolicValue rightSymbolicValue) {
 		if (leftSymbolicValue == rightSymbolicValue) {
 			return leftSymbolicValue;
 		}
@@ -196,13 +178,13 @@ public class SymbolicAnalysis extends SymbolicOCLExecutor	// FIXME merge Symboli
 		boolean leftKnown = leftSymbolicValue instanceof SymbolicKnownValue;
 		boolean leftMayBeInvalid = leftSymbolicValue.mayBeInvalid();
 		boolean leftMayBeNull = leftSymbolicValue.mayBeNull();
-		boolean leftMayZero = leftSymbolicValue.mayBeZero();
+		boolean leftMayBeZero = leftSymbolicValue.mayBeZero();
 		boolean rightKnown = rightSymbolicValue instanceof SymbolicKnownValue;
 		boolean rightMayBeInvalid = rightSymbolicValue.mayBeInvalid();
 		boolean rightMayBeNull = rightSymbolicValue.mayBeNull();
-		boolean rightMayZero = rightSymbolicValue.mayBeZero();
-		boolean leftStricter = (leftKnown && !rightKnown) || (!leftMayBeInvalid && rightMayBeInvalid) || (!leftMayBeNull && rightMayBeNull) || (!leftMayZero && rightMayZero);
-		boolean rightStricter = (rightKnown && !leftKnown) || (!rightMayBeInvalid && leftMayBeInvalid) || (!rightMayBeNull && leftMayBeNull) || (!rightMayZero && leftMayZero);
+		boolean rightMayBeZero = rightSymbolicValue.mayBeZero();
+		boolean leftStricter = (leftKnown && !rightKnown) || (!leftMayBeInvalid && rightMayBeInvalid) || (!leftMayBeNull && rightMayBeNull) || (!leftMayBeZero && rightMayBeZero);
+		boolean rightStricter = (rightKnown && !leftKnown) || (!rightMayBeInvalid && leftMayBeInvalid) || (!rightMayBeNull && leftMayBeNull) || (!rightMayBeZero && leftMayBeZero);
 		if (leftStricter && rightStricter) {
 			throw new UnsupportedOperationException();
 		}
@@ -213,17 +195,20 @@ public class SymbolicAnalysis extends SymbolicOCLExecutor	// FIXME merge Symboli
 			return rightSymbolicValue;
 		}
 		throw new UnsupportedOperationException();
-	}
+	} */
 
 	protected void resolveHypotheses() {
-		Map<@NonNull OCLExpression, @NonNull Hypothesis> expression2hypothesis2 = expression2hypothesis;
-		if (expression2hypothesis2 != null) {
+		Map<@NonNull TypedElement, @NonNull Hypothesis> typedElement2hypothesis2 = typedElement2hypothesis;
+		if (typedElement2hypothesis2 != null) {
 		//	AbstractSymbolicEvaluationEnvironment evaluationEnvironment = getEvaluationEnvironment();
-			List<@NonNull Hypothesis> hypotheses = new ArrayList<>(expression2hypothesis2.values());
+			List<@NonNull Hypothesis> hypotheses = new ArrayList<>(typedElement2hypothesis2.values());
 			if (hypotheses.size() > 1) {
 				Collections.sort(hypotheses);
 			}
 			for (@NonNull Hypothesis hypothesis : hypotheses) {
+				if (isCanceled()) {
+					throw new EvaluationHaltedException("Canceled");
+				}
 				hypothesis.check();
 			}
 		}
@@ -246,11 +231,22 @@ public class SymbolicAnalysis extends SymbolicOCLExecutor	// FIXME merge Symboli
 		} */
 	}
 
-	public @NonNull SymbolicValue symbolicEvaluate(@NonNull ExpressionInOCL expressionInOCL) {
+	public void symbolicEvaluate(@NonNull ExpressionInOCL expressionInOCL) {
+		if (isCanceled()) {
+			throw new EvaluationHaltedException("Canceled");
+		}
+		List<@NonNull TypedElement> typedElements = new ArrayList<>();
+		for (@NonNull EObject eObject : new TreeIterable(expressionInOCL, true)) {
+			if (eObject instanceof TypedElement) {
+				typedElements.add((TypedElement) eObject);
+			}
+		}
+		Collections.sort(typedElements, getTypedElementHeightComparator());
 		AbstractSymbolicEvaluationEnvironment evaluationEnvironment = getEvaluationEnvironment();
-		SymbolicValue result = evaluationEnvironment.symbolicEvaluate(expressionInOCL);
+		for (@NonNull TypedElement typedElement : typedElements) {
+			evaluationEnvironment.symbolicEvaluate(typedElement);
+		}
 		resolveHypotheses();
-		return result;
 	}
 
 	@Override

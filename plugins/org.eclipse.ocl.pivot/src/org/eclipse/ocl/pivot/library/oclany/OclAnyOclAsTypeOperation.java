@@ -12,12 +12,18 @@ package org.eclipse.ocl.pivot.library.oclany;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.evaluation.AbstractSymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.library.AbstractUntypedBinaryOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
  * OclAnyOclAsTypeOperation realises the OclAny::oclAsType() library operation.
@@ -25,6 +31,25 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
 public class OclAnyOclAsTypeOperation extends AbstractUntypedBinaryOperation
 {
 	public static final @NonNull OclAnyOclAsTypeOperation INSTANCE = new OclAnyOclAsTypeOperation();
+
+	/**
+	 * @since 1.15
+	 */
+	@Override
+	protected @Nullable SymbolicValue checkPreconditions(@NonNull AbstractSymbolicEvaluationEnvironment symbolicEvaluationEnvironment, @NonNull OperationCallExp callExp) {
+		TypeId returnTypeId = callExp.getTypeId();
+		OCLExpression source = PivotUtil.getOwnedSource(callExp);
+		SymbolicValue sourceProblem = symbolicEvaluationEnvironment.checkNotInvalid(source, returnTypeId);
+		if (sourceProblem != null) {
+			return sourceProblem;
+		}
+		OCLExpression argument = PivotUtil.getOwnedArgument(callExp, 0);
+		SymbolicValue argumentProblem = symbolicEvaluationEnvironment.checkNotInvalid(argument, returnTypeId);
+		if (argumentProblem != null) {
+			return argumentProblem;
+		}
+		return null;
+	}
 
 	/**
 	 * @since 1.1

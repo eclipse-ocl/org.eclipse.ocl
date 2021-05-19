@@ -23,8 +23,10 @@ import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.IfExp;
-import org.eclipse.ocl.pivot.IterateExp;
+import org.eclipse.ocl.pivot.Iteration;
+import org.eclipse.ocl.pivot.IteratorVariable;
 import org.eclipse.ocl.pivot.LetExp;
+import org.eclipse.ocl.pivot.LetVariable;
 import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.MapLiteralExp;
 import org.eclipse.ocl.pivot.MapLiteralPart;
@@ -34,6 +36,7 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.OppositePropertyCallExp;
 import org.eclipse.ocl.pivot.Parameter;
+import org.eclipse.ocl.pivot.ParameterVariable;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.ShadowExp;
@@ -42,14 +45,11 @@ import org.eclipse.ocl.pivot.TupleLiteralExp;
 import org.eclipse.ocl.pivot.TupleLiteralPart;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
-import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
-import org.eclipse.ocl.pivot.evaluation.EvaluationHaltedException;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
-import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.cse.CSEElement;
@@ -58,23 +58,22 @@ import org.eclipse.ocl.pivot.internal.manager.SymbolicExecutor;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
-import org.eclipse.ocl.pivot.internal.values.SymbolicCollectionValueImpl;
+import org.eclipse.ocl.pivot.internal.values.AbstractRefinedSymbolicValue;
 import org.eclipse.ocl.pivot.internal.values.SymbolicExpressionValueImpl;
 import org.eclipse.ocl.pivot.internal.values.SymbolicNavigationCallValueImpl;
 import org.eclipse.ocl.pivot.internal.values.SymbolicUnknownValueImpl;
-import org.eclipse.ocl.pivot.internal.values.SymbolicVariableValueImpl;
 import org.eclipse.ocl.pivot.labels.ILabelGenerator;
+import org.eclipse.ocl.pivot.library.LibraryIteration;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
-import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerRange;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
-import org.eclipse.ocl.pivot.values.MapValue;
 import org.eclipse.ocl.pivot.values.SymbolicKnownValue;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
@@ -128,7 +127,27 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 			}
 			result = new SymbolicExpressionValueImpl(navigationCallExp, mayBeNull, mayBeInvalid);
 		}
-		else */ if (sourceValue instanceof SymbolicKnownValue) {
+		else */
+		TypeId returnTypeId = navigationCallExp.getTypeId();
+		SymbolicValue invalidProblem = evaluationEnvironment.checkNotInvalid(source, returnTypeId);
+		if (invalidProblem != null) {
+			return invalidProblem;
+		}
+		if (sourceValue.isNull()) {
+			if (navigationCallExp.isIsSafe()) {
+				return evaluationEnvironment.getKnownValue(null);
+			}
+			else {
+				return evaluationEnvironment.getKnownValue(ValueUtil.INVALID_VALUE);
+			}
+		}
+		if (sourceValue.mayBeNull() && !navigationCallExp.isIsSafe()) {
+			SymbolicAnalysis symbolicAnalysis = getSymbolicAnalysis();
+			Hypothesis hypothesis = new Hypothesis.MayBeNullHypothesis(symbolicAnalysis, source, sourceValue);
+			symbolicAnalysis.addHypothesis(source, hypothesis);
+			return evaluationEnvironment.getMayBeInvalidValue(returnTypeId);
+		}
+		if (sourceValue instanceof SymbolicKnownValue) {
 			result = context.internalExecuteNavigationCallExp(navigationCallExp, referredProperty, ((SymbolicKnownValue)sourceValue).getValue());
 		}
 		else {
@@ -148,9 +167,6 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 	 * @since 1.12
 	 */
 	protected @Nullable Object doOperationCallExp(@NonNull OperationCallExp operationCallExp) {
-		if (isCanceled()) {
-			throw new EvaluationHaltedException("Canceled");
-		}
 		Operation apparentOperation = PivotUtil.getReferredOperation(operationCallExp);
 		if ("size".equals(apparentOperation.getName())) {
 			getClass();		// XXX
@@ -191,18 +207,18 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 			if (sourceValue == null) {
 				return null;
 			}
-			if (evaluationEnvironment.mayBeNull(source)) { //, sourceValue)) {
-				mayBeNull = true;
+			if (sourceValue.isNull()) {
+				return sourceValue;
 			}
-			if ((sourceValue instanceof MapValue) || (source.getTypeId() instanceof MapTypeId)) {
+			SymbolicValue sourceProblem = evaluationEnvironment.checkNotNull(source, operationCallExp.getTypeId());
+			if (sourceProblem != null) {
+				return sourceProblem;
+			}
+			if (sourceValue.isMap()) {
 				throw new InvalidValueException(PivotMessages.MapValueForbidden);
 			}
-			if ((sourceValue instanceof CollectionValue) || (source.getTypeId() instanceof MapTypeId)) {
-			//	sourceValue = ((CollectionValue)sourceValue).excluding(null);		// XXX
-				sourceValue = sourceValue.setIsNullFree();
-			}
-			else if (source.getTypeId() instanceof CollectionTypeId) {
-				sourceValue = sourceValue.setIsNullFree();
+			if (sourceValue.isCollection()) {
+				sourceValue = AbstractRefinedSymbolicValue.createNullFreeValue(sourceValue);
 			}
 		}
 		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
@@ -421,45 +437,6 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 		return (SymbolicExecutor)context;
 	}
 
-/*	protected @NonNull SymbolicValue nestedEvaluate(@NonNull OCLExpression constrainedExpression, @NonNull SymbolicValue constrainedValue, @NonNull OCLExpression expression) {
-		//	if (scopeValue instanceof SymbolicConstraint) {
-		//		return scopeValue;		// XXX FIXME deductions
-		//	}
-		//	if (scopeValue instanceof SymbolicUnknownValue) {
-		//		return scopeValue;
-		//	}
-	//	else if (scopeValue instanceof SymbolicVariableValue) {
-	//		return scopeValue;
-	//	}
-		SymbolicExecutor symbolicExecutor = getSymbolicExecutor();
-		try {
-			ConstrainedSymbolicEvaluationEnvironment constrainedSymbolicEvaluationEnvironment = symbolicExecutor.pushConstrainedSymbolicEvaluationEnvironment(expression);
-			constrainedSymbolicEvaluationEnvironment.addConstraint(constrainedExpression/ *, unconstrainedValue* /, constrainedValue);
-	//		AbstractSymbolicEvaluationEnvironment evaluationEnvironment = getEvaluationEnvironment();
-			return constrainedSymbolicEvaluationEnvironment.symbolicEvaluate(expression);
-		}
-		finally {
-			symbolicExecutor.popConstrainedSymbolicEvaluationEnvironment();
-		}
-	} */
-
-/*	public @NonNull SymbolicValue symbolicEvaluate(@NonNull TypedElement element) {
-		SymbolicEvaluationEnvironment evaluationEnvironment = getEvaluationEnvironment();
-		SymbolicValue symbolicValue = evaluationEnvironment.basicGetSymbolicValue(element);			// Re-use old value
-		if (symbolicValue != null) {
-			return symbolicValue;
-		}
-		Object result;
-		try {
-			EvaluationVisitor undecoratedVisitor = getUndecoratedVisitor();
-			result = element.accept(undecoratedVisitor);
-		}
-		catch (InvalidValueException e) {
-			result = e;
-		}
-		return evaluationEnvironment.traceValue(element, result);								// Record new value
-	} */
-
 	@Override
 	public @Nullable Object visitCollectionItem(@NonNull CollectionItem item) {
 		Object result;
@@ -549,9 +526,6 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 
 	@Override
 	public @NonNull SymbolicValue visitExpressionInOCL(@NonNull ExpressionInOCL expression) {
-		if (isCanceled()) {
-			throw new EvaluationHaltedException("Canceled");
-		}
 		AbstractSymbolicEvaluationEnvironment evaluationEnvironment = getEvaluationEnvironment();
 		return evaluationEnvironment.symbolicEvaluate(PivotUtil.getOwnedBody(expression));
 	}
@@ -560,21 +534,20 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 	public @NonNull SymbolicValue visitIfExp(@NonNull IfExp ifExp) {
 		AbstractSymbolicEvaluationEnvironment evaluationEnvironment = getEvaluationEnvironment();
 		OCLExpression conditionExpression = PivotUtil.getOwnedCondition(ifExp);
+		OCLExpression thenExpression = PivotUtil.getOwnedThen(ifExp);
+		OCLExpression elseExpression = PivotUtil.getOwnedElse(ifExp);
 		SymbolicValue conditionValue = evaluationEnvironment.symbolicEvaluate(conditionExpression);
 		if (conditionValue.isTrue()) {
-			OCLExpression thenExpression = PivotUtil.getOwnedThen(ifExp);
+			evaluationEnvironment.setDead(elseExpression);
 			return evaluationEnvironment.symbolicEvaluate(thenExpression);
 		}
 		else if (conditionValue.isFalse()) {
-			OCLExpression elseExpression = PivotUtil.getOwnedElse(ifExp);
+			evaluationEnvironment.setDead(thenExpression);
 			return evaluationEnvironment.symbolicEvaluate(elseExpression);
 		}
 		else {
 			boolean mayBeInvalid = conditionValue.mayBeInvalid();
 			boolean mayBeNull = conditionValue.mayBeNull();
-			OCLExpression thenExpression = PivotUtil.getOwnedThen(ifExp);
-		//	SymbolicValue knownThenValue = evaluationEnvironment.getKnownValue(Boolean.TRUE);
-		//	SymbolicValue thenValue = nestedEvaluate(conditionExpression, knownThenValue, thenExpression);
 			SymbolicValue thenValue = evaluationEnvironment.symbolicEvaluate(thenExpression);
 			if (thenValue.mayBeInvalid()) {
 				mayBeInvalid = true;
@@ -582,9 +555,6 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 			if (thenValue.mayBeNull()) {
 				mayBeNull = true;
 			}
-			OCLExpression elseExpression = PivotUtil.getOwnedElse(ifExp);
-		//	SymbolicValue knownElseValue = evaluationEnvironment.getKnownValue(Boolean.FALSE);
-		//	SymbolicValue elseValue = nestedEvaluate(conditionExpression, knownElseValue, elseExpression);
 			SymbolicValue elseValue = evaluationEnvironment.symbolicEvaluate(elseExpression);
 			if (elseValue.mayBeInvalid()) {
 				mayBeInvalid = true;
@@ -597,63 +567,120 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 	}
 
 	@Override
-	public Object visitLetExp(@NonNull LetExp letExp) {
-		OCLExpression expression = letExp.getOwnedIn();		// Never null when valid
-		Variable variable = letExp.getOwnedVariable();		// Never null when valid
-		assert variable != null;
-		Object value;
-		try {
-			value = variable.accept(getUndecoratedVisitor());
+	public @NonNull SymbolicValue visitIteratorVariable(@NonNull IteratorVariable iteratorVariable) {
+		AbstractSymbolicEvaluationEnvironment evaluationEnvironment = getEvaluationEnvironment();
+		OCLExpression initExp = iteratorVariable.getOwnedInit();
+		if (initExp != null) {
+			return evaluationEnvironment.symbolicEvaluate(initExp);
 		}
-		catch (EvaluationHaltedException e) {
-			throw e;
+		else {
+		//	getEvaluationEnvironment().add(parameterVariable, parameterValue);
+			CSEElement cseElement = getSymbolicAnalysis().getCSEElement(iteratorVariable);
+			SymbolicUnknownValueImpl symbolicValue = new SymbolicUnknownValueImpl(iteratorVariable.getTypeId(), !iteratorVariable.isIsRequired(), false);
+			return evaluationEnvironment.traceSymbolicValue(cseElement, symbolicValue);
 		}
-		catch (InvalidValueException e) {
-			value = e;
-		}
-		//		value = ValuesUtil.asValue(value);
-		assert expression != null;
-		AbstractSymbolicEvaluationEnvironment nestedEvaluationEnvironment = getEvaluationEnvironment(); //context.pushEvaluationEnvironment(expression, (TypedElement)letExp);
-		nestedEvaluationEnvironment.add(variable, value);
-		SymbolicValue inValue = nestedEvaluationEnvironment.symbolicEvaluate(expression);
-		return inValue;
+	}
+
+	@Override
+	public @NonNull SymbolicValue visitLetExp(@NonNull LetExp letExp) {
+		return getEvaluationEnvironment().symbolicEvaluate(PivotUtil.getOwnedIn(letExp));
+	}
+
+	@Override
+	public @NonNull SymbolicValue visitLetVariable(@NonNull LetVariable letVariable) {
+		return getEvaluationEnvironment().symbolicEvaluate(PivotUtil.getOwnedInit(letVariable));
 	}
 
 	@Override
 	public Object visitLoopExp(@NonNull LoopExp loopExp) {
 		AbstractSymbolicEvaluationEnvironment evaluationEnvironment = getEvaluationEnvironment();
-		Object result;
+		Iteration iteration = PivotUtil.getReferredIteration(loopExp);
+		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+		LibraryIteration implementation = (LibraryIteration)metamodelManager.getImplementation(iteration);
+		try {
+			return implementation.symbolicEvaluate(evaluationEnvironment, loopExp);
+		}
+		catch (InvalidValueException e) {
+			throw e;
+		}
+		catch (Exception e) {
+			// This is a backstop. Library operations should catch their own exceptions
+			//  and produce a better reason as a result.
+			OCLExpression ownedSource = PivotUtil.getOwnedSource(loopExp);
+			SymbolicValue sourceValue = evaluationEnvironment.symbolicEvaluate(ownedSource);
+			throw new InvalidValueException(e, PivotMessagesInternal.FailedToEvaluate_ERROR_, iteration, ILabelGenerator.Registry.INSTANCE.labelFor(sourceValue), loopExp);
+		}
+		catch (AssertionError e) {
+			// This is a backstop. Library operations should catch their own exceptions
+			//  and produce a better reason as a result.
+			OCLExpression ownedSource = PivotUtil.getOwnedSource(loopExp);
+			SymbolicValue sourceValue = evaluationEnvironment.symbolicEvaluate(ownedSource);
+			throw new InvalidValueException(e, PivotMessagesInternal.FailedToEvaluate_ERROR_, iteration, ILabelGenerator.Registry.INSTANCE.labelFor(sourceValue), loopExp);
+		}
+
+
+/*		Object result;
 		OCLExpression ownedSource = PivotUtil.getOwnedSource(loopExp);
+		TypeId returnTypeId = loopExp.getTypeId();
+		SymbolicValue invalidSourceProblem = evaluationEnvironment.checkNotInvalid(ownedSource, returnTypeId);
+		if (invalidSourceProblem != null) {
+			return invalidSourceProblem;
+		}
+		if (!loopExp.isIsSafe()) {
+			SymbolicValue nullSourceProblem = evaluationEnvironment.checkNotNull(ownedSource, returnTypeId);
+			if (nullSourceProblem != null) {
+				return nullSourceProblem;
+			}
+		}
+		for (@NonNull VariableDeclaration iterator : PivotUtil.getOwned Iterators(loopExp)) {
+			SymbolicValue invalidIteratorProblem = evaluationEnvironment.checkNotInvalid(iterator, returnTypeId);
+			if (invalidIteratorProblem != null) {
+				return invalidIteratorProblem;
+			}
+		//	CSEElement iteratorCSE = symbolicAnalysis.getCSEElement(iterator);
+		//	SymbolicValue iteratorValue = new SymbolicVariableValueImpl(iterator, !sourceType.isIsNullFree(), false);
+		//	evaluationEnvironment.traceSymbolicValue(iteratorCSE, iteratorValue);
+		}
+		if (loopExp instanceof IterateExp) {
+			Variable ownedResult = PivotUtil.getOwnedResult((IterateExp)loopExp);
+			SymbolicValue invalidResultProblem = evaluationEnvironment.checkNotInvalid(ownedResult, returnTypeId);
+			if (invalidResultProblem != null) {
+				return invalidResultProblem;
+			}
+		}
+
+		OCLExpression bodyExpression = PivotUtil.getOwnedBody(loopExp);
+		SymbolicValue invalidBodyProblem = evaluationEnvironment.checkNotInvalid(bodyExpression, returnTypeId);
+		if (invalidBodyProblem != null) {
+			return invalidBodyProblem;
+		}
+		if (bodyExpression.isIsRequired()) {
+			SymbolicValue nullBodyProblem = evaluationEnvironment.checkNotNull(bodyExpression, returnTypeId);
+			if (nullBodyProblem != null) {
+				return nullBodyProblem;
+			}
+		}
+
+
+
 		CollectionType sourceType = (CollectionType)ownedSource.getType();
-		evaluationEnvironment.symbolicEvaluate(ownedSource);
+		SymbolicValue sourceValue = evaluationEnvironment.symbolicEvaluate(ownedSource);
+		SymbolicAnalysis symbolicAnalysis = getSymbolicAnalysis();
+		for (@NonNull VariableDeclaration iterator : PivotUtil.getOwnedIterators(loopExp)) {
+			CSEElement iteratorCSE = symbolicAnalysis.getCSEElement(iterator);
+			SymbolicValue iteratorValue = new SymbolicVariableValueImpl(iterator, !sourceType.isIsNullFree(), false);
+			evaluationEnvironment.traceSymbolicValue(iteratorCSE, iteratorValue);
+
+
+
+		}
 		if (loopExp.isIsMany()) {
 			result = new SymbolicCollectionValueImpl(loopExp, false, false);
 		}
 		else {
 			result = new SymbolicExpressionValueImpl(loopExp, false, false);		// FIXME null / invalid
 		}
-		OCLExpression bodyExpression = PivotUtil.getOwnedBody(loopExp);
-	//	context.pushEvaluationEnvironment(bodyExpression, (Object)loopExp);
-	//	try {
-			SymbolicAnalysis symbolicAnalysis = getSymbolicAnalysis();
-			for (@NonNull VariableDeclaration iterator : PivotUtil.getOwnedIterators(loopExp)) {
-				CSEElement iteratorCSE = symbolicAnalysis.getCSEElement(iterator);
-				SymbolicValue iteratorValue = new SymbolicVariableValueImpl(iterator, !sourceType.isIsNullFree(), false);
-				evaluationEnvironment.traceSymbolicValue(iteratorCSE, iteratorValue);
-
-
-
-			//	evaluate(iterator);
-			}
-			if (loopExp instanceof IterateExp) {
-				evaluationEnvironment.symbolicEvaluate(PivotUtil.getOwnedResult((IterateExp)loopExp));
-			}
-			evaluate(bodyExpression);
-	//	}
-	//	finally {
-	//		context.popEvaluationEnvironment();
-	//	}
-		return result;
+		return result; */
 	}
 
 	@Override
@@ -692,6 +719,16 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 	@Override
 	public @Nullable Object visitOppositePropertyCallExp(@NonNull OppositePropertyCallExp oppositePropertyCallExp) {
 		return doNavigationCallExp(oppositePropertyCallExp);
+	}
+
+	@Override
+	public @NonNull SymbolicValue visitParameterVariable(@NonNull ParameterVariable parameterVariable) {
+		AbstractSymbolicEvaluationEnvironment evaluationEnvironment = getEvaluationEnvironment();
+		SymbolicValue symbolicValue = evaluationEnvironment.basicGetSymbolicValue(parameterVariable);
+		if (symbolicValue == null) {
+			throw new IllegalStateException(StringUtil.bind("Unbound parameter variable ''{0}''", parameterVariable));
+		}
+		return symbolicValue;
 	}
 
 	@Override
@@ -753,5 +790,12 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 			result = delegate.visitTupleLiteralExp(literalExp);
 		}
 		return result;
+	}
+
+	@Override
+	public Object visitVariableDeclaration(@NonNull VariableDeclaration object) {
+		// TODO Auto-generated method stub
+	//	return super.visitVariableDeclaration(object);
+		return visiting(object);
 	}
 }

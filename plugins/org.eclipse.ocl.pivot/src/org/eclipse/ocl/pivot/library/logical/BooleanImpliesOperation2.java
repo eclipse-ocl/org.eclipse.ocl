@@ -16,7 +16,6 @@ import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.internal.evaluation.AbstractSymbolicEvaluationEnvironment;
-import org.eclipse.ocl.pivot.internal.manager.SymbolicOCLExecutor;
 import org.eclipse.ocl.pivot.internal.values.SymbolicUnknownValueImpl;
 import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -31,6 +30,19 @@ import org.eclipse.ocl.pivot.values.SymbolicValue;
 public class BooleanImpliesOperation2 extends AbstractSimpleBinaryOperation
 {
 	public static final @NonNull BooleanImpliesOperation2 INSTANCE = new BooleanImpliesOperation2();
+
+/*	@Override
+	protected @Nullable SymbolicValue checkPreconditions(@NonNull AbstractSymbolicEvaluationEnvironment symbolicEvaluationEnvironment, @NonNull OperationCallExp callExp) {
+		OCLExpression source = PivotUtil.getOwnedSource(callExp);
+		if (symbolicEvaluationEnvironment.mayBeInvalidOrNull(source)) {
+			return symbolicEvaluationEnvironment.getMayBeInvalidValue(callExp);
+		}
+		OCLExpression argument = PivotUtil.getOwnedArgument(callExp, 0);
+		if (symbolicEvaluationEnvironment.mayBeInvalidOrNull(argument)) {
+			return symbolicEvaluationEnvironment.getMayBeInvalidValue(callExp);
+		}
+		return null;
+	} */
 
 	/**
 	 * @since 1.15
@@ -79,48 +91,26 @@ public class BooleanImpliesOperation2 extends AbstractSimpleBinaryOperation
 	 */
 	@Override
 	public @NonNull SymbolicValue symbolicEvaluate(@NonNull AbstractSymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
-		OCLExpression source = PivotUtil.getOwnedSource(callExp);
-		SymbolicValue unconstrainedSourceValue = evaluationEnvironment.symbolicEvaluate(source);
-		if (unconstrainedSourceValue.mayBeInvalidOrNull()) {
-			return new SymbolicUnknownValueImpl(callExp.getTypeId(), false, true);
+		SymbolicValue symbolicPreconditionValue = checkPreconditions(evaluationEnvironment, callExp);
+		if (symbolicPreconditionValue != null) {
+			return symbolicPreconditionValue;
 		}
+		OCLExpression source = PivotUtil.getOwnedSource(callExp);
+		OCLExpression argument = PivotUtil.getOwnedArgument(callExp, 0);
+		SymbolicValue unconstrainedSourceValue = evaluationEnvironment.symbolicEvaluate(source);
 		if (unconstrainedSourceValue.isFalse()) {
+			evaluationEnvironment.setDead(argument);
 			return evaluationEnvironment.getKnownValue(Boolean.TRUE);
 		}
-		OCLExpression argument = PivotUtil.getOwnedArgument(callExp, 0);
 		if (unconstrainedSourceValue.isTrue()) {							// If we know the source is true there is no need to install the extra fact.
 			return evaluationEnvironment.symbolicEvaluate(argument);
 		}
-	//	return super.symbolicEvaluate(symbolicAnalysis, callExp);
-	/*	assert sourceValue != null;
-		assert !ValueUtil.isInvalidValue(sourceValue);
-		assert !ValueUtil.isNullValue(sourceValue);
-		if (sourceValue == Boolean.FALSE) {
-			return TRUE_VALUE;
-		}
-		OCLExpression argument = PivotUtil.getOwnedArgument(callExp, 0);
-	//	if (sourceValue == Boolean.TRUE) {
-	//		return evaluationVisitor.evaluate(argument);
-	//	}
-	//	assert sourceValue instanceof SymbolicExpressionValue; */
-	//	SymbolicValue computedSourceValue = evaluationEnvironment.getSymbolicValue(source);
-		SymbolicOCLExecutor symbolicExecutor = evaluationEnvironment.getSymbolicExecutor();
-//		SymbolicValue knownSourceValue = evaluationEnvironment.getKnownValue(Boolean.TRUE);
-//		try {
-//			ConstrainedSymbolicEvaluationEnvironment constrainedEvaluationEnvironment = symbolicExecutor.pushConstrainedSymbolicEvaluationEnvironment(argument); //, computedSourceValue, knownSourceValue, callExp);
-			AbstractSymbolicEvaluationEnvironment constrainedEvaluationEnvironment = evaluationEnvironment;
-//			constrainedEvaluationEnvironment.addConstraint(source/*, unconstrainedSourceValue*/, knownSourceValue);
-		//	SymbolicValue recomputedSourceValue = nestedEvaluationEnvironment.getSymbolicValue(source);
-			SymbolicValue unconstrainedArgumentValue = constrainedEvaluationEnvironment.symbolicEvaluate(argument);
-			boolean mayBeInvalid = ValueUtil.mayBeInvalid(unconstrainedSourceValue) || ValueUtil.mayBeInvalid(unconstrainedArgumentValue);
-			boolean mayBeNull = ValueUtil.mayBeNull(unconstrainedSourceValue) || ValueUtil.mayBeNull(unconstrainedArgumentValue);
-			boolean mayBeInvalidOrNull = mayBeNull || mayBeInvalid;
-			SymbolicUnknownValueImpl resultValue = new SymbolicUnknownValueImpl(callExp.getTypeId(), false, mayBeInvalidOrNull);
-		//	constrainedEvaluationEnvironment.setUnconstrainedValue(resultValue);
-			return resultValue;
-//		}
-//		finally {
-//			symbolicExecutor.popConstrainedSymbolicEvaluationEnvironment();
-//		}
+		AbstractSymbolicEvaluationEnvironment constrainedEvaluationEnvironment = evaluationEnvironment;
+		SymbolicValue unconstrainedArgumentValue = constrainedEvaluationEnvironment.symbolicEvaluate(argument);
+		boolean mayBeInvalid = ValueUtil.mayBeInvalid(unconstrainedSourceValue) || ValueUtil.mayBeInvalid(unconstrainedArgumentValue);
+		boolean mayBeNull = ValueUtil.mayBeNull(unconstrainedSourceValue) || ValueUtil.mayBeNull(unconstrainedArgumentValue);
+		boolean mayBeInvalidOrNull = mayBeNull || mayBeInvalid;
+		SymbolicUnknownValueImpl resultValue = new SymbolicUnknownValueImpl(callExp.getTypeId(), false, mayBeInvalidOrNull);
+		return resultValue;
 	}
 }

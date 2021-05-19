@@ -15,11 +15,13 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.evaluation.AbstractSymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.library.AbstractUnaryOperation;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
@@ -28,6 +30,7 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.SetValue;
+import org.eclipse.ocl.pivot.values.SymbolicValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 /**
@@ -36,6 +39,20 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 public class OclAnyOclAsSetOperation extends AbstractUnaryOperation
 {
 	public static final @NonNull OclAnyOclAsSetOperation INSTANCE = new OclAnyOclAsSetOperation();
+
+	/**
+	 * @since 1.15
+	 */
+	@Override
+	protected @Nullable SymbolicValue checkPreconditions(@NonNull AbstractSymbolicEvaluationEnvironment symbolicEvaluationEnvironment, @NonNull OperationCallExp callExp) {
+		TypeId returnTypeId = callExp.getTypeId();
+		OCLExpression source = PivotUtil.getOwnedSource(callExp);
+		SymbolicValue sourceProblem = symbolicEvaluationEnvironment.checkNotInvalid(source, returnTypeId);
+		if (sourceProblem != null) {
+			return sourceProblem;
+		}
+		return null;
+	}
 
 	/** @deprecated use Executor */
 	@Deprecated

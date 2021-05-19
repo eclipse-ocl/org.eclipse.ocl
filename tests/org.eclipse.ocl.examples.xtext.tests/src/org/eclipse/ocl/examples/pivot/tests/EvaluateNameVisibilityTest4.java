@@ -385,8 +385,8 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 				"import ecore : 'http://www.eclipse.org/emf/2002/Ecore#/';\n" +
 						"package pkg : pkg = 'pkg' {\n" +
 						"  class A {\n" +
-						"    property derivedInteger : Integer { derivation: 99; }\n" +
-						"    property derivedDerivedInteger : Integer { derivation: 2 * derivedInteger;}\n" +
+						"    property derivedInteger : Integer[1] { derivation: 99; }\n" +
+						"    property derivedDerivedInteger : Integer[1] { derivation: 2 * derivedInteger;}\n" +
 						"  }\n" +
 						"}\n";
 		Resource metamodel = cs2as(ocl, metamodelText);

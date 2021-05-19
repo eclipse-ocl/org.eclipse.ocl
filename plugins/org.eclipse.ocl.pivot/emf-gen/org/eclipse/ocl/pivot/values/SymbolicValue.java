@@ -28,9 +28,22 @@ import org.eclipse.jdt.annotation.NonNull;
 public interface SymbolicValue extends Value
 {
 	/**
+	 * Return an equals SymbolicValue that is a refinement of unrefinedValue using unrefinedValue.getBaseValue();
+	 *
+	 * throws IllegalStateException if incompatoble.
+	 */
+	@NonNull SymbolicValue asRefinementOf(@NonNull SymbolicValue unrefinedValue);
+
+	/**
 	 * Update symbolicExecutor from any deductions that can be made from knowing that symbolicConstraint is observede.
 	 */
 //	void deduceFrom(@NonNull SymbolicExecutor symbolicExecutor, @NonNull SimpleSymbolicConstraint symbolicConstraint);
+
+	@NonNull SymbolicValue getBaseValue();
+
+	boolean isCollection();
+
+	boolean isDead();
 
 	boolean isFalse();
 
@@ -39,12 +52,16 @@ public interface SymbolicValue extends Value
 
 	boolean isKnown();
 
+	boolean isMap();
+
 	boolean isNull();
+
+	boolean isNullFree();
+
+	boolean isRefinementOf(@NonNull SymbolicValue unrefinedValue);
 
 	boolean isTrue();
 
 	boolean isZero();
-
-	@NonNull SymbolicValue setIsNullFree();
 
 } // SymbolicValue

@@ -651,7 +651,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	/**
 	 * @since 1.15
 	 */
-	protected SymbolicOCLExecutor createSymbolicExecutor(@NonNull ExpressionInOCL expressionInOCL, @NonNull ModelManager modelManager) {
+	protected @NonNull SymbolicAnalysis createSymbolicAnalysis(@NonNull ExpressionInOCL expressionInOCL, @NonNull ModelManager modelManager) {
 	//	return new SymbolicOCLExecutor((EnvironmentFactoryInternalExtension)environmentFactory, modelManager);
 		return new SymbolicAnalysis(expressionInOCL, (EnvironmentFactoryInternalExtension)environmentFactory, modelManager);
 	}
@@ -1805,8 +1805,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	@Override
 	public @NonNull SymbolicAnalysis getSymbolicAnalysis(@NonNull ExpressionInOCL expressionInOCL, @Nullable Object contextElement, @Nullable Object @Nullable [] parameters) {
 		ModelManager modelManager = environmentFactory.createModelManager(contextElement);
-		SymbolicAnalysis symbolicAnalysis = (SymbolicAnalysis) createSymbolicExecutor(expressionInOCL, modelManager);
-		symbolicAnalysis.initializeEvaluationEnvironment(expressionInOCL);
+		SymbolicAnalysis symbolicAnalysis = createSymbolicAnalysis(expressionInOCL, modelManager);
 		symbolicAnalysis.initializeEvaluationEnvironment(expressionInOCL, contextElement, parameters);			// XXX all related constraints
 		symbolicAnalysis.symbolicEvaluate(expressionInOCL);
 		return symbolicAnalysis;

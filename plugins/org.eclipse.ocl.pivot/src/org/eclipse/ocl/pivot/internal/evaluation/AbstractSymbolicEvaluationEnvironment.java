@@ -15,11 +15,13 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.cse.CSEElement;
-import org.eclipse.ocl.pivot.internal.manager.SymbolicExecutor;
-import org.eclipse.ocl.pivot.internal.manager.SymbolicOCLExecutor;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
@@ -34,7 +36,7 @@ public abstract class AbstractSymbolicEvaluationEnvironment extends BasicEvaluat
 {
 	private /*@LazyNonNull*/ EvaluationVisitor undecoratedVisitor = null;
 
-	protected AbstractSymbolicEvaluationEnvironment(@NonNull SymbolicExecutor executor, @NonNull NamedElement executableObject) {
+	protected AbstractSymbolicEvaluationEnvironment(@NonNull SymbolicAnalysis executor, @NonNull NamedElement executableObject) {
 		super(executor, executableObject);
 	}
 
@@ -42,12 +44,72 @@ public abstract class AbstractSymbolicEvaluationEnvironment extends BasicEvaluat
 		super(parent, element, element);
 	}
 
+	public @Nullable SymbolicValue basicGetSymbolicValue(@NonNull TypedElement element) {
+		CSEElement cseElement = getSymbolicAnalysis().getCSEElement(element);
+		return basicGetSymbolicValue(cseElement);
+	}
+
+	public abstract @Nullable SymbolicValue basicGetSymbolicValue(@NonNull CSEElement cseElement);
+
+	@Override
+	public @Nullable SymbolicValue checkNotInvalid(@NonNull TypedElement typedElement, @NonNull TypeId typeId) {
+		SymbolicValue symbolicValue = getSymbolicValue(typedElement);
+		if (symbolicValue.isInvalid()) {
+			return getKnownValue(ValueUtil.INVALID_VALUE);
+		}
+		if (!symbolicValue.mayBeInvalid()) {
+			return null;
+		}
+		SymbolicAnalysis symbolicAnalysis = getSymbolicAnalysis();
+		Hypothesis hypothesis = new Hypothesis.MayBeInvalidHypothesis(symbolicAnalysis, typedElement, symbolicValue);
+		symbolicAnalysis.addHypothesis(typedElement, hypothesis);
+		return getMayBeInvalidValue(typeId);
+	}
+
+	@Override
+	public @Nullable SymbolicValue checkNotNull(@NonNull TypedElement typedElement, @NonNull TypeId typeId) {
+		SymbolicValue symbolicValue = getSymbolicValue(typedElement);
+		if (symbolicValue.isNull()) {
+			return getKnownValue(ValueUtil.INVALID_VALUE);
+		}
+		if (!symbolicValue.mayBeNull()) {
+			return null;
+		}
+		SymbolicAnalysis symbolicAnalysis = getSymbolicAnalysis();
+		Hypothesis hypothesis = new Hypothesis.MayBeNullHypothesis(symbolicAnalysis, typedElement, symbolicValue);
+		symbolicAnalysis.addHypothesis(typedElement, hypothesis);
+		return getMayBeInvalidValue(typeId);
+	}
+
+	@Override
+	public @Nullable SymbolicValue checkNotZero(@NonNull TypedElement typedElement, @NonNull TypeId typeId) {
+		SymbolicValue symbolicValue = getSymbolicValue(typedElement);
+		if (symbolicValue.isZero()) {
+			return getKnownValue(ValueUtil.INVALID_VALUE);
+		}
+		if (!symbolicValue.mayBeZero()) {
+			return null;
+		}
+		SymbolicAnalysis symbolicAnalysis = getSymbolicAnalysis();
+		Hypothesis hypothesis = new Hypothesis.MayBeZeroHypothesis(symbolicAnalysis, typedElement, symbolicValue);
+		symbolicAnalysis.addHypothesis(typedElement, hypothesis);
+		return getMayBeInvalidValue(typeId);
+	}
+
 	public @NonNull SymbolicValue getBaseSymbolicValue(@NonNull CSEElement cseElement) {
 		return getBaseSymbolicEvaluationEnvironment().getSymbolicValue(cseElement);
 	}
 
+	public @NonNull SymbolicValue getBaseSymbolicValue(@NonNull TypedElement typedElement) {
+		return getBaseSymbolicEvaluationEnvironment().getSymbolicValue(typedElement);
+	}
+
 	public @NonNull SymbolicValue getKnownValue(@Nullable Object boxedValue) {
 		return getBaseSymbolicEvaluationEnvironment().getKnownValue(boxedValue);
+	}
+
+	public @Nullable SymbolicValue getMayBeInvalidValue(@NonNull TypeId typeid) {
+		return getBaseSymbolicEvaluationEnvironment().getMayBeInvalidValue(typeid);
 	}
 
 	@Override
@@ -55,12 +117,17 @@ public abstract class AbstractSymbolicEvaluationEnvironment extends BasicEvaluat
 		return (AbstractSymbolicEvaluationEnvironment) super.getParent();
 	}
 
-	protected @NonNull SymbolicAnalysis getSymbolicAnalysis() {
-		return (SymbolicAnalysis)getSymbolicExecutor();
+	public final @NonNull SymbolicAnalysis getSymbolicAnalysis() {
+		return (SymbolicAnalysis)executor;
 	}
 
-	public @NonNull SymbolicOCLExecutor getSymbolicExecutor() {
-		return (SymbolicOCLExecutor)getExecutor();
+	@Override
+	public final @NonNull SymbolicValue getSymbolicValue(@NonNull TypedElement element) {
+		return ClassUtil.nonNullState(basicGetSymbolicValue(element));
+	}
+
+	public final @NonNull SymbolicValue getSymbolicValue(@NonNull CSEElement cseElement) {
+		return ClassUtil.nonNullState(basicGetSymbolicValue(cseElement));
 	}
 
 	protected @NonNull EvaluationVisitor getUndecoratedVisitor() {
@@ -72,109 +139,41 @@ public abstract class AbstractSymbolicEvaluationEnvironment extends BasicEvaluat
 	}
 
 	@Override
-	public boolean isFalse(@NonNull OCLExpression element) {
+	public boolean isFalse(@NonNull TypedElement element) {
 		return getSymbolicValue(element).isFalse();
 	}
 
 	@Override
-	public boolean isInvalid(@NonNull OCLExpression element) {
+	public boolean isInvalid(@NonNull TypedElement element) {
 		return getSymbolicValue(element).isInvalid();
 	}
 
 	@Override
-	public boolean isNull(@NonNull OCLExpression element) {
+	public boolean isNull(@NonNull TypedElement element) {
 		return getSymbolicValue(element).isNull();
 	}
 
 	@Override
-	public boolean isTrue(@NonNull OCLExpression element) {
+	public boolean isTrue(@NonNull TypedElement element) {
 		return getSymbolicValue(element).isTrue();
 	}
 
 	@Override
-	public boolean isZero(@NonNull OCLExpression element) {
+	public boolean isZero(@NonNull TypedElement element) {
 		return getSymbolicValue(element).isZero();
 	}
 
 	@Override
-	public boolean mayBeInvalid(@NonNull OCLExpression expression) {
-		SymbolicValue symbolicValue = getSymbolicValue(expression);
-		if (!symbolicValue.mayBeInvalid()) {
-			return false;
-		}
-		SymbolicAnalysis symbolicAnalysis = getSymbolicAnalysis();
-		Hypothesis hypothesis = new Hypothesis.MayBeInvalidHypothesis(symbolicAnalysis, expression, symbolicValue);
-		symbolicAnalysis.addHypothesis(expression, hypothesis);
-	//	HypothesizedSymbolicEvaluationEnvironment hypothesizedSymbolicEvaluationEnvironment = symbolicExecutor.createHypothesizedSymbolicEvaluationEnvironment(element);
-	//	try {
-	//		SymbolicValue hypothesizedValue = new SymbolicKnownValueImpl(element.getTypeId(), ValueUtil.INVALID_VALUE);
-	//		hypothesizedSymbolicEvaluationEnvironment.putHypothesizedValue(symbolicValue, hypothesizedValue);
-		//	boolean isContradiction = hypothesizedSymbolicEvaluationEnvironment.isContradiction(this);
-		//	return !isContradiction;
-	//	}
-	//	finally {
-	//		symbolicExecutor.popEvaluationEnvironment();
-	//	}
-		return true;
+	public boolean mayBeInvalidOrNull(@NonNull OCLExpression element) {
+		return getSymbolicValue(element).mayBeInvalidOrNull();
 	}
+
+	public void setDead(@NonNull OCLExpression expression) {}
 
 	@Override
-	public boolean mayBeInvalidOrNull(@NonNull OCLExpression expression) {
-		boolean mayBeInvalid = mayBeInvalid(expression);		// FIXME it would be nice to do both at once
-		boolean mayBeNull = mayBeNull(expression);				// but that needs e.g. may-be-invalid + true.
-		return mayBeInvalid || mayBeNull;					// hypothesize both before the potential logiical short circuit.
+	public void toString(@NonNull StringBuilder s) {
+		toString(s, 0);
 	}
 
-	@Override
-	public boolean mayBeNull(@NonNull OCLExpression expression) {
-		SymbolicValue symbolicValue = getSymbolicValue(expression);
-		if (!symbolicValue.mayBeNull()) {
-			return false;
-		}
-		SymbolicAnalysis symbolicAnalysis = getSymbolicAnalysis();
-		Hypothesis hypothesis = new Hypothesis.MayBeNullHypothesis(symbolicAnalysis, expression, symbolicValue);
-		symbolicAnalysis.addHypothesis(expression, hypothesis);
-	//	HypothesizedSymbolicEvaluationEnvironment hypothesizedSymbolicEvaluationEnvironment = symbolicExecutor.createHypothesizedSymbolicEvaluationEnvironment(element);
-	//	try {
-	//		SymbolicValue hypothesizedValue = new SymbolicKnownValueImpl(element.getTypeId(), ValueUtil.NULL_VALUE);
-	//		hypothesizedSymbolicEvaluationEnvironment.putHypothesizedValue(symbolicValue, hypothesizedValue);
-		//	boolean isContradiction = hypothesizedSymbolicEvaluationEnvironment.isContradiction(this);
-		//	return !isContradiction;
-	//	}
-	//	finally {
-	//		symbolicExecutor.popEvaluationEnvironment();
-	//	}
-		return true;
-	}
-
-//	@Override
-//	public boolean mayBeNull(@NonNull OCLExpression expression, @Nullable Object value) {
-		// TODO Auto-generated method stub
-//		return false;
-//	}
-
-	@Override
-	public boolean mayBeZero(@NonNull OCLExpression expression) {
-		SymbolicValue symbolicValue = getSymbolicValue(expression);
-		if (!symbolicValue.mayBeZero()) {
-			return false;
-		}
-		if (symbolicValue.isZero()) {
-			return true;
-		}
-		SymbolicAnalysis symbolicAnalysis = getSymbolicAnalysis();
-		Hypothesis hypothesis = new Hypothesis.MayBeZeroHypothesis(symbolicAnalysis, expression, symbolicValue);
-		symbolicAnalysis.addHypothesis(expression, hypothesis);
-	//	HypothesizedSymbolicEvaluationEnvironment hypothesizedSymbolicEvaluationEnvironment = symbolicExecutor.createHypothesizedSymbolicEvaluationEnvironment(element);
-	//	try {
-	//		hypothesizedSymbolicEvaluationEnvironment.putHypothesizedValue(symbolicValue, hypothesizedValue);
-	//		hypothesizedSymbolicEvaluationEnvironment.putHypothesizedTerm(getSymbolicAnalysis(), element);
-		//	boolean isContradiction = hypothesizedSymbolicEvaluationEnvironment.isContradiction(this);
-		//	return !isContradiction;
-	//	}
-	//	finally {
-	//		symbolicExecutor.popEvaluationEnvironment();
-	//	}
-		return true;
-	}
+	protected abstract void toString(@NonNull StringBuilder s, int depth);
 }

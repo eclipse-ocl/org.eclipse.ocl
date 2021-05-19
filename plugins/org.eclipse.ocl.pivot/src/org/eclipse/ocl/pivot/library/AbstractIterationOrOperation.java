@@ -80,4 +80,39 @@ public abstract class AbstractIterationOrOperation extends AbstractFeature imple
 		}
 		return returnType;
 	}
+
+	/**
+	 * @since 1.15
+	 *
+	@Override
+	public @NonNull SymbolicValue symbolicEvaluate(@NonNull AbstractSymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
+		SymbolicValue symbolicPreconditionValue = checkPreconditions(evaluationEnvironment, callExp);
+		if (symbolicPreconditionValue != null) {
+			return symbolicPreconditionValue;
+		}
+		SymbolicValue sourceSymbolicValue = evaluationEnvironment.symbolicEvaluate(PivotUtil.getOwnedSource(callExp));
+		boolean isKnown = sourceSymbolicValue.isKnown();
+		Iterable<@NonNull OCLExpression> ownedArguments = PivotUtil.getOwnedArguments(callExp);
+		int argumentsSize = Iterables.size(ownedArguments);
+		List<@NonNull SymbolicValue> argumentSymbolicValues = new ArrayList<@NonNull SymbolicValue>(argumentsSize);
+		for (@NonNull OCLExpression argument : ownedArguments) {
+			SymbolicValue argumentSymbolicValue = evaluationEnvironment.symbolicEvaluate(argument);
+			if (!argumentSymbolicValue.isKnown()) {
+				isKnown = false;
+			}
+			argumentSymbolicValues.add(argumentSymbolicValue);
+		}
+		if (isKnown) {
+			@Nullable Object[] sourceAndArgumentValues = new @Nullable Object[1+argumentsSize];
+			sourceAndArgumentValues[0] = ((SymbolicKnownValue)sourceSymbolicValue).getValue();
+			for (int i = 0; i < argumentsSize; i++) {
+				sourceAndArgumentValues[i+1] = ((SymbolicKnownValue)argumentSymbolicValues.get(i)).getValue();
+			}
+			Object result = ((LibraryOperationExtension2)this).evaluate(evaluationEnvironment.getExecutor(), callExp, sourceAndArgumentValues);
+			return evaluationEnvironment.getKnownValue(result);
+		}
+		else {
+			return createChildSymbolicValue(evaluationEnvironment, callExp, sourceSymbolicValue, argumentSymbolicValues);
+		}
+	} */
 }

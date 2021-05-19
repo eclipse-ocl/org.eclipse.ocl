@@ -10,9 +10,6 @@
  */
 package org.eclipse.ocl.pivot.values;
 
-import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.internal.evaluation.Hypothesis;
-
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Symbolic Value</b></em>'.
@@ -29,5 +26,4 @@ import org.eclipse.ocl.pivot.internal.evaluation.Hypothesis;
  */
 public interface RefinedSymbolicValue extends SymbolicValue
 {
-	@NonNull Hypothesis getHypothesis();
 }

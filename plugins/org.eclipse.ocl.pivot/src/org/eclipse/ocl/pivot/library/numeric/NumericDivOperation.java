@@ -15,10 +15,8 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.internal.evaluation.AbstractSymbolicEvaluationEnvironment;
-import org.eclipse.ocl.pivot.internal.values.SymbolicUnknownValueImpl;
 import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
@@ -41,13 +39,14 @@ public class NumericDivOperation extends AbstractSimpleBinaryOperation
 	 */
 	@Override
 	protected @Nullable SymbolicValue checkPreconditions(@NonNull AbstractSymbolicEvaluationEnvironment symbolicEvaluationEnvironment, @NonNull OperationCallExp callExp) {
-		Iterable<@NonNull OCLExpression> ownedArguments = PivotUtil.getOwnedArguments(callExp);
-		OCLExpression argument = ownedArguments.iterator().next();
-		if (symbolicEvaluationEnvironment.isZero(argument)) {
-			return symbolicEvaluationEnvironment.getKnownValue(ValueUtil.INVALID_VALUE);
+		SymbolicValue superProblem = super.checkPreconditions(symbolicEvaluationEnvironment, callExp);
+		if (superProblem != null) {
+			return superProblem;
 		}
-		else if (symbolicEvaluationEnvironment.mayBeZero(argument)) {
-			return new SymbolicUnknownValueImpl(callExp.getTypeId(), false, true);
+		OCLExpression argument = PivotUtil.getOwnedArgument(callExp, 0);
+		SymbolicValue argumentProblem = symbolicEvaluationEnvironment.checkNotZero(argument, callExp.getTypeId());
+		if (argumentProblem != null) {
+			return argumentProblem;
 		}
 		return null;
 	}

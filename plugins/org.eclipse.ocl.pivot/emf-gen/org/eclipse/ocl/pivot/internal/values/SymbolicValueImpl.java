@@ -12,6 +12,8 @@ package org.eclipse.ocl.pivot.internal.values;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 import org.eclipse.ocl.pivot.values.ValuesPackage;
@@ -24,7 +26,7 @@ import org.eclipse.ocl.pivot.values.ValuesPackage;
  *
  * @generated NOT
  */
-public abstract class SymbolicValueImpl extends ValueImpl implements SymbolicValue {
+public abstract class SymbolicValueImpl extends AbstractSymbolicValue {
 	/**
 	 * The number of structural features of the '<em>Symbolic Value</em>' class.
 	 * <!-- begin-user-doc -->
@@ -97,6 +99,11 @@ public abstract class SymbolicValueImpl extends ValueImpl implements SymbolicVal
 		return this;
 	} */
 
+	@Override
+	public @NonNull SymbolicValue getBaseValue() {
+		return this;
+	}
+
 //	@Override
 //	public @NonNull CollectionTypeId getCollectionTypeId() {
 //		throw new InvalidValueException(PivotMessages.ConvertibleValueRequired, "Invalid");
@@ -110,6 +117,16 @@ public abstract class SymbolicValueImpl extends ValueImpl implements SymbolicVal
 	@Override
 	public @NonNull TypeId getTypeId() {
 		return typeId;
+	}
+
+	@Override
+	public boolean isCollection() {
+		return typeId instanceof CollectionTypeId;
+	}
+
+	@Override
+	public boolean isDead() {
+		return false;
 	}
 
 	@Override
@@ -128,8 +145,18 @@ public abstract class SymbolicValueImpl extends ValueImpl implements SymbolicVal
 	}
 
 	@Override
+	public boolean isMap() {
+		return typeId instanceof MapTypeId;
+	}
+
+	@Override
 	public boolean isNull() {
 		return false;
+	}
+
+	@Override
+	public boolean isNullFree() {
+		return false;			// XXX
 	}
 
 	@Override
@@ -160,11 +187,6 @@ public abstract class SymbolicValueImpl extends ValueImpl implements SymbolicVal
 	@Override
 	public boolean mayBeZero() {
 		return (getTypeId() == TypeId.REAL) || (getTypeId() == TypeId.INTEGER) || (getTypeId() == TypeId.UNLIMITED_NATURAL);	// FIXME Behavioral
-	}
-
-	@Override
-	public @NonNull SymbolicValue setIsNullFree() {
-		throw new UnsupportedOperationException();			// XXX
 	}
 
 	@Override

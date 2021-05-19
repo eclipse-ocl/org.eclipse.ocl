@@ -11,7 +11,7 @@
 package org.eclipse.ocl.pivot.internal.manager;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.internal.evaluation.AbstractSymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal.ExecutorInternalExtension;
 import org.eclipse.ocl.pivot.internal.evaluation.Hypothesis;
@@ -22,7 +22,7 @@ import org.eclipse.ocl.pivot.internal.evaluation.HypothesizedSymbolicEvaluationE
  */
 public interface SymbolicExecutor extends ExecutorInternalExtension
 {
-	void addHypothesis(@NonNull OCLExpression expression, @NonNull Hypothesis hypothesis);
+	void addHypothesis(@NonNull TypedElement typedElement, @NonNull Hypothesis hypothesis);
 
 	@NonNull HypothesizedSymbolicEvaluationEnvironment createHypothesizedSymbolicEvaluationEnvironment(@NonNull Hypothesis hypothesis);
 //	@NonNull SymbolicReEvaluationEnvironment createSymbolicReEvaluationEnvironment(@NonNull Hypothesis hypothesis);

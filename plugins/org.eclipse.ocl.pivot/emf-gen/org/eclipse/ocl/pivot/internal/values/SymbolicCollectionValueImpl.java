@@ -45,6 +45,11 @@ public class SymbolicCollectionValueImpl extends SymbolicExpressionValueImpl {
 	//	}
 //	}
 
+	@Override
+	public boolean isCollection() {
+		return true;
+	}
+
 /*	@Override
 	public void toString(@NonNull StringBuilder s, int lengthLimit) {
 		s.append(operation.getClass().getSimpleName());

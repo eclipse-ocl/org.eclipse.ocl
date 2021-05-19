@@ -18,7 +18,6 @@ import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.evaluation.AbstractSymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.internal.values.SymbolicUnknownValueImpl;
-import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
@@ -40,7 +39,7 @@ public class OclAnyNotEqualOperation extends OclAnyEqualOperation
 	 */
 	@Override
 	protected @NonNull SymbolicValue createChildSymbolicValue(@NonNull AbstractSymbolicEvaluationEnvironment symbolicEvaluationEnvironment, @NonNull OperationCallExp callExp,
-			@NonNull SymbolicValue sourceSymbolicValue, @NonNull LibraryOperation libraryOperation, @NonNull List<@NonNull SymbolicValue> argumentSymbolicValues) {
+			@NonNull SymbolicValue sourceSymbolicValue, @NonNull List<@NonNull SymbolicValue> argumentSymbolicValues) {
 		boolean mayBeInvalid = sourceSymbolicValue.mayBeInvalid();
 		int mayBeNullCount = sourceSymbolicValue.mayBeNull() ? 1: 0;
 		for (@NonNull SymbolicValue argumentSymbolicValue : argumentSymbolicValues) {

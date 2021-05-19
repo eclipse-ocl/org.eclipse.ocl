@@ -18,9 +18,14 @@ import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.evaluation.AbstractSymbolicEvaluationEnvironment;
+import org.eclipse.ocl.pivot.internal.values.SymbolicUnknownValueImpl;
 import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
  * AndOperation realises the and() library operation.
@@ -28,6 +33,41 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
 public class BooleanAndOperation extends AbstractSimpleBinaryOperation
 {
 	public static final @NonNull BooleanAndOperation INSTANCE = new BooleanAndOperation();
+
+	@Override
+	protected @Nullable SymbolicValue checkPreconditions(@NonNull AbstractSymbolicEvaluationEnvironment symbolicEvaluationEnvironment, @NonNull OperationCallExp callExp) {
+		TypeId returnTypeId = callExp.getTypeId();
+		OCLExpression source = PivotUtil.getOwnedSource(callExp);
+		OCLExpression argument = PivotUtil.getOwnedArgument(callExp, 0);
+		SymbolicValue sourceValue = symbolicEvaluationEnvironment.symbolicEvaluate(source);
+		SymbolicValue argumentValue = symbolicEvaluationEnvironment.symbolicEvaluate(argument);
+		if (sourceValue.isFalse()) {
+			symbolicEvaluationEnvironment.setDead(argument);
+			return symbolicEvaluationEnvironment.getKnownValue(Boolean.FALSE);
+		}
+		if (argumentValue.isFalse()) {
+			symbolicEvaluationEnvironment.setDead(source);
+			return symbolicEvaluationEnvironment.getKnownValue(Boolean.FALSE);
+		}
+		SymbolicValue invalidSourceProblem = symbolicEvaluationEnvironment.checkNotInvalid(source, returnTypeId);
+		if (invalidSourceProblem != null) {
+			return invalidSourceProblem;
+		}
+		SymbolicValue nullSourceProblem = symbolicEvaluationEnvironment.checkNotNull(source, returnTypeId);
+		if (nullSourceProblem != null) {
+			return nullSourceProblem;
+		}
+		// ??? XXX short-circuits
+		SymbolicValue invalidArgumentProblem = symbolicEvaluationEnvironment.checkNotInvalid(argument, returnTypeId);
+		if (invalidArgumentProblem != null) {
+			return invalidArgumentProblem;
+		}
+		SymbolicValue nullArgumentProblem = symbolicEvaluationEnvironment.checkNotNull(argument, returnTypeId);
+		if (nullArgumentProblem != null) {
+			return nullArgumentProblem;
+		}
+		return null;
+	}
 
 	/**
 	 * @since 1.15
@@ -138,4 +178,32 @@ public class BooleanAndOperation extends AbstractSimpleBinaryOperation
 			symbolicExecutor.popSymbolicHypothesis();
 		}
 	} */
+
+	/**
+	 * @since 1.15
+	 */
+	@Override
+	public @NonNull SymbolicValue symbolicEvaluate(@NonNull AbstractSymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
+		SymbolicValue symbolicPreconditionValue = checkPreconditions(evaluationEnvironment, callExp);
+		if (symbolicPreconditionValue != null) {
+			return symbolicPreconditionValue;
+		}
+		OCLExpression source = PivotUtil.getOwnedSource(callExp);
+		OCLExpression argument = PivotUtil.getOwnedArgument(callExp, 0);
+		SymbolicValue sourceValue = evaluationEnvironment.symbolicEvaluate(source);
+		SymbolicValue argumentValue = evaluationEnvironment.symbolicEvaluate(argument);
+		if (sourceValue.isTrue()) {
+			return argumentValue;
+		}
+		if (argumentValue.isTrue()) {
+			return sourceValue;
+		}
+		AbstractSymbolicEvaluationEnvironment constrainedEvaluationEnvironment = evaluationEnvironment;
+		SymbolicValue unconstrainedArgumentValue = constrainedEvaluationEnvironment.symbolicEvaluate(argument);
+		boolean mayBeInvalid = ValueUtil.mayBeInvalid(sourceValue) || ValueUtil.mayBeInvalid(unconstrainedArgumentValue);
+		boolean mayBeNull = ValueUtil.mayBeNull(sourceValue) || ValueUtil.mayBeNull(unconstrainedArgumentValue);
+		boolean mayBeInvalidOrNull = mayBeNull || mayBeInvalid;
+		SymbolicUnknownValueImpl resultValue = new SymbolicUnknownValueImpl(callExp.getTypeId(), false, mayBeInvalidOrNull);	// XXX not null/invalid here
+		return resultValue;
+	}
 }

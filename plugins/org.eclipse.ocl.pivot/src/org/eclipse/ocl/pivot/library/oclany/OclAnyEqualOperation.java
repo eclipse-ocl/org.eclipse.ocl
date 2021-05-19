@@ -14,12 +14,14 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.evaluation.AbstractSymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.internal.values.SymbolicUnknownValueImpl;
 import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
-import org.eclipse.ocl.pivot.library.LibraryOperation;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
@@ -33,13 +35,32 @@ public class OclAnyEqualOperation extends AbstractSimpleBinaryOperation
 	public static final @NonNull OclAnyEqualOperation INSTANCE = new OclAnyEqualOperation();
 
 	/**
-	 * Overridden to be invalid out for any invalid in, never null, false for mismatching nullity.
+	 * @since 1.15
+	 */
+	@Override
+	protected @Nullable SymbolicValue checkPreconditions(@NonNull AbstractSymbolicEvaluationEnvironment symbolicEvaluationEnvironment, @NonNull OperationCallExp callExp) {
+		TypeId returnTypeId = callExp.getTypeId();
+		OCLExpression source = PivotUtil.getOwnedSource(callExp);
+		SymbolicValue sourceProblem = symbolicEvaluationEnvironment.checkNotInvalid(source, returnTypeId);
+		if (sourceProblem != null) {
+			return sourceProblem;
+		}
+		OCLExpression argument = PivotUtil.getOwnedArgument(callExp, 0);
+		SymbolicValue argumentProblem = symbolicEvaluationEnvironment.checkNotInvalid(argument, returnTypeId);
+		if (argumentProblem != null) {
+			return argumentProblem;
+		}
+		return null;
+	}
+
+	/**
+	 * Overridden to be invalid-out for any invalid in, never null, false for mismatching nullity.
 	 *
 	 * @since 1.15
 	 */
 	@Override
 	protected @NonNull SymbolicValue createChildSymbolicValue(@NonNull AbstractSymbolicEvaluationEnvironment symbolicEvaluationEnvironment, @NonNull OperationCallExp callExp,
-			@NonNull SymbolicValue sourceSymbolicValue, @NonNull LibraryOperation libraryOperation, @NonNull List<@NonNull SymbolicValue> argumentSymbolicValues) {
+			@NonNull SymbolicValue sourceSymbolicValue, @NonNull List<@NonNull SymbolicValue> argumentSymbolicValues) {
 		boolean mayBeInvalid = sourceSymbolicValue.mayBeInvalid();
 		int mayBeNullCount = sourceSymbolicValue.mayBeNull() ? 1: 0;
 		for (@NonNull SymbolicValue argumentSymbolicValue : argumentSymbolicValues) {

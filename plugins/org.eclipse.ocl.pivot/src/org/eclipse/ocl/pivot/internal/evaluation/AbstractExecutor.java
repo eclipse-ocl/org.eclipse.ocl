@@ -528,7 +528,7 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 
 	@Override
 	public boolean isCanceled() {
-		return evaluationVisitor.isCanceled();
+		return (evaluationVisitor != null) && evaluationVisitor.isCanceled();
 	}
 
 	@Override

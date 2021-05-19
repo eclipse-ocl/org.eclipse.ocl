@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
@@ -35,6 +34,7 @@ import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.internal.cse.CSEElement;
+import org.eclipse.ocl.pivot.internal.values.AbstractRefinedSymbolicValue;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.logical.BooleanAndOperation;
 import org.eclipse.ocl.pivot.library.logical.BooleanAndOperation2;
@@ -46,189 +46,161 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.eclipse.ocl.pivot.utilities.UniqueList;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
- * A SymbolicHypothesisEvaluationEnvironment defines a symbolic EvaluationEnvironment in which the values
- * of one or more expressions have hypothesized values, which may be exploited by evaluay=tion, but which when
- * recomputed must match their hypothesis else the hypothesis is contradicted and the evluation is invalid.
+ * A HypothesizedSymbolicEvaluationEnvironment supports the symbolic re-evaluation subject to some hypothesis
+ * which defines a value for some expression and imposes executability of a particular control path. All CSEs
+ * have the same refined value for the poyrposes of the hypothesis evaluation. Once the hypothesis has been
+ * contradicted a refined value vfor the hypothesized expression can be return ed to the baseSymbolicEvaluationEnvironment.
  *
  * @since 1.15
  */
 public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluationEnvironment
 {
-	protected final @NonNull AbstractSymbolicEvaluationEnvironment symbolicEvaluationEnvironment;
 	protected final @NonNull Hypothesis hypothesis;
-	protected final @NonNull SymbolicAnalysis symbolicAnalysis;
 
 	/**
 	 * The hypothesis-specific (symbolic) value of each common expression element, null if not yet computed.
+	 * Note that this is the 'read' value. A re-evaluation may compute a rival value which,
+	 *  if incompatible constitutes a contradiction.
 	 */
 	private @NonNull Map<@NonNull CSEElement, @NonNull SymbolicValue> cseElement2symbolicValue = new HashMap<>();
 
 	/**
-	 * All CSEs for a stronger value may be used while assessing the the hypothesis.
+	 * Variables whose initializer is affected and so whose symbolic value must be re-evaluated..
 	 */
-//	private final @NonNull Map<@NonNull CSEElement, @NonNull SymbolicValue> cseElement2constrainingValue = new HashMap<>();
-	private final @NonNull Map<@NonNull CSEElement, @NonNull SymbolicValue> primaryCSE2constrainingValue = new HashMap<>();
-	private final @NonNull Map<@NonNull CSEElement, @NonNull SymbolicValue> corollaryCSE2constrainingValue = new HashMap<>();
+	private final @NonNull UniqueList<@NonNull VariableDeclaration> affectedVariables = new UniqueList<>();
 
 	/**
-	 * Expressions and Variables from which the hypothesis requires a re-evaluation.
-	 *
-	 * NB. While each common sub-expression has a unique value for a given hypothesis, it must be computed wrt
-	 * the expression that is being hypothesized to ensure that control path constraints are observed.
+	 * Expressions (and ExpressionInOCL) whose symbolic value must be re-evaluated..
 	 */
 	private final @NonNull Set<@NonNull TypedElement> affectedTypedElements = new HashSet<>();
 
-	public HypothesizedSymbolicEvaluationEnvironment(@NonNull AbstractSymbolicEvaluationEnvironment symbolicEvaluationEnvironment, @NonNull Hypothesis hypothesis) {
-		super(symbolicEvaluationEnvironment, hypothesis.getExpression());
-		this.symbolicEvaluationEnvironment = symbolicEvaluationEnvironment;
+	/**
+	 * TypedElements for which the hypothesized value or its control path consequences provides a better value.
+	 */
+	private final @NonNull Map<@NonNull TypedElement, @NonNull SymbolicValue> refinedTypedElements2symbolicValue = new HashMap<>();
+
+	public HypothesizedSymbolicEvaluationEnvironment(@NonNull BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment, @NonNull Hypothesis hypothesis) {
+		super(symbolicEvaluationEnvironment, hypothesis.getTypedElement());
 		this.hypothesis = hypothesis;
-		this.symbolicAnalysis = getSymbolicAnalysis();
+		installHypothesis();
 	}
 
 	/**
-	 * Install the control path constraints that ensure that expression is executable wrt its containingTypedElement.
+	 * Given that executedExpression executes, register any consequent refinements for
+	 * any refinedTypedElements or affectedVariables that ensure this execution.
+	 *
 	 * </br>'and'/'implies' guards are set true
 	 * </br>'or' guards false
 	 * </br>'if' conditions true/false as appropriate.
 	 * </br>navigation sources not-invalid
 	 */
-	private void addAffectedControlExpressions(@NonNull EObject containingTypedElement, @NonNull OCLExpression expression) {
-		OCLExpression constrainedExpression = null;
-		SymbolicValue symbolicConstrainedValue = null;
-		Boolean symbolicKnownValue = null;
+	private void addRefinedChildExpressions(@NonNull OCLExpression executedExpression) {
+		EObject containingTypedElement = executedExpression.eContainer();
+		OCLExpression refinedExpression = null;						// Expression that can be refined
+		Boolean refinedBooleanValue = null;							//  by a simple Boolean	value
+		SymbolicValue refinedSymbolicValue = null;					//   or a more complex outright symbolic value
 		if (containingTypedElement instanceof IfExp) {
 			IfExp ifExp = (IfExp)containingTypedElement;
-			constrainedExpression = PivotUtil.getOwnedCondition(ifExp);
-//		symbolicPathValue = symbolicEvaluationEnvironment.getSymbolicValue2(constrainedExpression);
-			if (expression == ifExp.getOwnedThen()) {
-				symbolicKnownValue = Boolean.TRUE;
+			refinedExpression = PivotUtil.getOwnedCondition(ifExp);
+			if (executedExpression == ifExp.getOwnedThen()) {
+				refinedBooleanValue = Boolean.TRUE;
 			}
-			else if (expression == ifExp.getOwnedElse()) {
-				symbolicKnownValue = Boolean.FALSE;
+			else if (executedExpression == ifExp.getOwnedElse()) {
+				refinedBooleanValue = Boolean.FALSE;
 			}
 		}
 		else if (containingTypedElement instanceof OperationCallExp) {
 			OperationCallExp operationCallExp = (OperationCallExp)containingTypedElement;
-			constrainedExpression = PivotUtil.getOwnedSource(operationCallExp);
+			refinedExpression = PivotUtil.getOwnedSource(operationCallExp);
 			List<OCLExpression> ownedArguments = operationCallExp.getOwnedArguments();
 			if (ownedArguments.size() == 1) {
 				OCLExpression argument = ownedArguments.get(0);
-				if (expression == argument) {
-			//		symbolicPathValue = symbolicEvaluationEnvironment.getSymbolicValue2(constrainedExpression);
+				if (executedExpression == argument) {
 					Operation operation = operationCallExp.getReferredOperation();
 					LibraryFeature implementation = operation.getImplementation();
 					if ((implementation instanceof BooleanAndOperation) || (implementation instanceof BooleanAndOperation2)) {
-						symbolicKnownValue = Boolean.TRUE;
+						refinedBooleanValue = Boolean.TRUE;
 					}
 					else if ((implementation instanceof BooleanImpliesOperation) || (implementation instanceof BooleanImpliesOperation2)) {
-						symbolicKnownValue = Boolean.TRUE;
+						refinedBooleanValue = Boolean.TRUE;
 					}
 					else if ((implementation instanceof BooleanOrOperation) || (implementation instanceof BooleanOrOperation2)) {
-						symbolicKnownValue = Boolean.FALSE;
+						refinedBooleanValue = Boolean.FALSE;
 					}
 				}
 			}
-			// XXX isSafe
-			if (symbolicKnownValue == null) {
-				CSEElement cseElement = getSymbolicAnalysis().getCSEElement(constrainedExpression);
-				SymbolicValue baseSymbolicValue = getBaseSymbolicValue(cseElement);
-				symbolicConstrainedValue = baseSymbolicValue; // new SymbolicUnknownValueImpl(operationCallExp.getTypeId(), operationCallExp.isIsSafe(), false);
+			if (refinedBooleanValue == null) {
+				SymbolicValue baseSymbolicValue = getBaseSymbolicValue(refinedExpression);
+				refinedSymbolicValue = AbstractRefinedSymbolicValue.createNotInvalidOrNullValue(baseSymbolicValue);
 			}
 		}
 		else if (containingTypedElement instanceof NavigationCallExp) {
 			NavigationCallExp navigationCallExp = (NavigationCallExp)containingTypedElement;
-			constrainedExpression = PivotUtil.getOwnedSource(navigationCallExp);
-			// XXX isSafe
-			CSEElement cseElement = getSymbolicAnalysis().getCSEElement(constrainedExpression);
-			SymbolicValue baseSymbolicValue = getBaseSymbolicValue(cseElement);
-			symbolicConstrainedValue = baseSymbolicValue; // new SymbolicUnknownValueImpl(navigationCallExp.getTypeId(), navigationCallExp.isIsSafe(), false);
+			refinedExpression = PivotUtil.getOwnedSource(navigationCallExp);
+			SymbolicValue baseSymbolicValue = getBaseSymbolicValue(refinedExpression);
+			refinedSymbolicValue = AbstractRefinedSymbolicValue.createNotInvalidOrNullValue(baseSymbolicValue);
 		}
 		else if (containingTypedElement instanceof LoopExp) {
 			LoopExp loopExp = (LoopExp)containingTypedElement;
-			if (expression == loopExp.getOwnedBody()) {
+			if (executedExpression == loopExp.getOwnedBody()) {
 			//	constrainedExpression = PivotUtil.getOwnedSource(loopExp);
 			//	symbolicPathValue = symbolicEvaluationEnvironment.getSymbolicValue2(constrainedExpression);
 			// XXX	symbolicKnownValue = SIZE_NOT_EMPTY;
 				// XXX isSafe
 			}
-			constrainedExpression = PivotUtil.getOwnedSource(loopExp);
-			// XXX isSafe
-			CSEElement cseElement = getSymbolicAnalysis().getCSEElement(constrainedExpression);
-			SymbolicValue baseSymbolicValue = getBaseSymbolicValue(cseElement);
-			symbolicConstrainedValue = baseSymbolicValue; // new SymbolicUnknownValueImpl(loopExp.getTypeId(), loopExp.isIsSafe(), false);
+			refinedExpression = PivotUtil.getOwnedSource(loopExp);
+			SymbolicValue baseSymbolicValue = getBaseSymbolicValue(refinedExpression);
+			refinedSymbolicValue = AbstractRefinedSymbolicValue.createNotInvalidOrNullValue(baseSymbolicValue);
 		}
-	/*	else if (containingTypedElement instanceof Variable) {
-			Variable yariable = (Variable)containingTypedElement;
-			if (expression == yariable.getOwnedInit()) {
-				CSEElement variableCSE = symbolicAnalysis.getCSEElement(yariable);
-				Iterable<@NonNull OCLExpression> outputs = variableCSE.getOutputs();
-				if (outputs != null) {
-					for (@NonNull OCLExpression variableExp : outputs) {
-						addAffectedTypedElements(variableExp, false);
-					}
-				}
+		if (refinedExpression != null) {
+			if (refinedBooleanValue != null) {
+				assert refinedSymbolicValue == null;
+				refinedSymbolicValue = getKnownValue(refinedBooleanValue);
 			}
-		} */
-		if (constrainedExpression != null) {
-			if (symbolicKnownValue != null) {
-				assert symbolicConstrainedValue == null;
-				symbolicConstrainedValue = getKnownValue(symbolicKnownValue);
+			if (refinedSymbolicValue != null) {
+//				putHypothesizedValue(refinedExpression, refinedSymbolicValue, false);
+				SymbolicValue old = refinedTypedElements2symbolicValue.put(refinedExpression, refinedSymbolicValue);
+				assert old == null;
 			}
-		//	symbolicConstrainedValue = new SymbolicUnknownValueImpl(expression.getTypeId(), false, false);
-
-
-		//	SymbolicKnownValueImpl constrainingValue = new SymbolicKnownValueImpl(TypeId.BOOLEAN, symbolicKnownValue);
-		//	putHypothesizedValue(symbolicAnalysis.getCSEElement(constrainedExpression), constrainingValue);
-		//	putHypothesizedValue(symbolicPathValue, constrainingValue);
-		}
-		if ((constrainedExpression != null) && (symbolicConstrainedValue != null)) {
-			putHypothesizedValue(constrainedExpression, symbolicConstrainedValue, false);
+			if (refinedExpression instanceof VariableExp) {
+				affectedVariables.add(PivotUtil.getReferredVariable((VariableExp)refinedExpression));
+			}
 		}
 	}
 
 	/**
-	 * Install the control path constraints that ensure that typedElement is executable as part of the hypothesis.
+	 * Given that typedElement executes, register any consequent refinements for
+	 * containing TypedElements that ensure this execution.
 	 */
-	private void addAffectedTypedElements(@NonNull TypedElement typedElement, boolean isHypothesisPath) {
-		if (affectedTypedElements.add(typedElement) ) {
-			EObject eContainer = typedElement.eContainer();
-			if ((eContainer instanceof OCLExpression) || (eContainer instanceof ExpressionInOCL) || (eContainer instanceof VariableDeclaration)) {
-				TypedElement containingTypedElement = (TypedElement)eContainer;
-				assert containingTypedElement != null;
-				addAffectedTypedElements(containingTypedElement, isHypothesisPath);
-				if (isHypothesisPath && (typedElement instanceof OCLExpression)) {
-					addAffectedControlExpressions(containingTypedElement, (OCLExpression)typedElement);
-				}
-			}
-			if (typedElement instanceof VariableExp) {							// If a VariableExp is affected, all accesses to that variable must be re-evaluated.
-				VariableExp variableExp = (VariableExp)typedElement;
-				CSEElement variableCSE = symbolicAnalysis.getCSEElement(PivotUtil.getReferredVariable(variableExp));
-				Iterable<@NonNull OCLExpression> variableExps = variableCSE.getOutputs();
-				if (variableExps != null) {
-					for (@NonNull OCLExpression aVariableExp : variableExps) {
-						if (aVariableExp != variableExp) {
-							addAffectedTypedElements(aVariableExp, false);
-						}
-					}
-				}
-			}
+	private void addRefinedParentTypedElements(@NonNull TypedElement typedElement) {
+		EObject eContainer = typedElement.eContainer();
+		if (eContainer instanceof VariableDeclaration) {
+			VariableDeclaration containingVariable = (VariableDeclaration)eContainer;
+			assert containingVariable != null;
+			boolean added = affectedVariables.add(containingVariable);
+			assert added;
+			addRefinedParentTypedElements(containingVariable);
+		}
+		else if (eContainer instanceof OCLExpression) {
+			OCLExpression containingExpression = (OCLExpression)eContainer;
+			assert containingExpression != null;
+			affectedTypedElements.add(containingExpression);
+			addRefinedParentTypedElements(containingExpression);
+		}
+		else if (eContainer instanceof ExpressionInOCL) {
+			ExpressionInOCL containingExpressionInOCL = (ExpressionInOCL)eContainer;
+			assert containingExpressionInOCL != null;
+			affectedTypedElements.add(containingExpressionInOCL);
 		}
 	}
 
-	public @Nullable SymbolicValue basicGetSymbolicValue(@NonNull TypedElement element) {
-		CSEElement cseElement = getSymbolicAnalysis().getCSEElement(element);
-		SymbolicValue symbolicValue = primaryCSE2constrainingValue.get(cseElement);
-		if (symbolicValue != null) {
-			return symbolicValue;
-		}
-		symbolicValue = corollaryCSE2constrainingValue.get(cseElement);
-		if (symbolicValue != null) {
-			return symbolicValue;
-		}
+	@Override
+	public @Nullable SymbolicValue basicGetSymbolicValue(@NonNull CSEElement cseElement) {
 		return cseElement2symbolicValue.get(cseElement);
 	}
 
@@ -244,135 +216,143 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 	}
 
 	@Override
-	public @NonNull SymbolicValue getSymbolicValue(@NonNull TypedElement element) {
-		CSEElement cseElement = getSymbolicAnalysis().getCSEElement(element);
-		SymbolicValue symbolicValue = primaryCSE2constrainingValue.get(cseElement);
-		if (symbolicValue != null) {
-			return symbolicValue;
-		}
-		symbolicValue = corollaryCSE2constrainingValue.get(cseElement);
-		if (symbolicValue != null) {
-			return symbolicValue;
-		}
-		return ClassUtil.nonNullState(cseElement2symbolicValue.get(cseElement));
+	public @Nullable Object getValueOf(@NonNull TypedElement referredVariable) {
+		return getSymbolicValue(referredVariable);			// Re-use old value
 	}
 
-//	private @NonNull SymbolicValue getSymbolicValue(@NonNull CSEElement cseElement) {
-//		return ClassUtil.nonNullState(cseElement2symbolicValue.get(cseElement));
-//	}
-
-	public boolean isContradiction() {
-		List<@NonNull TypedElement> typedElementsList = new ArrayList<>(affectedTypedElements);
-		if (typedElementsList.size() > 1) {
-			Collections.sort(typedElementsList, symbolicAnalysis.getTypedElementHeightComparator());
+	private void installHypothesis() {
+		SymbolicAnalysis symbolicAnalysis = getSymbolicAnalysis();
+		//
+		//	Install the directly hypothesized expression.
+		//
+		@NonNull TypedElement typedElement = hypothesis.getTypedElement();
+		@NonNull SymbolicValue constrainingValue = hypothesis.getValue();
+		CSEElement hypothesisCSE = symbolicAnalysis.getCSEElement(typedElement);
+		cseElement2symbolicValue.put(hypothesisCSE, constrainingValue);		// Install the known 'read' value.
+		//
+		//	Ensure that all parents of the hypothesized expressions are re-evaluated.
+		//
+		//	Side-effect: refinedTypedElements and affectedVariables updated.
+		//
+		if (typedElement instanceof VariableExp) {
+			VariableDeclaration variable = PivotUtil.getReferredVariable((VariableExp)typedElement);
+			affectedVariables.add(variable);
 		}
-		for (@NonNull TypedElement typedElement : typedElementsList) {
-			CSEElement cseElement = symbolicAnalysis.getCSEElement(typedElement);
-			SymbolicValue constrainingValue = corollaryCSE2constrainingValue.get(cseElement);
-		//	assert constrainingValue != null;
-			SymbolicValue constrainedValue = symbolicEvaluate(typedElement);
-			//	assert constrainedValue == constrainingValue;
-			SymbolicValue constrainedValue2 = symbolicEvaluate(typedElement);		// XXX debugging
-			assert constrainedValue == constrainedValue2;
-			SymbolicValue reevaluatedValue = getSymbolicValue(typedElement);
-			if (!constrainedValue.equals(reevaluatedValue)) {
+		addRefinedParentTypedElements(typedElement);
+		//
+		//	Ensure that all children of control path expressions are refined to enforce the control path executability.
+		//
+		//	Side-effect: refinedTypedElements and affectedVariables updated.
+		//
+		for (@NonNull TypedElement affectedTypedElement : affectedTypedElements) {
+			if (affectedTypedElement instanceof OCLExpression) {
+				addRefinedChildExpressions((OCLExpression)affectedTypedElement);
+			}
+		}
+		//
+		//	Ensure that all usage of all VariableExps for all refined Variables are re-evaluated.
+		//
+		for (@NonNull VariableDeclaration variable : affectedVariables) {
+			CSEElement variableCSE = symbolicAnalysis.getCSEElement(variable);
+			Iterable<@NonNull OCLExpression> outputs = variableCSE.getOutputs();
+			if (outputs != null) {
+				for (@NonNull TypedElement output : outputs) {
+					if ((output instanceof VariableExp) && (output != typedElement)) {
+						VariableExp variableExp = (VariableExp)output;
+						if (affectedTypedElements.add(variableExp)) {
+							addRefinedParentTypedElements(variableExp);
+						}
+					}
+				}
+			}
+		}
+		//
+		//	Compute re-evaluate CSEs.
+		//
+		Set<@NonNull CSEElement> reEvaluateCSEs = new HashSet<>();
+		for (@NonNull TypedElement refinedTypedElement : refinedTypedElements2symbolicValue.keySet()) {
+			CSEElement cseElement = symbolicAnalysis.getCSEElement(refinedTypedElement);
+			SymbolicValue refinedValue = refinedTypedElements2symbolicValue.get(refinedTypedElement);
+			assert refinedValue != null;
+			SymbolicValue old = cseElement2symbolicValue.put(cseElement, refinedValue);	// Install the new 'read' value.
+			assert old == null;
+			reEvaluateCSEs.add(cseElement);
+		}
+		for (@NonNull TypedElement affectedTypedElement : affectedTypedElements) {
+			CSEElement cseElement = symbolicAnalysis.getCSEElement(affectedTypedElement);
+			reEvaluateCSEs.add(cseElement);
+		}
+		//
+		// Copy all unaffected CSEs.
+		//
+		BaseSymbolicEvaluationEnvironment baseSymbolicEvaluationEnvironment = getBaseSymbolicEvaluationEnvironment();
+		for (@NonNull CSEElement cseElement : baseSymbolicEvaluationEnvironment.getCSEElements()) {
+			if ((cseElement != hypothesisCSE) && !reEvaluateCSEs.contains(cseElement)) {
+				SymbolicValue symbolicValue = baseSymbolicEvaluationEnvironment.getSymbolicValue(cseElement);
+				SymbolicValue old = cseElement2symbolicValue.put(cseElement, symbolicValue);
+				assert old == null;
+			}
+		}
+	}
+
+public boolean isContradiction() {
+		List<@NonNull TypedElement> affectedTypedElementsList = new ArrayList<>(affectedTypedElements);
+		if (affectedTypedElementsList.size() > 1) {
+			Collections.sort(affectedTypedElementsList, getSymbolicAnalysis().getTypedElementHeightComparator());
+		}
+		for (@NonNull TypedElement affectedTypedElement : affectedTypedElementsList) {
+			boolean isCompatible = symbolicReEvaluate(affectedTypedElement);
+			if (!isCompatible) {
 				return true;
 			}
 		}
-	//	hypothesizedElement.acc
-	/*	for (ConstrainedSymbolicEvaluationEnvironment evaluationEnvironment = constrainedSymbolicEvaluationEnvironment; evaluationEnvironment != null; evaluationEnvironment = evaluationEnvironment.getParent()) {
-			ConstrainedSymbolicEvaluationEnvironment constrainedSymbolicEvaluationEnvironment = evaluationEnvironment;
-			for (@NonNull OCLExpression constrainedExpression : constrainedSymbolicEvaluationEnvironment.getConstrainedExpressions()) {
-				SymbolicValue constrainingValue = constrainedSymbolicEvaluationEnvironment.getConstrainingValue(constrainedExpression);
-				SymbolicValue constrainedValue = symbolicAnalysis.symbolicEvaluate(constrainedExpression);
-				if (!constrainedValue.equals(constrainingValue)) {
-					return true;
-				}
+		List<@NonNull TypedElement> typedElementsList = new ArrayList<>(refinedTypedElements2symbolicValue.keySet());
+		if (typedElementsList.size() > 1) {
+			Collections.sort(typedElementsList, getSymbolicAnalysis().getTypedElementHeightComparator());
+		}
+		for (@NonNull TypedElement typedElement : typedElementsList) {
+			boolean isCompatible = symbolicReEvaluate(typedElement);
+			if (!isCompatible) {
+				return true;
 			}
-		} */
+		}
 		return false;
-	}
-
-	public void putHypothesizedValue(@NonNull OCLExpression expression, @NonNull SymbolicValue constrainingValue) {
-		CSEElement cseElement = symbolicAnalysis.getCSEElement(expression);
-		SymbolicValue old = primaryCSE2constrainingValue.put(cseElement, constrainingValue);
-	//	putSymbolicValue(cseElement, constrainingValue);					// Avoid symbolicEvaluate re-evaluating
-		putHypothesizedValue(expression, constrainingValue, true);
-	}
-
-	private void putHypothesizedValue(@NonNull OCLExpression expression, @NonNull SymbolicValue constrainingValue, boolean isHypothesisPath) {
-		CSEElement cseElement = symbolicAnalysis.getCSEElement(expression);
-		SymbolicValue baseSymbolicValue = getBaseSymbolicValue(cseElement);
-		SymbolicValue mergedValue = symbolicAnalysis.mergeValue(baseSymbolicValue, constrainingValue);
-	//	putSymbolicValue(cseElement, constrainingValue);					// Avoid symbolicEvaluate re-evaluating
-		SymbolicValue old = corollaryCSE2constrainingValue.put(cseElement, mergedValue);
-		assert old == null;			// XXX maybe merge
-		if (expression instanceof VariableExp) {
-			VariableDeclaration variable = PivotUtil.getReferredVariable((VariableExp)expression);
-			CSEElement cseElement2 = symbolicAnalysis.getCSEElement(variable);
-			assert cseElement2 == cseElement;				// Design principle: VariableExps do not have distinct CSEs from their variable
-		}
-		addAffectedTypedElements(expression, isHypothesisPath);
-	}
-
-	public @Nullable SymbolicValue putSymbolicValue(@NonNull CSEElement cseElement, @NonNull SymbolicValue symbolicValue) {
-		return cseElement2symbolicValue.put(cseElement, symbolicValue);
-	}
-
-	public void resolveHypothesis(@NonNull AbstractSymbolicEvaluationEnvironment evaluationEnvironment) {
-		for (Entry<@NonNull CSEElement, @NonNull SymbolicValue> entry : primaryCSE2constrainingValue.entrySet()) {
-			@NonNull CSEElement cseElement = entry.getKey();
-			@NonNull SymbolicValue constrainingValue = entry.getValue();
-		//	for (@NonNull OCLExpression constrainedExpression : constrainedEvaluationEnvironment.getConstrainedExpressions()) {
-		//		SymbolicValue constrainingValue = constrainedEvaluationEnvironment.getConstrainingValue(constrainedExpression);
-		//		evaluationEnvironment.add(constrainedExpression, constrainingValue);
-		//	}
-		}
-	//	for (ConstrainedSymbolicEvaluationEnvironment constrainedEvaluationEnvironment = constrainedSymbolicEvaluationEnvironment; constrainedEvaluationEnvironment != null; constrainedEvaluationEnvironment = constrainedEvaluationEnvironment.getParent()) {
-	//		for (@NonNull OCLExpression constrainedExpression : constrainedEvaluationEnvironment.getConstrainedExpressions()) {
-	//			SymbolicValue constrainingValue = constrainedEvaluationEnvironment.getConstrainingValue(constrainedExpression);
-	//			evaluationEnvironment.add(constrainedExpression, constrainingValue);
-	//		}
-	//	}
 	}
 
 	@Override
 	public @NonNull SymbolicValue symbolicEvaluate(@NonNull TypedElement typedElement) {
-		SymbolicValue symbolicValue = basicGetSymbolicValue(typedElement);			// Re-use old value
-		if (symbolicValue == null) {
+		return getSymbolicValue(typedElement);									// Use the 'read' value
+	}
+
+	public boolean symbolicReEvaluate(@NonNull TypedElement typedElement) {
+		Object result = null;
+		try {
+			EvaluationVisitor undecoratedVisitor = getUndecoratedVisitor();
+			result = typedElement.accept(undecoratedVisitor);
+		}
+		catch (InvalidValueException e) {
+			result = e;
+		}
+		SymbolicValue writeValue;
+		if (result instanceof SymbolicValue) {
+			writeValue = (SymbolicValue)result;
+		}
+		else {
+			Object boxedValue = environmentFactory.getIdResolver().boxedValueOf(result);
+			writeValue = getKnownValue(boxedValue);
+		}
+		SymbolicValue readValue = basicGetSymbolicValue(typedElement);		// Get the 'read' value
+		if (readValue == null) {											// If a new evaluation
 			CSEElement cseElement = getSymbolicAnalysis().getCSEElement(typedElement);
-			Object result = primaryCSE2constrainingValue.get(cseElement);
-			if (result == null) {
-				try {
-					EvaluationVisitor undecoratedVisitor = getUndecoratedVisitor();
-					result = typedElement.accept(undecoratedVisitor);
-				}
-				catch (InvalidValueException e) {
-					result = e;
-				}
-			}
-			SymbolicValue traceValue = traceValue(cseElement, result);		// Record re-evaluated value
+			traceSymbolicValue(cseElement, writeValue);					// Record re-evaluated value
+			return true;
 		}
-		return getSymbolicValue(typedElement);							// Return hypothesisied override
-/*		SymbolicValue symbolicValue = cseElement2constrainingValue.get(cseElement);
-		if (symbolicValue != null) {
-			SymbolicValue basicSymbolicValue = basicGetSymbolicValue(cseElement);
-			if (symbolicValue != basicSymbolicValue) {
-				return traceSymbolicValue(cseElement, symbolicValue);								// Record new value
-			}
-			return symbolicValue;
-		}
-		return super.symbolicEvaluate(cseElement); */
+		return writeValue.equals(readValue);			// XXX isCompatible
 	}
 
 	@Override
-	public void toString(@NonNull StringBuilder s) {
-		toString(s, 0);
-	}
-
 	public void toString(@NonNull StringBuilder s, int depth) {
 		s.append("hypothesis for '" + executableObject + "' in '" + executableObject.eContainer() + "'");
-		super.toString(s);
 		StringUtil.appendIndentation(s, 0);
 		List<@NonNull CSEElement> keys = new ArrayList<>(cseElement2symbolicValue.keySet());
 		if (keys.size() > 1) {
@@ -383,33 +363,28 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 			Object value = cseElement2symbolicValue.get(key);
 			s.append("\n\t\t" + key + " => " + value);
 		}
-		List<@NonNull CSEElement> cseElements = new ArrayList<>(primaryCSE2constrainingValue.keySet());
-	//	if (unconstrainedValues.size() > 1) {
-	//		Collections.sort(unconstrainedValues, NameUtil.NAMEABLE_COMPARATOR);
-	//	}
 		StringUtil.appendIndentation(s, depth);
-		s.append("primary hypotheses");
-		for (@NonNull CSEElement cseElement : cseElements) {
+		s.append("refined");
+		for (@NonNull TypedElement redefinedTypedElement : refinedTypedElements2symbolicValue.keySet()) {
 			StringUtil.appendIndentation(s, depth+1);
-			s.append(cseElement + " => ");
-			SymbolicValue constrainingValue = primaryCSE2constrainingValue.get(cseElement);
+			s.append(redefinedTypedElement.eClass().getName());
+			s.append(" : \"");
+			s.append(redefinedTypedElement);
+			s.append("\" => ");
+			SymbolicValue constrainingValue = refinedTypedElements2symbolicValue.get(redefinedTypedElement);
 			assert constrainingValue != null;
 		//	StringUtil.appendIndentation(s, depth+2);
 			s.append(constrainingValue);
 		}
 		StringUtil.appendIndentation(s, depth);
-		s.append("corollary hypotheses");
-		cseElements = new ArrayList<>(corollaryCSE2constrainingValue.keySet());
-		for (@NonNull CSEElement cseElement : cseElements) {
+		s.append("re-evaluate");
+		for (@NonNull VariableDeclaration affectedVariable : affectedVariables) {
 			StringUtil.appendIndentation(s, depth+1);
-			s.append(cseElement + " => ");
-			SymbolicValue constrainingValue = corollaryCSE2constrainingValue.get(cseElement);
-			assert constrainingValue != null;
-		//	StringUtil.appendIndentation(s, depth+2);
-			s.append(constrainingValue);
+			s.append(affectedVariable.eClass().getName());
+			s.append(" : \"");
+			s.append(affectedVariable);
+			s.append("\"");
 		}
-		StringUtil.appendIndentation(s, depth);
-		s.append("re-evaluation required for");
 		for (@NonNull TypedElement affectedTypedElement : affectedTypedElements) {
 			StringUtil.appendIndentation(s, depth+1);
 			s.append(affectedTypedElement.eClass().getName());
@@ -417,28 +392,15 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 			s.append(affectedTypedElement);
 			s.append("\"");
 		}
-	//	StringUtil.appendIndentation(s, depth);
-	//	basicSymbolicEvaluationEnvironment.toString(s, depth+1);
 	}
 
+	@Override
 	public @NonNull SymbolicValue traceSymbolicValue(@NonNull CSEElement cseElement, @NonNull SymbolicValue symbolicValue) {
 		if ("self.name".equals(cseElement.toString())) {
 			getClass();		// XXX
 		}
-		SymbolicValue old = putSymbolicValue(cseElement, symbolicValue);
+		SymbolicValue old = cseElement2symbolicValue.put(cseElement, symbolicValue);	// Install the new 'read' value.
 		assert (old == null) || (old == symbolicValue); //old.equals(symbolicValue);
 		return symbolicValue;
-	}
-
-	public @NonNull SymbolicValue traceValue(@NonNull CSEElement cseElement, @Nullable Object value) {
-		SymbolicValue symbolicValue;
-		if (value instanceof SymbolicValue) {
-			symbolicValue = (SymbolicValue) value;
-		}
-		else {
-			Object boxedValue = environmentFactory.getIdResolver().boxedValueOf(value);
-			symbolicValue = getKnownValue(boxedValue);
-		}
-		return traceSymbolicValue(cseElement, symbolicValue);
 	}
 }

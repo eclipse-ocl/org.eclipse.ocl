@@ -80,6 +80,7 @@ import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.OppositePropertyCallExp;
 import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.Parameter;
+import org.eclipse.ocl.pivot.ParameterVariable;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
@@ -1975,6 +1976,13 @@ public class PivotUtil
 	 */
 	public static @NonNull VariableDeclaration getReferredVariable(@NonNull VariableExp variableExp) {
 		return ClassUtil.nonNullState(variableExp.getReferredVariable());
+	}
+
+	/**
+	 * @since 1.15
+	 */
+	public static @NonNull Parameter getRepresentedParameter(@NonNull ParameterVariable parameterVariable) {
+		return ClassUtil.nonNullState(parameterVariable.getRepresentedParameter());
 	}
 
 	/**
