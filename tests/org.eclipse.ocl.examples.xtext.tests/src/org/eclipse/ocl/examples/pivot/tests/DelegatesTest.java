@@ -1910,7 +1910,19 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		Map<Object, Object> validationContext = TestUtil.createDefaultContext(Diagnostician.INSTANCE);
 		Diagnostic validation = Diagnostician.INSTANCE.validate(eObject, validationContext);
 		List<Diagnostic> diagnostics = validation.getChildren();
-		assertEquals("Validation of '" + constraintName + "' child count:", 1, diagnostics.size());
+		if (diagnostics.size() != 1) {
+			StringBuilder s = new StringBuilder();
+			s.append("Validation of '" + constraintName + "'");
+			for (Diagnostic diagnostic : diagnostics) {
+				PivotUtil.formatDiagnostic(s, diagnostic, "\n\t");
+				for (Diagnostic child : diagnostic.getChildren()) {
+					PivotUtil.formatDiagnostic(s, child, "\n\t\t");
+				}
+			}
+			s.append("\n\tchild count:");
+			assertEquals(s.toString(), 1, diagnostics.size());
+
+		}
 		Diagnostic diagnostic = diagnostics.get(0);
 		assertEquals("Validation of '" + constraintName + "' data count:", 1, diagnostic.getData().size());
 		assertEquals("Validation of '" + constraintName + "' data object:", eObject, diagnostic.getData().get(0));
