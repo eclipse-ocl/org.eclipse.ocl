@@ -30,7 +30,6 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.evaluation.AbstractSymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal.ExecutorInternalExtension;
-import org.eclipse.ocl.pivot.internal.values.SymbolicUnknownValueImpl;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -124,21 +123,6 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 			i++;
 		}
 		return null;
-	}
-
-	/**
-	 * @since 1.15
-	 */
-	protected @NonNull SymbolicValue createChildSymbolicValue(@NonNull AbstractSymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp,
-			@NonNull SymbolicValue sourceSymbolicValue, @NonNull List<@NonNull SymbolicValue> argumentSymbolicValues) {
-		OCLExpression ownedSource = PivotUtil.getOwnedSource(callExp);
-		boolean mayBeInvalidOrNull = evaluationEnvironment.mayBeInvalidOrNull(ownedSource);
-		for (@NonNull SymbolicValue argumentSymbolicValue : argumentSymbolicValues) {		// XXX correlate parameter/return nullity
-			if (argumentSymbolicValue.mayBeInvalidOrNull()) {
-				mayBeInvalidOrNull = true;
-			}
-		}
-		return new SymbolicUnknownValueImpl(callExp.getTypeId(), false, mayBeInvalidOrNull);
 	}
 
 	/**

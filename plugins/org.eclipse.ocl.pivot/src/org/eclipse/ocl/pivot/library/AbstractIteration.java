@@ -15,16 +15,20 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.Variable;
+import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.evaluation.IterationManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.evaluation.AbstractSymbolicEvaluationEnvironment;
-import org.eclipse.ocl.pivot.internal.values.SymbolicUnknownValueImpl;
 import org.eclipse.ocl.pivot.library.LibraryOperation.LibraryOperationExtension2;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.SymbolicKnownValue;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
+
+import com.google.common.collect.Iterables;
 
 /**
  * AbstractIteration realizes shared characteristics of library iterations by providing a
@@ -62,63 +66,48 @@ public abstract class AbstractIteration extends AbstractIterationOrOperation imp
 			this.value = value;
 		}
 	}
-	/**
-	 * @since 1.15
-	 */
-	protected @Nullable SymbolicValue checkPreconditions(@NonNull AbstractSymbolicEvaluationEnvironment symbolicEvaluationEnvironment, @NonNull LoopExp loopExp) {
-	//	EnvironmentFactory environmentFactory = symbolicEvaluationEnvironment.getEnvironmentFactory();
-	//	CompleteModel completeModel = environmentFactory.getCompleteModel();
-	//	StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
-	//	Iteration referredIteration = PivotUtil.getReferredIteration(callExp);
-		TypeId returnTypeId = loopExp.getTypeId();
-		OCLExpression source = PivotUtil.getOwnedSource(loopExp);
-	//	CompleteClass oclInvalidClass = completeModel.getCompleteClass(standardLibrary.getOclInvalidType());
-	//	Operation oclInvalidOperation = oclInvalidClass.getOperation(referredOperation);
-	//	assert oclInvalidOperation == null : "Missing OclInvalid overload for " + referredOperation;
-		SymbolicValue invalidSourceProblem = symbolicEvaluationEnvironment.checkNotInvalid(source, returnTypeId);
-		if (invalidSourceProblem != null) {
-			return invalidSourceProblem;
-		}
-	//	CompleteClass oclVoidClass = completeModel.getCompleteClass(standardLibrary.getOclVoidType());
-	//	Operation oclVoidOperation = oclVoidClass.getOperation(referredOperation);
-	//	assert oclVoidOperation == null : "Missing OcVoid overload for " + referredOperation;
-		SymbolicValue nullSourceProblem = symbolicEvaluationEnvironment.checkNotNull(source, returnTypeId);
-		if (nullSourceProblem != null) {
-			return nullSourceProblem;
-		}
-	/*	int i = 0;
-		for (@NonNull OCLExpression argument : PivotUtil.getOwnedArguments(callExp)) {
-			if (!referredOperation.isIsValidating()) {
-				SymbolicValue invalidArgumentProblem = symbolicEvaluationEnvironment.checkNotInvalid(argument, returnTypeId);
-				if (invalidArgumentProblem != null) {
-					return invalidArgumentProblem;
-				}
-			}
-			Parameter parameter = PivotUtil.getOwnedParameter(referredOperation, i);
-			if (parameter.isIsRequired()) {
-				SymbolicValue nullArgumentProblem = symbolicEvaluationEnvironment.checkNotNull(argument, returnTypeId);
-				if (nullArgumentProblem != null) {
-					return nullArgumentProblem;
-				}
-			}
-			i++;
-		} */
-		return null;
-	}
 
 	/**
 	 * @since 1.15
 	 */
-	protected @NonNull SymbolicValue createChildSymbolicValue(@NonNull AbstractSymbolicEvaluationEnvironment evaluationEnvironment, @NonNull LoopExp loopExp,
-			@NonNull SymbolicValue sourceSymbolicValue, @NonNull List<@NonNull SymbolicValue> argumentSymbolicValues) {
-		OCLExpression ownedSource = PivotUtil.getOwnedSource(loopExp);
-		boolean mayBeInvalidOrNull = evaluationEnvironment.mayBeInvalidOrNull(ownedSource);
-		for (@NonNull SymbolicValue argumentSymbolicValue : argumentSymbolicValues) {		// XXX correlate parameter/return nullity
-			if (argumentSymbolicValue.mayBeInvalidOrNull()) {
-				mayBeInvalidOrNull = true;
+	protected @Nullable SymbolicValue checkPreconditions(@NonNull AbstractSymbolicEvaluationEnvironment symbolicEvaluationEnvironment, @NonNull LoopExp loopExp) {
+		TypeId returnTypeId = loopExp.getTypeId();
+		OCLExpression source = PivotUtil.getOwnedSource(loopExp);
+		SymbolicValue invalidSourceProblem = symbolicEvaluationEnvironment.checkNotInvalid(source, returnTypeId);
+		if (invalidSourceProblem != null) {
+			return invalidSourceProblem;
+		}
+		if (!loopExp.isIsSafe()) {
+			SymbolicValue nullSourceProblem = symbolicEvaluationEnvironment.checkNotNull(source, returnTypeId);
+			if (nullSourceProblem != null) {
+				return nullSourceProblem;
 			}
 		}
-		return new SymbolicUnknownValueImpl(loopExp.getTypeId(), false, mayBeInvalidOrNull);
+		for (@NonNull VariableDeclaration iterator : PivotUtil.getOwnedIterators(loopExp)) {
+			SymbolicValue invalidIteratorProblem = symbolicEvaluationEnvironment.checkNotInvalid(iterator, returnTypeId);
+			if (invalidIteratorProblem != null) {
+				return invalidIteratorProblem;
+			}
+		}
+		if (loopExp instanceof IterateExp) {
+			VariableDeclaration ownedResult = PivotUtil.getOwnedResult((IterateExp)loopExp);
+			SymbolicValue invalidResultProblem = symbolicEvaluationEnvironment.checkNotInvalid(ownedResult, returnTypeId);
+			if (invalidResultProblem != null) {
+				return invalidResultProblem;
+			}
+		}
+		OCLExpression bodyExpression = PivotUtil.getOwnedBody(loopExp);
+		SymbolicValue invalidBodyProblem = symbolicEvaluationEnvironment.checkNotInvalid(bodyExpression, returnTypeId);
+		if (invalidBodyProblem != null) {
+			return invalidBodyProblem;
+		}
+		if (bodyExpression.isIsRequired()) {
+			SymbolicValue nullBodyProblem = symbolicEvaluationEnvironment.checkNotNull(bodyExpression, returnTypeId);
+			if (nullBodyProblem != null) {
+				return nullBodyProblem;
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -175,19 +164,32 @@ public abstract class AbstractIteration extends AbstractIterationOrOperation imp
 			return symbolicPreconditionValue;
 		}
 		SymbolicValue sourceSymbolicValue = evaluationEnvironment.symbolicEvaluate(PivotUtil.getOwnedSource(loopExp));
-		boolean isKnown = sourceSymbolicValue.isKnown();
-		int argumentsSize = 0;
+		boolean isKnown = false; // Need to guard against huge symbolic constants -- sourceSymbolicValue.isKnown();
+		Iterable<@NonNull Variable> ownedIterators = PivotUtil.getOwnedIterators(loopExp);
+		int iteratorsSize = Iterables.size(ownedIterators);
+		int resultsSize = loopExp instanceof IterateExp ? 1 : 0;
+		int bodySize = 1;
+		int argumentsSize = iteratorsSize + resultsSize + bodySize;
 		List<@NonNull SymbolicValue> argumentSymbolicValues = new ArrayList<@NonNull SymbolicValue>(argumentsSize);
-	/*	Iterable<@NonNull OCLExpression> ownedArguments = PivotUtil.getOwnedArguments(loopExp);
-		int argumentsSize = Iterables.size(ownedArguments);
-		List<@NonNull SymbolicValue> argumentSymbolicValues = new ArrayList<@NonNull SymbolicValue>(argumentsSize);
-		for (@NonNull OCLExpression argument : ownedArguments) {
-			SymbolicValue argumentSymbolicValue = evaluationEnvironment.symbolicEvaluate(argument);
-			if (!argumentSymbolicValue.isKnown()) {
+		for (@NonNull Variable iterator : ownedIterators) {
+			SymbolicValue iteratorSymbolicValue = evaluationEnvironment.symbolicEvaluate(iterator);
+			if (!iteratorSymbolicValue.isKnown()) {
 				isKnown = false;
 			}
-			argumentSymbolicValues.add(argumentSymbolicValue);
-		} */
+			argumentSymbolicValues.add(iteratorSymbolicValue);
+		}
+		if (loopExp instanceof IterateExp) {
+			SymbolicValue resultSymbolicValue = evaluationEnvironment.symbolicEvaluate(PivotUtil.getOwnedResult((IterateExp) loopExp));
+			if (!resultSymbolicValue.isKnown()) {
+				isKnown = false;
+			}
+			argumentSymbolicValues.add(resultSymbolicValue);
+		}
+		SymbolicValue bodySymbolicValue = evaluationEnvironment.symbolicEvaluate(PivotUtil.getOwnedBody(loopExp));
+		if (!bodySymbolicValue.isKnown()) {
+			isKnown = false;
+		}
+		argumentSymbolicValues.add(bodySymbolicValue);
 		if (isKnown) {
 			@Nullable Object[] sourceAndArgumentValues = new @Nullable Object[1+argumentsSize];
 			sourceAndArgumentValues[0] = ((SymbolicKnownValue)sourceSymbolicValue).getValue();
@@ -200,6 +202,14 @@ public abstract class AbstractIteration extends AbstractIterationOrOperation imp
 		else {
 			return createChildSymbolicValue(evaluationEnvironment, loopExp, sourceSymbolicValue, argumentSymbolicValues);
 		}
+
+		/*	if (loopExp.isIsMany()) {
+			result = new SymbolicCollectionValueImpl(loopExp, false, false);
+		}
+		else {
+			result = new SymbolicExpressionValueImpl(loopExp, false, false);		// FIXME null / invalid
+		}
+		return result; */
 	}
 
 	/**

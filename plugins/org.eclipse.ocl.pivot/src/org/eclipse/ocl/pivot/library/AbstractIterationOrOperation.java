@@ -10,15 +10,20 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.library;
 
+import java.util.List;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.internal.evaluation.AbstractSymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
+import org.eclipse.ocl.pivot.internal.values.SymbolicUnknownValueImpl;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
  * AbstractIterationOrOperation realizes shared characteristics of library iterations and operations.
@@ -26,6 +31,21 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  */
 public abstract class AbstractIterationOrOperation extends AbstractFeature implements LibraryIterationOrOperation
 {
+	/**
+	 * @since 1.15
+	 */
+	protected @NonNull SymbolicValue createChildSymbolicValue(@NonNull AbstractSymbolicEvaluationEnvironment evaluationEnvironment, @NonNull CallExp callExp,
+			@NonNull SymbolicValue sourceSymbolicValue, @NonNull List<@NonNull SymbolicValue> argumentSymbolicValues) {
+		OCLExpression ownedSource = PivotUtil.getOwnedSource(callExp);
+		boolean mayBeInvalidOrNull = evaluationEnvironment.mayBeInvalidOrNull(ownedSource);
+		for (@NonNull SymbolicValue argumentSymbolicValue : argumentSymbolicValues) {		// XXX correlate parameter/return nullity
+			if (argumentSymbolicValue.mayBeInvalidOrNull()) {
+				mayBeInvalidOrNull = true;
+			}
+		}
+		return new SymbolicUnknownValueImpl(callExp.getTypeId(), false, mayBeInvalidOrNull);
+	}
+
 	/**
 	 * Special case processing for return collection types based on the source collection types and multiplicities.
 	 */
