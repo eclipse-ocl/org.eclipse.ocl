@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
@@ -77,6 +78,13 @@ public class PivotResourceValidator extends ResourceValidatorImpl
 
 	private static final Logger log = Logger.getLogger(PivotResourceValidator.class);
 	public static final String HAS_SYNTAX_ERRORS = "has_syntax_errors";
+
+	private EnvironmentFactoryInternal basicGetEnvironmentFactory;
+
+	public PivotResourceValidator() {
+		super();
+		this.basicGetEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+	}
 
 	protected ValidationDiagnostic createDefaultDiagnostic(Diagnostician diagnostician, EObject pivotObject) {
 		//		Object objectLabel = diagnostician.getObjectLabel(pivotObject);

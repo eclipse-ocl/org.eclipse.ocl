@@ -13,6 +13,7 @@ package org.eclipse.ocl.pivot.internal.evaluation;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.TypedElement;
@@ -44,7 +45,7 @@ public abstract class AbstractSymbolicEvaluationEnvironment extends BasicEvaluat
 		super(parent, element, element);
 	}
 
-	public @Nullable SymbolicValue basicGetSymbolicValue(@NonNull TypedElement element) {
+	public @Nullable SymbolicValue basicGetSymbolicValue(@NonNull Element element) {
 		CSEElement cseElement = getSymbolicAnalysis().getCSEElement(element);
 		return basicGetSymbolicValue(cseElement);
 	}
@@ -61,8 +62,7 @@ public abstract class AbstractSymbolicEvaluationEnvironment extends BasicEvaluat
 			return null;
 		}
 		SymbolicAnalysis symbolicAnalysis = getSymbolicAnalysis();
-		Hypothesis hypothesis = new Hypothesis.MayBeInvalidHypothesis(symbolicAnalysis, typedElement, symbolicValue);
-		symbolicAnalysis.addHypothesis(typedElement, hypothesis);
+		symbolicAnalysis.addMayBeInvalidHypothesis(typedElement, symbolicValue);
 		return getMayBeInvalidValue(typeId);
 	}
 
@@ -76,8 +76,7 @@ public abstract class AbstractSymbolicEvaluationEnvironment extends BasicEvaluat
 			return null;
 		}
 		SymbolicAnalysis symbolicAnalysis = getSymbolicAnalysis();
-		Hypothesis hypothesis = new Hypothesis.MayBeNullHypothesis(symbolicAnalysis, typedElement, symbolicValue);
-		symbolicAnalysis.addHypothesis(typedElement, hypothesis);
+		symbolicAnalysis.addMayBeNullHypothesis(typedElement, symbolicValue);
 		return getMayBeInvalidValue(typeId);
 	}
 
@@ -91,8 +90,7 @@ public abstract class AbstractSymbolicEvaluationEnvironment extends BasicEvaluat
 			return null;
 		}
 		SymbolicAnalysis symbolicAnalysis = getSymbolicAnalysis();
-		Hypothesis hypothesis = new Hypothesis.MayBeZeroHypothesis(symbolicAnalysis, typedElement, symbolicValue);
-		symbolicAnalysis.addHypothesis(typedElement, hypothesis);
+		symbolicAnalysis.addMayBeZeroHypothesis(typedElement, symbolicValue);
 		return getMayBeInvalidValue(typeId);
 	}
 
@@ -122,7 +120,7 @@ public abstract class AbstractSymbolicEvaluationEnvironment extends BasicEvaluat
 	}
 
 	@Override
-	public final @NonNull SymbolicValue getSymbolicValue(@NonNull TypedElement element) {
+	public final @NonNull SymbolicValue getSymbolicValue(@NonNull Element element) {
 		return ClassUtil.nonNullState(basicGetSymbolicValue(element));
 	}
 
@@ -164,8 +162,18 @@ public abstract class AbstractSymbolicEvaluationEnvironment extends BasicEvaluat
 	}
 
 	@Override
+	public boolean mayBeInvalid(@NonNull OCLExpression element) {
+		return getSymbolicValue(element).mayBeInvalid();
+	}
+
+	@Override
 	public boolean mayBeInvalidOrNull(@NonNull OCLExpression element) {
 		return getSymbolicValue(element).mayBeInvalidOrNull();
+	}
+
+	@Override
+	public boolean mayBeNull(@NonNull OCLExpression element) {
+		return getSymbolicValue(element).mayBeNull();
 	}
 
 	public void setDead(@NonNull OCLExpression expression) {}

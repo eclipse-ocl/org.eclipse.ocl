@@ -19,13 +19,15 @@ import java.util.Map;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LiteralExp;
 import org.eclipse.ocl.pivot.OCLExpression;
-import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.TypeExp;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
@@ -36,10 +38,28 @@ import org.eclipse.ocl.pivot.utilities.StringUtil;
 public class CommonSubExpressionAnalysis
 {
 	protected final @NonNull CSEVisitor visitor;
-	private final @NonNull Map<@NonNull TypedElement, @NonNull CSEElement> element2cse = new HashMap<>();
-//	private final @NonNull Map<@NonNull OCLExpression, @NonNull CSEElement> expression2cse = new HashMap<>();
+
+	/**
+	 * The CSEs for specific model elements.
+	 */
+	private final @NonNull Map<@NonNull Element, @NonNull CSEElement> element2cse = new HashMap<>();
+
+	/**
+	 * The CSEs for specific model elements.
+	 */
+	private @Nullable Map<@NonNull Class<?>, @NonNull Map<@NonNull List<@NonNull CSEElement>, @NonNull CSEAggregateElement>> namespaceClass2elements2cse = null;
+
+	/**
+	 * The CSEs for specific typeids.
+	 *
+	 * XXX make TypeExp a Literal
+	 */
+	private @Nullable Map<@NonNull TypeId, @NonNull CSETypeElement> typeid2cse = null;
+
+	/**
+	 * The CSEs for specific values.
+	 */
 	private final @NonNull Map<@NonNull Object, @NonNull CSEValueElement> value2cse = new HashMap<>();
-//	private final @NonNull Map<@NonNull VariableDeclaration, @NonNull CSEVariableElement> variable2cse = new HashMap<>();
 
 	public CommonSubExpressionAnalysis() {
 		this.visitor = createCSEVisitor();
@@ -58,7 +78,7 @@ public class CommonSubExpressionAnalysis
 		return new CSEVisitor(this);
 	}
 
-	public @NonNull CSEElement getElementCSE(@NonNull TypedElement expression) {
+	public @NonNull CSEElement getElementCSE(@NonNull Element expression) {
 		CSEElement cseElement = element2cse.get(expression);
 		if (cseElement == null) {
 			cseElement = visitor.visit(expression);
@@ -76,6 +96,25 @@ public class CommonSubExpressionAnalysis
 		return cseElement;
 	}
 
+	public @NonNull CSEAggregateElement getNamespaceCSE(@NonNull Element element, @NonNull List<@NonNull CSEElement> elements) {
+		@NonNull Class<?> namespaceClass = element.getClass();
+		Map<@NonNull Class<?>, @NonNull Map<@NonNull List<@NonNull CSEElement>, @NonNull CSEAggregateElement>> namespaceClass2elements2cse2 = namespaceClass2elements2cse;
+		if (namespaceClass2elements2cse2 == null) {
+			namespaceClass2elements2cse2 = namespaceClass2elements2cse = new HashMap<>();
+		}
+		Map<@NonNull List<@NonNull CSEElement>, @NonNull CSEAggregateElement> elements2cse = namespaceClass2elements2cse2.get(namespaceClass);
+		if (elements2cse == null) {
+			elements2cse = new HashMap<>();
+			namespaceClass2elements2cse2.put(namespaceClass, elements2cse);
+		}
+		CSEAggregateElement cseElement = elements2cse.get(elements);
+		if (cseElement == null) {
+			cseElement = new CSEAggregateElement(this, element, elements);
+			elements2cse.put(elements, cseElement);
+		}
+		return cseElement;
+	}
+
 	public @NonNull CSEValueElement getValueCSE(@NonNull LiteralExp literalExp, @NonNull Object value) {
 		CSEValueElement cseElement = value2cse.get(value);
 		if (cseElement == null) {
@@ -83,6 +122,21 @@ public class CommonSubExpressionAnalysis
 			value2cse.put(value, cseElement);
 		}
 		cseElement.addLiteralExp(literalExp);
+		return cseElement;
+	}
+
+	// XXX Make TypeExp a LiteralExp
+	public @NonNull CSETypeElement getTypeCSE(@NonNull TypeExp typeExp) {
+		Map<@NonNull TypeId, @NonNull CSETypeElement> typeid2cse2 = typeid2cse;
+		if (typeid2cse2 == null) {
+			typeid2cse2 = typeid2cse = new HashMap<>();
+		}
+		TypeId typeId = typeExp.getTypeId();
+		CSETypeElement cseElement = typeid2cse2.get(typeId);
+		if (cseElement == null) {
+			cseElement = new CSETypeElement(this, typeExp);
+			typeid2cse2.put(typeId, cseElement);
+		}
 		return cseElement;
 	}
 
@@ -115,24 +169,24 @@ public class CommonSubExpressionAnalysis
 
 	public void toString(@NonNull StringBuilder s, int depth) {
 		s.append("elements");
-		List<@NonNull TypedElement> typedElements = new ArrayList<>(element2cse.keySet());
-		Collections.sort(typedElements, NameUtil.TO_STRING_COMPARATOR);
-		for (@NonNull TypedElement typedElement : typedElements) {
+		List<@NonNull Element> elements = new ArrayList<>(element2cse.keySet());
+		Collections.sort(elements, NameUtil.TO_STRING_COMPARATOR);
+		for (@NonNull Element element : elements) {
 			StringUtil.appendIndentation(s, depth+1);
-			CSEElement cseElement = element2cse.get(typedElement);
+			CSEElement cseElement = element2cse.get(element);
 			assert cseElement != null;
-			TypedElement element = cseElement.getElement();
-			s.append(typedElement.eClass().getName());
+			Element theElement = cseElement.getElement();
+			s.append(element.eClass().getName());
 			s.append("@");
-			s.append(Integer.toHexString(System.identityHashCode(typedElement)));
+			s.append(Integer.toHexString(System.identityHashCode(element)));
 			s.append(" | ");
 			s.append(cseElement.getHeight());
 			s.append("-");
 			s.append(Integer.toHexString(System.identityHashCode(cseElement)));
 			s.append("-");
-			s.append(element.eClass().getName());
+			s.append(theElement.eClass().getName());
 			s.append(": ");
-			s.append(element);
+			s.append(theElement);
 		}
 		StringUtil.appendIndentation(s, depth);
 		s.append("values");
@@ -142,7 +196,7 @@ public class CommonSubExpressionAnalysis
 			StringUtil.appendIndentation(s, depth+1);
 			CSEElement cseElement = value2cse.get(value);
 			assert cseElement != null;
-			TypedElement element = cseElement.getElement();
+			Element element = cseElement.getElement();
 			if (value instanceof EObject) {
 				s.append(((EObject)value).eClass().getName());
 			}

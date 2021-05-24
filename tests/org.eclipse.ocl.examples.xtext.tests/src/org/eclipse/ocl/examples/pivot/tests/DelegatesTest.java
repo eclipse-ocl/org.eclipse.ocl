@@ -1894,7 +1894,8 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 					else {
 						s.append("\n");
 					}
-					s.append(diagnostic.getMessage());
+					PivotUtil.formatDiagnostic(s, diagnostic, "\n\t");
+				//	s.append(diagnostic.getMessage());
 				}
 				assert s != null;
 				String string = s.toString();

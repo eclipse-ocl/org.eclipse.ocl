@@ -55,14 +55,12 @@ import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.manager.SymbolicExecutor;
-import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.internal.values.AbstractRefinedSymbolicValue;
 import org.eclipse.ocl.pivot.internal.values.SymbolicExpressionValueImpl;
 import org.eclipse.ocl.pivot.internal.values.SymbolicNavigationCallValueImpl;
 import org.eclipse.ocl.pivot.internal.values.SymbolicUnknownValueImpl;
-import org.eclipse.ocl.pivot.labels.ILabelGenerator;
 import org.eclipse.ocl.pivot.library.LibraryIteration;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
@@ -106,28 +104,9 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 		OCLExpression source = PivotUtil.getOwnedSource(navigationCallExp);
 
 		AbstractSymbolicEvaluationEnvironment evaluationEnvironment = getEvaluationEnvironment();
-	//	SymbolicAnalysis.evaluateHypothesis(evaluationEnvironment, source, )
-
-
-
 		SymbolicValue sourceValue = evaluationEnvironment.symbolicEvaluate(source);
 		@SuppressWarnings("unused")
 		List<@Nullable Object> sourceAndArgumentValues = Lists.newArrayList(sourceValue);
-	/*	Iterable<@Nullable Object> symbolicConstraints = evaluationEnvironment.getSymbolicConstraints(referredProperty, sourceAndArgumentValues);
-		if (symbolicConstraints != null) {
-			boolean mayBeInvalid = true;
-			boolean mayBeNull = true;
-			for (@Nullable Object symbolicConstraint : symbolicConstraints) {
-				if (!ValueUtil.mayBeInvalid(symbolicConstraint)) {
-					mayBeInvalid = false;
-				}
-				if (!ValueUtil.mayBeNull(symbolicConstraint)) {
-					mayBeNull = false;
-				}
-			}
-			result = new SymbolicExpressionValueImpl(navigationCallExp, mayBeNull, mayBeInvalid);
-		}
-		else */
 		TypeId returnTypeId = navigationCallExp.getTypeId();
 		SymbolicValue invalidProblem = evaluationEnvironment.checkNotInvalid(source, returnTypeId);
 		if (invalidProblem != null) {
@@ -141,11 +120,14 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 				return evaluationEnvironment.getKnownValue(ValueUtil.INVALID_VALUE);
 			}
 		}
-		if (sourceValue.mayBeNull() && !navigationCallExp.isIsSafe()) {
-			SymbolicAnalysis symbolicAnalysis = getSymbolicAnalysis();
-			Hypothesis hypothesis = new Hypothesis.MayBeNullHypothesis(symbolicAnalysis, source, sourceValue);
-			symbolicAnalysis.addHypothesis(source, hypothesis);
-			return evaluationEnvironment.getMayBeInvalidValue(returnTypeId);
+		if (!navigationCallExp.isIsSafe()) {
+			SymbolicValue nullSourceProblem = evaluationEnvironment.checkNotNull(source, returnTypeId);
+			if (nullSourceProblem != null) {
+				return nullSourceProblem;
+			}
+		//	Hypothesis hypothesis = new Hypothesis.MayBeNullHypothesis(symbolicAnalysis, source, sourceValue);
+		//	symbolicAnalysis.addHypothesis(source, hypothesis);
+		//	return evaluationEnvironment.getMayBeInvalidValue(returnTypeId);
 		}
 		if (sourceValue instanceof SymbolicKnownValue) {
 			result = context.internalExecuteNavigationCallExp(navigationCallExp, referredProperty, ((SymbolicKnownValue)sourceValue).getValue());
@@ -185,18 +167,6 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 		else { //if (!isValidating) {
 			sourceValue = evaluationEnvironment.symbolicEvaluate(source);
 		}
-	//	else {
-	//		try {
-	//			sourceValue = symbolicEvaluate(source);
-	//			assert ValueUtil.isBoxed(sourceValue);	// Make sure Integer/Real are boxed, invalid is an exception, null is null
-	//		}
-	//		catch (EvaluationHaltedException e) {
-	//			throw e;
-	//		}
-	//		catch (InvalidValueException e) {
-	//			sourceValue = e;	// FIXME ?? propagate part of environment
-	//		}
-	//	}
 		//
 		@SuppressWarnings("unused")
 		boolean mayBeNull = false;
@@ -236,150 +206,16 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 				if (onlyType == standardLibrary.getOclSelfType()) {
 					List<@NonNull OCLExpression> arguments = ClassUtil.nullFree(operationCallExp.getOwnedArguments());
 					SymbolicValue onlyArgumentValue = evaluationEnvironment.symbolicEvaluate(arguments.get(0));
-				//	if (onlyArgumentValue instanceof SymbolicKnownValue) {
-				//		onlyArgumentValue = ((SymbolicKnownValue)onlyArgumentValue).getValue();
-				//	}
 					org.eclipse.ocl.pivot.Class actualArgType = idResolver.getStaticTypeOfValue(onlyType, onlyArgumentValue);
 					actualSourceType = (org.eclipse.ocl.pivot.Class)actualSourceType.getCommonType(idResolver, actualArgType);
 					// FIXME direct evaluate using second argument
 					actualOperation = actualSourceType.lookupActualOperation(standardLibrary, apparentOperation);
-				//	implementation = (LibraryBinaryOperation)metamodelManager.getImplementation(actualOperation);
-				/*	try {
-						boolean isSymbolic = (sourceValue instanceof SymbolicValue) || (onlyArgumentValue instanceof SymbolicValue);
-						if (!isSymbolic) {
-							TypeId returnTypeId = operationCallExp.getTypeId();
-							Object result = implementation.evaluate(context, returnTypeId, sourceValue, onlyArgumentValue);
-							assert !(result instanceof NullValue);// || (result instanceof SymbolicValue);
-							return result;
-						}
-						else {
-							List<@Nullable Object> boxedSourceAndArgumentValues = Lists.newArrayList(sourceValue, onlyArgumentValue);
-							Iterable<@Nullable Object> symbolicConstraints = evaluationEnvironment.getSymbolicConstraints(apparentOperation, boxedSourceAndArgumentValues);
-							if (symbolicConstraints != null) {
-								boolean mayBeInvalid = true;
-								boolean mayBeNull = true;
-								for (@Nullable Object symbolicConstraint : symbolicConstraints) {
-									if (!ValueUtil.mayBeInvalid(symbolicConstraint)) {
-										mayBeInvalid = false;
-									}
-									if (!ValueUtil.mayBeNull(symbolicConstraint)) {
-										mayBeNull = false;
-									}
-								}
-								return new SymbolicOperationCallValueImpl(operationCallExp, mayBeNull, mayBeInvalid, implementation, boxedSourceAndArgumentValues);
-							}
-							Object result = implementation.symbolicEvaluate(context, operationCallExp, sourceValue, onlyArgumentValue);
-							assert !(result instanceof NullValue);// || (result instanceof SymbolicValue);
-							evaluationEnvironment.addSymbolicResult(apparentOperation, boxedSourceAndArgumentValues, result);
-							return result;
-						}
-					}
-					catch (InvalidValueException e) {
-						throw e;
-					}
-					catch (Exception e) {
-						// This is a backstop. Library operations should catch their own exceptions
-						//  and produce a better reason as a result.
-						throw new InvalidValueException(e, PivotMessagesInternal.FailedToEvaluate_ERROR_, apparentOperation, ILabelGenerator.Registry.INSTANCE.labelFor(sourceValue), operationCallExp);
-					}
-					catch (AssertionError e) {
-						// This is a backstop. Library operations should catch their own exceptions
-						//  and produce a better reason as a result.
-						throw new InvalidValueException(e, PivotMessagesInternal.FailedToEvaluate_ERROR_, apparentOperation, ILabelGenerator.Registry.INSTANCE.labelFor(sourceValue), operationCallExp);
-					} */
 				}
 			}
 			actualOperation = actualSourceType.lookupActualOperation(standardLibrary, apparentOperation);
 		}
 		LibraryOperation implementation = (LibraryOperation)metamodelManager.getImplementation(actualOperation);
-		try {
-		/*	if (!isValidating) {
-				//
-				//	No validating/short-circuit terms symbolicValues - get the arguments
-				//
-				List<@NonNull OCLExpression> ownedArguments = PivotUtilInternal.getOwnedArgumentsList(operationCallExp);
-				@Nullable Object[] boxedSourceAndArgumentValues = new @Nullable Object[ownedArguments.size()+1];
-				boolean isSymbolic = sourceValue instanceof SymbolicValue;
-				int i = 0;
-				boxedSourceAndArgumentValues[i++] = sourceValue;
-				for (@NonNull OCLExpression argument : ownedArguments) {
-					Object argumentValue = evaluate(argument);
-					if (argumentValue instanceof SymbolicValue) {
-						isSymbolic = true;
-					}
-					boxedSourceAndArgumentValues[i++] = argumentValue;
-				}
-				if (!isSymbolic) {
-					//
-					//	No symbolicValues - just evaluate the 'constant'
-					//
-					return ((LibraryOperationExtension2)implementation).evaluate(context, operationCallExp, boxedSourceAndArgumentValues);
-				}
-				else {
-					List<@Nullable Object> boxedSourceAndArgumentValuesList = Lists.newArrayList(boxedSourceAndArgumentValues);
-					Iterable<@Nullable Object> symbolicConstraints = evaluationEnvironment.getSymbolicConstraints(apparentOperation, boxedSourceAndArgumentValuesList);
-					if (symbolicConstraints != null) {
-						//
-						//	SymbolicValues - re-use the symbolic result
-						//
-						boolean mayBeInvalid = true;
-						boolean mayBeNull = true;
-						for (@Nullable Object symbolicConstraint : symbolicConstraints) {
-							if (!ValueUtil.mayBeInvalid(symbolicConstraint)) {
-								mayBeInvalid = false;
-							}
-							if (!ValueUtil.mayBeNull(symbolicConstraint)) {
-								mayBeNull = false;
-							}
-						}
-						return new SymbolicOperationCallValueImpl(operationCallExp, mayBeNull, mayBeInvalid, implementation, boxedSourceAndArgumentValuesList);
-					}
-					else {
-						//
-						//	SymbolicValues - cache the symbolic result
-						//
-						if (apparentOperation.getImplementation() == OrderedCollectionAtOperation.INSTANCE) {
-							getClass();
-						}
-
-
-						Object result2 = implementation.symbolicDispatch(this, operationCallExp, sourceValue);
-
-
-						boolean isSafe = operationCallExp.isIsSafe();
-						boolean sourceMayBeInvalid = ValueUtil.mayBeInvalid(sourceValue);
-						boolean sourceMayBeNull = ValueUtil.mayBeNull(sourceValue);
-						boolean operationIsRequired = apparentOperation.isIsRequired();
-						boolean operationMayBeNull = !implementation.resolveReturnNullity(environmentFactory, operationCallExp, operationIsRequired);
-						boolean resultMayBeInvalid = sourceMayBeInvalid || (sourceMayBeNull && !isSafe);
-						boolean resultMayBeNull = operationMayBeNull || (sourceMayBeNull && isSafe && !operationCallExp.isIsMany());
-						Object result = new SymbolicOperationCallValueImpl(operationCallExp, resultMayBeNull, resultMayBeInvalid, implementation, boxedSourceAndArgumentValuesList);
-						assert !(result instanceof NullValue);// || (result instanceof SymbolicValue);
-						evaluationEnvironment.addSymbolicResult(apparentOperation, boxedSourceAndArgumentValuesList, result);
-						return result;
-					}
-				}
-			}
-			else { */
-				//
-				//	Validating/short-circuit - dispatch the source for assessment before looking at the argument
-				//
-				return implementation.symbolicEvaluate(evaluationEnvironment, operationCallExp);
-		//	}
-		}
-		catch (InvalidValueException e) {
-			throw e;
-		}
-		catch (Exception e) {
-			// This is a backstop. Library operations should catch their own exceptions
-			//  and produce a better reason as a result.
-			throw new InvalidValueException(e, PivotMessagesInternal.FailedToEvaluate_ERROR_, apparentOperation, ILabelGenerator.Registry.INSTANCE.labelFor(sourceValue), operationCallExp);
-		}
-		catch (AssertionError e) {
-			// This is a backstop. Library operations should catch their own exceptions
-			//  and produce a better reason as a result.
-			throw new InvalidValueException(e, PivotMessagesInternal.FailedToEvaluate_ERROR_, apparentOperation, ILabelGenerator.Registry.INSTANCE.labelFor(sourceValue), operationCallExp);
-		}
+		return implementation.symbolicEvaluate(evaluationEnvironment, operationCallExp);
 	}
 
 	@Deprecated /* @deprecated use symbolicEvaluate argument */

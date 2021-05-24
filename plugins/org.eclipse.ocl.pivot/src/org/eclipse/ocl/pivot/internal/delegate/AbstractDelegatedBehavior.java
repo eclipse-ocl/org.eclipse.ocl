@@ -192,8 +192,11 @@ implements DelegatedBehavior<E, R, F> {
 				List<?> data = diagnostic.getData();
 				if ((data != null) && (data.size() == 2)) {
 					Object data1 = data.get(1);
-					if (data1 instanceof EvaluationException) {
-						throw new OCLDelegateException((EvaluationException)data1);		// Re-use old exception to avoid losing cause
+					if (data1 instanceof Exception) {
+						throw new OCLDelegateException((Exception)data1);		// Re-use old exception to avoid losing cause
+					}
+					else if (data1 instanceof Throwable) {
+						throw new OCLDelegateException(new RuntimeException((Throwable)data1));		// Re-use old exception to avoid losing cause
 					}
 				}
 			}

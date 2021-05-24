@@ -38,6 +38,7 @@ import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
@@ -2504,33 +2505,37 @@ public class PivotValidator extends EObjectValidator
 				Variable parameter = ownedParameters.get(i);
 				mayBeNull = !parameter.isIsRequired();
 				mayBeInvalid = false;
-				parameterValues[i] = new Object[]{new SymbolicVariableValueImpl(parameter, mayBeNull, mayBeInvalid)};
+				parameterValues[i] = new SymbolicVariableValueImpl(parameter, mayBeNull, mayBeInvalid);
 			}
 			SymbolicAnalysis symbolicAnalysis = metamodelManager.getSymbolicAnalysis(expressionInOCL, selfValue, parameterValues);
 			BaseSymbolicEvaluationEnvironment evaluationEnvironment = symbolicAnalysis.getBaseSymbolicEvaluationEnvironment();
 		//	Map<@NonNull Element, @NonNull SymbolicValue> element2symbolicValue = symbolicAnalysis.getElement2SymbolicValue();
 			Set<@NonNull CSEElement> cseElements = evaluationEnvironment.getCSEElements();
-			for (@NonNull CSEElement cseElement : cseElements) {
-				SymbolicValue symbolicValue = evaluationEnvironment.getSymbolicValue(cseElement.getElement());
-				assert symbolicValue != null;
-				if (symbolicValue.mayBeInvalid() && !symbolicValue.isInvalid()) {
-					if (diagnostics != null) {
-						boolean isLeaf = true;
-						Iterable<@NonNull CSEElement> inputs = cseElement.getInputs();
-						assert inputs != null;
-						for (@NonNull CSEElement childElement : inputs) {
-							Object childValue = evaluationEnvironment.getSymbolicValue(childElement.getElement());
-							if (ValueUtil.mayBeInvalid(childValue) && !ValueUtil.isInvalidValue(childValue)) {
-								isLeaf = false;
-								break;
+			for (@NonNull EObject eObject : new TreeIterable(expressionInOCL, true)) {
+				if (eObject instanceof TypedElement) {
+					TypedElement typedElement = (TypedElement)eObject;
+					CSEElement cseElement = symbolicAnalysis.getCSEElement(typedElement);
+					SymbolicValue symbolicValue = evaluationEnvironment.getSymbolicValue(typedElement);
+					assert symbolicValue != null;
+					if (symbolicValue.mayBeInvalid() && !symbolicValue.isInvalid()) {			// FIXME Do we really want to suppress outright invalid warnings ?
+						if (diagnostics != null) {
+							boolean isLeaf = true;
+							Iterable<@NonNull CSEElement> inputs = cseElement.getInputs();
+							assert inputs != null;
+							for (@NonNull CSEElement childElement : inputs) {
+								Object childValue = evaluationEnvironment.getSymbolicValue(childElement.getElement());
+								if (ValueUtil.mayBeInvalid(childValue) && !ValueUtil.isInvalidValue(childValue)) {
+									isLeaf = false;
+									break;
+								}
+							}
+							if (isLeaf) {
+								String message = StringUtil.bind("May be invalid: ''{0}''", typedElement);
+								diagnostics.add(new BasicDiagnostic(Diagnostic.ERROR, DIAGNOSTIC_SOURCE, 0, message, new Object[] {typedElement}));		// XXX
 							}
 						}
-						if (isLeaf) {
-							String message = StringUtil.bind("May be invalid: ''{0}''", cseElement);
-							diagnostics.add(new BasicDiagnostic(Diagnostic.ERROR, DIAGNOSTIC_SOURCE, 0, message, new Object[] {cseElement}));		// XXX
-						}
+						allOk = false;			// XXX
 					}
-					allOk = false;			// XXX
 				}
 			}
 		}

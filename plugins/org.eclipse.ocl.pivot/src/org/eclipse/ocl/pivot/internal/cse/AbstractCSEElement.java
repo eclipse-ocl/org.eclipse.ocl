@@ -18,18 +18,18 @@ import java.util.Map;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
+import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.IfExp;
 import org.eclipse.ocl.pivot.NavigationCallExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  * @since 1.15
  */
-public abstract class AbstractCSEElement<E extends TypedElement> implements CSEElement
+public abstract class AbstractCSEElement<E extends Element> implements CSEElement
 {
 	protected final @NonNull CommonSubExpressionAnalysis cseAnalysis;
 	protected final @NonNull E exemplar;
@@ -81,6 +81,13 @@ public abstract class AbstractCSEElement<E extends TypedElement> implements CSEE
 	protected void addOutput(@NonNull OCLExpression outputExp) {
 		assert !outputs.contains(outputExp);
 		outputs.add(outputExp);
+	}
+
+	@Override
+	public int compareTo(@NonNull CSEElement that) {
+		int i1 = System.identityHashCode(this);
+		int i2 = System.identityHashCode(that);
+		return i1 - i2;
 	}
 
 	@Override

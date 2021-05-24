@@ -18,9 +18,12 @@ import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.evaluation.AbstractSymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
  * OrOperation realises the or() library operation.
@@ -28,6 +31,41 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
 public class BooleanOrOperation extends AbstractSimpleBinaryOperation
 {
 	public static final @NonNull BooleanOrOperation INSTANCE = new BooleanOrOperation();
+
+	@Override
+	protected @Nullable SymbolicValue checkPreconditions(@NonNull AbstractSymbolicEvaluationEnvironment symbolicEvaluationEnvironment, @NonNull OperationCallExp callExp) {
+		TypeId returnTypeId = callExp.getTypeId();
+		OCLExpression source = PivotUtil.getOwnedSource(callExp);
+		OCLExpression argument = PivotUtil.getOwnedArgument(callExp, 0);
+		SymbolicValue sourceValue = symbolicEvaluationEnvironment.symbolicEvaluate(source);
+		SymbolicValue argumentValue = symbolicEvaluationEnvironment.symbolicEvaluate(argument);
+		if (sourceValue.isTrue()) {
+			symbolicEvaluationEnvironment.setDead(argument);
+			return symbolicEvaluationEnvironment.getKnownValue(Boolean.TRUE);
+		}
+		if (argumentValue.isTrue()) {
+			symbolicEvaluationEnvironment.setDead(source);
+			return symbolicEvaluationEnvironment.getKnownValue(Boolean.TRUE);
+		}
+		SymbolicValue invalidSourceProblem = symbolicEvaluationEnvironment.checkNotInvalid(source, returnTypeId);
+		if (invalidSourceProblem != null) {
+			return invalidSourceProblem;
+		}
+		SymbolicValue nullSourceProblem = symbolicEvaluationEnvironment.checkNotNull(source, returnTypeId);
+		if (nullSourceProblem != null) {
+			return nullSourceProblem;
+		}
+		// ??? XXX short-circuits
+		SymbolicValue invalidArgumentProblem = symbolicEvaluationEnvironment.checkNotInvalid(argument, returnTypeId);
+		if (invalidArgumentProblem != null) {
+			return invalidArgumentProblem;
+		}
+		SymbolicValue nullArgumentProblem = symbolicEvaluationEnvironment.checkNotNull(argument, returnTypeId);
+		if (nullArgumentProblem != null) {
+			return nullArgumentProblem;
+		}
+		return null;
+	}
 
 	/**
 	 * @since 1.15

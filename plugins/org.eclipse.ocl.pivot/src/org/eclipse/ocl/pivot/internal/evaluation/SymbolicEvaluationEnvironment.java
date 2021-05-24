@@ -13,6 +13,7 @@ package org.eclipse.ocl.pivot.internal.evaluation;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
@@ -48,13 +49,15 @@ public interface SymbolicEvaluationEnvironment extends EvaluationEnvironment.Eva
 	@Nullable SymbolicValue checkNotZero(@NonNull TypedElement typedElement, @NonNull TypeId typeId);
 
 	@NonNull BaseSymbolicEvaluationEnvironment getBaseSymbolicEvaluationEnvironment();
-	@NonNull SymbolicValue getSymbolicValue(@NonNull TypedElement element);
+	@NonNull SymbolicValue getSymbolicValue(@NonNull Element element);
 	boolean isFalse(@NonNull TypedElement element);
 	boolean isInvalid(@NonNull TypedElement element);
 	boolean isNull(@NonNull TypedElement element);
 	boolean isTrue(@NonNull TypedElement element);
 	boolean isZero(@NonNull TypedElement element);
+	boolean mayBeInvalid(@NonNull OCLExpression expression);
 	boolean mayBeInvalidOrNull(@NonNull OCLExpression expression);
+	boolean mayBeNull(@NonNull OCLExpression expression);
 	@NonNull SymbolicValue symbolicEvaluate(@NonNull TypedElement element);
 	@NonNull SymbolicValue traceSymbolicValue(@NonNull CSEElement cseElement, @NonNull SymbolicValue symbolicValue);
 //	@NonNull SymbolicValue traceValue(@NonNull CSEElement cseElement, @Nullable Object value);

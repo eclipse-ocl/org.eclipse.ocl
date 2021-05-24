@@ -39,6 +39,7 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 	}
 
 	public void check() {
+		assert isContradiction == null : "isContradiction already determined for: " + this;
 		HypothesizedSymbolicEvaluationEnvironment hypothesizedEvaluationEnvironment = symbolicAnalysis.createHypothesizedSymbolicEvaluationEnvironment(this);
 		symbolicAnalysis.pushEvaluationEnvironment(hypothesizedEvaluationEnvironment);
 		isContradiction = hypothesizedEvaluationEnvironment.isContradiction();

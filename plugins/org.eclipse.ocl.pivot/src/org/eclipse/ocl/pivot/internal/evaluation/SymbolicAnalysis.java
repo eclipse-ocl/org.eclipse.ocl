@@ -21,6 +21,7 @@ import java.util.Map;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.TypedElement;
@@ -51,7 +52,9 @@ public class SymbolicAnalysis extends BasicOCLExecutor implements SymbolicExecut
 	/**
 	 * The expressions for which contradicting a hypothesized value allows a more precise re-evaluation.
 	 */
-	private @Nullable Map<@NonNull TypedElement, @NonNull Hypothesis> typedElement2hypothesis = null;
+	private @Nullable Map<@NonNull TypedElement, @NonNull List<@NonNull Hypothesis>> typedElement2hypotheses = null;
+
+	private @Nullable List<@NonNull Hypothesis> allHypotheses = null;
 
 	/**
 	 * Initializes the symbolic analysis of expressionInOCL that delegates to a non-symbolic evaluation visitor.
@@ -64,36 +67,38 @@ public class SymbolicAnalysis extends BasicOCLExecutor implements SymbolicExecut
 
 	@Override
 	public void addHypothesis(@NonNull TypedElement typedElement, @NonNull Hypothesis hypothesis) {
-		Map<@NonNull TypedElement, @NonNull Hypothesis> typedElement2hypothesis2 = typedElement2hypothesis;
-		if (typedElement2hypothesis2 == null) {
-			typedElement2hypothesis = typedElement2hypothesis2 = new HashMap<>();
+		List<@NonNull Hypothesis> hypotheses = getHypotheses(typedElement);
+		hypotheses.add(hypothesis);
+	//	assert old == null : "Repeated hypothesis : " + hypothesis;
+		List<@NonNull Hypothesis> allHypotheses2 = allHypotheses;
+		if (allHypotheses2 == null) {
+			allHypotheses2 = allHypotheses = new ArrayList<>();
 		}
-		Hypothesis old = typedElement2hypothesis2.put(typedElement, hypothesis);
-		assert old == null;
+		allHypotheses2.add(hypothesis);
 	}
 
-	public @NonNull Comparator<@NonNull TypedElement> getTypedElementHeightComparator() {
-		return new Comparator<@NonNull TypedElement>()
-		{
-			@Override
-			public int compare(@NonNull TypedElement o1, @NonNull TypedElement o2) {
-				int h1 = SymbolicAnalysis.this.getCSEElement(o1).getHeight();
-				int h2 = SymbolicAnalysis.this.getCSEElement(o2).getHeight();
-				int diff = h1 - h2;
-				if (diff != 0) {
-					return diff;
-				}
-				if (o1 instanceof VariableExp) h1++;
-				if (o2 instanceof VariableExp) h2++;
-				if (o1 instanceof ExpressionInOCL) h1++;
-				if (o2 instanceof ExpressionInOCL) h2++;
-				diff = h1 - h2;
-				if (diff != 0) {
-					return diff;
-				}
-				return System.identityHashCode(o1) - System.identityHashCode(o2);
-			}
-		};
+	public void addMayBeInvalidHypothesis(@NonNull TypedElement typedElement, @NonNull SymbolicValue symbolicValue) {
+		Hypothesis hypothesis = getHypotheses(typedElement, Hypothesis.MayBeInvalidHypothesis.class);
+		if (hypothesis == null) {
+			hypothesis = new Hypothesis.MayBeInvalidHypothesis(this, typedElement, symbolicValue);
+			addHypothesis(typedElement, hypothesis);
+		}
+	}
+
+	public void addMayBeNullHypothesis(@NonNull TypedElement typedElement, @NonNull SymbolicValue symbolicValue) {
+		Hypothesis hypothesis = getHypotheses(typedElement, Hypothesis.MayBeNullHypothesis.class);
+		if (hypothesis == null) {
+			hypothesis = new Hypothesis.MayBeNullHypothesis(this, typedElement, symbolicValue);
+			addHypothesis(typedElement, hypothesis);
+		}
+	}
+
+	public void addMayBeZeroHypothesis(@NonNull TypedElement typedElement, @NonNull SymbolicValue symbolicValue) {
+		Hypothesis hypothesis = getHypotheses(typedElement, Hypothesis.MayBeZeroHypothesis.class);
+		if (hypothesis == null) {
+			hypothesis = new Hypothesis.MayBeZeroHypothesis(this, typedElement, symbolicValue);
+			addHypothesis(typedElement, hypothesis);
+		}
 	}
 
 	@Override
@@ -121,10 +126,6 @@ public class SymbolicAnalysis extends BasicOCLExecutor implements SymbolicExecut
 		return hypothesizedEvaluationEnvironment;
 	}
 
-	protected @NonNull AbstractSymbolicEvaluationEnvironment createNestedEvaluationEnvironment(@NonNull AbstractSymbolicEvaluationEnvironment evaluationEnvironment, @NonNull CSEElement cseElement) {
-		return new BaseSymbolicEvaluationEnvironment(evaluationEnvironment, cseElement.getElement());
-	}
-
 	@Override
 	protected @NonNull AbstractSymbolicEvaluationEnvironment createRootEvaluationEnvironment(@NonNull NamedElement executableObject) {
 		return new BaseSymbolicEvaluationEnvironment(this, executableObject);
@@ -134,7 +135,7 @@ public class SymbolicAnalysis extends BasicOCLExecutor implements SymbolicExecut
 		return getEvaluationEnvironment().getBaseSymbolicEvaluationEnvironment();
 	}
 
-	public @NonNull CSEElement getCSEElement(@NonNull TypedElement element) {
+	public @NonNull CSEElement getCSEElement(@NonNull Element element) {
 		return cseAnalysis.getElementCSE(element);
 	}
 
@@ -143,8 +144,54 @@ public class SymbolicAnalysis extends BasicOCLExecutor implements SymbolicExecut
 		return (AbstractSymbolicEvaluationEnvironment)super.getEvaluationEnvironment();
 	}
 
+	private @Nullable Hypothesis getHypotheses(@NonNull TypedElement typedElement, @NonNull Class<?> hypothesisClass) {
+		for (@NonNull Hypothesis hypothesis : getHypotheses(typedElement)) {
+			if (hypothesis.getClass() == hypothesisClass) {
+				return hypothesis;
+			}
+		}
+		return null;
+	}
+
+	private @NonNull List<@NonNull Hypothesis> getHypotheses(@NonNull TypedElement typedElement) {
+		Map<@NonNull TypedElement, @NonNull List<@NonNull Hypothesis>> typedElement2hypotheses2 = typedElement2hypotheses;
+		if (typedElement2hypotheses2 == null) {
+			typedElement2hypotheses = typedElement2hypotheses2 = new HashMap<>();
+		}
+		List<@NonNull Hypothesis> hypotheses = typedElement2hypotheses2.get(typedElement);
+		if (hypotheses == null) {
+			hypotheses = new ArrayList<>();
+			typedElement2hypotheses2.put(typedElement, hypotheses);
+		}
+		return hypotheses;
+	}
+
 	public @Nullable List<@NonNull HypothesizedSymbolicEvaluationEnvironment> getHypothesizedEvaluationEnvironments() {
 		return hypothesizedEvaluationEnvironments;
+	}
+
+	public @NonNull Comparator<@NonNull TypedElement> getTypedElementHeightComparator() {
+		return new Comparator<@NonNull TypedElement>()
+		{
+			@Override
+			public int compare(@NonNull TypedElement o1, @NonNull TypedElement o2) {
+				int h1 = SymbolicAnalysis.this.getCSEElement(o1).getHeight();
+				int h2 = SymbolicAnalysis.this.getCSEElement(o2).getHeight();
+				int diff = h1 - h2;
+				if (diff != 0) {
+					return diff;
+				}
+				if (o1 instanceof VariableExp) h1++;
+				if (o2 instanceof VariableExp) h2++;
+				if (o1 instanceof ExpressionInOCL) h1++;
+				if (o2 instanceof ExpressionInOCL) h2++;
+				diff = h1 - h2;
+				if (diff != 0) {
+					return diff;
+				}
+				return System.identityHashCode(o1) - System.identityHashCode(o2);
+			}
+		};
 	}
 
 	public void initializeEvaluationEnvironment(@NonNull ExpressionInOCL expressionInOCL, @Nullable Object contextElement, @Nullable Object @Nullable [] parameters) {
@@ -198,14 +245,14 @@ public class SymbolicAnalysis extends BasicOCLExecutor implements SymbolicExecut
 	} */
 
 	protected void resolveHypotheses() {
-		Map<@NonNull TypedElement, @NonNull Hypothesis> typedElement2hypothesis2 = typedElement2hypothesis;
-		if (typedElement2hypothesis2 != null) {
+		Map<@NonNull TypedElement, @NonNull List<@NonNull Hypothesis>> typedElement2hypotheses2 = typedElement2hypotheses;
+		if (typedElement2hypotheses2 != null) {
 		//	AbstractSymbolicEvaluationEnvironment evaluationEnvironment = getEvaluationEnvironment();
-			List<@NonNull Hypothesis> hypotheses = new ArrayList<>(typedElement2hypothesis2.values());
+			List<@NonNull Hypothesis> hypotheses = new ArrayList<>(allHypotheses);
 			if (hypotheses.size() > 1) {
 				Collections.sort(hypotheses);
 			}
-			for (@NonNull Hypothesis hypothesis : hypotheses) {
+			for (@NonNull Hypothesis hypothesis : hypotheses) {	// XXX domain growth
 				if (isCanceled()) {
 					throw new EvaluationHaltedException("Canceled");
 				}

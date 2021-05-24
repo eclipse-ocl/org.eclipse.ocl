@@ -22,6 +22,7 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.OCLExpression;
@@ -82,7 +83,7 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 	}
 
 	@Override
-	public @Nullable SymbolicValue basicGetSymbolicValue(@NonNull TypedElement element) {
+	public @Nullable SymbolicValue basicGetSymbolicValue(@NonNull Element element) {
 		SymbolicValue refinedSymbolicValue = expression2refinedSymbolicValue.get(element);
 		if (refinedSymbolicValue != null) {
 			return refinedSymbolicValue;
@@ -262,6 +263,17 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 		catch (InvalidValueException e) {
 			result = e;
 		}
+	/*	catch (Exception e) {
+			// This is a backstop. Library operations should catch their own exceptions
+			//  and produce a better reason as a result.
+			result = new InvalidValueException(e, PivotMessagesInternal.FailedToEvaluate_ERROR_, element, "-", "-");
+		}
+		catch (AssertionError e) {
+			// This is a backstop. Library operations should catch their own exceptions
+			//  and produce a better reason as a result.
+			result = new InvalidValueException(e, PivotMessagesInternal.FailedToEvaluate_ERROR_, element, "-", "-");
+			throw e;
+		} */
 		CSEElement cseElement = getSymbolicAnalysis().getCSEElement(element);
 		return traceValue(cseElement, result);								// Record new value
 	}
