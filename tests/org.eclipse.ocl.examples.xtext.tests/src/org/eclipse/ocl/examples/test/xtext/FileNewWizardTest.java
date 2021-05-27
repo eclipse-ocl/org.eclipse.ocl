@@ -83,6 +83,8 @@ public class FileNewWizardTest extends TestCase
 	private static final @NonNull String EXPECTED_CLASS_NAME = "TestClass";
 	private static final @NonNull String EXPECTED_FEATURE_NAME = "testFeature";
 
+	private static final boolean SUPPRESS_OCL_NATURE = false;
+
 	@Rule public @NonNull TestName testName = new TestName();
 	public @Nullable TestFileSystem testFileSystem = null;
 	public @Nullable TestProject testProject = null;
@@ -220,6 +222,9 @@ public class FileNewWizardTest extends TestCase
 	 */
 	@Override
 	protected void setUp() throws Exception {
+		if (SUPPRESS_OCL_NATURE) {
+			System.err.println("OCL nature suppressed for " + getTestName());
+		}
 		super.setUp();
 		TestProject testProject = getTestProject();
 		//
@@ -230,7 +235,9 @@ public class FileNewWizardTest extends TestCase
 		assertTrue(testIProject.exists());
 		NullProgressMonitor nullMonitor = new NullProgressMonitor();
 		IProjectDescription description = ClassUtil.nonNullState(testIProject.getDescription());
-		BaseUIUtil.toggleNature(description, OCLProjectHelper.NATURE_ID);
+		if (!SUPPRESS_OCL_NATURE) {
+			BaseUIUtil.toggleNature(description, OCLProjectHelper.NATURE_ID);
+		}
 		testIProject.setDescription(description, IResource.FORCE | IResource.KEEP_HISTORY, nullMonitor);
 		//
 		URI inputURI = URI.createPlatformPluginURI(PivotTestCase.PLUGIN_ID + "/models/wizard/" + TEST_ECORE_NAME, true);
