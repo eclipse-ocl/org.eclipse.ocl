@@ -18,7 +18,7 @@ import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.evaluation.AbstractSymbolicEvaluationEnvironment;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -32,8 +32,11 @@ public class BooleanImpliesOperation extends AbstractSimpleBinaryOperation
 {
 	public static final @NonNull BooleanImpliesOperation INSTANCE = new BooleanImpliesOperation();
 
+	/**
+	 * @since 1.15
+	 */
 	@Override
-	protected @Nullable SymbolicValue checkPreconditions(@NonNull AbstractSymbolicEvaluationEnvironment symbolicEvaluationEnvironment, @NonNull OperationCallExp callExp) {
+	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment symbolicEvaluationEnvironment, @NonNull OperationCallExp callExp) {
 		TypeId returnTypeId = callExp.getTypeId();
 		OCLExpression source = PivotUtil.getOwnedSource(callExp);
 		OCLExpression argument = PivotUtil.getOwnedArgument(callExp, 0);

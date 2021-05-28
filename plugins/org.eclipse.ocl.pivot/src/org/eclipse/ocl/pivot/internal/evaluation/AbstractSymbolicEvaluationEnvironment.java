@@ -102,6 +102,7 @@ public abstract class AbstractSymbolicEvaluationEnvironment extends BasicEvaluat
 		return getBaseSymbolicEvaluationEnvironment().getSymbolicValue(typedElement);
 	}
 
+	@Override
 	public @NonNull SymbolicValue getKnownValue(@Nullable Object boxedValue) {
 		return getBaseSymbolicEvaluationEnvironment().getKnownValue(boxedValue);
 	}

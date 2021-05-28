@@ -18,11 +18,13 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.evaluation.IterationManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.evaluation.AbstractSymbolicEvaluationEnvironment;
+import org.eclipse.ocl.pivot.internal.values.SymbolicUnknownValueImpl;
 import org.eclipse.ocl.pivot.library.LibraryOperation.LibraryOperationExtension2;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.SymbolicKnownValue;
@@ -165,6 +167,8 @@ public abstract class AbstractIteration extends AbstractIterationOrOperation imp
 		}
 		SymbolicValue sourceSymbolicValue = evaluationEnvironment.symbolicEvaluate(PivotUtil.getOwnedSource(loopExp));
 		boolean isKnown = false; // Need to guard against huge symbolic constants -- sourceSymbolicValue.isKnown();
+		OCLExpression ownedSource = PivotUtil.getOwnedSource(loopExp);
+		boolean mayBeInvalidOrNull = loopExp.isIsSafe() ? evaluationEnvironment.mayBeInvalid(ownedSource) : evaluationEnvironment.mayBeInvalidOrNull(ownedSource);
 		Iterable<@NonNull Variable> ownedIterators = PivotUtil.getOwnedIterators(loopExp);
 		int iteratorsSize = Iterables.size(ownedIterators);
 		int resultsSize = loopExp instanceof IterateExp ? 1 : 0;
@@ -177,6 +181,9 @@ public abstract class AbstractIteration extends AbstractIterationOrOperation imp
 				isKnown = false;
 			}
 			argumentSymbolicValues.add(iteratorSymbolicValue);
+			if (iteratorSymbolicValue.mayBeInvalid()) {
+				mayBeInvalidOrNull = true;
+			}
 		}
 		if (loopExp instanceof IterateExp) {
 			SymbolicValue resultSymbolicValue = evaluationEnvironment.symbolicEvaluate(PivotUtil.getOwnedResult((IterateExp) loopExp));
@@ -184,10 +191,18 @@ public abstract class AbstractIteration extends AbstractIterationOrOperation imp
 				isKnown = false;
 			}
 			argumentSymbolicValues.add(resultSymbolicValue);
+			if (resultSymbolicValue.mayBeInvalid()) {
+				mayBeInvalidOrNull = true;
+			}
 		}
-		SymbolicValue bodySymbolicValue = evaluationEnvironment.symbolicEvaluate(PivotUtil.getOwnedBody(loopExp));
+		OCLExpression bodyExp = PivotUtil.getOwnedBody(loopExp);
+		SymbolicValue bodySymbolicValue = evaluationEnvironment.symbolicEvaluate(bodyExp);
 		if (!bodySymbolicValue.isKnown()) {
 			isKnown = false;
+		}
+		Parameter bodyParameter = loopExp.getReferredIteration().getOwnedParameters().get(0);
+		if (bodyParameter.isIsRequired() ? evaluationEnvironment.mayBeInvalidOrNull(bodyExp) : evaluationEnvironment.mayBeInvalid(bodyExp)) {
+			mayBeInvalidOrNull = true;
 		}
 		argumentSymbolicValues.add(bodySymbolicValue);
 		if (isKnown) {
@@ -200,7 +215,7 @@ public abstract class AbstractIteration extends AbstractIterationOrOperation imp
 			return evaluationEnvironment.getKnownValue(result);
 		}
 		else {
-			return createChildSymbolicValue(evaluationEnvironment, loopExp, sourceSymbolicValue, argumentSymbolicValues);
+			return new SymbolicUnknownValueImpl(loopExp.getTypeId(), false, mayBeInvalidOrNull);
 		}
 
 		/*	if (loopExp.isIsMany()) {

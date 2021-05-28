@@ -24,6 +24,7 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LiteralExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.TypeExp;
+import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
@@ -50,6 +51,11 @@ public class CommonSubExpressionAnalysis
 	private @Nullable Map<@NonNull Class<?>, @NonNull Map<@NonNull List<@NonNull CSEElement>, @NonNull CSEAggregateElement>> namespaceClass2elements2cse = null;
 
 	/**
+	 * The CSEs for specific keyed model elements such as ShadowPart and TupleLiteralPart
+	 */
+	private @Nullable Map<@NonNull Map<@NonNull TypedElement, @NonNull CSEElement>, @NonNull CSEMappedElement> key2element2cse = null;
+
+	/**
 	 * The CSEs for specific typeids.
 	 *
 	 * XXX make TypeExp a Literal
@@ -63,10 +69,6 @@ public class CommonSubExpressionAnalysis
 
 	public CommonSubExpressionAnalysis() {
 		this.visitor = createCSEVisitor();
-	}
-
-	public CommonSubExpressionAnalysis(@NonNull CSEVisitor visitor) {
-		this.visitor = visitor;
 	}
 
 	public @NonNull CSEElement analyze(@NonNull ExpressionInOCL expressionInOCL) {
@@ -96,6 +98,19 @@ public class CommonSubExpressionAnalysis
 		return cseElement;
 	}
 
+	public @NonNull CSEMappedElement getMappedCSE(@NonNull Element element, @NonNull Map<@NonNull TypedElement, @NonNull CSEElement> property2element) {
+		Map<@NonNull Map<@NonNull TypedElement, @NonNull CSEElement>, @NonNull CSEMappedElement> key2element2cse2 = key2element2cse;
+		if (key2element2cse2 == null) {
+			key2element2cse = key2element2cse2 = new HashMap<>();
+		}
+		CSEMappedElement cseElement = key2element2cse2.get(property2element);
+		if (cseElement == null) {
+			cseElement = new CSEMappedElement(this, element, property2element);
+			key2element2cse2.put(property2element, cseElement);
+		}
+		return cseElement;
+	}
+
 	public @NonNull CSEAggregateElement getNamespaceCSE(@NonNull Element element, @NonNull List<@NonNull CSEElement> elements) {
 		@NonNull Class<?> namespaceClass = element.getClass();
 		Map<@NonNull Class<?>, @NonNull Map<@NonNull List<@NonNull CSEElement>, @NonNull CSEAggregateElement>> namespaceClass2elements2cse2 = namespaceClass2elements2cse;
@@ -115,16 +130,6 @@ public class CommonSubExpressionAnalysis
 		return cseElement;
 	}
 
-	public @NonNull CSEValueElement getValueCSE(@NonNull LiteralExp literalExp, @NonNull Object value) {
-		CSEValueElement cseElement = value2cse.get(value);
-		if (cseElement == null) {
-			cseElement = new CSEValueElement(this, literalExp, value);
-			value2cse.put(value, cseElement);
-		}
-		cseElement.addLiteralExp(literalExp);
-		return cseElement;
-	}
-
 	// XXX Make TypeExp a LiteralExp
 	public @NonNull CSETypeElement getTypeCSE(@NonNull TypeExp typeExp) {
 		Map<@NonNull TypeId, @NonNull CSETypeElement> typeid2cse2 = typeid2cse;
@@ -137,6 +142,16 @@ public class CommonSubExpressionAnalysis
 			cseElement = new CSETypeElement(this, typeExp);
 			typeid2cse2.put(typeId, cseElement);
 		}
+		return cseElement;
+	}
+
+	public @NonNull CSEValueElement getValueCSE(@NonNull LiteralExp literalExp, @NonNull Object value) {
+		CSEValueElement cseElement = value2cse.get(value);
+		if (cseElement == null) {
+			cseElement = new CSEValueElement(this, literalExp, value);
+			value2cse.put(value, cseElement);
+		}
+		cseElement.addLiteralExp(literalExp);
 		return cseElement;
 	}
 

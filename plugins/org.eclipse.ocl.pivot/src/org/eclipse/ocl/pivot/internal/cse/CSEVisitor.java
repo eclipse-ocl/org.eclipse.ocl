@@ -12,7 +12,9 @@ package org.eclipse.ocl.pivot.internal.cse;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -38,6 +40,7 @@ import org.eclipse.ocl.pivot.NullLiteralExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
+import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.RealLiteralExp;
 import org.eclipse.ocl.pivot.ShadowExp;
 import org.eclipse.ocl.pivot.ShadowPart;
@@ -45,6 +48,7 @@ import org.eclipse.ocl.pivot.StringLiteralExp;
 import org.eclipse.ocl.pivot.TupleLiteralExp;
 import org.eclipse.ocl.pivot.TupleLiteralPart;
 import org.eclipse.ocl.pivot.TypeExp;
+import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
@@ -222,20 +226,23 @@ public class CSEVisitor extends AbstractExtendingVisitor<@NonNull CSEElement, @N
 
 	@Override
 	public @NonNull CSEElement visitShadowExp(@NonNull ShadowExp shadowExp) {
-	//	List<@NonNull String> shadowKeys = new ArrayList<>();
-		List<@NonNull CSEElement> elements = new ArrayList<>();
-		for (@NonNull ShadowPart part : PivotUtil.getOwnedParts(shadowExp)) {
-	//		shadowKeys.add(PivotUtil.getName(PivotUtil.getReferredProperty(part)));
-			elements.add(context.getElementCSE(part));
+		Map<@NonNull TypedElement, @NonNull CSEElement> property2element = new HashMap<>();
+		for (@NonNull ShadowPart shadowPart : PivotUtil.getOwnedParts(shadowExp)) {
+			Property shadowProperty = PivotUtil.getReferredProperty(shadowPart);
+			OCLExpression shadowInit = PivotUtil.getOwnedInit(shadowPart);
+			CSEElement initCSE = context.getElementCSE(shadowInit);
+			CSEElement partCSE = context.getNamespaceCSE(shadowPart, Collections.singletonList(initCSE));
+			property2element.put(shadowProperty, partCSE);
 		}
-	//	List<@NonNull String> sortedKeys = new ArrayList<>(shadowKeys);
-		Collections.sort(elements);
-		return context.getNamespaceCSE(shadowExp, elements);
+		return context.getMappedCSE(shadowExp, property2element);
 	}
 
 	@Override
 	public @NonNull CSEElement visitShadowPart(@NonNull ShadowPart shadowPart) {
-		return context.getElementCSE(PivotUtil.getOwnedInit(shadowPart));
+		ShadowExp shadowExp = PivotUtil.getOwningShadowExp(shadowPart);
+		Property shadowProperty = PivotUtil.getReferredProperty(shadowPart);
+		CSEMappedElement shadowCSE = (CSEMappedElement)context.getElementCSE(shadowExp);
+		return shadowCSE.getElement(shadowProperty);
 	}
 
 	@Override
@@ -245,16 +252,21 @@ public class CSEVisitor extends AbstractExtendingVisitor<@NonNull CSEElement, @N
 
 	@Override
 	public @NonNull CSEElement visitTupleLiteralExp(@NonNull TupleLiteralExp tupleLiteralExp) {
-		List<@NonNull CSEElement> elements = new ArrayList<>();
-		for (@NonNull TupleLiteralPart part : PivotUtil.getOwnedParts(tupleLiteralExp)) {
-			elements.add(context.getElementCSE(part));
+		Map<@NonNull TypedElement, @NonNull CSEElement> property2element = new HashMap<>();
+		for (@NonNull TupleLiteralPart tuplePart : PivotUtil.getOwnedParts(tupleLiteralExp)) {
+			OCLExpression shadowInit = PivotUtil.getOwnedInit(tuplePart);
+			CSEElement initCSE = context.getElementCSE(shadowInit);
+			CSEElement partCSE = context.getNamespaceCSE(tuplePart, Collections.singletonList(initCSE));
+			property2element.put(tuplePart, partCSE);
 		}
-		return context.getNamespaceCSE(tupleLiteralExp, elements);
+		return context.getMappedCSE(tupleLiteralExp, property2element);
 	}
 
 	@Override
 	public @NonNull CSEElement visitTupleLiteralPart(@NonNull TupleLiteralPart tupleLiteralPart) {
-		return context.getElementCSE(PivotUtil.getOwnedInit(tupleLiteralPart));
+		TupleLiteralExp tupleLiteralExp = PivotUtil.getOwningTupleLiteralExp(tupleLiteralPart);
+		CSEMappedElement tupleCSE = (CSEMappedElement)context.getElementCSE(tupleLiteralExp);
+		return tupleCSE.getElement(tupleLiteralPart);
 	}
 
 	@Override

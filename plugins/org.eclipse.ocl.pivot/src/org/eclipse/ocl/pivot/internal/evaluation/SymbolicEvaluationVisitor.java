@@ -150,7 +150,7 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 	 */
 	protected @Nullable Object doOperationCallExp(@NonNull OperationCallExp operationCallExp) {
 		Operation apparentOperation = PivotUtil.getReferredOperation(operationCallExp);
-		if ("size".equals(apparentOperation.getName())) {
+		if ("includes".equals(apparentOperation.getName())) {
 			getClass();		// XXX
 		}
 		@SuppressWarnings("unused")
@@ -275,30 +275,7 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 
 	@Override
 	public @Nullable Object visitCollectionItem(@NonNull CollectionItem item) {
-		Object result;
-//			result = delegate.visitCollectionItem(item);
-		boolean isSymbolic = false;
-		boolean mayBeInvalid = false;
-		boolean mayBeNull = false;
-	//	Object itemValue = evaluate(item);
-		OCLExpression ownedItem = PivotUtil.getOwnedItem(item);		// XXX
-		Object itemValue = delegate.evaluate(ownedItem);
-		if (itemValue instanceof SymbolicValue) {
-			isSymbolic = true;
-		}
-		if (ValueUtil.mayBeInvalid(itemValue)) {
-			mayBeInvalid = true;
-		}
-		if (ValueUtil.mayBeNull(itemValue)) {
-			mayBeNull = true;
-		}
-		if (isSymbolic) {
-			result = new SymbolicExpressionValueImpl(ownedItem, true, mayBeNull || mayBeInvalid);
-		}
-		else {
-			result = itemValue;
-		}
-		return result;
+		return getEvaluationEnvironment().symbolicEvaluate(PivotUtil.getOwnedItem(item));
 	}
 
 	@Override
@@ -321,7 +298,7 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 			}
 		}
 		if (isSymbolic) {
-			result = new SymbolicExpressionValueImpl(literalExp, true, mayBeNull || mayBeInvalid);
+			result = new SymbolicExpressionValueImpl(literalExp, false, mayBeNull || mayBeInvalid);
 		}
 		else {
 			result = delegate.visitCollectionLiteralExp(literalExp);
@@ -456,7 +433,7 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 			}
 		}
 		if (isSymbolic) {
-			return new SymbolicExpressionValueImpl(literalExp, true, mayBeNull || mayBeInvalid);
+			return new SymbolicExpressionValueImpl(literalExp, false, mayBeNull || mayBeInvalid);
 		}
 		else {
 			return delegate.visitMapLiteralExp(literalExp);
@@ -490,58 +467,107 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 
 	@Override
 	public @Nullable Object visitShadowExp(@NonNull ShadowExp shadowExp) {
-		Object result;
+		SymbolicEvaluationEnvironment evaluationEnvironment = getEvaluationEnvironment();
 		boolean isSymbolic = false;
 		boolean mayBeInvalid = false;
 		boolean mayBeNull = false;
 		for (@NonNull ShadowPart part : PivotUtil.getOwnedParts(shadowExp)) {
-			Object partValue = evaluate(PivotUtil.getOwnedInit(part));
-			assert ValueUtil.isBoxed(partValue);	// Make sure Integer/Real are boxed, invalid is an exception, null is null
-			if (partValue instanceof SymbolicValue) {
+			SymbolicValue partValue = evaluationEnvironment.symbolicEvaluate(part);
+			if (!partValue.isKnown()) {
 				isSymbolic = true;
 			}
-			if (ValueUtil.mayBeInvalid(partValue)) {
+			if (partValue.mayBeInvalid()) {
 				mayBeInvalid = true;
 			}
-			if (ValueUtil.mayBeNull(partValue)) {
+			if (partValue.mayBeNull()) {
 				mayBeNull = true;
 			}
 		}
 		if (isSymbolic) {
-			result = new SymbolicExpressionValueImpl(shadowExp, true, mayBeNull || mayBeInvalid);
+			return new SymbolicExpressionValueImpl(shadowExp, false, mayBeNull || mayBeInvalid);
 		}
 		else {
-			result = delegate.visitShadowExp(shadowExp);
+			return delegate.visitShadowExp(shadowExp);
 		}
-		return result;
+	}
+
+	@Override
+	public Object visitShadowPart(@NonNull ShadowPart shadowPart) {
+		SymbolicEvaluationEnvironment evaluationEnvironment = getEvaluationEnvironment();
+		boolean isSymbolic = false;
+		boolean mayBeInvalid = false;
+		boolean mayBeNull = false;
+		OCLExpression ownedInit = PivotUtil.getOwnedInit(shadowPart);		// XXX
+		Property partProperty = shadowPart.getReferredProperty();
+		boolean isRequired = partProperty.isIsRequired();
+		boolean isMany = partProperty.isIsMany();
+		SymbolicValue initValue = evaluationEnvironment.symbolicEvaluate(ownedInit);
+		if (!initValue.isKnown()) {
+			isSymbolic = true;
+		}
+		if (initValue.mayBeInvalid()) {
+			mayBeInvalid = true;
+		}
+		if (initValue.mayBeNull()) {
+			mayBeNull = true;
+		}
+		if (isSymbolic) {
+			return new SymbolicExpressionValueImpl(ownedInit, false, mayBeNull || mayBeInvalid);
+		}
+		else {
+			return new SymbolicExpressionValueImpl(ownedInit, false, mayBeNull || mayBeInvalid);
+//			return delegate.visitShadowPart(shadowPart);
+		}
 	}
 
 	@Override
 	public @Nullable Object visitTupleLiteralExp(@NonNull TupleLiteralExp literalExp) {
-		Object result;
+		SymbolicEvaluationEnvironment evaluationEnvironment = getEvaluationEnvironment();
 		boolean isSymbolic = false;
 		boolean mayBeInvalid = false;
 		boolean mayBeNull = false;
 		for (@NonNull TupleLiteralPart part : PivotUtil.getOwnedParts(literalExp)) {
-			Object partValue = evaluate(PivotUtil.getOwnedInit(part));
-			assert ValueUtil.isBoxed(partValue);	// Make sure Integer/Real are boxed, invalid is an exception, null is null
-			if (partValue instanceof SymbolicValue) {
+			SymbolicValue partValue = evaluationEnvironment.symbolicEvaluate(part);
+			if (!partValue.isKnown()) {
 				isSymbolic = true;
 			}
-			if (ValueUtil.mayBeInvalid(partValue)) {
+			if (partValue.mayBeInvalid()) {
 				mayBeInvalid = true;
 			}
-			if (ValueUtil.mayBeNull(partValue)) {
+			if (partValue.mayBeNull()) {
 				mayBeNull = true;
 			}
 		}
 		if (isSymbolic) {
-			result = new SymbolicExpressionValueImpl(literalExp, true, mayBeNull || mayBeInvalid);
+			return new SymbolicExpressionValueImpl(literalExp, false, mayBeNull || mayBeInvalid);
 		}
 		else {
-			result = delegate.visitTupleLiteralExp(literalExp);
+			return delegate.visitTupleLiteralExp(literalExp);
 		}
-		return result;
+	}
+
+	@Override
+	public Object visitTupleLiteralPart(@NonNull TupleLiteralPart part) {
+		SymbolicEvaluationEnvironment evaluationEnvironment = getEvaluationEnvironment();
+		boolean isSymbolic = false;
+		boolean mayBeInvalid = false;
+		boolean mayBeNull = false;
+		SymbolicValue partValue = evaluationEnvironment.symbolicEvaluate(PivotUtil.getOwnedInit(part));
+		if (!partValue.isKnown()) {
+			isSymbolic = true;
+		}
+		if (partValue.mayBeInvalid()) {
+			mayBeInvalid = true;
+		}
+		if (partValue.mayBeNull()) {
+			mayBeNull = true;
+		}
+		if (isSymbolic) {
+			return new SymbolicExpressionValueImpl(part, false, mayBeNull || mayBeInvalid);
+		}
+		else {
+			return delegate.visitTupleLiteralPart(part);
+		}
 	}
 
 	@Override

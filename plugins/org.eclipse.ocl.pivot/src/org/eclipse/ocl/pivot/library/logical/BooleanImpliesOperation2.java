@@ -15,7 +15,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.evaluation.Executor;
-import org.eclipse.ocl.pivot.internal.evaluation.AbstractSymbolicEvaluationEnvironment;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.internal.values.SymbolicUnknownValueImpl;
 import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -90,7 +90,7 @@ public class BooleanImpliesOperation2 extends AbstractSimpleBinaryOperation
 	 * @since 1.15
 	 */
 	@Override
-	public @NonNull SymbolicValue symbolicEvaluate(@NonNull AbstractSymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
+	public @NonNull SymbolicValue symbolicEvaluate(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
 		SymbolicValue symbolicPreconditionValue = checkPreconditions(evaluationEnvironment, callExp);
 		if (symbolicPreconditionValue != null) {
 			return symbolicPreconditionValue;
@@ -105,7 +105,7 @@ public class BooleanImpliesOperation2 extends AbstractSimpleBinaryOperation
 		if (unconstrainedSourceValue.isTrue()) {							// If we know the source is true there is no need to install the extra fact.
 			return evaluationEnvironment.symbolicEvaluate(argument);
 		}
-		AbstractSymbolicEvaluationEnvironment constrainedEvaluationEnvironment = evaluationEnvironment;
+		SymbolicEvaluationEnvironment constrainedEvaluationEnvironment = evaluationEnvironment;
 		SymbolicValue unconstrainedArgumentValue = constrainedEvaluationEnvironment.symbolicEvaluate(argument);
 		boolean mayBeInvalid = ValueUtil.mayBeInvalid(unconstrainedSourceValue) || ValueUtil.mayBeInvalid(unconstrainedArgumentValue);
 		boolean mayBeNull = ValueUtil.mayBeNull(unconstrainedSourceValue) || ValueUtil.mayBeNull(unconstrainedArgumentValue);

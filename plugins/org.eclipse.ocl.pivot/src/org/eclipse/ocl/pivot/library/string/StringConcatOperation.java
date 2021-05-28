@@ -12,7 +12,13 @@ package org.eclipse.ocl.pivot.library.string;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.OperationCallExp;
+import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
  * StringConcatOperation realises the String::concat() library operation.
@@ -20,6 +26,20 @@ import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
 public class StringConcatOperation extends AbstractSimpleBinaryOperation
 {
 	public static final @NonNull StringConcatOperation INSTANCE = new StringConcatOperation();
+
+	/**
+	 * @since 1.15
+	 */
+	@Override
+	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment symbolicEvaluationEnvironment, @NonNull OperationCallExp callExp) {
+		TypeId returnTypeId = callExp.getTypeId();
+		OCLExpression source = PivotUtil.getOwnedSource(callExp);
+		SymbolicValue sourceProblem = symbolicEvaluationEnvironment.checkNotInvalid(source, returnTypeId);
+		if (sourceProblem != null) {
+			return sourceProblem;
+		}
+		return null;
+	}
 
 	@Override
 	public @NonNull String evaluate(@Nullable Object left, @Nullable Object right) {

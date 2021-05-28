@@ -31,6 +31,17 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  */
 public abstract class AbstractCSEElement<E extends Element> implements CSEElement
 {
+	protected static int computeHeight(@NonNull Iterable<@NonNull CSEElement> elements) {
+		int maxHeight = 0;
+		for (@NonNull CSEElement element : elements) {
+			int height = element.getHeight();
+			if (height > maxHeight) {
+				maxHeight = height;
+			}
+		}
+		return maxHeight + 1;
+	}
+
 	protected final @NonNull CommonSubExpressionAnalysis cseAnalysis;
 	protected final @NonNull E exemplar;
 	private final int height;
@@ -49,7 +60,7 @@ public abstract class AbstractCSEElement<E extends Element> implements CSEElemen
 	/**
 	 * The CSEs used to compute this CSE. The primary source first, rest in iteratir, accumulator, argument, body order
 	 */
-	private final @Nullable List<@NonNull CSEElement> inputs;
+	private @Nullable List<@NonNull CSEElement> inputs = null;
 
 	/**
 	 * The expressions that compute from this CSE.
@@ -59,22 +70,22 @@ public abstract class AbstractCSEElement<E extends Element> implements CSEElemen
 
 	protected AbstractCSEElement(@NonNull CommonSubExpressionAnalysis cseAnalysis, @NonNull E exemplar, int height) {
 		this.cseAnalysis = cseAnalysis;
-		this.inputs = null;
 		this.exemplar = exemplar;
 		this.height = height;
 	}
 
 	protected AbstractCSEElement(@NonNull AbstractCSEElement<?> parent, @NonNull E exemplar, int height) {
 		this.cseAnalysis = parent.cseAnalysis;
-		this.inputs = new ArrayList<>();
-		inputs.add(parent);
+		addInput(parent);
 		this.exemplar = exemplar;
 		this.height = height;
 	}
 
 	protected void addInput(@NonNull CSEElement inputCSE) {
 		List<@NonNull CSEElement> inputs2 = inputs;
-		assert inputs2 != null;
+		if (inputs2 == null) {
+			inputs = inputs2 = new ArrayList<>();
+		}
 		inputs2.add(inputCSE);
 	}
 

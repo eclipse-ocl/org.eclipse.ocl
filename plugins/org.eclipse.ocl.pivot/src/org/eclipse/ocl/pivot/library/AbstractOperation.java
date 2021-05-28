@@ -27,9 +27,10 @@ import org.eclipse.ocl.pivot.evaluation.EvaluationHaltedException;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.evaluation.AbstractSymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal.ExecutorInternalExtension;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
+import org.eclipse.ocl.pivot.internal.values.SymbolicUnknownValueImpl;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -84,7 +85,7 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 	/**
 	 * @since 1.15
 	 */
-	protected @Nullable SymbolicValue checkPreconditions(@NonNull AbstractSymbolicEvaluationEnvironment symbolicEvaluationEnvironment, @NonNull OperationCallExp callExp) {
+	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment symbolicEvaluationEnvironment, @NonNull OperationCallExp callExp) {
 		EnvironmentFactory environmentFactory = symbolicEvaluationEnvironment.getEnvironmentFactory();
 		CompleteModel completeModel = environmentFactory.getCompleteModel();
 		StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
@@ -123,6 +124,27 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 			i++;
 		}
 		return null;
+	}
+
+	/**
+	 * @since 1.15
+	 */
+	protected @NonNull SymbolicValue createResultValue(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp,
+			@NonNull SymbolicValue sourceSymbolicValue, @NonNull List<@NonNull SymbolicValue> argumentSymbolicValues) {
+		OCLExpression ownedSource = PivotUtil.getOwnedSource(callExp);
+		Operation referredOperation = PivotUtil.getReferredOperation(callExp);
+		boolean mayBeInvalidOrNull = evaluationEnvironment.mayBeInvalidOrNull(ownedSource);
+		int i = 0;
+		for (@NonNull SymbolicValue argumentSymbolicValue : argumentSymbolicValues) {		// XXX correlate parameter/return nullity
+			if (argumentSymbolicValue.mayBeInvalidOrNull()) {
+				Parameter ownedParameter = PivotUtil.getOwnedParameter(referredOperation, i);
+				if (ownedParameter.isIsRequired()) {
+					mayBeInvalidOrNull = true;
+				}
+			}
+			i++;
+		}
+		return new SymbolicUnknownValueImpl(callExp.getTypeId(), false, mayBeInvalidOrNull);
 	}
 
 	/**
@@ -199,7 +221,7 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 	 * @since 1.15
 	 */
 	@Override
-	public @NonNull SymbolicValue symbolicEvaluate(@NonNull AbstractSymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
+	public @NonNull SymbolicValue symbolicEvaluate(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
 		SymbolicValue symbolicPreconditionValue = checkPreconditions(evaluationEnvironment, callExp);
 		if (symbolicPreconditionValue != null) {
 			return symbolicPreconditionValue;
@@ -226,7 +248,7 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 			return evaluationEnvironment.getKnownValue(result);
 		}
 		else {
-			return createChildSymbolicValue(evaluationEnvironment, callExp, sourceSymbolicValue, argumentSymbolicValues);
+			return createResultValue(evaluationEnvironment, callExp, sourceSymbolicValue, argumentSymbolicValues);
 		}
 	}
 }

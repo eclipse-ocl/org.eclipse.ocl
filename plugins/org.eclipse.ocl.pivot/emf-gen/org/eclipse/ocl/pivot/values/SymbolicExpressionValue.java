@@ -11,7 +11,7 @@
 package org.eclipse.ocl.pivot.values;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.TypedElement;
 
 /**
  * <!-- begin-user-doc -->
@@ -29,5 +29,5 @@ import org.eclipse.ocl.pivot.OCLExpression;
  */
 public interface SymbolicExpressionValue extends SymbolicValue
 {
-	@NonNull OCLExpression getExpression();
+	@NonNull TypedElement getExpression();
 }

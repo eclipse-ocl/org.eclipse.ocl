@@ -49,6 +49,7 @@ public interface SymbolicEvaluationEnvironment extends EvaluationEnvironment.Eva
 	@Nullable SymbolicValue checkNotZero(@NonNull TypedElement typedElement, @NonNull TypeId typeId);
 
 	@NonNull BaseSymbolicEvaluationEnvironment getBaseSymbolicEvaluationEnvironment();
+	@NonNull SymbolicValue getKnownValue(@Nullable Object boxedValue);
 	@NonNull SymbolicValue getSymbolicValue(@NonNull Element element);
 	boolean isFalse(@NonNull TypedElement element);
 	boolean isInvalid(@NonNull TypedElement element);
@@ -58,6 +59,7 @@ public interface SymbolicEvaluationEnvironment extends EvaluationEnvironment.Eva
 	boolean mayBeInvalid(@NonNull OCLExpression expression);
 	boolean mayBeInvalidOrNull(@NonNull OCLExpression expression);
 	boolean mayBeNull(@NonNull OCLExpression expression);
+	void setDead(@NonNull OCLExpression expression);
 	@NonNull SymbolicValue symbolicEvaluate(@NonNull TypedElement element);
 	@NonNull SymbolicValue traceSymbolicValue(@NonNull CSEElement cseElement, @NonNull SymbolicValue symbolicValue);
 //	@NonNull SymbolicValue traceValue(@NonNull CSEElement cseElement, @Nullable Object value);

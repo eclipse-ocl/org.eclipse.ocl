@@ -1839,10 +1839,24 @@ public class PivotUtil
 	}
 
 	/**
+	 * @since 1.16
+	 */
+	public static @NonNull ShadowExp getOwningShadowExp(@NonNull ShadowPart shadowPart) {
+		return (ShadowExp) ClassUtil.nonNullState(shadowPart.eContainer());
+	}
+
+	/**
 	 * @since 1.9
 	 */
 	public static @NonNull TemplateSignature getOwningSignature(@NonNull TemplateParameter asTemplateParameter) {
 		return ClassUtil.nonNullState(asTemplateParameter.getOwningSignature());
+	}
+
+	/**
+	 * @since 1.16
+	 */
+	public static @NonNull TupleLiteralExp getOwningTupleLiteralExp(@NonNull TupleLiteralPart tupleLiteralPart) {
+		return (TupleLiteralExp) ClassUtil.nonNullState(tupleLiteralPart.eContainer());
 	}
 
 	public static org.eclipse.ocl.pivot.@Nullable Package getPackage(@NonNull EObject object) {
