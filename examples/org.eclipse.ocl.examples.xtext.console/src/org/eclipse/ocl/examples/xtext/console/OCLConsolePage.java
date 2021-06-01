@@ -18,6 +18,7 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -114,7 +115,9 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.ISelectionService;
 import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.console.IConsole;
 import org.eclipse.ui.console.IConsoleConstants;
@@ -350,39 +353,6 @@ public class OCLConsolePage extends Page //implements MetamodelManagerListener
 	private @Nullable Iterable<org.eclipse.ocl.pivot.@NonNull Class> contextModelClasses = null;
 	private ParserContext parserContext;
 
-	/*	public IItemLabelProvider tupleTypeLabelProvider = new IItemLabelProvider() {
-
-		public Object getImage(Object object) {
-			return null;
-		}
-
-		public String getText(Object object) {
-		    @SuppressWarnings("unchecked")
-            TupleValue tuple = (TupleValue) object;
-			TupleType tupleType = tuple.getTupleType();
-
-			StringBuilder result = new StringBuilder();
-			result.append("Tuple{");//$NON-NLS-1$
-
-			for (Iterator<?> iter = tupleType.oclProperties().iterator();
-					iter.hasNext();) {
-
-				Object next = iter.next();
-
-				result.append(oclFactory.getName(next));
-				result.append(" = "); //$NON-NLS-1$
-				result.append(OCLConsolePage.this.toString(tuple.getValue(next)));
-
-				if (iter.hasNext()) {
-					result.append(", "); //$NON-NLS-1$
-				}
-			}
-
-			result.append('}');
-
-			return result.toString();
-		}}; */
-
 	/**
 	 * Initializes me.
 	 * @param console
@@ -569,7 +539,8 @@ public class OCLConsolePage extends Page //implements MetamodelManagerListener
 		Composite client = s1; //new Composite(s1, SWT.NULL);
 		Injector injector = XtextConsolePlugin.getInstance().getInjector(EssentialOCLPlugin.LANGUAGE_ID);
 		Composite editorComposite = client; //new Composite(client, SWT.NULL);
-		editor = new EmbeddedXtextEditor(editorComposite, injector, /*SWT.BORDER |*/ SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL);
+		EnvironmentFactoryInternal currentEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+		editor = new EmbeddedXtextEditor(editorComposite, injector, /*SWT.BORDER |*/ SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL, currentEnvironmentFactory);
 		//		MetamodelManagerResourceSetAdapter.getAdapter(editor.getResourceSet(), metamodelManager);
 
 		/*		editor.getViewer().getTextWidget().addModifyListener(new ModifyListener() {
@@ -840,7 +811,7 @@ public class OCLConsolePage extends Page //implements MetamodelManagerListener
 						((BaseCSResource)resource).dispose();
 					}
 
-					EnvironmentFactory environmentFactory = getEnvironmentFactory(contextObject);
+					EnvironmentFactory environmentFactory = ClassUtil.nonNullState(ThreadLocalExecutor.basicGetEnvironmentFactory()); //getEnvironmentFactory(contextObject);
 					IdResolver.IdResolverExtension idResolver = (IdResolver.IdResolverExtension)environmentFactory.getIdResolver();
 					//				DomainType staticType = idResolver.getStaticTypeOfValue(null, selectedObject);
 					org.eclipse.ocl.pivot.Class staticType = idResolver.getStaticTypeOfValue(null, contextObject);
@@ -856,11 +827,6 @@ public class OCLConsolePage extends Page //implements MetamodelManagerListener
 						instanceContext = ((EnvironmentFactoryInternalExtension)environmentFactory).getASOf(Element.class, instanceContext);
 					}
 					parserContext = new ClassContext(environmentFactory, null, contextType, (instanceContext instanceof Type) && !(instanceContext instanceof ElementExtension) ? (Type)instanceContext : null);
-					//				}
-					//				else {
-					//					parserContext = new ModelContext(metamodelManager, null);
-					//				}
-					//		        parserContext = new EObjectContext(metamodelManager, null, contextObject);
 					EssentialOCLCSResource csResource = (EssentialOCLCSResource) resource;
 					if (csResource != null) {
 						if (contextObject != null) {

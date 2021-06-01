@@ -72,6 +72,7 @@ public class BaseDocumentProvider extends DeferredDocumentProvider
 	}
 
 	public void initOCL(@NonNull BaseEditor baseEditor) {
+		ThreadLocalExecutorUI.initPart(baseEditor, null);
 		OCLInternal ocl = getOCL();
 		ThreadLocalExecutorUI.initPart(baseEditor, ocl.getEnvironmentFactory());
 	}

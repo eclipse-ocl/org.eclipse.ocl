@@ -10,12 +10,16 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.test.xtext;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.debug.core.ILaunch;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.pivot.tests.PivotTestCaseWithAutoTearDown;
@@ -23,9 +27,18 @@ import org.eclipse.ocl.examples.xtext.console.ColorManager;
 import org.eclipse.ocl.examples.xtext.console.OCLConsole;
 import org.eclipse.ocl.examples.xtext.console.OCLConsolePage;
 import org.eclipse.ocl.examples.xtext.tests.TestUIUtil;
+import org.eclipse.ocl.pivot.evaluation.ModelManager;
+import org.eclipse.ocl.pivot.internal.library.executor.LazyEcoreModelManager;
+import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.PivotEnvironmentFactory;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
+import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
+import org.eclipse.ocl.pivot.values.ObjectValue;
 import org.eclipse.ocl.xtext.base.ui.model.BaseDocument;
 import org.eclipse.swt.graphics.RGB;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.console.ConsolePlugin;
 import org.eclipse.ui.console.IConsole;
 import org.eclipse.ui.console.IConsoleManager;
@@ -105,6 +118,13 @@ public abstract class AbstractConsoleTests extends PivotTestCaseWithAutoTearDown
 		}
 
 		@Override
+		protected @Nullable EnvironmentFactoryAdapter createEditor(Composite s1) {
+			EnvironmentFactoryInternal testEnvironmentFactory = new TestEnvironmentFactory();
+			ThreadLocalExecutor.attachEnvironmentFactory(testEnvironmentFactory);
+			return super.createEditor(s1);
+		}
+
+		@Override
 		public boolean evaluate(String expression) {
 			return super.evaluate(expression);
 		}
@@ -139,6 +159,31 @@ public abstract class AbstractConsoleTests extends PivotTestCaseWithAutoTearDown
 
 		public void resetPopUpModelTypesUsageInformation() {
 			this.popUpModelTypesUsageInformation = false;
+		}
+	}
+
+	/**
+	 * See Bug 570894. Overridden to override LazyEcoreModelManager coonstruction to avoid
+	 * all the sibling ResourceSet roots being found in the extent.
+	 */
+	protected static class TestEnvironmentFactory extends PivotEnvironmentFactory
+	{
+		protected TestEnvironmentFactory() {
+			super(getProjectMap(), null, null);
+		}
+
+		@Override
+		public @NonNull ModelManager createModelManager(@Nullable Object object) {
+			if (object instanceof ObjectValue) {
+				object = ((ObjectValue) object).getObject();
+			}
+			if (object instanceof EObject) {
+				EObject rootContainer = EcoreUtil.getRootContainer((EObject)object);
+				assert rootContainer != null;
+				List<@NonNull EObject> rootList = Collections.singletonList(rootContainer);
+				return new LazyEcoreModelManager(rootList, null, null);
+			}
+			return ModelManager.NULL;
 		}
 	}
 

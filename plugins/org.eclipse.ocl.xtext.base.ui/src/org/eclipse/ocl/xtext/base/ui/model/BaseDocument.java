@@ -69,17 +69,21 @@ public class BaseDocument extends XtextDocument implements ConsoleContext
 		public <T> T modify(IUnitOfWork<T, XtextResource> work) {
 		//	System.out.println("[" + Thread.currentThread().getName() + "] modify " + NameUtil.debugSimpleName(this));
 			EnvironmentFactoryInternal oldEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
-			if ((environmentFactory != null) && (oldEnvironmentFactory != environmentFactory)) {
+			EnvironmentFactoryInternal newEnvironmentFactory = environmentFactory;
+			if ((newEnvironmentFactory != null) && (oldEnvironmentFactory != newEnvironmentFactory)) {
 			//	assert environmentFactory != null;
-				ThreadLocalExecutor.attachEnvironmentFactory(environmentFactory);
+				if (oldEnvironmentFactory != null) {
+					ThreadLocalExecutor.detachEnvironmentFactory(oldEnvironmentFactory);
+				}
+				ThreadLocalExecutor.attachEnvironmentFactory(newEnvironmentFactory);
 			}
 			try {
 				return super.modify(work);
 			}
 			finally {
-				if ((environmentFactory != null) && (oldEnvironmentFactory != environmentFactory)) {
+				if ((newEnvironmentFactory != null) && (oldEnvironmentFactory != newEnvironmentFactory)) {
 				//	assert environmentFactory != null;
-					ThreadLocalExecutor.detachEnvironmentFactory(environmentFactory);
+					ThreadLocalExecutor.detachEnvironmentFactory(newEnvironmentFactory);
 				}
 			}
 		}
@@ -88,17 +92,21 @@ public class BaseDocument extends XtextDocument implements ConsoleContext
 		public <T> T readOnly(IUnitOfWork<T, XtextResource> work) {
 		//	System.out.println("[" + Thread.currentThread().getName() + "] readOnly " + NameUtil.debugSimpleName(this));
 			EnvironmentFactoryInternal oldEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
-			if (oldEnvironmentFactory != environmentFactory) {
-				assert environmentFactory != null;
-				ThreadLocalExecutor.attachEnvironmentFactory(environmentFactory);
+			EnvironmentFactoryInternal newEnvironmentFactory = environmentFactory;
+			if ((newEnvironmentFactory != null) && (oldEnvironmentFactory != newEnvironmentFactory)) {
+			//	assert environmentFactory != null;
+				if (oldEnvironmentFactory != null) {
+					ThreadLocalExecutor.detachEnvironmentFactory(oldEnvironmentFactory);
+				}
+				ThreadLocalExecutor.attachEnvironmentFactory(newEnvironmentFactory);
 			}
 			try {
 				return super.readOnly(work);
 			}
 			finally {
-				if (oldEnvironmentFactory != environmentFactory) {
-					assert environmentFactory != null;
-					ThreadLocalExecutor.detachEnvironmentFactory(environmentFactory);
+				if (oldEnvironmentFactory != newEnvironmentFactory) {
+					assert newEnvironmentFactory != null;
+					ThreadLocalExecutor.detachEnvironmentFactory(newEnvironmentFactory);
 				}
 			}
 		}

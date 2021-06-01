@@ -41,8 +41,11 @@ public class ThreadLocalExecutorUI extends ThreadLocalExecutor implements IPartL
 	 *
 	 * If initActivePart is null the prevailing activePart is used to provide support for OCL-blind applications
 	 * such as the Sample Ecore Editor.
+	 *
+	 * If initEnvironmentfactory is null a new activePart will be defining a new initEnvironmentfactory later.
 	 */
-	public static void initPart(@Nullable IWorkbenchPart initActivePart, @NonNull EnvironmentFactoryInternal initEnvironmentfactory) {
+	public static void initPart(@Nullable IWorkbenchPart initActivePart, @Nullable EnvironmentFactoryInternal initEnvironmentfactory) {
+		assert (initActivePart != null) || (initEnvironmentfactory != null);
 		ThreadLocalExecutor threadLocalExecutor = get();
 		if (threadLocalExecutor instanceof ThreadLocalExecutorUI) {
 			((ThreadLocalExecutorUI)threadLocalExecutor).localInitPart(initActivePart, initEnvironmentfactory);
@@ -81,7 +84,7 @@ public class ThreadLocalExecutorUI extends ThreadLocalExecutor implements IPartL
 		return "[" + Thread.currentThread().getName() + ":" + NameUtil.debugSimpleName(activePart) + "]";
 	}
 
-	protected void localInitPart(@Nullable IWorkbenchPart initActivePart, @NonNull EnvironmentFactoryInternal initEnvironmentfactory) {
+	protected void localInitPart(@Nullable IWorkbenchPart initActivePart, @Nullable EnvironmentFactoryInternal initEnvironmentfactory) {
 		if (initEnvironmentfactory != basicGetEnvironmentFactory()) {			// == if a late not-active init
 			setEnvironmentFactory(null);
 		}
@@ -89,10 +92,12 @@ public class ThreadLocalExecutorUI extends ThreadLocalExecutor implements IPartL
 			initActivePart = this.activePart;
 			assert initActivePart != null;
 		}
-		EnvironmentFactoryInternal oldEnvironmentFactory = part2environmentFactory.put(initActivePart, initEnvironmentfactory);
-		assert oldEnvironmentFactory == null;
-		if (THREAD_LOCAL_ENVIRONMENT_FACTORY.isActive()) {
-			THREAD_LOCAL_ENVIRONMENT_FACTORY.println(getThreadName() + " Init [" + Thread.currentThread().getName() + ":" + NameUtil.debugSimpleName(initActivePart) + "] " + toString());
+		if (initEnvironmentfactory != null) {
+			EnvironmentFactoryInternal oldEnvironmentFactory = part2environmentFactory.put(initActivePart, initEnvironmentfactory);
+			assert oldEnvironmentFactory == null;
+			if (THREAD_LOCAL_ENVIRONMENT_FACTORY.isActive()) {
+				THREAD_LOCAL_ENVIRONMENT_FACTORY.println(getThreadName() + " Init [" + Thread.currentThread().getName() + ":" + NameUtil.debugSimpleName(initActivePart) + "] " + toString());
+			}
 		}
 	}
 
@@ -144,18 +149,16 @@ public class ThreadLocalExecutorUI extends ThreadLocalExecutor implements IPartL
 		if (THREAD_LOCAL_ENVIRONMENT_FACTORY.isActive()) {
 			THREAD_LOCAL_ENVIRONMENT_FACTORY.println(getThreadName() + " partDeactivated [" + Thread.currentThread().getName() + ":" + NameUtil.debugSimpleName(oldActivePart) + "] " + toString());
 		}
-		if (oldActivePart != null) {
-			EnvironmentFactoryInternal environmentFactory = localBasicGetEnvironmentFactory();
-			if (environmentFactory != null) {
-				EnvironmentFactory partEnvironmentFactory = oldActivePart.getAdapter(EnvironmentFactory.class);
-				part2environmentFactory.put(oldActivePart, environmentFactory);    // part2environmentFactory persists for an activate
-				if (partEnvironmentFactory == null) {		// OCL-blind editor
-					environmentFactory.attach(this);
-				}
+		EnvironmentFactoryInternal environmentFactory = localBasicGetEnvironmentFactory();
+		if (environmentFactory != null) {
+			EnvironmentFactory partEnvironmentFactory = oldActivePart.getAdapter(EnvironmentFactory.class);
+			part2environmentFactory.put(oldActivePart, environmentFactory);    // part2environmentFactory persists for an activate
+			if (partEnvironmentFactory == null) {		// OCL-blind editor
+				environmentFactory.attach(this);
 			}
-			else {
-				part2environmentFactory.remove(oldActivePart);
-			}
+		}
+		else {
+			part2environmentFactory.remove(oldActivePart);
 		}
 		activePart = null;
 		setEnvironmentFactory(null);
