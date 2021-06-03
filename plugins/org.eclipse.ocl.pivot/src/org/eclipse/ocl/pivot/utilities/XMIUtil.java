@@ -378,7 +378,6 @@ public class XMIUtil
 		saveOptions.put(XMLResource.OPTION_ENCODING, "UTF-8");
 		saveOptions.put(DerivedConstants.RESOURCE_OPTION_LINE_DELIMITER, "\n");
 		saveOptions.put(XMLResource.OPTION_LINE_WIDTH, Integer.valueOf(132));
-		saveOptions.put(XMLResource.OPTION_RESOURCE_ENTITY_HANDLER, new IdResourceEntityHandler());
 		return saveOptions;
 	}
 
