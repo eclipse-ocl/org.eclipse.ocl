@@ -291,10 +291,13 @@ public class BaseDocument extends XtextDocument implements ConsoleContext
 
 	@Override
 	public void setInput(XtextResource resource) {
-		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
-		assert environmentFactory != null;
 		assert baseStateAccess != null;
-		baseStateAccess.initEnvironmentFactory(environmentFactory);
+		EnvironmentFactoryInternal environmentFactory = baseStateAccess.basicGetEnvironmentFactory();
+		if (environmentFactory == null) {
+			environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+			assert environmentFactory != null;
+			baseStateAccess.initEnvironmentFactory(environmentFactory);
+		}
 		super.setInput(resource);
 	}
 }
