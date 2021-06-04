@@ -49,6 +49,7 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
@@ -550,8 +551,28 @@ public abstract class BaseCSorASDocumentProvider extends BaseDocumentProvider
 
 	@Override
 	protected void setDocumentResource(XtextDocument xtextDocument, IEditorInput editorInput, String encoding) throws CoreException {
-		super.setDocumentResource(xtextDocument, editorInput, encoding);
 		String loadedAs = loadedAsMap.get(xtextDocument);
+		boolean needModify = false;
+		if (!isText(loadedAs) && (xtextDocument instanceof BaseDocument)) {
+			EnvironmentFactoryInternal environmentFactory = ((BaseDocument)xtextDocument).basicGetEnvironmentFactory();
+			if (environmentFactory != null) {
+				needModify = true;
+			}
+		}
+		if (!needModify) {
+			super.setDocumentResource(xtextDocument, editorInput, encoding);
+		}
+		else {		// Fix Bug 573982 avoid concurrent load / reconcile
+			xtextDocument.modify(new IUnitOfWork<Object, XtextResource>()
+			{
+				@Override
+				public Object exec(XtextResource state) throws Exception {
+					BaseCSorASDocumentProvider.super.setDocumentResource(xtextDocument, editorInput, encoding);
+					return null;
+				}
+			});
+		}
+		assert loadedAs == loadedAsMap.get(xtextDocument);
 		if (!isText(loadedAs)) {
 			xtextDocument.readOnly(new IUnitOfWork<Object, XtextResource>()
 			{

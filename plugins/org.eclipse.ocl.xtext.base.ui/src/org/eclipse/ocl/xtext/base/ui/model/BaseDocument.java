@@ -61,6 +61,10 @@ public class BaseDocument extends XtextDocument implements ConsoleContext
 			super();
 		}
 
+		public @Nullable EnvironmentFactoryInternal basicGetEnvironmentFactory() {
+			return environmentFactory;
+		}
+
 		public void initEnvironmentFactory(@Nullable EnvironmentFactoryInternal environmentFactory) {
 			this.environmentFactory = environmentFactory;
 		}
@@ -119,6 +123,10 @@ public class BaseDocument extends XtextDocument implements ConsoleContext
 	@Inject
 	public BaseDocument(DocumentTokenSource tokenSource, ITextEditComposer composer) {
 		super(tokenSource, composer);
+	}
+
+	public @Nullable EnvironmentFactoryInternal basicGetEnvironmentFactory() {
+		return baseStateAccess != null ? baseStateAccess.basicGetEnvironmentFactory() : null;
 	}
 
 	protected void checkForErrors(Resource resource) throws CoreException {
