@@ -328,7 +328,8 @@ public class EditorTests extends XtextTestCase
 			s.append(ch, 0, count);
 		}
 		String tweakedEcoreContent = ecoreContent.replace("testURI", "testing");
-		assertEquals(tweakedEcoreContent, s.toString());
+		String tweakedFileContent = s.toString().replace("\r\n", "\n").replace("\n\r", "\n");
+		assertEquals(tweakedEcoreContent, tweakedFileContent);
 		doTearDown(editor);
 	}
 
