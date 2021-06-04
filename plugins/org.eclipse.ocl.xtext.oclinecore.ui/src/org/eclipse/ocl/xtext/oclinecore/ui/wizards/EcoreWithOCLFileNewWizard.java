@@ -26,7 +26,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
-import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.xtext.base.ui.wizards.AbstractFileDialog;
 import org.eclipse.ocl.xtext.base.ui.wizards.AbstractFileNewWizardPage;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
@@ -59,7 +58,7 @@ public class EcoreWithOCLFileNewWizard extends AbstractOCLinEcoreFileNewWizard
 			ASResource asResource = ocl.cs2as(csResource);
 			Resource eResource = ocl.as2ecore(asResource, ecoreURI);
 			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-			eResource.save(outputStream, XMIUtil.createSaveOptions());
+			eResource.save(outputStream, null);
 			@SuppressWarnings("null")@NonNull String string = outputStream.toString();
 			return string;
 		} catch (IOException e) {

@@ -52,8 +52,8 @@ public class ResourceWriter extends WorkflowComponentWithModelSlot
 		return contentTypeIdentifier;
 	}
 
-	protected Map<Object, Object> getSaveOptions() {
-		Map<Object, Object> result = XMIUtil.createSaveOptions();
+	protected Map<Object, Object> getSaveOptions(@NonNull XMLResource resource) {
+		Map<Object, Object> result = XMIUtil.createSaveOptions(resource);
 		result.put(Resource.OPTION_SAVE_ONLY_IF_CHANGED, Resource.OPTION_SAVE_ONLY_IF_CHANGED_MEMORY_BUFFER);
 		return result;
 	}
@@ -65,9 +65,9 @@ public class ResourceWriter extends WorkflowComponentWithModelSlot
 	@Override
 	public void invokeInternal(WorkflowContext ctx, ProgressMonitor arg1, Issues arg2) {
 		ResourceSet resourceSet = ClassUtil.nonNullState(getResourceSet());
-		Resource inputResource = (Resource) ctx.get(getModelSlot());
+		XMLResource inputResource = (XMLResource) ctx.get(getModelSlot());
+		assert inputResource != null;
 		try {
-			Map<Object, Object> saveOptions = getSaveOptions();
 			if (uri != null) {
 				URI fileURI = URI.createPlatformResourceURI(uri, true);
 				log.info("Writing '" + fileURI + "'");
@@ -82,21 +82,19 @@ public class ResourceWriter extends WorkflowComponentWithModelSlot
 							StandaloneProjectMap.MapToFirstConflictHandlerWithLog.INSTANCE);
 					}
 				}
-				Resource saveResource = resourceSet.createResource(fileURI, contentTypeIdentifier);
-				Map<@NonNull EObject, @NonNull String> eObject2xmiId = null;
-				if ((inputResource instanceof XMLResource) && (saveResource instanceof XMLResource)) {
-					eObject2xmiId = XMIUtil.getIds((XMLResource)inputResource);
-				}
+				XMLResource saveResource = (XMLResource) resourceSet.createResource(fileURI, contentTypeIdentifier);
+				Map<@NonNull EObject, @NonNull String> eObject2xmiId = XMIUtil.getIds(inputResource);
 				saveResource.getContents().addAll(inputResource.getContents());
 				if (eObject2xmiId != null) {
-					XMIUtil.setIds((XMLResource) saveResource, eObject2xmiId);
+					XMIUtil.setIds(saveResource, eObject2xmiId);
 				}
-				XMIUtil.retainLineWidth(saveOptions, saveResource);
+				Map<Object, Object> saveOptions = getSaveOptions(saveResource);
 				saveResource.save(saveOptions);
 				inputResource.getContents().addAll(saveResource.getContents());
 				saveResource.unload();
 			}
 			else {
+				Map<Object, Object> saveOptions = getSaveOptions(inputResource);
 				log.info("Writing '" + inputResource.getURI() + "'");
 				inputResource.save(saveOptions);
 			}

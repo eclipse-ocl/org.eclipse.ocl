@@ -28,7 +28,6 @@ import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.uml.internal.as2es.AS2UML;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
-import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.ui.model.BaseDocument;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
@@ -104,7 +103,7 @@ public class OCLinEcoreDocument extends BaseDocument
 							UMLResource umlResource = (UMLResource) resourceSet.createResource(umlURI);
 							umlResource.getContents().addAll(umlContents);
 							checkForErrors(umlResource);
-							umlResource.save(writer, XMIUtil.createSaveOptions());
+							umlResource.save(writer, null);
 						}
 					}
 				}
@@ -130,7 +129,7 @@ public class OCLinEcoreDocument extends BaseDocument
 							options.put(PivotConstants.PRIMITIVE_TYPES_URI_PREFIX, "primitives.ecore#//");
 							options.put(ClassUtil.nonNullState(OCLConstants.OCL_DELEGATE_URI), exportDelegateURI);
 							XMLResource ecoreResource = AS2Ecore.createResource(cs2as.getEnvironmentFactory(), asResource, ecoreURI, options);
-							ecoreResource.save(writer, XMIUtil.createSaveOptions());
+							ecoreResource.save(writer, null);
 							checkForErrors(ecoreResource);
 						}
 					}

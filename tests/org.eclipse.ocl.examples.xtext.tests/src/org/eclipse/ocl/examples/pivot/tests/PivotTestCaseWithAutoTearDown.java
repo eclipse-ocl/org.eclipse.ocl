@@ -45,7 +45,6 @@ import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
-import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 
@@ -123,7 +122,7 @@ public abstract class PivotTestCaseWithAutoTearDown extends PivotTestCase
 				ecoreResource.setID(eObject,  EcoreUtil.generateUUID());
 			}
 		}
-		ecoreResource.save(XMIUtil.createSaveOptions());
+		ecoreResource.save(null);
 		return ecoreURI;
 	}
 

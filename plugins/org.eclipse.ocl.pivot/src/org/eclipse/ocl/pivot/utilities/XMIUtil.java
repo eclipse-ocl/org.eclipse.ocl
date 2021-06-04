@@ -32,6 +32,8 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreSwitch;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMLResource;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
+import org.eclipse.emf.ecore.xmi.impl.XMLResourceImpl;
 import org.eclipse.emf.ecore.xml.type.XMLTypePackage;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -371,14 +373,49 @@ public class XMIUtil
 	}
 
 	/**
-	 * Return a set of saveOptions supporting UTF-8 with 132 character Unix lines.
+	 * Return the saveOptions for a pivot resource, supporting UTF-8 with 132 character Unix lines
+	 * and using entities to compress URIs.
+	 *
+	 * @since 1.15
 	 */
+	public static @NonNull Map<Object, Object> createPivotSaveOptions() {
+		Map<Object, Object> saveOptions =createSaveOptions();
+		saveOptions.put(XMLResource.OPTION_RESOURCE_ENTITY_HANDLER, new IdResourceEntityHandler());
+		return saveOptions;
+	}
+
+	/**
+	 * Return a set of saveOptions supporting UTF-8 with 132 character Unix lines.
+	 *
+	 * NB These preferences must not be used when saving a standard resource such as a *.ecore
+	 * to avoid incompatibilities between rival savers. See Bug 573923.
+	 *
+	 * @deprecated supply resurce argument so that custom resources use their cistom save options.
+	 */
+	@Deprecated
 	public static @NonNull Map<Object, Object> createSaveOptions() {
 		Map<Object, Object> saveOptions = new HashMap<>();
 		saveOptions.put(XMLResource.OPTION_ENCODING, "UTF-8");
 		saveOptions.put(DerivedConstants.RESOURCE_OPTION_LINE_DELIMITER, "\n");
 		saveOptions.put(XMLResource.OPTION_LINE_WIDTH, Integer.valueOf(132));
 		return saveOptions;
+	}
+
+	/**
+	 * Return a set of saveOptions for aResource. For generic XMLResourceImpl or XMIResourceImpl
+	 * resources returns saveOptions supporting UTF-8 with 132 character Unix lines. Otherwise returns
+	 * a copyof aResource's defaultSaveOptions.
+	 *
+	 * @since 1.15
+	 */
+	public static @NonNull Map<Object, Object> createSaveOptions(@NonNull XMLResource aResource) {
+		Class<?> resourceClass = aResource.getClass();
+		if ((resourceClass == XMIResourceImpl.class) || (resourceClass == XMLResourceImpl.class)) {
+			return createSaveOptions();
+		}
+		else {
+			return new HashMap<>(aResource.getDefaultSaveOptions());
+		}
 	}
 
 	/**

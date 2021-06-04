@@ -23,7 +23,6 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.XMLSave;
 import org.eclipse.emf.ecore.xmi.impl.XMIHelperImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
@@ -44,7 +43,6 @@ import org.eclipse.ocl.pivot.utilities.TracingAdapter;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
-import org.eclipse.ocl.pivot.utilities.XMIUtil.IdResourceEntityHandler;
 
 /**
  * ASResourceImpl is the mandatory implementation of the ASResource interface that refines an
@@ -224,12 +222,12 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	}
 
 	@Override
-	public Map<Object, Object> getDefaultSaveOptions() {
-		if (defaultSaveOptions == null) {
-			defaultSaveOptions = XMIUtil.createSaveOptions();
-			defaultSaveOptions.put(XMLResource.OPTION_RESOURCE_ENTITY_HANDLER, new IdResourceEntityHandler());
+	public @NonNull Map<Object, Object> getDefaultSaveOptions() {
+		Map<Object, Object> defaultSaveOptions2 = defaultSaveOptions;
+		if (defaultSaveOptions2 == null) {
+			defaultSaveOptions = defaultSaveOptions2 = XMIUtil.createPivotSaveOptions();
 		}
-		return defaultSaveOptions;
+		return defaultSaveOptions2;
 	}
 
 	@SuppressWarnings("deprecation")

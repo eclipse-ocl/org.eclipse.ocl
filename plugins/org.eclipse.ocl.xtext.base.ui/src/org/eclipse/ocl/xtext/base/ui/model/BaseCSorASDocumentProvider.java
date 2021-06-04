@@ -457,7 +457,7 @@ public abstract class BaseCSorASDocumentProvider extends BaseDocumentProvider
 				//				StringWriter writer = new StringWriter();
 				try {
 					//					csResource.save(new URIConverter.WriteableOutputStream(writer, xmlEncoding), null);
-					Map<Object, Object> saveOptions = XMIUtil.createSaveOptions();
+					Map<Object, Object> saveOptions = XMIUtil.createPivotSaveOptions();
 					try {
 						csResource.save(outputStream, saveOptions);
 					}

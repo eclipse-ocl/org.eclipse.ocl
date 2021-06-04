@@ -270,7 +270,7 @@ public class BaseDocument extends XtextDocument implements ConsoleContext
 	public void saveAsPivot(@NonNull StringWriter writer) throws CoreException, IOException {
 		XMLResource asResource = getASResource();
 		if (asResource != null) {
-			asResource.save(writer, XMIUtil.createSaveOptions());
+			asResource.save(writer, XMIUtil.createPivotSaveOptions());
 		}
 	}
 

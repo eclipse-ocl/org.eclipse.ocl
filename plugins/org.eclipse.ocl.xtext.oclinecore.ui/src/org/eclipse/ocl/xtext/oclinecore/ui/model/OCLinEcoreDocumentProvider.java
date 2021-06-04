@@ -271,7 +271,7 @@ public class OCLinEcoreDocumentProvider extends BaseCSorASDocumentProvider
 				//				StringWriter writer = new StringWriter();
 				try {
 					//					csResource.save(new URIConverter.WriteableOutputStream(writer, xmlEncoding), null);
-					Map<Object, Object> saveOptions = XMIUtil.createSaveOptions();
+					Map<Object, Object> saveOptions = XMIUtil.createPivotSaveOptions();
 					csResource.save(outputStream, saveOptions);
 					inputStream = new ByteArrayInputStream(outputStream.toByteArray());
 				} catch (InvalidConcreteSyntaxException e) {
