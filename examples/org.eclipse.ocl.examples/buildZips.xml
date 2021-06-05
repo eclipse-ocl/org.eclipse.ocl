@@ -5,7 +5,7 @@
 	</target>
 
 	<patternset id="zip.excludes"
-		excludes="src.zip,build.xml,javaCompiler*,temp.folder/**,@dot/**"/>
+		excludes="src.zip,build.xml,javaCompiler*,temp.folder/**,@dot/**,target/**"/>
 	
 	<target name="zip.examples" depends="init">
 		<!-- OCL examples -->
