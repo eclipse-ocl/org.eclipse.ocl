@@ -75,7 +75,6 @@ public class BaseDocument extends XtextDocument implements ConsoleContext
 			EnvironmentFactoryInternal oldEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 			EnvironmentFactoryInternal newEnvironmentFactory = environmentFactory;
 			if ((newEnvironmentFactory != null) && (oldEnvironmentFactory != newEnvironmentFactory)) {
-			//	assert environmentFactory != null;
 				if (oldEnvironmentFactory != null) {
 					ThreadLocalExecutor.detachEnvironmentFactory(oldEnvironmentFactory);
 				}
@@ -86,7 +85,6 @@ public class BaseDocument extends XtextDocument implements ConsoleContext
 			}
 			finally {
 				if ((newEnvironmentFactory != null) && (oldEnvironmentFactory != newEnvironmentFactory)) {
-				//	assert environmentFactory != null;
 					ThreadLocalExecutor.detachEnvironmentFactory(newEnvironmentFactory);
 				}
 			}
@@ -98,7 +96,6 @@ public class BaseDocument extends XtextDocument implements ConsoleContext
 			EnvironmentFactoryInternal oldEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 			EnvironmentFactoryInternal newEnvironmentFactory = environmentFactory;
 			if ((newEnvironmentFactory != null) && (oldEnvironmentFactory != newEnvironmentFactory)) {
-			//	assert environmentFactory != null;
 				if (oldEnvironmentFactory != null) {
 					ThreadLocalExecutor.detachEnvironmentFactory(oldEnvironmentFactory);
 				}
@@ -108,8 +105,7 @@ public class BaseDocument extends XtextDocument implements ConsoleContext
 				return super.readOnly(work);
 			}
 			finally {
-				if (oldEnvironmentFactory != newEnvironmentFactory) {
-					assert newEnvironmentFactory != null;
+				if ((newEnvironmentFactory != null) && (oldEnvironmentFactory != newEnvironmentFactory)) {
 					ThreadLocalExecutor.detachEnvironmentFactory(newEnvironmentFactory);
 				}
 			}
