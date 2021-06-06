@@ -215,7 +215,7 @@ public class EmbeddedXtextEditor
 		this(control, injector, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL, null);
 	}
 
-	public EmbeddedXtextEditor(Composite control, Injector injector, int style, EnvironmentFactoryInternal currentEnvironmentFactory) {
+	public EmbeddedXtextEditor(Composite control, Injector injector, int style, @Nullable EnvironmentFactoryInternal currentEnvironmentFactory) {
 		fControl = control;
 		fStyle = style;
 		fAnnotationPreferences = new MarkerAnnotationPreferences();

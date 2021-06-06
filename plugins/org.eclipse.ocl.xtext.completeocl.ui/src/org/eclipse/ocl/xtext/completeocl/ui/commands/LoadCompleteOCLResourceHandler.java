@@ -42,10 +42,14 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.ocl.pivot.internal.registry.CompleteOCLRegistry;
-import org.eclipse.ocl.pivot.internal.resource.OCLAdapter;
+import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
+import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.OCL;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.xtext.base.ui.utilities.PDEUtils;
 import org.eclipse.ocl.xtext.completeocl.ui.CompleteOCLUiModule;
 import org.eclipse.ocl.xtext.completeocl.ui.messages.CompleteOCLUIMessages;
@@ -148,6 +152,8 @@ public class LoadCompleteOCLResourceHandler extends AbstractHandler
 
 			@Override
 			protected IStatus run(final IProgressMonitor monitor) {
+				ThreadLocalExecutor.resetEnvironmentFactory();		// Reset in case last thread user (validation job) not yet finalized
+				ThreadLocalExecutor.attachEnvironmentFactory(environmentFactory);
 				processedResourcesReturn = processResources();
 				Display.getDefault().asyncExec(new Runnable()
 				{
@@ -156,12 +162,13 @@ public class LoadCompleteOCLResourceHandler extends AbstractHandler
 						okPressed();
 					}
 				});
+				ThreadLocalExecutor.detachEnvironmentFactory(environmentFactory);
 				return Status.OK_STATUS;
 			}
 
 			protected boolean processResources() {
-				OCLAdapter oclAdapter = OCLAdapter.getAdapter(resourceSet);
-				CompleteOCLLoader helper = new CompleteOCLLoader(oclAdapter.getEnvironmentFactory()) {
+			//	OCLAdapter oclAdapter = OCLAdapter.getAdapter(resourceSet);
+				CompleteOCLLoader helper = new CompleteOCLLoader(environmentFactory) {
 					@Override
 					protected boolean error(@NonNull String primaryMessage, @Nullable String detailMessage) {
 						Display.getDefault().asyncExec(new Runnable()
@@ -211,6 +218,7 @@ public class LoadCompleteOCLResourceHandler extends AbstractHandler
 
 		protected final Shell parent;
 		protected final @NonNull ResourceSet resourceSet;
+		private final @NonNull EnvironmentFactoryInternal environmentFactory;
 		private DropTarget target;
 		private Set<URI> registeredURIsForResourceSet;
 		private DeferredLoadDocumentJob job = null;
@@ -219,6 +227,16 @@ public class LoadCompleteOCLResourceHandler extends AbstractHandler
 			super(parent, domain);
 			this.parent = parent;
 			this.resourceSet = resourceSet;
+			// Ensure EnvironmentFactory created on main thread (Bug 574041)
+			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+			if (environmentFactory == null) {
+				ProjectManager projectManager = ProjectMap.findAdapter(resourceSet);
+				if (projectManager == null) {
+					projectManager = OCL.CLASS_PATH;
+				}
+				environmentFactory = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(projectManager, resourceSet, null);
+			}
+			this.environmentFactory = environmentFactory;
 			int shellStyle = getShellStyle();
 			int newShellStyle = shellStyle & ~(SWT.APPLICATION_MODAL | SWT.PRIMARY_MODAL | SWT.SYSTEM_MODAL);
 			setShellStyle(newShellStyle);
