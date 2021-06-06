@@ -4,7 +4,8 @@ Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-SymbolicName: org.eclipse.ocl.examples.project.completeocltutorial;singleton:=true
 Bundle-Version: 1.9.400.qualifier
-Require-Bundle: org.eclipse.ocl.pivot
+Require-Bundle: org.eclipse.ocl.pivot,
+ org.eclipse.xtext;resolution:=optional
 Automatic-Module-Name: org.eclipse.ocl.examples.project.completeocltutorial
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: .;x-internal:=true
