@@ -350,6 +350,14 @@ public class LoadTests extends XtextTestCase
 
 	public Model doLoadUML(@Nullable TestOCL externalOCL, @NonNull URI inputURI, @NonNull ILoadCallBack loadCallBacks, @NonNull String @Nullable [] messages) throws IOException, ParserException {
 		UMLStandaloneSetup.init();
+		String extension = inputURI.fileExtension();
+		String stem = inputURI.trimFileExtension().lastSegment();
+		//		String outputName = stem + "." + extension + ".xmi";
+		String output2Name = stem + ".saved." + extension;
+		String oclName = stem + ".ocl";
+		//		URI outputURI = getProjectFileURI(outputName);
+		URI output2URI = getTestFileURI(output2Name);		// NB getTestProject() may activate PackageExplorerPart
+		URI oclURI = getTestFileURI(oclName);
 		OCLInternal internalOCL = externalOCL != null ? externalOCL : createOCLWithProjectMap();
 	//	UMLASResourceFactory.getInstance();
 		//		long startTime = System.currentTimeMillis();
@@ -367,14 +375,6 @@ public class LoadTests extends XtextTestCase
 			StandaloneProjectMap.IProjectDescriptor projectDescriptor = ClassUtil.nonNullState(getProjectMap().getProjectDescriptor("org.eclipse.uml2.uml"));
 			projectDescriptor.initializeURIMap(URIConverter.URI_MAP);		// *.ecore2xml must be global
 		}
-		String extension = inputURI.fileExtension();
-		String stem = inputURI.trimFileExtension().lastSegment();
-		//		String outputName = stem + "." + extension + ".xmi";
-		String output2Name = stem + ".saved." + extension;
-		String oclName = stem + ".ocl";
-		//		URI outputURI = getProjectFileURI(outputName);
-		URI output2URI = getTestFileURI(output2Name);
-		URI oclURI = getTestFileURI(oclName);
 		EnvironmentFactoryInternal environmentFactory = internalOCL.getEnvironmentFactory();
 		//		EnvironmentFactoryResourceSetAdapter.getAdapter(resourceSet, environmentFactory);
 		Resource umlResource = null;
