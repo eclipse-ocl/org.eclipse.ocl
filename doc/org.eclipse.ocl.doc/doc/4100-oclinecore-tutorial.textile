@@ -286,9 +286,9 @@ In more detail:
 * @->size()@ is a collection operation that just counts the number of selected loans
 * @<= copies@, which is short for @<= self.copies@ converts the count to @true@ if it is consistent, or @false@ if inconsistent.
 
-Close the *Tutorial.xmi* editor before modifying its meta-model. (Beware that
-a wide variety of unpleasant errors can occur if the meta-model is changed after
-the model is loaded.)
+(it used to be necessary to close the *Tutorial.xmi* editor before modifying its meta-model since
+a wide variety of unpleasant errors could occur if the meta-model changes after the model is loaded.
+This EMF limitation now appears to have been resolved.)
 
 Add the invariant shown below to the meta-model.
 
@@ -378,14 +378,14 @@ Reopen *Tutorial.xmi* and select *Book b2* so that the derived property is visib
 
 !{width:60%}images/4100-derived_property.png(Derived Property)!
 
-The helper operation can be evaluated in the *Console* view, after closing and reopening, by selecting book @b2@ and typing @isAvailable()@ for execution.
+The helper operation can be evaluated in the *Console* view by selecting book @b2@ and typing @isAvailable()@ for execution. (It is no longer necessary to close and reopen the Console after a metamodel change.)
 
 !{width:60%}images/4100-helper_operation.png(Helper Operation)!
 
 We will now add further helpers and constraints to enforce an
 at most two loans per member policy and to require loans to be unique.
 
-(Don't forget to close *Tutorial.xmi* while changing its meta-model.)
+(It is prudent, but perhaps no longer necessary, to close *Tutorial.xmi* and the Console while changing the meta-model.)
 
 !{width:70%}images/4100-metamodel4.png(Example Metamodel with More Features)!
 "[Text for cut and paste]":../references/4100-metamodel4.oclinecore

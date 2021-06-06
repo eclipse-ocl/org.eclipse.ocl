@@ -55,7 +55,7 @@ h4. import declarations
 
 The import statement is a serious omission from the OMG specification, since without it, any attempt to
 align the Complete OCL constraints with external models relies on implementation-specific magic. The import
-statement is therefore an Eclipse OCL extension that is likely to be part of a future OCL specification revision.
+statement is therefore an extension that the Pivot-based Eclipse OCL prototypes for a future OCL specification revision.
 
 Zero or more import statements may be present to specify the URIs of external model elements and optionally
 alias names for those elements. In the example:
@@ -77,7 +77,7 @@ Prior to the Juno release, import statements were not understood and so there wa
 Complete OCL document using the Xtext editor, or usage with Pivot model and Xtext parser required import statements.
 But re-use with the Ecore and UML LPG parser required the import statements to be removed.
 
-In Juno, the LPG parser ignores the import statements, so they may be left in.
+Since Juno, the LPG parser ignores the import statements, so they may be left in.
 p. 
 
 h4. package context declaration
@@ -191,7 +191,7 @@ bq..
 It has been observed that the extra menu action is not always immediately available, so if you do not see it, hit *Esc* to cancel the menu, select something corresponding to a model object and right click again.
 p. 
 
-In Mars, suitable applications are
+Since Mars, suitable applications are
 * an editor generated from an Ecore meta-model
 ** the Sample Ecore Editor
 ** the UML Model Editor
