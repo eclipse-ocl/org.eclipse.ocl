@@ -39,6 +39,7 @@ import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.utilities.OCL;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.validation.ComposedEValidator;
 
 public abstract class PivotDiagnostician extends Diagnostician
@@ -137,7 +138,7 @@ public abstract class PivotDiagnostician extends Diagnostician
 	 *
 	 * @since 1.4
 	 */
-	public static @NonNull OCL getOCL(@NonNull  Map<Object, Object> context, @Nullable EObject eObject) {
+	public static @NonNull OCL getOCL(@NonNull Map<Object, Object> context, @Nullable EObject eObject) {
 		OCL ocl = null;
 		Object oclRef = context.get(WeakOCLReference.class);
 		if (oclRef instanceof WeakOCLReference) {
@@ -153,12 +154,14 @@ public abstract class PivotDiagnostician extends Diagnostician
 			if (ocl == null) {
 				ocl = OCL.newInstance();
 			}
+			ThreadLocalExecutor.setUsesFinalizer();
 			context.put(WeakOCLReference.class, new WeakOCLReference(ocl));
 		}
 		return ocl;
 	}
 
 	public static void setOCL(@NonNull Map<Object, Object> context, @NonNull OCL ocl) {
+		ThreadLocalExecutor.setUsesFinalizer();
 		context.put(WeakOCLReference.class, new WeakOCLReference(ocl));
 	}
 
@@ -218,21 +221,27 @@ public abstract class PivotDiagnostician extends Diagnostician
 	 * WeakOCLReference maintains the reference to the OCL context within the Diagnostician context and
 	 * disposes of it once the Diagnostician is done.
 	 */
-	public static final class WeakOCLReference extends WeakReference<OCL>
+	public static final class WeakOCLReference extends WeakReference<OCL>	// FIXME Migrate to ThreadLocalExecutor.Terminator
 	{
+		private static int counter = 0;
+
 		protected final @NonNull OCL ocl;
+		private int count;
 
 		protected WeakOCLReference(@NonNull OCL ocl) {
 			super(ocl);
 			this.ocl = ocl;
+			this.count = ++counter;
+		//	System.out.println("[" + Thread.currentThread().getName() + "] PivotDiagnostician.WeakOCLReference-" + count + ".init()");
 		}
 
 		@Override
 		public void finalize() {
-			new Thread("OCL-Finalizer")
+			new Thread("OCL-Finalizer")		// New thread needed to avoid deadlock hazrad on ocl.dsipose()
 			{
 				@Override
 				public void run() {
+				//	System.out.println("[" + Thread.currentThread().getName() + "] PivotDiagnostician.WeakOCLReference-" + count + ".finalize()");
 					ocl.dispose();
 				}
 			}.start();

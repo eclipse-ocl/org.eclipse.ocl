@@ -228,21 +228,27 @@ public class EcoreOCLEValidator implements EValidator
 	 * @deprecated use PivotDiagnostician.getOCL
 	 */
 	@Deprecated
-	protected static final class WeakOCLReference extends WeakReference<OCLInternal>
+	protected static final class WeakOCLReference extends WeakReference<OCLInternal>	// FIXME Migrate to ThreadLocalExecutor.Terminator
 	{
-		protected final @NonNull OCLInternal ocl;
+		private static int counter = 0;
+
+		protected final @NonNull OCL ocl;
+		private int count;
 
 		protected WeakOCLReference(@NonNull OCLInternal ocl) {
 			super(ocl);
 			this.ocl = ocl;
+			this.count = ++counter;
+		//	System.out.println("[" + Thread.currentThread().getName() + "] EcoreOCLEValidator.WeakOCLReference-" + count + ".init()");
 		}
 
 		@Override
 		public void finalize() {
-			new Thread("OCL-Finalizer")
+			new Thread("OCL-Finalizer")		// New thread needed to avoid deadlock hazrad on ocl.dsipose()
 			{
 				@Override
 				public void run() {
+				//	System.out.println("[" + Thread.currentThread().getName() + "] EcoreOCLEValidator.WeakOCLReference-" + count + ".finalize()");
 					ocl.dispose();
 				}
 			}.start();

@@ -18,7 +18,6 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -79,7 +78,6 @@ import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory.EnvironmentFactoryExtension;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.OCLHelper;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
@@ -115,9 +113,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.ISelectionService;
 import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.console.IConsole;
 import org.eclipse.ui.console.IConsoleConstants;
@@ -361,7 +357,7 @@ public class OCLConsolePage extends Page //implements MetamodelManagerListener
 		super();
 		//		this.metamodelManager = new CancelableMetamodelManager();
 		this.console = console;
-		System.out.println("Create " + NameUtil.debugSimpleName(this));
+	//	System.out.println("Create " + NameUtil.debugSimpleName(this));
 	}
 
 	/**
@@ -588,7 +584,7 @@ public class OCLConsolePage extends Page //implements MetamodelManagerListener
 	 */
 	@Override
 	public void dispose() {
-		System.out.println("Dispose " + NameUtil.debugSimpleName(this));
+	//	System.out.println("Dispose " + NameUtil.debugSimpleName(this));
 		if (editor != null) {
 			editor.dispose();
 			editor = null;

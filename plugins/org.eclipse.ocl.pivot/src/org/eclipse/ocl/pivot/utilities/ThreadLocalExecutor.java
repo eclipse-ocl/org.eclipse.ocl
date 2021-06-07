@@ -192,9 +192,35 @@ public class ThreadLocalExecutor
 		threadLocalExecutor.localSetExecutor(executor);
 	}
 
+	/**
+	 * Return true if this (worker) thread use a finalizer to release its resources.
+	 *
+	 * @since 1.15
+	 */
+	public static void setUsesFinalizer() {
+	//	ThreadLocalExecutor threadLocalExecutor = ClassUtil.nonNullState(INSTANCE.get());
+		ThreadLocalExecutor threadLocalExecutor = INSTANCE.get();
+		if (threadLocalExecutor != null) {
+			threadLocalExecutor.usesFinalizer = true;
+		}
+		else {
+			ThreadLocalExecutor.class.getName();			// XXX
+		}
+	}
+
 	public static @NonNull String toDebugString() {
 		ThreadLocalExecutor threadLocalExecutor = INSTANCE.get();
 		return threadLocalExecutor != null ? threadLocalExecutor.toString() : "*** FINALIZED ***";
+	}
+
+	/**
+	 * Return true if this (worker) thread use a finalizer to release its resources.
+	 *
+	 * @since 1.15
+	 */
+	public static boolean usesFinalizer() {
+		ThreadLocalExecutor threadLocalExecutor = INSTANCE.get();
+		return (threadLocalExecutor != null) && threadLocalExecutor.usesFinalizer;
 	}
 
 	/**
@@ -222,6 +248,13 @@ public class ThreadLocalExecutor
 	 * The Executor for the only active EnvironmentFactory on this thread, null if no unique Executor.
 	 */
 	private @Nullable Executor executor = null;
+
+	/**
+	 * True if the thread application code use a fanalizer to release its resources.
+	 * e.g. EMF validation worker thread lazily discovers that it needs OCL and so must resort to
+	 * a finalizer to releasse it.
+	 */
+	private boolean usesFinalizer = false;
 
 	/**
 	 * @since 1.15
@@ -324,10 +357,11 @@ public class ThreadLocalExecutor
 	/**
 	 * @since 1.15
 	 */
-	protected void localReset() {
+	protected synchronized void localReset() {
 		setEnvironmentFactory(null);
 		executor = null;
 		concurrentEnvironmentFactories = false;
+		usesFinalizer = false;
 		if (THREAD_LOCAL_ENVIRONMENT_FACTORY.isActive()) {
 			THREAD_LOCAL_ENVIRONMENT_FACTORY.println(getThreadName() + " Reset " + toString());
 		}
@@ -356,6 +390,11 @@ public class ThreadLocalExecutor
 			if ((oldEnvironmentFactory != null) && !oldEnvironmentFactory.isDisposed()) {
 				oldEnvironmentFactory.detach(this);
 				this.environmentFactory = null;
+				if (usesFinalizer) {
+				//	System.out.println("[" + Thread.currentThread().getName() + "] setEnvironmentFactory() gc()");
+					System.gc();
+					usesFinalizer = false;
+				}
 			}
 			if ((newEnvironmentFactory != null) && !newEnvironmentFactory.isDisposed()) {
 				this.environmentFactory = newEnvironmentFactory;
