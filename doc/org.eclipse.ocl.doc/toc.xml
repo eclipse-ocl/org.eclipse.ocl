@@ -354,6 +354,7 @@
 <topic href="help/Tutorials.html#Troubleshooting" label="Troubleshooting"></topic>
 <topic href="help/Tutorials.html#UsingtheOCLinEcoretexteditorforEcore" label="Using the OCLinEcore text editor for Ecore">
 <topic href="help/Tutorials.html#CreateaNewEMFProject" label="Create a New EMF Project"></topic>
+<topic href="help/Tutorials.html#ConverttoanOCLProject" label="Convert to an OCL Project"></topic>
 <topic href="help/Tutorials.html#CreateaNewEcoreModel" label="Create a New Ecore Model"></topic>
 <topic href="help/Tutorials.html#OCLinEcoreMetamodel" label="Edit Ecore Model as OCLinEcore"></topic>
 <topic href="help/Tutorials.html#TheTutorialMetaModel" label="The Tutorial Meta-Model"></topic>

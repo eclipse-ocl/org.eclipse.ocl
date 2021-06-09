@@ -1,10 +1,10 @@
 
 h2(#CodeGenerationTutorial). Code Generation tutorial
 
-This tutorial has been updated for Eclipse Mars: Eclipse 4.5, EMF 2.11, OCL 6.0.
-* Some screenshots may be slightly out of date.
+This tutorial has been refreshed for Eclipse 2021-06; Eclipse 4.20, EMF 2.26, OCL 6.15.0.
+* The graphical styling of some screenshots may be slightly out of date.
 
-The direct OCL to Java Code generator was a very experimental functionality for the Juno release. It has been substantially rewritten for Kepler. Some optimisations have been activated for Luna and Mars. 
+The direct OCL to Java Code generator has matured significantly from its experimental functionality for the Juno release. It is now the recommended approach. 
 
 In this tutorial we will continue the OCLinEcore tutorial and show how to get a direct Java representation of the Ecore model avoiding the need for run-time compilation.
 
@@ -20,7 +20,7 @@ In "Generating Java Code":#OCLinEcoreTutorial-genmodel we saw how to create a ge
 
 Whether to generate OCL as text strings for interpretation or to convert directly to Java is determined by the Code Generation Mode. This may be configured using  the project property or workspace preference as described in "Code Generation Mode":#CodeGenerationMode. So use *Window->Preferences->OCL* to change the *Realisation of OCL embedded in Ecore models* setting to *==Generate Java code in *Impl classes==*.
 
-Now open *Tutorial.genmodel*, select the root resource and invoke *Generate Model Code* to (re)generate the Java code. This will take somewhat longer as additional work items show that the OCL is being compiled and that Xtend templates are generating additional Java code.
+Now open *Tutorial.genmodel*, select the root @Tutorial@ resource and invoke *Generate Model Code* to (re)generate the Java code. This will take somewhat longer as additional work items show that the OCL is being compiled and that Xtend templates are generating additional Java code.
 
 bq.. 
 Note that you must close *Tutorial.genmodel* while changing the Code Generation Mode.
@@ -30,11 +30,15 @@ p.
 
 That is all there is to it. Your model code is now 100% Java; no OCL parsing is needed at run-time. 
 
+bq.. 
+If you see errors related to undefined ...__DIAGNOSTICCHAIN_MAP, you need tio edit your *.genmodel to make sure that the Model->Operation Reflection option on the overall GenModel is set true.
+p. 
+
 h3. Using a GenAnnotation
 
 Changing the default genmodel setting is a little dangerous since the change will affect any other genmodel activities you perform. It is therefore advisable to reset the workspace preference setting to its default and use a GenAnnotation to embed the setting in the genmodel.
 
-The easiest way to create the GenAnnotation that ensure direct code generation regardless of workspace or project preferences, is to paste the following three lines into your genmodel just above the @foreignModel@ or @genpackages@ element.
+The easiest way to create the GenAnnotation that ensure direct code generation regardless of workspace or project preferences, is to paste the following three lines into your genmodel just above the @foreignModel@ or @genPackages@ element.
 
 bc.. 
   <genAnnotations source="http://www.eclipse.org/OCL/GenModel">

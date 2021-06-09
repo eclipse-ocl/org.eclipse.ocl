@@ -105,11 +105,11 @@
 </div>
 </div>
 </div>
-<p>This tutorial has been updated for Eclipse Mars; Eclipse 4.5, EMF 2.11, OCL 6.0.</p>
+<p>This tutorial has been refreshed for Eclipse 2021-06; Eclipse 4.20, EMF 2.26, OCL 6.15.0.</p>
 <div class="itemizedlist">
 <ul class="itemizedlist" type="disc">
 <li class="listitem">
-<p>Some screenshots may be slightly out of date.</p>
+<p>The graphical styling of some screenshots may be slightly out of date.</p>
 </li>
 </ul>
 </div>
@@ -306,6 +306,68 @@
 <p>Left-click on 
 						<span class="bold"><strong>Finish</strong></span>.
 					</p>
+</div>
+<div class="section" title="Convert to an OCL Project">
+<div class="titlepage">
+<div>
+<div>
+<h4 class="title">
+<a name="ConverttoanOCLProject"></a>Convert to an OCL Project</h4>
+</div>
+</div>
+</div>
+<p>An OCL project, analogously to many other Eclipse projects, has an OCL nature and an OCL builder that compile OCL resources so that any problems are shown as error/warning/info markers in the 
+						<span class="bold"><strong>Problems View</strong></span>.
+					</p>
+<p>The OCL nature may be added to our project by right-clicking on the project and then invoking 
+						<span class="bold"><strong>Configure-&gt;Convert to OCL Project</strong></span> from the context menu.
+					</p>
+<p>
+						
+</p>
+<div class="mediaobject">
+<img src="images/4100-convert_to_ocl_project.png"></div>
+<p>
+					
+</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" type="disc">
+<li class="listitem">
+<p>The OCL nature may be removed by 
+								<span class="bold"><strong>Configure-&gt;Unconfigure OCL</strong></span>.
+							</p>
+</li>
+</ul>
+</div>
+<p>Adding the OCL nature makes the project also-an-OCL-project. It does not displace any other natures that the project already has.</p>
+<p>It is not necessary to add the OCL nature, but if you omit this step, every time you open an OCL editor, a pop-up will offer to add the OCL nature for you.</p>
+<div class="blockquote">
+<blockquote class="blockquote">
+<p>
+							The EMF and UML2 projects do not provide corresponding natures to validate *.ecore or *.uml files. This would leave any OCL embedded in Ecore or UML unchecked and the user unaware of problems. The OCL nature therefore validates *.ecore or *.uml files as well as OCL files by default. This default can be adjusted by editing the value of the enabledExtensions in the .project file.</p>
+</blockquote>
+</div>
+<p></p>
+<p>
+						
+</p>
+<div class="mediaobject">
+<img src="images/4100-project-commands.png"></div>
+<p>
+					
+</p>
+<div class="blockquote">
+<blockquote class="blockquote">
+<p>
+							If you cannot see files such as 
+							<span class="bold"><strong>.project</strong></span>, open the 
+							<span class="bold"><strong>View</strong></span> menu by clicking the top right tool bar icon of the 
+							<span class="bold"><strong>Package Explorer</strong></span> and enable visibility of .resources in the 
+							<span class="bold"><strong>Filters</strong></span>.
+						</p>
+</blockquote>
+</div>
+<p></p>
 </div>
 <div class="section" title="Create a New Ecore Model">
 <div class="titlepage">
@@ -592,11 +654,16 @@
 <p>
 				
 </p>
-<p>The model is automatically opened for editing. 
-					If it is does not open with the Sample Reflective Ecore Model Editor,
-					close the editor and open explicitly using *Open With-&gt;Sample Reflective Ecore Model Editor).
-					This gives a tree-like presentation of the model. The properties of each node can
-					be seen in the Properties View.</p>
+<p>The model is automatically opened for editing. </p>
+<div class="itemizedlist">
+<ul class="itemizedlist" type="disc">
+<li class="listitem">
+<p>If it is does not open with the Sample Reflective Ecore Model Editor, close the editor and open explicitly using 
+							<span class="bold"><strong>Open With-&gt;Sample Reflective Ecore Model Editor</strong></span>. This gives a tree-like presentation of the model. The properties of each node can be seen in the Properties View.
+						</p>
+</li>
+</ul>
+</div>
 <p>
 					
 </p>
@@ -605,11 +672,17 @@
 <p>
 				
 </p>
-<p>(If the Properties View is not visible, right-click within the editor and left-click on
-
-					<span class="bold"><strong>Show Properties View</strong></span>.)
-				</p>
-<p>Select the Library and use give it a name such as 
+<div class="itemizedlist">
+<ul class="itemizedlist" type="disc">
+<li class="listitem">
+<p>If the Properties View is not visible, right-click within the editor and left-click on 
+							<span class="bold"><strong>Show Properties View</strong></span>.
+						</p>
+</li>
+</ul>
+</div>
+<p>Select the 
+					<code class="code">Library</code> and give it a name such as 
 					<code class="code">lib</code>.
 				</p>
 <p>From the right-button menu for 
@@ -656,6 +729,17 @@
 					<span class="bold"><strong>Validate</strong></span> 
 					<code class="code">Library</code> and all its children.
 				</p>
+<div class="blockquote">
+<blockquote class="blockquote">
+<p>
+						Beware. If you have installed WST for web support, or M2E for Maven support, there is a rival 
+						<span class="bold"><strong>Validate</strong></span> with a checkbox near the bottom of the menu. It does not appear to do anything useful for EMF-based models. The correct 
+						<span class="bold"><strong>Validate</strong></span> is the one just above 
+						<span class="bold"><strong>Live Validation</strong></span>.
+					</p>
+</blockquote>
+</div>
+<p></p>
 <p>
 					
 </p>
@@ -675,13 +759,16 @@
 <p>
 				
 </p>
-<p>(If you have an error at this point, a 
-					<span class="bold"><strong>Details</strong></span> button will lead you to some
-					diagnostics that may clarify the problem. Pasting the following XMI 
-					into 
-					<span class="bold"><strong>Tutorial.xmi</strong></span> should also
-					resolve an entry problem.)
-				</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" type="disc">
+<li class="listitem">
+<p>If you have an error at this point, a 
+							<span class="bold"><strong>Details</strong></span> button will lead you to some diagnostics that may clarify the problem. Pasting the following XMI into 
+							<span class="bold"><strong>Tutorial.xmi</strong></span> should also resolve an entry problem.
+						</p>
+</li>
+</ul>
+</div>
 <div class="literallayout">
 <p>
 <code class="code">&lt;?xml&nbsp;version="1.0"&nbsp;encoding="ASCII"?&gt;<br>
@@ -725,7 +812,7 @@
 </div>
 </div>
 </div>
-<p>The semantic constraint that a book cannot be borrowed more times than there are books
+<p>The semantic constraint that a book cannot be borrowed more times than there are copies of the book
 					is a simple example of a constraint that cannot be expressed by simple multiplicities; 
 					a more powerful capability is required that may potentially require evaluation
 					of functions of almost arbitrary complexity. The Object Constraint Language
@@ -795,11 +882,17 @@
 </li>
 </ul>
 </div>
-<p>Close the 
-					<span class="bold"><strong>Tutorial.xmi</strong></span> editor before modifying its meta-model. (Beware that
-					a wide variety of unpleasant errors can occur if the meta-model is changed after
-					the model is loaded.)
-				</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" type="disc">
+<li class="listitem">
+<p>it used to be necessary to close an XML editor such as 
+							<span class="bold"><strong>Tutorial.xmi</strong></span> before modifying its meta-model since
+						</p>
+</li>
+</ul>
+</div>
+<p>a wide variety of unpleasant errors could occur if the meta-model changes after the model is loaded.
+					This EMF limitation now appears to have been resolved. It is nonetheless prudent to do so.</p>
 <p>Add the invariant shown below to the meta-model.</p>
 <p>
 					
@@ -837,7 +930,7 @@
 					satisfied for the 
 					<code class="code">b2</code> book.
 				</p>
-<p>Alternatively you may invoke 
+<p>Alternatively you may enable 
 					<span class="bold"><strong>Live Validation</strong></span> so that validation happens automatically with
 					error icons and hover text identifying problems.
 				</p>
@@ -911,11 +1004,16 @@
 <p>Left-click to select the 
 					<code class="code">Library</code> in the 
 					<span class="bold"><strong>Tutorial.xmi</strong></span> as the context
-					for a query, and then type 
-					<code class="code">books</code> followed by a new line into the lower
-					pane of the console. 
+					for a query. The title of the console view shows the that the 
+					<code class="code">Library</code> has been selected as OCL&rsquo;s 
+					<code class="code">self</code> .
 				</p>
-<p>The result of evaluating this query for the Library is shown.</p>
+<p>Type 
+					<code class="code">books</code> followed by a new line into the lower pane of the console. 
+				</p>
+<p>The result of evaluating this query for the 
+					<code class="code">Library</code> is shown.
+				</p>
 <p>
 					
 </p>
@@ -967,8 +1065,13 @@
 <a class="ulink" href="../references/4100-metamodel3.oclinecore" target="_new">[Text for cut and paste]</a>
 				
 </p>
-<p>Note that the derived property must also be volatile to avoid problems when
-					a model is loaded but has no content.</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" type="disc">
+<li class="listitem">
+<p>Note that the derived property must also be volatile to avoid problems when a model is loaded but has no content.</p>
+</li>
+</ul>
+</div>
 <p>Reopen 
 					<span class="bold"><strong>Tutorial.xmi</strong></span> and select 
 					<span class="bold"><strong>Book b2</strong></span> so that the derived property is visible in the 
@@ -983,9 +1086,9 @@
 				
 </p>
 <p>The helper operation can be evaluated in the 
-					<span class="bold"><strong>Console</strong></span> view, after closing and reopening, by selecting book 
+					<span class="bold"><strong>Console</strong></span> view by selecting book 
 					<code class="code">b2</code> and typing 
-					<code class="code">isAvailable()</code> for execution.
+					<code class="code">isAvailable()</code> for execution. (It is no longer necessary to close and reopen the Console after a metamodel change.)
 				</p>
 <p>
 					
@@ -997,9 +1100,15 @@
 </p>
 <p>We will now add further helpers and constraints to enforce an
 					at most two loans per member policy and to require loans to be unique.</p>
-<p>(Don&rsquo;t forget to close 
-					<span class="bold"><strong>Tutorial.xmi</strong></span> while changing its meta-model.)
-				</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" type="disc">
+<li class="listitem">
+<p>It is prudent, but perhaps no longer necessary, to close 
+							<span class="bold"><strong>Tutorial.xmi</strong></span> and the Console while changing the meta-model.
+						</p>
+</li>
+</ul>
+</div>
 <p>
 					
 </p>
@@ -1039,12 +1148,26 @@
 </div>
 </div>
 <p>We have shown how OCL may be used to enrich Ecore meta-models, how model instances can be created
-					and validated and how expressions can be evaluated, all without generating any Java code.</p>
-<p>Exactly the same facilities are available if you do generate Java code and as a result you gain some speed benefits. By default, in the Eclipse OCL 6.4.0 (Photon) release the generated Java code for OCL is interpreted and so the speed gains occur only for the EMF models.
-					In the 
-					<a class="link" href="CodeGenerationTutorial.html" title="Code Generation tutorial">Code Generation Tutorial</a>, a preliminary release of 
-					the OCL to Java code generator is described, giving an approximately five-fold speed improvement
-					and eliminating the need for run-time compilation.
+					and validated and how expressions can be evaluated, all without generating any Java code. The OCLinEcore support
+					provides the requisite Ecore EAnnotations to ensure that the dynamic execution of EMF activates an OCL
+					interpreter where OCL functionality is required.</p>
+<p>Exactly the same facilities are available if you generate Java code for the Ecore model and as a result you gain some speed benefits. You have two choices for the realization of the OCL embedded with Ecore models.</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" type="disc">
+<li class="listitem">
+<p>Generate Java code within the *Impl classes</p>
+</li>
+<li class="listitem">
+<p>Delete for interpretation at run-time</p>
+</li>
+</ul>
+</div>
+<p>The first newer approach takes longer to generate the model since the OCL is compiled to Java incurring parser overheads at compile-time. However the OCL runs approximately five times faster and has fewer dependencies since no parsing is necessary at run-time. This approach is described In the 
+					<a class="link" href="CodeGenerationTutorial.html" title="Code Generation tutorial">Code Generation Tutorial</a>.
+				</p>
+<p>The second older approach embeds the OCL in the Java as unparsed stings so that parsing occurs overheads at run-time. The generated Java is smaller since the executable Java for OCL is larger than uncompiled strings. </p>
+<p>We continue here with the older approach for which delegation to yyje interpreter is selected as a root 
+					<span class="bold"><strong>Window-&gt;Preferences-&gt;OCL</strong></span> relaization preference.
 				</p>
 <p>Generating Java code is exactly the same as for any other EMF project. (Prior to EMF 2.8, there was one important difference; you must explicitly set 
 					<span class="bold"><strong>Operation Reflection</strong></span> to true. The default for this changed to true in EMF 2.8.)

@@ -1,8 +1,8 @@
 
 h2(#CompleteOCLTutorial). Complete OCL tutorial
 
-This tutorial has been updated for Eclipse Mars: Eclipse 4.5, EMF 2.11, OCL 6.0.
-* Some screenshots may be slightly out of date.
+This tutorial has been refreshed for Eclipse 2021-06; Eclipse 4.20, EMF 2.26, OCL 6.15.0.
+* The graphical styling of some screenshots may be slightly out of date.
 
 h3. Overview 
 

@@ -1,8 +1,8 @@
 
 h2(#OCLinEcoreTutorial). OCLinEcore tutorial
 
-This tutorial has been updated for Eclipse Mars; Eclipse 4.5, EMF 2.11, OCL 6.0.
-* Some screenshots may be slightly out of date.
+This tutorial has been refreshed for Eclipse 2021-06; Eclipse 4.20, EMF 2.26, OCL 6.15.0.
+* The graphical styling of some screenshots may be slightly out of date.
 
 h3. Overview 
 
@@ -75,6 +75,30 @@ Left-click on *Next* and in the *New Empty EMF Project* dialog type *Tutorial* a
 !{width:60%}images/4100-new_empty_emf_project.png(New Empty EMF Project)!
 
 Left-click on *Finish*.
+
+h4. Convert to an OCL Project
+
+An OCL project, analogously to many other Eclipse projects, has an OCL nature and an OCL builder that compile OCL resources so that any problems are shown as error/warning/info markers in the *Problems View*.
+
+The OCL nature may be added to our project by right-clicking on the project and then invoking *Configure->Convert to OCL Project* from the context menu.
+
+!{width:60%}images/4100-convert_to_ocl_project.png(Conbert to OCL Project)!
+
+* The OCL nature may be removed by *Configure->Unconfigure OCL*.
+
+Adding the OCL nature makes the project also-an-OCL-project. It does not displace any other natures that the project already has.
+
+It is not necessary to add the OCL nature, but if you omit this step, every time you open an OCL editor, a pop-up will offer to add the OCL nature for you.
+
+bq.. 
+The EMF and UML2 projects do not provide corresponding natures to validate *.ecore or *.uml files. This would leave any OCL embedded in Ecore or UML unchecked and the user unaware of problems. The OCL nature therefore validates *.ecore or *.uml files as well as OCL files by default. This default can be adjusted by editing the value of the enabledExtensions in the .project file.
+p. 
+
+!{width:60%}images/4100-project-commands.png(Project Commands)!
+
+bq.. 
+If you cannot see files such as *.project*, open the *View* menu by clicking the top right tool bar icon of the *Package Explorer* and enable visibility of .resources in the *Filters*.
+p. 
 
 h4. Create a New Ecore Model
 
@@ -189,17 +213,14 @@ dynamic model instance and left-click *Finish*.
 !{width:60%}images/4100-create_dynamic_instance_dialog.png(Create Dynamic Instance Dialog)!
 
 The model is automatically opened for editing. 
-If it is does not open with the Sample Reflective Ecore Model Editor,
-close the editor and open explicitly using *Open With->Sample Reflective Ecore Model Editor).
-This gives a tree-like presentation of the model. The properties of each node can
-be seen in the Properties View.
+
+* If it is does not open with the Sample Reflective Ecore Model Editor, close the editor and open explicitly using *Open With->Sample Reflective Ecore Model Editor*. This gives a tree-like presentation of the model. The properties of each node can be seen in the Properties View.
 
 !{width:60%}images/4100-initial_model.png(Initial Model)!
 
-(If the Properties View is not visible, right-click within the editor and left-click on
-*Show Properties View*.)
+* If the Properties View is not visible, right-click within the editor and left-click on *Show Properties View*.
 
-Select the Library and use give it a name such as @lib@.
+Select the @Library@ and give it a name such as @lib@.
 
 From the right-button menu for @Library@ use *New Child->Books Book* twice,
 use *New Child->Loans Loan* once and *New Child->Members Member* three times
@@ -222,6 +243,10 @@ The configuration so far is simple, three members, two books and one loan. We ca
 validate that this by right-clicking on the @Library@ node, and left-clicking
 to *Validate* @Library@ and all its children.
 
+bq.. 
+Beware. If you have installed WST for web support, or M2E for Maven support, there is a rival *Validate* with a checkbox near the bottom of the menu. It does not appear to do anything useful for EMF-based models. The correct *Validate* is the one just above *Live Validation*.
+p. 
+
 !{width:60%}images/4100-validate_menu.png(Validate Menu)!
 
 Since the model is so simple, it is difficult to have anything wrong; most of
@@ -230,10 +255,7 @@ Book are prevented by the Editor's enforcement of the meta-model.
 
 !{width:60%}images/4100-validation_successful.png(Validation Successful)!
 
-(If you have an error at this point, a *Details* button will lead you to some
-diagnostics that may clarify the problem. Pasting the following XMI 
-into *Tutorial.xmi* should also
-resolve an entry problem.)
+* If you have an error at this point, a *Details* button will lead you to some diagnostics that may clarify the problem. Pasting the following XMI into *Tutorial.xmi* should also resolve an entry problem.
 
 bc.. 
 <?xml version="1.0" encoding="ASCII"?>
@@ -262,7 +284,7 @@ the two copies of @b2@ to participate in three loans.
 
 h3. Enrich the meta-model with OCL
 
-The semantic constraint that a book cannot be borrowed more times than there are books
+The semantic constraint that a book cannot be borrowed more times than there are copies of the book
 is a simple example of a constraint that cannot be expressed by simple multiplicities; 
 a more powerful capability is required that may potentially require evaluation
 of functions of almost arbitrary complexity. The Object Constraint Language
@@ -286,9 +308,9 @@ In more detail:
 * @->size()@ is a collection operation that just counts the number of selected loans
 * @<= copies@, which is short for @<= self.copies@ converts the count to @true@ if it is consistent, or @false@ if inconsistent.
 
-(it used to be necessary to close the *Tutorial.xmi* editor before modifying its meta-model since
+* it used to be necessary to close an XML editor such as *Tutorial.xmi* before modifying its meta-model since
 a wide variety of unpleasant errors could occur if the meta-model changes after the model is loaded.
-This EMF limitation now appears to have been resolved.)
+This EMF limitation now appears to have been resolved. It is nonetheless prudent to do so.
 
 Add the invariant shown below to the meta-model.
 
@@ -306,7 +328,7 @@ you will now get a validation error. Left click *Details* for details.
 The *Details* identifies that the @SufficientCopies@ invariant is not
 satisfied for the @b2@ book.
 
-Alternatively you may invoke *Live Validation* so that validation happens automatically with
+Alternatively you may enable *Live Validation* so that validation happens automatically with
 error icons and hover text identifying problems.
 
 If you now change the first loan so that @b1@ is borrowed and then validate
@@ -345,10 +367,11 @@ The *Interactive Xtext OCL* console comprises two main text panes. The upper pan
 displays results. The lower pane supports entry of queries.
 
 Left-click to select the @Library@ in the *Tutorial.xmi* as the context
-for a query, and then type @books@ followed by a new line into the lower
-pane of the console. 
+for a query. The title of the console view shows the that the @Library@ has been selected as OCL's @self@ .
 
-The result of evaluating this query for the Library is shown.
+Type @books@ followed by a new line into the lower pane of the console. 
+
+The result of evaluating this query for the @Library@ is shown.
 
 !{width:60%}images/4100-books_query.png(Books Query)!
 
@@ -371,8 +394,7 @@ Simplify the invariant to use the derived property.
 !{width:70%}images/4100-metamodel3.png(Example Metamodel with Features)!
 "[Text for cut and paste]":../references/4100-metamodel3.oclinecore
 
-Note that the derived property must also be volatile to avoid problems when
-a model is loaded but has no content.
+* Note that the derived property must also be volatile to avoid problems when a model is loaded but has no content.
 
 Reopen *Tutorial.xmi* and select *Book b2* so that the derived property is visible in the *Properties* view.
 
@@ -385,7 +407,7 @@ The helper operation can be evaluated in the *Console* view by selecting book @b
 We will now add further helpers and constraints to enforce an
 at most two loans per member policy and to require loans to be unique.
 
-(It is prudent, but perhaps no longer necessary, to close *Tutorial.xmi* and the Console while changing the meta-model.)
+* It is prudent, but perhaps no longer necessary, to close *Tutorial.xmi* and the Console while changing the meta-model.
 
 !{width:70%}images/4100-metamodel4.png(Example Metamodel with More Features)!
 "[Text for cut and paste]":../references/4100-metamodel4.oclinecore
@@ -401,12 +423,20 @@ There are now two validation failures.
 h3(#OCLinEcoreTutorial-genmodel). Generating Java Code
 
 We have shown how OCL may be used to enrich Ecore meta-models, how model instances can be created
-and validated and how expressions can be evaluated, all without generating any Java code.
+and validated and how expressions can be evaluated, all without generating any Java code. The OCLinEcore support
+provides the requisite Ecore EAnnotations to ensure that the dynamic execution of EMF activates an OCL
+interpreter where OCL functionality is required.
 
-Exactly the same facilities are available if you do generate Java code and as a result you gain some speed benefits. By default, in the Eclipse OCL 6.4.0 (Photon) release the generated Java code for OCL is interpreted and so the speed gains occur only for the EMF models.
-In the "Code Generation Tutorial":#CodeGenerationTutorial, a preliminary release of 
-the OCL to Java code generator is described, giving an approximately five-fold speed improvement
-and eliminating the need for run-time compilation.
+Exactly the same facilities are available if you generate Java code for the Ecore model and as a result you gain some speed benefits. You have two choices for the realization of the OCL embedded with Ecore models.
+
+* Generate Java code within the *Impl classes
+* Delete for interpretation at run-time
+
+The first newer approach takes longer to generate the model since the OCL is compiled to Java incurring parser overheads at compile-time. However the OCL runs approximately five times faster and has fewer dependencies since no parsing is necessary at run-time. This approach is described In the "Code Generation Tutorial":#CodeGenerationTutorial.
+
+The second older approach embeds the OCL in the Java as unparsed stings so that parsing occurs overheads at run-time. The generated Java is smaller since the executable Java for OCL is larger than uncompiled strings. 
+
+We continue here with the older approach for which delegation to yyje interpreter is selected as a root *Window->Preferences->OCL* relaization preference.
 
 Generating Java code is exactly the same as for any other EMF project. (Prior to EMF 2.8, there was one important difference; you must explicitly set *Operation Reflection* to true. The default for this changed to true in EMF 2.8.)
 
