@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-SymbolicName: org.eclipse.ocl.examples.project.completeocltutorial;singleton:=true
-Bundle-Version: 1.9.400.qualifier
+Bundle-Version: 1.9.500.qualifier
 Require-Bundle: org.eclipse.ocl.pivot,
  org.eclipse.xtext;resolution:=optional
 Automatic-Module-Name: org.eclipse.ocl.examples.project.completeocltutorial

@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.ocl.standalone.ecore.tests;singleton:=true
-Bundle-Version: 6.15.0.qualifier
+Bundle-Version: 6.16.0.qualifier
 Automatic-Module-Name: org.eclipse.ocl.standalone.ecore.tests
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Localization: plugin
