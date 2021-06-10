@@ -37,6 +37,7 @@ After each first repo contribution, remember to update the aggregates e.g.
 cd ~/downloads/modeling/mdt/ocl/updates/milestones
 ant -f /shared/modeling/tools/promotion/manage-composite.xml add -Dchild.repository=6.10.0
 
+Repos overview: https://download.eclipse.org/oomph/archive/p2-index/modeling.mdt.ocl.html
 
 -- Drops maintenance -- https://download.eclipse.org/modeling/mdt/ocl/downloads/drops
 ssh genie.ocl@projects-storage.eclipse.org ls -la /home/data/httpd/download.eclipse.org/modeling/mdt/ocl/downloads/drops/6.12.0
@@ -50,6 +51,12 @@ ssh genie.ocl@projects-storage.eclipse.org rm -rf /home/data/httpd/download.ecli
 
 ssh genie.ocl@projects-storage.eclipse.org cd /home/data/httpd/download.eclipse.org/modeling/mdt/ocl/updates/nightly ; ant -f /shared/modeling/tools/promotion/manage-composite.xml remove -Dchild.repository=6.12.0
 ssh genie.ocl@projects-storage.eclipse.org rm -rf /home/data/httpd/download.eclipse.org/modeling/mdt/ocl/updates/nightly/6.12.0
+
+ssh genie.ocl@projects-storage.eclipse.org cd /home/data/httpd/download.eclipse.org/modeling/mdt/ocl/updates/interim ; ant -f /shared/modeling/tools/promotion/manage-composite.xml remove -Dchild.repository=6.12.0
+ssh genie.ocl@projects-storage.eclipse.org rm -rf /home/data/httpd/download.eclipse.org/modeling/mdt/ocl/updates/interim/6.12.0
+
+ssh genie.ocl@projects-storage.eclipse.org cd /home/data/httpd/download.eclipse.org/modeling/mdt/ocl/updates/milestones ; ant -f /shared/modeling/tools/promotion/manage-composite.xml remove -Dchild.repository=6.12.0
+ssh genie.ocl@projects-storage.eclipse.org rm -rf /home/data/httpd/download.eclipse.org/modeling/mdt/ocl/updates/milestones/6.12.0
 
 
 -- Drops archiving -- https://archive.eclipse.org/modeling/mdt/ocl/downloads/drops ---- and edit GIT\mdt\downloads\extras-ocl.php
