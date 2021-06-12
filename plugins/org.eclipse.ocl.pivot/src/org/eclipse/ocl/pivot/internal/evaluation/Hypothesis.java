@@ -66,11 +66,13 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 		return System.identityHashCode(this) - System.identityHashCode(that);
 	}
 
+	public abstract @NonNull String getKind();
+
+	public abstract @NonNull SymbolicValue getRefinedValue();
+
 	public @NonNull TypedElement getTypedElement() {
 		return typedElement;
 	}
-
-	public abstract @NonNull SymbolicValue getRefinedValue();
 
 	public @NonNull SymbolicValue getValue() {
 		return value;
@@ -111,6 +113,11 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 		}
 
 		@Override
+		public @NonNull String getKind() {
+			return "mayBeInvalid";
+		}
+
+		@Override
 		public @NonNull SymbolicValue getRefinedValue() {
 			return AbstractRefinedSymbolicValue.createNotInvalidValue(mayBeInvalidValue);
 		}
@@ -131,6 +138,11 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 		}
 
 		@Override
+		public @NonNull String getKind() {
+			return "mayBeNull";
+		}
+
+		@Override
 		public @NonNull SymbolicValue getRefinedValue() {
 			return AbstractRefinedSymbolicValue.createNotNullValue(mayBeNullValue);
 		}
@@ -148,6 +160,11 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 		public MayBeZeroHypothesis(@NonNull SymbolicAnalysis symbolicAnalysis, @NonNull TypedElement typedElement, @NonNull SymbolicValue mayBeZeroValue) {
 			super(symbolicAnalysis, typedElement, symbolicAnalysis.getEvaluationEnvironment().getKnownValue(ValueUtil.ZERO_VALUE));
 			this.mayBeZeroValue = mayBeZeroValue;
+		}
+
+		@Override
+		public @NonNull String getKind() {
+			return "mayBeZero";
 		}
 
 		@Override

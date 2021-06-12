@@ -352,7 +352,7 @@ public boolean isContradiction() {
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
-		s.append("hypothesis for '" + executableObject + "' in '" + executableObject.eContainer() + "'");
+		s.append(hypothesis.getKind() + " hypothesis for '" + executableObject + "' in '" + executableObject.eContainer() + "'");
 		StringUtil.appendIndentation(s, 0);
 		List<@NonNull CSEElement> keys = new ArrayList<>(cseElement2symbolicValue.keySet());
 		if (keys.size() > 1) {
