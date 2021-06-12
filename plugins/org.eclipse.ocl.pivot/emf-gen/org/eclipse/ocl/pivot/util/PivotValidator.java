@@ -53,6 +53,8 @@ public class PivotValidator extends EObjectValidator
 {
 	/**
 	 * Temporary validation context option to defer parsing of ExpressionInOCL bodies for legacy testing compatibility.
+	 *
+	 * FIXME BUG 574166.
 	 */
 	private static final @NonNull String EXPRESSION_IN_OCL_LAZY_PARSE = "ExpressionInOCL_lazy_parse";
 

@@ -80,12 +80,12 @@ public class RoundTripTests extends XtextTestCase
 		//		}
 		return ecoreResource;
 	}
-	public @NonNull ASResource createPivotFromEcore(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Resource ecoreResource) throws IOException {
+	public @NonNull ASResource createPivotFromEcore(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Resource ecoreResource, boolean lazyParse) throws IOException {
 		Ecore2AS ecore2as = Ecore2AS.getAdapter(ecoreResource, environmentFactory);
 		Model pivotModel = ecore2as.getASModel();
 		ASResource asResource = (ASResource) ClassUtil.nonNullState(pivotModel.eResource());
 		assertNoResourceErrors("Ecore2AS failed", asResource);
-		assertNoValidationErrors("Ecore2AS invalid", asResource);
+		assertNoValidationErrors("Ecore2AS invalid", asResource, lazyParse);
 		return asResource;
 	}
 	public @NonNull ASResource createPivotFromXtext(@NonNull EnvironmentFactoryInternal environmentFactory, BaseCSResource xtextResource, int expectedContentCount) throws IOException {
@@ -256,10 +256,10 @@ public class RoundTripTests extends XtextTestCase
 	}
 
 	public void doRoundTripFromOCLinEcore(@NonNull TestFile testFile) throws IOException, InterruptedException {
-		doRoundTripFromOCLinEcore(testFile.getFileURI());
+		doRoundTripFromOCLinEcore(testFile.getFileURI(), false);
 	}
 
-	public void doRoundTripFromOCLinEcore(@NonNull URI inputURI) throws IOException, InterruptedException {
+	public void doRoundTripFromOCLinEcore(@NonNull URI inputURI, boolean lazyParse) throws IOException, InterruptedException {
 		OCLInternal ocl1 = OCLInternal.newInstance(getProjectMap(), null);
 		String stem = inputURI.trimFileExtension().lastSegment();
 		String ecoreName = stem + ".ecore";
@@ -275,7 +275,7 @@ public class RoundTripTests extends XtextTestCase
 		//
 		OCLInternal ocl2 = OCLInternal.newInstance(getProjectMap(), null);
 		EnvironmentFactoryInternal environmentFactory2 = ocl2.getEnvironmentFactory();
-		ASResource pivotResource2 = createPivotFromEcore(environmentFactory2, ecoreResource);
+		ASResource pivotResource2 = createPivotFromEcore(environmentFactory2, ecoreResource, lazyParse);
 		@SuppressWarnings("unused")
 		BaseCSResource xtextResource2 = createXtextFromPivot(environmentFactory2, pivotResource2, outputURI);
 		ocl2.dispose();
@@ -378,7 +378,7 @@ public class RoundTripTests extends XtextTestCase
 						"}\n" +
 						"}\n";
 		TestFile testFile = createOCLinEcoreFile("Bug350894B.oclinecore", testFileContentsB);
-		doRoundTripFromOCLinEcore(testFile);
+		doRoundTripFromOCLinEcore(testFile.getFileURI(), true);
 	}
 
 	public void testBug356243_oclinecore() throws IOException, InterruptedException {
@@ -568,7 +568,7 @@ public class RoundTripTests extends XtextTestCase
 						"}\n" +
 						"}\n";
 		TestFile testFile = createOCLinEcoreFile("InvariantComments.oclinecore", testFileContents);
-		doRoundTripFromOCLinEcore(testFile);
+		doRoundTripFromOCLinEcore(testFile.getFileURI(), true);
 	}
 
 	public void testCompanyRoundTrip() throws IOException, InterruptedException, ParserException {
@@ -886,7 +886,7 @@ public class RoundTripTests extends XtextTestCase
 		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
 		TestFile testFile = getTestFile("Types.oclinecore", ocl, getTestModelURI("models/oclinecore/Types.oclinecore"));
 		ocl.dispose();
-		doRoundTripFromOCLinEcore(testFile.getFileURI());
+		doRoundTripFromOCLinEcore(testFile.getFileURI(), false);
 	}
 
 	public void testXMLNamespaceRoundTrip() throws IOException, InterruptedException, ParserException {

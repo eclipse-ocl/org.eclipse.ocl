@@ -333,16 +333,27 @@ public class PivotTestCase extends TestCase
 	}
 
 	public static void assertNoValidationErrors(@NonNull String string, @NonNull Resource resource) {
+		assertNoValidationErrors(string, resource, false);
+	}
+
+	public static void assertNoValidationErrors(@NonNull String string, @NonNull Resource resource, boolean lazyParse) {	// FIXME BUG 574166 eliminate lazyParse
 		for (EObject eObject : resource.getContents()) {
-			assertNoValidationErrors(string, ClassUtil.nonNullEMF(eObject));
+			assertNoValidationErrors(string, ClassUtil.nonNullEMF(eObject), lazyParse);
 		}
 	}
 
 	public static void assertNoValidationErrors(@NonNull String string, @NonNull EObject eObject) {
+		assertNoValidationErrors(string, eObject, false);
+	}
+
+	public static void assertNoValidationErrors(@NonNull String string, @NonNull EObject eObject, boolean lazyParse) {	// FIXME BUG 574166 eliminate lazyParse
 		Map<Object, Object> validationContext = TestUtil.createDefaultContext(Diagnostician.INSTANCE);
 		//		Resource eResource = ClassUtil.nonNullState(eObject.eResource());
 		//		PivotUtilInternal.getMetamodelManager(eResource);	// FIXME oclIsKindOf fails because ExecutableStandardLibrary.getMetaclass is bad
 		//		Diagnostic diagnostic = Diagnostician.INSTANCE.validate(eObject, validationContext);
+		if (lazyParse) {
+			PivotValidator.initLazyParse(validationContext, true);
+		}
 		BasicDiagnostic diagnostics = PivotDiagnostician.BasicDiagnosticWithRemove.validate(eObject, validationContext);
 		List<Diagnostic> children = diagnostics.getChildren();
 		if (children.size() <= 0) {
@@ -361,7 +372,6 @@ public class PivotTestCase extends TestCase
 				s.append("    ");
 			}
 			s.append(child.getMessage());
-			Throwable t = null;
 			for (Object data : child.getData()) {
 				if (data instanceof Throwable) {
 					s.append("\n    ");
@@ -446,8 +456,14 @@ public class PivotTestCase extends TestCase
 	}
 
 	public static @NonNull List<Diagnostic> assertValidationDiagnostics(@NonNull String prefix, @NonNull Resource resource, @NonNull String @Nullable [] messages) {
+		return assertValidationDiagnostics(prefix, resource, messages, false);
+	}
+
+	public static @NonNull List<Diagnostic> assertValidationDiagnostics(@NonNull String prefix, @NonNull Resource resource, @NonNull String @Nullable [] messages, boolean lazyParse) {
 		Map<Object, Object> validationContext = TestUtil.createDefaultContext(Diagnostician.INSTANCE);
-		PivotValidator.initLazyParse(validationContext, true);		// XXX Lazy deferral of ExpressionInOCL AS creation for legacy testing compatibility
+		if (lazyParse) {
+			PivotValidator.initLazyParse(validationContext, true);		// FIXME BUG 574166 Lazy deferral of ExpressionInOCL AS creation for legacy testing compatibility
+		}
 		return assertValidationDiagnostics(prefix, resource, validationContext, messages);
 	}
 
