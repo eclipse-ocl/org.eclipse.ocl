@@ -63,9 +63,18 @@ public class SerializeTests extends XtextTestCase
 		default @Nullable String cs2asErrorMessages() { return null; }
 		default void extraXtextResourceValidate(@NonNull BaseCSResource xtextResource) {}
 		default void initializeResourceSet(@NonNull ResourceSet resourceSet) {}
+		default boolean isLazyParse() { return false; }
 	}
 
 	public static final @NonNull SerializeTestHelper DEFAULT_HELPER = new SerializeTestHelper() {};
+
+	public static final @NonNull SerializeTestHelper LAZY_PARSE_HELPER = new SerializeTestHelper()		// FIXME BUG 574166
+	{
+		@Override
+		public boolean isLazyParse() {
+			return true;
+		}
+	};
 
 	@Override
 	protected void setUp() throws Exception {
@@ -111,7 +120,7 @@ public class SerializeTests extends XtextTestCase
 			assertNoResourceErrors("Normalisation failed", asResource);
 			@NonNull String @Nullable [] asValidationMessages = testHelper.asFirstValidationMessages();
 			if (asValidationMessages != SUPPRESS_VALIDATION) {
-				assertValidationDiagnostics("Normalisation invalid", asResource, asValidationMessages);
+				assertValidationDiagnostics("Normalisation invalid", asResource, asValidationMessages, testHelper.isLazyParse());
 			}
 			//
 			//	Pivot to CS
@@ -575,7 +584,7 @@ public class SerializeTests extends XtextTestCase
 	}
 
 	public void testSerialize_ConstraintMessages() throws Exception {
-		doSerialize(getTestModelURI("models/ecore/ConstraintMessages.ecore"), getTestModelURI("models/ecore/ConstraintMessages.reference.ecore"), DEFAULT_HELPER);
+		doSerialize(getTestModelURI("models/ecore/ConstraintMessages.ecore"), getTestModelURI("models/ecore/ConstraintMessages.reference.ecore"), LAZY_PARSE_HELPER);
 	}
 
 	public void testSerialize_Ecore() throws Exception {
@@ -731,6 +740,10 @@ public class SerializeTests extends XtextTestCase
 			@Override
 			public @NonNull String cs2asErrorMessages() {
 				return StringUtil.bind(PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "OclInvalid", "substring", "1, 1");
+			}
+			@Override
+			public boolean isLazyParse() {
+				return true;
 			}
 		});
 	}

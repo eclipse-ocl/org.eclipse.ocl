@@ -293,7 +293,7 @@ public class OCLstdlibTests extends XtextTestCase
 		//		PivotAliasCreator.refreshPackageAliases(javaResource);
 		assertNoResourceErrors("Java Model", javaResource);
 		assertNoUnresolvedProxies("Java Model", javaResource);
-		assertNoValidationErrors("Java Model", javaResource);
+		assertNoValidationErrors("Java Model", javaResource, true);
 		//
 		//	Check similar content
 		//
