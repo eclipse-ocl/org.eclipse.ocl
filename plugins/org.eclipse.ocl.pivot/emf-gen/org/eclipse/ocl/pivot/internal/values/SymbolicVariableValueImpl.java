@@ -72,6 +72,12 @@ public class SymbolicVariableValueImpl extends SymbolicValueImpl implements Symb
 //		return mayBeNull;
 //	}
 
+//	@Override
+//	public boolean isZero() {
+//		// TODO Auto-generated method stub
+//		return super.isZero();
+//	}
+
 	@Override
 	public void toString(@NonNull StringBuilder s, int lengthLimit) {
 		s.append("\"");

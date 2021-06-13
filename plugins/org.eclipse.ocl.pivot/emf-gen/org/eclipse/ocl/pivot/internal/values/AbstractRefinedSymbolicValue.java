@@ -12,6 +12,9 @@ package org.eclipse.ocl.pivot.internal.values;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicCollectionContent;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicMapContent;
 import org.eclipse.ocl.pivot.values.RefinedSymbolicValue;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
@@ -58,6 +61,11 @@ public abstract class AbstractRefinedSymbolicValue extends AbstractSymbolicValue
 		}
 
 		@Override
+		public boolean isSmallerThan(@NonNull SymbolicValue minSizeValue) {
+			return false;
+		}
+
+		@Override
 		public boolean isTrue() {
 			return false;
 		}
@@ -78,6 +86,11 @@ public abstract class AbstractRefinedSymbolicValue extends AbstractSymbolicValue
 		}
 
 		@Override
+		public boolean mayBeSmallerThan(@NonNull SymbolicValue minSizeValue) {
+			return false;
+		}
+
+		@Override
 		public boolean mayBeZero() {
 			return false;
 		}
@@ -85,6 +98,72 @@ public abstract class AbstractRefinedSymbolicValue extends AbstractSymbolicValue
 		@Override
 		public @NonNull String toString() {
 			return "%IsDead";
+		}
+	}
+
+	private static class IsEmptySymbolicValue extends AbstractRefinedSymbolicValue
+	{
+		public IsEmptySymbolicValue(@NonNull SymbolicValue value) {
+			super(value);
+		}
+
+		@Override
+		public boolean isEmpty() {
+			return true;
+		}
+
+		@Override
+		public boolean mayBeEmpty() {
+			return true;
+		}
+
+		@Override
+		public @NonNull String toString() {
+			return "%IsEmpty(" + value.toString() + ")";
+		}
+	}
+
+	private static class IsZeroSymbolicValue extends AbstractRefinedSymbolicValue
+	{
+		public IsZeroSymbolicValue(@NonNull SymbolicValue value) {
+			super(value);
+		}
+
+		@Override
+		public boolean isZero() {
+			return true;
+		}
+
+		@Override
+		public boolean mayBeZero() {
+			return true;
+		}
+
+		@Override
+		public @NonNull String toString() {
+			return "%IsZero(" + value.toString() + ")";
+		}
+	}
+
+	private static class NotEmptySymbolicValue extends AbstractRefinedSymbolicValue
+	{
+		public NotEmptySymbolicValue(@NonNull SymbolicValue value) {
+			super(value);
+		}
+
+		@Override
+		public boolean isEmpty() {
+			return false;
+		}
+
+		@Override
+		public boolean mayBeEmpty() {
+			return false;
+		}
+
+		@Override
+		public @NonNull String toString() {
+			return "%NotEmpty(" + value.toString() + ")";
 		}
 	}
 
@@ -186,6 +265,35 @@ public abstract class AbstractRefinedSymbolicValue extends AbstractSymbolicValue
 		}
 	}
 
+	private static class NotSmallerThanSymbolicValue extends AbstractRefinedSymbolicValue
+	{
+		protected final @NonNull SymbolicValue minSizeValue;
+
+		public NotSmallerThanSymbolicValue(@NonNull SymbolicValue value, @NonNull SymbolicValue minSizeValue) {
+			super(value);
+			this.minSizeValue = minSizeValue;
+		}
+
+		@Override
+		public boolean isSmallerThan(@NonNull SymbolicValue minSizeValue) {
+			// TODO Auto-generated method stub
+		//	return super.isSmallerThan(minSizeValue);
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public boolean mayBeSmallerThan(@NonNull SymbolicValue minSizeValue) {
+			// TODO Auto-generated method stub
+		//	return super.mayBeSmallerThan(minSizeValue);
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public @NonNull String toString() {
+			return "%NotSmallerThan(" + value.toString() + "," + minSizeValue.toString() + ")";
+		}
+	}
+
 	private static class NullFreeSymbolicValue extends AbstractRefinedSymbolicValue
 	{
 		public NullFreeSymbolicValue(@NonNull SymbolicValue value) {
@@ -203,6 +311,28 @@ public abstract class AbstractRefinedSymbolicValue extends AbstractSymbolicValue
 		}
 	}
 
+	private static class SizeSymbolicValue extends AbstractRefinedSymbolicValue
+	{
+		public SizeSymbolicValue(@NonNull SymbolicValue value) {
+			super(value);
+		}
+
+	//	@Override
+	//	public boolean isZero() {
+	//		return true;
+	//	}
+
+	//	@Override
+	//	public boolean mayBeZero() {
+	//		return true;
+	//	}
+
+		@Override
+		public @NonNull String toString() {
+			return "%Size(" + value.toString() + ")";
+		}
+	}
+
 	public static @NonNull SymbolicValue createIsDeadValue(SymbolicValue symbolicValue) {
 		if (symbolicValue.isDead()) {
 			return symbolicValue;
@@ -210,6 +340,33 @@ public abstract class AbstractRefinedSymbolicValue extends AbstractSymbolicValue
 		else {
 			return new IsDeadSymbolicValue(symbolicValue.getBaseValue());
 		}
+	}
+
+	public static @NonNull SymbolicValue createIsEmptyValue(@NonNull SymbolicValue symbolicValue) {
+		if (symbolicValue.isEmpty()) {
+			return symbolicValue;
+		}
+		else {
+			return new IsEmptySymbolicValue(symbolicValue);
+		}
+	}
+
+	public static @NonNull SymbolicValue createIsZeroValue(@NonNull SymbolicValue symbolicValue) {
+		if (symbolicValue.isZero()) {
+			return symbolicValue;
+		}
+		else {
+			return new IsZeroSymbolicValue(symbolicValue);
+		}
+	}
+
+	public static @NonNull SymbolicValue createNotEmptyValue(@NonNull SymbolicValue symbolicValue) {
+	//	if (!symbolicValue.isEmpty()) {
+	//		return symbolicValue;
+	//	}
+	//	else {
+			return new NotEmptySymbolicValue(symbolicValue);
+	//	}
 	}
 
 	public static @NonNull SymbolicValue createNotInvalidValue(@NonNull SymbolicValue symbolicValue) {
@@ -238,6 +395,13 @@ public abstract class AbstractRefinedSymbolicValue extends AbstractSymbolicValue
 		return symbolicValue;
 	}
 
+	public static @NonNull SymbolicValue createNotSmallerThanValue(@NonNull SymbolicValue symbolicValue, @NonNull SymbolicValue minSizeValue) {
+		if (symbolicValue.mayBeSmallerThan(minSizeValue)) {
+			symbolicValue = new NotSmallerThanSymbolicValue(symbolicValue, minSizeValue);
+		}
+		return symbolicValue;
+	}
+
 	public static @NonNull SymbolicValue createNotZeroValue(@NonNull SymbolicValue symbolicValue) {
 		if (symbolicValue.mayBeZero()) {
 			symbolicValue = new NotZeroSymbolicValue(symbolicValue);
@@ -251,6 +415,21 @@ public abstract class AbstractRefinedSymbolicValue extends AbstractSymbolicValue
 		}
 		return symbolicValue;
 	}
+
+	public static @NonNull SymbolicValue createSizeValue(@NonNull SymbolicValue symbolicValue) {
+		return new SizeSymbolicValue(symbolicValue);
+	}
+
+	public static @NonNull SymbolicValue createSmallerThanValue(@NonNull SymbolicValue symbolicValue, @NonNull SymbolicValue minSizeValue) {
+		throw new UnsupportedOperationException();
+	}
+
+//	public static @NonNull SymbolicValue createZeroValue(@NonNull SymbolicValue symbolicValue) {
+//		if (!symbolicValue.isZero()) {
+//			symbolicValue = new ZeroSymbolicValue(symbolicValue);
+//		}
+//		return symbolicValue;
+//	}
 
 	protected final @NonNull SymbolicValue value;
 
@@ -286,6 +465,21 @@ public abstract class AbstractRefinedSymbolicValue extends AbstractSymbolicValue
 	}
 
 	@Override
+	public @NonNull SymbolicCollectionContent getCollectionContent() {
+		return value.getCollectionContent();
+	}
+
+	@Override
+	public @NonNull SymbolicContent getContent() {
+		return value.getContent();
+	}
+
+	@Override
+	public @NonNull SymbolicMapContent getMapContent() {
+		return value.getMapContent();
+	}
+
+	@Override
 	public @NonNull TypeId getTypeId() {
 		return value.getTypeId();
 	}
@@ -298,6 +492,11 @@ public abstract class AbstractRefinedSymbolicValue extends AbstractSymbolicValue
 	@Override
 	public boolean isDead() {
 		return value.isDead();
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return value.isEmpty();
 	}
 
 	@Override
@@ -326,6 +525,11 @@ public abstract class AbstractRefinedSymbolicValue extends AbstractSymbolicValue
 	}
 
 	@Override
+	public boolean isSmallerThan(@NonNull SymbolicValue minSizeValue) {
+		return value.isSmallerThan(minSizeValue);
+	}
+
+	@Override
 	public boolean isTrue() {
 		return value.isTrue();
 	}
@@ -336,6 +540,11 @@ public abstract class AbstractRefinedSymbolicValue extends AbstractSymbolicValue
 	}
 
 	@Override
+	public boolean mayBeEmpty() {
+		return value.mayBeEmpty();
+	}
+
+	@Override
 	public boolean mayBeInvalid() {
 		return value.mayBeInvalid();
 	}
@@ -343,6 +552,11 @@ public abstract class AbstractRefinedSymbolicValue extends AbstractSymbolicValue
 	@Override
 	public boolean mayBeNull() {
 		return value.mayBeNull();
+	}
+
+	@Override
+	public boolean mayBeSmallerThan(@NonNull SymbolicValue minSizeValue) {
+		return value.mayBeSmallerThan(minSizeValue);
 	}
 
 	@Override

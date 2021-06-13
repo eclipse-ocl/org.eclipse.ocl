@@ -77,6 +77,14 @@ public class SymbolicAnalysis extends BasicOCLExecutor implements SymbolicExecut
 		allHypotheses2.add(hypothesis);
 	}
 
+	public void addMayBeEmptyHypothesis(@NonNull TypedElement typedElement, @NonNull SymbolicValue symbolicValue) {
+		Hypothesis hypothesis = getHypotheses(typedElement, Hypothesis.MayBeEmptyHypothesis.class);
+		if (hypothesis == null) {
+			hypothesis = new Hypothesis.MayBeEmptyHypothesis(this, typedElement, symbolicValue);
+			addHypothesis(typedElement, hypothesis);
+		}
+	}
+
 	public void addMayBeInvalidHypothesis(@NonNull TypedElement typedElement, @NonNull SymbolicValue symbolicValue) {
 		Hypothesis hypothesis = getHypotheses(typedElement, Hypothesis.MayBeInvalidHypothesis.class);
 		if (hypothesis == null) {
@@ -89,6 +97,14 @@ public class SymbolicAnalysis extends BasicOCLExecutor implements SymbolicExecut
 		Hypothesis hypothesis = getHypotheses(typedElement, Hypothesis.MayBeNullHypothesis.class);
 		if (hypothesis == null) {
 			hypothesis = new Hypothesis.MayBeNullHypothesis(this, typedElement, symbolicValue);
+			addHypothesis(typedElement, hypothesis);
+		}
+	}
+
+	public void addMayBeSmallerThanHypothesis(@NonNull TypedElement typedElement, @NonNull SymbolicValue symbolicValue, @NonNull SymbolicValue minSizeValue) {
+		Hypothesis hypothesis = getHypotheses(typedElement, Hypothesis.MayBeSmallerThanHypothesis.class);		// minSIze
+		if (hypothesis == null) {
+			hypothesis = new Hypothesis.MayBeSmallerThanHypothesis(this, typedElement, symbolicValue, minSizeValue);
 			addHypothesis(typedElement, hypothesis);
 		}
 	}
@@ -326,8 +342,12 @@ public class SymbolicAnalysis extends BasicOCLExecutor implements SymbolicExecut
 		List<@NonNull HypothesizedSymbolicEvaluationEnvironment> hypothesizedEvaluationEnvironments = getHypothesizedEvaluationEnvironments();
 		if (hypothesizedEvaluationEnvironments != null) {
 			StringUtil.appendIndentation(s, 1);
+			s.append("{");
+			StringUtil.appendIndentation(s, 2);
 			for (HypothesizedSymbolicEvaluationEnvironment hypothesizedSymbolicEvaluationEnvironments : hypothesizedEvaluationEnvironments) {
-				hypothesizedSymbolicEvaluationEnvironments.toString(s, 1);
+				hypothesizedSymbolicEvaluationEnvironments.toString(s, 2);
+				StringUtil.appendIndentation(s, 2);
+				s.append("}");
 			}
 		}
 		return s.toString();

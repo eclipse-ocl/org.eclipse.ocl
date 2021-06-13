@@ -27,6 +27,15 @@ import org.eclipse.ocl.pivot.values.SymbolicValue;
  */
 public interface SymbolicEvaluationEnvironment extends EvaluationEnvironment.EvaluationEnvironmentExtension
 {
+	//	@NonNull SymbolicValue traceValue(@NonNull CSEElement cseElement, @Nullable Object value);
+
+	/**
+	 * Return a SymbolicKnownValue for invalid, if typedElement is a collection and empty.
+	 * Else return a mayBeNull SymbolicUnknownValue for typeId if typedElement is a collection.
+	 * Else return null if typedElement is not null.
+	 */
+	@Nullable SymbolicValue checkNotEmpty(@NonNull TypedElement typedElement, @NonNull TypeId typeId);
+
 	/**
 	 * Return a SymbolicKnownValue for invalid, if typedElement isInvalid.
 	 * Else return a mayBeNull SymbolicUnknownValue for typeId if typedElement mayBeInvalid.
@@ -40,6 +49,12 @@ public interface SymbolicEvaluationEnvironment extends EvaluationEnvironment.Eva
 	 * Else return null if typedElement is not null.
 	 */
 	@Nullable SymbolicValue checkNotNull(@NonNull TypedElement typedElement, @NonNull TypeId typeId);
+
+	/**
+	 * Return a SymbolicKnownValue for invalid, if typedElement is a collection whose size may bee smaller than minSize.
+	 * Else return null .
+	 */
+	@Nullable SymbolicValue checkNotSmallerThan(@NonNull TypedElement typedElement, @NonNull SymbolicValue minSizeValue, @NonNull TypeId typeId);
 
 	/**
 	 * Return a SymbolicKnownValue for invalid, if typedElement isZero.

@@ -14,6 +14,7 @@ package org.eclipse.ocl.pivot.internal.evaluation;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.internal.values.AbstractRefinedSymbolicValue;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -26,15 +27,37 @@ import org.eclipse.ocl.pivot.values.SymbolicValue;
 public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 {
 	protected final @NonNull SymbolicAnalysis symbolicAnalysis;
+
+	/**
+	 * The TypedElement whose for which a value is being hypothesis.
+	 */
 	protected final @NonNull TypedElement typedElement;
-	protected final @NonNull SymbolicValue value;
+
+	/**
+	 * The value of the typedElement prior to assignment by the hypothesis.
+	 */
+	protected final @NonNull SymbolicValue originalValue;
+
+	/**
+	 * The value of the typedElement after assignment by the hypothesis.
+	 */
+	protected final @NonNull SymbolicValue hypothesizedValue;
+
+	/**
+	 * The CSE of the typedElement.
+	 */
 	protected final @NonNull CSEElement cseElement;
+
+	/**
+	 * Whether the hypothesis is conformed(false), contradicted(true) or is yet to be decided (null).
+	 */
 	private @Nullable Boolean isContradiction = null;
 
-	protected Hypothesis(@NonNull SymbolicAnalysis symbolicAnalysis, @NonNull TypedElement typedElement, @NonNull SymbolicValue value) {
+	protected Hypothesis(@NonNull SymbolicAnalysis symbolicAnalysis, @NonNull TypedElement typedElement, @NonNull SymbolicValue originalValue, @NonNull SymbolicValue hypothesizedValue) {
 		this.symbolicAnalysis = symbolicAnalysis;
 		this.typedElement = typedElement;
-		this.value = value;
+		this.originalValue = originalValue;
+		this.hypothesizedValue = hypothesizedValue;
 		this.cseElement = symbolicAnalysis.getCSEElement(typedElement);
 	}
 
@@ -68,18 +91,22 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 
 	public abstract @NonNull String getKind();
 
+	public @NonNull SymbolicValue getOriginalValue() {
+		return originalValue;
+	}
+
 	public abstract @NonNull SymbolicValue getRefinedValue();
 
 	public @NonNull TypedElement getTypedElement() {
 		return typedElement;
 	}
 
-	public @NonNull SymbolicValue getValue() {
-		return value;
-	}
-
 	public boolean isContradiction() {
 		return ClassUtil.nonNullState(isContradiction).booleanValue();
+	}
+
+	public @Nullable Boolean mayBeEmpty() {
+		return null;
 	}
 
 	public @Nullable Boolean mayBeInvalid() {
@@ -90,26 +117,75 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 		return null;
 	}
 
+	public @Nullable Boolean mayBeSmallerThan(int minSize) {
+		return null;
+	}
+
 	public @Nullable Boolean mayBeZero() {
 		return null;
 	}
 
 	@Override
-	public @NonNull String toString() {
+	public final @NonNull String toString() {
 		StringBuilder s = new StringBuilder();
-		s.append(value);
-		s.append(isContradiction == null ? " ?= " : (isContradiction == Boolean.TRUE) ? " == " :  " != ");
-		s.append(typedElement);
+		toString(s);
 		return s.toString();
+	}
+
+	protected void toString(@NonNull StringBuilder s) {
+		s.append(typedElement);
+		s.append(" ");
+		s.append(getKind());
+		s.append(": ");
+		s.append(originalValue);
+		s.append(" ");
+		s.append(isContradiction == null ? "undecided" : (isContradiction == Boolean.TRUE) ? "confirmed" :  "contradicted");
+		s.append(": ");
+		s.append(hypothesizedValue);
+	}
+
+	public static class MayBeEmptyHypothesis extends Hypothesis
+	{
+		protected static @NonNull SymbolicValue zeroValue(@NonNull SymbolicAnalysis symbolicAnalysis, @NonNull TypeId typeId, @NonNull SymbolicValue originalValue) {
+		//	if (typeId instanceof CollectionTypeId) {
+		//		return AbstractRefinedSymbolicValue.createZeroValue(originalValue);
+		//	}
+		//	else if (typeId instanceof MapTypeId) {
+		//		return AbstractRefinedSymbolicValue.createZeroValue(originalValue);
+		//	}
+			return symbolicAnalysis.getEvaluationEnvironment().getKnownValue(ValueUtil.ZERO_VALUE);
+		}
+
+		public MayBeEmptyHypothesis(@NonNull SymbolicAnalysis symbolicAnalysis, @NonNull TypedElement typedElement, @NonNull SymbolicValue originalValue) {
+			super(symbolicAnalysis, typedElement, originalValue, AbstractRefinedSymbolicValue.createIsEmptyValue(originalValue));
+		}
+		@Override
+		public @NonNull String getKind() {
+			return "mayBeEmpty";
+		}
+
+		@Override
+		public @NonNull SymbolicValue getRefinedValue() {
+			return AbstractRefinedSymbolicValue.createNotEmptyValue(originalValue);
+		}
+
+		@Override
+		public @Nullable Boolean mayBeEmpty() {
+			return isContradiction();
+		}
+
+	//	@Override
+	//	protected void toString(@NonNull StringBuilder s) {
+	//		super.toString(s);
+	//		s.append(" => ");
+	//		s.append(mayBeZeroValue);
+	//	}
 	}
 
 	public static class MayBeInvalidHypothesis extends Hypothesis
 	{
-		protected final @NonNull SymbolicValue mayBeInvalidValue;
-
-		public MayBeInvalidHypothesis(@NonNull SymbolicAnalysis symbolicAnalysis, @NonNull TypedElement typedElement, @NonNull SymbolicValue mayBeInvalidValue) {
-			super(symbolicAnalysis, typedElement, symbolicAnalysis.getEvaluationEnvironment().getKnownValue(ValueUtil.INVALID_VALUE));
-			this.mayBeInvalidValue = mayBeInvalidValue;
+		public MayBeInvalidHypothesis(@NonNull SymbolicAnalysis symbolicAnalysis, @NonNull TypedElement typedElement, @NonNull SymbolicValue originalValue) {
+			super(symbolicAnalysis, typedElement, originalValue, symbolicAnalysis.getEvaluationEnvironment().getKnownValue(ValueUtil.INVALID_VALUE));
 		}
 
 		@Override
@@ -119,22 +195,26 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 
 		@Override
 		public @NonNull SymbolicValue getRefinedValue() {
-			return AbstractRefinedSymbolicValue.createNotInvalidValue(mayBeInvalidValue);
+			return AbstractRefinedSymbolicValue.createNotInvalidValue(originalValue);
 		}
 
 		@Override
 		public @Nullable Boolean mayBeInvalid() {
 			return isContradiction();
 		}
+
+	//	@Override
+	//	protected void toString(@NonNull StringBuilder s) {
+	//		super.toString(s);
+	//		s.append(" => ");
+	//		s.append(mayBeInvalidValue);
+	//	}
 	}
 
 	public static class MayBeNullHypothesis extends Hypothesis
 	{
-		protected final @NonNull SymbolicValue mayBeNullValue;
-
-		public MayBeNullHypothesis(@NonNull SymbolicAnalysis symbolicAnalysis, @NonNull TypedElement typedElement, @NonNull SymbolicValue mayBeNullValue) {
-			super(symbolicAnalysis, typedElement, symbolicAnalysis.getEvaluationEnvironment().getKnownValue(null));
-			this.mayBeNullValue = mayBeNullValue;
+		public MayBeNullHypothesis(@NonNull SymbolicAnalysis symbolicAnalysis, @NonNull TypedElement typedElement, @NonNull SymbolicValue originalValue) {
+			super(symbolicAnalysis, typedElement, originalValue, symbolicAnalysis.getEvaluationEnvironment().getKnownValue(null));
 		}
 
 		@Override
@@ -144,24 +224,69 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 
 		@Override
 		public @NonNull SymbolicValue getRefinedValue() {
-			return AbstractRefinedSymbolicValue.createNotNullValue(mayBeNullValue);
+			return AbstractRefinedSymbolicValue.createNotNullValue(originalValue);
 		}
 
 		@Override
 		public @Nullable Boolean mayBeNull() {
 			return isContradiction();
 		}
+
+	//	@Override
+	//	protected void toString(@NonNull StringBuilder s) {
+	//		super.toString(s);
+	//		s.append(" => ");
+	//		s.append(mayBeNullValue);
+	//	}
+	}
+
+	public static class MayBeSmallerThanHypothesis extends Hypothesis
+	{
+		protected final @NonNull SymbolicValue minSizeValue;
+
+		public MayBeSmallerThanHypothesis(@NonNull SymbolicAnalysis symbolicAnalysis, @NonNull TypedElement typedElement, @NonNull SymbolicValue originalValue, @NonNull SymbolicValue minSizeValue) {
+			super(symbolicAnalysis, typedElement, originalValue, AbstractRefinedSymbolicValue.createSmallerThanValue(originalValue, minSizeValue));
+			this.minSizeValue = minSizeValue;
+		}
+
+		@Override
+		public @NonNull String getKind() {
+			return "mayBeSmallerThan(" + minSizeValue + ")";
+		}
+
+		@Override
+		public @NonNull SymbolicValue getRefinedValue() {
+			return AbstractRefinedSymbolicValue.createNotSmallerThanValue(originalValue, minSizeValue);
+		}
+
+		@Override
+		public @Nullable Boolean mayBeSmallerThan(int minSize) {
+			return isContradiction();
+		}
+
+	//	@Override
+	//	protected void toString(@NonNull StringBuilder s) {
+	//		super.toString(s);
+	//		s.append(" => ");
+	//		s.append(mayBeSmallerThanValue);
+	//	}
 	}
 
 	public static class MayBeZeroHypothesis extends Hypothesis
 	{
-		protected final @NonNull SymbolicValue mayBeZeroValue;
-
-		public MayBeZeroHypothesis(@NonNull SymbolicAnalysis symbolicAnalysis, @NonNull TypedElement typedElement, @NonNull SymbolicValue mayBeZeroValue) {
-			super(symbolicAnalysis, typedElement, symbolicAnalysis.getEvaluationEnvironment().getKnownValue(ValueUtil.ZERO_VALUE));
-			this.mayBeZeroValue = mayBeZeroValue;
+		protected static @NonNull SymbolicValue zeroValue(@NonNull SymbolicAnalysis symbolicAnalysis, @NonNull TypeId typeId, @NonNull SymbolicValue originalValue) {
+		//	if (typeId instanceof CollectionTypeId) {
+		//		return AbstractRefinedSymbolicValue.createZeroValue(originalValue);
+		//	}
+		//	else if (typeId instanceof MapTypeId) {
+		//		return AbstractRefinedSymbolicValue.createZeroValue(originalValue);
+		//	}
+			return symbolicAnalysis.getEvaluationEnvironment().getKnownValue(ValueUtil.ZERO_VALUE);
 		}
 
+		public MayBeZeroHypothesis(@NonNull SymbolicAnalysis symbolicAnalysis, @NonNull TypedElement typedElement, @NonNull SymbolicValue originalValue) {
+			super(symbolicAnalysis, typedElement, originalValue, zeroValue(symbolicAnalysis, typedElement.getTypeId(), originalValue));
+		}
 		@Override
 		public @NonNull String getKind() {
 			return "mayBeZero";
@@ -169,12 +294,19 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 
 		@Override
 		public @NonNull SymbolicValue getRefinedValue() {
-			return AbstractRefinedSymbolicValue.createNotZeroValue(mayBeZeroValue);
+			return AbstractRefinedSymbolicValue.createNotZeroValue(originalValue);
 		}
 
 		@Override
 		public @Nullable Boolean mayBeZero() {
 			return isContradiction();
 		}
+
+	//	@Override
+	//	protected void toString(@NonNull StringBuilder s) {
+	//		super.toString(s);
+	//		s.append(" => ");
+	//		s.append(mayBeZeroValue);
+	//	}
 	}
 }

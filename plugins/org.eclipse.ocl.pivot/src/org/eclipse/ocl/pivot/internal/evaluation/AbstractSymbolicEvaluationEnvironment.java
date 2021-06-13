@@ -53,6 +53,20 @@ public abstract class AbstractSymbolicEvaluationEnvironment extends BasicEvaluat
 	public abstract @Nullable SymbolicValue basicGetSymbolicValue(@NonNull CSEElement cseElement);
 
 	@Override
+	public @Nullable SymbolicValue checkNotEmpty(@NonNull TypedElement typedElement, @NonNull TypeId typeId) {
+		SymbolicValue symbolicValue = getSymbolicValue(typedElement);
+		if (symbolicValue.isEmpty()) {
+			return getKnownValue(ValueUtil.INVALID_VALUE);
+		}
+		if (!symbolicValue.mayBeEmpty()) {
+			return null;
+		}
+		SymbolicAnalysis symbolicAnalysis = getSymbolicAnalysis();
+		symbolicAnalysis.addMayBeEmptyHypothesis(typedElement, symbolicValue);
+		return getMayBeInvalidValue(typeId);
+	}
+
+	@Override
 	public @Nullable SymbolicValue checkNotInvalid(@NonNull TypedElement typedElement, @NonNull TypeId typeId) {
 		SymbolicValue symbolicValue = getSymbolicValue(typedElement);
 		if (symbolicValue.isInvalid()) {
@@ -77,6 +91,20 @@ public abstract class AbstractSymbolicEvaluationEnvironment extends BasicEvaluat
 		}
 		SymbolicAnalysis symbolicAnalysis = getSymbolicAnalysis();
 		symbolicAnalysis.addMayBeNullHypothesis(typedElement, symbolicValue);
+		return getMayBeInvalidValue(typeId);
+	}
+
+	@Override
+	public @Nullable SymbolicValue checkNotSmallerThan(@NonNull TypedElement typedElement, @NonNull SymbolicValue minSizeValue, @NonNull TypeId typeId) {
+		SymbolicValue symbolicValue = getSymbolicValue(typedElement);
+		if (symbolicValue.isSmallerThan(minSizeValue)) {
+			return getKnownValue(ValueUtil.INVALID_VALUE);
+		}
+		if (!symbolicValue.mayBeSmallerThan(minSizeValue)) {
+			return null;
+		}
+		SymbolicAnalysis symbolicAnalysis = getSymbolicAnalysis();
+		symbolicAnalysis.addMayBeSmallerThanHypothesis(typedElement, symbolicValue, minSizeValue);
 		return getMayBeInvalidValue(typeId);
 	}
 
@@ -177,6 +205,7 @@ public abstract class AbstractSymbolicEvaluationEnvironment extends BasicEvaluat
 		return getSymbolicValue(element).mayBeNull();
 	}
 
+	@Override
 	public void setDead(@NonNull OCLExpression expression) {}
 
 	@Override

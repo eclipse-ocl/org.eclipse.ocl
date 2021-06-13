@@ -12,9 +12,15 @@ package org.eclipse.ocl.pivot.internal.values;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicCollectionContent;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicMapContent;
+import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.SymbolicKnownValue;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 import org.eclipse.ocl.pivot.values.ValuesPackage;
 
@@ -60,6 +66,7 @@ public abstract class SymbolicValueImpl extends AbstractSymbolicValue {
 	protected final @NonNull TypeId typeId;
 	protected final boolean mayBeNull;
 	protected final boolean mayBeInvalid;
+	private @Nullable SymbolicContent content = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -99,15 +106,49 @@ public abstract class SymbolicValueImpl extends AbstractSymbolicValue {
 		return this;
 	} */
 
+	public @Nullable SymbolicContent basicGetContent() {
+		return content;
+	}
+
 	@Override
 	public @NonNull SymbolicValue getBaseValue() {
 		return this;
+	}
+
+	@Override
+	public @NonNull SymbolicCollectionContent getCollectionContent() {
+		assert typeId instanceof CollectionTypeId;
+		SymbolicContent content2 = content;
+		if (content2 == null) {
+			content = content2 = new SymbolicCollectionContent((CollectionTypeId)typeId);
+		}
+		return (SymbolicCollectionContent)content2;
 	}
 
 //	@Override
 //	public @NonNull CollectionTypeId getCollectionTypeId() {
 //		throw new InvalidValueException(PivotMessages.ConvertibleValueRequired, "Invalid");
 //	}
+
+	public @NonNull SymbolicContent getContent() {
+		if (typeId instanceof CollectionTypeId) {
+			return getCollectionContent();
+		}
+		if (typeId instanceof MapTypeId) {
+			return getMapContent();
+		}
+		throw new IllegalStateException();
+	}
+
+	@Override
+	public @NonNull SymbolicMapContent getMapContent() {
+		assert typeId instanceof MapTypeId;
+		SymbolicContent content2 = content;
+		if (content2 == null) {
+			content = content2 = new SymbolicMapContent((MapTypeId)typeId);
+		}
+		return (SymbolicMapContent)content2;
+	}
 
 //	@Override
 //	public @NonNull TupleTypeId getTupleTypeId() {
@@ -127,6 +168,12 @@ public abstract class SymbolicValueImpl extends AbstractSymbolicValue {
 	@Override
 	public boolean isDead() {
 		return false;
+	}
+
+	@Override
+	public boolean isEmpty() {
+		SymbolicContent content = basicGetContent();
+		return (content != null) && content.isEmpty();
 	}
 
 	@Override
@@ -160,6 +207,11 @@ public abstract class SymbolicValueImpl extends AbstractSymbolicValue {
 	}
 
 	@Override
+	public boolean isSmallerThan(@NonNull SymbolicValue minSizeValue) {
+		return false;
+	}
+
+	@Override
 	public boolean isTrue() {
 		return false;
 	}
@@ -167,6 +219,12 @@ public abstract class SymbolicValueImpl extends AbstractSymbolicValue {
 	@Override
 	public boolean isZero() {
 		return false;
+	}
+
+	@Override
+	public boolean mayBeEmpty() {
+		SymbolicContent content = basicGetContent();
+		return (content == null) || content.mayBeEmpty();
 	}
 
 	@Override
@@ -185,8 +243,32 @@ public abstract class SymbolicValueImpl extends AbstractSymbolicValue {
 	}
 
 	@Override
+	public boolean mayBeSmallerThan(@NonNull SymbolicValue minSizeValue) {
+		if (!minSizeValue.isKnown()) {
+			return true;
+		}
+		Object value = ((SymbolicKnownValue)minSizeValue).getValue();
+		if (value instanceof Number) {
+			return ((Number)value).intValue() > 0;
+		}
+		if (value instanceof IntegerValue) {
+			return ((IntegerValue)value).intValue() > 0;
+		}
+		return true;
+	}
+
+	@Override
 	public boolean mayBeZero() {
-		return (getTypeId() == TypeId.REAL) || (getTypeId() == TypeId.INTEGER) || (getTypeId() == TypeId.UNLIMITED_NATURAL);	// FIXME Behavioral
+		TypeId typeId = getTypeId();
+	//	if (typeId instanceof CollectionTypeId) {
+	//		return true;			// Collection may be empty
+	//	}
+	//	else if (typeId instanceof MapTypeId) {
+	//		return true;			// Map may be empty
+	//	}
+	//	else {
+			return (typeId == TypeId.REAL) || (typeId == TypeId.INTEGER) || (typeId == TypeId.UNLIMITED_NATURAL);	// FIXME Behavioral
+	//	}
 	}
 
 	@Override

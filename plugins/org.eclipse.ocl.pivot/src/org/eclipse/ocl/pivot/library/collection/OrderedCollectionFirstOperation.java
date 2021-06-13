@@ -13,9 +13,14 @@ package org.eclipse.ocl.pivot.library.collection;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
+import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.OperationCallExp;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.library.AbstractSimpleUnaryOperation;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.SequenceValue;
+import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
  * OrderedCollectionFirstOperation realises the OrderedCollection::first() library operation.
@@ -23,6 +28,22 @@ import org.eclipse.ocl.pivot.values.SequenceValue;
 public class OrderedCollectionFirstOperation extends AbstractSimpleUnaryOperation
 {
 	public static final @NonNull OrderedCollectionFirstOperation INSTANCE = new OrderedCollectionFirstOperation();
+
+	@Override
+	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment symbolicEvaluationEnvironment, @NonNull OperationCallExp callExp) {
+		SymbolicValue superProblem = super.checkPreconditions(symbolicEvaluationEnvironment, callExp);
+		if (superProblem != null) {
+			return superProblem;
+		}
+		OCLExpression source = PivotUtil.getOwnedSource(callExp);
+	//	SymbolicValue sourceSymbolicValue = symbolicEvaluationEnvironment.getSymbolicValue(source);
+	//	SymbolicCollectionContent sourceContent = sourceSymbolicValue.getCollectionContent();
+		SymbolicValue sourceSizeProblem = symbolicEvaluationEnvironment.checkNotEmpty(source, callExp.getTypeId());
+		if (sourceSizeProblem != null) {
+			return sourceSizeProblem;
+		}
+		return null;
+	}
 
 	@Override
 	public @Nullable Object evaluate(@Nullable Object argument) {

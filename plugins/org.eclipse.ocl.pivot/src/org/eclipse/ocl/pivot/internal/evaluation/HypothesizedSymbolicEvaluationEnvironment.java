@@ -226,7 +226,7 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 		//	Install the directly hypothesized expression.
 		//
 		@NonNull TypedElement typedElement = hypothesis.getTypedElement();
-		@NonNull SymbolicValue constrainingValue = hypothesis.getValue();
+		@NonNull SymbolicValue constrainingValue = hypothesis.getOriginalValue();
 		CSEElement hypothesisCSE = symbolicAnalysis.getCSEElement(typedElement);
 		cseElement2symbolicValue.put(hypothesisCSE, constrainingValue);		// Install the known 'read' value.
 		//
@@ -295,7 +295,7 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 		}
 	}
 
-public boolean isContradiction() {
+	public boolean isContradiction() {
 		List<@NonNull TypedElement> affectedTypedElementsList = new ArrayList<>(affectedTypedElements);
 		if (affectedTypedElementsList.size() > 1) {
 			Collections.sort(affectedTypedElementsList, getSymbolicAnalysis().getTypedElementHeightComparator());
@@ -347,7 +347,12 @@ public boolean isContradiction() {
 			traceSymbolicValue(cseElement, writeValue);					// Record re-evaluated value
 			return true;
 		}
-		return writeValue.equals(readValue);			// XXX isCompatible
+		if (writeValue.equals(readValue)) { // XXX isCompatible
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	@Override

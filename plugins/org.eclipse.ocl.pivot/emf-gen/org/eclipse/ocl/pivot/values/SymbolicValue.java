@@ -11,6 +11,9 @@
 package org.eclipse.ocl.pivot.values;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicCollectionContent;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicMapContent;
 
 /**
  * <!-- begin-user-doc -->
@@ -41,9 +44,17 @@ public interface SymbolicValue extends Value
 
 	@NonNull SymbolicValue getBaseValue();
 
+	@NonNull SymbolicCollectionContent getCollectionContent();
+
+	@NonNull SymbolicContent getContent();
+
+	@NonNull SymbolicMapContent getMapContent();
+
 	boolean isCollection();
 
 	boolean isDead();
+
+	boolean isEmpty();
 
 	boolean isFalse();
 
@@ -60,8 +71,14 @@ public interface SymbolicValue extends Value
 
 	boolean isRefinementOf(@NonNull SymbolicValue unrefinedValue);
 
+	boolean isSmallerThan(@NonNull SymbolicValue minSizeValue);
+
 	boolean isTrue();
 
 	boolean isZero();
+
+	boolean mayBeEmpty();
+
+	boolean mayBeSmallerThan(@NonNull SymbolicValue minSizeValue);
 
 } // SymbolicValue
