@@ -101,13 +101,13 @@ public class SymbolicAnalysis extends BasicOCLExecutor implements SymbolicExecut
 		}
 	}
 
-	public void addMayBeSmallerThanHypothesis(@NonNull TypedElement typedElement, @NonNull SymbolicValue symbolicValue, @NonNull SymbolicValue minSizeValue) {
+/*	public void addMayBeSmallerThanHypothesis(@NonNull TypedElement typedElement, @NonNull SymbolicValue symbolicValue, @NonNull SymbolicValue minSizeValue) {
 		Hypothesis hypothesis = getHypotheses(typedElement, Hypothesis.MayBeSmallerThanHypothesis.class);		// minSIze
 		if (hypothesis == null) {
 			hypothesis = new Hypothesis.MayBeSmallerThanHypothesis(this, typedElement, symbolicValue, minSizeValue);
 			addHypothesis(typedElement, hypothesis);
 		}
-	}
+	} */
 
 	public void addMayBeZeroHypothesis(@NonNull TypedElement typedElement, @NonNull SymbolicValue symbolicValue) {
 		Hypothesis hypothesis = getHypotheses(typedElement, Hypothesis.MayBeZeroHypothesis.class);
@@ -341,12 +341,12 @@ public class SymbolicAnalysis extends BasicOCLExecutor implements SymbolicExecut
 		}
 		List<@NonNull HypothesizedSymbolicEvaluationEnvironment> hypothesizedEvaluationEnvironments = getHypothesizedEvaluationEnvironments();
 		if (hypothesizedEvaluationEnvironments != null) {
-			StringUtil.appendIndentation(s, 1);
-			s.append("{");
-			StringUtil.appendIndentation(s, 2);
 			for (HypothesizedSymbolicEvaluationEnvironment hypothesizedSymbolicEvaluationEnvironments : hypothesizedEvaluationEnvironments) {
-				hypothesizedSymbolicEvaluationEnvironments.toString(s, 2);
-				StringUtil.appendIndentation(s, 2);
+				StringUtil.appendIndentation(s, 1);
+				s.append("{ ");
+			//	StringUtil.appendIndentation(s, 2);
+				hypothesizedSymbolicEvaluationEnvironments.toString(s, 1);
+				StringUtil.appendIndentation(s, 1);
 				s.append("}");
 			}
 		}

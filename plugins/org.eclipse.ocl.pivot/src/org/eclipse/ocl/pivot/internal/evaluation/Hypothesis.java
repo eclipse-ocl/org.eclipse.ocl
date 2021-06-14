@@ -17,6 +17,7 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.internal.values.AbstractRefinedSymbolicValue;
+import org.eclipse.ocl.pivot.internal.values.AbstractRefinedSymbolicValue.RefinedContentSymbolicValue;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
@@ -68,8 +69,7 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 		isContradiction = hypothesizedEvaluationEnvironment.isContradiction();
 		symbolicAnalysis.popEvaluationEnvironment();
 		if (isContradiction()) {
-			BaseSymbolicEvaluationEnvironment baseSymbolicEvaluationEnvironment = symbolicAnalysis.getBaseSymbolicEvaluationEnvironment();
-			baseSymbolicEvaluationEnvironment.refineValue(typedElement, getRefinedValue());
+			refine();
 		//	SymbolicReEvaluationEnvironment refinedEvaluationEnvironment = symbolicAnalysis.createSymbolicReEvaluationEnvironment(this);
 		//	refinedEvaluationEnvironment.putRefinedValue(expression, getRefinedValue());
 		//	symbolicAnalysis.pushEvaluationEnvironment(refinedEvaluationEnvironment);
@@ -95,7 +95,7 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 		return originalValue;
 	}
 
-	public abstract @NonNull SymbolicValue getRefinedValue();
+//	public abstract @NonNull SymbolicValue getRefinedValue();
 
 	public @NonNull TypedElement getTypedElement() {
 		return typedElement;
@@ -124,6 +124,8 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 	public @Nullable Boolean mayBeZero() {
 		return null;
 	}
+
+	protected abstract void refine();
 
 	@Override
 	public final @NonNull String toString() {
@@ -157,7 +159,7 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 		}
 
 		public MayBeEmptyHypothesis(@NonNull SymbolicAnalysis symbolicAnalysis, @NonNull TypedElement typedElement, @NonNull SymbolicValue originalValue) {
-			super(symbolicAnalysis, typedElement, originalValue, AbstractRefinedSymbolicValue.createIsEmptyValue(originalValue));
+			super(symbolicAnalysis, typedElement, originalValue, AbstractRefinedSymbolicValue.createIsZeroValue(AbstractRefinedSymbolicValue.createSizeValue(originalValue)));
 		}
 		@Override
 		public @NonNull String getKind() {
@@ -165,13 +167,18 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 		}
 
 		@Override
-		public @NonNull SymbolicValue getRefinedValue() {
-			return AbstractRefinedSymbolicValue.createNotEmptyValue(originalValue);
+		public @Nullable Boolean mayBeEmpty() {
+			return isContradiction();
 		}
 
 		@Override
-		public @Nullable Boolean mayBeEmpty() {
-			return isContradiction();
+		protected void refine() {
+			BaseSymbolicEvaluationEnvironment baseSymbolicEvaluationEnvironment = symbolicAnalysis.getBaseSymbolicEvaluationEnvironment();
+			RefinedContentSymbolicValue refinedValue = AbstractRefinedSymbolicValue.createRefinedContent(originalValue);
+			SymbolicValue refinedSize = AbstractRefinedSymbolicValue.createNotValue(AbstractRefinedSymbolicValue.createIsZeroValue(refinedValue.getSize()));
+			refinedValue.setSize(refinedSize);
+		//	SymbolicValue refinedValue = getRefinedValue();
+			baseSymbolicEvaluationEnvironment.refineValue(typedElement, refinedValue);
 		}
 
 	//	@Override
@@ -194,13 +201,15 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 		}
 
 		@Override
-		public @NonNull SymbolicValue getRefinedValue() {
-			return AbstractRefinedSymbolicValue.createNotInvalidValue(originalValue);
+		public @Nullable Boolean mayBeInvalid() {
+			return isContradiction();
 		}
 
 		@Override
-		public @Nullable Boolean mayBeInvalid() {
-			return isContradiction();
+		protected void refine() {
+			BaseSymbolicEvaluationEnvironment baseSymbolicEvaluationEnvironment = symbolicAnalysis.getBaseSymbolicEvaluationEnvironment();
+			SymbolicValue refinedValue = AbstractRefinedSymbolicValue.createNotInvalidValue(originalValue);
+			baseSymbolicEvaluationEnvironment.refineValue(typedElement, refinedValue);
 		}
 
 	//	@Override
@@ -223,13 +232,15 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 		}
 
 		@Override
-		public @NonNull SymbolicValue getRefinedValue() {
-			return AbstractRefinedSymbolicValue.createNotNullValue(originalValue);
+		public @Nullable Boolean mayBeNull() {
+			return isContradiction();
 		}
 
 		@Override
-		public @Nullable Boolean mayBeNull() {
-			return isContradiction();
+		protected void refine() {
+			BaseSymbolicEvaluationEnvironment baseSymbolicEvaluationEnvironment = symbolicAnalysis.getBaseSymbolicEvaluationEnvironment();
+			SymbolicValue refinedValue = AbstractRefinedSymbolicValue.createNotNullValue(originalValue);
+			baseSymbolicEvaluationEnvironment.refineValue(typedElement, refinedValue);
 		}
 
 	//	@Override
@@ -240,7 +251,7 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 	//	}
 	}
 
-	public static class MayBeSmallerThanHypothesis extends Hypothesis
+/*	public static class MayBeSmallerThanHypothesis extends Hypothesis
 	{
 		protected final @NonNull SymbolicValue minSizeValue;
 
@@ -270,7 +281,7 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 	//		s.append(" => ");
 	//		s.append(mayBeSmallerThanValue);
 	//	}
-	}
+	} */
 
 	public static class MayBeZeroHypothesis extends Hypothesis
 	{
@@ -293,13 +304,15 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 		}
 
 		@Override
-		public @NonNull SymbolicValue getRefinedValue() {
-			return AbstractRefinedSymbolicValue.createNotZeroValue(originalValue);
+		public @Nullable Boolean mayBeZero() {
+			return isContradiction();
 		}
 
 		@Override
-		public @Nullable Boolean mayBeZero() {
-			return isContradiction();
+		protected void refine() {
+			BaseSymbolicEvaluationEnvironment baseSymbolicEvaluationEnvironment = symbolicAnalysis.getBaseSymbolicEvaluationEnvironment();
+			SymbolicValue refinedValue = AbstractRefinedSymbolicValue.createNotValue(AbstractRefinedSymbolicValue.createIsZeroValue(originalValue));
+			baseSymbolicEvaluationEnvironment.refineValue(typedElement, refinedValue);
 		}
 
 	//	@Override

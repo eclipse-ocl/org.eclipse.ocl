@@ -21,6 +21,7 @@ import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.cse.CSEElement;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
@@ -55,10 +56,12 @@ public abstract class AbstractSymbolicEvaluationEnvironment extends BasicEvaluat
 	@Override
 	public @Nullable SymbolicValue checkNotEmpty(@NonNull TypedElement typedElement, @NonNull TypeId typeId) {
 		SymbolicValue symbolicValue = getSymbolicValue(typedElement);
-		if (symbolicValue.isEmpty()) {
+		SymbolicContent symbolicContent = symbolicValue.getContent();
+		SymbolicValue symbolicSize = symbolicContent.getSize();
+		if (symbolicSize.isZero()) {
 			return getKnownValue(ValueUtil.INVALID_VALUE);
 		}
-		if (!symbolicValue.mayBeEmpty()) {
+		if (!symbolicSize.mayBeZero()) {
 			return null;
 		}
 		SymbolicAnalysis symbolicAnalysis = getSymbolicAnalysis();
@@ -94,7 +97,7 @@ public abstract class AbstractSymbolicEvaluationEnvironment extends BasicEvaluat
 		return getMayBeInvalidValue(typeId);
 	}
 
-	@Override
+/*	@Override
 	public @Nullable SymbolicValue checkNotSmallerThan(@NonNull TypedElement typedElement, @NonNull SymbolicValue minSizeValue, @NonNull TypeId typeId) {
 		SymbolicValue symbolicValue = getSymbolicValue(typedElement);
 		if (symbolicValue.isSmallerThan(minSizeValue)) {
@@ -106,7 +109,7 @@ public abstract class AbstractSymbolicEvaluationEnvironment extends BasicEvaluat
 		SymbolicAnalysis symbolicAnalysis = getSymbolicAnalysis();
 		symbolicAnalysis.addMayBeSmallerThanHypothesis(typedElement, symbolicValue, minSizeValue);
 		return getMayBeInvalidValue(typeId);
-	}
+	} */
 
 	@Override
 	public @Nullable SymbolicValue checkNotZero(@NonNull TypedElement typedElement, @NonNull TypeId typeId) {

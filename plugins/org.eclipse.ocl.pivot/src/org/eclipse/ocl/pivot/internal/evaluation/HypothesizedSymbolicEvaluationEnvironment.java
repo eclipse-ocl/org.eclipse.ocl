@@ -34,6 +34,7 @@ import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.internal.cse.CSEElement;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicStatus;
 import org.eclipse.ocl.pivot.internal.values.AbstractRefinedSymbolicValue;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.logical.BooleanAndOperation;
@@ -324,6 +325,10 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 		return getSymbolicValue(typedElement);									// Use the 'read' value
 	}
 
+	/**
+	 * Re-evaluate typedElement and return true if the new result is compatible with the old value.
+	 * Conversely return false for an incompatibility and consequently a contradiction.
+	 */
 	public boolean symbolicReEvaluate(@NonNull TypedElement typedElement) {
 		Object result = null;
 		try {
@@ -347,31 +352,69 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 			traceSymbolicValue(cseElement, writeValue);					// Record re-evaluated value
 			return true;
 		}
-		if (writeValue.equals(readValue)) { // XXX isCompatible
+		if (writeValue == readValue) {
 			return true;
 		}
-		else {
+		SymbolicStatus booleanWriteStatus = writeValue.basicGetBooleanStatus();
+		if (booleanWriteStatus != null) {
+			boolean mayBeFalse = !booleanWriteStatus.isSatisfied();
+			boolean mayBeTrue = !booleanWriteStatus.isUnsatisfied();
+			boolean mustBeFalse = readValue.isFalse();
+			boolean mustBeTrue = readValue.isTrue();
+			if (mustBeFalse && !mayBeFalse) {
+				return false;
+			}
+			if (mustBeTrue && !mayBeTrue) {
+				return false;
+			}
+		}
+
+		if (writeValue.isInvalid() && !readValue.mayBeInvalid()) {
 			return false;
 		}
+		if (writeValue.mayBeInvalid() && !readValue.mayBeInvalid()) {
+			return false;
+		}
+		if (writeValue.isNull() && !readValue.mayBeNull()) {
+			return false;
+		}
+		if (writeValue.mayBeNull() && !readValue.mayBeNull()) {
+			return false;
+		}
+		if (writeValue.basicGetZeroStatus() != null) {
+			if (writeValue.isZero() && !readValue.mayBeZero()) {
+				return false;
+			}
+			if (writeValue.mayBeZero() && !readValue.mayBeZero()) {
+				return false;
+			}
+		}
+	//	if (writeValue.equals(readValue)) { / / XXX isCompatible
+			return true;
+	//	}
+	//	else {
+	//		return false;
+	//	}
 	}
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
 		s.append(hypothesis.getKind() + " hypothesis for '" + executableObject + "' in '" + executableObject.eContainer() + "'");
-		StringUtil.appendIndentation(s, 0);
+		StringUtil.appendIndentation(s, depth+1);
 		List<@NonNull CSEElement> keys = new ArrayList<>(cseElement2symbolicValue.keySet());
 		if (keys.size() > 1) {
 			Collections.sort(keys, NameUtil.TO_STRING_COMPARATOR);
 		}
-		s.append("\t" + keys.size() + " cses");
+		s.append(keys.size() + " cses");
 		for (@NonNull CSEElement key : keys) {
+			StringUtil.appendIndentation(s, depth+2);
 			Object value = cseElement2symbolicValue.get(key);
-			s.append("\n\t\t" + key + " => " + value);
+			s.append(key + " => " + value);
 		}
-		StringUtil.appendIndentation(s, depth);
+		StringUtil.appendIndentation(s, depth+1);
 		s.append("refined");
 		for (@NonNull TypedElement redefinedTypedElement : refinedTypedElements2symbolicValue.keySet()) {
-			StringUtil.appendIndentation(s, depth+1);
+			StringUtil.appendIndentation(s, depth+2);
 			s.append(redefinedTypedElement.eClass().getName());
 			s.append(" : \"");
 			s.append(redefinedTypedElement);
@@ -381,17 +424,17 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 		//	StringUtil.appendIndentation(s, depth+2);
 			s.append(constrainingValue);
 		}
-		StringUtil.appendIndentation(s, depth);
+		StringUtil.appendIndentation(s, depth+1);
 		s.append("re-evaluate");
 		for (@NonNull VariableDeclaration affectedVariable : affectedVariables) {
-			StringUtil.appendIndentation(s, depth+1);
+			StringUtil.appendIndentation(s, depth+2);
 			s.append(affectedVariable.eClass().getName());
 			s.append(" : \"");
 			s.append(affectedVariable);
 			s.append("\"");
 		}
 		for (@NonNull TypedElement affectedTypedElement : affectedTypedElements) {
-			StringUtil.appendIndentation(s, depth+1);
+			StringUtil.appendIndentation(s, depth+2);
 			s.append(affectedTypedElement.eClass().getName());
 			s.append(" : \"");
 			s.append(affectedTypedElement);

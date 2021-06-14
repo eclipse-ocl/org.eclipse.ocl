@@ -11,9 +11,11 @@
 package org.eclipse.ocl.pivot.values;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicCollectionContent;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicMapContent;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicStatus;
 
 /**
  * <!-- begin-user-doc -->
@@ -37,6 +39,10 @@ public interface SymbolicValue extends Value
 	 */
 	@NonNull SymbolicValue asRefinementOf(@NonNull SymbolicValue unrefinedValue);
 
+	@Nullable SymbolicStatus basicGetBooleanStatus();
+
+	@Nullable SymbolicStatus basicGetZeroStatus();
+
 	/**
 	 * Update symbolicExecutor from any deductions that can be made from knowing that symbolicConstraint is observede.
 	 */
@@ -44,17 +50,25 @@ public interface SymbolicValue extends Value
 
 	@NonNull SymbolicValue getBaseValue();
 
+	@NonNull SymbolicStatus getBooleanStatus();
+
 	@NonNull SymbolicCollectionContent getCollectionContent();
 
 	@NonNull SymbolicContent getContent();
 
+	@NonNull SymbolicStatus getDeadStatus();
+
+	@NonNull SymbolicStatus getInvalidStatus();
+
+	@NonNull SymbolicStatus getNullStatus();
+
 	@NonNull SymbolicMapContent getMapContent();
+
+	@NonNull SymbolicStatus getZeroStatus();
 
 	boolean isCollection();
 
 	boolean isDead();
-
-	boolean isEmpty();
 
 	boolean isFalse();
 
@@ -71,14 +85,16 @@ public interface SymbolicValue extends Value
 
 	boolean isRefinementOf(@NonNull SymbolicValue unrefinedValue);
 
-	boolean isSmallerThan(@NonNull SymbolicValue minSizeValue);
+//	boolean isSmallerThan(@NonNull SymbolicValue minSizeValue);
 
 	boolean isTrue();
 
 	boolean isZero();
 
-	boolean mayBeEmpty();
+	boolean mayBeFalse();
 
-	boolean mayBeSmallerThan(@NonNull SymbolicValue minSizeValue);
+//	boolean mayBeSmallerThan(@NonNull SymbolicValue minSizeValue);
+
+	boolean mayBeTrue();
 
 } // SymbolicValue

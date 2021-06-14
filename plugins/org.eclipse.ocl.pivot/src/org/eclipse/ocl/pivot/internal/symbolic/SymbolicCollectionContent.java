@@ -16,6 +16,15 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 public class SymbolicCollectionContent extends SymbolicContent
 {
 	public SymbolicCollectionContent(@NonNull CollectionTypeId typeId) {
-		// TODO Auto-generated constructor stub
+		super(typeId);
+	}
+
+	protected SymbolicCollectionContent(@NonNull SymbolicCollectionContent originalContent) {
+		super(originalContent);
+	}
+
+	@Override
+	public @NonNull SymbolicContent shallowClone() {
+		return new SymbolicCollectionContent(this);
 	}
 }

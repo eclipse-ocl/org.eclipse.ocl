@@ -16,6 +16,15 @@ import org.eclipse.ocl.pivot.ids.MapTypeId;
 public class SymbolicMapContent extends SymbolicContent
 {
 	public SymbolicMapContent(@NonNull MapTypeId typeId) {
-		// TODO Auto-generated constructor stub
+		super(typeId);
+	}
+
+	protected SymbolicMapContent(@NonNull SymbolicMapContent originalContent) {
+		super(originalContent);
+	}
+
+	@Override
+	public @NonNull SymbolicContent shallowClone() {
+		return new SymbolicMapContent(this);
 	}
 }

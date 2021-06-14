@@ -18,10 +18,7 @@ import org.eclipse.ocl.pivot.evaluation.EvaluationHaltedException;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
-import org.eclipse.ocl.pivot.internal.manager.SymbolicExecutor;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
-import org.eclipse.ocl.pivot.values.SimpleSymbolicConstraint;
-import org.eclipse.ocl.pivot.values.SymbolicOperationCallValue;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
@@ -68,14 +65,6 @@ public interface LibraryOperation extends LibraryIterationOrOperation
 		 * @throws for an uncontrolled failure that should be treated as invalid
 		 */
 		@Nullable Object evaluate(@NonNull Executor executor, @NonNull TypedElement caller, @Nullable Object @NonNull [] boxedSourceAndArgumentValues);
-	}
-
-	/**
-	 * Update symbolicExecutor from any deductions that can be made from knowing that resultValue satisfies resultConstraint.
-	 * @since 1.15
-	 */
-	default void deduceFrom(@NonNull SymbolicExecutor symbolicExecutor, @NonNull SymbolicOperationCallValue operationCallValue, @NonNull SimpleSymbolicConstraint resultConstraint) {
-		return;  // No deductions by default.
 	}
 
 	/** @deprecated use Executor */

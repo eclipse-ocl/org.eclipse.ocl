@@ -11,6 +11,8 @@
 package org.eclipse.ocl.pivot.internal.values;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicStatus;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
@@ -21,17 +23,48 @@ public abstract class AbstractSymbolicValue extends ValueImpl implements Symboli
 	@Override
 	public @NonNull SymbolicValue asRefinementOf(@NonNull SymbolicValue unrefinedValue) {
 	//	@NonNull SymbolicValue thisBaseValue = this.getBaseValue();
-		@NonNull SymbolicValue resultValue = unrefinedValue.getBaseValue();
-		if (!mayBeInvalid() && unrefinedValue.mayBeInvalid()) {
+		@NonNull SymbolicValue baseValue = unrefinedValue.getBaseValue();
+		@NonNull SymbolicValue resultValue = baseValue;			// XXX ?? fudging erroneous IsDead
+		if (!mayBeInvalid() && baseValue.mayBeInvalid()) {
 			resultValue = AbstractRefinedSymbolicValue.createNotInvalidValue(resultValue);
 		}
-		if (!mayBeNull() && unrefinedValue.mayBeNull()) {
+		if (!mayBeNull() && baseValue.mayBeNull()) {
 			resultValue = AbstractRefinedSymbolicValue.createNotNullValue(resultValue);
 		}
-		if (!mayBeZero() && unrefinedValue.mayBeZero()) {
-			resultValue = AbstractRefinedSymbolicValue.createNotZeroValue(resultValue);
+		if (!mayBeZero() && baseValue.mayBeZero()) {
+			resultValue = AbstractRefinedSymbolicValue.createNotValue(AbstractRefinedSymbolicValue.createIsZeroValue(resultValue));
 		}
 		return resultValue;
+	}
+
+	@Override
+	public final @NonNull SymbolicStatus getBooleanStatus() {
+		return ClassUtil.nonNullState(basicGetBooleanStatus());
+	}
+
+	@Override
+	public final @NonNull SymbolicStatus getZeroStatus() {
+		return ClassUtil.nonNullState(basicGetZeroStatus());
+	}
+
+	@Override
+	public final boolean isDead() {
+		return getDeadStatus().isSatisfied();
+	}
+
+	@Override
+	public /*final*/ boolean isFalse() {
+		return getBooleanStatus().isUnsatisfied();
+	}
+
+	@Override
+	public final boolean isInvalid() {
+		return getInvalidStatus().isSatisfied();
+	}
+
+	@Override
+	public final boolean isNull() {
+		return getNullStatus().isSatisfied();
 	}
 
 	@Override
@@ -51,5 +84,30 @@ public abstract class AbstractSymbolicValue extends ValueImpl implements Symboli
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public /*final*/ boolean isTrue() {
+		return getBooleanStatus().isSatisfied();
+	}
+
+	@Override
+	public final boolean isZero() {
+		return getZeroStatus().isSatisfied();
+	}
+
+	@Override
+	public boolean mayBeInvalid() {
+		return !getInvalidStatus().isUnsatisfied();
+	}
+
+	@Override
+	public boolean mayBeNull() {
+		return !getNullStatus().isUnsatisfied();
+	}
+
+	@Override
+	public boolean mayBeZero() {
+		return !getZeroStatus().isUnsatisfied();
 	}
 }

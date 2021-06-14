@@ -13,6 +13,7 @@ package org.eclipse.ocl.pivot.internal.values;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicStatus;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.SymbolicKnownValue;
 
@@ -34,6 +35,32 @@ public class SymbolicKnownValueImpl extends SymbolicValueImpl implements Symboli
 	}
 
 	@Override
+	public @Nullable SymbolicStatus basicGetBooleanStatus() {
+		if (knownValue == ValueUtil.TRUE_VALUE) {
+			return SymbolicStatus.SATISFIED;
+		}
+		else if (knownValue == ValueUtil.FALSE_VALUE) {
+			return SymbolicStatus.UNSATISFIED;
+		}
+		return super.basicGetBooleanStatus();
+	}
+
+	@Override
+	public @NonNull SymbolicStatus basicGetZeroStatus() {
+		return ValueUtil.ZERO_VALUE.equals(knownValue) ? SymbolicStatus.SATISFIED : SymbolicStatus.UNSATISFIED;
+	}
+
+	@Override
+	public @NonNull SymbolicStatus getInvalidStatus() {
+		return ValueUtil.isInvalidValue(knownValue) ? SymbolicStatus.SATISFIED : SymbolicStatus.UNSATISFIED;
+	}
+
+	@Override
+	public @NonNull SymbolicStatus getNullStatus() {
+		return ValueUtil.isNullValue(knownValue) ? SymbolicStatus.SATISFIED : SymbolicStatus.UNSATISFIED;
+	}
+
+	@Override
 	public @Nullable Object getValue() {
 		return knownValue;
 	}
@@ -44,28 +71,13 @@ public class SymbolicKnownValueImpl extends SymbolicValueImpl implements Symboli
 	}
 
 	@Override
-	public boolean isInvalid() {
-		return ValueUtil.isInvalidValue(knownValue);
-	}
-
-	@Override
 	public boolean isKnown() {
 		return true;
 	}
 
 	@Override
-	public boolean isNull() {
-		return ValueUtil.isNullValue(knownValue);
-	}
-
-	@Override
 	public boolean isTrue() {
 		return knownValue == Boolean.TRUE;
-	}
-
-	@Override
-	public boolean isZero() {
-		return ValueUtil.ZERO_VALUE.equals(knownValue);
 	}
 
 //	@Override
@@ -81,11 +93,6 @@ public class SymbolicKnownValueImpl extends SymbolicValueImpl implements Symboli
 //		assert !isRequired || !mayBeNull;
 //		return mayBeNull;
 //	}
-
-	@Override
-	public boolean mayBeZero() {
-		return ValueUtil.ZERO_VALUE.equals(knownValue);
-	}
 
 /*	@Override
 	public EList<Adapter> eAdapters() {

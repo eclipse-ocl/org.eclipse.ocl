@@ -20,6 +20,14 @@ public abstract class SymbolicContent
 {
 	private @Nullable SymbolicValue sizeValue;
 
+	protected SymbolicContent(@NonNull TypeId typeId) {
+		// TODO Auto-generated constructor stub
+	}
+
+	protected SymbolicContent(@NonNull SymbolicContent originalContent) {
+		this.sizeValue = originalContent.sizeValue;
+	}
+
 	public @NonNull SymbolicValue getSize() {
 		SymbolicValue sizeValue2 = sizeValue;
 		if (sizeValue2 == null) {
@@ -35,4 +43,10 @@ public abstract class SymbolicContent
 	public boolean mayBeEmpty() {
 		return getSize().mayBeZero();
 	}
+
+	public void setSize(@NonNull SymbolicValue sizeValue) {
+		this.sizeValue = sizeValue;
+	}
+
+	public abstract @NonNull SymbolicContent shallowClone();
 }

@@ -54,7 +54,7 @@ public interface SymbolicEvaluationEnvironment extends EvaluationEnvironment.Eva
 	 * Return a SymbolicKnownValue for invalid, if typedElement is a collection whose size may bee smaller than minSize.
 	 * Else return null .
 	 */
-	@Nullable SymbolicValue checkNotSmallerThan(@NonNull TypedElement typedElement, @NonNull SymbolicValue minSizeValue, @NonNull TypeId typeId);
+//	@Nullable SymbolicValue checkNotSmallerThan(@NonNull TypedElement typedElement, @NonNull SymbolicValue minSizeValue, @NonNull TypeId typeId);
 
 	/**
 	 * Return a SymbolicKnownValue for invalid, if typedElement isZero.
