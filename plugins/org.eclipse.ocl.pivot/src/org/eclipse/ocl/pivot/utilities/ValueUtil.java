@@ -975,7 +975,7 @@ public abstract class ValueUtil
 	/**
 	 * Return true if value is an invalid value.
 	 *
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	public static boolean isInvalidValue(@Nullable Object value) {
 		return (value instanceof InvalidValue);
@@ -996,7 +996,7 @@ public abstract class ValueUtil
 	/**
 	 * Return true if value is a null value.
 	 *
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	public static boolean isNullValue(@Nullable Object value) {
 		return (value == null) | ((value instanceof NullValue) && !(value instanceof InvalidValue));
@@ -1043,7 +1043,7 @@ public abstract class ValueUtil
 	}
 
 	/**
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	public static boolean mayBeInvalid(@Nullable Object value) {
 		if (value instanceof Value) {
@@ -1053,7 +1053,7 @@ public abstract class ValueUtil
 	}
 
 	/**
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	public static boolean mayBeNull(@Nullable Object value) {
 		if (value == null) {
@@ -1066,7 +1066,7 @@ public abstract class ValueUtil
 	}
 
 	/**
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	public static boolean mayBeZero(@Nullable Object value) {
 		if (value instanceof Value) {

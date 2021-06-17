@@ -649,7 +649,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	}
 
 	/**
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	protected @NonNull SymbolicAnalysis createSymbolicAnalysis(@NonNull ExpressionInOCL expressionInOCL, @NonNull ModelManager modelManager) {
 	//	return new SymbolicOCLExecutor((EnvironmentFactoryInternalExtension)environmentFactory, modelManager);

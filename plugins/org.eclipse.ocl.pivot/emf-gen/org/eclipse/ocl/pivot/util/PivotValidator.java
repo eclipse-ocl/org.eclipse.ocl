@@ -60,7 +60,7 @@ public class PivotValidator extends EObjectValidator
 
 	/**
 	 * Validation context option to disable symbolic validation when the caller undertakes to ensure that preconditions are satisfied by test values.
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	public static final @NonNull String SYMBOLIC_ANALYSIS_DISABLE_VALIDATION = "SymbolicAnalysis_disable_validation";;
 
@@ -899,7 +899,7 @@ public class PivotValidator extends EObjectValidator
 	protected static final int DIAGNOSTIC_CODE_COUNT = GENERATED_DIAGNOSTIC_CODE_COUNT;
 
 	/**
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	public static void initLazyParse(@NonNull Map<Object, Object> context, boolean isLazyParse) {
 		context.put(EXPRESSION_IN_OCL_LAZY_PARSE, isLazyParse);

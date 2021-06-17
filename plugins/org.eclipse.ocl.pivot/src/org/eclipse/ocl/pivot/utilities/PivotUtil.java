@@ -1128,7 +1128,7 @@ public class PivotUtil
 	}
 
 	/**
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	public static @NonNull String getConstraintName(@NonNull Constraint constraint) {
 		String constraintName = PivotUtil.getName(constraint);
@@ -1600,7 +1600,7 @@ public class PivotUtil
 	}
 
 	/**
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	public static @NonNull OCLExpression getOwnedInit(@NonNull TupleLiteralPart tupleLiteralPart) {
 		return ClassUtil.nonNullState(tupleLiteralPart.getOwnedInit());
@@ -1678,7 +1678,7 @@ public class PivotUtil
 	}
 
 	/**
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	public static @NonNull Variable getOwnedParameter(@NonNull ExpressionInOCL expressionInOCL, int index) {
 		return ClassUtil.nonNullState(expressionInOCL.getOwnedParameters().get(index));
@@ -1692,7 +1692,7 @@ public class PivotUtil
 	}
 
 	/**
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	public static @NonNull Iterable<@NonNull Variable> getOwnedParameters(@NonNull ExpressionInOCL expressionInOCL) {
 		return ClassUtil.nullFree(expressionInOCL.getOwnedParameters());
@@ -1713,14 +1713,14 @@ public class PivotUtil
 	}
 
 	/**
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	public static @NonNull Iterable<@NonNull MapLiteralPart> getOwnedParts(@NonNull MapLiteralExp asMapLiteralExp) {
 		return ClassUtil.nullFree(asMapLiteralExp.getOwnedParts());
 	}
 
 	/**
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	public static @NonNull Iterable<@NonNull ShadowPart> getOwnedParts(@NonNull ShadowExp asShadowExp) {
 		return ClassUtil.nullFree(asShadowExp.getOwnedParts());
@@ -2004,7 +2004,7 @@ public class PivotUtil
 	}
 
 	/**
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	public static @NonNull Parameter getRepresentedParameter(@NonNull ParameterVariable parameterVariable) {
 		return ClassUtil.nonNullState(parameterVariable.getRepresentedParameter());
@@ -2055,7 +2055,7 @@ public class PivotUtil
 	}
 
 	/**
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	public static @NonNull String getStringSymbol(@NonNull StringLiteralExp stringLiteralExp) {
 		return ClassUtil.nonNullState(stringLiteralExp.getStringSymbol());

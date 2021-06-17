@@ -22,7 +22,7 @@ import org.eclipse.ocl.pivot.values.SymbolicValue;
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Symbolic Value</b></em>'.
- * @since 1.15
+ * @since 1.16
  * <!-- end-user-doc -->
  *
  * @generated

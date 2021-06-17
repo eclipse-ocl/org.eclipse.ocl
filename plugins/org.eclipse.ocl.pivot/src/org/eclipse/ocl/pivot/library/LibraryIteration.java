@@ -54,7 +54,7 @@ public interface LibraryIteration extends LibraryIterationOrOperation
 	@Nullable Object evaluateIteration(@NonNull IterationManager iterationManager);
 
 	/**
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	default @NonNull SymbolicValue symbolicEvaluate(@NonNull AbstractSymbolicEvaluationEnvironment evaluationEnvironment, @NonNull LoopExp loopExp) {
 		throw new UnsupportedOperationException();

@@ -34,7 +34,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 
 /**
- * @since 1.15
+ * @since 1.16
  */
 public class CommonSubExpressionAnalysis
 {

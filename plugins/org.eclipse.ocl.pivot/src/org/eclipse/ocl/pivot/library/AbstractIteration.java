@@ -70,7 +70,7 @@ public abstract class AbstractIteration extends AbstractIterationOrOperation imp
 	}
 
 	/**
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	protected @Nullable SymbolicValue checkPreconditions(@NonNull AbstractSymbolicEvaluationEnvironment symbolicEvaluationEnvironment, @NonNull LoopExp loopExp) {
 		TypeId returnTypeId = loopExp.getTypeId();

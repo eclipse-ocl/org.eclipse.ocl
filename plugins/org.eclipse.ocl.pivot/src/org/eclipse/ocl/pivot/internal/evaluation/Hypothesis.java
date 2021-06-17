@@ -23,7 +23,7 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
- * @since 1.15
+ * @since 1.16
  */
 public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 {

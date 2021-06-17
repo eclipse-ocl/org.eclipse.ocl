@@ -1435,7 +1435,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 	}
 
 	/**
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	public void setExpressionInOCLcontext(@NonNull ExpressionInOCL pivotElement, org.eclipse.uml2.uml.@NonNull Element umlElement) {
 		for (EObject umlSelf = umlElement; umlSelf != null; umlSelf = umlSelf.eContainer()) {

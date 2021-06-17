@@ -78,7 +78,7 @@ public interface Executor extends Evaluator
 	@Deprecated /* @deprecated use Object argument */
 	@NonNull EvaluationEnvironment pushEvaluationEnvironment(@NonNull NamedElement executableObject, @Nullable OCLExpression callingObject);
 	/**
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	default @NonNull EvaluationEnvironment pushEvaluationEnvironment(@NonNull NamedElement executableObject, @Nullable Object caller) {
 		throw new UnsupportedOperationException();
@@ -86,7 +86,7 @@ public interface Executor extends Evaluator
 	void replace(@NonNull TypedElement referredVariable, @Nullable Object value);
 
 	/**
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	default void resetCaches() {}
 	@Override

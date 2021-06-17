@@ -557,7 +557,7 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 	}
 
 	/**
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	protected EvaluationEnvironment pushEvaluationEnvironment(@NonNull EvaluationEnvironment nestedEvaluationEnvironment) {
 		assert nestedEvaluationEnvironment.getParentEvaluationEnvironment() == evaluationEnvironment;

@@ -60,14 +60,14 @@ public interface EvaluationEnvironment extends Adaptable, Customizable
 	@NonNull EnvironmentFactory getEnvironmentFactory();
 
 	/**
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	default EvaluationEnvironment.@Nullable EvaluationEnvironmentExtension getParentEvaluationEnvironment() {
 		throw new UnsupportedOperationException();
 	}
 
 	/**
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	default @NonNull ExecutorInternal getExecutor() {
 		throw new UnsupportedOperationException();
@@ -115,14 +115,14 @@ public interface EvaluationEnvironment extends Adaptable, Customizable
 	@NonNull NamedElement getExecutableObject();
 
 	/**
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	default @Nullable Object replaceInternal(@NonNull VariableDeclaration referredVariable, @Nullable Object value) {
 		return null;
 	}
 
 	/**
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	default void toString(@NonNull StringBuilder s) {}
 }

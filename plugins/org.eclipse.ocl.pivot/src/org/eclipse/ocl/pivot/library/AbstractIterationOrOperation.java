@@ -22,7 +22,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  * AbstractIterationOrOperation realizes shared characteristics of library iterations and operations.
- * @since 1.15
+ * @since 1.16
  */
 public abstract class AbstractIterationOrOperation extends AbstractFeature implements LibraryIterationOrOperation
 {

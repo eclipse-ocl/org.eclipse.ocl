@@ -50,7 +50,7 @@ import org.eclipse.ocl.pivot.values.SymbolicValue;
  * A BaseSymbolicEvaluationEnvironment supports the control-blind symbolic evaluation initially to associate a
  * SymbolicValue with each CSEElement. Subsequently, evaluation of hypothesies may refine the value of specific expressions.
  *
- * @since 1.15
+ * @since 1.16
  */
 public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluationEnvironment
 {

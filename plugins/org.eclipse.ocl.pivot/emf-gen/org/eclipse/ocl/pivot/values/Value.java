@@ -222,7 +222,7 @@ public interface Value
 	 * Return true if this value is or may be invalid.
 	 *
 	 * @generated NOT
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	default boolean mayBeInvalid() { return true; }
 
@@ -230,7 +230,7 @@ public interface Value
 	 * Return true if this value is or may be invalid or null.
 	 *
 	 * @generated NOT
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	default boolean mayBeInvalidOrNull() { return mayBeInvalid() || mayBeNull(); }
 
@@ -238,7 +238,7 @@ public interface Value
 	 * Return true if this value is or may be null.
 	 *
 	 * @generated NOT
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	default boolean mayBeNull() { return true; }
 
@@ -246,7 +246,7 @@ public interface Value
 	 * Return true if this value is or may be zero.
 	 *
 	 * @generated NOT
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	default boolean mayBeZero() { return false; }
 

@@ -161,7 +161,7 @@ public interface IdResolver extends IdVisitor<Element>
 	boolean oclEquals(@Nullable Object thisValue, @Nullable Object thatValue);
 
 	/**
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	default void removeType(@NonNull TypeId typeId) {}
 

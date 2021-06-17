@@ -102,7 +102,7 @@ public interface EvaluationVisitor extends Visitor<Object>, Evaluator
 	@NonNull StandardLibrary getStandardLibrary();
 
 	/**
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	default @NonNull EvaluationVisitor getUndecoratedVisitor() {
 		return this;

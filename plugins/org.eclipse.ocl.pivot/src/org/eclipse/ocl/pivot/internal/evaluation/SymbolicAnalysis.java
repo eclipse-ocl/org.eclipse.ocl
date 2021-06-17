@@ -40,7 +40,7 @@ import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
- * @since 1.15
+ * @since 1.16
  */
 public class SymbolicAnalysis extends BasicOCLExecutor implements SymbolicExecutor, ExecutorInternal
 {

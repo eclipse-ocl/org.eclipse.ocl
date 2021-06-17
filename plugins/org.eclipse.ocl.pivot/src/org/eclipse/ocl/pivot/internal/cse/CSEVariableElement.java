@@ -16,7 +16,7 @@ import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
- * @since 1.15
+ * @since 1.16
  */
 public class CSEVariableElement extends AbstractCSEElement<@NonNull VariableDeclaration>
 {

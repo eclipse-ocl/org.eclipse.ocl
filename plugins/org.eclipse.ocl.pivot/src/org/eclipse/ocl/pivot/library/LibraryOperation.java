@@ -72,7 +72,7 @@ public interface LibraryOperation extends LibraryIterationOrOperation
 	@Nullable Object dispatch(@NonNull Evaluator evaluator, @NonNull OperationCallExp callExp, @Nullable Object sourceValue);
 
 	/**
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	default @NonNull SymbolicValue symbolicEvaluate(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
 		throw new UnsupportedOperationException();

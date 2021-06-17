@@ -83,7 +83,7 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 	}
 
 	/**
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment symbolicEvaluationEnvironment, @NonNull OperationCallExp callExp) {
 		EnvironmentFactory environmentFactory = symbolicEvaluationEnvironment.getEnvironmentFactory();
@@ -127,7 +127,7 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 	}
 
 	/**
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	protected @NonNull SymbolicValue createResultValue(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp,
 			@NonNull SymbolicValue sourceSymbolicValue, @NonNull List<@NonNull SymbolicValue> argumentSymbolicValues) {

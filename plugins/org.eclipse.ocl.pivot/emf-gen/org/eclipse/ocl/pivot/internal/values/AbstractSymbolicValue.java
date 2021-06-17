@@ -16,7 +16,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
- * @since 1.15
+ * @since 1.16
  */
 public abstract class AbstractSymbolicValue extends ValueImpl implements SymbolicValue
 {

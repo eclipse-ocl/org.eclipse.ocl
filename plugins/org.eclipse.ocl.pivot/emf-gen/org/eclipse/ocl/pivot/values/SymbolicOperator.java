@@ -11,7 +11,7 @@
 package org.eclipse.ocl.pivot.values;
 
 /**
- * @since 1.15
+ * @since 1.16
  */
 public enum SymbolicOperator
 {

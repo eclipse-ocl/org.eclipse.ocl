@@ -57,7 +57,7 @@ import org.eclipse.ocl.pivot.values.SymbolicValue;
  * have the same refined value for the poyrposes of the hypothesis evaluation. Once the hypothesis has been
  * contradicted a refined value vfor the hypothesized expression can be return ed to the baseSymbolicEvaluationEnvironment.
  *
- * @since 1.15
+ * @since 1.16
  */
 public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluationEnvironment
 {

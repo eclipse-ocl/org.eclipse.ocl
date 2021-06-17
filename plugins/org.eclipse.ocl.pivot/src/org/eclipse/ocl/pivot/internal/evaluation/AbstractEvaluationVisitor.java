@@ -231,7 +231,7 @@ extends AbstractExtendingVisitor<@Nullable Object, ExecutorInternal.@NonNull Exe
 	 *
 	 * @return my delegate visitor, which may be my own self or some other
 	 *
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	@Override
 	public final @NonNull EvaluationVisitor getUndecoratedVisitor() {

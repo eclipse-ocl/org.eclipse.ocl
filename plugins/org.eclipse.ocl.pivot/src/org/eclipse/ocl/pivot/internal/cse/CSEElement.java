@@ -31,7 +31,7 @@ import org.eclipse.ocl.pivot.Operation;
  * When evaluating a hypothesis for a particular expression, all CSEs again have the same narrower symbolic
  * value for that hypothesis. CSEs therefore have narrower variant symbolic values that are access dependent.
  *
- * @since 1.15
+ * @since 1.16
  */
 public interface CSEElement extends Comparable<@NonNull CSEElement>
 {

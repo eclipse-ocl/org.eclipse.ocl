@@ -27,7 +27,7 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
- * @since 1.15
+ * @since 1.16
  */
 public abstract class AbstractCSEElement<E extends Element> implements CSEElement
 {

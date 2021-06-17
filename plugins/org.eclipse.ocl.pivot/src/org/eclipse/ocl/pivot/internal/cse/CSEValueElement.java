@@ -14,7 +14,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.LiteralExp;
 
 /**
- * @since 1.15
+ * @since 1.16
  */
 public class CSEValueElement extends AbstractCSEElement<@NonNull LiteralExp>
 {

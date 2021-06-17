@@ -16,7 +16,7 @@ import org.eclipse.ocl.pivot.TypedElement;
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Symbolic Value</b></em>'.
- * @since 1.15
+ * @since 1.16
  * <!-- end-user-doc -->
  *
  * <!-- begin-model-doc -->

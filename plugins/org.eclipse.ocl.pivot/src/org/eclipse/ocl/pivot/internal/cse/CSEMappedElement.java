@@ -18,7 +18,7 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
- * @since 1.15
+ * @since 1.16
  */
 public class CSEMappedElement extends AbstractCSEElement<@NonNull Element>
 {

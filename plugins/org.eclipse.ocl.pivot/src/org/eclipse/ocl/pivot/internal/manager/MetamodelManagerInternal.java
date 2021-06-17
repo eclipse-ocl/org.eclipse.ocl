@@ -55,7 +55,7 @@ public interface MetamodelManagerInternal extends MetamodelManager
 	public interface MetamodelManagerInternalExtension2 extends MetamodelManagerInternalExtension
 	{
 		/**
-		 * @since 1.15
+		 * @since 1.16
 		 */
 		default @Nullable SymbolicAnalysis basicGetSymbolicAnalysis(@NonNull Element element) {
 			return null;
@@ -63,7 +63,7 @@ public interface MetamodelManagerInternal extends MetamodelManager
 		@NonNull FinalAnalysis getFinalAnalysis();
 		@NonNull FlowAnalysis getFlowAnalysis(@NonNull OCLExpression oclExpression);
 		/**
-		 * @since 1.15
+		 * @since 1.16
 		 */
 		default @NonNull SymbolicAnalysis getSymbolicAnalysis(@NonNull ExpressionInOCL expressionInOCL, @Nullable Object context, @Nullable Object @Nullable [] parameters) {
 			throw new UnsupportedOperationException();

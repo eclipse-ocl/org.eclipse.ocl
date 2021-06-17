@@ -18,7 +18,7 @@ import org.eclipse.ocl.pivot.internal.evaluation.Hypothesis;
 import org.eclipse.ocl.pivot.internal.evaluation.HypothesizedSymbolicEvaluationEnvironment;
 
 /**
- * @since 1.15
+ * @since 1.16
  */
 public interface SymbolicExecutor extends ExecutorInternalExtension
 {

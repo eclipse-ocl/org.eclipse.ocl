@@ -80,7 +80,7 @@ import com.google.common.collect.Lists;
 /**
  * A symbolic evaluation decorator for an evaluation visitor.
  *
- * @since 1.15
+ * @since 1.16
  */
 public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implements EvaluationVisitor.EvaluationVisitorExtension
 {
