@@ -20,6 +20,15 @@ context EModelElement
 */
 def: asError(verdict : Boolean) : Boolean = if verdict then true else null endif
 
+def: isPrimeNumber(candidatePrime : Integer) : Boolean =
+    isPrimeNumber(candidatePrime, 3, Sequence{2})
+
+def: isPrimeNumber(candidatePrime : Integer, candidateFactor:Integer,
+    knownPrimes:Sequence(Integer)) : Boolean =
+    (candidateFactor*candidateFactor > candidatePrime)
+    or (knownPrimes->forAll(n | ((candidatePrime.div(n)) * n) <> candidatePrime)
+    and isPrimeNumber(candidatePrime, candidateFactor+2, knownPrimes->append(candidateFactor)))
+
 /**
  * Extra validation for EReference and EAttribute.
  */

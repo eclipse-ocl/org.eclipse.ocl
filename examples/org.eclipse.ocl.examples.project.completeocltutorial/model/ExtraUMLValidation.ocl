@@ -18,3 +18,12 @@ context uml::Class
  * The first letter of a classname should be uppercase.
  */
 inv CamelCaseName: name <> null implies name.at(1) = name.at(1).toUpperCase()
+
+def: isPrimeNumber(candidatePrime : Integer) : Boolean =
+    isPrimeNumber(candidatePrime, 3, Sequence{2})
+
+def: isPrimeNumber(candidatePrime : Integer, candidateFactor:Integer,
+    knownPrimes:Sequence(Integer)) : Boolean =
+    (candidateFactor*candidateFactor > candidatePrime)
+    or (knownPrimes->forAll(n | ((candidatePrime.div(n)) * n) <> candidatePrime)
+    and isPrimeNumber(candidatePrime, candidateFactor+2, knownPrimes->append(candidateFactor)))
