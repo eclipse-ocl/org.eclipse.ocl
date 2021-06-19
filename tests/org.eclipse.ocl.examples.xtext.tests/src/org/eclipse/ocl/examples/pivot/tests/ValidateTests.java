@@ -11,6 +11,7 @@
 package org.eclipse.ocl.examples.pivot.tests;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -50,6 +51,7 @@ import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.validation.EcoreOCLEValidator;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
+import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
 import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
 import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory;
@@ -91,6 +93,11 @@ public class ValidateTests extends AbstractValidateTests
 			diagnostics.addAll(diagnostic.getChildren());
 		}
 		return assertDiagnostics(prefix, resource, diagnostics, messages);
+	}
+
+	//	@Override
+	protected @NonNull TestOCL createTestOCL() {
+		return new TestOCL(getTestFileSystem(), getTestPackageName(), getTestName(), OCL.NO_PROJECTS, null);
 	}
 
 	public Resource doLoadEcore(@NonNull OCL ocl, @NonNull URI ecoreURI) throws IOException {
@@ -189,7 +196,7 @@ public class ValidateTests extends AbstractValidateTests
 						"		}\n" +
 						"	}\n" +
 						"}\n";
-		createOCLinEcoreFile("Bug418552.oclinecore", testDocument);
+		createFile("Bug418552.oclinecore", testDocument);
 		OCL ocl1 = createOCL();
 		@NonNull List<Diagnostic> diagnostics = doValidateOCLinEcore(ocl1, "Bug418552", getMessages(
 			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Property::CompatibleDefaultExpression", "temp::Tester::total")));
@@ -251,6 +258,202 @@ public class ValidateTests extends AbstractValidateTests
 		assertEquals("ExecutorManager.CONSTRUCTION_COUNT", 1, ExecutorManager.CONSTRUCTION_COUNT-oldExecutorManager_CONSTRUCTION_COUNT);  // 1 for outer validation, 2 more for inner validations
 		assertEquals("AbstractExecutor.CONSTRUCTION_COUNT", 8, AbstractExecutor.CONSTRUCTION_COUNT-oldAbstractExecutor_CONSTRUCTION_COUNT);  // 8 validation evaluations
 		ocl.dispose();
+	}
+
+	// See Bug 574324
+	public void testValidate_IsPrimeNumber_completeocl() throws IOException, InterruptedException, InvocationTargetException {
+		TestOCL ocl = createTestOCL();
+		String xmiDocument =
+				"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+				+ "<ecore:EPackage xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:ecore=\"http://www.eclipse.org/emf/2002/Ecore\"\n"
+				+ "    name=\"IsPrimeNumber\" nsURI=\"isPrimeNumber\" nsPrefix=\"isp\">\n"
+				+ "</ecore:EPackage>\n"
+				+ "\n";
+		TestFile xmiTestFile = createFile("IsPrimeNumber.xmi", xmiDocument);
+		URI xmiURI = xmiTestFile.getFileURI();
+		Resource ecoreResource = ocl.getResourceSet().getResource(xmiURI, true);
+		EPackage testPackage = ClassUtil.nonNullState((EPackage) ecoreResource.getContents().get(0));
+		String oclTestDocument =
+				"import ecore : 'http://www.eclipse.org/emf/2002/Ecore#/'\n"
+				+ "\n"
+				+ "package ecore\n"
+				+ "\n"
+				+ "context EModelElement\n"
+				+ "def: isPrimeNumber(candidatePrime : Integer) : Boolean =\n"
+				+ "	(0 < candidatePrime)\n"
+				+ "	  and ((candidatePrime < 4)\n"
+				+ "		  or ((candidatePrime.div(2) * 2) <> candidatePrime)\n"
+				+ "			 and isPrimeNumber(candidatePrime, 3))\n"
+				+ "\n"
+				+ "def: isPrimeNumber(candidatePrime : Integer, candidateFactor:Integer) : Boolean =\n"
+				+ "	((candidatePrime.div(candidateFactor) * candidateFactor) <> candidatePrime)\n"
+				+ "	  and ((candidateFactor*candidateFactor > candidatePrime)\n"
+				+ "		  or isPrimeNumber(candidatePrime, candidateFactor+2))\n"
+				+ "endpackage\n";
+		TestFile oclTestFile = createFile("IsPrimeNumber.ocl", oclTestDocument);
+		URI oclURI = oclTestFile.getFileURI();
+		ocl.getResourceSet().getResource(oclURI, true);
+		try {
+			checkValidationDiagnostics(testPackage, Diagnostic.WARNING);
+			ocl.assertQueryFalse(testPackage, "isPrimeNumber(0)");
+			ocl.assertQueryTrue(testPackage, "isPrimeNumber(1)");
+			ocl.assertQueryTrue(testPackage, "isPrimeNumber(2)");
+			ocl.assertQueryTrue(testPackage, "isPrimeNumber(3)");
+			ocl.assertQueryFalse(testPackage, "isPrimeNumber(4)");
+			ocl.assertQueryTrue(testPackage, "isPrimeNumber(5)");
+
+			ocl.assertQueryFalse(testPackage, "isPrimeNumber(15)");
+			ocl.assertQueryFalse(testPackage, "isPrimeNumber(16)");
+			ocl.assertQueryTrue(testPackage, "isPrimeNumber(17)");
+			ocl.assertQueryFalse(testPackage, "isPrimeNumber(18)");
+			ocl.assertQueryTrue(testPackage, "isPrimeNumber(19)");
+			ocl.assertQueryFalse(testPackage, "isPrimeNumber(20)");
+
+			ocl.assertQueryFalse(testPackage, "isPrimeNumber(96)");
+			ocl.assertQueryTrue(testPackage, "isPrimeNumber(97)");
+			ocl.assertQueryFalse(testPackage, "isPrimeNumber(98)");
+
+			ocl.assertQueryFalse(testPackage, "isPrimeNumber(996)");
+			ocl.assertQueryTrue(testPackage, "isPrimeNumber(997)");
+			ocl.assertQueryFalse(testPackage, "isPrimeNumber(998)");
+
+			ocl.assertQueryFalse(testPackage, "isPrimeNumber(10005)");
+			ocl.assertQueryFalse(testPackage, "isPrimeNumber(10006)");
+			ocl.assertQueryTrue(testPackage, "isPrimeNumber(10007)");
+			ocl.assertQueryFalse(testPackage, "isPrimeNumber(10008)");
+			ocl.assertQueryTrue(testPackage, "isPrimeNumber(10009)");
+			ocl.assertQueryFalse(testPackage, "isPrimeNumber(10010)");
+			ocl.assertQueryFalse(testPackage, "isPrimeNumber(10011)");
+		}
+		finally {
+			ocl.dispose();
+		}
+	}
+
+	// See Bug 574324, Bug 574483
+	public void testValidate_IsPrimeNumber_completeocl_Integer() throws IOException, InterruptedException, InvocationTargetException {
+		TestOCL ocl = createTestOCL();
+		String oclTestDocument =
+				"package ocl\n"
+				+ "\n"
+				+ "context _'Integer'\n"
+				+ "def: isPrimeNumber() : Boolean =\n"
+				+ "	(0 < self)\n"
+				+ "	  and ((self < 4)\n"
+				+ "		  or ((self.div(2) * 2) <> self)\n"
+				+ "			 and self.isPrimeNumber(3))\n"
+				+ "\n"
+				+ "def: isPrimeNumber(candidateFactor:Integer) : Boolean =\n"
+				+ "	((self.div(candidateFactor) * candidateFactor) <> self)\n"
+				+ "	  and ((candidateFactor*candidateFactor > self)\n"
+				+ "		  or self.isPrimeNumber(candidateFactor+2))\n"
+				+ "endpackage\n";
+		TestFile oclTestFile = createFile("IsPrimeNumber.ocl", oclTestDocument);
+		URI oclURI = oclTestFile.getFileURI();
+		CSResource csResource = (CSResource) ocl.getResourceSet().getResource(oclURI, true);
+		assert csResource != null;
+		assertNoResourceErrors("Load", csResource);
+		try {
+			ocl.assertQueryFalse(null, "0.isPrimeNumber()");
+			ocl.assertQueryTrue(null, "1.isPrimeNumber()");
+			ocl.assertQueryTrue(null, "2.isPrimeNumber()");
+			ocl.assertQueryTrue(null, "3.isPrimeNumber()");
+			ocl.assertQueryFalse(null, "4.isPrimeNumber()");
+			ocl.assertQueryTrue(null, "5.isPrimeNumber()");
+
+			ocl.assertQueryFalse(null, "15.isPrimeNumber()");
+			ocl.assertQueryFalse(null, "16.isPrimeNumber()");
+			ocl.assertQueryTrue(null, "17.isPrimeNumber()");
+			ocl.assertQueryFalse(null, "18.isPrimeNumber()");
+			ocl.assertQueryTrue(null, "19.isPrimeNumber()");
+			ocl.assertQueryFalse(null, "20.isPrimeNumber()");
+
+			ocl.assertQueryFalse(null, "96.isPrimeNumber()");
+			ocl.assertQueryTrue(null, "97.isPrimeNumber()");
+			ocl.assertQueryFalse(null, "98.isPrimeNumber()");
+
+			ocl.assertQueryFalse(null, "996.isPrimeNumber()");
+			ocl.assertQueryTrue(null, "997.isPrimeNumber()");
+			ocl.assertQueryFalse(null, "998.isPrimeNumber()");
+
+			ocl.assertQueryFalse(null, "10005.isPrimeNumber()");
+			ocl.assertQueryFalse(null, "10006.isPrimeNumber()");
+			ocl.assertQueryTrue(null, "10007.isPrimeNumber()");
+			ocl.assertQueryFalse(null, "10008.isPrimeNumber()");
+			ocl.assertQueryTrue(null, "10009.isPrimeNumber()");
+			ocl.assertQueryFalse(null, "10010.isPrimeNumber()");
+			ocl.assertQueryFalse(null, "10011.isPrimeNumber()");
+		}
+		finally {
+			ocl.dispose();
+		}
+	}
+
+	// See Bug 574324
+	public void testValidate_IsPrimeNumber_oclinecore() throws IOException, InterruptedException, InvocationTargetException {
+		TestOCL ocl = createTestOCL();
+		String testDocument =
+				"package isPrimeNumber : isp = 'isPrimeNumber'\n"
+				+ "{\n"
+				+ "	class MyNumber\n"
+				+ "	{\n"
+				+ "		operation isPrimeNumber(candidatePrime : Integer) : Boolean {\n"
+				+ "			body: (0 < candidatePrime)\n"
+				+ "				  and ((candidatePrime < 4)\n"
+				+ "					  or ((candidatePrime.div(2) * 2) <> candidatePrime)\n"
+				+ "						 and isPrimeNumber(candidatePrime, 3));\n"
+				+ "		}\n"
+				+ "\n"
+				+ "		operation isPrimeNumber(candidatePrime : Integer, candidateFactor:Integer) : Boolean {\n"
+//				+ "			body: false.oclLog('\ncandidatePrime='+candidatePrime.toString() + ', candidateFactor='+candidateFactor.toString() +'\n') or\n"
+				+ "			body: ((candidatePrime.div(candidateFactor) * candidateFactor) <> candidatePrime)\n"
+				+ "				  and ((candidateFactor*candidateFactor > candidatePrime)\n"
+				+ "					  or isPrimeNumber(candidatePrime, candidateFactor+2));\n"
+				+ "		}\n"
+				+ "	}\n"
+				+ "}\n";
+		TestFile testFile = createFile("IsPrimeNumber.oclinecore", testDocument);
+		URI inputURI = testFile.getFileURI();
+		URI ecoreURI = getTestFile("IsPrimeNumber.ecore").getFileURI();
+		Resource ecoreResource = doLoadOCLinEcore(ocl, inputURI, ecoreURI);
+		EPackage validatePackage = ClassUtil.nonNullState((EPackage) ecoreResource.getContents().get(0));
+		try {
+			EObject testInstance = eCreate(validatePackage, "MyNumber");
+			checkValidationDiagnostics(testInstance, Diagnostic.WARNING);
+			ocl.assertQueryFalse(testInstance, "isPrimeNumber(0)");
+			ocl.assertQueryTrue(testInstance, "isPrimeNumber(1)");
+			ocl.assertQueryTrue(testInstance, "isPrimeNumber(2)");
+			ocl.assertQueryTrue(testInstance, "isPrimeNumber(3)");
+			ocl.assertQueryFalse(testInstance, "isPrimeNumber(4)");
+			ocl.assertQueryTrue(testInstance, "isPrimeNumber(5)");
+
+			ocl.assertQueryFalse(testInstance, "isPrimeNumber(15)");
+			ocl.assertQueryFalse(testInstance, "isPrimeNumber(16)");
+			ocl.assertQueryTrue(testInstance, "isPrimeNumber(17)");
+			ocl.assertQueryFalse(testInstance, "isPrimeNumber(18)");
+			ocl.assertQueryTrue(testInstance, "isPrimeNumber(19)");
+			ocl.assertQueryFalse(testInstance, "isPrimeNumber(20)");
+
+			ocl.assertQueryFalse(testInstance, "isPrimeNumber(96)");
+			ocl.assertQueryTrue(testInstance, "isPrimeNumber(97)");
+			ocl.assertQueryFalse(testInstance, "isPrimeNumber(98)");
+
+			ocl.assertQueryFalse(testInstance, "isPrimeNumber(996)");
+			ocl.assertQueryTrue(testInstance, "isPrimeNumber(997)");
+			ocl.assertQueryFalse(testInstance, "isPrimeNumber(998)");
+
+			ocl.assertQueryFalse(testInstance, "isPrimeNumber(10005)");
+			ocl.assertQueryFalse(testInstance, "isPrimeNumber(10006)");
+			ocl.assertQueryTrue(testInstance, "isPrimeNumber(10007)");
+			ocl.assertQueryFalse(testInstance, "isPrimeNumber(10008)");
+			ocl.assertQueryTrue(testInstance, "isPrimeNumber(10009)");
+			ocl.assertQueryFalse(testInstance, "isPrimeNumber(10010)");
+			ocl.assertQueryFalse(testInstance, "isPrimeNumber(10011)");
+		}
+		finally {
+			ocl.dispose();
+			EValidator.Registry.INSTANCE.remove(validatePackage);
+		}
 	}
 
 	public void testValidate_Pivot_ecore() throws IOException, InterruptedException {
@@ -398,7 +601,7 @@ public class ValidateTests extends AbstractValidateTests
 						"context Book\n" +
 						"inv ExactlyOneCopy: copies=1\n" +
 						"endpackage\n";
-		TestFile testFile = createOCLinEcoreFile("ExtraOCLinEcoreTutorial.ocl", testDocument);
+		TestFile testFile = createFile("ExtraOCLinEcoreTutorial.ocl", testDocument);
 		//
 		Resource resource = ClassUtil.nonNullState(resourceSet.getResource(xmiURI, true));
 		assertValidationDiagnostics("Without Complete OCL", resource, getMessages(
@@ -466,7 +669,7 @@ public class ValidateTests extends AbstractValidateTests
 				"  inv IsClassWrtRoot: self.rootFalse()\n" +
 				"  inv IsClassWrtLeaf: self.leafFalse()\n" +
 				"endpackage\n";
-		TestFile testFile = createOCLinEcoreFile("Bug422583.ocl", testDocument);
+		TestFile testFile = createFile("Bug422583.ocl", testDocument);
 		//
 		Resource resource = ClassUtil.nonNullState(resourceSet.getResource(umlURI, true));
 		org.eclipse.uml2.uml.Class uNamed = null;

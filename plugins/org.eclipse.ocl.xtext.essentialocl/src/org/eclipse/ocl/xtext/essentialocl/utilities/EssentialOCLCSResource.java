@@ -513,7 +513,7 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 		ParserContext parserContext2 = parserContext;
 		if (parserContext2 == null) {
 			EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(this);
-			parserContext2 = parserContext = new DefaultParserContext(environmentFactory, getURI());
+			parserContext2 = parserContext = new DefaultParserContext(environmentFactory, getURI());		// FIXME use a derived ExtendedParserContext
 		}
 		return parserContext2;
 	}

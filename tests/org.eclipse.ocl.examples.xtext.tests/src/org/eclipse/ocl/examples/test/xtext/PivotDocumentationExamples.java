@@ -272,8 +272,7 @@ public class PivotDocumentationExamples extends XtextTestCase
 
 		// Register an additional EValidator for the Complete OCL document constraints
 		ComposedEValidator newEValidator = ComposedEValidator.install(EXTLibraryPackage.eINSTANCE);
-		newEValidator.addChild(new CompleteOCLEObjectValidator(
-			EXTLibraryPackage.eINSTANCE, uri, ocl.getEnvironmentFactory()));
+		newEValidator.addChild(new CompleteOCLEObjectValidator(EXTLibraryPackage.eINSTANCE, uri));
 
 		// Validate the entire Resource containing the library
 		Resource resource = library.eResource();

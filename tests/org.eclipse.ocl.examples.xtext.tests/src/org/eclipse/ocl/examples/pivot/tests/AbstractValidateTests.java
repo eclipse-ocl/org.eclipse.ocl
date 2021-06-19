@@ -130,13 +130,19 @@ public abstract class AbstractValidateTests extends PivotTestCaseWithAutoTearDow
 		return assertValidationDiagnostics("Pivot validation errors", asResource, validationDiagnostics);
 	}
 
-	protected @NonNull EObject eCreate(EPackage ePackage, String className) {
+	protected @NonNull EObject eCreate(@NonNull EPackage ePackage, @NonNull String className) {
 		EClass eClass = (EClass) ePackage.getEClassifier(className);
 		EFactory eFactoryInstance = ePackage.getEFactoryInstance();
 		return eFactoryInstance.create(eClass);
 	}
 
-	protected void eSet(EObject eObject, String eFeatureName, Object value) {
+/*
+ * eInvoke would bypass CompleteClasses. Use ocl.assertQuery...
+ *
+  	protected Object eInvoke(@NonNull EObject eObject, @NonNull String eOperationName, Object... values) throws InvocationTargetException {
+ */
+
+	protected void eSet(@NonNull EObject eObject, @NonNull String eFeatureName, Object value) {
 		EClass eClass = eObject.eClass();
 		EStructuralFeature eFeature = eClass.getEStructuralFeature(eFeatureName);
 		assert eFeature != null;

@@ -26,6 +26,8 @@ import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
  * install the derived context into the ExpressionInOCL.
  *
  * @noimplement This interface is not intended to be implemented by clients.
+ *
+ * FIXME Currently only implemented for UMLXParserContext.
  */
 public interface ExtendedParserContext extends ParserContext
 {

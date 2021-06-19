@@ -73,6 +73,8 @@ public class EcoreConsoleTests extends AbstractConsoleTests
 			fail();
 			return;
 		}
+		assertConsoleResult(consolePage, b1Book, "hasSpareCopies(0)", "true\n");
+		assertConsoleResult(consolePage, b1Book, "hasSpareCopies(5)", "false\n");
 		@SuppressWarnings("unchecked")
 		EObject aLoan = ((List<EObject>) xmiLibrary.eGet(ecoreLoans)).get(0);
 		//
@@ -86,6 +88,8 @@ public class EcoreConsoleTests extends AbstractConsoleTests
 		b2Book.eSet(bookCopies, BigInteger.valueOf(3));
 		assertConsoleResult(consolePage, b2Book, "isAvailable()", "true\n");
 		assertConsoleResult(consolePage, b1Book, "isAvailable()", "false\n");
+		//
+		assertConsoleResult(consolePage, b1Book, "hasSpareCopies(5)", "false\n");
 		//
 		assertConsoleResult(consolePage, ecoreBook, "name", "'Book'\n");
 		assertConsoleResult(consolePage, ecoreBook, "copies", "<b><error>Parsing failure\n</error></b><error>\n1:1: Unresolved Property '::copies'\n</error>");

@@ -126,7 +126,7 @@ public abstract class PivotTestCaseWithAutoTearDown extends PivotTestCase
 		return ecoreURI;
 	}
 
-	public @NonNull TestFile createOCLinEcoreFile(@NonNull String filePath, @NonNull String fileContent) throws IOException {
+	public @NonNull TestFile createFile(@NonNull String filePath, @NonNull String fileContent) throws IOException {
 		TestProject testProject = getTestProject();
 		TestFile outFile = testProject.getOutputFile(filePath);
 		File file = outFile.getFile();
@@ -134,6 +134,11 @@ public abstract class PivotTestCaseWithAutoTearDown extends PivotTestCase
 		writer.append(fileContent);
 		writer.close();
 		return outFile;
+	}
+
+	@Deprecated /* @deprecated use createFile */
+	public @NonNull TestFile createOCLinEcoreFile(@NonNull String filePath, @NonNull String fileContent) throws IOException {
+		return createFile(filePath, fileContent);
 	}
 
 	/**
