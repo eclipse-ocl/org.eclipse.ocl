@@ -1,45 +1,155 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.pde.ui.JunitLaunchConfig">
-<booleanAttribute key="append.args" value="true"/>
-<stringAttribute key="application" value="org.eclipse.pde.junit.runtime.coretestapplication"/>
-<booleanAttribute key="askclear" value="false"/>
-<booleanAttribute key="automaticAdd" value="true"/>
-<booleanAttribute key="automaticValidate" value="false"/>
-<stringAttribute key="bootstrap" value=""/>
-<stringAttribute key="checked" value="[NONE]"/>
-<booleanAttribute key="clearConfig" value="true"/>
-<booleanAttribute key="clearws" value="true"/>
-<booleanAttribute key="clearwslog" value="false"/>
-<stringAttribute key="configLocation" value="${workspace_loc}/.metadata/.plugins/org.eclipse.pde.core/pde-junit"/>
-<booleanAttribute key="default" value="false"/>
-<stringAttribute key="deselected_workspace_plugins" value="org.eclipse.emf.examples.library,org.eclipse.ocl,org.eclipse.ocl.capabilities.lal,org.eclipse.ocl.common,org.eclipse.ocl.common.ui,org.eclipse.ocl.doc,org.eclipse.ocl.ecore,org.eclipse.ocl.ecore.edit,org.eclipse.ocl.ecore.tests,org.eclipse.ocl.edit,org.eclipse.ocl.examples,org.eclipse.ocl.examples.common,org.eclipse.ocl.examples.impactanalyzer,org.eclipse.ocl.examples.impactanalyzer.testmodel.company,org.eclipse.ocl.examples.impactanalyzer.testmodel.ngpm,org.eclipse.ocl.examples.impactanalyzer.tests,org.eclipse.ocl.examples.impactanalyzer.testutils,org.eclipse.ocl.examples.impactanalyzer.ui,org.eclipse.ocl.examples.impactanalyzer.util,org.eclipse.ocl.examples.tests,org.eclipse.ocl.examples.testutils,org.eclipse.ocl.tests,org.eclipse.ocl.ui"/>
-<booleanAttribute key="includeOptional" value="true"/>
-<stringAttribute key="location" value="${workspace_loc}/../junit-workspace"/>
-<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
-<listEntry value="/org.eclipse.ocl.examples.eventmanager.tests/src/org/eclipse/ocl/examples/eventmanager/tests/EventManagerTests.java"/>
-</listAttribute>
-<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
-<listEntry value="1"/>
-</listAttribute>
-<stringAttribute key="org.eclipse.jdt.junit.CONTAINER" value=""/>
-<booleanAttribute key="org.eclipse.jdt.junit.KEEPRUNNING_ATTR" value="false"/>
-<stringAttribute key="org.eclipse.jdt.junit.TESTNAME" value=""/>
-<stringAttribute key="org.eclipse.jdt.junit.TEST_KIND" value="org.eclipse.jdt.junit.loader.junit4"/>
-<stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.eclipse.ocl.examples.eventmanager.tests.EventManagerTests"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} -consoleLog"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="org.eclipse.ocl.examples.eventmanager.tests"/>
-<stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.pde.ui.workbenchClasspathProvider"/>
-<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-DtestNameSuffix=plugin&#13;&#10;-Dosgi.requiredJavaVersion=1.5 -Xms40m -Xmx512m -XX:PermSize=256m"/>
-<stringAttribute key="pde.version" value="3.3"/>
-<stringAttribute key="product" value="org.eclipse.sdk.ide"/>
-<booleanAttribute key="run_in_ui_thread" value="true"/>
-<stringAttribute key="selected_target_plugins" value="javax.servlet@default:default,org.eclipse.ant.core@default:default,org.eclipse.core.contenttype@default:default,org.eclipse.core.expressions@default:default,org.eclipse.core.filesystem.win32.x86_64@default:false,org.eclipse.core.filesystem@default:default,org.eclipse.core.jobs@default:default,org.eclipse.core.resources@default:default,org.eclipse.core.runtime@default:true,org.eclipse.core.variables@default:default,org.eclipse.emf.common@default:default,org.eclipse.emf.ecore.xmi@default:default,org.eclipse.emf.ecore@default:default,org.eclipse.equinox.app@default:default,org.eclipse.equinox.common@2:true,org.eclipse.equinox.preferences@default:default,org.eclipse.equinox.registry@default:default,org.eclipse.osgi.services@default:default,org.eclipse.osgi@-1:true,org.hamcrest.core@default:default,org.junit@default:default"/>
-<stringAttribute key="selected_workspace_plugins" value="Activity@default:default,org.eclipse.emf.ecore@default:default,org.eclipse.ocl.all@default:default,org.eclipse.ocl.examples.autogen@default:default,org.eclipse.ocl.examples.build@default:default,org.eclipse.ocl.examples.classic@default:default,org.eclipse.ocl.examples.codegen@default:default,org.eclipse.ocl.examples.debug.ui@default:default,org.eclipse.ocl.examples.debug.vm.ui@default:default,org.eclipse.ocl.examples.debug.vm@default:default,org.eclipse.ocl.examples.debug@default:default,org.eclipse.ocl.examples.ecore2lpg@default:default,org.eclipse.ocl.examples.emf.validation.validity.ui@default:default,org.eclipse.ocl.examples.emf.validation.validity@default:default,org.eclipse.ocl.examples.eventmanager.tests@default:default,org.eclipse.ocl.examples.eventmanager@default:default,org.eclipse.ocl.examples.interpreter@default:default,org.eclipse.ocl.examples.project.completeocltutorial@default:default,org.eclipse.ocl.examples.project.royalandloyal@default:default,org.eclipse.ocl.examples.standalone@default:default,org.eclipse.ocl.examples.ui@default:default,org.eclipse.ocl.examples.uml25@default:default,org.eclipse.ocl.examples.unified@default:default,org.eclipse.ocl.examples.validity.test@default:default,org.eclipse.ocl.examples.validity@default:default,org.eclipse.ocl.examples.xtext.console@default:default,org.eclipse.ocl.examples.xtext.tests@default:default,org.eclipse.ocl.examples.xtext2lpg@default:default,org.eclipse.ocl.master@default:default,org.eclipse.ocl.pivot.ui@default:default,org.eclipse.ocl.pivot.uml@default:default,org.eclipse.ocl.pivot@default:default,org.eclipse.ocl.uml.edit@default:default,org.eclipse.ocl.uml.tests@default:default,org.eclipse.ocl.uml.ui@default:default,org.eclipse.ocl.uml@default:default,org.eclipse.ocl.xtext.base.ui@default:default,org.eclipse.ocl.xtext.base@default:default,org.eclipse.ocl.xtext.completeocl.ui@default:default,org.eclipse.ocl.xtext.completeocl@default:default,org.eclipse.ocl.xtext.essentialocl.ui@default:default,org.eclipse.ocl.xtext.essentialocl@default:default,org.eclipse.ocl.xtext.markup.ui@default:default,org.eclipse.ocl.xtext.markup@default:default,org.eclipse.ocl.xtext.oclinecore.ui@default:default,org.eclipse.ocl.xtext.oclinecore@default:default,org.eclipse.ocl.xtext.oclstdlib.ui@default:default,org.eclipse.ocl.xtext.oclstdlib@default:default,org.eclipse.qvt@default:default,org.eclipse.qvtd.all.tests@default:default,org.eclipse.qvtd.atl.tests@default:default,org.eclipse.qvtd.atl@default:default,org.eclipse.qvtd.build@default:default,org.eclipse.qvtd.codegen@default:default,org.eclipse.qvtd.compiler.tests@default:default,org.eclipse.qvtd.compiler@default:default,org.eclipse.qvtd.cs2as.build@default:default,org.eclipse.qvtd.cs2as.compiler.tests@default:default,org.eclipse.qvtd.cs2as.compiler@default:default,org.eclipse.qvtd.cs2as.xtext.runtime@default:default,org.eclipse.qvtd.debug.ui@default:default,org.eclipse.qvtd.debug@default:default,org.eclipse.qvtd.doc.bigmde2016.tests@default:default,org.eclipse.qvtd.doc.exe2016.tests@default:default,org.eclipse.qvtd.doc.miniocl.build@default:default,org.eclipse.qvtd.doc.miniocl@default:default,org.eclipse.qvtd.doc.minioclcs.xtext.ide@default:default,org.eclipse.qvtd.doc.minioclcs.xtext.tests@default:default,org.eclipse.qvtd.doc.minioclcs.xtext.ui@default:default,org.eclipse.qvtd.doc.minioclcs.xtext@default:default,org.eclipse.qvtd.doc@default:default,org.eclipse.qvtd.examples.qvtcore.uml2rdbms@default:default,org.eclipse.qvtd.examples.qvtrelation.hstm2fstm@default:default,org.eclipse.qvtd.examples.qvtrelation.modelmorf@default:default,org.eclipse.qvtd.examples.qvtrelation.reltocore@default:default,org.eclipse.qvtd.examples.umlx.hstm2fstm@default:default,org.eclipse.qvtd.examples@default:default,org.eclipse.qvtd.pivot.qvtbase@default:default,org.eclipse.qvtd.pivot.qvtcore@default:default,org.eclipse.qvtd.pivot.qvtimperative@default:default,org.eclipse.qvtd.pivot.qvtrelation@default:default,org.eclipse.qvtd.pivot.qvtschedule@default:default,org.eclipse.qvtd.pivot.qvttemplate@default:default,org.eclipse.qvtd.runtime@default:default,org.eclipse.qvtd.umlx.tests@default:default,org.eclipse.qvtd.umlx.ui@default:default,org.eclipse.qvtd.umlx@default:default,org.eclipse.qvtd.xtext.qvtbase.tests@default:default,org.eclipse.qvtd.xtext.qvtbase.ui@default:default,org.eclipse.qvtd.xtext.qvtbase@default:default,org.eclipse.qvtd.xtext.qvtcore.tests@default:default,org.eclipse.qvtd.xtext.qvtcore.ui@default:default,org.eclipse.qvtd.xtext.qvtcore@default:default,org.eclipse.qvtd.xtext.qvtimperative.tests@default:default,org.eclipse.qvtd.xtext.qvtimperative.ui@default:default,org.eclipse.qvtd.xtext.qvtimperative@default:default,org.eclipse.qvtd.xtext.qvtrelation.tests@default:default,org.eclipse.qvtd.xtext.qvtrelation.ui@default:default,org.eclipse.qvtd.xtext.qvtrelation@default:default,org.eclipse.uml2.uml.resources@default:default"/>
-<booleanAttribute key="show_selected_only" value="false"/>
-<booleanAttribute key="tracing" value="false"/>
-<booleanAttribute key="useCustomFeatures" value="false"/>
-<booleanAttribute key="useDefaultConfig" value="true"/>
-<booleanAttribute key="useDefaultConfigArea" value="false"/>
-<booleanAttribute key="useProduct" value="false"/>
+    <booleanAttribute key="append.args" value="true"/>
+    <stringAttribute key="application" value="org.eclipse.pde.junit.runtime.coretestapplication"/>
+    <booleanAttribute key="askclear" value="false"/>
+    <booleanAttribute key="automaticAdd" value="true"/>
+    <booleanAttribute key="automaticValidate" value="false"/>
+    <stringAttribute key="bootstrap" value=""/>
+    <stringAttribute key="checked" value="[NONE]"/>
+    <booleanAttribute key="clearConfig" value="true"/>
+    <booleanAttribute key="clearws" value="true"/>
+    <booleanAttribute key="clearwslog" value="false"/>
+    <stringAttribute key="configLocation" value="${workspace_loc}/.metadata/.plugins/org.eclipse.pde.core/pde-junit"/>
+    <booleanAttribute key="default" value="false"/>
+    <setAttribute key="deselected_workspace_bundles">
+        <setEntry value="org.eclipse.ocl"/>
+        <setEntry value="org.eclipse.ocl.capabilities.lal"/>
+        <setEntry value="org.eclipse.ocl.common"/>
+        <setEntry value="org.eclipse.ocl.common.ui"/>
+        <setEntry value="org.eclipse.ocl.doc"/>
+        <setEntry value="org.eclipse.ocl.ecore"/>
+        <setEntry value="org.eclipse.ocl.ecore.edit"/>
+        <setEntry value="org.eclipse.ocl.ecore.tests"/>
+        <setEntry value="org.eclipse.ocl.edit"/>
+        <setEntry value="org.eclipse.ocl.examples"/>
+        <setEntry value="org.eclipse.ocl.examples.impactanalyzer"/>
+        <setEntry value="org.eclipse.ocl.examples.impactanalyzer.testmodel.company"/>
+        <setEntry value="org.eclipse.ocl.examples.impactanalyzer.testmodel.ngpm"/>
+        <setEntry value="org.eclipse.ocl.examples.impactanalyzer.tests"/>
+        <setEntry value="org.eclipse.ocl.examples.impactanalyzer.testutils"/>
+        <setEntry value="org.eclipse.ocl.examples.impactanalyzer.ui"/>
+        <setEntry value="org.eclipse.ocl.examples.impactanalyzer.util"/>
+        <setEntry value="org.eclipse.ocl.examples.tests"/>
+        <setEntry value="org.eclipse.ocl.examples.testutils"/>
+        <setEntry value="org.eclipse.ocl.tests"/>
+        <setEntry value="org.eclipse.ocl.ui"/>
+    </setAttribute>
+    <booleanAttribute key="includeOptional" value="true"/>
+    <stringAttribute key="location" value="${workspace_loc}/../junit-workspace"/>
+    <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+        <listEntry value="/org.eclipse.ocl.examples.eventmanager.tests/src/org/eclipse/ocl/examples/eventmanager/tests/EventManagerTests.java"/>
+    </listAttribute>
+    <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+        <listEntry value="1"/>
+    </listAttribute>
+    <stringAttribute key="org.eclipse.jdt.junit.CONTAINER" value=""/>
+    <booleanAttribute key="org.eclipse.jdt.junit.KEEPRUNNING_ATTR" value="false"/>
+    <stringAttribute key="org.eclipse.jdt.junit.TESTNAME" value=""/>
+    <stringAttribute key="org.eclipse.jdt.junit.TEST_KIND" value="org.eclipse.jdt.junit.loader.junit4"/>
+    <booleanAttribute key="org.eclipse.jdt.launching.ATTR_ATTR_USE_ARGFILE" value="false"/>
+    <stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-11"/>
+    <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.eclipse.ocl.examples.eventmanager.tests.EventManagerTests"/>
+    <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} -consoleLog"/>
+    <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="org.eclipse.ocl.examples.eventmanager.tests"/>
+    <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.pde.ui.workbenchClasspathProvider"/>
+    <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-DtestNameSuffix=plugin&#13;&#10;-Dosgi.requiredJavaVersion=1.5 -Xms40m -Xmx512m -XX:PermSize=256m"/>
+    <stringAttribute key="pde.version" value="3.3"/>
+    <stringAttribute key="product" value="org.eclipse.sdk.ide"/>
+    <booleanAttribute key="run_in_ui_thread" value="true"/>
+    <setAttribute key="selected_target_bundles">
+        <setEntry value="org.eclipse.ant.core@default:default"/>
+        <setEntry value="org.eclipse.core.contenttype@default:default"/>
+        <setEntry value="org.eclipse.core.expressions@default:default"/>
+        <setEntry value="org.eclipse.core.filesystem.win32.x86_64@default:false"/>
+        <setEntry value="org.eclipse.core.filesystem@default:default"/>
+        <setEntry value="org.eclipse.core.jobs@default:default"/>
+        <setEntry value="org.eclipse.core.resources@default:default"/>
+        <setEntry value="org.eclipse.core.runtime@default:true"/>
+        <setEntry value="org.eclipse.core.variables@default:default"/>
+        <setEntry value="org.eclipse.emf.common@default:default"/>
+        <setEntry value="org.eclipse.emf.ecore.xmi@default:default"/>
+        <setEntry value="org.eclipse.emf.ecore@default:default"/>
+        <setEntry value="org.eclipse.equinox.app@default:default"/>
+        <setEntry value="org.eclipse.equinox.common@2:true"/>
+        <setEntry value="org.eclipse.equinox.preferences@default:default"/>
+        <setEntry value="org.eclipse.equinox.registry@default:default"/>
+        <setEntry value="org.eclipse.osgi.services@default:default"/>
+        <setEntry value="org.eclipse.osgi@-1:true"/>
+        <setEntry value="org.hamcrest.core@default:default"/>
+        <setEntry value="org.junit@default:default"/>
+    </setAttribute>
+    <setAttribute key="selected_workspace_bundles">
+        <setEntry value="lpg.generator.linux_x86@default:false"/>
+        <setEntry value="lpg.generator.linux_x86_64@default:false"/>
+        <setEntry value="lpg.generator.macosx_x86@default:false"/>
+        <setEntry value="lpg.generator.macosx_x86_64@default:false"/>
+        <setEntry value="lpg.generator.win32_x86*2.0.17@default:false"/>
+        <setEntry value="lpg.generator@default:default"/>
+        <setEntry value="lpg.runtime.java@default:default"/>
+        <setEntry value="org.eclipse.ocl.all@default:default"/>
+        <setEntry value="org.eclipse.ocl.codegen.tests@default:default"/>
+        <setEntry value="org.eclipse.ocl.compatibility.tests@default:default"/>
+        <setEntry value="org.eclipse.ocl.control@default:default"/>
+        <setEntry value="org.eclipse.ocl.examples.autogen@default:default"/>
+        <setEntry value="org.eclipse.ocl.examples.build@default:default"/>
+        <setEntry value="org.eclipse.ocl.examples.classic@default:default"/>
+        <setEntry value="org.eclipse.ocl.examples.codegen@default:default"/>
+        <setEntry value="org.eclipse.ocl.examples.debug.ui@default:default"/>
+        <setEntry value="org.eclipse.ocl.examples.debug.vm.ui@default:default"/>
+        <setEntry value="org.eclipse.ocl.examples.debug.vm@default:default"/>
+        <setEntry value="org.eclipse.ocl.examples.debug@default:default"/>
+        <setEntry value="org.eclipse.ocl.examples.ecore2lpg@default:default"/>
+        <setEntry value="org.eclipse.ocl.examples.emf.validation.validity.ui@default:default"/>
+        <setEntry value="org.eclipse.ocl.examples.emf.validation.validity@default:default"/>
+        <setEntry value="org.eclipse.ocl.examples.eventmanager.tests@default:default"/>
+        <setEntry value="org.eclipse.ocl.examples.eventmanager@default:default"/>
+        <setEntry value="org.eclipse.ocl.examples.extlibrary@default:default"/>
+        <setEntry value="org.eclipse.ocl.examples.interpreter@default:default"/>
+        <setEntry value="org.eclipse.ocl.examples.project.completeocltutorial@default:default"/>
+        <setEntry value="org.eclipse.ocl.examples.project.oclinecoretutorial@default:default"/>
+        <setEntry value="org.eclipse.ocl.examples.project.royalandloyal@default:default"/>
+        <setEntry value="org.eclipse.ocl.examples.standalone@default:default"/>
+        <setEntry value="org.eclipse.ocl.examples.ui@default:default"/>
+        <setEntry value="org.eclipse.ocl.examples.uml25@default:default"/>
+        <setEntry value="org.eclipse.ocl.examples.unified@default:default"/>
+        <setEntry value="org.eclipse.ocl.examples.validity.test@default:default"/>
+        <setEntry value="org.eclipse.ocl.examples.validity@default:default"/>
+        <setEntry value="org.eclipse.ocl.examples.xtext.build@default:default"/>
+        <setEntry value="org.eclipse.ocl.examples.xtext.console@default:default"/>
+        <setEntry value="org.eclipse.ocl.examples.xtext.idioms.ui@default:default"/>
+        <setEntry value="org.eclipse.ocl.examples.xtext.idioms@default:default"/>
+        <setEntry value="org.eclipse.ocl.examples.xtext.serializer@default:default"/>
+        <setEntry value="org.eclipse.ocl.examples.xtext.tests@default:default"/>
+        <setEntry value="org.eclipse.ocl.examples.xtext2lpg@default:default"/>
+        <setEntry value="org.eclipse.ocl.master@default:default"/>
+        <setEntry value="org.eclipse.ocl.pivot.ui@default:default"/>
+        <setEntry value="org.eclipse.ocl.pivot.uml@default:default"/>
+        <setEntry value="org.eclipse.ocl.pivot@default:default"/>
+        <setEntry value="org.eclipse.ocl.standalone.ecore.tests@default:default"/>
+        <setEntry value="org.eclipse.ocl.standalone.pivot.tests@default:default"/>
+        <setEntry value="org.eclipse.ocl.standalone.uml.tests@default:default"/>
+        <setEntry value="org.eclipse.ocl.uml.edit@default:default"/>
+        <setEntry value="org.eclipse.ocl.uml.tests@default:default"/>
+        <setEntry value="org.eclipse.ocl.uml.ui@default:default"/>
+        <setEntry value="org.eclipse.ocl.uml@default:default"/>
+        <setEntry value="org.eclipse.ocl.xtext.base.ui@default:default"/>
+        <setEntry value="org.eclipse.ocl.xtext.base@default:default"/>
+        <setEntry value="org.eclipse.ocl.xtext.completeocl.ui@default:default"/>
+        <setEntry value="org.eclipse.ocl.xtext.completeocl@default:default"/>
+        <setEntry value="org.eclipse.ocl.xtext.essentialocl.ui@default:default"/>
+        <setEntry value="org.eclipse.ocl.xtext.essentialocl@default:default"/>
+        <setEntry value="org.eclipse.ocl.xtext.markup.ui@default:default"/>
+        <setEntry value="org.eclipse.ocl.xtext.markup@default:default"/>
+        <setEntry value="org.eclipse.ocl.xtext.oclinecore.ui@default:default"/>
+        <setEntry value="org.eclipse.ocl.xtext.oclinecore@default:default"/>
+        <setEntry value="org.eclipse.ocl.xtext.oclstdlib.ui@default:default"/>
+        <setEntry value="org.eclipse.ocl.xtext.oclstdlib@default:default"/>
+    </setAttribute>
+    <booleanAttribute key="show_selected_only" value="false"/>
+    <booleanAttribute key="tracing" value="false"/>
+    <booleanAttribute key="useCustomFeatures" value="false"/>
+    <booleanAttribute key="useDefaultConfig" value="true"/>
+    <booleanAttribute key="useDefaultConfigArea" value="false"/>
+    <booleanAttribute key="useProduct" value="false"/>
 </launchConfiguration>
