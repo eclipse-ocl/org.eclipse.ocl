@@ -2,3 +2,4 @@ bin
 doc
 *.jar
 /target/
+/.polyglot.build.properties
