@@ -14,6 +14,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
@@ -30,22 +31,24 @@ public class EvaluatorMultipleIterationManager extends AbstractEvaluatorIteratio
 	protected boolean hasCurrent;
 
 	/** @deprecated supply a callExp */
+	// FIXME VariableDeclaration
 	@Deprecated
 	public EvaluatorMultipleIterationManager(@NonNull Evaluator invokingExecutor, @NonNull OCLExpression body, @NonNull CollectionValue collectionValue,
-			@Nullable VariableDeclaration accumulator, @Nullable Object accumulatorValue, @NonNull VariableDeclaration... referredIterators) {
+			@Nullable TypedElement accumulator, @Nullable Object accumulatorValue, @NonNull TypedElement... referredIterators) {
 		this(ValueUtil.getExecutor(invokingExecutor), null, body, collectionValue, accumulator, accumulatorValue);
 	}
 
 	/**
 	 * @since 1.1
 	 */
+	// FIXME VariableDeclaration
 	public EvaluatorMultipleIterationManager(@NonNull Executor invokingExecutor, /*@NonNull*/ CallExp callExp, @NonNull OCLExpression body, @NonNull CollectionValue collectionValue,
-			@Nullable VariableDeclaration accumulator, @Nullable Object accumulatorValue, @NonNull VariableDeclaration... referredIterators) {
+			@Nullable TypedElement accumulator, @Nullable Object accumulatorValue, @NonNull TypedElement... referredIterators) {
 		super(invokingExecutor, callExp, body, collectionValue, accumulator, accumulatorValue);
 		int iMax = referredIterators.length;
 		ValueIterator[] iterators = new ValueIterator[iMax];
 		for (int i = 0; i < iMax; i++) {
-			VariableDeclaration referredIterator = referredIterators[i];
+			VariableDeclaration referredIterator = (VariableDeclaration) referredIterators[i];
 			if (referredIterator != null) {
 				ValueIterator valueIterator = new ValueIterator(executor, collectionValue, referredIterator);
 				if (!valueIterator.hasCurrent()) {

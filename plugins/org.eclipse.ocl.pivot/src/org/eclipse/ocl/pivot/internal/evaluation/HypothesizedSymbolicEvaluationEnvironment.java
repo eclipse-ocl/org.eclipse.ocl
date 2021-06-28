@@ -217,7 +217,7 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 	}
 
 	@Override
-	public @Nullable Object getValueOf(@NonNull VariableDeclaration referredVariable) {
+	public @Nullable Object getValueOf(@NonNull TypedElement referredVariable) {
 		return getSymbolicValue(referredVariable);			// Re-use old value
 	}
 

@@ -43,18 +43,20 @@ public abstract class AbstractEvaluatorIterationManager extends AbstractIteratio
 		private Object value;		// 'null' is a valid value so 'this' is used as end of iteration
 
 		/** @deprecated use Executor */
+		// FIXME VariableDeclaration
 		@Deprecated
-		public ValueIterator(@NonNull Evaluator evaluator, @NonNull CollectionValue collectionValue, @NonNull VariableDeclaration variable) {
+		public ValueIterator(@NonNull Evaluator evaluator, @NonNull CollectionValue collectionValue, @NonNull TypedElement variable) {
 			this(ValueUtil.getExecutor(evaluator), collectionValue, variable);
 		}
 
 		/**
 		 * @since 1.1
 		 */
-		public ValueIterator(@NonNull Executor executor, @NonNull CollectionValue collectionValue, @NonNull VariableDeclaration variable) {
+		// FIXME VariableDeclaration
+		public ValueIterator(@NonNull Executor executor, @NonNull CollectionValue collectionValue, @NonNull TypedElement variable) {
 			this.evaluationEnvironment = executor.getEvaluationEnvironment();
 			this.collectionValue = collectionValue;
-			this.variable = variable;
+			this.variable = (VariableDeclaration) variable;
 			reset();
 		}
 
@@ -98,11 +100,12 @@ public abstract class AbstractEvaluatorIterationManager extends AbstractIteratio
 	/**
 	 * @since 1.1
 	 */
-	protected static @NonNull ValueIterator @Nullable [] createIterators(@NonNull VariableDeclaration @NonNull [] referredIterators, @NonNull Executor executor, @NonNull CollectionValue collectionValue) {
+	// FIXME VariableDeclaration
+	protected static @NonNull ValueIterator @Nullable [] createIterators(@NonNull TypedElement @NonNull [] referredIterators, @NonNull Executor executor, @NonNull CollectionValue collectionValue) {
 		int iMax = referredIterators.length;
 		@NonNull ValueIterator @Nullable [] iterators = new @NonNull ValueIterator[iMax];
 		for (int i = 0; i < iMax; i++) {
-			VariableDeclaration referredIterator = referredIterators[i];
+			VariableDeclaration referredIterator = (VariableDeclaration)referredIterators[i];
 			ValueIterator valueIterator = new ValueIterator(executor, collectionValue, referredIterator);
 			if (!valueIterator.hasCurrent()) {
 				return null;
@@ -118,21 +121,24 @@ public abstract class AbstractEvaluatorIterationManager extends AbstractIteratio
 	 */
 	protected final /*@NonNull*/ CallExp callExp;		// Null at root or when calling context unknown
 	protected final @NonNull OCLExpression body;
-	protected final @Nullable VariableDeclaration accumulatorVariable;
+	// FIXME VariableDeclaration
+	protected final @Nullable TypedElement accumulatorVariable;
 	private @Nullable Object accumulatorValue;
 
 	/** deprecated supply a callExp */
+	// FIXME VariableDeclaration
 	@Deprecated
 	public AbstractEvaluatorIterationManager(@NonNull Evaluator evaluator, @NonNull OCLExpression body, @NonNull CollectionValue collectionValue,
-			@Nullable VariableDeclaration accumulatorVariable, @Nullable Object accumulatorValue) {
+			@Nullable TypedElement accumulatorVariable, @Nullable Object accumulatorValue) {
 		this(ValueUtil.getExecutor(evaluator), null, body, collectionValue, accumulatorVariable, accumulatorValue);
 	}
 
 	/**
 	 * @since 1.1
 	 */
+	// FIXME VariableDeclaration
 	protected AbstractEvaluatorIterationManager(@NonNull Executor executor, /*@NonNull*/ CallExp callExp, @NonNull OCLExpression body, @NonNull CollectionValue collectionValue,
-			@Nullable VariableDeclaration accumulatorVariable, @Nullable Object accumulatorValue) {
+			@Nullable TypedElement accumulatorVariable, @Nullable Object accumulatorValue) {
 		super(executor);
 		this.collectionValue = collectionValue;
 		this.callExp = callExp;
@@ -200,7 +206,7 @@ public abstract class AbstractEvaluatorIterationManager extends AbstractIteratio
 	@Override
 	public @Nullable Object updateAccumulator(Object newValue) {
 		this.accumulatorValue = newValue;
-		VariableDeclaration accumulatorVariable2 = accumulatorVariable;
+		VariableDeclaration accumulatorVariable2 = (VariableDeclaration)accumulatorVariable;
 		if (accumulatorVariable2 != null) {
 			getEvaluationEnvironment().replace(accumulatorVariable2, accumulatorValue);
 		}

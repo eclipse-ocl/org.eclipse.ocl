@@ -19,7 +19,7 @@ import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.VariableDeclaration;
+import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
@@ -39,7 +39,8 @@ public interface Executor extends Evaluator
 		@Override
 		void resetCaches();
 	}
-	void add(@NonNull VariableDeclaration referredVariable, @Nullable Object value);
+	// FIXME VariableDeclaration
+	void add(@NonNull TypedElement referredVariable, @Nullable Object value);
 	@Override
 	@Nullable Object evaluate(@NonNull OCLExpression body);
 	@Override
@@ -83,7 +84,8 @@ public interface Executor extends Evaluator
 	default @NonNull EvaluationEnvironment pushEvaluationEnvironment(@NonNull NamedElement executableObject, @Nullable Object caller) {
 		throw new UnsupportedOperationException();
 	}
-	void replace(@NonNull VariableDeclaration referredVariable, @Nullable Object value);
+	// FIXME VariableDeclaration
+	void replace(@NonNull TypedElement referredVariable, @Nullable Object value);
 
 	/**
 	 * @since 1.16

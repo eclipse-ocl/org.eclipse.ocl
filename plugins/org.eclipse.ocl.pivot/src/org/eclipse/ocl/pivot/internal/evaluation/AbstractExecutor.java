@@ -126,8 +126,8 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 	}
 
 	@Override
-	public void add(@NonNull VariableDeclaration referredVariable, @Nullable Object value) {
-		evaluationEnvironment.add(referredVariable, value);
+	public void add(@NonNull TypedElement referredVariable, @Nullable Object value) {
+		evaluationEnvironment.add((VariableDeclaration)referredVariable, value);
 	}
 
 	/**
@@ -358,7 +358,7 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 	}
 
 	@Override
-	public @Nullable Object getValueOf(@NonNull VariableDeclaration referredVariable) {
+	public @Nullable Object getValueOf(@NonNull TypedElement referredVariable) {
 		return evaluationEnvironment.getValueOf(referredVariable);
 	}
 
@@ -566,8 +566,8 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 	}
 
 	@Override
-	public void replace(@NonNull VariableDeclaration referredVariable, @Nullable Object value) {
-		evaluationEnvironment.replace(referredVariable, value);
+	public void replace(@NonNull TypedElement referredVariable, @Nullable Object value) {
+		evaluationEnvironment.replace((VariableDeclaration)referredVariable, value);
 	}
 
 	/**

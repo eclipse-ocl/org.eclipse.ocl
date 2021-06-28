@@ -127,7 +127,7 @@ public class BasicEvaluationEnvironment extends AbstractCustomizable implements 
 	 *            the associated binding
 	 */
 	@Override
-	public void add(@NonNull VariableDeclaration referredVariable, @Nullable Object value) {
+	public void add(@NonNull TypedElement referredVariable, @Nullable Object value) {
 		if (variable2value.containsKey(referredVariable)) {
 			Object oldValue = variable2value.get(referredVariable);
 			if ((oldValue != value) && ((oldValue == null) || !oldValue.equals(value))) {
@@ -138,7 +138,7 @@ public class BasicEvaluationEnvironment extends AbstractCustomizable implements 
 				throw new IllegalArgumentException(message);
 			}
 		}
-		variable2value.put(referredVariable, value);
+		variable2value.put((VariableDeclaration)referredVariable, value);
 	}
 
 	/**
@@ -226,7 +226,7 @@ public class BasicEvaluationEnvironment extends AbstractCustomizable implements 
 	 * @return the value associated with the referredVariable
 	 */
 	@Override
-	public @Nullable Object getValueOf(@NonNull VariableDeclaration referredVariable) {
+	public @Nullable Object getValueOf(@NonNull TypedElement referredVariable) {
 		Object object = variable2value.get(referredVariable);
 		if (object == null) {		// XXX variable2value using ValueUtil.NULL_VALUE
 			if (!variable2value.containsKey(referredVariable)) {
@@ -256,7 +256,7 @@ public class BasicEvaluationEnvironment extends AbstractCustomizable implements 
 	 * @return the value associated with the removed referredVariable
 	 */
 	@Override
-	public @Nullable Object remove(@NonNull VariableDeclaration referredVariable) {
+	public @Nullable Object remove(@NonNull TypedElement referredVariable) {
 		return variable2value.remove(referredVariable);
 	}
 
@@ -269,8 +269,8 @@ public class BasicEvaluationEnvironment extends AbstractCustomizable implements 
 	 *            the new value
 	 */
 	@Override
-	public void replace(@NonNull VariableDeclaration referredVariable, @Nullable Object value) {
-		variable2value.put(referredVariable, value);
+	public void replace(@NonNull TypedElement referredVariable, @Nullable Object value) {
+		variable2value.put((VariableDeclaration)referredVariable, value);
 	}
 
 

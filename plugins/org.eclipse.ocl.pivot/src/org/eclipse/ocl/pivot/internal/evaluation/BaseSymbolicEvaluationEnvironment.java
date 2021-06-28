@@ -178,7 +178,7 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 	}
 
 	@Override
-	public @Nullable Object getValueOf(@NonNull VariableDeclaration variable) {
+	public @Nullable Object getValueOf(@NonNull TypedElement variable) {
 		Object variableValue = super.getValueOf(variable);
 	/*	if (variableValue instanceof SymbolicValue) {
 			SymbolicValue symbolicValue = (SymbolicValue)variableValue;

@@ -50,7 +50,8 @@ public interface EvaluationEnvironment extends Adaptable, Customizable
 	 *
 	 * @see #replace(TypedElement, Object)
 	 */
-	void add(@NonNull VariableDeclaration referredVariable, @Nullable Object value);
+	// FIXME VariableDeclaration
+	void add(@NonNull TypedElement referredVariable, @Nullable Object value);
 
 	/**
 	 * Clears the environment of variables.
@@ -80,7 +81,8 @@ public interface EvaluationEnvironment extends Adaptable, Customizable
 	 *            the name whose value is to be returned
 	 * @return the value associated with the name
 	 */
-	@Nullable Object getValueOf(@NonNull VariableDeclaration referredVariable);
+	// FIXME VariableDeclaration
+	@Nullable Object getValueOf(@NonNull TypedElement referredVariable);
 
 	/**
 	 * Return the set of all locally registered variables.
@@ -95,7 +97,8 @@ public interface EvaluationEnvironment extends Adaptable, Customizable
 	 *            the variable declaration to remove
 	 * @return the value associated with the removed variable declaration
 	 */
-	@Nullable Object remove(@NonNull VariableDeclaration referredVariable);
+	// FIXME VariableDeclaration
+	@Nullable Object remove(@NonNull TypedElement referredVariable);
 
 	/**
 	 * Replaces the current value of the supplied variable declaration with the
@@ -106,7 +109,8 @@ public interface EvaluationEnvironment extends Adaptable, Customizable
 	 * @param value
 	 *            the new value
 	 */
-	void replace(@NonNull VariableDeclaration referredVariable, @Nullable Object value);
+	// FIXME VariableDeclaration
+	void replace(@NonNull TypedElement referredVariable, @Nullable Object value);
 
 	/** @deprecated moved to Evaluator */
 	@Deprecated

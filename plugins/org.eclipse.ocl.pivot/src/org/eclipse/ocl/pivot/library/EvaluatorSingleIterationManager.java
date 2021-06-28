@@ -14,7 +14,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.OCLExpression;
-import org.eclipse.ocl.pivot.VariableDeclaration;
+import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.IterationManager;
@@ -55,25 +55,28 @@ public class EvaluatorSingleIterationManager extends AbstractEvaluatorIterationM
 		}
 	}
 
-	protected final @NonNull VariableDeclaration referredIterator;
+	// FIXME VariableDeclaration
+	protected final @NonNull TypedElement referredIterator;
 	protected final @NonNull ValueIterator iterator;
 
 	/** @deprecated supply a callExp */
+	// FIXME VariableDeclaration
 	@Deprecated
 	public EvaluatorSingleIterationManager(@NonNull Evaluator invokingEvaluator,
 			@NonNull OCLExpression body, @NonNull CollectionValue collectionValue,
-			@Nullable VariableDeclaration accumulator, @Nullable Object accumulatorValue,
-			@NonNull VariableDeclaration referredIterator) {
+			@Nullable TypedElement accumulator, @Nullable Object accumulatorValue,
+			@NonNull TypedElement referredIterator) {
 		this(ValueUtil.getExecutor(invokingEvaluator), null, body, collectionValue, accumulator, accumulatorValue, referredIterator);
 	}
 
 	/**
 	 * @since 1.1
 	 */
+	// FIXME VariableDeclaration
 	public EvaluatorSingleIterationManager(@NonNull Executor invokingExecutor,
 			/*@NonNull*/ CallExp callExp, @NonNull OCLExpression body, @NonNull CollectionValue collectionValue,
-			@Nullable VariableDeclaration accumulator, @Nullable Object accumulatorValue,
-			@NonNull VariableDeclaration referredIterator) {
+			@Nullable TypedElement accumulator, @Nullable Object accumulatorValue,
+			@NonNull TypedElement referredIterator) {
 		super(invokingExecutor, callExp, body, collectionValue, accumulator, accumulatorValue);
 		this.referredIterator = referredIterator;
 		this.iterator = new ValueIterator(executor, collectionValue, referredIterator);
