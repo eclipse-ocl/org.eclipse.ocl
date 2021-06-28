@@ -172,6 +172,42 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getOwnedPathElementsNextPathElementCSParserRuleCall_1_1_0() { return cOwnedPathElementsNextPathElementCSParserRuleCall_1_1_0; }
 	}
 
+	public class UnreservedPathNameCSElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.base.Base.UnreservedPathNameCS");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cOwnedPathElementsAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cOwnedPathElementsNextPathElementCSParserRuleCall_0_0 = (RuleCall)cOwnedPathElementsAssignment_0.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Keyword cColonColonKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final Assignment cOwnedPathElementsAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cOwnedPathElementsNextPathElementCSParserRuleCall_1_1_0 = (RuleCall)cOwnedPathElementsAssignment_1_1.eContents().get(0);
+
+		//UnreservedPathNameCS PathNameCS:
+		//	ownedPathElements+=NextPathElementCS ('::' ownedPathElements+=NextPathElementCS)*;
+		@Override public ParserRule getRule() { return rule; }
+
+		//ownedPathElements+=NextPathElementCS ('::' ownedPathElements+=NextPathElementCS)*
+		public Group getGroup() { return cGroup; }
+
+		//ownedPathElements+=NextPathElementCS
+		public Assignment getOwnedPathElementsAssignment_0() { return cOwnedPathElementsAssignment_0; }
+
+		//NextPathElementCS
+		public RuleCall getOwnedPathElementsNextPathElementCSParserRuleCall_0_0() { return cOwnedPathElementsNextPathElementCSParserRuleCall_0_0; }
+
+		//('::' ownedPathElements+=NextPathElementCS)*
+		public Group getGroup_1() { return cGroup_1; }
+
+		//'::'
+		public Keyword getColonColonKeyword_1_0() { return cColonColonKeyword_1_0; }
+
+		//ownedPathElements+=NextPathElementCS
+		public Assignment getOwnedPathElementsAssignment_1_1() { return cOwnedPathElementsAssignment_1_1; }
+
+		//NextPathElementCS
+		public RuleCall getOwnedPathElementsNextPathElementCSParserRuleCall_1_1_0() { return cOwnedPathElementsNextPathElementCSParserRuleCall_1_1_0; }
+	}
+
 	public class FirstPathElementCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.base.Base.FirstPathElementCS");
 		private final Assignment cReferredElementAssignment = (Assignment)rule.eContents().get(1);
@@ -619,6 +655,7 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 	private final MultiplicityCSElements pMultiplicityCS;
 	private final MultiplicityStringCSElements pMultiplicityStringCS;
 	private final PathNameCSElements pPathNameCS;
+	private final UnreservedPathNameCSElements pUnreservedPathNameCS;
 	private final FirstPathElementCSElements pFirstPathElementCS;
 	private final NextPathElementCSElements pNextPathElementCS;
 	private final TemplateBindingCSElements pTemplateBindingCS;
@@ -660,6 +697,7 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 		this.pMultiplicityCS = new MultiplicityCSElements();
 		this.pMultiplicityStringCS = new MultiplicityStringCSElements();
 		this.pPathNameCS = new PathNameCSElements();
+		this.pUnreservedPathNameCS = new UnreservedPathNameCSElements();
 		this.pFirstPathElementCS = new FirstPathElementCSElements();
 		this.pNextPathElementCS = new NextPathElementCSElements();
 		this.pTemplateBindingCS = new TemplateBindingCSElements();
@@ -754,6 +792,16 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 
 	public ParserRule getPathNameCSRule() {
 		return getPathNameCSAccess().getRule();
+	}
+
+	//UnreservedPathNameCS PathNameCS:
+	//	ownedPathElements+=NextPathElementCS ('::' ownedPathElements+=NextPathElementCS)*;
+	public UnreservedPathNameCSElements getUnreservedPathNameCSAccess() {
+		return pUnreservedPathNameCS;
+	}
+
+	public ParserRule getUnreservedPathNameCSRule() {
+		return getUnreservedPathNameCSAccess().getRule();
 	}
 
 	//FirstPathElementCS PathElementCS:

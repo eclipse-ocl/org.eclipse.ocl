@@ -79,8 +79,15 @@ public abstract class AbstractBaseSemanticSequencer extends AbstractDelegatingSe
 				}
 				else break;
 			case BaseCSPackage.PATH_NAME_CS:
-				sequence_PathNameCS(context, (PathNameCS) semanticObject);
-				return;
+				if (rule == grammarAccess.getPathNameCSRule()) {
+					sequence_PathNameCS(context, (PathNameCS) semanticObject);
+					return;
+				}
+				else if (rule == grammarAccess.getUnreservedPathNameCSRule()) {
+					sequence_UnreservedPathNameCS(context, (PathNameCS) semanticObject);
+					return;
+				}
+				else break;
 			case BaseCSPackage.TEMPLATE_BINDING_CS:
 				sequence_TemplateBindingCS(context, (TemplateBindingCS) semanticObject);
 				return;
@@ -264,6 +271,18 @@ public abstract class AbstractBaseSemanticSequencer extends AbstractDelegatingSe
 	 *     (ownedPathName=PathNameCS ownedBinding=TemplateBindingCS?)
 	 */
 	protected void sequence_TypedTypeRefCS(ISerializationContext context, TypedTypeRefCS semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+
+
+	/**
+	 * Contexts:
+	 *     UnreservedPathNameCS returns PathNameCS
+	 *
+	 * Constraint:
+	 *     (ownedPathElements+=NextPathElementCS ownedPathElements+=NextPathElementCS*)
+	 */
+	protected void sequence_UnreservedPathNameCS(ISerializationContext context, PathNameCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 

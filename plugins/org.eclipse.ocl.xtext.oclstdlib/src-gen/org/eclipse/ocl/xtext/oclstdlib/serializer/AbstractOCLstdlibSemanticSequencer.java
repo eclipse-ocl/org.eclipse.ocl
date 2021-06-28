@@ -206,6 +206,10 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 					sequence_URIPathNameCS(context, (PathNameCS) semanticObject);
 					return;
 				}
+				else if (rule == grammarAccess.getUnreservedPathNameCSRule()) {
+					sequence_UnreservedPathNameCS(context, (PathNameCS) semanticObject);
+					return;
+				}
 				else break;
 			case BaseCSPackage.PRIMITIVE_TYPE_REF_CS:
 				if (rule == grammarAccess.getPrimitiveTypeCSRule()

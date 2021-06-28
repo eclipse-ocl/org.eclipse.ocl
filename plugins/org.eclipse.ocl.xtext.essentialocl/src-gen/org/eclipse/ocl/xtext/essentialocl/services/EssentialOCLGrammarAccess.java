@@ -663,12 +663,12 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightParenthesisKeyword_1_3 = (Keyword)cGroup_1.eContents().get(3);
 
 		//CollectionTypeCS:
-		//	name=CollectionTypeIdentifier ('(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS?
-		//	')')?;
+		//	name=CollectionTypeIdentifier ('(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS
+		//	? ')')?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//name=CollectionTypeIdentifier ('(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS?
-		//')')?
+		//name=CollectionTypeIdentifier ('(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS
+		//? ')')?
 		public Group getGroup() { return cGroup; }
 
 		//name=CollectionTypeIdentifier
@@ -3344,8 +3344,8 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//CollectionTypeCS:
-	//	name=CollectionTypeIdentifier ('(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS?
-	//	')')?;
+	//	name=CollectionTypeIdentifier ('(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS
+	//	? ')')?;
 	public CollectionTypeCSElements getCollectionTypeCSAccess() {
 		return pCollectionTypeCS;
 	}
@@ -3932,6 +3932,16 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 
 	public ParserRule getPathNameCSRule() {
 		return getPathNameCSAccess().getRule();
+	}
+
+	//UnreservedPathNameCS PathNameCS:
+	//	ownedPathElements+=NextPathElementCS ('::' ownedPathElements+=NextPathElementCS)*;
+	public BaseGrammarAccess.UnreservedPathNameCSElements getUnreservedPathNameCSAccess() {
+		return gaBase.getUnreservedPathNameCSAccess();
+	}
+
+	public ParserRule getUnreservedPathNameCSRule() {
+		return getUnreservedPathNameCSAccess().getRule();
 	}
 
 	//FirstPathElementCS PathElementCS:

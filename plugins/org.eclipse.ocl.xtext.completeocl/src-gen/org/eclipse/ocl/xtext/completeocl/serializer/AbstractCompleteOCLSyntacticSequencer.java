@@ -159,7 +159,7 @@ public abstract class AbstractCompleteOCLSyntacticSequencer extends AbstractSynt
 	 * This ambiguous syntax occurs at:
 	 *     ownedBodies+=SpecificationCS 'body' (ambiguity) ':' ownedBodies+=SpecificationCS
 	 *     ownedParameters+=ParameterCS ')' ':' 'body' (ambiguity) ':' ownedBodies+=SpecificationCS
-	 *     ownedPathName=PathNameCS '(' ')' ':' 'body' (ambiguity) ':' ownedBodies+=SpecificationCS
+	 *     ownedPathName=UnreservedPathNameCS '(' ')' ':' 'body' (ambiguity) ':' ownedBodies+=SpecificationCS
 	 *     ownedPostconditions+=ConstraintCS 'body' (ambiguity) ':' ownedBodies+=SpecificationCS
 	 *     ownedPreconditions+=ConstraintCS 'body' (ambiguity) ':' ownedBodies+=SpecificationCS
 	 *     ownedType=TypeExpCS 'body' (ambiguity) ':' ownedBodies+=SpecificationCS

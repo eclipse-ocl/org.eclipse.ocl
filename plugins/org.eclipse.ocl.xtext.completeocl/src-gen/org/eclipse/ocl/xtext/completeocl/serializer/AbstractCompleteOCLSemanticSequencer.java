@@ -167,6 +167,10 @@ public abstract class AbstractCompleteOCLSemanticSequencer extends EssentialOCLS
 					sequence_URIPathNameCS(context, (PathNameCS) semanticObject);
 					return;
 				}
+				else if (rule == grammarAccess.getUnreservedPathNameCSRule()) {
+					sequence_UnreservedPathNameCS(context, (PathNameCS) semanticObject);
+					return;
+				}
 				else break;
 			case BaseCSPackage.PRIMITIVE_TYPE_REF_CS:
 				if (rule == grammarAccess.getTypedRefCSRule()
@@ -451,7 +455,7 @@ public abstract class AbstractCompleteOCLSemanticSequencer extends EssentialOCLS
 	 *     (
 	 *         ownedSignature=TemplateSignatureCS?
 	 *         selfName=UnrestrictedName?
-	 *         ownedPathName=PathNameCS
+	 *         ownedPathName=UnreservedPathNameCS
 	 *         (ownedInvariants+=ConstraintCS | ownedDefinitions+=DefCS)+
 	 *     )
 	 */
@@ -570,7 +574,7 @@ public abstract class AbstractCompleteOCLSemanticSequencer extends EssentialOCLS
 	 * Constraint:
 	 *     (
 	 *         ownedSignature=TemplateSignatureCS?
-	 *         ownedPathName=PathNameCS
+	 *         ownedPathName=UnreservedPathNameCS
 	 *         (ownedParameters+=ParameterCS ownedParameters+=ParameterCS*)?
 	 *         ownedType=TypeExpCS?
 	 *         (ownedPreconditions+=ConstraintCS | ownedPostconditions+=ConstraintCS | ownedBodies+=SpecificationCS)*
@@ -586,7 +590,7 @@ public abstract class AbstractCompleteOCLSemanticSequencer extends EssentialOCLS
 	 *     PackageDeclarationCS returns PackageDeclarationCS
 	 *
 	 * Constraint:
-	 *     (ownedPathName=PathNameCS ownedInvariants+=ConstraintCS* ownedContexts+=ContextDeclCS*)
+	 *     (ownedPathName=UnreservedPathNameCS ownedInvariants+=ConstraintCS* ownedContexts+=ContextDeclCS*)
 	 */
 	protected void sequence_PackageDeclarationCS(ISerializationContext context, PackageDeclarationCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -611,7 +615,7 @@ public abstract class AbstractCompleteOCLSemanticSequencer extends EssentialOCLS
 	 *     PropertyContextDeclCS returns PropertyContextDeclCS
 	 *
 	 * Constraint:
-	 *     (ownedPathName=PathNameCS ownedType=TypeExpCS (ownedDefaultExpressions+=SpecificationCS | ownedDefaultExpressions+=SpecificationCS)*)
+	 *     (ownedPathName=UnreservedPathNameCS ownedType=TypeExpCS (ownedDefaultExpressions+=SpecificationCS | ownedDefaultExpressions+=SpecificationCS)*)
 	 */
 	protected void sequence_PropertyContextDeclCS(ISerializationContext context, PropertyContextDeclCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

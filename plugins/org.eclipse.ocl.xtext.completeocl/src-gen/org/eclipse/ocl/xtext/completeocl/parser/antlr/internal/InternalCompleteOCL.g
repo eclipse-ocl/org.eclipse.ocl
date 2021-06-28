@@ -243,9 +243,9 @@ ruleClassifierContextDeclCS returns [EObject current=null]
 )?(
 (
 		{
-	        newCompositeNode(grammarAccess.getClassifierContextDeclCSAccess().getOwnedPathNamePathNameCSParserRuleCall_3_0());
+	        newCompositeNode(grammarAccess.getClassifierContextDeclCSAccess().getOwnedPathNameUnreservedPathNameCSParserRuleCall_3_0());
 	    }
-		lv_ownedPathName_3_0=rulePathNameCS		{
+		lv_ownedPathName_3_0=ruleUnreservedPathNameCS		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getClassifierContextDeclCSRule());
 	        }
@@ -253,7 +253,7 @@ ruleClassifierContextDeclCS returns [EObject current=null]
        			$current,
        			"ownedPathName",
         		lv_ownedPathName_3_0,
-        		"org.eclipse.ocl.xtext.base.Base.PathNameCS");
+        		"org.eclipse.ocl.xtext.base.Base.UnreservedPathNameCS");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -988,9 +988,9 @@ ruleOperationContextDeclCS returns [EObject current=null]
 )?(
 (
 		{
-	        newCompositeNode(grammarAccess.getOperationContextDeclCSAccess().getOwnedPathNamePathNameCSParserRuleCall_2_0());
+	        newCompositeNode(grammarAccess.getOperationContextDeclCSAccess().getOwnedPathNameUnreservedPathNameCSParserRuleCall_2_0());
 	    }
-		lv_ownedPathName_2_0=rulePathNameCS		{
+		lv_ownedPathName_2_0=ruleUnreservedPathNameCS		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getOperationContextDeclCSRule());
 	        }
@@ -998,7 +998,7 @@ ruleOperationContextDeclCS returns [EObject current=null]
        			$current,
        			"ownedPathName",
         		lv_ownedPathName_2_0,
-        		"org.eclipse.ocl.xtext.base.Base.PathNameCS");
+        		"org.eclipse.ocl.xtext.base.Base.UnreservedPathNameCS");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1184,9 +1184,9 @@ rulePackageDeclarationCS returns [EObject current=null]
 (
 (
 		{
-	        newCompositeNode(grammarAccess.getPackageDeclarationCSAccess().getOwnedPathNamePathNameCSParserRuleCall_1_0());
+	        newCompositeNode(grammarAccess.getPackageDeclarationCSAccess().getOwnedPathNameUnreservedPathNameCSParserRuleCall_1_0());
 	    }
-		lv_ownedPathName_1_0=rulePathNameCS		{
+		lv_ownedPathName_1_0=ruleUnreservedPathNameCS		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getPackageDeclarationCSRule());
 	        }
@@ -1194,7 +1194,7 @@ rulePackageDeclarationCS returns [EObject current=null]
        			$current,
        			"ownedPathName",
         		lv_ownedPathName_1_0,
-        		"org.eclipse.ocl.xtext.base.Base.PathNameCS");
+        		"org.eclipse.ocl.xtext.base.Base.UnreservedPathNameCS");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1332,9 +1332,9 @@ rulePropertyContextDeclCS returns [EObject current=null]
 (
 (
 		{
-	        newCompositeNode(grammarAccess.getPropertyContextDeclCSAccess().getOwnedPathNamePathNameCSParserRuleCall_1_0());
+	        newCompositeNode(grammarAccess.getPropertyContextDeclCSAccess().getOwnedPathNameUnreservedPathNameCSParserRuleCall_1_0());
 	    }
-		lv_ownedPathName_1_0=rulePathNameCS		{
+		lv_ownedPathName_1_0=ruleUnreservedPathNameCS		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getPropertyContextDeclCSRule());
 	        }
@@ -1342,7 +1342,7 @@ rulePropertyContextDeclCS returns [EObject current=null]
        			$current,
        			"ownedPathName",
         		lv_ownedPathName_1_0,
-        		"org.eclipse.ocl.xtext.base.Base.PathNameCS");
+        		"org.eclipse.ocl.xtext.base.Base.UnreservedPathNameCS");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -6596,6 +6596,67 @@ rulePathNameCS returns [EObject current=null]
 		lv_ownedPathElements_2_0=ruleNextPathElementCS		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getPathNameCSRule());
+	        }
+       		add(
+       			$current,
+       			"ownedPathElements",
+        		lv_ownedPathElements_2_0,
+        		"org.eclipse.ocl.xtext.base.Base.NextPathElementCS");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))*)
+;
+
+
+
+
+
+// Entry rule entryRuleUnreservedPathNameCS
+entryRuleUnreservedPathNameCS returns [EObject current=null]
+	:
+	{ newCompositeNode(grammarAccess.getUnreservedPathNameCSRule()); }
+	 iv_ruleUnreservedPathNameCS=ruleUnreservedPathNameCS
+	 { $current=$iv_ruleUnreservedPathNameCS.current; }
+	 EOF
+;
+
+// Rule UnreservedPathNameCS
+ruleUnreservedPathNameCS returns [EObject current=null]
+    @init { enterRule();
+    }
+    @after { leaveRule(); }:
+((
+(
+		{
+	        newCompositeNode(grammarAccess.getUnreservedPathNameCSAccess().getOwnedPathElementsNextPathElementCSParserRuleCall_0_0());
+	    }
+		lv_ownedPathElements_0_0=ruleNextPathElementCS		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getUnreservedPathNameCSRule());
+	        }
+       		add(
+       			$current,
+       			"ownedPathElements",
+        		lv_ownedPathElements_0_0,
+        		"org.eclipse.ocl.xtext.base.Base.NextPathElementCS");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)(	otherlv_1='::'
+    {
+    	newLeafNode(otherlv_1, grammarAccess.getUnreservedPathNameCSAccess().getColonColonKeyword_1_0());
+    }
+(
+(
+		{
+	        newCompositeNode(grammarAccess.getUnreservedPathNameCSAccess().getOwnedPathElementsNextPathElementCSParserRuleCall_1_1_0());
+	    }
+		lv_ownedPathElements_2_0=ruleNextPathElementCS		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getUnreservedPathNameCSRule());
 	        }
        		add(
        			$current,

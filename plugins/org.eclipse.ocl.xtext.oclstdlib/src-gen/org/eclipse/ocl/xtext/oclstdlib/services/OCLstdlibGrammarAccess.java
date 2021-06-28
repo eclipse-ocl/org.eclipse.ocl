@@ -3261,8 +3261,8 @@ public class OCLstdlibGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//CollectionTypeCS:
-	//	name=CollectionTypeIdentifier ('(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS?
-	//	')')?;
+	//	name=CollectionTypeIdentifier ('(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS
+	//	? ')')?;
 	public EssentialOCLGrammarAccess.CollectionTypeCSElements getCollectionTypeCSAccess() {
 		return gaEssentialOCL.getCollectionTypeCSAccess();
 	}
@@ -3839,6 +3839,16 @@ public class OCLstdlibGrammarAccess extends AbstractGrammarElementFinder {
 
 	public ParserRule getPathNameCSRule() {
 		return getPathNameCSAccess().getRule();
+	}
+
+	//UnreservedPathNameCS PathNameCS:
+	//	ownedPathElements+=NextPathElementCS ('::' ownedPathElements+=NextPathElementCS)*;
+	public BaseGrammarAccess.UnreservedPathNameCSElements getUnreservedPathNameCSAccess() {
+		return gaBase.getUnreservedPathNameCSAccess();
+	}
+
+	public ParserRule getUnreservedPathNameCSRule() {
+		return getUnreservedPathNameCSAccess().getRule();
 	}
 
 	//FirstPathElementCS PathElementCS:

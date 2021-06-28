@@ -1953,6 +1953,8 @@ finally {
 
 
 
+
+
 // Entry rule entryRuleFirstPathElementCS
 entryRuleFirstPathElementCS
 :
@@ -11341,6 +11343,8 @@ finally {
 
 
 
+
+
 rule__TemplateBindingCS__Group__0
     @init {
 		int stackSize = keepStackSize();
@@ -13893,6 +13897,8 @@ rule__PathNameCS__OwnedPathElementsAssignment_1_1
 finally {
 	restoreStackSize(stackSize);
 }
+
+
 
 rule__FirstPathElementCS__ReferredElementAssignment
     @init {

@@ -129,7 +129,7 @@ public class CompleteOCLGrammarResource extends AbstractGrammarResource
 					createKeyword("context"),
 					setCardinality("?", createAssignment("ownedSignature", "=", createRuleCall(PR_TemplateSignatureCS))),
 					setCardinality("?", createAssignment("selfName", "=", createRuleCall(PR_UnrestrictedName))),
-					createAssignment("ownedPathName", "=", createRuleCall(_Base.PR_PathNameCS)),
+					createAssignment("ownedPathName", "=", createRuleCall(_Base.PR_UnreservedPathNameCS)),
 					setCardinality("+", createAlternatives(
 						createGroup(
 							createKeyword("inv"),
@@ -226,7 +226,7 @@ public class CompleteOCLGrammarResource extends AbstractGrammarResource
 				createGroup(
 					createKeyword("context"),
 					setCardinality("?", createAssignment("ownedSignature", "=", createRuleCall(PR_TemplateSignatureCS))),
-					createAssignment("ownedPathName", "=", createRuleCall(_Base.PR_PathNameCS)),
+					createAssignment("ownedPathName", "=", createRuleCall(_Base.PR_UnreservedPathNameCS)),
 					createKeyword("("),
 					setCardinality("?", createGroup(
 						createAssignment("ownedParameters", "+=", createRuleCall(PR_ParameterCS)),
@@ -251,7 +251,7 @@ public class CompleteOCLGrammarResource extends AbstractGrammarResource
 			PR_PackageDeclarationCS.setAlternatives(
 				createGroup(
 					createKeyword("package"),
-					createAssignment("ownedPathName", "=", createRuleCall(_Base.PR_PathNameCS)),
+					createAssignment("ownedPathName", "=", createRuleCall(_Base.PR_UnreservedPathNameCS)),
 					setCardinality("*", createGroup(
 						createKeyword("inv"),
 						createAssignment("ownedInvariants", "+=", createRuleCall(PR_ConstraintCS)))),
@@ -279,7 +279,7 @@ public class CompleteOCLGrammarResource extends AbstractGrammarResource
 			PR_PropertyContextDeclCS.setAlternatives(
 				createGroup(
 					createKeyword("context"),
-					createAssignment("ownedPathName", "=", createRuleCall(_Base.PR_PathNameCS)),
+					createAssignment("ownedPathName", "=", createRuleCall(_Base.PR_UnreservedPathNameCS)),
 					createKeyword(":"),
 					createAssignment("ownedType", "=", createRuleCall(_EssentialOCL.PR_TypeExpCS)),
 					setCardinality("*", createAlternatives(
@@ -1148,6 +1148,7 @@ public class CompleteOCLGrammarResource extends AbstractGrammarResource
 		private static final @NonNull ParserRule PR_UPPER = createParserRule("UPPER", createTypeRef(MM_ecore, org.eclipse.emf.ecore.EcorePackage.Literals.EINT));
 		private static final @NonNull ParserRule PR_URI = createParserRule("URI", createTypeRef(MM_ecore, org.eclipse.emf.ecore.EcorePackage.Literals.ESTRING));
 		private static final @NonNull ParserRule PR_UnreservedName = createParserRule("UnreservedName", createTypeRef(MM_ecore, org.eclipse.emf.ecore.EcorePackage.Literals.ESTRING));
+		private static final @NonNull ParserRule PR_UnreservedPathNameCS = createParserRule("UnreservedPathNameCS", createTypeRef(MM, org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.PATH_NAME_CS));
 		private static final @NonNull ParserRule PR_UnrestrictedName = createParserRule("UnrestrictedName", createTypeRef(MM_ecore, org.eclipse.emf.ecore.EcorePackage.Literals.ESTRING));
 		private static final @NonNull ParserRule PR_WildcardTypeRefCS = createParserRule("WildcardTypeRefCS", createTypeRef(MM, org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.WILDCARD_TYPE_REF_CS));
 
@@ -1244,6 +1245,12 @@ public class CompleteOCLGrammarResource extends AbstractGrammarResource
 				createRuleCall(TR_SINGLE_QUOTED_STRING));
 			PR_UnreservedName.setAlternatives(
 				createRuleCall(_CompleteOCL.PR_UnrestrictedName));
+			PR_UnreservedPathNameCS.setAlternatives(
+				createGroup(
+					createAssignment("ownedPathElements", "+=", createRuleCall(PR_NextPathElementCS)),
+					setCardinality("*", createGroup(
+						createKeyword("::"),
+						createAssignment("ownedPathElements", "+=", createRuleCall(PR_NextPathElementCS))))));
 			PR_UnrestrictedName.setAlternatives(
 				createRuleCall(PR_Identifier));
 			PR_WildcardTypeRefCS.setAlternatives(
@@ -1272,6 +1279,7 @@ public class CompleteOCLGrammarResource extends AbstractGrammarResource
 				rules.add(PR_MultiplicityCS);
 				rules.add(PR_MultiplicityStringCS);
 				rules.add(PR_PathNameCS);
+				rules.add(PR_UnreservedPathNameCS);
 				rules.add(PR_FirstPathElementCS);
 				rules.add(PR_NextPathElementCS);
 				rules.add(PR_TemplateBindingCS);

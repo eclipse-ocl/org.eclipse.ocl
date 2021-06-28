@@ -1378,6 +1378,7 @@ public class OCLstdlibGrammarResource extends AbstractGrammarResource
 		private static final @NonNull ParserRule PR_UPPER = createParserRule("UPPER", createTypeRef(MM_ecore, org.eclipse.emf.ecore.EcorePackage.Literals.EINT));
 		private static final @NonNull ParserRule PR_URI = createParserRule("URI", createTypeRef(MM_ecore, org.eclipse.emf.ecore.EcorePackage.Literals.ESTRING));
 		private static final @NonNull ParserRule PR_UnreservedName = createParserRule("UnreservedName", createTypeRef(MM_ecore, org.eclipse.emf.ecore.EcorePackage.Literals.ESTRING));
+		private static final @NonNull ParserRule PR_UnreservedPathNameCS = createParserRule("UnreservedPathNameCS", createTypeRef(MM, org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.PATH_NAME_CS));
 		private static final @NonNull ParserRule PR_UnrestrictedName = createParserRule("UnrestrictedName", createTypeRef(MM_ecore, org.eclipse.emf.ecore.EcorePackage.Literals.ESTRING));
 		private static final @NonNull ParserRule PR_WildcardTypeRefCS = createParserRule("WildcardTypeRefCS", createTypeRef(MM, org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.WILDCARD_TYPE_REF_CS));
 
@@ -1474,6 +1475,12 @@ public class OCLstdlibGrammarResource extends AbstractGrammarResource
 				createRuleCall(TR_SINGLE_QUOTED_STRING));
 			PR_UnreservedName.setAlternatives(
 				createRuleCall(_EssentialOCL.PR_UnrestrictedName));
+			PR_UnreservedPathNameCS.setAlternatives(
+				createGroup(
+					createAssignment("ownedPathElements", "+=", createRuleCall(PR_NextPathElementCS)),
+					setCardinality("*", createGroup(
+						createKeyword("::"),
+						createAssignment("ownedPathElements", "+=", createRuleCall(PR_NextPathElementCS))))));
 			PR_UnrestrictedName.setAlternatives(
 				createRuleCall(_OCLstdlib.PR_Identifier));
 			PR_WildcardTypeRefCS.setAlternatives(
@@ -1502,6 +1509,7 @@ public class OCLstdlibGrammarResource extends AbstractGrammarResource
 				rules.add(PR_MultiplicityCS);
 				rules.add(PR_MultiplicityStringCS);
 				rules.add(PR_PathNameCS);
+				rules.add(PR_UnreservedPathNameCS);
 				rules.add(PR_FirstPathElementCS);
 				rules.add(PR_NextPathElementCS);
 				rules.add(PR_TemplateBindingCS);

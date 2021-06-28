@@ -197,6 +197,10 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 					sequence_URIPathNameCS(context, (PathNameCS) semanticObject);
 					return;
 				}
+				else if (rule == grammarAccess.getUnreservedPathNameCSRule()) {
+					sequence_UnreservedPathNameCS(context, (PathNameCS) semanticObject);
+					return;
+				}
 				else break;
 			case BaseCSPackage.PRIMITIVE_TYPE_REF_CS:
 				if (rule == grammarAccess.getTypedRefCSRule()
@@ -743,18 +747,18 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 	 *         (ownedParameters+=ParameterCS ownedParameters+=ParameterCS*)?
 	 *         ownedType=TypedMultiplicityRefCS?
 	 *         (ownedExceptions+=TypedRefCS ownedExceptions+=TypedRefCS*)?
-	 *         qualifiers+='!transient'?
+	 *         qualifiers+='transient'?
 	 *         (
 	 *             (
 	 *                 qualifiers+='derived' |
 	 *                 qualifiers+='!derived' |
 	 *                 qualifiers+='ordered' |
 	 *                 qualifiers+='!ordered' |
-	 *                 qualifiers+='transient' |
+	 *                 qualifiers+='!transient' |
 	 *                 qualifiers+='unique' |
 	 *                 qualifiers+='!unique'
 	 *             )?
-	 *             qualifiers+='!transient'?
+	 *             qualifiers+='transient'?
 	 *         )*
 	 *         (
 	 *             ownedAnnotations+=AnnotationElementCS |
@@ -853,14 +857,13 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 	 *         referredOpposite=[Property|UnrestrictedName]?
 	 *         ownedType=TypedMultiplicityRefCS?
 	 *         default=SINGLE_QUOTED_STRING?
-	 *         qualifiers+='unsettable'?
+	 *         qualifiers+='ordered'?
 	 *         (
 	 *             (
 	 *                 qualifiers+='composes' |
 	 *                 qualifiers+='!composes' |
 	 *                 qualifiers+='derived' |
 	 *                 qualifiers+='!derived' |
-	 *                 qualifiers+='ordered' |
 	 *                 qualifiers+='!ordered' |
 	 *                 qualifiers+='readonly' |
 	 *                 qualifiers+='!readonly' |
@@ -870,11 +873,12 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 	 *                 qualifiers+='!transient' |
 	 *                 qualifiers+='unique' |
 	 *                 qualifiers+='!unique' |
+	 *                 qualifiers+='unsettable' |
 	 *                 qualifiers+='!unsettable' |
 	 *                 qualifiers+='volatile' |
 	 *                 qualifiers+='!volatile'
 	 *             )?
-	 *             qualifiers+='unsettable'?
+	 *             qualifiers+='ordered'?
 	 *         )*
 	 *         (
 	 *             (
