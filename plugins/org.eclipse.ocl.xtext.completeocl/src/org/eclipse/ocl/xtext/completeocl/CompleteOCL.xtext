@@ -38,7 +38,7 @@ CompleteOCLNavigationOperatorName:
 
 ClassifierContextDeclCS returns ClassifierContextDeclCS:
 	'context' (ownedSignature=TemplateSignatureCS)? (selfName=UnrestrictedName)?
-	ownedPathName=PathNameCS
+	ownedPathName=UnreservedPathNameCS
 	(('inv' ownedInvariants+=ConstraintCS)
 	| ownedDefinitions+=DefCS
 	)+;
@@ -121,7 +121,7 @@ ImportCS returns base::ImportCS:
  * For compatibility with invariants the body expression may have a name that is never used.
  */
 OperationContextDeclCS returns OperationContextDeclCS:
-	'context' (ownedSignature=TemplateSignatureCS)? ownedPathName=PathNameCS
+	'context' (ownedSignature=TemplateSignatureCS)? ownedPathName=UnreservedPathNameCS
 	'(' (ownedParameters+=ParameterCS (',' ownedParameters+=ParameterCS)*)? ')' ':' (ownedType=TypeExpCS)?
 	(('pre' ownedPreconditions+=ConstraintCS)
 	| ('post' ownedPostconditions+=ConstraintCS)
@@ -129,7 +129,7 @@ OperationContextDeclCS returns OperationContextDeclCS:
 	)*;
 
 PackageDeclarationCS returns PackageDeclarationCS:
-	'package' ownedPathName=PathNameCS ('inv' ownedInvariants+=ConstraintCS)* (ownedContexts+=ContextDeclCS)* 'endpackage';
+	'package' ownedPathName=UnreservedPathNameCS ('inv' ownedInvariants+=ConstraintCS)* (ownedContexts+=ContextDeclCS)* 'endpackage';
 
 ParameterCS returns base::ParameterCS:
 	(name=UnrestrictedName ':')? ownedType=TypeExpCS;
@@ -158,7 +158,7 @@ ParameterCS returns base::ParameterCS:
  * NB. RoyalAndLoyal gratuitously names its derived values.
  */
 PropertyContextDeclCS returns PropertyContextDeclCS:
-	'context' ownedPathName=PathNameCS ':' ownedType=TypeExpCS
+	'context' ownedPathName=UnreservedPathNameCS ':' ownedType=TypeExpCS
 	(('derive' UnrestrictedName? ':' ownedDefaultExpressions+=SpecificationCS)
 	| ('init' UnrestrictedName? ':' ownedDefaultExpressions+=SpecificationCS)
 	)*;

@@ -336,7 +336,7 @@ public class ValidateTests extends AbstractValidateTests
 		String oclTestDocument =
 				"package ocl\n"
 				+ "\n"
-				+ "context _'Integer'\n"
+				+ "context Integer\n"
 				+ "def: isPrimeNumber() : Boolean =\n"
 				+ "	(0 < self)\n"
 				+ "	  and ((self < 4)\n"

@@ -25,6 +25,9 @@ MultiplicityStringCS returns MultiplicityStringCS:
 PathNameCS returns PathNameCS:
 	ownedPathElements+=FirstPathElementCS ('::' ownedPathElements+=NextPathElementCS)*;
 
+UnreservedPathNameCS returns PathNameCS:
+	ownedPathElements+=NextPathElementCS ('::' ownedPathElements+=NextPathElementCS)*;
+
 FirstPathElementCS returns PathElementCS:
 	referredElement=[pivot::NamedElement|UnrestrictedName];
 
