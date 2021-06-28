@@ -43,7 +43,7 @@ import org.eclipse.ocl.examples.debug.vm.utils.VMRuntimeException;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
-import org.eclipse.ocl.pivot.Variable;
+import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
@@ -572,7 +572,7 @@ public class VariableFinder
 		if (envVarName.startsWith("$")) {
 			Object pcObject = fEvalEnv.getValueOf(fEvalEnv.getPCVariable());
 			for (VMEvaluationEnvironment evalEnv = fEvalEnv; evalEnv != null; evalEnv = evalEnv.getVMParentEvaluationEnvironment()) {
-				for (TypedElement localVariable : evalEnv.getVariables()) {
+				for (@NonNull VariableDeclaration localVariable : evalEnv.getVariables()) {
 					if (localVariable instanceof OCLExpression) {
 						OCLExpression oclExpression = (OCLExpression) localVariable;
 						if (oclExpression.eContainer() == pcObject) {
@@ -593,15 +593,15 @@ public class VariableFinder
 		if (!gotIt) {
 			Set<TypedElement> variables = new HashSet<TypedElement>();
 			for (VMEvaluationEnvironment evalEnv = fEvalEnv; evalEnv != null; evalEnv = evalEnv.getVMParentEvaluationEnvironment()) {
-				Set<TypedElement> localVariables = evalEnv.getVariables();
+				Set<@NonNull VariableDeclaration> localVariables = evalEnv.getVariables();
 				variables.addAll(localVariables);
 				if (NameUtil.getNameable(localVariables, PivotConstants.SELF_NAME) != null) {
 					break;
 				}
 			}
 			rootObj = NameUtil.getNameable(variables, envVarName);
-			if (rootObj instanceof Variable) {
-				rootObj = fEvalEnv.getValueOf((TypedElement)rootObj);
+			if (rootObj instanceof VariableDeclaration) {
+				rootObj = fEvalEnv.getValueOf((VariableDeclaration)rootObj);
 				gotIt = true;
 			}
 		}
@@ -713,10 +713,11 @@ public class VariableFinder
 		//		throw new UnsupportedOperationException();
 	}
 
-	protected @Nullable VMVariableData getVariable(@NonNull TypedElement variable, @Nullable Object pcObject) {
+	protected @Nullable VMVariableData getVariable(@NonNull VariableDeclaration variable, @Nullable Object pcObject) {
 		String varName = variable.getName();
 		if (variable instanceof OCLExpression) {
-			OCLExpression oclExpression = (OCLExpression) variable;
+			assert false;
+		/*	OCLExpression oclExpression = (OCLExpression) variable;
 			if (oclExpression.eContainer() == pcObject) {
 				varName = getTermVariableName(oclExpression);
 				if (varName != null) {
@@ -734,7 +735,7 @@ public class VariableFinder
 					setValueAndType(var, value, declaredType);
 					return var;
 				}
-			}
+			} */
 		}
 		else if (varName != null) {
 			VMVariableData var = new VMVariableData(varName, null);
@@ -759,7 +760,7 @@ public class VariableFinder
 	public @NonNull List<VMVariableData> getVariables() {
 		List<VMVariableData> result = new ArrayList<VMVariableData>();
 		Object pcObject = fEvalEnv.getValueOf(fEvalEnv.getPCVariable());
-		for (TypedElement variable : fEvalEnv.getVariables()) {
+		for (@NonNull VariableDeclaration variable : fEvalEnv.getVariables()) {
 			if (variable != null) {
 				VMVariableData var = getVariable(variable, pcObject);
 				if (var != null) {

@@ -18,6 +18,7 @@ import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.ShadowExp;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.Executor;
@@ -46,7 +47,7 @@ public interface ExecutorInternal extends Executor
 	@Override
 	@NonNull MetamodelManagerInternal getMetamodelManager();
 	@NonNull EvaluationEnvironment getRootEvaluationEnvironment();
-	@Nullable Object getValueOf(@NonNull TypedElement referredVariable);
+	@Nullable Object getValueOf(@NonNull VariableDeclaration referredVariable);
 	@NonNull EvaluationEnvironment initializeEvaluationEnvironment(@NonNull NamedElement executableObject);
 	@Nullable Object internalExecuteNavigationCallExp(@NonNull NavigationCallExp propertyCallExp, @NonNull Property referredProperty, @Nullable Object sourceValue);
 }

@@ -14,7 +14,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.OCLExpression;
-import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.IterationManager;
 import org.eclipse.ocl.pivot.values.IterableValue;
@@ -50,14 +50,14 @@ public class EvaluatorSingleMapIterationManager extends AbstractEvaluatorIterabl
 		}
 	}
 
-	protected final @NonNull TypedElement referredKeyIterator;
-	protected final @Nullable TypedElement referredValueIterator;
+	protected final @NonNull VariableDeclaration referredKeyIterator;
+	protected final @Nullable VariableDeclaration referredValueIterator;
 	protected final @NonNull MapValueIterator iterator;
 
 	public EvaluatorSingleMapIterationManager(@NonNull Executor invokingExecutor,
 			/*@NonNull*/ CallExp callExp, @NonNull OCLExpression body, @NonNull MapValue mapValue,
-			@Nullable TypedElement accumulator, @Nullable Object accumulatorValue,
-			@NonNull TypedElement referredKeyIterator, @Nullable TypedElement referredValueIterator) {
+			@Nullable VariableDeclaration accumulator, @Nullable Object accumulatorValue,
+			@NonNull VariableDeclaration referredKeyIterator, @Nullable VariableDeclaration referredValueIterator) {
 		super(invokingExecutor, callExp, body, mapValue, accumulator, accumulatorValue);
 		this.referredKeyIterator = referredKeyIterator;
 		this.referredValueIterator = referredValueIterator;

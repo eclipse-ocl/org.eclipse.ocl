@@ -25,6 +25,7 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
+import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 
 public interface VMEvaluationEnvironment extends EvaluationEnvironment.EvaluationEnvironmentExtension
@@ -33,19 +34,19 @@ public interface VMEvaluationEnvironment extends EvaluationEnvironment.Evaluatio
 	{
 		public final @NonNull IStepper stepper;
 		public final @NonNull Element element;
-		private @Nullable Map<TypedElement, Object> partialResults;
-		
+		private @Nullable Map<@NonNull TypedElement, Object> partialResults;
+
 		public StepperEntry(@NonNull IStepper stepper, @NonNull Element element) {
 			this.stepper = stepper;
 			this.element = element;
 		}
 
 		public void popFrom(@NonNull VMEvaluationEnvironment evaluationEnvironment) {
-			Map<TypedElement, Object> partialResults2 = partialResults;
+			Map<@NonNull TypedElement, Object> partialResults2 = partialResults;
 			if (partialResults2 != null) {
-				for (TypedElement element : partialResults2.keySet()) {
-					if (element != null) {
-						evaluationEnvironment.remove(element);
+				for (@NonNull TypedElement element : partialResults2.keySet()) {
+					if (element instanceof VariableDeclaration) {
+						evaluationEnvironment.remove((VariableDeclaration)element);
 					}
 				}
 				partialResults2.clear();
@@ -54,12 +55,14 @@ public interface VMEvaluationEnvironment extends EvaluationEnvironment.Evaluatio
 		}
 
 		public void pushTo(@NonNull VMEvaluationEnvironment evaluationEnvironment, @NonNull TypedElement element, @Nullable Object value) {
-			Map<TypedElement, Object> partialResults2 = partialResults;
+			Map<@NonNull TypedElement, Object> partialResults2 = partialResults;
 			if (partialResults2 == null) {
-				partialResults = partialResults2 = new HashMap<TypedElement, Object>();
+				partialResults = partialResults2 = new HashMap<>();
 			}
 			partialResults2.put(element, value);
-			evaluationEnvironment.replace(element, value);
+			if (element instanceof VariableDeclaration) {
+				evaluationEnvironment.replace((VariableDeclaration)element, value);
+			}
 		}
 	}
 

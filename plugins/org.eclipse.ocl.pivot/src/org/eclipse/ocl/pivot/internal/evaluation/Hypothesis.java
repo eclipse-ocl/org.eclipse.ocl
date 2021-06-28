@@ -89,6 +89,10 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 		return System.identityHashCode(this) - System.identityHashCode(that);
 	}
 
+	public @NonNull SymbolicValue getHypothesizedValue() {
+		return hypothesizedValue;
+	}
+
 	public abstract @NonNull String getKind();
 
 	public @NonNull SymbolicValue getOriginalValue() {

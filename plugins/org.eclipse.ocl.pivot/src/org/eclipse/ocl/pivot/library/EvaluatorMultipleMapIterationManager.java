@@ -14,7 +14,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.OCLExpression;
-import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.values.MapValue;
 
@@ -30,12 +30,12 @@ public class EvaluatorMultipleMapIterationManager extends AbstractEvaluatorItera
 	protected boolean hasCurrent;
 
 	public EvaluatorMultipleMapIterationManager(@NonNull Executor invokingExecutor, /*@NonNull*/ CallExp callExp, @NonNull OCLExpression body, @NonNull MapValue mapValue,
-			@Nullable TypedElement accumulator, @Nullable Object accumulatorValue, @NonNull TypedElement[] referredKeyIterators, @Nullable TypedElement[] referredValueIterators) {
+			@Nullable VariableDeclaration accumulator, @Nullable Object accumulatorValue, @NonNull VariableDeclaration[] referredKeyIterators, @Nullable VariableDeclaration[] referredValueIterators) {
 		super(invokingExecutor, callExp, body, mapValue, accumulator, accumulatorValue);
 		int iMax = referredKeyIterators.length;
 		MapValueIterator[] iterators = new MapValueIterator[iMax];
 		for (int i = 0; i < iMax; i++) {
-			TypedElement referredKeyIterator = referredKeyIterators[i];
+			VariableDeclaration referredKeyIterator = referredKeyIterators[i];
 			//	if (referredKeyIterator != null) {
 			MapValueIterator valueIterator = new MapValueIterator(executor, mapValue, referredKeyIterator, referredValueIterators[i]);
 			if (!valueIterator.hasCurrent()) {

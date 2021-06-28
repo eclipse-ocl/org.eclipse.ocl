@@ -217,7 +217,7 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 	}
 
 	@Override
-	public @Nullable Object getValueOf(@NonNull TypedElement referredVariable) {
+	public @Nullable Object getValueOf(@NonNull VariableDeclaration referredVariable) {
 		return getSymbolicValue(referredVariable);			// Re-use old value
 	}
 
@@ -227,9 +227,10 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 		//	Install the directly hypothesized expression.
 		//
 		@NonNull TypedElement typedElement = hypothesis.getTypedElement();
-		@NonNull SymbolicValue constrainingValue = hypothesis.getOriginalValue();
+		@NonNull SymbolicValue originalValue = hypothesis.getOriginalValue();
+		@NonNull SymbolicValue hypothesizedValue = hypothesis.getHypothesizedValue();
 		CSEElement hypothesisCSE = symbolicAnalysis.getCSEElement(typedElement);
-		cseElement2symbolicValue.put(hypothesisCSE, constrainingValue);		// Install the known 'read' value.
+		cseElement2symbolicValue.put(hypothesisCSE, originalValue);		// Install the known 'read' value.
 		//
 		//	Ensure that all parents of the hypothesized expressions are re-evaluated.
 		//
@@ -238,6 +239,7 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 		if (typedElement instanceof VariableExp) {
 			VariableDeclaration variable = PivotUtil.getReferredVariable((VariableExp)typedElement);
 			affectedVariables.add(variable);
+
 		}
 		addRefinedParentTypedElements(typedElement);
 		//

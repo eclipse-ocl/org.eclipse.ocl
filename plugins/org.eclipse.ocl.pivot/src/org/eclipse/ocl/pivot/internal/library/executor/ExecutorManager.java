@@ -25,6 +25,7 @@ import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.EvaluationLogger;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
@@ -49,7 +50,7 @@ public abstract class ExecutorManager implements ExecutorExtension
 	private static final @NonNull EvaluationEnvironment nullEvaluationEnvironment = new EvaluationEnvironment()
 	{
 		@Override
-		public void add(@NonNull TypedElement referredVariable, @Nullable Object value) {}
+		public void add(@NonNull VariableDeclaration referredVariable, @Nullable Object value) {}
 
 		@Override
 		public void clear() {}
@@ -103,12 +104,12 @@ public abstract class ExecutorManager implements ExecutorExtension
 		}
 
 		@Override
-		public @Nullable Object getValueOf(@NonNull TypedElement referredVariable) {
+		public @Nullable Object getValueOf(@NonNull VariableDeclaration referredVariable) {
 			return null;
 		}
 
 		@Override
-		public @NonNull Set<TypedElement> getVariables() {
+		public @NonNull Set<@NonNull VariableDeclaration> getVariables() {
 			return Collections.emptySet();
 		}
 
@@ -122,7 +123,7 @@ public abstract class ExecutorManager implements ExecutorExtension
 		}
 
 		@Override
-		public @Nullable Object remove(@NonNull TypedElement referredVariable) {
+		public @Nullable Object remove(@NonNull VariableDeclaration referredVariable) {
 			return null;
 		}
 
@@ -137,7 +138,7 @@ public abstract class ExecutorManager implements ExecutorExtension
 		}
 
 		@Override
-		public void replace(@NonNull TypedElement referredVariable, @Nullable Object value) {}
+		public void replace(@NonNull VariableDeclaration referredVariable, @Nullable Object value) {}
 
 		@Override
 		public <T> void setOption(@NonNull Option<T> option, @Nullable T value) {
@@ -173,7 +174,7 @@ public abstract class ExecutorManager implements ExecutorExtension
 	 * @since 1.1
 	 */
 	@Override
-	public void add(@NonNull TypedElement referredVariable, @Nullable Object value) {}
+	public void add(@NonNull VariableDeclaration referredVariable, @Nullable Object value) {}
 
 	/** @deprecated Evaluator no longer nests
 	 * @since 1.1*/
@@ -404,7 +405,7 @@ public abstract class ExecutorManager implements ExecutorExtension
 	 * @since 1.1
 	 */
 	@Override
-	public void replace(@NonNull TypedElement referredVariable, @Nullable Object value) {}
+	public void replace(@NonNull VariableDeclaration referredVariable, @Nullable Object value) {}
 
 	/**
 	 * @since 1.3
