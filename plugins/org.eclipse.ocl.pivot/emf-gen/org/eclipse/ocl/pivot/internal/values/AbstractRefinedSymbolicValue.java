@@ -462,7 +462,7 @@ public abstract class AbstractRefinedSymbolicValue extends AbstractSymbolicValue
 		if (!mayBeNull() && unrefinedValue.mayBeNull()) {
 			resultValue = createNotNullValue(resultValue);
 		}
-		if (!mayBeZero() && unrefinedValue.mayBeZero()) {
+		if ((basicGetZeroStatus() != null) && !mayBeZero() && (unrefinedValue.basicGetZeroStatus() != null) && unrefinedValue.mayBeZero()) {
 			resultValue = createNotValue(createIsZeroValue(resultValue));
 		}
 		return resultValue;
@@ -475,7 +475,7 @@ public abstract class AbstractRefinedSymbolicValue extends AbstractSymbolicValue
 
 	@Override
 	public @Nullable SymbolicStatus basicGetZeroStatus() {
-		return value.getZeroStatus();
+		return value.basicGetZeroStatus();
 	}
 
 	@Override

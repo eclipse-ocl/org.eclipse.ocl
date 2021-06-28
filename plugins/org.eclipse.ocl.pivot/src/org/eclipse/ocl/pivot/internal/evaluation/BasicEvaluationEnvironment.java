@@ -63,7 +63,7 @@ public class BasicEvaluationEnvironment extends AbstractCustomizable implements 
 	protected final @Nullable OCLExpression callingObject;
 
 	/**
-	 * The known value of each variable. Nominally immuatble but evlves for iterators.
+	 * The known value of each variable. Nominally immutable but iterators can replace.
 	 */
 	private final @NonNull Map<@NonNull VariableDeclaration, @Nullable Object> variable2value = new HashMap<>();
 

@@ -31,7 +31,7 @@ public abstract class AbstractSymbolicValue extends ValueImpl implements Symboli
 		if (!mayBeNull() && baseValue.mayBeNull()) {
 			resultValue = AbstractRefinedSymbolicValue.createNotNullValue(resultValue);
 		}
-		if (!mayBeZero() && baseValue.mayBeZero()) {
+		if ((basicGetZeroStatus() != null) && !mayBeZero() && (baseValue.basicGetZeroStatus() != null) && baseValue.mayBeZero()) {
 			resultValue = AbstractRefinedSymbolicValue.createNotValue(AbstractRefinedSymbolicValue.createIsZeroValue(resultValue));
 		}
 		return resultValue;

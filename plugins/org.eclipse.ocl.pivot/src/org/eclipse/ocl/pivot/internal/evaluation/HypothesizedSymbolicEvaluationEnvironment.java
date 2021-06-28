@@ -230,7 +230,7 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 		@NonNull SymbolicValue originalValue = hypothesis.getOriginalValue();
 		@NonNull SymbolicValue hypothesizedValue = hypothesis.getHypothesizedValue();
 		CSEElement hypothesisCSE = symbolicAnalysis.getCSEElement(typedElement);
-		cseElement2symbolicValue.put(hypothesisCSE, originalValue);		// Install the known 'read' value.
+		cseElement2symbolicValue.put(hypothesisCSE, hypothesizedValue);		// Install the known 'read' value.
 		//
 		//	Ensure that all parents of the hypothesized expressions are re-evaluated.
 		//
