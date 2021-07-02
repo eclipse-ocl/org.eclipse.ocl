@@ -29,8 +29,8 @@ public class SymbolicKnownValueImpl extends SymbolicValueImpl implements Symboli
 
 	private @Nullable Object knownValue;
 
-	public SymbolicKnownValueImpl(@NonNull TypeId typeId, @Nullable Object knownValue) { //, @NonNull SymbolicValue value) {
-		super(typeId, ValueUtil.mayBeNull(knownValue), ValueUtil.mayBeInvalid(knownValue));
+	public SymbolicKnownValueImpl(@NonNull String name, @NonNull TypeId typeId, @Nullable Object knownValue) { //, @NonNull SymbolicValue value) {
+		super(name, typeId, ValueUtil.mayBeNull(knownValue), ValueUtil.mayBeInvalid(knownValue));
 		this.knownValue = knownValue;
 	}
 
@@ -46,18 +46,18 @@ public class SymbolicKnownValueImpl extends SymbolicValueImpl implements Symboli
 	}
 
 	@Override
-	public @NonNull SymbolicStatus basicGetZeroStatus() {
-		return ValueUtil.ZERO_VALUE.equals(knownValue) ? SymbolicStatus.SATISFIED : SymbolicStatus.UNSATISFIED;
-	}
-
-	@Override
-	public @NonNull SymbolicStatus getInvalidStatus() {
+	public @NonNull SymbolicStatus basicGetInvalidStatus() {
 		return ValueUtil.isInvalidValue(knownValue) ? SymbolicStatus.SATISFIED : SymbolicStatus.UNSATISFIED;
 	}
 
 	@Override
-	public @NonNull SymbolicStatus getNullStatus() {
+	public @NonNull SymbolicStatus basicGetNullStatus() {
 		return ValueUtil.isNullValue(knownValue) ? SymbolicStatus.SATISFIED : SymbolicStatus.UNSATISFIED;
+	}
+
+	@Override
+	public @NonNull SymbolicStatus basicGetZeroStatus() {
+		return ValueUtil.ZERO_VALUE.equals(knownValue) ? SymbolicStatus.SATISFIED : SymbolicStatus.UNSATISFIED;
 	}
 
 	@Override
@@ -81,12 +81,6 @@ public class SymbolicKnownValueImpl extends SymbolicValueImpl implements Symboli
 	}
 
 //	@Override
-//	public @NonNull EObject asNavigableObject() {
-//		return this;
-//	}
-
-
-//	@Override
 //	public boolean mayBeNull() {
 //		boolean isRequired = variable.isIsRequired();
 //		boolean mayBeNull = value.mayBeNull();
@@ -94,105 +88,10 @@ public class SymbolicKnownValueImpl extends SymbolicValueImpl implements Symboli
 //		return mayBeNull;
 //	}
 
-/*	@Override
-	public EList<Adapter> eAdapters() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public boolean eDeliver() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void eSetDeliver(boolean deliver) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void eNotify(Notification notification) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public EClass eClass() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public Resource eResource() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public EObject eContainer() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public EStructuralFeature eContainingFeature() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public EReference eContainmentFeature() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public EList<EObject> eContents() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public TreeIterator<@NonNull EObject> eAllContents() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public boolean eIsProxy() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public EList<EObject> eCrossReferences() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public Object eGet(EStructuralFeature feature) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public Object eGet(EStructuralFeature feature, boolean resolve) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void eSet(EStructuralFeature feature, Object newValue) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public boolean eIsSet(EStructuralFeature feature) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void eUnset(EStructuralFeature feature) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public Object eInvoke(EOperation operation, EList<?> arguments) throws InvocationTargetException {
-		throw new UnsupportedOperationException();
-	} */
-
 	@Override
 	public void toString(@NonNull StringBuilder s, int lengthLimit) {
 		s.append(knownValue);
-		s.append(" : ");
+		s.append(" for: ");
 		super.toString(s, lengthLimit);
 	}
 } //SymbolicValueImpl

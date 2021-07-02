@@ -14,7 +14,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.values.SymbolicExpressionValue;
 
 /**
  * <!-- begin-user-doc -->
@@ -24,22 +23,22 @@ import org.eclipse.ocl.pivot.values.SymbolicExpressionValue;
  *
  * @generated
  */
-public class SymbolicExpressionValueImpl extends SymbolicValueImpl implements SymbolicExpressionValue {
-	protected final @NonNull TypedElement expression;
+public class SymbolicExpressionValueImpl extends SymbolicValueImpl {
+//	protected final @NonNull TypedElement expression;
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param variable
 	 * @generated NOT
 	 */
-	public SymbolicExpressionValueImpl(@NonNull TypedElement expression, boolean mayBeNull, boolean mayBeInvalid) {
+	public SymbolicExpressionValueImpl(@NonNull String name, @NonNull TypedElement expression, boolean mayBeNull, boolean mayBeInvalid) {
 		// FIXME getBehavioralType needed by test_umlValidation_Bug467192
-		super(ClassUtil.nonNullState(PivotUtil.getBehavioralType(expression)).getTypeId(), mayBeNull, mayBeInvalid);
-		this.expression = expression;
+		super(name, ClassUtil.nonNullState(PivotUtil.getBehavioralType(expression)).getTypeId(), mayBeNull, mayBeInvalid);
+//		this.expression = expression;
 	}
 
-	@Override
-	public @NonNull TypedElement getExpression() {
-		return expression;
-	}
+//	@Override
+//	public @NonNull TypedElement getExpression() {
+//		return expression;
+//	}
 } //SymbolicValueImpl

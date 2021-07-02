@@ -10,16 +10,21 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.library.oclany;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
-import org.eclipse.ocl.pivot.internal.values.SymbolicUnknownValueImpl;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicStatus;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.pivot.values.SymbolicKnownValue;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 
@@ -33,12 +38,31 @@ public class OclAnyNotEqualOperation extends OclAnyEqualOperation
 	public static final @NonNull OclAnyNotEqualOperation INSTANCE = new OclAnyNotEqualOperation();
 
 	/**
+	 * @since 1.15
+	 */
+	@Override
+	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment symbolicEvaluationEnvironment, @NonNull OperationCallExp callExp) {
+		TypeId returnTypeId = callExp.getTypeId();
+		OCLExpression source = PivotUtil.getOwnedSource(callExp);
+		SymbolicValue invalidSourceProblem = symbolicEvaluationEnvironment.checkNotInvalid(source, returnTypeId);
+		if (invalidSourceProblem != null) {
+			return invalidSourceProblem;
+		}
+		OCLExpression argument = PivotUtil.getOwnedArgument(callExp, 0);
+		SymbolicValue invalidArgumentProblem = symbolicEvaluationEnvironment.checkNotInvalid(argument, returnTypeId);
+		if (invalidArgumentProblem != null) {
+			return invalidArgumentProblem;
+		}
+		return null;
+	}
+
+	/**
 	 * Overridden to be invalid out for any invalid in, never null, true for mismatching nullity.
 	 *
 	 * @since 1.15
 	 */
 	@Override
-	protected @NonNull SymbolicValue createResultValue(@NonNull SymbolicEvaluationEnvironment symbolicEvaluationEnvironment, @NonNull OperationCallExp callExp,
+	protected @NonNull SymbolicValue createResultValue(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp,
 			@NonNull SymbolicValue sourceSymbolicValue, @NonNull List<@NonNull SymbolicValue> argumentSymbolicValues) {
 		boolean mayBeInvalid = sourceSymbolicValue.mayBeInvalid();
 		int mayBeNullCount = sourceSymbolicValue.mayBeNull() ? 1: 0;
@@ -51,10 +75,10 @@ public class OclAnyNotEqualOperation extends OclAnyEqualOperation
 			}
 		}
 		if (!mayBeInvalid && ((mayBeNullCount & 1) != 0)) {
-			return symbolicEvaluationEnvironment.getKnownValue(Boolean.TRUE);
+			return evaluationEnvironment.getKnownValue(Boolean.TRUE);
 		}
 		else {
-			return new SymbolicUnknownValueImpl(callExp.getTypeId(), false, mayBeInvalid);
+			return evaluationEnvironment.createUnknownValue(callExp, false, mayBeInvalid);
 		}
 	}
 
@@ -78,6 +102,36 @@ public class OclAnyNotEqualOperation extends OclAnyEqualOperation
 		else {
 			throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.BOOLEAN_NAME, getTypeName(right));
 		}
+	}
+
+	@Override
+	public @NonNull SymbolicValue symbolicEvaluate(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
+		SymbolicValue symbolicPreconditionValue = checkPreconditions(evaluationEnvironment, callExp);
+		if (symbolicPreconditionValue != null) {
+			return symbolicPreconditionValue;
+		}
+		SymbolicValue sourceSymbolicValue = evaluationEnvironment.symbolicEvaluate(PivotUtil.getOwnedSource(callExp));
+		SymbolicValue argumentSymbolicValue = evaluationEnvironment.symbolicEvaluate(PivotUtil.getOwnedArgument(callExp, 0));
+		boolean isKnown = sourceSymbolicValue.isKnown() && argumentSymbolicValue.isKnown();
+		if (isKnown) {
+			Object sourceKnownValue = ((SymbolicKnownValue)sourceSymbolicValue).getValue();
+			Object argumentKnownValue = ((SymbolicKnownValue)argumentSymbolicValue).getValue();
+			Boolean resultKnownValue = evaluate(sourceKnownValue, argumentKnownValue);
+			return evaluationEnvironment.getKnownValue(resultKnownValue);
+		}
+		SymbolicStatus sourceNullStatus = sourceSymbolicValue.getNullStatus();
+		SymbolicStatus argumentNullStatus = argumentSymbolicValue.getNullStatus();
+		Boolean nullSameness = sourceNullStatus.asSame(argumentNullStatus);
+		if (nullSameness != null) {
+			return evaluationEnvironment.getKnownValue(ValueUtil.asBoolean(!nullSameness));
+		}
+		SymbolicStatus sourceZeroStatus = sourceSymbolicValue.getZeroStatus();
+		SymbolicStatus argumentZeroStatus = argumentSymbolicValue.getZeroStatus();
+		Boolean zeroSameness = sourceZeroStatus.asSame(argumentZeroStatus);
+		if (zeroSameness != null) {
+			return evaluationEnvironment.getKnownValue(ValueUtil.asBoolean(!zeroSameness));
+		}
+		return createResultValue(evaluationEnvironment, callExp, sourceSymbolicValue, Collections.singletonList(argumentSymbolicValue));
 	}
 
 /*	@Override

@@ -23,6 +23,7 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OclInvalidTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.values.UndefinedValueImpl;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
 
 /**
  * An InvalidValueException wraps an InvalidValue and is used to return the InvalidValue
@@ -228,6 +229,16 @@ public class InvalidValueException extends UndefinedValueImpl implements Invalid
 	@Override
 	public int oclHashCode() {
 		return hashCode();
+	}
+
+	@Override
+	public String toString() {
+		if (this == ValueUtil.INVALID_VALUE) {
+			return getMessage();
+		}
+		else {
+			return getClass().getSimpleName() + ":" + getMessage();
+		}
 	}
 
 	//	@Override

@@ -29,8 +29,8 @@ public class SymbolicCollectionValueImpl extends SymbolicExpressionValueImpl {
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
-	public SymbolicCollectionValueImpl(@NonNull OCLExpression expression, boolean mayBeNull, boolean mayBeInvalid) {
-		super(expression, mayBeNull, mayBeInvalid);
+	public SymbolicCollectionValueImpl(@NonNull String name, @NonNull OCLExpression expression, boolean mayBeNull, boolean mayBeInvalid) {
+		super(name, expression, mayBeNull, mayBeInvalid);
 //		this.operation = operation;
 //		this.sourceValue = sourceValue;
 //		this.argumentValue = argumentValue;

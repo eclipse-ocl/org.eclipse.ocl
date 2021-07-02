@@ -26,7 +26,6 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.OCLExpression;
-import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
@@ -34,15 +33,10 @@ import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.internal.values.AbstractRefinedSymbolicValue;
-import org.eclipse.ocl.pivot.internal.values.SymbolicKnownValueImpl;
-import org.eclipse.ocl.pivot.internal.values.SymbolicUnknownValueImpl;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
-import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
-import org.eclipse.ocl.pivot.values.OCLValue;
-import org.eclipse.ocl.pivot.values.SymbolicKnownValue;
 import org.eclipse.ocl.pivot.values.SymbolicUnknownValue;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
@@ -58,11 +52,6 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 	 * The known control-blind (symbolic) value of each common expression element, null if not yet computed.
 	 */
 	private @NonNull Map<@NonNull CSEElement, @NonNull SymbolicValue> cseElement2symbolicValue = new HashMap<>();
-
-	/**
-	 * The known symbolic value of known literal values.
-	 */
-	private @NonNull Map<@Nullable Object, @NonNull SymbolicKnownValue> value2symbolicValue = new HashMap<>();
 
 	/**
 	 * The maybe-invalid symbolic value of known TYpeIds.
@@ -147,31 +136,10 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 	}
 
 	@Override
-	public @NonNull SymbolicValue getKnownValue(@Nullable Object boxedValue) {
-		assert ValueUtil.isBoxed(boxedValue);
-		SymbolicKnownValue symbolicKnownValue = value2symbolicValue.get(boxedValue);
-		if (symbolicKnownValue == null) {
-			if (boxedValue instanceof OCLValue) {
-				for (@Nullable Object key : value2symbolicValue.keySet()) {		// FIXME ?? smarter cache ?? Redundant OCLValue is already smart
-					if ((key instanceof OCLValue) && ((OCLValue)boxedValue).oclEquals((OCLValue)key)) {
-						symbolicKnownValue = value2symbolicValue.get(key);
-					}
-				}
-			}
-			if (symbolicKnownValue == null) {
-				Type type = getEnvironmentFactory().getIdResolver().getStaticTypeOfValue(null, boxedValue);
-				symbolicKnownValue = new SymbolicKnownValueImpl(type.getTypeId(), boxedValue);
-				value2symbolicValue.put(boxedValue, symbolicKnownValue);
-			}
-		}
-		return symbolicKnownValue;
-	}
-
-	@Override
 	public @Nullable SymbolicValue getMayBeInvalidValue(@NonNull TypeId typeid) {
 		SymbolicUnknownValue symbolicUnknownValue = typeid2symbolicValue.get(typeid);
 		if (symbolicUnknownValue == null) {
-			symbolicUnknownValue = new SymbolicUnknownValueImpl(typeid, false, true);
+			symbolicUnknownValue = createUnknownValue(typeid, false, true);
 			typeid2symbolicValue.put(typeid, symbolicUnknownValue);
 		}
 		return symbolicUnknownValue;
@@ -231,7 +199,17 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 		List<@NonNull TypedElement> affectedExpressionsList = new ArrayList<>(affectedExpressionsSet);
 		Collections.sort(affectedExpressionsList, getSymbolicAnalysis().getTypedElementHeightComparator());
 		for (@NonNull TypedElement affectedExpression : affectedExpressionsList) {
-			symbolicReEvaluate(affectedExpression);
+			if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
+				SymbolicAnalysis.HYPOTHESIS.println("   re-evaluating \"" + affectedExpression + "\" in \"" + affectedExpression.eContainer() + "\"");
+			}
+			SymbolicValue oldValue = getBaseSymbolicValue(affectedExpression);
+			if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
+				SymbolicAnalysis.HYPOTHESIS.println("    old: " + oldValue);
+			}
+			SymbolicValue newValue = symbolicReEvaluate(affectedExpression);
+			if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
+				SymbolicAnalysis.HYPOTHESIS.println("    new: " + newValue);
+			}
 		}
 	}
 
@@ -250,40 +228,15 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 	}
 
 	@Override
-	public @NonNull SymbolicValue symbolicEvaluate(@NonNull TypedElement element) {
-		SymbolicValue symbolicValue = basicGetSymbolicValue(element);			// Re-use old value
+	public @NonNull SymbolicValue symbolicEvaluate(@NonNull TypedElement typedElement) {
+		SymbolicValue symbolicValue = basicGetSymbolicValue(typedElement);			// Re-use old value
 		if (symbolicValue != null) {
 			return symbolicValue;
 		}
 		Object result;
 		try {
 			EvaluationVisitor undecoratedVisitor = getUndecoratedVisitor();
-			result = element.accept(undecoratedVisitor);
-		}
-		catch (InvalidValueException e) {
-			result = e;
-		}
-	/*	catch (Exception e) {
-			// This is a backstop. Library operations should catch their own exceptions
-			//  and produce a better reason as a result.
-			result = new InvalidValueException(e, PivotMessagesInternal.FailedToEvaluate_ERROR_, element, "-", "-");
-		}
-		catch (AssertionError e) {
-			// This is a backstop. Library operations should catch their own exceptions
-			//  and produce a better reason as a result.
-			result = new InvalidValueException(e, PivotMessagesInternal.FailedToEvaluate_ERROR_, element, "-", "-");
-			throw e;
-		} */
-		CSEElement cseElement = getSymbolicAnalysis().getCSEElement(element);
-		return traceValue(cseElement, result);								// Record new value
-	}
-
-	public @NonNull SymbolicValue symbolicReEvaluate(@NonNull TypedElement element) {
-		SymbolicValue unrefinedValue = getSymbolicValue(element);			// Get the unrefined value
-		Object result;
-		try {
-			EvaluationVisitor undecoratedVisitor = getUndecoratedVisitor();
-			result = element.accept(undecoratedVisitor);
+			result = typedElement.accept(undecoratedVisitor);
 		}
 		catch (InvalidValueException e) {
 			result = e;
@@ -296,8 +249,48 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 			Object boxedValue = environmentFactory.getIdResolver().boxedValueOf(result);
 			refinedValue = getKnownValue(boxedValue);
 		}
+		if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
+//			refinedValue.toString();		// XXX
+			SymbolicAnalysis.HYPOTHESIS.println("  evaluated: \"" + typedElement + "\" as: " + refinedValue);
+		}
+	/*	catch (Exception e) {
+			// This is a backstop. Library operations should catch their own exceptions
+			//  and produce a better reason as a result.
+			result = new InvalidValueException(e, PivotMessagesInternal.FailedToEvaluate_ERROR_, element, "-", "-");
+		}
+		catch (AssertionError e) {
+			// This is a backstop. Library operations should catch their own exceptions
+			//  and produce a better reason as a result.
+			result = new InvalidValueException(e, PivotMessagesInternal.FailedToEvaluate_ERROR_, element, "-", "-");
+			throw e;
+		} */
+		CSEElement cseElement = getSymbolicAnalysis().getCSEElement(typedElement);
+		return traceSymbolicValue(cseElement, refinedValue);								// Record new value
+	}
+
+	public @NonNull SymbolicValue symbolicReEvaluate(@NonNull TypedElement typedElement) {
+		SymbolicValue unrefinedValue = getSymbolicValue(typedElement);			// Get the unrefined value
+		Object result;
+		try {
+			EvaluationVisitor undecoratedVisitor = getUndecoratedVisitor();
+			result = typedElement.accept(undecoratedVisitor);
+		}
+		catch (InvalidValueException e) {
+			result = e;
+		}
+		SymbolicValue refinedValue;
+		if (result instanceof SymbolicValue) {
+			refinedValue = (SymbolicValue) result;
+		}
+		else {
+			Object boxedValue = environmentFactory.getIdResolver().boxedValueOf(result);
+			refinedValue = getKnownValue(boxedValue);
+		}
+	//	if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
+	//		SymbolicAnalysis.HYPOTHESIS.println("  re-evaluated: \"" + typedElement + "\" as: " + refinedValue);
+	//	}
 		refinedValue = refinedValue.asRefinementOf(unrefinedValue);
-		SymbolicValue old = expression2refinedSymbolicValue.put(element, refinedValue);
+		SymbolicValue old = expression2refinedSymbolicValue.put(typedElement, refinedValue);
 		if (old != null) {
 			assert old == unrefinedValue;
 		}

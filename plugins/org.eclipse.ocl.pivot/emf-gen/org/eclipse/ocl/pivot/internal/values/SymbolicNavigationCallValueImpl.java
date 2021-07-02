@@ -34,8 +34,8 @@ public class SymbolicNavigationCallValueImpl extends SymbolicExpressionValueImpl
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
-	public SymbolicNavigationCallValueImpl(@NonNull NavigationCallExp navigationCallExp, boolean mayBeNull, boolean mayBeInvalid, @NonNull SymbolicValue sourceValue) {
-		super(navigationCallExp, mayBeNull, mayBeInvalid);
+	public SymbolicNavigationCallValueImpl(@NonNull String name, @NonNull NavigationCallExp navigationCallExp, boolean mayBeNull, boolean mayBeInvalid, @NonNull SymbolicValue sourceValue) {
+		super(name, navigationCallExp, mayBeNull, mayBeInvalid);
 		this.sourceValue = sourceValue;
 		this.property = PivotUtil.getReferredProperty(navigationCallExp);
 	}

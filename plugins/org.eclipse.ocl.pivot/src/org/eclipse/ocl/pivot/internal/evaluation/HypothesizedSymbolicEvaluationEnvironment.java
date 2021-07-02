@@ -324,7 +324,11 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 
 	@Override
 	public @NonNull SymbolicValue symbolicEvaluate(@NonNull TypedElement typedElement) {
-		return getSymbolicValue(typedElement);									// Use the 'read' value
+		SymbolicValue symbolicValue = getSymbolicValue(typedElement);
+	//	if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
+	//		SymbolicAnalysis.HYPOTHESIS.println("    evaluated: \"" + typedElement + "\" as: " + symbolicValue);
+	//	}
+		return symbolicValue;									// Use the 'read' value
 	}
 
 	/**
@@ -347,6 +351,9 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 		else {
 			Object boxedValue = environmentFactory.getIdResolver().boxedValueOf(result);
 			writeValue = getKnownValue(boxedValue);
+		}
+		if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
+			SymbolicAnalysis.HYPOTHESIS.println("    re-evaluated: \"" + typedElement + "\" as: " + writeValue);
 		}
 		SymbolicValue readValue = basicGetSymbolicValue(typedElement);		// Get the 'read' value
 		if (readValue == null) {											// If a new evaluation

@@ -15,6 +15,8 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicStatus;
 import org.eclipse.ocl.pivot.internal.values.AbstractRefinedSymbolicValue;
 import org.eclipse.ocl.pivot.library.AbstractSimpleUnaryOperation;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -42,8 +44,18 @@ public class CollectionIsEmptyOperation extends AbstractSimpleUnaryOperation
 		}
 		OCLExpression source = PivotUtil.getOwnedSource(callExp);
 		SymbolicValue sourceValue = evaluationEnvironment.symbolicEvaluate(source);
-		SymbolicValue sizeValue = AbstractRefinedSymbolicValue.createSizeValue(sourceValue);
-		SymbolicValue emptyValue = AbstractRefinedSymbolicValue.createIsZeroValue(sizeValue);
-		return emptyValue;
+		SymbolicContent content = sourceValue.getContent();
+		SymbolicValue sizeValue = content.getSize();
+		SymbolicStatus zeroStatus = sizeValue.getZeroStatus();
+		if (zeroStatus.isSatisfied()) {
+			return evaluationEnvironment.getKnownValue(Boolean.TRUE);
+		}
+		else if (zeroStatus.isSatisfied()) {
+			return evaluationEnvironment.getKnownValue(Boolean.FALSE);
+		}
+		else {
+			SymbolicValue emptyValue = AbstractRefinedSymbolicValue.createIsZeroValue(sizeValue);
+			return emptyValue;
+		}
 	}
 }

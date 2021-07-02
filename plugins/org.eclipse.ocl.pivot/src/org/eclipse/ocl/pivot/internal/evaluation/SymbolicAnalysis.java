@@ -24,6 +24,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.NamedElement;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableExp;
@@ -34,9 +35,15 @@ import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.internal.cse.CommonSubExpressionAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.SymbolicExecutor;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
+import org.eclipse.ocl.pivot.internal.values.SymbolicKnownValueImpl;
+import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.OCLValue;
+import org.eclipse.ocl.pivot.values.SymbolicKnownValue;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
@@ -44,10 +51,17 @@ import org.eclipse.ocl.pivot.values.SymbolicValue;
  */
 public class SymbolicAnalysis extends BasicOCLExecutor implements SymbolicExecutor, ExecutorInternal
 {
+	public static final @NonNull TracingOption HYPOTHESIS = new TracingOption(PivotPlugin.PLUGIN_ID, "symbolic/hypothesis");
+
 	private @Nullable List<@NonNull HypothesizedSymbolicEvaluationEnvironment> hypothesizedEvaluationEnvironments = null;
 
 	protected final @NonNull ExpressionInOCL expressionInOCL;
 	protected final @NonNull CommonSubExpressionAnalysis cseAnalysis;
+
+	/**
+	 * The known symbolic value of known literal values.
+	 */
+	private @NonNull Map<@Nullable Object, @NonNull SymbolicKnownValue> knownValue2symbolicValue = new HashMap<>();
 
 	/**
 	 * The expressions for which contradicting a hypothesized value allows a more precise re-evaluation.
@@ -55,6 +69,16 @@ public class SymbolicAnalysis extends BasicOCLExecutor implements SymbolicExecut
 	private @Nullable Map<@NonNull TypedElement, @NonNull List<@NonNull Hypothesis>> typedElement2hypotheses = null;
 
 	private @Nullable List<@NonNull Hypothesis> allHypotheses = null;
+
+	/**
+	 * Counter for allocated constants.
+	 */
+	private int constantCounter = 0;
+
+	/**
+	 * Counter for allocated variables.
+	 */
+	private int variableCounter = 0;
 
 	/**
 	 * Initializes the symbolic analysis of expressionInOCL that delegates to a non-symbolic evaluation visitor.
@@ -147,6 +171,10 @@ public class SymbolicAnalysis extends BasicOCLExecutor implements SymbolicExecut
 		return new BaseSymbolicEvaluationEnvironment(this, executableObject);
 	}
 
+	public @NonNull String createVariableName() {
+		return "s#" + variableCounter++;
+	}
+
 	public @NonNull BaseSymbolicEvaluationEnvironment getBaseSymbolicEvaluationEnvironment() {
 		return getEvaluationEnvironment().getBaseSymbolicEvaluationEnvironment();
 	}
@@ -184,6 +212,27 @@ public class SymbolicAnalysis extends BasicOCLExecutor implements SymbolicExecut
 
 	public @Nullable List<@NonNull HypothesizedSymbolicEvaluationEnvironment> getHypothesizedEvaluationEnvironments() {
 		return hypothesizedEvaluationEnvironments;
+	}
+
+	public @NonNull SymbolicValue getKnownValue(@Nullable Object boxedValue) {
+		assert ValueUtil.isBoxed(boxedValue);
+		SymbolicKnownValue symbolicKnownValue = knownValue2symbolicValue.get(boxedValue);
+		if (symbolicKnownValue == null) {
+			if (boxedValue instanceof OCLValue) {
+				for (@Nullable Object key : knownValue2symbolicValue.keySet()) {		// FIXME ?? smarter cache ?? Redundant OCLValue is already smart
+					if ((key instanceof OCLValue) && ((OCLValue)boxedValue).oclEquals((OCLValue)key)) {
+						symbolicKnownValue = knownValue2symbolicValue.get(key);
+					}
+				}
+			}
+			if (symbolicKnownValue == null) {
+				Type type = getEnvironmentFactory().getIdResolver().getStaticTypeOfValue(null, boxedValue);
+				String constantName = "k#" + constantCounter++;
+				symbolicKnownValue = new SymbolicKnownValueImpl(constantName, type.getTypeId(), boxedValue);
+				knownValue2symbolicValue.put(boxedValue, symbolicKnownValue);
+			}
+		}
+		return symbolicKnownValue;
 	}
 
 	public @NonNull Comparator<@NonNull TypedElement> getTypedElementHeightComparator() {
@@ -263,6 +312,9 @@ public class SymbolicAnalysis extends BasicOCLExecutor implements SymbolicExecut
 	protected void resolveHypotheses() {
 		Map<@NonNull TypedElement, @NonNull List<@NonNull Hypothesis>> typedElement2hypotheses2 = typedElement2hypotheses;
 		if (typedElement2hypotheses2 != null) {
+			if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
+				SymbolicAnalysis.HYPOTHESIS.println(" resolving hypotheses");
+			}
 		//	AbstractSymbolicEvaluationEnvironment evaluationEnvironment = getEvaluationEnvironment();
 			List<@NonNull Hypothesis> hypotheses = new ArrayList<>(allHypotheses);
 			if (hypotheses.size() > 1) {
@@ -297,6 +349,9 @@ public class SymbolicAnalysis extends BasicOCLExecutor implements SymbolicExecut
 	public void symbolicEvaluate(@NonNull ExpressionInOCL expressionInOCL) {
 		if (isCanceled()) {
 			throw new EvaluationHaltedException("Canceled");
+		}
+		if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
+			SymbolicAnalysis.HYPOTHESIS.println("Analyzing \"" + expressionInOCL + "\"");
 		}
 		List<@NonNull TypedElement> typedElements = new ArrayList<>();
 		for (@NonNull EObject eObject : new TreeIterable(expressionInOCL, true)) {

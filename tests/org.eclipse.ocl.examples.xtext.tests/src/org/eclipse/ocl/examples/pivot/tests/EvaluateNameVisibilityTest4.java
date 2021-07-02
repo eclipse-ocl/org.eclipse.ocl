@@ -40,6 +40,7 @@ import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
@@ -404,6 +405,7 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		if (useCodeGen) {
 			return;					// FIXME 506647 regression disabled
 		}
+		SymbolicAnalysis.HYPOTHESIS.setState(true);
 		TestOCL ocl = createOCL();
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
 			OCLinEcoreStandaloneSetup.doSetup();

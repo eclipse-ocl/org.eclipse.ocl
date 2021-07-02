@@ -29,7 +29,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * @see org.eclipse.ocl.pivot.values.ValuesPackage#getSymbolicValue()
  * @generated
  */
-public interface SymbolicOperationCallValue extends SymbolicExpressionValue
+public interface SymbolicOperationCallValue extends SymbolicValue
 {
 	@NonNull List<@Nullable Object> getBoxedSourceAndArgumentValues();
 }

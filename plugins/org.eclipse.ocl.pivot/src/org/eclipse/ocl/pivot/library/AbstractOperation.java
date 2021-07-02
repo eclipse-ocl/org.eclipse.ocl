@@ -30,7 +30,6 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal.ExecutorInternalExtension;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
-import org.eclipse.ocl.pivot.internal.values.SymbolicUnknownValueImpl;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -144,7 +143,7 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 			}
 			i++;
 		}
-		return new SymbolicUnknownValueImpl(callExp.getTypeId(), false, mayBeInvalidOrNull);
+		return evaluationEnvironment.createUnknownValue(callExp, false, mayBeInvalidOrNull);
 	}
 
 	/**

@@ -47,7 +47,8 @@ public abstract class SymbolicValueImpl extends AbstractSymbolicValue {
 	 * @generated NOT
 	 */
 	public SymbolicValueImpl() {
-		typeId = TypeId.OCL_INVALID;
+		this.name = TypeId.OCL_INVALID_NAME;
+		this.typeId = TypeId.OCL_INVALID;
 		this.mayBeNull = false;
 		this.mayBeInvalid = false;
 	}
@@ -62,6 +63,7 @@ public abstract class SymbolicValueImpl extends AbstractSymbolicValue {
 		return ValuesPackage.Literals.SYMBOLIC_VALUE;
 	}
 
+	protected final @NonNull String name;
 	protected final @NonNull TypeId typeId;
 	protected final boolean mayBeNull;
 	protected final boolean mayBeInvalid;
@@ -73,7 +75,8 @@ public abstract class SymbolicValueImpl extends AbstractSymbolicValue {
 	 * @param variable
 	 * @generated NOT
 	 */
-	public SymbolicValueImpl(@NonNull TypeId typeId, boolean mayBeNull, boolean mayBeInvalid) {
+	public SymbolicValueImpl(@NonNull String name, @NonNull TypeId typeId, boolean mayBeNull, boolean mayBeInvalid) {
+		this.name = name;
 		this.typeId = typeId;
 		this.mayBeNull = mayBeNull;
 		this.mayBeInvalid = mayBeInvalid;
@@ -119,6 +122,16 @@ public abstract class SymbolicValueImpl extends AbstractSymbolicValue {
 	}
 
 	@Override
+	public @NonNull SymbolicStatus basicGetInvalidStatus() {
+		return mayBeInvalid ? SymbolicStatus.UNDECIDED : SymbolicStatus.UNSATISFIED;
+	}
+
+	@Override
+	public @NonNull SymbolicStatus basicGetNullStatus() {
+		return mayBeNull ? SymbolicStatus.UNDECIDED : SymbolicStatus.UNSATISFIED;
+	}
+
+	@Override
 	public @Nullable SymbolicStatus basicGetZeroStatus() {
 		if ((typeId == TypeId.REAL) || (typeId == TypeId.INTEGER) || (typeId == TypeId.UNLIMITED_NATURAL)) {	// FIXME Behavioral
 			return SymbolicStatus.UNDECIDED;
@@ -136,7 +149,7 @@ public abstract class SymbolicValueImpl extends AbstractSymbolicValue {
 		assert typeId instanceof CollectionTypeId;
 		SymbolicContent content2 = content;
 		if (content2 == null) {
-			content = content2 = new SymbolicCollectionContent((CollectionTypeId)typeId);
+			content = content2 = new SymbolicCollectionContent("c#" + name + "%", (CollectionTypeId)typeId);
 		}
 		return (SymbolicCollectionContent)content2;
 	}
@@ -163,23 +176,13 @@ public abstract class SymbolicValueImpl extends AbstractSymbolicValue {
 	}
 
 	@Override
-	public @NonNull SymbolicStatus getInvalidStatus() {
-		return mayBeInvalid ? SymbolicStatus.UNDECIDED : SymbolicStatus.UNSATISFIED;
-	}
-
-	@Override
 	public @NonNull SymbolicMapContent getMapContent() {
 		assert typeId instanceof MapTypeId;
 		SymbolicContent content2 = content;
 		if (content2 == null) {
-			content = content2 = new SymbolicMapContent((MapTypeId)typeId);
+			content = content2 = new SymbolicMapContent("m#" + name + "%", (MapTypeId)typeId);
 		}
 		return (SymbolicMapContent)content2;
-	}
-
-	@Override
-	public @NonNull SymbolicStatus getNullStatus() {
-		return mayBeNull ? SymbolicStatus.UNDECIDED : SymbolicStatus.UNSATISFIED;
 	}
 
 //	@Override
@@ -266,6 +269,8 @@ public abstract class SymbolicValueImpl extends AbstractSymbolicValue {
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int lengthLimit) {
+		s.append(name);
+		s.append(" : ");
 		s.append(typeId);
 		s.append("[");
 		s.append(mayBeNull ? "?" : "1");
@@ -273,6 +278,12 @@ public abstract class SymbolicValueImpl extends AbstractSymbolicValue {
 			s.append("!");
 		}
 		s.append("]");
+		SymbolicContent content2 = content;
+		if (content2 != null) {
+			s.append("{");
+			content2.toString(s);
+			s.append("}");
+		}
 	}
 
 /*	@Override

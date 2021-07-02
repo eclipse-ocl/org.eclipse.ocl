@@ -18,7 +18,6 @@ import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
-import org.eclipse.ocl.pivot.internal.values.SymbolicUnknownValueImpl;
 import org.eclipse.ocl.pivot.library.AbstractSimpleUnaryOperation;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.NullValue;
@@ -53,7 +52,7 @@ public class OclAnyOclIsUndefinedOperation extends AbstractSimpleUnaryOperation
 			@NonNull SymbolicValue sourceSymbolicValue, @NonNull List<@NonNull SymbolicValue> argumentSymbolicValues) {
 		OCLExpression ownedSource = PivotUtil.getOwnedSource(callExp);
 		boolean mayBeInvalid = evaluationEnvironment.mayBeInvalid(ownedSource);
-		return new SymbolicUnknownValueImpl(callExp.getTypeId(), false, mayBeInvalid);
+		return evaluationEnvironment.createUnknownValue(callExp, false, mayBeInvalid);
 	}
 
 

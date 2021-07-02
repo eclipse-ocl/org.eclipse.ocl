@@ -24,7 +24,6 @@ import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.evaluation.IterationManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.evaluation.AbstractSymbolicEvaluationEnvironment;
-import org.eclipse.ocl.pivot.internal.values.SymbolicUnknownValueImpl;
 import org.eclipse.ocl.pivot.library.LibraryOperation.LibraryOperationExtension2;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.SymbolicKnownValue;
@@ -215,7 +214,7 @@ public abstract class AbstractIteration extends AbstractIterationOrOperation imp
 			return evaluationEnvironment.getKnownValue(result);
 		}
 		else {
-			return new SymbolicUnknownValueImpl(loopExp.getTypeId(), false, mayBeInvalidOrNull);
+			return evaluationEnvironment.createUnknownValue(loopExp.getTypeId(), false, mayBeInvalidOrNull);
 		}
 
 		/*	if (loopExp.isIsMany()) {

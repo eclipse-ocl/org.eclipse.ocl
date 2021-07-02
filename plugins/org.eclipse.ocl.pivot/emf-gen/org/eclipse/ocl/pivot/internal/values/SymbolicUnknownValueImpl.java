@@ -32,8 +32,8 @@ public class SymbolicUnknownValueImpl extends SymbolicValueImpl implements Symbo
 	 * @param object
 	 * @generated NOT
 	 */
-	public SymbolicUnknownValueImpl(@NonNull TypeId typeId, boolean mayBeNull, boolean mayBeInvalid) { //, @NonNull SymbolicValue value) {
-		super(typeId, mayBeNull, mayBeInvalid);
+	public SymbolicUnknownValueImpl(@NonNull String name, @NonNull TypeId typeId, boolean mayBeNull, boolean mayBeInvalid) { //, @NonNull SymbolicValue value) {
+		super(name, typeId, mayBeNull, mayBeInvalid);
 	}
 
 //	@Override

@@ -63,6 +63,8 @@ public interface SymbolicEvaluationEnvironment extends EvaluationEnvironment.Eva
 	 */
 	@Nullable SymbolicValue checkNotZero(@NonNull TypedElement typedElement, @NonNull TypeId typeId);
 
+	@NonNull SymbolicValue createUnknownValue(@NonNull TypedElement typedElement, boolean mayBeNull, boolean mayBeInvalid);
+
 	@NonNull BaseSymbolicEvaluationEnvironment getBaseSymbolicEvaluationEnvironment();
 	@NonNull SymbolicValue getKnownValue(@Nullable Object boxedValue);
 	@NonNull SymbolicValue getSymbolicValue(@NonNull Element element);

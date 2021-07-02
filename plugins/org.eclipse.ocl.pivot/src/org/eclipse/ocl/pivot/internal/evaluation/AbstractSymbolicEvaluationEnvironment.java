@@ -22,8 +22,10 @@ import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent;
+import org.eclipse.ocl.pivot.internal.values.SymbolicUnknownValueImpl;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.SymbolicUnknownValue;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
@@ -57,6 +59,7 @@ public abstract class AbstractSymbolicEvaluationEnvironment extends BasicEvaluat
 	public @Nullable SymbolicValue checkNotEmpty(@NonNull TypedElement typedElement, @NonNull TypeId typeId) {
 		SymbolicValue symbolicValue = getSymbolicValue(typedElement);
 		SymbolicContent symbolicContent = symbolicValue.getContent();
+//		symbolicContent.toString();		// XXX
 		SymbolicValue symbolicSize = symbolicContent.getSize();
 		if (symbolicSize.isZero()) {
 			return getKnownValue(ValueUtil.INVALID_VALUE);
@@ -125,6 +128,15 @@ public abstract class AbstractSymbolicEvaluationEnvironment extends BasicEvaluat
 		return getMayBeInvalidValue(typeId);
 	}
 
+	public @NonNull SymbolicUnknownValue createUnknownValue(@NonNull TypeId typeId, boolean mayBeNull, boolean mayBeInvalid) {
+		return new SymbolicUnknownValueImpl(getSymbolicAnalysis().createVariableName(), typeId, mayBeNull, mayBeInvalid);
+	}
+
+	@Override
+	public @NonNull SymbolicValue createUnknownValue(@NonNull TypedElement typedElement, boolean mayBeNull, boolean mayBeInvalid) {
+		return createUnknownValue(typedElement.getTypeId(), mayBeNull, mayBeInvalid);
+	}
+
 	public @NonNull SymbolicValue getBaseSymbolicValue(@NonNull CSEElement cseElement) {
 		return getBaseSymbolicEvaluationEnvironment().getSymbolicValue(cseElement);
 	}
@@ -134,8 +146,8 @@ public abstract class AbstractSymbolicEvaluationEnvironment extends BasicEvaluat
 	}
 
 	@Override
-	public @NonNull SymbolicValue getKnownValue(@Nullable Object boxedValue) {
-		return getBaseSymbolicEvaluationEnvironment().getKnownValue(boxedValue);
+	public final @NonNull SymbolicValue getKnownValue(@Nullable Object boxedValue) {
+		return getSymbolicAnalysis().getKnownValue(boxedValue);
 	}
 
 	public @Nullable SymbolicValue getMayBeInvalidValue(@NonNull TypeId typeid) {

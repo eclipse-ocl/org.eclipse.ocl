@@ -13,10 +13,13 @@ package org.eclipse.ocl.pivot.internal.symbolic;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 
+/**
+ * @since 1.16
+ */
 public class SymbolicMapContent extends SymbolicContent
 {
-	public SymbolicMapContent(@NonNull MapTypeId typeId) {
-		super(typeId);
+	public SymbolicMapContent(@NonNull String name, @NonNull MapTypeId typeId) {
+		super(name, typeId);
 	}
 
 	protected SymbolicMapContent(@NonNull SymbolicMapContent originalContent) {

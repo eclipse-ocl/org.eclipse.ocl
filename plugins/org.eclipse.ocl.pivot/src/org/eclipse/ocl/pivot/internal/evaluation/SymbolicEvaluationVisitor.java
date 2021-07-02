@@ -58,9 +58,7 @@ import org.eclipse.ocl.pivot.internal.manager.SymbolicExecutor;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.internal.values.AbstractRefinedSymbolicValue;
-import org.eclipse.ocl.pivot.internal.values.SymbolicExpressionValueImpl;
 import org.eclipse.ocl.pivot.internal.values.SymbolicNavigationCallValueImpl;
-import org.eclipse.ocl.pivot.internal.values.SymbolicUnknownValueImpl;
 import org.eclipse.ocl.pivot.library.LibraryIteration;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
@@ -140,7 +138,7 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 			boolean propertyMayBeNull = !referredProperty.isIsRequired();
 			boolean resultMayBeInvalid = sourceMayBeInvalid || (sourceMayBeNull && !isSafe && !sourceIsMany);
 			boolean resultMayBeNull = propertyMayBeNull || (sourceMayBeNull && isSafe && !sourceIsMany);
-			result = new SymbolicNavigationCallValueImpl(navigationCallExp, resultMayBeNull, resultMayBeInvalid, sourceValue);
+			result = new SymbolicNavigationCallValueImpl(getSymbolicAnalysis().createVariableName(), navigationCallExp, resultMayBeNull, resultMayBeInvalid, sourceValue);
 		}
 		return result;
 	}
@@ -150,7 +148,7 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 	 */
 	protected @Nullable Object doOperationCallExp(@NonNull OperationCallExp operationCallExp) {
 		Operation apparentOperation = PivotUtil.getReferredOperation(operationCallExp);
-		if ("includes".equals(apparentOperation.getName())) {
+		if ("first".equals(apparentOperation.getName())) {
 			getClass();		// XXX
 		}
 		@SuppressWarnings("unused")
@@ -298,7 +296,7 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 			}
 		}
 		if (isSymbolic) {
-			result = new SymbolicExpressionValueImpl(literalExp, false, mayBeNull || mayBeInvalid);
+			result = getEvaluationEnvironment().createUnknownValue(literalExp, false, mayBeNull || mayBeInvalid);
 		}
 		else {
 			result = delegate.visitCollectionLiteralExp(literalExp);
@@ -316,8 +314,7 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 		if ((firstValue instanceof SymbolicValue) || (lastValue instanceof SymbolicValue)) {
 			boolean mayBeInvalid = ValueUtil.mayBeInvalid(firstValue) || ValueUtil.mayBeInvalid(firstValue);
 			boolean mayBeNull = ValueUtil.mayBeNull(lastValue) || ValueUtil.mayBeNull(lastValue);
-			TypeId typeId = range.getTypeId();
-			result = new SymbolicUnknownValueImpl(typeId, false, mayBeNull || mayBeInvalid);
+			result = getEvaluationEnvironment().createUnknownValue(range, false, mayBeNull || mayBeInvalid);
 		}
 		else {
 //				result = delegate.visitCollectionRange(range);
@@ -375,7 +372,7 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 			if (elseValue.mayBeNull()) {
 				mayBeNull = true;
 			}
-			return new SymbolicExpressionValueImpl(ifExp, mayBeNull, mayBeInvalid);
+			return evaluationEnvironment.createUnknownValue(ifExp, mayBeNull, mayBeInvalid);
 		}
 	}
 
@@ -389,7 +386,7 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 		else {
 		//	getEvaluationEnvironment().add(parameterVariable, parameterValue);
 			CSEElement cseElement = getSymbolicAnalysis().getCSEElement(iteratorVariable);
-			SymbolicUnknownValueImpl symbolicValue = new SymbolicUnknownValueImpl(iteratorVariable.getTypeId(), !iteratorVariable.isIsRequired(), false);
+			SymbolicValue symbolicValue = getEvaluationEnvironment().createUnknownValue(iteratorVariable, !iteratorVariable.isIsRequired(), false);
 			return evaluationEnvironment.traceSymbolicValue(cseElement, symbolicValue);
 		}
 	}
@@ -433,7 +430,7 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 			}
 		}
 		if (isSymbolic) {
-			return new SymbolicExpressionValueImpl(literalExp, false, mayBeNull || mayBeInvalid);
+			return getEvaluationEnvironment().createUnknownValue(literalExp, false, mayBeNull || mayBeInvalid);
 		}
 		else {
 			return delegate.visitMapLiteralExp(literalExp);
@@ -484,7 +481,7 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 			}
 		}
 		if (isSymbolic) {
-			return new SymbolicExpressionValueImpl(shadowExp, false, mayBeNull || mayBeInvalid);
+			return evaluationEnvironment.createUnknownValue(shadowExp, false, mayBeNull || mayBeInvalid);
 		}
 		else {
 			return delegate.visitShadowExp(shadowExp);
@@ -512,10 +509,10 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 			mayBeNull = true;
 		}
 		if (isSymbolic) {
-			return new SymbolicExpressionValueImpl(ownedInit, false, mayBeNull || mayBeInvalid);
+			return evaluationEnvironment.createUnknownValue(ownedInit, false, mayBeNull || mayBeInvalid);
 		}
 		else {
-			return new SymbolicExpressionValueImpl(ownedInit, false, mayBeNull || mayBeInvalid);
+			return evaluationEnvironment.createUnknownValue(ownedInit, false, mayBeNull || mayBeInvalid);
 //			return delegate.visitShadowPart(shadowPart);
 		}
 	}
@@ -539,7 +536,7 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 			}
 		}
 		if (isSymbolic) {
-			return new SymbolicExpressionValueImpl(literalExp, false, mayBeNull || mayBeInvalid);
+			return evaluationEnvironment.createUnknownValue(literalExp, false, mayBeNull || mayBeInvalid);
 		}
 		else {
 			return delegate.visitTupleLiteralExp(literalExp);
@@ -563,7 +560,7 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 			mayBeNull = true;
 		}
 		if (isSymbolic) {
-			return new SymbolicExpressionValueImpl(part, false, mayBeNull || mayBeInvalid);
+			return evaluationEnvironment.createUnknownValue(part, false, mayBeNull || mayBeInvalid);
 		}
 		else {
 			return delegate.visitTupleLiteralPart(part);

@@ -43,6 +43,16 @@ public abstract class AbstractSymbolicValue extends ValueImpl implements Symboli
 	}
 
 	@Override
+	public final @NonNull SymbolicStatus getInvalidStatus() {
+		return ClassUtil.nonNullState(basicGetInvalidStatus());
+	}
+
+	@Override
+	public final @NonNull SymbolicStatus getNullStatus() {
+		return ClassUtil.nonNullState(basicGetNullStatus());
+	}
+
+	@Override
 	public final @NonNull SymbolicStatus getZeroStatus() {
 		return ClassUtil.nonNullState(basicGetZeroStatus());
 	}

@@ -12,6 +12,7 @@ package org.eclipse.ocl.pivot.internal.values;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.VariableDeclaration;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.SymbolicVariableValue;
 
 /**
@@ -35,7 +36,7 @@ public class SymbolicVariableValueImpl extends SymbolicValueImpl implements Symb
 	 * @generated NOT
 	 */
 	public SymbolicVariableValueImpl(@NonNull VariableDeclaration variable, boolean mayBeNull, boolean mayBeInvalid) { //, @NonNull SymbolicValue value) {
-		super(variable.getTypeId(), mayBeNull, mayBeInvalid);
+		super(PivotUtil.getName(variable), variable.getTypeId(), mayBeNull, mayBeInvalid);
 		this.variable = variable;
 //		this.value = value;
 	}

@@ -41,6 +41,10 @@ public interface SymbolicValue extends Value
 
 	@Nullable SymbolicStatus basicGetBooleanStatus();
 
+	@Nullable SymbolicStatus basicGetInvalidStatus();
+
+	@Nullable SymbolicStatus basicGetNullStatus();
+
 	@Nullable SymbolicStatus basicGetZeroStatus();
 
 	/**

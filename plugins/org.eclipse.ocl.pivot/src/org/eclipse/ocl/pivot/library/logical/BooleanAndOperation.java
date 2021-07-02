@@ -19,7 +19,6 @@ import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
-import org.eclipse.ocl.pivot.internal.values.SymbolicUnknownValueImpl;
 import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -206,7 +205,6 @@ public class BooleanAndOperation extends AbstractSimpleBinaryOperation
 		boolean mayBeInvalid = ValueUtil.mayBeInvalid(sourceValue) || ValueUtil.mayBeInvalid(unconstrainedArgumentValue);
 		boolean mayBeNull = ValueUtil.mayBeNull(sourceValue) || ValueUtil.mayBeNull(unconstrainedArgumentValue);
 		boolean mayBeInvalidOrNull = mayBeNull || mayBeInvalid;
-		SymbolicUnknownValueImpl resultValue = new SymbolicUnknownValueImpl(callExp.getTypeId(), false, mayBeInvalidOrNull);	// XXX not null/invalid here
-		return resultValue;
+		return evaluationEnvironment.createUnknownValue(callExp, false, mayBeInvalidOrNull);	// XXX not null/invalid here
 	}
 }

@@ -12,11 +12,11 @@ package org.eclipse.ocl.pivot.library.oclany;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.OperationCallExp;
-import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
-import org.eclipse.ocl.pivot.internal.values.SymbolicUnknownValueImpl;
 import org.eclipse.ocl.pivot.library.AbstractSimpleUnaryOperation;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.InvalidValue;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
@@ -40,12 +40,28 @@ public class OclAnyOclIsInvalidOperation extends AbstractSimpleUnaryOperation
 		if (argument instanceof InvalidValue) {
 			return Boolean.TRUE;
 		}
-		if (argument instanceof SymbolicValue) {
-			SymbolicValue symbolicValue = (SymbolicValue)argument;
-			if (symbolicValue.mayBeInvalid()) {
-				return new SymbolicUnknownValueImpl(TypeId.BOOLEAN, false, false);
-			}
-		}
 		return Boolean.FALSE;
+	}
+
+	/**
+	 * @since 1.15
+	 */
+	@Override
+	public @NonNull SymbolicValue symbolicEvaluate(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
+		SymbolicValue symbolicPreconditionValue = checkPreconditions(evaluationEnvironment, callExp);
+		if (symbolicPreconditionValue != null) {
+			return symbolicPreconditionValue;
+		}
+		OCLExpression source = PivotUtil.getOwnedSource(callExp);
+		SymbolicValue sourceValue = evaluationEnvironment.symbolicEvaluate(source);
+		if (sourceValue.isInvalid()) {
+			return evaluationEnvironment.getKnownValue(Boolean.TRUE);
+		}
+		else if (sourceValue.mayBeInvalid()) {
+			return evaluationEnvironment.createUnknownValue(callExp, false, false);
+		}
+		else {
+			return evaluationEnvironment.getKnownValue(Boolean.FALSE);
+		}
 	}
 }

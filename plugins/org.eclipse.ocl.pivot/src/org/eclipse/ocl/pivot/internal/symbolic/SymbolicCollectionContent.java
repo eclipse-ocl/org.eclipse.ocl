@@ -13,10 +13,13 @@ package org.eclipse.ocl.pivot.internal.symbolic;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 
+/**
+ * @since 1.16
+ */
 public class SymbolicCollectionContent extends SymbolicContent
 {
-	public SymbolicCollectionContent(@NonNull CollectionTypeId typeId) {
-		super(typeId);
+	public SymbolicCollectionContent(@NonNull String name, @NonNull CollectionTypeId typeId) {
+		super(name, typeId);
 	}
 
 	protected SymbolicCollectionContent(@NonNull SymbolicCollectionContent originalContent) {

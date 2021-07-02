@@ -36,9 +36,9 @@ public class SymbolicOperationCallValueImpl extends SymbolicExpressionValueImpl 
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
-	public SymbolicOperationCallValueImpl(@NonNull OperationCallExp operationCallExp, boolean mayBeNull, boolean mayBeInvalid,
+	public SymbolicOperationCallValueImpl(@NonNull String name, @NonNull OperationCallExp operationCallExp, boolean mayBeNull, boolean mayBeInvalid,
 			@NonNull LibraryOperation operation, @NonNull List<@NonNull SymbolicValue> boxedSourceAndArgumentValues) {
-		super(operationCallExp, mayBeNull, mayBeInvalid);
+		super(name, operationCallExp, mayBeNull, mayBeInvalid);
 		this.operation = operation;
 		this.boxedSourceAndArgumentValues = boxedSourceAndArgumentValues;
 	//	assert operation == operationCallExp.getReferredOperation().getImplementation();		// XXX lazy init may not have happened
