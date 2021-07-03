@@ -114,7 +114,7 @@ public class NullValueImpl extends UndefinedValueImpl implements NullValue
 	}
 
 	/**
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	@Override
 	public boolean mayBeInvalid() {
@@ -122,7 +122,7 @@ public class NullValueImpl extends UndefinedValueImpl implements NullValue
 	}
 
 	/**
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	@Override
 	public boolean mayBeInvalidOrNull() {
@@ -130,7 +130,7 @@ public class NullValueImpl extends UndefinedValueImpl implements NullValue
 	}
 
 	/**
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	@Override
 	public boolean mayBeNull() {

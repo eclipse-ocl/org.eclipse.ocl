@@ -1477,7 +1477,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 					GenModel genModel = (GenModel) genModelResource.getContents().get(0);
 					genModel.setModelDirectory(getTestProject().getName() + "/" + JavaFileUtil.TEST_SRC_FOLDER_NAME);
 					genModelResource.setURI(targetGenModelURI);
-					genModelResource.save(XMIUtil.createSaveOptions());
+					genModelResource.save(XMIUtil.createSaveOptions(genModelResource));
 					//
 					createManifestFile();
 				}
@@ -1836,7 +1836,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 					GenModel genModel = (GenModel) genModelResource.getContents().get(0);
 					genModel.setModelDirectory(getTestProject().getName() + "/" + JavaFileUtil.TEST_SRC_FOLDER_NAME);
 					genModelResource.setURI(targetGenModelURI);
-					genModelResource.save(XMIUtil.createSaveOptions());
+					genModelResource.save(XMIUtil.createSaveOptions(genModelResource));
 				}
 				finally {
 					ocl0.dispose();
@@ -1912,7 +1912,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 						Resource resource = resourceSet1.getResource(URI.createURI(PivotPackage.eNS_URI, true), true);
 						ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 						resource.setURI(URI.createPlatformResourceURI(testProjectName + "/" + "Pivot.oclas", true));
-						resource.save(outputStream, XMIUtil.createSaveOptions());
+						resource.save(outputStream, XMIUtil.createSaveOptions(resource));
 
 						IWorkspace workspace = ResourcesPlugin.getWorkspace();
 						IProject project = workspace.getRoot().getProject(testProjectName);

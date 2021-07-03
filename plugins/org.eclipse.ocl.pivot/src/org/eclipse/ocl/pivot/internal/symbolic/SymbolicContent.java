@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2010, 2021 Willink Transformations and others.
+ * Copyright (c) 2020, 2021 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -12,8 +12,9 @@ package org.eclipse.ocl.pivot.internal.symbolic;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.values.SymbolicUnknownValueImpl;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
@@ -21,6 +22,38 @@ import org.eclipse.ocl.pivot.values.SymbolicValue;
  */
 public abstract class SymbolicContent
 {
+	public static class SymbolicCollectionContent extends SymbolicContent
+	{
+		public SymbolicCollectionContent(@NonNull String name, @NonNull CollectionTypeId typeId) {
+			super(name, typeId);
+		}
+
+		protected SymbolicCollectionContent(@NonNull SymbolicCollectionContent originalContent) {
+			super(originalContent);
+		}
+
+		@Override
+		public @NonNull SymbolicContent shallowClone() {
+			return new SymbolicCollectionContent(this);
+		}
+	}
+
+	public static class SymbolicMapContent extends SymbolicContent
+	{
+		public SymbolicMapContent(@NonNull String name, @NonNull MapTypeId typeId) {
+			super(name, typeId);
+		}
+
+		protected SymbolicMapContent(@NonNull SymbolicMapContent originalContent) {
+			super(originalContent);
+		}
+
+		@Override
+		public @NonNull SymbolicContent shallowClone() {
+			return new SymbolicMapContent(this);
+		}
+	}
+
 	private @NonNull String name;
 	private int cloneCount = 0;
 	private @Nullable SymbolicValue sizeValue;
@@ -37,7 +70,7 @@ public abstract class SymbolicContent
 	public @NonNull SymbolicValue getSize() {
 		SymbolicValue sizeValue2 = sizeValue;
 		if (sizeValue2 == null) {
-			sizeValue = sizeValue2 = new SymbolicUnknownValueImpl(name + "size", TypeId.INTEGER, false, false);
+			sizeValue = sizeValue2 = new SymbolicUnknownValue(name + "size", TypeId.INTEGER, false, false);
 		}
 		return sizeValue2;
 	}

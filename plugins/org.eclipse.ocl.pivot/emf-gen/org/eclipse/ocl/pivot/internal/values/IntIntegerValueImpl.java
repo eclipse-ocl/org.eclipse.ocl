@@ -231,7 +231,7 @@ public class IntIntegerValueImpl extends IntegerValueImpl
 	}
 
 	/**
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	@Override
 	public boolean mayBeZero() {

@@ -16,9 +16,9 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.cse.CSEElement;
+import org.eclipse.ocl.pivot.internal.symbolic.AbstractSymbolicRefinedValue;
+import org.eclipse.ocl.pivot.internal.symbolic.AbstractSymbolicRefinedValue.SymbolicRefinedContentValue;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent;
-import org.eclipse.ocl.pivot.internal.values.AbstractRefinedSymbolicValue;
-import org.eclipse.ocl.pivot.internal.values.AbstractRefinedSymbolicValue.RefinedContentSymbolicValue;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
@@ -176,12 +176,12 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 		}
 
 		private static @NonNull SymbolicValue createHypothesizedValue(@NonNull SymbolicAnalysis symbolicAnalysis, @NonNull SymbolicValue originalValue) {
-			RefinedContentSymbolicValue refinedValue = null;
+			SymbolicRefinedContentValue refinedValue = null;
 			SymbolicContent content = originalValue.getContent();
 			SymbolicValue sizeValue = content.getSize();
 			if (!sizeValue.isZero()) {
 				if (refinedValue == null) {
-					refinedValue = new RefinedContentSymbolicValue(originalValue);
+					refinedValue = new SymbolicRefinedContentValue(originalValue);
 					sizeValue = symbolicAnalysis.getEvaluationEnvironment().getKnownValue(ValueUtil.ZERO_VALUE);
 					refinedValue.setSize(sizeValue);
 //					refinedValue.toString();
@@ -200,9 +200,9 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 		}
 
 		@Override
-		protected @NonNull RefinedContentSymbolicValue getRefinedValue() {
-			RefinedContentSymbolicValue refinedValue = AbstractRefinedSymbolicValue.createRefinedContent(originalValue);
-			SymbolicValue refinedSize = AbstractRefinedSymbolicValue.createNotValue(AbstractRefinedSymbolicValue.createBeKnownValue(refinedValue.getSize(), ValueUtil.ZERO_VALUE));
+		protected @NonNull SymbolicRefinedContentValue getRefinedValue() {
+			SymbolicRefinedContentValue refinedValue = AbstractSymbolicRefinedValue.createRefinedContent(originalValue);
+			SymbolicValue refinedSize = AbstractSymbolicRefinedValue.createExceptValue(refinedValue.getSize(), ValueUtil.ZERO_VALUE);
 			refinedValue.setSize(refinedSize);
 			return refinedValue;
 		}
@@ -215,7 +215,7 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 		@Override
 		protected void refine() {
 			BaseSymbolicEvaluationEnvironment baseSymbolicEvaluationEnvironment = symbolicAnalysis.getBaseSymbolicEvaluationEnvironment();
-			RefinedContentSymbolicValue refinedValue = getRefinedValue();
+			SymbolicRefinedContentValue refinedValue = getRefinedValue();
 			if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
 				SymbolicAnalysis.HYPOTHESIS.println("  refined: " + refinedValue);
 			}
@@ -244,7 +244,7 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 
 		@Override
 		protected @NonNull SymbolicValue getRefinedValue() {
-			return AbstractRefinedSymbolicValue.createNotInvalidValue(originalValue);
+			return AbstractSymbolicRefinedValue.createExceptValue(originalValue, ValueUtil.INVALID_VALUE);
 		}
 
 		@Override
@@ -280,7 +280,7 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 
 		@Override
 		protected @NonNull SymbolicValue getRefinedValue() {
-			return AbstractRefinedSymbolicValue.createNotNullValue(originalValue);
+			return AbstractSymbolicRefinedValue.createExceptValue(originalValue, null);
 		}
 
 		@Override
@@ -357,7 +357,7 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 
 		@Override
 		protected @NonNull SymbolicValue getRefinedValue() {
-			return AbstractRefinedSymbolicValue.createNotValue(AbstractRefinedSymbolicValue.createBeKnownValue(originalValue, ValueUtil.ZERO_VALUE));
+			return AbstractSymbolicRefinedValue.createExceptValue(originalValue, ValueUtil.ZERO_VALUE);
 		}
 
 		@Override

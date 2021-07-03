@@ -26,7 +26,6 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.evaluation.AbstractSymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.library.LibraryOperation.LibraryOperationExtension2;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.values.SymbolicKnownValue;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 import com.google.common.collect.Iterables;
@@ -71,39 +70,39 @@ public abstract class AbstractIteration extends AbstractIterationOrOperation imp
 	/**
 	 * @since 1.16
 	 */
-	protected @Nullable SymbolicValue checkPreconditions(@NonNull AbstractSymbolicEvaluationEnvironment symbolicEvaluationEnvironment, @NonNull LoopExp loopExp) {
+	protected @Nullable SymbolicValue checkPreconditions(@NonNull AbstractSymbolicEvaluationEnvironment evaluationEnvironment, @NonNull LoopExp loopExp) {
 		TypeId returnTypeId = loopExp.getTypeId();
 		OCLExpression source = PivotUtil.getOwnedSource(loopExp);
-		SymbolicValue invalidSourceProblem = symbolicEvaluationEnvironment.checkNotInvalid(source, returnTypeId);
+		SymbolicValue invalidSourceProblem = evaluationEnvironment.checkNotInvalid(source, returnTypeId);
 		if (invalidSourceProblem != null) {
 			return invalidSourceProblem;
 		}
 		if (!loopExp.isIsSafe()) {
-			SymbolicValue nullSourceProblem = symbolicEvaluationEnvironment.checkNotNull(source, returnTypeId);
+			SymbolicValue nullSourceProblem = evaluationEnvironment.checkNotNull(source, returnTypeId);
 			if (nullSourceProblem != null) {
 				return nullSourceProblem;
 			}
 		}
 		for (@NonNull VariableDeclaration iterator : PivotUtil.getOwnedIterators(loopExp)) {
-			SymbolicValue invalidIteratorProblem = symbolicEvaluationEnvironment.checkNotInvalid(iterator, returnTypeId);
+			SymbolicValue invalidIteratorProblem = evaluationEnvironment.checkNotInvalid(iterator, returnTypeId);
 			if (invalidIteratorProblem != null) {
 				return invalidIteratorProblem;
 			}
 		}
 		if (loopExp instanceof IterateExp) {
 			VariableDeclaration ownedResult = PivotUtil.getOwnedResult((IterateExp)loopExp);
-			SymbolicValue invalidResultProblem = symbolicEvaluationEnvironment.checkNotInvalid(ownedResult, returnTypeId);
+			SymbolicValue invalidResultProblem = evaluationEnvironment.checkNotInvalid(ownedResult, returnTypeId);
 			if (invalidResultProblem != null) {
 				return invalidResultProblem;
 			}
 		}
 		OCLExpression bodyExpression = PivotUtil.getOwnedBody(loopExp);
-		SymbolicValue invalidBodyProblem = symbolicEvaluationEnvironment.checkNotInvalid(bodyExpression, returnTypeId);
+		SymbolicValue invalidBodyProblem = evaluationEnvironment.checkNotInvalid(bodyExpression, returnTypeId);
 		if (invalidBodyProblem != null) {
 			return invalidBodyProblem;
 		}
 		if (bodyExpression.isIsRequired()) {
-			SymbolicValue nullBodyProblem = symbolicEvaluationEnvironment.checkNotNull(bodyExpression, returnTypeId);
+			SymbolicValue nullBodyProblem = evaluationEnvironment.checkNotNull(bodyExpression, returnTypeId);
 			if (nullBodyProblem != null) {
 				return nullBodyProblem;
 			}
@@ -156,7 +155,7 @@ public abstract class AbstractIteration extends AbstractIterationOrOperation imp
 	}
 
 	/**
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	@Override
 	public @NonNull SymbolicValue symbolicEvaluate(@NonNull AbstractSymbolicEvaluationEnvironment evaluationEnvironment, @NonNull LoopExp loopExp) {
@@ -206,9 +205,9 @@ public abstract class AbstractIteration extends AbstractIterationOrOperation imp
 		argumentSymbolicValues.add(bodySymbolicValue);
 		if (isKnown) {
 			@Nullable Object[] sourceAndArgumentValues = new @Nullable Object[1+argumentsSize];
-			sourceAndArgumentValues[0] = ((SymbolicKnownValue)sourceSymbolicValue).getValue();
+			sourceAndArgumentValues[0] = sourceSymbolicValue.getKnownValue();
 			for (int i = 0; i < argumentsSize; i++) {
-				sourceAndArgumentValues[i+1] = ((SymbolicKnownValue)argumentSymbolicValues.get(i)).getValue();
+				sourceAndArgumentValues[i+1] = argumentSymbolicValues.get(i).getKnownValue();
 			}
 			Object result = ((LibraryOperationExtension2)this).evaluate(evaluationEnvironment.getExecutor(), loopExp, sourceAndArgumentValues);
 			return evaluationEnvironment.getKnownValue(result);

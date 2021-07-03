@@ -35,16 +35,16 @@ public class NumericDivOperation extends AbstractSimpleBinaryOperation
 	}
 
 	/**
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	@Override
-	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment symbolicEvaluationEnvironment, @NonNull OperationCallExp callExp) {
-		SymbolicValue superProblem = super.checkPreconditions(symbolicEvaluationEnvironment, callExp);
+	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
+		SymbolicValue superProblem = super.checkPreconditions(evaluationEnvironment, callExp);
 		if (superProblem != null) {
 			return superProblem;
 		}
 		OCLExpression argument = PivotUtil.getOwnedArgument(callExp, 0);
-		SymbolicValue argumentProblem = symbolicEvaluationEnvironment.checkNotZero(argument, callExp.getTypeId());
+		SymbolicValue argumentProblem = evaluationEnvironment.checkNotZero(argument, callExp.getTypeId());
 		if (argumentProblem != null) {
 			return argumentProblem;
 		}

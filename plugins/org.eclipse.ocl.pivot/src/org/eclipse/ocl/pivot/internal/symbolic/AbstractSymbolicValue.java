@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2021 Willink Transformations and others.
+ * Copyright (c) 2020, 2021 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -8,11 +8,12 @@
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  */
-package org.eclipse.ocl.pivot.internal.values;
+package org.eclipse.ocl.pivot.internal.symbolic;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.internal.symbolic.SymbolicStatus;
+import org.eclipse.ocl.pivot.internal.values.ValueImpl;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
@@ -26,13 +27,13 @@ public abstract class AbstractSymbolicValue extends ValueImpl implements Symboli
 		@NonNull SymbolicValue baseValue = unrefinedValue.getBaseValue();
 		@NonNull SymbolicValue resultValue = baseValue;			// XXX ?? fudging erroneous IsDead
 		if (!mayBeInvalid() && baseValue.mayBeInvalid()) {
-			resultValue = AbstractRefinedSymbolicValue.createNotInvalidValue(resultValue);
+			resultValue = AbstractSymbolicRefinedValue.createExceptValue(resultValue, ValueUtil.INVALID_VALUE);
 		}
 		if (!mayBeNull() && baseValue.mayBeNull()) {
-			resultValue = AbstractRefinedSymbolicValue.createNotNullValue(resultValue);
+			resultValue = AbstractSymbolicRefinedValue.createExceptValue(resultValue, null);
 		}
 		if ((basicGetZeroStatus() != null) && !mayBeZero() && (baseValue.basicGetZeroStatus() != null) && baseValue.mayBeZero()) {
-			resultValue = AbstractRefinedSymbolicValue.createNotValue(AbstractRefinedSymbolicValue.createIsZeroValue(resultValue));
+			resultValue = AbstractSymbolicRefinedValue.createNotValue(AbstractSymbolicRefinedValue.createIsZeroValue(resultValue));
 		}
 		return resultValue;
 	}
@@ -44,12 +45,14 @@ public abstract class AbstractSymbolicValue extends ValueImpl implements Symboli
 
 	@Override
 	public final @NonNull SymbolicStatus getInvalidStatus() {
-		return ClassUtil.nonNullState(basicGetInvalidStatus());
+		SymbolicStatus invalidStatus = basicGetInvalidStatus();
+		return invalidStatus != null ? invalidStatus : SymbolicStatus.UNSATISFIED;
 	}
 
 	@Override
 	public final @NonNull SymbolicStatus getNullStatus() {
-		return ClassUtil.nonNullState(basicGetNullStatus());
+		SymbolicStatus nullStatus = basicGetNullStatus();
+		return nullStatus != null ? nullStatus : SymbolicStatus.UNSATISFIED;
 	}
 
 	@Override
@@ -63,8 +66,10 @@ public abstract class AbstractSymbolicValue extends ValueImpl implements Symboli
 	}
 
 	@Override
-	public /*final*/ boolean isFalse() {
-		return getBooleanStatus().isUnsatisfied();
+	public final boolean isFalse() {
+		SymbolicStatus booleanStatus = basicGetBooleanStatus();
+		return (booleanStatus != null) && booleanStatus.isUnsatisfied();
+	//	return getBooleanStatus().isUnsatisfied();
 	}
 
 	@Override
@@ -97,8 +102,10 @@ public abstract class AbstractSymbolicValue extends ValueImpl implements Symboli
 	}
 
 	@Override
-	public /*final*/ boolean isTrue() {
-		return getBooleanStatus().isSatisfied();
+	public final boolean isTrue() {
+		SymbolicStatus booleanStatus = basicGetBooleanStatus();
+		return (booleanStatus != null) && booleanStatus.isSatisfied();
+	//	return getBooleanStatus().isSatisfied();
 	}
 
 	@Override

@@ -137,16 +137,6 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 	@Override
 	public void dispose() {}
 
-	/**
-	 * @since 1.15
-	 *
-	@Override
-	public @Nullable Object evaluate(@NonNull CollectionLiteralPart part) {
-		Object value = part.accept(undecoratedVisitor);
-		assert ValueUtil.isBoxed(value);	// Make sure Integer/Real are boxed, invalid is an exception, null is null
-		return value;
-	} */
-
 	@Override
 	public @Nullable Object evaluate(@NonNull OCLExpression body) {
 		Object value = ((Element) body).accept(undecoratedVisitor);

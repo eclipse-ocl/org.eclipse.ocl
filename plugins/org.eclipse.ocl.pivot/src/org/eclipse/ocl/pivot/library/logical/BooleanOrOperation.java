@@ -33,62 +33,24 @@ public class BooleanOrOperation extends AbstractSimpleBinaryOperation
 	public static final @NonNull BooleanOrOperation INSTANCE = new BooleanOrOperation();
 
 	/**
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	@Override
-	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment symbolicEvaluationEnvironment, @NonNull OperationCallExp callExp) {
-		TypeId returnTypeId = callExp.getTypeId();
+	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
 		OCLExpression source = PivotUtil.getOwnedSource(callExp);
 		OCLExpression argument = PivotUtil.getOwnedArgument(callExp, 0);
-		SymbolicValue sourceValue = symbolicEvaluationEnvironment.symbolicEvaluate(source);
-		SymbolicValue argumentValue = symbolicEvaluationEnvironment.symbolicEvaluate(argument);
-		if (sourceValue.isTrue()) {
-			symbolicEvaluationEnvironment.setDead(argument);
-			return symbolicEvaluationEnvironment.getKnownValue(Boolean.TRUE);
+		SymbolicValue sourceValue = evaluationEnvironment.symbolicEvaluate(source);
+		SymbolicValue argumentValue = evaluationEnvironment.symbolicEvaluate(argument);
+		if (sourceValue.isTrue()) {		// source can short-circuit argument
+			evaluationEnvironment.setDead(argument);
+			return evaluationEnvironment.getKnownValue(Boolean.TRUE);
 		}
-		if (argumentValue.isTrue()) {
-			symbolicEvaluationEnvironment.setDead(source);
-			return symbolicEvaluationEnvironment.getKnownValue(Boolean.TRUE);
+		if (argumentValue.isTrue()) {		// argument can short-circuit source
+			evaluationEnvironment.setDead(source);
+			return evaluationEnvironment.getKnownValue(Boolean.TRUE);
 		}
-		SymbolicValue invalidSourceProblem = symbolicEvaluationEnvironment.checkNotInvalid(source, returnTypeId);
-		if (invalidSourceProblem != null) {
-			return invalidSourceProblem;
-		}
-		SymbolicValue nullSourceProblem = symbolicEvaluationEnvironment.checkNotNull(source, returnTypeId);
-		if (nullSourceProblem != null) {
-			return nullSourceProblem;
-		}
-		// ??? XXX short-circuits
-		SymbolicValue invalidArgumentProblem = symbolicEvaluationEnvironment.checkNotInvalid(argument, returnTypeId);
-		if (invalidArgumentProblem != null) {
-			return invalidArgumentProblem;
-		}
-		SymbolicValue nullArgumentProblem = symbolicEvaluationEnvironment.checkNotNull(argument, returnTypeId);
-		if (nullArgumentProblem != null) {
-			return nullArgumentProblem;
-		}
-		return null;
+		return checkPreconditions(evaluationEnvironment, callExp, CHECK_NOT_INVALID | CHECK_NOT_NULL);
 	}
-
-	/**
-	 * @since 1.15
-	 *
-	@Override
-	public void deduceFrom(@NonNull SymbolicExecutor symbolicExecutor, @NonNull SymbolicOperationCallValue resultValue, @NonNull SimpleSymbolicConstraint simpleConstraint) {
-		if ((simpleConstraint.getSymbolicOperator() == SymbolicOperator.EQUALS) && (simpleConstraint.getSymbolicValue() == Boolean.FALSE)) {
-			List<@Nullable Object> boxedSourceAndArgumentValues = resultValue.getBoxedSourceAndArgumentValues();
-			Object sourceValue = boxedSourceAndArgumentValues.get(0);
-			if (sourceValue instanceof SymbolicValue) {
-				SimpleSymbolicConstraintImpl symbolicConstraint = new SimpleSymbolicConstraintImpl(TypeId.BOOLEAN, false, false, SymbolicOperator.EQUALS, Boolean.FALSE);
-				((SymbolicValue)sourceValue).deduceFrom(symbolicExecutor, symbolicConstraint);
-			}
-			Object argumentValue = boxedSourceAndArgumentValues.get(1);
-			if (argumentValue instanceof SymbolicValue) {
-				SimpleSymbolicConstraintImpl symbolicConstraint = new SimpleSymbolicConstraintImpl(TypeId.BOOLEAN, false, false, SymbolicOperator.EQUALS, Boolean.FALSE);
-				((SymbolicValue)argumentValue).deduceFrom(symbolicExecutor, symbolicConstraint);
-			}
-		}
-	} */
 
 	@Override
 	public @Nullable Object dispatch(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object sourceValue) {

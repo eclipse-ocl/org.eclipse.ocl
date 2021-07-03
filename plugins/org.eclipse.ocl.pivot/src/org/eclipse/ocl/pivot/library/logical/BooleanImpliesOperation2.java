@@ -30,38 +30,29 @@ public class BooleanImpliesOperation2 extends AbstractSimpleBinaryOperation
 {
 	public static final @NonNull BooleanImpliesOperation2 INSTANCE = new BooleanImpliesOperation2();
 
-/*	@Override
-	protected @Nullable SymbolicValue checkPreconditions(@NonNull AbstractSymbolicEvaluationEnvironment symbolicEvaluationEnvironment, @NonNull OperationCallExp callExp) {
+	/**
+	 * @since 1.16
+	 */
+	@Override
+	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
 		OCLExpression source = PivotUtil.getOwnedSource(callExp);
-		if (symbolicEvaluationEnvironment.mayBeInvalidOrNull(source)) {
-			return symbolicEvaluationEnvironment.getMayBeInvalidValue(callExp);
-		}
 		OCLExpression argument = PivotUtil.getOwnedArgument(callExp, 0);
-		if (symbolicEvaluationEnvironment.mayBeInvalidOrNull(argument)) {
-			return symbolicEvaluationEnvironment.getMayBeInvalidValue(callExp);
+		SymbolicValue sourceValue = evaluationEnvironment.symbolicEvaluate(source);
+		SymbolicValue argumentValue = evaluationEnvironment.symbolicEvaluate(argument);
+		if (sourceValue.isFalse()) {		// Only source can short-circuit argument
+			evaluationEnvironment.setDead(argument);
+			return evaluationEnvironment.getKnownValue(Boolean.TRUE);
+		}
+		SymbolicValue superProblem = checkPreconditions(evaluationEnvironment, callExp, CHECK_NOT_INVALID | CHECK_NOT_NULL);
+		if (superProblem != null) {
+			return superProblem;
+		}
+		if (argumentValue.isTrue()) {		// argument can short-circuit source
+			evaluationEnvironment.setDead(source);
+			return evaluationEnvironment.getKnownValue(Boolean.TRUE);
 		}
 		return null;
-	} */
-
-	/**
-	 * @since 1.15
-	 *
-	@Override
-	public void deduceFrom(@NonNull SymbolicExecutor symbolicExecutor, @NonNull SymbolicOperationCallValue resultValue, @NonNull SimpleSymbolicConstraint simpleConstraint) {
-		if ((simpleConstraint.getSymbolicOperator() == SymbolicOperator.EQUALS) && (simpleConstraint.getSymbolicValue() == Boolean.TRUE)) {
-			List<@Nullable Object> boxedSourceAndArgumentValues = resultValue.getBoxedSourceAndArgumentValues();
-			Object sourceValue = boxedSourceAndArgumentValues.get(0);
-			if (sourceValue instanceof SymbolicValue) {
-				SimpleSymbolicConstraintImpl symbolicConstraint = new SimpleSymbolicConstraintImpl(TypeId.BOOLEAN, false, false, SymbolicOperator.EQUALS, Boolean.FALSE);
-				((SymbolicValue)sourceValue).deduceFrom(symbolicExecutor, symbolicConstraint);
-			}
-			Object argumentValue = boxedSourceAndArgumentValues.get(1);
-			if (argumentValue instanceof SymbolicValue) {
-				SimpleSymbolicConstraintImpl symbolicConstraint = new SimpleSymbolicConstraintImpl(TypeId.BOOLEAN, false, false, SymbolicOperator.EQUALS, Boolean.TRUE);
-				((SymbolicValue)argumentValue).deduceFrom(symbolicExecutor, symbolicConstraint);
-			}
-		}
-	} */
+	}
 
 	@Override
 	public @Nullable Object dispatch(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object sourceValue) {
@@ -86,7 +77,7 @@ public class BooleanImpliesOperation2 extends AbstractSimpleBinaryOperation
 	}
 
 	/**
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	@Override
 	public @NonNull SymbolicValue symbolicEvaluate(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {

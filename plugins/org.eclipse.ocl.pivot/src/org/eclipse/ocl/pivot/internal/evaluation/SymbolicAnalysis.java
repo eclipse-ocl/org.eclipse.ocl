@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2018 Willink Transformations and others.
+ * Copyright (c) 2020, 2021 Willink Transformations and others.
  * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -31,19 +31,27 @@ import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.evaluation.EvaluationHaltedException;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor.EvaluationVisitorExtension;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
+import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.ids.MapTypeId;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.internal.cse.CommonSubExpressionAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.SymbolicExecutor;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent.SymbolicCollectionContent;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent.SymbolicMapContent;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicKnownValue;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
-import org.eclipse.ocl.pivot.internal.values.SymbolicKnownValueImpl;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.CollectionValue;
+import org.eclipse.ocl.pivot.values.InvalidValue;
+import org.eclipse.ocl.pivot.values.MapValue;
 import org.eclipse.ocl.pivot.values.OCLValue;
-import org.eclipse.ocl.pivot.values.SymbolicKnownValue;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
@@ -61,7 +69,7 @@ public class SymbolicAnalysis extends BasicOCLExecutor implements SymbolicExecut
 	/**
 	 * The known symbolic value of known literal values.
 	 */
-	private @NonNull Map<@Nullable Object, @NonNull SymbolicKnownValue> knownValue2symbolicValue = new HashMap<>();
+	private @NonNull Map<@Nullable Object, org.eclipse.ocl.pivot.internal.symbolic.SymbolicKnownValue> knownValue2symbolicValue = new HashMap<>();
 
 	/**
 	 * The expressions for which contradicting a hypothesized value allows a more precise re-evaluation.
@@ -150,14 +158,8 @@ public class SymbolicAnalysis extends BasicOCLExecutor implements SymbolicExecut
 
 	@Override
 	public @NonNull HypothesizedSymbolicEvaluationEnvironment createHypothesizedSymbolicEvaluationEnvironment(@NonNull Hypothesis hypothesis) {
-		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment = (BaseSymbolicEvaluationEnvironment) getEvaluationEnvironment();
-	//	ConstrainedSymbolicEvaluationEnvironment constrainedEvaluationEnvironment2 = constrainedSymbolicEvaluationEnvironment;
-	//	assert constrainedEvaluationEnvironment2 != null;
-		HypothesizedSymbolicEvaluationEnvironment hypothesizedEvaluationEnvironment = new HypothesizedSymbolicEvaluationEnvironment(symbolicEvaluationEnvironment, hypothesis);
-	//	pushEvaluationEnvironment(nestedEvaluationEnvironment);
-		//	nestedEvaluationEnvironment.add(symbolicValue, constantValue);
-		//	SimpleSymbolicConstraintImpl symbolicConstraint = new SimpleSymbolicConstraintImpl(symbolicValue.getTypeId(), false, false, SymbolicOperator.EQUALS, constantValue);
-		//	symbolicValue.deduceFrom(this, symbolicConstraint);
+		BaseSymbolicEvaluationEnvironment evaluationEnvironment = (BaseSymbolicEvaluationEnvironment) getEvaluationEnvironment();
+		HypothesizedSymbolicEvaluationEnvironment hypothesizedEvaluationEnvironment = new HypothesizedSymbolicEvaluationEnvironment(evaluationEnvironment, hypothesis);
 		List<@NonNull HypothesizedSymbolicEvaluationEnvironment> hypothesizedEvaluationEnvironments2 = hypothesizedEvaluationEnvironments;
 		if (hypothesizedEvaluationEnvironments2 == null) {
 			hypothesizedEvaluationEnvironments = hypothesizedEvaluationEnvironments2 = new ArrayList<>();
@@ -228,7 +230,19 @@ public class SymbolicAnalysis extends BasicOCLExecutor implements SymbolicExecut
 			if (symbolicKnownValue == null) {
 				Type type = getEnvironmentFactory().getIdResolver().getStaticTypeOfValue(null, boxedValue);
 				String constantName = "k#" + constantCounter++;
-				symbolicKnownValue = new SymbolicKnownValueImpl(constantName, type.getTypeId(), boxedValue);
+				TypeId typeId = type.getTypeId();
+				SymbolicContent content = null;
+				if (boxedValue instanceof InvalidValue) {
+				}
+				else if (boxedValue instanceof CollectionValue) {
+					content = new SymbolicCollectionContent("c#" + constantName + "%", (CollectionTypeId)typeId);
+					content.setSize(getKnownValue(((CollectionValue)boxedValue).isEmpty() ? ValueUtil.ZERO_VALUE : ValueUtil.ONE_VALUE));
+				}
+				else if (boxedValue instanceof MapValue) {
+					content = new SymbolicMapContent("m#" + constantName + "%", (MapTypeId)typeId);
+					content.setSize(getKnownValue(((MapValue)boxedValue).isEmpty() ? ValueUtil.ZERO_VALUE : ValueUtil.ONE_VALUE));
+				}
+				symbolicKnownValue = new SymbolicKnownValue(constantName, typeId, boxedValue, content);
 				knownValue2symbolicValue.put(boxedValue, symbolicKnownValue);
 			}
 		}
@@ -262,23 +276,23 @@ public class SymbolicAnalysis extends BasicOCLExecutor implements SymbolicExecut
 	public void initializeEvaluationEnvironment(@NonNull ExpressionInOCL expressionInOCL, @Nullable Object contextElement, @Nullable Object @Nullable [] parameters) {
 		initializeEvaluationEnvironment(expressionInOCL);
 		cseAnalysis.analyze(expressionInOCL);
-		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment = getBaseSymbolicEvaluationEnvironment();
+		BaseSymbolicEvaluationEnvironment evaluationEnvironment = getBaseSymbolicEvaluationEnvironment();
 	//	IdResolver idResolver = environmentFactory.getIdResolver();
 		Variable contextVariable = expressionInOCL.getOwnedContext();
 		if (contextVariable != null) {
 		//	Object contextValue = idResolver.boxedValueOf(contextElement);
-		//	symbolicEvaluationEnvironment.add(contextVariable, contextValue);
+		//	evaluationEnvironment.add(contextVariable, contextValue);
 			CSEElement cseElement = getCSEElement(contextVariable);
-			symbolicEvaluationEnvironment.traceValue(cseElement, contextElement);
+			evaluationEnvironment.traceValue(cseElement, contextElement);
 		}
 		int i = 0;
 		assert parameters != null;
 		for (Variable parameterVariable : PivotUtil.getOwnedParameters(expressionInOCL)) {
 			Object parameter = parameters[i++];
 		//	Object parameterValue = idResolver.boxedValueOf(parameter);
-		//	symbolicEvaluationEnvironment.add(parameterVariable, parameterValue);
+		//	evaluationEnvironment.add(parameterVariable, parameterValue);
 			CSEElement cseElement = getCSEElement(parameterVariable);
-			symbolicEvaluationEnvironment.traceValue(cseElement, parameter);
+			evaluationEnvironment.traceValue(cseElement, parameter);
 		}
 	}
 
@@ -327,23 +341,6 @@ public class SymbolicAnalysis extends BasicOCLExecutor implements SymbolicExecut
 				hypothesis.check();
 			}
 		}
-	/*	if (hypothesizedEvaluationEnvironments != null) {
-			for (@NonNull HypothesizedSymbolicEvaluationEnvironment hypothesizedEvaluationEnvironment : hypothesizedEvaluationEnvironments) {
-				CSEElement hypothesizedElement = hypothesizedEvaluationEnvironment.getHypothesizedElement();
-				AbstractSymbolicEvaluationEnvironment nestedEvaluationEnvironment = createNestedEvaluationEnvironment(getEvaluationEnvironment(), hypothesizedElement);		// XXX execuatbleObject?					pushEvaluationEnvironment(nestedEvaluationEnvironment);
-				hypothesizedEvaluationEnvironment.resolveHypothesis(nestedEvaluationEnvironment);
-				pushEvaluationEnvironment(nestedEvaluationEnvironment);
-
-				nestedEvaluationEnvironment.symbolicEvaluate(hypothesizedElement);
-				//	nestedEvaluationEnvironment.add(symbolicValue, constantValue);
-			//		SimpleSymbolicConstraintImpl symbolicConstraint = new SimpleSymbolicConstraintImpl(symbolicValue.getTypeId(), false, false, SymbolicOperator.EQUALS, constantValue);
-			//		symbolicValue.deduceFrom(this, symbolicConstraint);
-			//	}
-
-
-				popEvaluationEnvironment();
-			}
-		} */
 	}
 
 	public void symbolicEvaluate(@NonNull ExpressionInOCL expressionInOCL) {

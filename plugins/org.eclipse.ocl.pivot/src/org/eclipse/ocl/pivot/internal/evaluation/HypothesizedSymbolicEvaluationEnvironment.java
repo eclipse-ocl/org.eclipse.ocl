@@ -34,8 +34,8 @@ import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.internal.cse.CSEElement;
+import org.eclipse.ocl.pivot.internal.symbolic.AbstractSymbolicRefinedValue;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicStatus;
-import org.eclipse.ocl.pivot.internal.values.AbstractRefinedSymbolicValue;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.logical.BooleanAndOperation;
 import org.eclipse.ocl.pivot.library.logical.BooleanAndOperation2;
@@ -85,8 +85,8 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 	 */
 	private final @NonNull Map<@NonNull TypedElement, @NonNull SymbolicValue> refinedTypedElements2symbolicValue = new HashMap<>();
 
-	public HypothesizedSymbolicEvaluationEnvironment(@NonNull BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment, @NonNull Hypothesis hypothesis) {
-		super(symbolicEvaluationEnvironment, hypothesis.getTypedElement());
+	public HypothesizedSymbolicEvaluationEnvironment(@NonNull BaseSymbolicEvaluationEnvironment evaluationEnvironment, @NonNull Hypothesis hypothesis) {
+		super(evaluationEnvironment, hypothesis.getTypedElement());
 		this.hypothesis = hypothesis;
 		installHypothesis();
 	}
@@ -137,26 +137,26 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 			}
 			if (refinedBooleanValue == null) {
 				SymbolicValue baseSymbolicValue = getBaseSymbolicValue(refinedExpression);
-				refinedSymbolicValue = AbstractRefinedSymbolicValue.createNotInvalidOrNullValue(baseSymbolicValue);
+				refinedSymbolicValue = AbstractSymbolicRefinedValue.createNotInvalidOrNullValue(baseSymbolicValue);
 			}
 		}
 		else if (containingTypedElement instanceof NavigationCallExp) {
 			NavigationCallExp navigationCallExp = (NavigationCallExp)containingTypedElement;
 			refinedExpression = PivotUtil.getOwnedSource(navigationCallExp);
 			SymbolicValue baseSymbolicValue = getBaseSymbolicValue(refinedExpression);
-			refinedSymbolicValue = AbstractRefinedSymbolicValue.createNotInvalidOrNullValue(baseSymbolicValue);
+			refinedSymbolicValue = AbstractSymbolicRefinedValue.createNotInvalidOrNullValue(baseSymbolicValue);
 		}
 		else if (containingTypedElement instanceof LoopExp) {
 			LoopExp loopExp = (LoopExp)containingTypedElement;
 			if (executedExpression == loopExp.getOwnedBody()) {
 			//	constrainedExpression = PivotUtil.getOwnedSource(loopExp);
-			//	symbolicPathValue = symbolicEvaluationEnvironment.getSymbolicValue2(constrainedExpression);
+			//	symbolicPathValue = evaluationEnvironment.getSymbolicValue2(constrainedExpression);
 			// XXX	symbolicKnownValue = SIZE_NOT_EMPTY;
 				// XXX isSafe
 			}
 			refinedExpression = PivotUtil.getOwnedSource(loopExp);
 			SymbolicValue baseSymbolicValue = getBaseSymbolicValue(refinedExpression);
-			refinedSymbolicValue = AbstractRefinedSymbolicValue.createNotInvalidOrNullValue(baseSymbolicValue);
+			refinedSymbolicValue = AbstractSymbolicRefinedValue.createNotInvalidOrNullValue(baseSymbolicValue);
 		}
 		if (refinedExpression != null) {
 			if (refinedBooleanValue != null) {
@@ -227,7 +227,7 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 		//	Install the directly hypothesized expression.
 		//
 		@NonNull TypedElement typedElement = hypothesis.getTypedElement();
-		@NonNull SymbolicValue originalValue = hypothesis.getOriginalValue();
+		@SuppressWarnings("unused") @NonNull SymbolicValue originalValue = hypothesis.getOriginalValue();
 		@NonNull SymbolicValue hypothesizedValue = hypothesis.getHypothesizedValue();
 		CSEElement hypothesisCSE = symbolicAnalysis.getCSEElement(typedElement);
 		cseElement2symbolicValue.put(hypothesisCSE, hypothesizedValue);		// Install the known 'read' value.

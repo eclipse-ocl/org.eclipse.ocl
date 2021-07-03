@@ -19,7 +19,6 @@ import org.eclipse.ocl.pivot.library.AbstractSimpleUnaryOperation;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
-import org.eclipse.ocl.pivot.values.SymbolicKnownValue;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
@@ -44,7 +43,7 @@ public class CollectionSizeOperation extends AbstractSimpleUnaryOperation
 		SymbolicValue sourceSymbolicValue = evaluationEnvironment.symbolicEvaluate(PivotUtil.getOwnedSource(callExp));
 		boolean isKnown = sourceSymbolicValue.isKnown();
 		if (isKnown) {
-			Object sourceKnownValue = ((SymbolicKnownValue)sourceSymbolicValue).getValue();
+			Object sourceKnownValue = sourceSymbolicValue.getKnownValue();
 			IntegerValue resultKnownValue = evaluate(sourceKnownValue);
 			return evaluationEnvironment.getKnownValue(resultKnownValue);
 		}

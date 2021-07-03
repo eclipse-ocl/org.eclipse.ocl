@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.xtext.tests.TestFile;
@@ -73,10 +74,10 @@ public class RoundTripTests extends XtextTestCase
 	private static final @NonNull String AS2ES_VALIDATION_ERRORS = "AS2ES_VALIDATION_ERRORS";
 
 	public @NonNull Resource createEcoreFromPivot(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource, @NonNull URI ecoreURI) throws IOException {
-		Resource ecoreResource = AS2Ecore.createResource(environmentFactory, asResource, ecoreURI, null);
+		XMLResource ecoreResource = AS2Ecore.createResource(environmentFactory, asResource, ecoreURI, null);
 		assertNoResourceErrors("To Ecore errors", ecoreResource);
 		//		if (ecoreURI != null) {
-		ecoreResource.save(XMIUtil.createSaveOptions());
+		ecoreResource.save(XMIUtil.createSaveOptions(ecoreResource));
 		//		}
 		return ecoreResource;
 	}
@@ -107,7 +108,7 @@ public class RoundTripTests extends XtextTestCase
 		XtextResource xtextResource = (XtextResource) resourceSet.createResource(xtextURI, OCLinEcoreCSPackage.eCONTENT_TYPE);
 		((BaseCSResource) xtextResource).updateFrom(asResource, environmentFactory);
 		DebugTimestamp debugTimestamp = new DebugTimestamp(ClassUtil.nonNullState(xtextResource.getURI().toString()));
-		xtextResource.save(XMIUtil.createSaveOptions());
+		xtextResource.save(XMIUtil.createSaveOptions(xtextResource));
 		debugTimestamp.log("Serialization save done");
 		assertNoResourceErrors("Conversion failed", xtextResource);
 		assertNoDiagnosticErrors("Concrete Syntax validation failed", xtextResource);
@@ -128,7 +129,7 @@ public class RoundTripTests extends XtextTestCase
 		CSResource xtextResource = (CSResource) resourceSet.createResource(xtextURI, OCLinEcoreCSPackage.eCONTENT_TYPE);
 		xtextResource.updateFrom(asResource, environmentFactory);
 		DebugTimestamp debugTimestamp = new DebugTimestamp(ClassUtil.nonNullState(xtextResource.getURI().toString()));
-		xtextResource.save(XMIUtil.createSaveOptions());
+		xtextResource.save(XMIUtil.createSaveOptions(xtextResource));
 		debugTimestamp.log("Serialization save done");
 		assertNoResourceErrors("Conversion failed", xtextResource);
 		assertNoDiagnosticErrors("Concrete Syntax validation failed", (XtextResource) xtextResource);
@@ -160,7 +161,7 @@ public class RoundTripTests extends XtextTestCase
 			environmentFactory1.adapt(resourceSet);
 			BaseCSResource xtextResource1 = createXtextFromURI(environmentFactory1, inputURI);
 			ASResource pivotResource1 = createPivotFromXtext(environmentFactory1, xtextResource1, 1);
-			pivotResource1.save(XMIUtil.createSaveOptions());
+			pivotResource1.save(XMIUtil.createSaveOptions(pivotResource1));
 			ASResource pivotResource2 = ClassUtil.nonNullState(CompleteOCLSplitter.separate(environmentFactory1, pivotResource1));
 			@SuppressWarnings("unused")
 			CSResource xtextResource2 = createCompleteOCLXtextFromPivot(environmentFactory1, pivotResource2, outputURI);
@@ -223,13 +224,13 @@ public class RoundTripTests extends XtextTestCase
 				tit.prune();
 			}
 		}
-		asResource.save(XMIUtil.createSaveOptions());
+		asResource.save(XMIUtil.createSaveOptions(asResource));
 		@NonNull String @NonNull[] validationDiagnostics = saveOptions != null ? (@NonNull String @NonNull[])saveOptions.get(AS2ES_VALIDATION_ERRORS) : NO_MESSAGES;
 		assertValidationDiagnostics("Ecore2AS invalid", asResource, validationDiagnostics);
 		Resource outputResource = AS2Ecore.createResource(environmentFactory, asResource, inputURI, saveOptions);
 		assertNoResourceErrors("Ecore2AS failed", outputResource);
 		OutputStream outputStream = resourceSet.getURIConverter().createOutputStream(outputURI);
-		outputResource.save(outputStream, XMIUtil.createSaveOptions());
+		outputResource.save(outputStream, XMIUtil.createSaveOptions(outputResource));
 		outputStream.close();
 		assertNoValidationErrors("Ecore2AS invalid", outputResource);
 
@@ -328,7 +329,7 @@ public class RoundTripTests extends XtextTestCase
 		Resource asResource = pivotModel.eResource();
 		asResource.setURI(pivotURI);
 		assertNoResourceErrors("UML2AS failed", asResource);
-		asResource.save(XMIUtil.createSaveOptions());
+		asResource.save(XMIUtil.createSaveOptions(asResource));
 		assertNoValidationErrors("UML2AS invalid", asResource);
 
 		List<? extends @NonNull EObject> outputObjects = new ArrayList<>(AS2UML.createResource(environmentFactory, asResource));
@@ -342,7 +343,7 @@ public class RoundTripTests extends XtextTestCase
 		Resource outputResource = resourceSet.createResource(outputURI);
 		outputResource.getContents().addAll(outputObjects);
 		assertNoResourceErrors("UML2AS failed", outputResource);
-		outputResource.save(XMIUtil.createSaveOptions());
+		outputResource.save(XMIUtil.createSaveOptions(outputResource));
 		assertNoValidationErrors("UML2AS invalid", outputResource);
 		TestUtil.assertSameModel(inputResource, outputResource);
 		ocl.dispose();
@@ -377,7 +378,7 @@ public class RoundTripTests extends XtextTestCase
 						"invariant file: not oclIsKindOf(_'Bug350894A.ecore#/'::A);\n" +
 						"}\n" +
 						"}\n";
-		TestFile testFile = createOCLinEcoreFile("Bug350894B.oclinecore", testFileContentsB);
+		TestFile testFile = createFile("Bug350894B.oclinecore", testFileContentsB);
 		doRoundTripFromOCLinEcore(testFile.getFileURI(), true);
 	}
 
@@ -390,7 +391,7 @@ public class RoundTripTests extends XtextTestCase
 						"		property is_always_typed : OclAny { ordered };\n" +
 						"	}\n" +
 						"}\n";
-		TestFile testFile = createOCLinEcoreFile("Bug356243.oclinecore", testFileContents);
+		TestFile testFile = createFile("Bug356243.oclinecore", testFileContents);
 		doRoundTripFromOCLinEcore(testFile);
 	}
 
@@ -410,7 +411,7 @@ public class RoundTripTests extends XtextTestCase
 						"		}\n" +
 						"	}\n" +
 						"}\n";
-		TestFile testFile = createOCLinEcoreFile("Bug426927.oclinecore", testFileContents);
+		TestFile testFile = createFile("Bug426927.oclinecore", testFileContents);
 		doRoundTripFromOCLinEcore(testFile);
 	}
 
@@ -437,7 +438,7 @@ public class RoundTripTests extends XtextTestCase
 						//				"property tuple : Tuple(b : B);\n" +		// Bug 401938
 						"}\n" +
 						"}\n";
-		TestFile testFile = createOCLinEcoreFile("Aggregates.oclinecore", testFileContents);
+		TestFile testFile = createFile("Aggregates.oclinecore", testFileContents);
 		doRoundTripFromOCLinEcore(testFile);
 	}
 
@@ -455,7 +456,7 @@ public class RoundTripTests extends XtextTestCase
 						"   literal INT16 = 3;\n" +
 						"}\n" +
 						"}\n";
-		TestFile testFile = createOCLinEcoreFile("Annotations.oclinecore", testFileContents);
+		TestFile testFile = createFile("Annotations.oclinecore", testFileContents);
 		doRoundTripFromOCLinEcore(testFile);
 	}
 
@@ -476,7 +477,7 @@ public class RoundTripTests extends XtextTestCase
 						"property vThree2Star : Real[3..*];\n" +
 						"}\n" +
 						"}\n";
-		TestFile testFile = createOCLinEcoreFile("Cardinality.oclinecore", testFileContents);
+		TestFile testFile = createFile("Cardinality.oclinecore", testFileContents);
 		doRoundTripFromOCLinEcore(testFile);
 	}
 
@@ -501,7 +502,7 @@ public class RoundTripTests extends XtextTestCase
 						"property c3 : Real;\n" +
 						"}\n" +
 						"}\n";
-		TestFile testFile = createOCLinEcoreFile("Comments.oclinecore", testFileContents);
+		TestFile testFile = createFile("Comments.oclinecore", testFileContents);
 		doRoundTripFromOCLinEcore(testFile);
 	}
 
@@ -515,7 +516,7 @@ public class RoundTripTests extends XtextTestCase
 						"		property fruit : T[*] { ordered };\n" +
 						"	}\n" +
 						"}";
-		TestFile testFile = createOCLinEcoreFile("Bug468846.oclinecore", testFileContents);
+		TestFile testFile = createFile("Bug468846.oclinecore", testFileContents);
 		doRoundTripFromOCLinEcore(testFile);
 	}
 
@@ -538,7 +539,7 @@ public class RoundTripTests extends XtextTestCase
 						"	abstract class CallEvent extends Event;\n" +
 						"	class ReplyEvent extends Event;\n" +
 						"}";
-		TestFile testFile = createOCLinEcoreFile("Bug492800.oclinecore", testFileContents);
+		TestFile testFile = createFile("Bug492800.oclinecore", testFileContents);
 		doRoundTripFromOCLinEcore(testFile);
 	}
 
@@ -567,7 +568,7 @@ public class RoundTripTests extends XtextTestCase
 						"}\n" +
 						"}\n" +
 						"}\n";
-		TestFile testFile = createOCLinEcoreFile("InvariantComments.oclinecore", testFileContents);
+		TestFile testFile = createFile("InvariantComments.oclinecore", testFileContents);
 		doRoundTripFromOCLinEcore(testFile.getFileURI(), true);
 	}
 
@@ -604,7 +605,7 @@ public class RoundTripTests extends XtextTestCase
 						"		operation paths(types : ocl::OclType) : ocl::Sequence(Artefact)[*];\n" +
 						"	}\n" +
 						"}\n";
-		TestFile testFile = createOCLinEcoreFile("Bug510729.oclinecore", testFileContents);
+		TestFile testFile = createFile("Bug510729.oclinecore", testFileContents);
 		doRoundTripFromOCLinEcore(testFile);
 	}
 
@@ -615,7 +616,7 @@ public class RoundTripTests extends XtextTestCase
 						"  abstract class Generic(T extends Generic(T));\n" +
 						"  class Concrete extends Generic(Concrete);\n" +
 						"}\n";
-		TestFile testFile = createOCLinEcoreFile("Bug516274.oclinecore", testFileContents);
+		TestFile testFile = createFile("Bug516274.oclinecore", testFileContents);
 		doRoundTripFromOCLinEcore(testFile);
 	}
 
@@ -625,7 +626,7 @@ public class RoundTripTests extends XtextTestCase
 						"import 'http://www.eclipse.org/emf/2003/XMLType';\n" +
 						"\n" +
 						"package stk : stk = 'http://stk' {}";
-		TestFile testFile = createOCLinEcoreFile("Bug521094.oclinecore", testFileContents);
+		TestFile testFile = createFile("Bug521094.oclinecore", testFileContents);
 		doRoundTripFromOCLinEcore(testFile);
 	}
 
@@ -700,7 +701,7 @@ public class RoundTripTests extends XtextTestCase
 						"		property value : Integer[1];\n" +
 						"	}\n" +
 						"}\n";
-		TestFile testFile = createOCLinEcoreFile("Maps.oclinecore", testFileContents);
+		TestFile testFile = createFile("Maps.oclinecore", testFileContents);
 		doRoundTripFromOCLinEcore(testFile);
 	}
 
@@ -717,7 +718,7 @@ public class RoundTripTests extends XtextTestCase
 						"	}\n" +
 						"	class Port;\n" +
 						"}";
-		TestFile testFile = createOCLinEcoreFile("Multiplicities.oclinecore", testFileContents);
+		TestFile testFile = createFile("Multiplicities.oclinecore", testFileContents);
 		doRoundTripFromOCLinEcore(testFile);
 	}
 
@@ -829,7 +830,7 @@ public class RoundTripTests extends XtextTestCase
 						"sysml { stereotype = 'SysML::Block'; }\n" +
 						"}\n" +
 						"}\n";
-		TestFile testFile = createOCLinEcoreFile("SysML.oclinecore", testFileContents);
+		TestFile testFile = createFile("SysML.oclinecore", testFileContents);
 		doRoundTripFromOCLinEcore(testFile);
 	}
 
@@ -868,7 +869,7 @@ public class RoundTripTests extends XtextTestCase
 						"\n" +
 						"	}\n" +
 						"}";
-		TestFile testFile = createOCLinEcoreFile("Bug509533a.oclinecore", testFileContents);
+		TestFile testFile = createFile("Bug509533a.oclinecore", testFileContents);
 		doRoundTripFromOCLinEcore(testFile);
 	}
 

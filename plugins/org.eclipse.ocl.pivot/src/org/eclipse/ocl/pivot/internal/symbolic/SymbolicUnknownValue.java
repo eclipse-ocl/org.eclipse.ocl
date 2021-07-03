@@ -8,21 +8,17 @@
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  */
-package org.eclipse.ocl.pivot.internal.cse;
+package org.eclipse.ocl.pivot.internal.symbolic;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.TypeExp;
 import org.eclipse.ocl.pivot.ids.TypeId;
 
 /**
  * @since 1.16
  */
-public class CSETypeElement extends AbstractCSEElement<@NonNull TypeExp>
-{
-	protected final @NonNull TypeId typeId;
+public class SymbolicUnknownValue extends AbstractLeafSymbolicValue {
 
-	public CSETypeElement(@NonNull CommonSubExpressionAnalysis cseAnalysis, @NonNull TypeExp typeExp) {
-		super(cseAnalysis, typeExp, 0);
-		this.typeId = typeExp.getTypeId();
+	public SymbolicUnknownValue(@NonNull String name, @NonNull TypeId typeId, boolean mayBeNull, boolean mayBeInvalid) { //, @NonNull SymbolicValue value) {
+		super(name, typeId, mayBeNull, mayBeInvalid, null);
 	}
 }

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2010, 2020 Willink Transformations and others.
+ * Copyright (c) 2020, 2021 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -8,34 +8,26 @@
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  */
-package org.eclipse.ocl.pivot.internal.values;
+package org.eclipse.ocl.pivot.internal.symbolic;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.symbolic.SymbolicCollectionContent;
-import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent;
-import org.eclipse.ocl.pivot.internal.symbolic.SymbolicMapContent;
-import org.eclipse.ocl.pivot.internal.symbolic.SymbolicStatus;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent.SymbolicCollectionContent;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent.SymbolicMapContent;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
-import org.eclipse.ocl.pivot.values.NumberValue;
-import org.eclipse.ocl.pivot.values.RefinedSymbolicValue;
+import org.eclipse.ocl.pivot.values.InvalidValue;
+import org.eclipse.ocl.pivot.values.SymbolicRefinedValue;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Symbolic Value</b></em>'.
  * @since 1.16
- * <!-- end-user-doc -->
- *
- * @generated NOT
  */
-public abstract class AbstractRefinedSymbolicValue extends AbstractSymbolicValue implements RefinedSymbolicValue
+public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue implements SymbolicRefinedValue
 {
-
 	/**
 	 * BeKnown reports a SATISFIED/UNSATISFIED BooleanStatus or ZeroStatus for known constants.
-	 */
+	 *
 	private static class BeKnownSymbolicValue extends AbstractRefinedSymbolicValue
 	{
 		protected final @NonNull Object knownValue;
@@ -63,20 +55,33 @@ public abstract class AbstractRefinedSymbolicValue extends AbstractSymbolicValue
 		}
 
 		@Override
+		public @NonNull SymbolicStatus getInvalidStatus() {
+			return SymbolicStatus.valueOf(knownValue instanceof InvalidValue);
+		}
+
+		@Override
+		public @NonNull SymbolicStatus getNullStatus() {
+			return SymbolicStatus.valueOf(knownValue == ValueUtil.NULL_VALUE);
+		}
+
+		@Override
 		public void toString(@NonNull StringBuilder s, int sizeLimit) {
 			s.append("%BeKnown(");
 			super.toString(s, sizeLimit);
-			s.append(".");
+			s.append(", ");
 			s.append(knownValue);
 			s.append(")");
 		}
-	}
+	} */
 
-	private static class IsDeadSymbolicValue extends AbstractRefinedSymbolicValue
+	/**
+	 * Except refines a SymbolicStatus to define a dead.(unreachable) evaluation
+	 */
+	private static class SymbolicDeadValue extends AbstractSymbolicRefinedValue
 	{
-		public IsDeadSymbolicValue(@NonNull SymbolicValue value) {
+		public SymbolicDeadValue(@NonNull SymbolicValue value) {
 			super(value);
-			assert !(value instanceof RefinedSymbolicValue);
+			assert !(value instanceof SymbolicRefinedValue);
 		}
 
 		@Override
@@ -105,11 +110,6 @@ public abstract class AbstractRefinedSymbolicValue extends AbstractSymbolicValue
 		}
 
 		@Override
-		public boolean isFalse() {
-			return false;
-		}
-
-		@Override
 		public boolean isNullFree() {
 			return false;
 		}
@@ -118,16 +118,6 @@ public abstract class AbstractRefinedSymbolicValue extends AbstractSymbolicValue
 		public boolean isSmallerThan(@NonNull SymbolicValue minSizeValue) {
 			return false;
 		} */
-
-		@Override
-		public boolean isTrue() {
-			return false;
-		}
-
-		@Override
-		public boolean mayBeFalse() {
-			return false;
-		}
 
 		@Override
 		public boolean mayBeInvalid() {
@@ -145,19 +135,76 @@ public abstract class AbstractRefinedSymbolicValue extends AbstractSymbolicValue
 		} */
 
 		@Override
-		public boolean mayBeTrue() {
-			return false;
-		}
-
-		@Override
 		public boolean mayBeZero() {
 			return false;
 		}
 
 		@Override
 		public void toString(@NonNull StringBuilder s, int sizeLimit) {
-			s.append("%IsDead(");
+			s.append("%Dead(");
 			super.toString(s, sizeLimit);
+			s.append(")");
+		}
+	}
+
+	/**
+	 * Except refines a SymbolicStatus to exclude a possible value.
+	 */
+	private static class SymbolicExceptValue extends AbstractSymbolicRefinedValue
+	{
+		protected final @NonNull Object exceptValue;
+
+		public SymbolicExceptValue(@NonNull SymbolicValue value, @Nullable Object exceptValue) {
+			super(value);
+			assert ValueUtil.isBoxed(exceptValue);
+			this.exceptValue = exceptValue != null ? exceptValue : ValueUtil.NULL_VALUE;
+		}
+
+		@Override
+		public @Nullable SymbolicStatus basicGetBooleanStatus() {
+			SymbolicStatus booleanStatus = super.basicGetBooleanStatus();
+			if (exceptValue.equals(ValueUtil.TRUE_VALUE)) {
+				booleanStatus = SymbolicStatus.UNSATISFIED;
+			}
+			else if (exceptValue.equals(ValueUtil.FALSE_VALUE)) {
+				booleanStatus = SymbolicStatus.SATISFIED;
+			}
+			return booleanStatus;
+		}
+
+		@Override
+		public @Nullable SymbolicStatus basicGetInvalidStatus() {
+			SymbolicStatus invalidStatus = super.basicGetInvalidStatus();
+			if (exceptValue instanceof InvalidValue) {
+				invalidStatus = SymbolicStatus.UNSATISFIED;
+			}
+			return invalidStatus;
+		}
+
+		@Override
+		public @Nullable SymbolicStatus basicGetNullStatus() {
+			SymbolicStatus nullStatus = super.basicGetNullStatus();
+			if (exceptValue == ValueUtil.NULL_VALUE) {
+				nullStatus = SymbolicStatus.UNSATISFIED;
+			}
+			return nullStatus;
+		}
+
+		@Override
+		public @Nullable SymbolicStatus basicGetZeroStatus() {
+			SymbolicStatus zeroStatus = super.basicGetInvalidStatus();
+			if (exceptValue.equals(ValueUtil.ZERO_VALUE)) {
+				zeroStatus = SymbolicStatus.UNSATISFIED;
+			}
+			return zeroStatus;
+		}
+
+		@Override
+		public void toString(@NonNull StringBuilder s, int sizeLimit) {
+			s.append("%Except(");
+			super.toString(s, sizeLimit);
+			s.append(", ");
+			ValueUtil.toString(exceptValue, s, sizeLimit);
 			s.append(")");
 		}
 	}
@@ -165,9 +212,9 @@ public abstract class AbstractRefinedSymbolicValue extends AbstractSymbolicValue
 	/**
 	 * IsZero converts a ZeroStatus value to a BooleanStatus
 	 */
-	private static class IsZeroSymbolicValue extends AbstractRefinedSymbolicValue
+	private static class SymbolicIsZeroValue extends AbstractSymbolicRefinedValue
 	{
-		public IsZeroSymbolicValue(@NonNull SymbolicValue value) {
+		public SymbolicIsZeroValue(@NonNull SymbolicValue value) {
 			super(value);
 		}
 
@@ -177,8 +224,24 @@ public abstract class AbstractRefinedSymbolicValue extends AbstractSymbolicValue
 		}
 
 		@Override
+		public @Nullable SymbolicStatus basicGetInvalidStatus() {
+			return null;
+		}
+
+		@Override
+		public @Nullable SymbolicStatus basicGetNullStatus() {
+			return null;
+		}
+
+		@Override
 		public @NonNull SymbolicStatus basicGetZeroStatus() {
 			return value.getZeroStatus();
+		}
+
+		@Override
+		public @Nullable Object getKnownValue() {
+			SymbolicStatus booleanStatus = getBooleanStatus();
+			return /*booleanStatus == null ? null :*/ booleanStatus.isSatisfied() ? Boolean.TRUE : Boolean.FALSE;
 		}
 
 		@Override
@@ -189,57 +252,9 @@ public abstract class AbstractRefinedSymbolicValue extends AbstractSymbolicValue
 		}
 	}
 
-	private static class NotInvalidSymbolicValue extends AbstractRefinedSymbolicValue
-	{
-		public NotInvalidSymbolicValue(@NonNull SymbolicValue value) {
-			super(value);
-		}
-
-		@Override
-		public @NonNull SymbolicStatus basicGetBooleanStatus() {
-			return getInvalidStatus();
-		}
-
-		@Override
-		public @NonNull SymbolicStatus basicGetInvalidStatus() {
-			return SymbolicStatus.UNSATISFIED;
-		}
-
-		@Override
-		public void toString(@NonNull StringBuilder s, int sizeLimit) {
-			s.append("%NotInvalid(");
-			super.toString(s, sizeLimit);
-			s.append(")");
-		}
-	}
-
-	private static class NotNullSymbolicValue extends AbstractRefinedSymbolicValue
-	{
-		public NotNullSymbolicValue(@NonNull SymbolicValue value) {
-			super(value);
-		}
-
-		@Override
-		public @NonNull SymbolicStatus basicGetBooleanStatus() {
-			return getNullStatus();
-		}
-
-		@Override
-		public @NonNull SymbolicStatus basicGetNullStatus() {
-			return SymbolicStatus.UNSATISFIED;
-		}
-
-		@Override
-		public void toString(@NonNull StringBuilder s, int sizeLimit) {
-			s.append("%NotNull(");
-			super.toString(s, sizeLimit);
-			s.append(")");
-		}
-	}
-
-	private static class NotSymbolicValue extends AbstractRefinedSymbolicValue
-	{
-		public NotSymbolicValue(@NonNull SymbolicValue value) {
+	private static class SymbolicNotValue extends AbstractSymbolicRefinedValue
+	{		// FIXME only negate Boolean / correct TypeId
+		public SymbolicNotValue(@NonNull SymbolicValue value) {
 			super(value);
 		}
 
@@ -249,38 +264,21 @@ public abstract class AbstractRefinedSymbolicValue extends AbstractSymbolicValue
 		}
 
 		@Override
-		public @NonNull SymbolicStatus basicGetZeroStatus() {
-			return value.getZeroStatus().not();			// not super to avoid recursion
-		}
-
-	//	@Override
-	//	public @NonNull SymbolicStatus getNullStatus() {
-	//		return super.getNullStatus().not();
-	//	}
-
-	//	@Override
-	//	public @NonNull SymbolicStatus getZeroStatus() {
-	//		return super.getZeroStatus().not();
-	//	}
-
-//		@Override
-//		public boolean isFalse() {
-//			return !value.mayBeTrue();
-//		}
-
-//		@Override
-//		public boolean isTrue() {
-//			return !value.mayBeFalse();
-//		}
-
-		@Override
-		public boolean mayBeFalse() {
-			return !value.isTrue();
+		public @Nullable SymbolicStatus basicGetInvalidStatus() {
+			SymbolicStatus invalidStatus = value.basicGetInvalidStatus();
+			return invalidStatus != null ? invalidStatus.not() : null;
 		}
 
 		@Override
-		public boolean mayBeTrue() {
-			return !value.isFalse();
+		public @Nullable SymbolicStatus basicGetNullStatus() {
+			SymbolicStatus nullStatus = value.basicGetNullStatus();
+			return nullStatus != null ? nullStatus.not() : null;
+		}
+
+		@Override
+		public @Nullable SymbolicStatus basicGetZeroStatus() {
+			SymbolicStatus zeroStatus = value.basicGetZeroStatus();
+			return zeroStatus != null ? zeroStatus.not() : null;
 		}
 
 		@Override
@@ -320,9 +318,9 @@ public abstract class AbstractRefinedSymbolicValue extends AbstractSymbolicValue
 		}
 	} */
 
-	private static class NullFreeSymbolicValue extends AbstractRefinedSymbolicValue
+	private static class SymbolicNullFreeValue extends AbstractSymbolicRefinedValue
 	{
-		public NullFreeSymbolicValue(@NonNull SymbolicValue value) {
+		public SymbolicNullFreeValue(@NonNull SymbolicValue value) {
 			super(value);
 		}
 
@@ -339,11 +337,11 @@ public abstract class AbstractRefinedSymbolicValue extends AbstractSymbolicValue
 		}
 	}
 
-	public static class RefinedContentSymbolicValue extends AbstractRefinedSymbolicValue
+	public static class SymbolicRefinedContentValue extends AbstractSymbolicRefinedValue
 	{
 		private final @NonNull SymbolicContent content;
 
-		public RefinedContentSymbolicValue(@NonNull SymbolicValue value) {
+		public SymbolicRefinedContentValue(@NonNull SymbolicValue value) {
 			super(value);
 			this.content = value.getContent().shallowClone();
 		}
@@ -376,11 +374,6 @@ public abstract class AbstractRefinedSymbolicValue extends AbstractSymbolicValue
 			content.setSize(refinedSize);
 		}
 
-	//	@Override
-	//	public @NonNull String toString() {
-	//		return "%Refined(" + value.toString() + ")";
-	//	}
-
 		@Override
 		public void toString(@NonNull StringBuilder s, int sizeLimit) {
 			s.append("%Refined(");
@@ -392,10 +385,20 @@ public abstract class AbstractRefinedSymbolicValue extends AbstractSymbolicValue
 		}
 	}
 
-	private static class SizeSymbolicValue extends AbstractRefinedSymbolicValue
+	private static class SymbolicSizeValue extends AbstractSymbolicRefinedValue
 	{
-		public SizeSymbolicValue(@NonNull SymbolicValue value) {
+		public SymbolicSizeValue(@NonNull SymbolicValue value) {
 			super(value);
+		}
+
+		@Override
+		public @Nullable SymbolicStatus basicGetInvalidStatus() {
+			return null;
+		}
+
+		@Override
+		public @Nullable SymbolicStatus basicGetNullStatus() {
+			return null;
 		}
 
 		@Override
@@ -409,45 +412,41 @@ public abstract class AbstractRefinedSymbolicValue extends AbstractSymbolicValue
 		}
 	}
 
-	public static @NonNull SymbolicValue createBeKnownValue(@NonNull SymbolicValue symbolicValue, @NonNull Object knownValue) {
+/*	public static @NonNull SymbolicValue createBeKnownValue(@NonNull SymbolicValue symbolicValue, @NonNull Object knownValue) {
 		if (!symbolicValue.isZero()) {
 			return new BeKnownSymbolicValue(symbolicValue, knownValue);
 		}
 		else {
 			return symbolicValue;
 		}
-	}
-
-	public static @NonNull SymbolicValue createIsDeadValue(SymbolicValue symbolicValue) {
-		if (!symbolicValue.isDead()) {
-			return new IsDeadSymbolicValue(symbolicValue.getBaseValue());
-		}
-		else {
-			return symbolicValue;
-		}
-	}
-
-/*	public static @NonNull SymbolicValue createIsEmptyValue(@NonNull SymbolicValue symbolicValue) {
-		if (!symbolicValue.isEmpty()) {
-			return new IsEmptySymbolicValue(symbolicValue);
-		}
-		else {
-			return symbolicValue;
-		}
 	} */
+
+	public static @NonNull SymbolicValue createDeadValue(SymbolicValue symbolicValue) {
+		if (!symbolicValue.isDead()) {
+			return new SymbolicDeadValue(symbolicValue.getBaseValue());
+		}
+		else {
+			return symbolicValue;
+		}
+	}
+
+	public static @NonNull SymbolicValue createExceptValue(@NonNull SymbolicValue symbolicValue, @Nullable Object exceptValue) {
+		assert ValueUtil.isBoxed(exceptValue);
+		if (((exceptValue == null) && symbolicValue.isNull())
+		 || ((exceptValue instanceof InvalidValue) && symbolicValue.isInvalid())
+		 || (ValueUtil.ZERO_VALUE.equals(exceptValue) && symbolicValue.isZero())
+		 || (ValueUtil.FALSE_VALUE.equals(exceptValue) && symbolicValue.isFalse())
+		 || (ValueUtil.TRUE_VALUE.equals(exceptValue) && symbolicValue.isTrue())) {
+			return symbolicValue;
+		}
+		else {
+			return new SymbolicExceptValue(symbolicValue, exceptValue);
+		}
+	}
 
 	public static @NonNull SymbolicValue createIsZeroValue(@NonNull SymbolicValue symbolicValue) {
 		if (!symbolicValue.isZero()) {
-			return new IsZeroSymbolicValue(symbolicValue);
-		}
-		else {
-			return symbolicValue;
-		}
-	}
-
-	public static @NonNull SymbolicValue createNotInvalidValue(@NonNull SymbolicValue symbolicValue) {
-		if (symbolicValue.mayBeInvalid()) {
-			return new NotInvalidSymbolicValue(symbolicValue);
+			return new SymbolicIsZeroValue(symbolicValue);
 		}
 		else {
 			return symbolicValue;
@@ -455,24 +454,7 @@ public abstract class AbstractRefinedSymbolicValue extends AbstractSymbolicValue
 	}
 
 	public static @NonNull SymbolicValue createNotInvalidOrNullValue(@NonNull SymbolicValue symbolicValue) {
-		if (symbolicValue.mayBeInvalid()) {
-			return new NotInvalidSymbolicValue(symbolicValue);
-		}
-		else if (symbolicValue.mayBeNull()) {
-			return new NotNullSymbolicValue(symbolicValue);
-		}
-		else {
-			return symbolicValue;
-		}
-	}
-
-	public static @NonNull SymbolicValue createNotNullValue(@NonNull SymbolicValue symbolicValue) {
-		if (symbolicValue.mayBeNull()) {
-			return new NotNullSymbolicValue(symbolicValue);
-		}
-		else {
-			return symbolicValue;
-		}
+		return createExceptValue(createExceptValue(symbolicValue, null), ValueUtil.INVALID_VALUE);
 	}
 
 /*	public static @NonNull SymbolicValue createNotSmallerThanValue(@NonNull SymbolicValue symbolicValue, @NonNull SymbolicValue minSizeValue) {
@@ -485,24 +467,24 @@ public abstract class AbstractRefinedSymbolicValue extends AbstractSymbolicValue
 	} */
 
 	public static @NonNull SymbolicValue createNotValue(@NonNull SymbolicValue symbolicValue) {
-		return new NotSymbolicValue(symbolicValue);
+		return new SymbolicNotValue(symbolicValue);
 	}
 
 	public static @NonNull SymbolicValue createNullFreeValue(@NonNull SymbolicValue symbolicValue) {
 		if (!symbolicValue.isNullFree()) {
-			return new NullFreeSymbolicValue(symbolicValue);
+			return new SymbolicNullFreeValue(symbolicValue);
 		}
 		else {
 			return symbolicValue;
 		}
 	}
 
-	public static RefinedContentSymbolicValue createRefinedContent(@NonNull SymbolicValue symbolicValue) {
-		return new RefinedContentSymbolicValue(symbolicValue);
+	public static SymbolicRefinedContentValue createRefinedContent(@NonNull SymbolicValue symbolicValue) {
+		return new SymbolicRefinedContentValue(symbolicValue);
 	}
 
 	public static @NonNull SymbolicValue createSizeValue(@NonNull SymbolicValue symbolicValue) {
-		return new SizeSymbolicValue(symbolicValue);
+		return new SymbolicSizeValue(symbolicValue);
 	}
 
 	public static @NonNull SymbolicValue createSmallerThanValue(@NonNull SymbolicValue symbolicValue, @NonNull SymbolicValue minSizeValue) {
@@ -511,7 +493,7 @@ public abstract class AbstractRefinedSymbolicValue extends AbstractSymbolicValue
 
 	protected final @NonNull SymbolicValue value;
 
-	protected AbstractRefinedSymbolicValue(@NonNull SymbolicValue value) {
+	protected AbstractSymbolicRefinedValue(@NonNull SymbolicValue value) {
 		this.value = value;
 		assert !value.isDead();
 	}
@@ -526,10 +508,10 @@ public abstract class AbstractRefinedSymbolicValue extends AbstractSymbolicValue
 	//	@NonNull SymbolicValue thisBaseValue = this.getBaseValue();
 		@NonNull SymbolicValue resultValue = unrefinedValue.getBaseValue();
 		if (!mayBeInvalid() && unrefinedValue.mayBeInvalid()) {
-			resultValue = createNotInvalidValue(resultValue);
+			resultValue = createExceptValue(resultValue, ValueUtil.INVALID_VALUE);
 		}
 		if (!mayBeNull() && unrefinedValue.mayBeNull()) {
-			resultValue = createNotNullValue(resultValue);
+			resultValue = createExceptValue(resultValue, null);
 		}
 		if ((basicGetZeroStatus() != null) && !mayBeZero() && (unrefinedValue.basicGetZeroStatus() != null) && unrefinedValue.mayBeZero()) {
 			resultValue = createNotValue(createIsZeroValue(resultValue));
@@ -588,6 +570,11 @@ public abstract class AbstractRefinedSymbolicValue extends AbstractSymbolicValue
 	}
 
 	@Override
+	public @Nullable Object getKnownValue() {
+		return value.getKnownValue();
+	}
+
+	@Override
 	public boolean isCollection() {
 		return value.isCollection();
 	}
@@ -607,28 +594,8 @@ public abstract class AbstractRefinedSymbolicValue extends AbstractSymbolicValue
 		return value.isNullFree();
 	}
 
-//	@Override
-//	public boolean isSmallerThan(@NonNull SymbolicValue minSizeValue) {
-//		return value.isSmallerThan(minSizeValue);
-//	}
-
-	@Override
-	public boolean mayBeFalse() {
-		return value.mayBeFalse();
-	}
-
-//	@Override
-//	public boolean mayBeSmallerThan(@NonNull SymbolicValue minSizeValue) {
-//		return value.mayBeSmallerThan(minSizeValue);
-//	}
-
-	@Override
-	public boolean mayBeTrue() {
-		return value.mayBeTrue();
-	}
-
 	@Override
 	public void toString(@NonNull StringBuilder s, int sizeLimit) {
-		value.toString(s, sizeLimit);
+		ValueUtil.toString(value, s, sizeLimit);
 	}
 }

@@ -28,10 +28,10 @@ public class OclAnyOclIsInvalidOperation extends AbstractSimpleUnaryOperation
 	public static final @NonNull OclAnyOclIsInvalidOperation INSTANCE = new OclAnyOclIsInvalidOperation();
 
 	/**
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	@Override
-	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment symbolicEvaluationEnvironment, @NonNull OperationCallExp callExp) {
+	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
 		return null;
 	}
 
@@ -44,7 +44,7 @@ public class OclAnyOclIsInvalidOperation extends AbstractSimpleUnaryOperation
 	}
 
 	/**
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	@Override
 	public @NonNull SymbolicValue symbolicEvaluate(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {

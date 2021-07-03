@@ -102,7 +102,7 @@ public class IdiomsLoadTests extends XtextTestCase
 			xtextResource.setURI(output2URI);
 			//			System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " save()");
 			DebugTimestamp debugTimestamp = new DebugTimestamp(xtextResource.getURI().toString());
-			xtextResource.save(XMIUtil.createSaveOptions());
+			xtextResource.save(XMIUtil.createSaveOptions(xtextResource));
 			debugTimestamp.log("Serialization save done");
 			//			System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " saved()");
 			assertNoResourceErrors("Save failed", xtextResource);

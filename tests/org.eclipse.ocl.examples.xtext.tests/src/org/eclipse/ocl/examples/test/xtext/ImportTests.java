@@ -74,12 +74,12 @@ public class ImportTests extends XtextTestCase
 				"package A1 : A2 = 'http://A3'{\n" +
 						"    class A;\n" +
 						"}\n";
-		createOCLinEcoreFile("Bug353793A.oclinecore", testFileA);
+		createFile("Bug353793A.oclinecore", testFileA);
 		String testFileB =
 				"package B1 : B2 = 'http://B3'{\n" +
 						"    class B;\n" +
 						"}\n";
-		createOCLinEcoreFile("Bug353793B.oclinecore", testFileB);
+		createFile("Bug353793B.oclinecore", testFileB);
 		String testFileE =
 				"package E1 : E2 = 'http://E3'{\n" +
 						"    class E;\n" +
@@ -171,7 +171,7 @@ public class ImportTests extends XtextTestCase
 						"operation spacedOut() : String => 'org.eclipse.ocl.examples.test.xtext.ImportTests$SpacedOut';\n" +
 						"}\n" +
 						"}\n";
-		createOCLinEcoreFile("custom.oclstdlib", customLibrary);
+		createFile("custom.oclstdlib", customLibrary);
 		String testFile =
 				"library 'minimal.oclstdlib'\n" +
 						"library 'custom.oclstdlib'\n" +
@@ -240,7 +240,7 @@ public class ImportTests extends XtextTestCase
 						"context _'Real'\n" +
 						"def: isPositive(z : Integer) : Boolean = true\n" +
 						"endpackage\n";
-		createOCLinEcoreFile("more.ocl", moreCompleteOCL);
+		createFile("more.ocl", moreCompleteOCL);
 		String testFile =
 				"import 'more.ocl.oclas#/'\n" +
 						"package ocl\n" +
@@ -394,7 +394,7 @@ public class ImportTests extends XtextTestCase
 						"operation spacedOut() : String => 'org.eclipse.ocl.examples.test.xtext.ImportTests$SpacedOut';\n" +
 						"}\n" +
 						"}\n";
-		createOCLinEcoreFile("custom.oclstdlib", customLibrary);
+		createFile("custom.oclstdlib", customLibrary);
 		String testFile =
 				"import '" + LibraryConstants.STDLIB_URI + "';\n" +
 						"import 'custom.oclstdlib';\n" +
@@ -461,7 +461,7 @@ public class ImportTests extends XtextTestCase
 						"context _'Real'\n" +
 						"def: isPositive(z : Integer) : Boolean = true\n" +
 						"endpackage\n";
-		createOCLinEcoreFile("more.ocl", moreCompleteOCL);
+		createFile("more.ocl", moreCompleteOCL);
 		String testFile =
 				"import 'more.ocl'\n" +
 						"package ocl\n" +
@@ -481,7 +481,7 @@ public class ImportTests extends XtextTestCase
 						"context _'Real'\n" +
 						"def: isPositive() : Boolean = true\n" +
 						"endpackage\n";
-		createOCLinEcoreFile("more.ocl", moreCompleteOCL);
+		createFile("more.ocl", moreCompleteOCL);
 		String testFile =
 				"import 'more.ocl'\n" +
 						"package ocl\n" +
@@ -504,7 +504,7 @@ public class ImportTests extends XtextTestCase
 						"context _'Integer'\n" +
 						"def: isPositive() : Boolean = true\n" +
 						"endpackage\n";
-		createOCLinEcoreFile("imported.ocl", moreCompleteOCL);
+		createFile("imported.ocl", moreCompleteOCL);
 		String testFile =
 				"import 'imported.ocl'\n" +
 						"package ocl\n" +

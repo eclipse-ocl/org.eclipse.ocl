@@ -408,7 +408,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	}
 
 	/**
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	@Override
 	public @Nullable SymbolicAnalysis basicGetSymbolicAnalysis(@NonNull Element element) {
@@ -1759,45 +1759,6 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	public @NonNull Iterable<@NonNull CompleteClass> getSuperCompleteClasses(@NonNull CompleteClass completeClass) {
 		return completeClass.getProperSuperCompleteClasses();
 	}
-
-/*	@Override
-	public @NonNull SymbolicAnalysis getSymbolicAnalysis(@NonNull Element element) {
-		ExpressionInOCL expressionInOCL = PivotUtil.getContainingExpressionInOCL(element);
-		if (expressionInOCL != null) {
-			return getSymbolicAnalysis(expressionInOCL);
-		}
-		return MetamodelManagerInternalExtension2.super.getSymbolicAnalysis(element);
-	} */
-
-	/**
-	 * @since 1.15
-	 *
-	public @NonNull SymbolicAnalysis getSymbolicAnalysis(@NonNull ExpressionInOCL expressionInOCL) {
-		Map<@NonNull ExpressionInOCL, @NonNull SymbolicAnalysis> expressionInOCL2symbolicAnalysis2 = expressionInOCL2symbolicAnalysis;
-		if (expressionInOCL2symbolicAnalysis2 == null) {
-			expressionInOCL2symbolicAnalysis = expressionInOCL2symbolicAnalysis2 = new HashMap<>();
-		}
-		SymbolicAnalysis symbolicAnalysis = expressionInOCL2symbolicAnalysis2.get(expressionInOCL);
-		if (symbolicAnalysis == null) {
-			VariableDeclaration contextVariable = PivotUtil.getOwnedContext(expressionInOCL);
-			boolean mayBeNull = !contextVariable.isIsRequired();
-			boolean mayBeInvalid = contextVariable.getTypeId() == TypeId.OCL_INVALID;
-			Object contextValue = new SymbolicVariableValueImpl(contextVariable, mayBeNull, mayBeInvalid);
-			Operation operation = PivotUtil.getContainingOperation(expressionInOCL);
-			List<@NonNull Variable> ownedParameters = PivotUtilInternal.getOwnedParametersList(expressionInOCL);
-			int iSize = ownedParameters.size();
-			@Nullable Object[] parameterValues = new @Nullable Object[iSize];
-			for (int i = 0; i < iSize; i++) {
-				VariableDeclaration parameterVariable = ownedParameters.get(i);
-				mayBeNull = !parameterVariable.isIsRequired();
-				mayBeInvalid = (operation != null) && operation.isIsValidating();
-				parameterValues[i] = new SymbolicVariableValueImpl(parameterVariable, mayBeNull, mayBeInvalid);
-			}
-			symbolicAnalysis = getSymbolicAnalysis(expressionInOCL, contextValue, parameterValues);
-			expressionInOCL2symbolicAnalysis2.put(expressionInOCL, symbolicAnalysis);
-		}
-		return symbolicAnalysis;
-	} */
 
 	/**
 	 * @since 1.3

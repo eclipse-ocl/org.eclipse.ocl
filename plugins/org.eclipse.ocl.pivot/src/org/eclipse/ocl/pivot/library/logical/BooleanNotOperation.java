@@ -12,13 +12,11 @@ package org.eclipse.ocl.pivot.library.logical;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.library.AbstractSimpleUnaryOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
@@ -30,41 +28,12 @@ public class BooleanNotOperation extends AbstractSimpleUnaryOperation
 	public static final @NonNull BooleanNotOperation INSTANCE = new BooleanNotOperation();
 
 	/**
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	@Override
-	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment symbolicEvaluationEnvironment, @NonNull OperationCallExp callExp) {
-		TypeId returnTypeId = callExp.getTypeId();
-		OCLExpression source = PivotUtil.getOwnedSource(callExp);
-		SymbolicValue invalidSourceProblem = symbolicEvaluationEnvironment.checkNotInvalid(source, returnTypeId);
-		if (invalidSourceProblem != null) {
-			return invalidSourceProblem;
-		}
-		return null;
+	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
+		return checkPreconditions(evaluationEnvironment, callExp, CHECK_NOT_INVALID);
 	}
-
-	/**
-	 * @since 1.15
-	 *
-	@Override
-	public void deduceFrom(@NonNull SymbolicExecutor symbolicExecutor, @NonNull SymbolicOperationCallValue resultValue, @NonNull SimpleSymbolicConstraint simpleConstraint) {
-		if (simpleConstraint.getSymbolicOperator() == SymbolicOperator.EQUALS) {
-			List<@Nullable Object> boxedSourceAndArgumentValues = resultValue.getBoxedSourceAndArgumentValues();
-			Object sourceValue = boxedSourceAndArgumentValues.get(0);
-			if (sourceValue instanceof SymbolicValue) {
-				Object symbolicValue = simpleConstraint.getSymbolicValue();
-				SymbolicValue symbolicValue2 = (SymbolicValue)sourceValue;
-				if (symbolicValue == Boolean.TRUE) {
-					SimpleSymbolicConstraintImpl symbolicConstraint = new SimpleSymbolicConstraintImpl(TypeId.BOOLEAN, false, false, SymbolicOperator.EQUALS, Boolean.FALSE);
-					symbolicValue2.deduceFrom(symbolicExecutor, symbolicConstraint);
-				}
-				else if (symbolicValue == Boolean.FALSE) {
-					SimpleSymbolicConstraintImpl symbolicConstraint = new SimpleSymbolicConstraintImpl(TypeId.BOOLEAN, false, false, SymbolicOperator.EQUALS, Boolean.TRUE);
-					symbolicValue2.deduceFrom(symbolicExecutor, symbolicConstraint);
-				}
-			}
-		}
-	} */
 
 	@Override
 	public @Nullable Boolean evaluate(@Nullable Object argument) {

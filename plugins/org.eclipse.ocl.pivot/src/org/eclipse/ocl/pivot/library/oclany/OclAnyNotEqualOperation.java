@@ -15,7 +15,6 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
@@ -24,7 +23,6 @@ import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
-import org.eclipse.ocl.pivot.values.SymbolicKnownValue;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 
@@ -38,28 +36,9 @@ public class OclAnyNotEqualOperation extends OclAnyEqualOperation
 	public static final @NonNull OclAnyNotEqualOperation INSTANCE = new OclAnyNotEqualOperation();
 
 	/**
-	 * @since 1.15
-	 */
-	@Override
-	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment symbolicEvaluationEnvironment, @NonNull OperationCallExp callExp) {
-		TypeId returnTypeId = callExp.getTypeId();
-		OCLExpression source = PivotUtil.getOwnedSource(callExp);
-		SymbolicValue invalidSourceProblem = symbolicEvaluationEnvironment.checkNotInvalid(source, returnTypeId);
-		if (invalidSourceProblem != null) {
-			return invalidSourceProblem;
-		}
-		OCLExpression argument = PivotUtil.getOwnedArgument(callExp, 0);
-		SymbolicValue invalidArgumentProblem = symbolicEvaluationEnvironment.checkNotInvalid(argument, returnTypeId);
-		if (invalidArgumentProblem != null) {
-			return invalidArgumentProblem;
-		}
-		return null;
-	}
-
-	/**
 	 * Overridden to be invalid out for any invalid in, never null, true for mismatching nullity.
 	 *
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	@Override
 	protected @NonNull SymbolicValue createResultValue(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp,
@@ -81,11 +60,6 @@ public class OclAnyNotEqualOperation extends OclAnyEqualOperation
 			return evaluationEnvironment.createUnknownValue(callExp, false, mayBeInvalid);
 		}
 	}
-
-/*	@Override
-	public void deduceFrom(@NonNull SymbolicExecutor symbolicExecutor, @NonNull SymbolicOperationCallValue operationCallValue, @NonNull SimpleSymbolicConstraint resultConstraint) {
-		deduceFrom(symbolicExecutor, operationCallValue, resultConstraint, true);
-	} */
 
 	@Override
 	public @NonNull Boolean evaluate(@Nullable Object left, @Nullable Object right) {
@@ -114,8 +88,8 @@ public class OclAnyNotEqualOperation extends OclAnyEqualOperation
 		SymbolicValue argumentSymbolicValue = evaluationEnvironment.symbolicEvaluate(PivotUtil.getOwnedArgument(callExp, 0));
 		boolean isKnown = sourceSymbolicValue.isKnown() && argumentSymbolicValue.isKnown();
 		if (isKnown) {
-			Object sourceKnownValue = ((SymbolicKnownValue)sourceSymbolicValue).getValue();
-			Object argumentKnownValue = ((SymbolicKnownValue)argumentSymbolicValue).getValue();
+			Object sourceKnownValue = sourceSymbolicValue.getKnownValue();
+			Object argumentKnownValue = argumentSymbolicValue.getKnownValue();
 			Boolean resultKnownValue = evaluate(sourceKnownValue, argumentKnownValue);
 			return evaluationEnvironment.getKnownValue(resultKnownValue);
 		}

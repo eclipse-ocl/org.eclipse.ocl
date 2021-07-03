@@ -22,10 +22,9 @@ import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent;
-import org.eclipse.ocl.pivot.internal.values.SymbolicUnknownValueImpl;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicUnknownValue;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
-import org.eclipse.ocl.pivot.values.SymbolicUnknownValue;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
@@ -129,7 +128,7 @@ public abstract class AbstractSymbolicEvaluationEnvironment extends BasicEvaluat
 	}
 
 	public @NonNull SymbolicUnknownValue createUnknownValue(@NonNull TypeId typeId, boolean mayBeNull, boolean mayBeInvalid) {
-		return new SymbolicUnknownValueImpl(getSymbolicAnalysis().createVariableName(), typeId, mayBeNull, mayBeInvalid);
+		return new SymbolicUnknownValue(getSymbolicAnalysis().createVariableName(), typeId, mayBeNull, mayBeInvalid);
 	}
 
 	@Override

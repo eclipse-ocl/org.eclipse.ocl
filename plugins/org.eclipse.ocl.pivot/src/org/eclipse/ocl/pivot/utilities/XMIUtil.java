@@ -390,8 +390,12 @@ public class XMIUtil
 	 * NB These preferences must not be used when saving a standard resource such as a *.ecore
 	 * to avoid incompatibilities between rival savers. See Bug 573923.
 	 *
+<<<<<<< Upstream, based on ewillink/573843
 	 * @deprecated supply resurce argument so that custom resources use their cu
 	 * +stom save options.
+=======
+	 * @deprecated supply resurce argument so that custom resources use their custom save options.
+>>>>>>> 32734f1 Rationalize checkPreconditions
 	 */
 	@Deprecated
 	public static @NonNull Map<Object, Object> createSaveOptions() {
@@ -414,8 +418,31 @@ public class XMIUtil
 		if ((resourceClass == XMIResourceImpl.class) || (resourceClass == XMLResourceImpl.class)) {
 			return createSaveOptions();
 		}
-		else {
+		else  {
 			return new HashMap<>(aResource.getDefaultSaveOptions());
+		}
+	}
+
+	/**
+	 * Return a set of saveOptions for aResource. For generic XMLResourceImpl or XMIResourceImpl
+	 * resources returns saveOptions supporting UTF-8 with 132 character Unix lines. Otherwise returns
+	 * a copyof aResource's defaultSaveOptions.
+	 *
+	 * @since 1.16
+	 */
+	public static @NonNull Map<Object, Object> createSaveOptions(@NonNull Resource aResource) {
+		Class<?> resourceClass = aResource.getClass();
+		if ((resourceClass == XMIResourceImpl.class) || (resourceClass == XMLResourceImpl.class)) {
+			return createSaveOptions();
+		}
+		else if (aResource instanceof XMLResource) {
+			return new HashMap<>(((XMLResource)aResource).getDefaultSaveOptions());
+		}
+	//	else if (aResource instanceof ResourceImpl) {
+	//		return new HashMap<>(((ResourceImpl)aResource).getDefaultSaveOptions());
+	//	}
+		else {
+			return createSaveOptions();
 		}
 	}
 

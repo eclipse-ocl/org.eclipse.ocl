@@ -465,10 +465,10 @@ public interface ValuesPackage extends EPackage {
 		EClass SET_VALUE = eINSTANCE.getSetValue();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.values.SymbolicValueImpl <em>Symbolic Value</em>}' class.
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.symbolic.AbstractLeafSymbolicValue <em>Symbolic Value</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.eclipse.ocl.pivot.internal.values.SymbolicValueImpl
+		 * @see org.eclipse.ocl.pivot.internal.symbolic.AbstractLeafSymbolicValue
 		 * @see org.eclipse.ocl.pivot.internal.values.ValuesPackageImpl#getSymbolicValue()
 		 * @generated
 		 */

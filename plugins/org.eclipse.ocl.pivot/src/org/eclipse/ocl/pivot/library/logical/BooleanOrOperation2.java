@@ -15,9 +15,11 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
  * BooleanOrOperation2 realises the 2-valued or() library operation.
@@ -29,24 +31,28 @@ public class BooleanOrOperation2 extends AbstractSimpleBinaryOperation
 	public static final @NonNull BooleanOrOperation2 INSTANCE = new BooleanOrOperation2();
 
 	/**
-	 * @since 1.15
-	 *
+	 * @since 1.16
+	 */
 	@Override
-	public void deduceFrom(@NonNull SymbolicExecutor symbolicExecutor, @NonNull SymbolicOperationCallValue resultValue, @NonNull SimpleSymbolicConstraint simpleConstraint) {
-		if ((simpleConstraint.getSymbolicOperator() == SymbolicOperator.EQUALS) && (simpleConstraint.getSymbolicValue() == Boolean.FALSE)) {
-			List<@Nullable Object>boxedSourceAndArgumentValues = resultValue.getBoxedSourceAndArgumentValues();
-			Object sourceValue = boxedSourceAndArgumentValues.get(0);
-			if (sourceValue instanceof SymbolicValue) {
-				SimpleSymbolicConstraintImpl symbolicConstraint = new SimpleSymbolicConstraintImpl(TypeId.BOOLEAN, false, false, SymbolicOperator.EQUALS, Boolean.FALSE);
-				((SymbolicValue)sourceValue).deduceFrom(symbolicExecutor, symbolicConstraint);
-			}
-			Object argumentValue = boxedSourceAndArgumentValues.get(1);
-			if (argumentValue instanceof SymbolicValue) {
-				SimpleSymbolicConstraintImpl symbolicConstraint = new SimpleSymbolicConstraintImpl(TypeId.BOOLEAN, false, false, SymbolicOperator.EQUALS, Boolean.FALSE);
-				((SymbolicValue)argumentValue).deduceFrom(symbolicExecutor, symbolicConstraint);
-			}
+	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
+		OCLExpression source = PivotUtil.getOwnedSource(callExp);
+		OCLExpression argument = PivotUtil.getOwnedArgument(callExp, 0);
+		SymbolicValue sourceValue = evaluationEnvironment.symbolicEvaluate(source);
+		SymbolicValue argumentValue = evaluationEnvironment.symbolicEvaluate(argument);
+		if (sourceValue.isTrue()) {		// Only source can short-circuit argument
+			evaluationEnvironment.setDead(argument);
+			return evaluationEnvironment.getKnownValue(Boolean.TRUE);
 		}
-	} */
+		SymbolicValue superProblem = checkPreconditions(evaluationEnvironment, callExp, CHECK_NOT_INVALID | CHECK_NOT_NULL);
+		if (superProblem != null) {
+			return superProblem;
+		}
+		if (argumentValue.isTrue()) {	// argument does not short-circuit source
+			evaluationEnvironment.setDead(source);
+			return evaluationEnvironment.getKnownValue(Boolean.TRUE);
+		}
+		return null;
+	}
 
 	@Override
 	public @Nullable Object dispatch(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object sourceValue) {

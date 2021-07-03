@@ -457,6 +457,7 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 		throw new InvalidValueException(PivotMessages.ConvertibleValueRequired, "Invalid");
 	}
 
+	@Deprecated /* not used */
 	public boolean isFalse() {
 		return false;
 	}
@@ -471,6 +472,7 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 		return false;
 	}
 
+	@Deprecated /* not used */
 	public boolean isTrue() {
 		return false;
 	}

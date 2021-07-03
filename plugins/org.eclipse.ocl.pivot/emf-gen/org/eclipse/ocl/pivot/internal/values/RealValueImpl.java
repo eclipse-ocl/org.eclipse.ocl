@@ -361,7 +361,7 @@ public class RealValueImpl extends NumberValueImpl implements RealValue {
 	}
 
 	/**
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	@Override
 	public boolean mayBeZero() {

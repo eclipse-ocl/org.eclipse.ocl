@@ -55,10 +55,10 @@ import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.manager.SymbolicExecutor;
+import org.eclipse.ocl.pivot.internal.symbolic.AbstractLeafSymbolicValue.SymbolicNavigationCallValue;
+import org.eclipse.ocl.pivot.internal.symbolic.AbstractSymbolicRefinedValue;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
-import org.eclipse.ocl.pivot.internal.values.AbstractRefinedSymbolicValue;
-import org.eclipse.ocl.pivot.internal.values.SymbolicNavigationCallValueImpl;
 import org.eclipse.ocl.pivot.library.LibraryIteration;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
@@ -70,7 +70,6 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerRange;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
-import org.eclipse.ocl.pivot.values.SymbolicKnownValue;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 import com.google.common.collect.Lists;
@@ -127,8 +126,8 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 		//	symbolicAnalysis.addHypothesis(source, hypothesis);
 		//	return evaluationEnvironment.getMayBeInvalidValue(returnTypeId);
 		}
-		if (sourceValue instanceof SymbolicKnownValue) {
-			result = context.internalExecuteNavigationCallExp(navigationCallExp, referredProperty, ((SymbolicKnownValue)sourceValue).getValue());
+		if (sourceValue.isKnown()) {
+			result = context.internalExecuteNavigationCallExp(navigationCallExp, referredProperty, sourceValue.getKnownValue());
 		}
 		else {
 			boolean isSafe = navigationCallExp.isIsSafe();
@@ -138,7 +137,7 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 			boolean propertyMayBeNull = !referredProperty.isIsRequired();
 			boolean resultMayBeInvalid = sourceMayBeInvalid || (sourceMayBeNull && !isSafe && !sourceIsMany);
 			boolean resultMayBeNull = propertyMayBeNull || (sourceMayBeNull && isSafe && !sourceIsMany);
-			result = new SymbolicNavigationCallValueImpl(getSymbolicAnalysis().createVariableName(), navigationCallExp, resultMayBeNull, resultMayBeInvalid, sourceValue);
+			result = new SymbolicNavigationCallValue(getSymbolicAnalysis().createVariableName(), navigationCallExp, resultMayBeNull, resultMayBeInvalid, sourceValue);
 		}
 		return result;
 	}
@@ -186,7 +185,7 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 				throw new InvalidValueException(PivotMessages.MapValueForbidden);
 			}
 			if (sourceValue.isCollection()) {
-				sourceValue = AbstractRefinedSymbolicValue.createNullFreeValue(sourceValue);
+				sourceValue = AbstractSymbolicRefinedValue.createNullFreeValue(sourceValue);
 			}
 		}
 		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
@@ -220,8 +219,8 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 	public @Nullable Object evaluate(@NonNull Element element) {
 		AbstractSymbolicEvaluationEnvironment evaluationEnvironment = getEvaluationEnvironment();
 		SymbolicValue symbolicValue = evaluationEnvironment.symbolicEvaluate((TypedElement)element);
-		if (symbolicValue instanceof SymbolicKnownValue) {
-			return ((SymbolicKnownValue)symbolicValue).getValue();
+		if (symbolicValue.isKnown()) {
+			return symbolicValue.getKnownValue();
 		}
 		else {
 			return symbolicValue;
@@ -233,8 +232,8 @@ public class SymbolicEvaluationVisitor extends EvaluationVisitorDecorator implem
 	public @Nullable Object evaluate(@NonNull OCLExpression expression) {
 		AbstractSymbolicEvaluationEnvironment evaluationEnvironment = getEvaluationEnvironment();
 		SymbolicValue symbolicValue = evaluationEnvironment.symbolicEvaluate(expression);
-		if (symbolicValue instanceof SymbolicKnownValue) {
-			return ((SymbolicKnownValue)symbolicValue).getValue();
+		if (symbolicValue.isKnown()) {
+			return symbolicValue.getKnownValue();
 		}
 		else {
 			return symbolicValue;

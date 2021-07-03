@@ -30,15 +30,13 @@ public class OrderedCollectionFirstOperation extends AbstractSimpleUnaryOperatio
 	public static final @NonNull OrderedCollectionFirstOperation INSTANCE = new OrderedCollectionFirstOperation();
 
 	@Override
-	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment symbolicEvaluationEnvironment, @NonNull OperationCallExp callExp) {
-		SymbolicValue superProblem = super.checkPreconditions(symbolicEvaluationEnvironment, callExp);
+	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
+		SymbolicValue superProblem = super.checkPreconditions(evaluationEnvironment, callExp);
 		if (superProblem != null) {
 			return superProblem;
 		}
 		OCLExpression source = PivotUtil.getOwnedSource(callExp);
-	//	SymbolicValue sourceSymbolicValue = symbolicEvaluationEnvironment.getSymbolicValue(source);
-	//	SymbolicCollectionContent sourceContent = sourceSymbolicValue.getCollectionContent();
-		SymbolicValue sourceSizeProblem = symbolicEvaluationEnvironment.checkNotEmpty(source, callExp.getTypeId());
+		SymbolicValue sourceSizeProblem = evaluationEnvironment.checkNotEmpty(source, callExp.getTypeId());
 		if (sourceSizeProblem != null) {
 			return sourceSizeProblem;
 		}

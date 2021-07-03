@@ -41,17 +41,11 @@ public class OclAnyOclAsSetOperation extends AbstractUnaryOperation
 	public static final @NonNull OclAnyOclAsSetOperation INSTANCE = new OclAnyOclAsSetOperation();
 
 	/**
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	@Override
-	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment symbolicEvaluationEnvironment, @NonNull OperationCallExp callExp) {
-		TypeId returnTypeId = callExp.getTypeId();
-		OCLExpression source = PivotUtil.getOwnedSource(callExp);
-		SymbolicValue sourceProblem = symbolicEvaluationEnvironment.checkNotInvalid(source, returnTypeId);
-		if (sourceProblem != null) {
-			return sourceProblem;
-		}
-		return null;
+	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
+		return checkPreconditions(evaluationEnvironment, callExp, CHECK_NOT_INVALID);
 	}
 
 	/** @deprecated use Executor */
@@ -79,7 +73,7 @@ public class OclAnyOclAsSetOperation extends AbstractUnaryOperation
 
 	// Working around Bug 512758
 	/**
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	@Override
 	public @Nullable Type resolveReturnType(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, @Nullable Type returnType) {

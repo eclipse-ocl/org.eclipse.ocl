@@ -14,13 +14,10 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
@@ -34,28 +31,17 @@ public class OclAnyEqualOperation extends AbstractSimpleBinaryOperation
 	public static final @NonNull OclAnyEqualOperation INSTANCE = new OclAnyEqualOperation();
 
 	/**
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	@Override
-	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment symbolicEvaluationEnvironment, @NonNull OperationCallExp callExp) {
-		TypeId returnTypeId = callExp.getTypeId();
-		OCLExpression source = PivotUtil.getOwnedSource(callExp);
-		SymbolicValue sourceProblem = symbolicEvaluationEnvironment.checkNotInvalid(source, returnTypeId);
-		if (sourceProblem != null) {
-			return sourceProblem;
-		}
-		OCLExpression argument = PivotUtil.getOwnedArgument(callExp, 0);
-		SymbolicValue argumentProblem = symbolicEvaluationEnvironment.checkNotInvalid(argument, returnTypeId);
-		if (argumentProblem != null) {
-			return argumentProblem;
-		}
-		return null;
+	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
+		return checkPreconditions(evaluationEnvironment, callExp, CHECK_NOT_INVALID);
 	}
 
 	/**
 	 * Overridden to be invalid-out for any invalid in, never null, false for mismatching nullity.
 	 *
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	@Override
 	protected @NonNull SymbolicValue createResultValue(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp,
@@ -77,60 +63,6 @@ public class OclAnyEqualOperation extends AbstractSimpleBinaryOperation
 			return evaluationEnvironment.createUnknownValue(callExp, false, mayBeInvalid);
 		}
 	}
-
-	/**
-	 * @since 1.15
-	 *
-	@Override
-	public void deduceFrom(@NonNull SymbolicExecutor symbolicExecutor, @NonNull SymbolicOperationCallValue operationCallValue, @NonNull SimpleSymbolicConstraint resultConstraint) {
-		deduceFrom(symbolicExecutor, operationCallValue, resultConstraint, false);
-	} */
-
-	/**
-	 * @since 1.15
-	 *
-	protected void deduceFrom(@NonNull SymbolicExecutor symbolicExecutor, @NonNull SymbolicOperationCallValue resultValue, @NonNull SimpleSymbolicConstraint simpleConstraint, boolean isInverted) {
-		SymbolicOperator thisSymbolicOperator = simpleConstraint.getSymbolicOperator();
-		SymbolicOperator nestedSymbolicOperator = null;
-		if (thisSymbolicOperator == (isInverted ? SymbolicOperator.NOT_EQUALS : SymbolicOperator.EQUALS)) {		// FIXME simplify, XOR
-			Object knownValue = simpleConstraint.getSymbolicValue();
-			if (knownValue == Boolean.TRUE) {
-				nestedSymbolicOperator = SymbolicOperator.EQUALS;
-			}
-			else if (knownValue == Boolean.FALSE) {
-				nestedSymbolicOperator = SymbolicOperator.NOT_EQUALS;
-			}
-		}
-		else if (thisSymbolicOperator == (isInverted ? SymbolicOperator.EQUALS : SymbolicOperator.NOT_EQUALS)) {
-			Object knownValue = simpleConstraint.getSymbolicValue();
-			if (knownValue == Boolean.TRUE) {
-				nestedSymbolicOperator = SymbolicOperator.NOT_EQUALS;
-			}
-			else if (knownValue == Boolean.FALSE) {
-				nestedSymbolicOperator = SymbolicOperator.EQUALS;
-			}
-		}
-		else {
-			throw new IllegalStateException(String.valueOf(thisSymbolicOperator));
-		}
-		if (nestedSymbolicOperator != null) {
-			List<@Nullable Object> boxedSourceAndArgumentValues = resultValue.getBoxedSourceAndArgumentValues();
-			Object sourceValue = boxedSourceAndArgumentValues.get(0);
-			Object argumentValue = boxedSourceAndArgumentValues.get(1);
-		//	OCLExpression expression = resultValue.getExpression();
-			if (sourceValue instanceof SymbolicValue) {
-				SymbolicValue symbolicValue = (SymbolicValue)sourceValue;
-				SimpleSymbolicConstraintImpl symbolicConstraint = new SimpleSymbolicConstraintImpl(symbolicValue.getTypeId(), false, false, nestedSymbolicOperator, argumentValue);
-			//	symbolicExecutor.replace(this, symbolicConstraint);
-				symbolicValue.deduceFrom(symbolicExecutor, symbolicConstraint);	// FIXME special case null argumentValue
-			}
-			if (argumentValue instanceof SymbolicValue) {
-				SymbolicValue symbolicValue = (SymbolicValue)argumentValue;
-				SimpleSymbolicConstraintImpl symbolicConstraint = new SimpleSymbolicConstraintImpl(symbolicValue.getTypeId(), false, false, nestedSymbolicOperator, sourceValue);
-				symbolicValue.deduceFrom(symbolicExecutor, symbolicConstraint);
-			}
-		}
-	} */
 
 	@Override
 	public @NonNull Boolean evaluate(@Nullable Object left, @Nullable Object right) {

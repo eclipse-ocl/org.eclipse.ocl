@@ -35,7 +35,6 @@ import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
-import org.eclipse.ocl.pivot.values.SymbolicKnownValue;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 import com.google.common.collect.Iterables;
@@ -52,6 +51,23 @@ import com.google.common.collect.Iterables;
  */
 public abstract class AbstractOperation extends AbstractIterationOrOperation implements LibraryOperation.LibraryOperationExtension2
 {
+	/**
+	 * @since 1.16
+	 */
+	protected static final int CHECK_NO_OCL_INVALID_OVERLOAD = 1 << 0;
+	/**
+	 * @since 1.16
+	 */
+	protected static final int CHECK_NO_OCL_VOID_OVERLOAD = 1 << 1;
+	/**
+	 * @since 1.16
+	 */
+	protected static final int CHECK_NOT_INVALID = 1 << 2;
+	/**
+	 * @since 1.16
+	 */
+	protected static final int CHECK_NOT_NULL = 1 << 3;
+
 	/**
 	 * Return the evaluation from sourceAndArgumentValues using the executor for context wrt a caller.
 	 *
@@ -84,38 +100,53 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 	/**
 	 * @since 1.16
 	 */
-	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment symbolicEvaluationEnvironment, @NonNull OperationCallExp callExp) {
-		EnvironmentFactory environmentFactory = symbolicEvaluationEnvironment.getEnvironmentFactory();
+	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
+		return checkPreconditions(evaluationEnvironment, callExp, CHECK_NO_OCL_INVALID_OVERLOAD | CHECK_NO_OCL_VOID_OVERLOAD | CHECK_NOT_INVALID | CHECK_NOT_NULL);
+	}
+
+	/**
+	 * @since 1.16
+	 */
+	protected final @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp, int checkFlags) {
+		EnvironmentFactory environmentFactory = evaluationEnvironment.getEnvironmentFactory();
 		CompleteModel completeModel = environmentFactory.getCompleteModel();
 		StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		Operation referredOperation = PivotUtil.getReferredOperation(callExp);
 		TypeId returnTypeId = callExp.getTypeId();
 		OCLExpression source = PivotUtil.getOwnedSource(callExp);
-		CompleteClass oclInvalidClass = completeModel.getCompleteClass(standardLibrary.getOclInvalidType());
-		Operation oclInvalidOperation = oclInvalidClass.getOperation(referredOperation);
-		assert oclInvalidOperation == null : "Missing OclInvalid overload for " + referredOperation;
-		SymbolicValue invalidSourceProblem = symbolicEvaluationEnvironment.checkNotInvalid(source, returnTypeId);
-		if (invalidSourceProblem != null) {
-			return invalidSourceProblem;
+		if ((checkFlags & CHECK_NOT_INVALID) != 0) {
+			if ((checkFlags & CHECK_NO_OCL_INVALID_OVERLOAD) != 0) {
+				CompleteClass oclInvalidClass = completeModel.getCompleteClass(standardLibrary.getOclInvalidType());
+				Operation oclInvalidOperation = oclInvalidClass.getOperation(referredOperation);
+				assert oclInvalidOperation == null : "Missing OclInvalid overload for " + referredOperation;
+			}
+			SymbolicValue invalidSourceProblem = evaluationEnvironment.checkNotInvalid(source, returnTypeId);
+			if (invalidSourceProblem != null) {
+				return invalidSourceProblem;
+			}
 		}
-		CompleteClass oclVoidClass = completeModel.getCompleteClass(standardLibrary.getOclVoidType());
-		Operation oclVoidOperation = oclVoidClass.getOperation(referredOperation);
-		assert oclVoidOperation == null : "Missing OcVoid overload for " + referredOperation;
-		SymbolicValue nullSourceProblem = symbolicEvaluationEnvironment.checkNotNull(source, returnTypeId);
-		if (nullSourceProblem != null) {
-			return nullSourceProblem;
+		if ((checkFlags & CHECK_NOT_NULL) != 0) {
+			if ((checkFlags & CHECK_NO_OCL_VOID_OVERLOAD) != 0) {
+				CompleteClass oclVoidClass = completeModel.getCompleteClass(standardLibrary.getOclVoidType());
+				Operation oclVoidOperation = oclVoidClass.getOperation(referredOperation);
+				assert oclVoidOperation == null : "Missing OcVoid overload for " + referredOperation;
+			}
+			SymbolicValue nullSourceProblem = evaluationEnvironment.checkNotNull(source, returnTypeId);
+			if (nullSourceProblem != null) {
+				return nullSourceProblem;
+			}
 		}
 		int i = 0;
 		for (@NonNull OCLExpression argument : PivotUtil.getOwnedArguments(callExp)) {
-			if (!referredOperation.isIsValidating()) {
-				SymbolicValue invalidArgumentProblem = symbolicEvaluationEnvironment.checkNotInvalid(argument, returnTypeId);
+			if (!referredOperation.isIsValidating() && ((checkFlags & CHECK_NOT_INVALID) != 0)) {
+				SymbolicValue invalidArgumentProblem = evaluationEnvironment.checkNotInvalid(argument, returnTypeId);
 				if (invalidArgumentProblem != null) {
 					return invalidArgumentProblem;
 				}
 			}
 			Parameter parameter = PivotUtil.getOwnedParameter(referredOperation, i);
-			if (parameter.isIsRequired()) {
-				SymbolicValue nullArgumentProblem = symbolicEvaluationEnvironment.checkNotNull(argument, returnTypeId);
+			if (parameter.isIsRequired() && ((checkFlags & CHECK_NOT_NULL) != 0)) {
+				SymbolicValue nullArgumentProblem = evaluationEnvironment.checkNotNull(argument, returnTypeId);
 				if (nullArgumentProblem != null) {
 					return nullArgumentProblem;
 				}
@@ -217,7 +248,7 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 	//	}
 
 	/**
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	@Override
 	public @NonNull SymbolicValue symbolicEvaluate(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
@@ -239,9 +270,9 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 		}
 		if (isKnown) {
 			@Nullable Object[] sourceAndArgumentValues = new @Nullable Object[1+argumentsSize];
-			sourceAndArgumentValues[0] = ((SymbolicKnownValue)sourceSymbolicValue).getValue();
+			sourceAndArgumentValues[0] = sourceSymbolicValue.getKnownValue();
 			for (int i = 0; i < argumentsSize; i++) {
-				sourceAndArgumentValues[i+1] = ((SymbolicKnownValue)argumentSymbolicValues.get(i)).getValue();
+				sourceAndArgumentValues[i+1] = argumentSymbolicValues.get(i).getKnownValue();
 			}
 			Object result = ((LibraryOperationExtension2)this).evaluate(evaluationEnvironment.getExecutor(), callExp, sourceAndArgumentValues);
 			return evaluationEnvironment.getKnownValue(result);

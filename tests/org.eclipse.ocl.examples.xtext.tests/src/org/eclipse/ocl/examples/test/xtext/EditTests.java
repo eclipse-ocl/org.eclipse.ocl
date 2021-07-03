@@ -715,7 +715,7 @@ public class EditTests extends XtextTestCase
 		//
 		StringWriter writer = new StringWriter();
 		OutputStream outputStream = new URIConverter.WriteableOutputStream(writer, "UTF-8");
-		ecoreResource.save(outputStream, XMIUtil.createSaveOptions());
+		ecoreResource.save(outputStream, XMIUtil.createSaveOptions(ecoreResource));
 		ecoreResource.unload();
 		InputStream inputStream = new URIConverter.ReadableInputStream(writer.toString().replace("tuttut",  "tut"), "UTF-8");
 		ecoreResource.load(inputStream, null);

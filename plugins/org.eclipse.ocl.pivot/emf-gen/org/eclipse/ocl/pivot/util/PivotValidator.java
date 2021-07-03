@@ -28,10 +28,10 @@ import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.internal.evaluation.BaseSymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicVariableValue;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
-import org.eclipse.ocl.pivot.internal.values.SymbolicVariableValueImpl;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.utilities.MorePivotable;
 import org.eclipse.ocl.pivot.utilities.Nameable;
@@ -2500,14 +2500,14 @@ public class PivotValidator extends EObjectValidator
 			Variable ownedContext = expressionInOCL.getOwnedContext();
 			boolean mayBeNull = isValidating || !ownedContext.isIsRequired();
 			boolean mayBeInvalid = isValidating;
-			Object selfValue = new SymbolicVariableValueImpl(ownedContext, mayBeNull, mayBeInvalid);
+			Object selfValue = new SymbolicVariableValue(ownedContext, mayBeNull, mayBeInvalid);
 			List<@NonNull Variable> ownedParameters = PivotUtilInternal.getOwnedParametersList(expressionInOCL);
 			@Nullable Object[] parameterValues = new @Nullable Object[ownedParameters.size()];
 			for (int i = 0; i < ownedParameters.size(); i++) {
 				Variable parameter = ownedParameters.get(i);
 				mayBeNull = !parameter.isIsRequired();
 				mayBeInvalid = false;
-				parameterValues[i] = new SymbolicVariableValueImpl(parameter, mayBeNull, mayBeInvalid);
+				parameterValues[i] = new SymbolicVariableValue(parameter, mayBeNull, mayBeInvalid);
 			}
 			SymbolicAnalysis symbolicAnalysis = metamodelManager.getSymbolicAnalysis(expressionInOCL, selfValue, parameterValues);
 			BaseSymbolicEvaluationEnvironment evaluationEnvironment = symbolicAnalysis.getBaseSymbolicEvaluationEnvironment();

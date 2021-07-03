@@ -168,7 +168,8 @@ public class InvalidValueException extends UndefinedValueImpl implements Invalid
 
 	@Override
 	public boolean equals(Object obj) {
-		throw this; //return obj instanceof InvalidValueException;
+	//	throw this; //return obj instanceof InvalidValueException;
+		return obj == this;
 	}
 
 	public @NonNull Type getType(@NonNull StandardLibrary standardLibrary) {
@@ -197,7 +198,7 @@ public class InvalidValueException extends UndefinedValueImpl implements Invalid
 	}
 
 	/**
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	@Override
 	public boolean mayBeInvalid() {
@@ -205,7 +206,7 @@ public class InvalidValueException extends UndefinedValueImpl implements Invalid
 	}
 
 	/**
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	@Override
 	public boolean mayBeInvalidOrNull() {
@@ -213,7 +214,7 @@ public class InvalidValueException extends UndefinedValueImpl implements Invalid
 	}
 
 	/**
-	 * @since 1.15
+	 * @since 1.16
 	 */
 	@Override
 	public boolean mayBeNull() {

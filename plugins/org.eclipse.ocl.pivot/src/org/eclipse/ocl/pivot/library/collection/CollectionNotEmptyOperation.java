@@ -15,9 +15,9 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
+import org.eclipse.ocl.pivot.internal.symbolic.AbstractSymbolicRefinedValue;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicStatus;
-import org.eclipse.ocl.pivot.internal.values.AbstractRefinedSymbolicValue;
 import org.eclipse.ocl.pivot.library.AbstractSimpleUnaryOperation;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
@@ -54,8 +54,8 @@ public class CollectionNotEmptyOperation extends AbstractSimpleUnaryOperation
 			return evaluationEnvironment.getKnownValue(Boolean.TRUE);
 		}
 		else {
-			SymbolicValue emptyValue = AbstractRefinedSymbolicValue.createIsZeroValue(sizeValue);
-			SymbolicValue notEmptyValue = AbstractRefinedSymbolicValue.createNotValue(emptyValue);
+			SymbolicValue emptyValue = AbstractSymbolicRefinedValue.createIsZeroValue(sizeValue);
+			SymbolicValue notEmptyValue = AbstractSymbolicRefinedValue.createNotValue(emptyValue);
 			return notEmptyValue;
 		}
 	}

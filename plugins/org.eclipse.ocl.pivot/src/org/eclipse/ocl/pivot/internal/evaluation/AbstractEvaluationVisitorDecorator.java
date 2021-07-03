@@ -102,15 +102,6 @@ public abstract class AbstractEvaluationVisitorDecorator<EV extends EvaluationVi
 
 	/**
 	 * Delegates to my decorated visitor.
-	 * @since 1.15
-	 *
-	@Override
-	public @Nullable Object evaluate(@NonNull CollectionLiteralPart part) {
-		return delegate.evaluate(part);
-	} */
-
-	/**
-	 * Delegates to my decorated visitor.
 	 * @since 1.1
 	 */
 	@Override

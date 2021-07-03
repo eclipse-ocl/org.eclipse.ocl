@@ -32,12 +32,12 @@ import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.cse.CSEElement;
-import org.eclipse.ocl.pivot.internal.values.AbstractRefinedSymbolicValue;
+import org.eclipse.ocl.pivot.internal.symbolic.AbstractSymbolicRefinedValue;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicUnknownValue;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
-import org.eclipse.ocl.pivot.values.SymbolicUnknownValue;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
@@ -56,7 +56,7 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 	/**
 	 * The maybe-invalid symbolic value of known TYpeIds.
 	 */
-	private @NonNull Map<@NonNull TypeId, @NonNull SymbolicUnknownValue> typeid2symbolicValue = new HashMap<>();
+	private @NonNull Map<@NonNull TypeId, org.eclipse.ocl.pivot.internal.symbolic.SymbolicUnknownValue> typeid2symbolicValue = new HashMap<>();
 
 	/**
 	 * The expression-specific refined symbolic values established after contradicting a hypothesis.
@@ -186,6 +186,9 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 	}
 
 	public void refineValue(@NonNull TypedElement typedElement, @NonNull SymbolicValue symbolicValue) {
+		if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
+			SymbolicAnalysis.HYPOTHESIS.println("    refined: " + symbolicValue);
+		}
 	//	Hypothesis hypothesis = refinedValue.getHypothesis();
 	//	assert expression == hypothesis.getExpression();
 	//	toString();		// XXX
@@ -220,7 +223,7 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 				TypedElement typedElement = (TypedElement)eObject;
 				SymbolicValue symbolicValue = getSymbolicValue(typedElement);
 				if (!symbolicValue.isDead()) {
-					symbolicValue = AbstractRefinedSymbolicValue.createIsDeadValue(symbolicValue);
+					symbolicValue = AbstractSymbolicRefinedValue.createDeadValue(symbolicValue);
 					expression2refinedSymbolicValue.put(typedElement, symbolicValue);
 				}
 			}

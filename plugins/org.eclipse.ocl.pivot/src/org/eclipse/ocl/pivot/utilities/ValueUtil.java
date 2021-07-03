@@ -1215,7 +1215,13 @@ public abstract class ValueUtil
 	}
 
 	public static void toString(@Nullable Object value, @NonNull StringBuilder s, int sizeLimit) {
-		if (value instanceof Value) {
+		if (value == ValueUtil.INVALID_VALUE) {
+			s.append(ValueUtil.INVALID_VALUE.getMessage());
+		}
+		else if (value instanceof InvalidValueException) {
+			s.append(value.getClass().getSimpleName() + ":" + ((InvalidValueException)value).getMessage());
+		}
+		else if (value instanceof Value) {
 			((Value)value).toString(s, sizeLimit);
 		}
 		else if (value instanceof String) {
