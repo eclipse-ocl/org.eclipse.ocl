@@ -87,19 +87,14 @@ public class BooleanImpliesOperation2 extends AbstractSimpleBinaryOperation
 		}
 		OCLExpression source = PivotUtil.getOwnedSource(callExp);
 		OCLExpression argument = PivotUtil.getOwnedArgument(callExp, 0);
-		SymbolicValue unconstrainedSourceValue = evaluationEnvironment.symbolicEvaluate(source);
-		if (unconstrainedSourceValue.isFalse()) {
-			evaluationEnvironment.setDead(argument);
-			return evaluationEnvironment.getKnownValue(Boolean.TRUE);
+		SymbolicValue sourceValue = evaluationEnvironment.symbolicEvaluate(source);
+		SymbolicValue argumentValue = evaluationEnvironment.symbolicEvaluate(argument);
+		if (sourceValue.isTrue()) {
+			return argumentValue;		// Re-use known symbolic value
 		}
-		if (unconstrainedSourceValue.isTrue()) {							// If we know the source is true there is no need to install the extra fact.
-			return evaluationEnvironment.symbolicEvaluate(argument);
-		}
-		SymbolicEvaluationEnvironment constrainedEvaluationEnvironment = evaluationEnvironment;
-		SymbolicValue unconstrainedArgumentValue = constrainedEvaluationEnvironment.symbolicEvaluate(argument);
-		boolean mayBeInvalid = ValueUtil.mayBeInvalid(unconstrainedSourceValue) || ValueUtil.mayBeInvalid(unconstrainedArgumentValue);
-		boolean mayBeNull = ValueUtil.mayBeNull(unconstrainedSourceValue) || ValueUtil.mayBeNull(unconstrainedArgumentValue);
-		boolean mayBeInvalidOrNull = mayBeNull || mayBeInvalid;
-		return evaluationEnvironment.createUnknownValue(callExp, false, mayBeInvalidOrNull);
+	//	if (argumentValue.isFalse()) {
+	//		return sourceValue;			// Re-use known symbolic value ?? use not
+	//	}
+		return super.symbolicEvaluate(evaluationEnvironment, callExp);
 	}
 }

@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.library.oclany;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -18,10 +17,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
-import org.eclipse.ocl.pivot.internal.symbolic.SymbolicStatus;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
@@ -78,7 +74,7 @@ public class OclAnyNotEqualOperation extends OclAnyEqualOperation
 		}
 	}
 
-	@Override
+/*	@Override
 	public @NonNull SymbolicValue symbolicEvaluate(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
 		SymbolicValue symbolicPreconditionValue = checkPreconditions(evaluationEnvironment, callExp);
 		if (symbolicPreconditionValue != null) {
@@ -106,7 +102,7 @@ public class OclAnyNotEqualOperation extends OclAnyEqualOperation
 			return evaluationEnvironment.getKnownValue(ValueUtil.asBoolean(!zeroSameness));
 		}
 		return createResultValue(evaluationEnvironment, callExp, sourceSymbolicValue, Collections.singletonList(argumentSymbolicValue));
-	}
+	} */
 
 /*	@Override
 	public @Nullable Object symbolicEvaluate(@NonNull Executor executor, @NonNull OperationCallExp operationCallExp, @Nullable Object sourceValue, @Nullable Object argumentValue) {

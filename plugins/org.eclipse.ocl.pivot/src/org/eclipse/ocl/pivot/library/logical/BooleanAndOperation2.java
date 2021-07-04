@@ -77,32 +77,24 @@ public class BooleanAndOperation2 extends AbstractSimpleBinaryOperation
 	}
 
 	/**
-	 * @since 1.15
-	 *
+	 * @since 1.16
+	 */
 	@Override
-	public @Nullable Object symbolicDispatch(@NonNull EvaluationVisitor evaluationVisitor, @NonNull OperationCallExp callExp, @Nullable Object sourceValue) {
-		assert sourceValue != null;
-		assert !ValueUtil.isInvalidValue(sourceValue);
-		assert !ValueUtil.isNullValue(sourceValue);
-		if (sourceValue == Boolean.FALSE) {
-			return FALSE_VALUE;
+	public @NonNull SymbolicValue symbolicEvaluate(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
+		SymbolicValue symbolicPreconditionValue = checkPreconditions(evaluationEnvironment, callExp);
+		if (symbolicPreconditionValue != null) {
+			return symbolicPreconditionValue;
 		}
+		OCLExpression source = PivotUtil.getOwnedSource(callExp);
 		OCLExpression argument = PivotUtil.getOwnedArgument(callExp, 0);
-		if (sourceValue == Boolean.TRUE) {
-			return evaluationVisitor.evaluate(argument);
+		SymbolicValue sourceValue = evaluationEnvironment.symbolicEvaluate(source);
+		SymbolicValue argumentValue = evaluationEnvironment.symbolicEvaluate(argument);
+		if (sourceValue.isTrue()) {
+			return argumentValue;		// Re-use known symbolic value
 		}
-		assert sourceValue instanceof SymbolicExpressionValue;
-		SymbolicExecutor symbolicExecutor = (SymbolicExecutor)evaluationVisitor.getExecutor();
-		try {
-			symbolicExecutor.pushSymbolicEvaluationEnvironment((SymbolicExpressionValue)sourceValue, Boolean.TRUE, callExp);
-			Object argumentValue = evaluationVisitor.evaluate(argument);
-			List<@Nullable Object> boxedSourceAndArgumentValues = Lists.newArrayList(sourceValue, argumentValue);
-			boolean mayBeInvalid = ValueUtil.mayBeInvalid(sourceValue) || ValueUtil.mayBeInvalid(argumentValue);
-			boolean mayBeNull = ValueUtil.mayBeNull(sourceValue) || ValueUtil.mayBeNull(argumentValue);
-			return new SymbolicOperationCallValueImpl(callExp, false, mayBeNull || mayBeInvalid, this, boxedSourceAndArgumentValues);
+		if (argumentValue.isTrue()) {
+			return sourceValue;			// Re-use known symbolic value
 		}
-		finally {
-			evaluationVisitor.getExecutor().popEvaluationEnvironment();
-		}
-	} */
+		return super.symbolicEvaluate(evaluationEnvironment, callExp);
+	}
 }

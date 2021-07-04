@@ -53,17 +53,4 @@ public class BooleanNotOperation extends AbstractSimpleUnaryOperation
 			throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.BOOLEAN_NAME, getTypeName(argument));
 		}
 	}
-
-	/**
-	 * @since 1.15
-	 *
-	@Override
-	public @Nullable Object symbolicDispatch(@NonNull EvaluationVisitor evaluationVisitor, @NonNull OperationCallExp callExp, @Nullable Object sourceValue) {
-		if (sourceValue instanceof SymbolicValue) {
-			boolean mayBeInvalid = ValueUtil.mayBeInvalid(sourceValue);
-			boolean mayBeNull = ValueUtil.mayBeNull(sourceValue);
-			return new SymbolicOperationCallValueImpl(callExp, mayBeNull, mayBeInvalid, this, Lists.newArrayList(sourceValue));
-		}
-		return dispatch(evaluationVisitor.getExecutor(), callExp, sourceValue);
-	} */
 }

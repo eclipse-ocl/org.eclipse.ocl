@@ -22,7 +22,6 @@ import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
@@ -97,53 +96,6 @@ public class BooleanAndOperation extends AbstractSimpleBinaryOperation
 	}
 
 	/**
-	 * @since 1.15
-	 *
-	@Override
-	public @Nullable Object symbolicDispatch(@NonNull EvaluationVisitor evaluationVisitor, @NonNull OperationCallExp callExp, @Nullable Object sourceValue) {
-		assert sourceValue != null;
-		assert !ValueUtil.isInvalidValue(sourceValue);
-		assert !ValueUtil.isNullValue(sourceValue);
-		if (sourceValue == Boolean.FALSE) {
-			return FALSE_VALUE;
-		}
-		OCLExpression source = PivotUtil.getOwnedSource(callExp);
-		OCLExpression argument = PivotUtil.getOwnedArgument(callExp, 0);
-		if (sourceValue == Boolean.TRUE) {
-			return evaluationVisitor.evaluate(argument);
-		}
-		assert sourceValue instanceof SymbolicExpressionValue;
-		SymbolicExecutor symbolicExecutor = (SymbolicExecutor)evaluationVisitor.getExecutor();
-		try {
-			SymbolicHypothesisEvaluationEnvironment symbolicHypothesisEvaluationEnvironment = symbolicExecutor.pushSymbolicHypothesis(callExp);
-			Object sourceValue2 = evaluationVisitor.evaluate(source);
-			symbolicHypothesisEvaluationEnvironment.addHypothesis(source, Boolean.TRUE);
-			Object argumentValue2 = evaluationVisitor.evaluate(argument);
-			if ((sourceValue instanceof SymbolicValue) || (sourceValue instanceof SymbolicValue)) {
-					boolean mayBeInvalid = ValueUtil.mayBeInvalid(sourceValue2) || ValueUtil.mayBeInvalid(argumentValue2);
-					boolean mayBeNull = ValueUtil.mayBeNull(sourceValue2) || ValueUtil.mayBeNull(argumentValue2);
-				return new SymbolicOperationCallValueImpl(callExp, false, mayBeNull || mayBeInvalid, this, Lists.newArrayList(sourceValue2, argumentValue2));
-			}
-			else {
-				return evaluate(sourceValue2, argumentValue2);
-			}
-
-
-
-
-		//	symbolicExecutor.pushSymbolicEvaluationEnvironment((SymbolicExpressionValue)sourceValue, Boolean.TRUE, callExp);
-		//	Object argumentValue = evaluationVisitor.evaluate(argument);
-		//	boolean mayBeInvalid = ValueUtil.mayBeInvalid(sourceValue) || ValueUtil.mayBeInvalid(argumentValue);
-		//	boolean mayBeNull = ValueUtil.mayBeNull(sourceValue) || ValueUtil.mayBeNull(argumentValue);
-		//	return new SymbolicOperationCallValueImpl(callExp, false, mayBeNull || mayBeInvalid, this, Lists.newArrayList(sourceValue, argumentValue));
-		}
-		finally {
-		//	symbolicExecutor.popEvaluationEnvironment();
-			symbolicExecutor.popSymbolicHypothesis();
-		}
-	} */
-
-	/**
 	 * @since 1.16
 	 */
 	@Override
@@ -157,16 +109,11 @@ public class BooleanAndOperation extends AbstractSimpleBinaryOperation
 		SymbolicValue sourceValue = evaluationEnvironment.symbolicEvaluate(source);
 		SymbolicValue argumentValue = evaluationEnvironment.symbolicEvaluate(argument);
 		if (sourceValue.isTrue()) {
-			return argumentValue;
+			return argumentValue;		// Re-use known symbolic value
 		}
 		if (argumentValue.isTrue()) {
-			return sourceValue;
+			return sourceValue;			// Re-use known symbolic value
 		}
-		SymbolicEvaluationEnvironment constrainedEvaluationEnvironment = evaluationEnvironment;
-		SymbolicValue unconstrainedArgumentValue = constrainedEvaluationEnvironment.symbolicEvaluate(argument);
-		boolean mayBeInvalid = ValueUtil.mayBeInvalid(sourceValue) || ValueUtil.mayBeInvalid(unconstrainedArgumentValue);
-		boolean mayBeNull = ValueUtil.mayBeNull(sourceValue) || ValueUtil.mayBeNull(unconstrainedArgumentValue);
-		boolean mayBeInvalidOrNull = mayBeNull || mayBeInvalid;
-		return evaluationEnvironment.createUnknownValue(callExp, false, mayBeInvalidOrNull);	// XXX not null/invalid here
+		return super.symbolicEvaluate(evaluationEnvironment, callExp);
 	}
 }

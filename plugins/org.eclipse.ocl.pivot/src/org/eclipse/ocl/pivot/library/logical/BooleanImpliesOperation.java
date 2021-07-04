@@ -95,38 +95,25 @@ public class BooleanImpliesOperation extends AbstractSimpleBinaryOperation
 		}
 	}
 
+	/**
+	 * @since 1.16
+	 */
 	@Override
 	public @NonNull SymbolicValue symbolicEvaluate(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
-		// TODO Auto-generated method stub
+		SymbolicValue symbolicPreconditionValue = checkPreconditions(evaluationEnvironment, callExp);
+		if (symbolicPreconditionValue != null) {
+			return symbolicPreconditionValue;
+		}
+		OCLExpression source = PivotUtil.getOwnedSource(callExp);
+		OCLExpression argument = PivotUtil.getOwnedArgument(callExp, 0);
+		SymbolicValue sourceValue = evaluationEnvironment.symbolicEvaluate(source);
+		SymbolicValue argumentValue = evaluationEnvironment.symbolicEvaluate(argument);
+		if (sourceValue.isTrue()) {
+			return argumentValue;		// Re-use known symbolic value
+		}
+	//	if (argumentValue.isFalse()) {
+	//		return sourceValue;			// Re-use known symbolic value ?? use not
+	//	}
 		return super.symbolicEvaluate(evaluationEnvironment, callExp);
 	}
-
-	/**
-	 * @since 1.15
-	 *
-	@Override
-	public @Nullable Object symbolicDispatch(@NonNull EvaluationVisitor evaluationVisitor, @NonNull OperationCallExp callExp, @Nullable Object sourceValue) {
-		assert sourceValue != null;
-		assert !ValueUtil.isInvalidValue(sourceValue);
-		assert !ValueUtil.isNullValue(sourceValue);
-		if (sourceValue == Boolean.FALSE) {
-			return TRUE_VALUE;
-		}
-		OCLExpression argument = PivotUtil.getOwnedArgument(callExp, 0);
-		if (sourceValue == Boolean.TRUE) {
-			return evaluationVisitor.evaluate(argument);
-		}
-		assert sourceValue instanceof SymbolicExpressionValue;
-		SymbolicExecutor symbolicExecutor = (SymbolicExecutor)evaluationVisitor.getExecutor();
-		try {
-			symbolicExecutor.pushSymbolicEvaluationEnvironment((SymbolicExpressionValue)sourceValue, Boolean.TRUE, callExp);
-			Object argumentValue = evaluationVisitor.evaluate(argument);
-			boolean mayBeInvalid = ValueUtil.mayBeInvalid(sourceValue) || ValueUtil.mayBeInvalid(argumentValue);
-			boolean mayBeNull = ValueUtil.mayBeNull(sourceValue) || ValueUtil.mayBeNull(argumentValue);
-			return new SymbolicOperationCallValueImpl(callExp, false, mayBeNull || mayBeInvalid, this, Lists.newArrayList(sourceValue, argumentValue));
-		}
-		finally {
-			evaluationVisitor.getExecutor().popEvaluationEnvironment();
-		}
-	} */
 }
