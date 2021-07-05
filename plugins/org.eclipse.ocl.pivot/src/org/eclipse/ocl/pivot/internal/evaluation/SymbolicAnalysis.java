@@ -27,7 +27,6 @@ import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
-import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.evaluation.EvaluationHaltedException;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor.EvaluationVisitorExtension;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
@@ -250,27 +249,7 @@ public class SymbolicAnalysis extends BasicOCLExecutor implements SymbolicExecut
 	}
 
 	public @NonNull Comparator<@NonNull TypedElement> getTypedElementHeightComparator() {
-		return new Comparator<@NonNull TypedElement>()
-		{
-			@Override
-			public int compare(@NonNull TypedElement o1, @NonNull TypedElement o2) {
-				int h1 = SymbolicAnalysis.this.getCSEElement(o1).getHeight();
-				int h2 = SymbolicAnalysis.this.getCSEElement(o2).getHeight();
-				int diff = h1 - h2;
-				if (diff != 0) {
-					return diff;
-				}
-				if (o1 instanceof VariableExp) h1++;
-				if (o2 instanceof VariableExp) h2++;
-				if (o1 instanceof ExpressionInOCL) h1++;
-				if (o2 instanceof ExpressionInOCL) h2++;
-				diff = h1 - h2;
-				if (diff != 0) {
-					return diff;
-				}
-				return System.identityHashCode(o1) - System.identityHashCode(o2);
-			}
-		};
+		return cseAnalysis.getTypedElementHeightComparator();
 	}
 
 	public void initializeEvaluationEnvironment(@NonNull ExpressionInOCL expressionInOCL, @Nullable Object contextElement, @Nullable Object @Nullable [] parameters) {

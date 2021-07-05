@@ -12,6 +12,7 @@ package org.eclipse.ocl.pivot.internal.cse;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,10 +28,10 @@ import org.eclipse.ocl.pivot.TypeExp;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
-import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicUtils;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicUtils.TypedElementHeightComparator;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 
 /**
@@ -67,13 +68,19 @@ public class CommonSubExpressionAnalysis
 	 */
 	private final @NonNull Map<@NonNull Object, @NonNull CSEValueElement> value2cse = new HashMap<>();
 
+	/**
+	 * Comparator to sort ExpressionInOCL/OCLExpression into simplest CSE first, most direct TYpedE;ement first.
+	 */
+	private @Nullable TypedElementHeightComparator typedElementHeightComparator;
+
 	public CommonSubExpressionAnalysis() {
 		this.visitor = createCSEVisitor();
 	}
 
 	public @NonNull CSEElement analyze(@NonNull ExpressionInOCL expressionInOCL) {
-		OCLExpression bodyExp = PivotUtil.getOwnedBody(expressionInOCL);
-		return getExpressionCSE(bodyExp);
+		CSEElement cseElement = getElementCSE(expressionInOCL);
+		assert SymbolicUtils.debugCheckCSEs(expressionInOCL, element2cse);		// XXX debugging
+		return cseElement;
 	}
 
 	protected @NonNull CSEVisitor createCSEVisitor() {
@@ -81,15 +88,6 @@ public class CommonSubExpressionAnalysis
 	}
 
 	public @NonNull CSEElement getElementCSE(@NonNull Element expression) {
-		CSEElement cseElement = element2cse.get(expression);
-		if (cseElement == null) {
-			cseElement = visitor.visit(expression);
-			element2cse.put(expression, cseElement);
-		}
-		return cseElement;
-	}
-
-	public @NonNull CSEElement getExpressionCSE(@NonNull OCLExpression expression) {
 		CSEElement cseElement = element2cse.get(expression);
 		if (cseElement == null) {
 			cseElement = visitor.visit(expression);
@@ -145,6 +143,14 @@ public class CommonSubExpressionAnalysis
 		return cseElement;
 	}
 
+	public @NonNull Comparator<@NonNull TypedElement> getTypedElementHeightComparator() {
+		TypedElementHeightComparator typedElementHeightComparator2 = typedElementHeightComparator;
+		if (typedElementHeightComparator2 == null) {
+			typedElementHeightComparator = typedElementHeightComparator2 = new TypedElementHeightComparator(element2cse);
+		}
+		return typedElementHeightComparator2;
+	}
+
 	public @NonNull CSEValueElement getValueCSE(@NonNull LiteralExp literalExp, @NonNull Object value) {
 		CSEValueElement cseElement = value2cse.get(value);
 		if (cseElement == null) {
@@ -155,7 +161,15 @@ public class CommonSubExpressionAnalysis
 		return cseElement;
 	}
 
-	public @NonNull CSEVariableElement getVariableCSE(@Nullable VariableExp variableExp, @NonNull VariableDeclaration variableDeclaration) {
+//	public @NonNull CSEVariableElement getVariableCSE(@Nullable VariableExp variableExp, @NonNull VariableDeclaration variableDeclaration) {
+//		CSEVariableElement cseElement = getVariableCSE(variableDeclaration);
+//		if (variableExp != null) {
+//			cseElement.addVariableExp(variableExp);
+//		}
+//		return cseElement;
+//	}
+
+	public @NonNull CSEVariableElement getVariableCSE(@NonNull VariableDeclaration variableDeclaration) {
 		CSEVariableElement cseElement = (CSEVariableElement) element2cse.get(variableDeclaration);
 		if (cseElement == null) {
 			int height = 0;
@@ -168,9 +182,6 @@ public class CommonSubExpressionAnalysis
 			}
 			cseElement = new CSEVariableElement(this, variableDeclaration, height);
 			element2cse.put(variableDeclaration, cseElement);
-		}
-		if (variableExp != null) {
-			cseElement.addVariableExp(variableExp);
 		}
 		return cseElement;
 	}

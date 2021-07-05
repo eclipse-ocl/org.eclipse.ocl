@@ -737,7 +737,7 @@ public class SymbolicAnalysisTests extends XtextTestCase
 
 	public void testSymbolicAnalysis_First() throws Exception {
 		MyOCL ocl = new MyOCL();
-		ExpressionInOCL asExpressionInOCL = ocl.createQueryTestModel("GuardedFirst", "GuardedFirst(x : Sequence(Integer)) : Integer",
+		ExpressionInOCL asExpressionInOCL = ocl.createQueryTestModel("First", "First(x : Sequence(Integer)) : Integer",
 				"x->first()");
 		VariableDeclaration contextVariable = PivotUtil.getOwnedContext(asExpressionInOCL);
 	//	VariableDeclaration firstParameterVariable = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
