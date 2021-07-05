@@ -53,6 +53,12 @@ public class PivotProjectPreferencePage extends AbstractProjectPreferencePage
 	@Override
 	protected void createFieldEditors(Composite fieldEditorParent, List<IFieldEditor> fields) {
 		Label horizontalLine= new Label(fieldEditorParent, SWT.SEPARATOR | SWT.HORIZONTAL);
+		horizontalLine = new Label(fieldEditorParent, SWT.SEPARATOR | SWT.HORIZONTAL);
+		horizontalLine.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false, 2, 1));
+		horizontalLine.setFont(fieldEditorParent.getFont());
+		fields.add(new MyComboFieldEditor(PivotValidationOptions.PotentialInvalidResult,
+			PivotUIMessages.Pivot_PotentialInvalidResult, SEVERITY_MODES, fieldEditorParent));
+		horizontalLine = new Label(fieldEditorParent, SWT.SEPARATOR | SWT.HORIZONTAL);
 		horizontalLine.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false, 2, 1));
 		horizontalLine.setFont(fieldEditorParent.getFont());
 		fields.add(new MyComboFieldEditor(PivotValidationOptions.EcoreValidation,

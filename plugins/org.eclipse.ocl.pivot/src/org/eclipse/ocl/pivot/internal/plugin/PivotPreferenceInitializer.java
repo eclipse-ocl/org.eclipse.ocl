@@ -25,6 +25,7 @@ public class PivotPreferenceInitializer extends AnnotatedPreferenceInitializer
 		putPreference(PivotValidationOptions.EcoreValidation);
 		putPreference(PivotValidationOptions.MissingSafeNavigation);
 		putPreference(PivotValidationOptions.OptionalDefaultMultiplicity);
+		putPreference(PivotValidationOptions.PotentialInvalidResult);
 		putPreference(PivotValidationOptions.RedundantSafeNavigation);
 	}
 }

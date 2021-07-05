@@ -418,6 +418,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		assert (umlRealization1 != null) && (umlStereotype1 != null);
 		String label = NameUtil.qualifiedNameFor(getStereotypeApplication(umlRealization1, umlStereotype1));
 		ThreadLocalExecutor.resetEnvironmentFactory();;
+	//	PivotUtilInternal.getEnvironmentFactory(null).setOption(PivotValidationOptions.PotentialInvalidResult, StatusCodes.Severity.IGNORE);
 		assertValidationDiagnostics("Loading", umlResource, validationContext, getMessages(
 			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "ParentRealization::In case of a ParentRealization relationship, the supplier should be a child of the client", label)));
 		disposeResourceSet(resourceSet);

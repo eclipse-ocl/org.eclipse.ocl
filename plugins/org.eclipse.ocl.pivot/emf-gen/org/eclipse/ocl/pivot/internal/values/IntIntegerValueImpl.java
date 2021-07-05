@@ -17,6 +17,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.InvalidValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.RealValue;
 
@@ -165,19 +166,22 @@ public class IntIntegerValueImpl extends IntegerValueImpl
 	@Override
 	public boolean equals(Object obj) {
 		try {
-			if (obj instanceof IntIntegerValueImpl) {
+			if (obj instanceof InvalidValue) {
+
+			}
+			else if (obj instanceof IntIntegerValueImpl) {
 				int thatValue = ((IntIntegerValueImpl)obj).intValue();
 				return value == thatValue;
 			}
-			if (obj instanceof LongIntegerValueImpl) {
+			else if (obj instanceof LongIntegerValueImpl) {
 				long thatValue = ((LongIntegerValueImpl)obj).longValue();
 				return value == thatValue;
 			}
-			if (obj instanceof IntegerValue) {
+			else if (obj instanceof IntegerValue) {
 				BigInteger bigIntegerValue = ((IntegerValue)obj).bigIntegerValue();
 				return bigIntegerValue().compareTo(bigIntegerValue) == 0;
 			}
-			if (obj instanceof RealValue) {
+			else if (obj instanceof RealValue) {
 				BigDecimal bigDecimalValue = ((RealValue)obj).bigDecimalValue();
 				return bigDecimalValue().compareTo(bigDecimalValue) == 0;
 			}

@@ -11,6 +11,8 @@
 
 package org.eclipse.ocl.pivot.messages;
 
+import org.eclipse.emf.common.util.Diagnostic;
+
 /**
  * StatusCodes summarize the result of a validation. The OK/WARNING/ERROR subset are used as
  * validation preferences with OK suppressing a validation and WARNING/ERROR selecting the severity.
@@ -32,6 +34,23 @@ public final class StatusCodes
 
 		private Severity(int statusCode) {
 			this.statusCode = statusCode;
+		}
+
+		/**
+		 * The org.eclipse.emf.common.util.Diagnostic equivalent.
+		 * @since 1.16
+		 */
+		public int getDiagnosticSeverity() {
+			int diagnosticMask = 0;
+			if (statusCode == 0) {
+				diagnosticMask = Diagnostic.INFO;
+			}
+			else {
+				if ((statusCode & StatusCodes.INFO) != 0) diagnosticMask |= Diagnostic.INFO;
+				if ((statusCode & StatusCodes.WARNING) != 0) diagnosticMask |= Diagnostic.WARNING;
+				if ((statusCode & StatusCodes.ERROR) != 0) diagnosticMask |= Diagnostic.ERROR;
+			}
+			return diagnosticMask;
 		}
 
 		public int getStatusCode() {

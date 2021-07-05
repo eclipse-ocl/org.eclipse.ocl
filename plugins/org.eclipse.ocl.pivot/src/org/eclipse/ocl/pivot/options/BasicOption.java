@@ -22,18 +22,18 @@ public abstract class BasicOption<T> implements Option<T>, PreferenceableOption<
 	protected final @NonNull String pluginId;
 	protected final @NonNull String key;
 	protected final T defaultValue;
-	
+
 	protected BasicOption(@NonNull String pluginId, @NonNull String key, T defaultValue) {
 		this.pluginId = pluginId;
 		this.key = key;
 		this.defaultValue = defaultValue;
 	}
-	
+
 	@Override
 	public final @NonNull String getKey() {
 		return key;
 	}
-	
+
 	@Override
 	public final T getDefaultValue() {
 		return defaultValue;
@@ -42,5 +42,10 @@ public abstract class BasicOption<T> implements Option<T>, PreferenceableOption<
 	@Override
 	public final @NonNull String getPluginId() {
 		return pluginId;
+	}
+
+	@Override
+	public @NonNull String toString() {
+		return key;
 	}
 }
