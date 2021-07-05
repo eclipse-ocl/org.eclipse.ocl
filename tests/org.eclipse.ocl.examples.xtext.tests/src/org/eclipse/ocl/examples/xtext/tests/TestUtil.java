@@ -59,7 +59,6 @@ import org.eclipse.ocl.examples.xtext.tests.XtextTestCase.EOperationsNormalizer;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase.ETypedElementNormalizer;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase.Normalizer;
 import org.eclipse.ocl.pivot.internal.validation.PivotEAnnotationValidator;
-import org.eclipse.ocl.pivot.util.PivotValidator;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -100,7 +99,7 @@ public class TestUtil
 
 	public static @NonNull Map<Object, Object> createDefaultContext(Diagnostician instance) {
 		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
-		validationContext.put(PivotValidator.SYMBOLIC_ANALYSIS_DISABLE_VALIDATION, Boolean.TRUE);
+	//	validationContext.put(PivotValidator.SYMBOLIC_ANALYSIS_DISABLE_VALIDATION, Boolean.TRUE);
 		return validationContext;
 	}
 
