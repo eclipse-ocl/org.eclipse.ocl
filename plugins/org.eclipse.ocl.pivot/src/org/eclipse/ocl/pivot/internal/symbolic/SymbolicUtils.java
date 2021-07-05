@@ -23,7 +23,6 @@ import org.eclipse.ocl.pivot.CollectionItem;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LetExp;
-import org.eclipse.ocl.pivot.ShadowPart;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.internal.cse.CSEElement;
@@ -85,20 +84,22 @@ public class SymbolicUtils extends AbstractLeafSymbolicValue
 	public static boolean debugCheckCSEs(@NonNull ExpressionInOCL expressionInOCL, @NonNull Map<@NonNull Element, @NonNull CSEElement> element2cse) {
 		Map<@NonNull CSEElement, @NonNull List<@NonNull TypedElement>> cse2elements = new HashMap<>();
 		for (EObject eObject : new TreeIterable(expressionInOCL,true)) {
-			TypedElement element = (TypedElement)eObject;
-			CSEElement cseElement2 = element2cse.get(element);
-			assert cseElement2 != null : "Missing CSE for " + element.eClass().getName() + ": " + element;
-			List<@NonNull TypedElement> elements = cse2elements.get(cseElement2);
-			if (elements == null) {
-				elements = new ArrayList<>();
-				cse2elements.put(cseElement2, elements);
+			if (eObject instanceof TypedElement) {		// MapLiteralPart
+				TypedElement element = (TypedElement)eObject;
+				CSEElement cseElement2 = element2cse.get(element);
+				assert cseElement2 != null : "Missing CSE for " + element.eClass().getName() + ": " + element;
+				List<@NonNull TypedElement> elements = cse2elements.get(cseElement2);
+				if (elements == null) {
+					elements = new ArrayList<>();
+					cse2elements.put(cseElement2, elements);
+				}
+				elements.add(element);
 			}
-			elements.add(element);
 		}
 		for (@NonNull List<@NonNull TypedElement> elements : cse2elements.values()) {
 			for (@NonNull TypedElement element : elements) {
 				for (TypedElement aDelegate = element; (aDelegate = SymbolicUtils.getDelegate(aDelegate)) != null; ) {
-					assert elements.contains(aDelegate) : "Inconistent CSE delegation for " + element.eClass().getName() + ": " + element;
+					assert elements.contains(aDelegate) : "Inconsistent CSE delegation for " + element.eClass().getName() + ": " + element;
 				}
 			}
 		}
@@ -116,9 +117,9 @@ public class SymbolicUtils extends AbstractLeafSymbolicValue
 		else if (typedElement instanceof LetExp) {
 			delegate = PivotUtil.getOwnedIn((LetExp)typedElement);
 		}
-		else if (typedElement instanceof ShadowPart) {
-			delegate = PivotUtil.getReferredProperty((ShadowPart)typedElement);
-		}
+	//	else if (typedElement instanceof ShadowPart) {
+	//		delegate = PivotUtil.getReferredProperty((ShadowPart)typedElement);
+	//	}
 	//	else if (typedElement instanceof Variable) {
 	//		delegate = ((Variable)typedElement).getOwnedInit();
 	//	}

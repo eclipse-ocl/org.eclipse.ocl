@@ -126,6 +126,11 @@ public class CSEVisitor extends AbstractExtendingVisitor<@NonNull CSEElement, @N
 			@SuppressWarnings("unused")
 			CSEElement parameterCSE = context.getVariableCSE(parameter);
 		}
+		Variable ownedResult = expressionInOCL.getOwnedResult();
+		if (ownedResult != null) {
+			@SuppressWarnings("unused")
+			CSEElement resultCSE = context.getVariableCSE(ownedResult);
+		}
 		OCLExpression bodyExp = PivotUtil.getOwnedBody(expressionInOCL);
 		CSEElement bodyCSE = context.getElementCSE(bodyExp);
 		return bodyCSE;
@@ -173,6 +178,10 @@ public class CSEVisitor extends AbstractExtendingVisitor<@NonNull CSEElement, @N
 			OCLExpression initExp = iterator.getOwnedInit();
 			CSEElement initCSE = initExp != null ? context.getElementCSE(initExp) : null;
 			argumentCSEs.add(initCSE);
+		}
+		for (@NonNull Variable coiterator : PivotUtil.getOwnedCoIterators(loopExp)) {
+			@SuppressWarnings("unused")
+			CSEElement variableCSE = context.getVariableCSE(coiterator);
 		}
 		if (loopExp instanceof IterateExp) {
 			Variable result = PivotUtil.getOwnedResult((IterateExp)loopExp);
@@ -299,12 +308,12 @@ public class CSEVisitor extends AbstractExtendingVisitor<@NonNull CSEElement, @N
 	@Override
 	public @NonNull CSEElement visitVariableExp(@NonNull VariableExp variableExp) {
 		VariableDeclaration variable = PivotUtil.getReferredVariable(variableExp);
-		if (variableExp.eContainer() instanceof LetExp) {
-			OCLExpression initExp = ((Variable)variable).getOwnedInit();
-			if (initExp != null) {
-				return context.getElementCSE(initExp);
-			}
-		}
+	//	if (variableExp.eContainer() instanceof LetExp) {
+	//		OCLExpression initExp = ((Variable)variable).getOwnedInit();
+	//		if (initExp != null) {
+	//			return context.getElementCSE(initExp);
+	//		}
+	//	}
 		CSEVariableElement variableCSE = context.getVariableCSE(variable);
 		variableCSE.addVariableExp(variableExp);
 		return variableCSE;
