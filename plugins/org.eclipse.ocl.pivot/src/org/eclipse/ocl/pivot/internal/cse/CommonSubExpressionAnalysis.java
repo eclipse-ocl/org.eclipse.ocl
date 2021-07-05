@@ -110,6 +110,7 @@ public class CommonSubExpressionAnalysis
 	}
 
 	public @NonNull CSEAggregateElement getNamespaceCSE(@NonNull Element element, @NonNull List<@NonNull CSEElement> elements) {
+		assert !element2cse.containsKey(element);
 		@NonNull Class<?> namespaceClass = element.getClass();
 		Map<@NonNull Class<?>, @NonNull Map<@NonNull List<@NonNull CSEElement>, @NonNull CSEAggregateElement>> namespaceClass2elements2cse2 = namespaceClass2elements2cse;
 		if (namespaceClass2elements2cse2 == null) {
@@ -125,6 +126,7 @@ public class CommonSubExpressionAnalysis
 			cseElement = new CSEAggregateElement(this, element, elements);
 			elements2cse.put(elements, cseElement);
 		}
+		element2cse.put(element, cseElement);
 		return cseElement;
 	}
 
