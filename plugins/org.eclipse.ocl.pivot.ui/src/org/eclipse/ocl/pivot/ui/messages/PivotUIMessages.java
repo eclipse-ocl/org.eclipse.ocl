@@ -24,6 +24,7 @@ public class PivotUIMessages
 	public static String Pivot_EcoreValidation;
 	public static String Pivot_MissingSafeNavigation;
 	public static String Pivot_ModelTypeSelection;
+	public static String Pivot_OptionalDefaultMultiplicity;
 	public static String Pivot_RedundantSafeNavigation;
 
 	public static String Pivot_Severity_Ignore;

@@ -37,6 +37,12 @@ public class PivotValidationOptions
 	public static final @NonNull EnumeratedOption<StatusCodes.Severity> MissingSafeNavigation = new EnumeratedOption<StatusCodes.Severity>(
 			PivotPlugin.PLUGIN_ID, "missing.safe.navigation", StatusCodes.Severity.IGNORE, StatusCodes.Severity.class); //$NON-NLS-1$
 
+	/**
+	 * @since 1.16
+	 */
+	public static final @NonNull BooleanOption OptionalDefaultMultiplicity = new BooleanOption(
+		PivotPlugin.PLUGIN_ID, "optional.default.multiplicity", true); //$NON-NLS-1$
+
 	public static final @NonNull EnumeratedOption<StatusCodes.Severity> RedundantSafeNavigation = new EnumeratedOption<StatusCodes.Severity>(
 			PivotPlugin.PLUGIN_ID, "redundant.safe.navigation", StatusCodes.Severity.IGNORE, StatusCodes.Severity.class); //$NON-NLS-1$
 
