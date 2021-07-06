@@ -96,7 +96,7 @@ public class OCLCommon implements OCLConstants
 	 * @since 1.1
 	 */
 	public static String getDefaultDefaultDelegationMode() {
-		if (EMFPlugin.IS_ECLIPSE_RUNNING) {		// BUG 403595 Leave LPG as the default default for now.
+		if (EMFPlugin.IS_ECLIPSE_RUNNING) {
 			//
 			// org.eclipse.ocl.pivot.utilities.PivotConstants.OCL_DELEGATE_URI_PIVOT is not
 			// on the classPath so search for it using the validationDelegates extension point.
