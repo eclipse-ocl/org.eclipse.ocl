@@ -73,12 +73,26 @@ public abstract class AbstractProjectPreferencePage extends PreferencePage
 		void setPropertyChangeListener(IPropertyChangeListener listener);
 		void store();
 	}
-	
+
 	protected static class MyComboFieldEditor extends ComboFieldEditor implements IFieldEditor
 	{
 		public MyComboFieldEditor(PreferenceableOption<?> preference, String labelText,
 				String[][] entryNamesAndValues, Composite parent) {
+			this(preference, labelText, entryNamesAndValues, parent, null);
+		}
+
+		/**
+		 * @since 1.16
+		 */
+		public MyComboFieldEditor(PreferenceableOption<?> preference, String labelText,
+				String[][] entryNamesAndValues, Composite parent, String toolTipText) {
 			super(preference.getKey(), labelText, entryNamesAndValues, parent);
+			if (toolTipText != null) {
+				getLabelControl().setToolTipText(toolTipText);
+			}
+			else {
+				getLabelControl().setToolTipText("toolTipText");
+			}
 		}
 
 		@Override
@@ -91,7 +105,7 @@ public abstract class AbstractProjectPreferencePage extends PreferencePage
 			super.setPresentsDefaultValue(booleanValue);
 		}
 	}
-	
+
 	// Name of the preferences store: /project/.setting/STORE_ID.prefs
 	protected static final String[][] BOOLEANS = new String[][] {
 		{ CommonUIMessages.Preference_False, Boolean.FALSE.toString() },
@@ -107,13 +121,13 @@ public abstract class AbstractProjectPreferencePage extends PreferencePage
 	private static final InstanceScope INSTANCE_SCOPE_INSTANCE = new InstanceScope();	// InstanceScope.INSTANCE not available for Galileo
 
 	private String pluginId;
-	
+
     /**
      * The field editors, or <code>null</code> if not created yet.
      */
     private List<IFieldEditor> fields = new ArrayList<IFieldEditor>();
 
-    /** 
+    /**
      * The first invalid field editor, or <code>null</code>
      * if all field editors are valid.
      */
@@ -187,7 +201,7 @@ public abstract class AbstractProjectPreferencePage extends PreferencePage
 
 	protected abstract AbstractProjectPreferencePage createClonePage();
 
-	/** 
+	/**
 	 * Insert the project-specific button and link on project-specific pages.
 	 */
 	@Override
@@ -226,7 +240,7 @@ public abstract class AbstractProjectPreferencePage extends PreferencePage
         checkState();
         return fieldEditorParent;
     }
-	
+
 	/**
 	 * Creates the field editors. Field editors are abstractions of
 	 * the common GUI blocks needed to manipulate various types
@@ -244,10 +258,12 @@ public abstract class AbstractProjectPreferencePage extends PreferencePage
 		link.setFont(composite.getFont());
 		link.setText("<A>" + text + "</A>");  //$NON-NLS-1$//$NON-NLS-2$
 		link.addSelectionListener(new SelectionListener() {
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				doLinkActivated((Link) e.widget);
 			}
 
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				doLinkActivated((Link) e.widget);
 			}
@@ -255,7 +271,7 @@ public abstract class AbstractProjectPreferencePage extends PreferencePage
 		return link;
 	}
 
-    /**	
+    /**
      * The field editor preference page implementation of an <code>IDialogPage</code>
      * method disposes of this page's controls and images.
      * Subclasses may override to release their own allocated SWT
@@ -282,6 +298,7 @@ public abstract class AbstractProjectPreferencePage extends PreferencePage
 		manager.addToRoot(targetNode);
 		final PreferenceDialog dialog = new PreferenceDialog(getControl().getShell(), manager);
 		BusyIndicator.showWhile(getControl().getDisplay(), new Runnable() {
+			@Override
 			public void run() {
 				dialog.create();
 				dialog.setMessage(targetNode.getLabelText());
@@ -294,6 +311,7 @@ public abstract class AbstractProjectPreferencePage extends PreferencePage
 	 * Return the object that owns the properties shown in this property page, which is
 	 * a non-null IProject for a project Property page and null for a global preference page.
 	 */
+	@Override
 	public final IProject getElement() {
 		return project;
 	}
@@ -318,7 +336,8 @@ public abstract class AbstractProjectPreferencePage extends PreferencePage
 	public IPreferenceStore getWorkspaceStore() {
 		return super.getPreferenceStore();
 	}
-	 
+
+	@Override
 	public void init(IWorkbench workbench) {
 	}
 
@@ -381,8 +400,8 @@ public abstract class AbstractProjectPreferencePage extends PreferencePage
 //		printPreferences("super.performDefaults()");
 	}
 
-	/** 
-	 * 
+	/**
+	 *
 	 */
 	@Override
 	public boolean performOk() {
@@ -437,10 +456,11 @@ public abstract class AbstractProjectPreferencePage extends PreferencePage
 
     /**
      * The field editor preference page implementation of this <code>IPreferencePage</code>
-     * (and <code>IPropertyChangeListener</code>) method intercepts <code>IS_VALID</code> 
+     * (and <code>IPropertyChangeListener</code>) method intercepts <code>IS_VALID</code>
      * events but passes other events on to its superclass.
      */
-    public void propertyChange(PropertyChangeEvent event) {
+    @Override
+	public void propertyChange(PropertyChangeEvent event) {
 
         if (event.getProperty().equals(FieldEditor.IS_VALID)) {
             boolean newValue = ((Boolean) event.getNewValue()).booleanValue();
@@ -459,12 +479,13 @@ public abstract class AbstractProjectPreferencePage extends PreferencePage
      * Receives the object that owns the properties shown in this property page.
 	 * @see org.eclipse.ui.IWorkbenchPropertyPage#setElement(org.eclipse.core.runtime.IAdaptable)
 	 */
+	@Override
 	public void setElement(IAdaptable element) {
 		IProject adapter = element.getAdapter(IProject.class);
 		this.project = adapter;
 		if (project != null) {
 			projectStore = new ScopedPreferenceStore(new ProjectScope(project), pluginId);
-			
+
 		}
 	}
 

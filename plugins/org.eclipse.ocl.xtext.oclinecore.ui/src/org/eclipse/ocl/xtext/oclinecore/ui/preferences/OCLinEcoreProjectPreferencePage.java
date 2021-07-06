@@ -12,6 +12,8 @@ package org.eclipse.ocl.xtext.oclinecore.ui.preferences;
 
 import java.util.List;
 
+import org.eclipse.ocl.common.OCLConstants;
+import org.eclipse.ocl.common.ui.internal.messages.CommonUIMessages;
 import org.eclipse.ocl.common.ui.internal.preferences.AbstractProjectPreferencePage;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.options.OCLinEcoreOptions;
@@ -49,6 +51,13 @@ public class OCLinEcoreProjectPreferencePage extends AbstractProjectPreferencePa
 		horizontalLine.setLayoutData(new GridData(GridData.FILL, GridData.FILL, false, false, 2, 1));
 		horizontalLine.setFont(fieldEditorParent.getFont());
 		fields.add(new MyComboFieldEditor(OCLinEcoreOptions.EXPORT_DELEGATION_URI,
-			OCLinEcoreUIMessages.OCLinEcore_EditorDelegationMode, ElementUtil.getDelegateURIs(), fieldEditorParent));
+			OCLinEcoreUIMessages.OCLinEcore_EditorDelegationMode, ElementUtil.getDelegateURIs(), fieldEditorParent,
+			"OCL embedded within an Ecore model can be executed using the Unified or Classic OCL functionality.\n" +
+			"This preference determines what form of execution is specified when the OCLinEcore saves to an Ecore file.\n" +
+			OCLConstants.OCL_DELEGATE_URI_LPG + " specifies use of the Classic LPG-based engine.\n" +
+			OCLConstants.OCL_DELEGATE_URI_SLASH + "Pivot specifies use of the Unified Xtext-based engine.\n" +
+			OCLConstants.OCL_DELEGATE_URI_SLASH + "Debug specifies use of the Unified Xtext-based debugger.\n" +
+			"The virtual " + OCLConstants.OCL_DELEGATE_URI + " defers the decision until execution at which point\n" +
+			"the \"" + CommonUIMessages.DefaultDelegationMode + "\" preferennce selects the engine."));
 	}
 }
