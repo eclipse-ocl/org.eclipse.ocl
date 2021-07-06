@@ -184,7 +184,7 @@ public interface PivotConstants
 	/**
 	 * The delegate URI for Ecore annotations using the Pivot evaluator.
 	 */
-	static final @NonNull String OCL_DELEGATE_URI_PIVOT = OCLConstants.OCL_DELEGATE_URI_SLASH + "Pivot"; //$NON-NLS-1$
+	static final @NonNull String OCL_DELEGATE_URI_PIVOT = OCLConstants.OCL_DELEGATE_URI_PIVOT;
 
-	static final @NonNull String OCL_DELEGATE_URI_DEBUG = OCLConstants.OCL_DELEGATE_URI_SLASH + "Debug"; //$NON-NLS-1$
+	static final @NonNull String OCL_DELEGATE_URI_DEBUG = OCLConstants.OCL_DELEGATE_URI_DEBUG;
 }

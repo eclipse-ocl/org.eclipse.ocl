@@ -890,11 +890,11 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		});
 	}
 
-	public void test_defaultIsLPG() throws Throwable {
+	public void test_defaultIsPivot() throws Throwable {
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() {
-				assertEquals(OCLConstants.OCL_DELEGATE_URI_LPG, CommonOptions.DEFAULT_DELEGATION_MODE.getPreferredValue());
+				assertEquals(OCLConstants.OCL_DELEGATE_URI_PIVOT, CommonOptions.DEFAULT_DELEGATION_MODE.getPreferredValue());
 			}
 		});
 	}

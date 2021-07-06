@@ -17,9 +17,15 @@ import org.eclipse.ocl.common.internal.preferences.EnumerationPreference;
 
 public class CommonOptions {
 
+	/**
+	 * CODE_GENERATION_MODE select whether GenModel geneates direct Java code or delegates to the OCL interpreter at run-time.
+	 */
     public static final EnumerationPreference<CodeGenerationMode> CODE_GENERATION_MODE = new EnumerationPreference<CodeGenerationMode>(
-    		OCLConstants.PLUGIN_ID, "code.generation.mode", CodeGenerationMode.DELEGATED, CodeGenerationMode.class); //$NON-NLS-1$
+    		OCLConstants.PLUGIN_ID, "code.generation.mode", CodeGenerationMode.GENERATED, CodeGenerationMode.class); //$NON-NLS-1$
 
+	/**
+	 * DEFAULT_DELEGATION_MODE selects which OCL execution engine is used when the edit-time save has used the virtual delegate.
+	 */
     public static final VirtualDelegateMapping DEFAULT_DELEGATION_MODE = new VirtualDelegateMapping(
     		OCLConstants.PLUGIN_ID, "default.delegation.mode", OCLCommon.getDefaultDefaultDelegationMode()); //$NON-NLS-1$
 

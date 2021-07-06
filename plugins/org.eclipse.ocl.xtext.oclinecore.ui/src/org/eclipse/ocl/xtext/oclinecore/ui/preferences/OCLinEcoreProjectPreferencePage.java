@@ -55,8 +55,8 @@ public class OCLinEcoreProjectPreferencePage extends AbstractProjectPreferencePa
 			"OCL embedded within an Ecore model can be executed using the Unified or Classic OCL functionality.\n" +
 			"This preference determines what form of execution is specified when the OCLinEcore saves to an Ecore file.\n" +
 			OCLConstants.OCL_DELEGATE_URI_LPG + " specifies use of the Classic LPG-based engine.\n" +
-			OCLConstants.OCL_DELEGATE_URI_SLASH + "Pivot specifies use of the Unified Xtext-based engine.\n" +
-			OCLConstants.OCL_DELEGATE_URI_SLASH + "Debug specifies use of the Unified Xtext-based debugger.\n" +
+			OCLConstants.OCL_DELEGATE_URI_PIVOT + " specifies use of the Unified Xtext-based engine.\n" +
+			OCLConstants.OCL_DELEGATE_URI_DEBUG + " specifies use of the Unified Xtext-based debugger.\n" +
 			"The virtual " + OCLConstants.OCL_DELEGATE_URI + " defers the decision until execution at which point\n" +
 			"the \"" + CommonUIMessages.DefaultDelegationMode + "\" preferennce selects the engine."));
 	}

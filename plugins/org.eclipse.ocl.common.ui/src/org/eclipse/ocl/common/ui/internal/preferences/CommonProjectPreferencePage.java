@@ -108,8 +108,8 @@ public class CommonProjectPreferencePage extends AbstractProjectPreferencePage
 			"The (legacy) Classic functionality uses an LPG-based parser and an extended Ecore metamodel.\n" +
 			"This preference takes effect when the 'virtual' " + OCLConstants.OCL_DELEGATE_URI + " is used.\n" +
 			OCLConstants.OCL_DELEGATE_URI_LPG + " delegates to the Classic LPG-based engine.\n" +
-			OCLConstants.OCL_DELEGATE_URI_SLASH + "Pivot delegates to the Unified Xtext-based engine.\n" +
-			OCLConstants.OCL_DELEGATE_URI_SLASH + "Debug delegates to the Unified Xtext-based debugger."));
+			OCLConstants.OCL_DELEGATE_URI_PIVOT + " delegates to the Unified Xtext-based engine.\n" +
+			OCLConstants.OCL_DELEGATE_URI_DEBUG + " delegates to the Unified Xtext-based debugger."));
 		fields.add(new MyComboFieldEditor(CommonOptions.CODE_GENERATION_MODE,
 			CommonUIMessages.CodeGenerationMode, CODE_GENERATION_MODES, fieldEditorParent,
 			"When EMF's generate model facility is used to generate Java code for an Ecore model, OCL embedded\n" +

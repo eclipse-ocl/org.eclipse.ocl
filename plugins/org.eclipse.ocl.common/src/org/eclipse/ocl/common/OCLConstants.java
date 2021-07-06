@@ -53,12 +53,21 @@ public interface OCLConstants
 	 * keys.
 	 * <p>
 	 * Note also that validation must be enabled by specifying an EClassifier Ecore annotation with a space separated list
-	 * of invariant <tt><i>constraintName</i></tt>s as the value of the <tt>constraints</tt> details key. 
+	 * of invariant <tt><i>constraintName</i></tt>s as the value of the <tt>constraints</tt> details key.
 	 * <p>
 	 * See <tt>/org.eclipse.ocl.ecore.tests/model/Company.ecore</tt> or <tt>http://wiki.eclipse.org/MDT/OCLinEcore</tt> for an example.
 	 */
 	public static final String OCL_DELEGATE_URI = org.eclipse.emf.ecore.EcorePackage.eNS_URI + "/OCL"; //$NON-NLS-1$
 	public static final String OCL_DELEGATE_URI_SLASH = OCL_DELEGATE_URI + "/"; //$NON-NLS-1$
 
+	/**
+	 * @since 1.16
+	 */
+	public static final String OCL_DELEGATE_URI_DEBUG = OCL_DELEGATE_URI_SLASH + "Debug"; //$NON-NLS-1$
 	public static final String OCL_DELEGATE_URI_LPG = OCL_DELEGATE_URI_SLASH + "LPG"; //$NON-NLS-1$
+
+	/**
+	 * @since 1.16
+	 */
+	public static final String OCL_DELEGATE_URI_PIVOT = OCL_DELEGATE_URI_SLASH + "Pivot"; //$NON-NLS-1$
 }

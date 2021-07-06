@@ -33,7 +33,7 @@ public class OCLCommon implements OCLConstants
 	 * A DefaultDefaultDelegationMode.run() scans the validationDelegates extension points for
 	 * to determine whether Pivot functionality is available and so returns the relevant delegate
 	 * URI for use as the default.degate.mode..
-	 * 
+	 *
 	 * This code is factored into a separate static class to ensure that classes that are not
 	 * available standalone are not loaded before EMFPlugin.IS_ECLIPSE_RUNNING is checked.
 	 *
@@ -60,7 +60,7 @@ public class OCLCommon implements OCLConstants
 	/**
 	 * A PreferenceListenerInstaller installs itself as a IPreferenceChangeListener on an option
 	 * so that PreferenceableOption2.fireChanged is invoked for any change.
-	 * 
+	 *
 	 * This code is factored into a separate static class to ensure that classes that are not
 	 * available standalone are not loaded before EMFPlugin.IS_ECLIPSE_RUNNING is checked.
 	 */
@@ -85,7 +85,7 @@ public class OCLCommon implements OCLConstants
 	}
 
 	public static final String PLUGIN_ID = "org.eclipse.ocl.common"; //$NON-NLS-1$
-	
+
 	/**
 	 * Return the default value of the "default.delegation.mode" preference, returning the LPG value for now.
 	 * .
@@ -112,7 +112,7 @@ public class OCLCommon implements OCLConstants
 				return (String) pivotClass.getField("OCL_DELEGATE_URI_PIVOT").get(null); //$NON-NLS-1$
 			} catch (Exception e) { /* Can't find it - no need to report as error * / }
 		} */
-		return OCLConstants.OCL_DELEGATE_URI_LPG;
+		return OCLConstants.OCL_DELEGATE_URI_PIVOT;
 	}
 
 	/**
@@ -146,16 +146,16 @@ public class OCLCommon implements OCLConstants
 	    EAnnotation eAnnotation = getDelegateAnnotation(eModelElement);
 	    return eAnnotation == null ? null : (String)eAnnotation.getDetails().get(key);
 	}
-	
+
 	/**
-	 * Return the preference value for 
+	 * Return the preference value for
 	 * @param option
 	 * @param contexts
 	 */
 	public static <T> T getPreference(PreferenceableOption<T> option, IScopeContext[] contexts) {
 		if (EMFPlugin.IS_ECLIPSE_RUNNING) {
 			IPreferencesService preferencesService = Platform.getPreferencesService();
-			if (preferencesService != null) {			
+			if (preferencesService != null) {
 				String qualifier = option.getPluginId();
 				String key = option.getKey();
 				T defaultValue = option.getDefaultValue();
@@ -165,7 +165,7 @@ public class OCLCommon implements OCLConstants
 		}
 		return option.getDefaultValue(); // Standalone or Eclipse not running
 	}
-	
+
 	/**
 	 * Install an IPreferenceChangeListener so that option.fireChanged() is notified of any change in the Eclipse preference.
 	 * @since 1.1
