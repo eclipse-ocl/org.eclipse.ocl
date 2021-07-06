@@ -66,6 +66,7 @@ import org.eclipse.ocl.pivot.internal.scoping.ScopeFilter;
 import org.eclipse.ocl.pivot.internal.utilities.IllegalLibraryException;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MorePivotable;
@@ -160,6 +161,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	private final IDiagnosticConsumer diagnosticsConsumer;
 
 	private boolean hasFailed = false;
+	private boolean optionalDefaultMultiplicity;
 
 	public CS2ASConversion(@NonNull CS2AS converter, @NonNull IDiagnosticConsumer diagnosticsConsumer) {
 		super(converter.getEnvironmentFactory());
@@ -169,6 +171,8 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		this.left2RightVisitor = converter.createLeft2RightVisitor(this);
 		this.postOrderVisitor = converter.createPostOrderVisitor(this);
 		this.preOrderVisitor = converter.createPreOrderVisitor(this);
+		this.optionalDefaultMultiplicity = environmentFactory.getValue(PivotValidationOptions.OptionalDefaultMultiplicity) == Boolean.TRUE;
+
 	}
 
 	public @NonNull OCLExpression addBadExpressionError(@NonNull ModelElementCS csElement, /*@NonNull*/ String message, Object... bindings) {
@@ -1078,16 +1082,24 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 				isRequired = true;
 			}
 			else {
-				lower = ElementUtil.getLower(csTypedElement);
-				upper = ElementUtil.getUpper(csTypedElement);
-				if (upper == 1) {
-					isRequired = lower == 1;
+				MultiplicityCS csMultiplicity = ownedType.getOwnedMultiplicity();
+				if ((csMultiplicity == null) && !optionalDefaultMultiplicity){
+					lower = 1;
+					upper = 1;
+					isRequired = true;
 				}
 				else {
-					isRequired = true;
-					//				if (pivotType != null) {
-					//					pivotType = metamodelManager.getCollectionType(ElementUtil.isOrdered(csTypedElement), ElementUtil.isUnique(csTypedElement), pivotType, ValueUtil.integerValueOf(lower), ValueUtil.unlimitedNaturalValueOf(upper));
-					//				}
+					lower = ElementUtil.getLower(csTypedElement);
+					upper = ElementUtil.getUpper(csTypedElement);
+					if (upper == 1) {
+						isRequired = lower == 1;
+					}
+					else {
+						isRequired = true;
+						//				if (pivotType != null) {
+						//					pivotType = metamodelManager.getCollectionType(ElementUtil.isOrdered(csTypedElement), ElementUtil.isUnique(csTypedElement), pivotType, ValueUtil.integerValueOf(lower), ValueUtil.unlimitedNaturalValueOf(upper));
+						//				}
+					}
 				}
 			}
 		}
@@ -1102,7 +1114,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	public void refreshRequiredType(@NonNull TypedElement pivotElement, @NonNull TypedRefCS csTypeRef) {
 		org.eclipse.ocl.pivot.Class type = PivotUtil.getPivot(org.eclipse.ocl.pivot.Class.class, csTypeRef);
 		Boolean isRequired = converter.isRequired(csTypeRef);
-		getHelper().setType(pivotElement, type, isRequired == Boolean.TRUE);
+		getHelper().setType(pivotElement, type, isRequired != Boolean.FALSE);
 	}
 
 	public void refreshTemplateSignature(@NonNull TemplateableElementCS csTemplateableElement, @NonNull TemplateableElement pivotTemplateableElement) {
