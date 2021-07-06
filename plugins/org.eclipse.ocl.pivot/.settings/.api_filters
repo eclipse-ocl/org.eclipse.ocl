@@ -424,6 +424,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/options/PivotValidationOptions.java" type="org.eclipse.ocl.pivot.options.PivotValidationOptions">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.options.PivotValidationOptions"/>
+                <message_argument value="OptionalDefaultMultiplicity"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/resource/BasicProjectManager.java" type="org.eclipse.ocl.pivot.resource.BasicProjectManager">
         <filter comment="Bug 512402 workaround" id="576725006">
             <message_arguments>
