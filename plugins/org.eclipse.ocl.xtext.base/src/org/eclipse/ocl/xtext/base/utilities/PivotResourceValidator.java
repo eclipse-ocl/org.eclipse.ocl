@@ -21,8 +21,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EObjectValidator;
-import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
@@ -79,11 +77,8 @@ public class PivotResourceValidator extends ResourceValidatorImpl
 	private static final Logger log = Logger.getLogger(PivotResourceValidator.class);
 	public static final String HAS_SYNTAX_ERRORS = "has_syntax_errors";
 
-	private EnvironmentFactoryInternal basicGetEnvironmentFactory;
-
 	public PivotResourceValidator() {
 		super();
-		this.basicGetEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 	}
 
 	protected ValidationDiagnostic createDefaultDiagnostic(Diagnostician diagnostician, EObject pivotObject) {
@@ -91,13 +86,6 @@ public class PivotResourceValidator extends ResourceValidatorImpl
 		//		return new ValidationDiagnostic(EcorePlugin.INSTANCE.getString("_UI_DiagnosticRoot_diagnostic",
 		//			new Object[] { objectLabel }), new Object[] { pivotObject });
 		return new ValidationDiagnostic("");
-	}
-
-	protected void issueFromDiagnostics(IAcceptor<Issue> acceptor, ValidationDiagnostic diagnostic) {
-		for (Diagnostic childDiagnostic : diagnostic.getChildren()) {
-			//			System.out.println(" issueFromEValidatorDiagnostic " + childDiagnostic);
-			issueFromEValidatorDiagnostic(childDiagnostic, acceptor);
-		}
 	}
 
 	protected void performValidation(IAcceptor<Issue> acceptor, Resource asResource, CancelIndicator monitor) {
@@ -121,14 +109,14 @@ public class PivotResourceValidator extends ResourceValidatorImpl
 				EObject pObject = contents.get(j);
 				ValidationDiagnostic diagnostic = createDefaultDiagnostic(diagnostician, pObject);
 				diagnostician.validate(pObject, diagnostic, context);
-				if (!diagnostic.getChildren().isEmpty()) {
+				for (Diagnostic childDiagnostic : diagnostic.getChildren()) {
 					if (diagnostic.getSeverity() == Diagnostic.ERROR) {
-						pResource.getErrors().add(diagnostic);
+						pResource.getErrors().add(new ValidationDiagnostic(childDiagnostic.getMessage()));
 					}
 					else if (diagnostic.getSeverity() == Diagnostic.WARNING) {
-						pResource.getWarnings().add(diagnostic);
+						pResource.getWarnings().add(new ValidationDiagnostic(childDiagnostic.getMessage()));
 					}
-					issueFromDiagnostics(acceptor, diagnostic);
+					issueFromEValidatorDiagnostic(childDiagnostic, acceptor);
 				}
 			} catch (RuntimeException e) {
 				if (!monitor.isCanceled()) {
@@ -226,7 +214,8 @@ public class PivotResourceValidator extends ResourceValidatorImpl
 						options.put(AbstractInjectableValidator.CURRENT_LANGUAGE_NAME, ((XtextResource) resource).getLanguageName());
 						if (resource instanceof BaseCSResource) {
 							BaseCSResource csResource = (BaseCSResource)resource;
-							@NonNull List<Resource.Diagnostic> errors = csResource.getErrors();
+							List<Resource.Diagnostic> errors = csResource.getErrors();
+							assert errors != null;
 							hasSyntaxError = ElementUtil.hasSyntaxError(errors);
 							if (hasSyntaxError) {
 								options.put(PivotResourceValidator.HAS_SYNTAX_ERRORS, Boolean.TRUE);
@@ -272,7 +261,6 @@ public class PivotResourceValidator extends ResourceValidatorImpl
 		ThreadLocalExecutor.resetEnvironmentFactory();
 		return result;
 	}
-
 
 	private void logCheckStatus(final Resource resource, boolean parserDiagFail, String string) {
 		if (log.isDebugEnabled()) {

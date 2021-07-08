@@ -10,17 +10,38 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.utilities;
 
+import java.util.List;
+
+import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.resource.CSResource.CSResourceExtension2;
 import org.eclipse.ocl.xtext.basecs.ModelElementCS;
+import org.eclipse.xtext.util.IAcceptor;
 import org.eclipse.xtext.validation.DiagnosticConverterImpl;
+import org.eclipse.xtext.validation.Issue;
 
 public class PivotDiagnosticConverter extends DiagnosticConverterImpl
 {
 	private boolean getLocationDataInProgress = false;
+
+	@Override
+	public void convertValidatorDiagnostic(Diagnostic diagnostic, IAcceptor<Issue> acceptor) {
+		List<?> data = diagnostic.getData();
+		if ((data != null) && (data.size() >= 2)) {
+			Object data1 = data.get(1);
+			if (data1 instanceof Throwable) {
+				String oldMessage = diagnostic.getMessage();
+				String newMessage = oldMessage + "\n" + data1.toString();
+				BasicDiagnostic newDiagnostic = new BasicDiagnostic(diagnostic.getSeverity(), diagnostic.getSource(), diagnostic.getCode(), newMessage, data.toArray(new Object[data.size()]));
+				newDiagnostic.addAll(diagnostic);		// adds children
+				diagnostic = newDiagnostic;
+			}
+		}
+		super.convertValidatorDiagnostic(diagnostic, acceptor);
+	}
 
 	@Override
 	protected EObject getCauser(Diagnostic diagnostic) {
