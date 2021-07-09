@@ -23,25 +23,23 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
-import org.eclipse.ocl.pivot.NamedElement;
-import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
-import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment.EvaluationEnvironmentExtension;
 import org.eclipse.ocl.pivot.evaluation.EvaluationHaltedException;
-import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor.EvaluationVisitorExtension;
+import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.internal.cse.CommonSubExpressionAnalysis;
-import org.eclipse.ocl.pivot.internal.manager.SymbolicExecutor;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent.SymbolicCollectionContent;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent.SymbolicMapContent;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicKnownValue;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicUnknownValue;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -58,19 +56,28 @@ import org.eclipse.ocl.pivot.values.SymbolicValue;
 /**
  * @since 1.16
  */
-public class SymbolicAnalysis extends BasicOCLExecutor implements SymbolicExecutor, ExecutorInternal
+public class SymbolicAnalysis /*extends BasicOCLExecutor implements SymbolicExecutor, ExecutorInternal*/
 {
 	public static final @NonNull TracingOption HYPOTHESIS = new TracingOption(PivotPlugin.PLUGIN_ID, "symbolic/hypothesis");
 
-	private @Nullable List<@NonNull HypothesizedSymbolicEvaluationEnvironment> hypothesizedEvaluationEnvironments = null;
-
+	private final @NonNull BasicOCLExecutor executor;
+	protected final EnvironmentFactoryInternal.@NonNull EnvironmentFactoryInternalExtension environmentFactory;
 	protected final @NonNull ExpressionInOCL expressionInOCL;
 	protected final @NonNull CommonSubExpressionAnalysis cseAnalysis;
+	protected final @NonNull BaseSymbolicEvaluationEnvironment baseSymbolicEvaluationEnvironment;
+	private final @NonNull EvaluationVisitor evaluationVisitor;
+	private @Nullable List<@NonNull HypothesizedSymbolicEvaluationEnvironment> hypothesizedEvaluationEnvironments = null;
+
 
 	/**
 	 * The known symbolic value of known literal values.
 	 */
 	private @NonNull Map<@Nullable Object, org.eclipse.ocl.pivot.internal.symbolic.SymbolicKnownValue> knownValue2symbolicValue = new HashMap<>();
+
+	/**
+	 * The maybe-invalid symbolic value of known TYpeIds.
+	 */
+	private @NonNull Map<@NonNull TypeId, org.eclipse.ocl.pivot.internal.symbolic.SymbolicUnknownValue> typeid2symbolicValue = new HashMap<>();
 
 	/**
 	 * The expressions for which contradicting a hypothesized value allows a more precise re-evaluation.
@@ -93,12 +100,14 @@ public class SymbolicAnalysis extends BasicOCLExecutor implements SymbolicExecut
 	 * Initializes the symbolic analysis of expressionInOCL that delegates to a non-symbolic evaluation visitor.
 	 */
 	public SymbolicAnalysis(@NonNull ExpressionInOCL expressionInOCL, @NonNull EnvironmentFactoryInternalExtension environmentFactory, @NonNull ModelManager modelManager) {
-		super(environmentFactory, modelManager);
+		this.executor = new BasicOCLExecutor(environmentFactory, modelManager);
+		this.environmentFactory = environmentFactory;
 		this.expressionInOCL = expressionInOCL;
 		this.cseAnalysis = new CommonSubExpressionAnalysis();
+		this.evaluationVisitor = executor.createEvaluationVisitor();
+		this.baseSymbolicEvaluationEnvironment = new BaseSymbolicEvaluationEnvironment(this, expressionInOCL);
 	}
 
-	@Override
 	public void addHypothesis(@NonNull TypedElement typedElement, @NonNull Hypothesis hypothesis) {
 		List<@NonNull Hypothesis> hypotheses = getHypotheses(typedElement);
 		hypotheses.add(hypothesis);
@@ -134,14 +143,6 @@ public class SymbolicAnalysis extends BasicOCLExecutor implements SymbolicExecut
 		}
 	}
 
-/*	public void addMayBeSmallerThanHypothesis(@NonNull TypedElement typedElement, @NonNull SymbolicValue symbolicValue, @NonNull SymbolicValue minSizeValue) {
-		Hypothesis hypothesis = getHypotheses(typedElement, Hypothesis.MayBeSmallerThanHypothesis.class);		// minSIze
-		if (hypothesis == null) {
-			hypothesis = new Hypothesis.MayBeSmallerThanHypothesis(this, typedElement, symbolicValue, minSizeValue);
-			addHypothesis(typedElement, hypothesis);
-		}
-	} */
-
 	public void addMayBeZeroHypothesis(@NonNull TypedElement typedElement, @NonNull SymbolicValue symbolicValue) {
 		Hypothesis hypothesis = getHypotheses(typedElement, Hypothesis.MayBeZeroHypothesis.class);
 		if (hypothesis == null) {
@@ -150,17 +151,13 @@ public class SymbolicAnalysis extends BasicOCLExecutor implements SymbolicExecut
 		}
 	}
 
-	@Override
-	protected @NonNull EvaluationVisitorExtension createEvaluationVisitor() {
-		EvaluationVisitorExtension evaluationVisitor = super.createEvaluationVisitor();
-		SymbolicEvaluationVisitor symbolicEvaluationVisitor = new SymbolicEvaluationVisitor(evaluationVisitor);
+	public @NonNull SymbolicEvaluationVisitor createSymbolicEvaluationVisitor(@NonNull SymbolicEvaluationEnvironment symbolicEvaluationEnvironment) {
+		SymbolicEvaluationVisitor symbolicEvaluationVisitor = new SymbolicEvaluationVisitor(this, evaluationVisitor, symbolicEvaluationEnvironment);
 		return symbolicEvaluationVisitor;
 	}
 
-	@Override
 	public @NonNull HypothesizedSymbolicEvaluationEnvironment createHypothesizedSymbolicEvaluationEnvironment(@NonNull Hypothesis hypothesis) {
-		BaseSymbolicEvaluationEnvironment evaluationEnvironment = (BaseSymbolicEvaluationEnvironment) getEvaluationEnvironment();
-		HypothesizedSymbolicEvaluationEnvironment hypothesizedEvaluationEnvironment = new HypothesizedSymbolicEvaluationEnvironment(evaluationEnvironment, hypothesis);
+		HypothesizedSymbolicEvaluationEnvironment hypothesizedEvaluationEnvironment = new HypothesizedSymbolicEvaluationEnvironment(baseSymbolicEvaluationEnvironment, hypothesis);
 		List<@NonNull HypothesizedSymbolicEvaluationEnvironment> hypothesizedEvaluationEnvironments2 = hypothesizedEvaluationEnvironments;
 		if (hypothesizedEvaluationEnvironments2 == null) {
 			hypothesizedEvaluationEnvironments = hypothesizedEvaluationEnvironments2 = new ArrayList<>();
@@ -169,27 +166,12 @@ public class SymbolicAnalysis extends BasicOCLExecutor implements SymbolicExecut
 		return hypothesizedEvaluationEnvironment;
 	}
 
-	@Override
-	protected @NonNull EvaluationEnvironmentExtension createNestedEvaluationEnvironment(
-			@NonNull EvaluationEnvironmentExtension evaluationEnvironment,
-			@NonNull NamedElement executableObject, @Nullable Object caller) {
-		// TODO Auto-generated method stub
-		return super.createNestedEvaluationEnvironment(evaluationEnvironment, executableObject, caller);
+	public @NonNull SymbolicUnknownValue createUnknownValue(@NonNull TypeId typeId, boolean mayBeNull, boolean mayBeInvalid) {
+		return new SymbolicUnknownValue(createVariableName(), typeId, mayBeNull, mayBeInvalid);
 	}
 
-	@Override
-	protected @NonNull EvaluationEnvironmentExtension createNestedEvaluationEnvironment(
-			@NonNull EvaluationEnvironmentExtension evaluationEnvironment,
-			@NonNull NamedElement executableObject,
-			@Nullable OCLExpression callingObject) {
-		// TODO Auto-generated method stub
-		return super.createNestedEvaluationEnvironment(evaluationEnvironment,
-			executableObject, callingObject);
-	}
-
-	@Override
-	protected @NonNull AbstractSymbolicEvaluationEnvironment createRootEvaluationEnvironment(@NonNull NamedElement executableObject) {
-		return new BaseSymbolicEvaluationEnvironment(this, executableObject);
+	public @NonNull SymbolicValue createUnknownValue(@NonNull TypedElement typedElement, boolean mayBeNull, boolean mayBeInvalid) {
+		return createUnknownValue(typedElement.getTypeId(), mayBeNull, mayBeInvalid);
 	}
 
 	public @NonNull String createVariableName() {
@@ -197,16 +179,19 @@ public class SymbolicAnalysis extends BasicOCLExecutor implements SymbolicExecut
 	}
 
 	public @NonNull BaseSymbolicEvaluationEnvironment getBaseSymbolicEvaluationEnvironment() {
-		return getSymbolicEvaluationEnvironment().getBaseSymbolicEvaluationEnvironment();
+		return baseSymbolicEvaluationEnvironment;
 	}
 
 	public @NonNull CSEElement getCSEElement(@NonNull Element element) {
 		return cseAnalysis.getElementCSE(element);
 	}
 
-	@Override
-	public @NonNull AbstractSymbolicEvaluationEnvironment getSymbolicEvaluationEnvironment() {
-		return (AbstractSymbolicEvaluationEnvironment)super.getEvaluationEnvironment();
+	public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
+		return environmentFactory;
+	}
+
+	public @NonNull ExecutorInternal getExecutor() {
+		return executor;
 	}
 
 	private @Nullable Hypothesis getHypotheses(@NonNull TypedElement typedElement, @NonNull Class<?> hypothesisClass) {
@@ -247,7 +232,7 @@ public class SymbolicAnalysis extends BasicOCLExecutor implements SymbolicExecut
 				}
 			}
 			if (symbolicKnownValue == null) {
-				Type type = getEnvironmentFactory().getIdResolver().getStaticTypeOfValue(null, boxedValue);
+				Type type = environmentFactory.getIdResolver().getStaticTypeOfValue(null, boxedValue);
 				String constantName = "k#" + constantCounter++;
 				TypeId typeId = type.getTypeId();
 				SymbolicContent content = null;
@@ -268,37 +253,42 @@ public class SymbolicAnalysis extends BasicOCLExecutor implements SymbolicExecut
 		return symbolicKnownValue;
 	}
 
+	public @Nullable SymbolicValue getMayBeInvalidValue(@NonNull TypeId typeid) {
+		SymbolicUnknownValue symbolicUnknownValue = typeid2symbolicValue.get(typeid);
+		if (symbolicUnknownValue == null) {
+			symbolicUnknownValue = createUnknownValue(typeid, false, true);
+			typeid2symbolicValue.put(typeid, symbolicUnknownValue);
+		}
+		return symbolicUnknownValue;
+	}
+
+	public @NonNull SymbolicEvaluationEnvironment getSymbolicEvaluationEnvironment() {
+		return baseSymbolicEvaluationEnvironment.getSymbolicEvaluationEnvironment();
+	}
+
 	public @NonNull Comparator<@NonNull TypedElement> getTypedElementHeightComparator() {
 		return cseAnalysis.getTypedElementHeightComparator();
 	}
 
 	public void initializeEvaluationEnvironment(@NonNull ExpressionInOCL expressionInOCL, @Nullable Object selfObject, @Nullable Object resultObject, @Nullable Object @Nullable [] parameters) {
-		initializeEvaluationEnvironment(expressionInOCL);
+		executor.initializeEvaluationEnvironment(expressionInOCL);
 		cseAnalysis.analyze(expressionInOCL);
-		BaseSymbolicEvaluationEnvironment evaluationEnvironment = getBaseSymbolicEvaluationEnvironment();
-	//	IdResolver idResolver = environmentFactory.getIdResolver();
 		Variable contextVariable = expressionInOCL.getOwnedContext();
 		if (contextVariable != null) {
-		//	Object contextValue = idResolver.boxedValueOf(contextElement);
-		//	evaluationEnvironment.add(contextVariable, contextValue);
 			CSEElement cseElement = getCSEElement(contextVariable);
-			evaluationEnvironment.traceValue(cseElement, selfObject);
+			traceValue(cseElement, selfObject);
 		}
 		Variable resultVariable = expressionInOCL.getOwnedResult();
 		if (resultVariable != null) {
-		//	Object contextValue = idResolver.boxedValueOf(contextElement);
-		//	evaluationEnvironment.add(contextVariable, contextValue);
 			CSEElement cseElement = getCSEElement(resultVariable);
-			evaluationEnvironment.traceValue(cseElement, resultObject);
+			traceValue(cseElement, resultObject);
 		}
 		int i = 0;
 		assert parameters != null;
 		for (Variable parameterVariable : PivotUtil.getOwnedParameters(expressionInOCL)) {
 			Object parameter = parameters[i++];
-		//	Object parameterValue = idResolver.boxedValueOf(parameter);
-		//	evaluationEnvironment.add(parameterVariable, parameterValue);
 			CSEElement cseElement = getCSEElement(parameterVariable);
-			evaluationEnvironment.traceValue(cseElement, parameter);
+			traceValue(cseElement, parameter);
 		}
 	}
 
@@ -329,13 +319,16 @@ public class SymbolicAnalysis extends BasicOCLExecutor implements SymbolicExecut
 		throw new UnsupportedOperationException();
 	} */
 
+	private boolean isCanceled() {
+		return executor.isCanceled();
+	}
+
 	protected void resolveHypotheses() {
 		Map<@NonNull TypedElement, @NonNull List<@NonNull Hypothesis>> typedElement2hypotheses2 = typedElement2hypotheses;
 		if (typedElement2hypotheses2 != null) {
 			if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
 				SymbolicAnalysis.HYPOTHESIS.println(" resolving hypotheses");
 			}
-		//	AbstractSymbolicEvaluationEnvironment evaluationEnvironment = getEvaluationEnvironment();
 			List<@NonNull Hypothesis> hypotheses = new ArrayList<>(allHypotheses);
 			if (hypotheses.size() > 1) {
 				Collections.sort(hypotheses);
@@ -363,7 +356,7 @@ public class SymbolicAnalysis extends BasicOCLExecutor implements SymbolicExecut
 			}
 		}
 		Collections.sort(typedElements, getTypedElementHeightComparator());
-		AbstractSymbolicEvaluationEnvironment evaluationEnvironment = getSymbolicEvaluationEnvironment();
+		SymbolicEvaluationEnvironment evaluationEnvironment = getSymbolicEvaluationEnvironment();
 		for (@NonNull TypedElement typedElement : typedElements) {
 			evaluationEnvironment.symbolicEvaluate(typedElement);
 		}
@@ -409,5 +402,18 @@ public class SymbolicAnalysis extends BasicOCLExecutor implements SymbolicExecut
 			}
 		}
 		return s.toString();
+	}
+
+	private @NonNull SymbolicValue traceValue(@NonNull CSEElement cseElement, @Nullable Object value) {
+		SymbolicValue symbolicValue;
+		if (value instanceof SymbolicValue) {
+			symbolicValue = (SymbolicValue) value;
+		}
+		else {
+			Object boxedValue = environmentFactory.getIdResolver().boxedValueOf(value);
+			symbolicValue = getKnownValue(boxedValue);
+		}
+		BaseSymbolicEvaluationEnvironment evaluationEnvironment = getBaseSymbolicEvaluationEnvironment();
+		return evaluationEnvironment.traceSymbolicValue(cseElement, symbolicValue);
 	}
 }

@@ -23,7 +23,8 @@ import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.evaluation.IterationManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.evaluation.AbstractSymbolicEvaluationEnvironment;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.library.LibraryOperation.LibraryOperationExtension2;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
@@ -70,7 +71,7 @@ public abstract class AbstractIteration extends AbstractIterationOrOperation imp
 	/**
 	 * @since 1.16
 	 */
-	protected @Nullable SymbolicValue checkPreconditions(@NonNull AbstractSymbolicEvaluationEnvironment evaluationEnvironment, @NonNull LoopExp loopExp) {
+	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull LoopExp loopExp) {
 		TypeId returnTypeId = loopExp.getTypeId();
 		OCLExpression source = PivotUtil.getOwnedSource(loopExp);
 		SymbolicValue invalidSourceProblem = evaluationEnvironment.checkNotInvalid(source, returnTypeId);
@@ -158,7 +159,7 @@ public abstract class AbstractIteration extends AbstractIterationOrOperation imp
 	 * @since 1.16
 	 */
 	@Override
-	public @NonNull SymbolicValue symbolicEvaluate(@NonNull AbstractSymbolicEvaluationEnvironment evaluationEnvironment, @NonNull LoopExp loopExp) {
+	public @NonNull SymbolicValue symbolicEvaluate(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull LoopExp loopExp) {
 		SymbolicValue symbolicPreconditionValue = checkPreconditions(evaluationEnvironment, loopExp);
 		if (symbolicPreconditionValue != null) {
 			return symbolicPreconditionValue;
@@ -203,17 +204,18 @@ public abstract class AbstractIteration extends AbstractIterationOrOperation imp
 			mayBeInvalidOrNull = true;
 		}
 		argumentSymbolicValues.add(bodySymbolicValue);
+		SymbolicAnalysis symbolicAnalysis = evaluationEnvironment.getSymbolicAnalysis();
 		if (isKnown) {
 			@Nullable Object[] sourceAndArgumentValues = new @Nullable Object[1+argumentsSize];
 			sourceAndArgumentValues[0] = sourceSymbolicValue.getKnownValue();
 			for (int i = 0; i < argumentsSize; i++) {
 				sourceAndArgumentValues[i+1] = argumentSymbolicValues.get(i).getKnownValue();
 			}
-			Object result = ((LibraryOperationExtension2)this).evaluate(evaluationEnvironment.getExecutor(), loopExp, sourceAndArgumentValues);
+			Object result = ((LibraryOperationExtension2)this).evaluate(symbolicAnalysis.getExecutor(), loopExp, sourceAndArgumentValues);
 			return evaluationEnvironment.getKnownValue(result);
 		}
 		else {
-			return evaluationEnvironment.createUnknownValue(loopExp.getTypeId(), false, mayBeInvalidOrNull);
+			return symbolicAnalysis.createUnknownValue(loopExp.getTypeId(), false, mayBeInvalidOrNull);
 		}
 
 		/*	if (loopExp.isIsMany()) {

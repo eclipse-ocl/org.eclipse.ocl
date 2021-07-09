@@ -239,6 +239,11 @@ public class PivotTestCase extends TestCase
 				}
 				s1.append("\n");
 				s1.append(actual);
+				List<?> data = diagnostic.getData();
+				if ((data != null) && (data.size() >= 2) && (data.get(1) instanceof Throwable)) {
+					s1.append("\n\t");
+					s1.append(data.get(1).toString());
+				}
 			}
 			else {
 				expected.put(actual, expectedCount-1);

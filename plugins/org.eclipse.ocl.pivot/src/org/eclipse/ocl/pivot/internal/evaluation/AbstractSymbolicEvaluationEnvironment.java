@@ -14,16 +14,15 @@ package org.eclipse.ocl.pivot.internal.evaluation;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
-import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
-import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicUnknownValue;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
@@ -35,20 +34,23 @@ import org.eclipse.ocl.pivot.values.SymbolicValue;
  *
  * @since 1.16
  */
-public abstract class AbstractSymbolicEvaluationEnvironment extends BasicEvaluationEnvironment implements SymbolicEvaluationEnvironment
+public abstract class AbstractSymbolicEvaluationEnvironment implements SymbolicEvaluationEnvironment
 {
-	private /*@LazyNonNull*/ EvaluationVisitor undecoratedVisitor = null;
+	protected final @NonNull SymbolicAnalysis symbolicAnalysis;
+	protected final @NonNull TypedElement executableObject;
+	protected final @NonNull EnvironmentFactory environmentFactory;
+	protected final @NonNull SymbolicEvaluationVisitor symbolicEvaluationVisitor;
 
-	protected AbstractSymbolicEvaluationEnvironment(@NonNull SymbolicAnalysis executor, @NonNull NamedElement executableObject) {
-		super(executor, executableObject);
+	protected AbstractSymbolicEvaluationEnvironment(@NonNull SymbolicAnalysis symbolicAnalysis, @NonNull TypedElement executableObject) {
+		this.symbolicAnalysis = symbolicAnalysis;
+		this.executableObject = executableObject;
+		this.environmentFactory = symbolicAnalysis.getEnvironmentFactory();
+		this.symbolicEvaluationVisitor = symbolicAnalysis.createSymbolicEvaluationVisitor(this);
 	}
 
-	protected AbstractSymbolicEvaluationEnvironment(@NonNull AbstractSymbolicEvaluationEnvironment parent, @NonNull NamedElement element) {
-		super(parent, element, element);
-	}
-
+	@Override
 	public @Nullable SymbolicValue basicGetSymbolicValue(@NonNull Element element) {
-		CSEElement cseElement = getSymbolicAnalysis().getCSEElement(element);
+		CSEElement cseElement = symbolicAnalysis.getCSEElement(element);
 		return basicGetSymbolicValue(cseElement);
 	}
 
@@ -58,7 +60,6 @@ public abstract class AbstractSymbolicEvaluationEnvironment extends BasicEvaluat
 	public @Nullable SymbolicValue checkNotEmpty(@NonNull TypedElement typedElement, @NonNull TypeId typeId) {
 		SymbolicValue symbolicValue = getSymbolicValue(typedElement);
 		SymbolicContent symbolicContent = symbolicValue.getContent();
-//		symbolicContent.toString();		// XXX
 		SymbolicValue symbolicSize = symbolicContent.getSize();
 		if (symbolicSize.isZero()) {
 			return getKnownValue(ValueUtil.INVALID_VALUE);
@@ -66,9 +67,8 @@ public abstract class AbstractSymbolicEvaluationEnvironment extends BasicEvaluat
 		if (!symbolicSize.mayBeZero()) {
 			return null;
 		}
-		SymbolicAnalysis symbolicAnalysis = getSymbolicAnalysis();
 		symbolicAnalysis.addMayBeEmptyHypothesis(typedElement, symbolicValue);
-		return getMayBeInvalidValue(typeId);
+		return symbolicAnalysis.getMayBeInvalidValue(typeId);
 	}
 
 	@Override
@@ -80,9 +80,8 @@ public abstract class AbstractSymbolicEvaluationEnvironment extends BasicEvaluat
 		if (!symbolicValue.mayBeInvalid()) {
 			return null;
 		}
-		SymbolicAnalysis symbolicAnalysis = getSymbolicAnalysis();
 		symbolicAnalysis.addMayBeInvalidHypothesis(typedElement, symbolicValue);
-		return getMayBeInvalidValue(typeId);
+		return symbolicAnalysis.getMayBeInvalidValue(typeId);
 	}
 
 	@Override
@@ -94,24 +93,9 @@ public abstract class AbstractSymbolicEvaluationEnvironment extends BasicEvaluat
 		if (!symbolicValue.mayBeNull()) {
 			return null;
 		}
-		SymbolicAnalysis symbolicAnalysis = getSymbolicAnalysis();
 		symbolicAnalysis.addMayBeNullHypothesis(typedElement, symbolicValue);
-		return getMayBeInvalidValue(typeId);
+		return symbolicAnalysis.getMayBeInvalidValue(typeId);
 	}
-
-/*	@Override
-	public @Nullable SymbolicValue checkNotSmallerThan(@NonNull TypedElement typedElement, @NonNull SymbolicValue minSizeValue, @NonNull TypeId typeId) {
-		SymbolicValue symbolicValue = getSymbolicValue(typedElement);
-		if (symbolicValue.isSmallerThan(minSizeValue)) {
-			return getKnownValue(ValueUtil.INVALID_VALUE);
-		}
-		if (!symbolicValue.mayBeSmallerThan(minSizeValue)) {
-			return null;
-		}
-		SymbolicAnalysis symbolicAnalysis = getSymbolicAnalysis();
-		symbolicAnalysis.addMayBeSmallerThanHypothesis(typedElement, symbolicValue, minSizeValue);
-		return getMayBeInvalidValue(typeId);
-	} */
 
 	@Override
 	public @Nullable SymbolicValue checkNotZero(@NonNull TypedElement typedElement, @NonNull TypeId typeId) {
@@ -122,45 +106,38 @@ public abstract class AbstractSymbolicEvaluationEnvironment extends BasicEvaluat
 		if (!symbolicValue.mayBeZero()) {
 			return null;
 		}
-		SymbolicAnalysis symbolicAnalysis = getSymbolicAnalysis();
 		symbolicAnalysis.addMayBeZeroHypothesis(typedElement, symbolicValue);
-		return getMayBeInvalidValue(typeId);
+		return symbolicAnalysis.getMayBeInvalidValue(typeId);
 	}
 
+	@Override
 	public @NonNull SymbolicUnknownValue createUnknownValue(@NonNull TypeId typeId, boolean mayBeNull, boolean mayBeInvalid) {
-		return new SymbolicUnknownValue(getSymbolicAnalysis().createVariableName(), typeId, mayBeNull, mayBeInvalid);
+		return symbolicAnalysis.createUnknownValue(typeId, mayBeNull, mayBeInvalid);
 	}
 
 	@Override
 	public @NonNull SymbolicValue createUnknownValue(@NonNull TypedElement typedElement, boolean mayBeNull, boolean mayBeInvalid) {
-		return createUnknownValue(typedElement.getTypeId(), mayBeNull, mayBeInvalid);
+		return symbolicAnalysis.createUnknownValue(typedElement, mayBeNull, mayBeInvalid);
 	}
 
-	public @NonNull SymbolicValue getBaseSymbolicValue(@NonNull CSEElement cseElement) {
-		return getBaseSymbolicEvaluationEnvironment().getSymbolicValue(cseElement);
+	@Override
+	public @NonNull EnvironmentFactory getEnvironmentFactory() {
+		return environmentFactory;
 	}
 
-	public @NonNull SymbolicValue getBaseSymbolicValue(@NonNull TypedElement typedElement) {
-		return getBaseSymbolicEvaluationEnvironment().getSymbolicValue(typedElement);
+	@Override
+	public @NonNull ExecutorInternal getExecutor() {
+		return symbolicAnalysis.getExecutor();
 	}
 
 	@Override
 	public final @NonNull SymbolicValue getKnownValue(@Nullable Object boxedValue) {
-		return getSymbolicAnalysis().getKnownValue(boxedValue);
-	}
-
-	public @Nullable SymbolicValue getMayBeInvalidValue(@NonNull TypeId typeid) {
-		return getBaseSymbolicEvaluationEnvironment().getMayBeInvalidValue(typeid);
-	}
-
-	@Override
-	public @Nullable AbstractSymbolicEvaluationEnvironment getParent() {
-		return (AbstractSymbolicEvaluationEnvironment) super.getParent();
+		return symbolicAnalysis.getKnownValue(boxedValue);
 	}
 
 	@Override
 	public final @NonNull SymbolicAnalysis getSymbolicAnalysis() {
-		return (SymbolicAnalysis)executor;
+		return symbolicAnalysis;
 	}
 
 	@Override
@@ -170,14 +147,6 @@ public abstract class AbstractSymbolicEvaluationEnvironment extends BasicEvaluat
 
 	public final @NonNull SymbolicValue getSymbolicValue(@NonNull CSEElement cseElement) {
 		return ClassUtil.nonNullState(basicGetSymbolicValue(cseElement));
-	}
-
-	protected @NonNull EvaluationVisitor getUndecoratedVisitor() {
-		EvaluationVisitor undecoratedVisitor2 = undecoratedVisitor;
-		if (undecoratedVisitor2 == null) {
-			this.undecoratedVisitor = undecoratedVisitor2 = executor.getEvaluationVisitor().getUndecoratedVisitor();
-		}
-		return undecoratedVisitor2;
 	}
 
 	@Override
@@ -224,8 +193,10 @@ public abstract class AbstractSymbolicEvaluationEnvironment extends BasicEvaluat
 	public void setDead(@NonNull OCLExpression expression) {}
 
 	@Override
-	public void toString(@NonNull StringBuilder s) {
-		toString(s, 0);
+	public String toString() {
+		StringBuilder s = new StringBuilder();
+		toString(s,0);
+		return s.toString();
 	}
 
 	protected abstract void toString(@NonNull StringBuilder s, int depth);

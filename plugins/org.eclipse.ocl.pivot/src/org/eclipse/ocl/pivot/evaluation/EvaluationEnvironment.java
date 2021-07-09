@@ -33,7 +33,6 @@ public interface EvaluationEnvironment extends Adaptable, Customizable
 	 */
 	public interface EvaluationEnvironmentExtension extends EvaluationEnvironment
 	{
-		@Override
 		@NonNull ExecutorInternal getExecutor();
 		@Override
 		EvaluationEnvironment.@Nullable EvaluationEnvironmentExtension getParentEvaluationEnvironment();
@@ -64,13 +63,6 @@ public interface EvaluationEnvironment extends Adaptable, Customizable
 	 * @since 1.16
 	 */
 	default EvaluationEnvironment.@Nullable EvaluationEnvironmentExtension getParentEvaluationEnvironment() {
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * @since 1.16
-	 */
-	default @NonNull ExecutorInternal getExecutor() {
 		throw new UnsupportedOperationException();
 	}
 

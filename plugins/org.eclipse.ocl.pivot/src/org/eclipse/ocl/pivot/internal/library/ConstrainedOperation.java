@@ -123,7 +123,7 @@ public class ConstrainedOperation extends AbstractOperation
 				assert argument != null;
 				boxedSourceAndArgumentValues[1+i] = argumentSymbolicValues.get(i).getKnownValue();
 			}
-			final Object resultObject = evaluate(symbolicAnalysis, callExp, boxedSourceAndArgumentValues);
+			final Object resultObject = evaluate(symbolicAnalysis.getExecutor(), callExp, boxedSourceAndArgumentValues);
 			return symbolicAnalysis.getKnownValue(resultObject);
 
 

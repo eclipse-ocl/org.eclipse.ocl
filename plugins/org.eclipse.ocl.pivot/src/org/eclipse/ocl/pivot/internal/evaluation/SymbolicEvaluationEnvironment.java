@@ -16,18 +16,18 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.TypedElement;
-import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.cse.CSEElement;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
  *
  * @since 1.16
  */
-public interface SymbolicEvaluationEnvironment extends EvaluationEnvironment.EvaluationEnvironmentExtension
+public interface SymbolicEvaluationEnvironment
 {
-	//	@NonNull SymbolicValue traceValue(@NonNull CSEElement cseElement, @Nullable Object value);
+	@Nullable SymbolicValue basicGetSymbolicValue(@NonNull Element element);
 
 	/**
 	 * Return a SymbolicKnownValue for invalid, if typedElement is a collection and empty.
@@ -51,21 +51,17 @@ public interface SymbolicEvaluationEnvironment extends EvaluationEnvironment.Eva
 	@Nullable SymbolicValue checkNotNull(@NonNull TypedElement typedElement, @NonNull TypeId typeId);
 
 	/**
-	 * Return a SymbolicKnownValue for invalid, if typedElement is a collection whose size may bee smaller than minSize.
-	 * Else return null .
-	 */
-//	@Nullable SymbolicValue checkNotSmallerThan(@NonNull TypedElement typedElement, @NonNull SymbolicValue minSizeValue, @NonNull TypeId typeId);
-
-	/**
 	 * Return a SymbolicKnownValue for invalid, if typedElement isZero.
 	 * Else return a mayBeNull SymbolicUnknownValue for typeId if typedElement mayBeZero.
 	 * Else return null if typedElement is not zero.
 	 */
 	@Nullable SymbolicValue checkNotZero(@NonNull TypedElement typedElement, @NonNull TypeId typeId);
 
+	@NonNull SymbolicValue createUnknownValue(@NonNull TypeId typeId, boolean mayBeNull, boolean mayBeInvalidOrNull);
 	@NonNull SymbolicValue createUnknownValue(@NonNull TypedElement typedElement, boolean mayBeNull, boolean mayBeInvalid);
-
 	@NonNull BaseSymbolicEvaluationEnvironment getBaseSymbolicEvaluationEnvironment();
+	@NonNull EnvironmentFactory getEnvironmentFactory();
+	@NonNull ExecutorInternal getExecutor();
 	@NonNull SymbolicValue getKnownValue(@Nullable Object boxedValue);
 	@NonNull SymbolicAnalysis getSymbolicAnalysis();
 	@NonNull SymbolicValue getSymbolicValue(@NonNull Element element);
@@ -80,5 +76,4 @@ public interface SymbolicEvaluationEnvironment extends EvaluationEnvironment.Eva
 	void setDead(@NonNull OCLExpression expression);
 	@NonNull SymbolicValue symbolicEvaluate(@NonNull TypedElement element);
 	@NonNull SymbolicValue traceSymbolicValue(@NonNull CSEElement cseElement, @NonNull SymbolicValue symbolicValue);
-//	@NonNull SymbolicValue traceValue(@NonNull CSEElement cseElement, @Nullable Object value);
 }

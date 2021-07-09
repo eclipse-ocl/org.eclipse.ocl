@@ -901,7 +901,7 @@ public abstract class ValueUtil
 
 	public static boolean isBoxed(@Nullable Object object) {
 		if (object instanceof SymbolicValue) {
-			return true;
+			return false;
 		}
 		if (object instanceof InvalidValue) {
 			return true;

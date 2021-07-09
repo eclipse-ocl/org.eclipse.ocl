@@ -32,7 +32,6 @@ import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
-import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.internal.symbolic.AbstractSymbolicRefinedValue;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicStatus;
@@ -43,7 +42,6 @@ import org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation;
 import org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation2;
 import org.eclipse.ocl.pivot.library.logical.BooleanOrOperation;
 import org.eclipse.ocl.pivot.library.logical.BooleanOrOperation2;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
@@ -61,6 +59,7 @@ import org.eclipse.ocl.pivot.values.SymbolicValue;
  */
 public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluationEnvironment
 {
+	protected final @NonNull BaseSymbolicEvaluationEnvironment baseSymbolicEvaluationEnvironment;
 	protected final @NonNull Hypothesis hypothesis;
 
 	/**
@@ -85,8 +84,9 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 	 */
 	private final @NonNull Map<@NonNull TypedElement, @NonNull SymbolicValue> refinedTypedElements2symbolicValue = new HashMap<>();
 
-	public HypothesizedSymbolicEvaluationEnvironment(@NonNull BaseSymbolicEvaluationEnvironment evaluationEnvironment, @NonNull Hypothesis hypothesis) {
-		super(evaluationEnvironment, hypothesis.getTypedElement());
+	public HypothesizedSymbolicEvaluationEnvironment(@NonNull BaseSymbolicEvaluationEnvironment baseSymbolicEvaluationEnvironment, @NonNull Hypothesis hypothesis) {
+		super(baseSymbolicEvaluationEnvironment.getSymbolicAnalysis(), hypothesis.getTypedElement());
+		this.baseSymbolicEvaluationEnvironment = baseSymbolicEvaluationEnvironment;
 		this.hypothesis = hypothesis;
 		installHypothesis();
 	}
@@ -136,14 +136,14 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 				}
 			}
 			if (refinedBooleanValue == null) {
-				SymbolicValue baseSymbolicValue = getBaseSymbolicValue(refinedExpression);
+				SymbolicValue baseSymbolicValue = baseSymbolicEvaluationEnvironment.getSymbolicValue(refinedExpression);
 				refinedSymbolicValue = AbstractSymbolicRefinedValue.createNotInvalidOrNullValue(baseSymbolicValue);
 			}
 		}
 		else if (containingTypedElement instanceof NavigationCallExp) {
 			NavigationCallExp navigationCallExp = (NavigationCallExp)containingTypedElement;
 			refinedExpression = PivotUtil.getOwnedSource(navigationCallExp);
-			SymbolicValue baseSymbolicValue = getBaseSymbolicValue(refinedExpression);
+			SymbolicValue baseSymbolicValue = baseSymbolicEvaluationEnvironment.getSymbolicValue(refinedExpression);
 			refinedSymbolicValue = AbstractSymbolicRefinedValue.createNotInvalidOrNullValue(baseSymbolicValue);
 		}
 		else if (containingTypedElement instanceof LoopExp) {
@@ -155,7 +155,7 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 				// XXX isSafe
 			}
 			refinedExpression = PivotUtil.getOwnedSource(loopExp);
-			SymbolicValue baseSymbolicValue = getBaseSymbolicValue(refinedExpression);
+			SymbolicValue baseSymbolicValue = baseSymbolicEvaluationEnvironment.getSymbolicValue(refinedExpression);
 			refinedSymbolicValue = AbstractSymbolicRefinedValue.createNotInvalidOrNullValue(baseSymbolicValue);
 		}
 		if (refinedExpression != null) {
@@ -164,7 +164,6 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 				refinedSymbolicValue = getKnownValue(refinedBooleanValue);
 			}
 			if (refinedSymbolicValue != null) {
-//				putHypothesizedValue(refinedExpression, refinedSymbolicValue, false);
 				SymbolicValue old = refinedTypedElements2symbolicValue.put(refinedExpression, refinedSymbolicValue);
 				assert old == null;
 			}
@@ -208,21 +207,10 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 	@Override
 	@NonNull
 	public BaseSymbolicEvaluationEnvironment getBaseSymbolicEvaluationEnvironment() {
-		return getParent().getBaseSymbolicEvaluationEnvironment();
-	}
-
-	@Override
-	public @NonNull AbstractSymbolicEvaluationEnvironment getParent() {
-		return ClassUtil.nonNullState(super.getParent());
-	}
-
-	@Override
-	public @Nullable Object getValueOf(@NonNull TypedElement referredVariable) {
-		return getSymbolicValue(referredVariable);			// Re-use old value
+		return baseSymbolicEvaluationEnvironment;
 	}
 
 	private void installHypothesis() {
-		SymbolicAnalysis symbolicAnalysis = getSymbolicAnalysis();
 		//
 		//	Install the directly hypothesized expression.
 		//
@@ -301,7 +289,7 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 	public boolean isContradiction() {
 		List<@NonNull TypedElement> affectedTypedElementsList = new ArrayList<>(affectedTypedElements);
 		if (affectedTypedElementsList.size() > 1) {
-			Collections.sort(affectedTypedElementsList, getSymbolicAnalysis().getTypedElementHeightComparator());
+			Collections.sort(affectedTypedElementsList, symbolicAnalysis.getTypedElementHeightComparator());
 		}
 		for (@NonNull TypedElement affectedTypedElement : affectedTypedElementsList) {
 			boolean isCompatible = symbolicReEvaluate(affectedTypedElement);
@@ -311,7 +299,7 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 		}
 		List<@NonNull TypedElement> typedElementsList = new ArrayList<>(refinedTypedElements2symbolicValue.keySet());
 		if (typedElementsList.size() > 1) {
-			Collections.sort(typedElementsList, getSymbolicAnalysis().getTypedElementHeightComparator());
+			Collections.sort(typedElementsList, symbolicAnalysis.getTypedElementHeightComparator());
 		}
 		for (@NonNull TypedElement typedElement : typedElementsList) {
 			boolean isCompatible = symbolicReEvaluate(typedElement);
@@ -338,8 +326,7 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 	public boolean symbolicReEvaluate(@NonNull TypedElement typedElement) {
 		Object result = null;
 		try {
-			EvaluationVisitor undecoratedVisitor = getUndecoratedVisitor();
-			result = typedElement.accept(undecoratedVisitor);
+			result = symbolicEvaluationVisitor.symbolicEvaluate(typedElement);
 		}
 		catch (InvalidValueException e) {
 			result = e;
@@ -357,7 +344,7 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 		}
 		SymbolicValue readValue = basicGetSymbolicValue(typedElement);		// Get the 'read' value
 		if (readValue == null) {											// If a new evaluation
-			CSEElement cseElement = getSymbolicAnalysis().getCSEElement(typedElement);
+			CSEElement cseElement = symbolicAnalysis.getCSEElement(typedElement);
 			traceSymbolicValue(cseElement, writeValue);					// Record re-evaluated value
 			return true;
 		}

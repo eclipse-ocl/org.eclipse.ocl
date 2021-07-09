@@ -273,7 +273,6 @@ public class BasicEvaluationEnvironment extends AbstractCustomizable implements 
 		variable2value.put((VariableDeclaration)referredVariable, value);
 	}
 
-
 	/**
 	 * Returns a string representation of the bindings
 	 */

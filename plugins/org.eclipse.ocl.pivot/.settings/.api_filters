@@ -367,12 +367,6 @@
         <filter id="404000815">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment"/>
-                <message_argument value="getExecutor()"/>
-            </message_arguments>
-        </filter>
-        <filter id="404000815">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment"/>
                 <message_argument value="getParentEvaluationEnvironment()"/>
             </message_arguments>
         </filter>
@@ -583,7 +577,7 @@
         <filter id="404000815">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.library.LibraryIteration"/>
-                <message_argument value="symbolicEvaluate(AbstractSymbolicEvaluationEnvironment, LoopExp)"/>
+                <message_argument value="symbolicEvaluate(SymbolicEvaluationEnvironment, LoopExp)"/>
             </message_arguments>
         </filter>
     </resource>
