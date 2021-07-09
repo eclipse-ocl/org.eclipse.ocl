@@ -65,7 +65,7 @@ public interface MetamodelManagerInternal extends MetamodelManager
 		/**
 		 * @since 1.16
 		 */
-		default @NonNull SymbolicAnalysis getSymbolicAnalysis(@NonNull ExpressionInOCL expressionInOCL, @Nullable Object context, @Nullable Object @Nullable [] parameters) {
+		default @NonNull SymbolicAnalysis getSymbolicAnalysis(@NonNull ExpressionInOCL expressionInOCL, @Nullable Object selfObject, @Nullable Object resultObject, @Nullable Object @Nullable [] parameters) {
 			throw new UnsupportedOperationException();
 		}
 

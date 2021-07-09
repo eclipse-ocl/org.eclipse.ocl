@@ -12,7 +12,6 @@ package org.eclipse.ocl.pivot.util;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
@@ -38,6 +37,7 @@ import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.utilities.MorePivotable;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.ParserException;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
@@ -2495,10 +2495,15 @@ public class PivotValidator extends EObjectValidator
 						isValidating = asOperation.isIsValidating();
 					}
 				}
-				Variable ownedContext = expressionInOCL.getOwnedContext();
+				VariableDeclaration ownedContext = PivotUtil.getOwnedContext(expressionInOCL);
 				boolean mayBeNull = isValidating || !ownedContext.isIsRequired();
 				boolean mayBeInvalid = isValidating;
 				Object selfValue = new SymbolicVariableValue(ownedContext, mayBeNull, mayBeInvalid);
+				Object resultValue = null;
+				Variable ownedResult = expressionInOCL.getOwnedResult();
+				if (ownedResult != null) {
+					resultValue = new SymbolicVariableValue(ownedResult, isValidating || !ownedResult.isIsRequired(), mayBeInvalid);
+				}
 				List<@NonNull Variable> ownedParameters = PivotUtilInternal.getOwnedParametersList(expressionInOCL);
 				@Nullable Object[] parameterValues = new @Nullable Object[ownedParameters.size()];
 				for (int i = 0; i < ownedParameters.size(); i++) {
@@ -2507,10 +2512,10 @@ public class PivotValidator extends EObjectValidator
 					mayBeInvalid = false;
 					parameterValues[i] = new SymbolicVariableValue(parameter, mayBeNull, mayBeInvalid);
 				}
-				SymbolicAnalysis symbolicAnalysis = metamodelManager.getSymbolicAnalysis(expressionInOCL, selfValue, parameterValues);
+				SymbolicAnalysis symbolicAnalysis = metamodelManager.getSymbolicAnalysis(expressionInOCL, selfValue, resultValue, parameterValues);
 				BaseSymbolicEvaluationEnvironment evaluationEnvironment = symbolicAnalysis.getBaseSymbolicEvaluationEnvironment();
 			//	Map<@NonNull Element, @NonNull SymbolicValue> element2symbolicValue = symbolicAnalysis.getElement2SymbolicValue();
-				Set<@NonNull CSEElement> cseElements = evaluationEnvironment.getCSEElements();
+			//	Set<@NonNull CSEElement> cseElements = evaluationEnvironment.getCSEElements();
 				for (@NonNull EObject eObject : new TreeIterable(expressionInOCL, true)) {
 					if (eObject instanceof TypedElement) {
 						TypedElement typedElement = (TypedElement)eObject;

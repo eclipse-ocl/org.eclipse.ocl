@@ -27,8 +27,7 @@ public interface SymbolicExecutor extends ExecutorInternalExtension
 	@NonNull HypothesizedSymbolicEvaluationEnvironment createHypothesizedSymbolicEvaluationEnvironment(@NonNull Hypothesis hypothesis);
 //	@NonNull SymbolicReEvaluationEnvironment createSymbolicReEvaluationEnvironment(@NonNull Hypothesis hypothesis);
 
-	@Override
-	@NonNull AbstractSymbolicEvaluationEnvironment getEvaluationEnvironment();
+	@NonNull AbstractSymbolicEvaluationEnvironment getSymbolicEvaluationEnvironment();
 
 	/**
 	 * Created a nested SymbolicEvaluationEnvironment on behalf of caller in which symbolicValue has a constantValue.

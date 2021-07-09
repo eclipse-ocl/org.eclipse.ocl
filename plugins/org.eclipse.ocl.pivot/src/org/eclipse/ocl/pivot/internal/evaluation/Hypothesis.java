@@ -172,7 +172,7 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 		//	else if (typeId instanceof MapTypeId) {
 		//		return AbstractRefinedSymbolicValue.createZeroValue(originalValue);
 		//	}
-			return symbolicAnalysis.getEvaluationEnvironment().getKnownValue(ValueUtil.ZERO_VALUE);
+			return symbolicAnalysis.getSymbolicEvaluationEnvironment().getKnownValue(ValueUtil.ZERO_VALUE);
 		}
 
 		private static @NonNull SymbolicValue createHypothesizedValue(@NonNull SymbolicAnalysis symbolicAnalysis, @NonNull SymbolicValue originalValue) {
@@ -182,7 +182,7 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 			if (!sizeValue.isZero()) {
 				if (refinedValue == null) {
 					refinedValue = new SymbolicRefinedContentValue(originalValue);
-					sizeValue = symbolicAnalysis.getEvaluationEnvironment().getKnownValue(ValueUtil.ZERO_VALUE);
+					sizeValue = symbolicAnalysis.getSymbolicEvaluationEnvironment().getKnownValue(ValueUtil.ZERO_VALUE);
 					refinedValue.setSize(sizeValue);
 //					refinedValue.toString();
 				}
@@ -234,7 +234,7 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 	public static class MayBeInvalidHypothesis extends Hypothesis
 	{
 		public MayBeInvalidHypothesis(@NonNull SymbolicAnalysis symbolicAnalysis, @NonNull TypedElement typedElement, @NonNull SymbolicValue originalValue) {
-			super(symbolicAnalysis, typedElement, originalValue, symbolicAnalysis.getEvaluationEnvironment().getKnownValue(ValueUtil.INVALID_VALUE));
+			super(symbolicAnalysis, typedElement, originalValue, symbolicAnalysis.getSymbolicEvaluationEnvironment().getKnownValue(ValueUtil.INVALID_VALUE));
 		}
 
 		@Override
@@ -270,7 +270,7 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 	public static class MayBeNullHypothesis extends Hypothesis
 	{
 		public MayBeNullHypothesis(@NonNull SymbolicAnalysis symbolicAnalysis, @NonNull TypedElement typedElement, @NonNull SymbolicValue originalValue) {
-			super(symbolicAnalysis, typedElement, originalValue, symbolicAnalysis.getEvaluationEnvironment().getKnownValue(null));
+			super(symbolicAnalysis, typedElement, originalValue, symbolicAnalysis.getSymbolicEvaluationEnvironment().getKnownValue(null));
 		}
 
 		@Override
@@ -344,7 +344,7 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 		//	else if (typeId instanceof MapTypeId) {
 		//		return AbstractRefinedSymbolicValue.createZeroValue(originalValue);
 		//	}
-			return symbolicAnalysis.getEvaluationEnvironment().getKnownValue(ValueUtil.ZERO_VALUE);
+			return symbolicAnalysis.getSymbolicEvaluationEnvironment().getKnownValue(ValueUtil.ZERO_VALUE);
 		}
 
 		public MayBeZeroHypothesis(@NonNull SymbolicAnalysis symbolicAnalysis, @NonNull TypedElement typedElement, @NonNull SymbolicValue originalValue) {

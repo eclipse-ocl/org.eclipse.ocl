@@ -24,9 +24,11 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.NamedElement;
+import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
+import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment.EvaluationEnvironmentExtension;
 import org.eclipse.ocl.pivot.evaluation.EvaluationHaltedException;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor.EvaluationVisitorExtension;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
@@ -168,6 +170,24 @@ public class SymbolicAnalysis extends BasicOCLExecutor implements SymbolicExecut
 	}
 
 	@Override
+	protected @NonNull EvaluationEnvironmentExtension createNestedEvaluationEnvironment(
+			@NonNull EvaluationEnvironmentExtension evaluationEnvironment,
+			@NonNull NamedElement executableObject, @Nullable Object caller) {
+		// TODO Auto-generated method stub
+		return super.createNestedEvaluationEnvironment(evaluationEnvironment, executableObject, caller);
+	}
+
+	@Override
+	protected @NonNull EvaluationEnvironmentExtension createNestedEvaluationEnvironment(
+			@NonNull EvaluationEnvironmentExtension evaluationEnvironment,
+			@NonNull NamedElement executableObject,
+			@Nullable OCLExpression callingObject) {
+		// TODO Auto-generated method stub
+		return super.createNestedEvaluationEnvironment(evaluationEnvironment,
+			executableObject, callingObject);
+	}
+
+	@Override
 	protected @NonNull AbstractSymbolicEvaluationEnvironment createRootEvaluationEnvironment(@NonNull NamedElement executableObject) {
 		return new BaseSymbolicEvaluationEnvironment(this, executableObject);
 	}
@@ -177,7 +197,7 @@ public class SymbolicAnalysis extends BasicOCLExecutor implements SymbolicExecut
 	}
 
 	public @NonNull BaseSymbolicEvaluationEnvironment getBaseSymbolicEvaluationEnvironment() {
-		return getEvaluationEnvironment().getBaseSymbolicEvaluationEnvironment();
+		return getSymbolicEvaluationEnvironment().getBaseSymbolicEvaluationEnvironment();
 	}
 
 	public @NonNull CSEElement getCSEElement(@NonNull Element element) {
@@ -185,7 +205,7 @@ public class SymbolicAnalysis extends BasicOCLExecutor implements SymbolicExecut
 	}
 
 	@Override
-	public @NonNull AbstractSymbolicEvaluationEnvironment getEvaluationEnvironment() {
+	public @NonNull AbstractSymbolicEvaluationEnvironment getSymbolicEvaluationEnvironment() {
 		return (AbstractSymbolicEvaluationEnvironment)super.getEvaluationEnvironment();
 	}
 
@@ -252,7 +272,7 @@ public class SymbolicAnalysis extends BasicOCLExecutor implements SymbolicExecut
 		return cseAnalysis.getTypedElementHeightComparator();
 	}
 
-	public void initializeEvaluationEnvironment(@NonNull ExpressionInOCL expressionInOCL, @Nullable Object contextElement, @Nullable Object @Nullable [] parameters) {
+	public void initializeEvaluationEnvironment(@NonNull ExpressionInOCL expressionInOCL, @Nullable Object selfObject, @Nullable Object resultObject, @Nullable Object @Nullable [] parameters) {
 		initializeEvaluationEnvironment(expressionInOCL);
 		cseAnalysis.analyze(expressionInOCL);
 		BaseSymbolicEvaluationEnvironment evaluationEnvironment = getBaseSymbolicEvaluationEnvironment();
@@ -262,7 +282,14 @@ public class SymbolicAnalysis extends BasicOCLExecutor implements SymbolicExecut
 		//	Object contextValue = idResolver.boxedValueOf(contextElement);
 		//	evaluationEnvironment.add(contextVariable, contextValue);
 			CSEElement cseElement = getCSEElement(contextVariable);
-			evaluationEnvironment.traceValue(cseElement, contextElement);
+			evaluationEnvironment.traceValue(cseElement, selfObject);
+		}
+		Variable resultVariable = expressionInOCL.getOwnedResult();
+		if (resultVariable != null) {
+		//	Object contextValue = idResolver.boxedValueOf(contextElement);
+		//	evaluationEnvironment.add(contextVariable, contextValue);
+			CSEElement cseElement = getCSEElement(resultVariable);
+			evaluationEnvironment.traceValue(cseElement, resultObject);
 		}
 		int i = 0;
 		assert parameters != null;
@@ -336,7 +363,7 @@ public class SymbolicAnalysis extends BasicOCLExecutor implements SymbolicExecut
 			}
 		}
 		Collections.sort(typedElements, getTypedElementHeightComparator());
-		AbstractSymbolicEvaluationEnvironment evaluationEnvironment = getEvaluationEnvironment();
+		AbstractSymbolicEvaluationEnvironment evaluationEnvironment = getSymbolicEvaluationEnvironment();
 		for (@NonNull TypedElement typedElement : typedElements) {
 			evaluationEnvironment.symbolicEvaluate(typedElement);
 		}

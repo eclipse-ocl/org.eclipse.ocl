@@ -489,7 +489,7 @@
         <filter id="404000815">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal.MetamodelManagerInternalExtension2"/>
-                <message_argument value="getSymbolicAnalysis(Element)"/>
+                <message_argument value="getSymbolicAnalysis(ExpressionInOCL, Object, Object, Object[])"/>
             </message_arguments>
         </filter>
         <filter id="404000815">
@@ -739,12 +739,10 @@
                 <message_argument value="PotentialInvalidResult"/>
             </message_arguments>
         </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/options/PivotValidationOptions.java" type="org.eclipse.ocl.pivot.options.PivotValidationOptions">
         <filter id="336658481">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.options.PivotValidationOptions"/>
-                <message_argument value="OptionalDefaultMultiplicity"/>
+                <message_argument value="PotentialInvalidResult"/>
             </message_arguments>
         </filter>
     </resource>

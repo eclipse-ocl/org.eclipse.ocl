@@ -11,6 +11,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.library;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -23,9 +24,15 @@ import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.Executor.ExecutorExtension;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.AbstractOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.values.SymbolicValue;
+
+import com.google.common.collect.Iterables;
 
 /**
  * An instance of ConstrainedOperation supports evaluation of
@@ -64,6 +71,11 @@ public class ConstrainedOperation extends AbstractOperation
 		}
 	}
 
+	@Override
+	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
+		return null;			// XXX is ther anything to check ?? yes the preconditions
+	}
+
 	/**
 	 * @since 1.1
 	 */
@@ -79,6 +91,77 @@ public class ConstrainedOperation extends AbstractOperation
 			boxedSourceAndArgumentValues[1+i] = executor.evaluate(argument);
 		}
 		return evaluate(executor, callExp, boxedSourceAndArgumentValues);
+	}
+
+	@Override
+	public @NonNull SymbolicValue symbolicEvaluate(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
+		SymbolicValue symbolicPreconditionValue = checkPreconditions(evaluationEnvironment, callExp);
+		if (symbolicPreconditionValue != null) {
+			return symbolicPreconditionValue;
+		}
+		SymbolicValue sourceSymbolicValue = evaluationEnvironment.symbolicEvaluate(PivotUtil.getOwnedSource(callExp));
+		boolean isKnown = sourceSymbolicValue.isKnown();
+		List<@NonNull OCLExpression> ownedArguments = PivotUtilInternal.getOwnedArgumentsList(callExp);
+		int argumentsSize = Iterables.size(ownedArguments);
+		List<@NonNull SymbolicValue> argumentSymbolicValues = new ArrayList<@NonNull SymbolicValue>(argumentsSize);
+		for (@NonNull OCLExpression argument : ownedArguments) {
+			SymbolicValue argumentSymbolicValue = evaluationEnvironment.symbolicEvaluate(argument);
+			if (!argumentSymbolicValue.isKnown()) {
+				isKnown = false;
+			}
+			argumentSymbolicValues.add(argumentSymbolicValue);
+		}
+		if (isKnown) {
+
+
+
+			SymbolicAnalysis symbolicAnalysis = evaluationEnvironment.getSymbolicAnalysis();
+			@Nullable Object[] boxedSourceAndArgumentValues = new @Nullable Object[1+argumentsSize];
+			boxedSourceAndArgumentValues[0] = sourceSymbolicValue.getKnownValue();
+			for (int i = 0; i < argumentsSize; i++) {
+				OCLExpression argument = ownedArguments.get(i);
+				assert argument != null;
+				boxedSourceAndArgumentValues[1+i] = argumentSymbolicValues.get(i).getKnownValue();
+			}
+			final Object resultObject = evaluate(symbolicAnalysis, callExp, boxedSourceAndArgumentValues);
+			return symbolicAnalysis.getKnownValue(resultObject);
+
+
+
+
+		/*	// FIXME nested
+			@Nullable Object[] argumentValues = new @Nullable Object[1+argumentsSize];
+			Object selfObject = sourceSymbolicValue.getKnownValue();
+		//	SymbolicValue resultSymbolicValue = evaluationEnvironment.symbolicEvaluate(PivotUtil.getOwnedSource(callExp));
+			Object resultObject = null;//resultSymbolicValue.getKnownValue();
+			Variable resultVariable = expressionInOCL.getOwnedResult();
+			if (resultVariable != null) {
+			//	Object contextValue = idResolver.boxedValueOf(contextElement);
+			//	evaluationEnvironment.add(contextVariable, contextValue);
+				CSEElement cseElement = symbolicAnalysis.getCSEElement(resultVariable);
+			// XXX	evaluationEnvironment.traceValue(cseElement, resultObject);
+			}
+			for (int i = 0; i < argumentsSize; i++) {
+				argumentValues[i] = argumentSymbolicValues.get(i).getKnownValue();
+			}
+		//	Object result = ((LibraryOperationExtension2)this).evaluate(evaluationEnvironment.getExecutor(), callExp, sourceAndArgumentValues);
+		//	return evaluationEnvironment.getKnownValue(result);
+		//	symbolicAnalysis.initializeEvaluationEnvironment(expressionInOCL, selfObject, resultObject, argumentValues);			// XXX all related constraints
+
+			symbolicAnalysis.symbolicEvaluate(expressionInOCL);
+			return sourceSymbolicValue;// XXXX result symbolicAnalysis; */
+		}
+		else {
+			return createResultValue(evaluationEnvironment, callExp, sourceSymbolicValue, argumentSymbolicValues);
+		}
+
+
+	//	ModelManager modelManager = environmentFactory.createModelManager(selfObject);
+	//	SymbolicAnalysis symbolicAnalysis = createSymbolicAnalysis(expressionInOCL, modelManager);
+
+
+
+	//	return super.symbolicEvaluate(evaluationEnvironment, callExp);
 	}
 
 	@Override

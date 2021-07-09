@@ -67,6 +67,7 @@ public interface SymbolicEvaluationEnvironment extends EvaluationEnvironment.Eva
 
 	@NonNull BaseSymbolicEvaluationEnvironment getBaseSymbolicEvaluationEnvironment();
 	@NonNull SymbolicValue getKnownValue(@Nullable Object boxedValue);
+	@NonNull SymbolicAnalysis getSymbolicAnalysis();
 	@NonNull SymbolicValue getSymbolicValue(@NonNull Element element);
 	boolean isFalse(@NonNull TypedElement element);
 	boolean isInvalid(@NonNull TypedElement element);
