@@ -320,6 +320,11 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 			symbolicEvaluationEnvironment.setDead(thenExpression);
 			return symbolicEvaluationEnvironment.symbolicEvaluate(elseExpression);
 		}
+		else if (conditionValue.isInvalid() || conditionValue.isNull()) {
+			symbolicEvaluationEnvironment.setDead(thenExpression);
+			symbolicEvaluationEnvironment.setDead(elseExpression);
+			return context.getKnownValue(ValueUtil.INVALID_VALUE);
+		}
 		else {
 			boolean mayBeInvalid = conditionValue.mayBeInvalid();
 			boolean mayBeNull = conditionValue.mayBeNull();

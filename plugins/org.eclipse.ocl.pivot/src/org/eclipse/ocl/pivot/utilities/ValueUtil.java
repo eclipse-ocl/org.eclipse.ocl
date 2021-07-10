@@ -999,7 +999,7 @@ public abstract class ValueUtil
 	 * @since 1.16
 	 */
 	public static boolean isNullValue(@Nullable Object value) {
-		return (value == null) | ((value instanceof NullValue) && !(value instanceof InvalidValue));
+		return (value == null) || ((value instanceof NullValue) && !(value instanceof InvalidValue));
 	}
 
 	/**

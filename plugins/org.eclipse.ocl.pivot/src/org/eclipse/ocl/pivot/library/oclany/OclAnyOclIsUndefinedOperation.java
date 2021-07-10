@@ -53,4 +53,26 @@ public class OclAnyOclIsUndefinedOperation extends AbstractSimpleUnaryOperation
 	public @NonNull Boolean evaluate(@Nullable Object argument) {
 		return (argument == null) || (argument instanceof NullValue);	// NB InvalidValue is a NullValue
 	}
+
+	/**
+	 * @since 1.16
+	 */
+	@Override
+	public @NonNull SymbolicValue symbolicEvaluate(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
+		SymbolicValue symbolicPreconditionValue = checkPreconditions(evaluationEnvironment, callExp);
+		if (symbolicPreconditionValue != null) {
+			return symbolicPreconditionValue;
+		}
+		OCLExpression source = PivotUtil.getOwnedSource(callExp);
+		SymbolicValue sourceValue = evaluationEnvironment.symbolicEvaluate(source);
+		if (sourceValue.isNull()) {
+			return evaluationEnvironment.getKnownValue(Boolean.TRUE);
+		}
+		else if (sourceValue.mayBeNull()) {
+			return evaluationEnvironment.createUnknownValue(callExp, false, false);
+		}
+		else {
+			return evaluationEnvironment.getKnownValue(Boolean.FALSE);
+		}
+	}
 }
