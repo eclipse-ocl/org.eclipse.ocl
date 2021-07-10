@@ -22,7 +22,6 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.TypedElement;
@@ -61,7 +60,7 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 	}
 
 	@Override
-	public @Nullable SymbolicValue basicGetSymbolicValue(@NonNull Element element) {
+	public @Nullable SymbolicValue basicGetSymbolicValue(@NonNull TypedElement element) {
 		SymbolicValue refinedSymbolicValue = expression2refinedSymbolicValue.get(element);
 		if (refinedSymbolicValue != null) {
 			return refinedSymbolicValue;

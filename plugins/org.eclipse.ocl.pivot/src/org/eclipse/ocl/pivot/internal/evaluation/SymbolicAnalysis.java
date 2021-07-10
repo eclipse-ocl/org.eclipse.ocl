@@ -21,7 +21,6 @@ import java.util.Map;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
@@ -182,7 +181,7 @@ public class SymbolicAnalysis /*extends BasicOCLExecutor implements SymbolicExec
 		return baseSymbolicEvaluationEnvironment;
 	}
 
-	public @NonNull CSEElement getCSEElement(@NonNull Element element) {
+	public @NonNull CSEElement getCSEElement(@NonNull TypedElement element) {
 		return cseAnalysis.getElementCSE(element);
 	}
 

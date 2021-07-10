@@ -13,7 +13,6 @@ package org.eclipse.ocl.pivot.internal.evaluation;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -27,7 +26,7 @@ import org.eclipse.ocl.pivot.values.SymbolicValue;
  */
 public interface SymbolicEvaluationEnvironment
 {
-	@Nullable SymbolicValue basicGetSymbolicValue(@NonNull Element element);
+	@Nullable SymbolicValue basicGetSymbolicValue(@NonNull TypedElement element);
 
 	/**
 	 * Return a SymbolicKnownValue for invalid, if typedElement is a collection and empty.
@@ -64,7 +63,7 @@ public interface SymbolicEvaluationEnvironment
 	@NonNull ExecutorInternal getExecutor();
 	@NonNull SymbolicValue getKnownValue(@Nullable Object boxedValue);
 	@NonNull SymbolicAnalysis getSymbolicAnalysis();
-	@NonNull SymbolicValue getSymbolicValue(@NonNull Element element);
+	@NonNull SymbolicValue getSymbolicValue(@NonNull TypedElement element);
 	boolean isFalse(@NonNull TypedElement element);
 	boolean isInvalid(@NonNull TypedElement element);
 	boolean isNull(@NonNull TypedElement element);

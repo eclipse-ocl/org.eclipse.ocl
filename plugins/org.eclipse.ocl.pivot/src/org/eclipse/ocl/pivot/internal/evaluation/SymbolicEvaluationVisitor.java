@@ -55,6 +55,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypeExp;
 import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
 import org.eclipse.ocl.pivot.Variable;
+import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
@@ -597,8 +598,8 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 
 	@Override
 	public @NonNull SymbolicValue visitVariableExp(@NonNull VariableExp variableExp) {
-		Object resultValue = evaluationVisitor.visitVariableExp(variableExp);
-		return context.getKnownValue(resultValue);
+		final VariableDeclaration referredVariable = PivotUtil.getReferredVariable(variableExp);
+		return symbolicEvaluationEnvironment.symbolicEvaluate(referredVariable);
 	}
 
 	@Override

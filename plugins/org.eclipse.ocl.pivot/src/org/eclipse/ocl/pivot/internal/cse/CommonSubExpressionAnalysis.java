@@ -29,8 +29,8 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.symbolic.SymbolicUtils;
-import org.eclipse.ocl.pivot.internal.symbolic.SymbolicUtils.TypedElementHeightComparator;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicUtil;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicUtil.TypedElementHeightComparator;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 
@@ -79,7 +79,7 @@ public class CommonSubExpressionAnalysis
 
 	public @NonNull CSEElement analyze(@NonNull ExpressionInOCL expressionInOCL) {
 		CSEElement cseElement = getElementCSE(expressionInOCL);
-		assert SymbolicUtils.debugCheckCSEs(expressionInOCL, element2cse);		// XXX debugging
+		assert SymbolicUtil.debugCheckCSEs(expressionInOCL, element2cse);		// XXX debugging
 		return cseElement;
 	}
 

@@ -19,10 +19,14 @@ import java.util.Map;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionItem;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LetExp;
+import org.eclipse.ocl.pivot.LoopExp;
+import org.eclipse.ocl.pivot.NavigationCallExp;
+import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.internal.cse.CSEElement;
@@ -32,7 +36,7 @@ import org.eclipse.ocl.pivot.utilities.TreeIterable;
 /**
  * @since 1.16
  */
-public class SymbolicUtils extends AbstractLeafSymbolicValue
+public class SymbolicUtil extends AbstractLeafSymbolicValue
 {
 	/**
 	 * TypedElementHeightComparator sort ExpressionInOCL/OCLExpression to determine a (re-)evaluation order.
@@ -40,9 +44,9 @@ public class SymbolicUtils extends AbstractLeafSymbolicValue
 	 */
 	public static class TypedElementHeightComparator implements Comparator<@NonNull TypedElement>
 	{
-		private final @NonNull Map<@NonNull Element, @NonNull CSEElement> element2cse;
+		private final @NonNull Map<@NonNull ? extends Element, @NonNull CSEElement> element2cse;
 
-		public TypedElementHeightComparator(@NonNull Map<@NonNull Element, @NonNull CSEElement> element2cse) {
+		public TypedElementHeightComparator(@NonNull Map<@NonNull ? extends Element, @NonNull CSEElement> element2cse) {
 			this.element2cse = element2cse;
 		}
 
@@ -98,7 +102,7 @@ public class SymbolicUtils extends AbstractLeafSymbolicValue
 		}
 		for (@NonNull List<@NonNull TypedElement> elements : cse2elements.values()) {
 			for (@NonNull TypedElement element : elements) {
-				for (TypedElement aDelegate = element; (aDelegate = SymbolicUtils.getDelegate(aDelegate)) != null; ) {
+				for (TypedElement aDelegate = element; (aDelegate = SymbolicUtil.getDelegate(aDelegate)) != null; ) {
 					assert elements.contains(aDelegate) : "Inconsistent CSE delegation for " + element.eClass().getName() + ": " + element;
 				}
 			}
@@ -128,4 +132,45 @@ public class SymbolicUtils extends AbstractLeafSymbolicValue
 		}
 		return delegate;
 	}
+
+	/**
+	 * Return a short summary of typedElement to clarify its use in a whole ancestry diagnostic.
+	 */
+	public static @NonNull String getSummary(@NonNull TypedElement typedElement) {
+		StringBuilder s = new StringBuilder();
+		if (typedElement instanceof CallExp) {
+			CallExp callExp = (CallExp)typedElement;
+			s.append("«expr»");
+			if (callExp.isIsSafe()) {
+				s.append("?");
+			}
+			if (callExp.getOwnedSource().isIsMany()) {
+				s.append("->");
+			}
+			else {
+				s.append(".");
+			}
+			if (typedElement instanceof NavigationCallExp) {
+				s.append(PivotUtil.getName(PivotUtil.getReferredProperty((NavigationCallExp)typedElement)));
+			}
+			else if (typedElement instanceof OperationCallExp) {
+				s.append(PivotUtil.getName(PivotUtil.getReferredOperation((OperationCallExp)typedElement)));
+				s.append("(...)");
+			}
+			else if (typedElement instanceof LoopExp) {
+				s.append(PivotUtil.getName(PivotUtil.getReferredIteration((LoopExp)typedElement)));
+				s.append("(...)");
+			}
+			else if (typedElement instanceof LoopExp) {
+				s.append("a ");
+				s.append(typedElement.eClass().getName());
+			}
+		}
+		else {
+			s.append("a ");
+			s.append(typedElement.eClass().getName());
+		}
+		return s.toString();
+	}
+
 }

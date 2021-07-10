@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.util;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +30,7 @@ import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.internal.evaluation.BaseSymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicUtil;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicVariableValue;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
@@ -41,7 +45,6 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
-import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
@@ -2514,36 +2517,36 @@ public class PivotValidator extends EObjectValidator
 				}
 				SymbolicAnalysis symbolicAnalysis = metamodelManager.getSymbolicAnalysis(expressionInOCL, selfValue, resultValue, parameterValues);
 				BaseSymbolicEvaluationEnvironment evaluationEnvironment = symbolicAnalysis.getBaseSymbolicEvaluationEnvironment();
-			//	Map<@NonNull Element, @NonNull SymbolicValue> element2symbolicValue = symbolicAnalysis.getElement2SymbolicValue();
-			//	Set<@NonNull CSEElement> cseElements = evaluationEnvironment.getCSEElements();
+				Map<@NonNull TypedElement, @NonNull CSEElement> element2cse = null;
 				for (@NonNull EObject eObject : new TreeIterable(expressionInOCL, true)) {
 					if (eObject instanceof TypedElement) {
 						TypedElement typedElement = (TypedElement)eObject;
-						CSEElement cseElement = symbolicAnalysis.getCSEElement(typedElement);
 						SymbolicValue symbolicValue = evaluationEnvironment.getSymbolicValue(typedElement);
 						assert symbolicValue != null;
 						if (symbolicValue.mayBeInvalid() && !symbolicValue.isInvalid()) {			// FIXME Do we really want to suppress outright invalid warnings ?
-							if (diagnostics != null) {
-								boolean isLeaf = true;
-								Iterable<@NonNull CSEElement> inputs = cseElement.getInputs();
-								if (inputs != null) {
-									for (@NonNull CSEElement childElement : inputs) {
-										Object childValue = evaluationEnvironment.getSymbolicValue(childElement.getElement());
-										if (ValueUtil.mayBeInvalid(childValue) && !ValueUtil.isInvalidValue(childValue)) {
-											isLeaf = false;
-											break;
-										}
-									}
-								}
-								if (isLeaf) {
-									int diagnosticSeverity = invalidResultSeverity.getDiagnosticSeverity();
-									String message = StringUtil.bind("May be invalid: ''{0}''", typedElement);
-									diagnostics.add(new BasicDiagnostic(diagnosticSeverity, DIAGNOSTIC_SOURCE, 0, message, new Object[] {typedElement}));		// XXX
-								}
+							CSEElement cseElement = symbolicAnalysis.getCSEElement(typedElement);
+							if (element2cse == null) {
+								element2cse = new HashMap<>();
 							}
-							allOk = false;			// XXX
+							element2cse.put(typedElement, cseElement);
 						}
 					}
+				}
+				if (element2cse != null) {
+					List<@NonNull TypedElement> invalidTypedElements = new ArrayList<@NonNull TypedElement>(element2cse.keySet());
+					Collections.sort(invalidTypedElements, new SymbolicUtil.TypedElementHeightComparator(element2cse));
+					for (int i = 0; i < invalidTypedElements.size(); i++) {		// Domain shrinks
+						TypedElement typedElement = invalidTypedElements.get(i);
+						for (EObject eContainer2 = typedElement.eContainer(); eContainer2 != null; eContainer2 = eContainer2.eContainer()) {
+							invalidTypedElements.remove(eContainer2);
+						}
+					}
+					for (@NonNull TypedElement typedElement : invalidTypedElements) {
+						int diagnosticSeverity = invalidResultSeverity.getDiagnosticSeverity();
+						String message = StringUtil.bind("May be invalid: ''{0}'' in  ''{1}''", SymbolicUtil.getSummary(typedElement), typedElement);
+						diagnostics.add(new BasicDiagnostic(diagnosticSeverity, DIAGNOSTIC_SOURCE, 0, message, new Object[] {typedElement}));		// XXX
+					}
+					allOk = false;			// XXX
 				}
 			}
 		}
@@ -4842,5 +4845,4 @@ public class PivotValidator extends EObjectValidator
 	public ResourceLocator getResourceLocator() {
 		return PivotPlugin.INSTANCE;
 	}
-
 } //PivotValidator

@@ -13,7 +13,6 @@ package org.eclipse.ocl.pivot.internal.evaluation;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
@@ -49,7 +48,7 @@ public abstract class AbstractSymbolicEvaluationEnvironment implements SymbolicE
 	}
 
 	@Override
-	public @Nullable SymbolicValue basicGetSymbolicValue(@NonNull Element element) {
+	public @Nullable SymbolicValue basicGetSymbolicValue(@NonNull TypedElement element) {
 		CSEElement cseElement = symbolicAnalysis.getCSEElement(element);
 		return basicGetSymbolicValue(cseElement);
 	}
@@ -141,7 +140,7 @@ public abstract class AbstractSymbolicEvaluationEnvironment implements SymbolicE
 	}
 
 	@Override
-	public final @NonNull SymbolicValue getSymbolicValue(@NonNull Element element) {
+	public final @NonNull SymbolicValue getSymbolicValue(@NonNull TypedElement element) {
 		return ClassUtil.nonNullState(basicGetSymbolicValue(element));
 	}
 
