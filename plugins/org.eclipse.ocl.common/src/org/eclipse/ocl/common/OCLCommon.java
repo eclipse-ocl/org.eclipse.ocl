@@ -12,6 +12,9 @@ package org.eclipse.ocl.common;
 
 import java.util.List;
 
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtensionPoint;
+import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent;
@@ -21,6 +24,7 @@ import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EModelElement;
+import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.ocl.common.preferences.PreferenceableOption;
 import org.eclipse.ocl.common.preferences.PreferenceableOption.PreferenceableOption2;
 
@@ -30,13 +34,13 @@ import org.eclipse.ocl.common.preferences.PreferenceableOption.PreferenceableOpt
 public class OCLCommon implements OCLConstants
 {
 	/**
-	 * A DefaultDefaultDelegationMode.run() scans the validationDelegates extension points for
+	 * A DefaultDefaultDelegationMode.run() scans the validationDelegates extension points
 	 * to determine whether Pivot functionality is available and so returns the relevant delegate
 	 * URI for use as the default.degate.mode..
 	 *
 	 * This code is factored into a separate static class to ensure that classes that are not
 	 * available standalone are not loaded before EMFPlugin.IS_ECLIPSE_RUNNING is checked.
-	 *
+	 */
 	private static final class DefaultDefaultDelegationMode
 	{
 		public String run() {
@@ -44,7 +48,7 @@ public class OCLCommon implements OCLConstants
 			String pluginID = EcorePlugin.getPlugin().getBundle().getSymbolicName();
 			IExtensionPoint point = pluginRegistry.getExtensionPoint(pluginID, EcorePlugin.VALIDATION_DELEGATE_PPID);
 			if (point != null) {
-				String pivotURI = OCLConstants.OCL_DELEGATE_URI_SLASH + "Pivot";		//$NON-NLS-1$
+				String pivotURI = OCLConstants.OCL_DELEGATE_URI_PIVOT;
 				IConfigurationElement[] elements = point.getConfigurationElements();
 				for (int i = 0; i < elements.length; i++) {
 					String uri = elements[i].getAttribute("uri");						//$NON-NLS-1$
@@ -55,7 +59,7 @@ public class OCLCommon implements OCLConstants
 			}
 			return null;
 		}
-	} */
+	}
 
 	/**
 	 * A PreferenceListenerInstaller installs itself as a IPreferenceChangeListener on an option
@@ -92,9 +96,9 @@ public class OCLCommon implements OCLConstants
 	 * @since 1.1
 	 */
 	public static String getDefaultDefaultDelegationMode() {
-/*		if (EMFPlugin.IS_ECLIPSE_RUNNING) {		// BUG 403595 Leave LPG as the default default for now.
+		if (EMFPlugin.IS_ECLIPSE_RUNNING) {		// BUG 403595 Leave LPG as the default default for now.
 			//
-			// org.eclipse.ocl.examples.pivot.delegate.OCLDelegateDomain.OCL_DELEGATE_URI_PIVOT is not
+			// org.eclipse.ocl.pivot.utilities.PivotConstants.OCL_DELEGATE_URI_PIVOT is not
 			// on the classPath so search for it using the validationDelegates extension point.
 			//
 			String pivotURI = new DefaultDefaultDelegationMode().run();
@@ -104,15 +108,15 @@ public class OCLCommon implements OCLConstants
 		}
 		else {
 			//
-			// org.eclipse.ocl.examples.pivot.delegate.OCLDelegateDomain might be on the classPath.
+			// org.eclipse.ocl.pivot.utilities.PivotConstants might be on the classPath.
 			//
 			try {
 				ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
-				Class<?> pivotClass = contextClassLoader.loadClass("org.eclipse.ocl.examples.pivot.delegate.OCLDelegateDomain"); //$NON-NLS-1$
+				Class<?> pivotClass = contextClassLoader.loadClass("org.eclipse.ocl.pivot.utilities.PivotConstants"); //$NON-NLS-1$
 				return (String) pivotClass.getField("OCL_DELEGATE_URI_PIVOT").get(null); //$NON-NLS-1$
-			} catch (Exception e) { /* Can't find it - no need to report as error * / }
-		} */
-		return OCLConstants.OCL_DELEGATE_URI_PIVOT;
+			} catch (Exception e) { /* Can't find it - no need to report as error */ }
+		}
+		return OCLConstants.OCL_DELEGATE_URI_LPG;
 	}
 
 	/**

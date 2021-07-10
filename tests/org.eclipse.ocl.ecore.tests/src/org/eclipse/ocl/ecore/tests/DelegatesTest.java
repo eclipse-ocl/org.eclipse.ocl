@@ -127,17 +127,25 @@ public class DelegatesTest extends AbstractTestSuite
 	public Map<Object, Object> context = new HashMap<Object, Object>();
 	public boolean eclipseIsRunning;
 	public boolean usedLocalRegistry;
+
 	//
 	// Test framework
 	//
 	@Override
 	protected void setUp() {
+		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(OCLConstants.OCL_DELEGATE_URI_LPG);
 		super.setUp();
 		eclipseIsRunning = EMFPlugin.IS_ECLIPSE_RUNNING;
 		usedLocalRegistry = false;
 
 		initializeResourceSet(OCLConstants.OCL_DELEGATE_URI_LPG);
 		OCLDelegateDomain.initializeMappingFrom(null, OCLConstants.OCL_DELEGATE_URI);
+	}
+
+	@Override
+	protected void tearDown() throws Exception {
+		super.tearDown();
+		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(OCLCommon.getDefaultDefaultDelegationMode());
 	}
 
 	protected void initializeResourceSet(String oclDelegateURI) {
