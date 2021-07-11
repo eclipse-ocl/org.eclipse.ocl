@@ -34,7 +34,7 @@ public class OclAnyOclIsUndefinedOperation extends AbstractSimpleUnaryOperation
 	 */
 	@Override
 	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
-		return checkPreconditions(evaluationEnvironment, callExp, CHECK_NOT_INVALID);
+		return checkPreconditions(evaluationEnvironment, callExp, 0);
 	}
 
 	/**
@@ -65,10 +65,10 @@ public class OclAnyOclIsUndefinedOperation extends AbstractSimpleUnaryOperation
 		}
 		OCLExpression source = PivotUtil.getOwnedSource(callExp);
 		SymbolicValue sourceValue = evaluationEnvironment.symbolicEvaluate(source);
-		if (sourceValue.isNull()) {
+		if (sourceValue.isInvalid() || sourceValue.isNull()) {
 			return evaluationEnvironment.getKnownValue(Boolean.TRUE);
 		}
-		else if (sourceValue.mayBeNull()) {
+		else if (sourceValue.mayBeInvalid() || sourceValue.mayBeNull()) {
 			return evaluationEnvironment.createUnknownValue(callExp, false, false);
 		}
 		else {
