@@ -115,6 +115,12 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 	}
 
 	@Override
+	protected @NonNull Iterable<@NonNull TypedElement> getAffectedTypedElements(@NonNull TypedElement typedElement) {
+		CSEElement cseElement = symbolicAnalysis.getCSEElement(typedElement);
+		return cseElement.getElements();
+	}
+
+	@Override
 	public @NonNull BaseSymbolicEvaluationEnvironment getBaseSymbolicEvaluationEnvironment() {
 		return this;
 	}
@@ -137,9 +143,9 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 	//	executor.popEvaluationEnvironment();
 	}
 
-	public @NonNull HypothesizedSymbolicEvaluationEnvironment pushHypothesis(@NonNull Hypothesis hypothesis) {
+	public @NonNull HypothesizedSymbolicEvaluationEnvironment pushHypothesis(@NonNull Hypothesis hypothesis, @NonNull TypedElement typedElement) {
 		assert this.hypothesizedSymbolicEvaluationEnvironment == null;
-		this.hypothesizedSymbolicEvaluationEnvironment = symbolicAnalysis.createHypothesizedSymbolicEvaluationEnvironment(hypothesis);
+		this.hypothesizedSymbolicEvaluationEnvironment = symbolicAnalysis.createHypothesizedSymbolicEvaluationEnvironment(hypothesis, typedElement);
 		return hypothesizedSymbolicEvaluationEnvironment;
 	}
 

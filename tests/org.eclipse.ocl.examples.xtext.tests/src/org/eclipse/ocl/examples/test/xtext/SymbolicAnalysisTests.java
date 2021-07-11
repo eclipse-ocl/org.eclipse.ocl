@@ -11,6 +11,7 @@
 package org.eclipse.ocl.examples.test.xtext;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -76,6 +77,15 @@ import org.eclipse.ocl.xtext.oclstdlib.scoping.JavaClassScope;
 @SuppressWarnings("null")
 public class SymbolicAnalysisTests extends XtextTestCase
 {
+	@SuppressWarnings("serial")
+	private static class IsDeadList extends ArrayList<@Nullable EObject> {}
+	@SuppressWarnings("serial")
+	private static class IsInvalidList extends ArrayList<@Nullable EObject> {}
+	@SuppressWarnings("serial")
+	private static class MayBeInvalidList extends ArrayList<@Nullable EObject> {}
+	@SuppressWarnings("serial")
+	private static class MayBeNullList extends ArrayList<@Nullable EObject> {}
+
 	public class MyOCL extends TestOCL
 	{
 		public MyOCL() {
@@ -142,8 +152,8 @@ public class SymbolicAnalysisTests extends XtextTestCase
 	}
 
 	public void checkContents(@NonNull SymbolicAnalysis symbolicAnalysis, @NonNull ExpressionInOCL asExpressionInOCL,
-			@Nullable EObject @Nullable[] expectedDeads, @Nullable EObject @Nullable[] expectedMayBeNulls,
-			@Nullable EObject @Nullable[] expectedMayBeInvalids, @Nullable EObject @Nullable[] expectedIsInvalids) {
+			@Nullable IsDeadList expectedDeads, @Nullable MayBeNullList expectedMayBeNulls,
+			@Nullable MayBeInvalidList expectedMayBeInvalids, @Nullable IsInvalidList expectedIsInvalids) {
 	//	Map<@NonNull Element, @NonNull SymbolicValue> element2symbolicValue = symbolicAnalysis.getElement2SymbolicValue();
 		BaseSymbolicEvaluationEnvironment evaluationEnvironment = symbolicAnalysis.getBaseSymbolicEvaluationEnvironment();
 		Set<@NonNull TypedElement> elements = new HashSet<>(); //>evaluationEnvironment.getElements();
@@ -200,26 +210,24 @@ public class SymbolicAnalysisTests extends XtextTestCase
 		return eObject.eClass().getName() + ":\"" + eObject + "\"";
 	}
 
-	protected @Nullable EObject @Nullable [] isDeads(@Nullable EObject @Nullable ... elements) {
+	protected @Nullable IsDeadList isDeads(@Nullable EObject @Nullable ... elements) {
 		if (elements == null) {
 			return null;
 		}
-		int iMax = elements.length;
-		@Nullable EObject [] results = new @Nullable EObject[iMax];
-		for (int i = 0; i < iMax; i++) {
-			results[i] = elements[i];
+		IsDeadList results = new IsDeadList();
+		for (@Nullable EObject element : elements) {
+			results.add(element);
 		}
 		return results;
 	}
 
-	protected @Nullable EObject @Nullable [] isInvalids(@Nullable EObject @Nullable ... elements) {
+	protected @Nullable IsInvalidList isInvalids(@Nullable EObject @Nullable ... elements) {
 		if (elements == null) {
 			return null;
 		}
-		int iMax = elements.length;
-		@Nullable EObject [] results = new @Nullable EObject[iMax];
-		for (int i = 0; i < iMax; i++) {
-			results[i] = elements[i];
+		IsInvalidList results = new IsInvalidList();
+		for (@Nullable EObject element : elements) {
+			results.add(element);
 		}
 		return results;
 	}
@@ -236,26 +244,24 @@ public class SymbolicAnalysisTests extends XtextTestCase
 		return results;
 	} */
 
-	protected @Nullable EObject @Nullable [] mayBeInvalids(@Nullable EObject @Nullable ... elements) {
+	protected @Nullable MayBeInvalidList mayBeInvalids(@Nullable EObject @Nullable ... elements) {
 		if (elements == null) {
 			return null;
 		}
-		int iMax = elements.length;
-		@Nullable EObject [] results = new @Nullable EObject[iMax];
-		for (int i = 0; i < iMax; i++) {
-			results[i] = elements[i];
+		MayBeInvalidList results = new MayBeInvalidList();
+		for (@Nullable EObject element : elements) {
+			results.add(element);
 		}
 		return results;
 	}
 
-	protected @Nullable EObject @Nullable [] mayBeNulls(@Nullable EObject @Nullable ... elements) {
+	protected @Nullable MayBeNullList mayBeNulls(@Nullable EObject @Nullable ... elements) {
 		if (elements == null) {
 			return null;
 		}
-		int iMax = elements.length;
-		@Nullable EObject [] results = new @Nullable EObject[iMax];
-		for (int i = 0; i < iMax; i++) {
-			results[i] = elements[i];
+		MayBeNullList results = new MayBeNullList();
+		for (@Nullable EObject element : elements) {
+			results.add(element);
 		}
 		return results;
 	}
@@ -447,7 +453,7 @@ public class SymbolicAnalysisTests extends XtextTestCase
 
 		// safe non-null navigation
 		SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, null, new Object[]{new SymbolicUnknownValue("p0", deductionsTypeId, false, false)});
-		checkContents(symbolicAnalysis1, asExpressionInOCL, null, new EObject[]{contextVariable}, null, null);
+		checkContents(symbolicAnalysis1, asExpressionInOCL, null, mayBeNulls(contextVariable), null, null);
 
 		// safe null navigation
 		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, null, new Object[]{null});
@@ -588,7 +594,7 @@ public class SymbolicAnalysisTests extends XtextTestCase
 		// may-be-null x
 		SymbolicVariableValue symbolicVariable = new SymbolicVariableValue(asExpressionInOCL.getOwnedParameters().get(0), true, false);
 		SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, null, new Object[]{symbolicVariable});
-		checkContents(symbolicAnalysis3, asExpressionInOCL, null, mayBeNulls(contextVariable, firstParameterVariable, neSourceExp, nullExp), null, null);
+		checkContents(symbolicAnalysis3, asExpressionInOCL, null, mayBeNulls(contextVariable, firstParameterVariable, nullExp), mayBeInvalids(asExpressionInOCL), null);
 
 		// non-null unknown x
 		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, null, new Object[]{new SymbolicUnknownValue("p0", TypeId.INTEGER, false, false)});
@@ -636,7 +642,7 @@ public class SymbolicAnalysisTests extends XtextTestCase
 		// may-be-null x
 		SymbolicVariableValue symbolicVariable = new SymbolicVariableValue(asExpressionInOCL.getOwnedParameters().get(0), true, false);
 		SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, null, new Object[]{symbolicVariable});
-		checkContents(symbolicAnalysis3, asExpressionInOCL, null, mayBeNulls(contextVariable, firstParameterVariable, neSourceExp, nullExp), null, null);
+		checkContents(symbolicAnalysis3, asExpressionInOCL, null, mayBeNulls(contextVariable, firstParameterVariable, nullExp), mayBeInvalids(asExpressionInOCL), null);
 
 		// non-null unknown x
 		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, null, new Object[]{new SymbolicUnknownValue("p0", TypeId.INTEGER, false, false)});
@@ -684,7 +690,7 @@ public class SymbolicAnalysisTests extends XtextTestCase
 		// may-be-null x
 		SymbolicVariableValue symbolicVariable = new SymbolicVariableValue(asExpressionInOCL.getOwnedParameters().get(0), true, false);
 		SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, null, new Object[]{symbolicVariable});
-		checkContents(symbolicAnalysis3, asExpressionInOCL, null, mayBeNulls(contextVariable, firstParameterVariable, eqSourceExp, nullExp), null, null);
+		checkContents(symbolicAnalysis3, asExpressionInOCL, null, mayBeNulls(contextVariable, firstParameterVariable, nullExp), mayBeInvalids(asExpressionInOCL), null);
 
 		// non-null unknown x
 		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, null, new Object[]{new SymbolicUnknownValue("p0", TypeId.INTEGER, false, false)});
@@ -732,7 +738,7 @@ public class SymbolicAnalysisTests extends XtextTestCase
 		// may-be-null x
 		SymbolicVariableValue symbolicVariable = new SymbolicVariableValue(asExpressionInOCL.getOwnedParameters().get(0), true, false);
 		SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, null, new Object[]{symbolicVariable});
-		checkContents(symbolicAnalysis3, asExpressionInOCL, null, mayBeNulls(contextVariable, firstParameterVariable, eqSourceExp, nullExp), null, null);
+		checkContents(symbolicAnalysis3, asExpressionInOCL, null, mayBeNulls(contextVariable, firstParameterVariable, nullExp), mayBeInvalids(asExpressionInOCL), null);
 
 		// non-null unknown x
 		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, null, new Object[]{new SymbolicUnknownValue("p0", TypeId.INTEGER, false, false)});

@@ -47,6 +47,14 @@ public abstract class AbstractSymbolicEvaluationEnvironment implements SymbolicE
 		this.symbolicEvaluationVisitor = symbolicAnalysis.createSymbolicEvaluationVisitor(this);
 	}
 
+//	protected abstract void addMayBeEmptyHypothesis(@NonNull TypedElement typedElement, @NonNull SymbolicValue symbolicValue);
+
+//	protected abstract void addMayBeInvalidHypothesis(@NonNull TypedElement typedElement, @NonNull SymbolicValue symbolicValue);
+
+//	protected abstract void addMayBeNullHypothesis(@NonNull TypedElement typedElement, @NonNull SymbolicValue symbolicValue);
+
+//	protected abstract void addMayBeZeroHypothesis(@NonNull TypedElement typedElement, @NonNull SymbolicValue symbolicValue);
+
 	@Override
 	public @Nullable SymbolicValue basicGetSymbolicValue(@NonNull TypedElement element) {
 		CSEElement cseElement = symbolicAnalysis.getCSEElement(element);
@@ -66,7 +74,8 @@ public abstract class AbstractSymbolicEvaluationEnvironment implements SymbolicE
 		if (!symbolicSize.mayBeZero()) {
 			return null;
 		}
-		symbolicAnalysis.addMayBeEmptyHypothesis(typedElement, symbolicValue);
+		Iterable<@NonNull TypedElement> affectedTypedElements = getAffectedTypedElements(typedElement);
+		symbolicAnalysis.addMayBeEmptyHypothesis(affectedTypedElements, symbolicValue);
 		return symbolicAnalysis.getMayBeInvalidValue(typeId);
 	}
 
@@ -79,7 +88,8 @@ public abstract class AbstractSymbolicEvaluationEnvironment implements SymbolicE
 		if (!symbolicValue.mayBeInvalid()) {
 			return null;
 		}
-		symbolicAnalysis.addMayBeInvalidHypothesis(typedElement, symbolicValue);
+		Iterable<@NonNull TypedElement> affectedTypedElements = getAffectedTypedElements(typedElement);
+		symbolicAnalysis.addMayBeInvalidHypothesis(affectedTypedElements, symbolicValue);
 		return symbolicAnalysis.getMayBeInvalidValue(typeId);
 	}
 
@@ -92,7 +102,8 @@ public abstract class AbstractSymbolicEvaluationEnvironment implements SymbolicE
 		if (!symbolicValue.mayBeNull()) {
 			return null;
 		}
-		symbolicAnalysis.addMayBeNullHypothesis(typedElement, symbolicValue);
+		Iterable<@NonNull TypedElement> affectedTypedElements = getAffectedTypedElements(typedElement);
+		symbolicAnalysis.addMayBeNullHypothesis(affectedTypedElements, symbolicValue);
 		return symbolicAnalysis.getMayBeInvalidValue(typeId);
 	}
 
@@ -105,7 +116,8 @@ public abstract class AbstractSymbolicEvaluationEnvironment implements SymbolicE
 		if (!symbolicValue.mayBeZero()) {
 			return null;
 		}
-		symbolicAnalysis.addMayBeZeroHypothesis(typedElement, symbolicValue);
+		Iterable<@NonNull TypedElement> affectedTypedElements = getAffectedTypedElements(typedElement);
+		symbolicAnalysis.addMayBeZeroHypothesis(affectedTypedElements, symbolicValue);
 		return symbolicAnalysis.getMayBeInvalidValue(typeId);
 	}
 
@@ -118,6 +130,8 @@ public abstract class AbstractSymbolicEvaluationEnvironment implements SymbolicE
 	public @NonNull SymbolicValue createUnknownValue(@NonNull TypedElement typedElement, boolean mayBeNull, boolean mayBeInvalid) {
 		return symbolicAnalysis.createUnknownValue(typedElement, mayBeNull, mayBeInvalid);
 	}
+
+	protected abstract @NonNull Iterable<@NonNull TypedElement> getAffectedTypedElements(@NonNull TypedElement typedElement);
 
 	@Override
 	public @NonNull EnvironmentFactory getEnvironmentFactory() {
