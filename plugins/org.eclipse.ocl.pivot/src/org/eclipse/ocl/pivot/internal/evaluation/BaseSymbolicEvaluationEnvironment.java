@@ -194,49 +194,32 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 		if (symbolicValue != null) {
 			return symbolicValue;
 		}
-		Object result;
+		SymbolicValue resultValue;
 		try {
-			result = typedElement.accept(symbolicEvaluationVisitor);
+			resultValue = typedElement.accept(symbolicEvaluationVisitor);
 		}
 		catch (InvalidValueException e) {
-			result = e;
-		}
-		SymbolicValue refinedValue;
-		if (result instanceof SymbolicValue) {
-			refinedValue = (SymbolicValue) result;
-		}
-		else {
-			Object boxedValue = environmentFactory.getIdResolver().boxedValueOf(result);
-			refinedValue = getKnownValue(boxedValue);
+			Object boxedValue = environmentFactory.getIdResolver().boxedValueOf(e);
+			resultValue = getKnownValue(boxedValue);
 		}
 		if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
-			SymbolicAnalysis.HYPOTHESIS.println("  evaluated: \"" + typedElement + "\" as: " + refinedValue);
+			SymbolicAnalysis.HYPOTHESIS.println("  evaluated: \"" + typedElement + "\" as: " + resultValue);
 		}
 		CSEElement cseElement = symbolicAnalysis.getCSEElement(typedElement);
-		return traceSymbolicValue(cseElement, refinedValue);								// Record new value
+		return traceSymbolicValue(cseElement, resultValue);								// Record new value
 	}
 
 	public @NonNull SymbolicValue symbolicReEvaluate(@NonNull TypedElement typedElement) {
 		SymbolicValue unrefinedValue = getSymbolicValue(typedElement);			// Get the unrefined value
-		Object result;
+		SymbolicValue resultValue;
 		try {
-			result = typedElement.accept(symbolicEvaluationVisitor);
+			resultValue = typedElement.accept(symbolicEvaluationVisitor);
 		}
 		catch (InvalidValueException e) {
-			result = e;
+			Object boxedValue = environmentFactory.getIdResolver().boxedValueOf(e);
+			resultValue = getKnownValue(boxedValue);
 		}
-		SymbolicValue refinedValue;
-		if (result instanceof SymbolicValue) {
-			refinedValue = (SymbolicValue) result;
-		}
-		else {
-			Object boxedValue = environmentFactory.getIdResolver().boxedValueOf(result);
-			refinedValue = getKnownValue(boxedValue);
-		}
-	//	if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
-	//		SymbolicAnalysis.HYPOTHESIS.println("  re-evaluated: \"" + typedElement + "\" as: " + refinedValue);
-	//	}
-		refinedValue = refinedValue.asRefinementOf(unrefinedValue);
+		SymbolicValue refinedValue = resultValue.asRefinementOf(unrefinedValue);
 		SymbolicValue old = expression2refinedSymbolicValue.put(typedElement, refinedValue);
 		if (old != null) {
 			assert old == unrefinedValue;
