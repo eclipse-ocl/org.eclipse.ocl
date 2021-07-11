@@ -870,7 +870,7 @@ public class SymbolicAnalysisTests extends XtextTestCase
 		// unknown may-be-null deductions
 		SymbolicVariableValue symbolicVariable = new SymbolicVariableValue(asExpressionInOCL.getOwnedParameters().get(0), true, false);
 		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, new SymbolicUnknownValue("p0", TypeId.STRING, false, false), null, new Object[] {symbolicVariable});
-		checkContents(symbolicAnalysis2, asExpressionInOCL, null, mayBeNulls(contextVariable, firstParameterVariable, asExpressionInOCL, asIf, asConditionVariableExp, nullLiteralExp), mayBeInvalids(asExpressionInOCL, asIf, asConditionSrc), null);
+		checkContents(symbolicAnalysis2, asExpressionInOCL, null, mayBeNulls(firstParameterVariable, asExpressionInOCL, asIf, asConditionVariableExp, nullLiteralExp), mayBeInvalids(asConditionSrc), null);
 
 		// null deductions
 		SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, null, new Object[] {null});

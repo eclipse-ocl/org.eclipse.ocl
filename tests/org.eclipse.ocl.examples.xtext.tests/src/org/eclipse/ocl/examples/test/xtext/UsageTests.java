@@ -701,7 +701,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 						+ "    class Clase1\n"
 						+ "    {\n"
 						+ "        invariant : (self.name <> null) and (self.name.size() > 0);\n"
-						+ "        attribute name : String[?] { ordered };\n"
+						+ "        attribute name : String { ordered };\n"
 						+ "    }\n"
 						+ "}\n";
 				String genmodelFile = createEcoreGenModelContent("Bug370824", null);
