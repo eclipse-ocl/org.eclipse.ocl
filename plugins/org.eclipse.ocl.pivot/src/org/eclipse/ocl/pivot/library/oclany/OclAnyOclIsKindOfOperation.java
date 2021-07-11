@@ -33,7 +33,7 @@ public class OclAnyOclIsKindOfOperation extends AbstractUntypedBinaryOperation
 	 */
 	@Override
 	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
-		return checkPreconditions(evaluationEnvironment, callExp, CHECK_NOT_INVALID);
+		return super.checkPreconditions(evaluationEnvironment, callExp);
 	}
 
 	/** @deprecated use Executor */

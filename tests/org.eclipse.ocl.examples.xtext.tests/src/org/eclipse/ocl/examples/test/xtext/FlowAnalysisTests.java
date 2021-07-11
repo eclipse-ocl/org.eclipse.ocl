@@ -276,7 +276,7 @@ public class FlowAnalysisTests extends XtextTestCase
 	public void testFlowAnalysis_DoubleBiImpliesPropertyGuard() throws Exception {
 		MyOCL ocl = new MyOCL();
 		OperationCallExp asImplies = (OperationCallExp) ocl.createTestModel("DoubleBiImpliesVariableGuard",
-				"dummy <> null and dummy.dummy <> null implies dummy <> null or dummy.dummy <> null or dummy.dummy.dummy <> null");
+				"((dummy <> null) and (dummy.dummy <> null)) implies ((dummy <> null) or (dummy.dummy <> null) or (dummy.dummy.dummy <> null))");
 		OperationCallExp asAnd12 = (OperationCallExp) PivotUtil.getOwnedSource(asImplies);
 		OperationCallExp asGuard1 = (OperationCallExp) PivotUtil.getOwnedSource(asAnd12);
 		PropertyCallExp asRef1 = (PropertyCallExp) PivotUtil.getOwnedSource(asGuard1);

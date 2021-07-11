@@ -92,4 +92,24 @@ public class OclAnyOclAsSetOperation extends AbstractUnaryOperation
 		}
 		return returnType;
 	}
+
+	/**
+	 * @since 1.16
+	 */
+	@Override
+	public @NonNull SymbolicValue symbolicEvaluate(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
+		SymbolicValue symbolicPreconditionValue = checkPreconditions(evaluationEnvironment, callExp);
+		if (symbolicPreconditionValue != null) {
+			return symbolicPreconditionValue;
+		}
+		OCLExpression source = PivotUtil.getOwnedSource(callExp);
+		SymbolicValue sourceValue = evaluationEnvironment.symbolicEvaluate(source);
+		if (sourceValue.isNull()) {
+			SetValue setValue = evaluationEnvironment.getExecutor().getIdResolver().createSetOfEach((CollectionTypeId)callExp.getTypeId());
+			return evaluationEnvironment.getKnownValue(setValue);
+		}
+		else {
+			return evaluationEnvironment.createUnknownValue(callExp, false, false);
+		}
+	}
 }

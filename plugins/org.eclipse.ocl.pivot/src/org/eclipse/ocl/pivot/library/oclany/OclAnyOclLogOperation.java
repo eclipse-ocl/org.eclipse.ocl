@@ -12,10 +12,13 @@ package org.eclipse.ocl.pivot.library.oclany;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.evaluation.EvaluationLogger;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.library.AbstractPolyOperation;
+import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
  * OclAnyOclLogOperation realises the OclAny::oclLog() library operation.
@@ -23,6 +26,14 @@ import org.eclipse.ocl.pivot.library.AbstractPolyOperation;
 public class OclAnyOclLogOperation extends AbstractPolyOperation
 {
 	public static final @NonNull OclAnyOclLogOperation INSTANCE = new OclAnyOclLogOperation();
+
+	/**
+	 * @since 1.16
+	 */
+	@Override
+	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
+		return checkPreconditions(evaluationEnvironment, callExp, 0);
+	}
 
 	/**
 	 * @since 1.1
@@ -76,5 +87,17 @@ public class OclAnyOclLogOperation extends AbstractPolyOperation
 			return "null"; //$NON-NLS-1$
 		}
 		return string;
+	}
+
+	/**
+	 * @since 1.16
+	 */
+	@Override
+	public @NonNull SymbolicValue symbolicEvaluate(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
+		SymbolicValue symbolicPreconditionValue = checkPreconditions(evaluationEnvironment, callExp);
+		if (symbolicPreconditionValue != null) {
+			return symbolicPreconditionValue;
+		}
+		return evaluationEnvironment.createUnknownValue(callExp, false, false);
 	}
 }
