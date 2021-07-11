@@ -29,16 +29,37 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.cse.AbstractCSEElement.CSEMappedElement;
+import org.eclipse.ocl.pivot.internal.cse.AbstractCSEElement.CSESimpleElement;
+import org.eclipse.ocl.pivot.internal.cse.AbstractCSEElement.CSETypeElement;
+import org.eclipse.ocl.pivot.internal.cse.AbstractCSEElement.CSEValueElement;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicUtil;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicUtil.TypedElementHeightComparator;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 
+import com.google.common.collect.Iterables;
+
 /**
+ * CommonSubExpressionAnalysis supervises the construction of a CSEElement tree for an ExpresssionInOCL
+ * using a CSEVisitor to handle each distinct child and referenced Pivot Element. Caches avoid reation
+ * of duplicates.
+ *
  * @since 1.16
  */
 public class CommonSubExpressionAnalysis
 {
+	protected static int computeHeight(@NonNull Iterable<@NonNull CSEElement> elements) {
+		int maxHeight = 0;
+		for (@NonNull CSEElement element : elements) {
+			int height = element.getHeight();
+			if (height > maxHeight) {
+				maxHeight = height;
+			}
+		}
+		return maxHeight + 1;
+	}
+
 	protected final @NonNull CSEVisitor visitor;
 
 	/**
@@ -49,7 +70,7 @@ public class CommonSubExpressionAnalysis
 	/**
 	 * The CSEs for specific model elements.
 	 */
-	private @Nullable Map<@NonNull Class<?>, @NonNull Map<@NonNull List<@NonNull CSEElement>, @NonNull CSEAggregateElement>> namespaceClass2elements2cse = null;
+	private @Nullable Map<@NonNull Class<?>, @NonNull Map<@NonNull List<@NonNull CSEElement>, @NonNull CSESimpleElement>> namespaceClass2elements2cse = null;
 
 	/**
 	 * The CSEs for specific keyed model elements such as ShadowPart and TupleLiteralPart
@@ -87,51 +108,66 @@ public class CommonSubExpressionAnalysis
 		return new CSEVisitor(this);
 	}
 
-	public @NonNull CSEElement getElementCSE(@NonNull Element expression) {
-		CSEElement cseElement = element2cse.get(expression);
+	public @NonNull CSEElement getElementCSE(@NonNull Element element) {
+		CSEElement cseElement = element2cse.get(element);
 		if (cseElement == null) {
-			cseElement = visitor.visit(expression);
-			element2cse.put(expression, cseElement);
+			cseElement = visitor.visit(element);
+			element2cse.put(element, cseElement);
+			assert Iterables.contains(cseElement.getElements(), element) : "No CSE registration for a " + element.eClass().getName();
 		}
 		return cseElement;
 	}
 
-	public @NonNull CSEMappedElement getMappedCSE(@NonNull Element element, @NonNull Map<@NonNull TypedElement, @NonNull CSEElement> property2element) {
+	public @NonNull CSEElement getMappedCSE(@NonNull Element element, @NonNull Map<@NonNull TypedElement, @NonNull CSEElement> property2element) {
 		Map<@NonNull Map<@NonNull TypedElement, @NonNull CSEElement>, @NonNull CSEMappedElement> key2element2cse2 = key2element2cse;
 		if (key2element2cse2 == null) {
 			key2element2cse = key2element2cse2 = new HashMap<>();
 		}
 		CSEMappedElement cseElement = key2element2cse2.get(property2element);
 		if (cseElement == null) {
-			cseElement = new CSEMappedElement(this, element, property2element);
+			int height = computeHeight(property2element.values());
+			cseElement = new CSEMappedElement(this, element, height, property2element);
+			for (@NonNull CSEElement inputCSE : property2element.values()) {
+				cseElement.addInput(inputCSE);
+			}
 			key2element2cse2.put(property2element, cseElement);
+		}
+		else {
+			cseElement.addElement(element);
 		}
 		return cseElement;
 	}
 
-	public @NonNull CSEAggregateElement getNamespaceCSE(@NonNull Element element, @NonNull List<@NonNull CSEElement> elements) {
+	public @NonNull CSEElement getNamespaceCSE(@NonNull Element element, @NonNull List<@NonNull CSEElement> cseElements) {
 		assert !element2cse.containsKey(element);
 		@NonNull Class<?> namespaceClass = element.getClass();
-		Map<@NonNull Class<?>, @NonNull Map<@NonNull List<@NonNull CSEElement>, @NonNull CSEAggregateElement>> namespaceClass2elements2cse2 = namespaceClass2elements2cse;
+		Map<@NonNull Class<?>, @NonNull Map<@NonNull List<@NonNull CSEElement>, @NonNull CSESimpleElement>> namespaceClass2elements2cse2 = namespaceClass2elements2cse;
 		if (namespaceClass2elements2cse2 == null) {
 			namespaceClass2elements2cse2 = namespaceClass2elements2cse = new HashMap<>();
 		}
-		Map<@NonNull List<@NonNull CSEElement>, @NonNull CSEAggregateElement> elements2cse = namespaceClass2elements2cse2.get(namespaceClass);
+		Map<@NonNull List<@NonNull CSEElement>, @NonNull CSESimpleElement> elements2cse = namespaceClass2elements2cse2.get(namespaceClass);
 		if (elements2cse == null) {
 			elements2cse = new HashMap<>();
 			namespaceClass2elements2cse2.put(namespaceClass, elements2cse);
 		}
-		CSEAggregateElement cseElement = elements2cse.get(elements);
+		CSESimpleElement cseElement = elements2cse.get(cseElements);
 		if (cseElement == null) {
-			cseElement = new CSEAggregateElement(this, element, elements);
-			elements2cse.put(elements, cseElement);
+			int height = computeHeight(cseElements);
+			cseElement = new CSESimpleElement(this, element, height);
+			for (@NonNull CSEElement cseElement2 : cseElements) {
+				cseElement.addInput(cseElement2);
+			}
+			elements2cse.put(cseElements, cseElement);
+		}
+		else {
+			cseElement.addElement(element);
 		}
 		element2cse.put(element, cseElement);
 		return cseElement;
 	}
 
 	// XXX Make TypeExp a LiteralExp
-	public @NonNull CSETypeElement getTypeCSE(@NonNull TypeExp typeExp) {
+	public @NonNull CSEElement getTypeCSE(@NonNull TypeExp typeExp) {
 		Map<@NonNull TypeId, @NonNull CSETypeElement> typeid2cse2 = typeid2cse;
 		if (typeid2cse2 == null) {
 			typeid2cse2 = typeid2cse = new HashMap<>();
@@ -141,6 +177,9 @@ public class CommonSubExpressionAnalysis
 		if (cseElement == null) {
 			cseElement = new CSETypeElement(this, typeExp);
 			typeid2cse2.put(typeId, cseElement);
+		}
+		else {
+			cseElement.addElement(typeExp);
 		}
 		return cseElement;
 	}
@@ -153,13 +192,16 @@ public class CommonSubExpressionAnalysis
 		return typedElementHeightComparator2;
 	}
 
-	public @NonNull CSEValueElement getValueCSE(@NonNull LiteralExp literalExp, @NonNull Object value) {
+	public @NonNull CSEElement getValueCSE(@NonNull LiteralExp literalExp, @NonNull Object value) {
 		CSEValueElement cseElement = value2cse.get(value);
 		if (cseElement == null) {
 			cseElement = new CSEValueElement(this, literalExp, value);
 			value2cse.put(value, cseElement);
 		}
-		cseElement.addLiteralExp(literalExp);
+		else {
+			cseElement.addElement(literalExp);
+		}
+		cseElement.addOutput(literalExp);
 		return cseElement;
 	}
 
@@ -171,8 +213,8 @@ public class CommonSubExpressionAnalysis
 //		return cseElement;
 //	}
 
-	public @NonNull CSEVariableElement getVariableCSE(@NonNull VariableDeclaration variableDeclaration) {
-		CSEVariableElement cseElement = (CSEVariableElement) element2cse.get(variableDeclaration);
+	public @NonNull CSEElement getVariableCSE(@NonNull VariableDeclaration variableDeclaration) {
+		CSESimpleElement cseElement = (CSESimpleElement)element2cse.get(variableDeclaration);
 		if (cseElement == null) {
 			int height = 0;
 			if (variableDeclaration instanceof Variable) {
@@ -182,7 +224,7 @@ public class CommonSubExpressionAnalysis
 					height = initCSE.getHeight() + 1;
 				}
 			}
-			cseElement = new CSEVariableElement(this, variableDeclaration, height);
+			cseElement = new CSESimpleElement(this, variableDeclaration, height);
 			element2cse.put(variableDeclaration, cseElement);
 		}
 		return cseElement;
@@ -203,7 +245,7 @@ public class CommonSubExpressionAnalysis
 			StringUtil.appendIndentation(s, depth+1);
 			CSEElement cseElement = element2cse.get(element);
 			assert cseElement != null;
-			Element theElement = cseElement.getElement();
+			Element theElement = cseElement.getElements().iterator().next();
 			s.append(element.eClass().getName());
 			s.append("@");
 			s.append(Integer.toHexString(System.identityHashCode(element)));
@@ -224,7 +266,7 @@ public class CommonSubExpressionAnalysis
 			StringUtil.appendIndentation(s, depth+1);
 			CSEElement cseElement = value2cse.get(value);
 			assert cseElement != null;
-			Element element = cseElement.getElement();
+			Element element = cseElement.getElements().iterator().next();
 			if (value instanceof EObject) {
 				s.append(((EObject)value).eClass().getName());
 			}

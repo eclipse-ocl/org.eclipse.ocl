@@ -53,12 +53,16 @@ import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
+import org.eclipse.ocl.pivot.internal.cse.AbstractCSEElement.CSEMappedElement;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 
 /**
+ * The CSEVisitor provides the algorithms to convert a Pivot Element to its CSEElement
+ * under the caching and creation supervision of a CommonSubExpressionAnalysis.
+ *
  * @since 1.16
  */
 public class CSEVisitor extends AbstractExtendingVisitor<@NonNull CSEElement, @NonNull CommonSubExpressionAnalysis>
@@ -89,7 +93,9 @@ public class CSEVisitor extends AbstractExtendingVisitor<@NonNull CSEElement, @N
 
 	@Override
 	public @NonNull CSEElement visitCollectionItem(@NonNull CollectionItem collectionItem) {
-		return context.getElementCSE(PivotUtil.getOwnedItem(collectionItem));
+		CSEElement elementCSE = context.getElementCSE(PivotUtil.getOwnedItem(collectionItem));
+		elementCSE.addElement(collectionItem);
+		return elementCSE;
 	}
 
 	@Override
@@ -133,6 +139,7 @@ public class CSEVisitor extends AbstractExtendingVisitor<@NonNull CSEElement, @N
 		}
 		OCLExpression bodyExp = PivotUtil.getOwnedBody(expressionInOCL);
 		CSEElement bodyCSE = context.getElementCSE(bodyExp);
+		bodyCSE.addElement(expressionInOCL);
 		return bodyCSE;
 	}
 
@@ -163,6 +170,7 @@ public class CSEVisitor extends AbstractExtendingVisitor<@NonNull CSEElement, @N
 		CSEElement variableCSE = context.getVariableCSE(PivotUtil.getOwnedVariable(letExp));
 		OCLExpression inExp = PivotUtil.getOwnedIn(letExp);
 		CSEElement inCSE = context.getElementCSE(inExp);
+		inCSE.addElement(letExp);
 		return inCSE;		// init is separate as referenced, in is indeed unchanged.
 	}
 
@@ -308,14 +316,8 @@ public class CSEVisitor extends AbstractExtendingVisitor<@NonNull CSEElement, @N
 	@Override
 	public @NonNull CSEElement visitVariableExp(@NonNull VariableExp variableExp) {
 		VariableDeclaration variable = PivotUtil.getReferredVariable(variableExp);
-	//	if (variableExp.eContainer() instanceof LetExp) {
-	//		OCLExpression initExp = ((Variable)variable).getOwnedInit();
-	//		if (initExp != null) {
-	//			return context.getElementCSE(initExp);
-	//		}
-	//	}
-		CSEVariableElement variableCSE = context.getVariableCSE(variable);
-		variableCSE.addVariableExp(variableExp);
+		CSEElement variableCSE = context.getVariableCSE(variable);
+		variableCSE.addElement(variableExp);
 		return variableCSE;
 	}
 

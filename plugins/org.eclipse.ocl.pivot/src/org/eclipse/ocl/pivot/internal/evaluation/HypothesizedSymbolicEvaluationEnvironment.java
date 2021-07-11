@@ -22,6 +22,7 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.IfExp;
 import org.eclipse.ocl.pivot.LoopExp;
@@ -245,14 +246,11 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 		//
 		for (@NonNull VariableDeclaration variable : affectedVariables) {
 			CSEElement variableCSE = symbolicAnalysis.getCSEElement(variable);
-			Iterable<@NonNull OCLExpression> outputs = variableCSE.getOutputs();
-			if (outputs != null) {
-				for (@NonNull TypedElement output : outputs) {
-					if ((output instanceof VariableExp) && (output != typedElement)) {
-						VariableExp variableExp = (VariableExp)output;
-						if (affectedTypedElements.add(variableExp)) {
-							addRefinedParentTypedElements(variableExp);
-						}
+			for (@NonNull Element output : variableCSE.getElements()) {
+				if ((output instanceof VariableExp) && (output != typedElement)) {
+					VariableExp variableExp = (VariableExp)output;
+					if (affectedTypedElements.add(variableExp)) {
+						addRefinedParentTypedElements(variableExp);
 					}
 				}
 			}

@@ -22,6 +22,7 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.TypedElement;
@@ -80,10 +81,9 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 	private void gatherAffectedTypedElements(@NonNull Set<@NonNull TypedElement> affectedExpressions, @NonNull TypedElement typedElement) {
 		if (typedElement instanceof VariableDeclaration) {
 			CSEElement variableCSE = symbolicAnalysis.getCSEElement(typedElement);
-			Iterable<@NonNull OCLExpression> variableExps = variableCSE.getOutputs();
-			if (variableExps != null) {
-				for (@NonNull OCLExpression variableExp : variableExps) {
-					gatherAffectedTypedElements(affectedExpressions, variableExp);
+			for (@NonNull Element element : variableCSE.getElements()) {
+				if (element instanceof VariableExp) {
+					gatherAffectedTypedElements(affectedExpressions, (VariableExp)element);
 				}
 			}
 		}

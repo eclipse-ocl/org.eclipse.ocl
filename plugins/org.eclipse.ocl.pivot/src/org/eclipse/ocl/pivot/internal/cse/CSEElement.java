@@ -18,13 +18,12 @@ import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.IfExp;
 import org.eclipse.ocl.pivot.NavigationCallExp;
-import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 
 /**
  * A CSEElement defines the behaviour of a node in the Common Sub-Expression tree.
  *
- * THe CSEElement has the same actual value wherever used since OCL's side effect-free characterisics prohibit
+ * The CSEElement has the same actual value wherever used, since OCL's side effect-free characterisics prohibit
  * a different evaluation having a variant result. NB this applies to a particular iteration.
  * Eaxh iteration may have a different actual value.
  *
@@ -35,13 +34,17 @@ import org.eclipse.ocl.pivot.Operation;
  */
 public interface CSEElement extends Comparable<@NonNull CSEElement>
 {
+	/**
+	 * Register element as an additionl element whose CSE this is.
+	 */
+	void addElement(@NonNull Element element);
+
 	@NonNull CommonSubExpressionAnalysis getCommonSubExpressionAnalysis();
 
 	/**
-	 * The model element that first triggered creation of this CSE element.
+	 * The elements for which this is the CSE.
 	 */
-	@Deprecated /* this isn't fundamentally necessary - used in toString() diagnostics */
-	@NonNull Element getElement();
+	@NonNull Iterable<@NonNull Element> getElements();
 
 	/**
 	 * The transitive depth of getInputs().
@@ -66,7 +69,7 @@ public interface CSEElement extends Comparable<@NonNull CSEElement>
 	/**
 	 * The expressions whose evaluation uses this CSE.
 	 */
-	@Nullable Iterable<@NonNull OCLExpression> getOutputs();
+//	@NonNull Iterable<@NonNull OCLExpression> getOutputs();
 
 	/**
 	 * Add a navigation for navigationCallExp with this CSE as the source.
