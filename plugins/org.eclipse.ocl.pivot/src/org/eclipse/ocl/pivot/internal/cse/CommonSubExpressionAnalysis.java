@@ -23,12 +23,14 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LiteralExp;
+import org.eclipse.ocl.pivot.MapLiteralPart;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.TypeExp;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.cse.AbstractCSEElement.CSEMapLiteralPartElement;
 import org.eclipse.ocl.pivot.internal.cse.AbstractCSEElement.CSEMappedElement;
 import org.eclipse.ocl.pivot.internal.cse.AbstractCSEElement.CSESimpleElement;
 import org.eclipse.ocl.pivot.internal.cse.AbstractCSEElement.CSETypeElement;
@@ -71,6 +73,8 @@ public class CommonSubExpressionAnalysis
 	 * The CSEs for specific model elements.
 	 */
 	private @Nullable Map<@NonNull Class<?>, @NonNull Map<@NonNull List<@NonNull CSEElement>, @NonNull CSESimpleElement>> namespaceClass2elements2cse = null;
+	@Deprecated
+	private @Nullable Map<@NonNull Class<?>, @NonNull Map<@NonNull List<@NonNull CSEElement>, @NonNull CSEMapLiteralPartElement>> namespaceClass2elements2mapcse = null;
 
 	/**
 	 * The CSEs for specific keyed model elements such as ShadowPart and TupleLiteralPart
@@ -108,17 +112,20 @@ public class CommonSubExpressionAnalysis
 		return new CSEVisitor(this);
 	}
 
+	// XXX Change to TypedElement once MapLiteralPart is a TypedElement
 	public @NonNull CSEElement getElementCSE(@NonNull Element element) {
 		CSEElement cseElement = element2cse.get(element);
 		if (cseElement == null) {
 			cseElement = visitor.visit(element);
 			element2cse.put(element, cseElement);
-			assert Iterables.contains(cseElement.getElements(), element) : "No CSE registration for a " + element.eClass().getName();
+			if (!(element instanceof MapLiteralPart)) {
+				assert Iterables.contains(cseElement.getElements(), element) : "No CSE registration for a " + element.eClass().getName();
+			}
 		}
 		return cseElement;
 	}
 
-	public @NonNull CSEElement getMappedCSE(@NonNull Element element, @NonNull Map<@NonNull TypedElement, @NonNull CSEElement> property2element) {
+	public @NonNull CSEElement getMappedCSE(@NonNull TypedElement element, @NonNull Map<@NonNull TypedElement, @NonNull CSEElement> property2element) {
 		Map<@NonNull Map<@NonNull TypedElement, @NonNull CSEElement>, @NonNull CSEMappedElement> key2element2cse2 = key2element2cse;
 		if (key2element2cse2 == null) {
 			key2element2cse = key2element2cse2 = new HashMap<>();
@@ -138,7 +145,7 @@ public class CommonSubExpressionAnalysis
 		return cseElement;
 	}
 
-	public @NonNull CSEElement getNamespaceCSE(@NonNull Element element, @NonNull List<@NonNull CSEElement> cseElements) {
+	public @NonNull CSEElement getNamespaceCSE(@NonNull TypedElement element, @NonNull List<@NonNull CSEElement> cseElements) {
 		assert !element2cse.containsKey(element);
 		@NonNull Class<?> namespaceClass = element.getClass();
 		Map<@NonNull Class<?>, @NonNull Map<@NonNull List<@NonNull CSEElement>, @NonNull CSESimpleElement>> namespaceClass2elements2cse2 = namespaceClass2elements2cse;
@@ -162,6 +169,36 @@ public class CommonSubExpressionAnalysis
 		else {
 			cseElement.addElement(element);
 		}
+		element2cse.put(element, cseElement);
+		return cseElement;
+	}
+
+	// XXX Delete me once MapLiteralPart is a TypedElement
+	@Deprecated
+	public @NonNull CSEElement getNamespaceCSE(@NonNull MapLiteralPart element, @NonNull List<@NonNull CSEElement> cseElements) {
+		assert !element2cse.containsKey(element);
+		@NonNull Class<?> namespaceClass = element.getClass();
+		Map<@NonNull Class<?>, @NonNull Map<@NonNull List<@NonNull CSEElement>, @NonNull CSEMapLiteralPartElement>> namespaceClass2elements2cse2 = namespaceClass2elements2mapcse;
+		if (namespaceClass2elements2cse2 == null) {
+			namespaceClass2elements2cse2 = namespaceClass2elements2mapcse = new HashMap<>();
+		}
+		Map<@NonNull List<@NonNull CSEElement>, @NonNull CSEMapLiteralPartElement> elements2cse = namespaceClass2elements2cse2.get(namespaceClass);
+		if (elements2cse == null) {
+			elements2cse = new HashMap<>();
+			namespaceClass2elements2cse2.put(namespaceClass, elements2cse);
+		}
+		CSEMapLiteralPartElement cseElement = elements2cse.get(cseElements);
+		if (cseElement == null) {
+			int height = computeHeight(cseElements);
+			cseElement = new CSEMapLiteralPartElement(this, element, height);
+			for (@NonNull CSEElement cseElement2 : cseElements) {
+				cseElement.addInput(cseElement2);
+			}
+			elements2cse.put(cseElements, cseElement);
+		}
+	//	else {
+	//		cseElement.addElement(element);
+	//	}
 		element2cse.put(element, cseElement);
 		return cseElement;
 	}

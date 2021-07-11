@@ -104,7 +104,7 @@ public class SymbolicUtil extends AbstractLeafSymbolicValue
 			}
 		}
 		for (@NonNull CSEElement cseElement : cseElements) {
-			Iterable<@NonNull Element> elements = cseElement.getElements();
+			Iterable<@NonNull TypedElement> elements = cseElement.getElements();
 			for (@NonNull Element element : elements) {
 				for (Element aDelegate = element; (aDelegate = SymbolicUtil.getDelegate(aDelegate)) != null; ) {
 					assert Iterables.contains(elements, aDelegate) : "Inconsistent CSE delegation for " + element.eClass().getName() + ": " + element;

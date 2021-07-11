@@ -18,11 +18,10 @@ import java.util.Map;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
-import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.IfExp;
 import org.eclipse.ocl.pivot.LiteralExp;
+import org.eclipse.ocl.pivot.MapLiteralPart;
 import org.eclipse.ocl.pivot.NavigationCallExp;
-import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TypeExp;
@@ -43,7 +42,7 @@ public abstract class AbstractCSEElement implements CSEElement
 	{
 		private final @NonNull Map<@NonNull TypedElement, @NonNull CSEElement> key2element;
 
-		public CSEMappedElement(@NonNull CommonSubExpressionAnalysis cseAnalysis, @NonNull Element element, int height, @NonNull Map<@NonNull TypedElement, @NonNull CSEElement> key2element) {
+		public CSEMappedElement(@NonNull CommonSubExpressionAnalysis cseAnalysis, @NonNull TypedElement element, int height, @NonNull Map<@NonNull TypedElement, @NonNull CSEElement> key2element) {
 			super(cseAnalysis, element, height);
 			this.key2element = key2element;
 		}
@@ -54,11 +53,23 @@ public abstract class AbstractCSEElement implements CSEElement
 	}
 
 	/**
+	 * A CSEMapLiteralPartElement is the cirregular non-TypedElement implementation for a MapLiteralPart.
+	 */
+	// XXX Delete me once MapLiteralPart is a TypedElement
+	@Deprecated
+	public static class CSEMapLiteralPartElement extends AbstractCSEElement
+	{
+		public CSEMapLiteralPartElement(@NonNull CommonSubExpressionAnalysis cseAnalysis, @NonNull MapLiteralPart element, int height) {
+			super(cseAnalysis, height);
+		}
+	}
+
+	/**
 	 * A CSESimpleElement is the default concrete implementation of AbstractCSEElement.
 	 */
 	public static class CSESimpleElement extends AbstractCSEElement
 	{
-		public CSESimpleElement(@NonNull CommonSubExpressionAnalysis cseAnalysis, @NonNull Element element, int height) {
+		public CSESimpleElement(@NonNull CommonSubExpressionAnalysis cseAnalysis, @NonNull TypedElement element, int height) {
 			super(cseAnalysis, element, height);
 		}
 	}
@@ -115,23 +126,30 @@ public abstract class AbstractCSEElement implements CSEElement
 	/**
 	 * The expressions whoe symbolic values make use of this CSE element.
 	 */
-	private final @NonNull List<@NonNull OCLExpression> outputs = new ArrayList<>();
+	private final @NonNull List<@NonNull TypedElement> outputs = new ArrayList<>();
 
 	/**
 	 * The elements for which this is the CSE element.
 	 *
 	 * XXX FIXME this could be TypedElement if MapLiteralPart was a TypedElement.
 	 */
-	private final @NonNull List<@NonNull Element> elements = new ArrayList<>();
+	private final @NonNull List<@NonNull TypedElement> elements = new ArrayList<>();
 
-	protected AbstractCSEElement(@NonNull CommonSubExpressionAnalysis cseAnalysis, @NonNull Element element, int height) {
+	protected AbstractCSEElement(@NonNull CommonSubExpressionAnalysis cseAnalysis, @NonNull TypedElement element, int height) {
 		this.cseAnalysis = cseAnalysis;
 		this.height = height;
 		addElement(element);
 	}
 
+	// XXX Delete me once MapLiteralPart is a TypedElement
+	@Deprecated
+	protected AbstractCSEElement(@NonNull CommonSubExpressionAnalysis cseAnalysis, int height) {
+		this.cseAnalysis = cseAnalysis;
+		this.height = height;
+	}
+
 	@Override
-	public void addElement(@NonNull Element element) {
+	public void addElement(@NonNull TypedElement element) {
 		assert !elements.contains(element);
 		elements.add(element);
 	}
@@ -144,7 +162,7 @@ public abstract class AbstractCSEElement implements CSEElement
 		inputs2.add(inputCSE);
 	}
 
-	protected void addOutput(@NonNull OCLExpression outputExp) {
+	protected void addOutput(@NonNull TypedElement outputExp) {
 		assert !outputs.contains(outputExp);
 		outputs.add(outputExp);
 	}
@@ -162,7 +180,7 @@ public abstract class AbstractCSEElement implements CSEElement
 	}
 
 	@Override
-	public @NonNull Iterable<@NonNull Element> getElements() {
+	public @NonNull Iterable<@NonNull TypedElement> getElements() {
 		return elements;
 	}
 

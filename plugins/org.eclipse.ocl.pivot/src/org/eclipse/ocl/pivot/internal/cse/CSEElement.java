@@ -15,10 +15,10 @@ import java.util.List;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
-import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.IfExp;
 import org.eclipse.ocl.pivot.NavigationCallExp;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.TypedElement;
 
 /**
  * A CSEElement defines the behaviour of a node in the Common Sub-Expression tree.
@@ -37,14 +37,14 @@ public interface CSEElement extends Comparable<@NonNull CSEElement>
 	/**
 	 * Register element as an additionl element whose CSE this is.
 	 */
-	void addElement(@NonNull Element element);
+	void addElement(@NonNull TypedElement element);
 
 	@NonNull CommonSubExpressionAnalysis getCommonSubExpressionAnalysis();
 
 	/**
 	 * The elements for which this is the CSE.
 	 */
-	@NonNull Iterable<@NonNull Element> getElements();
+	@NonNull Iterable<@NonNull TypedElement> getElements();
 
 	/**
 	 * The transitive depth of getInputs().
