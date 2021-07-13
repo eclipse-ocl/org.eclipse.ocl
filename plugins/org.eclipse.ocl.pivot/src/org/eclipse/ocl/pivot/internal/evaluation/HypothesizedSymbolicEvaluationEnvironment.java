@@ -258,6 +258,9 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 				if (!mayBeNull) {
 					refinedSymbolicValue = AbstractSymbolicRefinedValue.createExceptValue(refinedSymbolicValue, null);
 				}
+				if (refinedSymbolicValue == baseSymbolicValue) {
+					refinedSymbolicValue = null;
+				}
 			}
 			if (refinedSymbolicValue != null) {
 				SymbolicValue old = refinedTypedElements2symbolicValue.put(refinedExpression, refinedSymbolicValue);
@@ -424,19 +427,12 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 	 * Conversely return a String describing the incompatibility and consequently a contradiction.
 	 */
 	public @Nullable String symbolicReEvaluate(@NonNull TypedElement typedElement) {
-		Object result = null;
+		SymbolicValue writeValue ;
 		try {
-			result = symbolicEvaluationVisitor.symbolicEvaluate(typedElement);
+			writeValue = symbolicEvaluationVisitor.symbolicEvaluate(typedElement);
 		}
 		catch (InvalidValueException e) {
-			result = e;
-		}
-		SymbolicValue writeValue;
-		if (result instanceof SymbolicValue) {
-			writeValue = (SymbolicValue)result;
-		}
-		else {
-			Object boxedValue = environmentFactory.getIdResolver().boxedValueOf(result);
+			Object boxedValue = environmentFactory.getIdResolver().boxedValueOf(e);
 			writeValue = getKnownValue(boxedValue);
 		}
 		if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
@@ -464,7 +460,6 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 				return "mustBeTrue is incompatible with !mayBeTrue";
 			}
 		}
-
 		if (writeValue.isInvalid() && !readValue.mayBeInvalid()) {
 			return "isInvalid is incompatible with !mayBeInvalid";
 		}

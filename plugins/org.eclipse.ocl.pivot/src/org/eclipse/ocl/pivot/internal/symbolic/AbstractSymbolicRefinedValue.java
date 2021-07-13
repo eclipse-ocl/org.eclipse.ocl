@@ -456,19 +456,6 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 		}
 	}
 
-	public static @NonNull SymbolicValue createNotInvalidOrNullValue(@NonNull SymbolicValue symbolicValue) {
-		return createExceptValue(createExceptValue(symbolicValue, null), ValueUtil.INVALID_VALUE);
-	}
-
-/*	public static @NonNull SymbolicValue createNotSmallerThanValue(@NonNull SymbolicValue symbolicValue, @NonNull SymbolicValue minSizeValue) {
-		if (symbolicValue.mayBeSmallerThan(minSizeValue)) {
-			return new NotSmallerThanSymbolicValue(symbolicValue, minSizeValue);
-		}
-		else {
-			return symbolicValue;
-		}
-	} */
-
 	public static @NonNull SymbolicValue createNotValue(@NonNull SymbolicValue symbolicValue) {
 		return new SymbolicNotValue(symbolicValue);
 	}
