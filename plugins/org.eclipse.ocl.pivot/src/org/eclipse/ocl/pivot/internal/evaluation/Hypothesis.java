@@ -22,7 +22,6 @@ import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.internal.symbolic.AbstractSymbolicRefinedValue;
 import org.eclipse.ocl.pivot.internal.symbolic.AbstractSymbolicRefinedValue.SymbolicRefinedContentValue;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
@@ -57,7 +56,7 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 	/**
 	 * Whether the hypothesis is contradicted(true) or confirmed(false) or is yet to be decided (null).
 	 */
-	private @Nullable Map<@NonNull TypedElement, @NonNull Boolean> typedElement2isContradiction = null;
+	private @Nullable Map<@NonNull TypedElement, @Nullable String> typedElement2incompatibility = null;
 
 	protected Hypothesis(@NonNull SymbolicAnalysis symbolicAnalysis, @NonNull Iterable<@NonNull TypedElement> typedElements, @NonNull SymbolicValue originalValue, @NonNull SymbolicValue hypothesizedValue) {
 		this.symbolicAnalysis = symbolicAnalysis;
@@ -72,9 +71,9 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 	}
 
 	public void check() {
-		Map<@NonNull TypedElement, @NonNull Boolean> typedElement2isContradiction2 = typedElement2isContradiction;
-		assert typedElement2isContradiction2 == null : "typedElement2isContradiction already determined for: " + this;
-		typedElement2isContradiction = typedElement2isContradiction2 = new HashMap<>();
+		Map<@NonNull TypedElement, @Nullable String> typedElement2incompatibility2 = typedElement2incompatibility;
+		assert typedElement2incompatibility2 == null : "typedElement2incompatibility already determined for: " + this;
+		typedElement2incompatibility = typedElement2incompatibility2 = new HashMap<>();
 		for (@NonNull TypedElement typedElement : typedElements) {
 			boolean traceHypothesis = SymbolicAnalysis.HYPOTHESIS.isActive();
 			if (traceHypothesis) {
@@ -87,10 +86,10 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 			}
 			BaseSymbolicEvaluationEnvironment baseSymbolicEvaluationEnvironment = symbolicAnalysis.getBaseSymbolicEvaluationEnvironment();
 			HypothesizedSymbolicEvaluationEnvironment hypothesizedEvaluationEnvironment = baseSymbolicEvaluationEnvironment.pushHypothesis(this, typedElement);
-			boolean isContradiction = hypothesizedEvaluationEnvironment.isContradiction(typedElement);
-			typedElement2isContradiction2.put(typedElement, isContradiction);
+			String incompatibility = hypothesizedEvaluationEnvironment.isContradiction(typedElement);
+			typedElement2incompatibility2.put(typedElement, incompatibility);
 			baseSymbolicEvaluationEnvironment.popHypothesis();
-			if (isContradiction(typedElement)) {
+			if (incompatibility != null) {
 				refine(typedElement);
 			}
 			else if (traceHypothesis) {
@@ -107,7 +106,11 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 		if (diff != 0) {
 			return diff;
 		}
-		return System.identityHashCode(this) - System.identityHashCode(that);
+		return System.identityHashCode(this) - System.identityHashCode(that);	// FIXME ?? breadth first ??
+	}
+
+	public @NonNull CSEElement getCSEElement() {
+		return cseElement;
 	}
 
 	public @NonNull SymbolicValue getHypothesizedValue() {
@@ -126,10 +129,10 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 //		return cseElement.getElements();
 //	}
 
-	public boolean isContradiction(@NonNull TypedElement typedElement) {
-		assert typedElement2isContradiction != null;
-		return ClassUtil.nonNullState(typedElement2isContradiction.get(typedElement)).booleanValue();
-	}
+//	public boolean isContradiction(@NonNull TypedElement typedElement) {
+//		assert typedElement2incompatibility != null;
+//		return ClassUtil.nonNullState(typedElement2incompatibility.get(typedElement)).booleanValue();
+//	}
 
 	protected abstract void refine(@NonNull TypedElement typedElement);
 
@@ -147,12 +150,12 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 		s.append(": ");
 		s.append(hypothesizedValue);
 		for (@NonNull TypedElement typedElement : typedElements) {
-			Boolean isContradiction = typedElement2isContradiction != null ? typedElement2isContradiction.get(typedElement) : null;
+			String incompatibility = typedElement2incompatibility != null ? typedElement2incompatibility.get(typedElement) : "indeterminate";
 			s.append("\n\t");
 			s.append(" ");
 			s.append(typedElement);
 			s.append(" ");
-			s.append(isContradiction == null ? "undecided" : (isContradiction == Boolean.TRUE) ? "confirmed" :  "contradicted");
+			s.append(incompatibility == null ? "undecided" : incompatibility);
 		}
 	}
 

@@ -96,7 +96,7 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 		super(baseSymbolicEvaluationEnvironment.getSymbolicAnalysis(), typedElement);
 		this.baseSymbolicEvaluationEnvironment = baseSymbolicEvaluationEnvironment;
 		this.hypothesis = hypothesis;
-		installHypothesis();
+		installHypothesis(typedElement);
 	}
 
 	/**
@@ -121,7 +121,7 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 			}
 			else if (executedExpression == ifExp.getOwnedElse()) {
 				refinedBooleanValue = Boolean.FALSE;
-			}
+			} // else condition childimposes no path limitations
 		}
 		else if (containingTypedElement instanceof OperationCallExp) {
 			OperationCallExp operationCallExp = (OperationCallExp)containingTypedElement;
@@ -223,14 +223,14 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 		return baseSymbolicEvaluationEnvironment;
 	}
 
-	private void installHypothesis() {
+	private void installHypothesis(@NonNull TypedElement typedElement) {
 		//
 		//	Install the directly hypothesized expression.
 		//
-		@NonNull TypedElement typedElement = executableObject;
+	//	@NonNull TypedElement typedElement = executableObject;
 		@SuppressWarnings("unused") @NonNull SymbolicValue originalValue = hypothesis.getOriginalValue();
 		@NonNull SymbolicValue hypothesizedValue = hypothesis.getHypothesizedValue();
-		CSEElement hypothesisCSE = symbolicAnalysis.getCSEElement(typedElement);
+		CSEElement hypothesisCSE = hypothesis.getCSEElement();
 		cseElement2symbolicValue.put(hypothesisCSE, hypothesizedValue);		// Install the known 'read' value.
 		//
 		//	Ensure that all parents of the hypothesized expressions are re-evaluated.
@@ -258,10 +258,10 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 		//
 		//	Ensure that all usage of all VariableExps for all refined Variables are re-evaluated.
 		//
-		for (@NonNull VariableDeclaration variable : affectedVariables) {
+		for (@NonNull VariableDeclaration variable : affectedVariables) {		// FIXME should manage a single traversal
 			CSEElement variableCSE = symbolicAnalysis.getCSEElement(variable);
 			for (@NonNull Element output : variableCSE.getElements()) {
-				if ((output instanceof VariableExp) && (output != typedElement)) {
+				if ((output instanceof VariableExp) && (output != typedElement)) {	// FIXME ?? surely (output != typedElement) is redundant ??
 					VariableExp variableExp = (VariableExp)output;
 					if (affectedTypedElements.add(variableExp)) {
 						addRefinedParentTypedElements(variableExp);
@@ -298,15 +298,15 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 		}
 	}
 
-	public boolean isContradiction(@NonNull TypedElement typedElement) {
+	public @Nullable String isContradiction(@NonNull TypedElement typedElement) {
 		List<@NonNull TypedElement> affectedTypedElementsList = new ArrayList<>(affectedTypedElements);
 		if (affectedTypedElementsList.size() > 1) {
 			Collections.sort(affectedTypedElementsList, symbolicAnalysis.getTypedElementHeightComparator());
 		}
 		for (@NonNull TypedElement affectedTypedElement : affectedTypedElementsList) {
-			boolean isCompatible = symbolicReEvaluate(affectedTypedElement);
-			if (!isCompatible) {
-				return true;
+			String inCompatibility = symbolicReEvaluate(affectedTypedElement);
+			if (inCompatibility != null) {
+				return inCompatibility;
 			}
 		}
 		List<@NonNull TypedElement> typedElementsList = new ArrayList<>(refinedTypedElements2symbolicValue.keySet());
@@ -314,12 +314,12 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 			Collections.sort(typedElementsList, symbolicAnalysis.getTypedElementHeightComparator());
 		}
 		for (@NonNull TypedElement typedElement2 : typedElementsList) {
-			boolean isCompatible = symbolicReEvaluate(typedElement2);
-			if (!isCompatible) {
-				return true;
+			String inCompatibility = symbolicReEvaluate(typedElement2);
+			if (inCompatibility != null) {
+				return inCompatibility;
 			}
 		}
-		return false;
+		return null;
 	}
 
 	@Override
@@ -332,10 +332,10 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 	}
 
 	/**
-	 * Re-evaluate typedElement and return true if the new result is compatible with the old value.
-	 * Conversely return false for an incompatibility and consequently a contradiction.
+	 * Re-evaluate typedElement and return null if the new result is compatible with the old value.
+	 * Conversely return a String describing the incompatibility and consequently a contradiction.
 	 */
-	public boolean symbolicReEvaluate(@NonNull TypedElement typedElement) {
+	public @Nullable String symbolicReEvaluate(@NonNull TypedElement typedElement) {
 		Object result = null;
 		try {
 			result = symbolicEvaluationVisitor.symbolicEvaluate(typedElement);
@@ -358,10 +358,10 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 		if (readValue == null) {											// If a new evaluation
 			CSEElement cseElement = symbolicAnalysis.getCSEElement(typedElement);
 			traceSymbolicValue(cseElement, writeValue);					// Record re-evaluated value
-			return true;
+			return null;
 		}
 		if (writeValue == readValue) {
-			return true;
+			return null;
 		}
 		SymbolicStatus booleanWriteStatus = writeValue.basicGetBooleanStatus();
 		if (booleanWriteStatus != null) {
@@ -370,35 +370,35 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 			boolean mustBeFalse = readValue.isFalse();
 			boolean mustBeTrue = readValue.isTrue();
 			if (mustBeFalse && !mayBeFalse) {
-				return false;
+				return "mustBeFalse is incompatible with !mayBeFalse";
 			}
 			if (mustBeTrue && !mayBeTrue) {
-				return false;
+				return "mustBeTrue is incompatible with !mayBeTrue";
 			}
 		}
 
 		if (writeValue.isInvalid() && !readValue.mayBeInvalid()) {
-			return false;
+			return "isInvalid is incompatible with !mayBeInvalid";
 		}
 		if (writeValue.mayBeInvalid() && !readValue.mayBeInvalid()) {
-			return false;
+			return "mayBeInvalid is incompatible with !mayBeInvalid";
 		}
 		if (writeValue.isNull() && !readValue.mayBeNull()) {
-			return false;
+			return "isNull is incompatible with !mayBeNull";
 		}
 		if (writeValue.mayBeNull() && !readValue.mayBeNull()) {
-			return false;
+			return "mayBeNull is incompatible with !mayBeNull";
 		}
 		if (writeValue.basicGetZeroStatus() != null) {
 			if (writeValue.isZero() && !readValue.mayBeZero()) {
-				return false;
+				return "isZero is incompatible with !mayBeZero";
 			}
 			if (writeValue.mayBeZero() && !readValue.mayBeZero()) {
-				return false;
+				return "mayBeZero is incompatible with !mayBeZero";
 			}
 		}
 	//	if (writeValue.equals(readValue)) { / / XXX isCompatible
-			return true;
+			return null;
 	//	}
 	//	else {
 	//		return false;

@@ -105,12 +105,17 @@ public abstract class AbstractSymbolicValue extends ValueImpl implements Symboli
 	public final boolean isTrue() {
 		SymbolicStatus booleanStatus = basicGetBooleanStatus();
 		return (booleanStatus != null) && booleanStatus.isSatisfied();
-	//	return getBooleanStatus().isSatisfied();
 	}
 
 	@Override
 	public final boolean isZero() {
 		return getZeroStatus().isSatisfied();
+	}
+
+	@Override
+	public boolean mayBeFalse() {
+		SymbolicStatus booleanStatus = basicGetBooleanStatus();
+		return (booleanStatus != null) && !booleanStatus.isUnsatisfied();
 	}
 
 	@Override
@@ -121,6 +126,12 @@ public abstract class AbstractSymbolicValue extends ValueImpl implements Symboli
 	@Override
 	public boolean mayBeNull() {
 		return !getNullStatus().isUnsatisfied();
+	}
+
+	@Override
+	public boolean mayBeTrue() {
+		SymbolicStatus booleanStatus = basicGetBooleanStatus();
+		return (booleanStatus != null) && !booleanStatus.isSatisfied();
 	}
 
 	@Override

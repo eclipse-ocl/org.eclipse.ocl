@@ -158,6 +158,9 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 			super(value);
 			assert ValueUtil.isBoxed(exceptValue);
 			this.exceptValue = exceptValue != null ? exceptValue : ValueUtil.NULL_VALUE;
+			assert !(ValueUtil.isInvalidValue(exceptValue) && !value.mayBeInvalid());
+			assert !(ValueUtil.isNullValue(exceptValue) && !value.mayBeNull());
+			assert !((exceptValue == ValueUtil.ZERO_VALUE) && !value.mayBeZero());
 		}
 
 		@Override
@@ -432,11 +435,11 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 
 	public static @NonNull SymbolicValue createExceptValue(@NonNull SymbolicValue symbolicValue, @Nullable Object exceptValue) {
 		assert ValueUtil.isBoxed(exceptValue);
-		if (((exceptValue == null) && symbolicValue.isNull())
-		 || ((exceptValue instanceof InvalidValue) && symbolicValue.isInvalid())
-		 || (ValueUtil.ZERO_VALUE.equals(exceptValue) && symbolicValue.isZero())
-		 || (ValueUtil.FALSE_VALUE.equals(exceptValue) && symbolicValue.isFalse())
-		 || (ValueUtil.TRUE_VALUE.equals(exceptValue) && symbolicValue.isTrue())) {
+		if (((exceptValue == null) && !symbolicValue.mayBeNull())
+		 || ((exceptValue instanceof InvalidValue) && !symbolicValue.mayBeInvalid())
+		 || (ValueUtil.ZERO_VALUE.equals(exceptValue) && !symbolicValue.mayBeZero())
+		 || (ValueUtil.FALSE_VALUE.equals(exceptValue) && !symbolicValue.mayBeFalse())
+		 || (ValueUtil.TRUE_VALUE.equals(exceptValue) && !symbolicValue.mayBeTrue())) {
 			return symbolicValue;
 		}
 		else {

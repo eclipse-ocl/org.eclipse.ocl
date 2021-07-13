@@ -89,4 +89,8 @@ public interface SymbolicValue extends Value
 
 	boolean isZero();
 
+	boolean mayBeFalse();
+
+	boolean mayBeTrue();
+
 } // SymbolicValue
