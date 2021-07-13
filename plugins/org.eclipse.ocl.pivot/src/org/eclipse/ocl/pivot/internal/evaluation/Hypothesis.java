@@ -68,6 +68,7 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 			assert cseElement == symbolicAnalysis.getCSEElement(typedElement);
 		}
 	//	assert Iterables.contains(getTypedElements(), typedElement);
+		assert originalValue.equals(symbolicAnalysis.getBaseSymbolicEvaluationEnvironment().getSymbolicValue(cseElement));
 	}
 
 	public void check() {
@@ -90,11 +91,11 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 			typedElement2incompatibility2.put(typedElement, incompatibility);
 			baseSymbolicEvaluationEnvironment.popHypothesis();
 			if (incompatibility != null) {
-				SymbolicAnalysis.HYPOTHESIS.println("Contradiction: " + incompatibility + " for " + typedElement);
+				SymbolicAnalysis.HYPOTHESIS.println("  => contradiction: " + incompatibility + " for " + typedElement);
 				refine(typedElement);
 			}
 			else if (traceHypothesis) {
-				SymbolicAnalysis.HYPOTHESIS.println("No contradiction: " + typedElement);
+				SymbolicAnalysis.HYPOTHESIS.println("  => no contradiction: " + typedElement);
 			}
 		}
 	}
