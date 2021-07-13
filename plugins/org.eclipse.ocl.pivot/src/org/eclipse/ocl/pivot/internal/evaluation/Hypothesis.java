@@ -90,10 +90,11 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 			typedElement2incompatibility2.put(typedElement, incompatibility);
 			baseSymbolicEvaluationEnvironment.popHypothesis();
 			if (incompatibility != null) {
+				SymbolicAnalysis.HYPOTHESIS.println("Contradiction: " + incompatibility + " for " + typedElement);
 				refine(typedElement);
 			}
 			else if (traceHypothesis) {
-				SymbolicAnalysis.HYPOTHESIS.println("No contradiction " + this);
+				SymbolicAnalysis.HYPOTHESIS.println("No contradiction: " + typedElement);
 			}
 		}
 	}

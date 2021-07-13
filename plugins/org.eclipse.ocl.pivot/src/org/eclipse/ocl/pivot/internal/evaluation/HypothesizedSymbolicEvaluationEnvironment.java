@@ -30,12 +30,14 @@ import org.eclipse.ocl.pivot.NavigationCallExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
+import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.internal.symbolic.AbstractSymbolicRefinedValue;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicStatus;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.logical.BooleanAndOperation;
 import org.eclipse.ocl.pivot.library.logical.BooleanAndOperation2;
@@ -43,10 +45,20 @@ import org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation;
 import org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation2;
 import org.eclipse.ocl.pivot.library.logical.BooleanOrOperation;
 import org.eclipse.ocl.pivot.library.logical.BooleanOrOperation2;
+import org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation;
+import org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation;
+import org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation;
+import org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInStateOperation;
+import org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation;
+import org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsUndefinedOperation;
+import org.eclipse.ocl.pivot.library.oclany.OclAnyOclLogOperation;
+import org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypeOperation;
+import org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.UniqueList;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
@@ -107,12 +119,16 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 	 * </br>'or' guards false
 	 * </br>'if' conditions true/false as appropriate.
 	 * </br>navigation sources not-invalid
+	 * </br>unsafe navigation sources not-null
+	 * </br>loop sources not-invalid
+	 * </br>unsafe loop sources not-null
 	 */
 	private void addRefinedChildExpressions(@NonNull OCLExpression executedExpression) {
 		EObject containingTypedElement = executedExpression.eContainer();
-		OCLExpression refinedExpression = null;						// Expression that can be refined
+		OCLExpression refinedExpression = null;						// Source/condition expression that can be refined
 		Boolean refinedBooleanValue = null;							//  by a simple Boolean	value
-		SymbolicValue refinedSymbolicValue = null;					//   or a more complex outright symbolic value
+		boolean mayBeInvalid = false;								//   or a strictness prohibition on
+		boolean mayBeNull = false;									//    null or invalid sources
 		if (containingTypedElement instanceof IfExp) {
 			IfExp ifExp = (IfExp)containingTypedElement;
 			refinedExpression = PivotUtil.getOwnedCondition(ifExp);
@@ -121,16 +137,47 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 			}
 			else if (executedExpression == ifExp.getOwnedElse()) {
 				refinedBooleanValue = Boolean.FALSE;
-			} // else condition childimposes no path limitations
+			}
+			// else  if (executedExpression == ifExp.getOwnedCondition()) imposes no path limitations
 		}
 		else if (containingTypedElement instanceof OperationCallExp) {
 			OperationCallExp operationCallExp = (OperationCallExp)containingTypedElement;
+			if (operationCallExp.isIsSafe()) {
+				mayBeNull = true;
+			}
 			refinedExpression = PivotUtil.getOwnedSource(operationCallExp);
-			List<OCLExpression> ownedArguments = operationCallExp.getOwnedArguments();
-			if (ownedArguments.size() == 1) {
+			Operation operation = PivotUtil.getReferredOperation(operationCallExp);
+			List<@NonNull OCLExpression> ownedArguments = PivotUtilInternal.getOwnedArgumentsList(operationCallExp);
+			int argumentsSize = ownedArguments.size();
+			if (argumentsSize == 0) {
+				LibraryFeature implementation = operation.getImplementation();
+				if (implementation instanceof OclAnyOclIsInvalidOperation) {
+					mayBeInvalid = true;
+					mayBeNull = true;
+				}
+			//	else if (implementation instanceof OclAnyOclIsNewOperation) {
+			//		mayBeNull = true;
+			//	}
+				else if (implementation instanceof OclAnyOclIsUndefinedOperation) {
+					mayBeInvalid = true;
+					mayBeNull = true;
+				}
+				else if (implementation instanceof OclAnyOclLogOperation) {
+					mayBeInvalid = true;
+					mayBeNull = true;
+				}
+				else if (implementation instanceof OclAnyOclTypeOperation) {
+					mayBeInvalid = true;
+					mayBeNull = true;
+				}
+				else if (implementation instanceof OclAnyToStringOperation) {
+					mayBeInvalid = true;
+					mayBeNull = true;
+				}
+			}
+			else if (argumentsSize == 1) {
 				OCLExpression argument = ownedArguments.get(0);
 				if (executedExpression == argument) {
-					Operation operation = operationCallExp.getReferredOperation();
 					LibraryFeature implementation = operation.getImplementation();
 					if ((implementation instanceof BooleanAndOperation) || (implementation instanceof BooleanAndOperation2)) {
 						refinedBooleanValue = Boolean.TRUE;
@@ -141,21 +188,53 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 					else if ((implementation instanceof BooleanOrOperation) || (implementation instanceof BooleanOrOperation2)) {
 						refinedBooleanValue = Boolean.FALSE;
 					}
+					else if (implementation instanceof OclAnyOclAsTypeOperation) {
+						mayBeNull = true;
+					}
+					else if (implementation instanceof OclAnyOclIsInStateOperation) {
+						mayBeNull = true;
+					}
+					else if (implementation instanceof OclAnyEqualOperation) {
+						mayBeNull = true;
+					}
+					else if (implementation instanceof OclAnyNotEqualOperation) {
+						mayBeNull = true;
+					}
 				}
 			}
-			if (refinedBooleanValue == null) {
-				SymbolicValue baseSymbolicValue = baseSymbolicEvaluationEnvironment.getSymbolicValue(refinedExpression);
-				refinedSymbolicValue = AbstractSymbolicRefinedValue.createNotInvalidOrNullValue(baseSymbolicValue);
+			boolean isValidating = operation.isIsValidating();
+			int i = 0;
+			for (@NonNull Parameter parameter : PivotUtil.getOwnedParameters(operation)) {
+				if (parameter.isIsRequired()) {
+					OCLExpression argument = ownedArguments.get(i);
+					SymbolicValue baseSymbolicValue = baseSymbolicEvaluationEnvironment.getSymbolicValue(refinedExpression);
+					SymbolicValue refinedSymbolicValue = baseSymbolicValue;
+					if (!isValidating && baseSymbolicValue.mayBeInvalid()) {
+						refinedSymbolicValue = AbstractSymbolicRefinedValue.createExceptValue(refinedSymbolicValue, ValueUtil.INVALID_VALUE);
+					}
+					if (baseSymbolicValue.mayBeNull()) {
+						refinedSymbolicValue = AbstractSymbolicRefinedValue.createExceptValue(refinedSymbolicValue, null);
+					}
+					if (refinedSymbolicValue != baseSymbolicValue) {
+						SymbolicValue old = refinedTypedElements2symbolicValue.put(argument, refinedSymbolicValue);
+						assert old == null;
+					}
+				}
+				i++;
 			}
 		}
 		else if (containingTypedElement instanceof NavigationCallExp) {
 			NavigationCallExp navigationCallExp = (NavigationCallExp)containingTypedElement;
+			if (navigationCallExp.isIsSafe()) {
+				mayBeNull = true;
+			}
 			refinedExpression = PivotUtil.getOwnedSource(navigationCallExp);
-			SymbolicValue baseSymbolicValue = baseSymbolicEvaluationEnvironment.getSymbolicValue(refinedExpression);
-			refinedSymbolicValue = AbstractSymbolicRefinedValue.createNotInvalidOrNullValue(baseSymbolicValue);
 		}
 		else if (containingTypedElement instanceof LoopExp) {
 			LoopExp loopExp = (LoopExp)containingTypedElement;
+			if (loopExp.isIsSafe()) {
+				mayBeNull = true;
+			}
 			if (executedExpression == loopExp.getOwnedBody()) {
 			//	constrainedExpression = PivotUtil.getOwnedSource(loopExp);
 			//	symbolicPathValue = evaluationEnvironment.getSymbolicValue2(constrainedExpression);
@@ -163,13 +242,22 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 				// XXX isSafe
 			}
 			refinedExpression = PivotUtil.getOwnedSource(loopExp);
-			SymbolicValue baseSymbolicValue = baseSymbolicEvaluationEnvironment.getSymbolicValue(refinedExpression);
-			refinedSymbolicValue = AbstractSymbolicRefinedValue.createNotInvalidOrNullValue(baseSymbolicValue);
 		}
 		if (refinedExpression != null) {
+
+			SymbolicValue refinedSymbolicValue = null;
 			if (refinedBooleanValue != null) {
-				assert refinedSymbolicValue == null;
 				refinedSymbolicValue = getKnownValue(refinedBooleanValue);
+			}
+			else if (!mayBeInvalid || !mayBeNull) {
+				SymbolicValue baseSymbolicValue = baseSymbolicEvaluationEnvironment.getSymbolicValue(refinedExpression);
+				refinedSymbolicValue = baseSymbolicValue;
+				if (!mayBeInvalid) {
+					refinedSymbolicValue = AbstractSymbolicRefinedValue.createExceptValue(refinedSymbolicValue, ValueUtil.INVALID_VALUE);
+				}
+				if (!mayBeNull) {
+					refinedSymbolicValue = AbstractSymbolicRefinedValue.createExceptValue(refinedSymbolicValue, null);
+				}
 			}
 			if (refinedSymbolicValue != null) {
 				SymbolicValue old = refinedTypedElements2symbolicValue.put(refinedExpression, refinedSymbolicValue);
