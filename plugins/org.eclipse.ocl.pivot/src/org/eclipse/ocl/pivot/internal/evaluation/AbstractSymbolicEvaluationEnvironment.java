@@ -75,7 +75,7 @@ public abstract class AbstractSymbolicEvaluationEnvironment implements SymbolicE
 			return null;
 		}
 		Iterable<@NonNull TypedElement> affectedTypedElements = getAffectedTypedElements(typedElement);
-		symbolicAnalysis.addMayBeEmptyHypothesis(affectedTypedElements, symbolicValue);
+		symbolicAnalysis.addMayBeEmptyHypothesis(affectedTypedElements);
 		return symbolicAnalysis.getMayBeInvalidValue(typeId);
 	}
 
@@ -89,7 +89,7 @@ public abstract class AbstractSymbolicEvaluationEnvironment implements SymbolicE
 			return null;
 		}
 		Iterable<@NonNull TypedElement> affectedTypedElements = getAffectedTypedElements(typedElement);
-		symbolicAnalysis.addMayBeInvalidHypothesis(affectedTypedElements, symbolicValue);
+		symbolicAnalysis.addMayBeInvalidHypothesis(affectedTypedElements);
 		return symbolicAnalysis.getMayBeInvalidValue(typeId);
 	}
 
@@ -103,7 +103,7 @@ public abstract class AbstractSymbolicEvaluationEnvironment implements SymbolicE
 			return null;
 		}
 		Iterable<@NonNull TypedElement> affectedTypedElements = getAffectedTypedElements(typedElement);
-		symbolicAnalysis.addMayBeNullHypothesis(affectedTypedElements, symbolicValue);
+		symbolicAnalysis.addMayBeNullHypothesis(affectedTypedElements);
 		return symbolicAnalysis.getMayBeInvalidValue(typeId);
 	}
 
@@ -117,7 +117,7 @@ public abstract class AbstractSymbolicEvaluationEnvironment implements SymbolicE
 			return null;
 		}
 		Iterable<@NonNull TypedElement> affectedTypedElements = getAffectedTypedElements(typedElement);
-		symbolicAnalysis.addMayBeZeroHypothesis(affectedTypedElements, symbolicValue);
+		symbolicAnalysis.addMayBeZeroHypothesis(affectedTypedElements);
 		return symbolicAnalysis.getMayBeInvalidValue(typeId);
 	}
 

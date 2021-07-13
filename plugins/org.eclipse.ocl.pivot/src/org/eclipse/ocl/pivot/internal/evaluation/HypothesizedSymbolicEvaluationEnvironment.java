@@ -319,7 +319,7 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 		//	Install the directly hypothesized expression.
 		//
 	//	@NonNull TypedElement typedElement = executableObject;
-		@SuppressWarnings("unused") @NonNull SymbolicValue originalValue = hypothesis.getOriginalValue();
+	//	@SuppressWarnings("unused") @NonNull SymbolicValue originalValue = hypothesis.getOriginalValue();
 		@NonNull SymbolicValue hypothesizedValue = hypothesis.getHypothesizedValue();
 		CSEElement hypothesisCSE = hypothesis.getCSEElement();
 		cseElement2symbolicValue.put(hypothesisCSE, hypothesizedValue);		// Install the known 'read' value.

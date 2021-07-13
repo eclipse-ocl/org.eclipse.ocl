@@ -121,34 +121,34 @@ public class SymbolicAnalysis /*extends BasicOCLExecutor implements SymbolicExec
 		allHypotheses2.add(hypothesis);
 	}
 
-	public void addMayBeEmptyHypothesis(@NonNull Iterable<@NonNull TypedElement> typedElements, @NonNull SymbolicValue symbolicValue) {
+	public void addMayBeEmptyHypothesis(@NonNull Iterable<@NonNull TypedElement> typedElements) {
 		Hypothesis hypothesis = getHypotheses(typedElements, Hypothesis.MayBeEmptyHypothesis.class);
 		if (hypothesis == null) {
-			hypothesis = new Hypothesis.MayBeEmptyHypothesis(this, typedElements, symbolicValue);
+			hypothesis = new Hypothesis.MayBeEmptyHypothesis(this, typedElements);
 			addHypothesis(hypothesis);
 		}
 	}
 
-	public void addMayBeInvalidHypothesis(@NonNull Iterable<@NonNull TypedElement> typedElements, @NonNull SymbolicValue symbolicValue) {
+	public void addMayBeInvalidHypothesis(@NonNull Iterable<@NonNull TypedElement> typedElements) {
 		Hypothesis hypothesis = getHypotheses(typedElements, Hypothesis.MayBeInvalidHypothesis.class);
 		if (hypothesis == null) {
-			hypothesis = new Hypothesis.MayBeInvalidHypothesis(this, typedElements, symbolicValue);
+			hypothesis = new Hypothesis.MayBeInvalidHypothesis(this, typedElements);
 			addHypothesis(hypothesis);
 		}
 	}
 
-	public void addMayBeNullHypothesis(@NonNull Iterable<@NonNull TypedElement> typedElements, @NonNull SymbolicValue symbolicValue) {
+	public void addMayBeNullHypothesis(@NonNull Iterable<@NonNull TypedElement> typedElements) {
 		Hypothesis hypothesis = getHypotheses(typedElements, Hypothesis.MayBeNullHypothesis.class);
 		if (hypothesis == null) {
-			hypothesis = new Hypothesis.MayBeNullHypothesis(this, typedElements, symbolicValue);
+			hypothesis = new Hypothesis.MayBeNullHypothesis(this, typedElements);
 			addHypothesis(hypothesis);
 		}
 	}
 
-	public void addMayBeZeroHypothesis(@NonNull Iterable<@NonNull TypedElement> typedElements, @NonNull SymbolicValue symbolicValue) {
+	public void addMayBeZeroHypothesis(@NonNull Iterable<@NonNull TypedElement> typedElements) {
 		Hypothesis hypothesis = getHypotheses(typedElements, Hypothesis.MayBeZeroHypothesis.class);
 		if (hypothesis == null) {
-			hypothesis = new Hypothesis.MayBeZeroHypothesis(this, typedElements, symbolicValue);
+			hypothesis = new Hypothesis.MayBeZeroHypothesis(this, typedElements);
 			addHypothesis(hypothesis);
 		}
 	}
