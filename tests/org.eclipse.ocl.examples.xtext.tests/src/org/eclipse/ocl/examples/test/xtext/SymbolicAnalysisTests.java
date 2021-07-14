@@ -17,11 +17,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.pivot.tests.PivotTestCase;
 import org.eclipse.ocl.examples.pivot.tests.TestOCL;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -86,15 +89,20 @@ public class SymbolicAnalysisTests extends XtextTestCase
 	@SuppressWarnings("serial")
 	private static class MayBeNullList extends ArrayList<@Nullable EObject> {}
 
+	private static @NonNull String DEDUCTIONS_PACKAGE_URI = "http://deductions";
+
 	public class MyOCL extends TestOCL
 	{
-		public MyOCL() {
-			super(getTestFileSystem(), "FlowAnalysisTests", getName(), OCL.NO_PROJECTS, null);
-		}
+		private @NonNull Resource asResource;
+		private @NonNull Operation asOperation;
+		private org.eclipse.ocl.pivot.@NonNull Package deductionsPackage;
+		private org.eclipse.ocl.pivot.@NonNull Class deductionsClass;
+		private org.eclipse.ocl.pivot.@NonNull Class dummyClass;
 
-		protected @NonNull ExpressionInOCL createQueryTestModel(@NonNull String queryName, @NonNull String querySignature, @NonNull String queryBody) throws IOException, ParserException {
+		public MyOCL(@NonNull String queryName, @NonNull String querySignature, @NonNull String queryBody) throws IOException {
+			super(getTestFileSystem(), "FlowAnalysisTests", getName(), OCL.NO_PROJECTS, null);
 			String testContext =
-					"package deductions : ded = 'http://deductions'\n" +
+					"package deductions : ded = '" + DEDUCTIONS_PACKAGE_URI + "'\n" +
 							"{\n" +
 							"  class Deductions\n" +
 							"  {\n" +
@@ -113,12 +121,22 @@ public class SymbolicAnalysisTests extends XtextTestCase
 			String fileName = "FlowAnalysis_" + queryName;
 			createFile(fileName + ".oclinecore", testContext);
 			PivotUtilInternal.getEnvironmentFactory(null).setOption(PivotValidationOptions.PotentialInvalidResult, StatusCodes.Severity.IGNORE);
-			Resource asResource = doLoad_Concrete(fileName, "oclinecore");
+			this.asResource = doLoad_Concrete(fileName, "oclinecore");
 			Model model = PivotUtil.getModel(asResource);
-			org.eclipse.ocl.pivot.Package deductionsPackage = ClassUtil.nonNullState(NameUtil.getNameable(model.getOwnedPackages(), "deductions"));
-			org.eclipse.ocl.pivot.Class deductionsClass = ClassUtil.nonNullState(NameUtil.getNameable(deductionsPackage.getOwnedClasses(), "Deductions"));
-			Operation asOperation = ClassUtil.nonNullState(NameUtil.getNameable(deductionsClass.getOwnedOperations(), queryName));
-			return ((EnvironmentFactoryInternalExtension)environmentFactory).parseSpecification(asOperation.getBodyExpression());
+			this.deductionsPackage = ClassUtil.nonNullState(NameUtil.getNameable(model.getOwnedPackages(), "deductions"));
+			this.deductionsClass = ClassUtil.nonNullState(NameUtil.getNameable(deductionsPackage.getOwnedClasses(), "Deductions"));
+			this.dummyClass = ClassUtil.nonNullState(NameUtil.getNameable(deductionsPackage.getOwnedClasses(), "Dummy"));
+			this.asOperation = ClassUtil.nonNullState(NameUtil.getNameable(deductionsClass.getOwnedOperations(), queryName));
+
+			URI ecoreURI = getTestFileURI(fileName + ".ecore");
+			@SuppressWarnings("unused")
+			Resource ecoreResource = PivotTestCase.as2ecore(this, asResource, ecoreURI, NO_MESSAGES);
+		}
+
+		public @NonNull EObject createDummyInstance() {
+			EClass eClass = (EClass) dummyClass.getESObject();
+			EFactory eFactoryInstance = eClass.getEPackage().getEFactoryInstance();
+			return eFactoryInstance.create(eClass);
 		}
 
 		public Resource doLoad_Concrete(@NonNull String stem, @NonNull String extension) throws IOException {
@@ -143,6 +161,10 @@ public class SymbolicAnalysisTests extends XtextTestCase
 			assertNoValidationErrors("Pivot validation errors", asResource.getContents().get(0));
 			asResource.save(XMIUtil.createSaveOptions(asResource));
 			return asResource;
+		}
+
+		public @NonNull ExpressionInOCL getExpressionInOCL() throws ParserException {
+			return ((EnvironmentFactoryInternalExtension)environmentFactory).parseSpecification(asOperation.getBodyExpression());
 		}
 
 		protected @NonNull SymbolicAnalysis getSymbolicAnalysis(@NonNull ExpressionInOCL asExpressionInOCL, @Nullable Object selfObject, @Nullable Object resultObject, @Nullable Object @Nullable [] parameters) {
@@ -273,9 +295,9 @@ public class SymbolicAnalysisTests extends XtextTestCase
 	}
 
 	public void testSymbolicAnalysis_AndGuard() throws Exception {
-		MyOCL ocl = new MyOCL();
-		ExpressionInOCL asExpressionInOCL = ocl.createQueryTestModel("AndGuard", "AndGuard(x : Integer) : Boolean",
+		MyOCL ocl = new MyOCL("AndGuard", "AndGuard(x : Integer) : Boolean",
 				"x <> null and x > 0");
+		ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
 		VariableDeclaration contextVariable = PivotUtil.getOwnedContext(asExpressionInOCL);
 		VariableDeclaration firstParameterVariable = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
 		OperationCallExp andExp = (OperationCallExp) asExpressionInOCL.getOwnedBody();
@@ -321,9 +343,9 @@ public class SymbolicAnalysisTests extends XtextTestCase
 	}
 
 	public void testSymbolicAnalysis_And2Guard() throws Exception {
-		MyOCL ocl = new MyOCL();
-		ExpressionInOCL asExpressionInOCL = ocl.createQueryTestModel("And2Guard", "And2Guard(x : Integer) : Boolean",
+		MyOCL ocl = new MyOCL("And2Guard", "And2Guard(x : Integer) : Boolean",
 				"x <> null and2 x > 0");
+		ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
 		VariableDeclaration contextVariable = PivotUtil.getOwnedContext(asExpressionInOCL);
 		VariableDeclaration firstParameterVariable = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
 		OperationCallExp andExp = (OperationCallExp) asExpressionInOCL.getOwnedBody();
@@ -369,9 +391,9 @@ public class SymbolicAnalysisTests extends XtextTestCase
 	}
 
 	public void testSymbolicAnalysis_BadSequenceIndex() throws Exception {
-		MyOCL ocl = new MyOCL();
-		ExpressionInOCL asExpressionInOCL = ocl.createQueryTestModel("BadSequenceIndex",
+		MyOCL ocl = new MyOCL("BadSequenceIndex",
 			"BadSequenceIndex(s : Sequence(Dummy)) : Dummy", "s->select(false)->at(4)");
+		ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
 	//	TypeId deductionsTypeId = asExpressionInOCL.getOwnedContext().getTypeId();
 		TypeId seqTypeId = asExpressionInOCL.getOwnedParameters().get(0).getTypeId();
 		VariableDeclaration contextVariable = PivotUtil.getOwnedContext(asExpressionInOCL);
@@ -401,9 +423,9 @@ public class SymbolicAnalysisTests extends XtextTestCase
 	}
 
 	public void testSymbolicAnalysis_BadDivide() throws Exception {
-		MyOCL ocl = new MyOCL();
-		ExpressionInOCL asExpressionInOCL = ocl.createQueryTestModel("BadDivide",
+		MyOCL ocl = new MyOCL("BadDivide",
 			"BadDivide(num : Real, den : Real) : Real", "num / den");
+		ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
 		OperationCallExp asOperationCallExp = (OperationCallExp) asExpressionInOCL.getOwnedBody();
 		VariableDeclaration contextVariable = PivotUtil.getOwnedContext(asExpressionInOCL);
 	//	VariableExp asNumExp = (VariableExp) PivotUtil.getOwnedSource(asOperationCallExp);
@@ -437,9 +459,9 @@ public class SymbolicAnalysisTests extends XtextTestCase
 	}
 
 	public void testSymbolicAnalysis_BadSafeNavigation() throws Exception {
-		MyOCL ocl = new MyOCL();
-		ExpressionInOCL asExpressionInOCL = ocl.createQueryTestModel("BadSafeNavigation",
+		MyOCL ocl = new MyOCL("BadSafeNavigation",
 			"BadSafeNavigation(x : Deductions[?]) : Dummy", "x?.nonNullDummy");
+		ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
 		VariableDeclaration contextVariable = PivotUtil.getOwnedContext(asExpressionInOCL);
 		VariableDeclaration firstParameterVariable = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
 		TypeId deductionsTypeId = asExpressionInOCL.getOwnedContext().getTypeId();
@@ -472,9 +494,9 @@ public class SymbolicAnalysisTests extends XtextTestCase
 	}
 
 	public void testSymbolicAnalysis_BadSafeOppositeNavigation() throws Exception {
-		MyOCL ocl = new MyOCL();
-		ExpressionInOCL asExpressionInOCL = ocl.createQueryTestModel("BadSafeNavigation",
+		MyOCL ocl = new MyOCL("BadSafeNavigation",
 			"BadSafeNavigation(x : Deductions[?]) : Bag(Dummy)", "x?.Dummy[Dummy::mayBeNullDeductions]");		// Dummy is a non-null multi-valued opposite
+		ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
 		VariableDeclaration contextVariable = PivotUtil.getOwnedContext(asExpressionInOCL);
 		VariableDeclaration firstParameterVariable = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
 		TypeId deductionsTypeId = asExpressionInOCL.getOwnedContext().getTypeId();
@@ -501,9 +523,9 @@ public class SymbolicAnalysisTests extends XtextTestCase
 	}
 
 	public void testSymbolicAnalysis_BadUnsafeRequiredNavigation() throws Exception {
-		MyOCL ocl = new MyOCL();
-		ExpressionInOCL asExpressionInOCL = ocl.createQueryTestModel("BadUnsafeRequiredNavigation",
+		MyOCL ocl = new MyOCL("BadUnsafeRequiredNavigation",
 			"BadUnsafeRequiredNavigation(x : Deductions[?]) : Dummy", "x.nonNullDummy");
+		ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
 		VariableDeclaration contextVariable = PivotUtil.getOwnedContext(asExpressionInOCL);
 		VariableDeclaration firstParameterVariable = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
 		TypeId deductionsTypeId = asExpressionInOCL.getOwnedContext().getTypeId();
@@ -530,9 +552,9 @@ public class SymbolicAnalysisTests extends XtextTestCase
 	}
 
 	public void testSymbolicAnalysis_BadUnsafeOptionalNavigation() throws Exception {
-		MyOCL ocl = new MyOCL();
-		ExpressionInOCL asExpressionInOCL = ocl.createQueryTestModel("BadUnsafeOptionalNavigation",
+		MyOCL ocl = new MyOCL("BadUnsafeOptionalNavigation",
 			"BadUnsafeOptionalNavigation(x : Deductions[?]) : Dummy", "x.mayBeNullDummy");
+		ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
 		VariableDeclaration contextVariable = PivotUtil.getOwnedContext(asExpressionInOCL);
 		VariableDeclaration firstParameterVariable = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
 		TypeId deductionsTypeId = asExpressionInOCL.getOwnedContext().getTypeId();
@@ -559,9 +581,9 @@ public class SymbolicAnalysisTests extends XtextTestCase
 	}
 
 	public void testSymbolicAnalysis_CommutatedAndGuard() throws Exception {
-		MyOCL ocl = new MyOCL();
-		ExpressionInOCL asExpressionInOCL = ocl.createQueryTestModel("CommutatedAndGuard", "CommutatedAndGuard(x : Integer) : Boolean",
+		MyOCL ocl = new MyOCL("CommutatedAndGuard", "CommutatedAndGuard(x : Integer) : Boolean",
 				"x > 0 and x <> null");
+		ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
 		VariableDeclaration contextVariable = PivotUtil.getOwnedContext(asExpressionInOCL);
 		VariableDeclaration firstParameterVariable = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
 		OperationCallExp andExp = (OperationCallExp) asExpressionInOCL.getOwnedBody();
@@ -607,9 +629,9 @@ public class SymbolicAnalysisTests extends XtextTestCase
 	}
 
 	public void testSymbolicAnalysis_CommutatedAnd2Guard() throws Exception {
-		MyOCL ocl = new MyOCL();
-		ExpressionInOCL asExpressionInOCL = ocl.createQueryTestModel("CommutatedAnd2Guard", "CommutatedAnd2Guard(x : Integer) : Boolean",
+		MyOCL ocl = new MyOCL("CommutatedAnd2Guard", "CommutatedAnd2Guard(x : Integer) : Boolean",
 				"x > 0 and2 x <> null");
+		ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
 		VariableDeclaration contextVariable = PivotUtil.getOwnedContext(asExpressionInOCL);
 		VariableDeclaration firstParameterVariable = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
 		OperationCallExp andExp = (OperationCallExp) asExpressionInOCL.getOwnedBody();
@@ -655,9 +677,9 @@ public class SymbolicAnalysisTests extends XtextTestCase
 	}
 
 	public void testSymbolicAnalysis_CommutatedOrGuard() throws Exception {
-		MyOCL ocl = new MyOCL();
-		ExpressionInOCL asExpressionInOCL = ocl.createQueryTestModel("CommutatedOrGuard", "CommutatedOrGuard(x : Integer) : Boolean",
+		MyOCL ocl = new MyOCL("CommutatedOrGuard", "CommutatedOrGuard(x : Integer) : Boolean",
 				"x > 0 or x = null");
+		ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
 		VariableDeclaration contextVariable = PivotUtil.getOwnedContext(asExpressionInOCL);
 		VariableDeclaration firstParameterVariable = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
 		OperationCallExp orExp = (OperationCallExp) asExpressionInOCL.getOwnedBody();
@@ -703,9 +725,9 @@ public class SymbolicAnalysisTests extends XtextTestCase
 	}
 
 	public void testSymbolicAnalysis_CommutatedOr2Guard() throws Exception {
-		MyOCL ocl = new MyOCL();
-		ExpressionInOCL asExpressionInOCL = ocl.createQueryTestModel("CommutatedOr2Guard", "CommutatedOr2Guard(x : Integer) : Boolean",
+		MyOCL ocl = new MyOCL("CommutatedOr2Guard", "CommutatedOr2Guard(x : Integer) : Boolean",
 				"x > 0 or2 x = null");
+		ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
 		VariableDeclaration contextVariable = PivotUtil.getOwnedContext(asExpressionInOCL);
 		VariableDeclaration firstParameterVariable = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
 		OperationCallExp orExp = (OperationCallExp) asExpressionInOCL.getOwnedBody();
@@ -751,9 +773,9 @@ public class SymbolicAnalysisTests extends XtextTestCase
 	}
 
 	public void testSymbolicAnalysis_First() throws Exception {
-		MyOCL ocl = new MyOCL();
-		ExpressionInOCL asExpressionInOCL = ocl.createQueryTestModel("First", "First(x : Sequence(Integer)) : Integer",
+		MyOCL ocl = new MyOCL("First", "First(x : Sequence(Integer)) : Integer",
 				"x->first()");
+		ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
 		VariableDeclaration contextVariable = PivotUtil.getOwnedContext(asExpressionInOCL);
 		VariableDeclaration firstParameterVariable = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
 		OperationCallExp firstExp = (OperationCallExp) asExpressionInOCL.getOwnedBody();
@@ -781,9 +803,9 @@ public class SymbolicAnalysisTests extends XtextTestCase
 	}
 
 	public void testSymbolicAnalysis_GuardedBadDivide() throws Exception {
-		MyOCL ocl = new MyOCL();
-		ExpressionInOCL asExpressionInOCL = ocl.createQueryTestModel("GuardedBadDivide",
+		MyOCL ocl = new MyOCL("GuardedBadDivide",
 			"GuardedBadDivide(num : Real, den : Real) : Real", "if den <> 0 then num / den else 999.999 endif");
+		ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
 		IfExp asIfExp = (IfExp) asExpressionInOCL.getOwnedBody();
 		OperationCallExp asOperationCallExp = (OperationCallExp) PivotUtil.getOwnedThen(asIfExp);
 		VariableDeclaration contextVariable = PivotUtil.getOwnedContext(asExpressionInOCL);
@@ -823,9 +845,9 @@ public class SymbolicAnalysisTests extends XtextTestCase
 	}
 
 	public void testSymbolicAnalysis_IfNullNameGuard() throws Exception {
-		MyOCL ocl = new MyOCL();
-		ExpressionInOCL asExpressionInOCL = ocl.createQueryTestModel("IfNullNameGuard", "IfNullNameGuard() : Boolean",
+		MyOCL ocl = new MyOCL("IfNullNameGuard", "IfNullNameGuard() : Boolean",
 				"(let v : String[?] = self?.toString() in if v = null then 'null' else v endif) <> null");
+		ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
 		VariableDeclaration contextVariable = PivotUtil.getOwnedContext(asExpressionInOCL);
 		OperationCallExp neOperationCallExp = (OperationCallExp) asExpressionInOCL.getOwnedBody();
 		NullLiteralExp neNullExp = (NullLiteralExp) PivotUtil.getOwnedArgument(neOperationCallExp, 0);
@@ -853,9 +875,9 @@ public class SymbolicAnalysisTests extends XtextTestCase
 	}
 
 	public void testSymbolicAnalysis_IfOclIsUnDefinedNameGuard() throws Exception {
-		MyOCL ocl = new MyOCL();
-		ExpressionInOCL asExpressionInOCL = ocl.createQueryTestModel("IfOclIsUnDefinedNameGuard", "IfOclIsUnDefinedNameGuard(deductions : Deductions) : Dummy[?]",
+		MyOCL ocl = new MyOCL("IfOclIsUnDefinedNameGuard", "IfOclIsUnDefinedNameGuard(deductions : Deductions) : Dummy[?]",
 				"if deductions.mayBeNullDummy.oclIsUndefined() then null else deductions.mayBeNullDummy.dummy endif");
+		ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
 		VariableDeclaration contextVariable = PivotUtil.getOwnedContext(asExpressionInOCL);
 		VariableDeclaration firstParameterVariable = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
 		IfExp asIf = (IfExp) asExpressionInOCL.getOwnedBody();
@@ -867,22 +889,34 @@ public class SymbolicAnalysisTests extends XtextTestCase
 		PropertyCallExp asElseSrc = (PropertyCallExp) PivotUtil.getOwnedSource(asElse);
 		VariableExp asElseVariableExp = (VariableExp) PivotUtil.getOwnedSource(asElseSrc);
 
-		// unknown may-be-null deductions
-		SymbolicVariableValue symbolicVariable = new SymbolicVariableValue(asExpressionInOCL.getOwnedParameters().get(0), true, false);
-		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, new SymbolicUnknownValue("p0", TypeId.STRING, false, false), null, new Object[] {symbolicVariable});
-		checkContents(symbolicAnalysis2, asExpressionInOCL, null, mayBeNulls(firstParameterVariable, asExpressionInOCL, asIf, asConditionVariableExp, nullLiteralExp), mayBeInvalids(asConditionSrc), null);
+		EObject dummyInstance = ocl.createDummyInstance();
+		SymbolicUnknownValue selfSymbolicVariable = new SymbolicUnknownValue("p0", TypeId.STRING, false, false);
 
-		// null deductions
+		// null deduction
 		SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, null, new Object[] {null});
 		checkContents(symbolicAnalysis1, asExpressionInOCL, isDeads(asElse, asElseSrc, asElseVariableExp), mayBeNulls(contextVariable, firstParameterVariable, asConditionVariableExp, asExpressionInOCL, asIf, nullLiteralExp), null, isInvalids(asConditionSrc));
+
+		// unknown may-be-null deduction
+		SymbolicVariableValue symbolicVariable2 = new SymbolicVariableValue(asExpressionInOCL.getOwnedParameters().get(0), true, false);
+		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, selfSymbolicVariable, null, new Object[] {symbolicVariable2});
+		checkContents(symbolicAnalysis2, asExpressionInOCL, null, mayBeNulls(firstParameterVariable, asExpressionInOCL, asIf, asConditionVariableExp, nullLiteralExp), mayBeInvalids(asConditionSrc), null);
+
+		// non-null unknown deduction
+		SymbolicVariableValue symbolicVariable3 = new SymbolicVariableValue(asExpressionInOCL.getOwnedParameters().get(0), false, false);
+		SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, selfSymbolicVariable, null, new Object[] {symbolicVariable3});
+		checkContents(symbolicAnalysis3, asExpressionInOCL, null, mayBeNulls(asExpressionInOCL, asIf, asConditionSrc, nullLiteralExp), null, null);
+
+		// non-null known deduction
+		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, null, new Object[] {dummyInstance});
+		checkContents(symbolicAnalysis4, asExpressionInOCL, isDeads(asElse, asElseSrc, asElseVariableExp), mayBeNulls(contextVariable, asExpressionInOCL, asIf, nullLiteralExp), null, isInvalids(asConditionSrc));
 
 		ocl.dispose();
 	}
 
 	public void testSymbolicAnalysis_ImpliesGuard() throws Exception {
-			MyOCL ocl = new MyOCL();
-			ExpressionInOCL asExpressionInOCL = ocl.createQueryTestModel("ImpliesGuard", "ImpliesGuard(x : Integer) : Boolean",
+			MyOCL ocl = new MyOCL("ImpliesGuard", "ImpliesGuard(x : Integer) : Boolean",
 					"x <> null implies x > 0");
+			ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
 			VariableDeclaration contextVariable = PivotUtil.getOwnedContext(asExpressionInOCL);
 			VariableDeclaration firstParameterVariable = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
 			OperationCallExp impliesExp = (OperationCallExp) asExpressionInOCL.getOwnedBody();
@@ -923,9 +957,9 @@ public class SymbolicAnalysisTests extends XtextTestCase
 		}
 
 	public void testSymbolicAnalysis_Implies2Guard() throws Exception {
-			MyOCL ocl = new MyOCL();
-			ExpressionInOCL asExpressionInOCL = ocl.createQueryTestModel("Implies2Guard", "Implies2Guard(x : Integer) : Boolean",
+			MyOCL ocl = new MyOCL("Implies2Guard", "Implies2Guard(x : Integer) : Boolean",
 					"x <> null implies2 x > 0");
+			ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
 			VariableDeclaration contextVariable = PivotUtil.getOwnedContext(asExpressionInOCL);
 			VariableDeclaration firstParameterVariable = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
 			OperationCallExp impliesExp = (OperationCallExp) asExpressionInOCL.getOwnedBody();
@@ -966,9 +1000,9 @@ public class SymbolicAnalysisTests extends XtextTestCase
 		}
 
 	public void testSymbolicAnalysis_IndirectAndGuard() throws Exception {
-			MyOCL ocl = new MyOCL();
-			ExpressionInOCL asExpressionInOCL = ocl.createQueryTestModel("IndirectAndGuard", "IndirectAndGuard(x : Deductions[1]) : Boolean",
+			MyOCL ocl = new MyOCL("IndirectAndGuard", "IndirectAndGuard(x : Deductions[1]) : Boolean",
 					"x?.mayBeNullDummy <> null and x?.mayBeNullDummy.dummy = null");
+			ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
 			VariableDeclaration contextVariable = PivotUtil.getOwnedContext(asExpressionInOCL);
 			VariableDeclaration firstParameterVariable = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
 			OperationCallExp andExp = (OperationCallExp) asExpressionInOCL.getOwnedBody();
@@ -1005,9 +1039,9 @@ public class SymbolicAnalysisTests extends XtextTestCase
 		}
 
 	public void testSymbolicAnalysis_IndirectAndGuard_Operation() throws Exception {
-			MyOCL ocl = new MyOCL();
-			ExpressionInOCL asExpressionInOCL = ocl.createQueryTestModel("IndirectAndGuard_Operation", "IndirectAndGuard_Operation(x : Deductions[1]) : Boolean",
+			MyOCL ocl = new MyOCL("IndirectAndGuard_Operation", "IndirectAndGuard_Operation(x : Deductions[1]) : Boolean",
 					"x?.mayBeNullDummy <> null and x?.mayBeNullDummy.func(1,2) = null");
+			ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
 			VariableDeclaration contextVariable = PivotUtil.getOwnedContext(asExpressionInOCL);
 			VariableDeclaration firstParameterVariable = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
 			OperationCallExp andExp = (OperationCallExp) asExpressionInOCL.getOwnedBody();
@@ -1046,9 +1080,9 @@ public class SymbolicAnalysisTests extends XtextTestCase
 		}
 
 	public void testSymbolicAnalysis_NotEmptyGuardedFirst() throws Exception {
-		MyOCL ocl = new MyOCL();
-		ExpressionInOCL asExpressionInOCL = ocl.createQueryTestModel("GuardedFirst", "GuardedFirst(x : Sequence(Integer)) : Integer",
+		MyOCL ocl = new MyOCL("GuardedFirst", "GuardedFirst(x : Sequence(Integer)) : Integer",
 				"if x->notEmpty() then x->first() else -1 endif");
+		ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
 		VariableDeclaration contextVariable = PivotUtil.getOwnedContext(asExpressionInOCL);
 		VariableDeclaration firstParameterVariable = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
 		IfExp ifExp = (IfExp) asExpressionInOCL.getOwnedBody();
@@ -1085,9 +1119,9 @@ public class SymbolicAnalysisTests extends XtextTestCase
 	}
 
 	public void testSymbolicAnalysis_NotIsEmptyGuardedFirst() throws Exception {		// XXX tweaked to fail
-		MyOCL ocl = new MyOCL();
-		ExpressionInOCL asExpressionInOCL = ocl.createQueryTestModel("GuardedFirst", "GuardedFirst(x : Sequence(Integer)) : Integer",
+		MyOCL ocl = new MyOCL("GuardedFirst", "GuardedFirst(x : Sequence(Integer)) : Integer",
 				"if not x->isEmpty() then x->first() else -1 endif");
+		ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
 		VariableDeclaration contextVariable = PivotUtil.getOwnedContext(asExpressionInOCL);
 		VariableDeclaration firstParameterVariable = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
 		IfExp ifExp = (IfExp) asExpressionInOCL.getOwnedBody();
@@ -1125,9 +1159,9 @@ public class SymbolicAnalysisTests extends XtextTestCase
 	}
 
 	public void testSymbolicAnalysis_SizeGtGuardedFirst() throws Exception {
-		MyOCL ocl = new MyOCL();
-		ExpressionInOCL asExpressionInOCL = ocl.createQueryTestModel("GuardedFirst", "GuardedFirst(x : Sequence(Integer)) : Integer",
+		MyOCL ocl = new MyOCL("GuardedFirst", "GuardedFirst(x : Sequence(Integer)) : Integer",
 				"if x->size() > 0 then x->first() else -1 endif");
+		ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
 		VariableDeclaration contextVariable = PivotUtil.getOwnedContext(asExpressionInOCL);
 		VariableDeclaration firstParameterVariable = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
 		IfExp ifExp = (IfExp) asExpressionInOCL.getOwnedBody();
@@ -1165,9 +1199,9 @@ public class SymbolicAnalysisTests extends XtextTestCase
 	}
 
 	public void testSymbolicAnalysis_SizeNeGuardedFirst() throws Exception {
-		MyOCL ocl = new MyOCL();
-		ExpressionInOCL asExpressionInOCL = ocl.createQueryTestModel("GuardedFirst", "GuardedFirst(x : Sequence(Integer)) : Integer",
+		MyOCL ocl = new MyOCL("GuardedFirst", "GuardedFirst(x : Sequence(Integer)) : Integer",
 				"if x->size() <> 0 then x->first() else -1 endif");
+		ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
 		VariableDeclaration contextVariable = PivotUtil.getOwnedContext(asExpressionInOCL);
 		VariableDeclaration firstParameterVariable = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
 		IfExp ifExp = (IfExp) asExpressionInOCL.getOwnedBody();
@@ -1205,9 +1239,9 @@ public class SymbolicAnalysisTests extends XtextTestCase
 	}
 
 	public void testSymbolicAnalysis_OrGuard() throws Exception {
-		MyOCL ocl = new MyOCL();
-		ExpressionInOCL asExpressionInOCL = ocl.createQueryTestModel("OrGuard", "OrGuard(x : Integer) : Boolean",
+		MyOCL ocl = new MyOCL("OrGuard", "OrGuard(x : Integer) : Boolean",
 				"x = null or x > 0");
+		ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
 		VariableDeclaration contextVariable = PivotUtil.getOwnedContext(asExpressionInOCL);
 		VariableDeclaration firstParameterVariable = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
 		OperationCallExp orExp = (OperationCallExp) asExpressionInOCL.getOwnedBody();
@@ -1253,9 +1287,9 @@ public class SymbolicAnalysisTests extends XtextTestCase
 	}
 
 	public void testSymbolicAnalysis_Or2Guard() throws Exception {
-		MyOCL ocl = new MyOCL();
-		ExpressionInOCL asExpressionInOCL = ocl.createQueryTestModel("Or2Guard", "Or2Guard(x : Integer) : Boolean",
+		MyOCL ocl = new MyOCL("Or2Guard", "Or2Guard(x : Integer) : Boolean",
 				"x = null or2 x > 0");
+		ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
 		VariableDeclaration contextVariable = PivotUtil.getOwnedContext(asExpressionInOCL);
 		VariableDeclaration firstParameterVariable = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
 		OperationCallExp orExp = (OperationCallExp) asExpressionInOCL.getOwnedBody();

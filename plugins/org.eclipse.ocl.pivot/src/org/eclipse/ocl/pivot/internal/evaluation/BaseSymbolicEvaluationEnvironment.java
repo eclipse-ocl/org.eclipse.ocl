@@ -167,16 +167,18 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 		List<@NonNull TypedElement> affectedExpressionsList = new ArrayList<>(affectedExpressionsSet);
 		Collections.sort(affectedExpressionsList, symbolicAnalysis.getTypedElementHeightComparator());
 		for (@NonNull TypedElement affectedExpression : affectedExpressionsList) {
-			if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
-				SymbolicAnalysis.HYPOTHESIS.println("   re-evaluating: " + SymbolicUtil.printPath(affectedExpression));
-			}
 			SymbolicValue oldValue = getSymbolicValue(affectedExpression);
-			if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
-				SymbolicAnalysis.HYPOTHESIS.println("    old: " + oldValue);
-			}
-			SymbolicValue newValue = symbolicReEvaluate(affectedExpression);
-			if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
-				SymbolicAnalysis.HYPOTHESIS.println("    new: " + newValue);
+			if (affectedExpression != typedElement) {
+				if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
+					SymbolicAnalysis.HYPOTHESIS.println("   re-evaluating: " + SymbolicUtil.printPath(affectedExpression));
+				}
+					if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
+					SymbolicAnalysis.HYPOTHESIS.println("    old: " + oldValue);
+				}
+				SymbolicValue newValue = symbolicReEvaluate(affectedExpression);
+				if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
+					SymbolicAnalysis.HYPOTHESIS.println("    new: " + newValue);
+				}
 			}
 		}
 	}
