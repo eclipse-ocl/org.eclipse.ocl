@@ -2512,7 +2512,7 @@ public class PivotValidator extends EObjectValidator
 				for (int i = 0; i < ownedParameters.size(); i++) {
 					Variable parameter = ownedParameters.get(i);
 					mayBeNull = !parameter.isIsRequired();
-					mayBeInvalid = false;
+				//	mayBeInvalid = false;
 					parameterValues[i] = new SymbolicVariableValue(parameter, mayBeNull, mayBeInvalid);
 				}
 				SymbolicAnalysis symbolicAnalysis = metamodelManager.getSymbolicAnalysis(expressionInOCL, selfValue, resultValue, parameterValues);
@@ -2542,11 +2542,23 @@ public class PivotValidator extends EObjectValidator
 						}
 					}
 					for (@NonNull TypedElement typedElement : invalidTypedElements) {
-						int diagnosticSeverity = invalidResultSeverity.getDiagnosticSeverity();
-						String message = StringUtil.bind("May be invalid: {0}", SymbolicUtil.printPath(typedElement));
-						diagnostics.add(new BasicDiagnostic(diagnosticSeverity, DIAGNOSTIC_SOURCE, 0, message, new Object[] {typedElement}));		// XXX
+						boolean invalidIsPermissible = false;
+						if (isValidating) {
+							TypedElement referredtypedElement = typedElement;
+							if (referredtypedElement instanceof VariableExp) {
+								referredtypedElement = PivotUtil.getReferredVariable((VariableExp)referredtypedElement);
+							}
+							if (referredtypedElement instanceof ParameterVariable) {
+								invalidIsPermissible = true;
+							}
+						}
+						if (!invalidIsPermissible) {
+							int diagnosticSeverity = invalidResultSeverity.getDiagnosticSeverity();
+							String message = StringUtil.bind("May be invalid: {0}", SymbolicUtil.printPath(typedElement));
+							diagnostics.add(new BasicDiagnostic(diagnosticSeverity, DIAGNOSTIC_SOURCE, 0, message, new Object[] {typedElement}));		// XXX
+							allOk = false;			// XXX
+						}
 					}
-					allOk = false;			// XXX
 				}
 			}
 		}
