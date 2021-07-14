@@ -35,7 +35,6 @@ import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
-import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment.EvaluationEnvironmentExtension;
 import org.eclipse.ocl.pivot.evaluation.EvaluationLogger;
@@ -127,7 +126,7 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 
 	@Override
 	public void add(@NonNull TypedElement referredVariable, @Nullable Object value) {
-		evaluationEnvironment.add((VariableDeclaration)referredVariable, value);
+		evaluationEnvironment.add(referredVariable, value);
 	}
 
 	/**
@@ -205,7 +204,7 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 
 	@Override
 	public @Nullable Object evaluate(@NonNull OCLExpression body) {
-		return evaluationVisitor.evaluate(body);
+		return getEvaluationVisitor().evaluate(body);
 	}
 
 	/**
@@ -567,7 +566,7 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 
 	@Override
 	public void replace(@NonNull TypedElement referredVariable, @Nullable Object value) {
-		evaluationEnvironment.replace((VariableDeclaration)referredVariable, value);
+		evaluationEnvironment.replace(referredVariable, value);
 	}
 
 	/**
@@ -587,7 +586,9 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 
 	@Override
 	public void setCanceled(boolean isCanceled) {
-		evaluationVisitor.setCanceled(isCanceled);
+		if (evaluationVisitor != null) {
+			evaluationVisitor.setCanceled(isCanceled);
+		}
 	}
 
 	@Override
