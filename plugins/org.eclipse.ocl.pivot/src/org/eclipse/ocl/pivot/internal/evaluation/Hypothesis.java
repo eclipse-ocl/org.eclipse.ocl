@@ -17,11 +17,11 @@ import java.util.Map;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.TypedElement;
-import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.internal.symbolic.AbstractSymbolicRefinedValue;
 import org.eclipse.ocl.pivot.internal.symbolic.AbstractSymbolicRefinedValue.SymbolicRefinedContentValue;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
@@ -70,9 +70,9 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 		for (@NonNull TypedElement typedElement : typedElements) {
 			boolean traceHypothesis = SymbolicAnalysis.HYPOTHESIS.isActive();
 			if (traceHypothesis) {
-				SymbolicAnalysis.HYPOTHESIS.println("  " + getKind() + " hypothesis for \"" + typedElement + "\" in \"" + typedElement.eContainer() + "\"");
-				SymbolicAnalysis.HYPOTHESIS.println("    old: " + getOriginalValue());
-				SymbolicAnalysis.HYPOTHESIS.println("    hypothesized: " + hypothesizedValue);
+				SymbolicAnalysis.HYPOTHESIS.println("  " + getKind() + " hypothesis for: " + SymbolicUtil.printPath(typedElement));
+				SymbolicAnalysis.HYPOTHESIS.println("    old: " + SymbolicUtil.printValue(getOriginalValue()));
+				SymbolicAnalysis.HYPOTHESIS.println("    hypothesized: " + SymbolicUtil.printValue(hypothesizedValue));
 			//	SymbolicAnalysis.HYPOTHESIS.println("    refined: " + getRefinedValue());		// XXX
 			//	SymbolicAnalysis.HYPOTHESIS.println(this.toString());
 			//	SymbolicAnalysis.HYPOTHESIS.println(this.toString());
@@ -83,11 +83,11 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 			typedElement2incompatibility2.put(typedElement, incompatibility);
 			baseSymbolicEvaluationEnvironment.popHypothesis();
 			if (incompatibility != null) {
-				SymbolicAnalysis.HYPOTHESIS.println("  => contradiction: " + incompatibility + " for " + typedElement);
+				SymbolicAnalysis.HYPOTHESIS.println("    => contradiction: " + incompatibility);
 				refine(typedElement);
 			}
 			else if (traceHypothesis) {
-				SymbolicAnalysis.HYPOTHESIS.println("  => no contradiction: " + typedElement);
+				SymbolicAnalysis.HYPOTHESIS.println("    => no contradiction: " + SymbolicUtil.printPath(typedElement));
 			}
 		}
 	}
@@ -119,15 +119,6 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 
 	abstract protected @NonNull SymbolicValue getRefinedValue();
 
-//	public @NonNull Iterable<@NonNull TypedElement> getTypedElements() {
-//		return cseElement.getElements();
-//	}
-
-//	public boolean isContradiction(@NonNull TypedElement typedElement) {
-//		assert typedElement2incompatibility != null;
-//		return ClassUtil.nonNullState(typedElement2incompatibility.get(typedElement)).booleanValue();
-//	}
-
 	protected abstract void refine(@NonNull TypedElement typedElement);
 
 	@Override
@@ -155,16 +146,6 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 
 	public static class MayBeEmptyHypothesis extends Hypothesis
 	{
-		protected static @NonNull SymbolicValue zeroValue(@NonNull SymbolicAnalysis symbolicAnalysis, @NonNull TypeId typeId, @NonNull SymbolicValue originalValue) {
-		//	if (typeId instanceof CollectionTypeId) {
-		//		return AbstractRefinedSymbolicValue.createZeroValue(originalValue);
-		//	}
-		//	else if (typeId instanceof MapTypeId) {
-		//		return AbstractRefinedSymbolicValue.createZeroValue(originalValue);
-		//	}
-			return symbolicAnalysis.getKnownValue(ValueUtil.ZERO_VALUE);
-		}
-
 		private static @NonNull SymbolicValue createHypothesizedValue(@NonNull SymbolicAnalysis symbolicAnalysis, @NonNull Iterable<@NonNull TypedElement> typedElements) {
 			CSEElement cseElement = symbolicAnalysis.getCSEElement(typedElements.iterator().next());
 			SymbolicValue originalValue = symbolicAnalysis.getBaseSymbolicEvaluationEnvironment().getSymbolicValue(cseElement);
@@ -175,7 +156,6 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 				refinedValue = new SymbolicRefinedContentValue(originalValue);
 				sizeValue = symbolicAnalysis.getKnownValue(ValueUtil.ZERO_VALUE);
 				refinedValue.setSize(sizeValue);
-//				refinedValue.toString();
 			}
 			return refinedValue != null ? refinedValue : originalValue;
 		}
@@ -204,16 +184,8 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 			if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
 				SymbolicAnalysis.HYPOTHESIS.println("  refined: " + refinedValue);
 			}
-		//	SymbolicValue refinedValue = getRefinedValue();
 			baseSymbolicEvaluationEnvironment.refineValue(typedElement, refinedValue);
 		}
-
-	//	@Override
-	//	protected void toString(@NonNull StringBuilder s) {
-	//		super.toString(s);
-	//		s.append(" => ");
-	//		s.append(mayBeZeroValue);
-	//	}
 	}
 
 	public static class MayBeInvalidHypothesis extends Hypothesis
@@ -238,13 +210,6 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 			SymbolicValue refinedValue = getRefinedValue();
 			baseSymbolicEvaluationEnvironment.refineValue(typedElement, refinedValue);
 		}
-
-	//	@Override
-	//	protected void toString(@NonNull StringBuilder s) {
-	//		super.toString(s);
-	//		s.append(" => ");
-	//		s.append(mayBeInvalidValue);
-	//	}
 	}
 
 	public static class MayBeNullHypothesis extends Hypothesis
@@ -269,13 +234,6 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 			SymbolicValue refinedValue = getRefinedValue();
 			baseSymbolicEvaluationEnvironment.refineValue(typedElement, refinedValue);
 		}
-
-	//	@Override
-	//	protected void toString(@NonNull StringBuilder s) {
-	//		super.toString(s);
-	//		s.append(" => ");
-	//		s.append(mayBeNullValue);
-	//	}
 	}
 
 /*	public static class MayBeSmallerThanHypothesis extends Hypothesis
@@ -296,13 +254,6 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 		public @NonNull SymbolicValue getRefinedValue() {
 			return AbstractRefinedSymbolicValue.createNotSmallerThanValue(originalValue, minSizeValue);
 		}
-
-	//	@Override
-	//	protected void toString(@NonNull StringBuilder s) {
-	//		super.toString(s);
-	//		s.append(" => ");
-	//		s.append(mayBeSmallerThanValue);
-	//	}
 	} */
 
 	public static class MayBeZeroHypothesis extends Hypothesis
@@ -330,12 +281,5 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 			}
 			baseSymbolicEvaluationEnvironment.refineValue(typedElement, refinedValue);
 		}
-
-	//	@Override
-	//	protected void toString(@NonNull StringBuilder s) {
-	//		super.toString(s);
-	//		s.append(" => ");
-	//		s.append(mayBeZeroValue);
-	//	}
 	}
 }

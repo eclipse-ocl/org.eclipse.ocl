@@ -497,13 +497,14 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 	public @NonNull SymbolicValue asRefinementOf(@NonNull SymbolicValue unrefinedValue) {
 	//	@NonNull SymbolicValue thisBaseValue = this.getBaseValue();
 		@NonNull SymbolicValue resultValue = unrefinedValue.getBaseValue();
-		if (!mayBeInvalid() && unrefinedValue.mayBeInvalid()) {
+		if (!mayBeInvalid()) {// && unrefinedValue.mayBeInvalid()) {
 			resultValue = createExceptValue(resultValue, ValueUtil.INVALID_VALUE);
 		}
-		if (!mayBeNull() && unrefinedValue.mayBeNull()) {
+		if (!mayBeNull()) {// && unrefinedValue.mayBeNull()) {
 			resultValue = createExceptValue(resultValue, null);
 		}
-		if ((basicGetZeroStatus() != null) && !mayBeZero() && (unrefinedValue.basicGetZeroStatus() != null) && unrefinedValue.mayBeZero()) {
+	//	if ((basicGetZeroStatus() != null) && !mayBeZero() && (unrefinedValue.basicGetZeroStatus() != null) && unrefinedValue.mayBeZero()) {
+		if (!mayBeZero()) {// && (unrefinedValue.basicGetZeroStatus() != null) && unrefinedValue.mayBeZero()) {
 			resultValue = createNotValue(createIsZeroValue(resultValue));
 		}
 		return resultValue;

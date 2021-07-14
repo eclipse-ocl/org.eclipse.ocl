@@ -38,6 +38,7 @@ import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent.SymbolicCollectio
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent.SymbolicMapContent;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicKnownValue;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicUnknownValue;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicUtil;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
@@ -349,7 +350,7 @@ public class SymbolicAnalysis /*extends BasicOCLExecutor implements SymbolicExec
 			throw new EvaluationHaltedException("Canceled");
 		}
 		if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
-			SymbolicAnalysis.HYPOTHESIS.println("Analyzing \"" + expressionInOCL + "\"");
+			SymbolicAnalysis.HYPOTHESIS.println("Analyzing: " + SymbolicUtil.printPath(expressionInOCL));
 		}
 		List<@NonNull TypedElement> typedElements = new ArrayList<>();
 		for (@NonNull EObject eObject : new TreeIterable(expressionInOCL, true)) {
@@ -358,9 +359,9 @@ public class SymbolicAnalysis /*extends BasicOCLExecutor implements SymbolicExec
 			}
 		}
 		Collections.sort(typedElements, getTypedElementHeightComparator());
-		SymbolicEvaluationEnvironment evaluationEnvironment = getSymbolicEvaluationEnvironment();
+		BaseSymbolicEvaluationEnvironment evaluationEnvironment = (BaseSymbolicEvaluationEnvironment) getSymbolicEvaluationEnvironment();
 		for (@NonNull TypedElement typedElement : typedElements) {
-			evaluationEnvironment.symbolicEvaluate(typedElement);
+			evaluationEnvironment.symbolicEvaluate(typedElement, true);
 		}
 		resolveHypotheses();
 	}

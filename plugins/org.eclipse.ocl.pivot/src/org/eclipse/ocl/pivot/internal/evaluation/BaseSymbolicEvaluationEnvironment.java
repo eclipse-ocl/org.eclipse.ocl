@@ -30,6 +30,7 @@ import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.internal.symbolic.AbstractSymbolicRefinedValue;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
@@ -167,7 +168,7 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 		Collections.sort(affectedExpressionsList, symbolicAnalysis.getTypedElementHeightComparator());
 		for (@NonNull TypedElement affectedExpression : affectedExpressionsList) {
 			if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
-				SymbolicAnalysis.HYPOTHESIS.println("   re-evaluating \"" + affectedExpression + "\" in \"" + affectedExpression.eContainer() + "\"");
+				SymbolicAnalysis.HYPOTHESIS.println("   re-evaluating: " + SymbolicUtil.printPath(affectedExpression));
 			}
 			SymbolicValue oldValue = getSymbolicValue(affectedExpression);
 			if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
@@ -195,9 +196,16 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 	}
 
 	@Override
-	public @NonNull SymbolicValue symbolicEvaluate(@NonNull TypedElement typedElement) {
+	public final @NonNull SymbolicValue symbolicEvaluate(@NonNull TypedElement typedElement) {
+		return symbolicEvaluate(typedElement, false);
+	}
+
+	public @NonNull SymbolicValue symbolicEvaluate(@NonNull TypedElement typedElement, boolean showReUse) {
 		SymbolicValue symbolicValue = basicGetSymbolicValue(typedElement);			// Re-use old value
 		if (symbolicValue != null) {
+			if (showReUse && SymbolicAnalysis.HYPOTHESIS.isActive()) {
+				SymbolicAnalysis.HYPOTHESIS.println("  re-used: " + SymbolicUtil.printPath(typedElement) + " as: " + symbolicValue);
+			}
 			return symbolicValue;
 		}
 		SymbolicValue resultValue;
@@ -209,7 +217,7 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 			resultValue = getKnownValue(boxedValue);
 		}
 		if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
-			SymbolicAnalysis.HYPOTHESIS.println("  evaluated: \"" + typedElement + "\" as: " + resultValue);
+			SymbolicAnalysis.HYPOTHESIS.println("  evaluated: " + SymbolicUtil.printPath(typedElement) + " as: " + resultValue);
 		}
 		CSEElement cseElement = symbolicAnalysis.getCSEElement(typedElement);
 		return traceSymbolicValue(cseElement, resultValue);								// Record new value

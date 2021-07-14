@@ -16,21 +16,25 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionItem;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.IfExp;
 import org.eclipse.ocl.pivot.LetExp;
 import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.NavigationCallExp;
 import org.eclipse.ocl.pivot.OperationCallExp;
+import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
+import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 import com.google.common.collect.Iterables;
 
@@ -143,43 +147,84 @@ public class SymbolicUtil extends AbstractLeafSymbolicValue
 	}
 
 	/**
-	 * Return a short summary of typedElement to clarify its use in a whole ancestry diagnostic.
+	 * Return a reverse hierarchical summary of typedElement to clarify its use in a whole ancestry diagnostic.
 	 */
-	public static @NonNull String getSummary(@NonNull TypedElement typedElement) {
+	public static @NonNull String printPath(@NonNull TypedElement typedElement) {
 		StringBuilder s = new StringBuilder();
-		if (typedElement instanceof CallExp) {
-			CallExp callExp = (CallExp)typedElement;
+		printPath(s, typedElement, null);
+		return s.toString();
+	}
+
+	/**
+	 * Accumulate a reverse hierarchical summary of typedElement to clarify its use in a whole ancestry diagnostic.
+	 */
+	protected static void printPath(@NonNull StringBuilder s, @NonNull TypedElement typedElement, @Nullable EReference childContainmentReference) {
+		if (typedElement instanceof ExpressionInOCL) {
 			s.append("«expr»");
-			if (callExp.isIsSafe()) {
-				s.append("?");
-			}
-			if (callExp.getOwnedSource().isIsMany()) {
-				s.append("->");
-			}
-			else {
-				s.append(".");
-			}
+		}
+		else if (typedElement instanceof CallExp) {
+		//	CallExp callExp = (CallExp)typedElement;
+		//	s.append("«expr»");
+		//	if (callExp.isIsSafe()) {
+		//		s.append("?");
+		//	}
+		//	if (callExp.getOwnedSource().isIsMany()) {
+		//		s.append("->");
+		//	}
+		//	else {
+		//		s.append(".");
+		//	}
 			if (typedElement instanceof NavigationCallExp) {
 				s.append(PivotUtil.getName(PivotUtil.getReferredProperty((NavigationCallExp)typedElement)));
 			}
 			else if (typedElement instanceof OperationCallExp) {
 				s.append(PivotUtil.getName(PivotUtil.getReferredOperation((OperationCallExp)typedElement)));
-				s.append("(...)");
+				s.append("()");
 			}
 			else if (typedElement instanceof LoopExp) {
 				s.append(PivotUtil.getName(PivotUtil.getReferredIteration((LoopExp)typedElement)));
-				s.append("(...)");
+				s.append("()");
 			}
-			else if (typedElement instanceof LoopExp) {
+			else {
 				s.append("a ");
 				s.append(typedElement.eClass().getName());
 			}
 		}
-		else {
-			s.append("a ");
-			s.append(typedElement.eClass().getName());
+		else if (typedElement instanceof IfExp) {
+			s.append("«if»");
+			if (childContainmentReference == PivotPackage.Literals.IF_EXP__OWNED_CONDITION) {
+				s.append(".cond");
+			}
+			else if (childContainmentReference == PivotPackage.Literals.IF_EXP__OWNED_THEN) {
+				s.append(".then");
+			}
+			else if (childContainmentReference == PivotPackage.Literals.IF_EXP__OWNED_ELSE) {
+				s.append(".else");
+			}
 		}
-		return s.toString();
+		else {
+		//	s.append("\"");
+			s.append(typedElement.getName());
+		//	s.append("\"");
+		}
+		EObject eContainer = typedElement.eContainer();
+		if (eContainer instanceof ExpressionInOCL) {
+			eContainer = typedElement.eContainer();
+		}
+		if (eContainer instanceof TypedElement) {
+			s.append("~");
+			printPath(s, (TypedElement)eContainer, typedElement.eContainmentFeature());
+		}
+	}
+
+	public static @NonNull String printValue(@NonNull SymbolicValue symbolicValue) {
+		if (symbolicValue instanceof SymbolicKnownValue) {
+			@SuppressWarnings("unused") Object value = ((SymbolicKnownValue)symbolicValue).getKnownValue();
+			return symbolicValue.toString();
+		}
+		else{
+			return symbolicValue.toString();
+		}
 	}
 
 }

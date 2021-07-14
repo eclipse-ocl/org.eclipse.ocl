@@ -282,14 +282,6 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/util/PivotValidator.java" type="org.eclipse.ocl.pivot.util.PivotValidator">
-        <filter id="336658481">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
-                <message_argument value="SYMBOLIC_ANALYSIS_DISABLE_VALIDATION"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/values/SymbolicValue.java" type="org.eclipse.ocl.pivot.values.SymbolicValue">
         <filter id="1110441988">
             <message_arguments>
@@ -420,12 +412,6 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/ocl/pivot/ids/IdResolver.java" type="org.eclipse.ocl.pivot.ids.IdResolver">
-        <filter id="403804204">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.ids.IdResolver"/>
-                <message_argument value="removeType(TypeId)"/>
-            </message_arguments>
-        </filter>
         <filter id="404000815">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.ids.IdResolver"/>
@@ -484,12 +470,6 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal.MetamodelManagerInternalExtension2"/>
                 <message_argument value="getSymbolicAnalysis(ExpressionInOCL, Object, Object, Object[])"/>
-            </message_arguments>
-        </filter>
-        <filter id="404000815">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal.MetamodelManagerInternalExtension2"/>
-                <message_argument value="getSymbolicAnalysis(ExpressionInOCL, Object, Object[])"/>
             </message_arguments>
         </filter>
     </resource>
@@ -559,12 +539,6 @@
                 <message_argument value="resolveBodyType(EnvironmentFactory, CallExp, Type)"/>
             </message_arguments>
         </filter>
-        <filter id="404000815">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.library.LibraryBinaryOperation"/>
-                <message_argument value="symbolicEvaluate(Executor, OperationCallExp, Object, Object)"/>
-            </message_arguments>
-        </filter>
     </resource>
     <resource path="src/org/eclipse/ocl/pivot/library/LibraryIteration.java" type="org.eclipse.ocl.pivot.library.LibraryIteration">
         <filter id="403984517">
@@ -587,18 +561,6 @@
                 <message_argument value="org.eclipse.ocl.pivot.library.LibraryOperation"/>
                 <message_argument value="org.eclipse.ocl.pivot.library.LibraryIterationOrOperation"/>
                 <message_argument value="resolveBodyType(EnvironmentFactory, CallExp, Type)"/>
-            </message_arguments>
-        </filter>
-        <filter id="404000815">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.library.LibraryOperation"/>
-                <message_argument value="deduceFrom(SymbolicExecutor, SymbolicOperationCallValue, SimpleSymbolicConstraint)"/>
-            </message_arguments>
-        </filter>
-        <filter id="404000815">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.library.LibraryOperation"/>
-                <message_argument value="symbolicEvaluate(AbstractSymbolicEvaluationEnvironment, OperationCallExp)"/>
             </message_arguments>
         </filter>
         <filter id="404000815">
@@ -733,26 +695,12 @@
                 <message_argument value="PotentialInvalidResult"/>
             </message_arguments>
         </filter>
-        <filter id="336658481">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.options.PivotValidationOptions"/>
-                <message_argument value="PotentialInvalidResult"/>
-            </message_arguments>
-        </filter>
     </resource>
     <resource path="src/org/eclipse/ocl/pivot/resource/BasicProjectManager.java" type="org.eclipse.ocl.pivot.resource.BasicProjectManager">
         <filter comment="Bug 512402 workaround" id="576725006">
             <message_arguments>
                 <message_argument value="ProjectManager"/>
                 <message_argument value="BasicProjectManager"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/resource/CSResource.java" type="org.eclipse.ocl.pivot.resource.CSResource">
-        <filter id="404000815">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.resource.CSResource"/>
-                <message_argument value="getEnvironmentFactory()"/>
             </message_arguments>
         </filter>
     </resource>

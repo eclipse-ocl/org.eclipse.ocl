@@ -93,4 +93,5 @@ public interface SymbolicValue extends Value
 
 	boolean mayBeTrue();
 
-} // SymbolicValue
+	@Override @NonNull String toString();
+}
