@@ -216,14 +216,6 @@ public class InvalidValueException extends UndefinedValueImpl implements Invalid
 	 * @since 1.16
 	 */
 	@Override
-	public boolean mayBeInvalidOrNull() {
-		return true;
-	}
-
-	/**
-	 * @since 1.16
-	 */
-	@Override
 	public boolean mayBeNull() {
 		return false;
 	}

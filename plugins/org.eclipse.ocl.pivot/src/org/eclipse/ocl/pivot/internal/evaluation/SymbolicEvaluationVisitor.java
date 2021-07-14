@@ -137,8 +137,8 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 		}
 		else {
 			boolean isSafe = navigationCallExp.isIsSafe();
-			boolean sourceMayBeInvalid = ValueUtil.mayBeInvalid(sourceValue);
-			boolean sourceMayBeNull = ValueUtil.mayBeNull(sourceValue);
+			boolean sourceMayBeInvalid = sourceValue.mayBeInvalid();
+			boolean sourceMayBeNull = sourceValue.mayBeNull();
 			boolean sourceIsMany = navigationCallExp.isIsMany();
 			boolean propertyMayBeNull = !referredProperty.isIsRequired();
 			boolean resultMayBeInvalid = sourceMayBeInvalid || (sourceMayBeNull && !isSafe && !sourceIsMany);
@@ -255,7 +255,7 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 			if (partValue.mayBeInvalid()) {
 				mayBeInvalid = true;
 			}
-			if (isNullFree && ValueUtil.mayBeNull(partValue)) {
+			if (isNullFree && partValue.mayBeNull()) {
 				mayBeNull = true;
 			}
 		}
@@ -401,13 +401,13 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 			if (!keyValue.isKnown() || !valueValue.isKnown()) {
 				isKnown = false;
 			}
-			if (ValueUtil.mayBeInvalid(keyValue) || ValueUtil.mayBeInvalid(valueValue)) {
+			if (keyValue.mayBeInvalid() || valueValue.mayBeInvalid()) {
 				mayBeInvalid = true;
 			}
-			if (isKeysAreNullFree && ValueUtil.mayBeNull(keyValue)) {
+			if (isKeysAreNullFree && keyValue.mayBeNull()) {
 				mayBeNull = true;
 			}
-			if (isValuesAreNullFree && ValueUtil.mayBeNull(valueValue)) {
+			if (isValuesAreNullFree && valueValue.mayBeNull()) {
 				mayBeNull = true;
 			}
 		}

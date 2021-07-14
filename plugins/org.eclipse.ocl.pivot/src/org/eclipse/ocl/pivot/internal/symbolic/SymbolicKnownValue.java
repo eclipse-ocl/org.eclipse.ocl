@@ -14,6 +14,8 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.SymbolicValue;
+import org.eclipse.ocl.pivot.values.Value;
 
 /**
  * @since 1.16
@@ -22,8 +24,34 @@ public class SymbolicKnownValue extends AbstractLeafSymbolicValue {
 
 	private @Nullable Object knownValue;
 
+	private static boolean mayBeInvalid(@Nullable Object value) {
+		if (value == null) {
+			return true;
+		}
+		else if (value instanceof SymbolicValue) {
+			throw new IllegalStateException("SymbolValue is no longer a Value");
+		}
+		else if (value instanceof Value) {
+			return ((Value)value).mayBeInvalid();
+		}
+		return false;
+	}
+
+	private static boolean mayBeNull(@Nullable Object value) {
+		if (value == null) {
+			return true;
+		}
+		else if (value instanceof SymbolicValue) {
+			throw new IllegalStateException("SymbolValue is no longer a Value");
+		}
+		else if (value instanceof Value) {
+			return ((Value)value).mayBeNull();
+		}
+		return false;
+	}
+
 	public SymbolicKnownValue(@NonNull String name, @NonNull TypeId typeId, @Nullable Object knownValue, @Nullable SymbolicContent content) { //, @NonNull SymbolicValue value) {
-		super(name, typeId, ValueUtil.mayBeNull(knownValue), ValueUtil.mayBeInvalid(knownValue), content);
+		super(name, typeId, mayBeNull(knownValue), mayBeInvalid(knownValue), content);
 		this.knownValue = knownValue;
 	}
 

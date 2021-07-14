@@ -1043,39 +1043,6 @@ public abstract class ValueUtil
 	}
 
 	/**
-	 * @since 1.16
-	 */
-	public static boolean mayBeInvalid(@Nullable Object value) {
-		if (value instanceof Value) {
-			return ((Value)value).mayBeInvalid();
-		}
-		return false;
-	}
-
-	/**
-	 * @since 1.16
-	 */
-	public static boolean mayBeNull(@Nullable Object value) {
-		if (value == null) {
-			return true;
-		}
-		else if (value instanceof Value) {
-			return ((Value)value).mayBeNull();
-		}
-		return false;
-	}
-
-	/**
-	 * @since 1.16
-	 */
-	public static boolean mayBeZero(@Nullable Object value) {
-		if (value instanceof Value) {
-			return ((Value)value).mayBeZero();
-		}
-		return false;
-	}
-
-	/**
 	 * @since 1.1
 	 */
 	public static @NonNull NumberValue numberValueOf(@NonNull Number aNumber) {

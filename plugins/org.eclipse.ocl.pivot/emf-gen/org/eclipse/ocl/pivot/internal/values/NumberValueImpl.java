@@ -253,14 +253,6 @@ public abstract class NumberValueImpl extends Number implements NumberValue  {
 	 * @since 1.16
 	 */
 	@Override
-	public boolean mayBeInvalidOrNull() {
-		return false;
-	}
-
-	/**
-	 * @since 1.16
-	 */
-	@Override
 	public boolean mayBeNull() {
 		return false;
 	}

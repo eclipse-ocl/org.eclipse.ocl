@@ -270,7 +270,7 @@ public class ValuesSwitch<@Nullable T1> extends Switch<T1> {
 				return result;
 			}
 			case 16: {
-				return null;
+				throw new IllegalStateException("SymbolValue is no longer a Value");
 			}
 			case 17: {
 				TupleValue tupleValue = (TupleValue)theEObject;
