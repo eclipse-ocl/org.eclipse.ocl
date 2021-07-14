@@ -899,10 +899,8 @@ public abstract class ValueUtil
 		}
 	}
 
-	public static boolean isBoxed(@Nullable Object object) {
-		if (object instanceof SymbolicValue) {
-			return false;
-		}
+	public static boolean isBoxed(@Nullable Object object) {	// FIXME just EObject and String as boxed non-Value
+		assert !(object instanceof SymbolicValue) : "SymbolValue is no longer a Value";
 		if (object instanceof InvalidValue) {
 			return true;
 		}

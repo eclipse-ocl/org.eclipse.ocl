@@ -19,13 +19,14 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionItem;
+import org.eclipse.ocl.pivot.CollectionRange;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.IfExp;
 import org.eclipse.ocl.pivot.LetExp;
 import org.eclipse.ocl.pivot.LoopExp;
+import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.NavigationCallExp;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.PivotPackage;
@@ -149,48 +150,29 @@ public class SymbolicUtil
 	/**
 	 * Return a reverse hierarchical summary of typedElement to clarify its use in a whole ancestry diagnostic.
 	 */
-	public static @NonNull String printPath(@NonNull TypedElement typedElement) {
+	public static @NonNull String printPath(@NonNull NamedElement namedElement) {
 		StringBuilder s = new StringBuilder();
-		printPath(s, typedElement, null);
+		printPath(s, namedElement, null);
 		return s.toString();
 	}
 
 	/**
 	 * Accumulate a reverse hierarchical summary of typedElement to clarify its use in a whole ancestry diagnostic.
 	 */
-	protected static void printPath(@NonNull StringBuilder s, @NonNull TypedElement typedElement, @Nullable EReference childContainmentReference) {
-		if (typedElement instanceof ExpressionInOCL) {
-			s.append("«expr»");
+	protected static void printPath(@NonNull StringBuilder s, @NonNull NamedElement namedElement, @Nullable EReference childContainmentReference) {
+		if (namedElement instanceof ExpressionInOCL) {
+			s.append("«body»");
 		}
-		else if (typedElement instanceof CallExp) {
-		//	CallExp callExp = (CallExp)typedElement;
-		//	s.append("«expr»");
-		//	if (callExp.isIsSafe()) {
-		//		s.append("?");
-		//	}
-		//	if (callExp.getOwnedSource().isIsMany()) {
-		//		s.append("->");
-		//	}
-		//	else {
-		//		s.append(".");
-		//	}
-			if (typedElement instanceof NavigationCallExp) {
-				s.append(PivotUtil.getName(PivotUtil.getReferredProperty((NavigationCallExp)typedElement)));
+		else if (namedElement instanceof CollectionRange) {
+			s.append("«range»");
+			if (childContainmentReference == PivotPackage.Literals.COLLECTION_RANGE__OWNED_FIRST) {
+				s.append(".first");
 			}
-			else if (typedElement instanceof OperationCallExp) {
-				s.append(PivotUtil.getName(PivotUtil.getReferredOperation((OperationCallExp)typedElement)));
-				s.append("()");
-			}
-			else if (typedElement instanceof LoopExp) {
-				s.append(PivotUtil.getName(PivotUtil.getReferredIteration((LoopExp)typedElement)));
-				s.append("()");
-			}
-			else {
-				s.append("a ");
-				s.append(typedElement.eClass().getName());
+			else if (childContainmentReference == PivotPackage.Literals.COLLECTION_RANGE__OWNED_LAST) {
+				s.append(".last");
 			}
 		}
-		else if (typedElement instanceof IfExp) {
+		else if (namedElement instanceof IfExp) {
 			s.append("«if»");
 			if (childContainmentReference == PivotPackage.Literals.IF_EXP__OWNED_CONDITION) {
 				s.append(".cond");
@@ -202,18 +184,27 @@ public class SymbolicUtil
 				s.append(".else");
 			}
 		}
+		else if (namedElement instanceof LoopExp) {
+			s.append(PivotUtil.getName(PivotUtil.getReferredIteration((LoopExp)namedElement)));
+			s.append("()");
+		}
+		else if (namedElement instanceof NavigationCallExp) {
+			s.append(PivotUtil.getName(PivotUtil.getReferredProperty((NavigationCallExp)namedElement)));
+		}
+		else if (namedElement instanceof OperationCallExp) {
+			s.append(PivotUtil.getName(PivotUtil.getReferredOperation((OperationCallExp)namedElement)));
+			s.append("()");
+		}
 		else {
-		//	s.append("\"");
-			s.append(typedElement.getName());
-		//	s.append("\"");
+			s.append(namedElement.getName());
 		}
-		EObject eContainer = typedElement.eContainer();
+		EObject eContainer = namedElement.eContainer();
 		if (eContainer instanceof ExpressionInOCL) {
-			eContainer = typedElement.eContainer();
+			eContainer = namedElement.eContainer();
 		}
-		if (eContainer instanceof TypedElement) {
+		if (eContainer instanceof NamedElement) {
 			s.append("~");
-			printPath(s, (TypedElement)eContainer, typedElement.eContainmentFeature());
+			printPath(s, (NamedElement)eContainer, namedElement.eContainmentFeature());
 		}
 	}
 

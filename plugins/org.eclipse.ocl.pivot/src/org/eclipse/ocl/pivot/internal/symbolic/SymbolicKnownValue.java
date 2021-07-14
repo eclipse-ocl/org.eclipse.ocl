@@ -25,11 +25,9 @@ public class SymbolicKnownValue extends AbstractLeafSymbolicValue {
 	private @Nullable Object knownValue;
 
 	private static boolean mayBeInvalid(@Nullable Object value) {
+		assert !(value instanceof SymbolicValue) : "SymbolValue is no longer a Value";
 		if (value == null) {
 			return true;
-		}
-		else if (value instanceof SymbolicValue) {
-			throw new IllegalStateException("SymbolValue is no longer a Value");
 		}
 		else if (value instanceof Value) {
 			return ((Value)value).mayBeInvalid();
@@ -38,11 +36,9 @@ public class SymbolicKnownValue extends AbstractLeafSymbolicValue {
 	}
 
 	private static boolean mayBeNull(@Nullable Object value) {
+		assert !(value instanceof SymbolicValue) : "SymbolValue is no longer a Value";
 		if (value == null) {
 			return true;
-		}
-		else if (value instanceof SymbolicValue) {
-			throw new IllegalStateException("SymbolValue is no longer a Value");
 		}
 		else if (value instanceof Value) {
 			return ((Value)value).mayBeNull();
