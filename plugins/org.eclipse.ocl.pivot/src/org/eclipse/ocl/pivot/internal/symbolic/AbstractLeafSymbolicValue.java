@@ -150,11 +150,6 @@ public abstract class AbstractLeafSymbolicValue extends AbstractSymbolicValue
 	}
 
 	@Override
-	public @NonNull Object asObject() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public @Nullable SymbolicStatus basicGetBooleanStatus() {
 		if (typeId == TypeId.BOOLEAN) {
 			return SymbolicStatus.UNDECIDED;

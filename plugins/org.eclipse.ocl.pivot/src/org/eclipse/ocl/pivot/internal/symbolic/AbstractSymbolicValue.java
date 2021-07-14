@@ -11,7 +11,6 @@
 package org.eclipse.ocl.pivot.internal.symbolic;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.internal.values.ValueImpl;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
@@ -19,7 +18,7 @@ import org.eclipse.ocl.pivot.values.SymbolicValue;
 /**
  * @since 1.16
  */
-public abstract class AbstractSymbolicValue extends ValueImpl implements SymbolicValue
+public abstract class AbstractSymbolicValue implements SymbolicValue
 {
 	@Override
 	public @NonNull SymbolicValue asRefinementOf(@NonNull SymbolicValue unrefinedValue) {
@@ -137,5 +136,12 @@ public abstract class AbstractSymbolicValue extends ValueImpl implements Symboli
 	@Override
 	public boolean mayBeZero() {
 		return !getZeroStatus().isUnsatisfied();
+	}
+
+	@Override
+	public /*final*/ @NonNull String toString() {
+		StringBuilder s = new StringBuilder();
+		toString(s, 100);
+		return s.toString();
 	}
 }

@@ -227,14 +227,6 @@ public interface Value
 	default boolean mayBeInvalid() { return true; }
 
 	/**
-	 * Return true if this value is or may be invalid or null.
-	 *
-	 * @generated NOT
-	 * @since 1.16
-	 */
-	default boolean mayBeInvalidOrNull() { return mayBeInvalid() || mayBeNull(); }
-
-	/**
 	 * Return true if this value is or may be null.
 	 *
 	 * @generated NOT

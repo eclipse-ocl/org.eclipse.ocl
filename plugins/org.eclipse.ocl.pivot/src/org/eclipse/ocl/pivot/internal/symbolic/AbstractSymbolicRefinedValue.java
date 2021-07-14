@@ -489,11 +489,6 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 	}
 
 	@Override
-	public @NonNull Object asObject() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public @NonNull SymbolicValue asRefinementOf(@NonNull SymbolicValue unrefinedValue) {
 	//	@NonNull SymbolicValue thisBaseValue = this.getBaseValue();
 		@NonNull SymbolicValue resultValue = unrefinedValue.getBaseValue();

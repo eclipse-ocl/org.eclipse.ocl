@@ -270,11 +270,7 @@ public class ValuesSwitch<@Nullable T1> extends Switch<T1> {
 				return result;
 			}
 			case 16: {
-				SymbolicValue symbolicValue = (SymbolicValue)theEObject;
-				T1 result = caseSymbolicValue(symbolicValue);
-				if (result == null) result = caseValue(symbolicValue);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
+				return null;
 			}
 			case 17: {
 				TupleValue tupleValue = (TupleValue)theEObject;

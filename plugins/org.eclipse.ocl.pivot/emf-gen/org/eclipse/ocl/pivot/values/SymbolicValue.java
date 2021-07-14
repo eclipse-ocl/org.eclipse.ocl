@@ -12,6 +12,7 @@ package org.eclipse.ocl.pivot.values;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent.SymbolicCollectionContent;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent.SymbolicMapContent;
@@ -30,7 +31,7 @@ import org.eclipse.ocl.pivot.internal.symbolic.SymbolicStatus;
  * @see org.eclipse.ocl.pivot.values.ValuesPackage#getSymbolicValue()
  * @generated
  */
-public interface SymbolicValue extends Value
+public interface SymbolicValue
 {
 	/**
 	 * Return an equals SymbolicValue that is a refinement of unrefinedValue using unrefinedValue.getBaseValue();
@@ -67,6 +68,8 @@ public interface SymbolicValue extends Value
 
 	@NonNull SymbolicMapContent getMapContent();
 
+	@NonNull TypeId getTypeId();
+
 	@NonNull SymbolicStatus getZeroStatus();
 
 	boolean isCollection();
@@ -74,6 +77,8 @@ public interface SymbolicValue extends Value
 	boolean isDead();
 
 	boolean isFalse();
+
+	boolean isInvalid();
 
 	boolean isKnown();
 
@@ -91,7 +96,17 @@ public interface SymbolicValue extends Value
 
 	boolean mayBeFalse();
 
+	boolean mayBeInvalid();
+
+	default boolean mayBeInvalidOrNull() { return mayBeInvalid() || mayBeNull(); }
+
+	boolean mayBeNull();
+
 	boolean mayBeTrue();
 
+	boolean mayBeZero();
+
 	@Override @NonNull String toString();
+
+	void toString(@NonNull StringBuilder s, int sizeLimit);
 }

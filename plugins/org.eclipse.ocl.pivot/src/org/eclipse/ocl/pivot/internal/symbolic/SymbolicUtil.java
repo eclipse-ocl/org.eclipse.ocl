@@ -41,7 +41,7 @@ import com.google.common.collect.Iterables;
 /**
  * @since 1.16
  */
-public class SymbolicUtil extends AbstractLeafSymbolicValue
+public class SymbolicUtil
 {
 	/**
 	 * TypedElementHeightComparator sort ExpressionInOCL/OCLExpression to determine a (re-)evaluation order.
