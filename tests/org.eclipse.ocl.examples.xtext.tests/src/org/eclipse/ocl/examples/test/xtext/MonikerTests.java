@@ -22,7 +22,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
 import org.eclipse.ocl.pivot.internal.ecore.Ecore2Moniker;
-import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
@@ -255,7 +254,6 @@ public class MonikerTests extends XtextTestCase
 	public void testMoniker_oclstdlib_oclstdlib() throws IOException, InterruptedException {
 		//		BaseScopeProvider.LOOKUP.setState(true);
 		//		Abstract2Moniker.TRACE_MONIKERS.setState(true);
-		SymbolicAnalysis.HYPOTHESIS.setState(true);
 		doMonikerTestOCLstdlib(getTestModelURI("models/oclstdlib/oclstdlib.oclstdlib"));
 	}
 

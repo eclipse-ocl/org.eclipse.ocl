@@ -40,10 +40,11 @@ import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
+import org.eclipse.ocl.pivot.messages.StatusCodes;
+import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
 import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -210,7 +211,8 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 	}
 
 	@Test public void test_caught_and_uncaught() {
-		TestOCL ocl = createOCL();
+		TestOCL ocl = createOCLWithProjectMap();
+		ocl.getEnvironmentFactory().setOption(PivotValidationOptions.PotentialInvalidResult, StatusCodes.Severity.IGNORE);		// Need an exception to be thrown
 		initFruitPackage(ocl);
 		EObject context = fruitEFactory.create(tree);
 		ocl.assertQueryTrue(context, "let myName : String = name in myName.oclIsKindOf(String) and myName = null");
@@ -404,7 +406,6 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		if (useCodeGen) {
 			return;					// FIXME 506647 regression disabled
 		}
-		SymbolicAnalysis.HYPOTHESIS.setState(true);
 		TestOCL ocl = createOCL();
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
 			OCLinEcoreStandaloneSetup.doSetup();
@@ -582,7 +583,7 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 	 * Tests construction of a type instance with property values
 	 */
 	@Test public void test_type_construction() throws InvocationTargetException {
-		TestOCL ocl = createOCL();
+		TestOCL ocl = createOCLWithProjectMap();
 		initFruitPackage(ocl);
 		EObject context = fruitEFactory.create(tree);
 		ocl.assertValidationErrorQuery(ocl.getContextType(context), "Apple{stem=null}.label", "Missing initializers: color");

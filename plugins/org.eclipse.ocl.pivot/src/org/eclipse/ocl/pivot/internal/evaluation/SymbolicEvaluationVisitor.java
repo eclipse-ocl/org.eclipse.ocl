@@ -516,7 +516,7 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 	//		return context.getKnownValue(resultValue);
 	//	}
 	//	else {
-			return context.createUnknownValue(ownedInit, false, mayBeNull || mayBeInvalid);
+			return context.createUnknownValue(ownedInit, false, /*mayBeNull ||*/ mayBeInvalid);
 	//	}
 	}
 
