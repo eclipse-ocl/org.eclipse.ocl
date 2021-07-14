@@ -37,9 +37,12 @@ import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.examples.xtext.tests.company.CompanyPackage;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.values.BagImpl;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
+import org.eclipse.ocl.pivot.messages.StatusCodes;
+import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
@@ -505,6 +508,7 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 
 	@Test public void test_unified_types_411441() throws Exception {
 		TestOCL ocl = createOCL();
+		ocl.getEnvironmentFactory().setOption(PivotValidationOptions.PotentialInvalidResult, StatusCodes.Severity.IGNORE);		// XXX BUG 520440 indexOf fail nt supported
 		ocl.assertQueryTrue(null, "let x : Collection(Type) = Set{Integer,Real} in x?->forAll(x : Type | x.name.indexOf('e') > 0)");
 		ocl.assertQueryTrue(null, "let x : Type[*] = Bag{Integer,Real} in x?->forAll(x : Type | x.name.indexOf('e') > 0)");
 		ocl.assertValidationErrorQuery(null, "let x : Type[*] = Set{Integer,Real} in x?->forAll(x : Type | x.name.indexOf('e') > 0)",

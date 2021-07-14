@@ -283,7 +283,7 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 			VariableDeclaration containingVariable = (VariableDeclaration)eContainer;
 			assert containingVariable != null;
 			boolean added = affectedVariables.add(containingVariable);
-			assert added;
+		//	assert added;
 			addRefinedParentTypedElements(containingVariable);
 		}
 		else if (eContainer instanceof OCLExpression) {

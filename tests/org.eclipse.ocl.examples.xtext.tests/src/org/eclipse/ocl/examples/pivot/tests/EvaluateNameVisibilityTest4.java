@@ -44,7 +44,6 @@ import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
-import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
 import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -480,7 +479,7 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 	 * Tests the basic name accesses
 	 */
 	@Test public void test_container_navigation() throws InvocationTargetException {
-		TestOCL ocl = createOCL();
+		TestOCL ocl = createOCLWithProjectMap();
 		initFruitPackage(ocl);
 		MetamodelManagerInternal metamodelManager = ocl.getMetamodelManager();
 		IdResolver idResolver = ocl.getIdResolver();
@@ -628,7 +627,6 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 			OCLinEcoreStandaloneSetup.doSetup();
 			//			OCLDelegateDomain.initialize(null);
 		}
-		ocl.getEnvironmentFactory().setOption(PivotValidationOptions.OptionalDefaultMultiplicity, Boolean.TRUE);
 		MetamodelManager metamodelManager = ocl.getMetamodelManager();
 		String metamodelText =
 				"package Bug411154 : pfx = 'Bug411154.ecore'\n" +
@@ -656,12 +654,12 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 						"		operation op4() : String { body: 'T2a::op4'; }\n" +
 						"		operation op6() : String { body: 'T2a::op6'; }\n" +
 						"		operation op7() : String { body: 'T2a::op7'; }\n" +
-						"		operation op9() : String { body: 'T2a::op9'; }\n" +
+						"		operation op9() : String[?] { body: 'T2a::op9'; }\n" +
 						"	}\n" +
 						"	class T2b extends T1 {\n" +
 						"		operation op6() : String { body: 'T2b::op6'; }\n" +
 						"		operation op7() : String { body: 'T2b::op7'; }\n" +
-						"		operation op9() : String { body: 'T2b::op9'; }\n" +
+						"		operation op9() : String[?] { body: 'T2b::op9'; }\n" +
 						"	}\n" +
 						"	class T3a extends T2a,T2b {\n" +
 						"		operation op1() : String { body: 'T3a::op1'; }\n" +
@@ -768,7 +766,7 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		ocl.assertSemanticErrorQuery(pivotTypeDomain, "t1_3b.op3()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Bug411154", "T1::op3");
 		ocl.assertQueryEquals(testObjectDomain, "T2a::op4", "t1_3b.op4()");
 		ocl.assertQueryEquals(testObjectDomain, "T1::op5", "t1_3b.op5()");
-		ocl.assertQueryInvalid(testObjectDomain, "t1_3b.op6()", NLS.bind(PivotMessages.AmbiguousOperation, "Bug411154::T1::op6() : String[?]", "Bug411154::T3b"), InvalidValueException.class);
+		ocl.assertQueryInvalid(testObjectDomain, "t1_3b.op6()", NLS.bind(PivotMessages.AmbiguousOperation, "Bug411154::T1::op6() : String[1]", "Bug411154::T3b"), InvalidValueException.class);
 		ocl.assertSemanticErrorQuery(pivotTypeDomain, "t1_3b.op7()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Bug411154", "T1::op7");
 		//
 		ocl.assertQueryEquals(testObjectDomain, "T3a::op1", "t1_4.op1()");
