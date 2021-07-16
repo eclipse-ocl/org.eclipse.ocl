@@ -103,7 +103,6 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 	/**
 	 * TypedElements for which the hypothesized value or its control path consequences provides a better value.
 	 */
-	private final @NonNull Set<@NonNull TypedElement> refinedTypedElements = new HashSet<>();
 	private final @NonNull Set<@NonNull CSEElement> refinedCSEElements = new HashSet<>();
 
 	public HypothesizedSymbolicEvaluationEnvironment(@NonNull BaseSymbolicEvaluationEnvironment baseSymbolicEvaluationEnvironment, @NonNull Hypothesis hypothesis, @NonNull TypedElement typedElement) {
@@ -220,8 +219,6 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 					if (refinedSymbolicValue != baseSymbolicValue) {
 						traceSymbolicValue(argument, refinedSymbolicValue);
 						refinedCSEElements.add(symbolicAnalysis.getCSEElement(argument));
-						boolean added = refinedTypedElements.add(argument);
-						assert added;
 					}
 				}
 				i++;
@@ -268,8 +265,6 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 			if (refinedSymbolicValue != null) {
 				traceSymbolicValue(refinedExpression, refinedSymbolicValue);
 				refinedCSEElements.add(symbolicAnalysis.getCSEElement(refinedExpression));
-				boolean added = refinedTypedElements.add(refinedExpression);
-				assert added;
 			}
 			if (refinedExpression instanceof VariableExp) {
 				affectedVariables.add(PivotUtil.getReferredVariable((VariableExp)refinedExpression));
@@ -369,11 +364,12 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 		//	Compute re-evaluate CSEs.
 		//
 		Set<@NonNull CSEElement> reEvaluateCSEs = new HashSet<>();
-		for (@NonNull TypedElement refinedTypedElement : refinedTypedElements) {
-			CSEElement cseElement = symbolicAnalysis.getCSEElement(refinedTypedElement);
+	//	for (@NonNull TypedElement refinedTypedElement : refinedTypedElements) {
+	//		CSEElement cseElement = symbolicAnalysis.getCSEElement(refinedTypedElement);
+		for (@NonNull CSEElement cseElement : refinedCSEElements) {
 			SymbolicValue refinedValue = cseElement2symbolicValue.get(cseElement); // refinedTypedElements2symbolicValue.get(refinedTypedElement);
 			assert refinedValue != null;
-			SymbolicValue old = traceSymbolicValue(refinedTypedElement, refinedValue);	// Install the new 'read' value.
+			SymbolicValue old = cseElement2symbolicValue.put(cseElement, refinedValue);	// Install the new 'read' value.
 		//	assert old == null;
 			reEvaluateCSEs.add(cseElement);
 		}
@@ -405,7 +401,13 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 				return inCompatibility;
 			}
 		}
-		List<@NonNull TypedElement> typedElementsList = new ArrayList<>(refinedTypedElements);
+		Set<@NonNull TypedElement> typedElementsSet = new HashSet<>();
+		for (@NonNull CSEElement cseElement : refinedCSEElements) {
+			for (@NonNull TypedElement typedElement2 : cseElement.getElements()) {
+				typedElementsSet.add(typedElement2);
+			}
+		}
+		List<@NonNull TypedElement> typedElementsList = new ArrayList<>(typedElementsSet);
 		if (typedElementsList.size() > 1) {
 			Collections.sort(typedElementsList, symbolicAnalysis.getTypedElementHeightComparator());
 		}
@@ -508,16 +510,18 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 		}
 		StringUtil.appendIndentation(s, depth+1);
 		s.append("refined");
-		for (@NonNull TypedElement redefinedTypedElement : refinedTypedElements) {
-			StringUtil.appendIndentation(s, depth+2);
-			s.append(redefinedTypedElement.eClass().getName());
-			s.append(" : \"");
-			s.append(redefinedTypedElement);
-			s.append("\" => ");
-			SymbolicValue constrainingValue = cseElement2symbolicValue.get(symbolicAnalysis.getCSEElement(redefinedTypedElement)); //  refinedTypedElements2symbolicValue.get(redefinedTypedElement);
-			assert constrainingValue != null;
-		//	StringUtil.appendIndentation(s, depth+2);
-			s.append(constrainingValue);
+		for (@NonNull CSEElement redefinedCSEElement : refinedCSEElements) {
+			for (@NonNull TypedElement redefinedTypedElement : redefinedCSEElement.getElements()) {
+				StringUtil.appendIndentation(s, depth+2);
+				s.append(redefinedTypedElement.eClass().getName());
+				s.append(" : \"");
+				s.append(redefinedTypedElement);
+				s.append("\" => ");
+				SymbolicValue constrainingValue = cseElement2symbolicValue.get(symbolicAnalysis.getCSEElement(redefinedTypedElement)); //  refinedTypedElements2symbolicValue.get(redefinedTypedElement);
+				assert constrainingValue != null;
+			//	StringUtil.appendIndentation(s, depth+2);
+				s.append(constrainingValue);
+			}
 		}
 		StringUtil.appendIndentation(s, depth+1);
 		s.append("re-evaluate");
