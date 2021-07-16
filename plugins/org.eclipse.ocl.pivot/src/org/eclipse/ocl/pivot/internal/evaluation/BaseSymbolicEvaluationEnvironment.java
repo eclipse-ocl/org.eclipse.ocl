@@ -46,11 +46,6 @@ import org.eclipse.ocl.pivot.values.SymbolicValue;
 public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluationEnvironment
 {
 	/**
-	 * The known control-blind (symbolic) value of each common expression element, null if not yet computed.
-	 */
-	private @NonNull Map<@NonNull CSEElement, @NonNull SymbolicValue> cseElement2symbolicValue = new HashMap<>();
-
-	/**
 	 * The expression-specific refined symbolic values established after contradicting a hypothesis.
 	 */
 	private @NonNull Map<@NonNull TypedElement, @NonNull SymbolicValue> expression2refinedSymbolicValue = new HashMap<>();
@@ -73,7 +68,7 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 
 	@Override
 	public @Nullable SymbolicValue basicGetSymbolicValue(@NonNull CSEElement cseElement) {
-		return cseElement2symbolicValue.get(cseElement);
+		return symbolicAnalysis.basicGetSymbolicValue(cseElement);
 	}
 
 	/**
@@ -127,7 +122,7 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 	}
 
 	public @NonNull Set<@NonNull CSEElement> getCSEElements() {
-		return cseElement2symbolicValue.keySet();
+		return symbolicAnalysis.getCSEElements();
 	}
 
 	public @NonNull SymbolicEvaluationEnvironment getSymbolicEvaluationEnvironment() {
@@ -221,8 +216,7 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 		if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
 			SymbolicAnalysis.HYPOTHESIS.println("  evaluated: " + SymbolicUtil.printPath(typedElement) + " as: " + resultValue);
 		}
-		CSEElement cseElement = symbolicAnalysis.getCSEElement(typedElement);
-		return traceSymbolicValue(cseElement, resultValue);								// Record new value
+		return traceSymbolicValue(typedElement, resultValue);								// Record new value
 	}
 
 	public @NonNull SymbolicValue symbolicReEvaluate(@NonNull TypedElement typedElement) {
@@ -247,7 +241,7 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 	public void toString(@NonNull StringBuilder s, int depth) {
 	//	super.toString(s);
 		StringUtil.appendIndentation(s, 0);
-		List<@NonNull CSEElement> keys = new ArrayList<>(cseElement2symbolicValue.keySet());
+	/*	List<@NonNull CSEElement> keys = new ArrayList<>(cseElement2symbolicValue.keySet());
 		if (keys.size() > 1) {
 			Collections.sort(keys, NameUtil.TO_STRING_COMPARATOR);
 		}
@@ -255,7 +249,7 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 		for (@NonNull CSEElement key : keys) {
 			Object value = cseElement2symbolicValue.get(key);
 			s.append("\n\t\t" + key + " => " + value);
-		}
+		} */
 		List<@NonNull TypedElement> refinedKeys = new ArrayList<>(expression2refinedSymbolicValue.keySet());
 		if (refinedKeys.size() > 0) {
 			if (refinedKeys.size() > 1) {
@@ -271,9 +265,8 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 	}
 
 	@Override
-	public @NonNull SymbolicValue traceSymbolicValue(@NonNull CSEElement cseElement, @NonNull SymbolicValue symbolicValue) {
-		SymbolicValue old = cseElement2symbolicValue.put(cseElement, symbolicValue);
-		assert (old == null) || (old == symbolicValue); //old.equals(symbolicValue);
-		return symbolicValue;
+	public @NonNull SymbolicValue traceSymbolicValue(@NonNull TypedElement typedElement, @NonNull SymbolicValue symbolicValue) {
+		CSEElement cseElement = symbolicAnalysis.getCSEElement(typedElement);
+		return symbolicAnalysis.traceSymbolicValue(cseElement, symbolicValue);
 	}
 }

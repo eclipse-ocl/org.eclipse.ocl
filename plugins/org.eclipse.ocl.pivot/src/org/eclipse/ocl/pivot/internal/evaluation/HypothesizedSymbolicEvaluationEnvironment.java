@@ -441,8 +441,7 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 		}
 		SymbolicValue readValue = basicGetSymbolicValue(typedElement);		// Get the 'read' value
 		if (readValue == null) {											// If a new evaluation
-			CSEElement cseElement = symbolicAnalysis.getCSEElement(typedElement);
-			traceSymbolicValue(cseElement, writeValue);					// Record re-evaluated value
+			traceSymbolicValue(typedElement, writeValue);					// Record re-evaluated value
 			return null;
 		}
 		if (writeValue == readValue) {
@@ -535,7 +534,8 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 	}
 
 	@Override
-	public @NonNull SymbolicValue traceSymbolicValue(@NonNull CSEElement cseElement, @NonNull SymbolicValue symbolicValue) {
+	public @NonNull SymbolicValue traceSymbolicValue(@NonNull TypedElement typedElement, @NonNull SymbolicValue symbolicValue) {
+		CSEElement cseElement = symbolicAnalysis.getCSEElement(typedElement);
 		if ("self.name".equals(cseElement.toString())) {
 			getClass();		// XXX
 		}

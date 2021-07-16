@@ -17,6 +17,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
@@ -41,6 +42,7 @@ import org.eclipse.ocl.pivot.internal.symbolic.SymbolicUnknownValue;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
@@ -69,14 +71,20 @@ public class SymbolicAnalysis /*extends BasicOCLExecutor implements SymbolicExec
 
 
 	/**
-	 * The known symbolic value of known literal values.
+	 * A cache for known symbolic values of known literal values.
 	 */
 	private @NonNull Map<@Nullable Object, org.eclipse.ocl.pivot.internal.symbolic.SymbolicKnownValue> knownValue2symbolicValue = new HashMap<>();
 
 	/**
-	 * The maybe-invalid symbolic value of known TYpeIds.
+	 * A cache of maybe-invalid symbolic value of known TYpeIds.
 	 */
 	private @NonNull Map<@NonNull TypeId, org.eclipse.ocl.pivot.internal.symbolic.SymbolicUnknownValue> typeid2symbolicValue = new HashMap<>();
+
+	/**
+	 * The known control-blind (symbolic) value of each common expression element, null if not yet computed.
+	 */
+	private @NonNull Map<@NonNull CSEElement, @NonNull SymbolicValue> cseElement2symbolicValue = new HashMap<>();
+
 
 	/**
 	 * The expressions for which contradicting a hypothesized value allows a more precise re-evaluation.
@@ -158,6 +166,10 @@ public class SymbolicAnalysis /*extends BasicOCLExecutor implements SymbolicExec
 		return symbolicEvaluationVisitor;
 	}
 
+	public @Nullable SymbolicValue basicGetSymbolicValue(@NonNull CSEElement cseElement) {
+		return cseElement2symbolicValue.get(cseElement);
+	}
+
 	public @NonNull HypothesizedSymbolicEvaluationEnvironment createHypothesizedSymbolicEvaluationEnvironment(@NonNull Hypothesis hypothesis, @NonNull TypedElement typedElement) {
 		HypothesizedSymbolicEvaluationEnvironment hypothesizedEvaluationEnvironment = new HypothesizedSymbolicEvaluationEnvironment(baseSymbolicEvaluationEnvironment, hypothesis, typedElement);
 		List<@NonNull HypothesizedSymbolicEvaluationEnvironment> hypothesizedEvaluationEnvironments2 = hypothesizedEvaluationEnvironments;
@@ -186,6 +198,10 @@ public class SymbolicAnalysis /*extends BasicOCLExecutor implements SymbolicExec
 
 	public @NonNull CSEElement getCSEElement(@NonNull TypedElement element) {
 		return cseAnalysis.getElementCSE(element);
+	}
+
+	public @NonNull Set<@NonNull CSEElement> getCSEElements() {
+		return cseElement2symbolicValue.keySet();
 	}
 
 	public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
@@ -266,6 +282,10 @@ public class SymbolicAnalysis /*extends BasicOCLExecutor implements SymbolicExec
 
 	public @NonNull SymbolicEvaluationEnvironment getSymbolicEvaluationEnvironment() {
 		return baseSymbolicEvaluationEnvironment.getSymbolicEvaluationEnvironment();
+	}
+
+	public @NonNull SymbolicValue getSymbolicValue(@NonNull CSEElement cseElement) {
+		return ClassUtil.nonNullState(basicGetSymbolicValue(cseElement));
 	}
 
 	public @NonNull Comparator<@NonNull TypedElement> getTypedElementHeightComparator() {
@@ -392,6 +412,15 @@ public class SymbolicAnalysis /*extends BasicOCLExecutor implements SymbolicExec
 				s.append(symbolicValue);
 			}
 		}
+	/*	List<@NonNull CSEElement> keys = new ArrayList<>(cseElement2symbolicValue.keySet());
+		if (keys.size() > 1) {
+			Collections.sort(keys, NameUtil.TO_STRING_COMPARATOR);
+		}
+		s.append("\t" + keys.size() + " cses");
+		for (@NonNull CSEElement key : keys) {
+			Object value = cseElement2symbolicValue.get(key);
+			s.append("\n\t\t" + key + " => " + value);
+		} */
 		List<@NonNull HypothesizedSymbolicEvaluationEnvironment> hypothesizedEvaluationEnvironments = getHypothesizedEvaluationEnvironments();
 		if (hypothesizedEvaluationEnvironments != null) {
 			for (HypothesizedSymbolicEvaluationEnvironment hypothesizedSymbolicEvaluationEnvironments : hypothesizedEvaluationEnvironments) {
@@ -406,6 +435,12 @@ public class SymbolicAnalysis /*extends BasicOCLExecutor implements SymbolicExec
 		return s.toString();
 	}
 
+	public @NonNull SymbolicValue traceSymbolicValue(@NonNull CSEElement cseElement, @NonNull SymbolicValue symbolicValue) {
+		SymbolicValue old = cseElement2symbolicValue.put(cseElement, symbolicValue);
+		assert (old == null) || (old == symbolicValue); //old.equals(symbolicValue);
+		return symbolicValue;
+	}
+
 	private @NonNull SymbolicValue traceValue(@NonNull CSEElement cseElement, @Nullable Object value) {
 		SymbolicValue symbolicValue;
 		if (value instanceof SymbolicValue) {
@@ -415,7 +450,6 @@ public class SymbolicAnalysis /*extends BasicOCLExecutor implements SymbolicExec
 			Object boxedValue = environmentFactory.getIdResolver().boxedValueOf(value);
 			symbolicValue = getKnownValue(boxedValue);
 		}
-		BaseSymbolicEvaluationEnvironment evaluationEnvironment = getBaseSymbolicEvaluationEnvironment();
-		return evaluationEnvironment.traceSymbolicValue(cseElement, symbolicValue);
+		return traceSymbolicValue(cseElement, symbolicValue);
 	}
 }

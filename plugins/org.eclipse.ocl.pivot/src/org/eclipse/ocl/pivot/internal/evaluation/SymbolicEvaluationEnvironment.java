@@ -16,7 +16,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
@@ -74,5 +73,5 @@ public interface SymbolicEvaluationEnvironment
 	boolean mayBeNull(@NonNull OCLExpression expression);
 	void setDead(@NonNull OCLExpression expression);
 	@NonNull SymbolicValue symbolicEvaluate(@NonNull TypedElement element);
-	@NonNull SymbolicValue traceSymbolicValue(@NonNull CSEElement cseElement, @NonNull SymbolicValue symbolicValue);
+	@NonNull SymbolicValue traceSymbolicValue(@NonNull TypedElement typedElement, @NonNull SymbolicValue symbolicValue);
 }
