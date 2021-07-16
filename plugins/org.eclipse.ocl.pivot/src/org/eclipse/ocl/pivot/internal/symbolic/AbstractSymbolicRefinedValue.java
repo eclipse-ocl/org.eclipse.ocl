@@ -195,7 +195,7 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 
 		@Override
 		public @Nullable SymbolicStatus basicGetZeroStatus() {
-			SymbolicStatus zeroStatus = super.basicGetInvalidStatus();
+			SymbolicStatus zeroStatus = super.basicGetZeroStatus();
 			if (exceptValue.equals(ValueUtil.ZERO_VALUE)) {
 				zeroStatus = SymbolicStatus.UNSATISFIED;
 			}
@@ -486,23 +486,6 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 	protected AbstractSymbolicRefinedValue(@NonNull SymbolicValue value) {
 		this.value = value;
 		assert !value.isDead();
-	}
-
-	@Override
-	public @NonNull SymbolicValue asRefinementOf(@NonNull SymbolicValue unrefinedValue) {
-	//	@NonNull SymbolicValue thisBaseValue = this.getBaseValue();
-		@NonNull SymbolicValue resultValue = unrefinedValue.getBaseValue();
-		if (!mayBeInvalid()) {// && unrefinedValue.mayBeInvalid()) {
-			resultValue = createExceptValue(resultValue, ValueUtil.INVALID_VALUE);
-		}
-		if (!mayBeNull()) {// && unrefinedValue.mayBeNull()) {
-			resultValue = createExceptValue(resultValue, null);
-		}
-	//	if ((basicGetZeroStatus() != null) && !mayBeZero() && (unrefinedValue.basicGetZeroStatus() != null) && unrefinedValue.mayBeZero()) {
-		if (!mayBeZero()) {// && (unrefinedValue.basicGetZeroStatus() != null) && unrefinedValue.mayBeZero()) {
-			resultValue = createNotValue(createIsZeroValue(resultValue));
-		}
-		return resultValue;
 	}
 
 	@Override

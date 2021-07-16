@@ -540,7 +540,13 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 			getClass();		// XXX
 		}
 		SymbolicValue old = cseElement2symbolicValue.put(cseElement, symbolicValue);	// Install the new 'read' value.
-		assert (old == null) || (old == symbolicValue); //old.equals(symbolicValue);
+		if (old != null) {
+			symbolicValue = symbolicValue.asRefinementOf(old);
+			if (symbolicValue != old) {
+				cseElement2symbolicValue.put(cseElement, symbolicValue);
+			}
+		}
+	//	assert (old == null) || (old == symbolicValue); //old.equals(symbolicValue);
 		return symbolicValue;
 	}
 }

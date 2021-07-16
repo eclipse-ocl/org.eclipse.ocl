@@ -22,7 +22,6 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 {
 	@Override
 	public @NonNull SymbolicValue asRefinementOf(@NonNull SymbolicValue unrefinedValue) {
-	//	@NonNull SymbolicValue thisBaseValue = this.getBaseValue();
 		@NonNull SymbolicValue baseValue = unrefinedValue.getBaseValue();
 		@NonNull SymbolicValue resultValue = baseValue;			// XXX ?? fudging erroneous IsDead
 		if (!mayBeInvalid() && baseValue.mayBeInvalid()) {
@@ -34,7 +33,8 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 		if ((basicGetZeroStatus() != null) && !mayBeZero() && (baseValue.basicGetZeroStatus() != null) && baseValue.mayBeZero()) {
 			resultValue = AbstractSymbolicRefinedValue.createNotValue(AbstractSymbolicRefinedValue.createIsZeroValue(resultValue));
 		}
-		return resultValue;
+		assert resultValue.isRefinementOf(unrefinedValue);
+		return resultValue;		// XXX define a contradiction refinement
 	}
 
 	@Override
@@ -68,7 +68,6 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 	public final boolean isFalse() {
 		SymbolicStatus booleanStatus = basicGetBooleanStatus();
 		return (booleanStatus != null) && booleanStatus.isUnsatisfied();
-	//	return getBooleanStatus().isUnsatisfied();
 	}
 
 	@Override
@@ -94,7 +93,7 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 		if (mayBeNull() && !unrefinedValue.mayBeNull()) {
 			return false;
 		}
-		if (mayBeZero() && !unrefinedValue.mayBeZero()) {
+		if (((basicGetZeroStatus() != null) && mayBeZero()) && !((unrefinedValue.basicGetZeroStatus() != null) && unrefinedValue.mayBeZero())) {
 			return false;
 		}
 		return true;

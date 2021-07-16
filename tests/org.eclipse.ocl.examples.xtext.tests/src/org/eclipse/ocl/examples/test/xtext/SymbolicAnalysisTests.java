@@ -1173,6 +1173,11 @@ public class SymbolicAnalysisTests extends XtextTestCase
 		OperationCallExp negExp = (OperationCallExp) ifExp.getOwnedElse();
 		IntegerLiteralExp literalExp = (IntegerLiteralExp) negExp.getOwnedSource();
 
+		// non-null unknown x
+		SymbolicVariableValue symbolicVariable99 = new SymbolicVariableValue(asExpressionInOCL.getOwnedParameters().get(0), false, false);
+		SymbolicAnalysis symbolicAnalysis399 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, null, new Object[]{symbolicVariable99});
+		checkContents(symbolicAnalysis399, asExpressionInOCL, null, mayBeNulls(contextVariable), null, null);
+
 		// non-null empty x
 		SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, null, new Object[]{ValueUtil.EMPTY_SET});
 		checkContents(symbolicAnalysis1, asExpressionInOCL, isDeads(firstExp, sourcefirstExp), mayBeNulls(contextVariable), null, null);
