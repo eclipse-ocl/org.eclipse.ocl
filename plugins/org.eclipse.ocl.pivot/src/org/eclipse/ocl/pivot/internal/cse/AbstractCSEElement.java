@@ -126,7 +126,8 @@ public abstract class AbstractCSEElement implements CSEElement
 	/**
 	 * The expressions whoe symbolic values make use of this CSE element.
 	 */
-	private final @NonNull List<@NonNull TypedElement> outputs = new ArrayList<>();
+//	private final @NonNull List<@NonNull TypedElement> outputs = new ArrayList<>();
+	private final @NonNull List<@NonNull CSEElement> outputs = new ArrayList<>();
 
 	/**
 	 * The elements for which this is the CSE element.
@@ -160,11 +161,12 @@ public abstract class AbstractCSEElement implements CSEElement
 			inputs = inputs2 = new ArrayList<>();
 		}
 		inputs2.add(inputCSE);
+		((AbstractCSEElement)inputCSE).outputs.add(this);
 	}
 
 	protected void addOutput(@NonNull TypedElement outputExp) {
-		assert !outputs.contains(outputExp);
-		outputs.add(outputExp);
+	//	assert !outputs.contains(outputExp);
+	//	outputs.add(outputExp);
 	}
 
 	@Override
@@ -269,10 +271,10 @@ public abstract class AbstractCSEElement implements CSEElement
 		return cseElement;
 	}
 
-//	@Override
-//	public @NonNull Iterable<@NonNull OCLExpression> getOutputs() {
-//		return outputs;
-//	}
+	@Override
+	public @NonNull Iterable<@NonNull CSEElement> getOutputs() {
+		return outputs;
+	}
 
 	@Override
 	public @NonNull CSEElement getPropertyCSE(@NonNull NavigationCallExp navigationCallExp) {

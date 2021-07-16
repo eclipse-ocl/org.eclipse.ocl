@@ -67,7 +67,7 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 		Map<@NonNull TypedElement, @Nullable String> typedElement2incompatibility2 = typedElement2incompatibility;
 		assert typedElement2incompatibility2 == null : "typedElement2incompatibility already determined for: " + this;
 		typedElement2incompatibility = typedElement2incompatibility2 = new HashMap<>();
-		for (@NonNull TypedElement typedElement : typedElements) {
+		for (@NonNull TypedElement typedElement : typedElements) {		// FIXME, can evaluate all in 'parallel'
 			boolean traceHypothesis = SymbolicAnalysis.HYPOTHESIS.isActive();
 			if (traceHypothesis) {
 				SymbolicAnalysis.HYPOTHESIS.println("  " + getKind() + " hypothesis for: " + SymbolicUtil.printPath(typedElement));

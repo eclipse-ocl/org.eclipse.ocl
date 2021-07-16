@@ -468,11 +468,6 @@ public class SymbolicAnalysisTests extends XtextTestCase
 		PropertyCallExp asPropertyCallExp = (PropertyCallExp) asExpressionInOCL.getOwnedBody();
 		VariableExp asSourceExp = (VariableExp) PivotUtil.getOwnedSource(asPropertyCallExp);
 
-		// safe maybe-null navigation
-		SymbolicAnalysis symbolicAnalysis399 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, null, new Object[]{new SymbolicUnknownValue("p0", deductionsTypeId, true, false)});
-		checkContents(symbolicAnalysis399, asExpressionInOCL, null, mayBeNulls(asExpressionInOCL, contextVariable, firstParameterVariable,
-			asPropertyCallExp, asSourceExp), null, null);
-
 		// safe non-null navigation
 		SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, null, new Object[]{new SymbolicUnknownValue("p0", deductionsTypeId, false, false)});
 		checkContents(symbolicAnalysis1, asExpressionInOCL, null, mayBeNulls(contextVariable), null, null);
@@ -1172,11 +1167,6 @@ public class SymbolicAnalysisTests extends XtextTestCase
 		VariableExp sourcefirstExp = (VariableExp) PivotUtil.getOwnedSource(firstExp);
 		OperationCallExp negExp = (OperationCallExp) ifExp.getOwnedElse();
 		IntegerLiteralExp literalExp = (IntegerLiteralExp) negExp.getOwnedSource();
-
-		// non-null unknown x
-		SymbolicVariableValue symbolicVariable99 = new SymbolicVariableValue(asExpressionInOCL.getOwnedParameters().get(0), false, false);
-		SymbolicAnalysis symbolicAnalysis399 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, null, new Object[]{symbolicVariable99});
-		checkContents(symbolicAnalysis399, asExpressionInOCL, null, mayBeNulls(contextVariable), null, null);
 
 		// non-null empty x
 		SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, null, new Object[]{ValueUtil.EMPTY_SET});

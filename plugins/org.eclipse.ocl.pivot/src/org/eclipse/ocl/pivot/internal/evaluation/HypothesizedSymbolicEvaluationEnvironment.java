@@ -101,6 +101,11 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 	private final @NonNull Set<@NonNull TypedElement> affectedTypedElements = new HashSet<>();
 
 	/**
+	 * CSEElements whose symbolic value must be re-evaluated..
+	 */
+	private final @NonNull Set<@NonNull CSEElement> affectedCSEElements = new HashSet<>();
+
+	/**
 	 * TypedElements for which the hypothesized value or its control path consequences provides a better value.
 	 */
 	private final @NonNull Set<@NonNull CSEElement> refinedCSEElements = new HashSet<>();
@@ -217,8 +222,9 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 						refinedSymbolicValue = AbstractSymbolicRefinedValue.createExceptValue(refinedSymbolicValue, null);
 					}
 					if (refinedSymbolicValue != baseSymbolicValue) {
-						traceSymbolicValue(argument, refinedSymbolicValue);
-						refinedCSEElements.add(symbolicAnalysis.getCSEElement(argument));
+						CSEElement cseElement = symbolicAnalysis.getCSEElement(argument);
+						traceSymbolicValue(cseElement, refinedSymbolicValue);
+						refinedCSEElements.add(cseElement);
 					}
 				}
 				i++;
@@ -263,8 +269,9 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 				}
 			}
 			if (refinedSymbolicValue != null) {
-				traceSymbolicValue(refinedExpression, refinedSymbolicValue);
-				refinedCSEElements.add(symbolicAnalysis.getCSEElement(refinedExpression));
+				CSEElement cseElement = symbolicAnalysis.getCSEElement(refinedExpression);
+				traceSymbolicValue(cseElement, refinedSymbolicValue);
+				refinedCSEElements.add(cseElement);
 			}
 			if (refinedExpression instanceof VariableExp) {
 				affectedVariables.add(PivotUtil.getReferredVariable((VariableExp)refinedExpression));
@@ -322,7 +329,7 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 	//	@SuppressWarnings("unused") @NonNull SymbolicValue originalValue = hypothesis.getOriginalValue();
 		@NonNull SymbolicValue hypothesizedValue = hypothesis.getHypothesizedValue();
 		CSEElement hypothesisCSE = hypothesis.getCSEElement();
-		traceSymbolicValue(typedElement, hypothesizedValue);		// Install the known 'read' value.
+		traceSymbolicValue(hypothesisCSE, hypothesizedValue);		// Install the known 'read' value.
 		//
 		//	Ensure that all parents of the hypothesized expressions are re-evaluated.
 		//
@@ -336,6 +343,20 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 			affectedVariables.add((VariableDeclaration)typedElement);
 		}
 		addRefinedParentTypedElements(typedElement);
+		addRefinedOutputCSEElements(hypothesisCSE);
+
+	//	for (@NonNull CSEElement cseElement9 : affectedCSEElements) {
+	//		for (@NonNull TypedElement typedElement9 : cseElement9.getElements()) {
+	//			assert affectedTypedElements.contains(typedElement9);
+	//		}
+	//	}
+		for (@NonNull TypedElement typedElement9 : affectedTypedElements) {
+			assert affectedCSEElements.contains(symbolicAnalysis.getCSEElement(typedElement9));
+		}
+
+
+
+
 		//
 		//	Ensure that all children of control path expressions are refined to enforce the control path executability.
 		//
@@ -386,6 +407,14 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 				SymbolicValue symbolicValue = baseSymbolicEvaluationEnvironment.getSymbolicValue(cseElement);
 				SymbolicValue old = cseElement2symbolicValue.put(cseElement, symbolicValue);
 				assert old == null;
+			}
+		}
+	}
+
+	private void addRefinedOutputCSEElements(@NonNull CSEElement cseElement) {
+		for (@NonNull CSEElement cseOutput : cseElement.getOutputs()) {
+			if (affectedCSEElements.add(cseOutput)) {
+				addRefinedOutputCSEElements(cseOutput);
 			}
 		}
 	}
@@ -447,7 +476,8 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 		}
 		SymbolicValue readValue = basicGetSymbolicValue(typedElement);		// Get the 'read' value
 		if (readValue == null) {											// If a new evaluation
-			traceSymbolicValue(typedElement, writeValue);					// Record re-evaluated value
+			CSEElement cseElement = symbolicAnalysis.getCSEElement(typedElement);
+			traceSymbolicValue(cseElement, writeValue);					// Record re-evaluated value
 			return null;
 		}
 		if (writeValue == readValue) {
@@ -541,12 +571,7 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 		}
 	}
 
-	@Override
-	public @NonNull SymbolicValue traceSymbolicValue(@NonNull TypedElement typedElement, @NonNull SymbolicValue symbolicValue) {
-		CSEElement cseElement = symbolicAnalysis.getCSEElement(typedElement);
-		if ("self.name".equals(cseElement.toString())) {
-			getClass();		// XXX
-		}
+	public @NonNull SymbolicValue traceSymbolicValue(@NonNull CSEElement cseElement, @NonNull SymbolicValue symbolicValue) {
 		SymbolicValue old = cseElement2symbolicValue.put(cseElement, symbolicValue);	// Install the new 'read' value.
 		if (old != null) {
 			symbolicValue = symbolicValue.asRefinementOf(old);
@@ -556,5 +581,14 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 		}
 	//	assert (old == null) || (old == symbolicValue); //old.equals(symbolicValue);
 		return symbolicValue;
+	}
+
+	@Override
+	public @NonNull SymbolicValue traceSymbolicValue(@NonNull TypedElement typedElement, @NonNull SymbolicValue symbolicValue) {
+		CSEElement cseElement = symbolicAnalysis.getCSEElement(typedElement);
+		if ("self.name".equals(cseElement.toString())) {
+			getClass();		// XXX
+		}
+		return traceSymbolicValue(cseElement, symbolicValue);
 	}
 }

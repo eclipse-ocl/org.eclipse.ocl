@@ -70,6 +70,7 @@ public interface CSEElement extends Comparable<@NonNull CSEElement>
 	 * The expressions whose evaluation uses this CSE.
 	 */
 //	@NonNull Iterable<@NonNull OCLExpression> getOutputs();
+	@NonNull Iterable<@NonNull CSEElement> getOutputs();
 
 	/**
 	 * Add a navigation for navigationCallExp with this CSE as the source.
