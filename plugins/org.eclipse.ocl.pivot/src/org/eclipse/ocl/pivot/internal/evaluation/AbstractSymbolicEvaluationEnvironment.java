@@ -49,12 +49,6 @@ public abstract class AbstractSymbolicEvaluationEnvironment implements SymbolicE
 		this.cseAnalysis = symbolicAnalysis.getCSEAnalysis();
 	}
 
-	@Override
-	public @Nullable SymbolicValue basicGetSymbolicValue(@NonNull TypedElement element) {
-		CSEElement cseElement = cseAnalysis.getCSEElement(element);
-		return basicGetSymbolicValue(cseElement);
-	}
-
 	public abstract @Nullable SymbolicValue basicGetSymbolicValue(@NonNull CSEElement cseElement);
 
 	@Override

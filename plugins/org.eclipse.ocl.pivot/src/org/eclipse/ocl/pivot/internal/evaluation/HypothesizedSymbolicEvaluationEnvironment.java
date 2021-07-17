@@ -347,6 +347,12 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 	}
 
 	@Override
+	public final @Nullable SymbolicValue basicGetSymbolicValue(@NonNull TypedElement element) {
+		CSEElement cseElement = cseAnalysis.getCSEElement(element);
+		return basicGetSymbolicValue(cseElement);
+	}
+
+	@Override
 	public @Nullable SymbolicValue basicGetSymbolicValue(@NonNull CSEElement cseElement) {
 		return cseElement2symbolicValue.get(cseElement);
 	}
