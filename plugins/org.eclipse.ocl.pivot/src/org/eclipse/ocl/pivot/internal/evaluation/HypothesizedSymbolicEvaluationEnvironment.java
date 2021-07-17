@@ -22,7 +22,6 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.IfExp;
 import org.eclipse.ocl.pivot.LoopExp;
@@ -33,7 +32,6 @@ import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VariableDeclaration;
-import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.internal.symbolic.AbstractSymbolicRefinedValue;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicStatus;
@@ -310,9 +308,7 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 	}
 
 	public @Nullable String analyze() {
-		List<@NonNull TypedElement> computedAffectedTypedElements = computeAffectedTypedElements();
-	//	assert new HashSet<>(computedAffectedTypedElements).equals(new HashSet<>(affectedTypedElements));
-		List<@NonNull TypedElement> affectedTypedElementsList = new ArrayList<>(computedAffectedTypedElements);
+		List<@NonNull TypedElement> affectedTypedElementsList = new ArrayList<>(computeAffectedTypedElements());
 		if (affectedTypedElementsList.size() > 1) {
 			Collections.sort(affectedTypedElementsList, cseAnalysis.getTypedElementHeightComparator());
 		}
@@ -349,12 +345,7 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 
 	@Override
 	public @Nullable SymbolicValue basicGetSymbolicValue(@NonNull CSEElement cseElement) {
-		SymbolicValue symbolicValue = cseElement2symbolicValue.get(cseElement);
-		if (symbolicValue == null) {
-		//	symbolicValue = baseSymbolicEvaluationEnvironment.basicGetSymbolicValue(cseElement);
-			getClass();			// XXX
-		}
-		return symbolicValue;
+		return cseElement2symbolicValue.get(cseElement);
 	}
 
 	private @NonNull List<@NonNull TypedElement> computeAffectedTypedElements() {
@@ -408,18 +399,6 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 		addRefinedParentTypedElements(typedElement);
 		addRefinedOutputCSEElements(hypothesisCSE);
 
-	//	for (@NonNull CSEElement cseElement9 : affectedCSEElements) {
-	//		for (@NonNull TypedElement typedElement9 : cseElement9.getElements()) {
-	//			assert affectedTypedElements.contains(typedElement9);
-	//		}
-	//	}
-		for (@NonNull TypedElement typedElement9 : affectedTypedElements) {
-			assert affectedCSEElements.contains(cseAnalysis.getCSEElement(typedElement9));
-		}
-
-
-
-
 		//
 		//	Ensure that all children of control path expressions are refined to enforce the control path executability.
 		//
@@ -432,55 +411,15 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 		}
 
 
-		for (@NonNull TypedElement typedElement9 : affectedTypedElements) {
-			assert affectedCSEElements.contains(cseAnalysis.getCSEElement(typedElement9));
-		}
-
-		Iterable<@NonNull VariableDeclaration> computedAffectedVariables = computeAffectedVariables();
-		//
-		//	Ensure that all usage of all VariableExps for all refined Variables are re-evaluated.
-		//
-		for (@NonNull VariableDeclaration variable : computedAffectedVariables) {		// FIXME should manage a single traversal
-			CSEElement variableCSE = cseAnalysis.getCSEElement(variable);
-			assert affectedCSEElements.contains(variableCSE);
-			for (@NonNull Element output : variableCSE.getElements()) {
-				if ((output instanceof VariableExp) && (output != typedElement)) {	// FIXME ?? surely (output != typedElement) is redundant ??
-					VariableExp variableExp = (VariableExp)output;
-					if (affectedTypedElements.add(variableExp)) {
-						addRefinedParentTypedElements(variableExp);
-					}
-				}
-			}
-		}
-		List<@NonNull TypedElement> computedAffectedTypedElements = computeAffectedTypedElements();
-	//	assert new HashSet<>(computedAffectedTypedElements).equals(new HashSet<>(affectedTypedElements));
-		for (@NonNull TypedElement typedElement9 : affectedTypedElements) {
-			CSEElement cseElement = cseAnalysis.getCSEElement(typedElement9);
-			assert affectedCSEElements.contains(cseElement);
-		}
-		//
-		//	Compute re-evaluate CSEs.
-		//
-		Set<@NonNull CSEElement> reEvaluateCSEs = new HashSet<>();
-	//	for (@NonNull TypedElement refinedTypedElement : refinedTypedElements) {
-	//		CSEElement cseElement = cseAnalysis.getCSEElement(refinedTypedElement);
-		for (@NonNull CSEElement cseElement : refinedCSEElements) {
-			SymbolicValue refinedValue = cseElement2symbolicValue.get(cseElement); // refinedTypedElements2symbolicValue.get(refinedTypedElement);
-			assert refinedValue != null;
-			SymbolicValue old = cseElement2symbolicValue.put(cseElement, refinedValue);	// Install the new 'read' value.
-		//	assert old == null;
-			reEvaluateCSEs.add(cseElement);
-		}
-		for (@NonNull TypedElement affectedTypedElement : computedAffectedTypedElements) {//affectedTypedElements) {
-			CSEElement cseElement = cseAnalysis.getCSEElement(affectedTypedElement);
-			reEvaluateCSEs.add(cseElement);
-		}
+	//	List<@NonNull TypedElement> computedAffectedTypedElements1 = computeAffectedTypedElements();
+	//	List<@NonNull TypedElement> computedAffectedTypedElements2 = computeAffectedTypedElements();
+	//	assert new HashSet<>(computedAffectedTypedElements1).equals(new HashSet<>(computedAffectedTypedElements2));
 		//
 		// Copy all unaffected CSEs.
 		//
 		BaseSymbolicEvaluationEnvironment baseSymbolicEvaluationEnvironment = getBaseSymbolicEvaluationEnvironment();
 		for (@NonNull CSEElement cseElement : baseSymbolicEvaluationEnvironment.getCSEElements()) {
-			if ((cseElement != hypothesisCSE) && !reEvaluateCSEs.contains(cseElement)/* && !affectedCSEElements.contains(cseElement)*/ && !refinedCSEElements.contains(cseElement)) {
+			if (!affectedCSEElements.contains(cseElement) && !refinedCSEElements.contains(cseElement)) {
 				SymbolicValue symbolicValue = baseSymbolicEvaluationEnvironment.getSymbolicValue(cseElement);
 				SymbolicValue old = cseElement2symbolicValue.put(cseElement, symbolicValue);
 				assert old == null;
@@ -622,7 +561,7 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 			s.append(affectedVariable);
 			s.append("\"");
 		}
-		for (@NonNull TypedElement affectedTypedElement : affectedTypedElements) {
+		for (@NonNull TypedElement affectedTypedElement : computeAffectedTypedElements()) {
 			StringUtil.appendIndentation(s, depth+2);
 			s.append(affectedTypedElement.eClass().getName());
 			s.append(" : \"");
