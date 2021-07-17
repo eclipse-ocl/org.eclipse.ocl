@@ -43,10 +43,11 @@ import org.eclipse.ocl.pivot.values.SymbolicValue;
  * A BaseSymbolicEvaluationEnvironment supports the control-blind symbolic evaluation initially to associate a
  * SymbolicValue with each CSEElement.
  *
- * The initial analyze() populates the cseElement2symbolicValue with the immuatbel control independent symbolic value
+ * The initial analyze() populates the cseElement2symbolicValue with the immutable control independent symbolic value
  * of each CSE.
  *
- * Subsequently, evaluation of hypothesies may refine the value of specific expressions.
+ * Subsequently reanalyze() assesses a hypothesis for a particular typed element and if contradicted may
+ * populate typedElement2refinedSymbolicValue with a more precise value for the typed element.
  *
  * @since 1.16
  */
@@ -64,6 +65,9 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 	 */
 	private @Nullable Map<@NonNull TypedElement, @NonNull SymbolicValue> typedElement2refinedSymbolicValue = null;
 
+	/**
+	 * Non-null while reanalyze() is assessing a hypothesis for a typed element.
+	 */
 	private @Nullable HypothesizedSymbolicEvaluationEnvironment hypothesizedSymbolicEvaluationEnvironment = null;
 
 	public BaseSymbolicEvaluationEnvironment(@NonNull SymbolicAnalysis symbolicAnalysis, @NonNull ExpressionInOCL expressionInOCL) {
@@ -209,7 +213,7 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 		return incompatibility;
 	}
 
-	public void refineValue(@NonNull TypedElement typedElement, @NonNull SymbolicValue symbolicValue) {
+	public void refineSymbolicValue(@NonNull TypedElement typedElement, @NonNull SymbolicValue symbolicValue) {
 		if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
 			SymbolicAnalysis.HYPOTHESIS.println("    refined: " + symbolicValue);
 		}

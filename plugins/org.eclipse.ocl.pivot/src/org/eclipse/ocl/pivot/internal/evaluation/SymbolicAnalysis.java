@@ -174,7 +174,7 @@ public class SymbolicAnalysis /*extends BasicOCLExecutor implements SymbolicExec
 				if (isCanceled()) {
 					throw new EvaluationHaltedException("Canceled");
 				}
-				hypothesis.check();
+				hypothesis.analyze();
 			}
 		}
 	}

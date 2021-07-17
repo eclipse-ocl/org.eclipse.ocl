@@ -63,7 +63,7 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 		}
 	}
 
-	public void check() {
+	public void analyze() {
 		Map<@NonNull TypedElement, @Nullable String> typedElement2incompatibility2 = typedElement2incompatibility;
 		assert typedElement2incompatibility2 == null : "typedElement2incompatibility already determined for: " + this;
 		typedElement2incompatibility = typedElement2incompatibility2 = new HashMap<>();
@@ -182,7 +182,7 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 			if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
 				SymbolicAnalysis.HYPOTHESIS.println("  refined: " + refinedValue);
 			}
-			baseSymbolicEvaluationEnvironment.refineValue(typedElement, refinedValue);
+			baseSymbolicEvaluationEnvironment.refineSymbolicValue(typedElement, refinedValue);
 		}
 	}
 
@@ -206,7 +206,7 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 		protected void refine(@NonNull TypedElement typedElement) {
 			BaseSymbolicEvaluationEnvironment baseSymbolicEvaluationEnvironment = symbolicAnalysis.getBaseSymbolicEvaluationEnvironment();
 			SymbolicValue refinedValue = getRefinedValue();
-			baseSymbolicEvaluationEnvironment.refineValue(typedElement, refinedValue);
+			baseSymbolicEvaluationEnvironment.refineSymbolicValue(typedElement, refinedValue);
 		}
 	}
 
@@ -230,7 +230,7 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 		protected void refine(@NonNull TypedElement typedElement) {
 			BaseSymbolicEvaluationEnvironment baseSymbolicEvaluationEnvironment = symbolicAnalysis.getBaseSymbolicEvaluationEnvironment();
 			SymbolicValue refinedValue = getRefinedValue();
-			baseSymbolicEvaluationEnvironment.refineValue(typedElement, refinedValue);
+			baseSymbolicEvaluationEnvironment.refineSymbolicValue(typedElement, refinedValue);
 		}
 	}
 
@@ -277,7 +277,7 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 			if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
 				SymbolicAnalysis.HYPOTHESIS.println("  refined: " + refinedValue);
 			}
-			baseSymbolicEvaluationEnvironment.refineValue(typedElement, refinedValue);
+			baseSymbolicEvaluationEnvironment.refineSymbolicValue(typedElement, refinedValue);
 		}
 	}
 }
