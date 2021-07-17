@@ -46,8 +46,8 @@ import org.eclipse.ocl.pivot.values.SymbolicValue;
  * The initial analyze() populates the cseElement2symbolicValue with the immutable control independent symbolic value
  * of each CSE.
  *
- * Subsequently reanalyze() assesses a hypothesis for a particular typed element and if contradicted may
- * populate typedElement2refinedSymbolicValue with a more precise value for the typed element.
+ * Subsequently hypothesize() assesses a hypothesis for a particular typed element and if contradicted the hypothesis
+ * may populate typedElement2refinedSymbolicValue with a more precise value for the typed element.
  *
  * @since 1.16
  */
@@ -188,6 +188,18 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 		return hypothesizedSymbolicEvaluationEnvironment != null ? hypothesizedSymbolicEvaluationEnvironment : this;
 	}
 
+	public @Nullable String hypothesize(@NonNull Hypothesis hypothesis, @NonNull TypedElement typedElement) {
+		if (typedElement2refinedSymbolicValue == null) {
+			typedElement2refinedSymbolicValue = new HashMap<>();
+		}
+		assert this.hypothesizedSymbolicEvaluationEnvironment == null;
+		this.hypothesizedSymbolicEvaluationEnvironment = symbolicAnalysis.createHypothesizedSymbolicEvaluationEnvironment(hypothesis, typedElement);
+		String incompatibility = hypothesizedSymbolicEvaluationEnvironment.analyze();
+		assert this.hypothesizedSymbolicEvaluationEnvironment != null;
+		hypothesizedSymbolicEvaluationEnvironment = null;
+		return incompatibility;
+	}
+
 	protected @NonNull SymbolicValue initParameter(@NonNull Variable parameter, @Nullable Object value) {
 		CSEElement cseElement = cseAnalysis.getCSEElement(parameter);
 		SymbolicValue symbolicValue;
@@ -199,18 +211,6 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 			symbolicValue = getKnownValue(boxedValue);
 		}
 		return setSymbolicValue(cseElement, symbolicValue);
-	}
-
-	public @Nullable String reanalyze(@NonNull Hypothesis hypothesis, @NonNull TypedElement typedElement) {
-		if (typedElement2refinedSymbolicValue == null) {
-			typedElement2refinedSymbolicValue = new HashMap<>();
-		}
-		assert this.hypothesizedSymbolicEvaluationEnvironment == null;
-		this.hypothesizedSymbolicEvaluationEnvironment = symbolicAnalysis.createHypothesizedSymbolicEvaluationEnvironment(hypothesis, typedElement);
-		String incompatibility = hypothesizedSymbolicEvaluationEnvironment.analyze();
-		assert this.hypothesizedSymbolicEvaluationEnvironment != null;
-		hypothesizedSymbolicEvaluationEnvironment = null;
-		return incompatibility;
 	}
 
 	public void refineSymbolicValue(@NonNull TypedElement typedElement, @NonNull SymbolicValue symbolicValue) {

@@ -80,8 +80,11 @@ public class SymbolicAnalysis /*extends BasicOCLExecutor implements SymbolicExec
 	 * The expressions for which contradicting a hypothesized value allows a more precise re-evaluation.
 	 */
 //	private @Nullable Map<@NonNull CSEElement, @NonNull List<@NonNull Hypothesis>> cseElement2hypotheses = null;
-	private @Nullable Map<@NonNull Iterable<@NonNull TypedElement>, @NonNull List<@NonNull Hypothesis>> typedElement2hypotheses = null;
+//	private @Nullable Map<@NonNull Iterable<@NonNull TypedElement>, @NonNull List<@NonNull Hypothesis>> ztypedElement2hypotheses = null;
 
+	/**
+	 * The hypotheses that may allow the symbolic values of some typed elements to be refined.
+	 */
 	private @Nullable List<@NonNull Hypothesis> allHypotheses = null;
 
 	/**
@@ -107,11 +110,6 @@ public class SymbolicAnalysis /*extends BasicOCLExecutor implements SymbolicExec
 	}
 
 	public void addHypothesis(@NonNull Hypothesis hypothesis) {
-	//	for (@NonNull TypedElement typedElement : hypothesis.getTypedElements()) {
-	//		List<@NonNull Hypothesis> hypotheses = getHypotheses(typedElement);
-	//		hypotheses.add(hypothesis);
-	//	}
-		//	assert old == null : "Repeated hypothesis : " + hypothesis;
 		List<@NonNull Hypothesis> allHypotheses2 = allHypotheses;
 		if (allHypotheses2 == null) {
 			allHypotheses2 = allHypotheses = new ArrayList<>();
@@ -120,35 +118,35 @@ public class SymbolicAnalysis /*extends BasicOCLExecutor implements SymbolicExec
 	}
 
 	public void addMayBeEmptyHypothesis(@NonNull Iterable<@NonNull TypedElement> typedElements) {
-		Hypothesis hypothesis = getHypotheses(typedElements, Hypothesis.MayBeEmptyHypothesis.class);
-		if (hypothesis == null) {
+		Hypothesis hypothesis;// = getHypotheses(typedElements, Hypothesis.MayBeEmptyHypothesis.class);
+	//	if (hypothesis == null) {
 			hypothesis = new Hypothesis.MayBeEmptyHypothesis(this, typedElements);
 			addHypothesis(hypothesis);
-		}
+	//	}
 	}
 
 	public void addMayBeInvalidHypothesis(@NonNull Iterable<@NonNull TypedElement> typedElements) {
-		Hypothesis hypothesis = getHypotheses(typedElements, Hypothesis.MayBeInvalidHypothesis.class);
-		if (hypothesis == null) {
+		Hypothesis hypothesis;// = getHypotheses(typedElements, Hypothesis.MayBeInvalidHypothesis.class);
+	//	if (hypothesis == null) {
 			hypothesis = new Hypothesis.MayBeInvalidHypothesis(this, typedElements);
 			addHypothesis(hypothesis);
-		}
+	//	}
 	}
 
 	public void addMayBeNullHypothesis(@NonNull Iterable<@NonNull TypedElement> typedElements) {
-		Hypothesis hypothesis = getHypotheses(typedElements, Hypothesis.MayBeNullHypothesis.class);
-		if (hypothesis == null) {
+		Hypothesis hypothesis;// = getHypotheses(typedElements, Hypothesis.MayBeNullHypothesis.class);
+	//	if (hypothesis == null) {
 			hypothesis = new Hypothesis.MayBeNullHypothesis(this, typedElements);
 			addHypothesis(hypothesis);
-		}
+	//	}
 	}
 
 	public void addMayBeZeroHypothesis(@NonNull Iterable<@NonNull TypedElement> typedElements) {
-		Hypothesis hypothesis = getHypotheses(typedElements, Hypothesis.MayBeZeroHypothesis.class);
-		if (hypothesis == null) {
+		Hypothesis hypothesis;// = getHypotheses(typedElements, Hypothesis.MayBeZeroHypothesis.class);
+	//	if (hypothesis == null) {
 			hypothesis = new Hypothesis.MayBeZeroHypothesis(this, typedElements);
 			addHypothesis(hypothesis);
-		}
+	//	}
 	}
 
 	public void analyze(@NonNull ExpressionInOCL expressionInOCL, @Nullable Object selfObject, @Nullable Object resultObject, @Nullable Object @Nullable [] parameters) {
@@ -161,12 +159,12 @@ public class SymbolicAnalysis /*extends BasicOCLExecutor implements SymbolicExec
 		executor.initializeEvaluationEnvironment(expressionInOCL);
 		cseAnalysis.analyze(expressionInOCL);
 		baseSymbolicEvaluationEnvironment.analyze(selfObject, resultObject, parameters);
-		Map<@NonNull Iterable<@NonNull TypedElement>, @NonNull List<@NonNull Hypothesis>> typedElement2hypotheses2 = typedElement2hypotheses;
-		if (typedElement2hypotheses2 != null) {
+		List<@NonNull Hypothesis> allHypotheses2 = allHypotheses;
+		if (allHypotheses2 != null) {
 			if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
 				SymbolicAnalysis.HYPOTHESIS.println(" resolving hypotheses");
 			}
-			List<@NonNull Hypothesis> hypotheses = new ArrayList<>(allHypotheses);
+			List<@NonNull Hypothesis> hypotheses = new ArrayList<>(allHypotheses2);
 			if (hypotheses.size() > 1) {
 				Collections.sort(hypotheses);
 			}
@@ -226,16 +224,16 @@ public class SymbolicAnalysis /*extends BasicOCLExecutor implements SymbolicExec
 		return executor;
 	}
 
-	private @Nullable Hypothesis getHypotheses(@NonNull Iterable<@NonNull TypedElement> typedElements, @NonNull Class<?> hypothesisClass) {
+/*	private @Nullable Hypothesis getHypotheses(@NonNull Iterable<@NonNull TypedElement> typedElements, @NonNull Class<?> hypothesisClass) {
 		for (@NonNull Hypothesis hypothesis : getHypotheses(typedElements)) {
 			if (hypothesis.getClass() == hypothesisClass) {
 				return hypothesis;
 			}
 		}
 		return null;
-	}
+	} */
 
-	private @NonNull List<@NonNull Hypothesis> getHypotheses(@NonNull Iterable<@NonNull TypedElement> typedElements) {
+/*	private @NonNull List<@NonNull Hypothesis> getHypotheses(@NonNull Iterable<@NonNull TypedElement> typedElements) {
 		Map<@NonNull Iterable<@NonNull TypedElement>, @NonNull List<@NonNull Hypothesis>> typedElement2hypotheses2 = typedElement2hypotheses;
 		if (typedElement2hypotheses2 == null) {
 			typedElement2hypotheses = typedElement2hypotheses2 = new HashMap<>();
@@ -246,7 +244,7 @@ public class SymbolicAnalysis /*extends BasicOCLExecutor implements SymbolicExec
 			typedElement2hypotheses2.put(typedElements, hypotheses);
 		}
 		return hypotheses;
-	}
+	} */
 
 	public @Nullable List<@NonNull HypothesizedSymbolicEvaluationEnvironment> getHypothesizedEvaluationEnvironments() {
 		return hypothesizedEvaluationEnvironments;

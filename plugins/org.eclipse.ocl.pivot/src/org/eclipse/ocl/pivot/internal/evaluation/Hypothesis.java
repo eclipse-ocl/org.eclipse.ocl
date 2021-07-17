@@ -26,6 +26,11 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
+ * A Hypothesis identifies a hypothesizedValue to be independently assessed for each of the typed elements sharing a cse element,
+ * and, if that assessment leads to a contradiction, provides a refined value for the typed element.
+ *
+ * Derived Hypothesis support alternative hypothesized and subsequent refined values.
+ *
  * @since 1.16
  */
 public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
@@ -78,7 +83,7 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 			//	SymbolicAnalysis.HYPOTHESIS.println(this.toString());
 			}
 			BaseSymbolicEvaluationEnvironment baseSymbolicEvaluationEnvironment = symbolicAnalysis.getBaseSymbolicEvaluationEnvironment();
-			String incompatibility = baseSymbolicEvaluationEnvironment.reanalyze(this, typedElement);
+			String incompatibility = baseSymbolicEvaluationEnvironment.hypothesize(this, typedElement);
 			if (incompatibility != null) {
 				SymbolicAnalysis.HYPOTHESIS.println("    => contradiction: " + incompatibility);
 				refine(typedElement);
