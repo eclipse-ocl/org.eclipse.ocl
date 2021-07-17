@@ -372,6 +372,7 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 		//
 		for (@NonNull VariableDeclaration variable : affectedVariables) {		// FIXME should manage a single traversal
 			CSEElement variableCSE = symbolicAnalysis.getCSEElement(variable);
+			assert (hypothesisCSE == variableCSE) || affectedCSEElements.contains(variableCSE);
 			for (@NonNull Element output : variableCSE.getElements()) {
 				if ((output instanceof VariableExp) && (output != typedElement)) {	// FIXME ?? surely (output != typedElement) is redundant ??
 					VariableExp variableExp = (VariableExp)output;
@@ -380,6 +381,14 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 					}
 				}
 			}
+		}
+		for (@NonNull TypedElement typedElement9 : affectedTypedElements) {
+			CSEElement cseElement = symbolicAnalysis.getCSEElement(typedElement9);
+			assert (hypothesisCSE == cseElement) || affectedCSEElements.contains(cseElement);
+		}
+		for (@NonNull TypedElement typedElement9 : affectedVariables) {
+			CSEElement cseElement = symbolicAnalysis.getCSEElement(typedElement9);
+			assert (hypothesisCSE == cseElement) || affectedCSEElements.contains(cseElement);
 		}
 		//
 		//	Compute re-evaluate CSEs.
@@ -403,7 +412,7 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 		//
 		BaseSymbolicEvaluationEnvironment baseSymbolicEvaluationEnvironment = getBaseSymbolicEvaluationEnvironment();
 		for (@NonNull CSEElement cseElement : baseSymbolicEvaluationEnvironment.getCSEElements()) {
-			if ((cseElement != hypothesisCSE) && !reEvaluateCSEs.contains(cseElement)) {
+			if ((cseElement != hypothesisCSE) && !reEvaluateCSEs.contains(cseElement)/* && !affectedCSEElements.contains(cseElement)*/ && !refinedCSEElements.contains(cseElement)) {
 				SymbolicValue symbolicValue = baseSymbolicEvaluationEnvironment.getSymbolicValue(cseElement);
 				SymbolicValue old = cseElement2symbolicValue.put(cseElement, symbolicValue);
 				assert old == null;
