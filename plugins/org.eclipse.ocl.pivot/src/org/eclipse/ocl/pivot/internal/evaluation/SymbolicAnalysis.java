@@ -155,10 +155,28 @@ public class SymbolicAnalysis /*extends BasicOCLExecutor implements SymbolicExec
 		if (isCanceled()) {
 			throw new EvaluationHaltedException("Canceled");
 		}
+		if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
+			SymbolicAnalysis.HYPOTHESIS.println("Analyzing: " + expressionInOCL);
+		}
 		executor.initializeEvaluationEnvironment(expressionInOCL);
 		cseAnalysis.analyze(expressionInOCL);
 		baseSymbolicEvaluationEnvironment.analyze(selfObject, resultObject, parameters);
-		resolveHypotheses();
+		Map<@NonNull Iterable<@NonNull TypedElement>, @NonNull List<@NonNull Hypothesis>> typedElement2hypotheses2 = typedElement2hypotheses;
+		if (typedElement2hypotheses2 != null) {
+			if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
+				SymbolicAnalysis.HYPOTHESIS.println(" resolving hypotheses");
+			}
+			List<@NonNull Hypothesis> hypotheses = new ArrayList<>(allHypotheses);
+			if (hypotheses.size() > 1) {
+				Collections.sort(hypotheses);
+			}
+			for (@NonNull Hypothesis hypothesis : hypotheses) {	// XXX domain growth
+				if (isCanceled()) {
+					throw new EvaluationHaltedException("Canceled");
+				}
+				hypothesis.check();
+			}
+		}
 	}
 
 	public @NonNull SymbolicEvaluationVisitor createSymbolicEvaluationVisitor(@NonNull SymbolicEvaluationEnvironment symbolicEvaluationEnvironment) {
@@ -311,25 +329,6 @@ public class SymbolicAnalysis /*extends BasicOCLExecutor implements SymbolicExec
 
 	private boolean isCanceled() {
 		return executor.isCanceled();
-	}
-
-	protected void resolveHypotheses() {
-		Map<@NonNull Iterable<@NonNull TypedElement>, @NonNull List<@NonNull Hypothesis>> typedElement2hypotheses2 = typedElement2hypotheses;
-		if (typedElement2hypotheses2 != null) {
-			if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
-				SymbolicAnalysis.HYPOTHESIS.println(" resolving hypotheses");
-			}
-			List<@NonNull Hypothesis> hypotheses = new ArrayList<>(allHypotheses);
-			if (hypotheses.size() > 1) {
-				Collections.sort(hypotheses);
-			}
-			for (@NonNull Hypothesis hypothesis : hypotheses) {	// XXX domain growth
-				if (isCanceled()) {
-					throw new EvaluationHaltedException("Canceled");
-				}
-				hypothesis.check();
-			}
-		}
 	}
 
 	@Override

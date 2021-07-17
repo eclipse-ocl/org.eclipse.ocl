@@ -62,7 +62,7 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 	/**
 	 * The refined symbolic values established after contradicting a hypothesis.
 	 */
-	private @NonNull Map<@NonNull TypedElement, @NonNull SymbolicValue> typedElement2refinedSymbolicValue = new HashMap<>();
+	private @Nullable Map<@NonNull TypedElement, @NonNull SymbolicValue> typedElement2refinedSymbolicValue = null;
 
 	private @Nullable HypothesizedSymbolicEvaluationEnvironment hypothesizedSymbolicEvaluationEnvironment = null;
 
@@ -72,9 +72,6 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 	}
 
 	public void analyze(@Nullable Object selfObject, @Nullable Object resultObject, @Nullable Object @Nullable [] parameters) {
-		if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
-			SymbolicAnalysis.HYPOTHESIS.println("Analyzing: " + expressionInOCL);
-		}
 		//
 		//	Initialize self/context parameter
 		//
@@ -108,18 +105,20 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 		}
 		Collections.sort(typedElements, cseAnalysis.getTypedElementHeightComparator());
 		for (@NonNull TypedElement typedElement : typedElements) {
-			symbolicEvaluate(typedElement, true);
+			symbolicEvaluate(typedElement, true);				// Multi-TypedElement CSEs re-use per-CSE cache
 		}
 	}
 
 	@Override
 	public @Nullable SymbolicValue basicGetSymbolicValue(@NonNull TypedElement element) {
-		SymbolicValue refinedSymbolicValue = typedElement2refinedSymbolicValue.get(element);
-		if (refinedSymbolicValue != null) {
-			return refinedSymbolicValue;
+		if (typedElement2refinedSymbolicValue != null) {
+			SymbolicValue refinedSymbolicValue = typedElement2refinedSymbolicValue.get(element);
+			if (refinedSymbolicValue != null) {
+				return refinedSymbolicValue;
+			}
 		}
 		CSEElement cseElement = symbolicAnalysis.getCSEElement(element);
-		return basicGetSymbolicValue(cseElement);
+		return cseElement2symbolicValue.get(cseElement);
 	}
 
 	@Override
@@ -198,20 +197,16 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 		return setSymbolicValue(cseElement, symbolicValue);
 	}
 
-	public boolean isDead(@NonNull OCLExpression element) {
-		return basicGetSymbolicValue(element) == null;
-	}
-
-	public void popHypothesis() {
-		assert this.hypothesizedSymbolicEvaluationEnvironment != null;
-		hypothesizedSymbolicEvaluationEnvironment = null;
-	//	executor.popEvaluationEnvironment();
-	}
-
-	public @NonNull HypothesizedSymbolicEvaluationEnvironment pushHypothesis(@NonNull Hypothesis hypothesis, @NonNull TypedElement typedElement) {
+	public @Nullable String reanalyze(@NonNull Hypothesis hypothesis, @NonNull TypedElement typedElement) {
+		if (typedElement2refinedSymbolicValue == null) {
+			typedElement2refinedSymbolicValue = new HashMap<>();
+		}
 		assert this.hypothesizedSymbolicEvaluationEnvironment == null;
 		this.hypothesizedSymbolicEvaluationEnvironment = symbolicAnalysis.createHypothesizedSymbolicEvaluationEnvironment(hypothesis, typedElement);
-		return hypothesizedSymbolicEvaluationEnvironment;
+		String incompatibility = hypothesizedSymbolicEvaluationEnvironment.analyze();
+		assert this.hypothesizedSymbolicEvaluationEnvironment != null;
+		hypothesizedSymbolicEvaluationEnvironment = null;
+		return incompatibility;
 	}
 
 	public void refineValue(@NonNull TypedElement typedElement, @NonNull SymbolicValue symbolicValue) {
@@ -221,6 +216,7 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 	//	Hypothesis hypothesis = refinedValue.getHypothesis();
 	//	assert expression == hypothesis.getExpression();
 	//	toString();		// XXX
+		assert typedElement2refinedSymbolicValue != null;
 		SymbolicValue old = typedElement2refinedSymbolicValue.put(typedElement, symbolicValue);
 		if (old != null) {
 	//		assert refinedValue.getBaseValue() == old.getBaseValue();
@@ -255,7 +251,11 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 				SymbolicValue symbolicValue = getSymbolicValue(typedElement);
 				if (!symbolicValue.isDead()) {
 					symbolicValue = AbstractSymbolicRefinedValue.createDeadValue(symbolicValue);
-					typedElement2refinedSymbolicValue.put(typedElement, symbolicValue);
+					Map<@NonNull TypedElement, @NonNull SymbolicValue> typedElement2refinedSymbolicValue2 = typedElement2refinedSymbolicValue;
+					if (typedElement2refinedSymbolicValue2 == null) {
+						typedElement2refinedSymbolicValue = typedElement2refinedSymbolicValue2 = new HashMap<>();
+					}
+					typedElement2refinedSymbolicValue2.put(typedElement, symbolicValue);
 				}
 			}
 		}
@@ -311,6 +311,7 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 			resultValue = getKnownValue(boxedValue);
 		}
 		SymbolicValue refinedValue = resultValue.asRefinementOf(unrefinedValue);
+		assert typedElement2refinedSymbolicValue != null;
 		SymbolicValue old = typedElement2refinedSymbolicValue.put(typedElement, refinedValue);
 		if (old != null) {
 			assert old == unrefinedValue;
@@ -331,16 +332,19 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 			Object value = cseElement2symbolicValue.get(key);
 			s.append("\n\t\t" + key + " => " + value);
 		} */
-		List<@NonNull TypedElement> refinedKeys = new ArrayList<>(typedElement2refinedSymbolicValue.keySet());
-		if (refinedKeys.size() > 0) {
-			if (refinedKeys.size() > 1) {
-				Collections.sort(refinedKeys, NameUtil.TO_STRING_COMPARATOR);
-			}
-			StringUtil.appendIndentation(s, 0);
-			s.append("\t" + refinedKeys.size() + " refined");
-			for (@NonNull TypedElement refinedKey : refinedKeys) {
-				Object value = typedElement2refinedSymbolicValue.get(refinedKey);
-				s.append("\n\t\t" + refinedKey + " => " + value);
+		Map<@NonNull TypedElement, @NonNull SymbolicValue> typedElement2refinedSymbolicValue2 = typedElement2refinedSymbolicValue;
+		if (typedElement2refinedSymbolicValue2 != null) {
+			List<@NonNull TypedElement> refinedKeys = new ArrayList<>(typedElement2refinedSymbolicValue2.keySet());
+			if (refinedKeys.size() > 0) {
+				if (refinedKeys.size() > 1) {
+					Collections.sort(refinedKeys, NameUtil.TO_STRING_COMPARATOR);
+				}
+				StringUtil.appendIndentation(s, 0);
+				s.append("\t" + refinedKeys.size() + " refined");
+				for (@NonNull TypedElement refinedKey : refinedKeys) {
+					Object value = typedElement2refinedSymbolicValue2.get(refinedKey);
+					s.append("\n\t\t" + refinedKey + " => " + value);
+				}
 			}
 		}
 	}

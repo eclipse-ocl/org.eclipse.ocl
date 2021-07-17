@@ -78,10 +78,7 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 			//	SymbolicAnalysis.HYPOTHESIS.println(this.toString());
 			}
 			BaseSymbolicEvaluationEnvironment baseSymbolicEvaluationEnvironment = symbolicAnalysis.getBaseSymbolicEvaluationEnvironment();
-			HypothesizedSymbolicEvaluationEnvironment hypothesizedEvaluationEnvironment = baseSymbolicEvaluationEnvironment.pushHypothesis(this, typedElement);
-			String incompatibility = hypothesizedEvaluationEnvironment.isContradiction(typedElement);
-			typedElement2incompatibility2.put(typedElement, incompatibility);
-			baseSymbolicEvaluationEnvironment.popHypothesis();
+			String incompatibility = baseSymbolicEvaluationEnvironment.reanalyze(this, typedElement);
 			if (incompatibility != null) {
 				SymbolicAnalysis.HYPOTHESIS.println("    => contradiction: " + incompatibility);
 				refine(typedElement);
@@ -89,6 +86,7 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 			else if (traceHypothesis) {
 				SymbolicAnalysis.HYPOTHESIS.println("    => no contradiction: " + SymbolicUtil.printPath(typedElement));
 			}
+			typedElement2incompatibility2.put(typedElement, incompatibility);
 		}
 	}
 

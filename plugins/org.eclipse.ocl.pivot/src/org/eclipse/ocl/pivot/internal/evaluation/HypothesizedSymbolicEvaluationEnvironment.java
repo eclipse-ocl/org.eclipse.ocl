@@ -316,6 +316,36 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 		}
 	}
 
+	public @Nullable String analyze() {
+		List<@NonNull TypedElement> affectedTypedElementsList = new ArrayList<>(affectedTypedElements);
+		if (affectedTypedElementsList.size() > 1) {
+			Collections.sort(affectedTypedElementsList, cseAnalysis.getTypedElementHeightComparator());
+		}
+		for (@NonNull TypedElement affectedTypedElement : affectedTypedElementsList) {
+			String inCompatibility = symbolicReEvaluate(affectedTypedElement);
+			if (inCompatibility != null) {
+				return inCompatibility;
+			}
+		}
+		Set<@NonNull TypedElement> typedElementsSet = new HashSet<>();
+		for (@NonNull CSEElement cseElement : refinedCSEElements) {
+			for (@NonNull TypedElement typedElement2 : cseElement.getElements()) {
+				typedElementsSet.add(typedElement2);
+			}
+		}
+		List<@NonNull TypedElement> typedElementsList = new ArrayList<>(typedElementsSet);
+		if (typedElementsList.size() > 1) {
+			Collections.sort(typedElementsList, cseAnalysis.getTypedElementHeightComparator());
+		}
+		for (@NonNull TypedElement typedElement2 : typedElementsList) {
+			String inCompatibility = symbolicReEvaluate(typedElement2);
+			if (inCompatibility != null) {
+				return inCompatibility;
+			}
+		}
+		return null;
+	}
+
 	@Override
 	public @Nullable SymbolicValue basicGetSymbolicValue(@NonNull CSEElement cseElement) {
 		return cseElement2symbolicValue.get(cseElement);
@@ -429,36 +459,6 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 				assert old == null;
 			}
 		}
-	}
-
-	public @Nullable String isContradiction(@NonNull TypedElement typedElement) {
-		List<@NonNull TypedElement> affectedTypedElementsList = new ArrayList<>(affectedTypedElements);
-		if (affectedTypedElementsList.size() > 1) {
-			Collections.sort(affectedTypedElementsList, cseAnalysis.getTypedElementHeightComparator());
-		}
-		for (@NonNull TypedElement affectedTypedElement : affectedTypedElementsList) {
-			String inCompatibility = symbolicReEvaluate(affectedTypedElement);
-			if (inCompatibility != null) {
-				return inCompatibility;
-			}
-		}
-		Set<@NonNull TypedElement> typedElementsSet = new HashSet<>();
-		for (@NonNull CSEElement cseElement : refinedCSEElements) {
-			for (@NonNull TypedElement typedElement2 : cseElement.getElements()) {
-				typedElementsSet.add(typedElement2);
-			}
-		}
-		List<@NonNull TypedElement> typedElementsList = new ArrayList<>(typedElementsSet);
-		if (typedElementsList.size() > 1) {
-			Collections.sort(typedElementsList, cseAnalysis.getTypedElementHeightComparator());
-		}
-		for (@NonNull TypedElement typedElement2 : typedElementsList) {
-			String inCompatibility = symbolicReEvaluate(typedElement2);
-			if (inCompatibility != null) {
-				return inCompatibility;
-			}
-		}
-		return null;
 	}
 
 	public @NonNull SymbolicValue setSymbolicValue(@NonNull CSEElement cseElement, @NonNull SymbolicValue symbolicValue) {
