@@ -366,7 +366,7 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 		}
 		else {
 			SymbolicValue symbolicValue = context.createUnknownValue(iteratorVariable, !iteratorVariable.isIsRequired(), false);
-			return symbolicEvaluationEnvironment.traceSymbolicValue(iteratorVariable, symbolicValue);
+			return symbolicEvaluationEnvironment.setSymbolicValue(iteratorVariable, symbolicValue);
 		}
 	}
 
@@ -463,7 +463,7 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 		}
 		else {
 			SymbolicValue symbolicValue = context.createUnknownValue(resultVariable, !resultVariable.isIsRequired(), false);
-			return symbolicEvaluationEnvironment.traceSymbolicValue(resultVariable, symbolicValue);
+			return symbolicEvaluationEnvironment.setSymbolicValue(resultVariable, symbolicValue);
 		}
 	}
 
@@ -595,7 +595,7 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 		else {
 			CSEElement cseElement = context.getCSEElement(iteratorVariable);
 			SymbolicValue symbolicValue = context.createUnknownValue(iteratorVariable, !iteratorVariable.isIsRequired(), false);
-			return symbolicEvaluationEnvironment.traceSymbolicValue(iteratorVariable, symbolicValue);
+			return symbolicEvaluationEnvironment.setSymbolicValue(iteratorVariable, symbolicValue);
 		}
 	}
 

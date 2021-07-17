@@ -103,7 +103,7 @@ public class CommonSubExpressionAnalysis
 	}
 
 	public @NonNull CSEElement analyze(@NonNull ExpressionInOCL expressionInOCL) {
-		CSEElement cseElement = getElementCSE(expressionInOCL);
+		CSEElement cseElement = getCSEElement(expressionInOCL);
 		assert SymbolicUtil.debugCheckCSEs(expressionInOCL, element2cse);		// XXX debugging
 		return cseElement;
 	}
@@ -113,7 +113,7 @@ public class CommonSubExpressionAnalysis
 	}
 
 	// XXX Change to TypedElement once MapLiteralPart is a TypedElement
-	public @NonNull CSEElement getElementCSE(@NonNull Element element) {
+	public @NonNull CSEElement getCSEElement(@NonNull Element element) {
 		CSEElement cseElement = element2cse.get(element);
 		if (cseElement == null) {
 			cseElement = visitor.visit(element);
@@ -257,7 +257,7 @@ public class CommonSubExpressionAnalysis
 			if (variableDeclaration instanceof Variable) {
 				OCLExpression initExpression = ((Variable)variableDeclaration).getOwnedInit();
 				if (initExpression != null) {
-					CSEElement initCSE = getElementCSE(initExpression);
+					CSEElement initCSE = getCSEElement(initExpression);
 					height = initCSE.getHeight() + 1;
 				}
 			}

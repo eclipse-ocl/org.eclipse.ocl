@@ -2518,7 +2518,7 @@ public class PivotValidator extends EObjectValidator
 				SymbolicAnalysis symbolicAnalysis = metamodelManager.getSymbolicAnalysis(expressionInOCL, selfValue, resultValue, parameterValues);
 				BaseSymbolicEvaluationEnvironment evaluationEnvironment = symbolicAnalysis.getBaseSymbolicEvaluationEnvironment();
 				Map<@NonNull TypedElement, @NonNull CSEElement> element2cse = null;
-				for (@NonNull EObject eObject : new TreeIterable(expressionInOCL, true)) {
+				for (@NonNull EObject eObject : new TreeIterable(expressionInOCL, true)) {		// FIXME Use CSEAnalysis
 					if (eObject instanceof TypedElement) {
 						TypedElement typedElement = (TypedElement)eObject;
 						SymbolicValue symbolicValue = evaluationEnvironment.getSymbolicValue(typedElement);

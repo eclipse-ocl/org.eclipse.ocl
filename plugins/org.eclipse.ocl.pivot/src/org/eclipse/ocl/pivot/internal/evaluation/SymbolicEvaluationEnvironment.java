@@ -15,6 +15,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
@@ -59,7 +60,7 @@ public interface SymbolicEvaluationEnvironment
 	@NonNull SymbolicValue createUnknownValue(@NonNull TypedElement typedElement, boolean mayBeNull, boolean mayBeInvalid);
 	@NonNull BaseSymbolicEvaluationEnvironment getBaseSymbolicEvaluationEnvironment();
 	@NonNull EnvironmentFactory getEnvironmentFactory();
-	@NonNull ExecutorInternal getExecutor();
+	@NonNull IdResolver getIdResolver();
 	@NonNull SymbolicValue getKnownValue(@Nullable Object boxedValue);
 	@NonNull SymbolicAnalysis getSymbolicAnalysis();
 	@NonNull SymbolicValue getSymbolicValue(@NonNull TypedElement element);
@@ -72,6 +73,6 @@ public interface SymbolicEvaluationEnvironment
 	boolean mayBeInvalidOrNull(@NonNull OCLExpression expression);
 	boolean mayBeNull(@NonNull OCLExpression expression);
 	void setDead(@NonNull OCLExpression expression);
+	@NonNull SymbolicValue setSymbolicValue(@NonNull TypedElement typedElement, @NonNull SymbolicValue symbolicValue);
 	@NonNull SymbolicValue symbolicEvaluate(@NonNull TypedElement element);
-	@NonNull SymbolicValue traceSymbolicValue(@NonNull TypedElement typedElement, @NonNull SymbolicValue symbolicValue);
 }

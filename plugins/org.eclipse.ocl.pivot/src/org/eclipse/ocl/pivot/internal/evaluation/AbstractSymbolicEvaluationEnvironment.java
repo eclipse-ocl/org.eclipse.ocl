@@ -16,8 +16,10 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
+import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.cse.CSEElement;
+import org.eclipse.ocl.pivot.internal.cse.CommonSubExpressionAnalysis;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicUnknownValue;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -36,28 +38,20 @@ import org.eclipse.ocl.pivot.values.SymbolicValue;
 public abstract class AbstractSymbolicEvaluationEnvironment implements SymbolicEvaluationEnvironment
 {
 	protected final @NonNull SymbolicAnalysis symbolicAnalysis;
-	protected final @NonNull TypedElement executableObject;
 	protected final @NonNull EnvironmentFactory environmentFactory;
 	protected final @NonNull SymbolicEvaluationVisitor symbolicEvaluationVisitor;
+	protected final @NonNull CommonSubExpressionAnalysis cseAnalysis;
 
-	protected AbstractSymbolicEvaluationEnvironment(@NonNull SymbolicAnalysis symbolicAnalysis, @NonNull TypedElement executableObject) {
+	protected AbstractSymbolicEvaluationEnvironment(@NonNull SymbolicAnalysis symbolicAnalysis) {
 		this.symbolicAnalysis = symbolicAnalysis;
-		this.executableObject = executableObject;
 		this.environmentFactory = symbolicAnalysis.getEnvironmentFactory();
 		this.symbolicEvaluationVisitor = symbolicAnalysis.createSymbolicEvaluationVisitor(this);
+		this.cseAnalysis = symbolicAnalysis.getCSEAnalysis();
 	}
-
-//	protected abstract void addMayBeEmptyHypothesis(@NonNull TypedElement typedElement, @NonNull SymbolicValue symbolicValue);
-
-//	protected abstract void addMayBeInvalidHypothesis(@NonNull TypedElement typedElement, @NonNull SymbolicValue symbolicValue);
-
-//	protected abstract void addMayBeNullHypothesis(@NonNull TypedElement typedElement, @NonNull SymbolicValue symbolicValue);
-
-//	protected abstract void addMayBeZeroHypothesis(@NonNull TypedElement typedElement, @NonNull SymbolicValue symbolicValue);
 
 	@Override
 	public @Nullable SymbolicValue basicGetSymbolicValue(@NonNull TypedElement element) {
-		CSEElement cseElement = symbolicAnalysis.getCSEElement(element);
+		CSEElement cseElement = cseAnalysis.getCSEElement(element);
 		return basicGetSymbolicValue(cseElement);
 	}
 
@@ -139,8 +133,8 @@ public abstract class AbstractSymbolicEvaluationEnvironment implements SymbolicE
 	}
 
 	@Override
-	public @NonNull ExecutorInternal getExecutor() {
-		return symbolicAnalysis.getExecutor();
+	public @NonNull IdResolver getIdResolver() {
+		return environmentFactory.getIdResolver();
 	}
 
 	@Override

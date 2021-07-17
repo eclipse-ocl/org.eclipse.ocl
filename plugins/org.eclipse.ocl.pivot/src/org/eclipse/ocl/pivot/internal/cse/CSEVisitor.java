@@ -93,7 +93,7 @@ public class CSEVisitor extends AbstractExtendingVisitor<@NonNull CSEElement, @N
 
 	@Override
 	public @NonNull CSEElement visitCollectionItem(@NonNull CollectionItem collectionItem) {
-		CSEElement elementCSE = context.getElementCSE(PivotUtil.getOwnedItem(collectionItem));
+		CSEElement elementCSE = context.getCSEElement(PivotUtil.getOwnedItem(collectionItem));
 		elementCSE.addElement(collectionItem);
 		return elementCSE;
 	}
@@ -102,7 +102,7 @@ public class CSEVisitor extends AbstractExtendingVisitor<@NonNull CSEElement, @N
 	public @NonNull CSEElement visitCollectionLiteralExp(@NonNull CollectionLiteralExp collectionLiteralExp) {
 		List<@NonNull CSEElement> elements = new ArrayList<>();
 		for (@NonNull CollectionLiteralPart part : PivotUtil.getOwnedParts(collectionLiteralExp)) {
-			elements.add(context.getElementCSE(part));
+			elements.add(context.getCSEElement(part));
 		}
 		CollectionType collectionType = (CollectionType)collectionLiteralExp.getType();
 		if (!collectionType.isOrdered()) {
@@ -114,8 +114,8 @@ public class CSEVisitor extends AbstractExtendingVisitor<@NonNull CSEElement, @N
 	@Override
 	public @NonNull CSEElement visitCollectionRange(@NonNull CollectionRange collectionRange) {
 		List<@NonNull CSEElement> elements = new ArrayList<>();
-		elements.add(context.getElementCSE(PivotUtil.getOwnedFirst(collectionRange)));
-		elements.add(context.getElementCSE(PivotUtil.getOwnedLast(collectionRange)));
+		elements.add(context.getCSEElement(PivotUtil.getOwnedFirst(collectionRange)));
+		elements.add(context.getCSEElement(PivotUtil.getOwnedLast(collectionRange)));
 		return context.getNamespaceCSE(collectionRange, elements);
 	}
 
@@ -138,7 +138,7 @@ public class CSEVisitor extends AbstractExtendingVisitor<@NonNull CSEElement, @N
 			CSEElement resultCSE = context.getVariableCSE(ownedResult);
 		}
 		OCLExpression bodyExp = PivotUtil.getOwnedBody(expressionInOCL);
-		CSEElement bodyCSE = context.getElementCSE(bodyExp);
+		CSEElement bodyCSE = context.getCSEElement(bodyExp);
 		bodyCSE.addElement(expressionInOCL);
 		return bodyCSE;
 	}
@@ -148,9 +148,9 @@ public class CSEVisitor extends AbstractExtendingVisitor<@NonNull CSEElement, @N
 		OCLExpression conditionExp = PivotUtil.getOwnedCondition(ifExp);
 		OCLExpression thenExp = PivotUtil.getOwnedThen(ifExp);
 		OCLExpression elseExp = PivotUtil.getOwnedElse(ifExp);
-		CSEElement conditionCSE = context.getElementCSE(conditionExp);
-		CSEElement thenCSE = context.getElementCSE(thenExp);
-		CSEElement elseCSE = context.getElementCSE(elseExp);
+		CSEElement conditionCSE = context.getCSEElement(conditionExp);
+		CSEElement thenCSE = context.getCSEElement(thenExp);
+		CSEElement elseCSE = context.getCSEElement(elseExp);
 		return conditionCSE.getIfCSE(ifExp, thenCSE, elseCSE);
 	}
 
@@ -169,7 +169,7 @@ public class CSEVisitor extends AbstractExtendingVisitor<@NonNull CSEElement, @N
 		@SuppressWarnings("unused")
 		CSEElement variableCSE = context.getVariableCSE(PivotUtil.getOwnedVariable(letExp));
 		OCLExpression inExp = PivotUtil.getOwnedIn(letExp);
-		CSEElement inCSE = context.getElementCSE(inExp);
+		CSEElement inCSE = context.getCSEElement(inExp);
 		inCSE.addElement(letExp);
 		return inCSE;		// init is separate as referenced, in is indeed unchanged.
 	}
@@ -178,13 +178,13 @@ public class CSEVisitor extends AbstractExtendingVisitor<@NonNull CSEElement, @N
 	public @NonNull CSEElement visitLoopExp(@NonNull LoopExp loopExp) {
 		OCLExpression sourceExp = PivotUtil.getOwnedSource(loopExp);
 		OCLExpression bodyExp = PivotUtil.getOwnedBody(loopExp);
-		CSEElement sourceCSE = context.getElementCSE(sourceExp);
+		CSEElement sourceCSE = context.getCSEElement(sourceExp);
 		List<@Nullable CSEElement> argumentCSEs = new ArrayList<>();
 		for (@NonNull Variable iterator : PivotUtil.getOwnedIterators(loopExp)) {
 			@SuppressWarnings("unused")
 			CSEElement variableCSE = context.getVariableCSE(iterator);
 			OCLExpression initExp = iterator.getOwnedInit();
-			CSEElement initCSE = initExp != null ? context.getElementCSE(initExp) : null;
+			CSEElement initCSE = initExp != null ? context.getCSEElement(initExp) : null;
 			argumentCSEs.add(initCSE);
 		}
 		for (@NonNull Variable coiterator : PivotUtil.getOwnedCoIterators(loopExp)) {
@@ -196,10 +196,10 @@ public class CSEVisitor extends AbstractExtendingVisitor<@NonNull CSEElement, @N
 			@SuppressWarnings("unused")
 			CSEElement variableCSE = context.getVariableCSE(result);
 			OCLExpression resultExp = result.getOwnedInit();
-			CSEElement resultCSE = resultExp != null ? context.getElementCSE(resultExp) : null;
+			CSEElement resultCSE = resultExp != null ? context.getCSEElement(resultExp) : null;
 			argumentCSEs.add(resultCSE);
 		}
-		CSEElement bodyCSE = context.getElementCSE(bodyExp);
+		CSEElement bodyCSE = context.getCSEElement(bodyExp);
 		argumentCSEs.add(bodyCSE);
 		Iteration iteration = PivotUtil.getReferredIteration(loopExp);
 		return sourceCSE.getOperationCSE(loopExp, iteration, argumentCSEs);
@@ -209,7 +209,7 @@ public class CSEVisitor extends AbstractExtendingVisitor<@NonNull CSEElement, @N
 	public @NonNull CSEElement visitMapLiteralExp(@NonNull MapLiteralExp mapLiteralExp) {
 		List<@NonNull CSEElement> elements = new ArrayList<>();
 		for (@NonNull MapLiteralPart part : PivotUtil.getOwnedParts(mapLiteralExp)) {
-			elements.add(context.getElementCSE(part));
+			elements.add(context.getCSEElement(part));
 		}
 		Collections.sort(elements);
 		return context.getNamespaceCSE(mapLiteralExp, elements);
@@ -218,15 +218,15 @@ public class CSEVisitor extends AbstractExtendingVisitor<@NonNull CSEElement, @N
 	@Override
 	public @NonNull CSEElement visitMapLiteralPart(@NonNull MapLiteralPart mapLiteralPart) {
 		List<@NonNull CSEElement> elements = new ArrayList<>();
-		elements.add(context.getElementCSE(PivotUtil.getOwnedKey(mapLiteralPart)));
-		elements.add(context.getElementCSE(PivotUtil.getOwnedValue(mapLiteralPart)));
+		elements.add(context.getCSEElement(PivotUtil.getOwnedKey(mapLiteralPart)));
+		elements.add(context.getCSEElement(PivotUtil.getOwnedValue(mapLiteralPart)));
 		return context.getNamespaceCSE(mapLiteralPart, elements);
 	}
 
 	@Override
 	public @NonNull CSEElement visitNavigationCallExp(@NonNull NavigationCallExp navigationCallExp) {
 		OCLExpression sourceExp = PivotUtil.getOwnedSource(navigationCallExp);
-		CSEElement sourceCSE = context.getElementCSE(sourceExp);
+		CSEElement sourceCSE = context.getCSEElement(sourceExp);
 		return sourceCSE.getPropertyCSE(navigationCallExp);
 	}
 
@@ -238,10 +238,10 @@ public class CSEVisitor extends AbstractExtendingVisitor<@NonNull CSEElement, @N
 	@Override
 	public @NonNull CSEElement visitOperationCallExp(@NonNull OperationCallExp operationCallExp) {
 		OCLExpression sourceExp = PivotUtil.getOwnedSource(operationCallExp);
-		CSEElement sourceCSE = context.getElementCSE(sourceExp);
+		CSEElement sourceCSE = context.getCSEElement(sourceExp);
 		List<@Nullable CSEElement> argumentCSEs = new ArrayList<>();
 		for (@NonNull OCLExpression argumentExp : PivotUtil.getOwnedArguments(operationCallExp)) {
-			CSEElement argumentCSE = context.getElementCSE(argumentExp);
+			CSEElement argumentCSE = context.getCSEElement(argumentExp);
 			argumentCSEs.add(argumentCSE);
 		}
 		Operation operation = PivotUtil.getReferredOperation(operationCallExp);
@@ -259,7 +259,7 @@ public class CSEVisitor extends AbstractExtendingVisitor<@NonNull CSEElement, @N
 		for (@NonNull ShadowPart shadowPart : PivotUtil.getOwnedParts(shadowExp)) {
 			Property shadowProperty = PivotUtil.getReferredProperty(shadowPart);
 			OCLExpression shadowInit = PivotUtil.getOwnedInit(shadowPart);
-			CSEElement initCSE = context.getElementCSE(shadowInit);
+			CSEElement initCSE = context.getCSEElement(shadowInit);
 			CSEElement partCSE = context.getNamespaceCSE(shadowPart, Collections.singletonList(initCSE));
 			property2element.put(shadowProperty, partCSE);
 		}
@@ -270,7 +270,7 @@ public class CSEVisitor extends AbstractExtendingVisitor<@NonNull CSEElement, @N
 	public @NonNull CSEElement visitShadowPart(@NonNull ShadowPart shadowPart) {
 		ShadowExp shadowExp = PivotUtil.getOwningShadowExp(shadowPart);
 		Property shadowProperty = PivotUtil.getReferredProperty(shadowPart);
-		CSEMappedElement shadowCSE = (CSEMappedElement)context.getElementCSE(shadowExp);
+		CSEMappedElement shadowCSE = (CSEMappedElement)context.getCSEElement(shadowExp);
 		return shadowCSE.getElement(shadowProperty);
 	}
 
@@ -284,7 +284,7 @@ public class CSEVisitor extends AbstractExtendingVisitor<@NonNull CSEElement, @N
 		Map<@NonNull TypedElement, @NonNull CSEElement> property2element = new HashMap<>();
 		for (@NonNull TupleLiteralPart tuplePart : PivotUtil.getOwnedParts(tupleLiteralExp)) {
 			OCLExpression shadowInit = PivotUtil.getOwnedInit(tuplePart);
-			CSEElement initCSE = context.getElementCSE(shadowInit);
+			CSEElement initCSE = context.getCSEElement(shadowInit);
 			CSEElement partCSE = context.getNamespaceCSE(tuplePart, Collections.singletonList(initCSE));
 			property2element.put(tuplePart, partCSE);
 		}
@@ -294,7 +294,7 @@ public class CSEVisitor extends AbstractExtendingVisitor<@NonNull CSEElement, @N
 	@Override
 	public @NonNull CSEElement visitTupleLiteralPart(@NonNull TupleLiteralPart tupleLiteralPart) {
 		TupleLiteralExp tupleLiteralExp = PivotUtil.getOwningTupleLiteralExp(tupleLiteralPart);
-		CSEMappedElement tupleCSE = (CSEMappedElement)context.getElementCSE(tupleLiteralExp);
+		CSEMappedElement tupleCSE = (CSEMappedElement)context.getCSEElement(tupleLiteralExp);
 		return tupleCSE.getElement(tupleLiteralPart);
 	}
 

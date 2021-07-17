@@ -1767,8 +1767,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	public @NonNull SymbolicAnalysis getSymbolicAnalysis(@NonNull ExpressionInOCL expressionInOCL, @Nullable Object selfObject, @Nullable Object resultObject, @Nullable Object @Nullable [] parameters) {
 		ModelManager modelManager = environmentFactory.createModelManager(selfObject);
 		SymbolicAnalysis symbolicAnalysis = createSymbolicAnalysis(expressionInOCL, modelManager);
-		symbolicAnalysis.initializeEvaluationEnvironment(expressionInOCL, selfObject, resultObject, parameters);			// XXX all related constraints
-		symbolicAnalysis.symbolicEvaluate(expressionInOCL);
+		symbolicAnalysis.analyze(expressionInOCL, selfObject, resultObject, parameters);			// XXX all related constraints
 		return symbolicAnalysis;
 	}
 

@@ -26,12 +26,14 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.internal.symbolic.AbstractSymbolicRefinedValue;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
@@ -39,26 +41,80 @@ import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
  * A BaseSymbolicEvaluationEnvironment supports the control-blind symbolic evaluation initially to associate a
- * SymbolicValue with each CSEElement. Subsequently, evaluation of hypothesies may refine the value of specific expressions.
+ * SymbolicValue with each CSEElement.
+ *
+ * The initial analyze() populates the cseElement2symbolicValue with the immuatbel control independent symbolic value
+ * of each CSE.
+ *
+ * Subsequently, evaluation of hypothesies may refine the value of specific expressions.
  *
  * @since 1.16
  */
 public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluationEnvironment
 {
+	protected final @NonNull ExpressionInOCL expressionInOCL;
+
 	/**
-	 * The expression-specific refined symbolic values established after contradicting a hypothesis.
+	 * The known immutable control-blind (symbolic) value of each common sub-expression element.
 	 */
-	private @NonNull Map<@NonNull TypedElement, @NonNull SymbolicValue> expression2refinedSymbolicValue = new HashMap<>();
+	private @NonNull Map<@NonNull CSEElement, @NonNull SymbolicValue> cseElement2symbolicValue = new HashMap<>();
+
+	/**
+	 * The refined symbolic values established after contradicting a hypothesis.
+	 */
+	private @NonNull Map<@NonNull TypedElement, @NonNull SymbolicValue> typedElement2refinedSymbolicValue = new HashMap<>();
 
 	private @Nullable HypothesizedSymbolicEvaluationEnvironment hypothesizedSymbolicEvaluationEnvironment = null;
 
-	public BaseSymbolicEvaluationEnvironment(@NonNull SymbolicAnalysis executor, @NonNull ExpressionInOCL expressionInOCL) {
-		super(executor, expressionInOCL);
+	public BaseSymbolicEvaluationEnvironment(@NonNull SymbolicAnalysis symbolicAnalysis, @NonNull ExpressionInOCL expressionInOCL) {
+		super(symbolicAnalysis);
+		this.expressionInOCL = expressionInOCL;
+	}
+
+	public void analyze(@Nullable Object selfObject, @Nullable Object resultObject, @Nullable Object @Nullable [] parameters) {
+		if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
+			SymbolicAnalysis.HYPOTHESIS.println("Analyzing: " + expressionInOCL);
+		}
+		//
+		//	Initialize self/context parameter
+		//
+		Variable contextVariable = expressionInOCL.getOwnedContext();
+		if (contextVariable != null) {
+			initParameter(contextVariable, selfObject);
+		}
+		//
+		//	Initialize result parameter
+		//
+		Variable resultVariable = expressionInOCL.getOwnedResult();
+		if (resultVariable != null) {
+			initParameter(resultVariable, resultObject);
+		}
+		//
+		//	Initialize other parameters
+		//
+		int i = 0;
+		assert parameters != null;
+		for (@NonNull Variable parameterVariable : PivotUtil.getOwnedParameters(expressionInOCL)) {
+			initParameter(parameterVariable, parameters[i++]);
+		}
+		//
+		//	Analyze each typed element in transitive bottom up order.
+		//
+		List<@NonNull TypedElement> typedElements = new ArrayList<>();
+		for (@NonNull EObject eObject : new TreeIterable(expressionInOCL, true)) {
+			if (eObject instanceof TypedElement) {
+				typedElements.add((TypedElement) eObject);
+			}
+		}
+		Collections.sort(typedElements, cseAnalysis.getTypedElementHeightComparator());
+		for (@NonNull TypedElement typedElement : typedElements) {
+			symbolicEvaluate(typedElement, true);
+		}
 	}
 
 	@Override
 	public @Nullable SymbolicValue basicGetSymbolicValue(@NonNull TypedElement element) {
-		SymbolicValue refinedSymbolicValue = expression2refinedSymbolicValue.get(element);
+		SymbolicValue refinedSymbolicValue = typedElement2refinedSymbolicValue.get(element);
 		if (refinedSymbolicValue != null) {
 			return refinedSymbolicValue;
 		}
@@ -68,7 +124,7 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 
 	@Override
 	public @Nullable SymbolicValue basicGetSymbolicValue(@NonNull CSEElement cseElement) {
-		return symbolicAnalysis.basicGetSymbolicValue(cseElement);
+		return cseElement2symbolicValue.get(cseElement);
 	}
 
 	/**
@@ -122,11 +178,24 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 	}
 
 	public @NonNull Set<@NonNull CSEElement> getCSEElements() {
-		return symbolicAnalysis.getCSEElements();
+		return cseElement2symbolicValue.keySet();
 	}
 
 	public @NonNull SymbolicEvaluationEnvironment getSymbolicEvaluationEnvironment() {
 		return hypothesizedSymbolicEvaluationEnvironment != null ? hypothesizedSymbolicEvaluationEnvironment : this;
+	}
+
+	protected @NonNull SymbolicValue initParameter(@NonNull Variable parameter, @Nullable Object value) {
+		CSEElement cseElement = cseAnalysis.getCSEElement(parameter);
+		SymbolicValue symbolicValue;
+		if (value instanceof SymbolicValue) {
+			symbolicValue = (SymbolicValue) value;
+		}
+		else {
+			Object boxedValue = environmentFactory.getIdResolver().boxedValueOf(value);
+			symbolicValue = getKnownValue(boxedValue);
+		}
+		return setSymbolicValue(cseElement, symbolicValue);
 	}
 
 	public boolean isDead(@NonNull OCLExpression element) {
@@ -152,7 +221,7 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 	//	Hypothesis hypothesis = refinedValue.getHypothesis();
 	//	assert expression == hypothesis.getExpression();
 	//	toString();		// XXX
-		SymbolicValue old = expression2refinedSymbolicValue.put(typedElement, symbolicValue);
+		SymbolicValue old = typedElement2refinedSymbolicValue.put(typedElement, symbolicValue);
 		if (old != null) {
 	//		assert refinedValue.getBaseValue() == old.getBaseValue();
 			// XXX verify that refined Value is stronger
@@ -160,7 +229,7 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 		Set<@NonNull TypedElement> affectedExpressionsSet = new HashSet<>();
 		gatherAffectedTypedElements(affectedExpressionsSet, typedElement);
 		List<@NonNull TypedElement> affectedExpressionsList = new ArrayList<>(affectedExpressionsSet);
-		Collections.sort(affectedExpressionsList, symbolicAnalysis.getTypedElementHeightComparator());
+		Collections.sort(affectedExpressionsList, cseAnalysis.getTypedElementHeightComparator());
 		for (@NonNull TypedElement affectedExpression : affectedExpressionsList) {
 			SymbolicValue oldValue = getSymbolicValue(affectedExpression);
 			if (affectedExpression != typedElement) {
@@ -186,10 +255,22 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 				SymbolicValue symbolicValue = getSymbolicValue(typedElement);
 				if (!symbolicValue.isDead()) {
 					symbolicValue = AbstractSymbolicRefinedValue.createDeadValue(symbolicValue);
-					expression2refinedSymbolicValue.put(typedElement, symbolicValue);
+					typedElement2refinedSymbolicValue.put(typedElement, symbolicValue);
 				}
 			}
 		}
+	}
+
+	@Override
+	public @NonNull SymbolicValue setSymbolicValue(@NonNull TypedElement typedElement, @NonNull SymbolicValue symbolicValue) {
+		CSEElement cseElement = symbolicAnalysis.getCSEElement(typedElement);
+		return setSymbolicValue(cseElement, symbolicValue);
+	}
+
+	protected @NonNull SymbolicValue setSymbolicValue(@NonNull CSEElement cseElement, @NonNull SymbolicValue symbolicValue) {
+		SymbolicValue old = cseElement2symbolicValue.put(cseElement, symbolicValue);
+		assert (old == null) || (old == symbolicValue); //old.equals(symbolicValue);
+		return symbolicValue;
 	}
 
 	@Override
@@ -197,7 +278,7 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 		return symbolicEvaluate(typedElement, false);
 	}
 
-	public @NonNull SymbolicValue symbolicEvaluate(@NonNull TypedElement typedElement, boolean showReUse) {
+	protected @NonNull SymbolicValue symbolicEvaluate(@NonNull TypedElement typedElement, boolean showReUse) {
 		SymbolicValue symbolicValue = basicGetSymbolicValue(typedElement);			// Re-use old value
 		if (symbolicValue != null) {
 			if (showReUse && SymbolicAnalysis.HYPOTHESIS.isActive()) {
@@ -216,7 +297,7 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 		if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
 			SymbolicAnalysis.HYPOTHESIS.println("  evaluated: " + SymbolicUtil.printPath(typedElement) + " as: " + resultValue);
 		}
-		return traceSymbolicValue(typedElement, resultValue);								// Record new value
+		return setSymbolicValue(typedElement, resultValue);								// Record new value
 	}
 
 	public @NonNull SymbolicValue symbolicReEvaluate(@NonNull TypedElement typedElement) {
@@ -230,7 +311,7 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 			resultValue = getKnownValue(boxedValue);
 		}
 		SymbolicValue refinedValue = resultValue.asRefinementOf(unrefinedValue);
-		SymbolicValue old = expression2refinedSymbolicValue.put(typedElement, refinedValue);
+		SymbolicValue old = typedElement2refinedSymbolicValue.put(typedElement, refinedValue);
 		if (old != null) {
 			assert old == unrefinedValue;
 		}
@@ -250,7 +331,7 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 			Object value = cseElement2symbolicValue.get(key);
 			s.append("\n\t\t" + key + " => " + value);
 		} */
-		List<@NonNull TypedElement> refinedKeys = new ArrayList<>(expression2refinedSymbolicValue.keySet());
+		List<@NonNull TypedElement> refinedKeys = new ArrayList<>(typedElement2refinedSymbolicValue.keySet());
 		if (refinedKeys.size() > 0) {
 			if (refinedKeys.size() > 1) {
 				Collections.sort(refinedKeys, NameUtil.TO_STRING_COMPARATOR);
@@ -258,15 +339,9 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 			StringUtil.appendIndentation(s, 0);
 			s.append("\t" + refinedKeys.size() + " refined");
 			for (@NonNull TypedElement refinedKey : refinedKeys) {
-				Object value = expression2refinedSymbolicValue.get(refinedKey);
+				Object value = typedElement2refinedSymbolicValue.get(refinedKey);
 				s.append("\n\t\t" + refinedKey + " => " + value);
 			}
 		}
-	}
-
-	@Override
-	public @NonNull SymbolicValue traceSymbolicValue(@NonNull TypedElement typedElement, @NonNull SymbolicValue symbolicValue) {
-		CSEElement cseElement = symbolicAnalysis.getCSEElement(typedElement);
-		return symbolicAnalysis.traceSymbolicValue(cseElement, symbolicValue);
 	}
 }

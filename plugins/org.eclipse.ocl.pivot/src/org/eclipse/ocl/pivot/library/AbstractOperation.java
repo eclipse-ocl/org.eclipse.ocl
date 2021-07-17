@@ -275,7 +275,8 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 			for (int i = 0; i < argumentsSize; i++) {
 				sourceAndArgumentValues[i+1] = argumentSymbolicValues.get(i).getKnownValue();
 			}
-			Object result = ((LibraryOperationExtension2)this).evaluate(evaluationEnvironment.getExecutor(), callExp, sourceAndArgumentValues);
+			ExecutorInternal executor = evaluationEnvironment.getSymbolicAnalysis().getExecutor();
+			Object result = ((LibraryOperationExtension2)this).evaluate(executor, callExp, sourceAndArgumentValues);
 			return evaluationEnvironment.getKnownValue(result);
 		}
 		else {
