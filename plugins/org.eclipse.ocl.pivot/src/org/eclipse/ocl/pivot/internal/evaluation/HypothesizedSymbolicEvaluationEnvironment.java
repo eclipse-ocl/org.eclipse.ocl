@@ -83,6 +83,9 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 	 */
 	protected final @NonNull Hypothesis hypothesis;
 
+	/**
+	 * The particular TypedElement for which the Hypothesis is explored by this HypothesizedSymbolicEvaluationEnvironment.
+	 */
 	protected final @NonNull TypedElement typedElement;
 
 	/**
@@ -93,17 +96,12 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 	private @NonNull Map<@NonNull CSEElement, @NonNull SymbolicValue> cseElement2symbolicValue = new HashMap<>();
 
 	/**
-	 * Variables whose initializer is affected and so whose symbolic value must be re-evaluated..
-	 */
-	private final @NonNull UniqueList<@NonNull VariableDeclaration> affectedVariables = new UniqueList<>();
-
-	/**
 	 * Expressions (and ExpressionInOCL) whose symbolic value must be re-evaluated..
 	 */
 	private final @NonNull Set<@NonNull TypedElement> affectedTypedElements = new HashSet<>();
 
 	/**
-	 * CSEElements whose symbolic value must be re-evaluated..
+	 * CSEElements whose symbolic value must be re-evaluated.
 	 */
 	private final @NonNull Set<@NonNull CSEElement> affectedCSEElements = new HashSet<>();
 
@@ -276,9 +274,6 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 				setSymbolicValue(cseElement, refinedSymbolicValue);
 				refinedCSEElements.add(cseElement);
 			}
-			if (refinedExpression instanceof VariableExp) {
-				affectedVariables.add(PivotUtil.getReferredVariable((VariableExp)refinedExpression));
-			}
 		}
 	}
 
@@ -299,8 +294,6 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 		if (eContainer instanceof VariableDeclaration) {
 			VariableDeclaration containingVariable = (VariableDeclaration)eContainer;
 			assert containingVariable != null;
-			boolean added = affectedVariables.add(containingVariable);
-		//	assert added;
 			addRefinedParentTypedElements(containingVariable);
 		}
 		else if (eContainer instanceof OCLExpression) {
@@ -357,6 +350,18 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 		return cseElement2symbolicValue.get(cseElement);
 	}
 
+	private @NonNull List<@NonNull VariableDeclaration> computeAffectedVariables() {
+		UniqueList<@NonNull VariableDeclaration> variables = new UniqueList<>();
+		for (@NonNull CSEElement cseElement : affectedCSEElements) {
+			for (@NonNull TypedElement element : cseElement.getElements()) {
+				if (element instanceof VariableDeclaration) {	// FIXME ?? surely (output != typedElement) is redundant ??
+					variables.add((VariableDeclaration)element);
+				}
+			}
+		}
+		return variables;
+	}
+
 	@Override
 	protected @NonNull Iterable<@NonNull TypedElement> getAffectedTypedElements(@NonNull TypedElement typedElement) {
 		return Collections.singletonList(typedElement);
@@ -372,23 +377,15 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 		//
 		//	Install the directly hypothesized expression.
 		//
-	//	@NonNull TypedElement typedElement = executableObject;
-	//	@SuppressWarnings("unused") @NonNull SymbolicValue originalValue = hypothesis.getOriginalValue();
 		@NonNull SymbolicValue hypothesizedValue = hypothesis.getHypothesizedValue();
 		CSEElement hypothesisCSE = hypothesis.getCSEElement();
 		setSymbolicValue(hypothesisCSE, hypothesizedValue);		// Install the known 'read' value.
+		affectedCSEElements.add(hypothesisCSE);
 		//
 		//	Ensure that all parents of the hypothesized expressions are re-evaluated.
 		//
 		//	Side-effect: refinedTypedElements and affectedVariables updated.
 		//
-		if (typedElement instanceof VariableExp) {
-			VariableDeclaration variable = PivotUtil.getReferredVariable((VariableExp)typedElement);
-			affectedVariables.add(variable);
-		}
-		else if (typedElement instanceof VariableDeclaration) {
-			affectedVariables.add((VariableDeclaration)typedElement);
-		}
 		addRefinedParentTypedElements(typedElement);
 		addRefinedOutputCSEElements(hypothesisCSE);
 
@@ -414,12 +411,19 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 				addRefinedChildExpressions((OCLExpression)affectedTypedElement);
 			}
 		}
+
+
+		for (@NonNull TypedElement typedElement9 : affectedTypedElements) {
+			assert affectedCSEElements.contains(cseAnalysis.getCSEElement(typedElement9));
+		}
+
+		List<@NonNull VariableDeclaration> computedAffectedVariables = computeAffectedVariables();
 		//
 		//	Ensure that all usage of all VariableExps for all refined Variables are re-evaluated.
 		//
-		for (@NonNull VariableDeclaration variable : affectedVariables) {		// FIXME should manage a single traversal
+		for (@NonNull VariableDeclaration variable : computedAffectedVariables) {		// FIXME should manage a single traversal
 			CSEElement variableCSE = cseAnalysis.getCSEElement(variable);
-			assert (hypothesisCSE == variableCSE) || affectedCSEElements.contains(variableCSE);
+			assert affectedCSEElements.contains(variableCSE);
 			for (@NonNull Element output : variableCSE.getElements()) {
 				if ((output instanceof VariableExp) && (output != typedElement)) {	// FIXME ?? surely (output != typedElement) is redundant ??
 					VariableExp variableExp = (VariableExp)output;
@@ -431,12 +435,12 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 		}
 		for (@NonNull TypedElement typedElement9 : affectedTypedElements) {
 			CSEElement cseElement = cseAnalysis.getCSEElement(typedElement9);
-			assert (hypothesisCSE == cseElement) || affectedCSEElements.contains(cseElement);
+			assert affectedCSEElements.contains(cseElement);
 		}
-		for (@NonNull TypedElement typedElement9 : affectedVariables) {
-			CSEElement cseElement = cseAnalysis.getCSEElement(typedElement9);
-			assert (hypothesisCSE == cseElement) || affectedCSEElements.contains(cseElement);
-		}
+	//	for (@NonNull TypedElement typedElement9 : computedAffectedVariables) {
+	//		CSEElement cseElement = cseAnalysis.getCSEElement(typedElement9);
+	//		assert affectedCSEElements.contains(cseElement);
+	//	}
 		//
 		//	Compute re-evaluate CSEs.
 		//
@@ -594,7 +598,7 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 		}
 		StringUtil.appendIndentation(s, depth+1);
 		s.append("re-evaluate");
-		for (@NonNull VariableDeclaration affectedVariable : affectedVariables) {
+		for (@NonNull VariableDeclaration affectedVariable : computeAffectedVariables()) {
 			StringUtil.appendIndentation(s, depth+2);
 			s.append(affectedVariable.eClass().getName());
 			s.append(" : \"");
