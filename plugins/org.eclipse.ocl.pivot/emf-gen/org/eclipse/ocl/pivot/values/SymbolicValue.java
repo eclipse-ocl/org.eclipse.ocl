@@ -34,6 +34,12 @@ import org.eclipse.ocl.pivot.internal.symbolic.SymbolicStatus;
 public interface SymbolicValue
 {
 	/**
+	 * Return a non-null String describing the incompatibility of this value if incompatible, else null.
+	 * @return
+	 */
+	@Nullable String asIncompatibility();
+
+	/**
 	 * Return an equals SymbolicValue that is a refinement of unrefinedValue using unrefinedValue.getBaseValue();
 	 *
 	 * throws IllegalStateException if incompatoble.

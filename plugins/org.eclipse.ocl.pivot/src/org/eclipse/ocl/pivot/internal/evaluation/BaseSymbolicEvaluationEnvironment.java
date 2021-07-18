@@ -180,6 +180,10 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 		return this;
 	}
 
+	public @NonNull Map<@NonNull CSEElement, @NonNull SymbolicValue> getCSEElement2SymbolicValue() {
+		return cseElement2symbolicValue;
+	}
+
 	public @NonNull Set<@NonNull CSEElement> getCSEElements() {
 		return cseElement2symbolicValue.keySet();
 	}

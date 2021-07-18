@@ -11,6 +11,7 @@
 package org.eclipse.ocl.pivot.internal.symbolic;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
@@ -20,6 +21,11 @@ import org.eclipse.ocl.pivot.values.SymbolicValue;
  */
 public abstract class AbstractSymbolicValue implements SymbolicValue
 {
+	@Override
+	public @Nullable String asIncompatibility() {
+		return null;
+	}
+
 	@Override
 	public @NonNull SymbolicValue asRefinementOf(@NonNull SymbolicValue unrefinedValue) {
 		@NonNull SymbolicValue baseValue = unrefinedValue.getBaseValue();

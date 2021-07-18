@@ -1282,6 +1282,7 @@ public class SymbolicAnalysisTests extends XtextTestCase
 	}
 
 	public void testSymbolicAnalysis_Or2Guard() throws Exception {
+		SymbolicAnalysis.HYPOTHESIS.setState(true);
 		MyOCL ocl = new MyOCL("Or2Guard", "Or2Guard(x : Integer) : Boolean",
 				"x = null or2 x > 0");
 		ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
@@ -1294,6 +1295,11 @@ public class SymbolicAnalysisTests extends XtextTestCase
 		NullLiteralExp nullExp = (NullLiteralExp) PivotUtil.getOwnedArgument(eqExp, 0);
 		VariableExp gtSourceExp = (VariableExp) PivotUtil.getOwnedSource(gtExp);
 		NumericLiteralExp zeroExp = (NumericLiteralExp) PivotUtil.getOwnedArgument(gtExp, 0);
+
+		// may-be-null x
+		SymbolicVariableValue symbolicVariable99 = new SymbolicVariableValue(asExpressionInOCL.getOwnedParameters().get(0), true, false);
+		SymbolicAnalysis symbolicAnalysis399 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, null, new Object[]{symbolicVariable99});
+		checkContents(symbolicAnalysis399, asExpressionInOCL, null, mayBeNulls(contextVariable, firstParameterVariable, eqSourceExp, nullExp), null, null);
 
 		// non-null known ok x
 		SymbolicAnalysis symbolicAnalysis1a = ocl.getSymbolicAnalysis(asExpressionInOCL, null, null, new Object[]{5});
