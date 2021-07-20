@@ -679,6 +679,9 @@ public class OCLinEcoreTablesUtils
 			if (asClass != null) {
 				appendTablesPackageQualification(asClass);
 				appendTablesSubackageQualification("TypeParameters");
+				if (asTemplateableElement instanceof Operation) {
+					s.append("_");
+				}
 				asTemplateableElement.accept(emitLiteralVisitor);
 				s.append("_");
 				s.appendAndEncodeName(asTemplateParameter);
