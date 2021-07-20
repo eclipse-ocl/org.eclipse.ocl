@@ -430,6 +430,13 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 					return genFeature;
 				}
 			}
+			String name = eStructuralFeature.getName();			// GenerateOCLstdlib has metamodel schizophrenia- Bug 571494#11
+			for (GenFeature genFeature : genClass.getAllGenFeatures()) {
+				String featureName = genFeature.getEcoreFeature().getName();
+				if (name.equals(featureName)) {
+					return genFeature;
+				}
+			}
 		}
 		throw new GenModelException("No GenFeature for " + eStructuralFeature);
 	}
