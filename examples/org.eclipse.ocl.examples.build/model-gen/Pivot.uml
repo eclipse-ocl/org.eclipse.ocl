@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE uml:Model [
-<!ENTITY _0 "pathmap://UML_PROFILES/Ecore.profile.uml">
-]>
-<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
-    xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="Ppivot" name="pivot" URI="http://www.eclipse.org/ocl/2015/Pivot">
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="Ppivot" name="pivot" URI="http://www.eclipse.org/ocl/2015/Pivot">
   <packagedElement xmi:type="uml:PrimitiveType" xmi:id="Ppivot.TBoolean" name="Boolean"/>
   <packagedElement xmi:type="uml:PrimitiveType" xmi:id="Ppivot.TInteger" name="Integer"/>
   <packagedElement xmi:type="uml:PrimitiveType" xmi:id="Ppivot.TLibraryFeature" name="LibraryFeature"/>
@@ -70,13 +66,11 @@
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TAnnotation" name="Annotation">
     <generalization xmi:id="Ppivot.TAnnotation.g0" general="Ppivot.TNamedElement"/>
-    <ownedAttribute xmi:id="Ppivot.TAnnotation.PownedContents" name="ownedContents" type="Ppivot.TElement" isOrdered="true" aggregation="composite"
-        association="Ppivot.A_ownedContents_Annotation">
+    <ownedAttribute xmi:id="Ppivot.TAnnotation.PownedContents" name="ownedContents" type="Ppivot.TElement" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedContents_Annotation">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TAnnotation.PownedContents.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TAnnotation.PownedContents.uV" value="*"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TAnnotation.PownedDetails" name="ownedDetails" type="Ppivot.TDetail" isOrdered="true" aggregation="composite"
-        association="Ppivot.A_ownedDetails_Annotation">
+    <ownedAttribute xmi:id="Ppivot.TAnnotation.PownedDetails" name="ownedDetails" type="Ppivot.TDetail" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedDetails_Annotation">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TAnnotation.PownedDetails.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TAnnotation.PownedDetails.uV" value="*"/>
     </ownedAttribute>
@@ -97,8 +91,7 @@
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TAssociationClassCallExp" name="AssociationClassCallExp">
     <generalization xmi:id="Ppivot.TAssociationClassCallExp.g0" general="Ppivot.TNavigationCallExp"/>
-    <ownedAttribute xmi:id="Ppivot.TAssociationClassCallExp.PreferredAssociationClass" name="referredAssociationClass" type="Ppivot.TAssociationClass"
-        isOrdered="true" association="Ppivot.A_referredAssociationClass_AssociationClassCallExp">
+    <ownedAttribute xmi:id="Ppivot.TAssociationClassCallExp.PreferredAssociationClass" name="referredAssociationClass" type="Ppivot.TAssociationClass" isOrdered="true" association="Ppivot.A_referredAssociationClass_AssociationClassCallExp">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TAssociationClassCallExp.PreferredAssociationClass.lV"/>
     </ownedAttribute>
   </packagedElement>
@@ -113,8 +106,7 @@
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TBooleanLiteralExp" name="BooleanLiteralExp">
     <generalization xmi:id="Ppivot.TBooleanLiteralExp.g0" general="Ppivot.TPrimitiveLiteralExp"/>
-    <ownedAttribute xmi:id="Ppivot.TBooleanLiteralExp.PbooleanSymbol" name="booleanSymbol" visibility="public" type="Ppivot.TBoolean"
-        isOrdered="true"/>
+    <ownedAttribute xmi:id="Ppivot.TBooleanLiteralExp.PbooleanSymbol" name="booleanSymbol" visibility="public" type="Ppivot.TBoolean" isOrdered="true"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TCallExp" name="CallExp" isAbstract="true">
     <generalization xmi:id="Ppivot.TCallExp.g0" general="Ppivot.TOCLExpression"/>
@@ -126,8 +118,7 @@
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TCallExp.PisSafe.lV"/>
       <defaultValue xmi:type="uml:LiteralString" xmi:id="Ppivot.TCallExp.PisSafe.dlV" value="false"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TCallExp.PownedSource" name="ownedSource" type="Ppivot.TOCLExpression" isOrdered="true" aggregation="composite"
-        association="Ppivot.A_ownedSource_CallExp">
+    <ownedAttribute xmi:id="Ppivot.TCallExp.PownedSource" name="ownedSource" type="Ppivot.TOCLExpression" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedSource_CallExp">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TCallExp.PownedSource.lV"/>
     </ownedAttribute>
   </packagedElement>
@@ -139,8 +130,7 @@
     <generalization xmi:id="Ppivot.TClass.g0" general="Ppivot.TNamespace"/>
     <generalization xmi:id="Ppivot.TClass.g1" general="Ppivot.TTemplateableElement"/>
     <generalization xmi:id="Ppivot.TClass.g2" general="Ppivot.TType"/>
-    <ownedAttribute xmi:id="Ppivot.TClass.PownedOperations" name="ownedOperations" type="Ppivot.TOperation" isOrdered="true" aggregation="composite"
-        association="Ppivot.A_ownedOperations_owningClass">
+    <ownedAttribute xmi:id="Ppivot.TClass.PownedOperations" name="ownedOperations" type="Ppivot.TOperation" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedOperations_owningClass">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TClass.PownedOperations.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TClass.PownedOperations.uV" value="*"/>
     </ownedAttribute>
@@ -168,8 +158,7 @@
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TClass.PownedInvariants.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TClass.PownedInvariants.uV" value="*"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TClass.PownedProperties" name="ownedProperties" type="Ppivot.TProperty" isOrdered="true" aggregation="composite"
-        association="Ppivot.A_ownedProperties_owningClass">
+    <ownedAttribute xmi:id="Ppivot.TClass.PownedProperties" name="ownedProperties" type="Ppivot.TProperty" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedProperties_owningClass">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TClass.PownedProperties.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TClass.PownedProperties.uV" value="*"/>
     </ownedAttribute>
@@ -183,14 +172,12 @@
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TCollectionItem" name="CollectionItem">
     <generalization xmi:id="Ppivot.TCollectionItem.g0" general="Ppivot.TCollectionLiteralPart"/>
-    <ownedAttribute xmi:id="Ppivot.TCollectionItem.PownedItem" name="ownedItem" type="Ppivot.TOCLExpression" isOrdered="true" aggregation="composite"
-        association="Ppivot.A_ownedItem_CollectionItem"/>
+    <ownedAttribute xmi:id="Ppivot.TCollectionItem.PownedItem" name="ownedItem" type="Ppivot.TOCLExpression" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedItem_CollectionItem"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TCollectionLiteralExp" name="CollectionLiteralExp">
     <generalization xmi:id="Ppivot.TCollectionLiteralExp.g0" general="Ppivot.TLiteralExp"/>
     <ownedAttribute xmi:id="Ppivot.TCollectionLiteralExp.Pkind" name="kind" visibility="public" type="Ppivot.TCollectionKind" isOrdered="true"/>
-    <ownedAttribute xmi:id="Ppivot.TCollectionLiteralExp.PownedParts" name="ownedParts" type="Ppivot.TCollectionLiteralPart" isOrdered="true"
-        aggregation="composite" association="Ppivot.A_ownedParts_CollectionLiteralExp">
+    <ownedAttribute xmi:id="Ppivot.TCollectionLiteralExp.PownedParts" name="ownedParts" type="Ppivot.TCollectionLiteralPart" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedParts_CollectionLiteralExp">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TCollectionLiteralExp.PownedParts.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TCollectionLiteralExp.PownedParts.uV" value="*"/>
     </ownedAttribute>
@@ -200,10 +187,8 @@
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TCollectionRange" name="CollectionRange">
     <generalization xmi:id="Ppivot.TCollectionRange.g0" general="Ppivot.TCollectionLiteralPart"/>
-    <ownedAttribute xmi:id="Ppivot.TCollectionRange.PownedFirst" name="ownedFirst" type="Ppivot.TOCLExpression" isOrdered="true" aggregation="composite"
-        association="Ppivot.A_ownedFirst_CollectionRange"/>
-    <ownedAttribute xmi:id="Ppivot.TCollectionRange.PownedLast" name="ownedLast" type="Ppivot.TOCLExpression" isOrdered="true" aggregation="composite"
-        association="Ppivot.A_ownedLast_CollectionRange"/>
+    <ownedAttribute xmi:id="Ppivot.TCollectionRange.PownedFirst" name="ownedFirst" type="Ppivot.TOCLExpression" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedFirst_CollectionRange"/>
+    <ownedAttribute xmi:id="Ppivot.TCollectionRange.PownedLast" name="ownedLast" type="Ppivot.TOCLExpression" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedLast_CollectionRange"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TCollectionType" name="CollectionType">
     <generalization xmi:id="Ppivot.TCollectionType.g0" general="Ppivot.TIterableType"/>
@@ -216,8 +201,7 @@
     <ownedAttribute xmi:id="Ppivot.TCollectionType.Pupper" name="upper" visibility="public" type="Ppivot.TUnlimitedNatural" isOrdered="true">
       <defaultValue xmi:type="uml:LiteralString" xmi:id="Ppivot.TCollectionType.Pupper.dlV" value="*"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TCollectionType.PelementType" name="elementType" type="Ppivot.TType" isOrdered="true" isDerived="true"
-        association="Ppivot.A_elementType_CollectionType"/>
+    <ownedAttribute xmi:id="Ppivot.TCollectionType.PelementType" name="elementType" type="Ppivot.TType" isOrdered="true" isDerived="true" association="Ppivot.A_elementType_CollectionType"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TComment" name="Comment">
     <generalization xmi:id="Ppivot.TComment.g0" general="Ppivot.TElement"/>
@@ -234,8 +218,7 @@
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TCompleteClass" name="CompleteClass">
     <generalization xmi:id="Ppivot.TCompleteClass.g0" general="Ppivot.TNamedElement"/>
-    <ownedAttribute xmi:id="Ppivot.TCompleteClass.PowningCompletePackage" name="owningCompletePackage" type="Ppivot.TCompletePackage"
-        isOrdered="true" association="Ppivot.A_ownedCompleteClasses_owningCompletePackage">
+    <ownedAttribute xmi:id="Ppivot.TCompleteClass.PowningCompletePackage" name="owningCompletePackage" type="Ppivot.TCompletePackage" isOrdered="true" association="Ppivot.A_ownedCompleteClasses_owningCompletePackage">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TCompleteClass.PowningCompletePackage.lV"/>
     </ownedAttribute>
     <ownedAttribute xmi:id="Ppivot.TCompleteClass.PpartialClasses" name="partialClasses" type="Ppivot.TClass" association="Ppivot.A_partialClasses_CompleteClass">
@@ -245,32 +228,26 @@
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TCompleteEnvironment" name="CompleteEnvironment">
     <generalization xmi:id="Ppivot.TCompleteEnvironment.g0" general="Ppivot.TElement"/>
-    <ownedAttribute xmi:id="Ppivot.TCompleteEnvironment.PownedCompleteModel" name="ownedCompleteModel" type="Ppivot.TCompleteModel" isOrdered="true"
-        aggregation="composite" association="Ppivot.A_ownedCompleteModel_owningCompleteEnvironment"/>
-    <ownedAttribute xmi:id="Ppivot.TCompleteEnvironment.PownedStandardLibrary" name="ownedStandardLibrary" type="Ppivot.TStandardLibrary"
-        isOrdered="true" aggregation="composite" association="Ppivot.A_ownedStandardLibrary_owningCompleteEnvironment"/>
+    <ownedAttribute xmi:id="Ppivot.TCompleteEnvironment.PownedCompleteModel" name="ownedCompleteModel" type="Ppivot.TCompleteModel" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedCompleteModel_owningCompleteEnvironment"/>
+    <ownedAttribute xmi:id="Ppivot.TCompleteEnvironment.PownedStandardLibrary" name="ownedStandardLibrary" type="Ppivot.TStandardLibrary" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedStandardLibrary_owningCompleteEnvironment"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TCompleteModel" name="CompleteModel">
     <generalization xmi:id="Ppivot.TCompleteModel.g0" general="Ppivot.TNamedElement"/>
-    <ownedAttribute xmi:id="Ppivot.TCompleteModel.PorphanCompletePackage" name="orphanCompletePackage" type="Ppivot.TOrphanCompletePackage"
-        isOrdered="true" isReadOnly="true" isDerived="true" association="Ppivot.A_orphanCompletePackage_CompleteModel">
+    <ownedAttribute xmi:id="Ppivot.TCompleteModel.PorphanCompletePackage" name="orphanCompletePackage" type="Ppivot.TOrphanCompletePackage" isOrdered="true" isReadOnly="true" isDerived="true" association="Ppivot.A_orphanCompletePackage_CompleteModel">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TCompleteModel.PorphanCompletePackage.lV"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TCompleteModel.PownedCompletePackages" name="ownedCompletePackages" type="Ppivot.TCompletePackage"
-        aggregation="composite" association="Ppivot.A_ownedCompletePackages_owningCompleteModel">
+    <ownedAttribute xmi:id="Ppivot.TCompleteModel.PownedCompletePackages" name="ownedCompletePackages" type="Ppivot.TCompletePackage" aggregation="composite" association="Ppivot.A_ownedCompletePackages_owningCompleteModel">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TCompleteModel.PownedCompletePackages.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TCompleteModel.PownedCompletePackages.uV" value="*"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TCompleteModel.PowningCompleteEnvironment" name="owningCompleteEnvironment" type="Ppivot.TCompleteEnvironment"
-        isOrdered="true" association="Ppivot.A_ownedCompleteModel_owningCompleteEnvironment">
+    <ownedAttribute xmi:id="Ppivot.TCompleteModel.PowningCompleteEnvironment" name="owningCompleteEnvironment" type="Ppivot.TCompleteEnvironment" isOrdered="true" association="Ppivot.A_ownedCompleteModel_owningCompleteEnvironment">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TCompleteModel.PowningCompleteEnvironment.lV"/>
     </ownedAttribute>
     <ownedAttribute xmi:id="Ppivot.TCompleteModel.PpartialModels" name="partialModels" type="Ppivot.TModel" association="Ppivot.A_partialModels_CompleteModel">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TCompleteModel.PpartialModels.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TCompleteModel.PpartialModels.uV" value="*"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TCompleteModel.PprimitiveCompletePackage" name="primitiveCompletePackage" type="Ppivot.TPrimitiveCompletePackage"
-        isOrdered="true" isReadOnly="true" isDerived="true" association="Ppivot.A_primitiveCompletePackage_CompleteModel">
+    <ownedAttribute xmi:id="Ppivot.TCompleteModel.PprimitiveCompletePackage" name="primitiveCompletePackage" type="Ppivot.TPrimitiveCompletePackage" isOrdered="true" isReadOnly="true" isDerived="true" association="Ppivot.A_primitiveCompletePackage_CompleteModel">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TCompleteModel.PprimitiveCompletePackage.lV"/>
     </ownedAttribute>
     <ownedOperation xmi:id="Ppivot.TCompleteModel.OgetOwnedCompletePackage" name="getOwnedCompletePackage" visibility="public">
@@ -284,22 +261,18 @@
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TCompletePackage" name="CompletePackage">
     <generalization xmi:id="Ppivot.TCompletePackage.g0" general="Ppivot.TNamedElement"/>
-    <ownedAttribute xmi:id="Ppivot.TCompletePackage.PownedCompleteClasses" name="ownedCompleteClasses" type="Ppivot.TCompleteClass" aggregation="composite"
-        association="Ppivot.A_ownedCompleteClasses_owningCompletePackage">
+    <ownedAttribute xmi:id="Ppivot.TCompletePackage.PownedCompleteClasses" name="ownedCompleteClasses" type="Ppivot.TCompleteClass" aggregation="composite" association="Ppivot.A_ownedCompleteClasses_owningCompletePackage">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TCompletePackage.PownedCompleteClasses.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TCompletePackage.PownedCompleteClasses.uV" value="*"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TCompletePackage.PownedCompletePackages" name="ownedCompletePackages" type="Ppivot.TCompletePackage"
-        aggregation="composite" association="Ppivot.A_ownedCompletePackages_owningCompletePackage">
+    <ownedAttribute xmi:id="Ppivot.TCompletePackage.PownedCompletePackages" name="ownedCompletePackages" type="Ppivot.TCompletePackage" aggregation="composite" association="Ppivot.A_ownedCompletePackages_owningCompletePackage">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TCompletePackage.PownedCompletePackages.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TCompletePackage.PownedCompletePackages.uV" value="*"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TCompletePackage.PowningCompletePackage" name="owningCompletePackage" type="Ppivot.TCompletePackage"
-        isOrdered="true" association="Ppivot.A_ownedCompletePackages_owningCompletePackage">
+    <ownedAttribute xmi:id="Ppivot.TCompletePackage.PowningCompletePackage" name="owningCompletePackage" type="Ppivot.TCompletePackage" isOrdered="true" association="Ppivot.A_ownedCompletePackages_owningCompletePackage">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TCompletePackage.PowningCompletePackage.lV"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TCompletePackage.PowningCompleteModel" name="owningCompleteModel" type="Ppivot.TCompleteModel" isOrdered="true"
-        association="Ppivot.A_ownedCompletePackages_owningCompleteModel">
+    <ownedAttribute xmi:id="Ppivot.TCompletePackage.PowningCompleteModel" name="owningCompleteModel" type="Ppivot.TCompleteModel" isOrdered="true" association="Ppivot.A_ownedCompletePackages_owningCompleteModel">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TCompletePackage.PowningCompleteModel.lV"/>
     </ownedAttribute>
     <ownedAttribute xmi:id="Ppivot.TCompletePackage.PpartialPackages" name="partialPackages" type="Ppivot.TPackage" association="Ppivot.A_partialPackages_CompletePackage">
@@ -334,19 +307,15 @@
     <ownedAttribute xmi:id="Ppivot.TConstraint.PisCallable" name="isCallable" visibility="public" type="Ppivot.TBoolean" isOrdered="true">
       <defaultValue xmi:type="uml:LiteralString" xmi:id="Ppivot.TConstraint.PisCallable.dlV" value="false"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TConstraint.PconstrainedElements" name="constrainedElements" type="Ppivot.TElement" isOrdered="true"
-        association="Ppivot.A_constrainedElements_Constraint">
+    <ownedAttribute xmi:id="Ppivot.TConstraint.PconstrainedElements" name="constrainedElements" type="Ppivot.TElement" isOrdered="true" association="Ppivot.A_constrainedElements_Constraint">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TConstraint.PconstrainedElements.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TConstraint.PconstrainedElements.uV" value="*"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TConstraint.Pcontext" name="context" type="Ppivot.TNamespace" isOrdered="true" isReadOnly="true" isDerived="true"
-        association="Ppivot.A_context_Constraint">
+    <ownedAttribute xmi:id="Ppivot.TConstraint.Pcontext" name="context" type="Ppivot.TNamespace" isOrdered="true" isReadOnly="true" isDerived="true" association="Ppivot.A_context_Constraint">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TConstraint.Pcontext.lV"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TConstraint.PownedSpecification" name="ownedSpecification" type="Ppivot.TLanguageExpression" isOrdered="true"
-        aggregation="composite" association="Ppivot.A_ownedSpecification_owningConstraint"/>
-    <ownedAttribute xmi:id="Ppivot.TConstraint.PowningPostContext" name="owningPostContext" type="Ppivot.TOperation" isOrdered="true"
-        association="Ppivot.A_ownedPostconditions_owningPostContext">
+    <ownedAttribute xmi:id="Ppivot.TConstraint.PownedSpecification" name="ownedSpecification" type="Ppivot.TLanguageExpression" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedSpecification_owningConstraint"/>
+    <ownedAttribute xmi:id="Ppivot.TConstraint.PowningPostContext" name="owningPostContext" type="Ppivot.TOperation" isOrdered="true" association="Ppivot.A_ownedPostconditions_owningPostContext">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TConstraint.PowningPostContext.lV"/>
     </ownedAttribute>
     <ownedAttribute xmi:id="Ppivot.TConstraint.PowningPreContext" name="owningPreContext" type="Ppivot.TOperation" isOrdered="true" association="Ppivot.A_ownedPreconditions_owningPreContext">
@@ -368,8 +337,7 @@
     <ownedAttribute xmi:id="Ppivot.TDataType.PisSerializable" name="isSerializable" visibility="public" type="Ppivot.TBoolean" isOrdered="true">
       <defaultValue xmi:type="uml:LiteralString" xmi:id="Ppivot.TDataType.PisSerializable.dlV" value="true"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TDataType.Pvalue" name="value" visibility="public" type="Ppivot.TString" isOrdered="true" isReadOnly="true"
-        isDerived="true">
+    <ownedAttribute xmi:id="Ppivot.TDataType.Pvalue" name="value" visibility="public" type="Ppivot.TString" isOrdered="true" isReadOnly="true" isDerived="true">
       <defaultValue xmi:type="uml:LiteralString" xmi:id="Ppivot.TDataType.Pvalue.dlV" value=""/>
     </ownedAttribute>
     <ownedAttribute xmi:id="Ppivot.TDataType.PbehavioralClass" name="behavioralClass" type="Ppivot.TClass" isOrdered="true" association="Ppivot.A_behavioralClass_DataType">
@@ -395,14 +363,12 @@
     <ownedAttribute xmi:id="Ppivot.TDynamicProperty.Pdefault" name="default" visibility="public" type="Ppivot.TString" isOrdered="true">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TDynamicProperty.Pdefault.lV"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TDynamicProperty.PreferredProperty" name="referredProperty" type="Ppivot.TProperty" isOrdered="true"
-        association="Ppivot.A_referredProperty_DynamicProperty"/>
+    <ownedAttribute xmi:id="Ppivot.TDynamicProperty.PreferredProperty" name="referredProperty" type="Ppivot.TProperty" isOrdered="true" association="Ppivot.A_referredProperty_DynamicProperty"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TDynamicType" name="DynamicType">
     <generalization xmi:id="Ppivot.TDynamicType.g0" general="Ppivot.TClass"/>
     <generalization xmi:id="Ppivot.TDynamicType.g1" general="Ppivot.TDynamicElement"/>
-    <ownedAttribute xmi:id="Ppivot.TDynamicType.PownedDynamicProperties" name="ownedDynamicProperties" type="Ppivot.TDynamicProperty"
-        aggregation="composite" association="Ppivot.A_ownedDynamicProperties_DynamicType">
+    <ownedAttribute xmi:id="Ppivot.TDynamicType.PownedDynamicProperties" name="ownedDynamicProperties" type="Ppivot.TDynamicProperty" aggregation="composite" association="Ppivot.A_ownedDynamicProperties_DynamicType">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TDynamicType.PownedDynamicProperties.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TDynamicType.PownedDynamicProperties.uV" value="*"/>
     </ownedAttribute>
@@ -419,13 +385,11 @@
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TElement.PownedComments.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TElement.PownedComments.uV" value="*"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TElement.PownedAnnotations" name="ownedAnnotations" type="Ppivot.TElement" isOrdered="true" aggregation="composite"
-        association="Ppivot.A_ownedAnnotations_Element">
+    <ownedAttribute xmi:id="Ppivot.TElement.PownedAnnotations" name="ownedAnnotations" type="Ppivot.TElement" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedAnnotations_Element">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TElement.PownedAnnotations.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TElement.PownedAnnotations.uV" value="*"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TElement.PownedExtensions" name="ownedExtensions" type="Ppivot.TElementExtension" aggregation="composite"
-        association="Ppivot.A_ownedExtensions_base">
+    <ownedAttribute xmi:id="Ppivot.TElement.PownedExtensions" name="ownedExtensions" type="Ppivot.TElementExtension" aggregation="composite" association="Ppivot.A_ownedExtensions_base">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TElement.PownedExtensions.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TElement.PownedExtensions.uV" value="*"/>
     </ownedAttribute>
@@ -456,15 +420,13 @@
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TEnumLiteralExp" name="EnumLiteralExp">
     <generalization xmi:id="Ppivot.TEnumLiteralExp.g0" general="Ppivot.TLiteralExp"/>
-    <ownedAttribute xmi:id="Ppivot.TEnumLiteralExp.PreferredLiteral" name="referredLiteral" type="Ppivot.TEnumerationLiteral" isOrdered="true"
-        association="Ppivot.A_referredLiteral_EnumLiteralExp">
+    <ownedAttribute xmi:id="Ppivot.TEnumLiteralExp.PreferredLiteral" name="referredLiteral" type="Ppivot.TEnumerationLiteral" isOrdered="true" association="Ppivot.A_referredLiteral_EnumLiteralExp">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TEnumLiteralExp.PreferredLiteral.lV"/>
     </ownedAttribute>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TEnumeration" name="Enumeration">
     <generalization xmi:id="Ppivot.TEnumeration.g0" general="Ppivot.TDataType"/>
-    <ownedAttribute xmi:id="Ppivot.TEnumeration.PownedLiterals" name="ownedLiterals" type="Ppivot.TEnumerationLiteral" isOrdered="true"
-        aggregation="composite" association="Ppivot.A_ownedLiterals_owningEnumeration">
+    <ownedAttribute xmi:id="Ppivot.TEnumeration.PownedLiterals" name="ownedLiterals" type="Ppivot.TEnumerationLiteral" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedLiterals_owningEnumeration">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TEnumeration.PownedLiterals.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TEnumeration.PownedLiterals.uV" value="*"/>
     </ownedAttribute>
@@ -479,26 +441,21 @@
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TEnumerationLiteral.Pvalue.lV"/>
       <defaultValue xmi:type="uml:LiteralString" xmi:id="Ppivot.TEnumerationLiteral.Pvalue.dlV" value="0"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TEnumerationLiteral.PowningEnumeration" name="owningEnumeration" type="Ppivot.TEnumeration" isOrdered="true"
-        association="Ppivot.A_ownedLiterals_owningEnumeration"/>
+    <ownedAttribute xmi:id="Ppivot.TEnumerationLiteral.PowningEnumeration" name="owningEnumeration" type="Ppivot.TEnumeration" isOrdered="true" association="Ppivot.A_ownedLiterals_owningEnumeration"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TExpressionInOCL" name="ExpressionInOCL">
     <generalization xmi:id="Ppivot.TExpressionInOCL.g0" general="Ppivot.TLanguageExpression"/>
-    <ownedAttribute xmi:id="Ppivot.TExpressionInOCL.PownedBody" name="ownedBody" type="Ppivot.TOCLExpression" isOrdered="true" aggregation="composite"
-        association="Ppivot.A_ownedBody_ExpressionInOCL">
+    <ownedAttribute xmi:id="Ppivot.TExpressionInOCL.PownedBody" name="ownedBody" type="Ppivot.TOCLExpression" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedBody_ExpressionInOCL">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TExpressionInOCL.PownedBody.lV"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TExpressionInOCL.PownedContext" name="ownedContext" type="Ppivot.TVariable" isOrdered="true" aggregation="composite"
-        association="Ppivot.A_ownedContext_ExpressionInOCL">
+    <ownedAttribute xmi:id="Ppivot.TExpressionInOCL.PownedContext" name="ownedContext" type="Ppivot.TVariable" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedContext_ExpressionInOCL">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TExpressionInOCL.PownedContext.lV"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TExpressionInOCL.PownedParameters" name="ownedParameters" type="Ppivot.TVariable" isOrdered="true"
-        aggregation="composite" association="Ppivot.A_ownedParameters_ExpressionInOCL">
+    <ownedAttribute xmi:id="Ppivot.TExpressionInOCL.PownedParameters" name="ownedParameters" type="Ppivot.TVariable" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedParameters_ExpressionInOCL">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TExpressionInOCL.PownedParameters.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TExpressionInOCL.PownedParameters.uV" value="*"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TExpressionInOCL.PownedResult" name="ownedResult" type="Ppivot.TVariable" isOrdered="true" aggregation="composite"
-        association="Ppivot.A_ownedResult_ExpressionInOCL">
+    <ownedAttribute xmi:id="Ppivot.TExpressionInOCL.PownedResult" name="ownedResult" type="Ppivot.TVariable" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedResult_ExpressionInOCL">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TExpressionInOCL.PownedResult.lV"/>
     </ownedAttribute>
   </packagedElement>
@@ -507,8 +464,7 @@
     <ownedAttribute xmi:id="Ppivot.TFeature.Pimplementation" name="implementation" visibility="public" type="Ppivot.TLibraryFeature" isOrdered="true">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TFeature.Pimplementation.lV"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TFeature.PimplementationClass" name="implementationClass" visibility="public" type="Ppivot.TString"
-        isOrdered="true">
+    <ownedAttribute xmi:id="Ppivot.TFeature.PimplementationClass" name="implementationClass" visibility="public" type="Ppivot.TString" isOrdered="true">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TFeature.PimplementationClass.lV"/>
     </ownedAttribute>
     <ownedAttribute xmi:id="Ppivot.TFeature.PisStatic" name="isStatic" visibility="public" type="Ppivot.TBoolean" isOrdered="true">
@@ -529,12 +485,9 @@
     <ownedAttribute xmi:id="Ppivot.TIfExp.PisElseIf" name="isElseIf" visibility="public" type="Ppivot.TBoolean" isOrdered="true">
       <defaultValue xmi:type="uml:LiteralString" xmi:id="Ppivot.TIfExp.PisElseIf.dlV" value="false"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TIfExp.PownedCondition" name="ownedCondition" type="Ppivot.TOCLExpression" isOrdered="true" aggregation="composite"
-        association="Ppivot.A_ownedCondition_IfExp"/>
-    <ownedAttribute xmi:id="Ppivot.TIfExp.PownedElse" name="ownedElse" type="Ppivot.TOCLExpression" isOrdered="true" aggregation="composite"
-        association="Ppivot.A_ownedElse_IfExp"/>
-    <ownedAttribute xmi:id="Ppivot.TIfExp.PownedThen" name="ownedThen" type="Ppivot.TOCLExpression" isOrdered="true" aggregation="composite"
-        association="Ppivot.A_ownedThen_IfExp"/>
+    <ownedAttribute xmi:id="Ppivot.TIfExp.PownedCondition" name="ownedCondition" type="Ppivot.TOCLExpression" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedCondition_IfExp"/>
+    <ownedAttribute xmi:id="Ppivot.TIfExp.PownedElse" name="ownedElse" type="Ppivot.TOCLExpression" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedElse_IfExp"/>
+    <ownedAttribute xmi:id="Ppivot.TIfExp.PownedThen" name="ownedThen" type="Ppivot.TOCLExpression" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedThen_IfExp"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TImport" name="Import">
     <generalization xmi:id="Ppivot.TImport.g0" general="Ppivot.TNamedElement"/>
@@ -553,19 +506,16 @@
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TInstanceSpecification.PownedSlots.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TInstanceSpecification.PownedSlots.uV" value="*"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TInstanceSpecification.PownedSpecification" name="ownedSpecification" type="Ppivot.TLanguageExpression"
-        isOrdered="true" aggregation="composite" association="Ppivot.A_ownedSpecification_InstanceSpecification">
+    <ownedAttribute xmi:id="Ppivot.TInstanceSpecification.PownedSpecification" name="ownedSpecification" type="Ppivot.TLanguageExpression" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedSpecification_InstanceSpecification">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TInstanceSpecification.PownedSpecification.lV"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TInstanceSpecification.PowningPackage" name="owningPackage" type="Ppivot.TPackage" isOrdered="true"
-        association="Ppivot.A_ownedInstances_owningPackage">
+    <ownedAttribute xmi:id="Ppivot.TInstanceSpecification.PowningPackage" name="owningPackage" type="Ppivot.TPackage" isOrdered="true" association="Ppivot.A_ownedInstances_owningPackage">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TInstanceSpecification.PowningPackage.lV"/>
     </ownedAttribute>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TIntegerLiteralExp" name="IntegerLiteralExp">
     <generalization xmi:id="Ppivot.TIntegerLiteralExp.g0" general="Ppivot.TNumericLiteralExp"/>
-    <ownedAttribute xmi:id="Ppivot.TIntegerLiteralExp.PintegerSymbol" name="integerSymbol" visibility="public" type="Ppivot.TInteger"
-        isOrdered="true"/>
+    <ownedAttribute xmi:id="Ppivot.TIntegerLiteralExp.PintegerSymbol" name="integerSymbol" visibility="public" type="Ppivot.TInteger" isOrdered="true"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TInvalidLiteralExp" name="InvalidLiteralExp">
     <generalization xmi:id="Ppivot.TInvalidLiteralExp.g0" general="Ppivot.TLiteralExp"/>
@@ -578,30 +528,25 @@
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TIterateExp" name="IterateExp">
     <generalization xmi:id="Ppivot.TIterateExp.g0" general="Ppivot.TLoopExp"/>
-    <ownedAttribute xmi:id="Ppivot.TIterateExp.PownedResult" name="ownedResult" type="Ppivot.TVariable" isOrdered="true" aggregation="composite"
-        association="Ppivot.A_ownedResult_IterateExp">
+    <ownedAttribute xmi:id="Ppivot.TIterateExp.PownedResult" name="ownedResult" type="Ppivot.TVariable" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedResult_IterateExp">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TIterateExp.PownedResult.lV"/>
     </ownedAttribute>
-    <interfaceRealization xmi:id="Ppivot.TIterateExp.interfaceRealization0" client="Ppivot.TIterateExp" supplier="Ppivot.TReferringElement"
-        contract="Ppivot.TReferringElement"/>
+    <interfaceRealization xmi:id="Ppivot.TIterateExp.interfaceRealization0" client="Ppivot.TIterateExp" supplier="Ppivot.TReferringElement" contract="Ppivot.TReferringElement"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TIteration" name="Iteration">
     <generalization xmi:id="Ppivot.TIteration.g0" general="Ppivot.TOperation"/>
-    <ownedAttribute xmi:id="Ppivot.TIteration.PownedAccumulators" name="ownedAccumulators" type="Ppivot.TParameter" isOrdered="true" aggregation="composite"
-        association="Ppivot.A_ownedAccumulators_Iteration">
+    <ownedAttribute xmi:id="Ppivot.TIteration.PownedAccumulators" name="ownedAccumulators" type="Ppivot.TParameter" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedAccumulators_Iteration">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TIteration.PownedAccumulators.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TIteration.PownedAccumulators.uV" value="*"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TIteration.PownedIterators" name="ownedIterators" type="Ppivot.TParameter" isOrdered="true" aggregation="composite"
-        association="Ppivot.A_ownedIterators_Iteration">
+    <ownedAttribute xmi:id="Ppivot.TIteration.PownedIterators" name="ownedIterators" type="Ppivot.TParameter" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedIterators_Iteration">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TIteration.PownedIterators.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TIteration.PownedIterators.uV" value="*"/>
     </ownedAttribute>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TIteratorExp" name="IteratorExp">
     <generalization xmi:id="Ppivot.TIteratorExp.g0" general="Ppivot.TLoopExp"/>
-    <interfaceRealization xmi:id="Ppivot.TIteratorExp.interfaceRealization0" client="Ppivot.TIteratorExp" supplier="Ppivot.TReferringElement"
-        contract="Ppivot.TReferringElement"/>
+    <interfaceRealization xmi:id="Ppivot.TIteratorExp.interfaceRealization0" client="Ppivot.TIteratorExp" supplier="Ppivot.TReferringElement" contract="Ppivot.TReferringElement"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TIteratorVariable" name="IteratorVariable">
     <generalization xmi:id="Ppivot.TIteratorVariable.g0" general="Ppivot.TVariable"/>
@@ -609,8 +554,7 @@
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TLambdaType" name="LambdaType">
     <generalization xmi:id="Ppivot.TLambdaType.g0" general="Ppivot.TDataType"/>
     <ownedAttribute xmi:id="Ppivot.TLambdaType.PcontextType" name="contextType" type="Ppivot.TType" isOrdered="true" association="Ppivot.A_contextType_LambdaType"/>
-    <ownedAttribute xmi:id="Ppivot.TLambdaType.PparameterType" name="parameterType" type="Ppivot.TType" isOrdered="true" isUnique="false"
-        association="Ppivot.A_parameterType_LambdaType">
+    <ownedAttribute xmi:id="Ppivot.TLambdaType.PparameterType" name="parameterType" type="Ppivot.TType" isOrdered="true" isUnique="false" association="Ppivot.A_parameterType_LambdaType">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TLambdaType.PparameterType.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TLambdaType.PparameterType.uV" value="*"/>
     </ownedAttribute>
@@ -621,27 +565,22 @@
     <ownedAttribute xmi:id="Ppivot.TLanguageExpression.Pbody" name="body" visibility="public" type="Ppivot.TString" isOrdered="true">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TLanguageExpression.Pbody.lV"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TLanguageExpression.Planguage" name="language" visibility="public" type="Ppivot.TString" isOrdered="true"
-        isReadOnly="true" isDerived="true"/>
-    <ownedAttribute xmi:id="Ppivot.TLanguageExpression.PowningConstraint" name="owningConstraint" type="Ppivot.TConstraint" isOrdered="true"
-        association="Ppivot.A_ownedSpecification_owningConstraint">
+    <ownedAttribute xmi:id="Ppivot.TLanguageExpression.Planguage" name="language" visibility="public" type="Ppivot.TString" isOrdered="true" isReadOnly="true" isDerived="true"/>
+    <ownedAttribute xmi:id="Ppivot.TLanguageExpression.PowningConstraint" name="owningConstraint" type="Ppivot.TConstraint" isOrdered="true" association="Ppivot.A_ownedSpecification_owningConstraint">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TLanguageExpression.PowningConstraint.lV"/>
     </ownedAttribute>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TLetExp" name="LetExp">
     <generalization xmi:id="Ppivot.TLetExp.g0" general="Ppivot.TOCLExpression"/>
-    <ownedAttribute xmi:id="Ppivot.TLetExp.PownedIn" name="ownedIn" type="Ppivot.TOCLExpression" isOrdered="true" aggregation="composite"
-        association="Ppivot.A_ownedIn_LetExp"/>
-    <ownedAttribute xmi:id="Ppivot.TLetExp.PownedVariable" name="ownedVariable" type="Ppivot.TVariable" isOrdered="true" aggregation="composite"
-        association="Ppivot.A_ownedVariable_LetExp"/>
+    <ownedAttribute xmi:id="Ppivot.TLetExp.PownedIn" name="ownedIn" type="Ppivot.TOCLExpression" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedIn_LetExp"/>
+    <ownedAttribute xmi:id="Ppivot.TLetExp.PownedVariable" name="ownedVariable" type="Ppivot.TVariable" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedVariable_LetExp"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TLetVariable" name="LetVariable">
     <generalization xmi:id="Ppivot.TLetVariable.g0" general="Ppivot.TVariable"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TLibrary" name="Library">
     <generalization xmi:id="Ppivot.TLibrary.g0" general="Ppivot.TPackage"/>
-    <ownedAttribute xmi:id="Ppivot.TLibrary.PownedPrecedences" name="ownedPrecedences" type="Ppivot.TPrecedence" isOrdered="true" aggregation="composite"
-        association="Ppivot.A_ownedPrecedences_Library">
+    <ownedAttribute xmi:id="Ppivot.TLibrary.PownedPrecedences" name="ownedPrecedences" type="Ppivot.TPrecedence" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedPrecedences_Library">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TLibrary.PownedPrecedences.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TLibrary.PownedPrecedences.uV" value="*"/>
     </ownedAttribute>
@@ -651,15 +590,12 @@
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TLoopExp" name="LoopExp" isAbstract="true">
     <generalization xmi:id="Ppivot.TLoopExp.g0" general="Ppivot.TCallExp"/>
-    <ownedAttribute xmi:id="Ppivot.TLoopExp.PownedBody" name="ownedBody" type="Ppivot.TOCLExpression" isOrdered="true" aggregation="composite"
-        association="Ppivot.A_ownedBody_LoopExp"/>
-    <ownedAttribute xmi:id="Ppivot.TLoopExp.PownedCoIterators" name="ownedCoIterators" type="Ppivot.TVariable" isOrdered="true" aggregation="composite"
-        association="Ppivot.A_ownedCoIterators_LoopExp">
+    <ownedAttribute xmi:id="Ppivot.TLoopExp.PownedBody" name="ownedBody" type="Ppivot.TOCLExpression" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedBody_LoopExp"/>
+    <ownedAttribute xmi:id="Ppivot.TLoopExp.PownedCoIterators" name="ownedCoIterators" type="Ppivot.TVariable" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedCoIterators_LoopExp">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TLoopExp.PownedCoIterators.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TLoopExp.PownedCoIterators.uV" value="*"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TLoopExp.PownedIterators" name="ownedIterators" type="Ppivot.TVariable" isOrdered="true" aggregation="composite"
-        association="Ppivot.A_ownedIterators_LoopExp">
+    <ownedAttribute xmi:id="Ppivot.TLoopExp.PownedIterators" name="ownedIterators" type="Ppivot.TVariable" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedIterators_LoopExp">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TLoopExp.PownedIterators.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TLoopExp.PownedIterators.uV" value="*"/>
     </ownedAttribute>
@@ -669,18 +605,15 @@
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TMapLiteralExp" name="MapLiteralExp">
     <generalization xmi:id="Ppivot.TMapLiteralExp.g0" general="Ppivot.TLiteralExp"/>
-    <ownedAttribute xmi:id="Ppivot.TMapLiteralExp.PownedParts" name="ownedParts" type="Ppivot.TMapLiteralPart" isOrdered="true" aggregation="composite"
-        association="Ppivot.A_ownedParts_MapLiteralExp">
+    <ownedAttribute xmi:id="Ppivot.TMapLiteralExp.PownedParts" name="ownedParts" type="Ppivot.TMapLiteralPart" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedParts_MapLiteralExp">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TMapLiteralExp.PownedParts.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TMapLiteralExp.PownedParts.uV" value="*"/>
     </ownedAttribute>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TMapLiteralPart" name="MapLiteralPart">
     <generalization xmi:id="Ppivot.TMapLiteralPart.g0" general="Ppivot.TElement"/>
-    <ownedAttribute xmi:id="Ppivot.TMapLiteralPart.PownedKey" name="ownedKey" type="Ppivot.TOCLExpression" isOrdered="true" aggregation="composite"
-        association="Ppivot.A_ownedKey_MapLiteralPart"/>
-    <ownedAttribute xmi:id="Ppivot.TMapLiteralPart.PownedValue" name="ownedValue" type="Ppivot.TOCLExpression" isOrdered="true" aggregation="composite"
-        association="Ppivot.A_ownedValue_MapLiteralPart"/>
+    <ownedAttribute xmi:id="Ppivot.TMapLiteralPart.PownedKey" name="ownedKey" type="Ppivot.TOCLExpression" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedKey_MapLiteralPart"/>
+    <ownedAttribute xmi:id="Ppivot.TMapLiteralPart.PownedValue" name="ownedValue" type="Ppivot.TOCLExpression" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedValue_MapLiteralPart"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TMapType" name="MapType">
     <generalization xmi:id="Ppivot.TMapType.g0" general="Ppivot.TIterableType"/>
@@ -698,26 +631,21 @@
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TMessageExp" name="MessageExp">
     <generalization xmi:id="Ppivot.TMessageExp.g0" general="Ppivot.TOCLExpression"/>
-    <ownedAttribute xmi:id="Ppivot.TMessageExp.PownedArguments" name="ownedArguments" type="Ppivot.TOCLExpression" isOrdered="true" aggregation="composite"
-        association="Ppivot.A_ownedArguments_MessageExp">
+    <ownedAttribute xmi:id="Ppivot.TMessageExp.PownedArguments" name="ownedArguments" type="Ppivot.TOCLExpression" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedArguments_MessageExp">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TMessageExp.PownedArguments.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TMessageExp.PownedArguments.uV" value="*"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TMessageExp.PownedCalledOperation" name="ownedCalledOperation" type="Ppivot.TCallOperationAction" isOrdered="true"
-        aggregation="composite" association="Ppivot.A_ownedCalledOperation_MessageExp">
+    <ownedAttribute xmi:id="Ppivot.TMessageExp.PownedCalledOperation" name="ownedCalledOperation" type="Ppivot.TCallOperationAction" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedCalledOperation_MessageExp">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TMessageExp.PownedCalledOperation.lV"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TMessageExp.PownedSentSignal" name="ownedSentSignal" type="Ppivot.TSendSignalAction" isOrdered="true"
-        aggregation="composite" association="Ppivot.A_ownedSentSignal_MessageExp">
+    <ownedAttribute xmi:id="Ppivot.TMessageExp.PownedSentSignal" name="ownedSentSignal" type="Ppivot.TSendSignalAction" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedSentSignal_MessageExp">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TMessageExp.PownedSentSignal.lV"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TMessageExp.PownedTarget" name="ownedTarget" type="Ppivot.TOCLExpression" isOrdered="true" aggregation="composite"
-        association="Ppivot.A_ownedTarget_MessageExp"/>
+    <ownedAttribute xmi:id="Ppivot.TMessageExp.PownedTarget" name="ownedTarget" type="Ppivot.TOCLExpression" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedTarget_MessageExp"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TMessageType" name="MessageType">
     <generalization xmi:id="Ppivot.TMessageType.g0" general="Ppivot.TClass"/>
-    <ownedAttribute xmi:id="Ppivot.TMessageType.PreferredOperation" name="referredOperation" type="Ppivot.TOperation" isOrdered="true"
-        association="Ppivot.A_referredOperation_MessageType">
+    <ownedAttribute xmi:id="Ppivot.TMessageType.PreferredOperation" name="referredOperation" type="Ppivot.TOperation" isOrdered="true" association="Ppivot.A_referredOperation_MessageType">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TMessageType.PreferredOperation.lV"/>
     </ownedAttribute>
     <ownedAttribute xmi:id="Ppivot.TMessageType.PreferredSignal" name="referredSignal" type="Ppivot.TSignal" isOrdered="true" association="Ppivot.A_referredSignal_MessageType">
@@ -732,8 +660,7 @@
     <ownedAttribute xmi:id="Ppivot.TModel.PxmiidVersion" name="xmiidVersion" visibility="public" type="Ppivot.TInteger" isOrdered="true">
       <defaultValue xmi:type="uml:LiteralString" xmi:id="Ppivot.TModel.PxmiidVersion.dlV" value="0"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TModel.PownedImports" name="ownedImports" type="Ppivot.TImport" isOrdered="true" aggregation="composite"
-        association="Ppivot.A_ownedImports_Model">
+    <ownedAttribute xmi:id="Ppivot.TModel.PownedImports" name="ownedImports" type="Ppivot.TImport" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedImports_Model">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TModel.PownedImports.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TModel.PownedImports.uV" value="*"/>
     </ownedAttribute>
@@ -750,16 +677,14 @@
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TNamespace" name="Namespace" isAbstract="true">
     <generalization xmi:id="Ppivot.TNamespace.g0" general="Ppivot.TNamedElement"/>
-    <ownedAttribute xmi:id="Ppivot.TNamespace.PownedConstraints" name="ownedConstraints" type="Ppivot.TConstraint" aggregation="composite"
-        association="Ppivot.A_ownedConstraints_Namespace">
+    <ownedAttribute xmi:id="Ppivot.TNamespace.PownedConstraints" name="ownedConstraints" type="Ppivot.TConstraint" aggregation="composite" association="Ppivot.A_ownedConstraints_Namespace">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TNamespace.PownedConstraints.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TNamespace.PownedConstraints.uV" value="*"/>
     </ownedAttribute>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TNavigationCallExp" name="NavigationCallExp" isAbstract="true">
     <generalization xmi:id="Ppivot.TNavigationCallExp.g0" general="Ppivot.TFeatureCallExp"/>
-    <ownedAttribute xmi:id="Ppivot.TNavigationCallExp.PnavigationSource" name="navigationSource" type="Ppivot.TProperty" isOrdered="true"
-        association="Ppivot.A_navigationSource_NavigationCallExp">
+    <ownedAttribute xmi:id="Ppivot.TNavigationCallExp.PnavigationSource" name="navigationSource" type="Ppivot.TProperty" isOrdered="true" association="Ppivot.A_navigationSource_NavigationCallExp">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TNavigationCallExp.PnavigationSource.lV"/>
     </ownedAttribute>
     <ownedAttribute xmi:id="Ppivot.TNavigationCallExp.Pqualifiers" name="qualifiers" type="Ppivot.TOCLExpression" isOrdered="true" association="Ppivot.A_qualifiers_NavigationCallExp">
@@ -802,22 +727,18 @@
     <ownedAttribute xmi:id="Ppivot.TOperation.PisValidating" name="isValidating" visibility="public" type="Ppivot.TBoolean" isOrdered="true">
       <defaultValue xmi:type="uml:LiteralString" xmi:id="Ppivot.TOperation.PisValidating.dlV" value="false"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TOperation.PbodyExpression" name="bodyExpression" type="Ppivot.TLanguageExpression" isOrdered="true"
-        aggregation="composite" association="Ppivot.A_bodyExpression_Operation">
+    <ownedAttribute xmi:id="Ppivot.TOperation.PbodyExpression" name="bodyExpression" type="Ppivot.TLanguageExpression" isOrdered="true" aggregation="composite" association="Ppivot.A_bodyExpression_Operation">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TOperation.PbodyExpression.lV"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TOperation.PownedParameters" name="ownedParameters" type="Ppivot.TParameter" isOrdered="true" aggregation="composite"
-        association="Ppivot.A_ownedParameters_owningOperation">
+    <ownedAttribute xmi:id="Ppivot.TOperation.PownedParameters" name="ownedParameters" type="Ppivot.TParameter" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedParameters_owningOperation">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TOperation.PownedParameters.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TOperation.PownedParameters.uV" value="*"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TOperation.PownedPostconditions" name="ownedPostconditions" type="Ppivot.TConstraint" aggregation="composite"
-        association="Ppivot.A_ownedPostconditions_owningPostContext">
+    <ownedAttribute xmi:id="Ppivot.TOperation.PownedPostconditions" name="ownedPostconditions" type="Ppivot.TConstraint" aggregation="composite" association="Ppivot.A_ownedPostconditions_owningPostContext">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TOperation.PownedPostconditions.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TOperation.PownedPostconditions.uV" value="*"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TOperation.PownedPreconditions" name="ownedPreconditions" type="Ppivot.TConstraint" aggregation="composite"
-        association="Ppivot.A_ownedPreconditions_owningPreContext">
+    <ownedAttribute xmi:id="Ppivot.TOperation.PownedPreconditions" name="ownedPreconditions" type="Ppivot.TConstraint" aggregation="composite" association="Ppivot.A_ownedPreconditions_owningPreContext">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TOperation.PownedPreconditions.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TOperation.PownedPreconditions.uV" value="*"/>
     </ownedAttribute>
@@ -841,22 +762,18 @@
     <ownedAttribute xmi:id="Ppivot.TOperationCallExp.PisVirtual" name="isVirtual" visibility="public" type="Ppivot.TBoolean" isOrdered="true">
       <defaultValue xmi:type="uml:LiteralString" xmi:id="Ppivot.TOperationCallExp.PisVirtual.dlV" value="true"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TOperationCallExp.PownedArguments" name="ownedArguments" type="Ppivot.TOCLExpression" isOrdered="true"
-        aggregation="composite" association="Ppivot.A_ownedArguments_OperationCallExp">
+    <ownedAttribute xmi:id="Ppivot.TOperationCallExp.PownedArguments" name="ownedArguments" type="Ppivot.TOCLExpression" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedArguments_OperationCallExp">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TOperationCallExp.PownedArguments.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TOperationCallExp.PownedArguments.uV" value="*"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TOperationCallExp.PreferredOperation" name="referredOperation" type="Ppivot.TOperation" isOrdered="true"
-        association="Ppivot.A_referredOperation_OperationCallExp">
+    <ownedAttribute xmi:id="Ppivot.TOperationCallExp.PreferredOperation" name="referredOperation" type="Ppivot.TOperation" isOrdered="true" association="Ppivot.A_referredOperation_OperationCallExp">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TOperationCallExp.PreferredOperation.lV"/>
     </ownedAttribute>
-    <interfaceRealization xmi:id="Ppivot.TOperationCallExp.interfaceRealization0" client="Ppivot.TOperationCallExp" supplier="Ppivot.TReferringElement"
-        contract="Ppivot.TReferringElement"/>
+    <interfaceRealization xmi:id="Ppivot.TOperationCallExp.interfaceRealization0" client="Ppivot.TOperationCallExp" supplier="Ppivot.TReferringElement" contract="Ppivot.TReferringElement"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TOppositePropertyCallExp" name="OppositePropertyCallExp">
     <generalization xmi:id="Ppivot.TOppositePropertyCallExp.g0" general="Ppivot.TNavigationCallExp"/>
-    <ownedAttribute xmi:id="Ppivot.TOppositePropertyCallExp.PreferredProperty" name="referredProperty" type="Ppivot.TProperty" isOrdered="true"
-        association="Ppivot.A_referredProperty_OppositePropertyCallExp">
+    <ownedAttribute xmi:id="Ppivot.TOppositePropertyCallExp.PreferredProperty" name="referredProperty" type="Ppivot.TProperty" isOrdered="true" association="Ppivot.A_referredProperty_OppositePropertyCallExp">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TOppositePropertyCallExp.PreferredProperty.lV"/>
     </ownedAttribute>
   </packagedElement>
@@ -882,8 +799,7 @@
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TPackage.PownedClasses.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TPackage.PownedClasses.uV" value="*"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TPackage.PownedInstances" name="ownedInstances" type="Ppivot.TInstanceSpecification" aggregation="composite"
-        association="Ppivot.A_ownedInstances_owningPackage">
+    <ownedAttribute xmi:id="Ppivot.TPackage.PownedInstances" name="ownedInstances" type="Ppivot.TInstanceSpecification" aggregation="composite" association="Ppivot.A_ownedInstances_owningPackage">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TPackage.PownedInstances.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TPackage.PownedInstances.uV" value="*"/>
     </ownedAttribute>
@@ -894,8 +810,7 @@
     <ownedAttribute xmi:id="Ppivot.TPackage.PowningPackage" name="owningPackage" type="Ppivot.TPackage" isOrdered="true" association="Ppivot.A_ownedPackages_owningPackage">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TPackage.PowningPackage.lV"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TPackage.PownedProfileApplications" name="ownedProfileApplications" type="Ppivot.TProfileApplication"
-        aggregation="composite" association="Ppivot.A_ownedProfileApplications_owningPackage">
+    <ownedAttribute xmi:id="Ppivot.TPackage.PownedProfileApplications" name="ownedProfileApplications" type="Ppivot.TProfileApplication" aggregation="composite" association="Ppivot.A_ownedProfileApplications_owningPackage">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TPackage.PownedProfileApplications.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TPackage.PownedProfileApplications.uV" value="*"/>
     </ownedAttribute>
@@ -914,8 +829,7 @@
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TPrecedence" name="Precedence">
     <generalization xmi:id="Ppivot.TPrecedence.g0" general="Ppivot.TNamedElement"/>
-    <ownedAttribute xmi:id="Ppivot.TPrecedence.Passociativity" name="associativity" visibility="public" type="Ppivot.TAssociativityKind"
-        isOrdered="true">
+    <ownedAttribute xmi:id="Ppivot.TPrecedence.Passociativity" name="associativity" visibility="public" type="Ppivot.TAssociativityKind" isOrdered="true">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TPrecedence.Passociativity.lV"/>
       <defaultValue xmi:type="uml:InstanceValue" xmi:id="Ppivot.TPrecedence.Passociativity.dlV" type="Ppivot.TAssociativityKind" instance="Ppivot.TAssociativityKind.Lleft"/>
     </ownedAttribute>
@@ -948,18 +862,15 @@
     <ownedAttribute xmi:id="Ppivot.TProfileApplication.PisStrict" name="isStrict" visibility="public" type="Ppivot.TBoolean" isOrdered="true">
       <defaultValue xmi:type="uml:LiteralString" xmi:id="Ppivot.TProfileApplication.PisStrict.dlV" value="false"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TProfileApplication.PappliedProfile" name="appliedProfile" type="Ppivot.TProfile" isOrdered="true"
-        association="Ppivot.A_profileApplications_appliedProfile"/>
+    <ownedAttribute xmi:id="Ppivot.TProfileApplication.PappliedProfile" name="appliedProfile" type="Ppivot.TProfile" isOrdered="true" association="Ppivot.A_profileApplications_appliedProfile"/>
     <ownedAttribute xmi:id="Ppivot.TProfileApplication.PowningPackage" name="owningPackage" type="Ppivot.TPackage" isOrdered="true" association="Ppivot.A_ownedProfileApplications_owningPackage"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TProperty" name="Property">
     <generalization xmi:id="Ppivot.TProperty.g0" general="Ppivot.TFeature"/>
-    <ownedAttribute xmi:id="Ppivot.TProperty.PdefaultValue" name="defaultValue" visibility="public" type="Ppivot.TObject" isOrdered="true"
-        isDerived="true">
+    <ownedAttribute xmi:id="Ppivot.TProperty.PdefaultValue" name="defaultValue" visibility="public" type="Ppivot.TObject" isOrdered="true" isDerived="true">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TProperty.PdefaultValue.lV"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TProperty.PdefaultValueString" name="defaultValueString" visibility="public" type="Ppivot.TString"
-        isOrdered="true">
+    <ownedAttribute xmi:id="Ppivot.TProperty.PdefaultValueString" name="defaultValueString" visibility="public" type="Ppivot.TString" isOrdered="true">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TProperty.PdefaultValueString.lV"/>
     </ownedAttribute>
     <ownedAttribute xmi:id="Ppivot.TProperty.PisComposite" name="isComposite" visibility="public" type="Ppivot.TBoolean" isOrdered="true">
@@ -990,8 +901,7 @@
     <ownedAttribute xmi:id="Ppivot.TProperty.PisVolatile" name="isVolatile" visibility="public" type="Ppivot.TBoolean" isOrdered="true">
       <defaultValue xmi:type="uml:LiteralString" xmi:id="Ppivot.TProperty.PisVolatile.dlV" value="false"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TProperty.PassociationClass" name="associationClass" type="Ppivot.TAssociationClass" isOrdered="true"
-        association="Ppivot.A_unownedAttributes_associationClass">
+    <ownedAttribute xmi:id="Ppivot.TProperty.PassociationClass" name="associationClass" type="Ppivot.TAssociationClass" isOrdered="true" association="Ppivot.A_unownedAttributes_associationClass">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TProperty.PassociationClass.lV"/>
     </ownedAttribute>
     <ownedAttribute xmi:id="Ppivot.TProperty.Pkeys" name="keys" type="Ppivot.TProperty" association="Ppivot.A_keys_Property">
@@ -1001,8 +911,7 @@
     <ownedAttribute xmi:id="Ppivot.TProperty.Popposite" name="opposite" type="Ppivot.TProperty" isOrdered="true" association="Ppivot.A_opposite_Property">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TProperty.Popposite.lV"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TProperty.PownedExpression" name="ownedExpression" type="Ppivot.TLanguageExpression" isOrdered="true"
-        aggregation="composite" association="Ppivot.A_ownedExpression_Property">
+    <ownedAttribute xmi:id="Ppivot.TProperty.PownedExpression" name="ownedExpression" type="Ppivot.TLanguageExpression" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedExpression_Property">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TProperty.PownedExpression.lV"/>
     </ownedAttribute>
     <ownedAttribute xmi:id="Ppivot.TProperty.PowningClass" name="owningClass" type="Ppivot.TClass" isOrdered="true" association="Ppivot.A_ownedProperties_owningClass">
@@ -1026,20 +935,15 @@
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TPropertyCallExp" name="PropertyCallExp">
     <generalization xmi:id="Ppivot.TPropertyCallExp.g0" general="Ppivot.TNavigationCallExp"/>
-    <ownedAttribute xmi:id="Ppivot.TPropertyCallExp.PreferredProperty" name="referredProperty" type="Ppivot.TProperty" isOrdered="true"
-        association="Ppivot.A_referredProperty_PropertyCallExp">
+    <ownedAttribute xmi:id="Ppivot.TPropertyCallExp.PreferredProperty" name="referredProperty" type="Ppivot.TProperty" isOrdered="true" association="Ppivot.A_referredProperty_PropertyCallExp">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TPropertyCallExp.PreferredProperty.lV"/>
     </ownedAttribute>
-    <interfaceRealization xmi:id="Ppivot.TPropertyCallExp.interfaceRealization0" client="Ppivot.TPropertyCallExp" supplier="Ppivot.TReferringElement"
-        contract="Ppivot.TReferringElement"/>
-    <ownedOperation xmi:id="Ppivot.TPropertyCallExp.OgetSpecializedReferredPropertyOwningType" name="getSpecializedReferredPropertyOwningType"
-        visibility="public">
-      <ownedParameter xmi:id="Ppivot.TPropertyCallExp.OgetSpecializedReferredPropertyOwningType.Pnull" type="Ppivot.TType" isOrdered="true"
-          direction="return"/>
+    <interfaceRealization xmi:id="Ppivot.TPropertyCallExp.interfaceRealization0" client="Ppivot.TPropertyCallExp" supplier="Ppivot.TReferringElement" contract="Ppivot.TReferringElement"/>
+    <ownedOperation xmi:id="Ppivot.TPropertyCallExp.OgetSpecializedReferredPropertyOwningType" name="getSpecializedReferredPropertyOwningType" visibility="public">
+      <ownedParameter xmi:id="Ppivot.TPropertyCallExp.OgetSpecializedReferredPropertyOwningType.Pnull" type="Ppivot.TType" isOrdered="true" direction="return"/>
     </ownedOperation>
     <ownedOperation xmi:id="Ppivot.TPropertyCallExp.OgetSpecializedReferredPropertyType" name="getSpecializedReferredPropertyType" visibility="public">
-      <ownedParameter xmi:id="Ppivot.TPropertyCallExp.OgetSpecializedReferredPropertyType.Pnull" type="Ppivot.TType" isOrdered="true"
-          direction="return"/>
+      <ownedParameter xmi:id="Ppivot.TPropertyCallExp.OgetSpecializedReferredPropertyType.Pnull" type="Ppivot.TType" isOrdered="true" direction="return"/>
     </ownedOperation>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TPseudostate" name="Pseudostate">
@@ -1050,8 +954,7 @@
     <ownedAttribute xmi:id="Ppivot.TPseudostate.PowningState" name="owningState" type="Ppivot.TState" isOrdered="true" association="Ppivot.A_ownedConnectionPoints_owningState">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TPseudostate.PowningState.lV"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TPseudostate.PowningStateMachine" name="owningStateMachine" type="Ppivot.TStateMachine" isOrdered="true"
-        association="Ppivot.A_ownedConnectionPoints_owningStateMachine">
+    <ownedAttribute xmi:id="Ppivot.TPseudostate.PowningStateMachine" name="owningStateMachine" type="Ppivot.TStateMachine" isOrdered="true" association="Ppivot.A_ownedConnectionPoints_owningStateMachine">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TPseudostate.PowningStateMachine.lV"/>
     </ownedAttribute>
   </packagedElement>
@@ -1068,16 +971,14 @@
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TRegion.PownedSubvertexes.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TRegion.PownedSubvertexes.uV" value="*"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TRegion.PownedTransitions" name="ownedTransitions" type="Ppivot.TTransition" aggregation="composite"
-        association="Ppivot.A_ownedTransitions_owningRegion">
+    <ownedAttribute xmi:id="Ppivot.TRegion.PownedTransitions" name="ownedTransitions" type="Ppivot.TTransition" aggregation="composite" association="Ppivot.A_ownedTransitions_owningRegion">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TRegion.PownedTransitions.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TRegion.PownedTransitions.uV" value="*"/>
     </ownedAttribute>
     <ownedAttribute xmi:id="Ppivot.TRegion.PowningState" name="owningState" type="Ppivot.TState" isOrdered="true" association="Ppivot.A_ownedRegions_owningState">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TRegion.PowningState.lV"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TRegion.PowningStateMachine" name="owningStateMachine" type="Ppivot.TStateMachine" isOrdered="true"
-        association="Ppivot.A_ownedRegions_owningStateMachine">
+    <ownedAttribute xmi:id="Ppivot.TRegion.PowningStateMachine" name="owningStateMachine" type="Ppivot.TStateMachine" isOrdered="true" association="Ppivot.A_ownedRegions_owningStateMachine">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TRegion.PowningStateMachine.lV"/>
     </ownedAttribute>
   </packagedElement>
@@ -1107,16 +1008,14 @@
     <ownedAttribute xmi:id="Ppivot.TShadowExp.Pvalue" name="value" visibility="public" type="Ppivot.TString" isOrdered="true">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TShadowExp.Pvalue.lV"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TShadowExp.PownedParts" name="ownedParts" type="Ppivot.TShadowPart" isOrdered="true" aggregation="composite"
-        association="Ppivot.A_ownedParts_ShadowExp">
+    <ownedAttribute xmi:id="Ppivot.TShadowExp.PownedParts" name="ownedParts" type="Ppivot.TShadowPart" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedParts_ShadowExp">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TShadowExp.PownedParts.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TShadowExp.PownedParts.uV" value="*"/>
     </ownedAttribute>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TShadowPart" name="ShadowPart">
     <generalization xmi:id="Ppivot.TShadowPart.g0" general="Ppivot.TTypedElement"/>
-    <ownedAttribute xmi:id="Ppivot.TShadowPart.PownedInit" name="ownedInit" type="Ppivot.TOCLExpression" isOrdered="true" aggregation="composite"
-        association="Ppivot.A_ownedInit_ShadowPart"/>
+    <ownedAttribute xmi:id="Ppivot.TShadowPart.PownedInit" name="ownedInit" type="Ppivot.TOCLExpression" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedInit_ShadowPart"/>
     <ownedAttribute xmi:id="Ppivot.TShadowPart.PreferredProperty" name="referredProperty" type="Ppivot.TProperty" isOrdered="true" association="Ppivot.A_referredProperty_ShadowPart"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TSignal" name="Signal">
@@ -1125,26 +1024,22 @@
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TSlot" name="Slot">
     <generalization xmi:id="Ppivot.TSlot.g0" general="Ppivot.TElement"/>
     <ownedAttribute xmi:id="Ppivot.TSlot.PdefiningProperty" name="definingProperty" type="Ppivot.TProperty" isOrdered="true" association="Ppivot.A_definingProperty_Slot"/>
-    <ownedAttribute xmi:id="Ppivot.TSlot.PownedValues" name="ownedValues" type="Ppivot.TValueSpecification" isOrdered="true" aggregation="composite"
-        association="Ppivot.A_ownedValues_Slot">
+    <ownedAttribute xmi:id="Ppivot.TSlot.PownedValues" name="ownedValues" type="Ppivot.TValueSpecification" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedValues_Slot">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TSlot.PownedValues.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TSlot.PownedValues.uV" value="*"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TSlot.PowningInstance" name="owningInstance" type="Ppivot.TInstanceSpecification" isOrdered="true"
-        association="Ppivot.A_ownedSlots_owningInstance"/>
+    <ownedAttribute xmi:id="Ppivot.TSlot.PowningInstance" name="owningInstance" type="Ppivot.TInstanceSpecification" isOrdered="true" association="Ppivot.A_ownedSlots_owningInstance"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TStandardLibrary" name="StandardLibrary">
     <generalization xmi:id="Ppivot.TStandardLibrary.g0" general="Ppivot.TElement"/>
-    <ownedAttribute xmi:id="Ppivot.TStandardLibrary.PowningCompleteEnvironment" name="owningCompleteEnvironment" type="Ppivot.TCompleteEnvironment"
-        isOrdered="true" association="Ppivot.A_ownedStandardLibrary_owningCompleteEnvironment">
+    <ownedAttribute xmi:id="Ppivot.TStandardLibrary.PowningCompleteEnvironment" name="owningCompleteEnvironment" type="Ppivot.TCompleteEnvironment" isOrdered="true" association="Ppivot.A_ownedStandardLibrary_owningCompleteEnvironment">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TStandardLibrary.PowningCompleteEnvironment.lV"/>
     </ownedAttribute>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TState" name="State">
     <generalization xmi:id="Ppivot.TState.g0" general="Ppivot.TNamespace"/>
     <generalization xmi:id="Ppivot.TState.g1" general="Ppivot.TVertex"/>
-    <ownedAttribute xmi:id="Ppivot.TState.PownedDeferrableTriggers" name="ownedDeferrableTriggers" type="Ppivot.TTrigger" aggregation="composite"
-        association="Ppivot.A_ownedDeferrableTriggers_owningState">
+    <ownedAttribute xmi:id="Ppivot.TState.PownedDeferrableTriggers" name="ownedDeferrableTriggers" type="Ppivot.TTrigger" aggregation="composite" association="Ppivot.A_ownedDeferrableTriggers_owningState">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TState.PownedDeferrableTriggers.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TState.PownedDeferrableTriggers.uV" value="*"/>
     </ownedAttribute>
@@ -1152,41 +1047,31 @@
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TState.PownedRegions.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TState.PownedRegions.uV" value="*"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TState.PownedConnectionPoints" name="ownedConnectionPoints" type="Ppivot.TPseudostate" aggregation="composite"
-        association="Ppivot.A_ownedConnectionPoints_owningState">
+    <ownedAttribute xmi:id="Ppivot.TState.PownedConnectionPoints" name="ownedConnectionPoints" type="Ppivot.TPseudostate" aggregation="composite" association="Ppivot.A_ownedConnectionPoints_owningState">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TState.PownedConnectionPoints.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TState.PownedConnectionPoints.uV" value="*"/>
     </ownedAttribute>
     <ownedAttribute xmi:id="Ppivot.TState.Psubmachines" name="submachines" type="Ppivot.TStateMachine" isOrdered="true" association="Ppivot.A_submachines_submachineStates">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TState.Psubmachines.lV"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TState.PisComposite" name="isComposite" visibility="public" type="Ppivot.TBoolean" isOrdered="true"
-        isReadOnly="true" isDerived="true"/>
-    <ownedAttribute xmi:id="Ppivot.TState.PisOrthogonal" name="isOrthogonal" visibility="public" type="Ppivot.TBoolean" isOrdered="true"
-        isReadOnly="true" isDerived="true"/>
-    <ownedAttribute xmi:id="Ppivot.TState.PisSimple" name="isSimple" visibility="public" type="Ppivot.TBoolean" isOrdered="true" isReadOnly="true"
-        isDerived="true"/>
-    <ownedAttribute xmi:id="Ppivot.TState.PisSubmachineState" name="isSubmachineState" visibility="public" type="Ppivot.TBoolean" isOrdered="true"
-        isReadOnly="true" isDerived="true"/>
-    <ownedAttribute xmi:id="Ppivot.TState.PownedConnections" name="ownedConnections" type="Ppivot.TConnectionPointReference" aggregation="composite"
-        association="Ppivot.A_ownedConnections_owningState">
+    <ownedAttribute xmi:id="Ppivot.TState.PisComposite" name="isComposite" visibility="public" type="Ppivot.TBoolean" isOrdered="true" isReadOnly="true" isDerived="true"/>
+    <ownedAttribute xmi:id="Ppivot.TState.PisOrthogonal" name="isOrthogonal" visibility="public" type="Ppivot.TBoolean" isOrdered="true" isReadOnly="true" isDerived="true"/>
+    <ownedAttribute xmi:id="Ppivot.TState.PisSimple" name="isSimple" visibility="public" type="Ppivot.TBoolean" isOrdered="true" isReadOnly="true" isDerived="true"/>
+    <ownedAttribute xmi:id="Ppivot.TState.PisSubmachineState" name="isSubmachineState" visibility="public" type="Ppivot.TBoolean" isOrdered="true" isReadOnly="true" isDerived="true"/>
+    <ownedAttribute xmi:id="Ppivot.TState.PownedConnections" name="ownedConnections" type="Ppivot.TConnectionPointReference" aggregation="composite" association="Ppivot.A_ownedConnections_owningState">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TState.PownedConnections.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TState.PownedConnections.uV" value="*"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TState.PownedDoActivity" name="ownedDoActivity" type="Ppivot.TBehavior" isOrdered="true" aggregation="composite"
-        association="Ppivot.A_ownedDoActivity_State">
+    <ownedAttribute xmi:id="Ppivot.TState.PownedDoActivity" name="ownedDoActivity" type="Ppivot.TBehavior" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedDoActivity_State">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TState.PownedDoActivity.lV"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TState.PownedEntry" name="ownedEntry" type="Ppivot.TBehavior" isOrdered="true" aggregation="composite"
-        association="Ppivot.A_ownedEntry_State">
+    <ownedAttribute xmi:id="Ppivot.TState.PownedEntry" name="ownedEntry" type="Ppivot.TBehavior" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedEntry_State">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TState.PownedEntry.lV"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TState.PownedExit" name="ownedExit" type="Ppivot.TBehavior" isOrdered="true" aggregation="composite"
-        association="Ppivot.A_ownedExit_State">
+    <ownedAttribute xmi:id="Ppivot.TState.PownedExit" name="ownedExit" type="Ppivot.TBehavior" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedExit_State">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TState.PownedExit.lV"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TState.PownedStateInvariant" name="ownedStateInvariant" type="Ppivot.TConstraint" isOrdered="true"
-        aggregation="composite" association="Ppivot.A_ownedStateInvariant_owningState">
+    <ownedAttribute xmi:id="Ppivot.TState.PownedStateInvariant" name="ownedStateInvariant" type="Ppivot.TConstraint" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedStateInvariant_owningState">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TState.PownedStateInvariant.lV"/>
     </ownedAttribute>
     <ownedAttribute xmi:id="Ppivot.TState.PredefinedState" name="redefinedState" type="Ppivot.TState" isOrdered="true" association="Ppivot.A_redefinedState_State">
@@ -1205,8 +1090,7 @@
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TStateMachine.PextendedStateMachines.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TStateMachine.PextendedStateMachines.uV" value="*"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TStateMachine.PownedConnectionPoints" name="ownedConnectionPoints" type="Ppivot.TPseudostate" aggregation="composite"
-        association="Ppivot.A_ownedConnectionPoints_owningStateMachine">
+    <ownedAttribute xmi:id="Ppivot.TStateMachine.PownedConnectionPoints" name="ownedConnectionPoints" type="Ppivot.TPseudostate" aggregation="composite" association="Ppivot.A_ownedConnectionPoints_owningStateMachine">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TStateMachine.PownedConnectionPoints.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TStateMachine.PownedConnectionPoints.uV" value="*"/>
     </ownedAttribute>
@@ -1220,8 +1104,7 @@
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TStereotype" name="Stereotype">
     <generalization xmi:id="Ppivot.TStereotype.g0" general="Ppivot.TClass"/>
-    <ownedAttribute xmi:id="Ppivot.TStereotype.PownedExtenders" name="ownedExtenders" type="Ppivot.TStereotypeExtender" aggregation="composite"
-        association="Ppivot.A_ownedExtenders_owningStereotype">
+    <ownedAttribute xmi:id="Ppivot.TStereotype.PownedExtenders" name="ownedExtenders" type="Ppivot.TStereotypeExtender" aggregation="composite" association="Ppivot.A_ownedExtenders_owningStereotype">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TStereotype.PownedExtenders.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TStereotype.PownedExtenders.uV" value="*"/>
     </ownedAttribute>
@@ -1232,8 +1115,7 @@
       <defaultValue xmi:type="uml:LiteralString" xmi:id="Ppivot.TStereotypeExtender.PisRequired.dlV" value="false"/>
     </ownedAttribute>
     <ownedAttribute xmi:id="Ppivot.TStereotypeExtender.Pclass" name="class" type="Ppivot.TClass" isOrdered="true" association="Ppivot.A_class_extenders"/>
-    <ownedAttribute xmi:id="Ppivot.TStereotypeExtender.PowningStereotype" name="owningStereotype" type="Ppivot.TStereotype" isOrdered="true"
-        association="Ppivot.A_ownedExtenders_owningStereotype"/>
+    <ownedAttribute xmi:id="Ppivot.TStereotypeExtender.PowningStereotype" name="owningStereotype" type="Ppivot.TStereotype" isOrdered="true" association="Ppivot.A_ownedExtenders_owningStereotype"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TStringLiteralExp" name="StringLiteralExp">
     <generalization xmi:id="Ppivot.TStringLiteralExp.g0" general="Ppivot.TPrimitiveLiteralExp"/>
@@ -1241,14 +1123,11 @@
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TTemplateBinding" name="TemplateBinding">
     <generalization xmi:id="Ppivot.TTemplateBinding.g0" general="Ppivot.TElement"/>
-    <ownedAttribute xmi:id="Ppivot.TTemplateBinding.PownedSubstitutions" name="ownedSubstitutions" type="Ppivot.TTemplateParameterSubstitution"
-        aggregation="composite" association="Ppivot.A_ownedSubstitutions_owningBinding">
+    <ownedAttribute xmi:id="Ppivot.TTemplateBinding.PownedSubstitutions" name="ownedSubstitutions" type="Ppivot.TTemplateParameterSubstitution" aggregation="composite" association="Ppivot.A_ownedSubstitutions_owningBinding">
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TTemplateBinding.PownedSubstitutions.uV" value="*"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TTemplateBinding.PowningElement" name="owningElement" type="Ppivot.TTemplateableElement" isOrdered="true"
-        association="Ppivot.A_ownedBindings_owningElement"/>
-    <ownedAttribute xmi:id="Ppivot.TTemplateBinding.PtemplateSignature" name="templateSignature" type="Ppivot.TTemplateSignature" isOrdered="true"
-        isReadOnly="true" isDerived="true" association="Ppivot.A_templateSignature_TemplateBinding"/>
+    <ownedAttribute xmi:id="Ppivot.TTemplateBinding.PowningElement" name="owningElement" type="Ppivot.TTemplateableElement" isOrdered="true" association="Ppivot.A_ownedBindings_owningElement"/>
+    <ownedAttribute xmi:id="Ppivot.TTemplateBinding.PtemplateSignature" name="templateSignature" type="Ppivot.TTemplateSignature" isOrdered="true" isReadOnly="true" isDerived="true" association="Ppivot.A_templateSignature_TemplateBinding"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TTemplateParameter" name="TemplateParameter">
     <generalization xmi:id="Ppivot.TTemplateParameter.g0" general="Ppivot.TType"/>
@@ -1256,43 +1135,34 @@
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TTemplateParameter.PconstrainingClasses.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TTemplateParameter.PconstrainingClasses.uV" value="*"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TTemplateParameter.PowningSignature" name="owningSignature" type="Ppivot.TTemplateSignature" isOrdered="true"
-        association="Ppivot.A_ownedParameters_owningSignature"/>
+    <ownedAttribute xmi:id="Ppivot.TTemplateParameter.PowningSignature" name="owningSignature" type="Ppivot.TTemplateSignature" isOrdered="true" association="Ppivot.A_ownedParameters_owningSignature"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TTemplateParameterSubstitution" name="TemplateParameterSubstitution">
     <generalization xmi:id="Ppivot.TTemplateParameterSubstitution.g0" general="Ppivot.TElement"/>
     <ownedAttribute xmi:id="Ppivot.TTemplateParameterSubstitution.Pactual" name="actual" type="Ppivot.TType" isOrdered="true" association="Ppivot.A_actual_TemplateParameterSubstitution"/>
-    <ownedAttribute xmi:id="Ppivot.TTemplateParameterSubstitution.Pformal" name="formal" type="Ppivot.TTemplateParameter" isOrdered="true"
-        association="Ppivot.A_formal_TemplateParameterSubstitution"/>
-    <ownedAttribute xmi:id="Ppivot.TTemplateParameterSubstitution.PownedWildcard" name="ownedWildcard" type="Ppivot.TWildcardType" isOrdered="true"
-        aggregation="composite" association="Ppivot.A_ownedWildcard_TemplateParameterSubstitution">
+    <ownedAttribute xmi:id="Ppivot.TTemplateParameterSubstitution.Pformal" name="formal" type="Ppivot.TTemplateParameter" isOrdered="true" association="Ppivot.A_formal_TemplateParameterSubstitution"/>
+    <ownedAttribute xmi:id="Ppivot.TTemplateParameterSubstitution.PownedWildcard" name="ownedWildcard" type="Ppivot.TWildcardType" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedWildcard_TemplateParameterSubstitution">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TTemplateParameterSubstitution.PownedWildcard.lV"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TTemplateParameterSubstitution.PowningBinding" name="owningBinding" type="Ppivot.TTemplateBinding"
-        isOrdered="true" association="Ppivot.A_ownedSubstitutions_owningBinding"/>
+    <ownedAttribute xmi:id="Ppivot.TTemplateParameterSubstitution.PowningBinding" name="owningBinding" type="Ppivot.TTemplateBinding" isOrdered="true" association="Ppivot.A_ownedSubstitutions_owningBinding"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TTemplateSignature" name="TemplateSignature">
     <generalization xmi:id="Ppivot.TTemplateSignature.g0" general="Ppivot.TElement"/>
-    <ownedAttribute xmi:id="Ppivot.TTemplateSignature.PownedParameters" name="ownedParameters" type="Ppivot.TTemplateParameter" isOrdered="true"
-        aggregation="composite" association="Ppivot.A_ownedParameters_owningSignature">
+    <ownedAttribute xmi:id="Ppivot.TTemplateSignature.PownedParameters" name="ownedParameters" type="Ppivot.TTemplateParameter" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedParameters_owningSignature">
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TTemplateSignature.PownedParameters.uV" value="*"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TTemplateSignature.PowningElement" name="owningElement" type="Ppivot.TTemplateableElement" isOrdered="true"
-        association="Ppivot.A_ownedSignature_owningElement"/>
+    <ownedAttribute xmi:id="Ppivot.TTemplateSignature.PowningElement" name="owningElement" type="Ppivot.TTemplateableElement" isOrdered="true" association="Ppivot.A_ownedSignature_owningElement"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TTemplateableElement" name="TemplateableElement" isAbstract="true">
     <generalization xmi:id="Ppivot.TTemplateableElement.g0" general="Ppivot.TElement"/>
-    <ownedAttribute xmi:id="Ppivot.TTemplateableElement.PownedBindings" name="ownedBindings" type="Ppivot.TTemplateBinding" aggregation="composite"
-        association="Ppivot.A_ownedBindings_owningElement">
+    <ownedAttribute xmi:id="Ppivot.TTemplateableElement.PownedBindings" name="ownedBindings" type="Ppivot.TTemplateBinding" aggregation="composite" association="Ppivot.A_ownedBindings_owningElement">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TTemplateableElement.PownedBindings.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TTemplateableElement.PownedBindings.uV" value="*"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TTemplateableElement.PownedSignature" name="ownedSignature" type="Ppivot.TTemplateSignature" isOrdered="true"
-        aggregation="composite" association="Ppivot.A_ownedSignature_owningElement">
+    <ownedAttribute xmi:id="Ppivot.TTemplateableElement.PownedSignature" name="ownedSignature" type="Ppivot.TTemplateSignature" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedSignature_owningElement">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TTemplateableElement.PownedSignature.lV"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TTemplateableElement.PunspecializedElement" name="unspecializedElement" type="Ppivot.TTemplateableElement"
-        isOrdered="true" association="Ppivot.A_unspecializedElement_TemplateableElement">
+    <ownedAttribute xmi:id="Ppivot.TTemplateableElement.PunspecializedElement" name="unspecializedElement" type="Ppivot.TTemplateableElement" isOrdered="true" association="Ppivot.A_unspecializedElement_TemplateableElement">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TTemplateableElement.PunspecializedElement.lV"/>
     </ownedAttribute>
   </packagedElement>
@@ -1301,12 +1171,10 @@
     <ownedAttribute xmi:id="Ppivot.TTransition.Pkind" name="kind" visibility="public" type="Ppivot.TTransitionKind" isOrdered="true">
       <defaultValue xmi:type="uml:InstanceValue" xmi:id="Ppivot.TTransition.Pkind.dlV" type="Ppivot.TTransitionKind" instance="Ppivot.TTransitionKind.Lexternal"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TTransition.PownedEffect" name="ownedEffect" type="Ppivot.TBehavior" isOrdered="true" aggregation="composite"
-        association="Ppivot.A_ownedEffect_owningTransition">
+    <ownedAttribute xmi:id="Ppivot.TTransition.PownedEffect" name="ownedEffect" type="Ppivot.TBehavior" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedEffect_owningTransition">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TTransition.PownedEffect.lV"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TTransition.PownedGuard" name="ownedGuard" type="Ppivot.TConstraint" isOrdered="true" aggregation="composite"
-        association="Ppivot.A_ownedGuard_owningTransition">
+    <ownedAttribute xmi:id="Ppivot.TTransition.PownedGuard" name="ownedGuard" type="Ppivot.TConstraint" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedGuard_owningTransition">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TTransition.PownedGuard.lV"/>
     </ownedAttribute>
     <ownedAttribute xmi:id="Ppivot.TTransition.PownedTriggers" name="ownedTriggers" type="Ppivot.TTrigger" aggregation="composite" association="Ppivot.A_ownedTriggers_owningTransition">
@@ -1328,16 +1196,14 @@
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TTupleLiteralExp" name="TupleLiteralExp">
     <generalization xmi:id="Ppivot.TTupleLiteralExp.g0" general="Ppivot.TLiteralExp"/>
-    <ownedAttribute xmi:id="Ppivot.TTupleLiteralExp.PownedParts" name="ownedParts" type="Ppivot.TTupleLiteralPart" isOrdered="true" aggregation="composite"
-        association="Ppivot.A_ownedParts_TupleLiteralExp">
+    <ownedAttribute xmi:id="Ppivot.TTupleLiteralExp.PownedParts" name="ownedParts" type="Ppivot.TTupleLiteralPart" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedParts_TupleLiteralExp">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TTupleLiteralExp.PownedParts.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TTupleLiteralExp.PownedParts.uV" value="*"/>
     </ownedAttribute>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TTupleLiteralPart" name="TupleLiteralPart">
     <generalization xmi:id="Ppivot.TTupleLiteralPart.g0" general="Ppivot.TVariableDeclaration"/>
-    <ownedAttribute xmi:id="Ppivot.TTupleLiteralPart.PownedInit" name="ownedInit" type="Ppivot.TOCLExpression" isOrdered="true" aggregation="composite"
-        association="Ppivot.A_ownedInit_TupleLiteralPart">
+    <ownedAttribute xmi:id="Ppivot.TTupleLiteralPart.PownedInit" name="ownedInit" type="Ppivot.TOCLExpression" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedInit_TupleLiteralPart">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TTupleLiteralPart.PownedInit.lV"/>
     </ownedAttribute>
   </packagedElement>
@@ -1372,13 +1238,11 @@
     <ownedAttribute xmi:id="Ppivot.TTypeExp.PreferredType" name="referredType" type="Ppivot.TType" isOrdered="true" association="Ppivot.A_referredType_TypeExp">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TTypeExp.PreferredType.lV"/>
     </ownedAttribute>
-    <interfaceRealization xmi:id="Ppivot.TTypeExp.interfaceRealization0" client="Ppivot.TTypeExp" supplier="Ppivot.TReferringElement"
-        contract="Ppivot.TReferringElement"/>
+    <interfaceRealization xmi:id="Ppivot.TTypeExp.interfaceRealization0" client="Ppivot.TTypeExp" supplier="Ppivot.TReferringElement" contract="Ppivot.TReferringElement"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TTypedElement" name="TypedElement" isAbstract="true">
     <generalization xmi:id="Ppivot.TTypedElement.g0" general="Ppivot.TNamedElement"/>
-    <ownedAttribute xmi:id="Ppivot.TTypedElement.PisMany" name="isMany" visibility="public" type="Ppivot.TBoolean" isOrdered="true" isReadOnly="true"
-        isDerived="true"/>
+    <ownedAttribute xmi:id="Ppivot.TTypedElement.PisMany" name="isMany" visibility="public" type="Ppivot.TBoolean" isOrdered="true" isReadOnly="true" isDerived="true"/>
     <ownedAttribute xmi:id="Ppivot.TTypedElement.PisRequired" name="isRequired" visibility="public" type="Ppivot.TBoolean" isOrdered="true">
       <defaultValue xmi:type="uml:LiteralString" xmi:id="Ppivot.TTypedElement.PisRequired.dlV" value="true"/>
     </ownedAttribute>
@@ -1387,14 +1251,12 @@
     </ownedAttribute>
     <ownedOperation xmi:id="Ppivot.TTypedElement.OCompatibleBody" name="CompatibleBody" visibility="public">
       <ownedParameter xmi:id="Ppivot.TTypedElement.OCompatibleBody.Pnull" type="Ppivot.TBoolean" isOrdered="true" direction="return"/>
-      <ownedParameter xmi:id="Ppivot.TTypedElement.OCompatibleBody.PbodySpecification" name="bodySpecification" type="Ppivot.TValueSpecification"
-          isOrdered="true"/>
+      <ownedParameter xmi:id="Ppivot.TTypedElement.OCompatibleBody.PbodySpecification" name="bodySpecification" type="Ppivot.TValueSpecification" isOrdered="true"/>
     </ownedOperation>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TUnlimitedNaturalLiteralExp" name="UnlimitedNaturalLiteralExp">
     <generalization xmi:id="Ppivot.TUnlimitedNaturalLiteralExp.g0" general="Ppivot.TNumericLiteralExp"/>
-    <ownedAttribute xmi:id="Ppivot.TUnlimitedNaturalLiteralExp.PunlimitedNaturalSymbol" name="unlimitedNaturalSymbol" visibility="public"
-        type="Ppivot.TUnlimitedNatural" isOrdered="true"/>
+    <ownedAttribute xmi:id="Ppivot.TUnlimitedNaturalLiteralExp.PunlimitedNaturalSymbol" name="unlimitedNaturalSymbol" visibility="public" type="Ppivot.TUnlimitedNatural" isOrdered="true"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TUnspecifiedValueExp" name="UnspecifiedValueExp">
     <generalization xmi:id="Ppivot.TUnspecifiedValueExp.g0" general="Ppivot.TOCLExpression"/>
@@ -1434,12 +1296,10 @@
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TVariable.PisImplicit.lV"/>
       <defaultValue xmi:type="uml:LiteralString" xmi:id="Ppivot.TVariable.PisImplicit.dlV" value="false"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TVariable.PownedInit" name="ownedInit" type="Ppivot.TOCLExpression" isOrdered="true" aggregation="composite"
-        association="Ppivot.A_ownedInit_Variable">
+    <ownedAttribute xmi:id="Ppivot.TVariable.PownedInit" name="ownedInit" type="Ppivot.TOCLExpression" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedInit_Variable">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TVariable.PownedInit.lV"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TVariable.PrepresentedParameter" name="representedParameter" type="Ppivot.TParameter" isOrdered="true"
-        association="Ppivot.A_representedParameter_Variable">
+    <ownedAttribute xmi:id="Ppivot.TVariable.PrepresentedParameter" name="representedParameter" type="Ppivot.TParameter" isOrdered="true" association="Ppivot.A_representedParameter_Variable">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TVariable.PrepresentedParameter.lV"/>
     </ownedAttribute>
   </packagedElement>
@@ -1455,25 +1315,21 @@
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TVariableExp.PisImplicit.lV"/>
       <defaultValue xmi:type="uml:LiteralString" xmi:id="Ppivot.TVariableExp.PisImplicit.dlV" value="false"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TVariableExp.PreferredVariable" name="referredVariable" type="Ppivot.TVariableDeclaration" isOrdered="true"
-        association="Ppivot.A_referredVariable_VariableExp">
+    <ownedAttribute xmi:id="Ppivot.TVariableExp.PreferredVariable" name="referredVariable" type="Ppivot.TVariableDeclaration" isOrdered="true" association="Ppivot.A_referredVariable_VariableExp">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TVariableExp.PreferredVariable.lV"/>
     </ownedAttribute>
-    <interfaceRealization xmi:id="Ppivot.TVariableExp.interfaceRealization0" client="Ppivot.TVariableExp" supplier="Ppivot.TReferringElement"
-        contract="Ppivot.TReferringElement"/>
+    <interfaceRealization xmi:id="Ppivot.TVariableExp.interfaceRealization0" client="Ppivot.TVariableExp" supplier="Ppivot.TReferringElement" contract="Ppivot.TReferringElement"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TVertex" name="Vertex" isAbstract="true">
     <generalization xmi:id="Ppivot.TVertex.g0" general="Ppivot.TNamedElement"/>
-    <ownedAttribute xmi:id="Ppivot.TVertex.PincomingTransitions" name="incomingTransitions" type="Ppivot.TTransition" isReadOnly="true"
-        association="Ppivot.A_target_incomingTransitions">
+    <ownedAttribute xmi:id="Ppivot.TVertex.PincomingTransitions" name="incomingTransitions" type="Ppivot.TTransition" isReadOnly="true" association="Ppivot.A_target_incomingTransitions">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TVertex.PincomingTransitions.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TVertex.PincomingTransitions.uV" value="*"/>
     </ownedAttribute>
     <ownedAttribute xmi:id="Ppivot.TVertex.PowningRegion" name="owningRegion" type="Ppivot.TRegion" isOrdered="true" association="Ppivot.A_ownedSubvertexes_owningRegion">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TVertex.PowningRegion.lV"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TVertex.PoutgoingTransitions" name="outgoingTransitions" type="Ppivot.TTransition" isReadOnly="true"
-        association="Ppivot.A_outgoingTransitions_source">
+    <ownedAttribute xmi:id="Ppivot.TVertex.PoutgoingTransitions" name="outgoingTransitions" type="Ppivot.TTransition" isReadOnly="true" association="Ppivot.A_outgoingTransitions_source">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TVertex.PoutgoingTransitions.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TVertex.PoutgoingTransitions.uV" value="*"/>
     </ownedAttribute>
@@ -1490,12 +1346,10 @@
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TWildcardType.PupperBound.lV"/>
     </ownedAttribute>
   </packagedElement>
-  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_actual_TemplateParameterSubstitution" name="A_actual_TemplateParameterSubstitution"
-      memberEnd="Ppivot.TTemplateParameterSubstitution.Pactual Ppivot.A_actual_TemplateParameterSubstitution.Pnull">
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_actual_TemplateParameterSubstitution" name="A_actual_TemplateParameterSubstitution" memberEnd="Ppivot.TTemplateParameterSubstitution.Pactual Ppivot.A_actual_TemplateParameterSubstitution.Pnull">
     <ownedEnd xmi:id="Ppivot.A_actual_TemplateParameterSubstitution.Pnull" type="Ppivot.TTemplateParameterSubstitution" association="Ppivot.A_actual_TemplateParameterSubstitution"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_annotatedElements_annotatingComments" name="A_annotatedElements_annotatingComments"
-      memberEnd="Ppivot.TComment.PannotatedElements Ppivot.TElement.PannotatingComments"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_annotatedElements_annotatingComments" name="A_annotatedElements_annotatingComments" memberEnd="Ppivot.TComment.PannotatedElements Ppivot.TElement.PannotatingComments"/>
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_behavioralClass_DataType" name="A_behavioralClass_DataType" memberEnd="Ppivot.TDataType.PbehavioralClass Ppivot.A_behavioralClass_DataType.Pnull">
     <ownedEnd xmi:id="Ppivot.A_behavioralClass_DataType.Pnull" type="Ppivot.TDataType" association="Ppivot.A_behavioralClass_DataType"/>
   </packagedElement>
@@ -1509,12 +1363,10 @@
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_coercions_PrimitiveType" name="A_coercions_PrimitiveType" memberEnd="Ppivot.TPrimitiveType.Pcoercions Ppivot.A_coercions_PrimitiveType.Pnull">
     <ownedEnd xmi:id="Ppivot.A_coercions_PrimitiveType.Pnull" type="Ppivot.TPrimitiveType" association="Ppivot.A_coercions_PrimitiveType"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_constrainedElements_Constraint" name="A_constrainedElements_Constraint"
-      memberEnd="Ppivot.TConstraint.PconstrainedElements Ppivot.A_constrainedElements_Constraint.Pnull">
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_constrainedElements_Constraint" name="A_constrainedElements_Constraint" memberEnd="Ppivot.TConstraint.PconstrainedElements Ppivot.A_constrainedElements_Constraint.Pnull">
     <ownedEnd xmi:id="Ppivot.A_constrainedElements_Constraint.Pnull" type="Ppivot.TConstraint" association="Ppivot.A_constrainedElements_Constraint"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_constrainingClasses_TemplateParameter" name="A_constrainingClasses_TemplateParameter"
-      memberEnd="Ppivot.TTemplateParameter.PconstrainingClasses Ppivot.A_constrainingClasses_TemplateParameter.Pnull">
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_constrainingClasses_TemplateParameter" name="A_constrainingClasses_TemplateParameter" memberEnd="Ppivot.TTemplateParameter.PconstrainingClasses Ppivot.A_constrainingClasses_TemplateParameter.Pnull">
     <ownedEnd xmi:id="Ppivot.A_constrainingClasses_TemplateParameter.Pnull" type="Ppivot.TTemplateParameter" association="Ppivot.A_constrainingClasses_TemplateParameter"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_contextType_LambdaType" name="A_contextType_LambdaType" memberEnd="Ppivot.TLambdaType.PcontextType Ppivot.A_contextType_LambdaType.Pnull">
@@ -1529,26 +1381,22 @@
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_elementType_CollectionType" name="A_elementType_CollectionType" memberEnd="Ppivot.TCollectionType.PelementType Ppivot.A_elementType_CollectionType.Pnull">
     <ownedEnd xmi:id="Ppivot.A_elementType_CollectionType.Pnull" type="Ppivot.TCollectionType" association="Ppivot.A_elementType_CollectionType"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_entries_ConnectionPointReference" name="A_entries_ConnectionPointReference"
-      memberEnd="Ppivot.TConnectionPointReference.Pentries Ppivot.A_entries_ConnectionPointReference.Pnull">
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_entries_ConnectionPointReference" name="A_entries_ConnectionPointReference" memberEnd="Ppivot.TConnectionPointReference.Pentries Ppivot.A_entries_ConnectionPointReference.Pnull">
     <ownedEnd xmi:id="Ppivot.A_entries_ConnectionPointReference.Pnull" type="Ppivot.TConnectionPointReference" association="Ppivot.A_entries_ConnectionPointReference"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_entryClass_MapType" name="A_entryClass_MapType" memberEnd="Ppivot.TMapType.PentryClass Ppivot.A_entryClass_MapType.Pnull">
     <ownedEnd xmi:id="Ppivot.A_entryClass_MapType.Pnull" type="Ppivot.TMapType" association="Ppivot.A_entryClass_MapType"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_exits_ConnectionPointReference" name="A_exits_ConnectionPointReference"
-      memberEnd="Ppivot.TConnectionPointReference.Pexits Ppivot.A_exits_ConnectionPointReference.Pnull">
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_exits_ConnectionPointReference" name="A_exits_ConnectionPointReference" memberEnd="Ppivot.TConnectionPointReference.Pexits Ppivot.A_exits_ConnectionPointReference.Pnull">
     <ownedEnd xmi:id="Ppivot.A_exits_ConnectionPointReference.Pnull" type="Ppivot.TConnectionPointReference" association="Ppivot.A_exits_ConnectionPointReference"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_extendedRegion_Region" name="A_extendedRegion_Region" memberEnd="Ppivot.TRegion.PextendedRegion Ppivot.A_extendedRegion_Region.Pnull">
     <ownedEnd xmi:id="Ppivot.A_extendedRegion_Region.Pnull" type="Ppivot.TRegion" association="Ppivot.A_extendedRegion_Region"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_extendedStateMachines_StateMachine" name="A_extendedStateMachines_StateMachine"
-      memberEnd="Ppivot.TStateMachine.PextendedStateMachines Ppivot.A_extendedStateMachines_StateMachine.Pnull">
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_extendedStateMachines_StateMachine" name="A_extendedStateMachines_StateMachine" memberEnd="Ppivot.TStateMachine.PextendedStateMachines Ppivot.A_extendedStateMachines_StateMachine.Pnull">
     <ownedEnd xmi:id="Ppivot.A_extendedStateMachines_StateMachine.Pnull" type="Ppivot.TStateMachine" association="Ppivot.A_extendedStateMachines_StateMachine"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_formal_TemplateParameterSubstitution" name="A_formal_TemplateParameterSubstitution"
-      memberEnd="Ppivot.TTemplateParameterSubstitution.Pformal Ppivot.A_formal_TemplateParameterSubstitution.Pnull">
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_formal_TemplateParameterSubstitution" name="A_formal_TemplateParameterSubstitution" memberEnd="Ppivot.TTemplateParameterSubstitution.Pformal Ppivot.A_formal_TemplateParameterSubstitution.Pnull">
     <ownedEnd xmi:id="Ppivot.A_formal_TemplateParameterSubstitution.Pnull" type="Ppivot.TTemplateParameterSubstitution" association="Ppivot.A_formal_TemplateParameterSubstitution"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_importedNamespace_Import" name="A_importedNamespace_Import" memberEnd="Ppivot.TImport.PimportedNamespace Ppivot.A_importedNamespace_Import.Pnull">
@@ -1569,8 +1417,7 @@
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_metaType_DynamicElement" name="A_metaType_DynamicElement" memberEnd="Ppivot.TDynamicElement.PmetaType Ppivot.A_metaType_DynamicElement.Pnull">
     <ownedEnd xmi:id="Ppivot.A_metaType_DynamicElement.Pnull" type="Ppivot.TDynamicElement" association="Ppivot.A_metaType_DynamicElement"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_navigationSource_NavigationCallExp" name="A_navigationSource_NavigationCallExp"
-      memberEnd="Ppivot.TNavigationCallExp.PnavigationSource Ppivot.A_navigationSource_NavigationCallExp.Pnull">
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_navigationSource_NavigationCallExp" name="A_navigationSource_NavigationCallExp" memberEnd="Ppivot.TNavigationCallExp.PnavigationSource Ppivot.A_navigationSource_NavigationCallExp.Pnull">
     <ownedEnd xmi:id="Ppivot.A_navigationSource_NavigationCallExp.Pnull" type="Ppivot.TNavigationCallExp" association="Ppivot.A_navigationSource_NavigationCallExp"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_operation_CallOperationAction" name="A_operation_CallOperationAction" memberEnd="Ppivot.TCallOperationAction.Poperation Ppivot.A_operation_CallOperationAction.Pnull">
@@ -1579,8 +1426,7 @@
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_opposite_Property" name="A_opposite_Property" memberEnd="Ppivot.TProperty.Popposite Ppivot.A_opposite_Property.Pnull">
     <ownedEnd xmi:id="Ppivot.A_opposite_Property.Pnull" type="Ppivot.TProperty" association="Ppivot.A_opposite_Property"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_orphanCompletePackage_CompleteModel" name="A_orphanCompletePackage_CompleteModel"
-      memberEnd="Ppivot.TCompleteModel.PorphanCompletePackage Ppivot.A_orphanCompletePackage_CompleteModel.Pnull">
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_orphanCompletePackage_CompleteModel" name="A_orphanCompletePackage_CompleteModel" memberEnd="Ppivot.TCompleteModel.PorphanCompletePackage Ppivot.A_orphanCompletePackage_CompleteModel.Pnull">
     <ownedEnd xmi:id="Ppivot.A_orphanCompletePackage_CompleteModel.Pnull" type="Ppivot.TCompleteModel" association="Ppivot.A_orphanCompletePackage_CompleteModel"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_outgoingTransitions_source" name="A_outgoingTransitions_source" memberEnd="Ppivot.TVertex.PoutgoingTransitions Ppivot.TTransition.Psource"/>
@@ -1593,8 +1439,7 @@
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedArguments_MessageExp" name="A_ownedArguments_MessageExp" memberEnd="Ppivot.TMessageExp.PownedArguments Ppivot.A_ownedArguments_MessageExp.Pnull">
     <ownedEnd xmi:id="Ppivot.A_ownedArguments_MessageExp.Pnull" type="Ppivot.TMessageExp" association="Ppivot.A_ownedArguments_MessageExp"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedArguments_OperationCallExp" name="A_ownedArguments_OperationCallExp"
-      memberEnd="Ppivot.TOperationCallExp.PownedArguments Ppivot.A_ownedArguments_OperationCallExp.Pnull">
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedArguments_OperationCallExp" name="A_ownedArguments_OperationCallExp" memberEnd="Ppivot.TOperationCallExp.PownedArguments Ppivot.A_ownedArguments_OperationCallExp.Pnull">
     <ownedEnd xmi:id="Ppivot.A_ownedArguments_OperationCallExp.Pnull" type="Ppivot.TOperationCallExp" association="Ppivot.A_ownedArguments_OperationCallExp"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedBehaviors_Class" name="A_ownedBehaviors_Class" memberEnd="Ppivot.TClass.PownedBehaviors Ppivot.A_ownedBehaviors_Class.Pnull">
@@ -1607,8 +1452,7 @@
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedBody_LoopExp" name="A_ownedBody_LoopExp" memberEnd="Ppivot.TLoopExp.PownedBody Ppivot.A_ownedBody_LoopExp.Pnull">
     <ownedEnd xmi:id="Ppivot.A_ownedBody_LoopExp.Pnull" type="Ppivot.TLoopExp" association="Ppivot.A_ownedBody_LoopExp"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedCalledOperation_MessageExp" name="A_ownedCalledOperation_MessageExp"
-      memberEnd="Ppivot.TMessageExp.PownedCalledOperation Ppivot.A_ownedCalledOperation_MessageExp.Pnull">
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedCalledOperation_MessageExp" name="A_ownedCalledOperation_MessageExp" memberEnd="Ppivot.TMessageExp.PownedCalledOperation Ppivot.A_ownedCalledOperation_MessageExp.Pnull">
     <ownedEnd xmi:id="Ppivot.A_ownedCalledOperation_MessageExp.Pnull" type="Ppivot.TMessageExp" association="Ppivot.A_ownedCalledOperation_MessageExp"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedClasses_owningPackage" name="A_ownedClasses_owningPackage" memberEnd="Ppivot.TPackage.PownedClasses Ppivot.TClass.PowningPackage"/>
@@ -1616,21 +1460,15 @@
     <ownedEnd xmi:id="Ppivot.A_ownedCoIterators_LoopExp.Pnull" type="Ppivot.TLoopExp" association="Ppivot.A_ownedCoIterators_LoopExp"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedComments_owningElement" name="A_ownedComments_owningElement" memberEnd="Ppivot.TElement.PownedComments Ppivot.TComment.PowningElement"/>
-  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedCompleteClasses_owningCompletePackage" name="A_ownedCompleteClasses_owningCompletePackage"
-      memberEnd="Ppivot.TCompletePackage.PownedCompleteClasses Ppivot.TCompleteClass.PowningCompletePackage"/>
-  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedCompleteModel_owningCompleteEnvironment" name="A_ownedCompleteModel_owningCompleteEnvironment"
-      memberEnd="Ppivot.TCompleteEnvironment.PownedCompleteModel Ppivot.TCompleteModel.PowningCompleteEnvironment"/>
-  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedCompletePackages_owningCompleteModel" name="A_ownedCompletePackages_owningCompleteModel"
-      memberEnd="Ppivot.TCompleteModel.PownedCompletePackages Ppivot.TCompletePackage.PowningCompleteModel"/>
-  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedCompletePackages_owningCompletePackage" name="A_ownedCompletePackages_owningCompletePackage"
-      memberEnd="Ppivot.TCompletePackage.PownedCompletePackages Ppivot.TCompletePackage.PowningCompletePackage"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedCompleteClasses_owningCompletePackage" name="A_ownedCompleteClasses_owningCompletePackage" memberEnd="Ppivot.TCompletePackage.PownedCompleteClasses Ppivot.TCompleteClass.PowningCompletePackage"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedCompleteModel_owningCompleteEnvironment" name="A_ownedCompleteModel_owningCompleteEnvironment" memberEnd="Ppivot.TCompleteEnvironment.PownedCompleteModel Ppivot.TCompleteModel.PowningCompleteEnvironment"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedCompletePackages_owningCompleteModel" name="A_ownedCompletePackages_owningCompleteModel" memberEnd="Ppivot.TCompleteModel.PownedCompletePackages Ppivot.TCompletePackage.PowningCompleteModel"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedCompletePackages_owningCompletePackage" name="A_ownedCompletePackages_owningCompletePackage" memberEnd="Ppivot.TCompletePackage.PownedCompletePackages Ppivot.TCompletePackage.PowningCompletePackage"/>
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedCondition_IfExp" name="A_ownedCondition_IfExp" memberEnd="Ppivot.TIfExp.PownedCondition Ppivot.A_ownedCondition_IfExp.Pnull">
     <ownedEnd xmi:id="Ppivot.A_ownedCondition_IfExp.Pnull" type="Ppivot.TIfExp" association="Ppivot.A_ownedCondition_IfExp"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedConnectionPoints_owningState" name="A_ownedConnectionPoints_owningState"
-      memberEnd="Ppivot.TState.PownedConnectionPoints Ppivot.TPseudostate.PowningState"/>
-  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedConnectionPoints_owningStateMachine" name="A_ownedConnectionPoints_owningStateMachine"
-      memberEnd="Ppivot.TStateMachine.PownedConnectionPoints Ppivot.TPseudostate.PowningStateMachine"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedConnectionPoints_owningState" name="A_ownedConnectionPoints_owningState" memberEnd="Ppivot.TState.PownedConnectionPoints Ppivot.TPseudostate.PowningState"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedConnectionPoints_owningStateMachine" name="A_ownedConnectionPoints_owningStateMachine" memberEnd="Ppivot.TStateMachine.PownedConnectionPoints Ppivot.TPseudostate.PowningStateMachine"/>
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedConnections_owningState" name="A_ownedConnections_owningState" memberEnd="Ppivot.TState.PownedConnections Ppivot.TConnectionPointReference.PowningState"/>
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedConstraints_Namespace" name="A_ownedConstraints_Namespace" memberEnd="Ppivot.TNamespace.PownedConstraints Ppivot.A_ownedConstraints_Namespace.Pnull">
     <ownedEnd xmi:id="Ppivot.A_ownedConstraints_Namespace.Pnull" type="Ppivot.TNamespace" association="Ppivot.A_ownedConstraints_Namespace"/>
@@ -1641,16 +1479,14 @@
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedContext_ExpressionInOCL" name="A_ownedContext_ExpressionInOCL" memberEnd="Ppivot.TExpressionInOCL.PownedContext Ppivot.A_ownedContext_ExpressionInOCL.Pnull">
     <ownedEnd xmi:id="Ppivot.A_ownedContext_ExpressionInOCL.Pnull" type="Ppivot.TExpressionInOCL" association="Ppivot.A_ownedContext_ExpressionInOCL"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedDeferrableTriggers_owningState" name="A_ownedDeferrableTriggers_owningState"
-      memberEnd="Ppivot.TState.PownedDeferrableTriggers Ppivot.TTrigger.PowningState"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedDeferrableTriggers_owningState" name="A_ownedDeferrableTriggers_owningState" memberEnd="Ppivot.TState.PownedDeferrableTriggers Ppivot.TTrigger.PowningState"/>
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedDetails_Annotation" name="A_ownedDetails_Annotation" memberEnd="Ppivot.TAnnotation.PownedDetails Ppivot.A_ownedDetails_Annotation.Pnull">
     <ownedEnd xmi:id="Ppivot.A_ownedDetails_Annotation.Pnull" type="Ppivot.TAnnotation" association="Ppivot.A_ownedDetails_Annotation"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedDoActivity_State" name="A_ownedDoActivity_State" memberEnd="Ppivot.TState.PownedDoActivity Ppivot.A_ownedDoActivity_State.Pnull">
     <ownedEnd xmi:id="Ppivot.A_ownedDoActivity_State.Pnull" type="Ppivot.TState" association="Ppivot.A_ownedDoActivity_State"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedDynamicProperties_DynamicType" name="A_ownedDynamicProperties_DynamicType"
-      memberEnd="Ppivot.TDynamicType.PownedDynamicProperties Ppivot.A_ownedDynamicProperties_DynamicType.Pnull">
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedDynamicProperties_DynamicType" name="A_ownedDynamicProperties_DynamicType" memberEnd="Ppivot.TDynamicType.PownedDynamicProperties Ppivot.A_ownedDynamicProperties_DynamicType.Pnull">
     <ownedEnd xmi:id="Ppivot.A_ownedDynamicProperties_DynamicType.Pnull" type="Ppivot.TDynamicType" association="Ppivot.A_ownedDynamicProperties_DynamicType"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedEffect_owningTransition" name="A_ownedEffect_owningTransition" memberEnd="Ppivot.TTransition.PownedEffect Ppivot.TBehavior.PowningTransition"/>
@@ -1666,8 +1502,7 @@
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedExpression_Property" name="A_ownedExpression_Property" memberEnd="Ppivot.TProperty.PownedExpression Ppivot.A_ownedExpression_Property.Pnull">
     <ownedEnd xmi:id="Ppivot.A_ownedExpression_Property.Pnull" type="Ppivot.TProperty" association="Ppivot.A_ownedExpression_Property"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedExtenders_owningStereotype" name="A_ownedExtenders_owningStereotype"
-      memberEnd="Ppivot.TStereotype.PownedExtenders Ppivot.TStereotypeExtender.PowningStereotype"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedExtenders_owningStereotype" name="A_ownedExtenders_owningStereotype" memberEnd="Ppivot.TStereotype.PownedExtenders Ppivot.TStereotypeExtender.PowningStereotype"/>
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedExtensions_base" name="A_ownedExtensions_base" memberEnd="Ppivot.TElement.PownedExtensions Ppivot.TElementExtension.Pbase"/>
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedFirst_CollectionRange" name="A_ownedFirst_CollectionRange" memberEnd="Ppivot.TCollectionRange.PownedFirst Ppivot.A_ownedFirst_CollectionRange.Pnull">
     <ownedEnd xmi:id="Ppivot.A_ownedFirst_CollectionRange.Pnull" type="Ppivot.TCollectionRange" association="Ppivot.A_ownedFirst_CollectionRange"/>
@@ -1707,23 +1542,18 @@
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedLast_CollectionRange" name="A_ownedLast_CollectionRange" memberEnd="Ppivot.TCollectionRange.PownedLast Ppivot.A_ownedLast_CollectionRange.Pnull">
     <ownedEnd xmi:id="Ppivot.A_ownedLast_CollectionRange.Pnull" type="Ppivot.TCollectionRange" association="Ppivot.A_ownedLast_CollectionRange"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedLiterals_owningEnumeration" name="A_ownedLiterals_owningEnumeration"
-      memberEnd="Ppivot.TEnumeration.PownedLiterals Ppivot.TEnumerationLiteral.PowningEnumeration"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedLiterals_owningEnumeration" name="A_ownedLiterals_owningEnumeration" memberEnd="Ppivot.TEnumeration.PownedLiterals Ppivot.TEnumerationLiteral.PowningEnumeration"/>
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedOperations_owningClass" name="A_ownedOperations_owningClass" memberEnd="Ppivot.TClass.PownedOperations Ppivot.TOperation.PowningClass"/>
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedPackages_Model" name="A_ownedPackages_Model" memberEnd="Ppivot.TModel.PownedPackages Ppivot.A_ownedPackages_Model.Pnull">
     <ownedEnd xmi:id="Ppivot.A_ownedPackages_Model.Pnull" type="Ppivot.TModel" association="Ppivot.A_ownedPackages_Model"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedPackages_owningPackage" name="A_ownedPackages_owningPackage" memberEnd="Ppivot.TPackage.PownedPackages Ppivot.TPackage.PowningPackage"/>
-  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedParameters_ExpressionInOCL" name="A_ownedParameters_ExpressionInOCL"
-      memberEnd="Ppivot.TExpressionInOCL.PownedParameters Ppivot.A_ownedParameters_ExpressionInOCL.Pnull">
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedParameters_ExpressionInOCL" name="A_ownedParameters_ExpressionInOCL" memberEnd="Ppivot.TExpressionInOCL.PownedParameters Ppivot.A_ownedParameters_ExpressionInOCL.Pnull">
     <ownedEnd xmi:id="Ppivot.A_ownedParameters_ExpressionInOCL.Pnull" type="Ppivot.TExpressionInOCL" association="Ppivot.A_ownedParameters_ExpressionInOCL"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedParameters_owningOperation" name="A_ownedParameters_owningOperation"
-      memberEnd="Ppivot.TOperation.PownedParameters Ppivot.TParameter.PowningOperation"/>
-  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedParameters_owningSignature" name="A_ownedParameters_owningSignature"
-      memberEnd="Ppivot.TTemplateSignature.PownedParameters Ppivot.TTemplateParameter.PowningSignature"/>
-  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedParts_CollectionLiteralExp" name="A_ownedParts_CollectionLiteralExp"
-      memberEnd="Ppivot.TCollectionLiteralExp.PownedParts Ppivot.A_ownedParts_CollectionLiteralExp.Pnull">
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedParameters_owningOperation" name="A_ownedParameters_owningOperation" memberEnd="Ppivot.TOperation.PownedParameters Ppivot.TParameter.PowningOperation"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedParameters_owningSignature" name="A_ownedParameters_owningSignature" memberEnd="Ppivot.TTemplateSignature.PownedParameters Ppivot.TTemplateParameter.PowningSignature"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedParts_CollectionLiteralExp" name="A_ownedParts_CollectionLiteralExp" memberEnd="Ppivot.TCollectionLiteralExp.PownedParts Ppivot.A_ownedParts_CollectionLiteralExp.Pnull">
     <ownedEnd xmi:id="Ppivot.A_ownedParts_CollectionLiteralExp.Pnull" type="Ppivot.TCollectionLiteralExp" association="Ppivot.A_ownedParts_CollectionLiteralExp"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedParts_MapLiteralExp" name="A_ownedParts_MapLiteralExp" memberEnd="Ppivot.TMapLiteralExp.PownedParts Ppivot.A_ownedParts_MapLiteralExp.Pnull">
@@ -1735,19 +1565,15 @@
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedParts_TupleLiteralExp" name="A_ownedParts_TupleLiteralExp" memberEnd="Ppivot.TTupleLiteralExp.PownedParts Ppivot.A_ownedParts_TupleLiteralExp.Pnull">
     <ownedEnd xmi:id="Ppivot.A_ownedParts_TupleLiteralExp.Pnull" type="Ppivot.TTupleLiteralExp" association="Ppivot.A_ownedParts_TupleLiteralExp"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedPostconditions_owningPostContext" name="A_ownedPostconditions_owningPostContext"
-      memberEnd="Ppivot.TOperation.PownedPostconditions Ppivot.TConstraint.PowningPostContext"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedPostconditions_owningPostContext" name="A_ownedPostconditions_owningPostContext" memberEnd="Ppivot.TOperation.PownedPostconditions Ppivot.TConstraint.PowningPostContext"/>
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedPrecedences_Library" name="A_ownedPrecedences_Library" memberEnd="Ppivot.TLibrary.PownedPrecedences Ppivot.A_ownedPrecedences_Library.Pnull">
     <ownedEnd xmi:id="Ppivot.A_ownedPrecedences_Library.Pnull" type="Ppivot.TLibrary" association="Ppivot.A_ownedPrecedences_Library"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedPreconditions_owningPreContext" name="A_ownedPreconditions_owningPreContext"
-      memberEnd="Ppivot.TOperation.PownedPreconditions Ppivot.TConstraint.PowningPreContext"/>
-  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedProfileApplications_owningPackage" name="A_ownedProfileApplications_owningPackage"
-      memberEnd="Ppivot.TPackage.PownedProfileApplications Ppivot.TProfileApplication.PowningPackage"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedPreconditions_owningPreContext" name="A_ownedPreconditions_owningPreContext" memberEnd="Ppivot.TOperation.PownedPreconditions Ppivot.TConstraint.PowningPreContext"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedProfileApplications_owningPackage" name="A_ownedProfileApplications_owningPackage" memberEnd="Ppivot.TPackage.PownedProfileApplications Ppivot.TProfileApplication.PowningPackage"/>
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedProperties_owningClass" name="A_ownedProperties_owningClass" memberEnd="Ppivot.TClass.PownedProperties Ppivot.TProperty.PowningClass"/>
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedRegions_owningState" name="A_ownedRegions_owningState" memberEnd="Ppivot.TState.PownedRegions Ppivot.TRegion.PowningState"/>
-  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedRegions_owningStateMachine" name="A_ownedRegions_owningStateMachine"
-      memberEnd="Ppivot.TStateMachine.PownedRegions Ppivot.TRegion.PowningStateMachine"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedRegions_owningStateMachine" name="A_ownedRegions_owningStateMachine" memberEnd="Ppivot.TStateMachine.PownedRegions Ppivot.TRegion.PowningStateMachine"/>
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedResult_ExpressionInOCL" name="A_ownedResult_ExpressionInOCL" memberEnd="Ppivot.TExpressionInOCL.PownedResult Ppivot.A_ownedResult_ExpressionInOCL.Pnull">
     <ownedEnd xmi:id="Ppivot.A_ownedResult_ExpressionInOCL.Pnull" type="Ppivot.TExpressionInOCL" association="Ppivot.A_ownedResult_ExpressionInOCL"/>
   </packagedElement>
@@ -1762,18 +1588,13 @@
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedSource_CallExp" name="A_ownedSource_CallExp" memberEnd="Ppivot.TCallExp.PownedSource Ppivot.A_ownedSource_CallExp.Pnull">
     <ownedEnd xmi:id="Ppivot.A_ownedSource_CallExp.Pnull" type="Ppivot.TCallExp" association="Ppivot.A_ownedSource_CallExp"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedSpecification_InstanceSpecification" name="A_ownedSpecification_InstanceSpecification"
-      memberEnd="Ppivot.TInstanceSpecification.PownedSpecification Ppivot.A_ownedSpecification_InstanceSpecification.Pnull">
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedSpecification_InstanceSpecification" name="A_ownedSpecification_InstanceSpecification" memberEnd="Ppivot.TInstanceSpecification.PownedSpecification Ppivot.A_ownedSpecification_InstanceSpecification.Pnull">
     <ownedEnd xmi:id="Ppivot.A_ownedSpecification_InstanceSpecification.Pnull" type="Ppivot.TInstanceSpecification" association="Ppivot.A_ownedSpecification_InstanceSpecification"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedSpecification_owningConstraint" name="A_ownedSpecification_owningConstraint"
-      memberEnd="Ppivot.TConstraint.PownedSpecification Ppivot.TLanguageExpression.PowningConstraint"/>
-  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedStandardLibrary_owningCompleteEnvironment" name="A_ownedStandardLibrary_owningCompleteEnvironment"
-      memberEnd="Ppivot.TCompleteEnvironment.PownedStandardLibrary Ppivot.TStandardLibrary.PowningCompleteEnvironment"/>
-  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedStateInvariant_owningState" name="A_ownedStateInvariant_owningState"
-      memberEnd="Ppivot.TState.PownedStateInvariant Ppivot.TConstraint.PowningState"/>
-  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedSubstitutions_owningBinding" name="A_ownedSubstitutions_owningBinding"
-      memberEnd="Ppivot.TTemplateBinding.PownedSubstitutions Ppivot.TTemplateParameterSubstitution.PowningBinding"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedSpecification_owningConstraint" name="A_ownedSpecification_owningConstraint" memberEnd="Ppivot.TConstraint.PownedSpecification Ppivot.TLanguageExpression.PowningConstraint"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedStandardLibrary_owningCompleteEnvironment" name="A_ownedStandardLibrary_owningCompleteEnvironment" memberEnd="Ppivot.TCompleteEnvironment.PownedStandardLibrary Ppivot.TStandardLibrary.PowningCompleteEnvironment"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedStateInvariant_owningState" name="A_ownedStateInvariant_owningState" memberEnd="Ppivot.TState.PownedStateInvariant Ppivot.TConstraint.PowningState"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedSubstitutions_owningBinding" name="A_ownedSubstitutions_owningBinding" memberEnd="Ppivot.TTemplateBinding.PownedSubstitutions Ppivot.TTemplateParameterSubstitution.PowningBinding"/>
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedSubvertexes_owningRegion" name="A_ownedSubvertexes_owningRegion" memberEnd="Ppivot.TRegion.PownedSubvertexes Ppivot.TVertex.PowningRegion"/>
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedTarget_MessageExp" name="A_ownedTarget_MessageExp" memberEnd="Ppivot.TMessageExp.PownedTarget Ppivot.A_ownedTarget_MessageExp.Pnull">
     <ownedEnd xmi:id="Ppivot.A_ownedTarget_MessageExp.Pnull" type="Ppivot.TMessageExp" association="Ppivot.A_ownedTarget_MessageExp"/>
@@ -1782,8 +1603,7 @@
     <ownedEnd xmi:id="Ppivot.A_ownedThen_IfExp.Pnull" type="Ppivot.TIfExp" association="Ppivot.A_ownedThen_IfExp"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedTransitions_owningRegion" name="A_ownedTransitions_owningRegion" memberEnd="Ppivot.TRegion.PownedTransitions Ppivot.TTransition.PowningRegion"/>
-  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedTriggers_owningTransition" name="A_ownedTriggers_owningTransition"
-      memberEnd="Ppivot.TTransition.PownedTriggers Ppivot.TTrigger.PowningTransition"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedTriggers_owningTransition" name="A_ownedTriggers_owningTransition" memberEnd="Ppivot.TTransition.PownedTriggers Ppivot.TTrigger.PowningTransition"/>
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedValue_MapLiteralPart" name="A_ownedValue_MapLiteralPart" memberEnd="Ppivot.TMapLiteralPart.PownedValue Ppivot.A_ownedValue_MapLiteralPart.Pnull">
     <ownedEnd xmi:id="Ppivot.A_ownedValue_MapLiteralPart.Pnull" type="Ppivot.TMapLiteralPart" association="Ppivot.A_ownedValue_MapLiteralPart"/>
   </packagedElement>
@@ -1793,8 +1613,7 @@
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedVariable_LetExp" name="A_ownedVariable_LetExp" memberEnd="Ppivot.TLetExp.PownedVariable Ppivot.A_ownedVariable_LetExp.Pnull">
     <ownedEnd xmi:id="Ppivot.A_ownedVariable_LetExp.Pnull" type="Ppivot.TLetExp" association="Ppivot.A_ownedVariable_LetExp"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedWildcard_TemplateParameterSubstitution" name="A_ownedWildcard_TemplateParameterSubstitution"
-      memberEnd="Ppivot.TTemplateParameterSubstitution.PownedWildcard Ppivot.A_ownedWildcard_TemplateParameterSubstitution.Pnull">
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_ownedWildcard_TemplateParameterSubstitution" name="A_ownedWildcard_TemplateParameterSubstitution" memberEnd="Ppivot.TTemplateParameterSubstitution.PownedWildcard Ppivot.A_ownedWildcard_TemplateParameterSubstitution.Pnull">
     <ownedEnd xmi:id="Ppivot.A_ownedWildcard_TemplateParameterSubstitution.Pnull" type="Ppivot.TTemplateParameterSubstitution" association="Ppivot.A_ownedWildcard_TemplateParameterSubstitution"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_parameterType_LambdaType" name="A_parameterType_LambdaType" memberEnd="Ppivot.TLambdaType.PparameterType Ppivot.A_parameterType_LambdaType.Pnull">
@@ -1806,27 +1625,23 @@
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_partialModels_CompleteModel" name="A_partialModels_CompleteModel" memberEnd="Ppivot.TCompleteModel.PpartialModels Ppivot.A_partialModels_CompleteModel.Pnull">
     <ownedEnd xmi:id="Ppivot.A_partialModels_CompleteModel.Pnull" type="Ppivot.TCompleteModel" association="Ppivot.A_partialModels_CompleteModel"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_partialPackages_CompletePackage" name="A_partialPackages_CompletePackage"
-      memberEnd="Ppivot.TCompletePackage.PpartialPackages Ppivot.A_partialPackages_CompletePackage.Pnull">
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_partialPackages_CompletePackage" name="A_partialPackages_CompletePackage" memberEnd="Ppivot.TCompletePackage.PpartialPackages Ppivot.A_partialPackages_CompletePackage.Pnull">
     <ownedEnd xmi:id="Ppivot.A_partialPackages_CompletePackage.Pnull" type="Ppivot.TCompletePackage" association="Ppivot.A_partialPackages_CompletePackage"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_precedence_Operation" name="A_precedence_Operation" memberEnd="Ppivot.TOperation.Pprecedence Ppivot.A_precedence_Operation.Pnull">
     <ownedEnd xmi:id="Ppivot.A_precedence_Operation.Pnull" type="Ppivot.TOperation" association="Ppivot.A_precedence_Operation"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_primitiveCompletePackage_CompleteModel" name="A_primitiveCompletePackage_CompleteModel"
-      memberEnd="Ppivot.TCompleteModel.PprimitiveCompletePackage Ppivot.A_primitiveCompletePackage_CompleteModel.Pnull">
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_primitiveCompletePackage_CompleteModel" name="A_primitiveCompletePackage_CompleteModel" memberEnd="Ppivot.TCompleteModel.PprimitiveCompletePackage Ppivot.A_primitiveCompletePackage_CompleteModel.Pnull">
     <ownedEnd xmi:id="Ppivot.A_primitiveCompletePackage_CompleteModel.Pnull" type="Ppivot.TCompleteModel" association="Ppivot.A_primitiveCompletePackage_CompleteModel"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_profileApplications_appliedProfile" name="A_profileApplications_appliedProfile"
-      memberEnd="Ppivot.TProfile.PprofileApplications Ppivot.TProfileApplication.PappliedProfile"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_profileApplications_appliedProfile" name="A_profileApplications_appliedProfile" memberEnd="Ppivot.TProfile.PprofileApplications Ppivot.TProfileApplication.PappliedProfile"/>
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_qualifiers_NavigationCallExp" name="A_qualifiers_NavigationCallExp" memberEnd="Ppivot.TNavigationCallExp.Pqualifiers Ppivot.A_qualifiers_NavigationCallExp.Pnull">
     <ownedEnd xmi:id="Ppivot.A_qualifiers_NavigationCallExp.Pnull" type="Ppivot.TNavigationCallExp" association="Ppivot.A_qualifiers_NavigationCallExp"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_raisedExceptions_Operation" name="A_raisedExceptions_Operation" memberEnd="Ppivot.TOperation.PraisedExceptions Ppivot.A_raisedExceptions_Operation.Pnull">
     <ownedEnd xmi:id="Ppivot.A_raisedExceptions_Operation.Pnull" type="Ppivot.TOperation" association="Ppivot.A_raisedExceptions_Operation"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_redefinedConstraints_Constraint" name="A_redefinedConstraints_Constraint"
-      memberEnd="Ppivot.TConstraint.PredefinedConstraints Ppivot.A_redefinedConstraints_Constraint.Pnull">
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_redefinedConstraints_Constraint" name="A_redefinedConstraints_Constraint" memberEnd="Ppivot.TConstraint.PredefinedConstraints Ppivot.A_redefinedConstraints_Constraint.Pnull">
     <ownedEnd xmi:id="Ppivot.A_redefinedConstraints_Constraint.Pnull" type="Ppivot.TConstraint" association="Ppivot.A_redefinedConstraints_Constraint"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_redefinedOperations_Operation" name="A_redefinedOperations_Operation" memberEnd="Ppivot.TOperation.PredefinedOperations Ppivot.A_redefinedOperations_Operation.Pnull">
@@ -1841,37 +1656,31 @@
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_references_Annotation" name="A_references_Annotation" memberEnd="Ppivot.TAnnotation.Preferences Ppivot.A_references_Annotation.Pnull">
     <ownedEnd xmi:id="Ppivot.A_references_Annotation.Pnull" type="Ppivot.TAnnotation" association="Ppivot.A_references_Annotation"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_referredAssociationClass_AssociationClassCallExp" name="A_referredAssociationClass_AssociationClassCallExp"
-      memberEnd="Ppivot.TAssociationClassCallExp.PreferredAssociationClass Ppivot.A_referredAssociationClass_AssociationClassCallExp.Pnull">
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_referredAssociationClass_AssociationClassCallExp" name="A_referredAssociationClass_AssociationClassCallExp" memberEnd="Ppivot.TAssociationClassCallExp.PreferredAssociationClass Ppivot.A_referredAssociationClass_AssociationClassCallExp.Pnull">
     <ownedEnd xmi:id="Ppivot.A_referredAssociationClass_AssociationClassCallExp.Pnull" type="Ppivot.TAssociationClassCallExp" association="Ppivot.A_referredAssociationClass_AssociationClassCallExp"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_referredIteration_LoopExp" name="A_referredIteration_LoopExp" memberEnd="Ppivot.TLoopExp.PreferredIteration Ppivot.A_referredIteration_LoopExp.Pnull">
     <ownedEnd xmi:id="Ppivot.A_referredIteration_LoopExp.Pnull" type="Ppivot.TLoopExp" association="Ppivot.A_referredIteration_LoopExp"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_referredLiteral_EnumLiteralExp" name="A_referredLiteral_EnumLiteralExp"
-      memberEnd="Ppivot.TEnumLiteralExp.PreferredLiteral Ppivot.A_referredLiteral_EnumLiteralExp.Pnull">
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_referredLiteral_EnumLiteralExp" name="A_referredLiteral_EnumLiteralExp" memberEnd="Ppivot.TEnumLiteralExp.PreferredLiteral Ppivot.A_referredLiteral_EnumLiteralExp.Pnull">
     <ownedEnd xmi:id="Ppivot.A_referredLiteral_EnumLiteralExp.Pnull" type="Ppivot.TEnumLiteralExp" association="Ppivot.A_referredLiteral_EnumLiteralExp"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_referredOperation_MessageType" name="A_referredOperation_MessageType" memberEnd="Ppivot.TMessageType.PreferredOperation Ppivot.A_referredOperation_MessageType.Pnull">
     <ownedEnd xmi:id="Ppivot.A_referredOperation_MessageType.Pnull" type="Ppivot.TMessageType" association="Ppivot.A_referredOperation_MessageType"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_referredOperation_OperationCallExp" name="A_referredOperation_OperationCallExp"
-      memberEnd="Ppivot.TOperationCallExp.PreferredOperation Ppivot.A_referredOperation_OperationCallExp.Pnull">
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_referredOperation_OperationCallExp" name="A_referredOperation_OperationCallExp" memberEnd="Ppivot.TOperationCallExp.PreferredOperation Ppivot.A_referredOperation_OperationCallExp.Pnull">
     <ownedEnd xmi:id="Ppivot.A_referredOperation_OperationCallExp.Pnull" type="Ppivot.TOperationCallExp" association="Ppivot.A_referredOperation_OperationCallExp"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_referredProperty_DynamicProperty" name="A_referredProperty_DynamicProperty"
-      memberEnd="Ppivot.TDynamicProperty.PreferredProperty Ppivot.A_referredProperty_DynamicProperty.Pnull">
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_referredProperty_DynamicProperty" name="A_referredProperty_DynamicProperty" memberEnd="Ppivot.TDynamicProperty.PreferredProperty Ppivot.A_referredProperty_DynamicProperty.Pnull">
     <ownedEnd xmi:id="Ppivot.A_referredProperty_DynamicProperty.Pnull" type="Ppivot.TDynamicProperty" association="Ppivot.A_referredProperty_DynamicProperty"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_referredProperty_OppositePropertyCallExp" name="A_referredProperty_OppositePropertyCallExp"
-      memberEnd="Ppivot.TOppositePropertyCallExp.PreferredProperty Ppivot.A_referredProperty_OppositePropertyCallExp.Pnull">
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_referredProperty_OppositePropertyCallExp" name="A_referredProperty_OppositePropertyCallExp" memberEnd="Ppivot.TOppositePropertyCallExp.PreferredProperty Ppivot.A_referredProperty_OppositePropertyCallExp.Pnull">
     <ownedEnd xmi:id="Ppivot.A_referredProperty_OppositePropertyCallExp.Pnull" type="Ppivot.TOppositePropertyCallExp" association="Ppivot.A_referredProperty_OppositePropertyCallExp"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_referredProperty_Property" name="A_referredProperty_Property" memberEnd="Ppivot.TProperty.PreferredProperty Ppivot.A_referredProperty_Property.Pnull">
     <ownedEnd xmi:id="Ppivot.A_referredProperty_Property.Pnull" type="Ppivot.TProperty" association="Ppivot.A_referredProperty_Property"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_referredProperty_PropertyCallExp" name="A_referredProperty_PropertyCallExp"
-      memberEnd="Ppivot.TPropertyCallExp.PreferredProperty Ppivot.A_referredProperty_PropertyCallExp.Pnull">
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_referredProperty_PropertyCallExp" name="A_referredProperty_PropertyCallExp" memberEnd="Ppivot.TPropertyCallExp.PreferredProperty Ppivot.A_referredProperty_PropertyCallExp.Pnull">
     <ownedEnd xmi:id="Ppivot.A_referredProperty_PropertyCallExp.Pnull" type="Ppivot.TPropertyCallExp" association="Ppivot.A_referredProperty_PropertyCallExp"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_referredProperty_ShadowPart" name="A_referredProperty_ShadowPart" memberEnd="Ppivot.TShadowPart.PreferredProperty Ppivot.A_referredProperty_ShadowPart.Pnull">
@@ -1909,8 +1718,7 @@
     <ownedEnd xmi:id="Ppivot.A_superClasses_Class.Pnull" type="Ppivot.TClass" association="Ppivot.A_superClasses_Class"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_target_incomingTransitions" name="A_target_incomingTransitions" memberEnd="Ppivot.TTransition.Ptarget Ppivot.TVertex.PincomingTransitions"/>
-  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_templateSignature_TemplateBinding" name="A_templateSignature_TemplateBinding"
-      memberEnd="Ppivot.TTemplateBinding.PtemplateSignature Ppivot.A_templateSignature_TemplateBinding.Pnull">
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_templateSignature_TemplateBinding" name="A_templateSignature_TemplateBinding" memberEnd="Ppivot.TTemplateBinding.PtemplateSignature Ppivot.A_templateSignature_TemplateBinding.Pnull">
     <ownedEnd xmi:id="Ppivot.A_templateSignature_TemplateBinding.Pnull" type="Ppivot.TTemplateBinding" association="Ppivot.A_templateSignature_TemplateBinding"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_typeValue_OCLExpression" name="A_typeValue_OCLExpression" memberEnd="Ppivot.TOCLExpression.PtypeValue Ppivot.A_typeValue_OCLExpression.Pnull">
@@ -1922,10 +1730,8 @@
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_type_TypedElement" name="A_type_TypedElement" memberEnd="Ppivot.TTypedElement.Ptype Ppivot.A_type_TypedElement.Pnull">
     <ownedEnd xmi:id="Ppivot.A_type_TypedElement.Pnull" type="Ppivot.TTypedElement" association="Ppivot.A_type_TypedElement"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_unownedAttributes_associationClass" name="A_unownedAttributes_associationClass"
-      memberEnd="Ppivot.TAssociationClass.PunownedAttributes Ppivot.TProperty.PassociationClass"/>
-  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_unspecializedElement_TemplateableElement" name="A_unspecializedElement_TemplateableElement"
-      memberEnd="Ppivot.TTemplateableElement.PunspecializedElement Ppivot.A_unspecializedElement_TemplateableElement.Pnull">
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_unownedAttributes_associationClass" name="A_unownedAttributes_associationClass" memberEnd="Ppivot.TAssociationClass.PunownedAttributes Ppivot.TProperty.PassociationClass"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_unspecializedElement_TemplateableElement" name="A_unspecializedElement_TemplateableElement" memberEnd="Ppivot.TTemplateableElement.PunspecializedElement Ppivot.A_unspecializedElement_TemplateableElement.Pnull">
     <ownedEnd xmi:id="Ppivot.A_unspecializedElement_TemplateableElement.Pnull" type="Ppivot.TTemplateableElement" association="Ppivot.A_unspecializedElement_TemplateableElement"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_upperBound_WildcardType" name="A_upperBound_WildcardType" memberEnd="Ppivot.TWildcardType.PupperBound Ppivot.A_upperBound_WildcardType.Pnull">
@@ -1945,8 +1751,8 @@
   <packagedElement xmi:type="uml:Interface" xmi:id="Ppivot.TVisitable" name="Visitable"/>
   <profileApplication xmi:id="Ppivot.pA0">
     <eAnnotations xmi:id="Ppivot.pA0.eA0" source="http://www.eclipse.org/uml2/2.0.0/UML">
-      <references xmi:type="ecore:EPackage" href="&_0;#_z1OFcHjqEdy8S4Cr8Rc_NA"/>
+      <references xmi:type="ecore:EPackage" href="pathmap://UML_PROFILES/Ecore.profile.uml#_z1OFcHjqEdy8S4Cr8Rc_NA"/>
     </eAnnotations>
-    <appliedProfile href="&_0;#_0"/>
+    <appliedProfile href="pathmap://UML_PROFILES/Ecore.profile.uml#_0"/>
   </profileApplication>
 </uml:Model>
