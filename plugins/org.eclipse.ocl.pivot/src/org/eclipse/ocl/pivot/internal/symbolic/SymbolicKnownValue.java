@@ -73,8 +73,11 @@ public class SymbolicKnownValue extends AbstractLeafSymbolicValue {
 	}
 
 	@Override
-	public @NonNull SymbolicStatus basicGetZeroStatus() {
-		return ValueUtil.ZERO_VALUE.equals(knownValue) ? SymbolicStatus.SATISFIED : SymbolicStatus.UNSATISFIED;
+	public @Nullable SymbolicStatus basicGetZeroStatus() {
+		if (isNumeric()) {
+			return ValueUtil.ZERO_VALUE.equals(knownValue) ? SymbolicStatus.SATISFIED : SymbolicStatus.UNSATISFIED;
+		}
+		return null;
 	}
 
 	@Override

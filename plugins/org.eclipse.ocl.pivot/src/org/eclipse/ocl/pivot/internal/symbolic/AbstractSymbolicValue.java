@@ -30,17 +30,174 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 	public @NonNull SymbolicValue asRefinementOf(@NonNull SymbolicValue unrefinedValue) {
 		@NonNull SymbolicValue baseValue = unrefinedValue.getBaseValue();
 		@NonNull SymbolicValue resultValue = baseValue;			// XXX ?? fudging erroneous IsDead
-		if (!mayBeInvalid() && baseValue.mayBeInvalid()) {
+		//
+		//	Resolve invalid refinement
+		//
+		if (isInvalid()) {
+			if (baseValue.mayBeInvalid()) {
+				return this;					// "invalid" is except-everything else
+			}
+			else {
+				assert !mayBeNull();
+				assert !mayBeZero();
+				return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "isInvalid is incompatible with !mayBeInvalid");
+			}
+		}
+		else if (mayBeInvalid()) {
+			if (!baseValue.mayBeInvalid()) {
+				return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "mayBeInvalid is incompatible with !mayBeInvalid");
+			}
+			else {
+				// no change
+			}
+		}
+		else {
 			resultValue = AbstractSymbolicRefinedValue.createExceptValue(resultValue, ValueUtil.INVALID_VALUE);
 		}
-		if (!mayBeNull() && baseValue.mayBeNull()) {
-			resultValue = AbstractSymbolicRefinedValue.createExceptValue(resultValue, null);
+		//
+		//	Resolve null refinement
+		//
+		if (isNull()) {
+			if (baseValue.mayBeNull()) {
+				return this;					// "null" is except-everything else
+			}
+			else {
+				assert !mayBeInvalid();
+				assert !mayBeZero();
+				return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "isNull is incompatible with !mayBeNull");
+			}
 		}
-		if ((basicGetZeroStatus() != null) && !mayBeZero() && (baseValue.basicGetZeroStatus() != null) && baseValue.mayBeZero()) {
-			resultValue = AbstractSymbolicRefinedValue.createNotValue(AbstractSymbolicRefinedValue.createIsZeroValue(resultValue));
+		else if (mayBeNull()) {
+			if (!baseValue.mayBeNull()) {
+				return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "mayBeNull is incompatible with !mayBeNull");
+			}
+			else {
+				// no change
+			}
 		}
+		else {
+			if (resultValue.isNull()) {
+				return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "notNull is incompatible with isNull");
+			}
+			else {
+			//	assert !mayBeInvalid();
+			//	assert !mayBeZero();
+			//	return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "isNull is incompatible with !mayBeNull");
+				resultValue = AbstractSymbolicRefinedValue.createExceptValue(resultValue, null);
+			}
+		}
+		//
+		//	Resolve zero refinement
+		//
+		if (baseValue.basicGetZeroStatus() != null) {
+			if (isZero()) {
+				if (baseValue.mayBeZero()) {
+					return this;					// "0" is except-everything else
+				}
+				else {
+					assert !mayBeInvalid();
+					assert !mayBeNull();
+					return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "isZero is incompatible with !mayBeZero");
+				}
+			}
+			else if (mayBeZero()) {
+				if (!baseValue.mayBeZero()) {
+					return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "mayBeZero is incompatible with !mayBeZero");
+				}
+				else {
+					// no change
+				}
+			}
+			else {
+				resultValue = AbstractSymbolicRefinedValue.createExceptValue(resultValue, ValueUtil.ZERO_VALUE);
+			}
+		}
+		//
+		//	Resolve true/false refinement
+		//
+		if (baseValue.basicGetBooleanStatus() != null) {
+			if (isTrue()) {
+				if (baseValue.mayBeTrue()) {
+					return this;					// "true" is except-everything else
+				}
+				else {
+					assert !mayBeInvalid();
+					assert !mayBeNull();
+					assert !mayBeZero();
+					return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "isTrue is incompatible with !mayBeTrue");
+				}
+			}
+			else if (isFalse()) {
+				if (baseValue.mayBeFalse()) {
+					return this;					// "false" is except-everything else
+				}
+				else {
+					assert !mayBeInvalid();
+					assert !mayBeNull();
+					assert !mayBeZero();
+					return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "isFalse is incompatible with !mayBeFalse");
+				}
+			}
+			else if (mayBeTrue()) {
+				if (!baseValue.mayBeTrue()) {
+					return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "mayBeTrue is incompatible with !mayBeTrue");
+				}
+				else if (!baseValue.mayBeFalse()) {
+					resultValue = AbstractSymbolicRefinedValue.createExceptValue(resultValue, ValueUtil.FALSE_VALUE);
+				}
+				else {
+					// no change
+				}
+			}
+			else if (mayBeFalse()) {
+				if (!baseValue.mayBeFalse()) {
+					return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "mayBeFalse is incompatible with !mayBeFalse");
+				}
+				else if (!baseValue.mayBeTrue()) {
+					resultValue = AbstractSymbolicRefinedValue.createExceptValue(resultValue, ValueUtil.TRUE_VALUE);
+				}
+				else {
+					// no change
+				}
+			}
+			else {			// ?? not-true and not-false never happens
+				if (!baseValue.mayBeFalse()) {
+					resultValue = AbstractSymbolicRefinedValue.createExceptValue(resultValue, ValueUtil.FALSE_VALUE);
+				}
+				if (!baseValue.mayBeTrue()) {
+					resultValue = AbstractSymbolicRefinedValue.createExceptValue(resultValue, ValueUtil.TRUE_VALUE);
+				}
+			}
+		}
+
+
+
+//		if ((basicGetZeroStatus() != null) && !mayBeZero() && (baseValue.basicGetZeroStatus() != null) && baseValue.mayBeZero()) {
+//			resultValue = AbstractSymbolicRefinedValue.createNotValue(AbstractSymbolicRefinedValue.createIsZeroValue(resultValue));
+//		}
 		assert resultValue.isRefinementOf(unrefinedValue);
 		return resultValue;		// XXX define a contradiction refinement
+/*		SymbolicStatus booleanWriteStatus = writeValue.basicGetBooleanStatus();
+		if (booleanWriteStatus != null) {
+			boolean mayBeFalse = !booleanWriteStatus.isSatisfied();
+			boolean mayBeTrue = !booleanWriteStatus.isUnsatisfied();
+			boolean mustBeFalse = readValue.isFalse();
+			boolean mustBeTrue = readValue.isTrue();
+			if (mustBeFalse && !mayBeFalse) {
+				return "mustBeFalse is incompatible with !mayBeFalse";
+			}
+			if (mustBeTrue && !mayBeTrue) {
+				return "mustBeTrue is incompatible with !mayBeTrue";
+			}
+		}
+		if (writeValue.basicGetZeroStatus() != null) {
+			if (writeValue.isZero() && !readValue.mayBeZero()) {
+				return "isZero is incompatible with !mayBeZero";
+			}
+			if (writeValue.mayBeZero() && !readValue.mayBeZero()) {
+				return "mayBeZero is incompatible with !mayBeZero";
+			}
+		} */
 	}
 
 	@Override

@@ -29,9 +29,9 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.internal.symbolic.AbstractSymbolicRefinedValue;
-import org.eclipse.ocl.pivot.internal.symbolic.SymbolicStatus;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicUtil;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
@@ -96,7 +96,9 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 	private final @NonNull Map<@NonNull CSEElement, @NonNull SymbolicValue> cseElement2symbolicValue;
 
 	/**
-	 * Expressions, Variables and ExpressionInOCL whose symbolic value depends on the value of the hypothesizedTypedElement.
+	 * Expressions, Variables and ExpressionInOCL whose symbolic value may depends on the value of the hypothesizedTypedElement.
+	 * For most expressions the container necessarily depends on the child, but not vice-versa. For variables a change is tantamount
+	 * to a re=evaluation since for instance a let variable affects parts of the in-child.
 	 */
 	private final @NonNull UniqueList<@NonNull TypedElement> activeTypedElements = new UniqueList<>();
 
@@ -210,37 +212,49 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 	 * containing and sibling TypedElements that ensure this execution.
 	 */
 	private @Nullable String installActiveTypedElementAncestry(@NonNull TypedElement activeTypedElement, @NonNull SymbolicValue activeSymbolicValue) {
-		activeTypedElements.add(activeTypedElement);
-		SymbolicValue refinedSymbolicValue = setSymbolicValue(activeTypedElement, activeSymbolicValue);
-		String incompatibility = refinedSymbolicValue.asIncompatibility();
-		if (incompatibility != null) {
-			return incompatibility;
+		if (!activeTypedElements.add(activeTypedElement)) {
+			SymbolicValue symbolicValue = getSymbolicValue(activeTypedElement);
+			return symbolicValue.asIncompatibility();
 		}
-	//	activeCSEElements.add(cseAnalysis.getCSEElement(activeTypedElement));
-		incompatibility = installActiveTypedElementDescendants(activeTypedElement);
-		if (incompatibility != null) {
-			return incompatibility;
-		}
-		EObject eContainer = activeTypedElement.eContainer();
-		if (eContainer instanceof ExpressionInOCL) {
-			ExpressionInOCL containingExpressionInOCL = (ExpressionInOCL)eContainer;
-			activeTypedElements.add(containingExpressionInOCL);
-		//	activeCSEElements.add(cseAnalysis.getCSEElement(containingExpressionInOCL));
-		//	List<@NonNull TypedElement> affectedTypedElementsList = new ArrayList<>(activeTypedElements);
-			if (activeTypedElements.size() > 1) {
-				Collections.sort(activeTypedElements, cseAnalysis.getTypedElementHeightComparator());
-			}
-		}
-		else if (eContainer instanceof TypedElement) {
-			TypedElement containingTypedElement = (TypedElement)eContainer;
-			SymbolicValue containingSymbolicValue = baseSymbolicEvaluationEnvironment.getSymbolicValue(containingTypedElement);
-			incompatibility = installActiveTypedElementAncestry(containingTypedElement, containingSymbolicValue);
+		else {
+			SymbolicValue refinedSymbolicValue = setSymbolicValue(activeTypedElement, activeSymbolicValue);
+			String incompatibility = refinedSymbolicValue.asIncompatibility();
 			if (incompatibility != null) {
 				return incompatibility;
 			}
-		}
-		else {
-			throw new IllegalStateException("Unexpected " + activeTypedElement.eClass().getName());
+			incompatibility = installActiveTypedElementDescendants(activeTypedElement);
+			if (incompatibility != null) {
+				return incompatibility;
+			}
+			EObject eContainer = activeTypedElement.eContainer();
+			if (eContainer instanceof ExpressionInOCL) {
+				ExpressionInOCL containingExpressionInOCL = (ExpressionInOCL)eContainer;
+				activeTypedElements.add(containingExpressionInOCL);
+				if (activeTypedElements.size() > 1) {
+					Collections.sort(activeTypedElements, cseAnalysis.getTypedElementHeightComparator());
+				}
+			}
+			else if (eContainer instanceof TypedElement) {
+				TypedElement containingTypedElement = (TypedElement)eContainer;
+				SymbolicValue containingSymbolicValue = baseSymbolicEvaluationEnvironment.getSymbolicValue(containingTypedElement);
+				incompatibility = installActiveTypedElementAncestry(containingTypedElement, containingSymbolicValue);
+				if (incompatibility != null) {
+					return incompatibility;
+				}
+				if (eContainer instanceof VariableDeclaration) {
+					CSEElement cseElement = cseAnalysis.getCSEElement(containingTypedElement);
+					for (@NonNull TypedElement referencingTypedElement : cseElement.getElements()) {
+						SymbolicValue referencingSymbolicValue = baseSymbolicEvaluationEnvironment.getSymbolicValue(containingTypedElement);
+						incompatibility = installActiveTypedElementAncestry(referencingTypedElement, referencingSymbolicValue);
+						if (incompatibility != null) {
+							return incompatibility;
+						}
+					}
+				}
+			}
+			else {
+				throw new IllegalStateException("Unexpected " + activeTypedElement.eClass().getName());
+			}
 		}
 		return null;
 	}
@@ -341,7 +355,7 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 			for (@NonNull Parameter parameter : PivotUtil.getOwnedParameters(operation)) {
 				if (parameter.isIsRequired()) {
 					OCLExpression argument = ownedArguments.get(i);
-					SymbolicValue baseSymbolicValue = baseSymbolicEvaluationEnvironment.getSymbolicValue(refinedExpression);
+					SymbolicValue baseSymbolicValue = baseSymbolicEvaluationEnvironment.getSymbolicValue(argument);
 					SymbolicValue refinedSymbolicValue = baseSymbolicValue;
 					if (!isValidating && baseSymbolicValue.mayBeInvalid()) {
 						refinedSymbolicValue = AbstractSymbolicRefinedValue.createExceptValue(refinedSymbolicValue, ValueUtil.INVALID_VALUE);
@@ -462,6 +476,7 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 			if ((newSymbolicValue != oldSymbolicValue) && !newSymbolicValue.equals(oldSymbolicValue)) {
 				cseElement2symbolicValue.put(cseElement, newSymbolicValue);
 				refinedCSEElements.add(cseElement);
+			//	SymbolicAnalysis.HYPOTHESIS.println("    refined: " + SymbolicUtil.printPath(typedElement) + " to: " + + newSymbolicValue);
 			}
 		}
 		return newSymbolicValue;
@@ -473,7 +488,11 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 		if ("self.name".equals(cseElement.toString())) {
 			getClass();		// XXX
 		}
-		return setSymbolicValue(cseElement, symbolicValue);
+		SymbolicValue resultValue = setSymbolicValue(cseElement, symbolicValue);
+		if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
+			SymbolicAnalysis.HYPOTHESIS.println("    set: " + SymbolicUtil.printPath(typedElement, false) + " as: " + SymbolicUtil.printValue(resultValue));
+		}
+		return resultValue;
 	}
 
 	@Override
@@ -499,8 +518,11 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 			writeValue = getKnownValue(boxedValue);
 		}
 		if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
-			SymbolicAnalysis.HYPOTHESIS.println("    re-evaluated: " + SymbolicUtil.printPath(typedElement) + " as: " + writeValue);
+			SymbolicAnalysis.HYPOTHESIS.println("    re-evaluated: " + SymbolicUtil.printPath(typedElement, false) + " as: " + writeValue);
 		}
+		SymbolicValue newSymbolicValue = setSymbolicValue(typedElement, writeValue);
+		return newSymbolicValue.asIncompatibility();
+/*		// Record re-evaluated value
 		SymbolicValue readValue = basicGetSymbolicValue(typedElement);		// Get the 'read' value
 		if (readValue == null) {											// If a new evaluation
 			CSEElement cseElement = cseAnalysis.getCSEElement(typedElement);
@@ -508,7 +530,7 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 			return null;
 		}
 		if (writeValue == readValue) {
-			return null;
+			return null;		// XXX re-use seSymbolValue
 		}
 		SymbolicStatus booleanWriteStatus = writeValue.basicGetBooleanStatus();
 		if (booleanWriteStatus != null) {
@@ -548,12 +570,12 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 	//	}
 	//	else {
 	//		return false;
-	//	}
+	//	} */
 	}
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
-		s.append(hypothesis.getKind() + " hypothesis for " + SymbolicUtil.printPath(hypothesizedTypedElement));
+		s.append(hypothesis.getKind() + " hypothesis for " + SymbolicUtil.printPath(hypothesizedTypedElement, true));
 		StringUtil.appendIndentation(s, depth+1);
 		List<@NonNull CSEElement> keys = new ArrayList<>(cseElement2symbolicValue.keySet());
 		if (keys.size() > 1) {
@@ -580,7 +602,7 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 			s.append(" - ");
 			s.append(activeTypedElement.eClass().getName());
 			s.append(" : ");
-			s.append(SymbolicUtil.printPath(activeTypedElement));
+			s.append(SymbolicUtil.printPath(activeTypedElement, false));
 		}
 		StringUtil.appendIndentation(s, depth+1);
 		s.append("refined");

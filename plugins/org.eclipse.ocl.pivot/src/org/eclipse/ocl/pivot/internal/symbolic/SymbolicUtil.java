@@ -25,6 +25,7 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.IfExp;
 import org.eclipse.ocl.pivot.LetExp;
+import org.eclipse.ocl.pivot.LiteralExp;
 import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.NavigationCallExp;
@@ -150,17 +151,20 @@ public class SymbolicUtil
 	/**
 	 * Return a reverse hierarchical summary of typedElement to clarify its use in a whole ancestry diagnostic.
 	 */
-	public static @NonNull String printPath(@NonNull NamedElement namedElement) {
+	public static @NonNull String printPath(@NonNull NamedElement namedElement, boolean fullHierarchy) {
 		StringBuilder s = new StringBuilder();
-		printPath(s, namedElement, null);
+		printPath(s, namedElement, null, fullHierarchy);
 		return s.toString();
 	}
 
 	/**
 	 * Accumulate a reverse hierarchical summary of typedElement to clarify its use in a whole ancestry diagnostic.
 	 */
-	protected static void printPath(@NonNull StringBuilder s, @NonNull NamedElement namedElement, @Nullable EReference childContainmentReference) {
+	protected static void printPath(@NonNull StringBuilder s, @NonNull NamedElement namedElement, @Nullable EReference childContainmentReference, boolean fullHierarchy) {
 		if (namedElement instanceof ExpressionInOCL) {
+			if (!fullHierarchy) {
+				return;
+			}
 			s.append("«body»");
 		}
 		else if (namedElement instanceof CollectionRange) {
@@ -195,6 +199,9 @@ public class SymbolicUtil
 			s.append(PivotUtil.getName(PivotUtil.getReferredOperation((OperationCallExp)namedElement)));
 			s.append("()");
 		}
+		else if (namedElement instanceof LiteralExp) {
+			s.append(namedElement.toString());
+		}
 		else {
 			s.append(namedElement.getName());
 		}
@@ -204,7 +211,7 @@ public class SymbolicUtil
 		}
 		if (eContainer instanceof NamedElement) {
 			s.append("~");
-			printPath(s, (NamedElement)eContainer, namedElement.eContainmentFeature());
+			printPath(s, (NamedElement)eContainer, namedElement.eContainmentFeature(), fullHierarchy);
 		}
 	}
 

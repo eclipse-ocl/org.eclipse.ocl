@@ -2554,7 +2554,7 @@ public class PivotValidator extends EObjectValidator
 						}
 						if (!invalidIsPermissible) {
 							int diagnosticSeverity = invalidResultSeverity.getDiagnosticSeverity();
-							String message = StringUtil.bind("May be invalid: {0}", SymbolicUtil.printPath(typedElement));
+							String message = StringUtil.bind("May be invalid: {0}", SymbolicUtil.printPath(typedElement, true));
 							diagnostics.add(new BasicDiagnostic(diagnosticSeverity, DIAGNOSTIC_SOURCE, 0, message, new Object[] {typedElement}));		// XXX
 							allOk = false;			// XXX
 						}

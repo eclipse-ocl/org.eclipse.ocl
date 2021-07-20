@@ -174,7 +174,7 @@ public abstract class AbstractLeafSymbolicValue extends AbstractSymbolicValue
 
 	@Override
 	public @Nullable SymbolicStatus basicGetZeroStatus() {
-		if ((typeId == TypeId.REAL) || (typeId == TypeId.INTEGER) || (typeId == TypeId.UNLIMITED_NATURAL)) {	// FIXME Behavioral
+		if (isNumeric()) {	// FIXME Behavioral
 			return SymbolicStatus.UNDECIDED;
 		}
 		return null;
@@ -271,6 +271,10 @@ public abstract class AbstractLeafSymbolicValue extends AbstractSymbolicValue
 	@Override
 	public boolean isNullFree() {
 		return false;			// XXX
+	}
+
+	protected boolean isNumeric() {
+		return (typeId == TypeId.REAL) || (typeId == TypeId.INTEGER) || (typeId == TypeId.UNLIMITED_NATURAL);
 	}
 
 	@Override

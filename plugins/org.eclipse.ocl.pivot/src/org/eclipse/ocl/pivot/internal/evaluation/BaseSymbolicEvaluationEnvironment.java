@@ -219,7 +219,7 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 
 	public void refineSymbolicValue(@NonNull TypedElement typedElement, @NonNull SymbolicValue symbolicValue) {
 		if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
-			SymbolicAnalysis.HYPOTHESIS.println("    refined: " + symbolicValue);
+			SymbolicAnalysis.HYPOTHESIS.println("    refined: " + SymbolicUtil.printPath(typedElement, false) + " to: " + symbolicValue);
 		}
 	//	Hypothesis hypothesis = refinedValue.getHypothesis();
 	//	assert expression == hypothesis.getExpression();
@@ -238,7 +238,7 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 			SymbolicValue oldValue = getSymbolicValue(affectedExpression);
 			if (affectedExpression != typedElement) {
 				if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
-					SymbolicAnalysis.HYPOTHESIS.println("   re-evaluating: " + SymbolicUtil.printPath(affectedExpression));
+					SymbolicAnalysis.HYPOTHESIS.println("   re-evaluating: " + SymbolicUtil.printPath(affectedExpression, false));
 				}
 					if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
 					SymbolicAnalysis.HYPOTHESIS.println("    old: " + oldValue);
@@ -290,7 +290,7 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 		SymbolicValue symbolicValue = basicGetSymbolicValue(typedElement);			// Re-use old value
 		if (symbolicValue != null) {
 			if (showReUse && SymbolicAnalysis.HYPOTHESIS.isActive()) {
-				SymbolicAnalysis.HYPOTHESIS.println("  re-used: " + SymbolicUtil.printPath(typedElement) + " as: " + symbolicValue);
+				SymbolicAnalysis.HYPOTHESIS.println("  re-used: " + SymbolicUtil.printPath(typedElement, false) + " as: " + symbolicValue);
 			}
 			return symbolicValue;
 		}
@@ -303,7 +303,7 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 			resultValue = getKnownValue(boxedValue);
 		}
 		if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
-			SymbolicAnalysis.HYPOTHESIS.println("  evaluated: " + SymbolicUtil.printPath(typedElement) + " as: " + resultValue);
+			SymbolicAnalysis.HYPOTHESIS.println("  evaluated: " + SymbolicUtil.printPath(typedElement, false) + " as: " + resultValue);
 		}
 		return setSymbolicValue(typedElement, resultValue);								// Record new value
 	}

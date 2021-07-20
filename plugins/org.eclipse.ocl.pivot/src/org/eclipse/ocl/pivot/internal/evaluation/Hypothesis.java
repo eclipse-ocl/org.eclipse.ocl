@@ -75,9 +75,9 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 		for (@NonNull TypedElement typedElement : typedElements) {		// FIXME, can evaluate all in 'parallel'
 			boolean traceHypothesis = SymbolicAnalysis.HYPOTHESIS.isActive();
 			if (traceHypothesis) {
-				SymbolicAnalysis.HYPOTHESIS.println("  " + getKind() + " hypothesis for: " + SymbolicUtil.printPath(typedElement));
-				SymbolicAnalysis.HYPOTHESIS.println("    old: " + SymbolicUtil.printValue(getOriginalValue()));
-				SymbolicAnalysis.HYPOTHESIS.println("    hypothesized: " + SymbolicUtil.printValue(hypothesizedValue));
+				SymbolicAnalysis.HYPOTHESIS.println("  " + getKind() + " hypothesis for: " + SymbolicUtil.printPath(typedElement, false));
+				SymbolicAnalysis.HYPOTHESIS.println("    old: " + SymbolicUtil.printPath(typedElement, false) + " was: " + SymbolicUtil.printValue(getOriginalValue()));
+			//	SymbolicAnalysis.HYPOTHESIS.println("    hypothesized: " + SymbolicUtil.printValue(hypothesizedValue));
 			//	SymbolicAnalysis.HYPOTHESIS.println("    refined: " + getRefinedValue());		// XXX
 			//	SymbolicAnalysis.HYPOTHESIS.println(this.toString());
 			//	SymbolicAnalysis.HYPOTHESIS.println(this.toString());
@@ -89,7 +89,7 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 				refine(typedElement);
 			}
 			else if (traceHypothesis) {
-				SymbolicAnalysis.HYPOTHESIS.println("    => no contradiction: " + SymbolicUtil.printPath(typedElement));
+				SymbolicAnalysis.HYPOTHESIS.println("    => no contradiction: " + SymbolicUtil.printPath(typedElement, false));
 			}
 			typedElement2incompatibility2.put(typedElement, incompatibility);
 		}
@@ -185,7 +185,7 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 			BaseSymbolicEvaluationEnvironment baseSymbolicEvaluationEnvironment = symbolicAnalysis.getBaseSymbolicEvaluationEnvironment();
 			SymbolicRefinedContentValue refinedValue = getRefinedValue();
 			if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
-				SymbolicAnalysis.HYPOTHESIS.println("  refined: " + refinedValue);
+				SymbolicAnalysis.HYPOTHESIS.println("  refined: " + SymbolicUtil.printPath(typedElement, false) + " to: " + refinedValue);
 			}
 			baseSymbolicEvaluationEnvironment.refineSymbolicValue(typedElement, refinedValue);
 		}
@@ -280,7 +280,7 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 			BaseSymbolicEvaluationEnvironment baseSymbolicEvaluationEnvironment = symbolicAnalysis.getBaseSymbolicEvaluationEnvironment();
 			SymbolicValue refinedValue = getRefinedValue();
 			if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
-				SymbolicAnalysis.HYPOTHESIS.println("  refined: " + refinedValue);
+				SymbolicAnalysis.HYPOTHESIS.println("  refined: " + SymbolicUtil.printPath(typedElement, false) + " to: " + refinedValue);
 			}
 			baseSymbolicEvaluationEnvironment.refineSymbolicValue(typedElement, refinedValue);
 		}

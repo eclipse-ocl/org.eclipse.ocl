@@ -52,6 +52,7 @@ import org.eclipse.ocl.pivot.internal.evaluation.BaseSymbolicEvaluationEnvironme
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicUnknownValue;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicUtil;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicVariableValue;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
@@ -208,7 +209,7 @@ public class SymbolicAnalysisTests extends XtextTestCase
 			boolean okMayBeInvalid = expectedMayBeInvalid == actualValue.mayBeInvalid();
 			boolean okMayBeNull = expectedMayBeNull == actualValue.mayBeNull();
 			if (!okIsDead || !okIsInvalid || !okMayBeInvalid || !okMayBeNull ) {
-				s.append("\n\t" + debugText(element));
+				s.append("\n\t" + element.eClass().getName() + ": " + SymbolicUtil.printPath(element, true));
 				if (!okIsDead) {
 					s.append("\n\t\t expected " + (expectedIsDead ? "not " : "") + "is-dead" );
 				}
