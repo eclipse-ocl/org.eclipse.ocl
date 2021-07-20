@@ -390,12 +390,7 @@ public class XMIUtil
 	 * NB These preferences must not be used when saving a standard resource such as a *.ecore
 	 * to avoid incompatibilities between rival savers. See Bug 573923.
 	 *
-<<<<<<< Upstream, based on ewillink/573843
-	 * @deprecated supply resurce argument so that custom resources use their cu
-	 * +stom save options.
-=======
 	 * @deprecated supply resurce argument so that custom resources use their custom save options.
->>>>>>> 32734f1 Rationalize checkPreconditions
 	 */
 	@Deprecated
 	public static @NonNull Map<Object, Object> createSaveOptions() {

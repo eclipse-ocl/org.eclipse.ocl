@@ -28,12 +28,6 @@
         <filter id="338755678">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
-                <message_argument value="_Collection__OclAny__"/>
-            </message_arguments>
-        </filter>
-        <filter id="338755678">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
                 <message_argument value="_Lambda_Bag_T_Bag_collectNested_V"/>
             </message_arguments>
         </filter>
@@ -227,18 +221,6 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
                 <message_argument value="_Lambda_UniqueCollection_T_OclAny"/>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/values/SymbolicValueImpl.java" type="org.eclipse.ocl.pivot.internal.values.SymbolicValueImpl">
-        <filter id="1110441988">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.internal.values.SymbolicValueImpl"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/oclstdlib/OCLstdlibTables.java" type="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables$Properties">
-        <filter id="338755678">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Properties"/>
-                <message_argument value="_OclType__Collection__elementType"/>
             </message_arguments>
         </filter>
     </resource>
