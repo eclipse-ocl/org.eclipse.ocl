@@ -16,6 +16,8 @@ import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
+import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
  * UnsupportedOperation realises an unimplemented library operation.
@@ -23,6 +25,11 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 public class UnsupportedOperation extends AbstractOperation implements LibraryProperty.LibraryPropertyExtension
 {
 	public static final @NonNull UnsupportedOperation INSTANCE = new UnsupportedOperation();
+
+	@Override
+	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
+		return null;
+	}
 
 	/**
 	 * @since 1.1
@@ -37,7 +44,7 @@ public class UnsupportedOperation extends AbstractOperation implements LibraryPr
 	@Override
 	public @Nullable Object evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
 		throw new UnsupportedOperationException();
-	}	
+	}
 
 	/**
 	 * @since 1.1
