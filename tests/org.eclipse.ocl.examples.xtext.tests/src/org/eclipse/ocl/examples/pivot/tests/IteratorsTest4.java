@@ -160,8 +160,6 @@ public class IteratorsTest4 extends PivotTestSuite
 		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
 		ocl.getEnvironmentFactory().setSafeNavigationValidationSeverity(StatusCodes.Severity.WARNING);
 		org.eclipse.ocl.pivot.Class pkg1Type = environmentFactory.getASClass("Package");
-//xxx
-		ocl.assertQueryEquals(ocl.pkg1, ocl.bob, "let op : Set(Package[*|?]) = ownedPackages in op->any(p | p?.name = 'bob')");
 		// complete form
 		ocl.assertQueryEquals(ocl.pkg1, ocl.bob, "let op : Set(Package[*|?]) = ownedPackages in op->any(p : ocl::Package[?] | p?.name = 'bob')");
 		ocl.assertQueryEquals(ocl.pkg1, ocl.bob, "let op : Set(Package[*|?]) = ownedPackages in op?->any(p : ocl::Package | p.name = 'bob')");
@@ -172,7 +170,7 @@ public class IteratorsTest4 extends PivotTestSuite
 			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "PropertyCallExp::UnsafeSourceCanNotBeNull", "p.name");
 
 		// shorter form
-		ocl.assertQueryEquals(ocl.pkg1, ocl.bob, "let op : Set(Package[*|?]) = ownedPackages in op->any(p | p?.name = 'bob')");
+		ocl.assertQueryEquals(ocl.pkg1, ocl.bob, "let op : Set(Package[*|1]) = ownedPackages in op->any(p | p.name = 'bob')");
 		ocl.assertQueryEquals(ocl.pkg1, ocl.bob, "let op : Set(Package[*|?]) = ownedPackages in op?->any(p | p.name = 'bob')");
 		//		ocl.assertValidationErrorQuery(pkg1Type, "ownedPackages->any(p | p.name = 'bob')",
 		//			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "PropertyCallExp", "UnsafeSourceMustBeNotNull", "p.name");
@@ -194,11 +192,15 @@ public class IteratorsTest4 extends PivotTestSuite
 		ocl.assertQueryFalse(null, "Sequence{false, false}->any(s | s = false)");
 
 		ocl.assertQueryInvalid(null, "Sequence{}->any(s | s = null)");		// OMG Issue 18504
-		ocl.assertQueryNull(null, "Sequence{null}->any(s | s = null)");
-		ocl.assertQueryNull(null, "Sequence{null, null}->any(s | s = null)");
+		// FIXME BUG 507628 comment 11 - check all test chnages wrt 2021-06
+		ocl.assertValidationErrorQuery(pkg1Type, "Sequence{null}->any(s | s = null)",
+			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "IteratorExp::UnsafeSourceCanNotBeNull", "Sequence{null}->any(s : OclVoid[1] | s.=(null))");
+		ocl.assertValidationErrorQuery(pkg1Type, "Sequence{null, null}->any(s | s = null)",
+			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "IteratorExp::UnsafeSourceCanNotBeNull", "Sequence{null, null}->any(s : OclVoid[1] | s.=(null))");
+	//	ocl.assertQueryNull(null, "Sequence{null, null}->any(s | s = null)");
 
-		ocl.assertQueryDefined(ocl.pkg1, "let op : Set(Package[*|?]) = ownedPackages in op->any(true)");
-		ocl.assertQueryInvalid(ocl.pkg1, "let op : Set(Package[*|?]) = ownedPackages in op->any(false)");			// OMG Issue 18504
+		ocl.assertQueryDefined(ocl.pkg1, "let op : Set(Package[*|1]) = ownedPackages in op->any(true)");
+		ocl.assertQueryInvalid(ocl.pkg1, "let op : Set(Package[*|1]) = ownedPackages in op->any(false)");			// OMG Issue 18504
 		ocl.assertQueryDefined(ocl.pkg1, "let op : Set(Package[*|?]) = ownedPackages in op?->any(true)");
 
 		ocl.assertQueryEquals(null, 2, "Map{2 <- 1, 1 <- 2}->any(key <- value | key > value)");
