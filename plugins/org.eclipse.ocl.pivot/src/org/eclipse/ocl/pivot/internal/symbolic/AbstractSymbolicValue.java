@@ -28,6 +28,10 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 
 	@Override
 	public @NonNull SymbolicValue asRefinementOf(@NonNull SymbolicValue unrefinedValue) {
+		//
+		//	The following comparions return unrefinedValue wrapped in refinements to exhibit the
+		//	characteristics of this, unless this is a known literal that totally supplants the unrefineValue.
+		//
 	//	@NonNull SymbolicValue zzbaseValue = unrefinedValue.getBaseValue();
 		@NonNull SymbolicValue resultValue = unrefinedValue;			// XXX ?? fudging erroneous IsDead
 		//
@@ -185,11 +189,11 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 		SymbolicContent thisContent = basicGetContent();
 		SymbolicContent unrefinedContent = unrefinedValue.basicGetContent();
 		if ((thisContent != null) || (unrefinedContent != null)) {
-			SymbolicContent resultContent = basicGetContent();
 			SymbolicValue resultSize = null;
 			boolean thisNotEmpty = (thisContent != null) && !thisContent.mayBeEmpty();
 			boolean unrefinedContentNotEmpty = (unrefinedContent != null) && !unrefinedContent.mayBeEmpty();
 			SymbolicValue thisSize = thisContent != null ? thisContent.getSize() : null;
+			SymbolicValue unrefinedSize = unrefinedContent != null ? unrefinedContent.getSize() : null;
 			if (thisNotEmpty && unrefinedContentNotEmpty) {
 				resultSize = thisSize;					// ok !isEmpty
 			}
@@ -209,51 +213,36 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 				resultSize = unrefinedContent.getSize();	// ok mayBeEmpty
 			}
 			else {
-				resultSize = null;							// ok mayBeEmpty
+				// resultSize = null;							// ok mayBeEmpty
 			}
-			if ((resultSize != thisSize) || (resultValue != this)) {
-				assert resultSize != null;
-				if (resultContent == null) {
+			SymbolicContent resultContent;
+			if (resultSize == unrefinedSize) {
+				if (resultValue != unrefinedValue) {
 					resultValue = AbstractSymbolicRefinedValue.createRefinedContent(resultValue);
 					resultContent = resultValue.getContent();
+					if (resultSize != null) {
+						resultContent.setSize(resultSize);
+					}
 				}
-				resultContent.setSize(resultSize);
+			}
+			else if (resultSize == thisSize) {
+				resultValue = AbstractSymbolicRefinedValue.createRefinedContent(resultValue);
+				resultContent = resultValue.getContent();
+				if (resultSize != null) {
+					resultContent.setSize(resultSize);
+				}
+			}
+			else {
+				resultValue = AbstractSymbolicRefinedValue.createRefinedContent(resultValue);
+				resultContent = resultValue.getContent();
+				if (resultSize != null) {
+					resultContent.setSize(resultSize);
+				}
 			}
 		}
-
-
-
-
-
-
-
-//		if ((basicGetZeroStatus() != null) && !mayBeZero() && (baseValue.basicGetZeroStatus() != null) && baseValue.mayBeZero()) {
-//			resultValue = AbstractSymbolicRefinedValue.createNotValue(AbstractSymbolicRefinedValue.createIsZeroValue(resultValue));
-//		}
 	//	assert resultValue.isRefinementOf(this);					-- a 'new' UnknownValue may be refined to an 'old' UnknownValue
 	//	assert resultValue.isRefinementOf(unrefinedValue);			-- a 'new' KnownValue may refine an 'old' UnknownValue
 		return resultValue;		// XXX define a contradiction refinement
-/*		SymbolicStatus booleanWriteStatus = writeValue.basicGetBooleanStatus();
-		if (booleanWriteStatus != null) {
-			boolean mayBeFalse = !booleanWriteStatus.isSatisfied();
-			boolean mayBeTrue = !booleanWriteStatus.isUnsatisfied();
-			boolean mustBeFalse = readValue.isFalse();
-			boolean mustBeTrue = readValue.isTrue();
-			if (mustBeFalse && !mayBeFalse) {
-				return "mustBeFalse is incompatible with !mayBeFalse";
-			}
-			if (mustBeTrue && !mayBeTrue) {
-				return "mustBeTrue is incompatible with !mayBeTrue";
-			}
-		}
-		if (writeValue.basicGetZeroStatus() != null) {
-			if (writeValue.isZero() && !readValue.mayBeZero()) {
-				return "isZero is incompatible with !mayBeZero";
-			}
-			if (writeValue.mayBeZero() && !readValue.mayBeZero()) {
-				return "mayBeZero is incompatible with !mayBeZero";
-			}
-		} */
 	}
 
 	@Override

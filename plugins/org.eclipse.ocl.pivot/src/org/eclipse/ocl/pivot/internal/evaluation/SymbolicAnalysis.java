@@ -155,7 +155,22 @@ public class SymbolicAnalysis /*extends BasicOCLExecutor implements SymbolicExec
 			throw new EvaluationHaltedException("Canceled");
 		}
 		if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
-			SymbolicAnalysis.HYPOTHESIS.println("Analyzing: " + expressionInOCL);
+			StringBuilder s = new StringBuilder();
+			s.append("Analyzing: ");
+			s.append(expressionInOCL);
+		//	s.append("\n\tself = ");
+			s.append(" for ");
+			ValueUtil.toString(selfObject, s, 100);
+			if (parameters != null) {
+				for (int i = 0; i < parameters.length; i++) {
+				//	s.append("\n\t");
+					s.append(", ");
+				//	s.append(PivotUtil.getOwnedParameter(expressionInOCL, i).getName());
+				//	s.append(" = ");
+					ValueUtil.toString(parameters[i], s, 100);
+				}
+			}
+			SymbolicAnalysis.HYPOTHESIS.println(s.toString());
 		}
 		BaseSymbolicEvaluationEnvironment baseSymbolicEvaluationEnvironment2 = new BaseSymbolicEvaluationEnvironment(this, expressionInOCL);
 		this.baseSymbolicEvaluationEnvironment = baseSymbolicEvaluationEnvironment2;
