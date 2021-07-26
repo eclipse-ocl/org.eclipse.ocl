@@ -40,13 +40,15 @@ public interface SymbolicValue
 	@Nullable String asIncompatibility();
 
 	/**
-	 * Return an equals SymbolicValue that is a refinement of unrefinedValue using unrefinedValue.getBaseValue();
+	 * Return an equivalent SymbolicValue to this value that is either a known literal value or a refinement of unrefinedValue,
 	 *
 	 * throws IllegalStateException if incompatoble.
 	 */
 	@NonNull SymbolicValue asRefinementOf(@NonNull SymbolicValue unrefinedValue);
 
 	@Nullable SymbolicStatus basicGetBooleanStatus();
+
+	@Nullable SymbolicContent basicGetContent();
 
 	// Returns null when invalid not applicable to e.g. a ZeroStatus
 	@Nullable SymbolicStatus basicGetInvalidStatus();
@@ -114,5 +116,5 @@ public interface SymbolicValue
 
 	@Override @NonNull String toString();
 
-	void toString(@NonNull StringBuilder s, int sizeLimit);
+	void toString(@NonNull StringBuilder s);
 }

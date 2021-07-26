@@ -73,7 +73,7 @@ public class ConstrainedOperation extends AbstractOperation
 
 	@Override
 	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
-		return null;			// XXX is ther anything to check ?? yes the preconditions
+		return checkPreconditions(evaluationEnvironment, callExp, 0); 		// XXX is there anything to check ?? yes the preconditions
 	}
 
 	/**

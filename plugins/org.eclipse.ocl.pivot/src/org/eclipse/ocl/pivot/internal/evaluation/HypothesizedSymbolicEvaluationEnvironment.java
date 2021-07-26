@@ -20,6 +20,8 @@ import java.util.Map;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.IfExp;
 import org.eclipse.ocl.pivot.LoopExp;
@@ -28,8 +30,10 @@ import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Parameter;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VariableDeclaration;
+import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.internal.symbolic.AbstractSymbolicRefinedValue;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicUtil;
@@ -241,7 +245,7 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 				if (incompatibility != null) {
 					return incompatibility;
 				}
-				if (eContainer instanceof VariableDeclaration) {
+/*				if (eContainer instanceof VariableDeclaration) {
 					CSEElement cseElement = cseAnalysis.getCSEElement(containingTypedElement);
 					for (@NonNull TypedElement referencingTypedElement : cseElement.getElements()) {
 						SymbolicValue referencingSymbolicValue = baseSymbolicEvaluationEnvironment.getSymbolicValue(containingTypedElement);
@@ -250,7 +254,7 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 							return incompatibility;
 						}
 					}
-				}
+				} */
 			}
 			else {
 				throw new IllegalStateException("Unexpected " + activeTypedElement.eClass().getName());
@@ -272,6 +276,27 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 	 * </br>unsafe loop sources not-null
 	 */
 	private @Nullable String installActiveTypedElementDescendants(@NonNull TypedElement activeTypedElement) {
+		VariableDeclaration activeVariable = null;
+		if (activeTypedElement instanceof VariableExp) {
+			activeVariable = PivotUtil.getReferredVariable((VariableExp)activeTypedElement);
+		}
+		else if (activeTypedElement instanceof VariableDeclaration) {
+			activeVariable = (VariableDeclaration)activeTypedElement;
+		}
+		if (activeVariable != null) {
+			CSEElement cseElement = cseAnalysis.getCSEElement(activeVariable);
+			SymbolicValue symbolicValue = baseSymbolicEvaluationEnvironment.getSymbolicValue(cseElement);
+			for (@NonNull TypedElement referencingTypedElement : cseElement.getElements()) {
+				String incompatibility = installActiveTypedElementAncestry(referencingTypedElement, symbolicValue);
+				if (incompatibility != null) {
+					return incompatibility;
+				}
+			}
+		}
+
+
+
+
 		EObject containingTypedElement = activeTypedElement.eContainer();
 		OCLExpression refinedExpression = null;						// Source/condition expression that can be refined
 		Boolean refinedBooleanValue = null;							//  by a simple Boolean	value
@@ -295,6 +320,22 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 			}
 			refinedExpression = PivotUtil.getOwnedSource(operationCallExp);
 			Operation operation = PivotUtil.getReferredOperation(operationCallExp);
+
+			if (activeTypedElement == operationCallExp.getOwnedSource()) {
+				CompleteModel completeModel = environmentFactory.getCompleteModel();
+				StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
+				CompleteClass oclInvalidClass = completeModel.getCompleteClass(standardLibrary.getOclInvalidType());
+				Operation oclInvalidOperation = oclInvalidClass.getOperation(operation);
+				if (oclInvalidOperation != null) {
+					mayBeInvalid = true;
+				}
+				CompleteClass oclVoidClass = completeModel.getCompleteClass(standardLibrary.getOclVoidType());
+				Operation oclVoidOperation = oclVoidClass.getOperation(operation);
+				if (oclVoidOperation != null) {
+					mayBeNull = true;
+				}
+			}
+
 			List<@NonNull OCLExpression> ownedArguments = PivotUtilInternal.getOwnedArgumentsList(operationCallExp);
 			int argumentsSize = ownedArguments.size();
 			if (argumentsSize == 0) {

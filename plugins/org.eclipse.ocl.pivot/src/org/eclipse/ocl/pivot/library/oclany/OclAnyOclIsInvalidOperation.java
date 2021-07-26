@@ -32,7 +32,7 @@ public class OclAnyOclIsInvalidOperation extends AbstractSimpleUnaryOperation
 	 */
 	@Override
 	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
-		return null;
+		return checkPreconditions(evaluationEnvironment, callExp, 0);
 	}
 
 	@Override
@@ -58,7 +58,7 @@ public class OclAnyOclIsInvalidOperation extends AbstractSimpleUnaryOperation
 			return evaluationEnvironment.getKnownValue(Boolean.TRUE);
 		}
 		else if (sourceValue.mayBeInvalid()) {
-			return evaluationEnvironment.createUnknownValue(callExp, false, false);
+			return evaluationEnvironment.getUnknownValue(callExp, false, false);
 		}
 		else {
 			return evaluationEnvironment.getKnownValue(Boolean.FALSE);

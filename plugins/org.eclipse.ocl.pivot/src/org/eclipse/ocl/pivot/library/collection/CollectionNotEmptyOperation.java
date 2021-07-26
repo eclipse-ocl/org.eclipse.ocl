@@ -45,18 +45,18 @@ public class CollectionNotEmptyOperation extends AbstractSimpleUnaryOperation
 		OCLExpression source = PivotUtil.getOwnedSource(callExp);
 		SymbolicValue sourceValue = evaluationEnvironment.symbolicEvaluate(source);
 		SymbolicContent content = sourceValue.getContent();
-		SymbolicValue sizeValue = content.getSize();
-		SymbolicStatus zeroStatus = sizeValue.getZeroStatus();
-		if (zeroStatus.isSatisfied()) {
-			return evaluationEnvironment.getKnownValue(Boolean.FALSE);
-		}
-		else if (zeroStatus.isSatisfied()) {
-			return evaluationEnvironment.getKnownValue(Boolean.TRUE);
-		}
-		else {
-			SymbolicValue emptyValue = AbstractSymbolicRefinedValue.createIsZeroValue(sizeValue);
-			SymbolicValue notEmptyValue = AbstractSymbolicRefinedValue.createNotValue(emptyValue);
-			return notEmptyValue;
-		}
+	//	if (content != null) {
+			SymbolicValue sizeValue = content.getSize();
+			SymbolicStatus zeroStatus = sizeValue.getZeroStatus();
+			if (zeroStatus.isSatisfied()) {
+				return evaluationEnvironment.getKnownValue(Boolean.FALSE);
+			}
+			else if (zeroStatus.isSatisfied()) {
+				return evaluationEnvironment.getKnownValue(Boolean.TRUE);
+			}
+	//	}
+		SymbolicValue emptyValue = AbstractSymbolicRefinedValue.createIsZeroValue(sizeValue);
+		SymbolicValue notEmptyValue = AbstractSymbolicRefinedValue.createNotValue(emptyValue);
+		return notEmptyValue;
 	}
 }

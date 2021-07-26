@@ -28,23 +28,23 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 
 	@Override
 	public @NonNull SymbolicValue asRefinementOf(@NonNull SymbolicValue unrefinedValue) {
-		@NonNull SymbolicValue baseValue = unrefinedValue.getBaseValue();
-		@NonNull SymbolicValue resultValue = baseValue;			// XXX ?? fudging erroneous IsDead
+	//	@NonNull SymbolicValue zzbaseValue = unrefinedValue.getBaseValue();
+		@NonNull SymbolicValue resultValue = unrefinedValue;			// XXX ?? fudging erroneous IsDead
 		//
 		//	Resolve invalid refinement
 		//
 		if (isInvalid()) {
-			if (baseValue.mayBeInvalid()) {
+			if (unrefinedValue.mayBeInvalid()) {
 				return this;					// "invalid" is except-everything else
 			}
 			else {
 				assert !mayBeNull();
-				assert !mayBeZero();
+			//	assert !mayBeZero();
 				return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "isInvalid is incompatible with !mayBeInvalid");
 			}
 		}
 		else if (mayBeInvalid()) {
-			if (!baseValue.mayBeInvalid()) {
+			if (!unrefinedValue.mayBeInvalid()) {
 				return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "mayBeInvalid is incompatible with !mayBeInvalid");
 			}
 			else {
@@ -52,23 +52,28 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 			}
 		}
 		else {
-			resultValue = AbstractSymbolicRefinedValue.createExceptValue(resultValue, ValueUtil.INVALID_VALUE);
+			if (unrefinedValue.isInvalid()) {
+				return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "notInvalid is incompatible with isInvalid");
+			}
+			else {
+				resultValue = AbstractSymbolicRefinedValue.createExceptValue(resultValue, ValueUtil.INVALID_VALUE);
+			}
 		}
 		//
 		//	Resolve null refinement
 		//
 		if (isNull()) {
-			if (baseValue.mayBeNull()) {
+			if (unrefinedValue.mayBeNull()) {
 				return this;					// "null" is except-everything else
 			}
 			else {
 				assert !mayBeInvalid();
-				assert !mayBeZero();
+			//	assert !mayBeZero();
 				return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "isNull is incompatible with !mayBeNull");
 			}
 		}
 		else if (mayBeNull()) {
-			if (!baseValue.mayBeNull()) {
+			if (!unrefinedValue.mayBeNull()) {
 				return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "mayBeNull is incompatible with !mayBeNull");
 			}
 			else {
@@ -76,7 +81,7 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 			}
 		}
 		else {
-			if (resultValue.isNull()) {
+			if (unrefinedValue.isNull()) {
 				return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "notNull is incompatible with isNull");
 			}
 			else {
@@ -89,9 +94,9 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 		//
 		//	Resolve zero refinement
 		//
-		if (baseValue.basicGetZeroStatus() != null) {
+		if (unrefinedValue.basicGetZeroStatus() != null) {
 			if (isZero()) {
-				if (baseValue.mayBeZero()) {
+				if (unrefinedValue.mayBeZero()) {
 					return this;					// "0" is except-everything else
 				}
 				else {
@@ -101,7 +106,7 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 				}
 			}
 			else if (mayBeZero()) {
-				if (!baseValue.mayBeZero()) {
+				if (!unrefinedValue.mayBeZero()) {
 					return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "mayBeZero is incompatible with !mayBeZero");
 				}
 				else {
@@ -109,15 +114,20 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 				}
 			}
 			else {
-				resultValue = AbstractSymbolicRefinedValue.createExceptValue(resultValue, ValueUtil.ZERO_VALUE);
+				if (unrefinedValue.isZero()) {
+					return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "notZero is incompatible with isZero");
+				}
+				else {
+					resultValue = AbstractSymbolicRefinedValue.createExceptValue(resultValue, ValueUtil.ZERO_VALUE);
+				}
 			}
 		}
 		//
 		//	Resolve true/false refinement
 		//
-		if (baseValue.basicGetBooleanStatus() != null) {
+		if (unrefinedValue.basicGetBooleanStatus() != null) {
 			if (isTrue()) {
-				if (baseValue.mayBeTrue()) {
+				if (unrefinedValue.mayBeTrue()) {
 					return this;					// "true" is except-everything else
 				}
 				else {
@@ -128,21 +138,21 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 				}
 			}
 			else if (isFalse()) {
-				if (baseValue.mayBeFalse()) {
+				if (unrefinedValue.mayBeFalse()) {
 					return this;					// "false" is except-everything else
 				}
 				else {
 					assert !mayBeInvalid();
 					assert !mayBeNull();
-					assert !mayBeZero();
+				//	assert !mayBeZero();
 					return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "isFalse is incompatible with !mayBeFalse");
 				}
 			}
 			else if (mayBeTrue()) {
-				if (!baseValue.mayBeTrue()) {
+				if (!unrefinedValue.mayBeTrue()) {
 					return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "mayBeTrue is incompatible with !mayBeTrue");
 				}
-				else if (!baseValue.mayBeFalse()) {
+				else if (!unrefinedValue.mayBeFalse()) {
 					resultValue = AbstractSymbolicRefinedValue.createExceptValue(resultValue, ValueUtil.FALSE_VALUE);
 				}
 				else {
@@ -150,10 +160,10 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 				}
 			}
 			else if (mayBeFalse()) {
-				if (!baseValue.mayBeFalse()) {
+				if (!unrefinedValue.mayBeFalse()) {
 					return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "mayBeFalse is incompatible with !mayBeFalse");
 				}
-				else if (!baseValue.mayBeTrue()) {
+				else if (!unrefinedValue.mayBeTrue()) {
 					resultValue = AbstractSymbolicRefinedValue.createExceptValue(resultValue, ValueUtil.TRUE_VALUE);
 				}
 				else {
@@ -161,21 +171,67 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 				}
 			}
 			else {			// ?? not-true and not-false never happens
-				if (!baseValue.mayBeFalse()) {
+				if (!unrefinedValue.mayBeFalse()) {
 					resultValue = AbstractSymbolicRefinedValue.createExceptValue(resultValue, ValueUtil.FALSE_VALUE);
 				}
-				if (!baseValue.mayBeTrue()) {
+				if (!unrefinedValue.mayBeTrue()) {
 					resultValue = AbstractSymbolicRefinedValue.createExceptValue(resultValue, ValueUtil.TRUE_VALUE);
 				}
 			}
 		}
+		//
+		//	Resolve size refinement
+		//
+		SymbolicContent thisContent = basicGetContent();
+		SymbolicContent unrefinedContent = unrefinedValue.basicGetContent();
+		if ((thisContent != null) || (unrefinedContent != null)) {
+			SymbolicContent resultContent = basicGetContent();
+			SymbolicValue resultSize = null;
+			boolean thisNotEmpty = (thisContent != null) && !thisContent.mayBeEmpty();
+			boolean unrefinedContentNotEmpty = (unrefinedContent != null) && !unrefinedContent.mayBeEmpty();
+			SymbolicValue thisSize = thisContent != null ? thisContent.getSize() : null;
+			if (thisNotEmpty && unrefinedContentNotEmpty) {
+				resultSize = thisSize;					// ok !isEmpty
+			}
+			else if (thisNotEmpty || unrefinedContentNotEmpty) {
+				return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "notEmpty is incompatible with mayBeEmpty");
+			}
+			else if ((thisContent != null) && thisContent.isEmpty()) {
+				resultSize = thisSize;						// ok isEmpty
+			}
+			else if ((unrefinedContent != null) && unrefinedContent.isEmpty()) {
+				resultSize = unrefinedContent.getSize();	// ok isEmpty
+			}
+			else if (thisContent != null) {
+				resultSize = thisSize;						// ok mayBeEmpty
+			}
+			else if (unrefinedContent != null) {
+				resultSize = unrefinedContent.getSize();	// ok mayBeEmpty
+			}
+			else {
+				resultSize = null;							// ok mayBeEmpty
+			}
+			if ((resultSize != thisSize) || (resultValue != this)) {
+				assert resultSize != null;
+				if (resultContent == null) {
+					resultValue = AbstractSymbolicRefinedValue.createRefinedContent(resultValue);
+					resultContent = resultValue.getContent();
+				}
+				resultContent.setSize(resultSize);
+			}
+		}
+
+
+
+
 
 
 
 //		if ((basicGetZeroStatus() != null) && !mayBeZero() && (baseValue.basicGetZeroStatus() != null) && baseValue.mayBeZero()) {
 //			resultValue = AbstractSymbolicRefinedValue.createNotValue(AbstractSymbolicRefinedValue.createIsZeroValue(resultValue));
 //		}
-		assert resultValue.isRefinementOf(unrefinedValue);
+	//	assert resultValue.isRefinementOf(this);					-- a 'new' UnknownValue may be refined to an 'old' UnknownValue
+	//	assert resultValue.isRefinementOf(unrefinedValue);			-- a 'new' KnownValue may refine an 'old' UnknownValue
 		return resultValue;		// XXX define a contradiction refinement
 /*		SymbolicStatus booleanWriteStatus = writeValue.basicGetBooleanStatus();
 		if (booleanWriteStatus != null) {
@@ -201,8 +257,18 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 	}
 
 	@Override
+	public @Nullable SymbolicContent basicGetContent() {
+		return null;
+	}
+
+	@Override
 	public final @NonNull SymbolicStatus getBooleanStatus() {
 		return ClassUtil.nonNullState(basicGetBooleanStatus());
+	}
+
+	@Override
+	public @NonNull SymbolicContent getContent() {
+		return ClassUtil.nonNullState(basicGetContent());
 	}
 
 	@Override
@@ -247,7 +313,7 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 	public boolean isRefinementOf(@NonNull SymbolicValue unrefinedValue) {
 		@NonNull SymbolicValue thisBaseValue = this.getBaseValue();
 		@NonNull SymbolicValue thatBaseValue = unrefinedValue.getBaseValue();
-		if (thisBaseValue != thatBaseValue) {
+		if (thisBaseValue != thatBaseValue) {		// ??? null refining may-be-null has new base
 			return false;
 		}
 		if (mayBeInvalid() && !unrefinedValue.mayBeInvalid()) {
@@ -303,7 +369,13 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 	@Override
 	public /*final*/ @NonNull String toString() {
 		StringBuilder s = new StringBuilder();
-		toString(s, 100);
+		toString(s);
+		SymbolicContent content = basicGetContent();
+		if (content != null) {
+			s.append("{");
+			content.toString(s);
+			s.append("}");
+		}
 		return s.toString();
 	}
 }

@@ -60,7 +60,7 @@ public class OclAnyEqualOperation extends AbstractSimpleBinaryOperation
 			return evaluationEnvironment.getKnownValue(Boolean.FALSE);
 		}
 		else {
-			return evaluationEnvironment.createUnknownValue(callExp, false, mayBeInvalid);
+			return evaluationEnvironment.getUnknownValue(callExp, false, mayBeInvalid);
 		}
 	}
 

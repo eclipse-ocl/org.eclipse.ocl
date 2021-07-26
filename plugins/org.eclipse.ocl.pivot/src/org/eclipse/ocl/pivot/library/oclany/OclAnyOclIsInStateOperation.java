@@ -66,7 +66,7 @@ public class OclAnyOclIsInStateOperation extends AbstractUntypedBinaryOperation
 			return evaluationEnvironment.getKnownValue(Boolean.FALSE);
 		}
 		else {
-			return evaluationEnvironment.createUnknownValue(callExp, false, false);
+			return evaluationEnvironment.getUnknownValue(callExp, false, false);
 		}
 	}
 }

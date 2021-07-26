@@ -11,10 +11,6 @@
 package org.eclipse.ocl.pivot.library.oclany;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.OperationCallExp;
-import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
-import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
  * GreaterThanEqualOperation realises the >() library operation.
@@ -22,14 +18,6 @@ import org.eclipse.ocl.pivot.values.SymbolicValue;
 public class OclComparableGreaterThanOperation extends OclComparableComparisonOperation
 {
 	public static final @NonNull OclComparableGreaterThanOperation INSTANCE = new OclComparableGreaterThanOperation();
-
-	@Override
-	protected @Nullable SymbolicValue checkPreconditions(
-			@NonNull SymbolicEvaluationEnvironment evaluationEnvironment,
-			@NonNull OperationCallExp callExp) {
-		// TODO Auto-generated method stub
-		return super.checkPreconditions(evaluationEnvironment, callExp);
-	}
 
 	@Override
 	protected boolean getResultValue(Integer comparison) {

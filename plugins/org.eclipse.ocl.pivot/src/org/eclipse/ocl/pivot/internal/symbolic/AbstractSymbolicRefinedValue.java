@@ -91,9 +91,9 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 		}
 
 		@Override
-		public void toString(@NonNull StringBuilder s, int sizeLimit) {
+		public void toString(@NonNull StringBuilder s) {
 			s.append("%Dead(");
-			super.toString(s, sizeLimit);
+			super.toString(s);
 			s.append(")");
 		}
 	}
@@ -158,11 +158,11 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 		}
 
 		@Override
-		public void toString(@NonNull StringBuilder s, int sizeLimit) {
+		public void toString(@NonNull StringBuilder s) {
 			s.append("%Except(");
-			super.toString(s, sizeLimit);
+			super.toString(s);
 			s.append(", ");
-			ValueUtil.toString(exceptValue, s, sizeLimit);
+			ValueUtil.toString(exceptValue, s, 100);
 			s.append(")");
 		}
 	}
@@ -185,10 +185,15 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 		}
 
 		@Override
-		public void toString(@NonNull StringBuilder s, int sizeLimit) {
+		public @NonNull SymbolicStatus basicGetInvalidStatus() {		// Shouldn't really happen - asIncompatibility() guards
+			return SymbolicStatus.SATISFIED;
+		}
+
+		@Override
+		public void toString(@NonNull StringBuilder s) {
 			s.append("%Incompatibility(");
-			super.toString(s, sizeLimit);
-			s.append(",");
+			super.toString(s);
+			s.append(", ");
 			s.append(incompatibility);
 			s.append(")");
 		}
@@ -230,9 +235,9 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 		}
 
 		@Override
-		public void toString(@NonNull StringBuilder s, int sizeLimit) {
+		public void toString(@NonNull StringBuilder s) {
 			s.append("%IsZero(");
-			super.toString(s, sizeLimit);
+			super.toString(s);
 			s.append(")");
 		}
 	}
@@ -262,14 +267,15 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 
 		@Override
 		public @Nullable SymbolicStatus basicGetZeroStatus() {
-			SymbolicStatus zeroStatus = value.basicGetZeroStatus();
-			return zeroStatus != null ? zeroStatus.not() : null;
+		//	SymbolicStatus zeroStatus = value.basicGetZeroStatus();
+		//	return zeroStatus != null ? zeroStatus.not() : null;
+			return null;
 		}
 
 		@Override
-		public void toString(@NonNull StringBuilder s, int sizeLimit) {
+		public void toString(@NonNull StringBuilder s) {
 			s.append("%Not(");
-			super.toString(s, sizeLimit);
+			super.toString(s);
 			s.append(")");
 		}
 	}
@@ -315,9 +321,9 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 		}
 
 		@Override
-		public void toString(@NonNull StringBuilder s, int sizeLimit) {
+		public void toString(@NonNull StringBuilder s) {
 			s.append("%NullFree(");
-			super.toString(s, sizeLimit);
+			super.toString(s);
 			s.append(")");
 		}
 	}
@@ -332,8 +338,13 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 		}
 
 		@Override
-		public @NonNull SymbolicStatus basicGetZeroStatus() {
-			return content.getSize().getZeroStatus();
+		public @NonNull SymbolicContent basicGetContent() {
+			return content;
+		}
+
+		@Override
+		public @Nullable SymbolicStatus basicGetZeroStatus() {
+			return null;//content.getSize().getZeroStatus();
 		}
 
 		@Override
@@ -360,12 +371,9 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 		}
 
 		@Override
-		public void toString(@NonNull StringBuilder s, int sizeLimit) {
+		public void toString(@NonNull StringBuilder s) {
 			s.append("%Refined(");
-			value.toString(s, sizeLimit);
-			s.append(",{");
-			content.toString(s);
-			s.append("}");
+			value.toString(s);
 			s.append(")");
 		}
 	}
@@ -469,7 +477,7 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 		}
 	}
 
-	public static SymbolicRefinedContentValue createRefinedContent(@NonNull SymbolicValue symbolicValue) {
+	public static @NonNull SymbolicRefinedContentValue createRefinedContent(@NonNull SymbolicValue symbolicValue) {
 		return new SymbolicRefinedContentValue(symbolicValue);
 	}
 
@@ -491,6 +499,11 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 	@Override
 	public @Nullable SymbolicStatus basicGetBooleanStatus() {
 		return value.basicGetBooleanStatus();
+	}
+
+	@Override
+	public @Nullable SymbolicContent basicGetContent() {
+		return value.basicGetContent();
 	}
 
 	@Override
@@ -564,7 +577,7 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 	}
 
 	@Override
-	public void toString(@NonNull StringBuilder s, int sizeLimit) {
-		ValueUtil.toString(value, s, sizeLimit);
+	public void toString(@NonNull StringBuilder s) {
+		ValueUtil.toString(value, s, 100);
 	}
 }

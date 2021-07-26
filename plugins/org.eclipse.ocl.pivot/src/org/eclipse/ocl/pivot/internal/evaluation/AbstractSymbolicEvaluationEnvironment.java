@@ -21,7 +21,6 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.internal.cse.CommonSubExpressionAnalysis;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent;
-import org.eclipse.ocl.pivot.internal.symbolic.SymbolicUnknownValue;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
@@ -50,6 +49,15 @@ public abstract class AbstractSymbolicEvaluationEnvironment implements SymbolicE
 	}
 
 	public abstract @Nullable SymbolicValue basicGetSymbolicValue(@NonNull CSEElement cseElement);
+
+	@Override
+	public @Nullable SymbolicValue checkCompatible(@NonNull OCLExpression typedElement, @NonNull TypeId returnTypeId) {
+		SymbolicValue symbolicValue = getSymbolicValue(typedElement);
+		if (symbolicValue.asIncompatibility() != null) {
+			return symbolicValue;
+		}
+		return null;
+	}
 
 	@Override
 	public @Nullable SymbolicValue checkNotEmpty(@NonNull TypedElement typedElement, @NonNull TypeId typeId) {
@@ -109,16 +117,6 @@ public abstract class AbstractSymbolicEvaluationEnvironment implements SymbolicE
 		return symbolicAnalysis.getMayBeInvalidValue(typeId);
 	}
 
-	@Override
-	public @NonNull SymbolicUnknownValue createUnknownValue(@NonNull TypeId typeId, boolean mayBeNull, boolean mayBeInvalid) {
-		return symbolicAnalysis.createUnknownValue(typeId, mayBeNull, mayBeInvalid);
-	}
-
-	@Override
-	public @NonNull SymbolicValue createUnknownValue(@NonNull TypedElement typedElement, boolean mayBeNull, boolean mayBeInvalid) {
-		return symbolicAnalysis.createUnknownValue(typedElement, mayBeNull, mayBeInvalid);
-	}
-
 	protected abstract @NonNull Iterable<@NonNull TypedElement> getAffectedTypedElements(@NonNull TypedElement typedElement);
 
 	@Override
@@ -151,6 +149,11 @@ public abstract class AbstractSymbolicEvaluationEnvironment implements SymbolicE
 	}
 
 	@Override
+	public @NonNull SymbolicValue getUnknownValue(@NonNull TypedElement typedElement, boolean mayBeNull, boolean mayBeInvalid) {
+		return symbolicAnalysis.getUnknownValue(typedElement, mayBeNull, mayBeInvalid);
+	}
+
+	@Override
 	public boolean isFalse(@NonNull TypedElement element) {
 		return getSymbolicValue(element).isFalse();
 	}
@@ -176,18 +179,18 @@ public abstract class AbstractSymbolicEvaluationEnvironment implements SymbolicE
 	}
 
 	@Override
-	public boolean mayBeInvalid(@NonNull OCLExpression element) {
-		return getSymbolicValue(element).mayBeInvalid();
+	public boolean mayBeInvalid(@NonNull TypedElement typedElement) {
+		return getSymbolicValue(typedElement).mayBeInvalid();
 	}
 
 	@Override
-	public boolean mayBeInvalidOrNull(@NonNull OCLExpression element) {
-		return getSymbolicValue(element).mayBeInvalidOrNull();
+	public boolean mayBeInvalidOrNull(@NonNull TypedElement typedElement) {
+		return getSymbolicValue(typedElement).mayBeInvalidOrNull();
 	}
 
 	@Override
-	public boolean mayBeNull(@NonNull OCLExpression element) {
-		return getSymbolicValue(element).mayBeNull();
+	public boolean mayBeNull(@NonNull TypedElement typedElement) {
+		return getSymbolicValue(typedElement).mayBeNull();
 	}
 
 	@Override

@@ -76,12 +76,12 @@ public abstract class AbstractLeafSymbolicValue extends AbstractSymbolicValue
 		}
 
 		@Override
-		public void toString(@NonNull StringBuilder s, int lengthLimit) {
+		public void toString(@NonNull StringBuilder s) {
 			s.append(sourceValue);
 			s.append(".");
 			s.append(property.getName());
 			s.append(":");
-			super.toString(s, lengthLimit);
+			super.toString(s);
 		}
 	}
 
@@ -105,7 +105,7 @@ public abstract class AbstractLeafSymbolicValue extends AbstractSymbolicValue
 //		}
 
 		@Override
-		public void toString(@NonNull StringBuilder s, int lengthLimit) {
+		public void toString(@NonNull StringBuilder s) {
 			s.append(boxedSourceAndArgumentValues.get(0));
 			s.append(".");
 			s.append(operation.getClass().getSimpleName());
@@ -119,7 +119,7 @@ public abstract class AbstractLeafSymbolicValue extends AbstractSymbolicValue
 			}
 			s.append(")");
 			s.append(":");
-			super.toString(s, lengthLimit);
+			super.toString(s);
 		}
 	}
 
@@ -158,6 +158,7 @@ public abstract class AbstractLeafSymbolicValue extends AbstractSymbolicValue
 	//	throw new IllegalStateException("No Boolean source configured");
 	}
 
+	@Override
 	public @Nullable SymbolicContent basicGetContent() {
 		return content;
 	}
@@ -203,8 +204,6 @@ public abstract class AbstractLeafSymbolicValue extends AbstractSymbolicValue
 		return (SymbolicCollectionContent)content2;
 	}
 
-
-
 //	@Override
 //	public @NonNull CollectionTypeId getCollectionTypeId() {
 //		throw new InvalidValueException(PivotMessages.ConvertibleValueRequired, "Invalid");
@@ -241,13 +240,6 @@ public abstract class AbstractLeafSymbolicValue extends AbstractSymbolicValue
 		return (SymbolicMapContent)content2;
 	}
 
-
-
-//	@Override
-//	public @NonNull TupleTypeId getTupleTypeId() {
-//		throw new InvalidValueException(PivotMessages.ConvertibleValueRequired, "Invalid");
-//	}
-
 	@Override
 	public @NonNull TypeId getTypeId() {
 		return typeId;
@@ -278,7 +270,7 @@ public abstract class AbstractLeafSymbolicValue extends AbstractSymbolicValue
 	}
 
 	@Override
-	public void toString(@NonNull StringBuilder s, int lengthLimit) {
+	public void toString(@NonNull StringBuilder s) {
 		s.append(name);
 		s.append(" : ");
 		s.append(typeId);
@@ -288,11 +280,5 @@ public abstract class AbstractLeafSymbolicValue extends AbstractSymbolicValue
 			s.append("!");
 		}
 		s.append("]");
-		SymbolicContent content2 = content;
-		if (content2 != null) {
-			s.append("{");
-			content2.toString(s);
-			s.append("}");
-		}
 	}
 }

@@ -100,7 +100,7 @@ public abstract class SymbolicContent
 		SymbolicValue sizeValue2 = sizeValue;
 		if (sizeValue2 != null) {
 			s.append("size:");
-			sizeValue2.toString(s, 0);
+			sizeValue2.toString(s);
 		}
 	}
 }

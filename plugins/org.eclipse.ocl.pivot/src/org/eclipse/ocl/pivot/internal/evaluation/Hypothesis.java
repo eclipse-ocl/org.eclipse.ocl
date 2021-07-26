@@ -17,6 +17,8 @@ import java.util.Map;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.VariableDeclaration;
+import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.internal.symbolic.AbstractSymbolicRefinedValue;
 import org.eclipse.ocl.pivot.internal.symbolic.AbstractSymbolicRefinedValue.SymbolicRefinedContentValue;
@@ -72,27 +74,41 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 		Map<@NonNull TypedElement, @Nullable String> typedElement2incompatibility2 = typedElement2incompatibility;
 		assert typedElement2incompatibility2 == null : "typedElement2incompatibility already determined for: " + this;
 		typedElement2incompatibility = typedElement2incompatibility2 = new HashMap<>();
-		for (@NonNull TypedElement typedElement : typedElements) {		// FIXME, can evaluate all in 'parallel'
-			boolean traceHypothesis = SymbolicAnalysis.HYPOTHESIS.isActive();
-			if (traceHypothesis) {
-				SymbolicAnalysis.HYPOTHESIS.println("  " + getKind() + " hypothesis for: " + SymbolicUtil.printPath(typedElement, false));
-				SymbolicAnalysis.HYPOTHESIS.println("    old: " + SymbolicUtil.printPath(typedElement, false) + " was: " + SymbolicUtil.printValue(getOriginalValue()));
-			//	SymbolicAnalysis.HYPOTHESIS.println("    hypothesized: " + SymbolicUtil.printValue(hypothesizedValue));
-			//	SymbolicAnalysis.HYPOTHESIS.println("    refined: " + getRefinedValue());		// XXX
-			//	SymbolicAnalysis.HYPOTHESIS.println(this.toString());
-			//	SymbolicAnalysis.HYPOTHESIS.println(this.toString());
+		for (@NonNull TypedElement typedElement : typedElements) {
+			if (typedElement instanceof VariableDeclaration) {
+				String incompatibility = analyze(typedElement);
+				typedElement2incompatibility2.put(typedElement, incompatibility);
 			}
-			BaseSymbolicEvaluationEnvironment baseSymbolicEvaluationEnvironment = symbolicAnalysis.getBaseSymbolicEvaluationEnvironment();
-			String incompatibility = baseSymbolicEvaluationEnvironment.hypothesize(this, typedElement);
-			if (incompatibility != null) {
-				SymbolicAnalysis.HYPOTHESIS.println("    => contradiction: " + incompatibility);
-				refine(typedElement);
-			}
-			else if (traceHypothesis) {
-				SymbolicAnalysis.HYPOTHESIS.println("    => no contradiction: " + SymbolicUtil.printPath(typedElement, false));
-			}
-			typedElement2incompatibility2.put(typedElement, incompatibility);
 		}
+		for (@NonNull TypedElement typedElement : typedElements) {
+			if (!(typedElement instanceof VariableDeclaration) && !(typedElement instanceof VariableExp)) {
+				String incompatibility = analyze(typedElement);
+				typedElement2incompatibility2.put(typedElement, incompatibility);
+			}
+			// ?? carry across from referenced VariableDeclaration
+		}
+	}
+
+	protected @Nullable String analyze(@NonNull TypedElement typedElement) {
+		boolean traceHypothesis = SymbolicAnalysis.HYPOTHESIS.isActive();
+		if (traceHypothesis) {
+			SymbolicAnalysis.HYPOTHESIS.println("  " + getKind() + " hypothesis for: " + SymbolicUtil.printPath(typedElement, false));
+			SymbolicAnalysis.HYPOTHESIS.println("    old: " + SymbolicUtil.printPath(typedElement, false) + " was: " + SymbolicUtil.printValue(getOriginalValue()));
+		//	SymbolicAnalysis.HYPOTHESIS.println("    hypothesized: " + SymbolicUtil.printValue(hypothesizedValue));
+		//	SymbolicAnalysis.HYPOTHESIS.println("    refined: " + getRefinedValue());		// XXX
+		//	SymbolicAnalysis.HYPOTHESIS.println(this.toString());
+		//	SymbolicAnalysis.HYPOTHESIS.println(this.toString());
+		}
+		BaseSymbolicEvaluationEnvironment baseSymbolicEvaluationEnvironment = symbolicAnalysis.getBaseSymbolicEvaluationEnvironment();
+		String incompatibility = baseSymbolicEvaluationEnvironment.hypothesize(this, typedElement);
+		if (incompatibility != null) {
+			SymbolicAnalysis.HYPOTHESIS.println("    => contradiction: " + incompatibility);
+			refine(typedElement);
+		}
+		else if (traceHypothesis) {
+			SymbolicAnalysis.HYPOTHESIS.println("    => no contradiction: " + SymbolicUtil.printPath(typedElement, false));
+		}
+		return incompatibility;
 	}
 
 	@Override

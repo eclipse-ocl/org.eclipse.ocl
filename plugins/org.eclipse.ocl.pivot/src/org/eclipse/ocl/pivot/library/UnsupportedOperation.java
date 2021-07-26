@@ -28,7 +28,7 @@ public class UnsupportedOperation extends AbstractOperation implements LibraryPr
 
 	@Override
 	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
-		return null;
+		return checkPreconditions(evaluationEnvironment, callExp, 0);
 	}
 
 	/**

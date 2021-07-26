@@ -91,9 +91,9 @@ public class SymbolicKnownValue extends AbstractLeafSymbolicValue {
 	}
 
 	@Override
-	public void toString(@NonNull StringBuilder s, int lengthLimit) {
-		ValueUtil.toString(knownValue, s, lengthLimit);
-		s.append(" for: ");
-		super.toString(s, lengthLimit);
+	public void toString(@NonNull StringBuilder s) {
+		super.toString(s);
+		s.append(" = ");
+		ValueUtil.toString(knownValue, s, 100);
 	}
 }

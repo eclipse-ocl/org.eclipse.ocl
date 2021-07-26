@@ -75,20 +75,26 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 		this.expressionInOCL = expressionInOCL;
 	}
 
-	public void analyze(@Nullable Object selfObject, @Nullable Object resultObject, @Nullable Object @Nullable [] parameters) {
+	public @Nullable String analyze(@Nullable Object selfObject, @Nullable Object resultObject, @Nullable Object @Nullable [] parameters) {
 		//
 		//	Initialize self/context parameter
 		//
 		Variable contextVariable = expressionInOCL.getOwnedContext();
 		if (contextVariable != null) {
-			initParameter(contextVariable, selfObject);
+			String incompatibility = initParameter(contextVariable, selfObject).asIncompatibility();
+			if (incompatibility != null) {
+				return incompatibility;
+			}
 		}
 		//
 		//	Initialize result parameter
 		//
 		Variable resultVariable = expressionInOCL.getOwnedResult();
 		if (resultVariable != null) {
-			initParameter(resultVariable, resultObject);
+			String incompatibility = initParameter(resultVariable, resultObject).asIncompatibility();
+			if (incompatibility != null) {
+				return incompatibility;
+			}
 		}
 		//
 		//	Initialize other parameters
@@ -96,7 +102,10 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 		int i = 0;
 		assert parameters != null;
 		for (@NonNull Variable parameterVariable : PivotUtil.getOwnedParameters(expressionInOCL)) {
-			initParameter(parameterVariable, parameters[i++]);
+			String incompatibility = initParameter(parameterVariable, parameters[i++]).asIncompatibility();
+			if (incompatibility != null) {
+				return incompatibility;
+			}
 		}
 		//
 		//	Analyze each typed element in transitive bottom up order.
@@ -111,6 +120,7 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 		for (@NonNull TypedElement typedElement : typedElements) {
 			symbolicEvaluate(typedElement, true);				// Multi-TypedElement CSEs re-use per-CSE cache
 		}
+		return null;
 	}
 
 	@Override
@@ -214,6 +224,9 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 			Object boxedValue = environmentFactory.getIdResolver().boxedValueOf(value);
 			symbolicValue = getKnownValue(boxedValue);
 		}
+		if (symbolicValue.mayBeNull() && parameter.isIsRequired()) {
+			symbolicValue = AbstractSymbolicRefinedValue.createIncompatibility(symbolicValue, "mayBeNull \"" + parameter.getName() + "\" parameter initializer is incompatible with isRequired");
+		}
 		return setSymbolicValue(cseElement, symbolicValue);
 	}
 
@@ -221,15 +234,24 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 		if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
 			SymbolicAnalysis.HYPOTHESIS.println("    refined: " + SymbolicUtil.printPath(typedElement, false) + " to: " + symbolicValue);
 		}
+
+		if (typedElement instanceof VariableDeclaration) {
+			CSEElement cseElement = cseAnalysis.getCSEElement(typedElement);
+		//	setSymbolicValue(cseElement, symbolicValue);
+			SymbolicValue old = cseElement2symbolicValue.put(cseElement, symbolicValue);
+		//	assert (old == null) || (old == symbolicValue); //old.equals(symbolicValue);
+		}
+		else {
+			assert typedElement2refinedSymbolicValue != null;
+			SymbolicValue old = typedElement2refinedSymbolicValue.put(typedElement, symbolicValue);
+			if (old != null) {
+		//		assert refinedValue.getBaseValue() == old.getBaseValue();
+				// XXX verify that refined Value is stronger
+			}
+		}
 	//	Hypothesis hypothesis = refinedValue.getHypothesis();
 	//	assert expression == hypothesis.getExpression();
 	//	toString();		// XXX
-		assert typedElement2refinedSymbolicValue != null;
-		SymbolicValue old = typedElement2refinedSymbolicValue.put(typedElement, symbolicValue);
-		if (old != null) {
-	//		assert refinedValue.getBaseValue() == old.getBaseValue();
-			// XXX verify that refined Value is stronger
-		}
 		Set<@NonNull TypedElement> affectedExpressionsSet = new HashSet<>();
 		gatherAffectedTypedElements(affectedExpressionsSet, typedElement);
 		List<@NonNull TypedElement> affectedExpressionsList = new ArrayList<>(affectedExpressionsSet);

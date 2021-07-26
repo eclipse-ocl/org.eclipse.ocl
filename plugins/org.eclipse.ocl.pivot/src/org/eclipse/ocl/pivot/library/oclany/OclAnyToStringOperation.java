@@ -58,7 +58,7 @@ public class OclAnyToStringOperation extends AbstractSimpleUnaryOperation
 			return evaluationEnvironment.getKnownValue(NULL_STRING);
 		}
 		else {
-			return evaluationEnvironment.createUnknownValue(callExp, false, false);
+			return evaluationEnvironment.getUnknownValue(callExp, false, false);
 		}
 	}
 }

@@ -29,6 +29,11 @@ public interface SymbolicEvaluationEnvironment
 	@Nullable SymbolicValue basicGetSymbolicValue(@NonNull TypedElement element);
 
 	/**
+	 * Return a SymbolicKnownValue for incompatible, if typedElement is already incompatible, else null
+	 */
+	@Nullable SymbolicValue checkCompatible(@NonNull OCLExpression typedElement, @NonNull TypeId returnTypeId);
+
+	/**
 	 * Return a SymbolicKnownValue for invalid, if typedElement is a collection and empty.
 	 * Else return a mayBeNull SymbolicUnknownValue for typeId if typedElement is a collection.
 	 * Else return null if typedElement is not null.
@@ -56,23 +61,23 @@ public interface SymbolicEvaluationEnvironment
 	 */
 	@Nullable SymbolicValue checkNotZero(@NonNull TypedElement typedElement, @NonNull TypeId typeId);
 
-	@NonNull SymbolicValue createUnknownValue(@NonNull TypeId typeId, boolean mayBeNull, boolean mayBeInvalidOrNull);
-	@NonNull SymbolicValue createUnknownValue(@NonNull TypedElement typedElement, boolean mayBeNull, boolean mayBeInvalid);
 	@NonNull BaseSymbolicEvaluationEnvironment getBaseSymbolicEvaluationEnvironment();
 	@NonNull EnvironmentFactory getEnvironmentFactory();
 	@NonNull IdResolver getIdResolver();
 	@NonNull SymbolicValue getKnownValue(@Nullable Object boxedValue);
 	@NonNull SymbolicAnalysis getSymbolicAnalysis();
 	@NonNull SymbolicValue getSymbolicValue(@NonNull TypedElement element);
+	@NonNull SymbolicValue getUnknownValue(@NonNull TypedElement typedElement, boolean mayBeNull, boolean mayBeInvalid);
 	boolean isFalse(@NonNull TypedElement element);
 	boolean isInvalid(@NonNull TypedElement element);
 	boolean isNull(@NonNull TypedElement element);
 	boolean isTrue(@NonNull TypedElement element);
 	boolean isZero(@NonNull TypedElement element);
-	boolean mayBeInvalid(@NonNull OCLExpression expression);
-	boolean mayBeInvalidOrNull(@NonNull OCLExpression expression);
-	boolean mayBeNull(@NonNull OCLExpression expression);
+	boolean mayBeInvalid(@NonNull TypedElement typedElement);
+	boolean mayBeInvalidOrNull(@NonNull TypedElement typedElement);
+	boolean mayBeNull(@NonNull TypedElement typedElement);
 	void setDead(@NonNull OCLExpression expression);
 	@NonNull SymbolicValue setSymbolicValue(@NonNull TypedElement typedElement, @NonNull SymbolicValue symbolicValue);
 	@NonNull SymbolicValue symbolicEvaluate(@NonNull TypedElement element);
+
 }

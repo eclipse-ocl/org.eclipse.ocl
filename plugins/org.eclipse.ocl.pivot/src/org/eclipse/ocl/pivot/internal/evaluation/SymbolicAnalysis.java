@@ -31,6 +31,7 @@ import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.internal.cse.CommonSubExpressionAnalysis;
+import org.eclipse.ocl.pivot.internal.symbolic.AbstractSymbolicRefinedValue;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent.SymbolicCollectionContent;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent.SymbolicMapContent;
@@ -60,10 +61,10 @@ public class SymbolicAnalysis /*extends BasicOCLExecutor implements SymbolicExec
 	protected final EnvironmentFactoryInternal.@NonNull EnvironmentFactoryInternalExtension environmentFactory;
 	protected final @NonNull ExpressionInOCL expressionInOCL;
 	protected final @NonNull CommonSubExpressionAnalysis cseAnalysis;
-	protected final @NonNull BaseSymbolicEvaluationEnvironment baseSymbolicEvaluationEnvironment;
+	private @Nullable BaseSymbolicEvaluationEnvironment baseSymbolicEvaluationEnvironment =null;
 	private final @NonNull EvaluationVisitor evaluationVisitor;
 	private @Nullable List<@NonNull HypothesizedSymbolicEvaluationEnvironment> hypothesizedEvaluationEnvironments = null;
-
+	private @Nullable String analysisIncompatibility = null;		// set by analyze()
 
 	/**
 	 * A cache for known symbolic values of known literal values.
@@ -106,7 +107,7 @@ public class SymbolicAnalysis /*extends BasicOCLExecutor implements SymbolicExec
 		this.expressionInOCL = expressionInOCL;
 		this.cseAnalysis = new CommonSubExpressionAnalysis();
 		this.evaluationVisitor = executor.createEvaluationVisitor();
-		this.baseSymbolicEvaluationEnvironment = new BaseSymbolicEvaluationEnvironment(this, expressionInOCL);
+	//	this.baseSymbolicEvaluationEnvironment = new BaseSymbolicEvaluationEnvironment(this, expressionInOCL);
 	}
 
 	public void addHypothesis(@NonNull Hypothesis hypothesis) {
@@ -149,16 +150,21 @@ public class SymbolicAnalysis /*extends BasicOCLExecutor implements SymbolicExec
 	//	}
 	}
 
-	public void analyze(@NonNull ExpressionInOCL expressionInOCL, @Nullable Object selfObject, @Nullable Object resultObject, @Nullable Object @Nullable [] parameters) {
+	public @Nullable String analyze(@NonNull ExpressionInOCL expressionInOCL, @Nullable Object selfObject, @Nullable Object resultObject, @Nullable Object @Nullable [] parameters) {
 		if (isCanceled()) {
 			throw new EvaluationHaltedException("Canceled");
 		}
 		if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
 			SymbolicAnalysis.HYPOTHESIS.println("Analyzing: " + expressionInOCL);
 		}
+		BaseSymbolicEvaluationEnvironment baseSymbolicEvaluationEnvironment2 = new BaseSymbolicEvaluationEnvironment(this, expressionInOCL);
+		this.baseSymbolicEvaluationEnvironment = baseSymbolicEvaluationEnvironment2;
 		executor.initializeEvaluationEnvironment(expressionInOCL);
 		cseAnalysis.analyze(expressionInOCL);
-		baseSymbolicEvaluationEnvironment.analyze(selfObject, resultObject, parameters);
+		this.analysisIncompatibility = baseSymbolicEvaluationEnvironment2.analyze(selfObject, resultObject, parameters);
+		if (analysisIncompatibility != null) {
+			return analysisIncompatibility;
+		}
 		List<@NonNull Hypothesis> allHypotheses2 = allHypotheses;
 		if (allHypotheses2 != null) {
 			if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
@@ -175,6 +181,7 @@ public class SymbolicAnalysis /*extends BasicOCLExecutor implements SymbolicExec
 				hypothesis.analyze();
 			}
 		}
+		return null;
 	}
 
 	public @NonNull SymbolicEvaluationVisitor createSymbolicEvaluationVisitor(@NonNull SymbolicEvaluationEnvironment symbolicEvaluationEnvironment) {
@@ -183,7 +190,7 @@ public class SymbolicAnalysis /*extends BasicOCLExecutor implements SymbolicExec
 	}
 
 	public @NonNull HypothesizedSymbolicEvaluationEnvironment createHypothesizedSymbolicEvaluationEnvironment(@NonNull Hypothesis hypothesis, @NonNull TypedElement typedElement) {
-		HypothesizedSymbolicEvaluationEnvironment hypothesizedEvaluationEnvironment = new HypothesizedSymbolicEvaluationEnvironment(baseSymbolicEvaluationEnvironment, hypothesis, typedElement);
+		HypothesizedSymbolicEvaluationEnvironment hypothesizedEvaluationEnvironment = new HypothesizedSymbolicEvaluationEnvironment(getBaseSymbolicEvaluationEnvironment(), hypothesis, typedElement);
 		List<@NonNull HypothesizedSymbolicEvaluationEnvironment> hypothesizedEvaluationEnvironments2 = hypothesizedEvaluationEnvironments;
 		if (hypothesizedEvaluationEnvironments2 == null) {
 			hypothesizedEvaluationEnvironments = hypothesizedEvaluationEnvironments2 = new ArrayList<>();
@@ -196,15 +203,16 @@ public class SymbolicAnalysis /*extends BasicOCLExecutor implements SymbolicExec
 		return new SymbolicUnknownValue(createVariableName(), typeId, mayBeNull, mayBeInvalid);
 	}
 
-	public @NonNull SymbolicValue createUnknownValue(@NonNull TypedElement typedElement, boolean mayBeNull, boolean mayBeInvalid) {
-		return createUnknownValue(typedElement.getTypeId(), mayBeNull, mayBeInvalid);
-	}
-
 	public @NonNull String createVariableName() {
 		return "s#" + variableCounter++;
 	}
 
+	public @Nullable String getAnalysisIncompatibility() {
+		return analysisIncompatibility;
+	}
+
 	public @NonNull BaseSymbolicEvaluationEnvironment getBaseSymbolicEvaluationEnvironment() {
+		assert baseSymbolicEvaluationEnvironment != null;
 		return baseSymbolicEvaluationEnvironment;
 	}
 
@@ -293,7 +301,7 @@ public class SymbolicAnalysis /*extends BasicOCLExecutor implements SymbolicExec
 	}
 
 	public @NonNull SymbolicEvaluationEnvironment getSymbolicEvaluationEnvironment() {
-		return baseSymbolicEvaluationEnvironment.getSymbolicEvaluationEnvironment();
+		return getBaseSymbolicEvaluationEnvironment().getSymbolicEvaluationEnvironment();
 	}
 
 
@@ -324,6 +332,33 @@ public class SymbolicAnalysis /*extends BasicOCLExecutor implements SymbolicExec
 		}
 		throw new UnsupportedOperationException();
 	} */
+
+	public @NonNull SymbolicValue getUnknownValue(@NonNull TypedElement typedElement, boolean mayBeNull, boolean mayBeInvalid) {
+		SymbolicValue symbolicValue = getBaseSymbolicEvaluationEnvironment().basicGetSymbolicValue(typedElement);
+		if (symbolicValue instanceof SymbolicUnknownValue) {
+			assert symbolicValue.getTypeId() == typedElement.getTypeId();
+			if (!mayBeNull) {
+				if (symbolicValue.mayBeNull()) {
+					symbolicValue = AbstractSymbolicRefinedValue.createExceptValue(symbolicValue, null);
+				}
+			}
+			else {
+				assert symbolicValue.mayBeNull();
+			}
+			if (!mayBeInvalid) {
+				if (symbolicValue.mayBeInvalid()) {
+					symbolicValue = AbstractSymbolicRefinedValue.createExceptValue(symbolicValue, ValueUtil.INVALID_VALUE);
+				}
+			}
+			else {
+				assert symbolicValue.mayBeInvalid();
+			}
+			return symbolicValue;
+		}
+		else {
+			return createUnknownValue(typedElement.getTypeId(), mayBeNull, mayBeInvalid);
+		}
+	}
 
 	private boolean isCanceled() {
 		return executor.isCanceled();

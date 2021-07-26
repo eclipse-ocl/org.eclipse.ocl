@@ -162,10 +162,10 @@ public class SymbolicUtil
 	 */
 	protected static void printPath(@NonNull StringBuilder s, @NonNull NamedElement namedElement, @Nullable EReference childContainmentReference, boolean fullHierarchy) {
 		if (namedElement instanceof ExpressionInOCL) {
+			s.append("«body»");
 			if (!fullHierarchy) {
 				return;
 			}
-			s.append("«body»");
 		}
 		else if (namedElement instanceof CollectionRange) {
 			s.append("«range»");

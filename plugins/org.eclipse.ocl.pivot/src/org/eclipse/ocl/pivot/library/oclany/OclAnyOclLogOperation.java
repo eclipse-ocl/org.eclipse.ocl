@@ -32,7 +32,7 @@ public class OclAnyOclLogOperation extends AbstractPolyOperation
 	 */
 	@Override
 	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
-		return null;
+		return checkPreconditions(evaluationEnvironment, callExp, 0);
 	}
 
 	/**
@@ -98,6 +98,6 @@ public class OclAnyOclLogOperation extends AbstractPolyOperation
 		if (symbolicPreconditionValue != null) {
 			return symbolicPreconditionValue;
 		}
-		return evaluationEnvironment.createUnknownValue(callExp, false, false);
+		return evaluationEnvironment.getUnknownValue(callExp, false, false);
 	}
 }

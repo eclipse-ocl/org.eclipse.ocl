@@ -53,7 +53,7 @@ public class OclAnyNotEqualOperation extends OclAnyEqualOperation
 			return evaluationEnvironment.getKnownValue(Boolean.TRUE);
 		}
 		else {
-			return evaluationEnvironment.createUnknownValue(callExp, false, mayBeInvalid);
+			return evaluationEnvironment.getUnknownValue(callExp, false, mayBeInvalid);
 		}
 	}
 

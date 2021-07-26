@@ -76,7 +76,7 @@ public class OclAnyOclAsTypeOperation extends AbstractUntypedBinaryOperation
 			return sourceValue;
 		}
 		else {
-			return evaluationEnvironment.createUnknownValue(callExp, false, false);
+			return evaluationEnvironment.getUnknownValue(callExp, false, false);
 		}
 	}
 }

@@ -108,7 +108,6 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 	 * @since 1.16
 	 */
 	protected final @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp, int checkFlags) {
-		assert checkFlags != 0 : "No check flags can return null directly";
 		EnvironmentFactory environmentFactory = evaluationEnvironment.getEnvironmentFactory();
 		CompleteModel completeModel = environmentFactory.getCompleteModel();
 		StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
@@ -152,7 +151,15 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 					return nullArgumentProblem;
 				}
 			}
+			SymbolicValue compatibleArgumentProblem = evaluationEnvironment.checkCompatible(argument, returnTypeId);
+			if (compatibleArgumentProblem != null) {
+				return compatibleArgumentProblem;
+			}
 			i++;
+		}
+		SymbolicValue compatibleArgumentProblem = evaluationEnvironment.checkCompatible(source, returnTypeId);
+		if (compatibleArgumentProblem != null) {
+			return compatibleArgumentProblem;
 		}
 		return null;
 	}
@@ -175,7 +182,7 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 			}
 			i++;
 		}
-		return evaluationEnvironment.createUnknownValue(callExp, false, mayBeInvalidOrNull);
+		return evaluationEnvironment.getUnknownValue(callExp, false, mayBeInvalidOrNull);
 	}
 
 	/**
