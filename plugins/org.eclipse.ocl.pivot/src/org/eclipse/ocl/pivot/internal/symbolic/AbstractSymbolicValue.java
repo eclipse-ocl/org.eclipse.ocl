@@ -331,7 +331,7 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 	@Override
 	public boolean mayBeFalse() {
 		SymbolicStatus booleanStatus = basicGetBooleanStatus();
-		return (booleanStatus != null) && !booleanStatus.isUnsatisfied();
+		return (booleanStatus != null) && !booleanStatus.isSatisfied();
 	}
 
 	@Override
@@ -347,7 +347,7 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 	@Override
 	public boolean mayBeTrue() {
 		SymbolicStatus booleanStatus = basicGetBooleanStatus();
-		return (booleanStatus != null) && !booleanStatus.isSatisfied();
+		return (booleanStatus != null) && !booleanStatus.isUnsatisfied();
 	}
 
 	@Override

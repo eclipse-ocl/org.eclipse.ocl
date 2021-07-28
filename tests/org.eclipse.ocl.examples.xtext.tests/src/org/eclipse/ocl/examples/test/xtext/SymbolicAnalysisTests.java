@@ -293,53 +293,53 @@ public class SymbolicAnalysisTests extends XtextTestCase
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-//		SymbolicAnalysis.HYPOTHESIS.setState(true);
+		SymbolicAnalysis.HYPOTHESIS.setState(true);
 	}
 
 	public void testSymbolicAnalysis_AndGuard() throws Exception {
 		MyOCL ocl = new MyOCL("AndGuard", "AndGuard(x : Integer[?]) : Boolean",
 				"x <> null and x > 0");
 		ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
-		VariableDeclaration firstParameterVariable = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
-		OperationCallExp andExp = (OperationCallExp) asExpressionInOCL.getOwnedBody();
-		OperationCallExp notEqExp = (OperationCallExp) PivotUtil.getOwnedSource(andExp);
-		OperationCallExp gtExp = (OperationCallExp) PivotUtil.getOwnedArgument(andExp, 0);
-		VariableExp neSourceExp = (VariableExp) PivotUtil.getOwnedSource(notEqExp);
-		NullLiteralExp nullExp = (NullLiteralExp) PivotUtil.getOwnedArgument(notEqExp, 0);
-		VariableExp gtSourceExp = (VariableExp) PivotUtil.getOwnedSource(gtExp);
-		NumericLiteralExp zeroExp = (NumericLiteralExp) PivotUtil.getOwnedArgument(gtExp, 0);
+		VariableDeclaration x_Parameter = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
+		OperationCallExp and_Exp = (OperationCallExp) asExpressionInOCL.getOwnedBody();
+		OperationCallExp ne_and_Exp = (OperationCallExp) PivotUtil.getOwnedSource(and_Exp);
+		OperationCallExp gt_and_Exp = (OperationCallExp) PivotUtil.getOwnedArgument(and_Exp, 0);
+		VariableExp x_ne_and_Exp = (VariableExp) PivotUtil.getOwnedSource(ne_and_Exp);
+		NullLiteralExp null_ne_and_Exp = (NullLiteralExp) PivotUtil.getOwnedArgument(ne_and_Exp, 0);
+		VariableExp x_gt_and_Exp = (VariableExp) PivotUtil.getOwnedSource(gt_and_Exp);
+		NumericLiteralExp zero_gt_and_Exp = (NumericLiteralExp) PivotUtil.getOwnedArgument(gt_and_Exp, 0);
 
-		SymbolicVariableValue contextSymbolicVariable = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
+		SymbolicVariableValue self_Value = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
 
 		// non-null known ok x
-		SymbolicAnalysis symbolicAnalysis1a = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{5});
-		checkContents(symbolicAnalysis1a, asExpressionInOCL, null, mayBeNulls(nullExp), null, null);
+		SymbolicAnalysis symbolicAnalysis1a = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{5});
+		checkContents(symbolicAnalysis1a, asExpressionInOCL, null, mayBeNulls(null_ne_and_Exp), null, null);
 		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment1a = symbolicAnalysis1a.getBaseSymbolicEvaluationEnvironment();
-		assertTrue(symbolicEvaluationEnvironment1a.isTrue(gtExp));
+		assertTrue(symbolicEvaluationEnvironment1a.isTrue(gt_and_Exp));
 
 		// non-null known bad x
-		SymbolicAnalysis symbolicAnalysis1b = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{-5});
-		checkContents(symbolicAnalysis1b, asExpressionInOCL, isDeads(notEqExp, neSourceExp, nullExp), null, null, null);
+		SymbolicAnalysis symbolicAnalysis1b = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{-5});
+		checkContents(symbolicAnalysis1b, asExpressionInOCL, isDeads(ne_and_Exp, x_ne_and_Exp, null_ne_and_Exp), null, null, null);
 		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment1b = symbolicAnalysis1b.getBaseSymbolicEvaluationEnvironment();
-		assertTrue(symbolicEvaluationEnvironment1b.isFalse(gtExp));
+		assertTrue(symbolicEvaluationEnvironment1b.isFalse(gt_and_Exp));
 
 		// null x
-		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{null});
-		checkContents(symbolicAnalysis2, asExpressionInOCL, isDeads(gtExp, gtSourceExp, zeroExp), mayBeNulls(firstParameterVariable, neSourceExp, nullExp), null, null);
+		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{null});
+		checkContents(symbolicAnalysis2, asExpressionInOCL, isDeads(gt_and_Exp, x_gt_and_Exp, zero_gt_and_Exp), mayBeNulls(x_Parameter, x_ne_and_Exp, null_ne_and_Exp), null, null);
 		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment2 = symbolicAnalysis2.getBaseSymbolicEvaluationEnvironment();
-		assertTrue(symbolicEvaluationEnvironment2.isFalse(notEqExp));
+		assertTrue(symbolicEvaluationEnvironment2.isFalse(ne_and_Exp));
 		assertTrue(symbolicEvaluationEnvironment2.isFalse(asExpressionInOCL));
 
 		// may-be-null x
 		SymbolicVariableValue symbolicVariable = new SymbolicVariableValue(asExpressionInOCL.getOwnedParameters().get(0), true, false);
-		SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{symbolicVariable});
-		checkContents(symbolicAnalysis3, asExpressionInOCL, null, mayBeNulls(firstParameterVariable, neSourceExp, nullExp), null, null);
+		SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{symbolicVariable});
+		checkContents(symbolicAnalysis3, asExpressionInOCL, null, mayBeNulls(x_Parameter, x_ne_and_Exp, null_ne_and_Exp), null, null);
 
 		// non-null unknown x
-		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{new SymbolicUnknownValue("p0", TypeId.INTEGER, false, false)});
-		checkContents(symbolicAnalysis4, asExpressionInOCL, null, mayBeNulls(nullExp), null, null);
+		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{new SymbolicUnknownValue("p0", TypeId.INTEGER, false, false)});
+		checkContents(symbolicAnalysis4, asExpressionInOCL, null, mayBeNulls(null_ne_and_Exp), null, null);
 		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment4 = symbolicAnalysis4.getBaseSymbolicEvaluationEnvironment();
-		assertFalse(symbolicEvaluationEnvironment4.mayBeInvalidOrNull(gtExp));
+		assertFalse(symbolicEvaluationEnvironment4.mayBeInvalidOrNull(gt_and_Exp));
 		assertFalse(symbolicEvaluationEnvironment4.mayBeInvalidOrNull(asExpressionInOCL));
 
 		ocl.dispose();
@@ -349,46 +349,46 @@ public class SymbolicAnalysisTests extends XtextTestCase
 		MyOCL ocl = new MyOCL("And2Guard", "And2Guard(x : Integer[?]) : Boolean",
 				"x <> null and2 x > 0");
 		ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
-		VariableDeclaration firstParameterVariable = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
-		OperationCallExp andExp = (OperationCallExp) asExpressionInOCL.getOwnedBody();
-		OperationCallExp notEqExp = (OperationCallExp) PivotUtil.getOwnedSource(andExp);
-		OperationCallExp gtExp = (OperationCallExp) PivotUtil.getOwnedArgument(andExp, 0);
-		VariableExp neSourceExp = (VariableExp) PivotUtil.getOwnedSource(notEqExp);
-		NullLiteralExp nullExp = (NullLiteralExp) PivotUtil.getOwnedArgument(notEqExp, 0);
-		VariableExp gtSourceExp = (VariableExp) PivotUtil.getOwnedSource(gtExp);
-		NumericLiteralExp zeroExp = (NumericLiteralExp) PivotUtil.getOwnedArgument(gtExp, 0);
+		VariableDeclaration x_Parameter = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
+		OperationCallExp and2_Exp = (OperationCallExp) asExpressionInOCL.getOwnedBody();
+		OperationCallExp ne_and2_Exp = (OperationCallExp) PivotUtil.getOwnedSource(and2_Exp);
+		OperationCallExp gt_and2_Exp = (OperationCallExp) PivotUtil.getOwnedArgument(and2_Exp, 0);
+		VariableExp x_ne_and2_Exp = (VariableExp) PivotUtil.getOwnedSource(ne_and2_Exp);
+		NullLiteralExp null_ne_and2_Exp = (NullLiteralExp) PivotUtil.getOwnedArgument(ne_and2_Exp, 0);
+		VariableExp x_gt_and2_Exp = (VariableExp) PivotUtil.getOwnedSource(gt_and2_Exp);
+		NumericLiteralExp zero_gt_and2_Exp = (NumericLiteralExp) PivotUtil.getOwnedArgument(gt_and2_Exp, 0);
 
-		SymbolicVariableValue contextSymbolicVariable = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
+		SymbolicVariableValue self_Value = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
 
 		// non-null known ok x
-		SymbolicAnalysis symbolicAnalysis1a = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{5});
-		checkContents(symbolicAnalysis1a, asExpressionInOCL, null, mayBeNulls(nullExp), null, null);
+		SymbolicAnalysis symbolicAnalysis1a = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{5});
+		checkContents(symbolicAnalysis1a, asExpressionInOCL, null, mayBeNulls(null_ne_and2_Exp), null, null);
 		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment1a = symbolicAnalysis1a.getBaseSymbolicEvaluationEnvironment();
-		assertTrue(symbolicEvaluationEnvironment1a.isTrue(gtExp));
+		assertTrue(symbolicEvaluationEnvironment1a.isTrue(gt_and2_Exp));
 
 		// non-null known bad x
-		SymbolicAnalysis symbolicAnalysis1b = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{-5});
-		checkContents(symbolicAnalysis1b, asExpressionInOCL, isDeads(notEqExp, neSourceExp, nullExp), null, null, null);
+		SymbolicAnalysis symbolicAnalysis1b = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{-5});
+		checkContents(symbolicAnalysis1b, asExpressionInOCL, isDeads(ne_and2_Exp, x_ne_and2_Exp, null_ne_and2_Exp), null, null, null);
 		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment1b = symbolicAnalysis1b.getBaseSymbolicEvaluationEnvironment();
-		assertTrue(symbolicEvaluationEnvironment1b.isFalse(gtExp));
+		assertTrue(symbolicEvaluationEnvironment1b.isFalse(gt_and2_Exp));
 
 		// null x
-		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{null});
-		checkContents(symbolicAnalysis2, asExpressionInOCL, isDeads(gtExp, gtSourceExp, zeroExp), mayBeNulls(firstParameterVariable, neSourceExp, nullExp), null, null);
+		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{null});
+		checkContents(symbolicAnalysis2, asExpressionInOCL, isDeads(gt_and2_Exp, x_gt_and2_Exp, zero_gt_and2_Exp), mayBeNulls(x_Parameter, x_ne_and2_Exp, null_ne_and2_Exp), null, null);
 		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment2 = symbolicAnalysis2.getBaseSymbolicEvaluationEnvironment();
-		assertTrue(symbolicEvaluationEnvironment2.isFalse(notEqExp));
+		assertTrue(symbolicEvaluationEnvironment2.isFalse(ne_and2_Exp));
 		assertTrue(symbolicEvaluationEnvironment2.isFalse(asExpressionInOCL));
 
 		// may-be-null x
 		SymbolicVariableValue symbolicVariable = new SymbolicVariableValue(asExpressionInOCL.getOwnedParameters().get(0), true, false);
-		SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{symbolicVariable});
-		checkContents(symbolicAnalysis3, asExpressionInOCL, null, mayBeNulls(firstParameterVariable, neSourceExp, nullExp), null, null);
+		SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{symbolicVariable});
+		checkContents(symbolicAnalysis3, asExpressionInOCL, null, mayBeNulls(x_Parameter, x_ne_and2_Exp, null_ne_and2_Exp), null, null);
 
 		// non-null unknown x
-		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{new SymbolicUnknownValue("p0", TypeId.INTEGER, false, false)});
-		checkContents(symbolicAnalysis4, asExpressionInOCL, null, mayBeNulls(nullExp), null, null);
+		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{new SymbolicUnknownValue("p0", TypeId.INTEGER, false, false)});
+		checkContents(symbolicAnalysis4, asExpressionInOCL, null, mayBeNulls(null_ne_and2_Exp), null, null);
 		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment4 = symbolicAnalysis4.getBaseSymbolicEvaluationEnvironment();
-		assertFalse(symbolicEvaluationEnvironment4.mayBeInvalidOrNull(gtExp));
+		assertFalse(symbolicEvaluationEnvironment4.mayBeInvalidOrNull(gt_and2_Exp));
 		assertFalse(symbolicEvaluationEnvironment4.mayBeInvalidOrNull(asExpressionInOCL));
 
 		ocl.dispose();
@@ -400,16 +400,16 @@ public class SymbolicAnalysisTests extends XtextTestCase
 		ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
 	//	TypeId deductionsTypeId = asExpressionInOCL.getOwnedContext().getTypeId();
 		TypeId seqTypeId = asExpressionInOCL.getOwnedParameters().get(0).getTypeId();
-		OperationCallExp atCallExp = (OperationCallExp) asExpressionInOCL.getOwnedBody();
-		IteratorExp selectCallExp = (IteratorExp) atCallExp.getOwnedSource();
-		IteratorVariable selectIterator = (IteratorVariable) selectCallExp.getOwnedIterators().get(0);
-	//	LiteralExp selectBodyExp = (LiteralExp) selectCallExp.getOwnedBody();
+		OperationCallExp at_Exp = (OperationCallExp) asExpressionInOCL.getOwnedBody();
+		IteratorExp select_at_Exp = (IteratorExp) at_Exp.getOwnedSource();
+		IteratorVariable select_at_Iterator = (IteratorVariable) select_at_Exp.getOwnedIterators().get(0);
+	//	LiteralExp selectBodyExp = (LiteralExp) select_at_Exp.getOwnedBody();
 	//	VariableExp asSourceExp = (VariableExp) PivotUtil.getOwnedSource(asPropertyCallExp);
 
-		SymbolicVariableValue contextSymbolicVariable = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
+		SymbolicVariableValue self_Value = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
 
 		// safe non-null navigation
-		SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{new SymbolicUnknownValue("p0", seqTypeId, false, false)});
+		SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{new SymbolicUnknownValue("p0", seqTypeId, false, false)});
 		checkContents(symbolicAnalysis1, asExpressionInOCL, null, null, null, null);
 
 /*		// safe null navigation
@@ -431,35 +431,35 @@ public class SymbolicAnalysisTests extends XtextTestCase
 		MyOCL ocl = new MyOCL("BadDivide",
 			"BadDivide(num : Real[?], den : Real[?]) : Real", "num / den");
 		ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
-		OperationCallExp asOperationCallExp = (OperationCallExp) asExpressionInOCL.getOwnedBody();
-	//	VariableExp asNumExp = (VariableExp) PivotUtil.getOwnedSource(asOperationCallExp);
-	//	VariableExp asDenExp = (VariableExp) PivotUtil.getOwnedArgument(asOperationCallExp, 0);
+		OperationCallExp div_Exp = (OperationCallExp) asExpressionInOCL.getOwnedBody();
+	//	VariableExp num_Exp = (VariableExp) PivotUtil.getOwnedSource(div_Exp);
+	//	VariableExp den_Exp = (VariableExp) PivotUtil.getOwnedArgument(div_Exp, 0);
 
-		SymbolicVariableValue contextSymbolicVariable = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
+		SymbolicVariableValue self_Value = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
 
 		// not-null / maybe-zero
-		SymbolicAnalysis symbolicAnalysis5a = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{new SymbolicUnknownValue("p0", TypeId.REAL, false, false), new SymbolicUnknownValue("p1", TypeId.REAL, false, false)});
-		checkContents(symbolicAnalysis5a, asExpressionInOCL, null, null, mayBeInvalids(asExpressionInOCL, asOperationCallExp), null);
+		SymbolicAnalysis symbolicAnalysis5a = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{new SymbolicUnknownValue("p0", TypeId.REAL, false, false), new SymbolicUnknownValue("p1", TypeId.REAL, false, false)});
+		checkContents(symbolicAnalysis5a, asExpressionInOCL, null, null, mayBeInvalids(asExpressionInOCL, div_Exp), null);
 
 		// 5.0 / 0.0
-		SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{5.0, 0.0});
-		checkContents(symbolicAnalysis1, asExpressionInOCL, null, null, null, isInvalids(asExpressionInOCL, asOperationCallExp));
+		SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{5.0, 0.0});
+		checkContents(symbolicAnalysis1, asExpressionInOCL, null, null, null, isInvalids(asExpressionInOCL, div_Exp));
 
 		// 5.0 / 1.0
-		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{5.0, 1.0});
+		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{5.0, 1.0});
 		checkContents(symbolicAnalysis2, asExpressionInOCL, null, null, null, null);
 
 		// not-null / 0.0
-		SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{new SymbolicUnknownValue("p0", TypeId.REAL, false, false), 0.0});
-		checkContents(symbolicAnalysis3, asExpressionInOCL, null, null, null, isInvalids(asExpressionInOCL, asOperationCallExp));
+		SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{new SymbolicUnknownValue("p0", TypeId.REAL, false, false), 0.0});
+		checkContents(symbolicAnalysis3, asExpressionInOCL, null, null, null, isInvalids(asExpressionInOCL, div_Exp));
 
 		// not-null / 1.0
-		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{new SymbolicUnknownValue("p0", TypeId.REAL, false, false), 1.0});
+		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{new SymbolicUnknownValue("p0", TypeId.REAL, false, false), 1.0});
 		checkContents(symbolicAnalysis4, asExpressionInOCL, null, null, null, null);
 
 		// not-null / maybe-zero
-		SymbolicAnalysis symbolicAnalysis5 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{new SymbolicUnknownValue("p0", TypeId.REAL, false, false), new SymbolicUnknownValue("p1", TypeId.REAL, false, false)});
-		checkContents(symbolicAnalysis5, asExpressionInOCL, null, null, mayBeInvalids(asExpressionInOCL, asOperationCallExp), null);
+		SymbolicAnalysis symbolicAnalysis5 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{new SymbolicUnknownValue("p0", TypeId.REAL, false, false), new SymbolicUnknownValue("p1", TypeId.REAL, false, false)});
+		checkContents(symbolicAnalysis5, asExpressionInOCL, null, null, mayBeInvalids(asExpressionInOCL, div_Exp), null);
 
 		ocl.dispose();
 	}
@@ -468,29 +468,29 @@ public class SymbolicAnalysisTests extends XtextTestCase
 		MyOCL ocl = new MyOCL("BadSafeNavigation",
 			"BadSafeNavigation(x : Deductions[?]) : Dummy", "x?.nonNullDummy");
 		ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
-		VariableDeclaration firstParameterVariable = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
+		VariableDeclaration x_Parameter = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
 		TypeId deductionsTypeId = asExpressionInOCL.getOwnedContext().getTypeId();
-		PropertyCallExp asPropertyCallExp = (PropertyCallExp) asExpressionInOCL.getOwnedBody();
-		VariableExp asSourceExp = (VariableExp) PivotUtil.getOwnedSource(asPropertyCallExp);
+		PropertyCallExp nonNullDummy_Exp = (PropertyCallExp) asExpressionInOCL.getOwnedBody();
+		VariableExp x_nonNullDummy_Exp = (VariableExp) PivotUtil.getOwnedSource(nonNullDummy_Exp);
 
-		SymbolicVariableValue contextSymbolicVariable = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
+		SymbolicVariableValue self_Value = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
 
 		// safe non-null navigation
-		SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{new SymbolicUnknownValue("p0", deductionsTypeId, false, false)});
+		SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{new SymbolicUnknownValue("p0", deductionsTypeId, false, false)});
 		checkContents(symbolicAnalysis1, asExpressionInOCL, null, null, null, null);
 
 		// safe null navigation
-		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{null});
-		checkContents(symbolicAnalysis2, asExpressionInOCL, null, mayBeNulls(asExpressionInOCL, firstParameterVariable, asPropertyCallExp, asSourceExp), null, null);
+		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{null});
+		checkContents(symbolicAnalysis2, asExpressionInOCL, null, mayBeNulls(asExpressionInOCL, x_Parameter, nonNullDummy_Exp, x_nonNullDummy_Exp), null, null);
 
 		// safe maybe-null navigation
-		SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{new SymbolicUnknownValue("p0", deductionsTypeId, true, false)});
-		checkContents(symbolicAnalysis3, asExpressionInOCL, null, mayBeNulls(asExpressionInOCL, firstParameterVariable,
-			asPropertyCallExp, asSourceExp), null, null);
+		SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{new SymbolicUnknownValue("p0", deductionsTypeId, true, false)});
+		checkContents(symbolicAnalysis3, asExpressionInOCL, null, mayBeNulls(asExpressionInOCL, x_Parameter,
+			nonNullDummy_Exp, x_nonNullDummy_Exp), null, null);
 
 		// safe maybe-invalid navigation
-		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{new SymbolicUnknownValue("p0", deductionsTypeId, false, true)});
-		checkContents(symbolicAnalysis4, asExpressionInOCL, null, null, mayBeInvalids(asExpressionInOCL, firstParameterVariable, asPropertyCallExp, asSourceExp), null);
+		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{new SymbolicUnknownValue("p0", deductionsTypeId, false, true)});
+		assertNotNull(symbolicAnalysis4.getAnalysisIncompatibility());
 
 		ocl.dispose();
 	}
@@ -499,27 +499,28 @@ public class SymbolicAnalysisTests extends XtextTestCase
 		MyOCL ocl = new MyOCL("BadSafeNavigation",
 			"BadSafeNavigation(x : Deductions[?]) : Bag(Dummy)", "x?.Dummy[Dummy::mayBeNullDeductions]");		// Dummy is a non-null multi-valued opposite
 		ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
-		VariableDeclaration contextVariable = PivotUtil.getOwnedContext(asExpressionInOCL);
-		VariableDeclaration firstParameterVariable = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
+		VariableDeclaration x_Parameter = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
 		TypeId deductionsTypeId = asExpressionInOCL.getOwnedContext().getTypeId();
-		OppositePropertyCallExp asOppositePropertyCallExp = (OppositePropertyCallExp) asExpressionInOCL.getOwnedBody();
-		VariableExp asSourceExp = (VariableExp) PivotUtil.getOwnedSource(asOppositePropertyCallExp);
+		OppositePropertyCallExp Dummy_Exp = (OppositePropertyCallExp) asExpressionInOCL.getOwnedBody();
+		VariableExp x_Dummy_Exp = (VariableExp) PivotUtil.getOwnedSource(Dummy_Exp);
+
+		SymbolicVariableValue self_Value = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
 
 		// safe non-null navigation
-		SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, null, new Object[]{new SymbolicUnknownValue("p0", deductionsTypeId, false, false)});
-		checkContents(symbolicAnalysis1, asExpressionInOCL, null, mayBeNulls(contextVariable), null, null);
+		SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{new SymbolicUnknownValue("p0", deductionsTypeId, false, false)});
+		checkContents(symbolicAnalysis1, asExpressionInOCL, null, null, null, null);
 
 		// safe null navigation
-		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, null, new Object[]{null});
-		checkContents(symbolicAnalysis2, asExpressionInOCL, null, mayBeNulls(asExpressionInOCL, contextVariable, firstParameterVariable, asOppositePropertyCallExp, asSourceExp), null, null);
+		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{null});
+		checkContents(symbolicAnalysis2, asExpressionInOCL, null, mayBeNulls(asExpressionInOCL, x_Parameter, Dummy_Exp, x_Dummy_Exp), null, null);
 
 		// safe maybe-null navigation
-		SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, null, new Object[]{new SymbolicUnknownValue("p0", deductionsTypeId, true, false)});
-		checkContents(symbolicAnalysis3, asExpressionInOCL, null, mayBeNulls(contextVariable, firstParameterVariable, asSourceExp), null, null);
+		SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{new SymbolicUnknownValue("p0", deductionsTypeId, true, false)});
+		checkContents(symbolicAnalysis3, asExpressionInOCL, null, mayBeNulls(x_Parameter, x_Dummy_Exp), null, null);
 
 		// safe maybe-invalid navigation
-		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, null, new Object[]{new SymbolicUnknownValue("p0", deductionsTypeId, false, true)});
-		checkContents(symbolicAnalysis4, asExpressionInOCL, null, mayBeNulls(contextVariable), mayBeInvalids(asExpressionInOCL, firstParameterVariable, asSourceExp, asOppositePropertyCallExp), null);
+		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{new SymbolicUnknownValue("p0", deductionsTypeId, false, true)});
+		assertNotNull(symbolicAnalysis4.getAnalysisIncompatibility());
 
 		ocl.dispose();
 	}
@@ -528,27 +529,28 @@ public class SymbolicAnalysisTests extends XtextTestCase
 		MyOCL ocl = new MyOCL("BadUnsafeRequiredNavigation",
 			"BadUnsafeRequiredNavigation(x : Deductions[?]) : Dummy", "x.nonNullDummy");
 		ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
-		VariableDeclaration contextVariable = PivotUtil.getOwnedContext(asExpressionInOCL);
-		VariableDeclaration firstParameterVariable = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
+		VariableDeclaration x_Parameter = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
 		TypeId deductionsTypeId = asExpressionInOCL.getOwnedContext().getTypeId();
-		PropertyCallExp asPropertyCallExp = (PropertyCallExp) asExpressionInOCL.getOwnedBody();
-		VariableExp asSourceExp = (VariableExp) PivotUtil.getOwnedSource(asPropertyCallExp);
+		PropertyCallExp nonNullDummy_Exp = (PropertyCallExp) asExpressionInOCL.getOwnedBody();
+		VariableExp x_nonNullDummy_Exp = (VariableExp) PivotUtil.getOwnedSource(nonNullDummy_Exp);
+
+		SymbolicVariableValue self_Value = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
 
 		// unsafe non-null navigation
-		SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, null, new Object[]{new SymbolicUnknownValue("p0", deductionsTypeId, false, false)});
-		checkContents(symbolicAnalysis1, asExpressionInOCL, null, mayBeNulls(contextVariable), null, null);
+		SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{new SymbolicUnknownValue("p0", deductionsTypeId, false, false)});
+		checkContents(symbolicAnalysis1, asExpressionInOCL, null, null, null, null);
 
 		// unsafe null navigation
-		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, null, new Object[]{null});
-		checkContents(symbolicAnalysis2, asExpressionInOCL, null, mayBeNulls(contextVariable, firstParameterVariable, asSourceExp), null, isInvalids(asExpressionInOCL, asPropertyCallExp));
+		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{null});
+		checkContents(symbolicAnalysis2, asExpressionInOCL, null, mayBeNulls(x_Parameter, x_nonNullDummy_Exp), null, isInvalids(asExpressionInOCL, nonNullDummy_Exp));
 
 		// unsafe maybe-null navigation
-		SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, null, new Object[]{new SymbolicUnknownValue("p0", deductionsTypeId, true, false)});
-		checkContents(symbolicAnalysis3, asExpressionInOCL, null, mayBeNulls(contextVariable, firstParameterVariable, asSourceExp), mayBeInvalids(asExpressionInOCL, asPropertyCallExp), null);
+		SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{new SymbolicUnknownValue("p0", deductionsTypeId, true, false)});
+		checkContents(symbolicAnalysis3, asExpressionInOCL, null, mayBeNulls(x_Parameter, x_nonNullDummy_Exp), mayBeInvalids(asExpressionInOCL, nonNullDummy_Exp), null);
 
 		// unsafe maybe-invalid navigation
-		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, null, new Object[]{new SymbolicUnknownValue("p0", deductionsTypeId, false, true)});
-		checkContents(symbolicAnalysis4, asExpressionInOCL, null, mayBeNulls(contextVariable), mayBeInvalids(asExpressionInOCL, firstParameterVariable, asPropertyCallExp, asSourceExp), null);
+		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{new SymbolicUnknownValue("p0", deductionsTypeId, false, true)});
+		assertNotNull(symbolicAnalysis4.getAnalysisIncompatibility());
 
 		ocl.dispose();
 	}
@@ -557,27 +559,28 @@ public class SymbolicAnalysisTests extends XtextTestCase
 		MyOCL ocl = new MyOCL("BadUnsafeOptionalNavigation",
 			"BadUnsafeOptionalNavigation(x : Deductions[?]) : Dummy", "x.mayBeNullDummy");
 		ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
-		VariableDeclaration contextVariable = PivotUtil.getOwnedContext(asExpressionInOCL);
-		VariableDeclaration firstParameterVariable = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
+		VariableDeclaration x_Parameter = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
 		TypeId deductionsTypeId = asExpressionInOCL.getOwnedContext().getTypeId();
-		PropertyCallExp asPropertyCallExp = (PropertyCallExp) asExpressionInOCL.getOwnedBody();
-		VariableExp asSourceExp = (VariableExp) PivotUtil.getOwnedSource(asPropertyCallExp);
+		PropertyCallExp mayBeNullDummy_Exp = (PropertyCallExp) asExpressionInOCL.getOwnedBody();
+		VariableExp x_mayBeNullDummy_Exp = (VariableExp) PivotUtil.getOwnedSource(mayBeNullDummy_Exp);
+
+		SymbolicVariableValue self_Value = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
 
 		// unsafe non-null navigation
-		SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, null, new Object[]{new SymbolicUnknownValue("p0", deductionsTypeId, false, false)});
-		checkContents(symbolicAnalysis1, asExpressionInOCL, null, mayBeNulls(asExpressionInOCL, contextVariable, asPropertyCallExp), null, null);
+		SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{new SymbolicUnknownValue("p0", deductionsTypeId, false, false)});
+		checkContents(symbolicAnalysis1, asExpressionInOCL, null, mayBeNulls(asExpressionInOCL, mayBeNullDummy_Exp), null, null);
 
 		// unsafe null navigation
-		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, null, new Object[]{null});
-		checkContents(symbolicAnalysis2, asExpressionInOCL, null, mayBeNulls(contextVariable, firstParameterVariable, asSourceExp), null, isInvalids(asExpressionInOCL, asPropertyCallExp));
+		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{null});
+		checkContents(symbolicAnalysis2, asExpressionInOCL, null, mayBeNulls(x_Parameter, x_mayBeNullDummy_Exp), null, isInvalids(asExpressionInOCL, mayBeNullDummy_Exp));
 
 		// unsafe maybe-null navigation
-		SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, null, new Object[]{new SymbolicUnknownValue("p0", deductionsTypeId, true, false)});
-		checkContents(symbolicAnalysis3, asExpressionInOCL, null, mayBeNulls(contextVariable, firstParameterVariable, asSourceExp), mayBeInvalids(asExpressionInOCL, asPropertyCallExp), null);
+		SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{new SymbolicUnknownValue("p0", deductionsTypeId, true, false)});
+		checkContents(symbolicAnalysis3, asExpressionInOCL, null, mayBeNulls(x_Parameter, x_mayBeNullDummy_Exp), mayBeInvalids(asExpressionInOCL, mayBeNullDummy_Exp), null);
 
 		// unsafe maybe-invalid navigation
-		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, null, new Object[]{new SymbolicUnknownValue("p0", deductionsTypeId, false, true)});
-		checkContents(symbolicAnalysis4, asExpressionInOCL, null, mayBeNulls(contextVariable), mayBeInvalids(asExpressionInOCL, firstParameterVariable, asPropertyCallExp, asSourceExp), null);
+		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{new SymbolicUnknownValue("p0", deductionsTypeId, false, true)});
+		assertNotNull(symbolicAnalysis4.getAnalysisIncompatibility());
 
 		ocl.dispose();
 	}
@@ -586,46 +589,46 @@ public class SymbolicAnalysisTests extends XtextTestCase
 		MyOCL ocl = new MyOCL("CommutatedAndGuard", "CommutatedAndGuard(x : Integer[?]) : Boolean",
 				"x > 0 and x <> null");
 		ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
-		VariableDeclaration firstParameterVariable = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
-		OperationCallExp andExp = (OperationCallExp) asExpressionInOCL.getOwnedBody();
-		OperationCallExp gtExp = (OperationCallExp) PivotUtil.getOwnedSource(andExp);
-		OperationCallExp notEqExp = (OperationCallExp) PivotUtil.getOwnedArgument(andExp, 0);
-		VariableExp neSourceExp = (VariableExp) PivotUtil.getOwnedSource(notEqExp);
-		NullLiteralExp nullExp = (NullLiteralExp) PivotUtil.getOwnedArgument(notEqExp, 0);
-		VariableExp gtSourceExp = (VariableExp) PivotUtil.getOwnedSource(gtExp);
-		NumericLiteralExp zeroExp = (NumericLiteralExp) PivotUtil.getOwnedArgument(gtExp, 0);
+		VariableDeclaration x_Parameter = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
+		OperationCallExp and_Exp = (OperationCallExp) asExpressionInOCL.getOwnedBody();
+		OperationCallExp gt_and_Exp = (OperationCallExp) PivotUtil.getOwnedSource(and_Exp);
+		OperationCallExp ne_and_Exp = (OperationCallExp) PivotUtil.getOwnedArgument(and_Exp, 0);
+		VariableExp x_ne_and_Exp = (VariableExp) PivotUtil.getOwnedSource(ne_and_Exp);
+		NullLiteralExp null_ne_and_Exp = (NullLiteralExp) PivotUtil.getOwnedArgument(ne_and_Exp, 0);
+		VariableExp x_gt_and_Exp = (VariableExp) PivotUtil.getOwnedSource(gt_and_Exp);
+		NumericLiteralExp zero_gt_and_Exp = (NumericLiteralExp) PivotUtil.getOwnedArgument(gt_and_Exp, 0);
 
-		SymbolicVariableValue contextSymbolicVariable = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
+		SymbolicVariableValue self_Value = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
 
 		// non-null known ok x
-		SymbolicAnalysis symbolicAnalysis1a = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{5});
-		checkContents(symbolicAnalysis1a, asExpressionInOCL, null, mayBeNulls(nullExp), null, null);
+		SymbolicAnalysis symbolicAnalysis1a = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{5});
+		checkContents(symbolicAnalysis1a, asExpressionInOCL, null, mayBeNulls(null_ne_and_Exp), null, null);
 		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment1a = symbolicAnalysis1a.getBaseSymbolicEvaluationEnvironment();
-		assertTrue(symbolicEvaluationEnvironment1a.isTrue(gtExp));
+		assertTrue(symbolicEvaluationEnvironment1a.isTrue(gt_and_Exp));
 
 		// non-null known bad x
-		SymbolicAnalysis symbolicAnalysis1b = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{-5});
-		checkContents(symbolicAnalysis1b, asExpressionInOCL, isDeads(notEqExp, neSourceExp, nullExp), null, null, null);
+		SymbolicAnalysis symbolicAnalysis1b = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{-5});
+		checkContents(symbolicAnalysis1b, asExpressionInOCL, isDeads(ne_and_Exp, x_ne_and_Exp, null_ne_and_Exp), null, null, null);
 		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment1b = symbolicAnalysis1b.getBaseSymbolicEvaluationEnvironment();
-		assertTrue(symbolicEvaluationEnvironment1b.isFalse(gtExp));
+		assertTrue(symbolicEvaluationEnvironment1b.isFalse(gt_and_Exp));
 
 		// null x
-		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{null});
-		checkContents(symbolicAnalysis2, asExpressionInOCL, isDeads(gtExp, gtSourceExp, zeroExp), mayBeNulls(firstParameterVariable, neSourceExp, nullExp), null, null);
+		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{null});
+		checkContents(symbolicAnalysis2, asExpressionInOCL, isDeads(gt_and_Exp, x_gt_and_Exp, zero_gt_and_Exp), mayBeNulls(x_Parameter, x_ne_and_Exp, null_ne_and_Exp), null, null);
 		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment2 = symbolicAnalysis2.getBaseSymbolicEvaluationEnvironment();
-		assertTrue(symbolicEvaluationEnvironment2.isFalse(notEqExp));
+		assertTrue(symbolicEvaluationEnvironment2.isFalse(ne_and_Exp));
 	//	assertTrue(symbolicEvaluationEnvironment2.isTrue(asExpressionInOCL));
 
 		// may-be-null x
 		SymbolicVariableValue symbolicVariable = new SymbolicVariableValue(asExpressionInOCL.getOwnedParameters().get(0), true, false);
-		SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{symbolicVariable});
-		checkContents(symbolicAnalysis3, asExpressionInOCL, null, mayBeNulls(firstParameterVariable, neSourceExp, nullExp), null, null);
+		SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{symbolicVariable});
+		checkContents(symbolicAnalysis3, asExpressionInOCL, null, mayBeNulls(x_Parameter, null_ne_and_Exp), null, null);
 
 		// non-null unknown x
-		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{new SymbolicUnknownValue("p0", TypeId.INTEGER, false, false)});
-		checkContents(symbolicAnalysis4, asExpressionInOCL, null, mayBeNulls(nullExp), null, null);
+		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{new SymbolicUnknownValue("p0", TypeId.INTEGER, false, false)});
+		checkContents(symbolicAnalysis4, asExpressionInOCL, null, mayBeNulls(null_ne_and_Exp), null, null);
 		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment4 = symbolicAnalysis4.getBaseSymbolicEvaluationEnvironment();
-		assertFalse(symbolicEvaluationEnvironment4.mayBeInvalidOrNull(gtExp));
+		assertFalse(symbolicEvaluationEnvironment4.mayBeInvalidOrNull(gt_and_Exp));
 		assertFalse(symbolicEvaluationEnvironment4.mayBeInvalidOrNull(asExpressionInOCL));
 
 		ocl.dispose();
@@ -635,46 +638,46 @@ public class SymbolicAnalysisTests extends XtextTestCase
 		MyOCL ocl = new MyOCL("CommutatedAnd2Guard", "CommutatedAnd2Guard(x : Integer[?]) : Boolean",
 				"x > 0 and2 x <> null");
 		ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
-		VariableDeclaration firstParameterVariable = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
-		OperationCallExp andExp = (OperationCallExp) asExpressionInOCL.getOwnedBody();
-		OperationCallExp gtExp = (OperationCallExp) PivotUtil.getOwnedSource(andExp);
-		OperationCallExp notEqExp = (OperationCallExp) PivotUtil.getOwnedArgument(andExp, 0);
-		VariableExp neSourceExp = (VariableExp) PivotUtil.getOwnedSource(notEqExp);
-		NullLiteralExp nullExp = (NullLiteralExp) PivotUtil.getOwnedArgument(notEqExp, 0);
-		VariableExp gtSourceExp = (VariableExp) PivotUtil.getOwnedSource(gtExp);
-	//	NumericLiteralExp zeroExp = (NumericLiteralExp) PivotUtil.getOwnedArgument(gtExp, 0);
+		VariableDeclaration x_Parameter = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
+		OperationCallExp and2_Exp = (OperationCallExp) asExpressionInOCL.getOwnedBody();
+		OperationCallExp gt_and2_Exp = (OperationCallExp) PivotUtil.getOwnedSource(and2_Exp);
+		OperationCallExp ne_and2_Exp = (OperationCallExp) PivotUtil.getOwnedArgument(and2_Exp, 0);
+		VariableExp x_ne_and2_Exp = (VariableExp) PivotUtil.getOwnedSource(ne_and2_Exp);
+		NullLiteralExp null_ne_and2_Exp = (NullLiteralExp) PivotUtil.getOwnedArgument(ne_and2_Exp, 0);
+		VariableExp x_gt_and2_Exp = (VariableExp) PivotUtil.getOwnedSource(gt_and2_Exp);
+	//	NumericLiteralExp zero_gt_and2_Exp = (NumericLiteralExp) PivotUtil.getOwnedArgument(gt_and2_Exp, 0);
 
-		SymbolicVariableValue contextSymbolicVariable = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
+		SymbolicVariableValue self_Value = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
 
 		// non-null known ok x
-		SymbolicAnalysis symbolicAnalysis1a = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{5});
-		checkContents(symbolicAnalysis1a, asExpressionInOCL, null, mayBeNulls(nullExp), null, null);
+		SymbolicAnalysis symbolicAnalysis1a = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{5});
+		checkContents(symbolicAnalysis1a, asExpressionInOCL, null, mayBeNulls(null_ne_and2_Exp), null, null);
 		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment1a = symbolicAnalysis1a.getBaseSymbolicEvaluationEnvironment();
-		assertTrue(symbolicEvaluationEnvironment1a.isTrue(gtExp));
+		assertTrue(symbolicEvaluationEnvironment1a.isTrue(gt_and2_Exp));
 
 		// non-null known bad x
-		SymbolicAnalysis symbolicAnalysis1b = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{-5});
-		checkContents(symbolicAnalysis1b, asExpressionInOCL, isDeads(notEqExp, neSourceExp, nullExp), null, null, null);
+		SymbolicAnalysis symbolicAnalysis1b = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{-5});
+		checkContents(symbolicAnalysis1b, asExpressionInOCL, isDeads(ne_and2_Exp, x_ne_and2_Exp, null_ne_and2_Exp), null, null, null);
 		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment1b = symbolicAnalysis1b.getBaseSymbolicEvaluationEnvironment();
-		assertTrue(symbolicEvaluationEnvironment1b.isFalse(gtExp));
+		assertTrue(symbolicEvaluationEnvironment1b.isFalse(gt_and2_Exp));
 
 		// null x
-		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{null});
-		checkContents(symbolicAnalysis2, asExpressionInOCL, null, mayBeNulls(firstParameterVariable, gtSourceExp, neSourceExp, nullExp), null, isInvalids(asExpressionInOCL, andExp, gtExp));
+		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{null});
+		checkContents(symbolicAnalysis2, asExpressionInOCL, null, mayBeNulls(x_Parameter, x_gt_and2_Exp, x_ne_and2_Exp, null_ne_and2_Exp), null, isInvalids(asExpressionInOCL, and2_Exp, gt_and2_Exp));
 		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment2 = symbolicAnalysis2.getBaseSymbolicEvaluationEnvironment();
-		assertTrue(symbolicEvaluationEnvironment2.isFalse(notEqExp));
+		assertTrue(symbolicEvaluationEnvironment2.isFalse(ne_and2_Exp));
 	//	assertTrue(symbolicEvaluationEnvironment2.isTrue(asExpressionInOCL));
 
 		// may-be-null x
 		SymbolicVariableValue symbolicVariable = new SymbolicVariableValue(asExpressionInOCL.getOwnedParameters().get(0), true, false);
-		SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{symbolicVariable});
-		checkContents(symbolicAnalysis3, asExpressionInOCL, null, mayBeNulls(firstParameterVariable, neSourceExp, nullExp), null, null);
+		SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{symbolicVariable});
+		checkContents(symbolicAnalysis3, asExpressionInOCL, null, mayBeNulls(x_Parameter, null_ne_and2_Exp), null, null);
 
 		// non-null unknown x
-		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{new SymbolicUnknownValue("p0", TypeId.INTEGER, false, false)});
-		checkContents(symbolicAnalysis4, asExpressionInOCL, null, mayBeNulls(nullExp), null, null);
+		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{new SymbolicUnknownValue("p0", TypeId.INTEGER, false, false)});
+		checkContents(symbolicAnalysis4, asExpressionInOCL, null, mayBeNulls(null_ne_and2_Exp), null, null);
 		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment4 = symbolicAnalysis4.getBaseSymbolicEvaluationEnvironment();
-		assertFalse(symbolicEvaluationEnvironment4.mayBeInvalidOrNull(gtExp));
+		assertFalse(symbolicEvaluationEnvironment4.mayBeInvalidOrNull(gt_and2_Exp));
 		assertFalse(symbolicEvaluationEnvironment4.mayBeInvalidOrNull(asExpressionInOCL));
 
 		ocl.dispose();
@@ -684,46 +687,46 @@ public class SymbolicAnalysisTests extends XtextTestCase
 		MyOCL ocl = new MyOCL("CommutatedOrGuard", "CommutatedOrGuard(x : Integer[?]) : Boolean",
 				"x > 0 or x = null");
 		ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
-		VariableDeclaration firstParameterVariable = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
+		VariableDeclaration x_Parameter = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
 		OperationCallExp orExp = (OperationCallExp) asExpressionInOCL.getOwnedBody();
-		OperationCallExp gtExp = (OperationCallExp) PivotUtil.getOwnedSource(orExp);
-		OperationCallExp eqExp = (OperationCallExp) PivotUtil.getOwnedArgument(orExp, 0);
-		VariableExp eqSourceExp = (VariableExp) PivotUtil.getOwnedSource(eqExp);
-		NullLiteralExp nullExp = (NullLiteralExp) PivotUtil.getOwnedArgument(eqExp, 0);
-		VariableExp gtSourceExp = (VariableExp) PivotUtil.getOwnedSource(gtExp);
-		NumericLiteralExp zeroExp = (NumericLiteralExp) PivotUtil.getOwnedArgument(gtExp, 0);
+		OperationCallExp gt_or_Exp = (OperationCallExp) PivotUtil.getOwnedSource(orExp);
+		OperationCallExp eq_or_Exp = (OperationCallExp) PivotUtil.getOwnedArgument(orExp, 0);
+		VariableExp x_eq_or_Exp = (VariableExp) PivotUtil.getOwnedSource(eq_or_Exp);
+		NullLiteralExp null_eq_or_Exp = (NullLiteralExp) PivotUtil.getOwnedArgument(eq_or_Exp, 0);
+		VariableExp x_gt_or_Exp = (VariableExp) PivotUtil.getOwnedSource(gt_or_Exp);
+		NumericLiteralExp zero_gt_or_Exp = (NumericLiteralExp) PivotUtil.getOwnedArgument(gt_or_Exp, 0);
 
-		SymbolicVariableValue contextSymbolicVariable = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
+		SymbolicVariableValue self_Value = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
 
 		// non-null known ok x
-		SymbolicAnalysis symbolicAnalysis1a = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{5});
-		checkContents(symbolicAnalysis1a, asExpressionInOCL, isDeads(eqExp, eqSourceExp, nullExp), null, null, null);
+		SymbolicAnalysis symbolicAnalysis1a = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{5});
+		checkContents(symbolicAnalysis1a, asExpressionInOCL, isDeads(eq_or_Exp, x_eq_or_Exp, null_eq_or_Exp), null, null, null);
 		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment1a = symbolicAnalysis1a.getBaseSymbolicEvaluationEnvironment();
-		assertTrue(symbolicEvaluationEnvironment1a.isTrue(gtExp));
+		assertTrue(symbolicEvaluationEnvironment1a.isTrue(gt_or_Exp));
 
 		// non-null known bad x
-		SymbolicAnalysis symbolicAnalysis1b = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{-5});
-		checkContents(symbolicAnalysis1b, asExpressionInOCL, null, mayBeNulls(nullExp), null, null);
+		SymbolicAnalysis symbolicAnalysis1b = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{-5});
+		checkContents(symbolicAnalysis1b, asExpressionInOCL, null, mayBeNulls(null_eq_or_Exp), null, null);
 		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment1b = symbolicAnalysis1b.getBaseSymbolicEvaluationEnvironment();
-		assertTrue(symbolicEvaluationEnvironment1b.isFalse(gtExp));
+		assertTrue(symbolicEvaluationEnvironment1b.isFalse(gt_or_Exp));
 
 		// null x
-		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{null});
-		checkContents(symbolicAnalysis2, asExpressionInOCL, isDeads(gtExp, gtSourceExp, zeroExp), mayBeNulls(firstParameterVariable, eqSourceExp, nullExp), null, null);
+		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{null});
+		checkContents(symbolicAnalysis2, asExpressionInOCL, isDeads(gt_or_Exp, x_gt_or_Exp, zero_gt_or_Exp), mayBeNulls(x_Parameter, x_eq_or_Exp, null_eq_or_Exp), null, null);
 		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment2 = symbolicAnalysis2.getBaseSymbolicEvaluationEnvironment();
-		assertTrue(symbolicEvaluationEnvironment2.isTrue(eqExp));
+		assertTrue(symbolicEvaluationEnvironment2.isTrue(eq_or_Exp));
 		assertTrue(symbolicEvaluationEnvironment2.isTrue(asExpressionInOCL));
 
 		// may-be-null x
 		SymbolicVariableValue symbolicVariable = new SymbolicVariableValue(asExpressionInOCL.getOwnedParameters().get(0), true, false);
-		SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{symbolicVariable});
-		checkContents(symbolicAnalysis3, asExpressionInOCL, null, mayBeNulls(firstParameterVariable, eqSourceExp, nullExp), null, null);
+		SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{symbolicVariable});
+		checkContents(symbolicAnalysis3, asExpressionInOCL, null, mayBeNulls(x_Parameter, null_eq_or_Exp), null, null);
 
 		// non-null unknown x
-		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{new SymbolicUnknownValue("p0", TypeId.INTEGER, false, false)});
-		checkContents(symbolicAnalysis4, asExpressionInOCL, null, mayBeNulls(nullExp), null, null);
+		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{new SymbolicUnknownValue("p0", TypeId.INTEGER, false, false)});
+		checkContents(symbolicAnalysis4, asExpressionInOCL, null, mayBeNulls(null_eq_or_Exp), null, null);
 		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment4 = symbolicAnalysis4.getBaseSymbolicEvaluationEnvironment();
-		assertFalse(symbolicEvaluationEnvironment4.mayBeInvalidOrNull(gtExp));
+		assertFalse(symbolicEvaluationEnvironment4.mayBeInvalidOrNull(gt_or_Exp));
 		assertFalse(symbolicEvaluationEnvironment4.mayBeInvalidOrNull(asExpressionInOCL));
 
 		ocl.dispose();
@@ -733,84 +736,83 @@ public class SymbolicAnalysisTests extends XtextTestCase
 		MyOCL ocl = new MyOCL("CommutatedOr2Guard", "CommutatedOr2Guard(x : Integer[?]) : Boolean",
 				"x > 0 or2 x = null");
 		ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
-		VariableDeclaration firstParameterVariable = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
+		VariableDeclaration x_Parameter = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
 		OperationCallExp orExp = (OperationCallExp) asExpressionInOCL.getOwnedBody();
-		OperationCallExp gtExp = (OperationCallExp) PivotUtil.getOwnedSource(orExp);
-		OperationCallExp eqExp = (OperationCallExp) PivotUtil.getOwnedArgument(orExp, 0);
-		VariableExp eqSourceExp = (VariableExp) PivotUtil.getOwnedSource(eqExp);
-		NullLiteralExp nullExp = (NullLiteralExp) PivotUtil.getOwnedArgument(eqExp, 0);
-		VariableExp gtSourceExp = (VariableExp) PivotUtil.getOwnedSource(gtExp);
-	//	NumericLiteralExp zeroExp = (NumericLiteralExp) PivotUtil.getOwnedArgument(gtExp, 0);
+		OperationCallExp gt_or2_Exp = (OperationCallExp) PivotUtil.getOwnedSource(orExp);
+		OperationCallExp eq_or2_Exp = (OperationCallExp) PivotUtil.getOwnedArgument(orExp, 0);
+		VariableExp x_eq_or2_Exp = (VariableExp) PivotUtil.getOwnedSource(eq_or2_Exp);
+		NullLiteralExp null_eq_or2_Exp = (NullLiteralExp) PivotUtil.getOwnedArgument(eq_or2_Exp, 0);
+		VariableExp x_gt_or2_Exp = (VariableExp) PivotUtil.getOwnedSource(gt_or2_Exp);
+	//	NumericLiteralExp zero_gt_or2_Exp = (NumericLiteralExp) PivotUtil.getOwnedArgument(gt_or2_Exp, 0);
 
-		SymbolicVariableValue contextSymbolicVariable = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
+		SymbolicVariableValue self_Value = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
 
 		// non-null known ok x
-		SymbolicAnalysis symbolicAnalysis1a = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{5});
-		checkContents(symbolicAnalysis1a, asExpressionInOCL, isDeads(eqExp, eqSourceExp, nullExp), null, null, null);
+		SymbolicAnalysis symbolicAnalysis1a = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{5});
+		checkContents(symbolicAnalysis1a, asExpressionInOCL, isDeads(eq_or2_Exp, x_eq_or2_Exp, null_eq_or2_Exp), null, null, null);
 		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment1a = symbolicAnalysis1a.getBaseSymbolicEvaluationEnvironment();
-		assertTrue(symbolicEvaluationEnvironment1a.isTrue(gtExp));
+		assertTrue(symbolicEvaluationEnvironment1a.isTrue(gt_or2_Exp));
 
 		// non-null known bad x
-		SymbolicAnalysis symbolicAnalysis1b = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{-5});
-		checkContents(symbolicAnalysis1b, asExpressionInOCL, null, mayBeNulls(nullExp), null, null);
+		SymbolicAnalysis symbolicAnalysis1b = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{-5});
+		checkContents(symbolicAnalysis1b, asExpressionInOCL, null, mayBeNulls(null_eq_or2_Exp), null, null);
 		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment1b = symbolicAnalysis1b.getBaseSymbolicEvaluationEnvironment();
-		assertTrue(symbolicEvaluationEnvironment1b.isFalse(gtExp));
+		assertTrue(symbolicEvaluationEnvironment1b.isFalse(gt_or2_Exp));
 
 		// null x
-		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{null});
-		checkContents(symbolicAnalysis2, asExpressionInOCL, null, mayBeNulls(firstParameterVariable, gtSourceExp, eqSourceExp, nullExp), null, isInvalids(asExpressionInOCL, orExp, gtExp));
+		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{null});
+		checkContents(symbolicAnalysis2, asExpressionInOCL, null, mayBeNulls(x_Parameter, x_gt_or2_Exp, x_eq_or2_Exp, null_eq_or2_Exp), null, isInvalids(asExpressionInOCL, orExp, gt_or2_Exp));
 		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment2 = symbolicAnalysis2.getBaseSymbolicEvaluationEnvironment();
-		assertTrue(symbolicEvaluationEnvironment2.isTrue(eqExp));
+		assertTrue(symbolicEvaluationEnvironment2.isTrue(eq_or2_Exp));
 	//	assertTrue(symbolicEvaluationEnvironment2.isTrue(asExpressionInOCL));
 
 		// may-be-null x
 		SymbolicVariableValue symbolicVariable = new SymbolicVariableValue(asExpressionInOCL.getOwnedParameters().get(0), true, false);
-		SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{symbolicVariable});
-		checkContents(symbolicAnalysis3, asExpressionInOCL, null, mayBeNulls(firstParameterVariable, eqSourceExp, nullExp), null, null);
+		SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{symbolicVariable});
+		checkContents(symbolicAnalysis3, asExpressionInOCL, null, mayBeNulls(x_Parameter, null_eq_or2_Exp), null, null);
 
 		// non-null unknown x
-		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{new SymbolicUnknownValue("p0", TypeId.INTEGER, false, false)});
-		checkContents(symbolicAnalysis4, asExpressionInOCL, null, mayBeNulls(nullExp), null, null);
+		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{new SymbolicUnknownValue("p0", TypeId.INTEGER, false, false)});
+		checkContents(symbolicAnalysis4, asExpressionInOCL, null, mayBeNulls(null_eq_or2_Exp), null, null);
 		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment4 = symbolicAnalysis4.getBaseSymbolicEvaluationEnvironment();
-		assertFalse(symbolicEvaluationEnvironment4.mayBeInvalidOrNull(gtExp));
+		assertFalse(symbolicEvaluationEnvironment4.mayBeInvalidOrNull(gt_or2_Exp));
 		assertFalse(symbolicEvaluationEnvironment4.mayBeInvalidOrNull(asExpressionInOCL));
 
 		ocl.dispose();
 	}
 
 	public void testSymbolicAnalysis_First() throws Exception {
-		SymbolicAnalysis.HYPOTHESIS.setState(true);
 		MyOCL ocl = new MyOCL("First", "First(x : Sequence(Integer)[?]) : Integer",
 				"x->first()");
 		ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
-		VariableDeclaration firstParameterVariable = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
-		OperationCallExp firstExp = (OperationCallExp) asExpressionInOCL.getOwnedBody();
-		VariableExp sourcefirstExp = (VariableExp) PivotUtil.getOwnedSource(firstExp);
+		VariableDeclaration x_Parameter = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
+		OperationCallExp first_Exp = (OperationCallExp) asExpressionInOCL.getOwnedBody();
+		VariableExp x_first_Exp = (VariableExp) PivotUtil.getOwnedSource(first_Exp);
 
-		SymbolicVariableValue contextSymbolicVariable = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
+		SymbolicVariableValue self_Value = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
 
 		// non-null unknown x
 		SymbolicVariableValue symbolicVariable99 = new SymbolicVariableValue(asExpressionInOCL.getOwnedParameters().get(0), false, false);
-		SymbolicAnalysis symbolicAnalysis399 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{symbolicVariable99});
-		checkContents(symbolicAnalysis399, asExpressionInOCL, null, null, mayBeInvalids(asExpressionInOCL, firstExp), null);
+		SymbolicAnalysis symbolicAnalysis399 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{symbolicVariable99});
+		checkContents(symbolicAnalysis399, asExpressionInOCL, null, null, mayBeInvalids(asExpressionInOCL, first_Exp), null);
 
 		// non-null empty x
-		SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{ValueUtil.EMPTY_SET});
-		checkContents(symbolicAnalysis1, asExpressionInOCL, null, null, null, isInvalids(asExpressionInOCL, firstExp));
+		SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{ValueUtil.EMPTY_SET});
+		checkContents(symbolicAnalysis1, asExpressionInOCL, null, null, null, isInvalids(asExpressionInOCL, first_Exp));
 
 		// non-null not-empty x
 		SetValue set2 = ValueUtil.createSetOfEach(TypeId.SET.getSpecializedId(TypeId.INTEGER), ValueUtil.integerValueOf(99));
-		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{set2});
+		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{set2});
 		checkContents(symbolicAnalysis2, asExpressionInOCL, null, null, null, null);
 
 		// non-null unknown x
 		SymbolicVariableValue symbolicVariable = new SymbolicVariableValue(asExpressionInOCL.getOwnedParameters().get(0), false, false);
-		SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{symbolicVariable});
-		checkContents(symbolicAnalysis3, asExpressionInOCL, null, null, mayBeInvalids(asExpressionInOCL, firstExp), null);
+		SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{symbolicVariable});
+		checkContents(symbolicAnalysis3, asExpressionInOCL, null, null, mayBeInvalids(asExpressionInOCL, first_Exp), null);
 
 		// null collection x (does not behave as empty set)
-		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{null});
-		checkContents(symbolicAnalysis4, asExpressionInOCL, null, mayBeNulls(firstParameterVariable, sourcefirstExp), null, isInvalids(asExpressionInOCL, firstExp));
+		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{null});
+		checkContents(symbolicAnalysis4, asExpressionInOCL, null, mayBeNulls(x_Parameter, x_first_Exp), null, isInvalids(asExpressionInOCL, first_Exp));
 
 		ocl.dispose();
 	}
@@ -819,40 +821,36 @@ public class SymbolicAnalysisTests extends XtextTestCase
 		MyOCL ocl = new MyOCL("GuardedBadDivide",
 			"GuardedBadDivide(num : Real[?], den : Real[?]) : Real", "if den <> 0 then num / den else 999.999 endif");
 		ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
-		IfExp asIfExp = (IfExp) asExpressionInOCL.getOwnedBody();
-		OperationCallExp asOperationCallExp = (OperationCallExp) PivotUtil.getOwnedThen(asIfExp);
-		VariableExp asNumExp = (VariableExp) PivotUtil.getOwnedSource(asOperationCallExp);
-		VariableExp asDenExp = (VariableExp) PivotUtil.getOwnedArgument(asOperationCallExp, 0);
-		LiteralExp asLiteralExp = (LiteralExp) PivotUtil.getOwnedElse(asIfExp);
+		IfExp if_Exp = (IfExp) asExpressionInOCL.getOwnedBody();
+		OperationCallExp div_if_Exp = (OperationCallExp) PivotUtil.getOwnedThen(if_Exp);
+		VariableExp num_Exp = (VariableExp) PivotUtil.getOwnedSource(div_if_Exp);
+		VariableExp den_Exp = (VariableExp) PivotUtil.getOwnedArgument(div_if_Exp, 0);
+		LiteralExp literal_Exp = (LiteralExp) PivotUtil.getOwnedElse(if_Exp);
 
-		SymbolicVariableValue contextSymbolicVariable = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
-
-		// 5.0 / not-null-maybe-zero
-		SymbolicAnalysis symbolicAnalysis5a = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{5.0, new SymbolicUnknownValue("p0", TypeId.REAL, false, false)});
-		checkContents(symbolicAnalysis5a, asExpressionInOCL, null, null, null, null);
+		SymbolicVariableValue self_Value = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
 
 		// 5.0 / 0.0
-		SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{5.0, 0.0});
-		checkContents(symbolicAnalysis1, asExpressionInOCL, isDeads(asOperationCallExp, asNumExp, asDenExp), null, null, null);
+		SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{5.0, 0.0});
+		checkContents(symbolicAnalysis1, asExpressionInOCL, isDeads(div_if_Exp, num_Exp, den_Exp), null, null, null);
 
 		// 5.0 / 1.0
-		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{5.0, 1.0});
-		checkContents(symbolicAnalysis2, asExpressionInOCL, isDeads(asLiteralExp), null, null, null);
+		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{5.0, 1.0});
+		checkContents(symbolicAnalysis2, asExpressionInOCL, isDeads(literal_Exp), null, null, null);
 
 		// not-null / 0.0
-		SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{new SymbolicUnknownValue("p0", TypeId.REAL, false, false), 0.0});
-		checkContents(symbolicAnalysis3, asExpressionInOCL, isDeads(asOperationCallExp, asNumExp, asDenExp), null, null, null);
+		SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{new SymbolicUnknownValue("p0", TypeId.REAL, false, false), 0.0});
+		checkContents(symbolicAnalysis3, asExpressionInOCL, isDeads(div_if_Exp, num_Exp, den_Exp), null, null, null);
 
 		// not-null / 1.0
-		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{new SymbolicUnknownValue("p0", TypeId.REAL, false, false), 1.0});
-		checkContents(symbolicAnalysis4, asExpressionInOCL, isDeads(asLiteralExp), null, null, null);
+		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{new SymbolicUnknownValue("p0", TypeId.REAL, false, false), 1.0});
+		checkContents(symbolicAnalysis4, asExpressionInOCL, isDeads(literal_Exp), null, null, null);
 
 		// 5.0 / not-null-maybe-zero
-		SymbolicAnalysis symbolicAnalysis5 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{5.0, new SymbolicUnknownValue("p0", TypeId.REAL, false, false)});
+		SymbolicAnalysis symbolicAnalysis5 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{5.0, new SymbolicUnknownValue("p0", TypeId.REAL, false, false)});
 		checkContents(symbolicAnalysis5, asExpressionInOCL, null, null, null, null);
 
 		// 5 / not-null-maybe-zero
-		SymbolicAnalysis symbolicAnalysis6 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{5, new SymbolicUnknownValue("p0", TypeId.INTEGER, false, false)});
+		SymbolicAnalysis symbolicAnalysis6 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{5, new SymbolicUnknownValue("p0", TypeId.INTEGER, false, false)});
 		checkContents(symbolicAnalysis6, asExpressionInOCL, null, null, null, null);
 
 		ocl.dispose();
@@ -862,69 +860,69 @@ public class SymbolicAnalysisTests extends XtextTestCase
 		MyOCL ocl = new MyOCL("IfNullNameGuard", "IfNullNameGuard() : Boolean",
 				"(let v : String[?] = self?.toString() in if v = null then 'null' else v endif) <> null");
 		ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
-		OperationCallExp neOperationCallExp = (OperationCallExp) asExpressionInOCL.getOwnedBody();
-		NullLiteralExp neNullExp = (NullLiteralExp) PivotUtil.getOwnedArgument(neOperationCallExp, 0);
-		LetExp asLetExp = (LetExp) PivotUtil.getOwnedSource(neOperationCallExp);
-		OperationCallExp asLetVariableInit = (OperationCallExp) PivotUtil.getOwnedInit(PivotUtil.getOwnedVariable(asLetExp));
-		VariableExp selfExp = (VariableExp) PivotUtil.getOwnedSource(asLetVariableInit);
-		LetVariable asLetVariable = (LetVariable) PivotUtil.getOwnedVariable(asLetExp);
-		IfExp asIf = (IfExp) PivotUtil.getOwnedIn(asLetExp);
-		OperationCallExp asCondition = (OperationCallExp) PivotUtil.getOwnedCondition(asIf);
-		StringLiteralExp asThenLiteralExp = (StringLiteralExp) PivotUtil.getOwnedThen(asIf);
-		VariableExp asElseVariableExp = (VariableExp) PivotUtil.getOwnedElse(asIf);
-		VariableExp asConditionVariableExp = (VariableExp) PivotUtil.getOwnedSource(asCondition);
-		NullLiteralExp asConditionNullExp = (NullLiteralExp) PivotUtil.getOwnedArgument(asCondition, 0);
+		OperationCallExp ne_Exp = (OperationCallExp) asExpressionInOCL.getOwnedBody();
+		NullLiteralExp null_ne_Exp = (NullLiteralExp) PivotUtil.getOwnedArgument(ne_Exp, 0);
+		LetExp let_ne_Exp = (LetExp) PivotUtil.getOwnedSource(ne_Exp);
+		OperationCallExp toString_let_ne_Exp = (OperationCallExp) PivotUtil.getOwnedInit(PivotUtil.getOwnedVariable(let_ne_Exp));
+		VariableExp self_toString_let_ne_Exp = (VariableExp) PivotUtil.getOwnedSource(toString_let_ne_Exp);
+		LetVariable let_ne_Variable = (LetVariable) PivotUtil.getOwnedVariable(let_ne_Exp);
+		IfExp if_let_ne_Exp = (IfExp) PivotUtil.getOwnedIn(let_ne_Exp);
+		OperationCallExp eq_if_let_ne_Exp = (OperationCallExp) PivotUtil.getOwnedCondition(if_let_ne_Exp);
+		StringLiteralExp null_if_let_ne_Exp = (StringLiteralExp) PivotUtil.getOwnedThen(if_let_ne_Exp);
+		VariableExp v_if_let_ne_Exp = (VariableExp) PivotUtil.getOwnedElse(if_let_ne_Exp);
+		VariableExp v_eq_if_let_ne_Exp = (VariableExp) PivotUtil.getOwnedSource(eq_if_let_ne_Exp);
+		NullLiteralExp null_eq_if_let_ne_Exp = (NullLiteralExp) PivotUtil.getOwnedArgument(eq_if_let_ne_Exp, 0);
 
-		SymbolicVariableValue contextSymbolicVariable = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
+		SymbolicVariableValue self_Value = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
 
 		// null self
-		SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[0]);
-		checkContents(symbolicAnalysis1, asExpressionInOCL, isDeads(asElseVariableExp), mayBeNulls(selfExp, asLetVariableInit, asLetVariable, asConditionVariableExp, asConditionNullExp, neNullExp), null, null);
-		assertTrue("Result",  ocl.getIdResolver().oclEquals(symbolicAnalysis1.getBaseSymbolicEvaluationEnvironment().getSymbolicValue(asIf).getKnownValue(), "null"));
+		SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[0]);
+		checkContents(symbolicAnalysis1, asExpressionInOCL, isDeads(v_if_let_ne_Exp), mayBeNulls(self_toString_let_ne_Exp, toString_let_ne_Exp, let_ne_Variable, v_eq_if_let_ne_Exp, null_eq_if_let_ne_Exp, null_ne_Exp), null, null);
+		assertTrue("Result",  ocl.getIdResolver().oclEquals(symbolicAnalysis1.getBaseSymbolicEvaluationEnvironment().getSymbolicValue(if_let_ne_Exp).getKnownValue(), "null"));
 
 		// non-null unknown self
-		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[0]);
-		checkContents(symbolicAnalysis2, asExpressionInOCL, isDeads(asThenLiteralExp), mayBeNulls(asConditionNullExp, neNullExp), null, null);
+		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[0]);
+		checkContents(symbolicAnalysis2, asExpressionInOCL, isDeads(null_if_let_ne_Exp), mayBeNulls(null_eq_if_let_ne_Exp, null_ne_Exp), null, null);
 
 		ocl.dispose();
 	}
 
 	public void testSymbolicAnalysis_IfOclIsUnDefinedNameGuard() throws Exception {
-		MyOCL ocl = new MyOCL("IfOclIsUnDefinedNameGuard", "IfOclIsUnDefinedNameGuard(deductions : Deductions[?]) : Dummy[?]",
-				"if deductions.mayBeNullDummy.oclIsUndefined() then null else deductions.mayBeNullDummy.dummy endif");
+		MyOCL ocl = new MyOCL("IfOclIsUnDefinedNameGuard", "IfOclIsUnDefinedNameGuard(x : Deductions[?]) : Dummy[?]",
+				"if x.mayBeNullDummy.oclIsUndefined() then null else x.mayBeNullDummy.dummy endif");
 		ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
-		VariableDeclaration firstParameterVariable = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
-		IfExp asIf = (IfExp) asExpressionInOCL.getOwnedBody();
-		OperationCallExp asCondition = (OperationCallExp) PivotUtil.getOwnedCondition(asIf);
-		PropertyCallExp asConditionSrc = (PropertyCallExp) PivotUtil.getOwnedSource(asCondition);
-		VariableExp asConditionVariableExp = (VariableExp) PivotUtil.getOwnedSource(asConditionSrc);
-		NullLiteralExp nullLiteralExp = (NullLiteralExp) PivotUtil.getOwnedThen(asIf);
-		PropertyCallExp asElse = (PropertyCallExp) PivotUtil.getOwnedElse(asIf);
-		PropertyCallExp asElseSrc = (PropertyCallExp) PivotUtil.getOwnedSource(asElse);
-		VariableExp asElseVariableExp = (VariableExp) PivotUtil.getOwnedSource(asElseSrc);
+		VariableDeclaration x_Parameter = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
+		IfExp if_Exp = (IfExp) asExpressionInOCL.getOwnedBody();
+		OperationCallExp oclIsUndefined_if_Exp = (OperationCallExp) PivotUtil.getOwnedCondition(if_Exp);
+		PropertyCallExp mayBeNullDummy_oclIsUndefined_if_Exp = (PropertyCallExp) PivotUtil.getOwnedSource(oclIsUndefined_if_Exp);
+		VariableExp x_mayBeNullDummy_oclIsUndefined_if_Exp = (VariableExp) PivotUtil.getOwnedSource(mayBeNullDummy_oclIsUndefined_if_Exp);
+		NullLiteralExp null_if_Exp = (NullLiteralExp) PivotUtil.getOwnedThen(if_Exp);
+		PropertyCallExp dummy_if_Exp = (PropertyCallExp) PivotUtil.getOwnedElse(if_Exp);
+		PropertyCallExp mayBeNullDummy_dummy_if_Exp = (PropertyCallExp) PivotUtil.getOwnedSource(dummy_if_Exp);
+		VariableExp x_mayBeNullDummy_dummy_if_Exp = (VariableExp) PivotUtil.getOwnedSource(mayBeNullDummy_dummy_if_Exp);
 
 		EObject dummyInstance = ocl.createDummyInstance();
 	//	SymbolicUnknownValue selfSymbolicVariable = new SymbolicUnknownValue("p0", TypeId.STRING, false, false);
 
-		SymbolicVariableValue contextSymbolicVariable = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
+		SymbolicVariableValue self_Value = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
 
 		// null deduction
-		SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[] {null});
-		checkContents(symbolicAnalysis1, asExpressionInOCL, isDeads(asElse, asElseSrc, asElseVariableExp), mayBeNulls(firstParameterVariable, asConditionVariableExp, asExpressionInOCL, asIf, nullLiteralExp), null, isInvalids(asConditionSrc));
+		SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[] {null});
+		checkContents(symbolicAnalysis1, asExpressionInOCL, isDeads(dummy_if_Exp, mayBeNullDummy_dummy_if_Exp, x_mayBeNullDummy_dummy_if_Exp), mayBeNulls(x_Parameter, x_mayBeNullDummy_oclIsUndefined_if_Exp, asExpressionInOCL, if_Exp, null_if_Exp), null, isInvalids(mayBeNullDummy_oclIsUndefined_if_Exp));
 
 		// unknown may-be-null deduction
 		SymbolicVariableValue symbolicVariable2 = new SymbolicVariableValue(asExpressionInOCL.getOwnedParameters().get(0), true, false);
-		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[] {symbolicVariable2});
-		checkContents(symbolicAnalysis2, asExpressionInOCL, null, mayBeNulls(firstParameterVariable, asExpressionInOCL, asIf, asConditionVariableExp, nullLiteralExp), mayBeInvalids(asConditionSrc), null);
+		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[] {symbolicVariable2});
+		checkContents(symbolicAnalysis2, asExpressionInOCL, null, mayBeNulls(x_Parameter, asExpressionInOCL, if_Exp, x_mayBeNullDummy_oclIsUndefined_if_Exp, null_if_Exp), mayBeInvalids(mayBeNullDummy_oclIsUndefined_if_Exp), null);
 
 		// non-null unknown deduction
 		SymbolicVariableValue symbolicVariable3 = new SymbolicVariableValue(asExpressionInOCL.getOwnedParameters().get(0), false, false);
-		SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[] {symbolicVariable3});
-		checkContents(symbolicAnalysis3, asExpressionInOCL, null, mayBeNulls(asExpressionInOCL, asIf, asConditionSrc, nullLiteralExp), null, null);
+		SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[] {symbolicVariable3});
+		checkContents(symbolicAnalysis3, asExpressionInOCL, null, mayBeNulls(asExpressionInOCL, if_Exp, mayBeNullDummy_oclIsUndefined_if_Exp, null_if_Exp), null, null);
 
 		// non-null known deduction
 		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, null, new Object[] {dummyInstance});
-		checkContents(symbolicAnalysis4, asExpressionInOCL, isDeads(asElse, asElseSrc, asElseVariableExp), mayBeNulls(asExpressionInOCL, asIf, nullLiteralExp), null, isInvalids(asConditionSrc));
+		checkContents(symbolicAnalysis4, asExpressionInOCL, isDeads(dummy_if_Exp, mayBeNullDummy_dummy_if_Exp, x_mayBeNullDummy_dummy_if_Exp), mayBeNulls(asExpressionInOCL, if_Exp, null_if_Exp), null, isInvalids(mayBeNullDummy_oclIsUndefined_if_Exp));
 
 		ocl.dispose();
 	}
@@ -933,41 +931,41 @@ public class SymbolicAnalysisTests extends XtextTestCase
 			MyOCL ocl = new MyOCL("ImpliesGuard", "ImpliesGuard(x : Integer[?]) : Boolean",
 					"x <> null implies x > 0");
 			ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
-			VariableDeclaration firstParameterVariable = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
-			OperationCallExp impliesExp = (OperationCallExp) asExpressionInOCL.getOwnedBody();
-			OperationCallExp notEqExp = (OperationCallExp) PivotUtil.getOwnedSource(impliesExp);
-			OperationCallExp gtExp = (OperationCallExp) PivotUtil.getOwnedArgument(impliesExp, 0);
-			VariableExp neSourceExp = (VariableExp) PivotUtil.getOwnedSource(notEqExp);
-			NullLiteralExp nullExp = (NullLiteralExp) PivotUtil.getOwnedArgument(notEqExp, 0);
-			VariableExp gtSourceExp = (VariableExp) PivotUtil.getOwnedSource(gtExp);
-			NumericLiteralExp zeroExp = (NumericLiteralExp) PivotUtil.getOwnedArgument(gtExp, 0);
+			VariableDeclaration x_Parameter = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
+			OperationCallExp implies_Exp = (OperationCallExp) asExpressionInOCL.getOwnedBody();
+			OperationCallExp ne_implies_Exp = (OperationCallExp) PivotUtil.getOwnedSource(implies_Exp);
+			OperationCallExp gt_implies_Exp = (OperationCallExp) PivotUtil.getOwnedArgument(implies_Exp, 0);
+			VariableExp x_ne_implies_Exp = (VariableExp) PivotUtil.getOwnedSource(ne_implies_Exp);
+			NullLiteralExp null_ne_implies_Exp = (NullLiteralExp) PivotUtil.getOwnedArgument(ne_implies_Exp, 0);
+			VariableExp x_gt_implies_Exp = (VariableExp) PivotUtil.getOwnedSource(gt_implies_Exp);
+			NumericLiteralExp zero_gt_implies_Exp = (NumericLiteralExp) PivotUtil.getOwnedArgument(gt_implies_Exp, 0);
 
-			SymbolicVariableValue contextSymbolicVariable = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
+			SymbolicVariableValue self_Value = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
 
 			// may-be-null x
 			SymbolicVariableValue symbolicVariable = new SymbolicVariableValue(asExpressionInOCL.getOwnedParameters().get(0), true, false);
-			SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{symbolicVariable});
-			checkContents(symbolicAnalysis3, asExpressionInOCL, null, mayBeNulls(firstParameterVariable, neSourceExp, nullExp), null, null);
+			SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{symbolicVariable});
+			checkContents(symbolicAnalysis3, asExpressionInOCL, null, mayBeNulls(x_Parameter, x_ne_implies_Exp, null_ne_implies_Exp), null, null);
 
 			// non-null known x
-			SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{5});
-			checkContents(symbolicAnalysis1, asExpressionInOCL, isDeads(notEqExp, neSourceExp, nullExp), null, null, null);
+			SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{5});
+			checkContents(symbolicAnalysis1, asExpressionInOCL, isDeads(ne_implies_Exp, x_ne_implies_Exp, null_ne_implies_Exp), null, null, null);
 			BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment1 = symbolicAnalysis1.getBaseSymbolicEvaluationEnvironment();
-			assertTrue(symbolicEvaluationEnvironment1.isTrue(gtExp));
+			assertTrue(symbolicEvaluationEnvironment1.isTrue(gt_implies_Exp));
 			assertTrue(symbolicEvaluationEnvironment1.isTrue(asExpressionInOCL));
 
 			// null x
-			SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{null});
-			checkContents(symbolicAnalysis2, asExpressionInOCL, isDeads(gtExp, gtSourceExp, zeroExp), mayBeNulls(firstParameterVariable, neSourceExp, nullExp), null, null);
+			SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{null});
+			checkContents(symbolicAnalysis2, asExpressionInOCL, isDeads(gt_implies_Exp, x_gt_implies_Exp, zero_gt_implies_Exp), mayBeNulls(x_Parameter, x_ne_implies_Exp, null_ne_implies_Exp), null, null);
 			BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment2 = symbolicAnalysis2.getBaseSymbolicEvaluationEnvironment();
-			assertTrue(symbolicEvaluationEnvironment2.isFalse(notEqExp));
+			assertTrue(symbolicEvaluationEnvironment2.isFalse(ne_implies_Exp));
 			assertTrue(symbolicEvaluationEnvironment2.isTrue(asExpressionInOCL));
 
 			// non-null unknown x
-			SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{new SymbolicUnknownValue("p0", TypeId.INTEGER, false, false)});
-			checkContents(symbolicAnalysis4, asExpressionInOCL, null, mayBeNulls(nullExp), null, null);
+			SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{new SymbolicUnknownValue("p0", TypeId.INTEGER, false, false)});
+			checkContents(symbolicAnalysis4, asExpressionInOCL, null, mayBeNulls(null_ne_implies_Exp), null, null);
 			BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment4 = symbolicAnalysis4.getBaseSymbolicEvaluationEnvironment();
-			assertFalse(symbolicEvaluationEnvironment4.mayBeInvalidOrNull(gtExp));
+			assertFalse(symbolicEvaluationEnvironment4.mayBeInvalidOrNull(gt_implies_Exp));
 			assertFalse(symbolicEvaluationEnvironment4.mayBeInvalidOrNull(asExpressionInOCL));
 
 			ocl.dispose();
@@ -977,41 +975,41 @@ public class SymbolicAnalysisTests extends XtextTestCase
 			MyOCL ocl = new MyOCL("Implies2Guard", "Implies2Guard(x : Integer[?]) : Boolean",
 					"x <> null implies2 x > 0");
 			ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
-			VariableDeclaration firstParameterVariable = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
-			OperationCallExp impliesExp = (OperationCallExp) asExpressionInOCL.getOwnedBody();
-			OperationCallExp notEqExp = (OperationCallExp) PivotUtil.getOwnedSource(impliesExp);
-			OperationCallExp gtExp = (OperationCallExp) PivotUtil.getOwnedArgument(impliesExp, 0);
-			VariableExp neSourceExp = (VariableExp) PivotUtil.getOwnedSource(notEqExp);
-			NullLiteralExp nullExp = (NullLiteralExp) PivotUtil.getOwnedArgument(notEqExp, 0);
-			VariableExp gtSourceExp = (VariableExp) PivotUtil.getOwnedSource(gtExp);
-			NumericLiteralExp zeroExp = (NumericLiteralExp) PivotUtil.getOwnedArgument(gtExp, 0);
+			VariableDeclaration x_Parameter = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
+			OperationCallExp implies2_Exp = (OperationCallExp) asExpressionInOCL.getOwnedBody();
+			OperationCallExp ne_implies2_Exp = (OperationCallExp) PivotUtil.getOwnedSource(implies2_Exp);
+			OperationCallExp gt_implies2_Exp = (OperationCallExp) PivotUtil.getOwnedArgument(implies2_Exp, 0);
+			VariableExp x_ne_implies2_Exp = (VariableExp) PivotUtil.getOwnedSource(ne_implies2_Exp);
+			NullLiteralExp null_ne_implies2_Exp = (NullLiteralExp) PivotUtil.getOwnedArgument(ne_implies2_Exp, 0);
+			VariableExp x_gt_implies2_Exp = (VariableExp) PivotUtil.getOwnedSource(gt_implies2_Exp);
+			NumericLiteralExp zero_gt_implies2_Exp = (NumericLiteralExp) PivotUtil.getOwnedArgument(gt_implies2_Exp, 0);
 
-			SymbolicVariableValue contextSymbolicVariable = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
+			SymbolicVariableValue self_Value = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
 
 			// non-null known x
-			SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{5});
-			checkContents(symbolicAnalysis1, asExpressionInOCL, isDeads(notEqExp, neSourceExp, nullExp), null, null, null);
+			SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{5});
+			checkContents(symbolicAnalysis1, asExpressionInOCL, isDeads(ne_implies2_Exp, x_ne_implies2_Exp, null_ne_implies2_Exp), null, null, null);
 			BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment1 = symbolicAnalysis1.getBaseSymbolicEvaluationEnvironment();
-			assertTrue(symbolicEvaluationEnvironment1.isTrue(gtExp));
+			assertTrue(symbolicEvaluationEnvironment1.isTrue(gt_implies2_Exp));
 			assertTrue(symbolicEvaluationEnvironment1.isTrue(asExpressionInOCL));
 
 			// null x
-			SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{null});
-			checkContents(symbolicAnalysis2, asExpressionInOCL, isDeads(gtExp, gtSourceExp, zeroExp), mayBeNulls(firstParameterVariable, neSourceExp, nullExp), null, null);
+			SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{null});
+			checkContents(symbolicAnalysis2, asExpressionInOCL, isDeads(gt_implies2_Exp, x_gt_implies2_Exp, zero_gt_implies2_Exp), mayBeNulls(x_Parameter, x_ne_implies2_Exp, null_ne_implies2_Exp), null, null);
 			BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment2 = symbolicAnalysis2.getBaseSymbolicEvaluationEnvironment();
-			assertTrue(symbolicEvaluationEnvironment2.isFalse(notEqExp));
+			assertTrue(symbolicEvaluationEnvironment2.isFalse(ne_implies2_Exp));
 			assertTrue(symbolicEvaluationEnvironment2.isTrue(asExpressionInOCL));
 
 			// may-be-null x
 			SymbolicVariableValue symbolicVariable = new SymbolicVariableValue(asExpressionInOCL.getOwnedParameters().get(0), true, false);
-			SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{symbolicVariable});
-			checkContents(symbolicAnalysis3, asExpressionInOCL, null, mayBeNulls(firstParameterVariable, neSourceExp, nullExp), null, null);
+			SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{symbolicVariable});
+			checkContents(symbolicAnalysis3, asExpressionInOCL, null, mayBeNulls(x_Parameter, x_ne_implies2_Exp, null_ne_implies2_Exp), null, null);
 
 			// non-null unknown x
-			SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{new SymbolicUnknownValue("p0", TypeId.INTEGER, false, false)});
-			checkContents(symbolicAnalysis4, asExpressionInOCL, null, mayBeNulls(nullExp), null, null);
+			SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{new SymbolicUnknownValue("p0", TypeId.INTEGER, false, false)});
+			checkContents(symbolicAnalysis4, asExpressionInOCL, null, mayBeNulls(null_ne_implies2_Exp), null, null);
 			BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment4 = symbolicAnalysis4.getBaseSymbolicEvaluationEnvironment();
-			assertFalse(symbolicEvaluationEnvironment4.mayBeInvalidOrNull(gtExp));
+			assertFalse(symbolicEvaluationEnvironment4.mayBeInvalidOrNull(gt_implies2_Exp));
 			assertFalse(symbolicEvaluationEnvironment4.mayBeInvalidOrNull(asExpressionInOCL));
 
 			ocl.dispose();
@@ -1021,38 +1019,38 @@ public class SymbolicAnalysisTests extends XtextTestCase
 			MyOCL ocl = new MyOCL("IndirectAndGuard", "IndirectAndGuard(x : Deductions[?]) : Boolean",
 					"x?.mayBeNullDummy <> null and x?.mayBeNullDummy.dummy = null");
 			ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
-			VariableDeclaration firstParameterVariable = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
-			OperationCallExp andExp = (OperationCallExp) asExpressionInOCL.getOwnedBody();
-			OperationCallExp notEqExp = (OperationCallExp) PivotUtil.getOwnedSource(andExp);
-			PropertyCallExp notEqPropCallExp = (PropertyCallExp) PivotUtil.getOwnedSource(notEqExp);
-			VariableExp notEqSourceExp = (VariableExp) PivotUtil.getOwnedSource(notEqPropCallExp);
-			OperationCallExp eqExp = (OperationCallExp) PivotUtil.getOwnedArgument(andExp, 0);
-			PropertyCallExp eqPropCallExp = (PropertyCallExp) PivotUtil.getOwnedSource(eqExp);
-			PropertyCallExp eqPropCallPropCallExp = (PropertyCallExp) PivotUtil.getOwnedSource(eqPropCallExp);
-			VariableExp eqSourceExp = (VariableExp) PivotUtil.getOwnedSource(eqPropCallPropCallExp);
-			NullLiteralExp neNullExp = (NullLiteralExp) PivotUtil.getOwnedArgument(notEqExp, 0);
-		//	VariableExp gtSourceExp = (VariableExp) PivotUtil.getOwnedSource(eqExp);
-			NullLiteralExp eqNullExp = (NullLiteralExp) PivotUtil.getOwnedArgument(eqExp, 0);
+			VariableDeclaration x_Parameter = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
+			OperationCallExp and_Exp = (OperationCallExp) asExpressionInOCL.getOwnedBody();
+			OperationCallExp ne_and_Exp = (OperationCallExp) PivotUtil.getOwnedSource(and_Exp);
+			PropertyCallExp mayBeNullDummy_ne_and_Exp = (PropertyCallExp) PivotUtil.getOwnedSource(ne_and_Exp);
+			VariableExp x_mayBeNullDummy_ne_and_Exp = (VariableExp) PivotUtil.getOwnedSource(mayBeNullDummy_ne_and_Exp);
+			OperationCallExp eq_and_Exp = (OperationCallExp) PivotUtil.getOwnedArgument(and_Exp, 0);
+			PropertyCallExp dummy_eq_and_Exp = (PropertyCallExp) PivotUtil.getOwnedSource(eq_and_Exp);
+			PropertyCallExp mayBeNullDummy_dummy_eq_and_Exp = (PropertyCallExp) PivotUtil.getOwnedSource(dummy_eq_and_Exp);
+			VariableExp x_mayBeNullDummy_dummy_eq_and_Exp = (VariableExp) PivotUtil.getOwnedSource(mayBeNullDummy_dummy_eq_and_Exp);
+			NullLiteralExp null_ne_and_Exp = (NullLiteralExp) PivotUtil.getOwnedArgument(ne_and_Exp, 0);
+		//	VariableExp gtSourceExp = (VariableExp) PivotUtil.getOwnedSource(eq_and_Exp);
+			NullLiteralExp null_eq_and_Exp = (NullLiteralExp) PivotUtil.getOwnedArgument(eq_and_Exp, 0);
 
-			SymbolicVariableValue contextSymbolicVariable = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
+			SymbolicVariableValue self_Value = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
 
 			// null x
-			SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{null});
-			checkContents(symbolicAnalysis1, asExpressionInOCL, isDeads(eqExp, eqPropCallExp, eqPropCallPropCallExp, eqSourceExp, eqNullExp), mayBeNulls(firstParameterVariable, notEqPropCallExp, notEqSourceExp, neNullExp), null, null);
-			assertTrue(symbolicAnalysis1.getBaseSymbolicEvaluationEnvironment().isFalse(notEqExp));
-			assertTrue(symbolicAnalysis1.getBaseSymbolicEvaluationEnvironment().isFalse(andExp));
+			SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{null});
+			checkContents(symbolicAnalysis1, asExpressionInOCL, isDeads(eq_and_Exp, dummy_eq_and_Exp, mayBeNullDummy_dummy_eq_and_Exp, x_mayBeNullDummy_dummy_eq_and_Exp, null_eq_and_Exp), mayBeNulls(x_Parameter, mayBeNullDummy_ne_and_Exp, x_mayBeNullDummy_ne_and_Exp, null_ne_and_Exp), null, null);
+			assertTrue(symbolicAnalysis1.getBaseSymbolicEvaluationEnvironment().isFalse(ne_and_Exp));
+			assertTrue(symbolicAnalysis1.getBaseSymbolicEvaluationEnvironment().isFalse(and_Exp));
 			assertTrue(symbolicAnalysis1.getBaseSymbolicEvaluationEnvironment().isFalse(asExpressionInOCL));
 
 		/*	// null self
 			SymbolicEvaluationVisitor symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, null, new Object[]{null});
-			checkContents(symbolicAnalysis2, asExpressionInOCL, isDeads(gtExp, gtSourceExp, zeroExp), mayBeNulls(neSourceExp, nullExp}, null, null);
-			assertTrue(symbolicAnalysis2.isFalse(notEqExp));
+			checkContents(symbolicAnalysis2, asExpressionInOCL, isDeads(gt_implies2_Exp, gtSourceExp, zeroExp), mayBeNulls(x_ne_implies2_Exp, null_ne_implies2_Exp}, null, null);
+			assertTrue(symbolicAnalysis2.isFalse(ne_and_Exp));
 			assertTrue(symbolicAnalysis2.isTrue(asExpressionInOCL));
 
 			// may-be-null self
 			SymbolicVariableValueImpl symbolicVariable = new SymbolicVariableValueImpl(asExpressionInOCL.getOwnedParameters().get(0), true, false);
 			SymbolicEvaluationVisitor symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, null, new Object[]{symbolicVariable});
-			checkContents(symbolicAnalysis3, asExpressionInOCL, null, mayBeNulls(neSourceExp, nullExp}, null, null);
+			checkContents(symbolicAnalysis3, asExpressionInOCL, null, mayBeNulls(x_ne_implies2_Exp, null_ne_implies2_Exp}, null, null);
 	*/
 			ocl.dispose();
 		}
@@ -1061,87 +1059,86 @@ public class SymbolicAnalysisTests extends XtextTestCase
 			MyOCL ocl = new MyOCL("IndirectAndGuard_Operation", "IndirectAndGuard_Operation(x : Deductions[?]) : Boolean",
 					"x?.mayBeNullDummy <> null and x?.mayBeNullDummy.func(1,2) = null");
 			ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
-		//	VariableDeclaration contextVariable = PivotUtil.getOwnedContext(asExpressionInOCL);
-			VariableDeclaration firstParameterVariable = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
-			OperationCallExp andExp = (OperationCallExp) asExpressionInOCL.getOwnedBody();
-			OperationCallExp notEqExp = (OperationCallExp) PivotUtil.getOwnedSource(andExp);
-			PropertyCallExp notEqPropCallExp = (PropertyCallExp) PivotUtil.getOwnedSource(notEqExp);
-			VariableExp notEqSourceExp = (VariableExp) PivotUtil.getOwnedSource(notEqPropCallExp);
-			OperationCallExp eqExp = (OperationCallExp) PivotUtil.getOwnedArgument(andExp, 0);
-			OperationCallExp eqOpCallExp = (OperationCallExp) PivotUtil.getOwnedSource(eqExp);
-			PropertyCallExp eqOpCallPropCallExp = (PropertyCallExp) PivotUtil.getOwnedSource(eqOpCallExp);
-			VariableExp eqSourceExp = (VariableExp) PivotUtil.getOwnedSource(eqOpCallPropCallExp);
-			NullLiteralExp neNullExp = (NullLiteralExp) PivotUtil.getOwnedArgument(notEqExp, 0);
-		//	VariableExp gtSourceExp = (VariableExp) PivotUtil.getOwnedSource(eqExp);
-			NullLiteralExp eqNullExp = (NullLiteralExp) PivotUtil.getOwnedArgument(eqExp, 0);
-			IntegerLiteralExp eq1Exp = (IntegerLiteralExp) PivotUtil.getOwnedArgument(eqOpCallExp, 0);
-			IntegerLiteralExp eq2Exp = (IntegerLiteralExp) PivotUtil.getOwnedArgument(eqOpCallExp, 1);
+		//	VariableDeclaration self_Parameter = PivotUtil.getOwnedContext(asExpressionInOCL);
+			VariableDeclaration x_Parameter = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
+			OperationCallExp and_Exp = (OperationCallExp) asExpressionInOCL.getOwnedBody();
+			OperationCallExp ne_and_Exp = (OperationCallExp) PivotUtil.getOwnedSource(and_Exp);
+			PropertyCallExp mayBeNullDummy_ne_and_Exp = (PropertyCallExp) PivotUtil.getOwnedSource(ne_and_Exp);
+			VariableExp x_mayBeNullDummy_ne_and_Exp = (VariableExp) PivotUtil.getOwnedSource(mayBeNullDummy_ne_and_Exp);
+			OperationCallExp eq_and_Exp = (OperationCallExp) PivotUtil.getOwnedArgument(and_Exp, 0);
+			OperationCallExp func_eq_and_Exp = (OperationCallExp) PivotUtil.getOwnedSource(eq_and_Exp);
+			PropertyCallExp mayBeNullDummy_func_eq_and_Exp = (PropertyCallExp) PivotUtil.getOwnedSource(func_eq_and_Exp);
+			VariableExp x_mayBeNullDummy_func_eq_and_Exp = (VariableExp) PivotUtil.getOwnedSource(mayBeNullDummy_func_eq_and_Exp);
+			NullLiteralExp null_ne_and_Exp = (NullLiteralExp) PivotUtil.getOwnedArgument(ne_and_Exp, 0);
+		//	VariableExp gtSourceExp = (VariableExp) PivotUtil.getOwnedSource(eq_and_Exp);
+			NullLiteralExp null_eq_and_Exp = (NullLiteralExp) PivotUtil.getOwnedArgument(eq_and_Exp, 0);
+			IntegerLiteralExp a0_func_eq_and_Exp = (IntegerLiteralExp) PivotUtil.getOwnedArgument(func_eq_and_Exp, 0);
+			IntegerLiteralExp a1_func_eq_and_Exp = (IntegerLiteralExp) PivotUtil.getOwnedArgument(func_eq_and_Exp, 1);
 
-			SymbolicVariableValue contextSymbolicVariable = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
+			SymbolicVariableValue self_Value = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
 
 			// null x
-			SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{null});
-			checkContents(symbolicAnalysis1, asExpressionInOCL, isDeads(eqExp, eqOpCallExp, eqOpCallPropCallExp, eqSourceExp, eqNullExp, eq1Exp, eq2Exp), mayBeNulls(firstParameterVariable, notEqPropCallExp, notEqSourceExp, neNullExp), null, null);
-			assertTrue(symbolicAnalysis1.getBaseSymbolicEvaluationEnvironment().isFalse(notEqExp));
-			assertTrue(symbolicAnalysis1.getBaseSymbolicEvaluationEnvironment().isFalse(andExp));
+			SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{null});
+			checkContents(symbolicAnalysis1, asExpressionInOCL, isDeads(eq_and_Exp, func_eq_and_Exp, mayBeNullDummy_func_eq_and_Exp, x_mayBeNullDummy_func_eq_and_Exp, null_eq_and_Exp, a0_func_eq_and_Exp, a1_func_eq_and_Exp), mayBeNulls(x_Parameter, mayBeNullDummy_ne_and_Exp, x_mayBeNullDummy_ne_and_Exp, null_ne_and_Exp), null, null);
+			assertTrue(symbolicAnalysis1.getBaseSymbolicEvaluationEnvironment().isFalse(ne_and_Exp));
+			assertTrue(symbolicAnalysis1.getBaseSymbolicEvaluationEnvironment().isFalse(and_Exp));
 			assertTrue(symbolicAnalysis1.getBaseSymbolicEvaluationEnvironment().isFalse(asExpressionInOCL));
 
 		/*	// null self
 			SymbolicEvaluationVisitor symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, null, new Object[]{null});
-			checkContents(symbolicAnalysis2, asExpressionInOCL, isDeads(gtExp, gtSourceExp, zeroExp), mayBeNulls(neSourceExp, nullExp}, null, null);
-			assertTrue(symbolicAnalysis2.isFalse(notEqExp));
+			checkContents(symbolicAnalysis2, asExpressionInOCL, isDeads(gt_implies2_Exp, gtSourceExp, zeroExp), mayBeNulls(x_ne_implies2_Exp, null_ne_implies2_Exp}, null, null);
+			assertTrue(symbolicAnalysis2.isFalse(ne_and_Exp));
 			assertTrue(symbolicAnalysis2.isTrue(asExpressionInOCL));
 
 			// may-be-null self
 			SymbolicVariableValueImpl symbolicVariable = new SymbolicVariableValueImpl(asExpressionInOCL.getOwnedParameters().get(0), true, false);
 			SymbolicEvaluationVisitor symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, null, new Object[]{symbolicVariable});
-			checkContents(symbolicAnalysis3, asExpressionInOCL, null, mayBeNulls(neSourceExp, nullExp}, null, null);
+			checkContents(symbolicAnalysis3, asExpressionInOCL, null, mayBeNulls(x_ne_implies2_Exp, null_ne_implies2_Exp}, null, null);
 	*/
 			ocl.dispose();
 		}
 
 	public void testSymbolicAnalysis_NotEmptyGuardedFirst() throws Exception {
-		SymbolicAnalysis.HYPOTHESIS.setState(true);
 		MyOCL ocl = new MyOCL("GuardedFirst", "GuardedFirst(x : Sequence(Integer)[?]) : Integer",
 				"if x->notEmpty() then x->first() else -1 endif");
 		ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
-		VariableDeclaration firstParameterVariable = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
-		IfExp ifExp = (IfExp) asExpressionInOCL.getOwnedBody();
-		OperationCallExp notEmptyExp = (OperationCallExp) ifExp.getOwnedCondition();
-		VariableExp sourceNotEmptyExp = (VariableExp) PivotUtil.getOwnedSource(notEmptyExp);
-		OperationCallExp firstExp = (OperationCallExp) ifExp.getOwnedThen();
-		VariableExp sourcefirstExp = (VariableExp) PivotUtil.getOwnedSource(firstExp);
-		OperationCallExp negExp = (OperationCallExp) ifExp.getOwnedElse();
-		IntegerLiteralExp literalExp = (IntegerLiteralExp) negExp.getOwnedSource();
+		VariableDeclaration x_Parameter = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
+		IfExp if_Exp = (IfExp) asExpressionInOCL.getOwnedBody();
+		OperationCallExp notEmpty_if_Exp = (OperationCallExp) if_Exp.getOwnedCondition();
+		VariableExp x_notEmpty_if_Exp = (VariableExp) PivotUtil.getOwnedSource(notEmpty_if_Exp);
+		OperationCallExp first_if_Exp = (OperationCallExp) if_Exp.getOwnedThen();
+		VariableExp x_first_if_Exp = (VariableExp) PivotUtil.getOwnedSource(first_if_Exp);
+		OperationCallExp neg_if_Exp = (OperationCallExp) if_Exp.getOwnedElse();
+		IntegerLiteralExp one_neg_if_Exp = (IntegerLiteralExp) neg_if_Exp.getOwnedSource();
 
-		SymbolicVariableValue contextSymbolicVariable = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
+		SymbolicVariableValue self_Value = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
 
 		// non-null unknown x
 		SymbolicVariableValue symbolicVariable99 = new SymbolicVariableValue(asExpressionInOCL.getOwnedParameters().get(0), false, false);
-		SymbolicAnalysis symbolicAnalysis399 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{symbolicVariable99});
+		SymbolicAnalysis symbolicAnalysis399 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{symbolicVariable99});
 		checkContents(symbolicAnalysis399, asExpressionInOCL, null, null, null, null);
 
 		// non-null empty x
-		SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{ValueUtil.EMPTY_SET});
-		checkContents(symbolicAnalysis1, asExpressionInOCL, isDeads(firstExp, sourcefirstExp), null, null, null);
+		SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{ValueUtil.EMPTY_SET});
+		checkContents(symbolicAnalysis1, asExpressionInOCL, isDeads(first_if_Exp, x_first_if_Exp), null, null, null);
 		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment1 = symbolicAnalysis1.getBaseSymbolicEvaluationEnvironment();
-		assertTrue(symbolicEvaluationEnvironment1.isFalse(notEmptyExp));
+		assertTrue(symbolicEvaluationEnvironment1.isFalse(notEmpty_if_Exp));
 
 		// non-null not-empty x
 		SetValue set2 = ValueUtil.createSetOfEach(TypeId.SET.getSpecializedId(TypeId.INTEGER), ValueUtil.integerValueOf(99));
-		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{set2});
-		checkContents(symbolicAnalysis2, asExpressionInOCL, isDeads(negExp, literalExp), null, null, null);
+		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{set2});
+		checkContents(symbolicAnalysis2, asExpressionInOCL, isDeads(neg_if_Exp, one_neg_if_Exp), null, null, null);
 		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment2 = symbolicAnalysis2.getBaseSymbolicEvaluationEnvironment();
-		assertTrue(symbolicEvaluationEnvironment2.isTrue(notEmptyExp));
+		assertTrue(symbolicEvaluationEnvironment2.isTrue(notEmpty_if_Exp));
 
 		// non-null unknown x
 		SymbolicVariableValue symbolicVariable = new SymbolicVariableValue(asExpressionInOCL.getOwnedParameters().get(0), false, false);
-		SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{symbolicVariable});
+		SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{symbolicVariable});
 		checkContents(symbolicAnalysis3, asExpressionInOCL, null, null, null, null);
 
 		// null collection x (does not behave as empty set)
-		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{null});
-		checkContents(symbolicAnalysis4, asExpressionInOCL, isDeads(firstExp, sourcefirstExp, negExp, literalExp), mayBeNulls(firstParameterVariable, sourceNotEmptyExp), null, isInvalids(asExpressionInOCL, ifExp, notEmptyExp));
+		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{null});
+		checkContents(symbolicAnalysis4, asExpressionInOCL, isDeads(first_if_Exp, x_first_if_Exp, neg_if_Exp, one_neg_if_Exp), mayBeNulls(x_Parameter, x_notEmpty_if_Exp), null, isInvalids(asExpressionInOCL, if_Exp, notEmpty_if_Exp));
 
 		ocl.dispose();
 	}
@@ -1150,39 +1147,39 @@ public class SymbolicAnalysisTests extends XtextTestCase
 		MyOCL ocl = new MyOCL("GuardedFirst", "GuardedFirst(x : Sequence(Integer)[?]) : Integer",
 				"if not x->isEmpty() then x->first() else -1 endif");
 		ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
-		VariableDeclaration firstParameterVariable = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
-		IfExp ifExp = (IfExp) asExpressionInOCL.getOwnedBody();
-		OperationCallExp notExp = (OperationCallExp) ifExp.getOwnedCondition();
-		OperationCallExp isEmptyExp = (OperationCallExp) PivotUtil.getOwnedSource(notExp);
-		VariableExp sourceIsEmptyExp = (VariableExp) PivotUtil.getOwnedSource(isEmptyExp);
-		OperationCallExp firstExp = (OperationCallExp) ifExp.getOwnedThen();
-		VariableExp sourcefirstExp = (VariableExp) PivotUtil.getOwnedSource(firstExp);
-		OperationCallExp negExp = (OperationCallExp) ifExp.getOwnedElse();
-		IntegerLiteralExp literalExp = (IntegerLiteralExp) negExp.getOwnedSource();
+		VariableDeclaration x_Parameter = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
+		IfExp if_Exp = (IfExp) asExpressionInOCL.getOwnedBody();
+		OperationCallExp not_if_Exp = (OperationCallExp) if_Exp.getOwnedCondition();
+		OperationCallExp empty_not_if_Exp = (OperationCallExp) PivotUtil.getOwnedSource(not_if_Exp);
+		VariableExp x_empty_not_if_Exp = (VariableExp) PivotUtil.getOwnedSource(empty_not_if_Exp);
+		OperationCallExp firstExp = (OperationCallExp) if_Exp.getOwnedThen();
+		VariableExp first_if_Exp = (VariableExp) PivotUtil.getOwnedSource(firstExp);
+		OperationCallExp neg_if_Exp = (OperationCallExp) if_Exp.getOwnedElse();
+		IntegerLiteralExp one_neg_if_Exp = (IntegerLiteralExp) neg_if_Exp.getOwnedSource();
 
-		SymbolicVariableValue contextSymbolicVariable = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
+		SymbolicVariableValue self_Value = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
 
 		// non-null empty x
-		SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{ValueUtil.EMPTY_SET});
-		checkContents(symbolicAnalysis1, asExpressionInOCL, isDeads(firstExp, sourcefirstExp), null, null, null);
+		SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{ValueUtil.EMPTY_SET});
+		checkContents(symbolicAnalysis1, asExpressionInOCL, isDeads(firstExp, first_if_Exp), null, null, null);
 		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment1 = symbolicAnalysis1.getBaseSymbolicEvaluationEnvironment();
-		assertTrue(symbolicEvaluationEnvironment1.isFalse(notExp));
+		assertTrue(symbolicEvaluationEnvironment1.isFalse(not_if_Exp));
 
 		// non-null not-empty x
 		SetValue set2 = ValueUtil.createSetOfEach(TypeId.SET.getSpecializedId(TypeId.INTEGER), ValueUtil.integerValueOf(99));
-		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{set2});
-		checkContents(symbolicAnalysis2, asExpressionInOCL, isDeads(negExp, literalExp), null, null, null);
+		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{set2});
+		checkContents(symbolicAnalysis2, asExpressionInOCL, isDeads(neg_if_Exp, one_neg_if_Exp), null, null, null);
 		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment2 = symbolicAnalysis2.getBaseSymbolicEvaluationEnvironment();
-		assertTrue(symbolicEvaluationEnvironment2.isTrue(notExp));
+		assertTrue(symbolicEvaluationEnvironment2.isTrue(not_if_Exp));
 
 		// non-null unknown x
 		SymbolicVariableValue symbolicVariable = new SymbolicVariableValue(asExpressionInOCL.getOwnedParameters().get(0), false, false);
-		SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{symbolicVariable});
+		SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{symbolicVariable});
 		checkContents(symbolicAnalysis3, asExpressionInOCL, null, null, null, null);
 
 		// null collection x (does not behave as empty set)
-		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{null});
-		checkContents(symbolicAnalysis4, asExpressionInOCL, isDeads(firstExp, sourcefirstExp, negExp, literalExp), mayBeNulls(firstParameterVariable, sourceIsEmptyExp), null, isInvalids(asExpressionInOCL, ifExp, notExp, isEmptyExp));
+		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{null});
+		checkContents(symbolicAnalysis4, asExpressionInOCL, isDeads(firstExp, first_if_Exp, neg_if_Exp, one_neg_if_Exp), mayBeNulls(x_Parameter, x_empty_not_if_Exp), null, isInvalids(asExpressionInOCL, if_Exp, not_if_Exp, empty_not_if_Exp));
 
 		ocl.dispose();
 	}
@@ -1191,40 +1188,39 @@ public class SymbolicAnalysisTests extends XtextTestCase
 		MyOCL ocl = new MyOCL("GuardedFirst", "GuardedFirst(x : Sequence(Integer)[?]) : Integer",
 				"if x->size() > 0 then x->first() else -1 endif");
 		ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
-		VariableDeclaration contextVariable = PivotUtil.getOwnedContext(asExpressionInOCL);
-		VariableDeclaration firstParameterVariable = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
-		IfExp ifExp = (IfExp) asExpressionInOCL.getOwnedBody();
-		OperationCallExp gtExp = (OperationCallExp) ifExp.getOwnedCondition();
-		OperationCallExp sizeExp = (OperationCallExp) PivotUtil.getOwnedSource(gtExp);
-		VariableExp sourceSizeExp = (VariableExp) PivotUtil.getOwnedSource(sizeExp);
-		OperationCallExp firstExp = (OperationCallExp) ifExp.getOwnedThen();
-		VariableExp sourcefirstExp = (VariableExp) PivotUtil.getOwnedSource(firstExp);
-		OperationCallExp negExp = (OperationCallExp) ifExp.getOwnedElse();
-		IntegerLiteralExp literalExp = (IntegerLiteralExp) negExp.getOwnedSource();
+		VariableDeclaration x_Parameter = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
+		IfExp if_Exp = (IfExp) asExpressionInOCL.getOwnedBody();
+		OperationCallExp gt_if_Exp = (OperationCallExp) if_Exp.getOwnedCondition();
+		OperationCallExp size_gt_if_Exp = (OperationCallExp) PivotUtil.getOwnedSource(gt_if_Exp);
+		VariableExp x_size_gt_if_Exp = (VariableExp) PivotUtil.getOwnedSource(size_gt_if_Exp);
+		OperationCallExp first_ifExp = (OperationCallExp) if_Exp.getOwnedThen();
+		VariableExp x_first_ifExp = (VariableExp) PivotUtil.getOwnedSource(first_ifExp);
+		OperationCallExp neg_if_Exp = (OperationCallExp) if_Exp.getOwnedElse();
+		IntegerLiteralExp one_neg_if_Exp = (IntegerLiteralExp) neg_if_Exp.getOwnedSource();
 
-		SymbolicVariableValue contextSymbolicVariable = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
+		SymbolicVariableValue self_Value = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
 
 		// non-null empty x
-		SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{ValueUtil.EMPTY_SET});
-		checkContents(symbolicAnalysis1, asExpressionInOCL, isDeads(firstExp, sourcefirstExp), null, null, null);
+		SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{ValueUtil.EMPTY_SET});
+		checkContents(symbolicAnalysis1, asExpressionInOCL, isDeads(first_ifExp, x_first_ifExp), null, null, null);
 		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment1 = symbolicAnalysis1.getBaseSymbolicEvaluationEnvironment();
-		assertTrue(symbolicEvaluationEnvironment1.isFalse(gtExp));
+		assertTrue(symbolicEvaluationEnvironment1.isFalse(gt_if_Exp));
 
 		// non-null not-empty x
 		SetValue set2 = ValueUtil.createSetOfEach(TypeId.SET.getSpecializedId(TypeId.INTEGER), ValueUtil.integerValueOf(99));
-		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{set2});
-		checkContents(symbolicAnalysis2, asExpressionInOCL, isDeads(negExp, literalExp), null, null, null);
+		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{set2});
+		checkContents(symbolicAnalysis2, asExpressionInOCL, isDeads(neg_if_Exp, one_neg_if_Exp), null, null, null);
 		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment2 = symbolicAnalysis2.getBaseSymbolicEvaluationEnvironment();
-		assertTrue(symbolicEvaluationEnvironment2.isTrue(gtExp));
+		assertTrue(symbolicEvaluationEnvironment2.isTrue(gt_if_Exp));
 
 		// non-null unknown x
 		SymbolicVariableValue symbolicVariable = new SymbolicVariableValue(asExpressionInOCL.getOwnedParameters().get(0), false, false);
-		SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{symbolicVariable});
+		SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{symbolicVariable});
 		checkContents(symbolicAnalysis3, asExpressionInOCL, null, null, null, null);
 
 		// null collection x (does not behave as empty set)
-		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{null});
-		checkContents(symbolicAnalysis4, asExpressionInOCL, isDeads(firstExp, sourcefirstExp, negExp, literalExp), mayBeNulls(firstParameterVariable, sourceSizeExp), null, isInvalids(asExpressionInOCL, ifExp, gtExp, sizeExp));
+		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{null});
+		checkContents(symbolicAnalysis4, asExpressionInOCL, isDeads(first_ifExp, x_first_ifExp, neg_if_Exp, one_neg_if_Exp), mayBeNulls(x_Parameter, x_size_gt_if_Exp), null, isInvalids(asExpressionInOCL, if_Exp, gt_if_Exp, size_gt_if_Exp));
 
 		ocl.dispose();
 	}
@@ -1233,39 +1229,44 @@ public class SymbolicAnalysisTests extends XtextTestCase
 		MyOCL ocl = new MyOCL("GuardedFirst", "GuardedFirst(x : Sequence(Integer)[?]) : Integer",
 				"if x->size() <> 0 then x->first() else -1 endif");
 		ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
-		VariableDeclaration firstParameterVariable = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
-		IfExp ifExp = (IfExp) asExpressionInOCL.getOwnedBody();
-		OperationCallExp neExp = (OperationCallExp) ifExp.getOwnedCondition();
-		OperationCallExp sizeExp = (OperationCallExp) PivotUtil.getOwnedSource(neExp);
-		VariableExp sourceSizeExp = (VariableExp) PivotUtil.getOwnedSource(sizeExp);
-		OperationCallExp firstExp = (OperationCallExp) ifExp.getOwnedThen();
-		VariableExp sourcefirstExp = (VariableExp) PivotUtil.getOwnedSource(firstExp);
-		OperationCallExp negExp = (OperationCallExp) ifExp.getOwnedElse();
-		IntegerLiteralExp literalExp = (IntegerLiteralExp) negExp.getOwnedSource();
+		VariableDeclaration x_Parameter = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
+		IfExp if_Exp = (IfExp) asExpressionInOCL.getOwnedBody();
+		OperationCallExp ne_if_Exp = (OperationCallExp) if_Exp.getOwnedCondition();
+		OperationCallExp size_ne_if_Exp = (OperationCallExp) PivotUtil.getOwnedSource(ne_if_Exp);
+		VariableExp x_size_ne_if_Exp = (VariableExp) PivotUtil.getOwnedSource(size_ne_if_Exp);
+		OperationCallExp first_if_Exp = (OperationCallExp) if_Exp.getOwnedThen();
+		VariableExp x_first_if_Exp = (VariableExp) PivotUtil.getOwnedSource(first_if_Exp);
+		OperationCallExp neg_if_Exp = (OperationCallExp) if_Exp.getOwnedElse();
+		IntegerLiteralExp one_neg_if_Exp = (IntegerLiteralExp) neg_if_Exp.getOwnedSource();
 
-		SymbolicVariableValue contextSymbolicVariable = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
+		SymbolicVariableValue self_Value = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
+
+		// non-null unknown x
+		SymbolicVariableValue symbolicVariable99 = new SymbolicVariableValue(asExpressionInOCL.getOwnedParameters().get(0), false, false);
+		SymbolicAnalysis symbolicAnalysis399 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{symbolicVariable99});
+		checkContents(symbolicAnalysis399, asExpressionInOCL, null, null, null, null);
 
 		// non-null empty x
-		SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{ValueUtil.EMPTY_SET});
-		checkContents(symbolicAnalysis1, asExpressionInOCL, isDeads(firstExp, sourcefirstExp), null, null, null);
+		SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{ValueUtil.EMPTY_SET});
+		checkContents(symbolicAnalysis1, asExpressionInOCL, isDeads(first_if_Exp, x_first_if_Exp), null, null, null);
 		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment1 = symbolicAnalysis1.getBaseSymbolicEvaluationEnvironment();
-		assertTrue(symbolicEvaluationEnvironment1.isFalse(neExp));
+		assertTrue(symbolicEvaluationEnvironment1.isFalse(ne_if_Exp));
 
 		// non-null not-empty x
 		SetValue set2 = ValueUtil.createSetOfEach(TypeId.SET.getSpecializedId(TypeId.INTEGER), ValueUtil.integerValueOf(99));
-		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{set2});
-		checkContents(symbolicAnalysis2, asExpressionInOCL, isDeads(negExp, literalExp), null, null, null);
+		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{set2});
+		checkContents(symbolicAnalysis2, asExpressionInOCL, isDeads(neg_if_Exp, one_neg_if_Exp), null, null, null);
 		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment2 = symbolicAnalysis2.getBaseSymbolicEvaluationEnvironment();
-		assertTrue(symbolicEvaluationEnvironment2.isTrue(neExp));
+		assertTrue(symbolicEvaluationEnvironment2.isTrue(ne_if_Exp));
 
 		// non-null unknown x
 		SymbolicVariableValue symbolicVariable = new SymbolicVariableValue(asExpressionInOCL.getOwnedParameters().get(0), false, false);
-		SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{symbolicVariable});
+		SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{symbolicVariable});
 		checkContents(symbolicAnalysis3, asExpressionInOCL, null, null, null, null);
 
 		// null collection x (does not behave as empty set)
-		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{null});
-		checkContents(symbolicAnalysis4, asExpressionInOCL, isDeads(firstExp, sourcefirstExp, negExp, literalExp), mayBeNulls(firstParameterVariable, sourceSizeExp), null, isInvalids(asExpressionInOCL, ifExp, neExp, sizeExp));
+		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{null});
+		checkContents(symbolicAnalysis4, asExpressionInOCL, isDeads(first_if_Exp, x_first_if_Exp, neg_if_Exp, one_neg_if_Exp), mayBeNulls(x_Parameter, x_size_ne_if_Exp), null, isInvalids(asExpressionInOCL, if_Exp, ne_if_Exp, size_ne_if_Exp));
 
 		ocl.dispose();
 	}
@@ -1274,97 +1275,96 @@ public class SymbolicAnalysisTests extends XtextTestCase
 		MyOCL ocl = new MyOCL("OrGuard", "OrGuard(x : Integer[?]) : Boolean",
 				"x = null or x > 0");
 		ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
-		VariableDeclaration firstParameterVariable = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
+		VariableDeclaration x_Parameter = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
 		OperationCallExp orExp = (OperationCallExp) asExpressionInOCL.getOwnedBody();
-		OperationCallExp eqExp = (OperationCallExp) PivotUtil.getOwnedSource(orExp);
-		OperationCallExp gtExp = (OperationCallExp) PivotUtil.getOwnedArgument(orExp, 0);
-		VariableExp eqSourceExp = (VariableExp) PivotUtil.getOwnedSource(eqExp);
-		NullLiteralExp nullExp = (NullLiteralExp) PivotUtil.getOwnedArgument(eqExp, 0);
-		VariableExp gtSourceExp = (VariableExp) PivotUtil.getOwnedSource(gtExp);
-		NumericLiteralExp zeroExp = (NumericLiteralExp) PivotUtil.getOwnedArgument(gtExp, 0);
+		OperationCallExp eq_or_Exp = (OperationCallExp) PivotUtil.getOwnedSource(orExp);
+		OperationCallExp gt_or_Exp = (OperationCallExp) PivotUtil.getOwnedArgument(orExp, 0);
+		VariableExp x_eq_or_Exp = (VariableExp) PivotUtil.getOwnedSource(eq_or_Exp);
+		NullLiteralExp null_eq_or_Exp = (NullLiteralExp) PivotUtil.getOwnedArgument(eq_or_Exp, 0);
+		VariableExp x_gt_or_Exp = (VariableExp) PivotUtil.getOwnedSource(gt_or_Exp);
+		NumericLiteralExp zero_gt_or_Exp = (NumericLiteralExp) PivotUtil.getOwnedArgument(gt_or_Exp, 0);
 
-		SymbolicVariableValue contextSymbolicVariable = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
+		SymbolicVariableValue self_Value = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
 
 		// non-null known ok x
-		SymbolicAnalysis symbolicAnalysis1a = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{5});
-		checkContents(symbolicAnalysis1a, asExpressionInOCL, isDeads(eqExp, eqSourceExp, nullExp), null, null, null);
+		SymbolicAnalysis symbolicAnalysis1a = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{5});
+		checkContents(symbolicAnalysis1a, asExpressionInOCL, isDeads(eq_or_Exp, x_eq_or_Exp, null_eq_or_Exp), null, null, null);
 		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment1a = symbolicAnalysis1a.getBaseSymbolicEvaluationEnvironment();
-		assertTrue(symbolicEvaluationEnvironment1a.isTrue(gtExp));
+		assertTrue(symbolicEvaluationEnvironment1a.isTrue(gt_or_Exp));
 
 		// non-null known bad x
-		SymbolicAnalysis symbolicAnalysis1b = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{-5});
-		checkContents(symbolicAnalysis1b, asExpressionInOCL, null, mayBeNulls(nullExp), null, null);
+		SymbolicAnalysis symbolicAnalysis1b = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{-5});
+		checkContents(symbolicAnalysis1b, asExpressionInOCL, null, mayBeNulls(null_eq_or_Exp), null, null);
 		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment1b = symbolicAnalysis1b.getBaseSymbolicEvaluationEnvironment();
-		assertTrue(symbolicEvaluationEnvironment1b.isFalse(gtExp));
+		assertTrue(symbolicEvaluationEnvironment1b.isFalse(gt_or_Exp));
 
 		// null x
-		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{null});
-		checkContents(symbolicAnalysis2, asExpressionInOCL, isDeads(gtExp, gtSourceExp, zeroExp), mayBeNulls(firstParameterVariable, eqSourceExp, nullExp), null, null);
+		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{null});
+		checkContents(symbolicAnalysis2, asExpressionInOCL, isDeads(gt_or_Exp, x_gt_or_Exp, zero_gt_or_Exp), mayBeNulls(x_Parameter, x_eq_or_Exp, null_eq_or_Exp), null, null);
 		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment2 = symbolicAnalysis2.getBaseSymbolicEvaluationEnvironment();
-		assertTrue(symbolicEvaluationEnvironment2.isTrue(eqExp));
+		assertTrue(symbolicEvaluationEnvironment2.isTrue(eq_or_Exp));
 		assertTrue(symbolicEvaluationEnvironment2.isTrue(asExpressionInOCL));
 
 		// may-be-null x
 		SymbolicVariableValue symbolicVariable = new SymbolicVariableValue(asExpressionInOCL.getOwnedParameters().get(0), true, false);
-		SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{symbolicVariable});
-		checkContents(symbolicAnalysis3, asExpressionInOCL, null, mayBeNulls(firstParameterVariable, eqSourceExp, nullExp), null, null);
+		SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{symbolicVariable});
+		checkContents(symbolicAnalysis3, asExpressionInOCL, null, mayBeNulls(x_Parameter, x_eq_or_Exp, null_eq_or_Exp), null, null);
 
 		// non-null unknown x
-		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{new SymbolicUnknownValue("p0", TypeId.INTEGER, false, false)});
-		checkContents(symbolicAnalysis4, asExpressionInOCL, null, mayBeNulls(nullExp), null, null);
+		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{new SymbolicUnknownValue("p0", TypeId.INTEGER, false, false)});
+		checkContents(symbolicAnalysis4, asExpressionInOCL, null, mayBeNulls(null_eq_or_Exp), null, null);
 		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment4 = symbolicAnalysis4.getBaseSymbolicEvaluationEnvironment();
-		assertFalse(symbolicEvaluationEnvironment4.mayBeInvalidOrNull(gtExp));
+		assertFalse(symbolicEvaluationEnvironment4.mayBeInvalidOrNull(gt_or_Exp));
 		assertFalse(symbolicEvaluationEnvironment4.mayBeInvalidOrNull(asExpressionInOCL));
 
 		ocl.dispose();
 	}
 
 	public void testSymbolicAnalysis_Or2Guard() throws Exception {
-		SymbolicAnalysis.HYPOTHESIS.setState(true);
 		MyOCL ocl = new MyOCL("Or2Guard", "Or2Guard(x : Integer[?]) : Boolean",
 				"x = null or2 x > 0");
 		ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
-		VariableDeclaration contextVariable = PivotUtil.getOwnedContext(asExpressionInOCL);
-		VariableDeclaration firstParameterVariable = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
+		VariableDeclaration self_Parameter = PivotUtil.getOwnedContext(asExpressionInOCL);
+		VariableDeclaration x_Parameter = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
 		OperationCallExp orExp = (OperationCallExp) asExpressionInOCL.getOwnedBody();
-		OperationCallExp eqExp = (OperationCallExp) PivotUtil.getOwnedSource(orExp);
-		OperationCallExp gtExp = (OperationCallExp) PivotUtil.getOwnedArgument(orExp, 0);
-		VariableExp eqSourceExp = (VariableExp) PivotUtil.getOwnedSource(eqExp);
-		NullLiteralExp nullExp = (NullLiteralExp) PivotUtil.getOwnedArgument(eqExp, 0);
-		VariableExp gtSourceExp = (VariableExp) PivotUtil.getOwnedSource(gtExp);
-		NumericLiteralExp zeroExp = (NumericLiteralExp) PivotUtil.getOwnedArgument(gtExp, 0);
+		OperationCallExp eq_or2_Exp = (OperationCallExp) PivotUtil.getOwnedSource(orExp);
+		OperationCallExp gt_or2_Exp = (OperationCallExp) PivotUtil.getOwnedArgument(orExp, 0);
+		VariableExp x_eq_or2_Exp = (VariableExp) PivotUtil.getOwnedSource(eq_or2_Exp);
+		NullLiteralExp null_eq_or2_Exp = (NullLiteralExp) PivotUtil.getOwnedArgument(eq_or2_Exp, 0);
+		VariableExp x_gt_or2_Exp = (VariableExp) PivotUtil.getOwnedSource(gt_or2_Exp);
+		NumericLiteralExp zero_gt_or2_Exp = (NumericLiteralExp) PivotUtil.getOwnedArgument(gt_or2_Exp, 0);
 
-		SymbolicVariableValue contextSymbolicVariable = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
+		SymbolicVariableValue self_Value = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
 
 		// non-null known ok x
-		SymbolicAnalysis symbolicAnalysis1a = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{5});
-		checkContents(symbolicAnalysis1a, asExpressionInOCL, isDeads(eqExp, eqSourceExp, nullExp), null, null, null);
+		SymbolicAnalysis symbolicAnalysis1a = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{5});
+		checkContents(symbolicAnalysis1a, asExpressionInOCL, isDeads(eq_or2_Exp, x_eq_or2_Exp, null_eq_or2_Exp), null, null, null);
 		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment1a = symbolicAnalysis1a.getBaseSymbolicEvaluationEnvironment();
-		assertTrue(symbolicEvaluationEnvironment1a.isTrue(gtExp));
+		assertTrue(symbolicEvaluationEnvironment1a.isTrue(gt_or2_Exp));
 
 		// non-null known bad x
-		SymbolicAnalysis symbolicAnalysis1b = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{-5});
-		checkContents(symbolicAnalysis1b, asExpressionInOCL, null, mayBeNulls(nullExp), null, null);
+		SymbolicAnalysis symbolicAnalysis1b = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{-5});
+		checkContents(symbolicAnalysis1b, asExpressionInOCL, null, mayBeNulls(null_eq_or2_Exp), null, null);
 		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment1b = symbolicAnalysis1b.getBaseSymbolicEvaluationEnvironment();
-		assertTrue(symbolicEvaluationEnvironment1b.isFalse(gtExp));
+		assertTrue(symbolicEvaluationEnvironment1b.isFalse(gt_or2_Exp));
 
 		// null x
-		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{null});
-		checkContents(symbolicAnalysis2, asExpressionInOCL, isDeads(gtExp, gtSourceExp, zeroExp), mayBeNulls(firstParameterVariable, eqSourceExp, nullExp), null, null);
+		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{null});
+		checkContents(symbolicAnalysis2, asExpressionInOCL, isDeads(gt_or2_Exp, x_gt_or2_Exp, zero_gt_or2_Exp), mayBeNulls(x_Parameter, x_eq_or2_Exp, null_eq_or2_Exp), null, null);
 		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment2 = symbolicAnalysis2.getBaseSymbolicEvaluationEnvironment();
-		assertTrue(symbolicEvaluationEnvironment2.isTrue(eqExp));
+		assertTrue(symbolicEvaluationEnvironment2.isTrue(eq_or2_Exp));
 		assertTrue(symbolicEvaluationEnvironment2.isTrue(asExpressionInOCL));
 
 		// may-be-null x
 		SymbolicVariableValue symbolicVariable = new SymbolicVariableValue(asExpressionInOCL.getOwnedParameters().get(0), true, false);
-		SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextVariable, null, new Object[]{symbolicVariable});
-		checkContents(symbolicAnalysis3, asExpressionInOCL, null, mayBeNulls(firstParameterVariable, eqSourceExp, nullExp), null, null);
+		SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Parameter, null, new Object[]{symbolicVariable});
+		checkContents(symbolicAnalysis3, asExpressionInOCL, null, mayBeNulls(x_Parameter, x_eq_or2_Exp, null_eq_or2_Exp), null, null);
 
 		// non-null unknown x
-		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, contextSymbolicVariable, null, new Object[]{new SymbolicUnknownValue("p0", TypeId.INTEGER, false, false)});
-		checkContents(symbolicAnalysis4, asExpressionInOCL, null, mayBeNulls(nullExp), null, null);
+		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{new SymbolicUnknownValue("p0", TypeId.INTEGER, false, false)});
+		checkContents(symbolicAnalysis4, asExpressionInOCL, null, mayBeNulls(null_eq_or2_Exp), null, null);
 		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment4 = symbolicAnalysis4.getBaseSymbolicEvaluationEnvironment();
-		assertFalse(symbolicEvaluationEnvironment4.mayBeInvalidOrNull(gtExp));
+		assertFalse(symbolicEvaluationEnvironment4.mayBeInvalidOrNull(gt_or2_Exp));
 		assertFalse(symbolicEvaluationEnvironment4.mayBeInvalidOrNull(asExpressionInOCL));
 
 		ocl.dispose();

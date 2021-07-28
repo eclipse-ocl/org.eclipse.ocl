@@ -25,6 +25,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
@@ -223,6 +224,15 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 		else {
 			Object boxedValue = environmentFactory.getIdResolver().boxedValueOf(value);
 			symbolicValue = getKnownValue(boxedValue);
+		}
+		if (symbolicValue.mayBeInvalid()) {
+			ExpressionInOCL expressionInOCL = (ExpressionInOCL) parameter.eContainer();
+			EObject expressionContainer = expressionInOCL.eContainer();
+			if (expressionContainer instanceof Operation) {
+				if (!((Operation)expressionContainer).isIsValidating()) {
+					symbolicValue = AbstractSymbolicRefinedValue.createIncompatibility(symbolicValue, "mayBeInvalid \"" + parameter.getName() + "\" parameter initializer is incompatible with not-validating");
+				}
+			}
 		}
 		if (symbolicValue.mayBeNull() && parameter.isIsRequired()) {
 			symbolicValue = AbstractSymbolicRefinedValue.createIncompatibility(symbolicValue, "mayBeNull \"" + parameter.getName() + "\" parameter initializer is incompatible with isRequired");

@@ -415,12 +415,12 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 				i++;
 			}
 		}
-		else if (containingTypedElement instanceof NavigationCallExp) {
-			NavigationCallExp navigationCallExp = (NavigationCallExp)containingTypedElement;
-			if (navigationCallExp.isIsSafe()) {
-				mayBeNull = true;
-			}
-			refinedExpression = PivotUtil.getOwnedSource(navigationCallExp);
+		else if (containingTypedElement instanceof NavigationCallExp) {		// Source is not a descendant
+		//	NavigationCallExp navigationCallExp = (NavigationCallExp)containingTypedElement;
+		//	if (navigationCallExp.isIsSafe()) {
+		//		mayBeNull = true;
+		//	}
+		//	refinedExpression = PivotUtil.getOwnedSource(navigationCallExp);
 		}
 		else if (containingTypedElement instanceof LoopExp) {
 			LoopExp loopExp = (LoopExp)containingTypedElement;
