@@ -136,7 +136,7 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 
 	public @Nullable String analyze() {
 		@NonNull SymbolicValue hypothesizedValue = hypothesis.getHypothesizedValue();
-		installActiveTypedElementAncestry(hypothesizedTypedElement, hypothesizedValue, true);
+		installActiveTypedElementAncestry(hypothesizedTypedElement, hypothesizedValue, Boolean.TRUE);
 		UniqueList<@NonNull CSEElement> reevaluatedCSEElements = new UniqueList<>();
 		for (@NonNull TypedElement activeTypedElement : activeTypedElements) {
 			CSEElement activeCSEElement = cseAnalysis.getCSEElement(activeTypedElement);
@@ -215,22 +215,19 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 	 * Given that activeTypedElement executes, register any consequent refinements for
 	 * containing and sibling TypedElements that ensure this execution.
 	 */
-	private @Nullable String installActiveTypedElementAncestry(@NonNull TypedElement activeTypedElement, @NonNull SymbolicValue activeSymbolicValue, boolean isControlPath) {
-		if (!activeTypedElements.add(activeTypedElement)) {
+	private @Nullable String installActiveTypedElementAncestry(@NonNull TypedElement activeTypedElement, @NonNull SymbolicValue activeSymbolicValue, @Nullable Boolean isControlPath) {
+		if (activeTypedElement instanceof IfExp) {
+			getClass();		// XXX
+		}
+		if (!activeTypedElements.add(activeTypedElement)) {			// The ancestor of VariableExp wil eventually rejoin the hierarchy
 			SymbolicValue symbolicValue = getSymbolicValue(activeTypedElement);
 			return symbolicValue.asIncompatibility();
 		}
 		else {
-			SymbolicValue refinedSymbolicValue = setSymbolicValue(activeTypedElement, activeSymbolicValue);
+			SymbolicValue refinedSymbolicValue = setSymbolicValue(activeTypedElement, activeSymbolicValue, isControlPath == Boolean.TRUE ? "hypo" : isControlPath == Boolean.TRUE ? "ctrl" : "copy");
 			String incompatibility = refinedSymbolicValue.asIncompatibility();
 			if (incompatibility != null) {
 				return incompatibility;
-			}
-			if (isControlPath) {
-				incompatibility = installActiveTypedElementDescendants(activeTypedElement);
-				if (incompatibility != null) {
-					return incompatibility;
-				}
 			}
 			EObject eContainer = activeTypedElement.eContainer();
 			if (eContainer instanceof ExpressionInOCL) {
@@ -243,7 +240,7 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 			else if (eContainer instanceof TypedElement) {
 				TypedElement containingTypedElement = (TypedElement)eContainer;
 				SymbolicValue containingSymbolicValue = baseSymbolicEvaluationEnvironment.getSymbolicValue(containingTypedElement);
-				incompatibility = installActiveTypedElementAncestry(containingTypedElement, containingSymbolicValue, isControlPath);
+				incompatibility = installActiveTypedElementAncestry(containingTypedElement, containingSymbolicValue, isControlPath != null ? Boolean.FALSE : null);
 				if (incompatibility != null) {
 					return incompatibility;
 				}
@@ -260,6 +257,12 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 			}
 			else {
 				throw new IllegalStateException("Unexpected " + activeTypedElement.eClass().getName());
+			}
+			if (isControlPath != null) {
+				incompatibility = installActiveTypedElementDescendants(activeTypedElement);
+				if (incompatibility != null) {
+					return incompatibility;
+				}
 			}
 		}
 		return null;
@@ -289,7 +292,7 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 			CSEElement cseElement = cseAnalysis.getCSEElement(activeVariable);
 			SymbolicValue symbolicValue = baseSymbolicEvaluationEnvironment.getSymbolicValue(cseElement);
 			for (@NonNull TypedElement referencingTypedElement : cseElement.getElements()) {
-				String incompatibility = installActiveTypedElementAncestry(referencingTypedElement, symbolicValue, false);
+				String incompatibility = installActiveTypedElementAncestry(referencingTypedElement, symbolicValue, null);
 				if (incompatibility != null) {
 					return incompatibility;
 				}
@@ -408,7 +411,7 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 					}
 					if (refinedSymbolicValue != baseSymbolicValue) {
 						CSEElement cseElement = cseAnalysis.getCSEElement(argument);
-						setSymbolicValue(argument, refinedSymbolicValue);
+						setSymbolicValue(argument, refinedSymbolicValue, "child");
 						refinedCSEElements.add(cseElement);
 					}
 				}
@@ -529,14 +532,14 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 	}
 
 	@Override
-	public @NonNull SymbolicValue setSymbolicValue(@NonNull TypedElement typedElement, @NonNull SymbolicValue symbolicValue) {
+	public @NonNull SymbolicValue setSymbolicValue(@NonNull TypedElement typedElement, @NonNull SymbolicValue symbolicValue, @NonNull String purpose) {
 		CSEElement cseElement = cseAnalysis.getCSEElement(typedElement);
 		if ("self.name".equals(cseElement.toString())) {
 			getClass();		// XXX
 		}
 		SymbolicValue resultValue = setSymbolicValue(cseElement, symbolicValue);
 		if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
-			SymbolicAnalysis.HYPOTHESIS.println("    set-eval: " + SymbolicUtil.printPath(typedElement, false) + " as: " + SymbolicUtil.printValue(resultValue));
+			SymbolicAnalysis.HYPOTHESIS.println("    set-" + purpose + ": " + SymbolicUtil.printPath(typedElement, false) + " as: " + SymbolicUtil.printValue(resultValue));
 		}
 		return resultValue;
 	}
@@ -563,10 +566,10 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 			Object boxedValue = environmentFactory.getIdResolver().boxedValueOf(e);
 			writeValue = getKnownValue(boxedValue);
 		}
-		if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
-			SymbolicAnalysis.HYPOTHESIS.println("    re-evaluated: " + SymbolicUtil.printPath(typedElement, false) + " as: " + writeValue);
-		}
-		SymbolicValue newSymbolicValue = setSymbolicValue(typedElement, writeValue);
+	//	if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
+	//		SymbolicAnalysis.HYPOTHESIS.println("    re-evaluated: " + SymbolicUtil.printPath(typedElement, false) + " as: " + writeValue);
+	//	}
+		SymbolicValue newSymbolicValue = setSymbolicValue(typedElement, writeValue, "eval");
 		return newSymbolicValue.asIncompatibility();
 /*		// Record re-evaluated value
 		SymbolicValue readValue = basicGetSymbolicValue(typedElement);		// Get the 'read' value

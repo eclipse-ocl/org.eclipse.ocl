@@ -77,7 +77,7 @@ public interface SymbolicEvaluationEnvironment
 	boolean mayBeInvalidOrNull(@NonNull TypedElement typedElement);
 	boolean mayBeNull(@NonNull TypedElement typedElement);
 	void setDead(@NonNull OCLExpression expression);
-	@NonNull SymbolicValue setSymbolicValue(@NonNull TypedElement typedElement, @NonNull SymbolicValue symbolicValue);
+	@NonNull SymbolicValue setSymbolicValue(@NonNull TypedElement typedElement, @NonNull SymbolicValue symbolicValue, @NonNull String purpose);
 	@NonNull SymbolicValue symbolicEvaluate(@NonNull TypedElement element);
 
 }

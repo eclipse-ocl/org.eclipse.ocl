@@ -39,7 +39,7 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 		//
 		if (isInvalid()) {
 			if (unrefinedValue.mayBeInvalid()) {
-				return this;					// "invalid" is except-everything else
+				return this;							// "invalid" is except-everything else
 			}
 			else {
 				assert !mayBeNull();
@@ -48,7 +48,10 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 			}
 		}
 		else if (mayBeInvalid()) {
-			if (!unrefinedValue.mayBeInvalid()) {
+			if (unrefinedValue.isInvalid()) {
+				return unrefinedValue;					// "invalid" is except-everything else
+			}
+			else if (!unrefinedValue.mayBeInvalid()) {
 				return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "mayBeInvalid is incompatible with !mayBeInvalid");
 			}
 			else {
@@ -77,7 +80,10 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 			}
 		}
 		else if (mayBeNull()) {
-			if (!unrefinedValue.mayBeNull()) {
+			if (!unrefinedValue.isNull()) {
+				return unrefinedValue;				// "null" is except-everything else
+			}
+			else if (!unrefinedValue.mayBeNull()) {
 				return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "mayBeNull is incompatible with !mayBeNull");
 			}
 			else {
@@ -110,7 +116,10 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 				}
 			}
 			else if (mayBeZero()) {
-				if (!unrefinedValue.mayBeZero()) {
+				if (unrefinedValue.isZero()) {
+					return unrefinedValue;			// "0" is except-everything else
+				}
+				else if (!unrefinedValue.mayBeZero()) {
 					return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "mayBeZero is incompatible with !mayBeZero");
 				}
 				else {
@@ -137,7 +146,7 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 				else {
 					assert !mayBeInvalid();
 					assert !mayBeNull();
-					assert !mayBeZero();
+				//	assert !mayBeZero();
 					return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "isTrue is incompatible with !mayBeTrue");
 				}
 			}
@@ -153,7 +162,10 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 				}
 			}
 			else if (mayBeTrue()) {
-				if (!unrefinedValue.mayBeTrue()) {
+				if (unrefinedValue.isTrue()) {
+					return unrefinedValue;
+				}
+				else if (!unrefinedValue.mayBeTrue()) {
 					return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "mayBeTrue is incompatible with !mayBeTrue");
 				}
 				else if (!unrefinedValue.mayBeFalse()) {
@@ -164,7 +176,10 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 				}
 			}
 			else if (mayBeFalse()) {
-				if (!unrefinedValue.mayBeFalse()) {
+				if (unrefinedValue.isFalse()) {
+					return unrefinedValue;
+				}
+				else if (!unrefinedValue.mayBeFalse()) {
 					return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "mayBeFalse is incompatible with !mayBeFalse");
 				}
 				else if (!unrefinedValue.mayBeTrue()) {

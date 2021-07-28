@@ -374,7 +374,7 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 		}
 		else {
 			SymbolicValue symbolicValue = context.getUnknownValue(iteratorVariable, !iteratorVariable.isIsRequired(), false);
-			return symbolicEvaluationEnvironment.setSymbolicValue(iteratorVariable, symbolicValue);
+			return symbolicEvaluationEnvironment.setSymbolicValue(iteratorVariable, symbolicValue, "init");
 		}
 	}
 
@@ -471,7 +471,7 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 		}
 		else {
 			SymbolicValue symbolicValue = context.getUnknownValue(resultVariable, !resultVariable.isIsRequired(), false);
-			return symbolicEvaluationEnvironment.setSymbolicValue(resultVariable, symbolicValue);
+			return symbolicEvaluationEnvironment.setSymbolicValue(resultVariable, symbolicValue, "init");
 		}
 	}
 
@@ -603,7 +603,7 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 		else {
 			CSEElement cseElement = context.getCSEElement(iteratorVariable);
 			SymbolicValue symbolicValue = context.getUnknownValue(iteratorVariable, !iteratorVariable.isIsRequired(), false);
-			return symbolicEvaluationEnvironment.setSymbolicValue(iteratorVariable, symbolicValue);
+			return symbolicEvaluationEnvironment.setSymbolicValue(iteratorVariable, symbolicValue, "init");
 		}
 	}
 

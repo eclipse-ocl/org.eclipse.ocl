@@ -210,7 +210,7 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 
 		@Override
 		public @NonNull SymbolicStatus basicGetBooleanStatus() {
-			return basicGetZeroStatus();
+			return value.getZeroStatus();
 		}
 
 		@Override
@@ -224,8 +224,8 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 		}
 
 		@Override
-		public @NonNull SymbolicStatus basicGetZeroStatus() {
-			return value.getZeroStatus();
+		public @Nullable SymbolicStatus basicGetZeroStatus() {
+			return null; //value.getZeroStatus();
 		}
 
 		@Override

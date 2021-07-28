@@ -237,7 +237,11 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 		if (symbolicValue.mayBeNull() && parameter.isIsRequired()) {
 			symbolicValue = AbstractSymbolicRefinedValue.createIncompatibility(symbolicValue, "mayBeNull \"" + parameter.getName() + "\" parameter initializer is incompatible with isRequired");
 		}
-		return setSymbolicValue(cseElement, symbolicValue);
+		SymbolicValue resultValue = setSymbolicValue(cseElement, symbolicValue);
+		if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
+			SymbolicAnalysis.HYPOTHESIS.println("  set-" + "param" + ": " + SymbolicUtil.printPath(parameter, false) + " as: " + SymbolicUtil.printValue(resultValue));
+		}
+		return resultValue;
 	}
 
 	public void refineSymbolicValue(@NonNull TypedElement typedElement, @NonNull SymbolicValue symbolicValue) {
@@ -302,9 +306,13 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 	}
 
 	@Override
-	public @NonNull SymbolicValue setSymbolicValue(@NonNull TypedElement typedElement, @NonNull SymbolicValue symbolicValue) {
+	public @NonNull SymbolicValue setSymbolicValue(@NonNull TypedElement typedElement, @NonNull SymbolicValue symbolicValue, @NonNull String purpose) {
 		CSEElement cseElement = symbolicAnalysis.getCSEElement(typedElement);
-		return setSymbolicValue(cseElement, symbolicValue);
+		SymbolicValue resultValue = setSymbolicValue(cseElement, symbolicValue);
+		if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
+			SymbolicAnalysis.HYPOTHESIS.println("  set-" + purpose + ": " + SymbolicUtil.printPath(typedElement, false) + " as: " + SymbolicUtil.printValue(resultValue));
+		}
+		return resultValue;
 	}
 
 	protected @NonNull SymbolicValue setSymbolicValue(@NonNull CSEElement cseElement, @NonNull SymbolicValue symbolicValue) {
@@ -334,10 +342,10 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 			Object boxedValue = environmentFactory.getIdResolver().boxedValueOf(e);
 			resultValue = getKnownValue(boxedValue);
 		}
-		if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
-			SymbolicAnalysis.HYPOTHESIS.println("  evaluated: " + SymbolicUtil.printPath(typedElement, false) + " as: " + resultValue);
-		}
-		return setSymbolicValue(typedElement, resultValue);								// Record new value
+	//	if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
+	//		SymbolicAnalysis.HYPOTHESIS.println("  evaluated: " + SymbolicUtil.printPath(typedElement, false) + " as: " + resultValue);
+	//	}
+		return setSymbolicValue(typedElement, resultValue, "base");								// Record new value
 	}
 
 	public @NonNull SymbolicValue symbolicReEvaluate(@NonNull TypedElement typedElement) {

@@ -791,11 +791,6 @@ public class SymbolicAnalysisTests extends XtextTestCase
 
 		SymbolicVariableValue self_Value = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
 
-		// non-null unknown x
-		SymbolicVariableValue symbolicVariable99 = new SymbolicVariableValue(asExpressionInOCL.getOwnedParameters().get(0), false, false);
-		SymbolicAnalysis symbolicAnalysis399 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{symbolicVariable99});
-		checkContents(symbolicAnalysis399, asExpressionInOCL, null, null, mayBeInvalids(asExpressionInOCL, first_Exp), null);
-
 		// non-null empty x
 		SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{ValueUtil.EMPTY_SET});
 		checkContents(symbolicAnalysis1, asExpressionInOCL, null, null, null, isInvalids(asExpressionInOCL, first_Exp));
@@ -906,21 +901,26 @@ public class SymbolicAnalysisTests extends XtextTestCase
 
 		SymbolicVariableValue self_Value = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
 
-		// null deduction
+		// unknown may-be-null x
+		SymbolicVariableValue symbolicVariable299 = new SymbolicVariableValue(asExpressionInOCL.getOwnedParameters().get(0), true, false);
+		SymbolicAnalysis symbolicAnalysis299 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[] {symbolicVariable299});
+		checkContents(symbolicAnalysis299, asExpressionInOCL, null, mayBeNulls(x_Parameter, asExpressionInOCL, if_Exp, x_mayBeNullDummy_oclIsUndefined_if_Exp, null_if_Exp), mayBeInvalids(mayBeNullDummy_oclIsUndefined_if_Exp), null);
+
+		// null x
 		SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[] {null});
 		checkContents(symbolicAnalysis1, asExpressionInOCL, isDeads(dummy_if_Exp, mayBeNullDummy_dummy_if_Exp, x_mayBeNullDummy_dummy_if_Exp), mayBeNulls(x_Parameter, x_mayBeNullDummy_oclIsUndefined_if_Exp, asExpressionInOCL, if_Exp, null_if_Exp), null, isInvalids(mayBeNullDummy_oclIsUndefined_if_Exp));
 
-		// unknown may-be-null deduction
+		// unknown may-be-null x
 		SymbolicVariableValue symbolicVariable2 = new SymbolicVariableValue(asExpressionInOCL.getOwnedParameters().get(0), true, false);
 		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[] {symbolicVariable2});
 		checkContents(symbolicAnalysis2, asExpressionInOCL, null, mayBeNulls(x_Parameter, asExpressionInOCL, if_Exp, x_mayBeNullDummy_oclIsUndefined_if_Exp, null_if_Exp), mayBeInvalids(mayBeNullDummy_oclIsUndefined_if_Exp), null);
 
-		// non-null unknown deduction
+		// non-null unknown x
 		SymbolicVariableValue symbolicVariable3 = new SymbolicVariableValue(asExpressionInOCL.getOwnedParameters().get(0), false, false);
 		SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[] {symbolicVariable3});
 		checkContents(symbolicAnalysis3, asExpressionInOCL, null, mayBeNulls(asExpressionInOCL, if_Exp, mayBeNullDummy_oclIsUndefined_if_Exp, null_if_Exp), null, null);
 
-		// non-null known deduction
+		// non-null known x
 		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, null, null, new Object[] {dummyInstance});
 		checkContents(symbolicAnalysis4, asExpressionInOCL, isDeads(dummy_if_Exp, mayBeNullDummy_dummy_if_Exp, x_mayBeNullDummy_dummy_if_Exp), mayBeNulls(asExpressionInOCL, if_Exp, null_if_Exp), null, isInvalids(mayBeNullDummy_oclIsUndefined_if_Exp));
 
@@ -1113,11 +1113,6 @@ public class SymbolicAnalysisTests extends XtextTestCase
 
 		SymbolicVariableValue self_Value = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
 
-		// non-null unknown x
-		SymbolicVariableValue symbolicVariable99 = new SymbolicVariableValue(asExpressionInOCL.getOwnedParameters().get(0), false, false);
-		SymbolicAnalysis symbolicAnalysis399 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{symbolicVariable99});
-		checkContents(symbolicAnalysis399, asExpressionInOCL, null, null, null, null);
-
 		// non-null empty x
 		SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{ValueUtil.EMPTY_SET});
 		checkContents(symbolicAnalysis1, asExpressionInOCL, isDeads(first_if_Exp, x_first_if_Exp), null, null, null);
@@ -1240,11 +1235,6 @@ public class SymbolicAnalysisTests extends XtextTestCase
 		IntegerLiteralExp one_neg_if_Exp = (IntegerLiteralExp) neg_if_Exp.getOwnedSource();
 
 		SymbolicVariableValue self_Value = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
-
-		// non-null unknown x
-		SymbolicVariableValue symbolicVariable99 = new SymbolicVariableValue(asExpressionInOCL.getOwnedParameters().get(0), false, false);
-		SymbolicAnalysis symbolicAnalysis399 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{symbolicVariable99});
-		checkContents(symbolicAnalysis399, asExpressionInOCL, null, null, null, null);
 
 		// non-null empty x
 		SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{ValueUtil.EMPTY_SET});
