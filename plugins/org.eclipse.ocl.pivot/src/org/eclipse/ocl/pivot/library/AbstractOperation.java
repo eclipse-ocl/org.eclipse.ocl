@@ -172,18 +172,30 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 			@NonNull SymbolicValue sourceSymbolicValue, @NonNull List<@NonNull SymbolicValue> argumentSymbolicValues) {
 		OCLExpression ownedSource = PivotUtil.getOwnedSource(callExp);
 		Operation referredOperation = PivotUtil.getReferredOperation(callExp);
-		boolean mayBeInvalidOrNull = evaluationEnvironment.mayBeInvalidOrNull(ownedSource);
+		boolean mayBeInvalid = false;
+		boolean mayBeNull = false;
+		if (evaluationEnvironment.mayBeInvalid(ownedSource)) {
+			mayBeInvalid = true;
+		}
+		if (evaluationEnvironment.mayBeNull(ownedSource)) {
+			if (callExp.isIsSafe()) {
+				mayBeNull = true;
+			}
+			else {
+				mayBeInvalid = true;
+			}
+		}
 		int i = 0;
 		for (@NonNull SymbolicValue argumentSymbolicValue : argumentSymbolicValues) {		// XXX correlate parameter/return nullity
 			if (argumentSymbolicValue.mayBeInvalidOrNull()) {
 				Parameter ownedParameter = PivotUtil.getOwnedParameter(referredOperation, i);
 				if (ownedParameter.isIsRequired()) {
-					mayBeInvalidOrNull = true;
+					mayBeInvalid = true;
 				}
 			}
 			i++;
 		}
-		return evaluationEnvironment.getUnknownValue(callExp, false, mayBeInvalidOrNull);
+		return evaluationEnvironment.getUnknownValue(callExp, mayBeNull, mayBeInvalid);
 	}
 
 	/**

@@ -299,8 +299,8 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		ExpressionInOCL query = ocl.createQuery(standardLibrary.getOclVoidType(), "self->any(true)");
 		String textQuery =
 				"name = 'closure' implies\n" +
-						"if self.ownedSource?.type.oclIsKindOf(SequenceType) or self.ownedSource?.type.oclIsKindOf(OrderedSetType)"
-						+ "then self.type.oclIsKindOf(OrderedSetType) else self.type.oclIsKindOf(SetType) endif";
+						"if self.ownedSource?.type?.oclIsKindOf(SequenceType) or self.ownedSource?.type?.oclIsKindOf(OrderedSetType)"
+						+ "then self.type?.oclIsKindOf(OrderedSetType) else self.type?.oclIsKindOf(SetType) endif";
 		ocl.assertQueryTrue(query.getOwnedBody(), textQuery);
 		ocl.dispose();
 	}

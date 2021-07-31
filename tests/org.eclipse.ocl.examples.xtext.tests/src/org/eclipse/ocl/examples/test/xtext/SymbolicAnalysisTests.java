@@ -293,7 +293,7 @@ public class SymbolicAnalysisTests extends XtextTestCase
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		SymbolicAnalysis.HYPOTHESIS.setState(true);
+	//	SymbolicAnalysis.HYPOTHESIS.setState(true);
 	}
 
 	public void testSymbolicAnalysis_AndGuard() throws Exception {
@@ -870,11 +870,6 @@ public class SymbolicAnalysisTests extends XtextTestCase
 		NullLiteralExp null_eq_if_let_ne_Exp = (NullLiteralExp) PivotUtil.getOwnedArgument(eq_if_let_ne_Exp, 0);
 
 		SymbolicVariableValue self_Value = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
-
-		// maybe-null unknown x
-		SymbolicVariableValue symbolicVariable499 = new SymbolicVariableValue(asExpressionInOCL.getOwnedParameters().get(0), true, false);
-		SymbolicAnalysis symbolicAnalysis499 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[] {symbolicVariable499});
-		checkContents(symbolicAnalysis499, asExpressionInOCL, null, mayBeNulls(x_Parameter, let_ne_Exp, x_toString_let_ne_Exp, toString_let_ne_Exp, let_ne_Variable, if_let_ne_Exp, v_if_let_ne_Exp, v_eq_if_let_ne_Exp, null_eq_if_let_ne_Exp, null_ne_Exp), null, null);
 
 		// null x
 		SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[] {null});

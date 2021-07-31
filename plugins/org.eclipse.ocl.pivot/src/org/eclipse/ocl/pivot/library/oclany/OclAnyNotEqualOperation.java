@@ -40,16 +40,26 @@ public class OclAnyNotEqualOperation extends OclAnyEqualOperation
 	protected @NonNull SymbolicValue createResultValue(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp,
 			@NonNull SymbolicValue sourceSymbolicValue, @NonNull List<@NonNull SymbolicValue> argumentSymbolicValues) {
 		boolean mayBeInvalid = sourceSymbolicValue.mayBeInvalid();
-		int mayBeNullCount = sourceSymbolicValue.mayBeNull() ? 1: 0;
+		boolean mayBeNull = false;
+		int isNullCount = 0;
+		if (sourceSymbolicValue.isNull()) {
+			isNullCount++;
+		}
+		else if (sourceSymbolicValue.mayBeNull()) {
+			mayBeNull = true;
+		}
 		for (@NonNull SymbolicValue argumentSymbolicValue : argumentSymbolicValues) {
 			if (argumentSymbolicValue.mayBeInvalid()) {
 				mayBeInvalid = true;
 			}
-			if (argumentSymbolicValue.mayBeNull()) {
-				mayBeNullCount++;
+			if (argumentSymbolicValue.isNull()) {
+				isNullCount++;
+			}
+			else if (argumentSymbolicValue.mayBeNull()) {
+				mayBeNull = true;
 			}
 		}
-		if (!mayBeInvalid && ((mayBeNullCount & 1) != 0)) {
+		if (!mayBeInvalid && !mayBeNull && ((isNullCount & 1) != 0)) {
 			return evaluationEnvironment.getKnownValue(Boolean.TRUE);
 		}
 		else {
