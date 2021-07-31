@@ -33,9 +33,10 @@ import org.eclipse.ocl.pivot.values.SymbolicValue;
  *
  * @since 1.16
  */
-public abstract class Hypothesis //implements Comparable<@NonNull Hypothesis>
+public abstract class Hypothesis
 {
 	protected final @NonNull SymbolicAnalysis symbolicAnalysis;
+	protected final @NonNull BaseSymbolicEvaluationEnvironment baseSymbolicEvaluationEnvironment;
 
 	/**
 	 * The value of the typedElement after assignment by the hypothesis.
@@ -60,6 +61,7 @@ public abstract class Hypothesis //implements Comparable<@NonNull Hypothesis>
 
 	protected Hypothesis(@NonNull SymbolicAnalysis symbolicAnalysis, @NonNull Iterable<@NonNull TypedElement> typedElements, @NonNull SymbolicValue hypothesizedValue) {
 		this.symbolicAnalysis = symbolicAnalysis;
+		this.baseSymbolicEvaluationEnvironment = symbolicAnalysis.getBaseSymbolicEvaluationEnvironment();
 		this.hypothesizedValue = hypothesizedValue;
 		this.typedElements = typedElements;
 		this.cseElement = symbolicAnalysis.getCSEElement(typedElements.iterator().next());
@@ -74,25 +76,20 @@ public abstract class Hypothesis //implements Comparable<@NonNull Hypothesis>
 		typedElement2incompatibility = typedElement2incompatibility2 = new HashMap<>();
 		boolean traceHypothesis = SymbolicAnalysis.HYPOTHESIS.isActive();
 		//
-		// It is tempting to perform the sub-hypotheses tgether since each TyedElement has the same hypothesizedvalue, but
-		// each has a distinct ancestral contol path and so may hve distinct contradictions.
+		// It is tempting to perform the sub-hypotheses together since each TypedElement has the same hypothesizedvalue, but
+		// each has a distinct ancestral contol path and so may have distinct contradictions.
 		//
 		for (@NonNull TypedElement typedElement : typedElements) {
-			BaseSymbolicEvaluationEnvironment baseSymbolicEvaluationEnvironment = symbolicAnalysis.getBaseSymbolicEvaluationEnvironment();
 			if (traceHypothesis) {
 				SymbolicAnalysis.HYPOTHESIS.println("  " + getKind() + " hypothesis for: " + SymbolicUtil.printPath(typedElement, false));
-				SymbolicAnalysis.HYPOTHESIS.println("    old: " + SymbolicUtil.printPath(typedElement, false) + " was: " + SymbolicUtil.printValue(getOriginalValue()));	// Show TypedElement value
-				SymbolicAnalysis.HYPOTHESIS.println("    old-cse: " + SymbolicUtil.printPath(typedElement, false) + " was: " + SymbolicUtil.printValue(baseSymbolicEvaluationEnvironment.getSymbolicValue(symbolicAnalysis.getCSEElement(typedElement))));	// Show TypedElement value
-				SymbolicAnalysis.HYPOTHESIS.println("    old-te: " + SymbolicUtil.printPath(typedElement, false) + " was: " + SymbolicUtil.printValue(baseSymbolicEvaluationEnvironment.getSymbolicValue(typedElement)));	// Show TypedElement value
-			//	SymbolicAnalysis.HYPOTHESIS.println("    hypothesized: " + SymbolicUtil.printValue(hypothesizedValue));
-			//	SymbolicAnalysis.HYPOTHESIS.println("    refined: " + getRefinedValue());		// XXX
-			//	SymbolicAnalysis.HYPOTHESIS.println(this.toString());
-			//	SymbolicAnalysis.HYPOTHESIS.println(this.toString());
+				SymbolicAnalysis.HYPOTHESIS.println("    old: " + SymbolicUtil.printPath(typedElement, false) + " was: " + SymbolicUtil.printValue(baseSymbolicEvaluationEnvironment.getSymbolicValue(typedElement)));	// Show TypedElement value
 			}
 			String incompatibility = baseSymbolicEvaluationEnvironment.hypothesize(this, typedElement);
 			if (incompatibility != null) {
 				SymbolicAnalysis.HYPOTHESIS.println("    => contradiction: " + incompatibility);
-				refine(typedElement);
+				SymbolicValue unrefinedValue = baseSymbolicEvaluationEnvironment.getSymbolicValue(typedElement);
+				SymbolicValue refinedValue = getRefinedValue(unrefinedValue);
+				baseSymbolicEvaluationEnvironment.refineSymbolicValue(typedElement, refinedValue);
 			}
 			else if (traceHypothesis) {
 				SymbolicAnalysis.HYPOTHESIS.println("    => no contradiction: " + SymbolicUtil.printPath(typedElement, false));
@@ -100,17 +97,6 @@ public abstract class Hypothesis //implements Comparable<@NonNull Hypothesis>
 			typedElement2incompatibility2.put(typedElement, incompatibility);
 		}
 	}
-
-/*	@Override
-	public int compareTo(@NonNull Hypothesis that) {
-		int h1 = this.cseElement.getHeight();
-		int h2 = that.cseElement.getHeight();
-		int diff = h1 - h2;
-		if (diff != 0) {
-			return diff;
-		}
-		return System.identityHashCode(this) - System.identityHashCode(that);	// FIXME ?? breadth first ??
-	} */
 
 	public @NonNull CSEElement getCSEElement() {
 		return cseElement;
@@ -122,13 +108,7 @@ public abstract class Hypothesis //implements Comparable<@NonNull Hypothesis>
 
 	public abstract @NonNull String getKind();
 
-	protected @NonNull SymbolicValue getOriginalValue() {
-		return symbolicAnalysis.getBaseSymbolicEvaluationEnvironment().getSymbolicValue(cseElement);
-	}
-
-	abstract protected @NonNull SymbolicValue getRefinedValue();
-
-	protected abstract void refine(@NonNull TypedElement typedElement);
+	abstract protected @NonNull SymbolicValue getRefinedValue(@NonNull SymbolicValue unrefinedValue);
 
 	@Override
 	public final @NonNull String toString() {
@@ -140,14 +120,16 @@ public abstract class Hypothesis //implements Comparable<@NonNull Hypothesis>
 	protected void toString(@NonNull StringBuilder s) {
 		s.append(getKind());
 		s.append(": ");
-		s.append(getOriginalValue());
-		s.append(": ");
+	//	s.append(getOriginalValue());
+	//	s.append(": ");
 		s.append(hypothesizedValue);
 		for (@NonNull TypedElement typedElement : typedElements) {
 			String incompatibility = typedElement2incompatibility != null ? typedElement2incompatibility.get(typedElement) : "indeterminate";
 			s.append("\n\t");
 			s.append(" ");
 			s.append(typedElement);
+			s.append(": ");
+			s.append(baseSymbolicEvaluationEnvironment.getSymbolicValue(typedElement));
 			s.append(" ");
 			s.append(incompatibility == null ? "undecided" : incompatibility);
 		}
@@ -163,7 +145,6 @@ public abstract class Hypothesis //implements Comparable<@NonNull Hypothesis>
 			SymbolicValue sizeValue = content.getSize();
 			if (!sizeValue.isZero()) {
 				refinedValue = new SymbolicRefinedContentValue(originalValue);
-			//	content = refinedValue.getContent();
 				sizeValue = symbolicAnalysis.getKnownValue(ValueUtil.ZERO_VALUE);
 				refinedValue.setSize(sizeValue);
 			}
@@ -180,18 +161,11 @@ public abstract class Hypothesis //implements Comparable<@NonNull Hypothesis>
 		}
 
 		@Override
-		protected @NonNull SymbolicRefinedContentValue getRefinedValue() {
-			SymbolicRefinedContentValue refinedValue = AbstractSymbolicRefinedValue.createRefinedContent(getOriginalValue());
+		protected @NonNull SymbolicValue getRefinedValue(@NonNull SymbolicValue unrefinedValue) {
+			SymbolicRefinedContentValue refinedValue = AbstractSymbolicRefinedValue.createRefinedContent(unrefinedValue);
 			SymbolicValue refinedSize = AbstractSymbolicRefinedValue.createExceptValue(refinedValue.getSize(), ValueUtil.ZERO_VALUE);
 			refinedValue.setSize(refinedSize);
 			return refinedValue;
-		}
-
-		@Override
-		protected void refine(@NonNull TypedElement typedElement) {
-			BaseSymbolicEvaluationEnvironment baseSymbolicEvaluationEnvironment = symbolicAnalysis.getBaseSymbolicEvaluationEnvironment();
-			SymbolicRefinedContentValue refinedValue = getRefinedValue();
-			baseSymbolicEvaluationEnvironment.refineSymbolicValue(typedElement, refinedValue);
 		}
 	}
 
@@ -207,15 +181,8 @@ public abstract class Hypothesis //implements Comparable<@NonNull Hypothesis>
 		}
 
 		@Override
-		protected @NonNull SymbolicValue getRefinedValue() {
-			return AbstractSymbolicRefinedValue.createExceptValue(getOriginalValue(), ValueUtil.INVALID_VALUE);
-		}
-
-		@Override
-		protected void refine(@NonNull TypedElement typedElement) {
-			BaseSymbolicEvaluationEnvironment baseSymbolicEvaluationEnvironment = symbolicAnalysis.getBaseSymbolicEvaluationEnvironment();
-			SymbolicValue refinedValue = getRefinedValue();
-			baseSymbolicEvaluationEnvironment.refineSymbolicValue(typedElement, refinedValue);
+		protected @NonNull SymbolicValue getRefinedValue(@NonNull SymbolicValue unrefinedValue) {
+			return AbstractSymbolicRefinedValue.createExceptValue(unrefinedValue, ValueUtil.INVALID_VALUE);
 		}
 	}
 
@@ -231,37 +198,10 @@ public abstract class Hypothesis //implements Comparable<@NonNull Hypothesis>
 		}
 
 		@Override
-		protected @NonNull SymbolicValue getRefinedValue() {
-			return AbstractSymbolicRefinedValue.createExceptValue(getOriginalValue(), null);
-		}
-
-		@Override
-		protected void refine(@NonNull TypedElement typedElement) {
-			BaseSymbolicEvaluationEnvironment baseSymbolicEvaluationEnvironment = symbolicAnalysis.getBaseSymbolicEvaluationEnvironment();
-			SymbolicValue refinedValue = getRefinedValue();
-			baseSymbolicEvaluationEnvironment.refineSymbolicValue(typedElement, refinedValue);
+		protected @NonNull SymbolicValue getRefinedValue(@NonNull SymbolicValue unrefinedValue) {
+			return AbstractSymbolicRefinedValue.createExceptValue(unrefinedValue, null);
 		}
 	}
-
-/*	public static class MayBeSmallerThanHypothesis extends Hypothesis
-	{
-		protected final @NonNull SymbolicValue minSizeValue;
-
-		public MayBeSmallerThanHypothesis(@NonNull SymbolicAnalysis symbolicAnalysis, @NonNull TypedElement typedElement, @NonNull SymbolicValue originalValue, @NonNull SymbolicValue minSizeValue) {
-			super(symbolicAnalysis, typedElement, originalValue, AbstractRefinedSymbolicValue.createSmallerThanValue(originalValue, minSizeValue));
-			this.minSizeValue = minSizeValue;
-		}
-
-		@Override
-		public @NonNull String getKind() {
-			return "mayBeSmallerThan(" + minSizeValue + ")";
-		}
-
-		@Override
-		public @NonNull SymbolicValue getRefinedValue() {
-			return AbstractRefinedSymbolicValue.createNotSmallerThanValue(originalValue, minSizeValue);
-		}
-	} */
 
 	public static class MayBeZeroHypothesis extends Hypothesis
 	{
@@ -275,15 +215,8 @@ public abstract class Hypothesis //implements Comparable<@NonNull Hypothesis>
 		}
 
 		@Override
-		protected @NonNull SymbolicValue getRefinedValue() {
-			return AbstractSymbolicRefinedValue.createExceptValue(getOriginalValue(), ValueUtil.ZERO_VALUE);
-		}
-
-		@Override
-		protected void refine(@NonNull TypedElement typedElement) {
-			BaseSymbolicEvaluationEnvironment baseSymbolicEvaluationEnvironment = symbolicAnalysis.getBaseSymbolicEvaluationEnvironment();
-			SymbolicValue refinedValue = getRefinedValue();
-			baseSymbolicEvaluationEnvironment.refineSymbolicValue(typedElement, refinedValue);
+		protected @NonNull SymbolicValue getRefinedValue(@NonNull SymbolicValue unrefinedValue) {
+			return AbstractSymbolicRefinedValue.createExceptValue(unrefinedValue, ValueUtil.ZERO_VALUE);
 		}
 	}
 }

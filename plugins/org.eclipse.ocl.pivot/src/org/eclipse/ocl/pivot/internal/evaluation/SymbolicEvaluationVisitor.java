@@ -122,14 +122,14 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 		if (invalidProblem != null) {
 			return invalidProblem;
 		}
-		if (sourceValue.isNull()) {
-			if (navigationCallExp.isIsSafe()) {
-				return context.getKnownValue(null);
-			}
-			else {
-				return context.getKnownValue(ValueUtil.INVALID_VALUE);
-			}
-		}
+	//	if (sourceValue.isNull()) {
+	//		if (navigationCallExp.isIsSafe()) {
+	//			return context.getKnownValue(null);
+	//		}
+	//		else {
+	//			return context.getKnownValue(ValueUtil.INVALID_VALUE);
+	//		}
+	//	}
 		if (!navigationCallExp.isIsSafe()) {
 			SymbolicValue nullSourceProblem = symbolicEvaluationEnvironment.checkNotNull(source, returnTypeId, propertyMayBeNull);
 			if (nullSourceProblem != null) {
