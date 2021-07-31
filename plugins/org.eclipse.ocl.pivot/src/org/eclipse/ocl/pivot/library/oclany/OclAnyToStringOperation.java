@@ -17,6 +17,7 @@ import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.library.AbstractSimpleUnaryOperation;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
@@ -40,7 +41,7 @@ public class OclAnyToStringOperation extends AbstractSimpleUnaryOperation
 		if (sourceVal instanceof InvalidValueException)	{				// FIXME Remove this once CG has proper invalid analysis
 			throw (InvalidValueException)sourceVal;
 		}
-		return sourceVal != null ? oclToString(sourceVal) : NULL_STRING;
+		return sourceVal != null ? oclToString(sourceVal) : ValueUtil.NULL_STRING;
 	}
 
 	/**
@@ -52,13 +53,14 @@ public class OclAnyToStringOperation extends AbstractSimpleUnaryOperation
 		if (symbolicPreconditionValue != null) {
 			return symbolicPreconditionValue;
 		}
+		boolean isSafe = callExp.isIsSafe();
 		OCLExpression source = PivotUtil.getOwnedSource(callExp);
 		SymbolicValue sourceValue = evaluationEnvironment.symbolicEvaluate(source);
 		if (sourceValue.isNull()) {
-			return evaluationEnvironment.getKnownValue(NULL_STRING);
-		}
-		else {
-			return evaluationEnvironment.getUnknownValue(callExp, false, false);
+			return evaluationEnvironment.getKnownValue(isSafe ? null : ValueUtil.NULL_STRING);
+		} else {
+			boolean mayBeNull = sourceValue.mayBeNull();
+			return evaluationEnvironment.getUnknownValue(callExp, isSafe && mayBeNull, false);
 		}
 	}
 }

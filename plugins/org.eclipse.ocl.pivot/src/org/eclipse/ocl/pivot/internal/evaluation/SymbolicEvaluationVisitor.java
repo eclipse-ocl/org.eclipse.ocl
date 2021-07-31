@@ -65,12 +65,10 @@ import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.symbolic.AbstractLeafSymbolicValue.SymbolicNavigationCallValue;
-import org.eclipse.ocl.pivot.internal.symbolic.AbstractSymbolicRefinedValue;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryIteration;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
-import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -122,7 +120,7 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 		if (invalidProblem != null) {
 			return invalidProblem;
 		}
-	//	if (sourceValue.isNull()) {
+	//	if (sourceValue.isNull()) {  -- redundant
 	//		if (navigationCallExp.isIsSafe()) {
 	//			return context.getKnownValue(null);
 	//		}
@@ -176,7 +174,7 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 		boolean mayBeNull = !operationCallExp.isIsRequired();
 		//
 		//	Safe navigation of null source return null.
-		//
+		/*
 		if (operationCallExp.isIsSafe() && (source != null)) {
 			if (sourceValue == null) {
 				return context.getKnownValue(null);
@@ -194,7 +192,7 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 			if (sourceValue.isCollection()) {
 				sourceValue = AbstractSymbolicRefinedValue.createNullFreeValue(sourceValue);
 			}
-		}
+		} */
 		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		Operation actualOperation;
 		if (apparentOperation.isIsStatic()) {
