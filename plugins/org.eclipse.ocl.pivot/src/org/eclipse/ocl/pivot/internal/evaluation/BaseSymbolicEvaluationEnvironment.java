@@ -36,6 +36,7 @@ import org.eclipse.ocl.pivot.internal.symbolic.SymbolicUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
@@ -245,10 +246,10 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 	}
 
 	public void refineSymbolicValue(@NonNull TypedElement typedElement, @NonNull SymbolicValue symbolicValue) {
-		if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
-			SymbolicAnalysis.HYPOTHESIS.println("    refined: " + SymbolicUtil.printPath(typedElement, false) + " to: " + symbolicValue);
+		TracingOption hypothesisDebug = SymbolicAnalysis.HYPOTHESIS;
+		if (hypothesisDebug.isActive()) {
+			hypothesisDebug.println("    refined: " + SymbolicUtil.printPath(typedElement, false) + " to: " + symbolicValue);
 		}
-
 		if (typedElement instanceof VariableDeclaration) {
 			CSEElement cseElement = cseAnalysis.getCSEElement(typedElement);
 		//	setSymbolicValue(cseElement, symbolicValue);
@@ -273,15 +274,13 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 		for (@NonNull TypedElement affectedExpression : affectedExpressionsList) {
 			SymbolicValue oldValue = getSymbolicValue(affectedExpression);
 			if (affectedExpression != typedElement) {
-				if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
-					SymbolicAnalysis.HYPOTHESIS.println("   re-evaluating: " + SymbolicUtil.printPath(affectedExpression, false));
-				}
-					if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
-					SymbolicAnalysis.HYPOTHESIS.println("    old: " + oldValue);
+				if (hypothesisDebug.isActive()) {
+					hypothesisDebug.println("   re-evaluating: " + SymbolicUtil.printPath(affectedExpression, false));
+					hypothesisDebug.println("    old: " + oldValue);
 				}
 				SymbolicValue newValue = symbolicReEvaluate(affectedExpression);
-				if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
-					SymbolicAnalysis.HYPOTHESIS.println("    new: " + newValue);
+				if (hypothesisDebug.isActive()) {
+					hypothesisDebug.println("    new: " + newValue);
 				}
 			}
 		}

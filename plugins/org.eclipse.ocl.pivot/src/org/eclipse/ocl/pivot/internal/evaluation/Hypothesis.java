@@ -33,7 +33,7 @@ import org.eclipse.ocl.pivot.values.SymbolicValue;
  *
  * @since 1.16
  */
-public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
+public abstract class Hypothesis //implements Comparable<@NonNull Hypothesis>
 {
 	protected final @NonNull SymbolicAnalysis symbolicAnalysis;
 
@@ -78,15 +78,17 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 		// each has a distinct ancestral contol path and so may hve distinct contradictions.
 		//
 		for (@NonNull TypedElement typedElement : typedElements) {
+			BaseSymbolicEvaluationEnvironment baseSymbolicEvaluationEnvironment = symbolicAnalysis.getBaseSymbolicEvaluationEnvironment();
 			if (traceHypothesis) {
 				SymbolicAnalysis.HYPOTHESIS.println("  " + getKind() + " hypothesis for: " + SymbolicUtil.printPath(typedElement, false));
-				SymbolicAnalysis.HYPOTHESIS.println("    old: " + SymbolicUtil.printPath(typedElement, false) + " was: " + SymbolicUtil.printValue(getOriginalValue()));
+				SymbolicAnalysis.HYPOTHESIS.println("    old: " + SymbolicUtil.printPath(typedElement, false) + " was: " + SymbolicUtil.printValue(getOriginalValue()));	// Show TypedElement value
+				SymbolicAnalysis.HYPOTHESIS.println("    old-cse: " + SymbolicUtil.printPath(typedElement, false) + " was: " + SymbolicUtil.printValue(baseSymbolicEvaluationEnvironment.getSymbolicValue(symbolicAnalysis.getCSEElement(typedElement))));	// Show TypedElement value
+				SymbolicAnalysis.HYPOTHESIS.println("    old-te: " + SymbolicUtil.printPath(typedElement, false) + " was: " + SymbolicUtil.printValue(baseSymbolicEvaluationEnvironment.getSymbolicValue(typedElement)));	// Show TypedElement value
 			//	SymbolicAnalysis.HYPOTHESIS.println("    hypothesized: " + SymbolicUtil.printValue(hypothesizedValue));
 			//	SymbolicAnalysis.HYPOTHESIS.println("    refined: " + getRefinedValue());		// XXX
 			//	SymbolicAnalysis.HYPOTHESIS.println(this.toString());
 			//	SymbolicAnalysis.HYPOTHESIS.println(this.toString());
 			}
-			BaseSymbolicEvaluationEnvironment baseSymbolicEvaluationEnvironment = symbolicAnalysis.getBaseSymbolicEvaluationEnvironment();
 			String incompatibility = baseSymbolicEvaluationEnvironment.hypothesize(this, typedElement);
 			if (incompatibility != null) {
 				SymbolicAnalysis.HYPOTHESIS.println("    => contradiction: " + incompatibility);
@@ -99,7 +101,7 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 		}
 	}
 
-	@Override
+/*	@Override
 	public int compareTo(@NonNull Hypothesis that) {
 		int h1 = this.cseElement.getHeight();
 		int h2 = that.cseElement.getHeight();
@@ -108,7 +110,7 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 			return diff;
 		}
 		return System.identityHashCode(this) - System.identityHashCode(that);	// FIXME ?? breadth first ??
-	}
+	} */
 
 	public @NonNull CSEElement getCSEElement() {
 		return cseElement;
@@ -189,9 +191,6 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 		protected void refine(@NonNull TypedElement typedElement) {
 			BaseSymbolicEvaluationEnvironment baseSymbolicEvaluationEnvironment = symbolicAnalysis.getBaseSymbolicEvaluationEnvironment();
 			SymbolicRefinedContentValue refinedValue = getRefinedValue();
-			if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
-				SymbolicAnalysis.HYPOTHESIS.println("  refined: " + SymbolicUtil.printPath(typedElement, false) + " to: " + refinedValue);
-			}
 			baseSymbolicEvaluationEnvironment.refineSymbolicValue(typedElement, refinedValue);
 		}
 	}
@@ -284,9 +283,6 @@ public abstract class Hypothesis implements Comparable<@NonNull Hypothesis>
 		protected void refine(@NonNull TypedElement typedElement) {
 			BaseSymbolicEvaluationEnvironment baseSymbolicEvaluationEnvironment = symbolicAnalysis.getBaseSymbolicEvaluationEnvironment();
 			SymbolicValue refinedValue = getRefinedValue();
-			if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
-				SymbolicAnalysis.HYPOTHESIS.println("  refined: " + SymbolicUtil.printPath(typedElement, false) + " to: " + refinedValue);
-			}
 			baseSymbolicEvaluationEnvironment.refineSymbolicValue(typedElement, refinedValue);
 		}
 	}

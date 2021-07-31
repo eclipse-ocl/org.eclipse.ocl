@@ -138,7 +138,7 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 		@NonNull SymbolicValue hypothesizedValue = hypothesis.getHypothesizedValue();
 		installActiveTypedElementAncestry(hypothesizedTypedElement, hypothesizedValue, Boolean.TRUE);
 		UniqueList<@NonNull CSEElement> reevaluatedCSEElements = new UniqueList<>();
-		for (@NonNull TypedElement activeTypedElement : activeTypedElements) {
+		for (@NonNull TypedElement activeTypedElement : activeTypedElements) {			// FIXME need depth sort
 			CSEElement activeCSEElement = cseAnalysis.getCSEElement(activeTypedElement);
 			if (reevaluatedCSEElements.add(activeCSEElement)) {
 				String incompatibility = symbolicReEvaluate(activeTypedElement);
@@ -219,7 +219,7 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 		if (activeTypedElement instanceof IfExp) {
 			getClass();		// XXX
 		}
-		if (!activeTypedElements.add(activeTypedElement)) {			// The ancestor of VariableExp wil eventually rejoin the hierarchy
+		if (!activeTypedElements.add(activeTypedElement)) {			// The ancestor of VariableExp will eventually rejoin the hierarchy
 			SymbolicValue symbolicValue = getSymbolicValue(activeTypedElement);
 			return symbolicValue.asIncompatibility();
 		}
@@ -233,9 +233,6 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 			if (eContainer instanceof ExpressionInOCL) {
 				ExpressionInOCL containingExpressionInOCL = (ExpressionInOCL)eContainer;
 				activeTypedElements.add(containingExpressionInOCL);
-				if (activeTypedElements.size() > 1) {
-					Collections.sort(activeTypedElements, cseAnalysis.getTypedElementHeightComparator());
-				}
 			}
 			else if (eContainer instanceof TypedElement) {
 				TypedElement containingTypedElement = (TypedElement)eContainer;
@@ -262,6 +259,20 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 				incompatibility = installActiveTypedElementDescendants(activeTypedElement);
 				if (incompatibility != null) {
 					return incompatibility;
+				}
+				if (isControlPath == Boolean.TRUE) {
+					for (@NonNull CSEElement dependentCSEElement : cseAnalysis.getCSEElement(activeTypedElement).getOutputs()) {
+						SymbolicValue dependentSymbolicValue = baseSymbolicEvaluationEnvironment.getSymbolicValue(dependentCSEElement);
+						for (@NonNull TypedElement dependentTypedElement : dependentCSEElement.getElements()) {
+							String incompatibility2 = installActiveTypedElementAncestry(dependentTypedElement, dependentSymbolicValue, null);
+							if (incompatibility2 != null) {
+								return incompatibility2;
+							}
+						}
+					}
+					if (activeTypedElements.size() > 1) {
+						Collections.sort(activeTypedElements, cseAnalysis.getTypedElementHeightComparator());
+					}
 				}
 			}
 		}
@@ -566,60 +577,8 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 			Object boxedValue = environmentFactory.getIdResolver().boxedValueOf(e);
 			writeValue = getKnownValue(boxedValue);
 		}
-	//	if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
-	//		SymbolicAnalysis.HYPOTHESIS.println("    re-evaluated: " + SymbolicUtil.printPath(typedElement, false) + " as: " + writeValue);
-	//	}
 		SymbolicValue newSymbolicValue = setSymbolicValue(typedElement, writeValue, "eval");
 		return newSymbolicValue.asIncompatibility();
-/*		// Record re-evaluated value
-		SymbolicValue readValue = basicGetSymbolicValue(typedElement);		// Get the 'read' value
-		if (readValue == null) {											// If a new evaluation
-			CSEElement cseElement = cseAnalysis.getCSEElement(typedElement);
-			setSymbolicValue(cseElement, writeValue);					// Record re-evaluated value
-			return null;
-		}
-		if (writeValue == readValue) {
-			return null;		// XXX re-use seSymbolValue
-		}
-		SymbolicStatus booleanWriteStatus = writeValue.basicGetBooleanStatus();
-		if (booleanWriteStatus != null) {
-			boolean mayBeFalse = !booleanWriteStatus.isSatisfied();
-			boolean mayBeTrue = !booleanWriteStatus.isUnsatisfied();
-			boolean mustBeFalse = readValue.isFalse();
-			boolean mustBeTrue = readValue.isTrue();
-			if (mustBeFalse && !mayBeFalse) {
-				return "mustBeFalse is incompatible with !mayBeFalse";
-			}
-			if (mustBeTrue && !mayBeTrue) {
-				return "mustBeTrue is incompatible with !mayBeTrue";
-			}
-		}
-		if (writeValue.isInvalid() && !readValue.mayBeInvalid()) {
-			return "isInvalid is incompatible with !mayBeInvalid";
-		}
-		if (writeValue.mayBeInvalid() && !readValue.mayBeInvalid()) {
-			return "mayBeInvalid is incompatible with !mayBeInvalid";
-		}
-		if (writeValue.isNull() && !readValue.mayBeNull()) {
-			return "isNull is incompatible with !mayBeNull";
-		}
-		if (writeValue.mayBeNull() && !readValue.mayBeNull()) {
-			return "mayBeNull is incompatible with !mayBeNull";
-		}
-		if (writeValue.basicGetZeroStatus() != null) {
-			if (writeValue.isZero() && !readValue.mayBeZero()) {
-				return "isZero is incompatible with !mayBeZero";
-			}
-			if (writeValue.mayBeZero() && !readValue.mayBeZero()) {
-				return "mayBeZero is incompatible with !mayBeZero";
-			}
-		}
-	//	if (writeValue.equals(readValue)) { / / XXX isCompatible
-			return null;
-	//	}
-	//	else {
-	//		return false;
-	//	} */
 	}
 
 	@Override

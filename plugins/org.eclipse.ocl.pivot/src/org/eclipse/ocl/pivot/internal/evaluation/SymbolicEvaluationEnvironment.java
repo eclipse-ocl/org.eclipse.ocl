@@ -31,35 +31,35 @@ public interface SymbolicEvaluationEnvironment
 	/**
 	 * Return a SymbolicKnownValue for incompatible, if typedElement is already incompatible, else null
 	 */
-	@Nullable SymbolicValue checkCompatible(@NonNull OCLExpression typedElement, @NonNull TypeId returnTypeId);
+	@Nullable SymbolicValue checkCompatibility(@NonNull OCLExpression typedElement, @NonNull TypeId returnTypeId);
 
 	/**
 	 * Return a SymbolicKnownValue for invalid, if typedElement is a collection and empty.
 	 * Else return a mayBeNull SymbolicUnknownValue for typeId if typedElement is a collection.
 	 * Else return null if typedElement is not null.
 	 */
-	@Nullable SymbolicValue checkNotEmpty(@NonNull TypedElement typedElement, @NonNull TypeId typeId);
+	@Nullable SymbolicValue checkNotEmpty(@NonNull TypedElement typedElement, @NonNull TypeId typeId, boolean mayBeNull);
 
 	/**
 	 * Return a SymbolicKnownValue for invalid, if typedElement isInvalid.
 	 * Else return a mayBeNull SymbolicUnknownValue for typeId if typedElement mayBeInvalid.
 	 * Else return null if typedElement is not invalid.
 	 */
-	@Nullable SymbolicValue checkNotInvalid(@NonNull TypedElement typedElement, @NonNull TypeId typeId);
+	@Nullable SymbolicValue checkNotInvalid(@NonNull TypedElement typedElement, @NonNull TypeId typeId, boolean mayBeNull);
 
 	/**
 	 * Return a SymbolicKnownValue for invalid, if typedElement isNull.
 	 * Else return a mayBeNull SymbolicUnknownValue for typeId if typedElement mayBeNull.
 	 * Else return null if typedElement is not null.
 	 */
-	@Nullable SymbolicValue checkNotNull(@NonNull TypedElement typedElement, @NonNull TypeId typeId);
+	@Nullable SymbolicValue checkNotNull(@NonNull TypedElement typedElement, @NonNull TypeId typeId, boolean mayBeNull);
 
 	/**
 	 * Return a SymbolicKnownValue for invalid, if typedElement isZero.
 	 * Else return a mayBeNull SymbolicUnknownValue for typeId if typedElement mayBeZero.
 	 * Else return null if typedElement is not zero.
 	 */
-	@Nullable SymbolicValue checkNotZero(@NonNull TypedElement typedElement, @NonNull TypeId typeId);
+	@Nullable SymbolicValue checkNotZero(@NonNull TypedElement typedElement, @NonNull TypeId typeId, boolean mayBeNull);
 
 	@NonNull BaseSymbolicEvaluationEnvironment getBaseSymbolicEvaluationEnvironment();
 	@NonNull EnvironmentFactory getEnvironmentFactory();

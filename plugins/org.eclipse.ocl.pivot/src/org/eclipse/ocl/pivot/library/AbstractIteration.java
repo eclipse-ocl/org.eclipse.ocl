@@ -73,37 +73,38 @@ public abstract class AbstractIteration extends AbstractIterationOrOperation imp
 	 */
 	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull LoopExp loopExp) {
 		TypeId returnTypeId = loopExp.getTypeId();
+		boolean returnMayBeNull = !loopExp.isIsRequired();
 		OCLExpression source = PivotUtil.getOwnedSource(loopExp);
-		SymbolicValue invalidSourceProblem = evaluationEnvironment.checkNotInvalid(source, returnTypeId);
+		SymbolicValue invalidSourceProblem = evaluationEnvironment.checkNotInvalid(source, returnTypeId, returnMayBeNull);
 		if (invalidSourceProblem != null) {
 			return invalidSourceProblem;
 		}
 		if (!loopExp.isIsSafe()) {
-			SymbolicValue nullSourceProblem = evaluationEnvironment.checkNotNull(source, returnTypeId);
+			SymbolicValue nullSourceProblem = evaluationEnvironment.checkNotNull(source, returnTypeId, returnMayBeNull);
 			if (nullSourceProblem != null) {
 				return nullSourceProblem;
 			}
 		}
 		for (@NonNull VariableDeclaration iterator : PivotUtil.getOwnedIterators(loopExp)) {
-			SymbolicValue invalidIteratorProblem = evaluationEnvironment.checkNotInvalid(iterator, returnTypeId);
+			SymbolicValue invalidIteratorProblem = evaluationEnvironment.checkNotInvalid(iterator, returnTypeId, returnMayBeNull);
 			if (invalidIteratorProblem != null) {
 				return invalidIteratorProblem;
 			}
 		}
 		if (loopExp instanceof IterateExp) {
 			VariableDeclaration ownedResult = PivotUtil.getOwnedResult((IterateExp)loopExp);
-			SymbolicValue invalidResultProblem = evaluationEnvironment.checkNotInvalid(ownedResult, returnTypeId);
+			SymbolicValue invalidResultProblem = evaluationEnvironment.checkNotInvalid(ownedResult, returnTypeId, returnMayBeNull);
 			if (invalidResultProblem != null) {
 				return invalidResultProblem;
 			}
 		}
 		OCLExpression bodyExpression = PivotUtil.getOwnedBody(loopExp);
-		SymbolicValue invalidBodyProblem = evaluationEnvironment.checkNotInvalid(bodyExpression, returnTypeId);
+		SymbolicValue invalidBodyProblem = evaluationEnvironment.checkNotInvalid(bodyExpression, returnTypeId, returnMayBeNull);
 		if (invalidBodyProblem != null) {
 			return invalidBodyProblem;
 		}
 		if (bodyExpression.isIsRequired()) {
-			SymbolicValue nullBodyProblem = evaluationEnvironment.checkNotNull(bodyExpression, returnTypeId);
+			SymbolicValue nullBodyProblem = evaluationEnvironment.checkNotNull(bodyExpression, returnTypeId, returnMayBeNull);
 			if (nullBodyProblem != null) {
 				return nullBodyProblem;
 			}

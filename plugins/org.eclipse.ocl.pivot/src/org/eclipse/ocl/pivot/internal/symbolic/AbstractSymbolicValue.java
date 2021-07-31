@@ -80,7 +80,7 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 			}
 		}
 		else if (mayBeNull()) {
-			if (!unrefinedValue.isNull()) {
+			if (unrefinedValue.isNull()) {
 				return unrefinedValue;				// "null" is except-everything else
 			}
 			else if (!unrefinedValue.mayBeNull()) {
@@ -140,7 +140,13 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 		//
 		if (unrefinedValue.basicGetBooleanStatus() != null) {
 			if (isTrue()) {
-				if (unrefinedValue.mayBeTrue()) {
+				if (unrefinedValue.isFalse()) {
+					assert !mayBeInvalid();
+					assert !mayBeNull();
+				//	assert !mayBeZero();
+					return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "isTrue is incompatible with isFalse");
+				}
+				else if (unrefinedValue.mayBeTrue()) {
 					return this;					// "true" is except-everything else
 				}
 				else {
@@ -151,7 +157,13 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 				}
 			}
 			else if (isFalse()) {
-				if (unrefinedValue.mayBeFalse()) {
+				if (unrefinedValue.isTrue()) {
+					assert !mayBeInvalid();
+					assert !mayBeNull();
+				//	assert !mayBeZero();
+					return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "isFalse is incompatible with isTrue");
+				}
+				else if (unrefinedValue.mayBeFalse()) {
 					return this;					// "false" is except-everything else
 				}
 				else {
@@ -162,7 +174,7 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 				}
 			}
 			else if (mayBeTrue()) {
-				if (unrefinedValue.isTrue()) {
+				if (unrefinedValue.isTrue() || unrefinedValue.isFalse()) {
 					return unrefinedValue;
 				}
 				else if (!unrefinedValue.mayBeTrue()) {
@@ -176,7 +188,7 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 				}
 			}
 			else if (mayBeFalse()) {
-				if (unrefinedValue.isFalse()) {
+				if (unrefinedValue.isTrue() || unrefinedValue.isFalse()) {
 					return unrefinedValue;
 				}
 				else if (!unrefinedValue.mayBeFalse()) {

@@ -113,6 +113,7 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 		StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		Operation referredOperation = PivotUtil.getReferredOperation(callExp);
 		TypeId returnTypeId = callExp.getTypeId();
+		boolean returnMayBeNull = !callExp.isIsRequired();
 		OCLExpression source = PivotUtil.getOwnedSource(callExp);
 		if ((checkFlags & CHECK_NOT_INVALID) != 0) {
 			if ((checkFlags & CHECK_NO_OCL_INVALID_OVERLOAD) != 0) {
@@ -120,7 +121,7 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 				Operation oclInvalidOperation = oclInvalidClass.getOperation(referredOperation);
 				assert oclInvalidOperation == null : "Missing OclInvalid overload for " + referredOperation;
 			}
-			SymbolicValue invalidSourceProblem = evaluationEnvironment.checkNotInvalid(source, returnTypeId);
+			SymbolicValue invalidSourceProblem = evaluationEnvironment.checkNotInvalid(source, returnTypeId, returnMayBeNull);
 			if (invalidSourceProblem != null) {
 				return invalidSourceProblem;
 			}
@@ -131,7 +132,7 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 				Operation oclVoidOperation = oclVoidClass.getOperation(referredOperation);
 				assert oclVoidOperation == null : "Missing OcVoid overload for " + referredOperation;
 			}
-			SymbolicValue nullSourceProblem = evaluationEnvironment.checkNotNull(source, returnTypeId);
+			SymbolicValue nullSourceProblem = evaluationEnvironment.checkNotNull(source, returnTypeId, returnMayBeNull);
 			if (nullSourceProblem != null) {
 				return nullSourceProblem;
 			}
@@ -139,25 +140,25 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 		int i = 0;
 		for (@NonNull OCLExpression argument : PivotUtil.getOwnedArguments(callExp)) {
 			if (!referredOperation.isIsValidating() && ((checkFlags & CHECK_NOT_INVALID) != 0)) {
-				SymbolicValue invalidArgumentProblem = evaluationEnvironment.checkNotInvalid(argument, returnTypeId);
+				SymbolicValue invalidArgumentProblem = evaluationEnvironment.checkNotInvalid(argument, returnTypeId, returnMayBeNull);
 				if (invalidArgumentProblem != null) {
 					return invalidArgumentProblem;
 				}
 			}
 			Parameter parameter = PivotUtil.getOwnedParameter(referredOperation, i);
 			if (parameter.isIsRequired() && ((checkFlags & CHECK_NOT_NULL) != 0)) {
-				SymbolicValue nullArgumentProblem = evaluationEnvironment.checkNotNull(argument, returnTypeId);
+				SymbolicValue nullArgumentProblem = evaluationEnvironment.checkNotNull(argument, returnTypeId, returnMayBeNull);
 				if (nullArgumentProblem != null) {
 					return nullArgumentProblem;
 				}
 			}
-			SymbolicValue compatibleArgumentProblem = evaluationEnvironment.checkCompatible(argument, returnTypeId);
+			SymbolicValue compatibleArgumentProblem = evaluationEnvironment.checkCompatibility(argument, returnTypeId);
 			if (compatibleArgumentProblem != null) {
 				return compatibleArgumentProblem;
 			}
 			i++;
 		}
-		SymbolicValue compatibleArgumentProblem = evaluationEnvironment.checkCompatible(source, returnTypeId);
+		SymbolicValue compatibleArgumentProblem = evaluationEnvironment.checkCompatibility(source, returnTypeId);
 		if (compatibleArgumentProblem != null) {
 			return compatibleArgumentProblem;
 		}

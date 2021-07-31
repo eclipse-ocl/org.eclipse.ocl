@@ -113,11 +113,12 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 		OCLExpression source = PivotUtil.getOwnedSource(navigationCallExp);
 		SymbolicValue sourceValue = symbolicEvaluationEnvironment.symbolicEvaluate(source);
 		TypeId returnTypeId = navigationCallExp.getTypeId();
-		SymbolicValue compatibleProblem = symbolicEvaluationEnvironment.checkCompatible(source, returnTypeId);
-		if (compatibleProblem != null) {
-			return compatibleProblem;
+		SymbolicValue compatibilityProblem = symbolicEvaluationEnvironment.checkCompatibility(source, returnTypeId);
+		if (compatibilityProblem != null) {
+			return compatibilityProblem;
 		}
-		SymbolicValue invalidProblem = symbolicEvaluationEnvironment.checkNotInvalid(source, returnTypeId);
+		boolean propertyMayBeNull = !referredProperty.isIsRequired();
+		SymbolicValue invalidProblem = symbolicEvaluationEnvironment.checkNotInvalid(source, returnTypeId, propertyMayBeNull);
 		if (invalidProblem != null) {
 			return invalidProblem;
 		}
@@ -130,7 +131,7 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 			}
 		}
 		if (!navigationCallExp.isIsSafe()) {
-			SymbolicValue nullSourceProblem = symbolicEvaluationEnvironment.checkNotNull(source, returnTypeId);
+			SymbolicValue nullSourceProblem = symbolicEvaluationEnvironment.checkNotNull(source, returnTypeId, propertyMayBeNull);
 			if (nullSourceProblem != null) {
 				return nullSourceProblem;
 			}
@@ -144,7 +145,6 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 			boolean sourceMayBeInvalid = sourceValue.mayBeInvalid();
 			boolean sourceMayBeNull = sourceValue.mayBeNull();
 			boolean sourceIsMany = navigationCallExp.isIsMany();
-			boolean propertyMayBeNull = !referredProperty.isIsRequired();
 			boolean resultMayBeInvalid = sourceMayBeInvalid || (sourceMayBeNull && !isSafe && !sourceIsMany);
 			boolean resultMayBeNull = propertyMayBeNull || (sourceMayBeNull && isSafe && !sourceIsMany);
 			return new SymbolicNavigationCallValue(context.createVariableName(), navigationCallExp, resultMayBeNull, resultMayBeInvalid, sourceValue);
@@ -173,8 +173,7 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 			sourceValue = symbolicEvaluationEnvironment.symbolicEvaluate(source);
 		}
 		//
-		@SuppressWarnings("unused")
-		boolean mayBeNull = false;
+		boolean mayBeNull = !operationCallExp.isIsRequired();
 		//
 		//	Safe navigation of null source return null.
 		//
@@ -185,7 +184,7 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 			if (sourceValue.isNull()) {
 				return sourceValue;
 			}
-			SymbolicValue sourceProblem = symbolicEvaluationEnvironment.checkNotNull(source, operationCallExp.getTypeId());
+			SymbolicValue sourceProblem = symbolicEvaluationEnvironment.checkNotNull(source, operationCallExp.getTypeId(), mayBeNull);
 			if (sourceProblem != null) {
 				return sourceProblem;
 			}
@@ -313,9 +312,9 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 	@Override
 	public @NonNull SymbolicValue visitIfExp(@NonNull IfExp ifExp) {
 		OCLExpression conditionExpression = PivotUtil.getOwnedCondition(ifExp);
-		SymbolicValue compatibleProblem = symbolicEvaluationEnvironment.checkCompatible(conditionExpression, ifExp.getTypeId());
-		if (compatibleProblem != null) {
-			return compatibleProblem;
+		SymbolicValue compatibilityProblem = symbolicEvaluationEnvironment.checkCompatibility(conditionExpression, ifExp.getTypeId());
+		if (compatibilityProblem != null) {
+			return compatibilityProblem;
 		}
 		OCLExpression thenExpression = PivotUtil.getOwnedThen(ifExp);
 		OCLExpression elseExpression = PivotUtil.getOwnedElse(ifExp);
