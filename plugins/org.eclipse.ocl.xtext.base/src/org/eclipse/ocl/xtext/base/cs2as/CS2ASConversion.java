@@ -1081,7 +1081,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 			if (pivotType instanceof LambdaType) {			// The lambda exprssion is mandatory, for compatibility we propagate the return nullity
 				optionalDefaultMultiplicity2 = true;		// BUG
 			}
-			else if (pivotType instanceof MapType) {		// Ecore does not support collections of or null EMaps, so pivot Maps must also be 1..1
+			if (pivotType instanceof MapType) {		// Ecore does not support collections of or null EMaps, so pivot Maps must also be 1..1
 				lower = 1;
 				upper = 1;
 				isRequired = true;

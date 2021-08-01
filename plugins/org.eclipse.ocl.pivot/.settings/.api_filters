@@ -58,6 +58,12 @@
         <filter id="338755678">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
+                <message_argument value="_Collection__OclAny__"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
                 <message_argument value="_Lambda_Bag_T_Bag_collectNested_V"/>
             </message_arguments>
         </filter>
@@ -254,6 +260,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/oclstdlib/OCLstdlibTables.java" type="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables$Properties">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Properties"/>
+                <message_argument value="_OclType__Collection__elementType"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/util/AbstractDelegatingVisitor.java" type="org.eclipse.ocl.pivot.util.AbstractDelegatingVisitor">
         <filter comment="Bug 512402 workaround" id="576725006">
             <message_arguments>
@@ -395,26 +409,10 @@
                 <message_argument value="OptionalDefaultMultiplicity"/>
             </message_arguments>
         </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/options/PivotValidationOptions.java" type="org.eclipse.ocl.pivot.options.PivotValidationOptions">
-        <filter id="336658481">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.options.PivotValidationOptions"/>
-                <message_argument value="OptionalDefaultMultiplicity"/>
-            </message_arguments>
-        </filter>
         <filter id="336658481">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.options.PivotValidationOptions"/>
                 <message_argument value="PotentialInvalidResult"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/options/PivotValidationOptions.java" type="org.eclipse.ocl.pivot.options.PivotValidationOptions">
-        <filter id="336658481">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.options.PivotValidationOptions"/>
-                <message_argument value="OptionalDefaultMultiplicity"/>
             </message_arguments>
         </filter>
     </resource>
