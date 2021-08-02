@@ -42,6 +42,7 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.InvalidLiteralExp;
 import org.eclipse.ocl.pivot.Iteration;
+import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
@@ -1073,17 +1074,21 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		Type pivotType = null;
 		boolean isRequired = false;
 		if (ownedType != null) {
+			boolean optionalDefaultMultiplicity2 = optionalDefaultMultiplicity;
 			pivotType = PivotUtil.getPivot(Type.class, ownedType);
 			int lower;
 			int upper;
-			if (pivotType instanceof MapType) {		// Ecore does not support collections of or null EMaps, so pivot Maps must also be 1..1
+			if (pivotType instanceof LambdaType) {			// The lambda exprssion is mandatory, for compatibility we propagate the return nullity
+				optionalDefaultMultiplicity2 = true;		// BUG
+			}
+			else if (pivotType instanceof MapType) {		// Ecore does not support collections of or null EMaps, so pivot Maps must also be 1..1
 				lower = 1;
 				upper = 1;
 				isRequired = true;
 			}
 			else {
 				MultiplicityCS csMultiplicity = ownedType.getOwnedMultiplicity();
-				if ((csMultiplicity == null) && !optionalDefaultMultiplicity){
+				if ((csMultiplicity == null) && !optionalDefaultMultiplicity2){
 					lower = 1;
 					upper = 1;
 					isRequired = true;
