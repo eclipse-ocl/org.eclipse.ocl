@@ -137,14 +137,15 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 	public @Nullable String analyze() {
 		@NonNull SymbolicValue hypothesizedValue = hypothesis.getHypothesizedValue();
 		installActiveTypedElementAncestry(hypothesizedTypedElement, hypothesizedValue, Boolean.TRUE);
+	//	Collections.sort(activeTypedElements, cseAnalysis.getTypedElementHeightComparator());
 		UniqueList<@NonNull CSEElement> reevaluatedCSEElements = new UniqueList<>();
 		for (@NonNull TypedElement activeTypedElement : activeTypedElements) {			// FIXME need depth sort
 			CSEElement activeCSEElement = cseAnalysis.getCSEElement(activeTypedElement);
 			if (reevaluatedCSEElements.add(activeCSEElement)) {
 				String incompatibility = symbolicReEvaluate(activeTypedElement);
-				if (incompatibility != null) {
-					return incompatibility;
-				}
+			//	if (incompatibility != null) {
+			//		return incompatibility;
+			//	}
 			}
 		}
 	/*	Set<@NonNull TypedElement> typedElementsSet = new HashSet<>();
@@ -163,7 +164,9 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 				return incompatibility;
 			}
 		} */
-		return null;
+		ExpressionInOCL expressionInOCL = symbolicAnalysis.getExpressionInOCL();
+		SymbolicValue symbolicValue = getSymbolicValue(expressionInOCL);
+		return symbolicValue.asIncompatibility();
 	}
 
 	@Override

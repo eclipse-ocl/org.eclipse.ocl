@@ -78,6 +78,9 @@ public abstract class AbstractSymbolicEvaluationEnvironment implements SymbolicE
 	@Override
 	public @Nullable SymbolicValue checkNotInvalid(@NonNull TypedElement typedElement, @NonNull TypeId typeId, boolean mayBeNull) {
 		SymbolicValue symbolicValue = getSymbolicValue(typedElement);
+		if (symbolicValue.asIncompatibility() != null) {
+			return symbolicValue;
+		}
 		if (symbolicValue.isInvalid()) {
 			return getKnownValue(ValueUtil.INVALID_VALUE);
 		}

@@ -279,6 +279,10 @@ public class SymbolicAnalysis /*extends BasicOCLExecutor implements SymbolicExec
 		return executor;
 	}
 
+	public @NonNull ExpressionInOCL getExpressionInOCL() {
+		return expressionInOCL;
+	}
+
 	private @Nullable Hypothesis getHypothesis(@NonNull Iterable<@NonNull TypedElement> typedElements, @NonNull Class<?> hypothesisClass) {
 		Map<@NonNull TypedElement, @NonNull List<@NonNull Hypothesis>> typedElement2hypotheses2 = typedElement2hypotheses;
 		if (typedElement2hypotheses2 == null) {
