@@ -35,8 +35,8 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 		}
 
 		@Override
-		public @NonNull SymbolicStatus basicGetBooleanStatus() {
-			return getDeadStatus();
+		public @Nullable SymbolicStatus basicGetBooleanStatus() {
+			return null; //getDeadStatus();
 		}
 
 		@Override
@@ -50,8 +50,8 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 		}
 
 		@Override
-		public @NonNull SymbolicStatus basicGetZeroStatus() {
-			return SymbolicStatus.UNDECIDED;
+		public @Nullable SymbolicStatus basicGetZeroStatus() {
+			return null; //SymbolicStatus.UNDECIDED;
 		}
 
 		@Override

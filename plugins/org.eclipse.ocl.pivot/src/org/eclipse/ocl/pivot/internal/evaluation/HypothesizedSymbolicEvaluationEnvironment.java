@@ -137,9 +137,9 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 	public @Nullable String analyze() {
 		@NonNull SymbolicValue hypothesizedValue = hypothesis.getHypothesizedValue();
 		installActiveTypedElementAncestry(hypothesizedTypedElement, hypothesizedValue, Boolean.TRUE);
-	//	Collections.sort(activeTypedElements, cseAnalysis.getTypedElementHeightComparator());
+		Collections.sort(activeTypedElements, cseAnalysis.getTypedElementHeightComparator());
 		UniqueList<@NonNull CSEElement> reevaluatedCSEElements = new UniqueList<>();
-		for (@NonNull TypedElement activeTypedElement : activeTypedElements) {			// FIXME need depth sort
+		for (@NonNull TypedElement activeTypedElement : activeTypedElements) {
 			CSEElement activeCSEElement = cseAnalysis.getCSEElement(activeTypedElement);
 			if (reevaluatedCSEElements.add(activeCSEElement)) {
 				String incompatibility = symbolicReEvaluate(activeTypedElement);

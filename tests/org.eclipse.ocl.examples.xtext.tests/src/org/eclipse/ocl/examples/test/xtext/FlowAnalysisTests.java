@@ -28,7 +28,6 @@ import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.VariableExp;
-import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
@@ -275,7 +274,7 @@ public class FlowAnalysisTests extends XtextTestCase
 	}
 
 	public void testFlowAnalysis_DoubleBiImpliesPropertyGuard() throws Exception {
-		SymbolicAnalysis.HYPOTHESIS.setState(true);
+	//	SymbolicAnalysis.HYPOTHESIS.setState(true);
 		MyOCL ocl = new MyOCL();
 		OperationCallExp asImplies = (OperationCallExp) ocl.createTestModel("DoubleBiImpliesVariableGuard",
 				"((dummy <> null) and (dummy.dummy <> null)) implies ((dummy <> null) or (dummy.dummy <> null) or (dummy.dummy.dummy <> null))");
