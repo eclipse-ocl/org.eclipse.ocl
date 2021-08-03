@@ -1214,7 +1214,7 @@
         <ownedComments body="Evaluates to the most derived type of which oclText[self] is currently an instance. If oclText[self] is an instance of a multiply&#xA;classified type, the return is the most derived type of the current classification which is established when the instance is&#xA;passed to OCL, or re-established by an oclText[oclAsType()] call.&#xA;"/>
       </ownedOperations>
       <ownedOperations xmi:id="N,CWN" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypesOperation" name="oclTypes"
-          type="#PRF4+">
+          type="#UQF4+">
         <ownedComments body="Evaluates to all of the most derived type of which oclText[self] is an instance. The return from oclText[oclTypes()]&#xA;is normally equivalent to that from oclText[oclType()] unless oclText[self] is an instance of multiply classified type.&#xA;"/>
       </ownedOperations>
       <ownedOperations xmi:id="4f1nm" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation" name="toString"

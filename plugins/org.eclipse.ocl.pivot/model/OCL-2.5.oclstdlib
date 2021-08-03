@@ -937,7 +937,7 @@ abstract type OclAny : AnyType {
 	Evaluates to all of the most derived type of which oclText[self] is an instance. The return from oclText[oclTypes()]
 	is normally equivalent to that from oclText[oclType()] unless oclText[self] is an instance of multiply classified type.
 	**/
-	operation oclTypes() : Set(typeof(OclSelf)[1]) => 'org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypesOperation';
+	operation oclTypes() : Set(typeof(OclSelf)[*|1]) => 'org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypesOperation';
 --	operation "."(T)(object2 : OclAny) : T precedence=NAVIGATION => 'org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation';
 	/**
 	Returns a string representation of oclText[self].
