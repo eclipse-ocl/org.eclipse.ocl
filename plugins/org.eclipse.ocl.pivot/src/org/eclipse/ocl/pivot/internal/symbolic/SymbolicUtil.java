@@ -188,6 +188,15 @@ public class SymbolicUtil
 				s.append(".else");
 			}
 		}
+		else if (namedElement instanceof LetExp) {
+			s.append("«let»");
+			if (childContainmentReference == PivotPackage.Literals.LET_EXP__OWNED_VARIABLE) {
+				s.append(".var");
+			}
+			else if (childContainmentReference == PivotPackage.Literals.LET_EXP__OWNED_IN) {
+				s.append(".in");
+			}
+		}
 		else if (namedElement instanceof LoopExp) {
 			s.append(PivotUtil.getName(PivotUtil.getReferredIteration((LoopExp)namedElement)));
 			s.append("()");
