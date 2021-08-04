@@ -24,6 +24,7 @@ import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.IfExp;
+import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.NavigationCallExp;
 import org.eclipse.ocl.pivot.OCLExpression;
@@ -332,6 +333,20 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 			}
 			// else  if (executedExpression == ifExp.getOwnedCondition()) imposes no path limitations
 		}
+		else if (containingTypedElement instanceof LoopExp) {		// Before OperationCallExp
+			LoopExp loopExp = (LoopExp)containingTypedElement;
+			if (loopExp.isIsSafe()) {
+				mayBeNull = true;
+			}
+			Iteration iteration = PivotUtil.getReferredIteration(loopExp);
+			if (activeTypedElement == loopExp.getOwnedBody()) {
+			//	constrainedExpression = PivotUtil.getOwnedSource(loopExp);
+			//	symbolicPathValue = evaluationEnvironment.getSymbolicValue2(constrainedExpression);
+			// XXX	symbolicKnownValue = SIZE_NOT_EMPTY;
+				// XXX isSafe
+			}
+			refinedExpression = PivotUtil.getOwnedSource(loopExp);
+		}
 		else if (containingTypedElement instanceof OperationCallExp) {
 			OperationCallExp operationCallExp = (OperationCallExp)containingTypedElement;
 			if (operationCallExp.isIsSafe()) {
@@ -438,19 +453,6 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 		//		mayBeNull = true;
 		//	}
 		//	refinedExpression = PivotUtil.getOwnedSource(navigationCallExp);
-		}
-		else if (containingTypedElement instanceof LoopExp) {
-			LoopExp loopExp = (LoopExp)containingTypedElement;
-			if (loopExp.isIsSafe()) {
-				mayBeNull = true;
-			}
-			if (activeTypedElement == loopExp.getOwnedBody()) {
-			//	constrainedExpression = PivotUtil.getOwnedSource(loopExp);
-			//	symbolicPathValue = evaluationEnvironment.getSymbolicValue2(constrainedExpression);
-			// XXX	symbolicKnownValue = SIZE_NOT_EMPTY;
-				// XXX isSafe
-			}
-			refinedExpression = PivotUtil.getOwnedSource(loopExp);
 		}
 		String incompatibility = null;
 		if (refinedExpression != null) {
