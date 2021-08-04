@@ -464,6 +464,17 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 		}
 	}
 
+	public static @NonNull SymbolicValue createNotEmpty(@NonNull SymbolicValue symbolicValue) {
+		SymbolicContent content = symbolicValue.getContent();
+		SymbolicValue size = content.getSize();
+		if (size.mayBeZero()) {
+			symbolicValue = createRefinedContent(symbolicValue);
+			content = symbolicValue.getContent();
+			content.setSize(createExceptValue(size, 0));
+		}
+		return symbolicValue;
+	}
+
 	public static @NonNull SymbolicValue createNotValue(@NonNull SymbolicValue symbolicValue) {
 		return new SymbolicNotValue(symbolicValue);
 	}

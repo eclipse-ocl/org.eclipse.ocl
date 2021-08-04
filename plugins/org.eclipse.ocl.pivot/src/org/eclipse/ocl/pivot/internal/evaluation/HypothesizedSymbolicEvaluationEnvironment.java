@@ -24,6 +24,7 @@ import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.IfExp;
+import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.NavigationCallExp;
@@ -287,13 +288,22 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 	 * Given that executedExpression executes, register any consequent refinements for
 	 * any refinedTypedElements or affectedVariables that ensure this execution.
 	 *
-	 * </br>'and'/'implies' guards are set true
-	 * </br>'or' guards false
-	 * </br>'if' conditions true/false as appropriate.
+	 * </br>'and' term executes implies other term true
+	 * </br>'or' term executes implies other term false
+	 * </br>'implies' guard executes implies other term true
+	 * </br>IfExp.then executes implies condition is precisely true
+	 * </br>IfExp.else executes implies condition is precisely false
 	 * </br>navigation sources not-invalid
 	 * </br>unsafe navigation sources not-null
+	 * </br>LoopExp executes implies source not-invalid, not empty
+	 * </br>IterateExp executes implies result inirializer not invalid
 	 * </br>loop sources not-invalid
 	 * </br>unsafe loop sources not-null
+	 *
+	 * FIXME and/and2 etc distinctions, noting tht the symbolic analysis occurs before mandatory commutation.
+	 *
+	 * FIXME Is some of this functionality duplicating checkPreconditions() ?
+	 * No here we can impose constraints rather than discover them.
 	 */
 	private @Nullable String installActiveTypedElementDescendants(@NonNull TypedElement activeTypedElement) {
 		VariableDeclaration activeVariable = null;
@@ -339,12 +349,37 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 				mayBeNull = true;
 			}
 			Iteration iteration = PivotUtil.getReferredIteration(loopExp);
-			if (activeTypedElement == loopExp.getOwnedBody()) {
-			//	constrainedExpression = PivotUtil.getOwnedSource(loopExp);
-			//	symbolicPathValue = evaluationEnvironment.getSymbolicValue2(constrainedExpression);
-			// XXX	symbolicKnownValue = SIZE_NOT_EMPTY;
-				// XXX isSafe
+			assert !iteration.isIsValidating();
+			@NonNull OCLExpression ownedBody = PivotUtil.getOwnedBody(loopExp);
+
+			if (activeTypedElement == ownedBody) {
+				SymbolicValue baseSymbolicValue = baseSymbolicEvaluationEnvironment.getSymbolicValue(ownedBody);
+			//	SymbolicValue baseSymbolicValue = baseSymbolicValue.getContent().getSize();
+				SymbolicValue refinedSymbolicValue = AbstractSymbolicRefinedValue.createNotEmpty(baseSymbolicValue);
+				setSymbolicValue(ownedBody, refinedSymbolicValue, "child");
 			}
+			if (containingTypedElement instanceof IterateExp) {
+				IterateExp iterateExp = (IterateExp)containingTypedElement;
+				VariableDeclaration ownedResult = PivotUtil.getOwnedResult(iterateExp);
+				SymbolicValue baseSymbolicValue = baseSymbolicEvaluationEnvironment.getSymbolicValue(ownedResult);
+				SymbolicValue refinedSymbolicValue = AbstractSymbolicRefinedValue.createExceptValue(baseSymbolicValue, ValueUtil.INVALID_VALUE);
+				setSymbolicValue(ownedResult, refinedSymbolicValue, "child");
+			}
+
+		/*	@NonNull Parameter lambda = PivotUtil.getOwnedParameter(iteration, 0);
+			SymbolicValue baseSymbolicValue = baseSymbolicEvaluationEnvironment.getSymbolicValue(ownedBody);
+			SymbolicValue refinedSymbolicValue = baseSymbolicValue;
+			if (baseSymbolicValue.mayBeInvalid()) {
+				refinedSymbolicValue = AbstractSymbolicRefinedValue.createExceptValue(refinedSymbolicValue, ValueUtil.INVALID_VALUE);
+			}
+			if (lambda.isIsRequired() && baseSymbolicValue.mayBeNull()) {
+				refinedSymbolicValue = AbstractSymbolicRefinedValue.createExceptValue(refinedSymbolicValue, null);
+			}
+			if (refinedSymbolicValue != baseSymbolicValue) {
+				CSEElement cseElement = cseAnalysis.getCSEElement(ownedBody);
+				setSymbolicValue(ownedBody, refinedSymbolicValue, "child");
+				refinedCSEElements.add(cseElement);
+			} */
 			refinedExpression = PivotUtil.getOwnedSource(loopExp);
 		}
 		else if (containingTypedElement instanceof OperationCallExp) {
@@ -447,12 +482,12 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 				i++;
 			}
 		}
-		else if (containingTypedElement instanceof NavigationCallExp) {		// Source is not a descendant
-		//	NavigationCallExp navigationCallExp = (NavigationCallExp)containingTypedElement;
+		else if (containingTypedElement instanceof NavigationCallExp) {
+			NavigationCallExp navigationCallExp = (NavigationCallExp)containingTypedElement;
 		//	if (navigationCallExp.isIsSafe()) {
 		//		mayBeNull = true;
 		//	}
-		//	refinedExpression = PivotUtil.getOwnedSource(navigationCallExp);
+			assert activeTypedElement == PivotUtil.getOwnedSource(navigationCallExp);	// No extra corrolaries of ownedSource execution
 		}
 		String incompatibility = null;
 		if (refinedExpression != null) {
