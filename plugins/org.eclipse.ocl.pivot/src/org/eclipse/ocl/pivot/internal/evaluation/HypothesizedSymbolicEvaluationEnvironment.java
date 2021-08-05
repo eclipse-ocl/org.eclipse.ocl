@@ -362,11 +362,15 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 		assert !iteration.isIsValidating();
 		@Nullable String incompatibility = null;
 		@NonNull OCLExpression ownedSource = PivotUtil.getOwnedSource(loopExp);
+		@NonNull OCLExpression ownedBody = PivotUtil.getOwnedBody(loopExp);
 		if (activeTypedElement != ownedSource) {
 			SymbolicValue baseSymbolicValue = baseSymbolicEvaluationEnvironment.getSymbolicValue(ownedSource);
 			SymbolicValue refinedSymbolicValue = AbstractSymbolicRefinedValue.createExceptValue(baseSymbolicValue, ValueUtil.INVALID_VALUE);
 			if (!loopExp.isIsSafe()) {
 				refinedSymbolicValue = AbstractSymbolicRefinedValue.createExceptValue(baseSymbolicValue, null);
+			}
+			if (activeTypedElement == ownedBody) {
+				refinedSymbolicValue = AbstractSymbolicRefinedValue.createNotEmpty(refinedSymbolicValue);
 			}
 			incompatibility = installRefinement(ownedSource, refinedSymbolicValue);
 		}
@@ -379,11 +383,9 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 				incompatibility = installRefinement(ownedResult, refinedSymbolicValue);
 			}
 		}
-		@NonNull OCLExpression ownedBody = PivotUtil.getOwnedBody(loopExp);
 		if ((incompatibility == null) && (activeTypedElement != ownedBody)) {
-			SymbolicValue baseSymbolicValue = baseSymbolicEvaluationEnvironment.getSymbolicValue(ownedBody);
-			SymbolicValue refinedSymbolicValue = AbstractSymbolicRefinedValue.createNotEmpty(baseSymbolicValue);
-			incompatibility = installRefinement(ownedBody, refinedSymbolicValue);
+		//	SymbolicValue baseSymbolicValue = baseSymbolicEvaluationEnvironment.getSymbolicValue(ownedBody);
+		//	incompatibility = installRefinement(ownedBody, refinedSymbolicValue);
 		}
 		return incompatibility;
 	}
