@@ -11,6 +11,10 @@
 package org.eclipse.ocl.pivot.library.oclany;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.OperationCallExp;
+import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.internal.evaluation.HypothesizedSymbolicEvaluationEnvironment;
 
 /**
  * GreaterThanEqualOperation realises the >() library operation.
@@ -22,5 +26,14 @@ public class OclComparableGreaterThanOperation extends OclComparableComparisonOp
 	@Override
 	protected boolean getResultValue(Integer comparison) {
 		return comparison > 0;
+	}
+
+	/**
+	 * @since 1.16
+	 */
+	@Override
+	public @Nullable String installPathConstraints(@NonNull HypothesizedSymbolicEvaluationEnvironment evaluationEnvironment,
+			@NonNull TypedElement activeTypedElement, @NonNull OperationCallExp operationCallExp) {
+		return super.installPathConstraints(evaluationEnvironment, activeTypedElement, operationCallExp);
 	}
 }

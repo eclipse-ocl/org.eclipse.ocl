@@ -552,10 +552,10 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/ocl/pivot/library/LibraryOperation.java" type="org.eclipse.ocl.pivot.library.LibraryOperation">
-        <filter id="336658481">
+        <filter id="403804204">
             <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.options.PivotValidationOptions"/>
-                <message_argument value="PotentialInvalidResult"/>
+                <message_argument value="org.eclipse.ocl.pivot.library.LibraryOperation"/>
+                <message_argument value="installPathConstraints(HypothesizedSymbolicEvaluationEnvironment, TypedElement, OperationCallExp)"/>
             </message_arguments>
         </filter>
         <filter id="403984517">

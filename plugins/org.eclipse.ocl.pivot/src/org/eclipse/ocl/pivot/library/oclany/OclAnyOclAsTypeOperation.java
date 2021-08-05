@@ -63,6 +63,23 @@ public class OclAnyOclAsTypeOperation extends AbstractUntypedBinaryOperation
 
 	/**
 	 * @since 1.16
+	 *
+	@Override
+	public @Nullable String installPathConstraints(@NonNull HypothesizedSymbolicEvaluationEnvironment evaluationEnvironment, @NonNull TypedElement activeTypedElement, @NonNull OperationCallExp operationCallExp) {
+		OCLExpression source = PivotUtil.getOwnedSource(operationCallExp);
+		OCLExpression argument = PivotUtil.getOwnedArgument(operationCallExp, 0);
+		SymbolicValue refinedSymbolicValue = evaluationEnvironment.getKnownValue(Boolean.FALSE);
+		if (activeTypedElement == source) {
+			return evaluationEnvironment.installRefinement(argument, refinedSymbolicValue);
+		}
+		else {
+			assert activeTypedElement == argument;
+			return evaluationEnvironment.installRefinement(source, refinedSymbolicValue);
+		}
+	} */
+
+	/**
+	 * @since 1.16
 	 */
 	@Override
 	public @NonNull SymbolicValue symbolicEvaluate(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {

@@ -16,8 +16,10 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.OperationCallExp;
+import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.evaluation.HypothesizedSymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
@@ -92,6 +94,23 @@ public class BooleanOrOperation extends AbstractSimpleBinaryOperation
 		}
 		else {
 			throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.BOOLEAN_NAME, getTypeName(right));
+		}
+	}
+
+	/**
+	 * @since 1.16
+	 */
+	@Override
+	public @Nullable String installPathConstraints(@NonNull HypothesizedSymbolicEvaluationEnvironment evaluationEnvironment, @NonNull TypedElement activeTypedElement, @NonNull OperationCallExp operationCallExp) {
+		OCLExpression source = PivotUtil.getOwnedSource(operationCallExp);
+		OCLExpression argument = PivotUtil.getOwnedArgument(operationCallExp, 0);
+		SymbolicValue refinedSymbolicValue = evaluationEnvironment.getKnownValue(Boolean.FALSE);
+		if (activeTypedElement == source) {
+			return evaluationEnvironment.installRefinement(argument, refinedSymbolicValue);
+		}
+		else {
+			assert activeTypedElement == argument;
+			return evaluationEnvironment.installRefinement(source, refinedSymbolicValue);
 		}
 	}
 

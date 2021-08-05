@@ -30,7 +30,7 @@
         <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_mKYVYGYgEeuLiryWOk9R1g" name="spec" type="_BfN1AGYgEeuLiryWOk9R1g">
           <language>OCL</language>
           <body>let supplierElement : Set(UML::NamedElement) =
-    Has.allInstances()->select(h1 | h1.base_Dependency->collect(d1 | d1.client)->includes(self.base_NamedElement))->collect(h2 | h2.base_Dependency)?->collect(d2 | d2.supplier)->asSet()
+    Has.allInstances()->select(h1 | h1.base_Dependency->collect(d1 | d1.client)->includes(self.base_NamedElement))->collect(h2 | h2.base_Dependency)->collect(d2 | d2.supplier)->asSet()
     in Animal.allInstances()->select(a1 | supplierElement->includes(a1.base_NamedElement))</body>
         </defaultValue>
       </ownedAttribute>
