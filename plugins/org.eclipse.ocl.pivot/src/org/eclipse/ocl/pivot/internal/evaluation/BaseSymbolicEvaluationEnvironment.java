@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -223,6 +224,8 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 			symbolicValue = (SymbolicValue) value;
 		}
 		else {
+			EClassifier eClassifier = (EClassifier) PivotUtil.getType(parameter).getESObject();
+			assert (value == null) || (eClassifier == null) || eClassifier.isInstance(value) : "Expected a " + eClassifier.getName() + " as " + SymbolicUtil.printPath(parameter, true) + " rather than " + value;
 			Object boxedValue = environmentFactory.getIdResolver().boxedValueOf(value);
 			symbolicValue = getKnownValue(boxedValue);
 		}

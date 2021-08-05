@@ -359,8 +359,7 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 
 	@Override
 	public @NonNull SymbolicValue visitInvalidLiteralExp(@NonNull InvalidLiteralExp invalidLiteralExp) {
-		Object resultValue = evaluationVisitor.visitInvalidLiteralExp(invalidLiteralExp);
-		return context.getKnownValue(resultValue);
+		return context.getKnownValue(ValueUtil.INVALID_VALUE);
 	}
 
 	@Override
@@ -426,8 +425,7 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 
 	@Override
 	public @NonNull SymbolicValue visitNullLiteralExp(@NonNull NullLiteralExp nullLiteralExp) {
-		Object resultValue = evaluationVisitor.visitNullLiteralExp(nullLiteralExp);
-		return context.getKnownValue(resultValue);
+		return context.getKnownValue(null);
 	}
 
 	@Override

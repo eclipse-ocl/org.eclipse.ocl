@@ -81,7 +81,7 @@ public class FlowAnalysisTests extends XtextTestCase
 
 		protected @NonNull OCLExpression createTestModel(@NonNull String invariantName, @NonNull String invariantBody) throws IOException, ParserException {
 			String testContext =
-					"package deductions : ded = 'http://deductions'\n" +
+					"package deductions : ded = 'http://" + getTestName() + "/deductions'\n" +
 							"{\n" +
 							"  class Deductions\n" +
 							"  {\n" +

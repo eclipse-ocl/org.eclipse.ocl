@@ -20,6 +20,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.jdt.annotation.NonNull;
@@ -30,6 +31,7 @@ import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.IfExp;
 import org.eclipse.ocl.pivot.IntegerLiteralExp;
+import org.eclipse.ocl.pivot.InvalidLiteralExp;
 import org.eclipse.ocl.pivot.IteratorExp;
 import org.eclipse.ocl.pivot.IteratorVariable;
 import org.eclipse.ocl.pivot.LetExp;
@@ -41,6 +43,7 @@ import org.eclipse.ocl.pivot.NumericLiteralExp;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.OppositePropertyCallExp;
+import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.StringLiteralExp;
 import org.eclipse.ocl.pivot.TypedElement;
@@ -90,8 +93,6 @@ public class SymbolicAnalysisTests extends XtextTestCase
 	@SuppressWarnings("serial")
 	private static class MayBeNullList extends ArrayList<@Nullable EObject> {}
 
-	private static @NonNull String DEDUCTIONS_PACKAGE_URI = "http://deductions";
-
 	public class MyOCL extends TestOCL
 	{
 		private @NonNull Resource asResource;
@@ -99,11 +100,13 @@ public class SymbolicAnalysisTests extends XtextTestCase
 		private org.eclipse.ocl.pivot.@NonNull Package deductionsPackage;
 		private org.eclipse.ocl.pivot.@NonNull Class deductionsClass;
 		private org.eclipse.ocl.pivot.@NonNull Class dummyClass;
+		private @NonNull Property dummyClass_dummy;
+		private @NonNull Property deductionsClass_mayBeNullDummy;
 
 		public MyOCL(@NonNull String queryName, @NonNull String querySignature, @NonNull String queryBody) throws IOException {
-			super(getTestFileSystem(), "FlowAnalysisTests", getName(), OCL.NO_PROJECTS, null);
+			super(getTestFileSystem(), "SymbolicAnalysisTests", getName(), OCL.NO_PROJECTS, null);
 			String testContext =
-					"package deductions : ded = '" + DEDUCTIONS_PACKAGE_URI + "'\n" +
+					"package deductions : ded = 'http://" + getTestName() + "/deductions'\n" +
 							"{\n" +
 							"  class Deductions\n" +
 							"  {\n" +
@@ -119,7 +122,7 @@ public class SymbolicAnalysisTests extends XtextTestCase
 							"    operation func(i : Integer, j : Integer) : Dummy[?];\n" +
 							"  }\n" +
 							"}";
-			String fileName = "FlowAnalysis_" + queryName;
+			String fileName = "SymbolicAnalysisTests_" + queryName;
 			createFile(fileName + ".oclinecore", testContext);
 			PivotUtilInternal.getEnvironmentFactory(null).setOption(PivotValidationOptions.PotentialInvalidResult, StatusCodes.Severity.IGNORE);
 			this.asResource = doLoad_Concrete(fileName, "oclinecore");
@@ -128,10 +131,18 @@ public class SymbolicAnalysisTests extends XtextTestCase
 			this.deductionsClass = ClassUtil.nonNullState(NameUtil.getNameable(deductionsPackage.getOwnedClasses(), "Deductions"));
 			this.dummyClass = ClassUtil.nonNullState(NameUtil.getNameable(deductionsPackage.getOwnedClasses(), "Dummy"));
 			this.asOperation = ClassUtil.nonNullState(NameUtil.getNameable(deductionsClass.getOwnedOperations(), queryName));
+			this.dummyClass_dummy = ClassUtil.nonNullState(NameUtil.getNameable(dummyClass.getOwnedProperties(), "dummy"));
+			this.deductionsClass_mayBeNullDummy = ClassUtil.nonNullState(NameUtil.getNameable(deductionsClass.getOwnedProperties(), "mayBeNullDummy"));
 
 			URI ecoreURI = getTestFileURI(fileName + ".ecore");
 			@SuppressWarnings("unused")
 			Resource ecoreResource = PivotTestCase.as2ecore(this, asResource, ecoreURI, NO_MESSAGES);
+		}
+
+		public @NonNull EObject createDeductionsInstance() {
+			EClass eClass = (EClass) deductionsClass.getESObject();
+			EFactory eFactoryInstance = eClass.getEPackage().getEFactoryInstance();
+			return eFactoryInstance.create(eClass);
 		}
 
 		public @NonNull EObject createDummyInstance() {
@@ -293,7 +304,7 @@ public class SymbolicAnalysisTests extends XtextTestCase
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-	//	SymbolicAnalysis.HYPOTHESIS.setState(true);
+		SymbolicAnalysis.HYPOTHESIS.setState(true);
 	}
 
 	public void testSymbolicAnalysis_AndGuard() throws Exception {
@@ -907,6 +918,7 @@ public class SymbolicAnalysisTests extends XtextTestCase
 		PropertyCallExp mayBeNullDummy_dummy_if_Exp = (PropertyCallExp) PivotUtil.getOwnedSource(dummy_if_Exp);
 		VariableExp x_mayBeNullDummy_dummy_if_Exp = (VariableExp) PivotUtil.getOwnedSource(mayBeNullDummy_dummy_if_Exp);
 
+		EObject deductionsInstance = ocl.createDeductionsInstance();
 		EObject dummyInstance = ocl.createDummyInstance();
 		SymbolicVariableValue self_Value = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
 
@@ -924,9 +936,14 @@ public class SymbolicAnalysisTests extends XtextTestCase
 		SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[] {symbolicVariable3});
 		checkContents(symbolicAnalysis3, asExpressionInOCL, null, mayBeNulls(asExpressionInOCL, if_Exp, mayBeNullDummy_oclIsUndefined_if_Exp, null_if_Exp, dummy_if_Exp), null, null);
 
-		// non-null known x
-		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[] {dummyInstance});
-		checkContents(symbolicAnalysis4, asExpressionInOCL, isDeads(dummy_if_Exp, mayBeNullDummy_dummy_if_Exp, x_mayBeNullDummy_dummy_if_Exp), mayBeNulls(asExpressionInOCL, if_Exp, null_if_Exp), null, isInvalids(mayBeNullDummy_oclIsUndefined_if_Exp));
+		// non-null known x null x.mayBeNullDummy
+		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[] {deductionsInstance});
+		checkContents(symbolicAnalysis4, asExpressionInOCL, isDeads(dummy_if_Exp, mayBeNullDummy_dummy_if_Exp, x_mayBeNullDummy_dummy_if_Exp), mayBeNulls(asExpressionInOCL, if_Exp, mayBeNullDummy_oclIsUndefined_if_Exp, null_if_Exp), null, null);
+
+		// non-null known x non-null x.mayBeNullDummy
+		deductionsInstance.eSet((EStructuralFeature) ocl.deductionsClass_mayBeNullDummy.getESObject(), dummyInstance);
+		SymbolicAnalysis symbolicAnalysis5 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[] {deductionsInstance});
+		checkContents(symbolicAnalysis5, asExpressionInOCL, isDeads(null_if_Exp), mayBeNulls(asExpressionInOCL, if_Exp, dummy_if_Exp), null, null);
 
 		ocl.dispose();
 	}
@@ -1101,6 +1118,47 @@ public class SymbolicAnalysisTests extends XtextTestCase
 	*/
 			ocl.dispose();
 		}
+
+	public void testSymbolicAnalysis_InvalidLiteral() throws Exception {	// extracted from OCLtest.ocl Apple::stem
+		MyOCL ocl = new MyOCL("InvalidLiteral", "InvalidLiteral(x : Dummy[?]) : Dummy[?]",
+				"if x.dummy.oclIsUndefined() then null else invalid endif");
+		ExpressionInOCL asExpressionInOCL = ocl.getExpressionInOCL();
+		VariableDeclaration x_Parameter = PivotUtil.getOwnedParameter(asExpressionInOCL, 0);
+		IfExp if_Exp = (IfExp) asExpressionInOCL.getOwnedBody();
+		OperationCallExp oclIsUndefined_if_Exp = (OperationCallExp) PivotUtil.getOwnedCondition(if_Exp);
+		PropertyCallExp dummy_oclIsUndefined_if_Exp = (PropertyCallExp) PivotUtil.getOwnedSource(oclIsUndefined_if_Exp);
+		VariableExp x_dummy_oclIsUndefined_if_Exp = (VariableExp) PivotUtil.getOwnedSource(dummy_oclIsUndefined_if_Exp);
+		NullLiteralExp null_if_Exp = (NullLiteralExp) PivotUtil.getOwnedThen(if_Exp);
+		InvalidLiteralExp invalid_if_Exp = (InvalidLiteralExp) PivotUtil.getOwnedElse(if_Exp);
+
+		EObject dummyInstance = ocl.createDummyInstance();
+		SymbolicVariableValue self_Value = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), false, false);
+
+		// null x
+		SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[] {null});
+		checkContents(symbolicAnalysis1, asExpressionInOCL, isDeads(invalid_if_Exp), mayBeNulls(x_Parameter, x_dummy_oclIsUndefined_if_Exp, asExpressionInOCL, if_Exp, null_if_Exp), null, isInvalids(dummy_oclIsUndefined_if_Exp));
+
+		// unknown may-be-null x
+		SymbolicVariableValue symbolicVariable2 = new SymbolicVariableValue(asExpressionInOCL.getOwnedParameters().get(0), true, false);
+		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[] {symbolicVariable2});
+		checkContents(symbolicAnalysis2, asExpressionInOCL, null, mayBeNulls(x_Parameter, asExpressionInOCL, if_Exp, x_dummy_oclIsUndefined_if_Exp, null_if_Exp, dummy_oclIsUndefined_if_Exp), mayBeInvalids(asExpressionInOCL, if_Exp, dummy_oclIsUndefined_if_Exp), isInvalids(invalid_if_Exp));
+
+		// non-null unknown x
+		SymbolicVariableValue symbolicVariable3 = new SymbolicVariableValue(asExpressionInOCL.getOwnedParameters().get(0), false, false);
+		SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[] {symbolicVariable3});
+		checkContents(symbolicAnalysis3, asExpressionInOCL, null, mayBeNulls(asExpressionInOCL, if_Exp, dummy_oclIsUndefined_if_Exp, null_if_Exp), mayBeInvalids(asExpressionInOCL, if_Exp), isInvalids(invalid_if_Exp));
+
+		// non-null known x null x.dummy
+		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[] {dummyInstance});
+		checkContents(symbolicAnalysis4, asExpressionInOCL, isDeads(invalid_if_Exp), mayBeNulls(asExpressionInOCL, if_Exp, dummy_oclIsUndefined_if_Exp, null_if_Exp), null, null);
+
+		// non-null known x non-null x.dummy
+		dummyInstance.eSet((EStructuralFeature) ocl.dummyClass_dummy.getESObject(), dummyInstance);
+		SymbolicAnalysis symbolicAnalysis5 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[] {dummyInstance});
+		checkContents(symbolicAnalysis5, asExpressionInOCL, isDeads(null_if_Exp), null, null, isInvalids(asExpressionInOCL, if_Exp, invalid_if_Exp));
+
+		ocl.dispose();
+	}
 
 	public void testSymbolicAnalysis_NotEmptyGuardedFirst() throws Exception {
 		MyOCL ocl = new MyOCL("GuardedFirst", "GuardedFirst(x : Sequence(Integer)[?]) : Integer",
@@ -1351,7 +1409,7 @@ public class SymbolicAnalysisTests extends XtextTestCase
 
 		// may-be-null x
 		SymbolicVariableValue symbolicVariable = new SymbolicVariableValue(asExpressionInOCL.getOwnedParameters().get(0), true, false);
-		SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Parameter, null, new Object[]{symbolicVariable});
+		SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{symbolicVariable});
 		checkContents(symbolicAnalysis3, asExpressionInOCL, null, mayBeNulls(x_Parameter, x_eq_or2_Exp, null_eq_or2_Exp), null, null);
 
 		// non-null unknown x
