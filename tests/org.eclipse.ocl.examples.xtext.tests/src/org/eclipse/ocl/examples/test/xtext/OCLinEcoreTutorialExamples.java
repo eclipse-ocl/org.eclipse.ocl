@@ -47,6 +47,7 @@ import org.eclipse.ocl.pivot.internal.utilities.GlobalEnvironmentFactory;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
+import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.util.PivotValidator;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -72,7 +73,9 @@ public class OCLinEcoreTutorialExamples extends PivotTestCaseWithAutoTearDown
 		SymbolicAnalysis.HYPOTHESIS.setState(true);
 		GlobalEnvironmentFactory.disposeInstance();
 		//	GlobalEnvironmentFactory.getInstance().setSafeNavigationValidationSeverity(StatusCodes.Severity.IGNORE);
-		PivotUtilInternal.getEnvironmentFactory(null).setSafeNavigationValidationSeverity(StatusCodes.Severity.IGNORE);
+		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(null);
+		environmentFactory.setSafeNavigationValidationSeverity(StatusCodes.Severity.IGNORE);
+		environmentFactory.setOption(PivotValidationOptions.PotentialInvalidResult, StatusCodes.Severity.IGNORE);	// LPG lacks safe navigation needed for symbolic analysis
 		OCLDelegateDomain.initialize(resourceSet, PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		doTestOCLinEcoreTutorialUsingLPG(getTestModelURI("models/documentation/OCLinEcoreTutorialForPivot.xmi"), true);
 		GlobalEnvironmentFactory.disposeInstance();
@@ -93,7 +96,9 @@ public class OCLinEcoreTutorialExamples extends PivotTestCaseWithAutoTearDown
 	public void testOCLinEcoreTutorialUsingLPGForDefault() throws Exception {
 		GlobalEnvironmentFactory.disposeInstance();
 	//	GlobalEnvironmentFactory.getInstance().setSafeNavigationValidationSeverity(StatusCodes.Severity.IGNORE);
-		PivotUtilInternal.getEnvironmentFactory(null).setSafeNavigationValidationSeverity(StatusCodes.Severity.IGNORE);
+		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(null);
+		environmentFactory.setSafeNavigationValidationSeverity(StatusCodes.Severity.IGNORE);
+		environmentFactory.setOption(PivotValidationOptions.PotentialInvalidResult, StatusCodes.Severity.IGNORE);	// LPG lacks safe navigation needed for symbolic analysis
 		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);
 		doTestOCLinEcoreTutorialUsingLPG(getTestModelURI("models/documentation/OCLinEcoreTutorial.xmi"), true);
 		GlobalEnvironmentFactory.disposeInstance();
