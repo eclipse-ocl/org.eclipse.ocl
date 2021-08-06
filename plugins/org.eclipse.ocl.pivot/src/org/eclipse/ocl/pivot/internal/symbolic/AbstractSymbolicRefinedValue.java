@@ -470,7 +470,7 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 		if (size.mayBeZero()) {
 			symbolicValue = createRefinedContent(symbolicValue);
 			content = symbolicValue.getContent();
-			content.setSize(createExceptValue(size, 0));
+			content.setSize(createExceptValue(size, ValueUtil.integerValueOf(0)));
 		}
 		return symbolicValue;
 	}
