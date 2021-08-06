@@ -16,8 +16,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.TypedElement;
-import org.eclipse.ocl.pivot.internal.evaluation.HypothesizedSymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
@@ -98,15 +96,6 @@ public class OclAnyEqualOperation extends AbstractSimpleBinaryOperation
 			boolean result = left.equals(right);
 			return result;
 		}
-	}
-
-	/**
-	 * @since 1.16
-	 */
-	@Override
-	public @Nullable String installPathConstraints(@NonNull HypothesizedSymbolicEvaluationEnvironment evaluationEnvironment,
-			@NonNull TypedElement activeTypedElement, @NonNull OperationCallExp operationCallExp) {
-		return super.installPathConstraints(evaluationEnvironment, activeTypedElement, operationCallExp);
 	}
 
 	/**

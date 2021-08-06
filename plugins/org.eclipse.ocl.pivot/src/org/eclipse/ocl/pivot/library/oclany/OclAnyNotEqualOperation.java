@@ -15,9 +15,7 @@ import java.util.List;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OperationCallExp;
-import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.evaluation.HypothesizedSymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
@@ -84,12 +82,6 @@ public class OclAnyNotEqualOperation extends OclAnyEqualOperation
 		else {
 			throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.BOOLEAN_NAME, getTypeName(right));
 		}
-	}
-
-	@Override
-	public @Nullable String installPathConstraints(@NonNull HypothesizedSymbolicEvaluationEnvironment evaluationEnvironment,
-			@NonNull TypedElement activeTypedElement, @NonNull OperationCallExp operationCallExp) {
-		return super.installPathConstraints(evaluationEnvironment, activeTypedElement, operationCallExp);
 	}
 
 /*	@Override

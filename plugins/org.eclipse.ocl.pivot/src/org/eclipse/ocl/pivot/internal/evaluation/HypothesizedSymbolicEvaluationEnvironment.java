@@ -34,6 +34,7 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.internal.cse.CSEElement;
+import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.symbolic.AbstractSymbolicRefinedValue;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicUtil;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
@@ -319,6 +320,9 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 			OperationCallExp operationCallExp = (OperationCallExp)containingTypedElement;
 			Operation operation = PivotUtil.getReferredOperation(operationCallExp);
 			LibraryOperation implementation = (LibraryOperation)operation.getImplementation();
+			if (implementation == null) {
+				implementation = (LibraryOperation)((PivotMetamodelManager)environmentFactory.getMetamodelManager()).getImplementation(operation);
+			}
 			return implementation.installPathConstraints(this, activeTypedElement, operationCallExp);
 		}
 		else if (containingTypedElement instanceof NavigationCallExp) {
