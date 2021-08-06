@@ -2519,7 +2519,7 @@ public class PivotValidator extends EObjectValidator
 				String analysisIncompatibility = symbolicAnalysis.getAnalysisIncompatibility();
 				if (analysisIncompatibility != null) {
 					int diagnosticSeverity = invalidResultSeverity.getDiagnosticSeverity();
-					String message = analysisIncompatibility + "for " + SymbolicUtil.printPath(expressionInOCL, true);
+					String message = analysisIncompatibility + " for " + SymbolicUtil.printPath(expressionInOCL, true);
 					if (diagnostics != null) {
 						diagnostics.add(new BasicDiagnostic(diagnosticSeverity, DIAGNOSTIC_SOURCE, 0, message, new Object[] {expressionInOCL}));
 					}
