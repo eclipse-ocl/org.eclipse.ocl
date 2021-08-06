@@ -2516,6 +2516,15 @@ public class PivotValidator extends EObjectValidator
 					parameterValues[i] = new SymbolicVariableValue(parameter, mayBeNull, mayBeInvalid);
 				}
 				SymbolicAnalysis symbolicAnalysis = metamodelManager.getSymbolicAnalysis(expressionInOCL, selfValue, resultValue, parameterValues);
+				String analysisIncompatibility = symbolicAnalysis.getAnalysisIncompatibility();
+				if (analysisIncompatibility != null) {
+					int diagnosticSeverity = invalidResultSeverity.getDiagnosticSeverity();
+					String message = analysisIncompatibility + "for " + SymbolicUtil.printPath(expressionInOCL, true);
+					if (diagnostics != null) {
+						diagnostics.add(new BasicDiagnostic(diagnosticSeverity, DIAGNOSTIC_SOURCE, 0, message, new Object[] {expressionInOCL}));
+					}
+					return false;
+				}
 				BaseSymbolicEvaluationEnvironment evaluationEnvironment = symbolicAnalysis.getBaseSymbolicEvaluationEnvironment();
 				Map<@NonNull TypedElement, @NonNull CSEElement> element2cse = null;
 				for (@NonNull EObject eObject : new TreeIterable(expressionInOCL, true)) {		// FIXME Use CSEAnalysis
@@ -2555,7 +2564,9 @@ public class PivotValidator extends EObjectValidator
 						if (!invalidIsPermissible) {
 							int diagnosticSeverity = invalidResultSeverity.getDiagnosticSeverity();
 							String message = StringUtil.bind("May be invalid: {0}", SymbolicUtil.printPath(typedElement, true));
-							diagnostics.add(new BasicDiagnostic(diagnosticSeverity, DIAGNOSTIC_SOURCE, 0, message, new Object[] {typedElement}));		// XXX
+							if (diagnostics != null) {
+								diagnostics.add(new BasicDiagnostic(diagnosticSeverity, DIAGNOSTIC_SOURCE, 0, message, new Object[] {typedElement}));
+							}
 							allOk = false;			// XXX
 						}
 					}

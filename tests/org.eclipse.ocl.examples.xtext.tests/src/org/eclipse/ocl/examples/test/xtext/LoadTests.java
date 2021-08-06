@@ -53,6 +53,7 @@ import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.resource.AS2ID;
@@ -876,7 +877,7 @@ public class LoadTests extends XtextTestCase
 	}
 
 	public void testLoad_oclstdlib_oclstdlib() throws IOException, InterruptedException {
-		OCL ocl = createOCL();
+		OCL ocl = createOCLWithProjectMap();
 		//		StandardLibraryContribution.REGISTRY.put(MetamodelManager.DEFAULT_OCL_STDLIB_URI, StandardLibraryContribution.NULL);
 		Resource asResource = doLoad_Concrete(ocl, getTestModelURI("models/oclstdlib/oclstdlib.oclstdlib"));
 		//		checkMonikers(asResource);
@@ -1233,6 +1234,7 @@ public class LoadTests extends XtextTestCase
 	}
 
 	public void testLoad_OCLTest_ocl() throws IOException, InterruptedException {
+		SymbolicAnalysis.HYPOTHESIS.setState(true);
 		OCL ocl = createOCLWithProjectMap();
 		//		Abstract2Moniker.TRACE_MONIKERS.setState(true);
 		doLoad(ocl, getTestModelURI("models/ecore/OCLTest.ocl"));
