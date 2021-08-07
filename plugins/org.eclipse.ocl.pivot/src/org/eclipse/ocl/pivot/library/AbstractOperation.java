@@ -186,6 +186,7 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 			@NonNull SymbolicValue sourceSymbolicValue, @NonNull List<@NonNull SymbolicValue> argumentSymbolicValues) {
 		OCLExpression ownedSource = PivotUtil.getOwnedSource(callExp);
 		Operation referredOperation = PivotUtil.getReferredOperation(callExp);
+		assert !referredOperation.isIsValidating() : "Missing createResultValue overload for " + referredOperation.getImplementationClass();
 		boolean mayBeInvalid = false;
 		boolean mayBeNull = false;
 		if (evaluationEnvironment.mayBeInvalid(ownedSource)) {

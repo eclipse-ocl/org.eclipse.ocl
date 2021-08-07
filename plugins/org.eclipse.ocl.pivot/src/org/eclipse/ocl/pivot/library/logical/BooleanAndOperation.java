@@ -15,6 +15,7 @@ import java.util.List;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.Executor;
@@ -70,6 +71,32 @@ public class BooleanAndOperation extends AbstractSimpleBinaryOperation
 			firstArgument = e;	// FIXME ?? propagate part of environment
 		}
 		return evaluate(sourceValue, firstArgument);
+	}
+
+	@Override
+	protected @NonNull SymbolicValue createResultValue( @NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp,
+			@NonNull SymbolicValue sourceSymbolicValue, @NonNull List<@NonNull SymbolicValue> argumentSymbolicValues) {
+		Operation referredOperation = PivotUtil.getReferredOperation(callExp);
+		assert referredOperation.isIsValidating() : "Spurious createResultValue overload for " + referredOperation.getImplementationClass();
+		assert !callExp.isIsSafe() : "Spurious isSafe for " + referredOperation.getImplementationClass();
+		boolean mayBeInvalid = false;
+		boolean mayBeNull = false;
+		OCLExpression ownedSource = PivotUtil.getOwnedSource(callExp);
+		if (evaluationEnvironment.mayBeInvalid(ownedSource)) {
+			mayBeInvalid = true;
+		}
+		if (evaluationEnvironment.mayBeNull(ownedSource)) {
+			mayBeNull = true;
+		}
+		assert !PivotUtil.getOwnedParameter(referredOperation, 0).isIsRequired() : "Spurious isRequired for " + referredOperation.getImplementationClass();
+		OCLExpression ownedArgument = PivotUtil.getOwnedArgument(callExp, 0);
+		if (evaluationEnvironment.mayBeInvalid(ownedArgument)) {
+			mayBeInvalid = true;
+		}
+		if (evaluationEnvironment.mayBeNull(ownedArgument)) {
+			mayBeNull = true;
+		}
+		return evaluationEnvironment.getUnknownValue(callExp, mayBeNull, mayBeInvalid);
 	}
 
 	@Override

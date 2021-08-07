@@ -1220,6 +1220,7 @@ public class LoadTests extends XtextTestCase
 	}
 
 	public void testLoad_MiniPivot_ocl() throws IOException, InterruptedException {
+		SymbolicAnalysis.HYPOTHESIS.setState(true);
 		TestOCL ocl = createOCLWithProjectMap();
 		ocl.getEnvironmentFactory().setSafeNavigationValidationSeverity(StatusCodes.Severity.WARNING);
 		doLoad_OCL(ocl, getTestModelURI("models/ocl/MiniPivot.ocl"));

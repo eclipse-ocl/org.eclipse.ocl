@@ -130,10 +130,10 @@ requires T ≤ Integer, and well-formedness of the initializer requires Real ≤
 well-formed if Real ≤ T ≤ Integer. Either Set(Real) or Set(Integer) are well-formed. The most general type, Set(Real), is
 recommended since it minimizes type conversions and can often be easily deduced by considering the result type.
 */
-inv SetKindIsSet: kind = CollectionKind::Set implies type.oclIsKindOf(SetType)
-inv OrderedSetKindIsOrderedSet: kind = CollectionKind::OrderedSet implies type.oclIsKindOf(OrderedSetType)
-inv SequenceKindIsSequence: kind = CollectionKind::Sequence implies type.oclIsKindOf(SequenceType)
-inv BagKindIsBag: kind = CollectionKind::Bag implies type.oclIsKindOf(BagType)
+inv SetKindIsSet: ((kind = CollectionKind::Set) and (type <> null)) implies type.oclIsKindOf(SetType)
+inv OrderedSetKindIsOrderedSet: ((kind = CollectionKind::OrderedSet) and (type <> null)) implies type.oclIsKindOf(OrderedSetType)
+inv SequenceKindIsSequence: ((kind = CollectionKind::Sequence) and (type <> null)) implies type.oclIsKindOf(SequenceType)
+inv BagKindIsBag: ((kind = CollectionKind::Bag) and (type <> null)) implies type.oclIsKindOf(BagType)
 --inv ElementTypeIsCommonElementType: let elementType : Type = part->iterate (p; c : Classifier = OclVoid | c.commonSuperType (p.type))
 --in elementType.conformsTo(type.oclAsType(CollectionType).elementType)
 
