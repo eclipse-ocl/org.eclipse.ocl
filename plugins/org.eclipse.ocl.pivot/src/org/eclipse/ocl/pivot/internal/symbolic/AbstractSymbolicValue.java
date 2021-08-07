@@ -217,30 +217,35 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 		SymbolicContent unrefinedContent = unrefinedValue.basicGetContent();
 		if ((thisContent != null) || (unrefinedContent != null)) {
 			SymbolicValue resultSize = null;
+			boolean thisIsEmpty = (thisContent != null) && thisContent.isEmpty();
 			boolean thisNotEmpty = (thisContent != null) && !thisContent.mayBeEmpty();
+			boolean unrefinedContentIsEmpty = (unrefinedContent != null) && unrefinedContent.isEmpty();
 			boolean unrefinedContentNotEmpty = (unrefinedContent != null) && !unrefinedContent.mayBeEmpty();
 			SymbolicValue thisSize = thisContent != null ? thisContent.getSize() : null;
 			SymbolicValue unrefinedSize = unrefinedContent != null ? unrefinedContent.getSize() : null;
 			if (thisNotEmpty && unrefinedContentNotEmpty) {
 				resultSize = thisSize;					// ok !isEmpty
 			}
-			else if (thisNotEmpty || unrefinedContentNotEmpty) {
-				return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "notEmpty is incompatible with mayBeEmpty");
+			else if (thisNotEmpty && unrefinedContentIsEmpty) {
+				return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "notEmpty is incompatible with isEmpty");
 			}
-			else if ((thisContent != null) && thisContent.isEmpty()) {
+			else if (thisIsEmpty && unrefinedContentNotEmpty) {
+				return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "isEmpty is incompatible with not-notEmpty");
+			}
+			else if (thisIsEmpty) {
 				resultSize = thisSize;						// ok isEmpty
 			}
-			else if ((unrefinedContent != null) && unrefinedContent.isEmpty()) {
-				resultSize = unrefinedContent.getSize();	// ok isEmpty
+			else if (unrefinedContentIsEmpty) {
+				resultSize = unrefinedSize;					// ok isEmpty
 			}
 			else if (thisContent != null) {
 				resultSize = thisSize;						// ok mayBeEmpty
 			}
 			else if (unrefinedContent != null) {
-				resultSize = unrefinedContent.getSize();	// ok mayBeEmpty
+				resultSize = unrefinedSize;					// ok mayBeEmpty
 			}
 			else {
-				// resultSize = null;							// ok mayBeEmpty
+				// resultSize = null;						// ok mayBeEmpty
 			}
 			SymbolicContent resultContent;
 			if (resultSize == unrefinedSize) {

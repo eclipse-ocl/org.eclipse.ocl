@@ -80,23 +80,39 @@ public abstract class Hypothesis
 		// each has a distinct ancestral contol path and so may have distinct contradictions.
 		//
 		for (@NonNull TypedElement typedElement : typedElements) {
+			SymbolicValue oldSymbolicValue = baseSymbolicEvaluationEnvironment.getSymbolicValue(typedElement);
 			if (traceHypothesis) {
 				SymbolicAnalysis.HYPOTHESIS.println("  " + getKind() + " hypothesis for: " + SymbolicUtil.printPath(typedElement, false));
-				SymbolicAnalysis.HYPOTHESIS.println("    old: " + SymbolicUtil.printPath(typedElement, false) + " was: " + SymbolicUtil.printValue(baseSymbolicEvaluationEnvironment.getSymbolicValue(typedElement)));	// Show TypedElement value
+				SymbolicAnalysis.HYPOTHESIS.println("    old: " + SymbolicUtil.printPath(typedElement, false) + " was: " + SymbolicUtil.printValue(oldSymbolicValue));	// Show TypedElement value
 			}
-			String incompatibility = baseSymbolicEvaluationEnvironment.hypothesize(this, typedElement);
-			if (incompatibility != null) {
-				SymbolicAnalysis.HYPOTHESIS.println("    => contradiction: " + incompatibility);
-				SymbolicValue unrefinedValue = baseSymbolicEvaluationEnvironment.getSymbolicValue(typedElement);
-				SymbolicValue refinedValue = getRefinedValue(unrefinedValue);
-				baseSymbolicEvaluationEnvironment.refineSymbolicValue(typedElement, refinedValue);
+			if (cannotBeSatisfiedBy(oldSymbolicValue)) {
+				if (traceHypothesis) {
+					SymbolicAnalysis.HYPOTHESIS.println("    => already satisfied");
+				}
 			}
-			else if (traceHypothesis) {
-				SymbolicAnalysis.HYPOTHESIS.println("    => no contradiction: " + SymbolicUtil.printPath(typedElement, false));
+			else {
+				String incompatibility = baseSymbolicEvaluationEnvironment.hypothesize(this, typedElement);
+				if (incompatibility != null) {
+					if (traceHypothesis) {
+						SymbolicAnalysis.HYPOTHESIS.println("    => contradiction: " + incompatibility);
+					}
+					SymbolicValue unrefinedValue = oldSymbolicValue;
+					SymbolicValue refinedValue = getRefinedValue(unrefinedValue);
+					baseSymbolicEvaluationEnvironment.refineSymbolicValue(typedElement, refinedValue);
+					assert cannotBeSatisfiedBy(refinedValue);
+				}
+				else if (traceHypothesis) {
+					SymbolicAnalysis.HYPOTHESIS.println("    => no contradiction: " + SymbolicUtil.printPath(typedElement, false));
+				}
+				typedElement2incompatibility2.put(typedElement, incompatibility);
 			}
-			typedElement2incompatibility2.put(typedElement, incompatibility);
 		}
 	}
+
+	/**
+	 * Return true if symbolicValue cannot be refined to satisfy the hypothesis.
+	 */
+	protected abstract boolean cannotBeSatisfiedBy(@NonNull SymbolicValue symbolicValue);
 
 	public @NonNull CSEElement getCSEElement() {
 		return cseElement;
@@ -156,6 +172,11 @@ public abstract class Hypothesis
 		}
 
 		@Override
+		protected boolean cannotBeSatisfiedBy(@NonNull SymbolicValue symbolicValue) {
+			return !symbolicValue.getContent().mayBeEmpty();
+		}
+
+		@Override
 		public @NonNull String getKind() {
 			return "mayBeEmpty";
 		}
@@ -176,6 +197,11 @@ public abstract class Hypothesis
 		}
 
 		@Override
+		protected boolean cannotBeSatisfiedBy(@NonNull SymbolicValue symbolicValue) {
+			return !symbolicValue.mayBeInvalid();
+		}
+
+		@Override
 		public @NonNull String getKind() {
 			return "mayBeInvalid";
 		}
@@ -193,6 +219,11 @@ public abstract class Hypothesis
 		}
 
 		@Override
+		protected boolean cannotBeSatisfiedBy(@NonNull SymbolicValue symbolicValue) {
+			return !symbolicValue.mayBeNull();
+		}
+
+		@Override
 		public @NonNull String getKind() {
 			return "mayBeNull";
 		}
@@ -207,6 +238,11 @@ public abstract class Hypothesis
 	{
 		public MayBeZeroHypothesis(@NonNull SymbolicAnalysis symbolicAnalysis, @NonNull Iterable<@NonNull TypedElement> typedElements) {
 			super(symbolicAnalysis, typedElements, symbolicAnalysis.getKnownValue(ValueUtil.ZERO_VALUE));
+		}
+
+		@Override
+		protected boolean cannotBeSatisfiedBy(@NonNull SymbolicValue symbolicValue) {
+			return !symbolicValue.mayBeZero();
 		}
 
 		@Override
