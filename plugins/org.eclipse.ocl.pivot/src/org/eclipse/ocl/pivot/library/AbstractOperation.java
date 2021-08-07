@@ -32,6 +32,7 @@ import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal.ExecutorInternalExtension;
 import org.eclipse.ocl.pivot.internal.evaluation.HypothesizedSymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
+import org.eclipse.ocl.pivot.internal.library.ConstrainedOperation;
 import org.eclipse.ocl.pivot.internal.symbolic.AbstractSymbolicRefinedValue;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -146,9 +147,11 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 				Operation oclVoidOperation = oclVoidClass.getOperation(referredOperation);
 				assert oclVoidOperation == null : "Missing OcVoid overload for " + referredOperation;
 			}
-			SymbolicValue nullSourceProblem = evaluationEnvironment.checkNotNull(source, returnTypeId, returnMayBeNull);
-			if (nullSourceProblem != null) {
-				return nullSourceProblem;
+			if (!callExp.isIsSafe()) {
+				SymbolicValue nullSourceProblem = evaluationEnvironment.checkNotNull(source, returnTypeId, returnMayBeNull);
+				if (nullSourceProblem != null) {
+					return nullSourceProblem;
+				}
 			}
 		}
 		int i = 0;
@@ -186,7 +189,7 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 			@NonNull SymbolicValue sourceSymbolicValue, @NonNull List<@NonNull SymbolicValue> argumentSymbolicValues) {
 		OCLExpression ownedSource = PivotUtil.getOwnedSource(callExp);
 		Operation referredOperation = PivotUtil.getReferredOperation(callExp);
-		assert !referredOperation.isIsValidating() : "Missing createResultValue overload for " + referredOperation.getImplementationClass();
+		assert (this instanceof ConstrainedOperation) || !referredOperation.isIsValidating() : "Missing createResultValue overload for " + referredOperation.getImplementationClass();
 		boolean mayBeInvalid = false;
 		boolean mayBeNull = false;
 		if (evaluationEnvironment.mayBeInvalid(ownedSource)) {

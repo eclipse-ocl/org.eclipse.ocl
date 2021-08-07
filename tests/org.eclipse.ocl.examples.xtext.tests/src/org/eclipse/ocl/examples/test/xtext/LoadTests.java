@@ -1235,7 +1235,6 @@ public class LoadTests extends XtextTestCase
 	}
 
 	public void testLoad_OCLTest_ocl() throws IOException, InterruptedException {
-		SymbolicAnalysis.HYPOTHESIS.setState(true);
 		OCL ocl = createOCLWithProjectMap();
 		//		Abstract2Moniker.TRACE_MONIKERS.setState(true);
 		doLoad(ocl, getTestModelURI("models/ecore/OCLTest.ocl"));

@@ -15,12 +15,15 @@ import java.util.List;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
  * AbstractSimpleBinaryOperation defines the default implementation of a binary operation redirecting the
@@ -28,6 +31,31 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  */
 public abstract class AbstractSimpleBinaryOperation extends AbstractUntypedBinaryOperation implements LibrarySimpleBinaryOperation.LibrarySimpleBinaryOperationExtension
 {
+	protected @NonNull SymbolicValue createValidatingResultValue( @NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp,
+			@NonNull SymbolicValue sourceSymbolicValue, @NonNull List<@NonNull SymbolicValue> argumentSymbolicValues) {
+		Operation referredOperation = PivotUtil.getReferredOperation(callExp);
+		assert referredOperation.isIsValidating() : "Spurious createResultValue overload for " + referredOperation.getImplementationClass();
+		assert !callExp.isIsSafe() : "Spurious isSafe for " + referredOperation.getImplementationClass();
+		boolean mayBeInvalid = false;
+		boolean mayBeNull = false;
+		OCLExpression ownedSource = PivotUtil.getOwnedSource(callExp);
+		if (evaluationEnvironment.mayBeInvalid(ownedSource)) {
+			mayBeInvalid = true;
+		}
+		if (evaluationEnvironment.mayBeNull(ownedSource)) {
+			mayBeNull = true;
+		}
+		assert !PivotUtil.getOwnedParameter(referredOperation, 0).isIsRequired() : "Spurious isRequired for " + referredOperation.getImplementationClass();
+		OCLExpression ownedArgument = PivotUtil.getOwnedArgument(callExp, 0);
+		if (evaluationEnvironment.mayBeInvalid(ownedArgument)) {
+			mayBeInvalid = true;
+		}
+		if (evaluationEnvironment.mayBeNull(ownedArgument)) {
+			mayBeNull = true;
+		}
+		return evaluationEnvironment.getUnknownValue(callExp, mayBeNull, mayBeInvalid);
+	}
+
 	/** @deprecated use Executor */
 	@Deprecated
 	@Override

@@ -55,6 +55,12 @@ public class BooleanOrOperation extends AbstractSimpleBinaryOperation
 	}
 
 	@Override
+	protected @NonNull SymbolicValue createResultValue( @NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp,
+			@NonNull SymbolicValue sourceSymbolicValue, @NonNull List<@NonNull SymbolicValue> argumentSymbolicValues) {
+		return createValidatingResultValue(evaluationEnvironment, callExp, sourceSymbolicValue, argumentSymbolicValues);
+	}
+
+	@Override
 	public @Nullable Object dispatch(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object sourceValue) {
 		if (sourceValue == Boolean.TRUE) {
 			return TRUE_VALUE;
