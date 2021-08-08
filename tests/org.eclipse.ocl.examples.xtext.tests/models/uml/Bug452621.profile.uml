@@ -53,7 +53,7 @@
     <ownedRule xmi:id="_bkPLQHGVEeSLC9KKX06hTg" name="unique_default_values">
       <specification xmi:type="uml:OpaqueExpression" xmi:id="_xSTaMHGVEeSLC9KKX06hTg">
         <language>OCL</language>
-        <body>self.base_Class.ownedAttribute?->isUnique(defaultValue.stringValue())</body>
+        <body>self.base_Class.ownedAttribute?->isUnique(defaultValue?.stringValue())</body>
       </specification>
     </ownedRule>
     <ownedAttribute xmi:id="_qtsdsnGVEeSLC9KKX06hTg" name="base_Class" association="_qtsdsHGVEeSLC9KKX06hTg">
