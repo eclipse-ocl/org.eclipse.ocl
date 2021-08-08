@@ -711,8 +711,8 @@ public class RoundTripTests extends XtextTestCase
 						"{\n" +
 						"	class c\n" +
 						"	{\n" +
-						"		property endpoints : Port[*|1] { ordered };\n" +
-						"		property ports : Port[2|1] { ordered } {\n" +
+						"		property endpoints : OrderedSet(Port[2|1]);\n" +
+						"		property ports : OrderedSet(Port[2|1]) {\n" +
 						"			initial: let v = OrderedSet{endpoints->first(), endpoints->last()}->oclAsType(OrderedSet(Port[2|1])) in v;\n" +
 						"		}\n" +
 						"	}\n" +

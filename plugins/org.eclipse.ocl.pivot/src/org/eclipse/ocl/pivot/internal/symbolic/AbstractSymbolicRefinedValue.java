@@ -387,6 +387,9 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 		}
 	}
 
+	/**
+	 * SymbolicSizeValue refines to select the size of a values content.
+	 */
 	private static class SymbolicSizeValue extends AbstractSymbolicRefinedValue
 	{
 		public SymbolicSizeValue(@NonNull SymbolicValue value) {

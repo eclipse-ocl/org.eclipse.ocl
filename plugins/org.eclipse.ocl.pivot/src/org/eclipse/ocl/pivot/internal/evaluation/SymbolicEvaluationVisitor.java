@@ -65,6 +65,7 @@ import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.symbolic.AbstractLeafSymbolicValue.SymbolicNavigationCallValue;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryIteration;
@@ -79,6 +80,7 @@ import org.eclipse.ocl.pivot.values.IntegerRange;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
+import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 /**
  * A symbolic evaluation decorator for an evaluation visitor.
@@ -145,7 +147,19 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 			boolean sourceIsMany = navigationCallExp.isIsMany();
 			boolean resultMayBeInvalid = sourceMayBeInvalid || (sourceMayBeNull && !isSafe && !sourceIsMany);
 			boolean resultMayBeNull = propertyMayBeNull || (sourceMayBeNull && isSafe && !sourceIsMany);
-			return new SymbolicNavigationCallValue(context.createVariableName(), navigationCallExp, resultMayBeNull, resultMayBeInvalid, sourceValue);
+			SymbolicNavigationCallValue symbolicValue = new SymbolicNavigationCallValue(context.createVariableName(), navigationCallExp, resultMayBeNull, resultMayBeInvalid, sourceValue);
+			if (referredProperty.isIsMany()) {
+				CollectionType collectionType = (CollectionType)referredProperty.getType();
+				IntegerValue lowerValue = collectionType.getLowerValue();
+				UnlimitedNaturalValue upperValue = collectionType.getUpperValue();
+				if (!lowerValue.equals(ValueUtil.ZERO_VALUE) || !upperValue.equals(ValueUtil.UNLIMITED_VALUE)) {
+					SymbolicContent content = symbolicValue.getContent();
+					SymbolicValue size = content.getSize();
+					size.setLowerValue(lowerValue);
+					size.setUpperValue(upperValue);
+				}
+			}
+			return symbolicValue;
 		}
 	}
 
