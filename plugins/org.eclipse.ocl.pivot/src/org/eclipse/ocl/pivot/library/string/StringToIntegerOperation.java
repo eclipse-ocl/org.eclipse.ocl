@@ -24,9 +24,14 @@ public class StringToIntegerOperation extends AbstractSimpleUnaryOperation
 	public static final @NonNull StringToIntegerOperation INSTANCE = new StringToIntegerOperation();
 
 	@Override
-	public @NonNull IntegerValue evaluate(@Nullable Object sourceVal) {
+	public @Nullable IntegerValue evaluate(@Nullable Object sourceVal) {
 		String sourceString = asString(sourceVal);
 		@NonNull String result = sourceString.trim();
-		return ValueUtil.integerValueOf(result);
+		try {
+			return ValueUtil.integerValueOf(result);
+		}
+		catch (Throwable e) {
+			return null;
+		}
 	}
 }

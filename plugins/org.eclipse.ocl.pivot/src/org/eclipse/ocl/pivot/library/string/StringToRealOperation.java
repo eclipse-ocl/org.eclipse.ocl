@@ -24,8 +24,13 @@ public class StringToRealOperation extends AbstractSimpleUnaryOperation
 	public static final @NonNull StringToRealOperation INSTANCE = new StringToRealOperation();
 
 	@Override
-	public @NonNull RealValue evaluate(@Nullable Object sourceVal) {
+	public @Nullable RealValue evaluate(@Nullable Object sourceVal) {
 		String sourceString = asString(sourceVal);
-		return ValueUtil.realValueOf(sourceString);
+		try {
+			return ValueUtil.realValueOf(sourceString);
+		}
+		catch (Throwable e) {
+			return null;
+		}
 	}
 }

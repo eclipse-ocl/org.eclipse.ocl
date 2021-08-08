@@ -487,8 +487,8 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryFalse(null, "*.oclIsInvalid()");
 		ocl.assertQueryFalse(null, "'invalid'.oclIsInvalid()");
 		ocl.assertQueryFalse(ocl.pkg1, "self.oclIsInvalid()");
-		ocl.assertQueryTrue(null, "('123a'.toInteger()).oclIsInvalid()");	// Bug 342561 for old evaluator
-		ocl.assertQueryTrue(null, "let a:Integer='123a'.toInteger() in a.oclIsInvalid()");	// Bug 342561 for old evaluator
+		ocl.assertQueryTrue(null, "('123a'.toInteger()).oclIsUndefined()");	// Bug 342561 for old evaluator
+		ocl.assertQueryTrue(null, "let a:Integer='123a'.toInteger() in a.oclIsUndefined()");	// Bug 342561 for old evaluator
 		ocl.dispose();
 	}
 

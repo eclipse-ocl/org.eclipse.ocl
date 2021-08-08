@@ -20,7 +20,6 @@ import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
-import org.eclipse.osgi.util.NLS;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -547,11 +546,11 @@ public class EvaluateStringOperationsTest4 extends PivotTestSuite
 	@Test public void testStringToBoolean() {
 		TestOCL ocl = createOCL();
 		ocl.assertQueryTrue(null, "'true'.toBoolean()");
-		ocl.assertQueryFalse(null, "' true'.toBoolean()");
-		ocl.assertQueryFalse(null, "'true '.toBoolean()");
-		ocl.assertQueryFalse(null, "'True'.toBoolean()");
+		ocl.assertQueryNull(null, "' true'.toBoolean()");
+		ocl.assertQueryNull(null, "'true '.toBoolean()");
+		ocl.assertQueryNull(null, "'True'.toBoolean()");
 		ocl.assertQueryFalse(null, "'false'.toBoolean()");
-		ocl.assertQueryFalse(null, "'-4'.toBoolean()");
+		ocl.assertQueryNull(null, "'-4'.toBoolean()");
 		// invalid
 		ocl.assertQueryInvalid(null, "let s : String = invalid in s.toBoolean()");
 		// null
@@ -563,10 +562,10 @@ public class EvaluateStringOperationsTest4 extends PivotTestSuite
 		TestOCL ocl = createOCL();
 		ocl.assertQueryEquals(null, Integer.valueOf(4), "'4'.toInteger()");
 		ocl.assertQueryEquals(null, Integer.valueOf(-4), "'-4'.toInteger()");
-		ocl.assertQueryInvalid(null, "'4.0'.toInteger()", NLS.bind(PivotMessages.InvalidInteger, "4.0"), NumberFormatException.class);
+		ocl.assertQueryNull(null, "'4.0'.toInteger()");
 
-		ocl.assertQueryInvalid(null, "'2.4.0'.toInteger()");
-		ocl.assertQueryInvalid(null, "'a'.toInteger()");
+		ocl.assertQueryNull(null, "'2.4.0'.toInteger()");
+		ocl.assertQueryNull(null, "'a'.toInteger()");
 		// invalid
 		ocl.assertQueryInvalid(null, "let s : String = invalid in s.toInteger()");
 		// null
@@ -596,8 +595,8 @@ public class EvaluateStringOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(null, -4.0, "'-4'.toReal()", 0.0);
 		ocl.assertQueryEquals(null, 4.0, "'4.0'.toReal()", 0.0);
 
-		ocl.assertQueryInvalid(null, "'2.4.0'.toReal()", NLS.bind(PivotMessages.InvalidReal, "2.4.0"), NumberFormatException.class);
-		ocl.assertQueryInvalid(null, "'a'.toReal()", NLS.bind(PivotMessages.InvalidReal, "a"), NumberFormatException.class);
+		ocl.assertQueryNull(null, "'2.4.0'.toReal()");
+		ocl.assertQueryNull(null, "'a'.toReal()");
 		// invalid
 		ocl.assertQueryInvalid(null, "let s : String = invalid in s.toReal()");
 		// null

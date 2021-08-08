@@ -22,9 +22,16 @@ public class StringToBooleanOperation extends AbstractSimpleUnaryOperation
 	public static final @NonNull StringToBooleanOperation INSTANCE = new StringToBooleanOperation();
 
 	@Override
-	public @NonNull Boolean evaluate(@Nullable Object sourceVal) {
+	public @Nullable Boolean evaluate(@Nullable Object sourceVal) {
 		String sourceString = asString(sourceVal);
-		boolean result = "true".equals(sourceString); //$NON-NLS-1$
-		return result;
+		if ("true".equals(sourceString)) { //$NON-NLS-1$
+			return Boolean.TRUE;
+		}
+		else if ("false".equals(sourceString)) { //$NON-NLS-1$
+			return Boolean.FALSE;
+		}
+		else {
+			return null;
+		}
 	}
 }
