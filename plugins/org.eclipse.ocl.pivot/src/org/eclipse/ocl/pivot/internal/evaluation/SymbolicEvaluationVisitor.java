@@ -66,6 +66,7 @@ import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.symbolic.AbstractLeafSymbolicValue.SymbolicNavigationCallValue;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicNumericValue;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryIteration;
@@ -154,9 +155,8 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 				UnlimitedNaturalValue upperValue = collectionType.getUpperValue();
 				if (!lowerValue.equals(ValueUtil.ZERO_VALUE) || !upperValue.equals(ValueUtil.UNLIMITED_VALUE)) {
 					SymbolicContent content = symbolicValue.getContent();
-					SymbolicValue size = content.getSize();
-					size.setLowerValue(lowerValue);
-					size.setUpperValue(upperValue);
+					SymbolicValue size = SymbolicNumericValue.get(lowerValue, upperValue);
+					content.setSize(size);
 				}
 			}
 			return symbolicValue;

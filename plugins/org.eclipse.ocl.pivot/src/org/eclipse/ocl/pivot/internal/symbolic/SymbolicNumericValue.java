@@ -28,13 +28,13 @@ public class SymbolicNumericValue extends AbstractLeafSymbolicValue
 	public static @NonNull SymbolicNumericValue ZERO_OR_NOT_ZERO = new SymbolicNumericValue(ValueUtil.ZERO_VALUE, null);
 	public static @NonNull SymbolicNumericValue NOT_ZERO = new SymbolicNumericValue(ValueUtil.ONE_VALUE, null);
 
-	public static @Nullable SymbolicNumericValue get(@NonNull NumberValue numericValue) {
-		if (numericValue.equals(ValueUtil.ZERO_VALUE)) {
+	public static @NonNull SymbolicNumericValue get(@NonNull NumberValue lowerBound, @Nullable NumberValue upperBound) {
+		if (lowerBound.equals(ValueUtil.ZERO_VALUE) && (upperBound != null) && upperBound.equals(ValueUtil.ZERO_VALUE)) {
 			return ZERO;
 		}
 //		return ValueUtil.ZERO_VALUE.equals(knownValue) ? SymbolicNumericStatus.ZERO : SymbolicNumericStatus.NOT_ZERO;
 		// TODO Auto-generated method stub
-		return new SymbolicNumericValue(numericValue, numericValue);
+		return new SymbolicNumericValue(lowerBound, upperBound);
 	}
 
 	/**

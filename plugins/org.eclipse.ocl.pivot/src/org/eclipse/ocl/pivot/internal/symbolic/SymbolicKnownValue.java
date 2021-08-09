@@ -77,7 +77,7 @@ public class SymbolicKnownValue extends AbstractLeafSymbolicValue {
 	public @Nullable SymbolicNumericValue basicGetNumericValue() {
 		if (isNumeric()) {
 			assert knownValue != null;
-			return SymbolicNumericValue.get((NumberValue)knownValue);
+			return SymbolicNumericValue.get((NumberValue)knownValue, (NumberValue)knownValue);
 		}
 		return null;
 	}
