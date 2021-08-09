@@ -12,27 +12,29 @@ package org.eclipse.ocl.pivot.internal.symbolic;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.NumberValue;
 
 /**
- * SymbolicNumericStatus maintains the status of a partial numeric knowledge involing known lower and upper bounds.
+ * SymbolicNumericValue maintains the status of a partial numeric knowledge involing known lower and upper bounds.
  *
  * @since 1.16
  */
-public class SymbolicNumericStatus implements SymbolicStatus
+public class SymbolicNumericValue extends AbstractLeafSymbolicValue
 {
-	public static @NonNull SymbolicNumericStatus ZERO = new SymbolicNumericStatus(ValueUtil.ZERO_VALUE, ValueUtil.ZERO_VALUE);
-	public static @NonNull SymbolicNumericStatus ZERO_OR_NOT_ZERO = new SymbolicNumericStatus(ValueUtil.ZERO_VALUE, null);
-	public static @NonNull SymbolicNumericStatus NOT_ZERO = new SymbolicNumericStatus(ValueUtil.ONE_VALUE, null);
+	public static @NonNull SymbolicNumericValue ZERO = new SymbolicNumericValue(ValueUtil.ZERO_VALUE, ValueUtil.ZERO_VALUE);
+	public static @NonNull SymbolicNumericValue ZERO_OR_NOT_ZERO = new SymbolicNumericValue(ValueUtil.ZERO_VALUE, null);
+	public static @NonNull SymbolicNumericValue NOT_ZERO = new SymbolicNumericValue(ValueUtil.ONE_VALUE, null);
 
-	public static @Nullable SymbolicNumericStatus get(@NonNull NumberValue numericValue) {
+	public static @Nullable SymbolicNumericValue get(@NonNull NumberValue numericValue) {
 		if (numericValue.equals(ValueUtil.ZERO_VALUE)) {
 			return ZERO;
 		}
 //		return ValueUtil.ZERO_VALUE.equals(knownValue) ? SymbolicNumericStatus.ZERO : SymbolicNumericStatus.NOT_ZERO;
 		// TODO Auto-generated method stub
-		return new SymbolicNumericStatus(numericValue, numericValue);
+		return new SymbolicNumericValue(numericValue, numericValue);
 	}
 
 	/**
@@ -45,7 +47,8 @@ public class SymbolicNumericStatus implements SymbolicStatus
 	 */
 	private final @Nullable NumberValue upperBound;
 
-	private SymbolicNumericStatus(@NonNull NumberValue lowerBound, @Nullable NumberValue upperBound) {
+	private SymbolicNumericValue(@NonNull NumberValue lowerBound, @Nullable NumberValue upperBound) {
+		super(lowerBound + ".." + (upperBound != null ? upperBound.toString() : "*"), lowerBound instanceof IntegerValue ? TypeId.INTEGER : TypeId.REAL, false, false, null);
 		this.lowerBound = lowerBound;
 		this.upperBound = upperBound;
 	}
@@ -54,16 +57,18 @@ public class SymbolicNumericStatus implements SymbolicStatus
 		return (lowerBound != ValueUtil.ZERO_VALUE);// && (upperBound != ValueUtil.ZERO_VALUE);
 	}
 
+	@Override
 	public boolean isZero() {
 		return (lowerBound == ValueUtil.ZERO_VALUE) && (upperBound == ValueUtil.ZERO_VALUE);
 	}
 
+	@Override
 	public boolean mayBeZero() {
 		return (lowerBound == ValueUtil.ZERO_VALUE);// ^ (upperBound == ValueUtil.ZERO_VALUE);
 	}
 
 	@Override
 	public @NonNull String toString() {
-		return lowerBound + ".." + (upperBound != null ? upperBound.toString() : "*");
+		return name;
 	}
 }

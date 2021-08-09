@@ -16,7 +16,7 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent.SymbolicCollectionContent;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent.SymbolicMapContent;
-import org.eclipse.ocl.pivot.internal.symbolic.SymbolicNumericStatus;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicNumericValue;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicSimpleStatus;
 
 /**
@@ -57,7 +57,7 @@ public interface SymbolicValue
 	// Returns null when null not applicable to e.g. a ZeroStatus
 	@Nullable SymbolicSimpleStatus basicGetNullStatus();
 
-	@Nullable SymbolicNumericStatus basicGetNumericStatus();
+	@Nullable SymbolicNumericValue basicGetNumericValue();
 
 	@NonNull SymbolicValue getBaseValue();
 
@@ -79,7 +79,7 @@ public interface SymbolicValue
 
 	@NonNull TypeId getTypeId();
 
-	@NonNull SymbolicNumericStatus getNumericStatus();
+	@NonNull SymbolicNumericValue getNumericValue();
 
 	boolean isCollection();
 

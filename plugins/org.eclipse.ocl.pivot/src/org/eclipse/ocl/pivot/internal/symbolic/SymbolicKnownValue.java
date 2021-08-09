@@ -74,10 +74,10 @@ public class SymbolicKnownValue extends AbstractLeafSymbolicValue {
 	}
 
 	@Override
-	public @Nullable SymbolicNumericStatus basicGetNumericStatus() {
+	public @Nullable SymbolicNumericValue basicGetNumericValue() {
 		if (isNumeric()) {
 			assert knownValue != null;
-			return SymbolicNumericStatus.get((NumberValue)knownValue);
+			return SymbolicNumericValue.get((NumberValue)knownValue);
 		}
 		return null;
 	}

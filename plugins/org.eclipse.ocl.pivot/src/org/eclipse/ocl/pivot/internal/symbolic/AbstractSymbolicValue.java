@@ -104,7 +104,7 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 		//
 		//	Resolve zero refinement
 		//
-		if (unrefinedValue.basicGetNumericStatus() != null) {
+		if (unrefinedValue.basicGetNumericValue() != null) {
 			if (isZero()) {
 				if (unrefinedValue.mayBeZero()) {
 					return this;					// "0" is except-everything else
@@ -305,8 +305,8 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 	}
 
 	@Override
-	public final @NonNull SymbolicNumericStatus getNumericStatus() {
-		return ClassUtil.nonNullState(basicGetNumericStatus());
+	public final @NonNull SymbolicNumericValue getNumericValue() {
+		return ClassUtil.nonNullState(basicGetNumericValue());
 	}
 
 	@Override
@@ -343,7 +343,7 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 		if (mayBeNull() && !unrefinedValue.mayBeNull()) {
 			return false;
 		}
-		if (((basicGetNumericStatus() != null) && mayBeZero()) && !((unrefinedValue.basicGetNumericStatus() != null) && unrefinedValue.mayBeZero())) {
+		if (((basicGetNumericValue() != null) && mayBeZero()) && !((unrefinedValue.basicGetNumericValue() != null) && unrefinedValue.mayBeZero())) {
 			return false;
 		}
 		return true;
@@ -356,8 +356,8 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 	}
 
 	@Override
-	public final boolean isZero() {
-		return getNumericStatus().isZero();
+	public /*final*/ boolean isZero() {
+		return getNumericValue().isZero();
 	}
 
 	@Override
@@ -384,7 +384,7 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 
 	@Override
 	public boolean mayBeZero() {
-		return getNumericStatus().mayBeZero();
+		return getNumericValue().mayBeZero();
 	}
 
 	@Override

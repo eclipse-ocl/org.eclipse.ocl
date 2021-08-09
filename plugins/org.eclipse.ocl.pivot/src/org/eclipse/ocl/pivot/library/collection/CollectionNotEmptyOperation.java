@@ -17,7 +17,7 @@ import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.internal.symbolic.AbstractSymbolicRefinedValue;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent;
-import org.eclipse.ocl.pivot.internal.symbolic.SymbolicNumericStatus;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicNumericValue;
 import org.eclipse.ocl.pivot.library.AbstractSimpleUnaryOperation;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
@@ -47,7 +47,7 @@ public class CollectionNotEmptyOperation extends AbstractSimpleUnaryOperation
 		SymbolicContent content = sourceValue.getContent();
 	//	if (content != null) {
 			SymbolicValue sizeValue = content.getSize();
-			SymbolicNumericStatus zeroStatus = sizeValue.getNumericStatus();
+			SymbolicNumericValue zeroStatus = sizeValue.getNumericValue();
 			if (zeroStatus.isZero()) {
 				return evaluationEnvironment.getKnownValue(Boolean.FALSE);
 			}

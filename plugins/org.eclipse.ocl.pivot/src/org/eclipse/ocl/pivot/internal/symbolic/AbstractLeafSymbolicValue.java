@@ -174,9 +174,9 @@ public abstract class AbstractLeafSymbolicValue extends AbstractSymbolicValue
 	}
 
 	@Override
-	public @Nullable SymbolicNumericStatus basicGetNumericStatus() {
+	public @Nullable SymbolicNumericValue basicGetNumericValue() {
 		if (isNumeric()) {	// FIXME Behavioral
-			return SymbolicNumericStatus.ZERO_OR_NOT_ZERO;
+			return SymbolicNumericValue.ZERO_OR_NOT_ZERO;
 		}
 		return null;
 	}
