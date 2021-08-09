@@ -26,7 +26,7 @@
         <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_3AqlkGEIEeu3-bh5n6XVFQ" value="*"/>
         <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_4c1YQGFuEeutDq-J8nQl6w">
           <language>OCL</language>
-          <body>let supplierElement : Set(UML::NamedElement) = Depends.allInstances()->select(base_Dependency.client->includes(self.base_NamedElement)).base_Dependency.supplier->asSet() in Stereotype1.allInstances()->select(supplierElement->includes(base_NamedElement))</body>
+          <body>let supplierElement : Set(UML::NamedElement) = Depends.allInstances()->select(base_Dependency?.client->includes(self.base_NamedElement)).base_Dependency?.supplier->asSet() in Stereotype1.allInstances()->select(supplierElement->includes(base_NamedElement))</body>
         </defaultValue>
       </ownedAttribute>
       <ownedAttribute xmi:id="_iFn_IGFBEeu3-bh5n6XVFQ" name="enum1" type="_eJbPUGFBEeu3-bh5n6XVFQ" isReadOnly="true" isDerived="true">
@@ -69,14 +69,14 @@
         <specification xmi:type="uml:OpaqueExpression" xmi:id="_7jqaMGEJEeu3-bh5n6XVFQ" name="spec">
           <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
           <language>OCL</language>
-          <body>Stereotype1.allInstances()->exists(self.base_Dependency.client->includes(base_NamedElement))</body>
+          <body>Stereotype1.allInstances()->exists(self.base_Dependency?.client->includes(base_NamedElement))</body>
         </specification>
       </ownedRule>
       <ownedRule xmi:id="_AoPHUGEKEeu3-bh5n6XVFQ" name="supplier_is_Stereotype1" constrainedElement="_ov85AGEIEeu3-bh5n6XVFQ">
         <specification xmi:type="uml:OpaqueExpression" xmi:id="_AoPHUWEKEeu3-bh5n6XVFQ" name="spec">
           <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
           <language>OCL</language>
-          <body>Stereotype1.allInstances()->exists(self.base_Dependency.supplier->includes(base_NamedElement))</body>
+          <body>Stereotype1.allInstances()->exists(self.base_Dependency?.supplier->includes(base_NamedElement))</body>
         </specification>
       </ownedRule>
       <ownedAttribute xmi:id="_v4vgoWEIEeu3-bh5n6XVFQ" name="base_Dependency" association="_v4u5kGEIEeu3-bh5n6XVFQ">

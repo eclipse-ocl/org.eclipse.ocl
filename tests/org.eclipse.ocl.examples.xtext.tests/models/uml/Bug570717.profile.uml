@@ -24,9 +24,8 @@
       <ownedAttribute xmi:id="_xoj4cGEIEeu3-bh5n6XVFQ" name="depends" type="_DZkRYGEIEeu3-bh5n6XVFQ" isReadOnly="true" isDerived="true">
         <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_3Ake8GEIEeu3-bh5n6XVFQ"/>
         <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_3AqlkGEIEeu3-bh5n6XVFQ" value="*"/>
-        <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_4c1YQGFuEeutDq-J8nQl6w">
+        <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_4c1YQGFuEeutDq-J8nQl6w" body="">
           <language>OCL</language>
-          <body>let supplierElement : Set(UML::NamedElement) = Depends.allInstances()->select(base_Dependency.client->includes(self.base_NamedElement)).base_Dependency.supplier->asSet() in Stereotype1.allInstances()->select(supplierElement->includes(base_NamedElement))</body>
         </defaultValue>
       </ownedAttribute>
       <ownedAttribute xmi:id="_iFn_IGFBEeu3-bh5n6XVFQ" name="enum1" type="_eJbPUGFBEeu3-bh5n6XVFQ" isReadOnly="true" isDerived="true">

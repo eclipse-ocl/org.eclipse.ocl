@@ -26,8 +26,8 @@
         <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_KvS5QGYgEeuLiryWOk9R1g" value="*"/>
         <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_mKYVYGYgEeuLiryWOk9R1g" name="spec" type="_BfN1AGYgEeuLiryWOk9R1g">
           <language>OCL</language>
-          <body>let supplierElement : Set(UML::NamedElement) =
-    Has.allInstances()->select(base_Dependency.client->includes(self.base_NamedElement)).base_Dependency.supplier->asSet()
+          <body>let supplierElement : Set(UML::NamedElement) =&#xD;
+    Has.allInstances()->select(base_Dependency?.client->includes(self.base_NamedElement)).base_Dependency?.supplier->asSet()&#xD;
     in Animal.allInstances()->select(supplierElement->includes(base_NamedElement))</body>
         </defaultValue>
       </ownedAttribute>
