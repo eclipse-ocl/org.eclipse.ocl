@@ -16,7 +16,8 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent.SymbolicCollectionContent;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent.SymbolicMapContent;
-import org.eclipse.ocl.pivot.internal.symbolic.SymbolicStatus;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicNumericStatus;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicSimpleStatus;
 
 /**
  * <!-- begin-user-doc -->
@@ -46,39 +47,39 @@ public interface SymbolicValue
 	 */
 	@NonNull SymbolicValue asRefinementOf(@NonNull SymbolicValue unrefinedValue);
 
-	@Nullable SymbolicStatus basicGetBooleanStatus();
+	@Nullable SymbolicSimpleStatus basicGetBooleanStatus();
 
 	@Nullable SymbolicContent basicGetContent();
 
 	// Returns null when invalid not applicable to e.g. a ZeroStatus
-	@Nullable SymbolicStatus basicGetInvalidStatus();
+	@Nullable SymbolicSimpleStatus basicGetInvalidStatus();
 
 	// Returns null when null not applicable to e.g. a ZeroStatus
-	@Nullable SymbolicStatus basicGetNullStatus();
+	@Nullable SymbolicSimpleStatus basicGetNullStatus();
 
-	@Nullable SymbolicStatus basicGetZeroStatus();
+	@Nullable SymbolicNumericStatus basicGetNumericStatus();
 
 	@NonNull SymbolicValue getBaseValue();
 
-	@NonNull SymbolicStatus getBooleanStatus();
+	@NonNull SymbolicSimpleStatus getBooleanStatus();
 
 	@NonNull SymbolicCollectionContent getCollectionContent();
 
 	@NonNull SymbolicContent getContent();
 
-	@NonNull SymbolicStatus getDeadStatus();
+	@NonNull SymbolicSimpleStatus getDeadStatus();
 
-	@NonNull SymbolicStatus getInvalidStatus();
+	@NonNull SymbolicSimpleStatus getInvalidStatus();
 
 	@Nullable Object getKnownValue();
 
-	@NonNull SymbolicStatus getNullStatus();
+	@NonNull SymbolicSimpleStatus getNullStatus();
 
 	@NonNull SymbolicMapContent getMapContent();
 
 	@NonNull TypeId getTypeId();
 
-	@NonNull SymbolicStatus getZeroStatus();
+	@NonNull SymbolicNumericStatus getNumericStatus();
 
 	boolean isCollection();
 

@@ -150,9 +150,9 @@ public abstract class AbstractLeafSymbolicValue extends AbstractSymbolicValue
 	}
 
 	@Override
-	public @Nullable SymbolicStatus basicGetBooleanStatus() {
+	public @Nullable SymbolicSimpleStatus basicGetBooleanStatus() {
 		if (typeId == TypeId.BOOLEAN) {
-			return SymbolicStatus.UNDECIDED;
+			return SymbolicSimpleStatus.UNDECIDED;
 		}
 		return null;
 	//	throw new IllegalStateException("No Boolean source configured");
@@ -164,19 +164,19 @@ public abstract class AbstractLeafSymbolicValue extends AbstractSymbolicValue
 	}
 
 	@Override
-	public @NonNull SymbolicStatus basicGetInvalidStatus() {
-		return mayBeInvalid ? SymbolicStatus.UNDECIDED : SymbolicStatus.UNSATISFIED;
+	public @NonNull SymbolicSimpleStatus basicGetInvalidStatus() {
+		return mayBeInvalid ? SymbolicSimpleStatus.UNDECIDED : SymbolicSimpleStatus.UNSATISFIED;
 	}
 
 	@Override
-	public @NonNull SymbolicStatus basicGetNullStatus() {
-		return mayBeNull ? SymbolicStatus.UNDECIDED : SymbolicStatus.UNSATISFIED;
+	public @NonNull SymbolicSimpleStatus basicGetNullStatus() {
+		return mayBeNull ? SymbolicSimpleStatus.UNDECIDED : SymbolicSimpleStatus.UNSATISFIED;
 	}
 
 	@Override
-	public @Nullable SymbolicStatus basicGetZeroStatus() {
+	public @Nullable SymbolicNumericStatus basicGetNumericStatus() {
 		if (isNumeric()) {	// FIXME Behavioral
-			return SymbolicStatus.UNDECIDED;
+			return SymbolicNumericStatus.ZERO_OR_NOT_ZERO;
 		}
 		return null;
 	}
@@ -221,8 +221,8 @@ public abstract class AbstractLeafSymbolicValue extends AbstractSymbolicValue
 	}
 
 	@Override
-	public @NonNull SymbolicStatus getDeadStatus() {
-		return SymbolicStatus.UNSATISFIED;
+	public @NonNull SymbolicSimpleStatus getDeadStatus() {
+		return SymbolicSimpleStatus.UNSATISFIED;
 	}
 
 	@Override

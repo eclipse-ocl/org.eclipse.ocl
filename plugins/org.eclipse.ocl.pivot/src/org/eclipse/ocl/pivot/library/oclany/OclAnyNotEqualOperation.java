@@ -105,8 +105,8 @@ public class OclAnyNotEqualOperation extends OclAnyEqualOperation
 		if (nullSameness != null) {
 			return evaluationEnvironment.getKnownValue(ValueUtil.asBoolean(!nullSameness));
 		}
-		SymbolicStatus sourceZeroStatus = sourceSymbolicValue.getZeroStatus();
-		SymbolicStatus argumentZeroStatus = argumentSymbolicValue.getZeroStatus();
+		SymbolicStatus sourceZeroStatus = sourceSymbolicValue.getNumericStatus();
+		SymbolicStatus argumentZeroStatus = argumentSymbolicValue.getNumericStatus();
 		Boolean zeroSameness = sourceZeroStatus.asSame(argumentZeroStatus);
 		if (zeroSameness != null) {
 			return evaluationEnvironment.getKnownValue(ValueUtil.asBoolean(!zeroSameness));

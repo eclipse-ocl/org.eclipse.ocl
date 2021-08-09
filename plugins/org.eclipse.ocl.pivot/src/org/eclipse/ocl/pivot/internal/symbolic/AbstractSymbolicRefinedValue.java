@@ -35,22 +35,22 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 		}
 
 		@Override
-		public @Nullable SymbolicStatus basicGetBooleanStatus() {
+		public @Nullable SymbolicSimpleStatus basicGetBooleanStatus() {
 			return null; //getDeadStatus();
 		}
 
 		@Override
-		public @NonNull SymbolicStatus basicGetInvalidStatus() {
-			return SymbolicStatus.UNDECIDED;
+		public @NonNull SymbolicSimpleStatus basicGetInvalidStatus() {
+			return SymbolicSimpleStatus.UNDECIDED;
 		}
 
 		@Override
-		public @NonNull SymbolicStatus basicGetNullStatus() {
-			return SymbolicStatus.UNDECIDED;
+		public @NonNull SymbolicSimpleStatus basicGetNullStatus() {
+			return SymbolicSimpleStatus.UNDECIDED;
 		}
 
 		@Override
-		public @Nullable SymbolicStatus basicGetZeroStatus() {
+		public @Nullable SymbolicNumericStatus basicGetNumericStatus() {
 			return null; //SymbolicStatus.UNDECIDED;
 		}
 
@@ -86,8 +86,8 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 		}
 
 		@Override
-		public @NonNull SymbolicStatus getDeadStatus() {
-			return SymbolicStatus.SATISFIED;
+		public @NonNull SymbolicSimpleStatus getDeadStatus() {
+			return SymbolicSimpleStatus.SATISFIED;
 		}
 
 		@Override
@@ -119,40 +119,40 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 		}
 
 		@Override
-		public @Nullable SymbolicStatus basicGetBooleanStatus() {
-			SymbolicStatus booleanStatus = super.basicGetBooleanStatus();
+		public @Nullable SymbolicSimpleStatus basicGetBooleanStatus() {
+			SymbolicSimpleStatus booleanStatus = super.basicGetBooleanStatus();
 			if (exceptValue.equals(ValueUtil.TRUE_VALUE)) {
-				booleanStatus = SymbolicStatus.UNSATISFIED;
+				booleanStatus = SymbolicSimpleStatus.UNSATISFIED;
 			}
 			else if (exceptValue.equals(ValueUtil.FALSE_VALUE)) {
-				booleanStatus = SymbolicStatus.SATISFIED;
+				booleanStatus = SymbolicSimpleStatus.SATISFIED;
 			}
 			return booleanStatus;
 		}
 
 		@Override
-		public @Nullable SymbolicStatus basicGetInvalidStatus() {
-			SymbolicStatus invalidStatus = super.basicGetInvalidStatus();
+		public @Nullable SymbolicSimpleStatus basicGetInvalidStatus() {
+			SymbolicSimpleStatus invalidStatus = super.basicGetInvalidStatus();
 			if (exceptValue instanceof InvalidValue) {
-				invalidStatus = SymbolicStatus.UNSATISFIED;
+				invalidStatus = SymbolicSimpleStatus.UNSATISFIED;
 			}
 			return invalidStatus;
 		}
 
 		@Override
-		public @Nullable SymbolicStatus basicGetNullStatus() {
-			SymbolicStatus nullStatus = super.basicGetNullStatus();
+		public @Nullable SymbolicSimpleStatus basicGetNullStatus() {
+			SymbolicSimpleStatus nullStatus = super.basicGetNullStatus();
 			if (exceptValue == ValueUtil.NULL_VALUE) {
-				nullStatus = SymbolicStatus.UNSATISFIED;
+				nullStatus = SymbolicSimpleStatus.UNSATISFIED;
 			}
 			return nullStatus;
 		}
 
 		@Override
-		public @Nullable SymbolicStatus basicGetZeroStatus() {
-			SymbolicStatus zeroStatus = super.basicGetZeroStatus();
+		public @Nullable SymbolicNumericStatus basicGetNumericStatus() {
+			SymbolicNumericStatus zeroStatus = super.basicGetNumericStatus();
 			if (exceptValue.equals(ValueUtil.ZERO_VALUE)) {
-				zeroStatus = SymbolicStatus.UNSATISFIED;
+				zeroStatus = SymbolicNumericStatus.NOT_ZERO;		// FIXME keep refined wrapper
 			}
 			return zeroStatus;
 		}
@@ -185,8 +185,8 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 		}
 
 		@Override
-		public @NonNull SymbolicStatus basicGetInvalidStatus() {		// Shouldn't really happen - asIncompatibility() guards
-			return SymbolicStatus.SATISFIED;
+		public @NonNull SymbolicSimpleStatus basicGetInvalidStatus() {		// Shouldn't really happen - asIncompatibility() guards
+			return SymbolicSimpleStatus.SATISFIED;
 		}
 
 		@Override
@@ -209,28 +209,37 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 		}
 
 		@Override
-		public @NonNull SymbolicStatus basicGetBooleanStatus() {
-			return value.getZeroStatus();
+		public @NonNull SymbolicSimpleStatus basicGetBooleanStatus() {
+			SymbolicNumericStatus zeroStatus = value.getNumericStatus();
+			if (zeroStatus.isZero()) {
+				return SymbolicSimpleStatus.SATISFIED;
+			}
+			else if (zeroStatus.isNotZero()) {
+				return SymbolicSimpleStatus.UNSATISFIED;
+			}
+			else {
+				return SymbolicSimpleStatus.UNDECIDED;
+			}
 		}
 
 		@Override
-		public @Nullable SymbolicStatus basicGetInvalidStatus() {
+		public @Nullable SymbolicSimpleStatus basicGetInvalidStatus() {
 			return null;
 		}
 
 		@Override
-		public @Nullable SymbolicStatus basicGetNullStatus() {
+		public @Nullable SymbolicSimpleStatus basicGetNullStatus() {
 			return null;
 		}
 
 		@Override
-		public @Nullable SymbolicStatus basicGetZeroStatus() {
-			return null; //value.getZeroStatus();
+		public @Nullable SymbolicNumericStatus basicGetNumericStatus() {
+			return null; //value.getNumericStatus();
 		}
 
 		@Override
 		public @Nullable Object getKnownValue() {
-			SymbolicStatus booleanStatus = getBooleanStatus();
+			SymbolicSimpleStatus booleanStatus = getBooleanStatus();
 			return /*booleanStatus == null ? null :*/ booleanStatus.isSatisfied() ? Boolean.TRUE : Boolean.FALSE;
 		}
 
@@ -249,25 +258,25 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 		}
 
 		@Override
-		public @NonNull SymbolicStatus basicGetBooleanStatus() {
+		public @NonNull SymbolicSimpleStatus basicGetBooleanStatus() {
 			return value.getBooleanStatus().not();		// not super to avoid recursion
 		}
 
 		@Override
-		public @Nullable SymbolicStatus basicGetInvalidStatus() {
-			SymbolicStatus invalidStatus = value.basicGetInvalidStatus();
+		public @Nullable SymbolicSimpleStatus basicGetInvalidStatus() {
+			SymbolicSimpleStatus invalidStatus = value.basicGetInvalidStatus();
 			return invalidStatus != null ? invalidStatus.not() : null;
 		}
 
 		@Override
-		public @Nullable SymbolicStatus basicGetNullStatus() {
-			SymbolicStatus nullStatus = value.basicGetNullStatus();
+		public @Nullable SymbolicSimpleStatus basicGetNullStatus() {
+			SymbolicSimpleStatus nullStatus = value.basicGetNullStatus();
 			return nullStatus != null ? nullStatus.not() : null;
 		}
 
 		@Override
-		public @Nullable SymbolicStatus basicGetZeroStatus() {
-		//	SymbolicStatus zeroStatus = value.basicGetZeroStatus();
+		public @Nullable SymbolicNumericStatus basicGetNumericStatus() {
+		//	SymbolicStatus zeroStatus = value.basicGetNumericStatus();
 		//	return zeroStatus != null ? zeroStatus.not() : null;
 			return null;
 		}
@@ -343,8 +352,8 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 		}
 
 		@Override
-		public @Nullable SymbolicStatus basicGetZeroStatus() {
-			return null;//content.getSize().getZeroStatus();
+		public @Nullable SymbolicNumericStatus basicGetNumericStatus() {
+			return null;//content.getSize().getNumericStatus();
 		}
 
 		@Override
@@ -385,18 +394,18 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 		}
 
 		@Override
-		public @Nullable SymbolicStatus basicGetInvalidStatus() {
+		public @Nullable SymbolicSimpleStatus basicGetInvalidStatus() {
 			return null;
 		}
 
 		@Override
-		public @Nullable SymbolicStatus basicGetNullStatus() {
+		public @Nullable SymbolicSimpleStatus basicGetNullStatus() {
 			return null;
 		}
 
 		@Override
-		public @NonNull SymbolicStatus basicGetZeroStatus() {
-			return value.getContent().getSize().getZeroStatus();
+		public @NonNull SymbolicNumericStatus basicGetNumericStatus() {
+			return value.getContent().getSize().getNumericStatus();
 		}
 
 		@Override
@@ -508,7 +517,7 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 	}
 
 	@Override
-	public @Nullable SymbolicStatus basicGetBooleanStatus() {
+	public @Nullable SymbolicSimpleStatus basicGetBooleanStatus() {
 		return value.basicGetBooleanStatus();
 	}
 
@@ -518,18 +527,18 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 	}
 
 	@Override
-	public @Nullable SymbolicStatus basicGetInvalidStatus() {
+	public @Nullable SymbolicSimpleStatus basicGetInvalidStatus() {
 		return value.basicGetInvalidStatus();
 	}
 
 	@Override
-	public @Nullable SymbolicStatus basicGetNullStatus() {
+	public @Nullable SymbolicSimpleStatus basicGetNullStatus() {
 		return value.basicGetNullStatus();
 	}
 
 	@Override
-	public @Nullable SymbolicStatus basicGetZeroStatus() {
-		return value.basicGetZeroStatus();
+	public @Nullable SymbolicNumericStatus basicGetNumericStatus() {
+		return value.basicGetNumericStatus();
 	}
 
 	@Override
@@ -548,7 +557,7 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 	}
 
 	@Override
-	public @NonNull SymbolicStatus getDeadStatus() {
+	public @NonNull SymbolicSimpleStatus getDeadStatus() {
 		return value.getDeadStatus();
 	}
 

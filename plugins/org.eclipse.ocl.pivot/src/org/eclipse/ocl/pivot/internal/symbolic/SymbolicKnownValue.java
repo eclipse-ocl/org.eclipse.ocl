@@ -14,6 +14,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.NumberValue;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 import org.eclipse.ocl.pivot.values.Value;
 
@@ -52,30 +53,31 @@ public class SymbolicKnownValue extends AbstractLeafSymbolicValue {
 	}
 
 	@Override
-	public @Nullable SymbolicStatus basicGetBooleanStatus() {
+	public @Nullable SymbolicSimpleStatus basicGetBooleanStatus() {
 		if (knownValue == ValueUtil.TRUE_VALUE) {
-			return SymbolicStatus.SATISFIED;
+			return SymbolicSimpleStatus.SATISFIED;
 		}
 		else if (knownValue == ValueUtil.FALSE_VALUE) {
-			return SymbolicStatus.UNSATISFIED;
+			return SymbolicSimpleStatus.UNSATISFIED;
 		}
 		return super.basicGetBooleanStatus();
 	}
 
 	@Override
-	public @NonNull SymbolicStatus basicGetInvalidStatus() {
-		return ValueUtil.isInvalidValue(knownValue) ? SymbolicStatus.SATISFIED : SymbolicStatus.UNSATISFIED;
+	public @NonNull SymbolicSimpleStatus basicGetInvalidStatus() {
+		return ValueUtil.isInvalidValue(knownValue) ? SymbolicSimpleStatus.SATISFIED : SymbolicSimpleStatus.UNSATISFIED;
 	}
 
 	@Override
-	public @NonNull SymbolicStatus basicGetNullStatus() {
-		return ValueUtil.isNullValue(knownValue) ? SymbolicStatus.SATISFIED : SymbolicStatus.UNSATISFIED;
+	public @NonNull SymbolicSimpleStatus basicGetNullStatus() {
+		return ValueUtil.isNullValue(knownValue) ? SymbolicSimpleStatus.SATISFIED : SymbolicSimpleStatus.UNSATISFIED;
 	}
 
 	@Override
-	public @Nullable SymbolicStatus basicGetZeroStatus() {
+	public @Nullable SymbolicNumericStatus basicGetNumericStatus() {
 		if (isNumeric()) {
-			return ValueUtil.ZERO_VALUE.equals(knownValue) ? SymbolicStatus.SATISFIED : SymbolicStatus.UNSATISFIED;
+			assert knownValue != null;
+			return SymbolicNumericStatus.get((NumberValue)knownValue);
 		}
 		return null;
 	}
