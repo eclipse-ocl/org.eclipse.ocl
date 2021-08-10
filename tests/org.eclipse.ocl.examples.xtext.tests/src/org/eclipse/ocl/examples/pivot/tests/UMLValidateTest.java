@@ -34,7 +34,6 @@ import org.eclipse.ocl.common.internal.options.CommonOptions;
 import org.eclipse.ocl.common.internal.preferences.CommonPreferenceInitializer;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateDomain;
-import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.GlobalEnvironmentFactory;
@@ -508,7 +507,6 @@ public class UMLValidateTest extends AbstractValidateTests
 	}
 
 	public void test_umlValidation_Bug448470() throws IOException { // formerly Bug 447557
-		SymbolicAnalysis.HYPOTHESIS.setState(true);
 		resetRegistries();
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		if (EcorePlugin.IS_ECLIPSE_RUNNING) {

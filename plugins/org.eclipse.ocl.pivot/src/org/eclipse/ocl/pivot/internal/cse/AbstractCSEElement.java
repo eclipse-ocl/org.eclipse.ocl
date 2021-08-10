@@ -53,14 +53,24 @@ public abstract class AbstractCSEElement implements CSEElement
 	}
 
 	/**
-	 * A CSEMapLiteralPartElement is the cirregular non-TypedElement implementation for a MapLiteralPart.
+	 * A CSEMapLiteralPartElement is the irregular non-TypedElement implementation for a MapLiteralPart.
 	 */
 	// XXX Delete me once MapLiteralPart is a TypedElement
 	@Deprecated
 	public static class CSEMapLiteralPartElement extends AbstractCSEElement
 	{
+		protected final @NonNull MapLiteralPart part;
+
 		public CSEMapLiteralPartElement(@NonNull CommonSubExpressionAnalysis cseAnalysis, @NonNull MapLiteralPart element, int height) {
 			super(cseAnalysis, height);
+			this.part = element;
+		}
+
+		@Override
+		public void toString(@NonNull StringBuilder s, int lengthLimit) {
+			s.append(getHeight());
+			s.append("#");
+			s.append(part);
 		}
 	}
 
@@ -160,7 +170,7 @@ public abstract class AbstractCSEElement implements CSEElement
 		if (inputs2 == null) {
 			inputs = inputs2 = new ArrayList<>();
 		}
-		inputs2.add(inputCSE);
+		inputs2.add(inputCSE);		// No prohibition on duplicates e.g. f(1,1) or Sequence{1,1}
 		((AbstractCSEElement)inputCSE).outputs.add(this);
 	}
 

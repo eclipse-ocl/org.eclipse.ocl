@@ -276,7 +276,7 @@ public class CommonSubExpressionAnalysis
 		if (typeid2cse2 == null) {
 			typeid2cse2 = typeid2cse = new HashMap<>();
 		}
-		TypeId typeId = typeExp.getTypeId();
+		TypeId typeId = typeExp.getReferredType().getTypeId();
 		CSETypeElement cseElement = typeid2cse2.get(typeId);
 		if (cseElement == null) {
 			cseElement = new CSETypeElement(this, typeExp);
