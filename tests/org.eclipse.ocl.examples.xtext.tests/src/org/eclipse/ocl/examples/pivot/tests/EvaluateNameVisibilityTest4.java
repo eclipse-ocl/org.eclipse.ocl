@@ -294,14 +294,25 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 	}
 
 	@Test public void test_cg_caught_if() throws ParserException {
+		// The original version of this test checks that  numerous exceptionsare caught.
+		// Once SymbolicAnalysis is in place these are all eliminated at edit-time.
 		TestOCL ocl = createOCL();
 		StandardLibrary standardLibrary = ocl.getStandardLibrary();
 		ExpressionInOCL query = ocl.createQuery(standardLibrary.getOclVoidType(), "self->any(true)");
-		String textQuery =
-				"name = 'closure' implies\n" +
-						"if self.ownedSource?.type?.oclIsKindOf(SequenceType) or self.ownedSource?.type?.oclIsKindOf(OrderedSetType)"
-						+ "then self.type?.oclIsKindOf(OrderedSetType) else self.type?.oclIsKindOf(SetType) endif";
-		ocl.assertQueryTrue(query.getOwnedBody(), textQuery);
+		//
+		String textQuery1 =
+				"(name = 'closure') and (self.type <> null) and (self.ownedSource <> null) and (self.ownedSource.type <> null) implies\n" +
+						"if self.ownedSource.type.oclIsKindOf(SequenceType) or self.ownedSource.type.oclIsKindOf(OrderedSetType)"
+						+ "then self.type.oclIsKindOf(OrderedSetType) else self.type.oclIsKindOf(SetType) endif";
+		ocl.assertQueryTrue(query.getOwnedBody(), textQuery1);
+		//
+		ocl.getEnvironmentFactory().setOption(PivotValidationOptions.PotentialInvalidResult, StatusCodes.Severity.IGNORE);
+		String textQuery2 =
+				"(name = 'closure') implies\n" +
+						"if self.ownedSource.type.oclIsKindOf(SequenceType) or self.ownedSource.type.oclIsKindOf(OrderedSetType)"
+						+ "then self.type.oclIsKindOf(OrderedSetType) else self.type.oclIsKindOf(SetType) endif";
+		ocl.assertQueryTrue(query.getOwnedBody(), textQuery2);
+		//
 		ocl.dispose();
 	}
 
