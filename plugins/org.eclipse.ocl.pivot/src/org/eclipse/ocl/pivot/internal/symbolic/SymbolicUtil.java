@@ -11,9 +11,7 @@
 package org.eclipse.ocl.pivot.internal.symbolic;
 
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -35,10 +33,7 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
-
-import com.google.common.collect.Iterables;
 
 /**
  * @since 1.16
@@ -89,53 +84,17 @@ public class SymbolicUtil
 		}
 	}
 
-	//
-	//	Confirm that the element2cse has a consistently delegated entry for the expressionInOCL tree.
-	//
-	public static boolean debugCheckCSEs(@NonNull ExpressionInOCL expressionInOCL, @NonNull Map<@NonNull Element, @NonNull CSEElement> element2cse) {
-		//	Map<@NonNull CSEElement, @NonNull Set<@NonNull Element>> cse2elements = new HashMap<>();
-		Set<@NonNull CSEElement> cseElements = new HashSet<>();
-		for (EObject eObject : new TreeIterable(expressionInOCL,true)) {
-			if (eObject instanceof Element) {		// MapLiteralPart
-				Element element = (Element)eObject;
-				CSEElement cseElement = element2cse.get(element);
-				assert cseElement != null : "Missing CSE for " + element.eClass().getName() + ": " + element;
-	//			Set<@NonNull Element> elements = cse2elements.get(cseElement);
-	//			if (elements == null) {
-	//				elements = new HashSet<>();
-	//				cse2elements.put(cseElement, elements);
-	//			}
-	//			elements.add(element);
-				cseElements.add(cseElement);
-			}
-		}
-		for (@NonNull CSEElement cseElement : cseElements) {
-			Iterable<@NonNull TypedElement> elements = cseElement.getElements();
-			for (@NonNull Element element : elements) {
-				for (Element aDelegate = element; (aDelegate = SymbolicUtil.getDelegate(aDelegate)) != null; ) {
-					assert Iterables.contains(elements, aDelegate) : "Inconsistent CSE delegation for " + element.eClass().getName() + ": " + element;
-				}
-			}
-		}
-	//	for (Map.Entry<@NonNull CSEElement, @NonNull Set<@NonNull Element>> entry : cse2elements.entrySet()) {
-	//		Set<@NonNull Element> localElements = entry.getValue();
-	//		Set<@NonNull Element> cachedElements = Sets.newHashSet(entry.getKey().getElements());
-	//		assert localElements.equals(cachedElements);
-	//	}
-		return true;
-	}
-
 	public static @Nullable Element getDelegate(@NonNull Element typedElement) {
 		Element delegate = null;
 		if (typedElement instanceof CollectionItem) {
 			delegate = PivotUtil.getOwnedItem((CollectionItem)typedElement);
 		}
-		else if (typedElement instanceof ExpressionInOCL) {
-			delegate = ((ExpressionInOCL)typedElement).getOwnedBody();
-		}
-		else if (typedElement instanceof LetExp) {
-			delegate = PivotUtil.getOwnedIn((LetExp)typedElement);
-		}
+	//	else if (typedElement instanceof ExpressionInOCL) {
+	//		delegate = ((ExpressionInOCL)typedElement).getOwnedBody();
+	//	}
+	//	else if (typedElement instanceof LetExp) {
+	//		delegate = PivotUtil.getOwnedIn((LetExp)typedElement);
+	//	}
 	//	else if (typedElement instanceof ShadowPart) {
 	//		delegate = PivotUtil.getReferredProperty((ShadowPart)typedElement);
 	//	}

@@ -14,8 +14,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
@@ -39,6 +41,7 @@ import org.eclipse.ocl.pivot.internal.symbolic.SymbolicUtil;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicUtil.TypedElementHeightComparator;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.eclipse.ocl.pivot.utilities.TreeIterable;
 
 import com.google.common.collect.Iterables;
 
@@ -52,6 +55,9 @@ import com.google.common.collect.Iterables;
 public class CommonSubExpressionAnalysis
 {
 	protected static int computeHeight(@NonNull Iterable<@NonNull CSEElement> elements) {
+		if (Iterables.isEmpty(elements)) {
+			return 0;
+		}
 		int maxHeight = 0;
 		for (@NonNull CSEElement element : elements) {
 			int height = element.getHeight();
@@ -104,12 +110,73 @@ public class CommonSubExpressionAnalysis
 
 	public @NonNull CSEElement analyze(@NonNull ExpressionInOCL expressionInOCL) {
 		CSEElement cseElement = getCSEElement(expressionInOCL);
-		assert SymbolicUtil.debugCheckCSEs(expressionInOCL, element2cse);		// XXX debugging
+		assert debugCheckCSEs(expressionInOCL);		// XXX debugging
 		return cseElement;
 	}
 
 	protected @NonNull CSEVisitor createCSEVisitor() {
 		return new CSEVisitor(this);
+	}
+
+	//
+	//	Confirm that the element2cse has a consistently delegated entry for the expressionInOCL tree.
+	//
+	public boolean debugCheckCSEs(@NonNull ExpressionInOCL expressionInOCL) {
+		//	Map<@NonNull CSEElement, @NonNull Set<@NonNull Element>> cse2elements = new HashMap<>();
+		Set<@NonNull CSEElement> cseElements = new HashSet<>();
+		for (EObject eObject : new TreeIterable(expressionInOCL, true)) {
+			if (eObject instanceof Element) {		// MapLiteralPart
+				Element element = (Element)eObject;
+				CSEElement cseElement = element2cse.get(element);
+				assert cseElement != null : "Missing CSE for " + element.eClass().getName() + ": " + element;
+	//			Set<@NonNull Element> elements = cse2elements.get(cseElement);
+	//			if (elements == null) {
+	//				elements = new HashSet<>();
+	//				cse2elements.put(cseElement, elements);
+	//			}
+	//			elements.add(element);
+				cseElements.add(cseElement);
+			}
+		}
+		CSEElement cseRoot = getCSEElement(expressionInOCL);
+		int maxHeight = cseRoot.getHeight();
+		for (@NonNull CSEElement cseElement : cseElements) {
+			Iterable<@NonNull TypedElement> elements = cseElement.getElements();
+			for (@NonNull Element element : elements) {
+				for (Element aDelegate = element; (aDelegate = SymbolicUtil.getDelegate(aDelegate)) != null; ) {
+					assert Iterables.contains(elements, aDelegate) : "Inconsistent CSE delegation for " + element.eClass().getName() + ": " + element;
+				}
+			}
+			int height = cseElement.getHeight();
+			Iterable<@NonNull CSEElement> inputs = cseElement.getInputs();
+			if (inputs == null) {
+				assert height == 0 : "inconsistent height " + height + " for " + cseElement;
+			}
+			else {
+				assert height > 0 : "inconsistent height " + height + " for " + cseElement;
+				for (@NonNull CSEElement input : inputs) {
+					assert input.getHeight() < height : "inconsistent " + input.getHeight() + " input at " + height + " for " + cseElement;
+					assert Iterables.contains(input.getOutputs(), cseElement) : "missing input " + input + " for " + cseElement;
+				}
+			}
+			Iterable<@NonNull CSEElement> outputs = cseElement.getOutputs();
+			if (Iterables.isEmpty(outputs)) {
+				assert height == maxHeight : "inconsistent height " + height + " for " + cseElement;
+			}
+			else {
+				assert height < maxHeight : "inconsistent height " + height + " for " + cseElement;
+				for (@NonNull CSEElement output : outputs) {
+					assert output.getHeight() > height : "inconsistent height " + output.getHeight() + " output at " + height + " for " + cseElement;
+					assert Iterables.contains(output.getInputs(), cseElement) : "missing output " + output + " for " + cseElement;
+				}
+			}
+		}
+	//	for (Map.Entry<@NonNull CSEElement, @NonNull Set<@NonNull Element>> entry : cse2elements.entrySet()) {
+	//		Set<@NonNull Element> localElements = entry.getValue();
+	//		Set<@NonNull Element> cachedElements = Sets.newHashSet(entry.getKey().getElements());
+	//		assert localElements.equals(cachedElements);
+	//	}
+		return true;
 	}
 
 	// XXX Change to TypedElement once MapLiteralPart is a TypedElement
@@ -250,18 +317,22 @@ public class CommonSubExpressionAnalysis
 //		return cseElement;
 //	}
 
-	public @NonNull CSEElement getVariableCSE(@NonNull VariableDeclaration variableDeclaration) {
+	public @NonNull CSEElement getVariableCSE(@NonNull VariableDeclaration variableDeclaration) {  // Fold single call
 		CSESimpleElement cseElement = (CSESimpleElement)element2cse.get(variableDeclaration);
 		if (cseElement == null) {
+			CSEElement initCSE = null;
 			int height = 0;
 			if (variableDeclaration instanceof Variable) {
 				OCLExpression initExpression = ((Variable)variableDeclaration).getOwnedInit();
 				if (initExpression != null) {
-					CSEElement initCSE = getCSEElement(initExpression);
+					initCSE = getCSEElement(initExpression);
 					height = initCSE.getHeight() + 1;
 				}
 			}
 			cseElement = new CSESimpleElement(this, variableDeclaration, height);
+			if (initCSE != null) {
+				cseElement.addInput(initCSE);
+			}
 			element2cse.put(variableDeclaration, cseElement);
 		}
 		return cseElement;

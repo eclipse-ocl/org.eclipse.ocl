@@ -274,6 +274,10 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 		gatherAffectedTypedElements(affectedExpressionsSet, typedElement);
 		List<@NonNull TypedElement> affectedExpressionsList = new ArrayList<>(affectedExpressionsSet);
 		Collections.sort(affectedExpressionsList, cseAnalysis.getTypedElementHeightComparator());
+		List<@NonNull CSEElement> affectedCSEsList = new ArrayList<>();
+		for (@NonNull TypedElement affectedExpression : affectedExpressionsList) {
+			affectedCSEsList.add(cseAnalysis.getCSEElement(affectedExpression));
+		}
 		for (@NonNull TypedElement affectedExpression : affectedExpressionsList) {
 			SymbolicValue oldValue = getSymbolicValue(affectedExpression);
 			if (affectedExpression != typedElement) {
