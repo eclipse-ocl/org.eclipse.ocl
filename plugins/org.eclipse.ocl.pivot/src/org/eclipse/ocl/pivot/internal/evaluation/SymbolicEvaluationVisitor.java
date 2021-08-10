@@ -185,7 +185,7 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 			sourceValue = symbolicEvaluationEnvironment.symbolicEvaluate(source);
 		}
 		//
-		boolean mayBeNull = !operationCallExp.isIsRequired();
+	//	boolean mayBeNull = !operationCallExp.isIsRequired();
 		//
 		//	Safe navigation of null source return null.
 		/*

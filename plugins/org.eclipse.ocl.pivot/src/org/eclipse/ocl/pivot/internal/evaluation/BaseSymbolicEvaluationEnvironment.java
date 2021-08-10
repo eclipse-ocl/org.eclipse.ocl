@@ -148,10 +148,18 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 	 */
 	private void gatherAffectedTypedElements(@NonNull Set<@NonNull TypedElement> affectedExpressions, @NonNull TypedElement typedElement) {
 		if (typedElement instanceof VariableDeclaration) {
-			CSEElement variableCSE = symbolicAnalysis.getCSEElement(typedElement);
-			for (@NonNull Element element : variableCSE.getElements()) {
-				if (element instanceof VariableExp) {
-					gatherAffectedTypedElements(affectedExpressions, (VariableExp)element);
+			VariableDeclaration variable = (VariableDeclaration)typedElement;
+			if (affectedExpressions.add(variable)) {
+				EObject eContainer = variable.eContainer();
+				if ((eContainer instanceof OCLExpression) || (eContainer instanceof ExpressionInOCL) || (eContainer instanceof VariableDeclaration)) {
+					assert eContainer != null;
+					gatherAffectedTypedElements(affectedExpressions, (TypedElement)eContainer);
+				}
+				CSEElement variableCSE = symbolicAnalysis.getCSEElement(typedElement);
+				for (@NonNull Element element : variableCSE.getElements()) {
+					if (element instanceof VariableExp) {
+						gatherAffectedTypedElements(affectedExpressions, (VariableExp)element);
+					}
 				}
 			}
 		}
@@ -369,6 +377,20 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 		SymbolicValue old = typedElement2refinedSymbolicValue.put(typedElement, refinedValue);
 		if (old != null) {
 			assert old == unrefinedValue;
+		}
+		if (typedElement instanceof VariableDeclaration) {
+			CSEElement cseElement = cseAnalysis.getCSEElement(typedElement);
+			for (@NonNull TypedElement typedElement2 : cseElement.getElements()) {
+				if (typedElement2 != typedElement) {
+					SymbolicValue unrefinedValue2 = getSymbolicValue(typedElement);			// Get the unrefined value
+					SymbolicValue refinedValue2 = resultValue.asRefinementOf(unrefinedValue2);
+					assert typedElement2refinedSymbolicValue != null;
+					SymbolicValue old2 = typedElement2refinedSymbolicValue.put(typedElement2, refinedValue2);
+					if (old2 != null) {
+						assert old2 == unrefinedValue2;
+					}
+				}
+			}
 		}
 		return refinedValue;
 	}
