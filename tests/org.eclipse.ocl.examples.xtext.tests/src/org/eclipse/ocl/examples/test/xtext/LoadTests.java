@@ -53,6 +53,7 @@ import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.resource.AS2ID;
@@ -1219,6 +1220,7 @@ public class LoadTests extends XtextTestCase
 	}
 
 	public void testLoad_MiniPivot_ocl() throws IOException, InterruptedException {
+		SymbolicAnalysis.HYPOTHESIS.setState(true);
 		TestOCL ocl = createOCLWithProjectMap();
 		ocl.getEnvironmentFactory().setSafeNavigationValidationSeverity(StatusCodes.Severity.WARNING);
 		doLoad_OCL(ocl, getTestModelURI("models/ocl/MiniPivot.ocl"));

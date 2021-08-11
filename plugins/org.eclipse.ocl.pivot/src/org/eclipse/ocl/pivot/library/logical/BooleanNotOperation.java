@@ -40,6 +40,9 @@ public class BooleanNotOperation extends AbstractSimpleUnaryOperation
 		return checkPreconditions(evaluationEnvironment, callExp, CHECK_NOT_INVALID);
 	}
 
+	/**
+	 * @since 1.16
+	 */
 	@Override
 	protected @NonNull SymbolicValue createResultValue( @NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp,
 			@NonNull SymbolicValue sourceSymbolicValue, @NonNull List<@NonNull SymbolicValue> argumentSymbolicValues) {

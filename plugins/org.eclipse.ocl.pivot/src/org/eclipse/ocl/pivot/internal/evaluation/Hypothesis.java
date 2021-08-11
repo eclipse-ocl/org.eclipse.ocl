@@ -135,7 +135,7 @@ public abstract class Hypothesis
 
 	protected void toString(@NonNull StringBuilder s) {
 		s.append(getKind());
-		s.append(": ");
+		s.append(": explore ");
 	//	s.append(getOriginalValue());
 	//	s.append(": ");
 		s.append(hypothesizedValue);

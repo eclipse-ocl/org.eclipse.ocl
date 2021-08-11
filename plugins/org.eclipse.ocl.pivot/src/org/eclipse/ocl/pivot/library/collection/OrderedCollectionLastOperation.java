@@ -29,6 +29,9 @@ public class OrderedCollectionLastOperation extends AbstractSimpleUnaryOperation
 {
 	public static final @NonNull OrderedCollectionLastOperation INSTANCE = new OrderedCollectionLastOperation();
 
+	/**
+	 * @since 1.16
+	 */
 	@Override
 	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
 		SymbolicValue superProblem = super.checkPreconditions(evaluationEnvironment, callExp);

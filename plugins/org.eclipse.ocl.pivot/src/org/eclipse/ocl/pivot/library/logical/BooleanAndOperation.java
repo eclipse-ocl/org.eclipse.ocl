@@ -72,6 +72,9 @@ public class BooleanAndOperation extends AbstractSimpleBinaryOperation
 		return evaluate(sourceValue, firstArgument);
 	}
 
+	/**
+	 * @since 1.16
+	 */
 	@Override
 	protected @NonNull SymbolicValue createResultValue( @NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp,
 			@NonNull SymbolicValue sourceSymbolicValue, @NonNull List<@NonNull SymbolicValue> argumentSymbolicValues) {

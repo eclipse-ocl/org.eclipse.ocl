@@ -36,6 +36,9 @@ public class CollectionIsEmptyOperation extends AbstractSimpleUnaryOperation
 		return collectionValue.isEmpty();
 	}
 
+	/**
+	 * @since 1.16
+	 */
 	@Override
 	public @NonNull SymbolicValue symbolicEvaluate(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
 		SymbolicValue symbolicPreconditionValue = checkPreconditions(evaluationEnvironment, callExp);

@@ -5,11 +5,10 @@ import 'platform:/resource/org.eclipse.ocl.pivot/model/Pivot.ecore'
 
 package ocl
 
-context ShadowExp
-inv InitializesAllClassProperties:
-	let partProperties = ownedParts.referredProperty->asSet() in
-	let requiredClassProperties = partProperties->reject((opposite<>null) and opposite.isComposite) in
-	requiredClassProperties->notEmpty()
+context IterateExp
+inv SafeSourceCanBeNull: (isSafe and (ownedSource <> null) and (ownedSource.type <> null)) implies
+	let sourceType = ownedSource?.type in
+	if sourceType.oclIsKindOf(MapType) then sourceType.oclAsType(MapType).keysAreNullFree else sourceType.oclAsType(CollectionType).isNullFree endif
 	
 
 endpackage
