@@ -69,11 +69,20 @@ public interface CSEElement extends Comparable<@NonNull CSEElement>
 	/**
 	 * The expressions whose evaluation uses this CSE.
 	 */
-//	@NonNull Iterable<@NonNull OCLExpression> getOutputs();
 	@NonNull Iterable<@NonNull CSEElement> getOutputs();
 
 	/**
 	 * Add a navigation for navigationCallExp with this CSE as the source.
 	 */
 	@NonNull CSEElement getPropertyCSE(@NonNull NavigationCallExp navigationCallExp);
+
+	/**
+	 * The safe CSE wrapper for this CSE.
+	 */
+	@NonNull CSEElement getSafeCSE();
+
+	/**
+	 * True if this is an isSafe wrapper.
+	 */
+	boolean isSafe();
 }

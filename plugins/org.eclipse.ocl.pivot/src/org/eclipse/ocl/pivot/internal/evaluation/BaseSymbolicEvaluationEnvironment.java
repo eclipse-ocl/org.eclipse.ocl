@@ -121,6 +121,10 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 		}
 		Collections.sort(typedElements, cseAnalysis.getTypedElementHeightComparator());
 		for (@NonNull TypedElement typedElement : typedElements) {
+			String s = typedElement.toString();
+			if (s.contains("?")) {
+				getClass();			// XXX
+			}
 			symbolicEvaluate(typedElement, true);				// Multi-TypedElement CSEs re-use per-CSE cache
 		}
 		return null;

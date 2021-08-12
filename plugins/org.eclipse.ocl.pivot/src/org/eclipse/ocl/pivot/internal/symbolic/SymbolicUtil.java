@@ -76,7 +76,7 @@ public class SymbolicUtil
 			if (diff != 0) {
 				return diff;
 			}
-			Iterator<@NonNull Integer> i1 = getPosition(o1);
+			Iterator<@NonNull Integer> i1 = getPosition(o1);			// class name / nav name faster
 			Iterator<@NonNull Integer> i2 = getPosition(o2);
 			while (i1.hasNext() && i2.hasNext()) {
 				int x1 = i1.next();
@@ -208,14 +208,26 @@ public class SymbolicUtil
 			}
 		}
 		else if (namedElement instanceof LoopExp) {
-			s.append(PivotUtil.getName(PivotUtil.getReferredIteration((LoopExp)namedElement)));
+			LoopExp callExp = (LoopExp)namedElement;
+			if (callExp.isIsSafe()) {
+				s.append("?~");
+			}
+			s.append(PivotUtil.getName(PivotUtil.getReferredIteration(callExp)));
 			s.append("()");
 		}
 		else if (namedElement instanceof NavigationCallExp) {
-			s.append(PivotUtil.getName(PivotUtil.getReferredProperty((NavigationCallExp)namedElement)));
+			NavigationCallExp callExp = (NavigationCallExp)namedElement;
+			if (callExp.isIsSafe()) {
+				s.append("?~");
+			}
+			s.append(PivotUtil.getName(PivotUtil.getReferredProperty(callExp)));
 		}
 		else if (namedElement instanceof OperationCallExp) {
-			s.append(PivotUtil.getName(PivotUtil.getReferredOperation((OperationCallExp)namedElement)));
+			OperationCallExp callExp = (OperationCallExp)namedElement;
+			if (callExp.isIsSafe()) {
+				s.append("?~");
+			}
+			s.append(PivotUtil.getName(PivotUtil.getReferredOperation(callExp)));
 			s.append("()");
 		}
 		else if (namedElement instanceof LiteralExp) {

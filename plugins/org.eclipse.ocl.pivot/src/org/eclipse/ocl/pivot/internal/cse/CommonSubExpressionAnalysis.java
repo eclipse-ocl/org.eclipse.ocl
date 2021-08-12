@@ -185,6 +185,7 @@ public class CommonSubExpressionAnalysis
 		if (cseElement == null) {
 			cseElement = visitor.visit(element);
 			element2cse.put(element, cseElement);
+		//	CSEElement cseElementReg = cseElement instanceof CSESafeElement ? ;
 			if (!(element instanceof MapLiteralPart)) {
 				assert Iterables.contains(cseElement.getElements(), element) : "No CSE registration for a " + element.eClass().getName();
 			}
@@ -200,7 +201,8 @@ public class CommonSubExpressionAnalysis
 		CSEMappedElement cseElement = key2element2cse2.get(property2element);
 		if (cseElement == null) {
 			int height = computeHeight(property2element.values());
-			cseElement = new CSEMappedElement(this, element, height, property2element);
+			cseElement = new CSEMappedElement(this, height, property2element);
+			cseElement.addElement(element);
 			for (@NonNull CSEElement inputCSE : property2element.values()) {
 				cseElement.addInput(inputCSE);
 			}
@@ -227,7 +229,8 @@ public class CommonSubExpressionAnalysis
 		CSESimpleElement cseElement = elements2cse.get(cseElements);
 		if (cseElement == null) {
 			int height = computeHeight(cseElements);
-			cseElement = new CSESimpleElement(this, element, height);
+			cseElement = new CSESimpleElement(this, height);
+			cseElement.addElement(element);
 			for (@NonNull CSEElement cseElement2 : cseElements) {
 				cseElement.addInput(cseElement2);
 			}
@@ -279,7 +282,8 @@ public class CommonSubExpressionAnalysis
 		TypeId typeId = typeExp.getReferredType().getTypeId();
 		CSETypeElement cseElement = typeid2cse2.get(typeId);
 		if (cseElement == null) {
-			cseElement = new CSETypeElement(this, typeExp);
+			cseElement = new CSETypeElement(this, typeExp.getTypeId());
+			cseElement.addElement(typeExp);
 			typeid2cse2.put(typeId, cseElement);
 		}
 		else {
@@ -299,13 +303,14 @@ public class CommonSubExpressionAnalysis
 	public @NonNull CSEElement getValueCSE(@NonNull LiteralExp literalExp, @NonNull Object value) {
 		CSEValueElement cseElement = value2cse.get(value);
 		if (cseElement == null) {
-			cseElement = new CSEValueElement(this, literalExp, value);
+			cseElement = new CSEValueElement(this, value);
+			cseElement.addElement(literalExp);
 			value2cse.put(value, cseElement);
 		}
 		else {
 			cseElement.addElement(literalExp);
 		}
-		cseElement.addOutput(literalExp);
+	//	cseElement.addOutput(literalExp);
 		return cseElement;
 	}
 
@@ -319,6 +324,7 @@ public class CommonSubExpressionAnalysis
 
 	public @NonNull CSEElement getVariableCSE(@NonNull VariableDeclaration variableDeclaration) {  // Fold single call
 		CSESimpleElement cseElement = (CSESimpleElement)element2cse.get(variableDeclaration);
+		assert cseElement == null;
 		if (cseElement == null) {
 			CSEElement initCSE = null;
 			int height = 0;
@@ -329,7 +335,8 @@ public class CommonSubExpressionAnalysis
 					height = initCSE.getHeight() + 1;
 				}
 			}
-			cseElement = new CSESimpleElement(this, variableDeclaration, height);
+			cseElement = new CSESimpleElement(this, height);
+			cseElement.addElement(variableDeclaration);
 			if (initCSE != null) {
 				cseElement.addInput(initCSE);
 			}
@@ -353,7 +360,7 @@ public class CommonSubExpressionAnalysis
 			StringUtil.appendIndentation(s, depth+1);
 			CSEElement cseElement = element2cse.get(element);
 			assert cseElement != null;
-			Element theElement = cseElement.getElements().iterator().next();
+			Iterable<@NonNull TypedElement> elements2 = cseElement.getElements();
 			s.append(element.eClass().getName());
 			s.append("@");
 			s.append(Integer.toHexString(System.identityHashCode(element)));
@@ -361,10 +368,13 @@ public class CommonSubExpressionAnalysis
 			s.append(cseElement.getHeight());
 			s.append("-");
 			s.append(Integer.toHexString(System.identityHashCode(cseElement)));
-			s.append("-");
-			s.append(theElement.eClass().getName());
-			s.append(": ");
-			s.append(theElement);
+			if (!Iterables.isEmpty(elements2)) {
+				Element theElement = elements2.iterator().next();
+				s.append("-");
+				s.append(theElement.eClass().getName());
+				s.append(": ");
+				s.append(theElement);
+			}
 		}
 		StringUtil.appendIndentation(s, depth);
 		s.append("values");
