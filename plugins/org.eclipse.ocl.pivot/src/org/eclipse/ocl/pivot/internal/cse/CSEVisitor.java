@@ -53,7 +53,7 @@ import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
-import org.eclipse.ocl.pivot.internal.cse.AbstractCSEElement.CSEMappedElement;
+import org.eclipse.ocl.pivot.internal.cse.AbstractCSEElement.CSEVariableElement;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -88,14 +88,12 @@ public class CSEVisitor extends AbstractExtendingVisitor<@NonNull CSEElement, @N
 
 	@Override
 	public @NonNull CSEElement visitBooleanLiteralExp(@NonNull BooleanLiteralExp booleanLiteralExp) {
-		return context.getValueCSE(booleanLiteralExp, booleanLiteralExp.isBooleanSymbol());
+		return context.getValueCSE(booleanLiteralExp.isBooleanSymbol());
 	}
 
 	@Override
 	public @NonNull CSEElement visitCollectionItem(@NonNull CollectionItem collectionItem) {
-		CSEElement elementCSE = context.getCSEElement(PivotUtil.getOwnedItem(collectionItem));
-		elementCSE.addElement(collectionItem);
-		return elementCSE;
+		return context.getCSEElement(PivotUtil.getOwnedItem(collectionItem));
 	}
 
 	@Override
@@ -121,7 +119,7 @@ public class CSEVisitor extends AbstractExtendingVisitor<@NonNull CSEElement, @N
 
 	@Override
 	public @NonNull CSEElement visitEnumLiteralExp(@NonNull EnumLiteralExp enumLiteralExp) {
-		return context.getValueCSE(enumLiteralExp, PivotUtil.getReferredLiteral(enumLiteralExp));
+		return context.getValueCSE(PivotUtil.getReferredLiteral(enumLiteralExp));
 	}
 
 	@Override
@@ -152,12 +150,12 @@ public class CSEVisitor extends AbstractExtendingVisitor<@NonNull CSEElement, @N
 
 	@Override
 	public @NonNull CSEElement visitIntegerLiteralExp(@NonNull IntegerLiteralExp integerLiteralExp) {
-		return context.getValueCSE(integerLiteralExp, ValueUtil.integerValueOf(integerLiteralExp.getIntegerSymbol()));
+		return context.getValueCSE(ValueUtil.integerValueOf(integerLiteralExp.getIntegerSymbol()));
 	}
 
 	@Override
 	public @NonNull CSEElement visitInvalidLiteralExp(@NonNull InvalidLiteralExp invalidLiteralExp) {
-		return context.getValueCSE(invalidLiteralExp, ValueUtil.INVALID_VALUE);
+		return context.getValueCSE(ValueUtil.INVALID_VALUE);
 	}
 
 	@Override
@@ -228,7 +226,7 @@ public class CSEVisitor extends AbstractExtendingVisitor<@NonNull CSEElement, @N
 
 	@Override
 	public @NonNull CSEElement visitNullLiteralExp(@NonNull NullLiteralExp nullLiteralExp) {
-		return context.getValueCSE(nullLiteralExp, ValueUtil.NULL_VALUE);
+		return context.getValueCSE(ValueUtil.NULL_VALUE);
 	}
 
 	@Override
@@ -246,7 +244,7 @@ public class CSEVisitor extends AbstractExtendingVisitor<@NonNull CSEElement, @N
 
 	@Override
 	public @NonNull CSEElement visitRealLiteralExp(@NonNull RealLiteralExp realLiteralExp) {
-		return context.getValueCSE(realLiteralExp, ValueUtil.realValueOf(realLiteralExp.getRealSymbol()));
+		return context.getValueCSE(ValueUtil.realValueOf(realLiteralExp.getRealSymbol()));
 	}
 
 	@Override
@@ -254,9 +252,7 @@ public class CSEVisitor extends AbstractExtendingVisitor<@NonNull CSEElement, @N
 		Map<@NonNull TypedElement, @NonNull CSEElement> property2element = new HashMap<>();
 		for (@NonNull ShadowPart shadowPart : PivotUtil.getOwnedParts(shadowExp)) {
 			Property shadowProperty = PivotUtil.getReferredProperty(shadowPart);
-			OCLExpression shadowInit = PivotUtil.getOwnedInit(shadowPart);
-			CSEElement initCSE = context.getCSEElement(shadowInit);
-			CSEElement partCSE = context.getNamespaceCSE(shadowPart, Collections.singletonList(initCSE));
+			CSEElement partCSE = context.getCSEElement(shadowPart);
 			property2element.put(shadowProperty, partCSE);
 		}
 		return context.getMappedCSE(shadowExp, property2element);
@@ -264,24 +260,20 @@ public class CSEVisitor extends AbstractExtendingVisitor<@NonNull CSEElement, @N
 
 	@Override
 	public @NonNull CSEElement visitShadowPart(@NonNull ShadowPart shadowPart) {
-		ShadowExp shadowExp = PivotUtil.getOwningShadowExp(shadowPart);
-		Property shadowProperty = PivotUtil.getReferredProperty(shadowPart);
-		CSEMappedElement shadowCSE = (CSEMappedElement)context.getCSEElement(shadowExp);
-		return shadowCSE.getElement(shadowProperty);
+		CSEElement initCSE = context.getCSEElement(PivotUtil.getOwnedInit(shadowPart));
+		return context.getNamespaceCSE(shadowPart, Collections.singletonList(initCSE));
 	}
 
 	@Override
 	public @NonNull CSEElement visitStringLiteralExp(@NonNull StringLiteralExp stringLiteralExp) {
-		return context.getValueCSE(stringLiteralExp, PivotUtil.getStringSymbol(stringLiteralExp));
+		return context.getValueCSE(PivotUtil.getStringSymbol(stringLiteralExp));
 	}
 
 	@Override
 	public @NonNull CSEElement visitTupleLiteralExp(@NonNull TupleLiteralExp tupleLiteralExp) {
 		Map<@NonNull TypedElement, @NonNull CSEElement> property2element = new HashMap<>();
 		for (@NonNull TupleLiteralPart tuplePart : PivotUtil.getOwnedParts(tupleLiteralExp)) {
-			OCLExpression shadowInit = PivotUtil.getOwnedInit(tuplePart);
-			CSEElement initCSE = context.getCSEElement(shadowInit);
-			CSEElement partCSE = context.getNamespaceCSE(tuplePart, Collections.singletonList(initCSE));
+			CSEElement partCSE = context.getCSEElement(tuplePart);
 			property2element.put(tuplePart, partCSE);
 		}
 		return context.getMappedCSE(tupleLiteralExp, property2element);
@@ -289,32 +281,41 @@ public class CSEVisitor extends AbstractExtendingVisitor<@NonNull CSEElement, @N
 
 	@Override
 	public @NonNull CSEElement visitTupleLiteralPart(@NonNull TupleLiteralPart tupleLiteralPart) {
-		TupleLiteralExp tupleLiteralExp = PivotUtil.getOwningTupleLiteralExp(tupleLiteralPart);
-		CSEMappedElement tupleCSE = (CSEMappedElement)context.getCSEElement(tupleLiteralExp);
-		return tupleCSE.getElement(tupleLiteralPart);
+		OCLExpression partInit = PivotUtil.getOwnedInit(tupleLiteralPart);
+		CSEElement initCSE = context.getCSEElement(partInit);
+		return context.getNamespaceCSE(tupleLiteralPart, Collections.singletonList(initCSE));
 	}
 
 	@Override
 	public @NonNull CSEElement visitTypeExp(@NonNull TypeExp typeExp) {
-		return context.getTypeCSE(typeExp);
+		return context.getValueCSE(typeExp.getReferredType().getTypeId());
 	}
 
 	@Override
 	public @NonNull CSEElement visitUnlimitedNaturalLiteralExp(@NonNull UnlimitedNaturalLiteralExp unlimitedNaturalLiteralExp) {
-		return context.getValueCSE(unlimitedNaturalLiteralExp, ValueUtil.unlimitedNaturalValueOf(unlimitedNaturalLiteralExp.getUnlimitedNaturalSymbol()));
+		return context.getValueCSE(ValueUtil.unlimitedNaturalValueOf(unlimitedNaturalLiteralExp.getUnlimitedNaturalSymbol()));
+	}
+
+	@Override
+	public @NonNull CSEElement visitVariable(@NonNull Variable variable) {
+		OCLExpression initExpression = variable.getOwnedInit();
+		if (initExpression != null) {
+			return context.getCSEElement(initExpression);
+		}
+		else {
+			return super.visitVariable(variable);
+		}
 	}
 
 	@Override
 	public @NonNull CSEElement visitVariableDeclaration(@NonNull VariableDeclaration variableDeclaration) {
-		return context.getVariableCSE(variableDeclaration);
+		return new CSEVariableElement(context, variableDeclaration);
 	}
 
 	@Override
 	public @NonNull CSEElement visitVariableExp(@NonNull VariableExp variableExp) {
 		VariableDeclaration variable = PivotUtil.getReferredVariable(variableExp);
-		CSEElement variableCSE = context.getCSEElement(variable);
-		variableCSE.addElement(variableExp);
-		return variableCSE;
+		return context.getCSEElement(variable);
 	}
 
 	@Override

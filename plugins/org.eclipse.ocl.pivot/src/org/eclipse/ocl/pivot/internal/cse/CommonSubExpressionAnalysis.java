@@ -24,18 +24,11 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
-import org.eclipse.ocl.pivot.LiteralExp;
 import org.eclipse.ocl.pivot.MapLiteralPart;
-import org.eclipse.ocl.pivot.OCLExpression;
-import org.eclipse.ocl.pivot.TypeExp;
 import org.eclipse.ocl.pivot.TypedElement;
-import org.eclipse.ocl.pivot.Variable;
-import org.eclipse.ocl.pivot.VariableDeclaration;
-import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.cse.AbstractCSEElement.CSEMapLiteralPartElement;
 import org.eclipse.ocl.pivot.internal.cse.AbstractCSEElement.CSEMappedElement;
 import org.eclipse.ocl.pivot.internal.cse.AbstractCSEElement.CSESimpleElement;
-import org.eclipse.ocl.pivot.internal.cse.AbstractCSEElement.CSETypeElement;
 import org.eclipse.ocl.pivot.internal.cse.AbstractCSEElement.CSEValueElement;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicUtil;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicUtil.TypedElementHeightComparator;
@@ -88,21 +81,14 @@ public class CommonSubExpressionAnalysis
 	private @Nullable Map<@NonNull Map<@NonNull TypedElement, @NonNull CSEElement>, @NonNull CSEMappedElement> key2element2cse = null;
 
 	/**
-	 * The CSEs for specific typeids.
-	 *
-	 * XXX make TypeExp a Literal
-	 */
-	private @Nullable Map<@NonNull TypeId, @NonNull CSETypeElement> typeid2cse = null;
-
-	/**
 	 * The CSEs for specific values.
 	 */
 	private final @NonNull Map<@NonNull Object, @NonNull CSEValueElement> value2cse = new HashMap<>();
 
 	/**
-	 * Comparator to sort ExpressionInOCL/OCLExpression into simplest CSE first, most direct TYpedE;ement first.
+	 * Comparator to sort ExpressionInOCL/OCLExpression into simplest CSE first, most direct TypedElement first.
 	 */
-	private @Nullable TypedElementHeightComparator typedElementHeightComparator;
+	private @Nullable TypedElementHeightComparator typedElementHeightComparator = null;
 
 	public CommonSubExpressionAnalysis() {
 		this.visitor = createCSEVisitor();
@@ -185,8 +171,8 @@ public class CommonSubExpressionAnalysis
 		if (cseElement == null) {
 			cseElement = visitor.visit(element);
 			element2cse.put(element, cseElement);
-		//	CSEElement cseElementReg = cseElement instanceof CSESafeElement ? ;
 			if (!(element instanceof MapLiteralPart)) {
+				cseElement.addElement((TypedElement)element);
 				assert Iterables.contains(cseElement.getElements(), element) : "No CSE registration for a " + element.eClass().getName();
 			}
 		}
@@ -202,14 +188,10 @@ public class CommonSubExpressionAnalysis
 		if (cseElement == null) {
 			int height = computeHeight(property2element.values());
 			cseElement = new CSEMappedElement(this, height, property2element);
-			cseElement.addElement(element);
 			for (@NonNull CSEElement inputCSE : property2element.values()) {
 				cseElement.addInput(inputCSE);
 			}
 			key2element2cse2.put(property2element, cseElement);
-		}
-		else {
-			cseElement.addElement(element);
 		}
 		return cseElement;
 	}
@@ -230,16 +212,11 @@ public class CommonSubExpressionAnalysis
 		if (cseElement == null) {
 			int height = computeHeight(cseElements);
 			cseElement = new CSESimpleElement(this, height);
-			cseElement.addElement(element);
 			for (@NonNull CSEElement cseElement2 : cseElements) {
 				cseElement.addInput(cseElement2);
 			}
 			elements2cse.put(cseElements, cseElement);
 		}
-		else {
-			cseElement.addElement(element);
-		}
-		element2cse.put(element, cseElement);
 		return cseElement;
 	}
 
@@ -266,29 +243,6 @@ public class CommonSubExpressionAnalysis
 			}
 			elements2cse.put(cseElements, cseElement);
 		}
-	//	else {
-	//		cseElement.addElement(element);
-	//	}
-		element2cse.put(element, cseElement);
-		return cseElement;
-	}
-
-	// XXX Make TypeExp a LiteralExp
-	public @NonNull CSEElement getTypeCSE(@NonNull TypeExp typeExp) {
-		Map<@NonNull TypeId, @NonNull CSETypeElement> typeid2cse2 = typeid2cse;
-		if (typeid2cse2 == null) {
-			typeid2cse2 = typeid2cse = new HashMap<>();
-		}
-		TypeId typeId = typeExp.getReferredType().getTypeId();
-		CSETypeElement cseElement = typeid2cse2.get(typeId);
-		if (cseElement == null) {
-			cseElement = new CSETypeElement(this, typeExp.getTypeId());
-			cseElement.addElement(typeExp);
-			typeid2cse2.put(typeId, cseElement);
-		}
-		else {
-			cseElement.addElement(typeExp);
-		}
 		return cseElement;
 	}
 
@@ -300,47 +254,11 @@ public class CommonSubExpressionAnalysis
 		return typedElementHeightComparator2;
 	}
 
-	public @NonNull CSEElement getValueCSE(@NonNull LiteralExp literalExp, @NonNull Object value) {
+	public @NonNull CSEElement getValueCSE(@NonNull Object value) {
 		CSEValueElement cseElement = value2cse.get(value);
 		if (cseElement == null) {
 			cseElement = new CSEValueElement(this, value);
-			cseElement.addElement(literalExp);
 			value2cse.put(value, cseElement);
-		}
-		else {
-			cseElement.addElement(literalExp);
-		}
-	//	cseElement.addOutput(literalExp);
-		return cseElement;
-	}
-
-//	public @NonNull CSEVariableElement getVariableCSE(@Nullable VariableExp variableExp, @NonNull VariableDeclaration variableDeclaration) {
-//		CSEVariableElement cseElement = getVariableCSE(variableDeclaration);
-//		if (variableExp != null) {
-//			cseElement.addVariableExp(variableExp);
-//		}
-//		return cseElement;
-//	}
-
-	public @NonNull CSEElement getVariableCSE(@NonNull VariableDeclaration variableDeclaration) {  // Fold single call
-		CSESimpleElement cseElement = (CSESimpleElement)element2cse.get(variableDeclaration);
-		assert cseElement == null;
-		if (cseElement == null) {
-			CSEElement initCSE = null;
-			int height = 0;
-			if (variableDeclaration instanceof Variable) {
-				OCLExpression initExpression = ((Variable)variableDeclaration).getOwnedInit();
-				if (initExpression != null) {
-					initCSE = getCSEElement(initExpression);
-					height = initCSE.getHeight() + 1;
-				}
-			}
-			cseElement = new CSESimpleElement(this, height);
-			cseElement.addElement(variableDeclaration);
-			if (initCSE != null) {
-				cseElement.addInput(initCSE);
-			}
-			element2cse.put(variableDeclaration, cseElement);
 		}
 		return cseElement;
 	}

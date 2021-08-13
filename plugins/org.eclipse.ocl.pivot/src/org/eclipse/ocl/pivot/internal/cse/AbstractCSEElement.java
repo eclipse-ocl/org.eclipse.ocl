@@ -24,7 +24,7 @@ import org.eclipse.ocl.pivot.NavigationCallExp;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TypedElement;
-import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
@@ -77,11 +77,8 @@ public abstract class AbstractCSEElement implements CSEElement
 	 */
 	public static class CSESafeElement extends AbstractCSEElement
 	{
-	//	private @NonNull AbstractCSEElement unsafeCSE;
-
 		public CSESafeElement(@NonNull AbstractCSEElement cseElement) {
 			super(cseElement.cseAnalysis, cseElement.height+1);
-	//		this.unsafeCSE = cseElement;
 		}
 
 		@Override
@@ -101,19 +98,6 @@ public abstract class AbstractCSEElement implements CSEElement
 	}
 
 	/**
-	 * A CSETypeElement adds a redundant TypeId cache to aid debugging.
-	 */
-	public static class CSETypeElement extends CSESimpleElement
-	{
-		protected final @NonNull TypeId typeId;
-
-		public CSETypeElement(@NonNull CommonSubExpressionAnalysis cseAnalysis, @NonNull TypeId typeId) {
-			super(cseAnalysis, 0);
-			this.typeId = typeId;
-		}
-	}
-
-	/**
 	 * A CSEValueElement adds a redundant value cache to aid debugging.
 	 */
 	public static class CSEValueElement extends CSESimpleElement
@@ -123,6 +107,19 @@ public abstract class AbstractCSEElement implements CSEElement
 		public CSEValueElement(@NonNull CommonSubExpressionAnalysis cseAnalysis, @NonNull Object value) {
 			super(cseAnalysis, 0);
 			this.value = value;
+		}
+	}
+
+	/**
+	 * A CSEVariableElement adds a redundant variable cache to aid debugging.
+	 */
+	public static class CSEVariableElement extends CSESimpleElement
+	{
+		protected final @NonNull VariableDeclaration variable;
+
+		public CSEVariableElement(@NonNull CommonSubExpressionAnalysis cseAnalysis, @NonNull VariableDeclaration variable) {
+			super(cseAnalysis, 0);
+			this.variable = variable;
 		}
 	}
 
@@ -179,7 +176,7 @@ public abstract class AbstractCSEElement implements CSEElement
 			}
 		}
 		else {
-			assert !isSafe();
+		//	assert !isSafe();		-- LetVariable my be initialized with a safe CSE
 		}
 		assert !elements.contains(element);
 		elements.add(element);
@@ -249,14 +246,10 @@ public abstract class AbstractCSEElement implements CSEElement
 				maxHeight = elseHeight;
 			}
 			cseElement = new CSESimpleElement(cseAnalysis, maxHeight+1);
-			cseElement.addElement(ifExp);
 			cseElement.addInput(this);
 			cseElement.addInput(thenCSE);
 			cseElement.addInput(elseCSE);
 			arguments2cse.put(argumentCSEs, cseElement);
-		}
-		else {
-			cseElement.addElement(ifExp);
 		}
 		return cseElement;
 	}
@@ -298,7 +291,6 @@ public abstract class AbstractCSEElement implements CSEElement
 			arguments2cse.put(argumentCSEs, cseSimpleElement);
 		}
 		CSEElement cseElement = callExp.isIsSafe() ? cseSimpleElement.getSafeCSE() : cseSimpleElement;
-		cseElement.addElement(callExp);
 		return cseElement;
 	}
 
@@ -321,7 +313,6 @@ public abstract class AbstractCSEElement implements CSEElement
 			property2cse2.put(property, cseSimpleElement);
 		}
 		CSEElement cseElement = navigationCallExp.isIsSafe() ? cseSimpleElement.getSafeCSE() : cseSimpleElement;
-		cseElement.addElement(navigationCallExp);
 		return cseElement;
 	}
 
