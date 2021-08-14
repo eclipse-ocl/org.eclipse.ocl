@@ -86,11 +86,11 @@ public class SymbolicUtil
 					return diff;
 				}
 			}
-			if (!i1.hasNext()) {
-				return -1;
+			if (!i1.hasNext()) {		// Longest (deepest) first
+				return 1;
 			}
 			if (!i2.hasNext()) {
-				return 1;
+				return -1;
 			}
 			assert false;
 			return 0;

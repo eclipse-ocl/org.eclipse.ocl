@@ -32,9 +32,9 @@ public class SymbolicVariableValue extends AbstractLeafSymbolicValue {
 
 	@Override
 	public void toString(@NonNull StringBuilder s) {
-		s.append("\"");
-		s.append(variable.getName());
-		s.append("\":");
+	//	s.append("\"");
+	//	s.append(variable.getName());
+	//	s.append("\":");
 		super.toString(s);
 	}
 }

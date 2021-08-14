@@ -34,6 +34,8 @@ import org.eclipse.ocl.pivot.internal.symbolic.SymbolicSimpleStatus;
  */
 public interface SymbolicValue
 {
+	void appendName(@NonNull StringBuilder s);
+
 	/**
 	 * Return a non-null String describing the incompatibility of this value if incompatible, else null.
 	 * @return

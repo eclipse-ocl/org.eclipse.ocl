@@ -71,17 +71,15 @@ public abstract class AbstractLeafSymbolicValue extends AbstractSymbolicValue
 			this.property = PivotUtil.getReferredProperty(navigationCallExp);
 		}
 
-		public @Nullable Object getSourceValue() {
-			return sourceValue;
-		}
-
 		@Override
-		public void toString(@NonNull StringBuilder s) {
-			s.append(sourceValue);
+		public void appendName(@NonNull StringBuilder s) {
+			((AbstractSymbolicValue)sourceValue).appendName(s);
 			s.append(".");
 			s.append(property.getName());
-			s.append(":");
-			super.toString(s);
+		}
+
+		public @Nullable Object getSourceValue() {
+			return sourceValue;
 		}
 	}
 
@@ -105,21 +103,19 @@ public abstract class AbstractLeafSymbolicValue extends AbstractSymbolicValue
 //		}
 
 		@Override
-		public void toString(@NonNull StringBuilder s) {
-			s.append(boxedSourceAndArgumentValues.get(0));
+		public void appendName(@NonNull StringBuilder s) {
+			boxedSourceAndArgumentValues.get(0).appendName(s);
 			s.append(".");
 			s.append(operation.getClass().getSimpleName());
 			s.append("(");
 			for (int i = 1; i < boxedSourceAndArgumentValues.size(); i++) {
-				Object argumentValue = boxedSourceAndArgumentValues.get(i);
+				SymbolicValue argumentValue = boxedSourceAndArgumentValues.get(i);
 				if (i > 1) {
 					s.append(",");
 				}
-				s.append(argumentValue);
+				argumentValue.appendName(s);
 			}
 			s.append(")");
-			s.append(":");
-			super.toString(s);
 		}
 	}
 
@@ -147,6 +143,22 @@ public abstract class AbstractLeafSymbolicValue extends AbstractSymbolicValue
 		this.mayBeNull = mayBeNull;
 		this.mayBeInvalid = mayBeInvalid;
 		this.content = content;
+	}
+
+	@Override
+	public void appendName(@NonNull StringBuilder s) {
+		s.append(name);
+	}
+
+	protected void appendType(@NonNull StringBuilder s) {
+		s.append(" : ");
+		s.append(typeId);
+		s.append("[");
+		s.append(mayBeNull ? "?" : "1");
+		if (mayBeInvalid) {
+			s.append("!");
+		}
+		s.append("]");
 	}
 
 	@Override
@@ -271,14 +283,8 @@ public abstract class AbstractLeafSymbolicValue extends AbstractSymbolicValue
 
 	@Override
 	public void toString(@NonNull StringBuilder s) {
-		s.append(name);
-		s.append(" : ");
-		s.append(typeId);
-		s.append("[");
-		s.append(mayBeNull ? "?" : "1");
-		if (mayBeInvalid) {
-			s.append("!");
-		}
-		s.append("]");
+		appendName(s);
+		appendType(s);
+		appendContent(s);
 	}
 }

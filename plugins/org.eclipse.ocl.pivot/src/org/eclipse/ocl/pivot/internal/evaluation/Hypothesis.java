@@ -87,7 +87,7 @@ public abstract class Hypothesis
 			}
 			if (cannotBeSatisfiedBy(oldSymbolicValue)) {
 				if (traceHypothesis) {
-					SymbolicAnalysis.HYPOTHESIS.println("    => already satisfied");
+					SymbolicAnalysis.HYPOTHESIS.println("    => already contrdicted");
 				}
 			}
 			else {
@@ -107,6 +107,13 @@ public abstract class Hypothesis
 				typedElement2incompatibility2.put(typedElement, incompatibility);
 			}
 		}
+	}
+
+	/**
+	 * Return true if the hypothesis is incompatible with a safe navigation.
+	 */
+	public boolean cannotBeSafe() {
+		return false;
 	}
 
 	/**
@@ -197,6 +204,11 @@ public abstract class Hypothesis
 		}
 
 		@Override
+		public boolean cannotBeSafe() {
+			return true;
+		}
+
+		@Override
 		protected boolean cannotBeSatisfiedBy(@NonNull SymbolicValue symbolicValue) {
 			return !symbolicValue.mayBeInvalid();
 		}
@@ -216,6 +228,11 @@ public abstract class Hypothesis
 	{
 		public MayBeNullHypothesis(@NonNull SymbolicAnalysis symbolicAnalysis, @NonNull Iterable<@NonNull TypedElement> typedElements) {
 			super(symbolicAnalysis, typedElements, symbolicAnalysis.getKnownValue(null));
+		}
+
+		@Override
+		public boolean cannotBeSafe() {
+			return true;
 		}
 
 		@Override

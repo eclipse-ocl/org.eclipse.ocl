@@ -21,6 +21,15 @@ import org.eclipse.ocl.pivot.values.SymbolicValue;
  */
 public abstract class AbstractSymbolicValue implements SymbolicValue
 {
+	protected void appendContent(@NonNull StringBuilder s) {
+		SymbolicContent content = basicGetContent();
+		if (content != null) {
+			s.append("{");
+			content.toString(s);
+			s.append("}");
+		}
+	}
+
 	@Override
 	public @Nullable String asIncompatibility() {
 		return null;
@@ -391,12 +400,6 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 	public /*final*/ @NonNull String toString() {
 		StringBuilder s = new StringBuilder();
 		toString(s);
-		SymbolicContent content = basicGetContent();
-		if (content != null) {
-			s.append("{");
-			content.toString(s);
-			s.append("}");
-		}
 		return s.toString();
 	}
 }

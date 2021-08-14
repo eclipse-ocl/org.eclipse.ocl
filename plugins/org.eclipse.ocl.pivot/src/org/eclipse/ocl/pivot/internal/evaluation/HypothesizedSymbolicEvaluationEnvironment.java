@@ -203,9 +203,6 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 	 * containing and sibling TypedElements that ensure this execution.
 	 */
 	private @Nullable String installActiveTypedElementAncestry(@NonNull TypedElement activeTypedElement, @NonNull SymbolicValue activeSymbolicValue, @Nullable Boolean isControlPath) {
-		if (activeTypedElement instanceof IfExp) {
-			getClass();		// XXX
-		}
 		if (!activeTypedElements.add(activeTypedElement)) {			// The ancestor of VariableExp will eventually rejoin the hierarchy
 			SymbolicValue symbolicValue = getSymbolicValue(activeTypedElement);
 			return symbolicValue.asIncompatibility();
@@ -248,7 +245,35 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 					return incompatibility;
 				}
 				if (isControlPath == Boolean.TRUE) {
-					for (@NonNull CSEElement dependentCSEElement : cseAnalysis.getCSEElement(activeTypedElement).getOutputs()) {
+					CSEElement cseElement = cseAnalysis.getCSEElement(activeTypedElement);
+					if (cseElement.isSafe()) {
+						if (hypothesis.cannotBeSafe()) {
+							SymbolicValue baseSymbolicValue2 = baseSymbolicEvaluationEnvironment.getSymbolicValue(activeTypedElement);
+						//	SymbolicValue refinedSymbolicValue2 = AbstractSymbolicRefinedValue.createExceptValue(baseSymbolicValue2, ValueUtil.INVALID_VALUE);
+							SymbolicValue refinedSymbolicValue2 = AbstractSymbolicRefinedValue.createIncompatibility(baseSymbolicValue2, "cannotBeSafe");
+							String incompatibility2 = installRefinement(activeTypedElement, refinedSymbolicValue2);
+							if (incompatibility2 != null) {
+								return incompatibility2;
+							}
+						//	return "cannotBeSafe";
+						}
+					/*	Iterable<@NonNull CSEElement> inputs = cseElement.getInputs();
+						assert inputs != null;
+						for (@NonNull CSEElement unsafeCSEElement : inputs) {			// All one input
+							for (@NonNull Element unsafeElement : unsafeCSEElement.getElements()) {
+								if (unsafeElement instanceof TypedElement) {
+									SymbolicValue baseSymbolicValue2 = baseSymbolicEvaluationEnvironment.getSymbolicValue((TypedElement)unsafeElement);
+									SymbolicValue refinedSymbolicValue2 = AbstractSymbolicRefinedValue.createExceptValue(baseSymbolicValue2, ValueUtil.INVALID_VALUE);
+									refinedSymbolicValue2 = AbstractSymbolicRefinedValue.createExceptValue(baseSymbolicValue2, null);
+									String incompatibility2 = installRefinement((TypedElement)unsafeElement, refinedSymbolicValue);
+									if (incompatibility2 != null) {
+										return incompatibility2;
+									}
+								}
+							}
+						} */
+					}
+					for (@NonNull CSEElement dependentCSEElement : cseElement.getOutputs()) {
 						SymbolicValue dependentSymbolicValue = baseSymbolicEvaluationEnvironment.getSymbolicValue(dependentCSEElement);
 						for (@NonNull TypedElement dependentTypedElement : dependentCSEElement.getElements()) {
 							String incompatibility2 = installActiveTypedElementAncestry(dependentTypedElement, dependentSymbolicValue, null);
@@ -295,7 +320,7 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 		else if (activeTypedElement instanceof VariableDeclaration) {
 			activeVariable = (VariableDeclaration)activeTypedElement;
 		}
-		if (activeVariable != null) {
+		if (activeVariable != null) {				// ?? is this now redundant
 			CSEElement cseElement = cseAnalysis.getCSEElement(activeVariable);
 			SymbolicValue symbolicValue = baseSymbolicEvaluationEnvironment.getSymbolicValue(cseElement);
 			for (@NonNull TypedElement referencingTypedElement : cseElement.getElements()) {
