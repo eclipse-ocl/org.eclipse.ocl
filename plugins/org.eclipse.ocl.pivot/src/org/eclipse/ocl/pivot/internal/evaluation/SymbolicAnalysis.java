@@ -176,7 +176,7 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 		}
 	}
 
-	public @Nullable String analyze(@NonNull ExpressionInOCL expressionInOCL, @Nullable Object selfObject, @Nullable Object resultObject, @Nullable Object @Nullable [] parameters) {
+	public @Nullable String analyzeExpression(@NonNull ExpressionInOCL expressionInOCL, @Nullable Object selfObject, @Nullable Object resultObject, @Nullable Object @Nullable [] parameters) {
 		if (isCanceled()) {
 			throw new EvaluationHaltedException("Canceled");
 		}
@@ -198,11 +198,56 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 			}
 			SymbolicAnalysis.HYPOTHESIS.println(s.toString());
 		}
-		BaseSymbolicEvaluationEnvironment baseSymbolicEvaluationEnvironment2 = new BaseSymbolicEvaluationEnvironment(this, expressionInOCL);
+		BaseSymbolicEvaluationEnvironment baseSymbolicEvaluationEnvironment2 = new BaseSymbolicEvaluationEnvironment(this);
 		this.baseSymbolicEvaluationEnvironment = baseSymbolicEvaluationEnvironment2;
 		executor.initializeEvaluationEnvironment(expressionInOCL);
 		cseAnalysis.analyze(expressionInOCL);
-		this.analysisIncompatibility = baseSymbolicEvaluationEnvironment2.analyze(selfObject, resultObject, parameters);
+		this.analysisIncompatibility = baseSymbolicEvaluationEnvironment2.analyze(expressionInOCL, selfObject, resultObject, parameters);
+		if (analysisIncompatibility != null) {
+			return analysisIncompatibility;
+		}
+		List<@Nullable List<@NonNull Hypothesis>> height2hypotheses2 = height2hypotheses;
+		if (height2hypotheses2 != null) {
+			for ( ; height2hypothesisHeight < height2hypotheses2.size(); height2hypothesisHeight++) {
+				List<@NonNull Hypothesis> hypotheses = height2hypotheses2.get(height2hypothesisHeight);
+				if (hypotheses != null) {
+					if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
+						SymbolicAnalysis.HYPOTHESIS.println(" resolving hypotheses at " + height2hypothesisHeight);
+					}
+					for (int index = 0; index < hypotheses.size(); index++) {
+						Hypothesis hypothesis = hypotheses.get(index);
+						if (isCanceled()) {
+							throw new EvaluationHaltedException("Canceled");
+						}
+						hypothesis.analyze();
+					}
+				}
+			}
+		}
+		return null;
+	}
+
+	protected @Nullable String analyzeInvariants(org.eclipse.ocl.pivot.@NonNull Class selfClass, @NonNull Iterable<@NonNull ExpressionInOCL> expressionsInOCL, @Nullable Object selfObject) {
+		if (isCanceled()) {
+			throw new EvaluationHaltedException("Canceled");
+		}
+		if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
+			StringBuilder s = new StringBuilder();
+			s.append("Analyzing: for: ");
+			ValueUtil.toString(selfObject, s, 0);
+			for (@NonNull ExpressionInOCL expressionInOCL : expressionsInOCL) {
+				s.append("\n\t");
+				s.append(expressionInOCL);
+			}
+			SymbolicAnalysis.HYPOTHESIS.println(s.toString());
+		}
+		BaseSymbolicEvaluationEnvironment baseSymbolicEvaluationEnvironment2 = new BaseSymbolicEvaluationEnvironment(this);
+		this.baseSymbolicEvaluationEnvironment = baseSymbolicEvaluationEnvironment2;
+		executor.initializeEvaluationEnvironment(selfClass);
+		for (@NonNull ExpressionInOCL expressionInOCL : expressionsInOCL) {
+			cseAnalysis.analyze(expressionInOCL);
+		}
+		this.analysisIncompatibility = baseSymbolicEvaluationEnvironment2.analyze(expressionsInOCL, selfObject);
 		if (analysisIncompatibility != null) {
 			return analysisIncompatibility;
 		}

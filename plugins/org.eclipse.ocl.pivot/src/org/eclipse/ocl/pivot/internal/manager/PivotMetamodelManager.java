@@ -98,6 +98,7 @@ import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicClassAnalysis;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicExpressionAnalysis;
 import org.eclipse.ocl.pivot.internal.library.ConstrainedOperation;
 import org.eclipse.ocl.pivot.internal.library.EInvokeOperation;
@@ -311,6 +312,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	 */
 	private @Nullable Map<@NonNull OCLExpression, @NonNull FlowAnalysis> oclExpression2flowAnalysis = null;
 	private @Nullable Map<@NonNull ExpressionInOCL, @NonNull SymbolicAnalysis> expressionInOCL2symbolicAnalysis = null;
+	private @Nullable Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull SymbolicClassAnalysis> class2symbolicAnalysis = null;
 
 	private @Nullable Map<Resource,External2AS> es2ases = null;
 
@@ -652,7 +654,15 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	/**
 	 * @since 1.16
 	 */
-	protected @NonNull SymbolicAnalysis createSymbolicAnalysis(@NonNull ExpressionInOCL expressionInOCL, @NonNull ModelManager modelManager) {
+	protected @NonNull SymbolicClassAnalysis createSymbolicClassAnalysis(org.eclipse.ocl.pivot.@NonNull Class selfClass, @NonNull ModelManager modelManager) {
+	//	return new SymbolicOCLExecutor((EnvironmentFactoryInternalExtension)environmentFactory, modelManager);
+		return new SymbolicClassAnalysis(selfClass, (EnvironmentFactoryInternalExtension)environmentFactory, modelManager);
+	}
+
+	/**
+	 * @since 1.16
+	 */
+	protected @NonNull SymbolicAnalysis createSymbolicExpressionAnalysis(@NonNull ExpressionInOCL expressionInOCL, @NonNull ModelManager modelManager) {
 	//	return new SymbolicOCLExecutor((EnvironmentFactoryInternalExtension)environmentFactory, modelManager);
 		return new SymbolicExpressionAnalysis(expressionInOCL, (EnvironmentFactoryInternalExtension)environmentFactory, modelManager);
 	}
@@ -1766,11 +1776,39 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	 */
 	@Override
 	public @NonNull SymbolicAnalysis getSymbolicAnalysis(@NonNull ExpressionInOCL expressionInOCL, @Nullable Object selfObject, @Nullable Object resultObject, @Nullable Object @Nullable [] parameters) {
-		ModelManager modelManager = environmentFactory.createModelManager(selfObject);
-		SymbolicAnalysis symbolicAnalysis = createSymbolicAnalysis(expressionInOCL, modelManager);
-		symbolicAnalysis.analyze(expressionInOCL, selfObject, resultObject, parameters);			// XXX all related constraints
+		ModelManager modelManager = ModelManager.NULL; //environmentFactory.createModelManager(selfObject);
+		SymbolicAnalysis symbolicAnalysis = createSymbolicExpressionAnalysis(expressionInOCL, modelManager);
+		symbolicAnalysis.analyzeExpression(expressionInOCL, selfObject, resultObject, parameters);			// XXX all related constraints
 		return symbolicAnalysis;
 	}
+	/**
+	 * @since 1.3
+	 *
+	@Override
+	public @NonNull SymbolicAnalysis getSymbolicAnalysis(@NonNull ExpressionInOCL expressionInOCL, @Nullable Object selfObject, @Nullable Object resultObject, @Nullable Object @Nullable [] parameters) {
+		ModelManager modelManager = ModelManager.NULL; //environmentFactory.createModelManager(selfObject);
+
+		Type containingType = PivotUtil.getContainingType(expressionInOCL);
+		if (containingType instanceof org.eclipse.ocl.pivot.Class) {
+			org.eclipse.ocl.pivot.Class containingClass = (org.eclipse.ocl.pivot.Class)containingType;
+			Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull SymbolicClassAnalysis> class2symbolicAnalysis2 = class2symbolicAnalysis;
+			if (class2symbolicAnalysis2 == null) {
+				class2symbolicAnalysis = class2symbolicAnalysis2 = new HashMap<>();
+			}
+			SymbolicClassAnalysis symbolicClassAnalysis = class2symbolicAnalysis2.get(containingClass);
+			if (symbolicClassAnalysis == null) {
+				symbolicClassAnalysis = createSymbolicClassAnalysis(containingClass, modelManager);
+				class2symbolicAnalysis2.put(containingClass, symbolicClassAnalysis);
+				symbolicClassAnalysis.analyzeInvariants();
+			}
+			return symbolicClassAnalysis;
+		}
+		else {
+			SymbolicAnalysis symbolicAnalysis = createSymbolicExpressionAnalysis(expressionInOCL, modelManager);
+			symbolicAnalysis.analyzeExpression(expressionInOCL, selfObject, resultObject, parameters);			// XXX all related constraints
+			return symbolicAnalysis;
+		}
+	}*/
 
 	@Override
 	public ResourceSet getTarget() {

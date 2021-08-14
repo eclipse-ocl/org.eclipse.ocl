@@ -1,5 +1,6 @@
 package org.eclipse.ocl.pivot.internal.evaluation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
@@ -10,6 +11,7 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicUnknownValue;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -35,7 +37,7 @@ public class SymbolicClassAnalysis extends SymbolicAnalysis
 //		this.expressionsInOCL = expressionsInOCL;
 	}
 
-/*	public void analyzeInvariants() {
+	public void analyzeInvariants() {
 		assert incompatibility == null;
 		SymbolicValue selfVariable = new SymbolicUnknownValue("self", selfClass.getTypeId(), false, false);
 		List<@NonNull ExpressionInOCL> invariants = new ArrayList<>();
@@ -52,7 +54,7 @@ public class SymbolicClassAnalysis extends SymbolicAnalysis
 			}
 		}
 		analyzeInvariants(selfClass, invariants, selfVariable);
-	} */
+	}
 
 	public @NonNull SymbolicAnalysis getSymbolicAnalysis(@NonNull ExpressionInOCL expressionInOCL) {
 		return new SymbolicExpressionAnalysis(expressionInOCL, environmentFactory, getExecutor().getModelManager());

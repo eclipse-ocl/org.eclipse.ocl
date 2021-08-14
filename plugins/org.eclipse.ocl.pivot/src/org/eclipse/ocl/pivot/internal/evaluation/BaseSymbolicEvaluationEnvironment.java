@@ -56,8 +56,6 @@ import org.eclipse.ocl.pivot.values.SymbolicValue;
  */
 public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluationEnvironment
 {
-	protected final @NonNull ExpressionInOCL expressionInOCL;
-
 	/**
 	 * The known immutable control-blind (symbolic) value of each common sub-expression element.
 	 */
@@ -73,12 +71,11 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 	 */
 	private @Nullable HypothesizedSymbolicEvaluationEnvironment hypothesizedSymbolicEvaluationEnvironment = null;
 
-	public BaseSymbolicEvaluationEnvironment(@NonNull SymbolicAnalysis symbolicAnalysis, @NonNull ExpressionInOCL expressionInOCL) {
+	public BaseSymbolicEvaluationEnvironment(@NonNull SymbolicAnalysis symbolicAnalysis) {
 		super(symbolicAnalysis);
-		this.expressionInOCL = expressionInOCL;
 	}
 
-	public @Nullable String analyze(@Nullable Object selfObject, @Nullable Object resultObject, @Nullable Object @Nullable [] parameters) {
+	public @Nullable String analyze(@NonNull ExpressionInOCL expressionInOCL, @Nullable Object selfObject, @Nullable Object resultObject, @Nullable Object @Nullable [] parameters) {
 		//
 		//	Initialize self/context parameter
 		//
@@ -117,6 +114,37 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 		for (@NonNull EObject eObject : new TreeIterable(expressionInOCL, true)) {
 			if (eObject instanceof TypedElement) {
 				typedElements.add((TypedElement) eObject);
+			}
+		}
+		Collections.sort(typedElements, cseAnalysis.getTypedElementHeightComparator());
+		for (@NonNull TypedElement typedElement : typedElements) {
+			symbolicEvaluate(typedElement, true);				// Multi-TypedElement CSEs re-use per-CSE cache
+		}
+		return null;
+	}
+
+	public @Nullable String analyze(@NonNull Iterable<@NonNull ExpressionInOCL> expressionsInOCL, @Nullable Object selfObject) {
+		//
+		//	Initialize self/context parameter
+		//
+		for (@NonNull ExpressionInOCL expressionInOCL : expressionsInOCL) {
+			Variable contextVariable = expressionInOCL.getOwnedContext();
+			if (contextVariable != null) {
+				String incompatibility = initParameter(contextVariable, selfObject).asIncompatibility();
+				if (incompatibility != null) {
+					return incompatibility;
+				}
+			}
+		}
+		//
+		//	Analyze each typed element in transitive bottom up order.
+		//
+		List<@NonNull TypedElement> typedElements = new ArrayList<>();
+		for (@NonNull ExpressionInOCL expressionInOCL : expressionsInOCL) {
+			for (@NonNull EObject eObject : new TreeIterable(expressionInOCL, true)) {
+				if (eObject instanceof TypedElement) {
+					typedElements.add((TypedElement) eObject);
+				}
 			}
 		}
 		Collections.sort(typedElements, cseAnalysis.getTypedElementHeightComparator());

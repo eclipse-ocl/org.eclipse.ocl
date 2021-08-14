@@ -110,10 +110,6 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 	}
 
 	protected @NonNull SymbolicValue doNavigationCallExp(@NonNull NavigationCallExp navigationCallExp) {
-		if ("self.ownedSource".equals(navigationCallExp.toString())) {
-			String s = navigationCallExp.eContainer().toString();
-			getClass();		// XXX
-		}
 		Property referredProperty = PivotUtil.getReferredProperty(navigationCallExp);
 		OCLExpression source = PivotUtil.getOwnedSource(navigationCallExp);
 		SymbolicValue sourceValue = symbolicEvaluationEnvironment.symbolicEvaluate(source);
