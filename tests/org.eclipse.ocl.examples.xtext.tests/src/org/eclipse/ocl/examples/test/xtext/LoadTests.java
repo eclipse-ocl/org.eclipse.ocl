@@ -63,6 +63,7 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
+import org.eclipse.ocl.pivot.messages.StatusCodes.Severity;
 import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
@@ -1236,6 +1237,7 @@ public class LoadTests extends XtextTestCase
 
 	public void testLoad_OCLTest_ocl() throws IOException, InterruptedException {
 		OCL ocl = createOCLWithProjectMap();
+		ocl.getEnvironmentFactory().setOption(PivotValidationOptions.PotentialInvalidResult, Severity.IGNORE);		// Ecore model has deliberate errors
 		//		Abstract2Moniker.TRACE_MONIKERS.setState(true);
 		doLoad(ocl, getTestModelURI("models/ecore/OCLTest.ocl"));
 		ocl.dispose();

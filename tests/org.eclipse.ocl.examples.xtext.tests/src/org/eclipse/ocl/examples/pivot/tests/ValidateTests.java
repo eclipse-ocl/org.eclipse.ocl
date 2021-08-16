@@ -52,6 +52,8 @@ import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.validation.EcoreOCLEValidator;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
+import org.eclipse.ocl.pivot.messages.StatusCodes.Severity;
+import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
 import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
@@ -146,6 +148,7 @@ public class ValidateTests extends AbstractValidateTests
 		//	Create model
 		//
 		OCL ocl = createOCL();
+		ocl.getEnvironmentFactory().setOption(PivotValidationOptions.PotentialInvalidResult, Severity.IGNORE);		// Ecore model has deliberate errors
 		Resource ecoreResource = doLoadEcore(ocl, getTestModelURI("models/ecore/Bug418551.ecore"));
 		EPackage temp = (EPackage) ecoreResource.getContents().get(0);
 		EClass tester = (EClass) temp.getEClassifier("Tester");
