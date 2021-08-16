@@ -172,6 +172,11 @@ public class SymbolicUtil
 	 */
 	protected static void printPath(@NonNull StringBuilder s, @NonNull NamedElement namedElement, @Nullable EReference childContainmentReference, boolean fullHierarchy) {
 		if (namedElement instanceof ExpressionInOCL) {
+			EObject eContainer = namedElement.eContainer();
+			if (eContainer instanceof NamedElement) {
+				s.append(((NamedElement)eContainer).getName());
+				return;
+			}
 			s.append("«body»");
 			if (!fullHierarchy) {
 				return;

@@ -40,6 +40,8 @@ import org.eclipse.ocl.pivot.NullLiteralExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
+import org.eclipse.ocl.pivot.ParameterVariable;
+import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.RealLiteralExp;
 import org.eclipse.ocl.pivot.ShadowExp;
@@ -240,6 +242,16 @@ public class CSEVisitor extends AbstractExtendingVisitor<@NonNull CSEElement, @N
 		}
 		Operation operation = PivotUtil.getReferredOperation(operationCallExp);
 		return sourceCSE.getOperationCSE(operationCallExp, operation, argumentCSEs);
+	}
+
+	@Override
+	public @NonNull CSEElement visitParameterVariable(@NonNull ParameterVariable parameterVariable) {
+		if (parameterVariable.eContainmentFeature() == PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_CONTEXT) {
+			return context.getSelfCSE();	// same CSE for many root elements
+		}
+		else {
+			return super.visitParameterVariable(parameterVariable);
+		}
 	}
 
 	@Override

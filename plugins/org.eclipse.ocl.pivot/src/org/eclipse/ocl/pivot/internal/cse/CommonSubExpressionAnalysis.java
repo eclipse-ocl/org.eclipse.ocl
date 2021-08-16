@@ -86,12 +86,18 @@ public class CommonSubExpressionAnalysis
 	private final @NonNull Map<@NonNull Object, @NonNull CSEValueElement> value2cse = new HashMap<>();
 
 	/**
+	 * The CSE for for the self paramater of the current class analysis.
+	 */
+	private final @NonNull CSEElement selfCSE;
+
+	/**
 	 * Comparator to sort ExpressionInOCL/OCLExpression into simplest CSE first, most direct TypedElement first.
 	 */
 	private @Nullable TypedElementHeightComparator typedElementHeightComparator = null;
 
 	public CommonSubExpressionAnalysis() {
 		this.visitor = createCSEVisitor();
+		this.selfCSE = new CSESimpleElement(this, 0);
 	}
 
 	public @NonNull CSEElement analyze(@NonNull ExpressionInOCL expressionInOCL) {
@@ -244,6 +250,10 @@ public class CommonSubExpressionAnalysis
 			elements2cse.put(cseElements, cseElement);
 		}
 		return cseElement;
+	}
+
+	public @NonNull CSEElement getSelfCSE() {
+		return selfCSE;
 	}
 
 	public @NonNull Comparator<@NonNull TypedElement> getTypedElementHeightComparator() {

@@ -127,7 +127,7 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 		//
 		//	Initialize self/context parameter
 		//
-		for (@NonNull ExpressionInOCL expressionInOCL : expressionsInOCL) {
+		for (@NonNull ExpressionInOCL expressionInOCL : expressionsInOCL) {		// No loop needed
 			Variable contextVariable = expressionInOCL.getOwnedContext();
 			if (contextVariable != null) {
 				String incompatibility = initParameter(contextVariable, selfObject).asIncompatibility();
