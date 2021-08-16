@@ -9,6 +9,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
+import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicUnknownValue;
@@ -25,7 +26,7 @@ import org.eclipse.ocl.pivot.values.SymbolicValue;
 public class SymbolicClassAnalysis extends SymbolicAnalysis
 {
 	protected final org.eclipse.ocl.pivot.@NonNull Class selfClass;
-//	protected final @NonNull Iterable<@NonNull ExpressionInOCL> expressionsInOCL;
+	private @Nullable Iterable<@NonNull ExpressionInOCL> invariantBodies = null;
 	private @Nullable String incompatibility;
 
 	/**
@@ -40,12 +41,14 @@ public class SymbolicClassAnalysis extends SymbolicAnalysis
 	public void analyzeInvariants() {
 		assert incompatibility == null;
 		SymbolicValue selfVariable = new SymbolicUnknownValue("self", selfClass.getTypeId(), false, false);
-		List<@NonNull ExpressionInOCL> invariants = new ArrayList<>();
+		assert invariantBodies == null;
+		List<@NonNull ExpressionInOCL> invariantBodies2 = new ArrayList<>();
+		this.invariantBodies = invariantBodies2;
 		for (@NonNull Constraint invariant : PivotUtil.getOwnedInvariants(selfClass)) {
 			LanguageExpression ownedSpecification = invariant.getOwnedSpecification();
 			if (ownedSpecification != null) {
 				try {
-					invariants.add(environmentFactory.parseSpecification(ownedSpecification));
+					invariantBodies2.add(environmentFactory.parseSpecification(ownedSpecification));
 				}
 				catch (ParserException e) {
 					incompatibility = e.toString();
@@ -53,7 +56,7 @@ public class SymbolicClassAnalysis extends SymbolicAnalysis
 				}
 			}
 		}
-		analyzeInvariants(selfClass, invariants, selfVariable);
+		analyzeInvariants(selfClass, invariantBodies2, selfVariable);
 	}
 
 	public @NonNull SymbolicAnalysis getSymbolicAnalysis(@NonNull ExpressionInOCL expressionInOCL) {
@@ -62,7 +65,26 @@ public class SymbolicClassAnalysis extends SymbolicAnalysis
 
 	@Override
 	public @Nullable String getIncompatibility(@NonNull HypothesizedSymbolicEvaluationEnvironment hypothesizedSymbolicEvaluationEnvironment, @NonNull TypedElement hypothesizedTypedElement) {
-		return incompatibility;
+		if (incompatibility != null) {
+			return incompatibility;
+		}
+		Iterable<@NonNull ExpressionInOCL> invariantBodies2 = invariantBodies;
+		if (invariantBodies2 != null) {
+			ExpressionInOCL hypothesizedExpressionInOCL = PivotUtil.getContainingExpressionInOCL(hypothesizedTypedElement);
+			for (@NonNull ExpressionInOCL invariantBody : invariantBodies2) {
+				SymbolicValue symbolicValue = hypothesizedSymbolicEvaluationEnvironment.getSymbolicValue(invariantBody);
+				String incompatibility = symbolicValue.asIncompatibility();
+				if (incompatibility != null) {
+					return incompatibility;
+				}
+				else if (invariantBody != hypothesizedExpressionInOCL) {
+					if (symbolicValue.isFalse()) {
+						return "Incompatible " + ((NamedElement)invariantBody.eContainer()).getName();
+					}
+				}
+			}
+		}
+		return null;
 	}
 
 	@Override

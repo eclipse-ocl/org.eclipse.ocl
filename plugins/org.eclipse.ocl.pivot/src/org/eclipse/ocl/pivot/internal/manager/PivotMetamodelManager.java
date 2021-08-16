@@ -311,8 +311,14 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	 * Lazily computed, eagerly invalidated static analysis of the control flow within invariants and bodies.
 	 */
 	private @Nullable Map<@NonNull OCLExpression, @NonNull FlowAnalysis> oclExpression2flowAnalysis = null;
-	private @Nullable Map<@NonNull ExpressionInOCL, @NonNull SymbolicAnalysis> expressionInOCL2symbolicAnalysis = null;
+
+	/**
+	 * Lazily computed, eagerly invalidated static symbolic analysis of the invariants.
+	 */
 	private @Nullable Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull SymbolicClassAnalysis> class2symbolicAnalysis = null;
+
+	//	expression flow analysis is argument dependent
+	//	private @Nullable Map<@NonNull ExpressionInOCL, @NonNull SymbolicExpressionAnalysis> expressionInOCL2symbolicAnalysis = null;
 
 	private @Nullable Map<Resource,External2AS> es2ases = null;
 
@@ -412,18 +418,18 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 
 	/**
 	 * @since 1.16
-	 */
+	 *
 	@Override
 	public @Nullable SymbolicAnalysis basicGetSymbolicAnalysis(@NonNull Element element) {
 		ExpressionInOCL expressionInOCL = PivotUtil.getContainingExpressionInOCL(element);
 		if (expressionInOCL != null) {
-			Map<@NonNull ExpressionInOCL, @NonNull SymbolicAnalysis> expressionInOCL2symbolicAnalysis2 = expressionInOCL2symbolicAnalysis;
+			Map<@NonNull ExpressionInOCL, @NonNull SymbolicExpressionAnalysis> expressionInOCL2symbolicAnalysis2 = expressionInOCL2symbolicAnalysis;
 			if (expressionInOCL2symbolicAnalysis2 != null) {
 				return expressionInOCL2symbolicAnalysis2.get(expressionInOCL);
 			}
 		}
 		return null;
-	}
+	} */
 
 	/**
 	 * Return -ve if match1 is inferior to match2, +ve if match2 is inferior to match1, or
@@ -662,7 +668,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	/**
 	 * @since 1.16
 	 */
-	protected @NonNull SymbolicAnalysis createSymbolicExpressionAnalysis(@NonNull ExpressionInOCL expressionInOCL, @NonNull ModelManager modelManager) {
+	protected @NonNull SymbolicExpressionAnalysis createSymbolicExpressionAnalysis(@NonNull ExpressionInOCL expressionInOCL, @NonNull ModelManager modelManager) {
 	//	return new SymbolicOCLExecutor((EnvironmentFactoryInternalExtension)environmentFactory, modelManager);
 		return new SymbolicExpressionAnalysis(expressionInOCL, (EnvironmentFactoryInternalExtension)environmentFactory, modelManager);
 	}
@@ -1773,42 +1779,50 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 
 	/**
 	 * @since 1.3
-	 */
+	 *
 	@Override
 	public @NonNull SymbolicAnalysis getSymbolicAnalysis(@NonNull ExpressionInOCL expressionInOCL, @Nullable Object selfObject, @Nullable Object resultObject, @Nullable Object @Nullable [] parameters) {
 		ModelManager modelManager = ModelManager.NULL; //environmentFactory.createModelManager(selfObject);
 		SymbolicAnalysis symbolicAnalysis = createSymbolicExpressionAnalysis(expressionInOCL, modelManager);
 		symbolicAnalysis.analyzeExpression(expressionInOCL, selfObject, resultObject, parameters);			// XXX all related constraints
 		return symbolicAnalysis;
-	}
+	} */
 	/**
 	 * @since 1.3
-	 *
+	 */
 	@Override
 	public @NonNull SymbolicAnalysis getSymbolicAnalysis(@NonNull ExpressionInOCL expressionInOCL, @Nullable Object selfObject, @Nullable Object resultObject, @Nullable Object @Nullable [] parameters) {
 		ModelManager modelManager = ModelManager.NULL; //environmentFactory.createModelManager(selfObject);
-
 		Type containingType = PivotUtil.getContainingType(expressionInOCL);
 		if (containingType instanceof org.eclipse.ocl.pivot.Class) {
-			org.eclipse.ocl.pivot.Class containingClass = (org.eclipse.ocl.pivot.Class)containingType;
+			org.eclipse.ocl.pivot.Class completeClass = (org.eclipse.ocl.pivot.Class)containingType; // XXX getCompleteClass(containingType);
 			Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull SymbolicClassAnalysis> class2symbolicAnalysis2 = class2symbolicAnalysis;
 			if (class2symbolicAnalysis2 == null) {
 				class2symbolicAnalysis = class2symbolicAnalysis2 = new HashMap<>();
 			}
-			SymbolicClassAnalysis symbolicClassAnalysis = class2symbolicAnalysis2.get(containingClass);
+			SymbolicClassAnalysis symbolicClassAnalysis = class2symbolicAnalysis2.get(completeClass);
 			if (symbolicClassAnalysis == null) {
-				symbolicClassAnalysis = createSymbolicClassAnalysis(containingClass, modelManager);
-				class2symbolicAnalysis2.put(containingClass, symbolicClassAnalysis);
+				symbolicClassAnalysis = createSymbolicClassAnalysis(completeClass, modelManager);
+				class2symbolicAnalysis2.put(completeClass, symbolicClassAnalysis);
 				symbolicClassAnalysis.analyzeInvariants();
 			}
-			return symbolicClassAnalysis;
+			Namespace containingNamespace = PivotUtil.getContainingNamespace(expressionInOCL);
+			if ((containingNamespace == containingType) && (expressionInOCL.eContainmentFeature() == PivotPackage.Literals.CONSTRAINT__OWNED_SPECIFICATION)) {
+				return symbolicClassAnalysis;
+			}
 		}
-		else {
-			SymbolicAnalysis symbolicAnalysis = createSymbolicExpressionAnalysis(expressionInOCL, modelManager);
-			symbolicAnalysis.analyzeExpression(expressionInOCL, selfObject, resultObject, parameters);			// XXX all related constraints
-			return symbolicAnalysis;
-		}
-	}*/
+	//	Map<@NonNull ExpressionInOCL, @NonNull SymbolicExpressionAnalysis> expressionInOCL2symbolicAnalysis2 = expressionInOCL2symbolicAnalysis;
+	//	if (expressionInOCL2symbolicAnalysis2 == null) {
+	//		expressionInOCL2symbolicAnalysis = expressionInOCL2symbolicAnalysis2 = new HashMap<>();
+	//	}
+	//	SymbolicExpressionAnalysis symbolicExpressionAnalysis = expressionInOCL2symbolicAnalysis2.get(expressionInOCL);
+	//	if (symbolicExpressionAnalysis == null) {
+		SymbolicExpressionAnalysis symbolicExpressionAnalysis = createSymbolicExpressionAnalysis(expressionInOCL, modelManager);
+	//		expressionInOCL2symbolicAnalysis2.put(expressionInOCL, symbolicExpressionAnalysis);
+			symbolicExpressionAnalysis.analyzeExpression(expressionInOCL, selfObject, resultObject, parameters);
+	//	}
+		return symbolicExpressionAnalysis;
+	}
 
 	@Override
 	public ResourceSet getTarget() {
