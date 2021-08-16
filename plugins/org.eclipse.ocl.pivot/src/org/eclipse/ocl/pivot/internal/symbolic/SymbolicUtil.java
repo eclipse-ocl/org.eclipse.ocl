@@ -23,6 +23,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionItem;
 import org.eclipse.ocl.pivot.CollectionRange;
+import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.IfExp;
@@ -173,7 +174,13 @@ public class SymbolicUtil
 	protected static void printPath(@NonNull StringBuilder s, @NonNull NamedElement namedElement, @Nullable EReference childContainmentReference, boolean fullHierarchy) {
 		if (namedElement instanceof ExpressionInOCL) {
 			EObject eContainer = namedElement.eContainer();
-			if (eContainer instanceof NamedElement) {
+			if (eContainer instanceof Constraint) {
+				s.append(((NamedElement)eContainer.eContainer()).getName());
+				s.append("::");
+				s.append(((NamedElement)eContainer).getName());
+				return;
+			}
+			else if (eContainer instanceof NamedElement) {
 				s.append(((NamedElement)eContainer).getName());
 				return;
 			}

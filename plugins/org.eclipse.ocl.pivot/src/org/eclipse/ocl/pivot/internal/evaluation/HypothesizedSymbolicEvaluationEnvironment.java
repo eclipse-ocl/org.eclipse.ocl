@@ -275,11 +275,16 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 						} */
 					}
 					for (@NonNull CSEElement dependentCSEElement : cseElement.getOutputs()) {
-						SymbolicValue dependentSymbolicValue = baseSymbolicEvaluationEnvironment.getSymbolicValue(dependentCSEElement);
-						for (@NonNull TypedElement dependentTypedElement : dependentCSEElement.getElements()) {
-							String incompatibility2 = installActiveTypedElementAncestry(dependentTypedElement, dependentSymbolicValue, null);
-							if (incompatibility2 != null) {
-								return incompatibility2;
+						SymbolicValue dependentSymbolicValue = baseSymbolicEvaluationEnvironment.basicGetSymbolicValue(dependentCSEElement);
+						if (dependentSymbolicValue == null) {
+							assert dependentCSEElement.getSafeCSE() != null;
+						}
+						else {
+							for (@NonNull TypedElement dependentTypedElement : dependentCSEElement.getElements()) {
+								String incompatibility2 = installActiveTypedElementAncestry(dependentTypedElement, dependentSymbolicValue, null);
+								if (incompatibility2 != null) {
+									return incompatibility2;
+								}
 							}
 						}
 					}
@@ -389,7 +394,7 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 
 	private @Nullable String installLoopExpPathConstraints(@NonNull TypedElement activeTypedElement, @NonNull LoopExp loopExp) {
 		Iteration iteration = PivotUtil.getReferredIteration(loopExp);
-		assert !iteration.isIsValidating();
+	//	assert !iteration.isIsValidating();		// XXX FIXME forAll isValidating
 		@Nullable String incompatibility = null;
 		@NonNull OCLExpression ownedSource = PivotUtil.getOwnedSource(loopExp);
 		@NonNull OCLExpression ownedBody = PivotUtil.getOwnedBody(loopExp);
