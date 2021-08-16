@@ -31,7 +31,7 @@ public class SymbolicExpressionAnalysis extends SymbolicAnalysis
 
 	@Override
 	@Nullable
-	public String getIncompatibility(@NonNull HypothesizedSymbolicEvaluationEnvironment hypothesizedSymbolicEvaluationEnvironment) {
+	public String getIncompatibility(@NonNull HypothesizedSymbolicEvaluationEnvironment hypothesizedSymbolicEvaluationEnvironment, @NonNull TypedElement hypothesizedTypedElement) {
 		SymbolicValue symbolicValue = hypothesizedSymbolicEvaluationEnvironment.getSymbolicValue(expressionInOCL);
 		return symbolicValue.asIncompatibility();
 	}

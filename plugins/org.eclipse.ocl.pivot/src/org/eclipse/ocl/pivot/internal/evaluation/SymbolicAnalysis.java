@@ -365,7 +365,7 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 		return hypothesizedEvaluationEnvironments;
 	}
 
-	public abstract @Nullable String getIncompatibility(@NonNull HypothesizedSymbolicEvaluationEnvironment hypothesizedSymbolicEvaluationEnvironment);
+	public abstract @Nullable String getIncompatibility(@NonNull HypothesizedSymbolicEvaluationEnvironment hypothesizedSymbolicEvaluationEnvironment, @NonNull TypedElement hypothesizedTypedElement);
 
 	public @NonNull SymbolicValue getKnownValue(@Nullable Object boxedValue) {
 		assert ValueUtil.isBoxed(boxedValue);

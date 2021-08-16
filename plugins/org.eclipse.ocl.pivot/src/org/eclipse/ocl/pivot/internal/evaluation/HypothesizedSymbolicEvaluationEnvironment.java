@@ -151,7 +151,7 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 		//	ExpressionInOCL expressionInOCL = symbolicAnalysis.getExpressionInOCL();
 		//	SymbolicValue symbolicValue = getSymbolicValue(expressionInOCL);
 		//	return symbolicValue.asIncompatibility();
-			return symbolicAnalysis.getIncompatibility(this);
+			return symbolicAnalysis.getIncompatibility(this, hypothesizedTypedElement);
 	}
 
 	@Override

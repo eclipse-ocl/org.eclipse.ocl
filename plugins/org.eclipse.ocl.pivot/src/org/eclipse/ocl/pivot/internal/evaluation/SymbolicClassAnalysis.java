@@ -61,7 +61,7 @@ public class SymbolicClassAnalysis extends SymbolicAnalysis
 	}
 
 	@Override
-	public @Nullable String getIncompatibility(@NonNull HypothesizedSymbolicEvaluationEnvironment hypothesizedSymbolicEvaluationEnvironment) {
+	public @Nullable String getIncompatibility(@NonNull HypothesizedSymbolicEvaluationEnvironment hypothesizedSymbolicEvaluationEnvironment, @NonNull TypedElement hypothesizedTypedElement) {
 		return incompatibility;
 	}
 
