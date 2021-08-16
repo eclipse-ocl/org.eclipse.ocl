@@ -390,6 +390,10 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 
 	@Override
 	public @NonNull SymbolicValue visitLetExp(@NonNull LetExp letExp) {
+		SymbolicValue symbolicValue = symbolicEvaluationEnvironment.getSymbolicValue(PivotUtil.getOwnedVariable(letExp));
+		if (symbolicValue.asIncompatibility() != null) {
+			return symbolicValue;
+		}
 		return symbolicEvaluationEnvironment.symbolicEvaluate(PivotUtil.getOwnedIn(letExp));
 	}
 
