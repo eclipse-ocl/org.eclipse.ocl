@@ -392,8 +392,8 @@ public class MessageExpImpl
 			 *     if severity <= 0
 			 *     then true
 			 *     else
-			 *       let
-			 *         result : Boolean[?] = not ownedTarget.type.oclIsKindOf(CollectionType)
+			 *       let result : Boolean[?] = ownedTarget <> null and ownedTarget.type <> null implies
+			 *         not ownedTarget.type.oclIsKindOf(CollectionType)
 			 *       in
 			 *         constraintName.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
@@ -409,31 +409,61 @@ public class MessageExpImpl
 			else {
 				/*@Caught*/ @Nullable Object CAUGHT_result;
 				try {
-					/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
-					try {
-						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType_0 = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
-						@SuppressWarnings("null")
-						final /*@NonInvalid*/ @NonNull OCLExpression ownedTarget = this.getOwnedTarget();
-						final /*@NonInvalid*/ @Nullable Type type = ownedTarget.getType();
-						final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, TYP_CollectionType_0).booleanValue();
-						CAUGHT_oclIsKindOf = oclIsKindOf;
-					}
-					catch (Exception e) {
-						CAUGHT_oclIsKindOf = ValueUtil.createInvalidValue(e);
-					}
-					if (CAUGHT_oclIsKindOf instanceof InvalidValueException) {
-						throw (InvalidValueException)CAUGHT_oclIsKindOf;
-					}
+					@SuppressWarnings("null")
+					final /*@NonInvalid*/ @NonNull OCLExpression ownedTarget = this.getOwnedTarget();
+					final /*@NonInvalid*/ @Nullable Type type = ownedTarget.getType();
+					final /*@NonInvalid*/ @Nullable Boolean and;
+					final /*@NonInvalid*/ boolean ne = type != null;
+					and = ne;
 					final /*@Thrown*/ @Nullable Boolean result;
-					if (CAUGHT_oclIsKindOf == ValueUtil.FALSE_VALUE) {
+					if (and == ValueUtil.FALSE_VALUE) {
 						result = ValueUtil.TRUE_VALUE;
 					}
 					else {
-						if (CAUGHT_oclIsKindOf == ValueUtil.TRUE_VALUE) {
-							result = ValueUtil.FALSE_VALUE;
+						/*@Caught*/ @Nullable Object CAUGHT_not;
+						try {
+							/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
+							try {
+								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType_0 = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
+								final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, TYP_CollectionType_0).booleanValue();
+								CAUGHT_oclIsKindOf = oclIsKindOf;
+							}
+							catch (Exception e) {
+								CAUGHT_oclIsKindOf = ValueUtil.createInvalidValue(e);
+							}
+							if (CAUGHT_oclIsKindOf instanceof InvalidValueException) {
+								throw (InvalidValueException)CAUGHT_oclIsKindOf;
+							}
+							final /*@Thrown*/ @Nullable Boolean not;
+							if (CAUGHT_oclIsKindOf == ValueUtil.FALSE_VALUE) {
+								not = ValueUtil.TRUE_VALUE;
+							}
+							else {
+								if (CAUGHT_oclIsKindOf == ValueUtil.TRUE_VALUE) {
+									not = ValueUtil.FALSE_VALUE;
+								}
+								else {
+									not = null;
+								}
+							}
+							CAUGHT_not = not;
+						}
+						catch (Exception e) {
+							CAUGHT_not = ValueUtil.createInvalidValue(e);
+						}
+						if (CAUGHT_not == ValueUtil.TRUE_VALUE) {
+							result = ValueUtil.TRUE_VALUE;
 						}
 						else {
-							result = null;
+							if (CAUGHT_not instanceof InvalidValueException) {
+								throw (InvalidValueException)CAUGHT_not;
+							}
+							if ((and == null) || (CAUGHT_not == null)) {
+								result = null;
+							}
+							else {
+								result = ValueUtil.FALSE_VALUE;
+							}
 						}
 					}
 					CAUGHT_result = result;

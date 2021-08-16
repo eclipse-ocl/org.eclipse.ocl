@@ -74,7 +74,7 @@ public abstract class ValueSpecificationImpl
 	 */
 	@Override
 	public boolean isComputable() {
-		throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/Pivot!ValueSpecification!isComputable()
+		throw new UnsupportedOperationException();  // FIXME missing body EAnnotation for http://www.eclipse.org/ocl/2015/Pivot!ValueSpecification!isComputable()
 	}
 
 	/**
@@ -84,7 +84,7 @@ public abstract class ValueSpecificationImpl
 	 */
 	@Override
 	public Number integerValue() {
-		throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/Pivot!ValueSpecification!integerValue()
+		throw new UnsupportedOperationException();  // FIXME missing body EAnnotation for http://www.eclipse.org/ocl/2015/Pivot!ValueSpecification!integerValue()
 	}
 
 	/**
@@ -94,7 +94,7 @@ public abstract class ValueSpecificationImpl
 	 */
 	@Override
 	public boolean booleanValue() {
-		throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/Pivot!ValueSpecification!booleanValue()
+		throw new UnsupportedOperationException();  // FIXME missing body EAnnotation for http://www.eclipse.org/ocl/2015/Pivot!ValueSpecification!booleanValue()
 	}
 
 	/**
@@ -104,7 +104,7 @@ public abstract class ValueSpecificationImpl
 	 */
 	@Override
 	public String stringValue() {
-		throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/Pivot!ValueSpecification!stringValue()
+		throw new UnsupportedOperationException();  // FIXME missing body EAnnotation for http://www.eclipse.org/ocl/2015/Pivot!ValueSpecification!stringValue()
 	}
 
 	/**
@@ -114,7 +114,7 @@ public abstract class ValueSpecificationImpl
 	 */
 	@Override
 	public Number unlimitedValue() {
-		throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/Pivot!ValueSpecification!unlimitedValue()
+		throw new UnsupportedOperationException();  // FIXME missing body EAnnotation for http://www.eclipse.org/ocl/2015/Pivot!ValueSpecification!unlimitedValue()
 	}
 
 	/**
@@ -124,7 +124,7 @@ public abstract class ValueSpecificationImpl
 	 */
 	@Override
 	public boolean isNull() {
-		throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/Pivot!ValueSpecification!isNull()
+		throw new UnsupportedOperationException();  // FIXME missing body EAnnotation for http://www.eclipse.org/ocl/2015/Pivot!ValueSpecification!isNull()
 	}
 
 	/**
