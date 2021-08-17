@@ -228,7 +228,7 @@
             </ownedElse>
             <ownedThen xsi:type="pivot:BooleanLiteralExp" booleanSymbol="false" type="#XEMMs"/>
           </ownedBody>
-          <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="MxyDI" isRequired="false" name="self" type="#XEMMs"/>
+          <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="MxyDI" name="self" type="#XEMMs"/>
           <ownedParameters xsi:type="pivot:ParameterVariable" xmi:id="nhutT" name="b" representedParameter="#tix9E" type="#XEMMs"/>
         </bodyExpression>
         <ownedComments body="oclText[false] if either oclText[self] or oclText[b] is oclText[false].&#xA;Otherwise oclText[true].&#xA;"/>
@@ -318,7 +318,7 @@
             </ownedElse>
             <ownedThen xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" type="#XEMMs"/>
           </ownedBody>
-          <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="spaQQ" isRequired="false" name="self" type="#XEMMs"/>
+          <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="spaQQ" name="self" type="#XEMMs"/>
           <ownedParameters xsi:type="pivot:ParameterVariable" xmi:id="HaW6b" name="b" representedParameter="#Nlx5s" type="#XEMMs"/>
         </bodyExpression>
         <ownedComments body="oclText[true] if oclText[self] is oclText[false], or if oclText[b] is oclText[true].&#xA;Otherwise oclText[false].&#xA;"/>
@@ -445,7 +445,7 @@
             </ownedElse>
             <ownedThen xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" type="#XEMMs"/>
           </ownedBody>
-          <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="gV6f," isRequired="false" name="self" type="#XEMMs"/>
+          <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="gV6f," name="self" type="#XEMMs"/>
           <ownedParameters xsi:type="pivot:ParameterVariable" xmi:id="7F2JL" name="b" representedParameter="#RBSMV" type="#XEMMs"/>
         </bodyExpression>
         <ownedComments body="oclText[true] if either oclText[self] or oclText[b] is oclText[true].&#xA;Otherwise oclText[false].&#xA;"/>

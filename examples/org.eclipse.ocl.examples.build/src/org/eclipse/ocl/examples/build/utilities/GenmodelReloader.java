@@ -38,6 +38,7 @@ import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
+import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
 
@@ -102,6 +103,7 @@ public class GenmodelReloader extends AbstractProjectComponent
 		//		} catch (Exception e) {
 		//			throw new ConfigurationException("Couldn't create instance of class " + modelImporter, e);
 		//		}
+		OCLInternal ocl = OCLInternal.newInstance(modelImporterInstance.getGenModelResourceSet());
 		try {
 			Path path = new Path(genModel);
 			modelImporterInstance.defineOriginalGenModelPath(path);
@@ -162,6 +164,8 @@ public class GenmodelReloader extends AbstractProjectComponent
 			throw e;
 		} catch (Exception e) {
 			throw new RuntimeException("Problems running " + getClass().getSimpleName(), e);
+		} finally {
+			ocl.dispose();
 		}
 	}
 

@@ -121,7 +121,7 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 			height2hypotheses2 = height2hypotheses = new ArrayList<>();
 		}
 		int height = hypothesis.getCSEElement().getHeight();
-		System.out.println(height + "- " + hypothesis);		// XXX
+	//	System.out.println(height + "- " + hypothesis);		// XXX
 		while (height2hypotheses2.size() <= height) {
 			height2hypotheses2.add(null);
 		}
