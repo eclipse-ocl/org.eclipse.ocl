@@ -264,14 +264,22 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 		boolean mayBeNull = false;
 		for (@NonNull CollectionLiteralPart part : PivotUtil.getOwnedParts(literalExp)) {
 			SymbolicValue partValue = symbolicEvaluate(part);
+			if (partValue.isInvalid()) {
+				return context.getKnownValue(ValueUtil.INVALID_VALUE);
+			}
 			if (!partValue.isKnown()) {
 				isKnown = false;
 			}
 			if (partValue.mayBeInvalid()) {
 				mayBeInvalid = true;
 			}
-			if (isNullFree && partValue.mayBeNull()) {
-				mayBeNull = true;
+			if (isNullFree) {
+				if (partValue.isNull()) {
+					return context.getKnownValue(ValueUtil.INVALID_VALUE);
+				}
+				if (partValue.mayBeNull()) {
+					mayBeNull = true;
+				}
 			}
 		}
 		if (isKnown) {
@@ -419,17 +427,30 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 		for (@NonNull MapLiteralPart part : PivotUtil.getOwnedParts(literalExp)) {
 			SymbolicValue keyValue = symbolicEvaluate(PivotUtil.getOwnedKey(part));
 			SymbolicValue valueValue = symbolicEvaluate(PivotUtil.getOwnedValue(part));
+			if (keyValue.isInvalid() || valueValue.isInvalid()) {
+				return context.getKnownValue(ValueUtil.INVALID_VALUE);
+			}
 			if (!keyValue.isKnown() || !valueValue.isKnown()) {
 				isKnown = false;
 			}
 			if (keyValue.mayBeInvalid() || valueValue.mayBeInvalid()) {
 				mayBeInvalid = true;
 			}
-			if (isKeysAreNullFree && keyValue.mayBeNull()) {
-				mayBeNull = true;
+			if (isKeysAreNullFree) {
+				if (keyValue.isNull()) {
+					return context.getKnownValue(ValueUtil.INVALID_VALUE);
+				}
+				if (keyValue.mayBeNull()) {
+					mayBeNull = true;
+				}
 			}
-			if (isValuesAreNullFree && valueValue.mayBeNull()) {
-				mayBeNull = true;
+			if (isValuesAreNullFree) {
+				if (valueValue.isNull()) {
+					return context.getKnownValue(ValueUtil.INVALID_VALUE);
+				}
+				if (valueValue.mayBeNull()) {
+					mayBeNull = true;
+				}
 			}
 		}
 		if (isKnown) {
@@ -495,6 +516,9 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 		boolean mayBeNull = false;
 		for (@NonNull ShadowPart part : PivotUtil.getOwnedParts(shadowExp)) {
 			SymbolicValue partValue = symbolicEvaluationEnvironment.symbolicEvaluate(part);
+			if (partValue.isInvalid() || partValue.isNull()) {
+				return context.getKnownValue(ValueUtil.INVALID_VALUE);
+			}
 			if (!partValue.isKnown()) {
 				isKnown = false;
 			}
@@ -552,6 +576,9 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 		boolean mayBeNull = false;
 		for (@NonNull TupleLiteralPart part : PivotUtil.getOwnedParts(literalExp)) {
 			SymbolicValue partValue = symbolicEvaluationEnvironment.symbolicEvaluate(part);
+			if (partValue.isInvalid() || partValue.isNull()) {
+				return context.getKnownValue(ValueUtil.INVALID_VALUE);
+			}
 			if (!partValue.isKnown()) {
 				isKnown = false;
 			}
@@ -579,6 +606,9 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 		SymbolicValue partValue = symbolicEvaluationEnvironment.symbolicEvaluate(PivotUtil.getOwnedInit(part));
 		if (!partValue.isKnown()) {
 			isKnown = false;
+		}
+		if (partValue.isInvalid() || partValue.isNull()) {
+			return context.getKnownValue(ValueUtil.INVALID_VALUE);
 		}
 		if (partValue.mayBeInvalid()) {
 			mayBeInvalid = true;
