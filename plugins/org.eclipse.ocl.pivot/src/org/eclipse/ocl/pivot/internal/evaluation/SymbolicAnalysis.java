@@ -16,9 +16,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.LanguageExpression;
+import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.EvaluationHaltedException;
@@ -37,7 +42,11 @@ import org.eclipse.ocl.pivot.internal.symbolic.SymbolicUnknownValue;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
+import org.eclipse.ocl.pivot.utilities.ParserException;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
+import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValue;
@@ -483,5 +492,283 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 
 	private boolean isCanceled() {
 		return executor.isCanceled();
+	}
+
+	protected static abstract class SymbolicAbstractClassAnalysis extends SymbolicAnalysis
+	{
+		protected final org.eclipse.ocl.pivot.@NonNull Class primaryClass;
+		private @Nullable Iterable<@NonNull ExpressionInOCL> invariantBodies = null;
+		protected @Nullable String incompatibility;
+
+		/**
+		 * Initializes the symbolic analysis of expressionInOCL that delegates to a non-symbolic evaluation visitor.
+		 */
+		protected SymbolicAbstractClassAnalysis(org.eclipse.ocl.pivot.@NonNull Class primaryClass,
+				@NonNull EnvironmentFactoryInternalExtension environmentFactory, @NonNull ModelManager modelManager) {
+			super(environmentFactory, modelManager);
+			this.primaryClass = primaryClass;
+		}
+
+		public void analyzeInvariants() {
+			assert incompatibility == null;
+			SymbolicValue selfVariable = new SymbolicUnknownValue("self", primaryClass.getTypeId(), false, false);
+			Iterable<@NonNull ExpressionInOCL> invariantBodies2 = invariantBodies;
+			assert invariantBodies2 == null;
+			try {
+				this.invariantBodies = invariantBodies2 = gatherInvariantBodies();
+			}
+			catch (ParserException e) {
+				incompatibility = e.toString();
+				return;
+			}
+			analyzeInvariants(primaryClass, invariantBodies2, selfVariable);
+		}
+
+		protected abstract @NonNull List<@NonNull ExpressionInOCL> gatherInvariantBodies() throws ParserException;
+
+		public @NonNull SymbolicAnalysis getSymbolicAnalysis(@NonNull ExpressionInOCL expressionInOCL) {
+			return new SymbolicExpressionAnalysis(expressionInOCL, environmentFactory, getExecutor().getModelManager());
+		}
+
+		@Override
+		public @Nullable String getIncompatibility(@NonNull HypothesizedSymbolicEvaluationEnvironment hypothesizedSymbolicEvaluationEnvironment, @NonNull TypedElement hypothesizedTypedElement) {
+			if (incompatibility != null) {
+				return incompatibility;
+			}
+			Iterable<@NonNull ExpressionInOCL> invariantBodies2 = invariantBodies;
+			if (invariantBodies2 != null) {
+				ExpressionInOCL hypothesizedExpressionInOCL = PivotUtil.getContainingExpressionInOCL(hypothesizedTypedElement);
+				for (@NonNull ExpressionInOCL invariantBody : invariantBodies2) {
+					SymbolicValue symbolicValue = hypothesizedSymbolicEvaluationEnvironment.getSymbolicValue(invariantBody);
+					String incompatibility = symbolicValue.asIncompatibility();
+					if (incompatibility != null) {
+						return incompatibility;
+					}
+					else if (invariantBody != hypothesizedExpressionInOCL) {
+						if (symbolicValue.isFalse()) {
+							return "Incompatible " + ((NamedElement)invariantBody.eContainer()).getName();
+						}
+					}
+				}
+			}
+			return null;
+		}
+
+		protected void toString(@NonNull StringBuilder s, org.eclipse.ocl.pivot.@NonNull Class asClass) {
+			BaseSymbolicEvaluationEnvironment evaluationEnvironment = getBaseSymbolicEvaluationEnvironment();
+			for (@NonNull Constraint invariant : PivotUtil.getOwnedInvariants(asClass)) {
+				LanguageExpression ownedSpecification = invariant.getOwnedSpecification();
+				if (ownedSpecification != null) {
+					try {
+						ExpressionInOCL expressionInOCL = environmentFactory.parseSpecification(ownedSpecification);
+						for (EObject eObject : new TreeIterable(expressionInOCL, true)) {
+							s.append("\n  ");
+							for (EObject eParent = eObject; eParent != null && eParent != expressionInOCL; eParent = eParent.eContainer()) {
+								s.append("  ");
+							}
+							s.append(eObject.eClass().getName());
+							s.append(" : ");
+							s.append(eObject.toString());
+							s.append("\n  ");
+							for (EObject eParent = eObject; eParent != null && eParent != expressionInOCL; eParent = eParent.eContainer()) {
+								s.append("  ");
+							}
+							s.append("  => ");
+							SymbolicValue symbolicValue = eObject instanceof TypedElement ? evaluationEnvironment.basicGetSymbolicValue((TypedElement)eObject) : null;
+							if (symbolicValue == null) {
+								s.append("not-computed");
+							}
+							else {
+								s.append(symbolicValue.getClass().getSimpleName());
+								s.append(" : ");
+								s.append(symbolicValue);
+							}
+						}
+					} catch (ParserException e) {
+						// TODO Auto-generated catch block
+					//	e.printStackTrace();
+					}
+				}
+			}
+		}
+	}
+
+	public static class SymbolicClassAnalysis extends SymbolicAbstractClassAnalysis
+	{
+		/**
+		 * Initializes the symbolic analysis of expressionInOCL that delegates to a non-symbolic evaluation visitor.
+		 */
+		public SymbolicClassAnalysis(org.eclipse.ocl.pivot.@NonNull Class selfClass, @NonNull EnvironmentFactoryInternalExtension environmentFactory, @NonNull ModelManager modelManager) {
+			super(selfClass, environmentFactory, modelManager);
+//			this.expressionsInOCL = expressionsInOCL;
+		}
+
+		@Override
+		protected @NonNull List<@NonNull ExpressionInOCL> gatherInvariantBodies() throws ParserException {
+			List<@NonNull ExpressionInOCL> invariantBodies2 = new ArrayList<>();
+			for (@NonNull Constraint invariant : PivotUtil.getOwnedInvariants(primaryClass)) {
+				LanguageExpression ownedSpecification = invariant.getOwnedSpecification();
+				if (ownedSpecification != null) {
+					invariantBodies2.add(environmentFactory.parseSpecification(ownedSpecification));
+				}
+			}
+			return invariantBodies2;
+		}
+
+		@Override
+		public @NonNull String toString() {
+			StringBuilder s = new StringBuilder();
+			toString(s, primaryClass);
+		/*	List<@NonNull CSEElement> keys = new ArrayList<>(cseElement2symbolicValue.keySet());
+			if (keys.size() > 1) {
+				Collections.sort(keys, NameUtil.TO_STRING_COMPARATOR);
+			}
+			s.append("\t" + keys.size() + " cses");
+			for (@NonNull CSEElement key : keys) {
+				Object value = cseElement2symbolicValue.get(key);
+				s.append("\n\t\t" + key + " => " + value);
+			} */
+			List<@NonNull HypothesizedSymbolicEvaluationEnvironment> hypothesizedEvaluationEnvironments = getHypothesizedEvaluationEnvironments();
+			if (hypothesizedEvaluationEnvironments != null) {
+				for (HypothesizedSymbolicEvaluationEnvironment hypothesizedSymbolicEvaluationEnvironments : hypothesizedEvaluationEnvironments) {
+					StringUtil.appendIndentation(s, 1);
+					s.append("{ ");
+				//	StringUtil.appendIndentation(s, 2);
+					hypothesizedSymbolicEvaluationEnvironments.toString(s, 1);
+					StringUtil.appendIndentation(s, 1);
+					s.append("}");
+				}
+			}
+			return s.toString();
+		}
+	}
+
+	public static class SymbolicCompleteClassAnalysis extends SymbolicAbstractClassAnalysis
+	{
+		protected final @NonNull CompleteClass completeClass;
+
+		/**
+		 * Initializes the symbolic analysis of expressionInOCL that delegates to a non-symbolic evaluation visitor.
+		 */
+		public SymbolicCompleteClassAnalysis(@NonNull CompleteClass completeClass, @NonNull EnvironmentFactoryInternalExtension environmentFactory, @NonNull ModelManager modelManager) {
+			super(completeClass.getPrimaryClass(), environmentFactory, modelManager);
+			this.completeClass = completeClass;
+//			this.expressionsInOCL = expressionsInOCL;
+		}
+
+		@Override
+		protected @NonNull List<@NonNull ExpressionInOCL> gatherInvariantBodies() throws ParserException {
+			List<@NonNull ExpressionInOCL> invariantBodies2 = new ArrayList<>();
+			for (org.eclipse.ocl.pivot.@NonNull Class partialClass : PivotUtil.getPartialClasses(completeClass)) {
+				for (@NonNull Constraint invariant : PivotUtil.getOwnedInvariants(partialClass)) {
+					LanguageExpression ownedSpecification = invariant.getOwnedSpecification();
+					if (ownedSpecification != null) {
+						invariantBodies2.add(environmentFactory.parseSpecification(ownedSpecification));
+					}
+				}
+			}
+			return invariantBodies2;
+		}
+
+		@Override
+		public @NonNull String toString() {
+			StringBuilder s = new StringBuilder();
+			for (org.eclipse.ocl.pivot.@NonNull Class partialClass : PivotUtil.getPartialClasses(completeClass)) {
+				toString(s, partialClass);
+			}
+		/*	List<@NonNull CSEElement> keys = new ArrayList<>(cseElement2symbolicValue.keySet());
+			if (keys.size() > 1) {
+				Collections.sort(keys, NameUtil.TO_STRING_COMPARATOR);
+			}
+			s.append("\t" + keys.size() + " cses");
+			for (@NonNull CSEElement key : keys) {
+				Object value = cseElement2symbolicValue.get(key);
+				s.append("\n\t\t" + key + " => " + value);
+			} */
+			List<@NonNull HypothesizedSymbolicEvaluationEnvironment> hypothesizedEvaluationEnvironments = getHypothesizedEvaluationEnvironments();
+			if (hypothesizedEvaluationEnvironments != null) {
+				for (HypothesizedSymbolicEvaluationEnvironment hypothesizedSymbolicEvaluationEnvironments : hypothesizedEvaluationEnvironments) {
+					StringUtil.appendIndentation(s, 1);
+					s.append("{ ");
+				//	StringUtil.appendIndentation(s, 2);
+					hypothesizedSymbolicEvaluationEnvironments.toString(s, 1);
+					StringUtil.appendIndentation(s, 1);
+					s.append("}");
+				}
+			}
+			return s.toString();
+		}
+	}
+
+	public static class SymbolicExpressionAnalysis extends SymbolicAnalysis
+	{
+		protected final @NonNull ExpressionInOCL expressionInOCL;
+
+		/**
+		 * Initializes the symbolic analysis of expressionInOCL that delegates to a non-symbolic evaluation visitor.
+		 */
+		public SymbolicExpressionAnalysis(@NonNull ExpressionInOCL expressionInOCL,
+				@NonNull EnvironmentFactoryInternalExtension environmentFactory, @NonNull ModelManager modelManager) {
+			super(environmentFactory, modelManager);
+			this.expressionInOCL = expressionInOCL;
+		}
+
+		@Override
+		@Nullable
+		public String getIncompatibility(@NonNull HypothesizedSymbolicEvaluationEnvironment hypothesizedSymbolicEvaluationEnvironment, @NonNull TypedElement hypothesizedTypedElement) {
+			SymbolicValue symbolicValue = hypothesizedSymbolicEvaluationEnvironment.getSymbolicValue(expressionInOCL);
+			return symbolicValue.asIncompatibility();
+		}
+
+
+		@Override
+		public @NonNull String toString() {
+			BaseSymbolicEvaluationEnvironment evaluationEnvironment = getBaseSymbolicEvaluationEnvironment();
+			StringBuilder s = new StringBuilder();
+			for (EObject eObject : new TreeIterable(expressionInOCL, true)) {
+				s.append("\n  ");
+				for (EObject eParent = eObject; eParent != null && eParent != expressionInOCL; eParent = eParent.eContainer()) {
+					s.append("  ");
+				}
+				s.append(eObject.eClass().getName());
+				s.append(" : ");
+				s.append(eObject.toString());
+				s.append("\n  ");
+				for (EObject eParent = eObject; eParent != null && eParent != expressionInOCL; eParent = eParent.eContainer()) {
+					s.append("  ");
+				}
+				s.append("  => ");
+				SymbolicValue symbolicValue = eObject instanceof TypedElement ? evaluationEnvironment.basicGetSymbolicValue((TypedElement)eObject) : null;
+				if (symbolicValue == null) {
+					s.append("not-computed");
+				}
+				else {
+					s.append(symbolicValue.getClass().getSimpleName());
+					s.append(" : ");
+					s.append(symbolicValue);
+				}
+			}
+		/*	List<@NonNull CSEElement> keys = new ArrayList<>(cseElement2symbolicValue.keySet());
+			if (keys.size() > 1) {
+				Collections.sort(keys, NameUtil.TO_STRING_COMPARATOR);
+			}
+			s.append("\t" + keys.size() + " cses");
+			for (@NonNull CSEElement key : keys) {
+				Object value = cseElement2symbolicValue.get(key);
+				s.append("\n\t\t" + key + " => " + value);
+			} */
+			List<@NonNull HypothesizedSymbolicEvaluationEnvironment> hypothesizedEvaluationEnvironments = getHypothesizedEvaluationEnvironments();
+			if (hypothesizedEvaluationEnvironments != null) {
+				for (HypothesizedSymbolicEvaluationEnvironment hypothesizedSymbolicEvaluationEnvironments : hypothesizedEvaluationEnvironments) {
+					StringUtil.appendIndentation(s, 1);
+					s.append("{ ");
+				//	StringUtil.appendIndentation(s, 2);
+					hypothesizedSymbolicEvaluationEnvironments.toString(s, 1);
+					StringUtil.appendIndentation(s, 1);
+					s.append("}");
+				}
+			}
+			return s.toString();
+		}
 	}
 }
