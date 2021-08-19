@@ -113,8 +113,6 @@ public interface SymbolicValue
 
 	boolean mayBeInvalid();
 
-	default boolean mayBeInvalidOrNull() { return mayBeInvalid() || mayBeNull(); }
-
 	boolean mayBeNull();
 
 	boolean mayBeTrue();

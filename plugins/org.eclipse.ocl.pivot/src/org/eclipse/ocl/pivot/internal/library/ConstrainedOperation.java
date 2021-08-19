@@ -73,7 +73,7 @@ public class ConstrainedOperation extends AbstractOperation
 
 	@Override
 	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
-		return checkPreconditions(evaluationEnvironment, callExp, 0); 		// XXX is there anything to check ?? yes the preconditions
+		return checkPreconditions(evaluationEnvironment, callExp, CHECK_NOT_INVALID | CHECK_NOT_NULL);
 	}
 
 	/**
@@ -112,9 +112,6 @@ public class ConstrainedOperation extends AbstractOperation
 			argumentSymbolicValues.add(argumentSymbolicValue);
 		}
 		if (isKnown) {
-
-
-
 			SymbolicAnalysis symbolicAnalysis = evaluationEnvironment.getSymbolicAnalysis();
 			@Nullable Object[] boxedSourceAndArgumentValues = new @Nullable Object[1+argumentsSize];
 			boxedSourceAndArgumentValues[0] = sourceSymbolicValue.getKnownValue();
@@ -154,14 +151,6 @@ public class ConstrainedOperation extends AbstractOperation
 		else {
 			return createResultValue(evaluationEnvironment, callExp, sourceSymbolicValue, argumentSymbolicValues);
 		}
-
-
-	//	ModelManager modelManager = environmentFactory.createModelManager(selfObject);
-	//	SymbolicAnalysis symbolicAnalysis = createSymbolicAnalysis(expressionInOCL, modelManager);
-
-
-
-	//	return super.symbolicEvaluate(evaluationEnvironment, callExp);
 	}
 
 	@Override

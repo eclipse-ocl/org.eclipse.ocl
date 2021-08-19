@@ -205,7 +205,10 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 		}
 		int i = 0;
 		for (@NonNull SymbolicValue argumentSymbolicValue : argumentSymbolicValues) {		// XXX correlate parameter/return nullity
-			if (argumentSymbolicValue.mayBeInvalidOrNull()) {
+			if (argumentSymbolicValue.mayBeInvalid()) {
+				mayBeInvalid = true;
+			}
+			else if (argumentSymbolicValue.mayBeNull()){
 				Parameter ownedParameter = PivotUtil.getOwnedParameter(referredOperation, i);
 				if (ownedParameter.isIsRequired()) {
 					mayBeInvalid = true;
