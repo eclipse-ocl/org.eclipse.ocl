@@ -167,9 +167,6 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 	 */
 	protected @NonNull SymbolicValue doOperationCallExp(@NonNull OperationCallExp operationCallExp) {
 		Operation apparentOperation = PivotUtil.getReferredOperation(operationCallExp);
-		if ("CompatibleBody".equals(apparentOperation.getName())) {
-			getClass();		// XXX
-		}
 		@SuppressWarnings("unused")
 		boolean isValidating = apparentOperation.isIsValidating();
 		//

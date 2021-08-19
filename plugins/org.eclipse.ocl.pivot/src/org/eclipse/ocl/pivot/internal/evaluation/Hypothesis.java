@@ -87,7 +87,7 @@ public abstract class Hypothesis
 			}
 			if (cannotBeSatisfiedBy(oldSymbolicValue)) {
 				if (traceHypothesis) {
-					SymbolicAnalysis.HYPOTHESIS.println("    => already contrdicted");
+					SymbolicAnalysis.HYPOTHESIS.println("    => already contradicted");
 				}
 			}
 			else {
