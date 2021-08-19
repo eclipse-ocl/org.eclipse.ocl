@@ -396,7 +396,7 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 			initExp = PivotUtil.getOwnedSource(loopEXp);
 		}
 		SymbolicValue initSymbolicValue = symbolicEvaluationEnvironment.symbolicEvaluate(initExp);
-		SymbolicValue elementalSymbolicValue = initSymbolicValue.getCollectionContent().getElementalSymbolicValue(this, iteratorVariable);
+		SymbolicValue elementalSymbolicValue = initSymbolicValue.getContent().getElementalSymbolicValue(this, iteratorVariable);
 		return symbolicEvaluationEnvironment.setSymbolicValue(iteratorVariable, elementalSymbolicValue, "iter");
 	}
 

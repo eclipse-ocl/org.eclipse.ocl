@@ -198,7 +198,7 @@ public abstract class AbstractLeafSymbolicValue extends AbstractSymbolicValue
 	}
 
 	protected @NonNull SymbolicMapContent createMapContent() {
-		return new SymbolicMapContent("m#" + name + "%", (MapTypeId)typeId);
+		return new SymbolicMapContent("m#" + name + "%", (MapTypeId)typeId, null);
 	}
 
 	@Override

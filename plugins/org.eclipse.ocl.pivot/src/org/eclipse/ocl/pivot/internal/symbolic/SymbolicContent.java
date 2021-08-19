@@ -20,6 +20,8 @@ import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationVisitor;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
+import org.eclipse.ocl.pivot.values.IterableValue;
+import org.eclipse.ocl.pivot.values.MapValue;
 import org.eclipse.ocl.pivot.values.NumberValue;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
@@ -42,6 +44,7 @@ public abstract class SymbolicContent
 			this.collectionValue = originalContent.collectionValue;
 		}
 
+		@Override
 		public @NonNull SymbolicValue getElementalSymbolicValue(@NonNull SymbolicEvaluationVisitor symbolicEvaluationVisitor, @NonNull IteratorVariable iteratorVariable) {
 			SymbolicAnalysis symbolicAnalysis = symbolicEvaluationVisitor.getSymbolicAnalysis();
 			TypeId elementTypeId = ((CollectionTypeId)typeId).getElementTypeId();
@@ -50,34 +53,9 @@ public abstract class SymbolicContent
 				SymbolicValue symbolicValue = symbolicAnalysis.getUnknownValue(iteratorVariable, !iteratorVariable.isIsRequired(), false);
 				return symbolicValue;
 			}
-			NumberValue minimumLowerBound = null;
-			NumberValue minimumUpperBound = null;
-			for (@Nullable Object elementValue : collectionValue2) {
-				SymbolicValue elementSymbolicValue = symbolicAnalysis.getKnownValue(elementValue);
-				SymbolicValue elementSize = elementSymbolicValue.getCollectionContent().getSize();
-				NumberValue elementLowerBound = elementSize.getLowerBound();
-				if (minimumLowerBound == null) {
-					minimumLowerBound = elementLowerBound;
-				}
-				else if (elementLowerBound.compareTo(minimumLowerBound) < 0) {
-					minimumLowerBound = elementLowerBound;
-				}
-				NumberValue elementUpperBound = elementSize.getUpperBound();
-				if (elementUpperBound != null) {
-					if (minimumUpperBound == null) {
-						minimumUpperBound = elementUpperBound;
-					}
-					else if (elementUpperBound.compareTo(minimumUpperBound) < 0) {
-						minimumUpperBound = elementUpperBound;
-					}
-				}
-			}
-			if (minimumLowerBound == null) {
-				minimumLowerBound = ValueUtil.ZERO_VALUE;
-			}
-			SymbolicNumericValue sizeValue = SymbolicNumericValue.get(minimumLowerBound, minimumUpperBound);
+			SymbolicNumericValue sizeValue = computeElementSize(symbolicAnalysis, collectionValue2);
 			String constantName = symbolicAnalysis.createConstantName();
-			SymbolicCollectionContent content = new SymbolicCollectionContent("c#" + constantName + "%", collectionValue2.getTypeId(), collectionValue);
+			SymbolicCollectionContent content = new SymbolicCollectionContent("c#" + constantName + "%", collectionValue2.getTypeId(), collectionValue2);
 			content.setSize(sizeValue);
 			return new SymbolicKnownValue(constantName, elementTypeId, null, content);
 		}
@@ -90,12 +68,32 @@ public abstract class SymbolicContent
 
 	public static class SymbolicMapContent extends SymbolicContent
 	{
-		public SymbolicMapContent(@NonNull String name, @NonNull MapTypeId typeId) {
+		protected final @Nullable MapValue mapValue;
+
+		public SymbolicMapContent(@NonNull String name, @NonNull MapTypeId typeId, @Nullable MapValue mapValue) {
 			super(name, typeId);
+			this.mapValue = mapValue;
 		}
 
 		protected SymbolicMapContent(@NonNull SymbolicMapContent originalContent) {
 			super(originalContent);
+			this.mapValue = originalContent.mapValue;
+		}
+
+		@Override
+		public @NonNull SymbolicValue getElementalSymbolicValue(@NonNull SymbolicEvaluationVisitor symbolicEvaluationVisitor, @NonNull IteratorVariable iteratorVariable) {
+			SymbolicAnalysis symbolicAnalysis = symbolicEvaluationVisitor.getSymbolicAnalysis();
+			TypeId keyTypeId = ((MapTypeId)typeId).getKeyTypeId();
+			MapValue mapValue2 = mapValue;
+			if ((mapValue2 == null) || !(keyTypeId instanceof MapTypeId)) {
+				SymbolicValue symbolicValue = symbolicAnalysis.getUnknownValue(iteratorVariable, !iteratorVariable.isIsRequired(), false);
+				return symbolicValue;
+			}
+			SymbolicNumericValue sizeValue = computeElementSize(symbolicAnalysis, mapValue2);
+			String constantName = symbolicAnalysis.createConstantName();
+			SymbolicMapContent content = new SymbolicMapContent("c#" + constantName + "%", mapValue2.getTypeId(), mapValue2);
+			content.setSize(sizeValue);
+			return new SymbolicKnownValue(constantName, keyTypeId, null, content);
 		}
 
 		@Override
@@ -119,6 +117,37 @@ public abstract class SymbolicContent
 		this.typeId = originalContent.typeId;
 		this.sizeValue = originalContent.sizeValue;
 	}
+
+	protected @NonNull SymbolicNumericValue computeElementSize(@NonNull SymbolicAnalysis symbolicAnalysis, @NonNull IterableValue iterableValue) {
+		NumberValue minimumLowerBound = null;
+		NumberValue minimumUpperBound = null;
+		for (@Nullable Object elementValue : iterableValue) {
+			SymbolicValue elementSymbolicValue = symbolicAnalysis.getKnownValue(elementValue);
+			SymbolicValue elementSize = elementSymbolicValue.getContent().getSize();
+			NumberValue elementLowerBound = elementSize.getLowerBound();
+			if (minimumLowerBound == null) {
+				minimumLowerBound = elementLowerBound;
+			}
+			else if (elementLowerBound.compareTo(minimumLowerBound) < 0) {
+				minimumLowerBound = elementLowerBound;
+			}
+			NumberValue elementUpperBound = elementSize.getUpperBound();
+			if (elementUpperBound != null) {
+				if (minimumUpperBound == null) {
+					minimumUpperBound = elementUpperBound;
+				}
+				else if (elementUpperBound.compareTo(minimumUpperBound) < 0) {
+					minimumUpperBound = elementUpperBound;
+				}
+			}
+		}
+		if (minimumLowerBound == null) {
+			minimumLowerBound = ValueUtil.ZERO_VALUE;
+		}
+		return SymbolicNumericValue.get(minimumLowerBound, minimumUpperBound);
+	}
+
+	public abstract @NonNull SymbolicValue getElementalSymbolicValue(@NonNull SymbolicEvaluationVisitor symbolicEvaluationVisitor, @NonNull IteratorVariable iteratorVariable);
 
 	public @NonNull SymbolicValue getSize() {
 		SymbolicValue sizeValue2 = sizeValue;

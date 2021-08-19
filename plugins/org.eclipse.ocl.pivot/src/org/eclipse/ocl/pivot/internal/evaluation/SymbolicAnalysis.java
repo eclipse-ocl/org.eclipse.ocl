@@ -394,7 +394,8 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 					content.setSize(getKnownValue(collectionValue.isEmpty() ? ValueUtil.ZERO_VALUE : ValueUtil.ONE_VALUE));
 				}
 				else if (boxedValue instanceof MapValue) {
-					content = new SymbolicMapContent("m#" + constantName + "%", (MapTypeId)typeId);
+					MapValue mapValue = (MapValue)boxedValue;
+					content = new SymbolicMapContent("m#" + constantName + "%", (MapTypeId)typeId, mapValue);
 					content.setSize(getKnownValue(((MapValue)boxedValue).isEmpty() ? ValueUtil.ZERO_VALUE : ValueUtil.ONE_VALUE));
 				}
 				symbolicKnownValue = new SymbolicKnownValue(constantName, typeId, boxedValue, content);
