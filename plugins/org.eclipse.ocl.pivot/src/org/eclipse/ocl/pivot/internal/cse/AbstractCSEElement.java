@@ -117,8 +117,8 @@ public abstract class AbstractCSEElement implements CSEElement
 	{
 		protected final @NonNull VariableDeclaration variable;
 
-		public CSEVariableElement(@NonNull CommonSubExpressionAnalysis cseAnalysis, @NonNull VariableDeclaration variable) {
-			super(cseAnalysis, 0);
+		public CSEVariableElement(@NonNull CommonSubExpressionAnalysis cseAnalysis, @NonNull VariableDeclaration variable, int height) {
+			super(cseAnalysis, height);
 			this.variable = variable;
 		}
 	}

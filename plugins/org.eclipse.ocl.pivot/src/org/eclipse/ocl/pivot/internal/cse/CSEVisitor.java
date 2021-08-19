@@ -31,6 +31,7 @@ import org.eclipse.ocl.pivot.IntegerLiteralExp;
 import org.eclipse.ocl.pivot.InvalidLiteralExp;
 import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
+import org.eclipse.ocl.pivot.IteratorVariable;
 import org.eclipse.ocl.pivot.LetExp;
 import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.MapLiteralExp;
@@ -161,6 +162,17 @@ public class CSEVisitor extends AbstractExtendingVisitor<@NonNull CSEElement, @N
 	}
 
 	@Override
+	public @NonNull CSEElement visitIteratorVariable(@NonNull IteratorVariable iteratorVariable) {
+		LoopExp loopExp = (LoopExp)iteratorVariable.eContainer();
+		assert loopExp != null;
+		OCLExpression ownedSource = PivotUtil.getOwnedSource(loopExp);
+		CSEElement sourceCSE = context.getCSEElement(ownedSource);
+		CSEVariableElement iteratorCSE = new CSEVariableElement(context, iteratorVariable, sourceCSE.getHeight() + 1);
+		iteratorCSE.addInput(sourceCSE);
+		return iteratorCSE;
+	}
+
+	@Override
 	public @NonNull CSEElement visitLetExp(@NonNull LetExp letExp) {
 		List<@NonNull CSEElement> elements = new ArrayList<>();
 		elements.add(context.getCSEElement(PivotUtil.getOwnedVariable(letExp)));
@@ -178,7 +190,7 @@ public class CSEVisitor extends AbstractExtendingVisitor<@NonNull CSEElement, @N
 			@SuppressWarnings("unused")
 			CSEElement variableCSE = context.getCSEElement(iterator);
 			OCLExpression initExp = iterator.getOwnedInit();
-			CSEElement initCSE = initExp != null ? context.getCSEElement(initExp) : null;
+			CSEElement initCSE = initExp != null ? context.getCSEElement(initExp) : variableCSE;
 			argumentCSEs.add(initCSE);
 		}
 		for (@NonNull Variable coiterator : PivotUtil.getOwnedCoIterators(loopExp)) {
@@ -194,10 +206,11 @@ public class CSEVisitor extends AbstractExtendingVisitor<@NonNull CSEElement, @N
 		}
 		argumentCSEs.add(context.getCSEElement(bodyExp));
 		Iteration iteration = PivotUtil.getReferredIteration(loopExp);
-		CSEElement iterationCSE = sourceCSE.getOperationCSE(loopExp, iteration, argumentCSEs);
-		for (@NonNull Variable iterator : PivotUtil.getOwnedIterators(loopExp)) {
-			((AbstractCSEElement)iterationCSE).addInput(context.getCSEElement(iterator));
-		}
+		AbstractCSEElement iterationCSE = (AbstractCSEElement) sourceCSE.getOperationCSE(loopExp, iteration, argumentCSEs);
+	//	for (@NonNull Variable iterator : PivotUtil.getOwnedIterators(loopExp)) {
+	//		iterationCSE.addInput(context.getCSEElement(iterator));
+		//	((AbstractCSEElement)context.getCSEElement(iterator)).addInput(iterationCSE);
+	//	}
 		return iterationCSE;
 	}
 
@@ -321,7 +334,7 @@ public class CSEVisitor extends AbstractExtendingVisitor<@NonNull CSEElement, @N
 
 	@Override
 	public @NonNull CSEElement visitVariableDeclaration(@NonNull VariableDeclaration variableDeclaration) {
-		return new CSEVariableElement(context, variableDeclaration);
+		return new CSEVariableElement(context, variableDeclaration, 0);
 	}
 
 	@Override

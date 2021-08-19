@@ -161,7 +161,7 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 		public @Nullable SymbolicNumericValue basicGetNumericValue() {
 			SymbolicNumericValue zeroStatus = super.basicGetNumericValue();
 			if (exceptValue.equals(ValueUtil.ZERO_VALUE)) {
-				zeroStatus = SymbolicNumericValue.NOT_ZERO;		// FIXME keep refined wrapper
+				zeroStatus = SymbolicNumericValue.getNotZero();		// FIXME keep refined wrapper
 			}
 			return zeroStatus;
 		}

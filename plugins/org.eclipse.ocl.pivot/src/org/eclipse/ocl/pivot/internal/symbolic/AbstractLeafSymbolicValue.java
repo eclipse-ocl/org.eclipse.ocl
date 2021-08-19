@@ -188,13 +188,13 @@ public abstract class AbstractLeafSymbolicValue extends AbstractSymbolicValue
 	@Override
 	public @Nullable SymbolicNumericValue basicGetNumericValue() {
 		if (isNumeric()) {	// FIXME Behavioral
-			return SymbolicNumericValue.ZERO_OR_NOT_ZERO;
+			return SymbolicNumericValue.getZeroOrNotZero();
 		}
 		return null;
 	}
 
 	protected @NonNull SymbolicCollectionContent createCollectionContent() {
-		return new SymbolicCollectionContent("c#" + name + "%", (CollectionTypeId)typeId);
+		return new SymbolicCollectionContent("c#" + name + "%", (CollectionTypeId)typeId, null);
 	}
 
 	protected @NonNull SymbolicMapContent createMapContent() {

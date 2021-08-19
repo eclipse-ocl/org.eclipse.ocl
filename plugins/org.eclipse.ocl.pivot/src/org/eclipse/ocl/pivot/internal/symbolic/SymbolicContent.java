@@ -12,9 +12,15 @@ package org.eclipse.ocl.pivot.internal.symbolic;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.IteratorVariable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationVisitor;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.CollectionValue;
+import org.eclipse.ocl.pivot.values.NumberValue;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
@@ -24,12 +30,56 @@ public abstract class SymbolicContent
 {
 	public static class SymbolicCollectionContent extends SymbolicContent
 	{
-		public SymbolicCollectionContent(@NonNull String name, @NonNull CollectionTypeId typeId) {
+		protected final @Nullable CollectionValue collectionValue;
+
+		public SymbolicCollectionContent(@NonNull String name, @NonNull CollectionTypeId typeId, @Nullable CollectionValue collectionValue) {
 			super(name, typeId);
+			this.collectionValue = collectionValue;
 		}
 
 		protected SymbolicCollectionContent(@NonNull SymbolicCollectionContent originalContent) {
 			super(originalContent);
+			this.collectionValue = originalContent.collectionValue;
+		}
+
+		public @NonNull SymbolicValue getElementalSymbolicValue(@NonNull SymbolicEvaluationVisitor symbolicEvaluationVisitor, @NonNull IteratorVariable iteratorVariable) {
+			SymbolicAnalysis symbolicAnalysis = symbolicEvaluationVisitor.getSymbolicAnalysis();
+			TypeId elementTypeId = ((CollectionTypeId)typeId).getElementTypeId();
+			CollectionValue collectionValue2 = collectionValue;
+			if ((collectionValue2 == null) || !(elementTypeId instanceof CollectionTypeId)) {
+				SymbolicValue symbolicValue = symbolicAnalysis.getUnknownValue(iteratorVariable, !iteratorVariable.isIsRequired(), false);
+				return symbolicValue;
+			}
+			NumberValue minimumLowerBound = null;
+			NumberValue minimumUpperBound = null;
+			for (@Nullable Object elementValue : collectionValue2) {
+				SymbolicValue elementSymbolicValue = symbolicAnalysis.getKnownValue(elementValue);
+				SymbolicValue elementSize = elementSymbolicValue.getCollectionContent().getSize();
+				NumberValue elementLowerBound = elementSize.getLowerBound();
+				if (minimumLowerBound == null) {
+					minimumLowerBound = elementLowerBound;
+				}
+				else if (elementLowerBound.compareTo(minimumLowerBound) < 0) {
+					minimumLowerBound = elementLowerBound;
+				}
+				NumberValue elementUpperBound = elementSize.getUpperBound();
+				if (elementUpperBound != null) {
+					if (minimumUpperBound == null) {
+						minimumUpperBound = elementUpperBound;
+					}
+					else if (elementUpperBound.compareTo(minimumUpperBound) < 0) {
+						minimumUpperBound = elementUpperBound;
+					}
+				}
+			}
+			if (minimumLowerBound == null) {
+				minimumLowerBound = ValueUtil.ZERO_VALUE;
+			}
+			SymbolicNumericValue sizeValue = SymbolicNumericValue.get(minimumLowerBound, minimumUpperBound);
+			String constantName = symbolicAnalysis.createConstantName();
+			SymbolicCollectionContent content = new SymbolicCollectionContent("c#" + constantName + "%", collectionValue2.getTypeId(), collectionValue);
+			content.setSize(sizeValue);
+			return new SymbolicKnownValue(constantName, elementTypeId, null, content);
 		}
 
 		@Override
@@ -54,16 +104,19 @@ public abstract class SymbolicContent
 		}
 	}
 
-	private @NonNull String name;
+	protected final @NonNull String name;
+	protected final @NonNull TypeId typeId;
 	private int cloneCount = 0;
 	private @Nullable SymbolicValue sizeValue;
 
 	protected SymbolicContent(@NonNull String name, @NonNull TypeId typeId) {
 		this.name = name;
+		this.typeId = typeId;
 	}
 
 	protected SymbolicContent(@NonNull SymbolicContent originalContent) {
 		this.name = originalContent.name + originalContent.cloneCount++ + "%";
+		this.typeId = originalContent.typeId;
 		this.sizeValue = originalContent.sizeValue;
 	}
 

@@ -75,6 +75,10 @@ public interface SymbolicValue
 
 	@Nullable Object getKnownValue();
 
+	@NonNull NumberValue getLowerBound();
+
+	@Nullable NumberValue getUpperBound();
+
 	@NonNull SymbolicSimpleStatus getNullStatus();
 
 	@NonNull SymbolicMapContent getMapContent();

@@ -14,6 +14,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.NumberValue;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
@@ -308,6 +309,11 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 	}
 
 	@Override
+	public @NonNull NumberValue getLowerBound() {
+		return getNumericValue().getLowerBound();
+	}
+
+	@Override
 	public final @NonNull SymbolicSimpleStatus getNullStatus() {
 		SymbolicSimpleStatus nullStatus = basicGetNullStatus();
 		return nullStatus != null ? nullStatus : SymbolicSimpleStatus.UNSATISFIED;
@@ -316,6 +322,11 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 	@Override
 	public final @NonNull SymbolicNumericValue getNumericValue() {
 		return ClassUtil.nonNullState(basicGetNumericValue());
+	}
+
+	@Override
+	public @Nullable NumberValue getUpperBound() {
+		return getNumericValue().getUpperBound();
 	}
 
 	@Override

@@ -24,7 +24,6 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.EvaluationHaltedException;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
-import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.cse.CSEElement;
@@ -272,6 +271,10 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 		return null;
 	}
 
+	public @NonNull String createConstantName() {
+		return "k#" + constantCounter++;
+	}
+
 	public @NonNull SymbolicEvaluationVisitor createSymbolicEvaluationVisitor(@NonNull SymbolicEvaluationEnvironment symbolicEvaluationEnvironment) {
 		SymbolicEvaluationVisitor symbolicEvaluationVisitor = new SymbolicEvaluationVisitor(this, evaluationVisitor, symbolicEvaluationEnvironment);
 		return symbolicEvaluationVisitor;
@@ -380,14 +383,15 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 			}
 			if (symbolicKnownValue == null) {
 				Type type = environmentFactory.getIdResolver().getStaticTypeOfValue(null, boxedValue);
-				String constantName = "k#" + constantCounter++;
+				String constantName = createConstantName();
 				TypeId typeId = type.getTypeId();
 				SymbolicContent content = null;
 				if (boxedValue instanceof InvalidValue) {
 				}
 				else if (boxedValue instanceof CollectionValue) {
-					content = new SymbolicCollectionContent("c#" + constantName + "%", (CollectionTypeId)typeId);
-					content.setSize(getKnownValue(((CollectionValue)boxedValue).isEmpty() ? ValueUtil.ZERO_VALUE : ValueUtil.ONE_VALUE));
+					CollectionValue collectionValue = (CollectionValue)boxedValue;
+					content = new SymbolicCollectionContent("c#" + constantName + "%", collectionValue.getTypeId(), collectionValue);
+					content.setSize(getKnownValue(collectionValue.isEmpty() ? ValueUtil.ZERO_VALUE : ValueUtil.ONE_VALUE));
 				}
 				else if (boxedValue instanceof MapValue) {
 					content = new SymbolicMapContent("m#" + constantName + "%", (MapTypeId)typeId);

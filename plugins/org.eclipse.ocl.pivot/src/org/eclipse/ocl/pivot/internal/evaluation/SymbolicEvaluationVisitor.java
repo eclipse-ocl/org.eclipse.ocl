@@ -62,7 +62,6 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
-import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.symbolic.AbstractLeafSymbolicValue.SymbolicNavigationCallValue;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent;
@@ -168,9 +167,9 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 	 */
 	protected @NonNull SymbolicValue doOperationCallExp(@NonNull OperationCallExp operationCallExp) {
 		Operation apparentOperation = PivotUtil.getReferredOperation(operationCallExp);
-		if ("first".equals(apparentOperation.getName())) {
-			getClass();		// XXX
-		}
+	//	if ("first".equals(apparentOperation.getName())) {
+	//		getClass();		// XXX
+	//	}
 		@SuppressWarnings("unused")
 		boolean isValidating = apparentOperation.isIsValidating();
 		//
@@ -232,6 +231,10 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 		}
 		LibraryOperation implementation = (LibraryOperation)metamodelManager.getImplementation(actualOperation);
 		return implementation.symbolicEvaluate(symbolicEvaluationEnvironment, operationCallExp);
+	}
+
+	public @NonNull SymbolicAnalysis getSymbolicAnalysis() {
+		return context;
 	}
 
 	public @NonNull SymbolicValue symbolicEvaluate(@NonNull Element element) {
@@ -387,13 +390,14 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 	@Override
 	public @NonNull SymbolicValue visitIteratorVariable(@NonNull IteratorVariable iteratorVariable) {
 		OCLExpression initExp = iteratorVariable.getOwnedInit();
-		if (initExp != null) {
-			return symbolicEvaluationEnvironment.symbolicEvaluate(initExp);
+		if (initExp == null) {
+			LoopExp loopEXp = (LoopExp)iteratorVariable.eContainer();
+			assert loopEXp != null;
+			initExp = PivotUtil.getOwnedSource(loopEXp);
 		}
-		else {
-			SymbolicValue symbolicValue = context.getUnknownValue(iteratorVariable, !iteratorVariable.isIsRequired(), false);
-			return symbolicEvaluationEnvironment.setSymbolicValue(iteratorVariable, symbolicValue, "init");
-		}
+		SymbolicValue initSymbolicValue = symbolicEvaluationEnvironment.symbolicEvaluate(initExp);
+		SymbolicValue elementalSymbolicValue = initSymbolicValue.getCollectionContent().getElementalSymbolicValue(this, iteratorVariable);
+		return symbolicEvaluationEnvironment.setSymbolicValue(iteratorVariable, elementalSymbolicValue, "iter");
 	}
 
 	@Override
@@ -644,7 +648,6 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 			return symbolicEvaluationEnvironment.symbolicEvaluate(initExp);
 		}
 		else {
-			CSEElement cseElement = context.getCSEElement(iteratorVariable);
 			SymbolicValue symbolicValue = context.getUnknownValue(iteratorVariable, !iteratorVariable.isIsRequired(), false);
 			return symbolicEvaluationEnvironment.setSymbolicValue(iteratorVariable, symbolicValue, "init");
 		}
