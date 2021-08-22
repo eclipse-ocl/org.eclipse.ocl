@@ -410,7 +410,8 @@ public class ValidateTests extends AbstractValidateTests
 				+ "\n"
 				+ "		operation isPrimeNumber(candidatePrime : Integer[1], candidateFactor:Integer[1]) : Boolean {\n"
 //				+ "			body: false.oclLog('\ncandidatePrime='+candidatePrime.toString() + ', candidateFactor='+candidateFactor.toString() +'\n') or\n"
-				+ "			body: ((candidatePrime.div(candidateFactor) * candidateFactor) <> candidatePrime)\n"
+				+ "			body: (candidateFactor >= 1)\n"		// BUG 520440 it would be bice to infer this
+				+ "				  and ((candidatePrime.div(candidateFactor) * candidateFactor) <> candidatePrime)\n"
 				+ "				  and ((candidateFactor*candidateFactor > candidatePrime)\n"
 				+ "					  or isPrimeNumber(candidatePrime, candidateFactor+2));\n"
 				+ "		}\n"
