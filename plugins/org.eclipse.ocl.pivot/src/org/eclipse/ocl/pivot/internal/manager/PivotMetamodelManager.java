@@ -2332,6 +2332,15 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	}
 
 	/**
+	 * @since 1.16
+	 */
+	public void resetAnalyses() {
+		resetFinalAnalysis();
+		resetFlowAnalysis();
+		resetSymbolicAnalysis();
+	}
+
+	/**
 	 * @since 1.3
 	 */
 	@Override
@@ -2345,6 +2354,14 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	@Override
 	public void resetFlowAnalysis() {
 		oclExpression2flowAnalysis = null;
+	}
+
+	/**
+	 * @since 1.16
+	 */
+	public void resetSymbolicAnalysis() {
+		class2symbolicAnalysis = null;
+		completeClass2symbolicAnalysis = null;
 	}
 
 	public void setASmetamodel(org.eclipse.ocl.pivot.Package asPackage) {
