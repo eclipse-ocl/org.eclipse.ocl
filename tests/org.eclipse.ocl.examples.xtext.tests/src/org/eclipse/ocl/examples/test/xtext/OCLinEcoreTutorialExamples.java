@@ -61,14 +61,14 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
  */
 public class OCLinEcoreTutorialExamples extends PivotTestCaseWithAutoTearDown
 {
-	public void testOCLinEcoreTutorialUsingLPGForLPG() throws Exception {
+	public void zztestOCLinEcoreTutorialUsingLPGForLPG() throws Exception {
 		GlobalEnvironmentFactory.disposeInstance();
 		org.eclipse.ocl.ecore.OCL.initialize(resourceSet);
 		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);
 		doTestOCLinEcoreTutorialUsingLPG(getTestModelURI("models/documentation/OCLinEcoreTutorialForLPG.xmi"), true);
 		GlobalEnvironmentFactory.disposeInstance();
 	}
-	public void testOCLinEcoreTutorialUsingLPGForPivot() throws Exception {
+	public void zztestOCLinEcoreTutorialUsingLPGForPivot() throws Exception {
 		GlobalEnvironmentFactory.disposeInstance();
 		//	GlobalEnvironmentFactory.getInstance().setSafeNavigationValidationSeverity(StatusCodes.Severity.IGNORE);
 		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(null);
@@ -78,20 +78,20 @@ public class OCLinEcoreTutorialExamples extends PivotTestCaseWithAutoTearDown
 		doTestOCLinEcoreTutorialUsingLPG(getTestModelURI("models/documentation/OCLinEcoreTutorialForPivot.xmi"), true);
 		GlobalEnvironmentFactory.disposeInstance();
 	}
-	public void testOCLinEcoreTutorialUsingPivotForLPG() throws Exception {
+	public void zztestOCLinEcoreTutorialUsingPivotForLPG() throws Exception {
 		GlobalEnvironmentFactory.disposeInstance();
 		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);
 		doTestOCLinEcoreTutorialUsingPivot(getTestModelURI("models/documentation/OCLinEcoreTutorialForLPG.xmi"));
 		GlobalEnvironmentFactory.disposeInstance();
 	}
-	public void testOCLinEcoreTutorialUsingPivotForPivot() throws Exception {
+	public void zztestOCLinEcoreTutorialUsingPivotForPivot() throws Exception {
 		GlobalEnvironmentFactory.disposeInstance();
 		OCLDelegateDomain.initialize(resourceSet, PivotConstants.OCL_DELEGATE_URI_PIVOT);
 //		getProjectMap().initializeResourceSet(resourceSet);
 		doTestOCLinEcoreTutorialUsingPivot(getTestModelURI("models/documentation/OCLinEcoreTutorialForPivot.xmi"));
 		GlobalEnvironmentFactory.disposeInstance();
 	}
-	public void testOCLinEcoreTutorialUsingLPGForDefault() throws Exception {
+	public void zztestOCLinEcoreTutorialUsingLPGForDefault() throws Exception {
 		GlobalEnvironmentFactory.disposeInstance();
 	//	GlobalEnvironmentFactory.getInstance().setSafeNavigationValidationSeverity(StatusCodes.Severity.IGNORE);
 		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(null);
@@ -101,7 +101,7 @@ public class OCLinEcoreTutorialExamples extends PivotTestCaseWithAutoTearDown
 		doTestOCLinEcoreTutorialUsingLPG(getTestModelURI("models/documentation/OCLinEcoreTutorial.xmi"), true);
 		GlobalEnvironmentFactory.disposeInstance();
 	}
-	public void testOCLinEcoreTutorialUsingPivotForDefault() throws Exception {
+	public void zztestOCLinEcoreTutorialUsingPivotForDefault() throws Exception {
 		GlobalEnvironmentFactory.disposeInstance();
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);

@@ -14,38 +14,9 @@ package org.eclipse.ocl.examples.test.xtext;
 import java.io.File;
 import java.util.Arrays;
 
-import org.eclipse.emf.common.EMFPlugin;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.ocl.examples.pivot.tests.DelegatesTest;
-import org.eclipse.ocl.examples.pivot.tests.EvaluateBooleanOperationsTest;
-import org.eclipse.ocl.examples.pivot.tests.EvaluateClassifierOperationsTest;
-import org.eclipse.ocl.examples.pivot.tests.EvaluateCollectionOperationsTest;
-import org.eclipse.ocl.examples.pivot.tests.EvaluateConstructsTest;
-import org.eclipse.ocl.examples.pivot.tests.EvaluateMapOperationsTest;
-import org.eclipse.ocl.examples.pivot.tests.EvaluateModelOperationsTest;
-import org.eclipse.ocl.examples.pivot.tests.EvaluateNameVisibilityTest;
-import org.eclipse.ocl.examples.pivot.tests.EvaluateNumericOperationsTest;
-import org.eclipse.ocl.examples.pivot.tests.EvaluateOclAnyOperationsTest;
-import org.eclipse.ocl.examples.pivot.tests.EvaluateStringOperationsTest;
-import org.eclipse.ocl.examples.pivot.tests.EvaluateTupleOperationsTest;
-import org.eclipse.ocl.examples.pivot.tests.EvaluateUMLTest;
-import org.eclipse.ocl.examples.pivot.tests.InheritanceTests;
-import org.eclipse.ocl.examples.pivot.tests.IteratorsTest;
-import org.eclipse.ocl.examples.pivot.tests.LeakTests;
 import org.eclipse.ocl.examples.pivot.tests.PivotTestCase;
-import org.eclipse.ocl.examples.pivot.tests.PrettyPrinterTest;
-import org.eclipse.ocl.examples.pivot.tests.StereotypesTest;
 import org.eclipse.ocl.examples.pivot.tests.UMLValidateTest;
-import org.eclipse.ocl.examples.pivot.tests.ValidateTests;
-import org.eclipse.ocl.examples.test.ecore.ProjectMapTest;
-import org.eclipse.ocl.examples.test.label.PluginLabelTests;
-import org.eclipse.ocl.examples.test.label.StandaloneLabelTests;
-import org.eclipse.ocl.examples.test.standalone.StandaloneExecutionTests;
-import org.eclipse.ocl.examples.test.standalone.StandaloneParserTests;
 import org.eclipse.ocl.examples.xtext.tests.TestUIUtil;
-import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
 import org.eclipse.ocl.xtext.base.ui.BaseUIActivator;
 
 import junit.framework.Test;
@@ -76,11 +47,11 @@ extends TestCase {
 			PivotTestCase.createTestLog(new File(testLogFile));
 		}
 		TestSuite result = new TestSuite(testSuiteName);
-		result.addTestSuite(MonikerTests.class);
-		result.addTestSuite(PivotTests.class);
-		result.addTestSuite(OCLstdlibTests.class);
-		result.addTestSuite(PrecedenceTests.class);
-		result.addTestSuite(EvaluateBooleanOperationsTest.class);
+	//	result.addTestSuite(MonikerTests.class);
+	//	result.addTestSuite(PivotTests.class);
+	//	result.addTestSuite(OCLstdlibTests.class);
+	//	result.addTestSuite(PrecedenceTests.class);
+	/*	result.addTestSuite(EvaluateBooleanOperationsTest.class);
 		result.addTestSuite(EvaluateClassifierOperationsTest.class);
 		result.addTestSuite(EvaluateCollectionOperationsTest.class);
 		result.addTestSuite(EvaluateConstructsTest.class);
@@ -93,14 +64,14 @@ extends TestCase {
 		result.addTestSuite(EvaluateTupleOperationsTest.class);
 		result.addTestSuite(EvaluateUMLTest.class);
 		result.addTestSuite(IteratorsTest.class);
-		result.addTestSuite(FlowAnalysisTests.class);
-		result.addTestSuite(SymbolicAnalysisTests.class);
-		result.addTestSuite(DelegatesTest.class);
+	*///	result.addTestSuite(FlowAnalysisTests.class);
+	//	result.addTestSuite(SymbolicAnalysisTests.class);
+	/*	result.addTestSuite(DelegatesTest.class);
 		result.addTestSuite(ErrorTests.class);
 		result.addTestSuite(ImportTests.class);
 		result.addTestSuite(LeakTests.class);
-		result.addTestSuite(UMLValidateTest.class);
-		ResourceSet resourceSet = new ResourceSetImpl();
+	*/	result.addTestSuite(UMLValidateTest.class);
+	/*	ResourceSet resourceSet = new ResourceSetImpl();
 		UML2AS.initializeUML(resourceSet);
 		LoadTests.getProjectMap().initializeResourceSet(resourceSet);
 		if (resourceSet.getURIConverter().exists(URI.createPlatformResourceURI("/org.eclipse.ocl.examples.uml25/", true), null)) {
@@ -109,21 +80,21 @@ extends TestCase {
 		else {
 			result.addTestSuite(LoadTests.class);
 		}
-		result.addTestSuite(PrettyPrinterTest.class);
+*/	/*	result.addTestSuite(PrettyPrinterTest.class);
 		result.addTestSuite(TestPrettyPrinter.class);
 		result.addTestSuite(ProjectMapTest.class);
 		result.addTestSuite(RegistryTests.class);
-		result.addTestSuite(SerializeTests.class);
+	*///	result.addTestSuite(SerializeTests.class);
 		result.addTestSuite(RoundTripTests.class);
-		result.addTestSuite(StereotypesTest.class);
+	/*	result.addTestSuite(StereotypesTest.class);
 		result.addTestSuite(EditTests.class);
 		result.addTestSuite(InheritanceTests.class);
 		result.addTestSuite(MarkupTests.class);
 		result.addTestSuite(ValidateTests.class);
 		result.addTestSuite(PivotDocumentationExamples.class);
-		result.addTestSuite(OCLinEcoreTutorialExamples.class);
+	*///	result.addTestSuite(OCLinEcoreTutorialExamples.class);
 		result.addTestSuite(UsageTests.class);
-		result.addTestSuite(StandaloneExecutionTests.class);
+	/*	result.addTestSuite(StandaloneExecutionTests.class);
 		result.addTestSuite(StandaloneParserTests.class);
 		result.addTestSuite(GrammarRuleVectorTests.class);
 		result.addTestSuite(SerializationBuilderTests.class);
@@ -150,7 +121,7 @@ extends TestCase {
 		// if (EMFPlugin.IS_ECLIPSE_RUNNING) {
 		// 	result.addTestSuite(FinalTests.class);
 		// }
-		return result;
+	*/	return result;
 	}
 
 	public Object run(Object args) throws Exception {

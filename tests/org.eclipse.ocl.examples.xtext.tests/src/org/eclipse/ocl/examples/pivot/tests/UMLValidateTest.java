@@ -130,7 +130,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		super.tearDown();
 	}
 
-	public void testValidate_Bug417062_uml() throws IOException, InterruptedException, ParserException {
+	public void zztestValidate_Bug417062_uml() throws IOException, InterruptedException, ParserException {
 		//		EcorePlugin.ExtensionProcessor.process(getClass().getClassLoader());
 		//		UMLPlugin.ExtensionProcessor.process(getClass().getClassLoader());
 		//		new UMLPlugin.BodySupportRegistryReader().readRegistry();
@@ -159,7 +159,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		ocl = null;		// UMLOCLEValidator.WeakOCLReference will dispose.
 	}
 
-	public void test_tutorial_umlValidation_with_lpg_408990() {
+	public void zztest_tutorial_umlValidation_with_lpg_408990() {
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(OCLConstants.OCL_DELEGATE_URI_LPG);
 		OCL ocl = createOCL();
 		ResourceSet resourceSet = ocl.getResourceSet();
@@ -176,7 +176,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		ocl.dispose();
 	}
 
-	public void test_tutorial_umlValidation_with_pivot_408990() {
+	public void zztest_tutorial_umlValidation_with_pivot_408990() {
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		OCL ocl = createOCL();
 		ResourceSet resourceSet = ocl.getResourceSet();
@@ -199,7 +199,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		ocl.dispose();
 	}
 
-	public void test_tutorial_umlValidation_436903() {
+	public void zztest_tutorial_umlValidation_436903() {
 		OCL ocl = OCL.newInstance(getProjectMap());
 		ResourceSet resourceSet = ocl.getResourceSet(); //createResourceSet();
 		if (!EcorePlugin.IS_ECLIPSE_RUNNING) {
@@ -250,7 +250,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		ocl.dispose();
 	}
 
-	public void test_umlValidation_404882() {
+	public void zztest_umlValidation_404882() {
 		OCL ocl = OCL.newInstance(getProjectMap());
 		ResourceSet resourceSet = ocl.getResourceSet(); //createResourceSet();
 		if (!EcorePlugin.IS_ECLIPSE_RUNNING) {
@@ -286,7 +286,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		ocl.dispose();
 	}
 
-	public void test_umlValidation_423905() {
+	public void zztest_umlValidation_423905() {
 		OCL ocl = OCL.newInstance(getProjectMap());
 		ResourceSet resourceSet = ocl.getResourceSet(); //createResourceSet();
 		if (!EcorePlugin.IS_ECLIPSE_RUNNING) {
@@ -322,7 +322,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		ocl.dispose();
 	}
 
-	public void test_umlValidation_432920() {
+	public void zztest_umlValidation_432920() {
 		resetRegistries();
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		OCL ocl = createOCL();
@@ -368,7 +368,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		ocl.dispose();
 	}
 
-	public void test_umlValidation_434433() {
+	public void zztest_umlValidation_434433() {
 		resetRegistries();
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		OCL ocl = createOCL();
@@ -396,7 +396,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		ocl.dispose();
 	}
 
-	public void test_umlValidation_Bug434356() {
+	public void zztest_umlValidation_Bug434356() {
 		//		EssentialOCLLinkingService.DEBUG_RETRY = true;
 		//		UML2AS.TYPE_EXTENSIONS.setState(true);
 		resetRegistries();
@@ -428,7 +428,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		ocl.dispose();
 	}
 
-	public void test_umlValidation_Bug436945() throws IOException {   // This is org.eclipse.ocl.doc/doc/models/1710-m1.uml
+	public void zztest_umlValidation_Bug436945() throws IOException {   // This is org.eclipse.ocl.doc/doc/models/1710-m1.uml
 		//		UML2AS.TYPE_EXTENSIONS.setState(true);
 		//		resetRegistries();
 		//		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(OCLDelegateDomain.OCL_DELEGATE_URI_PIVOT);
@@ -508,7 +508,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		ocl.dispose();
 	}
 
-	public void test_umlValidation_Bug448470() throws IOException { // formerly Bug 447557
+	public void zztest_umlValidation_Bug448470() throws IOException { // formerly Bug 447557
 		resetRegistries();
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		if (EcorePlugin.IS_ECLIPSE_RUNNING) {
@@ -536,7 +536,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		ocl.dispose();
 	}
 
-	public void test_umlValidation_Bug452621() throws IOException {
+	public void zztest_umlValidation_Bug452621() throws IOException {
 		resetRegistries();
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		if (EcorePlugin.IS_ECLIPSE_RUNNING) {
@@ -561,7 +561,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		ocl.dispose();
 	}
 
-	public void test_umlValidation_Bug458326() throws IOException {
+	public void zztest_umlValidation_Bug458326() throws IOException {
 		resetRegistries();
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		if (EcorePlugin.IS_ECLIPSE_RUNNING) {
@@ -584,7 +584,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		ocl.dispose();
 	}
 
-	public void test_umlValidation_Bug458394() throws IOException {
+	public void zztest_umlValidation_Bug458394() throws IOException {
 //		BaseLinkingService.DEBUG_RETRY.setState(true);
 		resetRegistries();
 		//		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
@@ -614,7 +614,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		ocl.dispose();
 	}
 
-	public void test_umlValidation_Bug458470() throws IOException {
+	public void zztest_umlValidation_Bug458470() throws IOException {
 		resetRegistries();
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		if (EcorePlugin.IS_ECLIPSE_RUNNING) {
@@ -640,7 +640,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		ocl.dispose();
 	}
 
-	public void test_umlValidation_Bug464808() throws IOException {
+	public void zztest_umlValidation_Bug464808() throws IOException {
 		resetRegistries();
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		if (EcorePlugin.IS_ECLIPSE_RUNNING) {
@@ -665,7 +665,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		ocl.dispose();
 	}
 
-	public void test_umlValidation_Bug467192() throws IOException {
+	public void zztest_umlValidation_Bug467192() throws IOException {
 		resetRegistries();
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		if (EcorePlugin.IS_ECLIPSE_RUNNING) {
@@ -704,7 +704,7 @@ public class UMLValidateTest extends AbstractValidateTests
 	//	Diagnostic ERROR source=org.eclipse.emf.ecore code=0 Diagnosis of org.eclipse.uml2.uml.internal.impl.ModelImpl@6325f352{file:/E:/GIT/org.eclipse.ocl/tests/org.eclipse.ocl.examples.xtext.tests/bin/org/eclipse/ocl/examples/pivot/tests/models/Bug467192.uml#_7AJBoNeUEeSuVqZ4Q6mWmQ} data=[org.eclipse.uml2.uml.internal.impl.ModelImpl@6325f352 (name: CustomPrimitiveTypes, visibility: <unset>) (URI: null) (viewpoint: <unset>)] [Diagnostic ERROR source=org.eclipse.uml2.uml code=0 "Parsing error for CustomPrimitiveTypes::Class1::SimpleDataTypeArithmetic::self.simpleDataTypeAttribute + self.simpleDataTypeAttribute <> self.simpleDataTypeAttribute :
 	//			 The 'Class1::SimpleDataTypeArithmetic' constraint is invalid: 'self.simpleDataTypeAttribute + self.simpleDataTypeAttribute <> self.simpleDataTypeAttribute'
 	//			1: Unresolved Operation 'CustomPrimitiveTypes::SimpleDataType::+(CustomPrimitiveTypes::SimpleDataType)'" data=[org.eclipse.uml2.uml.internal.impl.OpaqueExpressionImpl@15405bd6 (name: <unset>, visibility: <unset>) (body: [self.simpleDataTypeAttribute + self.simpleDataTypeAttribute <> self.simpleDataTypeAttribute ], language: [OCL])], Diagnostic WARNING source=org.eclipse.ocl.pivot code=0 The 'CallExp::TypeIsNotInvalid' constraint is violated for 'self.simpleDataTypeAttribute.oclBadOperation(self.simpleDataTypeAttribute)' data=[self.simpleDataTypeAttribute.oclBadOperation(self.simpleDataTypeAttribute)], Diagnostic WARNING source=org.eclipse.ocl.pivot code=0 The 'OperationCallExp::ArgumentCount' constraint is violated for 'self.simpleDataTypeAttribute.oclBadOperation(self.simpleDataTypeAttribute)' data=[self.simpleDataTypeAttribute.oclBadOperation(self.simpleDataTypeAttribute)], Diagnostic WARNING source=org.eclipse.ocl.pivot code=0 The 'OperationCallExp::ArgumentTypeIsConformant' constraint is violated for 'self.simpleDataTypeAttribute.oclBadOperation(self.simpleDataTypeAttribute)' data=[self.simpleDataTypeAttribute.oclBadOperation(self.simpleDataTypeAttribute)]]
-	public void test_umlValidation_Bug472461() throws IOException {
+	public void zztest_umlValidation_Bug472461() throws IOException {
 		resetRegistries();
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		if (EcorePlugin.IS_ECLIPSE_RUNNING) {
@@ -724,7 +724,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		ocl.dispose();
 	}
 
-	public void test_umlValidation_Bug472469() throws IOException {
+	public void zztest_umlValidation_Bug472469() throws IOException {
 		resetRegistries();
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		if (EcorePlugin.IS_ECLIPSE_RUNNING) {
@@ -744,7 +744,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		ocl.dispose();
 	}
 
-	public void test_umlValidation_Bug476662() throws IOException {
+	public void zztest_umlValidation_Bug476662() throws IOException {
 		resetRegistries();
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		if (EcorePlugin.IS_ECLIPSE_RUNNING) {
@@ -764,7 +764,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		ocl.dispose();
 	}
 
-	public void test_umlValidation_Bug478416() throws IOException {
+	public void zztest_umlValidation_Bug478416() throws IOException {
 		resetRegistries();
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		if (EcorePlugin.IS_ECLIPSE_RUNNING) {
@@ -784,7 +784,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		ocl.dispose();
 	}
 
-	public void test_umlValidation_Bug485586() throws IOException {
+	public void zztest_umlValidation_Bug485586() throws IOException {
 		resetRegistries();
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		if (EcorePlugin.IS_ECLIPSE_RUNNING) {
@@ -804,7 +804,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		ocl.dispose();
 	}
 
-	public void test_umlValidation_Bug506191() throws IOException {
+	public void zztest_umlValidation_Bug506191() throws IOException {
 		resetRegistries();
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		if (EcorePlugin.IS_ECLIPSE_RUNNING) {
@@ -824,7 +824,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		ocl.dispose();
 	}
 
-	public void test_umlValidation_Bug513773() throws IOException {
+	public void zztest_umlValidation_Bug513773() throws IOException {
 		resetRegistries();
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		if (EcorePlugin.IS_ECLIPSE_RUNNING) {
@@ -844,7 +844,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		ocl.dispose();
 	}
 
-	public void test_umlValidation_Bug514353() throws IOException {
+	public void zztest_umlValidation_Bug514353() throws IOException {
 		resetRegistries();
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		if (EcorePlugin.IS_ECLIPSE_RUNNING) {
@@ -866,7 +866,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		ocl.dispose();
 	}
 
-	public void test_umlValidation_Bug515027() throws IOException {
+	public void zztest_umlValidation_Bug515027() throws IOException {
 		//		PartialClasses.ADD_BASE_PROPERTY.setState(true);
 		//		PartialClasses.ADD_EXTENSION_PROPERTY.setState(true);
 		//		PartialClasses.INIT_MEMBER_PROPERTIES.setState(true);
@@ -891,7 +891,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		ocl.dispose();
 	}
 
-	public void test_umlValidation_Bug566594() throws IOException {
+	public void zztest_umlValidation_Bug566594() throws IOException {
 		//		PartialClasses.ADD_BASE_PROPERTY.setState(true);
 		//		PartialClasses.ADD_EXTENSION_PROPERTY.setState(true);
 		//		PartialClasses.INIT_MEMBER_PROPERTIES.setState(true);

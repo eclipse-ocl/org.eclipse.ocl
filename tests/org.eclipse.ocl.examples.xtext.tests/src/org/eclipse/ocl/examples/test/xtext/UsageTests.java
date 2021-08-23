@@ -690,7 +690,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		return umlModelResource;
 	}
 
-	public void testBug370824() throws Throwable {
+	public void zztestBug370824() throws Throwable {
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws Exception {
@@ -715,7 +715,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		});
 	}
 
-	public void testBug409650() throws Throwable {
+	public void zztestBug409650() throws Throwable {
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws Exception {
@@ -760,7 +760,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		});
 	}
 
-	public void testBug415782() throws Throwable {
+	public void zztestBug415782() throws Throwable {
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws Exception {
@@ -793,7 +793,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		});
 	}
 
-	public void testBug416421() throws Throwable {
+	public void zztestBug416421() throws Throwable {
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws Exception {
@@ -843,7 +843,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		});
 	}
 
-	public void testBug458722() throws Throwable {
+	public void zztestBug458722() throws Throwable {
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws Exception {
@@ -892,7 +892,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		});
 	}
 
-	public void testBug458723() throws Throwable {
+	public void zztestBug458723() throws Throwable {
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws Exception {
@@ -935,7 +935,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		});
 	}
 
-	public void testBug458724() throws Throwable {
+	public void zztestBug458724() throws Throwable {
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws Exception {
@@ -984,7 +984,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		});
 	}
 
-	public void testBug567919() throws Throwable {
+	public void zztestBug567919() throws Throwable {
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws Exception {
@@ -1050,7 +1050,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	}
 
 /*	FIXME Bug 569113
-	public void testBug569113() throws Exception {
+	public void zztestBug569113() throws Exception {
 		String testFileStem = "Bug569113";
 		String testProjectName = "bug569113";
 		String oclinecoreFile =
@@ -1077,7 +1077,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	/**
 	 * Verify that the static profile in Bug570717.uml model can be generated and compiled.
 	 */
-	public void testBug570717_uml() throws Throwable {
+	public void zztestBug570717_uml() throws Throwable {
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws Exception {
@@ -1123,7 +1123,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	/**
 	 * Verify that the static profile in Bug570717.uml model can be generated and compiled.
 	 */
-	public void testBug570717a_uml() throws Throwable {
+	public void zztestBug570717a_uml() throws Throwable {
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws Exception {
@@ -1155,7 +1155,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		});
 	}
 
-	public void testBug570802() throws Throwable {
+	public void zztestBug570802() throws Throwable {
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws Exception {
@@ -1187,7 +1187,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	/**
 	 * Verify that the static profile in Bug570891.uml model can be generated and compiled.
 	 */
-	public void testBug570891_uml() throws Throwable {
+	public void zztestBug570891_uml() throws Throwable {
 		if (OCLGenModelUtil.INSTANCE.hasDoubleOverrideBug547424()) {				// Avoid UML BUG 547424
 			System.err.println(getName() + " has been disabled -see UML Bug 547424");
 			return;
@@ -1229,7 +1229,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	 * Verify that the static profile in 570892.profile.uml model can be generated and compiled
 	 * and that the 570892.uml model can then validate.
 	 */
-	public void testBug570892_uml() throws Throwable {
+	public void zztestBug570892_uml() throws Throwable {
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws Exception {
@@ -1279,7 +1279,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	 * Verify that the static profile in Bug570894.profile.uml model can be generated and compiled
 	 * and that the Bug570894.uml model can then validate.
 	 */
-	public void testBug570894_uml() throws Throwable {
+	public void zztestBug570894_uml() throws Throwable {
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws Exception {
@@ -1344,7 +1344,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	/**
 	 * Verify that the static profile in Bug571407.profile.uml model can be generated and compiled.
 	 */
-	public void testBug571407_uml() throws Throwable {
+	public void zztestBug571407_uml() throws Throwable {
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws Exception {
@@ -1406,7 +1406,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		});
 	}
 
-	public void testCSE() throws Throwable {
+	public void zztestCSE() throws Throwable {
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws Exception {
@@ -1457,7 +1457,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		});
 	}
 
-	public void testCodegenCompany() throws Throwable {
+	public void zztestCodegenCompany() throws Throwable {
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws Exception {
@@ -1496,7 +1496,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		});
 	}
 
-	public void testEcoreLists570717() throws Throwable {
+	public void zztestEcoreLists570717() throws Throwable {
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws Exception {
@@ -1640,7 +1640,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		});
 	}
 
-	public void testEcoreTypes412736() throws Throwable {
+	public void zztestEcoreTypes412736() throws Throwable {
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws Exception {
@@ -1719,7 +1719,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		});
 	}
 
-	public void testEnumTypes412685() throws Throwable {
+	public void zztestEnumTypes412685() throws Throwable {
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws Exception {
@@ -1767,7 +1767,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		});
 	}
 
-	public void testEvaluators() throws Throwable {
+	public void zztestEvaluators() throws Throwable {
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws Exception {
@@ -1815,7 +1815,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		});
 	}
 
-	public void testSysML_QUDV() throws Throwable {
+	public void zztestSysML_QUDV() throws Throwable {
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws Exception {
@@ -1878,7 +1878,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		});
 	}
 
-	public void testInitStatics() throws Throwable {
+	public void zztestInitStatics() throws Throwable {
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws Exception {
@@ -1893,7 +1893,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	 * Sample Reflective Ecore Editor.
 	 * @throws Throwable
 	 */
-	public void testOpen_Pivot_oclas() throws Throwable {
+	public void zztestOpen_Pivot_oclas() throws Throwable {
 		try {
 			doTestRunnable(new TestRunnable() {
 				@Override
@@ -1951,7 +1951,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	 * UML MOdel Ecore Editor.
 	 * @throws Throwable
 	 */
-	public void testOpen_Bug469251_uml() throws Throwable {
+	public void zztestOpen_Bug469251_uml() throws Throwable {
 		try {
 			doTestRunnable(new TestRunnable() {
 				@Override
@@ -2049,7 +2049,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		});
 	}
 
-	public void testTemplateTypes471201() throws Throwable {
+	public void zztestTemplateTypes471201() throws Throwable {
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws Exception {
