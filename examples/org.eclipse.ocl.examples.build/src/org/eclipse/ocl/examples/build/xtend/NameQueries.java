@@ -14,19 +14,27 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.eclipse.emf.codegen.ecore.genmodel.GenClass;
+import org.eclipse.emf.codegen.ecore.genmodel.GenFeature;
+import org.eclipse.emf.codegen.ecore.genmodel.GenOperation;
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
 import org.eclipse.emf.codegen.util.CodeGenUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.generator.AbstractGenModelHelper;
+import org.eclipse.ocl.examples.codegen.generator.EcoreGenModelHelper;
+import org.eclipse.ocl.examples.codegen.generator.GenModelHelper;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.MapType;
+import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
+import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  * NameQueries manges the mapping from a model element to its unique symbol name.
@@ -44,11 +52,13 @@ public class NameQueries
 	}
 
 	protected final @NonNull MetamodelManagerInternal metamodelManager;
+	protected final @NonNull GenModelHelper genModelHelper;
 	private @NonNull Map<String, Integer> counters = new HashMap<String, Integer>();
 	private @NonNull Map<Object, String> definedSymbols = new HashMap<Object, String>();
 
 	public NameQueries(@NonNull MetamodelManagerInternal metamodelManager) {
 		this.metamodelManager = metamodelManager;
+		this.genModelHelper = new EcoreGenModelHelper((PivotMetamodelManager)metamodelManager);
 	}
 
 	public @Nullable String basicGetSymbolName(@NonNull Object elem) {
@@ -99,6 +109,36 @@ public class NameQueries
 		return enumeration.getName() + "." + CodeGenUtil.upperName(enumerationLiteral.getName());
 	}
 
+	public @NonNull String getEcoreLiteral(@NonNull Operation operation) {
+		org.eclipse.ocl.pivot.Class type = PivotUtil.getOwningClass(operation);
+		String nsURI = ClassUtil.nonNullModel(type.getOwningPackage().getURI());
+		GenPackage genPackage = ClassUtil.nonNullState(metamodelManager).getGenPackage(nsURI);
+		if (genPackage != null) {
+			GenClass genClass = (GenClass)genModelHelper.getGenClassifier(type);
+			assert genClass != null;
+			GenOperation genOperation = genModelHelper.getGenOperation(operation);
+			assert genOperation != null;
+			String operationID = genClass.getOperationID(genOperation, false);
+			StringBuilder s = new StringBuilder();
+			s.append(/*genPackage.getInterfacePackageName() +*/genPackage.getPackageInterfaceName());
+			s.append(".Literals.");
+			s.append(operationID);
+		/*	s.append(CodeGenUtil.upperName(type.getName()));
+			s.append("___");
+			s.append(CodeGenUtil.upperName(operation.getName()));
+			Iterable<@NonNull Parameter> ownedParameters = PivotUtil.getOwnedParameters(operation);
+			if (!Iterables.isEmpty(ownedParameters)) {
+				s.append("_");
+				for (@NonNull Parameter parameter : ownedParameters) {
+					s.append("_");
+					s.append(parameter.getType().getName().toUpperCase(Locale.getDefault()));
+				}
+			} */
+			return s.toString();
+		}
+		return "\"" + operation.getName() + "\"";
+	}
+
 	public @NonNull String getEcoreLiteral(@NonNull Property property) {
 		if (!property.isIsImplicit()) {
 			org.eclipse.ocl.pivot.Class type = property.getOwningClass();
@@ -106,12 +146,18 @@ public class NameQueries
 				String nsURI = ClassUtil.nonNullModel(type.getOwningPackage().getURI());
 				GenPackage genPackage = ClassUtil.nonNullState(metamodelManager).getGenPackage(nsURI);
 				if (genPackage != null) {
+					GenClass genClass = (GenClass)genModelHelper.getGenClassifier(type);
+					assert genClass != null;
+					GenFeature genFeature = genModelHelper.getGenFeature(property);
+					assert genFeature != null;
+					String featureID = genClass.getFeatureID(genFeature);
 					return /*genPackage.getInterfacePackageName() +*/genPackage
 							.getPackageInterfaceName()
 							+ ".Literals."
-							+ CodeGenUtil.upperName(type.getName())
-							+ "__"
-							+ CodeGenUtil.upperName(property.getName());
+							+ featureID;
+						//	+ CodeGenUtil.upperName(type.getName())
+						//	+ "__"
+						//	+ CodeGenUtil.upperName(property.getName());
 				}
 			}
 		}

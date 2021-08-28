@@ -129,20 +129,6 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		'''
 	}
 
-	protected def String declareProperties(/*@NonNull*/ Model root) {
-		var pkge2properties = root.getSortedProperties();
-		if (pkge2properties.isEmpty()) return "";
-		var sortedPackages = root.getSortedPackages(pkge2properties.keySet());
-		'''
-			«FOR pkge : sortedPackages»
-
-				«FOR property : ClassUtil.nullFree(pkge2properties.get(pkge))»
-				private final @NonNull Property «property.getPrefixedSymbolName("pr_" + property.partialName())» = createProperty(«property.getNameLiteral()», «property.type.getSymbolName()»);
-				«ENDFOR»
-			«ENDFOR»
-		'''
-	}
-
 	protected def String declareTupleTypes(/*@NonNull*/ Model root) {
 		var tupleTypes = root.getSortedTupleTypes();
 		if (tupleTypes.isEmpty()) return "";
@@ -169,7 +155,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 					«FOR coercion : (type as PrimitiveType).getSortedCoercions(allCoercions)»
 						ownedCoercions.add(coercion = «coercion.getSymbolName()»);
 						«IF coercion.bodyExpression !== null»
-							operation.setBodyExpression(createExpressionInOCL(«coercion.type.getSymbolName()», "«coercion.bodyExpression.javaString()»"));
+							createBodyExpression(operation, «coercion.type.getSymbolName()», "«coercion.bodyExpression.javaString()»");
 						«ENDIF»
 					«ENDFOR»
 				«ENDFOR»
@@ -428,8 +414,8 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 
 			«FOR pkge : sortedPackages»
 				«FOR operation : ClassUtil.nullFree(pkge2operations.get(pkge))»
-				private final @NonNull Operation «operation.getPrefixedSymbolName("op_" + operation.partialName())» = createOperation("«operation.
-				name»", «operation.type.getSymbolName()», «IF operation.implementationClass !== null»"«operation.
+				private final @NonNull Operation «operation.getPrefixedSymbolName("op_" + operation.partialName())» = createOperation(«operation.
+				getNameLiteral()», «operation.type.getSymbolName()», «IF operation.implementationClass !== null»"«operation.
 				implementationClass»", «operation.implementationClass».INSTANCE«ELSE»null, null«ENDIF»«IF operation.getOwnedSignature() !== null»«FOR templateParameter : operation.getOwnedSignature().getOwnedParameters()», «templateParameter.getSymbolName()»«ENDFOR»«ENDIF»);
 				«ENDFOR»
 			«ENDFOR»
@@ -462,7 +448,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 						operation.setIsValidating(true);
 					«ENDIF»
 					«IF operation.bodyExpression !== null»
-						operation.setBodyExpression(createExpressionInOCL(«operation.owningClass.getSymbolName()», "«operation.bodyExpression.javaString()»", «operation.type.getSymbolName()»));
+						createBodyExpression(operation, «operation.owningClass.getSymbolName()», "«operation.bodyExpression.javaString()»", «operation.type.getSymbolName()»);
 					«ENDIF»
 					«IF operation.ownedParameters.size() > 0»
 						ownedParameters = operation.getOwnedParameters();
@@ -564,6 +550,13 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		var sortedPackages = root.getSortedPackages(pkge2properties.keySet());
 		var Class oldType  = null;
 		'''
+
+			«FOR pkge : sortedPackages»
+
+				«FOR property : ClassUtil.nullFree(pkge2properties.get(pkge))»
+				private final @NonNull Property «property.getPrefixedSymbolName("pr_" + property.partialName())» = createProperty(«property.getNameLiteral()», «property.type.getSymbolName()»);
+				«ENDFOR»
+			«ENDFOR»
 
 			private void installProperties() {
 				List<Property> ownedProperties;

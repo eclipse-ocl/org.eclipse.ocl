@@ -38,6 +38,25 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 		'''
 	}
 
+	protected override String declarePrimitiveTypes(/*@NonNull*/ Model root) {
+		var pkge2primitiveTypes = root.getSortedPrimitiveTypes();
+		if (pkge2primitiveTypes.isEmpty()) return "";
+		var Package pkg = root.ownedPackages.findPackage();
+		var sortedPackages = root.getSortedPackages(pkge2primitiveTypes.keySet());
+		'''
+			«FOR pkge : sortedPackages»
+
+				«FOR type : ClassUtil.nullFree(pkge2primitiveTypes.get(pkge))»
+					«IF pkg == pkge && !excludedEClassifierNames.contains(type.name)»
+						private final @NonNull PrimitiveType «type.getPrefixedSymbolNameWithoutNormalization("_"+type.partialName())» = createPrimitiveType(«getEcoreLiteral(type)»);
+					«ELSE»
+						private final @NonNull PrimitiveType «type.getPrefixedSymbolNameWithoutNormalization("_"+type.partialName())» = createPrimitiveType("«type.name»");
+					«ENDIF»
+				«ENDFOR»
+			«ENDFOR»
+		'''
+	}
+
 	protected def String defineConstantType(DataType type) {'''
 		«IF "Boolean".equals(type.name)»
 			private void PrimitiveType «type.getPrefixedSymbolName("_"+type.partialName())» = OCLstdlib._Boolean;«ELSEIF "Classifier".equals(type.name)»
@@ -378,7 +397,6 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 					«root.defineOperations()»
 					«root.defineIterations()»
 					«root.defineCoercions()»
-					«root.declareProperties()»
 					«root.defineProperties()»
 					«root.defineTemplateBindings()»
 					«root.definePrecedences()»

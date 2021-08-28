@@ -358,7 +358,6 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 					«root.defineOperations()»
 					«root.defineIterations()»
 					«root.defineCoercions()»
-					«root.declareProperties()»
 					«root.defineProperties()»
 					«root.defineTemplateBindings()»
 					«root.definePrecedences()»

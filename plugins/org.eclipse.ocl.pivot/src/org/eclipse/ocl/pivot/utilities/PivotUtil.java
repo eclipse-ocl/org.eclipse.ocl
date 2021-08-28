@@ -668,6 +668,16 @@ public class PivotUtil
 		return pivotPrecedence;
 	}
 
+	/**
+	 * @since 1.16
+	 */
+	public static @NonNull PrimitiveType createPrimitiveType(/*@NonNull*/ EDataType eDataType) {
+		PrimitiveType pivotType = PivotFactory.eINSTANCE.createPrimitiveType();
+		pivotType.setName(eDataType.getName());
+		((PivotObjectImpl)pivotType).setESObject(eDataType);
+		return pivotType;
+	}
+
 	public static @NonNull PrimitiveType createPrimitiveType(@NonNull String name) {
 		PrimitiveType pivotType = PivotFactory.eINSTANCE.createPrimitiveType();
 		pivotType.setName(name);

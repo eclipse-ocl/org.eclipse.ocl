@@ -47,6 +47,7 @@ public interface GenModelHelper
 	@NonNull String getFullyQualifiedEcoreLiteralName(@NonNull EClassifier eClassifier);
 	@Nullable GenClassifier getGenClassifier(org.eclipse.ocl.pivot.@NonNull Class type);
 	@NonNull GenFeature getGenFeature(@NonNull EStructuralFeature eStructuralFeature) throws GenModelException;
+	@NonNull GenFeature getGenFeature(@NonNull Property property) throws GenModelException;
 	@Nullable GenOperation getGenOperation(@NonNull Operation operation);
 	@Nullable GenPackage getGenPackage(@NonNull EPackage ePackage);
 	@Nullable GenPackage getGenPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage);

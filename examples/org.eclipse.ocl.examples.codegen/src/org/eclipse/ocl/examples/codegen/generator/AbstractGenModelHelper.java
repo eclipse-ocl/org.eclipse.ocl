@@ -404,6 +404,7 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 		throw new GenModelException("No GenClassifier for " + type);
 	}
 
+	@Override
 	public @NonNull GenFeature getGenFeature(@NonNull Property property) throws GenModelException {
 		org.eclipse.ocl.pivot.Class owningType = property.getOwningClass();
 		if (owningType != null) {

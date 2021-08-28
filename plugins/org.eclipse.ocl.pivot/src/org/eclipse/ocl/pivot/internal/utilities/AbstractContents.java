@@ -92,6 +92,22 @@ public abstract class AbstractContents extends PivotUtil
 		return createCollectionType(PivotFactory.eINSTANCE.createBagType(), unspecializedType);
 	}
 
+	/**
+	 * @since 1.16
+	 */
+	protected @NonNull ExpressionInOCL createBodyExpression(@NonNull Operation operation, @NonNull Type selfType, @NonNull String exprString, @NonNull Type resultType) {
+		ExpressionInOCL pivotExpression = PivotFactory.eINSTANCE.createExpressionInOCL();
+		pivotExpression.setType(resultType);
+		pivotExpression.setBody(exprString);
+		ParameterVariable contextVariable = PivotFactory.eINSTANCE.createParameterVariable();
+		contextVariable.setName(PivotConstants.SELF_NAME);
+		contextVariable.setType(selfType);
+		contextVariable.setIsRequired(!operation.isIsValidating());
+		pivotExpression.setOwnedContext(contextVariable);
+		operation.setBodyExpression(pivotExpression);
+		return pivotExpression;
+	}
+
 	protected @NonNull <@NonNull T extends CollectionType> T createCollectionType(@NonNull T pivotType, @NonNull String name, @Nullable  String lower, @Nullable String upper, @NonNull TemplateParameter templateParameter) {
 		pivotType.setName(name);
 		pivotType.setLower(lower != null ? StringUtil.createNumberFromString(lower) : Integer.valueOf(0));
@@ -127,12 +143,17 @@ public abstract class AbstractContents extends PivotUtil
 		ExpressionInOCL pivotExpression = PivotFactory.eINSTANCE.createExpressionInOCL();
 		pivotExpression.setType(type);
 		pivotExpression.setBody(exprString);
+//		ParameterVariable contextVariable = PivotFactory.eINSTANCE.createParameterVariable();
+//		contextVariable.setName(PivotConstants.SELF_NAME);
+//		contextVariable.setType(type);
+//		pivotExpression.setOwnedContext(contextVariable);
 		return pivotExpression;
 	}
 
 	/**
 	 * @since 1.15
 	 */
+	@Deprecated /* use createBodyExpression */
 	protected @NonNull ExpressionInOCL createExpressionInOCL(@NonNull Type selfType, @NonNull String exprString, @NonNull Type resultType) {
 		ExpressionInOCL pivotExpression = PivotFactory.eINSTANCE.createExpressionInOCL();
 		pivotExpression.setType(resultType);

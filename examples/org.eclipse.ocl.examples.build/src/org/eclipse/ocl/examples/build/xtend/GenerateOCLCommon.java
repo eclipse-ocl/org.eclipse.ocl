@@ -61,12 +61,10 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
-import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -231,7 +229,8 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		//		boolean hasComplements = false;
 		if (reference instanceof Type) {
 			//			hasComplements = hasComplements((Type) reference);
-			EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.findEnvironmentFactory(reference);
+		/*	The following now loads existing classes when we are generating new ones for GeneratePivotModel.
+		 * EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.findEnvironmentFactory(reference);
 			//			assert environmentFactory == this.environmentFactory;
 			if (environmentFactory != null) {	// FIXME this conveniently does not relocate the built-in PrimitiveTypes
 				CompleteClassInternal completeClass = environmentFactory.getMetamodelManager().getCompleteClass((Type)reference);
@@ -245,7 +244,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 					}
 				}
 				reference = completeClass.getPrimaryClass();
-			}
+			} */
 		}
 		else if (!(reference instanceof org.eclipse.ocl.pivot.Package)) {
 			reference = metamodelManager.getPrimaryElement(reference);
@@ -622,6 +621,10 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 			element2moniker.put(elem, moniker);
 		}
 		return moniker;
+	}
+
+	protected @NonNull String getNameLiteral(@NonNull Operation operation) {
+		return '"' + operation.getName() + '"';
 	}
 
 	protected @NonNull String getNameLiteral(@NonNull Property property) {

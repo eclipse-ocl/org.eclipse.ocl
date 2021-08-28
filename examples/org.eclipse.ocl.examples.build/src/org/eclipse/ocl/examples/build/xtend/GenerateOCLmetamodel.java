@@ -35,6 +35,7 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateableElement;
@@ -146,6 +147,11 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 	}
 
 	@Override
+	protected @NonNull String getNameLiteral(@NonNull Operation operation) {
+		return nameQueries.getEcoreLiteral(operation);
+	}
+
+	@Override
 	protected @NonNull String getNameLiteral(@NonNull Property property) {
 		return nameQueries.getEcoreLiteral(property);
 	}
@@ -194,7 +200,7 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 			}
 			Ecore2AS ecore2as = Ecore2AS.getAdapter(ecoreResource, getEnvironmentFactory());
 			Model pivotModel = ecore2as.getASModel();
-			Resource asResource = pivotModel.eResource();
+			ASResource asResource = (ASResource) pivotModel.eResource();
 			String pivotErrorsString = PivotUtil.formatResourceDiagnostics(ClassUtil.nonNullEMF(asResource.getErrors()), "Converting " + inputURI, "\n");
 			if (pivotErrorsString != null) {
 				issues.addError(this, pivotErrorsString, null, null, null);
@@ -241,11 +247,12 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 			}
 			asResource.setURI(saveURI);
 			//	    	as2id.assignIds(asResource.getResourceSet());
-			Map<Object, Object> options = XMIUtil.createSaveOptions();
+			Map<Object, Object> options = XMIUtil.createSaveOptions(asResource);
 			options.put(ASResource.OPTION_NORMALIZE_CONTENTS, Boolean.TRUE);
 			options.put(AS2ID.DEBUG_LUSSID_COLLISIONS, Boolean.TRUE);
 			options.put(AS2ID.DEBUG_XMIID_COLLISIONS, Boolean.TRUE);
 			XMIUtil.retainLineWidth(options, asResource);
+			asResource.setSaveable(true);
 			asResource.save(options);
 			for (Resource resource : asResource.getResourceSet().getResources()) {
 				String saveMessage = PivotUtil.formatResourceDiagnostics(ClassUtil.nonNullEMF(resource.getErrors()), "Save", "\n\t");
