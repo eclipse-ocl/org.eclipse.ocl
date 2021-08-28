@@ -319,11 +319,11 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Class _State = createClass("State");
 		private final @NonNull Class _Type = createClass("Type");
 
-		private final @NonNull PrimitiveType _Boolean = createPrimitiveType("Boolean");
-		private final @NonNull PrimitiveType _Integer = createPrimitiveType("Integer");
-		private final @NonNull PrimitiveType _Real = createPrimitiveType("Real");
-		private final @NonNull PrimitiveType _String = createPrimitiveType("String");
-		private final @NonNull PrimitiveType _UnlimitedNatural = createPrimitiveType("UnlimitedNatural");
+		private final @NonNull PrimitiveType _Boolean = createPrimitiveType(OCLstdlibPackage.Literals.BOOLEAN);
+		private final @NonNull PrimitiveType _Integer = createPrimitiveType(OCLstdlibPackage.Literals.INTEGER);
+		private final @NonNull PrimitiveType _Real = createPrimitiveType(OCLstdlibPackage.Literals.REAL);
+		private final @NonNull PrimitiveType _String = createPrimitiveType(OCLstdlibPackage.Literals.STRING);
+		private final @NonNull PrimitiveType _UnlimitedNatural = createPrimitiveType(OCLstdlibPackage.Literals.UNLIMITED_NATURAL);
 
 		private final @NonNull TemplateParameter tp_UnlimitedNatural_oclAsType_TT = createTemplateParameter("TT");
 		private final @NonNull TemplateParameter tp_Bag_collectNested_V = createTemplateParameter("V");
@@ -1689,53 +1689,53 @@ public class OCLstdlib extends ASResourceImpl
 			operation.setIsInvalidating(true);
 			operation.setIsRequired(false);
 			operation.setIsValidating(true);
-			operation.setBodyExpression(createExpressionInOCL(_Boolean, "if self.oclIsInvalid() then\n\t\t        if b.oclIsInvalid() then self\n\t\t        elseif b = false then false\n\t\t        else self\n\t\t        endif\n\t\t      elseif self = false then false\n\t\t      elseif b.oclIsInvalid() then b\n\t\t      elseif b = false then false\n\t\t      elseif self = null then null\n\t\t      elseif b = null then null\n\t\t      else true\n\t\t      endif", _Boolean));
+			createBodyExpression(operation, _Boolean, "if self.oclIsInvalid() then\n\t\t        if b.oclIsInvalid() then self\n\t\t        elseif b = false then false\n\t\t        else self\n\t\t        endif\n\t\t      elseif self = false then false\n\t\t      elseif b.oclIsInvalid() then b\n\t\t      elseif b = false then false\n\t\t      elseif self = null then null\n\t\t      elseif b = null then null\n\t\t      else true\n\t\t      endif", _Boolean);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("b", _Boolean, false));
 			ownedOperations.add(operation = op_Boolean_and2);
 			operation.setIsValidating(true);
-			operation.setBodyExpression(createExpressionInOCL(_Boolean, "if self = false then false\n\t\t      elseif b = false then false\n\t\t      else true\n\t\t      endif", _Boolean));
+			createBodyExpression(operation, _Boolean, "if self = false then false\n\t\t      elseif b = false then false\n\t\t      else true\n\t\t      endif", _Boolean);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("b", _Boolean, true));
 			ownedOperations.add(operation = op_Boolean_implies);
 			operation.setIsInvalidating(true);
 			operation.setIsRequired(false);
 			operation.setIsValidating(true);
-			operation.setBodyExpression(createExpressionInOCL(_Boolean, "if self.oclIsInvalid() then\n\t\t        if b.oclIsInvalid() then self\n\t\t        elseif b = true then true\n\t\t        else self\n\t\t        endif\n\t\t      elseif self = false then true\n\t\t      elseif b.oclIsInvalid() then b\n\t\t      elseif b = true then true\n\t\t      elseif self = null then null\n\t\t      elseif b = null then b\n\t\t      else false\n\t\t      endif", _Boolean));
+			createBodyExpression(operation, _Boolean, "if self.oclIsInvalid() then\n\t\t        if b.oclIsInvalid() then self\n\t\t        elseif b = true then true\n\t\t        else self\n\t\t        endif\n\t\t      elseif self = false then true\n\t\t      elseif b.oclIsInvalid() then b\n\t\t      elseif b = true then true\n\t\t      elseif self = null then null\n\t\t      elseif b = null then b\n\t\t      else false\n\t\t      endif", _Boolean);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("b", _Boolean, false));
 			ownedOperations.add(operation = op_Boolean_implies2);
 			operation.setIsValidating(true);
-			operation.setBodyExpression(createExpressionInOCL(_Boolean, "if self = false then true\n\t\t      elseif b = true then true\n\t\t      else false\n\t\t      endif", _Boolean));
+			createBodyExpression(operation, _Boolean, "if self = false then true\n\t\t      elseif b = true then true\n\t\t      else false\n\t\t      endif", _Boolean);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("b", _Boolean, true));
 			ownedOperations.add(operation = op_Boolean_not);
 			operation.setIsInvalidating(true);
 			operation.setIsRequired(false);
 			operation.setIsValidating(true);
-			operation.setBodyExpression(createExpressionInOCL(_Boolean, "if self.oclIsInvalid() then self\n\t\t      elseif self = null then null\n\t\t      else self = false\n\t\t      endif", _Boolean));
+			createBodyExpression(operation, _Boolean, "if self.oclIsInvalid() then self\n\t\t      elseif self = null then null\n\t\t      else self = false\n\t\t      endif", _Boolean);
 			ownedOperations.add(operation = op_Boolean_not2);
-			operation.setBodyExpression(createExpressionInOCL(_Boolean, "if self then false else true endif", _Boolean));
+			createBodyExpression(operation, _Boolean, "if self then false else true endif", _Boolean);
 			ownedOperations.add(operation = op_Boolean_or);
 			operation.setIsInvalidating(true);
 			operation.setIsRequired(false);
 			operation.setIsValidating(true);
-			operation.setBodyExpression(createExpressionInOCL(_Boolean, "if self.oclIsInvalid() then\n\t\t        if b.oclIsInvalid() then self\n\t\t\t    elseif b = true then true\n\t\t        else self\n\t\t        endif\n\t\t      elseif self = true then true\n\t\t\t  elseif b.oclIsInvalid() then b\n\t\t\t  elseif b = true then true\n\t\t\t  elseif self = null then null\n\t\t\t  elseif b = null then null\n\t\t      else false\n\t\t      endif", _Boolean));
+			createBodyExpression(operation, _Boolean, "if self.oclIsInvalid() then\n\t\t        if b.oclIsInvalid() then self\n\t\t\t    elseif b = true then true\n\t\t        else self\n\t\t        endif\n\t\t      elseif self = true then true\n\t\t\t  elseif b.oclIsInvalid() then b\n\t\t\t  elseif b = true then true\n\t\t\t  elseif self = null then null\n\t\t\t  elseif b = null then null\n\t\t      else false\n\t\t      endif", _Boolean);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("b", _Boolean, false));
 			ownedOperations.add(operation = op_Boolean_or2);
 			operation.setIsValidating(true);
-			operation.setBodyExpression(createExpressionInOCL(_Boolean, "if self = true then true\n\t\t\t  elseif b = true then true\n\t\t      else false\n\t\t      endif", _Boolean));
+			createBodyExpression(operation, _Boolean, "if self = true then true\n\t\t\t  elseif b = true then true\n\t\t      else false\n\t\t      endif", _Boolean);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("b", _Boolean, true));
 			ownedOperations.add(operation = op_Boolean_toString);
 			ownedOperations.add(operation = op_Boolean_xor);
 			operation.setIsRequired(false);
-			operation.setBodyExpression(createExpressionInOCL(_Boolean, "if self.oclIsInvalid() then self\n\t\t      elseif b.oclIsInvalid() then b\n\t\t      elseif self = null then null\n\t\t      elseif b = null then null\n\t\t      else self <> b\n\t\t      endif", _Boolean));
+			createBodyExpression(operation, _Boolean, "if self.oclIsInvalid() then self\n\t\t      elseif b.oclIsInvalid() then b\n\t\t      elseif self = null then null\n\t\t      elseif b = null then null\n\t\t      else self <> b\n\t\t      endif", _Boolean);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("b", _Boolean, false));
 			ownedOperations.add(operation = op_Boolean_xor2);
-			operation.setBodyExpression(createExpressionInOCL(_Boolean, "self <> b", _Boolean));
+			createBodyExpression(operation, _Boolean, "self <> b", _Boolean);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("b", _Boolean, true));
 
@@ -2841,6 +2841,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedCoercions = _Integer.getCoercions();
 			ownedCoercions.add(coercion = op_Integer_toUnlimitedNatural);
 		}
+
 
 		private final @NonNull Property pr_Collection_elementType = createProperty("elementType", tp_Collection_T);
 		private final @NonNull Property pr_Collection_lower = createProperty("lower", _Integer);

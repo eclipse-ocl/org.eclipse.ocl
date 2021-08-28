@@ -1889,29 +1889,29 @@ public class OCLmetamodel extends ASResourceImpl
 			superClasses.add(_Collection_Vertex);
 		}
 
-		private final @NonNull Operation op_CompleteModel_getOwnedCompletePackage = createOperation("getOwnedCompletePackage", _CompletePackage, null, null);
-		private final @NonNull Operation op_CompletePackage_getOwnedCompleteClass = createOperation("getOwnedCompleteClass", _CompleteClass, null, null);
-		private final @NonNull Operation op_Element_allOwnedElements = createOperation("allOwnedElements", _Set_Element_NullFree, null, null);
-		private final @NonNull Operation op_Element_getValue = createOperation("getValue", _Element, null, null);
-		private final @NonNull Operation op_OCLExpression_isNonNull = createOperation("isNonNull", _Boolean, null, null);
-		private final @NonNull Operation op_OCLExpression_isNull = createOperation("isNull", _Boolean, null, null);
-		private final @NonNull Operation op_OperationCallExp_hasOclVoidOverload = createOperation("hasOclVoidOverload", _Boolean, null, null);
-		private final @NonNull Operation op_Property_isAttribute = createOperation("isAttribute", _Boolean, null, null);
-		private final @NonNull Operation op_PropertyCallExp_getSpecializedReferredPropertyOwningType = createOperation("getSpecializedReferredPropertyOwningType", _Type, null, null);
-		private final @NonNull Operation op_PropertyCallExp_getSpecializedReferredPropertyType = createOperation("getSpecializedReferredPropertyType", _Type, null, null);
-		private final @NonNull Operation op_ReferringElement_getReferredElement = createOperation("getReferredElement", _Element, null, null);
-		private final @NonNull Operation op_SelfType_specializeIn = createOperation("specializeIn", _Type, null, null);
-		private final @NonNull Operation op_Type_flattenedType = createOperation("flattenedType", _Type, null, null);
-		private final @NonNull Operation op_Type_isClass = createOperation("isClass", _Class, null, null);
-		private final @NonNull Operation op_Type_isTemplateParameter = createOperation("isTemplateParameter", _TemplateParameter, null, null);
-		private final @NonNull Operation op_Type_specializeIn = createOperation("specializeIn", _Type, null, null);
-		private final @NonNull Operation op_TypedElement_CompatibleBody = createOperation("CompatibleBody", _Boolean, null, null);
-		private final @NonNull Operation op_ValueSpecification_booleanValue = createOperation("booleanValue", _Boolean, null, null);
-		private final @NonNull Operation op_ValueSpecification_integerValue = createOperation("integerValue", _Integer, null, null);
-		private final @NonNull Operation op_ValueSpecification_isComputable = createOperation("isComputable", _Boolean, null, null);
-		private final @NonNull Operation op_ValueSpecification_isNull = createOperation("isNull", _Boolean, null, null);
-		private final @NonNull Operation op_ValueSpecification_stringValue = createOperation("stringValue", _String, null, null);
-		private final @NonNull Operation op_ValueSpecification_unlimitedValue = createOperation("unlimitedValue", _UnlimitedNatural, null, null);
+		private final @NonNull Operation op_CompleteModel_getOwnedCompletePackage = createOperation(PivotPackage.Literals.COMPLETE_MODEL___GET_OWNED_COMPLETE_PACKAGE__STRING, _CompletePackage, null, null);
+		private final @NonNull Operation op_CompletePackage_getOwnedCompleteClass = createOperation(PivotPackage.Literals.COMPLETE_PACKAGE___GET_OWNED_COMPLETE_CLASS__STRING, _CompleteClass, null, null);
+		private final @NonNull Operation op_Element_allOwnedElements = createOperation(PivotPackage.Literals.ELEMENT___ALL_OWNED_ELEMENTS, _Set_Element_NullFree, null, null);
+		private final @NonNull Operation op_Element_getValue = createOperation(PivotPackage.Literals.ELEMENT___GET_VALUE__TYPE_STRING, _Element, null, null);
+		private final @NonNull Operation op_OCLExpression_isNonNull = createOperation(PivotPackage.Literals.OCL_EXPRESSION___IS_NON_NULL, _Boolean, null, null);
+		private final @NonNull Operation op_OCLExpression_isNull = createOperation(PivotPackage.Literals.OCL_EXPRESSION___IS_NULL, _Boolean, null, null);
+		private final @NonNull Operation op_OperationCallExp_hasOclVoidOverload = createOperation(PivotPackage.Literals.OPERATION_CALL_EXP___HAS_OCL_VOID_OVERLOAD, _Boolean, null, null);
+		private final @NonNull Operation op_Property_isAttribute = createOperation(PivotPackage.Literals.PROPERTY___IS_ATTRIBUTE__PROPERTY, _Boolean, null, null);
+		private final @NonNull Operation op_PropertyCallExp_getSpecializedReferredPropertyOwningType = createOperation(PivotPackage.Literals.PROPERTY_CALL_EXP___GET_SPECIALIZED_REFERRED_PROPERTY_OWNING_TYPE, _Type, null, null);
+		private final @NonNull Operation op_PropertyCallExp_getSpecializedReferredPropertyType = createOperation(PivotPackage.Literals.PROPERTY_CALL_EXP___GET_SPECIALIZED_REFERRED_PROPERTY_TYPE, _Type, null, null);
+		private final @NonNull Operation op_ReferringElement_getReferredElement = createOperation(PivotPackage.Literals.REFERRING_ELEMENT___GET_REFERRED_ELEMENT, _Element, null, null);
+		private final @NonNull Operation op_SelfType_specializeIn = createOperation(PivotPackage.Literals.SELF_TYPE___SPECIALIZE_IN__CALLEXP_TYPE, _Type, null, null);
+		private final @NonNull Operation op_Type_flattenedType = createOperation(PivotPackage.Literals.TYPE___FLATTENED_TYPE, _Type, null, null);
+		private final @NonNull Operation op_Type_isClass = createOperation(PivotPackage.Literals.TYPE___IS_CLASS, _Class, null, null);
+		private final @NonNull Operation op_Type_isTemplateParameter = createOperation(PivotPackage.Literals.TYPE___IS_TEMPLATE_PARAMETER, _TemplateParameter, null, null);
+		private final @NonNull Operation op_Type_specializeIn = createOperation(PivotPackage.Literals.TYPE___SPECIALIZE_IN__CALLEXP_TYPE, _Type, null, null);
+		private final @NonNull Operation op_TypedElement_CompatibleBody = createOperation(PivotPackage.Literals.TYPED_ELEMENT___COMPATIBLE_BODY__VALUESPECIFICATION, _Boolean, null, null);
+		private final @NonNull Operation op_ValueSpecification_booleanValue = createOperation(PivotPackage.Literals.VALUE_SPECIFICATION___BOOLEAN_VALUE, _Boolean, null, null);
+		private final @NonNull Operation op_ValueSpecification_integerValue = createOperation(PivotPackage.Literals.VALUE_SPECIFICATION___INTEGER_VALUE, _Integer, null, null);
+		private final @NonNull Operation op_ValueSpecification_isComputable = createOperation(PivotPackage.Literals.VALUE_SPECIFICATION___IS_COMPUTABLE, _Boolean, null, null);
+		private final @NonNull Operation op_ValueSpecification_isNull = createOperation(PivotPackage.Literals.VALUE_SPECIFICATION___IS_NULL, _Boolean, null, null);
+		private final @NonNull Operation op_ValueSpecification_stringValue = createOperation(PivotPackage.Literals.VALUE_SPECIFICATION___STRING_VALUE, _String, null, null);
+		private final @NonNull Operation op_ValueSpecification_unlimitedValue = createOperation(PivotPackage.Literals.VALUE_SPECIFICATION___UNLIMITED_VALUE, _UnlimitedNatural, null, null);
 
 		private void installOperations() {
 			List<Operation> ownedOperations;
@@ -1933,10 +1933,10 @@ public class OCLmetamodel extends ASResourceImpl
 
 			ownedOperations = _Element.getOwnedOperations();
 			ownedOperations.add(operation = op_Element_allOwnedElements);
-			operation.setBodyExpression(createExpressionInOCL(_Element, "self->closure(oclContents()->selectByKind(Element))", _Set_Element_NullFree));
+			createBodyExpression(operation, _Element, "self->closure(oclContents()->selectByKind(Element))", _Set_Element_NullFree);
 			ownedOperations.add(operation = op_Element_getValue);
 			operation.setIsRequired(false);
-			operation.setBodyExpression(createExpressionInOCL(_Element, "null", _Element));
+			createBodyExpression(operation, _Element, "null", _Element);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("stereotype", _Type, true));
 			ownedParameters.add(parameter = createParameter("propertyName", _String, true));
@@ -1947,26 +1947,26 @@ public class OCLmetamodel extends ASResourceImpl
 
 			ownedOperations = _OperationCallExp.getOwnedOperations();
 			ownedOperations.add(operation = op_OperationCallExp_hasOclVoidOverload);
-			operation.setBodyExpression(createExpressionInOCL(_OperationCallExp, "false", _Boolean));
+			createBodyExpression(operation, _OperationCallExp, "false", _Boolean);
 
 			ownedOperations = _Property.getOwnedOperations();
 			ownedOperations.add(operation = op_Property_isAttribute);
-			operation.setBodyExpression(createExpressionInOCL(_Property, "--Type.allInstances()->exists(c| c.ownedAttribute->includes(p))\nlet container : ocl::OclElement = oclContainer() in container.oclIsKindOf(Class) and container.oclAsType(Class).ownedProperties->includes(self)", _Boolean));
+			createBodyExpression(operation, _Property, "--Type.allInstances()->exists(c| c.ownedAttribute->includes(p))\nlet container : ocl::OclElement = oclContainer() in container.oclIsKindOf(Class) and container.oclAsType(Class).ownedProperties->includes(self)", _Boolean);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("p", _Property, true));
 
 			ownedOperations = _PropertyCallExp.getOwnedOperations();
 			ownedOperations.add(operation = op_PropertyCallExp_getSpecializedReferredPropertyOwningType);
-			operation.setBodyExpression(createExpressionInOCL(_PropertyCallExp, "referredProperty?.owningClass", _Type));
+			createBodyExpression(operation, _PropertyCallExp, "referredProperty?.owningClass", _Type);
 			ownedOperations.add(operation = op_PropertyCallExp_getSpecializedReferredPropertyType);
-			operation.setBodyExpression(createExpressionInOCL(_PropertyCallExp, "referredProperty?.type.oclAsType(Class)", _Type));
+			createBodyExpression(operation, _PropertyCallExp, "referredProperty?.type.oclAsType(Class)", _Type);
 
 			ownedOperations = _ReferringElement.getOwnedOperations();
 			ownedOperations.add(operation = op_ReferringElement_getReferredElement);
 
 			ownedOperations = _SelfType.getOwnedOperations();
 			ownedOperations.add(operation = op_SelfType_specializeIn);
-			operation.setBodyExpression(createExpressionInOCL(_SelfType, "selfType", _Type));
+			createBodyExpression(operation, _SelfType, "selfType", _Type);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("expr", _CallExp, true));
 			ownedParameters.add(parameter = createParameter("selfType", _Type, true));
@@ -1974,20 +1974,20 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedOperations = _Type.getOwnedOperations();
 			ownedOperations.add(operation = op_Type_flattenedType);
 			operation.setIsRequired(false);
-			operation.setBodyExpression(createExpressionInOCL(_Type, "self", _Type));
+			createBodyExpression(operation, _Type, "self", _Type);
 			ownedOperations.add(operation = op_Type_isClass);
 			operation.setIsRequired(false);
 			ownedOperations.add(operation = op_Type_isTemplateParameter);
 			operation.setIsRequired(false);
 			ownedOperations.add(operation = op_Type_specializeIn);
-			operation.setBodyExpression(createExpressionInOCL(_Type, "self", _Type));
+			createBodyExpression(operation, _Type, "self", _Type);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("expr", _CallExp, true));
 			ownedParameters.add(parameter = createParameter("selfType", _Type, true));
 
 			ownedOperations = _TypedElement.getOwnedOperations();
 			ownedOperations.add(operation = op_TypedElement_CompatibleBody);
-			operation.setBodyExpression(createExpressionInOCL(_TypedElement, "bodySpecification.type?.conformsTo(self.type)", _Boolean));
+			createBodyExpression(operation, _TypedElement, "bodySpecification.type?.conformsTo(self.type)", _Boolean);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("bodySpecification", _ValueSpecification, true));
 
@@ -2002,6 +2002,7 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedOperations.add(operation = op_ValueSpecification_unlimitedValue);
 			operation.setIsRequired(false);
 		}
+
 
 		private final @NonNull Property pr_Annotation_ownedContents = createProperty(PivotPackage.Literals.ANNOTATION__OWNED_CONTENTS, _OrderedSet_Element_NullFree);
 		private final @NonNull Property pr_Annotation_ownedDetails = createProperty(PivotPackage.Literals.ANNOTATION__OWNED_DETAILS, _OrderedSet_Detail_NullFree);
