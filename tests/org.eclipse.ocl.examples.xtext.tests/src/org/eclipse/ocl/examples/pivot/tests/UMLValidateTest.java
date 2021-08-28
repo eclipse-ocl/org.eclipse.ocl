@@ -46,6 +46,7 @@ import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
 import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
+import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
@@ -462,6 +463,8 @@ public class UMLValidateTest extends AbstractValidateTests
 	}
 
 	public void test_umlValidation_446007() {
+		ThreadLocalExecutor.THREAD_LOCAL_ENVIRONMENT_FACTORY.setState(true);
+		AbstractEnvironmentFactory.ENVIRONMENT_FACTORY_ATTACH.setState(true);
 		OCL ocl = OCL.newInstance(getProjectMap());
 		ResourceSet resourceSet = ocl.getResourceSet(); //createResourceSet();
 		if (!EcorePlugin.IS_ECLIPSE_RUNNING) {

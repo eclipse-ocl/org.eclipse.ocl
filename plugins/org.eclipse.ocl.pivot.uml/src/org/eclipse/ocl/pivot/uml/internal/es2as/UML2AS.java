@@ -1144,6 +1144,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 	}
 
 	protected @NonNull Model installDeclarations(@NonNull Resource asResource) {
+		standardLibrary.getBooleanType();					// Load standard library to avoid lazy confusion while debugging
 		URI pivotURI = asResource.getURI();
 		Model pivotModel2 = pivotModel = PivotUtil.createModel(umlURI != null ? umlURI.toString() : pivotURI.toString());
 		asResource.getContents().add(pivotModel2);

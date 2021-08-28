@@ -369,6 +369,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 				}
 				for (TreeIterator<EObject> i = getAllProperContents(getContents()); i.hasNext(); ) {
 					EObject eObject = i.next();
+					assert !eObject.eAdapters().contains(immutabilityCheckingAdapter);
 					eObject.eAdapters().add(immutabilityCheckingAdapter);
 				}
 			}

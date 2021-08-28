@@ -194,6 +194,9 @@ public class RoundTripTests extends XtextTestCase
 		}
 		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
 		doRoundTripFromEcore(ocl.getEnvironmentFactory(), inputURI, referenceURI, saveOptions);
+		System.gc();
+		Thread.sleep(100);
+		System.gc();
 		ocl.dispose();
 	}
 	protected void doRoundTripFromEcore(@NonNull EnvironmentFactoryInternal environmentFactory, URI inputURI, URI referenceURI, Map<@NonNull String, @Nullable Object> saveOptions) throws IOException, InterruptedException, ParserException {
@@ -209,8 +212,7 @@ public class RoundTripTests extends XtextTestCase
 
 		Ecore2AS ecore2as = Ecore2AS.getAdapter(inputResource, environmentFactory);
 		Model pivotModel = ecore2as.getASModel();
-		Resource asResource = pivotModel.eResource();
-		asResource.setURI(pivotURI);
+		ASResource asResource = (ASResource)pivotModel.eResource();
 		assertNoResourceErrors("Ecore2AS failed", asResource);
 		//		int i = 0;
 		for (TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
@@ -224,7 +226,13 @@ public class RoundTripTests extends XtextTestCase
 				tit.prune();
 			}
 		}
+	//	URI savedURI = asResource.getURI();
+	//	boolean savedSaveable = asResource.isSaveable();
+		asResource.setURI(pivotURI);
+		asResource.setSaveable(true);
 		asResource.save(XMIUtil.createSaveOptions(asResource));
+	//	asResource.setURI(savedURI);
+	//	asResource.setSaveable(savedSaveable);
 		@NonNull String @NonNull[] validationDiagnostics = saveOptions != null ? (@NonNull String @NonNull[])saveOptions.get(AS2ES_VALIDATION_ERRORS) : NO_MESSAGES;
 		assertValidationDiagnostics("Ecore2AS invalid", asResource, validationDiagnostics);
 		Resource outputResource = AS2Ecore.createResource(environmentFactory, asResource, inputURI, saveOptions);

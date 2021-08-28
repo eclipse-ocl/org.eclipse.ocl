@@ -74,6 +74,7 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.NavigationCallExp;
+import org.eclipse.ocl.pivot.NullLiteralExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
@@ -1352,6 +1353,15 @@ public class PivotUtil
 	}
 
 	/**
+	 * @since 1.16
+	 */
+	public static @NonNull String getExternalURI(@Nullable EObject element) {
+		Model model = getContainingModel(element);
+		String externalURI = model != null ? model.getExternalURI() : null;
+		return externalURI != null ? externalURI : "null";
+	}
+
+	/**
 	 * @since 1.10
 	 */
 	public static @NonNull Set<org.eclipse.ocl.pivot.@NonNull Package> getImportedPackageClosure(@NonNull CompleteModel completeModel, org.eclipse.ocl.pivot.@NonNull Package asPackage) {
@@ -2241,6 +2251,12 @@ public class PivotUtil
 		expressionInOCL.setOwnedBody(oclExpression);
 		expressionInOCL.setType(oclExpression != null ? oclExpression.getType() : null);
 		expressionInOCL.setIsRequired(oclExpression != null&& oclExpression.isIsRequired());;
+		if (oclExpression instanceof NullLiteralExp) {
+			System.out.println(NameUtil.debugSimpleName(expressionInOCL) + " : " +  oclExpression + " " + NameUtil.debugSimpleName(expressionInOCL.getType()) + " : " +  expressionInOCL.getType().getName());
+			for (Variable parameter : expressionInOCL.getOwnedParameters()) {
+				System.out.println("  " + NameUtil.debugSimpleName(parameter) + " : " +  parameter.getName() + " " + NameUtil.debugSimpleName(parameter.getType()) + " : " +  parameter.getType().getName());
+			}
+		}
 	}
 
 	/**

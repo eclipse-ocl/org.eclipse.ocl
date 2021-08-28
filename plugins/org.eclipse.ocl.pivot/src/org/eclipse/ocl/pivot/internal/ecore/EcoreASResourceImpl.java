@@ -14,16 +14,28 @@ import java.io.IOException;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 public class EcoreASResourceImpl extends ASResourceImpl
 {
 	public EcoreASResourceImpl(@NonNull URI uri, @NonNull ASResourceFactory asResourceFactory) {
 		super(uri, asResourceFactory);
 	//	setSaveable(false);		-- FIXME change to require explicit srtSaveable(true) policy
+		System.out.println("ctor " + NameUtil.debugSimpleName(this) + " : " + uri);
+	}
+
+	@Override
+	public String getURIFragment(EObject eObject) {
+		String uriFragment = super.getURIFragment(eObject);
+  	  if ("CPVxu".equals(uriFragment)) {
+		  getClass();
+	  }
+		return uriFragment;
 	}
 
 	@Override

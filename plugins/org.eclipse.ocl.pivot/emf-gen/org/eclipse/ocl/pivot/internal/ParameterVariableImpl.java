@@ -165,4 +165,32 @@ public class ParameterVariableImpl extends VariableImpl implements ParameterVari
 		return visitor.visitParameterVariable(this);
 	}
 
+/*    @Override
+	public void eSetProxyURI(URI uri) {
+    	if ("propertyName".equals(getName())) {
+        	System.out.println(uri.toString());
+        	  if ((uri != null) && "CPVxu".equals(uri.fragment())) {
+      		  getClass();
+      	  }
+    	}
+		super.eSetProxyURI(uri);
+	} */
+
+	@Override
+	public void setType(Type newType) {
+    	if ("propertyName".equals(getName())) {
+        	getClass();
+    	}
+		super.setType(newType);
+//		System.out.println(NameUtil.debugSimpleName(this) + " " + String.valueOf(getName()) + " .type: " + NameUtil.debugSimpleName(newType));
+	}
+
+	@Override
+	public void setName(String newName) {
+    	if ("propertyName".equals(newName)) {
+      		getClass();
+    	}
+		super.setName(newName);
+	}
+
 } //ParameterVariableImpl

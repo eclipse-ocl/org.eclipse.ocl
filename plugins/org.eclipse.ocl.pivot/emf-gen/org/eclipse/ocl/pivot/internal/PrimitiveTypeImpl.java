@@ -14,7 +14,10 @@ import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Behavior;
@@ -22,6 +25,8 @@ import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
+import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
@@ -33,6 +38,8 @@ import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.util.Visitor;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -426,5 +433,38 @@ public class PrimitiveTypeImpl
 		String name2 = getName();
 		assert name2 != null;
 		return IdManager.getPrimitiveTypeId(name2);
+	}
+
+	@Override
+	protected void eBasicSetContainer(InternalEObject newContainer, int newContainerFeatureID) {
+		super.eBasicSetContainer(newContainer, newContainerFeatureID);
+		System.out.println(NameUtil.debugSimpleName(this) + " " + String.valueOf(getName()) + " in " + PivotUtil.getExternalURI(newContainer));
+		if ("String".equals(getName())) {
+			getClass();			// XXX
+		}
+	}
+
+	@Override
+	public void eSetProxyURI(URI uri) {
+	//	Resource eResource = eResource();
+	//	if (eResource != null) {
+			String string = uri.trimFragment().toString();
+			if ("file:/E:/Development/Chital/Workspace/_OCL_RoundTripTests__testPivotRoundTrip/Pivot.ecore.oclas".equals(string))
+				getClass();			// XXX
+	//	}
+		StringBuilder s = new StringBuilder();
+		s.append("eSetProxyURI " + String.valueOf(uri)  + " in " + NameUtil.debugSimpleName(eResource()));
+		for (EObject eObject = this; eObject != null; eObject = eObject.eContainer()) {
+			s.append("\n\t" + NameUtil.debugSimpleName(eObject));
+			if (eObject instanceof Model) {
+				s.append(" " + ((NamedElement)eObject).getName());
+				s.append(" " + ((Model)eObject).getExternalURI());
+			}
+			else if (eObject instanceof NamedElement) {
+				s.append(" " + ((NamedElement)eObject).getName());
+			}
+		}
+		System.out.println(s.toString());
+		super.eSetProxyURI(uri);
 	}
 } //PrimitiveTypeImpl

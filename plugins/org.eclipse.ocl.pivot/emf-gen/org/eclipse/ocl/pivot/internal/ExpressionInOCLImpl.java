@@ -27,12 +27,17 @@ import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.NullLiteralExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
+import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -165,6 +170,9 @@ public class ExpressionInOCLImpl
 	 */
 	@Override
 	public void setOwnedBody(OCLExpression newOwnedBody) {
+		if (newOwnedBody instanceof NullLiteralExp) {
+			getClass();
+		}
 		if (newOwnedBody != ownedBody)
 		{
 			NotificationChain msgs = null;
@@ -538,5 +546,21 @@ public class ExpressionInOCLImpl
 	@Override
 	public String getLanguage() {
 		return PivotConstants.OCL_LANGUAGE;
+	}
+
+	@Override
+	public void setType(Type newType) {
+		if (newType instanceof PrimitiveType) {
+			Model model1 = PivotUtil.getContainingModel(this);
+			if (model1 != null) {
+				Model model2 = PivotUtil.getContainingModel(newType);
+				if (model2 != null) {
+					if (!OCLstdlib.STDLIB_URI.equals(model2.getExternalURI())) {
+						getClass();
+					}
+				}
+			}
+		}
+		super.setType(newType);
 	}
 } //ExpressionInOCLImpl

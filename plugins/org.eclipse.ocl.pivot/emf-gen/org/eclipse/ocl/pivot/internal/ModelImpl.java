@@ -33,6 +33,7 @@ import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.complete.ModelListeners;
 import org.eclipse.ocl.pivot.util.Visitor;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -468,6 +469,8 @@ public class ModelImpl extends NamespaceImpl implements Model
 			newName = null;
 		}
 		super.setName(newName);
+		// name is a cached optimization of externalURI
+		System.out.println("setExternalURI " + NameUtil.debugSimpleName(this) + " " + newExternalURI);
 	}
 
 	/**

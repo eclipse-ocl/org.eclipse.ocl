@@ -118,9 +118,9 @@ public class PivotTestCase extends TestCase
 	public static boolean DEBUG_GC = false;			// True performs an enthusuastic resource release and GC at the end of each test
 	public static boolean DEBUG_ID = false;			// True prints the start and end of each test.
 	{
-	//	PivotUtilInternal.noDebug = false;
+		PivotUtilInternal.noDebug = false;
 	//	DEBUG_GC = true;
-	//	DEBUG_ID = true;
+		DEBUG_ID = true;
 	//	AbstractEnvironmentFactory.liveEnvironmentFactories = new WeakHashMap<>();	// Prints the create/finalize of each EnvironmentFactory
 	//	PivotMetamodelManager.liveMetamodelManagers = new WeakHashMap<>();			// Prints the create/finalize of each MetamodelManager
 	//	StandaloneProjectMap.liveStandaloneProjectMaps = new WeakHashMap<>();		// Prints the create/finalize of each StandaloneProjectMap
@@ -775,7 +775,7 @@ public class PivotTestCase extends TestCase
 			testThread.start();
 			synchronized (testThread) {
 				try {
-					testThread.wait(1000000);		// Needlessly long wait to avoid confusing debug session
+					testThread.wait(100000000);		// Needlessly long wait to avoid confusing debug session
 				} catch (InterruptedException e) {
 					// Don't care -- e.printStackTrace();
 				}

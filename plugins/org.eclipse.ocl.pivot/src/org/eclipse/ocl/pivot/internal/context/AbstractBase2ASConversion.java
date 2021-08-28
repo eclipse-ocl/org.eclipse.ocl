@@ -149,7 +149,7 @@ public abstract class AbstractBase2ASConversion extends AbstractConversion imple
 				param = PivotFactory.eINSTANCE.createParameterVariable();
 				param.setName(name);
 			}
-			setBehavioralType(param, parameter);
+			/*converter.getHelper().*/setBehavioralType(param, parameter);
 			param.setRepresentedParameter(parameter);
 			newVariables.add(param);
 		}

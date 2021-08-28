@@ -58,6 +58,7 @@ import org.eclipse.emf.ecore.presentation.EcoreEditor;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.emf.mwe.core.ConfigurationException;
 import org.eclipse.jdt.annotation.NonNull;
@@ -82,6 +83,7 @@ import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
@@ -554,7 +556,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		ResourceSet resourceSet = ocl.getResourceSet();
 		try {
 			URI fileURI = genmodelURI; //getProjectFileURI(testFileStem + ".genmodel");
-			// System.out.println("Generating Ecore Model using '" + fileURI + "'");
+			 System.out.println("Generating Ecore Model using '" + fileURI + "'");
 			//		metamodelManager2.dispose();
 			ProjectManager projectMap = ocl.getProjectManager();
 		//	ocl.dispose();
@@ -603,7 +605,17 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 			genModel.setUpdateClasspath(false); // New class-paths should be generated manually
 			//		genModel.setComplianceLevel(GenJDKLevel.JDK50_LITERAL);
 			// genModel.setRootExtendsClass("org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container");
+			for (Resource asResource : ocl.getResourceSet().getResources()) {
+				System.out.println("has0 " + NameUtil.debugSimpleName(asResource) + " : " + asResource.getURI());
+			}
+			for (Resource asResource : ((AbstractEnvironmentFactory)ocl.getEnvironmentFactory()).getASResourceSet().getResources()) {
+				System.out.println("has1 " + NameUtil.debugSimpleName(asResource) + " : " + asResource.getURI());
+			}
+			EcoreUtil.resolveAll(ocl.getResourceSet());
 			Diagnostic diagnostic = genModel.diagnose();
+			for (Resource asResource : ((AbstractEnvironmentFactory)ocl.getEnvironmentFactory()).getASResourceSet().getResources()) {
+				System.out.println("has2 " + NameUtil.debugSimpleName(asResource) + " : " + asResource.getURI());
+			}
 			if (diagnostic.getSeverity() != Diagnostic.OK) {
 				String s = PivotUtil.formatDiagnostics(diagnostic, "\n");
 				fail("Diagnose failure " + s);

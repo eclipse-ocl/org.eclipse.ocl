@@ -521,10 +521,15 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getPrimaryClass() {
+		int i = 0;
 		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : ClassUtil.nullFree(partialClasses)) {
 			if (partialClass.getESObject() != null) {
+				if (i != 0) {
+					getClass();			// XXX
+				}
 				return partialClass;
 			}
+			i++;
 		}
 		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : ClassUtil.nullFree(partialClasses)) {
 			return partialClass;

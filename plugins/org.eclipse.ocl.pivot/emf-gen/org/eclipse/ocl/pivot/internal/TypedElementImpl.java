@@ -16,6 +16,7 @@ import java.util.Collection;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
@@ -25,6 +26,7 @@ import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ValueSpecification;
@@ -179,9 +181,36 @@ implements TypedElement {
 	@Override
 	public void setType(Type newType) {
 		Type oldType = type;
+		if (/*(oldType != null) &&*/ (newType instanceof PrimitiveType) && (newType != oldType)) {
+			EObject eContainer2 = newType.eContainer();
+			if (eContainer2 != null) {
+				getClass();		// XXX
+			}
+		}
 		type = newType;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, 7, oldType, type));
+
+
+	//	if (newType instanceof PrimitiveType) {
+	//		System.out.println("\t" + NameUtil.debugSimpleName(this) + " " + String.valueOf(getName()) + " .type: " + NameUtil.debugSimpleName(newType) + " " + String.valueOf(newType.getName()) + " was " + NameUtil.debugSimpleName(oldType));
+	//	}
+	//	else if ((newType == null) && (oldType instanceof PrimitiveType)) {
+	//		System.out.println("\t" + NameUtil.debugSimpleName(this) + " " + String.valueOf(getName()) + " .type: " + NameUtil.debugSimpleName(newType) + " resetting " + NameUtil.debugSimpleName(oldType));
+	//	}
+	}
+
+	@Override
+	protected void eBasicSetContainer(InternalEObject newContainer,
+			int newContainerFeatureID) {
+		// TODO Auto-generated method stub
+		super.eBasicSetContainer(newContainer, newContainerFeatureID);
+		if (type instanceof PrimitiveType) {
+			EObject eContainer2 = type.eContainer();
+			if (eContainer2 != null) {
+				getClass();		// XXX
+			}
+		}
 	}
 
 	/**

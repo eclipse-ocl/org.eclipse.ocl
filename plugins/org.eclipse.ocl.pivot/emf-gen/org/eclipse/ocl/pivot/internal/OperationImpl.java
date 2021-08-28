@@ -594,6 +594,9 @@ implements Operation {
 	@Override
 	public void setBodyExpression(LanguageExpression newBodyExpression)
 	{
+		if ("getValue".equals(name)) {
+			getClass();		// XXX
+		}
 		if (newBodyExpression != bodyExpression)
 		{
 			NotificationChain msgs = null;
