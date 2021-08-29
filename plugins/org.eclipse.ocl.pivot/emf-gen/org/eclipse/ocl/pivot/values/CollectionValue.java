@@ -53,7 +53,7 @@ public interface CollectionValue extends IterableValue {
 	/**
 	 * @generated NOT
 	 */
-	@Nullable <T> List<T> asEcoreObjects(@NonNull IdResolver idResolver, @Nullable Class<T> instanceClass);
+	@NonNull <T> List<T> asEcoreObjects(@NonNull IdResolver idResolver, @Nullable Class<T> instanceClass);
 
 	/**
 	 * @generated NOT

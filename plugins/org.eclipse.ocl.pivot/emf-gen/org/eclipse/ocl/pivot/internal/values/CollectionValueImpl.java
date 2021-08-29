@@ -307,7 +307,7 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 
 	@Override
 	@SuppressWarnings("unchecked")			// FIXME check element types
-	public @Nullable <T> List<T> asEcoreObjects(@NonNull IdResolver idResolver, @Nullable Class<T> instanceClass) {
+	public @NonNull <T> List<T> asEcoreObjects(@NonNull IdResolver idResolver, @Nullable Class<T> instanceClass) {
 		return (List<T>) asEcoreObject(idResolver, instanceClass);
 	}
 
