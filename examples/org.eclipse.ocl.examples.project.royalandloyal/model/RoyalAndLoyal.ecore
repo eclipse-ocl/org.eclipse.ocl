@@ -103,10 +103,10 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="color" eType="#//RandLColor"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="printedName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         changeable="false" volatile="true" transient="true" derived="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="goodThru" eType="#//Date"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="validFrom" eType="#//Date"
-        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="goodThru" lowerBound="1"
+        eType="#//Date" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="validFrom" lowerBound="1"
+        eType="#//Date" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="myLevel" eType="#//ServiceLevel"
         changeable="false" volatile="true" transient="true" derived="true" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="owner" lowerBound="1" eType="#//Customer"
