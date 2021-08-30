@@ -78,6 +78,9 @@ org.eclipse.ocl.pivot/resource/checkImmutability=false
 # Trace updates of the StandardLibraryContribution.REGISTRY
 org.eclipse.ocl.pivot/standardLibraryContribution=false
 
+# Trace maintenanve of symbolic hypotheses to eliminat mayBeInvalid diagnostocs. 
+org.eclipse.ocl.pivot/symbolic/hypothesis=false
+
 # Trace validation of InstanceSpecifications 
 org.eclipse.ocl.pivot/validate/instance=false
 

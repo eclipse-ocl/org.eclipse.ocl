@@ -10,9 +10,25 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.library;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.IterateExp;
+import org.eclipse.ocl.pivot.LoopExp;
+import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.Variable;
+import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.evaluation.IterationManager;
+import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
+import org.eclipse.ocl.pivot.library.LibraryOperation.LibraryOperationExtension2;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.values.SymbolicValue;
+
+import com.google.common.collect.Iterables;
 
 /**
  * AbstractIteration realizes shared characteristics of library iterations by providing a
@@ -49,6 +65,87 @@ public abstract class AbstractIteration extends AbstractIterationOrOperation imp
 		public void set(@Nullable Object value) {
 			this.value = value;
 		}
+	}
+
+	/**
+	 * @since 1.16
+	 */
+	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull LoopExp loopExp) {
+		TypeId returnTypeId = loopExp.getTypeId();
+		boolean returnMayBeNull = !loopExp.isIsRequired();
+		OCLExpression source = PivotUtil.getOwnedSource(loopExp);
+		SymbolicValue invalidSourceProblem = evaluationEnvironment.checkNotInvalid(source, returnTypeId, returnMayBeNull);
+		if (invalidSourceProblem != null) {
+			return invalidSourceProblem;
+		}
+		if (!loopExp.isIsSafe()) {
+			SymbolicValue nullSourceProblem = evaluationEnvironment.checkNotNull(source, returnTypeId, returnMayBeNull);
+			if (nullSourceProblem != null) {
+				return nullSourceProblem;
+			}
+		}
+		for (@NonNull VariableDeclaration iterator : PivotUtil.getOwnedIterators(loopExp)) {
+			SymbolicValue invalidIteratorProblem = evaluationEnvironment.checkNotInvalid(iterator, returnTypeId, returnMayBeNull);
+			if (invalidIteratorProblem != null) {
+				return invalidIteratorProblem;
+			}
+		}
+		if (loopExp instanceof IterateExp) {
+			VariableDeclaration ownedResult = PivotUtil.getOwnedResult((IterateExp)loopExp);
+			SymbolicValue invalidResultProblem = evaluationEnvironment.checkNotInvalid(ownedResult, returnTypeId, returnMayBeNull);
+			if (invalidResultProblem != null) {
+				return invalidResultProblem;
+			}
+		}
+		OCLExpression bodyExpression = PivotUtil.getOwnedBody(loopExp);
+		SymbolicValue invalidBodyProblem = evaluationEnvironment.checkNotInvalid(bodyExpression, returnTypeId, returnMayBeNull);
+		if (invalidBodyProblem != null) {
+			return invalidBodyProblem;
+		}
+		if (bodyExpression.isIsRequired()) {
+			SymbolicValue nullBodyProblem = evaluationEnvironment.checkNotNull(bodyExpression, returnTypeId, returnMayBeNull);
+			if (nullBodyProblem != null) {
+				return nullBodyProblem;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * @since 1.16
+	 */
+	protected @NonNull SymbolicValue createResultValue(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull LoopExp loopExp,
+			@NonNull SymbolicValue sourceSymbolicValue, @NonNull List<@NonNull SymbolicValue> argumentSymbolicValues) {
+		boolean mayBeInvalid = false;
+		boolean mayBeNull = false;
+		if (sourceSymbolicValue.mayBeInvalid()) {
+			mayBeInvalid = true;
+		}
+		if (sourceSymbolicValue.mayBeNull()) {
+			if (loopExp.isIsSafe()) {
+				mayBeNull = true;
+			}
+			else {
+				mayBeInvalid = true;
+			}
+		}
+		for (@NonNull SymbolicValue argumentSymbolicValue : argumentSymbolicValues) {
+			if (argumentSymbolicValue.mayBeInvalid()) {
+				mayBeInvalid = true;
+			}
+		}
+	/*	OCLExpression bodyExp = PivotUtil.getOwnedBody(loopExp);
+		if (evaluationEnvironment.mayBeNull(bodyExp)) {
+			Parameter bodyParameter = loopExp.getReferredIteration().getOwnedParameters().get(0);
+			if (bodyParameter.isIsRequired()) {
+				mayBeInvalid = true;
+			}
+			else {
+				mayBeNull = true;
+			}
+		} */
+		SymbolicAnalysis symbolicAnalysis = evaluationEnvironment.getSymbolicAnalysis();
+		return symbolicAnalysis.createUnknownValue(loopExp.getTypeId(), mayBeNull, mayBeInvalid);
 	}
 
 	/**
@@ -93,6 +190,58 @@ public abstract class AbstractIteration extends AbstractIterationOrOperation imp
 	 */
 	protected @Nullable Object resolveTerminalValue(@NonNull IterationManager iterationManager) {
 		return iterationManager.getAccumulatorValue();
+	}
+
+	/**
+	 * @since 1.16
+	 */
+	@Override
+	public @NonNull SymbolicValue symbolicEvaluate(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull LoopExp loopExp) {
+		SymbolicValue symbolicPreconditionValue = checkPreconditions(evaluationEnvironment, loopExp);
+		if (symbolicPreconditionValue != null) {
+			return symbolicPreconditionValue;
+		}
+		SymbolicValue sourceSymbolicValue = evaluationEnvironment.symbolicEvaluate(PivotUtil.getOwnedSource(loopExp));
+		boolean isKnown = false; // Need to guard against huge symbolic constants -- sourceSymbolicValue.isKnown();
+		Iterable<@NonNull Variable> ownedIterators = PivotUtil.getOwnedIterators(loopExp);
+		int iteratorsSize = Iterables.size(ownedIterators);
+		int resultsSize = loopExp instanceof IterateExp ? 1 : 0;
+		int bodySize = 1;
+		int argumentsSize = iteratorsSize + resultsSize + bodySize;
+		List<@NonNull SymbolicValue> argumentSymbolicValues = new ArrayList<@NonNull SymbolicValue>(argumentsSize);
+		for (@NonNull Variable iterator : ownedIterators) {
+			SymbolicValue iteratorSymbolicValue = evaluationEnvironment.symbolicEvaluate(iterator);
+			if (!iteratorSymbolicValue.isKnown()) {
+				isKnown = false;
+			}
+			argumentSymbolicValues.add(iteratorSymbolicValue);
+		}
+		if (loopExp instanceof IterateExp) {
+			SymbolicValue resultSymbolicValue = evaluationEnvironment.symbolicEvaluate(PivotUtil.getOwnedResult((IterateExp) loopExp));
+			if (!resultSymbolicValue.isKnown()) {
+				isKnown = false;
+			}
+			argumentSymbolicValues.add(resultSymbolicValue);
+		}
+		OCLExpression bodyExp = PivotUtil.getOwnedBody(loopExp);
+		SymbolicValue bodySymbolicValue = evaluationEnvironment.symbolicEvaluate(bodyExp);
+		if (!bodySymbolicValue.isKnown()) {
+			isKnown = false;
+		}
+		argumentSymbolicValues.add(bodySymbolicValue);
+		if (isKnown) {
+			@Nullable Object[] sourceAndArgumentValues = new @Nullable Object[1+argumentsSize];
+			sourceAndArgumentValues[0] = sourceSymbolicValue.getKnownValue();
+			for (int i = 0; i < argumentsSize; i++) {
+				sourceAndArgumentValues[i+1] = argumentSymbolicValues.get(i).getKnownValue();
+			}
+			SymbolicAnalysis symbolicAnalysis = evaluationEnvironment.getSymbolicAnalysis();
+			Object result = ((LibraryOperationExtension2)this).evaluate(symbolicAnalysis.getExecutor(), loopExp, sourceAndArgumentValues);
+			return evaluationEnvironment.getKnownValue(result);
+		}
+		else {
+			return createResultValue(evaluationEnvironment, loopExp, sourceSymbolicValue, argumentSymbolicValues);
+		}
 	}
 
 	/**

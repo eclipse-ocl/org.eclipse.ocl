@@ -17,6 +17,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.values.CollectionValue;
@@ -38,14 +39,15 @@ public abstract class AbstractEvaluatorIterableIterationManager<IV extends Itera
 	{
 		protected final EvaluationEnvironment evaluationEnvironment;
 		protected final @NonNull IV iterableValue;
-		private final @NonNull TypedElement iteratorVariable;
+		private final @NonNull VariableDeclaration iteratorVariable;
 		private Iterator<? extends Object> javaIter;
 		private Object iteratorValue;		// 'null' is a valid value so 'this' is used as end of iteration
 
+		// FIXME VariableDeclaration
 		public AbstractValueIterator(@NonNull Executor executor, @NonNull IV iterableValue, @NonNull TypedElement iteratorVariable) {
 			this.evaluationEnvironment = executor.getEvaluationEnvironment();
 			this.iterableValue = iterableValue;
-			this.iteratorVariable = iteratorVariable;
+			this.iteratorVariable = (VariableDeclaration)iteratorVariable;
 		}
 
 		public @Nullable Object get() {
@@ -80,6 +82,7 @@ public abstract class AbstractEvaluatorIterableIterationManager<IV extends Itera
 
 	protected static class CollectionValueIterator extends AbstractValueIterator<CollectionValue>
 	{
+		// FIXME VariableDeclaration
 		public CollectionValueIterator(@NonNull Executor executor, @NonNull CollectionValue collectionValue, @NonNull TypedElement keyVariable) {
 			super(executor, collectionValue, keyVariable);
 			reset();
@@ -88,11 +91,12 @@ public abstract class AbstractEvaluatorIterableIterationManager<IV extends Itera
 
 	protected static class MapValueIterator extends AbstractValueIterator<MapValue>
 	{
-		private final @Nullable TypedElement valueVariable;
+		private final @Nullable VariableDeclaration valueVariable;
 
+		// FIXME VariableDeclaration
 		public MapValueIterator(@NonNull Executor executor, @NonNull MapValue mapValue, @NonNull TypedElement keyVariable, @Nullable TypedElement valueVariable) {
 			super(executor, mapValue, keyVariable);
-			this.valueVariable = valueVariable;
+			this.valueVariable = (VariableDeclaration)valueVariable;
 			reset();
 		}
 
@@ -100,7 +104,7 @@ public abstract class AbstractEvaluatorIterableIterationManager<IV extends Itera
 		public @Nullable Object next() {
 			Object keyValue = super.next();
 			if (keyValue != this) {
-				TypedElement valueVariable2 = valueVariable;
+				VariableDeclaration valueVariable2 = valueVariable;
 				if (valueVariable2 != null) {
 					Object valueValue = iterableValue.at(keyValue);
 					evaluationEnvironment.replace(valueVariable2, valueValue);
@@ -113,9 +117,11 @@ public abstract class AbstractEvaluatorIterableIterationManager<IV extends Itera
 	protected final @NonNull IV iterableValue;
 	protected final /*@NonNull*/ CallExp callExp;		// Null at root or when calling context unknown
 	protected final @NonNull OCLExpression body;
+	// FIXME VariableDeclaration
 	protected final @Nullable TypedElement accumulatorVariable;
 	private @Nullable Object accumulatorValue;
 
+	// FIXME VariableDeclaration
 	protected AbstractEvaluatorIterableIterationManager(@NonNull Executor executor, /*@NonNull*/ CallExp callExp, @NonNull OCLExpression body, @NonNull IV iterableValue,
 			@Nullable TypedElement accumulatorVariable, @Nullable Object accumulatorValue) {
 		super(executor);
@@ -178,7 +184,7 @@ public abstract class AbstractEvaluatorIterableIterationManager<IV extends Itera
 	@Override
 	public @Nullable Object updateAccumulator(Object newValue) {
 		this.accumulatorValue = newValue;
-		TypedElement accumulatorVariable2 = accumulatorVariable;
+		VariableDeclaration accumulatorVariable2 = (VariableDeclaration)accumulatorVariable;
 		if (accumulatorVariable2 != null) {
 			getEvaluationEnvironment().replace(accumulatorVariable2, accumulatorValue);
 		}

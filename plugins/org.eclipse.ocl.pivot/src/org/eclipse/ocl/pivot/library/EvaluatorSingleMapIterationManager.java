@@ -50,10 +50,13 @@ public class EvaluatorSingleMapIterationManager extends AbstractEvaluatorIterabl
 		}
 	}
 
+	// FIXME VariableDeclaration
 	protected final @NonNull TypedElement referredKeyIterator;
+	// FIXME VariableDeclaration
 	protected final @Nullable TypedElement referredValueIterator;
 	protected final @NonNull MapValueIterator iterator;
 
+	// FIXME VariableDeclaration
 	public EvaluatorSingleMapIterationManager(@NonNull Executor invokingExecutor,
 			/*@NonNull*/ CallExp callExp, @NonNull OCLExpression body, @NonNull MapValue mapValue,
 			@Nullable TypedElement accumulator, @Nullable Object accumulatorValue,

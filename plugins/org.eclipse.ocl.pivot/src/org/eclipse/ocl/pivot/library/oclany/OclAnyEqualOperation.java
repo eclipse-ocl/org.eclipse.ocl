@@ -10,11 +10,16 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.library.oclany;
 
+import java.util.List;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
  * OclAnyEqualOperation realises the OCLAny::=() library operation and
@@ -24,6 +29,50 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
 public class OclAnyEqualOperation extends AbstractSimpleBinaryOperation
 {
 	public static final @NonNull OclAnyEqualOperation INSTANCE = new OclAnyEqualOperation();
+
+	/**
+	 * @since 1.16
+	 */
+	@Override
+	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
+		return checkPreconditions(evaluationEnvironment, callExp, CHECK_NOT_INVALID);
+	}
+
+	/**
+	 * Overridden to be invalid-out for any invalid in, never null, false for mismatching nullity.
+	 *
+	 * @since 1.16
+	 */
+	@Override
+	protected @NonNull SymbolicValue createResultValue(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp,
+			@NonNull SymbolicValue sourceSymbolicValue, @NonNull List<@NonNull SymbolicValue> argumentSymbolicValues) {
+		boolean mayBeInvalid = sourceSymbolicValue.mayBeInvalid();
+		boolean mayBeNull = false;
+		int isNullCount = 0;
+		if (sourceSymbolicValue.isNull()) {
+			isNullCount++;
+		}
+		else if (sourceSymbolicValue.mayBeNull()) {
+			mayBeNull = true;
+		}
+		for (@NonNull SymbolicValue argumentSymbolicValue : argumentSymbolicValues) {
+			if (argumentSymbolicValue.mayBeInvalid()) {
+				mayBeInvalid = true;
+			}
+			if (argumentSymbolicValue.isNull()) {
+				isNullCount++;
+			}
+			else if (argumentSymbolicValue.mayBeNull()) {
+				mayBeNull = true;
+			}
+		}
+		if (!mayBeInvalid && !mayBeNull && ((isNullCount & 1) != 0)) {
+			return evaluationEnvironment.getKnownValue(Boolean.FALSE);
+		}
+		else {
+			return evaluationEnvironment.getUnknownValue(callExp, false, mayBeInvalid);
+		}
+	}
 
 	@Override
 	public @NonNull Boolean evaluate(@Nullable Object left, @Nullable Object right) {
@@ -39,7 +88,7 @@ public class OclAnyEqualOperation extends AbstractSimpleBinaryOperation
 		if (left == null) {
 			return right == null;
 		}
-		else if ((left instanceof Type) && (right instanceof Type)){
+		else if ((left instanceof Type) && (right instanceof Type)) {
 			boolean result = ((Type) left).getTypeId().equals(((Type) right).getTypeId());		// FIXME is this a sound/efficient tradeoff for not boxing?
 			return result;
 		}
@@ -48,4 +97,22 @@ public class OclAnyEqualOperation extends AbstractSimpleBinaryOperation
 			return result;
 		}
 	}
+
+	/**
+	 * @since 1.15
+	 *
+	@Override
+	public @Nullable Object symbolicEvaluate(@NonNull Executor executor, @NonNull OperationCallExp operationCallExp, @Nullable Object sourceValue, @Nullable Object argumentValue) {
+		if ((sourceValue instanceof SymbolicValue) || (argumentValue instanceof SymbolicValue)) {
+			if ((sourceValue == null) && !ValueUtil.mayBeNull(argumentValue)) {
+				return ValueUtil.FALSE_VALUE;
+			}
+			if ((argumentValue == null) && !ValueUtil.mayBeNull(sourceValue)) {
+				return ValueUtil.FALSE_VALUE;
+			}
+			boolean mayBeInvalid = ValueUtil.mayBeInvalid(sourceValue) || ValueUtil.mayBeInvalid(argumentValue);
+			return new SymbolicOperationCallValueImpl(operationCallExp, false, / *mayBeNull ||* / mayBeInvalid, this, Lists.newArrayList(sourceValue, argumentValue));
+		}
+		return evaluate(sourceValue, argumentValue);
+	} */
 }

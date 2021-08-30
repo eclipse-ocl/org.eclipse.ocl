@@ -10,19 +10,42 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.util;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.common.util.BasicDiagnostic;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.*;
+import org.eclipse.ocl.pivot.internal.cse.CSEElement;
+import org.eclipse.ocl.pivot.internal.evaluation.BaseSymbolicEvaluationEnvironment;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis;
+import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicUtil;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicVariableValue;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
+import org.eclipse.ocl.pivot.messages.StatusCodes.Severity;
+import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.utilities.MorePivotable;
 import org.eclipse.ocl.pivot.utilities.Nameable;
+import org.eclipse.ocl.pivot.utilities.ParserException;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
+import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.eclipse.ocl.pivot.utilities.TreeIterable;
+import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
  * <!-- begin-user-doc -->
@@ -879,6 +902,14 @@ public class PivotValidator extends EObjectValidator
 	 */
 	public static void initLazyParse(@NonNull Map<Object, Object> context, boolean isLazyParse) {
 		context.put(EXPRESSION_IN_OCL_LAZY_PARSE, isLazyParse);
+	}
+
+	private static boolean isLazyParse(@Nullable Map<Object, Object> context) {
+		if (context == null) {
+			return false;
+		}
+		Object isLazy = context.get(EXPRESSION_IN_OCL_LAZY_PARSE);
+		return isLazy == Boolean.TRUE;
 	}
 
 	/**
@@ -2436,7 +2467,113 @@ public class PivotValidator extends EObjectValidator
 				return false;
 			}
 		} */
-		return validateExpressionInOCLGen(expressionInOCL, diagnostics, context);
+//		OCLExpression ownedBody = expressionInOCL.getOwnedBody();
+//		if (ownedBody == null) {
+//			getClass();		// XXX
+//		}
+		if ((expressionInOCL.getOwnedBody() == null) && (expressionInOCL.getBody() != null) && !isLazyParse(context)) {	// Generated OCLstdlib and States.ecore loaded as *.oclas has lazy unparsed AST
+			assert context != null;
+			EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) PivotUtilInternal.getEnvironmentFactory(expressionInOCL);
+			try {
+				environmentFactory.parseSpecification(expressionInOCL);
+			} catch (ParserException e) {
+				if (diagnostics != null) {
+					diagnostics.add(new BasicDiagnostic(Diagnostic.ERROR, DIAGNOSTIC_SOURCE, 0, e.getLocalizedMessage(), new Object[] {expressionInOCL}));
+				}
+				return false;
+			}
+		}
+		boolean allOk = validateExpressionInOCLGen(expressionInOCL, diagnostics, context);
+		if (allOk && (expressionInOCL.getOwnedBody() != null)) {
+			EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(expressionInOCL);
+			Severity invalidResultSeverity = environmentFactory.getValue(PivotValidationOptions.PotentialInvalidResult);
+			assert invalidResultSeverity != null;
+			if (invalidResultSeverity != Severity.IGNORE) {
+				PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+				boolean isValidating = false;
+				EObject eContainer = expressionInOCL.eContainer();
+				if (eContainer instanceof Operation) {
+					Operation asOperation = (Operation)eContainer;
+					if (expressionInOCL == asOperation.getBodyExpression()) {
+						isValidating = asOperation.isIsValidating();
+					}
+				}
+				VariableDeclaration ownedContext = PivotUtil.getOwnedContext(expressionInOCL);
+				boolean mayBeNull = isValidating || !ownedContext.isIsRequired();
+				boolean mayBeInvalid = isValidating;
+				Object selfValue = new SymbolicVariableValue(ownedContext, mayBeNull, mayBeInvalid);
+				Object resultValue = null;
+				Variable ownedResult = expressionInOCL.getOwnedResult();
+				if (ownedResult != null) {
+					resultValue = new SymbolicVariableValue(ownedResult, isValidating || !ownedResult.isIsRequired(), mayBeInvalid);
+				}
+				List<@NonNull Variable> ownedParameters = PivotUtilInternal.getOwnedParametersList(expressionInOCL);
+				@Nullable Object[] parameterValues = new @Nullable Object[ownedParameters.size()];
+				for (int i = 0; i < ownedParameters.size(); i++) {
+					Variable parameter = ownedParameters.get(i);
+					mayBeNull = !parameter.isIsRequired();
+				//	mayBeInvalid = false;
+					parameterValues[i] = new SymbolicVariableValue(parameter, mayBeNull, mayBeInvalid);
+				}
+				SymbolicAnalysis symbolicAnalysis = metamodelManager.getSymbolicAnalysis(expressionInOCL, selfValue, resultValue, parameterValues);
+				String analysisIncompatibility = symbolicAnalysis.getAnalysisIncompatibility();
+				if (analysisIncompatibility != null) {
+					int diagnosticSeverity = invalidResultSeverity.getDiagnosticSeverity();
+					String message = analysisIncompatibility + " for " + SymbolicUtil.printPath(expressionInOCL, true);
+					if (diagnostics != null) {
+						diagnostics.add(new BasicDiagnostic(diagnosticSeverity, DIAGNOSTIC_SOURCE, 0, message, new Object[] {expressionInOCL}));
+					}
+					return false;
+				}
+				BaseSymbolicEvaluationEnvironment evaluationEnvironment = symbolicAnalysis.getBaseSymbolicEvaluationEnvironment();
+				Map<@NonNull TypedElement, @NonNull CSEElement> element2cse = null;
+				for (@NonNull EObject eObject : new TreeIterable(expressionInOCL, true)) {		// FIXME Use CSEAnalysis
+					if (eObject instanceof TypedElement) {
+						TypedElement typedElement = (TypedElement)eObject;
+						SymbolicValue symbolicValue = evaluationEnvironment.getSymbolicValue(typedElement);
+						assert symbolicValue != null;
+						if (symbolicValue.mayBeInvalid() && !symbolicValue.isInvalid()) {			// FIXME Do we really want to suppress outright invalid warnings ?
+							CSEElement cseElement = symbolicAnalysis.getCSEElement(typedElement);
+							if (element2cse == null) {
+								element2cse = new HashMap<>();
+							}
+							element2cse.put(typedElement, cseElement);
+						}
+					}
+				}
+				if (element2cse != null) {
+					List<@NonNull TypedElement> invalidTypedElements = new ArrayList<@NonNull TypedElement>(element2cse.keySet());
+					Collections.sort(invalidTypedElements, new SymbolicUtil.TypedElementHeightComparator(element2cse));
+					for (int i = 0; i < invalidTypedElements.size(); i++) {		// Domain shrinks
+						TypedElement typedElement = invalidTypedElements.get(i);
+						for (EObject eContainer2 = typedElement.eContainer(); eContainer2 != null; eContainer2 = eContainer2.eContainer()) {
+							invalidTypedElements.remove(eContainer2);
+						}
+					}
+					for (@NonNull TypedElement typedElement : invalidTypedElements) {
+						boolean invalidIsPermissible = false;
+						if (isValidating) {
+							TypedElement referredtypedElement = typedElement;
+							if (referredtypedElement instanceof VariableExp) {
+								referredtypedElement = PivotUtil.getReferredVariable((VariableExp)referredtypedElement);
+							}
+							if (referredtypedElement instanceof ParameterVariable) {
+								invalidIsPermissible = true;
+							}
+						}
+						if (!invalidIsPermissible) {
+							int diagnosticSeverity = invalidResultSeverity.getDiagnosticSeverity();
+							String message = StringUtil.bind("May be invalid: {0}", SymbolicUtil.printPath(typedElement, true));
+							if (diagnostics != null) {
+								diagnostics.add(new BasicDiagnostic(diagnosticSeverity, DIAGNOSTIC_SOURCE, 0, message, new Object[] {typedElement}));
+							}
+							allOk = false;			// XXX
+						}
+					}
+				}
+			}
+		}
+		return allOk;
 	}
 
 	/**

@@ -17,6 +17,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
@@ -37,11 +38,12 @@ public abstract class AbstractEvaluatorIterationManager extends AbstractIteratio
 	{
 		private final EvaluationEnvironment evaluationEnvironment;
 		private final @NonNull CollectionValue collectionValue;
-		private final @NonNull TypedElement variable;
+		private final @NonNull VariableDeclaration variable;
 		private Iterator<? extends Object> javaIter;
 		private Object value;		// 'null' is a valid value so 'this' is used as end of iteration
 
 		/** @deprecated use Executor */
+		// FIXME VariableDeclaration
 		@Deprecated
 		public ValueIterator(@NonNull Evaluator evaluator, @NonNull CollectionValue collectionValue, @NonNull TypedElement variable) {
 			this(ValueUtil.getExecutor(evaluator), collectionValue, variable);
@@ -50,10 +52,11 @@ public abstract class AbstractEvaluatorIterationManager extends AbstractIteratio
 		/**
 		 * @since 1.1
 		 */
+		// FIXME VariableDeclaration
 		public ValueIterator(@NonNull Executor executor, @NonNull CollectionValue collectionValue, @NonNull TypedElement variable) {
 			this.evaluationEnvironment = executor.getEvaluationEnvironment();
 			this.collectionValue = collectionValue;
-			this.variable = variable;
+			this.variable = (VariableDeclaration) variable;
 			reset();
 		}
 
@@ -97,11 +100,12 @@ public abstract class AbstractEvaluatorIterationManager extends AbstractIteratio
 	/**
 	 * @since 1.1
 	 */
+	// FIXME VariableDeclaration
 	protected static @NonNull ValueIterator @Nullable [] createIterators(@NonNull TypedElement @NonNull [] referredIterators, @NonNull Executor executor, @NonNull CollectionValue collectionValue) {
 		int iMax = referredIterators.length;
 		@NonNull ValueIterator @Nullable [] iterators = new @NonNull ValueIterator[iMax];
 		for (int i = 0; i < iMax; i++) {
-			TypedElement referredIterator = referredIterators[i];
+			VariableDeclaration referredIterator = (VariableDeclaration)referredIterators[i];
 			ValueIterator valueIterator = new ValueIterator(executor, collectionValue, referredIterator);
 			if (!valueIterator.hasCurrent()) {
 				return null;
@@ -117,10 +121,12 @@ public abstract class AbstractEvaluatorIterationManager extends AbstractIteratio
 	 */
 	protected final /*@NonNull*/ CallExp callExp;		// Null at root or when calling context unknown
 	protected final @NonNull OCLExpression body;
+	// FIXME VariableDeclaration
 	protected final @Nullable TypedElement accumulatorVariable;
 	private @Nullable Object accumulatorValue;
 
 	/** deprecated supply a callExp */
+	// FIXME VariableDeclaration
 	@Deprecated
 	public AbstractEvaluatorIterationManager(@NonNull Evaluator evaluator, @NonNull OCLExpression body, @NonNull CollectionValue collectionValue,
 			@Nullable TypedElement accumulatorVariable, @Nullable Object accumulatorValue) {
@@ -130,6 +136,7 @@ public abstract class AbstractEvaluatorIterationManager extends AbstractIteratio
 	/**
 	 * @since 1.1
 	 */
+	// FIXME VariableDeclaration
 	protected AbstractEvaluatorIterationManager(@NonNull Executor executor, /*@NonNull*/ CallExp callExp, @NonNull OCLExpression body, @NonNull CollectionValue collectionValue,
 			@Nullable TypedElement accumulatorVariable, @Nullable Object accumulatorValue) {
 		super(executor);
@@ -199,7 +206,7 @@ public abstract class AbstractEvaluatorIterationManager extends AbstractIteratio
 	@Override
 	public @Nullable Object updateAccumulator(Object newValue) {
 		this.accumulatorValue = newValue;
-		TypedElement accumulatorVariable2 = accumulatorVariable;
+		VariableDeclaration accumulatorVariable2 = (VariableDeclaration)accumulatorVariable;
 		if (accumulatorVariable2 != null) {
 			getEvaluationEnvironment().replace(accumulatorVariable2, accumulatorValue);
 		}

@@ -16,11 +16,16 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.OperationCallExp;
+import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.evaluation.HypothesizedSymbolicEvaluationEnvironment;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
  * ImpliesOperation realises the implies() library operation.
@@ -28,6 +33,35 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
 public class BooleanImpliesOperation extends AbstractSimpleBinaryOperation
 {
 	public static final @NonNull BooleanImpliesOperation INSTANCE = new BooleanImpliesOperation();
+
+	/**
+	 * @since 1.16
+	 */
+	@Override
+	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
+		OCLExpression source = PivotUtil.getOwnedSource(callExp);
+		OCLExpression argument = PivotUtil.getOwnedArgument(callExp, 0);
+		SymbolicValue sourceValue = evaluationEnvironment.symbolicEvaluate(source);
+		SymbolicValue argumentValue = evaluationEnvironment.symbolicEvaluate(argument);
+		if (sourceValue.isFalse()) {		// source can short-circuit argument
+			evaluationEnvironment.setDead(argument);
+			return evaluationEnvironment.getKnownValue(Boolean.TRUE);
+		}
+		if (argumentValue.isTrue()) {		// argument can short-circuit source
+			evaluationEnvironment.setDead(source);
+			return evaluationEnvironment.getKnownValue(Boolean.TRUE);
+		}
+		return checkPreconditions(evaluationEnvironment, callExp, CHECK_NOT_INVALID | CHECK_NOT_NULL);
+	}
+
+	/**
+	 * @since 1.16
+	 */
+	@Override
+	protected @NonNull SymbolicValue createResultValue( @NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp,
+			@NonNull SymbolicValue sourceSymbolicValue, @NonNull List<@NonNull SymbolicValue> argumentSymbolicValues) {
+		return createValidatingResultValue(evaluationEnvironment, callExp, sourceSymbolicValue, argumentSymbolicValues);
+	}
 
 	@Override
 	public @Nullable Object dispatch(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object sourceValue) {
@@ -70,5 +104,45 @@ public class BooleanImpliesOperation extends AbstractSimpleBinaryOperation
 		else {
 			throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.BOOLEAN_NAME, getTypeName(right));
 		}
+	}
+
+	/**
+	 * @since 1.16
+	 */
+	@Override
+	public @Nullable String installPathConstraints(@NonNull HypothesizedSymbolicEvaluationEnvironment evaluationEnvironment, @NonNull TypedElement activeTypedElement, @NonNull OperationCallExp operationCallExp) {
+		OCLExpression source = PivotUtil.getOwnedSource(operationCallExp);
+		OCLExpression argument = PivotUtil.getOwnedArgument(operationCallExp, 0);
+		if (activeTypedElement == source) {
+			SymbolicValue refinedSymbolicValue = evaluationEnvironment.getKnownValue(Boolean.FALSE);
+			return evaluationEnvironment.installRefinement(argument, refinedSymbolicValue);
+		}
+		else {
+			assert activeTypedElement == argument;
+			SymbolicValue refinedSymbolicValue = evaluationEnvironment.getKnownValue(Boolean.TRUE);
+			return evaluationEnvironment.installRefinement(source, refinedSymbolicValue);
+		}
+	}
+
+	/**
+	 * @since 1.16
+	 */
+	@Override
+	public @NonNull SymbolicValue symbolicEvaluate(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
+		SymbolicValue symbolicPreconditionValue = checkPreconditions(evaluationEnvironment, callExp);
+		if (symbolicPreconditionValue != null) {
+			return symbolicPreconditionValue;
+		}
+		OCLExpression source = PivotUtil.getOwnedSource(callExp);
+		OCLExpression argument = PivotUtil.getOwnedArgument(callExp, 0);
+		SymbolicValue sourceValue = evaluationEnvironment.symbolicEvaluate(source);
+		SymbolicValue argumentValue = evaluationEnvironment.symbolicEvaluate(argument);
+		if (sourceValue.isTrue()) {
+			return argumentValue;		// Re-use known symbolic value
+		}
+	//	if (argumentValue.isFalse()) {
+	//		return sourceValue;			// Re-use known symbolic value ?? use not
+	//	}
+		return super.symbolicEvaluate(evaluationEnvironment, callExp);
 	}
 }

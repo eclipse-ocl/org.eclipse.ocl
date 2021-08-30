@@ -55,10 +55,12 @@ public class EvaluatorSingleIterationManager extends AbstractEvaluatorIterationM
 		}
 	}
 
+	// FIXME VariableDeclaration
 	protected final @NonNull TypedElement referredIterator;
 	protected final @NonNull ValueIterator iterator;
 
 	/** @deprecated supply a callExp */
+	// FIXME VariableDeclaration
 	@Deprecated
 	public EvaluatorSingleIterationManager(@NonNull Evaluator invokingEvaluator,
 			@NonNull OCLExpression body, @NonNull CollectionValue collectionValue,
@@ -70,6 +72,7 @@ public class EvaluatorSingleIterationManager extends AbstractEvaluatorIterationM
 	/**
 	 * @since 1.1
 	 */
+	// FIXME VariableDeclaration
 	public EvaluatorSingleIterationManager(@NonNull Executor invokingExecutor,
 			/*@NonNull*/ CallExp callExp, @NonNull OCLExpression body, @NonNull CollectionValue collectionValue,
 			@Nullable TypedElement accumulator, @Nullable Object accumulatorValue,

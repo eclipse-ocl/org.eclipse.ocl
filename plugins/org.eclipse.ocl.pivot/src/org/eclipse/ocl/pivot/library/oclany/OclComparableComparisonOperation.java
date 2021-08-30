@@ -29,12 +29,12 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
  * OclComparableComparisonOperation provides the abstract support for a comparison operation.
  */
 public abstract class OclComparableComparisonOperation extends AbstractUntypedBinaryOperation
-{	
+{
 	/** @deprecated use Executor */
 	@Deprecated
 	@Override
 	public @Nullable Boolean evaluate(@NonNull Evaluator evaluator, @Nullable Object left, @Nullable Object right) {
-		return evaluate(getExecutor(evaluator), left, right); 
+		return evaluate(getExecutor(evaluator), left, right);
 	}
 
 	/**
@@ -70,4 +70,17 @@ public abstract class OclComparableComparisonOperation extends AbstractUntypedBi
 	}
 
 	protected abstract boolean getResultValue(Integer comparison);
+
+	/**
+	 * @since 1.15
+	 *
+	@Override
+	public @Nullable Object symbolicEvaluate(@NonNull Executor executor, @NonNull OperationCallExp operationCallExp, @Nullable Object sourceValue, @Nullable Object argumentValue) {
+		if (sourceValue instanceof SymbolicValue) {
+			boolean mayBeInvalid = ValueUtil.mayBeInvalid(sourceValue) || ValueUtil.mayBeInvalid(argumentValue);
+			boolean mayBeNull = ValueUtil.mayBeNull(sourceValue) || ValueUtil.mayBeNull(argumentValue);
+			return new SimpleSymbolicConstraintImpl(operationCallExp.getTypeId(), false, mayBeNull || mayBeInvalid, SymbolicOperator.COMPARE_TO, argumentValue);
+		}
+		return evaluate(executor, sourceValue, argumentValue);
+	} */
 }

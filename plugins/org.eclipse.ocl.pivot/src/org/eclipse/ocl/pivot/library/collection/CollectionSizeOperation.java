@@ -12,9 +12,14 @@ package org.eclipse.ocl.pivot.library.collection;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.OperationCallExp;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent;
 import org.eclipse.ocl.pivot.library.AbstractSimpleUnaryOperation;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
  * CollectionSizeOperation realises the Collection::size() library operation.
@@ -27,5 +32,25 @@ public class CollectionSizeOperation extends AbstractSimpleUnaryOperation
 	public @NonNull IntegerValue evaluate(@Nullable Object argument) {
 		CollectionValue collectionValue = asCollectionValue(argument);
 		return collectionValue.size();
+	}
+
+	/**
+	 * @since 1.16
+	 */
+	@Override
+	public @NonNull SymbolicValue symbolicEvaluate(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
+		SymbolicValue symbolicPreconditionValue = checkPreconditions(evaluationEnvironment, callExp);
+		if (symbolicPreconditionValue != null) {
+			return symbolicPreconditionValue;
+		}
+		SymbolicValue sourceSymbolicValue = evaluationEnvironment.symbolicEvaluate(PivotUtil.getOwnedSource(callExp));
+		boolean isKnown = sourceSymbolicValue.isKnown();
+		if (isKnown) {
+			Object sourceKnownValue = sourceSymbolicValue.getKnownValue();
+			IntegerValue resultKnownValue = evaluate(sourceKnownValue);
+			return evaluationEnvironment.getKnownValue(resultKnownValue);
+		}
+		SymbolicContent content = sourceSymbolicValue.getContent();
+		return content.getSize();
 	}
 }

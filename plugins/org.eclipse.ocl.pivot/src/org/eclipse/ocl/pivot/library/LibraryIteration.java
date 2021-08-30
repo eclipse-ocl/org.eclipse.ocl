@@ -12,12 +12,15 @@ package org.eclipse.ocl.pivot.library;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.IterationManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
  */
@@ -49,4 +52,11 @@ public interface LibraryIteration extends LibraryIterationOrOperation
 	 * @throws InvalidValueException if a body evaluates to invalid
 	 */
 	@Nullable Object evaluateIteration(@NonNull IterationManager iterationManager);
+
+	/**
+	 * @since 1.17
+	 */
+	default @NonNull SymbolicValue symbolicEvaluate(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull LoopExp loopExp) {
+		throw new UnsupportedOperationException();
+	}
 }

@@ -37,4 +37,16 @@ public interface LibraryBinaryOperation extends LibraryOperation
 	/** @deprecated use Executor */
 	@Deprecated
 	@Nullable Object evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @Nullable Object sourceValue, @Nullable Object argumentValue);
+
+	/**
+	 * Evaluate an OclSelf binary operations as part of the symbolic evaluator. At least one of the source/argument values is a SymbolicValue.
+	 *
+	 * @since 1.15
+	 *
+	default @Nullable Object symbolicEvaluate(@NonNull Executor executor, @NonNull OperationCallExp operationCallExp, @Nullable Object sourceValue, @Nullable Object argumentValue) {
+		assert (sourceValue instanceof SymbolicValue) || (argumentValue instanceof SymbolicValue);
+		boolean mayBeInvalid = ValueUtil.mayBeInvalid(sourceValue) || ValueUtil.mayBeInvalid(argumentValue);
+		boolean mayBeNull = ValueUtil.mayBeNull(sourceValue) || ValueUtil.mayBeNull(argumentValue);
+		return new SymbolicOperationCallValueImpl(operationCallExp, false, mayBeNull || mayBeInvalid, this, Lists.newArrayList(sourceValue, argumentValue));
+	} */
 }

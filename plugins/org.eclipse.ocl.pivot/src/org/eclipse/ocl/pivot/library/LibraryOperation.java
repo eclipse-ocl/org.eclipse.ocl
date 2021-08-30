@@ -17,7 +17,10 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.EvaluationHaltedException;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.internal.evaluation.HypothesizedSymbolicEvaluationEnvironment;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
  */
@@ -68,4 +71,20 @@ public interface LibraryOperation extends LibraryIterationOrOperation
 	/** @deprecated use Executor */
 	@Deprecated
 	@Nullable Object dispatch(@NonNull Evaluator evaluator, @NonNull OperationCallExp callExp, @Nullable Object sourceValue);
+
+	/**
+	 * Refine the symbolic values in evaluationEnvironment of input elements of operationCallExp in the light of the knowledge that the activeTypedElement input executes as part
+	 * the exploration of the current hypothesis, The default implementation for an ordinary operation ensures that all source/argument inputs other than the active input are
+	 * conformant with the strict operation signature. Overrides for and/implies/or impose stronger refinemments in accord with their short-circuit characteristics.
+	 *
+	 * @since 1.16
+	 */
+	@Nullable String installPathConstraints(@NonNull HypothesizedSymbolicEvaluationEnvironment evaluationEnvironment, @NonNull TypedElement activeTypedElement, @NonNull OperationCallExp operationCallExp);
+
+	/**
+	 * @since 1.16
+	 */
+	default @NonNull SymbolicValue symbolicEvaluate(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
+		throw new UnsupportedOperationException();
+	}
 }

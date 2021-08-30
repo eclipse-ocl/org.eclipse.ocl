@@ -12,10 +12,13 @@ package org.eclipse.ocl.pivot.library.oclany;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.library.AbstractUntypedUnaryOperation;
+import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
  * OclAnyOclTypeOperation realises the OclAny::oclType() library operation.
@@ -23,12 +26,20 @@ import org.eclipse.ocl.pivot.library.AbstractUntypedUnaryOperation;
 public class OclAnyOclTypeOperation extends AbstractUntypedUnaryOperation
 {
 	public static final @NonNull OclAnyOclTypeOperation INSTANCE = new OclAnyOclTypeOperation();
-	
+
+	/**
+	 * @since 1.16
+	 */
+	@Override
+	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
+		return checkPreconditions(evaluationEnvironment, callExp, CHECK_NOT_INVALID);
+	}
+
 	/** @deprecated use Executor */
 	@Deprecated
 	@Override
 	public @NonNull Type evaluate(@NonNull Evaluator evaluator, @Nullable Object sourceValue) {
-		return evaluate(getExecutor(evaluator), sourceValue); 
+		return evaluate(getExecutor(evaluator), sourceValue);
 	}
 
 	/**

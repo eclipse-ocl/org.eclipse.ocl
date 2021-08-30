@@ -12,8 +12,14 @@ package org.eclipse.ocl.pivot.library.oclany;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.OperationCallExp;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.library.AbstractSimpleUnaryOperation;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
  * OclAnyToStringOperation realises the OclAny::toString() library operation.
@@ -22,11 +28,39 @@ public class OclAnyToStringOperation extends AbstractSimpleUnaryOperation
 {
 	public static final @NonNull OclAnyToStringOperation INSTANCE = new OclAnyToStringOperation();
 
+	/**
+	 * @since 1.16
+	 */
+	@Override
+	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
+		return checkPreconditions(evaluationEnvironment, callExp, CHECK_NOT_INVALID);
+	}
+
 	@Override
 	public @NonNull String evaluate(@Nullable Object sourceVal) {
 		if (sourceVal instanceof InvalidValueException)	{				// FIXME Remove this once CG has proper invalid analysis
 			throw (InvalidValueException)sourceVal;
 		}
-		return sourceVal != null ? oclToString(sourceVal) : NULL_STRING;
+		return sourceVal != null ? oclToString(sourceVal) : ValueUtil.NULL_STRING;
+	}
+
+	/**
+	 * @since 1.16
+	 */
+	@Override
+	public @NonNull SymbolicValue symbolicEvaluate(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
+		SymbolicValue symbolicPreconditionValue = checkPreconditions(evaluationEnvironment, callExp);
+		if (symbolicPreconditionValue != null) {
+			return symbolicPreconditionValue;
+		}
+		boolean isSafe = callExp.isIsSafe();
+		OCLExpression source = PivotUtil.getOwnedSource(callExp);
+		SymbolicValue sourceValue = evaluationEnvironment.symbolicEvaluate(source);
+		if (sourceValue.isNull()) {
+			return evaluationEnvironment.getKnownValue(isSafe ? null : ValueUtil.NULL_STRING);
+		} else {
+			boolean mayBeNull = sourceValue.mayBeNull();
+			return evaluationEnvironment.getUnknownValue(callExp, isSafe && mayBeNull, false);
+		}
 	}
 }

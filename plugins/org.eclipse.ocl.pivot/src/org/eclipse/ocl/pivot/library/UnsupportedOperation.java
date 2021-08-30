@@ -16,6 +16,9 @@ import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
  * UnsupportedOperation realises an unimplemented library operation.
@@ -23,6 +26,11 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 public class UnsupportedOperation extends AbstractOperation implements LibraryProperty.LibraryPropertyExtension
 {
 	public static final @NonNull UnsupportedOperation INSTANCE = new UnsupportedOperation();
+
+	@Override
+	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
+		return checkPreconditions(evaluationEnvironment, callExp, 0);
+	}
 
 	/**
 	 * @since 1.1
@@ -37,7 +45,7 @@ public class UnsupportedOperation extends AbstractOperation implements LibraryPr
 	@Override
 	public @Nullable Object evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
 		throw new UnsupportedOperationException();
-	}	
+	}
 
 	/**
 	 * @since 1.1
@@ -45,5 +53,10 @@ public class UnsupportedOperation extends AbstractOperation implements LibraryPr
 	@Override
 	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public @NonNull SymbolicValue symbolicEvaluate(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment,@NonNull OperationCallExp callExp) {
+		return evaluationEnvironment.getKnownValue(ValueUtil.INVALID_VALUE);
 	}
 }

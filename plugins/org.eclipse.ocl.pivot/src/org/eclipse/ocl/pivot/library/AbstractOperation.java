@@ -10,22 +10,39 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.library;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
+import org.eclipse.ocl.pivot.Parameter;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.EvaluationHaltedException;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.evaluation.BaseSymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal.ExecutorInternalExtension;
+import org.eclipse.ocl.pivot.internal.evaluation.HypothesizedSymbolicEvaluationEnvironment;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
+import org.eclipse.ocl.pivot.internal.library.ConstrainedOperation;
+import org.eclipse.ocl.pivot.internal.symbolic.AbstractSymbolicRefinedValue;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.pivot.values.SymbolicValue;
+
+import com.google.common.collect.Iterables;
 
 /**
  * AbstractOperation defines the minimal functionality of all Operation implementations. Each implemented
@@ -39,6 +56,23 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
  */
 public abstract class AbstractOperation extends AbstractIterationOrOperation implements LibraryOperation.LibraryOperationExtension2
 {
+	/**
+	 * @since 1.16
+	 */
+	protected static final int CHECK_NO_OCL_INVALID_OVERLOAD = 1 << 0;
+	/**
+	 * @since 1.16
+	 */
+	protected static final int CHECK_NO_OCL_VOID_OVERLOAD = 1 << 1;
+	/**
+	 * @since 1.16
+	 */
+	protected static final int CHECK_NOT_INVALID = 1 << 2;
+	/**
+	 * @since 1.16
+	 */
+	protected static final int CHECK_NOT_NULL = 1 << 3;
+
 	/**
 	 * Return the evaluation from sourceAndArgumentValues using the executor for context wrt a caller.
 	 *
@@ -66,6 +100,123 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 		else {
 			return basicEvaluate(executor, caller, sourceAndArgumentValues);
 		}
+	}
+
+	/**
+	 * @since 1.16
+	 */
+	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
+		return checkPreconditions(evaluationEnvironment, callExp, CHECK_NO_OCL_INVALID_OVERLOAD | CHECK_NO_OCL_VOID_OVERLOAD | CHECK_NOT_INVALID | CHECK_NOT_NULL);
+	}
+
+	/**
+	 * @since 1.16
+	 */
+	protected final @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp, int checkFlags) {
+		EnvironmentFactory environmentFactory = evaluationEnvironment.getEnvironmentFactory();
+		CompleteModel completeModel = environmentFactory.getCompleteModel();
+		StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
+		Operation referredOperation = PivotUtil.getReferredOperation(callExp);
+		TypeId returnTypeId = callExp.getTypeId();
+		boolean returnMayBeNull = !callExp.isIsRequired();
+		OCLExpression source = PivotUtil.getOwnedSource(callExp);
+		SymbolicValue sourceValue = evaluationEnvironment.symbolicEvaluate(source);
+		if (sourceValue.asIncompatibility() != null) {
+			return sourceValue;
+		}
+		for (@NonNull OCLExpression argument : PivotUtil.getOwnedArguments(callExp)) {
+			SymbolicValue argumentValue = evaluationEnvironment.symbolicEvaluate(argument);
+			if (argumentValue.asIncompatibility() != null) {
+				return argumentValue;
+			}
+		}
+		if ((checkFlags & CHECK_NOT_INVALID) != 0) {
+			if ((checkFlags & CHECK_NO_OCL_INVALID_OVERLOAD) != 0) {
+				CompleteClass oclInvalidClass = completeModel.getCompleteClass(standardLibrary.getOclInvalidType());
+				Operation oclInvalidOperation = oclInvalidClass.getOperation(referredOperation);
+				assert oclInvalidOperation == null : "Missing OclInvalid overload for " + referredOperation;
+			}
+			SymbolicValue invalidSourceProblem = evaluationEnvironment.checkNotInvalid(source, returnTypeId, returnMayBeNull);
+			if (invalidSourceProblem != null) {
+				return invalidSourceProblem;
+			}
+		}
+		if ((checkFlags & CHECK_NOT_NULL) != 0) {
+			if ((checkFlags & CHECK_NO_OCL_VOID_OVERLOAD) != 0) {
+				CompleteClass oclVoidClass = completeModel.getCompleteClass(standardLibrary.getOclVoidType());
+				Operation oclVoidOperation = oclVoidClass.getOperation(referredOperation);
+				assert oclVoidOperation == null : "Missing OcVoid overload for " + referredOperation;
+			}
+			if (!callExp.isIsSafe()) {
+				SymbolicValue nullSourceProblem = evaluationEnvironment.checkNotNull(source, returnTypeId, returnMayBeNull);
+				if (nullSourceProblem != null) {
+					return nullSourceProblem;
+				}
+			}
+		}
+		int i = 0;
+		for (@NonNull OCLExpression argument : PivotUtil.getOwnedArguments(callExp)) {
+			if (!referredOperation.isIsValidating() && ((checkFlags & CHECK_NOT_INVALID) != 0)) {
+				SymbolicValue invalidArgumentProblem = evaluationEnvironment.checkNotInvalid(argument, returnTypeId, returnMayBeNull);
+				if (invalidArgumentProblem != null) {
+					return invalidArgumentProblem;
+				}
+			}
+			Parameter parameter = PivotUtil.getOwnedParameter(referredOperation, i);
+			if (parameter.isIsRequired() && ((checkFlags & CHECK_NOT_NULL) != 0)) {
+				SymbolicValue nullArgumentProblem = evaluationEnvironment.checkNotNull(argument, returnTypeId, returnMayBeNull);
+				if (nullArgumentProblem != null) {
+					return nullArgumentProblem;
+				}
+			}
+			SymbolicValue compatibleArgumentProblem = evaluationEnvironment.checkCompatibility(argument, returnTypeId);
+			if (compatibleArgumentProblem != null) {
+				return compatibleArgumentProblem;
+			}
+			i++;
+		}
+		SymbolicValue compatibleArgumentProblem = evaluationEnvironment.checkCompatibility(source, returnTypeId);
+		if (compatibleArgumentProblem != null) {
+			return compatibleArgumentProblem;
+		}
+		return null;
+	}
+
+	/**
+	 * @since 1.16
+	 */
+	protected @NonNull SymbolicValue createResultValue(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp,
+			@NonNull SymbolicValue sourceSymbolicValue, @NonNull List<@NonNull SymbolicValue> argumentSymbolicValues) {
+		OCLExpression ownedSource = PivotUtil.getOwnedSource(callExp);
+		Operation referredOperation = PivotUtil.getReferredOperation(callExp);
+		assert (this instanceof ConstrainedOperation) || !referredOperation.isIsValidating() : "Missing createResultValue overload for " + referredOperation.getImplementationClass();
+		boolean mayBeInvalid = false;
+		boolean mayBeNull = false;
+		if (evaluationEnvironment.mayBeInvalid(ownedSource)) {
+			mayBeInvalid = true;
+		}
+		if (evaluationEnvironment.mayBeNull(ownedSource)) {
+			if (callExp.isIsSafe()) {
+				mayBeNull = true;
+			}
+			else {
+				mayBeInvalid = true;
+			}
+		}
+		int i = 0;
+		for (@NonNull SymbolicValue argumentSymbolicValue : argumentSymbolicValues) {		// XXX correlate parameter/return nullity
+			if (argumentSymbolicValue.mayBeInvalid()) {
+				mayBeInvalid = true;
+			}
+			else if (argumentSymbolicValue.mayBeNull()){
+				Parameter ownedParameter = PivotUtil.getOwnedParameter(referredOperation, i);
+				if (ownedParameter.isIsRequired()) {
+					mayBeInvalid = true;
+				}
+			}
+			i++;
+		}
+		return evaluationEnvironment.getUnknownValue(callExp, mayBeNull, mayBeInvalid);
 	}
 
 	/**
@@ -137,4 +288,114 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 	//	public boolean isCached() {
 	//		return true;
 	//	}
+
+	@Override
+	public @Nullable String installPathConstraints(@NonNull HypothesizedSymbolicEvaluationEnvironment evaluationEnvironment, @NonNull TypedElement activeTypedElement, @NonNull OperationCallExp operationCallExp) {
+		Operation operation = PivotUtil.getReferredOperation(operationCallExp);
+		BaseSymbolicEvaluationEnvironment baseSymbolicEvaluationEnvironment = evaluationEnvironment.getBaseSymbolicEvaluationEnvironment();
+		String incompatibility = null;
+		//
+		OCLExpression ownedSource = PivotUtil.getOwnedSource(operationCallExp);
+		if (ownedSource != activeTypedElement) {
+			SymbolicValue baseSymbolicValue = baseSymbolicEvaluationEnvironment.getSymbolicValue(ownedSource);
+			SymbolicValue refinedSymbolicValue = baseSymbolicValue;
+			//
+			boolean mayBeInvalid = false;
+			EnvironmentFactory environmentFactory = evaluationEnvironment.getEnvironmentFactory();
+			CompleteModel completeModel = environmentFactory.getCompleteModel();
+			StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
+			CompleteClass oclInvalidClass = completeModel.getCompleteClass(standardLibrary.getOclInvalidType());
+			Operation oclInvalidOperation = oclInvalidClass.getOperation(operation);
+			if (oclInvalidOperation != null) {
+				mayBeInvalid = true;
+			}
+			if (!mayBeInvalid && baseSymbolicValue.mayBeInvalid()) {
+				refinedSymbolicValue = AbstractSymbolicRefinedValue.createExceptValue(refinedSymbolicValue, ValueUtil.INVALID_VALUE);
+			}
+			//
+			boolean mayBeNull = false;
+			if (operationCallExp.isIsSafe()) {
+				mayBeNull = true;
+			}
+			else {
+				CompleteClass oclVoidClass = completeModel.getCompleteClass(standardLibrary.getOclVoidType());
+				Operation oclVoidOperation = oclVoidClass.getOperation(operation);
+				if (oclVoidOperation != null) {
+					mayBeNull = true;
+				}
+			}
+			if (!mayBeNull && baseSymbolicValue.mayBeNull()) {
+				refinedSymbolicValue = AbstractSymbolicRefinedValue.createExceptValue(refinedSymbolicValue, null);
+			}
+			if (refinedSymbolicValue != baseSymbolicValue) {
+				incompatibility = evaluationEnvironment.installRefinement(ownedSource, refinedSymbolicValue);
+			}
+		}
+		if (incompatibility == null) {
+			List<@NonNull OCLExpression> ownedArguments = PivotUtilInternal.getOwnedArgumentsList(operationCallExp);
+			if (ownedArguments.size() > 0) {
+				assert !operation.isIsValidating();
+				int i = 0;
+				for (@NonNull Parameter parameter : PivotUtil.getOwnedParameters(operation)) {
+					OCLExpression argument = ownedArguments.get(i);
+					if (argument != activeTypedElement) {
+						SymbolicValue baseSymbolicValue = baseSymbolicEvaluationEnvironment.getSymbolicValue(argument);
+						if (parameter.isIsRequired()) {
+							SymbolicValue refinedSymbolicValue2 = baseSymbolicValue;
+							if (baseSymbolicValue.mayBeInvalid()) {
+								refinedSymbolicValue2 = AbstractSymbolicRefinedValue.createExceptValue(refinedSymbolicValue2, ValueUtil.INVALID_VALUE);
+							}
+							if (baseSymbolicValue.mayBeNull()) {
+								refinedSymbolicValue2 = AbstractSymbolicRefinedValue.createExceptValue(refinedSymbolicValue2, null);
+							}
+							if (refinedSymbolicValue2 != baseSymbolicValue) {
+								incompatibility = evaluationEnvironment.installRefinement(argument, refinedSymbolicValue2);
+								if (incompatibility != null) {
+									break;
+								}
+							}
+						}
+					}
+					i++;
+				}
+			}
+		}
+		return incompatibility;
+	}
+
+	/**
+	 * @since 1.16
+	 */
+	@Override
+	public @NonNull SymbolicValue symbolicEvaluate(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
+		SymbolicValue symbolicPreconditionValue = checkPreconditions(evaluationEnvironment, callExp);
+		if (symbolicPreconditionValue != null) {
+			return symbolicPreconditionValue;
+		}
+		SymbolicValue sourceSymbolicValue = evaluationEnvironment.symbolicEvaluate(PivotUtil.getOwnedSource(callExp));
+		boolean isKnown = sourceSymbolicValue.isKnown();
+		Iterable<@NonNull OCLExpression> ownedArguments = PivotUtil.getOwnedArguments(callExp);
+		int argumentsSize = Iterables.size(ownedArguments);
+		List<@NonNull SymbolicValue> argumentSymbolicValues = new ArrayList<@NonNull SymbolicValue>(argumentsSize);
+		for (@NonNull OCLExpression argument : ownedArguments) {
+			SymbolicValue argumentSymbolicValue = evaluationEnvironment.symbolicEvaluate(argument);
+			if (!argumentSymbolicValue.isKnown()) {
+				isKnown = false;
+			}
+			argumentSymbolicValues.add(argumentSymbolicValue);
+		}
+		if (isKnown) {
+			@Nullable Object[] sourceAndArgumentValues = new @Nullable Object[1+argumentsSize];
+			sourceAndArgumentValues[0] = sourceSymbolicValue.getKnownValue();
+			for (int i = 0; i < argumentsSize; i++) {
+				sourceAndArgumentValues[i+1] = argumentSymbolicValues.get(i).getKnownValue();
+			}
+			ExecutorInternal executor = evaluationEnvironment.getSymbolicAnalysis().getExecutor();
+			Object result = ((LibraryOperationExtension2)this).evaluate(executor, callExp, sourceAndArgumentValues);
+			return evaluationEnvironment.getKnownValue(result);
+		}
+		else {
+			return createResultValue(evaluationEnvironment, callExp, sourceSymbolicValue, argumentSymbolicValues);
+		}
+	}
 }

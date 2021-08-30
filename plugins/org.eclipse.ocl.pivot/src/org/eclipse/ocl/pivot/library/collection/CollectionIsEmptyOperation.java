@@ -12,8 +12,16 @@ package org.eclipse.ocl.pivot.library.collection;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.OperationCallExp;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
+import org.eclipse.ocl.pivot.internal.symbolic.AbstractSymbolicRefinedValue;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicNumericValue;
 import org.eclipse.ocl.pivot.library.AbstractSimpleUnaryOperation;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
+import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
  * CollectionIsEmptyOperation realises the Collection::isEmpty() library operation.
@@ -26,5 +34,31 @@ public class CollectionIsEmptyOperation extends AbstractSimpleUnaryOperation
 	public @NonNull Boolean evaluate(@Nullable Object argument) {
 		CollectionValue collectionValue = asCollectionValue(argument);
 		return collectionValue.isEmpty();
+	}
+
+	/**
+	 * @since 1.16
+	 */
+	@Override
+	public @NonNull SymbolicValue symbolicEvaluate(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
+		SymbolicValue symbolicPreconditionValue = checkPreconditions(evaluationEnvironment, callExp);
+		if (symbolicPreconditionValue != null) {
+			return symbolicPreconditionValue;
+		}
+		OCLExpression source = PivotUtil.getOwnedSource(callExp);
+		SymbolicValue sourceValue = evaluationEnvironment.symbolicEvaluate(source);
+		SymbolicContent content = sourceValue.getContent();
+		SymbolicValue sizeValue = content.getSize();
+		SymbolicNumericValue zeroStatus = sizeValue.getNumericValue();
+		if (zeroStatus.isZero()) {
+			return evaluationEnvironment.getKnownValue(Boolean.TRUE);
+		}
+		else if (zeroStatus.isNotZero()) {
+			return evaluationEnvironment.getKnownValue(Boolean.FALSE);
+		}
+		else {
+			SymbolicValue emptyValue = AbstractSymbolicRefinedValue.createIsZeroValue(sizeValue);
+			return emptyValue;
+		}
 	}
 }

@@ -85,6 +85,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.WildcardType;
+import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.compatibility.EMF_2_9;
@@ -96,6 +97,10 @@ import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis.SymbolicClassAnalysis;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis.SymbolicCompleteClassAnalysis;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis.SymbolicExpressionAnalysis;
 import org.eclipse.ocl.pivot.internal.library.ConstrainedOperation;
 import org.eclipse.ocl.pivot.internal.library.EInvokeOperation;
 import org.eclipse.ocl.pivot.internal.library.ImplementationManager;
@@ -308,6 +313,15 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	 */
 	private @Nullable Map<@NonNull OCLExpression, @NonNull FlowAnalysis> oclExpression2flowAnalysis = null;
 
+	/**
+	 * Lazily computed, eagerly invalidated static symbolic analysis of the invariants.
+	 */
+	private @Nullable Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull SymbolicClassAnalysis> class2symbolicAnalysis = null;
+	private @Nullable Map<@NonNull CompleteClass, @NonNull SymbolicCompleteClassAnalysis> completeClass2symbolicAnalysis = null;
+
+	//	expression flow analysis is argument dependent
+	//	private @Nullable Map<@NonNull ExpressionInOCL, @NonNull SymbolicExpressionAnalysis> expressionInOCL2symbolicAnalysis = null;
+
 	private @Nullable Map<Resource,External2AS> es2ases = null;
 
 	/**
@@ -403,6 +417,21 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 			}
 		}
 	}
+
+	/**
+	 * @since 1.17
+	 *
+	@Override
+	public @Nullable SymbolicAnalysis basicGetSymbolicAnalysis(@NonNull Element element) {
+		ExpressionInOCL expressionInOCL = PivotUtil.getContainingExpressionInOCL(element);
+		if (expressionInOCL != null) {
+			Map<@NonNull ExpressionInOCL, @NonNull SymbolicExpressionAnalysis> expressionInOCL2symbolicAnalysis2 = expressionInOCL2symbolicAnalysis;
+			if (expressionInOCL2symbolicAnalysis2 != null) {
+				return expressionInOCL2symbolicAnalysis2.get(expressionInOCL);
+			}
+		}
+		return null;
+	} */
 
 	/**
 	 * Return -ve if match1 is inferior to match2, +ve if match2 is inferior to match1, or
@@ -628,6 +657,28 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		asString.setType(standardLibrary.getStringType());
 		asString.setIsRequired(true);
 		return asString;
+	}
+
+	/**
+	 * @since 1.17
+	 */
+	protected @NonNull SymbolicClassAnalysis createSymbolicClassAnalysis(org.eclipse.ocl.pivot.@NonNull Class selfClass, @NonNull ModelManager modelManager) {
+		return new SymbolicClassAnalysis(selfClass, (EnvironmentFactoryInternalExtension)environmentFactory, modelManager);
+	}
+
+	/**
+	 * @since 1.17
+	 */
+	protected @NonNull SymbolicCompleteClassAnalysis createSymbolicClassAnalysis(@NonNull CompleteClass completeClass, @NonNull ModelManager modelManager) {
+		return new SymbolicCompleteClassAnalysis(completeClass, (EnvironmentFactoryInternalExtension)environmentFactory, modelManager);
+	}
+
+	/**
+	 * @since 1.17
+	 */
+	protected @NonNull SymbolicExpressionAnalysis createSymbolicExpressionAnalysis(@NonNull ExpressionInOCL expressionInOCL, @NonNull ModelManager modelManager) {
+	//	return new SymbolicOCLExecutor((EnvironmentFactoryInternalExtension)environmentFactory, modelManager);
+		return new SymbolicExpressionAnalysis(expressionInOCL, (EnvironmentFactoryInternalExtension)environmentFactory, modelManager);
 	}
 
 	public @NonNull UnlimitedNaturalLiteralExp createUnlimitedNaturalLiteralExp(@NonNull Number unlimitedNaturalSymbol) {		// FIXME move to PivotHelper
@@ -1734,6 +1785,74 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		return completeClass.getProperSuperCompleteClasses();
 	}
 
+	/**
+	 * @since 1.3
+	 *
+	@Override
+	public @NonNull SymbolicAnalysis getSymbolicAnalysis(@NonNull ExpressionInOCL expressionInOCL, @Nullable Object selfObject, @Nullable Object resultObject, @Nullable Object @Nullable [] parameters) {
+		ModelManager modelManager = ModelManager.NULL; //environmentFactory.createModelManager(selfObject);
+		SymbolicAnalysis symbolicAnalysis = createSymbolicExpressionAnalysis(expressionInOCL, modelManager);
+		symbolicAnalysis.analyzeExpression(expressionInOCL, selfObject, resultObject, parameters);			// XXX all related constraints
+		return symbolicAnalysis;
+	} */
+	/**
+	 * @since 1.3
+	 */
+	@Override
+	public @NonNull SymbolicAnalysis getSymbolicAnalysis(@NonNull ExpressionInOCL expressionInOCL, @Nullable Object selfObject, @Nullable Object resultObject, @Nullable Object @Nullable [] parameters) {
+		ModelManager modelManager = ModelManager.NULL; //environmentFactory.createModelManager(selfObject);
+		Type containingType = PivotUtil.getContainingType(expressionInOCL);
+		if (containingType instanceof org.eclipse.ocl.pivot.Class) {
+			org.eclipse.ocl.pivot.Class selfClass = (org.eclipse.ocl.pivot.Class)containingType; // XXX getCompleteClass(containingType);
+			SymbolicAnalysis symbolicAnalysis;
+			CompleteClass completeClass = getCompleteClass(containingType);
+			if (Iterables.contains(completeClass.getPartialClasses(), containingType)) {
+				Map<@NonNull CompleteClass, @NonNull SymbolicCompleteClassAnalysis> completeClass2symbolicAnalysis2 = completeClass2symbolicAnalysis;
+				if (completeClass2symbolicAnalysis2 == null) {
+					completeClass2symbolicAnalysis = completeClass2symbolicAnalysis2 = new HashMap<>();
+				}
+				SymbolicCompleteClassAnalysis symbolicClassAnalysis = completeClass2symbolicAnalysis2.get(completeClass);
+				if (symbolicClassAnalysis == null) {
+					symbolicClassAnalysis = createSymbolicClassAnalysis(completeClass, modelManager);
+					completeClass2symbolicAnalysis2.put(completeClass, symbolicClassAnalysis);
+					symbolicClassAnalysis.analyzeInvariants();
+				}
+				symbolicAnalysis = symbolicClassAnalysis;
+			//	Namespace containingNamespace = PivotUtil.getContainingNamespace(expressionInOCL);
+			//	if ((containingNamespace == containingType) && (expressionInOCL.eContainmentFeature() == PivotPackage.Literals.CONSTRAINT__OWNED_SPECIFICATION)) {
+			//		return symbolicClassAnalysis;
+			}
+			else {
+				Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull SymbolicClassAnalysis> class2symbolicAnalysis2 = class2symbolicAnalysis;
+				if (class2symbolicAnalysis2 == null) {
+					class2symbolicAnalysis = class2symbolicAnalysis2 = new HashMap<>();
+				}
+				SymbolicClassAnalysis symbolicClassAnalysis = class2symbolicAnalysis2.get(selfClass);
+				if (symbolicClassAnalysis == null) {
+					symbolicClassAnalysis = createSymbolicClassAnalysis(selfClass, modelManager);
+					class2symbolicAnalysis2.put(selfClass, symbolicClassAnalysis);
+					symbolicClassAnalysis.analyzeInvariants();
+				}
+				symbolicAnalysis = symbolicClassAnalysis;
+			}
+			Namespace containingNamespace = PivotUtil.getContainingNamespace(expressionInOCL);
+			if ((containingNamespace == containingType) && (expressionInOCL.eContainmentFeature() == PivotPackage.Literals.CONSTRAINT__OWNED_SPECIFICATION)) {
+				return symbolicAnalysis;
+			}
+		}
+	//	Map<@NonNull ExpressionInOCL, @NonNull SymbolicExpressionAnalysis> expressionInOCL2symbolicAnalysis2 = expressionInOCL2symbolicAnalysis;
+	//	if (expressionInOCL2symbolicAnalysis2 == null) {
+	//		expressionInOCL2symbolicAnalysis = expressionInOCL2symbolicAnalysis2 = new HashMap<>();
+	//	}
+	//	SymbolicExpressionAnalysis symbolicExpressionAnalysis = expressionInOCL2symbolicAnalysis2.get(expressionInOCL);
+	//	if (symbolicExpressionAnalysis == null) {
+		SymbolicExpressionAnalysis symbolicExpressionAnalysis = createSymbolicExpressionAnalysis(expressionInOCL, modelManager);
+	//		expressionInOCL2symbolicAnalysis2.put(expressionInOCL, symbolicExpressionAnalysis);
+			symbolicExpressionAnalysis.analyzeExpression(expressionInOCL, selfObject, resultObject, parameters);
+	//	}
+		return symbolicExpressionAnalysis;
+	}
+
 	@Override
 	public ResourceSet getTarget() {
 		return asResourceSet;
@@ -2220,11 +2339,12 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	}
 
 	/**
-	 * @since 1.16
+	 * @since 1.17
 	 */
 	public void resetAnalyses() {
 		resetFinalAnalysis();
 		resetFlowAnalysis();
+		resetSymbolicAnalysis();
 	}
 
 	/**
@@ -2241,6 +2361,14 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	@Override
 	public void resetFlowAnalysis() {
 		oclExpression2flowAnalysis = null;
+	}
+
+	/**
+	 * @since 1.17
+	 */
+	public void resetSymbolicAnalysis() {
+		class2symbolicAnalysis = null;
+		completeClass2symbolicAnalysis = null;
 	}
 
 	public void setASmetamodel(org.eclipse.ocl.pivot.Package asPackage) {

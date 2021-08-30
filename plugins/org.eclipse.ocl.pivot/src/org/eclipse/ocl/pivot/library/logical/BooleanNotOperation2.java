@@ -14,8 +14,10 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.library.AbstractSimpleUnaryOperation;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
  * BooleanNotOperation2 realises the 2-valued not() library operation.
@@ -25,6 +27,14 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
 public class BooleanNotOperation2 extends AbstractSimpleUnaryOperation
 {
 	public static final @NonNull BooleanNotOperation2 INSTANCE = new BooleanNotOperation2();
+
+	/**
+	 * @since 1.16
+	 */
+	@Override		// Not actually necessary - no OclInvalid/OclVoid overloads
+	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
+		return checkPreconditions(evaluationEnvironment, callExp, CHECK_NOT_INVALID | CHECK_NOT_NULL);
+	}
 
 	@Override
 	public @Nullable Object dispatch(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object sourceValue) {

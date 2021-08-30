@@ -12,12 +12,17 @@ package org.eclipse.ocl.pivot.library.oclany;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.library.AbstractUntypedBinaryOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
  * OclAnyOclAsTypeOperation realises the OclAny::oclAsType() library operation.
@@ -25,6 +30,14 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
 public class OclAnyOclAsTypeOperation extends AbstractUntypedBinaryOperation
 {
 	public static final @NonNull OclAnyOclAsTypeOperation INSTANCE = new OclAnyOclAsTypeOperation();
+
+	/**
+	 * @since 1.16
+	 */
+	@Override
+	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
+		return checkPreconditions(evaluationEnvironment, callExp, CHECK_NOT_INVALID);
+	}
 
 	/**
 	 * @since 1.1
@@ -45,6 +58,42 @@ public class OclAnyOclAsTypeOperation extends AbstractUntypedBinaryOperation
 		}
 		else {
 			throw new InvalidValueException(PivotMessages.IncompatibleOclAsTypeSourceType, sourceType, argType);
+		}
+	}
+
+	/**
+	 * @since 1.16
+	 *
+	@Override
+	public @Nullable String installPathConstraints(@NonNull HypothesizedSymbolicEvaluationEnvironment evaluationEnvironment, @NonNull TypedElement activeTypedElement, @NonNull OperationCallExp operationCallExp) {
+		OCLExpression source = PivotUtil.getOwnedSource(operationCallExp);
+		OCLExpression argument = PivotUtil.getOwnedArgument(operationCallExp, 0);
+		SymbolicValue refinedSymbolicValue = evaluationEnvironment.getKnownValue(Boolean.FALSE);
+		if (activeTypedElement == source) {
+			return evaluationEnvironment.installRefinement(argument, refinedSymbolicValue);
+		}
+		else {
+			assert activeTypedElement == argument;
+			return evaluationEnvironment.installRefinement(source, refinedSymbolicValue);
+		}
+	} */
+
+	/**
+	 * @since 1.16
+	 */
+	@Override
+	public @NonNull SymbolicValue symbolicEvaluate(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
+		SymbolicValue symbolicPreconditionValue = checkPreconditions(evaluationEnvironment, callExp);
+		if (symbolicPreconditionValue != null) {
+			return symbolicPreconditionValue;
+		}
+		OCLExpression source = PivotUtil.getOwnedSource(callExp);
+		SymbolicValue sourceValue = evaluationEnvironment.symbolicEvaluate(source);
+		if (sourceValue.isNull()) {
+			return sourceValue;
+		}
+		else {
+			return evaluationEnvironment.getUnknownValue(callExp, false, false);
 		}
 	}
 }

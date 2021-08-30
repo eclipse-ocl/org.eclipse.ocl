@@ -90,6 +90,7 @@ import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.RealValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
 import org.eclipse.ocl.pivot.values.SetValue;
+import org.eclipse.ocl.pivot.values.SymbolicValue;
 import org.eclipse.ocl.pivot.values.TupleValue;
 import org.eclipse.ocl.pivot.values.UniqueCollectionValue;
 import org.eclipse.ocl.pivot.values.Unlimited;
@@ -899,6 +900,7 @@ public abstract class ValueUtil
 	}
 
 	public static boolean isBoxed(@Nullable Object object) {	// FIXME just EObject and String as boxed non-Value
+		assert !(object instanceof SymbolicValue) : "SymbolValue is no longer a Value";
 		if (object instanceof InvalidValue) {
 			return true;
 		}
@@ -971,7 +973,7 @@ public abstract class ValueUtil
 	/**
 	 * Return true if value is an invalid value.
 	 *
-	 * @since 1.16
+	 * @since 1.17
 	 */
 	public static boolean isInvalidValue(@Nullable Object value) {
 		return (value instanceof InvalidValue);
@@ -992,7 +994,7 @@ public abstract class ValueUtil
 	/**
 	 * Return true if value is a null value.
 	 *
-	 * @since 1.16
+	 * @since 1.17
 	 */
 	public static boolean isNullValue(@Nullable Object value) {
 		return (value == null) || ((value instanceof NullValue) && !(value instanceof InvalidValue));

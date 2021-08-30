@@ -10,12 +10,20 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.library.logical;
 
+import java.util.List;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.library.AbstractSimpleUnaryOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
  * NotOperation realises the not() library operation.
@@ -23,6 +31,35 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
 public class BooleanNotOperation extends AbstractSimpleUnaryOperation
 {
 	public static final @NonNull BooleanNotOperation INSTANCE = new BooleanNotOperation();
+
+	/**
+	 * @since 1.16
+	 */
+	@Override
+	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
+		return checkPreconditions(evaluationEnvironment, callExp, CHECK_NOT_INVALID);
+	}
+
+	/**
+	 * @since 1.16
+	 */
+	@Override
+	protected @NonNull SymbolicValue createResultValue( @NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp,
+			@NonNull SymbolicValue sourceSymbolicValue, @NonNull List<@NonNull SymbolicValue> argumentSymbolicValues) {
+		Operation referredOperation = PivotUtil.getReferredOperation(callExp);
+		assert referredOperation.isIsValidating() : "Spurious createResultValue overload for " + referredOperation.getImplementationClass();
+		assert !callExp.isIsSafe() : "Spurious isSafe for " + referredOperation.getImplementationClass();
+		boolean mayBeInvalid = false;
+		boolean mayBeNull = false;
+		OCLExpression ownedSource = PivotUtil.getOwnedSource(callExp);
+		if (evaluationEnvironment.mayBeInvalid(ownedSource)) {
+			mayBeInvalid = true;
+		}
+		if (evaluationEnvironment.mayBeNull(ownedSource)) {
+			mayBeNull = true;
+		}
+		return evaluationEnvironment.getUnknownValue(callExp, mayBeNull, mayBeInvalid);
+	}
 
 	@Override
 	public @Nullable Boolean evaluate(@Nullable Object argument) {
