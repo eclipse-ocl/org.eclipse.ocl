@@ -94,6 +94,7 @@ extends TestCase {
 		result.addTestSuite(EvaluateUMLTest.class);
 		result.addTestSuite(IteratorsTest.class);
 		result.addTestSuite(FlowAnalysisTests.class);
+		result.addTestSuite(SymbolicAnalysisTests.class);
 		result.addTestSuite(DelegatesTest.class);
 		result.addTestSuite(ErrorTests.class);
 		result.addTestSuite(ImportTests.class);
