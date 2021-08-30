@@ -9578,7 +9578,7 @@ implements PivotPackage  {
 		   source,
 		   new String[]
 		   {
-			   "body", "kind = CollectionKind::Bag implies type.oclIsKindOf(BagType)\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "((kind = CollectionKind::Bag) and (type <> null)) implies type.oclIsKindOf(BagType)\n" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getCollectionLiteralExp__ValidateCollectionKindIsConcrete__DiagnosticChain_Map(),
@@ -9592,21 +9592,21 @@ implements PivotPackage  {
 		   source,
 		   new String[]
 		   {
-			   "body", "kind = CollectionKind::OrderedSet implies type.oclIsKindOf(OrderedSetType)\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "((kind = CollectionKind::OrderedSet) and (type <> null)) implies type.oclIsKindOf(OrderedSetType)\n" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getCollectionLiteralExp__ValidateSequenceKindIsSequence__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "kind = CollectionKind::Sequence implies type.oclIsKindOf(SequenceType)\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "((kind = CollectionKind::Sequence) and (type <> null)) implies type.oclIsKindOf(SequenceType)\n" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getCollectionLiteralExp__ValidateSetKindIsSet__DiagnosticChain_Map(),
 		   source,
 		   new String[]
 		   {
-			   "body", "kind = CollectionKind::Set implies type.oclIsKindOf(SetType)\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "((kind = CollectionKind::Set) and (type <> null)) implies type.oclIsKindOf(SetType)\n" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getCollectionLiteralPart__ValidateTypeIsNotInvalid__DiagnosticChain_Map(),
@@ -9760,7 +9760,7 @@ implements PivotPackage  {
 		   source,
 		   new String[]
 		   {
-			   "body", "name = \'closure\' implies\n\tlet bodyElementType = if ownedBody.type.oclIsKindOf(CollectionType) then ownedBody.type.oclAsType(CollectionType).elementType elseif ownedBody.type.oclIsKindOf(MapType) then ownedBody.type.oclAsType(MapType).keyType else ownedBody.type endif in \n\tlet iteratorType = ownedIterators->at(1).type in\n\tbodyElementType?.conformsTo(iteratorType)\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "((name = \'closure\') and (ownedBody <> null) and (ownedBody.type <> null)) implies\n\tlet bodyElementType = if ownedBody.type.oclIsKindOf(CollectionType) then ownedBody.type.oclAsType(CollectionType).elementType elseif ownedBody.type.oclIsKindOf(MapType) then ownedBody.type.oclAsType(MapType).keyType else ownedBody.type endif in \n\tlet iteratorType = ownedIterators->at(1).type in\n\tbodyElementType?.conformsTo(iteratorType)\n\n" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getIteratorExp__ValidateClosureBodyTypeIsConformanttoIteratorType__DiagnosticChain_Map(),
@@ -9977,7 +9977,7 @@ implements PivotPackage  {
 		   source,
 		   new String[]
 		   {
-			   "body", "not ownedTarget.type.oclIsKindOf(CollectionType)\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "((ownedTarget <> null) and (ownedTarget.type <> null)) implies not ownedTarget.type.oclIsKindOf(CollectionType)\n\n" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getOCLExpression__ValidateTypeIsNotNull__DiagnosticChain_Map(),
@@ -10110,7 +10110,7 @@ implements PivotPackage  {
 		   source,
 		   new String[]
 		   {
-			   "body", "not referredProperty?.isStatic implies \n\townedSource?.type?.conformsTo(getSpecializedReferredPropertyOwningType())\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "((referredProperty <> null) and not referredProperty.isStatic) implies \n\townedSource?.type?.conformsTo(getSpecializedReferredPropertyOwningType())\n" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getPropertyCallExp__ValidateSafeSourceCanBeNull__DiagnosticChain_Map(),
@@ -10173,7 +10173,7 @@ implements PivotPackage  {
 		   source,
 		   new String[]
 		   {
-			   "body", "type.oclIsKindOf(DataType) implies ownedParts->size() = 1\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "type <> null implies type.oclIsKindOf(DataType) implies ownedParts->size() = 1\n" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getShadowExp__ValidateDataTypeHasStringValueInitializer__DiagnosticChain_Map(),
@@ -10187,7 +10187,7 @@ implements PivotPackage  {
 		   source,
 		   new String[]
 		   {
-			   "body", "if type.oclIsKindOf(DataType) then Tuple{status:Boolean[1]=true, message:String[1]=\'\'}.status else \n\tlet partProperties = ownedParts.referredProperty->asSet() in\n\tlet allProperties = type.oclAsType(Class)->closure(superClasses).ownedProperties->asSet() in\n\tlet classProperties = allProperties->reject(isDerived or isImplicit or isStatic or isTransient)->reject(name?.startsWith(\'ocl\')) in\n\tlet requiredClassProperties = classProperties->reject(defaultValueString <> null)->reject(isVolatile or not isRequired)->reject(type.oclIsKindOf(CollectionType))->reject((opposite<>null) and opposite.isComposite) in\n\tlet extraProperties : Set(NamedElement[*|1]) = partProperties->excludingAll(classProperties) in\n\tlet missingProperties : Set(NamedElement[*|1]) = requiredClassProperties->excludingAll(partProperties) in\n\tif extraProperties->notEmpty() then Tuple{status:Boolean[1]=false, message:String[1]=extraProperties->sortedBy(name)->iterate(p; acc:String=\'Unexpected initializers:\'|acc +\' \' + p.name)}.status\n\telse if missingProperties->notEmpty() then Tuple{status:Boolean[1]=false, message:String[1]=missingProperties->sortedBy(name)->iterate(p; acc:String=\'Missing initializers:\'|acc +\' \' + p.name)}.status\n\telse Tuple{status:Boolean[1]=true, message:String[1]=\'\'}.status\n\tendif endif endif\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "type <> null implies if type.oclIsKindOf(DataType) then Tuple{status:Boolean[1]=true, message:String[1]=\'\'}.status else \n\tlet partProperties = ownedParts.referredProperty->asSet() in\n\tlet allProperties = type.oclAsType(Class)->closure(superClasses).ownedProperties->asSet() in\n\tlet classProperties = allProperties->reject(isDerived or isImplicit or isStatic or isTransient)->reject(name?.startsWith(\'ocl\')) in\n\tlet requiredClassProperties = classProperties->reject(defaultValueString <> null)->reject(isVolatile or not isRequired)->reject((type<>null) and type.oclIsKindOf(CollectionType))->reject((opposite<>null) and opposite.isComposite) in\n\tlet extraProperties : Set(NamedElement[*|1]) = partProperties->excludingAll(classProperties) in\n\tlet missingProperties : Set(NamedElement[*|1]) = requiredClassProperties->excludingAll(partProperties) in\n\tif extraProperties->notEmpty() then Tuple{status:Boolean[1]=false, message:String[1]=extraProperties->sortedBy(name)->iterate(p; acc:String=\'Unexpected initializers:\'|acc +\' \' + p.name)}.status\n\telse if missingProperties->notEmpty() then Tuple{status:Boolean[1]=false, message:String[1]=missingProperties->sortedBy(name)->iterate(p; acc:String=\'Missing initializers:\'|acc +\' \' + p.name)}.status\n\telse Tuple{status:Boolean[1]=true, message:String[1]=\'\'}.status\n\tendif endif endif\n" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getShadowExp__ValidateTypeIsNotInvalid__DiagnosticChain_Map(),

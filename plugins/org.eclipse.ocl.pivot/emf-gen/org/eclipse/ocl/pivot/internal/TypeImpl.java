@@ -85,7 +85,7 @@ implements Type {
 	@Override
 	public org.eclipse.ocl.pivot.Class isClass()
 	{
-		throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/Pivot!Type!isClass()
+		throw new UnsupportedOperationException();  // FIXME missing body EAnnotation for http://www.eclipse.org/ocl/2015/Pivot!Type!isClass()
 	}
 
 	/**
@@ -96,7 +96,7 @@ implements Type {
 	@Override
 	public TemplateParameter isTemplateParameter()
 	{
-		throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/Pivot!Type!isTemplateParameter()
+		throw new UnsupportedOperationException();  // FIXME missing body EAnnotation for http://www.eclipse.org/ocl/2015/Pivot!Type!isTemplateParameter()
 	}
 
 	/**

@@ -1558,7 +1558,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Operation op_OclAny_oclLog = createOperation("oclLog", _OclSelf, "org.eclipse.ocl.pivot.library.oclany.OclAnyOclLogOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyOclLogOperation.INSTANCE);
 		private final @NonNull Operation op_OclAny_oclLog_1 = createOperation("oclLog", _OclSelf, "org.eclipse.ocl.pivot.library.oclany.OclAnyOclLogOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyOclLogOperation.INSTANCE);
 		private final @NonNull Operation op_OclAny_oclType = createOperation("oclType", _OclSelf, "org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypeOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypeOperation.INSTANCE);
-		private final @NonNull Operation op_OclAny_oclTypes = createOperation("oclTypes", _Set_OclSelf, "org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypesOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypesOperation.INSTANCE);
+		private final @NonNull Operation op_OclAny_oclTypes = createOperation("oclTypes", _Set_OclSelf_NullFree, "org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypesOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypesOperation.INSTANCE);
 		private final @NonNull Operation op_OclAny_toString = createOperation("toString", _String, "org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
 		private final @NonNull Operation op_OclComparable__lt_ = createOperation("<", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanOperation", org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanOperation.INSTANCE);
 		private final @NonNull Operation op_OclComparable__lt__eq_ = createOperation("<=", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation.INSTANCE);
@@ -1693,7 +1693,6 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("b", _Boolean, false));
 			ownedOperations.add(operation = op_Boolean_and2);
-			operation.setIsValidating(true);
 			createBodyExpression(operation, _Boolean, "if self = false then false\n\t\t      elseif b = false then false\n\t\t      else true\n\t\t      endif", _Boolean);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("b", _Boolean, true));
@@ -1705,7 +1704,6 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("b", _Boolean, false));
 			ownedOperations.add(operation = op_Boolean_implies2);
-			operation.setIsValidating(true);
 			createBodyExpression(operation, _Boolean, "if self = false then true\n\t\t      elseif b = true then true\n\t\t      else false\n\t\t      endif", _Boolean);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("b", _Boolean, true));
@@ -1724,7 +1722,6 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("b", _Boolean, false));
 			ownedOperations.add(operation = op_Boolean_or2);
-			operation.setIsValidating(true);
 			createBodyExpression(operation, _Boolean, "if self = true then true\n\t\t\t  elseif b = true then true\n\t\t      else false\n\t\t      endif", _Boolean);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("b", _Boolean, true));

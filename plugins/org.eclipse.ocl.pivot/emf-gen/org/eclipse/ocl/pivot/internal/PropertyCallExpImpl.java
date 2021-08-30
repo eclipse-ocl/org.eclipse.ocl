@@ -535,7 +535,7 @@ implements PropertyCallExp {
 			 *     if severity <= 0
 			 *     then true
 			 *     else
-			 *       let result : Boolean[?] = not referredProperty?.isStatic implies
+			 *       let result : Boolean[?] = referredProperty <> null and not referredProperty.isStatic implies
 			 *         ownedSource?.type?.conformsTo(
 			 *           getSpecializedReferredPropertyOwningType())
 			 *       in
@@ -552,48 +552,70 @@ implements PropertyCallExp {
 			else {
 				/*@Caught*/ @Nullable Object CAUGHT_result;
 				try {
-					/*@Caught*/ @Nullable Object CAUGHT_not;
+					/*@Caught*/ @Nullable Object CAUGHT_and;
 					try {
-						/*@Caught*/ @Nullable Object CAUGHT_safe_isStatic_source;
-						try {
-							final /*@NonInvalid*/ @Nullable Property referredProperty = this.getReferredProperty();
-							final /*@NonInvalid*/ @NonNull Object isStatic = referredProperty == null;
-							/*@Thrown*/ @Nullable Boolean safe_isStatic_source;
-							if (isStatic == Boolean.TRUE) {
-								safe_isStatic_source = null;
-							}
-							else {
-								assert referredProperty != null;
-								final /*@Thrown*/ boolean isStatic_0 = referredProperty.isIsStatic();
-								safe_isStatic_source = isStatic_0;
-							}
-							CAUGHT_safe_isStatic_source = safe_isStatic_source;
-						}
-						catch (Exception e) {
-							CAUGHT_safe_isStatic_source = ValueUtil.createInvalidValue(e);
-						}
-						if (CAUGHT_safe_isStatic_source instanceof InvalidValueException) {
-							throw (InvalidValueException)CAUGHT_safe_isStatic_source;
-						}
-						final /*@Thrown*/ @Nullable Boolean not;
-						if (CAUGHT_safe_isStatic_source == ValueUtil.FALSE_VALUE) {
-							not = ValueUtil.TRUE_VALUE;
+						final /*@NonInvalid*/ @Nullable Property referredProperty = this.getReferredProperty();
+						final /*@NonInvalid*/ boolean ne = referredProperty != null;
+						final /*@Thrown*/ @Nullable Boolean and;
+						if (!ne) {
+							and = ValueUtil.FALSE_VALUE;
 						}
 						else {
-							if (CAUGHT_safe_isStatic_source == ValueUtil.TRUE_VALUE) {
-								not = ValueUtil.FALSE_VALUE;
+							/*@Caught*/ @Nullable Object CAUGHT_not;
+							try {
+								/*@Caught*/ @NonNull Object CAUGHT_isStatic;
+								try {
+									if (referredProperty == null) {
+										throw new InvalidValueException("Null source for \'Feature::isStatic\'");
+									}
+									final /*@Thrown*/ boolean isStatic = referredProperty.isIsStatic();
+									CAUGHT_isStatic = isStatic;
+								}
+								catch (Exception e) {
+									CAUGHT_isStatic = ValueUtil.createInvalidValue(e);
+								}
+								if (CAUGHT_isStatic instanceof InvalidValueException) {
+									throw (InvalidValueException)CAUGHT_isStatic;
+								}
+								final /*@Thrown*/ @Nullable Boolean not;
+								if (CAUGHT_isStatic == ValueUtil.FALSE_VALUE) {
+									not = ValueUtil.TRUE_VALUE;
+								}
+								else {
+									if (CAUGHT_isStatic == ValueUtil.TRUE_VALUE) {
+										not = ValueUtil.FALSE_VALUE;
+									}
+									else {
+										not = null;
+									}
+								}
+								CAUGHT_not = not;
+							}
+							catch (Exception e) {
+								CAUGHT_not = ValueUtil.createInvalidValue(e);
+							}
+							if (CAUGHT_not == ValueUtil.FALSE_VALUE) {
+								and = ValueUtil.FALSE_VALUE;
 							}
 							else {
-								not = null;
+								if (CAUGHT_not instanceof InvalidValueException) {
+									throw (InvalidValueException)CAUGHT_not;
+								}
+								if (CAUGHT_not == null) {
+									and = null;
+								}
+								else {
+									and = ValueUtil.TRUE_VALUE;
+								}
 							}
 						}
-						CAUGHT_not = not;
+						CAUGHT_and = and;
 					}
 					catch (Exception e) {
-						CAUGHT_not = ValueUtil.createInvalidValue(e);
+						CAUGHT_and = ValueUtil.createInvalidValue(e);
 					}
 					final /*@Thrown*/ @Nullable Boolean result;
-					if (CAUGHT_not == ValueUtil.FALSE_VALUE) {
+					if (CAUGHT_and == ValueUtil.FALSE_VALUE) {
 						result = ValueUtil.TRUE_VALUE;
 					}
 					else {
@@ -640,13 +662,13 @@ implements PropertyCallExp {
 							result = ValueUtil.TRUE_VALUE;
 						}
 						else {
-							if (CAUGHT_not instanceof InvalidValueException) {
-								throw (InvalidValueException)CAUGHT_not;
+							if (CAUGHT_and instanceof InvalidValueException) {
+								throw (InvalidValueException)CAUGHT_and;
 							}
 							if (CAUGHT_safe_conformsTo_source instanceof InvalidValueException) {
 								throw (InvalidValueException)CAUGHT_safe_conformsTo_source;
 							}
-							if ((CAUGHT_not == null) || (CAUGHT_safe_conformsTo_source == null)) {
+							if ((CAUGHT_and == null) || (CAUGHT_safe_conformsTo_source == null)) {
 								result = null;
 							}
 							else {

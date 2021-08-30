@@ -209,8 +209,8 @@
         <ownedComments body="oclText[false] if either oclText[self] or oclText[b] is oclText[false].&#xA;Otherwise oclText[invalid] if either oclText[self] or oclText[b] is oclText[invalid] .&#xA;Otherwise oclText[null] if either oclText[self] or oclText[b] is oclText[null].&#xA;Otherwise oclText[true].&#xA;"/>
         <ownedParameters xmi:id="Z7lXU" isRequired="false" name="b" type="#XEMMs"/>
       </ownedOperations>
-      <ownedOperations xmi:id="gKkjU" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanAndOperation2" isValidating="true"
-          name="and2" precedence="#VT87C" type="#XEMMs">
+      <ownedOperations xmi:id="gKkjU" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanAndOperation2" name="and2" precedence="#VT87C"
+          type="#XEMMs">
         <bodyExpression xsi:type="pivot:ExpressionInOCL" body="if self = false then false&#xA;&#x9;&#x9;      elseif b = false then false&#xA;&#x9;&#x9;      else true&#xA;&#x9;&#x9;      endif"
             type="#XEMMs">
           <ownedBody xsi:type="pivot:IfExp" type="#XEMMs">
@@ -299,8 +299,8 @@
         <ownedComments body="oclText[true] if oclText[self] is oclText[false], or if oclText[b] is oclText[true].&#xA;Otherwise oclText[invalid] if either oclText[self] or oclText[b] is oclText[invalid].&#xA;Otherwise oclText[null] if either oclText[self] or oclText[b] is oclText[null].&#xA;Otherwise oclText[false].&#xA;"/>
         <ownedParameters xmi:id="5o8Gk" isRequired="false" name="b" type="#XEMMs"/>
       </ownedOperations>
-      <ownedOperations xmi:id="AfRB7" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation2" isValidating="true"
-          name="implies2" precedence="#1Odhg" type="#XEMMs">
+      <ownedOperations xmi:id="AfRB7" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation2" name="implies2"
+          precedence="#1Odhg" type="#XEMMs">
         <bodyExpression xsi:type="pivot:ExpressionInOCL" body="if self = false then true&#xA;&#x9;&#x9;      elseif b = true then true&#xA;&#x9;&#x9;      else false&#xA;&#x9;&#x9;      endif"
             type="#XEMMs">
           <ownedBody xsi:type="pivot:IfExp" type="#XEMMs">
@@ -426,8 +426,8 @@
         <ownedComments body="oclText[true] if either oclText[self] or oclText[b] is oclText[true].&#xA;Otherwise oclText[invalid] if either oclText[self] or oclText[b] is oclText[invalid].&#xA;Otherwise oclText[null] if either oclText[self] or oclText[b] is oclText[null].&#xA;Otherwise oclText[false].&#xA;"/>
         <ownedParameters xmi:id="1KtsO" isRequired="false" name="b" type="#XEMMs"/>
       </ownedOperations>
-      <ownedOperations xmi:id="UAjYU" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanOrOperation2" isValidating="true"
-          name="or2" precedence="#BEt7C" type="#XEMMs">
+      <ownedOperations xmi:id="UAjYU" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanOrOperation2" name="or2" precedence="#BEt7C"
+          type="#XEMMs">
         <bodyExpression xsi:type="pivot:ExpressionInOCL" body="if self = true then true&#xA;&#x9;&#x9;&#x9;  elseif b = true then true&#xA;&#x9;&#x9;      else false&#xA;&#x9;&#x9;      endif"
             type="#XEMMs">
           <ownedBody xsi:type="pivot:IfExp" type="#XEMMs">
@@ -1214,7 +1214,7 @@
         <ownedComments body="Evaluates to the most derived type of which oclText[self] is currently an instance. If oclText[self] is an instance of a multiply&#xA;classified type, the return is the most derived type of the current classification which is established when the instance is&#xA;passed to OCL, or re-established by an oclText[oclAsType()] call.&#xA;"/>
       </ownedOperations>
       <ownedOperations xmi:id="N,CWN" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypesOperation" name="oclTypes"
-          type="#PRF4+">
+          type="#UQF4+">
         <ownedComments body="Evaluates to all of the most derived type of which oclText[self] is an instance. The return from oclText[oclTypes()]&#xA;is normally equivalent to that from oclText[oclType()] unless oclText[self] is an instance of multiply classified type.&#xA;"/>
       </ownedOperations>
       <ownedOperations xmi:id="4f1nm" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation" name="toString"

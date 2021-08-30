@@ -22,6 +22,8 @@ var projectName = "org.eclipse.ocl.pivot"
 
 /**
  *	Generate the OCL Meta Model, by converting Pivot.ecore to OCLmetamodel.java.
+ * 
+ * This is a debug aid. It is the final step of GeneratePivotModel.mwe2
  */
 Workflow {
 	bean = ResourceSetImpl : resourceSet {}

@@ -412,7 +412,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 			 *     if severity <= 0
 			 *     then true
 			 *     else
-			 *       let result : Boolean[?] = name = 'closure' implies
+			 *       let result : Boolean[?] = name = 'closure' and ownedBody <> null and ownedBody.type <> null implies
 			 *         let
 			 *           bodyElementType : Type[?] = if
 			 *             ownedBody.type.oclIsKindOf(CollectionType)
@@ -440,10 +440,45 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 			else {
 				/*@Caught*/ @Nullable Object CAUGHT_result;
 				try {
-					final /*@NonInvalid*/ @Nullable String name = this.getName();
-					final /*@NonInvalid*/ boolean eq = PivotTables.STR_closure.equals(name);
+					/*@Caught*/ @Nullable Object CAUGHT_and_0;
+					try {
+						final /*@NonInvalid*/ @Nullable String name = this.getName();
+						final /*@NonInvalid*/ boolean eq = PivotTables.STR_closure.equals(name);
+						final /*@NonInvalid*/ @Nullable Boolean and;
+						if (!eq) {
+							and = ValueUtil.FALSE_VALUE;
+						}
+						else {
+							and = eq;
+						}
+						final /*@Thrown*/ @Nullable Boolean and_0;
+						if (and == ValueUtil.FALSE_VALUE) {
+							and_0 = ValueUtil.FALSE_VALUE;
+						}
+						else {
+							@SuppressWarnings("null")
+							final /*@NonInvalid*/ @NonNull OCLExpression ownedBody = this.getOwnedBody();
+							final /*@NonInvalid*/ @Nullable Type type = ownedBody.getType();
+							final /*@NonInvalid*/ boolean ne = type != null;
+							if (!ne) {
+								and_0 = ValueUtil.FALSE_VALUE;
+							}
+							else {
+								if (and == null) {
+									and_0 = null;
+								}
+								else {
+									and_0 = ValueUtil.TRUE_VALUE;
+								}
+							}
+						}
+						CAUGHT_and_0 = and_0;
+					}
+					catch (Exception e) {
+						CAUGHT_and_0 = ValueUtil.createInvalidValue(e);
+					}
 					final /*@Thrown*/ @Nullable Boolean result;
-					if (!eq) {
+					if (CAUGHT_and_0 == ValueUtil.FALSE_VALUE) {
 						result = ValueUtil.TRUE_VALUE;
 					}
 					else {
@@ -451,30 +486,30 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 						try {
 							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType_0 = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
 							@SuppressWarnings("null")
-							final /*@NonInvalid*/ @NonNull OCLExpression ownedBody_3 = this.getOwnedBody();
-							final /*@NonInvalid*/ @Nullable Type type_3 = ownedBody_3.getType();
-							final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type_3, TYP_CollectionType_0).booleanValue();
+							final /*@NonInvalid*/ @NonNull OCLExpression ownedBody_4 = this.getOwnedBody();
+							final /*@NonInvalid*/ @Nullable Type type_4 = ownedBody_4.getType();
+							final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type_4, TYP_CollectionType_0).booleanValue();
 							/*@Thrown*/ @Nullable Type bodyElementType;
 							if (oclIsKindOf) {
 								@SuppressWarnings("null")
-								final /*@Thrown*/ @NonNull CollectionType oclAsType = (@NonNull CollectionType)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, type_3, TYP_CollectionType_0);
+								final /*@Thrown*/ @NonNull CollectionType oclAsType = (@NonNull CollectionType)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, type_4, TYP_CollectionType_0);
 								@SuppressWarnings("null")
 								final /*@Thrown*/ @NonNull Type elementType = oclAsType.getElementType();
 								bodyElementType = elementType;
 							}
 							else {
 								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_MapType_0 = idResolver.getClass(PivotTables.CLSSid_MapType, null);
-								final /*@Thrown*/ boolean oclIsKindOf_0 = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type_3, TYP_MapType_0).booleanValue();
+								final /*@Thrown*/ boolean oclIsKindOf_0 = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type_4, TYP_MapType_0).booleanValue();
 								/*@Thrown*/ @Nullable Type symbol_0;
 								if (oclIsKindOf_0) {
 									@SuppressWarnings("null")
-									final /*@Thrown*/ @NonNull MapType oclAsType_0 = (@NonNull MapType)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, type_3, TYP_MapType_0);
+									final /*@Thrown*/ @NonNull MapType oclAsType_0 = (@NonNull MapType)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, type_4, TYP_MapType_0);
 									@SuppressWarnings("null")
 									final /*@Thrown*/ @NonNull Type keyType = oclAsType_0.getKeyType();
 									symbol_0 = keyType;
 								}
 								else {
-									symbol_0 = type_3;
+									symbol_0 = type_4;
 								}
 								bodyElementType = symbol_0;
 							}
@@ -514,10 +549,13 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 							result = ValueUtil.TRUE_VALUE;
 						}
 						else {
+							if (CAUGHT_and_0 instanceof InvalidValueException) {
+								throw (InvalidValueException)CAUGHT_and_0;
+							}
 							if (CAUGHT_safe_conformsTo_source instanceof InvalidValueException) {
 								throw (InvalidValueException)CAUGHT_safe_conformsTo_source;
 							}
-							if (CAUGHT_safe_conformsTo_source == null) {
+							if ((CAUGHT_and_0 == null) || (CAUGHT_safe_conformsTo_source == null)) {
 								result = null;
 							}
 							else {
