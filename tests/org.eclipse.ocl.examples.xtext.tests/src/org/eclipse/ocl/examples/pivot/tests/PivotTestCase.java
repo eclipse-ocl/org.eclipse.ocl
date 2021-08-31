@@ -71,10 +71,10 @@ import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
+import org.eclipse.ocl.pivot.util.PivotValidator;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.DebugTimestamp;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotStandaloneSetup;
@@ -239,6 +239,11 @@ public class PivotTestCase extends TestCase
 				}
 				s1.append("\n");
 				s1.append(actual);
+				List<?> data = diagnostic.getData();
+				if ((data != null) && (data.size() >= 2) && (data.get(1) instanceof Throwable)) {
+					s1.append("\n\t");
+					s1.append(String.valueOf(data.get(1)));
+				}
 			}
 			else {
 				expected.put(actual, expectedCount-1);
@@ -347,12 +352,12 @@ public class PivotTestCase extends TestCase
 	}
 
 	public static void assertNoValidationErrors(@NonNull String string, @NonNull EObject eObject, boolean lazyParse) {	// FIXME BUG 574166 eliminate lazyParse
-		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
+		Map<Object, Object> validationContext = TestUtil.createDefaultContext(Diagnostician.INSTANCE);
 		//		Resource eResource = ClassUtil.nonNullState(eObject.eResource());
 		//		PivotUtilInternal.getMetamodelManager(eResource);	// FIXME oclIsKindOf fails because ExecutableStandardLibrary.getMetaclass is bad
 		//		Diagnostic diagnostic = Diagnostician.INSTANCE.validate(eObject, validationContext);
 		if (lazyParse) {
-		//	PivotValidator.initLazyParse(validationContext, true);
+			PivotValidator.initLazyParse(validationContext, true);
 		}
 		BasicDiagnostic diagnostics = PivotDiagnostician.BasicDiagnosticWithRemove.validate(eObject, validationContext);
 		List<Diagnostic> children = diagnostics.getChildren();
@@ -460,9 +465,9 @@ public class PivotTestCase extends TestCase
 	}
 
 	public static @NonNull List<Diagnostic> assertValidationDiagnostics(@NonNull String prefix, @NonNull Resource resource, @NonNull String @Nullable [] messages, boolean lazyParse) {
-		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
+		Map<Object, Object> validationContext = TestUtil.createDefaultContext(Diagnostician.INSTANCE);
 		if (lazyParse) {
-		//	PivotValidator.initLazyParse(validationContext, true);		// FIXME BUG 574166 Lazy deferral of ExpressionInOCL AS creation for legacy testing compatibility
+			PivotValidator.initLazyParse(validationContext, true);		// FIXME BUG 574166 Lazy deferral of ExpressionInOCL AS creation for legacy testing compatibility
 		}
 		return assertValidationDiagnostics(prefix, resource, validationContext, messages);
 	}
@@ -770,7 +775,7 @@ public class PivotTestCase extends TestCase
 			testThread.start();
 			synchronized (testThread) {
 				try {
-					testThread.wait(1000000);		// Needlessly long wait to avoid confusing debug session
+					testThread.wait(100000000);		// Needlessly long wait to avoid confusing debug session
 				} catch (InterruptedException e) {
 					// Don't care -- e.printStackTrace();
 				}

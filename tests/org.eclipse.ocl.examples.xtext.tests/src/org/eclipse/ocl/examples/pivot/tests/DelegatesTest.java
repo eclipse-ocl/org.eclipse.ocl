@@ -1881,7 +1881,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	}
 
 	protected void validateWithoutError(EObject eObject) {
-		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
+		Map<Object, Object> validationContext = TestUtil.createDefaultContext(Diagnostician.INSTANCE);
 		Diagnostic validation = Diagnostician.INSTANCE.validate(eObject, validationContext);
 		if (validation.getSeverity() != Diagnostic.OK) {
 			List<Diagnostic> diagnostics = validation.getChildren();
@@ -1894,7 +1894,8 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 					else {
 						s.append("\n");
 					}
-					s.append(diagnostic.getMessage());
+					PivotUtil.formatDiagnostic(s, diagnostic, "\n\t");
+				//	s.append(diagnostic.getMessage());
 				}
 				assert s != null;
 				String string = s.toString();
@@ -1907,10 +1908,22 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	}
 
 	protected void validateConstraintWithSeverity(String constraintName, int severity, EObject eObject, String message) {
-		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
+		Map<Object, Object> validationContext = TestUtil.createDefaultContext(Diagnostician.INSTANCE);
 		Diagnostic validation = Diagnostician.INSTANCE.validate(eObject, validationContext);
 		List<Diagnostic> diagnostics = validation.getChildren();
-		assertEquals("Validation of '" + constraintName + "' child count:", 1, diagnostics.size());
+		if (diagnostics.size() != 1) {
+			StringBuilder s = new StringBuilder();
+			s.append("Validation of '" + constraintName + "'");
+			for (Diagnostic diagnostic : diagnostics) {
+				PivotUtil.formatDiagnostic(s, diagnostic, "\n\t");
+				for (Diagnostic child : diagnostic.getChildren()) {
+					PivotUtil.formatDiagnostic(s, child, "\n\t\t");
+				}
+			}
+			s.append("\n\tchild count:");
+			assertEquals(s.toString(), 1, diagnostics.size());
+
+		}
 		Diagnostic diagnostic = diagnostics.get(0);
 		assertEquals("Validation of '" + constraintName + "' data count:", 1, diagnostic.getData().size());
 		assertEquals("Validation of '" + constraintName + "' data object:", eObject, diagnostic.getData().get(0));
@@ -1927,7 +1940,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	}
 
 	protected void validateWithSeverity(String constraintName, int severity, EObject eObject, String messageTemplate, Object... bindings) {
-		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
+		Map<Object, Object> validationContext = TestUtil.createDefaultContext(Diagnostician.INSTANCE);
 		Diagnostic validation = Diagnostician.INSTANCE.validate(eObject, validationContext);
 		List<Diagnostic> diagnostics = validation.getChildren();
 		assertEquals("Validation of '" + constraintName + "' child count:", 1, diagnostics.size());
@@ -1940,7 +1953,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	}
 
 	protected void validateWithDelegationSeverity(String constraintName, int severity, EObject eObject, String source, Class<? extends Exception> exceptionClass, String messageTemplate, Object... bindings) {
-		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
+		Map<Object, Object> validationContext = TestUtil.createDefaultContext(Diagnostician.INSTANCE);
 		Diagnostic validation = Diagnostician.INSTANCE.validate(eObject, validationContext);
 		assertEquals("Validation of '" + constraintName + "' severity:", severity, validation.getSeverity());
 		List<Diagnostic> diagnostics = validation.getChildren();

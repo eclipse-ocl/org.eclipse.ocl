@@ -74,7 +74,6 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.NavigationCallExp;
-import org.eclipse.ocl.pivot.NullLiteralExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
@@ -2251,12 +2250,12 @@ public class PivotUtil
 		expressionInOCL.setOwnedBody(oclExpression);
 		expressionInOCL.setType(oclExpression != null ? oclExpression.getType() : null);
 		expressionInOCL.setIsRequired(oclExpression != null&& oclExpression.isIsRequired());;
-		if (oclExpression instanceof NullLiteralExp) {
-			System.out.println(NameUtil.debugSimpleName(expressionInOCL) + " : " +  oclExpression + " " + NameUtil.debugSimpleName(expressionInOCL.getType()) + " : " +  expressionInOCL.getType().getName());
-			for (Variable parameter : expressionInOCL.getOwnedParameters()) {
-				System.out.println("  " + NameUtil.debugSimpleName(parameter) + " : " +  parameter.getName() + " " + NameUtil.debugSimpleName(parameter.getType()) + " : " +  parameter.getType().getName());
-			}
-		}
+	//	if (oclExpression instanceof NullLiteralExp) {
+	//		System.out.println(NameUtil.debugSimpleName(expressionInOCL) + " : " +  oclExpression + " " + NameUtil.debugSimpleName(expressionInOCL.getType()) + " : " +  expressionInOCL.getType().getName());
+	//		for (Variable parameter : expressionInOCL.getOwnedParameters()) {
+	//			System.out.println("  " + NameUtil.debugSimpleName(parameter) + " : " +  parameter.getName() + " " + NameUtil.debugSimpleName(parameter.getType()) + " : " +  parameter.getType().getName());
+	//		}
+	//	}
 	}
 
 	/**

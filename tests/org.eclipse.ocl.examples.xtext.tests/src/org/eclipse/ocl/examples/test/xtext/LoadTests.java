@@ -62,6 +62,7 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
+import org.eclipse.ocl.pivot.messages.StatusCodes.Severity;
 import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
@@ -186,7 +187,7 @@ public class LoadTests extends XtextTestCase
 			//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " validated()");
 			resource.setURI(output2URI);
 			//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " save()");
-			resource.save(XMIUtil.createSaveOptions());
+			resource.save(XMIUtil.createSaveOptions(resource));
 			//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " saved()");
 			assertNoResourceErrors("Save failed", resource);
 		}
@@ -229,7 +230,7 @@ public class LoadTests extends XtextTestCase
 			xtextResource.setURI(output2URI);
 			//			System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " save()");
 			DebugTimestamp debugTimestamp = new DebugTimestamp(xtextResource.getURI().toString());
-			xtextResource.save(XMIUtil.createSaveOptions());
+			xtextResource.save(XMIUtil.createSaveOptions(xtextResource));
 			debugTimestamp.log("Serialization save done");
 			//			System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " saved()");
 			assertNoResourceErrors("Save failed", xtextResource);
@@ -279,7 +280,7 @@ public class LoadTests extends XtextTestCase
 			//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " validated()");
 			ecoreResource.setURI(output2URI);
 			//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " save()");
-			ecoreResource.save(XMIUtil.createSaveOptions());
+			ecoreResource.save(XMIUtil.createSaveOptions(ecoreResource));
 			//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " saved()");
 			assertNoResourceErrors("Save failed", ecoreResource);
 			ecoreResource.setURI(inputURI);
@@ -392,7 +393,7 @@ public class LoadTests extends XtextTestCase
 			//			System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " validated()");
 			umlResource.setURI(output2URI);
 			//			System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " save()");
-			umlResource.save(XMIUtil.createSaveOptions());
+			umlResource.save(XMIUtil.createSaveOptions(umlResource));
 			//			System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " saved()");
 			assertNoResourceErrors("Save failed", umlResource);
 			umlResource.setURI(inputURI);
@@ -474,7 +475,7 @@ public class LoadTests extends XtextTestCase
 							if (csDocument.getOwnedPackages().size() > 0) {
 								hasOCLcontent = true;
 								DebugTimestamp debugTimestamp = new DebugTimestamp(xtextResource.getURI().toString());
-								xtextResource.save(XMIUtil.createSaveOptions());
+								xtextResource.save(XMIUtil.createSaveOptions(xtextResource));
 								debugTimestamp.log("Serialization save done");
 							}
 						}
@@ -571,7 +572,7 @@ public class LoadTests extends XtextTestCase
 		CS2AS cs2as = xtextResource.findCS2AS();
 		if (cs2as != null) {
 			ASResource asResource = cs2as.getASResource();
-			Map<Object, Object> saveOptions = XMIUtil.createSaveOptions();
+			Map<Object, Object> saveOptions = XMIUtil.createSaveOptions(asResource);
 			saveOptions.put(AS2ID.DEBUG_LUSSID_COLLISIONS, Boolean.TRUE);
 			saveOptions.put(AS2ID.DEBUG_XMIID_COLLISIONS, Boolean.TRUE);
 			AS2ID.assignIds(asResource, saveOptions);
@@ -595,17 +596,17 @@ public class LoadTests extends XtextTestCase
 		//FIXME		assertNoValidationErrors("Validation errors", xtextResource.getContents().get(0));
 		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " validated()");
 		xtextResource.setURI(savedURI);
-		Map<Object, Object> saveOptions = XMIUtil.createSaveOptions();
-		saveOptions.put(AS2ID.DEBUG_LUSSID_COLLISIONS, Boolean.TRUE);
-		saveOptions.put(AS2ID.DEBUG_XMIID_COLLISIONS, Boolean.TRUE);
 		DebugTimestamp debugTimestamp = new DebugTimestamp(xtextResource.getURI().toString());
-		xtextResource.save(saveOptions);
+		xtextResource.save(XMIUtil.createSaveOptions(xtextResource));
 		debugTimestamp.log("Serialization save done");
 		xtextResource.setURI(inputURI);
 		assertNoResourceErrors("Save failed", xtextResource);
 		saveAsXMI(xtextResource, cstURI);
 		asResource.setURI(pivotURI);
 		assertNoValidationErrors("Pivot validation errors", asResource.getContents().get(0));
+		Map<Object, Object> saveOptions = XMIUtil.createSaveOptions(asResource);
+		saveOptions.put(AS2ID.DEBUG_LUSSID_COLLISIONS, Boolean.TRUE);
+		saveOptions.put(AS2ID.DEBUG_XMIID_COLLISIONS, Boolean.TRUE);
 		asResource.save(saveOptions);
 		return asResource;
 	}
@@ -692,7 +693,7 @@ public class LoadTests extends XtextTestCase
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", new XMIResourceFactoryImpl()); //$NON-NLS-1$
 		Resource xmiResource = resourceSet.createResource(xmiURI);
 		xmiResource.getContents().addAll(resource.getContents());
-		Map<Object, Object> options = XMIUtil.createSaveOptions();
+		Map<Object, Object> options = XMIUtil.createSaveOptions(xmiResource);
 		//		options.put(XMLResource.OPTION_SCHEMA_LOCATION_IMPLEMENTATION, Boolean.TRUE);
 		xmiResource.save(options);
 		assertNoResourceErrors("Save failed", xmiResource);
@@ -747,7 +748,7 @@ public class LoadTests extends XtextTestCase
 		Map<String,Object> options = new HashMap<String,Object>();
 		options.put(PivotConstants.PRIMITIVE_TYPES_URI_PREFIX, "models/ecore/primitives.ecore#//");
 		XMLResource ecoreResource = AS2Ecore.createResource((EnvironmentFactoryInternal) ocl.getEnvironmentFactory(), asResource, ecoreURI, options);
-		ecoreResource.save(XMIUtil.createSaveOptions());
+		ecoreResource.save(XMIUtil.createSaveOptions(ecoreResource));
 		ocl.dispose();
 	}
 
@@ -796,7 +797,7 @@ public class LoadTests extends XtextTestCase
 						"		invariant NameNotEmpty: name->notEmpty();\n" +
 						"	}\n" +
 						"}\n";
-		TestFile testFile = createOCLinEcoreFile("Refresh.oclinecore", testFileContents);
+		TestFile testFile = createFile("Refresh.oclinecore", testFileContents);
 		BaseCSResource xtextResource = doLoad_Concrete1(ocl, testFile.getFileURI());
 		Resource asResource = doLoad_Concrete2(xtextResource, testFile.getFileURI());
 		assertNoValidationErrors("First validation", asResource);
@@ -853,7 +854,7 @@ public class LoadTests extends XtextTestCase
 						"	{\n" +
 						"	}\n" +
 						"}";
-		TestFile testFile = createOCLinEcoreFile("Refresh2.oclinecore", testFileContents);
+		TestFile testFile = createFile("Refresh2.oclinecore", testFileContents);
 		BaseCSResource xtextResource = doLoad_Concrete1(ocl, testFile.getFileURI());
 		Resource asResource = doLoad_Concrete2(xtextResource, testFile.getFileURI());
 		assertNoValidationErrors("First validation", asResource);
@@ -876,7 +877,7 @@ public class LoadTests extends XtextTestCase
 	}
 
 	public void testLoad_oclstdlib_oclstdlib() throws IOException, InterruptedException {
-		OCL ocl = createOCL();
+		OCL ocl = createOCLWithProjectMap();
 		//		StandardLibraryContribution.REGISTRY.put(MetamodelManager.DEFAULT_OCL_STDLIB_URI, StandardLibraryContribution.NULL);
 		Resource asResource = doLoad_Concrete(ocl, getTestModelURI("models/oclstdlib/oclstdlib.oclstdlib"));
 		//		checkMonikers(asResource);
@@ -885,7 +886,7 @@ public class LoadTests extends XtextTestCase
 		Map<String,Object> options = new HashMap<String,Object>();
 		options.put(PivotConstants.PRIMITIVE_TYPES_URI_PREFIX, "models/ecore/primitives.ecore#//");
 		XMLResource ecoreResource = AS2Ecore.createResource((EnvironmentFactoryInternal) ocl.getEnvironmentFactory(), asResource, ecoreURI, options);
-		ecoreResource.save(XMIUtil.createSaveOptions());
+		ecoreResource.save(XMIUtil.createSaveOptions(ecoreResource));
 		ocl.dispose();
 	}
 
@@ -1018,7 +1019,7 @@ public class LoadTests extends XtextTestCase
 						"property vThree2Star : Real[3..*];\n" +
 						"}\n" +
 						"}\n";
-		TestFile testFile = createOCLinEcoreFile("Bug402767.oclinecore", testFileContents);
+		TestFile testFile = createFile("Bug402767.oclinecore", testFileContents);
 		Resource resource = doLoad_Concrete(ocl, testFile.getFileURI());
 		Model root = (Model) resource.getContents().get(0);
 		org.eclipse.ocl.pivot.Package pkg = root.getOwnedPackages().get(0);
@@ -1055,7 +1056,7 @@ public class LoadTests extends XtextTestCase
 						"		}\n" +
 						"	}\n" +
 						"}\n";
-		TestFile testFile = createOCLinEcoreFile("Bug403070.oclinecore", testFileContents);
+		TestFile testFile = createFile("Bug403070.oclinecore", testFileContents);
 		doLoad_Concrete(ocl, testFile.getFileURI());
 		ocl.dispose();
 	}
@@ -1083,13 +1084,13 @@ public class LoadTests extends XtextTestCase
 						"{\n" +
 						"	abstract class Bug450950A;\n" +
 						"}\n";
-		createOCLinEcoreFile("Bug450950A.oclinecore", bug450950A);
+		createFile("Bug450950A.oclinecore", bug450950A);
 		String bug450950B =
 				"package bug450950 : bug450950B = 'http://www.eclipse.org/ocl/Bug450950B'\n" +
 						"{\n" +
 						"	abstract class Bug450950B;\n" +
 						"}\n";
-		createOCLinEcoreFile("Bug450950B.oclinecore", bug450950B);
+		createFile("Bug450950B.oclinecore", bug450950B);
 		String bug450950 =
 				"import bug450950a : 'Bug450950A.oclinecore'::bug450950\n" +
 						"import bug450950b : 'Bug450950B.oclinecore'::bug450950\n" +
@@ -1101,7 +1102,7 @@ public class LoadTests extends XtextTestCase
 						"context Bug450950B\n" +
 						"def : isB() : Boolean = true\n" +
 						"endpackage\n";
-		TestFile testFile = createOCLinEcoreFile("Bug450950.ocl", bug450950);
+		TestFile testFile = createFile("Bug450950.ocl", bug450950);
 		String message = "\\nAmbiguous xmi:id TVXWp\\n	 bug450950\\n	 bug450950\\ncollision at 693728595\\n	bug450950\\n	bug450950";
 		Resource asResource = doLoad_Concrete(ocl, testFile.getFileURI(), StringUtil.bind(PivotMessagesInternal.UnstableXMIid_ERROR_, message));
 		assertResourceErrors("Save", asResource, StringUtil.bind(PivotMessagesInternal.UnstableXMIid_ERROR_, message));
@@ -1234,6 +1235,7 @@ public class LoadTests extends XtextTestCase
 
 	public void testLoad_OCLTest_ocl() throws IOException, InterruptedException {
 		OCL ocl = createOCLWithProjectMap();
+		ocl.getEnvironmentFactory().setOption(PivotValidationOptions.PotentialInvalidResult, Severity.IGNORE);		// Ecore model has deliberate errors
 		//		Abstract2Moniker.TRACE_MONIKERS.setState(true);
 		doLoad(ocl, getTestModelURI("models/ecore/OCLTest.ocl"));
 		ocl.dispose();
@@ -1503,7 +1505,7 @@ public class LoadTests extends XtextTestCase
 		//
 		URI asURI = esasURI.trimFileExtension().trimFileExtension().appendFileExtension("oclas");
 		asResource.setURI(asURI);
-		asResource.save(XMIUtil.createSaveOptions());		// Bug 418412 gave a duplicate xmi:id ISE failure here.
+		asResource.save(XMIUtil.createSaveOptions(asResource));		// Bug 418412 gave a duplicate xmi:id ISE failure here.
 		for (TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
 			EObject eObject = tit.next();
 			String id = asResource.getID(eObject);

@@ -44,6 +44,8 @@ import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.values.CollectionTypeParametersImpl;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
+import org.eclipse.ocl.pivot.messages.StatusCodes.Severity;
+import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
@@ -715,7 +717,7 @@ public class EditTests extends XtextTestCase
 		//
 		StringWriter writer = new StringWriter();
 		OutputStream outputStream = new URIConverter.WriteableOutputStream(writer, "UTF-8");
-		ecoreResource.save(outputStream, XMIUtil.createSaveOptions());
+		ecoreResource.save(outputStream, XMIUtil.createSaveOptions(ecoreResource));
 		ecoreResource.unload();
 		InputStream inputStream = new URIConverter.ReadableInputStream(writer.toString().replace("tuttut",  "tut"), "UTF-8");
 		ecoreResource.load(inputStream, null);
@@ -922,6 +924,7 @@ public class EditTests extends XtextTestCase
 		URI ecoreURI1 = getTestFileURI("test1.ecore");
 		URI outputURI = getTestFileURI("test.oclinecore");
 		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
+		ocl.getEnvironmentFactory().setOption(PivotValidationOptions.PotentialInvalidResult, Severity.IGNORE);		// Ecore model has deliberate errors
 		CSResource xtextResource = ocl.getCSResource(outputURI, testDocument);
 		Resource asResource = cs2as(ocl, xtextResource, null);
 		{

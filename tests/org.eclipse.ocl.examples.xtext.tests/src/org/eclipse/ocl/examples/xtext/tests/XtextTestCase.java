@@ -490,7 +490,7 @@ public class XtextTestCase extends PivotTestCaseWithAutoTearDown
 
 	public @NonNull String createEcoreString(@NonNull OCL ocl, @NonNull String fileName, @NonNull String fileContent, boolean assignIds) throws IOException {
 		String inputName = fileName + ".oclinecore";
-		createOCLinEcoreFile(inputName, fileContent);
+		createFile(inputName, fileContent);
 		URI inputURI = getTestFileURI(inputName);
 		URI ecoreURI = getTestFileURI(fileName + ".ecore");
 		BaseCSResource xtextResource = null;
@@ -511,7 +511,7 @@ public class XtextTestCase extends PivotTestCaseWithAutoTearDown
 				}
 			}
 			Writer writer = new StringWriter();
-			ecoreResource.save(writer, XMIUtil.createSaveOptions());
+			ecoreResource.save(writer, XMIUtil.createSaveOptions(ecoreResource));
 			return ClassUtil.nonNullState(writer.toString());
 		}
 		finally {

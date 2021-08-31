@@ -58,6 +58,7 @@ import org.eclipse.emf.ecore.presentation.EcoreEditor;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.emf.mwe.core.ConfigurationException;
 import org.eclipse.jdt.annotation.NonNull;
@@ -82,6 +83,7 @@ import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
@@ -554,7 +556,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		ResourceSet resourceSet = ocl.getResourceSet();
 		try {
 			URI fileURI = genmodelURI; //getProjectFileURI(testFileStem + ".genmodel");
-			// System.out.println("Generating Ecore Model using '" + fileURI + "'");
+			 System.out.println("Generating Ecore Model using '" + fileURI + "'");
 			//		metamodelManager2.dispose();
 			ProjectManager projectMap = ocl.getProjectManager();
 		//	ocl.dispose();
@@ -603,7 +605,17 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 			genModel.setUpdateClasspath(false); // New class-paths should be generated manually
 			//		genModel.setComplianceLevel(GenJDKLevel.JDK50_LITERAL);
 			// genModel.setRootExtendsClass("org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container");
+			for (Resource asResource : ocl.getResourceSet().getResources()) {
+				System.out.println("has0 " + NameUtil.debugSimpleName(asResource) + " : " + asResource.getURI());
+			}
+			for (Resource asResource : ((AbstractEnvironmentFactory)ocl.getEnvironmentFactory()).getASResourceSet().getResources()) {
+				System.out.println("has1 " + NameUtil.debugSimpleName(asResource) + " : " + asResource.getURI());
+			}
+			EcoreUtil.resolveAll(ocl.getResourceSet());
 			Diagnostic diagnostic = genModel.diagnose();
+			for (Resource asResource : ((AbstractEnvironmentFactory)ocl.getEnvironmentFactory()).getASResourceSet().getResources()) {
+				System.out.println("has2 " + NameUtil.debugSimpleName(asResource) + " : " + asResource.getURI());
+			}
 			if (diagnostic.getSeverity() != Diagnostic.OK) {
 				String s = PivotUtil.formatDiagnostics(diagnostic, "\n");
 				fail("Diagnose failure " + s);
@@ -700,8 +712,8 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 						+ "{\n"
 						+ "    class Clase1\n"
 						+ "    {\n"
-						+ "        invariant : self.name.size() > 0;\n"
-						+ "        attribute name : String[?] { ordered };\n"
+						+ "        invariant : (self.name <> null) and (self.name.size() > 0);\n"
+						+ "        attribute name : String { ordered };\n"
 						+ "    }\n"
 						+ "}\n";
 				String genmodelFile = createEcoreGenModelContent("Bug370824", null);
@@ -726,10 +738,10 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 						+ "    class Clase1\n"
 						+ "    {\n"
 						+ "        invariant : self.name.size() > 0;\n"
-						+ "        attribute name : String[?] { ordered };\n"
-						+ "        operation copy(b : Boolean) : Boolean { body: b; }\n"
-						+ "        operation complement(b : Boolean) : Boolean { body: not b; }\n"
-						+ "        operation myPrefixedName(s1 : String, s2 : String) : String { body: s1 + name + s2; }\n"
+						+ "        attribute name : String[1] { ordered };\n"
+						+ "        operation copy(b : Boolean[1]) : Boolean[1] { body: b; }\n"
+						+ "        operation complement(b : Boolean[1]) : Boolean[1] { body: not b; }\n"
+						+ "        operation myPrefixedName(s1 : String[1], s2 : String[1]) : String[1] { body: s1 + name + s2; }\n"
 						+ "        operation me() : Clase1 { body: self.oclAsType(Clase1); }\n"
 						+ "    }\n" + "}\n";
 				String genmodelFile = createEcoreGenModelContent("Bug409650", null);
@@ -948,7 +960,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 								"{\n" +
 								"    class Element\n" +
 								"    {\n" +
-								"        attribute name : String = '';\n" +
+								"        attribute name : String[1] = '';\n" +
 								"        invariant\n" +
 								"        elementNameNotReservedWord: \n" +
 								"            let name: String = self.name.toLower() in\n" +
@@ -1477,7 +1489,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 					GenModel genModel = (GenModel) genModelResource.getContents().get(0);
 					genModel.setModelDirectory(getTestProject().getName() + "/" + JavaFileUtil.TEST_SRC_FOLDER_NAME);
 					genModelResource.setURI(targetGenModelURI);
-					genModelResource.save(XMIUtil.createSaveOptions());
+					genModelResource.save(XMIUtil.createSaveOptions(genModelResource));
 					//
 					createManifestFile();
 				}
@@ -1508,76 +1520,76 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 						+ "    datatype ENumber : 'java.lang.Number' { serializable };\n"
 						+ "    class EcoreLists\n"
 						+ "    {\n"
-						+ "        attribute eBigDecimal : ecore::EBigDecimal { derived readonly volatile } { derivation: negEBigDecimal(1); }\n"
-						+ "        attribute eBigDecimals : ecore::EBigDecimal[*] { derived readonly volatile } { derivation: negEBigDecimals(Set{1}); }\n"
-						+ "        attribute eBigInteger : ecore::EBigInteger { derived readonly volatile } { derivation: negEBigInteger(1); }\n"
-						+ "        attribute eBigIntegers : ecore::EBigInteger[*] { derived readonly volatile } { derivation: negEBigIntegers(Set{1}); }\n"
-						+ "        attribute eBoolean : ecore::EBoolean { derived readonly volatile } { derivation: notEBoolean(true); }\n"
-						+ "        attribute eBooleans : ecore::EBoolean[*] { derived readonly volatile } { derivation: notEBooleans(Set{true}); }\n"
-						+ "        attribute eBooleanObject : ecore::EBooleanObject { derived readonly volatile } { derivation: notEBooleanObject(true); }\n"
-						+ "        attribute eBooleanObjects : ecore::EBooleanObject[*] { derived readonly volatile } { derivation: notEBooleanObjects(Set{true}); }\n"
-						+ "        attribute eChar : ecore::EChar { derived readonly volatile } { derivation: negEChar(1); }\n"
-						+ "        attribute eChars : ecore::EChar[*] { derived readonly volatile } { derivation: negEChars(Set{1}); }\n"
-						+ "        attribute eCharacterObject : ecore::ECharacterObject { derived readonly volatile } { derivation: negECharacterObject(1); }\n"
-						+ "        attribute eCharacterObjects : ecore::ECharacterObject[*] { derived readonly volatile } { derivation: negECharacterObjects(Set{1}); }\n"
-						+ "        attribute eDouble : ecore::EDouble { derived readonly volatile } { derivation: negEDouble(1); }\n"
-						+ "        attribute eDoubles : ecore::EDouble[*] { derived readonly volatile } { derivation: negEDoubles(Set{1}); }\n"
-						+ "        attribute eDoubleObject : ecore::EDoubleObject { derived readonly volatile } { derivation: negEDoubleObject(1); }\n"
-						+ "        attribute eDoubleObjects : ecore::EDoubleObject[*] { derived readonly volatile } { derivation: negEDoubleObjects(Set{1}); }\n"
-						+ "        attribute eFloat : ecore::EFloat { derived readonly volatile } { derivation: negEFloat(1); }\n"
-						+ "        attribute eFloats : ecore::EFloat[*] { derived readonly volatile } { derivation: negEFloats(Set{1}); }\n"
-						+ "        attribute eFloatObject : ecore::EFloatObject { derived readonly volatile } { derivation: negEFloatObject(1); }\n"
-						+ "        attribute eFloatObjects : ecore::EFloatObject[*] { derived readonly volatile } { derivation: negEFloatObjects(Set{1}); }\n"
-						+ "        attribute eInt : ecore::EInt { derived readonly volatile } { derivation: negEInt(1); }\n"
-						+ "        attribute eInts : ecore::EInt[*] { derived readonly volatile } { derivation: negEInts(Set{1}); }\n"
-						+ "        attribute eIntegerObject : ecore::EIntegerObject { derived readonly volatile } { derivation: negEIntegerObject(1); }\n"
-						+ "        attribute eIntegerObjects : ecore::EIntegerObject[*] { derived readonly volatile } { derivation: negEIntegerObjects(Set{1}); }\n"
-						+ "        attribute eLong : ecore::ELong { derived readonly volatile } { derivation: negELong(1); }\n"
-						+ "        attribute eLongs : ecore::ELong[*] { derived readonly volatile } { derivation: negELongs(Set{1}); }\n"
-						+ "        attribute eLongObject : ecore::ELongObject { derived readonly volatile } { derivation: negELongObject(1); }\n"
-						+ "        attribute eLongObjects : ecore::ELongObject[*] { derived readonly volatile } { derivation: negELongObjects(Set{1}); }\n"
-						+ "        attribute eShort : ecore::EShort { derived readonly volatile } { derivation: negEShort(1); }\n"
-						+ "        attribute eShorts : ecore::EShort[*] { derived readonly volatile } { derivation: negEShorts(Set{1}); }\n"
-						+ "        attribute eShortObject : ecore::EShortObject { derived readonly volatile } { derivation: negEShortObject(1); }\n"
-						+ "        attribute eShortObjects : ecore::EShortObject[*] { derived readonly volatile } { derivation: negEShortObjects(Set{1}); }\n"
-						//			+ "        attribute eNumber : ENumber { derived readonly volatile } { derivation: negENumber(ENumber{'1'}); }\n"
-						+ "        attribute eString : ecore::EString { derived readonly volatile } { derivation: upCase('abc'); }\n"
-						+ "        attribute eStrings : ecore::EString[*] { derived readonly volatile } { derivation: upCases(Set{'abc'}); }\n"
-						+ "        operation negEBigDecimal(b : ecore::EBigDecimal) : ecore::EBigDecimal { body: -b; }\n"
-						+ "        operation negEBigDecimals(b : ecore::EBigDecimal[*]) : ecore::EBigDecimal[*] { body: b->collect(e | -e)->asSet(); }\n"
-						+ "        operation negEBigInteger(b : ecore::EBigInteger) : ecore::EBigInteger { body: -b; }\n"
-						+ "        operation negEBigIntegers(b : ecore::EBigInteger[*]) : ecore::EBigInteger[*] { body: b->collect(e | -e)->asSet(); }\n"
-						+ "        operation notEBoolean(b : ecore::EBoolean) : ecore::EBoolean { body: not b; }\n"
-						+ "        operation notEBooleans(b : ecore::EBoolean[*]) : ecore::EBoolean[*] { body: b->collect(e | not e)->asSet(); }\n"
-						+ "        operation notEBooleanObject(b : ecore::EBooleanObject) : ecore::EBooleanObject { body: not b; }\n"
-						+ "        operation notEBooleanObjects(b : ecore::EBooleanObject[*]) : ecore::EBooleanObject[*] { body: b->collect(e | not e)->asSet(); }\n"
-						+ "        operation negEChar(b : ecore::EChar) : ecore::EChar { body: -b; }\n"
-						+ "        operation negEChars(b : ecore::EChar[*]) : ecore::EChar[*] { body: b->collect(e | (-e).oclAsType(ecore::EChar))->asSet(); }\n"
-						+ "        operation negECharacterObject(b : ecore::ECharacterObject) : ecore::ECharacterObject { body: -b; }\n"
-						+ "        operation negECharacterObjects(b : ecore::ECharacterObject[*]) : ecore::ECharacterObject[*] { body: b->collect(e | -e)->asSet(); }\n"
-						+ "        operation negEDouble(b : ecore::EDouble) : ecore::EDouble { body: -b; }\n"
-						+ "        operation negEDoubles(b : ecore::EDouble[*]) : ecore::EDouble[*] { body: b->collect(e | -e)->asSet(); }\n"
-						+ "        operation negEDoubleObject(b : ecore::EDoubleObject) : ecore::EDoubleObject { body: -b; }\n"
-						+ "        operation negEDoubleObjects(b : ecore::EDoubleObject[*]) : ecore::EDoubleObject[*] { body: b->collect(e | -e)->asSet(); }\n"
-						+ "        operation negEFloat(b : ecore::EFloat) : ecore::EFloat { body: -b; }\n"
-						+ "        operation negEFloats(b : ecore::EFloat[*]) : ecore::EFloat[*] { body: b->collect(e | -e)->asSet(); }\n"
-						+ "        operation negEFloatObject(b : ecore::EFloatObject) : ecore::EFloatObject { body: -b; }\n"
-						+ "        operation negEFloatObjects(b : ecore::EFloatObject[*]) : ecore::EFloatObject[*] { body: b->collect(e | -e)->asSet(); }\n"
-						+ "        operation negEInt(b : ecore::EInt) : ecore::EInt { body: -b; }\n"
-						+ "        operation negEInts(b : ecore::EInt[*]) : ecore::EInt[*] { body: b->collect(e | -e)->asSet(); }\n"
-						+ "        operation negEIntegerObject(b : ecore::EIntegerObject) : ecore::EIntegerObject { body: -b; }\n"
-						+ "        operation negEIntegerObjects(b : ecore::EIntegerObject[*]) : ecore::EIntegerObject[*] { body: b->collect(e | -e)->asSet(); }\n"
-						+ "        operation negELong(b : ecore::ELong) : ecore::ELong { body: -b; }\n"
-						+ "        operation negELongs(b : ecore::ELong[*]) : ecore::ELong[*] { body: b->collect(e | -e)->asSet(); }\n"
-						+ "        operation negELongObject(b : ecore::ELongObject) : ecore::ELongObject { body: -b; }\n"
-						+ "        operation negELongObjects(b : ecore::ELongObject[*]) : ecore::ELongObject[*] { body: b->collect(e | -e)->asSet(); }\n"
-						+ "        operation negEShort(b : ecore::EShort) : ecore::EShort { body: -b; }\n"
-						+ "        operation negEShorts(b : ecore::EShort[*]) : ecore::EShort[*] { body: b->collect(e | -e)->asSet(); }\n"
-						+ "        operation negEShortObject(b : ecore::EShortObject) : ecore::EShortObject { body: -b; }\n"
-						+ "        operation negEShortObjects(b : ecore::EShortObject[*]) : ecore::EShortObject[*] { body: b->collect(e | -e)->asSet(); }\n"
+						+ "        attribute eBigDecimal : ecore::EBigDecimal[1] { derived readonly volatile } { derivation: negEBigDecimal(1); }\n"
+						+ "        attribute eBigDecimals : ecore::EBigDecimal[*|1] { derived readonly volatile } { derivation: negEBigDecimals(Set{1}); }\n"
+						+ "        attribute eBigInteger : ecore::EBigInteger[1] { derived readonly volatile } { derivation: negEBigInteger(1); }\n"
+						+ "        attribute eBigIntegers : ecore::EBigInteger[*|1] { derived readonly volatile } { derivation: negEBigIntegers(Set{1}); }\n"
+						+ "        attribute eBoolean : ecore::EBoolean[1] { derived readonly volatile } { derivation: notEBoolean(true); }\n"
+						+ "        attribute eBooleans : ecore::EBoolean[*|1] { derived readonly volatile } { derivation: notEBooleans(Set{true}); }\n"
+						+ "        attribute eBooleanObject : ecore::EBooleanObject[1] { derived readonly volatile } { derivation: notEBooleanObject(true); }\n"
+						+ "        attribute eBooleanObjects : ecore::EBooleanObject[*|1] { derived readonly volatile } { derivation: notEBooleanObjects(Set{true}); }\n"
+						+ "        attribute eChar : ecore::EChar[1] { derived readonly volatile } { derivation: negEChar(1); }\n"
+						+ "        attribute eChars : ecore::EChar[*|1] { derived readonly volatile } { derivation: negEChars(Set{1}); }\n"
+						+ "        attribute eCharacterObject : ecore::ECharacterObject[1] { derived readonly volatile } { derivation: negECharacterObject(1); }\n"
+						+ "        attribute eCharacterObjects : ecore::ECharacterObject[*|1] { derived readonly volatile } { derivation: negECharacterObjects(Set{1}); }\n"
+						+ "        attribute eDouble : ecore::EDouble[1] { derived readonly volatile } { derivation: negEDouble(1); }\n"
+						+ "        attribute eDoubles : ecore::EDouble[*|1] { derived readonly volatile } { derivation: negEDoubles(Set{1}); }\n"
+						+ "        attribute eDoubleObject : ecore::EDoubleObject[1] { derived readonly volatile } { derivation: negEDoubleObject(1); }\n"
+						+ "        attribute eDoubleObjects : ecore::EDoubleObject[*|1] { derived readonly volatile } { derivation: negEDoubleObjects(Set{1}); }\n"
+						+ "        attribute eFloat : ecore::EFloat[1] { derived readonly volatile } { derivation: negEFloat(1); }\n"
+						+ "        attribute eFloats : ecore::EFloat[*|1] { derived readonly volatile } { derivation: negEFloats(Set{1}); }\n"
+						+ "        attribute eFloatObject : ecore::EFloatObject[1] { derived readonly volatile } { derivation: negEFloatObject(1); }\n"
+						+ "        attribute eFloatObjects : ecore::EFloatObject[*|1] { derived readonly volatile } { derivation: negEFloatObjects(Set{1}); }\n"
+						+ "        attribute eInt : ecore::EInt[1] { derived readonly volatile } { derivation: negEInt(1); }\n"
+						+ "        attribute eInts : ecore::EInt[*|1] { derived readonly volatile } { derivation: negEInts(Set{1}); }\n"
+						+ "        attribute eIntegerObject : ecore::EIntegerObject[1] { derived readonly volatile } { derivation: negEIntegerObject(1); }\n"
+						+ "        attribute eIntegerObjects : ecore::EIntegerObject[*|1] { derived readonly volatile } { derivation: negEIntegerObjects(Set{1}); }\n"
+						+ "        attribute eLong : ecore::ELong[1] { derived readonly volatile } { derivation: negELong(1); }\n"
+						+ "        attribute eLongs : ecore::ELong[*|1] { derived readonly volatile } { derivation: negELongs(Set{1}); }\n"
+						+ "        attribute eLongObject : ecore::ELongObject[1] { derived readonly volatile } { derivation: negELongObject(1); }\n"
+						+ "        attribute eLongObjects : ecore::ELongObject[*|1] { derived readonly volatile } { derivation: negELongObjects(Set{1}); }\n"
+						+ "        attribute eShort : ecore::EShort[1] { derived readonly volatile } { derivation: negEShort(1); }\n"
+						+ "        attribute eShorts : ecore::EShort[*|1] { derived readonly volatile } { derivation: negEShorts(Set{1}); }\n"
+						+ "        attribute eShortObject : ecore::EShortObject[1] { derived readonly volatile } { derivation: negEShortObject(1); }\n"
+						+ "        attribute eShortObjects : ecore::EShortObject[*|1] { derived readonly volatile } { derivation: negEShortObjects(Set{1}); }\n"
+						//			+ "        attribute eNumber : ENumber[1] { derived readonly volatile } { derivation: negENumber(ENumber{'1'}); }\n"
+						+ "        attribute eString : ecore::EString[1] { derived readonly volatile } { derivation: upCase('abc'); }\n"
+						+ "        attribute eStrings : ecore::EString[*|1] { derived readonly volatile } { derivation: upCases(Set{'abc'}); }\n"
+						+ "        operation negEBigDecimal(b : ecore::EBigDecimal[1]) : ecore::EBigDecimal[1] { body: -b; }\n"
+						+ "        operation negEBigDecimals(b : ecore::EBigDecimal[*|1]) : ecore::EBigDecimal[*|1] { body: b->collect(e | -e)->asSet(); }\n"
+						+ "        operation negEBigInteger(b : ecore::EBigInteger[1]) : ecore::EBigInteger[1] { body: -b; }\n"
+						+ "        operation negEBigIntegers(b : ecore::EBigInteger[*|1]) : ecore::EBigInteger[*|1] { body: b->collect(e | -e)->asSet(); }\n"
+						+ "        operation notEBoolean(b : ecore::EBoolean[1]) : ecore::EBoolean[1] { body: not b; }\n"
+						+ "        operation notEBooleans(b : ecore::EBoolean[*|1]) : ecore::EBoolean[*|1] { body: b->collect(e | not e)->asSet(); }\n"
+						+ "        operation notEBooleanObject(b : ecore::EBooleanObject[1]) : ecore::EBooleanObject[1] { body: not b; }\n"
+						+ "        operation notEBooleanObjects(b : ecore::EBooleanObject[*|1]) : ecore::EBooleanObject[*|1] { body: b->collect(e | not e)->asSet(); }\n"
+						+ "        operation negEChar(b : ecore::EChar[1]) : ecore::EChar[1] { body: -b; }\n"
+						+ "        operation negEChars(b : ecore::EChar[*|1]) : ecore::EChar[*|1] { body: b->collect(e | (-e).oclAsType(ecore::EChar))->asSet(); }\n"
+						+ "        operation negECharacterObject(b : ecore::ECharacterObject[1]) : ecore::ECharacterObject[1] { body: -b; }\n"
+						+ "        operation negECharacterObjects(b : ecore::ECharacterObject[*|1]) : ecore::ECharacterObject[*|1] { body: b->collect(e | -e)->asSet(); }\n"
+						+ "        operation negEDouble(b : ecore::EDouble[1]) : ecore::EDouble[1] { body: -b; }\n"
+						+ "        operation negEDoubles(b : ecore::EDouble[*|1]) : ecore::EDouble[*|1] { body: b->collect(e | -e)->asSet(); }\n"
+						+ "        operation negEDoubleObject(b : ecore::EDoubleObject[1]) : ecore::EDoubleObject[1] { body: -b; }\n"
+						+ "        operation negEDoubleObjects(b : ecore::EDoubleObject[*|1]) : ecore::EDoubleObject[*|1] { body: b->collect(e | -e)->asSet(); }\n"
+						+ "        operation negEFloat(b : ecore::EFloat[1]) : ecore::EFloat[1] { body: -b; }\n"
+						+ "        operation negEFloats(b : ecore::EFloat[*|1]) : ecore::EFloat[*|1] { body: b->collect(e | -e)->asSet(); }\n"
+						+ "        operation negEFloatObject(b : ecore::EFloatObject[1]) : ecore::EFloatObject[1] { body: -b; }\n"
+						+ "        operation negEFloatObjects(b : ecore::EFloatObject[*|1]) : ecore::EFloatObject[*|1] { body: b->collect(e | -e)->asSet(); }\n"
+						+ "        operation negEInt(b : ecore::EInt[1]) : ecore::EInt[1] { body: -b; }\n"
+						+ "        operation negEInts(b : ecore::EInt[*|1]) : ecore::EInt[*|1] { body: b->collect(e | -e)->asSet(); }\n"
+						+ "        operation negEIntegerObject(b : ecore::EIntegerObject[1]) : ecore::EIntegerObject[1] { body: -b; }\n"
+						+ "        operation negEIntegerObjects(b : ecore::EIntegerObject[*|1]) : ecore::EIntegerObject[*|1] { body: b->collect(e | -e)->asSet(); }\n"
+						+ "        operation negELong(b : ecore::ELong[1]) : ecore::ELong[1] { body: -b; }\n"
+						+ "        operation negELongs(b : ecore::ELong[*|1]) : ecore::ELong[*|1] { body: b->collect(e | -e)->asSet(); }\n"
+						+ "        operation negELongObject(b : ecore::ELongObject[1]) : ecore::ELongObject[1] { body: -b; }\n"
+						+ "        operation negELongObjects(b : ecore::ELongObject[*|1]) : ecore::ELongObject[*|1] { body: b->collect(e | -e)->asSet(); }\n"
+						+ "        operation negEShort(b : ecore::EShort[1]) : ecore::EShort[1] { body: -b; }\n"
+						+ "        operation negEShorts(b : ecore::EShort[*|1]) : ecore::EShort[*|1] { body: b->collect(e | -e)->asSet(); }\n"
+						+ "        operation negEShortObject(b : ecore::EShortObject[1]) : ecore::EShortObject[1] { body: -b; }\n"
+						+ "        operation negEShortObjects(b : ecore::EShortObject[*|1]) : ecore::EShortObject[*|1] { body: b->collect(e | -e)->asSet(); }\n"
 						//			+ "        operation negENumber(b : ENumber) : ENumber { body: (-(b.oclAsType(Integer))).oclAsType(ENumber); }\n"
-						+ "        operation upCase(b : ecore::EString) : ecore::EString { body: b.toUpper(); }\n"
-						+ "        operation upCases(b : ecore::EString[*]) : ecore::EString[*] { body: b->collect(e | e.toUpper())->asSet(); }\n"
+						+ "        operation upCase(b : ecore::EString[1]) : ecore::EString[1] { body: b.toUpper(); }\n"
+						+ "        operation upCases(b : ecore::EString[*|1]) : ecore::EString[*|1] { body: b->collect(e | e.toUpper())->asSet(); }\n"
 						+ "    }\n" + "}\n";
 				String genmodelFile = createEcoreGenModelContent("Bug570717", null);
 				createManifestFile();
@@ -1836,7 +1848,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 					GenModel genModel = (GenModel) genModelResource.getContents().get(0);
 					genModel.setModelDirectory(getTestProject().getName() + "/" + JavaFileUtil.TEST_SRC_FOLDER_NAME);
 					genModelResource.setURI(targetGenModelURI);
-					genModelResource.save(XMIUtil.createSaveOptions());
+					genModelResource.save(XMIUtil.createSaveOptions(genModelResource));
 				}
 				finally {
 					ocl0.dispose();
@@ -1912,7 +1924,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 						Resource resource = resourceSet1.getResource(URI.createURI(PivotPackage.eNS_URI, true), true);
 						ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 						resource.setURI(URI.createPlatformResourceURI(testProjectName + "/" + "Pivot.oclas", true));
-						resource.save(outputStream, XMIUtil.createSaveOptions());
+						resource.save(outputStream, XMIUtil.createSaveOptions(resource));
 
 						IWorkspace workspace = ResourcesPlugin.getWorkspace();
 						IProject project = workspace.getRoot().getProject(testProjectName);

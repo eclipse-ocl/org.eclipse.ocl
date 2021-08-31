@@ -14,6 +14,7 @@ import java.io.IOException;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.pivot.tests.TestOCL;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
@@ -80,7 +81,7 @@ public class FlowAnalysisTests extends XtextTestCase
 
 		protected @NonNull OCLExpression createTestModel(@NonNull String invariantName, @NonNull String invariantBody) throws IOException, ParserException {
 			String testContext =
-					"package deductions : ded = 'http://deductions'\n" +
+					"package deductions : ded = 'http://" + getTestName() + "/deductions'\n" +
 							"{\n" +
 							"  class Deductions\n" +
 							"  {\n" +
@@ -95,7 +96,7 @@ public class FlowAnalysisTests extends XtextTestCase
 							"  }\n" +
 							"}";
 			String fileName = "FlowAnalysis_" + invariantName;
-			createOCLinEcoreFile(fileName + ".oclinecore", testContext);
+			createFile(fileName + ".oclinecore", testContext);
 			Resource asResource = doLoad_Concrete(fileName, "oclinecore");
 			Model model = PivotUtil.getModel(asResource);
 			org.eclipse.ocl.pivot.Package deductionsPackage = ClassUtil.nonNullState(NameUtil.getNameable(model.getOwnedPackages(), "deductions"));
@@ -119,12 +120,12 @@ public class FlowAnalysisTests extends XtextTestCase
 				ASResource asResource = cs2as.getASResource();
 				assertNoValidationErrors("Loaded pivot", asResource);
 			}
-			Resource asResource = xtextResource.getASResource();
+			XMLResource asResource = xtextResource.getASResource();
 			assertNoUnresolvedProxies("Unresolved proxies", xtextResource);
 			assertNoResourceErrors("Save failed", xtextResource);
 			asResource.setURI(pivotURI);
 			assertNoValidationErrors("Pivot validation errors", asResource.getContents().get(0));
-			asResource.save(XMIUtil.createSaveOptions());
+			asResource.save(XMIUtil.createSaveOptions(asResource));
 			return asResource;
 		}
 
@@ -273,9 +274,10 @@ public class FlowAnalysisTests extends XtextTestCase
 	}
 
 	public void testFlowAnalysis_DoubleBiImpliesPropertyGuard() throws Exception {
+	//	SymbolicAnalysis.HYPOTHESIS.setState(true);
 		MyOCL ocl = new MyOCL();
 		OperationCallExp asImplies = (OperationCallExp) ocl.createTestModel("DoubleBiImpliesVariableGuard",
-				"dummy <> null and dummy.dummy <> null implies dummy <> null or dummy.dummy <> null or dummy.dummy.dummy <> null");
+				"((dummy <> null) and (dummy.dummy <> null)) implies ((dummy <> null) or (dummy.dummy <> null) or (dummy.dummy.dummy <> null))");
 		OperationCallExp asAnd12 = (OperationCallExp) PivotUtil.getOwnedSource(asImplies);
 		OperationCallExp asGuard1 = (OperationCallExp) PivotUtil.getOwnedSource(asAnd12);
 		PropertyCallExp asRef1 = (PropertyCallExp) PivotUtil.getOwnedSource(asGuard1);

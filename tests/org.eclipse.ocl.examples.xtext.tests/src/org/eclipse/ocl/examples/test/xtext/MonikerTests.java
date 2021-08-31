@@ -181,7 +181,7 @@ public class MonikerTests extends XtextTestCase
 		Resource asResource = csResource.getASResource();
 		assertNoValidationErrors("Pivot validation problems", asResource);
 		asResource.setURI(pivotURI);
-		asResource.save(XMIUtil.createSaveOptions());
+		asResource.save(XMIUtil.createSaveOptions(asResource));
 		//
 		//	Check CS-Pivot moniker consistency
 		//

@@ -12,13 +12,19 @@ package my : my = 'http://my/1.0'
     }
     class AType extends Entity
     {
+        operation selfReferences() : Sequence(BType[*|1])
+        {
+            body: BType.allInstances()->select(references->includes(self))->asSequence();
+        }
         operation referenced() : BType[?] 
         {
-            body: BType.allInstances()->select(references->includes(self))->asSequence()->first();
+            body: let selfReferences = selfReferences()
+            in if selfReferences->notEmpty() then selfReferences->first() else null endif;
         }
         attribute referencedAttr : BType[?] { derived,volatile,transient,readonly }
         {
-            derivation: BType.allInstances()->select(references->includes(self))->asSequence()->first();
+            derivation: let selfReferences = selfReferences()
+            in if selfReferences->notEmpty() then selfReferences->first() else null endif;
         }
 
     }

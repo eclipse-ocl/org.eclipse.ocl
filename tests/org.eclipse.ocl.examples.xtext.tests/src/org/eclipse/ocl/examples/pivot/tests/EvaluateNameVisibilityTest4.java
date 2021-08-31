@@ -43,6 +43,7 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
+import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
 import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
@@ -210,7 +211,8 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 	}
 
 	@Test public void test_caught_and_uncaught() {
-		TestOCL ocl = createOCL();
+		TestOCL ocl = createOCLWithProjectMap();
+		ocl.getEnvironmentFactory().setOption(PivotValidationOptions.PotentialInvalidResult, StatusCodes.Severity.IGNORE);		// Need an exception to be thrown
 		initFruitPackage(ocl);
 		EObject context = fruitEFactory.create(tree);
 		ocl.assertQueryTrue(context, "let myName : String = name in myName.oclIsKindOf(String) and myName = null");
@@ -292,14 +294,25 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 	}
 
 	@Test public void test_cg_caught_if() throws ParserException {
+		// The original version of this test checks that  numerous exceptionsare caught.
+		// Once SymbolicAnalysis is in place these are all eliminated at edit-time.
 		TestOCL ocl = createOCL();
 		StandardLibrary standardLibrary = ocl.getStandardLibrary();
 		ExpressionInOCL query = ocl.createQuery(standardLibrary.getOclVoidType(), "self->any(true)");
-		String textQuery =
-				"name = 'closure' implies\n" +
-						"if self.ownedSource?.type.oclIsKindOf(SequenceType) or self.ownedSource?.type.oclIsKindOf(OrderedSetType)"
+		//
+		String textQuery1 =
+				"(name = 'closure') and (self.type <> null) and (self.ownedSource <> null) and (self.ownedSource.type <> null) implies\n" +
+						"if self.ownedSource.type.oclIsKindOf(SequenceType) or self.ownedSource.type.oclIsKindOf(OrderedSetType)"
 						+ "then self.type.oclIsKindOf(OrderedSetType) else self.type.oclIsKindOf(SetType) endif";
-		ocl.assertQueryTrue(query.getOwnedBody(), textQuery);
+		ocl.assertQueryTrue(query.getOwnedBody(), textQuery1);
+		//
+		ocl.getEnvironmentFactory().setOption(PivotValidationOptions.PotentialInvalidResult, StatusCodes.Severity.IGNORE);
+		String textQuery2 =
+				"(name = 'closure') implies\n" +
+						"if self.ownedSource.type.oclIsKindOf(SequenceType) or self.ownedSource.type.oclIsKindOf(OrderedSetType)"
+						+ "then self.type.oclIsKindOf(OrderedSetType) else self.type.oclIsKindOf(SetType) endif";
+		ocl.assertQueryTrue(query.getOwnedBody(), textQuery2);
+		//
 		ocl.dispose();
 	}
 
@@ -385,8 +398,8 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 				"import ecore : 'http://www.eclipse.org/emf/2002/Ecore#/';\n" +
 						"package pkg : pkg = 'pkg' {\n" +
 						"  class A {\n" +
-						"    property derivedInteger : Integer { derivation: 99; }\n" +
-						"    property derivedDerivedInteger : Integer { derivation: 2 * derivedInteger;}\n" +
+						"    property derivedInteger : Integer[1] { derivation: 99; }\n" +
+						"    property derivedDerivedInteger : Integer[1] { derivation: 2 * derivedInteger;}\n" +
 						"  }\n" +
 						"}\n";
 		Resource metamodel = cs2as(ocl, metamodelText);
@@ -478,7 +491,7 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 	 * Tests the basic name accesses
 	 */
 	@Test public void test_container_navigation() throws InvocationTargetException {
-		TestOCL ocl = createOCL();
+		TestOCL ocl = createOCLWithProjectMap();
 		initFruitPackage(ocl);
 		MetamodelManagerInternal metamodelManager = ocl.getMetamodelManager();
 		IdResolver idResolver = ocl.getIdResolver();
@@ -581,7 +594,7 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 	 * Tests construction of a type instance with property values
 	 */
 	@Test public void test_type_construction() throws InvocationTargetException {
-		TestOCL ocl = createOCL();
+		TestOCL ocl = createOCLWithProjectMap();
 		initFruitPackage(ocl);
 		EObject context = fruitEFactory.create(tree);
 		ocl.assertValidationErrorQuery(ocl.getContextType(context), "Apple{stem=null}.label", "Missing initializers: color");
@@ -626,7 +639,6 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 			OCLinEcoreStandaloneSetup.doSetup();
 			//			OCLDelegateDomain.initialize(null);
 		}
-		ocl.getEnvironmentFactory().setOption(PivotValidationOptions.OptionalDefaultMultiplicity, Boolean.TRUE);
 		MetamodelManager metamodelManager = ocl.getMetamodelManager();
 		String metamodelText =
 				"package Bug411154 : pfx = 'Bug411154.ecore'\n" +
@@ -654,12 +666,12 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 						"		operation op4() : String { body: 'T2a::op4'; }\n" +
 						"		operation op6() : String { body: 'T2a::op6'; }\n" +
 						"		operation op7() : String { body: 'T2a::op7'; }\n" +
-						"		operation op9() : String { body: 'T2a::op9'; }\n" +
+						"		operation op9() : String[?] { body: 'T2a::op9'; }\n" +
 						"	}\n" +
 						"	class T2b extends T1 {\n" +
 						"		operation op6() : String { body: 'T2b::op6'; }\n" +
 						"		operation op7() : String { body: 'T2b::op7'; }\n" +
-						"		operation op9() : String { body: 'T2b::op9'; }\n" +
+						"		operation op9() : String[?] { body: 'T2b::op9'; }\n" +
 						"	}\n" +
 						"	class T3a extends T2a,T2b {\n" +
 						"		operation op1() : String { body: 'T3a::op1'; }\n" +
@@ -766,7 +778,7 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		ocl.assertSemanticErrorQuery(pivotTypeDomain, "t1_3b.op3()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Bug411154", "T1::op3");
 		ocl.assertQueryEquals(testObjectDomain, "T2a::op4", "t1_3b.op4()");
 		ocl.assertQueryEquals(testObjectDomain, "T1::op5", "t1_3b.op5()");
-		ocl.assertQueryInvalid(testObjectDomain, "t1_3b.op6()", NLS.bind(PivotMessages.AmbiguousOperation, "Bug411154::T1::op6() : String[?]", "Bug411154::T3b"), InvalidValueException.class);
+		ocl.assertQueryInvalid(testObjectDomain, "t1_3b.op6()", NLS.bind(PivotMessages.AmbiguousOperation, "Bug411154::T1::op6() : String[1]", "Bug411154::T3b"), InvalidValueException.class);
 		ocl.assertSemanticErrorQuery(pivotTypeDomain, "t1_3b.op7()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Bug411154", "T1::op7");
 		//
 		ocl.assertQueryEquals(testObjectDomain, "T3a::op1", "t1_4.op1()");

@@ -37,6 +37,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.common.internal.options.CommonOptions;
 import org.eclipse.ocl.examples.xtext.tests.TestFile;
+import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.evaluation.AbstractModelManager;
@@ -51,6 +52,8 @@ import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.validation.EcoreOCLEValidator;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
+import org.eclipse.ocl.pivot.messages.StatusCodes.Severity;
+import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
 import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
@@ -80,7 +83,7 @@ import junit.framework.TestCase;
 public class ValidateTests extends AbstractValidateTests
 {
 	public static @NonNull List<Diagnostic> assertEcoreOCLValidationDiagnostics(@Nullable OCL ocl, @NonNull String prefix, @NonNull Resource resource, @NonNull String... messages) {
-		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
+		Map<Object, Object> validationContext = TestUtil.createDefaultContext(Diagnostician.INSTANCE);
 		if (ocl != null) {
 			validationContext.put(OCL.class,  ocl);
 		}
@@ -145,6 +148,7 @@ public class ValidateTests extends AbstractValidateTests
 		//	Create model
 		//
 		OCL ocl = createOCL();
+		ocl.getEnvironmentFactory().setOption(PivotValidationOptions.PotentialInvalidResult, Severity.IGNORE);		// Ecore model has deliberate errors
 		Resource ecoreResource = doLoadEcore(ocl, getTestModelURI("models/ecore/Bug418551.ecore"));
 		EPackage temp = (EPackage) ecoreResource.getContents().get(0);
 		EClass tester = (EClass) temp.getEClassifier("Tester");
@@ -256,7 +260,7 @@ public class ValidateTests extends AbstractValidateTests
 		assertEquals("AbstractEnvironmentFactory.CONSTRUCTION_COUNT", 1, AbstractEnvironmentFactory.CONSTRUCTION_COUNT-oldAbstractEnvironmentFactory_CONSTRUCTION_COUNT);
 		assertEquals("AbstractModelManager.CONSTRUCTION_COUNT", 1, AbstractModelManager.CONSTRUCTION_COUNT-oldAbstractModelManager_CONSTRUCTION_COUNT);
 		assertEquals("ExecutorManager.CONSTRUCTION_COUNT", 1, ExecutorManager.CONSTRUCTION_COUNT-oldExecutorManager_CONSTRUCTION_COUNT);  // 1 for outer validation, 2 more for inner validations
-		assertEquals("AbstractExecutor.CONSTRUCTION_COUNT", 8, AbstractExecutor.CONSTRUCTION_COUNT-oldAbstractExecutor_CONSTRUCTION_COUNT);  // 8 validation evaluations
+		assertEquals("AbstractExecutor.CONSTRUCTION_COUNT", 8+2, AbstractExecutor.CONSTRUCTION_COUNT-oldAbstractExecutor_CONSTRUCTION_COUNT);  // 8 validation evaluations + 2 symbolic analyses
 		ocl.dispose();
 	}
 
@@ -397,16 +401,17 @@ public class ValidateTests extends AbstractValidateTests
 				+ "{\n"
 				+ "	class MyNumber\n"
 				+ "	{\n"
-				+ "		operation isPrimeNumber(candidatePrime : Integer) : Boolean {\n"
+				+ "		operation isPrimeNumber(candidatePrime : Integer[1]) : Boolean {\n"
 				+ "			body: (0 < candidatePrime)\n"
 				+ "				  and ((candidatePrime < 4)\n"
 				+ "					  or ((candidatePrime.div(2) * 2) <> candidatePrime)\n"
 				+ "						 and isPrimeNumber(candidatePrime, 3));\n"
 				+ "		}\n"
 				+ "\n"
-				+ "		operation isPrimeNumber(candidatePrime : Integer, candidateFactor:Integer) : Boolean {\n"
+				+ "		operation isPrimeNumber(candidatePrime : Integer[1], candidateFactor:Integer[1]) : Boolean {\n"
 //				+ "			body: false.oclLog('\ncandidatePrime='+candidatePrime.toString() + ', candidateFactor='+candidateFactor.toString() +'\n') or\n"
-				+ "			body: ((candidatePrime.div(candidateFactor) * candidateFactor) <> candidatePrime)\n"
+				+ "			body: (candidateFactor >= 1)\n"		// BUG 520440 it would be bice to infer this
+				+ "				  and ((candidatePrime.div(candidateFactor) * candidateFactor) <> candidatePrime)\n"
 				+ "				  and ((candidateFactor*candidateFactor > candidatePrime)\n"
 				+ "					  or isPrimeNumber(candidatePrime, candidateFactor+2));\n"
 				+ "		}\n"
