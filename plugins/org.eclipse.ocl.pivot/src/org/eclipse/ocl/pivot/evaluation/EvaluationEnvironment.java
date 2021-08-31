@@ -16,6 +16,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
 import org.eclipse.ocl.pivot.utilities.Adaptable;
 import org.eclipse.ocl.pivot.utilities.Customizable;
@@ -33,6 +34,7 @@ public interface EvaluationEnvironment extends Adaptable, Customizable
 	public interface EvaluationEnvironmentExtension extends EvaluationEnvironment
 	{
 		@NonNull ExecutorInternal getExecutor();
+		@Override
 		EvaluationEnvironment.@Nullable EvaluationEnvironmentExtension getParentEvaluationEnvironment();
 	}
 
@@ -57,12 +59,20 @@ public interface EvaluationEnvironment extends Adaptable, Customizable
 	@NonNull EnvironmentFactory getEnvironmentFactory();
 
 	/**
+	 * @since 1.17
+	 */
+	default EvaluationEnvironment.@Nullable EvaluationEnvironmentExtension getParentEvaluationEnvironment() {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
 	 * Returns the value associated with the supplied variable declaration
 	 *
 	 * @param referredVariable
 	 *            the name whose value is to be returned
 	 * @return the value associated with the name
 	 */
+	// FIXME VariableDeclaration
 	@Nullable Object getValueOf(@NonNull TypedElement referredVariable);
 
 	/**
@@ -98,7 +108,14 @@ public interface EvaluationEnvironment extends Adaptable, Customizable
 	@NonNull NamedElement getExecutableObject();
 
 	/**
-	 * @since 1.16
+	 * @since 1.17
+	 */
+	default @Nullable Object replaceInternal(@NonNull VariableDeclaration referredVariable, @Nullable Object value) {
+		return null;
+	}
+
+	/**
+	 * @since 1.17
 	 */
 	default void toString(@NonNull StringBuilder s) {}
 }

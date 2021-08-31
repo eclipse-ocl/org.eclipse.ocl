@@ -36,6 +36,7 @@ import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
+import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment.EvaluationEnvironmentExtension;
 import org.eclipse.ocl.pivot.evaluation.EvaluationLogger;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
@@ -203,7 +204,7 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 
 	@Override
 	public @Nullable Object evaluate(@NonNull OCLExpression body) {
-		return evaluationVisitor.evaluate(body);
+		return getEvaluationVisitor().evaluate(body);
 	}
 
 	/**
@@ -527,7 +528,7 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 
 	@Override
 	public boolean isCanceled() {
-		return evaluationVisitor.isCanceled();
+		return (evaluationVisitor != null) && evaluationVisitor.isCanceled();
 	}
 
 	@Override
@@ -555,6 +556,14 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 		return pushEvaluationEnvironment(executableObject, (TypedElement)callingObject);
 	}
 
+	/**
+	 * @since 1.17
+	 */
+	protected EvaluationEnvironment pushEvaluationEnvironment(@NonNull EvaluationEnvironment nestedEvaluationEnvironment) {
+		assert nestedEvaluationEnvironment.getParentEvaluationEnvironment() == evaluationEnvironment;
+		return evaluationEnvironment = (EvaluationEnvironmentExtension) nestedEvaluationEnvironment;
+	}
+
 	@Override
 	public void replace(@NonNull TypedElement referredVariable, @Nullable Object value) {
 		evaluationEnvironment.replace(referredVariable, value);
@@ -577,7 +586,9 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 
 	@Override
 	public void setCanceled(boolean isCanceled) {
-		evaluationVisitor.setCanceled(isCanceled);
+		if (evaluationVisitor != null) {
+			evaluationVisitor.setCanceled(isCanceled);
+		}
 	}
 
 	@Override

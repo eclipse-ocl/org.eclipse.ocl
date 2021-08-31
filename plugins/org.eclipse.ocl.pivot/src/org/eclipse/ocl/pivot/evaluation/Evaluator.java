@@ -49,6 +49,14 @@ public interface Evaluator
 	@Deprecated
 	@NonNull EvaluationEnvironment getEvaluationEnvironment();
 
+	/** @deprecated use Executor or EvaluationVisitor.
+	 * @since 1.17*/
+	@Deprecated
+	default @NonNull Executor getExecutor() {
+		throw new UnsupportedOperationException();
+	}
+
+
 	//	/** @deprecated use Executor or EvaluationVisitor. */
 	//	@Deprecated
 	//	@NonNull Executor getExecutor();

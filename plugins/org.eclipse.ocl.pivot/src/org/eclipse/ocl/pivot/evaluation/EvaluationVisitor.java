@@ -35,6 +35,7 @@ public interface EvaluationVisitor extends Visitor<Object>, Evaluator
 	 */
 	public interface EvaluationVisitorExtension extends EvaluationVisitor
 	{
+		@Override
 		@NonNull Executor getExecutor();
 
 		/**
@@ -47,6 +48,13 @@ public interface EvaluationVisitor extends Visitor<Object>, Evaluator
 	@Deprecated
 	@Override
 	@NonNull EvaluationVisitor createNestedEvaluator();
+
+	/**
+	 * @since 1.15
+	 *
+	default @Nullable Object evaluate(@NonNull CollectionLiteralPart part) {
+		throw new UnsupportedOperationException();	// FIXME abstract
+	} */
 
 	@Override
 	@Nullable Object evaluate(@NonNull OCLExpression body);
@@ -71,6 +79,12 @@ public interface EvaluationVisitor extends Visitor<Object>, Evaluator
 	@Deprecated
 	@NonNull EvaluationVisitor getEvaluator();
 
+	@Override
+	default @NonNull Executor getExecutor() {
+		throw new UnsupportedOperationException();
+	}
+
+
 	/** @deprecated moved to Evaluator */
 	@Deprecated
 	@NonNull MetamodelManager getMetamodelManager();
@@ -86,6 +100,13 @@ public interface EvaluationVisitor extends Visitor<Object>, Evaluator
 	@Deprecated
 	@Override
 	@NonNull StandardLibrary getStandardLibrary();
+
+	/**
+	 * @since 1.17
+	 */
+	default @NonNull EvaluationVisitor getUndecoratedVisitor() {
+		return this;
+	}
 
 	@Override
 	boolean isCanceled();

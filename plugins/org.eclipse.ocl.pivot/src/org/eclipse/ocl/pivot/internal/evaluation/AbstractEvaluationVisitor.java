@@ -67,7 +67,7 @@ extends AbstractExtendingVisitor<@Nullable Object, ExecutorInternal.@NonNull Exe
 
 	/** @deprecated Use getExecutor().getEvaluationEnvironment() */
 	@Deprecated
-	protected final @NonNull EvaluationEnvironment evaluationEnvironment;
+	protected EvaluationEnvironment evaluationEnvironment;
 	/** @deprecated Use environmentFactory.getEvaluationEnvironment() */
 	@Deprecated
 	protected final @NonNull CompleteEnvironmentInternal completeEnvironment;
@@ -91,7 +91,7 @@ extends AbstractExtendingVisitor<@Nullable Object, ExecutorInternal.@NonNull Exe
 		this.idResolver = environmentFactory.getIdResolver();
 		this.standardLibrary = environmentFactory.getStandardLibrary();
 		this.undecoratedVisitor = this;  // assume I have no decorator
-		this.evaluationEnvironment = executor.getRootEvaluationEnvironment();
+	//	this.evaluationEnvironment = executor.getRootEvaluationEnvironment();
 		this.completeEnvironment = environmentFactory.getCompleteEnvironment();
 		this.modelManager = executor.getModelManager();
 	}
@@ -230,8 +230,11 @@ extends AbstractExtendingVisitor<@Nullable Object, ExecutorInternal.@NonNull Exe
 	 * recursively visit myself, then this decorator is cut out of the picture.
 	 *
 	 * @return my delegate visitor, which may be my own self or some other
+	 *
+	 * @since 1.17
 	 */
-	protected final @NonNull EvaluationVisitor getUndecoratedVisitor() {
+	@Override
+	public final @NonNull EvaluationVisitor getUndecoratedVisitor() {
 		return undecoratedVisitor;
 	}
 
