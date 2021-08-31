@@ -12,7 +12,10 @@ package org.eclipse.ocl.pivot.library.collection;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CallExp;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
@@ -26,5 +29,15 @@ public class CollectionExcludingOperation extends AbstractSimpleBinaryOperation
 	public @NonNull CollectionValue evaluate(@Nullable Object left, @Nullable Object right) {
 		CollectionValue leftCollectionValue = asCollectionValue(left);
 		return leftCollectionValue.excluding(right);
+	}
+
+	/**
+	 *	Special case processing for return types based on the source collection element types.
+	 *
+	 * @since 1.18
+	 */
+	@Override
+	public @Nullable Type resolveReturnType(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, @Nullable Type returnType) {
+		return resolveCollectionSourceReturnType(environmentFactory, callExp, returnType);
 	}
 }

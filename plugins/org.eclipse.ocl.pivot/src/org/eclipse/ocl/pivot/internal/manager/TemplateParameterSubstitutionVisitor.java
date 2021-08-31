@@ -55,7 +55,7 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
-import org.eclipse.ocl.pivot.library.LibraryFeature;
+import org.eclipse.ocl.pivot.library.LibraryIterationOrOperation;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
@@ -205,13 +205,9 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 		return context.get(templateParameter.getTemplateParameterId().getIndex());
 	}
 
+	@Deprecated /* @deprecated all functionality moved to LibraryOperation */
 	protected @Nullable TemplateParameterSubstitutionHelper getHelper(@NonNull Operation operation) {
-		LibraryFeature implementationClass = operation.getImplementation();
-		if (implementationClass == null) {
-			return  null;
-		}
-		Class<? extends LibraryFeature> className = implementationClass.getClass();
-		return TemplateParameterSubstitutionHelper.getHelper(className);
+		return  null;
 	}
 
 	protected @NonNull TupleType getSpecializedTupleType(@NonNull TupleType type) {
@@ -437,9 +433,9 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 		if (formalElements.size() > 0) {
 			OCLExpression actualElement = object.getOwnedBody();
 			Type actualType = actualElement.getType();
-			TemplateParameterSubstitutionHelper helper = getHelper(referredIteration);
-			if (helper != null) {
-				actualType = helper.resolveBodyType(environmentFactory.getMetamodelManager(), object, actualType);
+			LibraryIterationOrOperation implementation = (LibraryIterationOrOperation) referredIteration.getImplementation();
+			if (implementation != null) {		// Library classes have implementations, Complete OCL classes may be recursive
+				actualType = implementation.resolveBodyType(environmentFactory, object, actualType);
 			}
 			analyzeType(formalElements.get(0).getType(), actualType);
 		}
@@ -487,9 +483,9 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 		//
 		//	FIXME More general processing for T2 < T1
 		//
-		TemplateParameterSubstitutionHelper helper = getHelper(referredOperation);
-		if (helper != null) {
-			helper.resolveUnmodeledTemplateParameterSubstitutions(this, object);
+		LibraryIterationOrOperation implementation = (LibraryIterationOrOperation)referredOperation.getImplementation();
+		if (implementation != null) {		// Library classes have implementations, Complete OCL classes may be recursive
+			implementation.resolveUnmodeledTemplateParameterSubstitutions(this, object);
 		}
 		return null;
 	}

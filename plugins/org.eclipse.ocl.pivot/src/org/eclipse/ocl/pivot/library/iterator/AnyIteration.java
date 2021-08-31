@@ -12,12 +12,14 @@ package org.eclipse.ocl.pivot.library.iterator;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.IterationManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.AbstractIteration;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 
@@ -34,7 +36,7 @@ public class AnyIteration extends AbstractIteration
 	public @NonNull Object createAccumulatorValue(@NonNull Evaluator evaluator, @NonNull TypeId accumulatorTypeId, @NonNull TypeId bodyTypeId) {
 		return createAccumulatorValue(ValueUtil.getExecutor(evaluator), accumulatorTypeId, bodyTypeId);
 	}
-	
+
 	/**
 	 * @since 1.1
 	 */
@@ -42,16 +44,26 @@ public class AnyIteration extends AbstractIteration
 	public @NonNull Object createAccumulatorValue(@NonNull Executor executor, @NonNull TypeId accumulatorTypeId, @NonNull TypeId bodyTypeId) {
 		return INSTANCE;		// Not used
 	}
-	
+
+	/**
+	 *	Special case processing for return types based on the source collection element types.
+	 *
+	 * @since 1.15
+	 */
+	@Override
+	public boolean resolveReturnNullity(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, boolean returnIsRequired) {
+		return resolveCollectionSourceElementReturnNullity(environmentFactory, callExp, returnIsRequired);
+	}
+
 	@Override
 	protected @Nullable Object resolveTerminalValue(@NonNull IterationManager iterationManager) {
 //		return null;
 		throw new InvalidValueException("No matching content for 'any'"); // OMG Issue 18504 //$NON-NLS-1$
 	}
-	
+
 	@Override
     protected @Nullable Object updateAccumulator(@NonNull IterationManager iterationManager) {
-		Object bodyVal = iterationManager.evaluateBody();		
+		Object bodyVal = iterationManager.evaluateBody();
 		if (bodyVal == null) {
 			throw new InvalidValueException(PivotMessages.UndefinedBody, "any"); 	// Null body is invalid //$NON-NLS-1$
 		}
@@ -62,7 +74,7 @@ public class AnyIteration extends AbstractIteration
 			throw new InvalidValueException(PivotMessages.NonBooleanBody, "any"); 	// Non boolean body is invalid //$NON-NLS-1$
 		}
 		else {
-			Object value = iterationManager.get();		
+			Object value = iterationManager.get();
 			return value;									// Terminate after first find
 		}
 	}

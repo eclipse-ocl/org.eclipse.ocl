@@ -12,7 +12,9 @@ package org.eclipse.ocl.pivot.library.collection;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.values.OrderedCollectionValue;
 
 /**
@@ -27,5 +29,15 @@ public class OrderedCollectionAtOperation extends AbstractSimpleBinaryOperation
 		OrderedCollectionValue leftOrderedCollectionValue = asOrderedCollectionValue(left);
 		Integer atValue = asInteger(right);
 		return leftOrderedCollectionValue.at(atValue.intValue());
+	}
+
+	/**
+	 *	Special case processing for return types based on the source collection element types.
+	 *
+	 * @since 1.18
+	 */
+	@Override
+	public boolean resolveReturnNullity(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, boolean returnIsRequired) {
+		return resolveCollectionSourceElementReturnNullity(environmentFactory, callExp, returnIsRequired);
 	}
 }
