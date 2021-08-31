@@ -306,14 +306,15 @@ public abstract class BaseCSorASDocumentProvider extends BaseDocumentProvider
 	}
 
 	protected boolean isXML(@NonNull InputStream inputStream, String encoding) throws IOException {
+		String xmlIntro = "<?xml";
+		inputStream.mark(xmlIntro.length());
 		BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, encoding));
 		try {
 			String line = reader.readLine();
-			inputStream.reset();
-			return (line != null) && line.startsWith("<?xml");
+			return (line != null) && line.startsWith(xmlIntro);
 		}
 		finally {
-			reader.close();
+			inputStream.reset();
 		}
 	}
 
