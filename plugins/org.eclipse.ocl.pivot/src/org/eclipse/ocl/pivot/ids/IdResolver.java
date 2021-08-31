@@ -160,6 +160,11 @@ public interface IdResolver extends IdVisitor<Element>
 
 	boolean oclEquals(@Nullable Object thisValue, @Nullable Object thatValue);
 
+	/**
+	 * @since 1.17
+	 */
+	default void removeType(@NonNull TypeId typeId) {}
+
 	@Nullable Object unboxedValueOf(@Nullable Object boxedValue);
 
 	@NonNull Enumerator unboxedValueOf(@NonNull EnumerationLiteralId enumerationLiteralId);

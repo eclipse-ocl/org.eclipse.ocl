@@ -55,6 +55,7 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
+import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
@@ -1587,6 +1588,12 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		else {
 			return boxedValue;
 		}
+	}
+
+	@Override
+	public void removeType(@NonNull TypeId typeId) {
+		@SuppressWarnings("unused")
+		Type old = key2type.remove(typeId);
 	}
 
 	@Override
