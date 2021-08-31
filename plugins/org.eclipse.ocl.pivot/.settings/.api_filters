@@ -182,6 +182,151 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/utilities/EnvironmentFactoryInternal.java" type="org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal">
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal"/>
+                <message_argument value="analyzeExpressions(EObject, Set&lt;CompleteClass&gt;, Set&lt;Property&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal"/>
+                <message_argument value="detachRedundantThreadLocal()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/library/LibraryBinaryOperation.java" type="org.eclipse.ocl.pivot.library.LibraryBinaryOperation">
+        <filter id="403984517">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.library.LibraryBinaryOperation"/>
+                <message_argument value="org.eclipse.ocl.pivot.library.LibraryIterationOrOperation"/>
+                <message_argument value="resolveBodyType(EnvironmentFactory, CallExp, Type)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/library/LibraryIteration.java" type="org.eclipse.ocl.pivot.library.LibraryIteration">
+        <filter id="403984517">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.library.LibraryIteration"/>
+                <message_argument value="org.eclipse.ocl.pivot.library.LibraryIterationOrOperation"/>
+                <message_argument value="resolveBodyType(EnvironmentFactory, CallExp, Type)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/library/LibraryOperation.java" type="org.eclipse.ocl.pivot.library.LibraryOperation">
+        <filter id="403984517">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.library.LibraryOperation"/>
+                <message_argument value="org.eclipse.ocl.pivot.library.LibraryIterationOrOperation"/>
+                <message_argument value="resolveBodyType(EnvironmentFactory, CallExp, Type)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/library/LibrarySimpleBinaryOperation.java" type="org.eclipse.ocl.pivot.library.LibrarySimpleBinaryOperation">
+        <filter id="403984517">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.library.LibrarySimpleBinaryOperation"/>
+                <message_argument value="org.eclipse.ocl.pivot.library.LibraryIterationOrOperation"/>
+                <message_argument value="resolveBodyType(EnvironmentFactory, CallExp, Type)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/library/LibrarySimpleOperation.java" type="org.eclipse.ocl.pivot.library.LibrarySimpleOperation">
+        <filter id="403984517">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.library.LibrarySimpleOperation"/>
+                <message_argument value="org.eclipse.ocl.pivot.library.LibraryIterationOrOperation"/>
+                <message_argument value="resolveBodyType(EnvironmentFactory, CallExp, Type)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/library/LibrarySimpleTernaryOperation.java" type="org.eclipse.ocl.pivot.library.LibrarySimpleTernaryOperation">
+        <filter id="403984517">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.library.LibrarySimpleTernaryOperation"/>
+                <message_argument value="org.eclipse.ocl.pivot.library.LibraryIterationOrOperation"/>
+                <message_argument value="resolveBodyType(EnvironmentFactory, CallExp, Type)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/library/LibrarySimpleUnaryOperation.java" type="org.eclipse.ocl.pivot.library.LibrarySimpleUnaryOperation">
+        <filter id="403984517">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.library.LibrarySimpleUnaryOperation"/>
+                <message_argument value="org.eclipse.ocl.pivot.library.LibraryIterationOrOperation"/>
+                <message_argument value="resolveBodyType(EnvironmentFactory, CallExp, Type)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/library/LibraryTernaryOperation.java" type="org.eclipse.ocl.pivot.library.LibraryTernaryOperation">
+        <filter id="403984517">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.library.LibraryTernaryOperation"/>
+                <message_argument value="org.eclipse.ocl.pivot.library.LibraryIterationOrOperation"/>
+                <message_argument value="resolveBodyType(EnvironmentFactory, CallExp, Type)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/library/LibraryUnaryOperation.java" type="org.eclipse.ocl.pivot.library.LibraryUnaryOperation">
+        <filter id="403984517">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.library.LibraryUnaryOperation"/>
+                <message_argument value="org.eclipse.ocl.pivot.library.LibraryIterationOrOperation"/>
+                <message_argument value="resolveBodyType(EnvironmentFactory, CallExp, Type)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/library/LibraryUntypedBinaryOperation.java" type="org.eclipse.ocl.pivot.library.LibraryUntypedBinaryOperation">
+        <filter id="403984517">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.library.LibraryUntypedBinaryOperation"/>
+                <message_argument value="org.eclipse.ocl.pivot.library.LibraryIterationOrOperation"/>
+                <message_argument value="resolveBodyType(EnvironmentFactory, CallExp, Type)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/library/LibraryUntypedOperation.java" type="org.eclipse.ocl.pivot.library.LibraryUntypedOperation">
+        <filter id="403984517">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.library.LibraryUntypedOperation"/>
+                <message_argument value="org.eclipse.ocl.pivot.library.LibraryIterationOrOperation"/>
+                <message_argument value="resolveBodyType(EnvironmentFactory, CallExp, Type)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/library/LibraryUntypedTernaryOperation.java" type="org.eclipse.ocl.pivot.library.LibraryUntypedTernaryOperation">
+        <filter id="403984517">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.library.LibraryUntypedTernaryOperation"/>
+                <message_argument value="org.eclipse.ocl.pivot.library.LibraryIterationOrOperation"/>
+                <message_argument value="resolveBodyType(EnvironmentFactory, CallExp, Type)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/library/LibraryUntypedUnaryOperation.java" type="org.eclipse.ocl.pivot.library.LibraryUntypedUnaryOperation">
+        <filter id="403984517">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.library.LibraryUntypedUnaryOperation"/>
+                <message_argument value="org.eclipse.ocl.pivot.library.LibraryIterationOrOperation"/>
+                <message_argument value="resolveBodyType(EnvironmentFactory, CallExp, Type)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/options/PivotValidationOptions.java" type="org.eclipse.ocl.pivot.options.PivotValidationOptions">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.options.PivotValidationOptions"/>
+                <message_argument value="OptionalDefaultMultiplicity"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.options.PivotValidationOptions"/>
+                <message_argument value="PotentialInvalidResult"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/resource/BasicProjectManager.java" type="org.eclipse.ocl.pivot.resource.BasicProjectManager">
         <filter comment="Bug 512402 workaround" id="576725006">
             <message_arguments>

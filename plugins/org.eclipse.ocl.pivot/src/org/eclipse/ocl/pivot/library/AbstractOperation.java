@@ -37,7 +37,7 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
  * For code generated purposes the many Unary/Binary/Ternary derived classes offer significantly simpler signatures
  * suitable for direct invocation from auto-generated Java code.
  */
-public abstract class AbstractOperation extends AbstractFeature implements LibraryOperation.LibraryOperationExtension2
+public abstract class AbstractOperation extends AbstractIterationOrOperation implements LibraryOperation.LibraryOperationExtension2
 {
 	/**
 	 * Return the evaluation from sourceAndArgumentValues using the executor for context wrt a caller.

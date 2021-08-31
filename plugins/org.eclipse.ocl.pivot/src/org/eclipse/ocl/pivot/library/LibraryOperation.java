@@ -21,7 +21,7 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
 
 /**
  */
-public interface LibraryOperation extends LibraryFeature
+public interface LibraryOperation extends LibraryIterationOrOperation
 {
 	/**
 	 * @since 1.1
