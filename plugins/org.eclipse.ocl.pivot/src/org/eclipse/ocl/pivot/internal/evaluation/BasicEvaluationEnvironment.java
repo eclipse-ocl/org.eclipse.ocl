@@ -282,6 +282,9 @@ public class BasicEvaluationEnvironment extends AbstractCustomizable implements 
 		return s.toString();
 	}
 
+	/**
+	 * @since 1.16
+	 */
 	@Override
 	public void toString(@NonNull StringBuilder s) {
 		if (parent != null) {

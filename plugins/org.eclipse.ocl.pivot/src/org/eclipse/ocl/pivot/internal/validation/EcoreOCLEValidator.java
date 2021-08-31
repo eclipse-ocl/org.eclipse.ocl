@@ -1019,6 +1019,8 @@ public class EcoreOCLEValidator implements EValidator
 		Map<Object,Object> nestedContext = new HashMap<>(context);
 		nestedContext.remove(EObjectValidator.ROOT_OBJECT);
 		if (!nestedDiagnostician.validate(expressionInOCL, nestedDiagnostic, nestedContext)) {
+			nestedContext.remove(EObjectValidator.ROOT_OBJECT);
+		//	boolean ok2 = nestedDiagnostician.validate(expressionInOCL, nestedDiagnostic, nestedContext); 	// XXX
 			allOk = false;
 			if (diagnostics != null) {
 				String role = PivotUtilInternal.getSpecificationRole(asSpecification);
@@ -1032,6 +1034,15 @@ public class EcoreOCLEValidator implements EValidator
 						// Problems View needs a multiline to show per-line errors
 						s.append("\n\t");
 						s.append(childDiagnostic.getMessage());
+						List<?> datas = childDiagnostic.getData();
+						if (datas != null) {
+							for (Object data : datas) {
+								if (data instanceof Throwable) {
+									s.append("\n\t\t");
+									s.append(data.toString());
+								}
+							}
+						}
 					}
 				}
 				String invalidMessage = StringUtil.bind(PivotMessagesInternal.ValidationConstraintIsInvalid_ERROR_, role, contextName, s.toString());

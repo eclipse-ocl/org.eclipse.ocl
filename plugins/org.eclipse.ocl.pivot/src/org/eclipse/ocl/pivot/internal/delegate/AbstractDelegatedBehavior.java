@@ -186,7 +186,21 @@ implements DelegatedBehavior<E, R, F> {
 		BasicDiagnostic diagnostics = Diagnostician.INSTANCE.createDefaultDiagnostic(eObject);
 		if (!Diagnostician.INSTANCE.validate(eObject, diagnostics, validationContext)) {
 			StringBuilder s = null;
-			for (Diagnostic diagnostic : diagnostics.getChildren()) {
+			List<Diagnostic> children = diagnostics.getChildren();
+			if (children.size() == 1) {
+				Diagnostic diagnostic = children.get(0);
+				List<?> data = diagnostic.getData();
+				if ((data != null) && (data.size() == 2)) {
+					Object data1 = data.get(1);
+					if (data1 instanceof Exception) {
+						throw new OCLDelegateException((Exception)data1);		// Re-use old exception to avoid losing cause
+					}
+					else if (data1 instanceof Throwable) {
+						throw new OCLDelegateException(new RuntimeException((Throwable)data1));		// Re-use old exception to avoid losing cause
+					}
+				}
+			}
+			for (Diagnostic diagnostic : children) {
 				if (s == null) {
 					s = new StringBuilder();
 				}
