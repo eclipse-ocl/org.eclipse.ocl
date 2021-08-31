@@ -541,13 +541,6 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/util/AbstractNullVisitor.java" type="org.eclipse.ocl.pivot.util.AbstractNullVisitor">
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="visitBooleanType(BooleanType)"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/util/AbstractVisitor.java" type="org.eclipse.ocl.pivot.util.AbstractVisitor">
         <filter comment="Bug 512402 workaround" id="576725006">
             <message_arguments>
@@ -1378,6 +1371,24 @@
             <message_arguments>
                 <message_argument value="Technology"/>
                 <message_argument value="AbstractTechnology"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/library/LibraryIteration.java" type="org.eclipse.ocl.pivot.library.LibraryIteration">
+        <filter id="403984517">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.library.LibraryIteration"/>
+                <message_argument value="org.eclipse.ocl.pivot.library.LibraryIterationOrOperation"/>
+                <message_argument value="resolveBodyType(EnvironmentFactory, CallExp, Type)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/library/LibraryOperation.java" type="org.eclipse.ocl.pivot.library.LibraryOperation">
+        <filter id="403984517">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.library.LibraryOperation"/>
+                <message_argument value="org.eclipse.ocl.pivot.library.LibraryIterationOrOperation"/>
+                <message_argument value="resolveBodyType(EnvironmentFactory, CallExp, Type)"/>
             </message_arguments>
         </filter>
     </resource>
