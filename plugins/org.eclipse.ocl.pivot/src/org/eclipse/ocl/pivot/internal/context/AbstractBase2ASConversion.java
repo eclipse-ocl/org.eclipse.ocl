@@ -127,7 +127,7 @@ public abstract class AbstractBase2ASConversion extends AbstractConversion imple
 		Variable contextVariable = pivotSpecification.getOwnedContext();
 		//		pivotSpecification.getParameterVariable().clear();
 		if ((contextVariable != null) && !contextOperation.eIsProxy()) {
-			setType(contextVariable, contextOperation.getOwningClass(), true);
+			setType(contextVariable, contextOperation.getOwningClass(), !contextOperation.isIsValidating());
 			setParameterVariables(pivotSpecification, ClassUtil.nonNullEMF(contextOperation.getOwnedParameters()));
 		}
 		if (resultName != null) {
@@ -149,7 +149,7 @@ public abstract class AbstractBase2ASConversion extends AbstractConversion imple
 				param = PivotFactory.eINSTANCE.createParameterVariable();
 				param.setName(name);
 			}
-			setBehavioralType(param, parameter);
+			/*converter.getHelper().*/setBehavioralType(param, parameter);
 			param.setRepresentedParameter(parameter);
 			newVariables.add(param);
 		}

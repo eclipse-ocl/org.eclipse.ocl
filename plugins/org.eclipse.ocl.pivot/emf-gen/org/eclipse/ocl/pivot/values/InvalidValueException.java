@@ -65,6 +65,13 @@ public class InvalidValueException extends UndefinedValueImpl implements Invalid
 	}
 
 	/**
+	 * @since 1.16
+	 */
+	public InvalidValueException(/*@NonNull*/ String message) {
+		super(message);
+	}
+
+	/**
 	 * @since 1.5
 	 */
 	public InvalidValueException(@NonNull Throwable e) {
@@ -168,7 +175,8 @@ public class InvalidValueException extends UndefinedValueImpl implements Invalid
 
 	@Override
 	public boolean equals(Object obj) {
-		throw this; //return obj instanceof InvalidValueException;
+	//	throw this; //return obj instanceof InvalidValueException;
+		return obj == this;
 	}
 
 	public @NonNull Type getType(@NonNull StandardLibrary standardLibrary) {
@@ -214,13 +222,23 @@ public class InvalidValueException extends UndefinedValueImpl implements Invalid
 
 	@Override
 	public boolean oclEquals(@NonNull OCLValue thatValue) {
-		return equals(thatValue);
+		return (thatValue == this); //equals(thatValue);
 	}
 
 	@Override
 	public int oclHashCode() {
 		return hashCode();
 	}
+
+//	@Override
+//	public String toString() {
+//		if (this == ValueUtil.INVALID_VALUE) {
+//			return getMessage();
+//		}
+//		else {
+//			return getClass().getSimpleName() + ":" + getMessage();
+//		}
+//	}
 
 	//	@Override
 	//	public String toString() {

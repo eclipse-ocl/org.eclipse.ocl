@@ -197,7 +197,7 @@
               <ownedThen xsi:type="pivot:VariableExp" name="self" referredVariable="#Ing82" type="#XEMMs"/>
             </ownedThen>
           </ownedBody>
-          <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="Ing82" name="self" type="#XEMMs"/>
+          <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="Ing82" isRequired="false" name="self" type="#XEMMs"/>
           <ownedParameters xsi:type="pivot:ParameterVariable" xmi:id="jXcmC" isRequired="false" name="b" representedParameter="#Z7lXU"
               type="#XEMMs"/>
         </bodyExpression>
@@ -292,7 +292,7 @@
               <ownedThen xsi:type="pivot:VariableExp" name="self" referredVariable="#oe0Z9" type="#XEMMs"/>
             </ownedThen>
           </ownedBody>
-          <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="oe0Z9" name="self" type="#XEMMs"/>
+          <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="oe0Z9" isRequired="false" name="self" type="#XEMMs"/>
           <ownedParameters xsi:type="pivot:ParameterVariable" xmi:id="DPwDJ" isRequired="false" name="b" representedParameter="#5o8Gk"
               type="#XEMMs"/>
         </bodyExpression>
@@ -345,7 +345,7 @@
             </ownedElse>
             <ownedThen xsi:type="pivot:VariableExp" name="self" referredVariable="#Hy6AH" type="#XEMMs"/>
           </ownedBody>
-          <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="Hy6AH" name="self" type="#XEMMs"/>
+          <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="Hy6AH" isRequired="false" name="self" type="#XEMMs"/>
         </bodyExpression>
         <ownedComments body="oclText[true] if oclText[self] is oclText[false].&#xA;oclText[false] if oclText[self] is oclText[true].&#xA;oclText[null] if oclText[self] is oclText[null].&#xA;Otherwise oclText[invalid].&#xA;"/>
       </ownedOperations>
@@ -419,7 +419,7 @@
               <ownedThen xsi:type="pivot:VariableExp" name="self" referredVariable="#04BxZ" type="#XEMMs"/>
             </ownedThen>
           </ownedBody>
-          <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="04BxZ" name="self" type="#XEMMs"/>
+          <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="04BxZ" isRequired="false" name="self" type="#XEMMs"/>
           <ownedParameters xsi:type="pivot:ParameterVariable" xmi:id="Pp9al" isRequired="false" name="b" representedParameter="#1KtsO"
               type="#XEMMs"/>
         </bodyExpression>
