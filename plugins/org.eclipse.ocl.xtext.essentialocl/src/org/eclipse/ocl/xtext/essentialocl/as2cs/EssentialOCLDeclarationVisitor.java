@@ -500,15 +500,21 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 	@Override
 	public ElementCS visitExpressionInOCL(@NonNull ExpressionInOCL object) {
 		OCLExpression bodyExpression = object.getOwnedBody();
-		if (bodyExpression != null) {
+	/*	if (bodyExpression != null) {
 			ExpSpecificationCS csElement = context.refreshElement(ExpSpecificationCS.class, EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS, object);
 			String body = PrettyPrinter.print(bodyExpression);
 			csElement.setExprString(body);
 			return csElement;
-		}
-		String body = object.getBody();
+		} */
+		String body = object.getBody();		// Prefer old serialization, can be nulled if regeneration neweded.
 		if (body != null) {
 			ExpSpecificationCS csElement = context.refreshElement(ExpSpecificationCS.class, EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS, object);
+			csElement.setExprString(body);
+			return csElement;
+		}
+		if (bodyExpression != null) {
+			ExpSpecificationCS csElement = context.refreshElement(ExpSpecificationCS.class, EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS, object);
+			body = PrettyPrinter.print(bodyExpression);
 			csElement.setExprString(body);
 			return csElement;
 		}
