@@ -484,7 +484,9 @@ public class Ecore2AS extends AbstractExternal2AS
 			}
 		}
 		@NonNull ASResource asResource = metamodelManager.getResource(pivotURI, ASResource.ECORE_CONTENT_TYPE);
-		asResource.setSaveable(false);
+		if (asResource.isSaveable()) {
+			asResource.setSaveable(false);				// Probably redundant now
+		}
 		//		try {
 		if (metamodelManager.getLibraryResource() == null) {
 			if (libraryEPackage != null) {

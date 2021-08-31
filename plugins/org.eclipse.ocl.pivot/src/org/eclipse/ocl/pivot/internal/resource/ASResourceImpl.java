@@ -361,14 +361,16 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	 */
 	@Override
 	public void setSaveable(boolean isSaveable) {
+		boolean wasSaveable = this.isSaveable;
 		this.isSaveable = isSaveable;
 		if (!isSaveable) {
-			if (CHECK_IMMUTABILITY.isActive()) {
+			if (wasSaveable && CHECK_IMMUTABILITY.isActive()) {
 				if (immutabilityCheckingAdapter == null) {
 					immutabilityCheckingAdapter = new ImmutabilityCheckingAdapter();
 				}
 				for (TreeIterator<EObject> i = getAllProperContents(getContents()); i.hasNext(); ) {
 					EObject eObject = i.next();
+					assert !eObject.eAdapters().contains(immutabilityCheckingAdapter);
 					eObject.eAdapters().add(immutabilityCheckingAdapter);
 				}
 			}
