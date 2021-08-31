@@ -562,7 +562,7 @@ public class MapValueImpl extends ValueImpl implements MapValue {
 	}
 
 	@Override
-	public String toString() {
+	public @NonNull String toString() {
 		StringBuilder s = new StringBuilder();
 		toString(s, 100);
 		return s.toString();

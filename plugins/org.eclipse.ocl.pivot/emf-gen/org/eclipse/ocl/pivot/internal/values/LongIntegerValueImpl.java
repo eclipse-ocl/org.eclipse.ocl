@@ -225,6 +225,14 @@ public class LongIntegerValueImpl extends IntegerValueImpl
 		}
 	}
 
+	/**
+	 * @since 1.16
+	 */
+	@Override
+	public boolean mayBeZero() {
+		return value == 0L;
+	}
+
 	@Override
 	public @NonNull IntegerValue minInteger(@NonNull IntegerValue right) {
 		if (right instanceof IntIntegerValueImpl) {

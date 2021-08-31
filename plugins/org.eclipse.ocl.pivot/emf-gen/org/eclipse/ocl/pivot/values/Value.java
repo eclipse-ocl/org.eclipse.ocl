@@ -219,6 +219,30 @@ public interface Value
 	boolean isUndefined();
 
 	/**
+	 * Return true if this value is or may be invalid.
+	 *
+	 * @generated NOT
+	 * @since 1.16
+	 */
+	default boolean mayBeInvalid() { return true; }
+
+	/**
+	 * Return true if this value is or may be null.
+	 *
+	 * @generated NOT
+	 * @since 1.16
+	 */
+	default boolean mayBeNull() { return true; }
+
+	/**
+	 * Return true if this value is or may be zero.
+	 *
+	 * @generated NOT
+	 * @since 1.16
+	 */
+	default boolean mayBeZero() { return false; }
+
+	/**
 	 * @generated NOT
 	 */
 	void toString(@NonNull StringBuilder s, int sizeLimit);

@@ -196,6 +196,22 @@ public class InvalidValueException extends UndefinedValueImpl implements Invalid
 		return true;
 	}
 
+	/**
+	 * @since 1.16
+	 */
+	@Override
+	public boolean mayBeInvalid() {
+		return true;
+	}
+
+	/**
+	 * @since 1.16
+	 */
+	@Override
+	public boolean mayBeNull() {
+		return false;
+	}
+
 	@Override
 	public boolean oclEquals(@NonNull OCLValue thatValue) {
 		return equals(thatValue);

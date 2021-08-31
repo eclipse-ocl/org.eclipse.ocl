@@ -360,6 +360,14 @@ public class RealValueImpl extends NumberValueImpl implements RealValue {
 		}
 	}
 
+	/**
+	 * @since 1.16
+	 */
+	@Override
+	public boolean mayBeZero() {
+		return value.signum() == 0;
+	}
+
 	@Override
 	public @NonNull RealValue min(@NonNull RealValue rightValue) {
 		return rightValue.minReal(this);

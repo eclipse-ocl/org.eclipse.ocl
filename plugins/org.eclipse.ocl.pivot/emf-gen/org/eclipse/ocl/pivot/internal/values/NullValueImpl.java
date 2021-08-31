@@ -113,6 +113,22 @@ public class NullValueImpl extends UndefinedValueImpl implements NullValue
 		return equals(thatValue);
 	}
 
+	/**
+	 * @since 1.16
+	 */
+	@Override
+	public boolean mayBeInvalid() {
+		return false;
+	}
+
+	/**
+	 * @since 1.16
+	 */
+	@Override
+	public boolean mayBeNull() {
+		return true;
+	}
+
 	@Override
 	public int oclHashCode() {
 		return hashCode();
