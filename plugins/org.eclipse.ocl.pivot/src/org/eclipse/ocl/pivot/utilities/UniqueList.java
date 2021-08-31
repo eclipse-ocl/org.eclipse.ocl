@@ -49,6 +49,19 @@ public class UniqueList<E> extends ArrayList<E> implements Set<E>
     }
 
     /**
+     * Constructs a new set containing the elements in the specified collection.
+     * @since 1.16
+     */
+    public UniqueList(E[] es) {
+    	if (es.length >= SMALL_TO_LARGE_THRESHOLD) {
+        	set = new HashSet<>(es.length);
+     	}
+       	for (E aT : es) {
+       		add(aT);
+       	}
+    }
+
+    /**
      * Constructs a new, empty set with the specified initial capacity.
      */
     public UniqueList(int initialCapacity) {

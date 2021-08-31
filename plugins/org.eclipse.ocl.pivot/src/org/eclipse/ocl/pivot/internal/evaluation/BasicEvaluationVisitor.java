@@ -592,7 +592,7 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 	}
 
 	/**
-	 * Callback for a CollectionLiteralExp visit.
+	 * Callback for a MapLiteralExp visit.
 	 */
 	@Override
 	public Object visitMapLiteralExp(@NonNull MapLiteralExp mapLiteralExp) {

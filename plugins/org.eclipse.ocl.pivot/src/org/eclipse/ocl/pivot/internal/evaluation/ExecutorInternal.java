@@ -46,6 +46,7 @@ public interface ExecutorInternal extends Executor
 	@Override
 	@NonNull MetamodelManagerInternal getMetamodelManager();
 	@NonNull EvaluationEnvironment getRootEvaluationEnvironment();
+	// FIXME VariableDeclaration
 	@Nullable Object getValueOf(@NonNull TypedElement referredVariable);
 	@NonNull EvaluationEnvironment initializeEvaluationEnvironment(@NonNull NamedElement executableObject);
 	@Nullable Object internalExecuteNavigationCallExp(@NonNull NavigationCallExp propertyCallExp, @NonNull Property referredProperty, @Nullable Object sourceValue);

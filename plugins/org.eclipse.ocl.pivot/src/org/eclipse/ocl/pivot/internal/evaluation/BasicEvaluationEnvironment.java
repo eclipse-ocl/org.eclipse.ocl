@@ -11,7 +11,10 @@
 
 package org.eclipse.ocl.pivot.internal.evaluation;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -25,6 +28,7 @@ import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.Option;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.osgi.util.NLS;
@@ -56,7 +60,12 @@ public class BasicEvaluationEnvironment extends AbstractCustomizable implements 
 	 */
 	@Deprecated
 	protected final @Nullable OCLExpression callingObject;
-	private final @NonNull Map<TypedElement, Object> variableValues = new HashMap<TypedElement, Object>();
+
+	/**
+	 * The known value of each variable. Nominally immutable but iterators can replace.
+	 */
+	private final @NonNull Map<@NonNull TypedElement, Object> variable2value = new HashMap<>();
+
 	/** @deprecated use an executor */
 	@Deprecated
 	protected final @NonNull ModelManager modelManager;
@@ -118,8 +127,8 @@ public class BasicEvaluationEnvironment extends AbstractCustomizable implements 
 	 */
 	@Override
 	public void add(@NonNull TypedElement referredVariable, @Nullable Object value) {
-		if (variableValues.containsKey(referredVariable)) {
-			Object oldValue = variableValues.get(referredVariable);
+		if (variable2value.containsKey(referredVariable)) {
+			Object oldValue = variable2value.get(referredVariable);
 			if ((oldValue != value) && ((oldValue == null) || !oldValue.equals(value))) {
 				String message = NLS.bind(
 					PivotMessagesInternal.BindingExist_ERROR_,
@@ -128,7 +137,7 @@ public class BasicEvaluationEnvironment extends AbstractCustomizable implements 
 				throw new IllegalArgumentException(message);
 			}
 		}
-		variableValues.put(referredVariable, value);
+		variable2value.put(referredVariable, value);
 	}
 
 	/**
@@ -136,7 +145,7 @@ public class BasicEvaluationEnvironment extends AbstractCustomizable implements 
 	 */
 	@Override
 	public void clear() {
-		variableValues.clear();
+		variable2value.clear();
 	}
 
 	/**
@@ -217,9 +226,9 @@ public class BasicEvaluationEnvironment extends AbstractCustomizable implements 
 	 */
 	@Override
 	public @Nullable Object getValueOf(@NonNull TypedElement referredVariable) {
-		Object object = variableValues.get(referredVariable);
-		if (object == null) {
-			if (!variableValues.containsKey(referredVariable)) {
+		Object object = variable2value.get(referredVariable);
+		if (object == null) {		// XXX variable2value using ValueUtil.NULL_VALUE
+			if (!variable2value.containsKey(referredVariable)) {
 				EvaluationEnvironment parent2 = parent;
 				if (parent2 != null) {
 					object = parent2.getValueOf(referredVariable);
@@ -233,8 +242,8 @@ public class BasicEvaluationEnvironment extends AbstractCustomizable implements 
 	}
 
 	@Override
-	public @NonNull Set<TypedElement> getVariables() {
-		return variableValues.keySet();
+	public @NonNull Set<@NonNull TypedElement> getVariables() {
+		return variable2value.keySet();
 	}
 
 	/**
@@ -247,7 +256,7 @@ public class BasicEvaluationEnvironment extends AbstractCustomizable implements 
 	 */
 	@Override
 	public @Nullable Object remove(@NonNull TypedElement referredVariable) {
-		return variableValues.remove(referredVariable);
+		return variable2value.remove(referredVariable);
 	}
 
 	/**
@@ -260,7 +269,7 @@ public class BasicEvaluationEnvironment extends AbstractCustomizable implements 
 	 */
 	@Override
 	public void replace(@NonNull TypedElement referredVariable, @Nullable Object value) {
-		variableValues.put(referredVariable, value);
+		variable2value.put(referredVariable, value);
 	}
 
 	/**
@@ -268,6 +277,25 @@ public class BasicEvaluationEnvironment extends AbstractCustomizable implements 
 	 */
 	@Override
 	public String toString() {
-		return variableValues.toString();
+		StringBuilder s = new StringBuilder();
+		toString(s);
+		return s.toString();
+	}
+
+	@Override
+	public void toString(@NonNull StringBuilder s) {
+		if (parent != null) {
+			parent.toString(s);
+			s.append("\n");
+		}
+		List<@NonNull TypedElement> keys = new ArrayList<>(variable2value.keySet());
+		if (keys.size() > 1) {
+			Collections.sort(keys, NameUtil.NAMEABLE_COMPARATOR);
+		}
+		s.append("\t" + keys.size() + " variables");
+		for (@NonNull TypedElement key : keys) {
+			Object value = variable2value.get(key);
+			s.append("\n\t\t" + key + " => " + value);
+		}
 	}
 }

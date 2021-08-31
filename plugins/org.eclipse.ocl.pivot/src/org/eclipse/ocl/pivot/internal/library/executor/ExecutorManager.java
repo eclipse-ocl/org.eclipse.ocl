@@ -108,7 +108,7 @@ public abstract class ExecutorManager implements ExecutorExtension
 		}
 
 		@Override
-		public @NonNull Set<TypedElement> getVariables() {
+		public @NonNull Set<@NonNull TypedElement> getVariables() {
 			return Collections.emptySet();
 		}
 

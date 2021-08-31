@@ -76,6 +76,7 @@ import org.eclipse.ocl.pivot.values.BagValue;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerRange;
 import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.InvalidValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.IterableValue;
 import org.eclipse.ocl.pivot.values.MapEntry;
@@ -897,7 +898,10 @@ public abstract class ValueUtil
 		}
 	}
 
-	public static boolean isBoxed(@Nullable Object object) {
+	public static boolean isBoxed(@Nullable Object object) {	// FIXME just EObject and String as boxed non-Value
+		if (object instanceof InvalidValue) {
+			return true;
+		}
 		if (object instanceof NullValue) {
 			return false;
 		}
@@ -965,6 +969,15 @@ public abstract class ValueUtil
 	}
 
 	/**
+	 * Return true if value is an invalid value.
+	 *
+	 * @since 1.16
+	 */
+	public static boolean isInvalidValue(@Nullable Object value) {
+		return (value instanceof InvalidValue);
+	}
+
+	/**
 	 * @since 1.6
 	 */
 	public static @Nullable IterableValue isIterableValue(@Nullable Object value) {
@@ -974,6 +987,15 @@ public abstract class ValueUtil
 		else {
 			return null;
 		}
+	}
+
+	/**
+	 * Return true if value is a null value.
+	 *
+	 * @since 1.16
+	 */
+	public static boolean isNullValue(@Nullable Object value) {
+		return (value == null) || ((value instanceof NullValue) && !(value instanceof InvalidValue));
 	}
 
 	/**
@@ -1156,7 +1178,13 @@ public abstract class ValueUtil
 	}
 
 	public static void toString(@Nullable Object value, @NonNull StringBuilder s, int sizeLimit) {
-		if (value instanceof Value) {
+		if (value == ValueUtil.INVALID_VALUE) {
+			s.append(ValueUtil.INVALID_VALUE.getMessage());
+		}
+		else if (value instanceof InvalidValueException) {
+			s.append(value.getClass().getSimpleName() + ":" + ((InvalidValueException)value).getMessage());
+		}
+		else if (value instanceof Value) {
 			((Value)value).toString(s, sizeLimit);
 		}
 		else if (value instanceof String) {

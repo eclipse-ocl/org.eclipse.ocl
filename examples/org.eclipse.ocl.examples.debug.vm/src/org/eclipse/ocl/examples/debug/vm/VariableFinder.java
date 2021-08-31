@@ -43,7 +43,7 @@ import org.eclipse.ocl.examples.debug.vm.utils.VMRuntimeException;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
-import org.eclipse.ocl.pivot.Variable;
+import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -81,9 +81,9 @@ public class VariableFinder
 		return hierarchicalURI;
 	}
 
-	public static @NonNull List<EStructuralFeature> getAllFeatures(@NonNull EClass eClass) {
-		List<EStructuralFeature> features = new ArrayList<EStructuralFeature>();
-		features.addAll(eClass.getEAllStructuralFeatures());
+	public static @NonNull List<@NonNull EStructuralFeature> getAllFeatures(@NonNull EClass eClass) {
+		List<@NonNull EStructuralFeature> features = new ArrayList<>();
+		features.addAll(ClassUtil.nullFree(eClass.getEAllStructuralFeatures()));
 		/* 		if (eClass instanceof Root) {
 			for (Iterator<EStructuralFeature> it = features.iterator(); it.hasNext();) {
 				EStructuralFeature feature = it.next();
@@ -93,9 +93,9 @@ public class VariableFinder
 			}
 		}
 		collectIntermediateProperties(features, eClass); */
-		Collections.sort(features, new Comparator<EStructuralFeature>() {
+		Collections.sort(features, new Comparator<@NonNull EStructuralFeature>() {
 			@Override
-			public int compare(EStructuralFeature var1, EStructuralFeature var2) {
+			public int compare(@NonNull EStructuralFeature var1, @NonNull EStructuralFeature var2) {
 				String n1 = var1.getName();
 				String n2 = var2.getName();
 				if (n1 == null) n1 = "";
@@ -573,7 +573,7 @@ public class VariableFinder
 		if (envVarName.startsWith("$")) {
 			Object pcObject = fEvalEnv.getValueOf(fEvalEnv.getPCVariable());
 			for (VMEvaluationEnvironment evalEnv = fEvalEnv; evalEnv != null; evalEnv = evalEnv.getVMParentEvaluationEnvironment()) {
-				for (TypedElement localVariable : evalEnv.getVariables()) {
+				for (@NonNull TypedElement localVariable : evalEnv.getVariables()) {
 					if (localVariable instanceof OCLExpression) {
 						OCLExpression oclExpression = (OCLExpression) localVariable;
 						if (oclExpression.eContainer() == pcObject) {
@@ -592,17 +592,17 @@ public class VariableFinder
 			}
 		}
 		if (!gotIt) {
-			Set<TypedElement> variables = new HashSet<TypedElement>();
+			Set<@NonNull TypedElement> variables = new HashSet<>();
 			for (VMEvaluationEnvironment evalEnv = fEvalEnv; evalEnv != null; evalEnv = evalEnv.getVMParentEvaluationEnvironment()) {
-				Set<TypedElement> localVariables = evalEnv.getVariables();
+				Set<@NonNull TypedElement> localVariables = new HashSet<>(evalEnv.getVariables());
 				variables.addAll(localVariables);
 				if (NameUtil.getNameable(localVariables, PivotConstants.SELF_NAME) != null) {
 					break;
 				}
 			}
 			rootObj = NameUtil.getNameable(variables, envVarName);
-			if (rootObj instanceof Variable) {
-				rootObj = fEvalEnv.getValueOf((TypedElement)rootObj);
+			if (rootObj instanceof VariableDeclaration) {
+				rootObj = fEvalEnv.getValueOf((VariableDeclaration)rootObj);
 				gotIt = true;
 			}
 		}
@@ -757,10 +757,10 @@ public class VariableFinder
 		return null;
 	}
 
-	public @NonNull List<VMVariableData> getVariables() {
-		List<VMVariableData> result = new ArrayList<VMVariableData>();
+	public @NonNull List<@NonNull VMVariableData> getVariables() {
+		List<@NonNull VMVariableData> result = new ArrayList<>();
 		Object pcObject = fEvalEnv.getValueOf(fEvalEnv.getPCVariable());
-		for (TypedElement variable : fEvalEnv.getVariables()) {
+		for (@NonNull TypedElement variable : fEvalEnv.getVariables()) {
 			if (variable != null) {
 				VMVariableData var = getVariable(variable, pcObject);
 				if (var != null) {
@@ -847,7 +847,7 @@ public class VariableFinder
 
 		@NonNull String @NonNull [] variablePath = getVariablePath(variableURI);
 
-		List<@NonNull VMVariableData> variables = new ArrayList<@NonNull VMVariableData>();
+		List<@NonNull VMVariableData> variables = new ArrayList<>();
 		find(variablePath, request.includeChildVars, variables);
 
 		if (variables.isEmpty()) {
