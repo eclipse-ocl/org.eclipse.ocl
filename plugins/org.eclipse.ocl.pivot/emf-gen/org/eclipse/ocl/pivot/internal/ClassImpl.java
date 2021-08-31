@@ -56,7 +56,7 @@ import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.ClassListeners;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
+import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
@@ -1413,14 +1413,12 @@ implements org.eclipse.ocl.pivot.Class {
 			TemplateSignature templateSignature = getOwnedSignature();
 			if (templateSignature != null) {
 				EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(callExpr);
-				PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-				return metamodelManager.specializeType(this, callExpr, selfType, null);
+				return TemplateParameterSubstitutionVisitor.specializeType(this, callExpr, environmentFactory, selfType, null);
 			}
 			List<TemplateBinding> templateBindings = getOwnedBindings();
 			if ((templateBindings != null) && !templateBindings.isEmpty()) {
 				EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(callExpr);
-				PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-				return metamodelManager.specializeType(this, callExpr, selfType, null);
+				return TemplateParameterSubstitutionVisitor.specializeType(this, callExpr, environmentFactory, selfType, null);
 			}
 		}
 		return this;

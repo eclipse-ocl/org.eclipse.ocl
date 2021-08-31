@@ -1427,7 +1427,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		Type actualType;
 		Type sourceType = source != null ? source.getType() : null;
 		if (sourceType != null) {
-			actualType = metamodelManager.specializeType(formalType, callExp, sourceType, source != null ? source.getTypeValue() : null);
+			actualType = TemplateParameterSubstitutionVisitor.specializeType(formalType, callExp, environmentFactory, sourceType, source != null ? source.getTypeValue() : null);
 		}
 		else {
 			actualType = formalType;
