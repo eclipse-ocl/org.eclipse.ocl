@@ -2220,6 +2220,14 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	}
 
 	/**
+	 * @since 1.16
+	 */
+	public void resetAnalyses() {
+		resetFinalAnalysis();
+		resetFlowAnalysis();
+	}
+
+	/**
 	 * @since 1.3
 	 */
 	@Override

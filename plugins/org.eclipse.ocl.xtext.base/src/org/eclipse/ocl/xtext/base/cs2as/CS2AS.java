@@ -681,6 +681,7 @@ public abstract class CS2AS extends AbstractConversion	// FIXME migrate function
 
 	public synchronized void update(@NonNull IDiagnosticConsumer diagnosticsConsumer) {
 		//		printDiagnostic("CS2AS.update start", false, 0);
+		metamodelManager.resetAnalyses();
 		@SuppressWarnings("unused") Map<CSI, Element> oldCSI2AS = csi2asMapping.getMapping();
 		@SuppressWarnings("unused") Set<CSI> newCSIs = csi2asMapping.computeCSIs(csResource);
 		//		System.out.println("==========================================================================");
