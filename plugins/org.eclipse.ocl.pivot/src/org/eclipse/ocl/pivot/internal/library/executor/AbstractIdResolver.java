@@ -1905,9 +1905,24 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 						}
 					}
 				}
+				List<@NonNull TemplateParameter> templateParameterList = new ArrayList<>();
+				for (EObject eObject = staticType; eObject != null; eObject = eObject.eContainer()) {
+					if (eObject instanceof TemplateableElement) {
+						TemplateableElement templateableElement = PivotUtil.getUnspecializedTemplateableElement((TemplateableElement)eObject);
+						TemplateSignature templateSignature = templateableElement.getOwnedSignature();
+						if (templateSignature != null) {
+							int insertIndex = 0;
+							for (@NonNull TemplateParameter templateParameter : PivotUtil.getOwnedParameters(templateSignature)) {
+								templateParameterList.add(insertIndex++, templateParameter);
+							}
+						}
+					}
+				}
+				return templateParameterList.get(globalIndex);
 			}
 		}
-		throw new UnsupportedOperationException();
+	//	throw new UnsupportedOperationException();
+		return standardLibrary.getOclInvalidType();		// FIXME testMoniker_oclstdlib_oclstdlib can have an empty staticTypeStack
 	}
 
 	@Override
