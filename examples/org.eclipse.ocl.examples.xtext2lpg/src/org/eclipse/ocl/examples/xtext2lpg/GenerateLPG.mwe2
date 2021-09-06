@@ -15,7 +15,6 @@ import org.eclipse.ocl.examples.build.utilities.*
 import org.eclipse.emf.mwe.utils.*
 import org.eclipse.emf.mwe2.runtime.workflow.*
 import org.eclipse.emf.ecore.resource.impl.*
-import org.eclipse.m2m.internal.qvt.oml.runtime.ant.QvtoAntTransformationTask
 
 var projectName = "org.eclipse.ocl.examples.xtext2lpg"
 var projectURI = "platform:/resource/${projectName}"
