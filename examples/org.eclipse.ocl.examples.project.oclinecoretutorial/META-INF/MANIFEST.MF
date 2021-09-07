@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Oclinecoretutorial
 Bundle-SymbolicName: org.eclipse.ocl.examples.project.oclinecoretutorial
-Bundle-Version: 1.16.0.qualifier
+Bundle-Version: 1.17.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: org.eclipse.ocl.examples.project.oclinecoretutorial
 Export-Package: model
