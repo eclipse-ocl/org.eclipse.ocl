@@ -388,13 +388,13 @@ public class OCLstdlib extends ASResourceImpl
 			createProperty("first", tp_Collection_T),
 			createProperty("second", tp_Collection_product_T2));
 
-		private final @NonNull BagType _Bag_Bag_T = createBagType("Bag"/*T*/, "0", "*", tp_Bag_T);
-		private final @NonNull CollectionType _Collection_Collection_T = createCollectionType("Collection"/*T*/, "0", "*", tp_Collection_T);
-		private final @NonNull CollectionType _OrderedCollection_OrderedCollection_T = createCollectionType("OrderedCollection"/*T*/, "0", "*", tp_OrderedCollection_T);
-		private final @NonNull OrderedSetType _OrderedSet_OrderedSet_T = createOrderedSetType("OrderedSet"/*T*/, "0", "*", tp_OrderedSet_T);
-		private final @NonNull SequenceType _Sequence_Sequence_T = createSequenceType("Sequence"/*T*/, "0", "*", tp_Sequence_T);
-		private final @NonNull SetType _Set_Set_T = createSetType("Set"/*T*/, "0", "*", tp_Set_T);
-		private final @NonNull CollectionType _UniqueCollection_UniqueCollection_T = createCollectionType("UniqueCollection"/*T*/, "0", "*", tp_UniqueCollection_T);
+		private final @NonNull BagType _Bag_Bag_T = createBagType(OCLstdlibPackage.Literals.BAG, tp_Bag_T);
+		private final @NonNull CollectionType _Collection_Collection_T = createCollectionType(OCLstdlibPackage.Literals.COLLECTION, tp_Collection_T);
+		private final @NonNull CollectionType _OrderedCollection_OrderedCollection_T = createCollectionType(OCLstdlibPackage.Literals.ORDERED_COLLECTION, tp_OrderedCollection_T);
+		private final @NonNull OrderedSetType _OrderedSet_OrderedSet_T = createOrderedSetType(OCLstdlibPackage.Literals.ORDERED_SET, tp_OrderedSet_T);
+		private final @NonNull SequenceType _Sequence_Sequence_T = createSequenceType(OCLstdlibPackage.Literals.SEQUENCE, tp_Sequence_T);
+		private final @NonNull SetType _Set_Set_T = createSetType(OCLstdlibPackage.Literals.SET, tp_Set_T);
+		private final @NonNull CollectionType _UniqueCollection_UniqueCollection_T = createCollectionType(OCLstdlibPackage.Literals.UNIQUE_COLLECTION, tp_UniqueCollection_T);
 
 		private final @NonNull BagType _Bag_Bag_collectNested_V_NullFree = createBagType(_Bag_Bag_T);
 		private final @NonNull BagType _Bag_Bag_collect_V_NullFree = createBagType(_Bag_Bag_T);
@@ -535,7 +535,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull CollectionType _UniqueCollection_Set_T = createCollectionType(_UniqueCollection_UniqueCollection_T);
 		private final @NonNull CollectionType _UniqueCollection_UniqueCollection_T_1 = createCollectionType(_UniqueCollection_UniqueCollection_T);
 
-		private final @NonNull MapType _Map_Map_K_Map_V = createMapType("Map"/*K V*/, tp_Map_K, tp_Map_V);
+		private final @NonNull MapType _Map_Map_K_Map_V = createMapType(OCLstdlibPackage.Literals.MAP, tp_Map_K, tp_Map_V);
 		private final @NonNull MapType _Map_Collection_T_Collection_collectBy_V = createMapType(_Map_Map_K_Map_V);
 		private final @NonNull MapType _Map_Map_excludesMap_K2_Map_excludesMap_V2 = createMapType(_Map_Map_K_Map_V);
 		private final @NonNull MapType _Map_Map_excludingMap_K2_Map_excludingMap_V2 = createMapType(_Map_Map_K_Map_V);

@@ -12,6 +12,7 @@ package	org.eclipse.ocl.pivot.internal.utilities;
 
 import java.util.List;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -81,8 +82,21 @@ public abstract class AbstractContents extends PivotUtil
 		parameterSubstitutions.add(templateParameterSubstitution);
 	}
 
+	/* @deprecated no longer used. Replaced by EClass literal and TemplateParameter */
+	@Deprecated
 	protected @NonNull BagType createBagType(@NonNull String name, @Nullable String lower, @Nullable String upper, @NonNull TemplateParameter templateParameter) {
 		return createCollectionType(PivotFactory.eINSTANCE.createBagType(), name, lower, upper, templateParameter);
+	}
+
+	/**
+	 * @since 1.17
+	 */
+	protected @NonNull BagType createBagType(/*@NonNull*/ EClass eClass, @NonNull TemplateParameter templateParameter) {
+		BagType pivotType = PivotFactory.eINSTANCE.createBagType();
+		pivotType.setName(eClass.getName());
+		initTemplateParameters(pivotType, templateParameter);
+		((PivotObjectImpl)pivotType).setESObject(eClass);
+		return pivotType;
 	}
 
 	/**
@@ -108,6 +122,17 @@ public abstract class AbstractContents extends PivotUtil
 		return pivotExpression;
 	}
 
+	/**
+	 * @since 1.17
+	 */
+	protected @NonNull CollectionType createCollectionType(/*@NonNull*/ EClass eClass, @NonNull TemplateParameter templateParameter) {
+		CollectionType pivotType = PivotFactory.eINSTANCE.createCollectionType();
+		pivotType.setName(eClass.getName());
+		initTemplateParameters(pivotType, templateParameter);
+		((PivotObjectImpl)pivotType).setESObject(eClass);
+		return pivotType;
+	}
+
 	protected @NonNull <@NonNull T extends CollectionType> T createCollectionType(@NonNull T pivotType, @NonNull String name, @Nullable  String lower, @Nullable String upper, @NonNull TemplateParameter templateParameter) {
 		pivotType.setName(name);
 		pivotType.setLower(lower != null ? StringUtil.createNumberFromString(lower) : Integer.valueOf(0));
@@ -116,6 +141,8 @@ public abstract class AbstractContents extends PivotUtil
 		return pivotType;
 	}
 
+	/* @deprecated no longer used. Replaced by EClass literal and TemplateParameter */
+	@Deprecated
 	protected @NonNull CollectionType createCollectionType(@NonNull String name, @Nullable String lower, @Nullable String upper, @NonNull TemplateParameter templateParameter) {
 		return createCollectionType(PivotFactory.eINSTANCE.createCollectionType(), name, lower, upper, templateParameter);
 	}
@@ -197,6 +224,19 @@ public abstract class AbstractContents extends PivotUtil
 		return pivotType;
 	}
 
+	/**
+	 * @since 1.17
+	 */
+	protected @NonNull MapType createMapType(/*@NonNull*/ EClass eClass, @NonNull TemplateParameter keyParameter, @NonNull TemplateParameter valueParameter) {
+		MapType mapType = PivotFactory.eINSTANCE.createMapType();
+		mapType.setName(eClass.getName());
+		initTemplateParameters(mapType, keyParameter, valueParameter);
+		((PivotObjectImpl)mapType).setESObject(eClass);
+		return mapType;
+	}
+
+	/* @deprecated no longer used. Replaced by EClass literal and TemplateParameter */
+	@Deprecated
 	protected @NonNull MapType createMapType(@NonNull String name, @NonNull TemplateParameter keyParameter, @NonNull TemplateParameter valueParameter) {
 		MapType mapType = PivotFactory.eINSTANCE.createMapType();
 		mapType.setName(name);
@@ -220,6 +260,19 @@ public abstract class AbstractContents extends PivotUtil
 		return pivotOperation;
 	}
 
+	/**
+	 * @since 1.17
+	 */
+	protected @NonNull OrderedSetType createOrderedSetType(/*@NonNull*/ EClass eClass, @NonNull TemplateParameter templateParameter) {
+		OrderedSetType pivotType = PivotFactory.eINSTANCE.createOrderedSetType();
+		pivotType.setName(eClass.getName());
+		initTemplateParameters(pivotType, templateParameter);
+		((PivotObjectImpl)pivotType).setESObject(eClass);
+		return pivotType;
+	}
+
+	/* @deprecated no longer used. Replaced by EClass literal and TemplateParameter */
+	@Deprecated
 	protected @NonNull OrderedSetType createOrderedSetType(@NonNull String name, @Nullable String lower, @Nullable String upper, @NonNull TemplateParameter templateParameter) {
 		return createCollectionType(PivotFactory.eINSTANCE.createOrderedSetType(), name, lower, upper, templateParameter);
 	}
@@ -231,6 +284,19 @@ public abstract class AbstractContents extends PivotUtil
 		return createCollectionType(PivotFactory.eINSTANCE.createOrderedSetType(), unspecializedType);
 	}
 
+	/**
+	 * @since 1.17
+	 */
+	protected @NonNull SequenceType createSequenceType(/*@NonNull*/ EClass eClass, @NonNull TemplateParameter templateParameter) {
+		SequenceType pivotType = PivotFactory.eINSTANCE.createSequenceType();
+		pivotType.setName(eClass.getName());
+		initTemplateParameters(pivotType, templateParameter);
+		((PivotObjectImpl)pivotType).setESObject(eClass);
+		return pivotType;
+	}
+
+	/* @deprecated no longer used. Replaced by EClass literal and TemplateParameter */
+	@Deprecated
 	protected @NonNull SequenceType createSequenceType(@NonNull String name, @Nullable String lower, @Nullable String upper, @NonNull TemplateParameter templateParameter) {
 		return createCollectionType(PivotFactory.eINSTANCE.createSequenceType(), name, lower, upper, templateParameter);
 	}
@@ -242,6 +308,19 @@ public abstract class AbstractContents extends PivotUtil
 		return createCollectionType(PivotFactory.eINSTANCE.createSequenceType(), unspecializedType);
 	}
 
+	/**
+	 * @since 1.17
+	 */
+	protected @NonNull SetType createSetType(/*@NonNull*/ EClass eClass, @NonNull TemplateParameter templateParameter) {
+		SetType pivotType = PivotFactory.eINSTANCE.createSetType();
+		pivotType.setName(eClass.getName());
+		initTemplateParameters(pivotType, templateParameter);
+		((PivotObjectImpl)pivotType).setESObject(eClass);
+		return pivotType;
+	}
+
+	/* @deprecated no longer used. Replaced by EClass literal and TemplateParameter */
+	@Deprecated
 	protected @NonNull SetType createSetType(@NonNull String name, @Nullable String lower, @Nullable String upper, @NonNull TemplateParameter templateParameter) {
 		return createCollectionType(PivotFactory.eINSTANCE.createSetType(), name, lower, upper, templateParameter);
 	}

@@ -16,6 +16,7 @@ import org.eclipse.ocl.pivot.Package
 import org.eclipse.ocl.pivot.utilities.ClassUtil
 import java.util.Collection
 import java.util.GregorianCalendar
+import org.eclipse.ocl.pivot.Type
 
 class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 {
@@ -32,6 +33,50 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 					private final @NonNull «type.eClass().name» «type.getPrefixedSymbolName("_"+type.partialName())» = create«type.eClass().name»(«getEcoreLiteral(type)»);
 				«ELSE»
 					private final @NonNull «type.eClass().name» «type.getPrefixedSymbolNameWithoutNormalization("_"+type.partialName())» = create«type.eClass().name»("«type.name»");
+				«ENDIF»
+			«ENDFOR»
+		«ENDFOR»
+		'''
+	}
+
+	protected override String declareCollectionTypes(Model root) {
+		var pkge2collectionTypes = root.getSortedCollectionTypes();
+		if (pkge2collectionTypes.isEmpty()) return "";
+		var sortedPackages = root.getSortedPackages(pkge2collectionTypes.keySet());
+		'''
+		«FOR pkge : sortedPackages»
+
+			«FOR type : ClassUtil.nullFree(pkge2collectionTypes.get(pkge))»«var typeName = type.getPrefixedSymbolName("_" + type.getName() + "_" + type.getElementType().partialName() + (if (type.isIsNullFree()) "_NullFree" else "") )»
+			«IF type.getOwnedSignature() !== null»
+			private final @NonNull «type.eClass.name» «typeName» = create«type.eClass.name»(«getEcoreLiteral(type)»«IF type.getOwnedSignature() !== null»«FOR templateParameter : type.getOwnedSignature().getOwnedParameters()», «templateParameter.getSymbolName()»«ENDFOR»«ENDIF»);
+			«ENDIF»
+			«ENDFOR»
+			«FOR type : ClassUtil.nullFree(pkge2collectionTypes.get(pkge))»«var typeName = type.getPrefixedSymbolName("_" + type.getName() + "_" + type.getElementType().partialName() + (if (type.isIsNullFree()) "_NullFree" else "") )»
+			«IF type.getOwnedSignature() === null»
+			private final @NonNull «type.eClass.name» «typeName» = create«type.eClass.name»(«type.getUnspecializedElement().getSymbolName()»);
+			«ENDIF»
+			«ENDFOR»
+		«ENDFOR»
+		'''
+	}
+
+	protected override String declareMapTypes(/*@NonNull*/ Model root) {
+		var pkge2mapTypes = root.getSortedMapTypes();
+		if (pkge2mapTypes.isEmpty()) return "";
+		var sortedPackages = root.getSortedPackages(pkge2mapTypes.keySet());
+		'''
+
+		«FOR pkge : sortedPackages»
+			«FOR type : ClassUtil.nullFree(pkge2mapTypes.get(pkge))»
+				«IF type.getOwnedSignature() !== null»
+					private final @NonNull «type.eClass.name» «type.getPrefixedSymbolName("_" + type.getName() + "_" + type.getKeyType().partialName() + "_" + type.getValueType().partialName())» = create«type.
+					eClass.name»(«getEcoreLiteral(type)»«IF type.getOwnedSignature() !== null»«FOR templateParameter : type.getOwnedSignature().getOwnedParameters()», «templateParameter.getSymbolName()»«ENDFOR»«ENDIF»);
+				«ENDIF»
+			«ENDFOR»
+			«FOR type : ClassUtil.nullFree(pkge2mapTypes.get(pkge))»
+				«IF type.getOwnedSignature() === null»
+					private final @NonNull «type.eClass.name» «type.getPrefixedSymbolName("_" + type.getName() + "_" + type.getKeyType().partialName() + "_" + type.getValueType().partialName())» = create«type.
+					eClass.name»(«type.getUnspecializedElement().getSymbolName()»);
 				«ENDIF»
 			«ENDFOR»
 		«ENDFOR»
