@@ -669,19 +669,10 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	@Override
 	public @NonNull <T extends CollectionType> T getCollectionType(@NonNull T containerType, @NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
 		assert containerType == PivotUtil.getUnspecializedTemplateableElement(containerType);
-		TemplateSignature templateSignature = containerType.getOwnedSignature();
-		if (templateSignature == null) {
-			throw new IllegalArgumentException("Collection type must have a template signature");
-		}
-		List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
-		if (templateParameters.size() != 1) {
-			throw new IllegalArgumentException("Collection type must have exactly one template parameter");
-		}
-		boolean isUnspecialized = elementType == templateParameters.get(0);
-		if (isUnspecialized) {
+		CompleteClassInternal completeClass = ownedCompleteModel.getCompleteClass(containerType);
+		if (isUnspecializedType(completeClass, elementType)) {
 			return containerType;
 		}
-		CompleteClassInternal completeClass = ownedCompleteModel.getCompleteClass(containerType);
 		CollectionTypeParameters<@NonNull Type> typeParameters = TypeUtil.createCollectionTypeParameters(elementType, isNullFree, lower, upper);
 		@SuppressWarnings("unchecked")
 		T specializedType = (T) completeClass.getCollectionType(typeParameters);
@@ -785,19 +776,10 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	@Override
 	public @NonNull MapType getMapType(@NonNull MapType containerType, @NonNull Type keyType, boolean keysAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
 		assert containerType == PivotUtil.getUnspecializedTemplateableElement(containerType);
-		TemplateSignature templateSignature = containerType.getOwnedSignature();
-		if (templateSignature == null) {
-			throw new IllegalArgumentException("Map type must have a template signature");
-		}
-		List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
-		if (templateParameters.size() != 2) {
-			throw new IllegalArgumentException("Map type must have exactly two template parameter");
-		}
-		boolean isUnspecialized = (keyType == templateParameters.get(0)) && (valueType == templateParameters.get(1));
-		if (isUnspecialized) {
+		CompleteClassInternal completeClass = ownedCompleteModel.getCompleteClass(containerType);
+		if (isUnspecializedType(completeClass, keyType, valueType)) {
 			return containerType;
 		}
-		CompleteClassInternal completeClass = ownedCompleteModel.getCompleteClass(containerType);
 		MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters = TypeUtil.createMapTypeParameters(keyType, keysAreNullFree, valueType, valuesAreNullFree);
 		MapType specializedType = ownedCompleteModel.getMapType(completeClass, typeParameters);
 		return specializedType;
@@ -969,6 +951,36 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	@Override
 	public boolean isCodeGeneration() {
 		return isCodeGeneration ;
+	}
+
+	/**
+	 * Return true if elementTypes are the TemplateParameters of one of the unspecialized type of one of the
+	 * partial types of completeClass.
+	 */
+	private boolean isUnspecializedType(@NonNull CompleteClassInternal completeClass, @NonNull Type @NonNull ... elementTypes) {
+		Iterable<org.eclipse.ocl.pivot.@NonNull Class> partialClasses = PivotUtil.getPartialClasses(completeClass);
+		for (int i = 0; i < elementTypes.length; i++) {
+			@NonNull Type elementType = elementTypes[i];
+			boolean isUnspecializedElement = false;
+			for (org.eclipse.ocl.pivot.@NonNull Class partialClass : partialClasses) {
+				TemplateSignature templateSignature = partialClass.getOwnedSignature();
+				if (templateSignature == null) {
+					throw new IllegalArgumentException(completeClass.getName() + " type must have a template signature");
+				}
+				List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
+				if (templateParameters.size() != elementTypes.length) {
+					throw new IllegalArgumentException(completeClass.getName() + " type must have exactly " + elementTypes.length + " template parameter");
+				}
+				if (elementType == templateParameters.get(i)) {
+					isUnspecializedElement = true;
+					break;
+				}
+			}
+			if (!isUnspecializedElement) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	@Override
