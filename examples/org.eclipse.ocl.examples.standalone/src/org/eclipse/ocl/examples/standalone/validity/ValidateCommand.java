@@ -301,7 +301,7 @@ public class ValidateCommand extends StandaloneCommand
 				extractOCLUris(strings, uri);
 			} else if (OCL_FILE_EXTENSION.equals(fileExtension.toLowerCase())) {
 				if (!exists) {
-					logger.warn(StandaloneMessages.OCLArgumentAnalyzer_OCLResource + uri + StandaloneMessages.OCLArgumentAnalyzer_NotExist);
+					logger.warn(StandaloneMessages.OCLArgumentAnalyzer_OCLResource + " " + uri + StandaloneMessages.OCLArgumentAnalyzer_NotExist);
 					ignored = true;
 				} else {
 					strings.add(uri.toString());
@@ -314,7 +314,7 @@ public class ValidateCommand extends StandaloneCommand
 			}
 
 			if (ignored) {
-				logger.warn(StandaloneMessages.OCLArgumentAnalyzer_OCLFile + uri + StandaloneMessages.OCLArgumentAnalyzer_ignored);
+				logger.warn(StandaloneMessages.OCLArgumentAnalyzer_OCLFile + " " + uri + StandaloneMessages.OCLArgumentAnalyzer_ignored);
 			}
 		}
 

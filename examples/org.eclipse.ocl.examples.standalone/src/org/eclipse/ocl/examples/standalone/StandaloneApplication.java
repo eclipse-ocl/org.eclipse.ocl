@@ -14,6 +14,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.ConsoleAppender;
+import org.apache.log4j.Logger;
+import org.apache.log4j.SimpleLayout;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -41,6 +44,7 @@ public class StandaloneApplication implements IApplication
 	private static final String ARGS_KEY = "application.args"; //$NON-NLS-1$
 
 	public static void main(String[] args) {
+		Logger.getRootLogger().addAppender(new ConsoleAppender(new SimpleLayout(), ConsoleAppender.SYSTEM_OUT));
 		StandaloneApplication standaloneApplication = new StandaloneApplication();
 		standaloneApplication.execute(args);
 	}
