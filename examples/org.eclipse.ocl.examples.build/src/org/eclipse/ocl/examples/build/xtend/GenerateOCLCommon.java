@@ -509,6 +509,10 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		return nameQueries.getEcoreLiteral(elem);
 	}
 
+	protected String getEcoreLiteral(org.eclipse.ocl.pivot.@NonNull Package elem) {
+		return nameQueries.getEcoreLiteral(elem);
+	}
+
 	protected @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
 		assert environmentFactory != null;
 		return environmentFactory;

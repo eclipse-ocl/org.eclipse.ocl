@@ -319,8 +319,7 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 						super(standardLibrary);
 						«root.getSymbolName()» = createModel("«pkg.getURI»");
 						«FOR pkge : root.getSortedPackages()»
-						«pkge.getSymbolName()» = create«pkge.eClass().getName()»("«pkge.getName()»", "«pkge.getNsPrefix()»", "«pkge.getURI()»", «pkge.getGeneratedPackageId()»);
-						((PivotObjectImpl)«pkge.getSymbolName()»).setESObject(«getEcoreLiteral(pkge)»);
+						«pkge.getSymbolName()» = create«pkge.eClass().getName()»("«pkge.getName()»", "«pkge.getNsPrefix()»", "«pkge.getURI()»", «pkge.getGeneratedPackageId()», «getEcoreLiteral(pkge)»);
 						«ENDFOR»
 						«root.installPackages()»
 						«root.installClassTypes()»

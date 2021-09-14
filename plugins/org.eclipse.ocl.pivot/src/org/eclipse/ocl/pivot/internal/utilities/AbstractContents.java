@@ -13,6 +13,7 @@ package	org.eclipse.ocl.pivot.internal.utilities;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -47,6 +48,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.internal.LibraryImpl;
+import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -206,6 +208,7 @@ public abstract class AbstractContents extends PivotUtil
 		return pivotIteration;
 	}
 
+	@Deprecated /* @deprecated add ePackage */
 	protected @NonNull Library createLibrary(@NonNull String name, @NonNull String nsPrefix, @NonNull String nsURI, @Nullable PackageId packageId) {
 		Library pivotLibrary = PivotFactory.eINSTANCE.createLibrary();
 		pivotLibrary.setName(name);
@@ -214,6 +217,21 @@ public abstract class AbstractContents extends PivotUtil
 			((LibraryImpl)pivotLibrary).setPackageId(packageId);  // FIXME Add to API
 		}
 		pivotLibrary.setURI(nsURI);
+		return pivotLibrary;
+	}
+
+	/**
+	 * @since 1.17
+	 */
+	protected @NonNull Library createLibrary(@NonNull String name, @NonNull String nsPrefix, @NonNull String nsURI, @Nullable PackageId packageId, @Nullable EPackage ePackage) {
+		Library pivotLibrary = PivotFactory.eINSTANCE.createLibrary();
+		pivotLibrary.setName(name);
+		pivotLibrary.setNsPrefix(nsPrefix);
+		if (packageId != null) {
+			((LibraryImpl)pivotLibrary).setPackageId(packageId);  // FIXME Add to API
+		}
+		pivotLibrary.setURI(nsURI);
+		((PivotObjectImpl)pivotLibrary).setESObject(ePackage);
 		return pivotLibrary;
 	}
 
@@ -254,6 +272,15 @@ public abstract class AbstractContents extends PivotUtil
 		return specializedType;
 	}
 
+	/**
+	 * @since 1.17
+	 */
+	protected @NonNull Model createModel(@NonNull String asURI, @NonNull EPackage ePackage) {
+		Model pivotModel = PivotUtil.createModel(asURI);
+		((PivotObjectImpl)pivotModel).setESObject(ePackage);
+		return pivotModel;
+	}
+
 	protected @NonNull Operation createOperation(@NonNull String name, @NonNull Type type, @Nullable String implementationClass, @Nullable LibraryFeature implementation, TemplateParameter... templateParameters) {
 		Operation pivotOperation = createOperation(name, type, implementationClass, implementation);
 		initTemplateParameters(pivotOperation, templateParameters);
@@ -282,6 +309,21 @@ public abstract class AbstractContents extends PivotUtil
 	 */
 	protected @NonNull OrderedSetType createOrderedSetType(@NonNull OrderedSetType unspecializedType) {
 		return createCollectionType(PivotFactory.eINSTANCE.createOrderedSetType(), unspecializedType);
+	}
+
+	/**
+	 * @since 1.17
+	 */
+	protected org.eclipse.ocl.pivot.@NonNull Package createPackage(@NonNull String name, @Nullable String nsPrefix, @NonNull String nsURI, @Nullable PackageId packageId, @Nullable EPackage ePackage) {
+		org.eclipse.ocl.pivot.Package pivotPackage = PivotFactory.eINSTANCE.createPackage();
+		pivotPackage.setName(name);
+		pivotPackage.setNsPrefix(nsPrefix);
+		if (packageId != null) {
+			((PackageImpl)pivotPackage).setPackageId(packageId);  // FIXME Add to API
+		}
+		pivotPackage.setURI(nsURI);
+		((PivotObjectImpl)pivotPackage).setESObject(ePackage);
+		return pivotPackage;
 	}
 
 	/**

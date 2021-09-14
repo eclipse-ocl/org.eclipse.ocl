@@ -401,7 +401,7 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 					{
 						«root.getSymbolName()» = createModel(asURI);
 						«FOR pkge : root.getSortedPackages()»
-						«pkge.getSymbolName()» = create«pkge.eClass().getName()»("«pkge.getName()»", "«pkge.getNsPrefix()»", "«pkge.getURI()»", «pkge.getGeneratedPackageId()»);
+						«pkge.getSymbolName()» = create«pkge.eClass().getName()»("«pkge.getName()»", "«pkge.getNsPrefix()»", "«pkge.getURI()»", «pkge.getGeneratedPackageId()», «getEcoreLiteral(pkge)»);
 						«ENDFOR»
 						«root.installPackages()»
 						«root.installClassTypes()»
