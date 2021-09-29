@@ -79,7 +79,7 @@ public class ConvertToUnixLineEndings extends AbstractWorkflowComponent2 {
 				final String dir = st.nextToken().trim();
 				final File f = new File(dir);
 				if (f.exists() && f.isDirectory()) {
-					LOG.info("Converting " + f.getAbsolutePath());
+					LOG.info("Converting " + getReadablePath(f));
 					try {
 						cleanFolder(f.getAbsolutePath());
 					}
@@ -106,8 +106,8 @@ public class ConvertToUnixLineEndings extends AbstractWorkflowComponent2 {
 	public void cleanFolder(String srcGenPath) throws FileNotFoundException {
 		File f = new File(srcGenPath);
 		if (!f.exists())
-			throw new FileNotFoundException(srcGenPath + " " + f.getAbsolutePath());
-		LOG.debug("Converting folder " + f.getPath());
+			throw new FileNotFoundException(srcGenPath + " " + getReadablePath(f));
+		LOG.debug("Converting folder " + getReadablePath(f));
 		convertFolder(f, new FileFilter() {
 			@Override
 			public boolean accept(File path) {
@@ -127,7 +127,7 @@ public class ConvertToUnixLineEndings extends AbstractWorkflowComponent2 {
 
 	public boolean convertFolder(File parentFolder, final FileFilter filter, boolean continueOnError) throws FileNotFoundException {
 		if (!parentFolder.exists())
-			throw new FileNotFoundException(parentFolder.getAbsolutePath());
+			throw new FileNotFoundException(getReadablePath(parentFolder));
 		FileFilter myFilter = filter;
 		if (myFilter == null) {
 			myFilter = new FileFilter() {
@@ -137,7 +137,7 @@ public class ConvertToUnixLineEndings extends AbstractWorkflowComponent2 {
 				}
 			};
 		}
-		LOG.debug("Converting folder " + parentFolder.toString());
+		LOG.debug("Converting folder " + getReadablePath(parentFolder));
 		final File[] contents = parentFolder.listFiles(myFilter);
 		for (int j = 0; contents!=null && j < contents.length; j++) {
 			final File file = contents[j];
@@ -181,13 +181,13 @@ public class ConvertToUnixLineEndings extends AbstractWorkflowComponent2 {
 					}
 				}
 			} catch (IOException e) {
-				LOG.error("Failed to read '" + file + "'", e);
+				LOG.error("Failed to read '" + getReadablePath(file) + "'", e);
 				return;
 			}
 			try {
 				reader.close();
 			} catch (IOException e) {
-				LOG.error("Failed to close '" + file + "'", e);
+				LOG.error("Failed to close '" + getReadablePath(file) + "'", e);
 				return;
 			}
 			if (changed || trimmed) {
@@ -197,20 +197,28 @@ public class ConvertToUnixLineEndings extends AbstractWorkflowComponent2 {
 						writer.write(s.toString());
 						writer.flush();
 					} catch (IOException e) {
-						LOG.error("Failed to write '" + file + "'", e);
+						LOG.error("Failed to write '" + getReadablePath(file) + "'", e);
 						return;
 					} finally {
 						writer.close();
 					}
 				} catch (IOException e) {
-					LOG.error("Failed to re-open '" + file + "'", e);
+					LOG.error("Failed to re-open '" + getReadablePath(file) + "'", e);
 					return;
 				}
-				LOG.info((changed ? "Converted " : "Trimmed ") + file);
+				LOG.info((changed ? "Converted " : "Trimmed ") + getReadablePath(file));
 			}
 		} catch (FileNotFoundException e) {
 			LOG.error("Failed to open '" + file + "'", e);
 			return;
+		}
+	}
+
+	protected String getReadablePath(File f) {
+		try {
+			return f.getCanonicalPath();
+		} catch (IOException e) {
+			return f.getAbsolutePath();
 		}
 	}
 
