@@ -75,6 +75,9 @@ org.eclipse.ocl.pivot/partialPackages=false
 # Throw an IllegalStateException if an immuatbke resource is modified. 
 org.eclipse.ocl.pivot/resource/checkImmutability=false
 
+# Trace updates of the StandardLibraryContribution.REGISTRY
+org.eclipse.ocl.pivot/standardLibraryContribution=false
+
 # Trace validation of InstanceSpecifications 
 org.eclipse.ocl.pivot/validate/instance=false
 
