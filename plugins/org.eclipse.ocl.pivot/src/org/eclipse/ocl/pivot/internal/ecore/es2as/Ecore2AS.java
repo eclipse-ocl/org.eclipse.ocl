@@ -665,7 +665,7 @@ public class Ecore2AS extends AbstractExternal2AS
 			EMap<String, String> details = importAnnotation.getDetails();
 			for (String key : details.keySet()) {
 				String value = details.get(key);
-				if (value == null) {
+				if (value == null) {			// Surely the blank namespace never happens so this is redundant rubbish?
 					value = key;
 					key = "";
 				}

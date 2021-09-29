@@ -20,8 +20,10 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
+import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.AbstractASResourceFactory;
+import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.validation.EcoreOCLEValidator;
 import org.eclipse.ocl.pivot.internal.validation.PivotEAnnotationValidator;
@@ -54,6 +56,10 @@ public final class EcoreASResourceFactory extends AbstractASResourceFactory
 	@Override
 	public @NonNull Resource createResource(URI uri) {
 		assert uri != null;
+		StandardLibraryContribution standardLibraryContribution = OCLASResourceFactory.REGISTRY.get(uri);
+		if (standardLibraryContribution != null) {
+			return standardLibraryContribution.getResource();
+		}
 		ASResource asResource = new EcoreASResourceImpl(uri, this);
 		configureResource(asResource);
 		return asResource;
