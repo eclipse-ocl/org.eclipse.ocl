@@ -235,7 +235,7 @@ public abstract class GenerateVisitorsWorkflowComponent extends AbstractWorkflow
 		//		} catch (IOException e) {
 		//			throw new RuntimeException("Problems running " + getClass().getSimpleName(), e);
 		//		}
-		ocl.dispose();
+		ocl.dispose(true);
 	}
 
 	protected boolean isDerived() {

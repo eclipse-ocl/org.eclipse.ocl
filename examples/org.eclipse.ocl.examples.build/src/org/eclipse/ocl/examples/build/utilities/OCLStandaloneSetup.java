@@ -28,6 +28,9 @@ public class OCLStandaloneSetup
 	private ResourceSet resourceSet = null;
 
 	public OCLStandaloneSetup() {
+	//	AbstractEnvironmentFactory.ENVIRONMENT_FACTORY_ATTACH.setState(true);
+	//	ThreadLocalExecutor.THREAD_LOCAL_ENVIRONMENT_FACTORY.setState(true);
+	//	StandardLibraryContribution.STANDARD_LIBRARY_CONTRIBUTION.setState(true);
 		log.info("Registering OCL Resources");
 		//		OCLstdlib.install();
 		//		PivotPackage.eINSTANCE.getClass();

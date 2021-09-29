@@ -223,6 +223,13 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	default boolean isDisposed() { return false; }
 
 	/**
+	 * Give finalizers a chance to detach trivially so that a subsequent call to detach() can be the ultimate dispose().
+	 *
+	 * @since 1.17
+	 */
+	default void preDispose() {}
+
+	/**
 	 * Define the StatusCodes severity with which the validation identified by validationKey is reported.
 	 * StatusCodes.OK severity suppresses the validation altogether.
 	 *

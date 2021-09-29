@@ -950,6 +950,22 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		return parserContext.parse(contextElement, expression);
 	}
 
+	/**
+	 * @since 1.17
+	 */
+	@Override
+	public void preDispose() {
+		if (attachCount >= 2) {
+			if (ThreadLocalExecutor.THREAD_LOCAL_ENVIRONMENT_FACTORY.isActive()) {
+				ThreadLocalExecutor.THREAD_LOCAL_ENVIRONMENT_FACTORY.println("[" + Thread.currentThread().getName() + "] gc()-" + 0);
+			}
+			System.gc();
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {}
+		}
+	}
+
 	public void resetSeverities() {
 		validationKey2severity = null;
 	}

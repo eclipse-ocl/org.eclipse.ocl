@@ -209,15 +209,15 @@ public class QVToTransformationExecutor extends AbstractWorkflowComponent
 				XMLResource outResource = (XMLResource) resourceSet.createResource(outURI, null);
 				outResource.getContents().addAll(ClassUtil.nullFree(modelExtents.get(modelExtents.size()-1).getContents()));
 				outResource.setEncoding(getEncoding());
-				Map<Object, Object> options = XMIUtil.createSaveOptions();
+				Map<Object, Object> options = XMIUtil.createSaveOptions(outResource);
 				options.put(XMLResource.OPTION_USE_ENCODED_ATTRIBUTE_STYLE, Boolean.TRUE);
 				options.put(XMLResource.OPTION_URI_HANDLER, new URIHandlerImpl.PlatformSchemeAware());
 				options.put(XMLResource.OPTION_SCHEMA_LOCATION, Boolean.TRUE);
-				XMIUtil.retainLineWidth(options, outResource);
 				outResource.save(options);
 				if (validate) {
-					OCLInternal.adapt(resourceSet);
+					OCLInternal ocl = OCLInternal.newInstance(resourceSet);
 					validate(outResource);
+					ocl.dispose(true);
 				}
 			} catch (IOException e) {
 				issues.addError(this, "Failed to save ", outURI, e, null);

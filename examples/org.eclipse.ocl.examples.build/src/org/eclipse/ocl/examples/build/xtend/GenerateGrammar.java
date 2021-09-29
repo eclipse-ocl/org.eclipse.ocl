@@ -305,7 +305,7 @@ public abstract class GenerateGrammar extends AbstractWorkflowComponent
 		} catch (Exception e) {
 			throw new RuntimeException("Problems running " + getClass().getSimpleName(), e);
 		} finally {
-			ocl.dispose();
+			ocl.dispose(true);
 		}
 	}
 

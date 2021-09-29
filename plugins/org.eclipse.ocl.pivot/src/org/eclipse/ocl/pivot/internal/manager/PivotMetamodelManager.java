@@ -1703,14 +1703,14 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	}
 
 	public @NonNull ASResource getResource(@NonNull URI uri, @Nullable String contentType) {
-		Object asResourceFactory = asResourceSet.getResourceFactoryRegistry().getContentTypeToFactoryMap().get(contentType);
-		if (asResourceFactory == null) {
-			throw new IllegalStateException("No registration for content type '" + contentType + "'");
-		} else if (!(asResourceFactory instanceof ASResourceFactory)) {
-			throw new IllegalStateException("Non ASResourceFactory registration for content type '" + contentType + "'");
-		}
 		Resource asResource = asResourceSet.getResource(uri, false);
 		if (asResource == null) {
+			Object asResourceFactory = asResourceSet.getResourceFactoryRegistry().getContentTypeToFactoryMap().get(contentType);
+			if (asResourceFactory == null) {
+				throw new IllegalStateException("No registration for content type '" + contentType + "'");
+			} else if (!(asResourceFactory instanceof ASResourceFactory)) {
+				throw new IllegalStateException("Non ASResourceFactory registration for content type '" + contentType + "'");
+			}
 			asResource = ((ASResourceFactory)asResourceFactory).createResource(uri);
 			assert asResource != null;
 			asResourceSet.getResources().add(asResource);

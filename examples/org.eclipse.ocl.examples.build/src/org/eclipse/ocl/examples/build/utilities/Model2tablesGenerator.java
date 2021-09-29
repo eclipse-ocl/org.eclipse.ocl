@@ -23,6 +23,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.mwe.core.WorkflowContext;
 import org.eclipse.emf.mwe.core.issues.Issues;
@@ -30,8 +31,11 @@ import org.eclipse.emf.mwe.core.lib.AbstractWorkflowComponent;
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreTables;
-import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
+import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
+import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
+import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
+import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
@@ -43,6 +47,8 @@ public class Model2tablesGenerator extends AbstractWorkflowComponent
 {
 	private Logger log = Logger.getLogger(getClass());
 	private ResourceSet resourceSet = null;
+	private OCLInstanceSetup oclInstanceSetup = null;
+	private OCLInternal ocl = null;
 	private boolean genOCLstdlib = false;
 	protected String genModelFile;
 
@@ -51,12 +57,28 @@ public class Model2tablesGenerator extends AbstractWorkflowComponent
 		if (genModelFile == null) {
 			issues.addError(this, "genModel not specified.");
 		}
+		if ((resourceSet != null) && (oclInstanceSetup != null)) {
+			issues.addError(this, "only one of oclInstanceSetup and resourceSet may be specified.");
+		}
+		else if ((resourceSet == null) && (oclInstanceSetup == null)) {
+			issues.addError(this, "one of oclInstanceSetup and resourceSet must be specified.");
+		}
+	}
+
+	private @NonNull OCLInternal getOCL() {
+		if (oclInstanceSetup != null) {
+			ocl = oclInstanceSetup.getOCL();
+		}
+		else {
+			ocl = OCLInternal.newInstance(getResourceSet());
+		}
+		return ocl;
 	}
 
 	public @NonNull ResourceSet getResourceSet() {
 		ResourceSet resourceSet2 = resourceSet;
 		if (resourceSet2 == null) {
-			resourceSet = resourceSet2 = new ResourceSetImpl();
+			resourceSet = resourceSet2 = ocl != null ? ocl.getResourceSet() : new ResourceSetImpl();
 		}
 		return resourceSet2;
 	}
@@ -64,17 +86,36 @@ public class Model2tablesGenerator extends AbstractWorkflowComponent
 	@Override
 	public void invokeInternal(WorkflowContext ctx, ProgressMonitor arg1, Issues issues) {
 		URI genModelURI = URI.createPlatformResourceURI(genModelFile, true);
-		log.info("Loading Gen Model '" + genModelURI);
-		ResourceSet resourceSet = getResourceSet();
+		OCLInternal ocl = getOCL();
+		ResourceSet resourceSet = ocl.getResourceSet();
+		PivotMetamodelManager metamodelManager = (PivotMetamodelManager)ocl.getMetamodelManager();
 		if (genOCLstdlib) {
-			final EnvironmentFactoryAdapter adapter = EnvironmentFactoryAdapter.find(resourceSet);
-			if (adapter != null) {
-				adapter.getMetamodelManager().setLibraryLoadInProgress(true);
-			}
+		//	final EnvironmentFactoryAdapter adapter = EnvironmentFactoryAdapter.find(resourceSet);
+		//	if (adapter != null) {
+			metamodelManager.setLibraryLoadInProgress(true);
+		//	}
 		}
+		log.info("Loading Gen Model '" + genModelURI);
+		StandardLibraryContribution savedContribution = null;
+		if (genOCLstdlib) {
+			savedContribution = StandardLibraryContribution.REGISTRY.put(OCLstdlib.STDLIB_URI, new StandardLibraryContribution()
+			{
+
+				@Override
+				public @NonNull StandardLibraryContribution getContribution() {
+					return this;
+				}
+
+				@Override
+				public @NonNull Resource getResource() {
+					return new ResourceImpl(URI.createURI("dummy-library"));
+				}
+			});
+		}
+
 		try {
-			StandaloneProjectMap projectMap = new StandaloneProjectMap(false);
-			projectMap.initializeResourceSet(resourceSet);
+			StandaloneProjectMap projectMap = (StandaloneProjectMap) ocl.getProjectManager(); // new StandaloneProjectMap(false);
+		//	projectMap.initializeResourceSet(resourceSet);
 			resourceSet.getPackageRegistry().put(GenModelPackage.eNS_URI, GenModelPackage.eINSTANCE);
 			Resource genModelResource = resourceSet.getResource(genModelURI, true);
 			List<Diagnostic> genModelErrors = ClassUtil.nonNullEMF(genModelResource.getErrors());
@@ -110,6 +151,14 @@ public class Model2tablesGenerator extends AbstractWorkflowComponent
 			}
 		} catch (Exception e) {
 			throw new RuntimeException("Problems running " + getClass().getSimpleName(), e);
+		} finally {
+			if (this.oclInstanceSetup == null) {
+				ocl.dispose(true);
+			}
+			ocl = null;
+			if (savedContribution != null) {
+				StandardLibraryContribution.REGISTRY.put(OCLstdlib.STDLIB_URI, savedContribution);
+			}
 		}
 	}
 
@@ -119,6 +168,15 @@ public class Model2tablesGenerator extends AbstractWorkflowComponent
 
 	public void setGenOCLstdlib(boolean genOCLstdlib) {
 		this.genOCLstdlib = genOCLstdlib;
+	}
+
+	/**
+	 * Define an OCLInstanceSetup to supervise the OCL state. If omitted a local OCL is
+	 * created using the resourceSet. Is specified, an OCL may be shared by multiple workflow
+	 * components. The OCLInstanceSetup workflow creas, the OCLInstanceDispose workflow disposes.
+	 */
+	public void setOclInstanceSetup(OCLInstanceSetup oclInstanceSetup) {
+		this.oclInstanceSetup = oclInstanceSetup;
 	}
 
 	public void setResourceSet(ResourceSet resourceSet) {

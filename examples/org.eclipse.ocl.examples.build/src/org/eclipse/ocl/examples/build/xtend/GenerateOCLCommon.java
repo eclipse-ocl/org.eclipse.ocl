@@ -22,8 +22,6 @@ import java.util.Set;
 
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.mwe.utils.Mapping;
 import org.eclipse.jdt.annotation.NonNull;
@@ -691,13 +689,6 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 			nameQueries.putSymbolName(completeClass, localSymbolName);
 		}
 		return localSymbolName;
-	}
-
-	protected ResourceSet getResourceSet() {
-		if (resourceSet == null) {
-			resourceSet = new ResourceSetImpl();
-		}
-		return resourceSet;
 	}
 
 	protected @NonNull Model getRootPackage(org.eclipse.ocl.pivot.@Nullable Package elem) {

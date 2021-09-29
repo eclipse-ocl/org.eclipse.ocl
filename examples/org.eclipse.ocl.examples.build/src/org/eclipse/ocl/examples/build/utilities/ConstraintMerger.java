@@ -226,7 +226,7 @@ public class ConstraintMerger extends AbstractProjectComponent
 				newEcoreResource.save(saveOptions); //getSaveOptions());
 				//				resourceSet.getResources().remove(ecoreResource2);
 			}
-			ocl.dispose();
+			ocl.dispose(true);
 		} catch (IOException e) {
 			throw new RuntimeException("Problems running " + getClass().getSimpleName(), e);
 		}

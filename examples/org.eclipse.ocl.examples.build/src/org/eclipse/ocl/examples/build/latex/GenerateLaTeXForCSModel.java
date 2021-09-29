@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
@@ -106,9 +106,9 @@ public abstract class GenerateLaTeXForCSModel extends GenerateLaTeXUtils
 				return;
 			}
 			EObject xtextModel = ClassUtil.nonNullState(xtextResource.getContents().get(0));
-			
-			
-			
+
+
+
 			EObject eObject = asPackage.getESObject();
 			Resource eResource = eObject.eResource();
 			if (eResource != null) {
@@ -132,7 +132,7 @@ public abstract class GenerateLaTeXForCSModel extends GenerateLaTeXUtils
 		} catch (Exception e) {
 			throw new RuntimeException("Problems running " + getClass().getSimpleName(), e);
 		} finally {
-			ocl.dispose();
+			ocl.dispose(true);
 		}
 	}
 

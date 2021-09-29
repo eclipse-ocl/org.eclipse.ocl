@@ -12,14 +12,19 @@ package org.eclipse.ocl.examples.build.xtend;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.mwe.core.issues.Issues;
 import org.eclipse.emf.mwe.core.lib.AbstractWorkflowComponent;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.examples.build.utilities.OCLInstanceSetup;
+import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.xtext.oclstdlib.OCLstdlibStandaloneSetup;
 
 public abstract class GenerateMetamodelWorkflowComponent extends AbstractWorkflowComponent
 {
-	protected Logger log = Logger.getLogger(getClass());	
-	protected ResourceSet resourceSet = null;	
+	protected Logger log = Logger.getLogger(getClass());
+	protected OCLInstanceSetup oclInstanceSetup = null;
+	protected ResourceSet resourceSet = null;
 	protected String uri;
 	protected String javaClassName;
 	protected String javaFolder;
@@ -31,7 +36,7 @@ public abstract class GenerateMetamodelWorkflowComponent extends AbstractWorkflo
 
 	protected GenerateMetamodelWorkflowComponent() {
 		OCLstdlibStandaloneSetup.doSetup();
-	}	
+	}
 
 	@Override
 	public void checkConfiguration(Issues issues) {
@@ -53,6 +58,29 @@ public abstract class GenerateMetamodelWorkflowComponent extends AbstractWorkflo
 		if (modelFile == null) {
 			issues.addError(this, "modelFile not specified.");
 		}
+		if ((resourceSet != null) && (oclInstanceSetup != null)) {
+			issues.addError(this, "only one of oclInstanceSetup and resourceSet may be specified.");
+		}
+		else if ((resourceSet == null) && (oclInstanceSetup == null)) {
+			issues.addError(this, "one of oclInstanceSetup and resourceSet must be specified.");
+		}
+	}
+
+	protected @NonNull OCLInternal getOCL() {
+		if (oclInstanceSetup != null) {
+			return oclInstanceSetup.getOCL();
+		}
+		else {
+			return OCLInternal.newInstance(getResourceSet());
+		}
+	}
+
+	public @NonNull ResourceSet getResourceSet() {
+		ResourceSet resourceSet2 = resourceSet;
+		if (resourceSet2 == null) {
+			resourceSet = resourceSet2 = oclInstanceSetup != null ? oclInstanceSetup.getResourceSet() : new ResourceSetImpl();
+		}
+		return resourceSet2;
 	}
 
 	/**
@@ -77,19 +105,28 @@ public abstract class GenerateMetamodelWorkflowComponent extends AbstractWorkflo
 	}
 
 	/**
+	 * Define an OCLInstanceSetup to supervise the OCL state. If omitted a local OCL is
+	 * created using the resourceSet. Is specified, an OCL may be shared by multiple workflow
+	 * components. The OCLInstanceSetup workflow creas, the OCLInstanceDispose workflow disposes.
+	 */
+	public void setOclInstanceSetup(@NonNull OCLInstanceSetup oclInstanceSetup) {
+		this.oclInstanceSetup = oclInstanceSetup;
+	}
+
+	/**
 	 * The project name hosting the Metamodel. (e.g. "org.eclipse.ocl.pivot")
 	 */
 	public void setProjectName(String projectName) {
 		this.projectName = projectName;
 	}
-	
+
 	/**
-	 * An optional ResourceSet that MWE components may share to reduce model loading. 
+	 * An optional ResourceSet that MWE components may share to reduce model loading.
 	 */
 	public void setResourceSet(ResourceSet resourceSet) {
 		this.resourceSet = resourceSet;
 	}
-	
+
 	/**
 	 * The nsURI for use in the generated metamodel. (e.g. "http://www.eclipse.org/ocl/2015/Pivot").
 	 */

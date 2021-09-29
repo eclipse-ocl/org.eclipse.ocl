@@ -45,8 +45,8 @@ import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.resource.AS2ID;
 import org.eclipse.ocl.pivot.internal.resource.ASSaver;
+import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -108,16 +108,19 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 
 	@Override
 	protected void invokeInternal(WorkflowContext ctx, ProgressMonitor monitor, Issues issues) {
+		StandardLibraryContribution savedContribution = null;
 		if (!useOCLstdlib) {
-			StandardLibraryContribution.REGISTRY.remove(OCLstdlib.STDLIB_URI);
+			savedContribution = StandardLibraryContribution.REGISTRY.remove(OCLstdlib.STDLIB_URI);
 		}
 		String rootPath = StandaloneSetup.getPlatformRootPath();
 		File folder = new File(rootPath + javaFolder + "/" + javaPackageName.replace(".", "/"));
+		sourceFile = "/" + projectName + "/" + modelFile;
+		URI fileURI = URI.createPlatformResourceURI(sourceFile, true);
+		log.info("Loading OCL library '" + fileURI);
+		OCLInternal ocl = getOCL();
+		ResourceSet resourceSet = ocl.getResourceSet();
 		try {
-			sourceFile = "/" + projectName + "/" + modelFile;
-			URI fileURI = URI.createPlatformResourceURI(sourceFile, true);
-			log.info("Loading OCL library '" + fileURI);
-			ResourceSet resourceSet = getResourceSet();
+			setEnvironmentFactory(ocl.getEnvironmentFactory());
 			BaseCSResource xtextResource = (BaseCSResource)resourceSet.getResource(fileURI, true);
 			String message = PivotUtil.formatResourceDiagnostics(ClassUtil.nonNullEMF(xtextResource.getErrors()), "OCLstdlib parse failure", "\n");
 			if (message != null) {
@@ -138,7 +141,6 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 			//				return;
 			//			}
 			EObject pivotModel = ClassUtil.nonNullState(asResource.getContents().get(0));
-			setEnvironmentFactory(ClassUtil.nonNullState(PivotUtilInternal.findEnvironmentFactory(pivotModel)));
 			ASSaver saver = new ASSaver(asResource);
 			saver.localizeSpecializations();
 			String fileName = folder + "/" + javaClassName + ".java";
@@ -290,6 +292,14 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 			throw e;
 		} catch (Exception e) {
 			throw new RuntimeException("Problems running " + getClass().getSimpleName(), e);
+		} finally {
+			if (this.oclInstanceSetup == null) {
+				ocl.dispose(true);
+			}
+			ocl = null;
+			if (savedContribution != null) {
+				StandardLibraryContribution.REGISTRY.put(OCLstdlib.STDLIB_URI, savedContribution);
+			}
 		}
 	}
 

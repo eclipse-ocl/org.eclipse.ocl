@@ -385,6 +385,21 @@ public class OCL
 	}
 
 	/**
+	 * Dsipose this OCL and if force, give other threads a chance to run simple finalizers before dispose() happens.
+	 *
+	 * @since 1.17
+	 */
+	public void dispose(boolean force) {
+		EnvironmentFactoryInternal environmentFactory2 = environmentFactory;
+		if (environmentFactory2 != null) {
+			if (force) {
+				environmentFactory2.preDispose();
+			}
+			dispose();
+		}
+	}
+
+	/**
 	 * Return the Pivot resource counterpart of an ecoreResource.
 	 */
 	public @NonNull ASResource ecore2as(@NonNull Resource ecoreResource) throws ParserException {

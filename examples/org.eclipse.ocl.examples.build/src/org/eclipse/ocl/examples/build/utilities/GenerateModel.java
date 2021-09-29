@@ -12,7 +12,6 @@ package org.eclipse.ocl.examples.build.utilities;
 
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -41,7 +40,7 @@ import org.eclipse.emf.mwe.core.lib.AbstractWorkflowComponent;
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.genmodel.OCLGenModelUtil;
-import org.eclipse.ocl.pivot.util.DerivedConstants;
+import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
 
@@ -51,6 +50,7 @@ import org.eclipse.ocl.pivot.utilities.XMIUtil;
 public class GenerateModel extends AbstractWorkflowComponent {
 	private Logger log = Logger.getLogger(getClass());
 	private ResourceSet resourceSet = null; // Optional ResourceSet to re-use
+	private OCLInstanceSetup oclInstanceSetup = null;
 	protected String genModel; 				// URI of the genmodel
 	protected boolean showProgress = false; // Set true to show genmodel new tasks
 	private boolean clearResourceSet = true;// Set to false to preserve the resource set.
@@ -64,6 +64,12 @@ public class GenerateModel extends AbstractWorkflowComponent {
 	public void checkConfiguration(Issues issues) {
 		if (genModel == null) {
 			issues.addError(this, "uri not specified.");
+		}
+		if ((resourceSet != null) && (oclInstanceSetup != null)) {
+			issues.addError(this, "only one of oclInstanceSetup and resourceSet may be specified.");
+		}
+		else if ((resourceSet == null) && (oclInstanceSetup == null)) {
+			issues.addError(this, "one of oclInstanceSetup and resourceSet must be specified.");
 		}
 	}
 
@@ -82,11 +88,21 @@ public class GenerateModel extends AbstractWorkflowComponent {
 		return genModel;
 	}
 
-	public ResourceSet getResourceSet() {
-		if (resourceSet == null) {
-			resourceSet = new ResourceSetImpl();
+	private @NonNull OCLInternal getOCL() {
+		if (oclInstanceSetup != null) {
+			return oclInstanceSetup.getOCL();
 		}
-		return resourceSet;
+		else {
+			return OCLInternal.newInstance(getResourceSet());
+		}
+	}
+
+	public ResourceSet getResourceSet() {
+		ResourceSet resourceSet2 = resourceSet;
+		if (resourceSet2 == null) {
+			resourceSet = resourceSet2 = oclInstanceSetup != null ? oclInstanceSetup.getResourceSet() : new ResourceSetImpl();
+		}
+		return resourceSet2;
 	}
 
 	@Override
@@ -132,14 +148,10 @@ public class GenerateModel extends AbstractWorkflowComponent {
 		genModel.reconcile();
 		allOldUsedGenPackages.retainAll(usedGenPackages);		// Promoted indirect to direct usedGenPackages
 		try {
-			Map<Object, Object> saveOptions = new HashMap<Object, Object>();
-			saveOptions.put(XMLResource.OPTION_ENCODING, "UTF-8");
-			saveOptions.put(DerivedConstants.RESOURCE_OPTION_LINE_DELIMITER, "\n");
-			saveOptions.put(Resource.OPTION_SAVE_ONLY_IF_CHANGED, Resource.OPTION_SAVE_ONLY_IF_CHANGED_MEMORY_BUFFER);
-			saveOptions.put(Resource.OPTION_LINE_DELIMITER, Resource.OPTION_LINE_DELIMITER_UNSPECIFIED);
-			log.info("Saving reconciled '" + fileURI + "'");
 			usedGenPackages.removeAll(allOldUsedGenPackages);
-			XMIUtil.retainLineWidth(saveOptions, resource);
+			log.info("Saving reconciled '" + fileURI + "'");
+			Map<Object, Object> saveOptions = XMIUtil.createSaveOptions((XMLResource)resource);
+			saveOptions.put(XMLResource.OPTION_ENCODING, "UTF-8");
 			resource.save(saveOptions);
 			usedGenPackages.addAll(allOldUsedGenPackages);
 		} catch (IOException e) {
@@ -168,10 +180,13 @@ public class GenerateModel extends AbstractWorkflowComponent {
 			genModel.setComplianceLevel(GenJDKLevel.JDK50_LITERAL);
 		}
 		// genModel.setRootExtendsClass("org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container");
-		OCL ocl = OCL.newInstance(resourceSet);
+		OCL ocl = getOCL();
 		Diagnostic diagnostic = genModel.diagnose();
 		reportDiagnostics(issues, diagnostic);
-		ocl.dispose();
+		if (this.oclInstanceSetup == null) {
+			ocl.dispose(true);
+		}
+		ocl = null;
 
 		/*
 		 * JavaModelManager.getJavaModelManager().initializePreferences();
@@ -250,10 +265,17 @@ public class GenerateModel extends AbstractWorkflowComponent {
 	}
 
 	/**
-	 * Define a ReseourceSet to be used for for required resources. This allows the same ResourceSet to
+	 * Define an OCLInstanceSetup to supervise the OCL state. If omitted a local OCL is
+	 * created using the resourceSet. Is specified, an OCL may be shared by multiple workflow
+	 * components. The OCLInstanceSetup workflow creas, the OCLInstanceDispose workflow disposes.
+	 */
+	public void setOclInstanceSetup(OCLInstanceSetup oclInstanceSetup) {
+		this.oclInstanceSetup = oclInstanceSetup;
+	}
+
+	/**
+	 * Define a ResourceSet to be used for for required resources. This allows the same ResourceSet to
 	 * be shared for multiple modeling purposes.
-	 *
-	 * @param resourceSet the ResourceSet
 	 */
 	public void setResourceSet(ResourceSet resourceSet) {
 		this.resourceSet = resourceSet;

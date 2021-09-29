@@ -30,7 +30,8 @@ Workflow {
     	platformUri = "../../plugins"
     }
     bean = EcoreGenModelSetup { resourceSet = resourceSet }
-    component = GenerateOCLstdlibXtend { resourceSet = resourceSet
+ 	component = OCLInstanceSetup : oclInstanceSetup { resourceSet = resourceSet }
+    component = GenerateOCLstdlibXtend { oclInstanceSetup = oclInstanceSetup
     	projectName = "${sourceName}"
     	modelFile = "model/OCL-2.5.oclstdlib"
     	uri = "http://www.eclipse.org/ocl/2015/Library"
@@ -46,13 +47,14 @@ Workflow {
     	excludedEClassifierName = "State"
     	excludedEClassifierName = "Type"
     }
-    component = GenerateModel { resourceSet = resourceSet skipOnErrors = true clearResourceSet=false
+    component = GenerateModel { oclInstanceSetup = oclInstanceSetup skipOnErrors = true clearResourceSet=false
     	genModel = "/${sourceName}/model/oclstdlib.genmodel"
     }
-    component = Model2tablesGenerator { resourceSet = resourceSet
+    component = Model2tablesGenerator { oclInstanceSetup = oclInstanceSetup
     	genModelFile = "/${sourceName}/model/oclstdlib.genmodel"
     	genOCLstdlib = true
     }
+	component = OCLInstanceDispose { oclInstanceSetup = oclInstanceSetup }
 	component = ConvertToUnixLineEndings {
 		directory = "../../plugins/${sourceName}/emf-gen"
 	}

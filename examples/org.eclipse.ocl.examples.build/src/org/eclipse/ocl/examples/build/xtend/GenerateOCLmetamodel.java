@@ -136,6 +136,7 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 		return nameQueries.getEcoreLiteral(elem);
 	}
 
+	@Override
 	protected String getEcoreLiteral(org.eclipse.ocl.pivot.@NonNull Package elem) {
 		return nameQueries.getEcoreLiteral(elem);
 	}
@@ -174,7 +175,8 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 
 	@Override
 	protected void invokeInternal(WorkflowContext ctx, ProgressMonitor monitor, Issues issues) {
-		ResourceSet resourceSet = ClassUtil.nonNullState(getResourceSet());
+		OCLInternal ocl = getOCL();
+		ResourceSet resourceSet = ocl.getResourceSet();
 		StandaloneProjectMap projectMap = StandaloneProjectMap.getAdapter(resourceSet);
 		assert projectName != null;
 		StandaloneProjectMap.IProjectDescriptor projectDescriptor = projectMap.getProjectDescriptor(projectName);
@@ -187,7 +189,6 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 		File outputFolder = projectDescriptor.getLocationFile(javaFolder + '/' + javaPackageName.replace('.', '/'));
 		OCLstdlib.install();
 		log.info("Loading Pivot Model '" + inputURI);
-		OCLInternal ocl = OCLInternal.newInstance();
 		try {
 			setEnvironmentFactory(ocl.getEnvironmentFactory());
 			ResourceSet asResourceSet = metamodelManager.getASResourceSet();
@@ -266,7 +267,10 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 		} catch (Exception e) {
 			throw new RuntimeException("Problems running " + getClass().getSimpleName(), e);
 		} finally {
-			ocl.dispose();
+			if (this.oclInstanceSetup == null) {
+				ocl.dispose(true);
+			}
+			ocl = null;
 		}
 	}
 
