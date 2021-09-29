@@ -21,8 +21,10 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EModelElement;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -207,13 +209,23 @@ public class ClassUtil
 	}
 
 	/**
-	 * Return true if resource is a registered resource; hosting a compile Java model.
+	 * Return true if resource is a registered resource; hosting a compiled Java model.
 	 */
-	public static boolean isRegistered(Resource resource) {
-		if (resource == null) {
-			return false;
+	public static boolean isRegistered(@Nullable Resource resource) {			// See Bug 576288
+		if (resource != null) {
+			URI uri = resource.getURI();
+			if (uri != null) {
+				for (EObject eRoot : resource.getContents()) {		// ?? only ever one - multi-EPackages are flattened by GenModel Ecore2Java
+					if (eRoot instanceof EPackage) {
+						String nsURI = ((EPackage)eRoot).getNsURI();
+						if ((nsURI != null) && nsURI.equals(uri.toString())) {
+							return true;		// FIXME checking for a Java init() method is solider.
+						}
+					}
+				}
+			}
 		}
-		return resource.getResourceSet() == null;		// FIXME searching resource.getContents() for a derived EPackageImpl with an init() method is solider.
+		return false;
 	}
 
 	/**

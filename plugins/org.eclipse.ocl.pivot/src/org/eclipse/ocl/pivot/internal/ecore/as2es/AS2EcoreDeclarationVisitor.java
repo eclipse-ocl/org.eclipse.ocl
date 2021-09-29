@@ -40,6 +40,7 @@ import org.eclipse.emf.ecore.ETypeParameter;
 import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.impl.EMOFExtendedMetaData;
 import org.eclipse.jdt.annotation.NonNull;
@@ -605,11 +606,9 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 					String value;
 					if (eTarget != null) {
 						URI uri = null;
-						if ((eTarget instanceof EPackage) && ClassUtil.isRegistered(eTarget.eResource())) {
-							String nsURI = ((EPackage)eTarget).getNsURI();
-							if (nsURI != null) {
-								uri = URI.createURI(nsURI);
-							}
+						Resource eResource = eTarget.eResource();
+						if ((eTarget instanceof EPackage) && ClassUtil.isRegistered(eResource)) {
+							uri = eResource.getURI();
 						}
 						if (uri == null) {
 							uri = EcoreUtil.getURI(eTarget);
