@@ -36,6 +36,15 @@ public class StringSegmentImpl
 		implements StringSegment {
 
 	/**
+	 * The number of structural features of the '<em>String Segment</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int STRING_SEGMENT_FEATURE_COUNT = SegmentImpl.SEGMENT_FEATURE_COUNT + 2;
+
+	/**
 	 * The default value of the '{@link #isPrintable() <em>Printable</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -114,9 +123,7 @@ public class StringSegmentImpl
 		boolean oldPrintable = printable;
 		printable = newPrintable;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-				IdiomsPackage.STRING_SEGMENT__PRINTABLE, oldPrintable,
-				printable));
+			eNotify(new ENotificationImpl(this, Notification.SET, 0, oldPrintable, printable));
 	}
 
 	/**
@@ -139,8 +146,7 @@ public class StringSegmentImpl
 		String oldString = string;
 		string = newString;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-				IdiomsPackage.STRING_SEGMENT__STRING, oldString, string));
+			eNotify(new ENotificationImpl(this, Notification.SET, 1, oldString, string));
 	}
 
 	/**
@@ -150,10 +156,11 @@ public class StringSegmentImpl
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case IdiomsPackage.STRING_SEGMENT__PRINTABLE :
+		switch (featureID)
+		{
+			case 0:
 				return isPrintable();
-			case IdiomsPackage.STRING_SEGMENT__STRING :
+			case 1:
 				return getString();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -166,12 +173,13 @@ public class StringSegmentImpl
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case IdiomsPackage.STRING_SEGMENT__PRINTABLE :
-				setPrintable((Boolean) newValue);
+		switch (featureID)
+		{
+			case 0:
+				setPrintable((Boolean)newValue);
 				return;
-			case IdiomsPackage.STRING_SEGMENT__STRING :
-				setString((String) newValue);
+			case 1:
+				setString((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -184,11 +192,12 @@ public class StringSegmentImpl
 	 */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID) {
-			case IdiomsPackage.STRING_SEGMENT__PRINTABLE :
+		switch (featureID)
+		{
+			case 0:
 				setPrintable(PRINTABLE_EDEFAULT);
 				return;
-			case IdiomsPackage.STRING_SEGMENT__STRING :
+			case 1:
 				setString(STRING_EDEFAULT);
 				return;
 		}
@@ -202,13 +211,12 @@ public class StringSegmentImpl
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case IdiomsPackage.STRING_SEGMENT__PRINTABLE :
+		switch (featureID)
+		{
+			case 0:
 				return printable != PRINTABLE_EDEFAULT;
-			case IdiomsPackage.STRING_SEGMENT__STRING :
-				return STRING_EDEFAULT == null
-					? string != null
-					: !STRING_EDEFAULT.equals(string);
+			case 1:
+				return STRING_EDEFAULT == null ? string != null : !STRING_EDEFAULT.equals(string);
 		}
 		return super.eIsSet(featureID);
 	}

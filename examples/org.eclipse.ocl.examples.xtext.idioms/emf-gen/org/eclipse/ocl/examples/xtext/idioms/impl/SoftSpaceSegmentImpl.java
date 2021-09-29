@@ -27,6 +27,15 @@ public class SoftSpaceSegmentImpl
 		implements SoftSpaceSegment {
 
 	/**
+	 * The number of structural features of the '<em>Soft Space Segment</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int SOFT_SPACE_SEGMENT_FEATURE_COUNT = SegmentImpl.SEGMENT_FEATURE_COUNT + 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

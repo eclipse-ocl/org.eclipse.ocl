@@ -14,6 +14,7 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.xtext.idioms.AnyAssignmentLocator;
 import org.eclipse.ocl.examples.xtext.idioms.AnyElementLocator;
 import org.eclipse.ocl.examples.xtext.idioms.AssignmentLocator;
@@ -77,7 +78,8 @@ public class IdiomsAdapterFactory
 	 * @generated
 	 */
 	public IdiomsAdapterFactory() {
-		if (modelPackage == null) {
+		if (modelPackage == null)
+		{
 			modelPackage = IdiomsPackage.eINSTANCE;
 		}
 	}
@@ -92,11 +94,13 @@ public class IdiomsAdapterFactory
 	 */
 	@Override
 	public boolean isFactoryForType(Object object) {
-		if (object == modelPackage) {
+		if (object == modelPackage)
+		{
 			return true;
 		}
-		if (object instanceof EObject) {
-			return ((EObject) object).eClass().getEPackage() == modelPackage;
+		if (object instanceof EObject)
+		{
+			return ((EObject)object).eClass().getEPackage() == modelPackage;
 		}
 		return false;
 	}
@@ -107,188 +111,189 @@ public class IdiomsAdapterFactory
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected IdiomsSwitch<Adapter> modelSwitch = new IdiomsSwitch<Adapter>() {
-
-		@Override
-		public Adapter caseAnyAssignmentLocator(AnyAssignmentLocator object) {
-			return createAnyAssignmentLocatorAdapter();
-		}
-
-		@Override
-		public Adapter caseAnyElementLocator(AnyElementLocator object) {
-			return createAnyElementLocatorAdapter();
-		}
-
-		@Override
-		public Adapter caseAssignmentLocator(AssignmentLocator object) {
-			return createAssignmentLocatorAdapter();
-		}
-
-		@Override
-		public Adapter caseCustomSegment(CustomSegment object) {
-			return createCustomSegmentAdapter();
-		}
-
-		@Override
-		public Adapter caseEPackageImport(EPackageImport object) {
-			return createEPackageImportAdapter();
-		}
-
-		@Override
-		public Adapter caseFinalLocator(FinalLocator object) {
-			return createFinalLocatorAdapter();
-		}
-
-		@Override
-		public Adapter caseHalfNewLineSegment(HalfNewLineSegment object) {
-			return createHalfNewLineSegmentAdapter();
-		}
-
-		@Override
-		public Adapter caseIdiom(Idiom object) {
-			return createIdiomAdapter();
-		}
-
-		@Override
-		public Adapter caseIdiomsElement(IdiomsElement object) {
-			return createIdiomsElementAdapter();
-		}
-
-		@Override
-		public Adapter caseIdiomsImport(IdiomsImport object) {
-			return createIdiomsImportAdapter();
-		}
-
-		@Override
-		public Adapter caseIdiomsModel(IdiomsModel object) {
-			return createIdiomsModelAdapter();
-		}
-
-		@Override
-		public Adapter caseKeywordLocator(KeywordLocator object) {
-			return createKeywordLocatorAdapter();
-		}
-
-		@Override
-		public Adapter caseLocator(Locator object) {
-			return createLocatorAdapter();
-		}
-
-		@Override
-		public Adapter caseLocatorDeclaration(LocatorDeclaration object) {
-			return createLocatorDeclarationAdapter();
-		}
-
-		@Override
-		public Adapter caseNewLineSegment(NewLineSegment object) {
-			return createNewLineSegmentAdapter();
-		}
-
-		@Override
-		public Adapter caseNoSpaceSegment(NoSpaceSegment object) {
-			return createNoSpaceSegmentAdapter();
-		}
-
-		@Override
-		public Adapter casePopSegment(PopSegment object) {
-			return createPopSegmentAdapter();
-		}
-
-		@Override
-		public Adapter casePostCommentSegment(PostCommentSegment object) {
-			return createPostCommentSegmentAdapter();
-		}
-
-		@Override
-		public Adapter casePreCommentSegment(PreCommentSegment object) {
-			return createPreCommentSegmentAdapter();
-		}
-
-		@Override
-		public Adapter caseReferredLocator(ReferredLocator object) {
-			return createReferredLocatorAdapter();
-		}
-
-		@Override
-		public Adapter caseReferredSegment(ReferredSegment object) {
-			return createReferredSegmentAdapter();
-		}
-
-		@Override
-		public Adapter caseReturnsLocator(ReturnsLocator object) {
-			return createReturnsLocatorAdapter();
-		}
-
-		@Override
-		public Adapter casePushSegment(PushSegment object) {
-			return createPushSegmentAdapter();
-		}
-
-		@Override
-		public Adapter caseSegment(Segment object) {
-			return createSegmentAdapter();
-		}
-
-		@Override
-		public Adapter caseSegmentDeclaration(SegmentDeclaration object) {
-			return createSegmentDeclarationAdapter();
-		}
-
-		@Override
-		public Adapter caseSoftNewLineSegment(SoftNewLineSegment object) {
-			return createSoftNewLineSegmentAdapter();
-		}
-
-		@Override
-		public Adapter caseSoftSpaceSegment(SoftSpaceSegment object) {
-			return createSoftSpaceSegmentAdapter();
-		}
-
-		@Override
-		public Adapter caseStringSegment(StringSegment object) {
-			return createStringSegmentAdapter();
-		}
-
-		@Override
-		public Adapter caseSubIdiom(SubIdiom object) {
-			return createSubIdiomAdapter();
-		}
-
-		@Override
-		public Adapter caseValueSegment(ValueSegment object) {
-			return createValueSegmentAdapter();
-		}
-
-		@Override
-		public Adapter caseWrapAnchorSegment(WrapAnchorSegment object) {
-			return createWrapAnchorSegmentAdapter();
-		}
-
-		@Override
-		public Adapter caseWrapBeginSomeSegment(WrapBeginSomeSegment object) {
-			return createWrapBeginSomeSegmentAdapter();
-		}
-
-		@Override
-		public Adapter caseWrapBeginAllSegment(WrapBeginAllSegment object) {
-			return createWrapBeginAllSegmentAdapter();
-		}
-
-		@Override
-		public Adapter caseWrapEndSegment(WrapEndSegment object) {
-			return createWrapEndSegmentAdapter();
-		}
-
-		@Override
-		public Adapter caseWrapHereSegment(WrapHereSegment object) {
-			return createWrapHereSegmentAdapter();
-		}
-
-		@Override
-		public Adapter defaultCase(EObject object) {
-			return createEObjectAdapter();
-		}
-	};
+	protected IdiomsSwitch<@Nullable Adapter> modelSwitch = new IdiomsSwitch<@Nullable Adapter>()
+		{
+			@Override
+			public Adapter caseAnyAssignmentLocator(AnyAssignmentLocator object)
+			{
+				return createAnyAssignmentLocatorAdapter();
+			}
+			@Override
+			public Adapter caseAnyElementLocator(AnyElementLocator object)
+			{
+				return createAnyElementLocatorAdapter();
+			}
+			@Override
+			public Adapter caseAssignmentLocator(AssignmentLocator object)
+			{
+				return createAssignmentLocatorAdapter();
+			}
+			@Override
+			public Adapter caseCustomSegment(CustomSegment object)
+			{
+				return createCustomSegmentAdapter();
+			}
+			@Override
+			public Adapter caseEPackageImport(EPackageImport object)
+			{
+				return createEPackageImportAdapter();
+			}
+			@Override
+			public Adapter caseFinalLocator(FinalLocator object)
+			{
+				return createFinalLocatorAdapter();
+			}
+			@Override
+			public Adapter caseHalfNewLineSegment(HalfNewLineSegment object)
+			{
+				return createHalfNewLineSegmentAdapter();
+			}
+			@Override
+			public Adapter caseIdiom(Idiom object)
+			{
+				return createIdiomAdapter();
+			}
+			@Override
+			public Adapter caseIdiomsElement(IdiomsElement object)
+			{
+				return createIdiomsElementAdapter();
+			}
+			@Override
+			public Adapter caseIdiomsImport(IdiomsImport object)
+			{
+				return createIdiomsImportAdapter();
+			}
+			@Override
+			public Adapter caseIdiomsModel(IdiomsModel object)
+			{
+				return createIdiomsModelAdapter();
+			}
+			@Override
+			public Adapter caseKeywordLocator(KeywordLocator object)
+			{
+				return createKeywordLocatorAdapter();
+			}
+			@Override
+			public Adapter caseLocator(Locator object)
+			{
+				return createLocatorAdapter();
+			}
+			@Override
+			public Adapter caseLocatorDeclaration(LocatorDeclaration object)
+			{
+				return createLocatorDeclarationAdapter();
+			}
+			@Override
+			public Adapter caseNewLineSegment(NewLineSegment object)
+			{
+				return createNewLineSegmentAdapter();
+			}
+			@Override
+			public Adapter caseNoSpaceSegment(NoSpaceSegment object)
+			{
+				return createNoSpaceSegmentAdapter();
+			}
+			@Override
+			public Adapter casePopSegment(PopSegment object)
+			{
+				return createPopSegmentAdapter();
+			}
+			@Override
+			public Adapter casePostCommentSegment(PostCommentSegment object)
+			{
+				return createPostCommentSegmentAdapter();
+			}
+			@Override
+			public Adapter casePreCommentSegment(PreCommentSegment object)
+			{
+				return createPreCommentSegmentAdapter();
+			}
+			@Override
+			public Adapter caseReferredLocator(ReferredLocator object)
+			{
+				return createReferredLocatorAdapter();
+			}
+			@Override
+			public Adapter caseReferredSegment(ReferredSegment object)
+			{
+				return createReferredSegmentAdapter();
+			}
+			@Override
+			public Adapter caseReturnsLocator(ReturnsLocator object)
+			{
+				return createReturnsLocatorAdapter();
+			}
+			@Override
+			public Adapter casePushSegment(PushSegment object)
+			{
+				return createPushSegmentAdapter();
+			}
+			@Override
+			public Adapter caseSegment(Segment object)
+			{
+				return createSegmentAdapter();
+			}
+			@Override
+			public Adapter caseSegmentDeclaration(SegmentDeclaration object)
+			{
+				return createSegmentDeclarationAdapter();
+			}
+			@Override
+			public Adapter caseSoftNewLineSegment(SoftNewLineSegment object)
+			{
+				return createSoftNewLineSegmentAdapter();
+			}
+			@Override
+			public Adapter caseSoftSpaceSegment(SoftSpaceSegment object)
+			{
+				return createSoftSpaceSegmentAdapter();
+			}
+			@Override
+			public Adapter caseStringSegment(StringSegment object)
+			{
+				return createStringSegmentAdapter();
+			}
+			@Override
+			public Adapter caseSubIdiom(SubIdiom object)
+			{
+				return createSubIdiomAdapter();
+			}
+			@Override
+			public Adapter caseValueSegment(ValueSegment object)
+			{
+				return createValueSegmentAdapter();
+			}
+			@Override
+			public Adapter caseWrapAnchorSegment(WrapAnchorSegment object)
+			{
+				return createWrapAnchorSegmentAdapter();
+			}
+			@Override
+			public Adapter caseWrapBeginSomeSegment(WrapBeginSomeSegment object)
+			{
+				return createWrapBeginSomeSegmentAdapter();
+			}
+			@Override
+			public Adapter caseWrapBeginAllSegment(WrapBeginAllSegment object)
+			{
+				return createWrapBeginAllSegmentAdapter();
+			}
+			@Override
+			public Adapter caseWrapEndSegment(WrapEndSegment object)
+			{
+				return createWrapEndSegmentAdapter();
+			}
+			@Override
+			public Adapter caseWrapHereSegment(WrapHereSegment object)
+			{
+				return createWrapHereSegmentAdapter();
+			}
+			@Override
+			public Adapter defaultCase(EObject object)
+			{
+				return createEObjectAdapter();
+			}
+		};
 
 	/**
 	 * Creates an adapter for the <code>target</code>.
@@ -300,7 +305,7 @@ public class IdiomsAdapterFactory
 	 */
 	@Override
 	public Adapter createAdapter(Notifier target) {
-		return modelSwitch.doSwitch((EObject) target);
+		return modelSwitch.doSwitch((EObject)target);
 	}
 
 	/**

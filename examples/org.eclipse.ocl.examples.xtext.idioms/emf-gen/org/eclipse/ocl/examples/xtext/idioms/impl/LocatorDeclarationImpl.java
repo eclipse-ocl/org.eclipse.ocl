@@ -43,6 +43,15 @@ public class LocatorDeclarationImpl
 		implements LocatorDeclaration {
 
 	/**
+	 * The number of structural features of the '<em>Locator Declaration</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int LOCATOR_DECLARATION_FEATURE_COUNT = IdiomsElementImpl.IDIOMS_ELEMENT_FEATURE_COUNT + 3;
+
+	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -111,8 +120,7 @@ public class LocatorDeclarationImpl
 		String oldName = name;
 		name = newName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-				IdiomsPackage.LOCATOR_DECLARATION__NAME, oldName, name));
+			eNotify(new ENotificationImpl(this, Notification.SET, 0, oldName, name));
 	}
 
 	/**
@@ -134,15 +142,10 @@ public class LocatorDeclarationImpl
 			NotificationChain msgs) {
 		Locator oldOwnedLocator = ownedLocator;
 		ownedLocator = newOwnedLocator;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this,
-				Notification.SET,
-				IdiomsPackage.LOCATOR_DECLARATION__OWNED_LOCATOR,
-				oldOwnedLocator, newOwnedLocator);
-			if (msgs == null)
-				msgs = notification;
-			else
-				msgs.add(notification);
+		if (eNotificationRequired())
+		{
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 1, oldOwnedLocator, newOwnedLocator);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
 	}
@@ -154,25 +157,18 @@ public class LocatorDeclarationImpl
 	 */
 	@Override
 	public void setOwnedLocator(Locator newOwnedLocator) {
-		if (newOwnedLocator != ownedLocator) {
+		if (newOwnedLocator != ownedLocator)
+		{
 			NotificationChain msgs = null;
 			if (ownedLocator != null)
-				msgs = ((InternalEObject) ownedLocator).eInverseRemove(this,
-					EOPPOSITE_FEATURE_BASE
-						- IdiomsPackage.LOCATOR_DECLARATION__OWNED_LOCATOR,
-					null, msgs);
+				msgs = ((InternalEObject)ownedLocator).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (1), null, msgs);
 			if (newOwnedLocator != null)
-				msgs = ((InternalEObject) newOwnedLocator).eInverseAdd(this,
-					EOPPOSITE_FEATURE_BASE
-						- IdiomsPackage.LOCATOR_DECLARATION__OWNED_LOCATOR,
-					null, msgs);
+				msgs = ((InternalEObject)newOwnedLocator).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (1), null, msgs);
 			msgs = basicSetOwnedLocator(newOwnedLocator, msgs);
-			if (msgs != null)
-				msgs.dispatch();
-		} else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-				IdiomsPackage.LOCATOR_DECLARATION__OWNED_LOCATOR,
-				newOwnedLocator, newOwnedLocator));
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, 1, newOwnedLocator, newOwnedLocator));
 	}
 
 	/**
@@ -182,9 +178,8 @@ public class LocatorDeclarationImpl
 	 */
 	@Override
 	public IdiomsModel getOwningIdiomsModel() {
-		if (eContainerFeatureID() != IdiomsPackage.LOCATOR_DECLARATION__OWNING_IDIOMS_MODEL)
-			return null;
-		return (IdiomsModel) eInternalContainer();
+		if (eContainerFeatureID() != (2)) return null;
+		return (IdiomsModel)eInternalContainer();
 	}
 
 	/**
@@ -194,8 +189,7 @@ public class LocatorDeclarationImpl
 	 */
 	public NotificationChain basicSetOwningIdiomsModel(
 			IdiomsModel newOwningIdiomsModel, NotificationChain msgs) {
-		msgs = eBasicSetContainer((InternalEObject) newOwningIdiomsModel,
-			IdiomsPackage.LOCATOR_DECLARATION__OWNING_IDIOMS_MODEL, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningIdiomsModel, 2, msgs);
 		return msgs;
 	}
 
@@ -206,27 +200,20 @@ public class LocatorDeclarationImpl
 	 */
 	@Override
 	public void setOwningIdiomsModel(IdiomsModel newOwningIdiomsModel) {
-		if (newOwningIdiomsModel != eInternalContainer()
-			|| (eContainerFeatureID() != IdiomsPackage.LOCATOR_DECLARATION__OWNING_IDIOMS_MODEL
-				&& newOwningIdiomsModel != null)) {
+		if (newOwningIdiomsModel != eInternalContainer() || (eContainerFeatureID() != (2) && newOwningIdiomsModel != null))
+		{
 			if (EcoreUtil.isAncestor(this, newOwningIdiomsModel))
-				throw new IllegalArgumentException(
-					"Recursive containment not allowed for " + toString()); //$NON-NLS-1$
+				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
 			NotificationChain msgs = null;
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningIdiomsModel != null)
-				msgs = ((InternalEObject) newOwningIdiomsModel).eInverseAdd(
-					this,
-					IdiomsPackage.IDIOMS_MODEL__OWNED_LOCATOR_DECLARATIONS,
-					IdiomsModel.class, msgs);
+				msgs = ((InternalEObject)newOwningIdiomsModel).eInverseAdd(this, 4, IdiomsModel.class, msgs);
 			msgs = basicSetOwningIdiomsModel(newOwningIdiomsModel, msgs);
-			if (msgs != null)
-				msgs.dispatch();
-		} else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-				IdiomsPackage.LOCATOR_DECLARATION__OWNING_IDIOMS_MODEL,
-				newOwningIdiomsModel, newOwningIdiomsModel));
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, 2, newOwningIdiomsModel, newOwningIdiomsModel));
 	}
 
 	/**
@@ -237,11 +224,12 @@ public class LocatorDeclarationImpl
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case IdiomsPackage.LOCATOR_DECLARATION__OWNING_IDIOMS_MODEL :
+		switch (featureID)
+		{
+			case 2:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
-				return basicSetOwningIdiomsModel((IdiomsModel) otherEnd, msgs);
+				return basicSetOwningIdiomsModel((IdiomsModel)otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -254,10 +242,11 @@ public class LocatorDeclarationImpl
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case IdiomsPackage.LOCATOR_DECLARATION__OWNED_LOCATOR :
+		switch (featureID)
+		{
+			case 1:
 				return basicSetOwnedLocator(null, msgs);
-			case IdiomsPackage.LOCATOR_DECLARATION__OWNING_IDIOMS_MODEL :
+			case 2:
 				return basicSetOwningIdiomsModel(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -271,11 +260,10 @@ public class LocatorDeclarationImpl
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(
 			NotificationChain msgs) {
-		switch (eContainerFeatureID()) {
-			case IdiomsPackage.LOCATOR_DECLARATION__OWNING_IDIOMS_MODEL :
-				return eInternalContainer().eInverseRemove(this,
-					IdiomsPackage.IDIOMS_MODEL__OWNED_LOCATOR_DECLARATIONS,
-					IdiomsModel.class, msgs);
+		switch (eContainerFeatureID())
+		{
+			case 2:
+				return eInternalContainer().eInverseRemove(this, 4, IdiomsModel.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -287,12 +275,13 @@ public class LocatorDeclarationImpl
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case IdiomsPackage.LOCATOR_DECLARATION__NAME :
+		switch (featureID)
+		{
+			case 0:
 				return getName();
-			case IdiomsPackage.LOCATOR_DECLARATION__OWNED_LOCATOR :
+			case 1:
 				return getOwnedLocator();
-			case IdiomsPackage.LOCATOR_DECLARATION__OWNING_IDIOMS_MODEL :
+			case 2:
 				return getOwningIdiomsModel();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -305,15 +294,16 @@ public class LocatorDeclarationImpl
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case IdiomsPackage.LOCATOR_DECLARATION__NAME :
-				setName((String) newValue);
+		switch (featureID)
+		{
+			case 0:
+				setName((String)newValue);
 				return;
-			case IdiomsPackage.LOCATOR_DECLARATION__OWNED_LOCATOR :
-				setOwnedLocator((Locator) newValue);
+			case 1:
+				setOwnedLocator((Locator)newValue);
 				return;
-			case IdiomsPackage.LOCATOR_DECLARATION__OWNING_IDIOMS_MODEL :
-				setOwningIdiomsModel((IdiomsModel) newValue);
+			case 2:
+				setOwningIdiomsModel((IdiomsModel)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -326,15 +316,16 @@ public class LocatorDeclarationImpl
 	 */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID) {
-			case IdiomsPackage.LOCATOR_DECLARATION__NAME :
+		switch (featureID)
+		{
+			case 0:
 				setName(NAME_EDEFAULT);
 				return;
-			case IdiomsPackage.LOCATOR_DECLARATION__OWNED_LOCATOR :
-				setOwnedLocator((Locator) null);
+			case 1:
+				setOwnedLocator((Locator)null);
 				return;
-			case IdiomsPackage.LOCATOR_DECLARATION__OWNING_IDIOMS_MODEL :
-				setOwningIdiomsModel((IdiomsModel) null);
+			case 2:
+				setOwningIdiomsModel((IdiomsModel)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -347,14 +338,13 @@ public class LocatorDeclarationImpl
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case IdiomsPackage.LOCATOR_DECLARATION__NAME :
-				return NAME_EDEFAULT == null
-					? name != null
-					: !NAME_EDEFAULT.equals(name);
-			case IdiomsPackage.LOCATOR_DECLARATION__OWNED_LOCATOR :
+		switch (featureID)
+		{
+			case 0:
+				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+			case 1:
 				return ownedLocator != null;
-			case IdiomsPackage.LOCATOR_DECLARATION__OWNING_IDIOMS_MODEL :
+			case 2:
 				return getOwningIdiomsModel() != null;
 		}
 		return super.eIsSet(featureID);
@@ -367,8 +357,7 @@ public class LocatorDeclarationImpl
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy())
-			return super.toString();
+		if (eIsProxy()) return super.toString();
 
 		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (name: "); //$NON-NLS-1$

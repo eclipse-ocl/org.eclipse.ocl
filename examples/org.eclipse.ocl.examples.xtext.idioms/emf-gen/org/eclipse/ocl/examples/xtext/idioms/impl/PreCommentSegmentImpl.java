@@ -27,6 +27,15 @@ public class PreCommentSegmentImpl
 		implements PreCommentSegment {
 
 	/**
+	 * The number of structural features of the '<em>Pre Comment Segment</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int PRE_COMMENT_SEGMENT_FEATURE_COUNT = SegmentImpl.SEGMENT_FEATURE_COUNT + 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

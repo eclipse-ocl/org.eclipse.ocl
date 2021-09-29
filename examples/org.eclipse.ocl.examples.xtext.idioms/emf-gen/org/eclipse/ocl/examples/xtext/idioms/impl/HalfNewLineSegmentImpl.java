@@ -27,6 +27,15 @@ public class HalfNewLineSegmentImpl
 		implements HalfNewLineSegment {
 
 	/**
+	 * The number of structural features of the '<em>Half New Line Segment</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int HALF_NEW_LINE_SEGMENT_FEATURE_COUNT = SegmentImpl.SEGMENT_FEATURE_COUNT + 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

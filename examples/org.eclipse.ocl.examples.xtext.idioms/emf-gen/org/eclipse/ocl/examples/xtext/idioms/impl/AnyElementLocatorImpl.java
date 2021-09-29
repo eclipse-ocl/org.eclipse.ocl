@@ -26,6 +26,15 @@ public class AnyElementLocatorImpl
 		implements AnyElementLocator {
 
 	/**
+	 * The number of structural features of the '<em>Any Element Locator</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int ANY_ELEMENT_LOCATOR_FEATURE_COUNT = LocatorImpl.LOCATOR_FEATURE_COUNT + 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

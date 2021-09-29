@@ -31,8 +31,7 @@ public interface IdiomsFactory
 	 * @generated
 	 */
 	@NonNull
-	IdiomsFactory eINSTANCE = org.eclipse.ocl.examples.xtext.idioms.impl.IdiomsFactoryImpl
-		.init();
+	IdiomsFactory eINSTANCE = org.eclipse.ocl.examples.xtext.idioms.impl.IdiomsFactoryImpl.init();
 
 	/**
 	 * Returns a new object of class '<em>Any Assignment Locator</em>'.

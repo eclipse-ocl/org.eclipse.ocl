@@ -79,7 +79,9 @@ public class OCLmetamodel extends ASResourceImpl
 
 	public static @NonNull Package create(@NonNull StandardLibraryInternal standardLibrary, @NonNull String name, @Nullable String nsPrefix, @NonNull String nsURI) {
 		OCLmetamodel resource = new ReadOnly(PIVOT_AS_URI);
-		Contents contents = new Contents(standardLibrary.getPackage(), name, nsPrefix, nsURI);
+		Package standardLibraryPackage = standardLibrary.getOclAnyType().getOwningPackage();
+		assert standardLibraryPackage != null;
+		Contents contents = new Contents(standardLibraryPackage, name, nsPrefix, nsURI);
 		Model model = contents.getModel();
 		resource.getContents().add(model);
 		@SuppressWarnings("null")@NonNull Package pkge = model.getOwnedPackages().get(0);

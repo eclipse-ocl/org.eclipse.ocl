@@ -56,6 +56,15 @@ public class IdiomsModelImpl
 		implements IdiomsModel {
 
 	/**
+	 * The number of structural features of the '<em>Model</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int IDIOMS_MODEL_FEATURE_COUNT = IdiomsElementImpl.IDIOMS_ELEMENT_FEATURE_COUNT + 7;
+
+	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -181,9 +190,9 @@ public class IdiomsModelImpl
 	 */
 	@Override
 	public EList<String> getNames() {
-		if (names == null) {
-			names = new EDataTypeUniqueEList<String>(String.class, this,
-				IdiomsPackage.IDIOMS_MODEL__NAMES);
+		if (names == null)
+		{
+			names = new EDataTypeUniqueEList<String>(String.class, this, 1);
 		}
 		return names;
 	}
@@ -195,10 +204,9 @@ public class IdiomsModelImpl
 	 */
 	@Override
 	public EList<EPackageImport> getOwnedImports() {
-		if (ownedImports == null) {
-			ownedImports = new EObjectContainmentEList<EPackageImport>(
-				EPackageImport.class, this,
-				IdiomsPackage.IDIOMS_MODEL__OWNED_IMPORTS);
+		if (ownedImports == null)
+		{
+			ownedImports = new EObjectContainmentEList<EPackageImport>(EPackageImport.class, this, 3);
 		}
 		return ownedImports;
 	}
@@ -210,11 +218,9 @@ public class IdiomsModelImpl
 	 */
 	@Override
 	public EList<LocatorDeclaration> getOwnedLocatorDeclarations() {
-		if (ownedLocatorDeclarations == null) {
-			ownedLocatorDeclarations = new EObjectContainmentWithInverseEList<LocatorDeclaration>(
-				LocatorDeclaration.class, this,
-				IdiomsPackage.IDIOMS_MODEL__OWNED_LOCATOR_DECLARATIONS,
-				IdiomsPackage.LOCATOR_DECLARATION__OWNING_IDIOMS_MODEL);
+		if (ownedLocatorDeclarations == null)
+		{
+			ownedLocatorDeclarations = new EObjectContainmentWithInverseEList<LocatorDeclaration>(LocatorDeclaration.class, this, 4, 2);
 		}
 		return ownedLocatorDeclarations;
 	}
@@ -226,11 +232,9 @@ public class IdiomsModelImpl
 	 */
 	@Override
 	public EList<SegmentDeclaration> getOwnedSegmentDeclarations() {
-		if (ownedSegmentDeclarations == null) {
-			ownedSegmentDeclarations = new EObjectContainmentWithInverseEList<SegmentDeclaration>(
-				SegmentDeclaration.class, this,
-				IdiomsPackage.IDIOMS_MODEL__OWNED_SEGMENT_DECLARATIONS,
-				IdiomsPackage.SEGMENT_DECLARATION__OWNING_IDIOMS_MODEL);
+		if (ownedSegmentDeclarations == null)
+		{
+			ownedSegmentDeclarations = new EObjectContainmentWithInverseEList<SegmentDeclaration>(SegmentDeclaration.class, this, 5, 2);
 		}
 		return ownedSegmentDeclarations;
 	}
@@ -242,9 +246,9 @@ public class IdiomsModelImpl
 	 */
 	@Override
 	public EList<Idiom> getOwnedIdioms() {
-		if (ownedIdioms == null) {
-			ownedIdioms = new EObjectContainmentEList<Idiom>(Idiom.class, this,
-				IdiomsPackage.IDIOMS_MODEL__OWNED_IDIOMS);
+		if (ownedIdioms == null)
+		{
+			ownedIdioms = new EObjectContainmentEList<Idiom>(Idiom.class, this, 2);
 		}
 		return ownedIdioms;
 	}
@@ -256,10 +260,9 @@ public class IdiomsModelImpl
 	 */
 	@Override
 	public EList<IdiomsImport> getOwnedWiths() {
-		if (ownedWiths == null) {
-			ownedWiths = new EObjectContainmentEList<IdiomsImport>(
-				IdiomsImport.class, this,
-				IdiomsPackage.IDIOMS_MODEL__OWNED_WITHS);
+		if (ownedWiths == null)
+		{
+			ownedWiths = new EObjectContainmentEList<IdiomsImport>(IdiomsImport.class, this, 6);
 		}
 		return ownedWiths;
 	}
@@ -273,13 +276,12 @@ public class IdiomsModelImpl
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case IdiomsPackage.IDIOMS_MODEL__OWNED_LOCATOR_DECLARATIONS :
-				return ((InternalEList<InternalEObject>) (InternalEList<?>) getOwnedLocatorDeclarations())
-					.basicAdd(otherEnd, msgs);
-			case IdiomsPackage.IDIOMS_MODEL__OWNED_SEGMENT_DECLARATIONS :
-				return ((InternalEList<InternalEObject>) (InternalEList<?>) getOwnedSegmentDeclarations())
-					.basicAdd(otherEnd, msgs);
+		switch (featureID)
+		{
+			case 4:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedLocatorDeclarations()).basicAdd(otherEnd, msgs);
+			case 5:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedSegmentDeclarations()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -292,22 +294,18 @@ public class IdiomsModelImpl
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case IdiomsPackage.IDIOMS_MODEL__OWNED_IDIOMS :
-				return ((InternalEList<?>) getOwnedIdioms())
-					.basicRemove(otherEnd, msgs);
-			case IdiomsPackage.IDIOMS_MODEL__OWNED_IMPORTS :
-				return ((InternalEList<?>) getOwnedImports())
-					.basicRemove(otherEnd, msgs);
-			case IdiomsPackage.IDIOMS_MODEL__OWNED_LOCATOR_DECLARATIONS :
-				return ((InternalEList<?>) getOwnedLocatorDeclarations())
-					.basicRemove(otherEnd, msgs);
-			case IdiomsPackage.IDIOMS_MODEL__OWNED_SEGMENT_DECLARATIONS :
-				return ((InternalEList<?>) getOwnedSegmentDeclarations())
-					.basicRemove(otherEnd, msgs);
-			case IdiomsPackage.IDIOMS_MODEL__OWNED_WITHS :
-				return ((InternalEList<?>) getOwnedWiths())
-					.basicRemove(otherEnd, msgs);
+		switch (featureID)
+		{
+			case 2:
+				return ((InternalEList<?>)getOwnedIdioms()).basicRemove(otherEnd, msgs);
+			case 3:
+				return ((InternalEList<?>)getOwnedImports()).basicRemove(otherEnd, msgs);
+			case 4:
+				return ((InternalEList<?>)getOwnedLocatorDeclarations()).basicRemove(otherEnd, msgs);
+			case 5:
+				return ((InternalEList<?>)getOwnedSegmentDeclarations()).basicRemove(otherEnd, msgs);
+			case 6:
+				return ((InternalEList<?>)getOwnedWiths()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -319,20 +317,21 @@ public class IdiomsModelImpl
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case IdiomsPackage.IDIOMS_MODEL__NAME :
+		switch (featureID)
+		{
+			case 0:
 				return getName();
-			case IdiomsPackage.IDIOMS_MODEL__NAMES :
+			case 1:
 				return getNames();
-			case IdiomsPackage.IDIOMS_MODEL__OWNED_IDIOMS :
+			case 2:
 				return getOwnedIdioms();
-			case IdiomsPackage.IDIOMS_MODEL__OWNED_IMPORTS :
+			case 3:
 				return getOwnedImports();
-			case IdiomsPackage.IDIOMS_MODEL__OWNED_LOCATOR_DECLARATIONS :
+			case 4:
 				return getOwnedLocatorDeclarations();
-			case IdiomsPackage.IDIOMS_MODEL__OWNED_SEGMENT_DECLARATIONS :
+			case 5:
 				return getOwnedSegmentDeclarations();
-			case IdiomsPackage.IDIOMS_MODEL__OWNED_WITHS :
+			case 6:
 				return getOwnedWiths();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -346,34 +345,31 @@ public class IdiomsModelImpl
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case IdiomsPackage.IDIOMS_MODEL__NAMES :
+		switch (featureID)
+		{
+			case 1:
 				getNames().clear();
-				getNames().addAll((Collection<? extends String>) newValue);
+				getNames().addAll((Collection<? extends String>)newValue);
 				return;
-			case IdiomsPackage.IDIOMS_MODEL__OWNED_IDIOMS :
+			case 2:
 				getOwnedIdioms().clear();
-				getOwnedIdioms().addAll((Collection<? extends Idiom>) newValue);
+				getOwnedIdioms().addAll((Collection<? extends Idiom>)newValue);
 				return;
-			case IdiomsPackage.IDIOMS_MODEL__OWNED_IMPORTS :
+			case 3:
 				getOwnedImports().clear();
-				getOwnedImports()
-					.addAll((Collection<? extends EPackageImport>) newValue);
+				getOwnedImports().addAll((Collection<? extends EPackageImport>)newValue);
 				return;
-			case IdiomsPackage.IDIOMS_MODEL__OWNED_LOCATOR_DECLARATIONS :
+			case 4:
 				getOwnedLocatorDeclarations().clear();
-				getOwnedLocatorDeclarations().addAll(
-					(Collection<? extends LocatorDeclaration>) newValue);
+				getOwnedLocatorDeclarations().addAll((Collection<? extends LocatorDeclaration>)newValue);
 				return;
-			case IdiomsPackage.IDIOMS_MODEL__OWNED_SEGMENT_DECLARATIONS :
+			case 5:
 				getOwnedSegmentDeclarations().clear();
-				getOwnedSegmentDeclarations().addAll(
-					(Collection<? extends SegmentDeclaration>) newValue);
+				getOwnedSegmentDeclarations().addAll((Collection<? extends SegmentDeclaration>)newValue);
 				return;
-			case IdiomsPackage.IDIOMS_MODEL__OWNED_WITHS :
+			case 6:
 				getOwnedWiths().clear();
-				getOwnedWiths()
-					.addAll((Collection<? extends IdiomsImport>) newValue);
+				getOwnedWiths().addAll((Collection<? extends IdiomsImport>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -386,23 +382,24 @@ public class IdiomsModelImpl
 	 */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID) {
-			case IdiomsPackage.IDIOMS_MODEL__NAMES :
+		switch (featureID)
+		{
+			case 1:
 				getNames().clear();
 				return;
-			case IdiomsPackage.IDIOMS_MODEL__OWNED_IDIOMS :
+			case 2:
 				getOwnedIdioms().clear();
 				return;
-			case IdiomsPackage.IDIOMS_MODEL__OWNED_IMPORTS :
+			case 3:
 				getOwnedImports().clear();
 				return;
-			case IdiomsPackage.IDIOMS_MODEL__OWNED_LOCATOR_DECLARATIONS :
+			case 4:
 				getOwnedLocatorDeclarations().clear();
 				return;
-			case IdiomsPackage.IDIOMS_MODEL__OWNED_SEGMENT_DECLARATIONS :
+			case 5:
 				getOwnedSegmentDeclarations().clear();
 				return;
-			case IdiomsPackage.IDIOMS_MODEL__OWNED_WITHS :
+			case 6:
 				getOwnedWiths().clear();
 				return;
 		}
@@ -416,24 +413,21 @@ public class IdiomsModelImpl
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case IdiomsPackage.IDIOMS_MODEL__NAME :
-				return NAME_EDEFAULT == null
-					? name != null
-					: !NAME_EDEFAULT.equals(name);
-			case IdiomsPackage.IDIOMS_MODEL__NAMES :
+		switch (featureID)
+		{
+			case 0:
+				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+			case 1:
 				return names != null && !names.isEmpty();
-			case IdiomsPackage.IDIOMS_MODEL__OWNED_IDIOMS :
+			case 2:
 				return ownedIdioms != null && !ownedIdioms.isEmpty();
-			case IdiomsPackage.IDIOMS_MODEL__OWNED_IMPORTS :
+			case 3:
 				return ownedImports != null && !ownedImports.isEmpty();
-			case IdiomsPackage.IDIOMS_MODEL__OWNED_LOCATOR_DECLARATIONS :
-				return ownedLocatorDeclarations != null
-					&& !ownedLocatorDeclarations.isEmpty();
-			case IdiomsPackage.IDIOMS_MODEL__OWNED_SEGMENT_DECLARATIONS :
-				return ownedSegmentDeclarations != null
-					&& !ownedSegmentDeclarations.isEmpty();
-			case IdiomsPackage.IDIOMS_MODEL__OWNED_WITHS :
+			case 4:
+				return ownedLocatorDeclarations != null && !ownedLocatorDeclarations.isEmpty();
+			case 5:
+				return ownedSegmentDeclarations != null && !ownedSegmentDeclarations.isEmpty();
+			case 6:
 				return ownedWiths != null && !ownedWiths.isEmpty();
 		}
 		return super.eIsSet(featureID);
@@ -446,8 +440,7 @@ public class IdiomsModelImpl
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy())
-			return super.toString();
+		if (eIsProxy()) return super.toString();
 
 		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (name: "); //$NON-NLS-1$

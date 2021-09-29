@@ -48,6 +48,15 @@ public class SubIdiomImpl
 		implements SubIdiom {
 
 	/**
+	 * The number of structural features of the '<em>Sub Idiom</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int SUB_IDIOM_FEATURE_COUNT = IdiomsElementImpl.IDIOMS_ELEMENT_FEATURE_COUNT + 4;
+
+	/**
 	 * The default value of the '{@link #isAll() <em>All</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -126,8 +135,7 @@ public class SubIdiomImpl
 		boolean oldAll = all;
 		all = newAll;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-				IdiomsPackage.SUB_IDIOM__ALL, oldAll, all));
+			eNotify(new ENotificationImpl(this, Notification.SET, 0, oldAll, all));
 	}
 
 	/**
@@ -149,14 +157,10 @@ public class SubIdiomImpl
 			NotificationChain msgs) {
 		Locator oldOwnedLocator = ownedLocator;
 		ownedLocator = newOwnedLocator;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this,
-				Notification.SET, IdiomsPackage.SUB_IDIOM__OWNED_LOCATOR,
-				oldOwnedLocator, newOwnedLocator);
-			if (msgs == null)
-				msgs = notification;
-			else
-				msgs.add(notification);
+		if (eNotificationRequired())
+		{
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 1, oldOwnedLocator, newOwnedLocator);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
 	}
@@ -168,27 +172,18 @@ public class SubIdiomImpl
 	 */
 	@Override
 	public void setOwnedLocator(Locator newOwnedLocator) {
-		if (newOwnedLocator != ownedLocator) {
+		if (newOwnedLocator != ownedLocator)
+		{
 			NotificationChain msgs = null;
 			if (ownedLocator != null)
-				msgs = ((InternalEObject) ownedLocator)
-					.eInverseRemove(this,
-						EOPPOSITE_FEATURE_BASE
-							- IdiomsPackage.SUB_IDIOM__OWNED_LOCATOR,
-						null, msgs);
+				msgs = ((InternalEObject)ownedLocator).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (1), null, msgs);
 			if (newOwnedLocator != null)
-				msgs = ((InternalEObject) newOwnedLocator)
-					.eInverseAdd(this,
-						EOPPOSITE_FEATURE_BASE
-							- IdiomsPackage.SUB_IDIOM__OWNED_LOCATOR,
-						null, msgs);
+				msgs = ((InternalEObject)newOwnedLocator).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (1), null, msgs);
 			msgs = basicSetOwnedLocator(newOwnedLocator, msgs);
-			if (msgs != null)
-				msgs.dispatch();
-		} else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-				IdiomsPackage.SUB_IDIOM__OWNED_LOCATOR, newOwnedLocator,
-				newOwnedLocator));
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, 1, newOwnedLocator, newOwnedLocator));
 	}
 
 	/**
@@ -198,9 +193,9 @@ public class SubIdiomImpl
 	 */
 	@Override
 	public EList<Segment> getOwnedSegments() {
-		if (ownedSegments == null) {
-			ownedSegments = new EObjectContainmentEList<Segment>(Segment.class,
-				this, IdiomsPackage.SUB_IDIOM__OWNED_SEGMENTS);
+		if (ownedSegments == null)
+		{
+			ownedSegments = new EObjectContainmentEList<Segment>(Segment.class, this, 2);
 		}
 		return ownedSegments;
 	}
@@ -212,9 +207,8 @@ public class SubIdiomImpl
 	 */
 	@Override
 	public Idiom getOwningIdiom() {
-		if (eContainerFeatureID() != IdiomsPackage.SUB_IDIOM__OWNING_IDIOM)
-			return null;
-		return (Idiom) eInternalContainer();
+		if (eContainerFeatureID() != (3)) return null;
+		return (Idiom)eInternalContainer();
 	}
 
 	/**
@@ -224,8 +218,7 @@ public class SubIdiomImpl
 	 */
 	public NotificationChain basicSetOwningIdiom(Idiom newOwningIdiom,
 			NotificationChain msgs) {
-		msgs = eBasicSetContainer((InternalEObject) newOwningIdiom,
-			IdiomsPackage.SUB_IDIOM__OWNING_IDIOM, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningIdiom, 3, msgs);
 		return msgs;
 	}
 
@@ -236,25 +229,20 @@ public class SubIdiomImpl
 	 */
 	@Override
 	public void setOwningIdiom(Idiom newOwningIdiom) {
-		if (newOwningIdiom != eInternalContainer()
-			|| (eContainerFeatureID() != IdiomsPackage.SUB_IDIOM__OWNING_IDIOM
-				&& newOwningIdiom != null)) {
+		if (newOwningIdiom != eInternalContainer() || (eContainerFeatureID() != (3) && newOwningIdiom != null))
+		{
 			if (EcoreUtil.isAncestor(this, newOwningIdiom))
-				throw new IllegalArgumentException(
-					"Recursive containment not allowed for " + toString()); //$NON-NLS-1$
+				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
 			NotificationChain msgs = null;
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningIdiom != null)
-				msgs = ((InternalEObject) newOwningIdiom).eInverseAdd(this,
-					IdiomsPackage.IDIOM__OWNED_SUB_IDIOMS, Idiom.class, msgs);
+				msgs = ((InternalEObject)newOwningIdiom).eInverseAdd(this, 5, Idiom.class, msgs);
 			msgs = basicSetOwningIdiom(newOwningIdiom, msgs);
-			if (msgs != null)
-				msgs.dispatch();
-		} else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-				IdiomsPackage.SUB_IDIOM__OWNING_IDIOM, newOwningIdiom,
-				newOwningIdiom));
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, 3, newOwningIdiom, newOwningIdiom));
 	}
 
 	/**
@@ -265,11 +253,12 @@ public class SubIdiomImpl
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case IdiomsPackage.SUB_IDIOM__OWNING_IDIOM :
+		switch (featureID)
+		{
+			case 3:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
-				return basicSetOwningIdiom((Idiom) otherEnd, msgs);
+				return basicSetOwningIdiom((Idiom)otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -282,13 +271,13 @@ public class SubIdiomImpl
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case IdiomsPackage.SUB_IDIOM__OWNED_LOCATOR :
+		switch (featureID)
+		{
+			case 1:
 				return basicSetOwnedLocator(null, msgs);
-			case IdiomsPackage.SUB_IDIOM__OWNED_SEGMENTS :
-				return ((InternalEList<?>) getOwnedSegments())
-					.basicRemove(otherEnd, msgs);
-			case IdiomsPackage.SUB_IDIOM__OWNING_IDIOM :
+			case 2:
+				return ((InternalEList<?>)getOwnedSegments()).basicRemove(otherEnd, msgs);
+			case 3:
 				return basicSetOwningIdiom(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -302,10 +291,10 @@ public class SubIdiomImpl
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(
 			NotificationChain msgs) {
-		switch (eContainerFeatureID()) {
-			case IdiomsPackage.SUB_IDIOM__OWNING_IDIOM :
-				return eInternalContainer().eInverseRemove(this,
-					IdiomsPackage.IDIOM__OWNED_SUB_IDIOMS, Idiom.class, msgs);
+		switch (eContainerFeatureID())
+		{
+			case 3:
+				return eInternalContainer().eInverseRemove(this, 5, Idiom.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -317,14 +306,15 @@ public class SubIdiomImpl
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case IdiomsPackage.SUB_IDIOM__ALL :
+		switch (featureID)
+		{
+			case 0:
 				return isAll();
-			case IdiomsPackage.SUB_IDIOM__OWNED_LOCATOR :
+			case 1:
 				return getOwnedLocator();
-			case IdiomsPackage.SUB_IDIOM__OWNED_SEGMENTS :
+			case 2:
 				return getOwnedSegments();
-			case IdiomsPackage.SUB_IDIOM__OWNING_IDIOM :
+			case 3:
 				return getOwningIdiom();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -338,20 +328,20 @@ public class SubIdiomImpl
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case IdiomsPackage.SUB_IDIOM__ALL :
-				setAll((Boolean) newValue);
+		switch (featureID)
+		{
+			case 0:
+				setAll((Boolean)newValue);
 				return;
-			case IdiomsPackage.SUB_IDIOM__OWNED_LOCATOR :
-				setOwnedLocator((Locator) newValue);
+			case 1:
+				setOwnedLocator((Locator)newValue);
 				return;
-			case IdiomsPackage.SUB_IDIOM__OWNED_SEGMENTS :
+			case 2:
 				getOwnedSegments().clear();
-				getOwnedSegments()
-					.addAll((Collection<? extends Segment>) newValue);
+				getOwnedSegments().addAll((Collection<? extends Segment>)newValue);
 				return;
-			case IdiomsPackage.SUB_IDIOM__OWNING_IDIOM :
-				setOwningIdiom((Idiom) newValue);
+			case 3:
+				setOwningIdiom((Idiom)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -364,18 +354,19 @@ public class SubIdiomImpl
 	 */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID) {
-			case IdiomsPackage.SUB_IDIOM__ALL :
+		switch (featureID)
+		{
+			case 0:
 				setAll(ALL_EDEFAULT);
 				return;
-			case IdiomsPackage.SUB_IDIOM__OWNED_LOCATOR :
-				setOwnedLocator((Locator) null);
+			case 1:
+				setOwnedLocator((Locator)null);
 				return;
-			case IdiomsPackage.SUB_IDIOM__OWNED_SEGMENTS :
+			case 2:
 				getOwnedSegments().clear();
 				return;
-			case IdiomsPackage.SUB_IDIOM__OWNING_IDIOM :
-				setOwningIdiom((Idiom) null);
+			case 3:
+				setOwningIdiom((Idiom)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -388,14 +379,15 @@ public class SubIdiomImpl
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case IdiomsPackage.SUB_IDIOM__ALL :
+		switch (featureID)
+		{
+			case 0:
 				return all != ALL_EDEFAULT;
-			case IdiomsPackage.SUB_IDIOM__OWNED_LOCATOR :
+			case 1:
 				return ownedLocator != null;
-			case IdiomsPackage.SUB_IDIOM__OWNED_SEGMENTS :
+			case 2:
 				return ownedSegments != null && !ownedSegments.isEmpty();
-			case IdiomsPackage.SUB_IDIOM__OWNING_IDIOM :
+			case 3:
 				return getOwningIdiom() != null;
 		}
 		return super.eIsSet(featureID);

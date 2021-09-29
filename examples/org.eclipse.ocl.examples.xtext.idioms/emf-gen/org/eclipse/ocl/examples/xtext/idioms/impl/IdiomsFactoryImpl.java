@@ -68,13 +68,16 @@ public class IdiomsFactoryImpl
 	 * @generated
 	 */
 	public static @NonNull IdiomsFactory init() {
-		try {
-			IdiomsFactory theIdiomsFactory = (IdiomsFactory) EPackage.Registry.INSTANCE
-				.getEFactory(IdiomsPackage.eNS_URI);
-			if (theIdiomsFactory != null) {
+		try
+		{
+			IdiomsFactory theIdiomsFactory = (IdiomsFactory)EPackage.Registry.INSTANCE.getEFactory(IdiomsPackage.eNS_URI);
+			if (theIdiomsFactory != null)
+			{
 				return theIdiomsFactory;
 			}
-		} catch (Exception exception) {
+		}
+		catch (Exception exception)
+		{
 			EcorePlugin.INSTANCE.log(exception);
 		}
 		return new IdiomsFactoryImpl();
@@ -97,74 +100,42 @@ public class IdiomsFactoryImpl
 	 */
 	@Override
 	public @NonNull EObject create(EClass eClass) {
-		switch (eClass.getClassifierID()) {
-			case IdiomsPackage.ANY_ASSIGNMENT_LOCATOR :
-				return createAnyAssignmentLocator();
-			case IdiomsPackage.ANY_ELEMENT_LOCATOR :
-				return createAnyElementLocator();
-			case IdiomsPackage.ASSIGNMENT_LOCATOR :
-				return createAssignmentLocator();
-			case IdiomsPackage.CUSTOM_SEGMENT :
-				return createCustomSegment();
-			case IdiomsPackage.EPACKAGE_IMPORT :
-				return createEPackageImport();
-			case IdiomsPackage.FINAL_LOCATOR :
-				return createFinalLocator();
-			case IdiomsPackage.HALF_NEW_LINE_SEGMENT :
-				return createHalfNewLineSegment();
-			case IdiomsPackage.IDIOM :
-				return createIdiom();
-			case IdiomsPackage.IDIOMS_IMPORT :
-				return createIdiomsImport();
-			case IdiomsPackage.IDIOMS_MODEL :
-				return createIdiomsModel();
-			case IdiomsPackage.KEYWORD_LOCATOR :
-				return createKeywordLocator();
-			case IdiomsPackage.LOCATOR_DECLARATION :
-				return createLocatorDeclaration();
-			case IdiomsPackage.NEW_LINE_SEGMENT :
-				return createNewLineSegment();
-			case IdiomsPackage.NO_SPACE_SEGMENT :
-				return createNoSpaceSegment();
-			case IdiomsPackage.POP_SEGMENT :
-				return createPopSegment();
-			case IdiomsPackage.POST_COMMENT_SEGMENT :
-				return createPostCommentSegment();
-			case IdiomsPackage.PRE_COMMENT_SEGMENT :
-				return createPreCommentSegment();
-			case IdiomsPackage.REFERRED_LOCATOR :
-				return createReferredLocator();
-			case IdiomsPackage.REFERRED_SEGMENT :
-				return createReferredSegment();
-			case IdiomsPackage.RETURNS_LOCATOR :
-				return createReturnsLocator();
-			case IdiomsPackage.PUSH_SEGMENT :
-				return createPushSegment();
-			case IdiomsPackage.SEGMENT_DECLARATION :
-				return createSegmentDeclaration();
-			case IdiomsPackage.SOFT_NEW_LINE_SEGMENT :
-				return createSoftNewLineSegment();
-			case IdiomsPackage.SOFT_SPACE_SEGMENT :
-				return createSoftSpaceSegment();
-			case IdiomsPackage.STRING_SEGMENT :
-				return createStringSegment();
-			case IdiomsPackage.SUB_IDIOM :
-				return createSubIdiom();
-			case IdiomsPackage.VALUE_SEGMENT :
-				return createValueSegment();
-			case IdiomsPackage.WRAP_ANCHOR_SEGMENT :
-				return createWrapAnchorSegment();
-			case IdiomsPackage.WRAP_BEGIN_SOME_SEGMENT :
-				return createWrapBeginSomeSegment();
-			case IdiomsPackage.WRAP_BEGIN_ALL_SEGMENT :
-				return createWrapBeginAllSegment();
-			case IdiomsPackage.WRAP_END_SEGMENT :
-				return createWrapEndSegment();
-			case IdiomsPackage.WRAP_HERE_SEGMENT :
-				return createWrapHereSegment();
-			default :
-				throw new IllegalArgumentException("The class '" //$NON-NLS-1$
-					+ eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$
+		switch (eClass.getClassifierID())
+		{
+			case 0: return createAnyAssignmentLocator();
+			case 1: return createAnyElementLocator();
+			case 2: return createAssignmentLocator();
+			case 3: return createCustomSegment();
+			case 4: return createEPackageImport();
+			case 5: return createFinalLocator();
+			case 6: return createHalfNewLineSegment();
+			case 7: return createIdiom();
+			case 9: return createIdiomsImport();
+			case 10: return createIdiomsModel();
+			case 11: return createKeywordLocator();
+			case 13: return createLocatorDeclaration();
+			case 14: return createNewLineSegment();
+			case 15: return createNoSpaceSegment();
+			case 16: return createPopSegment();
+			case 17: return createPostCommentSegment();
+			case 18: return createPreCommentSegment();
+			case 19: return createReferredLocator();
+			case 20: return createReferredSegment();
+			case 21: return createReturnsLocator();
+			case 22: return createPushSegment();
+			case 24: return createSegmentDeclaration();
+			case 25: return createSoftNewLineSegment();
+			case 26: return createSoftSpaceSegment();
+			case 27: return createStringSegment();
+			case 28: return createSubIdiom();
+			case 29: return createValueSegment();
+			case 30: return createWrapAnchorSegment();
+			case 31: return createWrapBeginSomeSegment();
+			case 32: return createWrapBeginAllSegment();
+			case 33: return createWrapEndSegment();
+			case 34: return createWrapHereSegment();
+			default:
+				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
 
@@ -528,7 +499,7 @@ public class IdiomsFactoryImpl
 	@SuppressWarnings("null")
 	@Override
 	public @NonNull IdiomsPackage getIdiomsPackage() {
-		return (IdiomsPackage) getEPackage();
+		return (IdiomsPackage)getEPackage();
 	}
 
 	/**

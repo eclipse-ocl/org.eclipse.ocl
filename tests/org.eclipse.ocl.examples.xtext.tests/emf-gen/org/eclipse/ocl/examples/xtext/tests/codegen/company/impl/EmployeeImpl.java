@@ -308,7 +308,7 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 			final /*@NonInvalid*/ @Nullable Employee manager_0 = _1.getManager();
 			final /*@NonInvalid*/ boolean eq = this.equals(manager_0);
 			//
-			if (eq == ValueUtil.TRUE_VALUE) {
+			if (eq) {
 				accumulator.add(_1);
 			}
 		}
@@ -345,7 +345,7 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 			 */
 			final /*@NonInvalid*/ boolean reportsTo = _1.reportsTo(this);
 			//
-			if (reportsTo == ValueUtil.TRUE_VALUE) {
+			if (reportsTo) {
 				accumulator.add(_1);
 			}
 		}
@@ -477,7 +477,7 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, CodegencompanyTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean symbol_0;
 			if (le) {
-				symbol_0 = ValueUtil.TRUE_VALUE;
+				symbol_0 = true;
 			}
 			else {
 				final /*@NonInvalid*/ @Nullable Employee manager = this.getManager();
@@ -544,7 +544,7 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, CodegencompanyTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean symbol_2;
 			if (le) {
-				symbol_2 = ValueUtil.TRUE_VALUE;
+				symbol_2 = true;
 			}
 			else {
 				/*@Caught*/ @NonNull Object CAUGHT_symbol_1;
@@ -660,7 +660,7 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, CodegencompanyTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean symbol_0;
 			if (le) {
-				symbol_0 = ValueUtil.TRUE_VALUE;
+				symbol_0 = true;
 			}
 			else {
 				/*@Caught*/ @Nullable Object CAUGHT_result;

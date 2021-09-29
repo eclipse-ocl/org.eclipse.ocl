@@ -40,11 +40,11 @@ import org.eclipse.ocl.pivot.ids.TypeId;
  * <p>
  * A boxed value is not needed for the large number of ordinary EObjects not in the above list.
  * <p>
- * asYYY returns a non-null YYY if self is convertible to an YYY and is not NullValue/InvalidValue
+ * asXXX returns a non-null XXX if self is convertible to an XXX and is not NullValue/InvalidValue
  * throws an InvalidValueException for a NullValue/InvalidValue. A Value object may be converted
- * if the conversion to YYY is exact and type conformant.
+ * if the conversion to XXX is exact and type conformant.
  * <p>
- * isYYY returns an YYY-related value if self is an YYY and is not a NullValue/InvalidValue, returns null otherwise.
+ * isXXX returns an XXX-related value if self is an XXX and is not a NullValue/InvalidValue, returns null otherwise.
  * <!-- end-model-doc -->
  *
  *

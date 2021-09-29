@@ -13,6 +13,7 @@ package org.eclipse.ocl.examples.xtext.idioms.util;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.xtext.idioms.AnyAssignmentLocator;
 import org.eclipse.ocl.examples.xtext.idioms.AnyElementLocator;
 import org.eclipse.ocl.examples.xtext.idioms.AssignmentLocator;
@@ -63,7 +64,7 @@ import org.eclipse.ocl.examples.xtext.idioms.WrapHereSegment;
  * @see org.eclipse.ocl.examples.xtext.idioms.IdiomsPackage
  * @generated
  */
-public class IdiomsSwitch<T>
+public class IdiomsSwitch<@Nullable T>
 		extends Switch<T> {
 
 	/**
@@ -81,7 +82,8 @@ public class IdiomsSwitch<T>
 	 * @generated
 	 */
 	public IdiomsSwitch() {
-		if (modelPackage == null) {
+		if (modelPackage == null)
+		{
 			modelPackage = IdiomsPackage.eINSTANCE;
 		}
 	}
@@ -108,372 +110,313 @@ public class IdiomsSwitch<T>
 	 */
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
-		switch (classifierID) {
-			case IdiomsPackage.ANY_ASSIGNMENT_LOCATOR : {
-				AnyAssignmentLocator anyAssignmentLocator = (AnyAssignmentLocator) theEObject;
+		switch (classifierID)
+		{
+			case 0:
+			{
+				AnyAssignmentLocator anyAssignmentLocator = (AnyAssignmentLocator)theEObject;
 				T result = caseAnyAssignmentLocator(anyAssignmentLocator);
-				if (result == null)
-					result = caseLocator(anyAssignmentLocator);
-				if (result == null)
-					result = caseIdiomsElement(anyAssignmentLocator);
-				if (result == null)
-					result = defaultCase(theEObject);
+				if (result == null) result = caseLocator(anyAssignmentLocator);
+				if (result == null) result = caseIdiomsElement(anyAssignmentLocator);
+				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case IdiomsPackage.ANY_ELEMENT_LOCATOR : {
-				AnyElementLocator anyElementLocator = (AnyElementLocator) theEObject;
+			case 1:
+			{
+				AnyElementLocator anyElementLocator = (AnyElementLocator)theEObject;
 				T result = caseAnyElementLocator(anyElementLocator);
-				if (result == null)
-					result = caseLocator(anyElementLocator);
-				if (result == null)
-					result = caseIdiomsElement(anyElementLocator);
-				if (result == null)
-					result = defaultCase(theEObject);
+				if (result == null) result = caseLocator(anyElementLocator);
+				if (result == null) result = caseIdiomsElement(anyElementLocator);
+				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case IdiomsPackage.ASSIGNMENT_LOCATOR : {
-				AssignmentLocator assignmentLocator = (AssignmentLocator) theEObject;
+			case 2:
+			{
+				AssignmentLocator assignmentLocator = (AssignmentLocator)theEObject;
 				T result = caseAssignmentLocator(assignmentLocator);
-				if (result == null)
-					result = caseLocator(assignmentLocator);
-				if (result == null)
-					result = caseIdiomsElement(assignmentLocator);
-				if (result == null)
-					result = defaultCase(theEObject);
+				if (result == null) result = caseLocator(assignmentLocator);
+				if (result == null) result = caseIdiomsElement(assignmentLocator);
+				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case IdiomsPackage.CUSTOM_SEGMENT : {
-				CustomSegment customSegment = (CustomSegment) theEObject;
+			case 3:
+			{
+				CustomSegment customSegment = (CustomSegment)theEObject;
 				T result = caseCustomSegment(customSegment);
-				if (result == null)
-					result = caseSegment(customSegment);
-				if (result == null)
-					result = caseIdiomsElement(customSegment);
-				if (result == null)
-					result = defaultCase(theEObject);
+				if (result == null) result = caseSegment(customSegment);
+				if (result == null) result = caseIdiomsElement(customSegment);
+				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case IdiomsPackage.EPACKAGE_IMPORT : {
-				EPackageImport ePackageImport = (EPackageImport) theEObject;
+			case 4:
+			{
+				EPackageImport ePackageImport = (EPackageImport)theEObject;
 				T result = caseEPackageImport(ePackageImport);
-				if (result == null)
-					result = caseIdiomsElement(ePackageImport);
-				if (result == null)
-					result = defaultCase(theEObject);
+				if (result == null) result = caseIdiomsElement(ePackageImport);
+				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case IdiomsPackage.FINAL_LOCATOR : {
-				FinalLocator finalLocator = (FinalLocator) theEObject;
+			case 5:
+			{
+				FinalLocator finalLocator = (FinalLocator)theEObject;
 				T result = caseFinalLocator(finalLocator);
-				if (result == null)
-					result = caseLocator(finalLocator);
-				if (result == null)
-					result = caseIdiomsElement(finalLocator);
-				if (result == null)
-					result = defaultCase(theEObject);
+				if (result == null) result = caseLocator(finalLocator);
+				if (result == null) result = caseIdiomsElement(finalLocator);
+				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case IdiomsPackage.HALF_NEW_LINE_SEGMENT : {
-				HalfNewLineSegment halfNewLineSegment = (HalfNewLineSegment) theEObject;
+			case 6:
+			{
+				HalfNewLineSegment halfNewLineSegment = (HalfNewLineSegment)theEObject;
 				T result = caseHalfNewLineSegment(halfNewLineSegment);
-				if (result == null)
-					result = caseSegment(halfNewLineSegment);
-				if (result == null)
-					result = caseIdiomsElement(halfNewLineSegment);
-				if (result == null)
-					result = defaultCase(theEObject);
+				if (result == null) result = caseSegment(halfNewLineSegment);
+				if (result == null) result = caseIdiomsElement(halfNewLineSegment);
+				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case IdiomsPackage.IDIOM : {
-				Idiom idiom = (Idiom) theEObject;
+			case 7:
+			{
+				Idiom idiom = (Idiom)theEObject;
 				T result = caseIdiom(idiom);
-				if (result == null)
-					result = caseIdiomsElement(idiom);
-				if (result == null)
-					result = defaultCase(theEObject);
+				if (result == null) result = caseIdiomsElement(idiom);
+				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case IdiomsPackage.IDIOMS_ELEMENT : {
-				IdiomsElement idiomsElement = (IdiomsElement) theEObject;
+			case 8:
+			{
+				IdiomsElement idiomsElement = (IdiomsElement)theEObject;
 				T result = caseIdiomsElement(idiomsElement);
-				if (result == null)
-					result = defaultCase(theEObject);
+				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case IdiomsPackage.IDIOMS_IMPORT : {
-				IdiomsImport idiomsImport = (IdiomsImport) theEObject;
+			case 9:
+			{
+				IdiomsImport idiomsImport = (IdiomsImport)theEObject;
 				T result = caseIdiomsImport(idiomsImport);
-				if (result == null)
-					result = caseIdiomsElement(idiomsImport);
-				if (result == null)
-					result = defaultCase(theEObject);
+				if (result == null) result = caseIdiomsElement(idiomsImport);
+				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case IdiomsPackage.IDIOMS_MODEL : {
-				IdiomsModel idiomsModel = (IdiomsModel) theEObject;
+			case 10:
+			{
+				IdiomsModel idiomsModel = (IdiomsModel)theEObject;
 				T result = caseIdiomsModel(idiomsModel);
-				if (result == null)
-					result = caseIdiomsElement(idiomsModel);
-				if (result == null)
-					result = defaultCase(theEObject);
+				if (result == null) result = caseIdiomsElement(idiomsModel);
+				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case IdiomsPackage.KEYWORD_LOCATOR : {
-				KeywordLocator keywordLocator = (KeywordLocator) theEObject;
+			case 11:
+			{
+				KeywordLocator keywordLocator = (KeywordLocator)theEObject;
 				T result = caseKeywordLocator(keywordLocator);
-				if (result == null)
-					result = caseLocator(keywordLocator);
-				if (result == null)
-					result = caseIdiomsElement(keywordLocator);
-				if (result == null)
-					result = defaultCase(theEObject);
+				if (result == null) result = caseLocator(keywordLocator);
+				if (result == null) result = caseIdiomsElement(keywordLocator);
+				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case IdiomsPackage.LOCATOR : {
-				Locator locator = (Locator) theEObject;
+			case 12:
+			{
+				Locator locator = (Locator)theEObject;
 				T result = caseLocator(locator);
-				if (result == null)
-					result = caseIdiomsElement(locator);
-				if (result == null)
-					result = defaultCase(theEObject);
+				if (result == null) result = caseIdiomsElement(locator);
+				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case IdiomsPackage.LOCATOR_DECLARATION : {
-				LocatorDeclaration locatorDeclaration = (LocatorDeclaration) theEObject;
+			case 13:
+			{
+				LocatorDeclaration locatorDeclaration = (LocatorDeclaration)theEObject;
 				T result = caseLocatorDeclaration(locatorDeclaration);
-				if (result == null)
-					result = caseIdiomsElement(locatorDeclaration);
-				if (result == null)
-					result = defaultCase(theEObject);
+				if (result == null) result = caseIdiomsElement(locatorDeclaration);
+				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case IdiomsPackage.NEW_LINE_SEGMENT : {
-				NewLineSegment newLineSegment = (NewLineSegment) theEObject;
+			case 14:
+			{
+				NewLineSegment newLineSegment = (NewLineSegment)theEObject;
 				T result = caseNewLineSegment(newLineSegment);
-				if (result == null)
-					result = caseSegment(newLineSegment);
-				if (result == null)
-					result = caseIdiomsElement(newLineSegment);
-				if (result == null)
-					result = defaultCase(theEObject);
+				if (result == null) result = caseSegment(newLineSegment);
+				if (result == null) result = caseIdiomsElement(newLineSegment);
+				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case IdiomsPackage.NO_SPACE_SEGMENT : {
-				NoSpaceSegment noSpaceSegment = (NoSpaceSegment) theEObject;
+			case 15:
+			{
+				NoSpaceSegment noSpaceSegment = (NoSpaceSegment)theEObject;
 				T result = caseNoSpaceSegment(noSpaceSegment);
-				if (result == null)
-					result = caseSegment(noSpaceSegment);
-				if (result == null)
-					result = caseIdiomsElement(noSpaceSegment);
-				if (result == null)
-					result = defaultCase(theEObject);
+				if (result == null) result = caseSegment(noSpaceSegment);
+				if (result == null) result = caseIdiomsElement(noSpaceSegment);
+				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case IdiomsPackage.POP_SEGMENT : {
-				PopSegment popSegment = (PopSegment) theEObject;
+			case 16:
+			{
+				PopSegment popSegment = (PopSegment)theEObject;
 				T result = casePopSegment(popSegment);
-				if (result == null)
-					result = caseSegment(popSegment);
-				if (result == null)
-					result = caseIdiomsElement(popSegment);
-				if (result == null)
-					result = defaultCase(theEObject);
+				if (result == null) result = caseSegment(popSegment);
+				if (result == null) result = caseIdiomsElement(popSegment);
+				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case IdiomsPackage.POST_COMMENT_SEGMENT : {
-				PostCommentSegment postCommentSegment = (PostCommentSegment) theEObject;
+			case 17:
+			{
+				PostCommentSegment postCommentSegment = (PostCommentSegment)theEObject;
 				T result = casePostCommentSegment(postCommentSegment);
-				if (result == null)
-					result = caseSegment(postCommentSegment);
-				if (result == null)
-					result = caseIdiomsElement(postCommentSegment);
-				if (result == null)
-					result = defaultCase(theEObject);
+				if (result == null) result = caseSegment(postCommentSegment);
+				if (result == null) result = caseIdiomsElement(postCommentSegment);
+				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case IdiomsPackage.PRE_COMMENT_SEGMENT : {
-				PreCommentSegment preCommentSegment = (PreCommentSegment) theEObject;
+			case 18:
+			{
+				PreCommentSegment preCommentSegment = (PreCommentSegment)theEObject;
 				T result = casePreCommentSegment(preCommentSegment);
-				if (result == null)
-					result = caseSegment(preCommentSegment);
-				if (result == null)
-					result = caseIdiomsElement(preCommentSegment);
-				if (result == null)
-					result = defaultCase(theEObject);
+				if (result == null) result = caseSegment(preCommentSegment);
+				if (result == null) result = caseIdiomsElement(preCommentSegment);
+				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case IdiomsPackage.REFERRED_LOCATOR : {
-				ReferredLocator referredLocator = (ReferredLocator) theEObject;
+			case 19:
+			{
+				ReferredLocator referredLocator = (ReferredLocator)theEObject;
 				T result = caseReferredLocator(referredLocator);
-				if (result == null)
-					result = caseLocator(referredLocator);
-				if (result == null)
-					result = caseIdiomsElement(referredLocator);
-				if (result == null)
-					result = defaultCase(theEObject);
+				if (result == null) result = caseLocator(referredLocator);
+				if (result == null) result = caseIdiomsElement(referredLocator);
+				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case IdiomsPackage.REFERRED_SEGMENT : {
-				ReferredSegment referredSegment = (ReferredSegment) theEObject;
+			case 20:
+			{
+				ReferredSegment referredSegment = (ReferredSegment)theEObject;
 				T result = caseReferredSegment(referredSegment);
-				if (result == null)
-					result = caseSegment(referredSegment);
-				if (result == null)
-					result = caseIdiomsElement(referredSegment);
-				if (result == null)
-					result = defaultCase(theEObject);
+				if (result == null) result = caseSegment(referredSegment);
+				if (result == null) result = caseIdiomsElement(referredSegment);
+				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case IdiomsPackage.RETURNS_LOCATOR : {
-				ReturnsLocator returnsLocator = (ReturnsLocator) theEObject;
+			case 21:
+			{
+				ReturnsLocator returnsLocator = (ReturnsLocator)theEObject;
 				T result = caseReturnsLocator(returnsLocator);
-				if (result == null)
-					result = caseLocator(returnsLocator);
-				if (result == null)
-					result = caseIdiomsElement(returnsLocator);
-				if (result == null)
-					result = defaultCase(theEObject);
+				if (result == null) result = caseLocator(returnsLocator);
+				if (result == null) result = caseIdiomsElement(returnsLocator);
+				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case IdiomsPackage.PUSH_SEGMENT : {
-				PushSegment pushSegment = (PushSegment) theEObject;
+			case 22:
+			{
+				PushSegment pushSegment = (PushSegment)theEObject;
 				T result = casePushSegment(pushSegment);
-				if (result == null)
-					result = caseSegment(pushSegment);
-				if (result == null)
-					result = caseIdiomsElement(pushSegment);
-				if (result == null)
-					result = defaultCase(theEObject);
+				if (result == null) result = caseSegment(pushSegment);
+				if (result == null) result = caseIdiomsElement(pushSegment);
+				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case IdiomsPackage.SEGMENT : {
-				Segment segment = (Segment) theEObject;
+			case 23:
+			{
+				Segment segment = (Segment)theEObject;
 				T result = caseSegment(segment);
-				if (result == null)
-					result = caseIdiomsElement(segment);
-				if (result == null)
-					result = defaultCase(theEObject);
+				if (result == null) result = caseIdiomsElement(segment);
+				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case IdiomsPackage.SEGMENT_DECLARATION : {
-				SegmentDeclaration segmentDeclaration = (SegmentDeclaration) theEObject;
+			case 24:
+			{
+				SegmentDeclaration segmentDeclaration = (SegmentDeclaration)theEObject;
 				T result = caseSegmentDeclaration(segmentDeclaration);
-				if (result == null)
-					result = caseIdiomsElement(segmentDeclaration);
-				if (result == null)
-					result = defaultCase(theEObject);
+				if (result == null) result = caseIdiomsElement(segmentDeclaration);
+				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case IdiomsPackage.SOFT_NEW_LINE_SEGMENT : {
-				SoftNewLineSegment softNewLineSegment = (SoftNewLineSegment) theEObject;
+			case 25:
+			{
+				SoftNewLineSegment softNewLineSegment = (SoftNewLineSegment)theEObject;
 				T result = caseSoftNewLineSegment(softNewLineSegment);
-				if (result == null)
-					result = caseSegment(softNewLineSegment);
-				if (result == null)
-					result = caseIdiomsElement(softNewLineSegment);
-				if (result == null)
-					result = defaultCase(theEObject);
+				if (result == null) result = caseSegment(softNewLineSegment);
+				if (result == null) result = caseIdiomsElement(softNewLineSegment);
+				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case IdiomsPackage.SOFT_SPACE_SEGMENT : {
-				SoftSpaceSegment softSpaceSegment = (SoftSpaceSegment) theEObject;
+			case 26:
+			{
+				SoftSpaceSegment softSpaceSegment = (SoftSpaceSegment)theEObject;
 				T result = caseSoftSpaceSegment(softSpaceSegment);
-				if (result == null)
-					result = caseSegment(softSpaceSegment);
-				if (result == null)
-					result = caseIdiomsElement(softSpaceSegment);
-				if (result == null)
-					result = defaultCase(theEObject);
+				if (result == null) result = caseSegment(softSpaceSegment);
+				if (result == null) result = caseIdiomsElement(softSpaceSegment);
+				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case IdiomsPackage.STRING_SEGMENT : {
-				StringSegment stringSegment = (StringSegment) theEObject;
+			case 27:
+			{
+				StringSegment stringSegment = (StringSegment)theEObject;
 				T result = caseStringSegment(stringSegment);
-				if (result == null)
-					result = caseSegment(stringSegment);
-				if (result == null)
-					result = caseIdiomsElement(stringSegment);
-				if (result == null)
-					result = defaultCase(theEObject);
+				if (result == null) result = caseSegment(stringSegment);
+				if (result == null) result = caseIdiomsElement(stringSegment);
+				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case IdiomsPackage.SUB_IDIOM : {
-				SubIdiom subIdiom = (SubIdiom) theEObject;
+			case 28:
+			{
+				SubIdiom subIdiom = (SubIdiom)theEObject;
 				T result = caseSubIdiom(subIdiom);
-				if (result == null)
-					result = caseIdiomsElement(subIdiom);
-				if (result == null)
-					result = defaultCase(theEObject);
+				if (result == null) result = caseIdiomsElement(subIdiom);
+				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case IdiomsPackage.VALUE_SEGMENT : {
-				ValueSegment valueSegment = (ValueSegment) theEObject;
+			case 29:
+			{
+				ValueSegment valueSegment = (ValueSegment)theEObject;
 				T result = caseValueSegment(valueSegment);
-				if (result == null)
-					result = caseSegment(valueSegment);
-				if (result == null)
-					result = caseIdiomsElement(valueSegment);
-				if (result == null)
-					result = defaultCase(theEObject);
+				if (result == null) result = caseSegment(valueSegment);
+				if (result == null) result = caseIdiomsElement(valueSegment);
+				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case IdiomsPackage.WRAP_ANCHOR_SEGMENT : {
-				WrapAnchorSegment wrapAnchorSegment = (WrapAnchorSegment) theEObject;
+			case 30:
+			{
+				WrapAnchorSegment wrapAnchorSegment = (WrapAnchorSegment)theEObject;
 				T result = caseWrapAnchorSegment(wrapAnchorSegment);
-				if (result == null)
-					result = caseSegment(wrapAnchorSegment);
-				if (result == null)
-					result = caseIdiomsElement(wrapAnchorSegment);
-				if (result == null)
-					result = defaultCase(theEObject);
+				if (result == null) result = caseSegment(wrapAnchorSegment);
+				if (result == null) result = caseIdiomsElement(wrapAnchorSegment);
+				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case IdiomsPackage.WRAP_BEGIN_SOME_SEGMENT : {
-				WrapBeginSomeSegment wrapBeginSomeSegment = (WrapBeginSomeSegment) theEObject;
+			case 31:
+			{
+				WrapBeginSomeSegment wrapBeginSomeSegment = (WrapBeginSomeSegment)theEObject;
 				T result = caseWrapBeginSomeSegment(wrapBeginSomeSegment);
-				if (result == null)
-					result = caseSegment(wrapBeginSomeSegment);
-				if (result == null)
-					result = caseIdiomsElement(wrapBeginSomeSegment);
-				if (result == null)
-					result = defaultCase(theEObject);
+				if (result == null) result = caseSegment(wrapBeginSomeSegment);
+				if (result == null) result = caseIdiomsElement(wrapBeginSomeSegment);
+				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case IdiomsPackage.WRAP_BEGIN_ALL_SEGMENT : {
-				WrapBeginAllSegment wrapBeginAllSegment = (WrapBeginAllSegment) theEObject;
+			case 32:
+			{
+				WrapBeginAllSegment wrapBeginAllSegment = (WrapBeginAllSegment)theEObject;
 				T result = caseWrapBeginAllSegment(wrapBeginAllSegment);
-				if (result == null)
-					result = caseSegment(wrapBeginAllSegment);
-				if (result == null)
-					result = caseIdiomsElement(wrapBeginAllSegment);
-				if (result == null)
-					result = defaultCase(theEObject);
+				if (result == null) result = caseSegment(wrapBeginAllSegment);
+				if (result == null) result = caseIdiomsElement(wrapBeginAllSegment);
+				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case IdiomsPackage.WRAP_END_SEGMENT : {
-				WrapEndSegment wrapEndSegment = (WrapEndSegment) theEObject;
+			case 33:
+			{
+				WrapEndSegment wrapEndSegment = (WrapEndSegment)theEObject;
 				T result = caseWrapEndSegment(wrapEndSegment);
-				if (result == null)
-					result = caseSegment(wrapEndSegment);
-				if (result == null)
-					result = caseIdiomsElement(wrapEndSegment);
-				if (result == null)
-					result = defaultCase(theEObject);
+				if (result == null) result = caseSegment(wrapEndSegment);
+				if (result == null) result = caseIdiomsElement(wrapEndSegment);
+				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case IdiomsPackage.WRAP_HERE_SEGMENT : {
-				WrapHereSegment wrapHereSegment = (WrapHereSegment) theEObject;
+			case 34:
+			{
+				WrapHereSegment wrapHereSegment = (WrapHereSegment)theEObject;
 				T result = caseWrapHereSegment(wrapHereSegment);
-				if (result == null)
-					result = caseSegment(wrapHereSegment);
-				if (result == null)
-					result = caseIdiomsElement(wrapHereSegment);
-				if (result == null)
-					result = defaultCase(theEObject);
+				if (result == null) result = caseSegment(wrapHereSegment);
+				if (result == null) result = caseIdiomsElement(wrapHereSegment);
+				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			default :
-				return defaultCase(theEObject);
+			default: return defaultCase(theEObject);
 		}
 	}
 

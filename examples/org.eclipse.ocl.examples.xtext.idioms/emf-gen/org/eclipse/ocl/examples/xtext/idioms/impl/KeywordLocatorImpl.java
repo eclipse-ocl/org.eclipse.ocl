@@ -35,6 +35,15 @@ public class KeywordLocatorImpl
 		implements KeywordLocator {
 
 	/**
+	 * The number of structural features of the '<em>Keyword Locator</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int KEYWORD_LOCATOR_FEATURE_COUNT = LocatorImpl.LOCATOR_FEATURE_COUNT + 1;
+
+	/**
 	 * The default value of the '{@link #getString() <em>String</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -93,8 +102,7 @@ public class KeywordLocatorImpl
 		String oldString = string;
 		string = newString;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-				IdiomsPackage.KEYWORD_LOCATOR__STRING, oldString, string));
+			eNotify(new ENotificationImpl(this, Notification.SET, 0, oldString, string));
 	}
 
 	/**
@@ -104,8 +112,9 @@ public class KeywordLocatorImpl
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case IdiomsPackage.KEYWORD_LOCATOR__STRING :
+		switch (featureID)
+		{
+			case 0:
 				return getString();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -118,9 +127,10 @@ public class KeywordLocatorImpl
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case IdiomsPackage.KEYWORD_LOCATOR__STRING :
-				setString((String) newValue);
+		switch (featureID)
+		{
+			case 0:
+				setString((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -133,8 +143,9 @@ public class KeywordLocatorImpl
 	 */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID) {
-			case IdiomsPackage.KEYWORD_LOCATOR__STRING :
+		switch (featureID)
+		{
+			case 0:
 				setString(STRING_EDEFAULT);
 				return;
 		}
@@ -148,11 +159,10 @@ public class KeywordLocatorImpl
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case IdiomsPackage.KEYWORD_LOCATOR__STRING :
-				return STRING_EDEFAULT == null
-					? string != null
-					: !STRING_EDEFAULT.equals(string);
+		switch (featureID)
+		{
+			case 0:
+				return STRING_EDEFAULT == null ? string != null : !STRING_EDEFAULT.equals(string);
 		}
 		return super.eIsSet(featureID);
 	}

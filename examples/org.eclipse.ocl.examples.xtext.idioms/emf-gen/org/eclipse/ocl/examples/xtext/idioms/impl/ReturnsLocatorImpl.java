@@ -37,6 +37,15 @@ public class ReturnsLocatorImpl
 		implements ReturnsLocator {
 
 	/**
+	 * The number of structural features of the '<em>Returns Locator</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int RETURNS_LOCATOR_FEATURE_COUNT = LocatorImpl.LOCATOR_FEATURE_COUNT + 2;
+
+	/**
 	 * The cached value of the '{@link #getEPackage() <em>EPackage</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -82,14 +91,14 @@ public class ReturnsLocatorImpl
 	 */
 	@Override
 	public EPackage getEPackage() {
-		if (ePackage != null && ePackage.eIsProxy()) {
-			InternalEObject oldEPackage = (InternalEObject) ePackage;
-			ePackage = (EPackage) eResolveProxy(oldEPackage);
-			if (ePackage != oldEPackage) {
+		if (ePackage != null && ePackage.eIsProxy())
+		{
+			InternalEObject oldEPackage = (InternalEObject)ePackage;
+			ePackage = (EPackage)eResolveProxy(oldEPackage);
+			if (ePackage != oldEPackage)
+			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
-						IdiomsPackage.RETURNS_LOCATOR__EPACKAGE, oldEPackage,
-						ePackage));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 0, oldEPackage, ePackage));
 			}
 		}
 		return ePackage;
@@ -114,9 +123,7 @@ public class ReturnsLocatorImpl
 		EPackage oldEPackage = ePackage;
 		ePackage = newEPackage;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-				IdiomsPackage.RETURNS_LOCATOR__EPACKAGE, oldEPackage,
-				ePackage));
+			eNotify(new ENotificationImpl(this, Notification.SET, 0, oldEPackage, ePackage));
 	}
 
 	/**
@@ -126,14 +133,14 @@ public class ReturnsLocatorImpl
 	 */
 	@Override
 	public EClass getEClass() {
-		if (eClass != null && eClass.eIsProxy()) {
-			InternalEObject oldEClass = (InternalEObject) eClass;
-			eClass = (EClass) eResolveProxy(oldEClass);
-			if (eClass != oldEClass) {
+		if (eClass != null && eClass.eIsProxy())
+		{
+			InternalEObject oldEClass = (InternalEObject)eClass;
+			eClass = (EClass)eResolveProxy(oldEClass);
+			if (eClass != oldEClass)
+			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
-						IdiomsPackage.RETURNS_LOCATOR__ECLASS, oldEClass,
-						eClass));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 1, oldEClass, eClass));
 			}
 		}
 		return eClass;
@@ -158,8 +165,7 @@ public class ReturnsLocatorImpl
 		EClass oldEClass = eClass;
 		eClass = newEClass;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-				IdiomsPackage.RETURNS_LOCATOR__ECLASS, oldEClass, eClass));
+			eNotify(new ENotificationImpl(this, Notification.SET, 1, oldEClass, eClass));
 	}
 
 	/**
@@ -169,14 +175,13 @@ public class ReturnsLocatorImpl
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case IdiomsPackage.RETURNS_LOCATOR__EPACKAGE :
-				if (resolve)
-					return getEPackage();
+		switch (featureID)
+		{
+			case 0:
+				if (resolve) return getEPackage();
 				return basicGetEPackage();
-			case IdiomsPackage.RETURNS_LOCATOR__ECLASS :
-				if (resolve)
-					return getEClass();
+			case 1:
+				if (resolve) return getEClass();
 				return basicGetEClass();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -189,12 +194,13 @@ public class ReturnsLocatorImpl
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case IdiomsPackage.RETURNS_LOCATOR__EPACKAGE :
-				setEPackage((EPackage) newValue);
+		switch (featureID)
+		{
+			case 0:
+				setEPackage((EPackage)newValue);
 				return;
-			case IdiomsPackage.RETURNS_LOCATOR__ECLASS :
-				setEClass((EClass) newValue);
+			case 1:
+				setEClass((EClass)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -207,12 +213,13 @@ public class ReturnsLocatorImpl
 	 */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID) {
-			case IdiomsPackage.RETURNS_LOCATOR__EPACKAGE :
-				setEPackage((EPackage) null);
+		switch (featureID)
+		{
+			case 0:
+				setEPackage((EPackage)null);
 				return;
-			case IdiomsPackage.RETURNS_LOCATOR__ECLASS :
-				setEClass((EClass) null);
+			case 1:
+				setEClass((EClass)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -225,10 +232,11 @@ public class ReturnsLocatorImpl
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case IdiomsPackage.RETURNS_LOCATOR__EPACKAGE :
+		switch (featureID)
+		{
+			case 0:
 				return ePackage != null;
-			case IdiomsPackage.RETURNS_LOCATOR__ECLASS :
+			case 1:
 				return eClass != null;
 		}
 		return super.eIsSet(featureID);

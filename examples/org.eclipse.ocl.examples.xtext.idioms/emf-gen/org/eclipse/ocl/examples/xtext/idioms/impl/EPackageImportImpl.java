@@ -39,6 +39,15 @@ public class EPackageImportImpl
 		implements EPackageImport {
 
 	/**
+	 * The number of structural features of the '<em>EPackage Import</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int EPACKAGE_IMPORT_FEATURE_COUNT = IdiomsElementImpl.IDIOMS_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
 	 * The default value of the '{@link #getAs() <em>As</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -107,8 +116,7 @@ public class EPackageImportImpl
 		String oldAs = as;
 		as = newAs;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-				IdiomsPackage.EPACKAGE_IMPORT__AS, oldAs, as));
+			eNotify(new ENotificationImpl(this, Notification.SET, 0, oldAs, as));
 	}
 
 	/**
@@ -118,14 +126,14 @@ public class EPackageImportImpl
 	 */
 	@Override
 	public EPackage getEPackage() {
-		if (ePackage != null && ePackage.eIsProxy()) {
-			InternalEObject oldEPackage = (InternalEObject) ePackage;
-			ePackage = (EPackage) eResolveProxy(oldEPackage);
-			if (ePackage != oldEPackage) {
+		if (ePackage != null && ePackage.eIsProxy())
+		{
+			InternalEObject oldEPackage = (InternalEObject)ePackage;
+			ePackage = (EPackage)eResolveProxy(oldEPackage);
+			if (ePackage != oldEPackage)
+			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
-						IdiomsPackage.EPACKAGE_IMPORT__EPACKAGE, oldEPackage,
-						ePackage));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 1, oldEPackage, ePackage));
 			}
 		}
 		return ePackage;
@@ -150,9 +158,7 @@ public class EPackageImportImpl
 		EPackage oldEPackage = ePackage;
 		ePackage = newEPackage;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-				IdiomsPackage.EPACKAGE_IMPORT__EPACKAGE, oldEPackage,
-				ePackage));
+			eNotify(new ENotificationImpl(this, Notification.SET, 1, oldEPackage, ePackage));
 	}
 
 	/**
@@ -162,12 +168,12 @@ public class EPackageImportImpl
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case IdiomsPackage.EPACKAGE_IMPORT__AS :
+		switch (featureID)
+		{
+			case 0:
 				return getAs();
-			case IdiomsPackage.EPACKAGE_IMPORT__EPACKAGE :
-				if (resolve)
-					return getEPackage();
+			case 1:
+				if (resolve) return getEPackage();
 				return basicGetEPackage();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -180,12 +186,13 @@ public class EPackageImportImpl
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case IdiomsPackage.EPACKAGE_IMPORT__AS :
-				setAs((String) newValue);
+		switch (featureID)
+		{
+			case 0:
+				setAs((String)newValue);
 				return;
-			case IdiomsPackage.EPACKAGE_IMPORT__EPACKAGE :
-				setEPackage((EPackage) newValue);
+			case 1:
+				setEPackage((EPackage)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -198,12 +205,13 @@ public class EPackageImportImpl
 	 */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID) {
-			case IdiomsPackage.EPACKAGE_IMPORT__AS :
+		switch (featureID)
+		{
+			case 0:
 				setAs(AS_EDEFAULT);
 				return;
-			case IdiomsPackage.EPACKAGE_IMPORT__EPACKAGE :
-				setEPackage((EPackage) null);
+			case 1:
+				setEPackage((EPackage)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -216,12 +224,11 @@ public class EPackageImportImpl
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case IdiomsPackage.EPACKAGE_IMPORT__AS :
-				return AS_EDEFAULT == null
-					? as != null
-					: !AS_EDEFAULT.equals(as);
-			case IdiomsPackage.EPACKAGE_IMPORT__EPACKAGE :
+		switch (featureID)
+		{
+			case 0:
+				return AS_EDEFAULT == null ? as != null : !AS_EDEFAULT.equals(as);
+			case 1:
 				return ePackage != null;
 		}
 		return super.eIsSet(featureID);
@@ -234,8 +241,7 @@ public class EPackageImportImpl
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy())
-			return super.toString();
+		if (eIsProxy()) return super.toString();
 
 		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (as: "); //$NON-NLS-1$

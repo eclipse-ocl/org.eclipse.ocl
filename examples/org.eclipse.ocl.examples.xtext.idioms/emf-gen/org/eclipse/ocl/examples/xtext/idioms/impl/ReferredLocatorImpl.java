@@ -38,6 +38,15 @@ public class ReferredLocatorImpl
 		implements ReferredLocator {
 
 	/**
+	 * The number of structural features of the '<em>Referred Locator</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int REFERRED_LOCATOR_FEATURE_COUNT = LocatorImpl.LOCATOR_FEATURE_COUNT + 2;
+
+	/**
 	 * The cached value of the '{@link #getIdiomsModel() <em>Idioms Model</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -83,14 +92,14 @@ public class ReferredLocatorImpl
 	 */
 	@Override
 	public IdiomsModel getIdiomsModel() {
-		if (idiomsModel != null && idiomsModel.eIsProxy()) {
-			InternalEObject oldIdiomsModel = (InternalEObject) idiomsModel;
-			idiomsModel = (IdiomsModel) eResolveProxy(oldIdiomsModel);
-			if (idiomsModel != oldIdiomsModel) {
+		if (idiomsModel != null && idiomsModel.eIsProxy())
+		{
+			InternalEObject oldIdiomsModel = (InternalEObject)idiomsModel;
+			idiomsModel = (IdiomsModel)eResolveProxy(oldIdiomsModel);
+			if (idiomsModel != oldIdiomsModel)
+			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
-						IdiomsPackage.REFERRED_LOCATOR__IDIOMS_MODEL,
-						oldIdiomsModel, idiomsModel));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 0, oldIdiomsModel, idiomsModel));
 			}
 		}
 		return idiomsModel;
@@ -115,9 +124,7 @@ public class ReferredLocatorImpl
 		IdiomsModel oldIdiomsModel = idiomsModel;
 		idiomsModel = newIdiomsModel;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-				IdiomsPackage.REFERRED_LOCATOR__IDIOMS_MODEL, oldIdiomsModel,
-				idiomsModel));
+			eNotify(new ENotificationImpl(this, Notification.SET, 0, oldIdiomsModel, idiomsModel));
 	}
 
 	/**
@@ -127,15 +134,14 @@ public class ReferredLocatorImpl
 	 */
 	@Override
 	public LocatorDeclaration getLocatorDeclaration() {
-		if (locatorDeclaration != null && locatorDeclaration.eIsProxy()) {
-			InternalEObject oldLocatorDeclaration = (InternalEObject) locatorDeclaration;
-			locatorDeclaration = (LocatorDeclaration) eResolveProxy(
-				oldLocatorDeclaration);
-			if (locatorDeclaration != oldLocatorDeclaration) {
+		if (locatorDeclaration != null && locatorDeclaration.eIsProxy())
+		{
+			InternalEObject oldLocatorDeclaration = (InternalEObject)locatorDeclaration;
+			locatorDeclaration = (LocatorDeclaration)eResolveProxy(oldLocatorDeclaration);
+			if (locatorDeclaration != oldLocatorDeclaration)
+			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
-						IdiomsPackage.REFERRED_LOCATOR__LOCATOR_DECLARATION,
-						oldLocatorDeclaration, locatorDeclaration));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 1, oldLocatorDeclaration, locatorDeclaration));
 			}
 		}
 		return locatorDeclaration;
@@ -161,9 +167,7 @@ public class ReferredLocatorImpl
 		LocatorDeclaration oldLocatorDeclaration = locatorDeclaration;
 		locatorDeclaration = newLocatorDeclaration;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-				IdiomsPackage.REFERRED_LOCATOR__LOCATOR_DECLARATION,
-				oldLocatorDeclaration, locatorDeclaration));
+			eNotify(new ENotificationImpl(this, Notification.SET, 1, oldLocatorDeclaration, locatorDeclaration));
 	}
 
 	/**
@@ -173,14 +177,13 @@ public class ReferredLocatorImpl
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case IdiomsPackage.REFERRED_LOCATOR__IDIOMS_MODEL :
-				if (resolve)
-					return getIdiomsModel();
+		switch (featureID)
+		{
+			case 0:
+				if (resolve) return getIdiomsModel();
 				return basicGetIdiomsModel();
-			case IdiomsPackage.REFERRED_LOCATOR__LOCATOR_DECLARATION :
-				if (resolve)
-					return getLocatorDeclaration();
+			case 1:
+				if (resolve) return getLocatorDeclaration();
 				return basicGetLocatorDeclaration();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -193,12 +196,13 @@ public class ReferredLocatorImpl
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case IdiomsPackage.REFERRED_LOCATOR__IDIOMS_MODEL :
-				setIdiomsModel((IdiomsModel) newValue);
+		switch (featureID)
+		{
+			case 0:
+				setIdiomsModel((IdiomsModel)newValue);
 				return;
-			case IdiomsPackage.REFERRED_LOCATOR__LOCATOR_DECLARATION :
-				setLocatorDeclaration((LocatorDeclaration) newValue);
+			case 1:
+				setLocatorDeclaration((LocatorDeclaration)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -211,12 +215,13 @@ public class ReferredLocatorImpl
 	 */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID) {
-			case IdiomsPackage.REFERRED_LOCATOR__IDIOMS_MODEL :
-				setIdiomsModel((IdiomsModel) null);
+		switch (featureID)
+		{
+			case 0:
+				setIdiomsModel((IdiomsModel)null);
 				return;
-			case IdiomsPackage.REFERRED_LOCATOR__LOCATOR_DECLARATION :
-				setLocatorDeclaration((LocatorDeclaration) null);
+			case 1:
+				setLocatorDeclaration((LocatorDeclaration)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -229,10 +234,11 @@ public class ReferredLocatorImpl
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case IdiomsPackage.REFERRED_LOCATOR__IDIOMS_MODEL :
+		switch (featureID)
+		{
+			case 0:
 				return idiomsModel != null;
-			case IdiomsPackage.REFERRED_LOCATOR__LOCATOR_DECLARATION :
+			case 1:
 				return locatorDeclaration != null;
 		}
 		return super.eIsSet(featureID);

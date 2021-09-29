@@ -1,7 +1,7 @@
 /*******************************************************************************
  * <copyright>
  *
- * Copyright (c) 2015, 2020 Willink Transformations and others.
+ * Copyright (c) 2015, 2021 Willink Transformations and others.
  * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -23,10 +23,11 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.xtext.tests.codegen.company;
 
-import java.lang.String;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.examples.xtext.tests.codegen.company.CodegencompanyTables;
+// import org.eclipse.ocl.examples.xtext.tests.codegen.company.CodegencompanyPackage;
+// import org.eclipse.ocl.examples.xtext.tests.codegen.company.CodegencompanyTables;
 import org.eclipse.ocl.pivot.ParameterTypes;
 import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.ids.ClassId;
@@ -52,6 +53,7 @@ import org.eclipse.ocl.pivot.internal.library.executor.ExecutorProperty;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorPropertyWithImplementation;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorStandardLibrary;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
+import org.eclipse.ocl.pivot.utilities.AbstractTables;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerRange;
@@ -67,7 +69,7 @@ import org.eclipse.ocl.pivot.values.TupleValue;
  * In order to ensure correct static initialization, a top level class element must be accessed
  * before any nested class element. Therefore an access to PACKAGE.getClass() is recommended.
  */
-public class CodegencompanyTables
+public class CodegencompanyTables extends AbstractTables
 {
 	static {
 		Init.initStart();
@@ -387,8 +389,8 @@ public class CodegencompanyTables
 
 		private static final @NonNull ExecutorOperation @NonNull [] _Bug418716__Bug418716 = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _Bug418716__OclAny = {
-			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[1]) */,
-			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[1]) */,
+			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny__oclAsSet /* oclAsSet() */,
 			OCLstdlibTables.Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._OclAny__oclIsInState /* oclIsInState(OclState[?]) */,
@@ -398,7 +400,7 @@ public class CodegencompanyTables
 			OCLstdlibTables.Operations._OclAny__oclIsTypeOf /* oclIsTypeOf(OclType[1]) */,
 			OCLstdlibTables.Operations._OclAny__oclIsUndefined /* oclIsUndefined() */,
 			OCLstdlibTables.Operations._OclAny__0_oclLog /* oclLog() */,
-			OCLstdlibTables.Operations._OclAny__1_oclLog /* oclLog(String[?]) */,
+			OCLstdlibTables.Operations._OclAny__1_oclLog /* oclLog(String[1]) */,
 			OCLstdlibTables.Operations._OclAny__oclType /* oclType() */,
 			OCLstdlibTables.Operations._OclAny__oclTypes /* oclTypes() */,
 			OCLstdlibTables.Operations._OclAny__toString /* toString() */
@@ -415,8 +417,8 @@ public class CodegencompanyTables
 
 		private static final @NonNull ExecutorOperation @NonNull [] _Company__Company = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _Company__OclAny = {
-			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[1]) */,
-			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[1]) */,
+			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny__oclAsSet /* oclAsSet() */,
 			OCLstdlibTables.Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._OclAny__oclIsInState /* oclIsInState(OclState[?]) */,
@@ -426,7 +428,7 @@ public class CodegencompanyTables
 			OCLstdlibTables.Operations._OclAny__oclIsTypeOf /* oclIsTypeOf(OclType[1]) */,
 			OCLstdlibTables.Operations._OclAny__oclIsUndefined /* oclIsUndefined() */,
 			OCLstdlibTables.Operations._OclAny__0_oclLog /* oclLog() */,
-			OCLstdlibTables.Operations._OclAny__1_oclLog /* oclLog(String[?]) */,
+			OCLstdlibTables.Operations._OclAny__1_oclLog /* oclLog(String[1]) */,
 			OCLstdlibTables.Operations._OclAny__oclType /* oclType() */,
 			OCLstdlibTables.Operations._OclAny__oclTypes /* oclTypes() */,
 			OCLstdlibTables.Operations._OclAny__toString /* toString() */
@@ -443,8 +445,8 @@ public class CodegencompanyTables
 
 		private static final @NonNull ExecutorOperation @NonNull [] _CompanySizeKind__CompanySizeKind = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _CompanySizeKind__OclAny = {
-			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[1]) */,
-			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[1]) */,
+			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny__oclAsSet /* oclAsSet() */,
 			OCLstdlibTables.Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._OclAny__oclIsInState /* oclIsInState(OclState[?]) */,
@@ -454,7 +456,7 @@ public class CodegencompanyTables
 			OCLstdlibTables.Operations._OclAny__oclIsTypeOf /* oclIsTypeOf(OclType[1]) */,
 			OCLstdlibTables.Operations._OclAny__oclIsUndefined /* oclIsUndefined() */,
 			OCLstdlibTables.Operations._OclAny__0_oclLog /* oclLog() */,
-			OCLstdlibTables.Operations._OclAny__1_oclLog /* oclLog(String[?]) */,
+			OCLstdlibTables.Operations._OclAny__1_oclLog /* oclLog(String[1]) */,
 			OCLstdlibTables.Operations._OclAny__oclType /* oclType() */,
 			OCLstdlibTables.Operations._OclAny__oclTypes /* oclTypes() */,
 			OCLstdlibTables.Operations._OclAny__toString /* toString() */
@@ -480,8 +482,8 @@ public class CodegencompanyTables
 			CodegencompanyTables.Operations._Employee__reportsTo /* reportsTo(Employee[?]) */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _Employee__OclAny = {
-			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[1]) */,
-			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[1]) */,
+			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny__oclAsSet /* oclAsSet() */,
 			OCLstdlibTables.Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._OclAny__oclIsInState /* oclIsInState(OclState[?]) */,
@@ -491,7 +493,7 @@ public class CodegencompanyTables
 			OCLstdlibTables.Operations._OclAny__oclIsTypeOf /* oclIsTypeOf(OclType[1]) */,
 			OCLstdlibTables.Operations._OclAny__oclIsUndefined /* oclIsUndefined() */,
 			OCLstdlibTables.Operations._OclAny__0_oclLog /* oclLog() */,
-			OCLstdlibTables.Operations._OclAny__1_oclLog /* oclLog(String[?]) */,
+			OCLstdlibTables.Operations._OclAny__1_oclLog /* oclLog(String[1]) */,
 			OCLstdlibTables.Operations._OclAny__oclType /* oclType() */,
 			OCLstdlibTables.Operations._OclAny__oclTypes /* oclTypes() */,
 			OCLstdlibTables.Operations._OclAny__toString /* toString() */
@@ -548,16 +550,23 @@ public class CodegencompanyTables
 
 		private static final @NonNull ExecutorProperty @NonNull [] _Bug418716 = {
 			CodegencompanyTables.Properties._Bug418716__AttributeWithInitital,
-			CodegencompanyTables.Properties._Bug418716__AttributeWithoutInitital
+			CodegencompanyTables.Properties._Bug418716__AttributeWithoutInitital,
+			OCLstdlibTables.Properties._OclElement__oclContainer,
+			OCLstdlibTables.Properties._OclElement__oclContents
 		};
 
 		private static final @NonNull ExecutorProperty @NonNull [] _Company = {
 			CodegencompanyTables.Properties._Company__employees,
 			CodegencompanyTables.Properties._Company__name,
+			OCLstdlibTables.Properties._OclElement__oclContainer,
+			OCLstdlibTables.Properties._OclElement__oclContents,
 			CodegencompanyTables.Properties._Company__size
 		};
 
-		private static final @NonNull ExecutorProperty @NonNull [] _CompanySizeKind = {};
+		private static final @NonNull ExecutorProperty @NonNull [] _CompanySizeKind = {
+			OCLstdlibTables.Properties._OclElement__oclContainer,
+			OCLstdlibTables.Properties._OclElement__oclContents
+		};
 
 		private static final @NonNull ExecutorProperty @NonNull [] _Employee = {
 			CodegencompanyTables.Properties._Employee__allReports,
@@ -566,6 +575,8 @@ public class CodegencompanyTables
 			CodegencompanyTables.Properties._Employee__hasNameAsAttribute,
 			CodegencompanyTables.Properties._Employee__manager,
 			CodegencompanyTables.Properties._Employee__name,
+			OCLstdlibTables.Properties._OclElement__oclContainer,
+			OCLstdlibTables.Properties._OclElement__oclContents,
 			CodegencompanyTables.Properties._Employee__reportingChain
 		};
 
@@ -635,7 +646,7 @@ public class CodegencompanyTables
 		private static int initCount = 0;
 
 		/**
-		 * Invoked at the start of a static construction to defer residual cobstruction until primary constructions complete.
+		 * Invoked at the start of a static construction to defer residual construction until primary constructions complete.
 		 */
 		private static void initStart() {
 			if (initCount >= 0) {
@@ -644,7 +655,7 @@ public class CodegencompanyTables
 		}
 
 		/**
-		 * Invoked at the end of a static construction to activate residual cobstruction once primary constructions complete.
+		 * Invoked at the end of a static construction to activate residual construction once primary constructions complete.
 		 */
 		private static void initEnd() {
 			if (initCount > 0) {
@@ -663,5 +674,23 @@ public class CodegencompanyTables
 	/*
 	 * Force initialization of outer fields. Inner fields are lazily initialized.
 	 */
-	public static void init() {}
+	public static void init() {
+		new CodegencompanyTables();
+	}
+
+	private CodegencompanyTables() {
+		super(CodegencompanyPackage.eNS_URI);
+	}
+
+	/*
+	 * The EClasses whose instances should be cached to support allInstances().
+	 */
+	private static final @NonNull EClass allInstancesEClasses @NonNull [] = {
+		CodegencompanyPackage.Literals.EMPLOYEE
+	};
+
+	@Override
+	public @NonNull EClass @NonNull [] basicGetAllInstancesClasses() {
+		return allInstancesEClasses;
+	}
 }

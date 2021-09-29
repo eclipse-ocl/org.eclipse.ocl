@@ -348,16 +348,11 @@ public class IdiomsPackageImpl
 	 * @generated
 	 */
 	public static IdiomsPackage init() {
-		if (isInited)
-			return (IdiomsPackage) EPackage.Registry.INSTANCE
-				.getEPackage(IdiomsPackage.eNS_URI);
+		if (isInited) return (IdiomsPackage)EPackage.Registry.INSTANCE.getEPackage(IdiomsPackage.eNS_URI);
 
 		// Obtain or create and register package
-		Object registeredIdiomsPackage = EPackage.Registry.INSTANCE
-			.get(eNS_URI);
-		IdiomsPackageImpl theIdiomsPackage = registeredIdiomsPackage instanceof IdiomsPackageImpl
-			? (IdiomsPackageImpl) registeredIdiomsPackage
-			: new IdiomsPackageImpl();
+		Object registeredIdiomsPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+		IdiomsPackageImpl theIdiomsPackage = registeredIdiomsPackage instanceof IdiomsPackageImpl ? (IdiomsPackageImpl)registeredIdiomsPackage : new IdiomsPackageImpl();
 
 		isInited = true;
 
@@ -415,8 +410,7 @@ public class IdiomsPackageImpl
 	 */
 	@Override
 	public EReference getAssignmentLocator_EPackage() {
-		return (EReference) assignmentLocatorEClass.getEStructuralFeatures()
-			.get(0);
+		return (EReference)assignmentLocatorEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -426,8 +420,7 @@ public class IdiomsPackageImpl
 	 */
 	@Override
 	public EReference getAssignmentLocator_EClass() {
-		return (EReference) assignmentLocatorEClass.getEStructuralFeatures()
-			.get(1);
+		return (EReference)assignmentLocatorEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -437,8 +430,7 @@ public class IdiomsPackageImpl
 	 */
 	@Override
 	public EReference getAssignmentLocator_EStructuralFeature() {
-		return (EReference) assignmentLocatorEClass.getEStructuralFeatures()
-			.get(2);
+		return (EReference)assignmentLocatorEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -458,7 +450,7 @@ public class IdiomsPackageImpl
 	 */
 	@Override
 	public EAttribute getCustomSegment_SupportClassName() {
-		return (EAttribute) customSegmentEClass.getEStructuralFeatures().get(0);
+		return (EAttribute)customSegmentEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -478,8 +470,7 @@ public class IdiomsPackageImpl
 	 */
 	@Override
 	public EAttribute getEPackageImport_As() {
-		return (EAttribute) ePackageImportEClass.getEStructuralFeatures()
-			.get(0);
+		return (EAttribute)ePackageImportEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -489,8 +480,7 @@ public class IdiomsPackageImpl
 	 */
 	@Override
 	public EReference getEPackageImport_EPackage() {
-		return (EReference) ePackageImportEClass.getEStructuralFeatures()
-			.get(1);
+		return (EReference)ePackageImportEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -530,7 +520,7 @@ public class IdiomsPackageImpl
 	 */
 	@Override
 	public EAttribute getIdiom_Name() {
-		return (EAttribute) idiomEClass.getEStructuralFeatures().get(0);
+		return (EAttribute)idiomEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -540,7 +530,7 @@ public class IdiomsPackageImpl
 	 */
 	@Override
 	public EReference getIdiom_ForEPackage() {
-		return (EReference) idiomEClass.getEStructuralFeatures().get(1);
+		return (EReference)idiomEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -550,7 +540,7 @@ public class IdiomsPackageImpl
 	 */
 	@Override
 	public EReference getIdiom_ForEClass() {
-		return (EReference) idiomEClass.getEStructuralFeatures().get(2);
+		return (EReference)idiomEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -560,7 +550,7 @@ public class IdiomsPackageImpl
 	 */
 	@Override
 	public EAttribute getIdiom_InRuleRegex() {
-		return (EAttribute) idiomEClass.getEStructuralFeatures().get(3);
+		return (EAttribute)idiomEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -570,7 +560,7 @@ public class IdiomsPackageImpl
 	 */
 	@Override
 	public EAttribute getIdiom_Mixin() {
-		return (EAttribute) idiomEClass.getEStructuralFeatures().get(4);
+		return (EAttribute)idiomEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -580,7 +570,7 @@ public class IdiomsPackageImpl
 	 */
 	@Override
 	public EReference getIdiom_OwnedSubIdioms() {
-		return (EReference) idiomEClass.getEStructuralFeatures().get(5);
+		return (EReference)idiomEClass.getEStructuralFeatures().get(5);
 	}
 
 	/**
@@ -610,7 +600,7 @@ public class IdiomsPackageImpl
 	 */
 	@Override
 	public EAttribute getIdiomsImport_As() {
-		return (EAttribute) idiomsImportEClass.getEStructuralFeatures().get(0);
+		return (EAttribute)idiomsImportEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -620,7 +610,7 @@ public class IdiomsPackageImpl
 	 */
 	@Override
 	public EReference getIdiomsImport_IdiomsModel() {
-		return (EReference) idiomsImportEClass.getEStructuralFeatures().get(1);
+		return (EReference)idiomsImportEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -640,7 +630,7 @@ public class IdiomsPackageImpl
 	 */
 	@Override
 	public EAttribute getIdiomsModel_Name() {
-		return (EAttribute) idiomsModelEClass.getEStructuralFeatures().get(0);
+		return (EAttribute)idiomsModelEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -650,7 +640,7 @@ public class IdiomsPackageImpl
 	 */
 	@Override
 	public EAttribute getIdiomsModel_Names() {
-		return (EAttribute) idiomsModelEClass.getEStructuralFeatures().get(1);
+		return (EAttribute)idiomsModelEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -660,7 +650,7 @@ public class IdiomsPackageImpl
 	 */
 	@Override
 	public EReference getIdiomsModel_OwnedImports() {
-		return (EReference) idiomsModelEClass.getEStructuralFeatures().get(3);
+		return (EReference)idiomsModelEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -670,7 +660,7 @@ public class IdiomsPackageImpl
 	 */
 	@Override
 	public EReference getIdiomsModel_OwnedLocatorDeclarations() {
-		return (EReference) idiomsModelEClass.getEStructuralFeatures().get(4);
+		return (EReference)idiomsModelEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -680,7 +670,7 @@ public class IdiomsPackageImpl
 	 */
 	@Override
 	public EReference getIdiomsModel_OwnedSegmentDeclarations() {
-		return (EReference) idiomsModelEClass.getEStructuralFeatures().get(5);
+		return (EReference)idiomsModelEClass.getEStructuralFeatures().get(5);
 	}
 
 	/**
@@ -690,7 +680,7 @@ public class IdiomsPackageImpl
 	 */
 	@Override
 	public EReference getIdiomsModel_OwnedIdioms() {
-		return (EReference) idiomsModelEClass.getEStructuralFeatures().get(2);
+		return (EReference)idiomsModelEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -700,7 +690,7 @@ public class IdiomsPackageImpl
 	 */
 	@Override
 	public EReference getIdiomsModel_OwnedWiths() {
-		return (EReference) idiomsModelEClass.getEStructuralFeatures().get(6);
+		return (EReference)idiomsModelEClass.getEStructuralFeatures().get(6);
 	}
 
 	/**
@@ -730,8 +720,7 @@ public class IdiomsPackageImpl
 	 */
 	@Override
 	public EAttribute getKeywordLocator_String() {
-		return (EAttribute) keywordLocatorEClass.getEStructuralFeatures()
-			.get(0);
+		return (EAttribute)keywordLocatorEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -751,8 +740,7 @@ public class IdiomsPackageImpl
 	 */
 	@Override
 	public EAttribute getLocatorDeclaration_Name() {
-		return (EAttribute) locatorDeclarationEClass.getEStructuralFeatures()
-			.get(0);
+		return (EAttribute)locatorDeclarationEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -762,8 +750,7 @@ public class IdiomsPackageImpl
 	 */
 	@Override
 	public EReference getLocatorDeclaration_OwnedLocator() {
-		return (EReference) locatorDeclarationEClass.getEStructuralFeatures()
-			.get(1);
+		return (EReference)locatorDeclarationEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -773,8 +760,7 @@ public class IdiomsPackageImpl
 	 */
 	@Override
 	public EReference getLocatorDeclaration_OwningIdiomsModel() {
-		return (EReference) locatorDeclarationEClass.getEStructuralFeatures()
-			.get(2);
+		return (EReference)locatorDeclarationEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -844,8 +830,7 @@ public class IdiomsPackageImpl
 	 */
 	@Override
 	public EReference getReferredLocator_IdiomsModel() {
-		return (EReference) referredLocatorEClass.getEStructuralFeatures()
-			.get(0);
+		return (EReference)referredLocatorEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -855,8 +840,7 @@ public class IdiomsPackageImpl
 	 */
 	@Override
 	public EReference getReferredLocator_LocatorDeclaration() {
-		return (EReference) referredLocatorEClass.getEStructuralFeatures()
-			.get(1);
+		return (EReference)referredLocatorEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -876,8 +860,7 @@ public class IdiomsPackageImpl
 	 */
 	@Override
 	public EReference getReferredSegment_IdiomsModel() {
-		return (EReference) referredSegmentEClass.getEStructuralFeatures()
-			.get(0);
+		return (EReference)referredSegmentEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -887,8 +870,7 @@ public class IdiomsPackageImpl
 	 */
 	@Override
 	public EReference getReferredSegment_SegmentDeclaration() {
-		return (EReference) referredSegmentEClass.getEStructuralFeatures()
-			.get(1);
+		return (EReference)referredSegmentEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -908,8 +890,7 @@ public class IdiomsPackageImpl
 	 */
 	@Override
 	public EReference getReturnsLocator_EPackage() {
-		return (EReference) returnsLocatorEClass.getEStructuralFeatures()
-			.get(0);
+		return (EReference)returnsLocatorEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -919,8 +900,7 @@ public class IdiomsPackageImpl
 	 */
 	@Override
 	public EReference getReturnsLocator_EClass() {
-		return (EReference) returnsLocatorEClass.getEStructuralFeatures()
-			.get(1);
+		return (EReference)returnsLocatorEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -960,8 +940,7 @@ public class IdiomsPackageImpl
 	 */
 	@Override
 	public EAttribute getSegmentDeclaration_Name() {
-		return (EAttribute) segmentDeclarationEClass.getEStructuralFeatures()
-			.get(0);
+		return (EAttribute)segmentDeclarationEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -971,8 +950,7 @@ public class IdiomsPackageImpl
 	 */
 	@Override
 	public EReference getSegmentDeclaration_OwnedSegment() {
-		return (EReference) segmentDeclarationEClass.getEStructuralFeatures()
-			.get(1);
+		return (EReference)segmentDeclarationEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -982,8 +960,7 @@ public class IdiomsPackageImpl
 	 */
 	@Override
 	public EReference getSegmentDeclaration_OwningIdiomsModel() {
-		return (EReference) segmentDeclarationEClass.getEStructuralFeatures()
-			.get(2);
+		return (EReference)segmentDeclarationEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -1023,7 +1000,7 @@ public class IdiomsPackageImpl
 	 */
 	@Override
 	public EAttribute getStringSegment_Printable() {
-		return (EAttribute) stringSegmentEClass.getEStructuralFeatures().get(0);
+		return (EAttribute)stringSegmentEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -1033,7 +1010,7 @@ public class IdiomsPackageImpl
 	 */
 	@Override
 	public EAttribute getStringSegment_String() {
-		return (EAttribute) stringSegmentEClass.getEStructuralFeatures().get(1);
+		return (EAttribute)stringSegmentEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -1053,7 +1030,7 @@ public class IdiomsPackageImpl
 	 */
 	@Override
 	public EAttribute getSubIdiom_All() {
-		return (EAttribute) subIdiomEClass.getEStructuralFeatures().get(0);
+		return (EAttribute)subIdiomEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -1063,7 +1040,7 @@ public class IdiomsPackageImpl
 	 */
 	@Override
 	public EReference getSubIdiom_OwnedLocator() {
-		return (EReference) subIdiomEClass.getEStructuralFeatures().get(1);
+		return (EReference)subIdiomEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -1073,7 +1050,7 @@ public class IdiomsPackageImpl
 	 */
 	@Override
 	public EReference getSubIdiom_OwnedSegments() {
-		return (EReference) subIdiomEClass.getEStructuralFeatures().get(2);
+		return (EReference)subIdiomEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -1083,7 +1060,7 @@ public class IdiomsPackageImpl
 	 */
 	@Override
 	public EReference getSubIdiom_OwningIdiom() {
-		return (EReference) subIdiomEClass.getEStructuralFeatures().get(3);
+		return (EReference)subIdiomEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -1153,7 +1130,7 @@ public class IdiomsPackageImpl
 	 */
 	@Override
 	public IdiomsFactory getIdiomsFactory() {
-		return (IdiomsFactory) getEFactoryInstance();
+		return (IdiomsFactory)getEFactoryInstance();
 	}
 
 	/**
@@ -1171,130 +1148,119 @@ public class IdiomsPackageImpl
 	 * @generated
 	 */
 	public void createPackageContents() {
-		if (isCreated)
-			return;
+		if (isCreated) return;
 		isCreated = true;
 
 		// Create classes and their features
-		anyAssignmentLocatorEClass = createEClass(ANY_ASSIGNMENT_LOCATOR);
+		anyAssignmentLocatorEClass = createEClass(0);
 
-		anyElementLocatorEClass = createEClass(ANY_ELEMENT_LOCATOR);
+		anyElementLocatorEClass = createEClass(1);
 
-		assignmentLocatorEClass = createEClass(ASSIGNMENT_LOCATOR);
-		createEReference(assignmentLocatorEClass, ASSIGNMENT_LOCATOR__EPACKAGE);
-		createEReference(assignmentLocatorEClass, ASSIGNMENT_LOCATOR__ECLASS);
-		createEReference(assignmentLocatorEClass,
-			ASSIGNMENT_LOCATOR__ESTRUCTURAL_FEATURE);
+		assignmentLocatorEClass = createEClass(2);
+		createEReference(assignmentLocatorEClass, 0);
+		createEReference(assignmentLocatorEClass, 1);
+		createEReference(assignmentLocatorEClass, 2);
 
-		customSegmentEClass = createEClass(CUSTOM_SEGMENT);
-		createEAttribute(customSegmentEClass,
-			CUSTOM_SEGMENT__SUPPORT_CLASS_NAME);
+		customSegmentEClass = createEClass(3);
+		createEAttribute(customSegmentEClass, 0);
 
-		ePackageImportEClass = createEClass(EPACKAGE_IMPORT);
-		createEAttribute(ePackageImportEClass, EPACKAGE_IMPORT__AS);
-		createEReference(ePackageImportEClass, EPACKAGE_IMPORT__EPACKAGE);
+		ePackageImportEClass = createEClass(4);
+		createEAttribute(ePackageImportEClass, 0);
+		createEReference(ePackageImportEClass, 1);
 
-		finalLocatorEClass = createEClass(FINAL_LOCATOR);
+		finalLocatorEClass = createEClass(5);
 
-		halfNewLineSegmentEClass = createEClass(HALF_NEW_LINE_SEGMENT);
+		halfNewLineSegmentEClass = createEClass(6);
 
-		idiomEClass = createEClass(IDIOM);
-		createEAttribute(idiomEClass, IDIOM__NAME);
-		createEReference(idiomEClass, IDIOM__FOR_EPACKAGE);
-		createEReference(idiomEClass, IDIOM__FOR_ECLASS);
-		createEAttribute(idiomEClass, IDIOM__IN_RULE_REGEX);
-		createEAttribute(idiomEClass, IDIOM__MIXIN);
-		createEReference(idiomEClass, IDIOM__OWNED_SUB_IDIOMS);
+		idiomEClass = createEClass(7);
+		createEAttribute(idiomEClass, 0);
+		createEReference(idiomEClass, 1);
+		createEReference(idiomEClass, 2);
+		createEAttribute(idiomEClass, 3);
+		createEAttribute(idiomEClass, 4);
+		createEReference(idiomEClass, 5);
 
-		idiomsElementEClass = createEClass(IDIOMS_ELEMENT);
+		idiomsElementEClass = createEClass(8);
 
-		idiomsImportEClass = createEClass(IDIOMS_IMPORT);
-		createEAttribute(idiomsImportEClass, IDIOMS_IMPORT__AS);
-		createEReference(idiomsImportEClass, IDIOMS_IMPORT__IDIOMS_MODEL);
+		idiomsImportEClass = createEClass(9);
+		createEAttribute(idiomsImportEClass, 0);
+		createEReference(idiomsImportEClass, 1);
 
-		idiomsModelEClass = createEClass(IDIOMS_MODEL);
-		createEAttribute(idiomsModelEClass, IDIOMS_MODEL__NAME);
-		createEAttribute(idiomsModelEClass, IDIOMS_MODEL__NAMES);
-		createEReference(idiomsModelEClass, IDIOMS_MODEL__OWNED_IDIOMS);
-		createEReference(idiomsModelEClass, IDIOMS_MODEL__OWNED_IMPORTS);
-		createEReference(idiomsModelEClass,
-			IDIOMS_MODEL__OWNED_LOCATOR_DECLARATIONS);
-		createEReference(idiomsModelEClass,
-			IDIOMS_MODEL__OWNED_SEGMENT_DECLARATIONS);
-		createEReference(idiomsModelEClass, IDIOMS_MODEL__OWNED_WITHS);
+		idiomsModelEClass = createEClass(10);
+		createEAttribute(idiomsModelEClass, 0);
+		createEAttribute(idiomsModelEClass, 1);
+		createEReference(idiomsModelEClass, 2);
+		createEReference(idiomsModelEClass, 3);
+		createEReference(idiomsModelEClass, 4);
+		createEReference(idiomsModelEClass, 5);
+		createEReference(idiomsModelEClass, 6);
 
-		keywordLocatorEClass = createEClass(KEYWORD_LOCATOR);
-		createEAttribute(keywordLocatorEClass, KEYWORD_LOCATOR__STRING);
+		keywordLocatorEClass = createEClass(11);
+		createEAttribute(keywordLocatorEClass, 0);
 
-		locatorEClass = createEClass(LOCATOR);
+		locatorEClass = createEClass(12);
 
-		locatorDeclarationEClass = createEClass(LOCATOR_DECLARATION);
-		createEAttribute(locatorDeclarationEClass, LOCATOR_DECLARATION__NAME);
-		createEReference(locatorDeclarationEClass,
-			LOCATOR_DECLARATION__OWNED_LOCATOR);
-		createEReference(locatorDeclarationEClass,
-			LOCATOR_DECLARATION__OWNING_IDIOMS_MODEL);
+		locatorDeclarationEClass = createEClass(13);
+		createEAttribute(locatorDeclarationEClass, 0);
+		createEReference(locatorDeclarationEClass, 1);
+		createEReference(locatorDeclarationEClass, 2);
 
-		newLineSegmentEClass = createEClass(NEW_LINE_SEGMENT);
+		newLineSegmentEClass = createEClass(14);
 
-		noSpaceSegmentEClass = createEClass(NO_SPACE_SEGMENT);
+		noSpaceSegmentEClass = createEClass(15);
 
-		popSegmentEClass = createEClass(POP_SEGMENT);
+		popSegmentEClass = createEClass(16);
 
-		postCommentSegmentEClass = createEClass(POST_COMMENT_SEGMENT);
+		postCommentSegmentEClass = createEClass(17);
 
-		preCommentSegmentEClass = createEClass(PRE_COMMENT_SEGMENT);
+		preCommentSegmentEClass = createEClass(18);
 
-		referredLocatorEClass = createEClass(REFERRED_LOCATOR);
-		createEReference(referredLocatorEClass, REFERRED_LOCATOR__IDIOMS_MODEL);
-		createEReference(referredLocatorEClass,
-			REFERRED_LOCATOR__LOCATOR_DECLARATION);
+		referredLocatorEClass = createEClass(19);
+		createEReference(referredLocatorEClass, 0);
+		createEReference(referredLocatorEClass, 1);
 
-		referredSegmentEClass = createEClass(REFERRED_SEGMENT);
-		createEReference(referredSegmentEClass, REFERRED_SEGMENT__IDIOMS_MODEL);
-		createEReference(referredSegmentEClass,
-			REFERRED_SEGMENT__SEGMENT_DECLARATION);
+		referredSegmentEClass = createEClass(20);
+		createEReference(referredSegmentEClass, 0);
+		createEReference(referredSegmentEClass, 1);
 
-		returnsLocatorEClass = createEClass(RETURNS_LOCATOR);
-		createEReference(returnsLocatorEClass, RETURNS_LOCATOR__EPACKAGE);
-		createEReference(returnsLocatorEClass, RETURNS_LOCATOR__ECLASS);
+		returnsLocatorEClass = createEClass(21);
+		createEReference(returnsLocatorEClass, 0);
+		createEReference(returnsLocatorEClass, 1);
 
-		pushSegmentEClass = createEClass(PUSH_SEGMENT);
+		pushSegmentEClass = createEClass(22);
 
-		segmentEClass = createEClass(SEGMENT);
+		segmentEClass = createEClass(23);
 
-		segmentDeclarationEClass = createEClass(SEGMENT_DECLARATION);
-		createEAttribute(segmentDeclarationEClass, SEGMENT_DECLARATION__NAME);
-		createEReference(segmentDeclarationEClass,
-			SEGMENT_DECLARATION__OWNED_SEGMENT);
-		createEReference(segmentDeclarationEClass,
-			SEGMENT_DECLARATION__OWNING_IDIOMS_MODEL);
+		segmentDeclarationEClass = createEClass(24);
+		createEAttribute(segmentDeclarationEClass, 0);
+		createEReference(segmentDeclarationEClass, 1);
+		createEReference(segmentDeclarationEClass, 2);
 
-		softNewLineSegmentEClass = createEClass(SOFT_NEW_LINE_SEGMENT);
+		softNewLineSegmentEClass = createEClass(25);
 
-		softSpaceSegmentEClass = createEClass(SOFT_SPACE_SEGMENT);
+		softSpaceSegmentEClass = createEClass(26);
 
-		stringSegmentEClass = createEClass(STRING_SEGMENT);
-		createEAttribute(stringSegmentEClass, STRING_SEGMENT__PRINTABLE);
-		createEAttribute(stringSegmentEClass, STRING_SEGMENT__STRING);
+		stringSegmentEClass = createEClass(27);
+		createEAttribute(stringSegmentEClass, 0);
+		createEAttribute(stringSegmentEClass, 1);
 
-		subIdiomEClass = createEClass(SUB_IDIOM);
-		createEAttribute(subIdiomEClass, SUB_IDIOM__ALL);
-		createEReference(subIdiomEClass, SUB_IDIOM__OWNED_LOCATOR);
-		createEReference(subIdiomEClass, SUB_IDIOM__OWNED_SEGMENTS);
-		createEReference(subIdiomEClass, SUB_IDIOM__OWNING_IDIOM);
+		subIdiomEClass = createEClass(28);
+		createEAttribute(subIdiomEClass, 0);
+		createEReference(subIdiomEClass, 1);
+		createEReference(subIdiomEClass, 2);
+		createEReference(subIdiomEClass, 3);
 
-		valueSegmentEClass = createEClass(VALUE_SEGMENT);
+		valueSegmentEClass = createEClass(29);
 
-		wrapAnchorSegmentEClass = createEClass(WRAP_ANCHOR_SEGMENT);
+		wrapAnchorSegmentEClass = createEClass(30);
 
-		wrapBeginSomeSegmentEClass = createEClass(WRAP_BEGIN_SOME_SEGMENT);
+		wrapBeginSomeSegmentEClass = createEClass(31);
 
-		wrapBeginAllSegmentEClass = createEClass(WRAP_BEGIN_ALL_SEGMENT);
+		wrapBeginAllSegmentEClass = createEClass(32);
 
-		wrapEndSegmentEClass = createEClass(WRAP_END_SEGMENT);
+		wrapEndSegmentEClass = createEClass(33);
 
-		wrapHereSegmentEClass = createEClass(WRAP_HERE_SEGMENT);
+		wrapHereSegmentEClass = createEClass(34);
 	}
 
 	/**
@@ -1312,8 +1278,7 @@ public class IdiomsPackageImpl
 	 * @generated
 	 */
 	public void initializePackageContents() {
-		if (isInitialized)
-			return;
+		if (isInitialized) return;
 		isInitialized = true;
 
 		// Initialize package
@@ -1362,305 +1327,115 @@ public class IdiomsPackageImpl
 		wrapHereSegmentEClass.getESuperTypes().add(this.getSegment());
 
 		// Initialize classes and features; add operations and parameters
-		initEClass(anyAssignmentLocatorEClass, AnyAssignmentLocator.class,
-			"AnyAssignmentLocator", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
-			IS_GENERATED_INSTANCE_CLASS);
+		initEClass(anyAssignmentLocatorEClass, AnyAssignmentLocator.class, "AnyAssignmentLocator", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
-		initEClass(anyElementLocatorEClass, AnyElementLocator.class,
-			"AnyElementLocator", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
-			IS_GENERATED_INSTANCE_CLASS);
+		initEClass(anyElementLocatorEClass, AnyElementLocator.class, "AnyElementLocator", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
-		initEClass(assignmentLocatorEClass, AssignmentLocator.class,
-			"AssignmentLocator", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
-			IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getAssignmentLocator_EPackage(),
-			ecorePackage.getEPackage(), null, "ePackage", null, 1, 1, //$NON-NLS-1$
-			AssignmentLocator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
-			!IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
-			!IS_DERIVED, IS_ORDERED);
-		initEReference(getAssignmentLocator_EClass(), ecorePackage.getEClass(),
-			null, "eClass", null, 1, 1, AssignmentLocator.class, !IS_TRANSIENT, //$NON-NLS-1$
-			!IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
-			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getAssignmentLocator_EStructuralFeature(),
-			ecorePackage.getEStructuralFeature(), null, "eStructuralFeature", //$NON-NLS-1$
-			null, 1, 1, AssignmentLocator.class, !IS_TRANSIENT, !IS_VOLATILE,
-			IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
-			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(assignmentLocatorEClass, AssignmentLocator.class, "AssignmentLocator", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getAssignmentLocator_EPackage(), ecorePackage.getEPackage(), null, "ePackage", null, 1, 1, AssignmentLocator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getAssignmentLocator_EClass(), ecorePackage.getEClass(), null, "eClass", null, 1, 1, AssignmentLocator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getAssignmentLocator_EStructuralFeature(), ecorePackage.getEStructuralFeature(), null, "eStructuralFeature", null, 1, 1, AssignmentLocator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-		initEClass(customSegmentEClass, CustomSegment.class, "CustomSegment", //$NON-NLS-1$
-			!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getCustomSegment_SupportClassName(),
-			ecorePackage.getEString(), "supportClassName", null, 0, 1, //$NON-NLS-1$
-			CustomSegment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
-			!IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(customSegmentEClass, CustomSegment.class, "CustomSegment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(getCustomSegment_SupportClassName(), ecorePackage.getEString(), "supportClassName", null, 0, 1, CustomSegment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-		initEClass(ePackageImportEClass, EPackageImport.class, "EPackageImport", //$NON-NLS-1$
-			!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getEPackageImport_As(), ecorePackage.getEString(), "as", //$NON-NLS-1$
-			null, 0, 1, EPackageImport.class, !IS_TRANSIENT, !IS_VOLATILE,
-			IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
-			IS_ORDERED);
-		initEReference(getEPackageImport_EPackage(), ecorePackage.getEPackage(),
-			null, "ePackage", null, 1, 1, EPackageImport.class, !IS_TRANSIENT, //$NON-NLS-1$
-			!IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
-			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(ePackageImportEClass, EPackageImport.class, "EPackageImport", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(getEPackageImport_As(), ecorePackage.getEString(), "as", null, 0, 1, EPackageImport.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getEPackageImport_EPackage(), ecorePackage.getEPackage(), null, "ePackage", null, 1, 1, EPackageImport.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-		initEClass(finalLocatorEClass, FinalLocator.class, "FinalLocator", //$NON-NLS-1$
-			!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(finalLocatorEClass, FinalLocator.class, "FinalLocator", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
-		initEClass(halfNewLineSegmentEClass, HalfNewLineSegment.class,
-			"HalfNewLineSegment", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
-			IS_GENERATED_INSTANCE_CLASS);
+		initEClass(halfNewLineSegmentEClass, HalfNewLineSegment.class, "HalfNewLineSegment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
-		initEClass(idiomEClass, Idiom.class, "Idiom", !IS_ABSTRACT, //$NON-NLS-1$
-			!IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getIdiom_Name(), ecorePackage.getEString(), "name", null, //$NON-NLS-1$
-			1, 1, Idiom.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
-			!IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getIdiom_ForEPackage(), ecorePackage.getEPackage(), null,
-			"forEPackage", null, 0, 1, Idiom.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
-			IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
-			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getIdiom_ForEClass(), ecorePackage.getEClass(), null,
-			"forEClass", null, 0, 1, Idiom.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
-			IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
-			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getIdiom_InRuleRegex(), ecorePackage.getEString(),
-			"inRuleRegex", null, 0, 1, Idiom.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
-			IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
-			IS_ORDERED);
-		initEAttribute(getIdiom_Mixin(), ecorePackage.getEBoolean(), "mixin", //$NON-NLS-1$
-			"false", 0, 1, Idiom.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
-			IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
-			IS_ORDERED);
-		initEReference(getIdiom_OwnedSubIdioms(), this.getSubIdiom(),
-			this.getSubIdiom_OwningIdiom(), "ownedSubIdioms", null, 0, -1, //$NON-NLS-1$
-			Idiom.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
-			IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
-			!IS_DERIVED, IS_ORDERED);
+		initEClass(idiomEClass, Idiom.class, "Idiom", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(getIdiom_Name(), ecorePackage.getEString(), "name", null, 1, 1, Idiom.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getIdiom_ForEPackage(), ecorePackage.getEPackage(), null, "forEPackage", null, 0, 1, Idiom.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getIdiom_ForEClass(), ecorePackage.getEClass(), null, "forEClass", null, 0, 1, Idiom.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getIdiom_InRuleRegex(), ecorePackage.getEString(), "inRuleRegex", null, 0, 1, Idiom.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getIdiom_Mixin(), ecorePackage.getEBoolean(), "mixin", "false", 0, 1, Idiom.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEReference(getIdiom_OwnedSubIdioms(), this.getSubIdiom(), this.getSubIdiom_OwningIdiom(), "ownedSubIdioms", null, 0, -1, Idiom.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-		initEClass(idiomsElementEClass, IdiomsElement.class, "IdiomsElement", //$NON-NLS-1$
-			IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(idiomsElementEClass, IdiomsElement.class, "IdiomsElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
-		initEClass(idiomsImportEClass, IdiomsImport.class, "IdiomsImport", //$NON-NLS-1$
-			!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getIdiomsImport_As(), ecorePackage.getEString(), "as", //$NON-NLS-1$
-			null, 0, 1, IdiomsImport.class, !IS_TRANSIENT, !IS_VOLATILE,
-			IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
-			IS_ORDERED);
-		initEReference(getIdiomsImport_IdiomsModel(), this.getIdiomsModel(),
-			null, "idiomsModel", null, 1, 1, IdiomsImport.class, !IS_TRANSIENT, //$NON-NLS-1$
-			!IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
-			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(idiomsImportEClass, IdiomsImport.class, "IdiomsImport", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(getIdiomsImport_As(), ecorePackage.getEString(), "as", null, 0, 1, IdiomsImport.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getIdiomsImport_IdiomsModel(), this.getIdiomsModel(), null, "idiomsModel", null, 1, 1, IdiomsImport.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-		initEClass(idiomsModelEClass, IdiomsModel.class, "IdiomsModel", //$NON-NLS-1$
-			!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getIdiomsModel_Name(), ecorePackage.getEString(), "name", //$NON-NLS-1$
-			null, 1, 1, IdiomsModel.class, !IS_TRANSIENT, !IS_VOLATILE,
-			!IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED,
-			IS_ORDERED);
-		initEAttribute(getIdiomsModel_Names(), ecorePackage.getEString(),
-			"names", null, 1, -1, IdiomsModel.class, !IS_TRANSIENT, //$NON-NLS-1$
-			!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-			!IS_DERIVED, IS_ORDERED);
-		initEReference(getIdiomsModel_OwnedIdioms(), this.getIdiom(), null,
-			"ownedIdioms", null, 0, -1, IdiomsModel.class, !IS_TRANSIENT, //$NON-NLS-1$
-			!IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getIdiomsModel_OwnedImports(), this.getEPackageImport(),
-			null, "ownedImports", null, 0, -1, IdiomsModel.class, !IS_TRANSIENT, //$NON-NLS-1$
-			!IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getIdiomsModel_OwnedLocatorDeclarations(),
-			this.getLocatorDeclaration(),
-			this.getLocatorDeclaration_OwningIdiomsModel(),
-			"ownedLocatorDeclarations", null, 0, -1, IdiomsModel.class, //$NON-NLS-1$
-			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
-			!IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
-			IS_ORDERED);
-		initEReference(getIdiomsModel_OwnedSegmentDeclarations(),
-			this.getSegmentDeclaration(),
-			this.getSegmentDeclaration_OwningIdiomsModel(),
-			"ownedSegmentDeclarations", null, 0, -1, IdiomsModel.class, //$NON-NLS-1$
-			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
-			!IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
-			IS_ORDERED);
-		initEReference(getIdiomsModel_OwnedWiths(), this.getIdiomsImport(),
-			null, "ownedWiths", null, 0, -1, IdiomsModel.class, !IS_TRANSIENT, //$NON-NLS-1$
-			!IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(idiomsModelEClass, IdiomsModel.class, "IdiomsModel", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(getIdiomsModel_Name(), ecorePackage.getEString(), "name", null, 1, 1, IdiomsModel.class, !IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getIdiomsModel_Names(), ecorePackage.getEString(), "names", null, 1, -1, IdiomsModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getIdiomsModel_OwnedIdioms(), this.getIdiom(), null, "ownedIdioms", null, 0, -1, IdiomsModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getIdiomsModel_OwnedImports(), this.getEPackageImport(), null, "ownedImports", null, 0, -1, IdiomsModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getIdiomsModel_OwnedLocatorDeclarations(), this.getLocatorDeclaration(), this.getLocatorDeclaration_OwningIdiomsModel(), "ownedLocatorDeclarations", null, 0, -1, IdiomsModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getIdiomsModel_OwnedSegmentDeclarations(), this.getSegmentDeclaration(), this.getSegmentDeclaration_OwningIdiomsModel(), "ownedSegmentDeclarations", null, 0, -1, IdiomsModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getIdiomsModel_OwnedWiths(), this.getIdiomsImport(), null, "ownedWiths", null, 0, -1, IdiomsModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-		initEClass(keywordLocatorEClass, KeywordLocator.class, "KeywordLocator", //$NON-NLS-1$
-			!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getKeywordLocator_String(), ecorePackage.getEString(),
-			"string", null, 1, 1, KeywordLocator.class, !IS_TRANSIENT, //$NON-NLS-1$
-			!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-			!IS_DERIVED, IS_ORDERED);
+		initEClass(keywordLocatorEClass, KeywordLocator.class, "KeywordLocator", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(getKeywordLocator_String(), ecorePackage.getEString(), "string", null, 1, 1, KeywordLocator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-		initEClass(locatorEClass, Locator.class, "Locator", IS_ABSTRACT, //$NON-NLS-1$
-			!IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(locatorEClass, Locator.class, "Locator", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
-		initEClass(locatorDeclarationEClass, LocatorDeclaration.class,
-			"LocatorDeclaration", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
-			IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getLocatorDeclaration_Name(), ecorePackage.getEString(),
-			"name", null, 1, 1, LocatorDeclaration.class, !IS_TRANSIENT, //$NON-NLS-1$
-			!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-			!IS_DERIVED, IS_ORDERED);
-		initEReference(getLocatorDeclaration_OwnedLocator(), this.getLocator(),
-			null, "ownedLocator", null, 1, 1, LocatorDeclaration.class, //$NON-NLS-1$
-			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
-			!IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
-			IS_ORDERED);
-		initEReference(getLocatorDeclaration_OwningIdiomsModel(),
-			this.getIdiomsModel(),
-			this.getIdiomsModel_OwnedLocatorDeclarations(), "owningIdiomsModel", //$NON-NLS-1$
-			null, 1, 1, LocatorDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE,
-			IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
-			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(locatorDeclarationEClass, LocatorDeclaration.class, "LocatorDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(getLocatorDeclaration_Name(), ecorePackage.getEString(), "name", null, 1, 1, LocatorDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getLocatorDeclaration_OwnedLocator(), this.getLocator(), null, "ownedLocator", null, 1, 1, LocatorDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getLocatorDeclaration_OwningIdiomsModel(), this.getIdiomsModel(), this.getIdiomsModel_OwnedLocatorDeclarations(), "owningIdiomsModel", null, 1, 1, LocatorDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-		initEClass(newLineSegmentEClass, NewLineSegment.class, "NewLineSegment", //$NON-NLS-1$
-			!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(newLineSegmentEClass, NewLineSegment.class, "NewLineSegment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
-		initEClass(noSpaceSegmentEClass, NoSpaceSegment.class, "NoSpaceSegment", //$NON-NLS-1$
-			!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(noSpaceSegmentEClass, NoSpaceSegment.class, "NoSpaceSegment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
-		initEClass(popSegmentEClass, PopSegment.class, "PopSegment", //$NON-NLS-1$
-			!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(popSegmentEClass, PopSegment.class, "PopSegment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
-		initEClass(postCommentSegmentEClass, PostCommentSegment.class,
-			"PostCommentSegment", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
-			IS_GENERATED_INSTANCE_CLASS);
+		initEClass(postCommentSegmentEClass, PostCommentSegment.class, "PostCommentSegment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
-		initEClass(preCommentSegmentEClass, PreCommentSegment.class,
-			"PreCommentSegment", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
-			IS_GENERATED_INSTANCE_CLASS);
+		initEClass(preCommentSegmentEClass, PreCommentSegment.class, "PreCommentSegment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
-		initEClass(referredLocatorEClass, ReferredLocator.class,
-			"ReferredLocator", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
-			IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getReferredLocator_IdiomsModel(), this.getIdiomsModel(),
-			null, "idiomsModel", null, 0, 1, ReferredLocator.class, //$NON-NLS-1$
-			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
-			IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
-			IS_ORDERED);
-		initEReference(getReferredLocator_LocatorDeclaration(),
-			this.getLocatorDeclaration(), null, "locatorDeclaration", null, 1, //$NON-NLS-1$
-			1, ReferredLocator.class, !IS_TRANSIENT, !IS_VOLATILE,
-			IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
-			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(referredLocatorEClass, ReferredLocator.class, "ReferredLocator", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getReferredLocator_IdiomsModel(), this.getIdiomsModel(), null, "idiomsModel", null, 0, 1, ReferredLocator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getReferredLocator_LocatorDeclaration(), this.getLocatorDeclaration(), null, "locatorDeclaration", null, 1, 1, ReferredLocator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-		initEClass(referredSegmentEClass, ReferredSegment.class,
-			"ReferredSegment", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
-			IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getReferredSegment_IdiomsModel(), this.getIdiomsModel(),
-			null, "idiomsModel", null, 0, 1, ReferredSegment.class, //$NON-NLS-1$
-			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
-			IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
-			IS_ORDERED);
-		initEReference(getReferredSegment_SegmentDeclaration(),
-			this.getSegmentDeclaration(), null, "segmentDeclaration", null, 1, //$NON-NLS-1$
-			1, ReferredSegment.class, !IS_TRANSIENT, !IS_VOLATILE,
-			IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
-			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(referredSegmentEClass, ReferredSegment.class, "ReferredSegment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getReferredSegment_IdiomsModel(), this.getIdiomsModel(), null, "idiomsModel", null, 0, 1, ReferredSegment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getReferredSegment_SegmentDeclaration(), this.getSegmentDeclaration(), null, "segmentDeclaration", null, 1, 1, ReferredSegment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-		initEClass(returnsLocatorEClass, ReturnsLocator.class, "ReturnsLocator", //$NON-NLS-1$
-			!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getReturnsLocator_EPackage(), ecorePackage.getEPackage(),
-			null, "ePackage", null, 1, 1, ReturnsLocator.class, !IS_TRANSIENT, //$NON-NLS-1$
-			!IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
-			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getReturnsLocator_EClass(), ecorePackage.getEClass(),
-			null, "eClass", null, 1, 1, ReturnsLocator.class, !IS_TRANSIENT, //$NON-NLS-1$
-			!IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
-			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(returnsLocatorEClass, ReturnsLocator.class, "ReturnsLocator", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getReturnsLocator_EPackage(), ecorePackage.getEPackage(), null, "ePackage", null, 1, 1, ReturnsLocator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getReturnsLocator_EClass(), ecorePackage.getEClass(), null, "eClass", null, 1, 1, ReturnsLocator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-		initEClass(pushSegmentEClass, PushSegment.class, "PushSegment", //$NON-NLS-1$
-			!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(pushSegmentEClass, PushSegment.class, "PushSegment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
-		initEClass(segmentEClass, Segment.class, "Segment", IS_ABSTRACT, //$NON-NLS-1$
-			!IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(segmentEClass, Segment.class, "Segment", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
-		initEClass(segmentDeclarationEClass, SegmentDeclaration.class,
-			"SegmentDeclaration", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
-			IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getSegmentDeclaration_Name(), ecorePackage.getEString(),
-			"name", null, 1, 1, SegmentDeclaration.class, !IS_TRANSIENT, //$NON-NLS-1$
-			!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-			!IS_DERIVED, IS_ORDERED);
-		initEReference(getSegmentDeclaration_OwnedSegment(), this.getSegment(),
-			null, "ownedSegment", null, 1, 1, SegmentDeclaration.class, //$NON-NLS-1$
-			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
-			!IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
-			IS_ORDERED);
-		initEReference(getSegmentDeclaration_OwningIdiomsModel(),
-			this.getIdiomsModel(),
-			this.getIdiomsModel_OwnedSegmentDeclarations(), "owningIdiomsModel", //$NON-NLS-1$
-			null, 1, 1, SegmentDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE,
-			IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
-			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(segmentDeclarationEClass, SegmentDeclaration.class, "SegmentDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(getSegmentDeclaration_Name(), ecorePackage.getEString(), "name", null, 1, 1, SegmentDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getSegmentDeclaration_OwnedSegment(), this.getSegment(), null, "ownedSegment", null, 1, 1, SegmentDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getSegmentDeclaration_OwningIdiomsModel(), this.getIdiomsModel(), this.getIdiomsModel_OwnedSegmentDeclarations(), "owningIdiomsModel", null, 1, 1, SegmentDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-		initEClass(softNewLineSegmentEClass, SoftNewLineSegment.class,
-			"SoftNewLineSegment", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
-			IS_GENERATED_INSTANCE_CLASS);
+		initEClass(softNewLineSegmentEClass, SoftNewLineSegment.class, "SoftNewLineSegment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
-		initEClass(softSpaceSegmentEClass, SoftSpaceSegment.class,
-			"SoftSpaceSegment", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
-			IS_GENERATED_INSTANCE_CLASS);
+		initEClass(softSpaceSegmentEClass, SoftSpaceSegment.class, "SoftSpaceSegment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
-		initEClass(stringSegmentEClass, StringSegment.class, "StringSegment", //$NON-NLS-1$
-			!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getStringSegment_Printable(), ecorePackage.getEBoolean(),
-			"printable", "true", 1, 1, StringSegment.class, !IS_TRANSIENT, //$NON-NLS-1$//$NON-NLS-2$
-			!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-			!IS_DERIVED, IS_ORDERED);
-		initEAttribute(getStringSegment_String(), ecorePackage.getEString(),
-			"string", null, 1, 1, StringSegment.class, !IS_TRANSIENT, //$NON-NLS-1$
-			!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-			!IS_DERIVED, IS_ORDERED);
+		initEClass(stringSegmentEClass, StringSegment.class, "StringSegment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(getStringSegment_Printable(), ecorePackage.getEBoolean(), "printable", "true", 1, 1, StringSegment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(getStringSegment_String(), ecorePackage.getEString(), "string", null, 1, 1, StringSegment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-		initEClass(subIdiomEClass, SubIdiom.class, "SubIdiom", !IS_ABSTRACT, //$NON-NLS-1$
-			!IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getSubIdiom_All(), ecorePackage.getEBoolean(), "all", //$NON-NLS-1$
-			"false", 1, 1, SubIdiom.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
-			IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
-			IS_ORDERED);
-		initEReference(getSubIdiom_OwnedLocator(), this.getLocator(), null,
-			"ownedLocator", null, 0, 1, SubIdiom.class, !IS_TRANSIENT, //$NON-NLS-1$
-			!IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getSubIdiom_OwnedSegments(), this.getSegment(), null,
-			"ownedSegments", null, 0, -1, SubIdiom.class, !IS_TRANSIENT, //$NON-NLS-1$
-			!IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getSubIdiom_OwningIdiom(), this.getIdiom(),
-			this.getIdiom_OwnedSubIdioms(), "owningIdiom", null, 1, 1, //$NON-NLS-1$
-			SubIdiom.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
-			!IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
-			!IS_DERIVED, IS_ORDERED);
+		initEClass(subIdiomEClass, SubIdiom.class, "SubIdiom", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(getSubIdiom_All(), ecorePackage.getEBoolean(), "all", "false", 1, 1, SubIdiom.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEReference(getSubIdiom_OwnedLocator(), this.getLocator(), null, "ownedLocator", null, 0, 1, SubIdiom.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getSubIdiom_OwnedSegments(), this.getSegment(), null, "ownedSegments", null, 0, -1, SubIdiom.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getSubIdiom_OwningIdiom(), this.getIdiom(), this.getIdiom_OwnedSubIdioms(), "owningIdiom", null, 1, 1, SubIdiom.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-		initEClass(valueSegmentEClass, ValueSegment.class, "ValueSegment", //$NON-NLS-1$
-			!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(valueSegmentEClass, ValueSegment.class, "ValueSegment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
-		initEClass(wrapAnchorSegmentEClass, WrapAnchorSegment.class,
-			"WrapAnchorSegment", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
-			IS_GENERATED_INSTANCE_CLASS);
+		initEClass(wrapAnchorSegmentEClass, WrapAnchorSegment.class, "WrapAnchorSegment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
-		initEClass(wrapBeginSomeSegmentEClass, WrapBeginSomeSegment.class,
-			"WrapBeginSomeSegment", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
-			IS_GENERATED_INSTANCE_CLASS);
+		initEClass(wrapBeginSomeSegmentEClass, WrapBeginSomeSegment.class, "WrapBeginSomeSegment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
-		initEClass(wrapBeginAllSegmentEClass, WrapBeginAllSegment.class,
-			"WrapBeginAllSegment", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
-			IS_GENERATED_INSTANCE_CLASS);
+		initEClass(wrapBeginAllSegmentEClass, WrapBeginAllSegment.class, "WrapBeginAllSegment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
-		initEClass(wrapEndSegmentEClass, WrapEndSegment.class, "WrapEndSegment", //$NON-NLS-1$
-			!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(wrapEndSegmentEClass, WrapEndSegment.class, "WrapEndSegment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
-		initEClass(wrapHereSegmentEClass, WrapHereSegment.class,
-			"WrapHereSegment", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
-			IS_GENERATED_INSTANCE_CLASS);
+		initEClass(wrapHereSegmentEClass, WrapHereSegment.class, "WrapHereSegment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		// Create resource
 		createResource(eNS_URI);
@@ -1678,9 +1453,13 @@ public class IdiomsPackageImpl
 	 */
 	protected void createImportAnnotations() {
 		String source = "http://www.eclipse.org/OCL/Import"; //$NON-NLS-1$
-		addAnnotation(this, source,
-			new String[]{"ecore", "http://www.eclipse.org/emf/2002/Ecore" //$NON-NLS-1$ //$NON-NLS-2$
-			});
+		addAnnotation
+		  (this,
+		   source,
+		   new String[]
+		   {
+			   "ecore", "http://www.eclipse.org/emf/2002/Ecore" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
 	}
 
 } //IdiomsPackageImpl

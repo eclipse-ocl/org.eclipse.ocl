@@ -27,6 +27,15 @@ public class WrapBeginAllSegmentImpl
 		implements WrapBeginAllSegment {
 
 	/**
+	 * The number of structural features of the '<em>Wrap Begin All Segment</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int WRAP_BEGIN_ALL_SEGMENT_FEATURE_COUNT = SegmentImpl.SEGMENT_FEATURE_COUNT + 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

@@ -39,6 +39,15 @@ public class IdiomsImportImpl
 		implements IdiomsImport {
 
 	/**
+	 * The number of structural features of the '<em>Import</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int IDIOMS_IMPORT_FEATURE_COUNT = IdiomsElementImpl.IDIOMS_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
 	 * The default value of the '{@link #getAs() <em>As</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -107,8 +116,7 @@ public class IdiomsImportImpl
 		String oldAs = as;
 		as = newAs;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-				IdiomsPackage.IDIOMS_IMPORT__AS, oldAs, as));
+			eNotify(new ENotificationImpl(this, Notification.SET, 0, oldAs, as));
 	}
 
 	/**
@@ -118,14 +126,14 @@ public class IdiomsImportImpl
 	 */
 	@Override
 	public IdiomsModel getIdiomsModel() {
-		if (idiomsModel != null && idiomsModel.eIsProxy()) {
-			InternalEObject oldIdiomsModel = (InternalEObject) idiomsModel;
-			idiomsModel = (IdiomsModel) eResolveProxy(oldIdiomsModel);
-			if (idiomsModel != oldIdiomsModel) {
+		if (idiomsModel != null && idiomsModel.eIsProxy())
+		{
+			InternalEObject oldIdiomsModel = (InternalEObject)idiomsModel;
+			idiomsModel = (IdiomsModel)eResolveProxy(oldIdiomsModel);
+			if (idiomsModel != oldIdiomsModel)
+			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
-						IdiomsPackage.IDIOMS_IMPORT__IDIOMS_MODEL,
-						oldIdiomsModel, idiomsModel));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 1, oldIdiomsModel, idiomsModel));
 			}
 		}
 		return idiomsModel;
@@ -150,9 +158,7 @@ public class IdiomsImportImpl
 		IdiomsModel oldIdiomsModel = idiomsModel;
 		idiomsModel = newIdiomsModel;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-				IdiomsPackage.IDIOMS_IMPORT__IDIOMS_MODEL, oldIdiomsModel,
-				idiomsModel));
+			eNotify(new ENotificationImpl(this, Notification.SET, 1, oldIdiomsModel, idiomsModel));
 	}
 
 	/**
@@ -162,12 +168,12 @@ public class IdiomsImportImpl
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case IdiomsPackage.IDIOMS_IMPORT__AS :
+		switch (featureID)
+		{
+			case 0:
 				return getAs();
-			case IdiomsPackage.IDIOMS_IMPORT__IDIOMS_MODEL :
-				if (resolve)
-					return getIdiomsModel();
+			case 1:
+				if (resolve) return getIdiomsModel();
 				return basicGetIdiomsModel();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -180,12 +186,13 @@ public class IdiomsImportImpl
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case IdiomsPackage.IDIOMS_IMPORT__AS :
-				setAs((String) newValue);
+		switch (featureID)
+		{
+			case 0:
+				setAs((String)newValue);
 				return;
-			case IdiomsPackage.IDIOMS_IMPORT__IDIOMS_MODEL :
-				setIdiomsModel((IdiomsModel) newValue);
+			case 1:
+				setIdiomsModel((IdiomsModel)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -198,12 +205,13 @@ public class IdiomsImportImpl
 	 */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID) {
-			case IdiomsPackage.IDIOMS_IMPORT__AS :
+		switch (featureID)
+		{
+			case 0:
 				setAs(AS_EDEFAULT);
 				return;
-			case IdiomsPackage.IDIOMS_IMPORT__IDIOMS_MODEL :
-				setIdiomsModel((IdiomsModel) null);
+			case 1:
+				setIdiomsModel((IdiomsModel)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -216,12 +224,11 @@ public class IdiomsImportImpl
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case IdiomsPackage.IDIOMS_IMPORT__AS :
-				return AS_EDEFAULT == null
-					? as != null
-					: !AS_EDEFAULT.equals(as);
-			case IdiomsPackage.IDIOMS_IMPORT__IDIOMS_MODEL :
+		switch (featureID)
+		{
+			case 0:
+				return AS_EDEFAULT == null ? as != null : !AS_EDEFAULT.equals(as);
+			case 1:
 				return idiomsModel != null;
 		}
 		return super.eIsSet(featureID);
@@ -234,8 +241,7 @@ public class IdiomsImportImpl
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy())
-			return super.toString();
+		if (eIsProxy()) return super.toString();
 
 		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (as: "); //$NON-NLS-1$

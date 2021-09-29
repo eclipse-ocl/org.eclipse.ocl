@@ -34,6 +34,15 @@ public class CustomSegmentImpl
 		implements CustomSegment {
 
 	/**
+	 * The number of structural features of the '<em>Custom Segment</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CUSTOM_SEGMENT_FEATURE_COUNT = SegmentImpl.SEGMENT_FEATURE_COUNT + 1;
+
+	/**
 	 * The default value of the '{@link #getSupportClassName() <em>Support Class Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -92,9 +101,7 @@ public class CustomSegmentImpl
 		String oldSupportClassName = supportClassName;
 		supportClassName = newSupportClassName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-				IdiomsPackage.CUSTOM_SEGMENT__SUPPORT_CLASS_NAME,
-				oldSupportClassName, supportClassName));
+			eNotify(new ENotificationImpl(this, Notification.SET, 0, oldSupportClassName, supportClassName));
 	}
 
 	/**
@@ -104,8 +111,9 @@ public class CustomSegmentImpl
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case IdiomsPackage.CUSTOM_SEGMENT__SUPPORT_CLASS_NAME :
+		switch (featureID)
+		{
+			case 0:
 				return getSupportClassName();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -118,9 +126,10 @@ public class CustomSegmentImpl
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case IdiomsPackage.CUSTOM_SEGMENT__SUPPORT_CLASS_NAME :
-				setSupportClassName((String) newValue);
+		switch (featureID)
+		{
+			case 0:
+				setSupportClassName((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -133,8 +142,9 @@ public class CustomSegmentImpl
 	 */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID) {
-			case IdiomsPackage.CUSTOM_SEGMENT__SUPPORT_CLASS_NAME :
+		switch (featureID)
+		{
+			case 0:
 				setSupportClassName(SUPPORT_CLASS_NAME_EDEFAULT);
 				return;
 		}
@@ -148,11 +158,10 @@ public class CustomSegmentImpl
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case IdiomsPackage.CUSTOM_SEGMENT__SUPPORT_CLASS_NAME :
-				return SUPPORT_CLASS_NAME_EDEFAULT == null
-					? supportClassName != null
-					: !SUPPORT_CLASS_NAME_EDEFAULT.equals(supportClassName);
+		switch (featureID)
+		{
+			case 0:
+				return SUPPORT_CLASS_NAME_EDEFAULT == null ? supportClassName != null : !SUPPORT_CLASS_NAME_EDEFAULT.equals(supportClassName);
 		}
 		return super.eIsSet(featureID);
 	}

@@ -52,6 +52,15 @@ public class IdiomImpl
 		implements Idiom {
 
 	/**
+	 * The number of structural features of the '<em>Idiom</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int IDIOM_FEATURE_COUNT = IdiomsElementImpl.IDIOMS_ELEMENT_FEATURE_COUNT + 6;
+
+	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -180,8 +189,7 @@ public class IdiomImpl
 		String oldName = name;
 		name = newName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-				IdiomsPackage.IDIOM__NAME, oldName, name));
+			eNotify(new ENotificationImpl(this, Notification.SET, 0, oldName, name));
 	}
 
 	/**
@@ -191,14 +199,14 @@ public class IdiomImpl
 	 */
 	@Override
 	public EPackage getForEPackage() {
-		if (forEPackage != null && forEPackage.eIsProxy()) {
-			InternalEObject oldForEPackage = (InternalEObject) forEPackage;
-			forEPackage = (EPackage) eResolveProxy(oldForEPackage);
-			if (forEPackage != oldForEPackage) {
+		if (forEPackage != null && forEPackage.eIsProxy())
+		{
+			InternalEObject oldForEPackage = (InternalEObject)forEPackage;
+			forEPackage = (EPackage)eResolveProxy(oldForEPackage);
+			if (forEPackage != oldForEPackage)
+			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
-						IdiomsPackage.IDIOM__FOR_EPACKAGE, oldForEPackage,
-						forEPackage));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 1, oldForEPackage, forEPackage));
 			}
 		}
 		return forEPackage;
@@ -223,9 +231,7 @@ public class IdiomImpl
 		EPackage oldForEPackage = forEPackage;
 		forEPackage = newForEPackage;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-				IdiomsPackage.IDIOM__FOR_EPACKAGE, oldForEPackage,
-				forEPackage));
+			eNotify(new ENotificationImpl(this, Notification.SET, 1, oldForEPackage, forEPackage));
 	}
 
 	/**
@@ -235,14 +241,14 @@ public class IdiomImpl
 	 */
 	@Override
 	public EClass getForEClass() {
-		if (forEClass != null && forEClass.eIsProxy()) {
-			InternalEObject oldForEClass = (InternalEObject) forEClass;
-			forEClass = (EClass) eResolveProxy(oldForEClass);
-			if (forEClass != oldForEClass) {
+		if (forEClass != null && forEClass.eIsProxy())
+		{
+			InternalEObject oldForEClass = (InternalEObject)forEClass;
+			forEClass = (EClass)eResolveProxy(oldForEClass);
+			if (forEClass != oldForEClass)
+			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
-						IdiomsPackage.IDIOM__FOR_ECLASS, oldForEClass,
-						forEClass));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 2, oldForEClass, forEClass));
 			}
 		}
 		return forEClass;
@@ -267,8 +273,7 @@ public class IdiomImpl
 		EClass oldForEClass = forEClass;
 		forEClass = newForEClass;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-				IdiomsPackage.IDIOM__FOR_ECLASS, oldForEClass, forEClass));
+			eNotify(new ENotificationImpl(this, Notification.SET, 2, oldForEClass, forEClass));
 	}
 
 	/**
@@ -291,9 +296,7 @@ public class IdiomImpl
 		String oldInRuleRegex = inRuleRegex;
 		inRuleRegex = newInRuleRegex;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-				IdiomsPackage.IDIOM__IN_RULE_REGEX, oldInRuleRegex,
-				inRuleRegex));
+			eNotify(new ENotificationImpl(this, Notification.SET, 3, oldInRuleRegex, inRuleRegex));
 	}
 
 	/**
@@ -316,8 +319,7 @@ public class IdiomImpl
 		boolean oldMixin = mixin;
 		mixin = newMixin;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-				IdiomsPackage.IDIOM__MIXIN, oldMixin, mixin));
+			eNotify(new ENotificationImpl(this, Notification.SET, 4, oldMixin, mixin));
 	}
 
 	/**
@@ -327,10 +329,9 @@ public class IdiomImpl
 	 */
 	@Override
 	public EList<SubIdiom> getOwnedSubIdioms() {
-		if (ownedSubIdioms == null) {
-			ownedSubIdioms = new EObjectContainmentWithInverseEList<SubIdiom>(
-				SubIdiom.class, this, IdiomsPackage.IDIOM__OWNED_SUB_IDIOMS,
-				IdiomsPackage.SUB_IDIOM__OWNING_IDIOM);
+		if (ownedSubIdioms == null)
+		{
+			ownedSubIdioms = new EObjectContainmentWithInverseEList<SubIdiom>(SubIdiom.class, this, 5, 3);
 		}
 		return ownedSubIdioms;
 	}
@@ -344,10 +345,10 @@ public class IdiomImpl
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case IdiomsPackage.IDIOM__OWNED_SUB_IDIOMS :
-				return ((InternalEList<InternalEObject>) (InternalEList<?>) getOwnedSubIdioms())
-					.basicAdd(otherEnd, msgs);
+		switch (featureID)
+		{
+			case 5:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedSubIdioms()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -360,10 +361,10 @@ public class IdiomImpl
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case IdiomsPackage.IDIOM__OWNED_SUB_IDIOMS :
-				return ((InternalEList<?>) getOwnedSubIdioms())
-					.basicRemove(otherEnd, msgs);
+		switch (featureID)
+		{
+			case 5:
+				return ((InternalEList<?>)getOwnedSubIdioms()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -375,22 +376,21 @@ public class IdiomImpl
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case IdiomsPackage.IDIOM__NAME :
+		switch (featureID)
+		{
+			case 0:
 				return getName();
-			case IdiomsPackage.IDIOM__FOR_EPACKAGE :
-				if (resolve)
-					return getForEPackage();
+			case 1:
+				if (resolve) return getForEPackage();
 				return basicGetForEPackage();
-			case IdiomsPackage.IDIOM__FOR_ECLASS :
-				if (resolve)
-					return getForEClass();
+			case 2:
+				if (resolve) return getForEClass();
 				return basicGetForEClass();
-			case IdiomsPackage.IDIOM__IN_RULE_REGEX :
+			case 3:
 				return getInRuleRegex();
-			case IdiomsPackage.IDIOM__MIXIN :
+			case 4:
 				return isMixin();
-			case IdiomsPackage.IDIOM__OWNED_SUB_IDIOMS :
+			case 5:
 				return getOwnedSubIdioms();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -404,26 +404,26 @@ public class IdiomImpl
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case IdiomsPackage.IDIOM__NAME :
-				setName((String) newValue);
+		switch (featureID)
+		{
+			case 0:
+				setName((String)newValue);
 				return;
-			case IdiomsPackage.IDIOM__FOR_EPACKAGE :
-				setForEPackage((EPackage) newValue);
+			case 1:
+				setForEPackage((EPackage)newValue);
 				return;
-			case IdiomsPackage.IDIOM__FOR_ECLASS :
-				setForEClass((EClass) newValue);
+			case 2:
+				setForEClass((EClass)newValue);
 				return;
-			case IdiomsPackage.IDIOM__IN_RULE_REGEX :
-				setInRuleRegex((String) newValue);
+			case 3:
+				setInRuleRegex((String)newValue);
 				return;
-			case IdiomsPackage.IDIOM__MIXIN :
-				setMixin((Boolean) newValue);
+			case 4:
+				setMixin((Boolean)newValue);
 				return;
-			case IdiomsPackage.IDIOM__OWNED_SUB_IDIOMS :
+			case 5:
 				getOwnedSubIdioms().clear();
-				getOwnedSubIdioms()
-					.addAll((Collection<? extends SubIdiom>) newValue);
+				getOwnedSubIdioms().addAll((Collection<? extends SubIdiom>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -436,23 +436,24 @@ public class IdiomImpl
 	 */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID) {
-			case IdiomsPackage.IDIOM__NAME :
+		switch (featureID)
+		{
+			case 0:
 				setName(NAME_EDEFAULT);
 				return;
-			case IdiomsPackage.IDIOM__FOR_EPACKAGE :
-				setForEPackage((EPackage) null);
+			case 1:
+				setForEPackage((EPackage)null);
 				return;
-			case IdiomsPackage.IDIOM__FOR_ECLASS :
-				setForEClass((EClass) null);
+			case 2:
+				setForEClass((EClass)null);
 				return;
-			case IdiomsPackage.IDIOM__IN_RULE_REGEX :
+			case 3:
 				setInRuleRegex(IN_RULE_REGEX_EDEFAULT);
 				return;
-			case IdiomsPackage.IDIOM__MIXIN :
+			case 4:
 				setMixin(MIXIN_EDEFAULT);
 				return;
-			case IdiomsPackage.IDIOM__OWNED_SUB_IDIOMS :
+			case 5:
 				getOwnedSubIdioms().clear();
 				return;
 		}
@@ -466,22 +467,19 @@ public class IdiomImpl
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case IdiomsPackage.IDIOM__NAME :
-				return NAME_EDEFAULT == null
-					? name != null
-					: !NAME_EDEFAULT.equals(name);
-			case IdiomsPackage.IDIOM__FOR_EPACKAGE :
+		switch (featureID)
+		{
+			case 0:
+				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+			case 1:
 				return forEPackage != null;
-			case IdiomsPackage.IDIOM__FOR_ECLASS :
+			case 2:
 				return forEClass != null;
-			case IdiomsPackage.IDIOM__IN_RULE_REGEX :
-				return IN_RULE_REGEX_EDEFAULT == null
-					? inRuleRegex != null
-					: !IN_RULE_REGEX_EDEFAULT.equals(inRuleRegex);
-			case IdiomsPackage.IDIOM__MIXIN :
+			case 3:
+				return IN_RULE_REGEX_EDEFAULT == null ? inRuleRegex != null : !IN_RULE_REGEX_EDEFAULT.equals(inRuleRegex);
+			case 4:
 				return mixin != MIXIN_EDEFAULT;
-			case IdiomsPackage.IDIOM__OWNED_SUB_IDIOMS :
+			case 5:
 				return ownedSubIdioms != null && !ownedSubIdioms.isEmpty();
 		}
 		return super.eIsSet(featureID);

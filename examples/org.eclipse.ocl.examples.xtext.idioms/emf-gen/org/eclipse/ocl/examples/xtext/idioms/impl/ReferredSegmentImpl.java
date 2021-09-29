@@ -40,6 +40,15 @@ public class ReferredSegmentImpl
 		implements ReferredSegment {
 
 	/**
+	 * The number of structural features of the '<em>Referred Segment</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int REFERRED_SEGMENT_FEATURE_COUNT = SegmentImpl.SEGMENT_FEATURE_COUNT + 2;
+
+	/**
 	 * The cached value of the '{@link #getIdiomsModel() <em>Idioms Model</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -85,14 +94,14 @@ public class ReferredSegmentImpl
 	 */
 	@Override
 	public IdiomsModel getIdiomsModel() {
-		if (idiomsModel != null && idiomsModel.eIsProxy()) {
-			InternalEObject oldIdiomsModel = (InternalEObject) idiomsModel;
-			idiomsModel = (IdiomsModel) eResolveProxy(oldIdiomsModel);
-			if (idiomsModel != oldIdiomsModel) {
+		if (idiomsModel != null && idiomsModel.eIsProxy())
+		{
+			InternalEObject oldIdiomsModel = (InternalEObject)idiomsModel;
+			idiomsModel = (IdiomsModel)eResolveProxy(oldIdiomsModel);
+			if (idiomsModel != oldIdiomsModel)
+			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
-						IdiomsPackage.REFERRED_SEGMENT__IDIOMS_MODEL,
-						oldIdiomsModel, idiomsModel));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 0, oldIdiomsModel, idiomsModel));
 			}
 		}
 		return idiomsModel;
@@ -117,9 +126,7 @@ public class ReferredSegmentImpl
 		IdiomsModel oldIdiomsModel = idiomsModel;
 		idiomsModel = newIdiomsModel;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-				IdiomsPackage.REFERRED_SEGMENT__IDIOMS_MODEL, oldIdiomsModel,
-				idiomsModel));
+			eNotify(new ENotificationImpl(this, Notification.SET, 0, oldIdiomsModel, idiomsModel));
 	}
 
 	/**
@@ -129,15 +136,14 @@ public class ReferredSegmentImpl
 	 */
 	@Override
 	public SegmentDeclaration getSegmentDeclaration() {
-		if (segmentDeclaration != null && segmentDeclaration.eIsProxy()) {
-			InternalEObject oldSegmentDeclaration = (InternalEObject) segmentDeclaration;
-			segmentDeclaration = (SegmentDeclaration) eResolveProxy(
-				oldSegmentDeclaration);
-			if (segmentDeclaration != oldSegmentDeclaration) {
+		if (segmentDeclaration != null && segmentDeclaration.eIsProxy())
+		{
+			InternalEObject oldSegmentDeclaration = (InternalEObject)segmentDeclaration;
+			segmentDeclaration = (SegmentDeclaration)eResolveProxy(oldSegmentDeclaration);
+			if (segmentDeclaration != oldSegmentDeclaration)
+			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
-						IdiomsPackage.REFERRED_SEGMENT__SEGMENT_DECLARATION,
-						oldSegmentDeclaration, segmentDeclaration));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 1, oldSegmentDeclaration, segmentDeclaration));
 			}
 		}
 		return segmentDeclaration;
@@ -163,9 +169,7 @@ public class ReferredSegmentImpl
 		SegmentDeclaration oldSegmentDeclaration = segmentDeclaration;
 		segmentDeclaration = newSegmentDeclaration;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-				IdiomsPackage.REFERRED_SEGMENT__SEGMENT_DECLARATION,
-				oldSegmentDeclaration, segmentDeclaration));
+			eNotify(new ENotificationImpl(this, Notification.SET, 1, oldSegmentDeclaration, segmentDeclaration));
 	}
 
 	/**
@@ -175,14 +179,13 @@ public class ReferredSegmentImpl
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case IdiomsPackage.REFERRED_SEGMENT__IDIOMS_MODEL :
-				if (resolve)
-					return getIdiomsModel();
+		switch (featureID)
+		{
+			case 0:
+				if (resolve) return getIdiomsModel();
 				return basicGetIdiomsModel();
-			case IdiomsPackage.REFERRED_SEGMENT__SEGMENT_DECLARATION :
-				if (resolve)
-					return getSegmentDeclaration();
+			case 1:
+				if (resolve) return getSegmentDeclaration();
 				return basicGetSegmentDeclaration();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -195,12 +198,13 @@ public class ReferredSegmentImpl
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case IdiomsPackage.REFERRED_SEGMENT__IDIOMS_MODEL :
-				setIdiomsModel((IdiomsModel) newValue);
+		switch (featureID)
+		{
+			case 0:
+				setIdiomsModel((IdiomsModel)newValue);
 				return;
-			case IdiomsPackage.REFERRED_SEGMENT__SEGMENT_DECLARATION :
-				setSegmentDeclaration((SegmentDeclaration) newValue);
+			case 1:
+				setSegmentDeclaration((SegmentDeclaration)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -213,12 +217,13 @@ public class ReferredSegmentImpl
 	 */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID) {
-			case IdiomsPackage.REFERRED_SEGMENT__IDIOMS_MODEL :
-				setIdiomsModel((IdiomsModel) null);
+		switch (featureID)
+		{
+			case 0:
+				setIdiomsModel((IdiomsModel)null);
 				return;
-			case IdiomsPackage.REFERRED_SEGMENT__SEGMENT_DECLARATION :
-				setSegmentDeclaration((SegmentDeclaration) null);
+			case 1:
+				setSegmentDeclaration((SegmentDeclaration)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -231,10 +236,11 @@ public class ReferredSegmentImpl
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case IdiomsPackage.REFERRED_SEGMENT__IDIOMS_MODEL :
+		switch (featureID)
+		{
+			case 0:
 				return idiomsModel != null;
-			case IdiomsPackage.REFERRED_SEGMENT__SEGMENT_DECLARATION :
+			case 1:
 				return segmentDeclaration != null;
 		}
 		return super.eIsSet(featureID);
