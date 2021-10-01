@@ -54,16 +54,40 @@ public interface TypeId extends ElementId
 	public static final @NonNull String OCL_ANY_NAME = "OclAny";
 	public static final @NonNull String OCL_COMPARABLE_NAME = "OclComparable";
 	/**
+	 * @since 1.17
+	 */
+	public static final @NonNull String OCL_ELEMENT_NAME = "OclElement";
+	/**
 	 * @since 1.1
 	 */
 	public static final @NonNull String OCL_ENUMERATION_NAME = "OclEnumeration";
 	public static final @NonNull String OCL_INVALID_NAME = "OclInvalid";
+	/**
+	 * @since 1.17
+	 */
+	public static final @NonNull String OCL_LAMBDA_NAME = "OclLambda";
+	/**
+	 * @since 1.17
+	 */
+	public static final @NonNull String OCL_MESSAGE_NAME = "OclMessage";
 	public static final @NonNull String OCL_SELF_NAME = "OclSelf";
+	/**
+	 * @since 1.17
+	 */
+	public static final @NonNull String OCL_STATE_NAME = "OclState";
 	/**
 	 * @since 1.1
 	 */
 	public static final @NonNull String OCL_STEREOTYPE_NAME = "OclStereotype";
 	public static final @NonNull String OCL_SUMMABLE_NAME = "OclSummable";
+	/**
+	 * @since 1.17
+	 */
+	public static final @NonNull String OCL_TUPLE_NAME = "OclTuple";
+	/**
+	 * @since 1.17
+	 */
+	public static final @NonNull String OCL_TYPE_NAME = "OclType";
 	public static final @NonNull String OCL_VOID_NAME = "OclVoid";
 	public static final @NonNull String OPERATION_NAME = "Operation";
 	public static final @NonNull String ORDERED_COLLECTION_NAME = "OrderedCollection";

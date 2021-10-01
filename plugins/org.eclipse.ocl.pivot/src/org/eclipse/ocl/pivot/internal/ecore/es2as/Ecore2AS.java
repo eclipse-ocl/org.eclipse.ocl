@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EGenericType;
 import org.eclipse.emf.ecore.EModelElement;
@@ -42,6 +43,7 @@ import org.eclipse.emf.ecore.xmi.XMIException;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.Model;
@@ -51,6 +53,7 @@ import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.ecore.Ecore2Moniker;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
@@ -75,7 +78,14 @@ import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
+import org.eclipse.ocl.pivot.utilities.TreeIterable;
 
+/**
+ * Manage conversio  of a *.ecore model to a *.ecore.oclas.
+ *
+ * FIXME This class has evolved to partially support loading OCLstdlib.ecore for direct use by Model2TablesGenerator. However
+ * Iterations are not modelled so for now Model2TablesGenerator must continue to rely on a previously load by GenerateOCLstdlibXtend
+ */
 public class Ecore2AS extends AbstractExternal2AS
 {
 	/**
@@ -135,7 +145,7 @@ public class Ecore2AS extends AbstractExternal2AS
 		return isNullFree;
 	}
 
-	public static Ecore2AS loadFromEcore(@NonNull ASResource ecoreASResource, @NonNull URI ecoreURI) {
+	public static @Nullable Ecore2AS loadFromEcore(@NonNull ASResource ecoreASResource, @NonNull URI ecoreURI) {
 		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(ecoreASResource);
 		ResourceSet resourceSet = environmentFactory.getResourceSet();
 		Resource ecoreResource = resourceSet.getResource(ecoreURI, true);
@@ -214,18 +224,25 @@ public class Ecore2AS extends AbstractExternal2AS
 	private Set<@NonNull Ecore2AS> allConverters = new HashSet<>();
 
 	/**
-	 * List of all generic types.
+	 * List of all EDataTypes that might need special case mapping via the ecore2asMap. Non-null during declaration pass.
 	 */
-	private List<@NonNull EGenericType> genericTypes = null;
+	private @Nullable List<@NonNull EDataType> eDataTypes = null;
+
+	/**
+	 * List of all generic types. Non-null during declaration pass.
+	 */
+	private @Nullable List<@NonNull EGenericType> genericTypes = null;
 
 	private List<Resource.@NonNull Diagnostic> errors = null;
 
 	protected final @NonNull Resource ecoreResource;
 
 	protected Model pivotModel = null;						// Set by importResource
-	protected final Ecore2ASDeclarationSwitch declarationPass = new Ecore2ASDeclarationSwitch(this);
-	protected final Ecore2ASReferenceSwitch referencePass = new Ecore2ASReferenceSwitch(this);
-	private HashMap</*@NonNull*/ EClassifier, @NonNull Type> ecore2asMap = null;
+	@Deprecated /* Now a local variable */
+	protected final Ecore2ASDeclarationSwitch declarationPass = null;
+	@Deprecated /* Now a local variable */
+	protected final Ecore2ASReferenceSwitch referencePass = null;
+	private @NonNull Map</*@NonNull*/ EClassifier, @NonNull Type> ecore2asMap = new HashMap<>();
 
 	/**
 	 * The loadableURI of the ecoreResource, which may differ from ecoreResource.getURI() when
@@ -254,16 +271,11 @@ public class Ecore2AS extends AbstractExternal2AS
 	protected void addCreated(@NonNull EObject eObject, @NonNull Element pivotElement) {
 		@SuppressWarnings("unused")
 		Element oldElement = newCreateMap.put(eObject, pivotElement);
-		//		if (eObject instanceof ENamedElement) {
-		//			assert (oldElement == null) || (oldElement == pivotElement) || ((oldElement instanceof DataType) && (((DataType)oldElement).getBehavioralType() == pivotElement));
-		//		}
-		//		else {
-		//			assert oldElement == null;
-		//		}
 	}
 
 	@Override
 	public void addGenericType(@NonNull EGenericType eObject) {
+		assert genericTypes != null;
 		genericTypes.add(eObject);
 	}
 
@@ -274,19 +286,9 @@ public class Ecore2AS extends AbstractExternal2AS
 		}
 		Element pivotElement1 = pivotElement;
 		if (eObject instanceof EDataType) {
-			Type pivotType = getEcore2ASMap().get(eObject);
-			if (pivotType != null) {  		// If eObject is a known synonym such as EString
-				pivotElement1 = pivotType;	// remap to the library type
-			}
+			assert eDataTypes != null;
+			eDataTypes.add((EDataType) eObject);
 		}
-		//		Element pivotElement2 = pivotElement;
-		//		if (pivotElement instanceof DataType) {
-		//			Type behavioralType = ((DataType)pivotElement).getBehavioralType();
-		//			if (behavioralType != null) {
-		//				pivotElement2 = behavioralType;
-		//			}
-		//		}
-		//		assert pivotElement1 == pivotElement2;
 		addCreated(eObject, pivotElement1);
 	}
 
@@ -326,7 +328,7 @@ public class Ecore2AS extends AbstractExternal2AS
 				if (allConverters.add(converter)) {
 					converter.getASModel();
 					for (Map.Entry<@NonNull EObject, @NonNull Element> entry : converter.newCreateMap.entrySet()) {
-						newCreateMap.put(entry.getKey(), entry.getValue());
+						addCreated(entry.getKey(), entry.getValue());
 					}
 				}
 			}
@@ -358,6 +360,7 @@ public class Ecore2AS extends AbstractExternal2AS
 		if (pivotModel == null) {
 			getASModel();
 		}
+		assert eDataTypes == null;
 		Element element = newCreateMap.get(eObject);
 		if (element == null) {
 			return null;
@@ -381,7 +384,7 @@ public class Ecore2AS extends AbstractExternal2AS
 					//					allEClassifiers.addAll(converter.allEClassifiers);
 					//					allNames.addAll(converter.allNames);
 					for (Map.Entry<@NonNull EObject, @NonNull Element> entry : converter.newCreateMap.entrySet()) {
-						newCreateMap.put(entry.getKey(), entry.getValue());
+						addCreated(entry.getKey(), entry.getValue());
 					}
 				}
 			}
@@ -424,26 +427,25 @@ public class Ecore2AS extends AbstractExternal2AS
 	}
 
 	public @Nullable Element getCreated(@NonNull EObject eObject) {
+		assert eDataTypes == null;
 		return newCreateMap.get(eObject);
 	}
 
 	@Override
 	public @Nullable <T extends Element> T getCreated(@NonNull Class<T> requiredClass, @NonNull EObject eObject) {
+		assert eDataTypes == null;
 		return getASOfEcore(requiredClass, eObject);
 	}
 
 	@Override
 	public @Nullable Map<@NonNull EObject, @NonNull Element> getCreatedMap() {
+		assert eDataTypes == null;
 		return newCreateMap;
 	}
 
+	@Deprecated
 	public @NonNull Map<EClassifier, Type> getEcore2ASMap() {
-		HashMap</*@NonNull*/ EClassifier, @NonNull Type> ecore2asMap2 = ecore2asMap;
-		if (ecore2asMap2 == null) {
-			ecore2asMap2 = ecore2asMap = new HashMap<>();
-			initializeEcore2ASMap();
-		}
-		return ecore2asMap2;
+		return ecore2asMap;
 	}
 
 	public @Nullable Resource getEcoreResource() {
@@ -460,34 +462,41 @@ public class Ecore2AS extends AbstractExternal2AS
 		return ClassUtil.nonNullEMF(ecoreResource.getURI());
 	}
 
-	public @NonNull Model importObjects(@NonNull Collection<EObject> ecoreContents, @NonNull URI pivotURI) {
+	public @NonNull Model importObjects(@NonNull Collection<@NonNull EObject> ecoreContents, @NonNull URI pivotURI) {
 		EPackage libraryEPackage = isLibrary(ecoreContents);
-		if (libraryEPackage != null) {
+		if (libraryEPackage != null) {			 // when generating OCLstdlib
 			newCreateMap = new HashMap<>();
-			org.eclipse.ocl.pivot.Package asLibrary = standardLibrary.getPackage();
-			newCreateMap.put(libraryEPackage, asLibrary);
-			List<org.eclipse.ocl.pivot.Class> ownedType = asLibrary.getOwnedClasses();
-			//			int prefix = LibraryConstants.ECORE_STDLIB_PREFIX.length();
-			for (@SuppressWarnings("null")@NonNull EClassifier eClassifier : libraryEPackage.getEClassifiers()) {
-				String name = environmentFactory.getTechnology().getOriginalName(eClassifier); //.substring(prefix);
-				Type asType = NameUtil.getNameable(ownedType, name);
-				if (asType != null) {
-					newCreateMap.put(eClassifier, asType);
+			AnyType asAnyType = standardLibrary.basicGetOclAnyType();
+			org.eclipse.ocl.pivot.Package asLibrary = asAnyType != null ? asAnyType.getOwningPackage() : null;
+			if (asLibrary != null) {
+				addCreated(libraryEPackage, asLibrary);
+				List<org.eclipse.ocl.pivot.Class> ownedTypes = asLibrary.getOwnedClasses();
+				//			int prefix = LibraryConstants.ECORE_STDLIB_PREFIX.length();
+				for (@SuppressWarnings("null")@NonNull EClassifier eClassifier : libraryEPackage.getEClassifiers()) {
+					String name = environmentFactory.getTechnology().getOriginalName(eClassifier); //.substring(prefix);
+					Type asType = NameUtil.getNameable(ownedTypes, name);
+					if (asType != null) {
+						addCreated(eClassifier, asType);
+					}
 				}
+				Model containingRoot = PivotUtil.getContainingModel(asLibrary);
+				return ClassUtil.nonNullModel(containingRoot);
 			}
-			Model containingRoot = PivotUtil.getContainingModel(asLibrary);
-			return ClassUtil.nonNullModel(containingRoot);
 		}
 		@NonNull ASResource asResource = metamodelManager.getResource(pivotURI, ASResource.ECORE_CONTENT_TYPE);
 		asResource.setSaveable(false);
 		//		try {
-		if ((metamodelManager.getLibraryResource() == null) && isPivot(ecoreContents)) {
-			String nsURI = ((EPackage)ecoreContents.iterator().next()).getNsURI();
-			if (nsURI != null) {
-				String stdlibASUri = LibraryConstants.STDLIB_URI + PivotConstants.DOT_OCL_AS_FILE_EXTENSION;
-				OCLstdlib library = OCLstdlib.create(stdlibASUri);
-				metamodelManager.installResource(library);
-				//					metamodelManager.installAs(nsURI, OCLstdlibTables.PACKAGE);
+		if (metamodelManager.getLibraryResource() == null) {
+			if (libraryEPackage != null) {
+				metamodelManager.installResource(asResource);
+			}
+			else if (isPivot(ecoreContents)) {
+				String nsURI = ((EPackage)ecoreContents.iterator().next()).getNsURI();
+				if (nsURI != null) {
+					String stdlibASUri = LibraryConstants.STDLIB_URI + PivotConstants.DOT_OCL_AS_FILE_EXTENSION;
+					OCLstdlib library = OCLstdlib.create(stdlibASUri);
+					metamodelManager.installResource(library);
+				}
 			}
 		}
 		URI uri = ecoreURI != null ? ecoreURI : ecoreResource.getURI();
@@ -507,13 +516,6 @@ public class Ecore2AS extends AbstractExternal2AS
 		if (newCreateMap == null) {
 			update(asResource, ecoreContents);
 		}
-		//		}
-		//		catch (Exception e) {
-		//			if (errors == null) {
-		//				errors = new ArrayList<Resource.Diagnostic>();
-		//			}
-		//			errors.add(new XMIException("Failed to load '" + pivotURI + "'", e));
-		//		}
 		List<Diagnostic> errors2 = errors;
 		if (errors2 != null) {
 			asResource.getErrors().addAll(ClassUtil.nullFree(errors2));
@@ -522,24 +524,39 @@ public class Ecore2AS extends AbstractExternal2AS
 	}
 
 	private @Nullable Map<@NonNull EObject, @NonNull Element> synthesizeCreateMap(@NonNull ASResource asResource) {
+		Model pivotModel2 = pivotModel;
+		assert pivotModel2 != null;
 		if (asResource instanceof OCLmetamodel) {					// FIXME polymorphize as a cached derived ASResourceImpl capability
-			Map<@NonNull EObject, @NonNull Element> newCreateMap = new HashMap<>();
-			for (TreeIterator<EObject> tit = pivotModel.eAllContents(); tit.hasNext(); ) {
+			Map<@NonNull EObject, @NonNull Element> createMap = new HashMap<>();
+			for (TreeIterator<EObject> tit = pivotModel2.eAllContents(); tit.hasNext(); ) {
 				EObject eObject = tit.next();
 				if (eObject instanceof Element) {
 					Element asElement = (Element)eObject;
 					EObject esObject = asElement.getESObject();
 					if (esObject != null) {
-						newCreateMap.put(esObject, asElement);
+						createMap.put(esObject, asElement);
 					}
 				}
 			}
-			newCreateMap.put(ClassUtil.nonNullEMF(PivotPackage.Literals.BOOLEAN), standardLibrary.getBooleanType());
-			newCreateMap.put(ClassUtil.nonNullEMF(PivotPackage.Literals.INTEGER), standardLibrary.getIntegerType());
-			newCreateMap.put(ClassUtil.nonNullEMF(PivotPackage.Literals.REAL), standardLibrary.getRealType());
-			newCreateMap.put(ClassUtil.nonNullEMF(PivotPackage.Literals.STRING), standardLibrary.getStringType());
-			newCreateMap.put(ClassUtil.nonNullEMF(PivotPackage.Literals.UNLIMITED_NATURAL), standardLibrary.getUnlimitedNaturalType());
-			return newCreateMap;
+			createMap.put(ClassUtil.nonNullEMF(PivotPackage.Literals.BOOLEAN), standardLibrary.getBooleanType());
+			createMap.put(ClassUtil.nonNullEMF(PivotPackage.Literals.INTEGER), standardLibrary.getIntegerType());
+			createMap.put(ClassUtil.nonNullEMF(PivotPackage.Literals.REAL), standardLibrary.getRealType());
+			createMap.put(ClassUtil.nonNullEMF(PivotPackage.Literals.STRING), standardLibrary.getStringType());
+			createMap.put(ClassUtil.nonNullEMF(PivotPackage.Literals.UNLIMITED_NATURAL), standardLibrary.getUnlimitedNaturalType());
+			return createMap;
+		}
+		else if (asResource instanceof OCLstdlib) {					// FIXME polymorphize as a cached derived ASResourceImpl capability
+			Map<@NonNull EObject, @NonNull Element> createMap = new HashMap<>();
+			for (EObject eObject : new TreeIterable(pivotModel2, false)) {
+				if (eObject instanceof Element) {
+					Element asElement = (Element)eObject;
+					EObject esObject = asElement.getESObject();
+					if (esObject != null) {
+						createMap.put(esObject, asElement);
+					}
+				}
+			}
+			return createMap;
 		}
 		else {
 			return null;
@@ -547,11 +564,59 @@ public class Ecore2AS extends AbstractExternal2AS
 	}
 
 	public void initializeEcore2ASMap() {
-		ecore2asMap.put(EcorePackage.Literals.EBOOLEAN_OBJECT, standardLibrary.getBooleanType());
-		ecore2asMap.put(EcorePackage.Literals.EBOOLEAN, standardLibrary.getBooleanType());
-		ecore2asMap.put(EcorePackage.Literals.EBIG_INTEGER, standardLibrary.getIntegerType());
-		ecore2asMap.put(EcorePackage.Literals.EBIG_DECIMAL, standardLibrary.getRealType());
-		ecore2asMap.put(EcorePackage.Literals.ESTRING, standardLibrary.getStringType());
+		org.eclipse.ocl.pivot.Class booleanType = standardLibrary.getBooleanType();
+		org.eclipse.ocl.pivot.Class integerType = standardLibrary.getIntegerType();
+		org.eclipse.ocl.pivot.Class realType = standardLibrary.getRealType();
+		org.eclipse.ocl.pivot.Class stringType = standardLibrary.getStringType();
+		ecore2asMap.put(EcorePackage.Literals.EBOOLEAN_OBJECT, booleanType);
+		ecore2asMap.put(EcorePackage.Literals.EBOOLEAN, booleanType);
+		ecore2asMap.put(EcorePackage.Literals.EBIG_INTEGER, integerType);
+		ecore2asMap.put(EcorePackage.Literals.EBIG_DECIMAL, realType);
+		ecore2asMap.put(EcorePackage.Literals.ESTRING, stringType);
+	}
+
+	/**
+	 * @since 1.17
+	 */
+	public void initializeLibrary() {
+		if (standardLibrary.basicGetOclAnyType() != null) {
+			return;
+		}
+		List<org.eclipse.ocl.pivot.@NonNull Class> asClasses = null;
+		boolean needsLibrary = true;
+		for (EObject eRoot : ecoreResource.getContents()) {		// All one EPackage
+			if (eRoot instanceof EPackage) {
+				EPackage ePackage = (EPackage)eRoot;
+				boolean hasOclAny = ePackage.getEClassifier(TypeId.OCL_ANY_NAME) != null;
+				boolean hasBoolean = ePackage.getEClassifier(TypeId.BOOLEAN_NAME) instanceof EDataType;
+				if (hasOclAny) {
+					needsLibrary = false;
+				}
+				if (hasOclAny || hasBoolean) {
+					for (EClassifier eClassifier : ePackage.getEClassifiers()) {
+						Element asClass = newCreateMap.get(eClassifier);
+						assert asClass != null;
+						if (asClasses == null) {
+							asClasses = new ArrayList<>();
+						}
+						asClasses.add((org.eclipse.ocl.pivot.Class)asClass);
+					}
+				}
+			}
+		}
+		if (needsLibrary && (asClasses != null)) {
+			Set<String> installName= new HashSet<>();
+			for (org.eclipse.ocl.pivot.@NonNull Class asClass : asClasses) {
+				installName.add(asClass.getName());
+			}
+			for (org.eclipse.ocl.pivot.Class asClass : OCLstdlib.getDefaultPackage().getOwnedClasses()) {		// FIXME use contribution
+				assert asClass != null;
+				if (!installName.contains(asClass.getName())) {
+					asClasses.add(asClass);
+				}
+			}
+			standardLibrary.defineLibraryTypes(asClasses);
+		}
 	}
 
 	protected void installImports() {
@@ -590,7 +655,10 @@ public class Ecore2AS extends AbstractExternal2AS
 		}
 	}
 
-	protected EPackage isLibrary(@NonNull Collection<EObject> ecoreContents) {
+	/**
+	 * Return the first EPackage element of ecoreContents that has an ASLibrary annotation.
+	 */
+	protected @Nullable EPackage isLibrary(@NonNull Collection<@NonNull EObject> ecoreContents) {
 		if (ecoreContents.size() != 1) {
 			return null;
 		}
@@ -598,12 +666,11 @@ public class Ecore2AS extends AbstractExternal2AS
 		if (!(ecoreRoot instanceof EPackage)) {
 			return null;
 		}
-		EPackage ecorePackage = (EPackage) ecoreRoot;
-		EAnnotation asLibraryAnnotation = ecorePackage.getEAnnotation(PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE);
-		return asLibraryAnnotation != null ? ecorePackage : null;
+		EPackage ecorePackage = (EPackage)ecoreRoot;
+		return isLibrary(ecorePackage) ? ecorePackage : null;
 	}
 
-	protected boolean isPivot(@NonNull Collection<EObject> ecoreContents) {
+	protected boolean isPivot(@NonNull Collection<@NonNull EObject> ecoreContents) {
 		if (ecoreContents.size() != 1) {
 			return false;
 		}
@@ -645,11 +712,8 @@ public class Ecore2AS extends AbstractExternal2AS
 		if ((asMetamodels != null) && (metamodelManager.getLibraryResource() == null)) {
 			String nsURI = asMetamodels.iterator().next().getNsURI();
 			if (nsURI != null) {
-				//				String stdlibASUri = LibraryConstants.STDLIB_URI + PivotConstants.DOT_OCL_AS_FILE_EXTENSION;
 				OCLstdlib library = OCLstdlib.getDefault(); //create(stdlibASUri, "ocl", "ocl", nsURI);
-				//				metamodelManager.addPackageNsURISynonym(OCLstdlib.STDLIB_URI, PivotConstants.METAMODEL_URI);
 				metamodelManager.installResource(library);
-				//				metamodelManager.installAs(nsURI, OCLstdlibTables.PACKAGE);
 			}
 		}
 	}
@@ -665,7 +729,7 @@ public class Ecore2AS extends AbstractExternal2AS
 			EMap<String, String> details = importAnnotation.getDetails();
 			for (String key : details.keySet()) {
 				String value = details.get(key);
-				if (value == null) {			// Surely the blank namespace never happens so this is redundant rubbish?
+				if (value == null) {
 					value = key;
 					key = "";
 				}
@@ -711,14 +775,6 @@ public class Ecore2AS extends AbstractExternal2AS
 			return uri;
 		}
 		StandaloneProjectMap projectMap = (StandaloneProjectMap)projectManager;
-		/*		if (baseURI == null) {
-			IPackageDescriptor packageDescriptor = projectManager.getPackageDescriptor(URI.createURI(ePackage.getNsURI()));
-			if (packageDescriptor == null) {
-				return uri;
-			}
-			IResourceDescriptor resourceDescriptor = packageDescriptor.getResourceDescriptor();
-			baseURI = resourceDescriptor.getPlatformPluginURI();
-		} */
 		uri = uri.resolve(baseURI);
 		if (uri.isPlatformPlugin() && ClassUtil.safeEquals(ePackage.getNsURI(), String.valueOf(ePackage.eResource().getURI())) && (uri.segmentCount() >= 1)) {
 			@NonNull String projectName = uri.segment(1);
@@ -750,26 +806,6 @@ public class Ecore2AS extends AbstractExternal2AS
 		referencers.add(eObject);
 	}
 
-	/*	protected void refreshAnnotation(NamedElement pivotElement, String key, String value) {
-		String source = PIVOT_URI;
-		Annotation pivotAnnotation = null;
-		for (Annotation annotation : pivotElement.getOwnedAnnotation()) {
-			if (annotation.getName().equals(source)) {
-				pivotAnnotation = annotation;
-				break;
-			}
-		}
-		if (pivotAnnotation == null) {
-			pivotAnnotation = PivotFactory.eINSTANCE.createAnnotation();
-			pivotAnnotation.setName(source);
-			pivotElement.getOwnedAnnotation().add(pivotAnnotation);
-		}
-		Detail pivotDetail = PivotFactory.eINSTANCE.createDetail();
-		pivotDetail.setName(key);
-		pivotDetail.getValue().add(value);
-		pivotAnnotation.getOwnedDetail().add(pivotDetail);
-	} */
-
 	@Override
 	public <@NonNull T extends NamedElement> T refreshElement(@NonNull Class<T> pivotClass, EClass pivotEClass, @NonNull EModelElement eModelElement) {
 		EObject pivotElement = null;
@@ -791,17 +827,75 @@ public class Ecore2AS extends AbstractExternal2AS
 		}
 		@SuppressWarnings("unchecked")
 		T castElement = (T) pivotElement;
-		Element oldElement = newCreateMap.put(eModelElement, castElement);
-		assert oldElement == null;
+	/*	Element oldElement = */ addCreated(eModelElement, castElement);
+	//	assert oldElement == null;
 		return castElement;
 	}
 
+	/**
+	 * @since 1.17
+	 */
+	protected void resolveAliases(@NonNull Resource asResource) {
+		AliasAdapter ecoreAdapter = AliasAdapter.findAdapter(ecoreResource);
+		if (ecoreAdapter != null) {
+			Map<EObject, String> ecoreAliasMap = ecoreAdapter.getAliasMap();
+			AliasAdapter pivotAdapter = AliasAdapter.getAdapter(asResource);
+			Map<EObject, String> pivotAliasMap = pivotAdapter.getAliasMap();
+			for (EObject eObject : ecoreAliasMap.keySet()) {
+				String alias = ecoreAliasMap.get(eObject);
+				Element element = newCreateMap.get(eObject);
+				pivotAliasMap.put(element, alias);
+			}
+		}
+	}
+
 	protected Type resolveDataType(@NonNull EDataType eClassifier) {
-		Type pivotType = getEcore2ASMap().get(eClassifier);
+		Type pivotType = ecore2asMap.get(eClassifier);
 		if (pivotType == null) {
 			pivotType = getASType(eClassifier);
 		}
 		return pivotType;
+	}
+
+	/**
+	 * @since 1.17
+	 */
+	protected void resolveDataTypeMappings() {
+		ecore2asMap = new HashMap<>();
+		initializeEcore2ASMap();
+		assert eDataTypes != null;
+		for (@NonNull EDataType eDataType : eDataTypes) {
+			Type pivotType = ecore2asMap.get(eDataType);
+			if (pivotType != null) {  		// If eObject is a known synonym such as EString
+				addCreated(eDataType, pivotType);	// remap to the library type
+			}
+		}
+		eDataTypes = null;
+	}
+
+	/**
+	 * @since 1.17
+	 */
+	protected void resolveDeclarations(@NonNull Resource asResource, @NonNull Iterable<@NonNull EObject> ecoreContents) {
+		Ecore2ASDeclarationSwitch declarationPass = new Ecore2ASDeclarationSwitch(this);
+		PivotUtilInternal.refreshList(asResource.getContents(), Collections.singletonList(ClassUtil.nonNull(pivotModel)));
+		List<org.eclipse.ocl.pivot.Package> newPackages = new ArrayList<>();
+		for (EObject eObject : ecoreContents) {
+			EClass eClass = eObject.eClass();
+			if (eClass.getEPackage() != EcorePackage.eINSTANCE) {
+				error("Non Ecore " + eClass.getName() + " for Ecore2AS.update");
+			}
+			else {
+				Object pivotElement = declarationPass.doInPackageSwitch(eObject);
+				if (pivotElement instanceof org.eclipse.ocl.pivot.Package) {
+					newPackages.add((org.eclipse.ocl.pivot.Package) pivotElement);
+				}
+				else {
+					error("Bad ecore content");
+				}
+			}
+		}
+		PivotUtilInternal.refreshList(pivotModel.getOwnedPackages(), newPackages);
 	}
 
 	/**
@@ -831,8 +925,109 @@ public class Ecore2AS extends AbstractExternal2AS
 		return metamodelManager.getLibraryType(unspecializedPivotClass, templateArguments);
 	}
 
+	/**
+	 * @since 1.17
+	 */
+	protected void resolveIds(@NonNull Iterable<@NonNull EObject> ecoreContents) {
+		oldIdMap = new HashMap<>();
+		for (@NonNull EObject ecoreContent : ecoreContents) {
+			Resource resource = ecoreContent.eResource();
+			if (resource instanceof XMLResource) {
+				XMLResource xmlResource = (XMLResource) resource;
+				String id = xmlResource.getID(ecoreContent);
+				if (id != null) {
+					Element element = newCreateMap.get(ecoreContent);
+					if (element != null) {
+						oldIdMap.put(id, element);
+					}
+				}
+				for (TreeIterator<EObject> tit = ecoreContent.eAllContents(); tit.hasNext(); ) {
+					EObject eObject = tit.next();
+					id = xmlResource.getID(eObject);
+					if (id != null) {
+						Element element = newCreateMap.get(eObject);
+						if (element != null) {
+							oldIdMap.put(id, element);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * @since 1.17
+	 */
+	protected void resolveReferences() {
+		Ecore2ASReferenceSwitch referencePass = new Ecore2ASReferenceSwitch(this);
+		Set<@NonNull EObject> theReferencers = referencers;
+		while (theReferencers != null) {
+			Set<@NonNull EObject> moreReferencers = null;
+			for (EObject eObject : theReferencers) {
+				Object asElement = referencePass.doInPackageSwitch(eObject);
+				if (asElement == referencePass) {
+					if (moreReferencers == null) {
+						moreReferencers = new HashSet<>();
+					}
+					moreReferencers.add(eObject);
+				}
+			}
+			if ((moreReferencers == null) || (moreReferencers.size() < theReferencers.size())) {		// Avoid infinite loop
+				theReferencers = moreReferencers;
+			}
+		}
+		for (EObject eObject : referencers) {
+			if (eObject instanceof EReference) {
+				Property pivotElement = getCreated(Property.class, eObject);
+				if (pivotElement != null) {
+					Property oppositeProperty = pivotElement.getOpposite();
+					if ((oppositeProperty == null) && (eObject.eContainer() instanceof EClass)) {		// Skip annotation references
+						metamodelManager.installPropertyDeclaration(pivotElement);
+					}
+				}
+			}
+		}
+		referencers = null;
+	}
+
 	protected Type resolveSimpleType(@NonNull EClassifier eClassifier) {
 		return getASType(eClassifier);
+	}
+
+	/**
+	 * @since 1.17
+	 */
+	protected void resolveSpecializations() {
+		Map<@NonNull String, @NonNull Type> resolvedSpecializations = new HashMap<>();
+		assert genericTypes != null;
+		for (@NonNull EGenericType eGenericType : genericTypes) {
+			if (eGenericType.toString().contains("Collection<NE>")) {
+				getClass();		// XXX
+			}
+			Type pivotType = resolveType(resolvedSpecializations, eGenericType);
+			if (pivotType != null) {
+				addCreated(eGenericType, pivotType);
+			}
+		}
+		genericTypes = null;
+	}
+
+	/**
+	 * Ensure that each loaded EDataType has an OclAny / OclEnumeration superclass.
+	 *
+	 * @since 1.17
+	 */
+	protected void resolveSuperDataTypes() {
+		org.eclipse.ocl.pivot.Class oclAnyType = standardLibrary.getOclAnyType();
+		org.eclipse.ocl.pivot.Class oclEnumerationType = standardLibrary.getOclEnumerationType();
+		assert eDataTypes != null;
+		for (@NonNull EDataType eDataType : eDataTypes) {
+			org.eclipse.ocl.pivot.Class pivotElement = (org.eclipse.ocl.pivot.Class)newCreateMap.get(eDataType);
+			assert pivotElement != null;
+			List<org.eclipse.ocl.pivot.Class> superClasses = pivotElement.getSuperClasses();
+			assert superClasses.isEmpty();
+			superClasses.add(eDataType instanceof EEnum ? oclEnumerationType : oclAnyType);
+		}
 	}
 
 	protected Type resolveType(@NonNull Map<String, Type> resolvedSpecializations, @NonNull EGenericType eGenericType) {
@@ -866,7 +1061,7 @@ public class Ecore2AS extends AbstractExternal2AS
 			pivotType = resolveSimpleType(eClassifier);
 		}
 		if (pivotType != null) {
-			newCreateMap.put(eGenericType, pivotType);
+			addCreated(eGenericType, pivotType);
 		}
 		return pivotType;
 	}
@@ -922,102 +1117,42 @@ public class Ecore2AS extends AbstractExternal2AS
 		return String.valueOf(ecoreResource.getURI());
 	}
 
-	public void update(@NonNull Resource asResource, @NonNull Collection<EObject> ecoreContents) {
+	public void update(@NonNull Resource asResource, @NonNull Collection<@NonNull EObject> ecoreContents) {
 		allConverters.clear();
 		newCreateMap = new HashMap<>();
 		referencers = new HashSet<>();
 		genericTypes = new ArrayList<>();
-		PivotUtilInternal.refreshList(asResource.getContents(), Collections.singletonList(ClassUtil.nonNull(pivotModel)));
-		List<org.eclipse.ocl.pivot.Package> newPackages = new ArrayList<>();
-		for (EObject eObject : ecoreContents) {
-			EClass eClass = eObject.eClass();
-			if (eClass.getEPackage() != EcorePackage.eINSTANCE) {
-				error("Non Ecore " + eClass.getName() + " for Ecore2AS.update");
-			}
-			else {
-				Object pivotElement = declarationPass.doInPackageSwitch(eObject);
-				if (pivotElement instanceof org.eclipse.ocl.pivot.Package) {
-					newPackages.add((org.eclipse.ocl.pivot.Package) pivotElement);
-				}
-				else {
-					error("Bad ecore content");
-				}
-			}
-		}
-		PivotUtilInternal.refreshList(pivotModel.getOwnedPackages(), newPackages);
-		AliasAdapter ecoreAdapter = AliasAdapter.findAdapter(ecoreResource);
-		if (ecoreAdapter != null) {
-			Map<EObject, String> ecoreAliasMap = ecoreAdapter.getAliasMap();
-			AliasAdapter pivotAdapter = AliasAdapter.getAdapter(asResource);
-			Map<EObject, String> pivotAliasMap = pivotAdapter.getAliasMap();
-			for (EObject eObject : ecoreAliasMap.keySet()) {
-				String alias = ecoreAliasMap.get(eObject);
-				Element element = newCreateMap.get(eObject);
-				pivotAliasMap.put(element, alias);
-			}
-		}
+		eDataTypes = new ArrayList<>();
+		/*
+		 * Establish the declarations.
+		 */
+		resolveDeclarations(asResource, ecoreContents);
+		/*
+		 * Register any local declarations that establish novel ;library content..
+		 */
+		initializeLibrary();
+		/*
+		 * Insert the OclAny/OclEnumeration superclasses after local overrides have been declared,
+		 * but before Primitive synonyms are remapped.
+		 */
+		resolveSuperDataTypes();
+		/*
+		 * Add any aliases
+		 */
+		resolveAliases(asResource);
 		metamodelManager.installResource(asResource);
-		Map<@NonNull String, @NonNull Type> resolvedSpecializations = new HashMap<>();
-		for (@NonNull EGenericType eGenericType : genericTypes) {
-			Type pivotType = resolveType(resolvedSpecializations, eGenericType);
-			if (pivotType != null) {
-				newCreateMap.put(eGenericType, pivotType);
-			}
-		}
-		Type oclInvalidType = standardLibrary.getOclInvalidType();
-		Property oclInvalidProperty = standardLibrary.getOclInvalidProperty();
-		Set<EObject> theReferencers = referencers;
-		while (theReferencers != null) {
-			Set<EObject> moreReferencers = null;
-			for (EObject eObject : theReferencers) {
-				Object asElement = referencePass.doInPackageSwitch(eObject);
-				if ((asElement == referencePass) || (asElement == oclInvalidProperty) || (asElement == oclInvalidType)) {
-					if (moreReferencers == null) {
-						moreReferencers = new HashSet<>();
-					}
-					moreReferencers.add(eObject);
-				}
-			}
-			if ((moreReferencers == null) || (moreReferencers.size() < theReferencers.size())) {		// Avoid infinite loop
-				theReferencers = moreReferencers;
-			}
-		}
-		for (EObject eObject : referencers) {
-			if (eObject instanceof EReference) {
-				Property pivotElement = getCreated(Property.class, eObject);
-				if (pivotElement != null) {
-					Property oppositeProperty = pivotElement.getOpposite();
-					if ((oppositeProperty == null) && (eObject.eContainer() instanceof EClass)) {		// Skip annotation references
-						metamodelManager.installPropertyDeclaration(pivotElement);
-					}
-				}
-			}
-		}
-		referencers = null;
-		genericTypes = null;
-		oldIdMap = new HashMap<>();
-		for (EObject ecoreContent : ecoreContents) {
-			Resource resource = ecoreContent.eResource();
-			if (resource instanceof XMLResource) {
-				XMLResource xmlResource = (XMLResource) resource;
-				String id = xmlResource.getID(ecoreContent);
-				if (id != null) {
-					Element element = newCreateMap.get(ecoreContent);
-					if (element != null) {
-						oldIdMap.put(id, element);
-					}
-				}
-				for (TreeIterator<EObject> tit = ecoreContent.eAllContents(); tit.hasNext(); ) {
-					EObject eObject = tit.next();
-					id = xmlResource.getID(eObject);
-					if (id != null) {
-						Element element = newCreateMap.get(eObject);
-						if (element != null) {
-							oldIdMap.put(id, element);
-						}
-					}
-				}
-			}
-		}
+		/*
+		 * Remap known Ecore EDataTypes after custom pivot types have had a chance to be declared.
+		 */
+		resolveDataTypeMappings();
+		/*
+		 * Declare the specializations.
+		 */
+		resolveSpecializations();
+		/*
+		 * Resolve references.
+		 */
+		resolveReferences();
+		resolveIds(ecoreContents);
 	}
 }

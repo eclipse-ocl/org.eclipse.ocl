@@ -76,7 +76,6 @@ import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
-import org.eclipse.ocl.pivot.library.LibraryConstants;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -1027,24 +1026,17 @@ public class OCLinEcoreTablesUtils
 			return null;
 		}
 		Ecore2AS ecore2as = Ecore2AS.getAdapter(ecoreResource, environmentFactory);
-		org.eclipse.ocl.pivot.Package asPackage = ecore2as.getCreated(org.eclipse.ocl.pivot.Package.class, ePackage);
-		if (asPackage == null) {
-			return null;
-		}
-		if (asPackage.getURI().equals(LibraryConstants.STDLIB_URI)) {				// If generating OCLstdlibTables ...
-			mergeLibrary(asPackage);			// FIXME: redundant once M2T scans all partial types
-		}
-		return asPackage;
+		return ecore2as.getCreated(org.eclipse.ocl.pivot.Package.class, ePackage);
 	}
 
 	protected @NonNull LinkedHashSet<@NonNull Property> getProperties(org.eclipse.ocl.pivot.@NonNull Class type) {
 		Set<String> names = new HashSet<>();
 		LinkedHashSet<@NonNull Property> properties = new LinkedHashSet<>();
-		for (@SuppressWarnings("null")@NonNull Property property : metamodelManager.getMemberProperties(type, true)) {
+		for (@NonNull Property property : metamodelManager.getMemberProperties(type, true)) {
 			names.add(property.getName());
 			properties.add(metamodelManager.getPrimaryProperty(property));
 		}
-		for (@SuppressWarnings("null")@NonNull Property property : metamodelManager.getMemberProperties(type, false)) {
+		for (@NonNull Property property : metamodelManager.getMemberProperties(type, false)) {
 			if (!names.contains(property.getName())) {
 				properties.add(metamodelManager.getPrimaryProperty(property));
 			}
@@ -1267,6 +1259,7 @@ public class OCLinEcoreTablesUtils
 		return null;
 	}
 
+	@Deprecated /* no longer used - has child stealing issues */
 	protected void mergeLibrary(org.eclipse.ocl.pivot.@NonNull Package primaryPackage) {
 		//		primaryPackage.setName("ocl");
 		List<org.eclipse.ocl.pivot.@NonNull Class> primaryTypes = ClassUtil.nullFree(primaryPackage.getOwnedClasses());

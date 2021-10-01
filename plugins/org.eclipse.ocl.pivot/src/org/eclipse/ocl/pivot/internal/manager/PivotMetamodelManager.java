@@ -1751,7 +1751,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 				}
 				if (!standardLibrary.isExplicitDefaultStandardLibraryURI()) {
 					for (org.eclipse.ocl.pivot.Class asClass : asLibrary.getOwnedClasses()) {
-						if ("OclAny".equals(asClass.getName())) {
+						if (TypeId.OCL_ANY_NAME.equals(asClass.getName())) {
 							standardLibrary.setDefaultStandardLibraryURI(uri);
 							break;
 						}
@@ -1769,13 +1769,20 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	 * Merge all types in asLibrary into the overall Standard Library.
 	 */
 	protected void installLibraryContents(@NonNull Library asLibrary) {
+		List<org.eclipse.ocl.pivot.@NonNull Class> asClasses = null;
 		for (org.eclipse.ocl.pivot.Class type : asLibrary.getOwnedClasses()) {
 			if (type != null) {
 				org.eclipse.ocl.pivot.Class primaryType = getPrimaryClass(type);
 				if ((type == primaryType) && !PivotUtilInternal.isOrphanType(type)) {
-					standardLibrary.defineLibraryType(primaryType);
+					if (asClasses == null) {
+						asClasses = new ArrayList<>();
+					}
+					asClasses.add(primaryType);
 				}
 			}
+		}
+		if (asClasses != null) {
+			standardLibrary.defineLibraryTypes(asClasses);
 		}
 	}
 

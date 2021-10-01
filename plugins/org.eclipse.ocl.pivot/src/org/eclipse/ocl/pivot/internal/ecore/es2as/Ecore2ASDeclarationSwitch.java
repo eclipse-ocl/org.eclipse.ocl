@@ -47,6 +47,9 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.common.OCLCommon;
 import org.eclipse.ocl.pivot.Annotation;
+import org.eclipse.ocl.pivot.AnyType;
+import org.eclipse.ocl.pivot.BagType;
+import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
@@ -55,21 +58,28 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.LanguageExpression;
+import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.SequenceType;
+import org.eclipse.ocl.pivot.SetType;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.ids.RootPackageId;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.PrimitiveCompletePackageImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
@@ -89,6 +99,9 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.RealValue;
+import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 {
@@ -150,17 +163,53 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 	}
 
 	@Override
-	public Object caseEClass(EClass eObject) {
-		@SuppressWarnings("null") @NonNull EClass eObject2 = eObject;
+	public Object caseEClass(EClass eClass) {
+		assert eClass != null;
+		String newName = technology.getOriginalName(eClass);
 		org.eclipse.ocl.pivot.Class pivotElement;
-		if (technology.isStereotype(environmentFactory, eObject2)) {
-			pivotElement = converter.refreshElement(Stereotype.class, PivotPackage.Literals.STEREOTYPE, eObject2);
+		if (technology.isStereotype(environmentFactory, eClass)) {
+			pivotElement = converter.refreshElement(Stereotype.class, PivotPackage.Literals.STEREOTYPE, eClass);
+		}
+		else if (TypeId.BAG_NAME.equals(newName)) {
+			pivotElement = converter.refreshElement(BagType.class, PivotPackage.Literals.BAG_TYPE, eClass);
+		}
+		else if (TypeId.COLLECTION_NAME.equals(newName)) {
+			pivotElement = converter.refreshElement(CollectionType.class, PivotPackage.Literals.COLLECTION_TYPE, eClass);
+		}
+	//	else if (TypeId.INTEGER.equals(newName)) {
+	//		pivotElement = converter.refreshElement(PrimitiveType.class, PivotPackage.Literals.PRIMITIVE_TYPE, eClass);
+	//	}
+		else if (TypeId.OCL_ANY_NAME.equals(newName)) {
+			pivotElement = converter.refreshElement(AnyType.class, PivotPackage.Literals.ANY_TYPE, eClass);
+		}
+		else if (TypeId.OCL_INVALID_NAME.equals(newName)) {
+			pivotElement = converter.refreshElement(InvalidType.class, PivotPackage.Literals.INVALID_TYPE, eClass);
+		}
+		else if (TypeId.OCL_VOID_NAME.equals(newName)) {
+			pivotElement = converter.refreshElement(VoidType.class, PivotPackage.Literals.VOID_TYPE, eClass);
+		}
+		else if (TypeId.ORDERED_COLLECTION_NAME.equals(newName)) {
+			pivotElement = converter.refreshElement(CollectionType.class, PivotPackage.Literals.COLLECTION_TYPE, eClass);
+		}
+		else if (TypeId.ORDERED_SET_NAME.equals(newName)) {
+			pivotElement = converter.refreshElement(OrderedSetType.class, PivotPackage.Literals.ORDERED_SET_TYPE, eClass);
+		}
+	//	else if (TypeId.REAL.equals(newName)) {
+	//		pivotElement = converter.refreshElement(PrimitiveType.class, PivotPackage.Literals.PRIMITIVE_TYPE, eClass);
+	//	}
+		else if (TypeId.SEQUENCE_NAME.equals(newName)) {
+			pivotElement = converter.refreshElement(SequenceType.class, PivotPackage.Literals.SEQUENCE_TYPE, eClass);
+		}
+		else if (TypeId.SET_NAME.equals(newName)) {
+			pivotElement = converter.refreshElement(SetType.class, PivotPackage.Literals.SET_TYPE, eClass);
+		}
+		else if (TypeId.UNIQUE_COLLECTION_NAME.equals(newName)) {
+			pivotElement = converter.refreshElement(CollectionType.class, PivotPackage.Literals.COLLECTION_TYPE, eClass);
 		}
 		else {
-			pivotElement = converter.refreshElement(org.eclipse.ocl.pivot.Class.class, PivotPackage.Literals.CLASS, eObject2);
+			pivotElement = converter.refreshElement(org.eclipse.ocl.pivot.Class.class, PivotPackage.Literals.CLASS, eClass);
 		}
 		String oldName = pivotElement.getName();
-		String newName = technology.getOriginalName(eObject2);
 		boolean nameChange = (oldName != newName) || ((oldName != null) && !oldName.equals(newName));
 		if (nameChange) {
 			org.eclipse.ocl.pivot.Package parentPackage = pivotElement.getOwningPackage();
@@ -170,23 +219,23 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		}
 		pivotElement.setName(newName);
 		List<EAnnotation> excludedAnnotations = null;
-		EAnnotation duplicatesAnnotation = eObject2.getEAnnotation(PivotConstantsInternal.DUPLICATES_ANNOTATION_SOURCE);
+		EAnnotation duplicatesAnnotation = eClass.getEAnnotation(PivotConstantsInternal.DUPLICATES_ANNOTATION_SOURCE);
 		if (duplicatesAnnotation != null) {
 			excludedAnnotations = new ArrayList<>();
 			excludedAnnotations.add(duplicatesAnnotation);
 		}
-		EAnnotation redefinesAnnotation = eObject2.getEAnnotation(PivotConstantsInternal.REDEFINES_ANNOTATION_SOURCE);
+		EAnnotation redefinesAnnotation = eClass.getEAnnotation(PivotConstantsInternal.REDEFINES_ANNOTATION_SOURCE);
 		if (redefinesAnnotation != null) {
 			excludedAnnotations = new ArrayList<>();
 			excludedAnnotations.add(redefinesAnnotation);
 		}
-		copyClassifier(pivotElement, eObject2, excludedAnnotations);
-		pivotElement.setIsAbstract(eObject2.isAbstract());
-		pivotElement.setIsInterface(eObject2.isInterface());
-		doSwitchAll(eObject2.getEGenericSuperTypes());
+		copyClassifier(pivotElement, eClass, excludedAnnotations);
+		pivotElement.setIsAbstract(eClass.isAbstract());
+		pivotElement.setIsInterface(eClass.isInterface());
+		doSwitchAll(eClass.getEGenericSuperTypes());
 		List<Operation> pivotOperations = pivotElement.getOwnedOperations();
 		List<Constraint> pivotInvariants = pivotElement.getOwnedInvariants();
-		for (@SuppressWarnings("null")@NonNull EOperation eOperation : eObject2.getEOperations()) {
+		for (@SuppressWarnings("null")@NonNull EOperation eOperation : eClass.getEOperations()) {
 			if (converter.isInvariant(eOperation)) {
 				Object pivotObject = doSwitch(eOperation);
 				pivotInvariants.add((Constraint) pivotObject);
@@ -197,7 +246,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 			}
 		}
 		List<Property> pivotProperties = pivotElement.getOwnedProperties();
-		doSwitchAll(pivotProperties, eObject2.getEStructuralFeatures());
+		doSwitchAll(pivotProperties, eClass.getEStructuralFeatures());
 		if (duplicatesAnnotation != null) {
 			for (EObject eContent : duplicatesAnnotation.getContents()) {
 				if (eContent instanceof EOperation) {
@@ -223,35 +272,38 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 				}
 			}
 		}
-		converter.queueReference(eObject2);				// For superclasses
+		converter.queueReference(eClass);				// For superclasses
 		return pivotElement;
 	}
 
 	@Override
-	public Object caseEDataType(EDataType eObject) {
-		@SuppressWarnings("null") @NonNull EDataType eObject2 = eObject;
-		Class<?> instanceClass = eObject2.getInstanceClass();
-		String newName = technology.getOriginalName(eObject2);
+	public Object caseEDataType(EDataType eDataType) {
+		assert eDataType != null;
+		Class<?> instanceClass = eDataType.getInstanceClass();
+		String newName = technology.getOriginalName(eDataType);
 		boolean isPrimitive = false;
-		if ("Boolean".equals(newName) && ((instanceClass == Boolean.class) || (instanceClass == boolean.class))) {
+		if (TypeId.BOOLEAN_NAME.equals(newName) && ((instanceClass == Boolean.class) || (instanceClass == boolean.class))) {
 			isPrimitive = true;
 		}
-		else if ("Integer".equals(newName) && ((instanceClass == Number.class) || (instanceClass == BigInteger.class)
+		else if (TypeId.INTEGER_NAME.equals(newName) && ((instanceClass == IntegerValue.class)
+				|| (instanceClass == Number.class) || (instanceClass == BigInteger.class)
 				|| (instanceClass == Long.class) || (instanceClass == long.class)
 				|| (instanceClass == Integer.class) || (instanceClass == int.class)
 				|| (instanceClass == Short.class) || (instanceClass == short.class)
 				|| (instanceClass == Byte.class) || (instanceClass == byte.class))) {
 			isPrimitive = true;
 		}
-		else if ("Real".equals(newName) && ((instanceClass == Number.class) || (instanceClass == BigDecimal.class)
+		else if (TypeId.REAL_NAME.equals(newName) && ((instanceClass == RealValue.class)
+				|| (instanceClass == Number.class) || (instanceClass == BigDecimal.class)
 				|| (instanceClass == Double.class) || (instanceClass == double.class)
 				|| (instanceClass == Float.class) || (instanceClass == float.class))) {
 			isPrimitive = true;
 		}
-		else if ("String".equals(newName) && (instanceClass == String.class)) {
+		else if (TypeId.STRING_NAME.equals(newName) && (instanceClass == String.class)) {
 			isPrimitive = true;
 		}
-		else if ("UnlimitedNatural".equals(newName) && ((instanceClass == Number.class) || (instanceClass == BigInteger.class)
+		else if (TypeId.UNLIMITED_NATURAL_NAME.equals(newName) && ((instanceClass == UnlimitedNaturalValue.class)
+				|| (instanceClass == Number.class) || (instanceClass == BigInteger.class)
 				|| (instanceClass == Long.class) || (instanceClass == long.class)
 				|| (instanceClass == Integer.class) || (instanceClass == int.class)
 				|| (instanceClass == Short.class) || (instanceClass == short.class)
@@ -260,10 +312,10 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		}
 		DataType pivotElement;
 		if (isPrimitive) {
-			pivotElement = converter.refreshElement(PrimitiveType.class, PivotPackage.Literals.PRIMITIVE_TYPE, eObject2);
+			pivotElement = converter.refreshElement(PrimitiveType.class, PivotPackage.Literals.PRIMITIVE_TYPE, eDataType);
 		}
 		else {
-			pivotElement = converter.refreshElement(DataType.class, PivotPackage.Literals.DATA_TYPE, eObject2);
+			pivotElement = converter.refreshElement(DataType.class, PivotPackage.Literals.DATA_TYPE, eDataType);
 		}
 		String oldName = pivotElement.getName();
 		boolean nameChange = (oldName != newName) || ((oldName != null) && !oldName.equals(newName));
@@ -274,7 +326,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 			}
 		}
 		pivotElement.setName(newName);
-		copyDataTypeOrEnum(pivotElement, eObject2);
+		copyDataTypeOrEnum(pivotElement, eDataType);
 		if (isPrimitive) {
 			PivotMetamodelManager metamodelManager = converter.getMetamodelManager();
 			CompleteModelInternal completeModelInternal = metamodelManager.getCompleteModel();
@@ -294,12 +346,11 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 				}
 				else {
 					instanceClass.getDeclaredMethod("compareTo", instanceClass);
-					converter.queueReference(eObject2);			// Defer synthesis till supertypes resolved
+					converter.queueReference(eDataType);			// Defer synthesis till supertypes resolved
 				}
 			} catch (Exception e) {
 			}
 		}
-		pivotElement.getSuperClasses().add(environmentFactory.getStandardLibrary().getOclAnyType());
 		return pivotElement;
 	}
 
@@ -319,8 +370,6 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		pivotElement.setName(newName);
 		copyDataTypeOrEnum(pivotElement, eObject2);
 		doSwitchAll(pivotElement.getOwnedLiterals(), eObject2.getELiterals());
-		//		pivotElement.getSuperClass().add(metamodelManager.getOclAnyType());
-		pivotElement.getSuperClasses().add(environmentFactory.getStandardLibrary().getOclEnumerationType());
 		return pivotElement;
 	}
 
@@ -379,17 +428,23 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 	}
 
 	@Override
-	public Object caseEPackage(EPackage eObject) {
-		@SuppressWarnings("null") @NonNull EPackage eObject2 = eObject;
-		org.eclipse.ocl.pivot.Package pivotElement = converter.refreshElement(org.eclipse.ocl.pivot.Package.class, PivotPackage.Literals.PACKAGE, eObject2);
+	public Object caseEPackage(EPackage ePackage) {
+		assert ePackage != null;;
+		org.eclipse.ocl.pivot.Package pivotElement;
+		if (converter.isLibrary(ePackage)) {
+			pivotElement = converter.refreshElement(Library.class, PivotPackage.Literals.LIBRARY, ePackage);
+		}
+		else {
+			pivotElement = converter.refreshElement(org.eclipse.ocl.pivot.Package.class, PivotPackage.Literals.PACKAGE, ePackage);
+		}
 		String oldName = pivotElement.getName();
-		String newName = technology.getOriginalName(eObject2);
+		String newName = technology.getOriginalName(ePackage);
 		//		if (newName == null) {
 		//			newName = "anon_" + Integer.toHexString(System.identityHashCode(eObject2));
 		//			logger.error("Anonymous package named as '" + newName + "'");
 		//		}
 		String oldNsURI = pivotElement.getURI();
-		String newNsURI = eObject2.getNsURI();
+		String newNsURI = ePackage.getNsURI();
 		boolean nameChange = (oldName != newName) || ((oldName != null) && !oldName.equals(newName));
 		boolean nsURIChange = (oldNsURI != newNsURI) || ((oldNsURI != null) && !oldNsURI.equals(newNsURI));
 		if (nameChange || nsURIChange) {
@@ -402,44 +457,44 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 			}
 		}
 		pivotElement.setName(newName);
-		if (eObject2.eIsSet(EcorePackage.Literals.EPACKAGE__NS_URI)) {
-			RootPackageId metamodel = technology.getMetamodelId(environmentFactory, eObject2);
+		if (ePackage.eIsSet(EcorePackage.Literals.EPACKAGE__NS_URI)) {
+			RootPackageId metamodel = technology.getMetamodelId(environmentFactory, ePackage);
 			if (metamodel != null) {
 				((PackageImpl)pivotElement).setPackageId(metamodel);
 			}
-			pivotElement.setURI(eObject2.getNsURI());
+			pivotElement.setURI(ePackage.getNsURI());
 		}
 		else {
 			pivotElement.setURI(null);
 		}
-		if (eObject2.eIsSet(EcorePackage.Literals.EPACKAGE__NS_PREFIX)) {
-			pivotElement.setNsPrefix(eObject2.getNsPrefix());
+		if (ePackage.eIsSet(EcorePackage.Literals.EPACKAGE__NS_PREFIX)) {
+			pivotElement.setNsPrefix(ePackage.getNsPrefix());
 		}
 		else {
 			pivotElement.setNsPrefix(null);
 		}
-		if (!(eObject2.eContainer() instanceof EAnnotation)) {
+		if (!(ePackage.eContainer() instanceof EAnnotation)) {
 			String moniker = AS2Moniker.toString(pivotElement);
-			AliasAdapter adapter = AliasAdapter.getAdapter(eObject2.eResource());
+			AliasAdapter adapter = AliasAdapter.getAdapter(ePackage.eResource());
 			if (adapter != null) {
-				adapter.getAliasMap().put(eObject2, moniker);
+				adapter.getAliasMap().put(ePackage, moniker);
 			}
 		}
 		List<EAnnotation> exclusions = new ArrayList<>();
-		EAnnotation eAnnotation = eObject2.getEAnnotation(EcorePackage.eNS_URI);
+		EAnnotation eAnnotation = ePackage.getEAnnotation(EcorePackage.eNS_URI);
 		if (eAnnotation != null) {
 			exclusions.add(eAnnotation);
 		}
-		if (ClassUtil.basicGetMetamodelAnnotation(eObject2) != null) {
-			exclusions.add(ClassUtil.getMetamodelAnnotation(eObject2));
+		if (ClassUtil.basicGetMetamodelAnnotation(ePackage) != null) {
+			exclusions.add(ClassUtil.getMetamodelAnnotation(ePackage));
 		}
-		converter.addMapping(eObject2, pivotElement);
+		converter.addMapping(ePackage, pivotElement);
 		//		copyNamedElement(pivotElement, eObject2);
-		copyAnnotatedElement(pivotElement, eObject2, exclusions);
-		doSwitchAll(pivotElement.getOwnedPackages(), eObject2.getESubpackages());
+		copyAnnotatedElement(pivotElement, ePackage, exclusions);
+		doSwitchAll(pivotElement.getOwnedPackages(), ePackage.getESubpackages());
 		//		doSwitchAll(pivotElement.getOwnedClasses(), eObject2.getEClassifiers());
 		List<org.eclipse.ocl.pivot.@NonNull Class> newList = new ArrayList<>();
-		for (EClassifier eClassifier : eObject2.getEClassifiers()) {
+		for (EClassifier eClassifier : ePackage.getEClassifiers()) {
 			if (!converter.isEcoreOnlyEntryClass(eClassifier)) {
 				@SuppressWarnings("null")
 				org.eclipse.ocl.pivot.@NonNull Class pivotObject = (org.eclipse.ocl.pivot.Class) doSwitch(eClassifier);

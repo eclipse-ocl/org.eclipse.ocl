@@ -41,6 +41,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.resource.AS2ID;
@@ -121,6 +122,9 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 		ResourceSet resourceSet = ocl.getResourceSet();
 		try {
 			setEnvironmentFactory(ocl.getEnvironmentFactory());
+			if (useOCLstdlib) {
+				environmentFactory.getStandardLibrary().getOclAnyType();
+			}
 			BaseCSResource xtextResource = (BaseCSResource)resourceSet.getResource(fileURI, true);
 			String message = PivotUtil.formatResourceDiagnostics(ClassUtil.nonNullEMF(xtextResource.getErrors()), "OCLstdlib parse failure", "\n");
 			if (message != null) {
@@ -181,23 +185,23 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 				// FIXME EClass instanceClassNames are correct because they were loaded correct.
 				// FIXME EClass setInstanceClassName trashes EClasses that are set explicitly
 				//				setInstanceClassName(ePackage, "Bag", Bag.class, null);
-				setInstanceClassName(ePackage, "Boolean", Boolean.class, null);
+				setInstanceClassName(ePackage, TypeId.BOOLEAN_NAME, Boolean.class, null);
 				//				setInstanceClassName(ePackage, "Collection", Collection.class, null);
-				setInstanceClassName(ePackage, "Integer", IntegerValue.class, null);
+				setInstanceClassName(ePackage, TypeId.INTEGER_NAME, IntegerValue.class, null);
 				//				setInstanceClassName(ePackage, "OclAny", Object.class, "This Ecore representation of the pivot OclAny exists solely to support serialization of Ecore metamodels.\nTRue functionality is only available once converted to a Pivot model.");
 				//			setInstanceClassName(ePackage, "OclInvalid", InvalidValue.class, null);
 				//			setInstanceClassName(ePackage, "OclVoid", NullValue.class, null);
 				//				setInstanceClassName(ePackage, "OrderedSet", OrderedSet.class, null);
-				setInstanceClassName(ePackage, "Real", RealValue.class, null);
+				setInstanceClassName(ePackage, TypeId.REAL_NAME, RealValue.class, null);
 				//				setInstanceClassName(ePackage, "Sequence", List.class, null);
 				//				setInstanceClassName(ePackage, "Set", Set.class, null);
-				setInstanceClassName(ePackage, "String", String.class, null);
+				setInstanceClassName(ePackage, TypeId.STRING_NAME, String.class, null);
 				//				setInstanceClassName(ePackage, "UniqueCollection", Set.class, null);
-				setInstanceClassName(ePackage, "UnlimitedNatural", UnlimitedNaturalValue.class, null);
+				setInstanceClassName(ePackage, TypeId.UNLIMITED_NATURAL_NAME, UnlimitedNaturalValue.class, null);
 				EList<EClassifier> eClassifiers = ePackage.getEClassifiers();
-				EClass eOclAny = (EClass) NameUtil.getENamedElement(eClassifiers, "OclAny");
-				EClass eOclElement = (EClass) NameUtil.getENamedElement(eClassifiers, "OclElement");
-				EClass eOclType = (EClass) NameUtil.getENamedElement(eClassifiers, "OclType");
+				EClass eOclAny = (EClass) NameUtil.getENamedElement(eClassifiers, TypeId.OCL_ANY_NAME);
+				EClass eOclElement = (EClass) NameUtil.getENamedElement(eClassifiers, TypeId.OCL_ELEMENT_NAME);
+				EClass eOclType = (EClass) NameUtil.getENamedElement(eClassifiers, TypeId.OCL_TYPE_NAME);
 				for (EClassifier eClassifier : new ArrayList<EClassifier>(eClassifiers)) {
 					if (eClassifier instanceof EClass) {
 						EClass eClass = (EClass) eClassifier;
@@ -232,7 +236,7 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 						//
 						//	Operations/properties referencing non-library classes are removed to avoid dangling references.
 						//
-						if (name.equals("OclEnumeration")) {
+						if (name.equals(TypeId.OCL_ENUMERATION_NAME)) {
 							EClass eClass = (EClass)eClassifier;
 							assert eClass.isAbstract();
 							eClass.getEOperations().clear();
@@ -248,25 +252,25 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 						//
 						//	Library classes have a non-null instance class name to suppress generation of a Java class
 						//
-						if (name.equals("OclComparable")
-								|| name.equals("OclElement")
-								|| name.equals("OclEnumeration")
-								|| name.equals("OclInvalid")
-								|| name.equals("OclLambda")
-								|| name.equals("OclMessage")
-								|| name.equals("OclSelf")
-								|| name.equals("OclState")
-								|| name.equals("OclStereotype")
-								|| name.equals("OclSummable")
-								|| name.equals("OclTuple")
-								|| name.equals("OclType")
-								|| name.equals("OclVoid")) {
+						if (name.equals(TypeId.OCL_COMPARABLE_NAME)
+								|| name.equals(TypeId.OCL_ELEMENT_NAME)
+								|| name.equals(TypeId.OCL_ENUMERATION_NAME)
+								|| name.equals(TypeId.OCL_INVALID_NAME)
+								|| name.equals(TypeId.OCL_LAMBDA_NAME)
+								|| name.equals(TypeId.OCL_MESSAGE_NAME)
+								|| name.equals(TypeId.OCL_SELF_NAME)
+								|| name.equals(TypeId.OCL_STATE_NAME)
+								|| name.equals(TypeId.OCL_STEREOTYPE_NAME)
+								|| name.equals(TypeId.OCL_SUMMABLE_NAME)
+								|| name.equals(TypeId.OCL_TUPLE_NAME)
+								|| name.equals(TypeId.OCL_TYPE_NAME)
+								|| name.equals(TypeId.OCL_VOID_NAME)) {
 							EClass eClass = (EClass)eClassifier;
 							assert eClass.isAbstract();
 							eClassifier.setInstanceClass(Object.class);
 							eClass.setInterface(true);
 							if (eClass.getESuperTypes().isEmpty()) {
-								eClass.getESuperTypes().add(name.equals("OclStereotype") ? eOclType : name.equals("OclType") ? eOclElement : eOclAny);
+								eClass.getESuperTypes().add(name.equals(TypeId.OCL_STEREOTYPE_NAME) ? eOclType : name.equals(TypeId.OCL_TYPE_NAME) ? eOclElement : eOclAny);
 							}
 						}
 					}

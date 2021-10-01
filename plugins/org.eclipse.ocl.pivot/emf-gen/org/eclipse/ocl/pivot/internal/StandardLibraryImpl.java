@@ -411,6 +411,11 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	protected /*final*/ /*@NonNull*/ EnvironmentFactoryInternal environmentFactory;
 
 	@Override
+	public @Nullable AnyType basicGetOclAnyType() {
+		return oclAnyType;
+	}
+
+	@Override
 	public @Nullable Operation basicGetOclInvalidOperation() {
 		return oclInvalidOperation;
 	}
@@ -425,6 +430,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 		return oclInvalidType;
 	}
 
+	@Deprecated
 	@Override
 	public void defineLibraryType(org.eclipse.ocl.pivot.@NonNull Class pivotType) {
 		Map<String, org.eclipse.ocl.pivot.Class> nameToLibraryTypeMap2 = nameToLibraryTypeMap;
@@ -435,6 +441,21 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 		org.eclipse.ocl.pivot.Class oldType = nameToLibraryTypeMap2.put(name, pivotType);
 		if ((oldType != null) && (oldType != pivotType)) {
 			logger.warn("Conflicting pivot type '" + name + "'");
+		}
+	}
+
+	@Override
+	public void defineLibraryTypes(@NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> pivotTypes) {
+		Map<String, org.eclipse.ocl.pivot.Class> nameToLibraryTypeMap2 = nameToLibraryTypeMap;
+		if (nameToLibraryTypeMap2 == null) {
+			nameToLibraryTypeMap = nameToLibraryTypeMap2 = new HashMap<String, org.eclipse.ocl.pivot.Class>();
+		}
+		for (org.eclipse.ocl.pivot.@NonNull Class pivotType : pivotTypes) {
+			String name = pivotType.getName();
+			org.eclipse.ocl.pivot.Class oldType = nameToLibraryTypeMap2.put(name, pivotType);
+			if ((oldType != null) && (oldType != pivotType)) {
+				logger.warn("Conflicting pivot type '" + name + "'");
+			}
 		}
 	}
 
@@ -619,7 +640,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	public org.eclipse.ocl.pivot.@NonNull Class getOclElementType() {
 		org.eclipse.ocl.pivot.Class oclElementType2 = oclElementType;
 		if (oclElementType2 == null) {
-			oclElementType2 = oclElementType = resolveRequiredSimpleType(org.eclipse.ocl.pivot.Class.class, "OclElement");
+			oclElementType2 = oclElementType = resolveRequiredSimpleType(org.eclipse.ocl.pivot.Class.class, TypeId.OCL_ELEMENT_NAME);
 		}
 		return oclElementType2;
 	}

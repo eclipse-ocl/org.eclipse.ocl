@@ -71,6 +71,7 @@ import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.utilities.OppositePropertyDetails;
@@ -340,7 +341,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		copyClassifier(eClass, pivotAnyType);
 		Class<?> instanceClass = null;
 		String name = pivotAnyType.getName();
-		if ("OclAny".equals(name)) {
+		if (TypeId.OCL_ANY_NAME.equals(name)) {
 			instanceClass = Object.class;
 		}
 		eClass.setInstanceClass(instanceClass);

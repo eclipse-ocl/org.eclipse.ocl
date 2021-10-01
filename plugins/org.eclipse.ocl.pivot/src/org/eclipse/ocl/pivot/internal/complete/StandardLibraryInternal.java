@@ -31,10 +31,19 @@ import org.eclipse.ocl.pivot.VoidType;
  */
 public interface StandardLibraryInternal extends StandardLibrary.StandardLibraryExtension
 {
+	/**
+	 * @since 1.17
+	 */
+	@Nullable AnyType basicGetOclAnyType();
 	@Nullable Operation basicGetOclInvalidOperation();
 	@Nullable Property basicGetOclInvalidProperty();
 	@Nullable InvalidType basicGetOclInvalidType();
+	@Deprecated /* @deprecated - use multi-type defineLibraryTypes */
 	void defineLibraryType(org.eclipse.ocl.pivot.@NonNull Class pivotType);
+	/**
+	 * @since 1.17
+	 */
+	void defineLibraryTypes(@NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> pivotTypes);
 	void dispose();
 	@Override
 	@NonNull BagType getBagType();

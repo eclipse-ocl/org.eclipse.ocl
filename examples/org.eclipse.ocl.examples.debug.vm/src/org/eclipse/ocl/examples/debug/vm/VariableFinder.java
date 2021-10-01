@@ -46,6 +46,7 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
@@ -514,7 +515,7 @@ public class VariableFinder
 			//				nextDeclaredType = "type.getElementType()";
 			//			} else if(nextDeclaredType == null) {
 			// FIXME
-			nextDeclaredType = "OclAny";
+			nextDeclaredType = TypeId.OCL_ANY_NAME;
 			//			}
 
 			Object element = getElement(collection, elementIndex);
@@ -541,7 +542,7 @@ public class VariableFinder
 			//				nextDeclaredType = "type.getElementType()";
 			//			} else if(nextDeclaredType == null) {
 			// FIXME
-			nextDeclaredType = "OclAny";
+			nextDeclaredType = TypeId.OCL_ANY_NAME;
 			//			}
 
 			Object element = getElement(collection.getElements(), elementIndex);
