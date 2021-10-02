@@ -454,7 +454,9 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 			String name = pivotType.getName();
 			org.eclipse.ocl.pivot.Class oldType = nameToLibraryTypeMap2.put(name, pivotType);
 			if ((oldType != null) && (oldType != pivotType)) {
-				logger.warn("Conflicting pivot type '" + name + "'");
+				if (!(oldType instanceof PrimitiveType) || !(pivotType instanceof PrimitiveType)) {		// User primitives may only be DataType e.g. testQVTrLoad_ATL2QVTr_qvtre
+					logger.warn("Conflicting pivot type '" + name + "'");
+				}
 			}
 		}
 	}
