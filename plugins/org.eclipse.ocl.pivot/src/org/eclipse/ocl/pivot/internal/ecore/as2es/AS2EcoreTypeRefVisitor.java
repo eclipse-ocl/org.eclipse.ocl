@@ -73,6 +73,19 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS
 		this.isRequired = isRequired;
 	}
 
+	private <T extends EObject> @Nullable T getESObject(@NonNull Class<T> requiredClass, org.eclipse.ocl.pivot.@NonNull Class pivotType) {
+		Iterable<org.eclipse.ocl.pivot.Class> partialClasses = metamodelManager.getPartialClasses(pivotType);
+		for (org.eclipse.ocl.pivot.Class type : partialClasses) {
+			if (type instanceof PivotObjectImpl) {
+				EObject esObject = ((PivotObjectImpl)type).getESObject();
+				if ((esObject != null) && requiredClass.isAssignableFrom(esObject.getClass())) {
+					return (T)esObject;
+				}
+			}
+		}
+		return null;
+	}
+
 	public EGenericType resolveEGenericType(org.eclipse.ocl.pivot.@NonNull Class type) {
 		EObject eType = safeVisit(type);
 		if (eType instanceof EGenericType) {
@@ -137,14 +150,9 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS
 				return eClassifier;
 			}
 			if (metamodelManager.isTypeServeable(pivotType)) {
-				Iterable<org.eclipse.ocl.pivot.Class> partialClasses = metamodelManager.getPartialClasses(pivotType);
-				for (org.eclipse.ocl.pivot.Class type : partialClasses) {
-					if (type instanceof PivotObjectImpl) {
-						EObject eTarget = ((PivotObjectImpl)type).getESObject();
-						if (eTarget != null) {
-							return eTarget;
-						}
-					}
+				eClassifier = getESObject(EClassifier.class, pivotType);
+				if (eClassifier != null) {
+					return eClassifier;
 				}
 			}
 			else {
@@ -226,6 +234,14 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS
 		if (eClassifier != null) {
 			return eClassifier;
 		}
+	//	EDataType eClassifier2 = getESObject(EDataType.class, pivotType);  -- too simple can give String rather than EString
+	//	if (eClassifier2 != null) {
+	//		if (!isRequired && (eClassifier2 == EcorePackage.Literals.EBOOLEAN)) {
+	//			eClassifier2 = EcorePackage.Literals.EBOOLEAN_OBJECT;
+	//		}
+	//		context.putCreated(pivotType, eClassifier2);
+	//		return eClassifier2;
+	//	}
 		String uri = context.getPrimitiveTypesUriPrefix();
 		if (uri != null) {
 			URI proxyURI = URI.createURI(uri + pivotType.getName());
@@ -244,25 +260,21 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS
 				}
 			}
 		}
-		org.eclipse.ocl.pivot.Package standardLibraryPackage = standardLibrary.getPackage();
 		for (org.eclipse.ocl.pivot.Class aType : partialClasses) {
-			org.eclipse.ocl.pivot.Package pivotPackage = aType.getOwningPackage();
-			if (pivotPackage == standardLibraryPackage) {
-				if (aType == standardLibrary.getStringType()) {
-					return EcorePackage.Literals.ESTRING;
-				}
-				else if (aType == standardLibrary.getBooleanType()) {
-					return isRequired ? EcorePackage.Literals.EBOOLEAN : EcorePackage.Literals.EBOOLEAN_OBJECT;
-				}
-				else if (aType == standardLibrary.getIntegerType()) {
-					return EcorePackage.Literals.EBIG_INTEGER;
-				}
-				else if (aType == standardLibrary.getRealType()) {
-					return EcorePackage.Literals.EBIG_DECIMAL;
-				}
-				else if (aType == standardLibrary.getUnlimitedNaturalType()) {
-					return EcorePackage.Literals.EBIG_INTEGER;
-				}
+			if (aType == standardLibrary.getStringType()) {
+				return EcorePackage.Literals.ESTRING;
+			}
+			else if (aType == standardLibrary.getBooleanType()) {
+				return isRequired ? EcorePackage.Literals.EBOOLEAN : EcorePackage.Literals.EBOOLEAN_OBJECT;
+			}
+			else if (aType == standardLibrary.getIntegerType()) {
+				return EcorePackage.Literals.EBIG_INTEGER;
+			}
+			else if (aType == standardLibrary.getRealType()) {
+				return EcorePackage.Literals.EBIG_DECIMAL;
+			}
+			else if (aType == standardLibrary.getUnlimitedNaturalType()) {
+				return EcorePackage.Literals.EBIG_INTEGER;
 			}
 		}
 		throw new IllegalArgumentException("Unsupported primitive type '" + pivotType + "' in AS2Ecore TypeRef pass");
