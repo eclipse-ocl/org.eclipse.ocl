@@ -755,7 +755,7 @@ public class EcoreOCLEValidator implements EValidator
 		if (eAnnotation == null) {
 			return true;
 		}
-		OCL ocl = PivotDiagnostician.getOCL(context, eOperation);		// Shares a weak referen ce that garbage collects
+		OCL ocl = PivotDiagnostician.getOCL(context, eOperation);		// Shares a weak reference that garbage collects
 		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension)ocl.getEnvironmentFactory();
 		NamedElement asElement = getASOf(environmentFactory, NamedElement.class, eOperation, diagnostics, context);
 		if (asElement == null) {

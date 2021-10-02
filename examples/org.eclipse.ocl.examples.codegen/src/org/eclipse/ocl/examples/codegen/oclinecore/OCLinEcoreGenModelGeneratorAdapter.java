@@ -553,7 +553,7 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 				if (javaBody != null) {
 					return;		// Leave an existing Java body unaffected
 				}
-				body = "throw new UnsupportedOperationException();  // FIXME Unimplemented " + (pOperation != null ? AS2Moniker.toString(pOperation) : "");
+				body = "throw new UnsupportedOperationException();  // FIXME missing body EAnnotation for " + (pOperation != null ? AS2Moniker.toString(pOperation) : "");
 			}
 			addEAnnotationDetail(eOperation, GenModelPackage.eNS_URI, "body", body);
 			//	removeEAnnotation(eOperation.getEAnnotation(OCLConstants.OCL_DELEGATE_URI));
@@ -571,7 +571,7 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 				if (javaBody != null) {
 					return;		// Leave an existing Java body unaffected
 				}
-				body = "throw new UnsupportedOperationException();  // FIXME Unimplemented " + (pProperty != null ? AS2Moniker.toString(pProperty) : "");
+				body = "throw new UnsupportedOperationException();  // FIXME missing body EAnnotation for " + (pProperty != null ? AS2Moniker.toString(pProperty) : "");
 			}
 			addEAnnotationDetail(eFeature, GenModelPackage.eNS_URI, "get", body);
 			//			addEAnnotationDetail(eFeature, GenModelPackage.eNS_URI, "body", body);

@@ -273,7 +273,11 @@ public interface StandardLibrary extends Element
 
 	/**
 	 * Obtains the package containing the library types
+	 *
+	 * Adeprecated since for extended libraries that package is ambiguous.
+	 * Use getOclAnyType().getOwningPackage() for the package defining OclAny.
 	 */
+	@Deprecated
 	org.eclipse.ocl.pivot.@NonNull Package getPackage();
 
 	Type getPrimitiveType(@NonNull PrimitiveTypeId id);
