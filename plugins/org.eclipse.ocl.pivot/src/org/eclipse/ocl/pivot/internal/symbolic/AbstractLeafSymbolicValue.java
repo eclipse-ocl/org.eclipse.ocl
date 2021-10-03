@@ -37,8 +37,8 @@ public abstract class AbstractLeafSymbolicValue extends AbstractSymbolicValue
 {
 	public static class SymbolicCollectionValue extends AbstractLeafSymbolicValue
 	{
-		public SymbolicCollectionValue(@NonNull String name, @NonNull OCLExpression expression, boolean mayBeNull, boolean mayBeInvalid) {
-			super(name, expression, mayBeNull, mayBeInvalid, null);
+		public SymbolicCollectionValue(@NonNull String name, @NonNull OCLExpression expression, @Nullable String mayBeNullReason, @Nullable String mayBeInvalidReason) {
+			super(name, expression, mayBeNullReason, mayBeInvalidReason, null);
 			assert expression.getType() instanceof CollectionType;
 		}
 
@@ -65,8 +65,8 @@ public abstract class AbstractLeafSymbolicValue extends AbstractSymbolicValue
 		protected final @NonNull SymbolicValue sourceValue;
 		protected final @NonNull Property property;
 
-		public SymbolicNavigationCallValue(@NonNull String name, @NonNull NavigationCallExp navigationCallExp, boolean mayBeNull, boolean mayBeInvalid, @NonNull SymbolicValue sourceValue) {
-			super(name, navigationCallExp, mayBeNull, mayBeInvalid, null);
+		public SymbolicNavigationCallValue(@NonNull String name, @NonNull NavigationCallExp navigationCallExp, @Nullable String mayBeNullReason, @Nullable String mayBeInvalidReason, @NonNull SymbolicValue sourceValue) {
+			super(name, navigationCallExp, mayBeNullReason, mayBeInvalidReason, null);
 			this.sourceValue = sourceValue;
 			this.property = PivotUtil.getReferredProperty(navigationCallExp);
 		}
@@ -88,9 +88,9 @@ public abstract class AbstractLeafSymbolicValue extends AbstractSymbolicValue
 		protected final @NonNull LibraryOperation operation;
 		protected final @NonNull List<@NonNull SymbolicValue> boxedSourceAndArgumentValues;
 
-		public SymbolicOperationCallValue(@NonNull String name, @NonNull OperationCallExp operationCallExp, boolean mayBeNull, boolean mayBeInvalid,
+		public SymbolicOperationCallValue(@NonNull String name, @NonNull OperationCallExp operationCallExp, @Nullable String mayBeNullReason, @Nullable String mayBeInvalidReason,
 				@NonNull LibraryOperation operation, @NonNull List<@NonNull SymbolicValue> boxedSourceAndArgumentValues) {
-			super(name, operationCallExp, mayBeNull, mayBeInvalid, null);
+			super(name, operationCallExp, mayBeNullReason, mayBeInvalidReason, null);
 			this.operation = operation;
 			this.boxedSourceAndArgumentValues = boxedSourceAndArgumentValues;
 		//	assert operation == operationCallExp.getReferredOperation().getImplementation();		// XXX lazy init may not have happened
@@ -122,26 +122,26 @@ public abstract class AbstractLeafSymbolicValue extends AbstractSymbolicValue
 	public AbstractLeafSymbolicValue() {
 		this.name = TypeId.OCL_INVALID_NAME;
 		this.typeId = TypeId.OCL_INVALID;
-		this.mayBeNull = false;
-		this.mayBeInvalid = false;
+		this.mayBeNullReason = null;
+		this.mayBeInvalidReason = null;
 	}
 
 	protected final @NonNull String name;
 	protected final @NonNull TypeId typeId;
-	protected final boolean mayBeNull;
-	protected final boolean mayBeInvalid;
+	protected final @Nullable String mayBeNullReason;
+	protected final @Nullable String mayBeInvalidReason;
 	private @Nullable SymbolicContent content = null;
 
-	protected AbstractLeafSymbolicValue(@NonNull String name, @NonNull TypedElement typedElement, boolean mayBeNull, boolean mayBeInvalid,@Nullable SymbolicContent content) {
+	protected AbstractLeafSymbolicValue(@NonNull String name, @NonNull TypedElement typedElement, @Nullable String mayBeNullReason, @Nullable String mayBeInvalidReason, @Nullable SymbolicContent content) {
 		// FIXME getBehavioralType needed by test_umlValidation_Bug467192
-		this(name, ClassUtil.nonNullState(PivotUtil.getBehavioralType(typedElement)).getTypeId(), mayBeNull, mayBeInvalid, content);
+		this(name, ClassUtil.nonNullState(PivotUtil.getBehavioralType(typedElement)).getTypeId(), mayBeNullReason, mayBeInvalidReason, content);
 	}
 
-	protected AbstractLeafSymbolicValue(@NonNull String name, @NonNull TypeId typeId, boolean mayBeNull, boolean mayBeInvalid, @Nullable SymbolicContent content) {
+	protected AbstractLeafSymbolicValue(@NonNull String name, @NonNull TypeId typeId, @Nullable String mayBeNullReason, @Nullable String mayBeInvalidReason, @Nullable SymbolicContent content) {
 		this.name = name;
 		this.typeId = typeId;
-		this.mayBeNull = mayBeNull;
-		this.mayBeInvalid = mayBeInvalid;
+		this.mayBeNullReason = mayBeNullReason;
+		this.mayBeInvalidReason = mayBeInvalidReason;
 		this.content = content;
 	}
 
@@ -154,8 +154,8 @@ public abstract class AbstractLeafSymbolicValue extends AbstractSymbolicValue
 		s.append(" : ");
 		s.append(typeId);
 		s.append("[");
-		s.append(mayBeNull ? "?" : "1");
-		if (mayBeInvalid) {
+		s.append(mayBeNullReason != null ? "?" : "1");
+		if (mayBeInvalidReason != null) {
 			s.append("!");
 		}
 		s.append("]");
@@ -177,12 +177,12 @@ public abstract class AbstractLeafSymbolicValue extends AbstractSymbolicValue
 
 	@Override
 	public @NonNull SymbolicSimpleStatus basicGetInvalidStatus() {
-		return mayBeInvalid ? SymbolicSimpleStatus.UNDECIDED : SymbolicSimpleStatus.UNSATISFIED;
+		return mayBeInvalidReason != null ? SymbolicSimpleStatus.UNDECIDED : SymbolicSimpleStatus.UNSATISFIED;
 	}
 
 	@Override
 	public @NonNull SymbolicSimpleStatus basicGetNullStatus() {
-		return mayBeNull ? SymbolicSimpleStatus.UNDECIDED : SymbolicSimpleStatus.UNSATISFIED;
+		return mayBeNullReason != null ? SymbolicSimpleStatus.UNDECIDED : SymbolicSimpleStatus.UNSATISFIED;
 	}
 
 	@Override
@@ -282,9 +282,34 @@ public abstract class AbstractLeafSymbolicValue extends AbstractSymbolicValue
 	}
 
 	@Override
+	public @Nullable String mayBeInvalidReason() {
+	//	String mayBeInvalidReason2 = super.mayBeInvalidReason();
+	//	assert (mayBeInvalidReason != null) == (mayBeInvalidReason2 != null);		// XXX
+	//	assert ClassUtil.safeEquals(mayBeInvalidReason, mayBeInvalidReason2);		// XXX
+		return mayBeInvalidReason;
+	}
+
+	@Override
+	public @Nullable String mayBeNullReason() {
+	//	String mayBeNullReason2 = super.mayBeNullReason();
+	//	assert (mayBeNullReason != null) == (mayBeNullReason2 != null);				// XXX
+	//	assert ClassUtil.safeEquals(mayBeNullReason, mayBeNullReason2);				// XXX
+		return mayBeNullReason;
+	}
+
+	@Override
 	public void toString(@NonNull StringBuilder s) {
 		appendName(s);
 		appendType(s);
 		appendContent(s);
+		s.append(" «");
+		if (mayBeNullReason != null) {
+			s.append(mayBeNullReason);
+		}
+		s.append("» «");
+		if (mayBeInvalidReason != null) {
+			s.append(mayBeInvalidReason);
+		}
+		s.append("»");
 	}
 }

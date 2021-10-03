@@ -27,8 +27,7 @@ public interface SymbolicValue
 	void appendName(@NonNull StringBuilder s);
 
 	/**
-	 * Return a non-null String describing the incompatibility of this value if incompatible, else null.
-	 * @return
+	 * Return a non-null String describing the incompatibility of this value if unconditionally incompatible, else null.
 	 */
 	@Nullable String asIncompatibility();
 
@@ -103,7 +102,11 @@ public interface SymbolicValue
 
 	boolean mayBeInvalid();
 
+	@Nullable String mayBeInvalidReason();
+
 	boolean mayBeNull();
+
+	@Nullable String mayBeNullReason();
 
 	boolean mayBeTrue();
 

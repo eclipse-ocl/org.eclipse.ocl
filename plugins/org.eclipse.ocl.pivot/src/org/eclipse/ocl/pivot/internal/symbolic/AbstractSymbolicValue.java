@@ -392,8 +392,18 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 	}
 
 	@Override
+	public @Nullable String mayBeInvalidReason() {
+		return SymbolicUtil.mayBeInvalidReason(mayBeInvalid());
+	}
+
+	@Override
 	public boolean mayBeNull() {
 		return !getNullStatus().isUnsatisfied();
+	}
+
+	@Override
+	public @Nullable String mayBeNullReason() {
+		return SymbolicUtil.mayBeNullReason(mayBeNull());
 	}
 
 	@Override

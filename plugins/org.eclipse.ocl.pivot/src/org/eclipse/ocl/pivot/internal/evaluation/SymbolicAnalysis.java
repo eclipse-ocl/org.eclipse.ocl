@@ -42,6 +42,7 @@ import org.eclipse.ocl.pivot.internal.symbolic.SymbolicUnknownValue;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
@@ -299,8 +300,8 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 		return hypothesizedEvaluationEnvironment;
 	}
 
-	public @NonNull SymbolicUnknownValue createUnknownValue(@NonNull TypeId typeId, boolean mayBeNull, boolean mayBeInvalid) {
-		return new SymbolicUnknownValue(createVariableName(), typeId, mayBeNull, mayBeInvalid);
+	public @NonNull SymbolicUnknownValue createUnknownValue(@NonNull TypeId typeId, @Nullable String mayBeNullReason, @Nullable String mayBeInvalidReason) {
+		return new SymbolicUnknownValue(createVariableName(), typeId, mayBeNullReason, mayBeInvalidReason);
 	}
 
 	public @NonNull String createVariableName() {
@@ -414,18 +415,20 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 		return symbolicKnownValue;
 	}
 
-	public @Nullable SymbolicValue getMayBeInvalidValue(@NonNull TypeId typeid, boolean mayBeNull) {
+	public @Nullable SymbolicValue getMayBeInvalidValue(@NonNull TypeId typeid, @Nullable String mayBeNullReason, @NonNull String mayBeInvalidReason) {
 		List<@NonNull SymbolicUnknownValue> unknownValues = typeid2unknownValues.get(typeid);
 		if (unknownValues == null) {
 			unknownValues = new ArrayList<>();
 			typeid2unknownValues.put(typeid, unknownValues);
 		}
 		for (@NonNull SymbolicUnknownValue unknownValue : unknownValues) {
-			if (unknownValue.mayBeNull() == mayBeNull) {
+		//	if (unknownValue.mayBeNull() == (mayBeNullReason != null)) {
+			if (ClassUtil.safeEquals(unknownValue.mayBeNullReason(), mayBeNullReason)
+			 && ClassUtil.safeEquals(unknownValue.mayBeInvalidReason(), mayBeInvalidReason)) {
 				return unknownValue;
 			}
 		}
-		SymbolicUnknownValue unknownValue = createUnknownValue(typeid, mayBeNull, true);
+		SymbolicUnknownValue unknownValue = createUnknownValue(typeid, mayBeNullReason, mayBeInvalidReason);
 		unknownValues.add(unknownValue);
 		return unknownValue;
 	}
@@ -463,11 +466,11 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 		throw new UnsupportedOperationException();
 	} */
 
-	public @NonNull SymbolicValue getUnknownValue(@NonNull TypedElement typedElement, boolean mayBeNull, boolean mayBeInvalid) {
+	public @NonNull SymbolicValue getUnknownValue(@NonNull TypedElement typedElement, @Nullable String mayBeNullReason, @Nullable String mayBeInvalidReason) {
 		SymbolicValue symbolicValue = getBaseSymbolicEvaluationEnvironment().basicGetSymbolicValue(typedElement);
 		if (symbolicValue instanceof SymbolicUnknownValue) {
 			assert symbolicValue.getTypeId() == typedElement.getTypeId();
-			if (!mayBeNull) {
+			if (mayBeNullReason == null) {
 				if (symbolicValue.mayBeNull()) {
 					symbolicValue = AbstractSymbolicRefinedValue.createExceptValue(symbolicValue, null);
 				}
@@ -475,7 +478,7 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 			else {
 				assert symbolicValue.mayBeNull();
 			}
-			if (!mayBeInvalid) {
+			if (mayBeInvalidReason == null) {
 				if (symbolicValue.mayBeInvalid()) {
 					symbolicValue = AbstractSymbolicRefinedValue.createExceptValue(symbolicValue, ValueUtil.INVALID_VALUE);
 				}
@@ -486,7 +489,7 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 			return symbolicValue;
 		}
 		else {
-			return createUnknownValue(typedElement.getTypeId(), mayBeNull, mayBeInvalid);
+			return createUnknownValue(typedElement.getTypeId(), mayBeNullReason, mayBeInvalidReason);
 		}
 	}
 
@@ -511,7 +514,7 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 
 		public void analyzeInvariants() {
 			assert incompatibility == null;
-			SymbolicValue selfVariable = new SymbolicUnknownValue("self", primaryClass.getTypeId(), false, false);
+			SymbolicValue selfVariable = new SymbolicUnknownValue("self", primaryClass.getTypeId(), null, null);
 			Iterable<@NonNull ExpressionInOCL> invariantBodies2 = invariantBodies;
 			assert invariantBodies2 == null;
 			try {

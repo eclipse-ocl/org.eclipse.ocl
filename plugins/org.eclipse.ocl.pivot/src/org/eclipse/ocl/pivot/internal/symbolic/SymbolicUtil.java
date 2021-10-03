@@ -21,24 +21,31 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionItem;
 import org.eclipse.ocl.pivot.CollectionRange;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.IfExp;
+import org.eclipse.ocl.pivot.IteratorVariable;
 import org.eclipse.ocl.pivot.LetExp;
+import org.eclipse.ocl.pivot.LetVariable;
 import org.eclipse.ocl.pivot.LiteralExp;
 import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.NavigationCallExp;
 import org.eclipse.ocl.pivot.OperationCallExp;
+import org.eclipse.ocl.pivot.ParameterVariable;
 import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.ResultVariable;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
+import org.eclipse.ocl.pivot.values.Value;
 
 /**
  * @since 1.17
@@ -157,6 +164,110 @@ public class SymbolicUtil
 			delegate = PivotUtil.getReferredVariable((VariableExp)typedElement);
 		}
 		return delegate;
+	}
+
+	public static @Nullable String isRequiredReason(@NonNull TypedElement typedElement) {
+		if (typedElement.isIsRequired()) {
+			return null;
+		}
+		StringBuilder s = new StringBuilder();
+		printName(s, typedElement);
+		s.append(" may be null");
+		return s.toString();
+	}
+
+	@Deprecated		/* @deprecated propagate true reason */
+	public static @NonNull String mayBeInvalidReason() {
+		return "mayBeInvalidReason";
+	}
+
+	@Deprecated		/* @deprecated propagate true reason */
+	public static @Nullable String mayBeInvalidReason(boolean mayBeInvalid) {
+		return mayBeInvalid ? mayBeInvalidReason() : null;
+	}
+
+	public static @Nullable String mayBeInvalidReason(@Nullable Object value) {
+		assert !(value instanceof SymbolicValue) : "SymbolValue is no longer a Value";
+		if (value == null) {
+			return null;
+		}
+		else if ((value instanceof Value) && ((Value)value).mayBeInvalid()) {
+			return "may-be-invalid value";
+		}
+		return null;
+	}
+
+	public static @Nullable String mayBeInvalidReason(@Nullable String nestedMayBeInvalidReason, @NonNull String outerReason) {
+		if (nestedMayBeInvalidReason == null) {
+			return null;
+		}
+		return nestedMayBeInvalidReason + " => " + outerReason + " may be invalid";
+	}
+
+	public static @NonNull String mayBeInvalidReason(@NonNull String nestedMayBeInvalidReason, @NonNull CallExp callExp) {
+	//	if (nestedMayBeInvalidReason == null) {
+	//		return null;
+	//	}
+		return nestedMayBeInvalidReason + " => \"" + callExp + "\" may be invalid";
+	}
+
+	@Deprecated		/* @deprecated propagate true reason */
+	public static @NonNull String mayBeNullReason() {
+		return "mayBeNullReason";
+	}
+
+	@Deprecated		/* @deprecated propagate true reason */
+	public static @Nullable String mayBeNullReason(boolean mayBeNull) {
+		return mayBeNull ? mayBeNullReason() : null;
+	}
+
+	public static @Nullable String mayBeNullReason(@Nullable String nestedMayBeNullReason, @NonNull String outerReason) {
+		if (nestedMayBeNullReason == null) {
+			return null;
+		}
+		return nestedMayBeNullReason + " => " + outerReason + " may be null";
+	}
+
+	public static @Nullable String mayBeNullReason(@Nullable Object value) {
+		assert !(value instanceof SymbolicValue) : "SymbolValue is no longer a Value";
+		if (value == null) {
+			return "null value";
+		}
+		else if ((value instanceof Value) && ((Value)value).mayBeNull()) {
+			return "may-be-null value";
+		}
+		return null;
+	}
+
+	/**
+	 * Return a summary of namedElement to clarify its use in adiagnostic.
+	 */
+	public static void printName(@NonNull StringBuilder s, @NonNull NamedElement namedElement) {
+		if (namedElement instanceof IteratorVariable) {
+			IteratorVariable iteratorVariable = (IteratorVariable)namedElement;
+			if (iteratorVariable.isIsImplicit()) {
+				s.append("implicit ");
+			}
+			s.append("iterator");
+		}
+		else if (namedElement instanceof LetVariable) {
+			s.append("let variable");
+		}
+		else if (namedElement instanceof ParameterVariable) {
+			s.append("parameter");
+		}
+		else if (namedElement instanceof ResultVariable) {
+			s.append("iteration result");
+		}
+		else if (namedElement instanceof VariableDeclaration) {
+			s.append("variable");
+		}
+		else {
+			s.append(namedElement.eClass().getName());
+		}
+		s.append(" \"");
+		s.append(namedElement.getName());
+		s.append("\"");
 	}
 
 	/**

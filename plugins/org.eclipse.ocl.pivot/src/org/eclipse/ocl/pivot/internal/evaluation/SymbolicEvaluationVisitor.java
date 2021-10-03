@@ -66,6 +66,7 @@ import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.symbolic.AbstractLeafSymbolicValue.SymbolicNavigationCallValue;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicNumericValue;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicUtil;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryIteration;
@@ -117,8 +118,8 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 		if (compatibilityProblem != null) {
 			return compatibilityProblem;
 		}
-		boolean propertyMayBeNull = !referredProperty.isIsRequired();
-		SymbolicValue invalidProblem = symbolicEvaluationEnvironment.checkNotInvalid(source, returnTypeId, propertyMayBeNull);
+		String propertyMayBeNullReason = SymbolicUtil.isRequiredReason(referredProperty);
+		SymbolicValue invalidProblem = symbolicEvaluationEnvironment.checkNotInvalid(source, returnTypeId, propertyMayBeNullReason, navigationCallExp);
 		if (invalidProblem != null) {
 			return invalidProblem;
 		}
@@ -131,7 +132,7 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 	//		}
 	//	}
 		if (!navigationCallExp.isIsSafe()) {
-			SymbolicValue nullSourceProblem = symbolicEvaluationEnvironment.checkNotNull(source, returnTypeId, propertyMayBeNull);
+			SymbolicValue nullSourceProblem = symbolicEvaluationEnvironment.checkNotNull(source, returnTypeId, propertyMayBeNullReason, navigationCallExp);
 			if (nullSourceProblem != null) {
 				return nullSourceProblem;
 			}
@@ -146,8 +147,8 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 			boolean sourceMayBeNull = sourceValue.mayBeNull();
 			boolean sourceIsMany = navigationCallExp.isIsMany();
 			boolean resultMayBeInvalid = sourceMayBeInvalid || (sourceMayBeNull && !isSafe && !sourceIsMany);
-			boolean resultMayBeNull = propertyMayBeNull || (sourceMayBeNull && isSafe && !sourceIsMany);
-			SymbolicNavigationCallValue symbolicValue = new SymbolicNavigationCallValue(context.createVariableName(), navigationCallExp, resultMayBeNull, resultMayBeInvalid, sourceValue);
+			boolean resultMayBeNull = (propertyMayBeNullReason != null) || (sourceMayBeNull && isSafe && !sourceIsMany);
+			SymbolicNavigationCallValue symbolicValue = new SymbolicNavigationCallValue(context.createVariableName(), navigationCallExp, SymbolicUtil.mayBeNullReason(resultMayBeNull), SymbolicUtil.mayBeInvalidReason(resultMayBeInvalid), sourceValue);
 			if (referredProperty.isIsMany()) {
 				CollectionType collectionType = (CollectionType)referredProperty.getType();
 				IntegerValue lowerValue = collectionType.getLowerValue();
@@ -287,7 +288,7 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 			return context.getKnownValue(resultValue);
 		}
 		else {
-			return context.getUnknownValue(literalExp, false, mayBeInvalid || mayBeNull);
+			return context.getUnknownValue(literalExp, null, SymbolicUtil.mayBeInvalidReason(mayBeInvalid || mayBeNull));
 		}
 	}
 
@@ -300,7 +301,7 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 		if (!firstValue.isKnown() || !lastValue.isKnown()) {
 			boolean mayBeInvalid = firstValue.mayBeInvalid() || firstValue.mayBeInvalid();
 			boolean mayBeNull = lastValue.mayBeNull() || lastValue.mayBeNull();
-			return context.getUnknownValue(range, false, mayBeNull || mayBeInvalid);
+			return context.getUnknownValue(range, null, SymbolicUtil.mayBeInvalidReason(mayBeNull || mayBeInvalid));
 		}
 		Object resultValue;
 		CollectionType type = (CollectionType) ((CollectionLiteralExp)range.eContainer()).getType();
@@ -353,23 +354,23 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 			return context.getKnownValue(ValueUtil.INVALID_VALUE);
 		}
 		else {
-			boolean mayBeInvalid = conditionValue.mayBeInvalid();
-			boolean mayBeNull = conditionValue.mayBeNull();
+			String mayBeInvalidReason = SymbolicUtil.mayBeInvalidReason(conditionValue.mayBeInvalidReason(), "condition");;
+			String mayBeNullReason = SymbolicUtil.mayBeNullReason(conditionValue.mayBeNullReason(), "condition");
 			SymbolicValue thenValue = symbolicEvaluationEnvironment.symbolicEvaluate(thenExpression);
-			if (thenValue.mayBeInvalid()) {
-				mayBeInvalid = true;
-			}
-			if (thenValue.mayBeNull()) {
-				mayBeNull = true;
-			}
 			SymbolicValue elseValue = symbolicEvaluationEnvironment.symbolicEvaluate(elseExpression);
-			if (elseValue.mayBeInvalid()) {
-				mayBeInvalid = true;
+			if (mayBeInvalidReason == null) {
+				mayBeInvalidReason = SymbolicUtil.mayBeInvalidReason(thenValue.mayBeInvalidReason(), "then");
+				if (mayBeInvalidReason == null) {
+					mayBeInvalidReason = SymbolicUtil.mayBeInvalidReason(elseValue.mayBeInvalidReason(), "then");
+				}
 			}
-			if (elseValue.mayBeNull()) {
-				mayBeNull = true;
+			if (mayBeNullReason == null) {
+				mayBeNullReason = SymbolicUtil.mayBeNullReason(thenValue.mayBeNullReason(), "else");
+				if (mayBeNullReason == null) {
+					mayBeNullReason = SymbolicUtil.mayBeNullReason(elseValue.mayBeNullReason(), "else");
+				}
 			}
-			return context.getUnknownValue(ifExp, mayBeNull, mayBeInvalid);
+			return context.getUnknownValue(ifExp, mayBeNullReason, mayBeInvalidReason);
 		}
 	}
 
@@ -459,7 +460,7 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 			return context.getKnownValue(resultValue);
 		}
 		else {
-			return context.getUnknownValue(literalExp, false, mayBeNull || mayBeInvalid);
+			return context.getUnknownValue(literalExp, null, SymbolicUtil.mayBeInvalidReason(mayBeNull || mayBeInvalid));
 		}
 	}
 
@@ -505,7 +506,7 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 			return symbolicEvaluationEnvironment.symbolicEvaluate(initExp);
 		}
 		else {
-			SymbolicValue symbolicValue = context.getUnknownValue(resultVariable, !resultVariable.isIsRequired(), false);
+			SymbolicValue symbolicValue = context.getUnknownValue(resultVariable, SymbolicUtil.isRequiredReason(resultVariable), null);
 			return symbolicEvaluationEnvironment.setSymbolicValue(resultVariable, symbolicValue, "init");
 		}
 	}
@@ -535,7 +536,7 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 			return context.getKnownValue(resultValue);
 		}
 		else {
-			return context.getUnknownValue(shadowExp, false, mayBeNull || mayBeInvalid);
+			return context.getUnknownValue(shadowExp, null, SymbolicUtil.mayBeInvalidReason(mayBeNull || mayBeInvalid));
 		}
 	}
 
@@ -560,7 +561,7 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 	//		return context.getKnownValue(resultValue);
 	//	}
 	//	else {
-			return context.getUnknownValue(ownedInit, false, /*mayBeNull ||*/ mayBeInvalid);
+			return context.getUnknownValue(ownedInit, null, SymbolicUtil.mayBeInvalidReason(/*mayBeNull ||*/ mayBeInvalid));
 	//	}
 	}
 
@@ -595,7 +596,7 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 			return context.getKnownValue(resultValue);
 		}
 		else {
-			return context.getUnknownValue(literalExp, false, mayBeNull || mayBeInvalid);
+			return context.getUnknownValue(literalExp, null, SymbolicUtil.mayBeInvalidReason(mayBeNull || mayBeInvalid));
 		}
 	}
 
@@ -622,7 +623,7 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 			return context.getKnownValue(resultValue);
 		}
 		else {
-			return context.getUnknownValue(part, false, mayBeNull || mayBeInvalid);
+			return context.getUnknownValue(part, null, SymbolicUtil.mayBeInvalidReason(mayBeNull || mayBeInvalid));
 		}
 	}
 
@@ -645,7 +646,7 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 			return symbolicEvaluationEnvironment.symbolicEvaluate(initExp);
 		}
 		else {
-			SymbolicValue symbolicValue = context.getUnknownValue(iteratorVariable, !iteratorVariable.isIsRequired(), false);
+			SymbolicValue symbolicValue = context.getUnknownValue(iteratorVariable, SymbolicUtil.isRequiredReason(iteratorVariable), null);
 			return symbolicEvaluationEnvironment.setSymbolicValue(iteratorVariable, symbolicValue, "init");
 		}
 	}

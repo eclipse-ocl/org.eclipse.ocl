@@ -71,7 +71,7 @@ public class SymbolicNumericValue extends AbstractLeafSymbolicValue
 	private final @Nullable NumberValue upperBound;
 
 	private SymbolicNumericValue(@NonNull NumberValue lowerBound, @Nullable NumberValue upperBound) {
-		super(lowerBound + ".." + (upperBound != null ? upperBound.toString() : "*"), lowerBound instanceof IntegerValue ? TypeId.INTEGER : TypeId.REAL, false, false, null);
+		super(lowerBound + ".." + (upperBound != null ? upperBound.toString() : "*"), lowerBound instanceof IntegerValue ? TypeId.INTEGER : TypeId.REAL, null, null, null);
 		this.lowerBound = lowerBound;
 		this.upperBound = upperBound;
 	}

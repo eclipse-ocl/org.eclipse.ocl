@@ -11,6 +11,7 @@
 package org.eclipse.ocl.pivot.internal.symbolic;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
@@ -21,8 +22,8 @@ public class SymbolicVariableValue extends AbstractLeafSymbolicValue {
 
 	protected final @NonNull VariableDeclaration variable;
 
-	public SymbolicVariableValue(@NonNull VariableDeclaration variable, boolean mayBeNull, boolean mayBeInvalid) { //, @NonNull SymbolicValue value) {
-		super(PivotUtil.getName(variable), variable.getTypeId(), mayBeNull, mayBeInvalid, null);
+	public SymbolicVariableValue(@NonNull VariableDeclaration variable, @Nullable String mayBeNullReason, @Nullable String mayBeInvalidReason) { //, @NonNull SymbolicValue value) {
+		super(PivotUtil.getName(variable), variable.getTypeId(), mayBeNullReason, mayBeInvalidReason, null);
 		this.variable = variable;
 	}
 

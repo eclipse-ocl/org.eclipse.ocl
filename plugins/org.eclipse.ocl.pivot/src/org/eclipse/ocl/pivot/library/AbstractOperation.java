@@ -34,6 +34,7 @@ import org.eclipse.ocl.pivot.internal.evaluation.HypothesizedSymbolicEvaluationE
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.internal.library.ConstrainedOperation;
 import org.eclipse.ocl.pivot.internal.symbolic.AbstractSymbolicRefinedValue;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicUtil;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
@@ -118,7 +119,7 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 		StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		Operation referredOperation = PivotUtil.getReferredOperation(callExp);
 		TypeId returnTypeId = callExp.getTypeId();
-		boolean returnMayBeNull = !callExp.isIsRequired();
+		String returnMayBeNullReason = SymbolicUtil.isRequiredReason(callExp);
 		OCLExpression source = PivotUtil.getOwnedSource(callExp);
 		SymbolicValue sourceValue = evaluationEnvironment.symbolicEvaluate(source);
 		if (sourceValue.asIncompatibility() != null) {
@@ -136,9 +137,13 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 				Operation oclInvalidOperation = oclInvalidClass.getOperation(referredOperation);
 				assert oclInvalidOperation == null : "Missing OclInvalid overload for " + referredOperation;
 			}
-			SymbolicValue invalidSourceProblem = evaluationEnvironment.checkNotInvalid(source, returnTypeId, returnMayBeNull);
+			SymbolicValue invalidSourceProblem = evaluationEnvironment.checkNotInvalid(source, returnTypeId, returnMayBeNullReason, callExp);
 			if (invalidSourceProblem != null) {
 				return invalidSourceProblem;
+			//	return SymbolicUtil.mayBeInvalidReason(invalidSourceProblem.mayBeInvalidReason(), callExp);
+			//	return createResultValue(invalidSourceProblem.mayBeInvalidReason(), callExp);
+			//	String mayBeInvalidReason = SymbolicUtil.mayBeInvalidReason(invalidSourceProblem.mayBeNullReason(), callExp);
+			//	return evaluationEnvironment.getUnknownValue(callExp, false, mayBeInvalidReason != null);
 			}
 		}
 		if ((checkFlags & CHECK_NOT_NULL) != 0) {
@@ -148,7 +153,7 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 				assert oclVoidOperation == null : "Missing OcVoid overload for " + referredOperation;
 			}
 			if (!callExp.isIsSafe()) {
-				SymbolicValue nullSourceProblem = evaluationEnvironment.checkNotNull(source, returnTypeId, returnMayBeNull);
+				SymbolicValue nullSourceProblem = evaluationEnvironment.checkNotNull(source, returnTypeId, returnMayBeNullReason, callExp);
 				if (nullSourceProblem != null) {
 					return nullSourceProblem;
 				}
@@ -157,14 +162,14 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 		int i = 0;
 		for (@NonNull OCLExpression argument : PivotUtil.getOwnedArguments(callExp)) {
 			if (!referredOperation.isIsValidating() && ((checkFlags & CHECK_NOT_INVALID) != 0)) {
-				SymbolicValue invalidArgumentProblem = evaluationEnvironment.checkNotInvalid(argument, returnTypeId, returnMayBeNull);
+				SymbolicValue invalidArgumentProblem = evaluationEnvironment.checkNotInvalid(argument, returnTypeId, returnMayBeNullReason, callExp);
 				if (invalidArgumentProblem != null) {
 					return invalidArgumentProblem;
 				}
 			}
 			Parameter parameter = PivotUtil.getOwnedParameter(referredOperation, i);
 			if (parameter.isIsRequired() && ((checkFlags & CHECK_NOT_NULL) != 0)) {
-				SymbolicValue nullArgumentProblem = evaluationEnvironment.checkNotNull(argument, returnTypeId, returnMayBeNull);
+				SymbolicValue nullArgumentProblem = evaluationEnvironment.checkNotNull(argument, returnTypeId, returnMayBeNullReason, callExp);
 				if (nullArgumentProblem != null) {
 					return nullArgumentProblem;
 				}

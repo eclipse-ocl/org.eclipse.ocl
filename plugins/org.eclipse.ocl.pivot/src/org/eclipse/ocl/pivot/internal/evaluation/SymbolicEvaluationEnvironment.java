@@ -13,6 +13,7 @@ package org.eclipse.ocl.pivot.internal.evaluation;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.IdResolver;
@@ -45,14 +46,14 @@ public interface SymbolicEvaluationEnvironment
 	 * Else return a mayBeNull SymbolicUnknownValue for typeId if typedElement mayBeInvalid.
 	 * Else return null if typedElement is not invalid.
 	 */
-	@Nullable SymbolicValue checkNotInvalid(@NonNull TypedElement typedElement, @NonNull TypeId typeId, boolean mayBeNull);
+	@Nullable SymbolicValue checkNotInvalid(@NonNull TypedElement typedElement, @NonNull TypeId typeId, @Nullable String mayBeNullReason, @NonNull CallExp callExp);
 
 	/**
 	 * Return a SymbolicKnownValue for invalid, if typedElement isNull.
 	 * Else return a mayBeNull SymbolicUnknownValue for typeId if typedElement mayBeNull.
 	 * Else return null if typedElement is not null.
 	 */
-	@Nullable SymbolicValue checkNotNull(@NonNull TypedElement typedElement, @NonNull TypeId typeId, boolean mayBeNull);
+	@Nullable SymbolicValue checkNotNull(@NonNull OCLExpression sourceExp, @NonNull TypeId typeId, @Nullable String mayBeNullReason, @NonNull CallExp callExp);
 
 	/**
 	 * Return a SymbolicKnownValue for invalid, if typedElement isZero.

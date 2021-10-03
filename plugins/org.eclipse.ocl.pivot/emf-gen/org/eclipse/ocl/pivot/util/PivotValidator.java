@@ -2501,19 +2501,26 @@ public class PivotValidator extends EObjectValidator
 				VariableDeclaration ownedContext = PivotUtil.getOwnedContext(expressionInOCL);
 				boolean mayBeNull = isValidating || !ownedContext.isIsRequired();
 				boolean mayBeInvalid = isValidating;
-				Object selfValue = new SymbolicVariableValue(ownedContext, mayBeNull, mayBeInvalid);
+				Object selfValue = new SymbolicVariableValue(ownedContext, SymbolicUtil.mayBeNullReason(mayBeNull), SymbolicUtil.mayBeInvalidReason(mayBeInvalid));
 				Object resultValue = null;
 				Variable ownedResult = expressionInOCL.getOwnedResult();
 				if (ownedResult != null) {
-					resultValue = new SymbolicVariableValue(ownedResult, isValidating || !ownedResult.isIsRequired(), mayBeInvalid);
+					String mayBeNullReason;
+					if (isValidating) {
+						mayBeNullReason = SymbolicUtil.mayBeNullReason(true);
+					}
+					else {
+						mayBeNullReason = SymbolicUtil.isRequiredReason(ownedResult);
+					}
+					resultValue = new SymbolicVariableValue(ownedResult, mayBeNullReason, SymbolicUtil.mayBeInvalidReason(mayBeInvalid));
 				}
 				List<@NonNull Variable> ownedParameters = PivotUtilInternal.getOwnedParametersList(expressionInOCL);
 				@Nullable Object[] parameterValues = new @Nullable Object[ownedParameters.size()];
 				for (int i = 0; i < ownedParameters.size(); i++) {
 					Variable parameter = ownedParameters.get(i);
-					mayBeNull = !parameter.isIsRequired();
+					String mayBeNullReason = SymbolicUtil.isRequiredReason(parameter);
 				//	mayBeInvalid = false;
-					parameterValues[i] = new SymbolicVariableValue(parameter, mayBeNull, mayBeInvalid);
+					parameterValues[i] = new SymbolicVariableValue(parameter, mayBeNullReason, SymbolicUtil.mayBeInvalidReason(mayBeInvalid));
 				}
 				SymbolicAnalysis symbolicAnalysis = metamodelManager.getSymbolicAnalysis(expressionInOCL, selfValue, resultValue, parameterValues);
 				String analysisIncompatibility = symbolicAnalysis.getAnalysisIncompatibility();

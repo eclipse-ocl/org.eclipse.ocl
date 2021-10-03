@@ -50,7 +50,7 @@ public abstract class SymbolicContent
 			TypeId elementTypeId = ((CollectionTypeId)typeId).getElementTypeId();
 			CollectionValue collectionValue2 = collectionValue;
 			if ((collectionValue2 == null) || !(elementTypeId instanceof CollectionTypeId)) {
-				SymbolicValue symbolicValue = symbolicAnalysis.getUnknownValue(iteratorVariable, !iteratorVariable.isIsRequired(), false);
+				SymbolicValue symbolicValue = symbolicAnalysis.getUnknownValue(iteratorVariable, SymbolicUtil.isRequiredReason(iteratorVariable), null);
 				return symbolicValue;
 			}
 			SymbolicNumericValue sizeValue = computeElementSize(symbolicAnalysis, collectionValue2);
@@ -86,7 +86,7 @@ public abstract class SymbolicContent
 			TypeId keyTypeId = ((MapTypeId)typeId).getKeyTypeId();
 			MapValue mapValue2 = mapValue;
 			if ((mapValue2 == null) || !(keyTypeId instanceof MapTypeId)) {
-				SymbolicValue symbolicValue = symbolicAnalysis.getUnknownValue(iteratorVariable, !iteratorVariable.isIsRequired(), false);
+				SymbolicValue symbolicValue = symbolicAnalysis.getUnknownValue(iteratorVariable, SymbolicUtil.isRequiredReason(iteratorVariable), null);
 				return symbolicValue;
 			}
 			SymbolicNumericValue sizeValue = computeElementSize(symbolicAnalysis, mapValue2);
@@ -152,7 +152,7 @@ public abstract class SymbolicContent
 	public @NonNull SymbolicValue getSize() {
 		SymbolicValue sizeValue2 = sizeValue;
 		if (sizeValue2 == null) {
-			sizeValue = sizeValue2 = new SymbolicUnknownValue(name + "size", TypeId.INTEGER, false, false);
+			sizeValue = sizeValue2 = new SymbolicUnknownValue(name + "size", TypeId.INTEGER, null, null);
 		}
 		return sizeValue2;
 	}

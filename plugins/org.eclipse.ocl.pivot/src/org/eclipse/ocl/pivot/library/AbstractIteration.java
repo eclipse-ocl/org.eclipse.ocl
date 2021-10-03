@@ -24,6 +24,7 @@ import org.eclipse.ocl.pivot.evaluation.IterationManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicUtil;
 import org.eclipse.ocl.pivot.library.LibraryOperation.LibraryOperationExtension2;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
@@ -72,38 +73,38 @@ public abstract class AbstractIteration extends AbstractIterationOrOperation imp
 	 */
 	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull LoopExp loopExp) {
 		TypeId returnTypeId = loopExp.getTypeId();
-		boolean returnMayBeNull = !loopExp.isIsRequired();
+		String returnMayBeNullReason = SymbolicUtil.isRequiredReason(loopExp);
 		OCLExpression source = PivotUtil.getOwnedSource(loopExp);
-		SymbolicValue invalidSourceProblem = evaluationEnvironment.checkNotInvalid(source, returnTypeId, returnMayBeNull);
+		SymbolicValue invalidSourceProblem = evaluationEnvironment.checkNotInvalid(source, returnTypeId, returnMayBeNullReason, loopExp);
 		if (invalidSourceProblem != null) {
 			return invalidSourceProblem;
 		}
 		if (!loopExp.isIsSafe()) {
-			SymbolicValue nullSourceProblem = evaluationEnvironment.checkNotNull(source, returnTypeId, returnMayBeNull);
+			SymbolicValue nullSourceProblem = evaluationEnvironment.checkNotNull(source, returnTypeId, returnMayBeNullReason, loopExp);
 			if (nullSourceProblem != null) {
 				return nullSourceProblem;
 			}
 		}
 		for (@NonNull VariableDeclaration iterator : PivotUtil.getOwnedIterators(loopExp)) {
-			SymbolicValue invalidIteratorProblem = evaluationEnvironment.checkNotInvalid(iterator, returnTypeId, returnMayBeNull);
+			SymbolicValue invalidIteratorProblem = evaluationEnvironment.checkNotInvalid(iterator, returnTypeId, returnMayBeNullReason, loopExp);
 			if (invalidIteratorProblem != null) {
 				return invalidIteratorProblem;
 			}
 		}
 		if (loopExp instanceof IterateExp) {
 			VariableDeclaration ownedResult = PivotUtil.getOwnedResult((IterateExp)loopExp);
-			SymbolicValue invalidResultProblem = evaluationEnvironment.checkNotInvalid(ownedResult, returnTypeId, returnMayBeNull);
+			SymbolicValue invalidResultProblem = evaluationEnvironment.checkNotInvalid(ownedResult, returnTypeId, returnMayBeNullReason, loopExp);
 			if (invalidResultProblem != null) {
 				return invalidResultProblem;
 			}
 		}
 		OCLExpression bodyExpression = PivotUtil.getOwnedBody(loopExp);
-		SymbolicValue invalidBodyProblem = evaluationEnvironment.checkNotInvalid(bodyExpression, returnTypeId, returnMayBeNull);
+		SymbolicValue invalidBodyProblem = evaluationEnvironment.checkNotInvalid(bodyExpression, returnTypeId, returnMayBeNullReason, loopExp);
 		if (invalidBodyProblem != null) {
 			return invalidBodyProblem;
 		}
 		if (bodyExpression.isIsRequired()) {
-			SymbolicValue nullBodyProblem = evaluationEnvironment.checkNotNull(bodyExpression, returnTypeId, returnMayBeNull);
+			SymbolicValue nullBodyProblem = evaluationEnvironment.checkNotNull(bodyExpression, returnTypeId, returnMayBeNullReason, loopExp);
 			if (nullBodyProblem != null) {
 				return nullBodyProblem;
 			}
@@ -145,7 +146,7 @@ public abstract class AbstractIteration extends AbstractIterationOrOperation imp
 			}
 		} */
 		SymbolicAnalysis symbolicAnalysis = evaluationEnvironment.getSymbolicAnalysis();
-		return symbolicAnalysis.createUnknownValue(loopExp.getTypeId(), mayBeNull, mayBeInvalid);
+		return symbolicAnalysis.createUnknownValue(loopExp.getTypeId(), SymbolicUtil.mayBeNullReason(mayBeNull), SymbolicUtil.mayBeInvalidReason(mayBeInvalid));
 	}
 
 	/**
