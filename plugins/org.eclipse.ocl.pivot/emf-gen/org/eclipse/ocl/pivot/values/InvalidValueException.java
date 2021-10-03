@@ -65,7 +65,7 @@ public class InvalidValueException extends UndefinedValueImpl implements Invalid
 	}
 
 	/**
-	 * @since 1.16
+	 * @since 1.17
 	 */
 	public InvalidValueException(/*@NonNull*/ String message) {
 		super(message);

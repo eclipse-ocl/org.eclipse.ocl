@@ -50,7 +50,7 @@ public class UniqueList<E> extends ArrayList<E> implements Set<E>
 
     /**
      * Constructs a new set containing the elements in the specified collection.
-     * @since 1.16
+     * @since 1.17
      */
     public UniqueList(E[] es) {
     	if (es.length >= SMALL_TO_LARGE_THRESHOLD) {

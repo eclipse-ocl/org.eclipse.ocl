@@ -58,7 +58,7 @@ import org.eclipse.ocl.pivot.values.SymbolicValue;
  * Subsequently hypothesize() assesses a hypothesis for a particular typed element and if contradicted the hypothesis
  * may populate typedElement2refinedSymbolicValue with a more precise value for the typed element.
  *
- * @since 1.16
+ * @since 1.17
  */
 public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluationEnvironment
 {

@@ -68,7 +68,7 @@ public abstract class AbstractIteration extends AbstractIterationOrOperation imp
 	}
 
 	/**
-	 * @since 1.16
+	 * @since 1.17
 	 */
 	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull LoopExp loopExp) {
 		TypeId returnTypeId = loopExp.getTypeId();
@@ -112,7 +112,7 @@ public abstract class AbstractIteration extends AbstractIterationOrOperation imp
 	}
 
 	/**
-	 * @since 1.16
+	 * @since 1.17
 	 */
 	protected @NonNull SymbolicValue createResultValue(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull LoopExp loopExp,
 			@NonNull SymbolicValue sourceSymbolicValue, @NonNull List<@NonNull SymbolicValue> argumentSymbolicValues) {

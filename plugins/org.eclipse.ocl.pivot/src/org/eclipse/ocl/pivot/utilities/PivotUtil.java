@@ -1128,7 +1128,7 @@ public class PivotUtil
 	}
 
 	/**
-	 * @since 1.16
+	 * @since 1.17
 	 */
 	public static @NonNull String getConstraintName(@NonNull Constraint constraint) {
 		String constraintName = PivotUtil.getName(constraint);
@@ -1352,7 +1352,7 @@ public class PivotUtil
 	}
 
 	/**
-	 * @since 1.16
+	 * @since 1.17
 	 */
 	public static @NonNull String getExternalURI(@Nullable EObject element) {
 		Model model = getContainingModel(element);
@@ -1609,7 +1609,7 @@ public class PivotUtil
 	}
 
 	/**
-	 * @since 1.16
+	 * @since 1.17
 	 */
 	public static @NonNull OCLExpression getOwnedInit(@NonNull TupleLiteralPart tupleLiteralPart) {
 		return ClassUtil.nonNullState(tupleLiteralPart.getOwnedInit());
@@ -1687,7 +1687,7 @@ public class PivotUtil
 	}
 
 	/**
-	 * @since 1.16
+	 * @since 1.17
 	 */
 	public static @NonNull Variable getOwnedParameter(@NonNull ExpressionInOCL expressionInOCL, int index) {
 		return ClassUtil.nonNullState(expressionInOCL.getOwnedParameters().get(index));
@@ -1701,7 +1701,7 @@ public class PivotUtil
 	}
 
 	/**
-	 * @since 1.16
+	 * @since 1.17
 	 */
 	public static @NonNull Iterable<@NonNull Variable> getOwnedParameters(@NonNull ExpressionInOCL expressionInOCL) {
 		return ClassUtil.nullFree(expressionInOCL.getOwnedParameters());
@@ -1722,14 +1722,14 @@ public class PivotUtil
 	}
 
 	/**
-	 * @since 1.16
+	 * @since 1.17
 	 */
 	public static @NonNull Iterable<@NonNull MapLiteralPart> getOwnedParts(@NonNull MapLiteralExp asMapLiteralExp) {
 		return ClassUtil.nullFree(asMapLiteralExp.getOwnedParts());
 	}
 
 	/**
-	 * @since 1.16
+	 * @since 1.17
 	 */
 	public static @NonNull Iterable<@NonNull ShadowPart> getOwnedParts(@NonNull ShadowExp asShadowExp) {
 		return ClassUtil.nullFree(asShadowExp.getOwnedParts());
@@ -1848,7 +1848,7 @@ public class PivotUtil
 	}
 
 	/**
-	 * @since 1.16
+	 * @since 1.17
 	 */
 	public static @NonNull ShadowExp getOwningShadowExp(@NonNull ShadowPart shadowPart) {
 		return (ShadowExp) ClassUtil.nonNullState(shadowPart.eContainer());
@@ -1862,7 +1862,7 @@ public class PivotUtil
 	}
 
 	/**
-	 * @since 1.16
+	 * @since 1.17
 	 */
 	public static @NonNull TupleLiteralExp getOwningTupleLiteralExp(@NonNull TupleLiteralPart tupleLiteralPart) {
 		return (TupleLiteralExp) ClassUtil.nonNullState(tupleLiteralPart.eContainer());
@@ -2013,7 +2013,7 @@ public class PivotUtil
 	}
 
 	/**
-	 * @since 1.16
+	 * @since 1.17
 	 */
 	public static @NonNull Parameter getRepresentedParameter(@NonNull ParameterVariable parameterVariable) {
 		return ClassUtil.nonNullState(parameterVariable.getRepresentedParameter());
@@ -2064,7 +2064,7 @@ public class PivotUtil
 	}
 
 	/**
-	 * @since 1.16
+	 * @since 1.17
 	 */
 	public static @NonNull String getStringSymbol(@NonNull StringLiteralExp stringLiteralExp) {
 		return ClassUtil.nonNullState(stringLiteralExp.getStringSymbol());

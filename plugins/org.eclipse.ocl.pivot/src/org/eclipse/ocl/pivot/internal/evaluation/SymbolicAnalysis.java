@@ -55,7 +55,7 @@ import org.eclipse.ocl.pivot.values.OCLValue;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
- * @since 1.16
+ * @since 1.17
  */
 public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements SymbolicExecutor, ExecutorInternal*/
 {

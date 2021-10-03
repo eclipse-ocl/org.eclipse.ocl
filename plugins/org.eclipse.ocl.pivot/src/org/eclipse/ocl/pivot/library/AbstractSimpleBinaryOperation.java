@@ -32,7 +32,7 @@ import org.eclipse.ocl.pivot.values.SymbolicValue;
 public abstract class AbstractSimpleBinaryOperation extends AbstractUntypedBinaryOperation implements LibrarySimpleBinaryOperation.LibrarySimpleBinaryOperationExtension
 {
 	/**
-	 * @since 1.16
+	 * @since 1.17
 	 */
 	protected @NonNull SymbolicValue createValidatingResultValue( @NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp,
 			@NonNull SymbolicValue sourceSymbolicValue, @NonNull List<@NonNull SymbolicValue> argumentSymbolicValues) {

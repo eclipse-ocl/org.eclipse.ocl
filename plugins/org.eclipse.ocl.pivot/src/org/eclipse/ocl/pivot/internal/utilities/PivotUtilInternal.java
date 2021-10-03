@@ -587,7 +587,7 @@ public class PivotUtilInternal //extends PivotUtil
 	}
 
 	/**
-	 * @since 1.16
+	 * @since 1.17
 	 */
 	public static @NonNull List<@NonNull Variable> getOwnedParametersList(@NonNull ExpressionInOCL expressionInOCL) {
 		return ClassUtil.nullFree(expressionInOCL.getOwnedParameters());

@@ -32,7 +32,7 @@ import org.eclipse.ocl.pivot.values.SymbolicValue;
  * environments are encourage to extend this class rather than implement
  * an evaluation environment "from scratch."
  *
- * @since 1.16
+ * @since 1.17
  */
 public abstract class AbstractSymbolicEvaluationEnvironment implements SymbolicEvaluationEnvironment
 {

@@ -898,7 +898,7 @@ public class PivotValidator extends EObjectValidator
 	protected static final int DIAGNOSTIC_CODE_COUNT = GENERATED_DIAGNOSTIC_CODE_COUNT;
 
 	/**
-	 * @since 1.16
+	 * @since 1.17
 	 */
 	public static void initLazyParse(@NonNull Map<Object, Object> context, boolean isLazyParse) {
 		context.put(EXPRESSION_IN_OCL_LAZY_PARSE, isLazyParse);

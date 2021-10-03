@@ -423,7 +423,7 @@ public class XMIUtil
 	 * resources returns saveOptions supporting UTF-8 with 132 character Unix lines. Otherwise returns
 	 * a copyof aResource's defaultSaveOptions.
 	 *
-	 * @since 1.16
+	 * @since 1.17
 	 */
 	public static @NonNull Map<Object, Object> createSaveOptions(@NonNull Resource aResource) {
 		Class<?> resourceClass = aResource.getClass();

@@ -43,7 +43,7 @@ import com.google.common.collect.Iterables;
  * using a CSEVisitor to handle each distinct child and referenced Pivot Element. Caches avoid reation
  * of duplicates.
  *
- * @since 1.16
+ * @since 1.17
  */
 public class CommonSubExpressionAnalysis
 {

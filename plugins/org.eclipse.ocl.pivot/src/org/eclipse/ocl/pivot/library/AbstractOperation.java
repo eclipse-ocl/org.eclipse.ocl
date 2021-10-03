@@ -57,19 +57,19 @@ import com.google.common.collect.Iterables;
 public abstract class AbstractOperation extends AbstractIterationOrOperation implements LibraryOperation.LibraryOperationExtension2
 {
 	/**
-	 * @since 1.16
+	 * @since 1.17
 	 */
 	protected static final int CHECK_NO_OCL_INVALID_OVERLOAD = 1 << 0;
 	/**
-	 * @since 1.16
+	 * @since 1.17
 	 */
 	protected static final int CHECK_NO_OCL_VOID_OVERLOAD = 1 << 1;
 	/**
-	 * @since 1.16
+	 * @since 1.17
 	 */
 	protected static final int CHECK_NOT_INVALID = 1 << 2;
 	/**
-	 * @since 1.16
+	 * @since 1.17
 	 */
 	protected static final int CHECK_NOT_NULL = 1 << 3;
 
@@ -103,14 +103,14 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 	}
 
 	/**
-	 * @since 1.16
+	 * @since 1.17
 	 */
 	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
 		return checkPreconditions(evaluationEnvironment, callExp, CHECK_NO_OCL_INVALID_OVERLOAD | CHECK_NO_OCL_VOID_OVERLOAD | CHECK_NOT_INVALID | CHECK_NOT_NULL);
 	}
 
 	/**
-	 * @since 1.16
+	 * @since 1.17
 	 */
 	protected final @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp, int checkFlags) {
 		EnvironmentFactory environmentFactory = evaluationEnvironment.getEnvironmentFactory();
@@ -183,7 +183,7 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 	}
 
 	/**
-	 * @since 1.16
+	 * @since 1.17
 	 */
 	protected @NonNull SymbolicValue createResultValue(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp,
 			@NonNull SymbolicValue sourceSymbolicValue, @NonNull List<@NonNull SymbolicValue> argumentSymbolicValues) {

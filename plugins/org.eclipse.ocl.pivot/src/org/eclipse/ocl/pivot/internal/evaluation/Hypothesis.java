@@ -31,7 +31,7 @@ import org.eclipse.ocl.pivot.values.SymbolicValue;
  *
  * Derived Hypothesis support alternative hypothesized and subsequent refined values.
  *
- * @since 1.16
+ * @since 1.17
  */
 public abstract class Hypothesis
 {

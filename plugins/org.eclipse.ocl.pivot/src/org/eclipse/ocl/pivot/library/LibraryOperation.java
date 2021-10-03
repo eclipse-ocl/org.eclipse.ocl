@@ -77,12 +77,12 @@ public interface LibraryOperation extends LibraryIterationOrOperation
 	 * the exploration of the current hypothesis, The default implementation for an ordinary operation ensures that all source/argument inputs other than the active input are
 	 * conformant with the strict operation signature. Overrides for and/implies/or impose stronger refinemments in accord with their short-circuit characteristics.
 	 *
-	 * @since 1.16
+	 * @since 1.17
 	 */
 	@Nullable String installPathConstraints(@NonNull HypothesizedSymbolicEvaluationEnvironment evaluationEnvironment, @NonNull TypedElement activeTypedElement, @NonNull OperationCallExp operationCallExp);
 
 	/**
-	 * @since 1.16
+	 * @since 1.17
 	 */
 	default @NonNull SymbolicValue symbolicEvaluate(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
 		throw new UnsupportedOperationException();
