@@ -390,6 +390,16 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 			return content.getSize();
 		}
 
+		@Override
+		public @Nullable String mayBeInvalidReason() {
+			return value.mayBeInvalidReason();
+		}
+
+		@Override
+		public @Nullable String mayBeNullReason() {
+			return value.mayBeNullReason();
+		}
+
 		public void setSize(@NonNull SymbolicValue refinedSize) {
 			content.setSize(refinedSize);
 		}
@@ -619,5 +629,16 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 //		ValueUtil.toString(value, s, 100);
 		appendName(s);
 		appendContent(s);
+		s.append(" «");
+		String mayBeNullReason = mayBeNullReason();
+		if (mayBeNullReason != null) {
+			s.append(mayBeNullReason);
+		}
+		s.append("» «");
+		String mayBeInvalidReason = mayBeInvalidReason();
+		if (mayBeInvalidReason != null) {
+			s.append(mayBeInvalidReason);
+		}
+		s.append("»");
 	}
 }

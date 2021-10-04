@@ -2569,6 +2569,7 @@ public class PivotValidator extends EObjectValidator
 							}
 						}
 						if (!invalidIsPermissible) {
+							SymbolicValue symbolicValue = symbolicAnalysis.getSymbolicEvaluationEnvironment().getSymbolicValue(typedElement);
 							int diagnosticSeverity = invalidResultSeverity.getDiagnosticSeverity();
 							String message = StringUtil.bind("May be invalid: {0}", SymbolicUtil.printPath(typedElement, true));
 							if (diagnostics != null) {
