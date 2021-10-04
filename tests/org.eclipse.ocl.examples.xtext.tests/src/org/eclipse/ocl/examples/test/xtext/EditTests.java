@@ -431,15 +431,15 @@ public class EditTests extends XtextTestCase
 						"		{\n" +
 						"			body: if name = null then 'null' else name endif;\n" +
 						"		}\n" +
-						"		operation operationLabels(operations : uml::Operation[*] { ordered }) : String[1]\n" +
+						"		operation operationLabels(operations : uml::Operation[*|1] { ordered }) : String[1]\n" +
 						"		{\n" +
-						"			body: operations->sortedBy(nameLabel(name))->iterate(p; acc : String = '' | let type : uml::Type = if p.class <> null then p.class else p.interface endif in acc + ' ' + nameLabel(p.class.package.name) + '::' + nameLabel(p.class.name) + '::' + nameLabel(p.name));\n" +
+						"			body: operations->sortedBy(nameLabel(name))->iterate(p; acc : String = '' | let type : uml::Type = if p.class <> null then p.class else p.interface endif in acc + ' ' + nameLabel(p.class?.package?.name) + '::' + nameLabel(p.class?.name) + '::' + nameLabel(p.name));\n" +
 						"		}\n" +
 						"		operation packageLabel(p : uml::Package[?]) : String[1]\n" +
 						"		{\n" +
 						"			body: if p <> null then nameLabel(p.name) else 'null' endif;\n" +
 						"		}\n" +
-						"		operation packageLabels(packages : uml::Package[*] { ordered }) : String[1]\n" +
+						"		operation packageLabels(packages : uml::Package[*|1] { ordered }) : String[1]\n" +
 						"		{\n" +
 						"			body: packages->sortedBy(nameLabel(name))->iterate(p; acc : String = '' | acc + ' ' + packageLabel(p));\n" +
 						"		}\n" +
@@ -447,7 +447,7 @@ public class EditTests extends XtextTestCase
 						"		{\n" +
 						"			body: if p <> null then let t = if p.class <> null then p.class else p.association endif in typeLabel(t) + '::' + nameLabel(p.name) else 'null' endif;\n" +
 						"		}\n" +
-						"		operation propertyLabels(properties : uml::Property[*] { ordered }) : String[1]\n" +
+						"		operation propertyLabels(properties : uml::Property[*|1] { ordered }) : String[1]\n" +
 						"		{\n" +
 						"			body: properties->sortedBy(nameLabel(name))->iterate(p; acc : String = '' | acc + ' ' + propertyLabel(p));\n" +
 						"		}\n" +
@@ -455,7 +455,7 @@ public class EditTests extends XtextTestCase
 						"		{\n" +
 						"			body: if t <> null then packageLabel(t.package) + '::' + nameLabel(t.name) else 'null' endif;\n" +
 						"		}\n" +
-						"		operation typeLabels(types : uml::Type[*] { ordered }) : String[1]\n" +
+						"		operation typeLabels(types : uml::Type[*|1] { ordered }) : String[1]\n" +
 						"		{\n" +
 						"			body: types->sortedBy(nameLabel(name))->iterate(t; acc : String = '' | acc + ' ' + typeLabel(t));\n" +
 						"		}\n" +
