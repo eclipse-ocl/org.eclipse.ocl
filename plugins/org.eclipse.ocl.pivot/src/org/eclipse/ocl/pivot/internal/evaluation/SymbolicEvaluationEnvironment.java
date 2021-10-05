@@ -18,6 +18,7 @@ import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicReason;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
@@ -46,14 +47,14 @@ public interface SymbolicEvaluationEnvironment
 	 * Else return a mayBeNull SymbolicUnknownValue for typeId if typedElement mayBeInvalid.
 	 * Else return null if typedElement is not invalid.
 	 */
-	@Nullable SymbolicValue checkNotInvalid(@NonNull TypedElement typedElement, @NonNull TypeId typeId, @Nullable String mayBeNullReason, @NonNull CallExp callExp);
+	@Nullable SymbolicValue checkNotInvalid(@NonNull TypedElement typedElement, @NonNull TypeId typeId, @Nullable SymbolicReason mayBeNullReason, @NonNull CallExp callExp);
 
 	/**
 	 * Return a SymbolicKnownValue for invalid, if typedElement isNull.
 	 * Else return a mayBeNull SymbolicUnknownValue for typeId if typedElement mayBeNull.
 	 * Else return null if typedElement is not null.
 	 */
-	@Nullable SymbolicValue checkNotNull(@NonNull OCLExpression sourceExp, @NonNull TypeId typeId, @Nullable String mayBeNullReason, @NonNull CallExp callExp);
+	@Nullable SymbolicValue checkNotNull(@NonNull OCLExpression sourceExp, @NonNull TypeId typeId, @Nullable SymbolicReason mayBeNullReason, @NonNull CallExp callExp);
 
 	/**
 	 * Return a SymbolicKnownValue for invalid, if typedElement isZero.

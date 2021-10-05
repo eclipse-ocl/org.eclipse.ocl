@@ -17,6 +17,7 @@ import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent.SymbolicCollectionContent;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent.SymbolicMapContent;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicNumericValue;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicReason;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicSimpleStatus;
 
 /**
@@ -102,11 +103,11 @@ public interface SymbolicValue
 
 	boolean mayBeInvalid();
 
-	@Nullable String mayBeInvalidReason();
+	@Nullable SymbolicReason mayBeInvalidReason();
 
 	boolean mayBeNull();
 
-	@Nullable String mayBeNullReason();
+	@Nullable SymbolicReason mayBeNullReason();
 
 	boolean mayBeTrue();
 

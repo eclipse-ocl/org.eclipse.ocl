@@ -392,7 +392,7 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 	}
 
 	@Override
-	public @Nullable String mayBeInvalidReason() {
+	public @Nullable SymbolicReason mayBeInvalidReason() {
 		return SymbolicUtil.mayBeInvalidReason(mayBeInvalid());
 	}
 
@@ -402,7 +402,7 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 	}
 
 	@Override
-	public @Nullable String mayBeNullReason() {
+	public @Nullable SymbolicReason mayBeNullReason() {
 		return SymbolicUtil.mayBeNullReason(mayBeNull());
 	}
 

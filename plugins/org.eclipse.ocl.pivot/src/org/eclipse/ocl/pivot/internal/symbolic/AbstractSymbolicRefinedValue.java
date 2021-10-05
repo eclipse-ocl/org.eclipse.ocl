@@ -391,12 +391,12 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 		}
 
 		@Override
-		public @Nullable String mayBeInvalidReason() {
+		public @Nullable SymbolicReason mayBeInvalidReason() {
 			return value.mayBeInvalidReason();
 		}
 
 		@Override
-		public @Nullable String mayBeNullReason() {
+		public @Nullable SymbolicReason mayBeNullReason() {
 			return value.mayBeNullReason();
 		}
 
@@ -630,14 +630,14 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 		appendName(s);
 		appendContent(s);
 		s.append(" «");
-		String mayBeNullReason = mayBeNullReason();
+		SymbolicReason mayBeNullReason = mayBeNullReason();
 		if (mayBeNullReason != null) {
-			s.append(mayBeNullReason);
+			mayBeNullReason.toString(s);
 		}
 		s.append("» «");
-		String mayBeInvalidReason = mayBeInvalidReason();
+		SymbolicReason mayBeInvalidReason = mayBeInvalidReason();
 		if (mayBeInvalidReason != null) {
-			s.append(mayBeInvalidReason);
+			mayBeInvalidReason.toString(s);
 		}
 		s.append("»");
 	}

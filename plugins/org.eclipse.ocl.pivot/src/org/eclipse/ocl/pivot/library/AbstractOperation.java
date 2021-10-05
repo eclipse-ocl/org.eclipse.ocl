@@ -34,6 +34,7 @@ import org.eclipse.ocl.pivot.internal.evaluation.HypothesizedSymbolicEvaluationE
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.internal.library.ConstrainedOperation;
 import org.eclipse.ocl.pivot.internal.symbolic.AbstractSymbolicRefinedValue;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicReason;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicUtil;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -119,7 +120,7 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 		StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		Operation referredOperation = PivotUtil.getReferredOperation(callExp);
 		TypeId returnTypeId = callExp.getTypeId();
-		String returnMayBeNullReason = SymbolicUtil.isRequiredReason(callExp);
+		SymbolicReason returnMayBeNullReason = SymbolicUtil.isRequiredReason(callExp);
 		OCLExpression source = PivotUtil.getOwnedSource(callExp);
 		SymbolicValue sourceValue = evaluationEnvironment.symbolicEvaluate(source);
 		if (sourceValue.asIncompatibility() != null) {

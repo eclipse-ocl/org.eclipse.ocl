@@ -24,6 +24,7 @@ import org.eclipse.ocl.pivot.evaluation.IterationManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicReason;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicUtil;
 import org.eclipse.ocl.pivot.library.LibraryOperation.LibraryOperationExtension2;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -73,7 +74,7 @@ public abstract class AbstractIteration extends AbstractIterationOrOperation imp
 	 */
 	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull LoopExp loopExp) {
 		TypeId returnTypeId = loopExp.getTypeId();
-		String returnMayBeNullReason = SymbolicUtil.isRequiredReason(loopExp);
+		SymbolicReason returnMayBeNullReason = SymbolicUtil.isRequiredReason(loopExp);
 		OCLExpression source = PivotUtil.getOwnedSource(loopExp);
 		SymbolicValue invalidSourceProblem = evaluationEnvironment.checkNotInvalid(source, returnTypeId, returnMayBeNullReason, loopExp);
 		if (invalidSourceProblem != null) {

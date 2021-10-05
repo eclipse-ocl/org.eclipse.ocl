@@ -28,6 +28,7 @@ import org.eclipse.ocl.pivot.*;
 import org.eclipse.ocl.pivot.internal.evaluation.BaseSymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicReason;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicUtil;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicVariableValue;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -2503,7 +2504,7 @@ public class PivotValidator extends EObjectValidator
 				Object resultValue = null;
 				Variable ownedResult = expressionInOCL.getOwnedResult();
 				if (ownedResult != null) {
-					String mayBeNullReason;
+					SymbolicReason mayBeNullReason;
 					if (isValidating) {
 						mayBeNullReason = SymbolicUtil.mayBeNullReason(true);
 					}
@@ -2516,7 +2517,7 @@ public class PivotValidator extends EObjectValidator
 				@Nullable Object[] parameterValues = new @Nullable Object[ownedParameters.size()];
 				for (int i = 0; i < ownedParameters.size(); i++) {
 					Variable parameter = ownedParameters.get(i);
-					String mayBeNullReason = SymbolicUtil.isRequiredReason(parameter);
+					SymbolicReason mayBeNullReason = SymbolicUtil.isRequiredReason(parameter);
 				//	mayBeInvalid = false;
 					parameterValues[i] = new SymbolicVariableValue(parameter, mayBeNullReason, SymbolicUtil.mayBeInvalidReason(mayBeInvalid));
 				}

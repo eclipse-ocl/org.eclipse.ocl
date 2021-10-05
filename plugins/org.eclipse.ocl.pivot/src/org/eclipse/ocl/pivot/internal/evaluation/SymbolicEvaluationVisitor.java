@@ -66,6 +66,7 @@ import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.symbolic.AbstractLeafSymbolicValue.SymbolicNavigationCallValue;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicNumericValue;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicReason;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicUtil;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
@@ -118,7 +119,7 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 		if (compatibilityProblem != null) {
 			return compatibilityProblem;
 		}
-		String propertyMayBeNullReason = SymbolicUtil.isRequiredReason(referredProperty);
+		SymbolicReason propertyMayBeNullReason = SymbolicUtil.isRequiredReason(referredProperty);
 		SymbolicValue invalidProblem = symbolicEvaluationEnvironment.checkNotInvalid(source, returnTypeId, propertyMayBeNullReason, navigationCallExp);
 		if (invalidProblem != null) {
 			return invalidProblem;
@@ -354,20 +355,20 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 			return context.getKnownValue(ValueUtil.INVALID_VALUE);
 		}
 		else {
-			String mayBeInvalidReason = SymbolicUtil.mayBeInvalidReason(conditionValue.mayBeInvalidReason(), "condition");;
-			String mayBeNullReason = SymbolicUtil.mayBeNullReason(conditionValue.mayBeNullReason(), "condition");
+			SymbolicReason mayBeInvalidReason = SymbolicUtil.mayBeInvalidReason(conditionValue, "condition");;
+			SymbolicReason mayBeNullReason = SymbolicUtil.mayBeNullReason(conditionValue, "condition");
 			SymbolicValue thenValue = symbolicEvaluationEnvironment.symbolicEvaluate(thenExpression);
 			SymbolicValue elseValue = symbolicEvaluationEnvironment.symbolicEvaluate(elseExpression);
 			if (mayBeInvalidReason == null) {
-				mayBeInvalidReason = SymbolicUtil.mayBeInvalidReason(thenValue.mayBeInvalidReason(), "then");
+				mayBeInvalidReason = SymbolicUtil.mayBeInvalidReason(thenValue, "then");
 				if (mayBeInvalidReason == null) {
-					mayBeInvalidReason = SymbolicUtil.mayBeInvalidReason(elseValue.mayBeInvalidReason(), "then");
+					mayBeInvalidReason = SymbolicUtil.mayBeInvalidReason(elseValue, "else");
 				}
 			}
 			if (mayBeNullReason == null) {
-				mayBeNullReason = SymbolicUtil.mayBeNullReason(thenValue.mayBeNullReason(), "else");
+				mayBeNullReason = SymbolicUtil.mayBeNullReason(thenValue, "then");
 				if (mayBeNullReason == null) {
-					mayBeNullReason = SymbolicUtil.mayBeNullReason(elseValue.mayBeNullReason(), "else");
+					mayBeNullReason = SymbolicUtil.mayBeNullReason(elseValue, "else");
 				}
 			}
 			return context.getUnknownValue(ifExp, mayBeNullReason, mayBeInvalidReason);

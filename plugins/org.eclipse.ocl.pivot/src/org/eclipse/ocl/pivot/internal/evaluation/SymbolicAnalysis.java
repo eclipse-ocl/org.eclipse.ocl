@@ -38,6 +38,7 @@ import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent.SymbolicCollectionContent;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent.SymbolicMapContent;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicKnownValue;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicReason;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicUnknownValue;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
@@ -300,7 +301,7 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 		return hypothesizedEvaluationEnvironment;
 	}
 
-	public @NonNull SymbolicUnknownValue createUnknownValue(@NonNull TypeId typeId, @Nullable String mayBeNullReason, @Nullable String mayBeInvalidReason) {
+	public @NonNull SymbolicUnknownValue createUnknownValue(@NonNull TypeId typeId, @Nullable SymbolicReason mayBeNullReason, @Nullable SymbolicReason mayBeInvalidReason) {
 		return new SymbolicUnknownValue(createVariableName(), typeId, mayBeNullReason, mayBeInvalidReason);
 	}
 
@@ -415,7 +416,7 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 		return symbolicKnownValue;
 	}
 
-	public @Nullable SymbolicValue getMayBeInvalidValue(@NonNull TypeId typeid, @Nullable String mayBeNullReason, @NonNull String mayBeInvalidReason) {
+	public @Nullable SymbolicValue getMayBeInvalidValue(@NonNull TypeId typeid, @Nullable SymbolicReason mayBeNullReason, @NonNull SymbolicReason mayBeInvalidReason) {
 		List<@NonNull SymbolicUnknownValue> unknownValues = typeid2unknownValues.get(typeid);
 		if (unknownValues == null) {
 			unknownValues = new ArrayList<>();
@@ -466,7 +467,7 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 		throw new UnsupportedOperationException();
 	} */
 
-	public @NonNull SymbolicValue getUnknownValue(@NonNull TypedElement typedElement, @Nullable String mayBeNullReason, @Nullable String mayBeInvalidReason) {
+	public @NonNull SymbolicValue getUnknownValue(@NonNull TypedElement typedElement, @Nullable SymbolicReason mayBeNullReason, @Nullable SymbolicReason mayBeInvalidReason) {
 		SymbolicValue symbolicValue = getBaseSymbolicEvaluationEnvironment().basicGetSymbolicValue(typedElement);
 		if (symbolicValue instanceof SymbolicUnknownValue) {
 			assert symbolicValue.getTypeId() == typedElement.getTypeId();

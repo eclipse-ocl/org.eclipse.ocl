@@ -67,75 +67,70 @@ public class SymbolicUtil
 		return delegate;
 	}
 
-	public static @Nullable String isRequiredReason(@NonNull TypedElement typedElement) {
+	public static @Nullable SymbolicReason isRequiredReason(@NonNull TypedElement typedElement) {
 		if (typedElement.isIsRequired()) {
 			return null;
 		}
 		StringBuilder s = new StringBuilder();
 		printName(s, typedElement);
 		s.append(" may be null");
-		return s.toString();
+		return new SymbolicSimpleReason(s.toString());
 	}
 
 	@Deprecated		/* @deprecated propagate true reason */
-	public static @NonNull String mayBeInvalidReason() {
-		return "mayBeInvalidReason";
+	public static @Nullable SymbolicReason mayBeInvalidReason(boolean mayBeInvalid) {
+		return mayBeInvalid ? SymbolicSimpleReason.MAY_BE_INVALID_REASON : null;
 	}
 
-	@Deprecated		/* @deprecated propagate true reason */
-	public static @Nullable String mayBeInvalidReason(boolean mayBeInvalid) {
-		return mayBeInvalid ? mayBeInvalidReason() : null;
-	}
-
-	public static @Nullable String mayBeInvalidReason(@Nullable Object value) {
+	public static @Nullable SymbolicReason mayBeInvalidReason(@Nullable Object value) {
 		assert !(value instanceof SymbolicValue) : "SymbolValue is no longer a Value";
 		if (value == null) {
 			return null;
 		}
 		else if ((value instanceof Value) && ((Value)value).mayBeInvalid()) {
-			return "may-be-invalid value";
+			return SymbolicSimpleReason.MAY_BE_INVALID_VALUE;
 		}
 		return null;
 	}
 
-	public static @Nullable String mayBeInvalidReason(@Nullable String nestedMayBeInvalidReason, @NonNull String outerReason) {
+	public static @Nullable SymbolicReason mayBeInvalidReason(@NonNull SymbolicValue nestedValue, @NonNull String outerReason) {
+		SymbolicReason nestedMayBeInvalidReason = nestedValue.mayBeInvalidReason();
 		if (nestedMayBeInvalidReason == null) {
 			return null;
 		}
-		return nestedMayBeInvalidReason + " => " + outerReason + " may be invalid";
+		// return nestedMayBeInvalidReason + " => " + outerReason + " may be invalid";
+		return new SymbolicNestedReason(nestedMayBeInvalidReason, null, new SymbolicSimpleReason(outerReason + " may be invalid"));
 	}
 
-	public static @NonNull String mayBeInvalidReason(@NonNull String nestedMayBeInvalidReason, @NonNull CallExp callExp) {
+	public static @NonNull SymbolicReason mayBeInvalidReason(@NonNull SymbolicReason nestedMayBeInvalidReason, @NonNull CallExp callExp) {
 	//	if (nestedMayBeInvalidReason == null) {
 	//		return null;
 	//	}
-		return nestedMayBeInvalidReason + " => \"" + callExp + "\" may be invalid";
+		// return nestedMayBeInvalidReason + " => \"" + callExp + "\" may be invalid";
+		return new SymbolicNestedReason(nestedMayBeInvalidReason, null, new SymbolicSimpleReason("\"" + callExp + "\" may be invalid"));
 	}
 
 	@Deprecated		/* @deprecated propagate true reason */
-	public static @NonNull String mayBeNullReason() {
-		return "mayBeNullReason";
+	public static @Nullable SymbolicReason mayBeNullReason(boolean mayBeNull) {
+		return mayBeNull ? SymbolicSimpleReason.MAY_BE_NULL_REASON : null;
 	}
 
-	@Deprecated		/* @deprecated propagate true reason */
-	public static @Nullable String mayBeNullReason(boolean mayBeNull) {
-		return mayBeNull ? mayBeNullReason() : null;
-	}
-
-	public static @Nullable String mayBeNullReason(@Nullable String nestedMayBeNullReason, @NonNull String outerReason) {
+	public static @Nullable SymbolicReason mayBeNullReason(@NonNull SymbolicValue nestedValue, @NonNull String outerReason) {
+		SymbolicReason nestedMayBeNullReason = nestedValue.mayBeNullReason();
 		if (nestedMayBeNullReason == null) {
 			return null;
 		}
-		return nestedMayBeNullReason + " => " + outerReason + " may be null";
+		// return nestedMayBeNullReason + " => " + outerReason + " may be null";
+		return new SymbolicNestedReason(nestedMayBeNullReason, null, new SymbolicSimpleReason(outerReason + " may be null"));
 	}
 
-	public static @Nullable String mayBeNullReason(@Nullable Object value) {
+	public static @Nullable SymbolicReason mayBeNullReason(@Nullable Object value) {
 		assert !(value instanceof SymbolicValue) : "SymbolValue is no longer a Value";
 		if (value == null) {
-			return "null value";
+			return SymbolicSimpleReason.NULL_VALUE;
 		}
 		else if ((value instanceof Value) && ((Value)value).mayBeNull()) {
-			return "may-be-null value";
+			return SymbolicSimpleReason.MAY_BE_NULL_VALUE;
 		}
 		return null;
 	}
