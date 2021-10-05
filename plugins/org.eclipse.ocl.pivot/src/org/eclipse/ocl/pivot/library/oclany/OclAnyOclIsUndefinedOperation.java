@@ -69,7 +69,7 @@ public class OclAnyOclIsUndefinedOperation extends AbstractSimpleUnaryOperation
 		if (sourceValue.isInvalid() || sourceValue.isNull()) {
 			return evaluationEnvironment.getKnownValue(Boolean.TRUE);
 		}
-		else if (sourceValue.mayBeInvalid() || sourceValue.mayBeNull()) {
+		else if ((sourceValue.mayBeInvalidReason() != null) || (sourceValue.mayBeNullReason() != null)) {
 			return evaluationEnvironment.getUnknownValue(callExp, null, null);
 		}
 		else {

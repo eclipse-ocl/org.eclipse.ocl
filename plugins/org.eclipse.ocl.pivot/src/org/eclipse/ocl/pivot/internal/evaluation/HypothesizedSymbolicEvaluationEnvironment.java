@@ -50,7 +50,7 @@ import org.eclipse.ocl.pivot.values.SymbolicValue;
  * A HypothesizedSymbolicEvaluationEnvironment supports the symbolic re-evaluation subject to some hypothesis
  * which defines a value for some expression and imposes executability of a particular control path. All CSEs
  * have the same refined value for the poyrposes of the hypothesis evaluation. Once the hypothesis has been
- * contradicted a refined value vfor the hypothesized expression can be return ed to the baseSymbolicEvaluationEnvironment.
+ * contradicted a refined value vfor the hypothesized expression can be returned to the baseSymbolicEvaluationEnvironment.
  *
  * @since 1.17
  */
@@ -251,7 +251,8 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 						if (hypothesis.cannotBeSafe()) {
 							SymbolicValue baseSymbolicValue2 = baseSymbolicEvaluationEnvironment.getSymbolicValue(activeTypedElement);
 						//	SymbolicValue refinedSymbolicValue2 = AbstractSymbolicRefinedValue.createExceptValue(baseSymbolicValue2, ValueUtil.INVALID_VALUE);
-							SymbolicValue refinedSymbolicValue2 = AbstractSymbolicRefinedValue.createIncompatibility(baseSymbolicValue2, "cannotBeSafe");
+						//	symbolicAnalysis.getMayBeInvalidValue(baseSymbolicValue2.getType, null, null)
+							SymbolicValue refinedSymbolicValue2 = AbstractSymbolicRefinedValue.createIncompatibility(baseSymbolicValue2, "cannotBeSafe", activeTypedElement);
 							String incompatibility2 = installRefinement(activeTypedElement, refinedSymbolicValue2);
 							if (incompatibility2 != null) {
 								return incompatibility2;
@@ -693,7 +694,7 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 	public @Nullable String installRefinement(@NonNull TypedElement refinedExpression, @NonNull SymbolicValue refinedSymbolicValue) {
 		CSEElement cseElement = cseAnalysis.getCSEElement(refinedExpression);
 		refinedCSEElements.add(cseElement);
-		SymbolicValue appliedSymbolicValue = setSymbolicValue(cseElement, refinedSymbolicValue);
+		SymbolicValue appliedSymbolicValue = setSymbolicValue(refinedExpression, cseElement, refinedSymbolicValue);
 		if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
 			SymbolicAnalysis.HYPOTHESIS.println("    set-path: " + SymbolicUtil.printPath(refinedExpression, false) + " as: " + SymbolicUtil.printValue(appliedSymbolicValue));
 		}
@@ -746,12 +747,12 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 		}
 	} */
 
-	private @NonNull SymbolicValue setSymbolicValue(@NonNull CSEElement cseElement, @NonNull SymbolicValue refinedSymbolicValue) {
+	private @NonNull SymbolicValue setSymbolicValue(@NonNull TypedElement typedElement, @NonNull CSEElement cseElement, @NonNull SymbolicValue refinedSymbolicValue) {
 		SymbolicValue oldSymbolicValue = cseElement2symbolicValue.get(cseElement);
 		assert oldSymbolicValue != null;
 		SymbolicValue newSymbolicValue = refinedSymbolicValue;
 		if ((newSymbolicValue != oldSymbolicValue) && !newSymbolicValue.equals(oldSymbolicValue)) {
-			newSymbolicValue = refinedSymbolicValue.asRefinementOf(oldSymbolicValue);
+			newSymbolicValue = refinedSymbolicValue.asRefinementOf(oldSymbolicValue, typedElement);
 			if ((newSymbolicValue != oldSymbolicValue) && !newSymbolicValue.equals(oldSymbolicValue)) {
 				cseElement2symbolicValue.put(cseElement, newSymbolicValue);
 				refinedCSEElements.add(cseElement);
@@ -767,7 +768,7 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 		if ("self.name".equals(cseElement.toString())) {
 			getClass();		// XXX
 		}
-		SymbolicValue resultValue = setSymbolicValue(cseElement, symbolicValue);
+		SymbolicValue resultValue = setSymbolicValue(typedElement, cseElement, symbolicValue);
 		if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
 			SymbolicAnalysis.HYPOTHESIS.println("    set-" + purpose + ": " + SymbolicUtil.printPath(typedElement, false) + " as: " + SymbolicUtil.printValue(resultValue));
 		}

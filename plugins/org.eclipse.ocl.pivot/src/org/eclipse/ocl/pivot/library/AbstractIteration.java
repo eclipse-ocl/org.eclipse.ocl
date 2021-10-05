@@ -118,22 +118,20 @@ public abstract class AbstractIteration extends AbstractIterationOrOperation imp
 	 */
 	protected @NonNull SymbolicValue createResultValue(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull LoopExp loopExp,
 			@NonNull SymbolicValue sourceSymbolicValue, @NonNull List<@NonNull SymbolicValue> argumentSymbolicValues) {
-		boolean mayBeInvalid = false;
-		boolean mayBeNull = false;
-		if (sourceSymbolicValue.mayBeInvalid()) {
-			mayBeInvalid = true;
-		}
-		if (sourceSymbolicValue.mayBeNull()) {
+		SymbolicReason mayBeInvalidReason = sourceSymbolicValue.mayBeInvalidReason();
+		SymbolicReason mayBeNullReason = null;
+		SymbolicReason mayBeNullReason2 = sourceSymbolicValue.mayBeNullReason();
+		if (mayBeNullReason2 != null) {
 			if (loopExp.isIsSafe()) {
-				mayBeNull = true;
+				mayBeNullReason = mayBeNullReason2;
 			}
 			else {
-				mayBeInvalid = true;
+				mayBeInvalidReason = mayBeNullReason2;
 			}
 		}
 		for (@NonNull SymbolicValue argumentSymbolicValue : argumentSymbolicValues) {
-			if (argumentSymbolicValue.mayBeInvalid()) {
-				mayBeInvalid = true;
+			if (mayBeInvalidReason == null) {
+				mayBeInvalidReason = argumentSymbolicValue.mayBeInvalidReason();
 			}
 		}
 	/*	OCLExpression bodyExp = PivotUtil.getOwnedBody(loopExp);
@@ -147,7 +145,7 @@ public abstract class AbstractIteration extends AbstractIterationOrOperation imp
 			}
 		} */
 		SymbolicAnalysis symbolicAnalysis = evaluationEnvironment.getSymbolicAnalysis();
-		return symbolicAnalysis.createUnknownValue(loopExp.getTypeId(), SymbolicUtil.mayBeNullReason(mayBeNull), SymbolicUtil.mayBeInvalidReason(mayBeInvalid));
+		return symbolicAnalysis.createUnknownValue(loopExp.getTypeId(), mayBeNullReason, mayBeInvalidReason);
 	}
 
 	/**

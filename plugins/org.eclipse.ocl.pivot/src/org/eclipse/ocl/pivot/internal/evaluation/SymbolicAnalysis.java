@@ -472,20 +472,20 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 		if (symbolicValue instanceof SymbolicUnknownValue) {
 			assert symbolicValue.getTypeId() == typedElement.getTypeId();
 			if (mayBeNullReason == null) {
-				if (symbolicValue.mayBeNull()) {
+				if (symbolicValue.mayBeNullReason() != null) {
 					symbolicValue = AbstractSymbolicRefinedValue.createExceptValue(symbolicValue, null);
 				}
 			}
 			else {
-				assert symbolicValue.mayBeNull();
+				assert symbolicValue.mayBeNullReason() != null;
 			}
 			if (mayBeInvalidReason == null) {
-				if (symbolicValue.mayBeInvalid()) {
+				if (symbolicValue.mayBeInvalidReason() != null) {
 					symbolicValue = AbstractSymbolicRefinedValue.createExceptValue(symbolicValue, ValueUtil.INVALID_VALUE);
 				}
 			}
 			else {
-				assert symbolicValue.mayBeInvalid();
+				assert symbolicValue.mayBeInvalidReason() != null;
 			}
 			return symbolicValue;
 		}

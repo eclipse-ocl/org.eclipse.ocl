@@ -29,6 +29,7 @@ import org.eclipse.ocl.pivot.internal.evaluation.BaseSymbolicEvaluationEnvironme
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicReason;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicSimpleReason;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicUtil;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicVariableValue;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -2498,28 +2499,30 @@ public class PivotValidator extends EObjectValidator
 					}
 				}
 				VariableDeclaration ownedContext = PivotUtil.getOwnedContext(expressionInOCL);
-				boolean mayBeNull = isValidating || !ownedContext.isIsRequired();
-				boolean mayBeInvalid = isValidating;
-				Object selfValue = new SymbolicVariableValue(ownedContext, SymbolicUtil.mayBeNullReason(mayBeNull), SymbolicUtil.mayBeInvalidReason(mayBeInvalid));
+				SymbolicReason mayBeNullReason1 = isValidating ? SymbolicSimpleReason.IS_VALIDATING : null;
+				if (mayBeNullReason1 == null) {
+					mayBeNullReason1 = SymbolicUtil.isRequiredReason(ownedContext);
+				}
+				SymbolicReason mayBeInvalidReason = isValidating ? SymbolicSimpleReason.IS_VALIDATING : null;
+				Object selfValue = new SymbolicVariableValue(ownedContext, mayBeNullReason1, mayBeInvalidReason);
 				Object resultValue = null;
 				Variable ownedResult = expressionInOCL.getOwnedResult();
 				if (ownedResult != null) {
-					SymbolicReason mayBeNullReason;
+					SymbolicReason mayBeNullReason2;
 					if (isValidating) {
-						mayBeNullReason = SymbolicUtil.mayBeNullReason(true);
+						mayBeNullReason2 = SymbolicSimpleReason.IS_VALIDATING;
 					}
 					else {
-						mayBeNullReason = SymbolicUtil.isRequiredReason(ownedResult);
+						mayBeNullReason2 = SymbolicUtil.isRequiredReason(ownedResult);
 					}
-					resultValue = new SymbolicVariableValue(ownedResult, mayBeNullReason, SymbolicUtil.mayBeInvalidReason(mayBeInvalid));
+					resultValue = new SymbolicVariableValue(ownedResult, mayBeNullReason2, mayBeInvalidReason);
 				}
 				List<@NonNull Variable> ownedParameters = PivotUtilInternal.getOwnedParametersList(expressionInOCL);
 				@Nullable Object[] parameterValues = new @Nullable Object[ownedParameters.size()];
 				for (int i = 0; i < ownedParameters.size(); i++) {
 					Variable parameter = ownedParameters.get(i);
-					SymbolicReason mayBeNullReason = SymbolicUtil.isRequiredReason(parameter);
-				//	mayBeInvalid = false;
-					parameterValues[i] = new SymbolicVariableValue(parameter, mayBeNullReason, SymbolicUtil.mayBeInvalidReason(mayBeInvalid));
+					SymbolicReason mayBeNullReason3 = SymbolicUtil.isRequiredReason(parameter);
+					parameterValues[i] = new SymbolicVariableValue(parameter, mayBeNullReason3, mayBeInvalidReason);
 				}
 				SymbolicAnalysis symbolicAnalysis = metamodelManager.getSymbolicAnalysis(expressionInOCL, selfValue, resultValue, parameterValues);
 				String analysisIncompatibility = symbolicAnalysis.getAnalysisIncompatibility();
@@ -2538,7 +2541,7 @@ public class PivotValidator extends EObjectValidator
 						TypedElement typedElement = (TypedElement)eObject;
 						SymbolicValue symbolicValue = evaluationEnvironment.getSymbolicValue(typedElement);
 						assert symbolicValue != null;
-						if (symbolicValue.mayBeInvalid() && !symbolicValue.isInvalid()) {			// FIXME Do we really want to suppress outright invalid warnings ?
+						if ((symbolicValue.mayBeInvalidReason() != null) && !symbolicValue.isInvalid()) {			// FIXME Do we really want to suppress outright invalid warnings ?
 							if (mayBeInvalidElements == null) {
 								mayBeInvalidElements = new ArrayList<>();
 							}

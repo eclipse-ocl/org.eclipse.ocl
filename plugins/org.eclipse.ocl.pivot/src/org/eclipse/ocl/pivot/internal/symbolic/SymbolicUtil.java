@@ -108,10 +108,6 @@ public class SymbolicUtil
 	}
 
 	public static @NonNull SymbolicReason mayBeInvalidReason(@NonNull SymbolicReason nestedMayBeInvalidReason, @NonNull CallExp callExp) {
-	//	if (nestedMayBeInvalidReason == null) {
-	//		return null;
-	//	}
-		// return nestedMayBeInvalidReason + " => \"" + callExp + "\" may be invalid";
 		return new SymbolicNestedReason(nestedMayBeInvalidReason, null, new SymbolicSimpleReason("\"" + callExp + "\" may be invalid"));
 	}
 
@@ -143,6 +139,10 @@ public class SymbolicUtil
 			return SymbolicSimpleReason.MAY_BE_NULL_VALUE;
 		}
 		return null;
+	}
+
+	public static @NonNull SymbolicReason mayBeNullReason(@NonNull SymbolicReason nestedMayBeNullReason, @NonNull CallExp callExp) {
+		return new SymbolicNestedReason(nestedMayBeNullReason, null, new SymbolicSimpleReason("\"" + callExp + "\" may be null"));
 	}
 
 	/**

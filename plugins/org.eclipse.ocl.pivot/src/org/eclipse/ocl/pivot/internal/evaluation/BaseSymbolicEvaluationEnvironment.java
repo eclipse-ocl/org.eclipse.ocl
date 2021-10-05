@@ -298,17 +298,17 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 			}
 			symbolicValue = getKnownValue(boxedValue);
 		}
-		if (symbolicValue.mayBeInvalid()) {
+		if (symbolicValue.mayBeInvalidReason() != null) {
 			ExpressionInOCL expressionInOCL = (ExpressionInOCL) parameter.eContainer();
 			EObject expressionContainer = expressionInOCL.eContainer();
 			if (expressionContainer instanceof Operation) {
 				if (!((Operation)expressionContainer).isIsValidating()) {
-					symbolicValue = AbstractSymbolicRefinedValue.createIncompatibility(symbolicValue, "mayBeInvalid \"" + parameter.getName() + "\" parameter initializer is incompatible with not-validating");
+					symbolicValue = AbstractSymbolicRefinedValue.createIncompatibility(symbolicValue, "mayBeInvalid \"" + parameter.getName() + "\" parameter initializer is incompatible with not-validating", parameter);
 				}
 			}
 		}
-		if (symbolicValue.mayBeNull() && parameter.isIsRequired()) {
-			symbolicValue = AbstractSymbolicRefinedValue.createIncompatibility(symbolicValue, "mayBeNull \"" + parameter.getName() + "\" parameter initializer is incompatible with isRequired");
+		if ((symbolicValue.mayBeNullReason() != null) && parameter.isIsRequired()) {
+			symbolicValue = AbstractSymbolicRefinedValue.createIncompatibility(symbolicValue, "mayBeNull \"" + parameter.getName() + "\" parameter initializer is incompatible with isRequired", parameter);
 		}
 		SymbolicValue resultValue = setSymbolicValue(cseElement, symbolicValue);
 		if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
@@ -427,7 +427,7 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 			Object boxedValue = environmentFactory.getIdResolver().boxedValueOf(e);
 			resultValue = getKnownValue(boxedValue);
 		}
-		SymbolicValue refinedValue = resultValue.asRefinementOf(unrefinedValue);
+		SymbolicValue refinedValue = resultValue.asRefinementOf(unrefinedValue, typedElement);
 		assert typedElement2refinedSymbolicValue != null;
 		SymbolicValue old = typedElement2refinedSymbolicValue.put(typedElement, refinedValue);
 		if (old != null) {

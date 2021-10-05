@@ -14,7 +14,10 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 /**
- * SymbolicSimpleReason maintains the reason for a symbolic evaluation failure as a nested hierrachy of reasons.
+ * SymbolicNestedReason maintains the reason for a symbolic evaluation failure as a nested hierarchy of reasons.
+ *
+ * FIXME Maintaining the hierarchy has some advantages for debugging, but is not obviously really necessary and
+ * somewhat conficts with attempts to maximize SymbolicValue re-use by avoiding unnecessary context.
  *
  * @since 1.17
  */

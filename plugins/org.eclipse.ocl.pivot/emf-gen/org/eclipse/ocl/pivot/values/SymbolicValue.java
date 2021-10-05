@@ -12,6 +12,7 @@ package org.eclipse.ocl.pivot.values;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent.SymbolicCollectionContent;
@@ -37,7 +38,7 @@ public interface SymbolicValue
 	 *
 	 * throws IllegalStateException if incompatoble.
 	 */
-	@NonNull SymbolicValue asRefinementOf(@NonNull SymbolicValue unrefinedValue);
+	@NonNull SymbolicValue asRefinementOf(@NonNull SymbolicValue unrefinedValue, @NonNull TypedElement typedElement);
 
 	@Nullable SymbolicSimpleStatus basicGetBooleanStatus();
 
@@ -101,12 +102,14 @@ public interface SymbolicValue
 
 	boolean mayBeFalse();
 
-	boolean mayBeInvalid();
-
+	/**
+	 * Return the non-null reason why this symbolic vaue may be invalid.
+	 */
 	@Nullable SymbolicReason mayBeInvalidReason();
 
-	boolean mayBeNull();
-
+	/**
+	 * Return the non-null reason why this symbolic vaue may be null.
+	 */
 	@Nullable SymbolicReason mayBeNullReason();
 
 	boolean mayBeTrue();

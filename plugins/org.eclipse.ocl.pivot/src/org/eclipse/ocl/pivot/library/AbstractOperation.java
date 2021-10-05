@@ -223,7 +223,20 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 			}
 			i++;
 		}
-		return evaluationEnvironment.getUnknownValue(callExp, mayBeNullReason, mayBeInvalidReason);
+		SymbolicReason resultMayBeInvalidReason = null;
+		SymbolicReason resultMayBeNullReason = null;
+		if (mayBeInvalidReason != null) {
+			resultMayBeInvalidReason = SymbolicUtil.mayBeInvalidReason(mayBeInvalidReason, callExp);
+		}
+		if (mayBeNullReason != null) {
+			if (callExp.isIsSafe()) {
+				resultMayBeNullReason = SymbolicUtil.mayBeNullReason(mayBeNullReason, callExp);
+			}
+			else if (resultMayBeInvalidReason == null) {
+				resultMayBeInvalidReason = SymbolicUtil.mayBeInvalidReason(mayBeNullReason, callExp);
+			}
+		}
+		return evaluationEnvironment.getUnknownValue(callExp, resultMayBeNullReason, resultMayBeInvalidReason);
 	}
 
 	/**
@@ -316,7 +329,7 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 			if (oclInvalidOperation != null) {
 				mayBeInvalid = true;
 			}
-			if (!mayBeInvalid && baseSymbolicValue.mayBeInvalid()) {
+			if (!mayBeInvalid && (baseSymbolicValue.mayBeInvalidReason() != null)) {
 				refinedSymbolicValue = AbstractSymbolicRefinedValue.createExceptValue(refinedSymbolicValue, ValueUtil.INVALID_VALUE);
 			}
 			//
@@ -331,7 +344,7 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 					mayBeNull = true;
 				}
 			}
-			if (!mayBeNull && baseSymbolicValue.mayBeNull()) {
+			if (!mayBeNull && (baseSymbolicValue.mayBeNullReason() != null)) {
 				refinedSymbolicValue = AbstractSymbolicRefinedValue.createExceptValue(refinedSymbolicValue, null);
 			}
 			if (refinedSymbolicValue != baseSymbolicValue) {
@@ -349,10 +362,10 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 						SymbolicValue baseSymbolicValue = baseSymbolicEvaluationEnvironment.getSymbolicValue(argument);
 						if (parameter.isIsRequired()) {
 							SymbolicValue refinedSymbolicValue2 = baseSymbolicValue;
-							if (baseSymbolicValue.mayBeInvalid()) {
+							if (baseSymbolicValue.mayBeInvalidReason() != null) {
 								refinedSymbolicValue2 = AbstractSymbolicRefinedValue.createExceptValue(refinedSymbolicValue2, ValueUtil.INVALID_VALUE);
 							}
-							if (baseSymbolicValue.mayBeNull()) {
+							if (baseSymbolicValue.mayBeNullReason() != null) {
 								refinedSymbolicValue2 = AbstractSymbolicRefinedValue.createExceptValue(refinedSymbolicValue2, null);
 							}
 							if (refinedSymbolicValue2 != baseSymbolicValue) {

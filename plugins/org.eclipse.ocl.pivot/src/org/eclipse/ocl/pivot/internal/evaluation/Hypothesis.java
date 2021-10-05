@@ -210,7 +210,7 @@ public abstract class Hypothesis
 
 		@Override
 		protected boolean cannotBeSatisfiedBy(@NonNull SymbolicValue symbolicValue) {
-			return !symbolicValue.mayBeInvalid();
+			return symbolicValue.mayBeInvalidReason() == null;
 		}
 
 		@Override
@@ -237,7 +237,7 @@ public abstract class Hypothesis
 
 		@Override
 		protected boolean cannotBeSatisfiedBy(@NonNull SymbolicValue symbolicValue) {
-			return !symbolicValue.mayBeNull();
+			return symbolicValue.mayBeNullReason() == null;
 		}
 
 		@Override

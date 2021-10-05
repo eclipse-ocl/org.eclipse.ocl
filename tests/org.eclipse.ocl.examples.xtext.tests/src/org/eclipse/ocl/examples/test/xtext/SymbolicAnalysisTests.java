@@ -219,8 +219,8 @@ public class SymbolicAnalysisTests extends XtextTestCase
 			boolean expectedMayBeInvalid = expectedIsInvalid || expectedMayBeInvalidSet.contains(element);
 			boolean okIsDead = expectedIsDead == actualValue.isDead();
 			boolean okIsInvalid = expectedIsInvalid == actualValue.isInvalid();
-			boolean okMayBeInvalid = expectedMayBeInvalid == actualValue.mayBeInvalid();
-			boolean okMayBeNull = expectedMayBeNull == actualValue.mayBeNull();
+			boolean okMayBeInvalid = expectedMayBeInvalid == (actualValue.mayBeInvalidReason() != null);
+			boolean okMayBeNull = expectedMayBeNull == (actualValue.mayBeNullReason() != null);
 			if (!okIsDead || !okIsInvalid || !okMayBeInvalid || !okMayBeNull ) {
 				s.append("\n\t" + element.eClass().getName() + ": " + SymbolicUtil.printPath(element, true));
 				if (!okIsDead) {
@@ -305,7 +305,7 @@ public class SymbolicAnalysisTests extends XtextTestCase
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-	//	SymbolicAnalysis.HYPOTHESIS.setState(true);
+		SymbolicAnalysis.HYPOTHESIS.setState(true);
 	}
 
 	public void testSymbolicAnalysis_AndGuard() throws Exception {

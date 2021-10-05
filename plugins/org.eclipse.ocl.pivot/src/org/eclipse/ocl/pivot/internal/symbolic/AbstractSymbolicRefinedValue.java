@@ -12,7 +12,9 @@ package org.eclipse.ocl.pivot.internal.symbolic;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent.SymbolicCollectionContent;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent.SymbolicMapContent;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
@@ -26,7 +28,8 @@ import org.eclipse.ocl.pivot.values.SymbolicValue;
 public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue implements SymbolicRefinedValue
 {
 	/**
-	 * Except refines a SymbolicStatus to define a dead.(unreachable) evaluation
+	 * AbstractSymbolicFinalValue wraps the evluated SymbolicValue in the final contextual verdict that its
+	 * usage is either Dead (not used) or Incompatible (conflicting with the usr's needs).
 	 */
 	private static abstract class AbstractSymbolicFinalValue extends AbstractSymbolicRefinedValue
 	{
@@ -60,18 +63,8 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 		}
 
 		@Override
-		public boolean mayBeInvalid() {
-			return false;
-		}
-
-		@Override
 		public @Nullable SymbolicReason mayBeInvalidReason() {
 			return null;
-		}
-
-		@Override
-		public boolean mayBeNull() {
-			return false;
 		}
 
 		@Override
@@ -86,7 +79,7 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 	}
 
 	/**
-	 * Except refines a SymbolicStatus to define a dead.(unreachable) evaluation
+	 * SymbolicDeadValue refines a SymbolicValue to define a dead.(unreachable) evaluation
 	 */
 	private static class SymbolicDeadValue extends AbstractSymbolicFinalValue
 	{
@@ -109,7 +102,7 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 	}
 
 	/**
-	 * Except refines a SymbolicStatus to exclude a possible value.
+	 * SymbolicExceptValue refines a SymbolicValue to exclude a possible value.
 	 */
 	private static class SymbolicExceptValue extends AbstractSymbolicRefinedValue
 	{
@@ -119,8 +112,8 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 			super(value);
 			assert ValueUtil.isBoxed(exceptValue);
 			this.exceptValue = exceptValue != null ? exceptValue : ValueUtil.NULL_VALUE;
-			assert !(ValueUtil.isInvalidValue(exceptValue) && !value.mayBeInvalid());
-			assert !(ValueUtil.isNullValue(exceptValue) && !value.mayBeNull());
+			assert !(ValueUtil.isInvalidValue(exceptValue) && (value.mayBeInvalidReason() == null));
+			assert !(ValueUtil.isNullValue(exceptValue) && (value.mayBeNullReason() == null));
 			assert !((exceptValue == ValueUtil.ZERO_VALUE) && !value.mayBeZero());
 
 
@@ -186,15 +179,19 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 	}
 
 	/**
-	 * Except refines a SymbolicStatus to define a dead.(unreachable) evaluation
+	 * SymboliciIncompatibility refines a SymbolicValue to define an incompatible usage; the wrapped value
+	 * conflicts with a requirement such as non-null of the usage..
 	 */
 	private static class SymboliciIncompatibility extends AbstractSymbolicFinalValue
 	{
 		protected final @NonNull String incompatibility;
+		protected final @NonNull TypedElement typedElement;
 
-		public SymboliciIncompatibility(@NonNull SymbolicValue value, @NonNull String incompatibility) {
+		public SymboliciIncompatibility(@NonNull SymbolicValue value, @NonNull String incompatibility, @NonNull TypedElement typedElement) {
 			super(value);
 			this.incompatibility = incompatibility;
+			this.typedElement = typedElement;
+			assert !(value instanceof SymboliciIncompatibility);
 		}
 
 		@Override
@@ -203,7 +200,9 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 			value.appendName(s);
 			s.append(", ");
 			s.append(incompatibility);
-			s.append(")");
+			s.append(" at \"");
+			s.append(PrettyPrinter.print(typedElement));
+			s.append("\")");
 		}
 
 		@Override
@@ -212,8 +211,24 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 		}
 
 		@Override
-		public @NonNull SymbolicSimpleStatus basicGetInvalidStatus() {		// Shouldn't really happen - asIncompatibility() guards
+		public @NonNull SymbolicSimpleStatus basicGetInvalidStatus() {
 			return SymbolicSimpleStatus.SATISFIED;
+		}
+
+		@Override
+		public @Nullable SymbolicReason mayBeInvalidReason() {
+			SymbolicReason mayBeInvalidReason = value.mayBeInvalidReason();
+			if (mayBeInvalidReason != null) {
+				return mayBeInvalidReason;
+			}
+			else {
+				return value.mayBeNullReason();
+			}
+		}
+
+		@Override
+		public @Nullable SymbolicReason mayBeNullReason() {
+			return null;
 		}
 	}
 
@@ -467,8 +482,8 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 
 	public static @NonNull SymbolicValue createExceptValue(@NonNull SymbolicValue symbolicValue, @Nullable Object exceptValue) {
 		assert ValueUtil.isBoxed(exceptValue);
-		if (((exceptValue == null) && !symbolicValue.mayBeNull())
-		 || ((exceptValue instanceof InvalidValue) && !symbolicValue.mayBeInvalid())
+		if (((exceptValue == null) && (symbolicValue.mayBeNullReason() == null))
+		 || ((exceptValue instanceof InvalidValue) && (symbolicValue.mayBeInvalidReason() == null))
 		 || (ValueUtil.ZERO_VALUE.equals(exceptValue) && !symbolicValue.mayBeZero())
 		 || (ValueUtil.FALSE_VALUE.equals(exceptValue) && !symbolicValue.mayBeFalse())
 		 || (ValueUtil.TRUE_VALUE.equals(exceptValue) && !symbolicValue.mayBeTrue())) {
@@ -488,9 +503,12 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 		}
 	} */
 
-	public static @NonNull SymbolicValue createIncompatibility(@NonNull SymbolicValue symbolicValue, @NonNull String incompatibility) {
+	public static @NonNull SymbolicValue createIncompatibility(@NonNull SymbolicValue symbolicValue, @NonNull String incompatibility, @NonNull TypedElement typedElement) {
+		if (symbolicValue.asIncompatibility() != null) {
+			return symbolicValue;
+		}
 	//	if (!symbolicValue.isDead()) {
-			return new SymboliciIncompatibility(symbolicValue, incompatibility);
+			return new SymboliciIncompatibility(symbolicValue, incompatibility, typedElement);
 	//	}
 	//	else {
 	//		return symbolicValue;
@@ -632,6 +650,20 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 	@Override
 	public boolean isNullFree() {
 		return value.isNullFree();
+	}
+
+	@Override
+	public @Nullable SymbolicReason mayBeInvalidReason() {
+		boolean mayBeInvalid = !getInvalidStatus().isUnsatisfied();
+//		return SymbolicUtil.mayBeInvalidReason(mayBeInvalid);
+		return mayBeInvalid ? value.mayBeInvalidReason() : null;
+	}
+
+	@Override
+	public @Nullable SymbolicReason mayBeNullReason() {
+		boolean mayBeNull = !getNullStatus().isUnsatisfied();
+//		return SymbolicUtil.mayBeNullReason(mayBeNull);
+		return mayBeNull ? value.mayBeNullReason() : null;
 	}
 
 	@Override

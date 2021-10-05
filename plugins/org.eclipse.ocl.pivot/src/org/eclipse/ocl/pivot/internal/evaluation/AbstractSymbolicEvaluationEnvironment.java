@@ -200,7 +200,7 @@ public abstract class AbstractSymbolicEvaluationEnvironment implements SymbolicE
 	@Override
 	public boolean mayBeInvalidOrNull(@NonNull TypedElement typedElement) {
 		SymbolicValue symbolicValue = getSymbolicValue(typedElement);
-		return symbolicValue.mayBeInvalid() || symbolicValue.mayBeNull();
+		return (symbolicValue.mayBeInvalidReason() != null) || (symbolicValue.mayBeNullReason() != null);
 	}
 
 //	@Override

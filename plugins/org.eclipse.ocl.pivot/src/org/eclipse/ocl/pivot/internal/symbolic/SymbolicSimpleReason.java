@@ -19,6 +19,7 @@ import org.eclipse.jdt.annotation.NonNull;
  */
 public class SymbolicSimpleReason implements SymbolicReason
 {
+	public static final @NonNull SymbolicSimpleReason IS_VALIDATING = new SymbolicSimpleReason("isValidating");
 	@Deprecated /* @deprecated - be more precise */
 	public static final @NonNull SymbolicSimpleReason MAY_BE_INVALID_REASON = new SymbolicSimpleReason("mayBeInvalidReason");
 	public static final @NonNull SymbolicSimpleReason MAY_BE_INVALID_VALUE = new SymbolicSimpleReason("may-be-invalid value");

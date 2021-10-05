@@ -12,6 +12,7 @@ package org.eclipse.ocl.pivot.internal.symbolic;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.NumberValue;
@@ -37,7 +38,7 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 	}
 
 	@Override
-	public @NonNull SymbolicValue asRefinementOf(@NonNull SymbolicValue unrefinedValue) {
+	public @NonNull SymbolicValue asRefinementOf(@NonNull SymbolicValue unrefinedValue, @NonNull TypedElement typedElement) {
 		//
 		//	The following comparions return unrefinedValue wrapped in refinements to exhibit the
 		//	characteristics of this, unless this is a known literal that totally supplants the unrefineValue.
@@ -48,21 +49,21 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 		//	Resolve invalid refinement
 		//
 		if (isInvalid()) {
-			if (unrefinedValue.mayBeInvalid()) {
+			if (unrefinedValue.mayBeInvalidReason() != null) {
 				return this;							// "invalid" is except-everything else
 			}
 			else {
-				assert !mayBeNull();
+				assert mayBeNullReason() == null;
 			//	assert !mayBeZero();
-				return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "isInvalid is incompatible with !mayBeInvalid");
+				return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "isInvalid is incompatible with !mayBeInvalid", typedElement);
 			}
 		}
-		else if (mayBeInvalid()) {
+		else if (mayBeInvalidReason() != null) {
 			if (unrefinedValue.isInvalid()) {
 				return unrefinedValue;					// "invalid" is except-everything else
 			}
-			else if (!unrefinedValue.mayBeInvalid()) {
-				return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "mayBeInvalid is incompatible with !mayBeInvalid");
+			else if (unrefinedValue.mayBeInvalidReason() == null) {
+				return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "mayBeInvalid is incompatible with !mayBeInvalid", typedElement);
 			}
 			else {
 				// no change
@@ -70,7 +71,7 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 		}
 		else {
 			if (unrefinedValue.isInvalid()) {
-				return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "notInvalid is incompatible with isInvalid");
+				return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "notInvalid is incompatible with isInvalid", typedElement);
 			}
 			else {
 				resultValue = AbstractSymbolicRefinedValue.createExceptValue(resultValue, ValueUtil.INVALID_VALUE);
@@ -80,21 +81,21 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 		//	Resolve null refinement
 		//
 		if (isNull()) {
-			if (unrefinedValue.mayBeNull()) {
+			if (unrefinedValue.mayBeNullReason() != null) {
 				return this;					// "null" is except-everything else
 			}
 			else {
-				assert !mayBeInvalid();
+				assert mayBeInvalidReason() == null;
 			//	assert !mayBeZero();
-				return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "isNull is incompatible with !mayBeNull");
+				return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "isNull is incompatible with !mayBeNull", typedElement);
 			}
 		}
-		else if (mayBeNull()) {
+		else if (mayBeNullReason() != null) {
 			if (unrefinedValue.isNull()) {
 				return unrefinedValue;				// "null" is except-everything else
 			}
-			else if (!unrefinedValue.mayBeNull()) {
-				return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "mayBeNull is incompatible with !mayBeNull");
+			else if (unrefinedValue.mayBeNullReason() == null) {
+				return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "mayBeNull is incompatible with !mayBeNull", typedElement);
 			}
 			else {
 				// no change
@@ -102,7 +103,7 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 		}
 		else {
 			if (unrefinedValue.isNull()) {
-				return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "notNull is incompatible with isNull");
+				return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "notNull is incompatible with isNull", typedElement);
 			}
 			else {
 			//	assert !mayBeInvalid();
@@ -120,9 +121,9 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 					return this;					// "0" is except-everything else
 				}
 				else {
-					assert !mayBeInvalid();
-					assert !mayBeNull();
-					return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "isZero is incompatible with !mayBeZero");
+					assert mayBeInvalidReason() == null;
+					assert mayBeNullReason() == null;
+					return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "isZero is incompatible with !mayBeZero", typedElement);
 				}
 			}
 			else if (mayBeZero()) {
@@ -130,7 +131,7 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 					return unrefinedValue;			// "0" is except-everything else
 				}
 				else if (!unrefinedValue.mayBeZero()) {
-					return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "mayBeZero is incompatible with !mayBeZero");
+					return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "mayBeZero is incompatible with !mayBeZero", typedElement);
 				}
 				else {
 					// no change
@@ -138,7 +139,7 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 			}
 			else {
 				if (unrefinedValue.isZero()) {
-					return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "notZero is incompatible with isZero");
+					return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "notZero is incompatible with isZero", typedElement);
 				}
 				else {
 					resultValue = AbstractSymbolicRefinedValue.createExceptValue(resultValue, ValueUtil.ZERO_VALUE);
@@ -151,36 +152,36 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 		if (unrefinedValue.basicGetBooleanStatus() != null) {
 			if (isTrue()) {
 				if (unrefinedValue.isFalse()) {
-					assert !mayBeInvalid();
-					assert !mayBeNull();
+					assert mayBeInvalidReason() == null;
+					assert mayBeNullReason() == null;
 				//	assert !mayBeZero();
-					return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "isTrue is incompatible with isFalse");
+					return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "isTrue is incompatible with isFalse", typedElement);
 				}
 				else if (unrefinedValue.mayBeTrue()) {
 					return this;					// "true" is except-everything else
 				}
 				else {
-					assert !mayBeInvalid();
-					assert !mayBeNull();
+					assert mayBeInvalidReason() == null;
+					assert mayBeNullReason() == null;
 				//	assert !mayBeZero();
-					return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "isTrue is incompatible with !mayBeTrue");
+					return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "isTrue is incompatible with !mayBeTrue", typedElement);
 				}
 			}
 			else if (isFalse()) {
 				if (unrefinedValue.isTrue()) {
-					assert !mayBeInvalid();
-					assert !mayBeNull();
+					assert mayBeInvalidReason() == null;
+					assert mayBeNullReason() == null;
 				//	assert !mayBeZero();
-					return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "isFalse is incompatible with isTrue");
+					return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "isFalse is incompatible with isTrue", typedElement);
 				}
 				else if (unrefinedValue.mayBeFalse()) {
 					return this;					// "false" is except-everything else
 				}
 				else {
-					assert !mayBeInvalid();
-					assert !mayBeNull();
+					assert mayBeInvalidReason() == null;
+					assert mayBeNullReason() == null;
 				//	assert !mayBeZero();
-					return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "isFalse is incompatible with !mayBeFalse");
+					return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "isFalse is incompatible with !mayBeFalse", typedElement);
 				}
 			}
 			else if (mayBeTrue()) {
@@ -188,7 +189,7 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 					return unrefinedValue;
 				}
 				else if (!unrefinedValue.mayBeTrue()) {
-					return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "mayBeTrue is incompatible with !mayBeTrue");
+					return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "mayBeTrue is incompatible with !mayBeTrue", typedElement);
 				}
 				else if (!unrefinedValue.mayBeFalse()) {
 					resultValue = AbstractSymbolicRefinedValue.createExceptValue(resultValue, ValueUtil.FALSE_VALUE);
@@ -202,7 +203,7 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 					return unrefinedValue;
 				}
 				else if (!unrefinedValue.mayBeFalse()) {
-					return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "mayBeFalse is incompatible with !mayBeFalse");
+					return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "mayBeFalse is incompatible with !mayBeFalse", typedElement);
 				}
 				else if (!unrefinedValue.mayBeTrue()) {
 					resultValue = AbstractSymbolicRefinedValue.createExceptValue(resultValue, ValueUtil.TRUE_VALUE);
@@ -237,10 +238,10 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 				resultSize = thisSize;					// ok !isEmpty
 			}
 			else if (thisNotEmpty && unrefinedContentIsEmpty) {
-				return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "notEmpty is incompatible with isEmpty");
+				return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "notEmpty is incompatible with isEmpty", typedElement);
 			}
 			else if (thisIsEmpty && unrefinedContentNotEmpty) {
-				return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "isEmpty is incompatible with not-notEmpty");
+				return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "isEmpty is incompatible with not-notEmpty", typedElement);
 			}
 			else if (thisIsEmpty) {
 				resultSize = thisSize;						// ok isEmpty
@@ -357,10 +358,10 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 		if (thisBaseValue != thatBaseValue) {		// ??? null refining may-be-null has new base
 			return false;
 		}
-		if (mayBeInvalid() && !unrefinedValue.mayBeInvalid()) {
+		if ((mayBeInvalidReason() != null) && (unrefinedValue.mayBeInvalidReason() == null)) {
 			return false;
 		}
-		if (mayBeNull() && !unrefinedValue.mayBeNull()) {
+		if ((mayBeNullReason() != null) && (unrefinedValue.mayBeNullReason() == null)) {
 			return false;
 		}
 		if (((basicGetNumericValue() != null) && mayBeZero()) && !((unrefinedValue.basicGetNumericValue() != null) && unrefinedValue.mayBeZero())) {
@@ -386,25 +387,17 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 		return (booleanStatus != null) && !booleanStatus.isSatisfied();
 	}
 
-	@Override
-	public boolean mayBeInvalid() {
-		return !getInvalidStatus().isUnsatisfied();
-	}
+//	@Override
+//	public @Nullable SymbolicReason mayBeInvalidReason() {
+//		boolean mayBeInvalid = !getInvalidStatus().isUnsatisfied();
+//		return SymbolicUtil.mayBeInvalidReason(mayBeInvalid);
+//	}
 
-	@Override
-	public @Nullable SymbolicReason mayBeInvalidReason() {
-		return SymbolicUtil.mayBeInvalidReason(mayBeInvalid());
-	}
-
-	@Override
-	public boolean mayBeNull() {
-		return !getNullStatus().isUnsatisfied();
-	}
-
-	@Override
-	public @Nullable SymbolicReason mayBeNullReason() {
-		return SymbolicUtil.mayBeNullReason(mayBeNull());
-	}
+//	@Override
+//	public @Nullable SymbolicReason mayBeNullReason() {
+//		boolean mayBeNull = !getNullStatus().isUnsatisfied();
+//		return SymbolicUtil.mayBeNullReason(mayBeNull);
+//	}
 
 	@Override
 	public boolean mayBeTrue() {
