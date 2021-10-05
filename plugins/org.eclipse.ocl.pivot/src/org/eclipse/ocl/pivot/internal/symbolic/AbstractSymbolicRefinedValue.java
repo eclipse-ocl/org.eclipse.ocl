@@ -65,8 +65,18 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 		}
 
 		@Override
+		public @Nullable SymbolicReason mayBeInvalidReason() {
+			return null;
+		}
+
+		@Override
 		public boolean mayBeNull() {
 			return false;
+		}
+
+		@Override
+		public @Nullable SymbolicReason mayBeNullReason() {
+			return null;
 		}
 
 		@Override

@@ -58,7 +58,7 @@ public class OclAnyOclIsInvalidOperation extends AbstractSimpleUnaryOperation
 			return evaluationEnvironment.getKnownValue(Boolean.TRUE);
 		}
 		else if (sourceValue.mayBeInvalid()) {
-			return evaluationEnvironment.getUnknownValue(callExp, false, false);
+			return evaluationEnvironment.getUnknownValue(callExp, null, null);
 		}
 		else {
 			return evaluationEnvironment.getKnownValue(Boolean.FALSE);

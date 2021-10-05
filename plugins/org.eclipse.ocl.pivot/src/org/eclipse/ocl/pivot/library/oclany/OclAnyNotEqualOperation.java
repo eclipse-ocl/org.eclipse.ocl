@@ -17,6 +17,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicReason;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
@@ -39,31 +40,31 @@ public class OclAnyNotEqualOperation extends OclAnyEqualOperation
 	@Override
 	protected @NonNull SymbolicValue createResultValue(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp,
 			@NonNull SymbolicValue sourceSymbolicValue, @NonNull List<@NonNull SymbolicValue> argumentSymbolicValues) {
-		boolean mayBeInvalid = sourceSymbolicValue.mayBeInvalid();
-		boolean mayBeNull = false;
+		SymbolicReason mayBeInvalidReason = sourceSymbolicValue.mayBeInvalidReason();
+		SymbolicReason mayBeNullReason = null;
 		int isNullCount = 0;
 		if (sourceSymbolicValue.isNull()) {
 			isNullCount++;
 		}
-		else if (sourceSymbolicValue.mayBeNull()) {
-			mayBeNull = true;
+		else {
+			mayBeNullReason = sourceSymbolicValue.mayBeNullReason();
 		}
 		for (@NonNull SymbolicValue argumentSymbolicValue : argumentSymbolicValues) {
-			if (argumentSymbolicValue.mayBeInvalid()) {
-				mayBeInvalid = true;
+			if (mayBeInvalidReason == null) {
+				mayBeInvalidReason = argumentSymbolicValue.mayBeInvalidReason();
 			}
 			if (argumentSymbolicValue.isNull()) {
 				isNullCount++;
 			}
-			else if (argumentSymbolicValue.mayBeNull()) {
-				mayBeNull = true;
+			else if (mayBeNullReason == null) {
+				mayBeNullReason = argumentSymbolicValue.mayBeNullReason();
 			}
 		}
-		if (!mayBeInvalid && !mayBeNull && ((isNullCount & 1) != 0)) {
+		if ((mayBeInvalidReason == null) && (mayBeNullReason == null) && ((isNullCount & 1) != 0)) {
 			return evaluationEnvironment.getKnownValue(Boolean.TRUE);
 		}
 		else {
-			return evaluationEnvironment.getUnknownValue(callExp, false, mayBeInvalid);
+			return evaluationEnvironment.getUnknownValue(callExp, null, mayBeInvalidReason);
 		}
 	}
 

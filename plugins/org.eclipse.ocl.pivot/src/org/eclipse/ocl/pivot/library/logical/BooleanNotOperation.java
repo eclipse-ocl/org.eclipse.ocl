@@ -19,6 +19,7 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicReason;
 import org.eclipse.ocl.pivot.library.AbstractSimpleUnaryOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -49,16 +50,10 @@ public class BooleanNotOperation extends AbstractSimpleUnaryOperation
 		Operation referredOperation = PivotUtil.getReferredOperation(callExp);
 		assert referredOperation.isIsValidating() : "Spurious createResultValue overload for " + referredOperation.getImplementationClass();
 		assert !callExp.isIsSafe() : "Spurious isSafe for " + referredOperation.getImplementationClass();
-		boolean mayBeInvalid = false;
-		boolean mayBeNull = false;
 		OCLExpression ownedSource = PivotUtil.getOwnedSource(callExp);
-		if (evaluationEnvironment.mayBeInvalid(ownedSource)) {
-			mayBeInvalid = true;
-		}
-		if (evaluationEnvironment.mayBeNull(ownedSource)) {
-			mayBeNull = true;
-		}
-		return evaluationEnvironment.getUnknownValue(callExp, mayBeNull, mayBeInvalid);
+		SymbolicReason mayBeInvalidReason = evaluationEnvironment.mayBeInvalidReason(ownedSource);
+		SymbolicReason mayBeNullReason = evaluationEnvironment.mayBeNullReason(ownedSource);
+		return evaluationEnvironment.getUnknownValue(callExp, mayBeNullReason, mayBeInvalidReason);
 	}
 
 	@Override

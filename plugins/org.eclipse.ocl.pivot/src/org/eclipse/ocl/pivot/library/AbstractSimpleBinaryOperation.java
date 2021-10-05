@@ -22,6 +22,7 @@ import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicReason;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
@@ -39,24 +40,18 @@ public abstract class AbstractSimpleBinaryOperation extends AbstractUntypedBinar
 		Operation referredOperation = PivotUtil.getReferredOperation(callExp);
 		assert referredOperation.isIsValidating() : "Spurious createResultValue overload for " + referredOperation.getImplementationClass();
 		assert !callExp.isIsSafe() : "Spurious isSafe for " + referredOperation.getImplementationClass();
-		boolean mayBeInvalid = false;
-		boolean mayBeNull = false;
 		OCLExpression ownedSource = PivotUtil.getOwnedSource(callExp);
-		if (evaluationEnvironment.mayBeInvalid(ownedSource)) {
-			mayBeInvalid = true;
-		}
-		if (evaluationEnvironment.mayBeNull(ownedSource)) {
-			mayBeNull = true;
-		}
+		SymbolicReason mayBeInvalidReason = evaluationEnvironment.mayBeInvalidReason(ownedSource);
+		SymbolicReason mayBeNullReason = evaluationEnvironment.mayBeInvalidReason(ownedSource);
 		assert !PivotUtil.getOwnedParameter(referredOperation, 0).isIsRequired() : "Spurious isRequired for " + referredOperation.getImplementationClass();
 		OCLExpression ownedArgument = PivotUtil.getOwnedArgument(callExp, 0);
-		if (evaluationEnvironment.mayBeInvalid(ownedArgument)) {
-			mayBeInvalid = true;
+		if (mayBeInvalidReason == null) {
+			mayBeInvalidReason = evaluationEnvironment.mayBeInvalidReason(ownedArgument);
 		}
-		if (evaluationEnvironment.mayBeNull(ownedArgument)) {
-			mayBeNull = true;
+		if (mayBeNullReason == null) {
+			mayBeNullReason = evaluationEnvironment.mayBeNullReason(ownedArgument);
 		}
-		return evaluationEnvironment.getUnknownValue(callExp, mayBeNull, mayBeInvalid);
+		return evaluationEnvironment.getUnknownValue(callExp, mayBeNullReason, mayBeInvalidReason);
 	}
 
 	/** @deprecated use Executor */

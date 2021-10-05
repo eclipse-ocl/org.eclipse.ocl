@@ -158,8 +158,8 @@ public abstract class AbstractSymbolicEvaluationEnvironment implements SymbolicE
 	}
 
 	@Override
-	public @NonNull SymbolicValue getUnknownValue(@NonNull TypedElement typedElement, boolean mayBeNull, boolean mayBeInvalid) {
-		return symbolicAnalysis.getUnknownValue(typedElement, SymbolicUtil.mayBeNullReason(mayBeNull), SymbolicUtil.mayBeInvalidReason(mayBeInvalid));
+	public @NonNull SymbolicValue getUnknownValue(@NonNull TypedElement typedElement,  @Nullable SymbolicReason mayBeNullReason, @Nullable SymbolicReason mayBeInvalidReason) {
+		return symbolicAnalysis.getUnknownValue(typedElement, mayBeNullReason, mayBeInvalidReason);
 	}
 
 	@Override
@@ -187,9 +187,14 @@ public abstract class AbstractSymbolicEvaluationEnvironment implements SymbolicE
 		return getSymbolicValue(element).isZero();
 	}
 
+//	@Override
+//	public boolean mayBeInvalid(@NonNull TypedElement typedElement) {
+//		return getSymbolicValue(typedElement).mayBeInvalid();
+//	}
+
 	@Override
-	public boolean mayBeInvalid(@NonNull TypedElement typedElement) {
-		return getSymbolicValue(typedElement).mayBeInvalid();
+	public @Nullable SymbolicReason mayBeInvalidReason(@NonNull TypedElement typedElement) {
+		return getSymbolicValue(typedElement).mayBeInvalidReason();
 	}
 
 	@Override
@@ -198,9 +203,14 @@ public abstract class AbstractSymbolicEvaluationEnvironment implements SymbolicE
 		return symbolicValue.mayBeInvalid() || symbolicValue.mayBeNull();
 	}
 
+//	@Override
+//	public boolean mayBeNull(@NonNull TypedElement typedElement) {
+//		return getSymbolicValue(typedElement).mayBeNull();
+//	}
+
 	@Override
-	public boolean mayBeNull(@NonNull TypedElement typedElement) {
-		return getSymbolicValue(typedElement).mayBeNull();
+	public @Nullable SymbolicReason mayBeNullReason(@NonNull TypedElement typedElement) {
+		return getSymbolicValue(typedElement).mayBeNullReason();
 	}
 
 	@Override

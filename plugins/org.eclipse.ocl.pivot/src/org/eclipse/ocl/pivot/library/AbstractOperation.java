@@ -196,33 +196,34 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 		OCLExpression ownedSource = PivotUtil.getOwnedSource(callExp);
 		Operation referredOperation = PivotUtil.getReferredOperation(callExp);
 		assert (this instanceof ConstrainedOperation) || !referredOperation.isIsValidating() : "Missing createResultValue overload for " + referredOperation.getImplementationClass();
-		boolean mayBeInvalid = false;
-		boolean mayBeNull = false;
-		if (evaluationEnvironment.mayBeInvalid(ownedSource)) {
-			mayBeInvalid = true;
-		}
-		if (evaluationEnvironment.mayBeNull(ownedSource)) {
+		SymbolicReason mayBeInvalidReason = evaluationEnvironment.mayBeInvalidReason(ownedSource);
+		SymbolicReason mayBeNullReason = null;
+		SymbolicReason mayBeNullReason2 = evaluationEnvironment.mayBeNullReason(ownedSource);
+		if (mayBeNullReason2 != null) {
 			if (callExp.isIsSafe()) {
-				mayBeNull = true;
+				mayBeNullReason = mayBeNullReason2;
 			}
 			else {
-				mayBeInvalid = true;
+				mayBeInvalidReason = mayBeNullReason2;
 			}
 		}
 		int i = 0;
 		for (@NonNull SymbolicValue argumentSymbolicValue : argumentSymbolicValues) {		// XXX correlate parameter/return nullity
-			if (argumentSymbolicValue.mayBeInvalid()) {
-				mayBeInvalid = true;
-			}
-			else if (argumentSymbolicValue.mayBeNull()){
-				Parameter ownedParameter = PivotUtil.getOwnedParameter(referredOperation, i);
-				if (ownedParameter.isIsRequired()) {
-					mayBeInvalid = true;
+			if (mayBeInvalidReason == null) {
+				mayBeInvalidReason = argumentSymbolicValue.mayBeInvalidReason();
+				if (mayBeInvalidReason == null) {
+					mayBeNullReason2 = argumentSymbolicValue.mayBeNullReason();
+					if (mayBeNullReason2 != null) {
+						Parameter ownedParameter = PivotUtil.getOwnedParameter(referredOperation, i);
+						if (ownedParameter.isIsRequired()) {
+							mayBeInvalidReason = mayBeNullReason2;
+						}
+					}
 				}
 			}
 			i++;
 		}
-		return evaluationEnvironment.getUnknownValue(callExp, mayBeNull, mayBeInvalid);
+		return evaluationEnvironment.getUnknownValue(callExp, mayBeNullReason, mayBeInvalidReason);
 	}
 
 	/**

@@ -79,7 +79,12 @@ public class SymbolicUtil
 
 	@Deprecated		/* @deprecated propagate true reason */
 	public static @Nullable SymbolicReason mayBeInvalidReason(boolean mayBeInvalid) {
-		return mayBeInvalid ? SymbolicSimpleReason.MAY_BE_INVALID_REASON : null;
+		if (mayBeInvalid) {
+			return SymbolicSimpleReason.MAY_BE_INVALID_REASON;
+		}
+		else {
+			return null;
+		}
 	}
 
 	public static @Nullable SymbolicReason mayBeInvalidReason(@Nullable Object value) {
@@ -112,7 +117,12 @@ public class SymbolicUtil
 
 	@Deprecated		/* @deprecated propagate true reason */
 	public static @Nullable SymbolicReason mayBeNullReason(boolean mayBeNull) {
-		return mayBeNull ? SymbolicSimpleReason.MAY_BE_NULL_REASON : null;
+		if (mayBeNull) {
+			return SymbolicSimpleReason.MAY_BE_NULL_REASON;
+		}
+		else {
+			return null;
+		}
 	}
 
 	public static @Nullable SymbolicReason mayBeNullReason(@NonNull SymbolicValue nestedValue, @NonNull String outerReason) {

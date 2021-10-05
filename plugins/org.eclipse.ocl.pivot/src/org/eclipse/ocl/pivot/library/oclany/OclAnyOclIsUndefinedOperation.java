@@ -17,6 +17,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicReason;
 import org.eclipse.ocl.pivot.library.AbstractSimpleUnaryOperation;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.NullValue;
@@ -44,8 +45,8 @@ public class OclAnyOclIsUndefinedOperation extends AbstractSimpleUnaryOperation
 	protected @NonNull SymbolicValue createResultValue(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp,
 			@NonNull SymbolicValue sourceSymbolicValue, @NonNull List<@NonNull SymbolicValue> argumentSymbolicValues) {
 		OCLExpression ownedSource = PivotUtil.getOwnedSource(callExp);
-		boolean mayBeInvalid = evaluationEnvironment.mayBeInvalid(ownedSource);
-		return evaluationEnvironment.getUnknownValue(callExp, false, mayBeInvalid);
+		SymbolicReason mayBeInvalidReason = evaluationEnvironment.mayBeInvalidReason(ownedSource);
+		return evaluationEnvironment.getUnknownValue(callExp, null, mayBeInvalidReason);
 	}
 
 
@@ -69,7 +70,7 @@ public class OclAnyOclIsUndefinedOperation extends AbstractSimpleUnaryOperation
 			return evaluationEnvironment.getKnownValue(Boolean.TRUE);
 		}
 		else if (sourceValue.mayBeInvalid() || sourceValue.mayBeNull()) {
-			return evaluationEnvironment.getUnknownValue(callExp, false, false);
+			return evaluationEnvironment.getUnknownValue(callExp, null, null);
 		}
 		else {
 			return evaluationEnvironment.getKnownValue(Boolean.FALSE);

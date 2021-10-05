@@ -15,6 +15,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicReason;
 import org.eclipse.ocl.pivot.library.AbstractSimpleUnaryOperation;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
@@ -59,8 +60,8 @@ public class OclAnyToStringOperation extends AbstractSimpleUnaryOperation
 		if (sourceValue.isNull()) {
 			return evaluationEnvironment.getKnownValue(isSafe ? null : ValueUtil.NULL_STRING);
 		} else {
-			boolean mayBeNull = sourceValue.mayBeNull();
-			return evaluationEnvironment.getUnknownValue(callExp, isSafe && mayBeNull, false);
+			SymbolicReason mayBeNullReason = isSafe ? sourceValue.mayBeNullReason() : null;
+			return evaluationEnvironment.getUnknownValue(callExp, mayBeNullReason, null);
 		}
 	}
 }

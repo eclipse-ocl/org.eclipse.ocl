@@ -98,6 +98,6 @@ public class OclAnyOclLogOperation extends AbstractPolyOperation
 		if (symbolicPreconditionValue != null) {
 			return symbolicPreconditionValue;
 		}
-		return evaluationEnvironment.getUnknownValue(callExp, false, false);
+		return evaluationEnvironment.getUnknownValue(callExp, null, null);
 	}
 }

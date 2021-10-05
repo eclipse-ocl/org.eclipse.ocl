@@ -109,7 +109,7 @@ public class OclAnyOclAsSetOperation extends AbstractUnaryOperation
 			return evaluationEnvironment.getKnownValue(setValue);
 		}
 		else {
-			return evaluationEnvironment.getUnknownValue(callExp, false, false);
+			return evaluationEnvironment.getUnknownValue(callExp, null, null);
 		}
 	}
 }
