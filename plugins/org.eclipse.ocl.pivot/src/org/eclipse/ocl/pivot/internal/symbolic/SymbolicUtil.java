@@ -10,13 +10,6 @@
  */
 package org.eclipse.ocl.pivot.internal.symbolic;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
@@ -42,7 +35,6 @@ import org.eclipse.ocl.pivot.ResultVariable;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
-import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 import org.eclipse.ocl.pivot.values.Value;
@@ -52,97 +44,6 @@ import org.eclipse.ocl.pivot.values.Value;
  */
 public class SymbolicUtil
 {
-	/**
-	 * TypedElementHeightComparator sort ExpressionInOCL/OCLExpression to determine a (re-)evaluation order.
-	 * Simplest (fewest shallowest children) CSE first, then fewest delegations to the CSE then earliest position
-	 * in Ecore Tree..
-	 */
-	public static class TypedElementHeightComparator implements Comparator<@NonNull TypedElement>
-	{
-		private final @NonNull Map<@NonNull ? extends Element, @NonNull CSEElement> element2cse;
-		private @Nullable Map<@NonNull Element, @NonNull Iterable<@NonNull Integer>> element2position = null;
-
-		public TypedElementHeightComparator(@NonNull Map<@NonNull ? extends Element, @NonNull CSEElement> element2cse) {
-			this.element2cse = element2cse;
-		}
-
-		@Override
-		public int compare(@NonNull TypedElement o1, @NonNull TypedElement o2) {
-			assert o1 != o2;
-			CSEElement cse1 = element2cse.get(o1);
-			CSEElement cse2 = element2cse.get(o2);
-			assert (cse1 != null) && (cse2 != null);
-			int h1 = cse1.getHeight();
-			int h2 = cse2.getHeight();
-			int diff = h1 - h2;
-			if (diff != 0) {
-				return diff;
-			}
-			int d1 = getDelegations(o1);
-			int d2 = getDelegations(o2);
-			diff = d1 - d2;
-			if (diff != 0) {
-				return diff;
-			}
-			Iterator<@NonNull Integer> i1 = getPosition(o1);			// class name / nav name faster
-			Iterator<@NonNull Integer> i2 = getPosition(o2);
-			while (i1.hasNext() && i2.hasNext()) {
-				int x1 = i1.next();
-				int x2 = i2.next();
-				diff = x1 - x2;
-				if (diff != 0) {
-					return diff;
-				}
-			}
-			if (!i1.hasNext()) {		// Longest (deepest) first
-				return 1;
-			}
-			if (!i2.hasNext()) {
-				return -1;
-			}
-			assert false;
-			return 0;
-		}
-
-		protected int getDelegations(@NonNull Element typedElement) {
-			Element delegate = getDelegate(typedElement);
-			if (delegate != null) {
-				final CSEElement cse1 = element2cse.get(typedElement);
-				final CSEElement cse2 = element2cse.get(delegate);
-				assert cse1 == cse2;		// XXX delete me
-				return 1 + getDelegations(delegate);
-			}
-			return 0;
-		}
-
-		protected @NonNull Iterator<@NonNull Integer> getPosition(@NonNull TypedElement typedElement) {
-			Map<@NonNull Element, @NonNull Iterable<@NonNull Integer>> element2position2 = element2position;
-			if (element2position2 == null) {
-				element2position = element2position2 = new HashMap<>();
-			}
-			Iterable<@NonNull Integer> position = element2position2.get(typedElement);
-			if (position == null) {
-				List<@NonNull Integer> position2 = new ArrayList<>();
-				position = getPosition(position2, typedElement);
-			//	assert !element2position2.values().contains(position);
-				element2position2.put(typedElement, position);
-			//	assert element2position2.values().contains(position);
-			}
-			return position.iterator();
-		}
-
-		private @NonNull Iterable<@NonNull Integer> getPosition(@NonNull List<@NonNull Integer> position, @NonNull EObject eObject) {
-			EReference eContainmentFeature = eObject.eContainmentFeature();
-			if (eContainmentFeature != null) {
-				EObject eContainer = eObject.eContainer();
-				assert eContainer != null;
-				getPosition(position, eContainer);
-				position.add(eContainer.eContents().indexOf(eObject));
-			}
-			return position;
-		}
-	}
-
 	public static @Nullable Element getDelegate(@NonNull Element typedElement) {
 		Element delegate = null;
 		if (typedElement instanceof CollectionItem) {

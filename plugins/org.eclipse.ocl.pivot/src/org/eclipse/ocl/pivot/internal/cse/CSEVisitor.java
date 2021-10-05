@@ -33,6 +33,7 @@ import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.IteratorVariable;
 import org.eclipse.ocl.pivot.LetExp;
+import org.eclipse.ocl.pivot.LetVariable;
 import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.MapLiteralExp;
 import org.eclipse.ocl.pivot.MapLiteralPart;
@@ -178,6 +179,11 @@ public class CSEVisitor extends AbstractExtendingVisitor<@NonNull CSEElement, @N
 		elements.add(context.getCSEElement(PivotUtil.getOwnedVariable(letExp)));
 		elements.add(context.getCSEElement(PivotUtil.getOwnedIn(letExp)));
 		return context.getNamespaceCSE(letExp, elements);
+	}
+
+	@Override
+	public @NonNull CSEElement visitLetVariable(@NonNull LetVariable letVariable) {
+		return context.getCSEElement(PivotUtil.getOwnedInit(letVariable));
 	}
 
 	@Override

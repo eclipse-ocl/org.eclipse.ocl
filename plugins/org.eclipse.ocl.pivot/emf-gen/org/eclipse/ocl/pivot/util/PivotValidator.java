@@ -12,7 +12,6 @@ package org.eclipse.ocl.pivot.util;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,7 +25,6 @@ import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.*;
-import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.internal.evaluation.BaseSymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
@@ -2533,31 +2531,30 @@ public class PivotValidator extends EObjectValidator
 					return false;
 				}
 				BaseSymbolicEvaluationEnvironment evaluationEnvironment = symbolicAnalysis.getBaseSymbolicEvaluationEnvironment();
-				Map<@NonNull TypedElement, @NonNull CSEElement> element2cse = null;
-				for (@NonNull EObject eObject : new TreeIterable(expressionInOCL, true)) {		// FIXME Use CSEAnalysis
+				List<@NonNull TypedElement> mayBeInvalidElements = null;
+				for (@NonNull EObject eObject : new TreeIterable(expressionInOCL, true)) {
 					if (eObject instanceof TypedElement) {
 						TypedElement typedElement = (TypedElement)eObject;
 						SymbolicValue symbolicValue = evaluationEnvironment.getSymbolicValue(typedElement);
 						assert symbolicValue != null;
 						if (symbolicValue.mayBeInvalid() && !symbolicValue.isInvalid()) {			// FIXME Do we really want to suppress outright invalid warnings ?
-							CSEElement cseElement = symbolicAnalysis.getCSEElement(typedElement);
-							if (element2cse == null) {
-								element2cse = new HashMap<>();
+							if (mayBeInvalidElements == null) {
+								mayBeInvalidElements = new ArrayList<>();
 							}
-							element2cse.put(typedElement, cseElement);
+							mayBeInvalidElements.add(typedElement);
 						}
 					}
 				}
-				if (element2cse != null) {
-					List<@NonNull TypedElement> invalidTypedElements = new ArrayList<@NonNull TypedElement>(element2cse.keySet());
-					Collections.sort(invalidTypedElements, new SymbolicUtil.TypedElementHeightComparator(element2cse));
-					for (int i = 0; i < invalidTypedElements.size(); i++) {		// Domain shrinks
-						TypedElement typedElement = invalidTypedElements.get(i);
+				if (mayBeInvalidElements != null) {
+				//	List<@NonNull TypedElement> invalidTypedElements = new ArrayList<@NonNull TypedElement>(element2cse.keySet());
+					Collections.sort(mayBeInvalidElements, symbolicAnalysis.getCSEAnalysis().getTypedElementHeightComparator());
+					for (int i = 0; i < mayBeInvalidElements.size(); i++) {		// Domain shrinks
+						TypedElement typedElement = mayBeInvalidElements.get(i);
 						for (EObject eContainer2 = typedElement.eContainer(); eContainer2 != null; eContainer2 = eContainer2.eContainer()) {
-							invalidTypedElements.remove(eContainer2);
+							mayBeInvalidElements.remove(eContainer2);
 						}
 					}
-					for (@NonNull TypedElement typedElement : invalidTypedElements) {
+					for (@NonNull TypedElement typedElement : mayBeInvalidElements) {
 						boolean invalidIsPermissible = false;
 						if (isValidating) {
 							TypedElement referredtypedElement = typedElement;
