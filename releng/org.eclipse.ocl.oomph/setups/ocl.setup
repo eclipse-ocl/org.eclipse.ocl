@@ -5,15 +5,13 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:git="http://www.eclipse.org/oomph/setup/git/1.0"
     xmlns:jdt="http://www.eclipse.org/oomph/setup/jdt/1.0"
-    xmlns:mylyn="http://www.eclipse.org/oomph/setup/mylyn/1.0"
-    xmlns:pde="http://www.eclipse.org/oomph/setup/pde/1.0"
     xmlns:predicates="http://www.eclipse.org/oomph/predicates/1.0"
     xmlns:projects="http://www.eclipse.org/oomph/setup/projects/1.0"
     xmlns:setup="http://www.eclipse.org/oomph/setup/1.0"
     xmlns:setup.p2="http://www.eclipse.org/oomph/setup/p2/1.0"
     xmlns:setup.targlets="http://www.eclipse.org/oomph/setup/targlets/1.0"
     xmlns:setup.workingsets="http://www.eclipse.org/oomph/setup/workingsets/1.0"
-    xsi:schemaLocation="http://www.eclipse.org/oomph/setup/git/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Git.ecore http://www.eclipse.org/oomph/setup/jdt/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/JDT.ecore http://www.eclipse.org/oomph/setup/mylyn/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Mylyn.ecore http://www.eclipse.org/oomph/setup/pde/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/PDE.ecore http://www.eclipse.org/oomph/predicates/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Predicates.ecore http://www.eclipse.org/oomph/setup/projects/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Projects.ecore http://www.eclipse.org/oomph/setup/targlets/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/SetupTarglets.ecore http://www.eclipse.org/oomph/setup/workingsets/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/SetupWorkingSets.ecore"
+    xsi:schemaLocation="http://www.eclipse.org/oomph/setup/git/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Git.ecore http://www.eclipse.org/oomph/setup/jdt/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/JDT.ecore http://www.eclipse.org/oomph/predicates/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Predicates.ecore http://www.eclipse.org/oomph/setup/projects/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Projects.ecore http://www.eclipse.org/oomph/setup/targlets/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/SetupTarglets.ecore http://www.eclipse.org/oomph/setup/workingsets/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/SetupWorkingSets.ecore"
     name="ocl"
     label="OCL">
   <setupTask
@@ -247,82 +245,19 @@
   </setupTask>
   <setupTask
       xsi:type="setup:CompoundTask"
-      name="Mylyn IDE">
-    <setupTask
-        xsi:type="setup.p2:P2Task"
-        label="Mylyn Tools">
-      <requirement
-          name="org.eclipse.mylyn.ide_feature.feature.group"/>
-      <requirement
-          name="org.eclipse.mylyn.java_feature.feature.group"/>
-      <requirement
-          name="org.eclipse.mylyn.pde_feature.feature.group"/>
-      <requirement
-          name="org.eclipse.mylyn.team_feature.feature.group"/>
-      <requirement
-          name="org.eclipse.mylyn.gerrit.feature.feature.group"/>
-      <requirement
-          name="org.eclipse.mylyn_feature.feature.group"/>
-      <requirement
-          name="org.eclipse.mylyn.bugzilla_feature.feature.group"/>
-      <requirement
-          name="org.eclipse.mylyn.git.feature.group"/>
-      <requirement
-          name="org.eclipse.mylyn.hudson.feature.group"/>
-      <requirement
-          name="org.eclipse.mylyn.wikitext_feature.feature.group"/>
-      <requirement
-          name="org.eclipse.egit.mylyn.feature.group"/>
-    </setupTask>
-    <setupTask
-        xsi:type="mylyn:MylynQueriesTask"
-        repositoryURL="https://bugs.eclipse.org/bugs"
-        userID="${bugzilla.id}"
-        password="${eclipse.user.password}">
-      <query
-          summary="OCL New/Open"
-          url="https://bugs.eclipse.org/bugs/buglist.cgi?bug_status=UNCONFIRMED&amp;bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;classification=Modeling&amp;list_id=8653934&amp;product=OCL&amp;query_format=advanced"/>
-      <query
-          summary="OCL Resolved"
-          url="https://bugs.eclipse.org/bugs/buglist.cgi?bug_status=RESOLVED&amp;classification=Modeling&amp;list_id=8654045&amp;product=OCL&amp;query_format=advanced"/>
-    </setupTask>
-    <setupTask
-        xsi:type="mylyn:MylynQueriesTask"
-        connectorKind="org.eclipse.mylyn.gerrit"
-        repositoryURL="https://git.eclipse.org/r"
-        userID="${bugzilla.id}"
-        password="${eclipse.user.password}">
-      <query
-          summary="OCL Gerrit Reviews">
-        <attribute
-            key="gerrit query type"
-            value="custom"/>
-        <attribute
-            key="gerrit query project"
-            value="ocl/org.eclipse.ocl"/>
-        <attribute
-            key="gerrit query string"
-            value="project:ocl/org.eclipse.ocl status:open branch:master"/>
-      </query>
-    </setupTask>
-    <setupTask
-        xsi:type="mylyn:MylynBuildsTask"
-        serverURL="https://ci.eclipse.org/ocl/"
-        userID="${bugzilla.id}"
-        password="${eclipse.user.password}">
-      <buildPlan
-          name="ocl-master"/>
-      <buildPlan
-          name="ocl-branch-tests"/>
-    </setupTask>
-  </setupTask>
-  <setupTask
-      xsi:type="setup:CompoundTask"
       name="Java Compiler">
     <setupTask
         xsi:type="setup:PreferenceTask"
         key="instance/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_STRICTLY_COMPATIBLE_JRE_NOT_AVAILABLE"
         value="ignore"/>
+    <setupTask
+        xsi:type="setup:CompoundTask"
+        name="org.eclipse.pde.api.tools">
+      <setupTask
+          xsi:type="setup:PreferenceTask"
+          key="/instance/org.eclipse.pde.api.tools/missing_default_api_profile"
+          value="Ignore"/>
+    </setupTask>
   </setupTask>
   <project name="dev"
       label="Development (required)">
@@ -381,6 +316,12 @@
             <operand
                 xsi:type="predicates:NamePredicate"
                 pattern="org.eclipse.ocl.capabilities"/>
+          </operand>
+          <operand
+              xsi:type="predicates:NotPredicate">
+            <operand
+                xsi:type="predicates:NamePredicate"
+                pattern="org.eclipse.ocl.control"/>
           </operand>
           <operand
               xsi:type="predicates:NotPredicate">
@@ -540,12 +481,6 @@
                 xsi:type="predicates:NamePredicate"
                 pattern="org.eclipse.ocl.examples.unified"/>
           </operand>
-          <operand
-              xsi:type="predicates:NotPredicate">
-            <operand
-                xsi:type="predicates:NamePredicate"
-                pattern="org.eclipse.ocl.examples.xtext.*"/>
-          </operand>
         </predicate>
       </workingSet>
       <workingSet
@@ -584,100 +519,6 @@
           </operand>
         </predicate>
       </workingSet>
-    </setupTask>
-    <setupTask
-        xsi:type="pde:APIBaselineFromTargetTask"
-        name="OCL API Base Line"
-        targetName="API Base Line"/>
-    <setupTask
-        xsi:type="setup.targlets:TargletTask"
-        targetName="API Base Line"
-        activateTarget="false">
-      <targlet
-          name="OCL API Base Line">
-        <requirement
-            name="org.eclipse.ocl.examples.feature.group"/>
-        <repositoryList
-            name="2021-09">
-          <repository
-              url="https://download.eclipse.org/releases/2021-06"/>
-        </repositoryList>
-        <repositoryList
-            name="2021-06">
-          <repository
-              url="https://download.eclipse.org/releases/2021-03"/>
-        </repositoryList>
-        <repositoryList
-            name="2021-03">
-          <repository
-              url="https://download.eclipse.org/releases/2020-12"/>
-        </repositoryList>
-        <repositoryList
-            name="2020-12">
-          <repository
-              url="https://download.eclipse.org/releases/2020-06"/>
-        </repositoryList>
-        <repositoryList
-            name="2020-06">
-          <repository
-              url="https://download.eclipse.org/releases/2020-03"/>
-        </repositoryList>
-        <repositoryList
-            name="2020-03">
-          <repository
-              url="https://download.eclipse.org/releases/2019-12"/>
-        </repositoryList>
-        <repositoryList
-            name="2019-12">
-          <repository
-              url="https://download.eclipse.org/releases/2019-09"/>
-        </repositoryList>
-        <repositoryList
-            name="2019-09">
-          <repository
-              url="https://download.eclipse.org/releases/2019-06"/>
-        </repositoryList>
-        <repositoryList
-            name="2019-06">
-          <repository
-              url="https://download.eclipse.org/releases/2019-03"/>
-        </repositoryList>
-        <repositoryList
-            name="2019-03">
-          <repository
-              url="https://download.eclipse.org/releases/2018-12"/>
-        </repositoryList>
-        <repositoryList
-            name="2018-12">
-          <repository
-              url="https://download.eclipse.org/releases/2018-09"/>
-        </repositoryList>
-        <repositoryList
-            name="2018-09">
-          <repository
-              url="https://download.eclipse.org/releases/photon"/>
-        </repositoryList>
-        <repositoryList
-            name="Photon">
-          <repository
-              url="https://download.eclipse.org/releases/oxygen"/>
-        </repositoryList>
-        <repositoryList
-            name="Oxygen">
-          <repository
-              url="https://download.eclipse.org/releases/neon"/>
-        </repositoryList>
-        <repositoryList
-            name="Neon">
-          <repository
-              url="https://download.eclipse.org/releases/mars"/>
-        </repositoryList>
-        <repositoryList
-            name="Master">
-          <repository
-              url="https://download.eclipse.org/releases/latest"/>
-        </repositoryList>
-      </targlet>
     </setupTask>
     <stream
         name="master"
