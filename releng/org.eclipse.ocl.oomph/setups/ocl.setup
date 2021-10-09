@@ -19,7 +19,7 @@
   <setupTask
       xsi:type="setup:VariableTask"
       name="eclipse.target.platform"
-      defaultValue="2021-03"
+      defaultValue="2021-09"
       storageURI="scope://Workspace"/>
   <setupTask
       xsi:type="git:GitCloneTask"
@@ -98,116 +98,130 @@
         <repositoryList
             name="Latest">
           <repository
-              url="http://download.eclipse.org/releases/latest"/>
+              url="https://download.eclipse.org/releases/latest"/>
           <repository
               url="https://download.eclipse.org/tools/orbit/downloads/latest-R"/>
         </repositoryList>
         <repositoryList
+            name="2021-09">
+          <repository
+              url="https://download.eclipse.org/releases/2021-09"/>
+          <repository
+              url="https://download.eclipse.org/tools/orbit/downloads/drops/R20210825222808/repository/"/>
+        </repositoryList>
+        <repositoryList
+            name="2021-06">
+          <repository
+              url="https://download.eclipse.org/releases/2021-06"/>
+          <repository
+              url="https://download.eclipse.org/tools/orbit/downloads/drops/R20210602031627/repository/"/>
+        </repositoryList>
+        <repositoryList
             name="2021-03">
           <repository
-              url="http://download.eclipse.org/releases/2021-03"/>
+              url="https://download.eclipse.org/releases/2021-03"/>
           <repository
-              url="http://download.eclipse.org/tools/orbit/downloads/drops/R20210223232630/repository/"/>
+              url="https://download.eclipse.org/tools/orbit/downloads/drops/R20210223232630/repository/"/>
         </repositoryList>
         <repositoryList
             name="2020-12">
           <repository
-              url="http://download.eclipse.org/releases/2020-12"/>
+              url="https://download.eclipse.org/releases/2020-12"/>
           <repository
-              url="http://download.eclipse.org/tools/orbit/downloads/drops/R20201130205003/repository/"/>
+              url="https://download.eclipse.org/tools/orbit/downloads/drops/R20201130205003/repository/"/>
         </repositoryList>
         <repositoryList
             name="2020-06">
           <repository
-              url="http://download.eclipse.org/releases/2020-06"/>
+              url="https://download.eclipse.org/releases/2020-06"/>
           <repository
-              url="http://download.eclipse.org/tools/orbit/downloads/drops/R20200529191137/repository/"/>
+              url="https://download.eclipse.org/tools/orbit/downloads/drops/R20200529191137/repository/"/>
         </repositoryList>
         <repositoryList
             name="2020-03">
           <repository
-              url="http://download.eclipse.org/releases/2020-03"/>
+              url="https://download.eclipse.org/releases/2020-03"/>
           <repository
-              url="http://download.eclipse.org/tools/orbit/downloads/drops/R20200224183213/repository/"/>
+              url="https://download.eclipse.org/tools/orbit/downloads/drops/R20200224183213/repository/"/>
         </repositoryList>
         <repositoryList
             name="2019-12">
           <repository
-              url="http://download.eclipse.org/releases/2019-12"/>
+              url="https://download.eclipse.org/releases/2019-12"/>
           <repository
-              url="http://download.eclipse.org/tools/orbit/downloads/drops/R20191126223242/repository/"/>
+              url="https://download.eclipse.org/tools/orbit/downloads/drops/R20191126223242/repository/"/>
         </repositoryList>
         <repositoryList
             name="2019-09">
           <repository
-              url="http://download.eclipse.org/releases/2019-09"/>
+              url="https://download.eclipse.org/releases/2019-09"/>
           <repository
-              url="http://download.eclipse.org/tools/orbit/downloads/drops/R20190827152740/repository/"/>
+              url="https://download.eclipse.org/tools/orbit/downloads/drops/R20190827152740/repository/"/>
         </repositoryList>
         <repositoryList
             name="2019-06">
           <repository
-              url="http://download.eclipse.org/releases/2019-06"/>
+              url="https://download.eclipse.org/releases/2019-06"/>
           <repository
-              url="http://download.eclipse.org/tools/orbit/downloads/drops/R20190602212107/repository/"/>
+              url="https://download.eclipse.org/tools/orbit/downloads/drops/R20190602212107/repository/"/>
         </repositoryList>
         <repositoryList
             name="2019-03">
           <repository
-              url="http://download.eclipse.org/releases/2019-03"/>
+              url="https://download.eclipse.org/releases/2019-03"/>
           <repository
-              url="http://download.eclipse.org/tools/orbit/downloads/drops/R20190226160451/repository/"/>
+              url="https://download.eclipse.org/tools/orbit/downloads/drops/R20190226160451/repository/"/>
         </repositoryList>
         <repositoryList
             name="2018-12">
           <repository
-              url="http://download.eclipse.org/releases/2018-12"/>
+              url="https://download.eclipse.org/releases/2018-12"/>
           <repository
-              url="http://download.eclipse.org/tools/orbit/downloads/drops/R20181128170323/repository/"/>
+              url="https://download.eclipse.org/tools/orbit/downloads/drops/R20181128170323/repository/"/>
         </repositoryList>
         <repositoryList
             name="2018-09">
           <repository
-              url="http://download.eclipse.org/releases/2018-09"/>
+              url="https://download.eclipse.org/releases/2018-09"/>
           <repository
-              url="http://download.eclipse.org/tools/orbit/downloads/drops/R20181128170323/repository/"/>
+              url="https://download.eclipse.org/tools/orbit/downloads/drops/R20181128170323/repository/"/>
         </repositoryList>
         <repositoryList
             name="Photon">
           <repository
-              url="http://download.eclipse.org/releases/photon"/>
+              url="https://download.eclipse.org/releases/photon"/>
           <repository
-              url="http://download.eclipse.org/tools/orbit/downloads/drops/R20180606145124/repository/"/>
+              url="https://download.eclipse.org/tools/orbit/downloads/drops/R20180606145124/repository/"/>
         </repositoryList>
         <repositoryList
             name="Oxygen">
           <repository
-              url="http://download.eclipse.org/releases/oxygen"/>
+              url="https://download.eclipse.org/releases/oxygen"/>
           <repository
-              url="http://download.eclipse.org/tools/orbit/downloads/drops/R20180330011457/repository/"/>
+              url="https://download.eclipse.org/tools/orbit/downloads/drops/R20180330011457/repository/"/>
         </repositoryList>
         <repositoryList
             name="Neon">
           <repository
-              url="http://download.eclipse.org/releases/neon"/>
+              url="https://download.eclipse.org/releases/neon"/>
           <repository
-              url="http://download.eclipse.org/tools/orbit/R-builds/R20170307180635/repository/"/>
+              url="https://download.eclipse.org/tools/orbit/R-builds/R20170307180635/repository/"/>
         </repositoryList>
         <repositoryList
             name="Mars">
           <repository
-              url="http://download.eclipse.org/releases/mars"/>
+              url="https://download.eclipse.org/releases/mars"/>
           <repository
-              url="http://download.eclipse.org/tools/orbit/downloads/drops/R20160221192158/repository/"/>
+              url="https://download.eclipse.org/tools/orbit/downloads/drops/R20160221192158/repository/"/>
         </repositoryList>
         <repositoryList
             name="Luna">
           <repository
-              url="http://download.eclipse.org/releases/luna"/>
+              url="https://download.eclipse.org/releases/luna"/>
           <repository
-              url="http://download.eclipse.org/tools/orbit/downloads/drops/R20150124073747/repository/"/>
+              url="https://download.eclipse.org/tools/orbit/downloads/drops/R20150124073747/repository/"/>
           <repository
-              url="http://download.eclipse.org/modeling/mdt/papyrus/updates/releases/luna"/>
+              url="https://download.eclipse.org/modeling/mdt/papyrus/updates/releases/luna"/>
         </repositoryList>
       </targlet>
     </setupTask>
@@ -311,7 +325,7 @@
         value="ignore"/>
   </setupTask>
   <project name="dev"
-      label="Development">
+      label="Development (required)">
     <setupTask
         xsi:type="projects:ProjectsImportTask">
       <sourceLocator
@@ -584,70 +598,106 @@
         <requirement
             name="org.eclipse.ocl.examples.feature.group"/>
         <repositoryList
+            name="2021-09">
+          <repository
+              url="https://download.eclipse.org/releases/2021-06"/>
+        </repositoryList>
+        <repositoryList
+            name="2021-06">
+          <repository
+              url="https://download.eclipse.org/releases/2021-03"/>
+        </repositoryList>
+        <repositoryList
+            name="2021-03">
+          <repository
+              url="https://download.eclipse.org/releases/2020-12"/>
+        </repositoryList>
+        <repositoryList
+            name="2020-12">
+          <repository
+              url="https://download.eclipse.org/releases/2020-06"/>
+        </repositoryList>
+        <repositoryList
             name="2020-06">
           <repository
-              url="http://download.eclipse.org/releases/2020-03"/>
+              url="https://download.eclipse.org/releases/2020-03"/>
         </repositoryList>
         <repositoryList
             name="2020-03">
           <repository
-              url="http://download.eclipse.org/releases/2019-12"/>
+              url="https://download.eclipse.org/releases/2019-12"/>
         </repositoryList>
         <repositoryList
             name="2019-12">
           <repository
-              url="http://download.eclipse.org/releases/2019-09"/>
+              url="https://download.eclipse.org/releases/2019-09"/>
         </repositoryList>
         <repositoryList
             name="2019-09">
           <repository
-              url="http://download.eclipse.org/releases/2019-06"/>
+              url="https://download.eclipse.org/releases/2019-06"/>
         </repositoryList>
         <repositoryList
             name="2019-06">
           <repository
-              url="http://download.eclipse.org/releases/2019-03"/>
+              url="https://download.eclipse.org/releases/2019-03"/>
         </repositoryList>
         <repositoryList
             name="2019-03">
           <repository
-              url="http://download.eclipse.org/releases/2018-12"/>
+              url="https://download.eclipse.org/releases/2018-12"/>
         </repositoryList>
         <repositoryList
             name="2018-12">
           <repository
-              url="http://download.eclipse.org/releases/2018-09"/>
+              url="https://download.eclipse.org/releases/2018-09"/>
         </repositoryList>
         <repositoryList
             name="2018-09">
           <repository
-              url="http://download.eclipse.org/releases/photon"/>
+              url="https://download.eclipse.org/releases/photon"/>
         </repositoryList>
         <repositoryList
             name="Photon">
           <repository
-              url="http://download.eclipse.org/releases/oxygen"/>
+              url="https://download.eclipse.org/releases/oxygen"/>
         </repositoryList>
         <repositoryList
             name="Oxygen">
           <repository
-              url="http://download.eclipse.org/releases/neon"/>
+              url="https://download.eclipse.org/releases/neon"/>
         </repositoryList>
         <repositoryList
             name="Neon">
           <repository
-              url="http://download.eclipse.org/releases/mars"/>
+              url="https://download.eclipse.org/releases/mars"/>
         </repositoryList>
         <repositoryList
             name="Master">
           <repository
-              url="http://download.eclipse.org/releases/latest"/>
+              url="https://download.eclipse.org/releases/latest"/>
         </repositoryList>
       </targlet>
     </setupTask>
     <stream
         name="master"
         label="Master (Latest)"/>
+    <stream
+        name="6.16.0"
+        label="6.16.0 (2021-09)">
+      <setupTask
+          xsi:type="setup:VariableTask"
+          name="emf.branch"
+          value="R2_27_0"/>
+    </stream>
+    <stream
+        name="6.15.0"
+        label="6.15.0 (2021-06)">
+      <setupTask
+          xsi:type="setup:VariableTask"
+          name="emf.branch"
+          value="R2_26_0"/>
+    </stream>
     <stream
         name="6.14.0"
         label="6.14.0 (2021-03)">
@@ -780,9 +830,10 @@
           name="emf.branch"
           value="R2_13_0"/>
     </stream>
-    <description>The development environment for the OCL</description>
+    <description>All the plugins to work with and regenerate OCL.</description>
   </project>
-  <project name="Releng">
+  <project name="releng"
+      label="Releng (optional)">
     <setupTask
         xsi:type="setup.p2:P2Task"
         label="Releng Tools">
@@ -886,6 +937,18 @@
         name="master"
         label="Master (Latest)"/>
     <stream
+        name="6.16.0"
+        label="6.16.0 (2021-09)"/>
+    <stream
+        name="6.15.0"
+        label="6.15.0 (2021-06)"/>
+    <stream
+        name="6.14.0"
+        label="6.14.0 (2021-03)"/>
+    <stream
+        name="6.13.0"
+        label="6.13.0 (2020-12)"/>
+    <stream
         name="6.12.0"
         label="6.12.0 (2020-06)"/>
     <stream
@@ -915,6 +978,7 @@
     <stream
         name="6.3.0"
         label="6.3.0 (Oxygen)"/>
+    <description>Omit this unless you want to build an OCL distribution or update documentation.</description>
   </project>
   <logicalProjectContainer
       xsi:type="setup:ProjectCatalog"
