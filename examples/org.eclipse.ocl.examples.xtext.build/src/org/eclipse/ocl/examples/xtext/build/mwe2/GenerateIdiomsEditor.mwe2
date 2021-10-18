@@ -32,7 +32,9 @@ Workflow {
 	bean = org.eclipse.emf.mwe.utils.StandaloneSetup {
 		scanClassPath = true
 		platformUri = ".."
+		registerGeneratedEPackage = "org.eclipse.emf.ecore.EcorePackage"
 		registerGeneratedEPackage = "org.eclipse.ocl.examples.xtext.idioms.IdiomsPackage"
+		registerGenModelFile = "platform:/resource/org.eclipse.emf.ecore/model/Ecore.genmodel"
 		registerGenModelFile = "platform:/resource/org.eclipse.ocl.examples.xtext.idioms/model/Idioms.genmodel"
 	}
 	

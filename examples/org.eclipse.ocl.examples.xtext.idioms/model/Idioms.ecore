@@ -22,11 +22,11 @@
       <details key="documentation" value="An AssignmentLocator identifies an assignment around which a&#xA;SubIdiom wraps appropriate spacing. A half-new line before and after&#xA;an assignment usefully gives blank lines between similar 'paragraphs'&#xA;without blank lines before or after."/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ePackage" lowerBound="1"
-        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EPackage"/>
+        eType="ecore:EClass platform:/resource/org.eclipse.emf.ecore/model/Ecore.ecore#//EPackage"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="eClass" lowerBound="1"
-        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+        eType="ecore:EClass platform:/resource/org.eclipse.emf.ecore/model/Ecore.ecore#//EClass"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="eStructuralFeature" lowerBound="1"
-        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature"/>
+        eType="ecore:EClass platform:/resource/org.eclipse.emf.ecore/model/Ecore.ecore#//EStructuralFeature"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CustomSegment" eSuperTypes="#//Segment">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -40,7 +40,7 @@
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="as" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ePackage" lowerBound="1"
-        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EPackage"/>
+        eType="ecore:EClass platform:/resource/org.eclipse.emf.ecore/model/Ecore.ecore#//EPackage"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FinalLocator" eSuperTypes="#//Locator">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -57,12 +57,12 @@
       <details key="documentation" value="An Idiom defines a formatting policy comprising one or more SubIdioms each of which&#xA;identifies a grammar term at which formatting is to be applied. Thus a dual SubIdiom,&#xA;may locate an opening brace in first SubIdiom and a closing brace in a second and impose&#xA;new-lines as desired. The idiom can be constrained to a particular&#xA;returned EClass or its derivation, or rules whose name matches a regex.&#xA;&#xA;The serialization variant of each grammar rule is analyzed to determine which Idioms&#xA;configure the formatting of each term in the rule. Each Idiom has one or more SubIdioms&#xA;whose locator may or may not match a term. Where all SubIdioms match, the corresponding&#xA;segemnts format the matching term. Idioms can match recursively and sequentially. Partial&#xA;Idiom matches are ignored."/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="forEPackage" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EPackage">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="forEPackage" eType="ecore:EClass platform:/resource/org.eclipse.emf.ecore/model/Ecore.ecore#//EPackage">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="An optional scope restriction on the matching of the string. If specified matches are&#xA;only discovered in rules that produce the EClass or a derivation thereof."/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="forEClass" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EClass">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="forEClass" eType="ecore:EClass platform:/resource/org.eclipse.emf.ecore/model/Ecore.ecore#//EClass">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="An optional scope restriction on the matching of the string. If specified matches are&#xA;only discovered in rules that produce the EClass or a derivation thereof."/>
       </eAnnotations>
@@ -209,9 +209,9 @@
       <details key="documentation" value="A ReturnsLocator identifies a rule that returns a specified EClass&#xA;or derivation thereof. A custom segment may precede the inner value to output&#xA;a comment.."/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ePackage" lowerBound="1"
-        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EPackage"/>
+        eType="ecore:EClass platform:/resource/org.eclipse.emf.ecore/model/Ecore.ecore#//EPackage"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="eClass" lowerBound="1"
-        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+        eType="ecore:EClass platform:/resource/org.eclipse.emf.ecore/model/Ecore.ecore#//EClass"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PushSegment" eSuperTypes="#//Segment">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
