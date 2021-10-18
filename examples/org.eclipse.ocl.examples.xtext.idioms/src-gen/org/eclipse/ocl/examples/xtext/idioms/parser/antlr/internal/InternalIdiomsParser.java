@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 /*******************************************************************************
- * Copyright (c) 2011, 2020 Willink Transformations and others.
+ * Copyright (c) 2011, 2021 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -228,7 +228,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.examples.xtext.idioms.
               						current,
               						"names",
               						lv_names_1_0,
-              						"org.eclipse.xtext.common.Terminals.ID");
+              						"org.eclipse.ocl.examples.xtext.idioms.Idioms.ID");
 
             }
 
@@ -279,7 +279,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.examples.xtext.idioms.
             	      							current,
             	      							"names",
             	      							lv_names_3_0,
-            	      							"org.eclipse.xtext.common.Terminals.ID");
+            	      							"org.eclipse.ocl.examples.xtext.idioms.Idioms.ID");
 
             	    }
 
@@ -716,7 +716,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.examples.xtext.idioms.
                       							current,
                       							"as",
                       							lv_as_3_0,
-                      							"org.eclipse.xtext.common.Terminals.ID");
+                      							"org.eclipse.ocl.examples.xtext.idioms.Idioms.ID");
 
                     }
 
@@ -913,7 +913,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.examples.xtext.idioms.
                       							current,
                       							"as",
                       							lv_as_3_0,
-                      							"org.eclipse.xtext.common.Terminals.ID");
+                      							"org.eclipse.ocl.examples.xtext.idioms.Idioms.ID");
 
                     }
 
@@ -1063,7 +1063,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.examples.xtext.idioms.
               						current,
               						"name",
               						lv_name_1_0,
-              						"org.eclipse.xtext.common.Terminals.ID");
+              						"org.eclipse.ocl.examples.xtext.idioms.Idioms.ID");
 
             }
 
@@ -2098,7 +2098,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.examples.xtext.idioms.
               					current,
               					"string",
               					lv_string_0_0,
-              					"org.eclipse.xtext.common.Terminals.STRING");
+              					"org.eclipse.ocl.examples.xtext.idioms.Idioms.STRING");
 
             }
 
@@ -2563,7 +2563,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.examples.xtext.idioms.
               						current,
               						"name",
               						lv_name_1_0,
-              						"org.eclipse.xtext.common.Terminals.ID");
+              						"org.eclipse.ocl.examples.xtext.idioms.Idioms.ID");
 
             }
 
@@ -3389,7 +3389,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.examples.xtext.idioms.
               						current,
               						"supportClassName",
               						lv_supportClassName_1_0,
-              						"org.eclipse.xtext.common.Terminals.STRING");
+              						"org.eclipse.ocl.examples.xtext.idioms.Idioms.STRING");
 
             }
 
@@ -4453,7 +4453,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.examples.xtext.idioms.
               						current,
               						"string",
               						lv_string_1_0,
-              						"org.eclipse.xtext.common.Terminals.STRING");
+              						"org.eclipse.ocl.examples.xtext.idioms.Idioms.STRING");
 
             }
 
@@ -5447,7 +5447,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.examples.xtext.idioms.
               						current,
               						"name",
               						lv_name_2_0,
-              						"org.eclipse.xtext.common.Terminals.ID");
+              						"org.eclipse.ocl.examples.xtext.idioms.Idioms.ID");
 
             }
 
@@ -5604,7 +5604,7 @@ public class InternalIdiomsParser extends org.eclipse.ocl.examples.xtext.idioms.
                       							current,
                       							"inRuleRegex",
                       							lv_inRuleRegex_8_0,
-                      							"org.eclipse.xtext.common.Terminals.STRING");
+                      							"org.eclipse.ocl.examples.xtext.idioms.Idioms.STRING");
 
                     }
 

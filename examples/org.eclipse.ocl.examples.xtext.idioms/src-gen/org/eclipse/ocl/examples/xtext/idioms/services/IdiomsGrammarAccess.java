@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2020 Willink Transformations and others.
+ * Copyright (c) 2011, 2021 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -26,7 +26,6 @@ import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.ParserRule;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.TerminalRule;
-import org.eclipse.xtext.common.services.TerminalsGrammarAccess;
 import org.eclipse.xtext.service.AbstractElementFinder;
 import org.eclipse.xtext.service.GrammarProvider;
 
@@ -55,15 +54,11 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final Assignment cOwnedIdiomsAssignment_5_2 = (Assignment)cAlternatives_5.eContents().get(2);
 		private final RuleCall cOwnedIdiomsIdiomParserRuleCall_5_2_0 = (RuleCall)cOwnedIdiomsAssignment_5_2.eContents().get(0);
 
-		////import "http://www.eclipse.org/ocl/2020/Idioms"
-		////import "Idioms.ecore"
 		//IdiomsModel:
-		//	'model' names+=ID ('.' names+=ID)* ownedWiths+=IdiomsImport* ownedImports+=EPackageImport*
-		//	(ownedLocatorDeclarations+=LocatorDeclaration | ownedSegmentDeclarations+=SegmentDeclaration | ownedIdioms+=Idiom)*;
+		//    'model' names+=ID ('.' names+=ID)* ownedWiths+=IdiomsImport* ownedImports+=EPackageImport* (ownedLocatorDeclarations+=LocatorDeclaration | ownedSegmentDeclarations+=SegmentDeclaration | ownedIdioms+=Idiom)* ;
 		@Override public ParserRule getRule() { return rule; }
 
-		//'model' names+=ID ('.' names+=ID)* ownedWiths+=IdiomsImport* ownedImports+=EPackageImport*
-		//(ownedLocatorDeclarations+=LocatorDeclaration | ownedSegmentDeclarations+=SegmentDeclaration | ownedIdioms+=Idiom)*
+		//'model' names+=ID ('.' names+=ID)* ownedWiths+=IdiomsImport* ownedImports+=EPackageImport* (ownedLocatorDeclarations+=LocatorDeclaration | ownedSegmentDeclarations+=SegmentDeclaration | ownedIdioms+=Idiom)*
 		public Group getGroup() { return cGroup; }
 
 		//'model'
@@ -134,7 +129,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final Keyword cSemicolonKeyword_3 = (Keyword)cGroup.eContents().get(3);
 
 		//EPackageImport:
-		//	'import' ePackage=[ecore::EPackage|STRING] ('as' ^as=ID)? ';'?;
+		//    'import' ePackage=[ecore::EPackage|STRING] ('as' ^as=ID)? ';'?;
 		@Override public ParserRule getRule() { return rule; }
 
 		//'import' ePackage=[ecore::EPackage|STRING] ('as' ^as=ID)? ';'?
@@ -181,7 +176,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final Keyword cSemicolonKeyword_3 = (Keyword)cGroup.eContents().get(3);
 
 		//IdiomsImport:
-		//	'with' idiomsModel=[IdiomsModel|STRING] ('as' ^as=ID)? ';'?;
+		//    'with' idiomsModel=[IdiomsModel|STRING] ('as' ^as=ID)? ';'?;
 		@Override public ParserRule getRule() { return rule; }
 
 		//'with' idiomsModel=[IdiomsModel|STRING] ('as' ^as=ID)? ';'?
@@ -225,10 +220,10 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final Keyword cSemicolonKeyword_3 = (Keyword)cGroup.eContents().get(3);
 
 		//LocatorDeclaration:
-		//	'locator' name=ID ownedLocator=Locator ';';
+		//    'locator' name=ID  ownedLocator=Locator ';';
 		@Override public ParserRule getRule() { return rule; }
 
-		//'locator' name=ID ownedLocator=Locator ';'
+		//'locator' name=ID  ownedLocator=Locator ';'
 		public Group getGroup() { return cGroup; }
 
 		//'locator'
@@ -261,12 +256,10 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final RuleCall cReturnsLocatorParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
 
 		//Locator:
-		//	AnyAssignmentLocator | AnyElementLocator | AssignmentLocator | FinalLocator | KeywordLocator | ReferredLocator |
-		//	ReturnsLocator;
+		//    AnyAssignmentLocator | AnyElementLocator | AssignmentLocator | FinalLocator | KeywordLocator | ReferredLocator | ReturnsLocator;
 		@Override public ParserRule getRule() { return rule; }
 
-		//AnyAssignmentLocator | AnyElementLocator | AssignmentLocator | FinalLocator | KeywordLocator | ReferredLocator |
-		//ReturnsLocator
+		//AnyAssignmentLocator | AnyElementLocator | AssignmentLocator | FinalLocator | KeywordLocator | ReferredLocator | ReturnsLocator
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//AnyAssignmentLocator
@@ -297,7 +290,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final Keyword cAnyAssignmentKeyword_1 = (Keyword)cGroup.eContents().get(1);
 
 		//AnyAssignmentLocator:
-		//	{AnyAssignmentLocator} 'any-assignment';
+		//    {AnyAssignmentLocator} 'any-assignment';
 		@Override public ParserRule getRule() { return rule; }
 
 		//{AnyAssignmentLocator} 'any-assignment'
@@ -316,7 +309,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final Keyword cAnyElementKeyword_1 = (Keyword)cGroup.eContents().get(1);
 
 		//AnyElementLocator:
-		//	{AnyElementLocator} 'any-element';
+		//    {AnyElementLocator} 'any-element';
 		@Override public ParserRule getRule() { return rule; }
 
 		//{AnyElementLocator} 'any-element'
@@ -347,27 +340,25 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final RuleCall cEStructuralFeatureEStructuralFeatureIDTerminalRuleCall_2_0_1 = (RuleCall)cEStructuralFeatureEStructuralFeatureCrossReference_2_0.eContents().get(1);
 
 		//AssignmentLocator:
-		//	'assignment' ((ePackage=[ecore::EPackage] '::')? eClass=[ecore::EClass] '::')?
-		//	eStructuralFeature=[ecore::EStructuralFeature];
+		//    'assignment' ((ePackage=[ecore::EPackage|ID] '::')? eClass=[ecore::EClass|ID] '::')? eStructuralFeature=[ecore::EStructuralFeature];
 		@Override public ParserRule getRule() { return rule; }
 
-		//'assignment' ((ePackage=[ecore::EPackage] '::')? eClass=[ecore::EClass] '::')?
-		//eStructuralFeature=[ecore::EStructuralFeature]
+		//'assignment' ((ePackage=[ecore::EPackage|ID] '::')? eClass=[ecore::EClass|ID] '::')? eStructuralFeature=[ecore::EStructuralFeature]
 		public Group getGroup() { return cGroup; }
 
 		//'assignment'
 		public Keyword getAssignmentKeyword_0() { return cAssignmentKeyword_0; }
 
-		//((ePackage=[ecore::EPackage] '::')? eClass=[ecore::EClass] '::')?
+		//((ePackage=[ecore::EPackage|ID] '::')? eClass=[ecore::EClass|ID] '::')?
 		public Group getGroup_1() { return cGroup_1; }
 
-		//(ePackage=[ecore::EPackage] '::')?
+		//(ePackage=[ecore::EPackage|ID] '::')?
 		public Group getGroup_1_0() { return cGroup_1_0; }
 
-		//ePackage=[ecore::EPackage]
+		//ePackage=[ecore::EPackage|ID]
 		public Assignment getEPackageAssignment_1_0_0() { return cEPackageAssignment_1_0_0; }
 
-		//[ecore::EPackage]
+		//[ecore::EPackage|ID]
 		public CrossReference getEPackageEPackageCrossReference_1_0_0_0() { return cEPackageEPackageCrossReference_1_0_0_0; }
 
 		//ID
@@ -376,10 +367,10 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		//'::'
 		public Keyword getColonColonKeyword_1_0_1() { return cColonColonKeyword_1_0_1; }
 
-		//eClass=[ecore::EClass]
+		//eClass=[ecore::EClass|ID]
 		public Assignment getEClassAssignment_1_1() { return cEClassAssignment_1_1; }
 
-		//[ecore::EClass]
+		//[ecore::EClass|ID]
 		public CrossReference getEClassEClassCrossReference_1_1_0() { return cEClassEClassCrossReference_1_1_0; }
 
 		//ID
@@ -404,7 +395,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final Keyword cFinalKeyword_1 = (Keyword)cGroup.eContents().get(1);
 
 		//FinalLocator:
-		//	{FinalLocator} 'final';
+		//    {FinalLocator} 'final';
 		@Override public ParserRule getRule() { return rule; }
 
 		//{FinalLocator} 'final'
@@ -422,7 +413,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final RuleCall cStringSTRINGTerminalRuleCall_0 = (RuleCall)cStringAssignment.eContents().get(0);
 
 		//KeywordLocator:
-		//	string=STRING;
+		//    string=STRING;
 		@Override public ParserRule getRule() { return rule; }
 
 		//string=STRING
@@ -445,22 +436,22 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final RuleCall cEClassEClassIDTerminalRuleCall_2_0_1 = (RuleCall)cEClassEClassCrossReference_2_0.eContents().get(1);
 
 		//ReturnsLocator:
-		//	'returns' (ePackage=[ecore::EPackage] '::')? eClass=[ecore::EClass];
+		//    'returns' (ePackage=[ecore::EPackage|ID] '::')? eClass=[ecore::EClass|ID];
 		@Override public ParserRule getRule() { return rule; }
 
-		//'returns' (ePackage=[ecore::EPackage] '::')? eClass=[ecore::EClass]
+		//'returns' (ePackage=[ecore::EPackage|ID] '::')? eClass=[ecore::EClass|ID]
 		public Group getGroup() { return cGroup; }
 
 		//'returns'
 		public Keyword getReturnsKeyword_0() { return cReturnsKeyword_0; }
 
-		//(ePackage=[ecore::EPackage] '::')?
+		//(ePackage=[ecore::EPackage|ID] '::')?
 		public Group getGroup_1() { return cGroup_1; }
 
-		//ePackage=[ecore::EPackage]
+		//ePackage=[ecore::EPackage|ID]
 		public Assignment getEPackageAssignment_1_0() { return cEPackageAssignment_1_0; }
 
-		//[ecore::EPackage]
+		//[ecore::EPackage|ID]
 		public CrossReference getEPackageEPackageCrossReference_1_0_0() { return cEPackageEPackageCrossReference_1_0_0; }
 
 		//ID
@@ -469,10 +460,10 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		//'::'
 		public Keyword getColonColonKeyword_1_1() { return cColonColonKeyword_1_1; }
 
-		//eClass=[ecore::EClass]
+		//eClass=[ecore::EClass|ID]
 		public Assignment getEClassAssignment_2() { return cEClassAssignment_2; }
 
-		//[ecore::EClass]
+		//[ecore::EClass|ID]
 		public CrossReference getEClassEClassCrossReference_2_0() { return cEClassEClassCrossReference_2_0; }
 
 		//ID
@@ -491,19 +482,19 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final RuleCall cLocatorDeclarationLocatorDeclarationIDTerminalRuleCall_1_0_1 = (RuleCall)cLocatorDeclarationLocatorDeclarationCrossReference_1_0.eContents().get(1);
 
 		//ReferredLocator:
-		//	(idiomsModel=[IdiomsModel] '::')? locatorDeclaration=[LocatorDeclaration];
+		//    (idiomsModel=[IdiomsModel|ID] '::')? locatorDeclaration=[LocatorDeclaration];
 		@Override public ParserRule getRule() { return rule; }
 
-		//(idiomsModel=[IdiomsModel] '::')? locatorDeclaration=[LocatorDeclaration]
+		//(idiomsModel=[IdiomsModel|ID] '::')? locatorDeclaration=[LocatorDeclaration]
 		public Group getGroup() { return cGroup; }
 
-		//(idiomsModel=[IdiomsModel] '::')?
+		//(idiomsModel=[IdiomsModel|ID] '::')?
 		public Group getGroup_0() { return cGroup_0; }
 
-		//idiomsModel=[IdiomsModel]
+		//idiomsModel=[IdiomsModel|ID]
 		public Assignment getIdiomsModelAssignment_0_0() { return cIdiomsModelAssignment_0_0; }
 
-		//[IdiomsModel]
+		//[IdiomsModel|ID]
 		public CrossReference getIdiomsModelIdiomsModelCrossReference_0_0_0() { return cIdiomsModelIdiomsModelCrossReference_0_0_0; }
 
 		//ID
@@ -532,7 +523,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final Keyword cSemicolonKeyword_3 = (Keyword)cGroup.eContents().get(3);
 
 		//SegmentDeclaration:
-		//	'segment' name=ID ownedSegment=Segment ';';
+		//    'segment' name=ID ownedSegment=Segment ';' ;
 		@Override public ParserRule getRule() { return rule; }
 
 		//'segment' name=ID ownedSegment=Segment ';'
@@ -578,9 +569,9 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final RuleCall cWrapHereSegmentParserRuleCall_16 = (RuleCall)cAlternatives.eContents().get(16);
 
 		//Segment:
-		//	CustomSegment | HalfNewLineSegment | NewLineSegment | NoSpaceSegment | PopSegment | PostCommentSegment |
-		//	PreCommentSegment | PushSegment | SoftNewLineSegment | SoftSpaceSegment | StringSegment | ValueSegment |
-		//	WrapAnchorSegment | WrapBeginAllSegment | WrapBeginSomeSegment | WrapEndSegment | WrapHereSegment;
+		//    CustomSegment | HalfNewLineSegment | NewLineSegment | NoSpaceSegment | PopSegment | PostCommentSegment |
+		//    PreCommentSegment | PushSegment | SoftNewLineSegment | SoftSpaceSegment | StringSegment | ValueSegment |
+		//    WrapAnchorSegment | WrapBeginAllSegment | WrapBeginSomeSegment | WrapEndSegment | WrapHereSegment;
 		@Override public ParserRule getRule() { return rule; }
 
 		//CustomSegment | HalfNewLineSegment | NewLineSegment | NoSpaceSegment | PopSegment | PostCommentSegment |
@@ -647,7 +638,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final RuleCall cSupportClassNameSTRINGTerminalRuleCall_1_0 = (RuleCall)cSupportClassNameAssignment_1.eContents().get(0);
 
 		//CustomSegment:
-		//	'custom' supportClassName=STRING;
+		//    'custom' supportClassName=STRING;
 		@Override public ParserRule getRule() { return rule; }
 
 		//'custom' supportClassName=STRING
@@ -669,7 +660,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final Keyword cHalfNewLineKeyword_1 = (Keyword)cGroup.eContents().get(1);
 
 		//HalfNewLineSegment:
-		//	{HalfNewLineSegment} 'half-new-line';
+		//    {HalfNewLineSegment} 'half-new-line';
 		@Override public ParserRule getRule() { return rule; }
 
 		//{HalfNewLineSegment} 'half-new-line'
@@ -688,7 +679,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final Keyword cNewLineKeyword_1 = (Keyword)cGroup.eContents().get(1);
 
 		//NewLineSegment:
-		//	{NewLineSegment} 'new-line';
+		//    {NewLineSegment} 'new-line';
 		@Override public ParserRule getRule() { return rule; }
 
 		//{NewLineSegment} 'new-line'
@@ -707,7 +698,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final Keyword cNoSpaceKeyword_1 = (Keyword)cGroup.eContents().get(1);
 
 		//NoSpaceSegment:
-		//	{NoSpaceSegment} 'no-space';
+		//    {NoSpaceSegment} 'no-space';
 		@Override public ParserRule getRule() { return rule; }
 
 		//{NoSpaceSegment} 'no-space'
@@ -726,7 +717,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final Keyword cPopKeyword_1 = (Keyword)cGroup.eContents().get(1);
 
 		//PopSegment:
-		//	{PopSegment} 'pop';
+		//    {PopSegment} 'pop';
 		@Override public ParserRule getRule() { return rule; }
 
 		//{PopSegment} 'pop'
@@ -745,7 +736,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final Keyword cPostCommentKeyword_1 = (Keyword)cGroup.eContents().get(1);
 
 		//PostCommentSegment:
-		//	{PostCommentSegment} 'post-comment';
+		//    {PostCommentSegment} 'post-comment';
 		@Override public ParserRule getRule() { return rule; }
 
 		//{PostCommentSegment} 'post-comment'
@@ -764,7 +755,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final Keyword cPreCommentKeyword_1 = (Keyword)cGroup.eContents().get(1);
 
 		//PreCommentSegment:
-		//	{PreCommentSegment} 'pre-comment';
+		//    {PreCommentSegment} 'pre-comment';
 		@Override public ParserRule getRule() { return rule; }
 
 		//{PreCommentSegment} 'pre-comment'
@@ -783,7 +774,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final Keyword cPushKeyword_1 = (Keyword)cGroup.eContents().get(1);
 
 		//PushSegment:
-		//	{PushSegment} 'push';
+		//    {PushSegment} 'push';
 		@Override public ParserRule getRule() { return rule; }
 
 		//{PushSegment} 'push'
@@ -802,7 +793,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final Keyword cSoftNewLineKeyword_1 = (Keyword)cGroup.eContents().get(1);
 
 		//SoftNewLineSegment:
-		//	{SoftNewLineSegment} 'soft-new-line';
+		//    {SoftNewLineSegment} 'soft-new-line';
 		@Override public ParserRule getRule() { return rule; }
 
 		//{SoftNewLineSegment} 'soft-new-line'
@@ -821,7 +812,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final Keyword cSoftSpaceKeyword_1 = (Keyword)cGroup.eContents().get(1);
 
 		//SoftSpaceSegment:
-		//	{SoftSpaceSegment} 'soft-space';
+		//    {SoftSpaceSegment} 'soft-space';
 		@Override public ParserRule getRule() { return rule; }
 
 		//{SoftSpaceSegment} 'soft-space'
@@ -843,7 +834,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final Keyword cPrintablePrintableKeyword_2_0 = (Keyword)cPrintableAssignment_2.eContents().get(0);
 
 		//StringSegment:
-		//	'string' string=STRING printable?='printable';
+		//    'string' string=STRING printable?='printable';
 		@Override public ParserRule getRule() { return rule; }
 
 		//'string' string=STRING printable?='printable'
@@ -871,7 +862,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final Keyword cValueKeyword_1 = (Keyword)cGroup.eContents().get(1);
 
 		//ValueSegment:
-		//	{ValueSegment} 'value';
+		//    {ValueSegment} 'value';
 		@Override public ParserRule getRule() { return rule; }
 
 		//{ValueSegment} 'value'
@@ -890,7 +881,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final Keyword cWrapAnchorKeyword_1 = (Keyword)cGroup.eContents().get(1);
 
 		//WrapAnchorSegment:
-		//	{WrapAnchorSegment} 'wrap-anchor';
+		//    {WrapAnchorSegment} 'wrap-anchor';
 		@Override public ParserRule getRule() { return rule; }
 
 		//{WrapAnchorSegment} 'wrap-anchor'
@@ -909,7 +900,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final Keyword cWrapBeginAllKeyword_1 = (Keyword)cGroup.eContents().get(1);
 
 		//WrapBeginAllSegment:
-		//	{WrapBeginAllSegment} 'wrap-begin-all';
+		//    {WrapBeginAllSegment} 'wrap-begin-all';
 		@Override public ParserRule getRule() { return rule; }
 
 		//{WrapBeginAllSegment} 'wrap-begin-all'
@@ -928,7 +919,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final Keyword cWrapBeginSomeKeyword_1 = (Keyword)cGroup.eContents().get(1);
 
 		//WrapBeginSomeSegment:
-		//	{WrapBeginSomeSegment} 'wrap-begin-some';
+		//    {WrapBeginSomeSegment} 'wrap-begin-some';
 		@Override public ParserRule getRule() { return rule; }
 
 		//{WrapBeginSomeSegment} 'wrap-begin-some'
@@ -947,7 +938,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final Keyword cWrapEndKeyword_1 = (Keyword)cGroup.eContents().get(1);
 
 		//WrapEndSegment:
-		//	{WrapEndSegment} 'wrap-end';
+		//    {WrapEndSegment} 'wrap-end';
 		@Override public ParserRule getRule() { return rule; }
 
 		//{WrapEndSegment} 'wrap-end'
@@ -966,7 +957,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final Keyword cWrapHereKeyword_1 = (Keyword)cGroup.eContents().get(1);
 
 		//WrapHereSegment:
-		//	{WrapHereSegment} 'wrap-here';
+		//    {WrapHereSegment} 'wrap-here';
 		@Override public ParserRule getRule() { return rule; }
 
 		//{WrapHereSegment} 'wrap-here'
@@ -991,19 +982,19 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final RuleCall cSegmentDeclarationSegmentDeclarationIDTerminalRuleCall_1_0_1 = (RuleCall)cSegmentDeclarationSegmentDeclarationCrossReference_1_0.eContents().get(1);
 
 		//ReferredSegment:
-		//	(idiomsModel=[IdiomsModel] '::')? segmentDeclaration=[SegmentDeclaration];
+		//    (idiomsModel=[IdiomsModel|ID] '::')? segmentDeclaration=[SegmentDeclaration];
 		@Override public ParserRule getRule() { return rule; }
 
-		//(idiomsModel=[IdiomsModel] '::')? segmentDeclaration=[SegmentDeclaration]
+		//(idiomsModel=[IdiomsModel|ID] '::')? segmentDeclaration=[SegmentDeclaration]
 		public Group getGroup() { return cGroup; }
 
-		//(idiomsModel=[IdiomsModel] '::')?
+		//(idiomsModel=[IdiomsModel|ID] '::')?
 		public Group getGroup_0() { return cGroup_0; }
 
-		//idiomsModel=[IdiomsModel]
+		//idiomsModel=[IdiomsModel|ID]
 		public Assignment getIdiomsModelAssignment_0_0() { return cIdiomsModelAssignment_0_0; }
 
-		//[IdiomsModel]
+		//[IdiomsModel|ID]
 		public CrossReference getIdiomsModelIdiomsModelCrossReference_0_0_0() { return cIdiomsModelIdiomsModelCrossReference_0_0_0; }
 
 		//ID
@@ -1053,12 +1044,12 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final Keyword cRightCurlyBracketKeyword_5_1_2 = (Keyword)cGroup_5_1.eContents().get(2);
 
 		//Idiom:
-		//	mixin?='mixin'? 'idiom' name=ID ('for' (forEPackage=[ecore::EPackage] '::')? forEClass=[ecore::EClass])? ('in'
-		//	inRuleRegex=STRING)? (ownedSubIdioms+=SubIdiom | '{' ownedSubIdioms+=SubIdiom* '}');
+		//    mixin?='mixin'? 'idiom' name=ID ('for' (forEPackage=[ecore::EPackage|ID] '::')? forEClass=[ecore::EClass])? ('in' inRuleRegex=STRING)?
+		//    ((ownedSubIdioms+=SubIdiom) | ('{' (ownedSubIdioms+=SubIdiom)* '}'));
 		@Override public ParserRule getRule() { return rule; }
 
-		//mixin?='mixin'? 'idiom' name=ID ('for' (forEPackage=[ecore::EPackage] '::')? forEClass=[ecore::EClass])? ('in'
-		//inRuleRegex=STRING)? (ownedSubIdioms+=SubIdiom | '{' ownedSubIdioms+=SubIdiom* '}')
+		//mixin?='mixin'? 'idiom' name=ID ('for' (forEPackage=[ecore::EPackage|ID] '::')? forEClass=[ecore::EClass])? ('in' inRuleRegex=STRING)?
+		//((ownedSubIdioms+=SubIdiom) | ('{' (ownedSubIdioms+=SubIdiom)* '}'))
 		public Group getGroup() { return cGroup; }
 
 		//mixin?='mixin'?
@@ -1076,19 +1067,19 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_2_0() { return cNameIDTerminalRuleCall_2_0; }
 
-		//('for' (forEPackage=[ecore::EPackage] '::')? forEClass=[ecore::EClass])?
+		//('for' (forEPackage=[ecore::EPackage|ID] '::')? forEClass=[ecore::EClass])?
 		public Group getGroup_3() { return cGroup_3; }
 
 		//'for'
 		public Keyword getForKeyword_3_0() { return cForKeyword_3_0; }
 
-		//(forEPackage=[ecore::EPackage] '::')?
+		//(forEPackage=[ecore::EPackage|ID] '::')?
 		public Group getGroup_3_1() { return cGroup_3_1; }
 
-		//forEPackage=[ecore::EPackage]
+		//forEPackage=[ecore::EPackage|ID]
 		public Assignment getForEPackageAssignment_3_1_0() { return cForEPackageAssignment_3_1_0; }
 
-		//[ecore::EPackage]
+		//[ecore::EPackage|ID]
 		public CrossReference getForEPackageEPackageCrossReference_3_1_0_0() { return cForEPackageEPackageCrossReference_3_1_0_0; }
 
 		//ID
@@ -1118,22 +1109,22 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		//STRING
 		public RuleCall getInRuleRegexSTRINGTerminalRuleCall_4_1_0() { return cInRuleRegexSTRINGTerminalRuleCall_4_1_0; }
 
-		//(ownedSubIdioms+=SubIdiom | '{' ownedSubIdioms+=SubIdiom* '}')
+		//((ownedSubIdioms+=SubIdiom) | ('{' (ownedSubIdioms+=SubIdiom)* '}'))
 		public Alternatives getAlternatives_5() { return cAlternatives_5; }
 
-		//ownedSubIdioms+=SubIdiom
+		//(ownedSubIdioms+=SubIdiom)
 		public Assignment getOwnedSubIdiomsAssignment_5_0() { return cOwnedSubIdiomsAssignment_5_0; }
 
 		//SubIdiom
 		public RuleCall getOwnedSubIdiomsSubIdiomParserRuleCall_5_0_0() { return cOwnedSubIdiomsSubIdiomParserRuleCall_5_0_0; }
 
-		//'{' ownedSubIdioms+=SubIdiom* '}'
+		//('{' (ownedSubIdioms+=SubIdiom)* '}')
 		public Group getGroup_5_1() { return cGroup_5_1; }
 
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_5_1_0() { return cLeftCurlyBracketKeyword_5_1_0; }
 
-		//ownedSubIdioms+=SubIdiom*
+		//(ownedSubIdioms+=SubIdiom)*
 		public Assignment getOwnedSubIdiomsAssignment_5_1_1() { return cOwnedSubIdiomsAssignment_5_1_1; }
 
 		//SubIdiom
@@ -1161,10 +1152,10 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final Keyword cSemicolonKeyword_4 = (Keyword)cGroup.eContents().get(4);
 
 		//SubIdiom:
-		//	'at' (all?='all' | 'each')? ownedLocator=Locator ('do' ownedSegments+=(Segment | ReferredSegment)*)? ';';
+		//    'at' (all?='all' | 'each')? ownedLocator=Locator ('do' ownedSegments+=(Segment|ReferredSegment)*)? ';';
 		@Override public ParserRule getRule() { return rule; }
 
-		//'at' (all?='all' | 'each')? ownedLocator=Locator ('do' ownedSegments+=(Segment | ReferredSegment)*)? ';'
+		//'at' (all?='all' | 'each')? ownedLocator=Locator ('do' ownedSegments+=(Segment|ReferredSegment)*)? ';'
 		public Group getGroup() { return cGroup; }
 
 		//'at'
@@ -1188,16 +1179,16 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		//Locator
 		public RuleCall getOwnedLocatorLocatorParserRuleCall_2_0() { return cOwnedLocatorLocatorParserRuleCall_2_0; }
 
-		//('do' ownedSegments+=(Segment | ReferredSegment)*)?
+		//('do' ownedSegments+=(Segment|ReferredSegment)*)?
 		public Group getGroup_3() { return cGroup_3; }
 
 		//'do'
 		public Keyword getDoKeyword_3_0() { return cDoKeyword_3_0; }
 
-		//ownedSegments+=(Segment | ReferredSegment)*
+		//ownedSegments+=(Segment|ReferredSegment)*
 		public Assignment getOwnedSegmentsAssignment_3_1() { return cOwnedSegmentsAssignment_3_1; }
 
-		//(Segment | ReferredSegment)
+		//(Segment|ReferredSegment)
 		public Alternatives getOwnedSegmentsAlternatives_3_1_0() { return cOwnedSegmentsAlternatives_3_1_0; }
 
 		//Segment
@@ -1245,16 +1236,19 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	private final ReferredSegmentElements pReferredSegment;
 	private final IdiomElements pIdiom;
 	private final SubIdiomElements pSubIdiom;
+	private final TerminalRule tID;
+	private final TerminalRule tINT;
+	private final TerminalRule tSTRING;
+	private final TerminalRule tML_COMMENT;
+	private final TerminalRule tSL_COMMENT;
+	private final TerminalRule tWS;
+	private final TerminalRule tANY_OTHER;
 
 	private final Grammar grammar;
 
-	private final TerminalsGrammarAccess gaTerminals;
-
 	@Inject
-	public IdiomsGrammarAccess(GrammarProvider grammarProvider,
-			TerminalsGrammarAccess gaTerminals) {
+	public IdiomsGrammarAccess(GrammarProvider grammarProvider) {
 		this.grammar = internalFindGrammar(grammarProvider);
-		this.gaTerminals = gaTerminals;
 		this.pIdiomsModel = new IdiomsModelElements();
 		this.pEPackageImport = new EPackageImportElements();
 		this.pIdiomsImport = new IdiomsImportElements();
@@ -1289,6 +1283,13 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		this.pReferredSegment = new ReferredSegmentElements();
 		this.pIdiom = new IdiomElements();
 		this.pSubIdiom = new SubIdiomElements();
+		this.tID = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.examples.xtext.idioms.Idioms.ID");
+		this.tINT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.examples.xtext.idioms.Idioms.INT");
+		this.tSTRING = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.examples.xtext.idioms.Idioms.STRING");
+		this.tML_COMMENT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.examples.xtext.idioms.Idioms.ML_COMMENT");
+		this.tSL_COMMENT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.examples.xtext.idioms.Idioms.SL_COMMENT");
+		this.tWS = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.examples.xtext.idioms.Idioms.WS");
+		this.tANY_OTHER = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.examples.xtext.idioms.Idioms.ANY_OTHER");
 	}
 
 	protected Grammar internalFindGrammar(GrammarProvider grammarProvider) {
@@ -1313,16 +1314,9 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 
 
-	public TerminalsGrammarAccess getTerminalsGrammarAccess() {
-		return gaTerminals;
-	}
 
-
-	////import "http://www.eclipse.org/ocl/2020/Idioms"
-	////import "Idioms.ecore"
 	//IdiomsModel:
-	//	'model' names+=ID ('.' names+=ID)* ownedWiths+=IdiomsImport* ownedImports+=EPackageImport*
-	//	(ownedLocatorDeclarations+=LocatorDeclaration | ownedSegmentDeclarations+=SegmentDeclaration | ownedIdioms+=Idiom)*;
+	//    'model' names+=ID ('.' names+=ID)* ownedWiths+=IdiomsImport* ownedImports+=EPackageImport* (ownedLocatorDeclarations+=LocatorDeclaration | ownedSegmentDeclarations+=SegmentDeclaration | ownedIdioms+=Idiom)* ;
 	public IdiomsModelElements getIdiomsModelAccess() {
 		return pIdiomsModel;
 	}
@@ -1332,7 +1326,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 
 	//EPackageImport:
-	//	'import' ePackage=[ecore::EPackage|STRING] ('as' ^as=ID)? ';'?;
+	//    'import' ePackage=[ecore::EPackage|STRING] ('as' ^as=ID)? ';'?;
 	public EPackageImportElements getEPackageImportAccess() {
 		return pEPackageImport;
 	}
@@ -1342,7 +1336,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 
 	//IdiomsImport:
-	//	'with' idiomsModel=[IdiomsModel|STRING] ('as' ^as=ID)? ';'?;
+	//    'with' idiomsModel=[IdiomsModel|STRING] ('as' ^as=ID)? ';'?;
 	public IdiomsImportElements getIdiomsImportAccess() {
 		return pIdiomsImport;
 	}
@@ -1352,7 +1346,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 
 	//LocatorDeclaration:
-	//	'locator' name=ID ownedLocator=Locator ';';
+	//    'locator' name=ID  ownedLocator=Locator ';';
 	public LocatorDeclarationElements getLocatorDeclarationAccess() {
 		return pLocatorDeclaration;
 	}
@@ -1362,8 +1356,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 
 	//Locator:
-	//	AnyAssignmentLocator | AnyElementLocator | AssignmentLocator | FinalLocator | KeywordLocator | ReferredLocator |
-	//	ReturnsLocator;
+	//    AnyAssignmentLocator | AnyElementLocator | AssignmentLocator | FinalLocator | KeywordLocator | ReferredLocator | ReturnsLocator;
 	public LocatorElements getLocatorAccess() {
 		return pLocator;
 	}
@@ -1373,7 +1366,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 
 	//AnyAssignmentLocator:
-	//	{AnyAssignmentLocator} 'any-assignment';
+	//    {AnyAssignmentLocator} 'any-assignment';
 	public AnyAssignmentLocatorElements getAnyAssignmentLocatorAccess() {
 		return pAnyAssignmentLocator;
 	}
@@ -1383,7 +1376,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 
 	//AnyElementLocator:
-	//	{AnyElementLocator} 'any-element';
+	//    {AnyElementLocator} 'any-element';
 	public AnyElementLocatorElements getAnyElementLocatorAccess() {
 		return pAnyElementLocator;
 	}
@@ -1393,8 +1386,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 
 	//AssignmentLocator:
-	//	'assignment' ((ePackage=[ecore::EPackage] '::')? eClass=[ecore::EClass] '::')?
-	//	eStructuralFeature=[ecore::EStructuralFeature];
+	//    'assignment' ((ePackage=[ecore::EPackage|ID] '::')? eClass=[ecore::EClass|ID] '::')? eStructuralFeature=[ecore::EStructuralFeature];
 	public AssignmentLocatorElements getAssignmentLocatorAccess() {
 		return pAssignmentLocator;
 	}
@@ -1404,7 +1396,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 
 	//FinalLocator:
-	//	{FinalLocator} 'final';
+	//    {FinalLocator} 'final';
 	public FinalLocatorElements getFinalLocatorAccess() {
 		return pFinalLocator;
 	}
@@ -1414,7 +1406,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 
 	//KeywordLocator:
-	//	string=STRING;
+	//    string=STRING;
 	public KeywordLocatorElements getKeywordLocatorAccess() {
 		return pKeywordLocator;
 	}
@@ -1424,7 +1416,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 
 	//ReturnsLocator:
-	//	'returns' (ePackage=[ecore::EPackage] '::')? eClass=[ecore::EClass];
+	//    'returns' (ePackage=[ecore::EPackage|ID] '::')? eClass=[ecore::EClass|ID];
 	public ReturnsLocatorElements getReturnsLocatorAccess() {
 		return pReturnsLocator;
 	}
@@ -1434,7 +1426,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 
 	//ReferredLocator:
-	//	(idiomsModel=[IdiomsModel] '::')? locatorDeclaration=[LocatorDeclaration];
+	//    (idiomsModel=[IdiomsModel|ID] '::')? locatorDeclaration=[LocatorDeclaration];
 	public ReferredLocatorElements getReferredLocatorAccess() {
 		return pReferredLocator;
 	}
@@ -1444,7 +1436,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 
 	//SegmentDeclaration:
-	//	'segment' name=ID ownedSegment=Segment ';';
+	//    'segment' name=ID ownedSegment=Segment ';' ;
 	public SegmentDeclarationElements getSegmentDeclarationAccess() {
 		return pSegmentDeclaration;
 	}
@@ -1454,9 +1446,9 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 
 	//Segment:
-	//	CustomSegment | HalfNewLineSegment | NewLineSegment | NoSpaceSegment | PopSegment | PostCommentSegment |
-	//	PreCommentSegment | PushSegment | SoftNewLineSegment | SoftSpaceSegment | StringSegment | ValueSegment |
-	//	WrapAnchorSegment | WrapBeginAllSegment | WrapBeginSomeSegment | WrapEndSegment | WrapHereSegment;
+	//    CustomSegment | HalfNewLineSegment | NewLineSegment | NoSpaceSegment | PopSegment | PostCommentSegment |
+	//    PreCommentSegment | PushSegment | SoftNewLineSegment | SoftSpaceSegment | StringSegment | ValueSegment |
+	//    WrapAnchorSegment | WrapBeginAllSegment | WrapBeginSomeSegment | WrapEndSegment | WrapHereSegment;
 	public SegmentElements getSegmentAccess() {
 		return pSegment;
 	}
@@ -1466,7 +1458,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 
 	//CustomSegment:
-	//	'custom' supportClassName=STRING;
+	//    'custom' supportClassName=STRING;
 	public CustomSegmentElements getCustomSegmentAccess() {
 		return pCustomSegment;
 	}
@@ -1476,7 +1468,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 
 	//HalfNewLineSegment:
-	//	{HalfNewLineSegment} 'half-new-line';
+	//    {HalfNewLineSegment} 'half-new-line';
 	public HalfNewLineSegmentElements getHalfNewLineSegmentAccess() {
 		return pHalfNewLineSegment;
 	}
@@ -1486,7 +1478,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 
 	//NewLineSegment:
-	//	{NewLineSegment} 'new-line';
+	//    {NewLineSegment} 'new-line';
 	public NewLineSegmentElements getNewLineSegmentAccess() {
 		return pNewLineSegment;
 	}
@@ -1496,7 +1488,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 
 	//NoSpaceSegment:
-	//	{NoSpaceSegment} 'no-space';
+	//    {NoSpaceSegment} 'no-space';
 	public NoSpaceSegmentElements getNoSpaceSegmentAccess() {
 		return pNoSpaceSegment;
 	}
@@ -1506,7 +1498,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 
 	//PopSegment:
-	//	{PopSegment} 'pop';
+	//    {PopSegment} 'pop';
 	public PopSegmentElements getPopSegmentAccess() {
 		return pPopSegment;
 	}
@@ -1516,7 +1508,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 
 	//PostCommentSegment:
-	//	{PostCommentSegment} 'post-comment';
+	//    {PostCommentSegment} 'post-comment';
 	public PostCommentSegmentElements getPostCommentSegmentAccess() {
 		return pPostCommentSegment;
 	}
@@ -1526,7 +1518,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 
 	//PreCommentSegment:
-	//	{PreCommentSegment} 'pre-comment';
+	//    {PreCommentSegment} 'pre-comment';
 	public PreCommentSegmentElements getPreCommentSegmentAccess() {
 		return pPreCommentSegment;
 	}
@@ -1536,7 +1528,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 
 	//PushSegment:
-	//	{PushSegment} 'push';
+	//    {PushSegment} 'push';
 	public PushSegmentElements getPushSegmentAccess() {
 		return pPushSegment;
 	}
@@ -1546,7 +1538,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 
 	//SoftNewLineSegment:
-	//	{SoftNewLineSegment} 'soft-new-line';
+	//    {SoftNewLineSegment} 'soft-new-line';
 	public SoftNewLineSegmentElements getSoftNewLineSegmentAccess() {
 		return pSoftNewLineSegment;
 	}
@@ -1556,7 +1548,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 
 	//SoftSpaceSegment:
-	//	{SoftSpaceSegment} 'soft-space';
+	//    {SoftSpaceSegment} 'soft-space';
 	public SoftSpaceSegmentElements getSoftSpaceSegmentAccess() {
 		return pSoftSpaceSegment;
 	}
@@ -1566,7 +1558,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 
 	//StringSegment:
-	//	'string' string=STRING printable?='printable';
+	//    'string' string=STRING printable?='printable';
 	public StringSegmentElements getStringSegmentAccess() {
 		return pStringSegment;
 	}
@@ -1576,7 +1568,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 
 	//ValueSegment:
-	//	{ValueSegment} 'value';
+	//    {ValueSegment} 'value';
 	public ValueSegmentElements getValueSegmentAccess() {
 		return pValueSegment;
 	}
@@ -1586,7 +1578,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 
 	//WrapAnchorSegment:
-	//	{WrapAnchorSegment} 'wrap-anchor';
+	//    {WrapAnchorSegment} 'wrap-anchor';
 	public WrapAnchorSegmentElements getWrapAnchorSegmentAccess() {
 		return pWrapAnchorSegment;
 	}
@@ -1596,7 +1588,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 
 	//WrapBeginAllSegment:
-	//	{WrapBeginAllSegment} 'wrap-begin-all';
+	//    {WrapBeginAllSegment} 'wrap-begin-all';
 	public WrapBeginAllSegmentElements getWrapBeginAllSegmentAccess() {
 		return pWrapBeginAllSegment;
 	}
@@ -1606,7 +1598,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 
 	//WrapBeginSomeSegment:
-	//	{WrapBeginSomeSegment} 'wrap-begin-some';
+	//    {WrapBeginSomeSegment} 'wrap-begin-some';
 	public WrapBeginSomeSegmentElements getWrapBeginSomeSegmentAccess() {
 		return pWrapBeginSomeSegment;
 	}
@@ -1616,7 +1608,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 
 	//WrapEndSegment:
-	//	{WrapEndSegment} 'wrap-end';
+	//    {WrapEndSegment} 'wrap-end';
 	public WrapEndSegmentElements getWrapEndSegmentAccess() {
 		return pWrapEndSegment;
 	}
@@ -1626,7 +1618,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 
 	//WrapHereSegment:
-	//	{WrapHereSegment} 'wrap-here';
+	//    {WrapHereSegment} 'wrap-here';
 	public WrapHereSegmentElements getWrapHereSegmentAccess() {
 		return pWrapHereSegment;
 	}
@@ -1636,7 +1628,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 
 	//ReferredSegment:
-	//	(idiomsModel=[IdiomsModel] '::')? segmentDeclaration=[SegmentDeclaration];
+	//    (idiomsModel=[IdiomsModel|ID] '::')? segmentDeclaration=[SegmentDeclaration];
 	public ReferredSegmentElements getReferredSegmentAccess() {
 		return pReferredSegment;
 	}
@@ -1646,8 +1638,8 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 
 	//Idiom:
-	//	mixin?='mixin'? 'idiom' name=ID ('for' (forEPackage=[ecore::EPackage] '::')? forEClass=[ecore::EClass])? ('in'
-	//	inRuleRegex=STRING)? (ownedSubIdioms+=SubIdiom | '{' ownedSubIdioms+=SubIdiom* '}');
+	//    mixin?='mixin'? 'idiom' name=ID ('for' (forEPackage=[ecore::EPackage|ID] '::')? forEClass=[ecore::EClass])? ('in' inRuleRegex=STRING)?
+	//    ((ownedSubIdioms+=SubIdiom) | ('{' (ownedSubIdioms+=SubIdiom)* '}'));
 	public IdiomElements getIdiomAccess() {
 		return pIdiom;
 	}
@@ -1657,7 +1649,7 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 
 	//SubIdiom:
-	//	'at' (all?='all' | 'each')? ownedLocator=Locator ('do' ownedSegments+=(Segment | ReferredSegment)*)? ';';
+	//    'at' (all?='all' | 'each')? ownedLocator=Locator ('do' ownedSegments+=(Segment|ReferredSegment)*)? ';';
 	public SubIdiomElements getSubIdiomAccess() {
 		return pSubIdiom;
 	}
@@ -1666,46 +1658,41 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		return getSubIdiomAccess().getRule();
 	}
 
-	//terminal ID:
-	//	'^'? ('a'..'z' | 'A'..'Z' | '_') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;
+	//terminal ID: '^'?('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
 	public TerminalRule getIDRule() {
-		return gaTerminals.getIDRule();
+		return tID;
 	}
 
-	//terminal INT returns ecore::EInt:
-	//	'0'..'9'+;
+	//terminal INT returns ecore::EInt: ('0'..'9')+;
 	public TerminalRule getINTRule() {
-		return gaTerminals.getINTRule();
+		return tINT;
 	}
 
 	//terminal STRING:
-	//	'"' ('\\' . | !('\\' | '"'))* '"' |
-	//	"'" ('\\' . | !('\\' | "'"))* "'";
+	//            '"' ( '\\' . /* 'b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\' */ | !('\\'|'"') )* '"' |
+	//            "'" ( '\\' . /* 'b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\' */ | !('\\'|"'") )* "'"
+	//        ;
 	public TerminalRule getSTRINGRule() {
-		return gaTerminals.getSTRINGRule();
+		return tSTRING;
 	}
 
-	//terminal ML_COMMENT:
-	//	'/*'->'*/';
+	//terminal ML_COMMENT : '/*' -> '*/';
 	public TerminalRule getML_COMMENTRule() {
-		return gaTerminals.getML_COMMENTRule();
+		return tML_COMMENT;
 	}
 
-	//terminal SL_COMMENT:
-	//	'//' !('\n' | '\r')* ('\r'? '\n')?;
+	//terminal SL_COMMENT : '//' !('\n'|'\r')* ('\r'? '\n')?;
 	public TerminalRule getSL_COMMENTRule() {
-		return gaTerminals.getSL_COMMENTRule();
+		return tSL_COMMENT;
 	}
 
-	//terminal WS:
-	//	' ' | '\t' | '\r' | '\n'+;
+	//terminal WS         : (' '|'\t'|'\r'|'\n')+;
 	public TerminalRule getWSRule() {
-		return gaTerminals.getWSRule();
+		return tWS;
 	}
 
-	//terminal ANY_OTHER:
-	//	.;
+	//terminal ANY_OTHER: .;
 	public TerminalRule getANY_OTHERRule() {
-		return gaTerminals.getANY_OTHERRule();
+		return tANY_OTHER;
 	}
 }
