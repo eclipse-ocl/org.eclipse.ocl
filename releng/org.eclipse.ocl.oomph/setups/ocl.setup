@@ -25,10 +25,16 @@
       value="2048m"
       vm="true"/>
   <setupTask
+      xsi:type="setup:EclipseIniTask"
+      excludedTriggers="STARTUP"
+      option="-perspective"
+      value="org.eclipse.jdt.ui.JavaPerspective"/>
+  <setupTask
       xsi:type="setup:ResourceCreationTask"
       excludedTriggers="STARTUP MANUAL"
       targetURL="${workspace.location|uri}/.metadata/.plugins/org.eclipse.jdt.ui/dialog_settings.xml"
       encoding="UTF-8">
+    <description>Initialize JDT's package explorer to show working sets as its root objects</description>
     <content>
       &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>
       &lt;section name=&quot;Workbench&quot;>
@@ -52,16 +58,6 @@
       xsi:type="setup.p2:P2Task">
     <requirement
         name="org.eclipse.jdt.junit4.runtime"/>
-    <requirement
-        name="org.eclipse.uml2.sdk.feature.group"/>
-    <requirement
-        name="org.eclipse.xtext.sdk.feature.group"/>
-    <requirement
-        name="org.eclipse.ocl.all.sdk.feature.group"/>
-    <requirement
-        name="org.eclipse.ocl.examples.feature.group"/>
-    <requirement
-        name="org.eclipse.m2m.qvt.oml.sdk.feature.group"/>
     <description>Install the tools needed in the IDE to work with the source code for ${scope.project.label}</description>
   </setupTask>
   <setupTask
@@ -259,6 +255,11 @@
         <value>remoteURI</value>
       </detail>
     </annotation>
+    <configSections
+        name="core">
+      <properties
+          key="autocrlf"/>
+    </configSections>
     <description>OCL Git repository clone</description>
   </setupTask>
   <project name="dev"
@@ -272,48 +273,48 @@
             xsi:type="predicates:AndPredicate">
           <operand
               xsi:type="predicates:NamePredicate"
-              pattern="org.eclipse.ocl.examples.*"/>
+              pattern="org\.eclipse\.ocl\.examples(\..*)?"/>
           <operand
               xsi:type="predicates:NotPredicate">
             <operand
                 xsi:type="predicates:NamePredicate"
-                pattern="org.eclipse.ocl.examples.autogen"/>
+                pattern="org\.eclipse\.ocl\.examples\.autogen"/>
           </operand>
           <operand
               xsi:type="predicates:NotPredicate">
             <operand
                 xsi:type="predicates:NamePredicate"
-                pattern="org.eclipse.ocl.examples.classic"/>
+                pattern="org\.eclipse\.ocl\.examples\.classic"/>
           </operand>
           <operand
               xsi:type="predicates:NotPredicate">
             <operand
                 xsi:type="predicates:NamePredicate"
-                pattern="org.eclipse.ocl.examples.extlibrary"/>
+                pattern="org\.eclipse\.ocl\.examples\.extlibrary"/>
           </operand>
           <operand
               xsi:type="predicates:NotPredicate">
             <operand
                 xsi:type="predicates:NamePredicate"
-                pattern="org.eclipse.ocl.examples.library"/>
+                pattern="org\.eclipse\.ocl\.examples\.library"/>
           </operand>
           <operand
               xsi:type="predicates:NotPredicate">
             <operand
                 xsi:type="predicates:NamePredicate"
-                pattern="org.eclipse.ocl.examples.unified"/>
+                pattern="org\.eclipse\.ocl\.examples\.unified"/>
           </operand>
           <operand
               xsi:type="predicates:NotPredicate">
             <operand
                 xsi:type="predicates:NamePredicate"
-                pattern="org.eclipse.ocl.examples.xtext2lpg"/>
+                pattern="org\.eclipse\.ocl\.examples\.xtext2lpg"/>
           </operand>
           <operand
               xsi:type="predicates:NotPredicate">
             <operand
                 xsi:type="predicates:NamePredicate"
-                pattern="org.eclipse.ocl.examples.*.build"/>
+                pattern="org\.eclipse\.ocl\.examples(\..*)?\.build"/>
           </operand>
         </predicate>
       </sourceLocator>
@@ -324,30 +325,30 @@
             xsi:type="predicates:AndPredicate">
           <operand
               xsi:type="predicates:NamePredicate"
-              pattern="org.eclipse.ocl.*"/>
+              pattern="org\.eclipse\.ocl(\..*)?"/>
           <operand
               xsi:type="predicates:NotPredicate">
             <operand
                 xsi:type="predicates:NamePredicate"
-                pattern="org.eclipse.ocl.all"/>
+                pattern="org\.eclipse\.ocl\.all"/>
           </operand>
           <operand
               xsi:type="predicates:NotPredicate">
             <operand
                 xsi:type="predicates:NamePredicate"
-                pattern="org.eclipse.ocl.capabilities"/>
+                pattern="org\.eclipse\.ocl\.capabilities"/>
           </operand>
           <operand
               xsi:type="predicates:NotPredicate">
             <operand
                 xsi:type="predicates:NamePredicate"
-                pattern="org.eclipse.ocl.control"/>
+                pattern="org\.eclipse\.ocl\.control"/>
           </operand>
           <operand
               xsi:type="predicates:NotPredicate">
             <operand
                 xsi:type="predicates:NamePredicate"
-                pattern="org.eclipse.ocl.master"/>
+                pattern="org\.eclipse\.ocl\.master"/>
           </operand>
         </predicate>
       </sourceLocator>
@@ -359,67 +360,67 @@
           name="${scope.project.root.label} Classic">
         <predicate
             xsi:type="predicates:NamePredicate"
-            pattern="org.eclipse.ocl"/>
+            pattern="org\.eclipse\.ocl"/>
         <predicate
             xsi:type="predicates:NamePredicate"
-            pattern="org.eclipse.ocl.common"/>
+            pattern="org\.eclipse\.ocl\.common"/>
         <predicate
             xsi:type="predicates:NamePredicate"
-            pattern="org.eclipse.ocl.common.ui"/>
+            pattern="org\.eclipse\.ocl\.common.ui"/>
         <predicate
             xsi:type="predicates:NamePredicate"
-            pattern="org.eclipse.ocl.ecore"/>
+            pattern="org\.eclipse\.ocl\.ecore"/>
         <predicate
             xsi:type="predicates:NamePredicate"
-            pattern="org.eclipse.ocl.ecore.edit"/>
+            pattern="org\.eclipse\.ocl\.ecore\.edit"/>
         <predicate
             xsi:type="predicates:NamePredicate"
-            pattern="org.eclipse.ocl.edit"/>
+            pattern="org\.eclipse\.ocl\.edit"/>
         <predicate
             xsi:type="predicates:NamePredicate"
-            pattern="org.eclipse.ocl.examples.eventmanager"/>
+            pattern="org\.eclipse\.ocl\.examples\.eventmanager"/>
         <predicate
             xsi:type="predicates:NamePredicate"
-            pattern="org.eclipse.ocl.examples.impactanalyzer"/>
+            pattern="org\.eclipse\.ocl\.examples\.impactanalyzer"/>
         <predicate
             xsi:type="predicates:NamePredicate"
-            pattern="org.eclipse.ocl.examples.impactanalyzer.ui"/>
+            pattern="org\.eclipse\.ocl\.examples\.impactanalyzer\.ui"/>
         <predicate
             xsi:type="predicates:NamePredicate"
-            pattern="org.eclipse.ocl.examples.impactanalyzer.util"/>
+            pattern="org\.eclipse\.ocl\.examples\.impactanalyzer\.util"/>
         <predicate
             xsi:type="predicates:NamePredicate"
-            pattern="org.eclipse.ocl.examples.interpreter"/>
+            pattern="org\.eclipse\.ocl\.examples\.interpreter"/>
         <predicate
             xsi:type="predicates:NamePredicate"
-            pattern="org.eclipse.ocl.ui"/>
+            pattern="org\.eclipse\.ocl\.ui"/>
         <predicate
             xsi:type="predicates:NamePredicate"
-            pattern="org.eclipse.ocl.uml"/>
+            pattern="org\.eclipse\.ocl\.uml"/>
         <predicate
             xsi:type="predicates:NamePredicate"
-            pattern="org.eclipse.ocl.uml.edit"/>
+            pattern="org\.eclipse\.ocl\.uml\.edit"/>
         <predicate
             xsi:type="predicates:NamePredicate"
-            pattern="org.eclipse.ocl.uml.ui"/>
+            pattern="org\.eclipse\.ocl\.uml\.ui"/>
       </workingSet>
       <workingSet
           name="${scope.project.root.label} Unified (Pivot)">
         <predicate
             xsi:type="predicates:NamePredicate"
-            pattern="org.eclipse.ocl.examples.debug.*"/>
+            pattern="org\.eclipse\.ocl\.examples\.debug(\..*)?"/>
         <predicate
             xsi:type="predicates:NamePredicate"
-            pattern="org.eclipse.ocl.examples.xtext.console"/>
+            pattern="org\.eclipse\.ocl\.examples\.xtext\.console"/>
         <predicate
             xsi:type="predicates:NamePredicate"
-            pattern="org.eclipse.ocl.pivot.*"/>
+            pattern="org\.eclipse\.ocl\.pivot(\..*)?"/>
         <predicate
             xsi:type="predicates:NamePredicate"
-            pattern="org.eclipse.ocl.xtext.*"/>
+            pattern="org\.eclipse\.ocl\.xtext(\..*)?"/>
         <predicate
             xsi:type="predicates:NamePredicate"
-            pattern="org.eclipse.ocl.examples.codegen"/>
+            pattern="org\.eclipse\.ocl\.examples\.codegen"/>
       </workingSet>
       <workingSet
           name="${scope.project.root.label} Examples">
@@ -427,54 +428,54 @@
             xsi:type="predicates:AndPredicate">
           <operand
               xsi:type="predicates:NamePredicate"
-              pattern="org.eclipse.ocl.examples.*"/>
+              pattern="org\.eclipse\.ocl\.examples(\..*)?"/>
           <operand
               xsi:type="predicates:NotPredicate">
             <operand
                 xsi:type="predicates:NamePredicate"
-                pattern="org.eclipse.ocl.examples.eventmanager"/>
+                pattern="org\.eclipse\.ocl\.examples\.eventmanager"/>
           </operand>
           <operand
               xsi:type="predicates:NotPredicate">
             <operand
                 xsi:type="predicates:NamePredicate"
-                pattern="org.eclipse.ocl.examples.impactanalyzer.*"/>
+                pattern="org\.eclipse\.ocl\.examples\.impactanalyzer(\..*)?"/>
           </operand>
           <operand
               xsi:type="predicates:NotPredicate">
             <operand
                 xsi:type="predicates:NamePredicate"
-                pattern="org.eclipse.ocl.examples.interpreter"/>
+                pattern="org\.eclipse\.ocl\.examples\.interpreter"/>
           </operand>
           <operand
               xsi:type="predicates:NotPredicate">
             <operand
                 xsi:type="predicates:NamePredicate"
-                pattern="org.eclipse.ocl.examples.*.build"/>
+                pattern="org\.eclipse\.ocl\.examples(\..*)?\.build"/>
           </operand>
           <operand
               xsi:type="predicates:NotPredicate">
             <operand
                 xsi:type="predicates:NamePredicate"
-                pattern="org.eclipse.ocl.examples.debug.*"/>
+                pattern="org\.eclipse\.ocl\.examples\.debug(\..*)?"/>
           </operand>
           <operand
               xsi:type="predicates:NotPredicate">
             <operand
                 xsi:type="predicates:NamePredicate"
-                pattern="org.eclipse.ocl.examples.xtext.console"/>
+                pattern="org\.eclipse\.ocl\.examples\.xtext\.console"/>
           </operand>
           <operand
               xsi:type="predicates:NotPredicate">
             <operand
                 xsi:type="predicates:NamePredicate"
-                pattern="org.eclipse.ocl.examples.extlibrary"/>
+                pattern="org\.eclipse\.ocl\.examples\.extlibrary"/>
           </operand>
           <operand
               xsi:type="predicates:NotPredicate">
             <operand
                 xsi:type="predicates:NamePredicate"
-                pattern="org.eclipse.ocl.examples.codegen"/>
+                pattern="org\.eclipse\.ocl\.examples\.codegen"/>
           </operand>
         </predicate>
       </workingSet>
@@ -529,6 +530,12 @@
   <project name="build"
       label="Build and Test (optional)">
     <setupTask
+        xsi:type="setup.p2:P2Task"
+        label="Build Tools">
+      <requirement
+          name="org.eclipse.xtext.sdk.feature.group"/>
+    </setupTask>
+    <setupTask
         xsi:type="projects:ProjectsImportTask">
       <sourceLocator
           rootFolder="${ocl.git.clone.location/examples}"
@@ -537,42 +544,42 @@
             xsi:type="predicates:AndPredicate">
           <operand
               xsi:type="predicates:NamePredicate"
-              pattern="org.eclipse.ocl.examples.*"/>
+              pattern="org\.eclipse\.ocl\.examples(\..*)?"/>
           <operand
               xsi:type="predicates:NotPredicate">
             <operand
                 xsi:type="predicates:NamePredicate"
-                pattern="org.eclipse.ocl.examples.autogen"/>
+                pattern="org\.eclipse\.ocl\.examples\.autogen"/>
           </operand>
           <operand
               xsi:type="predicates:NotPredicate">
             <operand
                 xsi:type="predicates:NamePredicate"
-                pattern="org.eclipse.ocl.examples.classic"/>
+                pattern="org\.eclipse\.ocl\.examples\.classic"/>
           </operand>
           <operand
               xsi:type="predicates:NotPredicate">
             <operand
                 xsi:type="predicates:NamePredicate"
-                pattern="org.eclipse.ocl.examples.extlibrary"/>
+                pattern="org\.eclipse\.ocl\.examples\.extlibrary"/>
           </operand>
           <operand
               xsi:type="predicates:NotPredicate">
             <operand
                 xsi:type="predicates:NamePredicate"
-                pattern="org.eclipse.ocl.examples.library"/>
+                pattern="org\.eclipse\.ocl\.examples\.library"/>
           </operand>
           <operand
               xsi:type="predicates:NotPredicate">
             <operand
                 xsi:type="predicates:NamePredicate"
-                pattern="org.eclipse.ocl.examples.unified"/>
+                pattern="org\.eclipse\.ocl\.examples\.unified"/>
           </operand>
           <operand
               xsi:type="predicates:NotPredicate">
             <operand
                 xsi:type="predicates:NamePredicate"
-                pattern="org.eclipse.ocl.examples.xtext2lpg"/>
+                pattern="org\.eclipse\.ocl\.examples\.xtext2lpg"/>
           </operand>
         </predicate>
       </sourceLocator>
@@ -588,7 +595,7 @@
         </annotation>
         <predicate
             xsi:type="predicates:NamePredicate"
-            pattern="org.eclipse.ocl.examples.extlibrary"/>
+            pattern="org\.eclipse\.ocl\.examples\.extlibrary"/>
       </sourceLocator>
       <sourceLocator
           rootFolder="${ocl.git.clone.location/tests}"
@@ -597,12 +604,12 @@
             xsi:type="predicates:AndPredicate">
           <operand
               xsi:type="predicates:NamePredicate"
-              pattern="org.eclipse.ocl.*"/>
+              pattern="org\.eclipse\.ocl\..*"/>
           <operand
               xsi:type="predicates:NotPredicate">
             <operand
                 xsi:type="predicates:NamePredicate"
-                pattern="org.eclipse.ocl.examples.consumers.tests"/>
+                pattern="org\.eclipse\.ocl\.examples\.consumers\.tests"/>
           </operand>
         </predicate>
       </sourceLocator>
@@ -613,81 +620,84 @@
       <workingSet
           name="${scope.project.root.label} Build">
         <predicate
-            xsi:type="predicates:NamePredicate"
-            pattern="org.eclipse.ocl.examples.build"/>
-        <predicate
-            xsi:type="predicates:NamePredicate"
-            pattern="org.eclipse.ocl.examples.xtext,build"/>
+            xsi:type="predicates:OrPredicate">
+          <operand
+              xsi:type="predicates:NamePredicate"
+              pattern="org\.eclipse\.ocl\.examples\.xtext\.build"/>
+          <operand
+              xsi:type="predicates:NamePredicate"
+              pattern="org\.eclipse\.ocl\.examples\.build"/>
+        </predicate>
       </workingSet>
       <workingSet
           name="${scope.project.root.label} Examples">
         <predicate
             xsi:type="predicates:NamePredicate"
-            pattern="org.eclipse.ocl.examples.common"/>
+            pattern="org\.eclipse\.ocl\.examples\.common"/>
         <predicate
             xsi:type="predicates:AndPredicate">
           <operand
               xsi:type="predicates:NamePredicate"
-              pattern="org.eclipse.ocl.examples.*"/>
+              pattern="org\.eclipse\.ocl\.examples(\..*)?"/>
           <operand
               xsi:type="predicates:NotPredicate">
             <operand
                 xsi:type="predicates:NamePredicate"
-                pattern="org.eclipse.ocl.*.tests"/>
+                pattern="org\.eclipse\.ocl\..*\.tests"/>
           </operand>
           <operand
               xsi:type="predicates:NotPredicate">
             <operand
                 xsi:type="predicates:NamePredicate"
-                pattern="org.eclipse.ocl.*.test"/>
+                pattern="org\.eclipse\.ocl\..*\.test"/>
           </operand>
           <operand
               xsi:type="predicates:NotPredicate">
             <operand
                 xsi:type="predicates:NamePredicate"
-                pattern="org.eclipse.ocl.examples.build"/>
+                pattern="org\.eclipse\.ocl\.examples\.build"/>
           </operand>
           <operand
               xsi:type="predicates:NotPredicate">
             <operand
                 xsi:type="predicates:NamePredicate"
-                pattern="org.eclipse.ocl.examples.codegen"/>
+                pattern="org\.eclipse\.ocl\.examples\.codegen"/>
           </operand>
           <operand
               xsi:type="predicates:NotPredicate">
             <operand
                 xsi:type="predicates:NamePredicate"
-                pattern="org.eclipse.ocl.examples.debug.*"/>
+                pattern="org\.eclipse\.ocl\.examples\.debug.*"/>
           </operand>
           <operand
               xsi:type="predicates:NotPredicate">
             <operand
                 xsi:type="predicates:NamePredicate"
-                pattern="org.eclipse.ocl.examples.eventmanager"/>
+                pattern="org\.eclipse\.ocl\.examples\.eventmanager"/>
           </operand>
           <operand
               xsi:type="predicates:NotPredicate">
             <operand
                 xsi:type="predicates:NamePredicate"
-                pattern="org.eclipse.ocl.examples.impactanalyzer.*"/>
+                pattern="org\.eclipse\.ocl\.examples\.impactanalyzer(\..*)?"/>
           </operand>
           <operand
               xsi:type="predicates:NotPredicate">
             <operand
                 xsi:type="predicates:NamePredicate"
-                pattern="org.eclipse.ocl.examples.testutils"/>
+                pattern="org\.eclipse\.ocl\.examples\.testutils"/>
           </operand>
           <operand
               xsi:type="predicates:NotPredicate">
             <operand
                 xsi:type="predicates:NamePredicate"
-                pattern="org.eclipse.ocl.examples.unified"/>
+                pattern="org\.eclipse\.ocl\.examples\.unified"/>
           </operand>
           <operand
               xsi:type="predicates:NotPredicate">
             <operand
                 xsi:type="predicates:NamePredicate"
-                pattern="org.eclipse.ocl.examples.xtext.build"/>
+                pattern="org\.eclipse\.ocl\.examples\.xtext\.build"/>
           </operand>
         </predicate>
       </workingSet>
@@ -695,35 +705,35 @@
           name="${scope.project.root.label} Tests">
         <predicate
             xsi:type="predicates:NamePredicate"
-            pattern="org.eclipse.emf.examples.library"/>
+            pattern="org\.eclipse\.emf.examples\.library"/>
         <predicate
             xsi:type="predicates:NamePredicate"
-            pattern="org.eclipse.ocl.examples.validity.test"/>
+            pattern="org\.eclipse\.ocl\.examples\.validity\.test"/>
         <predicate
             xsi:type="predicates:NamePredicate"
-            pattern="org.eclipse.ocl.examples.eventmanager.tests"/>
+            pattern="org\.eclipse\.ocl\.examples\.eventmanager\.tests"/>
         <predicate
             xsi:type="predicates:NamePredicate"
-            pattern="org.eclipse.ocl.examples.impactanalyzer.tests"/>
+            pattern="org\.eclipse\.ocl\.examples\.impactanalyzer\.tests"/>
         <predicate
             xsi:type="predicates:NamePredicate"
-            pattern="org.eclipse.ocl.examples.impactanalyzer.testmodel.*"/>
+            pattern="org\.eclipse\.ocl\.examples\.impactanalyzer\.testmodel(\..*)?"/>
         <predicate
             xsi:type="predicates:NamePredicate"
-            pattern="org.eclipse.ocl.examples.impactanalyzer.testutils"/>
+            pattern="org\.eclipse\.ocl\.examples\.impactanalyzer\.testutils"/>
         <predicate
             xsi:type="predicates:NamePredicate"
-            pattern="org.eclipse.ocl.examples.testutils"/>
+            pattern="org\.eclipse\.ocl\.examples\.testutils"/>
         <predicate
             xsi:type="predicates:AndPredicate">
           <operand
               xsi:type="predicates:NamePredicate"
-              pattern="org.eclipse.ocl.*.tests"/>
+              pattern="org\.eclipse\.ocl(\..*)?\.tests"/>
           <operand
               xsi:type="predicates:NotPredicate">
             <operand
                 xsi:type="predicates:NamePredicate"
-                pattern="org.eclipse.ocl.examples.consumers.tests"/>
+                pattern="org\.eclipse\.ocl\.examples\.consumers\.tests"/>
           </operand>
         </predicate>
       </workingSet>
@@ -775,7 +785,7 @@
             locateNestedProjects="true">
           <predicate
               xsi:type="predicates:NamePredicate"
-              pattern="org.eclipse.emf.examples.library"/>
+              pattern="org\.eclipse\.emf\.examples\.library"/>
         </sourceLocator>
       </setupTask>
     </stream>
@@ -811,7 +821,7 @@
             locateNestedProjects="true">
           <predicate
               xsi:type="predicates:NamePredicate"
-              pattern="org.eclipse.emf.examples.library"/>
+              pattern="org\.eclipse\.emf\.examples\.library"/>
         </sourceLocator>
       </setupTask>
     </stream>
@@ -847,7 +857,7 @@
             locateNestedProjects="true">
           <predicate
               xsi:type="predicates:NamePredicate"
-              pattern="org.eclipse.emf.examples.library"/>
+              pattern="org\.eclipse\.emf\.examples\.library"/>
         </sourceLocator>
       </setupTask>
     </stream>
@@ -883,7 +893,7 @@
             locateNestedProjects="true">
           <predicate
               xsi:type="predicates:NamePredicate"
-              pattern="org.eclipse.emf.examples.library"/>
+              pattern="org\.eclipse\.emf\.examples\.library"/>
         </sourceLocator>
       </setupTask>
     </stream>
@@ -919,7 +929,7 @@
             locateNestedProjects="true">
           <predicate
               xsi:type="predicates:NamePredicate"
-              pattern="org.eclipse.emf.examples.library"/>
+              pattern="org\.eclipse\.emf\.examples\.library"/>
         </sourceLocator>
       </setupTask>
     </stream>
@@ -955,7 +965,7 @@
             locateNestedProjects="true">
           <predicate
               xsi:type="predicates:NamePredicate"
-              pattern="org.eclipse.emf.examples.library"/>
+              pattern="org\.eclipse\.emf\.examples\.library"/>
         </sourceLocator>
       </setupTask>
     </stream>
@@ -991,7 +1001,7 @@
             locateNestedProjects="true">
           <predicate
               xsi:type="predicates:NamePredicate"
-              pattern="org.eclipse.emf.examples.library"/>
+              pattern="org\.eclipse\.emf\.examples\.library"/>
         </sourceLocator>
       </setupTask>
     </stream>
@@ -1027,7 +1037,7 @@
             locateNestedProjects="true">
           <predicate
               xsi:type="predicates:NamePredicate"
-              pattern="org.eclipse.emf.examples.library"/>
+              pattern="org\.eclipse\.emf\.examples\.library"/>
         </sourceLocator>
       </setupTask>
     </stream>
@@ -1063,7 +1073,7 @@
             locateNestedProjects="true">
           <predicate
               xsi:type="predicates:NamePredicate"
-              pattern="org.eclipse.emf.examples.library"/>
+              pattern="org\.eclipse\.emf\.examples\.library"/>
         </sourceLocator>
       </setupTask>
     </stream>
@@ -1099,7 +1109,7 @@
             locateNestedProjects="true">
           <predicate
               xsi:type="predicates:NamePredicate"
-              pattern="org.eclipse.emf.examples.library"/>
+              pattern="org\.eclipse\.emf\.examples\.library"/>
         </sourceLocator>
       </setupTask>
     </stream>
@@ -1123,10 +1133,10 @@
           locateNestedProjects="true">
         <predicate
             xsi:type="predicates:NamePredicate"
-            pattern="org.eclipse.ocl.examples.classic"/>
+            pattern="org\.eclipse\.ocl\.examples\.classic"/>
         <predicate
             xsi:type="predicates:NamePredicate"
-            pattern="org.eclipse.ocl.examples.unified"/>
+            pattern="org\.eclipse\.ocl\.examples\.unified"/>
       </sourceLocator>
       <sourceLocator
           rootFolder="${ocl.git.clone.location/features}"
@@ -1136,13 +1146,13 @@
           locateNestedProjects="true">
         <predicate
             xsi:type="predicates:NamePredicate"
-            pattern="org.eclipse.ocl.all"/>
+            pattern="org\.eclipse\.ocl\.all"/>
         <predicate
             xsi:type="predicates:NamePredicate"
-            pattern="org.eclipse.ocl.capabilities"/>
+            pattern="org\.eclipse\.ocl\.capabilities"/>
         <predicate
             xsi:type="predicates:NamePredicate"
-            pattern="org.eclipse.ocl.master"/>
+            pattern="org\.eclipse\.ocl\.master"/>
       </sourceLocator>
       <sourceLocator
           rootFolder="${ocl.git.clone.location/releng}"
@@ -1151,18 +1161,18 @@
             xsi:type="predicates:AndPredicate">
           <operand
               xsi:type="predicates:NamePredicate"
-              pattern="org.eclipse.ocl.*"/>
+              pattern="org\.eclipse\.ocl(\..*)?"/>
           <operand
               xsi:type="predicates:NotPredicate">
             <operand
                 xsi:type="predicates:NamePredicate"
-                pattern="org.eclipse.ocl.releng"/>
+                pattern="org\.eclipse\.ocl\.releng"/>
           </operand>
           <operand
               xsi:type="predicates:NotPredicate">
             <operand
                 xsi:type="predicates:NamePredicate"
-                pattern="org.eclipse.ocl.releng.consumers.build-feature"/>
+                pattern="org\.eclipse\.ocl\.releng\.consumers\.build-feature"/>
           </operand>
         </predicate>
       </sourceLocator>
@@ -1173,41 +1183,41 @@
           name="${scope.project.root.label} Features">
         <predicate
             xsi:type="predicates:NamePredicate"
-            pattern="org.eclipse.ocl.*-feature"/>
+            pattern="org\.eclipse\.ocl(\..*)?-feature"/>
       </workingSet>
       <workingSet
           name="${scope.project.root.label} Releng + Doc">
         <predicate
             xsi:type="predicates:NamePredicate"
-            pattern="org.eclipse.ocl.all"/>
+            pattern="org\.eclipse\.ocl\.all"/>
         <predicate
             xsi:type="predicates:NamePredicate"
-            pattern="org.eclipse.ocl.capabilities"/>
+            pattern="org\.eclipse\.ocl\.capabilities"/>
         <predicate
             xsi:type="predicates:NamePredicate"
-            pattern="org.eclipse.ocl.doc"/>
+            pattern="org\.eclipse\.ocl\.doc"/>
         <predicate
             xsi:type="predicates:NamePredicate"
-            pattern="org.eclipse.ocl.examples.classic"/>
+            pattern="org\.eclipse\.ocl\.examples.classic"/>
         <predicate
             xsi:type="predicates:NamePredicate"
-            pattern="org.eclipse.ocl.examples.unified"/>
+            pattern="org\.eclipse\.ocl\.examples.unified"/>
         <predicate
             xsi:type="predicates:NamePredicate"
-            pattern="org.eclipse.ocl.master"/>
+            pattern="org\.eclipse\.ocl\.master"/>
         <predicate
             xsi:type="predicates:NamePredicate"
-            pattern="org.eclipse.ocl.oomph"/>
+            pattern="org\.eclipse\.ocl\.oomph"/>
         <predicate
             xsi:type="predicates:AndPredicate">
           <operand
               xsi:type="predicates:NamePredicate"
-              pattern="org.eclipse.ocl.releng.*"/>
+              pattern="org\.eclipse\.ocl\.releng(\..*)?"/>
           <operand
               xsi:type="predicates:NotPredicate">
             <operand
                 xsi:type="predicates:NamePredicate"
-                pattern="org.eclipse.ocl.*-feature"/>
+                pattern="org\.eclipse\.ocl\..*-feature"/>
           </operand>
         </predicate>
       </workingSet>
