@@ -250,7 +250,7 @@ public class SerializeTests extends XtextTestCase
 	protected @NonNull Resource loadEcore(@NonNull ResourceSet resourceSet, @NonNull URI inputURI) {
 		Map<URI, URI> uriMap = resourceSet.getURIConverter().getURIMap();
 		if (EMFPlugin.IS_ECLIPSE_RUNNING) {
-			uriMap.putAll(EcorePlugin.computePlatformURIMap());
+			uriMap.putAll(EcorePlugin.computePlatformURIMap(true));
 		}
 		Resource ecoreResource = ClassUtil.nonNullState(resourceSet.getResource(inputURI, true));
 		mapOwnURI(ecoreResource);

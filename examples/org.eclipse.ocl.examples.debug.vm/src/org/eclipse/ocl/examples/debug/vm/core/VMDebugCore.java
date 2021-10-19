@@ -295,7 +295,7 @@ public abstract class VMDebugCore
 			if(platformPluginMap == null) {
 				platformPluginMap = new HashMap<URI, URI>();
 
-				Map<URI, URI> plugin2ResourceMap = EcorePlugin.computePlatformPluginToPlatformResourceMap();
+				Map<URI, URI> plugin2ResourceMap = EcorePlugin.computePlatformURIMap(true);
 				platformPluginMap.putAll(plugin2ResourceMap);
 
 				for (Map.Entry<URI, URI> entry : plugin2ResourceMap.entrySet()) {

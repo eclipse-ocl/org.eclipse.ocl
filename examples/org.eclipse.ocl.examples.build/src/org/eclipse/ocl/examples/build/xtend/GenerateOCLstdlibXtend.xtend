@@ -16,7 +16,6 @@ import org.eclipse.ocl.pivot.Package
 import org.eclipse.ocl.pivot.utilities.ClassUtil
 import java.util.Collection
 import java.util.GregorianCalendar
-import org.eclipse.ocl.pivot.Type
 
 class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 {

@@ -2261,7 +2261,7 @@ public class StandaloneProjectMap implements ProjectManager
 		public void initializeGenModelLocationMap(@NonNull Map<@NonNull URI, @NonNull IPackageDescriptor> nsURI2package) {
 			Collection<@NonNull IResourceDescriptor> resourceDescriptors = getResourceDescriptors();
 			if (resourceDescriptors != null) {
-				Map<String, URI> ePackageNsURIToGenModelLocationMap = EMF_2_9.EcorePlugin.getEPackageNsURIToGenModelLocationMap(false);
+				Map<String, URI> ePackageNsURIToGenModelLocationMap = EMF_2_9.EcorePlugin.getEPackageNsURIToGenModelLocationMap(true);
 				for (@NonNull IResourceDescriptor resourceDescriptor : resourceDescriptors) {
 					URI resolvedGenModelURI = getResolvedGenModelURI(resourceDescriptor);
 					for (IPackageDescriptor packageDescriptor : resourceDescriptor.getPackageDescriptors()) {

@@ -35,7 +35,7 @@ public abstract class StandaloneCommand
 		URIConverter uriConverter = URIConverter.INSTANCE;
 		if (!EcorePlugin.IS_ECLIPSE_RUNNING && uriConverter.getURIMap().isEmpty()) {
 			EcorePlugin.ExtensionProcessor.process(null);
-			uriConverter.getURIMap().putAll(EcorePlugin.computePlatformURIMap(false));
+			uriConverter.getURIMap().putAll(EcorePlugin.computePlatformURIMap(true));
 		}
 		return uriConverter;
 	}

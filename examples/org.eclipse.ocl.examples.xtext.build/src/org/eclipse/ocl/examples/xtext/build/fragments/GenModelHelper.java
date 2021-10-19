@@ -110,7 +110,7 @@ public class GenModelHelper		// Trimmed from org.eclipse.ocl.examples.codegen.ge
 				return genPackage;
 			}
 		}
-		URI uri = EcorePlugin.getEPackageNsURIToGenModelLocationMap(false).get(nsURI);
+		URI uri = EcorePlugin.getEPackageNsURIToGenModelLocationMap(true).get(nsURI);
 		if (uri != null) {
 			Resource resource = resourceSet.getResource(uri, true);
 			for (EObject eObject : resource.getContents()) {

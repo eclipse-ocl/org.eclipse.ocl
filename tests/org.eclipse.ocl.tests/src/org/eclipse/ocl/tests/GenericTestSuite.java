@@ -163,7 +163,7 @@ extends TestCase {
 		Map<URI, URI> uriMap = resourceSet.getURIConverter().getURIMap();
 		if (EcorePlugin.IS_ECLIPSE_RUNNING) {
 			EcorePlugin.ExtensionProcessor.process(null);;
-			Map<URI, URI> computePlatformURIMap = EcorePlugin.computePlatformURIMap(false);
+			Map<URI, URI> computePlatformURIMap = EcorePlugin.computePlatformURIMap(true);
 			uriMap.putAll(computePlatformURIMap);
 		}
 		else {

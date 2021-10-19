@@ -47,6 +47,7 @@ public class EMF_2_9
 		 */
 		@SuppressWarnings("unchecked")
 		public static Map<String, URI> getEPackageNsURIToGenModelLocationMap(boolean targetPlatform) {
+		// XXX	assert targetPlatform : "Running Platform is very unlikely to be appropriate"; // See Bug 576546
 			if (ECORE_PLUGIN_GET_EPACKAGE_NSURI_TO_GEN_MODEL_LOCATION_MAP_METHOD != null) {
 				try {
 					return (Map<String, URI>) ECORE_PLUGIN_GET_EPACKAGE_NSURI_TO_GEN_MODEL_LOCATION_MAP_METHOD.invoke(null, targetPlatform);

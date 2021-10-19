@@ -639,7 +639,7 @@ public class ValidateTests extends AbstractValidateTests
 		ProjectMap.initializeURIResourceMap(resourceSet);
 		Map<URI, URI> uriMap = resourceSet.getURIConverter().getURIMap();
 		if (EMFPlugin.IS_ECLIPSE_RUNNING) {
-			uriMap.putAll(EcorePlugin.computePlatformURIMap(false));
+			uriMap.putAll(EcorePlugin.computePlatformURIMap(true));
 		}
 		UML2AS.initialize(resourceSet);
 

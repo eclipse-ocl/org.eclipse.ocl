@@ -276,13 +276,14 @@ public abstract class AbstractProjectMapTest extends PivotTestCaseWithAutoTearDo
 		@NonNull URI nsURI = URI.createURI(ePackage.getNsURI());
 		@NonNull URI platformPluginEObjectURI = platformPluginURI.appendFragment(fragment);
 		@NonNull URI platformResourceEObjectURI = platformResourceURI.appendFragment(fragment);
-		ProjectManager.IProjectDescriptor projectDescriptor = getProjectMap().getProjectDescriptor(project);
+		StandaloneProjectMap projectMap = getProjectMap();
+		ProjectManager.IProjectDescriptor projectDescriptor = projectMap.getProjectDescriptor(project);
 		assert projectDescriptor != null;
 		ProjectManager.IPackageDescriptor packageDescriptor = projectDescriptor.getPackageDescriptor(nsURI);
 		assert packageDescriptor != null;
 		{
 			ResourceSet resourceSet = new ResourceSetImpl();
-			getProjectMap().initializeResourceSet(resourceSet);
+			projectMap.initializeResourceSet(resourceSet);
 			packageDescriptor.configure(resourceSet, StandaloneProjectMap.LoadFirstStrategy.INSTANCE, StandaloneProjectMap.MapToFirstConflictHandler.INSTANCE);
 			EPackage nsEPackage = resourceSet.getPackageRegistry().getEPackage(nsURI.toString());
 			EObject platformPluginEObject = resourceSet.getEObject(platformPluginEObjectURI, true);
@@ -291,12 +292,12 @@ public abstract class AbstractProjectMapTest extends PivotTestCaseWithAutoTearDo
 			assertEquals(nsURI.toString(), nsEPackage.getNsURI());
 			assertEquals(nsEPackage, platformPluginEObject);
 			assertEquals(nsEPackage, platformResourceEObject);
-			resourceSet.eAdapters().remove(getProjectMap());
+			resourceSet.eAdapters().remove(projectMap);
 			resourceSet = destroyResourceSet(resourceSet);
 		}
 		{
 			ResourceSet resourceSet = new ResourceSetImpl();
-			getProjectMap().initializeResourceSet(resourceSet);
+			projectMap.initializeResourceSet(resourceSet);
 			packageDescriptor.configure(resourceSet, StandaloneProjectMap.LoadFirstStrategy.INSTANCE, StandaloneProjectMap.MapToFirstConflictHandler.INSTANCE);
 			EObject platformPluginEObject = resourceSet.getEObject(platformPluginEObjectURI, true);
 			EObject platformResourceEObject = resourceSet.getEObject(platformResourceEObjectURI, true);
@@ -305,12 +306,12 @@ public abstract class AbstractProjectMapTest extends PivotTestCaseWithAutoTearDo
 			assertEquals(selfReferential, !platformPluginURI.equals(nsEPackage.eResource().getURI()));
 			assertEquals(selfReferential, nsEPackage != platformPluginEObject);
 			assertEquals(platformPluginEObject, platformResourceEObject);
-			resourceSet.eAdapters().remove(getProjectMap());
+			resourceSet.eAdapters().remove(projectMap);
 			resourceSet = destroyResourceSet(resourceSet);
 		}
 		{
 			ResourceSet resourceSet = new ResourceSetImpl();
-			getProjectMap().initializeResourceSet(resourceSet);
+			projectMap.initializeResourceSet(resourceSet);
 			packageDescriptor.configure(resourceSet, StandaloneProjectMap.LoadFirstStrategy.INSTANCE, StandaloneProjectMap.MapToFirstConflictHandler.INSTANCE);
 			EObject platformResourceEObject = resourceSet.getEObject(platformResourceEObjectURI, true);
 			EObject platformPluginEObject = resourceSet.getEObject(platformPluginEObjectURI, true);
@@ -319,7 +320,7 @@ public abstract class AbstractProjectMapTest extends PivotTestCaseWithAutoTearDo
 			assertEquals(selfReferential, !platformResourceURI.equals(nsEPackage.eResource().getURI()));
 			assertEquals(selfReferential, nsEPackage != platformPluginEObject);
 			assertEquals(platformPluginEObject, platformResourceEObject);
-			resourceSet.eAdapters().remove(getProjectMap());
+			resourceSet.eAdapters().remove(projectMap);
 			resourceSet = destroyResourceSet(resourceSet);
 		}
 	}

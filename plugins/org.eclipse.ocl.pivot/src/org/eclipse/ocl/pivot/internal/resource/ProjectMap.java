@@ -255,11 +255,15 @@ public class ProjectMap extends StandaloneProjectMap implements IResourceChangeL
 
 	protected void scanGenModels(@NonNull SAXParser saxParser) {
 		URIConverter uriConverter = new ExtensibleURIConverterImpl();
-		Map<String, URI> ePackageNsURIToGenModelLocationMap = EMF_2_9.EcorePlugin.getEPackageNsURIToGenModelLocationMap(false);
+		Map<String, URI> ePackageNsURIToGenModelLocationMap = EMF_2_9.EcorePlugin.getEPackageNsURIToGenModelLocationMap(true);
 		Map<@NonNull URI, @NonNull Map<@NonNull URI, @Nullable String>> genModel2nsURI2className = new HashMap<>();
 		for (String ePackageNsURI : ePackageNsURIToGenModelLocationMap.keySet()) {
 			URI genModelURI = ePackageNsURIToGenModelLocationMap.get(ePackageNsURI);
 			if (genModelURI != null) {
+				if (genModelURI.isPlatformResource()) {			// URI mapping may not (yet) be in place.
+					String platformResourcePath = genModelURI.toPlatformString(true);
+					genModelURI = URI.createPlatformPluginURI(platformResourcePath, true);
+				}
 				Map<@NonNull URI, @Nullable String> nsURI2className = genModel2nsURI2className.get(genModelURI);
 				if (nsURI2className == null) {
 					nsURI2className = new HashMap<>();
