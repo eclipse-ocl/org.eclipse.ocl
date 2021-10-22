@@ -433,6 +433,12 @@
               xsi:type="predicates:NotPredicate">
             <operand
                 xsi:type="predicates:NamePredicate"
+                pattern="org\.eclipse\.ocl\.examples\.classic"/>
+          </operand>
+          <operand
+              xsi:type="predicates:NotPredicate">
+            <operand
+                xsi:type="predicates:NamePredicate"
                 pattern="org\.eclipse\.ocl\.examples\.eventmanager"/>
           </operand>
           <operand
@@ -446,6 +452,12 @@
             <operand
                 xsi:type="predicates:NamePredicate"
                 pattern="org\.eclipse\.ocl\.examples\.interpreter"/>
+          </operand>
+          <operand
+              xsi:type="predicates:NotPredicate">
+            <operand
+                xsi:type="predicates:NamePredicate"
+                pattern="org\.eclipse\.ocl\.examples\.unified"/>
           </operand>
           <operand
               xsi:type="predicates:NotPredicate">
@@ -476,6 +488,18 @@
             <operand
                 xsi:type="predicates:NamePredicate"
                 pattern="org\.eclipse\.ocl\.examples\.codegen"/>
+          </operand>
+          <operand
+              xsi:type="predicates:NotPredicate">
+            <operand
+                xsi:type="predicates:NamePredicate"
+                pattern="org\.eclipse\.ocl\..*-feature"/>
+          </operand>
+          <operand
+              xsi:type="predicates:NotPredicate">
+            <operand
+                xsi:type="predicates:NamePredicate"
+                pattern="org\.eclipse\.ocl\..*.test.*"/>
           </operand>
         </predicate>
       </workingSet>
@@ -630,79 +654,10 @@
         </predicate>
       </workingSet>
       <workingSet
-          name="${scope.project.root.label} Examples">
+          name="${scope.project.root.label} Tests">
         <predicate
             xsi:type="predicates:NamePredicate"
-            pattern="org\.eclipse\.ocl\.examples\.common"/>
-        <predicate
-            xsi:type="predicates:AndPredicate">
-          <operand
-              xsi:type="predicates:NamePredicate"
-              pattern="org\.eclipse\.ocl\.examples(\..*)?"/>
-          <operand
-              xsi:type="predicates:NotPredicate">
-            <operand
-                xsi:type="predicates:NamePredicate"
-                pattern="org\.eclipse\.ocl\..*\.tests"/>
-          </operand>
-          <operand
-              xsi:type="predicates:NotPredicate">
-            <operand
-                xsi:type="predicates:NamePredicate"
-                pattern="org\.eclipse\.ocl\..*\.test"/>
-          </operand>
-          <operand
-              xsi:type="predicates:NotPredicate">
-            <operand
-                xsi:type="predicates:NamePredicate"
-                pattern="org\.eclipse\.ocl\.examples\.build"/>
-          </operand>
-          <operand
-              xsi:type="predicates:NotPredicate">
-            <operand
-                xsi:type="predicates:NamePredicate"
-                pattern="org\.eclipse\.ocl\.examples\.codegen"/>
-          </operand>
-          <operand
-              xsi:type="predicates:NotPredicate">
-            <operand
-                xsi:type="predicates:NamePredicate"
-                pattern="org\.eclipse\.ocl\.examples\.debug.*"/>
-          </operand>
-          <operand
-              xsi:type="predicates:NotPredicate">
-            <operand
-                xsi:type="predicates:NamePredicate"
-                pattern="org\.eclipse\.ocl\.examples\.eventmanager"/>
-          </operand>
-          <operand
-              xsi:type="predicates:NotPredicate">
-            <operand
-                xsi:type="predicates:NamePredicate"
-                pattern="org\.eclipse\.ocl\.examples\.impactanalyzer(\..*)?"/>
-          </operand>
-          <operand
-              xsi:type="predicates:NotPredicate">
-            <operand
-                xsi:type="predicates:NamePredicate"
-                pattern="org\.eclipse\.ocl\.examples\.testutils"/>
-          </operand>
-          <operand
-              xsi:type="predicates:NotPredicate">
-            <operand
-                xsi:type="predicates:NamePredicate"
-                pattern="org\.eclipse\.ocl\.examples\.unified"/>
-          </operand>
-          <operand
-              xsi:type="predicates:NotPredicate">
-            <operand
-                xsi:type="predicates:NamePredicate"
-                pattern="org\.eclipse\.ocl\.examples\.xtext\.build"/>
-          </operand>
-        </predicate>
-      </workingSet>
-      <workingSet
-          name="${scope.project.root.label} Tests">
+            pattern="org\.eclipse\.ocl\.examples\.extlibrary"/>
         <predicate
             xsi:type="predicates:NamePredicate"
             pattern="org\.eclipse\.emf.examples\.library"/>
@@ -743,16 +698,44 @@
         label="Master (Latest)"/>
     <stream
         name="6.16.0"
-        label="6.16.0 (2021-09)"/>
+        label="6.16.0 (2021-09)">
+      <setupTask
+          xsi:type="setup.p2:P2Task">
+        <requirement
+            name="org.eclipse.uml2.sdk.feature.group"
+            description="See Bug 576593: UML2 needed in Running Platform pre- 2021-12"/>
+      </setupTask>
+    </stream>
     <stream
         name="6.15.0"
-        label="6.15.0 (2021-06)"/>
+        label="6.15.0 (2021-06)">
+      <setupTask
+          xsi:type="setup.p2:P2Task">
+        <requirement
+            name="org.eclipse.uml2.sdk.feature.group"
+            description="See Bug 576593: UML2 needed in Running Platform pre- 2021-12"/>
+      </setupTask>
+    </stream>
     <stream
         name="6.14.0"
-        label="6.14.0 (2021-03)"/>
+        label="6.14.0 (2021-03)">
+      <setupTask
+          xsi:type="setup.p2:P2Task">
+        <requirement
+            name="org.eclipse.uml2.sdk.feature.group"
+            description="See Bug 576593: UML2 needed in Running Platform pre- 2021-12"/>
+      </setupTask>
+    </stream>
     <stream
         name="6.13.0"
-        label="6.13.0 (2020-12)"/>
+        label="6.13.0 (2020-12)">
+      <setupTask
+          xsi:type="setup.p2:P2Task">
+        <requirement
+            name="org.eclipse.uml2.sdk.feature.group"
+            description="See Bug 576593: UML2 needed in Running Platform pre- 2021-12"/>
+      </setupTask>
+    </stream>
     <stream
         name="6.12.0"
         label="6.12.0 (2020-06)">
@@ -787,6 +770,12 @@
               xsi:type="predicates:NamePredicate"
               pattern="org\.eclipse\.emf\.examples\.library"/>
         </sourceLocator>
+      </setupTask>
+      <setupTask
+          xsi:type="setup.p2:P2Task">
+        <requirement
+            name="org.eclipse.uml2.sdk.feature.group"
+            description="See Bug 576593: UML2 needed in Running Platform pre- 2021-12"/>
       </setupTask>
     </stream>
     <stream
@@ -824,6 +813,12 @@
               pattern="org\.eclipse\.emf\.examples\.library"/>
         </sourceLocator>
       </setupTask>
+      <setupTask
+          xsi:type="setup.p2:P2Task">
+        <requirement
+            name="org.eclipse.uml2.sdk.feature.group"
+            description="See Bug 576593: UML2 needed in Running Platform pre- 2021-12"/>
+      </setupTask>
     </stream>
     <stream
         name="6.10.0"
@@ -859,6 +854,12 @@
               xsi:type="predicates:NamePredicate"
               pattern="org\.eclipse\.emf\.examples\.library"/>
         </sourceLocator>
+      </setupTask>
+      <setupTask
+          xsi:type="setup.p2:P2Task">
+        <requirement
+            name="org.eclipse.uml2.sdk.feature.group"
+            description="See Bug 576593: UML2 needed in Running Platform pre- 2021-12"/>
       </setupTask>
     </stream>
     <stream
@@ -896,6 +897,12 @@
               pattern="org\.eclipse\.emf\.examples\.library"/>
         </sourceLocator>
       </setupTask>
+      <setupTask
+          xsi:type="setup.p2:P2Task">
+        <requirement
+            name="org.eclipse.uml2.sdk.feature.group"
+            description="See Bug 576593: UML2 needed in Running Platform pre- 2021-12"/>
+      </setupTask>
     </stream>
     <stream
         name="6.8.0"
@@ -931,6 +938,12 @@
               xsi:type="predicates:NamePredicate"
               pattern="org\.eclipse\.emf\.examples\.library"/>
         </sourceLocator>
+      </setupTask>
+      <setupTask
+          xsi:type="setup.p2:P2Task">
+        <requirement
+            name="org.eclipse.uml2.sdk.feature.group"
+            description="See Bug 576593: UML2 needed in Running Platform pre- 2021-12"/>
       </setupTask>
     </stream>
     <stream
@@ -968,6 +981,12 @@
               pattern="org\.eclipse\.emf\.examples\.library"/>
         </sourceLocator>
       </setupTask>
+      <setupTask
+          xsi:type="setup.p2:P2Task">
+        <requirement
+            name="org.eclipse.uml2.sdk.feature.group"
+            description="See Bug 576593: UML2 needed in Running Platform pre- 2021-12"/>
+      </setupTask>
     </stream>
     <stream
         name="6.6.0"
@@ -1003,6 +1022,12 @@
               xsi:type="predicates:NamePredicate"
               pattern="org\.eclipse\.emf\.examples\.library"/>
         </sourceLocator>
+      </setupTask>
+      <setupTask
+          xsi:type="setup.p2:P2Task">
+        <requirement
+            name="org.eclipse.uml2.sdk.feature.group"
+            description="See Bug 576593: UML2 needed in Running Platform pre- 2021-12"/>
       </setupTask>
     </stream>
     <stream
@@ -1040,6 +1065,12 @@
               pattern="org\.eclipse\.emf\.examples\.library"/>
         </sourceLocator>
       </setupTask>
+      <setupTask
+          xsi:type="setup.p2:P2Task">
+        <requirement
+            name="org.eclipse.uml2.sdk.feature.group"
+            description="See Bug 576593: UML2 needed in Running Platform pre- 2021-12"/>
+      </setupTask>
     </stream>
     <stream
         name="6.4.0"
@@ -1075,6 +1106,12 @@
               xsi:type="predicates:NamePredicate"
               pattern="org\.eclipse\.emf\.examples\.library"/>
         </sourceLocator>
+      </setupTask>
+      <setupTask
+          xsi:type="setup.p2:P2Task">
+        <requirement
+            name="org.eclipse.uml2.sdk.feature.group"
+            description="See Bug 576593: UML2 needed in Running Platform pre- 2021-12"/>
       </setupTask>
     </stream>
     <stream
@@ -1183,7 +1220,7 @@
           name="${scope.project.root.label} Features">
         <predicate
             xsi:type="predicates:NamePredicate"
-            pattern="org\.eclipse\.ocl(\..*)?-feature"/>
+            pattern="org\.eclipse\.ocl(\..*)*-feature"/>
       </workingSet>
       <workingSet
           name="${scope.project.root.label} Releng + Doc">
@@ -1198,10 +1235,10 @@
             pattern="org\.eclipse\.ocl\.doc"/>
         <predicate
             xsi:type="predicates:NamePredicate"
-            pattern="org\.eclipse\.ocl\.examples.classic"/>
+            pattern="org\.eclipse\.ocl\.examples\.classic"/>
         <predicate
             xsi:type="predicates:NamePredicate"
-            pattern="org\.eclipse\.ocl\.examples.unified"/>
+            pattern="org\.eclipse\.ocl\.examples\.unified"/>
         <predicate
             xsi:type="predicates:NamePredicate"
             pattern="org\.eclipse\.ocl\.master"/>
