@@ -46,7 +46,7 @@ import org.eclipse.ocl.examples.debug.vm.utils.WriterLog;
 
 public abstract class VMLaunchConfigurationDelegate<EC extends EvaluationContext> extends LaunchConfigurationDelegate
 {
-	
+
 	/*
 	 * TODO - handle multiple files involved in the transformation
 	 */
@@ -57,6 +57,7 @@ public abstract class VMLaunchConfigurationDelegate<EC extends EvaluationContext
 
 		DebugPlugin.getDefault().addDebugEventListener(
 				new IDebugEventSetListener() {
+					@Override
 					public void handleDebugEvents(DebugEvent[] events) {
 						for (int i = 0; i < events.length; i++) {
 							DebugEvent event = events[i];
@@ -65,12 +66,12 @@ public abstract class VMLaunchConfigurationDelegate<EC extends EvaluationContext
 								// unregister myself
 								DebugPlugin.getDefault().removeDebugEventListener(this);
 								// unregister workspace listener
-								unitFile.getProject().getWorkspace().removeResourceChangeListener(listener);								
+								unitFile.getProject().getWorkspace().removeResourceChangeListener(listener);
 							}
 						}
 					}
 				});
-	
+
 	}
 
 	protected abstract @NonNull VMDebugTarget createDebugTarget(@NonNull IVMVirtualMachineShell vm, @NonNull VMVirtualProcess process);
@@ -82,29 +83,29 @@ public abstract class VMLaunchConfigurationDelegate<EC extends EvaluationContext
 
 	protected EPackage.@NonNull Registry createPackageRegistry(String debuggableUri) {
 		URI debuggableURI = URI.createURI(debuggableUri);
-		try {		
+		try {
 			if(debuggableURI.isPlatformResource()) {
 				IFile file = getDebugCore().toFile(debuggableURI);
-				if(file != null && file.exists()) {	
+				if(file != null && file.exists()) {
 //					return MetamodelURIMappingHelper.mappingsToEPackageRegistry(file.getProject(), new ResourceSetImpl());
 				}
 			}
 		} catch(Exception e) {
 			// FIXME
 			getDebugCore().log(e);
-		}		
+		}
 
-		return new EPackageRegistryImpl(EPackage.Registry.INSTANCE); 
+		return new EPackageRegistryImpl(EPackage.Registry.INSTANCE);
 	}
-	
+
 	private DebuggableRunner createRunner(@NonNull EC evaluationContext) throws CoreException {
 		URI debuggableURI = evaluationContext.getDebuggableURI();
 		@SuppressWarnings("null")@NonNull String uri = debuggableURI.toString();
 		EPackage.Registry packageRegistry = createPackageRegistry(uri);
-		
+
 		List<String> modelURIs = new ArrayList<String>();
 		DebuggableRunnerFactory runnerFactory = createDebuggableRunnerFactory(packageRegistry, modelURIs, null);
-		
+
 		try {
 			return runnerFactory.createRunner(evaluationContext);
 		} catch (DiagnosticException e) {
@@ -117,7 +118,7 @@ public abstract class VMLaunchConfigurationDelegate<EC extends EvaluationContext
 	protected abstract @NonNull VMVirtualProcess createVirtualProcess(@NonNull ILaunch launch, @NonNull IVMVirtualMachineShell vm);
 
 	protected abstract @NonNull VMDebugCore getDebugCore();
-	
+
 	@Override
 	public void launch(ILaunchConfiguration configuration, String mode, ILaunch launch, IProgressMonitor monitor) throws CoreException {
 		assert configuration != null;
@@ -125,23 +126,23 @@ public abstract class VMLaunchConfigurationDelegate<EC extends EvaluationContext
 		EC evaluationContext = createEvaluationContext(configuration);
 		StreamsProxy streamsProxy = new StreamsProxy();
 		evaluationContext.setLog(new WriterLog(getDebugCore(), streamsProxy.getOutputWriter(), true));
-			
+
 		DebuggableRunner runner = createRunner(evaluationContext);
 		runner.setErrorLog(new PrintWriter(streamsProxy.getErrWriter(), true));
-		
+
 		Diagnostic initDiagnostic = runner.initialize();
 		if (initDiagnostic.getSeverity() == Diagnostic.ERROR) {
-			throw new CoreException(BasicDiagnostic.toIStatus(initDiagnostic));			
+			throw new CoreException(BasicDiagnostic.toIStatus(initDiagnostic));
 		}
-		
+
 		IVMVirtualMachineShell vm = createVirtualMachine(evaluationContext, runner);
-		
+
 		VMVirtualProcess process = createVirtualProcess(launch, vm);
 		process.setStreamsProxy(streamsProxy);
-		
+
 		try {
 			List<IFile> transformationWsFile = getDebugCore().toFiles(runner.getDebuggableURI());
-			if (!transformationWsFile.isEmpty()) {			
+			if (!transformationWsFile.isEmpty()) {
 				IFile unitFile = transformationWsFile.get(0);
 				if (unitFile != null) {
 					addSourceModificationListener(unitFile, process);
@@ -151,19 +152,20 @@ public abstract class VMLaunchConfigurationDelegate<EC extends EvaluationContext
 		catch (IllegalArgumentException e) {
 			// FIXME happens for Console input 'file'
 		}
-		
-		IDebugTarget debugTarget = createDebugTarget(vm, process);		
+
+		IDebugTarget debugTarget = createDebugTarget(vm, process);
 		launch.addDebugTarget(debugTarget);
 		debugTarget.getThreads()[0].stepInto();
+		evaluationContext.detachEnvironmentFactory();		// Release EnvironmentFactory attach by main Thread
 	}
-	
+
 /*	private URI toURI(String uriStr, String uriType) throws DiagnosticException {
 		IllegalArgumentException exc = null;
 		if(uriStr != null) {
 			try {
 				return URI.createURI(uriStr);
 			} catch(IllegalArgumentException e) {
-				exc = e; 
+				exc = e;
 			}
 		}
 

@@ -16,16 +16,32 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.debug.vm.evaluator.IVMContext;
 import org.eclipse.ocl.examples.debug.vm.utils.Log;
-import org.eclipse.ocl.pivot.utilities.OCL;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 
-public abstract class EvaluationContext extends OCL
+public abstract class EvaluationContext
 {
 	protected final @NonNull IVMContext vmContext;
 	private @Nullable Log log;
-	
+
 	protected EvaluationContext(@NonNull IVMContext vmContext) {
-		super(vmContext.getEnvironmentFactory());
 		this.vmContext = vmContext;
+	}
+
+	/**
+	 * Attach the EnvironmentFactory to the VM's thread.
+	 */
+	public void attachEnvironmentFactory() {
+		ThreadLocalExecutor.attachEnvironmentFactory(vmContext.getEnvironmentFactory());
+	}
+
+	/**
+	 * Detach the EnvironmentFactory from the current thread. This is initially called on the
+	 * main Thread once a call to attachEnvironmentFactory has acquired an attach on the VM thread.
+	 * The initial call releases the temporary attach by the main Thread for launch. A second call on
+	 * the VM thread once debugging/evaluation has completed releases the EnviromentFactory completely.
+	 */
+	public void detachEnvironmentFactory() {
+		ThreadLocalExecutor.detachEnvironmentFactory(vmContext.getEnvironmentFactory());
 	}
 
 	public @Nullable Log getLog() {
@@ -35,6 +51,7 @@ public abstract class EvaluationContext extends OCL
 	public abstract @NonNull URI getDebuggableURI();
 
 	public @NonNull IVMContext getVMContext() {
+	//	assert debugVMThread == Thread.currentThread();
 		return vmContext;
 	}
 
