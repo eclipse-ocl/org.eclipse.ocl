@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.ui.utilities;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,6 +21,7 @@ import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IPartService;
 import org.eclipse.ui.IWorkbench;
@@ -63,6 +65,15 @@ public class ThreadLocalExecutorUI extends ThreadLocalExecutor implements IPartL
 
 	public ThreadLocalExecutorUI() {}
 
+	/**
+	 * Close all editors using EnvironmentFactory instances. THs method is intended solely for use at the end of tests
+	 * for which an auto-editor created by the debugger may be hard to locate.
+	 */
+	public static void closeEditors() {
+		ThreadLocalExecutor threadLocalExecutor = get();
+		((ThreadLocalExecutorUI)threadLocalExecutor).localCloseEditors();
+	}
+
 	@Override
 	protected @NonNull ThreadLocalExecutor createInstance() {
 		if (Display.getCurrent() == null) {
@@ -84,6 +95,15 @@ public class ThreadLocalExecutorUI extends ThreadLocalExecutor implements IPartL
 		return "[" + Thread.currentThread().getName() + ":" + NameUtil.debugSimpleName(activePart) + "]";
 	}
 
+	private void localCloseEditors() {
+		for (@NonNull IWorkbenchPart part : new ArrayList<>(part2environmentFactory.keySet())) {
+			if (part instanceof IEditorPart) {
+				IEditorPart editorPart = (IEditorPart)part;
+				editorPart.getSite().getPage().closeEditor(editorPart, false);
+			}
+		}
+	}
+
 	protected void localInitPart(@Nullable IWorkbenchPart initActivePart, @Nullable EnvironmentFactoryInternal initEnvironmentfactory) {
 		if (initEnvironmentfactory != basicGetEnvironmentFactory()) {			// == if a late not-active init
 			setEnvironmentFactory(null);
@@ -102,7 +122,23 @@ public class ThreadLocalExecutorUI extends ThreadLocalExecutor implements IPartL
 	}
 
 	@Override
-	protected void localReset() {
+	protected void localAttachEnvironmentFactory(@NonNull EnvironmentFactoryInternal newEnvironmentFactory) {
+		super.localAttachEnvironmentFactory(newEnvironmentFactory);
+		if (Display.getCurrent() != null) {
+			getClass();
+		}
+	}
+
+	@Override
+	protected void localDetachEnvironmentFactory(@NonNull EnvironmentFactory environmentFactory) {
+		super.localDetachEnvironmentFactory(environmentFactory);
+		if (Display.getCurrent() != null) {
+			getClass();
+		}
+	}
+
+	@Override
+	protected synchronized void localReset() {
 		IWorkbenchPart activePart2 = activePart;
 		if (activePart2 != null) {
 			part2environmentFactory.remove(activePart2);

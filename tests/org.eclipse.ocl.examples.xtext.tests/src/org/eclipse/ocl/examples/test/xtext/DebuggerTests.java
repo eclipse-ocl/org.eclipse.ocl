@@ -59,6 +59,7 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.xtext.base.ui.model.BaseEditorCallback;
+import org.eclipse.ocl.xtext.base.ui.utilities.ThreadLocalExecutorUI;
 import org.eclipse.ocl.xtext.completeocl.ui.internal.CompleteOCLActivator;
 
 import com.google.inject.Injector;
@@ -328,6 +329,8 @@ public class DebuggerTests extends XtextTestCase
 			}
 			assertEquals(0, vm.getExitCode());
 			//		TestUIUtil.waitForLaunchToTerminate(launch);
+			ThreadLocalExecutorUI.closeEditors();
+			TestUIUtil.flushEvents();
 			ocl.dispose();
 		}
 		finally {
