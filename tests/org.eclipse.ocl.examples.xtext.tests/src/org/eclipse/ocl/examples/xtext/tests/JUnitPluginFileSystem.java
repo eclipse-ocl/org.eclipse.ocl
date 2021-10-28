@@ -244,7 +244,9 @@ public class JUnitPluginFileSystem extends TestFileSystem
 
 		@Override
 		public @NonNull ProjectManager createTestProjectManager() {
-			return new ProjectMap(false);
+			ProjectMap projectMap = new ProjectMap(false);
+		//	projectMap.setUseTargetPlatform(false); -- leave it to derived test classes to accommodate evolving target platform
+			return projectMap;
 		}
 
 		@Override

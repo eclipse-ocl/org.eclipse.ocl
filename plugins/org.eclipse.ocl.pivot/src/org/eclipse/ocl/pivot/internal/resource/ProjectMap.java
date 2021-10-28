@@ -149,6 +149,11 @@ public class ProjectMap extends StandaloneProjectMap implements IResourceChangeL
 	 */
 	private IResourceDeltaVisitor visitor = null;
 
+	/**
+	 * Whether to use the target or running platform when scanning gen models.
+	 */
+	private boolean targetPlatform = true;
+
 	public ProjectMap(boolean isGlobal) {
 		super(isGlobal);
 	}
@@ -255,7 +260,7 @@ public class ProjectMap extends StandaloneProjectMap implements IResourceChangeL
 
 	protected void scanGenModels(@NonNull SAXParser saxParser) {
 		URIConverter uriConverter = new ExtensibleURIConverterImpl();
-		Map<String, URI> ePackageNsURIToGenModelLocationMap = EMF_2_9.EcorePlugin.getEPackageNsURIToGenModelLocationMap(true);
+		Map<String, URI> ePackageNsURIToGenModelLocationMap = EMF_2_9.EcorePlugin.getEPackageNsURIToGenModelLocationMap(targetPlatform);
 		Map<@NonNull URI, @NonNull Map<@NonNull URI, @Nullable String>> genModel2nsURI2className = new HashMap<>();
 		for (String ePackageNsURI : ePackageNsURIToGenModelLocationMap.keySet()) {
 			URI genModelURI = ePackageNsURIToGenModelLocationMap.get(ePackageNsURI);
@@ -360,5 +365,12 @@ public class ProjectMap extends StandaloneProjectMap implements IResourceChangeL
 			refreshProject(projectDescriptors2, (IProject)resource);
 		}
 		return false;
+	}
+
+	/**
+	 * @since 1.17
+	 */
+	public void setUseTargetPlatform(boolean targetPlatform) {
+		this.targetPlatform = targetPlatform;
 	}
 }
