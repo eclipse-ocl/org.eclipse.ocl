@@ -44,6 +44,8 @@ public class EMF_2_9
 		 * EMF 2.9 deprecates EcorePlugin.getEPackageNsURIToGenModelLocationMap() in favor of
 		 * EcorePlugin.getEPackageNsURIToGenModelLocationMap(boolean) so redirect the new call
 		 * to the original method if the new method unavailable.
+		 *
+		 * FIXME Bug 576593 need a tracking cache if targetPlatform true
 		 */
 		@SuppressWarnings("unchecked")
 		public static Map<String, URI> getEPackageNsURIToGenModelLocationMap(boolean targetPlatform) {

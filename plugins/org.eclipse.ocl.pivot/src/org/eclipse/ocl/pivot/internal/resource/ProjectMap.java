@@ -260,6 +260,7 @@ public class ProjectMap extends StandaloneProjectMap implements IResourceChangeL
 
 	protected void scanGenModels(@NonNull SAXParser saxParser) {
 		URIConverter uriConverter = new ExtensibleURIConverterImpl();
+		// FIXME Bug 576593 getEPackageNsURIToGenModelLocationMap returns empty cache for not target-platform / non-cache otherwise
 		Map<String, URI> ePackageNsURIToGenModelLocationMap = EMF_2_9.EcorePlugin.getEPackageNsURIToGenModelLocationMap(targetPlatform);
 		Map<@NonNull URI, @NonNull Map<@NonNull URI, @Nullable String>> genModel2nsURI2className = new HashMap<>();
 		for (String ePackageNsURI : ePackageNsURIToGenModelLocationMap.keySet()) {
