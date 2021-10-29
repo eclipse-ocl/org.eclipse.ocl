@@ -2537,7 +2537,7 @@ public class StandaloneProjectMap implements ProjectManager
 		if (liveStandaloneProjectMaps != null) {
 			liveStandaloneProjectMaps.put(this, null);
 			PivotUtilInternal.debugPrintln("Create " + getClass().getSimpleName()
-				+ "@" + Integer.toHexString(System.identityHashCode(this)));
+				+ "@" + Integer.toHexString(System.identityHashCode(this)) + (isGlobal ? " global" : " local"));
 		}
 	}
 

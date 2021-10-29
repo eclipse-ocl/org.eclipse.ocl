@@ -12,11 +12,14 @@ package org.eclipse.ocl.pivot.internal.resource;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.xml.parsers.SAXParser;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceChangeEvent;
@@ -147,12 +150,17 @@ public class ProjectMap extends StandaloneProjectMap implements IResourceChangeL
 	/**
 	 * non-null visitor when this ProjectMap is listening to resource chnages in the workspace.
 	 */
-	private IResourceDeltaVisitor visitor = null;
+	private /*@LazyNonNull*/ IResourceDeltaVisitor visitor = null;
 
 	/**
 	 * Whether to use the target or running platform when scanning gen models.
 	 */
 	private boolean targetPlatform = true;
+
+	/**
+	 * plugin.xml deltas in the current visit();
+	 */
+	private @Nullable List<@NonNull IResourceDelta> pluginXMLdeltas = null;
 
 	public ProjectMap(boolean isGlobal) {
 		super(isGlobal);
@@ -220,14 +228,27 @@ public class ProjectMap extends StandaloneProjectMap implements IResourceChangeL
 	}
 
 	/**
-	 * Internal call-back for a resource change visits the delta to respond to chnaged open/closed projects.
+	 * Internal call-back for a resource change visits the delta to respond to changed open/closed projects.
 	 * Changes are synchronized on this.
 	 */
 	@Override
 	public void resourceChanged(IResourceChangeEvent event) {
 		try {
 			synchronized (this) {
-				event.getDelta().accept(visitor);
+				assert pluginXMLdeltas == null;
+				try {
+					event.getDelta().accept(visitor);
+					if (pluginXMLdeltas != null) {
+						for (IResourceDelta delta : pluginXMLdeltas) {
+							int kind = delta.getKind();
+						//	System.out.println("Delta " + kind + " for " + delta + ((kind & IResourceDelta.ADDED) != 0 ? " ADDED" : "") + ((kind & IResourceDelta.CHANGED) != 0 ? " CHANGED" : "") + ((kind & IResourceDelta.REMOVED) != 0 ? " REMOVED" : ""));
+							// FIXME Could process target platform project chnage here
+						}
+					}
+				}
+				finally {
+					pluginXMLdeltas = null;
+				}
 			}
 		} catch (CoreException e) {
 		//	log.error(e.getMessage(), e);
@@ -358,12 +379,25 @@ public class ProjectMap extends StandaloneProjectMap implements IResourceChangeL
 	@Override
 	public boolean visit(IResourceDelta delta) throws CoreException {
 		IResource resource = delta.getResource();
-		if (resource instanceof IWorkspaceRoot)
+		if (resource instanceof IWorkspaceRoot) {
 			return true;
+		}
 		if (resource instanceof IProject) {
 			Map<@NonNull String, @NonNull IProjectDescriptor> projectDescriptors2 = getProjectDescriptors();
 			assert projectDescriptors2 != null;
 			refreshProject(projectDescriptors2, (IProject)resource);
+			return true;
+		}
+		if (resource instanceof IFile) {
+			IFile file = (IFile)resource;
+			String fileName = file.getName();
+			if ("plugin.xml".equals(fileName)) {
+				List<@NonNull IResourceDelta> pluginXMLdeltas2 = pluginXMLdeltas;
+				if (pluginXMLdeltas2 == null) {
+					pluginXMLdeltas = pluginXMLdeltas2 = new ArrayList<>();
+				}
+				pluginXMLdeltas2.add(delta);
+			}
 		}
 		return false;
 	}
