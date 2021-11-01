@@ -12,4 +12,5 @@ package org.eclipse.ocl.compatibility.tests;
 
 public class CompatibilityPivotTests extends org.eclipse.ocl.examples.test.xtext.AllXtextTests
 {
+	// Selectively flatten AllXtextTests to focus for debugging.
 }

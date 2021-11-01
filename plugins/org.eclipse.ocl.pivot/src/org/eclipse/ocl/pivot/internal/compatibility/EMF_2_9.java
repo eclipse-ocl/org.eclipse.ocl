@@ -13,6 +13,7 @@ package org.eclipse.ocl.pivot.internal.compatibility;
 import java.lang.reflect.Method;
 import java.util.Map;
 
+import org.eclipse.emf.codegen.ecore.genmodel.GenRuntimeVersion;
 import org.eclipse.emf.common.util.URI;
 
 /**
@@ -49,7 +50,10 @@ public class EMF_2_9
 		 */
 		@SuppressWarnings("unchecked")
 		public static Map<String, URI> getEPackageNsURIToGenModelLocationMap(boolean targetPlatform) {
-			assert targetPlatform : "Running Platform is very unlikely to be appropriate"; // See Bug 576546/576593
+			if (GenRuntimeVersion.get("2.14") == null) {			// less than Photon
+				targetPlatform = false;								// Bug 576986 22 tests fail on Oxygen using a target platform
+			}
+		//	assert targetPlatform : "Running Platform is very unlikely to be appropriate"; // See Bug 576546/576593
 			if (ECORE_PLUGIN_GET_EPACKAGE_NSURI_TO_GEN_MODEL_LOCATION_MAP_METHOD != null) {
 				try {
 					return (Map<String, URI>) ECORE_PLUGIN_GET_EPACKAGE_NSURI_TO_GEN_MODEL_LOCATION_MAP_METHOD.invoke(null, targetPlatform);

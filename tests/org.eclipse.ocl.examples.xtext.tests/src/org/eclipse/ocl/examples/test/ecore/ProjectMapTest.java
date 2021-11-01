@@ -11,10 +11,12 @@
 
 package org.eclipse.ocl.examples.test.ecore;
 
+import org.eclipse.emf.codegen.ecore.genmodel.GenRuntimeVersion;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.examples.xtext.tests.TestCaseAppender;
 import org.eclipse.ocl.expressions.ExpressionsPackage;
 import org.eclipse.ocl.pivot.PivotPackage;
@@ -37,6 +39,15 @@ public class ProjectMapTest extends AbstractProjectMapTest
 		super.setUp();
     	TestCaseAppender.INSTANCE.install();
     	StandaloneProjectMap.TEST_MAY_INITIALIZE_GLOBAL_FACILITIES = true;
+		String targetRelease = System.getProperty("targetRelease");
+		if (targetRelease != null) {
+			boolean isTycho = CGUtil.isTychoSurefire();
+			if (isTycho) {				// FIXME BUG 526252
+				if (GenRuntimeVersion.get("2.14") == null) {			// less than Photon
+					System.err.println(getTestName() + " - use of target platform suppressed for " + targetRelease + " - see Bug 576986");
+				}
+			}
+		}
 	}
 
 	@Override
