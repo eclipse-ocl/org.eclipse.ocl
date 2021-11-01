@@ -153,11 +153,6 @@ public class ProjectMap extends StandaloneProjectMap implements IResourceChangeL
 	private /*@LazyNonNull*/ IResourceDeltaVisitor visitor = null;
 
 	/**
-	 * Whether to use the target or running platform when scanning gen models.
-	 */
-	private boolean targetPlatform = true;
-
-	/**
 	 * plugin.xml deltas in the current visit();
 	 */
 	private @Nullable List<@NonNull IResourceDelta> pluginXMLdeltas = null;
@@ -282,7 +277,7 @@ public class ProjectMap extends StandaloneProjectMap implements IResourceChangeL
 	protected void scanGenModels(@NonNull SAXParser saxParser) {
 		URIConverter uriConverter = new ExtensibleURIConverterImpl();
 		// FIXME Bug 576593 getEPackageNsURIToGenModelLocationMap returns empty cache for not target-platform / non-cache otherwise
-		Map<String, URI> ePackageNsURIToGenModelLocationMap = EMF_2_9.EcorePlugin.getEPackageNsURIToGenModelLocationMap(targetPlatform);
+		Map<String, URI> ePackageNsURIToGenModelLocationMap = EMF_2_9.EcorePlugin.getEPackageNsURIToGenModelLocationMap(true);
 		Map<@NonNull URI, @NonNull Map<@NonNull URI, @Nullable String>> genModel2nsURI2className = new HashMap<>();
 		for (String ePackageNsURI : ePackageNsURIToGenModelLocationMap.keySet()) {
 			URI genModelURI = ePackageNsURIToGenModelLocationMap.get(ePackageNsURI);
@@ -400,12 +395,5 @@ public class ProjectMap extends StandaloneProjectMap implements IResourceChangeL
 			}
 		}
 		return false;
-	}
-
-	/**
-	 * @since 1.17
-	 */
-	public void setUseTargetPlatform(boolean targetPlatform) {
-		this.targetPlatform = targetPlatform;
 	}
 }
