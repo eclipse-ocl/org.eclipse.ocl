@@ -34,7 +34,7 @@ public abstract class GrammarRuleValue implements Indexed, Nameable
 		return name;
 	}
 
-	public @NonNull String getRuleName() {		// XXX not distinct
+	public @NonNull String getRuleName() {		// FIXME not distinct
 		return name;
 	}
 

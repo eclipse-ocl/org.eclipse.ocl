@@ -249,7 +249,7 @@ public abstract class AbstractSerializationElement implements SerializationEleme
 	//		listOfNodes.addAll(((SequenceSerializationNode)serializationNode).getSerializationNodes());
 	//	}
 	//	else {
-			listOfNodes.add(serializationNode);		// XXX conditionalize on compounded locators
+			listOfNodes.add(serializationNode);		// FIXME conditionalize on compounded locators
 	//	}
 	}
 

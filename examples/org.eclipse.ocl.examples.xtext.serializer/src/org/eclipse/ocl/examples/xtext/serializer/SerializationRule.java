@@ -494,7 +494,7 @@ public class SerializationRule implements Nameable
 
 		for (int index = startIndex; index < endIndex; ) {
 			SerializationStep serializationStep = serializationSteps[index++];
-			@NonNull SerializationSegment @Nullable [] segments = serializationStep.getSerializationSegments(); // XXX Could invite serializer to provide a dynamicSerializationSegments.
+			@NonNull SerializationSegment @Nullable [] segments = serializationStep.getSerializationSegments(); // FIXME Could invite serializer to provide a dynamicSerializationSegments.
 			if (serializationStep instanceof SerializationStepSequence) {
 				int stepsRange = ((SerializationStepSequence)serializationStep).getStepsRange();
 				if (segments != null) {

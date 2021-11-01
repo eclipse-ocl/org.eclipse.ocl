@@ -1001,9 +1001,6 @@ public class Ecore2AS extends AbstractExternal2AS
 		Map<@NonNull String, @NonNull Type> resolvedSpecializations = new HashMap<>();
 		assert genericTypes != null;
 		for (@NonNull EGenericType eGenericType : genericTypes) {
-			if (eGenericType.toString().contains("Collection<NE>")) {
-				getClass();		// XXX
-			}
 			Type pivotType = resolveType(resolvedSpecializations, eGenericType);
 			if (pivotType != null) {
 				addCreated(eGenericType, pivotType);

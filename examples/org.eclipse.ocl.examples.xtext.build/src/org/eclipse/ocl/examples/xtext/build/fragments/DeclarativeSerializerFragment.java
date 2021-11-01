@@ -1066,7 +1066,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 	//	timestamp.log("getSerializationRulesList " +  parserRuleValue.getName() + " start");
 		List<@NonNull SerializationRule> serializationRules = Lists.newArrayList(grammarAnalysis.getSerializationRules(parserRuleValue));
 		assert serializationRules != null;
-		Collections.sort(serializationRules, new SerializationUtils.ToStringComparator<@NonNull SerializationRule>());	// XXX ?? Lowest slot usage first
+		Collections.sort(serializationRules, new SerializationUtils.ToStringComparator<@NonNull SerializationRule>());	// FIXME ?? Lowest slot usage first
 		return serializationRules;
 	}
 

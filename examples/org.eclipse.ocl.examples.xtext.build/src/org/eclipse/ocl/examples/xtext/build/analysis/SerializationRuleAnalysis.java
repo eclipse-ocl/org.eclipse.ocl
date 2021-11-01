@@ -741,7 +741,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 		}
 		//
 		// Assign solutions to gratuitous grammar terms.
-		// XXX need to encode residue for run-time resolution
+		// FIXME need to encode residue for run-time resolution
 		//
 		for (@NonNull CardinalityVariable variable : variables) {
 			assert !variable.isOne();
@@ -1111,7 +1111,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 				int size = stepsList.size();
 				@NonNull SerializationStep @NonNull [] serializationSteps = SerializationUtils.nonNullState(stepsList.toArray(new @NonNull SerializationStep[size]));
 				serializationRule = serializationRule2 = new SerializationRule(this, getVariantName(), ruleAnalysis.getIndex(), matchStepsArray, serializationSteps, basicGetSerializationFeatures());
-				SerializationRule old = SerializationUtils.maybeNull(debugMap.put(this, serializationRule2));		// XXX debugging
+				SerializationRule old = SerializationUtils.maybeNull(debugMap.put(this, serializationRule2));		// FIXME debugging
 				assert old == null;
 			}
 		}
@@ -1146,9 +1146,6 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 	 * Return true if there is an ordered many feature assignment from diverse parser rules.
 	 */
 	protected boolean isOrderedAndHeterogeneous() {
-		if ("PropertyContextDeclCS".equals(getName())) {
-			getClass();	// XXX
-		}
 		List<@NonNull CardinalityExpression> cardinalityExpressions = getExpressionsToSolve();
 		if (cardinalityExpressions.size() <= 0) {
 			return false;

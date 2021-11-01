@@ -65,7 +65,7 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 		}
 	}
 
-	public static @NonNull String encodeName(@NonNull NamedElement element) {		// XXX
+	public static @NonNull String encodeName(@NonNull NamedElement element) {
 		int arity = element instanceof Operation ? ((Operation)element).getOwnedParameters().size() : 0;
 		String rawEncodeName = rawEncodeName(ClassUtil.nonNullModel(element.getName()), arity);
 		if (element instanceof Operation) {

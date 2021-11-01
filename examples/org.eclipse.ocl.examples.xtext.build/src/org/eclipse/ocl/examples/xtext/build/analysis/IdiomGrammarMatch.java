@@ -94,7 +94,7 @@ public class IdiomGrammarMatch implements IdiomMatch
 						subIdioms.add(subIdiom);
 					}
 					else {
-						// XXX ERROR MESSAGE
+						// FIXME ERROR MESSAGE
 					}
 				}
 			}

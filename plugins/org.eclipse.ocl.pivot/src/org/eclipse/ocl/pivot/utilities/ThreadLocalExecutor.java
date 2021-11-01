@@ -198,13 +198,9 @@ public class ThreadLocalExecutor
 	 * @since 1.15
 	 */
 	public static void setUsesFinalizer() {
-	//	ThreadLocalExecutor threadLocalExecutor = ClassUtil.nonNullState(INSTANCE.get());
 		ThreadLocalExecutor threadLocalExecutor = INSTANCE.get();
 		if (threadLocalExecutor != null) {
 			threadLocalExecutor.usesFinalizer = true;
-		}
-		else {
-			ThreadLocalExecutor.class.getName();			// XXX
 		}
 	}
 

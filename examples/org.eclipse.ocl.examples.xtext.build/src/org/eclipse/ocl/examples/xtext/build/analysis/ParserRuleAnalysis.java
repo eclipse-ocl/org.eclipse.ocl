@@ -305,8 +305,8 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 				serializationElement = AbstractSerializationElement.flattenUnassignedGrammarRuleCall(unassignedGrammarRuleCallSerializationNode, grammarCardinality, isRootAlternative);
 				assert serializationElement != null;
 			}
-			assert serializationElement.noUnassignedParserRuleCall();					// XXX -- need to flatten if not CompoundElement
-			assert serializationElement.onlyRootUnassignedSerializationRuleCall(true);	// XXX -- need to flatten if not CompoundElement
+			assert serializationElement.noUnassignedParserRuleCall();					// FIXME -- need to flatten if not CompoundElement
+			assert serializationElement.onlyRootUnassignedSerializationRuleCall(true);	// FIXME -- need to flatten if not CompoundElement
 			return serializationElement;
 		}
 
@@ -865,7 +865,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 			}
 			idiomIndex++;
 		}
-		if (abstractElement instanceof CompoundElement) {				// XXX Alternatives need permutation or maybe just a constraint check
+		if (abstractElement instanceof CompoundElement) {				// FIXME Alternatives need permutation or maybe just a constraint check
 			for (AbstractElement nestedElement : ((CompoundElement)abstractElement).getElements()) {
 				assert nestedElement != null;
 				getIdiomMatches(nestedElement, idioms, idiomMatches);

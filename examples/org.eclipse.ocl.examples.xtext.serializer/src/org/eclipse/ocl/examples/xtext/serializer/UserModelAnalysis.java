@@ -156,11 +156,7 @@ public class UserModelAnalysis
 	 */
 	public void serialize(@NonNull SerializationBuilder serializationBuilder, @NonNull EObject eObject, @Nullable GrammarRuleValue targetRuleValue) {
 		debugSerializeCount++;
-		if ("MappingCallCS".equals(eObject.eClass().getName())) {
-			getClass();		// XXX
-		}
 		UserElementAnalysis elementAnalysis = getElementAnalysis(eObject);
-		String tos = elementAnalysis.toString();		// XXX
 		DynamicRuleMatch okMatch = elementAnalysis.basicCreateDynamicRuleMatch(targetRuleValue != null ? (ParserRuleValue)targetRuleValue : null);
 		if (okMatch != null) {
 			UserElementSerializer serializer = createUserElementSerializer(okMatch, eObject);

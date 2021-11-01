@@ -92,7 +92,7 @@ public interface SerializationElement
 	 */
 	boolean noUnassignedParserRuleCall();
 
-	boolean onlyRootUnassignedSerializationRuleCall(boolean isRootAlternative);	// XXX
+	boolean onlyRootUnassignedSerializationRuleCall(boolean isRootAlternative);	// FIXME delete me
 
 	/**
 	 * Append a multi-line debug serialization to a StringBuilder with the specified ndentation depth.
