@@ -673,6 +673,7 @@
         <buildType></buildType>
         <executionEnvironment>JavaSE-11</executionEnvironment>
         <targetRelease>2021-06</targetRelease>
+        <tycho-version>2.1.0</tycho-version>
       </properties>
     </profile>
     <profile>
@@ -684,6 +685,7 @@
         <buildType></buildType>
         <executionEnvironment>JavaSE-11</executionEnvironment>
         <targetRelease>2021-09</targetRelease>
+        <tycho-version>2.1.0</tycho-version>
       </properties>
     </profile>
     <profile>
@@ -695,6 +697,7 @@
         <buildType></buildType>
         <executionEnvironment>JavaSE-11</executionEnvironment>
         <targetRelease>2021-12</targetRelease>
+        <tycho-version>2.1.0</tycho-version>
       </properties>
     </profile>
   </profiles>
