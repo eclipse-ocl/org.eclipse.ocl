@@ -681,6 +681,14 @@ public class PrettyPrinter
 		appendTypeMultiplicity(object);
 	}
 
+	/**
+	 * @since 1.17
+	 */
+	public boolean canExdent() {
+		Fragment fragmentParent = fragment.getParent();
+		return (fragment != null) && (fragmentParent != null);
+	}
+
 	public @Nullable Precedence getCurrentPrecedence() {
 		return currentPrecedence;
 	}

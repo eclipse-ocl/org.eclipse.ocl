@@ -209,7 +209,7 @@ public class EssentialOCLPrettyPrintVisitor extends PrettyPrintVisitor
 
 	@Override
 	public Object visitIfExp(@NonNull IfExp object) {
-		boolean isElseIf = object.isIsElseIf();
+		boolean isElseIf = object.isIsElseIf() && context.canExdent();	// Avoid assertion fail if printing a nested if as root
 		if (!isElseIf) {
 			context.push("if", " ");
 		}
