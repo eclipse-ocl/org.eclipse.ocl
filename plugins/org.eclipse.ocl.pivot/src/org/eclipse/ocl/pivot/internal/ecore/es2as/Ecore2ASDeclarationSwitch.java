@@ -66,6 +66,7 @@ import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.Parameter;
+import org.eclipse.ocl.pivot.ParameterVariable;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
@@ -927,6 +928,11 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 					else {
 						expression = PivotFactory.eINSTANCE.createExpressionInOCL();
 						invariant.setOwnedSpecification(expression);
+						ParameterVariable contextVariable = PivotFactory.eINSTANCE.createParameterVariable();
+						contextVariable.setName(PivotConstants.SELF_NAME);
+						contextVariable.setType(pivotElement);
+						contextVariable.setIsRequired(contextVariable.isIsRequired());
+						expression.setOwnedContext(contextVariable);
 					}
 					String value = entry.getValue();
 					// Rescue any deprecated format message expressions
