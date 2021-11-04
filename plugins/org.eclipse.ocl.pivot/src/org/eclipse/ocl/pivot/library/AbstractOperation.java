@@ -171,11 +171,19 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 			if (compatibleArgumentProblem != null) {
 				return compatibleArgumentProblem;
 			}
+			SymbolicValue conformanceProblem = evaluationEnvironment.checkConformance(argument, returnType, parameter, callExp);
+			if (conformanceProblem != null) {
+				return conformanceProblem;
+			}
 			i++;
 		}
 		SymbolicValue compatibleSourceProblem = evaluationEnvironment.checkCompatibility(source, returnType);
 		if (compatibleSourceProblem != null) {
 			return compatibleSourceProblem;
+		}
+		SymbolicValue conformanceProblem = evaluationEnvironment.checkConformance(source, returnType, callExp.getOwnedSource(), callExp);
+		if (conformanceProblem != null) {
+			return conformanceProblem;
 		}
 		return null;
 	}

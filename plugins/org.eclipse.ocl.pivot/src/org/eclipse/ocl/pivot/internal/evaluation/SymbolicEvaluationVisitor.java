@@ -123,6 +123,10 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 		if (compatibilityProblem != null) {
 			return compatibilityProblem;
 		}
+		SymbolicValue conformanceProblem = symbolicEvaluationEnvironment.checkConformance(source, returnType, navigationCallExp.getOwnedSource(), navigationCallExp);
+		if (conformanceProblem != null) {
+			return conformanceProblem;
+		}
 		SymbolicReason propertyMayBeNullReason = SymbolicUtil.isRequiredReason(referredProperty);
 		SymbolicValue invalidProblem = symbolicEvaluationEnvironment.checkNotInvalid(source, returnType, propertyMayBeNullReason, navigationCallExp);
 		if (invalidProblem != null) {

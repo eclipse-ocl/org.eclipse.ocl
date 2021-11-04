@@ -36,6 +36,11 @@ public interface SymbolicEvaluationEnvironment
 	@Nullable SymbolicValue checkCompatibility(@NonNull OCLExpression typedElement, @NonNull Type returnType);
 
 	/**
+	 * Return a SymbolicKnownValue if typedElement is incompatible with callTerm's type, else null
+	 */
+	@Nullable SymbolicValue checkConformance(@NonNull OCLExpression typedElement, @NonNull Type returnType, @NonNull TypedElement callTerm, @NonNull CallExp callExp);
+
+	/**
 	 * Return a SymbolicKnownValue for invalid, if typedElement is a collection and empty.
 	 * Else return a mayBeNull SymbolicUnknownValue for typeId if typedElement is a collection.
 	 * Else return null if typedElement is not null.

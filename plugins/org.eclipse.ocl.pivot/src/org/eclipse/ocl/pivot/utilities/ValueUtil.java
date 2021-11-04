@@ -175,6 +175,14 @@ public abstract class ValueUtil
 		}
 	}
 
+	/**
+	 * Diagnostic declaration to detect inadvertent use of a SymbolValue
+	 *
+	 * @since 1.17
+	 */
+	@Deprecated
+	public static void asCollectionType(@Nullable SymbolicValue value) {}
+
 	public static @NonNull CollectionType asCollectionType(@Nullable Object value) {
 		if (value instanceof CollectionType) {
 			return (CollectionType)value;
@@ -183,6 +191,14 @@ public abstract class ValueUtil
 			throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.COLLECTION_TYPE_NAME, getTypeName(value));
 		}
 	}
+
+	/**
+	 * Diagnostic declaration to detect inadvertent use of a SymbolValue
+	 *
+	 * @since 1.17
+	 */
+	@Deprecated
+	public static void asCollectionValue(@Nullable SymbolicValue value) {}
 
 	public static @NonNull CollectionValue asCollectionValue(@Nullable Object value) {
 		if (value instanceof Value) {
@@ -242,6 +258,14 @@ public abstract class ValueUtil
 		}
 	}
 
+	/**
+	 * Diagnostic declaration to detect inadvertent use of a SymbolValue
+	 *
+	 * @since 1.17
+	 */
+	@Deprecated
+	public static void asMapType(@Nullable SymbolicValue value) {}
+
 	public static @NonNull MapType asMapType(@Nullable Object value) {
 		if (value instanceof MapType) {
 			return (MapType)value;
@@ -250,6 +274,14 @@ public abstract class ValueUtil
 			throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.MAP_TYPE_NAME, getTypeName(value));
 		}
 	}
+
+	/**
+	 * Diagnostic declaration to detect inadvertent use of a SymbolValue
+	 *
+	 * @since 1.17
+	 */
+	@Deprecated
+	public static void asMapValue(@Nullable SymbolicValue value) {}
 
 	public static @NonNull MapValue asMapValue(@Nullable Object value) {
 		if (value instanceof Value) {

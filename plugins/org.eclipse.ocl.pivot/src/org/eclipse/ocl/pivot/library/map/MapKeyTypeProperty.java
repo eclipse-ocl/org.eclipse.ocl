@@ -26,12 +26,12 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 public class MapKeyTypeProperty extends AbstractProperty
 {
 	public static final @NonNull MapKeyTypeProperty INSTANCE = new MapKeyTypeProperty();
-	
+
 	/** @deprecated use Executor */
 	@Deprecated
 	@Override
 	public @Nullable Type evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
-		return evaluate(getExecutor(evaluator), returnTypeId, sourceValue); 
+		return evaluate(getExecutor(evaluator), returnTypeId, sourceValue);
 	}
 
 	/**

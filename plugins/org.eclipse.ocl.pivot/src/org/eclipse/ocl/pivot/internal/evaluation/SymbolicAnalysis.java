@@ -728,20 +728,27 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 			return symbolicValue.asIncompatibility();
 		}
 
-
 		@Override
 		public @NonNull String toString() {
 			BaseSymbolicEvaluationEnvironment evaluationEnvironment = getBaseSymbolicEvaluationEnvironment();
 			StringBuilder s = new StringBuilder();
+			boolean isFirst = true;
 			for (EObject eObject : new TreeIterable(expressionInOCL, true)) {
-				s.append("\n  ");
+				if (!isFirst) {
+					s.append("\n");
+				}
+				else {
+					isFirst = false;
+				}
+			//	s.append("  ");
 				for (EObject eParent = eObject; eParent != null && eParent != expressionInOCL; eParent = eParent.eContainer()) {
 					s.append("  ");
 				}
 				s.append(eObject.eClass().getName());
 				s.append(" : ");
 				s.append(eObject.toString());
-				s.append("\n  ");
+				s.append("\n");
+			//	s.append("  ");
 				for (EObject eParent = eObject; eParent != null && eParent != expressionInOCL; eParent = eParent.eContainer()) {
 					s.append("  ");
 				}

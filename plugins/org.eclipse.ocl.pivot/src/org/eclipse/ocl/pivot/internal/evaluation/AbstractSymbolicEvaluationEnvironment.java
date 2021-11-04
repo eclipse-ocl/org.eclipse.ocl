@@ -14,6 +14,7 @@ package org.eclipse.ocl.pivot.internal.evaluation;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
+import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
@@ -61,6 +62,20 @@ public abstract class AbstractSymbolicEvaluationEnvironment implements SymbolicE
 			return symbolicValue;
 		}
 		return null;
+	}
+
+	@Override
+	public @Nullable SymbolicValue checkConformance(@NonNull OCLExpression typedElement, @NonNull Type returnType,
+			@NonNull TypedElement callTerm, @NonNull CallExp callExp) {
+		SymbolicValue symbolicValue = getSymbolicValue(typedElement);
+		Type actualType = symbolicValue.getType();
+		Type requiredType = callTerm.getType();
+		CompleteClass actualClass = environmentFactory.getCompleteModel().getCompleteClass(actualType);
+		CompleteClass requiredClass = environmentFactory.getCompleteModel().getCompleteClass(requiredType);
+		if (actualClass.conformsTo(requiredClass)) {
+			return null;
+		}
+		return getKnownValue(ValueUtil.INVALID_VALUE);
 	}
 
 	@Override
