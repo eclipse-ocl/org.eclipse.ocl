@@ -10,9 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.util;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.BasicDiagnostic;
@@ -25,27 +22,13 @@ import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.*;
-import org.eclipse.ocl.pivot.internal.evaluation.BaseSymbolicEvaluationEnvironment;
-import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
-import org.eclipse.ocl.pivot.internal.symbolic.SymbolicReason;
-import org.eclipse.ocl.pivot.internal.symbolic.SymbolicSimpleReason;
-import org.eclipse.ocl.pivot.internal.symbolic.SymbolicUtil;
-import org.eclipse.ocl.pivot.internal.symbolic.SymbolicVariableValue;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
-import org.eclipse.ocl.pivot.messages.StatusCodes.Severity;
-import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.utilities.MorePivotable;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.ParserException;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
-import org.eclipse.ocl.pivot.utilities.StringUtil;
-import org.eclipse.ocl.pivot.utilities.TreeIterable;
-import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
  * <!-- begin-user-doc -->
@@ -2484,7 +2467,7 @@ public class PivotValidator extends EObjectValidator
 			}
 		}
 		boolean allOk = validateExpressionInOCLGen(expressionInOCL, diagnostics, context);
-		if (allOk && (expressionInOCL.getOwnedBody() != null)) {
+	/*	if (allOk && (expressionInOCL.getOwnedBody() != null)) {
 			EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(expressionInOCL);
 			Severity invalidResultSeverity = environmentFactory.getValue(PivotValidationOptions.PotentialInvalidResult);
 			assert invalidResultSeverity != null;
@@ -2581,7 +2564,7 @@ public class PivotValidator extends EObjectValidator
 					}
 				}
 			}
-		}
+		} */
 		return allOk;
 	}
 

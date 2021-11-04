@@ -99,7 +99,7 @@ inv SortedByIteratorTypeIsComparable:
 context TypedElement
 def: CompatibleBody(bodySpecification : ValueSpecification[1]) : Boolean[1] =
 	bodySpecification.type?.conformsTo(self.type)
-
+inv UnconditionallyValid: true			-- overridden in code
 --def: makeParameter() : Parameter = Parameter{name='name'}
 
 ---ExpressionWFRs.ocl-----

@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot;
 
+import java.util.Map;
+
+import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.ids.TypeId;
 
@@ -98,6 +101,14 @@ public interface TypedElement extends NamedElement {
 	 * @generated
 	 */
 	boolean CompatibleBody(ValueSpecification bodySpecification);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @since 1.17
+	 */
+	boolean validateUnconditionallyValid(DiagnosticChain diagnostics, Map<Object, Object> context);
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.ocl.pivot.TypedElement#isIsRequired <em>Is Required</em>}' attribute.

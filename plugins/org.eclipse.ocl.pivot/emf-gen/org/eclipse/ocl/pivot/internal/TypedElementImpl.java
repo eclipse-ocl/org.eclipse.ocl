@@ -12,27 +12,48 @@ package org.eclipse.ocl.pivot.internal;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.BasicDiagnostic;
+import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ValueSpecification;
+import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.evaluation.BaseSymbolicEvaluationEnvironment;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis;
+import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal.MetamodelManagerInternalExtension2;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicReason;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicVariableValue;
 import org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation;
+import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
+import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
+import org.eclipse.ocl.pivot.messages.PivotMessages;
+import org.eclipse.ocl.pivot.util.PivotValidator;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 import org.eclipse.ocl.pivot.values.UnlimitedValue;
@@ -214,6 +235,78 @@ implements TypedElement {
 			throw new InvalidValueException("Null body for \'pivot::TypedElement::CompatibleBody(ValueSpecification[1]) : Boolean[1]\'");
 		}
 		return safe_conformsTo_source;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	private @Nullable String mayBeInvalidReason()
+	{
+		ExpressionInOCL expressionInOCL = PivotUtil.getContainingExpressionInOCL(this);
+		if (expressionInOCL == null) {		// e.g. Operation / Property
+			return null;
+		}
+		Executor executor = PivotUtil.getExecutor(this);
+		MetamodelManagerInternalExtension2 metamodelManager = (MetamodelManagerInternalExtension2)executor.getMetamodelManager();
+		SymbolicVariableValue selfValue = new SymbolicVariableValue(expressionInOCL.getOwnedContext(), null, null);
+		Variable ownedResult = expressionInOCL.getOwnedResult();
+		SymbolicVariableValue resultValue = ownedResult != null ? new SymbolicVariableValue(ownedResult, null, null) : null;
+		List<Variable> ownedParameters = expressionInOCL.getOwnedParameters();
+		@Nullable Object[] parameters = new @Nullable Object[ownedParameters.size()];
+		int i = 0;
+		for (Variable parameter : ownedParameters) {
+			parameters[i++] = new SymbolicVariableValue(parameter, null, null);
+		}
+		SymbolicAnalysis symbolicAnalysis = metamodelManager.getSymbolicAnalysis(expressionInOCL, selfValue, resultValue, parameters);
+		BaseSymbolicEvaluationEnvironment evaluationEnvironment = symbolicAnalysis.getBaseSymbolicEvaluationEnvironment();
+		SymbolicReason mayBeInvalidReason = evaluationEnvironment.mayBeInvalidReason(this);
+		if (mayBeInvalidReason == null) {
+			return null;
+		}
+		for (EObject eChild : eContents()) {
+			if (eChild instanceof TypedElement) {		// MapLiteralPart ??
+				SymbolicReason childMayBeInvalidReason = evaluationEnvironment.mayBeInvalidReason((TypedElement)eChild);
+				if (childMayBeInvalidReason != null) {
+					return null;		// Let child report result
+				}
+			}
+		}
+		return mayBeInvalidReason.toString();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
+	public boolean validateUnconditionallyValid(final DiagnosticChain diagnostics, final Map<Object, Object> context)
+	{
+		final @NonNull String constraintName = "TypedElement::UnconditionallyValid";
+		try {
+			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this, context);
+			final /*@NonInvalid*/ @NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.TYPED_ELEMENT___VALIDATE_UNCONDITIONALLY_VALID__DIAGNOSTICCHAIN_MAP);
+			if (OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue()) {
+				return true;
+			}
+			final /*@NonInvalid*/ String mayBeInvalidReason = mayBeInvalidReason();
+			if (mayBeInvalidReason == null) {
+				return true;
+			}
+			if (diagnostics != null) {
+				String objectLabel = EObjectValidator.getObjectLabel(this, context);
+				String emfMessage = StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_ + " because " + mayBeInvalidReason, new Object[]{constraintName, objectLabel});
+				Object emfData[] = new Object [] { this };
+				int emfSeverity = ValueUtil.asIntegerValue(severity_0).intValue();
+				diagnostics.add(new BasicDiagnostic(emfSeverity, PivotValidator.DIAGNOSTIC_SOURCE, 0, emfMessage, emfData));
+			}
+			return false;
+		}
+		catch (Throwable e) {
+			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);
+		}
 	}
 
 	/**
