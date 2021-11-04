@@ -44,6 +44,7 @@ import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal.MetamodelManagerInternalExtension2;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicReason;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicVariableValue;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
@@ -92,7 +93,7 @@ implements TypedElement {
 	 * @generated
 	 * @ordered
 	 */
-	public static final int TYPED_ELEMENT_OPERATION_COUNT = NamedElementImpl.NAMED_ELEMENT_OPERATION_COUNT + 1;
+	public static final int TYPED_ELEMENT_OPERATION_COUNT = NamedElementImpl.NAMED_ELEMENT_OPERATION_COUNT + 2;
 	/**
 	 * The default value of the '{@link #isIsMany() <em>Is Many</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -250,13 +251,13 @@ implements TypedElement {
 		}
 		Executor executor = PivotUtil.getExecutor(this);
 		MetamodelManagerInternalExtension2 metamodelManager = (MetamodelManagerInternalExtension2)executor.getMetamodelManager();
-		SymbolicVariableValue selfValue = new SymbolicVariableValue(expressionInOCL.getOwnedContext(), null, null);
+		SymbolicVariableValue selfValue = new SymbolicVariableValue(PivotUtil.getOwnedContext(expressionInOCL), null, null);
 		Variable ownedResult = expressionInOCL.getOwnedResult();
 		SymbolicVariableValue resultValue = ownedResult != null ? new SymbolicVariableValue(ownedResult, null, null) : null;
-		List<Variable> ownedParameters = expressionInOCL.getOwnedParameters();
+		List<@NonNull Variable> ownedParameters = PivotUtilInternal.getOwnedParametersList(expressionInOCL);
 		@Nullable Object[] parameters = new @Nullable Object[ownedParameters.size()];
 		int i = 0;
-		for (Variable parameter : ownedParameters) {
+		for (@NonNull Variable parameter : ownedParameters) {
 			parameters[i++] = new SymbolicVariableValue(parameter, null, null);
 		}
 		SymbolicAnalysis symbolicAnalysis = metamodelManager.getSymbolicAnalysis(expressionInOCL, selfValue, resultValue, parameters);
@@ -461,6 +462,7 @@ implements TypedElement {
 	 * @generated
 	 */
 	@Override
+	@SuppressWarnings("unchecked")
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException
 	{
 		switch (operationID)
@@ -471,6 +473,8 @@ implements TypedElement {
 				return getValue((Type)arguments.get(0), (String)arguments.get(1));
 			case 2:
 				return CompatibleBody((ValueSpecification)arguments.get(0));
+			case 3:
+				return validateUnconditionallyValid((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return eDynamicInvoke(operationID, arguments);
 	}

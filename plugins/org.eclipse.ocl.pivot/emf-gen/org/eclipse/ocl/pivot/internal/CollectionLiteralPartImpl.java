@@ -144,6 +144,8 @@ implements CollectionLiteralPart {
 			case 2:
 				return CompatibleBody((ValueSpecification)arguments.get(0));
 			case 3:
+				return validateUnconditionallyValid((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
+			case 4:
 				return validateTypeIsNotInvalid((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return eDynamicInvoke(operationID, arguments);

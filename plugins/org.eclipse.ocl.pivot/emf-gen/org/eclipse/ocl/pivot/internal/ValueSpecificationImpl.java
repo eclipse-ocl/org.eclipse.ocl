@@ -12,6 +12,8 @@ package org.eclipse.ocl.pivot.internal;
 
 import java.lang.reflect.InvocationTargetException;
 
+import java.util.Map;
+import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
@@ -133,6 +135,7 @@ public abstract class ValueSpecificationImpl
 	 * @generated
 	 */
 	@Override
+	@SuppressWarnings("unchecked")
 	public Object eInvoke(int operationID, EList<?> arguments)
 			throws InvocationTargetException {
 		switch (operationID)
@@ -144,16 +147,18 @@ public abstract class ValueSpecificationImpl
 			case 2:
 				return CompatibleBody((ValueSpecification)arguments.get(0));
 			case 3:
-				return booleanValue();
+				return validateUnconditionallyValid((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 			case 4:
-				return integerValue();
+				return booleanValue();
 			case 5:
-				return isComputable();
+				return integerValue();
 			case 6:
-				return isNull();
+				return isComputable();
 			case 7:
-				return stringValue();
+				return isNull();
 			case 8:
+				return stringValue();
+			case 9:
 				return unlimitedValue();
 		}
 		return eDynamicInvoke(operationID, arguments);

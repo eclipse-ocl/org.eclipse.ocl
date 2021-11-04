@@ -644,14 +644,16 @@ implements IfExp {
 			case 2:
 				return CompatibleBody((ValueSpecification)arguments.get(0));
 			case 3:
-				return isNonNull();
+				return validateUnconditionallyValid((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 			case 4:
-				return isNull();
+				return isNonNull();
 			case 5:
-				return validateTypeIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
+				return isNull();
 			case 6:
-				return validateConditionTypeIsBoolean((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
+				return validateTypeIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 			case 7:
+				return validateConditionTypeIsBoolean((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
+			case 8:
 				return validateTypeIsNotInvalid((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return eDynamicInvoke(operationID, arguments);

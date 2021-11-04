@@ -4492,6 +4492,16 @@ extends EPackage
 	EOperation getTypedElement__CompatibleBody__ValueSpecification();
 
 	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.TypedElement#validateUnconditionallyValid(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Unconditionally Valid</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate Unconditionally Valid</em>' operation.
+	 * @see org.eclipse.ocl.pivot.TypedElement#validateUnconditionallyValid(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @generated
+	 */
+	EOperation getTypedElement__ValidateUnconditionallyValid__DiagnosticChain_Map();
+
+	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.pivot.TypedElement#isIsRequired <em>Is Required</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -9365,6 +9375,14 @@ extends EPackage
 		 * @generated
 		 */
 		EOperation TYPED_ELEMENT___COMPATIBLE_BODY__VALUESPECIFICATION = eINSTANCE.getTypedElement__CompatibleBody__ValueSpecification();
+
+		/**
+		 * The meta object literal for the '<em><b>Validate Unconditionally Valid</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TYPED_ELEMENT___VALIDATE_UNCONDITIONALLY_VALID__DIAGNOSTICCHAIN_MAP = eINSTANCE.getTypedElement__ValidateUnconditionallyValid__DiagnosticChain_Map();
 
 		/**
 		 * The meta object literal for the '<em><b>Is Required</b></em>' attribute feature.

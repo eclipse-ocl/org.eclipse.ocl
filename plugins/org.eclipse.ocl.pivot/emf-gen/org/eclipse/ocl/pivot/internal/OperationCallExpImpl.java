@@ -498,7 +498,7 @@ implements OperationCallExp {
 		{
 			switch (baseOperationID)
 			{
-				case 6: return 13;
+				case 7: return 14;
 				default: return super.eDerivedOperationID(baseOperationID, baseClass);
 			}
 		}
@@ -506,7 +506,7 @@ implements OperationCallExp {
 		{
 			switch (baseOperationID)
 			{
-				case 0: return 9;
+				case 0: return 10;
 				default: return -1;
 			}
 		}
@@ -531,26 +531,28 @@ implements OperationCallExp {
 			case 2:
 				return CompatibleBody((ValueSpecification)arguments.get(0));
 			case 3:
-				return isNonNull();
+				return validateUnconditionallyValid((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 			case 4:
-				return isNull();
+				return isNonNull();
 			case 5:
+				return isNull();
+			case 6:
 				return validateTypeIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case 13:
-				return validateSafeSourceCanBeNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case 7:
-				return validateSafeSourceCannotBeMap((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case 8:
-				return validateTypeIsNotInvalid((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case 9:
-				return getReferredElement();
-			case 10:
-				return hasOclVoidOverload();
-			case 11:
-				return validateArgumentCount((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case 12:
-				return validateArgumentTypeIsConformant((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 			case 14:
+				return validateSafeSourceCanBeNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
+			case 8:
+				return validateSafeSourceCannotBeMap((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
+			case 9:
+				return validateTypeIsNotInvalid((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
+			case 10:
+				return getReferredElement();
+			case 11:
+				return hasOclVoidOverload();
+			case 12:
+				return validateArgumentCount((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
+			case 13:
+				return validateArgumentTypeIsConformant((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
+			case 15:
 				return validateUnsafeSourceCanNotBeNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return eDynamicInvoke(operationID, arguments);

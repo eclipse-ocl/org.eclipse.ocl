@@ -104,9 +104,9 @@ public interface TypedElement extends NamedElement {
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * @since 1.17
 	 * <!-- end-user-doc -->
 	 * @generated
-	 * @since 1.17
 	 */
 	boolean validateUnconditionallyValid(DiagnosticChain diagnostics, Map<Object, Object> context);
 

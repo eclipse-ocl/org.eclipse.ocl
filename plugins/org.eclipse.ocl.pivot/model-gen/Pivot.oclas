@@ -1220,8 +1220,11 @@
     </ownedClasses>
     <ownedClasses xmi:id="j7EI0" isAbstract="true" name="TypedElement" superClasses="#0kVqz">
       <ownedComments body="A TypedElement is a NamedElement that may have a Type specified for it."/>
+      <ownedInvariants xmi:id="REAvO" isCallable="true" name="UnconditionallyValid">
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="true&#x9;&#x9;&#x9;"/>
+      </ownedInvariants>
       <ownedOperations xmi:id="71tyJ" name="CompatibleBody" type="#ZuwnB">
-        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="&#xA;&#x9;bodySpecification.type?.conformsTo(self.type)&#xA;&#xA;"/>
+        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="&#xA;&#x9;bodySpecification.type?.conformsTo(self.type)&#xA;"/>
         <ownedParameters name="bodySpecification" type="#DLUxI"/>
       </ownedOperations>
       <ownedProperties xmi:id="YqNZL" isDerived="true" isReadOnly="true" isTransient="true" isVolatile="true" name="isMany" type="#ZuwnB"/>

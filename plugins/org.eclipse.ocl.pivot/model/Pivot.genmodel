@@ -961,6 +961,10 @@
       <genOperations ecoreOperation="Pivot.ecore#//TypedElement/CompatibleBody">
         <genParameters ecoreParameter="Pivot.ecore#//TypedElement/CompatibleBody/bodySpecification"/>
       </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//TypedElement/validateUnconditionallyValid">
+        <genParameters ecoreParameter="Pivot.ecore#//TypedElement/validateUnconditionallyValid/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//TypedElement/validateUnconditionallyValid/context"/>
+      </genOperations>
     </genClasses>
     <genClasses ecoreClass="Pivot.ecore#T-pivot-UnlimitedNaturalLiteralExp">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#F-pivot-UnlimitedNaturalLiteralExp-unlimitedNaturalSymbol"/>

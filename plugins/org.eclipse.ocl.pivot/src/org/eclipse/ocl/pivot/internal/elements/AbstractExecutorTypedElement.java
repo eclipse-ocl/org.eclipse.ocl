@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.elements;
 
+import java.util.Map;
+
+import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
@@ -63,5 +66,10 @@ public class AbstractExecutorTypedElement extends AbstractExecutorNamedElement i
 	@Override
 	public String toString() {
 		return String.valueOf(name) + " : " + String.valueOf(type); //$NON-NLS-1$
+	}
+
+	@Override
+	public boolean validateUnconditionallyValid(DiagnosticChain diagnostics, Map<Object, Object> context) {
+		throw new UnsupportedOperationException();
 	}
 }

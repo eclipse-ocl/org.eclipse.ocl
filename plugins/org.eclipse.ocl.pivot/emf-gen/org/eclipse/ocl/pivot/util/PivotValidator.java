@@ -825,12 +825,20 @@ public class PivotValidator extends EObjectValidator
 	public static final int TUPLE_LITERAL_PART__VALIDATE_TYPE_IS_NOT_INVALID = 95;
 
 	/**
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Unconditionally Valid' of 'Typed Element'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static final int TYPED_ELEMENT__VALIDATE_UNCONDITIONALLY_VALID = 96;
+
+	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Compatible Initialiser Type' of 'Variable'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int VARIABLE__VALIDATE_COMPATIBLE_INITIALISER_TYPE = 96;
+	public static final int VARIABLE__VALIDATE_COMPATIBLE_INITIALISER_TYPE = 97;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Name Is Not Null' of 'Variable Declaration'.
@@ -838,7 +846,7 @@ public class PivotValidator extends EObjectValidator
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int VARIABLE_DECLARATION__VALIDATE_NAME_IS_NOT_NULL = 97;
+	public static final int VARIABLE_DECLARATION__VALIDATE_NAME_IS_NOT_NULL = 98;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Not Invalid' of 'Variable Declaration'.
@@ -846,7 +854,7 @@ public class PivotValidator extends EObjectValidator
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int VARIABLE_DECLARATION__VALIDATE_TYPE_IS_NOT_INVALID = 98;
+	public static final int VARIABLE_DECLARATION__VALIDATE_TYPE_IS_NOT_INVALID = 99;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Not Null' of 'Variable Declaration'.
@@ -854,7 +862,7 @@ public class PivotValidator extends EObjectValidator
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int VARIABLE_DECLARATION__VALIDATE_TYPE_IS_NOT_NULL = 99;
+	public static final int VARIABLE_DECLARATION__VALIDATE_TYPE_IS_NOT_NULL = 100;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Not Invalid' of 'Variable Exp'.
@@ -862,7 +870,7 @@ public class PivotValidator extends EObjectValidator
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int VARIABLE_EXP__VALIDATE_TYPE_IS_NOT_INVALID = 100;
+	public static final int VARIABLE_EXP__VALIDATE_TYPE_IS_NOT_INVALID = 101;
 
 	/**
 	 * A constant with a fixed name that can be used as the base value for additional hand written constants.
@@ -870,7 +878,7 @@ public class PivotValidator extends EObjectValidator
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private static final int GENERATED_DIAGNOSTIC_CODE_COUNT = 100;
+	private static final int GENERATED_DIAGNOSTIC_CODE_COUNT = 101;
 
 	/**
 	 * A constant with a fixed name that can be used as the base value for additional hand written constants in a derived class.
@@ -1367,6 +1375,7 @@ public class PivotValidator extends EObjectValidator
 		if (result || diagnostics != null) result &= validate_UniqueID(property, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(property, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(property, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(property, diagnostics, context);
 		if (result || diagnostics != null) result &= validateFeature_validateNameIsNotNull(property, diagnostics, context);
 		if (result || diagnostics != null) result &= validateFeature_validateTypeIsNotInvalid(property, diagnostics, context);
 		if (result || diagnostics != null) result &= validateFeature_validateTypeIsNotNull(property, diagnostics, context);
@@ -1392,7 +1401,29 @@ public class PivotValidator extends EObjectValidator
 	 */
 	public boolean validateTypedElement(TypedElement typedElement,
 			DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(typedElement, diagnostics, context);
+		if (!validate_NoCircularContainment(typedElement, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(typedElement, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(typedElement, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(typedElement, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(typedElement, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(typedElement, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(typedElement, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(typedElement, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(typedElement, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(typedElement, diagnostics, context);
+		return result;
+	}
+
+	/**
+	 * Validates the validateUnconditionallyValid constraint of '<em>Typed Element</em>'.
+	 * <!-- begin-user-doc -->
+	 * @since 1.17
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateTypedElement_validateUnconditionallyValid(TypedElement typedElement, DiagnosticChain diagnostics, Map<Object, Object> context)
+	{
+		return typedElement.validateUnconditionallyValid(diagnostics, context);
 	}
 
 	/**
@@ -1412,6 +1443,7 @@ public class PivotValidator extends EObjectValidator
 		if (result || diagnostics != null) result &= validate_UniqueID(unlimitedNaturalLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(unlimitedNaturalLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(unlimitedNaturalLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(unlimitedNaturalLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(unlimitedNaturalLiteralExp, diagnostics, context);
 		return result;
 	}
@@ -1547,6 +1579,7 @@ public class PivotValidator extends EObjectValidator
 		if (result || diagnostics != null) result &= validate_UniqueID(operation, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(operation, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(operation, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(operation, diagnostics, context);
 		if (result || diagnostics != null) result &= validateFeature_validateNameIsNotNull(operation, diagnostics, context);
 		if (result || diagnostics != null) result &= validateFeature_validateTypeIsNotInvalid(operation, diagnostics, context);
 		if (result || diagnostics != null) result &= validateFeature_validateTypeIsNotNull(operation, diagnostics, context);
@@ -1617,6 +1650,7 @@ public class PivotValidator extends EObjectValidator
 		if (result || diagnostics != null) result &= validate_UniqueID(parameter, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(parameter, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(parameter, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(parameter, diagnostics, context);
 		if (result || diagnostics != null) result &= validateVariableDeclaration_validateNameIsNotNull(parameter, diagnostics, context);
 		if (result || diagnostics != null) result &= validateVariableDeclaration_validateTypeIsNotInvalid(parameter, diagnostics, context);
 		if (result || diagnostics != null) result &= validateVariableDeclaration_validateTypeIsNotNull(parameter, diagnostics, context);
@@ -1640,6 +1674,7 @@ public class PivotValidator extends EObjectValidator
 		if (result || diagnostics != null) result &= validate_UniqueID(parameterVariable, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(parameterVariable, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(parameterVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(parameterVariable, diagnostics, context);
 		if (result || diagnostics != null) result &= validateVariableDeclaration_validateNameIsNotNull(parameterVariable, diagnostics, context);
 		if (result || diagnostics != null) result &= validateVariableDeclaration_validateTypeIsNotInvalid(parameterVariable, diagnostics, context);
 		if (result || diagnostics != null) result &= validateVariableDeclaration_validateTypeIsNotNull(parameterVariable, diagnostics, context);
@@ -1685,6 +1720,7 @@ public class PivotValidator extends EObjectValidator
 		if (result || diagnostics != null) result &= validate_UniqueID(oppositePropertyCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(oppositePropertyCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(oppositePropertyCallExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(oppositePropertyCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(oppositePropertyCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateOppositePropertyCallExp_validateSafeSourceCanBeNull(oppositePropertyCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateCallExp_validateSafeSourceCannotBeMap(oppositePropertyCallExp, diagnostics, context);
@@ -1846,6 +1882,7 @@ public class PivotValidator extends EObjectValidator
 		if (result || diagnostics != null) result &= validate_UniqueID(associationClassCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(associationClassCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(associationClassCallExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(associationClassCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(associationClassCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateCallExp_validateSafeSourceCanBeNull(associationClassCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateCallExp_validateSafeSourceCannotBeMap(associationClassCallExp, diagnostics, context);
@@ -1870,6 +1907,7 @@ public class PivotValidator extends EObjectValidator
 		if (result || diagnostics != null) result &= validate_UniqueID(navigationCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(navigationCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(navigationCallExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(navigationCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(navigationCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateCallExp_validateSafeSourceCanBeNull(navigationCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateCallExp_validateSafeSourceCannotBeMap(navigationCallExp, diagnostics, context);
@@ -1893,6 +1931,7 @@ public class PivotValidator extends EObjectValidator
 		if (result || diagnostics != null) result &= validate_UniqueID(featureCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(featureCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(featureCallExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(featureCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(featureCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateCallExp_validateSafeSourceCanBeNull(featureCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateCallExp_validateSafeSourceCannotBeMap(featureCallExp, diagnostics, context);
@@ -1926,6 +1965,7 @@ public class PivotValidator extends EObjectValidator
 		if (result || diagnostics != null) result &= validate_UniqueID(callExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(callExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(callExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(callExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(callExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateCallExp_validateSafeSourceCanBeNull(callExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateCallExp_validateSafeSourceCannotBeMap(callExp, diagnostics, context);
@@ -2140,7 +2180,17 @@ public class PivotValidator extends EObjectValidator
 	 */
 	public boolean validateDynamicValueSpecification(DynamicValueSpecification dynamicValueSpecification, DiagnosticChain diagnostics, Map<Object, Object> context)
 	{
-		return validate_EveryDefaultConstraint(dynamicValueSpecification, diagnostics, context);
+		if (!validate_NoCircularContainment(dynamicValueSpecification, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(dynamicValueSpecification, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(dynamicValueSpecification, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(dynamicValueSpecification, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(dynamicValueSpecification, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(dynamicValueSpecification, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(dynamicValueSpecification, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(dynamicValueSpecification, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(dynamicValueSpecification, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(dynamicValueSpecification, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -2160,6 +2210,7 @@ public class PivotValidator extends EObjectValidator
 		if (result || diagnostics != null) result &= validate_UniqueID(booleanLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(booleanLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(booleanLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(booleanLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(booleanLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateBooleanLiteralExp_validateTypeIsBoolean(booleanLiteralExp, diagnostics, context);
 		return result;
@@ -2193,6 +2244,7 @@ public class PivotValidator extends EObjectValidator
 		if (result || diagnostics != null) result &= validate_UniqueID(primitiveLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(primitiveLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(primitiveLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(primitiveLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(primitiveLiteralExp, diagnostics, context);
 		return result;
 	}
@@ -2213,6 +2265,7 @@ public class PivotValidator extends EObjectValidator
 		if (result || diagnostics != null) result &= validate_UniqueID(literalExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(literalExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(literalExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(literalExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(literalExp, diagnostics, context);
 		return result;
 	}
@@ -2233,6 +2286,7 @@ public class PivotValidator extends EObjectValidator
 		if (result || diagnostics != null) result &= validate_UniqueID(collectionItem, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(collectionItem, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(collectionItem, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(collectionItem, diagnostics, context);
 		if (result || diagnostics != null) result &= validateCollectionLiteralPart_validateTypeIsNotInvalid(collectionItem, diagnostics, context);
 		if (result || diagnostics != null) result &= validateCollectionItem_validateTypeIsItemType(collectionItem, diagnostics, context);
 		return result;
@@ -2266,6 +2320,7 @@ public class PivotValidator extends EObjectValidator
 		if (result || diagnostics != null) result &= validate_UniqueID(collectionLiteralPart, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(collectionLiteralPart, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(collectionLiteralPart, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(collectionLiteralPart, diagnostics, context);
 		if (result || diagnostics != null) result &= validateCollectionLiteralPart_validateTypeIsNotInvalid(collectionLiteralPart, diagnostics, context);
 		return result;
 	}
@@ -2298,6 +2353,7 @@ public class PivotValidator extends EObjectValidator
 		if (result || diagnostics != null) result &= validate_UniqueID(collectionLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(collectionLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(collectionLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(collectionLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(collectionLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateCollectionLiteralExp_validateBagKindIsBag(collectionLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateCollectionLiteralExp_validateCollectionKindIsConcrete(collectionLiteralExp, diagnostics, context);
@@ -2378,6 +2434,7 @@ public class PivotValidator extends EObjectValidator
 		if (result || diagnostics != null) result &= validate_UniqueID(collectionRange, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(collectionRange, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(collectionRange, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(collectionRange, diagnostics, context);
 		if (result || diagnostics != null) result &= validateCollectionLiteralPart_validateTypeIsNotInvalid(collectionRange, diagnostics, context);
 		return result;
 	}
@@ -2398,6 +2455,7 @@ public class PivotValidator extends EObjectValidator
 		if (result || diagnostics != null) result &= validate_UniqueID(enumLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(enumLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(enumLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(enumLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(enumLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateEnumLiteralExp_validateTypeIsEnumerationType(enumLiteralExp, diagnostics, context);
 		return result;
@@ -2432,7 +2490,17 @@ public class PivotValidator extends EObjectValidator
 	 */
 	private boolean validateExpressionInOCLGen(ExpressionInOCL expressionInOCL, DiagnosticChain diagnostics, Map<Object, Object> context)
 	{
-		return validate_EveryDefaultConstraint(expressionInOCL, diagnostics, context);
+		if (!validate_NoCircularContainment(expressionInOCL, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(expressionInOCL, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(expressionInOCL, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(expressionInOCL, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(expressionInOCL, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(expressionInOCL, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(expressionInOCL, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(expressionInOCL, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(expressionInOCL, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(expressionInOCL, diagnostics, context);
+		return result;
 	}
 	public boolean validateExpressionInOCL(ExpressionInOCL expressionInOCL, DiagnosticChain diagnostics, Map<Object, Object> context)
 	{
@@ -2605,6 +2673,7 @@ public class PivotValidator extends EObjectValidator
 		if (result || diagnostics != null) result &= validate_UniqueID(feature, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(feature, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(feature, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(feature, diagnostics, context);
 		if (result || diagnostics != null) result &= validateFeature_validateNameIsNotNull(feature, diagnostics, context);
 		if (result || diagnostics != null) result &= validateFeature_validateTypeIsNotInvalid(feature, diagnostics, context);
 		if (result || diagnostics != null) result &= validateFeature_validateTypeIsNotNull(feature, diagnostics, context);
@@ -2662,6 +2731,7 @@ public class PivotValidator extends EObjectValidator
 		if (result || diagnostics != null) result &= validate_UniqueID(variable, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(variable, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(variable, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(variable, diagnostics, context);
 		if (result || diagnostics != null) result &= validateVariableDeclaration_validateNameIsNotNull(variable, diagnostics, context);
 		if (result || diagnostics != null) result &= validateVariableDeclaration_validateTypeIsNotInvalid(variable, diagnostics, context);
 		if (result || diagnostics != null) result &= validateVariableDeclaration_validateTypeIsNotNull(variable, diagnostics, context);
@@ -2697,6 +2767,7 @@ public class PivotValidator extends EObjectValidator
 		if (result || diagnostics != null) result &= validate_UniqueID(variableDeclaration, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(variableDeclaration, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(variableDeclaration, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(variableDeclaration, diagnostics, context);
 		if (result || diagnostics != null) result &= validateVariableDeclaration_validateNameIsNotNull(variableDeclaration, diagnostics, context);
 		if (result || diagnostics != null) result &= validateVariableDeclaration_validateTypeIsNotInvalid(variableDeclaration, diagnostics, context);
 		if (result || diagnostics != null) result &= validateVariableDeclaration_validateTypeIsNotNull(variableDeclaration, diagnostics, context);
@@ -2754,6 +2825,7 @@ public class PivotValidator extends EObjectValidator
 		if (result || diagnostics != null) result &= validate_UniqueID(ifExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(ifExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(ifExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(ifExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(ifExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateIfExp_validateConditionTypeIsBoolean(ifExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateIfExp_validateTypeIsNotInvalid(ifExp, diagnostics, context);
@@ -2819,6 +2891,7 @@ public class PivotValidator extends EObjectValidator
 		if (result || diagnostics != null) result &= validate_UniqueID(integerLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(integerLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(integerLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(integerLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(integerLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateIntegerLiteralExp_validateTypeIsInteger(integerLiteralExp, diagnostics, context);
 		return result;
@@ -2852,6 +2925,7 @@ public class PivotValidator extends EObjectValidator
 		if (result || diagnostics != null) result &= validate_UniqueID(numericLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(numericLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(numericLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(numericLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(numericLiteralExp, diagnostics, context);
 		return result;
 	}
@@ -2872,6 +2946,7 @@ public class PivotValidator extends EObjectValidator
 		if (result || diagnostics != null) result &= validate_UniqueID(oclExpression, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(oclExpression, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(oclExpression, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(oclExpression, diagnostics, context);
 		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(oclExpression, diagnostics, context);
 		return result;
 	}
@@ -2905,6 +2980,7 @@ public class PivotValidator extends EObjectValidator
 		if (result || diagnostics != null) result &= validate_UniqueID(invalidLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(invalidLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(invalidLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(invalidLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(invalidLiteralExp, diagnostics, context);
 		return result;
 	}
@@ -2967,6 +3043,7 @@ public class PivotValidator extends EObjectValidator
 		if (result || diagnostics != null) result &= validate_UniqueID(iterateExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(iterateExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(iterateExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(iterateExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(iterateExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateIterateExp_validateSafeSourceCanBeNull(iterateExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateCallExp_validateSafeSourceCannotBeMap(iterateExp, diagnostics, context);
@@ -3067,6 +3144,7 @@ public class PivotValidator extends EObjectValidator
 		if (result || diagnostics != null) result &= validate_UniqueID(iteration, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(iteration, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(iteration, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(iteration, diagnostics, context);
 		if (result || diagnostics != null) result &= validateFeature_validateNameIsNotNull(iteration, diagnostics, context);
 		if (result || diagnostics != null) result &= validateFeature_validateTypeIsNotInvalid(iteration, diagnostics, context);
 		if (result || diagnostics != null) result &= validateFeature_validateTypeIsNotNull(iteration, diagnostics, context);
@@ -3093,6 +3171,7 @@ public class PivotValidator extends EObjectValidator
 		if (result || diagnostics != null) result &= validate_UniqueID(iteratorExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(iteratorExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(iteratorExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(iteratorExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(iteratorExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateIteratorExp_validateSafeSourceCanBeNull(iteratorExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateCallExp_validateSafeSourceCannotBeMap(iteratorExp, diagnostics, context);
@@ -3175,6 +3254,7 @@ public class PivotValidator extends EObjectValidator
 		if (result || diagnostics != null) result &= validate_UniqueID(iteratorVariable, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(iteratorVariable, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(iteratorVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(iteratorVariable, diagnostics, context);
 		if (result || diagnostics != null) result &= validateVariableDeclaration_validateNameIsNotNull(iteratorVariable, diagnostics, context);
 		if (result || diagnostics != null) result &= validateVariableDeclaration_validateTypeIsNotInvalid(iteratorVariable, diagnostics, context);
 		if (result || diagnostics != null) result &= validateVariableDeclaration_validateTypeIsNotNull(iteratorVariable, diagnostics, context);
@@ -3409,7 +3489,17 @@ public class PivotValidator extends EObjectValidator
 	 */
 	public boolean validateLanguageExpression(LanguageExpression languageExpression, DiagnosticChain diagnostics, Map<Object, Object> context)
 	{
-		return validate_EveryDefaultConstraint(languageExpression, diagnostics, context);
+		if (!validate_NoCircularContainment(languageExpression, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(languageExpression, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(languageExpression, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(languageExpression, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(languageExpression, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(languageExpression, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(languageExpression, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(languageExpression, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(languageExpression, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(languageExpression, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -3428,6 +3518,7 @@ public class PivotValidator extends EObjectValidator
 		if (result || diagnostics != null) result &= validate_UniqueID(loopExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(loopExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(loopExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(loopExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(loopExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateCallExp_validateSafeSourceCanBeNull(loopExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateCallExp_validateSafeSourceCannotBeMap(loopExp, diagnostics, context);
@@ -3523,6 +3614,7 @@ public class PivotValidator extends EObjectValidator
 		if (result || diagnostics != null) result &= validate_UniqueID(mapLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(mapLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(mapLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(mapLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(mapLiteralExp, diagnostics, context);
 		return result;
 	}
@@ -3574,6 +3666,7 @@ public class PivotValidator extends EObjectValidator
 		if (result || diagnostics != null) result &= validate_UniqueID(letExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(letExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(letExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(letExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(letExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateLetExp_validateCompatibleNullityForIn(letExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateLetExp_validateTypeIsInType(letExp, diagnostics, context);
@@ -3631,6 +3724,7 @@ public class PivotValidator extends EObjectValidator
 		if (result || diagnostics != null) result &= validate_UniqueID(letVariable, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(letVariable, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(letVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(letVariable, diagnostics, context);
 		if (result || diagnostics != null) result &= validateVariableDeclaration_validateNameIsNotNull(letVariable, diagnostics, context);
 		if (result || diagnostics != null) result &= validateVariableDeclaration_validateTypeIsNotInvalid(letVariable, diagnostics, context);
 		if (result || diagnostics != null) result &= validateVariableDeclaration_validateTypeIsNotNull(letVariable, diagnostics, context);
@@ -3700,6 +3794,7 @@ public class PivotValidator extends EObjectValidator
 		if (result || diagnostics != null) result &= validate_UniqueID(messageExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(messageExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(messageExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(messageExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(messageExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateMessageExp_validateOneCallOrOneSend(messageExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateMessageExp_validateTargetIsNotACollection(messageExp, diagnostics, context);
@@ -3836,6 +3931,7 @@ public class PivotValidator extends EObjectValidator
 		if (result || diagnostics != null) result &= validate_UniqueID(nullLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(nullLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(nullLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(nullLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(nullLiteralExp, diagnostics, context);
 		return result;
 	}
@@ -3856,6 +3952,7 @@ public class PivotValidator extends EObjectValidator
 		if (result || diagnostics != null) result &= validate_UniqueID(operationCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(operationCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(operationCallExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(operationCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(operationCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateOperationCallExp_validateSafeSourceCanBeNull(operationCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateCallExp_validateSafeSourceCannotBeMap(operationCallExp, diagnostics, context);
@@ -3998,6 +4095,7 @@ public class PivotValidator extends EObjectValidator
 		if (result || diagnostics != null) result &= validate_UniqueID(propertyCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(propertyCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(propertyCallExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(propertyCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(propertyCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validatePropertyCallExp_validateSafeSourceCanBeNull(propertyCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateCallExp_validateSafeSourceCannotBeMap(propertyCallExp, diagnostics, context);
@@ -4078,6 +4176,7 @@ public class PivotValidator extends EObjectValidator
 		if (result || diagnostics != null) result &= validate_UniqueID(realLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(realLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(realLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(realLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(realLiteralExp, diagnostics, context);
 		return result;
 	}
@@ -4119,6 +4218,7 @@ public class PivotValidator extends EObjectValidator
 		if (result || diagnostics != null) result &= validate_UniqueID(resultVariable, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(resultVariable, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(resultVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(resultVariable, diagnostics, context);
 		if (result || diagnostics != null) result &= validateVariableDeclaration_validateNameIsNotNull(resultVariable, diagnostics, context);
 		if (result || diagnostics != null) result &= validateVariableDeclaration_validateTypeIsNotInvalid(resultVariable, diagnostics, context);
 		if (result || diagnostics != null) result &= validateVariableDeclaration_validateTypeIsNotNull(resultVariable, diagnostics, context);
@@ -4251,6 +4351,7 @@ public class PivotValidator extends EObjectValidator
 		if (result || diagnostics != null) result &= validate_UniqueID(shadowExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(shadowExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(shadowExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(shadowExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(shadowExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateShadowExp_validateClassHasNoStringValueInitializer(shadowExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateShadowExp_validateDataTypeHasNoPartInitializers(shadowExp, diagnostics, context);
@@ -4343,6 +4444,7 @@ public class PivotValidator extends EObjectValidator
 		if (result || diagnostics != null) result &= validate_UniqueID(shadowPart, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(shadowPart, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(shadowPart, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(shadowPart, diagnostics, context);
 		if (result || diagnostics != null) result &= validateShadowPart_validateCompatibleInitialiserType(shadowPart, diagnostics, context);
 		if (result || diagnostics != null) result &= validateShadowPart_validateTypeIsNotInvalid(shadowPart, diagnostics, context);
 		if (result || diagnostics != null) result &= validateShadowPart_validateTypeIsNotNull(shadowPart, diagnostics, context);
@@ -4409,6 +4511,7 @@ public class PivotValidator extends EObjectValidator
 		if (result || diagnostics != null) result &= validate_UniqueID(stateExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(stateExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(stateExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(stateExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(stateExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateStateExp_validateTypeIsNotInvalid(stateExp, diagnostics, context);
 		return result;
@@ -4493,6 +4596,7 @@ public class PivotValidator extends EObjectValidator
 		if (result || diagnostics != null) result &= validate_UniqueID(stringLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(stringLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(stringLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(stringLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(stringLiteralExp, diagnostics, context);
 		return result;
 	}
@@ -4513,6 +4617,7 @@ public class PivotValidator extends EObjectValidator
 		if (result || diagnostics != null) result &= validate_UniqueID(tupleLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(tupleLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(tupleLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(tupleLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(tupleLiteralExp, diagnostics, context);
 		return result;
 	}
@@ -4533,6 +4638,7 @@ public class PivotValidator extends EObjectValidator
 		if (result || diagnostics != null) result &= validate_UniqueID(tupleLiteralPart, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(tupleLiteralPart, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(tupleLiteralPart, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(tupleLiteralPart, diagnostics, context);
 		if (result || diagnostics != null) result &= validateVariableDeclaration_validateNameIsNotNull(tupleLiteralPart, diagnostics, context);
 		if (result || diagnostics != null) result &= validateTupleLiteralPart_validateTypeIsNotInvalid(tupleLiteralPart, diagnostics, context);
 		if (result || diagnostics != null) result &= validateVariableDeclaration_validateTypeIsNotNull(tupleLiteralPart, diagnostics, context);
@@ -4599,6 +4705,7 @@ public class PivotValidator extends EObjectValidator
 		if (result || diagnostics != null) result &= validate_UniqueID(typeExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(typeExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(typeExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(typeExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(typeExp, diagnostics, context);
 		return result;
 	}
@@ -4620,6 +4727,7 @@ public class PivotValidator extends EObjectValidator
 		if (result || diagnostics != null) result &= validate_UniqueID(unspecifiedValueExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(unspecifiedValueExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(unspecifiedValueExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(unspecifiedValueExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(unspecifiedValueExp, diagnostics, context);
 		return result;
 	}
@@ -4632,7 +4740,17 @@ public class PivotValidator extends EObjectValidator
 	public boolean validateValueSpecification(
 			ValueSpecification valueSpecification, DiagnosticChain diagnostics,
 			Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(valueSpecification, diagnostics, context);
+		if (!validate_NoCircularContainment(valueSpecification, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(valueSpecification, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(valueSpecification, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(valueSpecification, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(valueSpecification, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(valueSpecification, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(valueSpecification, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(valueSpecification, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(valueSpecification, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(valueSpecification, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -4651,6 +4769,7 @@ public class PivotValidator extends EObjectValidator
 		if (result || diagnostics != null) result &= validate_UniqueID(variableExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(variableExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(variableExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTypedElement_validateUnconditionallyValid(variableExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(variableExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateVariableExp_validateTypeIsNotInvalid(variableExp, diagnostics, context);
 		return result;
