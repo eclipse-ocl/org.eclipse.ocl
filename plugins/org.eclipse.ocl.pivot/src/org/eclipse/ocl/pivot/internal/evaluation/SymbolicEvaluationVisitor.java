@@ -60,7 +60,6 @@ import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
-import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.symbolic.AbstractLeafSymbolicValue.SymbolicNavigationCallValue;
@@ -114,13 +113,13 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 		Property referredProperty = PivotUtil.getReferredProperty(navigationCallExp);
 		OCLExpression source = PivotUtil.getOwnedSource(navigationCallExp);
 		SymbolicValue sourceValue = symbolicEvaluationEnvironment.symbolicEvaluate(source);
-		TypeId returnTypeId = navigationCallExp.getTypeId();
-		SymbolicValue compatibilityProblem = symbolicEvaluationEnvironment.checkCompatibility(source, returnTypeId);
+		Type returnType = PivotUtil.getType(navigationCallExp);
+		SymbolicValue compatibilityProblem = symbolicEvaluationEnvironment.checkCompatibility(source, returnType);
 		if (compatibilityProblem != null) {
 			return compatibilityProblem;
 		}
 		SymbolicReason propertyMayBeNullReason = SymbolicUtil.isRequiredReason(referredProperty);
-		SymbolicValue invalidProblem = symbolicEvaluationEnvironment.checkNotInvalid(source, returnTypeId, propertyMayBeNullReason, navigationCallExp);
+		SymbolicValue invalidProblem = symbolicEvaluationEnvironment.checkNotInvalid(source, returnType, propertyMayBeNullReason, navigationCallExp);
 		if (invalidProblem != null) {
 			return invalidProblem;
 		}
@@ -133,7 +132,7 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 	//		}
 	//	}
 		if (!navigationCallExp.isIsSafe()) {
-			SymbolicValue nullSourceProblem = symbolicEvaluationEnvironment.checkNotNull(source, returnTypeId, propertyMayBeNullReason, navigationCallExp);
+			SymbolicValue nullSourceProblem = symbolicEvaluationEnvironment.checkNotNull(source, returnType, propertyMayBeNullReason, navigationCallExp);
 			if (nullSourceProblem != null) {
 				return nullSourceProblem;
 			}
@@ -347,7 +346,7 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 	@Override
 	public @NonNull SymbolicValue visitIfExp(@NonNull IfExp ifExp) {
 		OCLExpression conditionExpression = PivotUtil.getOwnedCondition(ifExp);
-		SymbolicValue compatibilityProblem = symbolicEvaluationEnvironment.checkCompatibility(conditionExpression, ifExp.getTypeId());
+		SymbolicValue compatibilityProblem = symbolicEvaluationEnvironment.checkCompatibility(conditionExpression, PivotUtil.getType(ifExp));
 		if (compatibilityProblem != null) {
 			return compatibilityProblem;
 		}

@@ -78,6 +78,7 @@ import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
@@ -1548,7 +1549,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		for (CollectionLiteralPartCS csPart : csCollectionLiteralExp.getOwnedParts()) {
 			assert csPart != null;
 			CollectionLiteralPart pivotPart = context.visitLeft2Right(CollectionLiteralPart.class, csPart);
-			Type asType = pivotPart != null ? pivotPart.getType() : null;
+			Type asType = pivotPart != null ? ((CollectionType)pivotPart.getType()).getElementType() : null;
 			Type type = asType != null ? PivotUtil.getBehavioralType(asType) : null;
 			//			if (type instanceof InvalidType) {	// FIXME Use propagated reason via InvalidType
 			//				if (invalidValue == null) {
@@ -1639,7 +1640,8 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		}
 		CollectionLiteralPart expression = PivotUtil.getPivot(CollectionLiteralPart.class, csCollectionLiteralPart);
 		if (expression != null) {
-			helper.setType(expression, type, isRequired);
+			Type rangeType = metamodelManager.getCollectionType(TypeId.SEQUENCE_NAME, type, true, null, null); //pivotFirst, pivotLast);		// lower / upper
+			helper.setType(expression, rangeType, isRequired);
 		}
 		return expression;
 	}

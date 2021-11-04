@@ -39,7 +39,7 @@ public class OrderedCollectionLastOperation extends AbstractSimpleUnaryOperation
 			return superProblem;
 		}
 		OCLExpression source = PivotUtil.getOwnedSource(callExp);
-		SymbolicValue sourceSizeProblem = evaluationEnvironment.checkNotEmpty(source, callExp.getTypeId(), !callExp.isIsRequired());
+		SymbolicValue sourceSizeProblem = evaluationEnvironment.checkNotEmpty(source, PivotUtil.getType(callExp), !callExp.isIsRequired());
 		if (sourceSizeProblem != null) {
 			return sourceSizeProblem;
 		}

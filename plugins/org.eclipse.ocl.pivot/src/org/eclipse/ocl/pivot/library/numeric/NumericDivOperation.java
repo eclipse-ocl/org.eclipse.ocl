@@ -44,7 +44,7 @@ public class NumericDivOperation extends AbstractSimpleBinaryOperation
 			return superProblem;
 		}
 		OCLExpression argument = PivotUtil.getOwnedArgument(callExp, 0);
-		SymbolicValue argumentProblem = evaluationEnvironment.checkNotZero(argument, callExp.getTypeId(), false);
+		SymbolicValue argumentProblem = evaluationEnvironment.checkNotZero(argument, PivotUtil.getType(callExp), false);
 		if (argumentProblem != null) {
 			return argumentProblem;
 		}

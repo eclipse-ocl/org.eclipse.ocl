@@ -15,6 +15,7 @@ import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Behavior;
@@ -26,13 +27,16 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.util.Visitor;
+import org.eclipse.ocl.pivot.values.OCLValue;
 
 /**
  * <!-- begin-user-doc -->
@@ -427,4 +431,59 @@ public class PrimitiveTypeImpl
 		assert name2 != null;
 		return IdManager.getPrimitiveTypeId(name2);
 	}
+
+	/**
+	 * ORPHAN_INTEGER_TYPE provides a singleton Integer Type for use when the StandardLibrary is not available.
+	 * It has no useful behavior. It should be replaced by the StandardLibrary value before use.
+	 *
+	 * However getTypeId() and conformsTo() may be used as if replaced.
+	 *
+	 * @since 1.17
+	 */
+	public static @NonNull PrimitiveType ORPHAN_INTEGER_TYPE = new PrimitiveTypeImpl()
+	{
+		{ super.setName("Integer2"); }
+
+		@Override
+		public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
+			Type integerType = standardLibrary.getIntegerType();
+			return integerType.conformsTo(standardLibrary, type);
+		}
+
+		@Override
+		protected void eBasicSetContainer(InternalEObject newContainer, int newContainerFeatureID) {
+			throw new UnsupportedOperationException("ORPHAN_INTEGER_TYPE must be replaced by a true Integer before use.");
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			throw new UnsupportedOperationException("ORPHAN_INTEGER_TYPE must be replaced by a true Integer before use.");
+		}
+
+		@Override
+		public @NonNull TypeId getTypeId() {
+			return TypeId.INTEGER;
+		}
+
+		@Override
+		public int hashCode() {
+			throw new UnsupportedOperationException("ORPHAN_INTEGER_TYPE must be replaced by a true Integer before use.");
+		}
+
+		@Override
+		public boolean oclEquals(@NonNull OCLValue thatValue) {
+			throw new UnsupportedOperationException("ORPHAN_INTEGER_TYPE must be replaced by a true Integer before use.");
+		}
+
+		@Override
+		public int oclHashCode() {
+			throw new UnsupportedOperationException("ORPHAN_INTEGER_TYPE must be replaced by a true Integer before use.");
+		}
+
+		@Override
+		public void setName(String newName) {
+			throw new UnsupportedOperationException("ORPHAN_INTEGER_TYPE must be replaced by a true Integer before use.");
+		}
+	};
+
 } //PrimitiveTypeImpl

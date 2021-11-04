@@ -12,7 +12,7 @@ package org.eclipse.ocl.pivot.internal.symbolic;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.NumberValue;
 
@@ -23,8 +23,8 @@ public class SymbolicKnownValue extends AbstractLeafSymbolicValue {
 
 	private @Nullable Object knownValue;
 
-	public SymbolicKnownValue(@NonNull String name, @NonNull TypeId typeId, @Nullable Object knownValue, @Nullable SymbolicContent content) { //, @NonNull SymbolicValue value) {
-		super(name, typeId, SymbolicUtil.mayBeNullReason(knownValue), SymbolicUtil.mayBeInvalidReason(knownValue), content);
+	public SymbolicKnownValue(@NonNull String name, @NonNull Type type, @Nullable Object knownValue, @Nullable SymbolicContent content) { //, @NonNull SymbolicValue value) {
+		super(name, type, SymbolicUtil.mayBeNullReason(knownValue), SymbolicUtil.mayBeInvalidReason(knownValue), content);
 		this.knownValue = knownValue;
 	}
 

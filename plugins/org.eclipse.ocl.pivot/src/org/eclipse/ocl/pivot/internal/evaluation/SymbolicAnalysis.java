@@ -19,18 +19,18 @@ import java.util.Map;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
+import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.EvaluationHaltedException;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
-import org.eclipse.ocl.pivot.ids.MapTypeId;
-import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.internal.cse.CommonSubExpressionAnalysis;
 import org.eclipse.ocl.pivot.internal.symbolic.AbstractSymbolicRefinedValue;
@@ -79,7 +79,7 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 	/**
 	 * A cache of maybe-invalid symbolic value of known TYpeIds.
 	 */
-	private @NonNull Map<@NonNull TypeId, @NonNull List<@NonNull SymbolicUnknownValue>> typeid2unknownValues = new HashMap<>();
+	private @NonNull Map<@NonNull Type, @NonNull List<@NonNull SymbolicUnknownValue>> type2unknownValues = new HashMap<>();
 
 
 	/**
@@ -301,8 +301,8 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 		return hypothesizedEvaluationEnvironment;
 	}
 
-	public @NonNull SymbolicUnknownValue createUnknownValue(@NonNull TypeId typeId, @Nullable SymbolicReason mayBeNullReason, @Nullable SymbolicReason mayBeInvalidReason) {
-		return new SymbolicUnknownValue(createVariableName(), typeId, mayBeNullReason, mayBeInvalidReason);
+	public @NonNull SymbolicUnknownValue createUnknownValue(@NonNull Type type, @Nullable SymbolicReason mayBeNullReason, @Nullable SymbolicReason mayBeInvalidReason) {
+		return new SymbolicUnknownValue(createVariableName(), type, mayBeNullReason, mayBeInvalidReason);
 	}
 
 	public @NonNull String createVariableName() {
@@ -381,6 +381,10 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 
 	public abstract @Nullable String getIncompatibility(@NonNull HypothesizedSymbolicEvaluationEnvironment hypothesizedSymbolicEvaluationEnvironment, @NonNull TypedElement hypothesizedTypedElement);
 
+//	public @NonNull PrimitiveType getIntegerType() {
+//		return environmentFactory.getStandardLibrary().getIntegerType();
+//	}
+
 	public @NonNull SymbolicValue getKnownValue(@Nullable Object boxedValue) {
 		assert ValueUtil.isBoxed(boxedValue);
 		SymbolicKnownValue symbolicKnownValue = knownValue2symbolicValue.get(boxedValue);
@@ -395,32 +399,32 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 			if (symbolicKnownValue == null) {
 				Type type = environmentFactory.getIdResolver().getStaticTypeOfValue(null, boxedValue);
 				String constantName = createConstantName();
-				TypeId typeId = type.getTypeId();
 				SymbolicContent content = null;
 				if (boxedValue instanceof InvalidValue) {
 				}
 				else if (boxedValue instanceof CollectionValue) {
 					CollectionValue collectionValue = (CollectionValue)boxedValue;
-					content = new SymbolicCollectionContent("c#" + constantName + "%", collectionValue.getTypeId(), collectionValue);
+					content = new SymbolicCollectionContent("c#" + constantName + "%", (CollectionType)type, collectionValue);
 					content.setSize(getKnownValue(collectionValue.isEmpty() ? ValueUtil.ZERO_VALUE : ValueUtil.ONE_VALUE));
 				}
 				else if (boxedValue instanceof MapValue) {
 					MapValue mapValue = (MapValue)boxedValue;
-					content = new SymbolicMapContent("m#" + constantName + "%", (MapTypeId)typeId, mapValue);
+				//	TypeId typeId = type.getTypeId();
+					content = new SymbolicMapContent("m#" + constantName + "%", (MapType)type, mapValue);
 					content.setSize(getKnownValue(((MapValue)boxedValue).isEmpty() ? ValueUtil.ZERO_VALUE : ValueUtil.ONE_VALUE));
 				}
-				symbolicKnownValue = new SymbolicKnownValue(constantName, typeId, boxedValue, content);
+				symbolicKnownValue = new SymbolicKnownValue(constantName, type, boxedValue, content);
 				knownValue2symbolicValue.put(boxedValue, symbolicKnownValue);
 			}
 		}
 		return symbolicKnownValue;
 	}
 
-	public @Nullable SymbolicValue getMayBeInvalidValue(@NonNull TypeId typeid, @Nullable SymbolicReason mayBeNullReason, @NonNull SymbolicReason mayBeInvalidReason) {
-		List<@NonNull SymbolicUnknownValue> unknownValues = typeid2unknownValues.get(typeid);
+	public @Nullable SymbolicValue getMayBeInvalidValue(@NonNull Type type, @Nullable SymbolicReason mayBeNullReason, @NonNull SymbolicReason mayBeInvalidReason) {
+		List<@NonNull SymbolicUnknownValue> unknownValues = type2unknownValues.get(type);
 		if (unknownValues == null) {
 			unknownValues = new ArrayList<>();
-			typeid2unknownValues.put(typeid, unknownValues);
+			type2unknownValues.put(type, unknownValues);
 		}
 		for (@NonNull SymbolicUnknownValue unknownValue : unknownValues) {
 		//	if (unknownValue.mayBeNull() == (mayBeNullReason != null)) {
@@ -429,7 +433,7 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 				return unknownValue;
 			}
 		}
-		SymbolicUnknownValue unknownValue = createUnknownValue(typeid, mayBeNullReason, mayBeInvalidReason);
+		SymbolicUnknownValue unknownValue = createUnknownValue(type, mayBeNullReason, mayBeInvalidReason);
 		unknownValues.add(unknownValue);
 		return unknownValue;
 	}
@@ -490,7 +494,7 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 			return symbolicValue;
 		}
 		else {
-			return createUnknownValue(typedElement.getTypeId(), mayBeNullReason, mayBeInvalidReason);
+			return createUnknownValue(PivotUtil.getType(typedElement), mayBeNullReason, mayBeInvalidReason);
 		}
 	}
 
@@ -515,7 +519,7 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 
 		public void analyzeInvariants() {
 			assert incompatibility == null;
-			SymbolicValue selfVariable = new SymbolicUnknownValue("self", primaryClass.getTypeId(), null, null);
+			SymbolicValue selfVariable = new SymbolicUnknownValue("self", primaryClass, null, null);
 			Iterable<@NonNull ExpressionInOCL> invariantBodies2 = invariantBodies;
 			assert invariantBodies2 == null;
 			try {

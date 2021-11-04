@@ -26,7 +26,6 @@ import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.util.Visitor;
 
 /**
@@ -383,8 +382,14 @@ public class CollectionRangeImpl
 		return visitor.visitCollectionRange(this);
 	}
 
+//	@Override
+//	public @NonNull TypeId getTypeId() {
+//		return TypeId.INTEGER_RANGE;
+//	}
+
 	@Override
-	public @NonNull TypeId getTypeId() {
-		return TypeId.INTEGER_RANGE;
+	public void setType(Type newType) {
+		// TODO Auto-generated method stub
+		super.setType(newType);
 	}
 } //CollectionRangeImpl

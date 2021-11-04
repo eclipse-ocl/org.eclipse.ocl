@@ -15,10 +15,10 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.ids.IdResolver;
-import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.internal.cse.CommonSubExpressionAnalysis;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent;
@@ -55,7 +55,7 @@ public abstract class AbstractSymbolicEvaluationEnvironment implements SymbolicE
 	public abstract @Nullable SymbolicValue basicGetSymbolicValue(@NonNull CSEElement cseElement);
 
 	@Override
-	public @Nullable SymbolicValue checkCompatibility(@NonNull OCLExpression typedElement, @NonNull TypeId returnTypeId) {
+	public @Nullable SymbolicValue checkCompatibility(@NonNull OCLExpression typedElement, @NonNull Type returnType) {
 		SymbolicValue symbolicValue = getSymbolicValue(typedElement);
 		if (symbolicValue.asIncompatibility() != null) {
 			return symbolicValue;
@@ -64,7 +64,7 @@ public abstract class AbstractSymbolicEvaluationEnvironment implements SymbolicE
 	}
 
 	@Override
-	public @Nullable SymbolicValue checkNotEmpty(@NonNull TypedElement typedElement, @NonNull TypeId typeId, boolean mayBeNull) {
+	public @Nullable SymbolicValue checkNotEmpty(@NonNull TypedElement typedElement, @NonNull Type type, boolean mayBeNull) {
 		SymbolicValue symbolicValue = getSymbolicValue(typedElement);
 		SymbolicContent symbolicContent = symbolicValue.getContent();
 		SymbolicValue symbolicSize = symbolicContent.getSize();
@@ -76,11 +76,11 @@ public abstract class AbstractSymbolicEvaluationEnvironment implements SymbolicE
 		}
 		Iterable<@NonNull TypedElement> affectedTypedElements = getAffectedTypedElements(typedElement);
 		symbolicAnalysis.addMayBeEmptyHypothesis(affectedTypedElements);
-		return symbolicAnalysis.getMayBeInvalidValue(typeId, SymbolicUtil.mayBeNullReason(mayBeNull), SymbolicSimpleReason.MAY_BE_INVALID_REASON);
+		return symbolicAnalysis.getMayBeInvalidValue(type, SymbolicUtil.mayBeNullReason(mayBeNull), SymbolicSimpleReason.MAY_BE_INVALID_REASON);
 	}
 
 	@Override
-	public @Nullable SymbolicValue checkNotInvalid(@NonNull TypedElement typedElement, @NonNull TypeId typeId, @Nullable SymbolicReason mayBeNullReason, @NonNull CallExp callExp) {
+	public @Nullable SymbolicValue checkNotInvalid(@NonNull TypedElement typedElement, @NonNull Type type, @Nullable SymbolicReason mayBeNullReason, @NonNull CallExp callExp) {
 		SymbolicValue symbolicValue = getSymbolicValue(typedElement);
 		if (symbolicValue.asIncompatibility() != null) {
 			return symbolicValue;
@@ -94,11 +94,11 @@ public abstract class AbstractSymbolicEvaluationEnvironment implements SymbolicE
 		}
 		Iterable<@NonNull TypedElement> affectedTypedElements = getAffectedTypedElements(typedElement);
 		symbolicAnalysis.addMayBeInvalidHypothesis(affectedTypedElements);
-		return symbolicAnalysis.getMayBeInvalidValue(typeId, mayBeNullReason, SymbolicUtil.mayBeInvalidReason(mayBeInvalidReason, callExp));
+		return symbolicAnalysis.getMayBeInvalidValue(type, mayBeNullReason, SymbolicUtil.mayBeInvalidReason(mayBeInvalidReason, callExp));
 	}
 
 	@Override
-	public @Nullable SymbolicValue checkNotNull(@NonNull OCLExpression sourceExp, @NonNull TypeId typeId, @Nullable SymbolicReason mayBeNullReason, @NonNull CallExp callExp) {
+	public @Nullable SymbolicValue checkNotNull(@NonNull OCLExpression sourceExp, @NonNull Type type, @Nullable SymbolicReason mayBeNullReason, @NonNull CallExp callExp) {
 		SymbolicValue sourceSymbolicValue = getSymbolicValue(sourceExp);
 		if (sourceSymbolicValue.isNull()) {
 			return getKnownValue(ValueUtil.INVALID_VALUE);
@@ -109,11 +109,11 @@ public abstract class AbstractSymbolicEvaluationEnvironment implements SymbolicE
 		}
 		Iterable<@NonNull TypedElement> affectedTypedElements = getAffectedTypedElements(sourceExp);
 		symbolicAnalysis.addMayBeNullHypothesis(affectedTypedElements);
-		return symbolicAnalysis.getMayBeInvalidValue(typeId, mayBeNullReason, SymbolicUtil.mayBeInvalidReason(sourceMayBeNullReason, callExp));
+		return symbolicAnalysis.getMayBeInvalidValue(type, mayBeNullReason, SymbolicUtil.mayBeInvalidReason(sourceMayBeNullReason, callExp));
 	}
 
 	@Override
-	public @Nullable SymbolicValue checkNotZero(@NonNull TypedElement typedElement, @NonNull TypeId typeId, boolean mayBeNull) {
+	public @Nullable SymbolicValue checkNotZero(@NonNull TypedElement typedElement, @NonNull Type type, boolean mayBeNull) {
 		SymbolicValue symbolicValue = getSymbolicValue(typedElement);
 		if (symbolicValue.isZero()) {
 			return getKnownValue(ValueUtil.INVALID_VALUE);
@@ -123,7 +123,7 @@ public abstract class AbstractSymbolicEvaluationEnvironment implements SymbolicE
 		}
 		Iterable<@NonNull TypedElement> affectedTypedElements = getAffectedTypedElements(typedElement);
 		symbolicAnalysis.addMayBeZeroHypothesis(affectedTypedElements);
-		return symbolicAnalysis.getMayBeInvalidValue(typeId, SymbolicUtil.mayBeNullReason(mayBeNull), SymbolicSimpleReason.MAY_BE_INVALID_REASON);
+		return symbolicAnalysis.getMayBeInvalidValue(type, SymbolicUtil.mayBeNullReason(mayBeNull), SymbolicSimpleReason.MAY_BE_INVALID_REASON);
 	}
 
 	protected abstract @NonNull Iterable<@NonNull TypedElement> getAffectedTypedElements(@NonNull TypedElement typedElement);

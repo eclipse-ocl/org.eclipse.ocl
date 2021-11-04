@@ -12,14 +12,14 @@ package org.eclipse.ocl.pivot.internal.symbolic;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.Type;
 
 /**
  * @since 1.17
  */
 public class SymbolicUnknownValue extends AbstractLeafSymbolicValue {
 
-	public SymbolicUnknownValue(@NonNull String name, @NonNull TypeId typeId, @Nullable SymbolicReason mayBeNullReason, @Nullable SymbolicReason mayBeInvalidReason) { //, @NonNull SymbolicValue value) {
-		super(name, typeId, mayBeNullReason, mayBeInvalidReason, null);
+	public SymbolicUnknownValue(@NonNull String name, @NonNull Type type, @Nullable SymbolicReason mayBeNullReason, @Nullable SymbolicReason mayBeInvalidReason) { //, @NonNull SymbolicValue value) {
+		super(name, type, mayBeNullReason, mayBeInvalidReason, null);
 	}
 }

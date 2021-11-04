@@ -12,10 +12,10 @@ package org.eclipse.ocl.pivot.internal.symbolic;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.IteratorVariable;
-import org.eclipse.ocl.pivot.ids.CollectionTypeId;
-import org.eclipse.ocl.pivot.ids.MapTypeId;
-import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.MapType;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationVisitor;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
@@ -34,8 +34,8 @@ public abstract class SymbolicContent
 	{
 		protected final @Nullable CollectionValue collectionValue;
 
-		public SymbolicCollectionContent(@NonNull String name, @NonNull CollectionTypeId typeId, @Nullable CollectionValue collectionValue) {
-			super(name, typeId);
+		public SymbolicCollectionContent(@NonNull String name, @NonNull CollectionType type, @Nullable CollectionValue collectionValue) {
+			super(name, type);
 			this.collectionValue = collectionValue;
 		}
 
@@ -47,17 +47,17 @@ public abstract class SymbolicContent
 		@Override
 		public @NonNull SymbolicValue getElementalSymbolicValue(@NonNull SymbolicEvaluationVisitor symbolicEvaluationVisitor, @NonNull IteratorVariable iteratorVariable) {
 			SymbolicAnalysis symbolicAnalysis = symbolicEvaluationVisitor.getSymbolicAnalysis();
-			TypeId elementTypeId = ((CollectionTypeId)typeId).getElementTypeId();
+			Type elementType = ((CollectionType)type).getElementType();
 			CollectionValue collectionValue2 = collectionValue;
-			if ((collectionValue2 == null) || !(elementTypeId instanceof CollectionTypeId)) {
+			if ((collectionValue2 == null) || !(elementType instanceof CollectionType)) {
 				SymbolicValue symbolicValue = symbolicAnalysis.getUnknownValue(iteratorVariable, SymbolicUtil.isRequiredReason(iteratorVariable), null);
 				return symbolicValue;
 			}
 			SymbolicNumericValue sizeValue = computeElementSize(symbolicAnalysis, collectionValue2);
 			String constantName = symbolicAnalysis.createConstantName();
-			SymbolicCollectionContent content = new SymbolicCollectionContent("c#" + constantName + "%", collectionValue2.getTypeId(), collectionValue2);
+			SymbolicCollectionContent content = new SymbolicCollectionContent("c#" + constantName + "%", (CollectionType)type, collectionValue2);
 			content.setSize(sizeValue);
-			return new SymbolicKnownValue(constantName, elementTypeId, null, content);
+			return new SymbolicKnownValue(constantName, elementType, null, content);
 		}
 
 		@Override
@@ -70,8 +70,8 @@ public abstract class SymbolicContent
 	{
 		protected final @Nullable MapValue mapValue;
 
-		public SymbolicMapContent(@NonNull String name, @NonNull MapTypeId typeId, @Nullable MapValue mapValue) {
-			super(name, typeId);
+		public SymbolicMapContent(@NonNull String name, @NonNull MapType type, @Nullable MapValue mapValue) {
+			super(name, type);
 			this.mapValue = mapValue;
 		}
 
@@ -83,17 +83,17 @@ public abstract class SymbolicContent
 		@Override
 		public @NonNull SymbolicValue getElementalSymbolicValue(@NonNull SymbolicEvaluationVisitor symbolicEvaluationVisitor, @NonNull IteratorVariable iteratorVariable) {
 			SymbolicAnalysis symbolicAnalysis = symbolicEvaluationVisitor.getSymbolicAnalysis();
-			TypeId keyTypeId = ((MapTypeId)typeId).getKeyTypeId();
+			Type keyType = ((MapType)type).getKeyType();
 			MapValue mapValue2 = mapValue;
-			if ((mapValue2 == null) || !(keyTypeId instanceof MapTypeId)) {
+			if ((mapValue2 == null) || !(keyType instanceof MapType)) {
 				SymbolicValue symbolicValue = symbolicAnalysis.getUnknownValue(iteratorVariable, SymbolicUtil.isRequiredReason(iteratorVariable), null);
 				return symbolicValue;
 			}
 			SymbolicNumericValue sizeValue = computeElementSize(symbolicAnalysis, mapValue2);
 			String constantName = symbolicAnalysis.createConstantName();
-			SymbolicMapContent content = new SymbolicMapContent("c#" + constantName + "%", mapValue2.getTypeId(), mapValue2);
+			SymbolicMapContent content = new SymbolicMapContent("c#" + constantName + "%", (MapType)type, mapValue2);
 			content.setSize(sizeValue);
-			return new SymbolicKnownValue(constantName, keyTypeId, null, content);
+			return new SymbolicKnownValue(constantName, keyType, null, content);
 		}
 
 		@Override
@@ -103,18 +103,18 @@ public abstract class SymbolicContent
 	}
 
 	protected final @NonNull String name;
-	protected final @NonNull TypeId typeId;
+	protected final @NonNull Type type;
 	private int cloneCount = 0;
 	private @Nullable SymbolicValue sizeValue;
 
-	protected SymbolicContent(@NonNull String name, @NonNull TypeId typeId) {
+	protected SymbolicContent(@NonNull String name, @NonNull Type type) {
 		this.name = name;
-		this.typeId = typeId;
+		this.type = type;
 	}
 
 	protected SymbolicContent(@NonNull SymbolicContent originalContent) {
 		this.name = originalContent.name + originalContent.cloneCount++ + "%";
-		this.typeId = originalContent.typeId;
+		this.type = originalContent.type;
 		this.sizeValue = originalContent.sizeValue;
 	}
 
@@ -152,7 +152,7 @@ public abstract class SymbolicContent
 	public @NonNull SymbolicValue getSize() {
 		SymbolicValue sizeValue2 = sizeValue;
 		if (sizeValue2 == null) {
-			sizeValue = sizeValue2 = new SymbolicUnknownValue(name + "size", TypeId.INTEGER, null, null);
+			sizeValue = sizeValue2 = new SymbolicUnknownValue(name + "size", SymbolicValue.ORPHAN_INTEGER_TYPE, null, null);
 		}
 		return sizeValue2;
 	}

@@ -12,9 +12,7 @@ package org.eclipse.ocl.pivot.internal.symbolic;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
-import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.NumberValue;
 
 /**
@@ -71,7 +69,7 @@ public class SymbolicNumericValue extends AbstractLeafSymbolicValue
 	private final @Nullable NumberValue upperBound;
 
 	private SymbolicNumericValue(@NonNull NumberValue lowerBound, @Nullable NumberValue upperBound) {
-		super(lowerBound + ".." + (upperBound != null ? upperBound.toString() : "*"), lowerBound instanceof IntegerValue ? TypeId.INTEGER : TypeId.REAL, null, null, null);
+		super(lowerBound + ".." + (upperBound != null ? upperBound.toString() : "*"), ORPHAN_INTEGER_TYPE, /*lowerBound instanceof IntegerValue ? TypeId.INTEGER : TypeId.REAL,*/ null, null, null);
 		this.lowerBound = lowerBound;
 		this.upperBound = upperBound;
 	}

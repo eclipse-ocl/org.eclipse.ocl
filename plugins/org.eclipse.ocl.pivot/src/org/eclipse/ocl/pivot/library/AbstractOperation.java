@@ -22,11 +22,11 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.EvaluationHaltedException;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
-import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.evaluation.BaseSymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal.ExecutorInternalExtension;
@@ -95,7 +95,7 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 		CompleteModel completeModel = environmentFactory.getCompleteModel();
 		StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		Operation referredOperation = PivotUtil.getReferredOperation(callExp);
-		TypeId returnTypeId = callExp.getTypeId();
+		Type returnType = PivotUtil.getType(callExp);
 		SymbolicReason returnMayBeNullReason = SymbolicUtil.isRequiredReason(callExp);
 		//
 		//	Propagate the known incompatibility of any source/argument.
@@ -123,7 +123,7 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 			if (!hasRedundantOverloadForInvalid()) {
 				assert completeModel.getCompleteClass(standardLibrary.getOclInvalidType()).getOperation(referredOperation) == null : "Spurious OclInvalid overload for " + referredOperation;
 			}
-			SymbolicValue invalidSourceProblem = evaluationEnvironment.checkNotInvalid(source, returnTypeId, returnMayBeNullReason, callExp);
+			SymbolicValue invalidSourceProblem = evaluationEnvironment.checkNotInvalid(source, returnType, returnMayBeNullReason, callExp);
 			if (invalidSourceProblem != null) {
 				return invalidSourceProblem;
 			}
@@ -140,7 +140,7 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 				assert completeModel.getCompleteClass(standardLibrary.getOclVoidType()).getOperation(referredOperation) == null : "Spurious OcVoid overload for " + referredOperation;
 			}
 			if (!callExp.isIsSafe()) {
-				SymbolicValue nullSourceProblem = evaluationEnvironment.checkNotNull(source, returnTypeId, returnMayBeNullReason, callExp);
+				SymbolicValue nullSourceProblem = evaluationEnvironment.checkNotNull(source, returnType, returnMayBeNullReason, callExp);
 				if (nullSourceProblem != null) {
 					return nullSourceProblem;
 				}
@@ -152,7 +152,7 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 			//	Check whether an invalid argument is permissible,
 			//
 			if (!referredOperation.isIsValidating() && !sourceMayBeInvalid) {
-				SymbolicValue invalidArgumentProblem = evaluationEnvironment.checkNotInvalid(argument, returnTypeId, returnMayBeNullReason, callExp);
+				SymbolicValue invalidArgumentProblem = evaluationEnvironment.checkNotInvalid(argument, returnType, returnMayBeNullReason, callExp);
 				if (invalidArgumentProblem != null) {
 					return invalidArgumentProblem;
 				}
@@ -162,18 +162,18 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 			//
 			Parameter parameter = PivotUtil.getOwnedParameter(referredOperation, i);
 			if (parameter.isIsRequired() && !sourceMayBeNull) {
-				SymbolicValue nullArgumentProblem = evaluationEnvironment.checkNotNull(argument, returnTypeId, returnMayBeNullReason, callExp);
+				SymbolicValue nullArgumentProblem = evaluationEnvironment.checkNotNull(argument, returnType, returnMayBeNullReason, callExp);
 				if (nullArgumentProblem != null) {
 					return nullArgumentProblem;
 				}
 			}
-			SymbolicValue compatibleArgumentProblem = evaluationEnvironment.checkCompatibility(argument, returnTypeId);
+			SymbolicValue compatibleArgumentProblem = evaluationEnvironment.checkCompatibility(argument, returnType);
 			if (compatibleArgumentProblem != null) {
 				return compatibleArgumentProblem;
 			}
 			i++;
 		}
-		SymbolicValue compatibleSourceProblem = evaluationEnvironment.checkCompatibility(source, returnTypeId);
+		SymbolicValue compatibleSourceProblem = evaluationEnvironment.checkCompatibility(source, returnType);
 		if (compatibleSourceProblem != null) {
 			return compatibleSourceProblem;
 		}

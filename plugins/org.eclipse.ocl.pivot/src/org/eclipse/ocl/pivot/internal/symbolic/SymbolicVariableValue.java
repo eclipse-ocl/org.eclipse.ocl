@@ -23,7 +23,7 @@ public class SymbolicVariableValue extends AbstractLeafSymbolicValue {
 	protected final @NonNull VariableDeclaration variable;
 
 	public SymbolicVariableValue(@NonNull VariableDeclaration variable, @Nullable SymbolicReason mayBeNullReason, @Nullable SymbolicReason mayBeInvalidReason) { //, @NonNull SymbolicValue value) {
-		super(PivotUtil.getName(variable), variable.getTypeId(), mayBeNullReason, mayBeInvalidReason, null);
+		super(PivotUtil.getName(variable), PivotUtil.getType(variable), mayBeNullReason, mayBeInvalidReason, null);
 		this.variable = variable;
 	}
 

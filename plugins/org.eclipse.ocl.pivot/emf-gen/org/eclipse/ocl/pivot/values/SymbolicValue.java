@@ -12,8 +12,11 @@ package org.eclipse.ocl.pivot.values;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.PrimitiveType;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.PrimitiveTypeImpl;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent.SymbolicCollectionContent;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent.SymbolicMapContent;
@@ -26,6 +29,8 @@ import org.eclipse.ocl.pivot.internal.symbolic.SymbolicSimpleStatus;
  */
 public interface SymbolicValue
 {
+	static final @NonNull PrimitiveType ORPHAN_INTEGER_TYPE = PrimitiveTypeImpl.ORPHAN_INTEGER_TYPE;
+
 	void appendName(@NonNull StringBuilder s);
 
 	/**
@@ -73,6 +78,8 @@ public interface SymbolicValue
 	@NonNull SymbolicSimpleStatus getNullStatus();
 
 	@NonNull SymbolicMapContent getMapContent();
+
+	@NonNull Type getType();
 
 	@NonNull TypeId getTypeId();
 

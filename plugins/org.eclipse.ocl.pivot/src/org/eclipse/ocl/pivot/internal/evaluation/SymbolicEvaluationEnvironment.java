@@ -15,9 +15,9 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.IdResolver;
-import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicReason;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
@@ -33,35 +33,35 @@ public interface SymbolicEvaluationEnvironment
 	/**
 	 * Return a SymbolicKnownValue for incompatible, if typedElement is already incompatible, else null
 	 */
-	@Nullable SymbolicValue checkCompatibility(@NonNull OCLExpression typedElement, @NonNull TypeId returnTypeId);
+	@Nullable SymbolicValue checkCompatibility(@NonNull OCLExpression typedElement, @NonNull Type returnType);
 
 	/**
 	 * Return a SymbolicKnownValue for invalid, if typedElement is a collection and empty.
 	 * Else return a mayBeNull SymbolicUnknownValue for typeId if typedElement is a collection.
 	 * Else return null if typedElement is not null.
 	 */
-	@Nullable SymbolicValue checkNotEmpty(@NonNull TypedElement typedElement, @NonNull TypeId typeId, boolean mayBeNull);
+	@Nullable SymbolicValue checkNotEmpty(@NonNull TypedElement typedElement, @NonNull Type type, boolean mayBeNull);
 
 	/**
 	 * Return a SymbolicKnownValue for invalid, if typedElement isInvalid.
 	 * Else return a mayBeNull SymbolicUnknownValue for typeId if typedElement mayBeInvalid.
 	 * Else return null if typedElement is not invalid.
 	 */
-	@Nullable SymbolicValue checkNotInvalid(@NonNull TypedElement typedElement, @NonNull TypeId typeId, @Nullable SymbolicReason mayBeNullReason, @NonNull CallExp callExp);
+	@Nullable SymbolicValue checkNotInvalid(@NonNull TypedElement typedElement, @NonNull Type type, @Nullable SymbolicReason mayBeNullReason, @NonNull CallExp callExp);
 
 	/**
 	 * Return a SymbolicKnownValue for invalid, if typedElement isNull.
 	 * Else return a mayBeNull SymbolicUnknownValue for typeId if typedElement mayBeNull.
 	 * Else return null if typedElement is not null.
 	 */
-	@Nullable SymbolicValue checkNotNull(@NonNull OCLExpression sourceExp, @NonNull TypeId typeId, @Nullable SymbolicReason mayBeNullReason, @NonNull CallExp callExp);
+	@Nullable SymbolicValue checkNotNull(@NonNull OCLExpression sourceExp, @NonNull Type type, @Nullable SymbolicReason mayBeNullReason, @NonNull CallExp callExp);
 
 	/**
 	 * Return a SymbolicKnownValue for invalid, if typedElement isZero.
 	 * Else return a mayBeNull SymbolicUnknownValue for typeId if typedElement mayBeZero.
 	 * Else return null if typedElement is not zero.
 	 */
-	@Nullable SymbolicValue checkNotZero(@NonNull TypedElement typedElement, @NonNull TypeId typeId, boolean mayBeNull);
+	@Nullable SymbolicValue checkNotZero(@NonNull TypedElement typedElement, @NonNull Type type, boolean mayBeNull);
 
 	@NonNull BaseSymbolicEvaluationEnvironment getBaseSymbolicEvaluationEnvironment();
 	@NonNull EnvironmentFactory getEnvironmentFactory();

@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.ocl.pivot" version="2">
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/PrimitiveTypeImpl.java" type="org.eclipse.ocl.pivot.internal.PrimitiveTypeImpl">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.PrimitiveTypeImpl"/>
+                <message_argument value="ORPHAN_INTEGER_TYPE"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/internal/StandardLibraryImpl.java" type="org.eclipse.ocl.pivot.internal.StandardLibraryImpl">
         <filter comment="Bug 512402 workaround" id="576725006">
             <message_arguments>

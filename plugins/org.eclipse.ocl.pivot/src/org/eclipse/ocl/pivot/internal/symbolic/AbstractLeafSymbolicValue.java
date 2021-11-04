@@ -15,10 +15,12 @@ import java.util.List;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.NavigationCallExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
@@ -119,14 +121,15 @@ public abstract class AbstractLeafSymbolicValue extends AbstractSymbolicValue
 		}
 	}
 
-	public AbstractLeafSymbolicValue() {
+/*	public AbstractLeafSymbolicValue() {
 		this.name = TypeId.OCL_INVALID_NAME;
 		this.typeId = TypeId.OCL_INVALID;
 		this.mayBeNullReason = null;
 		this.mayBeInvalidReason = null;
-	}
+	} */
 
 	protected final @NonNull String name;
+	protected final @NonNull Type type;
 	protected final @NonNull TypeId typeId;
 	protected final @Nullable SymbolicReason mayBeNullReason;
 	protected final @Nullable SymbolicReason mayBeInvalidReason;
@@ -134,12 +137,13 @@ public abstract class AbstractLeafSymbolicValue extends AbstractSymbolicValue
 
 	protected AbstractLeafSymbolicValue(@NonNull String name, @NonNull TypedElement typedElement, @Nullable SymbolicReason mayBeNullReason, @Nullable SymbolicReason mayBeInvalidReason, @Nullable SymbolicContent content) {
 		// FIXME getBehavioralType needed by test_umlValidation_Bug467192
-		this(name, ClassUtil.nonNullState(PivotUtil.getBehavioralType(typedElement)).getTypeId(), mayBeNullReason, mayBeInvalidReason, content);
+		this(name, ClassUtil.nonNullState(PivotUtil.getBehavioralType(typedElement)), mayBeNullReason, mayBeInvalidReason, content);
 	}
 
-	protected AbstractLeafSymbolicValue(@NonNull String name, @NonNull TypeId typeId, @Nullable SymbolicReason mayBeNullReason, @Nullable SymbolicReason mayBeInvalidReason, @Nullable SymbolicContent content) {
+	protected AbstractLeafSymbolicValue(@NonNull String name, @NonNull Type type, @Nullable SymbolicReason mayBeNullReason, @Nullable SymbolicReason mayBeInvalidReason, @Nullable SymbolicContent content) {
 		this.name = name;
-		this.typeId = typeId;
+		this.type = type;
+		this.typeId = type.getTypeId();
 		this.mayBeNullReason = mayBeNullReason;// != null ? new SymbolicSimpleReason(mayBeNullReason) : null;
 		this.mayBeInvalidReason = mayBeInvalidReason;// != null ? new SymbolicSimpleReason(mayBeInvalidReason) : null;
 		this.content = content;
@@ -194,11 +198,11 @@ public abstract class AbstractLeafSymbolicValue extends AbstractSymbolicValue
 	}
 
 	protected @NonNull SymbolicCollectionContent createCollectionContent() {
-		return new SymbolicCollectionContent("c#" + name + "%", (CollectionTypeId)typeId, null);
+		return new SymbolicCollectionContent("c#" + name + "%", (CollectionType)type, null);
 	}
 
 	protected @NonNull SymbolicMapContent createMapContent() {
-		return new SymbolicMapContent("m#" + name + "%", (MapTypeId)typeId, null);
+		return new SymbolicMapContent("m#" + name + "%", (MapType)type, null);
 	}
 
 	@Override
@@ -250,6 +254,11 @@ public abstract class AbstractLeafSymbolicValue extends AbstractSymbolicValue
 			content = content2 = createMapContent();
 		}
 		return (SymbolicMapContent)content2;
+	}
+
+	@Override
+	public @NonNull Type getType() {
+		return type;
 	}
 
 	@Override

@@ -12,6 +12,7 @@ package org.eclipse.ocl.pivot.internal.symbolic;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
@@ -620,6 +621,11 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 	@Override
 	public @NonNull SymbolicMapContent getMapContent() {
 		return value.getMapContent();
+	}
+
+	@Override
+	public @NonNull Type getType() {
+		return value.getType();
 	}
 
 	@Override
