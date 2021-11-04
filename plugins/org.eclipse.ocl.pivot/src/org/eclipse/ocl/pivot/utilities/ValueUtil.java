@@ -146,6 +146,14 @@ public abstract class ValueUtil
 		}
 	}
 
+	/**
+	 * Diagnostic declaration to detect inadvertent use of a SymbolValue
+	 *
+	 * @since 1.17
+	 */
+	@Deprecated
+	public static void asBoolean(@Nullable SymbolicValue value) {}
+
 	public static @NonNull Boolean asBoolean(@Nullable Object value) {
 		if (value == Boolean.TRUE) {
 			return TRUE_VALUE;
@@ -196,6 +204,14 @@ public abstract class ValueUtil
 			throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.INTEGER_NAME, getTypeName(value));
 		}
 	}
+
+	/**
+	 * Diagnostic declaration to detect inadvertent use of a SymbolValue
+	 *
+	 * @since 1.17
+	 */
+	@Deprecated
+	public static void asIntegerValue(@Nullable SymbolicValue value) {}
 
 	public static @NonNull IntegerValue asIntegerValue(@Nullable Object value) {
 		if (value instanceof Value) {
@@ -310,6 +326,14 @@ public abstract class ValueUtil
 		}
 	}
 
+	/**
+	 * Diagnostic declaration to detect inadvertent use of a SymbolValue
+	 *
+	 * @since 1.17
+	 */
+	@Deprecated
+	public static void asRealValue(@Nullable SymbolicValue value) {}
+
 	public static @NonNull RealValue asRealValue(@Nullable Object value) {
 		if (value instanceof Value) {
 			return ((Value)value).asRealValue();
@@ -336,6 +360,14 @@ public abstract class ValueUtil
 			throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.SET_NAME, getTypeName(value));
 		}
 	}
+
+	/**
+	 * Diagnostic declaration to detect inadvertent use of a SymbolValue
+	 *
+	 * @since 1.17
+	 */
+	@Deprecated
+	public static void asString(@Nullable SymbolicValue value) {}
 
 	public static @NonNull String asString(@Nullable Object value) {
 		if (value instanceof String) {
@@ -372,6 +404,14 @@ public abstract class ValueUtil
 			throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.UNIQUE_COLLECTION_NAME, getTypeName(value));
 		}
 	}
+
+	/**
+	 * Diagnostic declaration to detect inadvertent use of a SymbolValue
+	 *
+	 * @since 1.17
+	 */
+	@Deprecated
+	public static void asUnlimitedNaturalValue(@Nullable SymbolicValue value) {}
 
 	public static @NonNull UnlimitedNaturalValue asUnlimitedNaturalValue(@Nullable Object value) {
 		if (value instanceof Value) {

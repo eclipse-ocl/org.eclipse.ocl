@@ -320,8 +320,8 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 		Object resultValue;
 		CollectionType type = (CollectionType) ((CollectionLiteralExp)range.eContainer()).getType();
 		CollectionTypeId typeId = type.getTypeId();
-		IntegerValue firstInteger = ValueUtil.asIntegerValue(firstValue);
-		IntegerValue lastInteger = ValueUtil.asIntegerValue(lastValue);
+		IntegerValue firstInteger = ValueUtil.asIntegerValue(firstValue.getKnownValue());
+		IntegerValue lastInteger = ValueUtil.asIntegerValue(lastValue.getKnownValue());
 		// construct a lazy integer list for the range
 		IntegerRange integerRange = ValueUtil.createRange(firstInteger, lastInteger);
 		if (type.isUnique()) {
