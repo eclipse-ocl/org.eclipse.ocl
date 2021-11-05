@@ -1549,32 +1549,36 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		for (CollectionLiteralPartCS csPart : csCollectionLiteralExp.getOwnedParts()) {
 			assert csPart != null;
 			CollectionLiteralPart pivotPart = context.visitLeft2Right(CollectionLiteralPart.class, csPart);
-			Type asType = pivotPart != null ? ((CollectionType)pivotPart.getType()).getElementType() : null;
-			Type type = asType != null ? PivotUtil.getBehavioralType(asType) : null;
+		//	Type asType = pivotPart != null ? ((CollectionType)pivotPart.getType()).getElementType() : null;
+		//	Type type = asType != null ? PivotUtil.getBehavioralType(asType) : null;
 			//			if (type instanceof InvalidType) {	// FIXME Use propagated reason via InvalidType
 			//				if (invalidValue == null) {
 			//					invalidValue = metamodelManager.createInvalidValue(csPart, null, "Invalid Collection content", null);
 			//				}
 			//			}
 			//			else
-			if (type != null) {
+			Type partType;
+			if (pivotPart instanceof CollectionItem) {
+				partType = pivotPart.getType();
+				if ((((CollectionItem)pivotPart).getOwnedItem() instanceof NullLiteralExp)) {
+					isNullFree = false;
+				}
+			}
+			else if (pivotPart instanceof CollectionRange) {
+				partType = ((CollectionType)pivotPart.getType()).getElementType();
+			}
+			else {
+				partType = null;
+				isNullFree = false;
+			}
+			if (partType != null) {
+				Type type = PivotUtil.getBehavioralType(partType);
 				if (commonType == null) {
 					commonType = type;
 				}
 				else if (commonType != type) {
 					commonType = metamodelManager.getCommonType(commonType, TemplateParameterSubstitutions.EMPTY, type, TemplateParameterSubstitutions.EMPTY);
 				}
-			}
-			if (pivotPart instanceof CollectionItem) {
-				if ((((CollectionItem)pivotPart).getOwnedItem() instanceof NullLiteralExp)) {
-					isNullFree = false;
-				}
-			}
-			else if (pivotPart instanceof CollectionRange) {
-				;
-			}
-			else {
-				isNullFree = false;
 			}
 		}
 		//		if (invalidValue != null) {
@@ -1640,8 +1644,10 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		}
 		CollectionLiteralPart expression = PivotUtil.getPivot(CollectionLiteralPart.class, csCollectionLiteralPart);
 		if (expression != null) {
-			Type rangeType = metamodelManager.getCollectionType(TypeId.SEQUENCE_NAME, type, true, null, null); //pivotFirst, pivotLast);		// lower / upper
-			helper.setType(expression, rangeType, isRequired);
+			if (csLast != null) {
+				type = metamodelManager.getCollectionType(TypeId.SEQUENCE_NAME, type, true, null, null); //pivotFirst, pivotLast);		// lower / upper
+			}
+			helper.setType(expression, type, isRequired);
 		}
 		return expression;
 	}
