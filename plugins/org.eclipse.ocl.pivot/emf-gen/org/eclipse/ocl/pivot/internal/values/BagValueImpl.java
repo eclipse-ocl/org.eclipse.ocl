@@ -200,7 +200,9 @@ public class BagValueImpl extends CollectionValueImpl implements BagValue {
 	public @NonNull BagValue flatten() {
 		Bag<Object> flattened = new BagImpl<Object>();
 		if (flatten(flattened)) {
-			return new BagValueImpl(getTypeId(), flattened);
+    		TypeId elementTypeId = getElementalTypeId();
+			CollectionTypeId flattenedTypeId = TypeId.BAG.getSpecializedId(elementTypeId);
+			return new BagValueImpl(flattenedTypeId, flattened);
 		}
 		else {
 			return this;

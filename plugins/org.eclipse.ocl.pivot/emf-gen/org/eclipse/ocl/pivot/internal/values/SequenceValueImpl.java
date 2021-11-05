@@ -215,7 +215,9 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 	public @NonNull SequenceValue flatten() {
     	List<Object> flattened = new ArrayList<Object>();
     	if (flatten(flattened)) {
-    		return new SparseSequenceValueImpl(getTypeId(), flattened);
+    		TypeId elementTypeId = getElementalTypeId();
+			CollectionTypeId flattenedTypeId = TypeId.SEQUENCE.getSpecializedId(elementTypeId);
+			return new SparseSequenceValueImpl(flattenedTypeId, flattened);
     	}
     	else {
     		return this;

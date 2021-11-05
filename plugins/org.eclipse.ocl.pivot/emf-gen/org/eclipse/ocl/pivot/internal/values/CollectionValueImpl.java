@@ -523,6 +523,17 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 		return getTypeId().getElementTypeId();
 	}
 
+	/**
+	 * @since 1.17
+	 */
+	public @NonNull TypeId getElementalTypeId() {
+		TypeId elementTypeId = getElementTypeId();
+		while (elementTypeId instanceof CollectionTypeId) {
+			elementTypeId = ((CollectionTypeId)elementTypeId).getElementTypeId();
+		}
+		return elementTypeId;
+	}
+
 	@Override
 	public @NonNull Collection<? extends Object> getElements() {
 		return elements;

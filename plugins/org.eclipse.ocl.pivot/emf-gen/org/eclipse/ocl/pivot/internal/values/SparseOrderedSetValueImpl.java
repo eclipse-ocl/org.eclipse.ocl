@@ -75,7 +75,9 @@ public class SparseOrderedSetValueImpl extends OrderedSetValueImpl
 	public @NonNull OrderedSetValue flatten() {
     	OrderedSet<Object> flattened = new OrderedSetImpl<Object>();
     	if (flatten(flattened)) {
-    		return new SparseOrderedSetValueImpl(getTypeId(), flattened);
+    		TypeId elementTypeId = getElementalTypeId();
+			CollectionTypeId flattenedTypeId = TypeId.ORDERED_SET.getSpecializedId(elementTypeId);
+			return new SparseOrderedSetValueImpl(flattenedTypeId, flattened);
     	}
     	else {
     		return this;

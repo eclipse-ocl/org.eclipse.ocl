@@ -204,7 +204,9 @@ public class SetValueImpl extends CollectionValueImpl implements SetValue {
 	public @NonNull SetValue flatten() {
     	Set<Object> flattened = new HashSet<Object>();
     	if (flatten(flattened)) {
-    		return new SetValueImpl(getTypeId(), flattened);
+    		TypeId elementTypeId = getElementalTypeId();
+			CollectionTypeId flattenedTypeId = TypeId.SET.getSpecializedId(elementTypeId);
+			return new SetValueImpl(flattenedTypeId, flattened);
     	}
     	else {
     		return this;
