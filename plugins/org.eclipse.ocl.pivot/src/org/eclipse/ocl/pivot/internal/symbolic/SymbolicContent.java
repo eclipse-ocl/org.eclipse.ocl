@@ -13,11 +13,13 @@ package org.eclipse.ocl.pivot.internal.symbolic;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.IteratorVariable;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationVisitor;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IterableValue;
@@ -63,6 +65,26 @@ public abstract class SymbolicContent
 		@Override
 		public @NonNull SymbolicContent shallowClone() {
 			return new SymbolicCollectionContent(this);
+		}
+	}
+
+	public static class SymbolicInvalidContent extends SymbolicContent
+	{
+		protected final @NonNull SymbolicReason reason;
+
+		public SymbolicInvalidContent(@NonNull String name, @NonNull InvalidType type, @NonNull SymbolicReason reason) {
+			super(name, type);
+			this.reason = reason;
+		}
+
+		@Override
+		public @NonNull SymbolicValue getElementalSymbolicValue(@NonNull SymbolicEvaluationVisitor symbolicEvaluationVisitor, @NonNull IteratorVariable iteratorVariable) {
+			return ClassUtil.nonNullState(symbolicEvaluationVisitor.getSymbolicAnalysis().getMayBeInvalidValue(type, null, reason)); //"XXX-bad-iterator"));
+		}
+
+		@Override
+		public @NonNull SymbolicContent shallowClone() {
+			return this; //throw new UnsupportedOperationException();
 		}
 	}
 

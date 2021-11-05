@@ -15,6 +15,7 @@ import java.util.List;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.NavigationCallExp;
 import org.eclipse.ocl.pivot.OCLExpression;
@@ -24,8 +25,10 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
+import org.eclipse.ocl.pivot.ids.OclInvalidTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent.SymbolicCollectionContent;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent.SymbolicInvalidContent;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent.SymbolicMapContent;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -201,6 +204,10 @@ public abstract class AbstractLeafSymbolicValue extends AbstractSymbolicValue
 		return new SymbolicCollectionContent("c#" + name + "%", (CollectionType)type, null);
 	}
 
+	protected @NonNull SymbolicInvalidContent createInvalidContent(@NonNull SymbolicReason reason) {
+		return new SymbolicInvalidContent("z#" + name + "%", (InvalidType)type, reason);
+	}
+
 	protected @NonNull SymbolicMapContent createMapContent() {
 		return new SymbolicMapContent("m#" + name + "%", (MapType)type, null);
 	}
@@ -227,6 +234,9 @@ public abstract class AbstractLeafSymbolicValue extends AbstractSymbolicValue
 
 	@Override
 	public @NonNull SymbolicContent getContent() {
+		if (typeId instanceof OclInvalidTypeId) {
+			return getInvalidContent(new SymbolicSimpleReason("invalid content"));
+		}
 		if (typeId instanceof CollectionTypeId) {
 			return getCollectionContent();
 		}
@@ -239,6 +249,16 @@ public abstract class AbstractLeafSymbolicValue extends AbstractSymbolicValue
 	@Override
 	public @NonNull SymbolicSimpleStatus getDeadStatus() {
 		return SymbolicSimpleStatus.UNSATISFIED;
+	}
+
+//	@Override
+	public @NonNull SymbolicInvalidContent getInvalidContent(@NonNull SymbolicReason reason) {
+		assert typeId instanceof OclInvalidTypeId;
+		SymbolicContent content2 = content;
+		if (content2 == null) {
+			content = content2 = createInvalidContent(reason);
+		}
+		return (SymbolicInvalidContent)content2;
 	}
 
 	@Override
