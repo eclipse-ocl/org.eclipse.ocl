@@ -53,6 +53,7 @@ import org.eclipse.ocl.pivot.TupleLiteralExp;
 import org.eclipse.ocl.pivot.TupleLiteralPart;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypeExp;
+import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
@@ -107,6 +108,10 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 		this.idResolver = environmentFactory.getIdResolver();
 		this.standardLibrary = environmentFactory.getStandardLibrary();
 		this.symbolicEvaluationEnvironment = symbolicEvaluationEnvironment;
+	}
+
+	public void addKnownVariable(@NonNull TypedElement typedElement, Object knownValue) {
+		evaluationVisitor.getEvaluationEnvironment().add(typedElement, knownValue);
 	}
 
 	protected @NonNull SymbolicValue doNavigationCallExp(@NonNull NavigationCallExp navigationCallExp) {
@@ -402,9 +407,9 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 	public @NonNull SymbolicValue visitIteratorVariable(@NonNull IteratorVariable iteratorVariable) {
 		OCLExpression initExp = iteratorVariable.getOwnedInit();
 		if (initExp == null) {
-			LoopExp loopEXp = (LoopExp)iteratorVariable.eContainer();
-			assert loopEXp != null;
-			initExp = PivotUtil.getOwnedSource(loopEXp);
+			LoopExp loopExp = (LoopExp)iteratorVariable.eContainer();
+			assert loopExp != null;
+			initExp = PivotUtil.getOwnedSource(loopExp);
 		}
 		SymbolicValue initSymbolicValue = symbolicEvaluationEnvironment.symbolicEvaluate(initExp);
 		SymbolicValue elementalSymbolicValue = initSymbolicValue.getContent().getElementalSymbolicValue(this, iteratorVariable);
@@ -422,7 +427,8 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 
 	@Override
 	public @NonNull SymbolicValue visitLetVariable(@NonNull LetVariable letVariable) {
-		return symbolicEvaluationEnvironment.symbolicEvaluate(PivotUtil.getOwnedInit(letVariable));
+		SymbolicValue symbolicValue = symbolicEvaluationEnvironment.symbolicEvaluate(PivotUtil.getOwnedInit(letVariable));
+		return symbolicValue;
 	}
 
 	@Override

@@ -25,6 +25,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.LetVariable;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PrimitiveType;
@@ -124,7 +125,11 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 		}
 		Collections.sort(typedElements, cseAnalysis.getTypedElementHeightComparator());
 		for (@NonNull TypedElement typedElement : typedElements) {
-			symbolicEvaluate(typedElement, true);				// Multi-TypedElement CSEs re-use per-CSE cache
+			SymbolicValue symbolicValue = symbolicEvaluate(typedElement, true);				// Multi-TypedElement CSEs re-use per-CSE cache
+			if ((typedElement instanceof LetVariable) && symbolicValue.isKnown()) {
+				Object knownValue = symbolicValue.getKnownValue();
+				symbolicEvaluationVisitor.addKnownVariable(typedElement, knownValue);
+			}
 		}
 		return null;
 	}
