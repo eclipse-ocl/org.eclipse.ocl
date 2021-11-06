@@ -29,13 +29,11 @@ import org.eclipse.ocl.pivot.LetVariable;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PrimitiveType;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
-import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.internal.symbolic.AbstractSymbolicRefinedValue;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicUtil;
@@ -276,10 +274,8 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 		else {
 			Object boxedValue;
 			Type type = PivotUtil.getBehavioralType(PivotUtil.getType(parameter));
-			IdResolver idResolver = environmentFactory.getIdResolver();
 			if (type instanceof PrimitiveType) {
 				boxedValue = idResolver.boxedValueOf(value);
-				StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 				if (type == standardLibrary.getBooleanType()) {
 					assert (boxedValue instanceof Boolean) : "Expected a Boolean as " + SymbolicUtil.printPath(parameter, true) + " rather than " + value;
 				}
@@ -416,7 +412,7 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 			resultValue = typedElement.accept(symbolicEvaluationVisitor);
 		}
 		catch (InvalidValueException e) {
-			Object boxedValue = environmentFactory.getIdResolver().boxedValueOf(e);
+			Object boxedValue = idResolver.boxedValueOf(e);
 			resultValue = getKnownValue(boxedValue);
 		}
 		return setSymbolicValue(typedElement, resultValue, "base");								// Record new value
@@ -429,7 +425,7 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 			resultValue = typedElement.accept(symbolicEvaluationVisitor);
 		}
 		catch (InvalidValueException e) {
-			Object boxedValue = environmentFactory.getIdResolver().boxedValueOf(e);
+			Object boxedValue = idResolver.boxedValueOf(e);
 			resultValue = getKnownValue(boxedValue);
 		}
 		SymbolicValue refinedValue = resultValue.asRefinementOf(unrefinedValue, typedElement);

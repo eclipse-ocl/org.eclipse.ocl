@@ -445,8 +445,6 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 //		LibraryOperation implementation = (LibraryOperation)operation.getImplementation();
 //		return implementation.installPathConstraints(this, activeTypedElement, operationCallExp);
 /*		if (activeTypedElement == operationCallExp.getOwnedSource()) {
-			CompleteModel completeModel = environmentFactory.getCompleteModel();
-			StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 			CompleteClass oclInvalidClass = completeModel.getCompleteClass(standardLibrary.getOclInvalidType());
 			Operation oclInvalidOperation = oclInvalidClass.getOperation(operation);
 			if (oclInvalidOperation != null) {
@@ -794,7 +792,7 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 			writeValue = symbolicEvaluationVisitor.symbolicEvaluate(typedElement);
 		}
 		catch (InvalidValueException e) {
-			Object boxedValue = environmentFactory.getIdResolver().boxedValueOf(e);
+			Object boxedValue = idResolver.boxedValueOf(e);
 			writeValue = getKnownValue(boxedValue);
 		}
 		SymbolicValue newSymbolicValue = setSymbolicValue(typedElement, writeValue, "eval");

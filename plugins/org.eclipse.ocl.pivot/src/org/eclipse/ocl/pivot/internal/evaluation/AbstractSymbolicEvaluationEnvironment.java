@@ -15,8 +15,9 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.OCLExpression;
-import org.eclipse.ocl.pivot.OperationCallExp;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
@@ -29,6 +30,7 @@ import org.eclipse.ocl.pivot.internal.symbolic.SymbolicSimpleReason;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicUtil;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
@@ -44,12 +46,18 @@ public abstract class AbstractSymbolicEvaluationEnvironment implements SymbolicE
 {
 	protected final @NonNull SymbolicAnalysis symbolicAnalysis;
 	protected final @NonNull EnvironmentFactory environmentFactory;
+	protected final @NonNull StandardLibrary standardLibrary;
+	protected final @NonNull CompleteModel completeModel;
+	protected final @NonNull IdResolver idResolver;
 	protected final @NonNull SymbolicEvaluationVisitor symbolicEvaluationVisitor;
 	protected final @NonNull CommonSubExpressionAnalysis cseAnalysis;
 
 	protected AbstractSymbolicEvaluationEnvironment(@NonNull SymbolicAnalysis symbolicAnalysis) {
 		this.symbolicAnalysis = symbolicAnalysis;
 		this.environmentFactory = symbolicAnalysis.getEnvironmentFactory();
+		this.standardLibrary = environmentFactory.getStandardLibrary();
+		this.completeModel = environmentFactory.getCompleteModel();
+		this.idResolver = environmentFactory.getIdResolver();
 		this.symbolicEvaluationVisitor = symbolicAnalysis.createSymbolicEvaluationVisitor(this);
 		this.cseAnalysis = symbolicAnalysis.getCSEAnalysis();
 	}
@@ -69,13 +77,13 @@ public abstract class AbstractSymbolicEvaluationEnvironment implements SymbolicE
 	public @Nullable SymbolicValue checkConformance(@NonNull OCLExpression typedElement, @NonNull Type returnType,
 			@NonNull TypedElement callTerm, @NonNull CallExp callExp) {
 		SymbolicValue symbolicValue = getSymbolicValue(typedElement);
-		Type actualType = symbolicValue.getType();
-		Type requiredType = callTerm.getType();
-		if (requiredType == environmentFactory.getStandardLibrary().getOclSelfType()) {
-			requiredType = ((OperationCallExp)callExp).getReferredOperation().getOwningClass();
+		Type requiredType = symbolicValue.getType();
+		Type actualType = PivotUtil.getType(callTerm);
+		if (requiredType == standardLibrary.getOclSelfType()) {
+			requiredType = PivotUtil.getOwningClass(PivotUtil.getReferredOperation(callExp));
 		}
-		CompleteClass actualClass = environmentFactory.getCompleteModel().getCompleteClass(actualType);
-		CompleteClass requiredClass = environmentFactory.getCompleteModel().getCompleteClass(requiredType);
+		CompleteClass actualClass = completeModel.getCompleteClass(actualType);
+		CompleteClass requiredClass = completeModel.getCompleteClass(requiredType);
 		if (actualClass.conformsTo(requiredClass)) {
 			return null;
 		}
