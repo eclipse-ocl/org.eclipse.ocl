@@ -226,7 +226,7 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 		}
 		else {
 			assert source != null;
-			org.eclipse.ocl.pivot.Class actualSourceType = idResolver.getStaticTypeOfValue(source.getType(), sourceValue);
+			org.eclipse.ocl.pivot.Class actualSourceType =  sourceValue != null ? PivotUtil.getClass(sourceValue.getType(), standardLibrary) : standardLibrary.getOclVoidType();
 			List<@NonNull Parameter> ownedParameters = PivotUtilInternal.getOwnedParametersList(apparentOperation);
 			if (ownedParameters.size() == 1) {
 				Parameter onlyParameter = ownedParameters.get(0);

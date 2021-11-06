@@ -26,8 +26,11 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.NamedElement;
+import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.Variable;
+import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.evaluation.EvaluationHaltedException;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
@@ -39,9 +42,13 @@ import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent.SymbolicCollectio
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent.SymbolicMapContent;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicKnownValue;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicReason;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicSimpleReason;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicUnknownValue;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicUtil;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicVariableValue;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
@@ -282,6 +289,10 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 		return null;
 	}
 
+	public @Nullable BaseSymbolicEvaluationEnvironment basicGetBaseSymbolicEvaluationEnvironment() {
+		return baseSymbolicEvaluationEnvironment;
+	}
+
 	public @NonNull String createConstantName() {
 		return "k#" + constantCounter++;
 	}
@@ -471,6 +482,11 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 		throw new UnsupportedOperationException();
 	} */
 
+	public @NonNull SymbolicValue getSymbolicValue(@NonNull TypedElement typedElement) {
+		assert baseSymbolicEvaluationEnvironment != null;
+		return baseSymbolicEvaluationEnvironment.getSymbolicValue(typedElement);
+	}
+
 	public @NonNull SymbolicValue getUnknownValue(@NonNull TypedElement typedElement, @Nullable SymbolicReason mayBeNullReason, @Nullable SymbolicReason mayBeInvalidReason) {
 		SymbolicValue symbolicValue = getBaseSymbolicEvaluationEnvironment().basicGetSymbolicValue(typedElement);
 		if (symbolicValue instanceof SymbolicUnknownValue) {
@@ -502,16 +518,17 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 		return executor.isCanceled();
 	}
 
-	protected static abstract class SymbolicAbstractClassAnalysis extends SymbolicAnalysis
+	public static abstract class SymbolicClassAnalysis extends SymbolicAnalysis
 	{
 		protected final org.eclipse.ocl.pivot.@NonNull Class primaryClass;
 		private @Nullable Iterable<@NonNull ExpressionInOCL> invariantBodies = null;
 		protected @Nullable String incompatibility;
+		private @NonNull Map<@NonNull ExpressionInOCL, @NonNull SymbolicExpressionAnalysis> expression2analysis = new HashMap<>();
 
 		/**
 		 * Initializes the symbolic analysis of expressionInOCL that delegates to a non-symbolic evaluation visitor.
 		 */
-		protected SymbolicAbstractClassAnalysis(org.eclipse.ocl.pivot.@NonNull Class primaryClass,
+		protected SymbolicClassAnalysis(/*@NonNull CompleteClass completeClass,*/ org.eclipse.ocl.pivot.@NonNull Class primaryClass,
 				@NonNull EnvironmentFactoryInternalExtension environmentFactory, @NonNull ModelManager modelManager) {
 			super(environmentFactory, modelManager);
 			this.primaryClass = primaryClass;
@@ -533,10 +550,6 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 		}
 
 		protected abstract @NonNull List<@NonNull ExpressionInOCL> gatherInvariantBodies() throws ParserException;
-
-		public @NonNull SymbolicAnalysis getSymbolicAnalysis(@NonNull ExpressionInOCL expressionInOCL) {
-			return new SymbolicExpressionAnalysis(expressionInOCL, environmentFactory, getExecutor().getModelManager());
-		}
 
 		@Override
 		public @Nullable String getIncompatibility(@NonNull HypothesizedSymbolicEvaluationEnvironment hypothesizedSymbolicEvaluationEnvironment, @NonNull TypedElement hypothesizedTypedElement) {
@@ -560,6 +573,67 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 				}
 			}
 			return null;
+		}
+
+		public @NonNull SymbolicExpressionAnalysis getSymbolicAnalysis(@NonNull ExpressionInOCL expressionInOCL) {
+			SymbolicExpressionAnalysis symbolicExpressionAnalysis = expression2analysis.get(expressionInOCL);
+			if (symbolicExpressionAnalysis == null) {
+				org.eclipse.ocl.pivot.Class contextClass = null;
+				Operation contextOperation = null;
+				EObject eContainer = expressionInOCL.eContainer();
+				if (eContainer instanceof Operation) {								// body
+					contextOperation = (Operation)eContainer;
+					contextClass = contextOperation.getOwningClass();
+				}
+				else if (eContainer instanceof Constraint) {
+					eContainer = eContainer.eContainer();
+					if (eContainer instanceof Operation) {							// pre/post-condition
+						contextOperation = (Operation)eContainer;
+						contextClass = contextOperation.getOwningClass();
+					}
+					else if (eContainer instanceof org.eclipse.ocl.pivot.Class) {	// invariant
+						contextClass = (org.eclipse.ocl.pivot.Class)eContainer;
+					}
+				}
+				else if (eContainer == null) {										// JUnit test
+					contextClass = (org.eclipse.ocl.pivot.Class) expressionInOCL.getOwnedContext().getType();
+				}
+				assert contextClass != null;
+				symbolicExpressionAnalysis = new SymbolicExpressionAnalysis(expressionInOCL, environmentFactory, getExecutor().getModelManager());
+				expression2analysis.put(expressionInOCL, symbolicExpressionAnalysis);
+				boolean isValidating = false;
+				if (contextOperation != null) {
+					isValidating = contextOperation.isIsValidating();
+				}
+				VariableDeclaration ownedContext = PivotUtil.getOwnedContext(expressionInOCL);
+				SymbolicReason mayBeNullReason1 = isValidating ? SymbolicSimpleReason.IS_VALIDATING : null;
+				if (mayBeNullReason1 == null) {
+					mayBeNullReason1 = SymbolicUtil.isRequiredReason(ownedContext);
+				}
+				SymbolicReason mayBeInvalidReason = isValidating ? SymbolicSimpleReason.IS_VALIDATING : null;
+				Object selfValue = new SymbolicVariableValue(ownedContext, mayBeNullReason1, mayBeInvalidReason);
+				Object resultValue = null;
+				Variable ownedResult = expressionInOCL.getOwnedResult();
+				if (ownedResult != null) {
+					SymbolicReason mayBeNullReason2;
+					if (isValidating) {
+						mayBeNullReason2 = SymbolicSimpleReason.IS_VALIDATING;
+					}
+					else {
+						mayBeNullReason2 = SymbolicUtil.isRequiredReason(ownedResult);
+					}
+					resultValue = new SymbolicVariableValue(ownedResult, mayBeNullReason2, mayBeInvalidReason);
+				}
+				List<@NonNull Variable> ownedParameters = PivotUtilInternal.getOwnedParametersList(expressionInOCL);
+				@Nullable Object[] parameterValues = new @Nullable Object[ownedParameters.size()];
+				for (int i = 0; i < ownedParameters.size(); i++) {
+					Variable parameter = ownedParameters.get(i);
+					SymbolicReason mayBeNullReason3 = SymbolicUtil.isRequiredReason(parameter);
+					parameterValues[i] = new SymbolicVariableValue(parameter, mayBeNullReason3, mayBeInvalidReason);
+				}
+				symbolicExpressionAnalysis.analyzeExpression(expressionInOCL, selfValue, resultValue, parameterValues);
+			}
+			return symbolicExpressionAnalysis;
 		}
 
 		protected void toString(@NonNull StringBuilder s, org.eclipse.ocl.pivot.@NonNull Class asClass) {
@@ -601,14 +675,13 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 		}
 	}
 
-	public static class SymbolicClassAnalysis extends SymbolicAbstractClassAnalysis
+	public static class SymbolicPartialClassAnalysis extends SymbolicClassAnalysis
 	{
 		/**
 		 * Initializes the symbolic analysis of expressionInOCL that delegates to a non-symbolic evaluation visitor.
 		 */
-		public SymbolicClassAnalysis(org.eclipse.ocl.pivot.@NonNull Class selfClass, @NonNull EnvironmentFactoryInternalExtension environmentFactory, @NonNull ModelManager modelManager) {
+		public SymbolicPartialClassAnalysis(org.eclipse.ocl.pivot.@NonNull Class selfClass, @NonNull EnvironmentFactoryInternalExtension environmentFactory, @NonNull ModelManager modelManager) {
 			super(selfClass, environmentFactory, modelManager);
-//			this.expressionsInOCL = expressionsInOCL;
 		}
 
 		@Override
@@ -651,7 +724,7 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 		}
 	}
 
-	public static class SymbolicCompleteClassAnalysis extends SymbolicAbstractClassAnalysis
+	public static class SymbolicCompleteClassAnalysis extends SymbolicClassAnalysis
 	{
 		protected final @NonNull CompleteClass completeClass;
 
@@ -661,7 +734,6 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 		public SymbolicCompleteClassAnalysis(@NonNull CompleteClass completeClass, @NonNull EnvironmentFactoryInternalExtension environmentFactory, @NonNull ModelManager modelManager) {
 			super(completeClass.getPrimaryClass(), environmentFactory, modelManager);
 			this.completeClass = completeClass;
-//			this.expressionsInOCL = expressionsInOCL;
 		}
 
 		@Override
@@ -730,7 +802,7 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 
 		@Override
 		public @NonNull String toString() {
-			BaseSymbolicEvaluationEnvironment evaluationEnvironment = getBaseSymbolicEvaluationEnvironment();
+			BaseSymbolicEvaluationEnvironment evaluationEnvironment = basicGetBaseSymbolicEvaluationEnvironment();
 			StringBuilder s = new StringBuilder();
 			boolean isFirst = true;
 			for (EObject eObject : new TreeIterable(expressionInOCL, true)) {
@@ -753,7 +825,7 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 					s.append("  ");
 				}
 				s.append("  => ");
-				SymbolicValue symbolicValue = eObject instanceof TypedElement ? evaluationEnvironment.basicGetSymbolicValue((TypedElement)eObject) : null;
+				SymbolicValue symbolicValue = (eObject instanceof TypedElement) && (evaluationEnvironment != null) ? evaluationEnvironment.basicGetSymbolicValue((TypedElement)eObject) : null;
 				if (symbolicValue == null) {
 					s.append("not-computed");
 				}

@@ -62,6 +62,13 @@ public interface MetamodelManagerInternal extends MetamodelManager
 		}
 		@NonNull FinalAnalysis getFinalAnalysis();
 		@NonNull FlowAnalysis getFlowAnalysis(@NonNull OCLExpression oclExpression);
+
+		/**
+		 * @since 1.17
+		 */
+		default @NonNull SymbolicAnalysis getSymbolicAnalysis(@NonNull ExpressionInOCL expressionInOCL) {
+			throw new UnsupportedOperationException();
+		}
 		/**
 		 * @since 1.17
 		 */

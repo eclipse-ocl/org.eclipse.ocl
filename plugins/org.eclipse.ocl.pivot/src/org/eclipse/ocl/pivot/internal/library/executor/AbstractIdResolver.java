@@ -105,6 +105,7 @@ import org.eclipse.ocl.pivot.values.OrderedSet;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
 import org.eclipse.ocl.pivot.values.SetValue;
+import org.eclipse.ocl.pivot.values.SymbolicValue;
 import org.eclipse.ocl.pivot.values.Unlimited;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 import org.eclipse.ocl.pivot.values.Value;
@@ -1117,6 +1118,11 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 				}
 				key2type.put(typeId, type);
 			}
+			return PivotUtil.getClass(type, standardLibrary);
+		}
+		else if (value instanceof SymbolicValue) {
+			assert false;		// Should ever happens - caller knows its a SymbolicValue
+			Type type = ((SymbolicValue)value).getType();
 			return PivotUtil.getClass(type, standardLibrary);
 		}
 		else if (value == null) {

@@ -12,7 +12,6 @@ package org.eclipse.ocl.pivot.internal;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -31,20 +30,17 @@ import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.InvalidLiteralExp;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ValueSpecification;
-import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.evaluation.BaseSymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal.MetamodelManagerInternalExtension2;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicReason;
-import org.eclipse.ocl.pivot.internal.symbolic.SymbolicVariableValue;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
@@ -53,9 +49,11 @@ import org.eclipse.ocl.pivot.util.PivotValidator;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.pivot.values.SymbolicValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 import org.eclipse.ocl.pivot.values.UnlimitedValue;
 
@@ -251,27 +249,24 @@ implements TypedElement {
 		}
 		Executor executor = PivotUtil.getExecutor(this);
 		MetamodelManagerInternalExtension2 metamodelManager = (MetamodelManagerInternalExtension2)executor.getMetamodelManager();
-		SymbolicVariableValue selfValue = new SymbolicVariableValue(PivotUtil.getOwnedContext(expressionInOCL), null, null);
-		Variable ownedResult = expressionInOCL.getOwnedResult();
-		SymbolicVariableValue resultValue = ownedResult != null ? new SymbolicVariableValue(ownedResult, null, null) : null;
-		List<@NonNull Variable> ownedParameters = PivotUtilInternal.getOwnedParametersList(expressionInOCL);
-		@Nullable Object[] parameters = new @Nullable Object[ownedParameters.size()];
-		int i = 0;
-		for (@NonNull Variable parameter : ownedParameters) {
-			parameters[i++] = new SymbolicVariableValue(parameter, null, null);
-		}
-		SymbolicAnalysis symbolicAnalysis = metamodelManager.getSymbolicAnalysis(expressionInOCL, selfValue, resultValue, parameters);
-		BaseSymbolicEvaluationEnvironment evaluationEnvironment = symbolicAnalysis.getBaseSymbolicEvaluationEnvironment();
-		SymbolicReason mayBeInvalidReason = evaluationEnvironment.mayBeInvalidReason(this);
+		SymbolicAnalysis symbolicAnalysis = metamodelManager.getSymbolicAnalysis(expressionInOCL);
+		SymbolicValue symbolicValue = symbolicAnalysis.getSymbolicValue(this);
+		SymbolicReason mayBeInvalidReason = symbolicValue.mayBeInvalidReason();
 		if (mayBeInvalidReason == null) {
 			return null;
 		}
 		for (EObject eChild : eContents()) {
 			if (eChild instanceof TypedElement) {		// MapLiteralPart ??
-				SymbolicReason childMayBeInvalidReason = evaluationEnvironment.mayBeInvalidReason((TypedElement)eChild);
+				SymbolicValue childSymbolicValue = symbolicAnalysis.getSymbolicValue((TypedElement)eChild);
+				SymbolicReason childMayBeInvalidReason = childSymbolicValue.mayBeInvalidReason();
 				if (childMayBeInvalidReason != null) {
 					return null;		// Let child report result
 				}
+			}
+		}
+		for (EObject eChild : new TreeIterable(this, true)) {
+			if (eChild instanceof InvalidLiteralExp) {
+				return null;		// Suppress transitive explicit invalid for now
 			}
 		}
 		return mayBeInvalidReason.toString();
