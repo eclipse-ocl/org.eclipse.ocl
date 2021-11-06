@@ -11,6 +11,7 @@
 
 package org.eclipse.ocl.pivot.internal.evaluation;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -81,6 +82,7 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerRange;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.pivot.values.RealValue;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
@@ -524,6 +526,13 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 	@Override
 	public @NonNull SymbolicValue visitRealLiteralExp(@NonNull RealLiteralExp realLiteralExp) {
 		Object resultValue = evaluationVisitor.visitRealLiteralExp(realLiteralExp);
+		if (resultValue instanceof RealValue) {		// Avoid getting stuck with an integral Real that doesn't conform to Integer.
+			try {
+				BigInteger bigIntegerValue = ((RealValue)resultValue).bigDecimalValue().toBigIntegerExact();
+				resultValue = ValueUtil.integerValueOf(bigIntegerValue);
+			}
+			catch (ArithmeticException e) {}
+		}
 		return context.getKnownValue(resultValue);
 	}
 
