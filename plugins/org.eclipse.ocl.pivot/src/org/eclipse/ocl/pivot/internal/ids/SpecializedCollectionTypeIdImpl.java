@@ -23,6 +23,7 @@ public class SpecializedCollectionTypeIdImpl extends AbstractSpecializedIdImpl<C
 
 	public SpecializedCollectionTypeIdImpl(@NonNull CollectionTypeId generalizedId, @NonNull BindingsId templateBindings) {
 		super(generalizedId, templateBindings);
+		assert templateBindings.size() == 1;
 	}
 
 	@Override

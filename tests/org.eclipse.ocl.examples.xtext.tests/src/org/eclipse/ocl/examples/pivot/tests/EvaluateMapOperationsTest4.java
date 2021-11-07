@@ -649,7 +649,6 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 
 	@Test public void testMapNotEqual() {
 		TestOCL ocl = createOCL();
-		ocl.assertQueryFalse(null, "Map{1 <- 1} <> Map{1 <- 1}");
 		//
 		ocl.assertQueryTrue(null, "Map{} <> Bag{}");
 		ocl.assertQueryTrue(null, "Map{} <> OrderedSet{}");

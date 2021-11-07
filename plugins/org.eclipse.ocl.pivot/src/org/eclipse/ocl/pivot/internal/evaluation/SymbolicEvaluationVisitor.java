@@ -11,7 +11,6 @@
 
 package org.eclipse.ocl.pivot.internal.evaluation;
 
-import java.math.BigInteger;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -82,7 +81,6 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerRange;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
-import org.eclipse.ocl.pivot.values.RealValue;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
@@ -125,9 +123,8 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 		if (compatibilityProblem != null) {
 			return compatibilityProblem;
 		}
-		SymbolicValue conformanceProblem = symbolicEvaluationEnvironment.checkConformance(source, returnType, navigationCallExp.getOwnedSource(), navigationCallExp);
-		if (conformanceProblem != null) {
-			return conformanceProblem;
+		if (!symbolicEvaluationEnvironment.checkConformance(source, returnType, source, navigationCallExp)) {
+			return symbolicEvaluationEnvironment.getInvalidValue("incompatible source for '" + navigationCallExp.getName() + "'");
 		}
 		SymbolicReason propertyMayBeNullReason = SymbolicUtil.isRequiredReason(referredProperty);
 		SymbolicValue invalidProblem = symbolicEvaluationEnvironment.checkNotInvalid(source, returnType, propertyMayBeNullReason, navigationCallExp);
@@ -236,7 +233,7 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 				if (onlyType == standardLibrary.getOclSelfType()) {
 					List<@NonNull OCLExpression> arguments = ClassUtil.nullFree(operationCallExp.getOwnedArguments());
 					SymbolicValue onlyArgumentValue = symbolicEvaluationEnvironment.symbolicEvaluate(arguments.get(0));
-					org.eclipse.ocl.pivot.Class actualArgType = idResolver.getStaticTypeOfValue(onlyType, onlyArgumentValue);
+					org.eclipse.ocl.pivot.Class actualArgType = (org.eclipse.ocl.pivot.Class)onlyArgumentValue.getType();
 					actualSourceType = (org.eclipse.ocl.pivot.Class)actualSourceType.getCommonType(idResolver, actualArgType);
 					// FIXME direct evaluate using second argument
 					actualOperation = actualSourceType.lookupActualOperation(standardLibrary, apparentOperation);
@@ -375,7 +372,7 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 		else if (conditionValue.isInvalid() || conditionValue.isNull()) {
 			symbolicEvaluationEnvironment.setDead(thenExpression);
 			symbolicEvaluationEnvironment.setDead(elseExpression);
-			return context.getKnownValue(ValueUtil.INVALID_VALUE);
+			return symbolicEvaluationEnvironment.getInvalidValue("incompatible condition");
 		}
 		else {
 			SymbolicReason mayBeInvalidReason = SymbolicUtil.mayBeInvalidReason(conditionValue, "condition");;
@@ -406,7 +403,7 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 
 	@Override
 	public @NonNull SymbolicValue visitInvalidLiteralExp(@NonNull InvalidLiteralExp invalidLiteralExp) {
-		return context.getKnownValue(ValueUtil.INVALID_VALUE);
+		return symbolicEvaluationEnvironment.getInvalidValue("invalid literal");
 	}
 
 	@Override
@@ -526,13 +523,6 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 	@Override
 	public @NonNull SymbolicValue visitRealLiteralExp(@NonNull RealLiteralExp realLiteralExp) {
 		Object resultValue = evaluationVisitor.visitRealLiteralExp(realLiteralExp);
-		if (resultValue instanceof RealValue) {		// Avoid getting stuck with an integral Real that doesn't conform to Integer.
-			try {
-				BigInteger bigIntegerValue = ((RealValue)resultValue).bigDecimalValue().toBigIntegerExact();
-				resultValue = ValueUtil.integerValueOf(bigIntegerValue);
-			}
-			catch (ArithmeticException e) {}
-		}
 		return context.getKnownValue(resultValue);
 	}
 

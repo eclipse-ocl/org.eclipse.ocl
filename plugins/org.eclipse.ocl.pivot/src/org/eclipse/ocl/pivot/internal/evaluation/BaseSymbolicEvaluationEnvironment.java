@@ -409,7 +409,7 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 		}
 		SymbolicValue resultValue;
 		try {
-			resultValue = typedElement.accept(symbolicEvaluationVisitor);
+			resultValue = typedElement.accept(symbolicEvaluationVisitor);		// ??? XXX use CSE common type
 		}
 		catch (InvalidValueException e) {
 			Object boxedValue = idResolver.boxedValueOf(e);

@@ -686,6 +686,12 @@
         <filter id="404000815">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal.MetamodelManagerInternalExtension2"/>
+                <message_argument value="getSymbolicAnalysis(ExpressionInOCL)"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal.MetamodelManagerInternalExtension2"/>
                 <message_argument value="getSymbolicAnalysis(ExpressionInOCL, Object, Object, Object[])"/>
             </message_arguments>
         </filter>
@@ -902,6 +908,14 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation"/>
                 <message_argument value="evaluate(Object)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/messages/PivotMessages.java" type="org.eclipse.ocl.pivot.messages.PivotMessages">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.messages.PivotMessages"/>
+                <message_argument value="ValidationConstraintIsNotSatisfiedWithReason_ERROR_"/>
             </message_arguments>
         </filter>
     </resource>

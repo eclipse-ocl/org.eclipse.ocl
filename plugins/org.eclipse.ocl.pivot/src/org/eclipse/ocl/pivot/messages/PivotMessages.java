@@ -76,6 +76,10 @@ public class PivotMessages
 	public static String Validation;
 
 	public static String ValidationConstraintIsNotSatisfied_ERROR_;
+	/**
+	 * @since 1.17
+	 */
+	public static String ValidationConstraintIsNotSatisfiedWithReason_ERROR_;
 	public static String ValidationEvaluationFailed_ERROR_;
 
 	public static String Severity_Cancel;

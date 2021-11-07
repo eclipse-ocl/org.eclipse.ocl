@@ -11,6 +11,9 @@
 
 package org.eclipse.ocl.pivot.internal.evaluation;
 
+import java.math.BigInteger;
+import java.util.List;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
@@ -32,6 +35,9 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.InvalidValue;
+import org.eclipse.ocl.pivot.values.RealValue;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
@@ -74,20 +80,54 @@ public abstract class AbstractSymbolicEvaluationEnvironment implements SymbolicE
 	}
 
 	@Override
-	public @Nullable SymbolicValue checkConformance(@NonNull OCLExpression typedElement, @NonNull Type returnType,
+	public boolean checkConformance(@NonNull OCLExpression typedElement, @NonNull Type returnType,
 			@NonNull TypedElement callTerm, @NonNull CallExp callExp) {
 		SymbolicValue symbolicValue = getSymbolicValue(typedElement);
-		Type requiredType = symbolicValue.getType();
-		Type actualType = PivotUtil.getType(callTerm);
+		Type actualType = symbolicValue.getType();
+		Type requiredType = PivotUtil.getType(callTerm);
 		if (requiredType == standardLibrary.getOclSelfType()) {
 			requiredType = PivotUtil.getOwningClass(PivotUtil.getReferredOperation(callExp));
 		}
 		CompleteClass actualClass = completeModel.getCompleteClass(actualType);
 		CompleteClass requiredClass = completeModel.getCompleteClass(requiredType);
 		if (actualClass.conformsTo(requiredClass)) {
-			return null;
+			return true;
 		}
-		return getKnownValue(ValueUtil.INVALID_VALUE);
+		if (!symbolicValue.isKnown()) {
+			return false;
+		}
+		// Known literals can be downcast,
+		Object knownValue = symbolicValue.getKnownValue();
+		List<org.eclipse.ocl.pivot.Class> requiredPartialClasses = requiredClass.getPartialClasses();
+		if (requiredPartialClasses.contains(standardLibrary.getIntegerType())) {
+			if (knownValue instanceof RealValue) {
+				RealValue realValue = (RealValue)knownValue;
+				try {
+					@SuppressWarnings("unused") BigInteger bigIntegerValue = realValue.bigDecimalValue().toBigIntegerExact();
+					return true;
+				}
+				catch (ArithmeticException e) {}
+			}
+		}
+		if (requiredPartialClasses.contains(standardLibrary.getUnlimitedNaturalType())) {
+			if (knownValue instanceof RealValue) {
+				RealValue realValue = (RealValue)knownValue;
+				if (realValue.signum() >= 0) {
+					try {
+						@SuppressWarnings("unused") BigInteger bigIntegerValue = realValue.bigDecimalValue().toBigIntegerExact();
+						return true;
+					}
+					catch (ArithmeticException e) {}
+				}
+			}
+			else if (knownValue instanceof IntegerValue) {
+				IntegerValue integerValue = (IntegerValue)knownValue;
+				if (integerValue.signum() >= 0) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	@Override
@@ -166,7 +206,17 @@ public abstract class AbstractSymbolicEvaluationEnvironment implements SymbolicE
 	}
 
 	@Override
+	public @NonNull SymbolicValue getInvalidValue(@NonNull String isInvalidReason) {
+		SymbolicValue mayBeInvalidValue = symbolicAnalysis.getMayBeInvalidValue(standardLibrary.getOclInvalidType(), null, new SymbolicSimpleReason(isInvalidReason));
+		assert mayBeInvalidValue != null;
+		return mayBeInvalidValue;
+	}
+
+	@Override
 	public final @NonNull SymbolicValue getKnownValue(@Nullable Object boxedValue) {
+		if (boxedValue instanceof InvalidValue) {
+			return getInvalidValue("invalid literal");		// XXX Fix caller
+		}
 		return symbolicAnalysis.getKnownValue(boxedValue);
 	}
 

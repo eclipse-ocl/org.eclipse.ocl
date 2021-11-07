@@ -578,27 +578,9 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 		public @NonNull SymbolicExpressionAnalysis getSymbolicAnalysis(@NonNull ExpressionInOCL expressionInOCL) {
 			SymbolicExpressionAnalysis symbolicExpressionAnalysis = expression2analysis.get(expressionInOCL);
 			if (symbolicExpressionAnalysis == null) {
-				org.eclipse.ocl.pivot.Class contextClass = null;
-				Operation contextOperation = null;
-				EObject eContainer = expressionInOCL.eContainer();
-				if (eContainer instanceof Operation) {								// body
-					contextOperation = (Operation)eContainer;
-					contextClass = contextOperation.getOwningClass();
-				}
-				else if (eContainer instanceof Constraint) {
-					eContainer = eContainer.eContainer();
-					if (eContainer instanceof Operation) {							// pre/post-condition
-						contextOperation = (Operation)eContainer;
-						contextClass = contextOperation.getOwningClass();
-					}
-					else if (eContainer instanceof org.eclipse.ocl.pivot.Class) {	// invariant
-						contextClass = (org.eclipse.ocl.pivot.Class)eContainer;
-					}
-				}
-				else if (eContainer == null) {										// JUnit test
-					contextClass = (org.eclipse.ocl.pivot.Class) expressionInOCL.getOwnedContext().getType();
-				}
-				assert contextClass != null;
+				Type contextType = PivotUtil.getContainingType(expressionInOCL);
+				assert contextType != null;
+				Operation contextOperation = PivotUtil.getContainingOperation(expressionInOCL);
 				symbolicExpressionAnalysis = new SymbolicExpressionAnalysis(expressionInOCL, environmentFactory, getExecutor().getModelManager());
 				expression2analysis.put(expressionInOCL, symbolicExpressionAnalysis);
 				boolean isValidating = false;

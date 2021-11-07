@@ -18,6 +18,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.pivot.tests.EvaluateUMLTest4.MyOCL;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
+import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.osgi.util.NLS;
 import org.junit.After;
 import org.junit.Before;
@@ -69,8 +70,9 @@ public class EvaluateConstructsTest4 extends PivotTestSuite
 
 	@Test public void testConstruct_if() throws Exception {
 		TestOCL ocl = createOCL();
-		ocl.assertValidationErrorQuery(null, "if null then 1 else 2 endif",
-			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "IfExp::ConditionTypeIsBoolean", "if null then 1 else 2 endif");
+		ocl.assertValidationErrorsQuery(null, "if null then 1 else 2 endif",
+			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfiedWithReason_ERROR_, "TypedElement::UnconditionallyValid", "if null then 1 else 2 endif", "incompatible condition"),
+			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "IfExp::ConditionTypeIsBoolean", "if null then 1 else 2 endif"));
 		//
 		ocl.assertQueryFalse(null, "if true then false else false endif");
 		ocl.assertQueryEquals(null, 1, "if true then 1 else 2 endif");
@@ -78,8 +80,9 @@ public class EvaluateConstructsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(null, 3.0, "if true then 3 else 4.0 endif");
 		ocl.assertQueryEquals(null, 4.0, "if false then 3 else 4.0 endif");
 		//
-		ocl.assertValidationErrorQuery(null, "if null then 1 else 2 endif",
-			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "IfExp::ConditionTypeIsBoolean", "if null then 1 else 2 endif");
+		ocl.assertValidationErrorsQuery(null, "if null then 1 else 2 endif",
+			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfiedWithReason_ERROR_, "TypedElement::UnconditionallyValid", "if null then 1 else 2 endif", "incompatible condition"),
+			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "IfExp::ConditionTypeIsBoolean", "if null then 1 else 2 endif"));
 		ocl.assertQueryInvalid(null, "if null then 1 else 2 endif");
 		ocl.assertQueryInvalid(null, "if invalid then 1 else 2 endif");
 		//

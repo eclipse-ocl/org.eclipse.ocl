@@ -113,7 +113,8 @@ public class OclAnyOclAsSetOperation extends AbstractUnaryOperation
 		OCLExpression source = PivotUtil.getOwnedSource(callExp);
 		SymbolicValue sourceValue = evaluationEnvironment.symbolicEvaluate(source);
 		if (sourceValue.isNull()) {
-			SetValue setValue = evaluationEnvironment.getIdResolver().createSetOfEach((CollectionTypeId)callExp.getTypeId());
+			CollectionTypeId typeId = (CollectionTypeId)callExp.getTypeId();
+			SetValue setValue = evaluationEnvironment.getIdResolver().createSetOfEach(typeId);
 			return evaluationEnvironment.getKnownValue(setValue);
 		}
 		else {

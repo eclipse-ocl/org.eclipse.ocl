@@ -293,7 +293,7 @@ implements TypedElement {
 			}
 			if (diagnostics != null) {
 				String objectLabel = EObjectValidator.getObjectLabel(this, context);
-				String emfMessage = StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_ + " because " + mayBeInvalidReason, new Object[]{constraintName, objectLabel});
+				String emfMessage = StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfiedWithReason_ERROR_, new Object[]{constraintName, objectLabel, mayBeInvalidReason});
 				Object emfData[] = new Object [] { this };
 				int emfSeverity = ValueUtil.asIntegerValue(severity_0).intValue();
 				diagnostics.add(new BasicDiagnostic(emfSeverity, PivotValidator.DIAGNOSTIC_SOURCE, 0, emfMessage, emfData));

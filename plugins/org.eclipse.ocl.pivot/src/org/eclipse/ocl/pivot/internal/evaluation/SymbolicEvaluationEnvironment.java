@@ -38,7 +38,7 @@ public interface SymbolicEvaluationEnvironment
 	/**
 	 * Return a SymbolicKnownValue if typedElement is incompatible with callTerm's type, else null
 	 */
-	@Nullable SymbolicValue checkConformance(@NonNull OCLExpression typedElement, @NonNull Type returnType, @NonNull TypedElement callTerm, @NonNull CallExp callExp);
+	boolean checkConformance(@NonNull OCLExpression typedElement, @NonNull Type returnType, @NonNull TypedElement callTerm, @NonNull CallExp callExp);
 
 	/**
 	 * Return a SymbolicKnownValue for invalid, if typedElement is a collection and empty.
@@ -71,6 +71,7 @@ public interface SymbolicEvaluationEnvironment
 	@NonNull BaseSymbolicEvaluationEnvironment getBaseSymbolicEvaluationEnvironment();
 	@NonNull EnvironmentFactory getEnvironmentFactory();
 	@NonNull IdResolver getIdResolver();
+	@NonNull SymbolicValue getInvalidValue(@NonNull String isInvalidReason);
 	@NonNull SymbolicValue getKnownValue(@Nullable Object boxedValue);
 	@NonNull SymbolicAnalysis getSymbolicAnalysis();
 	@NonNull SymbolicValue getSymbolicValue(@NonNull TypedElement element);
@@ -88,5 +89,4 @@ public interface SymbolicEvaluationEnvironment
 	void setDead(@NonNull OCLExpression expression);
 	@NonNull SymbolicValue setSymbolicValue(@NonNull TypedElement typedElement, @NonNull SymbolicValue symbolicValue, @NonNull String purpose);
 	@NonNull SymbolicValue symbolicEvaluate(@NonNull TypedElement element);
-
 }

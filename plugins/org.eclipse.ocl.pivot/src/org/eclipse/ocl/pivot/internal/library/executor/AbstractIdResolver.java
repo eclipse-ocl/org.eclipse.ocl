@@ -98,6 +98,7 @@ import org.eclipse.ocl.pivot.values.Bag;
 import org.eclipse.ocl.pivot.values.BagValue;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.InvalidValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.MapValue;
 import org.eclipse.ocl.pivot.values.OCLValue;
@@ -1095,6 +1096,9 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 				key2type.put(eClass, type);
 			}
 			return PivotUtil.getClass(type, standardLibrary);
+		}
+		else if (value instanceof InvalidValue) {
+			return standardLibrary.getOclInvalidType();
 		}
 		else if (value instanceof CollectionValue) {
 			CollectionValue collectionValue = (CollectionValue)value;

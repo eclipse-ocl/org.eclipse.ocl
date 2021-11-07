@@ -171,9 +171,8 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 			if (compatibleArgumentProblem != null) {
 				return compatibleArgumentProblem;
 			}
-			SymbolicValue conformanceProblem = evaluationEnvironment.checkConformance(argument, returnType, parameter, callExp);
-			if (conformanceProblem != null) {
-				return conformanceProblem;
+			if (!evaluationEnvironment.checkConformance(argument, returnType, parameter, callExp)) {
+				return evaluationEnvironment.getInvalidValue("incompatible '" + parameter.getName() + "' + parameter for '" + callExp.getName() + "'");
 			}
 			i++;
 		}
@@ -181,9 +180,8 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 		if (compatibleSourceProblem != null) {
 			return compatibleSourceProblem;
 		}
-		SymbolicValue conformanceProblem = evaluationEnvironment.checkConformance(source, returnType, callExp.getOwnedSource(), callExp);
-		if (conformanceProblem != null) {
-			return conformanceProblem;
+		if (!evaluationEnvironment.checkConformance(source, returnType, source, callExp)) {
+			return evaluationEnvironment.getInvalidValue("incompatible source for '" + callExp.getName() + "'");
 		}
 		return null;
 	}

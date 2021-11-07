@@ -711,6 +711,25 @@ public class TestOCL extends OCLInternal
 			}
 		}
 	}
+	public void assertValidationErrorsQuery(org.eclipse.ocl.pivot.@Nullable Class contextType, @NonNull String expression,
+			String... messages) {
+		BaseCSResource csResource = null;
+		try {
+			ParserContext classContext = new ClassContext(getEnvironmentFactory(), null, contextType, null);
+			csResource = (BaseCSResource) classContext.createBaseResource(expression);
+			PivotUtil.checkResourceErrors(StringUtil.bind(PivotMessagesInternal.ErrorsInResource, expression), csResource);
+			Resource asResource = csResource.getASResource();
+
+			PivotTestSuite.assertValidationDiagnostics("Validating", asResource, messages);
+		//	PivotTestSuite.appendLog(testName, contextType, expression, messages[0], null, null);
+		} catch (Exception e) {
+			TestCase.fail(e.getMessage());
+		} finally {
+			if (csResource != null) {
+				EnvironmentFactoryAdapter.disposeAll(csResource);
+			}
+		}
+	}
 
 	public boolean check(Object context, @NonNull String expression) throws ParserException {
 		MetamodelManager metamodelManager = getMetamodelManager();
