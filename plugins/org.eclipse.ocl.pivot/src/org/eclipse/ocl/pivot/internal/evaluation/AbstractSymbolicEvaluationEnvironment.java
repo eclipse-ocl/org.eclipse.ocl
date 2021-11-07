@@ -83,7 +83,7 @@ public abstract class AbstractSymbolicEvaluationEnvironment implements SymbolicE
 	public boolean checkConformance(@NonNull OCLExpression typedElement, @NonNull Type returnType,
 			@NonNull TypedElement callTerm, @NonNull CallExp callExp) {
 		SymbolicValue symbolicValue = getSymbolicValue(typedElement);
-		Type actualType = symbolicValue.getType();
+		Type actualType = SymbolicUtil.getType(symbolicValue, standardLibrary);
 		Type requiredType = PivotUtil.getType(callTerm);
 		if (requiredType == standardLibrary.getOclSelfType()) {
 			requiredType = PivotUtil.getOwningClass(PivotUtil.getReferredOperation(callExp));

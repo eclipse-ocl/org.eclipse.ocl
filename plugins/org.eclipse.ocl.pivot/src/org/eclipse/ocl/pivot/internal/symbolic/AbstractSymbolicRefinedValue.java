@@ -628,6 +628,11 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 		return value.getType();
 	}
 
+//	@Override
+//	public @NonNull Type getType(@NonNull StandardLibrary standardLibrary) {
+//		return value.getType(standardLibrary);
+//	}
+
 	@Override
 	public @NonNull TypeId getTypeId() {
 		return value.getTypeId();

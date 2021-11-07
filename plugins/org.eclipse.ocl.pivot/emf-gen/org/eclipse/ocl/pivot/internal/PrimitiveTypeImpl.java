@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Behavior;
 import org.eclipse.ocl.pivot.Comment;
+import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
@@ -458,6 +459,12 @@ public class PrimitiveTypeImpl
 		@Override
 		public boolean equals(Object obj) {
 			throw new UnsupportedOperationException("ORPHAN_INTEGER_TYPE must be replaced by a true Integer before use.");
+		}
+
+		@Override
+		public @NonNull CompleteInheritance getInheritance(@NonNull StandardLibrary standardLibrary) {
+			Type integerType = standardLibrary.getIntegerType();
+			return integerType.getInheritance(standardLibrary);
 		}
 
 		@Override

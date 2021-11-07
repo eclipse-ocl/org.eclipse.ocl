@@ -32,9 +32,12 @@ import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.ParameterVariable;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.ResultVariable;
+import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
+import org.eclipse.ocl.pivot.internal.PrimitiveTypeImpl;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 import org.eclipse.ocl.pivot.values.Value;
@@ -65,6 +68,11 @@ public class SymbolicUtil
 			delegate = PivotUtil.getReferredVariable((VariableExp)typedElement);
 		}
 		return delegate;
+	}
+
+	public static Type getType(SymbolicValue symbolicValue, @NonNull StandardLibrary standardLibrary) {
+		Type type = symbolicValue.getType();
+		return type == PrimitiveTypeImpl.ORPHAN_INTEGER_TYPE ? standardLibrary.getIntegerType() : type;
 	}
 
 	public static @Nullable SymbolicReason isRequiredReason(@NonNull TypedElement typedElement) {

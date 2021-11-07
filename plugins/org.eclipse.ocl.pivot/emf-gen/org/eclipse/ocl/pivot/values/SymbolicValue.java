@@ -73,17 +73,19 @@ public interface SymbolicValue
 
 	@NonNull NumberValue getLowerBound();
 
-	@Nullable NumberValue getUpperBound();
-
 	@NonNull SymbolicSimpleStatus getNullStatus();
 
 	@NonNull SymbolicMapContent getMapContent();
 
+	@NonNull SymbolicNumericValue getNumericValue();
+
 	@NonNull Type getType();
+
+//	@NonNull Type getType(@NonNull StandardLibrary standardLibrary);
 
 	@NonNull TypeId getTypeId();
 
-	@NonNull SymbolicNumericValue getNumericValue();
+	@Nullable NumberValue getUpperBound();
 
 	boolean isCollection();
 

@@ -45,6 +45,8 @@ import org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
+import org.eclipse.ocl.pivot.messages.StatusCodes;
+import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.util.PivotValidator;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -287,6 +289,12 @@ implements TypedElement {
 			if (OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue()) {
 				return true;
 			}
+			StatusCodes.Severity invalidResultSeverity = executor.getEnvironmentFactory().getValue(PivotValidationOptions.PotentialInvalidResult);		// FIXME Phase out this duplication
+			assert invalidResultSeverity != null;
+			if (invalidResultSeverity == StatusCodes.Severity.IGNORE) {
+				return true;
+			}
+
 			final /*@NonInvalid*/ String mayBeInvalidReason = mayBeInvalidReason();
 			if (mayBeInvalidReason == null) {
 				return true;

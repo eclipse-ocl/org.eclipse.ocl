@@ -116,8 +116,9 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 	@Test public void test_bad_navigation() throws InvocationTargetException {
 		TestOCL ocl = createOCL();
 		StandardLibrary standardLibrary = ocl.getStandardLibrary();
-		ocl.assertQueryEquals(standardLibrary.getPackage(), "Boolean", "let types = self.ownedClasses?->select(name = 'Boolean') in let type = if types->notEmpty() then types->any(true) else null endif in type?.name");
-		ocl.assertQueryNull(standardLibrary.getPackage(), "let types = self.ownedClasses?->select(name = 'notAclass') in let type = if types->notEmpty() then types->any(true) else null endif in type?.name");
+		org.eclipse.ocl.pivot.Package standardLibraryPackage = standardLibrary.getOclAnyType().getOwningPackage();
+		ocl.assertQueryEquals(standardLibraryPackage, "Boolean", "let types = self.ownedClasses?->select(name = 'Boolean') in let type = if types->notEmpty() then types->any(true) else null endif in type?.name");
+		ocl.assertQueryNull(standardLibraryPackage, "let types = self.ownedClasses?->select(name = 'notAclass') in let type = if types->notEmpty() then types->any(true) else null endif in type?.name");
 		ocl.assertSemanticErrorQuery(null, "let a : Type = null in a.Package", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Type", "Package");
 		ocl.assertQueryNull(null, "let a : Type = null in a?.isClass()");
 		ocl.assertSemanticErrorQuery(null, "let a : Type = null in a.Package()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Type", "Package");
@@ -138,49 +139,52 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		ocl.assertSemanticErrorQuery(null, "let a : Type = null in a.if", "no viable alternative following input ''if''");
 		ocl.assertSemanticErrorQuery(null, "let a : Type = null in a->if", "no viable alternative following input ''if''");
 		// oclAsSet()
-		ocl.assertQueryEquals(standardLibrary.getPackage(), 0, "let types = self.ownedClasses?->select(name = 'notAclass') in let type = if types->notEmpty() then types->any(true) else null endif in type->size()");
-		ocl.assertQueryEquals(standardLibrary.getPackage(), 0, "let types = self.ownedClasses?->select(name = 'notAclass') in let type = if types->notEmpty() then types->any(true) else null endif in type?->size()");
-		ocl.assertQueryEquals(standardLibrary.getPackage(), 1, "let types = self.ownedClasses?->select(name = 'Boolean') in let type = if types->notEmpty() then types->any(true) else null endif in type->size()");
-		ocl.assertQueryEquals(standardLibrary.getPackage(), 1, "let types = self.ownedClasses?->select(name = 'Boolean') in let type = if types->notEmpty() then types->any(true) else null endif in type?->size()");
-		ocl.assertQueryEquals(standardLibrary.getPackage(), 1, "let types = self.ownedClasses?->select(name = 'Boolean') in let type = if types->notEmpty() then types->any(true) else null endif in type?->size()?->size()");
+		ocl.assertQueryEquals(standardLibraryPackage, 0, "let types = self.ownedClasses?->select(name = 'notAclass') in let type = if types->notEmpty() then types->any(true) else null endif in type->size()");
+		ocl.assertQueryEquals(standardLibraryPackage, 0, "let types = self.ownedClasses?->select(name = 'notAclass') in let type = if types->notEmpty() then types->any(true) else null endif in type?->size()");
+		ocl.assertQueryEquals(standardLibraryPackage, 1, "let types = self.ownedClasses?->select(name = 'Boolean') in let type = if types->notEmpty() then types->any(true) else null endif in type->size()");
+		ocl.assertQueryEquals(standardLibraryPackage, 1, "let types = self.ownedClasses?->select(name = 'Boolean') in let type = if types->notEmpty() then types->any(true) else null endif in type?->size()");
+		ocl.assertQueryEquals(standardLibraryPackage, 1, "let types = self.ownedClasses?->select(name = 'Boolean') in let type = if types->notEmpty() then types->any(true) else null endif in type?->size()?->size()");
 		ocl.dispose();
 	}
 
 	@Test public void test_implicit_source() {
 		TestOCL ocl = createOCL();
 		StandardLibrary standardLibrary = ocl.getStandardLibrary();
+		org.eclipse.ocl.pivot.Package standardLibraryPackage = standardLibrary.getOclAnyType().getOwningPackage();
 		if (!useCodeGen) {			// FIXME CG consistent boxing
-			ocl.assertQueryTrue(standardLibrary.getPackage(), "ownedClasses?->select(name = 'Integer') = Set{Integer}");
-			ocl.assertQueryTrue(standardLibrary.getPackage(), "let name : String = 'String' in ownedClasses?->select(name = 'Integer') = Set{Integer}");
+			ocl.assertQueryTrue(standardLibraryPackage, "ownedClasses?->select(name = 'Integer') = Set{Integer}");
+			ocl.assertQueryTrue(standardLibraryPackage, "let name : String = 'String' in ownedClasses?->select(name = 'Integer') = Set{Integer}");
 			ocl.assertQueryTrue(-1, "let type : Class = oclType() in type.owningPackage?.ownedClasses?->select(name = type.name) = Set{Integer}");
 		}
-		ocl.assertQueryTrue(standardLibrary.getPackage(), "ownedPackages->select(oclIsKindOf(Integer))->isEmpty()");
-		ocl.assertQueryTrue(standardLibrary.getPackage(), "ownedPackages->select(oclIsKindOf(Package))->isEmpty()");	// Fails unless implicit Package disambiguated away by argument type expectation
+		ocl.assertQueryTrue(standardLibraryPackage, "ownedPackages->select(oclIsKindOf(Integer))->isEmpty()");
+		ocl.assertQueryTrue(standardLibraryPackage, "ownedPackages->select(oclIsKindOf(Package))->isEmpty()");	// Fails unless implicit Package disambiguated away by argument type expectation
 		ocl.dispose();
 	}
 
 	@Test public void test_safe_aggregate_navigation() {
 		TestOCL ocl = createOCL();
 		StandardLibrary standardLibrary = ocl.getStandardLibrary();
-		ocl.assertQueryInvalid(standardLibrary.getPackage(), "ownedClasses->including(null)->select(name = 'Integer')", StringUtil.bind(PivotMessages.NullNavigation, "source", "NamedElement::name"), InvalidValueException.class);
-		ocl.assertQueryResults(standardLibrary.getPackage(), "Set{Integer}", "ownedClasses?->select(name = 'Integer')");
+		org.eclipse.ocl.pivot.Package standardLibraryPackage = standardLibrary.getOclAnyType().getOwningPackage();
+		ocl.assertQueryInvalid(standardLibraryPackage, "ownedClasses->including(null)->select(name = 'Integer')", StringUtil.bind(PivotMessages.NullNavigation, "source", "NamedElement::name"), InvalidValueException.class);
+		ocl.assertQueryResults(standardLibraryPackage, "Set{Integer}", "ownedClasses?->select(name = 'Integer')");
 		if (!useCodeGen) {		// FIXME boxing
-			ocl.assertQueryTrue(standardLibrary.getPackage(), "ownedClasses?->select(name = 'Integer') = Set{Integer}");
+			ocl.assertQueryTrue(standardLibraryPackage, "ownedClasses?->select(name = 'Integer') = Set{Integer}");
 		}
-		ocl.assertQueryInvalid(standardLibrary.getPackage(), "ownedClasses->including(null)->select(name = 'Integer') = Set{Integer}", StringUtil.bind(PivotMessages.NullNavigation, "source", "NamedElement::name"), InvalidValueException.class);
-		ocl.assertQueryResults(standardLibrary.getPackage(), "Set{Integer}", "ownedClasses->including(null)?->select(name = 'Integer')");
-		ocl.assertQueryTrue(standardLibrary.getPackage(), "ownedClasses->including(null)?->select(name = 'Integer')?.name = Bag{'Integer'}");
-		ocl.assertQueryResults(standardLibrary.getPackage(), "Bag{'Integer', null}", "ownedClasses?->select(name = 'Integer')->including(null)->collect(c | c?.name)");
-		ocl.assertQueryInvalid(standardLibrary.getPackage(), "ownedClasses->including(null)->select(name = 'Integer').name = Bag{'Integer'}", StringUtil.bind(PivotMessages.NullNavigation, "source", "NamedElement::name"), InvalidValueException.class);
+		ocl.assertQueryInvalid(standardLibraryPackage, "ownedClasses->including(null)->select(name = 'Integer') = Set{Integer}", StringUtil.bind(PivotMessages.NullNavigation, "source", "NamedElement::name"), InvalidValueException.class);
+		ocl.assertQueryResults(standardLibraryPackage, "Set{Integer}", "ownedClasses->including(null)?->select(name = 'Integer')");
+		ocl.assertQueryTrue(standardLibraryPackage, "ownedClasses->including(null)?->select(name = 'Integer')?.name = Bag{'Integer'}");
+		ocl.assertQueryResults(standardLibraryPackage, "Bag{'Integer', null}", "ownedClasses?->select(name = 'Integer')->including(null)->collect(c | c?.name)");
+		ocl.assertQueryInvalid(standardLibraryPackage, "ownedClasses->including(null)->select(name = 'Integer').name = Bag{'Integer'}", StringUtil.bind(PivotMessages.NullNavigation, "source", "NamedElement::name"), InvalidValueException.class);
 		ocl.dispose();
 	}
 
 	@Test public void test_safe_object_navigation() {
 		TestOCL ocl = createOCL();
 		StandardLibrary standardLibrary = ocl.getStandardLibrary();
-		ocl.assertValidationErrorQuery(ocl.getContextType(standardLibrary.getPackage()), "let parent : OclElement[1] = oclContainer()?.oclAsType(OclElement) in parent", PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "LetVariable::CompatibleNullityForInitializer", "parent : OclElement[1] = self.oclContainer()?.oclAsType(OclElement)");
-		ocl.assertQueryEquals(standardLibrary.getPackage(), standardLibrary.getPackage().eContainer(), "let parent : OclElement[?] = oclContainer()?.oclAsType(OclElement) in parent");
-		ocl.assertQueryNull(standardLibrary.getPackage(), "let grandparent : OclElement[?] = oclContainer()?.oclContainer()?.oclAsType(OclElement) in grandparent");
+		org.eclipse.ocl.pivot.Package standardLibraryPackage = standardLibrary.getOclAnyType().getOwningPackage();
+		ocl.assertValidationErrorQuery(ocl.getContextType(standardLibraryPackage), "let parent : OclElement[1] = oclContainer()?.oclAsType(OclElement) in parent", PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "LetVariable::CompatibleNullityForInitializer", "parent : OclElement[1] = self.oclContainer()?.oclAsType(OclElement)");
+		ocl.assertQueryEquals(standardLibraryPackage, standardLibraryPackage.eContainer(), "let parent : OclElement[?] = oclContainer()?.oclAsType(OclElement) in parent");
+		ocl.assertQueryNull(standardLibraryPackage, "let grandparent : OclElement[?] = oclContainer()?.oclContainer()?.oclAsType(OclElement) in grandparent");
 		ocl.dispose();
 	}
 

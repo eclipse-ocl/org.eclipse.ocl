@@ -281,6 +281,11 @@ public abstract class AbstractLeafSymbolicValue extends AbstractSymbolicValue
 		return type;
 	}
 
+//	@Override
+//	public @NonNull Type getType(@NonNull StandardLibrary standardLibrary) {
+//		return type;
+//	}
+
 	@Override
 	public @NonNull TypeId getTypeId() {
 		return typeId;
