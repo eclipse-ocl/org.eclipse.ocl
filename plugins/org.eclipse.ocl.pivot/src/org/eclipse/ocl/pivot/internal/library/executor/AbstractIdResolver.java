@@ -1096,6 +1096,14 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 			}
 			return PivotUtil.getClass(type, standardLibrary);
 		}
+		else if (value instanceof CollectionValue) {
+			CollectionValue collectionValue = (CollectionValue)value;
+			CollectionTypeId collectionTypeId = collectionValue.getTypeId();
+			IntegerValue lowerBound = collectionValue.size();
+			UnlimitedNaturalValue upperBound = ValueUtil.unlimitedNaturalValueOf(lowerBound);
+			Type type = getCollectionType(collectionTypeId, false, lowerBound, upperBound);
+			return PivotUtil.getClass(type, standardLibrary);
+		}
 		else if (value instanceof Value) {
 			TypeId typeId = ((Value)value).getTypeId();
 			Type type = key2type.get(typeId);
@@ -1117,6 +1125,13 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 					type = standardLibrary.getOclAnyType();
 				}
 				key2type.put(typeId, type);
+			}
+			if (value instanceof CollectionValue) {
+				CollectionValue collectionValue = (CollectionValue)value;
+				CollectionTypeId collectionTypeId = collectionValue.getTypeId();
+				IntegerValue lowerBound = collectionValue.size();
+				UnlimitedNaturalValue upperBound = ValueUtil.unlimitedNaturalValueOf(lowerBound);
+				type = getCollectionType(collectionTypeId, false, lowerBound, upperBound);
 			}
 			return PivotUtil.getClass(type, standardLibrary);
 		}
@@ -1851,7 +1866,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	@Override
 	public org.eclipse.ocl.pivot.@Nullable Package visitRootPackageId(@NonNull RootPackageId id) {
 		if (id == IdManager.METAMODEL) {
-			return ClassUtil.nonNullState(getStandardLibrary().getPackage());
+			return ClassUtil.nonNullState(getStandardLibrary().getOclAnyType().getOwningPackage());
 		}
 		String name = id.getName();
 		org.eclipse.ocl.pivot.Package knownPackage = roots2package.get(name);

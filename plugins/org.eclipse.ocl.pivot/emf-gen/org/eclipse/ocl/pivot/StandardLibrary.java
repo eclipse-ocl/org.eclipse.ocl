@@ -274,7 +274,7 @@ public interface StandardLibrary extends Element
 	/**
 	 * Obtains the package containing the library types
 	 *
-	 * Adeprecated since for extended libraries that package is ambiguous.
+	 * Deprecated since for extended libraries that package is ambiguous.
 	 * Use getOclAnyType().getOwningPackage() for the package defining OclAny.
 	 */
 	@Deprecated
