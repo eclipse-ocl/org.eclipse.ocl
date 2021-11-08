@@ -57,6 +57,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.internal.compatibility.EMF_2_9;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.resource.ProjectManager.IProjectDescriptor.IProjectDescriptorExtension;
@@ -2260,10 +2261,16 @@ public class StandaloneProjectMap implements ProjectManager
 		public void initializeGenModelLocationMap(@NonNull Map<@NonNull URI, @NonNull IPackageDescriptor> nsURI2package) {
 			Collection<@NonNull IResourceDescriptor> resourceDescriptors = getResourceDescriptors();
 			if (resourceDescriptors != null) {
+				Map<String, URI> runningEPackageNsURIToGenModelLocationMap = EMF_2_9.EcorePlugin.getEPackageNsURIToGenModelLocationMap(false);
+				Map<String, URI> targetEPackageNsURIToGenModelLocationMap = EMF_2_9.EcorePlugin.getEPackageNsURIToGenModelLocationMap(true);
 				for (@NonNull IResourceDescriptor resourceDescriptor : resourceDescriptors) {
 					URI resolvedGenModelURI = getResolvedGenModelURI(resourceDescriptor);
 					for (IPackageDescriptor packageDescriptor : resourceDescriptor.getPackageDescriptors()) {
 						URI nsURI = packageDescriptor.getNsURI();
+						if (runningEPackageNsURIToGenModelLocationMap == targetEPackageNsURIToGenModelLocationMap) {
+							String nsURIstring = nsURI.toString();
+							runningEPackageNsURIToGenModelLocationMap.put(nsURIstring, resolvedGenModelURI);
+						}
 						nsURI2package.put(nsURI, packageDescriptor);
 						if (PROJECT_MAP_ADD_GEN_MODEL.isActive()) {
 							PROJECT_MAP_ADD_GEN_MODEL.println(nsURI + " => " + resolvedGenModelURI);
