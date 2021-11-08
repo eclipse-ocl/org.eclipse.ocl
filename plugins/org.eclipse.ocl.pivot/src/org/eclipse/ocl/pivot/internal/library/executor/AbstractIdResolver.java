@@ -1130,13 +1130,6 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 				}
 				key2type.put(typeId, type);
 			}
-			if (value instanceof CollectionValue) {
-				CollectionValue collectionValue = (CollectionValue)value;
-				CollectionTypeId collectionTypeId = collectionValue.getTypeId();
-				IntegerValue lowerBound = collectionValue.size();
-				UnlimitedNaturalValue upperBound = ValueUtil.unlimitedNaturalValueOf(lowerBound);
-				type = getCollectionType(collectionTypeId, false, lowerBound, upperBound);
-			}
 			return PivotUtil.getClass(type, standardLibrary);
 		}
 		else if (value instanceof SymbolicValue) {

@@ -19,6 +19,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteModel;
+import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
@@ -82,8 +83,21 @@ public abstract class AbstractSymbolicEvaluationEnvironment implements SymbolicE
 	@Override
 	public boolean checkConformance(@NonNull OCLExpression typedElement, @NonNull Type returnType,
 			@NonNull TypedElement callTerm, @NonNull CallExp callExp) {
+		Feature feature = PivotUtil.getReferredFeature(callExp);
 		SymbolicValue symbolicValue = getSymbolicValue(typedElement);
-		Type actualType = SymbolicUtil.getType(symbolicValue, standardLibrary);
+		Type actualType = null;
+		if (feature.isIsStatic()) {
+			Type sourceType = callExp.getOwnedSource().getType();
+		//	if (symbolicValue.isKnown()) {
+				actualType = idResolver.getStaticTypeOfValue(sourceType, symbolicValue.getKnownValue());	// XXX not known ?
+		//	}
+		//	else {
+		//		actualType = idResolver.getStaticTypeOfValue(sourceType, symbolicValue);	// XXX
+		//	}
+		}
+		else {
+			actualType = SymbolicUtil.getType(symbolicValue, standardLibrary);
+		}
 		Type requiredType = PivotUtil.getType(callTerm);
 		if (requiredType == standardLibrary.getOclSelfType()) {
 			requiredType = PivotUtil.getOwningClass(PivotUtil.getReferredOperation(callExp));
