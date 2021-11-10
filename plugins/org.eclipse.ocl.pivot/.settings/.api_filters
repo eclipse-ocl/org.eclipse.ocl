@@ -28,6 +28,15 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/AssociationClassCallExpImpl.java" type="org.eclipse.ocl.pivot.internal.AssociationClassCallExpImpl">
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.AssociationClassCallExpImpl"/>
+                <message_argument value="ASSOCIATION_CLASS_CALL_EXP_OPERATION_COUNT"/>
+                <message_argument value="9"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/internal/BooleanLiteralExpImpl.java" type="org.eclipse.ocl.pivot.internal.BooleanLiteralExpImpl">
         <filter id="388194388">
             <message_arguments>
@@ -73,12 +82,48 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/CollectionRangeImpl.java" type="org.eclipse.ocl.pivot.internal.CollectionRangeImpl">
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.CollectionRangeImpl"/>
+                <message_argument value="COLLECTION_RANGE_OPERATION_COUNT"/>
+                <message_argument value="4"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/DynamicValueSpecificationImpl.java" type="org.eclipse.ocl.pivot.internal.DynamicValueSpecificationImpl">
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.DynamicValueSpecificationImpl"/>
+                <message_argument value="DYNAMIC_VALUE_SPECIFICATION_OPERATION_COUNT"/>
+                <message_argument value="9"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/internal/EnumLiteralExpImpl.java" type="org.eclipse.ocl.pivot.internal.EnumLiteralExpImpl">
         <filter id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.EnumLiteralExpImpl"/>
                 <message_argument value="ENUM_LITERAL_EXP_OPERATION_COUNT"/>
                 <message_argument value="7"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/ExpressionInOCLImpl.java" type="org.eclipse.ocl.pivot.internal.ExpressionInOCLImpl">
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.ExpressionInOCLImpl"/>
+                <message_argument value="EXPRESSION_IN_OCL_OPERATION_COUNT"/>
+                <message_argument value="9"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/FeatureCallExpImpl.java" type="org.eclipse.ocl.pivot.internal.FeatureCallExpImpl">
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.FeatureCallExpImpl"/>
+                <message_argument value="FEATURE_CALL_EXP_OPERATION_COUNT"/>
+                <message_argument value="9"/>
             </message_arguments>
         </filter>
     </resource>
@@ -109,12 +154,30 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/InvalidLiteralExpImpl.java" type="org.eclipse.ocl.pivot.internal.InvalidLiteralExpImpl">
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.InvalidLiteralExpImpl"/>
+                <message_argument value="INVALID_LITERAL_EXP_OPERATION_COUNT"/>
+                <message_argument value="6"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/internal/IterateExpImpl.java" type="org.eclipse.ocl.pivot.internal.IterateExpImpl">
         <filter id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.IterateExpImpl"/>
                 <message_argument value="ITERATE_EXP_OPERATION_COUNT"/>
                 <message_argument value="22"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/IterationImpl.java" type="org.eclipse.ocl.pivot.internal.IterationImpl">
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.IterationImpl"/>
+                <message_argument value="ITERATION_OPERATION_COUNT"/>
+                <message_argument value="10"/>
             </message_arguments>
         </filter>
     </resource>
@@ -136,6 +199,15 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/LanguageExpressionImpl.java" type="org.eclipse.ocl.pivot.internal.LanguageExpressionImpl">
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.LanguageExpressionImpl"/>
+                <message_argument value="LANGUAGE_EXPRESSION_OPERATION_COUNT"/>
+                <message_argument value="9"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/internal/LetExpImpl.java" type="org.eclipse.ocl.pivot.internal.LetExpImpl">
         <filter id="388194388">
             <message_arguments>
@@ -154,6 +226,15 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/LiteralExpImpl.java" type="org.eclipse.ocl.pivot.internal.LiteralExpImpl">
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.LiteralExpImpl"/>
+                <message_argument value="LITERAL_EXP_OPERATION_COUNT"/>
+                <message_argument value="6"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/internal/LoopExpImpl.java" type="org.eclipse.ocl.pivot.internal.LoopExpImpl">
         <filter id="388194388">
             <message_arguments>
@@ -163,12 +244,48 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/MapLiteralExpImpl.java" type="org.eclipse.ocl.pivot.internal.MapLiteralExpImpl">
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.MapLiteralExpImpl"/>
+                <message_argument value="MAP_LITERAL_EXP_OPERATION_COUNT"/>
+                <message_argument value="6"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/internal/MessageExpImpl.java" type="org.eclipse.ocl.pivot.internal.MessageExpImpl">
         <filter id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.MessageExpImpl"/>
                 <message_argument value="MESSAGE_EXP_OPERATION_COUNT"/>
                 <message_argument value="8"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/NavigationCallExpImpl.java" type="org.eclipse.ocl.pivot.internal.NavigationCallExpImpl">
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.NavigationCallExpImpl"/>
+                <message_argument value="NAVIGATION_CALL_EXP_OPERATION_COUNT"/>
+                <message_argument value="9"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/NullLiteralExpImpl.java" type="org.eclipse.ocl.pivot.internal.NullLiteralExpImpl">
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.NullLiteralExpImpl"/>
+                <message_argument value="NULL_LITERAL_EXP_OPERATION_COUNT"/>
+                <message_argument value="6"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/NumericLiteralExpImpl.java" type="org.eclipse.ocl.pivot.internal.NumericLiteralExpImpl">
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.NumericLiteralExpImpl"/>
+                <message_argument value="NUMERIC_LITERAL_EXP_OPERATION_COUNT"/>
+                <message_argument value="6"/>
             </message_arguments>
         </filter>
     </resource>
@@ -208,12 +325,30 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/ParameterImpl.java" type="org.eclipse.ocl.pivot.internal.ParameterImpl">
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.ParameterImpl"/>
+                <message_argument value="PARAMETER_OPERATION_COUNT"/>
+                <message_argument value="6"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/internal/ParameterVariableImpl.java" type="org.eclipse.ocl.pivot.internal.ParameterVariableImpl">
         <filter id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.ParameterVariableImpl"/>
                 <message_argument value="PARAMETER_VARIABLE_OPERATION_COUNT"/>
                 <message_argument value="8"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/PrimitiveLiteralExpImpl.java" type="org.eclipse.ocl.pivot.internal.PrimitiveLiteralExpImpl">
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.PrimitiveLiteralExpImpl"/>
+                <message_argument value="PRIMITIVE_LITERAL_EXP_OPERATION_COUNT"/>
+                <message_argument value="6"/>
             </message_arguments>
         </filter>
     </resource>
@@ -240,6 +375,15 @@
                 <message_argument value="org.eclipse.ocl.pivot.internal.PropertyImpl"/>
                 <message_argument value="PROPERTY_OPERATION_COUNT"/>
                 <message_argument value="8"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/RealLiteralExpImpl.java" type="org.eclipse.ocl.pivot.internal.RealLiteralExpImpl">
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.RealLiteralExpImpl"/>
+                <message_argument value="REAL_LITERAL_EXP_OPERATION_COUNT"/>
+                <message_argument value="6"/>
             </message_arguments>
         </filter>
     </resource>
@@ -287,6 +431,24 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/StringLiteralExpImpl.java" type="org.eclipse.ocl.pivot.internal.StringLiteralExpImpl">
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.StringLiteralExpImpl"/>
+                <message_argument value="STRING_LITERAL_EXP_OPERATION_COUNT"/>
+                <message_argument value="6"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/TupleLiteralExpImpl.java" type="org.eclipse.ocl.pivot.internal.TupleLiteralExpImpl">
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.TupleLiteralExpImpl"/>
+                <message_argument value="TUPLE_LITERAL_EXP_OPERATION_COUNT"/>
+                <message_argument value="6"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/internal/TupleLiteralPartImpl.java" type="org.eclipse.ocl.pivot.internal.TupleLiteralPartImpl">
         <filter id="388194388">
             <message_arguments>
@@ -311,6 +473,24 @@
                 <message_argument value="org.eclipse.ocl.pivot.internal.TypedElementImpl"/>
                 <message_argument value="TYPED_ELEMENT_OPERATION_COUNT"/>
                 <message_argument value="3"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/UnlimitedNaturalLiteralExpImpl.java" type="org.eclipse.ocl.pivot.internal.UnlimitedNaturalLiteralExpImpl">
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.UnlimitedNaturalLiteralExpImpl"/>
+                <message_argument value="UNLIMITED_NATURAL_LITERAL_EXP_OPERATION_COUNT"/>
+                <message_argument value="6"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/UnspecifiedValueExpImpl.java" type="org.eclipse.ocl.pivot.internal.UnspecifiedValueExpImpl">
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.UnspecifiedValueExpImpl"/>
+                <message_argument value="UNSPECIFIED_VALUE_EXP_OPERATION_COUNT"/>
+                <message_argument value="6"/>
             </message_arguments>
         </filter>
     </resource>
