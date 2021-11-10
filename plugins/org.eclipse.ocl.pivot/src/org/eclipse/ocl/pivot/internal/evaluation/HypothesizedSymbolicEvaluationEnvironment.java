@@ -787,7 +787,7 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 	 * Conversely return a String describing the incompatibility and consequently a contradiction.
 	 */
 	public @Nullable String symbolicReEvaluate(@NonNull TypedElement typedElement) {
-		SymbolicValue writeValue ;
+		SymbolicValue writeValue;
 		try {
 			writeValue = symbolicEvaluationVisitor.symbolicEvaluate(typedElement);
 		}

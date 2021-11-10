@@ -87,7 +87,6 @@ public abstract class AbstractSymbolicEvaluationEnvironment implements SymbolicE
 		SymbolicValue symbolicValue = getSymbolicValue(typedElement);
 		Type actualType = null;
 		if (feature.isIsStatic()) {
-			Type sourceType = callExp.getOwnedSource().getType();
 			if (symbolicValue.isKnown()) {
 				Object knownValue = symbolicValue.getKnownValue();
 				return knownValue instanceof Type;
@@ -104,8 +103,8 @@ public abstract class AbstractSymbolicEvaluationEnvironment implements SymbolicE
 		if (requiredType == standardLibrary.getOclSelfType()) {
 			requiredType = PivotUtil.getOwningClass(PivotUtil.getReferredOperation(callExp));
 		}
-		CompleteClass actualClass = completeModel.getCompleteClass(actualType);
-		CompleteClass requiredClass = completeModel.getCompleteClass(requiredType);
+		CompleteClass actualClass = completeModel.getCompleteClass(PivotUtil.getBehavioralType(actualType));
+		CompleteClass requiredClass = completeModel.getCompleteClass(PivotUtil.getBehavioralType(requiredType));
 		if (actualClass.conformsTo(requiredClass)) {
 			return true;
 		}

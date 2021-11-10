@@ -70,7 +70,7 @@ public class SymbolicUtil
 		return delegate;
 	}
 
-	public static Type getType(SymbolicValue symbolicValue, @NonNull StandardLibrary standardLibrary) {
+	public static @NonNull Type getType(SymbolicValue symbolicValue, @NonNull StandardLibrary standardLibrary) {
 		Type type = symbolicValue.getType();
 		return type == PrimitiveTypeImpl.ORPHAN_INTEGER_TYPE ? standardLibrary.getIntegerType() : type;
 	}

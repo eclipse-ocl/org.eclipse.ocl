@@ -369,10 +369,15 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 			symbolicEvaluationEnvironment.setDead(thenExpression);
 			return symbolicEvaluationEnvironment.symbolicEvaluate(elseExpression);
 		}
-		else if (conditionValue.isInvalid() || conditionValue.isNull()) {
+		else if (conditionValue.isInvalid()) {
 			symbolicEvaluationEnvironment.setDead(thenExpression);
 			symbolicEvaluationEnvironment.setDead(elseExpression);
-			return symbolicEvaluationEnvironment.getInvalidValue("incompatible condition");
+			return conditionValue;
+		}
+		else if (conditionValue.isNull()) {
+			symbolicEvaluationEnvironment.setDead(thenExpression);
+			symbolicEvaluationEnvironment.setDead(elseExpression);
+			return symbolicEvaluationEnvironment.getInvalidValue("null condition");
 		}
 		else {
 			SymbolicReason mayBeInvalidReason = SymbolicUtil.mayBeInvalidReason(conditionValue, "condition");;
