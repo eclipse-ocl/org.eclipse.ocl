@@ -88,12 +88,14 @@ public abstract class AbstractSymbolicEvaluationEnvironment implements SymbolicE
 		Type actualType = null;
 		if (feature.isIsStatic()) {
 			Type sourceType = callExp.getOwnedSource().getType();
-		//	if (symbolicValue.isKnown()) {
-				actualType = idResolver.getStaticTypeOfValue(sourceType, symbolicValue.getKnownValue());	// XXX not known ?
-		//	}
-		//	else {
-		//		actualType = idResolver.getStaticTypeOfValue(sourceType, symbolicValue);	// XXX
-		//	}
+			if (symbolicValue.isKnown()) {
+				Object knownValue = symbolicValue.getKnownValue();
+				return knownValue instanceof Type;
+			}
+			else {
+				actualType = symbolicValue.getType();
+				return actualType instanceof org.eclipse.ocl.pivot.Class;
+			}
 		}
 		else {
 			actualType = SymbolicUtil.getType(symbolicValue, standardLibrary);
