@@ -184,12 +184,12 @@ public abstract class AbstractLeafSymbolicValue extends AbstractSymbolicValue
 
 	@Override
 	public @NonNull SymbolicSimpleStatus basicGetInvalidStatus() {
-		return mayBeInvalidReason != null ? SymbolicSimpleStatus.UNDECIDED : SymbolicSimpleStatus.UNSATISFIED;
+		return typeId == TypeId.OCL_INVALID ? SymbolicSimpleStatus.SATISFIED : mayBeInvalidReason != null ? SymbolicSimpleStatus.UNDECIDED : SymbolicSimpleStatus.UNSATISFIED;
 	}
 
 	@Override
 	public @NonNull SymbolicSimpleStatus basicGetNullStatus() {
-		return mayBeNullReason != null ? SymbolicSimpleStatus.UNDECIDED : SymbolicSimpleStatus.UNSATISFIED;
+		return typeId == TypeId.OCL_VOID ? SymbolicSimpleStatus.SATISFIED : mayBeNullReason != null ? SymbolicSimpleStatus.UNDECIDED : SymbolicSimpleStatus.UNSATISFIED;
 	}
 
 	@Override

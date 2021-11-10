@@ -23,6 +23,7 @@ import org.eclipse.ocl.pivot.internal.symbolic.AbstractSymbolicRefinedValue.Symb
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
@@ -200,7 +201,7 @@ public abstract class Hypothesis
 	public static class MayBeInvalidHypothesis extends Hypothesis
 	{
 		public MayBeInvalidHypothesis(@NonNull SymbolicAnalysis symbolicAnalysis, @NonNull Iterable<@NonNull TypedElement> typedElements) {
-			super(symbolicAnalysis, typedElements, symbolicAnalysis.getKnownValue(ValueUtil.INVALID_VALUE));
+			super(symbolicAnalysis, typedElements, symbolicAnalysis.getKnownValue(new InvalidValueException("hypothesized-invalid")));
 		}
 
 		@Override

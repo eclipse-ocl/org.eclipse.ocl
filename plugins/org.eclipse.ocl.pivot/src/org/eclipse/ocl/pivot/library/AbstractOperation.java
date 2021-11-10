@@ -442,7 +442,11 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 		}
 		if (isKnown) {
 			@Nullable Object[] sourceAndArgumentValues = new @Nullable Object[1+argumentsSize];
-			sourceAndArgumentValues[0] = sourceSymbolicValue.getKnownValue();
+			Object knownSourceValue = sourceSymbolicValue.getKnownValue();
+			if ((knownSourceValue == null) && callExp.isIsSafe()) {
+				return sourceSymbolicValue;
+			}
+			sourceAndArgumentValues[0] = knownSourceValue;
 			for (int i = 0; i < argumentsSize; i++) {
 				sourceAndArgumentValues[i+1] = argumentSymbolicValues.get(i).getKnownValue();
 			}

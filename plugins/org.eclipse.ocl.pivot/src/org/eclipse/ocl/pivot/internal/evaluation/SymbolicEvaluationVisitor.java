@@ -64,6 +64,7 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.symbolic.AbstractLeafSymbolicValue.SymbolicNavigationCallValue;
+import org.eclipse.ocl.pivot.internal.symbolic.AbstractSymbolicRefinedValue;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicNumericValue;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicReason;
@@ -348,7 +349,14 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 
 	@Override
 	public @NonNull SymbolicValue visitExpressionInOCL(@NonNull ExpressionInOCL expression) {
-		return symbolicEvaluationEnvironment.symbolicEvaluate(PivotUtil.getOwnedBody(expression));
+		SymbolicValue symbolicValue = symbolicEvaluationEnvironment.symbolicEvaluate(PivotUtil.getOwnedBody(expression));
+		if (symbolicValue.asIncompatibility() != null) {
+			return symbolicValue;
+		}
+		if (symbolicValue.isInvalid()) {
+			return AbstractSymbolicRefinedValue.createIncompatibility(symbolicValue, "invalid-result", expression);
+		}
+		return symbolicValue;
 	}
 
 	@Override
