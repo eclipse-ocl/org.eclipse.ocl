@@ -12,9 +12,12 @@
 package org.eclipse.ocl.pivot.internal.evaluation;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
@@ -197,7 +200,8 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 		if (isCanceled()) {
 			throw new EvaluationHaltedException("Canceled");
 		}
-		if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
+		boolean traceHypothesisActive = SymbolicAnalysis.HYPOTHESIS.isActive();
+		if (traceHypothesisActive) {
 			StringBuilder s = new StringBuilder();
 			s.append("Analyzing: ");
 			s.append(expressionInOCL);
@@ -225,10 +229,17 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 		}
 		List<@Nullable List<@NonNull Hypothesis>> height2hypotheses2 = height2hypotheses;
 		if (height2hypotheses2 != null) {
+			List<@NonNull TypedElement> sortedTypedElements = new ArrayList<>();
+			for (@NonNull EObject eObject : new TreeIterable(expressionInOCL, true)) {
+				if (eObject instanceof TypedElement) {
+					sortedTypedElements.add((TypedElement) eObject);
+				}
+			}
+			Collections.sort(sortedTypedElements, cseAnalysis.getTypedElementHeightComparator());
 			for ( ; height2hypothesisHeight < height2hypotheses2.size(); height2hypothesisHeight++) {
 				List<@NonNull Hypothesis> hypotheses = height2hypotheses2.get(height2hypothesisHeight);
 				if (hypotheses != null) {
-					if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
+					if (traceHypothesisActive) {
 						SymbolicAnalysis.HYPOTHESIS.println(" resolving hypotheses at " + height2hypothesisHeight);
 					}
 					for (int index = 0; index < hypotheses.size(); index++) {
@@ -236,7 +247,7 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 						if (isCanceled()) {
 							throw new EvaluationHaltedException("Canceled");
 						}
-						hypothesis.analyze();
+						hypothesis.analyze(sortedTypedElements);
 					}
 				}
 			}
@@ -270,6 +281,16 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 		}
 		List<@Nullable List<@NonNull Hypothesis>> height2hypotheses2 = height2hypotheses;
 		if (height2hypotheses2 != null) {
+			Set<@NonNull TypedElement> unsortedTypedElements = new HashSet<>();
+			for (@NonNull ExpressionInOCL expressionInOCL : expressionsInOCL) {
+				for (@NonNull EObject eObject : new TreeIterable(expressionInOCL, true)) {
+					if (eObject instanceof TypedElement) {
+						unsortedTypedElements.add((TypedElement) eObject);
+					}
+				}
+			}
+			List<@NonNull TypedElement> sortedTypedElements = new ArrayList<>(unsortedTypedElements);
+			Collections.sort(sortedTypedElements, cseAnalysis.getTypedElementHeightComparator());
 			for ( ; height2hypothesisHeight < height2hypotheses2.size(); height2hypothesisHeight++) {
 				List<@NonNull Hypothesis> hypotheses = height2hypotheses2.get(height2hypothesisHeight);
 				if (hypotheses != null) {
@@ -281,7 +302,7 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 						if (isCanceled()) {
 							throw new EvaluationHaltedException("Canceled");
 						}
-						hypothesis.analyze();
+						hypothesis.analyze(sortedTypedElements);
 					}
 				}
 			}

@@ -71,7 +71,7 @@ public abstract class Hypothesis
 		}
 	}
 
-	public void analyze() {
+	public void analyze(@NonNull Iterable<@NonNull TypedElement> sortedTypedElements) {
 		Map<@NonNull TypedElement, @Nullable String> typedElement2incompatibility2 = typedElement2incompatibility;
 		assert typedElement2incompatibility2 == null : "typedElement2incompatibility already determined for: " + this;
 		typedElement2incompatibility = typedElement2incompatibility2 = new HashMap<>();
@@ -90,6 +90,12 @@ public abstract class Hypothesis
 				if (traceHypothesis) {
 					SymbolicAnalysis.HYPOTHESIS.println("    => already contradicted");
 				}
+			//	SymbolicValue unrefinedValue = oldSymbolicValue;
+			//	SymbolicValue refinedValue = getRefinedValue(unrefinedValue);
+			//	baseSymbolicEvaluationEnvironment.refineSymbolicValue(typedElement, refinedValue);
+			//	assert cannotBeSatisfiedBy(refinedValue);
+			//	String string = typedElement2incompatibility2.get(typedElement);
+				//	typedElement2incompatibility2.put(typedElement, incompatibility);
 			}
 			else {
 				String incompatibility = baseSymbolicEvaluationEnvironment.hypothesize(this, typedElement);
@@ -106,6 +112,18 @@ public abstract class Hypothesis
 					SymbolicAnalysis.HYPOTHESIS.println("    => no contradiction: " + SymbolicUtil.printPath(typedElement, false));
 				}
 				typedElement2incompatibility2.put(typedElement, incompatibility);
+			}
+			if (traceHypothesis) {
+				SymbolicAnalysis.HYPOTHESIS.println("    status:");
+				for (@NonNull TypedElement sortedTypedElement : sortedTypedElements) {
+					SymbolicValue symbolicValue = baseSymbolicEvaluationEnvironment.getSymbolicValue(sortedTypedElement);
+					StringBuilder s = new StringBuilder();
+					s.append("      ");
+					s.append(sortedTypedElement);
+					s.append(": ");
+					s.append(symbolicValue);
+					SymbolicAnalysis.HYPOTHESIS.println(s.toString());
+				}
 			}
 		}
 	}

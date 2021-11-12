@@ -40,6 +40,7 @@ import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
@@ -298,6 +299,7 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 	}
 
 	@Test public void test_cg_caught_if() throws ParserException {
+		SymbolicAnalysis.HYPOTHESIS.setState(true);
 		// The original version of this test checks that  numerous exceptions are caught.
 		// Once SymbolicAnalysis is in place these are all eliminated at edit-time.
 		TestOCL ocl = createOCL();
