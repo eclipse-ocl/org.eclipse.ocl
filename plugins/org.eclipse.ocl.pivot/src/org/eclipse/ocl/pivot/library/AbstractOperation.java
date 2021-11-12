@@ -194,15 +194,20 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 		OCLExpression ownedSource = PivotUtil.getOwnedSource(callExp);
 		Operation referredOperation = PivotUtil.getReferredOperation(callExp);
 		assert (this instanceof ConstrainedOperation) || !referredOperation.isIsValidating() : "Missing createResultValue overload for " + referredOperation.getImplementationClass();
-		SymbolicReason mayBeInvalidReason = evaluationEnvironment.mayBeInvalidReason(ownedSource);
+		SymbolicReason mayBeInvalidReason = null;
 		SymbolicReason mayBeNullReason = null;
-		SymbolicReason mayBeNullReason2 = evaluationEnvironment.mayBeNullReason(ownedSource);
-		if (mayBeNullReason2 != null) {
-			if (callExp.isIsSafe()) {
-				mayBeNullReason = mayBeNullReason2;
-			}
-			else {
-				mayBeInvalidReason = mayBeNullReason2;
+		if (!sourceMayBeInvalid()) {
+			mayBeInvalidReason = evaluationEnvironment.mayBeInvalidReason(ownedSource);
+		}
+		if (!sourceMayBeNull()) {
+			SymbolicReason sourceMayBeNullReason = evaluationEnvironment.mayBeNullReason(ownedSource);
+			if (sourceMayBeNullReason != null) {
+				if (callExp.isIsSafe()) {
+					mayBeNullReason = sourceMayBeNullReason;
+				}
+				else {
+					mayBeInvalidReason = sourceMayBeNullReason;
+				}
 			}
 		}
 		int i = 0;
@@ -210,11 +215,11 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 			if (mayBeInvalidReason == null) {
 				mayBeInvalidReason = argumentSymbolicValue.mayBeInvalidReason();
 				if (mayBeInvalidReason == null) {
-					mayBeNullReason2 = argumentSymbolicValue.mayBeNullReason();
-					if (mayBeNullReason2 != null) {
+					SymbolicReason argmentMayBeNullReason = argumentSymbolicValue.mayBeNullReason();
+					if (argmentMayBeNullReason != null) {
 						Parameter ownedParameter = PivotUtil.getOwnedParameter(referredOperation, i);
 						if (ownedParameter.isIsRequired()) {
-							mayBeInvalidReason = mayBeNullReason2;
+							mayBeInvalidReason = argmentMayBeNullReason;
 						}
 					}
 				}
