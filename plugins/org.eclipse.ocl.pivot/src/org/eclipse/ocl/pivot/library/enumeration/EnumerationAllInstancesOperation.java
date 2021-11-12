@@ -17,16 +17,13 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
-import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.library.AbstractUnaryOperation;
 import org.eclipse.ocl.pivot.values.SetValue;
-import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
  * EnumerationAllInstancesOperation realises the Enumeration::allInstances() library operation.
@@ -34,14 +31,6 @@ import org.eclipse.ocl.pivot.values.SymbolicValue;
 public class EnumerationAllInstancesOperation extends AbstractUnaryOperation
 {
 	public static final @NonNull EnumerationAllInstancesOperation INSTANCE = new EnumerationAllInstancesOperation();
-
-	/**
-	 * @since 1.16
-	 */
-	@Override
-	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
-		return checkPreconditions(evaluationEnvironment, callExp, CHECK_NOT_INVALID | CHECK_NOT_NULL);
-	}
 
 	/** @deprecated use Executor */
 	@Deprecated
@@ -65,5 +54,15 @@ public class EnumerationAllInstancesOperation extends AbstractUnaryOperation
 			}
 		}
 		return createSetValue((CollectionTypeId)returnTypeId, results);
+	}
+
+	@Override
+	protected boolean hasRedundantOverloadForInvalid() {
+		return true;
+	}
+
+	@Override
+	protected boolean hasRedundantOverloadForNull() {
+		return true;
 	}
 }

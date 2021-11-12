@@ -59,23 +59,6 @@ import com.google.common.collect.Iterables;
 public abstract class AbstractOperation extends AbstractIterationOrOperation implements LibraryOperation.LibraryOperationExtension2
 {
 	/**
-	 * @since 1.17
-	 */
-	protected static final int CHECK_NO_OCL_INVALID_OVERLOAD = 1 << 0;
-	/**
-	 * @since 1.17
-	 */
-	protected static final int CHECK_NO_OCL_VOID_OVERLOAD = 1 << 1;
-	/**
-	 * @since 1.17
-	 */
-	protected static final int CHECK_NOT_INVALID = 1 << 2;
-	/**
-	 * @since 1.17
-	 */
-	protected static final int CHECK_NOT_NULL = 1 << 3;
-
-	/**
 	 * Return the evaluation from sourceAndArgumentValues using the executor for context wrt a caller.
 	 *
 	 * Derived calsses should override basicEvalute to evaluate a cacheable result, or evaluate to bypass caching.
@@ -108,19 +91,15 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 	 * @since 1.17
 	 */
 	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
-		return checkPreconditions(evaluationEnvironment, callExp, CHECK_NO_OCL_INVALID_OVERLOAD | CHECK_NO_OCL_VOID_OVERLOAD | CHECK_NOT_INVALID | CHECK_NOT_NULL);
-	}
-
-	/**
-	 * @since 1.17
-	 */
-	protected final @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp, int checkFlags) {
 		EnvironmentFactory environmentFactory = evaluationEnvironment.getEnvironmentFactory();
 		CompleteModel completeModel = environmentFactory.getCompleteModel();
 		StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		Operation referredOperation = PivotUtil.getReferredOperation(callExp);
 		TypeId returnTypeId = callExp.getTypeId();
 		SymbolicReason returnMayBeNullReason = SymbolicUtil.isRequiredReason(callExp);
+		//
+		//	Propagate the known incompatibility of any source/argument.
+		//
 		OCLExpression source = PivotUtil.getOwnedSource(callExp);
 		SymbolicValue sourceValue = evaluationEnvironment.symbolicEvaluate(source);
 		if (sourceValue.asIncompatibility() != null) {
@@ -132,26 +111,33 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 				return argumentValue;
 			}
 		}
-		if ((checkFlags & CHECK_NOT_INVALID) != 0) {
-			if ((checkFlags & CHECK_NO_OCL_INVALID_OVERLOAD) != 0) {
-				CompleteClass oclInvalidClass = completeModel.getCompleteClass(standardLibrary.getOclInvalidType());
-				Operation oclInvalidOperation = oclInvalidClass.getOperation(referredOperation);
-				assert oclInvalidOperation == null : "Missing OclInvalid overload for " + referredOperation;
+		//
+		//	Check whether an invalid source is permissible,
+		//
+		boolean sourceMayBeInvalid = sourceMayBeInvalid();
+		if (sourceMayBeInvalid) {
+			assert !hasRedundantOverloadForInvalid();
+			assert completeModel.getCompleteClass(standardLibrary.getOclInvalidType()).getOperation(referredOperation) != null : "Missing OclInvalid overload for " + referredOperation;
+		}
+		else {
+			if (!hasRedundantOverloadForInvalid()) {
+				assert completeModel.getCompleteClass(standardLibrary.getOclInvalidType()).getOperation(referredOperation) == null : "Spurious OclInvalid overload for " + referredOperation;
 			}
 			SymbolicValue invalidSourceProblem = evaluationEnvironment.checkNotInvalid(source, returnTypeId, returnMayBeNullReason, callExp);
 			if (invalidSourceProblem != null) {
 				return invalidSourceProblem;
-			//	return SymbolicUtil.mayBeInvalidReason(invalidSourceProblem.mayBeInvalidReason(), callExp);
-			//	return createResultValue(invalidSourceProblem.mayBeInvalidReason(), callExp);
-			//	String mayBeInvalidReason = SymbolicUtil.mayBeInvalidReason(invalidSourceProblem.mayBeNullReason(), callExp);
-			//	return evaluationEnvironment.getUnknownValue(callExp, false, mayBeInvalidReason != null);
 			}
 		}
-		if ((checkFlags & CHECK_NOT_NULL) != 0) {
-			if ((checkFlags & CHECK_NO_OCL_VOID_OVERLOAD) != 0) {
-				CompleteClass oclVoidClass = completeModel.getCompleteClass(standardLibrary.getOclVoidType());
-				Operation oclVoidOperation = oclVoidClass.getOperation(referredOperation);
-				assert oclVoidOperation == null : "Missing OcVoid overload for " + referredOperation;
+		//
+		//	Check whether a null source is permissible,
+		//
+		boolean sourceMayBeNull = sourceMayBeNull();
+		if (sourceMayBeNull) {
+			assert completeModel.getCompleteClass(standardLibrary.getOclVoidType()).getOperation(referredOperation) != null : "Missing OcVoid overload for " + referredOperation;
+		}
+		else {
+			if (!hasRedundantOverloadForNull()) {
+				assert completeModel.getCompleteClass(standardLibrary.getOclVoidType()).getOperation(referredOperation) == null : "Spurious OcVoid overload for " + referredOperation;
 			}
 			if (!callExp.isIsSafe()) {
 				SymbolicValue nullSourceProblem = evaluationEnvironment.checkNotNull(source, returnTypeId, returnMayBeNullReason, callExp);
@@ -162,14 +148,20 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 		}
 		int i = 0;
 		for (@NonNull OCLExpression argument : PivotUtil.getOwnedArguments(callExp)) {
-			if (!referredOperation.isIsValidating() && ((checkFlags & CHECK_NOT_INVALID) != 0)) {
+			//
+			//	Check whether an invalid argument is permissible,
+			//
+			if (!referredOperation.isIsValidating() && !sourceMayBeInvalid) {
 				SymbolicValue invalidArgumentProblem = evaluationEnvironment.checkNotInvalid(argument, returnTypeId, returnMayBeNullReason, callExp);
 				if (invalidArgumentProblem != null) {
 					return invalidArgumentProblem;
 				}
 			}
+			//
+			//	Check whether a null argument is permissible,
+			//
 			Parameter parameter = PivotUtil.getOwnedParameter(referredOperation, i);
-			if (parameter.isIsRequired() && ((checkFlags & CHECK_NOT_NULL) != 0)) {
+			if (parameter.isIsRequired() && !sourceMayBeNull) {
 				SymbolicValue nullArgumentProblem = evaluationEnvironment.checkNotNull(argument, returnTypeId, returnMayBeNullReason, callExp);
 				if (nullArgumentProblem != null) {
 					return nullArgumentProblem;
@@ -181,9 +173,9 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 			}
 			i++;
 		}
-		SymbolicValue compatibleArgumentProblem = evaluationEnvironment.checkCompatibility(source, returnTypeId);
-		if (compatibleArgumentProblem != null) {
-			return compatibleArgumentProblem;
+		SymbolicValue compatibleSourceProblem = evaluationEnvironment.checkCompatibility(source, returnTypeId);
+		if (compatibleSourceProblem != null) {
+			return compatibleSourceProblem;
 		}
 		return null;
 	}
@@ -381,6 +373,44 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 			}
 		}
 		return incompatibility;
+	}
+
+	/**
+	 * Return true if this implementation has a modelled declaration for handling an invalid input, but
+	 * actually just returns invalid.
+	 *
+	 * @since 1.17
+	 */
+	protected boolean hasRedundantOverloadForInvalid() {
+		return false;
+	}
+
+	/**
+	 * Return true if this implementation has a modelled declaration for handling a null input, but
+	 * actually just returns invalid.
+	 *
+	 * @since 1.17
+	 */
+	protected boolean hasRedundantOverloadForNull() {
+		return false;
+	}
+
+	/**
+	 * Return true if this implementation handles an invalid source value.
+	 *
+	 * @since 1.17
+	 */
+	protected boolean sourceMayBeInvalid() {
+		return false;
+	}
+
+	/**
+	 * Return true if this implementation handles a null source value.
+	 *
+	 * @since 1.17
+	 */
+	protected boolean sourceMayBeNull() {
+		return false;
 	}
 
 	/**

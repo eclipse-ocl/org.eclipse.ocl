@@ -12,13 +12,10 @@ package org.eclipse.ocl.pivot.library.oclany;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
-import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.library.AbstractUntypedBinaryOperation;
-import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
  * OclAnyOclIsTypeOfOperation realises the OclAny::oclIsTypeOf() library operation.
@@ -26,14 +23,6 @@ import org.eclipse.ocl.pivot.values.SymbolicValue;
 public class OclAnyOclIsTypeOfOperation extends AbstractUntypedBinaryOperation
 {
 	public static final @NonNull OclAnyOclIsTypeOfOperation INSTANCE = new OclAnyOclIsTypeOfOperation();
-
-	/**
-	 * @since 1.16
-	 */
-	@Override
-	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
-		return checkPreconditions(evaluationEnvironment, callExp, CHECK_NOT_INVALID);
-	}
 
 	/** @deprecated use Executor */
 	@Deprecated
@@ -51,5 +40,21 @@ public class OclAnyOclIsTypeOfOperation extends AbstractUntypedBinaryOperation
 		Type argType = asType(argVal);
 		boolean result = sourceType.isEqualTo(executor.getStandardLibrary(), argType);
 		return result;
+	}
+
+	/**
+	 * @since 1.17
+	 */
+	@Override
+	protected boolean hasRedundantOverloadForInvalid() {
+		return true;
+	}
+
+	/**
+	 * @since 1.17
+	 */
+	@Override
+	protected boolean sourceMayBeNull() {
+		return true;
 	}
 }

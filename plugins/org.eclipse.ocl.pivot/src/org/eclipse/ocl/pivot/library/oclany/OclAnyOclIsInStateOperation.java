@@ -28,14 +28,6 @@ public class OclAnyOclIsInStateOperation extends AbstractUntypedBinaryOperation
 {
 	public static final @NonNull OclAnyOclIsInStateOperation INSTANCE = new OclAnyOclIsInStateOperation();
 
-	/**
-	 * @since 1.16
-	 */
-	@Override
-	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
-		return checkPreconditions(evaluationEnvironment, callExp, CHECK_NOT_INVALID);
-	}
-
 	/** @deprecated use Executor */
 	@Deprecated
 	@Override
@@ -49,6 +41,22 @@ public class OclAnyOclIsInStateOperation extends AbstractUntypedBinaryOperation
 	@Override
 	public @NonNull Boolean evaluate(@NonNull Executor executor, @Nullable Object sourceVal, @Nullable Object argVal) {
 		throw new UnsupportedOperationException();			// FIXME
+	}
+
+	/**
+	 * @since 1.17
+	 */
+	@Override
+	protected boolean hasRedundantOverloadForInvalid() {
+		return true;
+	}
+
+	/**
+	 * @since 1.17
+	 */
+	@Override
+	protected boolean sourceMayBeNull() {
+		return true;
 	}
 
 	/**

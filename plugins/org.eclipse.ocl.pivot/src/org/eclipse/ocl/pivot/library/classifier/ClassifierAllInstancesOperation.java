@@ -17,7 +17,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
@@ -25,10 +24,8 @@ import org.eclipse.ocl.pivot.evaluation.ModelManager.EcoreModelManager;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.library.AbstractUnaryOperation;
 import org.eclipse.ocl.pivot.values.SetValue;
-import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
  * ClassifierAllInstancesOperation realises the Classifier::allInstances() library operation.
@@ -36,14 +33,6 @@ import org.eclipse.ocl.pivot.values.SymbolicValue;
 public class ClassifierAllInstancesOperation extends AbstractUnaryOperation
 {
 	public static final @NonNull ClassifierAllInstancesOperation INSTANCE = new ClassifierAllInstancesOperation();
-
-	/**
-	 * @since 1.16
-	 */
-	@Override
-	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
-		return checkPreconditions(evaluationEnvironment, callExp, CHECK_NOT_INVALID);
-	}
 
 	/** @deprecated use Executor */
 	@Deprecated
@@ -81,5 +70,15 @@ public class ClassifierAllInstancesOperation extends AbstractUnaryOperation
 			}
 		}
 		return createSetValue((CollectionTypeId)returnTypeId, results);
+	}
+
+	@Override
+	protected boolean hasRedundantOverloadForInvalid() {
+		return true;
+	}
+
+	@Override
+	protected boolean sourceMayBeNull() {
+		return true;
 	}
 }

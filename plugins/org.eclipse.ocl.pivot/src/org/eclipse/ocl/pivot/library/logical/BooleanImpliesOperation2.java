@@ -45,7 +45,7 @@ public class BooleanImpliesOperation2 extends AbstractSimpleBinaryOperation
 			evaluationEnvironment.setDead(argument);
 			return evaluationEnvironment.getKnownValue(Boolean.TRUE);
 		}
-		SymbolicValue superProblem = checkPreconditions(evaluationEnvironment, callExp, CHECK_NOT_INVALID | CHECK_NOT_NULL);
+		SymbolicValue superProblem = super.checkPreconditions(evaluationEnvironment, callExp);
 		if (superProblem != null) {
 			return superProblem;
 		}
@@ -76,6 +76,16 @@ public class BooleanImpliesOperation2 extends AbstractSimpleBinaryOperation
 		else  {
 			return FALSE_VALUE;
 		}
+	}
+
+	@Override
+	protected boolean hasRedundantOverloadForInvalid() {
+		return true;
+	}
+
+	@Override
+	protected boolean hasRedundantOverloadForNull() {
+		return true;
 	}
 
 	/**

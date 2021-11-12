@@ -17,10 +17,8 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.evaluation.Executor;
-import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
-import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
  * BooleanXorOperation2 realises the 2-valued Boolean::xor() library operation.
@@ -30,14 +28,6 @@ import org.eclipse.ocl.pivot.values.SymbolicValue;
 public class BooleanXorOperation2 extends AbstractSimpleBinaryOperation
 {
 	public static final @NonNull BooleanXorOperation2 INSTANCE = new BooleanXorOperation2();
-
-	/**
-	 * @since 1.16
-	 */
-	@Override
-	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
-		return checkPreconditions(evaluationEnvironment, callExp, CHECK_NOT_INVALID | CHECK_NOT_NULL);
-	}
 
 	@Override
 	public @Nullable Object dispatch(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object sourceValue) {
@@ -58,5 +48,15 @@ public class BooleanXorOperation2 extends AbstractSimpleBinaryOperation
 		else  {
 			return FALSE_VALUE;
 		}
+	}
+
+	@Override
+	protected boolean hasRedundantOverloadForInvalid() {
+		return true;
+	}
+
+	@Override
+	protected boolean hasRedundantOverloadForNull() {
+		return true;
 	}
 }

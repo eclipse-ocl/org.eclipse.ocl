@@ -29,20 +29,28 @@ public class OclAnyToStringOperation extends AbstractSimpleUnaryOperation
 {
 	public static final @NonNull OclAnyToStringOperation INSTANCE = new OclAnyToStringOperation();
 
-	/**
-	 * @since 1.16
-	 */
-	@Override
-	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
-		return checkPreconditions(evaluationEnvironment, callExp, CHECK_NOT_INVALID);
-	}
-
 	@Override
 	public @NonNull String evaluate(@Nullable Object sourceVal) {
 		if (sourceVal instanceof InvalidValueException)	{				// FIXME Remove this once CG has proper invalid analysis
 			throw (InvalidValueException)sourceVal;
 		}
 		return sourceVal != null ? oclToString(sourceVal) : ValueUtil.NULL_STRING;
+	}
+
+	/**
+	 * @since 1.17
+	 */
+	@Override
+	protected boolean hasRedundantOverloadForInvalid() {
+		return true;
+	}
+
+	/**
+	 * @since 1.17
+	 */
+	@Override
+	protected boolean sourceMayBeNull() {
+		return true;
 	}
 
 	/**

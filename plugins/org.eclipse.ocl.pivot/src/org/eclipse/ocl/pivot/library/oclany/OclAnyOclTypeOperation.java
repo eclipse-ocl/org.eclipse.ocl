@@ -12,13 +12,10 @@ package org.eclipse.ocl.pivot.library.oclany;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
-import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.library.AbstractUntypedUnaryOperation;
-import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
  * OclAnyOclTypeOperation realises the OclAny::oclType() library operation.
@@ -26,14 +23,6 @@ import org.eclipse.ocl.pivot.values.SymbolicValue;
 public class OclAnyOclTypeOperation extends AbstractUntypedUnaryOperation
 {
 	public static final @NonNull OclAnyOclTypeOperation INSTANCE = new OclAnyOclTypeOperation();
-
-	/**
-	 * @since 1.16
-	 */
-	@Override
-	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
-		return checkPreconditions(evaluationEnvironment, callExp, CHECK_NOT_INVALID);
-	}
 
 	/** @deprecated use Executor */
 	@Deprecated
@@ -49,5 +38,21 @@ public class OclAnyOclTypeOperation extends AbstractUntypedUnaryOperation
 	public @NonNull Type evaluate(@NonNull Executor executor, @Nullable Object sourceVal) {
 //		return executor.getStaticTypeOf(sourceVal);
 		return executor.getIdResolver().getDynamicTypeOf(sourceVal);
+	}
+
+	/**
+	 * @since 1.17
+	 */
+	@Override
+	protected boolean hasRedundantOverloadForInvalid() {
+		return true;
+	}
+
+	/**
+	 * @since 1.17
+	 */
+	@Override
+	protected boolean sourceMayBeNull() {
+		return true;
 	}
 }

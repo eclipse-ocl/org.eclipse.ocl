@@ -27,11 +27,6 @@ public class UnsupportedOperation extends AbstractOperation implements LibraryPr
 {
 	public static final @NonNull UnsupportedOperation INSTANCE = new UnsupportedOperation();
 
-	@Override
-	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
-		return checkPreconditions(evaluationEnvironment, callExp, 0);
-	}
-
 	/**
 	 * @since 1.1
 	 */
@@ -53,6 +48,16 @@ public class UnsupportedOperation extends AbstractOperation implements LibraryPr
 	@Override
 	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	protected boolean sourceMayBeInvalid() {
+		return true;
+	}
+
+	@Override
+	protected boolean sourceMayBeNull() {
+		return true;
 	}
 
 	@Override

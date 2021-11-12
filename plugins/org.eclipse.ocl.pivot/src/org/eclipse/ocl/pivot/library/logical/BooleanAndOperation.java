@@ -51,7 +51,7 @@ public class BooleanAndOperation extends AbstractSimpleBinaryOperation
 			evaluationEnvironment.setDead(source);
 			return evaluationEnvironment.getKnownValue(Boolean.FALSE);
 		}
-		return checkPreconditions(evaluationEnvironment, callExp, CHECK_NOT_INVALID | CHECK_NOT_NULL);
+		return super.checkPreconditions(evaluationEnvironment, callExp);
 	}
 
 	@Override
@@ -104,6 +104,22 @@ public class BooleanAndOperation extends AbstractSimpleBinaryOperation
 		else {
 			throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.BOOLEAN_NAME, getTypeName(right));
 		}
+	}
+
+	/**
+	 * @since 1.17
+	 */
+	@Override
+	protected boolean hasRedundantOverloadForInvalid() {
+		return true;
+	}
+
+	/**
+	 * @since 1.17
+	 */
+	@Override
+	protected boolean hasRedundantOverloadForNull() {
+		return true;
 	}
 
 	/**

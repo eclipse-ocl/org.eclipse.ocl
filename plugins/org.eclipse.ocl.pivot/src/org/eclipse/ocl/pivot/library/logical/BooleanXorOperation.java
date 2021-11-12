@@ -12,13 +12,10 @@ package org.eclipse.ocl.pivot.library.logical;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
-import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
  * BooleanXorOperation realises the Boolean::xor() library operation.
@@ -26,14 +23,6 @@ import org.eclipse.ocl.pivot.values.SymbolicValue;
 public class BooleanXorOperation extends AbstractSimpleBinaryOperation
 {
 	public static final @NonNull BooleanXorOperation INSTANCE = new BooleanXorOperation();
-
-	/**
-	 * @since 1.16
-	 */
-	@Override
-	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
-		return checkPreconditions(evaluationEnvironment, callExp, CHECK_NOT_INVALID | CHECK_NOT_NULL);
-	}
 
 	@Override
 	public @Nullable Boolean evaluate(@Nullable Object left, @Nullable Object right) {
@@ -63,5 +52,15 @@ public class BooleanXorOperation extends AbstractSimpleBinaryOperation
 			}
 		}
 		throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.BOOLEAN_NAME, getTypeName(left));
+	}
+
+	@Override
+	protected boolean hasRedundantOverloadForInvalid() {
+		return true;
+	}
+
+	@Override
+	protected boolean hasRedundantOverloadForNull() {
+		return true;
 	}
 }

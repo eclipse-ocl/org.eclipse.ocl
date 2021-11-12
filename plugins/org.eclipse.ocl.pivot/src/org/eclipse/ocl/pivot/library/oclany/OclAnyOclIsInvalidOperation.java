@@ -27,20 +27,22 @@ public class OclAnyOclIsInvalidOperation extends AbstractSimpleUnaryOperation
 {
 	public static final @NonNull OclAnyOclIsInvalidOperation INSTANCE = new OclAnyOclIsInvalidOperation();
 
-	/**
-	 * @since 1.16
-	 */
-	@Override
-	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
-		return checkPreconditions(evaluationEnvironment, callExp, 0);
-	}
-
 	@Override
 	public @NonNull Object evaluate(@Nullable Object argument) {
 		if (argument instanceof InvalidValue) {
 			return Boolean.TRUE;
 		}
 		return Boolean.FALSE;
+	}
+
+	@Override
+	protected boolean sourceMayBeInvalid() {
+		return true;
+	}
+
+	@Override
+	protected boolean sourceMayBeNull() {
+		return true;
 	}
 
 	/**

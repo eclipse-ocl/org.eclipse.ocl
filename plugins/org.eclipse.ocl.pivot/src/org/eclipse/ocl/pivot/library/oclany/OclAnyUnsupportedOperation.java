@@ -11,11 +11,7 @@
 package org.eclipse.ocl.pivot.library.oclany;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.OperationCallExp;
-import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
 import org.eclipse.ocl.pivot.library.UnsupportedOperation;
-import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
  * OclAnyUnsupportedOperation reports an unsupported operation.
@@ -24,12 +20,4 @@ public class OclAnyUnsupportedOperation extends UnsupportedOperation
 {
 	public static final @NonNull OclAnyUnsupportedOperation INSTANCE = new OclAnyUnsupportedOperation();
 	public static final @NonNull OclAnyUnsupportedOperation AMBIGUOUS = new OclAnyUnsupportedOperation();
-
-	/**
-	 * @since 1.16
-	 */
-	@Override
-	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
-		return checkPreconditions(evaluationEnvironment, callExp, 0);
-	}
 }

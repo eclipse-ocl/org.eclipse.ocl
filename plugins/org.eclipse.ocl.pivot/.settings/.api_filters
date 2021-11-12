@@ -163,6 +163,36 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/evaluation/Evaluator.java" type="org.eclipse.ocl.pivot.evaluation.Evaluator">
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.evaluation.Evaluator"/>
+                <message_argument value="getExecutor()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/evaluation/Executor.java" type="org.eclipse.ocl.pivot.evaluation.Executor">
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.evaluation.Executor"/>
+                <message_argument value="pushEvaluationEnvironment(NamedElement, Object)"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.evaluation.Executor"/>
+                <message_argument value="resetCaches()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/ids/IdResolver.java" type="org.eclipse.ocl.pivot.ids.IdResolver">
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.ids.IdResolver"/>
+                <message_argument value="removeType(TypeId)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/ids/TypeId.java" type="org.eclipse.ocl.pivot.ids.TypeId">
         <filter id="403767336">
             <message_arguments>
@@ -198,36 +228,6 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.ids.TypeId"/>
                 <message_argument value="OCL_TYPE_NAME"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/evaluation/Evaluator.java" type="org.eclipse.ocl.pivot.evaluation.Evaluator">
-        <filter id="404000815">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.evaluation.Evaluator"/>
-                <message_argument value="getExecutor()"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/evaluation/Executor.java" type="org.eclipse.ocl.pivot.evaluation.Executor">
-        <filter id="404000815">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.evaluation.Executor"/>
-                <message_argument value="pushEvaluationEnvironment(NamedElement, Object)"/>
-            </message_arguments>
-        </filter>
-        <filter id="404000815">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.evaluation.Executor"/>
-                <message_argument value="resetCaches()"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/ids/IdResolver.java" type="org.eclipse.ocl.pivot.ids.IdResolver">
-        <filter id="404000815">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.ids.IdResolver"/>
-                <message_argument value="removeType(TypeId)"/>
             </message_arguments>
         </filter>
     </resource>
@@ -357,6 +357,20 @@
                 <message_argument value="org.eclipse.ocl.pivot.library.LibraryBinaryOperation"/>
                 <message_argument value="org.eclipse.ocl.pivot.library.LibraryIterationOrOperation"/>
                 <message_argument value="resolveBodyType(EnvironmentFactory, CallExp, Type)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/library/LibraryFeature.java" type="org.eclipse.ocl.pivot.library.LibraryFeature">
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.library.LibraryFeature"/>
+                <message_argument value="sourceMayBeInvalid()"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.library.LibraryFeature"/>
+                <message_argument value="sourceMayBeNull()"/>
             </message_arguments>
         </filter>
     </resource>

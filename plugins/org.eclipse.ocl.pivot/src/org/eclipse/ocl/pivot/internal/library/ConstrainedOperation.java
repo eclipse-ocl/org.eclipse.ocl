@@ -71,11 +71,6 @@ public class ConstrainedOperation extends AbstractOperation
 		}
 	}
 
-	@Override
-	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
-		return checkPreconditions(evaluationEnvironment, callExp, CHECK_NOT_INVALID | CHECK_NOT_NULL);
-	}
-
 	/**
 	 * @since 1.1
 	 */
@@ -91,6 +86,16 @@ public class ConstrainedOperation extends AbstractOperation
 			boxedSourceAndArgumentValues[1+i] = executor.evaluate(argument);
 		}
 		return evaluate(executor, callExp, boxedSourceAndArgumentValues);
+	}
+
+	@Override
+	protected boolean hasRedundantOverloadForInvalid() {
+		return true;
+	}
+
+	@Override
+	protected boolean hasRedundantOverloadForNull() {
+		return true;
 	}
 
 	@Override

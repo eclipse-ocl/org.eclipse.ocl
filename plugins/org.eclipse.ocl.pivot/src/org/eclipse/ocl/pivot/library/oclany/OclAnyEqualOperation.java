@@ -32,14 +32,6 @@ public class OclAnyEqualOperation extends AbstractSimpleBinaryOperation
 	public static final @NonNull OclAnyEqualOperation INSTANCE = new OclAnyEqualOperation();
 
 	/**
-	 * @since 1.16
-	 */
-	@Override
-	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
-		return checkPreconditions(evaluationEnvironment, callExp, CHECK_NOT_INVALID);
-	}
-
-	/**
 	 * Overridden to be invalid-out for any invalid in, never null, false for mismatching nullity.
 	 *
 	 * @since 1.16
@@ -97,6 +89,22 @@ public class OclAnyEqualOperation extends AbstractSimpleBinaryOperation
 			boolean result = left.equals(right);
 			return result;
 		}
+	}
+
+	/**
+	 * @since 1.17
+	 */
+	@Override
+	protected boolean hasRedundantOverloadForInvalid() {
+		return true;
+	}
+
+	/**
+	 * @since 1.17
+	 */
+	@Override
+	protected boolean sourceMayBeNull() {
+		return true;
 	}
 
 	/**

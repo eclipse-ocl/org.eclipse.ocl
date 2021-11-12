@@ -28,14 +28,6 @@ public class OclAnyOclLogOperation extends AbstractPolyOperation
 	public static final @NonNull OclAnyOclLogOperation INSTANCE = new OclAnyOclLogOperation();
 
 	/**
-	 * @since 1.16
-	 */
-	@Override
-	protected @Nullable SymbolicValue checkPreconditions(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment, @NonNull OperationCallExp callExp) {
-		return checkPreconditions(evaluationEnvironment, callExp, 0);
-	}
-
-	/**
 	 * @since 1.1
 	 */
 	@Override
@@ -87,6 +79,16 @@ public class OclAnyOclLogOperation extends AbstractPolyOperation
 			return "null"; //$NON-NLS-1$
 		}
 		return string;
+	}
+
+	@Override
+	protected boolean sourceMayBeInvalid() {
+		return true;
+	}
+
+	@Override
+	protected boolean sourceMayBeNull() {
+		return true;
 	}
 
 	/**
