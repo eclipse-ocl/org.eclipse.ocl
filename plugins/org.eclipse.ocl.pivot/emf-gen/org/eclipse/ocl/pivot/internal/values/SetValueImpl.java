@@ -57,6 +57,9 @@ public class SetValueImpl extends CollectionValueImpl implements SetValue {
 		@Override
 		@SuppressWarnings("unchecked")
 		public boolean add(@Nullable Object value) {
+			if (value == null) {
+				addedNull();
+			}
 			return ((Collection<Object>)elements).add(value);
 		}
 	}

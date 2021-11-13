@@ -221,6 +221,7 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	protected final @NonNull CollectionTypeId typeId;
 	protected final @NonNull Collection<? extends Object> elements;		// Using Value instances where necessary to ensure correct equals semantics
 	private int hashCode = 0;
+	private /*@LazyNonNull*/ Boolean isNullFree = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -240,6 +241,17 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 		this.typeId = typeId;
 		this.elements = values;
 		assert checkElementsAreValues(values);
+	}
+
+	/**
+	 * Derived Mutable Collections must invoke addedNull() whenever mutation adds a null to the content.
+	 *
+	 * @since 1.17
+	 */
+	protected void addedNull() {
+		if (isNullFree == Boolean.TRUE) {
+			isNullFree = Boolean.FALSE;
+		}
 	}
 
 	protected boolean checkElementsAreUnique(Iterable<? extends Object> elements) {
@@ -674,6 +686,22 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	@Override
 	public @NonNull Boolean isEmpty() {
 		return intSize() == 0;
+	}
+
+	@Override
+	public boolean isNullFree() {
+		Boolean isNullFree2 = isNullFree;
+		if (isNullFree2 == null) {
+			isNullFree2 = Boolean.TRUE;
+			for (Object element : this.iterable()) {
+				if (element == null) {
+					isNullFree2 = Boolean.FALSE;
+					break;
+				}
+			}
+			isNullFree = isNullFree2;
+		}
+		return isNullFree2;
 	}
 
 	@Override

@@ -633,6 +633,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/values/CollectionValue.java" type="org.eclipse.ocl.pivot.values.CollectionValue">
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.CollectionValue"/>
+                <message_argument value="isNullFree()"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/values/SymbolicValue.java" type="org.eclipse.ocl.pivot.values.SymbolicValue">
         <filter id="1110441988">
             <message_arguments>

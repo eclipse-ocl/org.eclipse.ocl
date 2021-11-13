@@ -32,7 +32,7 @@ public class SymbolicSimpleReason implements SymbolicReason
 
 	public SymbolicSimpleReason(@NonNull String string) {
 		this.string = string;
-		assert !"variable \"object\" may be null".equals(string);	// xXX
+		assert !"variable \"object\" may be null".equals(string);	// XXX
 	}
 
 	@Override

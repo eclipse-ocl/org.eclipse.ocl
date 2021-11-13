@@ -49,17 +49,17 @@ public abstract class SymbolicContent
 		@Override
 		public @NonNull SymbolicValue getElementalSymbolicValue(@NonNull SymbolicEvaluationVisitor symbolicEvaluationVisitor, @NonNull IteratorVariable iteratorVariable) {
 			SymbolicAnalysis symbolicAnalysis = symbolicEvaluationVisitor.getSymbolicAnalysis();
-			Type elementType = ((CollectionType)type).getElementType();
+			CollectionType collectionType = (CollectionType)type;
+			Type elementType = collectionType.getElementType();
 			CollectionValue collectionValue2 = collectionValue;
 			if ((collectionValue2 == null) || !(elementType instanceof CollectionType)) {
-				SymbolicValue symbolicValue = symbolicAnalysis.getUnknownValue(iteratorVariable, SymbolicUtil.isRequiredReason(iteratorVariable), null);
-				return symbolicValue;
+				return symbolicAnalysis.getUnknownValue(iteratorVariable, SymbolicUtil.isRequiredReason(iteratorVariable), null);
 			}
 			SymbolicNumericValue sizeValue = computeElementSize(symbolicAnalysis, collectionValue2);
 			String constantName = symbolicAnalysis.createConstantName();
-			SymbolicCollectionContent content = new SymbolicCollectionContent("c#" + constantName + "%", (CollectionType)type, collectionValue2);
+			SymbolicCollectionContent content = new SymbolicCollectionContent("c#" + constantName + "%", collectionType, collectionValue2);			// XXX
 			content.setSize(sizeValue);
-			return new SymbolicKnownValue(constantName, elementType, null, content);
+			return symbolicAnalysis.getUnknownValue(iteratorVariable, SymbolicUtil.isRequiredReason(iteratorVariable), null);			// XXX nullFree
 		}
 
 		@Override

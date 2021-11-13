@@ -145,8 +145,21 @@ public interface CollectionValue extends IterableValue {
 	 */
 	@NonNull Boolean isEmpty();
 
+	/**
+	 * @generated NOT
+	 *
+	 * @since 1.17
+	 */
+	default boolean isNullFree() {return false; }
+
+	/**
+	 * @generated NOT
+	 */
 	boolean isOrdered();
 
+	/**
+	 * @generated NOT
+	 */
 	boolean isUnique();
 
 	/**
