@@ -23,13 +23,16 @@ import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.OclInvalidTypeId;
+import org.eclipse.ocl.pivot.ids.OclVoidTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent.SymbolicCollectionContent;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent.SymbolicInvalidContent;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent.SymbolicMapContent;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent.SymbolicVoidContent;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -212,6 +215,10 @@ public abstract class AbstractLeafSymbolicValue extends AbstractSymbolicValue
 		return new SymbolicMapContent("m#" + name + "%", (MapType)type, null);
 	}
 
+	protected @NonNull SymbolicVoidContent createVoidContent(@NonNull SymbolicReason reason) {
+		return new SymbolicVoidContent("z#" + name + "%", (VoidType)type, reason);
+	}
+
 	@Override
 	public @NonNull SymbolicValue getBaseValue() {
 		return this;
@@ -236,6 +243,9 @@ public abstract class AbstractLeafSymbolicValue extends AbstractSymbolicValue
 	public @NonNull SymbolicContent getContent() {
 		if (typeId instanceof OclInvalidTypeId) {
 			return getInvalidContent(new SymbolicSimpleReason("invalid content"));
+		}
+		if (typeId instanceof OclVoidTypeId) {
+			return getVoidContent(new SymbolicSimpleReason("null content"));
 		}
 		if (typeId instanceof CollectionTypeId) {
 			return getCollectionContent();
@@ -289,6 +299,16 @@ public abstract class AbstractLeafSymbolicValue extends AbstractSymbolicValue
 	@Override
 	public @NonNull TypeId getTypeId() {
 		return typeId;
+	}
+
+//	@Override
+	public @NonNull SymbolicVoidContent getVoidContent(@NonNull SymbolicReason reason) {
+		assert typeId instanceof OclVoidTypeId;
+		SymbolicContent content2 = content;
+		if (content2 == null) {
+			content = content2 = createVoidContent(reason);
+		}
+		return (SymbolicVoidContent)content2;
 	}
 
 	@Override

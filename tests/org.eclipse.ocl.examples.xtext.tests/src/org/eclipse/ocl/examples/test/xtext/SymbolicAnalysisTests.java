@@ -75,6 +75,7 @@ import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.utilities.UniqueList;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
+import org.eclipse.ocl.pivot.values.SequenceValue;
 import org.eclipse.ocl.pivot.values.SetValue;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
@@ -307,7 +308,7 @@ public class SymbolicAnalysisTests extends XtextTestCase
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		SymbolicAnalysis.HYPOTHESIS.setState(true);
+//		SymbolicAnalysis.HYPOTHESIS.setState(true);
 	}
 
 	public void testSymbolicAnalysis_AndGuard() throws Exception {
@@ -818,13 +819,19 @@ public class SymbolicAnalysisTests extends XtextTestCase
 
 		// non-null not-empty x
 		SetValue set2 = ValueUtil.createSetOfEach(TypeId.SET.getSpecializedId(TypeId.INTEGER), ValueUtil.integerValueOf(99));
-		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{set2});
+		SymbolicAnalysis symbolicAnalysis2a = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{set2});
+		checkContents(symbolicAnalysis2a, asExpressionInOCL, null, null, null, isInvalids(asExpressionInOCL, first_Exp));
+
+		// non-null not-empty x
+		SequenceValue seq = ValueUtil.createSequenceOfEach(TypeId.SEQUENCE.getSpecializedId(TypeId.INTEGER), ValueUtil.integerValueOf(99));
+		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{seq});
 		checkContents(symbolicAnalysis2, asExpressionInOCL, null, null, null, null);
 
 		// non-null unknown x
 		SymbolicVariableValue symbolicVariable = new SymbolicVariableValue(asExpressionInOCL.getOwnedParameters().get(0), null, null);
 		SymbolicAnalysis symbolicAnalysis3 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{symbolicVariable});
-		checkContents(symbolicAnalysis3, asExpressionInOCL, null, null, mayBeInvalids(asExpressionInOCL, first_Exp), null);
+	//	checkContents(symbolicAnalysis3, asExpressionInOCL, null, null, mayBeInvalids(asExpressionInOCL, first_Exp), null);
+		checkContents(symbolicAnalysis3, asExpressionInOCL, null, null, null, null);
 
 		// null collection x (does not behave as empty set)
 		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{null});

@@ -1801,7 +1801,13 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		Type containingType = PivotUtil.getContainingType(expressionInOCL);
 		if (containingType instanceof org.eclipse.ocl.pivot.Class) {
 			SymbolicClassAnalysis symbolicClassAnalysis = getSymbolicAnalysis((org.eclipse.ocl.pivot.Class)containingType);
-			return symbolicClassAnalysis.getSymbolicAnalysis(expressionInOCL);
+			SymbolicExpressionAnalysis symbolicExpressionAnalysis = symbolicClassAnalysis.getSymbolicAnalysis(expressionInOCL);
+			if ((selfObject == null) && (parameters == null)) {
+				return symbolicExpressionAnalysis;
+			}
+			symbolicExpressionAnalysis = symbolicExpressionAnalysis.getSymbolicAnalysis(selfObject, resultObject, parameters);
+			symbolicExpressionAnalysis.analyzeExpression(selfObject, resultObject, parameters);
+			return symbolicExpressionAnalysis;
 
 		//	Namespace containingNamespace = PivotUtil.getContainingNamespace(expressionInOCL);
 		//	if ((containingNamespace == containingType) && (expressionInOCL.eContainmentFeature() == PivotPackage.Literals.CONSTRAINT__OWNED_SPECIFICATION)) {

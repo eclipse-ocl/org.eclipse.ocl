@@ -82,7 +82,7 @@ public abstract class AbstractSymbolicEvaluationEnvironment implements SymbolicE
 
 	@Override
 	public boolean checkConformance(@NonNull OCLExpression typedElement, @NonNull Type returnType,
-			@NonNull TypedElement callTerm, @NonNull CallExp callExp) {
+			@NonNull TypedElement callTerm, @NonNull CallExp callExp) {			// XXX redundant callTerm
 		Feature feature = PivotUtil.getReferredFeature(callExp);
 		SymbolicValue symbolicValue = getSymbolicValue(typedElement);
 		Type actualType = null;

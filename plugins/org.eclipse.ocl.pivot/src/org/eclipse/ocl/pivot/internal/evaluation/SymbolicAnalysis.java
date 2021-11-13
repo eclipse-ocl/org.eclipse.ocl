@@ -73,7 +73,7 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 {
 	public static final @NonNull TracingOption HYPOTHESIS = new TracingOption(PivotPlugin.PLUGIN_ID, "symbolic/hypothesis");
 
-	private final @NonNull BasicOCLExecutor executor;
+	protected final @NonNull BasicOCLExecutor executor;
 	protected final EnvironmentFactoryInternal.@NonNull EnvironmentFactoryInternalExtension environmentFactory;
 	protected final @NonNull CommonSubExpressionAnalysis cseAnalysis;
 	private @Nullable BaseSymbolicEvaluationEnvironment baseSymbolicEvaluationEnvironment =null;
@@ -796,11 +796,20 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 			this.expressionInOCL = expressionInOCL;
 		}
 
+		public @Nullable String analyzeExpression(@Nullable Object selfObject, @Nullable Object resultObject, @Nullable Object @Nullable [] parameters) {
+			return analyzeExpression(expressionInOCL, selfObject, resultObject, parameters);
+		}
+
 		@Override
 		@Nullable
 		public String getIncompatibility(@NonNull HypothesizedSymbolicEvaluationEnvironment hypothesizedSymbolicEvaluationEnvironment, @NonNull TypedElement hypothesizedTypedElement) {
 			SymbolicValue symbolicValue = hypothesizedSymbolicEvaluationEnvironment.getSymbolicValue(expressionInOCL);
 			return symbolicValue.asIncompatibility();
+		}
+
+		public @NonNull SymbolicExpressionAnalysis getSymbolicAnalysis(@Nullable Object selfObject, @Nullable Object resultObject, @Nullable Object @Nullable [] parameters) {
+			// FIXME cache
+			return new SymbolicExpressionAnalysis(expressionInOCL, environmentFactory, executor.getModelManager());
 		}
 
 		@Override
