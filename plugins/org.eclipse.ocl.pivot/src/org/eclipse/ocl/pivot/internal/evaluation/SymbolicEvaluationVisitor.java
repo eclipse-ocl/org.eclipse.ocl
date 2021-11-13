@@ -280,7 +280,7 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 		for (@NonNull CollectionLiteralPart part : PivotUtil.getOwnedParts(literalExp)) {
 			SymbolicValue partValue = symbolicEvaluate(part);
 			if (partValue.isInvalid()) {
-				return context.getKnownValue(ValueUtil.INVALID_VALUE);
+				return partValue;
 			}
 			if (!partValue.isKnown()) {
 				isKnown = false;
@@ -290,7 +290,7 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 			}
 			if (isNullFree) {
 				if (partValue.isNull()) {
-					return context.getKnownValue(ValueUtil.INVALID_VALUE);
+					return context.getKnownValue(new InvalidValueException("null part value"));
 				}
 				if (mayBeInvalidReason == null) {
 					mayBeInvalidReason = partValue.mayBeNullReason();
@@ -460,11 +460,14 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 		final boolean isValuesAreNullFree = ((MapType)literalExp.getType()).isValuesAreNullFree();
 		boolean isKnown = true;
 		SymbolicReason mayBeInvalidReason = null;
-		for (@NonNull MapLiteralPart part : PivotUtil.getOwnedParts(literalExp)) {
+		for (@NonNull MapLiteralPart part : PivotUtil.getOwnedParts(literalExp)) { // Inlined because of Bug 577242
 			SymbolicValue keyValue = symbolicEvaluate(PivotUtil.getOwnedKey(part));
 			SymbolicValue valueValue = symbolicEvaluate(PivotUtil.getOwnedValue(part));
-			if (keyValue.isInvalid() || valueValue.isInvalid()) {
-				return context.getKnownValue(ValueUtil.INVALID_VALUE);
+			if (keyValue.isInvalid()) {
+				return keyValue;
+			}
+			if (valueValue.isInvalid()) {
+				return valueValue;
 			}
 			if (!keyValue.isKnown() || !valueValue.isKnown()) {
 				isKnown = false;
@@ -480,7 +483,7 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 			}
 			if (isKeysAreNullFree) {
 				if (keyValue.isNull()) {
-					return context.getKnownValue(ValueUtil.INVALID_VALUE);
+					return context.getKnownValue(new InvalidValueException("null key value"));
 				}
 				if (mayBeInvalidReason == null) {
 					mayBeInvalidReason = keyValue.mayBeNullReason();
@@ -488,7 +491,7 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 			}
 			if (isValuesAreNullFree) {
 				if (valueValue.isNull()) {
-					return context.getKnownValue(ValueUtil.INVALID_VALUE);
+					return context.getKnownValue(new InvalidValueException("null value value"));
 				}
 				if (mayBeInvalidReason == null) {
 					mayBeInvalidReason = valueValue.mayBeNullReason();
@@ -503,6 +506,52 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 			return context.getUnknownValue(literalExp, null, mayBeInvalidReason);
 		}
 	}
+
+/*	@Override		-- see Bug 577242
+	public @NonNull SymbolicValue visitMapLiteralPart(@NonNull MapLiteralPart mapLiteralPart) {
+		final @NonNull MapLiteralExp literalExp = (MapLiteralExp)mapLiteralPart.eContainer();
+		final boolean isKeysAreNullFree = ((MapType)literalExp.getType()).isKeysAreNullFree();
+		final boolean isValuesAreNullFree = ((MapType)literalExp.getType()).isValuesAreNullFree();
+		boolean isKnown = true;
+		SymbolicReason mayBeInvalidReason = null;
+		SymbolicValue keyValue = symbolicEvaluate(PivotUtil.getOwnedKey(mapLiteralPart));
+		SymbolicValue valueValue = symbolicEvaluate(PivotUtil.getOwnedValue(mapLiteralPart));
+		if (keyValue.isInvalid()) {
+			return keyValue;
+		}
+		if (valueValue.isInvalid()) {
+			return valueValue;
+		}
+		if (!keyValue.isKnown() || !valueValue.isKnown()) {
+			isKnown = false;
+		}
+		if (mayBeInvalidReason == null) {
+			mayBeInvalidReason = keyValue.mayBeInvalidReason();
+			if (mayBeInvalidReason == null) {
+				mayBeInvalidReason = valueValue.mayBeInvalidReason();
+				if (mayBeInvalidReason == null) {
+					mayBeInvalidReason = valueValue.mayBeInvalidReason();
+				}
+			}
+		}
+		if (isKeysAreNullFree) {
+			if (keyValue.isNull()) {
+				return context.getKnownValue(new InvalidValueException("null key value"));
+			}
+			if (mayBeInvalidReason == null) {
+				mayBeInvalidReason = keyValue.mayBeNullReason();
+			}
+		}
+		if (isValuesAreNullFree) {
+			if (valueValue.isNull()) {
+				return context.getKnownValue(new InvalidValueException("null value value"));
+			}
+			if (mayBeInvalidReason == null) {
+				mayBeInvalidReason = valueValue.mayBeNullReason();
+			}
+		}
+		return context.getUnknownValue(mapLiteralPart, null, mayBeInvalidReason);
+	} */
 
 	@Override
 	public @NonNull SymbolicValue visitNullLiteralExp(@NonNull NullLiteralExp nullLiteralExp) {
@@ -557,8 +606,11 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 		SymbolicReason mayBeInvalidReason = null;
 		for (@NonNull ShadowPart part : PivotUtil.getOwnedParts(shadowExp)) {
 			SymbolicValue partValue = symbolicEvaluationEnvironment.symbolicEvaluate(part);
-			if (partValue.isInvalid() || partValue.isNull()) {
-				return context.getKnownValue(ValueUtil.INVALID_VALUE);
+			if (partValue.isInvalid()) {
+				return partValue;
+			}
+			if (partValue.isNull()) {
+				return context.getKnownValue(new InvalidValueException("null part"));
 			}
 			if (!partValue.isKnown()) {
 				isKnown = false;
@@ -581,22 +633,18 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 
 	@Override
 	public @NonNull SymbolicValue visitShadowPart(@NonNull ShadowPart shadowPart) {
-	//	boolean isKnown = true;
 		OCLExpression ownedInit = PivotUtil.getOwnedInit(shadowPart);
 		SymbolicValue initValue = symbolicEvaluationEnvironment.symbolicEvaluate(ownedInit);
-	//	if (!initValue.isKnown()) {
-	//		isKnown = false;
-	//	}
-		SymbolicReason mayBeInvalidReason = initValue.mayBeInvalidReason();
-	//	if (mayBeInvalidReason != null) {
-	//		mayBeInvalidReason = initValue.mayBeNullReason();
-	//	}
-	//	if (isKnown) {
-	//		Object resultValue = evaluationVisitor.visitShadowPart(shadowPart);		// -- not supported
+		if (initValue.isInvalid()) {
+			return initValue;
+		}
+	//	if (initValue.isKnown()) {		// FIXME known ShadowPart is not supported
+	//		Object resultValue = evaluationVisitor.visitShadowPart(shadowPart);
 	//		return context.getKnownValue(resultValue);
 	//	}
 	//	else {
-			return context.getUnknownValue(ownedInit, null, mayBeInvalidReason);
+			SymbolicReason mayBeInvalidReason = initValue.mayBeInvalidReason();
+			return context.getUnknownValue(shadowPart, null, mayBeInvalidReason);
 	//	}
 	}
 
@@ -612,8 +660,11 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 		SymbolicReason mayBeInvalidReason = null;
 		for (@NonNull TupleLiteralPart part : PivotUtil.getOwnedParts(literalExp)) {
 			SymbolicValue partValue = symbolicEvaluationEnvironment.symbolicEvaluate(part);
-			if (partValue.isInvalid() || partValue.isNull()) {
-				return context.getKnownValue(ValueUtil.INVALID_VALUE);
+			if (partValue.isInvalid()) {
+				return partValue;
+			}
+			if (partValue.isNull()) {
+				return context.getKnownValue(new InvalidValueException("null part"));
 			}
 			if (!partValue.isKnown()) {
 				isKnown = false;
@@ -641,8 +692,11 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 		if (!partValue.isKnown()) {
 			isKnown = false;
 		}
-		if (partValue.isInvalid() || partValue.isNull()) {
-			return context.getKnownValue(ValueUtil.INVALID_VALUE);
+		if (partValue.isInvalid()) {
+			return partValue;
+		}
+		if (partValue.isNull()) {
+			return context.getKnownValue(new InvalidValueException("null part"));
 		}
 		SymbolicReason mayBeInvalidReason = partValue.mayBeInvalidReason();
 		if (mayBeInvalidReason == null) {

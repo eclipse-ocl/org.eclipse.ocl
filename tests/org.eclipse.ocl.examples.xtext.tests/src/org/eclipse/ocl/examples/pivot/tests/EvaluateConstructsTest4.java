@@ -71,7 +71,7 @@ public class EvaluateConstructsTest4 extends PivotTestSuite
 	@Test public void testConstruct_if() throws Exception {
 		TestOCL ocl = createOCL();
 		ocl.assertValidationErrorsQuery(null, "if null then 1 else 2 endif",
-			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfiedWithReason_ERROR_, "TypedElement::UnconditionallyValid", "if null then 1 else 2 endif", "incompatible condition"),
+			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfiedWithReason_ERROR_, "TypedElement::UnconditionallyValid", "if null then 1 else 2 endif", "null condition"),
 			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "IfExp::ConditionTypeIsBoolean", "if null then 1 else 2 endif"));
 		//
 		ocl.assertQueryFalse(null, "if true then false else false endif");
@@ -81,7 +81,7 @@ public class EvaluateConstructsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(null, 4.0, "if false then 3 else 4.0 endif");
 		//
 		ocl.assertValidationErrorsQuery(null, "if null then 1 else 2 endif",
-			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfiedWithReason_ERROR_, "TypedElement::UnconditionallyValid", "if null then 1 else 2 endif", "incompatible condition"),
+			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfiedWithReason_ERROR_, "TypedElement::UnconditionallyValid", "if null then 1 else 2 endif", "null condition"),
 			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "IfExp::ConditionTypeIsBoolean", "if null then 1 else 2 endif"));
 		ocl.assertQueryInvalid(null, "if null then 1 else 2 endif");
 		ocl.assertQueryInvalid(null, "if invalid then 1 else 2 endif");

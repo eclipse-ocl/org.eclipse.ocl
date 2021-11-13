@@ -299,7 +299,6 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 	}
 
 	@Test public void test_cg_caught_if() throws ParserException {
-		SymbolicAnalysis.HYPOTHESIS.setState(true);
 		// The original version of this test checks that  numerous exceptions are caught.
 		// Once SymbolicAnalysis is in place these are all eliminated at edit-time.
 		TestOCL ocl = createOCL();
