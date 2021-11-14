@@ -20,6 +20,7 @@ import org.eclipse.ocl.pivot.CollectionLiteralExp;
 import org.eclipse.ocl.pivot.CollectionLiteralPart;
 import org.eclipse.ocl.pivot.CollectionRange;
 import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.EnumLiteralExp;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -353,8 +354,16 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 		if (symbolicValue.asIncompatibility() != null) {
 			return symbolicValue;
 		}
-		if (symbolicValue.isInvalid()) {
-			return AbstractSymbolicRefinedValue.createIncompatibility(symbolicValue, "invalid-result", expression);
+		if (expression.eContainer() instanceof Constraint) {		// Anything definitely not-true for a Constraint is an incompatibility.
+			if (symbolicValue.isInvalid()) {
+				return AbstractSymbolicRefinedValue.createIncompatibility(symbolicValue, "invalid-constraint-result", expression);
+			}
+			if (symbolicValue.isNull()) {
+				return AbstractSymbolicRefinedValue.createIncompatibility(symbolicValue, "null-constraint-result", expression);
+			}
+			if (symbolicValue.isFalse()) {
+				return AbstractSymbolicRefinedValue.createIncompatibility(symbolicValue, "false-constraint-result", expression);
+			}
 		}
 		return symbolicValue;
 	}
