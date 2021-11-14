@@ -130,6 +130,13 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 	}
 
 	/**
+	 * @since 1.17
+	 */
+	public @Nullable EvaluationEnvironment basicGetRootEvaluationEnvironment() {
+		return rootEvaluationEnvironment;
+	}
+
+	/**
 	 * @since 1.3
 	 */
 	protected @NonNull EvaluationCache createEvaluationCache() {

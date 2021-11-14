@@ -97,6 +97,7 @@ import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
+import org.eclipse.ocl.pivot.internal.evaluation.AbstractExecutor;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis.SymbolicClassAnalysis;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis.SymbolicCompleteClassAnalysis;
@@ -1794,7 +1795,11 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		Type containingType = PivotUtil.getContainingType(expressionInOCL);
 		assert containingType instanceof org.eclipse.ocl.pivot.Class;
 		SymbolicClassAnalysis symbolicClassAnalysis = getSymbolicAnalysis((org.eclipse.ocl.pivot.Class)containingType);
-		return symbolicClassAnalysis.getSymbolicAnalysis(expressionInOCL);
+		SymbolicGenericExpressionAnalysis symbolicExpressionAnalysis = symbolicClassAnalysis.getSymbolicAnalysis(expressionInOCL);
+		if (((AbstractExecutor)symbolicExpressionAnalysis.getExecutor()).basicGetRootEvaluationEnvironment() == null) {
+			symbolicExpressionAnalysis.analyzeExpression();
+		}
+		return symbolicExpressionAnalysis;
 	}
 
 	@Override

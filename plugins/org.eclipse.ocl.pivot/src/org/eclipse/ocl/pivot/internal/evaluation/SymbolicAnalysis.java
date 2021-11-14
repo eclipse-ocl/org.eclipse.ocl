@@ -54,6 +54,7 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.Envir
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
@@ -204,9 +205,11 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 		if (traceHypothesisActive) {
 			StringBuilder s = new StringBuilder();
 			s.append("Analyzing: ");
+			s.append(NameUtil.debugSimpleName(this));
+			s.append("\n\t");
 			s.append(expressionInOCL);
 		//	s.append("\n\tself = ");
-			s.append(" for ");
+			s.append("\n\tfor ");
 			ValueUtil.toString(selfObject, s, 100);
 			if (parameters != null) {
 				for (int i = 0; i < parameters.length; i++) {
@@ -261,7 +264,9 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 		}
 		if (SymbolicAnalysis.HYPOTHESIS.isActive()) {
 			StringBuilder s = new StringBuilder();
-			s.append("Analyzing: for: ");
+			s.append("Analyzing: ");
+			s.append(NameUtil.debugSimpleName(this));
+			s.append("\n\tfor ");
 			ValueUtil.toString(selfObject, s, 0);
 			for (@NonNull ExpressionInOCL expressionInOCL : expressionsInOCL) {
 				s.append("\n\t");
@@ -607,7 +612,7 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 				assert contextType != null;
 				symbolicExpressionAnalysis = new SymbolicGenericExpressionAnalysis(expressionInOCL, environmentFactory, getExecutor().getModelManager());
 				expression2analysis.put(expressionInOCL, symbolicExpressionAnalysis);
-				symbolicExpressionAnalysis.analyzeExpression();
+			//	symbolicExpressionAnalysis.analyzeExpression();
 			}
 			return symbolicExpressionAnalysis;
 		}
