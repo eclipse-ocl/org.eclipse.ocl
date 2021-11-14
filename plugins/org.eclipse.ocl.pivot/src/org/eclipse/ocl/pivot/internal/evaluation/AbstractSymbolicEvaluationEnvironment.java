@@ -151,7 +151,7 @@ public abstract class AbstractSymbolicEvaluationEnvironment implements SymbolicE
 		SymbolicContent symbolicContent = symbolicValue.getContent();
 		SymbolicValue symbolicSize = symbolicContent.getSize();
 		if (symbolicSize.isZero()) {
-			return getKnownValue(ValueUtil.INVALID_VALUE);
+			return getKnownValue(ValueUtil.INVALID_VALUE);		// XXX More detailed invalid
 		}
 		if (!symbolicSize.mayBeZero()) {
 			return null;
@@ -168,7 +168,7 @@ public abstract class AbstractSymbolicEvaluationEnvironment implements SymbolicE
 			return symbolicValue;
 		}
 		if (symbolicValue.isInvalid()) {
-			return getKnownValue(ValueUtil.INVALID_VALUE);
+			return getKnownValue(ValueUtil.INVALID_VALUE);		// XXX More detailed invalid
 		}
 		SymbolicReason mayBeInvalidReason = symbolicValue.mayBeInvalidReason();
 		if (mayBeInvalidReason == null) {
@@ -183,7 +183,7 @@ public abstract class AbstractSymbolicEvaluationEnvironment implements SymbolicE
 	public @Nullable SymbolicValue checkNotNull(@NonNull OCLExpression sourceExp, @NonNull Type type, @Nullable SymbolicReason mayBeNullReason, @NonNull CallExp callExp) {
 		SymbolicValue sourceSymbolicValue = getSymbolicValue(sourceExp);
 		if (sourceSymbolicValue.isNull()) {
-			return getKnownValue(ValueUtil.INVALID_VALUE);
+			return getKnownValue(ValueUtil.INVALID_VALUE);		// XXX More detailed invalid
 		}
 		SymbolicReason sourceMayBeNullReason = sourceSymbolicValue.mayBeNullReason();
 		if (sourceMayBeNullReason == null) {
@@ -198,7 +198,7 @@ public abstract class AbstractSymbolicEvaluationEnvironment implements SymbolicE
 	public @Nullable SymbolicValue checkNotZero(@NonNull TypedElement typedElement, @NonNull Type type, boolean mayBeNull) {
 		SymbolicValue symbolicValue = getSymbolicValue(typedElement);
 		if (symbolicValue.isZero()) {
-			return getKnownValue(ValueUtil.INVALID_VALUE);
+			return getKnownValue(ValueUtil.INVALID_VALUE);		// XXX More detailed invalid
 		}
 		if (!symbolicValue.mayBeZero()) {
 			return null;

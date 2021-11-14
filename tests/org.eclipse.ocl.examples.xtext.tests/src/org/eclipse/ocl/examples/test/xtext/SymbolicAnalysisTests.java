@@ -308,7 +308,7 @@ public class SymbolicAnalysisTests extends XtextTestCase
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-//		SymbolicAnalysis.HYPOTHESIS.setState(true);
+		SymbolicAnalysis.HYPOTHESIS.setState(true);
 	}
 
 	public void testSymbolicAnalysis_AndGuard() throws Exception {
@@ -937,8 +937,6 @@ public class SymbolicAnalysisTests extends XtextTestCase
 		PropertyCallExp mayBeNullDummy_dummy_if_Exp = (PropertyCallExp) PivotUtil.getOwnedSource(dummy_if_Exp);
 		VariableExp x_mayBeNullDummy_dummy_if_Exp = (VariableExp) PivotUtil.getOwnedSource(mayBeNullDummy_dummy_if_Exp);
 
-		EObject deductionsInstance = ocl.createDeductionsInstance();
-		EObject dummyInstance = ocl.createDummyInstance();
 		SymbolicVariableValue self_Value = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), null, null);
 
 		// null x
@@ -956,12 +954,15 @@ public class SymbolicAnalysisTests extends XtextTestCase
 		checkContents(symbolicAnalysis3, asExpressionInOCL, null, mayBeNulls(asExpressionInOCL, if_Exp, mayBeNullDummy_oclIsUndefined_if_Exp, null_if_Exp, dummy_if_Exp), null, null);
 
 		// non-null known x null x.mayBeNullDummy
-		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[] {deductionsInstance});
+		EObject deductionsInstance4 = ocl.createDeductionsInstance();
+		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[] {deductionsInstance4});
 		checkContents(symbolicAnalysis4, asExpressionInOCL, isDeads(dummy_if_Exp, mayBeNullDummy_dummy_if_Exp, x_mayBeNullDummy_dummy_if_Exp), mayBeNulls(asExpressionInOCL, if_Exp, mayBeNullDummy_oclIsUndefined_if_Exp, null_if_Exp), null, null);
 
 		// non-null known x non-null x.mayBeNullDummy
-		deductionsInstance.eSet((EStructuralFeature) ocl.deductionsClass_mayBeNullDummy.getESObject(), dummyInstance);
-		SymbolicAnalysis symbolicAnalysis5 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[] {deductionsInstance});
+		EObject dummyInstance5 = ocl.createDummyInstance();
+		EObject deductionsInstance5 = ocl.createDeductionsInstance();
+		deductionsInstance5.eSet((EStructuralFeature) ocl.deductionsClass_mayBeNullDummy.getESObject(), dummyInstance5);
+		SymbolicAnalysis symbolicAnalysis5 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[] {deductionsInstance5});
 		checkContents(symbolicAnalysis5, asExpressionInOCL, isDeads(null_if_Exp), mayBeNulls(asExpressionInOCL, if_Exp, dummy_if_Exp), null, null);
 
 		ocl.dispose();
@@ -1152,7 +1153,6 @@ public class SymbolicAnalysisTests extends XtextTestCase
 		NullLiteralExp null_if_Exp = (NullLiteralExp) PivotUtil.getOwnedThen(if_Exp);
 		InvalidLiteralExp invalid_if_Exp = (InvalidLiteralExp) PivotUtil.getOwnedElse(if_Exp);
 
-		EObject dummyInstance = ocl.createDummyInstance();
 		SymbolicVariableValue self_Value = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), null, null);
 
 		// null x
@@ -1170,12 +1170,14 @@ public class SymbolicAnalysisTests extends XtextTestCase
 		checkContents(symbolicAnalysis3, asExpressionInOCL, null, mayBeNulls(asExpressionInOCL, if_Exp, dummy_oclIsUndefined_if_Exp, null_if_Exp), mayBeInvalids(asExpressionInOCL, if_Exp), isInvalids(invalid_if_Exp));
 
 		// non-null known x null x.dummy
-		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[] {dummyInstance});
+		EObject dummyInstance4 = ocl.createDummyInstance();
+		SymbolicAnalysis symbolicAnalysis4 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[] {dummyInstance4});
 		checkContents(symbolicAnalysis4, asExpressionInOCL, isDeads(invalid_if_Exp), mayBeNulls(asExpressionInOCL, if_Exp, dummy_oclIsUndefined_if_Exp, null_if_Exp), null, null);
 
 		// non-null known x non-null x.dummy
-		dummyInstance.eSet((EStructuralFeature) ocl.dummyClass_dummy.getESObject(), dummyInstance);
-		SymbolicAnalysis symbolicAnalysis5 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[] {dummyInstance});
+		EObject dummyInstance5 = ocl.createDummyInstance();
+		dummyInstance5.eSet((EStructuralFeature) ocl.dummyClass_dummy.getESObject(), dummyInstance5);
+		SymbolicAnalysis symbolicAnalysis5 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[] {dummyInstance5});
 		checkContents(symbolicAnalysis5, asExpressionInOCL, isDeads(null_if_Exp), null, null, isInvalids(asExpressionInOCL, if_Exp, invalid_if_Exp));
 
 		ocl.dispose();

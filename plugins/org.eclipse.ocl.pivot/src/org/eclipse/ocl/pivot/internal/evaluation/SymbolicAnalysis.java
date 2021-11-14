@@ -470,6 +470,10 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 		return unknownValue;
 	}
 
+	public @NonNull ModelManager getModelManager() {
+		return executor.getModelManager();
+	}
+
 	public @NonNull SymbolicEvaluationEnvironment getSymbolicEvaluationEnvironment() {
 		return getBaseSymbolicEvaluationEnvironment().getSymbolicEvaluationEnvironment();
 	}
@@ -544,7 +548,7 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 		protected final org.eclipse.ocl.pivot.@NonNull Class primaryClass;
 		private @Nullable Iterable<@NonNull ExpressionInOCL> invariantBodies = null;
 		protected @Nullable String incompatibility;
-		private @NonNull Map<@NonNull ExpressionInOCL, @NonNull SymbolicExpressionAnalysis> expression2analysis = new HashMap<>();
+		private @NonNull Map<@NonNull ExpressionInOCL, @NonNull SymbolicGenericExpressionAnalysis> expression2analysis = new HashMap<>();
 
 		/**
 		 * Initializes the symbolic analysis of expressionInOCL that delegates to a non-symbolic evaluation visitor.
@@ -596,45 +600,14 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 			return null;
 		}
 
-		public @NonNull SymbolicExpressionAnalysis getSymbolicAnalysis(@NonNull ExpressionInOCL expressionInOCL) {
-			SymbolicExpressionAnalysis symbolicExpressionAnalysis = expression2analysis.get(expressionInOCL);
+		public @NonNull SymbolicGenericExpressionAnalysis getSymbolicAnalysis(@NonNull ExpressionInOCL expressionInOCL) {
+			SymbolicGenericExpressionAnalysis symbolicExpressionAnalysis = expression2analysis.get(expressionInOCL);
 			if (symbolicExpressionAnalysis == null) {
 				Type contextType = PivotUtil.getContainingType(expressionInOCL);
 				assert contextType != null;
-				Operation contextOperation = PivotUtil.getContainingOperation(expressionInOCL);
-				symbolicExpressionAnalysis = new SymbolicExpressionAnalysis(expressionInOCL, environmentFactory, getExecutor().getModelManager());
+				symbolicExpressionAnalysis = new SymbolicGenericExpressionAnalysis(expressionInOCL, environmentFactory, getExecutor().getModelManager());
 				expression2analysis.put(expressionInOCL, symbolicExpressionAnalysis);
-				boolean isValidating = false;
-				if (contextOperation != null) {
-					isValidating = contextOperation.isIsValidating();
-				}
-				VariableDeclaration ownedContext = PivotUtil.getOwnedContext(expressionInOCL);
-				SymbolicReason mayBeNullReason1 = isValidating ? SymbolicSimpleReason.IS_VALIDATING : null;
-				if (mayBeNullReason1 == null) {
-					mayBeNullReason1 = SymbolicUtil.isRequiredReason(ownedContext);
-				}
-				SymbolicReason mayBeInvalidReason = isValidating ? SymbolicSimpleReason.IS_VALIDATING : null;
-				Object selfValue = new SymbolicVariableValue(ownedContext, mayBeNullReason1, mayBeInvalidReason);
-				Object resultValue = null;
-				Variable ownedResult = expressionInOCL.getOwnedResult();
-				if (ownedResult != null) {
-					SymbolicReason mayBeNullReason2;
-					if (isValidating) {
-						mayBeNullReason2 = SymbolicSimpleReason.IS_VALIDATING;
-					}
-					else {
-						mayBeNullReason2 = SymbolicUtil.isRequiredReason(ownedResult);
-					}
-					resultValue = new SymbolicVariableValue(ownedResult, mayBeNullReason2, mayBeInvalidReason);
-				}
-				List<@NonNull Variable> ownedParameters = PivotUtilInternal.getOwnedParametersList(expressionInOCL);
-				@Nullable Object[] parameterValues = new @Nullable Object[ownedParameters.size()];
-				for (int i = 0; i < ownedParameters.size(); i++) {
-					Variable parameter = ownedParameters.get(i);
-					SymbolicReason mayBeNullReason3 = SymbolicUtil.isRequiredReason(parameter);
-					parameterValues[i] = new SymbolicVariableValue(parameter, mayBeNullReason3, mayBeInvalidReason);
-				}
-				symbolicExpressionAnalysis.analyzeExpression(expressionInOCL, selfValue, resultValue, parameterValues);
+				symbolicExpressionAnalysis.analyzeExpression();
 			}
 			return symbolicExpressionAnalysis;
 		}
@@ -790,26 +763,20 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 		/**
 		 * Initializes the symbolic analysis of expressionInOCL that delegates to a non-symbolic evaluation visitor.
 		 */
-		public SymbolicExpressionAnalysis(@NonNull ExpressionInOCL expressionInOCL,
+		protected SymbolicExpressionAnalysis(@NonNull ExpressionInOCL expressionInOCL,
 				@NonNull EnvironmentFactoryInternalExtension environmentFactory, @NonNull ModelManager modelManager) {
 			super(environmentFactory, modelManager);
 			this.expressionInOCL = expressionInOCL;
 		}
 
-		public @Nullable String analyzeExpression(@Nullable Object selfObject, @Nullable Object resultObject, @Nullable Object @Nullable [] parameters) {
-			return analyzeExpression(expressionInOCL, selfObject, resultObject, parameters);
-		}
+//		public @Nullable String analyzeExpression(@Nullable Object selfObject, @Nullable Object resultObject, @Nullable Object @Nullable [] parameters) {
+//			return analyzeExpression(expressionInOCL, selfObject, resultObject, parameters);
+//		}
 
 		@Override
-		@Nullable
-		public String getIncompatibility(@NonNull HypothesizedSymbolicEvaluationEnvironment hypothesizedSymbolicEvaluationEnvironment, @NonNull TypedElement hypothesizedTypedElement) {
+		public @Nullable String getIncompatibility(@NonNull HypothesizedSymbolicEvaluationEnvironment hypothesizedSymbolicEvaluationEnvironment, @NonNull TypedElement hypothesizedTypedElement) {
 			SymbolicValue symbolicValue = hypothesizedSymbolicEvaluationEnvironment.getSymbolicValue(expressionInOCL);
 			return symbolicValue.asIncompatibility();
-		}
-
-		public @NonNull SymbolicExpressionAnalysis getSymbolicAnalysis(@Nullable Object selfObject, @Nullable Object resultObject, @Nullable Object @Nullable [] parameters) {
-			// FIXME cache
-			return new SymbolicExpressionAnalysis(expressionInOCL, environmentFactory, executor.getModelManager());
 		}
 
 		@Override
@@ -868,6 +835,113 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 				}
 			}
 			return s.toString();
+		}
+	}
+
+	public static class SymbolicGenericExpressionAnalysis extends SymbolicExpressionAnalysis
+	{
+		protected @Nullable List<@NonNull SymbolicSpecificExpressionAnalysis> specificAnalyses = null;
+
+		/**
+		 * Initializes the symbolic analysis of expressionInOCL that delegates to a non-symbolic evaluation visitor.
+		 */
+		public SymbolicGenericExpressionAnalysis(@NonNull ExpressionInOCL expressionInOCL,
+				@NonNull EnvironmentFactoryInternalExtension environmentFactory, @NonNull ModelManager modelManager) {
+			super(expressionInOCL, environmentFactory, modelManager);
+		}
+
+		public @Nullable String analyzeExpression() {
+			Operation contextOperation = PivotUtil.getContainingOperation(expressionInOCL);
+			boolean isValidating = false;
+			if (contextOperation != null) {
+				isValidating = contextOperation.isIsValidating();
+			}
+			VariableDeclaration ownedContext = PivotUtil.getOwnedContext(expressionInOCL);
+			SymbolicReason mayBeNullReason1 = isValidating ? SymbolicSimpleReason.IS_VALIDATING : null;
+			if (mayBeNullReason1 == null) {
+				mayBeNullReason1 = SymbolicUtil.isRequiredReason(ownedContext);
+			}
+			SymbolicReason mayBeInvalidReason = isValidating ? SymbolicSimpleReason.IS_VALIDATING : null;
+			Object selfValue = new SymbolicVariableValue(ownedContext, mayBeNullReason1, mayBeInvalidReason);
+			Object resultValue = null;
+			Variable ownedResult = expressionInOCL.getOwnedResult();
+			if (ownedResult != null) {
+				SymbolicReason mayBeNullReason2;
+				if (isValidating) {
+					mayBeNullReason2 = SymbolicSimpleReason.IS_VALIDATING;
+				}
+				else {
+					mayBeNullReason2 = SymbolicUtil.isRequiredReason(ownedResult);
+				}
+				resultValue = new SymbolicVariableValue(ownedResult, mayBeNullReason2, mayBeInvalidReason);
+			}
+			List<@NonNull Variable> ownedParameters = PivotUtilInternal.getOwnedParametersList(expressionInOCL);
+			@Nullable Object[] parameterValues = new @Nullable Object[ownedParameters.size()];
+			for (int i = 0; i < ownedParameters.size(); i++) {
+				Variable parameter = ownedParameters.get(i);
+				SymbolicReason mayBeNullReason3 = SymbolicUtil.isRequiredReason(parameter);
+				parameterValues[i] = new SymbolicVariableValue(parameter, mayBeNullReason3, mayBeInvalidReason);
+			}
+			return analyzeExpression(expressionInOCL, selfValue, resultValue, parameterValues);
+		}
+
+		public @NonNull SymbolicSpecificExpressionAnalysis getSymbolicAnalysis(@Nullable Object selfObject, @Nullable Object resultObject, @Nullable Object @Nullable [] parameters) {
+			List<@NonNull SymbolicSpecificExpressionAnalysis> specificAnalyses2 = specificAnalyses;
+			if (specificAnalyses2 == null) {
+				specificAnalyses = specificAnalyses2 = new ArrayList<>();
+			}
+			for (@NonNull SymbolicSpecificExpressionAnalysis specificAnalysis : specificAnalyses2) {
+				if (specificAnalysis.matches(selfObject, resultObject, parameters)) {
+					return specificAnalysis;
+				}
+			}
+			SymbolicSpecificExpressionAnalysis specificAnalysis = new SymbolicSpecificExpressionAnalysis(this, selfObject, resultObject, parameters);
+			specificAnalyses2.add(specificAnalysis);
+			return specificAnalysis;
+		}
+	}
+
+	public static class SymbolicSpecificExpressionAnalysis extends SymbolicExpressionAnalysis
+	{
+		protected final @Nullable Object selfObject;
+		protected final @Nullable Object resultObject;
+		protected final @Nullable Object @Nullable [] parameters;
+
+		public SymbolicSpecificExpressionAnalysis(@NonNull SymbolicGenericExpressionAnalysis genericAnalysis,
+				@Nullable Object selfObject, @Nullable Object resultObject, @Nullable Object @Nullable [] parameters) {
+			super(genericAnalysis.expressionInOCL, genericAnalysis.environmentFactory, genericAnalysis.getModelManager());
+			this.selfObject = selfObject;
+			this.resultObject = resultObject;
+			this.parameters = parameters;
+		}
+
+		public @Nullable String analyzeExpression() {
+			return analyzeExpression(expressionInOCL, selfObject, resultObject, parameters);
+		}
+
+		public boolean matches(@Nullable Object selfObject, @Nullable Object resultObject, @Nullable Object @Nullable [] thoseParameters) {
+			if (this.selfObject != selfObject) {		// FIXME equals ???
+				return false;
+			}
+			if (this.resultObject != resultObject) {	// FIXME equals ???
+				return false;
+			}
+			@Nullable
+			Object[] theseParameters = this.parameters;
+			if ((theseParameters != null) && (thoseParameters != null)) {
+				if (theseParameters.length != thoseParameters.length) {
+					return false;
+				}
+				for (int i = 0; i < theseParameters.length; i++) {
+					if (theseParameters[i] != thoseParameters[i]) {
+						return false;
+					}
+				}
+			}
+			else if ((theseParameters != null) || (parameters != null)) {
+				return false;
+			}
+			return true;
 		}
 	}
 }

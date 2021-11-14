@@ -100,8 +100,9 @@ import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis.SymbolicClassAnalysis;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis.SymbolicCompleteClassAnalysis;
-import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis.SymbolicExpressionAnalysis;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis.SymbolicGenericExpressionAnalysis;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis.SymbolicPartialClassAnalysis;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis.SymbolicSpecificExpressionAnalysis;
 import org.eclipse.ocl.pivot.internal.library.ConstrainedOperation;
 import org.eclipse.ocl.pivot.internal.library.EInvokeOperation;
 import org.eclipse.ocl.pivot.internal.library.ImplementationManager;
@@ -670,8 +671,8 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	/**
 	 * @since 1.17
 	 */
-	protected @NonNull SymbolicExpressionAnalysis createSymbolicExpressionAnalysis(@NonNull ExpressionInOCL expressionInOCL, @NonNull ModelManager modelManager) {
-		return new SymbolicExpressionAnalysis(expressionInOCL, (EnvironmentFactoryInternalExtension)environmentFactory, modelManager);
+	protected @NonNull SymbolicGenericExpressionAnalysis createSymbolicExpressionAnalysis(@NonNull ExpressionInOCL expressionInOCL, @NonNull ModelManager modelManager) {
+		return new SymbolicGenericExpressionAnalysis(expressionInOCL, (EnvironmentFactoryInternalExtension)environmentFactory, modelManager);
 	}
 
 	/**
@@ -1801,13 +1802,13 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		Type containingType = PivotUtil.getContainingType(expressionInOCL);
 		if (containingType instanceof org.eclipse.ocl.pivot.Class) {
 			SymbolicClassAnalysis symbolicClassAnalysis = getSymbolicAnalysis((org.eclipse.ocl.pivot.Class)containingType);
-			SymbolicExpressionAnalysis symbolicExpressionAnalysis = symbolicClassAnalysis.getSymbolicAnalysis(expressionInOCL);
+			SymbolicGenericExpressionAnalysis symbolicGenericExpressionAnalysis = symbolicClassAnalysis.getSymbolicAnalysis(expressionInOCL);
 			if ((selfObject == null) && (parameters == null)) {
-				return symbolicExpressionAnalysis;
+				return symbolicGenericExpressionAnalysis;
 			}
-			symbolicExpressionAnalysis = symbolicExpressionAnalysis.getSymbolicAnalysis(selfObject, resultObject, parameters);
-			symbolicExpressionAnalysis.analyzeExpression(selfObject, resultObject, parameters);
-			return symbolicExpressionAnalysis;
+			SymbolicSpecificExpressionAnalysis symbolicSpecificExpressionAnalysis = symbolicGenericExpressionAnalysis.getSymbolicAnalysis(selfObject, resultObject, parameters);
+			symbolicSpecificExpressionAnalysis.analyzeExpression();
+			return symbolicSpecificExpressionAnalysis;
 
 		//	Namespace containingNamespace = PivotUtil.getContainingNamespace(expressionInOCL);
 		//	if ((containingNamespace == containingType) && (expressionInOCL.eContainmentFeature() == PivotPackage.Literals.CONSTRAINT__OWNED_SPECIFICATION)) {
@@ -1822,11 +1823,18 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	//	SymbolicExpressionAnalysis symbolicExpressionAnalysis = expressionInOCL2symbolicAnalysis2.get(expressionInOCL);
 	//	if (symbolicExpressionAnalysis == null) {
 		ModelManager modelManager = ModelManager.NULL; //environmentFactory.createModelManager(selfObject);
-		SymbolicExpressionAnalysis symbolicExpressionAnalysis = createSymbolicExpressionAnalysis(expressionInOCL, modelManager);
+
+		SymbolicGenericExpressionAnalysis symbolicGenericExpressionAnalysis = createSymbolicExpressionAnalysis(expressionInOCL, modelManager);
+
+
+		SymbolicSpecificExpressionAnalysis symbolicSpecificExpressionAnalysis = symbolicGenericExpressionAnalysis.getSymbolicAnalysis(selfObject, resultObject, parameters);
+		symbolicSpecificExpressionAnalysis.analyzeExpression();
+		return symbolicSpecificExpressionAnalysis;
+	//	SymbolicSpecificExpressionAnalysis symbolicSpecificExpressionAnalysis = createSymbolicExpressionAnalysis(expressionInOCL, modelManager);
 	//		expressionInOCL2symbolicAnalysis2.put(expressionInOCL, symbolicExpressionAnalysis);
-			symbolicExpressionAnalysis.analyzeExpression(expressionInOCL, selfObject, resultObject, parameters);
+	//	symbolicSpecificExpressionAnalysis.analyzeExpression(expressionInOCL, selfObject, resultObject, parameters);
 	//	}
-		return symbolicExpressionAnalysis;
+	//	return symbolicExpressionAnalysis;
 	}
 
 	/**
