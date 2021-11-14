@@ -308,6 +308,13 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 				}
 			}
 		}
+		else {
+			Type actualType = symbolicValue.getType();
+			Type requiredType = PivotUtil.getType(parameter);
+			if (!actualType.conformsTo(standardLibrary, requiredType)) {
+				symbolicValue = AbstractSymbolicRefinedValue.createIncompatibility(symbolicValue, "incompatible type \"" + actualType + "\" for parameter \"" + parameter.getName() + "\"", parameter);
+			}
+		}
 		if ((symbolicValue.mayBeNullReason() != null) && parameter.isIsRequired()) {
 			symbolicValue = AbstractSymbolicRefinedValue.createIncompatibility(symbolicValue, "mayBeNull \"" + parameter.getName() + "\" parameter initializer is incompatible with isRequired", parameter);
 		}

@@ -1145,4 +1145,12 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/utilities/ValueUtil.java" type="org.eclipse.ocl.pivot.utilities.ValueUtil">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.utilities.ValueUtil"/>
+                <message_argument value="EMPTY_SEQUENCE"/>
+            </message_arguments>
+        </filter>
+    </resource>
 </component>

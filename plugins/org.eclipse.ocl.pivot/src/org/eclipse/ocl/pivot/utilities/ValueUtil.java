@@ -114,6 +114,10 @@ public abstract class ValueUtil
 
 	public static @NonNull Bag<?> EMPTY_BAG = new BagImpl<Object>();
 	public static final @NonNull Set<Object> EMPTY_SET = Collections.emptySet();
+	/**
+	 * @since 1.17
+	 */
+	public static final @NonNull List<Object> EMPTY_SEQUENCE = Collections.emptyList();
 
 	@SuppressWarnings("null")
 	public static final @NonNull BigInteger INTEGER_MAX_VALUE = BigInteger.valueOf(Integer.MAX_VALUE);

@@ -308,7 +308,7 @@ public class SymbolicAnalysisTests extends XtextTestCase
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-//		SymbolicAnalysis.HYPOTHESIS.setState(true);
+		SymbolicAnalysis.HYPOTHESIS.setState(true);
 	}
 
 	public void testSymbolicAnalysis_AndGuard() throws Exception {
@@ -814,13 +814,17 @@ public class SymbolicAnalysisTests extends XtextTestCase
 		SymbolicVariableValue self_Value = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), null, null);
 
 		// non-null empty x
-		SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{ValueUtil.EMPTY_SET});
+		SymbolicAnalysis symbolicAnalysis1a = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{ValueUtil.EMPTY_SET});
+		assertEquals("incompatible type \"Set(OclInvalid[0|1])\" for parameter \"x\"", symbolicAnalysis1a.getAnalysisIncompatibility());
+
+		// non-null empty x
+		SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{ValueUtil.EMPTY_SEQUENCE});
 		checkContents(symbolicAnalysis1, asExpressionInOCL, null, null, null, isInvalids(asExpressionInOCL, first_Exp));
 
 		// non-null not-empty x
-		SetValue set2 = ValueUtil.createSetOfEach(TypeId.SET.getSpecializedId(TypeId.INTEGER), ValueUtil.integerValueOf(99));
-		SymbolicAnalysis symbolicAnalysis2a = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{set2});
-		checkContents(symbolicAnalysis2a, asExpressionInOCL, null, null, null, isInvalids(asExpressionInOCL, first_Exp));
+		SetValue set2a = ValueUtil.createSetOfEach(TypeId.SET.getSpecializedId(TypeId.INTEGER), ValueUtil.integerValueOf(99));
+		SymbolicAnalysis symbolicAnalysis2a = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{set2a});
+		assertEquals("incompatible type \"Set(Integer[1|1])\" for parameter \"x\"", symbolicAnalysis2a.getAnalysisIncompatibility());
 
 		// non-null not-empty x
 		SequenceValue seq = ValueUtil.createSequenceOfEach(TypeId.SEQUENCE.getSpecializedId(TypeId.INTEGER), ValueUtil.integerValueOf(99));
@@ -1198,14 +1202,18 @@ public class SymbolicAnalysisTests extends XtextTestCase
 		SymbolicVariableValue self_Value = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), null, null);
 
 		// non-null empty x
-		SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{ValueUtil.EMPTY_SET});
+		SymbolicAnalysis symbolicAnalysis1a = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{ValueUtil.EMPTY_SET});
+		assertEquals("incompatible type \"Set(OclInvalid[0|1])\" for parameter \"x\"", symbolicAnalysis1a.getAnalysisIncompatibility());
+
+		// non-null empty x
+		SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{ValueUtil.EMPTY_SEQUENCE});
 		checkContents(symbolicAnalysis1, asExpressionInOCL, isDeads(first_if_Exp, x_first_if_Exp), null, null, null);
 		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment1 = symbolicAnalysis1.getBaseSymbolicEvaluationEnvironment();
 		assertTrue(symbolicEvaluationEnvironment1.isFalse(notEmpty_if_Exp));
 
 		// non-null not-empty x
-		SetValue set2 = ValueUtil.createSetOfEach(TypeId.SET.getSpecializedId(TypeId.INTEGER), ValueUtil.integerValueOf(99));
-		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{set2});
+		SequenceValue seq2 = ValueUtil.createSequenceOfEach(TypeId.SEQUENCE.getSpecializedId(TypeId.INTEGER), ValueUtil.integerValueOf(99));
+		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{seq2});
 		checkContents(symbolicAnalysis2, asExpressionInOCL, isDeads(neg_if_Exp, one_neg_if_Exp), null, null, null);
 		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment2 = symbolicAnalysis2.getBaseSymbolicEvaluationEnvironment();
 		assertTrue(symbolicEvaluationEnvironment2.isTrue(notEmpty_if_Exp));
@@ -1239,14 +1247,18 @@ public class SymbolicAnalysisTests extends XtextTestCase
 		SymbolicVariableValue self_Value = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), null, null);
 
 		// non-null empty x
-		SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{ValueUtil.EMPTY_SET});
+		SymbolicAnalysis symbolicAnalysis1a = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{ValueUtil.EMPTY_SET});
+		assertEquals("incompatible type \"Set(OclInvalid[0|1])\" for parameter \"x\"", symbolicAnalysis1a.getAnalysisIncompatibility());
+
+		// non-null empty x
+		SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{ValueUtil.EMPTY_SEQUENCE});
 		checkContents(symbolicAnalysis1, asExpressionInOCL, isDeads(firstExp, first_if_Exp), null, null, null);
 		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment1 = symbolicAnalysis1.getBaseSymbolicEvaluationEnvironment();
 		assertTrue(symbolicEvaluationEnvironment1.isFalse(not_if_Exp));
 
 		// non-null not-empty x
-		SetValue set2 = ValueUtil.createSetOfEach(TypeId.SET.getSpecializedId(TypeId.INTEGER), ValueUtil.integerValueOf(99));
-		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{set2});
+		SequenceValue seq2 = ValueUtil.createSequenceOfEach(TypeId.SEQUENCE.getSpecializedId(TypeId.INTEGER), ValueUtil.integerValueOf(99));
+		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{seq2});
 		checkContents(symbolicAnalysis2, asExpressionInOCL, isDeads(neg_if_Exp, one_neg_if_Exp), null, null, null);
 		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment2 = symbolicAnalysis2.getBaseSymbolicEvaluationEnvironment();
 		assertTrue(symbolicEvaluationEnvironment2.isTrue(not_if_Exp));
@@ -1280,14 +1292,18 @@ public class SymbolicAnalysisTests extends XtextTestCase
 		SymbolicVariableValue self_Value = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), null, null);
 
 		// non-null empty x
-		SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{ValueUtil.EMPTY_SET});
+		SymbolicAnalysis symbolicAnalysis1a = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{ValueUtil.EMPTY_SET});
+		assertEquals("incompatible type \"Set(OclInvalid[0|1])\" for parameter \"x\"", symbolicAnalysis1a.getAnalysisIncompatibility());
+
+		// non-null empty x
+		SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{ValueUtil.EMPTY_SEQUENCE});
 		checkContents(symbolicAnalysis1, asExpressionInOCL, isDeads(first_ifExp, x_first_ifExp), null, null, null);
 		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment1 = symbolicAnalysis1.getBaseSymbolicEvaluationEnvironment();
 		assertTrue(symbolicEvaluationEnvironment1.isFalse(gt_if_Exp));
 
 		// non-null not-empty x
-		SetValue set2 = ValueUtil.createSetOfEach(TypeId.SET.getSpecializedId(TypeId.INTEGER), ValueUtil.integerValueOf(99));
-		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{set2});
+		SequenceValue seq2 = ValueUtil.createSequenceOfEach(TypeId.SEQUENCE.getSpecializedId(TypeId.INTEGER), ValueUtil.integerValueOf(99));
+		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{seq2});
 		checkContents(symbolicAnalysis2, asExpressionInOCL, isDeads(neg_if_Exp, one_neg_if_Exp), null, null, null);
 		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment2 = symbolicAnalysis2.getBaseSymbolicEvaluationEnvironment();
 		assertTrue(symbolicEvaluationEnvironment2.isTrue(gt_if_Exp));
@@ -1321,14 +1337,18 @@ public class SymbolicAnalysisTests extends XtextTestCase
 		SymbolicVariableValue self_Value = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), null, null);
 
 		// non-null empty x
-		SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{ValueUtil.EMPTY_SET});
+		SymbolicAnalysis symbolicAnalysis1a = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{ValueUtil.EMPTY_SET});
+		assertEquals("incompatible type \"Set(OclInvalid[0|1])\" for parameter \"x\"", symbolicAnalysis1a.getAnalysisIncompatibility());
+
+		// non-null empty x
+		SymbolicAnalysis symbolicAnalysis1 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{ValueUtil.EMPTY_SEQUENCE});
 		checkContents(symbolicAnalysis1, asExpressionInOCL, isDeads(first_if_Exp, x_first_if_Exp), null, null, null);
 		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment1 = symbolicAnalysis1.getBaseSymbolicEvaluationEnvironment();
 		assertTrue(symbolicEvaluationEnvironment1.isFalse(ne_if_Exp));
 
 		// non-null not-empty x
-		SetValue set2 = ValueUtil.createSetOfEach(TypeId.SET.getSpecializedId(TypeId.INTEGER), ValueUtil.integerValueOf(99));
-		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{set2});
+		SequenceValue seq2 = ValueUtil.createSequenceOfEach(TypeId.SEQUENCE.getSpecializedId(TypeId.INTEGER), ValueUtil.integerValueOf(99));
+		SymbolicAnalysis symbolicAnalysis2 = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{seq2});
 		checkContents(symbolicAnalysis2, asExpressionInOCL, isDeads(neg_if_Exp, one_neg_if_Exp), null, null, null);
 		BaseSymbolicEvaluationEnvironment symbolicEvaluationEnvironment2 = symbolicAnalysis2.getBaseSymbolicEvaluationEnvironment();
 		assertTrue(symbolicEvaluationEnvironment2.isTrue(ne_if_Exp));
