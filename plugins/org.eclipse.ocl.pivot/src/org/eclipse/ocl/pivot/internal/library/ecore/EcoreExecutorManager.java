@@ -107,7 +107,7 @@ public class EcoreExecutorManager extends ExecutorManager
 					roots = resource.getContents();
 				}
 			}
-			org.eclipse.ocl.pivot.Package root = standardLibrary.getPackage();
+			org.eclipse.ocl.pivot.Package root = standardLibrary.getOclAnyType().getOwningPackage();
 			if (root instanceof PivotObject) {
 				if (roots == null) {
 					roots = new ArrayList<EObject>();

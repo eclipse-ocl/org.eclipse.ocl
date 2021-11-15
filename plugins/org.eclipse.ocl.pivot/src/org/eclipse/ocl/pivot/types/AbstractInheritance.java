@@ -267,7 +267,7 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 		}
 		LibraryFeature implementation = PivotUtilInternal.getImplementation(apparentOperation);	// invoke apparent op for null and invalid
 		if (implementation == null) {
-			implementation = UnsupportedOperation.INSTANCE;
+			implementation = UnsupportedOperation.getInstance();
 		}
 		return implementation;
 	}

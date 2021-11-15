@@ -115,7 +115,7 @@ public class ImplementationManager
 				} catch (Exception e) {
 					logger.error("Failed to load implementation of '" + property + "'", e);
 				}
-				return UnsupportedOperation.INSTANCE;
+				return UnsupportedOperation.getInstance();
 			}
 		}
 		Type type = property.getType();

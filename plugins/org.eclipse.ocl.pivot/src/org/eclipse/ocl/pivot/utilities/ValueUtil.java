@@ -843,7 +843,7 @@ public abstract class ValueUtil
 					// org.eclipse.ocl.domain.types
 					AbstractInheritance.initStatics();
 					// org.eclipse.ocl.domain.library
-					UnsupportedOperation.INSTANCE.getClass();
+					UnsupportedOperation.getInstance();
 					// org.eclipse.ocl.domain.messages
 					PivotMessages.InvalidOperation.getClass();
 					new StatusCodes();

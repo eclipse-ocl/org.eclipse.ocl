@@ -17,7 +17,6 @@ import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
-import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
@@ -25,7 +24,15 @@ import org.eclipse.ocl.pivot.values.SymbolicValue;
  */
 public class UnsupportedOperation extends AbstractOperation implements LibraryProperty.LibraryPropertyExtension
 {
+	@Deprecated /* @deprecated use getInstance() to facilitate debugging */
 	public static final @NonNull UnsupportedOperation INSTANCE = new UnsupportedOperation();
+
+	/**
+	 * @since 1.17
+	 */
+	public static @NonNull UnsupportedOperation getInstance() {
+		return INSTANCE;
+	}
 
 	/**
 	 * @since 1.1
@@ -62,6 +69,6 @@ public class UnsupportedOperation extends AbstractOperation implements LibraryPr
 
 	@Override
 	public @NonNull SymbolicValue symbolicEvaluate(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment,@NonNull OperationCallExp callExp) {
-		return evaluationEnvironment.getKnownValue(ValueUtil.INVALID_VALUE);
+		return evaluationEnvironment.getInvalidValue("invalid-unsupported-operation");
 	}
 }

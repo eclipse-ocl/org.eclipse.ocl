@@ -46,6 +46,7 @@ import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.util.PivotValidator;
 import org.eclipse.ocl.pivot.util.Visitor;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
@@ -290,6 +291,8 @@ implements TypedElement {
 				return true;
 			}
 			if (diagnostics != null) {
+				@SuppressWarnings("unused")
+				SymbolicAnalysis symbolicAnalysis = executor.getSymbolicAnalysis(ClassUtil.nonNullState(PivotUtil.getContainingExpressionInOCL(this)));		// XXX debugging
 				String objectLabel = EObjectValidator.getObjectLabel(this, context);
 				String emfMessage = StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfiedWithReason_ERROR_, new Object[]{constraintName, objectLabel, mayBeInvalidReason});
 				Object emfData[] = new Object [] { this };

@@ -1236,7 +1236,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 			ImplementationManager implementationManager = getImplementationManager();
 			implementation = implementationManager.loadImplementation(feature);
 			if (implementation == null) {
-				implementation = UnsupportedOperation.INSTANCE;
+				implementation = UnsupportedOperation.getInstance();
 			}
 		}
 		return implementation;
@@ -1257,7 +1257,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 						} catch (ParserException e) {
 							// TODO Auto-generated catch block
 							//							e.printStackTrace();
-							implementation = UnsupportedOperation.INSTANCE;
+							implementation = UnsupportedOperation.getInstance();
 						}
 					}
 				}
@@ -1304,7 +1304,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 						} catch (ParserException e) {
 							// TODO Auto-generated catch block
 							//							e.printStackTrace();
-							implementation = UnsupportedOperation.INSTANCE;
+							implementation = UnsupportedOperation.getInstance();
 						}
 					}
 				}
@@ -1317,7 +1317,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 						| IllegalAccessException e) {}
 			}
 			if (implementation == null) {
-				implementation = UnsupportedOperation.INSTANCE;
+				implementation = UnsupportedOperation.getInstance();
 			}
 			operation.setImplementation(implementation);
 		}
