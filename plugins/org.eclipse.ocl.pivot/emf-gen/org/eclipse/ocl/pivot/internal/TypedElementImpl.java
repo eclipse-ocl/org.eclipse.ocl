@@ -39,7 +39,6 @@ import org.eclipse.ocl.pivot.ValueSpecification;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis;
-import org.eclipse.ocl.pivot.internal.manager.PivotExecutorManager;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicReason;
 import org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
@@ -248,8 +247,7 @@ implements TypedElement {
 			return null;
 		}
 		Executor executor = PivotUtil.getExecutor(this);
-//		MetamodelManagerInternalExtension2 metamodelManager = (MetamodelManagerInternalExtension2)executor.getMetamodelManager();
-		SymbolicAnalysis symbolicAnalysis = ((PivotExecutorManager)executor).getSymbolicAnalysis(expressionInOCL);
+		SymbolicAnalysis symbolicAnalysis = executor.getSymbolicAnalysis(expressionInOCL);
 		SymbolicValue symbolicValue = symbolicAnalysis.getSymbolicValue(this);
 		SymbolicReason mayBeInvalidReason = symbolicValue.mayBeInvalidReason();
 		if (mayBeInvalidReason == null) {

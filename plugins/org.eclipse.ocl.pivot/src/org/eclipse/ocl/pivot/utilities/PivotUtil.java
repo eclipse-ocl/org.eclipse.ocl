@@ -121,6 +121,7 @@ import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
@@ -1292,12 +1293,15 @@ public class PivotUtil
 			return executor;
 		}
 		if (eObject != null) {
-			Resource eResource = eObject.eResource();
-			if (eResource != null) {
-				EnvironmentFactory environmentFactory = PivotUtilInternal.findEnvironmentFactory(eResource);
-				if (environmentFactory != null) {
-					executor = new PivotExecutorManager(environmentFactory, eObject);
+			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+			if (environmentFactory == null) {
+				Resource eResource = eObject.eResource();
+				if (eResource != null) {
+					environmentFactory = PivotUtilInternal.findEnvironmentFactory(eResource);
 				}
+			}
+			if (environmentFactory != null) {
+				executor = new PivotExecutorManager(environmentFactory, eObject);
 			}
 		}
 		if (executor == null) {
