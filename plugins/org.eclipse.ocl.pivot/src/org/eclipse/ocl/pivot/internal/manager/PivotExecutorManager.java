@@ -23,7 +23,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteClass;
-import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
@@ -58,7 +57,10 @@ public class PivotExecutorManager extends ExecutorManager
 {
 	/**
 	 * @since 1.7
+	 *
+	 * @deprecated Use ThreadLocalExecutor.
 	 */
+	@Deprecated
 	public static @Nullable Adapter createAdapter(@NonNull EnvironmentFactory environmentFactory, @NonNull EObject ecoreObject) {
 		Resource eResource = ecoreObject.eResource();
 		if (eResource == null) {
@@ -73,7 +75,10 @@ public class PivotExecutorManager extends ExecutorManager
 
 	/**
 	 * @since 1.7
+	 *
+	 * @deprecated Use ThreadLocalExecutor.
 	 */
+	@Deprecated
 	public static @Nullable Adapter findAdapter(@NonNull ResourceSet resourceSet) {
 		for (org.eclipse.emf.common.notify.Adapter adapter : resourceSet.eAdapters()) {
 			if (adapter instanceof Adapter) {
@@ -88,7 +93,10 @@ public class PivotExecutorManager extends ExecutorManager
 	 * re-use of the cached context of an earlier executor after a change to the models.
 	 *
 	 * @since 1.7
+	 *
+	 * @deprecated Use ThreadLocalExecutor.
 	 */
+	@Deprecated
 	public static void removeAdapter(@NonNull ResourceSet resourceSet) {
 		EList<org.eclipse.emf.common.notify.Adapter> eAdapters = resourceSet.eAdapters();
 		synchronized (eAdapters) {
@@ -101,6 +109,10 @@ public class PivotExecutorManager extends ExecutorManager
 		}
 	}
 
+	/**
+	 * @deprecated Use ThreadLocalExecutor.
+	 */
+	@Deprecated
 	private static class Adapter extends PivotExecutorManager implements org.eclipse.emf.common.notify.Adapter
 	{
 		private @NonNull ResourceSet resourceSet;
@@ -223,7 +235,7 @@ public class PivotExecutorManager extends ExecutorManager
 		Type containingType = PivotUtil.getContainingType(expressionInOCL);
 		assert containingType instanceof org.eclipse.ocl.pivot.Class;
 		SymbolicClassAnalysis symbolicClassAnalysis = getSymbolicAnalysis((org.eclipse.ocl.pivot.Class)containingType);
-		if (expressionInOCL.eContainer() instanceof Constraint) {
+		if (PivotUtil.isInvariant(expressionInOCL)) {
 			return symbolicClassAnalysis;
 		}
 		SymbolicGenericExpressionAnalysis symbolicExpressionAnalysis = symbolicClassAnalysis.getSymbolicAnalysis(expressionInOCL);

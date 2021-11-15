@@ -624,7 +624,7 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 		}
 
 		protected void toString(@NonNull StringBuilder s, org.eclipse.ocl.pivot.@NonNull Class asClass) {
-			BaseSymbolicEvaluationEnvironment evaluationEnvironment = getBaseSymbolicEvaluationEnvironment();
+			BaseSymbolicEvaluationEnvironment evaluationEnvironment = basicGetBaseSymbolicEvaluationEnvironment();
 			for (@NonNull Constraint invariant : PivotUtil.getOwnedInvariants(asClass)) {
 				LanguageExpression ownedSpecification = invariant.getOwnedSpecification();
 				if (ownedSpecification != null) {
@@ -643,7 +643,7 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 								s.append("  ");
 							}
 							s.append("  => ");
-							SymbolicValue symbolicValue = eObject instanceof TypedElement ? evaluationEnvironment.basicGetSymbolicValue((TypedElement)eObject) : null;
+							SymbolicValue symbolicValue = (evaluationEnvironment != null) && (eObject instanceof TypedElement) ? evaluationEnvironment.basicGetSymbolicValue((TypedElement)eObject) : null;
 							if (symbolicValue == null) {
 								s.append("not-computed");
 							}
@@ -725,16 +725,16 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 
 		@Override
 		protected @NonNull List<@NonNull ExpressionInOCL> gatherInvariantBodies() throws ParserException {
-			List<@NonNull ExpressionInOCL> invariantBodies2 = new ArrayList<>();
+			List<@NonNull ExpressionInOCL> invariantBodies = new ArrayList<>();
 			for (org.eclipse.ocl.pivot.@NonNull Class partialClass : PivotUtil.getPartialClasses(completeClass)) {
 				for (@NonNull Constraint invariant : PivotUtil.getOwnedInvariants(partialClass)) {
 					LanguageExpression ownedSpecification = invariant.getOwnedSpecification();
 					if (ownedSpecification != null) {
-						invariantBodies2.add(environmentFactory.parseSpecification(ownedSpecification));
+						invariantBodies.add(environmentFactory.parseSpecification(ownedSpecification));
 					}
 				}
 			}
-			return invariantBodies2;
+			return invariantBodies;
 		}
 
 		@Override

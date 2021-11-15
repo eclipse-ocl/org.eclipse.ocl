@@ -2157,6 +2157,18 @@ public class PivotUtil
 		return completeClass.getPrimaryClass() instanceof DataType;
 	}
 
+	/**
+	 * @since 1.17
+	 */
+	public static boolean isInvariant(@NonNull ExpressionInOCL expressionInOCL) {
+		EObject eContainer = expressionInOCL.eContainer();
+		if (!(eContainer instanceof Constraint)) {
+			return false;
+		}
+		EObject eContainerContainer = eContainer.eContainer();
+		return eContainerContainer instanceof Type;
+	}
+
 	public static boolean isObjectNavigationOperator(/*@NonNull*/ String operatorName) {
 		return PivotConstants.OBJECT_NAVIGATION_OPERATOR.equals(operatorName)
 				|| PivotConstants.SAFE_OBJECT_NAVIGATION_OPERATOR.equals(operatorName);
