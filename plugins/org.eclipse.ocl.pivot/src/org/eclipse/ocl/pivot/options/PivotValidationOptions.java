@@ -46,7 +46,9 @@ public class PivotValidationOptions
 		PivotPlugin.PLUGIN_ID, "optional.default.multiplicity", false); //$NON-NLS-1$
 
 	/**
-	 * @since 1.16
+	 * Enable the symbolic evaluation that diagnoses whether each TypedElement can be invalid.
+	 *
+	 * @since 1.17
 	 */
 	public static final @NonNull EnumeratedOption<StatusCodes.@NonNull Severity> PotentialInvalidResult = new EnumeratedOption<>(
 			PivotPlugin.PLUGIN_ID, "potential.invalid.result", StatusCodes.Severity.WARNING, StatusCodes.Severity.class); //$NON-NLS-1$
@@ -57,33 +59,50 @@ public class PivotValidationOptions
 	/**
 	 * A Map from all the safe navigation constraint names to the validation options that control them.
 	 * This avoids the need for distinct options for Operation/Property/Iteration control of the same concept.
+	 *
+	 * @since 1.17
 	 */
-	@Deprecated /* @deprecated no longer used; use safeValidationOperation2severityOption */
-	public static final @NonNull Map<String, EnumeratedOption<StatusCodes.Severity>> safeValidationName2severityOption = new HashMap<>();
+	public static final @NonNull Map<String, EnumeratedOption<StatusCodes.Severity>> validationName2validationOption = new HashMap<>();
+
+	@Deprecated /* @deprecated no longer used; use validationOperation2severityOption */
+	public static final @NonNull Map<String, EnumeratedOption<StatusCodes.Severity>> safeValidationName2severityOption = validationName2validationOption;
+
+	/**
+	 * A Map from all validation operation literals to those with corresponding but different preference options
+	 * each of which typically controls many distinct validation operations..
+	 * This avoids the need for distinct options for Operation/Property/Iteration control of the same concept.
+	 *
+	 * @since 1.17
+	 */
+	public static final @NonNull Map</*@NonNull*/ EOperation, @NonNull EnumeratedOption<StatusCodes.Severity>> validationOperation2validationOption = new HashMap<>();
 
 	/**
 	 * A Map from all the safe navigation constraint validation operation literals to the validation options that control them.
 	 * This avoids the need for distinct options for Operation/Property/Iteration control of the same concept.
 	 *
 	 * @since 1.7
+	 *
+	 * @deprecated use validationOperation2severityOption
 	 */
-	public static final @NonNull Map</*@NonNull*/ EOperation, @NonNull EnumeratedOption<StatusCodes.Severity>> safeValidationOperation2severityOption = new HashMap<>();
+	@Deprecated
+	public static final @NonNull Map</*@NonNull*/ EOperation, @NonNull EnumeratedOption<StatusCodes.Severity>> safeValidationOperation2severityOption = validationOperation2validationOption;
 
 	static {
-		safeValidationOperation2severityOption.put(PivotPackage.Literals.CALL_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP, PivotValidationOptions.RedundantSafeNavigation);
-		// safeValidationOperation2severityOption.put(PivotTables.STR_CallExp_c_c_SafeSourceCannotBeMap, PivotValidationOptions.MissingSafeNavigation); -- a real not discretionary bug
-		safeValidationOperation2severityOption.put(PivotPackage.Literals.ITERATE_EXP___VALIDATE_SAFE_ITERATOR_IS_REQUIRED__DIAGNOSTICCHAIN_MAP, PivotValidationOptions.RedundantSafeNavigation);
-		safeValidationOperation2severityOption.put(PivotPackage.Literals.ITERATE_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP, PivotValidationOptions.RedundantSafeNavigation);
-		safeValidationOperation2severityOption.put(PivotPackage.Literals.ITERATE_EXP___VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL__DIAGNOSTICCHAIN_MAP, PivotValidationOptions.MissingSafeNavigation);
-		safeValidationOperation2severityOption.put(PivotPackage.Literals.ITERATOR_EXP___VALIDATE_SAFE_ITERATOR_IS_REQUIRED__DIAGNOSTICCHAIN_MAP, PivotValidationOptions.RedundantSafeNavigation);
-		safeValidationOperation2severityOption.put(PivotPackage.Literals.ITERATOR_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP, PivotValidationOptions.RedundantSafeNavigation);
-		safeValidationOperation2severityOption.put(PivotPackage.Literals.ITERATOR_EXP___VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL__DIAGNOSTICCHAIN_MAP, PivotValidationOptions.MissingSafeNavigation);
-		safeValidationOperation2severityOption.put(PivotPackage.Literals.OPERATION_CALL_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP, PivotValidationOptions.RedundantSafeNavigation);
-		safeValidationOperation2severityOption.put(PivotPackage.Literals.OPERATION_CALL_EXP___VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL__DIAGNOSTICCHAIN_MAP, PivotValidationOptions.MissingSafeNavigation);
-		safeValidationOperation2severityOption.put(PivotPackage.Literals.OPPOSITE_PROPERTY_CALL_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP, PivotValidationOptions.RedundantSafeNavigation);
-		safeValidationOperation2severityOption.put(PivotPackage.Literals.OPPOSITE_PROPERTY_CALL_EXP___VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL__DIAGNOSTICCHAIN_MAP, PivotValidationOptions.MissingSafeNavigation);
-		safeValidationOperation2severityOption.put(PivotPackage.Literals.PROPERTY_CALL_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP, PivotValidationOptions.RedundantSafeNavigation);
-		safeValidationOperation2severityOption.put(PivotPackage.Literals.PROPERTY_CALL_EXP___VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL__DIAGNOSTICCHAIN_MAP, PivotValidationOptions.MissingSafeNavigation);
+		validationOperation2validationOption.put(PivotPackage.Literals.CALL_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP, PivotValidationOptions.RedundantSafeNavigation);
+		// validationOperation2severityOption.put(PivotTables.STR_CallExp_c_c_SafeSourceCannotBeMap, PivotValidationOptions.MissingSafeNavigation); -- a real not discretionary bug
+		validationOperation2validationOption.put(PivotPackage.Literals.ITERATE_EXP___VALIDATE_SAFE_ITERATOR_IS_REQUIRED__DIAGNOSTICCHAIN_MAP, PivotValidationOptions.RedundantSafeNavigation);
+		validationOperation2validationOption.put(PivotPackage.Literals.ITERATE_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP, PivotValidationOptions.RedundantSafeNavigation);
+		validationOperation2validationOption.put(PivotPackage.Literals.ITERATE_EXP___VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL__DIAGNOSTICCHAIN_MAP, PivotValidationOptions.MissingSafeNavigation);
+		validationOperation2validationOption.put(PivotPackage.Literals.ITERATOR_EXP___VALIDATE_SAFE_ITERATOR_IS_REQUIRED__DIAGNOSTICCHAIN_MAP, PivotValidationOptions.RedundantSafeNavigation);
+		validationOperation2validationOption.put(PivotPackage.Literals.ITERATOR_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP, PivotValidationOptions.RedundantSafeNavigation);
+		validationOperation2validationOption.put(PivotPackage.Literals.ITERATOR_EXP___VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL__DIAGNOSTICCHAIN_MAP, PivotValidationOptions.MissingSafeNavigation);
+		validationOperation2validationOption.put(PivotPackage.Literals.OPERATION_CALL_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP, PivotValidationOptions.RedundantSafeNavigation);
+		validationOperation2validationOption.put(PivotPackage.Literals.OPERATION_CALL_EXP___VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL__DIAGNOSTICCHAIN_MAP, PivotValidationOptions.MissingSafeNavigation);
+		validationOperation2validationOption.put(PivotPackage.Literals.OPPOSITE_PROPERTY_CALL_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP, PivotValidationOptions.RedundantSafeNavigation);
+		validationOperation2validationOption.put(PivotPackage.Literals.OPPOSITE_PROPERTY_CALL_EXP___VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL__DIAGNOSTICCHAIN_MAP, PivotValidationOptions.MissingSafeNavigation);
+		validationOperation2validationOption.put(PivotPackage.Literals.PROPERTY_CALL_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP, PivotValidationOptions.RedundantSafeNavigation);
+		validationOperation2validationOption.put(PivotPackage.Literals.PROPERTY_CALL_EXP___VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL__DIAGNOSTICCHAIN_MAP, PivotValidationOptions.MissingSafeNavigation);
+		validationOperation2validationOption.put(PivotPackage.Literals.TYPED_ELEMENT___VALIDATE_UNCONDITIONALLY_VALID__DIAGNOSTICCHAIN_MAP, PivotValidationOptions.PotentialInvalidResult);
 	}
 
 	/**
@@ -98,7 +117,7 @@ public class PivotValidationOptions
 				map.put(entry.getKey(), value.getDefaultValue());
 			}
 		} */
-		Set<Entry<EOperation, EnumeratedOption<Severity>>> entrySet2 = PivotValidationOptions.safeValidationOperation2severityOption.entrySet();
+		Set<Entry<EOperation, EnumeratedOption<Severity>>> entrySet2 = PivotValidationOptions.validationOperation2validationOption.entrySet();
 		for (Map.Entry<EOperation, EnumeratedOption<StatusCodes.Severity>> entry : entrySet2) {
 			EnumeratedOption<StatusCodes.Severity> value = entry.getValue();
 			if (value != null) {

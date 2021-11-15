@@ -91,6 +91,8 @@ import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.internal.utilities.Technology;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
+import org.eclipse.ocl.pivot.messages.StatusCodes.Severity;
+import org.eclipse.ocl.pivot.options.EnumeratedOption;
 import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
@@ -139,9 +141,10 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	private @NonNull Technology technology = ASResourceFactoryRegistry.INSTANCE.getTechnology();
 
 	/**
-	 * Configuration of validation preferences.
+	 * Lazily cached severity for each validation EOperation. Initrially looked up by the direct per EOperation
+	 * configured options falling back to the PivotValidationOptions.validationOperation2validationOption groupings.
 	 */
-	private /*LazyNonNull*/ Map<Object, StatusCodes.Severity> validationKey2severity = null;
+	private /*LazyNonNull*/ Map<Object, StatusCodes.Severity> validationOperation2severity = null;
 
 	/**
 	 * Leak debugging aid. Set non-null to diagnose EnvironmentFactory construction and finalization.
@@ -864,12 +867,30 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	}
 
 	@Override
-	public StatusCodes.@Nullable Severity getSeverity(@Nullable Object validationKey) {
-		Map<Object, StatusCodes.Severity> validationKey2severity2 = validationKey2severity;
-		if (validationKey2severity2 == null) {
-			validationKey2severity = validationKey2severity2 = createValidationKey2severityMap();
+	public StatusCodes.@Nullable Severity getSeverity(@Nullable Object validationOperation) {
+		assert validationOperation instanceof EOperation;
+		Map<Object, StatusCodes.Severity> validationOperation2severity2 = validationOperation2severity;
+		if (validationOperation2severity2 == null) {
+			validationOperation2severity = validationOperation2severity2 = new HashMap<>();
 		}
-		return validationKey2severity2.get(validationKey);
+		Severity severity = validationOperation2severity2.get(validationOperation);
+		if (severity == null) {
+			EnumeratedOption<Severity> validationOption = PivotValidationOptions.validationOperation2validationOption.get(validationOperation);
+			if (validationOption != null) {
+				severity = getValue(validationOption);
+				if (severity == null) {
+					validationOption = PivotValidationOptions.validationName2validationOption.get(validationOperation);
+					if (validationOption != null) {
+						severity = getValue(validationOption);
+					}
+				}
+			}
+			if (severity == null) {
+				severity = StatusCodes.Severity.WARNING;
+			}
+			validationOperation2severity2.put(validationOperation, severity);
+		}
+		return severity;
 	}
 
 	@Override
@@ -967,7 +988,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	}
 
 	public void resetSeverities() {
-		validationKey2severity = null;
+		validationOperation2severity = null;
 	}
 
 	@Override
@@ -1001,18 +1022,19 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	 */
 	@Override
 	public void setSafeNavigationValidationSeverity(StatusCodes.@NonNull Severity severity) {
-		for (EOperation key : PivotValidationOptions.safeValidationOperation2severityOption.keySet()) {
-			if (key != null) {
-				setSeverity(key, severity);
+		for (Map.Entry<EOperation, @NonNull EnumeratedOption<StatusCodes.Severity>> entry : PivotValidationOptions.validationOperation2validationOption.entrySet()) {
+			EnumeratedOption<Severity> value = entry.getValue();
+			if ((value == PivotValidationOptions.RedundantSafeNavigation) || (value == PivotValidationOptions.MissingSafeNavigation)) {
+				setSeverity(entry.getKey(), severity);
 			}
 		}
 	}
 
 	@Override
 	public synchronized StatusCodes.@Nullable Severity setSeverity(/*@NonNull*/ Object validationKey, StatusCodes.@Nullable Severity severity) {
-		Map<Object, StatusCodes.Severity> validationKey2severity2 = validationKey2severity;
+		Map<Object, StatusCodes.Severity> validationKey2severity2 = validationOperation2severity;
 		if (validationKey2severity2 == null) {
-			validationKey2severity = validationKey2severity2 = createValidationKey2severityMap();
+			validationOperation2severity = validationKey2severity2 = new HashMap<>(); //createValidationKey2severityMap();
 		}
 		return validationKey2severity2.put(validationKey, severity);
 	}

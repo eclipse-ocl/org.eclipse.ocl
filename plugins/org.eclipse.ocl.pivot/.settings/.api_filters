@@ -658,12 +658,6 @@
         <filter id="404000815">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.values.Value"/>
-                <message_argument value="mayBeInvalidOrNull()"/>
-            </message_arguments>
-        </filter>
-        <filter id="404000815">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.values.Value"/>
                 <message_argument value="mayBeNull()"/>
             </message_arguments>
         </filter>
@@ -671,46 +665,6 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.values.Value"/>
                 <message_argument value="mayBeZero()"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/values/ValuesPackage.java" type="org.eclipse.ocl.pivot.values.ValuesPackage">
-        <filter id="403804204">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.values.ValuesPackage"/>
-                <message_argument value="getSymbolicValue()"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
-                <message_argument value="getSymbolicValue()"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/values/ValuesPackage.java" type="org.eclipse.ocl.pivot.values.ValuesPackage$Literals">
-        <filter id="403767336">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.values.ValuesPackage.Literals"/>
-                <message_argument value="SYMBOLIC_VALUE"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
-                <message_argument value="SYMBOLIC_VALUE"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/values/util/ValuesAdapterFactory.java" type="org.eclipse.ocl.pivot.values.util.ValuesAdapterFactory">
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="createSymbolicValueAdapter()"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/values/util/ValuesSwitch.java" type="org.eclipse.ocl.pivot.values.util.ValuesSwitch">
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="caseSymbolicValue(SymbolicValue)"/>
             </message_arguments>
         </filter>
     </resource>
@@ -916,52 +870,12 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/ocl/pivot/library/AbstractOperation.java" type="org.eclipse.ocl.pivot.library.AbstractOperation">
-        <filter id="336658481">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.library.AbstractOperation"/>
-                <message_argument value="CHECK_NOT_INVALID"/>
-            </message_arguments>
-        </filter>
-        <filter id="336658481">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.library.AbstractOperation"/>
-                <message_argument value="CHECK_NOT_NULL"/>
-            </message_arguments>
-        </filter>
-        <filter id="336658481">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.library.AbstractOperation"/>
-                <message_argument value="CHECK_NO_OCL_INVALID_OVERLOAD"/>
-            </message_arguments>
-        </filter>
-        <filter id="336658481">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.library.AbstractOperation"/>
-                <message_argument value="CHECK_NO_OCL_VOID_OVERLOAD"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="src/org/eclipse/ocl/pivot/library/LibraryBinaryOperation.java" type="org.eclipse.ocl.pivot.library.LibraryBinaryOperation">
         <filter id="403984517">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.library.LibraryBinaryOperation"/>
                 <message_argument value="org.eclipse.ocl.pivot.library.LibraryIterationOrOperation"/>
                 <message_argument value="resolveBodyType(EnvironmentFactory, CallExp, Type)"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/library/LibraryFeature.java" type="org.eclipse.ocl.pivot.library.LibraryFeature">
-        <filter id="404000815">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.library.LibraryFeature"/>
-                <message_argument value="sourceMayBeInvalid()"/>
-            </message_arguments>
-        </filter>
-        <filter id="404000815">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.library.LibraryFeature"/>
-                <message_argument value="sourceMayBeNull()"/>
             </message_arguments>
         </filter>
     </resource>
@@ -1111,13 +1025,13 @@
         <filter id="336658481">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.options.PivotValidationOptions"/>
-                <message_argument value="OptionalDefaultMultiplicity"/>
+                <message_argument value="validationName2validationOption"/>
             </message_arguments>
         </filter>
         <filter id="336658481">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.options.PivotValidationOptions"/>
-                <message_argument value="PotentialInvalidResult"/>
+                <message_argument value="validationOperation2validationOption"/>
             </message_arguments>
         </filter>
     </resource>
