@@ -28,6 +28,7 @@ import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.VariableExp;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
@@ -311,6 +312,7 @@ public class FlowAnalysisTests extends XtextTestCase
 	}
 
 	public void testFlowAnalysis_LetExpressionGuard() throws Exception {
+		SymbolicAnalysis.HYPOTHESIS.setState(true);
 		MyOCL ocl = new MyOCL();
 		OperationCallExp asImplies = (OperationCallExp) ocl.createTestModel("LetExpressionGuard",
 				"dummy.func(4, let q : Integer = 7 in q) <> null implies dummy.func(4, let y : Integer = 7 in y) = null");

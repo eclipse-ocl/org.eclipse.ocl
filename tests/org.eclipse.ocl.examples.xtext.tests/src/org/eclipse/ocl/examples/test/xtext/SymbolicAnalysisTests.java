@@ -1246,6 +1246,12 @@ public class SymbolicAnalysisTests extends XtextTestCase
 
 		SymbolicVariableValue self_Value = new SymbolicVariableValue(asExpressionInOCL.getOwnedContext(), null, null);
 
+		// non-null unknown x
+		SymbolicVariableValue symbolicVariable3a = new SymbolicVariableValue(asExpressionInOCL.getOwnedParameters().get(0), null, null);
+		SymbolicAnalysis symbolicAnalysis3a = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{symbolicVariable3a});
+		checkContents(symbolicAnalysis3a, asExpressionInOCL, null, null, null, null);
+
+
 		// non-null empty x
 		SymbolicAnalysis symbolicAnalysis1a = ocl.getSymbolicAnalysis(asExpressionInOCL, self_Value, null, new Object[]{ValueUtil.EMPTY_SET});
 		assertEquals("incompatible type \"Set(OclInvalid[0|1])\" for parameter \"x\"", symbolicAnalysis1a.getAnalysisIncompatibility());

@@ -97,8 +97,43 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 		}
 
 		@Override
+		public @NonNull SymbolicValue asRefinementOf(@NonNull SymbolicValue unrefinedValue, @NonNull TypedElement typedElement) {
+			return super.asRefinementOf(unrefinedValue, typedElement);
+		}
+
+		@Override
+		public @Nullable SymbolicSimpleStatus basicGetBooleanStatus() {
+			return null;
+		}
+
+	//	@Override
+	//	public @NonNull SymbolicSimpleStatus basicGetInvalidStatus() {
+	//		return null;
+	//	}
+
+	//	@Override
+	//	public @NonNull SymbolicSimpleStatus basicGetNullStatus() {
+	//		return null;
+	//	}
+
+		@Override
+		public @Nullable SymbolicNumericValue basicGetNumericValue() {
+			return null;
+		}
+
+		@Override
+		public @Nullable SymbolicContent basicGetContent() {
+			return null;
+		}
+
+		@Override
 		public @NonNull SymbolicSimpleStatus getDeadStatus() {
 			return SymbolicSimpleStatus.SATISFIED;
+		}
+
+		@Override
+		public boolean isZero() {
+			return false;
 		}
 	}
 
@@ -238,8 +273,12 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 	 */
 	private static class SymbolicIsZeroValue extends AbstractSymbolicRefinedValue
 	{
-		public SymbolicIsZeroValue(@NonNull SymbolicValue value) {
+		protected final @NonNull Type booleanType;
+
+		public SymbolicIsZeroValue(@NonNull SymbolicValue value, @NonNull Type booleanType) {
 			super(value);
+			this.booleanType = booleanType;
+			assert booleanType.getTypeId() == TypeId.BOOLEAN;
 		}
 
 		@Override
@@ -282,6 +321,16 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 		public @Nullable Object getKnownValue() {
 			SymbolicSimpleStatus booleanStatus = getBooleanStatus();
 			return /*booleanStatus == null ? null :*/ booleanStatus.isSatisfied() ? Boolean.TRUE : Boolean.FALSE;
+		}
+
+		@Override
+		public @NonNull Type getType() {
+			return booleanType;
+		}
+
+		@Override
+		public @NonNull TypeId getTypeId() {
+			return TypeId.BOOLEAN;
 		}
 	}
 
@@ -516,9 +565,9 @@ public abstract class AbstractSymbolicRefinedValue extends AbstractSymbolicValue
 	//	}
 	}
 
-	public static @NonNull SymbolicValue createIsZeroValue(@NonNull SymbolicValue symbolicValue) {
+	public static @NonNull SymbolicValue createIsZeroValue(@NonNull SymbolicValue symbolicValue, @NonNull Type booleanType) {
 		if (!symbolicValue.isZero()) {
-			return new SymbolicIsZeroValue(symbolicValue);
+			return new SymbolicIsZeroValue(symbolicValue, booleanType);
 		}
 		else {
 			return symbolicValue;

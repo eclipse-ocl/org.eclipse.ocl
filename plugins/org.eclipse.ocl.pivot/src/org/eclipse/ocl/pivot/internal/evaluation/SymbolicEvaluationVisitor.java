@@ -89,6 +89,8 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 /**
  * A symbolic evaluation decorator for an evaluation visitor.
  *
+ * FIXME This shou;d replicate the PivotValidator. Share constraints somehow.
+ *
  * @since 1.17
  */
 public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull SymbolicValue, @NonNull SymbolicAnalysis>

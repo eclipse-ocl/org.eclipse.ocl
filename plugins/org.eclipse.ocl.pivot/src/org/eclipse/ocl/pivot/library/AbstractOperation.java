@@ -172,7 +172,8 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 				return compatibleArgumentProblem;
 			}
 			if (!evaluationEnvironment.checkConformance(argument, returnType, parameter, callExp)) {
-				return evaluationEnvironment.getInvalidValue("incompatible '" + parameter.getName() + "' + parameter for '" + callExp.getName() + "'");
+				evaluationEnvironment.checkConformance(argument, returnType, parameter, callExp);			// XXX
+				return evaluationEnvironment.getInvalidValue("incompatible '" + parameter.getName() + "' parameter for '" + callExp.getName() + "'");
 			}
 			i++;
 		}

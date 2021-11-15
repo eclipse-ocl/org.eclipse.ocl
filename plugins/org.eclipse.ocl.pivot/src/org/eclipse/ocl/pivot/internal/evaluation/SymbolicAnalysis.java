@@ -213,8 +213,8 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 			ValueUtil.toString(selfObject, s, 100);
 			if (parameters != null) {
 				for (int i = 0; i < parameters.length; i++) {
-				//	s.append("\n\t");
-					s.append(", ");
+					s.append("\n\t");
+				//	s.append(", ");
 				//	s.append(PivotUtil.getOwnedParameter(expressionInOCL, i).getName());
 				//	s.append(" = ");
 					ValueUtil.toString(parameters[i], s, 100);

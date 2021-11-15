@@ -40,6 +40,7 @@ import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal.MetamodelManagerInternalExtension2;
+import org.eclipse.ocl.pivot.internal.manager.PivotExecutorManager;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicReason;
 import org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
@@ -289,12 +290,13 @@ implements TypedElement {
 			if (OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue()) {
 				return true;
 			}
-			StatusCodes.Severity invalidResultSeverity = executor.getEnvironmentFactory().getValue(PivotValidationOptions.PotentialInvalidResult);		// FIXME Phase out this duplication
-			assert invalidResultSeverity != null;
-			if (invalidResultSeverity == StatusCodes.Severity.IGNORE) {
-				return true;
+			if (executor instanceof PivotExecutorManager) {
+				StatusCodes.Severity invalidResultSeverity = executor.getEnvironmentFactory().getValue(PivotValidationOptions.PotentialInvalidResult);		// FIXME Phase out this duplication
+				assert invalidResultSeverity != null;
+				if (invalidResultSeverity == StatusCodes.Severity.IGNORE) {
+					return true;
+				}
 			}
-
 			final /*@NonInvalid*/ String mayBeInvalidReason = mayBeInvalidReason();
 			if (mayBeInvalidReason == null) {
 				return true;
