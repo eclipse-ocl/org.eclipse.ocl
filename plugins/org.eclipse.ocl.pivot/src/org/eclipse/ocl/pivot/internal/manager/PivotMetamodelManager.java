@@ -85,7 +85,6 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.WildcardType;
-import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.compatibility.EMF_2_9;
@@ -665,22 +664,22 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	/**
 	 * @since 1.17
 	 */
-	protected @NonNull SymbolicCompleteClassAnalysis createSymbolicCompleteClassAnalysis(@NonNull CompleteClass completeClass, @NonNull ModelManager modelManager) {
-		return new SymbolicCompleteClassAnalysis(completeClass, (EnvironmentFactoryInternalExtension)environmentFactory, modelManager);
+	protected @NonNull SymbolicCompleteClassAnalysis createSymbolicCompleteClassAnalysis(@NonNull CompleteClass completeClass) {
+		return new SymbolicCompleteClassAnalysis(completeClass, (EnvironmentFactoryInternalExtension)environmentFactory);
 	}
 
 	/**
 	 * @since 1.17
 	 */
-	protected @NonNull SymbolicGenericExpressionAnalysis createSymbolicExpressionAnalysis(@NonNull ExpressionInOCL expressionInOCL, @NonNull ModelManager modelManager) {
-		return new SymbolicGenericExpressionAnalysis(expressionInOCL, (EnvironmentFactoryInternalExtension)environmentFactory, modelManager);
+	protected @NonNull SymbolicGenericExpressionAnalysis createSymbolicExpressionAnalysis(@NonNull ExpressionInOCL expressionInOCL) {
+		return new SymbolicGenericExpressionAnalysis(expressionInOCL, (EnvironmentFactoryInternalExtension)environmentFactory);
 	}
 
 	/**
 	 * @since 1.17
 	 */
-	protected @NonNull SymbolicPartialClassAnalysis createSymbolicPartialClassAnalysis(/*@NonNull CompleteClass completeClass,*/ org.eclipse.ocl.pivot.@NonNull Class selfClass, @NonNull ModelManager modelManager) {
-		return new SymbolicPartialClassAnalysis(/*completeClass,*/ selfClass, (EnvironmentFactoryInternalExtension)environmentFactory, modelManager);
+	protected @NonNull SymbolicPartialClassAnalysis createSymbolicPartialClassAnalysis(/*@NonNull CompleteClass completeClass,*/ org.eclipse.ocl.pivot.@NonNull Class selfClass) {
+		return new SymbolicPartialClassAnalysis(/*completeClass,*/ selfClass, (EnvironmentFactoryInternalExtension)environmentFactory);
 	}
 
 	public @NonNull UnlimitedNaturalLiteralExp createUnlimitedNaturalLiteralExp(@NonNull Number unlimitedNaturalSymbol) {		// FIXME move to PivotHelper
@@ -1830,9 +1829,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	//	}
 	//	SymbolicExpressionAnalysis symbolicExpressionAnalysis = expressionInOCL2symbolicAnalysis2.get(expressionInOCL);
 	//	if (symbolicExpressionAnalysis == null) {
-		ModelManager modelManager = ModelManager.NULL; //environmentFactory.createModelManager(selfObject);
-
-		SymbolicGenericExpressionAnalysis symbolicGenericExpressionAnalysis = createSymbolicExpressionAnalysis(expressionInOCL, modelManager);
+		SymbolicGenericExpressionAnalysis symbolicGenericExpressionAnalysis = createSymbolicExpressionAnalysis(expressionInOCL);
 
 
 		SymbolicSpecificExpressionAnalysis symbolicSpecificExpressionAnalysis = symbolicGenericExpressionAnalysis.getSymbolicAnalysis(selfObject, resultObject, parameters);
@@ -1863,16 +1860,14 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 				}
 				symbolicClassAnalysis = completeClass2symbolicAnalysis2.get(completeClass);
 				if (symbolicClassAnalysis == null) {
-					ModelManager modelManager = ModelManager.NULL; // XXX environmentFactory.createModelManager(selfObject);
-					symbolicClassAnalysis = createSymbolicCompleteClassAnalysis(completeClass, modelManager);
+					symbolicClassAnalysis = createSymbolicCompleteClassAnalysis(completeClass);
 					completeClass2symbolicAnalysis2.put(completeClass, symbolicClassAnalysis);
 					symbolicClassAnalysis.analyzeInvariants();
 				}
 				class2symbolicAnalysis2.put(selfClass, symbolicClassAnalysis);
 			}
 			else {
-				ModelManager modelManager = ModelManager.NULL; // XXX environmentFactory.createModelManager(selfObject);
-				symbolicClassAnalysis = createSymbolicPartialClassAnalysis(selfClass, modelManager);
+				symbolicClassAnalysis = createSymbolicPartialClassAnalysis(selfClass);
 				class2symbolicAnalysis2.put(selfClass, symbolicClassAnalysis);
 				symbolicClassAnalysis.analyzeInvariants();
 			}

@@ -74,7 +74,7 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 {
 	public static final @NonNull TracingOption HYPOTHESIS = new TracingOption(PivotPlugin.PLUGIN_ID, "symbolic/hypothesis");
 
-	protected final @NonNull BasicOCLExecutor executor;
+	protected final @NonNull AbstractExecutor executor;
 	protected final EnvironmentFactoryInternal.@NonNull EnvironmentFactoryInternalExtension environmentFactory;
 	protected final @NonNull CommonSubExpressionAnalysis cseAnalysis;
 	private @Nullable BaseSymbolicEvaluationEnvironment baseSymbolicEvaluationEnvironment =null;
@@ -128,8 +128,14 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 	/**
 	 * Initializes the symbolic analysis of expressionInOCL that delegates to a non-symbolic evaluation visitor.
 	 */
-	protected SymbolicAnalysis(@NonNull EnvironmentFactoryInternalExtension environmentFactory, @NonNull ModelManager modelManager) {
-		this.executor = new BasicOCLExecutor(environmentFactory, modelManager);
+	protected SymbolicAnalysis(@NonNull EnvironmentFactoryInternalExtension environmentFactory) {
+		this.executor = new AbstractExecutor(environmentFactory)
+		{
+			@Override
+			public @NonNull ModelManager getModelManager() {
+				return ModelManager.NULL;
+			}
+		};
 		this.environmentFactory = environmentFactory;
 		this.cseAnalysis = new CommonSubExpressionAnalysis();
 		this.evaluationVisitor = executor.createEvaluationVisitor();
@@ -559,8 +565,8 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 		 * Initializes the symbolic analysis of expressionInOCL that delegates to a non-symbolic evaluation visitor.
 		 */
 		protected SymbolicClassAnalysis(/*@NonNull CompleteClass completeClass,*/ org.eclipse.ocl.pivot.@NonNull Class primaryClass,
-				@NonNull EnvironmentFactoryInternalExtension environmentFactory, @NonNull ModelManager modelManager) {
-			super(environmentFactory, modelManager);
+				@NonNull EnvironmentFactoryInternalExtension environmentFactory) {
+			super(environmentFactory);
 			this.primaryClass = primaryClass;
 		}
 
@@ -610,7 +616,7 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 			if (symbolicExpressionAnalysis == null) {
 				Type contextType = PivotUtil.getContainingType(expressionInOCL);
 				assert contextType != null;
-				symbolicExpressionAnalysis = new SymbolicGenericExpressionAnalysis(expressionInOCL, environmentFactory, getExecutor().getModelManager());
+				symbolicExpressionAnalysis = new SymbolicGenericExpressionAnalysis(expressionInOCL, environmentFactory);
 				expression2analysis.put(expressionInOCL, symbolicExpressionAnalysis);
 			//	symbolicExpressionAnalysis.analyzeExpression();
 			}
@@ -661,8 +667,8 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 		/**
 		 * Initializes the symbolic analysis of expressionInOCL that delegates to a non-symbolic evaluation visitor.
 		 */
-		public SymbolicPartialClassAnalysis(org.eclipse.ocl.pivot.@NonNull Class selfClass, @NonNull EnvironmentFactoryInternalExtension environmentFactory, @NonNull ModelManager modelManager) {
-			super(selfClass, environmentFactory, modelManager);
+		public SymbolicPartialClassAnalysis(org.eclipse.ocl.pivot.@NonNull Class selfClass, @NonNull EnvironmentFactoryInternalExtension environmentFactory) {
+			super(selfClass, environmentFactory);
 		}
 
 		@Override
@@ -712,8 +718,8 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 		/**
 		 * Initializes the symbolic analysis of expressionInOCL that delegates to a non-symbolic evaluation visitor.
 		 */
-		public SymbolicCompleteClassAnalysis(@NonNull CompleteClass completeClass, @NonNull EnvironmentFactoryInternalExtension environmentFactory, @NonNull ModelManager modelManager) {
-			super(completeClass.getPrimaryClass(), environmentFactory, modelManager);
+		public SymbolicCompleteClassAnalysis(@NonNull CompleteClass completeClass, @NonNull EnvironmentFactoryInternalExtension environmentFactory) {
+			super(completeClass.getPrimaryClass(), environmentFactory);
 			this.completeClass = completeClass;
 		}
 
@@ -769,8 +775,8 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 		 * Initializes the symbolic analysis of expressionInOCL that delegates to a non-symbolic evaluation visitor.
 		 */
 		protected SymbolicExpressionAnalysis(@NonNull ExpressionInOCL expressionInOCL,
-				@NonNull EnvironmentFactoryInternalExtension environmentFactory, @NonNull ModelManager modelManager) {
-			super(environmentFactory, modelManager);
+				@NonNull EnvironmentFactoryInternalExtension environmentFactory) {
+			super(environmentFactory);
 			this.expressionInOCL = expressionInOCL;
 		}
 
@@ -851,8 +857,8 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 		 * Initializes the symbolic analysis of expressionInOCL that delegates to a non-symbolic evaluation visitor.
 		 */
 		public SymbolicGenericExpressionAnalysis(@NonNull ExpressionInOCL expressionInOCL,
-				@NonNull EnvironmentFactoryInternalExtension environmentFactory, @NonNull ModelManager modelManager) {
-			super(expressionInOCL, environmentFactory, modelManager);
+				@NonNull EnvironmentFactoryInternalExtension environmentFactory) {
+			super(expressionInOCL, environmentFactory);
 		}
 
 		public @Nullable String analyzeExpression() {
@@ -914,7 +920,7 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 
 		public SymbolicSpecificExpressionAnalysis(@NonNull SymbolicGenericExpressionAnalysis genericAnalysis,
 				@Nullable Object selfObject, @Nullable Object resultObject, @Nullable Object @Nullable [] parameters) {
-			super(genericAnalysis.expressionInOCL, genericAnalysis.environmentFactory, genericAnalysis.getModelManager());
+			super(genericAnalysis.expressionInOCL, genericAnalysis.environmentFactory);
 			this.selfObject = selfObject;
 			this.resultObject = resultObject;
 			this.parameters = parameters;
