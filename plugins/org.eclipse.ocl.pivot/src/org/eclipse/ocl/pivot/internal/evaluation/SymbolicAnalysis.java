@@ -896,7 +896,7 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 			return analyzeExpression(expressionInOCL, selfValue, resultValue, parameterValues);
 		}
 
-		public @NonNull SymbolicSpecificExpressionAnalysis getSymbolicAnalysis(@Nullable Object selfObject, @Nullable Object resultObject, @Nullable Object @Nullable [] parameters) {
+		public @NonNull SymbolicSpecificExpressionAnalysis getSymbolicAnalysis(@NonNull Object selfObject, @Nullable Object resultObject, @Nullable Object @Nullable [] parameters) {
 			List<@NonNull SymbolicSpecificExpressionAnalysis> specificAnalyses2 = specificAnalyses;
 			if (specificAnalyses2 == null) {
 				specificAnalyses = specificAnalyses2 = new ArrayList<>();
@@ -914,12 +914,12 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 
 	public static class SymbolicSpecificExpressionAnalysis extends SymbolicExpressionAnalysis
 	{
-		protected final @Nullable Object selfObject;
+		protected final @NonNull Object selfObject;
 		protected final @Nullable Object resultObject;
 		protected final @Nullable Object @Nullable [] parameters;
 
 		public SymbolicSpecificExpressionAnalysis(@NonNull SymbolicGenericExpressionAnalysis genericAnalysis,
-				@Nullable Object selfObject, @Nullable Object resultObject, @Nullable Object @Nullable [] parameters) {
+				@NonNull Object selfObject, @Nullable Object resultObject, @Nullable Object @Nullable [] parameters) {
 			super(genericAnalysis.expressionInOCL, genericAnalysis.environmentFactory);
 			this.selfObject = selfObject;
 			this.resultObject = resultObject;
@@ -930,7 +930,7 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 			return analyzeExpression(expressionInOCL, selfObject, resultObject, parameters);
 		}
 
-		public boolean matches(@Nullable Object selfObject, @Nullable Object resultObject, @Nullable Object @Nullable [] thoseParameters) {
+		public boolean matches(@NonNull Object selfObject, @Nullable Object resultObject, @Nullable Object @Nullable [] thoseParameters) {
 			if (this.selfObject != selfObject) {		// FIXME equals ???
 				return false;
 			}

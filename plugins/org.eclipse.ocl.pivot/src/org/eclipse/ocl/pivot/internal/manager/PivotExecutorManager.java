@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.manager;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
@@ -19,15 +22,29 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.Constraint;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
+import org.eclipse.ocl.pivot.internal.evaluation.AbstractExecutor;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis.SymbolicClassAnalysis;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis.SymbolicCompleteClassAnalysis;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis.SymbolicGenericExpressionAnalysis;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis.SymbolicPartialClassAnalysis;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis.SymbolicSpecificExpressionAnalysis;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorManager;
 import org.eclipse.ocl.pivot.internal.library.executor.LazyEcoreModelManager;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
+
+import com.google.common.collect.Iterables;
 
 /**
  * A PivotExecutorManager instance provides the bridge between a conventional EMF execution context
@@ -116,6 +133,12 @@ public class PivotExecutorManager extends ExecutorManager
 	protected final @NonNull EObject contextObject;
 	private @Nullable ModelManager modelManager = null;
 
+	/**
+	 * Lazily computed, eagerly invalidated static symbolic analysis of the invariants.
+	 */
+	private @Nullable Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull SymbolicClassAnalysis> class2symbolicAnalysis = null;
+	private @Nullable Map<@NonNull CompleteClass, @NonNull SymbolicClassAnalysis> completeClass2symbolicAnalysis = null;
+
 	public PivotExecutorManager(@NonNull EnvironmentFactory environmentFactory, @NonNull EObject contextObject) {
 		super(environmentFactory.getCompleteEnvironment());
 		this.environmentFactory = environmentFactory;
@@ -191,4 +214,81 @@ public class PivotExecutorManager extends ExecutorManager
 	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOfValue(@Nullable Type staticType, @Nullable Object value) {
 		return idResolver.getStaticTypeOfValue(staticType, value);
 	}
+
+	/**
+	 * @since 1.17
+	 */
+	@Override
+	public @NonNull SymbolicAnalysis getSymbolicAnalysis(@NonNull ExpressionInOCL expressionInOCL) {
+		Type containingType = PivotUtil.getContainingType(expressionInOCL);
+		assert containingType instanceof org.eclipse.ocl.pivot.Class;
+		SymbolicClassAnalysis symbolicClassAnalysis = getSymbolicAnalysis((org.eclipse.ocl.pivot.Class)containingType);
+		if (expressionInOCL.eContainer() instanceof Constraint) {
+			return symbolicClassAnalysis;
+		}
+		SymbolicGenericExpressionAnalysis symbolicExpressionAnalysis = symbolicClassAnalysis.getSymbolicAnalysis(expressionInOCL);
+		if (((AbstractExecutor)symbolicExpressionAnalysis.getExecutor()).basicGetRootEvaluationEnvironment() == null) {
+			symbolicExpressionAnalysis.analyzeExpression();
+		}
+		return symbolicExpressionAnalysis;
+	}
+
+	/**
+	 * @since 1.17
+	 */
+	public @NonNull SymbolicAnalysis getSymbolicAnalysis(@NonNull ExpressionInOCL expressionInOCL, @NonNull Object selfObject, @Nullable Object resultObject, @Nullable Object @Nullable [] parameters) {
+		Type containingType = PivotUtil.getContainingType(expressionInOCL);
+		if (containingType instanceof org.eclipse.ocl.pivot.Class) {
+			SymbolicClassAnalysis symbolicClassAnalysis = getSymbolicAnalysis((org.eclipse.ocl.pivot.Class)containingType);
+			SymbolicGenericExpressionAnalysis symbolicGenericExpressionAnalysis = symbolicClassAnalysis.getSymbolicAnalysis(expressionInOCL);
+			SymbolicSpecificExpressionAnalysis symbolicSpecificExpressionAnalysis = symbolicGenericExpressionAnalysis.getSymbolicAnalysis(selfObject, resultObject, parameters);
+			symbolicSpecificExpressionAnalysis.analyzeExpression();
+			return symbolicSpecificExpressionAnalysis;
+		}
+		SymbolicGenericExpressionAnalysis symbolicGenericExpressionAnalysis = new SymbolicGenericExpressionAnalysis(expressionInOCL, (EnvironmentFactoryInternalExtension)environmentFactory);
+		SymbolicSpecificExpressionAnalysis symbolicSpecificExpressionAnalysis = symbolicGenericExpressionAnalysis.getSymbolicAnalysis(selfObject, resultObject, parameters);
+		symbolicSpecificExpressionAnalysis.analyzeExpression();
+		return symbolicSpecificExpressionAnalysis;
+	}
+
+	/**
+	 * @since 1.17
+	 */
+	public SymbolicAnalysis.@NonNull SymbolicClassAnalysis getSymbolicAnalysis(org.eclipse.ocl.pivot.@NonNull Class selfClass) {
+		Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull SymbolicClassAnalysis> class2symbolicAnalysis2 = class2symbolicAnalysis;
+		if (class2symbolicAnalysis2 == null) {
+			class2symbolicAnalysis = class2symbolicAnalysis2 = new HashMap<>();
+		}
+		SymbolicClassAnalysis symbolicClassAnalysis = class2symbolicAnalysis2.get(selfClass);
+		if (symbolicClassAnalysis == null) {
+			CompleteClass completeClass = environmentFactory.getCompleteModel().getCompleteClass(selfClass);
+			if (Iterables.contains(completeClass.getPartialClasses(), selfClass)) {
+				Map<@NonNull CompleteClass, @NonNull SymbolicClassAnalysis> completeClass2symbolicAnalysis2 = completeClass2symbolicAnalysis;
+				if (completeClass2symbolicAnalysis2 == null) {
+					completeClass2symbolicAnalysis = completeClass2symbolicAnalysis2 = new HashMap<>();
+				}
+				symbolicClassAnalysis = completeClass2symbolicAnalysis2.get(completeClass);
+				if (symbolicClassAnalysis == null) {
+					symbolicClassAnalysis = new SymbolicCompleteClassAnalysis(completeClass, (EnvironmentFactoryInternalExtension) environmentFactory);
+					completeClass2symbolicAnalysis2.put(completeClass, symbolicClassAnalysis);
+					symbolicClassAnalysis.analyzeInvariants();
+				}
+				class2symbolicAnalysis2.put(selfClass, symbolicClassAnalysis);
+			}
+			else {
+				symbolicClassAnalysis = new SymbolicPartialClassAnalysis(selfClass, (EnvironmentFactoryInternalExtension)environmentFactory);
+				class2symbolicAnalysis2.put(selfClass, symbolicClassAnalysis);
+				symbolicClassAnalysis.analyzeInvariants();
+			}
+		}
+		return symbolicClassAnalysis;
+	}
+
+	/**
+	 * @since 1.17
+	 *
+	public void resetSymbolicAnalysis() {
+		class2symbolicAnalysis = null;
+		completeClass2symbolicAnalysis = null;
+	} */
 }

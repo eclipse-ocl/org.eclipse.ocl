@@ -714,6 +714,12 @@
         <filter id="404000815">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.evaluation.Executor"/>
+                <message_argument value="getSymbolicAnalysis(ExpressionInOCL)"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.evaluation.Executor"/>
                 <message_argument value="pushEvaluationEnvironment(NamedElement, Object)"/>
             </message_arguments>
         </filter>
