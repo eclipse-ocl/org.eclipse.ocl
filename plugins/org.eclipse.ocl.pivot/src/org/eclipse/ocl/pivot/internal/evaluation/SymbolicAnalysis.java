@@ -39,6 +39,7 @@ import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.internal.cse.CommonSubExpressionAnalysis;
+import org.eclipse.ocl.pivot.internal.manager.PivotExecutorManager;
 import org.eclipse.ocl.pivot.internal.symbolic.AbstractSymbolicRefinedValue;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicContent.SymbolicCollectionContent;
@@ -74,8 +75,9 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 {
 	public static final @NonNull TracingOption HYPOTHESIS = new TracingOption(PivotPlugin.PLUGIN_ID, "symbolic/hypothesis");
 
-	protected final @NonNull AbstractExecutor executor;
+	protected final @NonNull PivotExecutorManager pivotExecutorManager;
 	protected final EnvironmentFactoryInternal.@NonNull EnvironmentFactoryInternalExtension environmentFactory;
+	protected final @NonNull AbstractExecutor executor;		// XXX eliminate me
 	protected final @NonNull CommonSubExpressionAnalysis cseAnalysis;
 	private @Nullable BaseSymbolicEvaluationEnvironment baseSymbolicEvaluationEnvironment =null;
 	private final @NonNull EvaluationVisitor evaluationVisitor;
@@ -91,13 +93,6 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 	 * A cache of maybe-invalid symbolic value of known TYpeIds.
 	 */
 	private @NonNull Map<@NonNull Type, @NonNull List<@NonNull SymbolicUnknownValue>> type2unknownValues = new HashMap<>();
-
-
-	/**
-	 * The expressions for which contradicting a hypothesized value allows a more precise re-evaluation.
-	 */
-//	private @Nullable Map<@NonNull CSEElement, @NonNull List<@NonNull Hypothesis>> cseElement2hypotheses = null;
-//	private @Nullable Map<@NonNull Iterable<@NonNull TypedElement>, @NonNull List<@NonNull Hypothesis>> ztypedElement2hypotheses = null;
 
 	/**
 	 * The hypotheses that may allow the symbolic values of some typed elements to be refined, indexed by the
@@ -128,7 +123,9 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 	/**
 	 * Initializes the symbolic analysis of expressionInOCL that delegates to a non-symbolic evaluation visitor.
 	 */
-	protected SymbolicAnalysis(@NonNull EnvironmentFactoryInternalExtension environmentFactory) {
+	protected SymbolicAnalysis(@NonNull PivotExecutorManager pivotExecutorManager) {
+		this.pivotExecutorManager = pivotExecutorManager;
+		this.environmentFactory = (EnvironmentFactoryInternalExtension) pivotExecutorManager.getEnvironmentFactory();
 		this.executor = new AbstractExecutor(environmentFactory)
 		{
 			@Override
@@ -136,10 +133,8 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 				return ModelManager.NULL;
 			}
 		};
-		this.environmentFactory = environmentFactory;
 		this.cseAnalysis = new CommonSubExpressionAnalysis();
 		this.evaluationVisitor = executor.createEvaluationVisitor();
-	//	this.baseSymbolicEvaluationEnvironment = new BaseSymbolicEvaluationEnvironment(this, expressionInOCL);
 	}
 
 	public void addHypothesis(@NonNull Hypothesis hypothesis) {
@@ -148,7 +143,6 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 			height2hypotheses2 = height2hypotheses = new ArrayList<>();
 		}
 		int height = hypothesis.getCSEElement().getHeight();
-	//	System.out.println(height + "- " + hypothesis);		// XXX
 		while (height2hypotheses2.size() <= height) {
 			height2hypotheses2.add(null);
 		}
@@ -424,10 +418,6 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 
 	public abstract @Nullable String getIncompatibility(@NonNull HypothesizedSymbolicEvaluationEnvironment hypothesizedSymbolicEvaluationEnvironment, @NonNull TypedElement hypothesizedTypedElement);
 
-//	public @NonNull PrimitiveType getIntegerType() {
-//		return environmentFactory.getStandardLibrary().getIntegerType();
-//	}
-
 	public @NonNull SymbolicValue getKnownValue(@Nullable Object boxedValue) {
 		assert ValueUtil.isBoxed(boxedValue);
 		SymbolicKnownValue symbolicKnownValue = knownValue2symbolicValue.get(boxedValue);
@@ -489,35 +479,6 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 		return getBaseSymbolicEvaluationEnvironment().getSymbolicEvaluationEnvironment();
 	}
 
-
-
-/*	public @NonNull SymbolicValue mergeValue(@NonNull SymbolicValue leftSymbolicValue, @NonNull SymbolicValue rightSymbolicValue) {
-		if (leftSymbolicValue == rightSymbolicValue) {
-			return leftSymbolicValue;
-		}
-	//	assert leftSymbolicValue.getTypeId() == rightSymbolicValue.getTypeId();	// XXX need to tolerate inheritance
-		boolean leftKnown = leftSymbolicValue instanceof SymbolicKnownValue;
-		boolean leftMayBeInvalid = leftSymbolicValue.mayBeInvalid();
-		boolean leftMayBeNull = leftSymbolicValue.mayBeNull();
-		boolean leftMayBeZero = leftSymbolicValue.mayBeZero();
-		boolean rightKnown = rightSymbolicValue instanceof SymbolicKnownValue;
-		boolean rightMayBeInvalid = rightSymbolicValue.mayBeInvalid();
-		boolean rightMayBeNull = rightSymbolicValue.mayBeNull();
-		boolean rightMayBeZero = rightSymbolicValue.mayBeZero();
-		boolean leftStricter = (leftKnown && !rightKnown) || (!leftMayBeInvalid && rightMayBeInvalid) || (!leftMayBeNull && rightMayBeNull) || (!leftMayBeZero && rightMayBeZero);
-		boolean rightStricter = (rightKnown && !leftKnown) || (!rightMayBeInvalid && leftMayBeInvalid) || (!rightMayBeNull && leftMayBeNull) || (!rightMayBeZero && leftMayBeZero);
-		if (leftStricter && rightStricter) {
-			throw new UnsupportedOperationException();
-		}
-		if (leftStricter) {
-			return leftSymbolicValue;
-		}
-		if (rightStricter) {
-			return rightSymbolicValue;
-		}
-		throw new UnsupportedOperationException();
-	} */
-
 	public @NonNull SymbolicValue getSymbolicValue(@NonNull TypedElement typedElement) {
 		assert baseSymbolicEvaluationEnvironment != null;
 		return baseSymbolicEvaluationEnvironment.getSymbolicValue(typedElement);
@@ -565,8 +526,8 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 		 * Initializes the symbolic analysis of expressionInOCL that delegates to a non-symbolic evaluation visitor.
 		 */
 		protected SymbolicClassAnalysis(/*@NonNull CompleteClass completeClass,*/ org.eclipse.ocl.pivot.@NonNull Class primaryClass,
-				@NonNull EnvironmentFactoryInternalExtension environmentFactory) {
-			super(environmentFactory);
+				@NonNull PivotExecutorManager pivotExecutorManager) {
+			super(pivotExecutorManager);
 			this.primaryClass = primaryClass;
 		}
 
@@ -616,7 +577,7 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 			if (symbolicExpressionAnalysis == null) {
 				Type contextType = PivotUtil.getContainingType(expressionInOCL);
 				assert contextType != null;
-				symbolicExpressionAnalysis = new SymbolicGenericExpressionAnalysis(expressionInOCL, environmentFactory);
+				symbolicExpressionAnalysis = new SymbolicGenericExpressionAnalysis(expressionInOCL, pivotExecutorManager);
 				expression2analysis.put(expressionInOCL, symbolicExpressionAnalysis);
 			//	symbolicExpressionAnalysis.analyzeExpression();
 			}
@@ -667,8 +628,8 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 		/**
 		 * Initializes the symbolic analysis of expressionInOCL that delegates to a non-symbolic evaluation visitor.
 		 */
-		public SymbolicPartialClassAnalysis(org.eclipse.ocl.pivot.@NonNull Class selfClass, @NonNull EnvironmentFactoryInternalExtension environmentFactory) {
-			super(selfClass, environmentFactory);
+		public SymbolicPartialClassAnalysis(org.eclipse.ocl.pivot.@NonNull Class selfClass, @NonNull PivotExecutorManager pivotExecutorManager) {
+			super(selfClass, pivotExecutorManager);
 		}
 
 		@Override
@@ -687,26 +648,6 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 		public @NonNull String toString() {
 			StringBuilder s = new StringBuilder();
 			toString(s, primaryClass);
-		/*	List<@NonNull CSEElement> keys = new ArrayList<>(cseElement2symbolicValue.keySet());
-			if (keys.size() > 1) {
-				Collections.sort(keys, NameUtil.TO_STRING_COMPARATOR);
-			}
-			s.append("\t" + keys.size() + " cses");
-			for (@NonNull CSEElement key : keys) {
-				Object value = cseElement2symbolicValue.get(key);
-				s.append("\n\t\t" + key + " => " + value);
-			} */
-			List<@NonNull HypothesizedSymbolicEvaluationEnvironment> hypothesizedEvaluationEnvironments = getHypothesizedEvaluationEnvironments();
-			if (hypothesizedEvaluationEnvironments != null) {
-				for (HypothesizedSymbolicEvaluationEnvironment hypothesizedSymbolicEvaluationEnvironments : hypothesizedEvaluationEnvironments) {
-					StringUtil.appendIndentation(s, 1);
-					s.append("{ ");
-				//	StringUtil.appendIndentation(s, 2);
-					hypothesizedSymbolicEvaluationEnvironments.toString(s, 1);
-					StringUtil.appendIndentation(s, 1);
-					s.append("}");
-				}
-			}
 			return s.toString();
 		}
 	}
@@ -718,8 +659,8 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 		/**
 		 * Initializes the symbolic analysis of expressionInOCL that delegates to a non-symbolic evaluation visitor.
 		 */
-		public SymbolicCompleteClassAnalysis(@NonNull CompleteClass completeClass, @NonNull EnvironmentFactoryInternalExtension environmentFactory) {
-			super(completeClass.getPrimaryClass(), environmentFactory);
+		public SymbolicCompleteClassAnalysis(@NonNull CompleteClass completeClass, @NonNull PivotExecutorManager pivotExecutorManager) {
+			super(completeClass.getPrimaryClass(), pivotExecutorManager);
 			this.completeClass = completeClass;
 		}
 
@@ -743,15 +684,6 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 			for (org.eclipse.ocl.pivot.@NonNull Class partialClass : PivotUtil.getPartialClasses(completeClass)) {
 				toString(s, partialClass);
 			}
-		/*	List<@NonNull CSEElement> keys = new ArrayList<>(cseElement2symbolicValue.keySet());
-			if (keys.size() > 1) {
-				Collections.sort(keys, NameUtil.TO_STRING_COMPARATOR);
-			}
-			s.append("\t" + keys.size() + " cses");
-			for (@NonNull CSEElement key : keys) {
-				Object value = cseElement2symbolicValue.get(key);
-				s.append("\n\t\t" + key + " => " + value);
-			} */
 			List<@NonNull HypothesizedSymbolicEvaluationEnvironment> hypothesizedEvaluationEnvironments = getHypothesizedEvaluationEnvironments();
 			if (hypothesizedEvaluationEnvironments != null) {
 				for (HypothesizedSymbolicEvaluationEnvironment hypothesizedSymbolicEvaluationEnvironments : hypothesizedEvaluationEnvironments) {
@@ -774,15 +706,10 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 		/**
 		 * Initializes the symbolic analysis of expressionInOCL that delegates to a non-symbolic evaluation visitor.
 		 */
-		protected SymbolicExpressionAnalysis(@NonNull ExpressionInOCL expressionInOCL,
-				@NonNull EnvironmentFactoryInternalExtension environmentFactory) {
-			super(environmentFactory);
+		protected SymbolicExpressionAnalysis(@NonNull ExpressionInOCL expressionInOCL, @NonNull PivotExecutorManager pivotExecutorManager) {
+			super(pivotExecutorManager);
 			this.expressionInOCL = expressionInOCL;
 		}
-
-//		public @Nullable String analyzeExpression(@Nullable Object selfObject, @Nullable Object resultObject, @Nullable Object @Nullable [] parameters) {
-//			return analyzeExpression(expressionInOCL, selfObject, resultObject, parameters);
-//		}
 
 		@Override
 		public @Nullable String getIncompatibility(@NonNull HypothesizedSymbolicEvaluationEnvironment hypothesizedSymbolicEvaluationEnvironment, @NonNull TypedElement hypothesizedTypedElement) {
@@ -825,15 +752,6 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 					s.append(symbolicValue);
 				}
 			}
-		/*	List<@NonNull CSEElement> keys = new ArrayList<>(cseElement2symbolicValue.keySet());
-			if (keys.size() > 1) {
-				Collections.sort(keys, NameUtil.TO_STRING_COMPARATOR);
-			}
-			s.append("\t" + keys.size() + " cses");
-			for (@NonNull CSEElement key : keys) {
-				Object value = cseElement2symbolicValue.get(key);
-				s.append("\n\t\t" + key + " => " + value);
-			} */
 			List<@NonNull HypothesizedSymbolicEvaluationEnvironment> hypothesizedEvaluationEnvironments = getHypothesizedEvaluationEnvironments();
 			if (hypothesizedEvaluationEnvironments != null) {
 				for (HypothesizedSymbolicEvaluationEnvironment hypothesizedSymbolicEvaluationEnvironments : hypothesizedEvaluationEnvironments) {
@@ -856,12 +774,19 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 		/**
 		 * Initializes the symbolic analysis of expressionInOCL that delegates to a non-symbolic evaluation visitor.
 		 */
-		public SymbolicGenericExpressionAnalysis(@NonNull ExpressionInOCL expressionInOCL,
-				@NonNull EnvironmentFactoryInternalExtension environmentFactory) {
-			super(expressionInOCL, environmentFactory);
+		public SymbolicGenericExpressionAnalysis(@NonNull ExpressionInOCL expressionInOCL, @NonNull PivotExecutorManager pivotExecutorManager) {
+			super(expressionInOCL, pivotExecutorManager);
+			if ("self.nameLabel(self.newName).+(' <= ').+(self.operationLabels(self.oldOperations))".equals(expressionInOCL.toString())) {
+				getClass(); 		// XXX
+				SymbolicAnalysis.HYPOTHESIS.setState(true);
+			}
 		}
 
 		public @Nullable String analyzeExpression() {
+			if ("self.nameLabel(self.newName).+(' <= ').+(self.operationLabels(self.oldOperations))".equals(expressionInOCL.toString())) {
+				getClass(); 		// XXX
+				SymbolicAnalysis.HYPOTHESIS.setState(true);
+			}
 			Operation contextOperation = PivotUtil.getContainingOperation(expressionInOCL);
 			boolean isValidating = false;
 			if (contextOperation != null) {
@@ -920,7 +845,7 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 
 		public SymbolicSpecificExpressionAnalysis(@NonNull SymbolicGenericExpressionAnalysis genericAnalysis,
 				@NonNull Object selfObject, @Nullable Object resultObject, @Nullable Object @Nullable [] parameters) {
-			super(genericAnalysis.expressionInOCL, genericAnalysis.environmentFactory);
+			super(genericAnalysis.expressionInOCL, genericAnalysis.pivotExecutorManager);
 			this.selfObject = selfObject;
 			this.resultObject = resultObject;
 			this.parameters = parameters;

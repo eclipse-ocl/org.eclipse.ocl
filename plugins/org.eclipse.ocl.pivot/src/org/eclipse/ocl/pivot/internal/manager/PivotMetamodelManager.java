@@ -85,6 +85,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.WildcardType;
+import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.compatibility.EMF_2_9;
@@ -128,6 +129,7 @@ import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
@@ -2243,7 +2245,10 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	public void resetAnalyses() {
 		resetFinalAnalysis();
 		resetFlowAnalysis();
-//XXX		resetSymbolicAnalysis();
+		Executor executor = ThreadLocalExecutor.basicGetExecutor();
+		if (executor instanceof PivotExecutorManager) {
+			((PivotExecutorManager)executor).resetSymbolicAnalysis();
+		}
 	}
 
 	/**

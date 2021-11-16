@@ -36,7 +36,6 @@ import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis.SymbolicPartia
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis.SymbolicSpecificExpressionAnalysis;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorManager;
 import org.eclipse.ocl.pivot.internal.library.executor.LazyEcoreModelManager;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
@@ -257,7 +256,7 @@ public class PivotExecutorManager extends ExecutorManager
 			symbolicSpecificExpressionAnalysis.analyzeExpression();
 			return symbolicSpecificExpressionAnalysis;
 		}
-		SymbolicGenericExpressionAnalysis symbolicGenericExpressionAnalysis = new SymbolicGenericExpressionAnalysis(expressionInOCL, (EnvironmentFactoryInternalExtension)environmentFactory);
+		SymbolicGenericExpressionAnalysis symbolicGenericExpressionAnalysis = new SymbolicGenericExpressionAnalysis(expressionInOCL, this);
 		SymbolicSpecificExpressionAnalysis symbolicSpecificExpressionAnalysis = symbolicGenericExpressionAnalysis.getSymbolicAnalysis(selfObject, resultObject, parameters);
 		symbolicSpecificExpressionAnalysis.analyzeExpression();
 		return symbolicSpecificExpressionAnalysis;
@@ -281,14 +280,14 @@ public class PivotExecutorManager extends ExecutorManager
 				}
 				symbolicClassAnalysis = completeClass2symbolicAnalysis2.get(completeClass);
 				if (symbolicClassAnalysis == null) {
-					symbolicClassAnalysis = new SymbolicCompleteClassAnalysis(completeClass, (EnvironmentFactoryInternalExtension) environmentFactory);
+					symbolicClassAnalysis = new SymbolicCompleteClassAnalysis(completeClass, this);
 					completeClass2symbolicAnalysis2.put(completeClass, symbolicClassAnalysis);
 					symbolicClassAnalysis.analyzeInvariants();
 				}
 				class2symbolicAnalysis2.put(selfClass, symbolicClassAnalysis);
 			}
 			else {
-				symbolicClassAnalysis = new SymbolicPartialClassAnalysis(selfClass, (EnvironmentFactoryInternalExtension)environmentFactory);
+				symbolicClassAnalysis = new SymbolicPartialClassAnalysis(selfClass, this);
 				class2symbolicAnalysis2.put(selfClass, symbolicClassAnalysis);
 				symbolicClassAnalysis.analyzeInvariants();
 			}
@@ -298,9 +297,9 @@ public class PivotExecutorManager extends ExecutorManager
 
 	/**
 	 * @since 1.17
-	 *
+	 */
 	public void resetSymbolicAnalysis() {
 		class2symbolicAnalysis = null;
 		completeClass2symbolicAnalysis = null;
-	} */
+	}
 }
