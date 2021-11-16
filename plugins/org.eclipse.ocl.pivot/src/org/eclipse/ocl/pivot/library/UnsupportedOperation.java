@@ -17,6 +17,9 @@ import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicEvaluationEnvironment;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicReason;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicSimpleReason;
+import org.eclipse.ocl.pivot.internal.symbolic.SymbolicUtil;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
 /**
@@ -69,6 +72,10 @@ public class UnsupportedOperation extends AbstractOperation implements LibraryPr
 
 	@Override
 	public @NonNull SymbolicValue symbolicEvaluate(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment,@NonNull OperationCallExp callExp) {
-		return evaluationEnvironment.getInvalidValue("invalid-unsupported-operation");
+		SymbolicReason resultMayBeNullReason = null;
+		if (callExp.isIsRequired()) {
+			resultMayBeNullReason = SymbolicUtil.mayBeNullReason(new SymbolicSimpleReason("may-be=null-return"), callExp);
+		}
+		return evaluationEnvironment.getUnknownValue(callExp, resultMayBeNullReason, null);
 	}
 }

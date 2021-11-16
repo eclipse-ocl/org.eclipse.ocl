@@ -21,20 +21,10 @@ package overloads
 		operation add(set : Overload[*] { !ordered unique }) : Overload[*] { !ordered unique } {
 			body: addSet(add(set->union(set))->union(set));
 		}
-		operation addSelf(o : Overload) : Overload {
-			body: self;
-		}
-		operation addBag(bag : Overload[*] { !ordered !unique }) : Overload[*] { !ordered !unique } {
-			body: Bag{};
-		}
-		operation addOrderedSet(orderedset : Overload[*] { ordered unique }) : Overload[*] { ordered unique } {
-			body: OrderedSet{};
-		}
-		operation addSequence(sequence : Overload[*] { ordered !unique }) : Overload[*] { ordered !unique } {
-			body: Sequence{};
-		}
-		operation addSet(set : Overload[*] { !ordered unique }) : Overload[*] { !ordered unique } {
-			body: Set{};
-		}
+		operation addSelf(o : Overload) : Overload;
+		operation addBag(bag : Overload[*] { !ordered !unique }) : Overload[*] { !ordered !unique };
+		operation addOrderedSet(orderedset : Overload[*] { ordered unique }) : Overload[*] { ordered unique };
+		operation addSequence(sequence : Overload[*] { ordered !unique }) : Overload[*] { ordered !unique };
+		operation addSet(set : Overload[*] { !ordered unique }) : Overload[*] { !ordered unique };
 	}
 }
