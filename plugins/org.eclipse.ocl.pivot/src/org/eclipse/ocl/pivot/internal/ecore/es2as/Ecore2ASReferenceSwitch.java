@@ -42,6 +42,8 @@ import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
@@ -58,6 +60,7 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -179,6 +182,14 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 				}
 			}
 			doSwitchAll(Type.class, ClassUtil.<Type>nullFree(asOperation.getRaisedExceptions()), eOperation.getEGenericExceptions());
+			org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asOperation);
+			initContextVariable(asOperation.getBodyExpression(), asClass);
+			for (Constraint preCondition : asOperation.getOwnedPreconditions()) {
+				initContextVariable(preCondition.getOwnedSpecification(), asClass);
+			}
+			for (Constraint postCondition : asOperation.getOwnedPostconditions()) {
+				initContextVariable(postCondition.getOwnedSpecification(), asClass);
+			}
 			return asOperation;
 		}
 	}
@@ -544,5 +555,14 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * @since 1.17
+	 */
+	protected void initContextVariable(@Nullable LanguageExpression asExpression, org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		if (asExpression instanceof ExpressionInOCL) {
+			converter.setContextVariable((ExpressionInOCL)asExpression, PivotConstants.SELF_NAME, asClass, null);
+		}
 	}
 }

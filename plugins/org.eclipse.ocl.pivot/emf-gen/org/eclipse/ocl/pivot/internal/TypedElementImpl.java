@@ -47,6 +47,7 @@ import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.util.PivotValidator;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
@@ -248,7 +249,12 @@ implements TypedElement {
 			return null;
 		}
 		Executor executor = PivotUtil.getExecutor(this);
-		SymbolicAnalysis symbolicAnalysis = executor.getSymbolicAnalysis(expressionInOCL);
+		SymbolicAnalysis symbolicAnalysis;
+		try {
+			symbolicAnalysis = executor.getSymbolicAnalysis(expressionInOCL);
+		} catch (ParserException e) {
+			return this == expressionInOCL ? e.toString() : null;
+		}
 		SymbolicValue symbolicValue = symbolicAnalysis.getSymbolicValue(this);
 		SymbolicReason mayBeInvalidReason = symbolicValue.mayBeInvalidReason();
 		if (mayBeInvalidReason == null) {

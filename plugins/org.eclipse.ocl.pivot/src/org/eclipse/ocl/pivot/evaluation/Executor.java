@@ -25,6 +25,7 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
+import org.eclipse.ocl.pivot.utilities.ParserException;
 
 /**
  * @since 1.1
@@ -79,9 +80,10 @@ public interface Executor extends Evaluator
 	}
 
 	/**
+	 * @throws ParserException
 	 * @since 1.17
 	 */
-	default @NonNull SymbolicAnalysis getSymbolicAnalysis(@NonNull ExpressionInOCL expressionInOCL) {
+	default @NonNull SymbolicAnalysis getSymbolicAnalysis(@NonNull ExpressionInOCL expressionInOCL) throws ParserException {
 		throw new UnsupportedOperationException();
 	}
 
@@ -101,6 +103,7 @@ public interface Executor extends Evaluator
 	 * @since 1.17
 	 */
 	default void resetCaches() {}
+
 	@Override
 	void setLogger(@Nullable EvaluationLogger logger);
 }

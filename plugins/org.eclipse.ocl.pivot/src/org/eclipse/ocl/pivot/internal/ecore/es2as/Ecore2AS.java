@@ -45,6 +45,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
@@ -53,6 +54,7 @@ import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.ecore.Ecore2Moniker;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
@@ -295,6 +297,22 @@ public class Ecore2AS extends AbstractExternal2AS
 	@Override
 	protected Model basicGetPivotModel() {
 		return pivotModel;
+	}
+
+	private boolean checkCompleteness(@NonNull Resource asResource) {
+		for (EObject eObject : new TreeIterable(asResource)) {
+			if (eObject instanceof ExpressionInOCL) {
+				ExpressionInOCL expressionInOCL = (ExpressionInOCL)eObject;
+				if ((expressionInOCL.getBody() != null) && (expressionInOCL.getOwnedBody() != null)) {
+					Type containingType = PivotUtil.getContainingType(expressionInOCL);
+					assert containingType != null;
+					Variable contextVariable = expressionInOCL.getOwnedContext();
+					assert contextVariable != null : "Missing ownedContext for \"" + expressionInOCL + "\"";
+					assert contextVariable.getType() == containingType;
+				}
+			}
+		}
+		return true;
 	}
 
 	protected @NonNull URI createPivotURI() {
@@ -1152,6 +1170,10 @@ public class Ecore2AS extends AbstractExternal2AS
 		 * Resolve references.
 		 */
 		resolveReferences();
+		/*
+		 * Ensure that mandatory derived content has been initialized.
+		 */
+		assert checkCompleteness(asResource);
 		resolveIds(ecoreContents);
 	}
 }

@@ -600,7 +600,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		@SuppressWarnings("null") @NonNull List<ETypeParameter> eTypeParameters = eOperation.getETypeParameters();
 		copyTemplateSignature(pivotElement,eTypeParameters);
 		doSwitchAll(eOperation.getEGenericExceptions());
-		converter.queueReference(eOperation);				// For superclasses
+		converter.queueReference(eOperation);				// For superclasses/
 		return pivotElement;
 	}
 

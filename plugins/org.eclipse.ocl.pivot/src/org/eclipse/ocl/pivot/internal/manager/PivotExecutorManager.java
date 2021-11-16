@@ -36,10 +36,12 @@ import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis.SymbolicPartia
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis.SymbolicSpecificExpressionAnalysis;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorManager;
 import org.eclipse.ocl.pivot.internal.library.executor.LazyEcoreModelManager;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
+import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 import com.google.common.collect.Iterables;
@@ -227,10 +229,12 @@ public class PivotExecutorManager extends ExecutorManager
 	}
 
 	/**
+	 * @throws ParserException
 	 * @since 1.17
 	 */
 	@Override
-	public @NonNull SymbolicAnalysis getSymbolicAnalysis(@NonNull ExpressionInOCL expressionInOCL) {
+	public @NonNull SymbolicAnalysis getSymbolicAnalysis(@NonNull ExpressionInOCL expressionInOCL) throws ParserException {
+		((EnvironmentFactoryInternalExtension)environmentFactory).parseSpecification(expressionInOCL);		// Throw ParserException if bad text
 		Type containingType = PivotUtil.getContainingType(expressionInOCL);
 		assert containingType instanceof org.eclipse.ocl.pivot.Class;
 		SymbolicClassAnalysis symbolicClassAnalysis = getSymbolicAnalysis((org.eclipse.ocl.pivot.Class)containingType);
@@ -298,8 +302,10 @@ public class PivotExecutorManager extends ExecutorManager
 	/**
 	 * @since 1.17
 	 */
-	public void resetSymbolicAnalysis() {
+	@Override
+	public void resetCaches() {
 		class2symbolicAnalysis = null;
 		completeClass2symbolicAnalysis = null;
+		getMetamodelManager().resetCaches();
 	}
 }

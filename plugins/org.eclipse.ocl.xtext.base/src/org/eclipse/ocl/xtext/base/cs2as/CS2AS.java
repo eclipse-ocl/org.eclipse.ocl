@@ -36,6 +36,7 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VariableDeclaration;
+import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeFilter;
@@ -681,7 +682,11 @@ public abstract class CS2AS extends AbstractConversion	// FIXME migrate function
 
 	public synchronized void update(@NonNull IDiagnosticConsumer diagnosticsConsumer) {
 		//		printDiagnostic("CS2AS.update start", false, 0);
-		metamodelManager.resetAnalyses();
+		Executor executor = ThreadLocalExecutor.basicGetExecutor();
+		if (executor != null) {
+			assert executor.getEnvironmentFactory() == environmentFactory;
+			executor.resetCaches();
+		}
 		@SuppressWarnings("unused") Map<CSI, Element> oldCSI2AS = csi2asMapping.getMapping();
 		@SuppressWarnings("unused") Set<CSI> newCSIs = csi2asMapping.computeCSIs(csResource);
 		//		System.out.println("==========================================================================");

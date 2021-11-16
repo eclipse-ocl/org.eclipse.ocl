@@ -65,6 +65,7 @@ import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LambdaType;
+import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.LetExp;
 import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.MapLiteralExp;
@@ -2160,7 +2161,7 @@ public class PivotUtil
 	/**
 	 * @since 1.17
 	 */
-	public static boolean isInvariant(@NonNull ExpressionInOCL expressionInOCL) {
+	public static boolean isInvariant(@NonNull LanguageExpression expressionInOCL) {
 		EObject eContainer = expressionInOCL.eContainer();
 		if (!(eContainer instanceof Constraint)) {
 			return false;

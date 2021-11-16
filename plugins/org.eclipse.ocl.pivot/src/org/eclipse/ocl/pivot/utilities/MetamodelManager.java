@@ -63,7 +63,11 @@ public interface MetamodelManager
 	 *
 	 * @deprecated use PivotHelper.parseSpecification()
 	 */
-	@Deprecated /* @deprecated use PivotHelper.parseSpecification() */
+	@Deprecated /* @deprecated use EnvironmentFactoryExtension2.parseSpecification() */
 	@NonNull ExpressionInOCL parseSpecification(@NonNull LanguageExpression specification) throws ParserException;
 
+	/**
+	 * @since 1.17
+	 */
+	default void resetCaches() {}
 }

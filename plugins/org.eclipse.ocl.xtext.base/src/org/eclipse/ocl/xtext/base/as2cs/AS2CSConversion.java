@@ -325,7 +325,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 	}
 
 	public @NonNull PrecedenceManager getPrecedenceManager() {
-		return metamodelManager.getPrecedenceManager();
+		return getMetamodelManager().getPrecedenceManager();
 	}
 
 	public @Nullable BaseReferenceVisitor getReferenceVisitor(@NonNull EClass eClass, @Nullable Namespace scope) {
@@ -378,7 +378,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 	}
 
 	public void importNamespace(@NonNull Namespace importNamespace, @Nullable String alias) {
-		Namespace primaryNamespace = metamodelManager.getPrimaryElement(importNamespace);
+		Namespace primaryNamespace = getMetamodelManager().getPrimaryElement(importNamespace);
 		List<@NonNull String> aliases = importedNamespaces.get(primaryNamespace);
 		if (aliases == null) {
 			aliases = new ArrayList<>();
@@ -451,6 +451,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 	 */
 	public void refreshPathName(@NonNull PathNameCS csPathName, @NonNull Element element, @Nullable Namespace scope) {//, @Nullable Resource csResource) {
 		Namespace safeScope = scope;
+		PivotMetamodelManager metamodelManager = getMetamodelManager();
 		Element primaryElement = metamodelManager.getPrimaryElement(element);
 		if ((safeScope != null) && (primaryElement instanceof Type)) {
 			String name = ((Type)primaryElement).getName();
