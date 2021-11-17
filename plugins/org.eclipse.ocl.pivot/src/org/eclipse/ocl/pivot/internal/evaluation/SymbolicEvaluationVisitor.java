@@ -50,6 +50,7 @@ import org.eclipse.ocl.pivot.ResultVariable;
 import org.eclipse.ocl.pivot.ShadowExp;
 import org.eclipse.ocl.pivot.ShadowPart;
 import org.eclipse.ocl.pivot.StringLiteralExp;
+import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TupleLiteralExp;
 import org.eclipse.ocl.pivot.TupleLiteralPart;
 import org.eclipse.ocl.pivot.Type;
@@ -237,7 +238,17 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 				if (onlyType == standardLibrary.getOclSelfType()) {
 					List<@NonNull OCLExpression> arguments = ClassUtil.nullFree(operationCallExp.getOwnedArguments());
 					SymbolicValue onlyArgumentValue = symbolicEvaluationEnvironment.symbolicEvaluate(arguments.get(0));
-					org.eclipse.ocl.pivot.Class actualArgType = (org.eclipse.ocl.pivot.Class)onlyArgumentValue.getType();
+					Type type = onlyArgumentValue.getType();
+					org.eclipse.ocl.pivot.Class actualArgType;
+					if (type instanceof TemplateParameter) {
+						actualArgType = PivotUtil.basicGetLowerBound((TemplateParameter)type);
+						if (actualArgType == null) {
+							actualArgType = standardLibrary.getOclAnyType();
+						}
+					}
+					else {
+						actualArgType = (org.eclipse.ocl.pivot.Class)type;
+					}
 					actualSourceType = (org.eclipse.ocl.pivot.Class)actualSourceType.getCommonType(idResolver, actualArgType);
 					// FIXME direct evaluate using second argument
 					actualOperation = actualSourceType.lookupActualOperation(standardLibrary, apparentOperation);
