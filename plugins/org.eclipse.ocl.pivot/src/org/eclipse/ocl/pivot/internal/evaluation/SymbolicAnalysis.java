@@ -55,6 +55,7 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.Envir
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.ExpressionInOCLUsage;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -575,7 +576,8 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 		public @NonNull SymbolicGenericExpressionAnalysis getSymbolicAnalysis(@NonNull ExpressionInOCL expressionInOCL) {
 			SymbolicGenericExpressionAnalysis symbolicExpressionAnalysis = expression2analysis.get(expressionInOCL);
 			if (symbolicExpressionAnalysis == null) {
-				Type contextType = PivotUtil.getContainingType(expressionInOCL);
+				ExpressionInOCLUsage usage =ExpressionInOCLUsage.createUsage(expressionInOCL);
+				Type contextType = usage.getContextType();
 				assert contextType != null;
 				symbolicExpressionAnalysis = new SymbolicGenericExpressionAnalysis(expressionInOCL, pivotExecutorManager);
 				expression2analysis.put(expressionInOCL, symbolicExpressionAnalysis);

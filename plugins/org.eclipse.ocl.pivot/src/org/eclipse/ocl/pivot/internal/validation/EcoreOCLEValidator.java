@@ -233,7 +233,7 @@ public class EcoreOCLEValidator implements EValidator
 		private static int counter = 0;
 
 		protected final @NonNull OCL ocl;
-		private int count;
+		@SuppressWarnings("unused") private int count;
 
 		protected WeakOCLReference(@NonNull OCLInternal ocl) {
 			super(ocl);
@@ -368,98 +368,6 @@ public class EcoreOCLEValidator implements EValidator
 			Entry<String, String> entry = details.get(index);
 			return entry != null ? entry : pivotAnnotation;
 		}
-
-		/*		EObject asContainer = asExpression.eContainer();
-		if (asContainer instanceof Property) {
-
-		}
-		else if (asContainer instanceof Operation) {
-
-		}
-		else if (asContainer instanceof Constraint) {
-			Constraint asConstraint = (Constraint)asContainer;
-			EObject asContainerContainer = asConstraint.eContainer();
-			EReference eContainmentFeature = asConstraint.eContainmentFeature();
-			if (eContainmentFeature == PivotPackage.Literals.CLASS__OWNED_INVARIANTS) {
-
-			}
-			else if (asContainerContainer instanceof Operation) {
-
-			}
-		}
-		else {
-		}
-
-		if ((asElement instanceof Operation) && (role != null)) {
-			Operation asOperation = (Operation)asElement;	// FIXME workaround Bug 528355 that inhibits use of the detail entry
-			if (role.equals("body")) {
-				asSpecification = asOperation.getBodyExpression();
-			}
-			else if (role.equals("pre")) {
-				asConstraint = NameUtil.getNameable(asOperation.getOwnedPreconditions(), "");
-				if (asConstraint == null) {
-					asConstraint = NameUtil.getNameable(asOperation.getOwnedPreconditions(), null);
-				}
-				requiredType = booleanType;
-			}
-			else if (role.startsWith("pre_")) {
-				asConstraint = NameUtil.getNameable(asOperation.getOwnedPreconditions(), role.substring(4));
-				requiredType = booleanType;
-			}
-			else if (role.equals("post")) {
-				asConstraint = NameUtil.getNameable(asOperation.getOwnedPostconditions(), "");
-				if (asConstraint == null) {
-					asConstraint = NameUtil.getNameable(asOperation.getOwnedPostconditions(), null);
-				}
-				requiredType = booleanType;
-			}
-			else if (role.startsWith("post_")) {
-				asConstraint = NameUtil.getNameable(asOperation.getOwnedPostconditions(), role.substring(5));
-				requiredType = booleanType;
-			}
-		}
-		else if (asElement instanceof Property) {
-			Property asProperty = (Property)asElement;
-			asSpecification = asProperty.getOwnedExpression();
-		}
-		else if ((asElement instanceof org.eclipse.ocl.pivot.Class) && (role != null) && (asConstraint == null)) {
-			org.eclipse.ocl.pivot.Class asClass = (org.eclipse.ocl.pivot.Class)asElement;
-			asConstraint = NameUtil.getNameable(asClass.getOwnedInvariants(), role);
-			requiredType = booleanType;
-		}
-		else if ((asElement instanceof Namespace) && (role != null) && (asConstraint == null)) {
-			Namespace asNamespace = (Namespace)asElement;
-			asConstraint = NameUtil.getNameable(asNamespace.getOwnedConstraints(), role);
-			requiredType = booleanType;
-		}
-		if ((asSpecification == null) && (asConstraint != null)) {
-			asSpecification = asConstraint.getOwnedSpecification();
-			requiredType = booleanType;
-		}
-
-
-
-		EModelElement eModelElement = (EModelElement)esObject;
-		EAnnotation pivotAnnotation = OCLCommon.getDelegateAnnotation(eModelElement);
-		if (pivotAnnotation == null) {
-			return eObject;
-		}
-		EMap<String, String> details = pivotAnnotation.getDetails();
-		int index = details.indexOfKey(asExpression.getName());
-		if (index >= 0) {
-			Entry<String, String> entry = details.get(index);
-			return entry != null ? entry : pivotAnnotation;
-		}
-		EAnnotation ecoreAnnotation = eModelElement.getEAnnotation(EcorePackage.eNS_URI);
-		if (ecoreAnnotation == null) {
-			return eObject;
-		}
-		details = ecoreAnnotation.getDetails();
-		index = details.indexOfKey(CONSTRAINTS_KEY);
-		if (index >= 0) {
-			Entry<String, String> entry = details.get(index);
-			return entry != null ? entry : ecoreAnnotation;
-		} */
 		return eNamedElement;
 	}
 

@@ -2504,24 +2504,6 @@ public class PivotValidator extends EObjectValidator
 	}
 	public boolean validateExpressionInOCL(ExpressionInOCL expressionInOCL, DiagnosticChain diagnostics, Map<Object, Object> context)
 	{
-		/*		if ((expressionInOCL.getOwnedBody() == null) && (expressionInOCL.getBody() != null)) {
-			assert context != null;
-			OCL ocl = PivotDiagnostician.getOCL(context, expressionInOCL);
-			try {
-				ocl.getMetamodelManager().parseSpecification(expressionInOCL);
-			} catch (ParserException e) {
-				if (diagnostics != null) {
-					diagnostics.add(new BasicDiagnostic(Diagnostic.ERROR, DIAGNOSTIC_SOURCE, 0,
-						e.getLocalizedMessage(),
-						new Object[] {expressionInOCL}));
-				}
-				return false;
-			}
-		} */
-//		OCLExpression ownedBody = expressionInOCL.getOwnedBody();
-//		if (ownedBody == null) {
-//			getClass();		// XXX
-//		}
 		if ((expressionInOCL.getOwnedBody() == null) && (expressionInOCL.getBody() != null) && !isLazyParse(context)) {	// Generated OCLstdlib and States.ecore loaded as *.oclas has lazy unparsed AST
 			assert context != null;
 			EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) PivotUtilInternal.getEnvironmentFactory(expressionInOCL);
@@ -2535,104 +2517,6 @@ public class PivotValidator extends EObjectValidator
 			}
 		}
 		boolean allOk = validateExpressionInOCLGen(expressionInOCL, diagnostics, context);
-	/*	if (allOk && (expressionInOCL.getOwnedBody() != null)) {
-			EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(expressionInOCL);
-			Severity invalidResultSeverity = environmentFactory.getValue(PivotValidationOptions.PotentialInvalidResult);
-			assert invalidResultSeverity != null;
-			if (invalidResultSeverity != Severity.IGNORE) {
-				PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-				boolean isValidating = false;
-				EObject eContainer = expressionInOCL.eContainer();
-				if (eContainer instanceof Operation) {
-					Operation asOperation = (Operation)eContainer;
-					if (expressionInOCL == asOperation.getBodyExpression()) {
-						isValidating = asOperation.isIsValidating();
-					}
-				}
-				VariableDeclaration ownedContext = PivotUtil.getOwnedContext(expressionInOCL);
-				SymbolicReason mayBeNullReason1 = isValidating ? SymbolicSimpleReason.IS_VALIDATING : null;
-				if (mayBeNullReason1 == null) {
-					mayBeNullReason1 = SymbolicUtil.isRequiredReason(ownedContext);
-				}
-				SymbolicReason mayBeInvalidReason = isValidating ? SymbolicSimpleReason.IS_VALIDATING : null;
-				Object selfValue = new SymbolicVariableValue(ownedContext, mayBeNullReason1, mayBeInvalidReason);
-				Object resultValue = null;
-				Variable ownedResult = expressionInOCL.getOwnedResult();
-				if (ownedResult != null) {
-					SymbolicReason mayBeNullReason2;
-					if (isValidating) {
-						mayBeNullReason2 = SymbolicSimpleReason.IS_VALIDATING;
-					}
-					else {
-						mayBeNullReason2 = SymbolicUtil.isRequiredReason(ownedResult);
-					}
-					resultValue = new SymbolicVariableValue(ownedResult, mayBeNullReason2, mayBeInvalidReason);
-				}
-				List<@NonNull Variable> ownedParameters = PivotUtilInternal.getOwnedParametersList(expressionInOCL);
-				@Nullable Object[] parameterValues = new @Nullable Object[ownedParameters.size()];
-				for (int i = 0; i < ownedParameters.size(); i++) {
-					Variable parameter = ownedParameters.get(i);
-					SymbolicReason mayBeNullReason3 = SymbolicUtil.isRequiredReason(parameter);
-					parameterValues[i] = new SymbolicVariableValue(parameter, mayBeNullReason3, mayBeInvalidReason);
-				}
-				SymbolicAnalysis symbolicAnalysis = metamodelManager.getSymbolicAnalysis(expressionInOCL, selfValue, resultValue, parameterValues);
-				String analysisIncompatibility = symbolicAnalysis.getAnalysisIncompatibility();
-				if (analysisIncompatibility != null) {
-					int diagnosticSeverity = invalidResultSeverity.getDiagnosticSeverity();
-					String message = analysisIncompatibility + " for " + SymbolicUtil.printPath(expressionInOCL, true);
-					if (diagnostics != null) {
-						diagnostics.add(new BasicDiagnostic(diagnosticSeverity, DIAGNOSTIC_SOURCE, 0, message, new Object[] {expressionInOCL}));
-					}
-					return false;
-				}
-				BaseSymbolicEvaluationEnvironment evaluationEnvironment = symbolicAnalysis.getBaseSymbolicEvaluationEnvironment();
-				List<@NonNull TypedElement> mayBeInvalidElements = null;
-				for (@NonNull EObject eObject : new TreeIterable(expressionInOCL, true)) {
-					if (eObject instanceof TypedElement) {
-						TypedElement typedElement = (TypedElement)eObject;
-						SymbolicValue symbolicValue = evaluationEnvironment.getSymbolicValue(typedElement);
-						assert symbolicValue != null;
-						if ((symbolicValue.mayBeInvalidReason() != null) && !symbolicValue.isInvalid()) {			// FIXME Do we really want to suppress outright invalid warnings ?
-							if (mayBeInvalidElements == null) {
-								mayBeInvalidElements = new ArrayList<>();
-							}
-							mayBeInvalidElements.add(typedElement);
-						}
-					}
-				}
-				if (mayBeInvalidElements != null) {
-				//	List<@NonNull TypedElement> invalidTypedElements = new ArrayList<@NonNull TypedElement>(element2cse.keySet());
-					Collections.sort(mayBeInvalidElements, symbolicAnalysis.getCSEAnalysis().getTypedElementHeightComparator());
-					for (int i = 0; i < mayBeInvalidElements.size(); i++) {		// Domain shrinks
-						TypedElement typedElement = mayBeInvalidElements.get(i);
-						for (EObject eContainer2 = typedElement.eContainer(); eContainer2 != null; eContainer2 = eContainer2.eContainer()) {
-							mayBeInvalidElements.remove(eContainer2);
-						}
-					}
-					for (@NonNull TypedElement typedElement : mayBeInvalidElements) {
-						boolean invalidIsPermissible = false;
-						if (isValidating) {
-							TypedElement referredtypedElement = typedElement;
-							if (referredtypedElement instanceof VariableExp) {
-								referredtypedElement = PivotUtil.getReferredVariable((VariableExp)referredtypedElement);
-							}
-							if (referredtypedElement instanceof ParameterVariable) {
-								invalidIsPermissible = true;
-							}
-						}
-						if (!invalidIsPermissible) {
-							SymbolicValue symbolicValue = symbolicAnalysis.getSymbolicEvaluationEnvironment().getSymbolicValue(typedElement);
-							int diagnosticSeverity = invalidResultSeverity.getDiagnosticSeverity();
-							String message = StringUtil.bind("May be invalid: {0}", SymbolicUtil.printPath(typedElement, true));
-							if (diagnostics != null) {
-								diagnostics.add(new BasicDiagnostic(diagnosticSeverity, DIAGNOSTIC_SOURCE, 0, message, new Object[] {typedElement}));
-							}
-							allOk = false;			// XXX
-						}
-					}
-				}
-			}
-		} */
 		return allOk;
 	}
 

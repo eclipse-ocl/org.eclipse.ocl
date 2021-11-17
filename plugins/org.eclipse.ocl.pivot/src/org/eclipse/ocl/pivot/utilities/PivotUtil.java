@@ -61,11 +61,11 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.IfExp;
 import org.eclipse.ocl.pivot.Import;
+import org.eclipse.ocl.pivot.InstanceSpecification;
 import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LambdaType;
-import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.LetExp;
 import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.MapLiteralExp;
@@ -94,6 +94,7 @@ import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
 import org.eclipse.ocl.pivot.ShadowExp;
 import org.eclipse.ocl.pivot.ShadowPart;
+import org.eclipse.ocl.pivot.Slot;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.StringLiteralExp;
 import org.eclipse.ocl.pivot.TemplateBinding;
@@ -1213,6 +1214,9 @@ public class PivotUtil
 				if (eObject instanceof Type) {
 					return (Type)eObject;
 				}
+				if (eObject instanceof InstanceSpecification) {		// XXX
+					return ((InstanceSpecification)eObject).getClasses().get(0);
+				}
 				EObject eContainer = eObject.eContainer();
 				if (eContainer == null) {
 					if (eObject instanceof ExpressionInOCL) {
@@ -1245,6 +1249,13 @@ public class PivotUtil
 	 */
 	public static @NonNull Type getContextType(@NonNull LambdaType lambdaType) {
 		return ClassUtil.nonNullState(lambdaType.getContextType());
+	}
+
+	/**
+	 * @since 1.17
+	 */
+	public static @NonNull Property getDefiningProperty(@NonNull Slot asSlot) {
+		return ClassUtil.nonNullState(asSlot.getDefiningProperty());
 	}
 
 	/**
@@ -2156,18 +2167,6 @@ public class PivotUtil
 	 */
 	public static boolean isDataType(@NonNull CompleteClass completeClass) {
 		return completeClass.getPrimaryClass() instanceof DataType;
-	}
-
-	/**
-	 * @since 1.17
-	 */
-	public static boolean isInvariant(@NonNull LanguageExpression expressionInOCL) {
-		EObject eContainer = expressionInOCL.eContainer();
-		if (!(eContainer instanceof Constraint)) {
-			return false;
-		}
-		EObject eContainerContainer = eContainer.eContainer();
-		return eContainerContainer instanceof Type;
 	}
 
 	public static boolean isObjectNavigationOperator(/*@NonNull*/ String operatorName) {

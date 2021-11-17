@@ -712,7 +712,7 @@ public class TestOCL extends OCLInternal
 		}
 	}
 	public void assertValidationErrorsQuery(org.eclipse.ocl.pivot.@Nullable Class contextType, @NonNull String expression,
-			String... messages) {
+			@NonNull String... messages) {
 		BaseCSResource csResource = null;
 		try {
 			ParserContext classContext = new ClassContext(getEnvironmentFactory(), null, contextType, null);

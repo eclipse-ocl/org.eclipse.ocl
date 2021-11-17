@@ -51,7 +51,6 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.PropertyCallExp;
-import org.eclipse.ocl.pivot.Slot;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VoidType;
@@ -470,41 +469,10 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	public @Nullable ParserContext createParserContext(@NonNull Element element) {
 		Element pivotElement = element;
 		if (element instanceof ExpressionInOCL) {
-			EObject pivotContainer = pivotElement.eContainer();
-			if (pivotContainer instanceof Operation) {							// Operation.bodyExpression
-				Operation pivotOperation = (Operation) pivotContainer;
-				return new OperationContext(this, null, pivotOperation, null);
-			}
-			if (pivotContainer instanceof Property) {
-				Property pivotProperty = (Property) pivotContainer;
-				return new PropertyContext(this, null, pivotProperty);
-			}
-			if (pivotContainer instanceof Constraint) {							// Operation.pre/postCondition
-				EObject pivotContainerContainer = pivotContainer.eContainer();
-				if (pivotContainerContainer instanceof Operation) {
-					Operation pivotOperation = (Operation) pivotContainerContainer;
-					String resultName = null;
-					if (pivotOperation.getOwnedPostconditions().contains(pivotContainer)) {
-						Type resultType = pivotOperation.getType();
-						if ((resultType != null) && !(resultType instanceof VoidType)) {
-							resultName = PivotConstants.RESULT_NAME;
-						}
-					}
-					return new OperationContext(this, null, pivotOperation, resultName);
-				}
-				if (pivotContainerContainer instanceof org.eclipse.ocl.pivot.Class) {
-					org.eclipse.ocl.pivot.Class pivotType = (org.eclipse.ocl.pivot.Class) pivotContainerContainer;
-					return new ClassContext(this, null, pivotType, null);
-				}
-			}
-			if (pivotContainer instanceof Slot) {
-				Property asDefiningFeature = ((Slot)pivotContainer).getDefiningProperty();
-				if (asDefiningFeature != null) {
-					org.eclipse.ocl.pivot.Class pivotType = asDefiningFeature.getOwningClass();
-					if (pivotType != null) {
-						return new ClassContext(this, null, pivotType, null);
-					}
-				}
+			ExpressionInOCLUsage usage = ExpressionInOCLUsage.createUsage((ExpressionInOCL)element);
+			ParserContext parserContext = usage.createParserContext(this);
+			if (parserContext != null) {
+				return parserContext;
 			}
 		}
 		//
@@ -962,7 +930,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		if (expression == null) {
 			throw new ParserException(PivotMessagesInternal.MissingSpecificationBody_ERROR_, NameUtil.qualifiedNameFor(contextElement), PivotUtilInternal.getSpecificationRole(specification));
 		}
-		if (PivotUtil.isInvariant(specification)) {
+		if (ExpressionInOCLUsage.isInvariant(specification)) {
 			expression = PivotUtilInternal.getBodyExpression(expression);
 		}
 		ParserContext parserContext = createParserContext(specification);
