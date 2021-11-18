@@ -235,18 +235,15 @@ public class PivotExecutorManager extends ExecutorManager
 	 */
 	@Override
 	public @NonNull SymbolicAnalysis getSymbolicAnalysis(@NonNull ExpressionInOCL expressionInOCL) throws ParserException {
-		((EnvironmentFactoryInternalExtension)environmentFactory).parseSpecification(expressionInOCL);		// Throw ParserException if bad text
 		ExpressionInOCLUsage helper = ExpressionInOCLUsage.createUsage(expressionInOCL);
-
-
 		Type containingType = helper.getContextType();
-//		if (containingType instanceof InstanceSpecification) {
-//			containingType = ((InstanceSpecification)cont)
-//		}
 		assert containingType instanceof org.eclipse.ocl.pivot.Class;
 		SymbolicClassAnalysis symbolicClassAnalysis = getSymbolicAnalysis((org.eclipse.ocl.pivot.Class)containingType);
 		if (helper.isClassInvariant()) {
 			return symbolicClassAnalysis;
+		}
+		if (expressionInOCL.getOwnedBody() == null) {
+			((EnvironmentFactoryInternalExtension)environmentFactory).parseSpecification(expressionInOCL);		// Throw ParserException if bad text
 		}
 		SymbolicGenericExpressionAnalysis symbolicExpressionAnalysis = symbolicClassAnalysis.getSymbolicAnalysis(expressionInOCL);
 		if (((AbstractExecutor)symbolicExpressionAnalysis.getExecutor()).basicGetRootEvaluationEnvironment() == null) {

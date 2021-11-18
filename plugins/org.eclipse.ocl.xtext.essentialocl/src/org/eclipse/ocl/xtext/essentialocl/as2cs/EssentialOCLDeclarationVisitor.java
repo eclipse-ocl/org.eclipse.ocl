@@ -303,6 +303,7 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 		ExpSpecificationCS csStatus = null;
 		LanguageExpression specification = object.getOwnedSpecification();
 		if (specification instanceof ExpressionInOCL) {
+			String body = specification.getBody();
 			OCLExpression bodyExpression = ((ExpressionInOCL)specification).getOwnedBody();
 			if ((bodyExpression instanceof TupleLiteralExp) && (bodyExpression.getTypeId() == TUPLE_MESSAGE_STATUS)) {
 				TupleLiteralPart messagePart = NameUtil.getNameable(((TupleLiteralExp)bodyExpression).getOwnedParts(), TUPLE_MESSAGE_STATUS_0.getName());
@@ -314,6 +315,10 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 				csElement.setOwnedMessageSpecification(csMessage);
 				csStatus = context.refreshElement(ExpSpecificationCS.class, EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS, specification);
 				csStatus.setExprString(statusExpression != null ? PrettyPrinter.print(statusExpression) : "null");
+			}
+			else if (body != null) {
+				csStatus = context.refreshElement(ExpSpecificationCS.class, EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS, specification);
+				csStatus.setExprString(body);
 			}
 			else if (bodyExpression != null) {
 				csStatus = context.refreshElement(ExpSpecificationCS.class, EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS, specification);
