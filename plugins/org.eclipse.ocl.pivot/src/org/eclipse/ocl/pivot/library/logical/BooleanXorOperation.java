@@ -26,32 +26,34 @@ public class BooleanXorOperation extends AbstractSimpleBinaryOperation
 
 	@Override
 	public @Nullable Boolean evaluate(@Nullable Object left, @Nullable Object right) {
+		if (left == Boolean.FALSE) {
+			if (right == Boolean.FALSE) {
+				return FALSE_VALUE;
+			}
+			else if (right == Boolean.TRUE) {
+				return TRUE_VALUE;
+			}
+		}
+		else if (left == Boolean.TRUE) {
+			if (right == Boolean.FALSE) {
+				return TRUE_VALUE;
+			}
+			else if (right == Boolean.TRUE) {
+				return FALSE_VALUE;
+			}
+		}
 		if (left instanceof InvalidValueException) {
 			throw (InvalidValueException)left;
 		}
 		else if (right instanceof InvalidValueException) {
 			throw (InvalidValueException)right;
 		}
-		else if ((left == null) || (right == null)) {
-			return null;
+		else if (!(left instanceof Boolean)) {
+			throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.BOOLEAN_NAME, getTypeName(left));
 		}
-		else if (left == Boolean.FALSE) {
-			if (right == Boolean.TRUE) {
-				return TRUE_VALUE;
-			}
-			else if (right == Boolean.FALSE) {
-				return FALSE_VALUE;
-			}
+		else {
+			throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.BOOLEAN_NAME, getTypeName(right));
 		}
-		else if (left == Boolean.TRUE) {
-			if (right == Boolean.TRUE) {
-				return FALSE_VALUE;
-			}
-			else if (right == Boolean.FALSE) {
-				return TRUE_VALUE;
-			}
-		}
-		throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.BOOLEAN_NAME, getTypeName(left));
 	}
 
 	@Override

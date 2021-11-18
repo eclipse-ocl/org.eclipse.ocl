@@ -56,10 +56,7 @@ public class BooleanNotOperation extends AbstractSimpleUnaryOperation
 		else if (argument == Boolean.TRUE) {
 			return FALSE_VALUE;
 		}
-		if (argument == null) {
-			return null;
-		}
-		else if (argument instanceof InvalidValueException) {
+		if (argument instanceof InvalidValueException) {
 			throw (InvalidValueException)argument;
 		}
 		else {

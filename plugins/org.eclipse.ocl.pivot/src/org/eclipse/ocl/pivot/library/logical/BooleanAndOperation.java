@@ -83,11 +83,16 @@ public class BooleanAndOperation extends AbstractSimpleBinaryOperation
 
 	@Override
 	public @Nullable Boolean evaluate(@Nullable Object left, @Nullable Object right) {
-		if ((left == Boolean.FALSE) || (right == Boolean.FALSE)) {
+		if (left == Boolean.FALSE) {
 			return FALSE_VALUE;
 		}
-		else if ((left == Boolean.TRUE) && (right == Boolean.TRUE)) {
-			return TRUE_VALUE;
+		else if (left == Boolean.TRUE) {
+			if (right == Boolean.FALSE) {
+				return FALSE_VALUE;
+			}
+			else if (right == Boolean.TRUE) {
+				return TRUE_VALUE;
+			}
 		}
 		if (left instanceof InvalidValueException) {
 			throw (InvalidValueException)left;
@@ -95,9 +100,9 @@ public class BooleanAndOperation extends AbstractSimpleBinaryOperation
 		else if (right instanceof InvalidValueException) {
 			throw (InvalidValueException)right;
 		}
-		else if ((left == null) || (right == null)) {
-			return null;
-		}
+	//	else if ((left == null) || (right == null)) {
+	//		return null;
+	//	}
 		else if (!(left instanceof Boolean)) {
 			throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.BOOLEAN_NAME, getTypeName(left));
 		}

@@ -79,7 +79,8 @@ public class EvaluateBooleanOperationsTest4 extends PivotTestSuite
 	@Test public void testBooleanAnd() {
 		TestOCL ocl = createOCL();
 		org.eclipse.ocl.pivot.Class classType = ocl.getStandardLibrary().getClassType();
-		//
+//		ocl.assertQueryNull(null, "let a : Boolean = null, b : Boolean = null in a and b");
+//XXX		//
 		ocl.assertQueryFalse(null, "false and false");
 		ocl.assertQueryFalse(null, "false and true");
 		ocl.assertQueryFalse(null, "true and false");
@@ -87,18 +88,18 @@ public class EvaluateBooleanOperationsTest4 extends PivotTestSuite
 		// invalid
 		ocl.assertQueryFalse(null, "let b : Boolean = invalid in false and b");
 		ocl.assertQueryInvalid(null, "let b : Boolean = invalid in true and b");
-		ocl.assertQueryFalse(null, "let a : Boolean = invalid in a and false");
+		ocl.assertQueryInvalid(null, "let a : Boolean = invalid in a and false");
 		ocl.assertQueryInvalid(null, "let a : Boolean = invalid in a and true");
 		ocl.assertQueryInvalid(null, "let a : Boolean = invalid, b : Boolean = invalid in a and b");
 		// null
 		ocl.assertQueryFalse(null, "let b : Boolean = null in false and b");
-		ocl.assertQueryNull(null, "let b : Boolean = null in true and b");
-		ocl.assertQueryNull(null, "let a : Boolean = null, b : Boolean = null in a and b");
+		ocl.assertQueryInvalid(null, "let b : Boolean = null in true and b");
+		ocl.assertQueryInvalid(null, "let a : Boolean = null, b : Boolean = null in a and b");
 		ocl.assertQueryInvalid(null, "let a : Boolean = null, b : Boolean = invalid in a and b");
 		ocl.assertQueryInvalid(null, "let a : Boolean = null in a and Sequence{true}->at(0)");
-		ocl.assertQueryFalse(null, "let a : Boolean = null in a and false");
-		ocl.assertQueryNull(null, "let a : Boolean = null in a and true");
-		ocl.assertQueryNull(null, "let a : Boolean = null, b : Boolean = null in a and b");
+		ocl.assertQueryInvalid(null, "let a : Boolean = null in a and false");
+		ocl.assertQueryInvalid(null, "let a : Boolean = null in a and true");
+		ocl.assertQueryInvalid(null, "let a : Boolean = null, b : Boolean = null in a and b");
 		ocl.assertQueryInvalid(null, "let a : Boolean = invalid, b : Boolean = null in a and b");
 		ocl.assertQueryInvalid(null, "let b : Boolean = null in Sequence{true}->at(0) and b");
 		//
@@ -175,16 +176,16 @@ public class EvaluateBooleanOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryTrue(null, "let b : Boolean = invalid in false implies b");
 		ocl.assertQueryInvalid(null, "let b : Boolean = invalid in true implies b");
 		ocl.assertQueryInvalid(null, "let a : Boolean = invalid in a implies false");
-		ocl.assertQueryTrue(null, "let a : Boolean = invalid in a implies true");
+		ocl.assertQueryInvalid(null, "let a : Boolean = invalid in a implies true");
 		ocl.assertQueryInvalid(null, "let a : Boolean = invalid, b : Boolean = invalid in a implies b");
 		// null
 		ocl.assertQueryTrue(null, "let b : Boolean = null in false implies b");
-		ocl.assertQueryNull(null, "let b : Boolean = null in true implies b");
+		ocl.assertQueryInvalid(null, "let b : Boolean = null in true implies b");
 		ocl.assertQueryInvalid(null, "let a : Boolean = null, b : Boolean = invalid in a implies b");
 		ocl.assertQueryInvalid(null, "let a : Boolean = null in a implies Sequence{true}->at(0)");
-		ocl.assertQueryNull(null, "let a : Boolean = null in a implies false");
-		ocl.assertQueryTrue(null, "let a : Boolean = null in a implies true");
-		ocl.assertQueryNull(null, "let a : Boolean = null, b : Boolean = null in a implies b");
+		ocl.assertQueryInvalid(null, "let a : Boolean = null in a implies false");
+		ocl.assertQueryInvalid(null, "let a : Boolean = null in a implies true");
+		ocl.assertQueryInvalid(null, "let a : Boolean = null, b : Boolean = null in a implies b");
 		ocl.assertQueryInvalid(null, "let a : Boolean = invalid, b : Boolean = null in a implies b");
 		ocl.assertQueryInvalid(null, "let b : Boolean = null in Sequence{true}->at(0) implies b");
 		//
@@ -236,7 +237,7 @@ public class EvaluateBooleanOperationsTest4 extends PivotTestSuite
 		// invalid
 		ocl.assertQueryInvalid(null, "let a : Boolean = invalid in not a");
 		// null
-		ocl.assertQueryNull(null, "let a : Boolean = null in not a");
+		ocl.assertQueryInvalid(null, "let a : Boolean = null in not a");
 		//
 		ocl.assertQueryTrue(classType, "let a : Boolean = self = null in not a");
 		ocl.assertQueryFalse(classType, "let a : Boolean = self <> null in not a");
@@ -290,17 +291,17 @@ public class EvaluateBooleanOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryInvalid(null, "let b : Boolean = invalid in false or b");
 		ocl.assertQueryTrue(null, "let b : Boolean = invalid in true or b");
 		ocl.assertQueryInvalid(null, "let a : Boolean = invalid in a or false");
-		ocl.assertQueryTrue(null, "let a : Boolean = invalid in a or true");
+		ocl.assertQueryInvalid(null, "let a : Boolean = invalid in a or true");
 		ocl.assertQueryInvalid(null, "let a : Boolean = invalid, b : Boolean = invalid in a or b");
 		// null
-		ocl.assertQueryNull(null, "let b : Boolean = null in false or b");
+		ocl.assertQueryInvalid(null, "let b : Boolean = null in false or b");
 		ocl.assertQueryTrue(null, "let b : Boolean = null in true or b");
-		ocl.assertQueryNull(null, "let a : Boolean = null, b : Boolean = null in a or b");
+		ocl.assertQueryInvalid(null, "let a : Boolean = null, b : Boolean = null in a or b");
 		ocl.assertQueryInvalid(null, "let a : Boolean = null, b : Boolean = invalid in a or b");
 		ocl.assertQueryInvalid(null, "let a : Boolean = null in a or Sequence{true}->at(0)");
-		ocl.assertQueryNull(null, "let a : Boolean = null in a or false");
-		ocl.assertQueryTrue(null, "let a : Boolean = null in a or true");
-		ocl.assertQueryNull(null, "let a : Boolean = null, b : Boolean = null in a or b");
+		ocl.assertQueryInvalid(null, "let a : Boolean = null in a or false");
+		ocl.assertQueryInvalid(null, "let a : Boolean = null in a or true");
+		ocl.assertQueryInvalid(null, "let a : Boolean = null, b : Boolean = null in a or b");
 		ocl.assertQueryInvalid(null, "let a : Boolean = invalid, b : Boolean = null in a or b");
 		ocl.assertQueryInvalid(null, "let b : Boolean = null in Sequence{true}->at(0) or b");
 		//
@@ -371,11 +372,11 @@ public class EvaluateBooleanOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryInvalid(null, "let a : Boolean = invalid, b : Boolean = null in a xor b");
 		ocl.assertQueryInvalid(null, "let b : Boolean = invalid in Sequence{true}->at(0) xor b");
 		// xor
-		ocl.assertQueryNull(null, "let b : Boolean = null in false xor b");
-		ocl.assertQueryNull(null, "let b : Boolean = null in true xor b");
-		ocl.assertQueryNull(null, "let b : Boolean = null in true xor b");
-		ocl.assertQueryNull(null, "let a : Boolean = null in a xor true");
-		ocl.assertQueryNull(null, "let a : Boolean = null, b : Boolean = null in a xor b");
+		ocl.assertQueryInvalid(null, "let b : Boolean = null in false xor b");
+		ocl.assertQueryInvalid(null, "let b : Boolean = null in true xor b");
+		ocl.assertQueryInvalid(null, "let b : Boolean = null in true xor b");
+		ocl.assertQueryInvalid(null, "let a : Boolean = null in a xor true");
+		ocl.assertQueryInvalid(null, "let a : Boolean = null, b : Boolean = null in a xor b");
 		//
 		ocl.assertQueryFalse(classType, "let a : Boolean = self = null, b : Boolean = self = null in a xor b");
 		ocl.assertQueryTrue(classType, "let a : Boolean = self = null, b : Boolean = self <> null in a xor b");
