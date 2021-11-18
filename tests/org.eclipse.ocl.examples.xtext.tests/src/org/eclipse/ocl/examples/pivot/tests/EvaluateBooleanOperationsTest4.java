@@ -78,6 +78,8 @@ public class EvaluateBooleanOperationsTest4 extends PivotTestSuite
 
 	@Test public void testBooleanAnd() {
 		TestOCL ocl = createOCL();
+		ocl.assertQueryFalseUsingInvalid(null, "let a : Boolean = invalid in a and false");		// Requires post-parse symbolic analysis argument reversal
+//XXX
 		org.eclipse.ocl.pivot.Class classType = ocl.getStandardLibrary().getClassType();
 		ocl.assertQueryFalse(null, "false and false");
 		ocl.assertQueryFalse(null, "false and true");
@@ -86,7 +88,7 @@ public class EvaluateBooleanOperationsTest4 extends PivotTestSuite
 		// invalid
 		ocl.assertQueryFalseUsingInvalid(null, "let b : Boolean = invalid in false and b");
 		ocl.assertQueryInvalid(null, "let b : Boolean = invalid in true and b");
-		ocl.assertQueryInvalid(null, "let a : Boolean = invalid in a and false");
+		ocl.assertQueryFalseUsingInvalid(null, "let a : Boolean = invalid in a and false");		// Requires post-parse symbolic analysis argument reversal
 		ocl.assertQueryInvalid(null, "let a : Boolean = invalid in a and true");
 		ocl.assertQueryInvalid(null, "let a : Boolean = invalid, b : Boolean = invalid in a and b");
 		// null
@@ -95,7 +97,7 @@ public class EvaluateBooleanOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryInvalid(null, "let a : Boolean = null, b : Boolean = null in a and b");
 		ocl.assertQueryInvalid(null, "let a : Boolean = null, b : Boolean = invalid in a and b");
 		ocl.assertQueryInvalid(null, "let a : Boolean = null in a and Sequence{true}->at(0)");
-		ocl.assertQueryInvalid(null, "let a : Boolean = null in a and false");
+		ocl.assertQueryFalse(null, "let a : Boolean = null in a and false");		// Requires post-parse symbolic analysis argument reversal
 		ocl.assertQueryInvalid(null, "let a : Boolean = null in a and true");
 		ocl.assertQueryInvalid(null, "let a : Boolean = null, b : Boolean = null in a and b");
 		ocl.assertQueryInvalid(null, "let a : Boolean = invalid, b : Boolean = null in a and b");
@@ -289,7 +291,7 @@ public class EvaluateBooleanOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryInvalid(null, "let b : Boolean = invalid in false or b");
 		ocl.assertQueryTrueUsingInvalid(null, "let b : Boolean = invalid in true or b");
 		ocl.assertQueryInvalid(null, "let a : Boolean = invalid in a or false");
-		ocl.assertQueryInvalid(null, "let a : Boolean = invalid in a or true");
+		ocl.assertQueryTrueUsingInvalid(null, "let a : Boolean = invalid in a or true");
 		ocl.assertQueryInvalid(null, "let a : Boolean = invalid, b : Boolean = invalid in a or b");
 		// null
 		ocl.assertQueryInvalid(null, "let b : Boolean = null in false or b");
@@ -298,7 +300,7 @@ public class EvaluateBooleanOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryInvalid(null, "let a : Boolean = null, b : Boolean = invalid in a or b");
 		ocl.assertQueryInvalid(null, "let a : Boolean = null in a or Sequence{true}->at(0)");
 		ocl.assertQueryInvalid(null, "let a : Boolean = null in a or false");
-		ocl.assertQueryInvalid(null, "let a : Boolean = null in a or true");
+		ocl.assertQueryTrue(null, "let a : Boolean = null in a or true");		// Requires post-parse symbolic analysis argument reversal
 		ocl.assertQueryInvalid(null, "let a : Boolean = null, b : Boolean = null in a or b");
 		ocl.assertQueryInvalid(null, "let a : Boolean = invalid, b : Boolean = null in a or b");
 		ocl.assertQueryInvalid(null, "let b : Boolean = null in Sequence{true}->at(0) or b");
