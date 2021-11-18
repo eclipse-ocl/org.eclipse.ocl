@@ -60,6 +60,8 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.library.LibraryUnaryOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
+import org.eclipse.ocl.pivot.messages.StatusCodes;
+import org.eclipse.ocl.pivot.messages.StatusCodes.Severity;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
@@ -330,6 +332,15 @@ public class TestOCL extends OCLInternal
 			return null;
 		}
 	}
+	public @Nullable Object assertQueryEqualsUsingInvalid(@Nullable Object context, @Nullable Object expected, @NonNull String expression) {
+		Severity savedSeverity = environmentFactory.setSeverity(PivotPackage.Literals.TYPED_ELEMENT___VALIDATE_UNCONDITIONALLY_VALID__DIAGNOSTICCHAIN_MAP, StatusCodes.Severity.IGNORE);
+		try {
+			return assertQueryEquals(context, expected, expression);
+		}
+		finally {
+			environmentFactory.setSeverity(PivotPackage.Literals.TYPED_ELEMENT___VALIDATE_UNCONDITIONALLY_VALID__DIAGNOSTICCHAIN_MAP, savedSeverity);
+		}
+	}
 
 	/**
 	 * Assert that the result of evaluating an expression as a query is equal to expected.
@@ -385,12 +396,22 @@ public class TestOCL extends OCLInternal
 			return null;
 		}
 	}
+	public Object assertQueryFalseUsingInvalid(Object context, @NonNull String expression) {
+		Severity savedSeverity = environmentFactory.setSeverity(PivotPackage.Literals.TYPED_ELEMENT___VALIDATE_UNCONDITIONALLY_VALID__DIAGNOSTICCHAIN_MAP, StatusCodes.Severity.IGNORE);
+		try {
+			return assertQueryFalse(context, expression);
+		}
+		finally {
+			environmentFactory.setSeverity(PivotPackage.Literals.TYPED_ELEMENT___VALIDATE_UNCONDITIONALLY_VALID__DIAGNOSTICCHAIN_MAP, savedSeverity);
+		}
+	}
 
 	/**
 	 * Assert that the result of evaluating an expression as a query is invalid.
 	 * @return the evaluation result
 	 */
 	public Value assertQueryInvalid(Object context, @NonNull String expression) {
+		Severity savedSeverity = environmentFactory.setSeverity(PivotPackage.Literals.TYPED_ELEMENT___VALIDATE_UNCONDITIONALLY_VALID__DIAGNOSTICCHAIN_MAP, StatusCodes.Severity.IGNORE);
 		try {
 			Object value = evaluateWithoutValidation(null, context, expression);
 			if (!(value instanceof InvalidValue)) {
@@ -401,10 +422,14 @@ public class TestOCL extends OCLInternal
 		} catch (Exception e) {					// Something else is nasty
 			PivotTestSuite.failOn(expression, e);
 		}
+		finally {
+			environmentFactory.setSeverity(PivotPackage.Literals.TYPED_ELEMENT___VALIDATE_UNCONDITIONALLY_VALID__DIAGNOSTICCHAIN_MAP, savedSeverity);
+		}
 		return null;
 	}
 
 	public Object assertQueryInvalid(Object context, @NonNull String expression, String reason, Class<?> exceptionClass) {
+		Severity savedSeverity = environmentFactory.setSeverity(PivotPackage.Literals.TYPED_ELEMENT___VALIDATE_UNCONDITIONALLY_VALID__DIAGNOSTICCHAIN_MAP, StatusCodes.Severity.IGNORE);
 		try {
 			Object value = evaluateWithoutValidation(null, context, expression);
 			//    		if (!ValuesUtil.isInvalid(value)) {
@@ -441,6 +466,9 @@ public class TestOCL extends OCLInternal
 				TestCase.assertEquals("Invalid Value Reason", reason, e.getMessage());
 			}
 			//    		failOn(expression, e);
+		}
+		finally {
+			environmentFactory.setSeverity(PivotPackage.Literals.TYPED_ELEMENT___VALIDATE_UNCONDITIONALLY_VALID__DIAGNOSTICCHAIN_MAP, savedSeverity);
 		}
 		return null;
 	}
@@ -554,6 +582,15 @@ public class TestOCL extends OCLInternal
 			return null;
 		}
 	}
+	public Object assertQueryResultsUsingInvalid(Object context, @NonNull String expectedResultExpression, @NonNull String expression) {
+		Severity savedSeverity = environmentFactory.setSeverity(PivotPackage.Literals.TYPED_ELEMENT___VALIDATE_UNCONDITIONALLY_VALID__DIAGNOSTICCHAIN_MAP, StatusCodes.Severity.IGNORE);
+		try {
+			return assertQueryResults(context, expectedResultExpression, expression);
+		}
+		finally {
+			environmentFactory.setSeverity(PivotPackage.Literals.TYPED_ELEMENT___VALIDATE_UNCONDITIONALLY_VALID__DIAGNOSTICCHAIN_MAP, savedSeverity);
+		}
+	}
 
 	/**
 	 * Assert that the result of evaluating an expression as a query is true.
@@ -568,6 +605,15 @@ public class TestOCL extends OCLInternal
 		} catch (Exception e) {
 			PivotTestSuite.failOn(expression, e);
 			return null;
+		}
+	}
+	public Object assertQueryTrueUsingInvalid(Object context, @NonNull String expression) {
+		Severity savedSeverity = environmentFactory.setSeverity(PivotPackage.Literals.TYPED_ELEMENT___VALIDATE_UNCONDITIONALLY_VALID__DIAGNOSTICCHAIN_MAP, StatusCodes.Severity.IGNORE);
+		try {
+			return assertQueryTrue(context, expression);
+		}
+		finally {
+			environmentFactory.setSeverity(PivotPackage.Literals.TYPED_ELEMENT___VALIDATE_UNCONDITIONALLY_VALID__DIAGNOSTICCHAIN_MAP, savedSeverity);
 		}
 	}
 

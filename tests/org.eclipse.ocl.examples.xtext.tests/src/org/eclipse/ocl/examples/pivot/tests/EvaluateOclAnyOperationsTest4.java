@@ -378,8 +378,8 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryResults(null, "false", "true->oclIsUndefined()");	// Set{true}
 		ocl.assertQueryResults(null, "true", "null.oclIsUndefined()");
 		ocl.assertQueryResults(null, "false", "null->oclIsUndefined()");	// Set{}
-		ocl.assertQueryResults(null, "true", "invalid.oclIsUndefined()");
-		ocl.assertQueryResults(null, "true", "invalid->oclIsUndefined()");	// invalid
+		ocl.assertQueryResultsUsingInvalid(null, "true", "invalid.oclIsUndefined()");
+		ocl.assertQueryResultsUsingInvalid(null, "true", "invalid->oclIsUndefined()");	// invalid
 		//
 		ocl.assertQueryEquals(null, 4, "'1234'.size()");
 		ocl.assertQueryEquals(null, 1, "'1234'->size()");
@@ -478,7 +478,7 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 	 */
 	@Test public void test_oclIsInvalid() {
 		MyOCL ocl = createOCL();
-		ocl.assertQueryTrue(null, "invalid.oclIsInvalid()");
+		ocl.assertQueryTrueUsingInvalid(null, "invalid.oclIsInvalid()");
 		ocl.assertQueryFalse(null, "null.oclIsInvalid()");
 		ocl.assertQueryFalse(null, "true.oclIsInvalid()");
 		ocl.assertQueryFalse(null, "false.oclIsInvalid()");
@@ -675,7 +675,7 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 	 */
 	@Test public void test_oclIsUndefined() {
 		MyOCL ocl = createOCL();
-		ocl.assertQueryTrue(null, "invalid.oclIsUndefined()");
+		ocl.assertQueryTrueUsingInvalid(null, "invalid.oclIsUndefined()");
 		ocl.assertQueryTrue(null, "null.oclIsUndefined()");
 		ocl.assertQueryFalse(null, "true.oclIsUndefined()");
 		ocl.assertQueryFalse(null, "false.oclIsUndefined()");
@@ -957,12 +957,10 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 
 	@Test public void testToString() {
 		MyOCL ocl = createOCL();
-		ocl.assertQueryEquals(null, "invalid", "invalid.toString()");
-// XXX
 		ocl.assertQueryInvalid(null, "invalid");
 		ocl.assertQueryInvalid(null, "let x = invalid in x");
-		ocl.assertQueryEquals(null, "invalid", "invalid.toString()");
-		ocl.assertQueryEquals(null, "invalid", "let x = invalid in x.toString()");
+		ocl.assertQueryEqualsUsingInvalid(null, "invalid", "invalid.toString()");
+		ocl.assertQueryEqualsUsingInvalid(null, "invalid", "let x : OclAny = invalid in x.toString()");
 		//
 		ocl.assertQueryNull(null, "null");
 		ocl.assertQueryNull(null, "let x = null in x");

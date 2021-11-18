@@ -30,7 +30,6 @@ import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
-import org.eclipse.ocl.pivot.InvalidLiteralExp;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.Type;
@@ -50,7 +49,6 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
-import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
@@ -269,11 +267,11 @@ implements TypedElement {
 				}
 			}
 		}
-		for (EObject eChild : new TreeIterable(this, true)) {
-			if (eChild instanceof InvalidLiteralExp) {
-				return null;		// Suppress transitive explicit invalid for now
-			}
-		}
+	//	for (EObject eChild : new TreeIterable(this, true)) {
+	//		if (eChild instanceof InvalidLiteralExp) {
+	//			return null;		// Suppress transitive explicit invalid for now
+	//		}
+	//	}
 		return mayBeInvalidReason.toString();
 	}
 
