@@ -451,8 +451,8 @@
         <ownedComments body="oclText[true] if either oclText[self] or oclText[b] is oclText[true].&#xA;Otherwise oclText[false].&#xA;"/>
         <ownedParameters xmi:id="RBSMV" name="b" type="#XEMMs"/>
       </ownedOperations>
-      <ownedOperations xmi:id="clDqW" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation" name="toString"
-          type="#AlwVZ">
+      <ownedOperations xmi:id="clDqW" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation" isValidating="true"
+          name="toString" type="#AlwVZ">
         <ownedComments body="Converts oclText[self] to a string value.&#xA;"/>
       </ownedOperations>
       <ownedOperations xmi:id="AHlYU" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanXorOperation" isRequired="false"
@@ -848,8 +848,8 @@
         <ownedComments body="The result is oclText[self] modulo i.&#xA;"/>
         <ownedParameters name="i" type="#tYtCd"/>
       </ownedOperations>
-      <ownedOperations xmi:id="aIlbs" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation" name="toString"
-          type="#AlwVZ">
+      <ownedOperations xmi:id="aIlbs" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation" isValidating="true"
+          name="toString" type="#AlwVZ">
         <ownedComments body="Converts oclText[self] to a string value.&#xA;"/>
       </ownedOperations>
       <ownedOperations xmi:id="RRcEo" implementationClass="org.eclipse.ocl.pivot.library.numeric.IntegerToUnlimitedNaturalOperation" name="toUnlimitedNatural"
@@ -1217,8 +1217,8 @@
           type="#UQF4+">
         <ownedComments body="Evaluates to all of the most derived type of which oclText[self] is an instance. The return from oclText[oclTypes()]&#xA;is normally equivalent to that from oclText[oclType()] unless oclText[self] is an instance of multiply classified type.&#xA;"/>
       </ownedOperations>
-      <ownedOperations xmi:id="4f1nm" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation" name="toString"
-          type="#AlwVZ">
+      <ownedOperations xmi:id="4f1nm" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation" isValidating="true"
+          name="toString" type="#AlwVZ">
         <ownedComments body="Returns a string representation of oclText[self]."/>
       </ownedOperations>
       <ownedProperties xmi:id="c8rKW" isImplicit="true" name="OclInvalid" opposite="#QSjNW" type="#4eSgX"/>
@@ -1393,8 +1393,8 @@
           isValidating="true" name="or" precedence="#BEt7C" type="#XEMMs">
         <ownedParameters isRequired="false" name="b" type="#XEMMs"/>
       </ownedOperations>
-      <ownedOperations xmi:id="Xfrkw" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation" name="toString"
-          type="#AlwVZ">
+      <ownedOperations xmi:id="Xfrkw" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation" isValidating="true"
+          name="toString" type="#AlwVZ">
         <ownedComments body="Returns 'invalid'."/>
       </ownedOperations>
       <ownedProperties xmi:id="QSjNW" isRequired="false" name="oclBadProperty" type="#jbMkR">
@@ -1572,8 +1572,8 @@
           isRequired="false" isValidating="true" name="or" precedence="#BEt7C" type="#XEMMs">
         <ownedParameters isRequired="false" name="b" type="#XEMMs"/>
       </ownedOperations>
-      <ownedOperations xmi:id="wlpiQ" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation" name="toString"
-          type="#AlwVZ">
+      <ownedOperations xmi:id="wlpiQ" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation" isValidating="true"
+          name="toString" type="#AlwVZ">
         <ownedComments body="Returns oclText[null]."/>
       </ownedOperations>
       <ownedOperations xmi:id="UHLRO" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanXorOperation" isRequired="false"
@@ -1879,8 +1879,8 @@
       <ownedOperations xmi:id="cNx+G" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericRoundOperation" name="round" type="#tYtCd">
         <ownedComments body="The integer that is closest to oclText[self]. When there are two such integers, the largest one.&#xA;"/>
       </ownedOperations>
-      <ownedOperations xmi:id="6QrlW" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation" name="toString"
-          type="#AlwVZ">
+      <ownedOperations xmi:id="6QrlW" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation" isValidating="true"
+          name="toString" type="#AlwVZ">
         <ownedComments body="Converts oclText[self] to a string value.&#xA;"/>
       </ownedOperations>
     </ownedClasses>
@@ -2284,8 +2284,8 @@
           name="toReal" type="#Nr4QF">
         <ownedComments body="Converts oclText[self] to a Real[1] value. Returns null for non-Real text.&#xA;"/>
       </ownedOperations>
-      <ownedOperations xmi:id="hTgVo" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation" name="toString"
-          type="#AlwVZ">
+      <ownedOperations xmi:id="hTgVo" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation" isValidating="true"
+          name="toString" type="#AlwVZ">
         <ownedComments body="Returns oclText[self]."/>
       </ownedOperations>
       <ownedOperations xmi:id="cFu3M" implementationClass="org.eclipse.ocl.pivot.library.string.StringToUpperCaseOperation" name="toUpper"

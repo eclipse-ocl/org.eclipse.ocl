@@ -1726,6 +1726,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("b", _Boolean, true));
 			ownedOperations.add(operation = op_Boolean_toString);
+			operation.setIsValidating(true);
 			ownedOperations.add(operation = op_Boolean_xor);
 			operation.setIsRequired(false);
 			createBodyExpression(operation, _Boolean, "if self.oclIsInvalid() then self\n\t\t      elseif b.oclIsInvalid() then b\n\t\t      elseif self = null then null\n\t\t      elseif b = null then null\n\t\t      else self <> b\n\t\t      endif", _Boolean);
@@ -1765,6 +1766,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("i", _Integer, true));
 			ownedOperations.add(operation = op_Integer_toString);
+			operation.setIsValidating(true);
 			ownedOperations.add(operation = op_Integer_toUnlimitedNatural);
 
 			ownedOperations = _Real.getOwnedOperations();
@@ -1798,6 +1800,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters.add(parameter = createParameter("r", _OclSelf, true));
 			ownedOperations.add(operation = op_Real_round);
 			ownedOperations.add(operation = op_Real_toString);
+			operation.setIsValidating(true);
 
 			ownedOperations = _String.getOwnedOperations();
 			ownedOperations.add(operation = op_String__add_);
@@ -1881,6 +1884,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedOperations.add(operation = op_String_toReal);
 			operation.setIsRequired(false);
 			ownedOperations.add(operation = op_String_toString);
+			operation.setIsValidating(true);
 			ownedOperations.add(operation = op_String_toUpper);
 			ownedOperations.add(operation = op_String_toUpperCase);
 			ownedOperations.add(operation = op_String_tokenize);
@@ -2108,6 +2112,7 @@ public class OCLstdlib extends ASResourceImpl
 			operation.setIsTypeof(true);
 			ownedOperations.add(operation = op_OclAny_oclTypes);
 			ownedOperations.add(operation = op_OclAny_toString);
+			operation.setIsValidating(true);
 
 			ownedOperations = _OclComparable.getOwnedOperations();
 			ownedOperations.add(operation = op_OclComparable__lt_);
@@ -2192,6 +2197,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("b", _Boolean, false));
 			ownedOperations.add(operation = op_OclInvalid_toString);
+			operation.setIsValidating(true);
 
 			ownedOperations = _OclMessage.getOwnedOperations();
 			ownedOperations.add(operation = op_OclMessage_hasReturned);
@@ -2281,6 +2287,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("b", _Boolean, false));
 			ownedOperations.add(operation = op_OclVoid_toString);
+			operation.setIsValidating(true);
 			ownedOperations.add(operation = op_OclVoid_xor);
 			operation.setIsRequired(false);
 			ownedParameters = operation.getOwnedParameters();

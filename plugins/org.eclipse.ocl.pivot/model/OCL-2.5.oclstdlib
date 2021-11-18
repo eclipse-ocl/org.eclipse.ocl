@@ -308,7 +308,7 @@ type Boolean : PrimitiveType conformsTo OclAny {
 	/**
 	Converts oclText[self] to a string value.
 	**/
-	operation toString() : String[1] => 'org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation';
+	operation toString() : String[1]  validating => 'org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation';
 	/**
 	oclText[true] if oclText[self] <> oclText[b]
 	Otherwise oclText[false].
@@ -649,7 +649,7 @@ type Integer : PrimitiveType conformsTo Real {
 	/**
 	Converts oclText[self] to a string value.
 	**/
-	operation toString() : String[1] => 'org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation';
+	operation toString() : String[1]  validating => 'org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation';
 	/**
 	Converts a non-negative oclText[self] to an UnlimitedNatural value. A negative oclText[self] is converted to oclText[invalid].
 	An automatic coersion may be synthesized if the coercion enables an operation reference to be resolved
@@ -942,7 +942,7 @@ abstract type OclAny : AnyType {
 	/**
 	Returns a string representation of oclText[self].
 	*/
-	operation toString() : String[1] => 'org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation';
+	operation toString() : String[1] validating => 'org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation';
 }
 
 /**
@@ -1095,7 +1095,7 @@ abstract type OclInvalid : InvalidType conformsTo OclVoid {
 	/**
 	Returns 'invalid'.
 	*/
-	operation toString() : String[1] => 'org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation';
+	operation toString() : String[1]  validating => 'org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation';
 	
 	/**
 	 * An oclBadOperation may be used as a placeholder in an unsuccessfully created OCLExpression.
@@ -1268,7 +1268,7 @@ abstract type OclVoid : VoidType conformsTo OclAny {
 	/**
 	Returns oclText[null].
 	*/
-	operation toString() : String[1] => 'org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation';
+	operation toString() : String[1]  validating => 'org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation';
 }
 
 /**
@@ -1472,7 +1472,7 @@ type Real : PrimitiveType conformsTo OclComparable, OclSummable {
 	/**
 	Converts oclText[self] to a string value.
 	**/
-	operation toString() : String[1] => 'org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation';
+	operation toString() : String[1]  validating => 'org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation';
 }
 
 /**
@@ -1766,7 +1766,7 @@ type String : PrimitiveType conformsTo OclComparable, OclSummable {
 	/**
 	Returns oclText[self].
 	*/
-	operation toString() : String[1] => 'org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation';
+	operation toString() : String[1]  validating => 'org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation';
 	/**
 	This is a deprecated variant of toUpperCase() preserving compatibility with traditional Eclipse OCL behaviour. 
 	**/
