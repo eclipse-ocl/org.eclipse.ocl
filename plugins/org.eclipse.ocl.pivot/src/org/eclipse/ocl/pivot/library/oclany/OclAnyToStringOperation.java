@@ -79,7 +79,8 @@ public class OclAnyToStringOperation extends AbstractSimpleUnaryOperation
 		}
 		else if (sourceValue.isInvalid()) {
 			return evaluationEnvironment.getKnownValue(Value.INVALID_NAME);
-		} else {
+		}
+		else {
 			SymbolicReason mayBeNullReason = isSafe ? sourceValue.mayBeNullReason() : null;
 			return evaluationEnvironment.getUnknownValue(callExp, mayBeNullReason, null);
 		}

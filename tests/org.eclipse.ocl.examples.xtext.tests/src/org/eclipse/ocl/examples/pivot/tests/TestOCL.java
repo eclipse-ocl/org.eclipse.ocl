@@ -73,6 +73,7 @@ import org.eclipse.ocl.pivot.utilities.SemanticException;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
+import org.eclipse.ocl.pivot.values.InvalidValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.RealValue;
 import org.eclipse.ocl.pivot.values.Value;
@@ -392,7 +393,9 @@ public class TestOCL extends OCLInternal
 	public Value assertQueryInvalid(Object context, @NonNull String expression) {
 		try {
 			Object value = evaluateWithoutValidation(null, context, expression);
-			TestCase.fail(expression + " expected: invalid but was: " + value);
+			if (!(value instanceof InvalidValue)) {
+				TestCase.fail(expression + " expected: invalid but was: " + value);
+			}
 		} catch (InvalidValueException e) {		// OCL invalid is always an InvalidValueException
 			PivotTestSuite.appendLog(testName, context, expression, null, "invalid", null);
 		} catch (Exception e) {					// Something else is nasty

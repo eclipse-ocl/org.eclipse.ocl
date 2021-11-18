@@ -357,7 +357,7 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 
 	@Override
 	public Object visitInvalidLiteralExp(@NonNull InvalidLiteralExp invalidLiteralExp) {
-		throw ValueUtil.INVALID_VALUE;
+		throw ValueUtil.INVALID_VALUE;		// FIXME change to return -- affects all callers
 	}
 
 	/**

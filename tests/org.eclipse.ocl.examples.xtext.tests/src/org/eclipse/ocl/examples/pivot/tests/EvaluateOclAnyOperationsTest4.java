@@ -957,6 +957,18 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 
 	@Test public void testToString() {
 		MyOCL ocl = createOCL();
+		ocl.assertQueryEquals(null, "invalid", "invalid.toString()");
+// XXX
+		ocl.assertQueryInvalid(null, "invalid");
+		ocl.assertQueryInvalid(null, "let x = invalid in x");
+		ocl.assertQueryEquals(null, "invalid", "invalid.toString()");
+		ocl.assertQueryEquals(null, "invalid", "let x = invalid in x.toString()");
+		//
+		ocl.assertQueryNull(null, "null");
+		ocl.assertQueryNull(null, "let x = null in x");
+		ocl.assertQueryEquals(null, "null", "null.toString()");
+		ocl.assertQueryEquals(null, "null", "let x = null in x.toString()");
+		//
 		ocl.loadEPackage("ecore", EcorePackage.eINSTANCE);
 		@SuppressWarnings("null") @NonNull String emfString = EcoreFactory.eINSTANCE.createFromString(EcorePackage.Literals.EDATE, "2000-01-24").toString();
 		ocl.assertQueryEquals(null, emfString, "ecore::EDate{value='2000-01-24'}.toString()");
