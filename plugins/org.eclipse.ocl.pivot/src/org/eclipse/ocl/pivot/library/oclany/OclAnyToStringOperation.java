@@ -19,8 +19,9 @@ import org.eclipse.ocl.pivot.internal.symbolic.SymbolicReason;
 import org.eclipse.ocl.pivot.library.AbstractSimpleUnaryOperation;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
-import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.pivot.values.InvalidValue;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
+import org.eclipse.ocl.pivot.values.Value;
 
 /**
  * OclAnyToStringOperation realises the OclAny::toString() library operation.
@@ -31,17 +32,25 @@ public class OclAnyToStringOperation extends AbstractSimpleUnaryOperation
 
 	@Override
 	public @NonNull String evaluate(@Nullable Object sourceVal) {
-		if (sourceVal instanceof InvalidValueException)	{				// FIXME Remove this once CG has proper invalid analysis
-			throw (InvalidValueException)sourceVal;
+//		if (sourceVal instanceof InvalidValueException)	{				// FIXME Remove this once CG has proper invalid analysis
+//			throw (InvalidValueException)sourceVal;
+//		}
+		if (sourceVal == null)	{
+			return ValueUtil.NULL_STRING;
 		}
-		return sourceVal != null ? oclToString(sourceVal) : ValueUtil.NULL_STRING;
+		else if (sourceVal instanceof InvalidValue)	{
+			return Value.INVALID_NAME;
+		}
+		else {
+			return oclToString(sourceVal);
+		}
 	}
 
 	/**
 	 * @since 1.17
 	 */
 	@Override
-	protected boolean hasRedundantOverloadForInvalid() {
+	protected boolean sourceMayBeInvalid() {
 		return true;
 	}
 
@@ -67,6 +76,9 @@ public class OclAnyToStringOperation extends AbstractSimpleUnaryOperation
 		SymbolicValue sourceValue = evaluationEnvironment.symbolicEvaluate(source);
 		if (sourceValue.isNull()) {
 			return evaluationEnvironment.getKnownValue(isSafe ? null : ValueUtil.NULL_STRING);
+		}
+		else if (sourceValue.isInvalid()) {
+			return evaluationEnvironment.getKnownValue(Value.INVALID_NAME);
 		} else {
 			SymbolicReason mayBeNullReason = isSafe ? sourceValue.mayBeNullReason() : null;
 			return evaluationEnvironment.getUnknownValue(callExp, mayBeNullReason, null);
