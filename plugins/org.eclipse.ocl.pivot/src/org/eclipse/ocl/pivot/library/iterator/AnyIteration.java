@@ -57,8 +57,8 @@ public class AnyIteration extends AbstractIteration
 
 	@Override
 	protected @Nullable Object resolveTerminalValue(@NonNull IterationManager iterationManager) {
-//		return null;
-		throw new InvalidValueException("No matching content for 'any'"); // OMG Issue 18504 //$NON-NLS-1$
+		return null;
+//		throw new InvalidValueException("No matching content for 'any'"); // OMG Issue 18504 //$NON-NLS-1$
 	}
 
 	@Override
