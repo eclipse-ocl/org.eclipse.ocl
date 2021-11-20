@@ -1516,7 +1516,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 				initModelWithErrors(resourceSet);
 				EObject badClassInstance = create(acme, companyDetritus, (EClass) companyPackage.getEClassifier("ValidationEvaluatingToInvalid"), null);
 				validateWithDelegationSeverity("evaluatingToInvalid", Diagnostic.ERROR, badClassInstance, null,
-					EvaluationException.class, PivotMessagesInternal.ValidationResultIsInvalid_ERROR_, "ValidationEvaluatingToInvalid", "evaluatingToInvalid", LabelUtil.getLabel(badClassInstance), "invalid");
+					EvaluationException.class, PivotMessagesInternal.ValidationResultIsInvalid_ERROR_, "ValidationEvaluatingToInvalid", "evaluatingToInvalid", LabelUtil.getLabel(badClassInstance), "invalid-literal");
 				unloadResourceSet(resourceSet);
 			}
 		});

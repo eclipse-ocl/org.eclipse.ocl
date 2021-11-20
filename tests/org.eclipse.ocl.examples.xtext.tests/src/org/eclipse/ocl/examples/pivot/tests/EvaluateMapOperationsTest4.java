@@ -71,7 +71,7 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 
 	@Test public void testMapAt() {
 		TestOCL ocl = createOCL();
-		ocl.assertQueryInvalid(null, "Set{invalid}", "invalid", InvalidValueException.class);
+		ocl.assertQueryInvalid(null, "Set{invalid}", "invalid-literal", InvalidValueException.class);
 
 		ocl.assertQueryInvalid(null, "Map{}->at(3)", StringUtil.bind(PivotMessages.IndexNotInUse, 3), InvalidValueException.class);
 
@@ -85,7 +85,7 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryNull(null, "Map{'a'<-null}->at('a')");
 		ocl.assertQueryInvalid(null, "Map{'a'<-null}->at(null)", StringUtil.bind(PivotMessages.IndexNotInUse, "null"), InvalidValueException.class);
 
-		ocl.assertQueryInvalid(null, "Map{'a'<-'b'}->at(invalid)", "invalid", InvalidValueException.class);
+		ocl.assertQueryInvalid(null, "Map{'a'<-'b'}->at(invalid)", "invalid-literal", InvalidValueException.class);
 
 		ocl.dispose();
 	}
@@ -627,9 +627,9 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(null, 1, "Map{'a'<-null}->size()");
 		ocl.assertQueryEquals(null, 1, "Map{null<-null}->size()");
 
-		ocl.assertQueryInvalid(null, "Map{invalid<-'b'}", "invalid", InvalidValueException.class);
-		ocl.assertQueryInvalid(null, "Map{'a'<-invalid}", "invalid", InvalidValueException.class);
-		ocl.assertQueryInvalid(null, "Map{invalid<-invalid}", "invalid", InvalidValueException.class);
+		ocl.assertQueryInvalid(null, "Map{invalid<-'b'}", "invalid-literal", InvalidValueException.class);
+		ocl.assertQueryInvalid(null, "Map{'a'<-invalid}", "invalid-literal", InvalidValueException.class);
+		ocl.assertQueryInvalid(null, "Map{invalid<-invalid}", "invalid-literal", InvalidValueException.class);
 		ocl.dispose();
 	}
 

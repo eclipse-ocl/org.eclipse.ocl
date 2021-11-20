@@ -253,11 +253,15 @@
     <ownedClasses xmi:id="t5rpa" isAbstract="true" name="Element" superClasses="&_0;#zfDWR">
       <ownedComments body="An Element is a constituent of a model. As such, it has the capability of owning other Elements."/>
       <ownedOperations xmi:id="J2A5u" name="allOwnedElements" type="#+7MeC">
-        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="&#xA;&#x9;self->closure(oclContents()->selectByKind(Element))&#xA;&#x9;&#xA;"/>
+        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="&#xA;&#x9;self->closure(oclContents()->selectByKind(Element))&#xA;&#x9;&#xA;">
+          <ownedContext xsi:type="pivot:ParameterVariable" name="self" type="#t5rpa"/>
+        </bodyExpression>
         <ownedComments body="The query allOwnedElements() gives all of the direct and indirect ownedElements of an Element."/>
       </ownedOperations>
       <ownedOperations xmi:id="miFc+" isRequired="false" name="getValue" type="#t5rpa">
-        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="null&#xA;&#xA;"/>
+        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="null&#xA;&#xA;">
+          <ownedContext xsi:type="pivot:ParameterVariable" name="self" type="#t5rpa"/>
+        </bodyExpression>
         <ownedParameters name="stereotype" type="#rrwsa"/>
         <ownedParameters name="propertyName" type="#CPVxu"/>
       </ownedOperations>
@@ -688,7 +692,9 @@
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="(not hasOclVoidOverload()) implies ((ownedSource &lt;> null) and not isSafe implies ownedSource.isNonNull())&#xA;&#xA;"/>
       </ownedInvariants>
       <ownedOperations xmi:id="ml59+" name="hasOclVoidOverload" type="#ZuwnB">
-        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="false "/>
+        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="false ">
+          <ownedContext xsi:type="pivot:ParameterVariable" name="self" type="#p84zd"/>
+        </bodyExpression>
       </ownedOperations>
       <ownedProperties xmi:id="eWL7K" defaultValueString="true" name="isVirtual" type="#ZuwnB"/>
       <ownedProperties xmi:id="O9xIX" isComposite="true" name="ownedArguments" type="#Ftslp"/>
@@ -786,7 +792,9 @@
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="ownedExpression &lt;> null and ownedExpression.oclAsType(ExpressionInOCL).ownedBody &lt;> null implies CompatibleBody(ownedExpression)&#xA;&#xA;"/>
       </ownedInvariants>
       <ownedOperations xmi:id="nycUW" name="isAttribute" type="#ZuwnB">
-        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="&#xA;--Type.allInstances()->exists(c| c.ownedAttribute->includes(p))&#xA;let container : ocl::OclElement = oclContainer() in container.oclIsKindOf(Class) and container.oclAsType(Class).ownedProperties->includes(self)&#xA;&#xA;"/>
+        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="&#xA;--Type.allInstances()->exists(c| c.ownedAttribute->includes(p))&#xA;let container : ocl::OclElement = oclContainer() in container.oclIsKindOf(Class) and container.oclAsType(Class).ownedProperties->includes(self)&#xA;&#xA;">
+          <ownedContext xsi:type="pivot:ParameterVariable" name="self" type="#Gm0Mj"/>
+        </bodyExpression>
         <ownedParameters name="p" type="#Gm0Mj"/>
       </ownedOperations>
       <ownedProperties xmi:id="9lR1c" isRequired="false" name="associationClass" opposite="#D9XUa" type="#oE9s0"/>
@@ -848,10 +856,14 @@
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="(ownedSource &lt;> null) and not isSafe implies ownedSource.isNonNull()&#xA;&#xA;"/>
       </ownedInvariants>
       <ownedOperations xmi:id="TKf1y" name="getSpecializedReferredPropertyOwningType" type="#rrwsa">
-        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="referredProperty?.owningClass "/>
+        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="referredProperty?.owningClass ">
+          <ownedContext xsi:type="pivot:ParameterVariable" name="self" type="#7K0sf"/>
+        </bodyExpression>
       </ownedOperations>
       <ownedOperations xmi:id="XCWxk" name="getSpecializedReferredPropertyType" type="#rrwsa">
-        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="referredProperty?.type.oclAsType(Class) "/>
+        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="referredProperty?.type.oclAsType(Class) ">
+          <ownedContext xsi:type="pivot:ParameterVariable" name="self" type="#7K0sf"/>
+        </bodyExpression>
       </ownedOperations>
       <ownedProperties xmi:id="tl5uo" isRequired="false" name="referredProperty" type="#Gm0Mj"/>
     </ownedClasses>
@@ -923,7 +935,9 @@
     </ownedClasses>
     <ownedClasses xmi:id="Xhrcl" name="SelfType" superClasses="#pDcbe">
       <ownedOperations xmi:id="C4cbC" name="specializeIn" type="#rrwsa">
-        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="selfType&#xA;&#xA;"/>
+        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="selfType&#xA;&#xA;">
+          <ownedContext xsi:type="pivot:ParameterVariable" name="self" type="#Xhrcl"/>
+        </bodyExpression>
         <ownedParameters name="expr" type="#QJrde"/>
         <ownedParameters name="selfType" type="#rrwsa"/>
       </ownedOperations>
@@ -1190,12 +1204,16 @@
     <ownedClasses xmi:id="rrwsa" isAbstract="true" name="Type" superClasses="#0kVqz">
       <ownedComments body="A Type constrains the values represented by a TypedElement."/>
       <ownedOperations xmi:id="xDNE5" isRequired="false" name="flattenedType" type="#rrwsa">
-        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="self&#xA;&#xA;"/>
+        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="self&#xA;&#xA;">
+          <ownedContext xsi:type="pivot:ParameterVariable" name="self" type="#rrwsa"/>
+        </bodyExpression>
       </ownedOperations>
       <ownedOperations xmi:id="i,Kw4" isRequired="false" name="isClass" type="#pDcbe"/>
       <ownedOperations xmi:id="5WLf+" isRequired="false" name="isTemplateParameter" type="#Afray"/>
       <ownedOperations xmi:id="GZy9j" name="specializeIn" type="#rrwsa">
-        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="self&#xA;&#xA;"/>
+        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="self&#xA;&#xA;">
+          <ownedContext xsi:type="pivot:ParameterVariable" name="self" type="#rrwsa"/>
+        </bodyExpression>
         <ownedParameters name="expr" type="#QJrde"/>
         <ownedParameters name="selfType" type="#rrwsa"/>
       </ownedOperations>
@@ -1224,7 +1242,9 @@
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="true&#x9;&#x9;&#x9;"/>
       </ownedInvariants>
       <ownedOperations xmi:id="71tyJ" name="CompatibleBody" type="#ZuwnB">
-        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="&#xA;&#x9;bodySpecification.type?.conformsTo(self.type)&#xA;"/>
+        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="&#xA;&#x9;bodySpecification.type?.conformsTo(self.type)&#xA;">
+          <ownedContext xsi:type="pivot:ParameterVariable" name="self" type="#j7EI0"/>
+        </bodyExpression>
         <ownedParameters name="bodySpecification" type="#DLUxI"/>
       </ownedOperations>
       <ownedProperties xmi:id="YqNZL" isDerived="true" isReadOnly="true" isTransient="true" isVolatile="true" name="isMany" type="#ZuwnB"/>

@@ -1339,16 +1339,16 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryTrue(null, "'test'->notEmpty()");
 		ocl.assertQueryTrue(null, "''->notEmpty()");
 		// invalid collection
-		ocl.assertQueryInvalid(null, "invalid->notEmpty()", "invalid", InvalidValueException.class);
-		ocl.assertQueryInvalid(null, "let s : Sequence(Integer) = invalid in s->notEmpty()", "invalid", InvalidValueException.class);
-		ocl.assertQueryInvalid(null, "let b : Bag(Integer) = invalid in b->notEmpty()", "invalid", InvalidValueException.class);
-		ocl.assertQueryInvalid(null, "let s : Set(Integer) = invalid in s->notEmpty()", "invalid", InvalidValueException.class);
-		ocl.assertQueryInvalid(null, "let o : OrderedSet(Integer) = invalid in o->notEmpty()", "invalid", InvalidValueException.class);
+		ocl.assertQueryInvalid(null, "invalid->notEmpty()", "invalid-literal", InvalidValueException.class);
+		ocl.assertQueryInvalid(null, "let s : Sequence(Integer) = invalid in s->notEmpty()", "invalid-literal", InvalidValueException.class);
+		ocl.assertQueryInvalid(null, "let b : Bag(Integer) = invalid in b->notEmpty()", "invalid-literal", InvalidValueException.class);
+		ocl.assertQueryInvalid(null, "let s : Set(Integer) = invalid in s->notEmpty()", "invalid-literal", InvalidValueException.class);
+		ocl.assertQueryInvalid(null, "let o : OrderedSet(Integer) = invalid in o->notEmpty()", "invalid-literal", InvalidValueException.class);
 		// invalid collection element
-		ocl.assertQueryInvalid(null, "Sequence{invalid}->notEmpty()", "invalid", InvalidValueException.class);
-		ocl.assertQueryInvalid(null, "Bag{invalid}->notEmpty()", "invalid", InvalidValueException.class);
-		ocl.assertQueryInvalid(null, "Set{invalid}->notEmpty()", "invalid", InvalidValueException.class);
-		ocl.assertQueryInvalid(null, "OrderedSet{invalid}->notEmpty()", "invalid", InvalidValueException.class);
+		ocl.assertQueryInvalid(null, "Sequence{invalid}->notEmpty()", "invalid-literal", InvalidValueException.class);
+		ocl.assertQueryInvalid(null, "Bag{invalid}->notEmpty()", "invalid-literal", InvalidValueException.class);
+		ocl.assertQueryInvalid(null, "Set{invalid}->notEmpty()", "invalid-literal", InvalidValueException.class);
+		ocl.assertQueryInvalid(null, "OrderedSet{invalid}->notEmpty()", "invalid-literal", InvalidValueException.class);
 		// null collection
 		//		ocl.assertQueryInvalid(null, "null->notEmpty()");
 		ocl.assertQueryFalse(null, "null->notEmpty()");

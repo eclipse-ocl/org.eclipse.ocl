@@ -131,7 +131,7 @@ public abstract class ValueUtil
 	private static final int maxLongSize = maxLongValue.length();
 
 	public static final @NonNull Boolean FALSE_VALUE = Boolean.FALSE;
-	public static final @NonNull InvalidValueException INVALID_VALUE = new InvalidValueException("invalid");
+	public static final @NonNull InvalidValueException INVALID_VALUE = new InvalidValueException("invalid-literal");
 	public static final @NonNull NullValue NULL_VALUE = new NullValueImpl();
 	public static final @NonNull IntegerValue ONE_VALUE = integerValueOf(1);
 	public static final @NonNull UnlimitedNaturalValue UNLIMITED_ONE_VALUE = (UnlimitedNaturalValue)ONE_VALUE;
