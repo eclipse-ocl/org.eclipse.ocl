@@ -141,6 +141,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	private final @NonNull BaseCSVisitor<Element> left2RightVisitor;
 	private final @NonNull BaseCSVisitor<Continuation<?>> postOrderVisitor;
 	private final @NonNull BaseCSVisitor<Continuation<?>> preOrderVisitor;
+//	private final @NonNull Visitor<Continuation<?>> rewriteVisitor;
 
 	private @NonNull InterDependency<@NonNull TemplateSignatureContinuation> typesHaveSignatures = new InterDependency<>("All unspecialized signatures defined", null);
 

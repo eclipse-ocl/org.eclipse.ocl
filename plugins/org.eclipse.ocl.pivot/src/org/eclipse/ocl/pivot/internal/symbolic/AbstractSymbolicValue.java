@@ -64,6 +64,7 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 			}
 			else if (unrefinedValue.mayBeInvalidReason() == null) {
 				return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "mayBeInvalid is incompatible with !mayBeInvalid", typedElement);
+			//	resultValue = AbstractSymbolicRefinedValue.createExceptValue(resultValue, ValueUtil.INVALID_VALUE);
 			}
 			else {
 				// no change
@@ -95,7 +96,8 @@ public abstract class AbstractSymbolicValue implements SymbolicValue
 				return unrefinedValue;				// "null" is except-everything else
 			}
 			else if (unrefinedValue.mayBeNullReason() == null) {
-				return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "mayBeNull is incompatible with !mayBeNull", typedElement);
+			//	return AbstractSymbolicRefinedValue.createIncompatibility(resultValue, "mayBeNull is incompatible with !mayBeNull", typedElement);
+				resultValue = AbstractSymbolicRefinedValue.createExceptValue(resultValue, null);
 			}
 			else {
 				// no change

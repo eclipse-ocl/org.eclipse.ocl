@@ -129,7 +129,7 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 			return compatibilityProblem;
 		}
 		if (!symbolicEvaluationEnvironment.checkConformance(source, returnType, source, navigationCallExp)) {
-			return symbolicEvaluationEnvironment.getInvalidValue("incompatible source for '" + navigationCallExp.getName() + "'");
+			return symbolicEvaluationEnvironment.getInvalidValue(PivotUtil.getType(source), "incompatible source for '" + navigationCallExp.getName() + "'");
 		}
 		SymbolicReason propertyMayBeNullReason = SymbolicUtil.isRequiredReason(referredProperty);
 		SymbolicValue invalidProblem = symbolicEvaluationEnvironment.checkNotInvalid(source, returnType, propertyMayBeNullReason, navigationCallExp);
@@ -304,7 +304,7 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 			}
 			if (isNullFree) {
 				if (partValue.isNull()) {
-					return symbolicEvaluationEnvironment.getInvalidValue("null part value");
+					return symbolicEvaluationEnvironment.getInvalidValue(partValue.getType(), "null part value");
 				}
 				if (mayBeInvalidReason == null) {
 					mayBeInvalidReason = partValue.mayBeNullReason();
@@ -407,7 +407,7 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 		else if (conditionValue.isNull()) {
 			symbolicEvaluationEnvironment.setDead(thenExpression);
 			symbolicEvaluationEnvironment.setDead(elseExpression);
-			return symbolicEvaluationEnvironment.getInvalidValue("null condition");
+			return symbolicEvaluationEnvironment.getInvalidValue(PivotUtil.getType(conditionExpression), "null condition");
 		}
 		else {
 			SymbolicReason mayBeInvalidReason = SymbolicUtil.mayBeInvalidReason(conditionValue, "condition");;
@@ -438,7 +438,7 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 
 	@Override
 	public @NonNull SymbolicValue visitInvalidLiteralExp(@NonNull InvalidLiteralExp invalidLiteralExp) {
-		return symbolicEvaluationEnvironment.getInvalidValue("invalid literal");
+		return symbolicEvaluationEnvironment.getInvalidValue(PivotUtil.getType(invalidLiteralExp), "invalid literal");
 	}
 
 	@Override
@@ -505,7 +505,7 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 			}
 			if (isKeysAreNullFree) {
 				if (keyValue.isNull()) {
-					return symbolicEvaluationEnvironment.getInvalidValue("null key value");
+					return symbolicEvaluationEnvironment.getInvalidValue(keyValue.getType(), "null key value");
 				}
 				if (mayBeInvalidReason == null) {
 					mayBeInvalidReason = keyValue.mayBeNullReason();
@@ -513,7 +513,7 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 			}
 			if (isValuesAreNullFree) {
 				if (valueValue.isNull()) {
-					return symbolicEvaluationEnvironment.getInvalidValue("null value value");
+					return symbolicEvaluationEnvironment.getInvalidValue(valueValue.getType(), "null value value");
 				}
 				if (mayBeInvalidReason == null) {
 					mayBeInvalidReason = valueValue.mayBeNullReason();
@@ -686,7 +686,7 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 				return partValue;
 			}
 			if (partValue.isNull()) {
-				return symbolicEvaluationEnvironment.getInvalidValue("null part");
+				return symbolicEvaluationEnvironment.getInvalidValue(partValue.getType(), "null part");
 			}
 			if (!partValue.isKnown()) {
 				isKnown = false;
@@ -718,7 +718,7 @@ public class SymbolicEvaluationVisitor extends AbstractExtendingVisitor<@NonNull
 			return partValue;
 		}
 		if (partValue.isNull()) {
-			return symbolicEvaluationEnvironment.getInvalidValue("null part");
+			return symbolicEvaluationEnvironment.getInvalidValue(partValue.getType(), "null part");
 		}
 		SymbolicReason mayBeInvalidReason = partValue.mayBeInvalidReason();
 		if (mayBeInvalidReason == null) {

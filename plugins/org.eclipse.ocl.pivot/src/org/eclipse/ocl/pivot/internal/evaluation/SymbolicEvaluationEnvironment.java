@@ -71,7 +71,7 @@ public interface SymbolicEvaluationEnvironment
 	@NonNull BaseSymbolicEvaluationEnvironment getBaseSymbolicEvaluationEnvironment();
 	@NonNull EnvironmentFactory getEnvironmentFactory();
 	@NonNull IdResolver getIdResolver();
-	@NonNull SymbolicValue getInvalidValue(@NonNull String isInvalidReason);
+	@NonNull SymbolicValue getInvalidValue(@NonNull Type type, @NonNull String isInvalidReason);
 	@NonNull SymbolicValue getKnownValue(@Nullable Object boxedValue);
 	@NonNull SymbolicAnalysis getSymbolicAnalysis();
 	@NonNull SymbolicValue getSymbolicValue(@NonNull TypedElement element);

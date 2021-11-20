@@ -218,7 +218,7 @@ public abstract class Hypothesis
 	public static class MayBeInvalidHypothesis extends Hypothesis
 	{
 		public MayBeInvalidHypothesis(@NonNull SymbolicAnalysis symbolicAnalysis, @NonNull Iterable<@NonNull TypedElement> typedElements) {
-			super(symbolicAnalysis, typedElements, symbolicAnalysis.getSymbolicEvaluationEnvironment().getInvalidValue("hypothesized-invalid"));
+			super(symbolicAnalysis, typedElements, symbolicAnalysis.getSymbolicEvaluationEnvironment().getInvalidValue(typedElements.iterator().next().getType(), "hypothesized-invalid"));
 		}
 
 		@Override

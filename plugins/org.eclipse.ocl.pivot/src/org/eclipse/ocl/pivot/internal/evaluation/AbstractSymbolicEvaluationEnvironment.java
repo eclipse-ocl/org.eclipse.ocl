@@ -38,6 +38,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValue;
+import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.RealValue;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 
@@ -221,8 +222,9 @@ public abstract class AbstractSymbolicEvaluationEnvironment implements SymbolicE
 	}
 
 	@Override
-	public @NonNull SymbolicValue getInvalidValue(@NonNull String isInvalidReason) {
-		SymbolicValue mayBeInvalidValue = symbolicAnalysis.getMayBeInvalidValue(standardLibrary.getOclInvalidType(), null, new SymbolicSimpleReason(isInvalidReason));
+	public @NonNull SymbolicValue getInvalidValue(@NonNull Type type, @NonNull String isInvalidReason) {
+	//	SymbolicValue mayBeInvalidValue = symbolicAnalysis.getMayBeInvalidValue(type, null, new SymbolicSimpleReason(isInvalidReason));
+		SymbolicValue mayBeInvalidValue = symbolicAnalysis.getKnownValue(new InvalidValueException(isInvalidReason));
 		assert mayBeInvalidValue != null;
 		return mayBeInvalidValue;
 	}
@@ -230,7 +232,7 @@ public abstract class AbstractSymbolicEvaluationEnvironment implements SymbolicE
 	@Override
 	public final @NonNull SymbolicValue getKnownValue(@Nullable Object boxedValue) {
 		if (boxedValue instanceof InvalidValue) {
-			return getInvalidValue("invalid literal");		// XXX Fix caller
+			return getInvalidValue(standardLibrary.getOclInvalidType(), "invalid literal");		// XXX Fix caller
 		}
 		return symbolicAnalysis.getKnownValue(boxedValue);
 	}

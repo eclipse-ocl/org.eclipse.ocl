@@ -30,6 +30,9 @@ import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.IfExp;
+import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.Type;
@@ -39,7 +42,14 @@ import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis;
 import org.eclipse.ocl.pivot.internal.symbolic.SymbolicReason;
+import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation;
+import org.eclipse.ocl.pivot.library.logical.BooleanAndOperation;
+import org.eclipse.ocl.pivot.library.logical.BooleanAndOperation2;
+import org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation;
+import org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation2;
+import org.eclipse.ocl.pivot.library.logical.BooleanOrOperation;
+import org.eclipse.ocl.pivot.library.logical.BooleanOrOperation2;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
@@ -236,6 +246,75 @@ implements TypedElement {
 	}
 
 	/**
+	 * Return true if the invalid value of this TypedElement can be handled by the calling tree
+	 * and so should ot  be reported as a crash hazard to the user.
+	 *
+	 * The source of a validating operation such as oclIsInvalid() is handled.
+	 * The return of an invalidating operation is 'handled' by its caller.
+	 * The then/else arguments of an if, or short-circuited boolean arguments are transitively handled.
+	 * @param symbolicAnalysis
+	 */
+	private boolean invalidIsComputable(@NonNull SymbolicAnalysis symbolicAnalysis) {
+		for (EObject eObject = this, eContainer; (eContainer = eObject.eContainer()) != null; eObject = eContainer) {
+			SymbolicValue symbolicValue = eObject instanceof TypedElement ? symbolicAnalysis.getSymbolicValue((TypedElement)eObject) : null;
+			SymbolicValue symbolicContainerValue = eContainer instanceof TypedElement ? symbolicAnalysis.getSymbolicValue((TypedElement)eContainer) : null;
+			boolean isComputable = false;
+			if (eContainer instanceof OperationCallExp) {
+				OperationCallExp operationCallExp = (OperationCallExp)eContainer;
+				Operation referredOperation = operationCallExp.getReferredOperation();
+				if (operationCallExp.getOwnedSource() == eObject) {
+					if (referredOperation.isIsValidating()) {
+						return true;
+					}
+				}
+				else if (operationCallExp.getOwnedArguments().contains(eObject)) {
+					LibraryFeature implementation = referredOperation.getImplementation();
+					if (implementation instanceof BooleanAndOperation) {
+						isComputable = true;
+					}
+					else if (implementation instanceof BooleanAndOperation2) {
+						isComputable = true;
+					}
+					else if (implementation instanceof BooleanImpliesOperation) {
+						isComputable = true;
+					}
+					else if (implementation instanceof BooleanImpliesOperation2) {
+						isComputable = true;
+					}
+					else if (implementation instanceof BooleanOrOperation) {
+						isComputable = true;
+					}
+					else if (implementation instanceof BooleanOrOperation2) {
+						isComputable = true;
+					}
+				}
+			}
+			else if (eContainer instanceof IfExp) {
+				IfExp ifExp = (IfExp)eContainer;
+				if (ifExp.getOwnedThen() == eObject) {
+					isComputable = true;
+				}
+				else if (ifExp.getOwnedElse() == eObject) {
+					isComputable = true;
+				}
+			}
+			else if (eContainer instanceof ExpressionInOCL) {
+				EObject eContainerContainer = eContainer.eContainer();
+				if (eContainerContainer instanceof Operation) {
+					Operation operation = (Operation)eContainerContainer;
+					if (operation.isIsInvalidating()) {
+						return true;
+					}
+				}
+			}
+			if (!isComputable) {
+				return false;
+			}
+		}
+		return false;
+	}
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated NOT
@@ -294,9 +373,12 @@ implements TypedElement {
 			if (mayBeInvalidReason == null) {
 				return true;
 			}
+			SymbolicAnalysis symbolicAnalysis = executor.getSymbolicAnalysis(ClassUtil.nonNullState(PivotUtil.getContainingExpressionInOCL(this)));		// XXX debugging
+			if (invalidIsComputable(symbolicAnalysis)) {
+				return true;
+			}
 			if (diagnostics != null) {
-				@SuppressWarnings("unused")
-				SymbolicAnalysis symbolicAnalysis = executor.getSymbolicAnalysis(ClassUtil.nonNullState(PivotUtil.getContainingExpressionInOCL(this)));		// XXX debugging
+				invalidIsComputable(symbolicAnalysis);
 				String objectLabel = EObjectValidator.getObjectLabel(this, context);
 				String emfMessage = StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfiedWithReason_ERROR_, new Object[]{constraintName, objectLabel, mayBeInvalidReason});
 				Object emfData[] = new Object [] { this };

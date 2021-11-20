@@ -173,7 +173,7 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 			}
 			if (!evaluationEnvironment.checkConformance(argument, returnType, parameter, callExp)) {
 				evaluationEnvironment.checkConformance(argument, returnType, parameter, callExp);			// XXX
-				return evaluationEnvironment.getInvalidValue("incompatible '" + parameter.getName() + "' parameter for '" + callExp.getName() + "'");
+				return evaluationEnvironment.getInvalidValue(PivotUtil.getType(parameter), "incompatible '" + parameter.getName() + "' parameter for '" + callExp.getName() + "'");
 			}
 			i++;
 		}
@@ -182,7 +182,7 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 			return compatibleSourceProblem;
 		}
 		if (!evaluationEnvironment.checkConformance(source, returnType, source, callExp)) {
-			return evaluationEnvironment.getInvalidValue("incompatible source for '" + callExp.getName() + "'");
+			return evaluationEnvironment.getInvalidValue(PivotUtil.getType(source), "incompatible source for '" + callExp.getName() + "'");
 		}
 		return null;
 	}
