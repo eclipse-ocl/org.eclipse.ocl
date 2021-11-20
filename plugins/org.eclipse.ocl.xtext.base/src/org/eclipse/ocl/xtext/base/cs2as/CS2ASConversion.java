@@ -71,7 +71,9 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.logical.BooleanAndOperation;
+import org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation;
 import org.eclipse.ocl.pivot.library.logical.BooleanOrOperation;
+import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -1486,40 +1488,51 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 			return false;
 		}
 		//
-		//	Optimize/rewrite
+		//	Optimize/rewrite to support strict Booleans
 		//
-		assert asResource != null;
-		for (@NonNull EObject eObject : new TreeIterable(asResource)) {	// Chage to postorder rewrite visitpr
-			if (eObject instanceof OperationCallExp) {
-				OperationCallExp operationCallExp = (OperationCallExp)eObject;
-				Operation referredOperation = operationCallExp.getReferredOperation();
-				LibraryFeature implementation = referredOperation.getImplementation();
-				if ((implementation instanceof BooleanAndOperation) /*|| (implementation instanceof BooleanImpliesOperation)*/ || (implementation instanceof BooleanOrOperation)) {
-					ExpressionInOCL expressionInOCL = PivotUtil.getContainingExpressionInOCL(operationCallExp);
-					assert expressionInOCL != null;
-					PivotExecutorManager executor = new PivotExecutorManager(environmentFactory, operationCallExp);
-					try {
-						SymbolicAnalysis symbolicAnalysis = executor.getSymbolicAnalysis(expressionInOCL);
-						OCLExpression left = PivotUtil.getOwnedSource(operationCallExp);
-						OCLExpression right = PivotUtil.getOwnedArgument(operationCallExp, 0);
-						SymbolicValue leftSymbolicValue = symbolicAnalysis.getSymbolicValue(left);
-						SymbolicValue rightSymbolicValue = symbolicAnalysis.getSymbolicValue(right);
-						boolean hazardousLeft = !leftSymbolicValue.getInvalidStatus().isUnsatisfied() || !leftSymbolicValue.getInvalidStatus().isUnsatisfied();		// Leapfrog Dead
-						boolean hazardousRight = !rightSymbolicValue.getInvalidStatus().isUnsatisfied() || !rightSymbolicValue.getInvalidStatus().isUnsatisfied();	// Leapfrog Dead
-						if (hazardousLeft) {
-							if (hazardousRight) {
-								// error
+		Boolean strictBooleans = environmentFactory.getValue(PivotValidationOptions.EnforceStrictBooleans);
+		if (strictBooleans  == Boolean.TRUE) {
+			assert asResource != null;
+			for (@NonNull EObject eObject : new TreeIterable(asResource)) {	// Chage to postorder rewrite visitpr
+				if (eObject instanceof OperationCallExp) {
+					OperationCallExp operationCallExp = (OperationCallExp)eObject;
+					Operation referredOperation = operationCallExp.getReferredOperation();
+					LibraryFeature implementation = referredOperation.getImplementation();
+					if ((implementation instanceof BooleanAndOperation) || (implementation instanceof BooleanImpliesOperation) || (implementation instanceof BooleanOrOperation)) {
+						ExpressionInOCL expressionInOCL = PivotUtil.getContainingExpressionInOCL(operationCallExp);
+						assert expressionInOCL != null;
+						PivotExecutorManager executor = new PivotExecutorManager(environmentFactory, operationCallExp);
+						try {
+							SymbolicAnalysis symbolicAnalysis = executor.getSymbolicAnalysis(expressionInOCL);
+							OCLExpression left = PivotUtil.getOwnedSource(operationCallExp);
+							OCLExpression right = PivotUtil.getOwnedArgument(operationCallExp, 0);
+							SymbolicValue leftSymbolicValue = symbolicAnalysis.getSymbolicValue(left);
+							SymbolicValue rightSymbolicValue = symbolicAnalysis.getSymbolicValue(right);
+							boolean hazardousLeft = !leftSymbolicValue.getInvalidStatus().isUnsatisfied() || !leftSymbolicValue.getInvalidStatus().isUnsatisfied();		// Leapfrog Dead
+							boolean hazardousRight = !rightSymbolicValue.getInvalidStatus().isUnsatisfied() || !rightSymbolicValue.getInvalidStatus().isUnsatisfied();	// Leapfrog Dead
+							if (hazardousLeft) {
+								if (hazardousRight) {
+									ModelElementCS csElement = converter.getCSElement(operationCallExp);
+									assert csElement != null;
+									addError(csElement , PivotMessages.StrictnessViolation, operationCallExp.getName());
+								}
+								else {
+									PivotUtilInternal.resetContainer(left);
+									PivotUtilInternal.resetContainer(right);
+									if (implementation instanceof BooleanImpliesOperation) {
+										operationCallExp.setOwnedSource(new PivotHelper(environmentFactory).createOperationCallExp(right, "not"));
+										operationCallExp.getOwnedArguments().add(new PivotHelper(environmentFactory).createOperationCallExp(left, "not"));
+									}
+									else {
+										operationCallExp.setOwnedSource(right);
+										operationCallExp.getOwnedArguments().add(left);
+									}
+								}
 							}
-							else {
-								PivotUtilInternal.resetContainer(left);
-								PivotUtilInternal.resetContainer(right);
-								operationCallExp.setOwnedSource(right);
-								operationCallExp.getOwnedArguments().add(left);
-							}
+						} catch (ParserException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();		// ??? Never happens ???
 						}
-					} catch (ParserException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
 					}
 				}
 			}

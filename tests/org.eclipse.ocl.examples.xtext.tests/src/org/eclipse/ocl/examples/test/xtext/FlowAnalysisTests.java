@@ -32,6 +32,7 @@ import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
+import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -203,6 +204,7 @@ public class FlowAnalysisTests extends XtextTestCase
 
 	public void testFlowAnalysis_ImpliesPropertyGuard() throws Exception {
 		MyOCL ocl = new MyOCL();
+		ocl.getEnvironmentFactory().setOption(PivotValidationOptions.EnforceStrictBooleans, Boolean.FALSE);
 		OperationCallExp asImplies = (OperationCallExp) ocl.createTestModel("ImpliesVariableGuard",
 				"x <> null implies x.toString() <> null");
 		OperationCallExp asSource = (OperationCallExp) PivotUtil.getOwnedSource(asImplies);
@@ -217,6 +219,7 @@ public class FlowAnalysisTests extends XtextTestCase
 
 	public void testFlowAnalysis_ImpliesVariableGuard() throws Exception {
 		MyOCL ocl = new MyOCL();
+		ocl.getEnvironmentFactory().setOption(PivotValidationOptions.EnforceStrictBooleans, Boolean.FALSE);
 		LetExp asLetExp = (LetExp) ocl.createTestModel("ImpliesGuard",
 				"let v : Integer[?] = x in v <> null implies v.toString() <> null");
 		OperationCallExp asImplies = (OperationCallExp) PivotUtil.getOwnedIn(asLetExp);
@@ -277,6 +280,7 @@ public class FlowAnalysisTests extends XtextTestCase
 	public void testFlowAnalysis_DoubleBiImpliesPropertyGuard() throws Exception {
 	//	SymbolicAnalysis.HYPOTHESIS.setState(true);
 		MyOCL ocl = new MyOCL();
+		ocl.getEnvironmentFactory().setOption(PivotValidationOptions.EnforceStrictBooleans, Boolean.FALSE);
 		OperationCallExp asImplies = (OperationCallExp) ocl.createTestModel("DoubleBiImpliesVariableGuard",
 				"((dummy <> null) and (dummy.dummy <> null)) implies ((dummy <> null) or (dummy.dummy <> null) or (dummy.dummy.dummy <> null))");
 		OperationCallExp asAnd12 = (OperationCallExp) PivotUtil.getOwnedSource(asImplies);

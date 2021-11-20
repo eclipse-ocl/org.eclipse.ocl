@@ -46,6 +46,15 @@ public class PivotValidationOptions
 		PivotPlugin.PLUGIN_ID, "optional.default.multiplicity", false); //$NON-NLS-1$
 
 	/**
+	 * Specify that Booleans should be strict, requiring term re-ordering if necessary and possible
+	 * or a validation failure otherwise.
+	 *
+	 * @since 1.17
+	 */
+	public static final @NonNull BooleanOption EnforceStrictBooleans = new BooleanOption(
+		PivotPlugin.PLUGIN_ID, "strict.boolrans", true); //$NON-NLS-1$
+
+	/**
 	 * Enable the symbolic evaluation that diagnoses whether each TypedElement can be invalid.
 	 *
 	 * @since 1.17

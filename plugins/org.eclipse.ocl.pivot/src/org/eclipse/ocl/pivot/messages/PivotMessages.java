@@ -61,6 +61,10 @@ public class PivotMessages
 	public static String NonFiniteIntegerValue;
 	public static String NonPositiveUnlimitedNaturalValue;
 	public static String NullNavigation;
+	/**
+	 * @since 1.17
+	 */
+	public static String StrictnessViolation;
 	public static String TypedResultRequired;
 	public static String TypedValueRequired;
 	public static String UndefinedBody;

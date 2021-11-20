@@ -63,8 +63,16 @@ public class PivotProjectPreferencePage extends AbstractProjectPreferencePage
 		horizontalLine.setFont(fieldEditorParent.getFont());
 		fields.add(new MyComboFieldEditor(PivotValidationOptions.EcoreValidation,
 				PivotUIMessages.Pivot_EcoreValidation, SEVERITY_MODES, fieldEditorParent));
+		fields.add(new MyComboFieldEditor(PivotValidationOptions.EnforceStrictBooleans,
+			PivotUIMessages.Pivot_EnforceStrictBooleans, BOOLEANS, fieldEditorParent,
+			"Navigations and operations in OCL are strict; most usage of anull or invalid input gives an invalid result.\n" +
+			"Boolean operations are not strict giving some surprising commutative behaviors for null and invalid.\n" +
+			"Strict Boolean operations give the familiar short-circuit semantocs of C or Java and return invalid if the\n" +
+			"first term is null or invalid, even if the second term could short-circuit. Most of incompatibility between the\n" +
+			"two approaches is avoided by re-ordering the terms so that a provably safe (not null or invalid) term\n" +
+			"is evaluated as the first term. If both terms are unsafe, a validation error diagnoses the residual incompatibility."));
 		fields.add(new MyComboFieldEditor(PivotValidationOptions.MissingSafeNavigation,
-				PivotUIMessages.Pivot_MissingSafeNavigation, SEVERITY_MODES, fieldEditorParent));
+			PivotUIMessages.Pivot_MissingSafeNavigation, SEVERITY_MODES, fieldEditorParent));
 		fields.add(new MyComboFieldEditor(PivotValidationOptions.OptionalDefaultMultiplicity,
 				PivotUIMessages.Pivot_OptionalDefaultMultiplicity, BOOLEANS, fieldEditorParent,
 				"In UML, the default multiplicity for a TypedElement such as an Operation, Parameter or Property is [1],\n" +

@@ -72,10 +72,14 @@ public class UnsupportedOperation extends AbstractOperation implements LibraryPr
 
 	@Override
 	public @NonNull SymbolicValue symbolicEvaluate(@NonNull SymbolicEvaluationEnvironment evaluationEnvironment,@NonNull OperationCallExp callExp) {
+		SymbolicReason resultMayBeInvalidReason = null;
 		SymbolicReason resultMayBeNullReason = null;
-		if (callExp.isIsRequired()) {
+		if (!callExp.isIsRequired()) {
 			resultMayBeNullReason = SymbolicUtil.mayBeNullReason(new SymbolicSimpleReason("may-be=null-return"), callExp);
 		}
-		return evaluationEnvironment.getUnknownValue(callExp, resultMayBeNullReason, null);
+		if (callExp.getReferredOperation().isIsInvalidating()) {
+			resultMayBeInvalidReason = SymbolicUtil.mayBeInvalidReason(new SymbolicSimpleReason("may-be=invalid-return"), callExp);
+		}
+		return evaluationEnvironment.getUnknownValue(callExp, resultMayBeNullReason, resultMayBeInvalidReason);
 	}
 }

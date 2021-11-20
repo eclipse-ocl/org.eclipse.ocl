@@ -1023,11 +1023,23 @@
         <filter id="336658481">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.messages.PivotMessages"/>
+                <message_argument value="StrictnessViolation"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.messages.PivotMessages"/>
                 <message_argument value="ValidationConstraintIsNotSatisfiedWithReason_ERROR_"/>
             </message_arguments>
         </filter>
     </resource>
     <resource path="src/org/eclipse/ocl/pivot/options/PivotValidationOptions.java" type="org.eclipse.ocl.pivot.options.PivotValidationOptions">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.options.PivotValidationOptions"/>
+                <message_argument value="EnforceStrictBooleans"/>
+            </message_arguments>
+        </filter>
         <filter id="336658481">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.options.PivotValidationOptions"/>

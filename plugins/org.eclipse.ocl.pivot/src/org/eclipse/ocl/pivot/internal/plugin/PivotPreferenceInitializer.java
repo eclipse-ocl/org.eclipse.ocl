@@ -23,6 +23,7 @@ public class PivotPreferenceInitializer extends AnnotatedPreferenceInitializer
 	public void initializeDefaultPreferences() {
 		putPreference(PivotConsoleOptions.ConsoleModeltypesInformation);
 		putPreference(PivotValidationOptions.EcoreValidation);
+		putPreference(PivotValidationOptions.EnforceStrictBooleans);
 		putPreference(PivotValidationOptions.MissingSafeNavigation);
 		putPreference(PivotValidationOptions.OptionalDefaultMultiplicity);
 		putPreference(PivotValidationOptions.PotentialInvalidResult);

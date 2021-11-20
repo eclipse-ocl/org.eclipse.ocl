@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.junit.After;
 import org.junit.Before;
@@ -78,8 +79,7 @@ public class EvaluateBooleanOperationsTest4 extends PivotTestSuite
 
 	@Test public void testBooleanAnd() {
 		TestOCL ocl = createOCL();
-		ocl.assertQueryFalseUsingInvalid(null, "let a : Boolean = invalid in a and false");		// Requires post-parse symbolic analysis argument reversal
-//XXX
+		//
 		org.eclipse.ocl.pivot.Class classType = ocl.getStandardLibrary().getClassType();
 		ocl.assertQueryFalse(null, "false and false");
 		ocl.assertQueryFalse(null, "false and true");
@@ -90,7 +90,8 @@ public class EvaluateBooleanOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryInvalid(null, "let b : Boolean = invalid in true and b");
 		ocl.assertQueryFalseUsingInvalid(null, "let a : Boolean = invalid in a and false");		// Requires post-parse symbolic analysis argument reversal
 		ocl.assertQueryInvalid(null, "let a : Boolean = invalid in a and true");
-		ocl.assertQueryInvalid(null, "let a : Boolean = invalid, b : Boolean = invalid in a and b");
+		ocl.assertSemanticErrorQuery(null, "invalid and invalid", PivotMessages.StrictnessViolation, "and");
+		ocl.assertSemanticErrorQuery(null, "let a : Boolean = invalid, b : Boolean = invalid in a and b", PivotMessages.StrictnessViolation, "and");
 		// null
 		ocl.assertQueryFalse(null, "let b : Boolean = null in false and b");
 		ocl.assertQueryInvalid(null, "let b : Boolean = null in true and b");
@@ -176,15 +177,16 @@ public class EvaluateBooleanOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryTrueUsingInvalid(null, "let b : Boolean = invalid in false implies b");
 		ocl.assertQueryInvalid(null, "let b : Boolean = invalid in true implies b");
 		ocl.assertQueryInvalid(null, "let a : Boolean = invalid in a implies false");
-		ocl.assertQueryInvalid(null, "let a : Boolean = invalid in a implies true");
-		ocl.assertQueryInvalid(null, "let a : Boolean = invalid, b : Boolean = invalid in a implies b");
+		ocl.assertQueryTrueUsingInvalid(null, "let a : Boolean = invalid in a implies true");
+		ocl.assertSemanticErrorQuery(null, "invalid implies invalid", PivotMessages.StrictnessViolation, "implies");
+		ocl.assertSemanticErrorQuery(null, "let a : Boolean = invalid, b : Boolean = invalid in a implies b", PivotMessages.StrictnessViolation, "implies");
 		// null
 		ocl.assertQueryTrue(null, "let b : Boolean = null in false implies b");
 		ocl.assertQueryInvalid(null, "let b : Boolean = null in true implies b");
 		ocl.assertQueryInvalid(null, "let a : Boolean = null, b : Boolean = invalid in a implies b");
 		ocl.assertQueryInvalid(null, "let a : Boolean = null in a implies Sequence{true}->at(0)");
 		ocl.assertQueryInvalid(null, "let a : Boolean = null in a implies false");
-		ocl.assertQueryInvalid(null, "let a : Boolean = null in a implies true");
+		ocl.assertQueryTrue(null, "let a : Boolean = null in a implies true");
 		ocl.assertQueryInvalid(null, "let a : Boolean = null, b : Boolean = null in a implies b");
 		ocl.assertQueryInvalid(null, "let a : Boolean = invalid, b : Boolean = null in a implies b");
 		ocl.assertQueryInvalid(null, "let b : Boolean = null in Sequence{true}->at(0) implies b");
@@ -282,9 +284,7 @@ public class EvaluateBooleanOperationsTest4 extends PivotTestSuite
 	@Test public void testBooleanOr() {
 		TestOCL ocl = createOCL();
 		org.eclipse.ocl.pivot.Class classType = ocl.getStandardLibrary().getClassType();
-		ocl.assertQueryTrueUsingInvalid(null, "let a : Boolean = invalid in a or true");
-//		ocl.assertQueryTrueUsingInvalid(null, "invalid or true");
-// XXX		//
+		//
 		ocl.assertQueryFalse(null, "false or false");
 		ocl.assertQueryTrue(null, "false or true");
 		ocl.assertQueryTrue(null, "true or false");
@@ -294,7 +294,8 @@ public class EvaluateBooleanOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryTrueUsingInvalid(null, "let b : Boolean = invalid in true or b");
 		ocl.assertQueryInvalid(null, "let a : Boolean = invalid in a or false");
 		ocl.assertQueryTrueUsingInvalid(null, "let a : Boolean = invalid in a or true");
-		ocl.assertQueryInvalid(null, "let a : Boolean = invalid, b : Boolean = invalid in a or b");
+		ocl.assertSemanticErrorQuery(null, "invalid or invalid", PivotMessages.StrictnessViolation, "or");
+		ocl.assertSemanticErrorQuery(null, "let a : Boolean = invalid, b : Boolean = invalid in a or b", PivotMessages.StrictnessViolation, "or");
 		// null
 		ocl.assertQueryInvalid(null, "let b : Boolean = null in false or b");
 		ocl.assertQueryTrue(null, "let b : Boolean = null in true or b");
