@@ -21,6 +21,7 @@ import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.SelfType;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
@@ -101,7 +102,7 @@ public abstract class AbstractSymbolicEvaluationEnvironment implements SymbolicE
 			actualType = SymbolicUtil.getType(symbolicValue, standardLibrary);
 		}
 		Type requiredType = PivotUtil.getType(callTerm);
-		if (requiredType == standardLibrary.getOclSelfType()) {
+		if (requiredType instanceof SelfType) {
 			requiredType = PivotUtil.getOwningClass(PivotUtil.getReferredOperation(callExp));
 		}
 		CompleteClass actualClass = completeModel.getCompleteClass(PivotUtil.getBehavioralType(actualType));
