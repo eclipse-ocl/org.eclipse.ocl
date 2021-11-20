@@ -20,6 +20,7 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
 /**
  * OclVoidAndOperation realises the OclVoid::and() library operation.
  */
+@Deprecated /* @deprecated Folded into BooleanAndOperation */
 public class OclVoidAndOperation extends AbstractSimpleBinaryOperation
 {
 	public static final @NonNull OclVoidAndOperation INSTANCE = new OclVoidAndOperation();

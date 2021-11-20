@@ -1248,10 +1248,10 @@ abstract type OclVoid : VoidType conformsTo OclAny {
 	The concatenation of oclText[null] and s.
 	**/
 	operation "+"(s : String[?]) : String[1] precedence=ADDITIVE => 'org.eclipse.ocl.pivot.library.string.StringConcatOperation';
-	operation and(b : Boolean[?]) : Boolean[?] validating invalidating precedence=AND => 'org.eclipse.ocl.pivot.library.oclvoid.OclVoidAndOperation';
-	operation implies(b : Boolean[?]) : Boolean[?] validating invalidating precedence=IMPLIES => 'org.eclipse.ocl.pivot.library.oclvoid.OclVoidImpliesOperation';
+	operation and(b : Boolean[?]) : Boolean[?] validating invalidating precedence=AND => 'org.eclipse.ocl.pivot.library.logical.BooleanAndOperation';
+	operation implies(b : Boolean[?]) : Boolean[?] validating invalidating precedence=IMPLIES => 'org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation';
 	operation not() : Boolean[?] validating invalidating precedence=UNARY => 'org.eclipse.ocl.pivot.library.logical.BooleanNotOperation';
-	operation or(b : Boolean[?]) : Boolean[?] validating invalidating precedence=OR => 'org.eclipse.ocl.pivot.library.oclvoid.OclVoidOrOperation';
+	operation or(b : Boolean[?]) : Boolean[?] validating invalidating precedence=OR => 'org.eclipse.ocl.pivot.library.logical.BooleanOrOperation';
 	operation xor(b : Boolean[?]) : Boolean[?] precedence=XOR => 'org.eclipse.ocl.pivot.library.logical.BooleanXorOperation';
 	operation oclAsSet() : Set(OclSelf[0..0|1]) => 'org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation';
 	operation oclAsType(TT)(type : typeof(TT)[1]) : TT[?] invalidating => 'org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation';

@@ -1529,7 +1529,7 @@
           name="allInstances" type="#PRF4+">
         <ownedComments body="Returns oclText[Set{null}]."/>
       </ownedOperations>
-      <ownedOperations xmi:id="QtFRO" implementationClass="org.eclipse.ocl.pivot.library.oclvoid.OclVoidAndOperation" isInvalidating="true"
+      <ownedOperations xmi:id="QtFRO" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanAndOperation" isInvalidating="true"
           isRequired="false" isValidating="true" name="and" precedence="#VT87C" type="#XEMMs">
         <ownedParameters isRequired="false" name="b" type="#XEMMs"/>
       </ownedOperations>
@@ -1537,7 +1537,7 @@
         <ownedComments body="The concatenation of oclText[null] and s.&#xA;"/>
         <ownedParameters isRequired="false" name="s" type="#AlwVZ"/>
       </ownedOperations>
-      <ownedOperations xmi:id="wImDB" implementationClass="org.eclipse.ocl.pivot.library.oclvoid.OclVoidImpliesOperation" isInvalidating="true"
+      <ownedOperations xmi:id="wImDB" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation" isInvalidating="true"
           isRequired="false" isValidating="true" name="implies" precedence="#1Odhg" type="#XEMMs">
         <ownedParameters isRequired="false" name="b" type="#XEMMs"/>
       </ownedOperations>
@@ -1568,7 +1568,7 @@
           name="oclType" type="#zlfMH"/>
       <ownedOperations xmi:id="FF3Q3" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypesOperation" name="oclTypes"
           type="#PRF4+"/>
-      <ownedOperations xmi:id="c9uQO" implementationClass="org.eclipse.ocl.pivot.library.oclvoid.OclVoidOrOperation" isInvalidating="true"
+      <ownedOperations xmi:id="c9uQO" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanOrOperation" isInvalidating="true"
           isRequired="false" isValidating="true" name="or" precedence="#BEt7C" type="#XEMMs">
         <ownedParameters isRequired="false" name="b" type="#XEMMs"/>
       </ownedOperations>

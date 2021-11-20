@@ -17,6 +17,7 @@ import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
 /**
  * OclVoidOrOperation realises the OclVoid::or() library operation.
  */
+@Deprecated /* @deprecated Folded into BooleanOrOperation */
 public class OclVoidOrOperation extends AbstractSimpleBinaryOperation
 {
 	public static final @NonNull OclVoidOrOperation INSTANCE = new OclVoidOrOperation();

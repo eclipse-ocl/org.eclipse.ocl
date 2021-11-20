@@ -17,6 +17,7 @@ import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
 /**
  * OclVoidImpliesOperation realises the OclVoid::implies() library operation.
  */
+@Deprecated /* @deprecated Folded into BooleanImpliesOperation */
 public class OclVoidImpliesOperation extends AbstractSimpleBinaryOperation
 {
 	public static final @NonNull OclVoidImpliesOperation INSTANCE = new OclVoidImpliesOperation();
