@@ -254,7 +254,7 @@ implements TypedElement {
 	 * The then/else arguments of an if, or short-circuited boolean arguments are transitively handled.
 	 * @param symbolicAnalysis
 	 */
-	private boolean invalidIsComputable(@NonNull SymbolicAnalysis symbolicAnalysis) {
+	private boolean invalidIsComputable(@NonNull SymbolicAnalysis symbolicAnalysis) {		// XXX Is this needed
 		for (EObject eObject = this, eContainer; (eContainer = eObject.eContainer()) != null; eObject = eContainer) {
 			SymbolicValue symbolicValue = eObject instanceof TypedElement ? symbolicAnalysis.getSymbolicValue((TypedElement)eObject) : null;
 			SymbolicValue symbolicContainerValue = eContainer instanceof TypedElement ? symbolicAnalysis.getSymbolicValue((TypedElement)eContainer) : null;
@@ -323,6 +323,9 @@ implements TypedElement {
 	{
 		ExpressionInOCL expressionInOCL = PivotUtil.getContainingExpressionInOCL(this);
 		if (expressionInOCL == null) {		// e.g. Operation / Property
+			return null;
+		}
+		if ((expressionInOCL.getBody() == null) && (expressionInOCL.getOwnedBody() == null)) {		// name-only Constraint
 			return null;
 		}
 		Executor executor = PivotUtil.getExecutor(this);
