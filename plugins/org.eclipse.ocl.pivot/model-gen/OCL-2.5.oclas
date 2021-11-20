@@ -1389,7 +1389,7 @@
           name="oclIsUndefined" type="#XEMMs"/>
       <ownedOperations xmi:id="dncW5" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypeOperation" isTypeof="true"
           name="oclType" type="#zlfMH"/>
-      <ownedOperations xmi:id="D3wSu" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanAndOperation" isRequired="false"
+      <ownedOperations xmi:id="D3wSu" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanOrOperation" isRequired="false"
           isValidating="true" name="or" precedence="#BEt7C" type="#XEMMs">
         <ownedParameters isRequired="false" name="b" type="#XEMMs"/>
       </ownedOperations>
@@ -1754,7 +1754,7 @@
               </ownedBody>
               <ownedIterators xsi:type="pivot:IteratorVariable" xmi:id="ZZk,E" name="index" representedParameter="#HfeAP" type="#tYtCd"/>
               <ownedSource xsi:type="pivot:CollectionLiteralExp" kind="Sequence" type="#dhqjr">
-                <ownedParts xsi:type="pivot:CollectionRange" type="#tYtCd">
+                <ownedParts xsi:type="pivot:CollectionRange" type="#dhqjr">
                   <ownedFirst xsi:type="pivot:IntegerLiteralExp" integerSymbol="1" type="#tYtCd"/>
                   <ownedLast xsi:type="pivot:OperationCallExp" name="size" referredOperation="#eYPCX" type="#tYtCd">
                     <ownedSource xsi:type="pivot:VariableExp" name="self" referredVariable="#iYk,b" type="#fIXUp"/>
