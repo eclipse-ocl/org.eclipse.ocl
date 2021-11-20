@@ -63,21 +63,29 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.internal.context.AbstractBase2ASConversion;
+import org.eclipse.ocl.pivot.internal.evaluation.SymbolicAnalysis;
+import org.eclipse.ocl.pivot.internal.manager.PivotExecutorManager;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeFilter;
 import org.eclipse.ocl.pivot.internal.utilities.IllegalLibraryException;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.library.LibraryFeature;
+import org.eclipse.ocl.pivot.library.logical.BooleanAndOperation;
+import org.eclipse.ocl.pivot.library.logical.BooleanOrOperation;
 import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MorePivotable;
+import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
+import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.SymbolicValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 import org.eclipse.ocl.xtext.base.cs2as.BaseCSPreOrderVisitor.OperatorExpContinuation;
 import org.eclipse.ocl.xtext.base.cs2as.BaseCSPreOrderVisitor.TemplateSignatureContinuation;
@@ -1476,6 +1484,45 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		boolean hasNoMoreErrors = checkForNoErrors(csResource);
 		if (!hasNoMoreErrors) {
 			return false;
+		}
+		//
+		//	Optimize/rewrite
+		//
+		assert asResource != null;
+		for (@NonNull EObject eObject : new TreeIterable(asResource)) {	// Chage to postorder rewrite visitpr
+			if (eObject instanceof OperationCallExp) {
+				OperationCallExp operationCallExp = (OperationCallExp)eObject;
+				Operation referredOperation = operationCallExp.getReferredOperation();
+				LibraryFeature implementation = referredOperation.getImplementation();
+				if ((implementation instanceof BooleanAndOperation) /*|| (implementation instanceof BooleanImpliesOperation)*/ || (implementation instanceof BooleanOrOperation)) {
+					ExpressionInOCL expressionInOCL = PivotUtil.getContainingExpressionInOCL(operationCallExp);
+					assert expressionInOCL != null;
+					PivotExecutorManager executor = new PivotExecutorManager(environmentFactory, operationCallExp);
+					try {
+						SymbolicAnalysis symbolicAnalysis = executor.getSymbolicAnalysis(expressionInOCL);
+						OCLExpression left = PivotUtil.getOwnedSource(operationCallExp);
+						OCLExpression right = PivotUtil.getOwnedArgument(operationCallExp, 0);
+						SymbolicValue leftSymbolicValue = symbolicAnalysis.getSymbolicValue(left);
+						SymbolicValue rightSymbolicValue = symbolicAnalysis.getSymbolicValue(right);
+						boolean hazardousLeft = !leftSymbolicValue.getInvalidStatus().isUnsatisfied() || !leftSymbolicValue.getInvalidStatus().isUnsatisfied();		// Leapfrog Dead
+						boolean hazardousRight = !rightSymbolicValue.getInvalidStatus().isUnsatisfied() || !rightSymbolicValue.getInvalidStatus().isUnsatisfied();	// Leapfrog Dead
+						if (hazardousLeft) {
+							if (hazardousRight) {
+								// error
+							}
+							else {
+								PivotUtilInternal.resetContainer(left);
+								PivotUtilInternal.resetContainer(right);
+								operationCallExp.setOwnedSource(right);
+								operationCallExp.getOwnedArguments().add(left);
+							}
+						}
+					} catch (ParserException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
 		}
 		//
 		//	Prune obsolete packages
