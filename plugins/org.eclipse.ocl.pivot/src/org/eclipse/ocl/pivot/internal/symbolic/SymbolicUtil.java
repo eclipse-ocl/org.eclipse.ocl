@@ -39,6 +39,7 @@ import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.internal.PrimitiveTypeImpl;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.SymbolicValue;
 import org.eclipse.ocl.pivot.values.Value;
 
@@ -100,7 +101,11 @@ public class SymbolicUtil
 		if (value == null) {
 			return null;
 		}
-		else if ((value instanceof Value) && ((Value)value).mayBeInvalid()) {
+		else if (value instanceof InvalidValueException) {
+			String message = ((InvalidValueException)value).getMessage();
+			return message != null ? new SymbolicSimpleReason(message) : SymbolicSimpleReason.MAY_BE_INVALID_VALUE;		// FIXME cache ???
+		}
+		else if ((value instanceof Value) && ((Value)value).mayBeInvalid()) {		// FIXME redundant
 			return SymbolicSimpleReason.MAY_BE_INVALID_VALUE;
 		}
 		return null;

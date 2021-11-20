@@ -433,21 +433,24 @@ public abstract class SymbolicAnalysis /*extends BasicOCLExecutor implements Sym
 			if (symbolicKnownValue == null) {
 				Type type = environmentFactory.getIdResolver().getStaticTypeOfValue(null, boxedValue);
 				String constantName = createConstantName();
-				SymbolicContent content = null;
 				if (boxedValue instanceof InvalidValue) {
+					symbolicKnownValue = new SymbolicKnownValue(constantName, type, boxedValue, null);
 				}
-				else if (boxedValue instanceof CollectionValue) {
-					CollectionValue collectionValue = (CollectionValue)boxedValue;
-					content = new SymbolicCollectionContent("c#" + constantName + "%", (CollectionType)type, collectionValue);
-					content.setSize(getKnownValue(collectionValue.isEmpty() ? ValueUtil.ZERO_VALUE : ValueUtil.ONE_VALUE));
+				else {
+					SymbolicContent content = null;
+					if (boxedValue instanceof CollectionValue) {
+						CollectionValue collectionValue = (CollectionValue)boxedValue;
+						content = new SymbolicCollectionContent("c#" + constantName + "%", (CollectionType)type, collectionValue);
+						content.setSize(getKnownValue(collectionValue.isEmpty() ? ValueUtil.ZERO_VALUE : ValueUtil.ONE_VALUE));
+					}
+					else if (boxedValue instanceof MapValue) {
+						MapValue mapValue = (MapValue)boxedValue;
+					//	TypeId typeId = type.getTypeId();
+						content = new SymbolicMapContent("m#" + constantName + "%", (MapType)type, mapValue);
+						content.setSize(getKnownValue(((MapValue)boxedValue).isEmpty() ? ValueUtil.ZERO_VALUE : ValueUtil.ONE_VALUE));
+					}
+					symbolicKnownValue = new SymbolicKnownValue(constantName, type, boxedValue, content);
 				}
-				else if (boxedValue instanceof MapValue) {
-					MapValue mapValue = (MapValue)boxedValue;
-				//	TypeId typeId = type.getTypeId();
-					content = new SymbolicMapContent("m#" + constantName + "%", (MapType)type, mapValue);
-					content.setSize(getKnownValue(((MapValue)boxedValue).isEmpty() ? ValueUtil.ZERO_VALUE : ValueUtil.ONE_VALUE));
-				}
-				symbolicKnownValue = new SymbolicKnownValue(constantName, type, boxedValue, content);
 				knownValue2symbolicValue.put(boxedValue, symbolicKnownValue);
 			}
 		}
