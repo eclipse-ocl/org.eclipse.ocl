@@ -181,17 +181,16 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 	}
 
 	/**
-	 * Install the control path constraints that ensure that typedElement is executable as part of the hypothesis.
+	 * Accumulate all TYedElements that may need re-evaluation as a consequence of typedElement's value being refined.
+	 * The containers of typedElement's are returmed and transitively the containers of all variablle references.
 	 */
 	private void gatherAffectedTypedElements(@NonNull Set<@NonNull TypedElement> affectedExpressions, @NonNull TypedElement typedElement) {
-		if (typedElement instanceof VariableDeclaration) {
-			VariableDeclaration variable = (VariableDeclaration)typedElement;
-			if (affectedExpressions.add(variable)) {
-				EObject eContainer = variable.eContainer();
-				if ((eContainer instanceof OCLExpression) || (eContainer instanceof ExpressionInOCL) || (eContainer instanceof VariableDeclaration)) {
-					assert eContainer != null;
-					gatherAffectedTypedElements(affectedExpressions, (TypedElement)eContainer);
-				}
+		if (affectedExpressions.add(typedElement) && !(typedElement instanceof ExpressionInOCL)) {
+			EObject eContainer = typedElement.eContainer();
+			if (eContainer instanceof TypedElement) {
+				gatherAffectedTypedElements(affectedExpressions, (TypedElement)eContainer);
+			}
+			if (typedElement instanceof VariableDeclaration) {
 				CSEElement variableCSE = symbolicAnalysis.getCSEElement(typedElement);
 				for (@NonNull Element element : variableCSE.getElements()) {
 					if (element instanceof VariableExp) {
@@ -199,31 +198,6 @@ public class BaseSymbolicEvaluationEnvironment extends AbstractSymbolicEvaluatio
 					}
 				}
 			}
-		}
-		else if (typedElement instanceof VariableExp) {
-			OCLExpression expression = (VariableExp)typedElement;
-			EObject eContainer = expression.eContainer();
-			if ((eContainer instanceof OCLExpression) || (eContainer instanceof ExpressionInOCL) || (eContainer instanceof VariableDeclaration)) {
-				assert eContainer != null;
-				gatherAffectedTypedElements(affectedExpressions, (TypedElement)eContainer);
-			}
-		}
-		else if (typedElement instanceof OCLExpression) {
-			OCLExpression expression = (OCLExpression)typedElement;
-			if (affectedExpressions.add(expression) ) {
-				EObject eContainer = expression.eContainer();
-				if ((eContainer instanceof OCLExpression) || (eContainer instanceof ExpressionInOCL) || (eContainer instanceof VariableDeclaration)) {
-					assert eContainer != null;
-					gatherAffectedTypedElements(affectedExpressions, (TypedElement)eContainer);
-				}
-			}
-		}
-		else if (typedElement instanceof ExpressionInOCL) {
-			ExpressionInOCL expression = (ExpressionInOCL)typedElement;
-			affectedExpressions.add(expression);
-		}
-		else {
-			throw new UnsupportedOperationException();
 		}
 	}
 

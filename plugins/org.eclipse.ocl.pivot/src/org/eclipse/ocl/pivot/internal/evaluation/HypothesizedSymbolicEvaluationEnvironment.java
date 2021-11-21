@@ -23,7 +23,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.IfExp;
 import org.eclipse.ocl.pivot.IterateExp;
-import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LetExp;
 import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.NavigationCallExp;
@@ -126,10 +125,7 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 		for (@NonNull TypedElement activeTypedElement : activeTypedElements) {
 			CSEElement activeCSEElement = cseAnalysis.getCSEElement(activeTypedElement);
 			if (reevaluatedCSEElements.add(activeCSEElement)) {
-				String incompatibility = symbolicReEvaluate(activeTypedElement);
-			//	if (incompatibility != null) {
-			//		return incompatibility;
-			//	}
+				symbolicReEvaluate(activeTypedElement);
 			}
 		}
 	/*	Set<@NonNull TypedElement> typedElementsSet = new HashSet<>();
@@ -394,7 +390,7 @@ public class HypothesizedSymbolicEvaluationEnvironment extends AbstractSymbolicE
 	}
 
 	private @Nullable String installLoopExpPathConstraints(@NonNull TypedElement activeTypedElement, @NonNull LoopExp loopExp) {
-		Iteration iteration = PivotUtil.getReferredIteration(loopExp);
+	//	Iteration iteration = PivotUtil.getReferredIteration(loopExp);
 	//	assert !iteration.isIsValidating();		// XXX FIXME forAll isValidating
 		@Nullable String incompatibility = null;
 		@NonNull OCLExpression ownedSource = PivotUtil.getOwnedSource(loopExp);
