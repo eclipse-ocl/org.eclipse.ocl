@@ -46,6 +46,7 @@ import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotFactory;
+import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
@@ -130,7 +131,9 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 		if (pivotElement == null) {
 			return this;
 		}
-		doCompareToOperation(pivotElement, eDataType);
+		if (!(pivotElement instanceof PrimitiveType)) {
+			doCompareToOperation(pivotElement, eDataType);
+		}
 		return pivotElement;
 	}
 

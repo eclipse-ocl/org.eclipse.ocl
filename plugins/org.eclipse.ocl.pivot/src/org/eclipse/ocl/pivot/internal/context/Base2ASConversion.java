@@ -19,12 +19,17 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.utilities.PivotHelper;
 
 public interface Base2ASConversion
 {
+	/**
+	 * @since 1.17
+	 */
+	@NonNull PivotHelper getHelper();
 	void setContextVariable(@NonNull ExpressionInOCL pivotSpecification, @NonNull String selfVariableName, @Nullable Type contextType, @Nullable Type contextInstance);
 	void setClassifierContext(@NonNull ExpressionInOCL pivotSpecification, @NonNull Type contextType);
-	void setParameterVariables(@NonNull ExpressionInOCL pivotSpecification, @NonNull List<Parameter> parameters);
+	void setParameterVariables(@NonNull ExpressionInOCL pivotSpecification, @NonNull List<Parameter> operationParameterVariables);
 	void setParameterVariables(@NonNull ExpressionInOCL pivotSpecification, @NonNull Map<String, Type> parameters);
 	void setResultVariable(@NonNull ExpressionInOCL pivotSpecification, @NonNull Operation contextOperation, @NonNull String resultName);
 }

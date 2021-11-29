@@ -342,15 +342,12 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 				PivotMetamodelManager metamodelManager = converter.getMetamodelManager();
 				StandardLibraryInternal standardLibrary = metamodelManager.getStandardLibrary();
 				PrimitiveType behavioralClass = standardLibrary.getBehavioralClass(instanceClass);
-				if (behavioralClass != null) {
-					pivotElement.setBehavioralClass(behavioralClass);
-				}
-				else {
+				if (behavioralClass == null) {
 					instanceClass.getDeclaredMethod("compareTo", instanceClass);
-					converter.queueReference(eDataType);			// Defer synthesis till supertypes resolved
 				}
 			} catch (Exception e) {
 			}
+			converter.queueReference(eDataType);			// Defer synthesis till supertypes resolved
 		}
 		return pivotElement;
 	}

@@ -222,14 +222,12 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 		for (Property part : parts) {
 			if (part != null) {
 				Type propertyType = PivotUtilInternal.getType(part);
-				if (propertyType != null) {
-					Type resolvedPropertyType = specializeType(propertyType);
-					if (resolvedPropertyType != propertyType) {
-						if (resolutions == null) {
-							resolutions = new HashMap<String, Type>();
-						}
-						resolutions.put(NameUtil.getSafeName(part), resolvedPropertyType);
+				Type resolvedPropertyType = specializeType(propertyType);
+				if (resolvedPropertyType != propertyType) {
+					if (resolutions == null) {
+						resolutions = new HashMap<String, Type>();
 					}
+					resolutions.put(NameUtil.getSafeName(part), resolvedPropertyType);
 				}
 			}
 		}

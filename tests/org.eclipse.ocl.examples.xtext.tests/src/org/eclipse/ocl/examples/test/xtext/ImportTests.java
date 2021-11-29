@@ -154,7 +154,7 @@ public class ImportTests extends XtextTestCase
 						"endpackage\n";
 		Bag<String> bag = new BagImpl<String>();
 		bag.add(StringUtil.bind(PivotMessagesInternal.UnresolvedOperation_ERROR_, "String", "toString"));
-		bag.add(StringUtil.bind(PivotMessagesInternal.UnresolvedOperation_ERROR_, "Real", "toString"));
+		bag.add(StringUtil.bind(PivotMessagesInternal.UnresolvedOperation_ERROR_, "ecore::EDouble", "toString"));
 		// There are no precedences so =(s) rather than =(s.toString())
 		bag.add(StringUtil.bind(PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "OclInvalid", "and", "OclInvalid"));
 		doBadLoadFromString(ocl, "string.ocl", testFile, bag);
@@ -182,7 +182,7 @@ public class ImportTests extends XtextTestCase
 						"inv Standard_Real_ToString_DoesNotExist: r.toString()\n" +
 						"endpackage\n";
 		Bag<String> bag = new BagImpl<String>();
-		bag.add(StringUtil.bind(PivotMessagesInternal.UnresolvedOperation_ERROR_, "Real", "toString"));
+		bag.add(StringUtil.bind(PivotMessagesInternal.UnresolvedOperation_ERROR_, "ecore::EDouble", "toString"));
 		doBadLoadFromString(ocl, "string.ocl", testFile, bag);
 		ocl.dispose();
 	}

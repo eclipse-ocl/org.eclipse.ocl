@@ -42,6 +42,7 @@ import org.eclipse.ocl.examples.codegen.java.JavaImportNameManager;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Constraint;
+import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.LambdaType;
@@ -484,6 +485,18 @@ public class OCLinEcoreTablesUtils
 			type.getElementType().accept(this);
 			s.append(")");
 			return null;
+		}
+
+		@Override
+		public Object visitDataType(@NonNull DataType type) {
+			org.eclipse.ocl.pivot.Package dataTypePackage = PivotUtil.getContainingPackage(type);
+			if (dataTypePackage != asPackage) {
+				Type behavioralClass = type.getBehavioralClass();
+				if (behavioralClass != null) {
+					return behavioralClass.accept(this);				// Bug 577563 workaround to Avoid referencing potentially non-existing EcoreTables
+				}
+			}
+			return super.visitDataType(type);
 		}
 
 		@Override

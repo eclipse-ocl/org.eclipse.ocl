@@ -575,6 +575,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		return converter;
 	}
 
+	@Override
 	public final @NonNull PivotHelper getHelper() {
 		return converter.getHelper();
 	}
@@ -976,26 +977,26 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 				if (contextType != null) {
 					setClassifierContext(pivotSpecification, contextType);
 				}
-				setContextVariable(pivotSpecification, PivotConstants.SELF_NAME, contextType, null);
+				getHelper().setContextVariable(pivotSpecification, PivotConstants.SELF_NAME, contextType, null);
 			}
 			else if (eContainingFeature == PivotPackage.Literals.OPERATION__OWNED_PRECONDITIONS) {
 				Operation contextOperation = (Operation)eContainer;
 				if (contextOperation != null) {
-					setContextVariable(pivotSpecification, PivotConstants.SELF_NAME, contextOperation.getOwningClass(), null);
+					getHelper().setContextVariable(pivotSpecification, PivotConstants.SELF_NAME, contextOperation.getOwningClass(), null);
 					setOperationContext(pivotSpecification, contextOperation, null);
 				}
 				else {
-					setContextVariable(pivotSpecification, PivotConstants.SELF_NAME, null, null);
+					getHelper().setContextVariable(pivotSpecification, PivotConstants.SELF_NAME, null, null);
 				}
 			}
 			else if (eContainingFeature == PivotPackage.Literals.OPERATION__OWNED_POSTCONDITIONS) {
 				Operation contextOperation = (Operation)eContainer;
 				if (contextOperation != null) {
-					setContextVariable(pivotSpecification, PivotConstants.SELF_NAME, contextOperation.getOwningClass(), null);
+					getHelper().setContextVariable(pivotSpecification, PivotConstants.SELF_NAME, contextOperation.getOwningClass(), null);
 					setOperationContext(pivotSpecification, contextOperation, PivotConstants.RESULT_NAME);
 				}
 				else {
-					setContextVariable(pivotSpecification, PivotConstants.SELF_NAME, null, null);
+					getHelper().setContextVariable(pivotSpecification, PivotConstants.SELF_NAME, null, null);
 				}
 			}
 			else {
@@ -1005,11 +1006,11 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		else if (eContainingFeature == PivotPackage.Literals.PROPERTY__OWNED_EXPRESSION) {
 			Property contextProperty = (Property)eContainer;
 			setPropertyContext(pivotSpecification, contextProperty);
-			setContextVariable(pivotSpecification, PivotConstants.SELF_NAME, contextProperty.getOwningClass(), null);
+			getHelper().setContextVariable(pivotSpecification, PivotConstants.SELF_NAME, contextProperty.getOwningClass(), null);
 		}
 		else if (eContainingFeature == PivotPackage.Literals.OPERATION__BODY_EXPRESSION) {
 			Operation contextOperation = (Operation)eContainer;
-			setContextVariable(pivotSpecification, PivotConstants.SELF_NAME, contextOperation.getOwningClass(), null);
+			getHelper().setContextVariable(pivotSpecification, PivotConstants.SELF_NAME, contextOperation.getOwningClass(), null);
 			setOperationContext(pivotSpecification, contextOperation, null);
 		}
 		else {
@@ -1044,16 +1045,16 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		return converter.refreshModelElement(pivotClass, pivotEClass, csElement);
 	}
 
-	/* @deprecated use PivotHelper.refreshName() */
-	@Override
+	/* @deprecated no longer used / use PivotHelper.refreshName() */
 	@Deprecated
+	@Override
 	public void refreshName(@NonNull NamedElement pivotNamedElement, @Nullable String newName) {
 		getHelper().refreshName(pivotNamedElement, newName);
 	}
 
-	/* @deprecated use PivotHelper.refreshNsURI() */
-	@Override
+	/* @deprecated no longer used / use PivotHelper.refreshNsURI() */
 	@Deprecated
+	@Override
 	public void refreshNsURI(org.eclipse.ocl.pivot.@NonNull Package pivotPackage, String newNsURI) {
 		getHelper().refreshNsURI(pivotPackage, newNsURI);
 	}
@@ -1151,9 +1152,9 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		}
 	}
 
-	/* @deprecated use PivotHelper.setBehavioralType() */
-	@Override
+	/* @deprecated no longer used / use PivotHelper.setBehavioralType() */
 	@Deprecated
+	@Override
 	public void setBehavioralType(@NonNull TypedElement targetElement, @NonNull TypedElement sourceElement) {
 		getHelper().setBehavioralType(targetElement, sourceElement);
 	}
@@ -1175,23 +1176,23 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		expression.setName(operation != null ? operation.getName() : null);
 	}
 
-	/* @deprecated use PivotHelper.setType() */
-	@Override
+	/* @deprecated no longer used / use PivotHelper.setType() */
 	@Deprecated
+	@Override
 	public void setType(@NonNull OCLExpression pivotElement, Type type, boolean isRequired, @Nullable Type typeValue) {
 		getHelper().setType(pivotElement, type, isRequired, typeValue);
 	}
 
-	/* @deprecated use PivotHelper.setType() */
-	@Override
+	/* @deprecated no longer used / use PivotHelper.setType() */
 	@Deprecated
+	@Override
 	public void setType(@NonNull VariableDeclaration pivotElement, Type type, boolean isRequired, @Nullable Type typeValue) {
 		getHelper().setType(pivotElement, type, isRequired, typeValue);
 	}
 
-	/* @deprecated use PivotHelper.setType() */
-	@Override
+	/* @deprecated no longer used / use PivotHelper.setType() */
 	@Deprecated
+	@Override
 	public void setType(@NonNull TypedElement pivotElement, Type type, boolean isRequired) {
 		getHelper().setType(pivotElement, type, isRequired);
 	}

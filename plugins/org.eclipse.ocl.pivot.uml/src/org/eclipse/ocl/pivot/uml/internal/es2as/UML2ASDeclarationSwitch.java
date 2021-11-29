@@ -70,7 +70,6 @@ import org.eclipse.ocl.pivot.Transition;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.IdManager;
-import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2ASDeclarationSwitch;
@@ -209,8 +208,6 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 		copyDataTypeOrEnum(pivotElement, umlDataType);
 		@SuppressWarnings("null") @NonNull List<org.eclipse.uml2.uml.Property> umlAttributes = umlDataType.getAttributes();
 		doSwitchAll(umlAttributes);
-		//		converter.addProperties(umlAttributes, null);
-		pivotElement.getSuperClasses().add(standardLibrary.getOclAnyType());
 		return pivotElement;
 	}
 
@@ -220,7 +217,6 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 		Enumeration pivotElement = converter.refreshNamedElement(Enumeration.class, PivotPackage.Literals.ENUMERATION, umlEnumeration);
 		copyDataTypeOrEnum(pivotElement, umlEnumeration);
 		doSwitchAll(pivotElement.getOwnedLiterals(), umlEnumeration.getOwnedLiterals(), null);
-		pivotElement.getSuperClasses().add(((StandardLibraryInternal.StandardLibraryExtension)standardLibrary).getOclEnumerationType());
 		return pivotElement;
 	}
 
@@ -384,13 +380,10 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 	@Override
 	public DataType casePrimitiveType(org.eclipse.uml2.uml.PrimitiveType umlPrimitiveType) {
 		assert umlPrimitiveType != null;
-		PrimitiveType asPrimitiveType = getPrimitiveTypeByName(umlPrimitiveType);
+		PrimitiveType asPrimitiveType = converter.getPrimitiveTypeByName(umlPrimitiveType);
 		if (asPrimitiveType == null) {
-			asPrimitiveType = getPrimitiveTypeByOCLStereotype(umlPrimitiveType);
+			asPrimitiveType = converter.getPrimitiveTypeByOCLStereotype(umlPrimitiveType);
 		}
-		//		if (pivotElement != null) {
-		//			converter.addCreated(umlPrimitiveType, pivotElement);
-		//		}
 		org.eclipse.uml2.uml.Stereotype ecoreStereotype = null;
 		DataType pivotElement;
 		if (asPrimitiveType == standardLibrary.getBooleanType()) {
@@ -420,33 +413,16 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 				pivotElement = converter.refreshNamedElement(PrimitiveType.class, PivotPackage.Literals.PRIMITIVE_TYPE, umlPrimitiveType);
 			}
 		}
-		if (asPrimitiveType != null) {
-			//			@SuppressWarnings("unused")TypeServer typeServer1 = metamodelManager.getTypeServer(asPrimitiveType);
-			//			@SuppressWarnings("unused")TypeServer typeServer2 = metamodelManager.getTypeServer(pivotElement);
-			//			pivotElement.setBehavioralClass(asPrimitiveType);
-			org.eclipse.uml2.uml.Package umlPackage = umlPrimitiveType.getPackage();
-			if (umlPackage != null) {
-				String nsURI = umlPackage.getURI();
-				if (nsURI != null) {
-					//					metamodelManager.getPackageManager().addPackageNsURISynonym(nsURI, PackageId.METAMODEL_NAME);
-				}
-			}
-		}
-		else {
-			//			System.out.println("unknown PrimitiveType " + umlPrimitiveType);
-		}
 		copyClassifier(pivotElement, umlPrimitiveType);
 		String instanceClassName = null;
-		PrimitiveType behavioralClass = asPrimitiveType;
 		if (ecoreStereotype != null) {
 			Object object = umlPrimitiveType.getValue(ecoreStereotype, "instanceClassName");
 			if (object instanceof String) {
 				instanceClassName = (String) object;
-				behavioralClass = getPrimitiveTypeByEcoreStereotype(ecoreStereotype, instanceClassName);
 			}
 		}
 		pivotElement.setInstanceClassName(instanceClassName);
-		pivotElement.setBehavioralClass(behavioralClass);
+		converter.queueReference(umlPrimitiveType);				// behavioralClss /  superClasses
 		return pivotElement;
 	}
 
@@ -679,12 +655,10 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 			Object object = umlDataType.getValue(ecoreStereotype, "instanceClassName");
 			if (object instanceof String) {
 				instanceClassName = (String) object;
-				pivotElement.setBehavioralClass(getPrimitiveTypeByEcoreStereotype(ecoreStereotype, instanceClassName));
 			}
 		}
 		PrimitiveType asPrimitiveType = getPrimitiveTypeByOCLStereotype(umlDataType);
 		if (asPrimitiveType != null) {
-			pivotElement.setBehavioralClass(asPrimitiveType);
 			if (instanceClassName == null) {
 				if (asPrimitiveType == standardLibrary.getIntegerType()) {
 					instanceClassName = IntegerValue.class.getName();
@@ -695,8 +669,7 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 			}
 		}
 		pivotElement.setInstanceClassName(instanceClassName);
-		//		pivotElement.setIsSerializable(umlDataType.isSerializable());
-		converter.queueReference(umlDataType);				// For generals
+		converter.queueReference(umlDataType);				// behavioralClss /  superClasses
 	}
 
 	/*		public void copyDetailLines(List<String> lines, String value) {
@@ -891,7 +864,6 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 		}
 	}
 
-
 	protected void copyProperty(@NonNull Property pivotElement, org.eclipse.uml2.uml.@NonNull Property umlProperty, List<EAnnotation> excludedAnnotations) {
 		copyTypedElement(pivotElement, umlProperty, excludedAnnotations);		pivotElement.setIsReadOnly(umlProperty.isReadOnly());
 		pivotElement.setIsDerived(umlProperty.isDerived());
@@ -1085,74 +1057,16 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 	}
 
 	protected @Nullable PrimitiveType getPrimitiveTypeByEcoreStereotype(org.eclipse.uml2.uml.@NonNull Stereotype ecoreStereotype, @NonNull String instanceClassName) {
-		if ("boolean".equals(instanceClassName)) {
-			return standardLibrary.getBooleanType();
-		}
-		if ("byte".equals(instanceClassName) || "char".equals(instanceClassName) || "int".equals(instanceClassName) || "long".equals(instanceClassName) || "short".equals(instanceClassName)) {
-			return standardLibrary.getIntegerType();
-		}
-		if ("double".equals(instanceClassName) || "float".equals(instanceClassName)) {
-			return standardLibrary.getRealType();
-		}
-		try {
-			@SuppressWarnings("null")@NonNull ClassLoader classLoader = ecoreStereotype.getClass().getClassLoader();
-			Class<?> instanceClass = classLoader.loadClass(instanceClassName);
-			if (instanceClass != null) {
-				PrimitiveType behavioralClass = standardLibrary.getBehavioralClass(instanceClass);
-				if (behavioralClass != null) {
-					return behavioralClass;
-				}
-				instanceClass.getDeclaredMethod("compareTo", instanceClass);
-				//						converter.queueReference(eObject2);			// Defer synthesis till supertypes resolved
-			}
-		}
-		catch (Exception e) {
-			//			converter.error("Unknown '" + instanceClassName + "'");		// Ignores e.g. byte[]
-		}
-		return null;
+		return converter.getPrimitiveTypeByEcoreStereotype(ecoreStereotype, instanceClassName);
 	}
 
+	@Deprecated /* @deprecated use converter version */
 	protected @Nullable PrimitiveType getPrimitiveTypeByName(org.eclipse.uml2.uml.@NonNull PrimitiveType umlPrimitiveType) {
-		String name = umlPrimitiveType.getName();
-		if (UMLUtil.isBoolean(umlPrimitiveType) || TypeId.BOOLEAN_NAME.equals(name)) {
-			return standardLibrary.getBooleanType();
-		}
-		if (UMLUtil.isInteger(umlPrimitiveType) || TypeId.INTEGER_NAME.equals(name)) {
-			return standardLibrary.getIntegerType();
-		}
-		if (UMLUtil.isReal(umlPrimitiveType) || TypeId.REAL_NAME.equals(name)) {
-			return standardLibrary.getRealType();
-		}
-		if (UMLUtil.isString(umlPrimitiveType) || TypeId.STRING_NAME.equals(name)) {
-			return standardLibrary.getStringType();
-		}
-		if (UMLUtil.isUnlimitedNatural(umlPrimitiveType) || TypeId.UNLIMITED_NATURAL_NAME.equals(name)) {
-			return standardLibrary.getUnlimitedNaturalType();
-		}
-		org.eclipse.uml2.uml.Package umlPackage = umlPrimitiveType.getPackage();
-		if ((umlPackage != null) && "EcorePrimitiveTypes".equals(umlPackage.getName())) {		// FIXME Bug 412918 for extra cases
-			if ("EBigDecimal".equals(name)
-					|| "EFloat".equals(name) || "EFloatObject".equals(name)) {
-				return standardLibrary.getRealType();
-			}
-			else if ("EBigInteger".equals(name)
-					|| "EByte".equals(name) || "EByteObject".equals(name)
-					|| "EChar".equals(name) || "ECharacterObject".equals(name)
-					|| "ELong".equals(name) || "ELongObject".equals(name)
-					|| "EShortObject".equals(name) || "EShortObject".equals(name)) {
-				return standardLibrary.getIntegerType();
-			}
-		}
-		return null;
+		return converter.getPrimitiveTypeByName(umlPrimitiveType);
 	}
 
+	@Deprecated /* @deprecated use converter version */
 	protected @Nullable PrimitiveType getPrimitiveTypeByOCLStereotype(org.eclipse.uml2.uml.@NonNull DataType umlDataType) {
-		if (umlDataType.getAppliedStereotype("OCLforUML::Integer") != null) {
-			return standardLibrary.getIntegerType();
-		}
-		if (umlDataType.getAppliedStereotype("OCLforUML::Real") != null) {
-			return standardLibrary.getRealType();
-		}
-		return null;
+		return converter.getPrimitiveTypeByOCLStereotype(umlDataType);
 	}
 }

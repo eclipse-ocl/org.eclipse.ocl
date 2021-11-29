@@ -779,7 +779,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 					if (i > 0) {
 						s.append(", ");
 					}
-					Type type = PivotUtil.getBehavioralReturnType(types.get(i));
+					Type type = types.get(i);
 					type.accept(declareParameterTypeVisitor);
 				}
 				s.append(");\n");

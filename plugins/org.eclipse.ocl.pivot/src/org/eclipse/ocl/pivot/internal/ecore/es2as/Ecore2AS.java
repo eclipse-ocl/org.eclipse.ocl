@@ -45,6 +45,7 @@ import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AnyType;
+import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.Model;
@@ -1036,9 +1037,30 @@ public class Ecore2AS extends AbstractExternal2AS
 		for (@NonNull EDataType eDataType : eDataTypes) {
 			org.eclipse.ocl.pivot.Class pivotElement = (org.eclipse.ocl.pivot.Class)newCreateMap.get(eDataType);
 			assert pivotElement != null;
-			List<org.eclipse.ocl.pivot.Class> superClasses = pivotElement.getSuperClasses();
-			assert superClasses.isEmpty();
-			superClasses.add(eDataType instanceof EEnum ? oclEnumerationType : oclAnyType);
+			org.eclipse.ocl.pivot.Class behavioralClass = null;
+			org.eclipse.ocl.pivot.Class superClass = null;
+			if (pivotElement instanceof DataType) {
+				Class<?> instanceClass = eDataType.getInstanceClass();
+				if (instanceClass != null) {
+					try {
+						behavioralClass = standardLibrary.getBehavioralClass(instanceClass);
+						if (behavioralClass != null) {
+							if (PivotUtil.getName(behavioralClass).equals(pivotElement.getName())) {
+								behavioralClass = null;
+							}
+							else {
+								((DataType)pivotElement).setBehavioralClass(behavioralClass);
+								superClass = behavioralClass;
+							}
+						}
+					} catch (Exception e) {
+					}
+				}
+			}
+			if (superClass == null) {
+				superClass = eDataType instanceof EEnum ? oclEnumerationType : oclAnyType;
+			}
+			refreshList(pivotElement.getSuperClasses(), Collections.singletonList(superClass));
 		}
 	}
 

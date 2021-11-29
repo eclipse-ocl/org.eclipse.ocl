@@ -36,7 +36,6 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  * JUnitCodeGenerator supports generation of an ExpressionInOCL for execution in a JUNit test.
@@ -107,7 +106,7 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		cgOperation.setAst(expInOcl);
 		Type type = expInOcl.getType();
 		assert type != null;
-		TypeId asTypeId = PivotUtil.getBehavioralType(type).getTypeId();
+		TypeId asTypeId = type/*.behavioralType()*/.getTypeId();
 		cgOperation.setTypeId(cgAnalyzer.getTypeId(asTypeId));
 		cgOperation.setName(globalContext.getEvaluateName());
 		cgOperation.setBody(cgBody);

@@ -433,8 +433,9 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getBehavioralClass() {
-		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : ClassUtil.nullFree(partialClasses)) {
+	public org.eclipse.ocl.pivot.@Nullable Class getBehavioralClass() {
+		Iterable<org.eclipse.ocl.pivot.@NonNull Class> partialClasses2 = ClassUtil.nullFree(partialClasses);
+		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : partialClasses2) {
 			if (partialClass instanceof DataType) {
 				org.eclipse.ocl.pivot.Class behavioralClass = ((DataType)partialClass).getBehavioralClass();
 				if (behavioralClass != null) {
@@ -442,10 +443,10 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 				}
 			}
 		}
-		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : ClassUtil.nullFree(partialClasses)) {
+		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : partialClasses2) {
 			return partialClass;
 		}
-		throw new IllegalStateException();
+		return null;
 	}
 
 	@Override

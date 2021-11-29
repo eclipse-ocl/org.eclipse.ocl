@@ -46,7 +46,7 @@ public class ClassContext extends AbstractParserContext
 	@Override
 	public void initialize(@NonNull Base2ASConversion conversion, @NonNull ExpressionInOCL expression) {
 		super.initialize(conversion, expression);
-		conversion.setContextVariable(expression, selfName, classContext, instanceContext);
+		conversion.getHelper().setContextVariable(expression, selfName, classContext, instanceContext);
 	}
 
 	/**

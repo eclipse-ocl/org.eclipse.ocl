@@ -549,7 +549,7 @@ public class UMLOCLEValidator implements EValidator
 							String objectLabel = EObjectValidator.getObjectLabel(opaqueElement, context);
 							String message = NLS.bind("Body language processing error {0} on {1}", e, objectLabel);
 							diagnostics.add(new BasicDiagnostic(Diagnostic.ERROR, UMLValidator.DIAGNOSTIC_SOURCE,
-								0, message,  new Object[] { opaqueElement }));
+								0, message,  new Object[] { opaqueElement, e }));
 						}
 						else {
 							allOk = false;

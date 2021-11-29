@@ -45,7 +45,7 @@ public class EClassContext extends AbstractParserContext
 		super.initialize(conversion, expression);
 		Type classContext = getClassContext();
 		if (classContext != null) {
-			conversion.setContextVariable(expression, PivotConstants.SELF_NAME, classContext, null);
+			conversion.getHelper().setContextVariable(expression, PivotConstants.SELF_NAME, classContext, null);
 		}
 	}
 }

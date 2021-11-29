@@ -72,6 +72,6 @@ public class EObjectContext extends AbstractParserContext
 	public void initialize(@NonNull Base2ASConversion conversion, @NonNull ExpressionInOCL expression) {
 		super.initialize(conversion, expression);
 		Type classContext = getClassContext();
-		conversion.setContextVariable(expression, PivotConstants.SELF_NAME, classContext, null);
+		conversion.getHelper().setContextVariable(expression, PivotConstants.SELF_NAME, classContext, null);
 	}
 }

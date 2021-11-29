@@ -447,8 +447,12 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 		if (firstCompleteClass == secondCompleteClass) {
 			return true;
 		}
-		firstType = firstCompleteClass.getBehavioralClass();
-		secondType = secondCompleteClass.getBehavioralClass();
+	//	firstType = firstCompleteClass.getPrimaryClass();
+		Type behavioralClass = secondCompleteClass.getBehavioralClass();
+		if (behavioralClass != secondType) {
+			secondCompleteClass = getCompleteClass(behavioralClass);		// See Bug 574431 for disussion of this dodgy downcast
+			secondType = behavioralClass;
+		}
 		//
 		//	Use specialized conformance for constructed types, inheritance tree intersection for simple types
 		//

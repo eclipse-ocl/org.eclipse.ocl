@@ -40,6 +40,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.BooleanLiteralExp;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionType;
@@ -446,8 +447,8 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 				candidateConformsToReference = false;
 			}
 			else {
-				Type referenceType = ClassUtil.nonNullState(PivotUtil.getBehavioralType(referenceParameter));
-				Type candidateType = ClassUtil.nonNullState(PivotUtil.getBehavioralType(candidateParameter));
+				Type referenceType = ClassUtil.nonNullState(PivotUtil.getType(referenceParameter));
+				Type candidateType = ClassUtil.nonNullState(PivotUtil.getType(candidateParameter));
 				Type specializedReferenceType = completeModel.getSpecializedType(referenceType, referenceBindings);
 				Type specializedCandidateType = completeModel.getSpecializedType(candidateType, candidateBindings);
 				if (referenceType != candidateType) {
@@ -781,10 +782,13 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	public org.eclipse.ocl.pivot.@Nullable Package getASmetamodel() {
 		if ((asMetamodel == null) && autoLoadASmetamodel) {
 			org.eclipse.ocl.pivot.Package stdlibPackage = null;
-			standardLibrary.getOclAnyType();				// Load a default library if necessary.
-			if (!asLibraries.isEmpty()) {
-				stdlibPackage = asLibraries.get(0);
-			}
+			AnyType oclAnyType = standardLibrary.getOclAnyType();				// Load a default library if necessary.
+		//	if (!asLibraries.isEmpty()) {
+		//		stdlibPackage = asLibraries.get(0);
+		//	}
+		//	if (stdlibPackage == null) {
+				stdlibPackage = oclAnyType.getOwningPackage();
+		//	}
 			if (stdlibPackage != null) {
 				loadASmetamodel(stdlibPackage);
 			}

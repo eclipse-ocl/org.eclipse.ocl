@@ -46,6 +46,7 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.ProfileApplication;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Stereotype;
@@ -53,6 +54,7 @@ import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.IdManager;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.AbstractExternal2AS;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.AliasAdapter;
@@ -1108,7 +1110,124 @@ public abstract class UML2AS extends AbstractExternal2AS
 		return association2properties.get(asAssociationClass);
 	}
 
+	/**
+	 * @since 1.17
+	 */
+	public @Nullable PrimitiveType getBehavioralClass(org.eclipse.uml2.uml.@NonNull DataType umlDataType) {
+		if (umlDataType instanceof org.eclipse.uml2.uml.PrimitiveType) {
+			PrimitiveType asPrimitiveType = getPrimitiveTypeByName((org.eclipse.uml2.uml.PrimitiveType)umlDataType);
+			if (asPrimitiveType != null) {
+				if (PivotUtil.getName(asPrimitiveType).equals(umlDataType.getName())) {
+					return null;							// Same named PrimitiveType re-uses / is a synonym
+				}
+				else {
+					return asPrimitiveType;					// Chnaged name conforms to the behavioral primitove
+				}
+			}
+		}
+		PrimitiveType asPrimitiveType = getPrimitiveTypeByOCLStereotype(umlDataType);
+		if (asPrimitiveType != null) {
+			return asPrimitiveType;
+		}
+		org.eclipse.uml2.uml.Stereotype ecoreStereotype = umlDataType.getAppliedStereotype("Ecore::EClass");	// Bug 453090 : UML2 does not support generalization
+		if (ecoreStereotype == null) {
+			ecoreStereotype = umlDataType.getAppliedStereotype("Ecore::EDataType");
+		}
+		if (ecoreStereotype == null) {
+			ecoreStereotype = umlDataType.getAppliedStereotype("Ecore::EClassifier");
+		}
+		if (ecoreStereotype == null) {
+			return null;
+		}
+		Object object = umlDataType.getValue(ecoreStereotype, "instanceClassName");
+		if (!(object instanceof String)) {
+			return null;
+		}
+		return getPrimitiveTypeByEcoreStereotype(ecoreStereotype, (String) object);
+	}
+
 	public abstract @NonNull UML2ASDeclarationSwitch getDeclarationPass();
+
+	/**
+	 * @since 1.17
+	 */
+	public @Nullable PrimitiveType getPrimitiveTypeByEcoreStereotype(org.eclipse.uml2.uml.@NonNull Stereotype ecoreStereotype, @NonNull String instanceClassName) {
+		if ("boolean".equals(instanceClassName)) {
+			return standardLibrary.getBooleanType();
+		}
+		if ("byte".equals(instanceClassName) || "char".equals(instanceClassName) || "int".equals(instanceClassName) || "long".equals(instanceClassName) || "short".equals(instanceClassName)) {
+			return standardLibrary.getIntegerType();
+		}
+		if ("double".equals(instanceClassName) || "float".equals(instanceClassName)) {
+			return standardLibrary.getRealType();
+		}
+		try {
+			@SuppressWarnings("null")@NonNull ClassLoader classLoader = ecoreStereotype.getClass().getClassLoader();
+			Class<?> instanceClass = classLoader.loadClass(instanceClassName);
+			if (instanceClass != null) {
+				PrimitiveType behavioralClass = standardLibrary.getBehavioralClass(instanceClass);
+				if (behavioralClass != null) {
+					return behavioralClass;
+				}
+				instanceClass.getDeclaredMethod("compareTo", instanceClass);
+				//						converter.queueReference(eObject2);			// Defer synthesis till supertypes resolved
+			}
+		}
+		catch (Exception e) {
+			//			converter.error("Unknown '" + instanceClassName + "'");		// Ignores e.g. byte[]
+		}
+		return null;
+	}
+
+	/**
+	 * @since 1.17
+	 */
+	public @Nullable PrimitiveType getPrimitiveTypeByName(org.eclipse.uml2.uml.@NonNull PrimitiveType umlPrimitiveType) {
+		String name = umlPrimitiveType.getName();
+		if (UMLUtil.isBoolean(umlPrimitiveType) || TypeId.BOOLEAN_NAME.equals(name)) {
+			return standardLibrary.getBooleanType();
+		}
+		if (UMLUtil.isInteger(umlPrimitiveType) || TypeId.INTEGER_NAME.equals(name)) {
+			return standardLibrary.getIntegerType();
+		}
+		if (UMLUtil.isReal(umlPrimitiveType) || TypeId.REAL_NAME.equals(name)) {
+			return standardLibrary.getRealType();
+		}
+		if (UMLUtil.isString(umlPrimitiveType) || TypeId.STRING_NAME.equals(name)) {
+			return standardLibrary.getStringType();
+		}
+		if (UMLUtil.isUnlimitedNatural(umlPrimitiveType) || TypeId.UNLIMITED_NATURAL_NAME.equals(name)) {
+			return standardLibrary.getUnlimitedNaturalType();
+		}
+		org.eclipse.uml2.uml.Package umlPackage = umlPrimitiveType.getPackage();
+		if ((umlPackage != null) && "EcorePrimitiveTypes".equals(umlPackage.getName())) {		// FIXME Bug 412918 for extra cases
+			if ("EBigDecimal".equals(name)
+					|| "EFloat".equals(name) || "EFloatObject".equals(name)) {
+				return standardLibrary.getRealType();
+			}
+			else if ("EBigInteger".equals(name)
+					|| "EByte".equals(name) || "EByteObject".equals(name)
+					|| "EChar".equals(name) || "ECharacterObject".equals(name)
+					|| "ELong".equals(name) || "ELongObject".equals(name)
+					|| "EShortObject".equals(name) || "EShortObject".equals(name)) {
+				return standardLibrary.getIntegerType();
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * @since 1.17
+	 */
+	public @Nullable PrimitiveType getPrimitiveTypeByOCLStereotype(org.eclipse.uml2.uml.@NonNull DataType umlDataType) {
+		if (umlDataType.getAppliedStereotype("OCLforUML::Integer") != null) {
+			return standardLibrary.getIntegerType();
+		}
+		if (umlDataType.getAppliedStereotype("OCLforUML::Real") != null) {
+			return standardLibrary.getRealType();
+		}
+		return null;
+	}
 
 	@Override
 	public @NonNull Resource getResource() {

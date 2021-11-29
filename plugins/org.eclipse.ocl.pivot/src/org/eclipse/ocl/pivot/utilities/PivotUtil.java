@@ -113,12 +113,11 @@ import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorManager;
-import org.eclipse.ocl.pivot.internal.library.ecore.EcoreReflectiveType;
 import org.eclipse.ocl.pivot.internal.manager.PivotExecutorManager;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
@@ -1035,6 +1034,7 @@ public class PivotUtil
 	/**
 	 * @since 1.7
 	 */
+	@Deprecated /* @deprecated no longer used = behavioralType() now handled within Type::conformsTo */
 	public static @NonNull Type getBehavioralReturnType(@NonNull Type type) {
 		return getBehavioralType(getReturnType(type));
 	}
@@ -1042,41 +1042,30 @@ public class PivotUtil
 	/**
 	 * @since 1.7
 	 */
+	@Deprecated /* @deprecated no longer used = behavioralType() now handled within Type::conformsTo */
 	public static @NonNull Type getBehavioralType(@NonNull Type type) {
 		if (type instanceof CollectionType) {
-			CollectionType asCollectionType = (CollectionType)type;
-			Type asElementType = asCollectionType.getElementType();
+			CollectionType collectionType = (CollectionType)type;
+			Type asElementType = collectionType.getElementType();
 			if (asElementType != null) {
-				Type asBehavioralType = getBehavioralType(asElementType);
-				if (asBehavioralType != asElementType) {
-					ResourceSet resourceSet = asCollectionType.eResource().getResourceSet();
-					if (resourceSet != null) {
-						PivotMetamodelManager metamodelManager = PivotMetamodelManager.findAdapter(resourceSet);
-						if (metamodelManager != null) {
-							CollectionType unspecializedElement = (CollectionType)asCollectionType.getUnspecializedElement();
-							assert unspecializedElement != null;
-							boolean isNullFree = asCollectionType.isIsNullFree();
-							IntegerValue lowerValue = asCollectionType.getLowerValue();
-							UnlimitedNaturalValue upperValue = asCollectionType.getUpperValue();
-							return metamodelManager.getCompleteEnvironment().getCollectionType(unspecializedElement, asBehavioralType, isNullFree, lowerValue, upperValue);
-						}
+				Type behavioralElementType = getBehavioralType(asElementType);
+				assert behavioralElementType != null;
+				if (behavioralElementType != asElementType) {
+					EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+					if (environmentFactory != null) {
+						CollectionType unspecializedElement = (CollectionType)collectionType.getUnspecializedElement();
+						assert unspecializedElement != null;
+						boolean isNullFree = collectionType.isIsNullFree();
+						IntegerValue lowerValue = collectionType.getLowerValue();
+						UnlimitedNaturalValue upperValue = collectionType.getUpperValue();
+						return environmentFactory.getCompleteEnvironment().getCollectionType(unspecializedElement, behavioralElementType, isNullFree, lowerValue, upperValue);
 					}
 				}
 			}
 		}
 		else if (type instanceof DataType) {
-			DataType asDataType = (DataType)type;
-			Type resolvedClass = asDataType.getBehavioralClass();
-			if (resolvedClass != null) {
-				return resolvedClass;
-			}
-		}
-		else if (type instanceof EcoreReflectiveType) {
-			EcoreReflectiveType reflectiveType = (EcoreReflectiveType)type;
-			Type resolvedClass = reflectiveType.getBehavioralClass();
-			if (resolvedClass != null) {
-				return resolvedClass;
-			}
+			org.eclipse.ocl.pivot.Class behavioralClass = ((DataType)type).getBehavioralClass();
+			return behavioralClass != null ? behavioralClass : type;
 		}
 		return type;
 	}
@@ -1084,8 +1073,9 @@ public class PivotUtil
 	/**
 	 * @since 1.7
 	 */
+	@Deprecated /* @deprecated no longer used = behavioralType() now handled within Type::conformsTo */
 	public static @Nullable Type getBehavioralType(@Nullable TypedElement element) {
-		Type type = PivotUtilInternal.getType(element);
+		Type type = element != null ? PivotUtilInternal.getType(element) : null;
 		return type != null ? getBehavioralType(type) : null;
 	}
 
@@ -1934,6 +1924,7 @@ public class PivotUtil
 	/**
 	 * @since 1.7
 	 */
+	@Deprecated /* @deprecated no longer used = behavioralType() now handled within Type::conformsTo */
 	public static @NonNull Type getReturnType(@NonNull Type type) {
 		return PivotUtilInternal.getNonLambdaType(type);
 	}

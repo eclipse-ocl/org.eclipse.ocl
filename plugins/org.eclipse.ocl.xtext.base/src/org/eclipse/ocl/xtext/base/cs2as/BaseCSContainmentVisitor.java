@@ -13,6 +13,7 @@ package org.eclipse.ocl.xtext.base.cs2as;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
@@ -322,19 +323,27 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 		}
 		pivotElement.setIsSerializable(csElement.isIsSerializable());
 		refreshClassifier(pivotElement, csElement);
+		Class<?> instanceClass = null;
 		String instanceClassName = pivotElement.getInstanceClassName();
 		if (instanceClassName != null) {
 			try {
-				Class<?> instanceClass = Class.forName(instanceClassName);
-				if (instanceClass != null) {
-					PrimitiveType behavioralClass = standardLibrary.getBehavioralClass(instanceClass);
-					if (behavioralClass != null) {
-						pivotElement.setBehavioralClass(behavioralClass);
-					}
-				}
+				instanceClass = Class.forName(instanceClassName);
 			}
 			catch (Throwable e) {}
 		}
+		PrimitiveType behavioralClass = null;
+		if (instanceClass != null) {
+			behavioralClass = standardLibrary.getBehavioralClass(instanceClass);
+			if (behavioralClass != null) {
+				String behavioralName = PivotUtil.getName(behavioralClass);
+				if (behavioralName.equals(pivotElement.getName())) {
+					behavioralClass = null;
+				}
+			}
+		}
+		pivotElement.setBehavioralClass(behavioralClass);
+		org.eclipse.ocl.pivot.Class asSuperClass = behavioralClass != null ? behavioralClass : context.getStandardLibrary().getOclElementType();
+		helper.refreshList(pivotElement.getSuperClasses(), Collections.singletonList(asSuperClass));
 		return null;
 	}
 

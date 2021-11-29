@@ -559,6 +559,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/context/Base2ASConversion.java" type="org.eclipse.ocl.pivot.internal.context.Base2ASConversion">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.context.Base2ASConversion"/>
+                <message_argument value="getHelper()"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/internal/ecore/Ecore2Moniker.java" type="org.eclipse.ocl.pivot.internal.ecore.Ecore2Moniker">
         <filter comment="Bug 512402 workaround" id="576725006">
             <message_arguments>

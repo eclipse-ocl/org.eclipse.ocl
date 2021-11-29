@@ -185,7 +185,7 @@ public class EssentialOCLScoping
 					sourceType = source.getType();
 				}
 				if (sourceType != null) {
-					sourceType = PivotUtil.getBehavioralType(sourceType);
+				//	sourceType = PivotUtil.getBehavioralType(sourceType);
 					OperatorExpCS csParent = navigationArgument != null ? navigationArgument.getLocalParent() : null;
 					if (!PivotUtil.isAggregate(sourceType) && NavigationUtil.isNavigationInfixExp(csParent) && (csParent != null) && PivotUtil.isAggregateNavigationOperator(((InfixExpCS)csParent).getName())) {
 						typeText = "Set(" + sourceType.toString() + ")";

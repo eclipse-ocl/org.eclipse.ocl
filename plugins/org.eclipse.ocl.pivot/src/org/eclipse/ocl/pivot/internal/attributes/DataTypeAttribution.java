@@ -13,7 +13,6 @@ package org.eclipse.ocl.pivot.internal.attributes;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.DataType;
-import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.scoping.AbstractAttribution;
 import org.eclipse.ocl.pivot.internal.scoping.Attribution;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
@@ -26,20 +25,8 @@ public class DataTypeAttribution extends AbstractAttribution
 	@Override
 	public ScopeView computeLookup(@NonNull EObject target, @NonNull EnvironmentView environmentView, @NonNull ScopeView scopeView) {
 		DataType targetElement = (DataType) target;
-		Type resolvedClass = targetElement.getBehavioralClass();
-		Attribution attribution;
-		if (resolvedClass != null) {
-			attribution = environmentView.getAttribution(resolvedClass);
-		}
-		else {
-			attribution = ClassAttribution.INSTANCE;
-		}
+		Attribution attribution = ClassAttribution.INSTANCE;
 		environmentView.addAllTemplateParameters(targetElement);
-		if (attribution != this) {
-			return attribution.computeLookup(target, environmentView, scopeView);
-		}
-		else {
-			return scopeView.getParent();
-		}
+		return attribution.computeLookup(target, environmentView, scopeView);
 	}
 }

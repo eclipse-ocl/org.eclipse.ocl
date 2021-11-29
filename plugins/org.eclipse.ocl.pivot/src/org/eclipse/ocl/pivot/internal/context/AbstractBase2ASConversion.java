@@ -25,12 +25,14 @@ import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.ParameterVariable;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.SelfType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractConversion;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -64,7 +66,7 @@ public abstract class AbstractBase2ASConversion extends AbstractConversion imple
 		underspecifiedTypedElements.add(pivotElement);
 	}
 
-	/* @deprecated use PivotHelper.refreshName() */
+	/* @deprecated no longer used / use PivotHelper.refreshName() */
 	@Deprecated
 	public void refreshName(@NonNull NamedElement pivotNamedElement, @Nullable String newName) {
 		String oldName = pivotNamedElement.getName();
@@ -82,16 +84,16 @@ public abstract class AbstractBase2ASConversion extends AbstractConversion imple
 		}
 	}
 
-	/* @deprecated use PivotHelper.setBehavioralType() */
+	/* @deprecated no longer used / use PivotHelper.setBehavioralType() */
 	@Deprecated
 	public void setBehavioralType(@NonNull TypedElement targetElement, @NonNull TypedElement sourceElement) {
 		if (!sourceElement.eIsProxy()) {
-			Type type = PivotUtil.getBehavioralType(sourceElement);
-			if ((type != null) && type.eIsProxy()) {
+			Type type = PivotUtil.getType(sourceElement);
+			if (type.eIsProxy()) {
 				type = null;
 			}
 			boolean isRequired = sourceElement.isIsRequired();
-			setType(targetElement, type, isRequired);
+			getHelper().setType(targetElement, type, isRequired);
 		}
 	}
 
@@ -100,10 +102,10 @@ public abstract class AbstractBase2ASConversion extends AbstractConversion imple
 		Variable contextVariable = pivotSpecification.getOwnedContext();
 		if (contextVariable != null) {
 			if (contextType.eIsProxy()) {
-				setType(contextVariable, null, false);
+				getHelper().setType(contextVariable, null, false);
 			}
 			else {
-				setType(contextVariable, contextType, true);
+				getHelper().setType(contextVariable, contextType, true);
 			}
 		}
 	}
@@ -119,15 +121,15 @@ public abstract class AbstractBase2ASConversion extends AbstractConversion imple
 				contextType = standardLibrary.getOclVoidType();
 			}
 		}
-		refreshName(contextVariable, selfVariableName);
-		setType(contextVariable, contextType, contextVariable.isIsRequired(), contextInstance);
+		getHelper().refreshName(contextVariable, selfVariableName);
+		getHelper().setType(contextVariable, contextType, contextVariable.isIsRequired(), contextInstance);
 	}
 
 	public void setOperationContext(@NonNull ExpressionInOCL pivotSpecification, @NonNull Operation contextOperation, @Nullable String resultName) {
 		Variable contextVariable = pivotSpecification.getOwnedContext();
 		//		pivotSpecification.getParameterVariable().clear();
 		if ((contextVariable != null) && !contextOperation.eIsProxy()) {
-			setType(contextVariable, contextOperation.getOwningClass(), true);
+			getHelper().setType(contextVariable, contextOperation.getOwningClass(), true);
 			setParameterVariables(pivotSpecification, ClassUtil.nonNullEMF(contextOperation.getOwnedParameters()));
 		}
 		if (resultName != null) {
@@ -135,52 +137,68 @@ public abstract class AbstractBase2ASConversion extends AbstractConversion imple
 		}
 	}
 
+	/**
+	 * @since 1.17
+	 */
 	@Override
-	public void setParameterVariables(@NonNull ExpressionInOCL pivotSpecification, @NonNull List<Parameter> parameters) {
-		List<Variable> oldVariables = new ArrayList<>(pivotSpecification.getOwnedParameters());
-		List<Variable> newVariables = new ArrayList<>();
-		for (Parameter parameter : parameters) {
-			String name = parameter.getName();
-			Variable param = NameUtil.getNameable(oldVariables, name);
-			if (param != null) {
-				oldVariables.remove(param);
+	public void setParameterVariables(@NonNull ExpressionInOCL pivotSpecification, @NonNull List<Parameter> operationParameterVariables) {
+		List<@NonNull Variable> oldSpecificationVariables = PivotUtilInternal.getOwnedParametersList(pivotSpecification);
+		List<@NonNull Variable> residualSpecificationVariables = new ArrayList<>(oldSpecificationVariables);
+		List<@NonNull Variable> newSpecificationVariables = new ArrayList<>();
+		for (Parameter operationParameterVariable : operationParameterVariables) {
+			String name = operationParameterVariable.getName();
+			Variable specificationVariable = NameUtil.getNameable(residualSpecificationVariables, name);
+			if (specificationVariable != null) {
+				residualSpecificationVariables.remove(specificationVariable);
 			}
 			else {
-				param = PivotFactory.eINSTANCE.createParameterVariable();
-				param.setName(name);
+				specificationVariable = PivotFactory.eINSTANCE.createParameterVariable();
+				specificationVariable.setName(name);
 			}
-			setBehavioralType(param, parameter);
-			param.setRepresentedParameter(parameter);
-			newVariables.add(param);
+			Type type = PivotUtil.getType(operationParameterVariable);
+			if (type instanceof SelfType) {
+				type = pivotSpecification.getOwnedContext().getType(); // standardLibrary.getOclAnyType();
+			}
+			if (type.eIsProxy()) {
+				type = null;
+			}
+			boolean isRequired = operationParameterVariable.isIsRequired();
+			getHelper().setType(specificationVariable, type, isRequired);
+			specificationVariable.setRepresentedParameter(operationParameterVariable);
+			newSpecificationVariables.add(specificationVariable);
 		}
-		refreshList(ClassUtil.nonNullModel(pivotSpecification.getOwnedParameters()), newVariables);
+		refreshList(oldSpecificationVariables, newSpecificationVariables);
 	}
 
 	@Override
 	public void setParameterVariables(@NonNull ExpressionInOCL pivotSpecification, @NonNull Map<String, Type> parameters) {
-		List<Variable> oldVariables = new ArrayList<>(pivotSpecification.getOwnedParameters());
-		List<Variable> newVariables = new ArrayList<>();
+		List<@NonNull Variable> oldSpecificationVariables = PivotUtilInternal.getOwnedParametersList(pivotSpecification);
+		List<@NonNull Variable> residualSpecificationVariables = new ArrayList<>(oldSpecificationVariables);
+		List<@NonNull Variable> newSpecificationVariables = new ArrayList<>();
 		for (String name : parameters.keySet()) {
-			Type type = parameters.get(name);
-			Variable param = NameUtil.getNameable(oldVariables, name);
-			if (param != null) {
-				oldVariables.remove(param);
+			Variable specificationVariable = NameUtil.getNameable(residualSpecificationVariables, name);
+			if (specificationVariable != null) {
+				residualSpecificationVariables.remove(specificationVariable);
 			}
 			else {
-				param = PivotFactory.eINSTANCE.createParameterVariable();
-				param.setName(name);
+				specificationVariable = PivotFactory.eINSTANCE.createParameterVariable();
+				specificationVariable.setName(name);
 			}
-			setType(param, type, param.isIsRequired());
+			Type type = parameters.get(name);
+		//	if (type instanceof SelfType) {
+		//		type = pivotSpecification.getOwnedContext().getType(); // standardLibrary.getOclAnyType();
+		//	}
+			getHelper().setType(specificationVariable, type, specificationVariable.isIsRequired());
 			//		    param.setRepresentedParameter(parameter);
-			newVariables.add(param);
+			newSpecificationVariables.add(specificationVariable);
 		}
-		refreshList(ClassUtil.nonNullModel(pivotSpecification.getOwnedParameters()), newVariables);
+		refreshList(oldSpecificationVariables, newSpecificationVariables);
 	}
 
 	public void setPropertyContext(@NonNull ExpressionInOCL pivotSpecification, @NonNull Property contextProperty) {
 		Variable contextVariable = pivotSpecification.getOwnedContext();
 		if ((contextVariable != null) && !contextProperty.eIsProxy()) {
-			setType(contextVariable, contextProperty.getOwningClass(), true);
+			getHelper().setType(contextVariable, contextProperty.getOwningClass(), true);
 		}
 	}
 
@@ -193,7 +211,14 @@ public abstract class AbstractBase2ASConversion extends AbstractConversion imple
 				resultVariable = PivotFactory.eINSTANCE.createParameterVariable();
 			}
 			resultVariable.setName(resultName);
-			setBehavioralType(resultVariable, contextOperation);
+			if (!contextOperation.eIsProxy()) {
+				Type type = PivotUtil.getType(contextOperation);
+				if (type.eIsProxy()) {
+					type = null;
+				}
+				boolean isRequired = contextOperation.isIsRequired();
+				getHelper().setType(resultVariable, type, isRequired);
+			}
 			pivotSpecification.setOwnedResult(resultVariable);
 		}
 		else {
@@ -201,35 +226,33 @@ public abstract class AbstractBase2ASConversion extends AbstractConversion imple
 		}
 	}
 
-	/**
-	 * Set the type and so potentially satisfy some TypeOfDependency. This method ensures that
-	 * type is not set to null.
-	 *
-	 * @deprecated no longer used / use PivotHelper.refreshNsURI()
-	 */
+	/* @deprecated no longer used / use PivotHelper.setType() */
 	@Deprecated
 	public void setType(@NonNull TypedElement pivotElement, Type type) {
-		setType(pivotElement, type, pivotElement.isIsRequired());
+		getHelper().setType(pivotElement, type, pivotElement.isIsRequired());
 	}
 
-	@Deprecated /* @deprecated no longer used */
+	/* @deprecated no longer used / use PivotHelper.setType() */
+	@Deprecated
 	public void setType(@NonNull OCLExpression pivotElement, Type type, boolean isRequired, @Nullable Type typeValue) {	// FIXME redirect to PivotHelper
-		setType(pivotElement, type, isRequired);
-		Type primaryTypeValue = typeValue != null ? metamodelManager.getPrimaryType(typeValue) : null;
-		if (primaryTypeValue != pivotElement.getTypeValue()) {
-			pivotElement.setTypeValue(primaryTypeValue);
-		}
-	}
-	@Deprecated /* @deprecated only used locally */
-	public void setType(@NonNull VariableDeclaration pivotElement, Type type, boolean isRequired, @Nullable Type typeValue) {	// FIXME redirect to PivotHelper
-		setType(pivotElement, type, isRequired);
+		getHelper().setType(pivotElement, type, isRequired);
 		Type primaryTypeValue = typeValue != null ? metamodelManager.getPrimaryType(typeValue) : null;
 		if (primaryTypeValue != pivotElement.getTypeValue()) {
 			pivotElement.setTypeValue(primaryTypeValue);
 		}
 	}
 
-	/* @deprecated only used locally / use PivotHelper.setType() */
+	/* @deprecated no longer used / use PivotHelper.setType() */
+	@Deprecated
+	public void setType(@NonNull VariableDeclaration pivotElement, Type type, boolean isRequired, @Nullable Type typeValue) {	// FIXME redirect to PivotHelper
+		getHelper().setType(pivotElement, type, isRequired);
+		Type primaryTypeValue = typeValue != null ? metamodelManager.getPrimaryType(typeValue) : null;
+		if (primaryTypeValue != pivotElement.getTypeValue()) {
+			pivotElement.setTypeValue(primaryTypeValue);
+		}
+	}
+
+	/* @deprecated no longer used / use PivotHelper.setType() */
 	@Deprecated
 	public void setType(@NonNull TypedElement pivotElement, Type type, boolean isRequired) {
 		Type primaryType = type != null ? metamodelManager.getPrimaryType(type) : null;

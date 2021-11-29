@@ -260,14 +260,12 @@ public class TupleTypeManager
 		for (Property part : parts) {
 			if (part != null) {
 				Type propertyType = PivotUtilInternal.getType(part);
-				if (propertyType != null) {
-					Type resolvedPropertyType = completeEnvironment.getSpecializedType(propertyType, usageBindings);
-					if (resolvedPropertyType != propertyType) {
-						if (resolutions == null) {
-							resolutions = new HashMap<>();
-						}
-						resolutions.put(NameUtil.getSafeName(part), resolvedPropertyType);
+				Type resolvedPropertyType = completeEnvironment.getSpecializedType(propertyType, usageBindings);
+				if (resolvedPropertyType != propertyType) {
+					if (resolutions == null) {
+						resolutions = new HashMap<>();
 					}
+					resolutions.put(NameUtil.getSafeName(part), resolvedPropertyType);
 				}
 			}
 		}

@@ -95,7 +95,7 @@ public abstract class AbstractOperationMatcher implements OperationArguments
 	protected AbstractOperationMatcher(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type sourceType, @Nullable Type sourceTypeValue) {
 		this.environmentFactory = environmentFactory;
 		this.metamodelManager = environmentFactory.getMetamodelManager();
-		this.sourceType = sourceType != null ? PivotUtil.getBehavioralType(sourceType) : null;		// FIXME redundant
+		this.sourceType = sourceType;// != null ? PivotUtil.getBehavioralType(sourceType) : null;		// FIXME redundant
 		this.sourceTypeValue = sourceTypeValue;
 	}
 
@@ -106,8 +106,8 @@ public abstract class AbstractOperationMatcher implements OperationArguments
 		@NonNull Operation candidate = (Operation) match2;
 		org.eclipse.ocl.pivot.Class referenceClass = reference.getOwningClass();
 		org.eclipse.ocl.pivot.Class candidateClass = candidate.getOwningClass();
-		Type referenceType = referenceClass != null ? PivotUtil.getBehavioralType(referenceClass) : null;
-		Type candidateType = candidateClass != null ? PivotUtil.getBehavioralType(candidateClass) : null;
+		Type referenceType = referenceClass;// != null ? PivotUtil.getBehavioralType(referenceClass) : null;
+		Type candidateType = candidateClass;// != null ? PivotUtil.getBehavioralType(candidateClass) : null;
 		Type specializedReferenceType = referenceType != null ? completeModel.getSpecializedType(referenceType, referenceBindings) : null;
 		Type specializedCandidateType = candidateType != null ? completeModel.getSpecializedType(candidateType, candidateBindings) : null;
 		if ((reference instanceof Iteration) && (candidate instanceof Iteration) && (specializedReferenceType != null) && (specializedCandidateType != null)) {
@@ -143,8 +143,8 @@ public abstract class AbstractOperationMatcher implements OperationArguments
 			Type argumentType = pivotArgument.getType();
 			Parameter referenceParameter = referenceParameters.get(i);
 			Parameter candidateParameter = candidateParameters.get(i);
-			referenceType = PivotUtil.getBehavioralType(PivotUtil.getType(referenceParameter));
-			candidateType = PivotUtil.getBehavioralType(PivotUtil.getType(candidateParameter));
+			referenceType = PivotUtilInternal.getType(referenceParameter);//.behavioralType();
+			candidateType = PivotUtilInternal.getType(candidateParameter);//.behavioralType();
 			specializedReferenceType = completeModel.getSpecializedType(referenceType, referenceBindings);
 			specializedCandidateType = completeModel.getSpecializedType(candidateType, candidateBindings);
 			if (argumentType != specializedReferenceType) {
@@ -262,14 +262,8 @@ public abstract class AbstractOperationMatcher implements OperationArguments
 		for (int i = 0; i < iSize; i++) {
 			Parameter candidateParameter = candidateParameters.get(i);
 			OCLExpression expression = getArgument(i);
-			Type candidateType = PivotUtil.getBehavioralType(candidateParameter);
-			if (candidateType == null) {
-				return null;
-			}
-			Type expressionType = PivotUtil.getBehavioralType(expression);
-			if (expressionType == null) {
-				return null;
-			}
+			Type candidateType = PivotUtilInternal.getType(candidateParameter);
+			Type expressionType = PivotUtilInternal.getType(expression);
 			if (!metamodelManager.conformsTo(expressionType, TemplateParameterSubstitutions.EMPTY, candidateType, bindings)) {
 				boolean coerceable = false;
 				if (useCoercions) {
@@ -278,7 +272,8 @@ public abstract class AbstractOperationMatcher implements OperationArguments
 						if (partialClass instanceof PrimitiveType) {
 							for (Operation coercion : ((PrimitiveType)partialClass).getCoercions()) {
 								Type corcedSourceType = coercion.getType();
-								if ((corcedSourceType != null) && metamodelManager.conformsTo(corcedSourceType, TemplateParameterSubstitutions.EMPTY, candidateType, TemplateParameterSubstitutions.EMPTY)) {
+							//	if ((corcedSourceType != null) && metamodelManager.conformsTo(corcedSourceType, TemplateParameterSubstitutions.EMPTY, candidateType, TemplateParameterSubstitutions.EMPTY)) {
+								if ((corcedSourceType != null) && corcedSourceType.conformsTo(metamodelManager.getStandardLibrary(), candidateType)) {
 									coerceable = true;
 									break;
 								}

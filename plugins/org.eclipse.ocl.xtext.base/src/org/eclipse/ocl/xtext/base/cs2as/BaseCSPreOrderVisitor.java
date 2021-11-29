@@ -15,7 +15,6 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.AnyType;
-import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
@@ -524,13 +523,6 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 
 	@Override
 	public Continuation<?> visitDataTypeCS(@NonNull DataTypeCS csDataType) {
-		DataType pivotElement = PivotUtil.getPivot(DataType.class, csDataType);
-		if (pivotElement != null) {
-			List<org.eclipse.ocl.pivot.Class> pivotSuperClasses = pivotElement.getSuperClasses();
-			pivotSuperClasses.clear();
-			org.eclipse.ocl.pivot.Class oclElementType = context.getStandardLibrary().getOclElementType();
-			pivotSuperClasses.add(oclElementType);
-		}
 		return null;
 	}
 

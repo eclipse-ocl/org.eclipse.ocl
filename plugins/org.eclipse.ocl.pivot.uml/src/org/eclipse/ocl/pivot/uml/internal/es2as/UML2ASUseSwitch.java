@@ -55,6 +55,7 @@ import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.Unlimited;
 //import org.eclipse.uml2.uml.ValueSpecification;
 import org.eclipse.uml2.uml.util.UMLSwitch;
@@ -415,7 +416,7 @@ public class UML2ASUseSwitch extends UMLSwitch<Object>
 				org.eclipse.uml2.uml.ValueSpecification umlValue = umlProperty.getDefaultValue();
 				if (umlValue != null) {
 					asExpression = (ExpressionInOCL) doSwitch(umlValue);
-					Type requiredType = pivotElement.getType();
+					Type requiredType = PivotUtil.getType(pivotElement);
 					Type defaultValueType = asExpression != null ? asExpression.getType() : null;
 					if ((requiredType != null) && (defaultValueType != null) && !defaultValueType.conformsTo(standardLibrary, requiredType)) {
 						converter.error("Incompatible '" + defaultValueType + "' initializer for " + pivotElement + " when '" + requiredType + "' required");

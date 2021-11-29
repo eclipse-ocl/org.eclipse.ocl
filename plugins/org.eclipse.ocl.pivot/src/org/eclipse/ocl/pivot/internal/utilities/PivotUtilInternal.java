@@ -36,6 +36,7 @@ import org.eclipse.ocl.pivot.CollectionLiteralPart;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.IteratorVariable;
@@ -267,7 +268,7 @@ public class PivotUtilInternal //extends PivotUtil
 
 	@Deprecated /* @deprecated not used, use PivotUtil.getBehavioralType */
 	public static @Nullable Type getBehavioralType(@Nullable TypedElement element) {
-		Type type = getType(element);
+		Type type = element != null ? getType(element) : null;
 		return type != null ? PivotUtil.getBehavioralType(type) : null;
 	}
 
@@ -524,6 +525,13 @@ public class PivotUtilInternal //extends PivotUtil
 	}
 
 	/**
+	 * @since 1.17
+	 */
+	public static @NonNull List<@NonNull Parameter> getOwnedAccumulatorsList(@NonNull Iteration iteration) {
+		return ClassUtil.nullFree(iteration.getOwnedAccumulators());
+	}
+
+	/**
 	 * @since 1.3
 	 */
 	public static @NonNull List<@NonNull OCLExpression> getOwnedArgumentsList(@NonNull OperationCallExp operationCallExp) {
@@ -584,6 +592,13 @@ public class PivotUtilInternal //extends PivotUtil
 	 */
 	public static @NonNull List<org.eclipse.ocl.pivot.@NonNull Package> getOwnedPackagesList(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		return ClassUtil.nullFree(asPackage.getOwnedPackages());
+	}
+
+	/**
+	 * @since 1.17
+	 */
+	public static @NonNull List<@NonNull Variable> getOwnedParametersList(@NonNull ExpressionInOCL expressionInOCL) {
+		return ClassUtil.nullFree(expressionInOCL.getOwnedParameters());
 	}
 
 	/**
@@ -709,7 +724,7 @@ public class PivotUtilInternal //extends PivotUtil
 		return ClassUtil.nullFree(asClass.getSuperClasses());
 	}
 
-	public static @Nullable Type getType(@Nullable TypedElement typedElement) {
+/*	public static @Nullable Type getType(@Nullable TypedElement typedElement) {
 		if (typedElement == null) {
 			return null;
 		}
@@ -717,6 +732,27 @@ public class PivotUtilInternal //extends PivotUtil
 		if (type == null) {
 			return null;
 		}
+		//		type = getType(type);
+		type = getNonLambdaType(type);
+		if (type instanceof SelfType) {
+			if (typedElement instanceof Parameter) {
+				Operation operation = ((Parameter)typedElement).getOwningOperation();
+				if (operation != null) {
+					org.eclipse.ocl.pivot.Class selfType = operation.getOwningClass();
+					if (selfType != null) {
+						type = selfType;
+					}
+				}
+			}
+		}
+		return type;
+	} */
+
+	/**
+	 * @since 1.17
+	 */
+	public static @NonNull Type getType(@NonNull TypedElement typedElement) {
+		Type type = PivotUtil.getType(typedElement);
 		//		type = getType(type);
 		type = getNonLambdaType(type);
 		if (type instanceof SelfType) {

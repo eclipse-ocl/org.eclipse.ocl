@@ -24,7 +24,10 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AssociationClass;
+import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.Enumeration;
+import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Profile;
 import org.eclipse.ocl.pivot.ProfileApplication;
 import org.eclipse.ocl.pivot.Property;
@@ -100,9 +103,19 @@ public class UML2ASReferenceSwitch extends UMLSwitch<Object>
 	public org.eclipse.ocl.pivot.@NonNull Class caseClassifier(org.eclipse.uml2.uml.Classifier umlClassifier) {
 		assert umlClassifier != null;
 		org.eclipse.ocl.pivot.Class asClass = converter.getCreated(org.eclipse.ocl.pivot.Class.class, umlClassifier);
-		List<org.eclipse.ocl.pivot.Class> asSuperClasses = new ArrayList<org.eclipse.ocl.pivot.Class>();
 		if (asClass == null) {
 			return standardLibrary.getOclInvalidType();
+		}
+		List<org.eclipse.ocl.pivot.Class> asSuperClasses = new ArrayList<org.eclipse.ocl.pivot.Class>();
+		if (asClass instanceof Enumeration) {
+			asSuperClasses.add(standardLibrary.getOclEnumerationType());
+		}
+		else if (asClass instanceof DataType) {
+			PrimitiveType behavioralClass = converter.getBehavioralClass((org.eclipse.uml2.uml.DataType) umlClassifier);
+			if (behavioralClass != null) {
+				asSuperClasses.add(behavioralClass);
+				((DataType)asClass).setBehavioralClass(behavioralClass);
+			}
 		}
 		for (org.eclipse.uml2.uml.Generalization umlGeneralization : umlClassifier.getGeneralizations()) {
 			org.eclipse.uml2.uml.Classifier umlGeneral = umlGeneralization.getGeneral();
@@ -280,7 +293,6 @@ public class UML2ASReferenceSwitch extends UMLSwitch<Object>
 	}
 
 	private @NonNull AssociationClass createAssociationClassProperties(org.eclipse.uml2.uml.@NonNull Association umlAssociation) {
-		//		System.out.println("Association " + umlAssociation.getName() + ", " + NameUtil.debugSimpleName(umlAssociation) + " in " + NameUtil.debugSimpleName(converter.getCreatedMap()) + " ? ");
 		AssociationClass asAssociationClass = converter.getCreated(AssociationClass.class, umlAssociation);
 		assert asAssociationClass != null;
 		List<org.eclipse.uml2.uml.@NonNull Property> umlMemberEnds = converter.getSafeMemberEnds(umlAssociation);
