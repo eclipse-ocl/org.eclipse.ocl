@@ -31,8 +31,10 @@ import org.eclipse.emf.mwe.core.issues.Issues;
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Constraint;
+import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.Model;
@@ -58,6 +60,8 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.xtext.completeocl.CompleteOCLStandaloneSetup;
 
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
 /**
@@ -251,6 +255,7 @@ public class ConstraintMerger extends AbstractProjectComponent
 					if ((primaryDefaultExpression == null) && (pivotDefaultExpression != null)) {
 						primaryProperty.setOwnedExpression(pivotDefaultExpression);
 					}
+					mergeComments(primaryProperty, mergeProperty);
 				}
 				else											// Else simple promotion
 				{
@@ -273,11 +278,24 @@ public class ConstraintMerger extends AbstractProjectComponent
 						PivotUtilInternal.resetContainer(pivotBodyExpression);
 						primaryOperation.setBodyExpression(pivotBodyExpression);
 					}
+					mergeComments(primaryOperation, mergeOperation);
 				}
 				else											// Else simple promotion
 				{
 					PivotUtilInternal.resetContainer(mergeOperation);
 					primaryOperations.add(mergeOperation);
+				}
+			}
+		}
+	}
+
+	public void mergeComments(@NonNull Element primaryElement, @NonNull Element mergeElement) {
+		if (primaryElement.getOwnedComments().isEmpty()) {
+			Iterable<@NonNull Comment> mergeComments = PivotUtil.getOwnedComments(mergeElement);
+			if (!Iterables.isEmpty(mergeComments)) {
+				for (Comment mergeComment : Lists.newArrayList(mergeComments)) {
+					PivotUtilInternal.resetContainer(mergeComment);
+					primaryElement.getOwnedComments().add(mergeComment);
 				}
 			}
 		}
