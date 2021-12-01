@@ -399,6 +399,36 @@ extends EPackage
 	EAttribute getDataType_Value();
 
 	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.DataType#validateBehavioralClassHasDistinctName(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Behavioral Class Has Distinct Name</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate Behavioral Class Has Distinct Name</em>' operation.
+	 * @see org.eclipse.ocl.pivot.DataType#validateBehavioralClassHasDistinctName(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @generated
+	 */
+	EOperation getDataType__ValidateBehavioralClassHasDistinctName__DiagnosticChain_Map();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.DataType#validateBehavioralClassIsPrimitiveType(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Behavioral Class Is Primitive Type</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate Behavioral Class Is Primitive Type</em>' operation.
+	 * @see org.eclipse.ocl.pivot.DataType#validateBehavioralClassIsPrimitiveType(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @generated
+	 */
+	EOperation getDataType__ValidateBehavioralClassIsPrimitiveType__DiagnosticChain_Map();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.DataType#validateBehavioralClassIsSuperClass(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Behavioral Class Is Super Class</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate Behavioral Class Is Super Class</em>' operation.
+	 * @see org.eclipse.ocl.pivot.DataType#validateBehavioralClassIsSuperClass(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @generated
+	 */
+	EOperation getDataType__ValidateBehavioralClassIsSuperClass__DiagnosticChain_Map();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.BooleanLiteralExp <em>Boolean Literal Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6109,6 +6139,30 @@ extends EPackage
 		 * @generated
 		 */
 		EAttribute DATA_TYPE__VALUE = eINSTANCE.getDataType_Value();
+
+		/**
+		 * The meta object literal for the '<em><b>Validate Behavioral Class Has Distinct Name</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation DATA_TYPE___VALIDATE_BEHAVIORAL_CLASS_HAS_DISTINCT_NAME__DIAGNOSTICCHAIN_MAP = eINSTANCE.getDataType__ValidateBehavioralClassHasDistinctName__DiagnosticChain_Map();
+
+		/**
+		 * The meta object literal for the '<em><b>Validate Behavioral Class Is Primitive Type</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation DATA_TYPE___VALIDATE_BEHAVIORAL_CLASS_IS_PRIMITIVE_TYPE__DIAGNOSTICCHAIN_MAP = eINSTANCE.getDataType__ValidateBehavioralClassIsPrimitiveType__DiagnosticChain_Map();
+
+		/**
+		 * The meta object literal for the '<em><b>Validate Behavioral Class Is Super Class</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation DATA_TYPE___VALIDATE_BEHAVIORAL_CLASS_IS_SUPER_CLASS__DIAGNOSTICCHAIN_MAP = eINSTANCE.getDataType__ValidateBehavioralClassIsSuperClass__DiagnosticChain_Map();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.BooleanLiteralExpImpl <em>Boolean Literal Exp</em>}' class.

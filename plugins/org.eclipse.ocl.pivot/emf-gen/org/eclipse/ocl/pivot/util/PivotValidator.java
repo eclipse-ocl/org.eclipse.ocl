@@ -177,12 +177,36 @@ extends EObjectValidator {
 	public static final int CONSTRAINT__VALIDATE_UNIQUE_NAME = 15;
 
 	/**
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Behavioral Class Has Distinct Name' of 'Data Type'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static final int DATA_TYPE__VALIDATE_BEHAVIORAL_CLASS_HAS_DISTINCT_NAME = 16;
+
+	/**
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Behavioral Class Is Primitive Type' of 'Data Type'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static final int DATA_TYPE__VALIDATE_BEHAVIORAL_CLASS_IS_PRIMITIVE_TYPE = 17;
+
+	/**
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Behavioral Class Is Super Class' of 'Data Type'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static final int DATA_TYPE__VALIDATE_BEHAVIORAL_CLASS_IS_SUPER_CLASS = 18;
+
+	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Enumeration Type' of 'Enum Literal Exp'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ENUM_LITERAL_EXP__VALIDATE_TYPE_IS_ENUMERATION_TYPE = 16;
+	public static final int ENUM_LITERAL_EXP__VALIDATE_TYPE_IS_ENUMERATION_TYPE = 19;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Name Is Not Null' of 'Feature'.
@@ -190,7 +214,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int FEATURE__VALIDATE_NAME_IS_NOT_NULL = 17;
+	public static final int FEATURE__VALIDATE_NAME_IS_NOT_NULL = 20;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Not Invalid' of 'Feature'.
@@ -198,7 +222,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int FEATURE__VALIDATE_TYPE_IS_NOT_INVALID = 18;
+	public static final int FEATURE__VALIDATE_TYPE_IS_NOT_INVALID = 21;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Not Null' of 'Feature'.
@@ -206,7 +230,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int FEATURE__VALIDATE_TYPE_IS_NOT_NULL = 19;
+	public static final int FEATURE__VALIDATE_TYPE_IS_NOT_NULL = 22;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Condition Type Is Boolean' of 'If Exp'.
@@ -214,7 +238,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int IF_EXP__VALIDATE_CONDITION_TYPE_IS_BOOLEAN = 20;
+	public static final int IF_EXP__VALIDATE_CONDITION_TYPE_IS_BOOLEAN = 23;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Not Invalid' of 'If Exp'.
@@ -222,7 +246,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int IF_EXP__VALIDATE_TYPE_IS_NOT_INVALID = 21;
+	public static final int IF_EXP__VALIDATE_TYPE_IS_NOT_INVALID = 24;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Integer' of 'Integer Literal Exp'.
@@ -230,7 +254,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int INTEGER_LITERAL_EXP__VALIDATE_TYPE_IS_INTEGER = 22;
+	public static final int INTEGER_LITERAL_EXP__VALIDATE_TYPE_IS_INTEGER = 25;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Body Type Conforms To Result Type' of 'Iterate Exp'.
@@ -238,7 +262,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ITERATE_EXP__VALIDATE_BODY_TYPE_CONFORMS_TO_RESULT_TYPE = 23;
+	public static final int ITERATE_EXP__VALIDATE_BODY_TYPE_CONFORMS_TO_RESULT_TYPE = 26;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate One Initializer' of 'Iterate Exp'.
@@ -246,7 +270,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ITERATE_EXP__VALIDATE_ONE_INITIALIZER = 24;
+	public static final int ITERATE_EXP__VALIDATE_ONE_INITIALIZER = 27;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Safe Iterator Is Required' of 'Iterate Exp'.
@@ -254,7 +278,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ITERATE_EXP__VALIDATE_SAFE_ITERATOR_IS_REQUIRED = 25;
+	public static final int ITERATE_EXP__VALIDATE_SAFE_ITERATOR_IS_REQUIRED = 28;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Safe Source Can Be Null' of 'Iterate Exp'.
@@ -262,7 +286,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ITERATE_EXP__VALIDATE_SAFE_SOURCE_CAN_BE_NULL = 26;
+	public static final int ITERATE_EXP__VALIDATE_SAFE_SOURCE_CAN_BE_NULL = 29;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Result Type' of 'Iterate Exp'.
@@ -270,7 +294,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ITERATE_EXP__VALIDATE_TYPE_IS_RESULT_TYPE = 27;
+	public static final int ITERATE_EXP__VALIDATE_TYPE_IS_RESULT_TYPE = 30;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Unsafe Source Can Not Be Null' of 'Iterate Exp'.
@@ -278,7 +302,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ITERATE_EXP__VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL = 28;
+	public static final int ITERATE_EXP__VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL = 31;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Any Body Type Is Boolean' of 'Iterator Exp'.
@@ -286,7 +310,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ITERATOR_EXP__VALIDATE_ANY_BODY_TYPE_IS_BOOLEAN = 29;
+	public static final int ITERATOR_EXP__VALIDATE_ANY_BODY_TYPE_IS_BOOLEAN = 32;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Any Has One Iterator' of 'Iterator Exp'.
@@ -294,7 +318,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ITERATOR_EXP__VALIDATE_ANY_HAS_ONE_ITERATOR = 30;
+	public static final int ITERATOR_EXP__VALIDATE_ANY_HAS_ONE_ITERATOR = 33;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Any Type Is Source Element Type' of 'Iterator Exp'.
@@ -302,7 +326,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ITERATOR_EXP__VALIDATE_ANY_TYPE_IS_SOURCE_ELEMENT_TYPE = 31;
+	public static final int ITERATOR_EXP__VALIDATE_ANY_TYPE_IS_SOURCE_ELEMENT_TYPE = 34;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Closure Body Element Type Is Iterator Type' of 'Iterator Exp'.
@@ -310,7 +334,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ITERATOR_EXP__VALIDATE_CLOSURE_BODY_ELEMENT_TYPE_IS_ITERATOR_TYPE = 32;
+	public static final int ITERATOR_EXP__VALIDATE_CLOSURE_BODY_ELEMENT_TYPE_IS_ITERATOR_TYPE = 35;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Closure Body Type Is Conformantto Iterator Type' of 'Iterator Exp'.
@@ -318,7 +342,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ITERATOR_EXP__VALIDATE_CLOSURE_BODY_TYPE_IS_CONFORMANTTO_ITERATOR_TYPE = 33;
+	public static final int ITERATOR_EXP__VALIDATE_CLOSURE_BODY_TYPE_IS_CONFORMANTTO_ITERATOR_TYPE = 36;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Closure Element Type Is Source Element Type' of 'Iterator Exp'.
@@ -326,7 +350,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ITERATOR_EXP__VALIDATE_CLOSURE_ELEMENT_TYPE_IS_SOURCE_ELEMENT_TYPE = 34;
+	public static final int ITERATOR_EXP__VALIDATE_CLOSURE_ELEMENT_TYPE_IS_SOURCE_ELEMENT_TYPE = 37;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Closure Has One Iterator' of 'Iterator Exp'.
@@ -334,7 +358,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ITERATOR_EXP__VALIDATE_CLOSURE_HAS_ONE_ITERATOR = 35;
+	public static final int ITERATOR_EXP__VALIDATE_CLOSURE_HAS_ONE_ITERATOR = 38;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Closure Result Element Type Is Iterator Type' of 'Iterator Exp'.
@@ -342,7 +366,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ITERATOR_EXP__VALIDATE_CLOSURE_RESULT_ELEMENT_TYPE_IS_ITERATOR_TYPE = 36;
+	public static final int ITERATOR_EXP__VALIDATE_CLOSURE_RESULT_ELEMENT_TYPE_IS_ITERATOR_TYPE = 39;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Closure Source Element Type Is Body Element Type' of 'Iterator Exp'.
@@ -350,7 +374,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ITERATOR_EXP__VALIDATE_CLOSURE_SOURCE_ELEMENT_TYPE_IS_BODY_ELEMENT_TYPE = 37;
+	public static final int ITERATOR_EXP__VALIDATE_CLOSURE_SOURCE_ELEMENT_TYPE_IS_BODY_ELEMENT_TYPE = 40;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Closure Type Is Unique Collection' of 'Iterator Exp'.
@@ -358,7 +382,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ITERATOR_EXP__VALIDATE_CLOSURE_TYPE_IS_UNIQUE_COLLECTION = 38;
+	public static final int ITERATOR_EXP__VALIDATE_CLOSURE_TYPE_IS_UNIQUE_COLLECTION = 41;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Collect Element Type Is Flattened Body Type' of 'Iterator Exp'.
@@ -366,7 +390,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ITERATOR_EXP__VALIDATE_COLLECT_ELEMENT_TYPE_IS_FLATTENED_BODY_TYPE = 39;
+	public static final int ITERATOR_EXP__VALIDATE_COLLECT_ELEMENT_TYPE_IS_FLATTENED_BODY_TYPE = 42;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Collect Type Is Unordered' of 'Iterator Exp'.
@@ -374,7 +398,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ITERATOR_EXP__VALIDATE_COLLECT_TYPE_IS_UNORDERED = 40;
+	public static final int ITERATOR_EXP__VALIDATE_COLLECT_TYPE_IS_UNORDERED = 43;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Iterator Type Is Source Element Type' of 'Iterator Exp'.
@@ -382,7 +406,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ITERATOR_EXP__VALIDATE_ITERATOR_TYPE_IS_SOURCE_ELEMENT_TYPE = 41;
+	public static final int ITERATOR_EXP__VALIDATE_ITERATOR_TYPE_IS_SOURCE_ELEMENT_TYPE = 44;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Iterator Type Is Source Key Type' of 'Iterator Exp'.
@@ -390,7 +414,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ITERATOR_EXP__VALIDATE_ITERATOR_TYPE_IS_SOURCE_KEY_TYPE = 42;
+	public static final int ITERATOR_EXP__VALIDATE_ITERATOR_TYPE_IS_SOURCE_KEY_TYPE = 45;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Safe Iterator Is Required' of 'Iterator Exp'.
@@ -398,7 +422,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ITERATOR_EXP__VALIDATE_SAFE_ITERATOR_IS_REQUIRED = 43;
+	public static final int ITERATOR_EXP__VALIDATE_SAFE_ITERATOR_IS_REQUIRED = 46;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Safe Source Can Be Null' of 'Iterator Exp'.
@@ -406,7 +430,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ITERATOR_EXP__VALIDATE_SAFE_SOURCE_CAN_BE_NULL = 44;
+	public static final int ITERATOR_EXP__VALIDATE_SAFE_SOURCE_CAN_BE_NULL = 47;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Sorted By Element Type Is Source Element Type' of 'Iterator Exp'.
@@ -414,7 +438,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ITERATOR_EXP__VALIDATE_SORTED_BY_ELEMENT_TYPE_IS_SOURCE_ELEMENT_TYPE = 45;
+	public static final int ITERATOR_EXP__VALIDATE_SORTED_BY_ELEMENT_TYPE_IS_SOURCE_ELEMENT_TYPE = 48;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Sorted By Is Ordered If Source Is Ordered' of 'Iterator Exp'.
@@ -422,7 +446,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ITERATOR_EXP__VALIDATE_SORTED_BY_IS_ORDERED_IF_SOURCE_IS_ORDERED = 46;
+	public static final int ITERATOR_EXP__VALIDATE_SORTED_BY_IS_ORDERED_IF_SOURCE_IS_ORDERED = 49;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Sorted By Iterator Type Is Comparable' of 'Iterator Exp'.
@@ -430,7 +454,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ITERATOR_EXP__VALIDATE_SORTED_BY_ITERATOR_TYPE_IS_COMPARABLE = 47;
+	public static final int ITERATOR_EXP__VALIDATE_SORTED_BY_ITERATOR_TYPE_IS_COMPARABLE = 50;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Unsafe Source Can Not Be Null' of 'Iterator Exp'.
@@ -438,7 +462,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ITERATOR_EXP__VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL = 48;
+	public static final int ITERATOR_EXP__VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL = 51;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Has No Initializer' of 'Iterator Variable'.
@@ -446,7 +470,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ITERATOR_VARIABLE__VALIDATE_HAS_NO_INITIALIZER = 49;
+	public static final int ITERATOR_VARIABLE__VALIDATE_HAS_NO_INITIALIZER = 52;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Compatible Nullity For In' of 'Let Exp'.
@@ -454,7 +478,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int LET_EXP__VALIDATE_COMPATIBLE_NULLITY_FOR_IN = 50;
+	public static final int LET_EXP__VALIDATE_COMPATIBLE_NULLITY_FOR_IN = 53;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is In Type' of 'Let Exp'.
@@ -462,7 +486,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int LET_EXP__VALIDATE_TYPE_IS_IN_TYPE = 51;
+	public static final int LET_EXP__VALIDATE_TYPE_IS_IN_TYPE = 54;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Not Invalid' of 'Let Exp'.
@@ -470,7 +494,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int LET_EXP__VALIDATE_TYPE_IS_NOT_INVALID = 52;
+	public static final int LET_EXP__VALIDATE_TYPE_IS_NOT_INVALID = 55;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Compatible Nullity For Initializer' of 'Let Variable'.
@@ -478,7 +502,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int LET_VARIABLE__VALIDATE_COMPATIBLE_NULLITY_FOR_INITIALIZER = 53;
+	public static final int LET_VARIABLE__VALIDATE_COMPATIBLE_NULLITY_FOR_INITIALIZER = 56;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Compatible Type For Initializer' of 'Let Variable'.
@@ -486,7 +510,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int LET_VARIABLE__VALIDATE_COMPATIBLE_TYPE_FOR_INITIALIZER = 54;
+	public static final int LET_VARIABLE__VALIDATE_COMPATIBLE_TYPE_FOR_INITIALIZER = 57;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Has Initializer' of 'Let Variable'.
@@ -494,7 +518,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int LET_VARIABLE__VALIDATE_HAS_INITIALIZER = 55;
+	public static final int LET_VARIABLE__VALIDATE_HAS_INITIALIZER = 58;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Matching Map Co Iterators' of 'Loop Exp'.
@@ -502,7 +526,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int LOOP_EXP__VALIDATE_MATCHING_MAP_CO_ITERATORS = 56;
+	public static final int LOOP_EXP__VALIDATE_MATCHING_MAP_CO_ITERATORS = 59;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Matching Ordered Collection Co Iterators' of 'Loop Exp'.
@@ -510,7 +534,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int LOOP_EXP__VALIDATE_MATCHING_ORDERED_COLLECTION_CO_ITERATORS = 57;
+	public static final int LOOP_EXP__VALIDATE_MATCHING_ORDERED_COLLECTION_CO_ITERATORS = 60;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate No Co Initializers' of 'Loop Exp'.
@@ -518,7 +542,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int LOOP_EXP__VALIDATE_NO_CO_INITIALIZERS = 58;
+	public static final int LOOP_EXP__VALIDATE_NO_CO_INITIALIZERS = 61;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate No Initializers' of 'Loop Exp'.
@@ -526,7 +550,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int LOOP_EXP__VALIDATE_NO_INITIALIZERS = 59;
+	public static final int LOOP_EXP__VALIDATE_NO_INITIALIZERS = 62;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate No Not Ordered Collection Co Iterators' of 'Loop Exp'.
@@ -534,7 +558,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int LOOP_EXP__VALIDATE_NO_NOT_ORDERED_COLLECTION_CO_ITERATORS = 60;
+	public static final int LOOP_EXP__VALIDATE_NO_NOT_ORDERED_COLLECTION_CO_ITERATORS = 63;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Source Is Collection' of 'Loop Exp'.
@@ -542,7 +566,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int LOOP_EXP__VALIDATE_SOURCE_IS_COLLECTION = 61;
+	public static final int LOOP_EXP__VALIDATE_SOURCE_IS_COLLECTION = 64;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Source Is Iterable' of 'Loop Exp'.
@@ -550,7 +574,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int LOOP_EXP__VALIDATE_SOURCE_IS_ITERABLE = 62;
+	public static final int LOOP_EXP__VALIDATE_SOURCE_IS_ITERABLE = 65;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate One Call Or One Send' of 'Message Exp'.
@@ -558,7 +582,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int MESSAGE_EXP__VALIDATE_ONE_CALL_OR_ONE_SEND = 63;
+	public static final int MESSAGE_EXP__VALIDATE_ONE_CALL_OR_ONE_SEND = 66;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Target Is Not ACollection' of 'Message Exp'.
@@ -566,7 +590,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int MESSAGE_EXP__VALIDATE_TARGET_IS_NOT_ACOLLECTION = 64;
+	public static final int MESSAGE_EXP__VALIDATE_TARGET_IS_NOT_ACOLLECTION = 67;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Not Null' of 'OCL Expression'.
@@ -574,7 +598,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int OCL_EXPRESSION__VALIDATE_TYPE_IS_NOT_NULL = 65;
+	public static final int OCL_EXPRESSION__VALIDATE_TYPE_IS_NOT_NULL = 68;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Compatible Return' of 'Operation'.
@@ -582,7 +606,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int OPERATION__VALIDATE_COMPATIBLE_RETURN = 66;
+	public static final int OPERATION__VALIDATE_COMPATIBLE_RETURN = 69;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Loadable Implementation' of 'Operation'.
@@ -590,7 +614,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int OPERATION__VALIDATE_LOADABLE_IMPLEMENTATION = 67;
+	public static final int OPERATION__VALIDATE_LOADABLE_IMPLEMENTATION = 70;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Unique Postcondition Name' of 'Operation'.
@@ -598,7 +622,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int OPERATION__VALIDATE_UNIQUE_POSTCONDITION_NAME = 68;
+	public static final int OPERATION__VALIDATE_UNIQUE_POSTCONDITION_NAME = 71;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Unique Precondition Name' of 'Operation'.
@@ -606,7 +630,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int OPERATION__VALIDATE_UNIQUE_PRECONDITION_NAME = 69;
+	public static final int OPERATION__VALIDATE_UNIQUE_PRECONDITION_NAME = 72;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Argument Count' of 'Operation Call Exp'.
@@ -614,7 +638,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int OPERATION_CALL_EXP__VALIDATE_ARGUMENT_COUNT = 70;
+	public static final int OPERATION_CALL_EXP__VALIDATE_ARGUMENT_COUNT = 73;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Argument Type Is Conformant' of 'Operation Call Exp'.
@@ -622,7 +646,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int OPERATION_CALL_EXP__VALIDATE_ARGUMENT_TYPE_IS_CONFORMANT = 71;
+	public static final int OPERATION_CALL_EXP__VALIDATE_ARGUMENT_TYPE_IS_CONFORMANT = 74;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Safe Source Can Be Null' of 'Operation Call Exp'.
@@ -630,7 +654,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int OPERATION_CALL_EXP__VALIDATE_SAFE_SOURCE_CAN_BE_NULL = 72;
+	public static final int OPERATION_CALL_EXP__VALIDATE_SAFE_SOURCE_CAN_BE_NULL = 75;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Unsafe Source Can Not Be Null' of 'Operation Call Exp'.
@@ -638,7 +662,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int OPERATION_CALL_EXP__VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL = 73;
+	public static final int OPERATION_CALL_EXP__VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL = 76;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Safe Source Can Be Null' of 'Opposite Property Call Exp'.
@@ -646,7 +670,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int OPPOSITE_PROPERTY_CALL_EXP__VALIDATE_SAFE_SOURCE_CAN_BE_NULL = 74;
+	public static final int OPPOSITE_PROPERTY_CALL_EXP__VALIDATE_SAFE_SOURCE_CAN_BE_NULL = 77;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Unsafe Source Can Not Be Null' of 'Opposite Property Call Exp'.
@@ -654,7 +678,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int OPPOSITE_PROPERTY_CALL_EXP__VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL = 75;
+	public static final int OPPOSITE_PROPERTY_CALL_EXP__VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL = 78;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Has No Initializer' of 'Parameter Variable'.
@@ -662,7 +686,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int PARAMETER_VARIABLE__VALIDATE_HAS_NO_INITIALIZER = 76;
+	public static final int PARAMETER_VARIABLE__VALIDATE_HAS_NO_INITIALIZER = 79;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Compatible Default Expression' of 'Property'.
@@ -670,7 +694,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int PROPERTY__VALIDATE_COMPATIBLE_DEFAULT_EXPRESSION = 77;
+	public static final int PROPERTY__VALIDATE_COMPATIBLE_DEFAULT_EXPRESSION = 80;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Compatible Result Type' of 'Property Call Exp'.
@@ -678,7 +702,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int PROPERTY_CALL_EXP__VALIDATE_COMPATIBLE_RESULT_TYPE = 78;
+	public static final int PROPERTY_CALL_EXP__VALIDATE_COMPATIBLE_RESULT_TYPE = 81;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Non Static Source Type Is Conformant' of 'Property Call Exp'.
@@ -686,7 +710,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int PROPERTY_CALL_EXP__VALIDATE_NON_STATIC_SOURCE_TYPE_IS_CONFORMANT = 79;
+	public static final int PROPERTY_CALL_EXP__VALIDATE_NON_STATIC_SOURCE_TYPE_IS_CONFORMANT = 82;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Safe Source Can Be Null' of 'Property Call Exp'.
@@ -694,7 +718,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int PROPERTY_CALL_EXP__VALIDATE_SAFE_SOURCE_CAN_BE_NULL = 80;
+	public static final int PROPERTY_CALL_EXP__VALIDATE_SAFE_SOURCE_CAN_BE_NULL = 83;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Unsafe Source Can Not Be Null' of 'Property Call Exp'.
@@ -702,7 +726,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int PROPERTY_CALL_EXP__VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL = 81;
+	public static final int PROPERTY_CALL_EXP__VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL = 84;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Compatible Nullity For Initializer' of 'Result Variable'.
@@ -710,7 +734,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int RESULT_VARIABLE__VALIDATE_COMPATIBLE_NULLITY_FOR_INITIALIZER = 82;
+	public static final int RESULT_VARIABLE__VALIDATE_COMPATIBLE_NULLITY_FOR_INITIALIZER = 85;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Compatible Type For Initializer' of 'Result Variable'.
@@ -718,7 +742,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int RESULT_VARIABLE__VALIDATE_COMPATIBLE_TYPE_FOR_INITIALIZER = 83;
+	public static final int RESULT_VARIABLE__VALIDATE_COMPATIBLE_TYPE_FOR_INITIALIZER = 86;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Has Initializer' of 'Result Variable'.
@@ -726,7 +750,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int RESULT_VARIABLE__VALIDATE_HAS_INITIALIZER = 84;
+	public static final int RESULT_VARIABLE__VALIDATE_HAS_INITIALIZER = 87;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Class Has No String Value Initializer' of 'Shadow Exp'.
@@ -734,7 +758,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int SHADOW_EXP__VALIDATE_CLASS_HAS_NO_STRING_VALUE_INITIALIZER = 85;
+	public static final int SHADOW_EXP__VALIDATE_CLASS_HAS_NO_STRING_VALUE_INITIALIZER = 88;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Data Type Has No Part Initializers' of 'Shadow Exp'.
@@ -742,7 +766,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int SHADOW_EXP__VALIDATE_DATA_TYPE_HAS_NO_PART_INITIALIZERS = 86;
+	public static final int SHADOW_EXP__VALIDATE_DATA_TYPE_HAS_NO_PART_INITIALIZERS = 89;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Data Type Has One Part Initializer' of 'Shadow Exp'.
@@ -750,7 +774,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int SHADOW_EXP__VALIDATE_DATA_TYPE_HAS_ONE_PART_INITIALIZER = 87;
+	public static final int SHADOW_EXP__VALIDATE_DATA_TYPE_HAS_ONE_PART_INITIALIZER = 90;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Data Type Has String Value Initializer' of 'Shadow Exp'.
@@ -758,7 +782,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int SHADOW_EXP__VALIDATE_DATA_TYPE_HAS_STRING_VALUE_INITIALIZER = 88;
+	public static final int SHADOW_EXP__VALIDATE_DATA_TYPE_HAS_STRING_VALUE_INITIALIZER = 91;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Initializes All Class Properties' of 'Shadow Exp'.
@@ -766,7 +790,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int SHADOW_EXP__VALIDATE_INITIALIZES_ALL_CLASS_PROPERTIES = 89;
+	public static final int SHADOW_EXP__VALIDATE_INITIALIZES_ALL_CLASS_PROPERTIES = 92;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Not Invalid' of 'Shadow Exp'.
@@ -774,7 +798,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int SHADOW_EXP__VALIDATE_TYPE_IS_NOT_INVALID = 90;
+	public static final int SHADOW_EXP__VALIDATE_TYPE_IS_NOT_INVALID = 93;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Compatible Initialiser Type' of 'Shadow Part'.
@@ -782,7 +806,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int SHADOW_PART__VALIDATE_COMPATIBLE_INITIALISER_TYPE = 91;
+	public static final int SHADOW_PART__VALIDATE_COMPATIBLE_INITIALISER_TYPE = 94;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Not Invalid' of 'Shadow Part'.
@@ -790,7 +814,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int SHADOW_PART__VALIDATE_TYPE_IS_NOT_INVALID = 92;
+	public static final int SHADOW_PART__VALIDATE_TYPE_IS_NOT_INVALID = 95;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Not Null' of 'Shadow Part'.
@@ -798,7 +822,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int SHADOW_PART__VALIDATE_TYPE_IS_NOT_NULL = 93;
+	public static final int SHADOW_PART__VALIDATE_TYPE_IS_NOT_NULL = 96;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Not Invalid' of 'State Exp'.
@@ -806,7 +830,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int STATE_EXP__VALIDATE_TYPE_IS_NOT_INVALID = 94;
+	public static final int STATE_EXP__VALIDATE_TYPE_IS_NOT_INVALID = 97;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Compatible Initialiser Type' of 'Tuple Literal Part'.
@@ -814,7 +838,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int TUPLE_LITERAL_PART__VALIDATE_COMPATIBLE_INITIALISER_TYPE = 95;
+	public static final int TUPLE_LITERAL_PART__VALIDATE_COMPATIBLE_INITIALISER_TYPE = 98;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Not Invalid' of 'Tuple Literal Part'.
@@ -822,7 +846,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int TUPLE_LITERAL_PART__VALIDATE_TYPE_IS_NOT_INVALID = 96;
+	public static final int TUPLE_LITERAL_PART__VALIDATE_TYPE_IS_NOT_INVALID = 99;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Compatible Initialiser Type' of 'Variable'.
@@ -830,7 +854,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int VARIABLE__VALIDATE_COMPATIBLE_INITIALISER_TYPE = 97;
+	public static final int VARIABLE__VALIDATE_COMPATIBLE_INITIALISER_TYPE = 100;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Name Is Not Null' of 'Variable Declaration'.
@@ -838,7 +862,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int VARIABLE_DECLARATION__VALIDATE_NAME_IS_NOT_NULL = 98;
+	public static final int VARIABLE_DECLARATION__VALIDATE_NAME_IS_NOT_NULL = 101;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Not Invalid' of 'Variable Declaration'.
@@ -846,7 +870,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int VARIABLE_DECLARATION__VALIDATE_TYPE_IS_NOT_INVALID = 99;
+	public static final int VARIABLE_DECLARATION__VALIDATE_TYPE_IS_NOT_INVALID = 102;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Not Null' of 'Variable Declaration'.
@@ -854,7 +878,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int VARIABLE_DECLARATION__VALIDATE_TYPE_IS_NOT_NULL = 100;
+	public static final int VARIABLE_DECLARATION__VALIDATE_TYPE_IS_NOT_NULL = 103;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Not Invalid' of 'Variable Exp'.
@@ -862,7 +886,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int VARIABLE_EXP__VALIDATE_TYPE_IS_NOT_INVALID = 101;
+	public static final int VARIABLE_EXP__VALIDATE_TYPE_IS_NOT_INVALID = 104;
 
 	/**
 	 * A constant with a fixed name that can be used as the base value for additional hand written constants.
@@ -870,7 +894,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private static final int GENERATED_DIAGNOSTIC_CODE_COUNT = 101;
+	private static final int GENERATED_DIAGNOSTIC_CODE_COUNT = 104;
 
 	/**
 	 * A constant with a fixed name that can be used as the base value for additional hand written constants in a derived class.
@@ -1980,6 +2004,9 @@ extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(bagType, diagnostics, context);
 		if (result || diagnostics != null) result &= validateClass_validateNameIsNotNull(bagType, diagnostics, context);
 		if (result || diagnostics != null) result &= validateClass_validateUniqueInvariantName(bagType, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDataType_validateBehavioralClassHasDistinctName(bagType, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDataType_validateBehavioralClassIsPrimitiveType(bagType, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDataType_validateBehavioralClassIsSuperClass(bagType, diagnostics, context);
 		return result;
 	}
 
@@ -2022,6 +2049,9 @@ extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(collectionType, diagnostics, context);
 		if (result || diagnostics != null) result &= validateClass_validateNameIsNotNull(collectionType, diagnostics, context);
 		if (result || diagnostics != null) result &= validateClass_validateUniqueInvariantName(collectionType, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDataType_validateBehavioralClassHasDistinctName(collectionType, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDataType_validateBehavioralClassIsPrimitiveType(collectionType, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDataType_validateBehavioralClassIsSuperClass(collectionType, diagnostics, context);
 		return result;
 	}
 
@@ -2043,7 +2073,43 @@ extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(dataType, diagnostics, context);
 		if (result || diagnostics != null) result &= validateClass_validateNameIsNotNull(dataType, diagnostics, context);
 		if (result || diagnostics != null) result &= validateClass_validateUniqueInvariantName(dataType, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDataType_validateBehavioralClassHasDistinctName(dataType, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDataType_validateBehavioralClassIsPrimitiveType(dataType, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDataType_validateBehavioralClassIsSuperClass(dataType, diagnostics, context);
 		return result;
+	}
+
+	/**
+	 * Validates the validateBehavioralClassHasDistinctName constraint of '<em>Data Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateDataType_validateBehavioralClassHasDistinctName(DataType dataType, DiagnosticChain diagnostics, Map<Object, Object> context)
+	{
+		return dataType.validateBehavioralClassHasDistinctName(diagnostics, context);
+	}
+
+	/**
+	 * Validates the validateBehavioralClassIsPrimitiveType constraint of '<em>Data Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateDataType_validateBehavioralClassIsPrimitiveType(DataType dataType, DiagnosticChain diagnostics, Map<Object, Object> context)
+	{
+		return dataType.validateBehavioralClassIsPrimitiveType(diagnostics, context);
+	}
+
+	/**
+	 * Validates the validateBehavioralClassIsSuperClass constraint of '<em>Data Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateDataType_validateBehavioralClassIsSuperClass(DataType dataType, DiagnosticChain diagnostics, Map<Object, Object> context)
+	{
+		return dataType.validateBehavioralClassIsSuperClass(diagnostics, context);
 	}
 
 	/**
@@ -2456,6 +2522,9 @@ extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(enumeration, diagnostics, context);
 		if (result || diagnostics != null) result &= validateClass_validateNameIsNotNull(enumeration, diagnostics, context);
 		if (result || diagnostics != null) result &= validateClass_validateUniqueInvariantName(enumeration, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDataType_validateBehavioralClassHasDistinctName(enumeration, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDataType_validateBehavioralClassIsPrimitiveType(enumeration, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDataType_validateBehavioralClassIsSuperClass(enumeration, diagnostics, context);
 		return result;
 	}
 
@@ -2818,6 +2887,9 @@ extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(iterableType, diagnostics, context);
 		if (result || diagnostics != null) result &= validateClass_validateNameIsNotNull(iterableType, diagnostics, context);
 		if (result || diagnostics != null) result &= validateClass_validateUniqueInvariantName(iterableType, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDataType_validateBehavioralClassHasDistinctName(iterableType, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDataType_validateBehavioralClassIsPrimitiveType(iterableType, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDataType_validateBehavioralClassIsSuperClass(iterableType, diagnostics, context);
 		return result;
 	}
 
@@ -3271,6 +3343,9 @@ extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(lambdaType, diagnostics, context);
 		if (result || diagnostics != null) result &= validateClass_validateNameIsNotNull(lambdaType, diagnostics, context);
 		if (result || diagnostics != null) result &= validateClass_validateUniqueInvariantName(lambdaType, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDataType_validateBehavioralClassHasDistinctName(lambdaType, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDataType_validateBehavioralClassIsPrimitiveType(lambdaType, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDataType_validateBehavioralClassIsSuperClass(lambdaType, diagnostics, context);
 		return result;
 	}
 
@@ -3439,6 +3514,9 @@ extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(mapType, diagnostics, context);
 		if (result || diagnostics != null) result &= validateClass_validateNameIsNotNull(mapType, diagnostics, context);
 		if (result || diagnostics != null) result &= validateClass_validateUniqueInvariantName(mapType, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDataType_validateBehavioralClassHasDistinctName(mapType, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDataType_validateBehavioralClassIsPrimitiveType(mapType, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDataType_validateBehavioralClassIsSuperClass(mapType, diagnostics, context);
 		return result;
 	}
 
@@ -3812,6 +3890,9 @@ extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(orderedSetType, diagnostics, context);
 		if (result || diagnostics != null) result &= validateClass_validateNameIsNotNull(orderedSetType, diagnostics, context);
 		if (result || diagnostics != null) result &= validateClass_validateUniqueInvariantName(orderedSetType, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDataType_validateBehavioralClassHasDistinctName(orderedSetType, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDataType_validateBehavioralClassIsPrimitiveType(orderedSetType, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDataType_validateBehavioralClassIsSuperClass(orderedSetType, diagnostics, context);
 		return result;
 	}
 
@@ -3843,6 +3924,9 @@ extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(primitiveType, diagnostics, context);
 		if (result || diagnostics != null) result &= validateClass_validateNameIsNotNull(primitiveType, diagnostics, context);
 		if (result || diagnostics != null) result &= validateClass_validateUniqueInvariantName(primitiveType, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDataType_validateBehavioralClassHasDistinctName(primitiveType, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDataType_validateBehavioralClassIsPrimitiveType(primitiveType, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDataType_validateBehavioralClassIsSuperClass(primitiveType, diagnostics, context);
 		return result;
 	}
 
@@ -4095,6 +4179,9 @@ extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(sequenceType, diagnostics, context);
 		if (result || diagnostics != null) result &= validateClass_validateNameIsNotNull(sequenceType, diagnostics, context);
 		if (result || diagnostics != null) result &= validateClass_validateUniqueInvariantName(sequenceType, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDataType_validateBehavioralClassHasDistinctName(sequenceType, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDataType_validateBehavioralClassIsPrimitiveType(sequenceType, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDataType_validateBehavioralClassIsSuperClass(sequenceType, diagnostics, context);
 		return result;
 	}
 
@@ -4116,6 +4203,9 @@ extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(setType, diagnostics, context);
 		if (result || diagnostics != null) result &= validateClass_validateNameIsNotNull(setType, diagnostics, context);
 		if (result || diagnostics != null) result &= validateClass_validateUniqueInvariantName(setType, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDataType_validateBehavioralClassHasDistinctName(setType, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDataType_validateBehavioralClassIsPrimitiveType(setType, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDataType_validateBehavioralClassIsSuperClass(setType, diagnostics, context);
 		return result;
 	}
 
@@ -4464,6 +4554,9 @@ extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(tupleType, diagnostics, context);
 		if (result || diagnostics != null) result &= validateClass_validateNameIsNotNull(tupleType, diagnostics, context);
 		if (result || diagnostics != null) result &= validateClass_validateUniqueInvariantName(tupleType, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDataType_validateBehavioralClassHasDistinctName(tupleType, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDataType_validateBehavioralClassIsPrimitiveType(tupleType, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDataType_validateBehavioralClassIsSuperClass(tupleType, diagnostics, context);
 		return result;
 	}
 

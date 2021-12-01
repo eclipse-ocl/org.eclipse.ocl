@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot;
 
+import java.util.Map;
+import org.eclipse.emf.common.util.DiagnosticChain;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -63,6 +66,27 @@ extends org.eclipse.ocl.pivot.Class {
 	 * @generated
 	 */
 	String getValue();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	boolean validateBehavioralClassHasDistinctName(DiagnosticChain diagnostics, Map<Object, Object> context);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	boolean validateBehavioralClassIsPrimitiveType(DiagnosticChain diagnostics, Map<Object, Object> context);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	boolean validateBehavioralClassIsSuperClass(DiagnosticChain diagnostics, Map<Object, Object> context);
 
 	/**
 	 * Returns the value of the '<em><b>Behavioral Class</b></em>' reference.

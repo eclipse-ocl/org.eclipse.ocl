@@ -1565,6 +1565,39 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	@Override
+	public EOperation getDataType__ValidateBehavioralClassHasDistinctName__DiagnosticChain_Map()
+	{
+		return dataTypeEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EOperation getDataType__ValidateBehavioralClassIsPrimitiveType__DiagnosticChain_Map()
+	{
+		return dataTypeEClass.getEOperations().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EOperation getDataType__ValidateBehavioralClassIsSuperClass__DiagnosticChain_Map()
+	{
+		return dataTypeEClass.getEOperations().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EClass getBooleanLiteralExp() {
 		return booleanLiteralExpEClass;
 	}
@@ -7229,6 +7262,9 @@ implements PivotPackage  {
 		createEReference(dataTypeEClass, 20);
 		createEAttribute(dataTypeEClass, 21);
 		createEAttribute(dataTypeEClass, 22);
+		createEOperation(dataTypeEClass, 8);
+		createEOperation(dataTypeEClass, 9);
+		createEOperation(dataTypeEClass, 10);
 
 		detailEClass = createEClass(23);
 		createEAttribute(detailEClass, 5);
@@ -8197,6 +8233,33 @@ implements PivotPackage  {
 		initEReference(getDataType_BehavioralClass(), this.getClass_(), null, "behavioralClass", null, 0, 1, DataType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEAttribute(getDataType_IsSerializable(), this.getBoolean(), "isSerializable", "true", 1, 1, DataType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(getDataType_Value(), this.getString(), "value", "", 1, 1, DataType.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+
+		op = initEOperation(getDataType__ValidateBehavioralClassHasDistinctName__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "validateBehavioralClassHasDistinctName", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostics", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(ecorePackage.getEMap());
+		g2 = createEGenericType(ecorePackage.getEJavaObject());
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType(ecorePackage.getEJavaObject());
+		g1.getETypeArguments().add(g2);
+		addEParameter(op, g1, "context", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+
+		op = initEOperation(getDataType__ValidateBehavioralClassIsPrimitiveType__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "validateBehavioralClassIsPrimitiveType", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostics", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(ecorePackage.getEMap());
+		g2 = createEGenericType(ecorePackage.getEJavaObject());
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType(ecorePackage.getEJavaObject());
+		g1.getETypeArguments().add(g2);
+		addEParameter(op, g1, "context", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+
+		op = initEOperation(getDataType__ValidateBehavioralClassIsSuperClass__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "validateBehavioralClassIsSuperClass", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostics", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(ecorePackage.getEMap());
+		g2 = createEGenericType(ecorePackage.getEJavaObject());
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType(ecorePackage.getEJavaObject());
+		g1.getETypeArguments().add(g2);
+		addEParameter(op, g1, "context", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(detailEClass, Detail.class, "Detail", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEAttribute(getDetail_Values(), this.getString(), "values", null, 1, -1, Detail.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
@@ -9679,6 +9742,27 @@ implements PivotPackage  {
 			   "body", "true " //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
+		  (getDataType__ValidateBehavioralClassHasDistinctName__DiagnosticChain_Map(),
+		   source,
+		   new String[]
+		   {
+			   "body", "behavioralClass <> null implies superClasses->closure(superClasses)->forAll(b | b.name <> name)\n" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getDataType__ValidateBehavioralClassIsPrimitiveType__DiagnosticChain_Map(),
+		   source,
+		   new String[]
+		   {
+			   "body", "behavioralClass <> null implies behavioralClass.oclIsKindOf(PrimitiveType)\n" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getDataType__ValidateBehavioralClassIsSuperClass__DiagnosticChain_Map(),
+		   source,
+		   new String[]
+		   {
+			   "body", "behavioralClass <> null implies superClasses->includes(behavioralClass)\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
 		  (getElement__AllOwnedElements(),
 		   source,
 		   new String[]
@@ -10466,6 +10550,27 @@ implements PivotPackage  {
 		   new String[]
 		   {
 			   "originalName", "UniqueName" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getDataType__ValidateBehavioralClassHasDistinctName__DiagnosticChain_Map(),
+		   source,
+		   new String[]
+		   {
+			   "originalName", "BehavioralClassHasDistinctName" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getDataType__ValidateBehavioralClassIsPrimitiveType__DiagnosticChain_Map(),
+		   source,
+		   new String[]
+		   {
+			   "originalName", "BehavioralClassIsPrimitiveType" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getDataType__ValidateBehavioralClassIsSuperClass__DiagnosticChain_Map(),
+		   source,
+		   new String[]
+		   {
+			   "originalName", "BehavioralClassIsSuperClass" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getEnumLiteralExp__ValidateTypeIsEnumerationType__DiagnosticChain_Map(),

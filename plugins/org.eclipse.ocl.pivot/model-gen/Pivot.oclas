@@ -229,6 +229,15 @@
     </ownedClasses>
     <ownedClasses xmi:id="1mHCJ" name="DataType" superClasses="#pDcbe">
       <ownedComments body="A DataType is a type whose instances are identified only by their value."/>
+      <ownedInvariants xmi:id=",lcOG" isCallable="true" name="BehavioralClassHasDistinctName">
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="behavioralClass &lt;> null implies superClasses->closure(superClasses)->forAll(b | b.name &lt;> name)&#xA;"/>
+      </ownedInvariants>
+      <ownedInvariants xmi:id="VX1z8" isCallable="true" name="BehavioralClassIsPrimitiveType">
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="behavioralClass &lt;> null implies behavioralClass.oclIsKindOf(PrimitiveType)&#xA;"/>
+      </ownedInvariants>
+      <ownedInvariants xmi:id="71A2y" isCallable="true" name="BehavioralClassIsSuperClass">
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="behavioralClass &lt;> null implies superClasses->includes(behavioralClass)&#xA;&#xA;"/>
+      </ownedInvariants>
       <ownedProperties xmi:id="0zbos" isRequired="false" name="behavioralClass" type="#pDcbe">
         <ownedComments body="An equivalent type, such as a PrimitiveType, that defines the conformance and evaluation behavior."/>
       </ownedProperties>
@@ -1200,6 +1209,7 @@
       <ownedComments body="A Type constrains the values represented by a TypedElement."/>
       <ownedOperations xmi:id="xDNE5" isRequired="false" name="flattenedType" type="#rrwsa">
         <bodyExpression xsi:type="pivot:ExpressionInOCL" body="self&#xA;&#xA;"/>
+        <ownedComments body="Return the type to be used as the element type when this is flattened. For most types this is self.&#xA;For a CollectionType, it is the transitive element type."/>
       </ownedOperations>
       <ownedOperations xmi:id="i,Kw4" isRequired="false" name="isClass" type="#pDcbe"/>
       <ownedOperations xmi:id="5WLf+" isRequired="false" name="isTemplateParameter" type="#Afray"/>

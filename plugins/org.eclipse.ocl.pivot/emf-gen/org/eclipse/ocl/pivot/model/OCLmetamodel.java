@@ -4537,6 +4537,7 @@ public class OCLmetamodel extends ASResourceImpl
 			installComment(el__TransitionKind_local, "Implies that the Transition, if triggered, will not exit the composite (source) State, but it will exit and re-enter any state within the composite State that is in the current state configuration.");
 			installComment(_Trigger, "A Trigger specifies a specific point  at which an Event occurrence may trigger an effect in a Behavior. A Trigger may be qualified by the Port on which the Event occurred.");
 			installComment(_Type, "A Type constrains the values represented by a TypedElement.");
+			installComment(op_Type_flattenedType, "Return the type to be used as the element type when this is flattened. For most types this is self.\nFor a CollectionType, it is the transitive element type.");
 			installComment(_TypedElement, "A TypedElement is a NamedElement that may have a Type specified for it.");
 			installComment(pr_TypedElement_type, "The type of the TypedElement.");
 			installComment(_ValueSpecification, "A ValueSpecification is the specification of a (possibly empty) set of values. A ValueSpecification is a ParameterableElement that may be exposed as a formal TemplateParameter and provided as the actual parameter in the binding of a template.");

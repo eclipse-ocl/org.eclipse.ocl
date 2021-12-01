@@ -48,9 +48,8 @@ public class AbstractExecutorClass extends AbstractExecutorType implements org.e
 		throw new UnsupportedOperationException();
 	}
 
-	//	@Override
 	public org.eclipse.ocl.pivot.Class getBehavioralClass() {
-		throw new UnsupportedOperationException();
+		return null;
 	}
 
 	@Override
@@ -219,6 +218,27 @@ public class AbstractExecutorClass extends AbstractExecutorType implements org.e
 
 	@Override
 	public void setUnspecializedElement(TemplateableElement value) {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	public boolean validateBehavioralClassHasDistinctName(DiagnosticChain diagnostics, Map<Object, Object> context) {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	public boolean validateBehavioralClassIsPrimitiveType(DiagnosticChain diagnostics, Map<Object, Object> context) {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	public boolean validateBehavioralClassIsSuperClass(DiagnosticChain diagnostics, Map<Object, Object> context) {
 		throw new UnsupportedOperationException();
 	}
 
