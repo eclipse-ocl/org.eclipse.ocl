@@ -825,6 +825,25 @@ public class RoundTripTests extends XtextTestCase
 		ocl.dispose();
 	} */
 
+	public void testStaticsRoundTrip() throws IOException, InterruptedException {
+		String testFileContents =
+				"package p : p = 'p'\n" +
+						"{\n" +
+						"	class c\n" +
+						"	{\n" +
+						"		property a : Integer;\n" +
+						"		static property as : Integer;\n" +
+						"		property p : Port[*|1] { ordered };\n" +
+						"		static property ps : Port[*|1] { ordered };\n" +
+						"		operation f() : Port[?];\n" +
+						"		static operation fs() : Port[?];\n" +
+						"	}\n" +
+						"	class Port;\n" +
+						"}";
+		TestFile testFile = createOCLinEcoreFile("Statics.oclinecore", testFileContents);
+		doRoundTripFromOCLinEcore(testFile);
+	}
+
 	public void testSysMLRoundTrip() throws IOException, InterruptedException {
 		String testFileContents =
 				"package b : bb = 'bbb'\n" +

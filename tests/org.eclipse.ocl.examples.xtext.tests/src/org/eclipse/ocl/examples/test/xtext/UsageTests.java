@@ -2049,6 +2049,35 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		});
 	}
 
+	public void testStaticProperty() throws Throwable {
+		doTestRunnable(new TestRunnable() {
+			@Override
+			public void runWithThrowable() throws Exception {
+				String testFileStem = "StaticProperty";
+				String testProjectName = "staticProperty";
+				String oclinecoreFile =
+						"import ecore : 'http://www.eclipse.org/emf/2002/Ecore#/';\n"
+								+ "package staticProperty : staticProperty = 'http://staticProperty'\n"
+								+ "{\n"
+								+ "    class StaticProperty\n"
+								+ "    {\n"
+								+ "    	   static attribute startTime : ecore::EDate[1];\n"
+								+ "        operation startTime() : ecore::EDate[1] {"
+								+ "             body : startTime;\n"
+								+ "        }\n"
+								+ "    }\n"
+								+ "}\n";
+				String genmodelFile = createEcoreGenModelContent(testFileStem, null);
+				createManifestFile();
+				URI genModelURI = createModels(testFileStem, oclinecoreFile, genmodelFile);
+				doGenModel(genModelURI);
+				TestOCL ocl = createOCL();
+				doEcoreCompile(ocl, testProjectName);
+				ocl.dispose();
+			}
+		});
+	}
+
 	public void testTemplateTypes471201() throws Throwable {
 		doTestRunnable(new TestRunnable() {
 			@Override

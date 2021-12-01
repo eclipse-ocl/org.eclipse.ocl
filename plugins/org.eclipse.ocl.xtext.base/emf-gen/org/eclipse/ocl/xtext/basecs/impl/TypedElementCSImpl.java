@@ -32,6 +32,7 @@ import org.eclipse.ocl.xtext.basecs.TypedRefCS;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.xtext.basecs.impl.TypedElementCSImpl#isIsOptional <em>Is Optional</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.basecs.impl.TypedElementCSImpl#isIsStatic <em>Is Static</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.basecs.impl.TypedElementCSImpl#getOwnedType <em>Owned Type</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.basecs.impl.TypedElementCSImpl#getQualifiers <em>Qualifiers</em>}</li>
  * </ul>
@@ -47,7 +48,7 @@ public abstract class TypedElementCSImpl extends NamedElementCSImpl implements T
 	 * @generated
 	 * @ordered
 	 */
-	public static final int TYPED_ELEMENT_CS_FEATURE_COUNT = NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 3;
+	public static final int TYPED_ELEMENT_CS_FEATURE_COUNT = NamedElementCSImpl.NAMED_ELEMENT_CS_FEATURE_COUNT + 4;
 
 	/**
 	 * The default value of the '{@link #isIsOptional() <em>Is Optional</em>}' attribute.
@@ -68,6 +69,26 @@ public abstract class TypedElementCSImpl extends NamedElementCSImpl implements T
 	 * @ordered
 	 */
 	protected boolean isOptional = IS_OPTIONAL_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #isIsStatic() <em>Is Static</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isIsStatic()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean IS_STATIC_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isIsStatic() <em>Is Static</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isIsStatic()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean isStatic = IS_STATIC_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getOwnedType() <em>Owned Type</em>}' containment reference.
@@ -132,7 +153,7 @@ public abstract class TypedElementCSImpl extends NamedElementCSImpl implements T
 		ownedType = newOwnedType;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 7, oldOwnedType, newOwnedType);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 8, oldOwnedType, newOwnedType);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -150,14 +171,14 @@ public abstract class TypedElementCSImpl extends NamedElementCSImpl implements T
 		{
 			NotificationChain msgs = null;
 			if (ownedType != null)
-				msgs = ((InternalEObject)ownedType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (7), null, msgs);
+				msgs = ((InternalEObject)ownedType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (8), null, msgs);
 			if (newOwnedType != null)
-				msgs = ((InternalEObject)newOwnedType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (7), null, msgs);
+				msgs = ((InternalEObject)newOwnedType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (8), null, msgs);
 			msgs = basicSetOwnedType(newOwnedType, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 7, newOwnedType, newOwnedType));
+			eNotify(new ENotificationImpl(this, Notification.SET, 8, newOwnedType, newOwnedType));
 	}
 
 	/**
@@ -170,7 +191,7 @@ public abstract class TypedElementCSImpl extends NamedElementCSImpl implements T
 	{
 		if (qualifiers == null)
 		{
-			qualifiers = new EDataTypeUniqueEList<String>(String.class, this, 8);
+			qualifiers = new EDataTypeUniqueEList<String>(String.class, this, 9);
 		}
 		return qualifiers;
 	}
@@ -203,6 +224,31 @@ public abstract class TypedElementCSImpl extends NamedElementCSImpl implements T
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public boolean isIsStatic()
+	{
+		return isStatic;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setIsStatic(boolean newIsStatic)
+	{
+		boolean oldIsStatic = isStatic;
+		isStatic = newIsStatic;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, 7, oldIsStatic, isStatic));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
 	@Override
@@ -220,7 +266,7 @@ public abstract class TypedElementCSImpl extends NamedElementCSImpl implements T
 	{
 		switch (featureID)
 		{
-			case 7:
+			case 8:
 				return basicSetOwnedType(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -239,8 +285,10 @@ public abstract class TypedElementCSImpl extends NamedElementCSImpl implements T
 			case 6:
 				return isIsOptional();
 			case 7:
-				return getOwnedType();
+				return isIsStatic();
 			case 8:
+				return getOwnedType();
+			case 9:
 				return getQualifiers();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -261,9 +309,12 @@ public abstract class TypedElementCSImpl extends NamedElementCSImpl implements T
 				setIsOptional((Boolean)newValue);
 				return;
 			case 7:
-				setOwnedType((TypedRefCS)newValue);
+				setIsStatic((Boolean)newValue);
 				return;
 			case 8:
+				setOwnedType((TypedRefCS)newValue);
+				return;
+			case 9:
 				getQualifiers().clear();
 				getQualifiers().addAll((Collection<? extends String>)newValue);
 				return;
@@ -285,9 +336,12 @@ public abstract class TypedElementCSImpl extends NamedElementCSImpl implements T
 				setIsOptional(IS_OPTIONAL_EDEFAULT);
 				return;
 			case 7:
-				setOwnedType((TypedRefCS)null);
+				setIsStatic(IS_STATIC_EDEFAULT);
 				return;
 			case 8:
+				setOwnedType((TypedRefCS)null);
+				return;
+			case 9:
 				getQualifiers().clear();
 				return;
 		}
@@ -307,8 +361,10 @@ public abstract class TypedElementCSImpl extends NamedElementCSImpl implements T
 			case 6:
 				return isOptional != IS_OPTIONAL_EDEFAULT;
 			case 7:
-				return ownedType != null;
+				return isStatic != IS_STATIC_EDEFAULT;
 			case 8:
+				return ownedType != null;
+			case 9:
 				return qualifiers != null && !qualifiers.isEmpty();
 		}
 		return super.eIsSet(featureID);

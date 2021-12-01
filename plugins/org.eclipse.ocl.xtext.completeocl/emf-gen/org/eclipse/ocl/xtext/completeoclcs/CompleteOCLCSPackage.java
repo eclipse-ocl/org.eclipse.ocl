@@ -469,17 +469,6 @@ extends EPackage {
 	EReference getDefCS_OwnedSpecification();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.xtext.completeoclcs.DefCS#isIsStatic <em>Is Static</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Is Static</em>'.
-	 * @see org.eclipse.ocl.xtext.completeoclcs.DefCS#isIsStatic()
-	 * @see #getDefCS()
-	 * @generated
-	 */
-	EAttribute getDefCS_IsStatic();
-
-	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.completeoclcs.DefOperationCS <em>Def Operation CS</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -807,14 +796,6 @@ extends EPackage {
 		 * @generated
 		 */
 		EReference DEF_CS__OWNED_SPECIFICATION = eINSTANCE.getDefCS_OwnedSpecification();
-
-		/**
-		 * The meta object literal for the '<em><b>Is Static</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute DEF_CS__IS_STATIC = eINSTANCE.getDefCS_IsStatic();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.xtext.completeoclcs.impl.DefOperationCSImpl <em>Def Operation CS</em>}' class.
