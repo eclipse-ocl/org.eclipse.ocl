@@ -352,17 +352,6 @@ public interface OCLstdlibCSPackage
 	EAttribute getLibOperationCS_IsInvalidating();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.xtext.oclstdlibcs.LibOperationCS#isIsStatic <em>Is Static</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Is Static</em>'.
-	 * @see org.eclipse.ocl.xtext.oclstdlibcs.LibOperationCS#isIsStatic()
-	 * @see #getLibOperationCS()
-	 * @generated
-	 */
-	EAttribute getLibOperationCS_IsStatic();
-
-	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.xtext.oclstdlibcs.LibOperationCS#isIsValidating <em>Is Validating</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -403,17 +392,6 @@ public interface OCLstdlibCSPackage
 	 * @generated
 	 */
 	EClass getLibPropertyCS();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.xtext.oclstdlibcs.LibPropertyCS#isIsStatic <em>Is Static</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Is Static</em>'.
-	 * @see org.eclipse.ocl.xtext.oclstdlibcs.LibPropertyCS#isIsStatic()
-	 * @see #getLibPropertyCS()
-	 * @generated
-	 */
-	EAttribute getLibPropertyCS_IsStatic();
 
 	/**
 	 * Returns the meta object for the containment reference '{@link org.eclipse.ocl.xtext.oclstdlibcs.LibPropertyCS#getOwnedOpposite <em>Owned Opposite</em>}'.
@@ -649,14 +627,6 @@ public interface OCLstdlibCSPackage
 		EAttribute LIB_OPERATION_CS__IS_INVALIDATING = eINSTANCE.getLibOperationCS_IsInvalidating();
 
 		/**
-		 * The meta object literal for the '<em><b>Is Static</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute LIB_OPERATION_CS__IS_STATIC = eINSTANCE.getLibOperationCS_IsStatic();
-
-		/**
 		 * The meta object literal for the '<em><b>Is Validating</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -691,14 +661,6 @@ public interface OCLstdlibCSPackage
 		 * @generated
 		 */
 		EClass LIB_PROPERTY_CS = eINSTANCE.getLibPropertyCS();
-
-		/**
-		 * The meta object literal for the '<em><b>Is Static</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute LIB_PROPERTY_CS__IS_STATIC = eINSTANCE.getLibPropertyCS_IsStatic();
 
 		/**
 		 * The meta object literal for the '<em><b>Owned Opposite</b></em>' containment reference feature.

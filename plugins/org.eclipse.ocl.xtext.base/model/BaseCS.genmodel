@@ -204,6 +204,7 @@
     <genClasses image="false" ecoreClass="BaseCS.ecore#//TypeRefCS"/>
     <genClasses image="false" ecoreClass="BaseCS.ecore#//TypedElementCS">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//TypedElementCS/isOptional"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//TypedElementCS/isStatic"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//TypedElementCS/ownedType"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//TypedElementCS/qualifiers"/>
     </genClasses>

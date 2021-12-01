@@ -456,6 +456,7 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 		List<String> qualifiers = csElement.getQualifiers();
 		assert qualifiers != null;
 		pivotElement.setIsTransient(ElementUtil.getQualifier(qualifiers, "transient", "!transient", false));
+		pivotElement.setIsStatic(csElement.isIsStatic());
 		return null;
 	}
 
@@ -537,7 +538,7 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 		pivotElement.setIsID(qualifiers.contains("id"));
 		pivotElement.setIsReadOnly(qualifiers.contains("readonly"));
 		pivotElement.setIsResolveProxies(ElementUtil.getQualifier(qualifiers, "resolve", "!resolve", true));
-		pivotElement.setIsStatic(qualifiers.contains("static"));
+		pivotElement.setIsStatic(csElement.isIsStatic());
 		pivotElement.setIsTransient(qualifiers.contains("transient"));
 		pivotElement.setIsUnsettable(qualifiers.contains("unsettable"));
 		pivotElement.setIsVolatile(qualifiers.contains("volatile"));

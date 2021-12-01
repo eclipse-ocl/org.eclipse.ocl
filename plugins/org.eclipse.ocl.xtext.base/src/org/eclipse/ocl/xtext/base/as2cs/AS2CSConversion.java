@@ -611,7 +611,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 		T csElement = refreshTypedElement(csClass, csEClass, object);
 		refreshQualifiers(csElement.getQualifiers(), "derived", object.isIsDerived());
 		refreshQualifiers(csElement.getQualifiers(), "readonly", object.isIsReadOnly());
-		refreshQualifiers(csElement.getQualifiers(), "static", object.isIsStatic());
+		csElement.setIsStatic(object.isIsStatic());
 		refreshQualifiers(csElement.getQualifiers(), "transient", object.isIsTransient());
 		refreshQualifiers(csElement.getQualifiers(), "unsettable", object.isIsUnsettable());
 		refreshQualifiers(csElement.getQualifiers(), "volatile", object.isIsVolatile());

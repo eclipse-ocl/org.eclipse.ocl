@@ -54,6 +54,7 @@ import org.eclipse.ocl.pivot.Detail;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
+import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.MapType;
@@ -78,6 +79,7 @@ import org.eclipse.ocl.pivot.internal.utilities.OppositePropertyDetails;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
+import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -299,6 +301,34 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		assert details != null;
 		oppositePropertyDetails.addToDetails(details);
 		return eAnnotation;
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	public void createStaticEAnnotation(@NonNull ETypedElement eFeature, @NonNull Feature asFeature) {
+		EAnnotation umlAnnotation = eFeature.getEAnnotation(DerivedConstants.UML2_UML_PACKAGE_2_0_NS_URI);
+		boolean isStatic = asFeature.isIsStatic();
+		if (isStatic) {
+			if (umlAnnotation == null) {
+				umlAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
+				umlAnnotation.setSource(DerivedConstants.UML2_UML_PACKAGE_2_0_NS_URI);
+				eFeature.getEAnnotations().add(umlAnnotation);
+			}
+		}
+		else {
+			if (umlAnnotation != null) {
+				umlAnnotation.getDetails().removeKey("static");
+			}
+		}
+		if (umlAnnotation != null) {
+			if (isStatic) {
+				umlAnnotation.getDetails().put("static", Boolean.TRUE.toString());
+			}
+			else if (umlAnnotation.getDetails().isEmpty()) {
+				eFeature.getEAnnotations().remove(umlAnnotation);
+			}
+		}
 	}
 
 	public <T extends EObject> void safeVisitAll(@NonNull List<T> eObjects, @NonNull Iterable<? extends Element> pivotObjects) {
@@ -674,6 +704,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 			details.put(PivotConstantsInternal.OPERATION_IS_TRANSIENT, "true");
 			eOperation.getEAnnotations().add(eAnnotation);
 		}
+		createStaticEAnnotation(eOperation, pivotOperation);
 		return eOperation;
 	}
 
@@ -826,6 +857,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		if (defaultExpression != null) {
 			delegateInstaller.createPropertyDelegate(eStructuralFeature, defaultExpression, context.getEcoreURI());
 		}
+		createStaticEAnnotation(eStructuralFeature, pivotProperty);
 		/*		for (Property redefinedProperty : pivotProperty.getRedefinedProperty()) {
 			EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
 			eAnnotation.setSource(PivotConstants.REDEFINES_ANNOTATION_SOURCE);
