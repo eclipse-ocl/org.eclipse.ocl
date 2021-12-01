@@ -167,13 +167,7 @@ public class OCLinEcoreGrammarResource extends AbstractGrammarResource
 					createRuleCall(PR_SysMLCS)));
 			PR_AttributeCS.setAlternatives(
 				createGroup(
-					setCardinality("?", createAlternatives(
-						createGroup(
-							createAssignment("qualifiers", "+=", createKeyword("static")),
-							setCardinality("?", createAssignment("qualifiers", "+=", createKeyword("definition")))),
-						createGroup(
-							createAssignment("qualifiers", "+=", createKeyword("definition")),
-							setCardinality("?", createAssignment("qualifiers", "+=", createKeyword("static")))))),
+					setCardinality("?", createAssignment("isStatic", "?=", createKeyword("static"))),
 					createKeyword("attribute"),
 					createAssignment("name", "=", createRuleCall(PR_UnrestrictedName)),
 					setCardinality("?", createGroup(
@@ -412,13 +406,7 @@ public class OCLinEcoreGrammarResource extends AbstractGrammarResource
 					createKeyword(";")));
 			PR_OperationCS.setAlternatives(
 				createGroup(
-					setCardinality("?", createAlternatives(
-						createGroup(
-							createAssignment("qualifiers", "+=", createKeyword("static")),
-							setCardinality("?", createAssignment("qualifiers", "+=", createKeyword("definition")))),
-						createGroup(
-							createAssignment("qualifiers", "+=", createKeyword("definition")),
-							setCardinality("?", createAssignment("qualifiers", "+=", createKeyword("static")))))),
+					setCardinality("?", createAssignment("isStatic", "?=", createKeyword("static"))),
 					createKeyword("operation"),
 					setCardinality("?", createAssignment("ownedSignature", "=", createRuleCall(PR_TemplateSignatureCS))),
 					createAssignment("name", "=", createRuleCall(PR_UnrestrictedName)),
@@ -532,13 +520,7 @@ public class OCLinEcoreGrammarResource extends AbstractGrammarResource
 					createKeyword(";")));
 			PR_ReferenceCS.setAlternatives(
 				createGroup(
-					setCardinality("?", createAlternatives(
-						createGroup(
-							createAssignment("qualifiers", "+=", createKeyword("static")),
-							setCardinality("?", createAssignment("qualifiers", "+=", createKeyword("definition")))),
-						createGroup(
-							createAssignment("qualifiers", "+=", createKeyword("definition")),
-							setCardinality("?", createAssignment("qualifiers", "+=", createKeyword("static")))))),
+					setCardinality("?", createAssignment("isStatic", "?=", createKeyword("static"))),
 					createKeyword("property"),
 					createAssignment("name", "=", createRuleCall(PR_UnrestrictedName)),
 					setCardinality("?", createGroup(
