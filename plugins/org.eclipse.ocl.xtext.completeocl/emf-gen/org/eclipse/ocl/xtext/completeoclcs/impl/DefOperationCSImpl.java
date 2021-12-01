@@ -115,7 +115,7 @@ public class DefOperationCSImpl
 		ownedSignature = newOwnedSignature;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 3, oldOwnedSignature, newOwnedSignature);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 2, oldOwnedSignature, newOwnedSignature);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -140,7 +140,7 @@ public class DefOperationCSImpl
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 3, newOwnedSignature, newOwnedSignature));
+			eNotify(new ENotificationImpl(this, Notification.SET, TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 2, newOwnedSignature, newOwnedSignature));
 	}
 
 	/**
@@ -152,7 +152,7 @@ public class DefOperationCSImpl
 	public EList<ParameterCS> getOwnedParameters() {
 		if (ownedParameters == null)
 		{
-			ownedParameters = new EObjectContainmentEList<ParameterCS>(ParameterCS.class, this, TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 4);
+			ownedParameters = new EObjectContainmentEList<ParameterCS>(ParameterCS.class, this, TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 3);
 		}
 		return ownedParameters;
 	}
@@ -167,9 +167,9 @@ public class DefOperationCSImpl
 	{
 		switch (featureID)
 		{
-			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 3:
+			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 2:
 				if (ownedSignature != null)
-					msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 3), null, msgs);
+					msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 2), null, msgs);
 				return basicSetOwnedSignature((TemplateSignatureCS)otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -185,9 +185,9 @@ public class DefOperationCSImpl
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 3:
+			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 2:
 				return basicSetOwnedSignature(null, msgs);
-			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 4:
+			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 3:
 				return ((InternalEList<?>)getOwnedParameters()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -202,9 +202,9 @@ public class DefOperationCSImpl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 3:
+			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 2:
 				return getOwnedSignature();
-			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 4:
+			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 3:
 				return getOwnedParameters();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -220,10 +220,10 @@ public class DefOperationCSImpl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 3:
+			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 2:
 				setOwnedSignature((TemplateSignatureCS)newValue);
 				return;
-			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 4:
+			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 3:
 				getOwnedParameters().clear();
 				getOwnedParameters().addAll((Collection<? extends ParameterCS>)newValue);
 				return;
@@ -240,10 +240,10 @@ public class DefOperationCSImpl
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 3:
+			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 2:
 				setOwnedSignature((TemplateSignatureCS)null);
 				return;
-			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 4:
+			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 3:
 				getOwnedParameters().clear();
 				return;
 		}
@@ -259,9 +259,9 @@ public class DefOperationCSImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 3:
+			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 2:
 				return ownedSignature != null;
-			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 4:
+			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 3:
 				return ownedParameters != null && !ownedParameters.isEmpty();
 		}
 		return super.eIsSet(featureID);
@@ -279,7 +279,7 @@ public class DefOperationCSImpl
 		{
 			switch (derivedFeatureID)
 			{
-				case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 3: return 2;
+				case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 2: return 2;
 				default: return -1;
 			}
 		}
@@ -298,7 +298,7 @@ public class DefOperationCSImpl
 		{
 			switch (baseFeatureID)
 			{
-				case 2: return TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 3;
+				case 2: return TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 2;
 				default: return -1;
 			}
 		}

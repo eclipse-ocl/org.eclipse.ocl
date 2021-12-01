@@ -35,7 +35,6 @@
     </genClasses>
     <genClasses ecoreClass="CompleteOCLCS.ecore#//ContextDeclCS"/>
     <genClasses ecoreClass="CompleteOCLCS.ecore#//DefCS">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CompleteOCLCS.ecore#//DefCS/isStatic"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CompleteOCLCS.ecore#//DefCS/ownedSpecification"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CompleteOCLCS.ecore#//DefCS/owningClassifierContextDecl"/>
     </genClasses>

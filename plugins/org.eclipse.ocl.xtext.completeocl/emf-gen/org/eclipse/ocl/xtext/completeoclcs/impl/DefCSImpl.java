@@ -30,7 +30,6 @@ import org.eclipse.ocl.xtext.essentialoclcs.ExpSpecificationCS;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.ocl.xtext.completeoclcs.impl.DefCSImpl#isIsStatic <em>Is Static</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.completeoclcs.impl.DefCSImpl#getOwnedSpecification <em>Owned Specification</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.completeoclcs.impl.DefCSImpl#getOwningClassifierContextDecl <em>Owning Classifier Context Decl</em>}</li>
  * </ul>
@@ -48,27 +47,7 @@ public abstract class DefCSImpl
 	 * @generated
 	 * @ordered
 	 */
-	public static final int DEF_CS_FEATURE_COUNT = TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 3;
-
-	/**
-	 * The default value of the '{@link #isIsStatic() <em>Is Static</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isIsStatic()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final boolean IS_STATIC_EDEFAULT = false;
-
-	/**
-	 * The cached value of the '{@link #isIsStatic() <em>Is Static</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isIsStatic()
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean isStatic = IS_STATIC_EDEFAULT;
+	public static final int DEF_CS_FEATURE_COUNT = TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 2;
 
 	/**
 	 * The cached value of the '{@link #getOwnedSpecification() <em>Owned Specification</em>}' containment reference.
@@ -106,7 +85,7 @@ public abstract class DefCSImpl
 	 */
 	@Override
 	public ClassifierContextDeclCS getOwningClassifierContextDecl() {
-		if (eContainerFeatureID() != (TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 2)) return null;
+		if (eContainerFeatureID() != (TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 1)) return null;
 		return (ClassifierContextDeclCS)eInternalContainer();
 	}
 
@@ -131,7 +110,7 @@ public abstract class DefCSImpl
 		ownedSpecification = newOwnedSpecification;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 1, oldOwnedSpecification, newOwnedSpecification);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 0, oldOwnedSpecification, newOwnedSpecification);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -148,39 +127,14 @@ public abstract class DefCSImpl
 		{
 			NotificationChain msgs = null;
 			if (ownedSpecification != null)
-				msgs = ((InternalEObject)ownedSpecification).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 1), null, msgs);
+				msgs = ((InternalEObject)ownedSpecification).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 0), null, msgs);
 			if (newOwnedSpecification != null)
-				msgs = ((InternalEObject)newOwnedSpecification).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 1), null, msgs);
+				msgs = ((InternalEObject)newOwnedSpecification).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 0), null, msgs);
 			msgs = basicSetOwnedSpecification(newOwnedSpecification, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 1, newOwnedSpecification, newOwnedSpecification));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public boolean isIsStatic()
-	{
-		return isStatic;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setIsStatic(boolean newIsStatic)
-	{
-		boolean oldIsStatic = isStatic;
-		isStatic = newIsStatic;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 0, oldIsStatic, isStatic));
+			eNotify(new ENotificationImpl(this, Notification.SET, TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 0, newOwnedSpecification, newOwnedSpecification));
 	}
 
 	/**
@@ -203,10 +157,10 @@ public abstract class DefCSImpl
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 2:
+			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 1:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
-				return eBasicSetContainer(otherEnd, TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 2, msgs);
+				return eBasicSetContainer(otherEnd, TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 1, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -221,10 +175,10 @@ public abstract class DefCSImpl
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 1:
+			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 0:
 				return basicSetOwnedSpecification(null, msgs);
-			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 2:
-				return eBasicSetContainer(null, TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 2, msgs);
+			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 1:
+				return eBasicSetContainer(null, TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 1, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -239,7 +193,7 @@ public abstract class DefCSImpl
 			NotificationChain msgs) {
 		switch (eContainerFeatureID())
 		{
-			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 2:
+			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 1:
 				return eInternalContainer().eInverseRemove(this, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 2, ClassifierContextDeclCS.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
@@ -255,10 +209,8 @@ public abstract class DefCSImpl
 		switch (featureID)
 		{
 			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 0:
-				return isIsStatic();
-			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 1:
 				return getOwnedSpecification();
-			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 2:
+			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 1:
 				return getOwningClassifierContextDecl();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -274,9 +226,6 @@ public abstract class DefCSImpl
 		switch (featureID)
 		{
 			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 0:
-				setIsStatic((Boolean)newValue);
-				return;
-			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 1:
 				setOwnedSpecification((ExpSpecificationCS)newValue);
 				return;
 		}
@@ -293,9 +242,6 @@ public abstract class DefCSImpl
 		switch (featureID)
 		{
 			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 0:
-				setIsStatic(IS_STATIC_EDEFAULT);
-				return;
-			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 1:
 				setOwnedSpecification((ExpSpecificationCS)null);
 				return;
 		}
@@ -312,10 +258,8 @@ public abstract class DefCSImpl
 		switch (featureID)
 		{
 			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 0:
-				return isStatic != IS_STATIC_EDEFAULT;
-			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 1:
 				return ownedSpecification != null;
-			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 2:
+			case TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 1:
 				return getOwningClassifierContextDecl() != null;
 		}
 		return super.eIsSet(featureID);

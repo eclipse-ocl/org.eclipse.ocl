@@ -398,7 +398,7 @@ public class ClassifierContextDeclCSImpl
 	public EList<DefCS> getOwnedDefinitions() {
 		if (ownedDefinitions == null)
 		{
-			ownedDefinitions = new EObjectContainmentWithInverseEList<DefCS>(DefCS.class, this, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 2, TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 2);
+			ownedDefinitions = new EObjectContainmentWithInverseEList<DefCS>(DefCS.class, this, ModelElementCSImpl.MODEL_ELEMENT_CS_FEATURE_COUNT + 2, TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 1);
 		}
 		return ownedDefinitions;
 	}

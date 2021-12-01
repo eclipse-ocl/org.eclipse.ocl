@@ -36,7 +36,6 @@ import org.eclipse.ocl.xtext.oclstdlibcs.util.OCLstdlibCSVisitor;
  * <ul>
  *   <li>{@link org.eclipse.ocl.xtext.oclstdlibcs.impl.LibOperationCSImpl#getImplementation <em>Implementation</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.oclstdlibcs.impl.LibOperationCSImpl#isIsInvalidating <em>Is Invalidating</em>}</li>
- *   <li>{@link org.eclipse.ocl.xtext.oclstdlibcs.impl.LibOperationCSImpl#isIsStatic <em>Is Static</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.oclstdlibcs.impl.LibOperationCSImpl#isIsValidating <em>Is Validating</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.oclstdlibcs.impl.LibOperationCSImpl#getPrecedence <em>Precedence</em>}</li>
  * </ul>
@@ -54,7 +53,7 @@ public class LibOperationCSImpl
 	 * @generated
 	 * @ordered
 	 */
-	public static final int LIB_OPERATION_CS_FEATURE_COUNT = OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 5;
+	public static final int LIB_OPERATION_CS_FEATURE_COUNT = OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 4;
 
 	/**
 	 * The cached value of the '{@link #getImplementation() <em>Implementation</em>}' reference.
@@ -85,26 +84,6 @@ public class LibOperationCSImpl
 	 * @ordered
 	 */
 	protected boolean isInvalidating = IS_INVALIDATING_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #isIsStatic() <em>Is Static</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isIsStatic()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final boolean IS_STATIC_EDEFAULT = false;
-
-	/**
-	 * The cached value of the '{@link #isIsStatic() <em>Is Static</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isIsStatic()
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean isStatic = IS_STATIC_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #isIsValidating() <em>Is Validating</em>}' attribute.
@@ -213,7 +192,7 @@ public class LibOperationCSImpl
 			if (precedence != oldPrecedence)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 4, oldPrecedence, precedence));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 3, oldPrecedence, precedence));
 			}
 		}
 		return precedence;
@@ -238,7 +217,7 @@ public class LibOperationCSImpl
 		Precedence oldPrecedence = precedence;
 		precedence = newPrecedence;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 4, oldPrecedence, precedence));
+			eNotify(new ENotificationImpl(this, Notification.SET, OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 3, oldPrecedence, precedence));
 	}
 
 	/**
@@ -272,31 +251,6 @@ public class LibOperationCSImpl
 	 * @generated
 	 */
 	@Override
-	public boolean isIsStatic()
-	{
-		return isStatic;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setIsStatic(boolean newIsStatic)
-	{
-		boolean oldIsStatic = isStatic;
-		isStatic = newIsStatic;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 2, oldIsStatic, isStatic));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public boolean isIsValidating()
 	{
 		return isValidating;
@@ -313,7 +267,7 @@ public class LibOperationCSImpl
 		boolean oldIsValidating = isValidating;
 		isValidating = newIsValidating;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 3, oldIsValidating, isValidating));
+			eNotify(new ENotificationImpl(this, Notification.SET, OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 2, oldIsValidating, isValidating));
 	}
 
 	/**
@@ -331,10 +285,8 @@ public class LibOperationCSImpl
 			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 1:
 				return isIsInvalidating();
 			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 2:
-				return isIsStatic();
-			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 3:
 				return isIsValidating();
-			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 4:
+			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 3:
 				if (resolve) return getPrecedence();
 				return basicGetPrecedence();
 		}
@@ -357,12 +309,9 @@ public class LibOperationCSImpl
 				setIsInvalidating((Boolean)newValue);
 				return;
 			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 2:
-				setIsStatic((Boolean)newValue);
-				return;
-			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 3:
 				setIsValidating((Boolean)newValue);
 				return;
-			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 4:
+			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 3:
 				setPrecedence((Precedence)newValue);
 				return;
 		}
@@ -385,12 +334,9 @@ public class LibOperationCSImpl
 				setIsInvalidating(IS_INVALIDATING_EDEFAULT);
 				return;
 			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 2:
-				setIsStatic(IS_STATIC_EDEFAULT);
-				return;
-			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 3:
 				setIsValidating(IS_VALIDATING_EDEFAULT);
 				return;
-			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 4:
+			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 3:
 				setPrecedence((Precedence)null);
 				return;
 		}
@@ -411,10 +357,8 @@ public class LibOperationCSImpl
 			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 1:
 				return isInvalidating != IS_INVALIDATING_EDEFAULT;
 			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 2:
-				return isStatic != IS_STATIC_EDEFAULT;
-			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 3:
 				return isValidating != IS_VALIDATING_EDEFAULT;
-			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 4:
+			case OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 3:
 				return precedence != null;
 		}
 		return super.eIsSet(featureID);
