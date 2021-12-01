@@ -456,7 +456,7 @@ implements CompleteOCLCSPackage {
 	@Override
 	public EReference getDefCS_OwningClassifierContextDecl()
 	{
-		return (EReference)defCSEClass.getEStructuralFeatures().get(2);
+		return (EReference)defCSEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -467,18 +467,7 @@ implements CompleteOCLCSPackage {
 	@Override
 	public EReference getDefCS_OwnedSpecification()
 	{
-		return (EReference)defCSEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EAttribute getDefCS_IsStatic()
-	{
-		return (EAttribute)defCSEClass.getEStructuralFeatures().get(0);
+		return (EReference)defCSEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -620,12 +609,11 @@ implements CompleteOCLCSPackage {
 		contextDeclCSEClass = createEClass(2);
 
 		defCSEClass = createEClass(3);
-		createEAttribute(defCSEClass, TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 0);
+		createEReference(defCSEClass, TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 0);
 		createEReference(defCSEClass, TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 1);
-		createEReference(defCSEClass, TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 2);
 
 		defOperationCSEClass = createEClass(4);
-		createEReference(defOperationCSEClass, TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 4);
+		createEReference(defOperationCSEClass, TypedElementCSImpl.TYPED_ELEMENT_CS_FEATURE_COUNT + 3);
 
 		defPropertyCSEClass = createEClass(5);
 
@@ -720,7 +708,6 @@ implements CompleteOCLCSPackage {
 		initEClass(contextDeclCSEClass, ContextDeclCS.class, "ContextDeclCS", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(defCSEClass, DefCS.class, "DefCS", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getDefCS_IsStatic(), ecorePackage.getEBoolean(), "isStatic", null, 0, 1, DefCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getDefCS_OwnedSpecification(), theEssentialOCLCSPackage.getExpSpecificationCS(), null, "ownedSpecification", null, 0, 1, DefCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getDefCS_OwningClassifierContextDecl(), this.getClassifierContextDeclCS(), this.getClassifierContextDeclCS_OwnedDefinitions(), "owningClassifierContextDecl", null, 0, 1, DefCS.class, !IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

@@ -164,7 +164,7 @@ public class OperationCSImpl extends FeatureCSImpl implements OperationCS {
 		ownedSignature = newOwnedSignature;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 9, oldOwnedSignature, newOwnedSignature);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 10, oldOwnedSignature, newOwnedSignature);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -188,7 +188,7 @@ public class OperationCSImpl extends FeatureCSImpl implements OperationCS {
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 9, newOwnedSignature, newOwnedSignature));
+			eNotify(new ENotificationImpl(this, Notification.SET, 10, newOwnedSignature, newOwnedSignature));
 	}
 
 	/**
@@ -198,7 +198,7 @@ public class OperationCSImpl extends FeatureCSImpl implements OperationCS {
 	 */
 	@Override
 	public StructuredClassCS getOwningClass() {
-		if (eContainerFeatureID() != (15)) return null;
+		if (eContainerFeatureID() != (16)) return null;
 		return (StructuredClassCS)eInternalContainer();
 	}
 
@@ -208,7 +208,7 @@ public class OperationCSImpl extends FeatureCSImpl implements OperationCS {
 	 * @generated
 	 */
 	public NotificationChain basicSetOwningClass(StructuredClassCS newOwningClass, NotificationChain msgs) {
-		msgs = eBasicSetContainer((InternalEObject)newOwningClass, 15, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningClass, 16, msgs);
 		return msgs;
 	}
 
@@ -219,7 +219,7 @@ public class OperationCSImpl extends FeatureCSImpl implements OperationCS {
 	 */
 	@Override
 	public void setOwningClass(StructuredClassCS newOwningClass) {
-		if (newOwningClass != eInternalContainer() || (eContainerFeatureID() != (15) && newOwningClass != null))
+		if (newOwningClass != eInternalContainer() || (eContainerFeatureID() != (16) && newOwningClass != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningClass))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -232,7 +232,7 @@ public class OperationCSImpl extends FeatureCSImpl implements OperationCS {
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 15, newOwningClass, newOwningClass));
+			eNotify(new ENotificationImpl(this, Notification.SET, 16, newOwningClass, newOwningClass));
 	}
 
 	/**
@@ -245,7 +245,7 @@ public class OperationCSImpl extends FeatureCSImpl implements OperationCS {
 	{
 		if (ownedParameters == null)
 		{
-			ownedParameters = new EObjectContainmentWithInverseEList<ParameterCS>(ParameterCS.class, this, 12, 9);
+			ownedParameters = new EObjectContainmentWithInverseEList<ParameterCS>(ParameterCS.class, this, 13, 10);
 		}
 		return ownedParameters;
 	}
@@ -260,7 +260,7 @@ public class OperationCSImpl extends FeatureCSImpl implements OperationCS {
 	{
 		if (ownedExceptions == null)
 		{
-			ownedExceptions = new EObjectContainmentEList<TypedRefCS>(TypedRefCS.class, this, 11);
+			ownedExceptions = new EObjectContainmentEList<TypedRefCS>(TypedRefCS.class, this, 12);
 		}
 		return ownedExceptions;
 	}
@@ -275,7 +275,7 @@ public class OperationCSImpl extends FeatureCSImpl implements OperationCS {
 	{
 		if (ownedPreconditions == null)
 		{
-			ownedPreconditions = new EObjectContainmentEList<ConstraintCS>(ConstraintCS.class, this, 14);
+			ownedPreconditions = new EObjectContainmentEList<ConstraintCS>(ConstraintCS.class, this, 15);
 		}
 		return ownedPreconditions;
 	}
@@ -290,7 +290,7 @@ public class OperationCSImpl extends FeatureCSImpl implements OperationCS {
 	{
 		if (ownedPostconditions == null)
 		{
-			ownedPostconditions = new EObjectContainmentEList<ConstraintCS>(ConstraintCS.class, this, 13);
+			ownedPostconditions = new EObjectContainmentEList<ConstraintCS>(ConstraintCS.class, this, 14);
 		}
 		return ownedPostconditions;
 	}
@@ -305,7 +305,7 @@ public class OperationCSImpl extends FeatureCSImpl implements OperationCS {
 	{
 		if (ownedBodyExpressions == null)
 		{
-			ownedBodyExpressions = new EObjectContainmentEList<SpecificationCS>(SpecificationCS.class, this, 10);
+			ownedBodyExpressions = new EObjectContainmentEList<SpecificationCS>(SpecificationCS.class, this, 11);
 		}
 		return ownedBodyExpressions;
 	}
@@ -329,13 +329,13 @@ public class OperationCSImpl extends FeatureCSImpl implements OperationCS {
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case 9:
+			case 10:
 				if (ownedSignature != null)
-					msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (9), null, msgs);
+					msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (10), null, msgs);
 				return basicSetOwnedSignature((TemplateSignatureCS)otherEnd, msgs);
-			case 12:
+			case 13:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedParameters()).basicAdd(otherEnd, msgs);
-			case 15:
+			case 16:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningClass((StructuredClassCS)otherEnd, msgs);
@@ -352,19 +352,19 @@ public class OperationCSImpl extends FeatureCSImpl implements OperationCS {
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
-			case 9:
-				return basicSetOwnedSignature(null, msgs);
 			case 10:
-				return ((InternalEList<?>)getOwnedBodyExpressions()).basicRemove(otherEnd, msgs);
+				return basicSetOwnedSignature(null, msgs);
 			case 11:
-				return ((InternalEList<?>)getOwnedExceptions()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)getOwnedBodyExpressions()).basicRemove(otherEnd, msgs);
 			case 12:
-				return ((InternalEList<?>)getOwnedParameters()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)getOwnedExceptions()).basicRemove(otherEnd, msgs);
 			case 13:
-				return ((InternalEList<?>)getOwnedPostconditions()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)getOwnedParameters()).basicRemove(otherEnd, msgs);
 			case 14:
-				return ((InternalEList<?>)getOwnedPreconditions()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)getOwnedPostconditions()).basicRemove(otherEnd, msgs);
 			case 15:
+				return ((InternalEList<?>)getOwnedPreconditions()).basicRemove(otherEnd, msgs);
+			case 16:
 				return basicSetOwningClass(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -379,7 +379,7 @@ public class OperationCSImpl extends FeatureCSImpl implements OperationCS {
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID())
 		{
-			case 15:
+			case 16:
 				return eInternalContainer().eInverseRemove(this, 13, StructuredClassCS.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
@@ -394,19 +394,19 @@ public class OperationCSImpl extends FeatureCSImpl implements OperationCS {
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-			case 9:
-				return getOwnedSignature();
 			case 10:
-				return getOwnedBodyExpressions();
+				return getOwnedSignature();
 			case 11:
-				return getOwnedExceptions();
+				return getOwnedBodyExpressions();
 			case 12:
-				return getOwnedParameters();
+				return getOwnedExceptions();
 			case 13:
-				return getOwnedPostconditions();
+				return getOwnedParameters();
 			case 14:
-				return getOwnedPreconditions();
+				return getOwnedPostconditions();
 			case 15:
+				return getOwnedPreconditions();
+			case 16:
 				return getOwningClass();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -422,30 +422,30 @@ public class OperationCSImpl extends FeatureCSImpl implements OperationCS {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-			case 9:
+			case 10:
 				setOwnedSignature((TemplateSignatureCS)newValue);
 				return;
-			case 10:
+			case 11:
 				getOwnedBodyExpressions().clear();
 				getOwnedBodyExpressions().addAll((Collection<? extends SpecificationCS>)newValue);
 				return;
-			case 11:
+			case 12:
 				getOwnedExceptions().clear();
 				getOwnedExceptions().addAll((Collection<? extends TypedRefCS>)newValue);
 				return;
-			case 12:
+			case 13:
 				getOwnedParameters().clear();
 				getOwnedParameters().addAll((Collection<? extends ParameterCS>)newValue);
 				return;
-			case 13:
+			case 14:
 				getOwnedPostconditions().clear();
 				getOwnedPostconditions().addAll((Collection<? extends ConstraintCS>)newValue);
 				return;
-			case 14:
+			case 15:
 				getOwnedPreconditions().clear();
 				getOwnedPreconditions().addAll((Collection<? extends ConstraintCS>)newValue);
 				return;
-			case 15:
+			case 16:
 				setOwningClass((StructuredClassCS)newValue);
 				return;
 		}
@@ -461,25 +461,25 @@ public class OperationCSImpl extends FeatureCSImpl implements OperationCS {
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-			case 9:
+			case 10:
 				setOwnedSignature((TemplateSignatureCS)null);
 				return;
-			case 10:
+			case 11:
 				getOwnedBodyExpressions().clear();
 				return;
-			case 11:
+			case 12:
 				getOwnedExceptions().clear();
 				return;
-			case 12:
+			case 13:
 				getOwnedParameters().clear();
 				return;
-			case 13:
+			case 14:
 				getOwnedPostconditions().clear();
 				return;
-			case 14:
+			case 15:
 				getOwnedPreconditions().clear();
 				return;
-			case 15:
+			case 16:
 				setOwningClass((StructuredClassCS)null);
 				return;
 		}
@@ -495,19 +495,19 @@ public class OperationCSImpl extends FeatureCSImpl implements OperationCS {
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-			case 9:
-				return ownedSignature != null;
 			case 10:
-				return ownedBodyExpressions != null && !ownedBodyExpressions.isEmpty();
+				return ownedSignature != null;
 			case 11:
-				return ownedExceptions != null && !ownedExceptions.isEmpty();
+				return ownedBodyExpressions != null && !ownedBodyExpressions.isEmpty();
 			case 12:
-				return ownedParameters != null && !ownedParameters.isEmpty();
+				return ownedExceptions != null && !ownedExceptions.isEmpty();
 			case 13:
-				return ownedPostconditions != null && !ownedPostconditions.isEmpty();
+				return ownedParameters != null && !ownedParameters.isEmpty();
 			case 14:
-				return ownedPreconditions != null && !ownedPreconditions.isEmpty();
+				return ownedPostconditions != null && !ownedPostconditions.isEmpty();
 			case 15:
+				return ownedPreconditions != null && !ownedPreconditions.isEmpty();
+			case 16:
 				return getOwningClass() != null;
 		}
 		return super.eIsSet(featureID);
@@ -524,7 +524,7 @@ public class OperationCSImpl extends FeatureCSImpl implements OperationCS {
 		{
 			switch (derivedFeatureID)
 			{
-				case 9: return 2;
+				case 10: return 2;
 				default: return -1;
 			}
 		}
@@ -542,7 +542,7 @@ public class OperationCSImpl extends FeatureCSImpl implements OperationCS {
 		{
 			switch (baseFeatureID)
 			{
-				case 2: return 9;
+				case 2: return 10;
 				default: return -1;
 			}
 		}

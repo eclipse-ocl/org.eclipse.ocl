@@ -27,7 +27,6 @@ import org.eclipse.ocl.xtext.essentialoclcs.ExpSpecificationCS;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.ocl.xtext.completeoclcs.DefCS#isIsStatic <em>Is Static</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.completeoclcs.DefCS#getOwnedSpecification <em>Owned Specification</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.completeoclcs.DefCS#getOwningClassifierContextDecl <em>Owning Classifier Context Decl</em>}</li>
  * </ul>
@@ -87,34 +86,5 @@ public interface DefCS
 	 * @generated
 	 */
 	void setOwnedSpecification(ExpSpecificationCS value);
-
-	/**
-	 * Returns the value of the '<em><b>Is Static</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Is Static</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * Whether this Oeration or Property definition is for a static feature.
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Is Static</em>' attribute.
-	 * @see #setIsStatic(boolean)
-	 * @see org.eclipse.ocl.xtext.completeoclcs.CompleteOCLCSPackage#getDefCS_IsStatic()
-	 * @model
-	 * @generated
-	 */
-	boolean isIsStatic();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.xtext.completeoclcs.DefCS#isIsStatic <em>Is Static</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Is Static</em>' attribute.
-	 * @see #isIsStatic()
-	 * @generated
-	 */
-	void setIsStatic(boolean value);
 
 } // DefCS

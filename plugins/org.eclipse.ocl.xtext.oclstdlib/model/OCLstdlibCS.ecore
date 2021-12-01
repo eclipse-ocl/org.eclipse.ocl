@@ -27,8 +27,6 @@
   <eClassifiers xsi:type="ecore:EClass" name="LibOperationCS" eSuperTypes="../../org.eclipse.ocl.xtext.base/model/BaseCS.ecore#//OperationCS #//JavaImplementationCS">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isInvalidating" eType="ecore:EDataType ../../org.eclipse.ocl.pivot/model/Pivot.ecore#T-pivot-Boolean"
         defaultValueLiteral="false"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isStatic" eType="ecore:EDataType ../../org.eclipse.ocl.pivot/model/Pivot.ecore#T-pivot-Boolean"
-        defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isValidating" eType="ecore:EDataType ../../org.eclipse.ocl.pivot/model/Pivot.ecore#T-pivot-Boolean"
         defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="precedence" eType="ecore:EClass ../../org.eclipse.ocl.pivot/model/Pivot.ecore#T-pivot-Precedence"/>
@@ -39,8 +37,6 @@
         eType="#//PrecedenceCS" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="LibPropertyCS" eSuperTypes="../../org.eclipse.ocl.xtext.base/model/BaseCS.ecore#//AttributeCS #//JavaImplementationCS">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isStatic" eType="ecore:EDataType ../../org.eclipse.ocl.pivot/model/Pivot.ecore#T-pivot-Boolean"
-        defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedOpposite" eType="#//LibOppositeCS"
         containment="true"/>
   </eClassifiers>

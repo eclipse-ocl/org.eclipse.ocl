@@ -2072,6 +2072,17 @@ public interface BaseCSPackage extends EPackage {
 	EAttribute getTypedElementCS_IsOptional();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.xtext.basecs.TypedElementCS#isIsStatic <em>Is Static</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Is Static</em>'.
+	 * @see org.eclipse.ocl.xtext.basecs.TypedElementCS#isIsStatic()
+	 * @see #getTypedElementCS()
+	 * @generated
+	 */
+	EAttribute getTypedElementCS_IsStatic();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.basecs.TypedRefCS <em>Typed Ref CS</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3423,6 +3434,14 @@ public interface BaseCSPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute TYPED_ELEMENT_CS__IS_OPTIONAL = eINSTANCE.getTypedElementCS_IsOptional();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Static</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TYPED_ELEMENT_CS__IS_STATIC = eINSTANCE.getTypedElementCS_IsStatic();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.xtext.basecs.impl.TypedRefCSImpl <em>Typed Ref CS</em>}' class.

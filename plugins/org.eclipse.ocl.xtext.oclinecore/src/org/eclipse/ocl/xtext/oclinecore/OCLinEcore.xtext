@@ -104,8 +104,7 @@ AnnotationElementCS returns base::AnnotationElementCS:
 ;
 
 AttributeCS returns base::AttributeCS:
-	((qualifiers+='static' (qualifiers+='definition')?) | (qualifiers+='definition' (qualifiers+='static')?))?
-	'attribute' name=UnrestrictedName
+	isStatic?='static'? 'attribute' name=UnrestrictedName
 	(':' ownedType=TypedMultiplicityRefCS)?
 	('=' default=SINGLE_QUOTED_STRING)?
 	('{'((qualifiers+='derived' | qualifiers+='!derived' |
@@ -182,8 +181,7 @@ ModelElementRefCS returns base::ModelElementRefCS:
 ;
 
 OperationCS returns base::OperationCS:
-	((qualifiers+='static' (qualifiers+='definition')?) | (qualifiers+='definition' (qualifiers+='static')?))?
-	'operation' (ownedSignature=TemplateSignatureCS)? name=UnrestrictedName
+	isStatic?='static'? 'operation' (ownedSignature=TemplateSignatureCS)? name=UnrestrictedName
 	'(' (ownedParameters+=ParameterCS (',' ownedParameters+=ParameterCS)*)? ')'
 	(':' ownedType=TypedMultiplicityRefCS)?
 	('throws' ownedExceptions+=TypedRefCS (',' ownedExceptions+=TypedRefCS)*)?
@@ -231,8 +229,7 @@ ImplicitOppositeCS returns base::ImplicitOppositeCS:
 ;
 
 ReferenceCS returns base::ReferenceCS:
-	((qualifiers+='static' (qualifiers+='definition')?) | (qualifiers+='definition' (qualifiers+='static')?))?
-	'property' name=UnrestrictedName
+	isStatic?='static'? 'property' name=UnrestrictedName
 	('#' referredOpposite=[pivot::Property|UnrestrictedName])?
 	(':' ownedType=TypedMultiplicityRefCS)?
 	('=' default=SINGLE_QUOTED_STRING)?

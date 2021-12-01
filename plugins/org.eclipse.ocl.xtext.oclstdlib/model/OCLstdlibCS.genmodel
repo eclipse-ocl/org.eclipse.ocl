@@ -40,7 +40,6 @@
     </genClasses>
     <genClasses ecoreClass="OCLstdlibCS.ecore#//LibOperationCS">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute OCLstdlibCS.ecore#//LibOperationCS/isInvalidating"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute OCLstdlibCS.ecore#//LibOperationCS/isStatic"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute OCLstdlibCS.ecore#//LibOperationCS/isValidating"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference OCLstdlibCS.ecore#//LibOperationCS/precedence"/>
     </genClasses>
@@ -49,7 +48,6 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference OCLstdlibCS.ecore#//LibPackageCS/ownedPrecedences"/>
     </genClasses>
     <genClasses ecoreClass="OCLstdlibCS.ecore#//LibPropertyCS">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute OCLstdlibCS.ecore#//LibPropertyCS/isStatic"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference OCLstdlibCS.ecore#//LibPropertyCS/ownedOpposite"/>
     </genClasses>
     <genClasses ecoreClass="OCLstdlibCS.ecore#//LibRootPackageCS"/>

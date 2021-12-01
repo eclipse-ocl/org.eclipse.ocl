@@ -23,6 +23,7 @@ import org.eclipse.emf.common.util.EList;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.xtext.basecs.TypedElementCS#isIsOptional <em>Is Optional</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.basecs.TypedElementCS#isIsStatic <em>Is Static</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.basecs.TypedElementCS#getOwnedType <em>Owned Type</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.basecs.TypedElementCS#getQualifiers <em>Qualifiers</em>}</li>
  * </ul>
@@ -99,5 +100,32 @@ public interface TypedElementCS extends NamedElementCS {
 	 * @generated
 	 */
 	void setIsOptional(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Is Static</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Is Static</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Is Static</em>' attribute.
+	 * @see #setIsStatic(boolean)
+	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getTypedElementCS_IsStatic()
+	 * @model default="false"
+	 * @generated
+	 */
+	boolean isIsStatic();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.ocl.xtext.basecs.TypedElementCS#isIsStatic <em>Is Static</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Is Static</em>' attribute.
+	 * @see #isIsStatic()
+	 * @generated
+	 */
+	void setIsStatic(boolean value);
 
 } // TypedElementCS
