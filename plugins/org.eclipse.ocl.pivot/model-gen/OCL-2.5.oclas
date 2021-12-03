@@ -605,6 +605,14 @@
         <ownedComments body="The collection containing all elements of oclText[self] apart from all occurrences of all objects.&#xA;"/>
         <ownedParameters name="objects" type="#IgEJU"/>
       </ownedOperations>
+      <ownedOperations xsi:type="pivot:Iteration" xmi:id=",yQ+J" implementationClass="org.eclipse.ocl.pivot.library.iterator.ExistsIteration"
+          isInvalidating="true" isRequired="false" isValidating="true" name="exists" type="#XEMMs">
+        <ownedComments body="Results in oclText[true] if body evaluates to oclText[true] for at least one permutation of elements oclText[i], oclText[j], oclText[k] in the source collection.&#xA;"/>
+        <ownedIterators isRequired="false" name="i" type="#qs59R"/>
+        <ownedIterators isRequired="false" name="j" type="#qs59R"/>
+        <ownedIterators isRequired="false" name="k" type="#qs59R"/>
+        <ownedParameters isRequired="false" name="lambda" type="#9VTck"/>
+      </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="cuQ+J" implementationClass="org.eclipse.ocl.pivot.library.iterator.ExistsIteration"
           isInvalidating="true" isRequired="false" isValidating="true" name="exists" type="#XEMMs">
         <ownedComments body="Results in oclText[true] if body evaluates to oclText[true] for at least one permutation of elements oclText[i], oclText[j] in the source collection.&#xA;"/>
@@ -625,9 +633,17 @@
           <ownedParameters xmi:id="V4fY9" name="T2"/>
         </ownedSignature>
       </ownedOperations>
-      <ownedOperations xsi:type="pivot:Iteration" xmi:id="YtmML" implementationClass="org.eclipse.ocl.pivot.library.iterator.ForAllIteration"
+      <ownedOperations xsi:type="pivot:Iteration" xmi:id="7xmML" implementationClass="org.eclipse.ocl.pivot.library.iterator.ForAllIteration"
           isInvalidating="true" isRequired="false" isValidating="true" name="forAll" type="#XEMMs">
         <ownedComments body="Results in oclText[true] if the body expression evaluates to oclText[true] for each permutation of elements oclText[i], oclText[j] in the source collection; otherwise, result is oclText[false].&#xA;"/>
+        <ownedIterators isRequired="false" name="i" type="#qs59R"/>
+        <ownedIterators isRequired="false" name="j" type="#qs59R"/>
+        <ownedIterators isRequired="false" name="k" type="#qs59R"/>
+        <ownedParameters isRequired="false" name="lambda" type="#9VTck"/>
+      </ownedOperations>
+      <ownedOperations xsi:type="pivot:Iteration" xmi:id="YtmML" implementationClass="org.eclipse.ocl.pivot.library.iterator.ForAllIteration"
+          isInvalidating="true" isRequired="false" isValidating="true" name="forAll" type="#XEMMs">
+        <ownedComments body="Results in oclText[true] if the body expression evaluates to oclText[true] for each permutation of elements oclText[i], oclText[j], oclText[k] in the source collection; otherwise, result is oclText[false].&#xA;"/>
         <ownedIterators isRequired="false" name="i" type="#qs59R"/>
         <ownedIterators isRequired="false" name="j" type="#qs59R"/>
         <ownedParameters isRequired="false" name="lambda" type="#9VTck"/>
@@ -968,6 +984,14 @@
           <ownedParameters xmi:id="bSWcV" name="V2"/>
         </ownedSignature>
       </ownedOperations>
+      <ownedOperations xsi:type="pivot:Iteration" xmi:id="2HTld" implementationClass="org.eclipse.ocl.pivot.library.iterator.ExistsIteration"
+          isInvalidating="true" isRequired="false" isValidating="true" name="exists" type="#XEMMs">
+        <ownedComments body="Results in oclText[true] if body evaluates to oclText[true] for at least one permutation of keys oclText[k1], oclText[k2], oclText[k3] in the source map.&#xA;"/>
+        <ownedIterators isRequired="false" name="k1" type="#8dAuH"/>
+        <ownedIterators isRequired="false" name="k2" type="#8dAuH"/>
+        <ownedIterators isRequired="false" name="k3" type="#8dAuH"/>
+        <ownedParameters isRequired="false" name="lambda" type="#7A0zM"/>
+      </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="TDTld" implementationClass="org.eclipse.ocl.pivot.library.iterator.ExistsIteration"
           isInvalidating="true" isRequired="false" isValidating="true" name="exists" type="#XEMMs">
         <ownedComments body="Results in oclText[true] if body evaluates to oclText[true] for at least one permutation of keys oclText[k1], oclText[k2] in the source map.&#xA;"/>
@@ -979,6 +1003,14 @@
           isInvalidating="true" isRequired="false" isValidating="true" name="exists" type="#XEMMs">
         <ownedComments body="Results in oclText[true] if body evaluates to oclText[true] for at least one key oclText[k] in the source map.&#xA;"/>
         <ownedIterators isRequired="false" name="k" type="#8dAuH"/>
+        <ownedParameters isRequired="false" name="lambda" type="#7A0zM"/>
+      </ownedOperations>
+      <ownedOperations xsi:type="pivot:Iteration" xmi:id="yGpze" implementationClass="org.eclipse.ocl.pivot.library.iterator.ForAllIteration"
+          isInvalidating="true" isRequired="false" isValidating="true" name="forAll" type="#XEMMs">
+        <ownedComments body="Results in oclText[true] if the body expression evaluates to oclText[true] for each permutation of keys oclText[k1], oclText[k2], oclText[k3] in the source map; otherwise, result is oclText[false].&#xA;"/>
+        <ownedIterators isRequired="false" name="k1" type="#8dAuH"/>
+        <ownedIterators isRequired="false" name="k2" type="#8dAuH"/>
+        <ownedIterators isRequired="false" name="k3" type="#8dAuH"/>
         <ownedParameters isRequired="false" name="lambda" type="#7A0zM"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="PCpze" implementationClass="org.eclipse.ocl.pivot.library.iterator.ForAllIteration"

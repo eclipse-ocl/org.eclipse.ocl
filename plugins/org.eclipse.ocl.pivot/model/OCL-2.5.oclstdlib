@@ -397,13 +397,21 @@ abstract type Collection(T) : CollectionType conformsTo OclAny {
 	**/
 	iteration exists(i : T[?], j : T[?] | lambda : Lambda T() : Boolean[?]) : Boolean[?] invalidating validating => 'org.eclipse.ocl.pivot.library.iterator.ExistsIteration';
 	/**
+	Results in oclText[true] if body evaluates to oclText[true] for at least one permutation of elements oclText[i], oclText[j], oclText[k] in the source collection.
+	**/
+	iteration exists(i : T[?], j : T[?], k : T[?] | lambda : Lambda T() : Boolean[?]) : Boolean[?] invalidating validating => 'org.eclipse.ocl.pivot.library.iterator.ExistsIteration';
+	/**
 	Results in oclText[true] if the body expression evaluates to oclText[true] for each element oclText[i] in the source collection; otherwise, result is oclText[false].
 	**/
 	iteration forAll(i : T[?] | lambda : Lambda T() : Boolean[?]) : Boolean[?] invalidating validating => 'org.eclipse.ocl.pivot.library.iterator.ForAllIteration';
 	/**
-	Results in oclText[true] if the body expression evaluates to oclText[true] for each permutation of elements oclText[i], oclText[j] in the source collection; otherwise, result is oclText[false].
+	Results in oclText[true] if the body expression evaluates to oclText[true] for each permutation of elements oclText[i], oclText[j], oclText[k] in the source collection; otherwise, result is oclText[false].
 	**/
 	iteration forAll(i : T[?], j : T[?] | lambda : Lambda T() : Boolean[?]) : Boolean[?] invalidating validating => 'org.eclipse.ocl.pivot.library.iterator.ForAllIteration';
+	/**
+	Results in oclText[true] if the body expression evaluates to oclText[true] for each permutation of elements oclText[i], oclText[j] in the source collection; otherwise, result is oclText[false].
+	**/
+	iteration forAll(i : T[?], j : T[?], k : T[?] | lambda : Lambda T() : Boolean[?]) : Boolean[?] invalidating validating => 'org.eclipse.ocl.pivot.library.iterator.ForAllIteration';
 	/**
 	The Map from each element oclText[i] of the source collection, the key, to the set of values to and values that results from applying body to every value of the source map.
 	The result is not flattened. 
@@ -697,6 +705,10 @@ type Map(K,V) : MapType conformsTo OclAny {
 	**/
 	iteration exists(k1 : K[?], k2 : K[?] | lambda : Lambda K() : Boolean[?]) : Boolean[?] invalidating validating => 'org.eclipse.ocl.pivot.library.iterator.ExistsIteration';
 	/**
+	Results in oclText[true] if body evaluates to oclText[true] for at least one permutation of keys oclText[k1], oclText[k2], oclText[k3] in the source map.
+	**/
+	iteration exists(k1 : K[?], k2 : K[?], k3 : K[?] | lambda : Lambda K() : Boolean[?]) : Boolean[?] invalidating validating => 'org.eclipse.ocl.pivot.library.iterator.ExistsIteration';
+	/**
 	Results in oclText[true] if the body expression evaluates to oclText[true] for each key oclText[k] in the source map; otherwise, result is oclText[false].
 	**/
 	iteration forAll(k : K[?] | lambda : Lambda K() : Boolean[?]) : Boolean[?] invalidating validating => 'org.eclipse.ocl.pivot.library.iterator.ForAllIteration';
@@ -704,6 +716,10 @@ type Map(K,V) : MapType conformsTo OclAny {
 	Results in oclText[true] if the body expression evaluates to oclText[true] for each permutation of keys oclText[k1], oclText[k2] in the source map; otherwise, result is oclText[false].
 	**/
 	iteration forAll(k1 : K[?], k2 : K[?] | lambda : Lambda K() : Boolean[?]) : Boolean[?] invalidating validating => 'org.eclipse.ocl.pivot.library.iterator.ForAllIteration';
+	/**
+	Results in oclText[true] if the body expression evaluates to oclText[true] for each permutation of keys oclText[k1], oclText[k2], oclText[k3] in the source map; otherwise, result is oclText[false].
+	**/
+	iteration forAll(k1 : K[?], k2 : K[?], k3 : K[?] | lambda : Lambda K() : Boolean[?]) : Boolean[?] invalidating validating => 'org.eclipse.ocl.pivot.library.iterator.ForAllIteration';
 	/**
 	Results in oclText[true] if body evaluates to a different value for each key oclText[k] in the source map; otherwise, result is oclText[false].
 	**/
