@@ -688,6 +688,12 @@ public class IteratorsTest4 extends PivotTestSuite
 		ocl.assertQueryTrue(null, "Map{1 <- '1', true <- 'TRUE', false <- 'FALSE'}->exists(key1 <- value1, key2 | key2 <> value1)");
 		ocl.assertQueryTrue(null, "Map{1 <- '1', true <- 'TRUE', false <- 'FALSE'}->exists(key <- value | key.toString().toUpper() = value)");
 		ocl.assertQueryTrue(null, "Map{1 <- '1', true <- 'TRUE', false <- 'FALSE'}->exists(key : OclAny <- value : String | key.toString().toUpper() = value)");
+
+		ocl.assertQueryFalse(ocl.pkg1, "Sequence{2,3,4,6,12}->exists(e1, e2, e3 | e1 * e2 * e3 = 73)");
+		ocl.assertQueryTrue(ocl.pkg1, "Sequence{2,3,4,6,12}->exists(e1, e2, e3 | e1 * e2 * e3 = 72)");
+
+		ocl.assertQueryTrue(null, "Map{2<-1, 3<-2,1<-3}->exists(k1<-v1, k2<-v2, k3<-v3 | k1 = v2 and k2 = v3 and k3 = v1)");
+		ocl.assertQueryFalse(null, "Map{2<-1, 4<-2,1<-3}->exists(k1<-v1, k2<-v2, k3<-v3 | k1 = v2 and k2 = v3 and k3 = v1)");
 		ocl.dispose();
 	}
 
@@ -781,6 +787,12 @@ public class IteratorsTest4 extends PivotTestSuite
 		ocl.assertQueryTrue(null, "Map{1 <- '1', true <- 'TRUE', false <- 'FALSE'}->forAll(key1 <- value1, key2 | key2 <> value1)");
 		ocl.assertQueryTrue(null, "Map{1 <- '1', true <- 'TRUE', false <- 'FALSE'}->forAll(key <- value | key.toString().toUpper() = value)");
 		ocl.assertQueryTrue(null, "Map{1 <- '1', true <- 'TRUE', false <- 'FALSE'}->forAll(key : OclAny <- value : String | key.toString().toUpper() = value)");
+
+		ocl.assertQueryTrue(ocl.pkg1, "Sequence{2,3,4,6,12}->forAll(e1, e2, e3 | e1 * e2 * e3 <> 73)");
+		ocl.assertQueryFalse(ocl.pkg1, "Sequence{2,3,4,6,12}->forAll(e1, e2, e3 | e1 * e2 * e3 <> 72)");
+
+		ocl.assertQueryFalse(null, "Map{2<-1, 3<-2,1<-3}->forAll(k1<-v1, k2<-v2, k3<-v3 | not (k1 = v2 and k2 = v3 and k3 = v1))");
+		ocl.assertQueryTrue(null, "Map{2<-1, 4<-2,1<-3}->forAll(k1<-v1, k2<-v2, k3<-v3 | not (k1 = v2 and k2 = v3 and k3 = v1))");
 		ocl.dispose();
 	}
 
@@ -1125,12 +1137,12 @@ public class IteratorsTest4 extends PivotTestSuite
 	@Test public void test_invalidMultipleIteratorVariables() {
 		MyOCL ocl = createOCL();
 		ocl.assertBadQuery(SemanticException.class, Diagnostic.ERROR,		// FIXME Bug 296990
-			null, "Sequence{'a', 'b', 'c'}->exists(e1, e2, e3 | e1 = e2)",
-			PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Sequence(String)", "exists", "e1, e2, e3| e1 = e2");
+			null, "Sequence{'a', 'b', 'c'}->exists(e1, e2, e3, e4 | e1 = e2)",
+			PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Sequence(String)", "exists", "e1, e2, e3, e4| e1 = e2");
 
 		ocl.assertBadQuery(SemanticException.class, Diagnostic.ERROR,		// FIXME Bug 296990
-			null, "Sequence{'a', 'b', 'c'}->forAll(e1, e2, e3 | e1 = e2)",
-			PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Sequence(String)", "forAll", "e1, e2, e3| e1 = e2");
+			null, "Sequence{'a', 'b', 'c'}->forAll(e1, e2, e3, e4 | e1 = e2)",
+			PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Sequence(String)", "forAll", "e1, e2, e3, e4| e1 = e2");
 
 		ocl.assertBadQuery(SemanticException.class, Diagnostic.ERROR,
 			null, "Sequence{'a', 'b', 'c'}->collect(e1, e2 | Tuple{a : String = e1, b : String = e2})",

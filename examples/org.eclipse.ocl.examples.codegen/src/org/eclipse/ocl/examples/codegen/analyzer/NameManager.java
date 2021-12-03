@@ -107,7 +107,8 @@ public class NameManager
 {
 	public static final String BAG_NAME_HINT_PREFIX = "BAG";
 	public static final String COLLECTION_NAME_HINT_PREFIX = "COL";
-	public static final String DEFAULT_NAME_PREFIX = "symbol";
+	public static final String DEFAULT_GLOBAL_NAME_PREFIX = "global";
+	public static final String DEFAULT_LOCAL_NAME_PREFIX = "local";
 	//	public static final String ID_NAME_HINT_PREFIX = "TID";
 	public static final String EXPRESSION_IN_OCL_NAME_HINT_PREFIX = PivotConstants.RESULT_NAME;
 	public static final String INTEGER_NAME_HINT_PREFIX = "INT_";
@@ -569,7 +570,7 @@ public class NameManager
 				}
 			}
 			if (lastResort == null) {
-				lastResort = DEFAULT_NAME_PREFIX;
+				lastResort = context == null ? DEFAULT_GLOBAL_NAME_PREFIX : DEFAULT_LOCAL_NAME_PREFIX;
 			}
 			if (name2counter == null) {
 				name2counter = new HashMap<String, Integer>();
@@ -581,6 +582,9 @@ public class NameManager
 				if (!name2object.containsKey(attempt)) {		// Assumes that reserved names do not end in _ count
 					install(attempt, anObject);
 					name2counter.put(lastResort, ++count);
+					if ("symbol_3".equals(attempt)) {
+						getClass();			// XXX
+					}
 					return attempt;
 				}
 			}
