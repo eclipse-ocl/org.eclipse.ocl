@@ -1,7 +1,7 @@
 //import org.eclipse.ocl.examples.build.qvto.BlackBoxLibrary;
 import BlackBoxLibrary;
 
-modeltype UML2Ecore uses 'http://www.eclipse.org/ocl/2012/UML2EcoreMapping';
+modeltype UML2Ecore uses 'local://www.eclipse.org/ocl/2012/UML2EcoreMapping';
 modeltype UML uses 'http://www.eclipse.org/uml2/5.0.0/UML';
 modeltype Ecore uses 'http://www.eclipse.org/emf/2002/Ecore';
 
