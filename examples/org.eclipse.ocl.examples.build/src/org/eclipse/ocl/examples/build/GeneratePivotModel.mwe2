@@ -109,12 +109,24 @@ Workflow {
     	uri = "platform:/resource/${buildProjectName}/src/org/eclipse/ocl/examples/build/qvto/UML2EcoreAnalyzer.qvto"
     	in = "platform:/resource/${buildProjectName}/model/UML2ASinEcore.xmi" 
     	out = "platform:/resource/${buildProjectName}/model-gen/UML2ASAnalysis.xmi"
+    	
+    	ePackageMapping = { from = "org.eclipse.emf.ecore/model/Ecore.ecore" to = "http://www.eclipse.org/emf/2002/Ecore" }
+		ePackageMapping = { from = "org.eclipse.uml2.types/model/Types.ecore" to = "http://www.eclipse.org/uml2/5.0.0/Types" }
+		ePackageMapping = { from = "org.eclipse.uml2.uml/model/UML.ecore" to = "http://www.eclipse.org/uml2/5.0.0/UML" }
+		uriMapping = { from = "local://www.eclipse.org/ocl/2012/UML2EcoreControl" to = "org.eclipse.ocl.examples.build/model/UML2EcoreControl.ecore" }
+		uriMapping = { from = "local://www.eclipse.org/ocl/2012/UML2EcoreMapping" to = "org.eclipse.ocl.examples.build/model/UML2EcoreMapping.ecore" }
 	}
     component = QVToTransformationExecutor { resourceSet = pivotCreateResourceSet skipOnErrors = true
     	uri = "platform:/resource/${buildProjectName}/src/org/eclipse/ocl/examples/build/qvto/UML2EcoreSynthesizer.qvto"
     	in = "platform:/resource/${buildProjectName}/model-gen/UML2ASAnalysis.xmi" 
     	in = "platform:/resource/org.eclipse.emf.ecore/model/Ecore.ecore" 
     	out = "platform:/resource/${buildProjectName}/model-gen/UML2AS.ecore" 
+    	
+    	ePackageMapping = { from = "org.eclipse.emf.ecore/model/Ecore.ecore" to = "http://www.eclipse.org/emf/2002/Ecore" }
+		ePackageMapping = { from = "org.eclipse.uml2.types/model/Types.ecore" to = "http://www.eclipse.org/uml2/5.0.0/Types" }
+		ePackageMapping = { from = "org.eclipse.uml2.uml/model/UML.ecore" to = "http://www.eclipse.org/uml2/5.0.0/UML" }
+		uriMapping = { from = "local://www.eclipse.org/ocl/2012/UML2EcoreControl" to = "org.eclipse.ocl.examples.build/model/UML2EcoreControl.ecore" }
+		uriMapping = { from = "local://www.eclipse.org/ocl/2012/UML2EcoreMapping" to = "org.eclipse.ocl.examples.build/model/UML2EcoreMapping.ecore" }
 	}
     component = ResourceReader { resourceSet = pivotCreateResourceSet skipOnErrors = true
     	modelSlot = "${ecoreSlot}"

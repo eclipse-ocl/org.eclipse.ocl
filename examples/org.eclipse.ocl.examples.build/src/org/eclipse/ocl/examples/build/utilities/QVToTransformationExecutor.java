@@ -20,6 +20,7 @@ import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -51,9 +52,11 @@ public class QVToTransformationExecutor extends AbstractWorkflowComponent
 
 	private ResourceSet resourceSet = null;
 	private String uri = null;
-	private List<String> blackboxes = new ArrayList<String>();
-	private List<String> ins = new ArrayList<String>();
-	private Map<String, Object> configs = new HashMap<String, Object>();
+	private List<String> blackboxes = new ArrayList<>();
+	private List<String> ins = new ArrayList<>();
+	private Map<String, Object> configs = new HashMap<>();
+	private Map<@NonNull String, @NonNull String> ePackageMappings = new HashMap<>();
+	private Map<@NonNull String, @NonNull URI> uriMappings = new HashMap<>();
 	private String out = null;
 	private String trace = null;
 	private String encoding = "UTF-8"; //$NON-NLS-1$
@@ -70,6 +73,27 @@ public class QVToTransformationExecutor extends AbstractWorkflowComponent
 
 	public void addBlackbox(String className) {
 		blackboxes.add(className);
+	}
+
+	/**
+	 * Define a mapping from a workspace relative *.ecore file to the EPackage nsURI that it realizes.
+	 */
+	public void addEPackageMapping(final Mapping mapping) {
+		String from = mapping.getFrom();
+		String to = mapping.getTo();
+		assert (from != null) && (to != null);
+		ePackageMappings.put(from, to);
+	}
+
+	/**
+	 * Define a mapping from a modeltype name to its workspace relative *.ecore file
+	 * (duplicates ./.settings/org.eclipse.m2m.qvt.oml.mmodel.urimap)
+	 */
+	public void adduriMapping(final Mapping mapping) {
+		String from = mapping.getFrom();
+		URI toURI = URI.createPlatformResourceURI(mapping.getTo(), true);
+		assert (from != null) && (toURI != null);
+		uriMappings.put(from, toURI);
 	}
 
 	public void addIn(String fileName) {
@@ -123,6 +147,22 @@ public class QVToTransformationExecutor extends AbstractWorkflowComponent
 		}
 	}
 
+	private void installEPackageMapping(@NonNull ResourceSet resourceSet, @NonNull String sourceURI, @NonNull String nsURI) {
+		EPackage.Registry packageRegistry = resourceSet.getPackageRegistry();
+		EPackage ePackage = (EPackage)EPackage.Registry.INSTANCE.get(nsURI);
+		packageRegistry.put(URI.createPlatformPluginURI(sourceURI, true).toString(), ePackage);
+		packageRegistry.put(URI.createPlatformResourceURI(sourceURI, true).toString(), ePackage);
+	}
+
+	public void installURImapping(@NonNull ResourceSet resourceSet, @NonNull String sourceURI, @NonNull URI targetURI) {
+		EPackage.Registry packageRegistry = resourceSet.getPackageRegistry();
+		Resource resource = resourceSet.getResource(targetURI, true);
+		EPackage ePackage = (EPackage)resource.getContents().get(0);
+		packageRegistry.put(ePackage.getNsURI(), ePackage);
+		packageRegistry.put(targetURI.toString(), ePackage);
+		packageRegistry.put(sourceURI, ePackage);
+	}
+
 	@Override
 	protected void invokeInternal(WorkflowContext ctx, ProgressMonitor monitor, Issues issues) {
 		String uri = getUri();
@@ -138,7 +178,26 @@ public class QVToTransformationExecutor extends AbstractWorkflowComponent
 			}
 			//			TransformationExecutorBlackboxRegistry.INSTANCE.registerModules(blackbox);
 		}
-		TransformationExecutor transformationExecutor = new TransformationExecutor(txURI);
+		ResourceSet qvtResourceSet = new ResourceSetImpl();
+		EPackage.Registry packageRegistry = qvtResourceSet.getPackageRegistry();
+		//
+		//	Ensure the platform references to used EPackages use the genmodelled EPackage.
+		//
+		for (Map.Entry<@NonNull String, @NonNull String> entry : ePackageMappings.entrySet()) {
+			String filePath = entry.getKey();
+			String nsURI = entry.getValue();
+			installEPackageMapping(qvtResourceSet, filePath, nsURI);
+		}
+		//
+		//	Ensure that the modeltype resolves to its dynamic EPackage.
+		//
+		for (Map.Entry<@NonNull String, @NonNull URI> entry : uriMappings.entrySet()) {
+			String name = entry.getKey();
+			URI modelURI = entry.getValue();
+			installURImapping(qvtResourceSet, name, modelURI);
+		}
+
+		TransformationExecutor transformationExecutor = new TransformationExecutor(txURI, packageRegistry);
 		Diagnostic diagnostic = transformationExecutor.loadTransformation();
 		if (diagnostic.getSeverity() != Diagnostic.OK) {
 			StringBuilder s = new StringBuilder();
@@ -151,7 +210,8 @@ public class QVToTransformationExecutor extends AbstractWorkflowComponent
 			return;
 		}
 
-		ResourceSet resourceSet = getResourceSet();
+		ResourceSet resourceSet = new ResourceSetImpl(); //transformationExecutor.getResourceSet();
+		resourceSet.setPackageRegistry(packageRegistry);
 		List<@NonNull ModelExtent> modelExtents = new ArrayList<@NonNull ModelExtent>();
 		for (String in : ins) {
 			URI inURI = URI.createURI(in, true);
