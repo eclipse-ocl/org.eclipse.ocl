@@ -63,8 +63,11 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 		 */
 		// FIXME tests fail if keys are weak since GC is too aggressive across tests
 		// The actual types are weak keys so that parameterizations using stale types are garbage collected.
+		// No. The problem is that CollectionTypeParameters is not a singleton since it passes an element type. Attempting to use
+		// a SingletonScope needs to use the IdResolver to convert the TemplateParameterId to its type which seemed reluctant
+		// to work, and failing to GC within the scope of this CompleteClass is not a disaster. May change once CompleteClass goes.
 		//
-		private @Nullable /*WeakHash*/Map<@NonNull CollectionTypeParameters<@NonNull Type>, @NonNull WeakReference<@NonNull CollectionType>> collections = null;
+		private @Nullable /*WeakHash*/Map<@NonNull CollectionTypeParameters<@NonNull Type>, @NonNull WeakReference<@Nullable CollectionType>> collections = null;
 
 		protected @NonNull CollectionType createSpecialization(@NonNull CollectionTypeParameters<@NonNull Type> typeParameters) {
 			org.eclipse.ocl.pivot.Class unspecializedType = getPrimaryClass();
@@ -109,7 +112,7 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 			if (templateParameters.size() != 1) {
 				return null;
 			}
-			Map<CollectionTypeParameters<Type>, WeakReference<CollectionType>> specializations2 = collections;
+			Map<@NonNull CollectionTypeParameters<@NonNull Type>, @NonNull WeakReference<@Nullable CollectionType>> specializations2 = collections;
 			if (specializations2 == null) {
 				return null;
 			}
@@ -131,24 +134,24 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 
 		@Override
 		public synchronized @NonNull CollectionType getCollectionType(@NonNull CollectionTypeParameters<@NonNull Type> typeParameters) {
-			Map<@NonNull CollectionTypeParameters<@NonNull Type>, @NonNull WeakReference<@NonNull CollectionType>> specializations2 = collections;
+			Map<@NonNull CollectionTypeParameters<@NonNull Type>, @NonNull WeakReference<@Nullable CollectionType>> specializations2 = collections;
 			if (specializations2 == null) {
 				synchronized(this) {
 					specializations2 = collections;
 					if (specializations2 == null) {
-						specializations2 = collections = new /*Weak*/HashMap<@NonNull CollectionTypeParameters<@NonNull Type>, @NonNull WeakReference<@NonNull CollectionType>>();
+						specializations2 = collections = new /*Weak*/HashMap<@NonNull CollectionTypeParameters<@NonNull Type>, @NonNull WeakReference<@Nullable CollectionType>>();
 					}
 				}
 			}
 			synchronized (specializations2) {
 				CollectionType specializedType = null;
-				WeakReference<@NonNull CollectionType> weakReference = specializations2.get(typeParameters);
+				WeakReference<@Nullable CollectionType> weakReference = specializations2.get(typeParameters);
 				if (weakReference != null) {
 					specializedType = weakReference.get();
 				}
 				if (specializedType == null) {
 					specializedType = createSpecialization(typeParameters);
-					specializations2.put(typeParameters, new WeakReference<@NonNull CollectionType>(specializedType));
+					specializations2.put(typeParameters, new WeakReference<@Nullable CollectionType>(specializedType));
 				}
 				return specializedType;
 			}
@@ -164,8 +167,11 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 		 */
 		// FIXME tests fail if keys are weak since GC is too aggressive across tests
 		// The actual types are weak keys so that parameterizations using stale types are garbage collected.
+		// No. The problem is that MapTypeParameters is not a singleton since it passes key/value types. Attempting to use
+		// a SingletonScope needs to use the IdResolver to convert the TemplateParameterId to its type which seemed reluctant
+		// to work, and failing to GC within the scope of this CompleteClass is not a disaster. May change once CompleteClass goes.
 		//
-		private @Nullable /*WeakHash*/Map<@NonNull MapTypeParameters<@NonNull Type, @NonNull Type>, @NonNull WeakReference<@NonNull MapType>> maps = null;
+		private @Nullable /*WeakHash*/Map<@NonNull MapTypeParameters<@NonNull Type, @NonNull Type>, @NonNull WeakReference<@Nullable MapType>> maps = null;
 
 		protected @NonNull MapType createSpecialization(@NonNull MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters) {
 			org.eclipse.ocl.pivot.Class unspecializedType = getPrimaryClass();
@@ -206,7 +212,7 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 			if (templateParameters.size() != 1) {
 				return null;
 			}
-			Map<@NonNull MapTypeParameters<@NonNull Type, @NonNull Type>, @NonNull WeakReference<@NonNull MapType>> specializations2 = maps;
+			Map<@NonNull MapTypeParameters<@NonNull Type, @NonNull Type>, @NonNull WeakReference<@Nullable MapType>> specializations2 = maps;
 			if (specializations2 == null) {
 				return null;
 			}
@@ -228,24 +234,24 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 
 		@Override
 		public synchronized @NonNull MapType getMapType(@NonNull MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters) {
-			Map<@NonNull MapTypeParameters<@NonNull Type, @NonNull Type>, @NonNull WeakReference<@NonNull MapType>> specializations2 = maps;
+			Map<@NonNull MapTypeParameters<@NonNull Type, @NonNull Type>, @NonNull WeakReference<@Nullable MapType>> specializations2 = maps;
 			if (specializations2 == null) {
 				synchronized(this) {
 					specializations2 = maps;
 					if (specializations2 == null) {
-						specializations2 = maps = new /*Weak*/HashMap<@NonNull MapTypeParameters<@NonNull Type, @NonNull Type>, @NonNull WeakReference<@NonNull MapType>>();
+						specializations2 = maps = new /*Weak*/HashMap<@NonNull MapTypeParameters<@NonNull Type, @NonNull Type>, @NonNull WeakReference<@Nullable MapType>>();
 					}
 				}
 			}
 			synchronized (specializations2) {
 				MapType specializedType = null;
-				WeakReference<@NonNull MapType> weakReference = specializations2.get(typeParameters);
+				WeakReference<@Nullable MapType> weakReference = specializations2.get(typeParameters);
 				if (weakReference != null) {
 					specializedType = weakReference.get();
 				}
 				if (specializedType == null) {
 					specializedType = createSpecialization(typeParameters);
-					specializations2.put(typeParameters, new WeakReference<@NonNull MapType>(specializedType));
+					specializations2.put(typeParameters, new WeakReference<@Nullable MapType>(specializedType));
 				}
 				return specializedType;
 			}

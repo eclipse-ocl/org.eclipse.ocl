@@ -11,18 +11,74 @@
 package org.eclipse.ocl.pivot.internal.ids;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.ids.AbstractSingletonScope;
 import org.eclipse.ocl.pivot.ids.BindingsId;
+import org.eclipse.ocl.pivot.ids.IdHash;
+import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdVisitor;
 import org.eclipse.ocl.pivot.ids.LambdaTypeId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
+import org.eclipse.ocl.pivot.ids.SingletonScope.AbstractKeyAndValue;
 import org.eclipse.ocl.pivot.ids.TypeId;
 
-public class GeneralizedLambdaTypeIdImpl extends AbstractGeneralizedIdImpl<LambdaTypeId> implements LambdaTypeId, WeakHashMapOfListOfWeakReference3.MatchableId<String, ParametersId>
+public class GeneralizedLambdaTypeIdImpl extends AbstractGeneralizedIdImpl<@NonNull LambdaTypeId> implements LambdaTypeId, WeakHashMapOfListOfWeakReference3.MatchableId<String, ParametersId>
 {
+	private static class LambdaTypeIdValue extends AbstractKeyAndValue<@NonNull LambdaTypeId>
+	{
+		private final @NonNull IdManager idManager;
+		private @NonNull String name;
+		private @NonNull ParametersId parametersId;
+
+		private LambdaTypeIdValue(@NonNull IdManager idManager, @NonNull String name, @NonNull ParametersId parametersId) {
+			super(computeHashCode(name, parametersId));
+			this.idManager = idManager;
+			this.name = name;
+			this.parametersId = parametersId;
+		}
+
+		@Override
+		public @NonNull LambdaTypeId createSingleton() {
+			return new GeneralizedLambdaTypeIdImpl(idManager, name, parametersId);
+		}
+
+		@Override
+		public boolean equals(@Nullable Object that) {
+			if (that instanceof GeneralizedLambdaTypeIdImpl) {
+				GeneralizedLambdaTypeIdImpl singleton = (GeneralizedLambdaTypeIdImpl)that;
+				return name.equals(singleton.getName()) && (parametersId == singleton.getParametersId());
+			}
+			else {
+				return false;
+			}
+		}
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	public static class LambdaTypeIdSingletonScope extends AbstractSingletonScope<@NonNull LambdaTypeId, @NonNull LambdaTypeIdValue>
+	{
+		public @NonNull LambdaTypeId getSingleton(@NonNull IdManager idManager, @NonNull String name, @NonNull ParametersId parametersId) {
+			return getSingletonFor(new LambdaTypeIdValue(idManager, name, parametersId));
+		}
+	}
+
+	private static int computeHashCode(@NonNull String name, @NonNull ParametersId parametersId) {
+		return IdHash.createGlobalHash(LambdaTypeId.class, name) + parametersId.hashCode();
+	}
+
 	protected final @NonNull ParametersId parametersId;
 
+	@Deprecated /* @deprecated use simpler constructor */
 	public GeneralizedLambdaTypeIdImpl(@NonNull Integer hashCode, @NonNull String name, @NonNull ParametersId parametersId) {
 		super(hashCode, 0, name);
+		this.parametersId = parametersId;
+		assert this.hashCode == computeHashCode(name, parametersId);
+	}
+
+	private GeneralizedLambdaTypeIdImpl(@NonNull IdManager idManager, @NonNull String name, @NonNull ParametersId parametersId) {
+		super(computeHashCode(name, parametersId), 0, name);
 		this.parametersId = parametersId;
 	}
 

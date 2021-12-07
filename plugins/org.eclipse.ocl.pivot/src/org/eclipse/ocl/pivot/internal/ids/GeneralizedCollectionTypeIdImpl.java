@@ -12,18 +12,62 @@ package org.eclipse.ocl.pivot.internal.ids;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.ids.AbstractSingletonScope;
 import org.eclipse.ocl.pivot.ids.BindingsId;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdHash;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdVisitor;
+import org.eclipse.ocl.pivot.ids.SingletonScope.AbstractKeyAndValue;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 
-public class GeneralizedCollectionTypeIdImpl extends GeneralizedTypeIdImpl<CollectionTypeId> implements CollectionTypeId
+public class GeneralizedCollectionTypeIdImpl extends GeneralizedTypeIdImpl<@NonNull CollectionTypeId> implements CollectionTypeId
 {
+	private static class CollectionTypeIdValue extends AbstractKeyAndValue<@NonNull CollectionTypeId>
+	{
+		private final @NonNull IdManager idManager;
+		private final @NonNull String value;
+
+		public CollectionTypeIdValue(@NonNull IdManager idManager, @NonNull String value) {
+			super(computeHashCode(value));
+			this.idManager = idManager;
+			this.value = value;
+		}
+
+		@Override
+		public @NonNull CollectionTypeId createSingleton() {
+			return new GeneralizedCollectionTypeIdImpl(idManager, value);
+		}
+
+		@Override
+		public boolean equals(@Nullable Object that) {
+			if (that instanceof GeneralizedCollectionTypeIdImpl) {
+				GeneralizedCollectionTypeIdImpl singleton = (GeneralizedCollectionTypeIdImpl)that;
+				return singleton.getName().equals(value);
+			}
+			else {
+				return false;
+			}
+		}
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	public static class CollectionTypeIdSingletonScope extends AbstractSingletonScope<@NonNull CollectionTypeId, @NonNull String>
+	{
+		public @NonNull CollectionTypeId getSingleton(@NonNull IdManager idManager, @NonNull String value) {
+			return getSingletonFor(new CollectionTypeIdValue(idManager, value));
+		}
+	}
+
+	private static int computeHashCode(@NonNull String name) {
+		return IdHash.createGlobalHash(CollectionTypeId.class, name);
+	}
+
 	public GeneralizedCollectionTypeIdImpl(@NonNull IdManager idManager, @NonNull String name) {
-		super(IdHash.createGlobalHash(CollectionTypeId.class, name), 1, name);
+		super(computeHashCode(name), 1, name);
 		assert !MAP_NAME.equals(name);
 	}
 

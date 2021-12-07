@@ -6,10 +6,9 @@
  * http://www.eclipse.org/legal/epl-v20.html
  *
  * Contributors:
- *     E.D.Willink - initial API and implementation
+ *	 E.D.Willink - initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.pivot.ids;
-
 
 /**
  * A ClassId provides a unique hierarchical identifier for a class which is nested by unique name in a parent package.

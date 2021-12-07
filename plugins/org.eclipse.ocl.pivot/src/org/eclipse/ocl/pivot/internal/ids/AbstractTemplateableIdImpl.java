@@ -12,6 +12,7 @@ package org.eclipse.ocl.pivot.internal.ids;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.ids.AbstractSingletonScope;
 import org.eclipse.ocl.pivot.ids.BindingsId;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
@@ -19,17 +20,58 @@ import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.ids.PropertyId;
+import org.eclipse.ocl.pivot.ids.SingletonScope.AbstractKeyAndValue;
+import org.eclipse.ocl.pivot.ids.SpecializedId;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TemplateableId;
 
 public abstract class AbstractTemplateableIdImpl<T extends TemplateableId> extends AbstractElementId implements TemplateableId
 {
+	private static class SpecializedValue<T extends TemplateableId> extends AbstractKeyAndValue<@NonNull T>
+	{
+		private final @NonNull AbstractTemplateableIdImpl<T> generalizedId;
+		private final @NonNull BindingsId value;
+
+		private SpecializedValue(@NonNull AbstractTemplateableIdImpl<T> generalizedId, @NonNull BindingsId value) {
+			super(generalizedId.hashCode() + value.hashCode());
+			this.generalizedId = generalizedId;
+			this.value = value;
+		}
+
+		@Override
+		public @NonNull T createSingleton() {
+			return generalizedId.createSpecializedId(value);
+		}
+
+		@Override
+		public boolean equals(@Nullable Object that) {
+			if (that instanceof SpecializedId) {
+				SpecializedId singleton = (SpecializedId)that;
+				return singleton.getTemplateBindings().equals(value);
+			}
+			else {
+				return false;
+			}
+		}
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	public static class SpecializedSingletonScope<T extends TemplateableId> extends AbstractSingletonScope<@NonNull T, @NonNull BindingsId>
+	{
+
+		public @NonNull T getSingleton(@NonNull AbstractTemplateableIdImpl<T> generalizedId, @NonNull BindingsId value) {
+			return getSingletonFor(new SpecializedValue<T>(generalizedId, value));
+		}
+	}
+
 	protected final @NonNull Integer hashCode;
 
 	/**
 	 * Map from template bindings to the corresponding specialization.
 	 */
-	private @Nullable WeakHashMapOfWeakReference<BindingsId, T> specializations = null;
+	private @Nullable SpecializedSingletonScope<T> specializations = null;
 	protected final int templateParameters;
 
 	protected AbstractTemplateableIdImpl(@NonNull Integer hashCode, int templateParameters) {
@@ -53,22 +95,16 @@ public abstract class AbstractTemplateableIdImpl<T extends TemplateableId> exten
 
 	@Override
 	public @NonNull T getSpecializedId(@NonNull BindingsId templateBindings) {
-		WeakHashMapOfWeakReference<BindingsId, T> specializations2 = specializations;
+		SpecializedSingletonScope<T> specializations2 = specializations;
 		if (specializations2 == null) {
 			synchronized (this) {
 				specializations2 = specializations;
 				if (specializations2 == null) {
-					specializations = specializations2 = new WeakHashMapOfWeakReference<BindingsId, T>()
-					{
-						@Override
-						protected @NonNull T newId(@NonNull BindingsId templateBindings) {
-							return createSpecializedId(templateBindings);
-						}
-					};
+					specializations = specializations2 = new SpecializedSingletonScope<T>();
 				}
 			}
 		}
-		return specializations2.getId(templateBindings);
+		return specializations2.getSingleton(this, templateBindings);
 	}
 
 	public @NonNull T getSpecializedId(@NonNull ElementId... templateBindings) {

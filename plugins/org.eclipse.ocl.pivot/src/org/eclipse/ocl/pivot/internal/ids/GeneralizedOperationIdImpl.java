@@ -11,19 +11,76 @@
 package org.eclipse.ocl.pivot.internal.ids;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.ids.AbstractSingletonScope;
 import org.eclipse.ocl.pivot.ids.BindingsId;
+import org.eclipse.ocl.pivot.ids.ElementId;
+import org.eclipse.ocl.pivot.ids.IdHash;
 import org.eclipse.ocl.pivot.ids.IdVisitor;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
+import org.eclipse.ocl.pivot.ids.SingletonScope.AbstractKeyAndValue;
 import org.eclipse.ocl.pivot.ids.TypeId;
 
-public class GeneralizedOperationIdImpl extends AbstractGeneralizedIdImpl<OperationId> implements OperationId, WeakHashMapOfListOfWeakReference4.MatchableId<Integer, String, ParametersId>
+public class GeneralizedOperationIdImpl extends AbstractGeneralizedIdImpl<@NonNull OperationId> implements OperationId, WeakHashMapOfListOfWeakReference4.MatchableId<Integer, String, ParametersId>
 {
+	private static class OperationIdValue extends AbstractKeyAndValue<@NonNull OperationId>
+	{
+		private @NonNull TypeId parentId;
+		private int templateParameters;
+		private @NonNull String name;
+		private @NonNull ParametersId parametersId;
+
+		private OperationIdValue(@NonNull TypeId parentId, int templateParameters, @NonNull String name, @NonNull ParametersId parametersId) {
+			super(computeHashCode(parentId, templateParameters, name, parametersId));
+			this.parentId = parentId;
+			this.templateParameters = templateParameters;
+			this.name = name;
+			this.parametersId = parametersId;
+		}
+
+		@Override
+		public @NonNull OperationId createSingleton() {
+			return new GeneralizedOperationIdImpl(parentId, templateParameters, name, parametersId);
+		}
+
+		@Override
+		public boolean equals(@Nullable Object that) {
+			if (that instanceof GeneralizedOperationIdImpl) {
+				GeneralizedOperationIdImpl singleton = (GeneralizedOperationIdImpl)that;
+				return singleton.matches(templateParameters, name, parametersId);
+			}
+			else {
+				return false;
+			}
+		}
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	public static class OperationIdSingletonScope extends AbstractSingletonScope<@NonNull OperationId, @NonNull OperationIdValue>
+	{
+		public @NonNull OperationId getSingleton(@NonNull TypeId parentId, int templateParameters, @NonNull String name, @NonNull ParametersId parametersId) {
+			return getSingletonFor(new OperationIdValue(parentId, templateParameters, name, parametersId));
+		}
+	}
+
+	private static int computeHashCode(@NonNull ElementId parentId, int templateParameters, @NonNull String name, @NonNull ParametersId parametersId) {
+		return IdHash.createChildHash(parentId, name) + parametersId.hashCode();
+	}
+
 	protected final @NonNull TypeId parentId;
 	protected final @NonNull ParametersId parametersId;
-	
+
+	@Deprecated /* @deprecated use simpler constructor */
 	public GeneralizedOperationIdImpl(@NonNull Integer hashCode, @NonNull TypeId parentId, int templateParameters, @NonNull String name, @NonNull ParametersId parametersId) {
-		super(hashCode, templateParameters, name);
+		this(parentId, templateParameters, name, parametersId);
+		assert hashCode == this.hashCode;
+	}
+
+	private GeneralizedOperationIdImpl(@NonNull TypeId parentId, int templateParameters, @NonNull String name, @NonNull ParametersId parametersId) {
+		super(computeHashCode(parentId, templateParameters, name, parametersId), templateParameters, name);
 		this.parentId = parentId;
 		this.parametersId = parametersId;
 	}

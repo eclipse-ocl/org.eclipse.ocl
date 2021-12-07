@@ -261,7 +261,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	 * required part definitions to construct a tuple type in the lightweight execution environment. This cache may remain
 	 * unused when using the full pivot environment.
 	 */
-	private Map<@NonNull String, @NonNull Map<@NonNull Type, @NonNull WeakReference<@NonNull TypedElement>>> tupleParts = null;		// Lazily created
+	private Map<@NonNull String, @NonNull Map<@NonNull Type, @NonNull WeakReference<@Nullable TypedElement>>> tupleParts = null;		// Lazily created
 
 	/**
 	 * Mapping from package URI to corresponding Pivot Package. (used to resolve NsURIPackageId).
@@ -291,19 +291,20 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		String nsURI = userPackage.getURI();
 		if (nsURI != null) {
 			nsURI2package.put(nsURI, userPackage);
+			String internedMetmodelName = PivotConstants.METAMODEL_NAME.intern();
 			EPackage ePackage = userPackage.getEPackage();
 			if (ePackage != null) {
 				if (ClassUtil.basicGetMetamodelAnnotation(ePackage) != null) {
-					if (roots2package.get(PivotConstants.METAMODEL_NAME) == null) {
-						roots2package.put(PivotConstants.METAMODEL_NAME, userPackage);
+					if (roots2package.get(internedMetmodelName) == null) {
+						roots2package.put(internedMetmodelName, userPackage);
 					}
 				}
 			}
 			else {
 				for (org.eclipse.ocl.pivot.Class asType : userPackage.getOwnedClasses()) {
 					if ("Boolean".equals(asType.getName())) {			// FIXME Check PrimitiveType //$NON-NLS-1$
-						if (roots2package.get(PivotConstants.METAMODEL_NAME) == null) {
-							roots2package.put(PivotConstants.METAMODEL_NAME, userPackage);
+						if (roots2package.get(internedMetmodelName) == null) {
+							roots2package.put(internedMetmodelName, userPackage);
 						}
 						break;
 					}
@@ -313,7 +314,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		else {
 			String name = userPackage.getName();
 			if (name != null) {
-				roots2package.put(name, userPackage);
+				roots2package.put(name.intern(), userPackage);
 			}
 		}
 		addPackages(userPackage.getOwnedPackages());
@@ -1153,17 +1154,18 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	}
 
 	public synchronized @NonNull TypedElement getTuplePart(@NonNull String name, @NonNull Type type) {
+		String internedName = name.intern();
 		if (tupleParts == null) {
 			tupleParts = new WeakHashMap<>();
 		}
-		Map<@NonNull Type, @NonNull WeakReference<@NonNull TypedElement>> typeMap = tupleParts.get(name);
+		Map<@NonNull Type, @NonNull WeakReference<@Nullable TypedElement>> typeMap = tupleParts.get(internedName);
 		if (typeMap == null) {
 			typeMap = new WeakHashMap<>();
-			tupleParts.put(name, typeMap);
+			tupleParts.put(internedName, typeMap);
 		}
 		TypedElement tupleProperty = weakGet(typeMap, type);
 		if (tupleProperty == null) {
-			tupleProperty = new ExecutorTuplePart(type, name);
+			tupleProperty = new ExecutorTuplePart(type, internedName);
 			typeMap.put(type, new WeakReference<>(tupleProperty));
 		}
 		return tupleProperty;
@@ -1743,26 +1745,26 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 
 	@Override
 	public synchronized org.eclipse.ocl.pivot.@NonNull Package visitNsURIPackageId(@NonNull NsURIPackageId id) {
-		String nsURI = id.getNsURI();
-		org.eclipse.ocl.pivot.Package knownPackage = nsURI2package.get(nsURI);
+		String internedNsURI = id.getNsURI().intern();
+		org.eclipse.ocl.pivot.Package knownPackage = nsURI2package.get(internedNsURI);
 		if (knownPackage != null) {
 			return knownPackage;
 		}
-		org.eclipse.ocl.pivot.Package libraryPackage = standardLibrary.getNsURIPackage(nsURI);
+		org.eclipse.ocl.pivot.Package libraryPackage = standardLibrary.getNsURIPackage(internedNsURI);
 		if (libraryPackage != null) {
-			nsURI2package.put(nsURI, libraryPackage);
+			nsURI2package.put(internedNsURI, libraryPackage);
 			return libraryPackage;
 		}
 		if (!directRootsProcessed) {
 			processDirectRoots();
-			knownPackage = nsURI2package.get(nsURI);
+			knownPackage = nsURI2package.get(internedNsURI);
 			if (knownPackage != null) {
 				return knownPackage;
 			}
 		}
 		if (!crossReferencedRootsProcessed) {
 			processCrossReferencedRoots();
-			knownPackage = nsURI2package.get(nsURI);
+			knownPackage = nsURI2package.get(internedNsURI);
 			if (knownPackage != null) {
 				return knownPackage;
 			}
@@ -1840,8 +1842,8 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		if (id == IdManager.METAMODEL) {
 			return ClassUtil.nonNullState(getStandardLibrary().getPackage());
 		}
-		String name = id.getName();
-		org.eclipse.ocl.pivot.Package knownPackage = roots2package.get(name);
+		String internedName = id.getName().intern();
+		org.eclipse.ocl.pivot.Package knownPackage = roots2package.get(internedName);
 		if (knownPackage != null) {
 			return knownPackage;
 		}
@@ -1852,14 +1854,14 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		//		}
 		if (!directRootsProcessed) {
 			processDirectRoots();
-			knownPackage = roots2package.get(name);
+			knownPackage = roots2package.get(internedName);
 			if (knownPackage != null) {
 				return knownPackage;
 			}
 		}
 		if (!crossReferencedRootsProcessed) {
 			processCrossReferencedRoots();
-			knownPackage = roots2package.get(name);
+			knownPackage = roots2package.get(internedName);
 			if (knownPackage != null) {
 				return knownPackage;
 			}

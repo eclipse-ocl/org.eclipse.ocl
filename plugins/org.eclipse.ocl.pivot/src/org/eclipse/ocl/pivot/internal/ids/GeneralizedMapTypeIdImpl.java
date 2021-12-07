@@ -12,18 +12,62 @@ package org.eclipse.ocl.pivot.internal.ids;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.ids.AbstractSingletonScope;
 import org.eclipse.ocl.pivot.ids.BindingsId;
 import org.eclipse.ocl.pivot.ids.IdHash;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdVisitor;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
+import org.eclipse.ocl.pivot.ids.SingletonScope.AbstractKeyAndValue;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 
-public class GeneralizedMapTypeIdImpl extends GeneralizedTypeIdImpl<MapTypeId> implements MapTypeId
+public class GeneralizedMapTypeIdImpl extends GeneralizedTypeIdImpl<@NonNull MapTypeId> implements MapTypeId
 {
+	private static class MapTypeIdValue extends AbstractKeyAndValue<@NonNull MapTypeId>
+	{
+		private final @NonNull IdManager idManager;
+		private final @NonNull String value;
+
+		public MapTypeIdValue(@NonNull IdManager idManager, @NonNull String value) {
+			super(computeHashCode(value));
+			this.idManager = idManager;
+			this.value = value;
+		}
+
+		@Override
+		public @NonNull MapTypeId createSingleton() {
+			return new GeneralizedMapTypeIdImpl(idManager, value);
+		}
+
+		@Override
+		public boolean equals(@Nullable Object that) {
+			if (that instanceof GeneralizedMapTypeIdImpl) {
+				GeneralizedMapTypeIdImpl singleton = (GeneralizedMapTypeIdImpl)that;
+				return singleton.getName().equals(value);
+			}
+			else {
+				return false;
+			}
+		}
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	public static class MapTypeIdSingletonScope extends AbstractSingletonScope<@NonNull MapTypeId, @NonNull String>
+	{
+		public @NonNull MapTypeId getSingleton(@NonNull IdManager idManager, @NonNull String value) {
+			return getSingletonFor(new MapTypeIdValue(idManager, value));
+		}
+	}
+
+	private static int computeHashCode(@NonNull String name) {
+		return IdHash.createGlobalHash(MapTypeId.class, name);
+	}
+
 	public GeneralizedMapTypeIdImpl(@NonNull IdManager idManager, @NonNull String name) {
-		super(IdHash.createGlobalHash(MapTypeId.class, name), 2, name);
+		super(computeHashCode(name), 2, name);
 	}
 
 	@Override

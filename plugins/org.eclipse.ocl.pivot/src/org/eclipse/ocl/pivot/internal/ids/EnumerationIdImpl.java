@@ -12,28 +12,75 @@ package org.eclipse.ocl.pivot.internal.ids;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.ids.AbstractSingletonScope;
+import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.EnumerationId;
 import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
+import org.eclipse.ocl.pivot.ids.IdHash;
 import org.eclipse.ocl.pivot.ids.IdVisitor;
 import org.eclipse.ocl.pivot.ids.NsURIPackageId;
 import org.eclipse.ocl.pivot.ids.PackageId;
+import org.eclipse.ocl.pivot.ids.SingletonScope.AbstractKeyAndValue;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.ids.EnumerationLiteralIdImpl.EnumerationLiteralIdSingletonScope;
 
 public class EnumerationIdImpl extends AbstractTypeId implements EnumerationId
 {
+	private static class EnumerationIdValue extends AbstractKeyAndValue<@NonNull EnumerationId>
+	{
+		private final @NonNull PackageId parentId;
+		private final @NonNull String value;
+
+		private EnumerationIdValue(@NonNull PackageId parentId, @NonNull String value) {
+			super(computeHashCode(parentId, value));
+			this.parentId = parentId;
+			this.value = value;
+		}
+
+		@Override
+		public @NonNull EnumerationId createSingleton() {
+			return new EnumerationIdImpl(parentId, value);
+		}
+
+		@Override
+		public boolean equals(@Nullable Object that) {
+			if (that instanceof EnumerationIdImpl) {
+				EnumerationIdImpl singleton = (EnumerationIdImpl)that;
+				return singleton.getName().equals(value);
+			}
+			else {
+				return false;
+			}
+		}
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	public static class EnumerationIdSingletonScope extends AbstractSingletonScope<@NonNull EnumerationId, @NonNull String>
+	{
+		public @NonNull EnumerationId getSingleton(@NonNull PackageId parentId, @NonNull String value) {
+			return getSingletonFor(new EnumerationIdValue(parentId, value));
+		}
+	}
+
+	private static int computeHashCode(@NonNull ElementId parentId, @NonNull String name) {
+		return IdHash.createChildHash(parentId, name);
+	}
+
 	protected final @NonNull PackageId parent;
 	protected final @NonNull String name;
 	protected final int hashCode;
 
 	/**
-	 * Map from a nested type name to the corresponding EnumerationLiteralId. 
+	 * Map from a nested type name to the corresponding EnumerationLiteralId.
 	 */
-	private @Nullable WeakHashMapOfWeakReference<String, EnumerationLiteralId> memberEnumerationLiterals = null;
+	private @Nullable EnumerationLiteralIdSingletonScope memberEnumerationLiterals = null;
 
-	public EnumerationIdImpl(@NonNull PackageId parent, @NonNull String name) {
-		this.hashCode = 97 * parent.hashCode() + name.hashCode();
-		this.parent = parent;
+	public EnumerationIdImpl(@NonNull PackageId parentId, @NonNull String name) {
+		this.parent = parentId;
 		this.name = name;
+		this.hashCode = computeHashCode(parentId, name);
 	}
 
 	@Override
@@ -53,22 +100,16 @@ public class EnumerationIdImpl extends AbstractTypeId implements EnumerationId
 
 	@Override
 	public @NonNull EnumerationLiteralId getEnumerationLiteralId(@NonNull String name) {
-    	WeakHashMapOfWeakReference<String, EnumerationLiteralId> memberEnumerationLiterals2 = memberEnumerationLiterals;
+		EnumerationLiteralIdSingletonScope memberEnumerationLiterals2 = memberEnumerationLiterals;
 		if (memberEnumerationLiterals2 == null) {
-    		synchronized (this) {
-    			memberEnumerationLiterals2 = memberEnumerationLiterals;
-    	    	if (memberEnumerationLiterals2 == null) {
-    	    		memberEnumerationLiterals = memberEnumerationLiterals2 = new WeakHashMapOfWeakReference<String, EnumerationLiteralId>()
-    				{
-						@Override
-						protected @NonNull EnumerationLiteralId newId(@NonNull String name) {
-							return new EnumerationLiteralIdImpl(EnumerationIdImpl.this, name);
-						}
-					};
-	    	   }
-    		}
-    	}
-		return memberEnumerationLiterals2.getId(name);
+			synchronized (this) {
+				memberEnumerationLiterals2 = memberEnumerationLiterals;
+				if (memberEnumerationLiterals2 == null) {
+					memberEnumerationLiterals = memberEnumerationLiterals2 = new EnumerationLiteralIdSingletonScope();
+				}
+			}
+		}
+		return memberEnumerationLiterals2.getSingleton(this, name);
 	}
 
 	@Override
@@ -80,7 +121,7 @@ public class EnumerationIdImpl extends AbstractTypeId implements EnumerationId
 	public @NonNull String getName() {
 		return name;
 	}
-	
+
 	@Override
 	public @NonNull PackageId getParent() {
 		return parent;
@@ -90,10 +131,9 @@ public class EnumerationIdImpl extends AbstractTypeId implements EnumerationId
 	public final int hashCode() {
 		return hashCode;
 	}
-	
+
 	@Override
 	public String toString() {
 		return parent + "::" + name;
 	}
-
 }

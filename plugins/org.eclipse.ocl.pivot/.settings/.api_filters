@@ -64,44 +64,6 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/ocl/pivot/ids/TypeId.java" type="org.eclipse.ocl.pivot.ids.TypeId">
-        <filter id="403767336">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.ids.TypeId"/>
-                <message_argument value="OCL_ELEMENT_NAME"/>
-            </message_arguments>
-        </filter>
-        <filter id="403767336">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.ids.TypeId"/>
-                <message_argument value="OCL_LAMBDA_NAME"/>
-            </message_arguments>
-        </filter>
-        <filter id="403767336">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.ids.TypeId"/>
-                <message_argument value="OCL_MESSAGE_NAME"/>
-            </message_arguments>
-        </filter>
-        <filter id="403767336">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.ids.TypeId"/>
-                <message_argument value="OCL_STATE_NAME"/>
-            </message_arguments>
-        </filter>
-        <filter id="403767336">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.ids.TypeId"/>
-                <message_argument value="OCL_TUPLE_NAME"/>
-            </message_arguments>
-        </filter>
-        <filter id="403767336">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.ids.TypeId"/>
-                <message_argument value="OCL_TYPE_NAME"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="src/org/eclipse/ocl/pivot/internal/context/AbstractParserContext.java" type="org.eclipse.ocl.pivot.internal.context.AbstractParserContext">
         <filter comment="Bug 512402 workaround" id="576725006">
             <message_arguments>
@@ -123,30 +85,6 @@
             <message_arguments>
                 <message_argument value="PivotConstantsInternal"/>
                 <message_argument value="AbstractExternal2AS"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/internal/ids/GeneralizedOperationIdImpl.java" type="org.eclipse.ocl.pivot.internal.ids.GeneralizedOperationIdImpl">
-        <filter comment="Bug 512402 workaround" id="576725006">
-            <message_arguments>
-                <message_argument value="OperationId"/>
-                <message_argument value="GeneralizedOperationIdImpl"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/internal/ids/SpecializedOperationIdImpl.java" type="org.eclipse.ocl.pivot.internal.ids.SpecializedOperationIdImpl">
-        <filter comment="Bug 512402 workaround" id="576725006">
-            <message_arguments>
-                <message_argument value="OperationId"/>
-                <message_argument value="SpecializedOperationIdImpl"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/internal/library/StandardLibraryContribution.java" type="org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution">
-        <filter id="403767336">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution"/>
-                <message_argument value="STANDARD_LIBRARY_CONTRIBUTION"/>
             </message_arguments>
         </filter>
     </resource>
@@ -195,14 +133,6 @@
             <message_arguments>
                 <message_argument value="PivotConstantsInternal"/>
                 <message_argument value="AS2MonikerVisitor"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/utilities/EnvironmentFactory.java" type="org.eclipse.ocl.pivot.utilities.EnvironmentFactory">
-        <filter id="404000815">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.utilities.EnvironmentFactory"/>
-                <message_argument value="preDispose()"/>
             </message_arguments>
         </filter>
     </resource>

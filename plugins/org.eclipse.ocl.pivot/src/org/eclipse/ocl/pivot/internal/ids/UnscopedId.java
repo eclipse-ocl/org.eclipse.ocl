@@ -18,9 +18,25 @@ public abstract class UnscopedId extends AbstractTypeId
 	protected final @NonNull String name;
 	protected final int hashCode;
 
+	/**
+	 * @since 1.18
+	 */
+	protected UnscopedId() {
+		this.name = "";
+		this.hashCode = 0;
+	}
+
 	protected UnscopedId(@Nullable String name) {
 		this.name = name != null ? name : "";
 		this.hashCode = name.hashCode();
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	protected UnscopedId(int hashCode, @Nullable String name) {
+		this.name = name != null ? name : "";
+		this.hashCode = hashCode;
 	}
 
 	@Override

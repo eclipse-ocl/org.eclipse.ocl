@@ -732,14 +732,7 @@ implements org.eclipse.ocl.pivot.Package {
 	public @NonNull PackageId getPackageId() {
 		PackageId packageId2 = packageId;
 		if (packageId2 == null) {
-			synchronized (this) {
-				packageId2 = packageId;
-				if (packageId2 == null) {
-					synchronized (this) {
-						packageId = packageId2 = IdManager.getPackageId(this);
-					}
-				}
-			}
+			packageId = packageId2 = IdManager.getPackageId(this);
 		}
 		return packageId2;
 	}
@@ -783,7 +776,6 @@ implements org.eclipse.ocl.pivot.Package {
 	}
 
 	public void setPackageId(@NonNull PackageId packageId) {
-		assert this.packageId == null;
 		this.packageId = packageId;
 	}
 

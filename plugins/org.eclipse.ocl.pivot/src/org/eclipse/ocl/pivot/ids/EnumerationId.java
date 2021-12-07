@@ -6,7 +6,7 @@
  * http://www.eclipse.org/legal/epl-v20.html
  *
  * Contributors:
- *     E.D.Willink - initial API and implementation
+ *	 E.D.Willink - initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.pivot.ids;
 
@@ -19,9 +19,9 @@ import org.eclipse.jdt.annotation.NonNull;
 public interface EnumerationId extends NestedTypeId
 {
 	/**
-     * Return the typeId for anEnumerationLiteral of this typeId.
+	 * Return the typeId for anEnumerationLiteral of this typeId.
 	 * <p>
 	 * Throws UnsupportedException for typeIds such as Primitive Types that may not have enumeration literals.
-     */
+	 */
 	@NonNull EnumerationLiteralId getEnumerationLiteralId(@NonNull String name);
 }

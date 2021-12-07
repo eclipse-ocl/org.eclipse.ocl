@@ -11,16 +11,62 @@
 package org.eclipse.ocl.pivot.internal.ids;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.ids.AbstractSingletonScope;
+import org.eclipse.ocl.pivot.ids.IdHash;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdVisitor;
 import org.eclipse.ocl.pivot.ids.RootPackageId;
+import org.eclipse.ocl.pivot.ids.SingletonScope.AbstractKeyAndValue;
 
 public class RootPackageIdImpl extends AbstractPackageIdImpl implements RootPackageId
 {
+	private static class RootPackageIdValue extends AbstractKeyAndValue<@NonNull RootPackageId>
+	{
+		private final @NonNull IdManager idManager;
+		private final @NonNull String value;
+
+		public RootPackageIdValue(@NonNull IdManager idManager, @NonNull String value) {
+			super(computeHashCode(value));
+			this.idManager = idManager;
+			this.value = value;
+		}
+
+		@Override
+		public @NonNull RootPackageId createSingleton() {
+			return new RootPackageIdImpl(idManager, value);
+		}
+
+		@Override
+		public boolean equals(@Nullable Object that) {
+			if (that instanceof RootPackageIdImpl) {
+				RootPackageIdImpl singleton = (RootPackageIdImpl)that;
+				return singleton.getName().equals(value);
+			}
+			else {
+				return false;
+			}
+		}
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	public static class RootPackageIdSingletonScope extends AbstractSingletonScope<@NonNull RootPackageId, @NonNull String>
+	{
+		public @NonNull RootPackageId getSingleton(@NonNull IdManager idManager, @NonNull String value) {
+			return getSingletonFor(new RootPackageIdValue(idManager, value));
+		}
+	}
+
+	private static int computeHashCode(@NonNull String name) {
+		return IdHash.createGlobalHash(RootPackageId.class, name);
+	}
+
 	protected final @NonNull String name;
 
 	public RootPackageIdImpl(@NonNull IdManager idManager, @NonNull String name) {
-		super(name.hashCode());
+		super(computeHashCode(name));
 		this.name = name;
 	}
 

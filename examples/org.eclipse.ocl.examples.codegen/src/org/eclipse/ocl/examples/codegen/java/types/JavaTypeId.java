@@ -11,8 +11,11 @@
 package org.eclipse.ocl.examples.codegen.java.types;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.ids.AbstractSingletonScope;
 import org.eclipse.ocl.pivot.ids.IdVisitor;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
+import org.eclipse.ocl.pivot.ids.SingletonScope.AbstractKeyAndValue;
 import org.eclipse.ocl.pivot.internal.ids.UnscopedId;
 
 /**
@@ -20,6 +23,39 @@ import org.eclipse.ocl.pivot.internal.ids.UnscopedId;
  */
 public class JavaTypeId extends UnscopedId implements PrimitiveTypeId
 {
+	private static class JavaTypeIdValue extends AbstractKeyAndValue<@NonNull JavaTypeId>
+	{
+		private final @NonNull Class<?> value;
+
+		public JavaTypeIdValue(@NonNull Class<?> value) {
+			super(value.getName().hashCode());
+			this.value = value;
+		}
+
+		@Override
+		public @NonNull JavaTypeId createSingleton() {
+			return new JavaTypeId(value);
+		}
+
+		@Override
+		public boolean equals(@Nullable Object that) {
+			if (that instanceof JavaTypeId) {
+				JavaTypeId singleton = (JavaTypeId)that;
+				return singleton.getJavaClass().equals(value);
+			}
+			else {
+				return false;
+			}
+		}
+	}
+
+	public static class JavaTypeIdSingletonScope extends AbstractSingletonScope<@NonNull JavaTypeId, @NonNull Class<?>>
+	{
+		public @NonNull JavaTypeId getSingleton(@NonNull Class<?> value) {
+			return getSingletonFor(new JavaTypeIdValue(value));
+		}
+	}
+
 	protected final @NonNull Class<?> javaClass;
 
 	public JavaTypeId(@NonNull Class<?> javaClass) {

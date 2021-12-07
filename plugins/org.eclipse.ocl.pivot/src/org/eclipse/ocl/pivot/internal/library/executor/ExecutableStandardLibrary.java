@@ -59,17 +59,17 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 	/**
 	 * Shared cache of the lazily created lazily deleted specializations of each collection type.
 	 */
-	private @NonNull Map<@NonNull Type, @NonNull Map<@NonNull CollectionTypeParameters<@NonNull Type>, @NonNull WeakReference<@NonNull ExecutorCollectionType>>> collectionSpecializations = new WeakHashMap<>();
+	private @NonNull Map<@NonNull Type, @NonNull Map<@NonNull CollectionTypeParameters<@NonNull Type>, @NonNull WeakReference<@Nullable ExecutorCollectionType>>> collectionSpecializations = new /*Weak*/HashMap<>();	// Keys are not singletons
 
 	/**
 	 * Shared cache of the lazily created lazily deleted specializations of each map type.
 	 */
-	private @NonNull Map<@NonNull Type, @NonNull Map<@NonNull MapTypeParameters<@NonNull Type, @NonNull Type>, @NonNull WeakReference<@NonNull ExecutorMapType>>> mapSpecializations = new WeakHashMap<>();
+	private @NonNull Map<@NonNull Type, @NonNull Map<@NonNull MapTypeParameters<@NonNull Type, @NonNull Type>, @NonNull WeakReference<@Nullable ExecutorMapType>>> mapSpecializations = new /*Weak*/HashMap<>();		// Keys are not singletons
 
 	/**
 	 * Shared cache of the lazily created lazily deleted tuples.
 	 */
-	private @NonNull Map<@NonNull TupleTypeId, @NonNull WeakReference<@NonNull TupleType>> tupleTypeMap = new WeakHashMap<>();
+	private @NonNull Map<@NonNull TupleTypeId, @NonNull WeakReference<@Nullable TupleType>> tupleTypeMap = new WeakHashMap<>();		// Keys are singletons
 
 	/**
 	 * Configuration of validation preferences.
@@ -131,7 +131,7 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 		}
 		CollectionTypeParameters<@NonNull Type> typeParameters = TypeUtil.createCollectionTypeParameters(elementType, isNullFree, lower2, upper2);
 		ExecutorCollectionType specializedType = null;
-		Map<@NonNull CollectionTypeParameters<@NonNull Type>, @NonNull WeakReference<@NonNull ExecutorCollectionType>> map = collectionSpecializations.get(genericType);
+		Map<@NonNull CollectionTypeParameters<@NonNull Type>, @NonNull WeakReference<@Nullable ExecutorCollectionType>> map = collectionSpecializations.get(genericType);
 		if (map == null) {
 			map = new WeakHashMap<>();
 			collectionSpecializations.put(genericType, map);
@@ -171,7 +171,7 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 	public synchronized @NonNull MapType getMapType(org.eclipse.ocl.pivot.@NonNull Class genericType, @NonNull Type keyType, boolean keyValuesAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
 		MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters = TypeUtil.createMapTypeParameters(keyType, keyValuesAreNullFree, valueType, valuesAreNullFree);
 		ExecutorMapType specializedType = null;
-		Map<@NonNull MapTypeParameters<@NonNull Type, @NonNull Type>, @NonNull WeakReference<@NonNull ExecutorMapType>> map = mapSpecializations.get(genericType);
+		Map<@NonNull MapTypeParameters<@NonNull Type, @NonNull Type>, @NonNull WeakReference<@Nullable ExecutorMapType>> map = mapSpecializations.get(genericType);
 		if (map == null) {
 			map = new WeakHashMap<>();
 			mapSpecializations.put(genericType, map);
@@ -190,7 +190,7 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 	public synchronized @NonNull MapType getMapType(org.eclipse.ocl.pivot.@NonNull Class genericType, org.eclipse.ocl.pivot.@NonNull Class entryClass) {
 		MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters = TypeUtil.createMapTypeParameters(entryClass);
 		ExecutorMapType specializedType = null;
-		Map<@NonNull MapTypeParameters<@NonNull Type, @NonNull Type>, @NonNull WeakReference<@NonNull ExecutorMapType>> map = mapSpecializations.get(genericType);
+		Map<@NonNull MapTypeParameters<@NonNull Type, @NonNull Type>, @NonNull WeakReference<@Nullable ExecutorMapType>> map = mapSpecializations.get(genericType);
 		if (map == null) {
 			map = new WeakHashMap<>();
 			mapSpecializations.put(genericType, map);

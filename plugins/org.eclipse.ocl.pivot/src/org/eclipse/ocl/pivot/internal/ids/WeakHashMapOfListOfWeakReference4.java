@@ -18,13 +18,14 @@ import java.util.WeakHashMap;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
-public abstract class WeakHashMapOfListOfWeakReference4<K1, K2, K3, K4, V extends WeakHashMapOfListOfWeakReference4.MatchableId<K2, K3, K4>> extends WeakHashMap<K1,List<WeakReference<V>>> 
+@Deprecated /* @deprecated no longer used */
+public abstract class WeakHashMapOfListOfWeakReference4<K1, K2, K3, K4, V extends WeakHashMapOfListOfWeakReference4.MatchableId<K2, K3, K4>> extends WeakHashMap<K1,List<WeakReference<V>>>
 {
 	public static interface MatchableId<K2, K3, K4>
 	{
 		boolean matches(@NonNull K2 key2, @NonNull K3 key3, @NonNull K4 key4);
 	}
-	
+
 	public synchronized @NonNull V getId(@NonNull K1 key1, @NonNull K2 key2, @NonNull K3 key3, @NonNull K4 key4) {
 		List<WeakReference<V>> ids = get(key1);
 		if (ids == null) {

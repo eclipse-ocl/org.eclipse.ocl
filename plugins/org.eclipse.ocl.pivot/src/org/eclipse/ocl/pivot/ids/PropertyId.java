@@ -6,7 +6,7 @@
  * http://www.eclipse.org/legal/epl-v20.html
  *
  * Contributors:
- *     E.D.Willink - initial API and implementation
+ *	 E.D.Willink - initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.pivot.ids;
 
@@ -16,7 +16,7 @@ import org.eclipse.jdt.annotation.NonNull;
  * A PropertyId provides a unique hierarchical identifier for a property name.
  */
 public interface PropertyId extends ElementId
-{	
+{
 //	@Nullable EStructuralFeature getEFeature();
 	@NonNull String getName();
 	@NonNull TypeId getParent();

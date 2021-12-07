@@ -6,7 +6,7 @@
  * http://www.eclipse.org/legal/epl-v20.html
  *
  * Contributors:
- *     E.D.Willink - initial API and implementation
+ *	 E.D.Willink - initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.ids;
 
@@ -20,55 +20,55 @@ import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.ids.PropertyId;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.ids.GeneralizedOperationIdImpl.OperationIdSingletonScope;
 
 public abstract class AbstractTypeId extends AbstractElementId implements TypeId
 {
 	/**
-	 * Map from the operation hashCode to the operationIds with the same hash. 
+	 * Map from the operation hashCode to the operationIds with the same hash.
 	 */
-	private @Nullable OperationIdsMap memberOperations = null;
+	private @Nullable OperationIdSingletonScope memberOperations = null;
 
 	public @NonNull EnumerationLiteralId getEnumerationLiteralId(@NonNull String name) {
-    	throw new UnsupportedOperationException();
-    }
+		throw new UnsupportedOperationException();
+	}
 
 	@Override
 	public @NonNull String getMetaTypeName() {
 		return TypeId.CLASS_NAME;
 	}
 
-    @Override
+	@Override
 	public @NonNull OperationId getOperationId(int templateParameters, @NonNull String name, @NonNull ParametersId parametersId) {
-//		System.out.println("getOperationId " + name + " " + ClassUtil.debugFullName(parametersId) + " with " + ClassUtil.debugFullName(templateParameters));		
-		OperationIdsMap memberOperations2 = memberOperations;
+		GeneralizedOperationIdImpl.OperationIdSingletonScope memberOperations2 = memberOperations;
 		if (memberOperations2 == null) {
-    		synchronized (this) {
-    			memberOperations2 = memberOperations;
-    	    	if (memberOperations2 == null) {
-	    			memberOperations = memberOperations2 = new OperationIdsMap(this);
-    	    	}
-    		}
-    	}
-		return memberOperations2.getId(templateParameters, name, parametersId);
+			synchronized (this) {
+				memberOperations2 = memberOperations;
+				if (memberOperations2 == null) {
+					memberOperations = memberOperations2 = new OperationIdSingletonScope();
+				}
+			}
+		}
+		return memberOperations2.getSingleton(this, templateParameters, name, parametersId);
 	}
 
-    @Override
+	@Override
 	public @NonNull PropertyId getPropertyId(@NonNull String name) {
-    	throw new UnsupportedOperationException();
-    }
-	
-    @Override
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public @NonNull TemplateParameterId getTemplateParameterId(int index) {
-    	throw new UnsupportedOperationException();
-    }
-	
-    @Override
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public int getTemplateParameters() {
-    	throw new UnsupportedOperationException();
-    }
-   
-    @Override
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public @NonNull TypeId specialize(@NonNull BindingsId templateBindings) {
-    	throw new UnsupportedOperationException();
+		throw new UnsupportedOperationException();
 	}
 }

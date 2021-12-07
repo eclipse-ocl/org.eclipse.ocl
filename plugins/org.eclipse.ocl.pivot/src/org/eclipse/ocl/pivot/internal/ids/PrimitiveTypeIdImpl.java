@@ -12,15 +12,60 @@ package org.eclipse.ocl.pivot.internal.ids;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.ids.AbstractSingletonScope;
+import org.eclipse.ocl.pivot.ids.IdHash;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdVisitor;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
+import org.eclipse.ocl.pivot.ids.SingletonScope.AbstractKeyAndValue;
 import org.eclipse.ocl.pivot.ids.TypeId;
 
 public class PrimitiveTypeIdImpl extends UnscopedId implements PrimitiveTypeId
 {
+	private static class PrimitiveTypeIdValue extends AbstractKeyAndValue<@NonNull PrimitiveTypeId>
+	{
+		private final @NonNull IdManager idManager;
+		private final @NonNull String value;
+
+		private PrimitiveTypeIdValue(@NonNull IdManager idManager, @NonNull String value) {
+			super(computeHashCode(value));
+			this.idManager = idManager;
+			this.value = value;
+		}
+
+		@Override
+		public @NonNull PrimitiveTypeId createSingleton() {
+			return new PrimitiveTypeIdImpl(idManager, value);
+		}
+
+		@Override
+		public boolean equals(@Nullable Object that) {
+			if (that instanceof PrimitiveTypeIdImpl) {
+				PrimitiveTypeIdImpl singleton = (PrimitiveTypeIdImpl)that;
+				return singleton.getName().equals(value);
+			}
+			else {
+				return false;
+			}
+		}
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	public static class PrimitiveTypeIdSingletonScope extends AbstractSingletonScope<@NonNull PrimitiveTypeId, @NonNull String>
+	{
+		public @NonNull PrimitiveTypeId getSingleton(@NonNull IdManager idManager, @NonNull String value) {
+			return getSingletonFor(new PrimitiveTypeIdValue(idManager, value));
+		}
+	}
+
+	private static int computeHashCode(@NonNull String name) {
+		return IdHash.createGlobalHash(PrimitiveTypeId.class, name);
+	}
+
 	public PrimitiveTypeIdImpl(@NonNull IdManager idManager, @NonNull String name) {
-		super(name);
+		super(computeHashCode(name), name);
 	}
 
 	@Override

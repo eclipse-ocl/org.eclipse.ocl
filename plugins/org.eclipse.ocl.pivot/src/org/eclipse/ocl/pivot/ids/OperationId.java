@@ -6,7 +6,7 @@
  * http://www.eclipse.org/legal/epl-v20.html
  *
  * Contributors:
- *     E.D.Willink - initial API and implementation
+ *	 E.D.Willink - initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.pivot.ids;
 
@@ -17,8 +17,6 @@ import org.eclipse.jdt.annotation.NonNull;
  * <p>
  * An OperationId has a single ordered list of template parameters flattening all inherited package and type template parameters
  * as part of the single list. The least derived parameters appear first in the list, the operation parameters last.
- *
- * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface OperationId extends TemplateableId
 {

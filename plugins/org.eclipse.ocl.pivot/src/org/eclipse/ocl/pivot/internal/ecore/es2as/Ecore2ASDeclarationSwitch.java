@@ -463,6 +463,9 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 			if (metamodel != null) {
 				((PackageImpl)pivotElement).setPackageId(metamodel);
 			}
+		//	else {		// Seems like this should be better, but interacts with perhaps inconsistently shared $uml$ metamodel name
+		//		((PackageImpl)pivotElement).setPackageId(IdManager.getPackageId(ePackage));
+		//	}
 			pivotElement.setURI(ePackage.getNsURI());
 		}
 		else {

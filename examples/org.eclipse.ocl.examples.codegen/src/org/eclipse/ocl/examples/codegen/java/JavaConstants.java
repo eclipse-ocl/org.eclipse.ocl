@@ -11,13 +11,12 @@
 package org.eclipse.ocl.examples.codegen.java;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.examples.codegen.java.types.JavaTypeId;
+import org.eclipse.ocl.examples.codegen.java.types.JavaTypeId.JavaTypeIdSingletonScope;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.ids.WeakHashMapOfWeakReference;
 import org.eclipse.ocl.pivot.internal.library.UnboxedCompositionProperty;
 import org.eclipse.ocl.pivot.internal.library.UnboxedExplicitNavigationProperty;
 import org.eclipse.ocl.pivot.internal.library.UnboxedOppositeNavigationProperty;
@@ -25,16 +24,9 @@ import org.eclipse.ocl.pivot.internal.library.UnboxedOppositeNavigationProperty;
 public class JavaConstants
 {
 	/**
-	 * Map from a Java class to the corresponding JavaTypeId.
+	 * Map from a Java class to the corresponding JavaTypeId singleton.
 	 */
-	private static @NonNull WeakHashMapOfWeakReference<Class<?>, JavaTypeId> javaTypes =
-			new WeakHashMapOfWeakReference<Class<?>, JavaTypeId>()
-	{
-		@Override
-		protected @NonNull JavaTypeId newId(@NonNull Class<?> javaClass) {
-			return new JavaTypeId(javaClass);
-		}
-	};
+	private static @NonNull JavaTypeIdSingletonScope javaTypes = new JavaTypeIdSingletonScope();
 
 	public static final @NonNull String CONSTRAINT_NAME_NAME = "constraintName";
 	public static final @NonNull String E_CONTAINER_NAME = "eContainer";
@@ -48,7 +40,6 @@ public class JavaConstants
 	public static final @NonNull String SOURCE_AND_ARGUMENT_VALUES_NAME = "sourceAndArgumentValues";
 	public static final @NonNull String STANDARD_LIBRARY_NAME = "standardLibrary";
 	public static final @NonNull String TYPE_ID_NAME = "typeId";
-
 
 	public static final @NonNull TypeId CLASS_TYPE_ID = getJavaTypeId(org.eclipse.ocl.pivot.Class.class);
 	public static final @NonNull TypeId PROPERTY_TYPE_ID = getJavaTypeId(Property.class);
@@ -71,6 +62,6 @@ public class JavaConstants
 		else if (javaClass == String.class) {
 			return TypeId.STRING;
 		}
-		return javaTypes.getId(javaClass);
+		return javaTypes.getSingleton(javaClass);
 	}
 }

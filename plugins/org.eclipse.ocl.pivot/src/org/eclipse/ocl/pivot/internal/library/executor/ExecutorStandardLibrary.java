@@ -34,7 +34,7 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 {
-	private @NonNull Map<@NonNull String, WeakReference<EcoreExecutorPackage>> ePackageMap = new WeakHashMap<>();
+	private @NonNull Map<@NonNull String, WeakReference<EcoreExecutorPackage>> ePackageMap = new WeakHashMap<>();		// Keys are interned
 	private Map<org.eclipse.ocl.pivot.@NonNull Package, WeakReference<DomainReflectivePackage>> asPackageMap = null;
 	private /*@LazyNonNull*/ Map<EcoreExecutorPackage, List<EcoreExecutorPackage>> extensions = null;
 	private /*@LazyNonNull*/ org.eclipse.ocl.pivot.Class classType = null;
@@ -64,8 +64,9 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 	public synchronized void addPackage(@NonNull EcoreExecutorPackage execPackage, @Nullable EcoreExecutorPackage extendedPackage) {
 		String uri = execPackage.getURI();
 		assert uri != null;
+		String internedURI = uri.intern();
 		@SuppressWarnings("unused")
-		WeakReference<EcoreExecutorPackage> oldExecPackage = ePackageMap.put(uri, new WeakReference<>(execPackage));
+		WeakReference<EcoreExecutorPackage> oldExecPackage = ePackageMap.put(internedURI, new WeakReference<>(execPackage));
 		//		if ((oldExecPackage != null) && (oldExecPackage != execPackage)) {
 		//			Iterable<ExecutorType> newTypes = execPackage.getOwnedType();
 		//			for (DomainType oldType : oldExecPackage.getOwnedType()) {
@@ -133,7 +134,7 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 		Map<org.eclipse.ocl.pivot.Package, WeakReference<DomainReflectivePackage>> asPackageMap2;
 		synchronized (this) {
 			String nsURI = asPackage.getURI();
-			EcoreExecutorPackage ecoreExecutorPackage = nsURI != null ? weakGet(ePackageMap, nsURI) : null;
+			EcoreExecutorPackage ecoreExecutorPackage = nsURI != null ? weakGet(ePackageMap, nsURI.intern()) : null;
 			if (ecoreExecutorPackage != null) {
 				String name = asClass.getName();
 				CompleteInheritance executorType = ecoreExecutorPackage.getOwnedClass(name);
@@ -183,7 +184,7 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 
 	@Override
 	public org.eclipse.ocl.pivot.Package getNsURIPackage(@NonNull String nsURI) {
-		WeakReference<EcoreExecutorPackage> weakReference = ePackageMap.get(nsURI);
+		WeakReference<EcoreExecutorPackage> weakReference = ePackageMap.get(nsURI.intern());
 		if (weakReference == null) {
 			return null;
 		}
@@ -213,7 +214,7 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 
 	public synchronized @Nullable EcoreExecutorPackage getPackage(@NonNull EPackage ePackage) {
 		String nsURI = ePackage.getNsURI();
-		return nsURI != null ? weakGet(ePackageMap, nsURI) : null;
+		return nsURI != null ? weakGet(ePackageMap, nsURI.intern()) : null;
 	}
 
 	@Override

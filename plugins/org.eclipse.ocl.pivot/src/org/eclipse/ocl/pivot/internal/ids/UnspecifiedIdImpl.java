@@ -23,7 +23,7 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 public class UnspecifiedIdImpl extends AbstractTypeId implements UnspecifiedId, ClassId, DataTypeId
 {
 	protected final @NonNull Type type;
-	
+
 	public UnspecifiedIdImpl(@NonNull IdManager idManager, @NonNull Type type) {
 		this.type = type;
 	}
@@ -43,7 +43,6 @@ public class UnspecifiedIdImpl extends AbstractTypeId implements UnspecifiedId, 
 		throw new UnsupportedOperationException();
 	}
 
-	
 	@Override
 	public @NonNull PackageId getParent() {
 		throw new UnsupportedOperationException();

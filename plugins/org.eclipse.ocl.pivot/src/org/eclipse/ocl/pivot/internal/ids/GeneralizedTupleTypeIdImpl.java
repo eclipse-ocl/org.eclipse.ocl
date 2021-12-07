@@ -12,19 +12,75 @@ package org.eclipse.ocl.pivot.internal.ids;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.ids.AbstractSingletonScope;
+import org.eclipse.ocl.pivot.ids.IdHash;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdVisitor;
+import org.eclipse.ocl.pivot.ids.SingletonScope.AbstractKeyAndValue;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 
 public class GeneralizedTupleTypeIdImpl extends AbstractTypeId implements TupleTypeId, WeakHashMapOfListOfWeakReference3.MatchableId<String, @NonNull TuplePartId @NonNull []>
 {
-	protected final @NonNull Integer hashCode;
+	private static class TupleTypeIdValue extends AbstractKeyAndValue<@NonNull TupleTypeId>
+	{
+		private final @NonNull IdManager idManager;
+		private @NonNull String name;
+		private @NonNull TuplePartId @NonNull [] orderedPartIds;
+
+		private TupleTypeIdValue(@NonNull IdManager idManager, @NonNull String name, @NonNull TuplePartId @NonNull [] orderedPartIds) {
+			super(GeneralizedTupleTypeIdImpl.computeHashCode(name, orderedPartIds));
+			this.idManager = idManager;
+			this.name = name;
+			this.orderedPartIds = orderedPartIds;
+		}
+
+		@Override
+		public @NonNull TupleTypeId createSingleton() {
+			return new GeneralizedTupleTypeIdImpl(idManager, name, orderedPartIds);
+		}
+
+		@Override
+		public boolean equals(@Nullable Object that) {
+			if (that instanceof GeneralizedTupleTypeIdImpl) {
+				GeneralizedTupleTypeIdImpl singleton = (GeneralizedTupleTypeIdImpl)that;
+				return singleton.matches(name, orderedPartIds);
+			}
+			else {
+				return false;
+			}
+		}
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	public static class TupleTypeIdSingletonScope extends AbstractSingletonScope<@NonNull TupleTypeId, @NonNull TupleTypeIdValue>
+	{
+		public @NonNull TupleTypeId getSingleton(@NonNull IdManager idManager, @NonNull String name, @NonNull TuplePartId @NonNull [] orderedPartIds) {
+			return getSingletonFor(new TupleTypeIdValue(idManager, name, orderedPartIds));
+		}
+	}
+
+	private static int computeHashCode(@NonNull String name, @NonNull TuplePartId @NonNull [] orderedPartIds) {
+		return IdHash.createTupleHash(name, orderedPartIds);
+	}
+
+	protected final @NonNull Integer hashCode;			// FIXME int
 	protected final @NonNull String name;
 	protected final @NonNull TuplePartId @NonNull [] partIds;
 
+	@Deprecated /* Not used */
 	public GeneralizedTupleTypeIdImpl(@NonNull IdManager idManager, @NonNull Integer hashCode, @NonNull String name, @NonNull TuplePartId @NonNull [] orderedPartIds) {
 		this.hashCode = hashCode;
+		this.name = name;
+		this.partIds = orderedPartIds;
+		assert partsAreOrdered();
+		this.hashCode.equals(computeHashCode(name, orderedPartIds));
+	}
+
+	private GeneralizedTupleTypeIdImpl(@NonNull IdManager idManager, @NonNull String name, @NonNull TuplePartId @NonNull [] orderedPartIds) {
+		this.hashCode = computeHashCode(name, orderedPartIds);
 		this.name = name;
 		this.partIds = orderedPartIds;
 		assert partsAreOrdered();

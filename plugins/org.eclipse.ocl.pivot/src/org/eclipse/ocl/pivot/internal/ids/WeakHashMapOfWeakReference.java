@@ -18,7 +18,8 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.ElementId;
 
-public abstract class WeakHashMapOfWeakReference<K,V extends ElementId> extends WeakHashMap<K,WeakReference<V>> 
+@Deprecated /* @deprecated no longer used - unsound see Bug 577642 */
+public abstract class WeakHashMapOfWeakReference<K,V extends ElementId> extends WeakHashMap<K,WeakReference<V>>
 {
 	public @NonNull V getId(@NonNull K key) {
 		WeakReference<V> ref = get(key);
@@ -41,16 +42,17 @@ public abstract class WeakHashMapOfWeakReference<K,V extends ElementId> extends 
 			return newId;
 		}
 	}
-	
+
 	protected abstract @NonNull V newId(@NonNull K key);
 
 	@Override public String toString() {
-		StringBuffer buf = new StringBuffer();
+		StringBuilder buf = new StringBuilder();
 		buf.append("{");
 		Iterator<java.util.Map.Entry<K, WeakReference<V>>> i = entrySet().iterator();
 		boolean hasNext = i.hasNext();
 		while (hasNext) {
 			java.util.Map.Entry<K, WeakReference<V>> e = i.next();
+			hasNext = i.hasNext();
 			WeakReference<V> ref = e.getValue();
 			if (ref != null) {
 				@Nullable V value = ref.get();
@@ -65,7 +67,6 @@ public abstract class WeakHashMapOfWeakReference<K,V extends ElementId> extends 
 						buf.append("(this Map)");
 					else
 						buf.append(value);
-					hasNext = i.hasNext();
 					if (hasNext)
 						buf.append(", ");
 				}
@@ -75,6 +76,6 @@ public abstract class WeakHashMapOfWeakReference<K,V extends ElementId> extends 
 		buf.append("}");
 		return buf.toString();
 	}
-	
-	
+
+
 }

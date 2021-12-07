@@ -15,12 +15,61 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.ids.AbstractSingletonScope;
+import org.eclipse.ocl.pivot.ids.IdHash;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdVisitor;
 import org.eclipse.ocl.pivot.ids.NsURIPackageId;
+import org.eclipse.ocl.pivot.ids.SingletonScope.AbstractKeyAndValue;
 
 public class NsURIPackageIdImpl extends AbstractPackageIdImpl implements NsURIPackageId
 {
+	private static class NsURIPackageIdValue extends AbstractKeyAndValue<@NonNull NsURIPackageId>
+	{
+		private final @NonNull IdManager idManager;
+		private @NonNull String nsURI;
+		private @Nullable String nsPrefix;
+		private @Nullable EPackage ePackage;
+
+		private NsURIPackageIdValue(@NonNull IdManager idManager, @NonNull String nsURI, @Nullable String nsPrefix, @Nullable EPackage ePackage) {
+			super(computeHashCode(nsURI));
+			this.idManager = idManager;
+			this.nsURI = nsURI;
+			this.nsPrefix = nsPrefix;
+			this.ePackage = ePackage;
+		}
+
+		@Override
+		public @NonNull NsURIPackageId createSingleton() {
+			return new NsURIPackageIdImpl(idManager, nsURI, nsPrefix, ePackage);
+		}
+
+		@Override
+		public boolean equals(@Nullable Object that) {
+			if (that instanceof NsURIPackageIdImpl) {
+				NsURIPackageIdImpl singleton = (NsURIPackageIdImpl)that;
+				return nsURI.equals(singleton.getNsURI());
+			}
+			else {
+				return false;
+			}
+		}
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	public static class NsURIPackageIdSingletonScope extends AbstractSingletonScope<@NonNull NsURIPackageId, @NonNull NsURIPackageIdValue>
+	{
+		public @NonNull NsURIPackageId getSingleton(@NonNull IdManager idManager, @NonNull String nsURI, @Nullable String nsPrefix, @Nullable EPackage ePackage) {
+			return getSingletonFor(new NsURIPackageIdValue(idManager, nsURI, nsPrefix, ePackage));
+		}
+	}
+
+	private static int computeHashCode(@NonNull String name) {
+		return IdHash.createGlobalHash(NsURIPackageId.class, name);
+	}
+
 	/**
 	 * The Namespace URI of this package identity.
 	 */
@@ -37,7 +86,7 @@ public class NsURIPackageIdImpl extends AbstractPackageIdImpl implements NsURIPa
 	private @Nullable EPackage ePackage = null;
 
 	public NsURIPackageIdImpl(@NonNull IdManager idManager, @NonNull String nsURI, @Nullable String nsPrefix, @Nullable EPackage ePackage) {
-		super(nsURI.hashCode());
+		super(computeHashCode(nsURI));
 		this.nsURI = nsURI;
 		this.nsPrefix = nsPrefix;
 		if (ePackage != null) {

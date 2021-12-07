@@ -12,18 +12,25 @@ package org.eclipse.ocl.pivot.internal.ids;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.ids.BindingsId;
-import org.eclipse.ocl.pivot.ids.IdHash;
 import org.eclipse.ocl.pivot.ids.NestedTypeId;
 import org.eclipse.ocl.pivot.ids.NsURIPackageId;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.TemplateableTypeId;
 
-public abstract class GeneralizedNestedTypeIdImpl extends GeneralizedTypeIdImpl<TemplateableTypeId> implements NestedTypeId,TemplateableTypeId
+public abstract class GeneralizedNestedTypeIdImpl extends GeneralizedTypeIdImpl<@NonNull TemplateableTypeId> implements NestedTypeId, TemplateableTypeId
 {
 	protected final @NonNull PackageId parent;
 
+	@Deprecated
 	protected GeneralizedNestedTypeIdImpl(@NonNull PackageId parent, int templateParameters, @NonNull String name) {
-		super(IdHash.createChildHash(parent, name), templateParameters, name);
+		this(name.hashCode(), parent, templateParameters, name);
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	protected GeneralizedNestedTypeIdImpl(int hashCode, @NonNull PackageId parent, int templateParameters, @NonNull String name) {
+		super(hashCode, templateParameters, name);
 		this.parent = parent;
 	}
 
@@ -46,7 +53,7 @@ public abstract class GeneralizedNestedTypeIdImpl extends GeneralizedTypeIdImpl<
 	public @NonNull TemplateableTypeId getGeneralizedId() {
 		return this;
 	}
-	
+
 	@Override
 	public @NonNull PackageId getParent() {
 		return parent;
@@ -56,7 +63,7 @@ public abstract class GeneralizedNestedTypeIdImpl extends GeneralizedTypeIdImpl<
 	public @NonNull TemplateableTypeId specialize(@NonNull BindingsId templateBindings) {
     	return createSpecializedId(templateBindings);
 	}
-	
+
 	@Override
 	public String toString() {
 		return parent + "::" + name;

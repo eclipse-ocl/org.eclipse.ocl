@@ -6,7 +6,7 @@
  * http://www.eclipse.org/legal/epl-v20.html
  *
  * Contributors:
- *     E.D.Willink - initial API and implementation
+ *	 E.D.Willink - initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.pivot.ids;
 
@@ -27,7 +27,10 @@ import org.eclipse.jdt.annotation.Nullable;
  * A unique identifier provides a convenient mechanism for locating alternative representations, or pre-existing copies of
  * the same representation. The identifiers of for instance Collections and Tuples observe scope-independent semantics so
  * that equivalent collection and tuple types share the same element identifier.
- * 
+ * <p>
+ * The unique identifier are singletons with unique Key string values in theor paret/global context. These
+ * singletons are potentially thread safe.
+ *
  * @see EnumerationLiteralId
  * @see OperationId
  * @see PackageId
@@ -35,12 +38,12 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 public interface ElementId
 {
-	public static final class ElementIdComparator implements Comparator<ElementId>
+	public static final class ElementIdComparator implements Comparator<@NonNull ElementId>
 	{
 		public static final @NonNull ElementIdComparator INSTANCE = new ElementIdComparator();
-		
+
 		@Override
-		public int compare(ElementId o1, ElementId o2) {
+		public int compare(@NonNull ElementId o1, @NonNull ElementId o2) {
 			String d1 = o1.getDisplayName();
 			String d2 = o2.getDisplayName();
 			return d1.compareTo(d2);
@@ -48,7 +51,7 @@ public interface ElementId
 	}
 
 	@Nullable <R> R accept(@NonNull IdVisitor<R> visitor);
-	
+
 	/**
 	 * Return a simple name for diagnostics.
 	 */

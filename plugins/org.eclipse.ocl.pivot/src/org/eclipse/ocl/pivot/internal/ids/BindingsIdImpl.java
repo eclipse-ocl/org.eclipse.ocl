@@ -11,9 +11,13 @@
 package org.eclipse.ocl.pivot.internal.ids;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.ids.AbstractSingletonScope;
 import org.eclipse.ocl.pivot.ids.BindingsId;
 import org.eclipse.ocl.pivot.ids.ElementId;
+import org.eclipse.ocl.pivot.ids.IdHash;
 import org.eclipse.ocl.pivot.ids.IdManager;
+import org.eclipse.ocl.pivot.ids.SingletonScope.AbstractKeyAndValue;
 
 /**
  * BindingsIdImpl provides a hashable list of elementIds suitable for use when indexing specializations.
@@ -40,20 +44,74 @@ public class BindingsIdImpl implements BindingsId, WeakHashMapOfListOfWeakRefere
 		}
 	}
 
+	private static class BindingsIdValue extends AbstractKeyAndValue<@NonNull BindingsId>
+	{
+		private final @NonNull IdManager idManager;
+		private @NonNull ElementId @NonNull [] elements;
+
+		private BindingsIdValue(@NonNull IdManager idManager, @NonNull ElementId @NonNull [] elements) {
+			super(BindingsIdImpl.computeHashCode(elements));
+			this.idManager = idManager;
+			this.elements = elements;
+		}
+
+		@Override
+		public @NonNull BindingsId createSingleton() {
+			return new BindingsIdImpl(idManager, elements);
+		}
+
+		@Override
+		public boolean equals(@Nullable Object that) {
+			if (that instanceof BindingsIdImpl) {
+				BindingsIdImpl singleton = (BindingsIdImpl)that;
+				return singleton.matches(elements);
+			}
+			else {
+				return false;
+			}
+		}
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	public static class BindingsIdSingletonScope extends AbstractSingletonScope<@NonNull BindingsId, @NonNull ElementId @NonNull []>
+	{
+		public @NonNull BindingsId getSingleton(@NonNull IdManager idManager, @NonNull ElementId @NonNull [] elements) {
+			return getSingletonFor(new BindingsIdValue(idManager, elements));
+		}
+	}
+
+	private static int computeHashCode(@NonNull ElementId @NonNull [] elementIds) {
+		return IdHash.createParametersHash(BindingsId.class, elementIds);
+	}
+
 	private final @NonNull ElementId @NonNull [] elementIds;
 	private final @NonNull Integer hashCode;
 
 	/**
 	 * Construct a BindingsId for an idManager that has computed the hashCode for the typeIds.
 	 */
+	@Deprecated /* @deprecated no longer used */
 	public BindingsIdImpl(@NonNull IdManager idManager, @NonNull Integer hashCode, @NonNull ElementId @NonNull [] elementIds) {
 		this.hashCode = hashCode;
+		this.elementIds = elementIds;
+		assert hashCode == this.hashCode;
+	}
+
+	private BindingsIdImpl(@NonNull IdManager idManager, @NonNull ElementId @NonNull [] elementIds) {
+		this.hashCode = computeHashCode(elementIds);
 		this.elementIds = elementIds;
 	}
 
 	@Override
-	public final boolean equals(Object o) {
-		return o == this;
+	public final boolean equals(Object that) {
+		if (that instanceof org.eclipse.ocl.pivot.ids.SingletonScope.KeyAndValue) {	// A SingletonScope.Key may be used to lookup a singleton
+			return that.equals(this);
+		}
+		else {										// But normally ElementId instances are singletons
+			return this == that;
+		}
 	}
 
 	@Override

@@ -261,9 +261,6 @@ public class JavaStream
 
 	public void append(@Nullable String string) {
 		if (string != null) {
-			if ("symbol_3".equals(string)) {
-				getClass();		// XXX
-			}
 			if (indentationStack.isEmpty()) {
 				s.append(string);
 			}
@@ -699,7 +696,7 @@ public class JavaStream
 	}
 
 	public void appendDeclaration(@NonNull CGValuedElement cgElement) {
-		TypeDescriptor javaTypeDescriptor = codeGenerator.getTypeDescriptor(cgElement);
+	//	TypeDescriptor javaTypeDescriptor = codeGenerator.getTypeDescriptor(cgElement);
 		TypeRepresentation typeRepresentation = boxedTypeRepresentation;
 		if (cgElement.isEcore()) {
 			typeRepresentation = boxedTypeRepresentation;

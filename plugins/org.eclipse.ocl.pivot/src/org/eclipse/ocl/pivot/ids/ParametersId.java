@@ -18,7 +18,7 @@ import org.eclipse.ocl.pivot.utilities.IndexableIterable;
  * ParametersId provides a hashable list of operation
  * parameter ids suitable for use when indexing operation overloads.
  */
-public interface ParametersId extends IndexableIterable<@NonNull TypeId>
+public interface ParametersId extends IndexableIterable<@NonNull TypeId>	//  ?? ElementId
 {
 	/**
 	 * @since 1.3

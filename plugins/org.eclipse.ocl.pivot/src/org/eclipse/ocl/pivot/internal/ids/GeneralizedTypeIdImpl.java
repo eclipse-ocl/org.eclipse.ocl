@@ -17,18 +17,20 @@ import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.ids.PropertyId;
 import org.eclipse.ocl.pivot.ids.TemplateableId;
 import org.eclipse.ocl.pivot.ids.TemplateableTypeId;
+import org.eclipse.ocl.pivot.internal.ids.GeneralizedOperationIdImpl.OperationIdSingletonScope;
+import org.eclipse.ocl.pivot.internal.ids.PropertyIdImpl.PropertyIdSingletonScope;
 
 public abstract class GeneralizedTypeIdImpl<T extends TemplateableId> extends AbstractGeneralizedIdImpl<T> implements TemplateableTypeId
 {
 	/**
 	 * Map from the operation hashCode to the operationIds with the same hash.
 	 */
-	private @Nullable OperationIdsMap memberOperations = null;
+	private @Nullable OperationIdSingletonScope memberOperations = null;
 
 	/**
 	 * Map from the property name to the propertyIds.
 	 */
-	private @Nullable PropertyIdsMap memberProperties = null;
+	private @Nullable PropertyIdSingletonScope memberProperties = null;
 
 	protected GeneralizedTypeIdImpl(int hashCode, int templateParameters, @NonNull String name) {
 		super(hashCode, templateParameters, name);
@@ -36,31 +38,30 @@ public abstract class GeneralizedTypeIdImpl<T extends TemplateableId> extends Ab
 
 	@Override
 	public @NonNull OperationId getOperationId(int templateParameters, @NonNull String name, @NonNull ParametersId parametersId) {
-		//		System.out.println("getOperationId " + name + " " + ClassUtil.debugFullName(parametersId) + " with " + ClassUtil.debugFullName(templateParameters));
-		OperationIdsMap memberOperations2 = memberOperations;
+		GeneralizedOperationIdImpl.OperationIdSingletonScope memberOperations2 = memberOperations;
 		if (memberOperations2 == null) {
 			synchronized (this) {
 				memberOperations2 = memberOperations;
 				if (memberOperations2 == null) {
-					memberOperations = memberOperations2 = new OperationIdsMap(this);
+					memberOperations = memberOperations2 = new OperationIdSingletonScope();
 				}
 			}
 		}
-		return memberOperations2.getId(templateParameters, name, parametersId);
+		return memberOperations2.getSingleton(this, templateParameters, name, parametersId);
 	}
 
 	@Override
 	public @NonNull PropertyId getPropertyId(@NonNull String name) {
-		PropertyIdsMap memberProperties2 = memberProperties;
+		PropertyIdSingletonScope memberProperties2 = memberProperties;
 		if (memberProperties2 == null) {
 			synchronized (this) {
 				memberProperties2 = memberProperties;
 				if (memberProperties2 == null) {
-					memberProperties = memberProperties2 = new PropertyIdsMap(this);
+					memberProperties = memberProperties2 = new PropertyIdSingletonScope();
 				}
 			}
 		}
-		return memberProperties2.getId(name);
+		return memberProperties2.getSingleton(this, name);
 	}
 
 	/**
