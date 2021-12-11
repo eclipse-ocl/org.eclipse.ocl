@@ -11,7 +11,7 @@ Require-Bundle: org.eclipse.uml2.uml;bundle-version="[5.0.0,6.0.0)",
  org.eclipse.xtext.builder;bundle-version="[2.9.0,3.0.0)",
  org.eclipse.ocl.examples.emf.validation.validity.ui;bundle-version="[2.4.0,3.0.0)"
 Import-Package: org.apache.log4j;version="[1.2.15,2.0.0)"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: org.eclipse.ocl.xtext.completeocl.ui,
  org.eclipse.ocl.xtext.completeocl.ui.commands,
  org.eclipse.ocl.xtext.completeocl.ui.contentassist,
