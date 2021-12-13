@@ -42,6 +42,7 @@ import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionIsEmptyOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionSizeOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation;
@@ -574,7 +575,7 @@ implements LoopExp {
 			 *     then true
 			 *     else
 			 *       let
-			 *         result : Boolean[?] = self.ownedCoIterators->forAll(
+			 *         result : Boolean[?] = self.ownedCoIterators?->forAll(
 			 *           ownedInit->isEmpty())
 			 *       in
 			 *         constraintName.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
@@ -594,8 +595,9 @@ implements LoopExp {
 					@SuppressWarnings("null")
 					final /*@NonInvalid*/ @NonNull List<CoIteratorVariable> ownedCoIterators = this.getOwnedCoIterators();
 					final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedCoIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_CoIteratorVariable, ownedCoIterators);
+					final /*@Thrown*/ @NonNull OrderedSetValue safe_forAll_sources = (@Nullable OrderedSetValue)CollectionExcludingOperation.INSTANCE.evaluate(BOXED_ownedCoIterators, (Object)null);
 					/*@Thrown*/ @Nullable Object accumulator = ValueUtil.TRUE_VALUE;
-					@NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedCoIterators.iterator();
+					@NonNull Iterator<Object> ITERATOR__1 = safe_forAll_sources.iterator();
 					/*@Thrown*/ @Nullable Boolean result;
 					while (true) {
 						if (!ITERATOR__1.hasNext()) {

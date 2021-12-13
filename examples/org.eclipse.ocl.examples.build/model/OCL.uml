@@ -769,6 +769,12 @@
       </eAnnotations>
       <appliedProfile href="pathmap://UML_PROFILES/Ecore.profile.uml#_0"/>
     </profileApplication>
+    <profileApplication xmi:id="_fzd9QFweEey-JugQk5CN7g">
+      <eAnnotations xmi:id="_fznHMFweEey-JugQk5CN7g" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/ocl/2015/OCLforUML/1#/"/>
+      </eAnnotations>
+      <appliedProfile href="pathmap://OCL_PROFILES/OCLforUML.profile.uml#_0"/>
+    </profileApplication>
   </uml:Package>
   <Ecore:EReference xmi:id="_b3swsH9cEeOrlIuDtf7a6A" isTransient="true" isVolatile="true" isResolveProxies="false"/>
   <Ecore:EReference xmi:id="_pxI0MENFEeSgQZUbTRZNbQ" isTransient="true" base_Property="_O7klUDmUEeSB95ugQCao7g" isResolveProxies="false"/>
@@ -778,4 +784,5 @@
   <Ecore:EReference xmi:id="_Lxs5YGx7EeeGs8EXqqLgaA" isTransient="true" isVolatile="true" base_Property="OCL-OCL_Types-CollectionType-elementType" isResolveProxies="false"/>
   <Ecore:EReference xmi:id="_8QDJEONmEeikDdDxOl7LOg" isTransient="true" isVolatile="true" isResolveProxies="false"/>
   <ocl4uml:Collection xmi:id="_pCKcgFQ-EeyApJvzs7_U4Q" base_MultiplicityElement="_8l704OjJEeiyDNW4lK79YQ"/>
+  <ocl4uml:Collections xmi:id="_iZK0MFweEey-JugQk5CN7g" base_Package="OCL" isNullFree="true"/>
 </xmi:XMI>

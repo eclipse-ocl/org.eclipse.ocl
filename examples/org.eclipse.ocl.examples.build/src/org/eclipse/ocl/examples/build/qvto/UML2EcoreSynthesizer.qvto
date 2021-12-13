@@ -179,6 +179,7 @@ mapping UML2Ecore::CreatePackage::createPackage() : Ecore::EPackage
 	self.oldPackages->forEach(p) { umlPackage2ePackage->put(p, result); };
 	var createTypes : Set(UML2Ecore::CreateType) := self.typeMappings->selectByKind(UML2Ecore::CreateType)->asSet();
 --	self.convertNamedElement(result);
+	var isNullFree : Boolean := true; -- if self.newIsNullFree <> null then self.newIsNullFree else true endif;
 	result.name := self.newName;
 	result.nsURI := self.nsURI;
 	result.nsPrefix := self.nsPrefix;
@@ -195,6 +196,7 @@ mapping UML2Ecore::CreatePackage::createPackage() : Ecore::EPackage
 			source := 'http://www.eclipse.org/OCL/ASMetamodel';
 		};
 	};
+	result.map installNullFree(oldPackages, isNullFree);
 }
 
 helper UML2Ecore::CreateType::createType(createPackage : UML2Ecore::CreatePackage) : Ecore::EClassifier
@@ -331,6 +333,8 @@ when { newType.oclIsKindOf(Ecore::EDataType) }
 	self.createStructuralFeature(result, oldProperties, newType);
 	var isDerived : Boolean := if self.newIsDerived <> null then self.newIsDerived else oldProperties->exists(isDerived) endif;
 	if (debugDerived) log('    derived', self.newIsDerived.toString() + "=>" + isDerived.toString());
+	var isNullFree : Boolean := if self.newIsNullFree <> null then self.newIsNullFree else true endif;
+	if (debugDerived) log('    NullFree', self.newIsNullFree.toString() + "=>" + isNullFree.toString());
 	var isTransient : Boolean := if self.newIsTransient <> null then self.newIsTransient else isDerived endif;
 	if (debugDerived) log('    transient', self.newIsTransient.toString() + "=>" + isTransient.toString());
 	var isUnsettable : Boolean := if self.newIsUnsettable <> null then self.newIsUnsettable else false endif;
@@ -338,6 +342,7 @@ when { newType.oclIsKindOf(Ecore::EDataType) }
 	var isVolatile : Boolean := if self.newIsVolatile <> null then self.newIsVolatile else isDerived endif;
 	if (debugDerived) log('    volatile', self.newIsVolatile.toString() + "=>" + isVolatile.toString());
 	result._'derived' := isDerived;
+	result.map installNullFree(oldProperties, isNullFree);
 	result.map installTransient(oldProperties, 'Ecore::EAttribute', isTransient);
 	result.map installUnsettable(oldProperties, 'Ecore::EAttribute', isUnsettable);
 	result.map installVolatile(oldProperties, 'Ecore::EAttribute', isVolatile);
@@ -353,6 +358,8 @@ when { not newType.oclIsKindOf(Ecore::EDataType) }
 	result.containment := oldProperty.aggregation = UML::AggregationKind::composite;
 	var isDerived : Boolean := if self.newIsDerived <> null then self.newIsDerived else oldProperties->exists(isDerived) endif;-- and oldProperties->forAll(let opposite = getOtherEnd() in opposite = null or opposite.isDerived);
 	if (debugDerived) log('    derived', self.newIsDerived.toString() + "=>" + isDerived.toString());
+	var isNullFree : Boolean := if self.newIsNullFree <> null then self.newIsNullFree else true endif; --and oldProperties->forAll(let opposite = getOtherEnd() in opposite = null or opposite.isDerived) endif;
+	if (debugDerived) log('    nullFree', self.newIsNullFree.toString() + "=>" + isNullFree.toString());
 	var isTransient : Boolean := if self.newIsTransient <> null then self.newIsTransient else isDerived endif; --and oldProperties->forAll(let opposite = getOtherEnd() in opposite = null or opposite.isDerived) endif;
 	if (debugDerived) log('    transient', self.newIsTransient.toString() + "=>" + isTransient.toString());
 	var isUnsettable : Boolean := if self.newIsUnsettable <> null then self.newIsUnsettable else false endif;
@@ -360,6 +367,7 @@ when { not newType.oclIsKindOf(Ecore::EDataType) }
 	var isVolatile : Boolean := if self.newIsVolatile <> null then self.newIsVolatile else isDerived endif;
 	if (debugDerived) log('    volatile', self.newIsVolatile.toString() + "=>" + isVolatile.toString());
 	result._'derived' := isDerived;
+	result.map installNullFree(oldProperties, isNullFree);
 	result.map installTransient(oldProperties, 'Ecore::EReference', isTransient);
 	result.map installUnsettable(oldProperties, 'Ecore::EReference', isUnsettable);
 	result.map installVolatile(oldProperties, 'Ecore::EReference', isVolatile);
@@ -480,21 +488,52 @@ mapping inout Ecore::EReference::installResolveProxies(in properties : Set(UML::
 --	result.defaultValue := instanceClassName;
 }
 
-mapping inout Ecore::EStructuralFeature::installNullFree(in properties : Set(UML::Property), stereotypeName : String, defaultValue : Boolean)
+mapping inout Ecore::EPackage::installNullFree(in packages : Set(UML::Package), defaultValue : Boolean)
 {
-	var stereotypedProperties : Set(UML::Property) := properties->select(getAppliedStereotype(stereotypeName) <> null)->asSet();
+    var stereotypedPackages : Set(UML::Package) := packages->select(getAppliedStereotype('OCLforUML::Collections') <> null)->asSet();
+	var stereotypedPackage : UML::Package := if stereotypedPackages->notEmpty() then stereotypedPackages->any(true) else null endif;
+	var nullFreePackage : Boolean := if stereotypedPackage <> null then stereotypedPackage.getValue(stereotypedPackage.getAppliedStereotype('OCLforUML::Collections'), 'isNullFree').oclAsType(Boolean) else null endif;
+	if (nullFreePackage <> null) {
+		self.eAnnotations += object Ecore::EAnnotation {
+			source := 'http://www.eclipse.org/OCL/Collection';
+			details += object Ecore::EStringToStringMapEntry {
+				key := 'nullFree';
+				value := nullFreePackage.toString();
+			};
+		};
+	}
+--	result.defaultValue := instanceClassName;
+}
+
+mapping inout Ecore::EStructuralFeature::installNullFree(in properties : Set(UML::Property), defaultValue : Boolean)
+{
+    var stereotypedPackages : Set(UML::Package) := properties->closure(owner)->selectByKind(UML::Package)->select(getAppliedStereotype('OCLforUML::Collections') <> null)->asSet();
+    var stereotypedClasses : Set(UML::Class) := properties->closure(owner)->selectByKind(UML::Class)->select(getAppliedStereotype('OCLforUML::Collections') <> null)->asSet();
+	var stereotypedProperties : Set(UML::Property) := properties->select(getAppliedStereotype('OCLforUML::Collection') <> null)->asSet();
+	var stereotypedPackage : UML::Package := if stereotypedPackages->notEmpty() then stereotypedPackages->any(true) else null endif;
+--	log('stereotypedPackage', stereotypedPackage);
+	var stereotypedClass : UML::Class := if stereotypedClasses->notEmpty() then stereotypedClasses->any(true) else null endif;
+--	log('  stereotypedClass', stereotypedClass);
 	var stereotypedProperty : UML::Property := if stereotypedProperties->notEmpty() then stereotypedProperties->any(true) else null endif;
+--	log('  stereotypedProperty', stereotypedProperty);
 --	var stereotypes : Set(UML::Stereotype) := createType.oldTypes.oclAsType(UML::DataType).getAppliedStereotype('Ecore::EDataType')->asSet();
 --	log('stereotypedType', stereotypedType);
-	var transient : Boolean := if stereotypedProperty <> null then stereotypedProperty.getValue(stereotypedProperty.getAppliedStereotype(stereotypeName), 'isTransient').oclAsType(Boolean) else defaultValue endif;
+	var nullFreePackage : Boolean := if stereotypedPackage <> null then stereotypedPackage.getValue(stereotypedPackage.getAppliedStereotype('OCLforUML::Collections'), 'isNullFree').oclAsType(Boolean) else null endif;
+--	log('  nullFreePackage', nullFreePackage);
+	var nullFreeClass : Boolean := if stereotypedClass <> null then stereotypedClass.getValue(stereotypedClass.getAppliedStereotype('OCLforUML::Collections'), 'isNullFree').oclAsType(Boolean) else nullFreePackage endif;
+--	log('  nullFreeClass', nullFreeClass);
+	var nullFreeProperty : Boolean := if stereotypedProperty <> null then stereotypedProperty.getValue(stereotypedProperty.getAppliedStereotype('OCLforUML::Collection'), 'isNullFree').oclAsType(Boolean) else nullFreeClass endif;
+--	log('  nullFreeProperty', nullFreeProperty);
 --	log('instanceClassName', instanceClassName);
-	self.eAnnotations += object Ecore::EAnnotation {
-		source := 'http://www.eclipse.org/OCL/Collection';
-		details += object Ecore::EStringToStringMapEntry {
-			key := 'nullFree';
-			value := 'true';
+	if (nullFreeProperty <> null) {
+		self.eAnnotations += object Ecore::EAnnotation {
+			source := 'http://www.eclipse.org/OCL/Collection';
+			details += object Ecore::EStringToStringMapEntry {
+				key := 'nullFree';
+				value := nullFreeProperty.toString();
+			};
 		};
-	};
+	}
 --	result.defaultValue := instanceClassName;
 }
 

@@ -177,6 +177,9 @@ mapping String::createCreateProperty(someCreateProperties : Set(UML2EcoreControl
 	var newIsDeriveds := myCreateProperties.newIsDerived->asSet()->excluding(null);
 	if (newIsDeriveds->size() > 1) log("Ambiguous newIsDerived for ", self);
 	if (newIsDeriveds->size() = 1) result.newIsDerived := newIsDeriveds->any(true);
+	var newIsNullFrees := myCreateProperties.newIsNullFree->asSet()->excluding(null);
+	if (newIsNullFrees->size() > 1) log("Ambiguous newisNullFree for ", self);
+	if (newIsNullFrees->size() = 1) result.newIsNullFree := newIsNullFrees->any(true);
 	var newIsResolveProxieses := myCreateProperties.newIsResolveProxies->asSet()->excluding(null);
 	if (newIsResolveProxieses->size() > 1) log("Ambiguous newIsResolveProxies for ", self);
 	if (newIsResolveProxieses->size() = 1) result.newIsResolveProxies := newIsResolveProxieses->any(true);

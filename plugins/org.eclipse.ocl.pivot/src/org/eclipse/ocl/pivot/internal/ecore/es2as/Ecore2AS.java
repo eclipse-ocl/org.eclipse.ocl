@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EGenericType;
 import org.eclipse.emf.ecore.EModelElement;
+import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
@@ -133,14 +134,28 @@ public class Ecore2AS extends AbstractExternal2AS
 		return false;
 	}
 
+	@Deprecated /* @deprecated for API compatibility */
 	public static boolean isNullFree(@NonNull ETypedElement eObject) {
+		return isNullFree((ENamedElement)eObject);
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	public static boolean isNullFree(@NonNull ENamedElement eObject) {
 		boolean isNullFree;
 		EAnnotation eAnnotation = eObject.getEAnnotation(PivotConstants.COLLECTION_ANNOTATION_SOURCE);
 		if (eAnnotation != null) {
 			isNullFree = Boolean.valueOf(eAnnotation.getDetails().get(PivotConstants.COLLECTION_IS_NULL_FREE));
 		}
 		else {
-			isNullFree = true;		// UML collections are always null-free.Make it the undeclared default.
+			EObject eContainer = eObject.eContainer();
+			if (eContainer instanceof ENamedElement) {
+				isNullFree = isNullFree((ENamedElement)eContainer);
+			}
+			else {
+				isNullFree = true;		// UML collections are always null-free.Make it the undeclared default.
+			}
 		}
 		return isNullFree;
 	}

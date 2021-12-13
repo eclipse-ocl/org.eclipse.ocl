@@ -9517,6 +9517,8 @@ implements PivotPackage  {
 		// Create annotations
 		// http://www.eclipse.org/OCL/ASMetamodel
 		createASMetamodelAnnotations();
+		// http://www.eclipse.org/OCL/Collection
+		createCollectionAnnotations();
 		// http://www.eclipse.org/emf/2002/Ecore
 		createEcoreAnnotations();
 		// http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot
@@ -9556,6 +9558,32 @@ implements PivotPackage  {
 		   source,
 		   new String[]
 		   {
+		   });
+	}
+
+	/**
+	 * Initializes the annotations for <b>http://www.eclipse.org/OCL/Collection</b>.
+	 * <!-- begin-user-doc -->
+	 * @since 1.18
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void createCollectionAnnotations()
+	{
+		String source = "http://www.eclipse.org/OCL/Collection"; //$NON-NLS-1$
+		addAnnotation
+		  (this,
+		   source,
+		   new String[]
+		   {
+			   "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getLoopExp_OwnedCoIterators(),
+		   source,
+		   new String[]
+		   {
+			   "nullFree", "false" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 	}
 
@@ -9987,7 +10015,7 @@ implements PivotPackage  {
 		   source,
 		   new String[]
 		   {
-			   "body", "self.ownedCoIterators->forAll(ownedInit->isEmpty())\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "self.ownedCoIterators?->forAll(ownedInit->isEmpty())\n" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getLoopExp__ValidateNoInitializers__DiagnosticChain_Map(),

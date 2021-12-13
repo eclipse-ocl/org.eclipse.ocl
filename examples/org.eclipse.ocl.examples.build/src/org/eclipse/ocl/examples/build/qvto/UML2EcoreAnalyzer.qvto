@@ -327,6 +327,7 @@ mapping String::createCreateProperty(wantedProperties : Set(UML::Property)) : UM
 	assert fatal (explicitCreateProperties->size() <= 1) with log("Duplicate CreateProperty ", explicitCreateProperties->display());
 	result.newName := if explicitCreateProperties->notEmpty() then explicitCreateProperties->any(true).newName else self endif;
 	result.newIsDerived := let newIsDerived : Bag(Boolean) = explicitCreateProperties->collect(newIsDerived)->excluding(null) in if newIsDerived->notEmpty() then newIsDerived->exists(n | n) else null endif;
+	result.newIsNullFree := let newIsNullFree : Bag(Boolean) = explicitCreateProperties->collect(newIsNullFree)->excluding(null) in if newIsNullFree->notEmpty() then newIsNullFree->exists(n | n) else null endif;
 	result.newIsResolveProxies := let newIsResolveProxies : Bag(Boolean) = explicitCreateProperties->collect(newIsResolveProxies)->excluding(null) in if newIsResolveProxies->notEmpty() then newIsResolveProxies->exists(n | n) else null endif;
 	result.newIsTransient := let newIsTransient : Bag(Boolean) = explicitCreateProperties->collect(newIsTransient)->excluding(null) in if newIsTransient->notEmpty() then newIsTransient->exists(n | n) else null endif;
 	result.newIsUnsettable := let newIsUnsettable : Bag(Boolean) = explicitCreateProperties->collect(newIsUnsettable)->excluding(null) in if newIsUnsettable->notEmpty() then newIsUnsettable->exists(n | n) else null endif;
@@ -357,6 +358,8 @@ mapping UML2EcoreControl::CreateProperty::createRenameProperty() : UML2EcoreMapp
 	result.oldProperties := oldProperties;
 	if (debugProperty) log('    newIsDerived', self.newIsDerived);
 	result.newIsDerived := self.newIsDerived;
+	if (debugProperty) log('    newIsNullFree', self.newIsNullFree);
+	result.newIsNullFree := self.newIsNullFree;
 	if (debugProperty) log('    newIsResolveProxies', self.newIsResolveProxies);
 	result.newIsResolveProxies := self.newIsResolveProxies;
 	if (debugProperty) log('    newIsTransient', self.newIsTransient);

@@ -5,6 +5,11 @@
 <pivot:Model xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pivot="http://www.eclipse.org/ocl/2015/Pivot"
     xsi:schemaLocation="http://www.eclipse.org/ocl/2015/Pivot java://org.eclipse.ocl.pivot.PivotPackage" xmi:id="AAAAA" externalURI="platform:/resource/org.eclipse.ocl.pivot/model/Pivot.ecore" name="Pivot.ecore" xmiidVersion="1">
   <ownedPackages xmi:id="82dOP" URI="http://www.eclipse.org/ocl/2015/Pivot" name="pivot" nsPrefix="pivot">
+    <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.eclipse.org/OCL/Collection">
+      <ownedDetails name="nullFree">
+        <values>true</values>
+      </ownedDetails>
+    </ownedAnnotations>
     <ownedClasses xmi:id="g7Mr0" name="Annotation" superClasses="#0kVqz">
       <ownedProperties xmi:id="XjKgo" isComposite="true" name="ownedContents" type="#R+Drm"/>
       <ownedProperties xmi:id="V,KBZ" isComposite="true" name="ownedDetails" type="#ehjA2"/>
@@ -519,7 +524,7 @@
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="(ownedSource?.type.oclIsKindOf(OrderedSetType) or ownedSource?.type.oclIsKindOf(SequenceType)) implies (self.ownedCoIterators->size() = 0) or (self.ownedCoIterators->size() = self.ownedIterators->size())&#xA;"/>
       </ownedInvariants>
       <ownedInvariants xmi:id="Y3Nh," isCallable="true" name="NoCoInitializers">
-        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="self.ownedCoIterators->forAll(ownedInit->isEmpty())&#xA;"/>
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="self.ownedCoIterators?->forAll(ownedInit->isEmpty())&#xA;"/>
       </ownedInvariants>
       <ownedInvariants xmi:id="Mu9dD" isCallable="true" name="NoInitializers">
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="self.ownedIterators->forAll(ownedInit->isEmpty())&#xA;"/>
@@ -534,7 +539,7 @@
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="ownedSource?.type.oclIsKindOf(IterableType)&#xA;"/>
       </ownedInvariants>
       <ownedProperties xmi:id="h2RKw" isComposite="true" name="ownedBody" type="#BFtK4"/>
-      <ownedProperties xmi:id="Oa7sP" isComposite="true" name="ownedCoIterators" type="#bl0dg"/>
+      <ownedProperties xmi:id="Oa7sP" isComposite="true" name="ownedCoIterators" type="#Wm0dg"/>
       <ownedProperties xmi:id="aRrs3" isComposite="true" name="ownedIterators" type="#Rl6IP"/>
       <ownedProperties xmi:id="G2e3S" isRequired="false" name="referredIteration" type="#OZhAb"/>
     </ownedClasses>
@@ -1986,7 +1991,7 @@
         <ownedSubstitutions actual="#t4j6T" formal="&_0;#feFHs"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:OrderedSetType" xmi:id="bl0dg" isNullFree="true" name="OrderedSet" superClasses="#MOXpB #w4RO7">
+    <ownedClasses xsi:type="pivot:OrderedSetType" xmi:id="Wm0dg" name="OrderedSet" superClasses="#MOXpB #w4RO7">
       <ownedBindings>
         <ownedSubstitutions actual="#H163w" formal="&_0;#53+C2"/>
       </ownedBindings>

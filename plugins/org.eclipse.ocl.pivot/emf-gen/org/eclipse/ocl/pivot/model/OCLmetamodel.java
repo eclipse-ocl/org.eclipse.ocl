@@ -574,7 +574,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull CollectionType _OrderedCollection_Type = createCollectionType(_OrderedCollection);
 		private final @NonNull CollectionType _OrderedCollection_ValueSpecification = createCollectionType(_OrderedCollection);
 		private final @NonNull CollectionType _OrderedCollection_Variable = createCollectionType(_OrderedCollection);
-		private final @NonNull OrderedSetType _OrderedSet_CoIteratorVariable_NullFree = createOrderedSetType(_OrderedSet);
+		private final @NonNull OrderedSetType _OrderedSet_CoIteratorVariable = createOrderedSetType(_OrderedSet);
 		private final @NonNull OrderedSetType _OrderedSet_CollectionLiteralPart_NullFree = createOrderedSetType(_OrderedSet);
 		private final @NonNull OrderedSetType _OrderedSet_Detail_NullFree = createOrderedSetType(_OrderedSet);
 		private final @NonNull OrderedSetType _OrderedSet_Element_NullFree = createOrderedSetType(_OrderedSet);
@@ -1561,8 +1561,7 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedClasses.add(type = _OrderedCollection_Variable);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Collection_Variable);
-			ownedClasses.add(type = _OrderedSet_CoIteratorVariable_NullFree);
-			type.setIsNullFree(true);
+			ownedClasses.add(type = _OrderedSet_CoIteratorVariable);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OrderedCollection_CoIteratorVariable);
 			superClasses.add(_UniqueCollection_CoIteratorVariable);
@@ -2162,7 +2161,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Property pr_LetExp_ownedVariable = createProperty(PivotPackage.Literals.LET_EXP__OWNED_VARIABLE, _Variable);
 		private final @NonNull Property pr_Library_ownedPrecedences = createProperty(PivotPackage.Literals.LIBRARY__OWNED_PRECEDENCES, _OrderedSet_Precedence_NullFree);
 		private final @NonNull Property pr_LoopExp_ownedBody = createProperty(PivotPackage.Literals.LOOP_EXP__OWNED_BODY, _OCLExpression);
-		private final @NonNull Property pr_LoopExp_ownedCoIterators = createProperty(PivotPackage.Literals.LOOP_EXP__OWNED_CO_ITERATORS, _OrderedSet_CoIteratorVariable_NullFree);
+		private final @NonNull Property pr_LoopExp_ownedCoIterators = createProperty(PivotPackage.Literals.LOOP_EXP__OWNED_CO_ITERATORS, _OrderedSet_CoIteratorVariable);
 		private final @NonNull Property pr_LoopExp_ownedIterators = createProperty(PivotPackage.Literals.LOOP_EXP__OWNED_ITERATORS, _OrderedSet_Variable_NullFree);
 		private final @NonNull Property pr_LoopExp_referredIteration = createProperty(PivotPackage.Literals.LOOP_EXP__REFERRED_ITERATION, _Iteration);
 		private final @NonNull Property pr_MapLiteralExp_ownedParts = createProperty(PivotPackage.Literals.MAP_LITERAL_EXP__OWNED_PARTS, _OrderedSet_MapLiteralPart_NullFree);
@@ -4304,7 +4303,7 @@ public class OCLmetamodel extends ASResourceImpl
 			addBinding(_OrderedCollection_Type, _Type);
 			addBinding(_OrderedCollection_ValueSpecification, _ValueSpecification);
 			addBinding(_OrderedCollection_Variable, _Variable);
-			addBinding(_OrderedSet_CoIteratorVariable_NullFree, _CoIteratorVariable);
+			addBinding(_OrderedSet_CoIteratorVariable, _CoIteratorVariable);
 			addBinding(_OrderedSet_CollectionLiteralPart_NullFree, _CollectionLiteralPart);
 			addBinding(_OrderedSet_Detail_NullFree, _Detail);
 			addBinding(_OrderedSet_Element_NullFree, _Element);

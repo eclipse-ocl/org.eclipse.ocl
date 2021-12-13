@@ -262,7 +262,7 @@ inv SourceIsIterable: ownedSource?.type.oclIsKindOf(IterableType)
 /** The loop variable of an iterator expression has no init expression. */
 inv NoInitializers: self.ownedIterators->forAll(ownedInit->isEmpty())
 /** The loop variable of an iterator expression has no init expression. */
-inv NoCoInitializers: self.ownedCoIterators->forAll(ownedInit->isEmpty())
+inv NoCoInitializers: self.ownedCoIterators?->forAll(ownedInit->isEmpty())
 /** A Map must have the no co-iterators or the same number of iterators and co-iterators. */
 inv MatchingMapCoIterators: ownedSource?.type.oclIsKindOf(MapType) implies (self.ownedCoIterators->size() = 0) or (self.ownedCoIterators->size() = self.ownedIterators->size())
 /** An Ordered Collection must have the no co-iterators or the same number of iterators and co-iterators. */

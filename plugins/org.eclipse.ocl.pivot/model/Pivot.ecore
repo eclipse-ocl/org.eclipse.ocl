@@ -3,6 +3,9 @@
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmi:id="P-pivot" name="pivot" nsURI="http://www.eclipse.org/ocl/2015/Pivot"
     nsPrefix="pivot">
   <eAnnotations source="http://www.eclipse.org/OCL/ASMetamodel"/>
+  <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+    <details key="nullFree" value="true"/>
+  </eAnnotations>
   <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
     <details key="invocationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
     <details key="settingDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
@@ -1493,7 +1496,7 @@
     </eOperations>
     <eOperations name="validateNoCoInitializers" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="self.ownedCoIterators->forAll(ownedInit->isEmpty())&#xA;"/>
+        <details key="body" value="self.ownedCoIterators?->forAll(ownedInit->isEmpty())&#xA;"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="NoCoInitializers"/>
@@ -1570,7 +1573,11 @@
         name="ownedBody" lowerBound="1" eType="#T-pivot-OCLExpression" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-LoopExp-ownedCoIterators"
         name="ownedCoIterators" upperBound="-1" eType="#T-pivot-CoIteratorVariable"
-        containment="true"/>
+        containment="true">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="false"/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-LoopExp-ownedIterators"
         name="ownedIterators" upperBound="-1" eType="#T-pivot-Variable" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-LoopExp-referredIteration"
