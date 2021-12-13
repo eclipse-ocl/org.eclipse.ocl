@@ -105,6 +105,11 @@ public abstract class AbstractDelegatingVisitor<R, C, @NonNull D extends Visitor
 	}
 
 	@Override
+	public R visitCoIteratorVariable(org.eclipse.ocl.pivot.@NonNull CoIteratorVariable object) {
+		return delegate.visitCoIteratorVariable(object);
+	}
+
+	@Override
 	public R visitCollectionItem(org.eclipse.ocl.pivot.@NonNull CollectionItem object) {
 		return delegate.visitCollectionItem(object);
 	}

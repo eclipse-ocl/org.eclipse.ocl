@@ -15,6 +15,7 @@ import java.util.List;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.BooleanLiteralExp;
 import org.eclipse.ocl.pivot.CallExp;
+import org.eclipse.ocl.pivot.CoIteratorVariable;
 import org.eclipse.ocl.pivot.CollectionItem;
 import org.eclipse.ocl.pivot.CollectionLiteralExp;
 import org.eclipse.ocl.pivot.CollectionLiteralPart;
@@ -250,7 +251,7 @@ public class EssentialOCLPrettyPrintVisitor extends PrettyPrintVisitor
 		Variable result = object.getOwnedResult();
 		if (context.showNames()) {
 			List<Variable> iterators = object.getOwnedIterators();
-			List<Variable> coIterators = object.getOwnedCoIterators();
+			List<CoIteratorVariable> coIterators = object.getOwnedCoIterators();
 			int iteratorsSize = iterators.size();
 			int coIteratorsSize = coIterators.size();
 			appendSourceNavigation(object);
@@ -302,7 +303,7 @@ public class EssentialOCLPrettyPrintVisitor extends PrettyPrintVisitor
 			context.push("(", "");
 			String prefix = null;
 			List<@NonNull Variable> iterators = PivotUtilInternal.getOwnedIteratorsList(object);
-			List<Variable> coIterators = object.getOwnedCoIterators();
+			List<CoIteratorVariable> coIterators = object.getOwnedCoIterators();
 			int iteratorsSize = iterators.size();
 			int coIteratorsSize = coIterators.size();
 			for (int i = 0; i < iteratorsSize; i++) {
@@ -344,7 +345,7 @@ public class EssentialOCLPrettyPrintVisitor extends PrettyPrintVisitor
 		OCLExpression body = object.getOwnedBody();
 		if (context.showNames()) {
 			List<Variable> iterators = object.getOwnedIterators();
-			List<Variable> coIterators = object.getOwnedCoIterators();
+			List<CoIteratorVariable> coIterators = object.getOwnedCoIterators();
 			int iteratorsSize = iterators.size();
 			int coIteratorsSize = coIterators.size();
 			appendSourceNavigation(object);

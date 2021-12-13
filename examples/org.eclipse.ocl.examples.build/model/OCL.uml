@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Ecore="http://www.eclipse.org/uml2/schemas/Ecore/5" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xsi:schemaLocation="http://www.eclipse.org/uml2/schemas/Ecore/5 pathmap://UML_PROFILES/Ecore.profile.uml#_z1OFcHjqEdy8S4Cr8Rc_NA">
+<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Ecore="http://www.eclipse.org/uml2/schemas/Ecore/5" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:ocl4uml="http://www.eclipse.org/ocl/2015/OCLforUML/1" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xsi:schemaLocation="http://www.eclipse.org/uml2/schemas/Ecore/5 pathmap://UML_PROFILES/Ecore.profile.uml#_z1OFcHjqEdy8S4Cr8Rc_NA">
   <uml:Package xmi:id="OCL" name="OCL">
     <packagedElement xmi:type="uml:Package" xmi:id="OCL-OCL_Associations" name="OCL_Associations">
       <packagedElement xmi:type="uml:Class" xmi:id="OCL-OCL_Associations-Class" name="Class"/>
@@ -395,7 +395,7 @@
         <ownedAttribute xmi:id="OCL-OCL_Expressions-LoopExp-referredIteration" name="referredIteration" type="OCL-OCL_Library-Iteration">
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_XpdiIn7VEeOu79LxSz8Ylw"/>
         </ownedAttribute>
-        <ownedAttribute xmi:id="_8l704OjJEeiyDNW4lK79YQ" name="ownedCoIterators" type="OCL-OCL_Expressions-Variable" isOrdered="true" aggregation="composite">
+        <ownedAttribute xmi:id="_8l704OjJEeiyDNW4lK79YQ" name="ownedCoIterators" type="_E6f8kFXEEeyzMZrIbHIw1A" isOrdered="true" aggregation="composite">
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_8l704ejJEeiyDNW4lK79YQ"/>
           <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_8l704ujJEeiyDNW4lK79YQ" value="*"/>
         </ownedAttribute>
@@ -509,6 +509,12 @@
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_XpdiHn7VEeOu79LxSz8Ylw"/>
         </ownedAttribute>
       </packagedElement>
+      <profileApplication xmi:id="_myjKUFQ-EeyApJvzs7_U4Q">
+        <eAnnotations xmi:id="_mys7UFQ-EeyApJvzs7_U4Q" source="http://www.eclipse.org/uml2/2.0.0/UML">
+          <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/ocl/2015/OCLforUML/1#/"/>
+        </eAnnotations>
+        <appliedProfile href="pathmap://OCL_PROFILES/OCLforUML.profile.uml#_0"/>
+      </profileApplication>
     </packagedElement>
     <packagedElement xmi:type="uml:Package" xmi:id="OCL-OCL_Library" name="OCL_Library">
       <packagedElement xmi:type="uml:Class" xmi:id="OCL-OCL_Library-Iteration" name="Iteration">
@@ -742,6 +748,9 @@
       <packagedElement xmi:type="uml:Class" xmi:id="OCL-OCL_Variables-VariableDeclaration" name="VariableDeclaration" isAbstract="true">
         <generalization xmi:id="_Xpwc9X7VEeOu79LxSz8Ylw" general="OCL-OCL_Variables-TypedElement"/>
       </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_E6f8kFXEEeyzMZrIbHIw1A" name="CoIteratorVariable">
+        <generalization xmi:id="_E6f8kVXEEeyzMZrIbHIw1A" general="OCL-OCL_Variables-Variable"/>
+      </packagedElement>
     </packagedElement>
     <packagedElement xmi:type="uml:Package" xmi:id="OCL-OCL_UML" name="OCL_UML">
       <packagedElement xmi:type="uml:Class" xmi:id="OCL-OCL_UML-Class" name="Class"/>
@@ -768,4 +777,5 @@
   <Ecore:EReference xmi:id="_DpMhMGx7EeeGs8EXqqLgaA" isTransient="true" isVolatile="true" base_Property="_hPdG8M8yEeS-B8MCFKKocw" isResolveProxies="false"/>
   <Ecore:EReference xmi:id="_Lxs5YGx7EeeGs8EXqqLgaA" isTransient="true" isVolatile="true" base_Property="OCL-OCL_Types-CollectionType-elementType" isResolveProxies="false"/>
   <Ecore:EReference xmi:id="_8QDJEONmEeikDdDxOl7LOg" isTransient="true" isVolatile="true" isResolveProxies="false"/>
+  <ocl4uml:Collection xmi:id="_pCKcgFQ-EeyApJvzs7_U4Q" base_MultiplicityElement="_8l704OjJEeiyDNW4lK79YQ"/>
 </xmi:XMI>

@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CoIteratorVariable;
 import org.eclipse.ocl.pivot.CollectionLiteralExp;
 import org.eclipse.ocl.pivot.CollectionLiteralPart;
 import org.eclipse.ocl.pivot.CompleteClass;
@@ -539,7 +540,7 @@ public class PivotUtilInternal //extends PivotUtil
 	/**
 	 * @since 1.6
 	 */
-	public static @NonNull List<@NonNull Variable> getOwnedCoIteratorsList(@NonNull LoopExp loopExp) {
+	public static @NonNull List<@NonNull CoIteratorVariable> getOwnedCoIteratorsList(@NonNull LoopExp loopExp) {
 		return ClassUtil.nullFree(loopExp.getOwnedCoIterators());
 	}
 

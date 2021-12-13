@@ -23,6 +23,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.BooleanLiteralExp;
 import org.eclipse.ocl.pivot.CallExp;
+import org.eclipse.ocl.pivot.CoIteratorVariable;
 import org.eclipse.ocl.pivot.CollectionItem;
 import org.eclipse.ocl.pivot.CollectionLiteralExp;
 import org.eclipse.ocl.pivot.CollectionLiteralPart;
@@ -1028,6 +1029,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		int iteratorIndex = 0;
 		boolean isCollection = false;
 		MapType mapType = null;
+		List</*@Nullable*/ CoIteratorVariable> pivotCoIterators = null;
 		Type rawSourceElementType = null;
 		Type sourceType = csNameExp.getSourceType();
 		if (sourceType instanceof CollectionType) {
@@ -1037,6 +1039,9 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 				isSafe = true;
 			}
 			rawSourceElementType = sourceCollectionType.getElementType();
+			if (sourceCollectionType.isOrdered()) {
+				pivotCoIterators = new ArrayList<>();
+			}
 		}
 		else if (sourceType instanceof MapType) {
 			mapType = (MapType)sourceType;
@@ -1044,12 +1049,13 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 				isSafe = true;
 			}
 			rawSourceElementType = mapType.getKeyType();
+			pivotCoIterators = new ArrayList<>();
 		}
 		if (!isCollection && (mapType == null)) {
 			throw new UnsupportedOperationException();
 		}
+		boolean hasCoIterator = false;
 		List<@NonNull Variable> pivotIterators = new ArrayList<>();
-		List</*@Nullable*/ Variable> pivotCoIterators = (mapType != null) ? new ArrayList<>() : null;
 		Type sourceElementType = rawSourceElementType != null ? metamodelManager.getPrimaryType(rawSourceElementType) : null;
 		for (int argIndex = 0; argIndex < csRoundBracketedClause.getOwnedArguments().size(); argIndex++) {
 			NavigatingArgCS csArgument = csRoundBracketedClause.getOwnedArguments().get(argIndex);
@@ -1088,12 +1094,13 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 				boolean isRequired = iteratorIsRequired != null ? iteratorIsRequired.booleanValue() : isSafe || formalIterator.isIsRequired();
 				helper.setType(iterator, varType, isRequired, null);
 				pivotIterators.add(iterator);
-				Variable coIterator = null;
+				CoIteratorVariable coIterator = null;
 				VariableCS csCoIterator = csArgument.getOwnedCoIterator();
 				if (csCoIterator != null) {
-					if ((mapType != null)) {
-						coIterator = PivotUtil.getPivot(Variable.class, csCoIterator);
+					if ((pivotCoIterators != null)) {
+						coIterator = PivotUtil.getPivot(CoIteratorVariable.class, csCoIterator);
 						if (coIterator != null) {
+							hasCoIterator = true;
 							Type coIteratorType = null;
 							TypedRefCS csCoIteratorType = csCoIterator.getOwnedType();
 							Boolean coIteratorIsRequired = null;
@@ -1102,15 +1109,21 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 								coIteratorType = PivotUtil.getPivot(Type.class, csCoIteratorType);
 							}
 							if (coIteratorType == null) {
-								coIteratorType = mapType.getValueType();
-								coIteratorIsRequired = mapType.isValuesAreNullFree();
+								if (mapType != null) {
+									coIteratorType = mapType.getValueType();
+									coIteratorIsRequired = mapType.isValuesAreNullFree();
+								}
+								else {
+									coIteratorType = standardLibrary.getIntegerType();
+									coIteratorIsRequired = true;
+								}
 							}
 							boolean coIsRequired = coIteratorIsRequired != null ? coIteratorIsRequired.booleanValue() : isSafe || formalIterator.isIsRequired();
 							helper.setType(coIterator, coIteratorType, coIsRequired, null);  // FIXME isRequired *2
 						}
 					}
 					else {
-						context.addWarning(csCoIterator, "Co-iterator ignored for non-MapType");
+						context.addError(csCoIterator, PivotMessages.IllegalCoIterator, sourceType);
 					}
 				}
 				if (pivotCoIterators != null) {
@@ -1136,23 +1149,28 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		//
 		//	Implicit CoIterators
 		//
-		if (pivotCoIterators != null) {
-			assert mapType != null;
-			boolean valuesAreNullFree = mapType.isValuesAreNullFree();
+		if ((pivotCoIterators != null) && hasCoIterator) {
 			for (int coiteratorIndex = 0; coiteratorIndex < pivotCoIterators.size(); coiteratorIndex++) {
-				Variable coIterator = pivotCoIterators.get(coiteratorIndex);
+				CoIteratorVariable coIterator = pivotCoIterators.get(coiteratorIndex);
 				if (coIterator == null) {
+					boolean coIteratorIsRequired ;
+					if (mapType != null) {
+						coIteratorIsRequired = isSafe || mapType.isValuesAreNullFree();
+					}
+					else {
+						coIteratorIsRequired = true;
+					}
 					String varName = Integer.toString(iterationIteratorsSize + coiteratorIndex+1) + "_";
-					coIterator = context.refreshModelElement(IteratorVariable.class, PivotPackage.Literals.ITERATOR_VARIABLE, null);
+					coIterator = context.refreshModelElement(CoIteratorVariable.class, PivotPackage.Literals.CO_ITERATOR_VARIABLE, null);
 					helper.refreshName(coIterator, varName);
-					helper.setType(coIterator, sourceElementType, isSafe || valuesAreNullFree, null);
+					helper.setType(coIterator, sourceElementType, coIteratorIsRequired, null);
 					coIterator.setIsImplicit(true);
 					pivotCoIterators.set(coiteratorIndex, coIterator);
 				}
 			}
 		}
 		helper.refreshList(expression.getOwnedIterators(), pivotIterators);
-		if (pivotCoIterators != null) {
+		if (hasCoIterator) {
 			helper.refreshList(expression.getOwnedCoIterators(), pivotCoIterators);
 		}
 		else {

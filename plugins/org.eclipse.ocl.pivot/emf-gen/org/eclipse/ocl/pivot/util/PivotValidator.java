@@ -27,6 +27,7 @@ import org.eclipse.ocl.pivot.Behavior;
 import org.eclipse.ocl.pivot.BooleanLiteralExp;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CallOperationAction;
+import org.eclipse.ocl.pivot.CoIteratorVariable;
 import org.eclipse.ocl.pivot.CollectionItem;
 import org.eclipse.ocl.pivot.CollectionKind;
 import org.eclipse.ocl.pivot.CollectionLiteralExp;
@@ -628,20 +629,20 @@ extends EObjectValidator {
 	public static final int LOOP_EXP__VALIDATE_MATCHING_MAP_CO_ITERATORS = 56;
 
 	/**
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Matching Ordered Collection Co Iterators' of 'Loop Exp'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static final int LOOP_EXP__VALIDATE_MATCHING_ORDERED_COLLECTION_CO_ITERATORS = 57;
+
+	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate No Co Initializers' of 'Loop Exp'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int LOOP_EXP__VALIDATE_NO_CO_INITIALIZERS = 57;
-
-	/**
-	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate No Collection Co Iterators' of 'Loop Exp'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public static final int LOOP_EXP__VALIDATE_NO_COLLECTION_CO_ITERATORS = 58;
+	public static final int LOOP_EXP__VALIDATE_NO_CO_INITIALIZERS = 58;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate No Initializers' of 'Loop Exp'.
@@ -652,12 +653,20 @@ extends EObjectValidator {
 	public static final int LOOP_EXP__VALIDATE_NO_INITIALIZERS = 59;
 
 	/**
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate No Not Ordered Collection Co Iterators' of 'Loop Exp'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static final int LOOP_EXP__VALIDATE_NO_NOT_ORDERED_COLLECTION_CO_ITERATORS = 60;
+
+	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Source Is Collection' of 'Loop Exp'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int LOOP_EXP__VALIDATE_SOURCE_IS_COLLECTION = 60;
+	public static final int LOOP_EXP__VALIDATE_SOURCE_IS_COLLECTION = 61;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Source Is Iterable' of 'Loop Exp'.
@@ -665,7 +674,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int LOOP_EXP__VALIDATE_SOURCE_IS_ITERABLE = 61;
+	public static final int LOOP_EXP__VALIDATE_SOURCE_IS_ITERABLE = 62;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate One Call Or One Send' of 'Message Exp'.
@@ -673,7 +682,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int MESSAGE_EXP__VALIDATE_ONE_CALL_OR_ONE_SEND = 62;
+	public static final int MESSAGE_EXP__VALIDATE_ONE_CALL_OR_ONE_SEND = 63;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Target Is Not ACollection' of 'Message Exp'.
@@ -681,7 +690,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int MESSAGE_EXP__VALIDATE_TARGET_IS_NOT_ACOLLECTION = 63;
+	public static final int MESSAGE_EXP__VALIDATE_TARGET_IS_NOT_ACOLLECTION = 64;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Not Null' of 'OCL Expression'.
@@ -689,7 +698,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int OCL_EXPRESSION__VALIDATE_TYPE_IS_NOT_NULL = 64;
+	public static final int OCL_EXPRESSION__VALIDATE_TYPE_IS_NOT_NULL = 65;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Compatible Return' of 'Operation'.
@@ -697,7 +706,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int OPERATION__VALIDATE_COMPATIBLE_RETURN = 65;
+	public static final int OPERATION__VALIDATE_COMPATIBLE_RETURN = 66;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Loadable Implementation' of 'Operation'.
@@ -705,7 +714,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int OPERATION__VALIDATE_LOADABLE_IMPLEMENTATION = 66;
+	public static final int OPERATION__VALIDATE_LOADABLE_IMPLEMENTATION = 67;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Unique Postcondition Name' of 'Operation'.
@@ -713,7 +722,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int OPERATION__VALIDATE_UNIQUE_POSTCONDITION_NAME = 67;
+	public static final int OPERATION__VALIDATE_UNIQUE_POSTCONDITION_NAME = 68;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Unique Precondition Name' of 'Operation'.
@@ -721,7 +730,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int OPERATION__VALIDATE_UNIQUE_PRECONDITION_NAME = 68;
+	public static final int OPERATION__VALIDATE_UNIQUE_PRECONDITION_NAME = 69;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Argument Count' of 'Operation Call Exp'.
@@ -729,7 +738,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int OPERATION_CALL_EXP__VALIDATE_ARGUMENT_COUNT = 69;
+	public static final int OPERATION_CALL_EXP__VALIDATE_ARGUMENT_COUNT = 70;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Argument Type Is Conformant' of 'Operation Call Exp'.
@@ -737,7 +746,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int OPERATION_CALL_EXP__VALIDATE_ARGUMENT_TYPE_IS_CONFORMANT = 70;
+	public static final int OPERATION_CALL_EXP__VALIDATE_ARGUMENT_TYPE_IS_CONFORMANT = 71;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Safe Source Can Be Null' of 'Operation Call Exp'.
@@ -745,7 +754,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int OPERATION_CALL_EXP__VALIDATE_SAFE_SOURCE_CAN_BE_NULL = 71;
+	public static final int OPERATION_CALL_EXP__VALIDATE_SAFE_SOURCE_CAN_BE_NULL = 72;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Unsafe Source Can Not Be Null' of 'Operation Call Exp'.
@@ -753,7 +762,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int OPERATION_CALL_EXP__VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL = 72;
+	public static final int OPERATION_CALL_EXP__VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL = 73;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Safe Source Can Be Null' of 'Opposite Property Call Exp'.
@@ -761,7 +770,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int OPPOSITE_PROPERTY_CALL_EXP__VALIDATE_SAFE_SOURCE_CAN_BE_NULL = 73;
+	public static final int OPPOSITE_PROPERTY_CALL_EXP__VALIDATE_SAFE_SOURCE_CAN_BE_NULL = 74;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Unsafe Source Can Not Be Null' of 'Opposite Property Call Exp'.
@@ -769,7 +778,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int OPPOSITE_PROPERTY_CALL_EXP__VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL = 74;
+	public static final int OPPOSITE_PROPERTY_CALL_EXP__VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL = 75;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Has No Initializer' of 'Parameter Variable'.
@@ -777,7 +786,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int PARAMETER_VARIABLE__VALIDATE_HAS_NO_INITIALIZER = 75;
+	public static final int PARAMETER_VARIABLE__VALIDATE_HAS_NO_INITIALIZER = 76;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Compatible Default Expression' of 'Property'.
@@ -785,7 +794,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int PROPERTY__VALIDATE_COMPATIBLE_DEFAULT_EXPRESSION = 76;
+	public static final int PROPERTY__VALIDATE_COMPATIBLE_DEFAULT_EXPRESSION = 77;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Compatible Result Type' of 'Property Call Exp'.
@@ -793,7 +802,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int PROPERTY_CALL_EXP__VALIDATE_COMPATIBLE_RESULT_TYPE = 77;
+	public static final int PROPERTY_CALL_EXP__VALIDATE_COMPATIBLE_RESULT_TYPE = 78;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Non Static Source Type Is Conformant' of 'Property Call Exp'.
@@ -801,7 +810,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int PROPERTY_CALL_EXP__VALIDATE_NON_STATIC_SOURCE_TYPE_IS_CONFORMANT = 78;
+	public static final int PROPERTY_CALL_EXP__VALIDATE_NON_STATIC_SOURCE_TYPE_IS_CONFORMANT = 79;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Safe Source Can Be Null' of 'Property Call Exp'.
@@ -809,7 +818,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int PROPERTY_CALL_EXP__VALIDATE_SAFE_SOURCE_CAN_BE_NULL = 79;
+	public static final int PROPERTY_CALL_EXP__VALIDATE_SAFE_SOURCE_CAN_BE_NULL = 80;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Unsafe Source Can Not Be Null' of 'Property Call Exp'.
@@ -817,7 +826,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int PROPERTY_CALL_EXP__VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL = 80;
+	public static final int PROPERTY_CALL_EXP__VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL = 81;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Compatible Nullity For Initializer' of 'Result Variable'.
@@ -825,7 +834,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int RESULT_VARIABLE__VALIDATE_COMPATIBLE_NULLITY_FOR_INITIALIZER = 81;
+	public static final int RESULT_VARIABLE__VALIDATE_COMPATIBLE_NULLITY_FOR_INITIALIZER = 82;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Compatible Type For Initializer' of 'Result Variable'.
@@ -833,7 +842,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int RESULT_VARIABLE__VALIDATE_COMPATIBLE_TYPE_FOR_INITIALIZER = 82;
+	public static final int RESULT_VARIABLE__VALIDATE_COMPATIBLE_TYPE_FOR_INITIALIZER = 83;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Has Initializer' of 'Result Variable'.
@@ -841,7 +850,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int RESULT_VARIABLE__VALIDATE_HAS_INITIALIZER = 83;
+	public static final int RESULT_VARIABLE__VALIDATE_HAS_INITIALIZER = 84;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Class Has No String Value Initializer' of 'Shadow Exp'.
@@ -849,7 +858,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int SHADOW_EXP__VALIDATE_CLASS_HAS_NO_STRING_VALUE_INITIALIZER = 84;
+	public static final int SHADOW_EXP__VALIDATE_CLASS_HAS_NO_STRING_VALUE_INITIALIZER = 85;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Data Type Has No Part Initializers' of 'Shadow Exp'.
@@ -857,7 +866,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int SHADOW_EXP__VALIDATE_DATA_TYPE_HAS_NO_PART_INITIALIZERS = 85;
+	public static final int SHADOW_EXP__VALIDATE_DATA_TYPE_HAS_NO_PART_INITIALIZERS = 86;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Data Type Has One Part Initializer' of 'Shadow Exp'.
@@ -865,7 +874,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int SHADOW_EXP__VALIDATE_DATA_TYPE_HAS_ONE_PART_INITIALIZER = 86;
+	public static final int SHADOW_EXP__VALIDATE_DATA_TYPE_HAS_ONE_PART_INITIALIZER = 87;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Data Type Has String Value Initializer' of 'Shadow Exp'.
@@ -873,7 +882,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int SHADOW_EXP__VALIDATE_DATA_TYPE_HAS_STRING_VALUE_INITIALIZER = 87;
+	public static final int SHADOW_EXP__VALIDATE_DATA_TYPE_HAS_STRING_VALUE_INITIALIZER = 88;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Initializes All Class Properties' of 'Shadow Exp'.
@@ -881,7 +890,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int SHADOW_EXP__VALIDATE_INITIALIZES_ALL_CLASS_PROPERTIES = 88;
+	public static final int SHADOW_EXP__VALIDATE_INITIALIZES_ALL_CLASS_PROPERTIES = 89;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Not Invalid' of 'Shadow Exp'.
@@ -889,7 +898,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int SHADOW_EXP__VALIDATE_TYPE_IS_NOT_INVALID = 89;
+	public static final int SHADOW_EXP__VALIDATE_TYPE_IS_NOT_INVALID = 90;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Compatible Initialiser Type' of 'Shadow Part'.
@@ -897,7 +906,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int SHADOW_PART__VALIDATE_COMPATIBLE_INITIALISER_TYPE = 90;
+	public static final int SHADOW_PART__VALIDATE_COMPATIBLE_INITIALISER_TYPE = 91;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Not Invalid' of 'Shadow Part'.
@@ -905,7 +914,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int SHADOW_PART__VALIDATE_TYPE_IS_NOT_INVALID = 91;
+	public static final int SHADOW_PART__VALIDATE_TYPE_IS_NOT_INVALID = 92;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Not Null' of 'Shadow Part'.
@@ -913,7 +922,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int SHADOW_PART__VALIDATE_TYPE_IS_NOT_NULL = 92;
+	public static final int SHADOW_PART__VALIDATE_TYPE_IS_NOT_NULL = 93;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Not Invalid' of 'State Exp'.
@@ -921,7 +930,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int STATE_EXP__VALIDATE_TYPE_IS_NOT_INVALID = 93;
+	public static final int STATE_EXP__VALIDATE_TYPE_IS_NOT_INVALID = 94;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Compatible Initialiser Type' of 'Tuple Literal Part'.
@@ -929,7 +938,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int TUPLE_LITERAL_PART__VALIDATE_COMPATIBLE_INITIALISER_TYPE = 94;
+	public static final int TUPLE_LITERAL_PART__VALIDATE_COMPATIBLE_INITIALISER_TYPE = 95;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Not Invalid' of 'Tuple Literal Part'.
@@ -937,7 +946,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int TUPLE_LITERAL_PART__VALIDATE_TYPE_IS_NOT_INVALID = 95;
+	public static final int TUPLE_LITERAL_PART__VALIDATE_TYPE_IS_NOT_INVALID = 96;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Compatible Initialiser Type' of 'Variable'.
@@ -945,7 +954,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int VARIABLE__VALIDATE_COMPATIBLE_INITIALISER_TYPE = 96;
+	public static final int VARIABLE__VALIDATE_COMPATIBLE_INITIALISER_TYPE = 97;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Name Is Not Null' of 'Variable Declaration'.
@@ -953,7 +962,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int VARIABLE_DECLARATION__VALIDATE_NAME_IS_NOT_NULL = 97;
+	public static final int VARIABLE_DECLARATION__VALIDATE_NAME_IS_NOT_NULL = 98;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Not Invalid' of 'Variable Declaration'.
@@ -961,7 +970,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int VARIABLE_DECLARATION__VALIDATE_TYPE_IS_NOT_INVALID = 98;
+	public static final int VARIABLE_DECLARATION__VALIDATE_TYPE_IS_NOT_INVALID = 99;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Not Null' of 'Variable Declaration'.
@@ -969,7 +978,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int VARIABLE_DECLARATION__VALIDATE_TYPE_IS_NOT_NULL = 99;
+	public static final int VARIABLE_DECLARATION__VALIDATE_TYPE_IS_NOT_NULL = 100;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Not Invalid' of 'Variable Exp'.
@@ -977,7 +986,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int VARIABLE_EXP__VALIDATE_TYPE_IS_NOT_INVALID = 100;
+	public static final int VARIABLE_EXP__VALIDATE_TYPE_IS_NOT_INVALID = 101;
 
 	/**
 	 * A constant with a fixed name that can be used as the base value for additional hand written constants.
@@ -985,7 +994,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private static final int GENERATED_DIAGNOSTIC_CODE_COUNT = 100;
+	private static final int GENERATED_DIAGNOSTIC_CODE_COUNT = 101;
 
 	/**
 	 * A constant with a fixed name that can be used as the base value for additional hand written constants in a derived class.
@@ -1048,268 +1057,270 @@ extends EObjectValidator {
 			case 9:
 				return validateClass((org.eclipse.ocl.pivot.Class)value, diagnostics, context);
 			case 10:
-				return validateCollectionItem((CollectionItem)value, diagnostics, context);
+				return validateCoIteratorVariable((CoIteratorVariable)value, diagnostics, context);
 			case 11:
-				return validateCollectionLiteralExp((CollectionLiteralExp)value, diagnostics, context);
+				return validateCollectionItem((CollectionItem)value, diagnostics, context);
 			case 12:
-				return validateCollectionLiteralPart((CollectionLiteralPart)value, diagnostics, context);
+				return validateCollectionLiteralExp((CollectionLiteralExp)value, diagnostics, context);
 			case 13:
-				return validateCollectionRange((CollectionRange)value, diagnostics, context);
+				return validateCollectionLiteralPart((CollectionLiteralPart)value, diagnostics, context);
 			case 14:
-				return validateCollectionType((CollectionType)value, diagnostics, context);
+				return validateCollectionRange((CollectionRange)value, diagnostics, context);
 			case 15:
-				return validateComment((Comment)value, diagnostics, context);
+				return validateCollectionType((CollectionType)value, diagnostics, context);
 			case 16:
-				return validateCompleteClass((CompleteClass)value, diagnostics, context);
+				return validateComment((Comment)value, diagnostics, context);
 			case 17:
-				return validateCompleteEnvironment((CompleteEnvironment)value, diagnostics, context);
+				return validateCompleteClass((CompleteClass)value, diagnostics, context);
 			case 18:
-				return validateCompleteModel((CompleteModel)value, diagnostics, context);
+				return validateCompleteEnvironment((CompleteEnvironment)value, diagnostics, context);
 			case 19:
-				return validateCompletePackage((CompletePackage)value, diagnostics, context);
+				return validateCompleteModel((CompleteModel)value, diagnostics, context);
 			case 20:
-				return validateConnectionPointReference((ConnectionPointReference)value, diagnostics, context);
+				return validateCompletePackage((CompletePackage)value, diagnostics, context);
 			case 21:
-				return validateConstraint((Constraint)value, diagnostics, context);
+				return validateConnectionPointReference((ConnectionPointReference)value, diagnostics, context);
 			case 22:
-				return validateDataType((DataType)value, diagnostics, context);
+				return validateConstraint((Constraint)value, diagnostics, context);
 			case 23:
-				return validateDetail((Detail)value, diagnostics, context);
+				return validateDataType((DataType)value, diagnostics, context);
 			case 24:
-				return validateDynamicBehavior((DynamicBehavior)value, diagnostics, context);
+				return validateDetail((Detail)value, diagnostics, context);
 			case 25:
-				return validateDynamicElement((DynamicElement)value, diagnostics, context);
+				return validateDynamicBehavior((DynamicBehavior)value, diagnostics, context);
 			case 26:
-				return validateDynamicProperty((DynamicProperty)value, diagnostics, context);
+				return validateDynamicElement((DynamicElement)value, diagnostics, context);
 			case 27:
-				return validateDynamicType((DynamicType)value, diagnostics, context);
+				return validateDynamicProperty((DynamicProperty)value, diagnostics, context);
 			case 28:
-				return validateDynamicValueSpecification((DynamicValueSpecification)value, diagnostics, context);
+				return validateDynamicType((DynamicType)value, diagnostics, context);
 			case 29:
-				return validateElement((Element)value, diagnostics, context);
+				return validateDynamicValueSpecification((DynamicValueSpecification)value, diagnostics, context);
 			case 30:
-				return validateElementExtension((ElementExtension)value, diagnostics, context);
+				return validateElement((Element)value, diagnostics, context);
 			case 31:
-				return validateEnumLiteralExp((EnumLiteralExp)value, diagnostics, context);
+				return validateElementExtension((ElementExtension)value, diagnostics, context);
 			case 32:
-				return validateEnumeration((Enumeration)value, diagnostics, context);
+				return validateEnumLiteralExp((EnumLiteralExp)value, diagnostics, context);
 			case 33:
-				return validateEnumerationLiteral((EnumerationLiteral)value, diagnostics, context);
+				return validateEnumeration((Enumeration)value, diagnostics, context);
 			case 34:
-				return validateExpressionInOCL((ExpressionInOCL)value, diagnostics, context);
+				return validateEnumerationLiteral((EnumerationLiteral)value, diagnostics, context);
 			case 35:
-				return validateFeature((Feature)value, diagnostics, context);
+				return validateExpressionInOCL((ExpressionInOCL)value, diagnostics, context);
 			case 36:
-				return validateFeatureCallExp((FeatureCallExp)value, diagnostics, context);
+				return validateFeature((Feature)value, diagnostics, context);
 			case 37:
-				return validateFinalState((FinalState)value, diagnostics, context);
+				return validateFeatureCallExp((FeatureCallExp)value, diagnostics, context);
 			case 38:
-				return validateIfExp((IfExp)value, diagnostics, context);
+				return validateFinalState((FinalState)value, diagnostics, context);
 			case 39:
-				return validateImport((Import)value, diagnostics, context);
+				return validateIfExp((IfExp)value, diagnostics, context);
 			case 40:
-				return validateInstanceSpecification((InstanceSpecification)value, diagnostics, context);
+				return validateImport((Import)value, diagnostics, context);
 			case 41:
-				return validateIntegerLiteralExp((IntegerLiteralExp)value, diagnostics, context);
+				return validateInstanceSpecification((InstanceSpecification)value, diagnostics, context);
 			case 42:
-				return validateInvalidLiteralExp((InvalidLiteralExp)value, diagnostics, context);
+				return validateIntegerLiteralExp((IntegerLiteralExp)value, diagnostics, context);
 			case 43:
-				return validateInvalidType((InvalidType)value, diagnostics, context);
+				return validateInvalidLiteralExp((InvalidLiteralExp)value, diagnostics, context);
 			case 44:
-				return validateIterableType((IterableType)value, diagnostics, context);
+				return validateInvalidType((InvalidType)value, diagnostics, context);
 			case 45:
-				return validateIterateExp((IterateExp)value, diagnostics, context);
+				return validateIterableType((IterableType)value, diagnostics, context);
 			case 46:
-				return validateIteration((Iteration)value, diagnostics, context);
+				return validateIterateExp((IterateExp)value, diagnostics, context);
 			case 47:
-				return validateIteratorExp((IteratorExp)value, diagnostics, context);
+				return validateIteration((Iteration)value, diagnostics, context);
 			case 48:
-				return validateIteratorVariable((IteratorVariable)value, diagnostics, context);
+				return validateIteratorExp((IteratorExp)value, diagnostics, context);
 			case 49:
-				return validateLambdaType((LambdaType)value, diagnostics, context);
+				return validateIteratorVariable((IteratorVariable)value, diagnostics, context);
 			case 50:
-				return validateLanguageExpression((LanguageExpression)value, diagnostics, context);
+				return validateLambdaType((LambdaType)value, diagnostics, context);
 			case 51:
-				return validateLetExp((LetExp)value, diagnostics, context);
+				return validateLanguageExpression((LanguageExpression)value, diagnostics, context);
 			case 52:
-				return validateLetVariable((LetVariable)value, diagnostics, context);
+				return validateLetExp((LetExp)value, diagnostics, context);
 			case 53:
-				return validateLibrary((Library)value, diagnostics, context);
+				return validateLetVariable((LetVariable)value, diagnostics, context);
 			case 54:
-				return validateLiteralExp((LiteralExp)value, diagnostics, context);
+				return validateLibrary((Library)value, diagnostics, context);
 			case 55:
-				return validateLoopExp((LoopExp)value, diagnostics, context);
+				return validateLiteralExp((LiteralExp)value, diagnostics, context);
 			case 56:
-				return validateMapLiteralExp((MapLiteralExp)value, diagnostics, context);
+				return validateLoopExp((LoopExp)value, diagnostics, context);
 			case 57:
-				return validateMapLiteralPart((MapLiteralPart)value, diagnostics, context);
+				return validateMapLiteralExp((MapLiteralExp)value, diagnostics, context);
 			case 58:
-				return validateMapType((MapType)value, diagnostics, context);
+				return validateMapLiteralPart((MapLiteralPart)value, diagnostics, context);
 			case 59:
-				return validateMessageExp((MessageExp)value, diagnostics, context);
+				return validateMapType((MapType)value, diagnostics, context);
 			case 60:
-				return validateMessageType((MessageType)value, diagnostics, context);
+				return validateMessageExp((MessageExp)value, diagnostics, context);
 			case 61:
-				return validateModel((Model)value, diagnostics, context);
+				return validateMessageType((MessageType)value, diagnostics, context);
 			case 62:
-				return validateMorePivotable((MorePivotable)value, diagnostics, context);
+				return validateModel((Model)value, diagnostics, context);
 			case 63:
-				return validateNameable((Nameable)value, diagnostics, context);
+				return validateMorePivotable((MorePivotable)value, diagnostics, context);
 			case 64:
-				return validateNamedElement((NamedElement)value, diagnostics, context);
+				return validateNameable((Nameable)value, diagnostics, context);
 			case 65:
-				return validateNamespace((Namespace)value, diagnostics, context);
+				return validateNamedElement((NamedElement)value, diagnostics, context);
 			case 66:
-				return validateNavigationCallExp((NavigationCallExp)value, diagnostics, context);
+				return validateNamespace((Namespace)value, diagnostics, context);
 			case 67:
-				return validateNullLiteralExp((NullLiteralExp)value, diagnostics, context);
+				return validateNavigationCallExp((NavigationCallExp)value, diagnostics, context);
 			case 68:
-				return validateNumericLiteralExp((NumericLiteralExp)value, diagnostics, context);
+				return validateNullLiteralExp((NullLiteralExp)value, diagnostics, context);
 			case 69:
-				return validateOCLExpression((OCLExpression)value, diagnostics, context);
+				return validateNumericLiteralExp((NumericLiteralExp)value, diagnostics, context);
 			case 70:
-				return validateOperation((Operation)value, diagnostics, context);
+				return validateOCLExpression((OCLExpression)value, diagnostics, context);
 			case 71:
-				return validateOperationCallExp((OperationCallExp)value, diagnostics, context);
+				return validateOperation((Operation)value, diagnostics, context);
 			case 72:
-				return validateOppositePropertyCallExp((OppositePropertyCallExp)value, diagnostics, context);
+				return validateOperationCallExp((OperationCallExp)value, diagnostics, context);
 			case 73:
-				return validateOrderedSetType((OrderedSetType)value, diagnostics, context);
+				return validateOppositePropertyCallExp((OppositePropertyCallExp)value, diagnostics, context);
 			case 74:
-				return validateOrphanCompletePackage((OrphanCompletePackage)value, diagnostics, context);
+				return validateOrderedSetType((OrderedSetType)value, diagnostics, context);
 			case 75:
-				return validatePackage((org.eclipse.ocl.pivot.Package)value, diagnostics, context);
+				return validateOrphanCompletePackage((OrphanCompletePackage)value, diagnostics, context);
 			case 76:
-				return validateParameter((Parameter)value, diagnostics, context);
+				return validatePackage((org.eclipse.ocl.pivot.Package)value, diagnostics, context);
 			case 77:
-				return validateParameterVariable((ParameterVariable)value, diagnostics, context);
+				return validateParameter((Parameter)value, diagnostics, context);
 			case 78:
-				return validatePivotable((Pivotable)value, diagnostics, context);
+				return validateParameterVariable((ParameterVariable)value, diagnostics, context);
 			case 79:
-				return validatePrecedence((Precedence)value, diagnostics, context);
+				return validatePivotable((Pivotable)value, diagnostics, context);
 			case 80:
-				return validatePrimitiveCompletePackage((PrimitiveCompletePackage)value, diagnostics, context);
+				return validatePrecedence((Precedence)value, diagnostics, context);
 			case 81:
-				return validatePrimitiveLiteralExp((PrimitiveLiteralExp)value, diagnostics, context);
+				return validatePrimitiveCompletePackage((PrimitiveCompletePackage)value, diagnostics, context);
 			case 82:
-				return validatePrimitiveType((PrimitiveType)value, diagnostics, context);
+				return validatePrimitiveLiteralExp((PrimitiveLiteralExp)value, diagnostics, context);
 			case 83:
-				return validateProfile((Profile)value, diagnostics, context);
+				return validatePrimitiveType((PrimitiveType)value, diagnostics, context);
 			case 84:
-				return validateProfileApplication((ProfileApplication)value, diagnostics, context);
+				return validateProfile((Profile)value, diagnostics, context);
 			case 85:
-				return validateProperty((Property)value, diagnostics, context);
+				return validateProfileApplication((ProfileApplication)value, diagnostics, context);
 			case 86:
-				return validatePropertyCallExp((PropertyCallExp)value, diagnostics, context);
+				return validateProperty((Property)value, diagnostics, context);
 			case 87:
-				return validatePseudostate((Pseudostate)value, diagnostics, context);
+				return validatePropertyCallExp((PropertyCallExp)value, diagnostics, context);
 			case 88:
-				return validateRealLiteralExp((RealLiteralExp)value, diagnostics, context);
+				return validatePseudostate((Pseudostate)value, diagnostics, context);
 			case 89:
-				return validateReferringElement((ReferringElement)value, diagnostics, context);
+				return validateRealLiteralExp((RealLiteralExp)value, diagnostics, context);
 			case 90:
-				return validateRegion((Region)value, diagnostics, context);
+				return validateReferringElement((ReferringElement)value, diagnostics, context);
 			case 91:
-				return validateResultVariable((ResultVariable)value, diagnostics, context);
+				return validateRegion((Region)value, diagnostics, context);
 			case 92:
-				return validateSelfType((SelfType)value, diagnostics, context);
+				return validateResultVariable((ResultVariable)value, diagnostics, context);
 			case 93:
-				return validateSendSignalAction((SendSignalAction)value, diagnostics, context);
+				return validateSelfType((SelfType)value, diagnostics, context);
 			case 94:
-				return validateSequenceType((SequenceType)value, diagnostics, context);
+				return validateSendSignalAction((SendSignalAction)value, diagnostics, context);
 			case 95:
-				return validateSetType((SetType)value, diagnostics, context);
+				return validateSequenceType((SequenceType)value, diagnostics, context);
 			case 96:
-				return validateShadowExp((ShadowExp)value, diagnostics, context);
+				return validateSetType((SetType)value, diagnostics, context);
 			case 97:
-				return validateShadowPart((ShadowPart)value, diagnostics, context);
+				return validateShadowExp((ShadowExp)value, diagnostics, context);
 			case 98:
-				return validateSignal((Signal)value, diagnostics, context);
+				return validateShadowPart((ShadowPart)value, diagnostics, context);
 			case 99:
-				return validateSlot((Slot)value, diagnostics, context);
+				return validateSignal((Signal)value, diagnostics, context);
 			case 100:
-				return validateStandardLibrary((StandardLibrary)value, diagnostics, context);
+				return validateSlot((Slot)value, diagnostics, context);
 			case 101:
-				return validateState((State)value, diagnostics, context);
+				return validateStandardLibrary((StandardLibrary)value, diagnostics, context);
 			case 102:
-				return validateStateExp((StateExp)value, diagnostics, context);
+				return validateState((State)value, diagnostics, context);
 			case 103:
-				return validateStateMachine((StateMachine)value, diagnostics, context);
+				return validateStateExp((StateExp)value, diagnostics, context);
 			case 104:
-				return validateStereotype((Stereotype)value, diagnostics, context);
+				return validateStateMachine((StateMachine)value, diagnostics, context);
 			case 105:
-				return validateStereotypeExtender((StereotypeExtender)value, diagnostics, context);
+				return validateStereotype((Stereotype)value, diagnostics, context);
 			case 106:
-				return validateStringLiteralExp((StringLiteralExp)value, diagnostics, context);
+				return validateStereotypeExtender((StereotypeExtender)value, diagnostics, context);
 			case 107:
-				return validateTemplateBinding((TemplateBinding)value, diagnostics, context);
+				return validateStringLiteralExp((StringLiteralExp)value, diagnostics, context);
 			case 108:
-				return validateTemplateParameter((TemplateParameter)value, diagnostics, context);
+				return validateTemplateBinding((TemplateBinding)value, diagnostics, context);
 			case 109:
-				return validateTemplateParameterSubstitution((TemplateParameterSubstitution)value, diagnostics, context);
+				return validateTemplateParameter((TemplateParameter)value, diagnostics, context);
 			case 110:
-				return validateTemplateSignature((TemplateSignature)value, diagnostics, context);
+				return validateTemplateParameterSubstitution((TemplateParameterSubstitution)value, diagnostics, context);
 			case 111:
-				return validateTemplateableElement((TemplateableElement)value, diagnostics, context);
+				return validateTemplateSignature((TemplateSignature)value, diagnostics, context);
 			case 112:
-				return validateTransition((Transition)value, diagnostics, context);
+				return validateTemplateableElement((TemplateableElement)value, diagnostics, context);
 			case 113:
-				return validateTrigger((Trigger)value, diagnostics, context);
+				return validateTransition((Transition)value, diagnostics, context);
 			case 114:
-				return validateTupleLiteralExp((TupleLiteralExp)value, diagnostics, context);
+				return validateTrigger((Trigger)value, diagnostics, context);
 			case 115:
-				return validateTupleLiteralPart((TupleLiteralPart)value, diagnostics, context);
+				return validateTupleLiteralExp((TupleLiteralExp)value, diagnostics, context);
 			case 116:
-				return validateTupleType((TupleType)value, diagnostics, context);
+				return validateTupleLiteralPart((TupleLiteralPart)value, diagnostics, context);
 			case 117:
-				return validateType((Type)value, diagnostics, context);
+				return validateTupleType((TupleType)value, diagnostics, context);
 			case 118:
-				return validateTypeExp((TypeExp)value, diagnostics, context);
+				return validateType((Type)value, diagnostics, context);
 			case 119:
-				return validateTypedElement((TypedElement)value, diagnostics, context);
+				return validateTypeExp((TypeExp)value, diagnostics, context);
 			case 120:
-				return validateUnlimitedNaturalLiteralExp((UnlimitedNaturalLiteralExp)value, diagnostics, context);
+				return validateTypedElement((TypedElement)value, diagnostics, context);
 			case 121:
-				return validateUnspecifiedValueExp((UnspecifiedValueExp)value, diagnostics, context);
+				return validateUnlimitedNaturalLiteralExp((UnlimitedNaturalLiteralExp)value, diagnostics, context);
 			case 122:
-				return validateValueSpecification((ValueSpecification)value, diagnostics, context);
+				return validateUnspecifiedValueExp((UnspecifiedValueExp)value, diagnostics, context);
 			case 123:
-				return validateVariable((Variable)value, diagnostics, context);
+				return validateValueSpecification((ValueSpecification)value, diagnostics, context);
 			case 124:
-				return validateVariableDeclaration((VariableDeclaration)value, diagnostics, context);
+				return validateVariable((Variable)value, diagnostics, context);
 			case 125:
-				return validateVariableExp((VariableExp)value, diagnostics, context);
+				return validateVariableDeclaration((VariableDeclaration)value, diagnostics, context);
 			case 126:
-				return validateVertex((Vertex)value, diagnostics, context);
+				return validateVariableExp((VariableExp)value, diagnostics, context);
 			case 127:
-				return validateVisitable((Visitable)value, diagnostics, context);
+				return validateVertex((Vertex)value, diagnostics, context);
 			case 128:
-				return validateVoidType((VoidType)value, diagnostics, context);
+				return validateVisitable((Visitable)value, diagnostics, context);
 			case 129:
-				return validateWildcardType((WildcardType)value, diagnostics, context);
+				return validateVoidType((VoidType)value, diagnostics, context);
 			case 130:
-				return validateAssociativityKind((AssociativityKind)value, diagnostics, context);
+				return validateWildcardType((WildcardType)value, diagnostics, context);
 			case 131:
-				return validateCollectionKind((CollectionKind)value, diagnostics, context);
+				return validateAssociativityKind((AssociativityKind)value, diagnostics, context);
 			case 132:
-				return validatePseudostateKind((PseudostateKind)value, diagnostics, context);
+				return validateCollectionKind((CollectionKind)value, diagnostics, context);
 			case 133:
-				return validateTransitionKind((TransitionKind)value, diagnostics, context);
+				return validatePseudostateKind((PseudostateKind)value, diagnostics, context);
 			case 134:
-				return validateBoolean((Boolean)value, diagnostics, context);
+				return validateTransitionKind((TransitionKind)value, diagnostics, context);
 			case 135:
-				return validateInteger((Number)value, diagnostics, context);
+				return validateBoolean((Boolean)value, diagnostics, context);
 			case 136:
-				return validateLibraryFeature((LibraryFeature)value, diagnostics, context);
+				return validateInteger((Number)value, diagnostics, context);
 			case 137:
-				return validateObject(value, diagnostics, context);
+				return validateLibraryFeature((LibraryFeature)value, diagnostics, context);
 			case 138:
-				return validateReal((Number)value, diagnostics, context);
+				return validateObject(value, diagnostics, context);
 			case 139:
-				return validateString((String)value, diagnostics, context);
+				return validateReal((Number)value, diagnostics, context);
 			case 140:
-				return validateThrowable((Throwable)value, diagnostics, context);
+				return validateString((String)value, diagnostics, context);
 			case 141:
+				return validateThrowable((Throwable)value, diagnostics, context);
+			case 142:
 				return validateUnlimitedNatural((Number)value, diagnostics, context);
 			default:
 				return true;
@@ -1449,6 +1460,29 @@ extends EObjectValidator {
 	public boolean validateClass_validateUniqueInvariantName(org.eclipse.ocl.pivot.Class class_, DiagnosticChain diagnostics, Map<Object, Object> context)
 	{
 		return class_.validateUniqueInvariantName(diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateCoIteratorVariable(CoIteratorVariable coIteratorVariable, DiagnosticChain diagnostics, Map<Object, Object> context)
+	{
+		if (!validate_NoCircularContainment(coIteratorVariable, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(coIteratorVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(coIteratorVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(coIteratorVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(coIteratorVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(coIteratorVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(coIteratorVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(coIteratorVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(coIteratorVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validateVariableDeclaration_validateNameIsNotNull(coIteratorVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validateVariableDeclaration_validateTypeIsNotInvalid(coIteratorVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validateVariableDeclaration_validateTypeIsNotNull(coIteratorVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validateVariable_validateCompatibleInitialiserType(coIteratorVariable, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -2957,9 +2991,10 @@ extends EObjectValidator {
 		if (result || diagnostics != null) result &= validateCallExp_validateSafeSourceCannotBeMap(iterateExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateCallExp_validateTypeIsNotInvalid(iterateExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateLoopExp_validateMatchingMapCoIterators(iterateExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateLoopExp_validateMatchingOrderedCollectionCoIterators(iterateExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateLoopExp_validateNoCoInitializers(iterateExp, diagnostics, context);
-		if (result || diagnostics != null) result &= validateLoopExp_validateNoCollectionCoIterators(iterateExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateLoopExp_validateNoInitializers(iterateExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateLoopExp_validateNoNotOrderedCollectionCoIterators(iterateExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateLoopExp_validateSourceIsCollection(iterateExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateLoopExp_validateSourceIsIterable(iterateExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateIterateExp_validateBodyTypeConformsToResultType(iterateExp, diagnostics, context);
@@ -3083,9 +3118,10 @@ extends EObjectValidator {
 		if (result || diagnostics != null) result &= validateCallExp_validateSafeSourceCannotBeMap(iteratorExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateCallExp_validateTypeIsNotInvalid(iteratorExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateLoopExp_validateMatchingMapCoIterators(iteratorExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateLoopExp_validateMatchingOrderedCollectionCoIterators(iteratorExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateLoopExp_validateNoCoInitializers(iteratorExp, diagnostics, context);
-		if (result || diagnostics != null) result &= validateLoopExp_validateNoCollectionCoIterators(iteratorExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateLoopExp_validateNoInitializers(iteratorExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateLoopExp_validateNoNotOrderedCollectionCoIterators(iteratorExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateLoopExp_validateSourceIsCollection(iteratorExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateLoopExp_validateSourceIsIterable(iteratorExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateIteratorExp_validateAnyBodyTypeIsBoolean(iteratorExp, diagnostics, context);
@@ -3418,9 +3454,10 @@ extends EObjectValidator {
 		if (result || diagnostics != null) result &= validateCallExp_validateSafeSourceCannotBeMap(loopExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateCallExp_validateTypeIsNotInvalid(loopExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateLoopExp_validateMatchingMapCoIterators(loopExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateLoopExp_validateMatchingOrderedCollectionCoIterators(loopExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateLoopExp_validateNoCoInitializers(loopExp, diagnostics, context);
-		if (result || diagnostics != null) result &= validateLoopExp_validateNoCollectionCoIterators(loopExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateLoopExp_validateNoInitializers(loopExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateLoopExp_validateNoNotOrderedCollectionCoIterators(loopExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateLoopExp_validateSourceIsCollection(loopExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateLoopExp_validateSourceIsIterable(loopExp, diagnostics, context);
 		return result;
@@ -3438,6 +3475,17 @@ extends EObjectValidator {
 	}
 
 	/**
+	 * Validates the validateMatchingOrderedCollectionCoIterators constraint of '<em>Loop Exp</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateLoopExp_validateMatchingOrderedCollectionCoIterators(LoopExp loopExp, DiagnosticChain diagnostics, Map<Object, Object> context)
+	{
+		return loopExp.validateMatchingOrderedCollectionCoIterators(diagnostics, context);
+	}
+
+	/**
 	 * Validates the validateNoCoInitializers constraint of '<em>Loop Exp</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3449,17 +3497,6 @@ extends EObjectValidator {
 	}
 
 	/**
-	 * Validates the validateNoCollectionCoIterators constraint of '<em>Loop Exp</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean validateLoopExp_validateNoCollectionCoIterators(LoopExp loopExp, DiagnosticChain diagnostics, Map<Object, Object> context)
-	{
-		return loopExp.validateNoCollectionCoIterators(diagnostics, context);
-	}
-
-	/**
 	 * Validates the validateNoInitializers constraint of '<em>Loop Exp</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3468,6 +3505,17 @@ extends EObjectValidator {
 	public boolean validateLoopExp_validateNoInitializers(LoopExp loopExp, DiagnosticChain diagnostics, Map<Object, Object> context)
 	{
 		return loopExp.validateNoInitializers(diagnostics, context);
+	}
+
+	/**
+	 * Validates the validateNoNotOrderedCollectionCoIterators constraint of '<em>Loop Exp</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateLoopExp_validateNoNotOrderedCollectionCoIterators(LoopExp loopExp, DiagnosticChain diagnostics, Map<Object, Object> context)
+	{
+		return loopExp.validateNoNotOrderedCollectionCoIterators(diagnostics, context);
 	}
 
 	/**

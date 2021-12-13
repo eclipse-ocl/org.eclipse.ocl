@@ -108,7 +108,7 @@ public class NameManager
 	public static final String BAG_NAME_HINT_PREFIX = "BAG";
 	public static final String COLLECTION_NAME_HINT_PREFIX = "COL";
 	public static final String DEFAULT_GLOBAL_NAME_PREFIX = "global";
-	public static final String DEFAULT_LOCAL_NAME_PREFIX = "local";
+	public static final String DEFAULT_LOCAL_NAME_PREFIX = "symbol";
 	//	public static final String ID_NAME_HINT_PREFIX = "TID";
 	public static final String EXPRESSION_IN_OCL_NAME_HINT_PREFIX = PivotConstants.RESULT_NAME;
 	public static final String INTEGER_NAME_HINT_PREFIX = "INT_";

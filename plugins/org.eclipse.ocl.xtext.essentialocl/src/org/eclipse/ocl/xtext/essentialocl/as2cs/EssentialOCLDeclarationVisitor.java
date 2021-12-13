@@ -19,6 +19,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.BooleanLiteralExp;
 import org.eclipse.ocl.pivot.CallExp;
+import org.eclipse.ocl.pivot.CoIteratorVariable;
 import org.eclipse.ocl.pivot.CollectionItem;
 import org.eclipse.ocl.pivot.CollectionLiteralExp;
 import org.eclipse.ocl.pivot.CollectionLiteralPart;
@@ -565,7 +566,7 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 		csNameExp.setOwnedRoundBracketedClause(csRoundBracketedClause);;
 		String prefix = null;
 		List<Variable> asIterators = asIterateExp.getOwnedIterators();
-		List<Variable> asCoIterators = asIterateExp.getOwnedCoIterators();
+		List<CoIteratorVariable> asCoIterators = asIterateExp.getOwnedCoIterators();
 		for (int i = 0; i < asIterators.size(); i++) {
 			Variable asIterator = asIterators.get(i);
 			if (!asIterator.isIsImplicit()) {
@@ -617,7 +618,7 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 		csNameExp.setOwnedRoundBracketedClause(csRoundBracketedClause);;
 		String prefix = null;
 		List<Variable> asIterators = asIteratorExp.getOwnedIterators();
-		List<Variable> asCoIterators = asIteratorExp.getOwnedCoIterators();
+		List<CoIteratorVariable> asCoIterators = asIteratorExp.getOwnedCoIterators();
 		for (int i = 0; i < asIterators.size(); i++) {
 			Variable asIterator = asIterators.get(i);
 			if (!asIterator.isIsImplicit()) {

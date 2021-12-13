@@ -115,11 +115,13 @@ import org.eclipse.ocl.examples.codegen.java.operation.OrOperationHandler;
 import org.eclipse.ocl.examples.codegen.java.operation.XorOperation2Handler;
 import org.eclipse.ocl.examples.codegen.java.operation.XorOperationHandler;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
+import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionLiteralExp;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.LoopExp;
+import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Parameter;
@@ -134,6 +136,7 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.EnumerationId;
 import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
+import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.NestedTypeId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -312,20 +315,25 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		final CGTypeId resultType = cgIterationCallExp.getTypeId();
 		final Operation referredOperation = ((LoopExp)cgIterationCallExp.getAst()).getReferredIteration();
 		final int arity = iterators.size();
-		boolean isMap = coIterators.size() > 0;
+		Type sourceType = ((CallExp)CGUtil.getAST(cgIterationCallExp)).getOwnedSource().getType();
+		boolean isMap = sourceType instanceof MapType;
 		final Class<?> managerClass; 	// FIXME ExecutorMultipleIterationManager
 		final Class<?> operationClass;
+		final boolean passesCoIterators;
 		if (isMap) {
 			managerClass = ExecutorMultipleMapIterationManager.class;
 			operationClass = AbstractSimpleOperation.class;
+			passesCoIterators = true;
 		}
-		else if (arity == 1) {
+		else if ((arity == 1) && (coIterators.size() == 0)) {
 			managerClass = ExecutorSingleIterationManager.class;
 			operationClass = AbstractBinaryOperation.class;
+			passesCoIterators = false;
 		}
 		else {
 			managerClass = ExecutorMultipleIterationManager.class;
 			operationClass = AbstractSimpleOperation.class;
+			passesCoIterators = true;
 		}
 		final LibraryIteration libraryIteration = ClassUtil.nonNullState(cgIterationCallExp.getLibraryIteration());
 		final Method actualMethod = getJavaMethod(libraryIteration);
@@ -451,7 +459,9 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 				CGIterator iterator = iterators.get(i);
 				js.append(", final ");
 				js.appendDeclaration(iterator);
-				if (i < coIterators.size()) {
+			}
+			if (coIterators.size() > 0) {
+				for (int i = 0; i < arity; i++) {
 					js.append(", final ");
 					js.appendDeclaration(coIterators.get(i));
 				}
@@ -485,7 +495,9 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 				js.appendClassCast(iterator, isRequired, Object.class, new ArgumentSubStream(argIndex));
 				js.append(";\n");
 				argIndex++;
-				if (i < coIterators.size()) {
+			}
+			if (coIterators.size() > 0) {
+				for (int i = 0; i < arity; i++) {
 					CGIterator coIterator = coIterators.get(i);
 					Variable asCoIterator = CGUtil.getAST(coIterator);
 					if (!asCoIterator.isIsImplicit()) {
@@ -527,6 +539,9 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		js.append(", ");
 		if (isMap || (arity > 1)) {
 			js.append(arity + ", ");
+		}
+		if (passesCoIterators) {
+			js.append((coIterators.size() > 0) + ", ");
 		}
 		js.appendValueName(resultType);
 		js.append(", " + bodyName + ", ");
@@ -1073,6 +1088,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		Iteration2Java iterationHelper = context.getIterationHelper(ClassUtil.nonNullState(cgIterationCallExp.getReferredIteration()));
 		assert iterationHelper != null;
 		boolean flowContinues = false;
+		boolean isMap = cgSource.getASTypeId() instanceof MapTypeId;
 		//
 		if (!js.appendLocalStatements(cgSource)) {
 			return false;
@@ -1100,6 +1116,12 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		js.append(" " + iteratorName + " = ");
 		js.appendAtomicReferenceTo(cgSource);
 		js.append(".iterator();\n");
+		if (!isMap && (cgCoIterator != null)) {
+			js.appendDeclaration(cgCoIterator);
+			js.append(" = ");
+			js.appendClassReference(null, ValueUtil.class);
+			js.append(".ONE_VALUE;\n");
+		}
 		//
 		//	Declare body result
 		//
@@ -1138,7 +1160,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		//
 		// Declare coiterator/key access.
 		//
-		if (cgCoIterator != null) {		// && !isImplicit
+		if (isMap && (cgCoIterator != null)) { // && !isImplicit
 			Variable asCoIterator = CGUtil.getAST(cgCoIterator);
 			if (!asCoIterator.isIsImplicit()) {
 				if (cgCoIterator.isRequired()) {
@@ -1168,6 +1190,14 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			if (iterationHelper.appendUpdate(js, cgIterationCallExp)) {
 				flowContinues = true;
 			}
+		}
+		if (!isMap && (cgCoIterator != null)) {
+			js.appendReferenceTo(cgCoIterator);
+			js.append(" = ");
+			js.appendReferenceTo(cgCoIterator);
+			js.append(".addInteger(");
+			js.appendClassReference(null, ValueUtil.class);
+			js.append(".ONE_VALUE);\n");
 		}
 		//
 		//	Declare loop tail

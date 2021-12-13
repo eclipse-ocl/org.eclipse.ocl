@@ -24,6 +24,7 @@ import org.eclipse.ocl.pivot.Behavior;
 import org.eclipse.ocl.pivot.BooleanLiteralExp;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CallOperationAction;
+import org.eclipse.ocl.pivot.CoIteratorVariable;
 import org.eclipse.ocl.pivot.CollectionItem;
 import org.eclipse.ocl.pivot.CollectionLiteralExp;
 import org.eclipse.ocl.pivot.CollectionLiteralPart;
@@ -254,6 +255,11 @@ extends AdapterFactoryImpl {
 			public Adapter caseClass(org.eclipse.ocl.pivot.Class object)
 			{
 				return createClassAdapter();
+			}
+			@Override
+			public Adapter caseCoIteratorVariable(CoIteratorVariable object)
+			{
+				return createCoIteratorVariableAdapter();
 			}
 			@Override
 			public Adapter caseCollectionItem(CollectionItem object)
@@ -2159,6 +2165,21 @@ extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createClassAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.CoIteratorVariable <em>Co Iterator Variable</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.CoIteratorVariable
+	 * @generated
+	 */
+	public Adapter createCoIteratorVariableAdapter()
+	{
 		return null;
 	}
 

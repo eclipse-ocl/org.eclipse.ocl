@@ -480,6 +480,24 @@ mapping inout Ecore::EReference::installResolveProxies(in properties : Set(UML::
 --	result.defaultValue := instanceClassName;
 }
 
+mapping inout Ecore::EStructuralFeature::installNullFree(in properties : Set(UML::Property), stereotypeName : String, defaultValue : Boolean)
+{
+	var stereotypedProperties : Set(UML::Property) := properties->select(getAppliedStereotype(stereotypeName) <> null)->asSet();
+	var stereotypedProperty : UML::Property := if stereotypedProperties->notEmpty() then stereotypedProperties->any(true) else null endif;
+--	var stereotypes : Set(UML::Stereotype) := createType.oldTypes.oclAsType(UML::DataType).getAppliedStereotype('Ecore::EDataType')->asSet();
+--	log('stereotypedType', stereotypedType);
+	var transient : Boolean := if stereotypedProperty <> null then stereotypedProperty.getValue(stereotypedProperty.getAppliedStereotype(stereotypeName), 'isTransient').oclAsType(Boolean) else defaultValue endif;
+--	log('instanceClassName', instanceClassName);
+	self.eAnnotations += object Ecore::EAnnotation {
+		source := 'http://www.eclipse.org/OCL/Collection';
+		details += object Ecore::EStringToStringMapEntry {
+			key := 'nullFree';
+			value := 'true';
+		};
+	};
+--	result.defaultValue := instanceClassName;
+}
+
 mapping inout Ecore::EStructuralFeature::installTransient(in properties : Set(UML::Property), stereotypeName : String, defaultValue : Boolean)
 {
 	var stereotypedProperties : Set(UML::Property) := properties->select(getAppliedStereotype(stereotypeName) <> null)->asSet();

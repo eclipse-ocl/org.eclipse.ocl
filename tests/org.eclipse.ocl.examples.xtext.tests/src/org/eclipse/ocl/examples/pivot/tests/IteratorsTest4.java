@@ -480,6 +480,7 @@ public class IteratorsTest4 extends PivotTestSuite
 
 		ocl.assertQueryResults(ocl.pkg1, "Sequence{1,4,9}", "Sequence{1..3}->collect(k | k*k)");
 		ocl.assertQueryResults(ocl.pkg1, "Sequence{null, null, null}", "Sequence{1..3}->collect(k | null)");
+		ocl.assertQueryResults(null, "Sequence{11,15,21,29,39,51}", "Sequence{10..15}->collect(i <- x | i+x*x)");
 
 		ocl.dispose();
 	}
@@ -791,6 +792,13 @@ public class IteratorsTest4 extends PivotTestSuite
 		ocl.assertQueryTrue(ocl.pkg1, "Sequence{2,3,4,6,12}->forAll(e1, e2, e3 | e1 * e2 * e3 <> 73)");
 		ocl.assertQueryFalse(ocl.pkg1, "Sequence{2,3,4,6,12}->forAll(e1, e2, e3 | e1 * e2 * e3 <> 72)");
 
+		ocl.assertQueryTrue(null, "Sequence{11..15}->forAll(i1 <- x1, i2 <- x2 | i1+x2-11 = i2+x1-11)");
+		ocl.assertQueryTrue(null, "Sequence{11..15}->forAll(i1, i2, i3 | 1+i1+i2+i3 = i1+i2+i3+1)");
+		ocl.assertQueryTrue(null, "OrderedSet{11..15}->forAll(i1, i2 <- x2, i3 | i1+x2+i3 = i1+i2+i3-10)");
+		ocl.assertQueryTrue(null, "OrderedSet{11..15}->forAll(i1 <- x1, i2 <- x2, i3 <- x3 | i1+x2+i3 = x1+i2+x3+10)");
+		ocl.assertSemanticErrorQuery(null, "Set{11..15}->forAll(i1, i2 <- x2, i3 | i1+x2+i3 = i1+i2+i3-10)", PivotMessages.IllegalCoIterator, "Set(Integer)");
+		ocl.assertSemanticErrorQuery(null, "Bag{11..15}->forAll(i1 <- x1 | i1 = x1)", PivotMessages.IllegalCoIterator, "Bag(Integer)");
+
 		ocl.assertQueryFalse(null, "Map{2<-1, 3<-2,1<-3}->forAll(k1<-v1, k2<-v2, k3<-v3 | not (k1 = v2 and k2 = v3 and k3 = v1))");
 		ocl.assertQueryTrue(null, "Map{2<-1, 4<-2,1<-3}->forAll(k1<-v1, k2<-v2, k3<-v3 | not (k1 = v2 and k2 = v3 and k3 = v1))");
 		ocl.dispose();
@@ -868,8 +876,8 @@ public class IteratorsTest4 extends PivotTestSuite
 
 		ocl.assertQueryTrue(ocl.pkg1, "ownedPackages?->isUnique(name)");
 
-		ocl.assertQueryFalse(null, "Map{2 <- 1, 1 <- 2}->isUnique(key  <- value | key * value)");
-		ocl.assertQueryTrue(null, "Map{2 <- 2, 1 <- 2}->isUnique(key  <- value | key * value)");
+		ocl.assertQueryFalse(null, "Map{2 <- 1, 1 <- 2}->isUnique(key <- value | key * value)");
+		ocl.assertQueryTrue(null, "Map{2 <- 2, 1 <- 2}->isUnique(key <- value | key * value)");
 		ocl.dispose();
 	}
 
@@ -1045,6 +1053,8 @@ public class IteratorsTest4 extends PivotTestSuite
 
 		ocl.assertQueryResults(null, "Map{2 <- 4}", "Sequence{1..3}->collectBy(k | k*k)->select(k <- v | k = 2)");
 		ocl.assertQueryResults(null, "Map{2 <- 4}", "Sequence{1..3}->collectBy(k | k*k)->select(k <- v | v = 4)");
+
+
 		ocl.dispose();
 	}
 

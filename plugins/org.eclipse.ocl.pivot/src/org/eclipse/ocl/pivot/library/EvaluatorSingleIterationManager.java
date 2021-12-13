@@ -70,19 +70,31 @@ public class EvaluatorSingleIterationManager extends AbstractEvaluatorIterationM
 	/**
 	 * @since 1.1
 	 */
+	@Deprecated /* @deprecated specify indexIterator */
 	public EvaluatorSingleIterationManager(@NonNull Executor invokingExecutor,
 			/*@NonNull*/ CallExp callExp, @NonNull OCLExpression body, @NonNull CollectionValue collectionValue,
 			@Nullable TypedElement accumulator, @Nullable Object accumulatorValue,
 			@NonNull TypedElement referredIterator) {
+		this(invokingExecutor, callExp, body, collectionValue, accumulator, accumulatorValue, referredIterator, null);
+	}
+
+
+	/**
+	 * @since 1.18
+	 */
+	public EvaluatorSingleIterationManager(@NonNull Executor invokingExecutor,
+			/*@NonNull*/ CallExp callExp, @NonNull OCLExpression body, @NonNull CollectionValue collectionValue,
+			@Nullable TypedElement accumulator, @Nullable Object accumulatorValue,
+			@NonNull TypedElement referredIterator, @Nullable TypedElement coIterator) {
 		super(invokingExecutor, callExp, body, collectionValue, accumulator, accumulatorValue);
 		this.referredIterator = referredIterator;
-		this.iterator = new ValueIterator(executor, collectionValue, referredIterator);
+		this.iterator = new ValueIterator(executor, collectionValue, referredIterator, coIterator);
 	}
 
 	protected EvaluatorSingleIterationManager(@NonNull EvaluatorSingleIterationManager iterationManager, @NonNull CollectionValue value) {
 		super(iterationManager, value);
 		this.referredIterator = iterationManager.referredIterator;
-		this.iterator = new ValueIterator(executor, collectionValue, referredIterator);
+		this.iterator = new ValueIterator(executor, collectionValue, referredIterator, null);		// FIXME
 	}
 
 	@Override

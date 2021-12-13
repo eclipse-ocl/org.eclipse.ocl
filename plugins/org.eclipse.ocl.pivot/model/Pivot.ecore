@@ -282,6 +282,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Class-superClasses"
         name="superClasses" ordered="false" upperBound="-1" eType="#T-pivot-Class"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-CoIteratorVariable" name="CoIteratorVariable"
+      eSuperTypes="#T-pivot-Variable"/>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-CollectionItem" name="CollectionItem"
       eSuperTypes="#T-pivot-CollectionLiteralPart">
     <eOperations name="validateTypeIsItemType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
@@ -1461,10 +1463,25 @@
       eSuperTypes="#T-pivot-CallExp">
     <eOperations name="validateMatchingMapCoIterators" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="ownedSource?.type.oclIsKindOf(MapType) implies self.ownedCoIterators->size() = self.ownedIterators->size()&#xA;"/>
+        <details key="body" value="ownedSource?.type.oclIsKindOf(MapType) implies (self.ownedCoIterators->size() = 0) or (self.ownedCoIterators->size() = self.ownedIterators->size())&#xA;"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="MatchingMapCoIterators"/>
+      </eAnnotations>
+      <eParameters name="diagnostics" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
+      <eParameters name="context">
+        <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap">
+          <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+          <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+        </eGenericType>
+      </eParameters>
+    </eOperations>
+    <eOperations name="validateMatchingOrderedCollectionCoIterators" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+        <details key="body" value="(ownedSource?.type.oclIsKindOf(OrderedSetType) or ownedSource?.type.oclIsKindOf(SequenceType)) implies (self.ownedCoIterators->size() = 0) or (self.ownedCoIterators->size() = self.ownedIterators->size())&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <details key="originalName" value="MatchingOrderedCollectionCoIterators"/>
       </eAnnotations>
       <eParameters name="diagnostics" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
       <eParameters name="context">
@@ -1489,12 +1506,12 @@
         </eGenericType>
       </eParameters>
     </eOperations>
-    <eOperations name="validateNoCollectionCoIterators" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+    <eOperations name="validateNoInitializers" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="ownedSource?.type.oclIsKindOf(CollectionType) implies self.ownedCoIterators->isEmpty()&#xA;&#xA;"/>
+        <details key="body" value="self.ownedIterators->forAll(ownedInit->isEmpty())&#xA;"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="NoCollectionCoIterators"/>
+        <details key="originalName" value="NoInitializers"/>
       </eAnnotations>
       <eParameters name="diagnostics" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
       <eParameters name="context">
@@ -1504,12 +1521,12 @@
         </eGenericType>
       </eParameters>
     </eOperations>
-    <eOperations name="validateNoInitializers" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+    <eOperations name="validateNoNotOrderedCollectionCoIterators" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="self.ownedIterators->forAll(ownedInit->isEmpty())&#xA;"/>
+        <details key="body" value="(ownedSource?.type.oclIsKindOf(BagType) or ownedSource?.type.oclIsKindOf(SetType)) implies self.ownedCoIterators->isEmpty()&#xA;&#xA;"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="NoInitializers"/>
+        <details key="originalName" value="NoNotOrderedCollectionCoIterators"/>
       </eAnnotations>
       <eParameters name="diagnostics" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
       <eParameters name="context">
@@ -1552,7 +1569,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-LoopExp-ownedBody"
         name="ownedBody" lowerBound="1" eType="#T-pivot-OCLExpression" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-LoopExp-ownedCoIterators"
-        name="ownedCoIterators" upperBound="-1" eType="#T-pivot-Variable" containment="true"/>
+        name="ownedCoIterators" upperBound="-1" eType="#T-pivot-CoIteratorVariable"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-LoopExp-ownedIterators"
         name="ownedIterators" upperBound="-1" eType="#T-pivot-Variable" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-LoopExp-referredIteration"

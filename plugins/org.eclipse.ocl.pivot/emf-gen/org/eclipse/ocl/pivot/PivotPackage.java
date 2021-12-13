@@ -1813,6 +1813,16 @@ extends EPackage
 	EOperation getLoopExp__ValidateMatchingMapCoIterators__DiagnosticChain_Map();
 
 	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.LoopExp#validateMatchingOrderedCollectionCoIterators(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Matching Ordered Collection Co Iterators</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate Matching Ordered Collection Co Iterators</em>' operation.
+	 * @see org.eclipse.ocl.pivot.LoopExp#validateMatchingOrderedCollectionCoIterators(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @generated
+	 */
+	EOperation getLoopExp__ValidateMatchingOrderedCollectionCoIterators__DiagnosticChain_Map();
+
+	/**
 	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.LoopExp#validateNoCoInitializers(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate No Co Initializers</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1821,16 +1831,6 @@ extends EPackage
 	 * @generated
 	 */
 	EOperation getLoopExp__ValidateNoCoInitializers__DiagnosticChain_Map();
-
-	/**
-	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.LoopExp#validateNoCollectionCoIterators(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate No Collection Co Iterators</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Validate No Collection Co Iterators</em>' operation.
-	 * @see org.eclipse.ocl.pivot.LoopExp#validateNoCollectionCoIterators(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
-	 * @generated
-	 */
-	EOperation getLoopExp__ValidateNoCollectionCoIterators__DiagnosticChain_Map();
 
 	/**
 	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.LoopExp#validateSourceIsCollection(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Source Is Collection</em>}' operation.
@@ -1979,6 +1979,16 @@ extends EPackage
 	 * @generated
 	 */
 	EOperation getLoopExp__ValidateNoInitializers__DiagnosticChain_Map();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.LoopExp#validateNoNotOrderedCollectionCoIterators(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate No Not Ordered Collection Co Iterators</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate No Not Ordered Collection Co Iterators</em>' operation.
+	 * @see org.eclipse.ocl.pivot.LoopExp#validateNoNotOrderedCollectionCoIterators(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @generated
+	 */
+	EOperation getLoopExp__ValidateNoNotOrderedCollectionCoIterators__DiagnosticChain_Map();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.MessageExp <em>Message Exp</em>}'.
@@ -3653,6 +3663,16 @@ extends EPackage
 	 * @generated
 	 */
 	EOperation getClass__ValidateUniqueInvariantName__DiagnosticChain_Map();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.CoIteratorVariable <em>Co Iterator Variable</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Co Iterator Variable</em>'.
+	 * @see org.eclipse.ocl.pivot.CoIteratorVariable
+	 * @generated
+	 */
+	EClass getCoIteratorVariable();
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.pivot.Class#isIsInterface <em>Is Interface</em>}'.
@@ -7217,20 +7237,20 @@ extends EPackage
 		EOperation LOOP_EXP___VALIDATE_MATCHING_MAP_CO_ITERATORS__DIAGNOSTICCHAIN_MAP = eINSTANCE.getLoopExp__ValidateMatchingMapCoIterators__DiagnosticChain_Map();
 
 		/**
+		 * The meta object literal for the '<em><b>Validate Matching Ordered Collection Co Iterators</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation LOOP_EXP___VALIDATE_MATCHING_ORDERED_COLLECTION_CO_ITERATORS__DIAGNOSTICCHAIN_MAP = eINSTANCE.getLoopExp__ValidateMatchingOrderedCollectionCoIterators__DiagnosticChain_Map();
+
+		/**
 		 * The meta object literal for the '<em><b>Validate No Co Initializers</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EOperation LOOP_EXP___VALIDATE_NO_CO_INITIALIZERS__DIAGNOSTICCHAIN_MAP = eINSTANCE.getLoopExp__ValidateNoCoInitializers__DiagnosticChain_Map();
-
-		/**
-		 * The meta object literal for the '<em><b>Validate No Collection Co Iterators</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation LOOP_EXP___VALIDATE_NO_COLLECTION_CO_ITERATORS__DIAGNOSTICCHAIN_MAP = eINSTANCE.getLoopExp__ValidateNoCollectionCoIterators__DiagnosticChain_Map();
 
 		/**
 		 * The meta object literal for the '<em><b>Validate Source Is Collection</b></em>' operation.
@@ -7349,6 +7369,14 @@ extends EPackage
 		 * @generated
 		 */
 		EOperation LOOP_EXP___VALIDATE_NO_INITIALIZERS__DIAGNOSTICCHAIN_MAP = eINSTANCE.getLoopExp__ValidateNoInitializers__DiagnosticChain_Map();
+
+		/**
+		 * The meta object literal for the '<em><b>Validate No Not Ordered Collection Co Iterators</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation LOOP_EXP___VALIDATE_NO_NOT_ORDERED_COLLECTION_CO_ITERATORS__DIAGNOSTICCHAIN_MAP = eINSTANCE.getLoopExp__ValidateNoNotOrderedCollectionCoIterators__DiagnosticChain_Map();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.MessageExpImpl <em>Message Exp</em>}' class.
@@ -8713,6 +8741,16 @@ extends EPackage
 		 * @generated
 		 */
 		EOperation CLASS___VALIDATE_UNIQUE_INVARIANT_NAME__DIAGNOSTICCHAIN_MAP = eINSTANCE.getClass__ValidateUniqueInvariantName__DiagnosticChain_Map();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.CoIteratorVariableImpl <em>Co Iterator Variable</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.internal.CoIteratorVariableImpl
+		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getCoIteratorVariable()
+		 * @generated
+		 */
+		EClass CO_ITERATOR_VARIABLE = eINSTANCE.getCoIteratorVariable();
 
 		/**
 		 * The meta object literal for the '<em><b>Is Interface</b></em>' attribute feature.

@@ -131,6 +131,7 @@
         <genParameters ecoreParameter="Pivot.ecore#//Class/validateUniqueInvariantName/context"/>
       </genOperations>
     </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#T-pivot-CoIteratorVariable"/>
     <genClasses ecoreClass="Pivot.ecore#T-pivot-CollectionItem">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-CollectionItem-ownedItem"/>
       <genOperations ecoreOperation="Pivot.ecore#//CollectionItem/validateTypeIsItemType">
@@ -520,17 +521,21 @@
         <genParameters ecoreParameter="Pivot.ecore#//LoopExp/validateMatchingMapCoIterators/diagnostics"/>
         <genParameters ecoreParameter="Pivot.ecore#//LoopExp/validateMatchingMapCoIterators/context"/>
       </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//LoopExp/validateMatchingOrderedCollectionCoIterators">
+        <genParameters ecoreParameter="Pivot.ecore#//LoopExp/validateMatchingOrderedCollectionCoIterators/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//LoopExp/validateMatchingOrderedCollectionCoIterators/context"/>
+      </genOperations>
       <genOperations ecoreOperation="Pivot.ecore#//LoopExp/validateNoCoInitializers">
         <genParameters ecoreParameter="Pivot.ecore#//LoopExp/validateNoCoInitializers/diagnostics"/>
         <genParameters ecoreParameter="Pivot.ecore#//LoopExp/validateNoCoInitializers/context"/>
       </genOperations>
-      <genOperations ecoreOperation="Pivot.ecore#//LoopExp/validateNoCollectionCoIterators">
-        <genParameters ecoreParameter="Pivot.ecore#//LoopExp/validateNoCollectionCoIterators/diagnostics"/>
-        <genParameters ecoreParameter="Pivot.ecore#//LoopExp/validateNoCollectionCoIterators/context"/>
-      </genOperations>
       <genOperations ecoreOperation="Pivot.ecore#//LoopExp/validateNoInitializers">
         <genParameters ecoreParameter="Pivot.ecore#//LoopExp/validateNoInitializers/diagnostics"/>
         <genParameters ecoreParameter="Pivot.ecore#//LoopExp/validateNoInitializers/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//LoopExp/validateNoNotOrderedCollectionCoIterators">
+        <genParameters ecoreParameter="Pivot.ecore#//LoopExp/validateNoNotOrderedCollectionCoIterators/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//LoopExp/validateNoNotOrderedCollectionCoIterators/context"/>
       </genOperations>
       <genOperations ecoreOperation="Pivot.ecore#//LoopExp/validateSourceIsCollection">
         <genParameters ecoreParameter="Pivot.ecore#//LoopExp/validateSourceIsCollection/diagnostics"/>

@@ -37,44 +37,74 @@ public class ExecutorMultipleIterationManager extends AbstractIterationManager
 	private @Nullable Object accumulatorValue;
 	protected final @NonNull CollectionValue collectionValue;
 	private @NonNull List<@NonNull Iterator<@Nullable Object>> iteratorValues;
+	private int @Nullable [] iteratorIndexes;
 	private final @Nullable Object @NonNull [] arguments;
 
+	@Deprecated /* @deprecated specify co-iterators */
 	public ExecutorMultipleIterationManager(@NonNull Executor executor, int iterators, @NonNull TypeId returnTypeId, @NonNull AbstractSimpleOperation body,
+			@Nullable CollectionValue collectionValue, @Nullable Object accumulatorValue) {
+		this(executor, iterators, false, returnTypeId, body, collectionValue, accumulatorValue);
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	public ExecutorMultipleIterationManager(@NonNull Executor executor, int iterators, boolean hasCoIterators, @NonNull TypeId returnTypeId, @NonNull AbstractSimpleOperation body,
 			@Nullable CollectionValue collectionValue, @Nullable Object accumulatorValue) {
 		super(executor);
 		this.returnTypeId = returnTypeId;
 		this.body = body;
+		this.iteratorIndexes = hasCoIterators ? new int [iterators] : null;
 		this.accumulatorValue = accumulatorValue;
 		this.collectionValue = ValueUtil.asCollectionValue(collectionValue);
 		this.iteratorValues = new ArrayList<@NonNull Iterator<@Nullable Object>>(iterators);
-		this.arguments = new @Nullable Object[1 + iterators];
+		this.arguments = new @Nullable Object[1 + (hasCoIterators ? 2*iterators : iterators)];
 		this.arguments[0] = this.collectionValue;
 		for (int i = 0; i < iterators; i++) {
 			Iterator<@Nullable Object> iteratorValue = this.collectionValue.iterator();
 			iteratorValues.add(iteratorValue);
 			this.arguments[1 + i] = iteratorValue.hasNext() ? iteratorValue.next() : iteratorValues;
 		}
+		int[] iteratorIndexes2 = iteratorIndexes;
+		if (iteratorIndexes2 != null) {
+			for (int i = 0; i < iterators; i++) {
+				iteratorIndexes2[i] = 1;
+				this.arguments[1 + iterators + i] = ValueUtil.ONE_VALUE;
+			}
+		}
 	}
 
 	@Override
 	public boolean advanceIterators() {
-		for (int i = 0; i < iteratorValues.size(); i++) {
+		int[] iteratorIndexes2 = iteratorIndexes;
+		int iteratorCount = iteratorValues.size();
+		for (int i = 0; i < iteratorCount; i++) {
 			Iterator<@Nullable Object> iteratorValue = iteratorValues.get(i);
 			if (iteratorValue.hasNext()) {
 				Object keyValue = iteratorValue.next();
 				arguments[1 + i] = keyValue;
+				if (iteratorIndexes2 != null) {
+					arguments[1 + iteratorCount + i] = ValueUtil.integerValueOf(++iteratorIndexes2[i]);
+				}
 				for (int j = i; --j >= 0; ) {
 					iteratorValue = collectionValue.iterator();
 					assert iteratorValue.hasNext();
 					iteratorValues.set(j, iteratorValue);
 					keyValue = iteratorValue.next();
 					arguments[1 + j] = keyValue;
+					if (iteratorIndexes2 != null) {
+						iteratorIndexes2[j] = 1;
+						arguments[1 + iteratorCount + j] = ValueUtil.integerValueOf(1);
+					}
 				}
 				return true;
 			}
 		}
-		for (int i = 0; i < iteratorValues.size(); i++) {
+		for (int i = 0; i < iteratorCount; i++) {
 			arguments[1 + i] = iteratorValues;
+		//	if (iteratorIndexes2 != null) {
+		//		arguments[1 + iteratorCount + i] = ValueUtil.integerValueOf(1);
+		//	}
 		}
 		return false;
 	}

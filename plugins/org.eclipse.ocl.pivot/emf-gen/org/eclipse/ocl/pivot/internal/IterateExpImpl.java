@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
+import org.eclipse.ocl.pivot.CoIteratorVariable;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
@@ -303,7 +304,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 				return;
 			case 13:
 				getOwnedCoIterators().clear();
-				getOwnedCoIterators().addAll((Collection<? extends Variable>)newValue);
+				getOwnedCoIterators().addAll((Collection<? extends CoIteratorVariable>)newValue);
 				return;
 			case 14:
 				getOwnedIterators().clear();
@@ -441,7 +442,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 		{
 			switch (baseOperationID)
 			{
-				case 6: return 19;
+				case 6: return 20;
 				default: return super.eDerivedOperationID(baseOperationID, baseClass);
 			}
 		}
@@ -449,7 +450,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 		{
 			switch (baseOperationID)
 			{
-				case 0: return 15;
+				case 0: return 16;
 				default: return -1;
 			}
 		}
@@ -479,7 +480,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 				return isNull();
 			case 5:
 				return validateTypeIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case 19:
+			case 20:
 				return validateSafeSourceCanBeNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 			case 7:
 				return validateSafeSourceCannotBeMap((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
@@ -488,26 +489,28 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 			case 9:
 				return validateMatchingMapCoIterators((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 			case 10:
-				return validateNoCoInitializers((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
+				return validateMatchingOrderedCollectionCoIterators((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 			case 11:
-				return validateNoCollectionCoIterators((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
+				return validateNoCoInitializers((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 			case 12:
 				return validateNoInitializers((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 			case 13:
-				return validateSourceIsCollection((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
+				return validateNoNotOrderedCollectionCoIterators((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 			case 14:
-				return validateSourceIsIterable((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
+				return validateSourceIsCollection((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 			case 15:
-				return getReferredElement();
+				return validateSourceIsIterable((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 			case 16:
-				return validateBodyTypeConformsToResultType((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
+				return getReferredElement();
 			case 17:
-				return validateOneInitializer((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
+				return validateBodyTypeConformsToResultType((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 			case 18:
+				return validateOneInitializer((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
+			case 19:
 				return validateSafeIteratorIsRequired((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case 20:
-				return validateTypeIsResultType((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 			case 21:
+				return validateTypeIsResultType((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
+			case 22:
 				return validateUnsafeSourceCanNotBeNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return eDynamicInvoke(operationID, arguments);

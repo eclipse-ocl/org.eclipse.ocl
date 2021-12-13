@@ -37,17 +37,25 @@ public class EvaluatorMultipleIterationManager extends AbstractEvaluatorIteratio
 	}
 
 	/**
-	 * @since 1.1
+	 * @since 1.18
 	 */
 	public EvaluatorMultipleIterationManager(@NonNull Executor invokingExecutor, /*@NonNull*/ CallExp callExp, @NonNull OCLExpression body, @NonNull CollectionValue collectionValue,
 			@Nullable TypedElement accumulator, @Nullable Object accumulatorValue, TypedElement... referredIterators) {
+		this(invokingExecutor, callExp, body, collectionValue, accumulator, accumulatorValue, referredIterators, null);
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	public EvaluatorMultipleIterationManager(@NonNull Executor invokingExecutor, /*@NonNull*/ CallExp callExp, @NonNull OCLExpression body, @NonNull CollectionValue collectionValue,
+			@Nullable TypedElement accumulator, @Nullable Object accumulatorValue, @NonNull TypedElement @NonNull [] referredIterators, @Nullable TypedElement @Nullable[] coIterators) {
 		super(invokingExecutor, callExp, body, collectionValue, accumulator, accumulatorValue);
 		int iMax = referredIterators.length;
 		ValueIterator[] iterators = new ValueIterator[iMax];
 		for (int i = 0; i < iMax; i++) {
 			TypedElement referredIterator = referredIterators[i];
 			if (referredIterator != null) {
-				ValueIterator valueIterator = new ValueIterator(executor, collectionValue, referredIterator);
+				ValueIterator valueIterator = new ValueIterator(executor, collectionValue, referredIterator, coIterators != null ? coIterators[i] : null);
 				if (!valueIterator.hasCurrent()) {
 					this.iterators = null;
 					this.hasCurrent = false;

@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.DiagnosticChain;
-import org.eclipse.emf.common.util.ECollections;
 
 /**
  * <!-- begin-user-doc -->
@@ -64,7 +63,7 @@ extends CallExp {
 
 	/**
 	 * Returns the value of the '<em><b>Owned Co Iterators</b></em>' containment reference list.
-	 * The list contents are of type {@link org.eclipse.ocl.pivot.Variable}.
+	 * The list contents are of type {@link org.eclipse.ocl.pivot.CoIteratorVariable}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Owned Co Iterators</em>' containment reference list isn't clear,
@@ -74,9 +73,9 @@ extends CallExp {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Owned Co Iterators</em>' containment reference list.
 	 * @see org.eclipse.ocl.pivot.PivotPackage#getLoopExp_OwnedCoIterators()
-	 * @generated NOT
+	 * @generated
 	 */
-	default List<Variable> getOwnedCoIterators() { return ECollections.emptyEList(); }
+	List<CoIteratorVariable> getOwnedCoIterators();
 
 	/**
 	 * Returns the value of the '<em><b>Owned Iterators</b></em>' containment reference list.
@@ -128,6 +127,13 @@ extends CallExp {
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	boolean validateMatchingOrderedCollectionCoIterators(DiagnosticChain diagnostics, Map<Object, Object> context);
+
+	/**
+	 * <!-- begin-user-doc -->
 	 * @since 1.6
 	 * <!-- end-user-doc -->
 	 * @generated NOT
@@ -163,5 +169,12 @@ extends CallExp {
 	 * @generated
 	 */
 	boolean validateNoInitializers(DiagnosticChain diagnostics, Map<Object, Object> context);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	boolean validateNoNotOrderedCollectionCoIterators(DiagnosticChain diagnostics, Map<Object, Object> context);
 
 } // LoopExp

@@ -30,6 +30,10 @@ public class PivotMessages
 	public static String ConvertibleValueRequired;
 	public static String EObjectRequired;
 	public static String EmptyCollection;
+	/**
+	 * @since 1.18
+	 */
+	public static String IllegalCoIterator;
 	public static String ImplementationClassLoadFailure;
 	/**
 	 * @since 1.1

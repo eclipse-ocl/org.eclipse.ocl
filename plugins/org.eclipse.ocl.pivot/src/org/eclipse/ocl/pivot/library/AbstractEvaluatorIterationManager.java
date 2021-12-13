@@ -38,8 +38,10 @@ public abstract class AbstractEvaluatorIterationManager extends AbstractIteratio
 		private final EvaluationEnvironment evaluationEnvironment;
 		private final @NonNull CollectionValue collectionValue;
 		private final @NonNull TypedElement variable;
+		private final @Nullable TypedElement coVariable;
 		private Iterator<? extends Object> javaIter;
 		private Object value;		// 'null' is a valid value so 'this' is used as end of iteration
+		private int coIndex = 1;
 
 		/** @deprecated use Executor */
 		@Deprecated
@@ -50,10 +52,19 @@ public abstract class AbstractEvaluatorIterationManager extends AbstractIteratio
 		/**
 		 * @since 1.1
 		 */
+		@Deprecated /* @deprected specify coVariable */
 		public ValueIterator(@NonNull Executor executor, @NonNull CollectionValue collectionValue, @NonNull TypedElement variable) {
+			this(executor, collectionValue, variable, null);
+		}
+
+		/**
+		 * @since 1.18
+		 */
+		public ValueIterator(@NonNull Executor executor, @NonNull CollectionValue collectionValue, @NonNull TypedElement variable, @Nullable TypedElement coVariable) {
 			this.evaluationEnvironment = executor.getEvaluationEnvironment();
 			this.collectionValue = collectionValue;
 			this.variable = variable;
+			this.coVariable = coVariable;
 			reset();
 		}
 
@@ -72,6 +83,10 @@ public abstract class AbstractEvaluatorIterationManager extends AbstractIteratio
 			else {
 				value = javaIter.next();
 				evaluationEnvironment.replace(variable, value);
+				TypedElement coVariable2 = coVariable;
+				if (coVariable2 != null) {
+					evaluationEnvironment.replace(coVariable2, ValueUtil.integerValueOf(coIndex++));
+				}
 				//				System.out.println(name + " = " + value);
 			}
 			return value;
@@ -79,6 +94,7 @@ public abstract class AbstractEvaluatorIterationManager extends AbstractIteratio
 
 		public Object reset() {
 			javaIter = collectionValue.iterator();
+			coIndex = 1;
 			return next();
 		}
 

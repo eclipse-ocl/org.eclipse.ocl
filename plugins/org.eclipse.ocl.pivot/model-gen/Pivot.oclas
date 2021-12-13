@@ -95,6 +95,9 @@
       <ownedProperties xmi:id="9Vw0e" isImplicit="true" name="MapType" opposite="#J5GM0" type="#JK5PO"/>
       <ownedProperties xmi:id="Jh7cO" isImplicit="true" name="TemplateParameter" opposite="#zfRXZ" type="#6yjmF"/>
     </ownedClasses>
+    <ownedClasses xmi:id="H163w" name="CoIteratorVariable" superClasses="#t4j6T">
+      <ownedProperties xmi:id="IVrlv" isImplicit="true" isRequired="false" name="LoopExp" opposite="#Oa7sP" type="#KhrnS"/>
+    </ownedClasses>
     <ownedClasses xmi:id="CKfVx" name="CollectionItem" superClasses="#1s6I1">
       <ownedInvariants xmi:id="D3ZRY" isCallable="true" name="TypeIsItemType">
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="type = ownedItem.type&#xA;&#xA;"/>
@@ -510,16 +513,19 @@
     <ownedClasses xmi:id="fKWWp" isAbstract="true" name="LiteralExp" superClasses="#BFtK4"/>
     <ownedClasses xmi:id="KhrnS" isAbstract="true" name="LoopExp" superClasses="#QJrde">
       <ownedInvariants xmi:id="0p5ql" isCallable="true" name="MatchingMapCoIterators">
-        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="ownedSource?.type.oclIsKindOf(MapType) implies self.ownedCoIterators->size() = self.ownedIterators->size()&#xA;"/>
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="ownedSource?.type.oclIsKindOf(MapType) implies (self.ownedCoIterators->size() = 0) or (self.ownedCoIterators->size() = self.ownedIterators->size())&#xA;"/>
+      </ownedInvariants>
+      <ownedInvariants xmi:id="FLoUm" isCallable="true" name="MatchingOrderedCollectionCoIterators">
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="(ownedSource?.type.oclIsKindOf(OrderedSetType) or ownedSource?.type.oclIsKindOf(SequenceType)) implies (self.ownedCoIterators->size() = 0) or (self.ownedCoIterators->size() = self.ownedIterators->size())&#xA;"/>
       </ownedInvariants>
       <ownedInvariants xmi:id="Y3Nh," isCallable="true" name="NoCoInitializers">
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="self.ownedCoIterators->forAll(ownedInit->isEmpty())&#xA;"/>
       </ownedInvariants>
-      <ownedInvariants xmi:id="Us5+3" isCallable="true" name="NoCollectionCoIterators">
-        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="ownedSource?.type.oclIsKindOf(CollectionType) implies self.ownedCoIterators->isEmpty()&#xA;&#xA;"/>
-      </ownedInvariants>
       <ownedInvariants xmi:id="Mu9dD" isCallable="true" name="NoInitializers">
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="self.ownedIterators->forAll(ownedInit->isEmpty())&#xA;"/>
+      </ownedInvariants>
+      <ownedInvariants xmi:id="aJolQ" isCallable="true" name="NoNotOrderedCollectionCoIterators">
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="(ownedSource?.type.oclIsKindOf(BagType) or ownedSource?.type.oclIsKindOf(SetType)) implies self.ownedCoIterators->isEmpty()&#xA;&#xA;"/>
       </ownedInvariants>
       <ownedInvariants xmi:id="9R+V7" isCallable="true" name="SourceIsCollection">
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="true&#xA;"/>
@@ -528,7 +534,7 @@
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="ownedSource?.type.oclIsKindOf(IterableType)&#xA;"/>
       </ownedInvariants>
       <ownedProperties xmi:id="h2RKw" isComposite="true" name="ownedBody" type="#BFtK4"/>
-      <ownedProperties xmi:id="Oa7sP" isComposite="true" name="ownedCoIterators" type="#Rl6IP"/>
+      <ownedProperties xmi:id="Oa7sP" isComposite="true" name="ownedCoIterators" type="#bl0dg"/>
       <ownedProperties xmi:id="aRrs3" isComposite="true" name="ownedIterators" type="#Rl6IP"/>
       <ownedProperties xmi:id="G2e3S" isRequired="false" name="referredIteration" type="#OZhAb"/>
     </ownedClasses>
@@ -1271,7 +1277,6 @@
       <ownedProperties xmi:id="a3p9g" isImplicit="true" isRequired="false" name="ExpressionInOCL" opposite="#2tYZA" type="#sFfJa"/>
       <ownedProperties xmi:id="i9Axv" isImplicit="true" isRequired="false" name="IterateExp" opposite="#eb1wJ" type="#0L28o"/>
       <ownedProperties xmi:id="6HKvR" isImplicit="true" isRequired="false" name="LetExp" opposite="#AvpRG" type="#zmGAi"/>
-      <ownedProperties xmi:id="Wqpuw" isImplicit="true" isRequired="false" name="LoopExp" opposite="#Oa7sP" type="#KhrnS"/>
       <ownedProperties xmi:id="qs4sI" isImplicit="true" isRequired="false" name="LoopExp" opposite="#aRrs3" type="#KhrnS"/>
     </ownedClasses>
     <ownedClasses xmi:id="PT,bz" isAbstract="true" name="VariableDeclaration" superClasses="#j7EI0">
@@ -1574,6 +1579,11 @@
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="RLvrh" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
         <ownedSubstitutions actual="#pDcbe" formal="&_0;#qs59R"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id=",9hSL" name="Collection" superClasses="&_0;#jbMkR">
+      <ownedBindings>
+        <ownedSubstitutions actual="#H163w" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="9cW7G" name="Collection" superClasses="&_0;#jbMkR">
@@ -1886,6 +1896,11 @@
         <ownedSubstitutions actual="#lfR8C" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="MOXpB" name="OrderedCollection" superClasses="#,9hSL">
+      <ownedBindings>
+        <ownedSubstitutions actual="#H163w" formal="&_0;#feFHs"/>
+      </ownedBindings>
+    </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="KtLS9" name="OrderedCollection" superClasses="#9cW7G">
       <ownedBindings>
         <ownedSubstitutions actual="#1s6I1" formal="&_0;#feFHs"/>
@@ -1969,6 +1984,11 @@
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="COdUw" name="OrderedCollection" superClasses="#19n95">
       <ownedBindings>
         <ownedSubstitutions actual="#t4j6T" formal="&_0;#feFHs"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:OrderedSetType" xmi:id="bl0dg" isNullFree="true" name="OrderedSet" superClasses="#MOXpB #w4RO7">
+      <ownedBindings>
+        <ownedSubstitutions actual="#H163w" formal="&_0;#53+C2"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:OrderedSetType" xmi:id="ZEpGc" isNullFree="true" name="OrderedSet" superClasses="#KtLS9 #uXG32">
@@ -2214,6 +2234,11 @@
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="CGfnR" name="UniqueCollection" superClasses="#RLvrh">
       <ownedBindings>
         <ownedSubstitutions actual="#pDcbe" formal="&_0;#jdfjE"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="w4RO7" name="UniqueCollection" superClasses="#,9hSL">
+      <ownedBindings>
+        <ownedSubstitutions actual="#H163w" formal="&_0;#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="uXG32" name="UniqueCollection" superClasses="#9cW7G">

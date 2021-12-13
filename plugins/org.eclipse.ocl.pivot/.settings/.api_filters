@@ -1,5 +1,215 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.ocl.pivot" version="2">
+    <resource path="emf-gen/org/eclipse/ocl/pivot/CoIteratorVariable.java" type="org.eclipse.ocl.pivot.CoIteratorVariable">
+        <filter id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.CoIteratorVariable"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/LoopExp.java" type="org.eclipse.ocl.pivot.LoopExp">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.LoopExp"/>
+                <message_argument value="validateMatchingOrderedCollectionCoIterators(DiagnosticChain, Map&lt;Object,Object&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.LoopExp"/>
+                <message_argument value="validateNoNotOrderedCollectionCoIterators(DiagnosticChain, Map&lt;Object,Object&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter id="421650549">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.LoopExp"/>
+                <message_argument value="getOwnedCoIterators()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="validateMatchingOrderedCollectionCoIterators(DiagnosticChain, Map&lt;Object,Object&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="validateNoNotOrderedCollectionCoIterators(DiagnosticChain, Map&lt;Object,Object&gt;)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/PivotFactory.java" type="org.eclipse.ocl.pivot.PivotFactory">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotFactory"/>
+                <message_argument value="createCoIteratorVariable()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="createCoIteratorVariable()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/PivotPackage.java" type="org.eclipse.ocl.pivot.PivotPackage">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="getCoIteratorVariable()"/>
+            </message_arguments>
+        </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="getLoopExp__ValidateMatchingOrderedCollectionCoIterators__DiagnosticChain_Map()"/>
+            </message_arguments>
+        </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="getLoopExp__ValidateNoNotOrderedCollectionCoIterators__DiagnosticChain_Map()"/>
+            </message_arguments>
+        </filter>
+        <filter id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="getLoopExp__ValidateNoCollectionCoIterators__DiagnosticChain_Map()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getCoIteratorVariable()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getLoopExp__ValidateMatchingOrderedCollectionCoIterators__DiagnosticChain_Map()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getLoopExp__ValidateNoNotOrderedCollectionCoIterators__DiagnosticChain_Map()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/PivotPackage.java" type="org.eclipse.ocl.pivot.PivotPackage$Literals">
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage.Literals"/>
+                <message_argument value="LOOP_EXP___VALIDATE_NO_COLLECTION_CO_ITERATORS__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="CO_ITERATOR_VARIABLE"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="LOOP_EXP___VALIDATE_MATCHING_ORDERED_COLLECTION_CO_ITERATORS__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="LOOP_EXP___VALIDATE_NO_NOT_ORDERED_COLLECTION_CO_ITERATORS__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/PivotTables.java" type="org.eclipse.ocl.pivot.PivotTables">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
+                <message_argument value="CLSSid_CoIteratorVariable"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
+                <message_argument value="ORD_CLSSid_CoIteratorVariable"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="CLSSid_CoIteratorVariable"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="ORD_CLSSid_CoIteratorVariable"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/PivotTables.java" type="org.eclipse.ocl.pivot.PivotTables$Properties">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables.Properties"/>
+                <message_argument value="_Variable__LoopExp__ownedCoIterators"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/PivotTables.java" type="org.eclipse.ocl.pivot.PivotTables$Types">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables.Types"/>
+                <message_argument value="_CoIteratorVariable"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="_CoIteratorVariable"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/CoIteratorVariableImpl.java" type="org.eclipse.ocl.pivot.internal.CoIteratorVariableImpl">
+        <filter id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.CoIteratorVariableImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/IterateExpImpl.java" type="org.eclipse.ocl.pivot.internal.IterateExpImpl">
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.IterateExpImpl"/>
+                <message_argument value="ITERATE_EXP_OPERATION_COUNT"/>
+                <message_argument value="22"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/IteratorExpImpl.java" type="org.eclipse.ocl.pivot.internal.IteratorExpImpl">
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.IteratorExpImpl"/>
+                <message_argument value="ITERATOR_EXP_OPERATION_COUNT"/>
+                <message_argument value="36"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/LoopExpImpl.java" type="org.eclipse.ocl.pivot.internal.LoopExpImpl">
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.LoopExpImpl"/>
+                <message_argument value="validateNoCollectionCoIterators(DiagnosticChain, Map&lt;Object,Object&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.LoopExpImpl"/>
+                <message_argument value="LOOP_EXP_OPERATION_COUNT"/>
+                <message_argument value="15"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/PivotPackageImpl.java">
+        <filter id="0"/>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/PivotPackageImpl.java" type="org.eclipse.ocl.pivot.internal.PivotPackageImpl">
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.PivotPackageImpl"/>
+                <message_argument value="getLoopExp__ValidateNoCollectionCoIterators__DiagnosticChain_Map()"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/internal/StandardLibraryImpl.java" type="org.eclipse.ocl.pivot.internal.StandardLibraryImpl">
         <filter comment="Bug 512402 workaround" id="576725006">
             <message_arguments>
@@ -53,6 +263,382 @@
             <message_arguments>
                 <message_argument value="Visitor&lt;R&gt;"/>
                 <message_argument value="AbstractWrappingVisitor&lt;R, C, D, P&gt;"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/util/PivotAdapterFactory.java" type="org.eclipse.ocl.pivot.util.PivotAdapterFactory">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="createCoIteratorVariableAdapter()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/util/PivotSwitch.java" type="org.eclipse.ocl.pivot.util.PivotSwitch">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="caseCoIteratorVariable(CoIteratorVariable)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/util/PivotValidator.java">
+        <filter id="0"/>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/util/PivotValidator.java" type="org.eclipse.ocl.pivot.util.PivotValidator">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="LOOP_EXP__VALIDATE_MATCHING_ORDERED_COLLECTION_CO_ITERATORS"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="LOOP_EXP__VALIDATE_NO_NOT_ORDERED_COLLECTION_CO_ITERATORS"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="LOOP_EXP__VALIDATE_NO_COLLECTION_CO_ITERATORS"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="validateLoopExp_validateNoCollectionCoIterators(LoopExp, DiagnosticChain, Map&lt;Object,Object&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="DIAGNOSTIC_CODE_COUNT"/>
+                <message_argument value="100"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="LOOP_EXP__VALIDATE_NO_CO_INITIALIZERS"/>
+                <message_argument value="57"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="LOOP_EXP__VALIDATE_SOURCE_IS_COLLECTION"/>
+                <message_argument value="60"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="LOOP_EXP__VALIDATE_SOURCE_IS_ITERABLE"/>
+                <message_argument value="61"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="MESSAGE_EXP__VALIDATE_ONE_CALL_OR_ONE_SEND"/>
+                <message_argument value="62"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="MESSAGE_EXP__VALIDATE_TARGET_IS_NOT_ACOLLECTION"/>
+                <message_argument value="63"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="OCL_EXPRESSION__VALIDATE_TYPE_IS_NOT_NULL"/>
+                <message_argument value="64"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="OPERATION_CALL_EXP__VALIDATE_ARGUMENT_COUNT"/>
+                <message_argument value="69"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="OPERATION_CALL_EXP__VALIDATE_ARGUMENT_TYPE_IS_CONFORMANT"/>
+                <message_argument value="70"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="OPERATION_CALL_EXP__VALIDATE_SAFE_SOURCE_CAN_BE_NULL"/>
+                <message_argument value="71"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="OPERATION_CALL_EXP__VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL"/>
+                <message_argument value="72"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="OPERATION__VALIDATE_COMPATIBLE_RETURN"/>
+                <message_argument value="65"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="OPERATION__VALIDATE_LOADABLE_IMPLEMENTATION"/>
+                <message_argument value="66"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="OPERATION__VALIDATE_UNIQUE_POSTCONDITION_NAME"/>
+                <message_argument value="67"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="OPERATION__VALIDATE_UNIQUE_PRECONDITION_NAME"/>
+                <message_argument value="68"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="OPPOSITE_PROPERTY_CALL_EXP__VALIDATE_SAFE_SOURCE_CAN_BE_NULL"/>
+                <message_argument value="73"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="OPPOSITE_PROPERTY_CALL_EXP__VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL"/>
+                <message_argument value="74"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="PARAMETER_VARIABLE__VALIDATE_HAS_NO_INITIALIZER"/>
+                <message_argument value="75"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="PROPERTY_CALL_EXP__VALIDATE_COMPATIBLE_RESULT_TYPE"/>
+                <message_argument value="77"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="PROPERTY_CALL_EXP__VALIDATE_NON_STATIC_SOURCE_TYPE_IS_CONFORMANT"/>
+                <message_argument value="78"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="PROPERTY_CALL_EXP__VALIDATE_SAFE_SOURCE_CAN_BE_NULL"/>
+                <message_argument value="79"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="PROPERTY_CALL_EXP__VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL"/>
+                <message_argument value="80"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="PROPERTY__VALIDATE_COMPATIBLE_DEFAULT_EXPRESSION"/>
+                <message_argument value="76"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="RESULT_VARIABLE__VALIDATE_COMPATIBLE_NULLITY_FOR_INITIALIZER"/>
+                <message_argument value="81"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="RESULT_VARIABLE__VALIDATE_COMPATIBLE_TYPE_FOR_INITIALIZER"/>
+                <message_argument value="82"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="RESULT_VARIABLE__VALIDATE_HAS_INITIALIZER"/>
+                <message_argument value="83"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="SHADOW_EXP__VALIDATE_CLASS_HAS_NO_STRING_VALUE_INITIALIZER"/>
+                <message_argument value="84"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="SHADOW_EXP__VALIDATE_DATA_TYPE_HAS_NO_PART_INITIALIZERS"/>
+                <message_argument value="85"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="SHADOW_EXP__VALIDATE_DATA_TYPE_HAS_ONE_PART_INITIALIZER"/>
+                <message_argument value="86"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="SHADOW_EXP__VALIDATE_DATA_TYPE_HAS_STRING_VALUE_INITIALIZER"/>
+                <message_argument value="87"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="SHADOW_EXP__VALIDATE_INITIALIZES_ALL_CLASS_PROPERTIES"/>
+                <message_argument value="88"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="SHADOW_EXP__VALIDATE_TYPE_IS_NOT_INVALID"/>
+                <message_argument value="89"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="SHADOW_PART__VALIDATE_COMPATIBLE_INITIALISER_TYPE"/>
+                <message_argument value="90"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="SHADOW_PART__VALIDATE_TYPE_IS_NOT_INVALID"/>
+                <message_argument value="91"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="SHADOW_PART__VALIDATE_TYPE_IS_NOT_NULL"/>
+                <message_argument value="92"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="STATE_EXP__VALIDATE_TYPE_IS_NOT_INVALID"/>
+                <message_argument value="93"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="TUPLE_LITERAL_PART__VALIDATE_COMPATIBLE_INITIALISER_TYPE"/>
+                <message_argument value="94"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="TUPLE_LITERAL_PART__VALIDATE_TYPE_IS_NOT_INVALID"/>
+                <message_argument value="95"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="VARIABLE_DECLARATION__VALIDATE_NAME_IS_NOT_NULL"/>
+                <message_argument value="97"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="VARIABLE_DECLARATION__VALIDATE_TYPE_IS_NOT_INVALID"/>
+                <message_argument value="98"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="VARIABLE_DECLARATION__VALIDATE_TYPE_IS_NOT_NULL"/>
+                <message_argument value="99"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="VARIABLE_EXP__VALIDATE_TYPE_IS_NOT_INVALID"/>
+                <message_argument value="100"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="VARIABLE__VALIDATE_COMPATIBLE_INITIALISER_TYPE"/>
+                <message_argument value="96"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="LOOP_EXP__VALIDATE_MATCHING_ORDERED_COLLECTION_CO_ITERATORS"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="LOOP_EXP__VALIDATE_NO_NOT_ORDERED_COLLECTION_CO_ITERATORS"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="validateCoIteratorVariable(CoIteratorVariable, DiagnosticChain, Map&lt;Object,Object&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="validateLoopExp_validateMatchingOrderedCollectionCoIterators(LoopExp, DiagnosticChain, Map&lt;Object,Object&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="validateLoopExp_validateNoNotOrderedCollectionCoIterators(LoopExp, DiagnosticChain, Map&lt;Object,Object&gt;)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/util/Visitor.java" type="org.eclipse.ocl.pivot.util.Visitor">
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="visitCoIteratorVariable(CoIteratorVariable)"/>
             </message_arguments>
         </filter>
     </resource>
@@ -117,6 +703,14 @@
             <message_arguments>
                 <message_argument value="Technology"/>
                 <message_argument value="AbstractTechnology"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/messages/PivotMessages.java" type="org.eclipse.ocl.pivot.messages.PivotMessages">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.messages.PivotMessages"/>
+                <message_argument value="IllegalCoIterator"/>
             </message_arguments>
         </filter>
     </resource>

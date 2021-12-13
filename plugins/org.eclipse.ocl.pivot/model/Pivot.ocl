@@ -263,10 +263,12 @@ inv SourceIsIterable: ownedSource?.type.oclIsKindOf(IterableType)
 inv NoInitializers: self.ownedIterators->forAll(ownedInit->isEmpty())
 /** The loop variable of an iterator expression has no init expression. */
 inv NoCoInitializers: self.ownedCoIterators->forAll(ownedInit->isEmpty())
-/** A Map must have the same number of iterators and co-iterators. */
-inv MatchingMapCoIterators: ownedSource?.type.oclIsKindOf(MapType) implies self.ownedCoIterators->size() = self.ownedIterators->size()
-/** A Collection must have the same no co-iterators. */
-inv NoCollectionCoIterators: ownedSource?.type.oclIsKindOf(CollectionType) implies self.ownedCoIterators->isEmpty()
+/** A Map must have the no co-iterators or the same number of iterators and co-iterators. */
+inv MatchingMapCoIterators: ownedSource?.type.oclIsKindOf(MapType) implies (self.ownedCoIterators->size() = 0) or (self.ownedCoIterators->size() = self.ownedIterators->size())
+/** An Ordered Collection must have the no co-iterators or the same number of iterators and co-iterators. */
+inv MatchingOrderedCollectionCoIterators: (ownedSource?.type.oclIsKindOf(OrderedSetType) or ownedSource?.type.oclIsKindOf(SequenceType)) implies (self.ownedCoIterators->size() = 0) or (self.ownedCoIterators->size() = self.ownedIterators->size())
+/** A not-Ordered Collection must have no co-iterators. */
+inv NoNotOrderedCollectionCoIterators: (ownedSource?.type.oclIsKindOf(BagType) or ownedSource?.type.oclIsKindOf(SetType)) implies self.ownedCoIterators->isEmpty()
 
 context IteratorExp
 /** The type of each collection iterator variable must be the type of the elements of the source collection. */

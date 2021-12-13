@@ -34,56 +34,72 @@ public class ExecutorMultipleMapIterationManager extends AbstractIterationManage
 {
 	protected final @NonNull TypeId returnTypeId;
 	protected final @NonNull AbstractSimpleOperation body;
+	private final boolean hasCoIterators;
 	private @Nullable Object accumulatorValue;
 	protected final @NonNull MapValue mapValue;
 	private @NonNull List<@NonNull Iterator<@Nullable Object>> iteratorValues;
 	private final @Nullable Object @NonNull [] arguments;
 
+	@Deprecated /* @deprecated specify co-iterators */
 	public ExecutorMultipleMapIterationManager(@NonNull Executor executor, int iterators, @NonNull TypeId returnTypeId, @NonNull AbstractSimpleOperation body,
+			@Nullable MapValue mapValue, @Nullable Object accumulatorValue) {
+		this(executor, iterators, false, returnTypeId, body, mapValue, accumulatorValue);
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	public ExecutorMultipleMapIterationManager(@NonNull Executor executor, int iterators, boolean hasCoIterators, @NonNull TypeId returnTypeId, @NonNull AbstractSimpleOperation body,
 			@Nullable MapValue mapValue, @Nullable Object accumulatorValue) {
 		super(executor);
 		this.returnTypeId = returnTypeId;
 		this.body = body;
+		this.hasCoIterators = hasCoIterators;
 		this.accumulatorValue = accumulatorValue;
 		this.mapValue = ValueUtil.asMapValue(mapValue);		// Throws InvalidValueException for null
 		this.iteratorValues = new ArrayList<@NonNull Iterator<@Nullable Object>>(iterators);
-		this.arguments = new @Nullable Object[1 + 2 * iterators];
+		this.arguments = new @Nullable Object[1 + (hasCoIterators ? 2*iterators : iterators)];
 		this.arguments[0] = this.mapValue;
 		for (int i = 0; i < iterators; i++) {
 			Iterator<@Nullable Object> iteratorValue = this.mapValue.iterator();
 			iteratorValues.add(iteratorValue);
 			if (iteratorValue.hasNext()) {
 				Object keyValue = iteratorValue.next();
-				this.arguments[1 + 2*i] = keyValue;
-				this.arguments[2 + 2*i] = this.mapValue.at(keyValue);
+				this.arguments[1 + i] = keyValue;
+				if (hasCoIterators) {
+					this.arguments[1 + iterators + i] = this.mapValue.at(keyValue);
+				}
 			}
 			else {
-				this.arguments[1 + 2*i] = iteratorValues;
+				this.arguments[1 + i] = iteratorValues;
 			}
 		}
 	}
 
 	@Override
 	public boolean advanceIterators() {
-		for (int i = 0; i < iteratorValues.size(); i++) {
+		int iteratorsCount = iteratorValues.size();
+		for (int i = 0; i < iteratorsCount; i++) {
 			Iterator<@Nullable Object> iteratorValue = iteratorValues.get(i);
 			if (iteratorValue.hasNext()) {
 				Object keyValue = iteratorValue.next();
-				arguments[1 + 2*i] = keyValue;
-				arguments[2 + 2*i] = mapValue.at(keyValue);
+				arguments[1 + i] = keyValue;
+				if (hasCoIterators) {
+					arguments[1 + iteratorsCount + i] = mapValue.at(keyValue);
+				}
 				for (int j = i; --j >= 0; ) {
 					iteratorValue = mapValue.iterator();
 					assert iteratorValue.hasNext();
 					iteratorValues.set(j, iteratorValue);
 					keyValue = iteratorValue.next();
-					arguments[1 + 2*j] = keyValue;
-					arguments[2 + 2*j] = mapValue.at(keyValue);
+					arguments[1 + j] = keyValue;
+					arguments[1 + iteratorsCount + j] = mapValue.at(keyValue);
 				}
 				return true;
 			}
 		}
-		for (int i = 0; i < iteratorValues.size(); i++) {
-			arguments[1 + 2*i] = iteratorValues;
+		for (int i = 0; i < iteratorsCount; i++) {
+			arguments[1 + i] = iteratorValues;
 		}
 		return false;
 	}
