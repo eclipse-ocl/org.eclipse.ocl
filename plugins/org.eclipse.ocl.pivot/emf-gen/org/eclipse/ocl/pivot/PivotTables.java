@@ -89,7 +89,6 @@ public class PivotTables extends AbstractTables
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_CallExp = PivotTables.PACKid_$metamodel$.getClassId("CallExp", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_CallOperationAction = PivotTables.PACKid_$metamodel$.getClassId("CallOperationAction", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_Class = PivotTables.PACKid_$metamodel$.getClassId("Class", 0);
-	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_CoIteratorVariable = PivotTables.PACKid_$metamodel$.getClassId("CoIteratorVariable", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_CollectionItem = PivotTables.PACKid_$metamodel$.getClassId("CollectionItem", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_CollectionLiteralExp = PivotTables.PACKid_$metamodel$.getClassId("CollectionLiteralExp", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_CollectionLiteralPart = PivotTables.PACKid_$metamodel$.getClassId("CollectionLiteralPart", 0);
@@ -261,12 +260,12 @@ public class PivotTables extends AbstractTables
 	public static final /*@NonInvalid*/ @NonNull EnumerationLiteralId ELITid_OrderedSet = PivotTables.ENUMid_CollectionKind.getEnumerationLiteralId("OrderedSet");
 	public static final /*@NonInvalid*/ @NonNull EnumerationLiteralId ELITid_Sequence = PivotTables.ENUMid_CollectionKind.getEnumerationLiteralId("Sequence");
 	public static final /*@NonInvalid*/ @NonNull EnumerationLiteralId ELITid_Set = PivotTables.ENUMid_CollectionKind.getEnumerationLiteralId("Set");
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_CoIteratorVariable = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_CoIteratorVariable);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_CollectionLiteralPart = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_CollectionLiteralPart);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_Detail = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_Detail);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_Element = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_Element);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_EnumerationLiteral = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_EnumerationLiteral);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_Import = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_Import);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_IteratorVariable = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_IteratorVariable);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_MapLiteralPart = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_MapLiteralPart);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_NamedElement = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_NamedElement);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_OCLExpression = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_OCLExpression);
@@ -355,7 +354,6 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull EcoreExecutorType _CallExp = new EcoreExecutorType(PivotPackage.Literals.CALL_EXP, PACKAGE, 0 | ExecutorType.ABSTRACT);
 		public static final @NonNull EcoreExecutorType _CallOperationAction = new EcoreExecutorType(PivotPackage.Literals.CALL_OPERATION_ACTION, PACKAGE, 0);
 		public static final @NonNull EcoreExecutorType _Class = new EcoreExecutorType(PivotPackage.Literals.CLASS, PACKAGE, 0);
-		public static final @NonNull EcoreExecutorType _CoIteratorVariable = new EcoreExecutorType(PivotPackage.Literals.CO_ITERATOR_VARIABLE, PACKAGE, 0);
 		public static final @NonNull EcoreExecutorType _CollectionItem = new EcoreExecutorType(PivotPackage.Literals.COLLECTION_ITEM, PACKAGE, 0);
 		public static final @NonNull EcoreExecutorEnumeration _CollectionKind = new EcoreExecutorEnumeration(PivotPackage.Literals.COLLECTION_KIND, PACKAGE, 0);
 		public static final @NonNull EcoreExecutorType _CollectionLiteralExp = new EcoreExecutorType(PivotPackage.Literals.COLLECTION_LITERAL_EXP, PACKAGE, 0);
@@ -495,7 +493,6 @@ public class PivotTables extends AbstractTables
 			_CallExp,
 			_CallOperationAction,
 			_Class,
-			_CoIteratorVariable,
 			_CollectionItem,
 			_CollectionKind,
 			_CollectionLiteralExp,
@@ -751,15 +748,6 @@ public class PivotTables extends AbstractTables
 		private static final @NonNull ExecutorFragment _Class__OclType = new ExecutorFragment(Types._Class, OCLstdlibTables.Types._OclType);
 		private static final @NonNull ExecutorFragment _Class__TemplateableElement = new ExecutorFragment(Types._Class, PivotTables.Types._TemplateableElement);
 		private static final @NonNull ExecutorFragment _Class__Type = new ExecutorFragment(Types._Class, PivotTables.Types._Type);
-
-		private static final @NonNull ExecutorFragment _CoIteratorVariable__CoIteratorVariable = new ExecutorFragment(Types._CoIteratorVariable, PivotTables.Types._CoIteratorVariable);
-		private static final @NonNull ExecutorFragment _CoIteratorVariable__Element = new ExecutorFragment(Types._CoIteratorVariable, PivotTables.Types._Element);
-		private static final @NonNull ExecutorFragment _CoIteratorVariable__NamedElement = new ExecutorFragment(Types._CoIteratorVariable, PivotTables.Types._NamedElement);
-		private static final @NonNull ExecutorFragment _CoIteratorVariable__OclAny = new ExecutorFragment(Types._CoIteratorVariable, OCLstdlibTables.Types._OclAny);
-		private static final @NonNull ExecutorFragment _CoIteratorVariable__OclElement = new ExecutorFragment(Types._CoIteratorVariable, OCLstdlibTables.Types._OclElement);
-		private static final @NonNull ExecutorFragment _CoIteratorVariable__TypedElement = new ExecutorFragment(Types._CoIteratorVariable, PivotTables.Types._TypedElement);
-		private static final @NonNull ExecutorFragment _CoIteratorVariable__Variable = new ExecutorFragment(Types._CoIteratorVariable, PivotTables.Types._Variable);
-		private static final @NonNull ExecutorFragment _CoIteratorVariable__VariableDeclaration = new ExecutorFragment(Types._CoIteratorVariable, PivotTables.Types._VariableDeclaration);
 
 		private static final @NonNull ExecutorFragment _CollectionItem__CollectionItem = new ExecutorFragment(Types._CollectionItem, PivotTables.Types._CollectionItem);
 		private static final @NonNull ExecutorFragment _CollectionItem__CollectionLiteralPart = new ExecutorFragment(Types._CollectionItem, PivotTables.Types._CollectionLiteralPart);
@@ -1964,8 +1952,6 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull ExecutorProperty _Class__MapType__entryClass = new ExecutorPropertyWithImplementation("MapType", Types._Class, 15, new EcoreLibraryOppositeProperty(PivotPackage.Literals.MAP_TYPE__ENTRY_CLASS));
 		public static final @NonNull ExecutorProperty _Class__TemplateParameter__constrainingClasses = new ExecutorPropertyWithImplementation("TemplateParameter", Types._Class, 16, new EcoreLibraryOppositeProperty(PivotPackage.Literals.TEMPLATE_PARAMETER__CONSTRAINING_CLASSES));
 
-		public static final @NonNull ExecutorProperty _CoIteratorVariable__LoopExp__ownedCoIterators = new ExecutorPropertyWithImplementation("LoopExp", Types._CoIteratorVariable, 0, new EcoreLibraryOppositeProperty(PivotPackage.Literals.LOOP_EXP__OWNED_CO_ITERATORS));
-
 		public static final @NonNull ExecutorProperty _CollectionItem__ownedItem = new EcoreExecutorProperty(PivotPackage.Literals.COLLECTION_ITEM__OWNED_ITEM, Types._CollectionItem, 0);
 
 		public static final @NonNull ExecutorProperty _CollectionLiteralExp__kind = new EcoreExecutorProperty(PivotPackage.Literals.COLLECTION_LITERAL_EXP__KIND, Types._CollectionLiteralExp, 0);
@@ -2090,6 +2076,8 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull ExecutorProperty _Iteration__ownedAccumulators = new EcoreExecutorProperty(PivotPackage.Literals.ITERATION__OWNED_ACCUMULATORS, Types._Iteration, 0);
 		public static final @NonNull ExecutorProperty _Iteration__ownedIterators = new EcoreExecutorProperty(PivotPackage.Literals.ITERATION__OWNED_ITERATORS, Types._Iteration, 1);
 		public static final @NonNull ExecutorProperty _Iteration__LoopExp__referredIteration = new ExecutorPropertyWithImplementation("LoopExp", Types._Iteration, 2, new EcoreLibraryOppositeProperty(PivotPackage.Literals.LOOP_EXP__REFERRED_ITERATION));
+
+		public static final @NonNull ExecutorProperty _IteratorVariable__LoopExp__ownedCoIterators = new ExecutorPropertyWithImplementation("LoopExp", Types._IteratorVariable, 0, new EcoreLibraryOppositeProperty(PivotPackage.Literals.LOOP_EXP__OWNED_CO_ITERATORS));
 
 		public static final @NonNull ExecutorProperty _LambdaType__contextType = new EcoreExecutorProperty(PivotPackage.Literals.LAMBDA_TYPE__CONTEXT_TYPE, Types._LambdaType, 0);
 		public static final @NonNull ExecutorProperty _LambdaType__parameterType = new EcoreExecutorProperty(PivotPackage.Literals.LAMBDA_TYPE__PARAMETER_TYPE, Types._LambdaType, 1);
@@ -2581,19 +2569,6 @@ public class PivotTables extends AbstractTables
 				Fragments._Class__Class /* 5 */
 			};
 		private static final int @NonNull [] __Class = { 1,1,2,2,2,1 };
-
-		private static final @NonNull ExecutorFragment @NonNull [] _CoIteratorVariable =
-			{
-				Fragments._CoIteratorVariable__OclAny /* 0 */,
-				Fragments._CoIteratorVariable__OclElement /* 1 */,
-				Fragments._CoIteratorVariable__Element /* 2 */,
-				Fragments._CoIteratorVariable__NamedElement /* 3 */,
-				Fragments._CoIteratorVariable__TypedElement /* 4 */,
-				Fragments._CoIteratorVariable__VariableDeclaration /* 5 */,
-				Fragments._CoIteratorVariable__Variable /* 6 */,
-				Fragments._CoIteratorVariable__CoIteratorVariable /* 7 */
-			};
-		private static final int @NonNull [] __CoIteratorVariable = { 1,1,1,1,1,1,1,1 };
 
 		private static final @NonNull ExecutorFragment @NonNull [] _CollectionItem =
 			{
@@ -4139,7 +4114,6 @@ public class PivotTables extends AbstractTables
 			Types._CallExp.initFragments(_CallExp, __CallExp);
 			Types._CallOperationAction.initFragments(_CallOperationAction, __CallOperationAction);
 			Types._Class.initFragments(_Class, __Class);
-			Types._CoIteratorVariable.initFragments(_CoIteratorVariable, __CoIteratorVariable);
 			Types._CollectionItem.initFragments(_CollectionItem, __CollectionItem);
 			Types._CollectionKind.initFragments(_CollectionKind, __CollectionKind);
 			Types._CollectionLiteralExp.initFragments(_CollectionLiteralExp, __CollectionLiteralExp);
@@ -4741,44 +4715,6 @@ public class PivotTables extends AbstractTables
 			PivotTables.Operations._Type__isTemplateParameter /* isTemplateParameter() */,
 			PivotTables.Operations._Type__specializeIn /* specializeIn(CallExp[1],Type[1]) */
 		};
-
-		private static final @NonNull ExecutorOperation @NonNull [] _CoIteratorVariable__CoIteratorVariable = {};
-		private static final @NonNull ExecutorOperation @NonNull [] _CoIteratorVariable__Element = {
-			PivotTables.Operations._Element__allOwnedElements /* allOwnedElements() */,
-			PivotTables.Operations._Element__getValue /* getValue(Type[1],String[1]) */
-		};
-		private static final @NonNull ExecutorOperation @NonNull [] _CoIteratorVariable__NamedElement = {};
-		private static final @NonNull ExecutorOperation @NonNull [] _CoIteratorVariable__OclAny = {
-			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
-			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
-			OCLstdlibTables.Operations._OclAny__oclAsSet /* oclAsSet() */,
-			OCLstdlibTables.Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,
-			OCLstdlibTables.Operations._OclAny__oclIsInState /* oclIsInState(OclState[?]) */,
-			OCLstdlibTables.Operations._OclAny__oclIsInvalid /* oclIsInvalid() */,
-			OCLstdlibTables.Operations._OclAny__oclIsKindOf /* oclIsKindOf(OclType[1]) */,
-			OCLstdlibTables.Operations._OclAny__oclIsNew /* oclIsNew() */,
-			OCLstdlibTables.Operations._OclAny__oclIsTypeOf /* oclIsTypeOf(OclType[1]) */,
-			OCLstdlibTables.Operations._OclAny__oclIsUndefined /* oclIsUndefined() */,
-			OCLstdlibTables.Operations._OclAny__0_oclLog /* oclLog() */,
-			OCLstdlibTables.Operations._OclAny__1_oclLog /* oclLog(String[1]) */,
-			OCLstdlibTables.Operations._OclAny__oclType /* oclType() */,
-			OCLstdlibTables.Operations._OclAny__oclTypes /* oclTypes() */,
-			OCLstdlibTables.Operations._OclAny__toString /* toString() */
-		};
-		private static final @NonNull ExecutorOperation @NonNull [] _CoIteratorVariable__OclElement = {
-			OCLstdlibTables.Operations._OclElement__allInstances /* allInstances() */,
-			OCLstdlibTables.Operations._OclElement__oclAsModelType /* oclAsModelType(TT)(TT[1]) */,
-			OCLstdlibTables.Operations._OclElement__oclContainer /* oclContainer() */,
-			OCLstdlibTables.Operations._OclElement__oclContents /* oclContents() */,
-			OCLstdlibTables.Operations._OclElement__oclIsModelKindOf /* oclIsModelKindOf(OclType[1]) */,
-			OCLstdlibTables.Operations._OclElement__oclModelType /* oclModelType() */,
-			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
-		};
-		private static final @NonNull ExecutorOperation @NonNull [] _CoIteratorVariable__TypedElement = {
-			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
-		};
-		private static final @NonNull ExecutorOperation @NonNull [] _CoIteratorVariable__Variable = {};
-		private static final @NonNull ExecutorOperation @NonNull [] _CoIteratorVariable__VariableDeclaration = {};
 
 		private static final @NonNull ExecutorOperation @NonNull [] _CollectionItem__CollectionItem = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _CollectionItem__CollectionLiteralPart = {};
@@ -9715,15 +9651,6 @@ public class PivotTables extends AbstractTables
 			Fragments._Class__TemplateableElement.initOperations(_Class__TemplateableElement);
 			Fragments._Class__Type.initOperations(_Class__Type);
 
-			Fragments._CoIteratorVariable__CoIteratorVariable.initOperations(_CoIteratorVariable__CoIteratorVariable);
-			Fragments._CoIteratorVariable__Element.initOperations(_CoIteratorVariable__Element);
-			Fragments._CoIteratorVariable__NamedElement.initOperations(_CoIteratorVariable__NamedElement);
-			Fragments._CoIteratorVariable__OclAny.initOperations(_CoIteratorVariable__OclAny);
-			Fragments._CoIteratorVariable__OclElement.initOperations(_CoIteratorVariable__OclElement);
-			Fragments._CoIteratorVariable__TypedElement.initOperations(_CoIteratorVariable__TypedElement);
-			Fragments._CoIteratorVariable__Variable.initOperations(_CoIteratorVariable__Variable);
-			Fragments._CoIteratorVariable__VariableDeclaration.initOperations(_CoIteratorVariable__VariableDeclaration);
-
 			Fragments._CollectionItem__CollectionItem.initOperations(_CollectionItem__CollectionItem);
 			Fragments._CollectionItem__CollectionLiteralPart.initOperations(_CollectionItem__CollectionLiteralPart);
 			Fragments._CollectionItem__Element.initOperations(_CollectionItem__Element);
@@ -10981,23 +10908,6 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._Class__owningPackage,
 			PivotTables.Properties._Class__superClasses,
 			PivotTables.Properties._TemplateableElement__unspecializedElement
-		};
-
-		private static final @NonNull ExecutorProperty @NonNull [] _CoIteratorVariable = {
-			PivotTables.Properties._Element__annotatingComments,
-			PivotTables.Properties._Variable__isImplicit,
-			PivotTables.Properties._TypedElement__isMany,
-			PivotTables.Properties._TypedElement__isRequired,
-			PivotTables.Properties._NamedElement__name,
-			OCLstdlibTables.Properties._OclElement__oclContainer,
-			OCLstdlibTables.Properties._OclElement__oclContents,
-			PivotTables.Properties._Element__ownedAnnotations,
-			PivotTables.Properties._Element__ownedComments,
-			PivotTables.Properties._Element__ownedExtensions,
-			PivotTables.Properties._Variable__ownedInit,
-			PivotTables.Properties._Variable__representedParameter,
-			PivotTables.Properties._TypedElement__type,
-			PivotTables.Properties._VariableDeclaration__typeValue
 		};
 
 		private static final @NonNull ExecutorProperty @NonNull [] _CollectionItem = {
@@ -13156,7 +13066,6 @@ public class PivotTables extends AbstractTables
 			Fragments._CallExp__CallExp.initProperties(_CallExp);
 			Fragments._CallOperationAction__CallOperationAction.initProperties(_CallOperationAction);
 			Fragments._Class__Class.initProperties(_Class);
-			Fragments._CoIteratorVariable__CoIteratorVariable.initProperties(_CoIteratorVariable);
 			Fragments._CollectionItem__CollectionItem.initProperties(_CollectionItem);
 			Fragments._CollectionKind__CollectionKind.initProperties(_CollectionKind);
 			Fragments._CollectionLiteralExp__CollectionLiteralExp.initProperties(_CollectionLiteralExp);

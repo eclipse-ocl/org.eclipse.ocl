@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.ocl.pivot" version="2">
-    <resource path="emf-gen/org/eclipse/ocl/pivot/CoIteratorVariable.java" type="org.eclipse.ocl.pivot.CoIteratorVariable">
-        <filter id="1110441988">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.CoIteratorVariable"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/LoopExp.java" type="org.eclipse.ocl.pivot.LoopExp">
         <filter id="403804204">
             <message_arguments>
@@ -37,26 +30,7 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/PivotFactory.java" type="org.eclipse.ocl.pivot.PivotFactory">
-        <filter id="403804204">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.PivotFactory"/>
-                <message_argument value="createCoIteratorVariable()"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
-                <message_argument value="createCoIteratorVariable()"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/PivotPackage.java" type="org.eclipse.ocl.pivot.PivotPackage">
-        <filter id="403804204">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
-                <message_argument value="getCoIteratorVariable()"/>
-            </message_arguments>
-        </filter>
         <filter id="403804204">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
@@ -73,11 +47,6 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
                 <message_argument value="getLoopExp__ValidateNoCollectionCoIterators__DiagnosticChain_Map()"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
-                <message_argument value="getCoIteratorVariable()"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -100,11 +69,6 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
-                <message_argument value="CO_ITERATOR_VARIABLE"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
                 <message_argument value="LOOP_EXP___VALIDATE_MATCHING_ORDERED_COLLECTION_CO_ITERATORS__DIAGNOSTICCHAIN_MAP"/>
             </message_arguments>
         </filter>
@@ -118,23 +82,12 @@
         <filter id="336658481">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
-                <message_argument value="CLSSid_CoIteratorVariable"/>
-            </message_arguments>
-        </filter>
-        <filter id="336658481">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
-                <message_argument value="ORD_CLSSid_CoIteratorVariable"/>
+                <message_argument value="ORD_CLSSid_IteratorVariable"/>
             </message_arguments>
         </filter>
         <filter id="1143996420">
             <message_arguments>
-                <message_argument value="CLSSid_CoIteratorVariable"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="ORD_CLSSid_CoIteratorVariable"/>
+                <message_argument value="ORD_CLSSid_IteratorVariable"/>
             </message_arguments>
         </filter>
     </resource>
@@ -143,26 +96,6 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotTables.Properties"/>
                 <message_argument value="_Variable__LoopExp__ownedCoIterators"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/PivotTables.java" type="org.eclipse.ocl.pivot.PivotTables$Types">
-        <filter id="336658481">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.PivotTables.Types"/>
-                <message_argument value="_CoIteratorVariable"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="_CoIteratorVariable"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/CoIteratorVariableImpl.java" type="org.eclipse.ocl.pivot.internal.CoIteratorVariableImpl">
-        <filter id="1110441988">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.internal.CoIteratorVariableImpl"/>
             </message_arguments>
         </filter>
     </resource>
@@ -198,9 +131,6 @@
                 <message_argument value="15"/>
             </message_arguments>
         </filter>
-    </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/PivotPackageImpl.java">
-        <filter id="0"/>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/internal/PivotPackageImpl.java" type="org.eclipse.ocl.pivot.internal.PivotPackageImpl">
         <filter id="338792546">
@@ -265,23 +195,6 @@
                 <message_argument value="AbstractWrappingVisitor&lt;R, C, D, P&gt;"/>
             </message_arguments>
         </filter>
-    </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/util/PivotAdapterFactory.java" type="org.eclipse.ocl.pivot.util.PivotAdapterFactory">
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="createCoIteratorVariableAdapter()"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/util/PivotSwitch.java" type="org.eclipse.ocl.pivot.util.PivotSwitch">
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="caseCoIteratorVariable(CoIteratorVariable)"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/util/PivotValidator.java">
-        <filter id="0"/>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/util/PivotValidator.java" type="org.eclipse.ocl.pivot.util.PivotValidator">
         <filter id="336658481">
@@ -621,24 +534,12 @@
         </filter>
         <filter id="1143996420">
             <message_arguments>
-                <message_argument value="validateCoIteratorVariable(CoIteratorVariable, DiagnosticChain, Map&lt;Object,Object&gt;)"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
                 <message_argument value="validateLoopExp_validateMatchingOrderedCollectionCoIterators(LoopExp, DiagnosticChain, Map&lt;Object,Object&gt;)"/>
             </message_arguments>
         </filter>
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="validateLoopExp_validateNoNotOrderedCollectionCoIterators(LoopExp, DiagnosticChain, Map&lt;Object,Object&gt;)"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/util/Visitor.java" type="org.eclipse.ocl.pivot.util.Visitor">
-        <filter id="1211105284">
-            <message_arguments>
-                <message_argument value="visitCoIteratorVariable(CoIteratorVariable)"/>
             </message_arguments>
         </filter>
     </resource>

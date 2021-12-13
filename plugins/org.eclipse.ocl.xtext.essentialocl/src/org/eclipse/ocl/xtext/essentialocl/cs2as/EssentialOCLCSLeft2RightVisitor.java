@@ -23,7 +23,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.BooleanLiteralExp;
 import org.eclipse.ocl.pivot.CallExp;
-import org.eclipse.ocl.pivot.CoIteratorVariable;
 import org.eclipse.ocl.pivot.CollectionItem;
 import org.eclipse.ocl.pivot.CollectionLiteralExp;
 import org.eclipse.ocl.pivot.CollectionLiteralPart;
@@ -1029,7 +1028,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		int iteratorIndex = 0;
 		boolean isCollection = false;
 		MapType mapType = null;
-		List</*@Nullable*/ CoIteratorVariable> pivotCoIterators = null;
+		List</*@Nullable*/ IteratorVariable> pivotCoIterators = null;
 		Type rawSourceElementType = null;
 		Type sourceType = csNameExp.getSourceType();
 		if (sourceType instanceof CollectionType) {
@@ -1094,11 +1093,11 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 				boolean isRequired = iteratorIsRequired != null ? iteratorIsRequired.booleanValue() : isSafe || formalIterator.isIsRequired();
 				helper.setType(iterator, varType, isRequired, null);
 				pivotIterators.add(iterator);
-				CoIteratorVariable coIterator = null;
+				IteratorVariable coIterator = null;
 				VariableCS csCoIterator = csArgument.getOwnedCoIterator();
 				if (csCoIterator != null) {
 					if ((pivotCoIterators != null)) {
-						coIterator = PivotUtil.getPivot(CoIteratorVariable.class, csCoIterator);
+						coIterator = PivotUtil.getPivot(IteratorVariable.class, csCoIterator);
 						if (coIterator != null) {
 							hasCoIterator = true;
 							Type coIteratorType = null;
@@ -1151,7 +1150,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		//
 		if ((pivotCoIterators != null) && hasCoIterator) {
 			for (int coiteratorIndex = 0; coiteratorIndex < pivotCoIterators.size(); coiteratorIndex++) {
-				CoIteratorVariable coIterator = pivotCoIterators.get(coiteratorIndex);
+				IteratorVariable coIterator = pivotCoIterators.get(coiteratorIndex);
 				if (coIterator == null) {
 					boolean coIteratorIsRequired ;
 					if (mapType != null) {
@@ -1161,7 +1160,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 						coIteratorIsRequired = true;
 					}
 					String varName = Integer.toString(iterationIteratorsSize + coiteratorIndex+1) + "_";
-					coIterator = context.refreshModelElement(CoIteratorVariable.class, PivotPackage.Literals.CO_ITERATOR_VARIABLE, null);
+					coIterator = context.refreshModelElement(IteratorVariable.class, PivotPackage.Literals.ITERATOR_VARIABLE, null);
 					helper.refreshName(coIterator, varName);
 					helper.setType(coIterator, sourceElementType, coIteratorIsRequired, null);
 					coIterator.setIsImplicit(true);

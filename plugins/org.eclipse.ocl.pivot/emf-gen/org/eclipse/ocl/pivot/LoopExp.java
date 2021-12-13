@@ -63,7 +63,7 @@ extends CallExp {
 
 	/**
 	 * Returns the value of the '<em><b>Owned Co Iterators</b></em>' containment reference list.
-	 * The list contents are of type {@link org.eclipse.ocl.pivot.CoIteratorVariable}.
+	 * The list contents are of type {@link org.eclipse.ocl.pivot.IteratorVariable}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Owned Co Iterators</em>' containment reference list isn't clear,
@@ -75,7 +75,7 @@ extends CallExp {
 	 * @see org.eclipse.ocl.pivot.PivotPackage#getLoopExp_OwnedCoIterators()
 	 * @generated
 	 */
-	List<CoIteratorVariable> getOwnedCoIterators();
+	List<IteratorVariable> getOwnedCoIterators();
 
 	/**
 	 * Returns the value of the '<em><b>Owned Iterators</b></em>' containment reference list.

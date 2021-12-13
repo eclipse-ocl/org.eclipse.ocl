@@ -131,7 +131,6 @@
         <genParameters ecoreParameter="Pivot.ecore#//Class/validateUniqueInvariantName/context"/>
       </genOperations>
     </genClasses>
-    <genClasses ecoreClass="Pivot.ecore#T-pivot-CoIteratorVariable"/>
     <genClasses ecoreClass="Pivot.ecore#T-pivot-CollectionItem">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-CollectionItem-ownedItem"/>
       <genOperations ecoreOperation="Pivot.ecore#//CollectionItem/validateTypeIsItemType">

@@ -21,7 +21,6 @@ import java.util.Set;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.BooleanLiteralExp;
-import org.eclipse.ocl.pivot.CoIteratorVariable;
 import org.eclipse.ocl.pivot.CollectionItem;
 import org.eclipse.ocl.pivot.CollectionLiteralExp;
 import org.eclipse.ocl.pivot.CollectionLiteralPart;
@@ -38,6 +37,7 @@ import org.eclipse.ocl.pivot.InvalidLiteralExp;
 import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.IteratorExp;
+import org.eclipse.ocl.pivot.IteratorVariable;
 import org.eclipse.ocl.pivot.LetExp;
 import org.eclipse.ocl.pivot.MapLiteralExp;
 import org.eclipse.ocl.pivot.MapLiteralPart;
@@ -411,7 +411,7 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 			List<@NonNull Variable> iterators = PivotUtilInternal.getOwnedIteratorsList(iterateExp);
 			int iSize = iterators.size();
 			if (sourceValue instanceof MapValue) {
-				List<CoIteratorVariable> coIterators = iterateExp.getOwnedCoIterators();
+				List<IteratorVariable> coIterators = iterateExp.getOwnedCoIterators();
 				if (iSize == 1) {
 					VariableDeclaration keyIterator = ClassUtil.nonNullModel(iterators.get(0));
 					VariableDeclaration valueIterator = coIterators.size() >= 1 ? coIterators.get(0) : null;
@@ -512,7 +512,7 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 			Object accumulatorValue = implementation.createAccumulatorValue(context, iterationType.getTypeId(), bodyType.getTypeId());
 			List<@NonNull Variable> iterators = PivotUtilInternal.getOwnedIteratorsList(iteratorExp);
 			int iSize = iterators.size();
-			List<CoIteratorVariable> coIterators = iteratorExp.getOwnedCoIterators();
+			List<IteratorVariable> coIterators = iteratorExp.getOwnedCoIterators();
 			int coSize = coIterators.size();
 			if (sourceValue instanceof MapValue) {
 				if (iSize == 1) {

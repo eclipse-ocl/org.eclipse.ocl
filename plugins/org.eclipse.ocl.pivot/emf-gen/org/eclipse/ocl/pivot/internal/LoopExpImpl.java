@@ -27,11 +27,11 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CoIteratorVariable;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.Iteration;
+import org.eclipse.ocl.pivot.IteratorVariable;
 import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.PivotPackage;
@@ -116,7 +116,7 @@ implements LoopExp {
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<CoIteratorVariable> ownedCoIterators;
+	protected EList<IteratorVariable> ownedCoIterators;
 
 	/**
 	 * The cached value of the '{@link #getOwnedIterators() <em>Owned Iterators</em>}' containment reference list.
@@ -211,11 +211,11 @@ implements LoopExp {
 	 * @generated
 	 */
 	@Override
-	public List<CoIteratorVariable> getOwnedCoIterators()
+	public List<IteratorVariable> getOwnedCoIterators()
 	{
 		if (ownedCoIterators == null)
 		{
-			ownedCoIterators = new EObjectContainmentEList<CoIteratorVariable>(CoIteratorVariable.class, this, 13);
+			ownedCoIterators = new EObjectContainmentEList<IteratorVariable>(IteratorVariable.class, this, 13);
 		}
 		return ownedCoIterators;
 	}
@@ -319,8 +319,8 @@ implements LoopExp {
 				/*@Caught*/ @Nullable Object CAUGHT_result;
 				try {
 					@SuppressWarnings("null")
-					final /*@NonInvalid*/ @NonNull List<CoIteratorVariable> ownedCoIterators_0 = this.getOwnedCoIterators();
-					final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedCoIterators_0 = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_CoIteratorVariable, ownedCoIterators_0);
+					final /*@NonInvalid*/ @NonNull List<IteratorVariable> ownedCoIterators_0 = this.getOwnedCoIterators();
+					final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedCoIterators_0 = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_IteratorVariable, ownedCoIterators_0);
 					final /*@NonInvalid*/ @NonNull IntegerValue size_0 = CollectionSizeOperation.INSTANCE.evaluate(BOXED_ownedCoIterators_0);
 					/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
 					try {
@@ -435,8 +435,8 @@ implements LoopExp {
 				/*@Caught*/ @Nullable Object CAUGHT_result;
 				try {
 					@SuppressWarnings("null")
-					final /*@NonInvalid*/ @NonNull List<CoIteratorVariable> ownedCoIterators_0 = this.getOwnedCoIterators();
-					final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedCoIterators_0 = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_CoIteratorVariable, ownedCoIterators_0);
+					final /*@NonInvalid*/ @NonNull List<IteratorVariable> ownedCoIterators_0 = this.getOwnedCoIterators();
+					final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedCoIterators_0 = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_IteratorVariable, ownedCoIterators_0);
 					final /*@NonInvalid*/ @NonNull IntegerValue size_0 = CollectionSizeOperation.INSTANCE.evaluate(BOXED_ownedCoIterators_0);
 					/*@Caught*/ @Nullable Object CAUGHT_or;
 					try {
@@ -593,8 +593,8 @@ implements LoopExp {
 				/*@Caught*/ @Nullable Object CAUGHT_result;
 				try {
 					@SuppressWarnings("null")
-					final /*@NonInvalid*/ @NonNull List<CoIteratorVariable> ownedCoIterators = this.getOwnedCoIterators();
-					final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedCoIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_CoIteratorVariable, ownedCoIterators);
+					final /*@NonInvalid*/ @NonNull List<IteratorVariable> ownedCoIterators = this.getOwnedCoIterators();
+					final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedCoIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_IteratorVariable, ownedCoIterators);
 					final /*@Thrown*/ @NonNull OrderedSetValue safe_forAll_sources = (@Nullable OrderedSetValue)CollectionExcludingOperation.INSTANCE.evaluate(BOXED_ownedCoIterators, (Object)null);
 					/*@Thrown*/ @Nullable Object accumulator = ValueUtil.TRUE_VALUE;
 					@NonNull Iterator<Object> ITERATOR__1 = safe_forAll_sources.iterator();
@@ -610,7 +610,7 @@ implements LoopExp {
 							break;
 						}
 						@SuppressWarnings("null")
-						/*@NonInvalid*/ @NonNull CoIteratorVariable _1 = (@NonNull CoIteratorVariable)ITERATOR__1.next();
+						/*@NonInvalid*/ @NonNull IteratorVariable _1 = (@NonNull IteratorVariable)ITERATOR__1.next();
 						/**
 						 * ownedInit->isEmpty()
 						 */
@@ -936,8 +936,8 @@ implements LoopExp {
 					}
 					else {
 						@SuppressWarnings("null")
-						final /*@NonInvalid*/ @NonNull List<CoIteratorVariable> ownedCoIterators = this.getOwnedCoIterators();
-						final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedCoIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_CoIteratorVariable, ownedCoIterators);
+						final /*@NonInvalid*/ @NonNull List<IteratorVariable> ownedCoIterators = this.getOwnedCoIterators();
+						final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedCoIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_IteratorVariable, ownedCoIterators);
 						final /*@NonInvalid*/ boolean isEmpty = CollectionIsEmptyOperation.INSTANCE.evaluate(BOXED_ownedCoIterators).booleanValue();
 						if (isEmpty) {
 							result = ValueUtil.TRUE_VALUE;
@@ -1098,7 +1098,7 @@ implements LoopExp {
 				return;
 			case 13:
 				getOwnedCoIterators().clear();
-				getOwnedCoIterators().addAll((Collection<? extends CoIteratorVariable>)newValue);
+				getOwnedCoIterators().addAll((Collection<? extends IteratorVariable>)newValue);
 				return;
 			case 14:
 				getOwnedIterators().clear();

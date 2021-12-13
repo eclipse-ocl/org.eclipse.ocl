@@ -100,9 +100,6 @@
       <ownedProperties xmi:id="9Vw0e" isImplicit="true" name="MapType" opposite="#J5GM0" type="#JK5PO"/>
       <ownedProperties xmi:id="Jh7cO" isImplicit="true" name="TemplateParameter" opposite="#zfRXZ" type="#6yjmF"/>
     </ownedClasses>
-    <ownedClasses xmi:id="H163w" name="CoIteratorVariable" superClasses="#t4j6T">
-      <ownedProperties xmi:id="IVrlv" isImplicit="true" isRequired="false" name="LoopExp" opposite="#Oa7sP" type="#KhrnS"/>
-    </ownedClasses>
     <ownedClasses xmi:id="CKfVx" name="CollectionItem" superClasses="#1s6I1">
       <ownedInvariants xmi:id="D3ZRY" isCallable="true" name="TypeIsItemType">
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="type = ownedItem.type&#xA;&#xA;"/>
@@ -472,6 +469,7 @@
       <ownedInvariants xmi:id="uHopO" isCallable="true" name="HasNoInitializer">
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="ownedInit = null&#xA;&#xA;"/>
       </ownedInvariants>
+      <ownedProperties xmi:id="sbNVd" isImplicit="true" isRequired="false" name="LoopExp" opposite="#Oa7sP" type="#KhrnS"/>
     </ownedClasses>
     <ownedClasses xmi:id="S9Pb5" name="LambdaType" superClasses="#1mHCJ">
       <ownedProperties xmi:id="rwWeu" name="contextType" type="#rrwsa"/>
@@ -539,7 +537,7 @@
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="ownedSource?.type.oclIsKindOf(IterableType)&#xA;"/>
       </ownedInvariants>
       <ownedProperties xmi:id="h2RKw" isComposite="true" name="ownedBody" type="#BFtK4"/>
-      <ownedProperties xmi:id="Oa7sP" isComposite="true" name="ownedCoIterators" type="#Wm0dg"/>
+      <ownedProperties xmi:id="Oa7sP" isComposite="true" name="ownedCoIterators" type="#qjyQj"/>
       <ownedProperties xmi:id="aRrs3" isComposite="true" name="ownedIterators" type="#Rl6IP"/>
       <ownedProperties xmi:id="G2e3S" isRequired="false" name="referredIteration" type="#OZhAb"/>
     </ownedClasses>
@@ -1586,11 +1584,6 @@
         <ownedSubstitutions actual="#pDcbe" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id=",9hSL" name="Collection" superClasses="&_0;#jbMkR">
-      <ownedBindings>
-        <ownedSubstitutions actual="#H163w" formal="&_0;#qs59R"/>
-      </ownedBindings>
-    </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="9cW7G" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
         <ownedSubstitutions actual="#1s6I1" formal="&_0;#qs59R"/>
@@ -1679,6 +1672,11 @@
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="XRb47" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
         <ownedSubstitutions actual="#f3gRG" formal="&_0;#qs59R"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="T7fFO" name="Collection" superClasses="&_0;#jbMkR">
+      <ownedBindings>
+        <ownedSubstitutions actual="#7yjCF" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="SV6aE" name="Collection" superClasses="&_0;#jbMkR">
@@ -1901,11 +1899,6 @@
         <ownedSubstitutions actual="#lfR8C" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="MOXpB" name="OrderedCollection" superClasses="#,9hSL">
-      <ownedBindings>
-        <ownedSubstitutions actual="#H163w" formal="&_0;#feFHs"/>
-      </ownedBindings>
-    </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="KtLS9" name="OrderedCollection" superClasses="#9cW7G">
       <ownedBindings>
         <ownedSubstitutions actual="#1s6I1" formal="&_0;#feFHs"/>
@@ -1929,6 +1922,11 @@
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="DLyL1" name="OrderedCollection" superClasses="#2680+">
       <ownedBindings>
         <ownedSubstitutions actual="#WdWUd" formal="&_0;#feFHs"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="gLVcE" name="OrderedCollection" superClasses="#T7fFO">
+      <ownedBindings>
+        <ownedSubstitutions actual="#7yjCF" formal="&_0;#feFHs"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="8Cjk9" name="OrderedCollection" superClasses="#vytNH">
@@ -1991,11 +1989,6 @@
         <ownedSubstitutions actual="#t4j6T" formal="&_0;#feFHs"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:OrderedSetType" xmi:id="Wm0dg" name="OrderedSet" superClasses="#MOXpB #w4RO7">
-      <ownedBindings>
-        <ownedSubstitutions actual="#H163w" formal="&_0;#53+C2"/>
-      </ownedBindings>
-    </ownedClasses>
     <ownedClasses xsi:type="pivot:OrderedSetType" xmi:id="ZEpGc" isNullFree="true" name="OrderedSet" superClasses="#KtLS9 #uXG32">
       <ownedBindings>
         <ownedSubstitutions actual="#1s6I1" formal="&_0;#53+C2"/>
@@ -2019,6 +2012,11 @@
     <ownedClasses xsi:type="pivot:OrderedSetType" xmi:id="SiPAU" isNullFree="true" name="OrderedSet" superClasses="#DLyL1 #n1swu">
       <ownedBindings>
         <ownedSubstitutions actual="#WdWUd" formal="&_0;#53+C2"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:OrderedSetType" xmi:id="qjyQj" name="OrderedSet" superClasses="#gLVcE #E2PB+">
+      <ownedBindings>
+        <ownedSubstitutions actual="#7yjCF" formal="&_0;#53+C2"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:OrderedSetType" xmi:id="LaAZc" isNullFree="true" name="OrderedSet" superClasses="#8Cjk9 #gtdJ3">
@@ -2241,11 +2239,6 @@
         <ownedSubstitutions actual="#pDcbe" formal="&_0;#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="w4RO7" name="UniqueCollection" superClasses="#,9hSL">
-      <ownedBindings>
-        <ownedSubstitutions actual="#H163w" formal="&_0;#jdfjE"/>
-      </ownedBindings>
-    </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="uXG32" name="UniqueCollection" superClasses="#9cW7G">
       <ownedBindings>
         <ownedSubstitutions actual="#1s6I1" formal="&_0;#jdfjE"/>
@@ -2309,6 +2302,11 @@
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="IML0r" name="UniqueCollection" superClasses="#XRb47">
       <ownedBindings>
         <ownedSubstitutions actual="#f3gRG" formal="&_0;#jdfjE"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="E2PB+" name="UniqueCollection" superClasses="#T7fFO">
+      <ownedBindings>
+        <ownedSubstitutions actual="#7yjCF" formal="&_0;#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="gtdJ3" name="UniqueCollection" superClasses="#vytNH">

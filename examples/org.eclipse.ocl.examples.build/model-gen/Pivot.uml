@@ -170,9 +170,6 @@
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TClass.PsuperClasses.uV" value="*"/>
     </ownedAttribute>
   </packagedElement>
-  <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TCoIteratorVariable" name="CoIteratorVariable">
-    <generalization xmi:id="Ppivot.TCoIteratorVariable.g0" general="Ppivot.TVariable"/>
-  </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TCollectionItem" name="CollectionItem">
     <generalization xmi:id="Ppivot.TCollectionItem.g0" general="Ppivot.TCollectionLiteralPart"/>
     <ownedAttribute xmi:id="Ppivot.TCollectionItem.PownedItem" name="ownedItem" type="Ppivot.TOCLExpression" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedItem_CollectionItem"/>
@@ -594,7 +591,7 @@
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TLoopExp" name="LoopExp" isAbstract="true">
     <generalization xmi:id="Ppivot.TLoopExp.g0" general="Ppivot.TCallExp"/>
     <ownedAttribute xmi:id="Ppivot.TLoopExp.PownedBody" name="ownedBody" type="Ppivot.TOCLExpression" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedBody_LoopExp"/>
-    <ownedAttribute xmi:id="Ppivot.TLoopExp.PownedCoIterators" name="ownedCoIterators" type="Ppivot.TCoIteratorVariable" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedCoIterators_LoopExp">
+    <ownedAttribute xmi:id="Ppivot.TLoopExp.PownedCoIterators" name="ownedCoIterators" type="Ppivot.TIteratorVariable" isOrdered="true" aggregation="composite" association="Ppivot.A_ownedCoIterators_LoopExp">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TLoopExp.PownedCoIterators.lV"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="Ppivot.TLoopExp.PownedCoIterators.uV" value="*"/>
     </ownedAttribute>

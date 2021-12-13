@@ -51,15 +51,6 @@ extends EFactory {
 	@NonNull Class createClass();
 
 	/**
-	 * Returns a new object of class '<em>Co Iterator Variable</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Co Iterator Variable</em>'.
-	 * @generated
-	 */
-	CoIteratorVariable createCoIteratorVariable();
-
-	/**
 	 * Returns a new object of class '<em>Template Binding</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

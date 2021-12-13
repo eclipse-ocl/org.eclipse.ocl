@@ -395,7 +395,7 @@
         <ownedAttribute xmi:id="OCL-OCL_Expressions-LoopExp-referredIteration" name="referredIteration" type="OCL-OCL_Library-Iteration">
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_XpdiIn7VEeOu79LxSz8Ylw"/>
         </ownedAttribute>
-        <ownedAttribute xmi:id="_8l704OjJEeiyDNW4lK79YQ" name="ownedCoIterators" type="_E6f8kFXEEeyzMZrIbHIw1A" isOrdered="true" aggregation="composite">
+        <ownedAttribute xmi:id="_8l704OjJEeiyDNW4lK79YQ" name="ownedCoIterators" type="_KzuLUKymEea6UMIIRq32ug" isOrdered="true" aggregation="composite">
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_8l704ejJEeiyDNW4lK79YQ"/>
           <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_8l704ujJEeiyDNW4lK79YQ" value="*"/>
         </ownedAttribute>
@@ -747,9 +747,6 @@
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="OCL-OCL_Variables-VariableDeclaration" name="VariableDeclaration" isAbstract="true">
         <generalization xmi:id="_Xpwc9X7VEeOu79LxSz8Ylw" general="OCL-OCL_Variables-TypedElement"/>
-      </packagedElement>
-      <packagedElement xmi:type="uml:Class" xmi:id="_E6f8kFXEEeyzMZrIbHIw1A" name="CoIteratorVariable">
-        <generalization xmi:id="_E6f8kVXEEeyzMZrIbHIw1A" general="OCL-OCL_Variables-Variable"/>
       </packagedElement>
     </packagedElement>
     <packagedElement xmi:type="uml:Package" xmi:id="OCL-OCL_UML" name="OCL_UML">

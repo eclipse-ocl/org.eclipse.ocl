@@ -42,7 +42,6 @@ import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.AssociativityKind;
 import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.CallExp;
-import org.eclipse.ocl.pivot.CoIteratorVariable;
 import org.eclipse.ocl.pivot.CollectionItem;
 import org.eclipse.ocl.pivot.CollectionLiteralExp;
 import org.eclipse.ocl.pivot.CollectionLiteralPart;
@@ -65,6 +64,7 @@ import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
+import org.eclipse.ocl.pivot.IteratorVariable;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LetExp;
 import org.eclipse.ocl.pivot.LoopExp;
@@ -1496,7 +1496,7 @@ public class PivotUtil
 	/**
 	 * @since 1.6
 	 */
-	public static @NonNull Iterable<@NonNull CoIteratorVariable> getOwnedCoIterators(@NonNull LoopExp loopExp) {
+	public static @NonNull Iterable<@NonNull IteratorVariable> getOwnedCoIterators(@NonNull LoopExp loopExp) {
 		return ClassUtil.nullFree(loopExp.getOwnedCoIterators());
 	}
 

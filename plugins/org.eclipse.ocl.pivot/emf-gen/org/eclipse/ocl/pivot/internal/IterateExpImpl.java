@@ -27,13 +27,13 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
-import org.eclipse.ocl.pivot.CoIteratorVariable;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
+import org.eclipse.ocl.pivot.IteratorVariable;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.PivotPackage;
@@ -304,7 +304,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 				return;
 			case 13:
 				getOwnedCoIterators().clear();
-				getOwnedCoIterators().addAll((Collection<? extends CoIteratorVariable>)newValue);
+				getOwnedCoIterators().addAll((Collection<? extends IteratorVariable>)newValue);
 				return;
 			case 14:
 				getOwnedIterators().clear();

@@ -88,11 +88,6 @@ public abstract class AbstractExtendingVisitor<R, C>
 	}
 
 	@Override
-	public R visitCoIteratorVariable(org.eclipse.ocl.pivot.@NonNull CoIteratorVariable object) {
-		return visitVariable(object);
-	}
-
-	@Override
 	public R visitCollectionItem(org.eclipse.ocl.pivot.@NonNull CollectionItem object) {
 		return visitCollectionLiteralPart(object);
 	}

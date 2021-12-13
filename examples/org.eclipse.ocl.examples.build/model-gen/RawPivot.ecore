@@ -213,7 +213,6 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="CoIteratorVariable" eSuperTypes="#//Variable"/>
   <eClassifiers xsi:type="ecore:EClass" name="CollectionItem" eSuperTypes="#//CollectionLiteralPart">
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedItem" lowerBound="1"
         eType="#//OCLExpression" containment="true">
@@ -784,7 +783,7 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedCoIterators" upperBound="-1"
-        eType="#//CoIteratorVariable" containment="true">
+        eType="#//IteratorVariable" containment="true">
       <eAnnotations source="http://www.eclipse.org/OCL/Collection">
         <details key="nullFree" value="false"/>
       </eAnnotations>

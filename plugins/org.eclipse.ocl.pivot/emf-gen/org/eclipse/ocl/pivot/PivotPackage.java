@@ -3665,16 +3665,6 @@ extends EPackage
 	EOperation getClass__ValidateUniqueInvariantName__DiagnosticChain_Map();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.CoIteratorVariable <em>Co Iterator Variable</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Co Iterator Variable</em>'.
-	 * @see org.eclipse.ocl.pivot.CoIteratorVariable
-	 * @generated
-	 */
-	EClass getCoIteratorVariable();
-
-	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.pivot.Class#isIsInterface <em>Is Interface</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -8741,16 +8731,6 @@ extends EPackage
 		 * @generated
 		 */
 		EOperation CLASS___VALIDATE_UNIQUE_INVARIANT_NAME__DIAGNOSTICCHAIN_MAP = eINSTANCE.getClass__ValidateUniqueInvariantName__DiagnosticChain_Map();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.CoIteratorVariableImpl <em>Co Iterator Variable</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.ocl.pivot.internal.CoIteratorVariableImpl
-		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getCoIteratorVariable()
-		 * @generated
-		 */
-		EClass CO_ITERATOR_VARIABLE = eINSTANCE.getCoIteratorVariable();
 
 		/**
 		 * The meta object literal for the '<em><b>Is Interface</b></em>' attribute feature.

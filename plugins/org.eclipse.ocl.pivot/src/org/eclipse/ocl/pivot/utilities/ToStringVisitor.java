@@ -28,7 +28,6 @@ import org.eclipse.ocl.pivot.Annotation;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.AssociationClassCallExp;
 import org.eclipse.ocl.pivot.BooleanLiteralExp;
-import org.eclipse.ocl.pivot.CoIteratorVariable;
 import org.eclipse.ocl.pivot.CollectionItem;
 import org.eclipse.ocl.pivot.CollectionLiteralExp;
 import org.eclipse.ocl.pivot.CollectionLiteralPart;
@@ -53,6 +52,7 @@ import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.IteratorExp;
+import org.eclipse.ocl.pivot.IteratorVariable;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LetExp;
 import org.eclipse.ocl.pivot.MapLiteralExp;
@@ -800,11 +800,11 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		boolean isFirst = true;
 		List<Variable> iterators = callExp.getOwnedIterators();
 		int iteratorsSize = iterators.size();
-		List<CoIteratorVariable> coIterators = callExp.getOwnedCoIterators();
+		List<IteratorVariable> coIterators = callExp.getOwnedCoIterators();
 		int coIteratorsSize = coIterators.size();
 		for (int i = 0; i < iteratorsSize; i++) {
 			Variable iterator = iterators.get(i);
-			CoIteratorVariable coIterator = i < coIteratorsSize ? coIterators.get(i) : null;
+			IteratorVariable coIterator = i < coIteratorsSize ? coIterators.get(i) : null;
 			if (!isFirst) {
 				append(", ");
 			}
@@ -880,7 +880,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		boolean isFirst = true;
 		List<Variable> iterators = callExp.getOwnedIterators();
 		int iteratorsSize = iterators.size();
-		List<CoIteratorVariable> coIterators = callExp.getOwnedCoIterators();
+		List<IteratorVariable> coIterators = callExp.getOwnedCoIterators();
 		int coIteratorsSize = coIterators.size();
 		for (int i = 0; i < iteratorsSize; i++) {
 			Variable iterator = iterators.get(i);

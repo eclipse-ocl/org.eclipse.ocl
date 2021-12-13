@@ -32,6 +32,7 @@ import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.IfExp;
 import org.eclipse.ocl.pivot.IntegerLiteralExp;
+import org.eclipse.ocl.pivot.IteratorVariable;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.LetVariable;
 import org.eclipse.ocl.pivot.MapLiteralExp;
@@ -73,7 +74,6 @@ import org.eclipse.ocl.xtext.essentialoclcs.CollectionLiteralExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.CollectionLiteralPartCS;
 import org.eclipse.ocl.xtext.essentialoclcs.CollectionTypeCS;
 import org.eclipse.ocl.xtext.essentialoclcs.ContextCS;
-import org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage;
 import org.eclipse.ocl.xtext.essentialoclcs.ExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.ExpSpecificationCS;
 import org.eclipse.ocl.xtext.essentialoclcs.IfExpCS;
@@ -576,8 +576,7 @@ public class EssentialOCLCSContainmentVisitor extends AbstractEssentialOCLCSCont
 
 	@Override
 	public Continuation<?> visitVariableCS(@NonNull VariableCS csElement) {
-		boolean isCoIterator = csElement.eContainingFeature() == EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR;
-		refreshNamedElement(Variable.class, isCoIterator ? PivotPackage.Literals.CO_ITERATOR_VARIABLE : PivotPackage.Literals.VARIABLE, csElement);
+		refreshNamedElement(IteratorVariable.class, PivotPackage.Literals.ITERATOR_VARIABLE, csElement);
 		return null;
 	}
 }
