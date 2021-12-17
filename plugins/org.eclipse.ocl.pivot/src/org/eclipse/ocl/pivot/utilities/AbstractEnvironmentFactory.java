@@ -941,7 +941,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		if (expression == null) {
 			throw new ParserException(PivotMessagesInternal.MissingSpecificationBody_ERROR_, NameUtil.qualifiedNameFor(contextElement), PivotUtilInternal.getSpecificationRole(specification));
 		}
-		expression = PivotUtilInternal.getBodyExpression(expression);
+	//	expression = PivotUtilInternal.getBodyExpression(expression);
 		ParserContext parserContext = createParserContext(specification);
 		if (parserContext == null) {
 			throw new ParserException(PivotMessagesInternal.UnknownContextType_ERROR_, NameUtil.qualifiedNameFor(contextElement), PivotUtilInternal.getSpecificationRole(specification));

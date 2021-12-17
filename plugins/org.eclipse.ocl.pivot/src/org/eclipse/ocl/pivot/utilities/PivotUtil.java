@@ -2147,7 +2147,7 @@ public class PivotUtil
 		expressionInOCL.setBody(stringExpression);
 		expressionInOCL.setOwnedBody(oclExpression);
 		expressionInOCL.setType(oclExpression != null ? oclExpression.getType() : null);
-		expressionInOCL.setIsRequired(oclExpression != null&& oclExpression.isIsRequired());;
+		expressionInOCL.setIsRequired((oclExpression != null) && oclExpression.isIsRequired());;
 	}
 
 	/**

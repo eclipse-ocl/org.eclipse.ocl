@@ -66,6 +66,7 @@ import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
 import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
+import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.DebugTimestamp;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
@@ -74,6 +75,7 @@ import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.pivot.values.Unlimited;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
@@ -487,6 +489,7 @@ public class LoadTests extends XtextTestCase
 				//	Check that the split off file is loadable
 				//
 				if (hasOCLcontent) {
+					ThreadLocalExecutor.resetEnvironmentFactory();
 					OCL ocl2 = createOCLWithProjectMap();
 					ResourceSet resourceSet2 = ocl2.getResourceSet();
 					initializeExtraURIMappings(resourceSet2);
@@ -1256,6 +1259,7 @@ public class LoadTests extends XtextTestCase
 	}
 
 	public void testLoad_Internationalized_profile_uml() throws IOException, InterruptedException, ParserException {
+		AbstractEnvironmentFactory.ENVIRONMENT_FACTORY_ATTACH.setState(true);
 		//		EPackage.Registry.INSTANCE.put("http://www.omg.org/spec/MOF/20110701", UMLPackage.eINSTANCE);
 		//		EPackage.Registry.INSTANCE.put("http://www.omg.org/spec/UML/20120801", UMLPackage.eINSTANCE);
 		//		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xmi", XMI2UMLResource.Factory.INSTANCE);

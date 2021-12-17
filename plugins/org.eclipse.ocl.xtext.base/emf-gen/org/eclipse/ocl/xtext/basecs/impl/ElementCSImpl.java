@@ -212,7 +212,11 @@ public abstract class ElementCSImpl extends EObjectImpl implements ElementCS {
 	public String toString() {
 		ICompositeNode parserNode = NodeModelUtils.getNode(this);
 		if (parserNode != null) {
-			return parserNode.getText().trim();
+			String text = parserNode.getText();
+			if (text.charAt(0) == ' ') {
+				text = text.substring(1);
+			}
+			return text;//.trim();
 		}
 		return NameUtil.debugFullName(this);
 	}

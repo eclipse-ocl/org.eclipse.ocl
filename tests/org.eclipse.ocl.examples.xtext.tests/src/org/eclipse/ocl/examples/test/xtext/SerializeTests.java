@@ -31,6 +31,7 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
+import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
 import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
@@ -38,6 +39,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.basecs.ImportCS;
@@ -58,14 +60,32 @@ public class SerializeTests extends XtextTestCase
 		default void assertSameModel(@NonNull Resource expectedResource, @NonNull Resource actualResource) throws IOException, InterruptedException {
 			TestUtil.assertSameModel(expectedResource, actualResource);
 		}
-		default @NonNull String @NonNull [] asFirstValidationMessages() { return NO_MESSAGES; }
-		default @NonNull String @NonNull [] asSecondValidationMessages() { return asFirstValidationMessages(); }
-		default @Nullable String cs2asErrorMessages() { return null; }
-		default void extraXtextResourceValidate(@NonNull BaseCSResource xtextResource) {}
-		default void initializeResourceSet(@NonNull ResourceSet resourceSet) {}
+		default @NonNull String @NonNull [] asFirstValidationMessages() {
+			return NO_MESSAGES;
+		}
+		default @NonNull String @NonNull [] asSecondValidationMessages() {
+			return asFirstValidationMessages();
+		}
+		default @Nullable String cs2asErrorMessages() {
+			return null;
+		}
+		default void extraXtextResourceValidate(@NonNull BaseCSResource xtextResource) {
+			return;
+		}
+		default void initializeResourceSet(@NonNull ResourceSet resourceSet) {
+			return;
+		}
 	}
 
 	public static final @NonNull SerializeTestHelper DEFAULT_HELPER = new SerializeTestHelper() {};
+
+	public static final @NonNull SerializeTestHelper NO_VALIDATION = new SerializeTestHelper()
+	{
+		@Override
+		public @NonNull String @NonNull [] asFirstValidationMessages() {
+			return SUPPRESS_VALIDATION;
+		}
+	};
 
 	@Override
 	protected void setUp() throws Exception {
@@ -120,10 +140,10 @@ public class SerializeTests extends XtextTestCase
 		//	resourceSet.getResources().clear();
 		}
 		finally {
-		//	ThreadLocalExecutor.resetEnvironmentFactory();
 			ocl1.dispose();
 			ocl1 = null;
 		}
+		ThreadLocalExecutor.resetEnvironmentFactory();
 		OCL ocl2 = OCL.newInstance(getProjectMap());
 		ResourceSet resourceSet2 = ocl2.getResourceSet();
 		testHelper.initializeResourceSet(resourceSet2);
@@ -297,13 +317,7 @@ public class SerializeTests extends XtextTestCase
 	}
 
 	public void testSerialize_Bug376488() throws Exception {
-		doSerialize(getTestModelURI("models/ecore/Bug376488.ecore"), getTestModelURI("models/ecore/Bug376488.ecore"), new SerializeTestHelper()
-		{
-			@Override
-			public @NonNull String @NonNull [] asFirstValidationMessages() {
-				return SUPPRESS_VALIDATION;
-			}
-		});		// FIXME
+		doSerialize(getTestModelURI("models/ecore/Bug376488.ecore"), getTestModelURI("models/ecore/Bug376488.ecore"), NO_VALIDATION);		// FIXME
 	}
 
 	public void testSerialize_Bug382956() throws Exception {
@@ -594,12 +608,13 @@ public class SerializeTests extends XtextTestCase
 						"  </eAnnotations>\n" +
 						"  <eClassifiers xsi:type=\"ecore:EClass\" name=\"Expressions\">\n" +
 						"    <eAnnotations source=\"http://www.eclipse.org/emf/2002/Ecore\">\n" +
-						"      <details key=\"constraints\" value=\"SimpleIf SingleElseIf DoubleElseIf\"/>\n" +
+						"      <details key=\"constraints\" value=\"SimpleIf SingleElseIf DoubleElseIf MapIterators\"/>\n" +
 						"    </eAnnotations>\n" +
 						"    <eAnnotations source=\"http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot\">\n" +
 						"      <details key=\"SimpleIf\" value=\"if true then 1 else 2 endif &lt;> 0\"/>\n" +
 						"      <details key=\"SingleElseIf\" value=\"if true then 1 elseif true then 2 else 3 endif &lt;> 0\"/>\n" +
 						"      <details key=\"DoubleElseIf\" value=\"if true then 1 elseif true then 2 elseif true then 3 else 4 endif &lt;> 0\"/>\n" +
+						"      <details key=\"MapIterators\" value=\"Map{1 &lt;- 1}-&gt;collect(v &lt;- k | v * k)-&gt;notEmpty()\"/>\n" +
 						"    </eAnnotations>\n" +
 						"  </eClassifiers>\n" +
 						"</ecore:EPackage>\n";
@@ -725,8 +740,11 @@ public class SerializeTests extends XtextTestCase
 		{
 			@Override
 			public @NonNull String @NonNull [] asFirstValidationMessages() {
-				return NO_MESSAGES/*getMessages(message1, message2), NO_MESSAGESgetMessages(message4)*/;
-		//			new String[] {StringUtil.bind(PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "OclInvalid", "substring", "1, 1")};
+				return //SUPPRESS_VALIDATION;
+		//		return NO_MESSAGES/*getMessages(message1, message2), NO_MESSAGESgetMessages(message4)*/;
+					new @NonNull String[] {StringUtil.bind(PivotMessagesInternal.ValidationConstraintIsInvalid_ERROR_, PivotConstantsInternal.INVARIANT_ROLE,
+						"states::State::NameIsLeadingUpperCase", "let firstLetter : String = invalid.substring(1, 1) in firstLetter.toUpperCase() = firstLetter'"
+							+ "\n" + "1:36: Unresolved Operation 'OclInvalid::substring(1, 1)")};
 			}
 			@Override
 			public @NonNull String cs2asErrorMessages() {
