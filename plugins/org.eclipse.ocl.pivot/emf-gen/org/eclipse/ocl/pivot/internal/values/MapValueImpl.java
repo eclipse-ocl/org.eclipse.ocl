@@ -579,7 +579,7 @@ public class MapValueImpl extends ValueImpl implements MapValue {
 			}
 			if (s.length() < lengthLimit) {
 				ValueUtil.toString(entry.getKey(), s, lengthLimit-1);
-				s.append(" <- ");
+				s.append(" with ");
 				ValueUtil.toString(entry.getValue(), s, lengthLimit-1);
 			}
 			else {

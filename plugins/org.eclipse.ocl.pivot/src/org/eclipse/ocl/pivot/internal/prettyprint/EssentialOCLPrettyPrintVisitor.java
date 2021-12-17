@@ -270,7 +270,7 @@ public class EssentialOCLPrettyPrintVisitor extends PrettyPrintVisitor
 						//						safeVisit(iterator);
 						context.appendName(iterator);
 						if (coIterator != null) {
-							context.append(" <- ");
+							context.append(" with ");
 							context.appendName(coIterator);
 						}
 						prefix = ",";
@@ -316,7 +316,7 @@ public class EssentialOCLPrettyPrintVisitor extends PrettyPrintVisitor
 				context.append(" : ");
 				context.appendTypedMultiplicity(iterator);
 				if (coIterator != null) {
-					context.append(" <- ");
+					context.append(" with ");
 					context.appendName(coIterator);
 				}
 				prefix = ",";
@@ -370,7 +370,7 @@ public class EssentialOCLPrettyPrintVisitor extends PrettyPrintVisitor
 							//							safeVisit(iterator);
 							context.appendName(iterator);
 							if (coIterator != null) {
-								context.append(" <- ");
+								context.append(" with ");
 								context.appendName(coIterator);
 							}
 							prefix = ",";
@@ -456,7 +456,7 @@ public class EssentialOCLPrettyPrintVisitor extends PrettyPrintVisitor
 	@Override
 	public Object visitMapLiteralPart(@NonNull MapLiteralPart object) {
 		safeVisit(object.getOwnedKey());
-		context.next("", " <- ", "");
+		context.next("", " with ", "");
 		safeVisit(object.getOwnedValue());
 		return null;
 	}

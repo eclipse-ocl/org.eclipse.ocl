@@ -75,17 +75,17 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 
 		ocl.assertQueryInvalid(null, "Map{}->at(3)", StringUtil.bind(PivotMessages.IndexNotInUse, 3), InvalidValueException.class);
 
-		ocl.assertQueryEquals(null, "b", "Map{'a'<-'b'}->at('a')");
-		ocl.assertQueryInvalid(null, "Map{'a'<-'b'}->at('b')", StringUtil.bind(PivotMessages.IndexNotInUse, "b"), InvalidValueException.class);
-		ocl.assertQueryInvalid(null, "Map{'a'<-'b'}->at(null)", StringUtil.bind(PivotMessages.IndexNotInUse, "null"), InvalidValueException.class);
+		ocl.assertQueryEquals(null, "b", "Map{'a' with 'b'}->at('a')");
+		ocl.assertQueryInvalid(null, "Map{'a' with 'b'}->at('b')", StringUtil.bind(PivotMessages.IndexNotInUse, "b"), InvalidValueException.class);
+		ocl.assertQueryInvalid(null, "Map{'a' with 'b'}->at(null)", StringUtil.bind(PivotMessages.IndexNotInUse, "null"), InvalidValueException.class);
 
-		ocl.assertQueryEquals(null, "b", "Map{null<-'b'}->at(null)");
-		ocl.assertQueryInvalid(null, "Map{null<-'b'}->at('b')", StringUtil.bind(PivotMessages.IndexNotInUse, "b"), InvalidValueException.class);
+		ocl.assertQueryEquals(null, "b", "Map{null with 'b'}->at(null)");
+		ocl.assertQueryInvalid(null, "Map{null with 'b'}->at('b')", StringUtil.bind(PivotMessages.IndexNotInUse, "b"), InvalidValueException.class);
 
-		ocl.assertQueryNull(null, "Map{'a'<-null}->at('a')");
-		ocl.assertQueryInvalid(null, "Map{'a'<-null}->at(null)", StringUtil.bind(PivotMessages.IndexNotInUse, "null"), InvalidValueException.class);
+		ocl.assertQueryNull(null, "Map{'a' with null}->at('a')");
+		ocl.assertQueryInvalid(null, "Map{'a' with null}->at(null)", StringUtil.bind(PivotMessages.IndexNotInUse, "null"), InvalidValueException.class);
 
-		ocl.assertQueryInvalid(null, "Map{'a'<-'b'}->at(invalid)", "invalid", InvalidValueException.class);
+		ocl.assertQueryInvalid(null, "Map{'a' with 'b'}->at(invalid)", "invalid", InvalidValueException.class);
 
 		ocl.dispose();
 	}
@@ -97,33 +97,33 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryFalse(null, "Map{} = Sequence{}");
 		ocl.assertQueryFalse(null, "Map{} = Set{}");
 
-		ocl.assertQueryFalse(null, "Map{1 <- 1} = 1");
-		ocl.assertQueryFalse(null, "1 = Map{1 <- 1}");
+		ocl.assertQueryFalse(null, "Map{1 with 1} = 1");
+		ocl.assertQueryFalse(null, "1 = Map{1 with 1}");
 		ocl.assertQueryFalse(null, "Set{1} = Set{Set{1}}");
 
-		ocl.assertQueryTrue(null, "Map{1 <- 1} = Map{1 <- 1}");
-		ocl.assertQueryTrue(null, "Map{1.0 <- 1} = Map{1 <- 1}");
-		ocl.assertQueryTrue(null, "Map{1 <- 1.0} = Map{1 <- 1}");
-		ocl.assertQueryTrue(null, "Map{1.0 <- 1.0} = Map{1 <- 1}");
+		ocl.assertQueryTrue(null, "Map{1 with 1} = Map{1 with 1}");
+		ocl.assertQueryTrue(null, "Map{1.0 with 1} = Map{1 with 1}");
+		ocl.assertQueryTrue(null, "Map{1 with 1.0} = Map{1 with 1}");
+		ocl.assertQueryTrue(null, "Map{1.0 with 1.0} = Map{1 with 1}");
 
-		ocl.assertQueryFalse(null, "Map{1.01 <- 1} = Map{1 <- 1}");
-		ocl.assertQueryFalse(null, "Map{1 <- 1.01} = Map{1 <- 1}");
-		ocl.assertQueryFalse(null, "Map{1.01 <- 1.01} = Map{1 <- 1}");
+		ocl.assertQueryFalse(null, "Map{1.01 with 1} = Map{1 with 1}");
+		ocl.assertQueryFalse(null, "Map{1 with 1.01} = Map{1 with 1}");
+		ocl.assertQueryFalse(null, "Map{1.01 with 1.01} = Map{1 with 1}");
 
-		ocl.assertQueryFalse(null, "Map{1 <- 1} = Map{1 <- 1, 2 <- 1}");
+		ocl.assertQueryFalse(null, "Map{1 with 1} = Map{1 with 1, 2 with 1}");
 
-		ocl.assertQueryTrue(null, "Map{Map{'a'<-'b'} <- 1} = Map{Map{'a'<-'b'} <- 1}");
-		ocl.assertQueryFalse(null, "Map{Map{'a'<-'b'} <- 1} = Map{Map{'a'<-'c'} <- 1}");
-		ocl.assertQueryFalse(null, "Map{Map{'a'<-'b'} <- 1} = Map{Map{'b'<-'b'} <- 1}");
-		ocl.assertQueryTrue(null, "Map{1 <- Map{'a'<-'b'}} = Map{1 <- Map{'a'<-'b'}}");
-		ocl.assertQueryFalse(null, "Map{1 <- Map{'a'<-'b'}} = Map{1 <- Map{'a'<-'c'}}");
-		ocl.assertQueryFalse(null, "Map{1 <- Map{'a'<-'b'}} = Map{1 <- Map{'b'<-'b'}}");
+		ocl.assertQueryTrue(null, "Map{Map{'a' with 'b'} with 1} = Map{Map{'a' with 'b'} with 1}");
+		ocl.assertQueryFalse(null, "Map{Map{'a' with 'b'} with 1} = Map{Map{'a' with 'c'} with 1}");
+		ocl.assertQueryFalse(null, "Map{Map{'a' with 'b'} with 1} = Map{Map{'b' with 'b'} with 1}");
+		ocl.assertQueryTrue(null, "Map{1 with Map{'a' with 'b'}} = Map{1 with Map{'a' with 'b'}}");
+		ocl.assertQueryFalse(null, "Map{1 with Map{'a' with 'b'}} = Map{1 with Map{'a' with 'c'}}");
+		ocl.assertQueryFalse(null, "Map{1 with Map{'a' with 'b'}} = Map{1 with Map{'b' with 'b'}}");
 
 		// null map element
-		ocl.assertQueryTrue(null, "Map{null <- null} = Map{null <- null}");
-		ocl.assertQueryFalse(null, "Map{null <- 1} = Map{null <- null}");
-		ocl.assertQueryFalse(null, "Map{true <- null} = Map{null <- null}");
-		ocl.assertQueryFalse(null, "Map{'4' <- 4} = Map{null <- null}");
+		ocl.assertQueryTrue(null, "Map{null with null} = Map{null with null}");
+		ocl.assertQueryFalse(null, "Map{null with 1} = Map{null with null}");
+		ocl.assertQueryFalse(null, "Map{true with null} = Map{null with null}");
+		ocl.assertQueryFalse(null, "Map{'4' with 4} = Map{null with null}");
 		ocl.dispose();
 	}
 
@@ -138,28 +138,28 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 
 	@Test public void testMapExcludes() {
 		TestOCL ocl = createOCL();
-		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludes(3)");
-		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludes(3.0)");
-		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludes(4.0)");
-		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludes('test')");
+		ocl.assertQueryFalse(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->excludes(3)");
+		ocl.assertQueryFalse(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->excludes(3.0)");
+		ocl.assertQueryFalse(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->excludes(4.0)");
+		ocl.assertQueryFalse(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->excludes('test')");
 
-		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludes(3.5)");
-		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludes(8)");
-		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludes('tst')");
+		ocl.assertQueryTrue(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->excludes(3.5)");
+		ocl.assertQueryTrue(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->excludes(8)");
+		ocl.assertQueryTrue(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->excludes('tst')");
 
 		// invalid collection
 		ocl.assertQueryInvalid(null, "let s : Map(Integer,String) = invalid in s->excludes(0)");
 
 		// invalid collection element
-		ocl.assertQueryInvalid(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludes(invalid)");
+		ocl.assertQueryInvalid(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->excludes(invalid)");
 
 		// invalid null
 		ocl.assertQueryInvalid(null, "let s : Map(Integer,Boolean) = null in s->excludes(0)");
 
 		// invalid null element
-		ocl.assertQueryFalse(null, "Map{3 <- 8, null <- 'tst', 'test' <- true}->excludes(null)");
-		ocl.assertQueryFalse(null, "Map{null <- null}->excludes(null)");
-		ocl.assertQueryTrue(null, "Map{3 <- 8, 4 <- 'tst', 'test' <- true}->excludes(null)");
+		ocl.assertQueryFalse(null, "Map{3 with 8, null with 'tst', 'test' with true}->excludes(null)");
+		ocl.assertQueryFalse(null, "Map{null with null}->excludes(null)");
+		ocl.assertQueryTrue(null, "Map{3 with 8, 4 with 'tst', 'test' with true}->excludes(null)");
 		ocl.assertQueryTrue(null, "Map{}->excludes(null)");
 
 		ocl.dispose();
@@ -167,108 +167,108 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 
 	@Test public void testMapExcludesAll() {
 		TestOCL ocl = createOCL();
-		ocl.assertQueryFalse(null, "Map{3 <- true, 4.0 <- true, 'test' <- true}->excludesAll(Sequence{3, 'test'})");
-		ocl.assertQueryFalse(null, "Map{3 <- true, 4.0 <- true, 'test' <- true}->excludesAll(Bag{3, 'test'})");
-		ocl.assertQueryFalse(null, "Map{3 <- true, 4.0 <- true, 'test' <- true}->excludesAll(Set{3, 'test'})");
-		ocl.assertQueryFalse(null, "Map{3 <- true, 4.0 <- true, 'test' <- true}->excludesAll(OrderedSet{3, 'test'})");
+		ocl.assertQueryFalse(null, "Map{3 with true, 4.0 with true, 'test' with true}->excludesAll(Sequence{3, 'test'})");
+		ocl.assertQueryFalse(null, "Map{3 with true, 4.0 with true, 'test' with true}->excludesAll(Bag{3, 'test'})");
+		ocl.assertQueryFalse(null, "Map{3 with true, 4.0 with true, 'test' with true}->excludesAll(Set{3, 'test'})");
+		ocl.assertQueryFalse(null, "Map{3 with true, 4.0 with true, 'test' with true}->excludesAll(OrderedSet{3, 'test'})");
 
-		ocl.assertQueryFalse(null, "Map{3 <- true, 4.0 <- true, 'test' <- true}->excludesAll(Sequence{3.5, 'test'})");
-		ocl.assertQueryFalse(null, "Map{3 <- true, 4.0 <- true, 'test' <- true}->excludesAll(Bag{3.5, 'test'})");
-		ocl.assertQueryFalse(null, "Map{3 <- true, 4.0 <- true, 'test' <- true}->excludesAll(Set{3.5, 'test'})");
-		ocl.assertQueryFalse(null, "Map{3 <- true, 4.0 <- true, 'test' <- true}->excludesAll(OrderedSet{3.5, 'test'})");
+		ocl.assertQueryFalse(null, "Map{3 with true, 4.0 with true, 'test' with true}->excludesAll(Sequence{3.5, 'test'})");
+		ocl.assertQueryFalse(null, "Map{3 with true, 4.0 with true, 'test' with true}->excludesAll(Bag{3.5, 'test'})");
+		ocl.assertQueryFalse(null, "Map{3 with true, 4.0 with true, 'test' with true}->excludesAll(Set{3.5, 'test'})");
+		ocl.assertQueryFalse(null, "Map{3 with true, 4.0 with true, 'test' with true}->excludesAll(OrderedSet{3.5, 'test'})");
 
-		ocl.assertQueryTrue(null, "Map{3 <- true, 4.0 <- true, 'test' <- true}->excludesAll(Sequence{3.5, 'tst'})");
-		ocl.assertQueryTrue(null, "Map{3 <- true, 4.0 <- true, 'test' <- true}->excludesAll(Bag{3.5, 'tst'})");
-		ocl.assertQueryTrue(null, "Map{3 <- true, 4.0 <- true, 'test' <- true}->excludesAll(Set{3.5, 'tst'})");
-		ocl.assertQueryTrue(null, "Map{3 <- true, 4.0 <- true, 'test' <- true}->excludesAll(OrderedSet{3.5, 'tst'})");
+		ocl.assertQueryTrue(null, "Map{3 with true, 4.0 with true, 'test' with true}->excludesAll(Sequence{3.5, 'tst'})");
+		ocl.assertQueryTrue(null, "Map{3 with true, 4.0 with true, 'test' with true}->excludesAll(Bag{3.5, 'tst'})");
+		ocl.assertQueryTrue(null, "Map{3 with true, 4.0 with true, 'test' with true}->excludesAll(Set{3.5, 'tst'})");
+		ocl.assertQueryTrue(null, "Map{3 with true, 4.0 with true, 'test' with true}->excludesAll(OrderedSet{3.5, 'tst'})");
 
 		// invalid collection
 		ocl.assertQueryInvalid(null, "let s : Map(Integer,Boolean) = invalid in s->excludesAll(Sequence{0})");
 
-		ocl.assertQueryInvalid(null, "let s : Sequence(Integer) = invalid in Map{0 <- false}->excludesAll(s)");
+		ocl.assertQueryInvalid(null, "let s : Sequence(Integer) = invalid in Map{0 with false}->excludesAll(s)");
 
 		// invalid collection element
 		// Collections can't contain the invalid value
-		ocl.assertQueryInvalid(null, "Map{3 <- true, 4.0 <- true, invalid <- true, 'test' <- true}->excludesAll(OrderedSet{'test'})");
-		ocl.assertQueryInvalid(null, "Map{3 <- true, 4.0 <- true, 'test' <- true}->excludesAll(Sequence{'test', invalid})");
+		ocl.assertQueryInvalid(null, "Map{3 with true, 4.0 with true, invalid with true, 'test' with true}->excludesAll(OrderedSet{'test'})");
+		ocl.assertQueryInvalid(null, "Map{3 with true, 4.0 with true, 'test' with true}->excludesAll(Sequence{'test', invalid})");
 
 		// null collection
 		ocl.assertQueryInvalid(null, "let s : Map(Integer,Boolean) = null in s->excludesAll(Sequence{0})");
-		ocl.assertQueryInvalid(null, "let s : Sequence(Integer) = null in Map{0 <- false}->excludesAll(s)");
+		ocl.assertQueryInvalid(null, "let s : Sequence(Integer) = null in Map{0 with false}->excludesAll(s)");
 
 		// null collection element
-		ocl.assertQueryFalse(null, "Map{3 <- true, 4.0 <- true, null <- true, 'test' <- true}->excludesAll(OrderedSet{'test', null})");
-		ocl.assertQueryFalse(null, "Map{3 <- true, 4.0 <- true, 'test' <- true}->excludesAll(OrderedSet{'test', null})");
-		ocl.assertQueryTrue(null, "Map{3 <- true, 4.0 <- true, 'test' <- true}->excludesAll(OrderedSet{'tst', null})");
+		ocl.assertQueryFalse(null, "Map{3 with true, 4.0 with true, null with true, 'test' with true}->excludesAll(OrderedSet{'test', null})");
+		ocl.assertQueryFalse(null, "Map{3 with true, 4.0 with true, 'test' with true}->excludesAll(OrderedSet{'test', null})");
+		ocl.assertQueryTrue(null, "Map{3 with true, 4.0 with true, 'test' with true}->excludesAll(OrderedSet{'tst', null})");
 
 		ocl.dispose();
 	}
 
 	@Test public void testMapExcludesMap() {
 		TestOCL ocl = createOCL();
-		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludesMap(Map{3 <- 8})");
-		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludesMap(Map{3.0 <- 8})");
-		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludesMap(Map{3 <- 8, 4.0 <- 'tst'})");
-		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludesMap(Map{3 <- 8, 4 <- 'tst', 'test' <- true})");
-		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludesMap(Map{4.0 <- 'tst'})");
-		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludesMap(Map{'test' <- true})");
+		ocl.assertQueryFalse(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->excludesMap(Map{3 with 8})");
+		ocl.assertQueryFalse(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->excludesMap(Map{3.0 with 8})");
+		ocl.assertQueryFalse(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->excludesMap(Map{3 with 8, 4.0 with 'tst'})");
+		ocl.assertQueryFalse(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->excludesMap(Map{3 with 8, 4 with 'tst', 'test' with true})");
+		ocl.assertQueryFalse(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->excludesMap(Map{4.0 with 'tst'})");
+		ocl.assertQueryFalse(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->excludesMap(Map{'test' with true})");
 
-		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludesMap(Map{3.5 <- 8})");
-		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludesMap(Map{3 <- 8, 3.5 <- 8, 4.0 <- 'tst', 'test' <- true})");
-		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludesMap(Map{3 <- true})");
-		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludesMap(Map{'tst' <- 4.0})");
+		ocl.assertQueryTrue(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->excludesMap(Map{3.5 with 8})");
+		ocl.assertQueryFalse(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->excludesMap(Map{3 with 8, 3.5 with 8, 4.0 with 'tst', 'test' with true})");
+		ocl.assertQueryTrue(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->excludesMap(Map{3 with true})");
+		ocl.assertQueryTrue(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->excludesMap(Map{'tst' with 4.0})");
 
-		ocl.assertQueryTrue(null, "Map{3 <- true, 4.0 <- true, 'test' <- true}->excludesMap(Map{3.5 <- true})");
-		ocl.assertQueryTrue(null, "Map{3 <- true, 4.0 <- true, 'test' <- true}->excludesMap(Map{3.5 <- true, 3 <- false})");
+		ocl.assertQueryTrue(null, "Map{3 with true, 4.0 with true, 'test' with true}->excludesMap(Map{3.5 with true})");
+		ocl.assertQueryTrue(null, "Map{3 with true, 4.0 with true, 'test' with true}->excludesMap(Map{3.5 with true, 3 with false})");
 
 		// invalid collection
-		ocl.assertQueryInvalid(null, "let s : Map(Integer,String) = invalid in s->excludesMap(Map{0 <- 0})");
+		ocl.assertQueryInvalid(null, "let s : Map(Integer,String) = invalid in s->excludesMap(Map{0 with 0})");
 
 		// invalid collection element
-		ocl.assertQueryInvalid(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludesMap(Map{invalid <- 'tst'})");
-		ocl.assertQueryInvalid(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludesMap(Map{4.0 <- invalid})");
+		ocl.assertQueryInvalid(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->excludesMap(Map{invalid with 'tst'})");
+		ocl.assertQueryInvalid(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->excludesMap(Map{4.0 with invalid})");
 
 		// invalid null
-		ocl.assertQueryInvalid(null, "let s : Map(Integer,Boolean) = null in s->excludesMap(Map{0 <- 0})");
+		ocl.assertQueryInvalid(null, "let s : Map(Integer,Boolean) = null in s->excludesMap(Map{0 with 0})");
 
 		// invalid null element
-		ocl.assertQueryFalse(null, "Map{3 <- 8, null <- 'tst', 'test' <- null}->excludesMap(Map{null <- 'tst'})");
-		ocl.assertQueryFalse(null, "Map{3 <- 8, null <- 'tst', 'test' <- null}->excludesMap(Map{'test' <- null})");
-		ocl.assertQueryFalse(null, "Map{null <- null}->excludesMap(Map{null <- null})");
-		ocl.assertQueryTrue(null, "Map{3 <- 8, 4 <- 'tst', 'test' <- true}->excludesMap(Map{null <- 'tst'})");
-		ocl.assertQueryTrue(null, "Map{3 <- 8, 4 <- 'tst', 'test' <- true}->excludesMap(Map{4 <- null})");
-		ocl.assertQueryTrue(null, "Map{}->excludesMap(Map{null <- null})");
+		ocl.assertQueryFalse(null, "Map{3 with 8, null with 'tst', 'test' with null}->excludesMap(Map{null with 'tst'})");
+		ocl.assertQueryFalse(null, "Map{3 with 8, null with 'tst', 'test' with null}->excludesMap(Map{'test' with null})");
+		ocl.assertQueryFalse(null, "Map{null with null}->excludesMap(Map{null with null})");
+		ocl.assertQueryTrue(null, "Map{3 with 8, 4 with 'tst', 'test' with true}->excludesMap(Map{null with 'tst'})");
+		ocl.assertQueryTrue(null, "Map{3 with 8, 4 with 'tst', 'test' with true}->excludesMap(Map{4 with null})");
+		ocl.assertQueryTrue(null, "Map{}->excludesMap(Map{null with null})");
 
 		ocl.dispose();
 	}
 
 	@Test public void testMapExcludesPair() {
 		TestOCL ocl = createOCL();
-		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludes(3, 8)");
-		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludes(3.0, 8)");
-		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludes(4.0, 'tst')");
-		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludes('test', true)");
+		ocl.assertQueryFalse(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->excludes(3, 8)");
+		ocl.assertQueryFalse(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->excludes(3.0, 8)");
+		ocl.assertQueryFalse(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->excludes(4.0, 'tst')");
+		ocl.assertQueryFalse(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->excludes('test', true)");
 
-		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludes(3.5, 8)");
-		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludes(3, true)");
-		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludes('tst', 4.0)");
+		ocl.assertQueryTrue(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->excludes(3.5, 8)");
+		ocl.assertQueryTrue(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->excludes(3, true)");
+		ocl.assertQueryTrue(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->excludes('tst', 4.0)");
 
 		// invalid collection
 		ocl.assertQueryInvalid(null, "let s : Map(Integer,String) = invalid in s->excludes(0, 0)");
 
 		// invalid collection element
-		ocl.assertQueryInvalid(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludes(invalid, 'tst')");
-		ocl.assertQueryInvalid(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludes(4.0, invalid)");
+		ocl.assertQueryInvalid(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->excludes(invalid, 'tst')");
+		ocl.assertQueryInvalid(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->excludes(4.0, invalid)");
 
 		// invalid null
 		ocl.assertQueryInvalid(null, "let s : Map(Integer,Boolean) = null in s->excludes(0, 0)");
 
 		// invalid null element
-		ocl.assertQueryFalse(null, "Map{3 <- 8, null <- 'tst', 'test' <- null}->excludes(null, 'tst')");
-		ocl.assertQueryFalse(null, "Map{3 <- 8, null <- 'tst', 'test' <- null}->excludes('test', null)");
-		ocl.assertQueryFalse(null, "Map{null <- null}->excludes(null, null)");
-		ocl.assertQueryTrue(null, "Map{3 <- 8, 4 <- 'tst', 'test' <- true}->excludes(null, 'tst')");
-		ocl.assertQueryTrue(null, "Map{3 <- 8, 4 <- 'tst', 'test' <- true}->excludes(4, null)");
+		ocl.assertQueryFalse(null, "Map{3 with 8, null with 'tst', 'test' with null}->excludes(null, 'tst')");
+		ocl.assertQueryFalse(null, "Map{3 with 8, null with 'tst', 'test' with null}->excludes('test', null)");
+		ocl.assertQueryFalse(null, "Map{null with null}->excludes(null, null)");
+		ocl.assertQueryTrue(null, "Map{3 with 8, 4 with 'tst', 'test' with true}->excludes(null, 'tst')");
+		ocl.assertQueryTrue(null, "Map{3 with 8, 4 with 'tst', 'test' with true}->excludes(4, null)");
 		ocl.assertQueryTrue(null, "Map{}->excludes(null, null)");
 
 		ocl.dispose();
@@ -276,28 +276,28 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 
 	@Test public void testMapExcludesValue() {
 		TestOCL ocl = createOCL();
-		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludesValue(8)");
-		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludesValue(8.0)");
-		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludesValue('tst')");
-		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludesValue(true)");
+		ocl.assertQueryFalse(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->excludesValue(8)");
+		ocl.assertQueryFalse(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->excludesValue(8.0)");
+		ocl.assertQueryFalse(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->excludesValue('tst')");
+		ocl.assertQueryFalse(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->excludesValue(true)");
 
-		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludesValue(3.5)");
-		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludesValue(3)");
-		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludesValue('test')");
+		ocl.assertQueryTrue(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->excludesValue(3.5)");
+		ocl.assertQueryTrue(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->excludesValue(3)");
+		ocl.assertQueryTrue(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->excludesValue('test')");
 
 		// invalid collection
 		ocl.assertQueryInvalid(null, "let s : Map(Integer,String) = invalid in s->excludesValue(0)");
 
 		// invalid collection element
-		ocl.assertQueryInvalid(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->excludesValue(invalid)");
+		ocl.assertQueryInvalid(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->excludesValue(invalid)");
 
 		// invalid null
 		ocl.assertQueryInvalid(null, "let m : Map(Integer,Boolean) = null in m->excludesValue(0)");
 
 		// invalid null element
-		ocl.assertQueryFalse(null, "Map{3 <- 8, 'tst' <- null, 'test' <- true}->excludesValue(null)");
-		ocl.assertQueryFalse(null, "Map{null <- null}->excludesValue(null)");
-		ocl.assertQueryTrue(null, "Map{3 <- 8, 4 <- 'tst', 'test' <- true}->excludesValue(null)");
+		ocl.assertQueryFalse(null, "Map{3 with 8, 'tst' with null, 'test' with true}->excludesValue(null)");
+		ocl.assertQueryFalse(null, "Map{null with null}->excludesValue(null)");
+		ocl.assertQueryTrue(null, "Map{3 with 8, 4 with 'tst', 'test' with true}->excludesValue(null)");
 		ocl.assertQueryTrue(null, "Map{}->excludesValue(null)");
 
 		ocl.dispose();
@@ -305,89 +305,89 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 
 	@Test public void testMapExcluding() {
 		TestOCL ocl = createOCL();
-		ocl.assertQueryResults(null, "Map{'a' <- true, 'c' <- true}", "Map{'b' <- true, 'a' <- true, 'b' <- true, 'c' <- true}->excluding('b')");
+		ocl.assertQueryResults(null, "Map{'a' with true, 'c' with true}", "Map{'b' with true, 'a' with true, 'b' with true, 'c' with true}->excluding('b')");
 		// invalid map
 		ocl.assertQueryInvalid(null, "let m : Map(Integer,Boolean) = invalid in m->excluding('a')");
 		// invalid map element
-		ocl.assertQueryInvalid(null, "Map{'a' <- true, 'b' <- true}->excluding(invalid)");
+		ocl.assertQueryInvalid(null, "Map{'a' with true, 'b' with true}->excluding(invalid)");
 		// null map
 		ocl.assertQueryInvalid(null, "let m : Map(Integer,Boolean) = null in m->excluding('a')");
 		// invalid map element
-		ocl.assertQueryResults(null, "Map{'a' <- true, 'b' <- true}", "Map{null <- true, 'a' <- true, null <- true, 'b' <- true}->excluding(null)");
+		ocl.assertQueryResults(null, "Map{'a' with true, 'b' with true}", "Map{null with true, 'a' with true, null with true, 'b' with true}->excluding(null)");
 		ocl.dispose();
 	}
 
 	@Test public void testMapExcludingAll() {
 		TestOCL ocl = createOCL();
-		ocl.assertQueryResults(null, "Map{'a' <- true, 'c' <- true}", "Map{'b' <- true, 'a' <- true, 'd' <- true, 'd' <- true, 'b' <- true, 'c' <- true, 'd' <- true}->excludingAll(Sequence{'d', 'd', 'b', 'e'})");
+		ocl.assertQueryResults(null, "Map{'a' with true, 'c' with true}", "Map{'b' with true, 'a' with true, 'd' with true, 'd' with true, 'b' with true, 'c' with true, 'd' with true}->excludingAll(Sequence{'d', 'd', 'b', 'e'})");
 		// invalid map
 		ocl.assertQueryInvalid(null, "let m : Map(Integer,Boolean) = invalid in m->excludingAll(Sequence{'a'})");
 		// invalid map element
-		ocl.assertQueryInvalid(null, "Map{'a' <- true, 'b' <- true}->excludingAll(invalid)");
+		ocl.assertQueryInvalid(null, "Map{'a' with true, 'b' with true}->excludingAll(invalid)");
 		// null map
 		ocl.assertQueryInvalid(null, "let m : Map(Integer,Boolean) = null in m->excludingAll(Sequence{'a'})");
 		// invalid map element
-		ocl.assertQueryResults(null, "Map{'a' <- true, 'b' <- true}", "Map{null <- true, 'a' <- true, null <- true, 'b' <- true, 'c' <- true}->excludingAll(Sequence{null, 'c'})");
+		ocl.assertQueryResults(null, "Map{'a' with true, 'b' with true}", "Map{null with true, 'a' with true, null with true, 'b' with true, 'c' with true}->excludingAll(Sequence{null, 'c'})");
 		ocl.dispose();
 	}
 
 	@Test public void testMapExcludingMap() {
 		TestOCL ocl = createOCL();
-		ocl.assertQueryResults(null, "Map{'a' <- true, 'c' <- true, 'd' <- true}", "Map{'b' <- true, 'a' <- true, 'd' <- true, 'd' <- true, 'b' <- true, 'c' <- true, 'd' <- true}->excludingMap(Map{'d' <- true, 'd' <- false, 'b' <- true, 'e' <- true})");
+		ocl.assertQueryResults(null, "Map{'a' with true, 'c' with true, 'd' with true}", "Map{'b' with true, 'a' with true, 'd' with true, 'd' with true, 'b' with true, 'c' with true, 'd' with true}->excludingMap(Map{'d' with true, 'd' with false, 'b' with true, 'e' with true})");
 		// invalid map
-		ocl.assertQueryInvalid(null, "let m : Map(Integer,Boolean) = invalid in m->excludingMap(Map{'a' <- true})");
+		ocl.assertQueryInvalid(null, "let m : Map(Integer,Boolean) = invalid in m->excludingMap(Map{'a' with true})");
 		// invalid map element
-		ocl.assertQueryInvalid(null, "Map{'a' <- true, 'b' <- true}->excludingMap(Map{invalid <- true})");
-		ocl.assertQueryInvalid(null, "Map{'a' <- true, 'b' <- true}->excludingMap(Map{'a' <- invalid})");
-		ocl.assertQueryInvalid(null, "Map{'a' <- true, 'b' <- true}->excludingMap(Map{invalid <- invalid})");
+		ocl.assertQueryInvalid(null, "Map{'a' with true, 'b' with true}->excludingMap(Map{invalid with true})");
+		ocl.assertQueryInvalid(null, "Map{'a' with true, 'b' with true}->excludingMap(Map{'a' with invalid})");
+		ocl.assertQueryInvalid(null, "Map{'a' with true, 'b' with true}->excludingMap(Map{invalid with invalid})");
 		// null map
-		ocl.assertQueryInvalid(null, "let m : Map(Integer,Boolean) = null in m->excludingMap(Map{'a' <- true})");
+		ocl.assertQueryInvalid(null, "let m : Map(Integer,Boolean) = null in m->excludingMap(Map{'a' with true})");
 		// invalid map element
-		ocl.assertQueryResults(null, "Map{'a' <- true, 'b' <- true}", "Map{null <- true, 'a' <- true, null <- true, 'b' <- true, 'c' <- true}->excludingMap(Map{null <- true, 'c' <- true})");
+		ocl.assertQueryResults(null, "Map{'a' with true, 'b' with true}", "Map{null with true, 'a' with true, null with true, 'b' with true, 'c' with true}->excludingMap(Map{null with true, 'c' with true})");
 		ocl.dispose();
 	}
 
 	@Test public void testMapExcludingPair() {
 		TestOCL ocl = createOCL();
-		ocl.assertQueryResults(null, "Map{'a' <- true, 'c' <- true}", "Map{'b' <- true, 'a' <- true, 'b' <- true, 'c' <- true}->excluding('b', true)");
-		ocl.assertQueryResults(null, "Map{'a' <- true, 'b' <- true, 'c' <- true}", "Map{'b' <- true, 'a' <- true, 'b' <- true, 'c' <- true}->excluding('b', false)");
+		ocl.assertQueryResults(null, "Map{'a' with true, 'c' with true}", "Map{'b' with true, 'a' with true, 'b' with true, 'c' with true}->excluding('b', true)");
+		ocl.assertQueryResults(null, "Map{'a' with true, 'b' with true, 'c' with true}", "Map{'b' with true, 'a' with true, 'b' with true, 'c' with true}->excluding('b', false)");
 		// invalid map
 		ocl.assertQueryInvalid(null, "let m : Map(Integer,Boolean) = invalid in m->excluding('a', true)");
 		// invalid map element
-		ocl.assertQueryInvalid(null, "Map{'a' <- true, 'b' <- true}->excluding(invalid, true)");
-		ocl.assertQueryInvalid(null, "Map{'a' <- true, 'b' <- true}->excluding('a', invalid)");
-		ocl.assertQueryInvalid(null, "Map{'a' <- true, 'b' <- true}->excluding(invalid, invalid)");
+		ocl.assertQueryInvalid(null, "Map{'a' with true, 'b' with true}->excluding(invalid, true)");
+		ocl.assertQueryInvalid(null, "Map{'a' with true, 'b' with true}->excluding('a', invalid)");
+		ocl.assertQueryInvalid(null, "Map{'a' with true, 'b' with true}->excluding(invalid, invalid)");
 		// null map
 		ocl.assertQueryInvalid(null, "let m : Map(Integer,Boolean) = null in m->excluding('a', true)");
 		// invalid map element
-		ocl.assertQueryResults(null, "Map{'a' <- true, 'b' <- true}", "Map{null <- true, 'a' <- true, null <- true, 'b' <- true}->excluding(null, true)");
+		ocl.assertQueryResults(null, "Map{'a' with true, 'b' with true}", "Map{null with true, 'a' with true, null with true, 'b' with true}->excluding(null, true)");
 		ocl.dispose();
 	}
 
 	@Test public void testMapIncludes() {
 		TestOCL ocl = createOCL();
-		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includes(3)");
-		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includes(3.0)");
-		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includes(4.0)");
-		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includes('test')");
+		ocl.assertQueryTrue(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->includes(3)");
+		ocl.assertQueryTrue(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->includes(3.0)");
+		ocl.assertQueryTrue(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->includes(4.0)");
+		ocl.assertQueryTrue(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->includes('test')");
 
-		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includes(3.5)");
-		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includes(8)");
-		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includes('tst')");
+		ocl.assertQueryFalse(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->includes(3.5)");
+		ocl.assertQueryFalse(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->includes(8)");
+		ocl.assertQueryFalse(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->includes('tst')");
 
 		// invalid collection
 		ocl.assertQueryInvalid(null, "let s : Map(Integer,String) = invalid in s->includes(0)");
 
 		// invalid collection element
-		ocl.assertQueryInvalid(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includes(invalid)");
+		ocl.assertQueryInvalid(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->includes(invalid)");
 
 		// invalid null
 		ocl.assertQueryInvalid(null, "let s : Map(Integer,Boolean) = null in s->includes(0)");
 
 		// invalid null element
-		ocl.assertQueryTrue(null, "Map{3 <- 8, null <- 'tst', 'test' <- true}->includes(null)");
-		ocl.assertQueryTrue(null, "Map{null <- null}->includes(null)");
-		ocl.assertQueryFalse(null, "Map{3 <- 8, 4 <- 'tst', 'test' <- true}->includes(null)");
+		ocl.assertQueryTrue(null, "Map{3 with 8, null with 'tst', 'test' with true}->includes(null)");
+		ocl.assertQueryTrue(null, "Map{null with null}->includes(null)");
+		ocl.assertQueryFalse(null, "Map{3 with 8, 4 with 'tst', 'test' with true}->includes(null)");
 		ocl.assertQueryFalse(null, "Map{}->includes(null)");
 
 		ocl.dispose();
@@ -395,99 +395,99 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 
 	@Test public void testMapIncludesAll() {
 		TestOCL ocl = createOCL();
-		ocl.assertQueryTrue(null, "Map{3 <- true, 4.0 <- true, 'test' <- true}->includesAll(Sequence{3, 'test'})");
-		ocl.assertQueryTrue(null, "Map{3 <- true, 4.0 <- true, 'test' <- true}->includesAll(Bag{3, 'test'})");
-		ocl.assertQueryTrue(null, "Map{3 <- true, 4.0 <- true, 'test' <- true}->includesAll(Set{3, 'test'})");
-		ocl.assertQueryTrue(null, "Map{3 <- true, 4.0 <- true, 'test' <- true}->includesAll(OrderedSet{3, 'test'})");
+		ocl.assertQueryTrue(null, "Map{3 with true, 4.0 with true, 'test' with true}->includesAll(Sequence{3, 'test'})");
+		ocl.assertQueryTrue(null, "Map{3 with true, 4.0 with true, 'test' with true}->includesAll(Bag{3, 'test'})");
+		ocl.assertQueryTrue(null, "Map{3 with true, 4.0 with true, 'test' with true}->includesAll(Set{3, 'test'})");
+		ocl.assertQueryTrue(null, "Map{3 with true, 4.0 with true, 'test' with true}->includesAll(OrderedSet{3, 'test'})");
 
-		ocl.assertQueryFalse(null, "Map{3 <- true, 4.0 <- true, 'test' <- true}->includesAll(Sequence{3.5, 'test'})");
-		ocl.assertQueryFalse(null, "Map{3 <- true, 4.0 <- true, 'test' <- true}->includesAll(Bag{3.5, 'test'})");
-		ocl.assertQueryFalse(null, "Map{3 <- true, 4.0 <- true, 'test' <- true}->includesAll(Set{3.5, 'test'})");
-		ocl.assertQueryFalse(null, "Map{3 <- true, 4.0 <- true, 'test' <- true}->includesAll(OrderedSet{3.5, 'test'})");
+		ocl.assertQueryFalse(null, "Map{3 with true, 4.0 with true, 'test' with true}->includesAll(Sequence{3.5, 'test'})");
+		ocl.assertQueryFalse(null, "Map{3 with true, 4.0 with true, 'test' with true}->includesAll(Bag{3.5, 'test'})");
+		ocl.assertQueryFalse(null, "Map{3 with true, 4.0 with true, 'test' with true}->includesAll(Set{3.5, 'test'})");
+		ocl.assertQueryFalse(null, "Map{3 with true, 4.0 with true, 'test' with true}->includesAll(OrderedSet{3.5, 'test'})");
 
 		// invalid collection
 		ocl.assertQueryInvalid(null, "let s : Map(Integer,Boolean) = invalid in s->includesAll(Sequence{0})");
 
-		ocl.assertQueryInvalid(null, "let s : Sequence(Integer) = invalid in Map{0 <- false}->includesAll(s)");
+		ocl.assertQueryInvalid(null, "let s : Sequence(Integer) = invalid in Map{0 with false}->includesAll(s)");
 
 		// invalid collection element
 		// Collections can't contain the invalid value
-		ocl.assertQueryInvalid(null, "Map{3 <- true, 4.0 <- true, invalid <- true, 'test' <- true}->includesAll(OrderedSet{'test'})");
-		ocl.assertQueryInvalid(null, "Map{3 <- true, 4.0 <- true, 'test' <- true}->includesAll(Sequence{'test', invalid})");
+		ocl.assertQueryInvalid(null, "Map{3 with true, 4.0 with true, invalid with true, 'test' with true}->includesAll(OrderedSet{'test'})");
+		ocl.assertQueryInvalid(null, "Map{3 with true, 4.0 with true, 'test' with true}->includesAll(Sequence{'test', invalid})");
 
 		// null collection
 		ocl.assertQueryInvalid(null, "let s : Map(Integer,Boolean) = null in s->includesAll(Sequence{0})");
-		ocl.assertQueryInvalid(null, "let s : Sequence(Integer) = null in Map{0 <- false}->includesAll(s)");
+		ocl.assertQueryInvalid(null, "let s : Sequence(Integer) = null in Map{0 with false}->includesAll(s)");
 
 		// null collection element
-		ocl.assertQueryTrue(null, "Map{3 <- true, 4.0 <- true, null <- true, 'test' <- true}->includesAll(OrderedSet{'test', null})");
-		ocl.assertQueryFalse(null, "Map{3 <- true, 4.0 <- true, 'test' <- true}->includesAll(OrderedSet{'test', null})");
+		ocl.assertQueryTrue(null, "Map{3 with true, 4.0 with true, null with true, 'test' with true}->includesAll(OrderedSet{'test', null})");
+		ocl.assertQueryFalse(null, "Map{3 with true, 4.0 with true, 'test' with true}->includesAll(OrderedSet{'test', null})");
 
 		ocl.dispose();
 	}
 
 	@Test public void testMapIncludesMap() {
 		TestOCL ocl = createOCL();
-		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includesMap(Map{3 <- 8})");
-		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includesMap(Map{3.0 <- 8})");
-		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includesMap(Map{3 <- 8, 4.0 <- 'tst'})");
-		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includesMap(Map{3 <- 8, 4 <- 'tst', 'test' <- true})");
-		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includesMap(Map{4.0 <- 'tst'})");
-		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includesMap(Map{'test' <- true})");
+		ocl.assertQueryTrue(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->includesMap(Map{3 with 8})");
+		ocl.assertQueryTrue(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->includesMap(Map{3.0 with 8})");
+		ocl.assertQueryTrue(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->includesMap(Map{3 with 8, 4.0 with 'tst'})");
+		ocl.assertQueryTrue(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->includesMap(Map{3 with 8, 4 with 'tst', 'test' with true})");
+		ocl.assertQueryTrue(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->includesMap(Map{4.0 with 'tst'})");
+		ocl.assertQueryTrue(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->includesMap(Map{'test' with true})");
 
-		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includesMap(Map{3.5 <- 8})");
-		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includesMap(Map{3 <- 8, 3.5 <- 8, 4.0 <- 'tst', 'test' <- true})");
-		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includesMap(Map{3 <- true})");
-		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includesMap(Map{'tst' <- 4.0})");
+		ocl.assertQueryFalse(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->includesMap(Map{3.5 with 8})");
+		ocl.assertQueryFalse(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->includesMap(Map{3 with 8, 3.5 with 8, 4.0 with 'tst', 'test' with true})");
+		ocl.assertQueryFalse(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->includesMap(Map{3 with true})");
+		ocl.assertQueryFalse(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->includesMap(Map{'tst' with 4.0})");
 
 		// invalid collection
-		ocl.assertQueryInvalid(null, "let s : Map(Integer,String) = invalid in s->includesMap(Map{0 <- 0})");
+		ocl.assertQueryInvalid(null, "let s : Map(Integer,String) = invalid in s->includesMap(Map{0 with 0})");
 
 		// invalid collection element
-		ocl.assertQueryInvalid(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includesMap(Map{invalid <- 'tst'})");
-		ocl.assertQueryInvalid(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includesMap(Map{4.0 <- invalid})");
+		ocl.assertQueryInvalid(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->includesMap(Map{invalid with 'tst'})");
+		ocl.assertQueryInvalid(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->includesMap(Map{4.0 with invalid})");
 
 		// invalid null
-		ocl.assertQueryInvalid(null, "let s : Map(Integer,Boolean) = null in s->includesMap(Map{0 <- 0})");
+		ocl.assertQueryInvalid(null, "let s : Map(Integer,Boolean) = null in s->includesMap(Map{0 with 0})");
 
 		// invalid null element
-		ocl.assertQueryTrue(null, "Map{3 <- 8, null <- 'tst', 'test' <- null}->includesMap(Map{null <- 'tst'})");
-		ocl.assertQueryTrue(null, "Map{3 <- 8, null <- 'tst', 'test' <- null}->includesMap(Map{'test' <- null})");
-		ocl.assertQueryTrue(null, "Map{null <- null}->includesMap(Map{null <- null})");
-		ocl.assertQueryFalse(null, "Map{3 <- 8, 4 <- 'tst', 'test' <- true}->includesMap(Map{null <- 'tst'})");
-		ocl.assertQueryFalse(null, "Map{3 <- 8, 4 <- 'tst', 'test' <- true}->includesMap(Map{4 <- null})");
-		ocl.assertQueryFalse(null, "Map{}->includesMap(Map{null <- null})");
+		ocl.assertQueryTrue(null, "Map{3 with 8, null with 'tst', 'test' with null}->includesMap(Map{null with 'tst'})");
+		ocl.assertQueryTrue(null, "Map{3 with 8, null with 'tst', 'test' with null}->includesMap(Map{'test' with null})");
+		ocl.assertQueryTrue(null, "Map{null with null}->includesMap(Map{null with null})");
+		ocl.assertQueryFalse(null, "Map{3 with 8, 4 with 'tst', 'test' with true}->includesMap(Map{null with 'tst'})");
+		ocl.assertQueryFalse(null, "Map{3 with 8, 4 with 'tst', 'test' with true}->includesMap(Map{4 with null})");
+		ocl.assertQueryFalse(null, "Map{}->includesMap(Map{null with null})");
 
 		ocl.dispose();
 	}
 
 	@Test public void testMapIncludesPair() {
 		TestOCL ocl = createOCL();
-		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includes(3, 8)");
-		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includes(3.0, 8)");
-		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includes(4.0, 'tst')");
-		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includes('test', true)");
+		ocl.assertQueryTrue(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->includes(3, 8)");
+		ocl.assertQueryTrue(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->includes(3.0, 8)");
+		ocl.assertQueryTrue(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->includes(4.0, 'tst')");
+		ocl.assertQueryTrue(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->includes('test', true)");
 
-		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includes(3.5, 8)");
-		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includes(3, true)");
-		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includes('tst', 4.0)");
+		ocl.assertQueryFalse(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->includes(3.5, 8)");
+		ocl.assertQueryFalse(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->includes(3, true)");
+		ocl.assertQueryFalse(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->includes('tst', 4.0)");
 
 		// invalid collection
 		ocl.assertQueryInvalid(null, "let s : Map(Integer,String) = invalid in s->includes(0, 0)");
 
 		// invalid collection element
-		ocl.assertQueryInvalid(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includes(invalid, 'tst')");
-		ocl.assertQueryInvalid(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includes(4.0, invalid)");
+		ocl.assertQueryInvalid(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->includes(invalid, 'tst')");
+		ocl.assertQueryInvalid(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->includes(4.0, invalid)");
 
 		// invalid null
 		ocl.assertQueryInvalid(null, "let s : Map(Integer,Boolean) = null in s->includes(0, 0)");
 
 		// invalid null element
-		ocl.assertQueryTrue(null, "Map{3 <- 8, null <- 'tst', 'test' <- null}->includes(null, 'tst')");
-		ocl.assertQueryTrue(null, "Map{3 <- 8, null <- 'tst', 'test' <- null}->includes('test', null)");
-		ocl.assertQueryTrue(null, "Map{null <- null}->includes(null, null)");
-		ocl.assertQueryFalse(null, "Map{3 <- 8, 4 <- 'tst', 'test' <- true}->includes(null, 'tst')");
-		ocl.assertQueryFalse(null, "Map{3 <- 8, 4 <- 'tst', 'test' <- true}->includes(4, null)");
+		ocl.assertQueryTrue(null, "Map{3 with 8, null with 'tst', 'test' with null}->includes(null, 'tst')");
+		ocl.assertQueryTrue(null, "Map{3 with 8, null with 'tst', 'test' with null}->includes('test', null)");
+		ocl.assertQueryTrue(null, "Map{null with null}->includes(null, null)");
+		ocl.assertQueryFalse(null, "Map{3 with 8, 4 with 'tst', 'test' with true}->includes(null, 'tst')");
+		ocl.assertQueryFalse(null, "Map{3 with 8, 4 with 'tst', 'test' with true}->includes(4, null)");
 		ocl.assertQueryFalse(null, "Map{}->includes(null, null)");
 
 		ocl.dispose();
@@ -495,28 +495,28 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 
 	@Test public void testMapIncludesValue() {
 		TestOCL ocl = createOCL();
-		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includesValue(8)");
-		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includesValue(8.0)");
-		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includesValue('tst')");
-		ocl.assertQueryTrue(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includesValue(true)");
+		ocl.assertQueryTrue(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->includesValue(8)");
+		ocl.assertQueryTrue(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->includesValue(8.0)");
+		ocl.assertQueryTrue(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->includesValue('tst')");
+		ocl.assertQueryTrue(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->includesValue(true)");
 
-		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includesValue(3.5)");
-		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includesValue(3)");
-		ocl.assertQueryFalse(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includesValue('test')");
+		ocl.assertQueryFalse(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->includesValue(3.5)");
+		ocl.assertQueryFalse(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->includesValue(3)");
+		ocl.assertQueryFalse(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->includesValue('test')");
 
 		// invalid collection
 		ocl.assertQueryInvalid(null, "let s : Map(Integer,String) = invalid in s->includesValue(0)");
 
 		// invalid collection element
-		ocl.assertQueryInvalid(null, "Map{3 <- 8, 4.0 <- 'tst', 'test' <- true}->includesValue(invalid)");
+		ocl.assertQueryInvalid(null, "Map{3 with 8, 4.0 with 'tst', 'test' with true}->includesValue(invalid)");
 
 		// invalid null
 		ocl.assertQueryInvalid(null, "let s : Map(Integer,Boolean) = null in s->includesValue(0)");
 
 		// invalid null element
-		ocl.assertQueryTrue(null, "Map{3 <- 8, 'tst' <- null, 'test' <- true}->includesValue(null)");
-		ocl.assertQueryTrue(null, "Map{null <- null}->includesValue(null)");
-		ocl.assertQueryFalse(null, "Map{3 <- 8, 4 <- 'tst', 'test' <- true}->includesValue(null)");
+		ocl.assertQueryTrue(null, "Map{3 with 8, 'tst' with null, 'test' with true}->includesValue(null)");
+		ocl.assertQueryTrue(null, "Map{null with null}->includesValue(null)");
+		ocl.assertQueryFalse(null, "Map{3 with 8, 4 with 'tst', 'test' with true}->includesValue(null)");
 		ocl.assertQueryFalse(null, "Map{}->includesValue(null)");
 
 		ocl.dispose();
@@ -524,55 +524,55 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 
 	@Test public void testMapIncludingMap() {
 		TestOCL ocl = createOCL();
-		ocl.assertQueryResults(null, "Map{'a' <- true, 'b' <- false, 'c' <- true, 'd' <- true}", "Map{'a' <- true, 'b' <- true}->includingMap(Map{'c' <- true, 'd' <- true, 'b' <- false})");
+		ocl.assertQueryResults(null, "Map{'a' with true, 'b' with false, 'c' with true, 'd' with true}", "Map{'a' with true, 'b' with true}->includingMap(Map{'c' with true, 'd' with true, 'b' with false})");
 		// invalid map
-		ocl.assertQueryInvalid(null, "let m : Map(String, Integer) = invalid in m->includingMap(Map{'a' <- true})");
+		ocl.assertQueryInvalid(null, "let m : Map(String, Integer) = invalid in m->includingMap(Map{'a' with true})");
 		// invalid map element
-		ocl.assertQueryInvalid(null, "Map{'a' <- true, 'b' <- true}->includingMap(Map{invalid <- true})");
-		ocl.assertQueryInvalid(null, "Map{'a' <- true, 'b' <- true}->includingMap(Map{true <- invalid})");
-		ocl.assertQueryInvalid(null, "Map{'a' <- true, 'b' <- true}->includingMap(Map{invalid <- invalid})");
+		ocl.assertQueryInvalid(null, "Map{'a' with true, 'b' with true}->includingMap(Map{invalid with true})");
+		ocl.assertQueryInvalid(null, "Map{'a' with true, 'b' with true}->includingMap(Map{true with invalid})");
+		ocl.assertQueryInvalid(null, "Map{'a' with true, 'b' with true}->includingMap(Map{invalid with invalid})");
 		// null map
-		ocl.assertQueryInvalid(null, "let m : Map(String, Integer) = null in m->includingMap(Map{'a' <- true})");
+		ocl.assertQueryInvalid(null, "let m : Map(String, Integer) = null in m->includingMap(Map{'a' with true})");
 		// null map element
-		ocl.assertQueryResults(null, "Map{'a' <- true, 'b' <- true, null <- true, null <- true}", "Map{'a' <- true, 'b' <- true}->includingMap(Map{null <- true, null <- true})");
-		ocl.assertQueryResults(null, "Map{'a' <- true, null <- true, 'b' <- true, null <- false}", "Map{'a' <- true, null <- true, 'b' <- true}->includingMap(Map{null <- false})");
-		ocl.assertQueryResults(null, "Map{'a' <- true, null <- true, 'b' <- null, null <- true}", "Map{'a' <- true, null <- true, 'b' <- true}->includingMap(Map{'b' <- null})");
+		ocl.assertQueryResults(null, "Map{'a' with true, 'b' with true, null with true, null with true}", "Map{'a' with true, 'b' with true}->includingMap(Map{null with true, null with true})");
+		ocl.assertQueryResults(null, "Map{'a' with true, null with true, 'b' with true, null with false}", "Map{'a' with true, null with true, 'b' with true}->includingMap(Map{null with false})");
+		ocl.assertQueryResults(null, "Map{'a' with true, null with true, 'b' with null, null with true}", "Map{'a' with true, null with true, 'b' with true}->includingMap(Map{'b' with null})");
 		ocl.dispose();
 	}
 
 	@Test public void testMapIncludingPair() {
 		TestOCL ocl = createOCL();
 		StandardLibrary standardLibrary = ocl.getStandardLibrary();
-		ocl.assertQueryResults(null, "Map{'a' <- true, 'b' <- true, 'c' <- true}", "Map{'a' <- true, 'b' <- true}->including('c', true)");
-		ocl.assertQueryResults(null, "Map{'a' <- true, 'b' <- false}", "Map{'a' <- true, 'b' <- true}->including('b', false)");
-		ocl.assertQueryResults(null, "Map{'a' <- true, 'b' <- 'c'}", "Map{'a' <- true, 'b' <- true}->including('b', 'c')");
-		ocl.assertQueryResults(null, "Map{'a' <- true, 'b' <- true, true <- 'c'}", "Map{'a' <- true, 'b' <- true}->including(true, 'c')");
-		ocl.assertQueryEquals(null, standardLibrary.getStringType(), "Map{'a' <- true, 'b' <- true}->including('b', false).oclType().keyType");
-		ocl.assertQueryEquals(null, standardLibrary.getBooleanType(), "Map{'a' <- true, 'b' <- true}->including('b', false).oclType().valueType");
-		ocl.assertQueryEquals(null, standardLibrary.getOclAnyType(), "Map{'a' <- true, 'b' <- true}->including('b', 'c').oclType().valueType");
-		ocl.assertQueryEquals(null, standardLibrary.getOclAnyType(), "Map{'a' <- true, 'b' <- true}->including(true, 'c').oclType().keyType");
+		ocl.assertQueryResults(null, "Map{'a' with true, 'b' with true, 'c' with true}", "Map{'a' with true, 'b' with true}->including('c', true)");
+		ocl.assertQueryResults(null, "Map{'a' with true, 'b' with false}", "Map{'a' with true, 'b' with true}->including('b', false)");
+		ocl.assertQueryResults(null, "Map{'a' with true, 'b' with 'c'}", "Map{'a' with true, 'b' with true}->including('b', 'c')");
+		ocl.assertQueryResults(null, "Map{'a' with true, 'b' with true, true with 'c'}", "Map{'a' with true, 'b' with true}->including(true, 'c')");
+		ocl.assertQueryEquals(null, standardLibrary.getStringType(), "Map{'a' with true, 'b' with true}->including('b', false).oclType().keyType");
+		ocl.assertQueryEquals(null, standardLibrary.getBooleanType(), "Map{'a' with true, 'b' with true}->including('b', false).oclType().valueType");
+		ocl.assertQueryEquals(null, standardLibrary.getOclAnyType(), "Map{'a' with true, 'b' with true}->including('b', 'c').oclType().valueType");
+		ocl.assertQueryEquals(null, standardLibrary.getOclAnyType(), "Map{'a' with true, 'b' with true}->including(true, 'c').oclType().keyType");
 
 		// invalid map
 		ocl.assertQueryInvalid(null, "let m : Map(String, Integer) = invalid in m->including('a', null)");
 
 		// invalid map element
-		ocl.assertQueryInvalid(null, "Map{'a' <- true, 'b' <- true}->including(invalid, true)");
-		ocl.assertQueryInvalid(null, "Map{'a' <- true, 'b' <- true}->including('c', invalid)");
-		ocl.assertQueryInvalid(null, "Map{'a' <- true, 'b' <- true}->including(invalid, invalid)");
+		ocl.assertQueryInvalid(null, "Map{'a' with true, 'b' with true}->including(invalid, true)");
+		ocl.assertQueryInvalid(null, "Map{'a' with true, 'b' with true}->including('c', invalid)");
+		ocl.assertQueryInvalid(null, "Map{'a' with true, 'b' with true}->including(invalid, invalid)");
 
 		// null map
 		ocl.assertQueryInvalid(null, "let m : Map(String, Integer) = null in m->including('a', true)");
 
 		// null map element
-		ocl.assertQueryResults(null, "Map{'a' <- true, 'b' <- true, null <- true}", "Map{'a' <- true, 'b' <- true}->including(null, true)");
-		ocl.assertQueryResults(null, "Map{'a' <- true, 'b' <- true, 'c' <- null}", "Map{'a' <- true, 'b' <- true}->including('c', null)");
+		ocl.assertQueryResults(null, "Map{'a' with true, 'b' with true, null with true}", "Map{'a' with true, 'b' with true}->including(null, true)");
+		ocl.assertQueryResults(null, "Map{'a' with true, 'b' with true, 'c' with null}", "Map{'a' with true, 'b' with true}->including('c', null)");
 		ocl.dispose();
 	}
 
 	@Test public void testMapIsEmpty() {
 		TestOCL ocl = createOCL();
 		ocl.assertQueryTrue(null, "Map{}->isEmpty()");
-		ocl.assertQueryFalse(null, "Map{1 <- 4, 2 <- 4, 3 <- 'test'}->isEmpty()");
+		ocl.assertQueryFalse(null, "Map{1 with 4, 2 with 4, 3 with 'test'}->isEmpty()");
 
 		// invalid collection
 		ocl.assertQueryInvalid(null, "let s : Map(Integer,String) = invalid in s->isEmpty()");
@@ -580,17 +580,17 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 		// null map
 		ocl.assertQueryInvalid(null, "let s : Map(Integer,String) = null in s->isEmpty()");
 
-		ocl.assertQueryFalse(null, "Map{null <- null}->isEmpty()");
+		ocl.assertQueryFalse(null, "Map{null with null}->isEmpty()");
 		ocl.dispose();
 	}
 
 	@Test public void testMapKeyType() {
 		TestOCL ocl = createOCL();
 		StandardLibrary standardLibrary = ocl.getStandardLibrary();
-		ocl.assertQueryEquals(null, standardLibrary.getStringType(), "Map{'1' <- true}->oclType().keyType");
-		ocl.assertQueryEquals(null, standardLibrary.getOclAnyType(), "Map{1 <- true, 2.0 <- true, '3' <- true}->oclType().keyType");
-		ocl.assertQueryEquals(null, standardLibrary.getIntegerType(), "Map{1 <- true, 2 <- true, 3 <- true}->oclType().keyType");
-		ocl.assertQueryEquals(null, standardLibrary.getIntegerType(), "Map{1 <- true, 2 <- true, 3 <- true}->oclAsType(Map(Real, Boolean))->oclType().keyType");
+		ocl.assertQueryEquals(null, standardLibrary.getStringType(), "Map{'1' with true}->oclType().keyType");
+		ocl.assertQueryEquals(null, standardLibrary.getOclAnyType(), "Map{1 with true, 2.0 with true, '3' with true}->oclType().keyType");
+		ocl.assertQueryEquals(null, standardLibrary.getIntegerType(), "Map{1 with true, 2 with true, 3 with true}->oclType().keyType");
+		ocl.assertQueryEquals(null, standardLibrary.getIntegerType(), "Map{1 with true, 2 with true, 3 with true}->oclAsType(Map(Real, Boolean))->oclType().keyType");
 		// FIXME fails because common type is Set(T) and then because T is not type-servable and has no OclAny inheritance
 		//		ocl.assertQueryEquals(null, metamodelManager.getSetType(), "Sequence{Set{1}, Set{2.0}, Set{'3'}}->elementType");
 		// FIXME fails because common type is inadequate for implicit collect
@@ -601,9 +601,9 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 		TestOCL ocl = createOCL();
 		ocl.assertQueryEquals(null, ocl.getEmptySetValue(), "Map{}->keys()");
 
-		ocl.assertQueryResults(null, "Set{1, 2.0, '3'}", "Map{1 <- null, 2.0 <- true, '3' <- 2}->keys()");
+		ocl.assertQueryResults(null, "Set{1, 2.0, '3'}", "Map{1 with null, 2.0 with true, '3' with 2}->keys()");
 
-		ocl.assertQueryResults(null, "Set{'a', 'b', 'c'}", "Map{'a' <- true, 'b' <- true, 'c' <- null, 'b' <- null}->keys()");
+		ocl.assertQueryResults(null, "Set{'a', 'b', 'c'}", "Map{'a' with true, 'b' with true, 'c' with null, 'b' with null}->keys()");
 
 		// invalid collection
 		ocl.assertQueryInvalid(null, "let m : Map(Integer, Integer) = invalid in m->keys()");
@@ -616,25 +616,25 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 	@Test public void testMapLiteral() {
 		TestOCL ocl = createOCL();
 		ocl.assertQueryEquals(null, 0, "Map{}->size()");
-		ocl.assertQueryEquals(null, 1, "Map{'a'<-'b'}->size()");
-		ocl.assertQueryEquals(null, 1, "Map{'a'<-'b','a'<-'b'}->size()");
-		ocl.assertQueryEquals(null, 2, "Map{'a'<-'b','b'<-'a'}->size()");
-		ocl.assertQueryTrue(null, "let m = Map{'a'<-'b','a'<-'c'} in (m->size()=1) and (m->at('a')='c')");
+		ocl.assertQueryEquals(null, 1, "Map{'a' with 'b'}->size()");
+		ocl.assertQueryEquals(null, 1, "Map{'a' with 'b','a' with 'b'}->size()");
+		ocl.assertQueryEquals(null, 2, "Map{'a' with 'b','b' with 'a'}->size()");
+		ocl.assertQueryTrue(null, "let m = Map{'a' with 'b','a' with 'c'} in (m->size()=1) and (m->at('a')='c')");
 
-		ocl.assertQueryEquals(null, 1, "Map{null<-'b'}->size()");
-		ocl.assertQueryEquals(null, 1, "Map{'a'<-null}->size()");
-		ocl.assertQueryEquals(null, 1, "Map{null<-null}->size()");
+		ocl.assertQueryEquals(null, 1, "Map{null with 'b'}->size()");
+		ocl.assertQueryEquals(null, 1, "Map{'a' with null}->size()");
+		ocl.assertQueryEquals(null, 1, "Map{null with null}->size()");
 
-		ocl.assertQueryInvalid(null, "Map{invalid<-'b'}", "invalid", InvalidValueException.class);
-		ocl.assertQueryInvalid(null, "Map{'a'<-invalid}", "invalid", InvalidValueException.class);
-		ocl.assertQueryInvalid(null, "Map{invalid<-invalid}", "invalid", InvalidValueException.class);
+		ocl.assertQueryInvalid(null, "Map{invalid with 'b'}", "invalid", InvalidValueException.class);
+		ocl.assertQueryInvalid(null, "Map{'a' with invalid}", "invalid", InvalidValueException.class);
+		ocl.assertQueryInvalid(null, "Map{invalid with invalid}", "invalid", InvalidValueException.class);
 		ocl.dispose();
 	}
 
 	@Test public void testMapNotEmpty() {
 		TestOCL ocl = createOCL();
 		ocl.assertQueryFalse(null, "Map{}->notEmpty()");
-		ocl.assertQueryTrue(null, "Map{1 <- 4, 2 <- 4, 3 <- 'test'}->notEmpty()");
+		ocl.assertQueryTrue(null, "Map{1 with 4, 2 with 4, 3 with 'test'}->notEmpty()");
 
 		// invalid map
 		ocl.assertQueryInvalid(null, "let s : Map(Integer,String) = invalid in s->notEmpty()");
@@ -643,46 +643,46 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 		// null map
 		ocl.assertQueryInvalid(null, "let s : Map(Integer,String) = null in s->notEmpty()");
 
-		ocl.assertQueryTrue(null, "Map{null <- null}->notEmpty()");
+		ocl.assertQueryTrue(null, "Map{null with null}->notEmpty()");
 		ocl.dispose();
 	}
 
 	@Test public void testMapNotEqual() {
 		TestOCL ocl = createOCL();
-		ocl.assertQueryFalse(null, "Map{1 <- 1} <> Map{1 <- 1}");
+		ocl.assertQueryFalse(null, "Map{1 with 1} <> Map{1 with 1}");
 		//
 		ocl.assertQueryTrue(null, "Map{} <> Bag{}");
 		ocl.assertQueryTrue(null, "Map{} <> OrderedSet{}");
 		ocl.assertQueryTrue(null, "Map{} <> Sequence{}");
 		ocl.assertQueryTrue(null, "Map{} <> Set{}");
 
-		ocl.assertQueryTrue(null, "Map{1 <- 1} <> 1");
-		ocl.assertQueryTrue(null, "1 <> Map{1 <- 1}");
+		ocl.assertQueryTrue(null, "Map{1 with 1} <> 1");
+		ocl.assertQueryTrue(null, "1 <> Map{1 with 1}");
 		ocl.assertQueryTrue(null, "Set{1} <> Set{Set{1}}");
 
-		ocl.assertQueryFalse(null, "Map{1 <- 1} <> Map{1 <- 1}");
-		ocl.assertQueryFalse(null, "Map{1.0 <- 1} <> Map{1 <- 1}");
-		ocl.assertQueryFalse(null, "Map{1 <- 1.0} <> Map{1 <- 1}");
-		ocl.assertQueryFalse(null, "Map{1.0 <- 1.0} <> Map{1 <- 1}");
+		ocl.assertQueryFalse(null, "Map{1 with 1} <> Map{1 with 1}");
+		ocl.assertQueryFalse(null, "Map{1.0 with 1} <> Map{1 with 1}");
+		ocl.assertQueryFalse(null, "Map{1 with 1.0} <> Map{1 with 1}");
+		ocl.assertQueryFalse(null, "Map{1.0 with 1.0} <> Map{1 with 1}");
 
-		ocl.assertQueryTrue(null, "Map{1.01 <- 1} <> Map{1 <- 1}");
-		ocl.assertQueryTrue(null, "Map{1 <- 1.01} <> Map{1 <- 1}");
-		ocl.assertQueryTrue(null, "Map{1.01 <- 1.01} <> Map{1 <- 1}");
+		ocl.assertQueryTrue(null, "Map{1.01 with 1} <> Map{1 with 1}");
+		ocl.assertQueryTrue(null, "Map{1 with 1.01} <> Map{1 with 1}");
+		ocl.assertQueryTrue(null, "Map{1.01 with 1.01} <> Map{1 with 1}");
 
-		ocl.assertQueryTrue(null, "Map{1 <- 1} <> Map{1 <- 1, 2 <- 1}");
+		ocl.assertQueryTrue(null, "Map{1 with 1} <> Map{1 with 1, 2 with 1}");
 
-		ocl.assertQueryFalse(null, "Map{Map{'a'<-'b'} <- 1} <> Map{Map{'a'<-'b'} <- 1}");
-		ocl.assertQueryTrue(null, "Map{Map{'a'<-'b'} <- 1} <> Map{Map{'a'<-'c'} <- 1}");
-		ocl.assertQueryTrue(null, "Map{Map{'a'<-'b'} <- 1} <> Map{Map{'b'<-'b'} <- 1}");
-		ocl.assertQueryFalse(null, "Map{1 <- Map{'a'<-'b'}} <> Map{1 <- Map{'a'<-'b'}}");
-		ocl.assertQueryTrue(null, "Map{1 <- Map{'a'<-'b'}} <> Map{1 <- Map{'a'<-'c'}}");
-		ocl.assertQueryTrue(null, "Map{1 <- Map{'a'<-'b'}} <> Map{1 <- Map{'b'<-'b'}}");
+		ocl.assertQueryFalse(null, "Map{Map{'a' with 'b'} with 1} <> Map{Map{'a' with 'b'} with 1}");
+		ocl.assertQueryTrue(null, "Map{Map{'a' with 'b'} with 1} <> Map{Map{'a' with 'c'} with 1}");
+		ocl.assertQueryTrue(null, "Map{Map{'a' with 'b'} with 1} <> Map{Map{'b' with 'b'} with 1}");
+		ocl.assertQueryFalse(null, "Map{1 with Map{'a' with 'b'}} <> Map{1 with Map{'a' with 'b'}}");
+		ocl.assertQueryTrue(null, "Map{1 with Map{'a' with 'b'}} <> Map{1 with Map{'a' with 'c'}}");
+		ocl.assertQueryTrue(null, "Map{1 with Map{'a' with 'b'}} <> Map{1 with Map{'b' with 'b'}}");
 
 		// null map element
-		ocl.assertQueryFalse(null, "Map{null <- null} <> Map{null <- null}");
-		ocl.assertQueryTrue(null, "Map{null <- 1} <> Map{null <- null}");
-		ocl.assertQueryTrue(null, "Map{true <- null} <> Map{null <- null}");
-		ocl.assertQueryTrue(null, "Map{'4' <- 4} <> Map{null <- null}");
+		ocl.assertQueryFalse(null, "Map{null with null} <> Map{null with null}");
+		ocl.assertQueryTrue(null, "Map{null with 1} <> Map{null with null}");
+		ocl.assertQueryTrue(null, "Map{true with null} <> Map{null with null}");
+		ocl.assertQueryTrue(null, "Map{'4' with 4} <> Map{null with null}");
 		ocl.dispose();
 	}
 
@@ -714,17 +714,17 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 	@Test public void testMapSize() {
 		TestOCL ocl = createOCL();
 		ocl.assertQueryEquals(null, 0, "Map{}->size()");
-		ocl.assertQueryEquals(null, 1, "Map{'a'<-'b'}->size()");
+		ocl.assertQueryEquals(null, 1, "Map{'a' with 'b'}->size()");
 		ocl.dispose();
 	}
 
 	@Test public void testMapValueType() {
 		TestOCL ocl = createOCL();
 		StandardLibrary standardLibrary = ocl.getStandardLibrary();
-		ocl.assertQueryEquals(null, standardLibrary.getStringType(), "Map{true <- '1'}->oclType().valueType");
-		ocl.assertQueryEquals(null, standardLibrary.getOclAnyType(), "Map{'1' <- 1, '2' <- 2.0, '3' <- '3'}->oclType().valueType");
-		ocl.assertQueryEquals(null, standardLibrary.getIntegerType(), "Map{'1' <- 1, '2' <- 2, '3' <- 3}->oclType().valueType");
-		ocl.assertQueryEquals(null, standardLibrary.getIntegerType(), "Map{'1' <- 1, '2' <- 2, '3' <- 3}->oclAsType(Map(String, Real))->oclType().valueType");
+		ocl.assertQueryEquals(null, standardLibrary.getStringType(), "Map{true with '1'}->oclType().valueType");
+		ocl.assertQueryEquals(null, standardLibrary.getOclAnyType(), "Map{'1' with 1, '2' with 2.0, '3' with '3'}->oclType().valueType");
+		ocl.assertQueryEquals(null, standardLibrary.getIntegerType(), "Map{'1' with 1, '2' with 2, '3' with 3}->oclType().valueType");
+		ocl.assertQueryEquals(null, standardLibrary.getIntegerType(), "Map{'1' with 1, '2' with 2, '3' with 3}->oclAsType(Map(String, Real))->oclType().valueType");
 		// FIXME fails because common type is Set(T) and then because T is not type-servable and has no OclAny inheritance
 		//		ocl.assertQueryEquals(null, metamodelManager.getSetType(), "Sequence{Set{1}, Set{2.0}, Set{'3'}}->valueType");
 		// FIXME fails because common type is inadequate for implicit collect
@@ -735,9 +735,9 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 		TestOCL ocl = createOCL();
 		ocl.assertQueryEquals(null, ocl.getEmptyBagValue(), "Map{}->values()");
 
-		ocl.assertQueryResults(null, "Bag{null, 2, true}", "Map{1 <- null, 2.0 <- true, '3' <- 2}->values()");
+		ocl.assertQueryResults(null, "Bag{null, 2, true}", "Map{1 with null, 2.0 with true, '3' with 2}->values()");
 
-		ocl.assertQueryResults(null, "Bag{true, null, null}", "Map{'a' <- true, 'b' <- true, 'c' <- null, 'b' <- null}->values()");
+		ocl.assertQueryResults(null, "Bag{true, null, null}", "Map{'a' with true, 'b' with true, 'c' with null, 'b' with null}->values()");
 
 		// invalid collection
 		ocl.assertQueryInvalid(null, "let m : Map(Integer, Integer) = invalid in m->values()");

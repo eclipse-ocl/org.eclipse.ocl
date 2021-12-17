@@ -459,9 +459,9 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 		//
 		String expectedResultExpression = OCLGenModelUtil.INSTANCE.hasConstraintEAnnotations() ? "Set{'baseType','constraints','name'}" :  "Set{'baseType','name'}";
 		ocl.assertQueryResults(ePackage, expectedResultExpression,
-				"self.eClassifiers->collect(c | c.eAnnotations)->collect(a | a.details)->collect(m | m->collect(k <- v | k))->asSet()");
+				"self.eClassifiers->collect(c | c.eAnnotations)->collect(a | a.details)->collect(m | m->collect(k with v | k))->asSet()");
 		//	ocl.assertQueryResults(ePackage, "Set{'baseType','constraints','name','suppressedIsSetVisibility','suppressedUnsetVisibility'}",
-		//	"ecore::EAnnotation.allInstances().details->collect(m | m->collect(k <- v | k))->asSet()");
+		//	"ecore::EAnnotation.allInstances().details->collect(m | m->collect(k with v | k))->asSet()");
 		ocl.dispose();
 	}
 

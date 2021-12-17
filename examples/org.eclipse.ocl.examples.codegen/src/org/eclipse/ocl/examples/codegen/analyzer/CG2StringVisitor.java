@@ -328,7 +328,7 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<@Nullable 
 			safeVisit(cgIterator);
 			if (i < cgCoIterators.size()) {
 				CGValuedElement cgCoIterator = cgCoIterators.get(i);
-				append(" <- ");
+				append(" with ");
 				safeVisit(cgCoIterator);
 			}
 			isFirst = false;
@@ -531,7 +531,7 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<@Nullable 
 			safeVisit(cgIterator);
 			if (i < cgCoIterators.size()) {
 				CGValuedElement cgCoIterator = cgCoIterators.get(i);
-				append(" <- ");
+				append(" with ");
 				safeVisit(cgCoIterator);
 			}
 			prefix = ", ";//$NON-NLS-1$
@@ -637,7 +637,7 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<@Nullable 
 	@Override
 	public @Nullable String visitCGMapPart(@NonNull CGMapPart cgMapPart) {
 		safeVisit(cgMapPart.getKey());
-		append(" <- ");
+		append(" with ");
 		safeVisit(cgMapPart.getValue());
 		return null;
 	}
@@ -776,7 +776,7 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<@Nullable 
 	@Override
 	public @Nullable String visitCGShadowPart(@NonNull CGShadowPart cgShadowPart) {
 		appendName(((ShadowPart)cgShadowPart.getAst()).getReferredProperty());
-		append(" <- ");
+		append(" with ");
 		safeVisit(cgShadowPart.getInit());
 		return null;
 	}

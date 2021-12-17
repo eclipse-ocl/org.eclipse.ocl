@@ -810,7 +810,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 			}
 			safeVisit(iterator);
 			if (coIterator != null) {
-				append(" <- ");
+				append(" with ");
 				safeVisit(coIterator);
 			}
 			isFirst = false;
@@ -890,7 +890,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 			}
 			safeVisit(iterator);
 			if (coIterator != null) {
-				append(" <- ");
+				append(" with ");
 				safeVisit(coIterator);
 			}
 			isFirst = false;
@@ -964,7 +964,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	@Override
 	public String visitMapLiteralPart(@NonNull MapLiteralPart mapLiteralPart) {
 		safeVisit(mapLiteralPart.getOwnedKey());
-		append(" <- ");
+		append(" with ");
 		safeVisit(mapLiteralPart.getOwnedValue());
 		return null;
 	}

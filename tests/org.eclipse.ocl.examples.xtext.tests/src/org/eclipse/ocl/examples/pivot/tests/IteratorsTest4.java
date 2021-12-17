@@ -203,8 +203,8 @@ public class IteratorsTest4 extends PivotTestSuite
 		ocl.assertQueryInvalid(ocl.pkg1, "let op : Set(Package[*|1]) = ownedPackages in op->any(false)");			// OMG Issue 18504
 		ocl.assertQueryDefined(ocl.pkg1, "let op : Set(Package[*|?]) = ownedPackages in op?->any(true)");
 
-		ocl.assertQueryEquals(null, 2, "Map{2 <- 1, 1 <- 2}->any(key <- value | key > value)");
-		ocl.assertQueryInvalid(null, "Map{2 <- 1, 1 <- 2}->any(key <- value | key = value)");
+		ocl.assertQueryEquals(null, 2, "Map{2 with 1, 1 with 2}->any(key with value | key > value)");
+		ocl.assertQueryInvalid(null, "Map{2 with 1, 1 with 2}->any(key with value | key = value)");
 		ocl.dispose();
 	}
 
@@ -480,7 +480,7 @@ public class IteratorsTest4 extends PivotTestSuite
 
 		ocl.assertQueryResults(ocl.pkg1, "Sequence{1,4,9}", "Sequence{1..3}->collect(k | k*k)");
 		ocl.assertQueryResults(ocl.pkg1, "Sequence{null, null, null}", "Sequence{1..3}->collect(k | null)");
-		ocl.assertQueryResults(null, "Sequence{11,15,21,29,39,51}", "Sequence{10..15}->collect(i <- x | i+x*x)");
+		ocl.assertQueryResults(null, "Sequence{11,15,21,29,39,51}", "Sequence{10..15}->collect(i with x | i+x*x)");
 
 		ocl.dispose();
 	}
@@ -582,12 +582,12 @@ public class IteratorsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(null, expected1, "Sequence{1..5}->collectBy(i | i*i)");
 
 		// yet shorter form
-		ocl.assertQueryResults(null, "Map{9 <- Sequence{1, 4, 9, 16, 25, 16, 16}, 10 <- Sequence{1, 4, 9, 16, 25, 16, 16}}", "Sequence{9,10,9}->collectBy(Sequence{1, 4, 9, 16, 25, 16, 16})");
+		ocl.assertQueryResults(null, "Map{9 with Sequence{1, 4, 9, 16, 25, 16, 16}, 10 with Sequence{1, 4, 9, 16, 25, 16, 16}}", "Sequence{9,10,9}->collectBy(Sequence{1, 4, 9, 16, 25, 16, 16})");
 
 		// shortest form
-		ocl.assertQueryResults(null, "Map{1 <- '1', 2 <- '2', 3 <- '3', 4 <- '4', 5 <- '5', 99 <- '99' }", "Sequence{1..5,99}->collectBy(toString())");
+		ocl.assertQueryResults(null, "Map{1 with '1', 2 with '2', 3 with '3', 4 with '4', 5 with '5', 99 with '99' }", "Sequence{1..5,99}->collectBy(toString())");
 
-		ocl.assertQueryResults(null, "Sequence{1..3}->collectBy(k | k*k*k)", "Sequence{1..3}->collectBy(i | i*i)->collectBy(k <- v | k*v)");
+		ocl.assertQueryResults(null, "Sequence{1..3}->collectBy(k | k*k*k)", "Sequence{1..3}->collectBy(i | i*i)->collectBy(k with v | k*v)");
 		ocl.dispose();
 	}
 
@@ -674,27 +674,27 @@ public class IteratorsTest4 extends PivotTestSuite
 
 		ocl.assertQueryTrue(ocl.pkg1, "ownedPackages->exists(true)");
 
-		ocl.assertQueryTrue(null, "Map{1 <- '1', true <- 'TRUE', false <- 'FALSE'}->exists(key <- value | key <> value)");
-		ocl.assertQueryTrue(null, "Map{1 <- '1', true <- 'TRUE', false <- 'FALSE'}->exists(key | key <> null)");
-		ocl.assertQueryTrue(null, "Map{1 <- '1', true <- 'TRUE', null <- null}->exists(key | key <> null)");
-		ocl.assertQueryTrue(null, "Map{1 <- '1', true <- 'TRUE', null <- null}->exists(key  <- value| key = value)");
-		ocl.assertQueryFalse(null, "Map{1 <- '1', true <- 'TRUE', null <- 'null'}->exists(key  <- value| key = value)");
-		ocl.assertQueryFalse(null, "Map{1 <- '1', true <- 'TRUE', 'null' <- null}->exists(key  <- value| key = value)");
-		ocl.assertQueryInvalid(null, "Map{1 <- '1', true <- 'TRUE', invalid <- null}->exists(key  <- value| key = value)");
-		ocl.assertQueryInvalid(null, "Map{1 <- '1', true <- 'TRUE', null <- invalid}->exists(key  <- value| key = value)");
-		ocl.assertQueryInvalid(null, "Map{1 <- '1', true <- 'TRUE', 'null' <- null}->exists(key  <- value| key = invalid)");
-		ocl.assertQueryTrue(null, "Map{1 <- '1', true <- 'TRUE', false <- 'FALSE'}->exists(key : OclAny | key <> null)");
-		ocl.assertQueryTrue(null, "Map{1 <- '1', true <- 'TRUE', false <- 'FALSE'}->exists(key1, key2 <- value2 | key1 <> value2)");
-		ocl.assertQueryTrue(null, "Map{1 <- '1', true <- 'TRUE', false <- 'FALSE'}->exists(key1 : OclAny, key2 : OclAny <- value2 : String | key1 <> value2)");
-		ocl.assertQueryTrue(null, "Map{1 <- '1', true <- 'TRUE', false <- 'FALSE'}->exists(key1 <- value1, key2 | key2 <> value1)");
-		ocl.assertQueryTrue(null, "Map{1 <- '1', true <- 'TRUE', false <- 'FALSE'}->exists(key <- value | key.toString().toUpper() = value)");
-		ocl.assertQueryTrue(null, "Map{1 <- '1', true <- 'TRUE', false <- 'FALSE'}->exists(key : OclAny <- value : String | key.toString().toUpper() = value)");
+		ocl.assertQueryTrue(null, "Map{1 with '1', true with 'TRUE', false with 'FALSE'}->exists(key with value | key <> value)");
+		ocl.assertQueryTrue(null, "Map{1 with '1', true with 'TRUE', false with 'FALSE'}->exists(key | key <> null)");
+		ocl.assertQueryTrue(null, "Map{1 with '1', true with 'TRUE', null with null}->exists(key | key <> null)");
+		ocl.assertQueryTrue(null, "Map{1 with '1', true with 'TRUE', null with null}->exists(key  with value| key = value)");
+		ocl.assertQueryFalse(null, "Map{1 with '1', true with 'TRUE', null with 'null'}->exists(key  with value| key = value)");
+		ocl.assertQueryFalse(null, "Map{1 with '1', true with 'TRUE', 'null' with null}->exists(key  with value| key = value)");
+		ocl.assertQueryInvalid(null, "Map{1 with '1', true with 'TRUE', invalid with null}->exists(key  with value| key = value)");
+		ocl.assertQueryInvalid(null, "Map{1 with '1', true with 'TRUE', null with invalid}->exists(key  with value| key = value)");
+		ocl.assertQueryInvalid(null, "Map{1 with '1', true with 'TRUE', 'null' with null}->exists(key  with value| key = invalid)");
+		ocl.assertQueryTrue(null, "Map{1 with '1', true with 'TRUE', false with 'FALSE'}->exists(key : OclAny | key <> null)");
+		ocl.assertQueryTrue(null, "Map{1 with '1', true with 'TRUE', false with 'FALSE'}->exists(key1, key2 with value2 | key1 <> value2)");
+		ocl.assertQueryTrue(null, "Map{1 with '1', true with 'TRUE', false with 'FALSE'}->exists(key1 : OclAny, key2 : OclAny with value2 : String | key1 <> value2)");
+		ocl.assertQueryTrue(null, "Map{1 with '1', true with 'TRUE', false with 'FALSE'}->exists(key1 with value1, key2 | key2 <> value1)");
+		ocl.assertQueryTrue(null, "Map{1 with '1', true with 'TRUE', false with 'FALSE'}->exists(key with value | key.toString().toUpper() = value)");
+		ocl.assertQueryTrue(null, "Map{1 with '1', true with 'TRUE', false with 'FALSE'}->exists(key : OclAny with value : String | key.toString().toUpper() = value)");
 
 		ocl.assertQueryFalse(ocl.pkg1, "Sequence{2,3,4,6,12}->exists(e1, e2, e3 | e1 * e2 * e3 = 73)");
 		ocl.assertQueryTrue(ocl.pkg1, "Sequence{2,3,4,6,12}->exists(e1, e2, e3 | e1 * e2 * e3 = 72)");
 
-		ocl.assertQueryTrue(null, "Map{2<-1, 3<-2,1<-3}->exists(k1<-v1, k2<-v2, k3<-v3 | k1 = v2 and k2 = v3 and k3 = v1)");
-		ocl.assertQueryFalse(null, "Map{2<-1, 4<-2,1<-3}->exists(k1<-v1, k2<-v2, k3<-v3 | k1 = v2 and k2 = v3 and k3 = v1)");
+		ocl.assertQueryTrue(null, "Map{2 with 1, 3 with 2,1 with 3}->exists(k1 with v1, k2 with v2, k3 with v3 | k1 = v2 and k2 = v3 and k3 = v1)");
+		ocl.assertQueryFalse(null, "Map{2 with 1, 4 with 2,1 with 3}->exists(k1 with v1, k2 with v2, k3 with v3 | k1 = v2 and k2 = v3 and k3 = v1)");
 		ocl.dispose();
 	}
 
@@ -780,27 +780,27 @@ public class IteratorsTest4 extends PivotTestSuite
 		ocl.assertQueryTrue(ocl.pkg1, "Sequence{1..0}->forAll(false)");
 		ocl.assertQueryFalse(ocl.pkg1, "Sequence{1..1}->forAll(false)");
 
-		ocl.assertQueryTrue(null, "Map{1 <- '1', true <- 'TRUE', false <- 'FALSE'}->forAll(key <- value | key <> value)");
-		ocl.assertQueryTrue(null, "Map{1 <- '1', true <- 'TRUE', false <- 'FALSE'}->forAll(key | key <> null)");
-		ocl.assertQueryTrue(null, "Map{1 <- '1', true <- 'TRUE', false <- 'FALSE'}->forAll(key : OclAny | key <> null)");
-		ocl.assertQueryTrue(null, "Map{1 <- '1', true <- 'TRUE', false <- 'FALSE'}->forAll(key1, key2 <- value2 | key1 <> value2)");
-		ocl.assertQueryTrue(null, "Map{1 <- '1', true <- 'TRUE', false <- 'FALSE'}->forAll(key1 : OclAny, key2 : OclAny <- value2 : String | key1 <> value2)");
-		ocl.assertQueryTrue(null, "Map{1 <- '1', true <- 'TRUE', false <- 'FALSE'}->forAll(key1 <- value1, key2 | key2 <> value1)");
-		ocl.assertQueryTrue(null, "Map{1 <- '1', true <- 'TRUE', false <- 'FALSE'}->forAll(key <- value | key.toString().toUpper() = value)");
-		ocl.assertQueryTrue(null, "Map{1 <- '1', true <- 'TRUE', false <- 'FALSE'}->forAll(key : OclAny <- value : String | key.toString().toUpper() = value)");
+		ocl.assertQueryTrue(null, "Map{1 with '1', true with 'TRUE', false with 'FALSE'}->forAll(key with value | key <> value)");
+		ocl.assertQueryTrue(null, "Map{1 with '1', true with 'TRUE', false with 'FALSE'}->forAll(key | key <> null)");
+		ocl.assertQueryTrue(null, "Map{1 with '1', true with 'TRUE', false with 'FALSE'}->forAll(key : OclAny | key <> null)");
+		ocl.assertQueryTrue(null, "Map{1 with '1', true with 'TRUE', false with 'FALSE'}->forAll(key1, key2 with value2 | key1 <> value2)");
+		ocl.assertQueryTrue(null, "Map{1 with '1', true with 'TRUE', false with 'FALSE'}->forAll(key1 : OclAny, key2 : OclAny with value2 : String | key1 <> value2)");
+		ocl.assertQueryTrue(null, "Map{1 with '1', true with 'TRUE', false with 'FALSE'}->forAll(key1 with value1, key2 | key2 <> value1)");
+		ocl.assertQueryTrue(null, "Map{1 with '1', true with 'TRUE', false with 'FALSE'}->forAll(key with value | key.toString().toUpper() = value)");
+		ocl.assertQueryTrue(null, "Map{1 with '1', true with 'TRUE', false with 'FALSE'}->forAll(key : OclAny with value : String | key.toString().toUpper() = value)");
 
 		ocl.assertQueryTrue(ocl.pkg1, "Sequence{2,3,4,6,12}->forAll(e1, e2, e3 | e1 * e2 * e3 <> 73)");
 		ocl.assertQueryFalse(ocl.pkg1, "Sequence{2,3,4,6,12}->forAll(e1, e2, e3 | e1 * e2 * e3 <> 72)");
 
-		ocl.assertQueryTrue(null, "Sequence{11..15}->forAll(i1 <- x1, i2 <- x2 | i1+x2-11 = i2+x1-11)");
+		ocl.assertQueryTrue(null, "Sequence{11..15}->forAll(i1 with x1, i2 with x2 | i1+x2-11 = i2+x1-11)");
 		ocl.assertQueryTrue(null, "Sequence{11..15}->forAll(i1, i2, i3 | 1+i1+i2+i3 = i1+i2+i3+1)");
-		ocl.assertQueryTrue(null, "OrderedSet{11..15}->forAll(i1, i2 <- x2, i3 | i1+x2+i3 = i1+i2+i3-10)");
-		ocl.assertQueryTrue(null, "OrderedSet{11..15}->forAll(i1 <- x1, i2 <- x2, i3 <- x3 | i1+x2+i3 = x1+i2+x3+10)");
-		ocl.assertSemanticErrorQuery(null, "Set{11..15}->forAll(i1, i2 <- x2, i3 | i1+x2+i3 = i1+i2+i3-10)", PivotMessages.IllegalCoIterator, "Set(Integer)");
-		ocl.assertSemanticErrorQuery(null, "Bag{11..15}->forAll(i1 <- x1 | i1 = x1)", PivotMessages.IllegalCoIterator, "Bag(Integer)");
+		ocl.assertQueryTrue(null, "OrderedSet{11..15}->forAll(i1, i2 with x2, i3 | i1+x2+i3 = i1+i2+i3-10)");
+		ocl.assertQueryTrue(null, "OrderedSet{11..15}->forAll(i1 with x1, i2 with x2, i3 with x3 | i1+x2+i3 = x1+i2+x3+10)");
+		ocl.assertSemanticErrorQuery(null, "Set{11..15}->forAll(i1, i2 with x2, i3 | i1+x2+i3 = i1+i2+i3-10)", PivotMessages.IllegalCoIterator, "Set(Integer)");
+		ocl.assertSemanticErrorQuery(null, "Bag{11..15}->forAll(i1 with x1 | i1 = x1)", PivotMessages.IllegalCoIterator, "Bag(Integer)");
 
-		ocl.assertQueryFalse(null, "Map{2<-1, 3<-2,1<-3}->forAll(k1<-v1, k2<-v2, k3<-v3 | not (k1 = v2 and k2 = v3 and k3 = v1))");
-		ocl.assertQueryTrue(null, "Map{2<-1, 4<-2,1<-3}->forAll(k1<-v1, k2<-v2, k3<-v3 | not (k1 = v2 and k2 = v3 and k3 = v1))");
+		ocl.assertQueryFalse(null, "Map{2 with 1, 3 with 2,1 with 3}->forAll(k1 with v1, k2 with v2, k3 with v3 | not (k1 = v2 and k2 = v3 and k3 = v1))");
+		ocl.assertQueryTrue(null, "Map{2 with 1, 4 with 2,1 with 3}->forAll(k1 with v1, k2 with v2, k3 with v3 | not (k1 = v2 and k2 = v3 and k3 = v1))");
 		ocl.dispose();
 	}
 
@@ -876,8 +876,8 @@ public class IteratorsTest4 extends PivotTestSuite
 
 		ocl.assertQueryTrue(ocl.pkg1, "ownedPackages?->isUnique(name)");
 
-		ocl.assertQueryFalse(null, "Map{2 <- 1, 1 <- 2}->isUnique(key <- value | key * value)");
-		ocl.assertQueryTrue(null, "Map{2 <- 2, 1 <- 2}->isUnique(key <- value | key * value)");
+		ocl.assertQueryFalse(null, "Map{2 with 1, 1 with 2}->isUnique(key with value | key * value)");
+		ocl.assertQueryTrue(null, "Map{2 with 2, 1 with 2}->isUnique(key with value | key * value)");
 		ocl.dispose();
 	}
 
@@ -904,7 +904,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(ocl.pkg1, "pfx_a_b_c", "Sequence{'a','b','c'}->iterate(e : String; s : String = 'pfx' | s + '_' + e)");
 
 		ocl.assertQueryResults(null, "Sequence{1..3}->collectBy(k | k*k)", "Sequence{1..3}->iterate(j; acc = Map(Integer,Integer){} | acc->including(j, j*j))");
-		ocl.assertQueryResults(null, "Sequence{1..3}->collectBy(k | k*k)", "Sequence{1..3}->collectBy(i | i*i)->iterate(j <- v; acc = Map(Integer,Integer){} | acc->including(j, v))");
+		ocl.assertQueryResults(null, "Sequence{1..3}->collectBy(k | k*k)", "Sequence{1..3}->collectBy(i | i*i)->iterate(j with v; acc = Map(Integer,Integer){} | acc->including(j, v))");
 		ocl.dispose();
 	}
 
@@ -957,10 +957,10 @@ public class IteratorsTest4 extends PivotTestSuite
 
 		ocl.assertQueryTrue(ocl.pkg1, "Sequence{'a'}->one(true)");
 
-		ocl.assertQueryFalse(ocl.pkg1, "Map{}->one(k <- v | k = v)");
-		ocl.assertQueryTrue(ocl.pkg1, "Map{'a' <- 'a', 'b' <- 'c' }->one(k <- v | k = v)");
-		ocl.assertQueryTrue(ocl.pkg1, "Map{'a' <- 'a', 'b' <- 'c' }->one(k <- v | k <> v)");
-		ocl.assertQueryFalse(ocl.pkg1, "Map{'a' <- 'a', 'b' <- 'b' }->one(k <- v | k <> v)");
+		ocl.assertQueryFalse(ocl.pkg1, "Map{}->one(k with v | k = v)");
+		ocl.assertQueryTrue(ocl.pkg1, "Map{'a' with 'a', 'b' with 'c' }->one(k with v | k = v)");
+		ocl.assertQueryTrue(ocl.pkg1, "Map{'a' with 'a', 'b' with 'c' }->one(k with v | k <> v)");
+		ocl.assertQueryFalse(ocl.pkg1, "Map{'a' with 'a', 'b' with 'b' }->one(k with v | k <> v)");
 		ocl.dispose();
 	}
 
@@ -1005,8 +1005,8 @@ public class IteratorsTest4 extends PivotTestSuite
 		expected = idResolver.createSetOfEach(typeId);
 		ocl.assertQueryEquals(ocl.pkg1, expected, "ownedPackages?->reject(true)");
 
-		ocl.assertQueryResults(null, "Map{1 <- 1, 3 <- 9}", "Sequence{1..3}->collectBy(k | k*k)->reject(k <- v | k = 2)");
-		ocl.assertQueryResults(null, "Map{1 <- 1, 3 <- 9}", "Set{1..3}->collectBy(k | k*k)->reject(k <- v | v = 4)");
+		ocl.assertQueryResults(null, "Map{1 with 1, 3 with 9}", "Sequence{1..3}->collectBy(k | k*k)->reject(k with v | k = 2)");
+		ocl.assertQueryResults(null, "Map{1 with 1, 3 with 9}", "Set{1..3}->collectBy(k | k*k)->reject(k with v | v = 4)");
 		ocl.dispose();
 	}
 
@@ -1051,8 +1051,8 @@ public class IteratorsTest4 extends PivotTestSuite
 		Value expected2 = idResolver.createSetOfEach(typeId, ocl.bob, ocl.pkg2, ocl.pkg3);
 		ocl.assertQueryEquals(ocl.pkg1, expected2, "ownedPackages?->select(true)");
 
-		ocl.assertQueryResults(null, "Map{2 <- 4}", "Sequence{1..3}->collectBy(k | k*k)->select(k <- v | k = 2)");
-		ocl.assertQueryResults(null, "Map{2 <- 4}", "Sequence{1..3}->collectBy(k | k*k)->select(k <- v | v = 4)");
+		ocl.assertQueryResults(null, "Map{2 with 4}", "Sequence{1..3}->collectBy(k | k*k)->select(k with v | k = 2)");
+		ocl.assertQueryResults(null, "Map{2 with 4}", "Sequence{1..3}->collectBy(k | k*k)->select(k with v | v = 4)");
 
 
 		ocl.dispose();

@@ -695,7 +695,7 @@ public class RoundTripTests extends XtextTestCase
 						"		property oMap6 : Map(String[1],Integer[1])[1];\n" +
 						"		property oMap7 : Map(String[?],Integer[?])[1];\n" +
 						"		property oMap8 : Map(String[?],Integer[1])[1];\n" +
-						"		invariant MapIterators: Map{1 to 1}->collect(k to v | v * k)->notEmpty();\n" +
+						"		invariant MapIterators: Map{1 with 1}->collect(k with v | v * k)->notEmpty();\n" +
 						"	}\n" +
 						"	class KeyToValue : 'java.util.Map$Entry'\n" +
 						"	{\n" +
