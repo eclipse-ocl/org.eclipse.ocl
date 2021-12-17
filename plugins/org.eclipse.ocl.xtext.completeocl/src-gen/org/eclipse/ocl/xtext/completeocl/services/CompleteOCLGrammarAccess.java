@@ -1714,6 +1714,7 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 	//	| 'or'
 	//	| 'or2'
 	//	| 'then'
+	//	| 'with'
 	//	| 'xor'
 	//	| 'xor2';
 	public EssentialOCLGrammarAccess.EssentialOCLReservedKeywordElements getEssentialOCLReservedKeywordAccess() {
@@ -2003,7 +2004,7 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//MapLiteralPartCS:
-	//	ownedKey=ExpCS '<-' ownedValue=ExpCS;
+	//	ownedKey=ExpCS ('with' | '<-') ownedValue=ExpCS;
 	public EssentialOCLGrammarAccess.MapLiteralPartCSElements getMapLiteralPartCSAccess() {
 		return gaEssentialOCL.getMapLiteralPartCSAccess();
 	}
@@ -2012,6 +2013,8 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 		return getMapLiteralPartCSAccess().getRule();
 	}
 
+	//// <- is deprecated see Bug 577614
+	//
 	//PrimitiveLiteralExpCS:
 	//	NumberLiteralExpCS
 	//	| StringLiteralExpCS
@@ -2284,9 +2287,9 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 	///* A navigating argument is a generalized rule for the first argument in a round bracket clause. This is typically the first operation
 	// * parameter or an iterator. */
 	//NavigatingArgCS:
-	//	ownedNameExpression=super::NavigatingArgExpCS ('<-' ownedCoIterator=CoIteratorVariableCS ('='
-	//	ownedInitExpression=ExpCS)? | ':' ownedType=TypeExpCS ('<-' ownedCoIterator=CoIteratorVariableCS)? ('='
-	//	ownedInitExpression=ExpCS)? | (':' ownedType=TypeExpCS)? ('<-' ownedCoIterator=CoIteratorVariableCS)? 'in'
+	//	ownedNameExpression=super::NavigatingArgExpCS (('with' | '<-') ownedCoIterator=CoIteratorVariableCS ('='
+	//	ownedInitExpression=ExpCS)? | ':' ownedType=TypeExpCS (('with' | '<-') ownedCoIterator=CoIteratorVariableCS)? ('='
+	//	ownedInitExpression=ExpCS)? | (':' ownedType=TypeExpCS)? (('with' | '<-') ownedCoIterator=CoIteratorVariableCS)? 'in'
 	//	ownedInitExpression=ExpCS)?
 	//	| ':' ownedType=TypeExpCS;
 	public EssentialOCLGrammarAccess.NavigatingArgCSElements getNavigatingArgCSAccess() {
@@ -2316,9 +2319,9 @@ public class CompleteOCLGrammarAccess extends AbstractGrammarElementFinder {
 	///* A navigating comma argument is a generalized rule for non-first argument in a round bracket clause. These are typically non-first operation
 	// * parameters or a second iterator. */
 	//NavigatingCommaArgCS NavigatingArgCS:
-	//	prefix=',' ownedNameExpression=super::NavigatingArgExpCS ('<-' ownedCoIterator=CoIteratorVariableCS ('='
-	//	ownedInitExpression=ExpCS)? | ':' ownedType=TypeExpCS ('<-' ownedCoIterator=CoIteratorVariableCS)? ('='
-	//	ownedInitExpression=ExpCS)? | (':' ownedType=TypeExpCS)? ('<-' ownedCoIterator=CoIteratorVariableCS)? 'in'
+	//	prefix=',' ownedNameExpression=super::NavigatingArgExpCS (('with' | '<-') ownedCoIterator=CoIteratorVariableCS ('='
+	//	ownedInitExpression=ExpCS)? | ':' ownedType=TypeExpCS (('with' | '<-') ownedCoIterator=CoIteratorVariableCS)? ('='
+	//	ownedInitExpression=ExpCS)? | (':' ownedType=TypeExpCS)? (('with' | '<-') ownedCoIterator=CoIteratorVariableCS)? 'in'
 	//	ownedInitExpression=ExpCS)?;
 	public EssentialOCLGrammarAccess.NavigatingCommaArgCSElements getNavigatingCommaArgCSAccess() {
 		return gaEssentialOCL.getNavigatingCommaArgCSAccess();

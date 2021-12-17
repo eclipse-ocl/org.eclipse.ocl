@@ -18,6 +18,7 @@ import org.eclipse.xtext.IGrammarAccess;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.serializer.analysis.GrammarAlias.AbstractElementAlias;
+import org.eclipse.xtext.serializer.analysis.GrammarAlias.AlternativeAlias;
 import org.eclipse.xtext.serializer.analysis.GrammarAlias.GroupAlias;
 import org.eclipse.xtext.serializer.analysis.GrammarAlias.TokenAlias;
 import org.eclipse.xtext.serializer.analysis.ISyntacticSequencerPDAProvider.ISynNavigable;
@@ -28,13 +29,27 @@ import org.eclipse.xtext.serializer.sequencer.AbstractSyntacticSequencer;
 public abstract class AbstractEssentialOCLSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	protected EssentialOCLGrammarAccess grammarAccess;
+	protected AbstractElementAlias match_MapLiteralPartCS_LessThanSignHyphenMinusKeyword_1_1_or_WithKeyword_1_0;
 	protected AbstractElementAlias match_MultiplicityCS_VerticalLineQuestionMarkKeyword_2_0_q;
+	protected AbstractElementAlias match_NavigatingArgCS_LessThanSignHyphenMinusKeyword_0_1_0_0_1_or_WithKeyword_0_1_0_0_0;
+	protected AbstractElementAlias match_NavigatingArgCS_LessThanSignHyphenMinusKeyword_0_1_1_2_0_1_or_WithKeyword_0_1_1_2_0_0;
+	protected AbstractElementAlias match_NavigatingArgCS_LessThanSignHyphenMinusKeyword_0_1_2_1_0_1_or_WithKeyword_0_1_2_1_0_0;
+	protected AbstractElementAlias match_NavigatingCommaArgCS_LessThanSignHyphenMinusKeyword_2_0_0_1_or_WithKeyword_2_0_0_0;
+	protected AbstractElementAlias match_NavigatingCommaArgCS_LessThanSignHyphenMinusKeyword_2_1_2_0_1_or_WithKeyword_2_1_2_0_0;
+	protected AbstractElementAlias match_NavigatingCommaArgCS_LessThanSignHyphenMinusKeyword_2_2_1_0_1_or_WithKeyword_2_2_1_0_0;
 	protected AbstractElementAlias match_TupleTypeCS___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q;
 
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (EssentialOCLGrammarAccess) access;
+		match_MapLiteralPartCS_LessThanSignHyphenMinusKeyword_1_1_or_WithKeyword_1_0 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getMapLiteralPartCSAccess().getLessThanSignHyphenMinusKeyword_1_1()), new TokenAlias(false, false, grammarAccess.getMapLiteralPartCSAccess().getWithKeyword_1_0()));
 		match_MultiplicityCS_VerticalLineQuestionMarkKeyword_2_0_q = new TokenAlias(false, true, grammarAccess.getMultiplicityCSAccess().getVerticalLineQuestionMarkKeyword_2_0());
+		match_NavigatingArgCS_LessThanSignHyphenMinusKeyword_0_1_0_0_1_or_WithKeyword_0_1_0_0_0 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getNavigatingArgCSAccess().getLessThanSignHyphenMinusKeyword_0_1_0_0_1()), new TokenAlias(false, false, grammarAccess.getNavigatingArgCSAccess().getWithKeyword_0_1_0_0_0()));
+		match_NavigatingArgCS_LessThanSignHyphenMinusKeyword_0_1_1_2_0_1_or_WithKeyword_0_1_1_2_0_0 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getNavigatingArgCSAccess().getLessThanSignHyphenMinusKeyword_0_1_1_2_0_1()), new TokenAlias(false, false, grammarAccess.getNavigatingArgCSAccess().getWithKeyword_0_1_1_2_0_0()));
+		match_NavigatingArgCS_LessThanSignHyphenMinusKeyword_0_1_2_1_0_1_or_WithKeyword_0_1_2_1_0_0 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getNavigatingArgCSAccess().getLessThanSignHyphenMinusKeyword_0_1_2_1_0_1()), new TokenAlias(false, false, grammarAccess.getNavigatingArgCSAccess().getWithKeyword_0_1_2_1_0_0()));
+		match_NavigatingCommaArgCS_LessThanSignHyphenMinusKeyword_2_0_0_1_or_WithKeyword_2_0_0_0 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getNavigatingCommaArgCSAccess().getLessThanSignHyphenMinusKeyword_2_0_0_1()), new TokenAlias(false, false, grammarAccess.getNavigatingCommaArgCSAccess().getWithKeyword_2_0_0_0()));
+		match_NavigatingCommaArgCS_LessThanSignHyphenMinusKeyword_2_1_2_0_1_or_WithKeyword_2_1_2_0_0 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getNavigatingCommaArgCSAccess().getLessThanSignHyphenMinusKeyword_2_1_2_0_1()), new TokenAlias(false, false, grammarAccess.getNavigatingCommaArgCSAccess().getWithKeyword_2_1_2_0_0()));
+		match_NavigatingCommaArgCS_LessThanSignHyphenMinusKeyword_2_2_1_0_1_or_WithKeyword_2_2_1_0_0 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getNavigatingCommaArgCSAccess().getLessThanSignHyphenMinusKeyword_2_2_1_0_1()), new TokenAlias(false, false, grammarAccess.getNavigatingCommaArgCSAccess().getWithKeyword_2_2_1_0_0()));
 		match_TupleTypeCS___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getTupleTypeCSAccess().getLeftParenthesisKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getTupleTypeCSAccess().getRightParenthesisKeyword_1_2()));
 	}
 
@@ -50,12 +65,37 @@ public abstract class AbstractEssentialOCLSyntacticSequencer extends AbstractSyn
 		List<INode> transitionNodes = collectNodes(fromNode, toNode);
 		for (AbstractElementAlias syntax : transition.getAmbiguousSyntaxes()) {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
-			if (match_MultiplicityCS_VerticalLineQuestionMarkKeyword_2_0_q.equals(syntax))
+			if (match_MapLiteralPartCS_LessThanSignHyphenMinusKeyword_1_1_or_WithKeyword_1_0.equals(syntax))
+				emit_MapLiteralPartCS_LessThanSignHyphenMinusKeyword_1_1_or_WithKeyword_1_0(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_MultiplicityCS_VerticalLineQuestionMarkKeyword_2_0_q.equals(syntax))
 				emit_MultiplicityCS_VerticalLineQuestionMarkKeyword_2_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_NavigatingArgCS_LessThanSignHyphenMinusKeyword_0_1_0_0_1_or_WithKeyword_0_1_0_0_0.equals(syntax))
+				emit_NavigatingArgCS_LessThanSignHyphenMinusKeyword_0_1_0_0_1_or_WithKeyword_0_1_0_0_0(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_NavigatingArgCS_LessThanSignHyphenMinusKeyword_0_1_1_2_0_1_or_WithKeyword_0_1_1_2_0_0.equals(syntax))
+				emit_NavigatingArgCS_LessThanSignHyphenMinusKeyword_0_1_1_2_0_1_or_WithKeyword_0_1_1_2_0_0(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_NavigatingArgCS_LessThanSignHyphenMinusKeyword_0_1_2_1_0_1_or_WithKeyword_0_1_2_1_0_0.equals(syntax))
+				emit_NavigatingArgCS_LessThanSignHyphenMinusKeyword_0_1_2_1_0_1_or_WithKeyword_0_1_2_1_0_0(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_NavigatingCommaArgCS_LessThanSignHyphenMinusKeyword_2_0_0_1_or_WithKeyword_2_0_0_0.equals(syntax))
+				emit_NavigatingCommaArgCS_LessThanSignHyphenMinusKeyword_2_0_0_1_or_WithKeyword_2_0_0_0(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_NavigatingCommaArgCS_LessThanSignHyphenMinusKeyword_2_1_2_0_1_or_WithKeyword_2_1_2_0_0.equals(syntax))
+				emit_NavigatingCommaArgCS_LessThanSignHyphenMinusKeyword_2_1_2_0_1_or_WithKeyword_2_1_2_0_0(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_NavigatingCommaArgCS_LessThanSignHyphenMinusKeyword_2_2_1_0_1_or_WithKeyword_2_2_1_0_0.equals(syntax))
+				emit_NavigatingCommaArgCS_LessThanSignHyphenMinusKeyword_2_2_1_0_1_or_WithKeyword_2_2_1_0_0(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_TupleTypeCS___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q.equals(syntax))
 				emit_TupleTypeCS___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else acceptNodes(getLastNavigableState(), syntaxNodes);
 		}
+	}
+
+	/**
+	 * Ambiguous syntax:
+	 *     'with' | '<-'
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     ownedKey=ExpCS (ambiguity) ownedValue=ExpCS
+	 */
+	protected void emit_MapLiteralPartCS_LessThanSignHyphenMinusKeyword_1_1_or_WithKeyword_1_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
 	}
 
 	/**
@@ -70,6 +110,74 @@ public abstract class AbstractEssentialOCLSyntacticSequencer extends AbstractSyn
 	 *     upperBound=UPPER (ambiguity) ']' (rule end)
 	 */
 	protected void emit_MultiplicityCS_VerticalLineQuestionMarkKeyword_2_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+
+	/**
+	 * Ambiguous syntax:
+	 *     'with' | '<-'
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     ownedNameExpression=NavigatingArgExpCS (ambiguity) ownedCoIterator=CoIteratorVariableCS
+	 */
+	protected void emit_NavigatingArgCS_LessThanSignHyphenMinusKeyword_0_1_0_0_1_or_WithKeyword_0_1_0_0_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+
+	/**
+	 * Ambiguous syntax:
+	 *     'with' | '<-'
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     ownedType=TypeExpCS (ambiguity) ownedCoIterator=CoIteratorVariableCS
+	 */
+	protected void emit_NavigatingArgCS_LessThanSignHyphenMinusKeyword_0_1_1_2_0_1_or_WithKeyword_0_1_1_2_0_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+
+	/**
+	 * Ambiguous syntax:
+	 *     'with' | '<-'
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     ownedNameExpression=NavigatingArgExpCS (ambiguity) ownedCoIterator=CoIteratorVariableCS
+	 *     ownedType=TypeExpCS (ambiguity) ownedCoIterator=CoIteratorVariableCS
+	 */
+	protected void emit_NavigatingArgCS_LessThanSignHyphenMinusKeyword_0_1_2_1_0_1_or_WithKeyword_0_1_2_1_0_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+
+	/**
+	 * Ambiguous syntax:
+	 *     'with' | '<-'
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     ownedNameExpression=NavigatingArgExpCS (ambiguity) ownedCoIterator=CoIteratorVariableCS
+	 */
+	protected void emit_NavigatingCommaArgCS_LessThanSignHyphenMinusKeyword_2_0_0_1_or_WithKeyword_2_0_0_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+
+	/**
+	 * Ambiguous syntax:
+	 *     'with' | '<-'
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     ownedType=TypeExpCS (ambiguity) ownedCoIterator=CoIteratorVariableCS
+	 */
+	protected void emit_NavigatingCommaArgCS_LessThanSignHyphenMinusKeyword_2_1_2_0_1_or_WithKeyword_2_1_2_0_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+
+	/**
+	 * Ambiguous syntax:
+	 *     'with' | '<-'
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     ownedNameExpression=NavigatingArgExpCS (ambiguity) ownedCoIterator=CoIteratorVariableCS
+	 *     ownedType=TypeExpCS (ambiguity) ownedCoIterator=CoIteratorVariableCS
+	 */
+	protected void emit_NavigatingCommaArgCS_LessThanSignHyphenMinusKeyword_2_2_1_0_1_or_WithKeyword_2_2_1_0_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 

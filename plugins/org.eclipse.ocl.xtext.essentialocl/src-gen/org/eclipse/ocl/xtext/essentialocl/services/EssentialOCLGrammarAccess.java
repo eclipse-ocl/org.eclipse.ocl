@@ -59,8 +59,9 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cOrKeyword_11 = (Keyword)cAlternatives.eContents().get(11);
 		private final Keyword cOr2Keyword_12 = (Keyword)cAlternatives.eContents().get(12);
 		private final Keyword cThenKeyword_13 = (Keyword)cAlternatives.eContents().get(13);
-		private final Keyword cXorKeyword_14 = (Keyword)cAlternatives.eContents().get(14);
-		private final Keyword cXor2Keyword_15 = (Keyword)cAlternatives.eContents().get(15);
+		private final Keyword cWithKeyword_14 = (Keyword)cAlternatives.eContents().get(14);
+		private final Keyword cXorKeyword_15 = (Keyword)cAlternatives.eContents().get(15);
+		private final Keyword cXor2Keyword_16 = (Keyword)cAlternatives.eContents().get(16);
 
 		///** <<<This is a join point for derived grammars - replace with a more disciplined grammar extensibility>>> */
 		//EssentialOCLReservedKeyword:
@@ -78,6 +79,7 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 		//	| 'or'
 		//	| 'or2'
 		//	| 'then'
+		//	| 'with'
 		//	| 'xor'
 		//	| 'xor2';
 		@Override public ParserRule getRule() { return rule; }
@@ -96,6 +98,7 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 		//| 'or'
 		//| 'or2'
 		//| 'then'
+		//| 'with'
 		//| 'xor'
 		//| 'xor2'
 		public Alternatives getAlternatives() { return cAlternatives; }
@@ -142,11 +145,14 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 		//'then'
 		public Keyword getThenKeyword_13() { return cThenKeyword_13; }
 
+		//'with'
+		public Keyword getWithKeyword_14() { return cWithKeyword_14; }
+
 		//'xor'
-		public Keyword getXorKeyword_14() { return cXorKeyword_14; }
+		public Keyword getXorKeyword_15() { return cXorKeyword_15; }
 
 		//'xor2'
-		public Keyword getXor2Keyword_15() { return cXor2Keyword_15; }
+		public Keyword getXor2Keyword_16() { return cXor2Keyword_16; }
 	}
 
 	public class EssentialOCLUnaryOperatorNameElements extends AbstractParserRuleElementFinder {
@@ -1215,15 +1221,17 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cOwnedKeyAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cOwnedKeyExpCSParserRuleCall_0_0 = (RuleCall)cOwnedKeyAssignment_0.eContents().get(0);
-		private final Keyword cLessThanSignHyphenMinusKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
+		private final Keyword cWithKeyword_1_0 = (Keyword)cAlternatives_1.eContents().get(0);
+		private final Keyword cLessThanSignHyphenMinusKeyword_1_1 = (Keyword)cAlternatives_1.eContents().get(1);
 		private final Assignment cOwnedValueAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cOwnedValueExpCSParserRuleCall_2_0 = (RuleCall)cOwnedValueAssignment_2.eContents().get(0);
 
 		//MapLiteralPartCS:
-		//	ownedKey=ExpCS '<-' ownedValue=ExpCS;
+		//	ownedKey=ExpCS ('with' | '<-') ownedValue=ExpCS;
 		@Override public ParserRule getRule() { return rule; }
 
-		//ownedKey=ExpCS '<-' ownedValue=ExpCS
+		//ownedKey=ExpCS ('with' | '<-') ownedValue=ExpCS
 		public Group getGroup() { return cGroup; }
 
 		//ownedKey=ExpCS
@@ -1232,8 +1240,14 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 		//ExpCS
 		public RuleCall getOwnedKeyExpCSParserRuleCall_0_0() { return cOwnedKeyExpCSParserRuleCall_0_0; }
 
+		//('with' | '<-')
+		public Alternatives getAlternatives_1() { return cAlternatives_1; }
+
+		//'with'
+		public Keyword getWithKeyword_1_0() { return cWithKeyword_1_0; }
+
 		//'<-'
-		public Keyword getLessThanSignHyphenMinusKeyword_1() { return cLessThanSignHyphenMinusKeyword_1; }
+		public Keyword getLessThanSignHyphenMinusKeyword_1_1() { return cLessThanSignHyphenMinusKeyword_1_1; }
 
 		//ownedValue=ExpCS
 		public Assignment getOwnedValueAssignment_2() { return cOwnedValueAssignment_2; }
@@ -1252,6 +1266,8 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cInvalidLiteralExpCSParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
 		private final RuleCall cNullLiteralExpCSParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
 
+		//// <- is deprecated see Bug 577614
+		//
 		//PrimitiveLiteralExpCS:
 		//	NumberLiteralExpCS
 		//	| StringLiteralExpCS
@@ -2127,7 +2143,9 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cOwnedNameExpressionNavigatingArgExpCSParserRuleCall_0_0_0 = (RuleCall)cOwnedNameExpressionAssignment_0_0.eContents().get(0);
 		private final Alternatives cAlternatives_0_1 = (Alternatives)cGroup_0.eContents().get(1);
 		private final Group cGroup_0_1_0 = (Group)cAlternatives_0_1.eContents().get(0);
-		private final Keyword cLessThanSignHyphenMinusKeyword_0_1_0_0 = (Keyword)cGroup_0_1_0.eContents().get(0);
+		private final Alternatives cAlternatives_0_1_0_0 = (Alternatives)cGroup_0_1_0.eContents().get(0);
+		private final Keyword cWithKeyword_0_1_0_0_0 = (Keyword)cAlternatives_0_1_0_0.eContents().get(0);
+		private final Keyword cLessThanSignHyphenMinusKeyword_0_1_0_0_1 = (Keyword)cAlternatives_0_1_0_0.eContents().get(1);
 		private final Assignment cOwnedCoIteratorAssignment_0_1_0_1 = (Assignment)cGroup_0_1_0.eContents().get(1);
 		private final RuleCall cOwnedCoIteratorCoIteratorVariableCSParserRuleCall_0_1_0_1_0 = (RuleCall)cOwnedCoIteratorAssignment_0_1_0_1.eContents().get(0);
 		private final Group cGroup_0_1_0_2 = (Group)cGroup_0_1_0.eContents().get(2);
@@ -2139,7 +2157,9 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cOwnedTypeAssignment_0_1_1_1 = (Assignment)cGroup_0_1_1.eContents().get(1);
 		private final RuleCall cOwnedTypeTypeExpCSParserRuleCall_0_1_1_1_0 = (RuleCall)cOwnedTypeAssignment_0_1_1_1.eContents().get(0);
 		private final Group cGroup_0_1_1_2 = (Group)cGroup_0_1_1.eContents().get(2);
-		private final Keyword cLessThanSignHyphenMinusKeyword_0_1_1_2_0 = (Keyword)cGroup_0_1_1_2.eContents().get(0);
+		private final Alternatives cAlternatives_0_1_1_2_0 = (Alternatives)cGroup_0_1_1_2.eContents().get(0);
+		private final Keyword cWithKeyword_0_1_1_2_0_0 = (Keyword)cAlternatives_0_1_1_2_0.eContents().get(0);
+		private final Keyword cLessThanSignHyphenMinusKeyword_0_1_1_2_0_1 = (Keyword)cAlternatives_0_1_1_2_0.eContents().get(1);
 		private final Assignment cOwnedCoIteratorAssignment_0_1_1_2_1 = (Assignment)cGroup_0_1_1_2.eContents().get(1);
 		private final RuleCall cOwnedCoIteratorCoIteratorVariableCSParserRuleCall_0_1_1_2_1_0 = (RuleCall)cOwnedCoIteratorAssignment_0_1_1_2_1.eContents().get(0);
 		private final Group cGroup_0_1_1_3 = (Group)cGroup_0_1_1.eContents().get(3);
@@ -2152,7 +2172,9 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cOwnedTypeAssignment_0_1_2_0_1 = (Assignment)cGroup_0_1_2_0.eContents().get(1);
 		private final RuleCall cOwnedTypeTypeExpCSParserRuleCall_0_1_2_0_1_0 = (RuleCall)cOwnedTypeAssignment_0_1_2_0_1.eContents().get(0);
 		private final Group cGroup_0_1_2_1 = (Group)cGroup_0_1_2.eContents().get(1);
-		private final Keyword cLessThanSignHyphenMinusKeyword_0_1_2_1_0 = (Keyword)cGroup_0_1_2_1.eContents().get(0);
+		private final Alternatives cAlternatives_0_1_2_1_0 = (Alternatives)cGroup_0_1_2_1.eContents().get(0);
+		private final Keyword cWithKeyword_0_1_2_1_0_0 = (Keyword)cAlternatives_0_1_2_1_0.eContents().get(0);
+		private final Keyword cLessThanSignHyphenMinusKeyword_0_1_2_1_0_1 = (Keyword)cAlternatives_0_1_2_1_0.eContents().get(1);
 		private final Assignment cOwnedCoIteratorAssignment_0_1_2_1_1 = (Assignment)cGroup_0_1_2_1.eContents().get(1);
 		private final RuleCall cOwnedCoIteratorCoIteratorVariableCSParserRuleCall_0_1_2_1_1_0 = (RuleCall)cOwnedCoIteratorAssignment_0_1_2_1_1.eContents().get(0);
 		private final Keyword cInKeyword_0_1_2_2 = (Keyword)cGroup_0_1_2.eContents().get(2);
@@ -2166,21 +2188,24 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 		///* A navigating argument is a generalized rule for the first argument in a round bracket clause. This is typically the first operation
 		// * parameter or an iterator. */
 		//NavigatingArgCS:
-		//	ownedNameExpression=NavigatingArgExpCS ('<-' ownedCoIterator=CoIteratorVariableCS ('=' ownedInitExpression=ExpCS)? |
-		//	':' ownedType=TypeExpCS ('<-' ownedCoIterator=CoIteratorVariableCS)? ('=' ownedInitExpression=ExpCS)? | (':'
-		//	ownedType=TypeExpCS)? ('<-' ownedCoIterator=CoIteratorVariableCS)? 'in' ownedInitExpression=ExpCS)?
+		//	ownedNameExpression=NavigatingArgExpCS (('with' | '<-') ownedCoIterator=CoIteratorVariableCS ('='
+		//	ownedInitExpression=ExpCS)? | ':' ownedType=TypeExpCS (('with' | '<-') ownedCoIterator=CoIteratorVariableCS)? ('='
+		//	ownedInitExpression=ExpCS)? | (':' ownedType=TypeExpCS)? (('with' | '<-') ownedCoIterator=CoIteratorVariableCS)? 'in'
+		//	ownedInitExpression=ExpCS)?
 		//	| ':' ownedType=TypeExpCS;
 		@Override public ParserRule getRule() { return rule; }
 
-		//ownedNameExpression=NavigatingArgExpCS ('<-' ownedCoIterator=CoIteratorVariableCS ('=' ownedInitExpression=ExpCS)? |
-		//':' ownedType=TypeExpCS ('<-' ownedCoIterator=CoIteratorVariableCS)? ('=' ownedInitExpression=ExpCS)? | (':'
-		//ownedType=TypeExpCS)? ('<-' ownedCoIterator=CoIteratorVariableCS)? 'in' ownedInitExpression=ExpCS)?
+		//ownedNameExpression=NavigatingArgExpCS (('with' | '<-') ownedCoIterator=CoIteratorVariableCS ('='
+		//ownedInitExpression=ExpCS)? | ':' ownedType=TypeExpCS (('with' | '<-') ownedCoIterator=CoIteratorVariableCS)? ('='
+		//ownedInitExpression=ExpCS)? | (':' ownedType=TypeExpCS)? (('with' | '<-') ownedCoIterator=CoIteratorVariableCS)? 'in'
+		//ownedInitExpression=ExpCS)?
 		//| ':' ownedType=TypeExpCS
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//ownedNameExpression=NavigatingArgExpCS ('<-' ownedCoIterator=CoIteratorVariableCS ('=' ownedInitExpression=ExpCS)? |
-		//':' ownedType=TypeExpCS ('<-' ownedCoIterator=CoIteratorVariableCS)? ('=' ownedInitExpression=ExpCS)? | (':'
-		//ownedType=TypeExpCS)? ('<-' ownedCoIterator=CoIteratorVariableCS)? 'in' ownedInitExpression=ExpCS)?
+		//ownedNameExpression=NavigatingArgExpCS (('with' | '<-') ownedCoIterator=CoIteratorVariableCS ('='
+		//ownedInitExpression=ExpCS)? | ':' ownedType=TypeExpCS (('with' | '<-') ownedCoIterator=CoIteratorVariableCS)? ('='
+		//ownedInitExpression=ExpCS)? | (':' ownedType=TypeExpCS)? (('with' | '<-') ownedCoIterator=CoIteratorVariableCS)? 'in'
+		//ownedInitExpression=ExpCS)?
 		public Group getGroup_0() { return cGroup_0; }
 
 		//ownedNameExpression=NavigatingArgExpCS
@@ -2189,16 +2214,22 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 		//NavigatingArgExpCS
 		public RuleCall getOwnedNameExpressionNavigatingArgExpCSParserRuleCall_0_0_0() { return cOwnedNameExpressionNavigatingArgExpCSParserRuleCall_0_0_0; }
 
-		//('<-' ownedCoIterator=CoIteratorVariableCS ('=' ownedInitExpression=ExpCS)? | ':' ownedType=TypeExpCS ('<-'
-		//ownedCoIterator=CoIteratorVariableCS)? ('=' ownedInitExpression=ExpCS)? | (':' ownedType=TypeExpCS)? ('<-'
-		//ownedCoIterator=CoIteratorVariableCS)? 'in' ownedInitExpression=ExpCS)?
+		//(('with' | '<-') ownedCoIterator=CoIteratorVariableCS ('=' ownedInitExpression=ExpCS)? | ':' ownedType=TypeExpCS ((
+		//'with' | '<-') ownedCoIterator=CoIteratorVariableCS)? ('=' ownedInitExpression=ExpCS)? | (':' ownedType=TypeExpCS)? ((
+		//'with' | '<-') ownedCoIterator=CoIteratorVariableCS)? 'in' ownedInitExpression=ExpCS)?
 		public Alternatives getAlternatives_0_1() { return cAlternatives_0_1; }
 
-		//'<-' ownedCoIterator=CoIteratorVariableCS ('=' ownedInitExpression=ExpCS)?
+		//('with' | '<-') ownedCoIterator=CoIteratorVariableCS ('=' ownedInitExpression=ExpCS)?
 		public Group getGroup_0_1_0() { return cGroup_0_1_0; }
 
+		//('with' | '<-')
+		public Alternatives getAlternatives_0_1_0_0() { return cAlternatives_0_1_0_0; }
+
+		//'with'
+		public Keyword getWithKeyword_0_1_0_0_0() { return cWithKeyword_0_1_0_0_0; }
+
 		//'<-'
-		public Keyword getLessThanSignHyphenMinusKeyword_0_1_0_0() { return cLessThanSignHyphenMinusKeyword_0_1_0_0; }
+		public Keyword getLessThanSignHyphenMinusKeyword_0_1_0_0_1() { return cLessThanSignHyphenMinusKeyword_0_1_0_0_1; }
 
 		//ownedCoIterator=CoIteratorVariableCS
 		public Assignment getOwnedCoIteratorAssignment_0_1_0_1() { return cOwnedCoIteratorAssignment_0_1_0_1; }
@@ -2218,7 +2249,7 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 		//ExpCS
 		public RuleCall getOwnedInitExpressionExpCSParserRuleCall_0_1_0_2_1_0() { return cOwnedInitExpressionExpCSParserRuleCall_0_1_0_2_1_0; }
 
-		//':' ownedType=TypeExpCS ('<-' ownedCoIterator=CoIteratorVariableCS)? ('=' ownedInitExpression=ExpCS)?
+		//':' ownedType=TypeExpCS (('with' | '<-') ownedCoIterator=CoIteratorVariableCS)? ('=' ownedInitExpression=ExpCS)?
 		public Group getGroup_0_1_1() { return cGroup_0_1_1; }
 
 		//':'
@@ -2230,11 +2261,17 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 		//TypeExpCS
 		public RuleCall getOwnedTypeTypeExpCSParserRuleCall_0_1_1_1_0() { return cOwnedTypeTypeExpCSParserRuleCall_0_1_1_1_0; }
 
-		//('<-' ownedCoIterator=CoIteratorVariableCS)?
+		//(('with' | '<-') ownedCoIterator=CoIteratorVariableCS)?
 		public Group getGroup_0_1_1_2() { return cGroup_0_1_1_2; }
 
+		//('with' | '<-')
+		public Alternatives getAlternatives_0_1_1_2_0() { return cAlternatives_0_1_1_2_0; }
+
+		//'with'
+		public Keyword getWithKeyword_0_1_1_2_0_0() { return cWithKeyword_0_1_1_2_0_0; }
+
 		//'<-'
-		public Keyword getLessThanSignHyphenMinusKeyword_0_1_1_2_0() { return cLessThanSignHyphenMinusKeyword_0_1_1_2_0; }
+		public Keyword getLessThanSignHyphenMinusKeyword_0_1_1_2_0_1() { return cLessThanSignHyphenMinusKeyword_0_1_1_2_0_1; }
 
 		//ownedCoIterator=CoIteratorVariableCS
 		public Assignment getOwnedCoIteratorAssignment_0_1_1_2_1() { return cOwnedCoIteratorAssignment_0_1_1_2_1; }
@@ -2254,7 +2291,7 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 		//ExpCS
 		public RuleCall getOwnedInitExpressionExpCSParserRuleCall_0_1_1_3_1_0() { return cOwnedInitExpressionExpCSParserRuleCall_0_1_1_3_1_0; }
 
-		//(':' ownedType=TypeExpCS)? ('<-' ownedCoIterator=CoIteratorVariableCS)? 'in' ownedInitExpression=ExpCS
+		//(':' ownedType=TypeExpCS)? (('with' | '<-') ownedCoIterator=CoIteratorVariableCS)? 'in' ownedInitExpression=ExpCS
 		public Group getGroup_0_1_2() { return cGroup_0_1_2; }
 
 		//(':' ownedType=TypeExpCS)?
@@ -2269,11 +2306,17 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 		//TypeExpCS
 		public RuleCall getOwnedTypeTypeExpCSParserRuleCall_0_1_2_0_1_0() { return cOwnedTypeTypeExpCSParserRuleCall_0_1_2_0_1_0; }
 
-		//('<-' ownedCoIterator=CoIteratorVariableCS)?
+		//(('with' | '<-') ownedCoIterator=CoIteratorVariableCS)?
 		public Group getGroup_0_1_2_1() { return cGroup_0_1_2_1; }
 
+		//('with' | '<-')
+		public Alternatives getAlternatives_0_1_2_1_0() { return cAlternatives_0_1_2_1_0; }
+
+		//'with'
+		public Keyword getWithKeyword_0_1_2_1_0_0() { return cWithKeyword_0_1_2_1_0_0; }
+
 		//'<-'
-		public Keyword getLessThanSignHyphenMinusKeyword_0_1_2_1_0() { return cLessThanSignHyphenMinusKeyword_0_1_2_1_0; }
+		public Keyword getLessThanSignHyphenMinusKeyword_0_1_2_1_0_1() { return cLessThanSignHyphenMinusKeyword_0_1_2_1_0_1; }
 
 		//ownedCoIterator=CoIteratorVariableCS
 		public Assignment getOwnedCoIteratorAssignment_0_1_2_1_1() { return cOwnedCoIteratorAssignment_0_1_2_1_1; }
@@ -2375,7 +2418,9 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cOwnedNameExpressionNavigatingArgExpCSParserRuleCall_1_0 = (RuleCall)cOwnedNameExpressionAssignment_1.eContents().get(0);
 		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
 		private final Group cGroup_2_0 = (Group)cAlternatives_2.eContents().get(0);
-		private final Keyword cLessThanSignHyphenMinusKeyword_2_0_0 = (Keyword)cGroup_2_0.eContents().get(0);
+		private final Alternatives cAlternatives_2_0_0 = (Alternatives)cGroup_2_0.eContents().get(0);
+		private final Keyword cWithKeyword_2_0_0_0 = (Keyword)cAlternatives_2_0_0.eContents().get(0);
+		private final Keyword cLessThanSignHyphenMinusKeyword_2_0_0_1 = (Keyword)cAlternatives_2_0_0.eContents().get(1);
 		private final Assignment cOwnedCoIteratorAssignment_2_0_1 = (Assignment)cGroup_2_0.eContents().get(1);
 		private final RuleCall cOwnedCoIteratorCoIteratorVariableCSParserRuleCall_2_0_1_0 = (RuleCall)cOwnedCoIteratorAssignment_2_0_1.eContents().get(0);
 		private final Group cGroup_2_0_2 = (Group)cGroup_2_0.eContents().get(2);
@@ -2387,7 +2432,9 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cOwnedTypeAssignment_2_1_1 = (Assignment)cGroup_2_1.eContents().get(1);
 		private final RuleCall cOwnedTypeTypeExpCSParserRuleCall_2_1_1_0 = (RuleCall)cOwnedTypeAssignment_2_1_1.eContents().get(0);
 		private final Group cGroup_2_1_2 = (Group)cGroup_2_1.eContents().get(2);
-		private final Keyword cLessThanSignHyphenMinusKeyword_2_1_2_0 = (Keyword)cGroup_2_1_2.eContents().get(0);
+		private final Alternatives cAlternatives_2_1_2_0 = (Alternatives)cGroup_2_1_2.eContents().get(0);
+		private final Keyword cWithKeyword_2_1_2_0_0 = (Keyword)cAlternatives_2_1_2_0.eContents().get(0);
+		private final Keyword cLessThanSignHyphenMinusKeyword_2_1_2_0_1 = (Keyword)cAlternatives_2_1_2_0.eContents().get(1);
 		private final Assignment cOwnedCoIteratorAssignment_2_1_2_1 = (Assignment)cGroup_2_1_2.eContents().get(1);
 		private final RuleCall cOwnedCoIteratorCoIteratorVariableCSParserRuleCall_2_1_2_1_0 = (RuleCall)cOwnedCoIteratorAssignment_2_1_2_1.eContents().get(0);
 		private final Group cGroup_2_1_3 = (Group)cGroup_2_1.eContents().get(3);
@@ -2400,7 +2447,9 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cOwnedTypeAssignment_2_2_0_1 = (Assignment)cGroup_2_2_0.eContents().get(1);
 		private final RuleCall cOwnedTypeTypeExpCSParserRuleCall_2_2_0_1_0 = (RuleCall)cOwnedTypeAssignment_2_2_0_1.eContents().get(0);
 		private final Group cGroup_2_2_1 = (Group)cGroup_2_2.eContents().get(1);
-		private final Keyword cLessThanSignHyphenMinusKeyword_2_2_1_0 = (Keyword)cGroup_2_2_1.eContents().get(0);
+		private final Alternatives cAlternatives_2_2_1_0 = (Alternatives)cGroup_2_2_1.eContents().get(0);
+		private final Keyword cWithKeyword_2_2_1_0_0 = (Keyword)cAlternatives_2_2_1_0.eContents().get(0);
+		private final Keyword cLessThanSignHyphenMinusKeyword_2_2_1_0_1 = (Keyword)cAlternatives_2_2_1_0.eContents().get(1);
 		private final Assignment cOwnedCoIteratorAssignment_2_2_1_1 = (Assignment)cGroup_2_2_1.eContents().get(1);
 		private final RuleCall cOwnedCoIteratorCoIteratorVariableCSParserRuleCall_2_2_1_1_0 = (RuleCall)cOwnedCoIteratorAssignment_2_2_1_1.eContents().get(0);
 		private final Keyword cInKeyword_2_2_2 = (Keyword)cGroup_2_2.eContents().get(2);
@@ -2412,15 +2461,15 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 		///* A navigating comma argument is a generalized rule for non-first argument in a round bracket clause. These are typically non-first operation
 		// * parameters or a second iterator. */
 		//NavigatingCommaArgCS NavigatingArgCS:
-		//	prefix=',' ownedNameExpression=NavigatingArgExpCS ('<-' ownedCoIterator=CoIteratorVariableCS ('='
-		//	ownedInitExpression=ExpCS)? | ':' ownedType=TypeExpCS ('<-' ownedCoIterator=CoIteratorVariableCS)? ('='
-		//	ownedInitExpression=ExpCS)? | (':' ownedType=TypeExpCS)? ('<-' ownedCoIterator=CoIteratorVariableCS)? 'in'
+		//	prefix=',' ownedNameExpression=NavigatingArgExpCS (('with' | '<-') ownedCoIterator=CoIteratorVariableCS ('='
+		//	ownedInitExpression=ExpCS)? | ':' ownedType=TypeExpCS (('with' | '<-') ownedCoIterator=CoIteratorVariableCS)? ('='
+		//	ownedInitExpression=ExpCS)? | (':' ownedType=TypeExpCS)? (('with' | '<-') ownedCoIterator=CoIteratorVariableCS)? 'in'
 		//	ownedInitExpression=ExpCS)?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//prefix=',' ownedNameExpression=NavigatingArgExpCS ('<-' ownedCoIterator=CoIteratorVariableCS ('='
-		//ownedInitExpression=ExpCS)? | ':' ownedType=TypeExpCS ('<-' ownedCoIterator=CoIteratorVariableCS)? ('='
-		//ownedInitExpression=ExpCS)? | (':' ownedType=TypeExpCS)? ('<-' ownedCoIterator=CoIteratorVariableCS)? 'in'
+		//prefix=',' ownedNameExpression=NavigatingArgExpCS (('with' | '<-') ownedCoIterator=CoIteratorVariableCS ('='
+		//ownedInitExpression=ExpCS)? | ':' ownedType=TypeExpCS (('with' | '<-') ownedCoIterator=CoIteratorVariableCS)? ('='
+		//ownedInitExpression=ExpCS)? | (':' ownedType=TypeExpCS)? (('with' | '<-') ownedCoIterator=CoIteratorVariableCS)? 'in'
 		//ownedInitExpression=ExpCS)?
 		public Group getGroup() { return cGroup; }
 
@@ -2436,16 +2485,22 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 		//NavigatingArgExpCS
 		public RuleCall getOwnedNameExpressionNavigatingArgExpCSParserRuleCall_1_0() { return cOwnedNameExpressionNavigatingArgExpCSParserRuleCall_1_0; }
 
-		//('<-' ownedCoIterator=CoIteratorVariableCS ('=' ownedInitExpression=ExpCS)? | ':' ownedType=TypeExpCS ('<-'
-		//ownedCoIterator=CoIteratorVariableCS)? ('=' ownedInitExpression=ExpCS)? | (':' ownedType=TypeExpCS)? ('<-'
-		//ownedCoIterator=CoIteratorVariableCS)? 'in' ownedInitExpression=ExpCS)?
+		//(('with' | '<-') ownedCoIterator=CoIteratorVariableCS ('=' ownedInitExpression=ExpCS)? | ':' ownedType=TypeExpCS ((
+		//'with' | '<-') ownedCoIterator=CoIteratorVariableCS)? ('=' ownedInitExpression=ExpCS)? | (':' ownedType=TypeExpCS)? ((
+		//'with' | '<-') ownedCoIterator=CoIteratorVariableCS)? 'in' ownedInitExpression=ExpCS)?
 		public Alternatives getAlternatives_2() { return cAlternatives_2; }
 
-		//'<-' ownedCoIterator=CoIteratorVariableCS ('=' ownedInitExpression=ExpCS)?
+		//('with' | '<-') ownedCoIterator=CoIteratorVariableCS ('=' ownedInitExpression=ExpCS)?
 		public Group getGroup_2_0() { return cGroup_2_0; }
 
+		//('with' | '<-')
+		public Alternatives getAlternatives_2_0_0() { return cAlternatives_2_0_0; }
+
+		//'with'
+		public Keyword getWithKeyword_2_0_0_0() { return cWithKeyword_2_0_0_0; }
+
 		//'<-'
-		public Keyword getLessThanSignHyphenMinusKeyword_2_0_0() { return cLessThanSignHyphenMinusKeyword_2_0_0; }
+		public Keyword getLessThanSignHyphenMinusKeyword_2_0_0_1() { return cLessThanSignHyphenMinusKeyword_2_0_0_1; }
 
 		//ownedCoIterator=CoIteratorVariableCS
 		public Assignment getOwnedCoIteratorAssignment_2_0_1() { return cOwnedCoIteratorAssignment_2_0_1; }
@@ -2465,7 +2520,7 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 		//ExpCS
 		public RuleCall getOwnedInitExpressionExpCSParserRuleCall_2_0_2_1_0() { return cOwnedInitExpressionExpCSParserRuleCall_2_0_2_1_0; }
 
-		//':' ownedType=TypeExpCS ('<-' ownedCoIterator=CoIteratorVariableCS)? ('=' ownedInitExpression=ExpCS)?
+		//':' ownedType=TypeExpCS (('with' | '<-') ownedCoIterator=CoIteratorVariableCS)? ('=' ownedInitExpression=ExpCS)?
 		public Group getGroup_2_1() { return cGroup_2_1; }
 
 		//':'
@@ -2477,11 +2532,17 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 		//TypeExpCS
 		public RuleCall getOwnedTypeTypeExpCSParserRuleCall_2_1_1_0() { return cOwnedTypeTypeExpCSParserRuleCall_2_1_1_0; }
 
-		//('<-' ownedCoIterator=CoIteratorVariableCS)?
+		//(('with' | '<-') ownedCoIterator=CoIteratorVariableCS)?
 		public Group getGroup_2_1_2() { return cGroup_2_1_2; }
 
+		//('with' | '<-')
+		public Alternatives getAlternatives_2_1_2_0() { return cAlternatives_2_1_2_0; }
+
+		//'with'
+		public Keyword getWithKeyword_2_1_2_0_0() { return cWithKeyword_2_1_2_0_0; }
+
 		//'<-'
-		public Keyword getLessThanSignHyphenMinusKeyword_2_1_2_0() { return cLessThanSignHyphenMinusKeyword_2_1_2_0; }
+		public Keyword getLessThanSignHyphenMinusKeyword_2_1_2_0_1() { return cLessThanSignHyphenMinusKeyword_2_1_2_0_1; }
 
 		//ownedCoIterator=CoIteratorVariableCS
 		public Assignment getOwnedCoIteratorAssignment_2_1_2_1() { return cOwnedCoIteratorAssignment_2_1_2_1; }
@@ -2501,7 +2562,7 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 		//ExpCS
 		public RuleCall getOwnedInitExpressionExpCSParserRuleCall_2_1_3_1_0() { return cOwnedInitExpressionExpCSParserRuleCall_2_1_3_1_0; }
 
-		//(':' ownedType=TypeExpCS)? ('<-' ownedCoIterator=CoIteratorVariableCS)? 'in' ownedInitExpression=ExpCS
+		//(':' ownedType=TypeExpCS)? (('with' | '<-') ownedCoIterator=CoIteratorVariableCS)? 'in' ownedInitExpression=ExpCS
 		public Group getGroup_2_2() { return cGroup_2_2; }
 
 		//(':' ownedType=TypeExpCS)?
@@ -2516,11 +2577,17 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 		//TypeExpCS
 		public RuleCall getOwnedTypeTypeExpCSParserRuleCall_2_2_0_1_0() { return cOwnedTypeTypeExpCSParserRuleCall_2_2_0_1_0; }
 
-		//('<-' ownedCoIterator=CoIteratorVariableCS)?
+		//(('with' | '<-') ownedCoIterator=CoIteratorVariableCS)?
 		public Group getGroup_2_2_1() { return cGroup_2_2_1; }
 
+		//('with' | '<-')
+		public Alternatives getAlternatives_2_2_1_0() { return cAlternatives_2_2_1_0; }
+
+		//'with'
+		public Keyword getWithKeyword_2_2_1_0_0() { return cWithKeyword_2_2_1_0_0; }
+
 		//'<-'
-		public Keyword getLessThanSignHyphenMinusKeyword_2_2_1_0() { return cLessThanSignHyphenMinusKeyword_2_2_1_0; }
+		public Keyword getLessThanSignHyphenMinusKeyword_2_2_1_0_1() { return cLessThanSignHyphenMinusKeyword_2_2_1_0_1; }
 
 		//ownedCoIterator=CoIteratorVariableCS
 		public Assignment getOwnedCoIteratorAssignment_2_2_1_1() { return cOwnedCoIteratorAssignment_2_2_1_1; }
@@ -3133,6 +3200,7 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 	//	| 'or'
 	//	| 'or2'
 	//	| 'then'
+	//	| 'with'
 	//	| 'xor'
 	//	| 'xor2';
 	public EssentialOCLReservedKeywordElements getEssentialOCLReservedKeywordAccess() {
@@ -3463,7 +3531,7 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//MapLiteralPartCS:
-	//	ownedKey=ExpCS '<-' ownedValue=ExpCS;
+	//	ownedKey=ExpCS ('with' | '<-') ownedValue=ExpCS;
 	public MapLiteralPartCSElements getMapLiteralPartCSAccess() {
 		return pMapLiteralPartCS;
 	}
@@ -3472,6 +3540,8 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 		return getMapLiteralPartCSAccess().getRule();
 	}
 
+	//// <- is deprecated see Bug 577614
+	//
 	//PrimitiveLiteralExpCS:
 	//	NumberLiteralExpCS
 	//	| StringLiteralExpCS
@@ -3744,9 +3814,10 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 	///* A navigating argument is a generalized rule for the first argument in a round bracket clause. This is typically the first operation
 	// * parameter or an iterator. */
 	//NavigatingArgCS:
-	//	ownedNameExpression=NavigatingArgExpCS ('<-' ownedCoIterator=CoIteratorVariableCS ('=' ownedInitExpression=ExpCS)? |
-	//	':' ownedType=TypeExpCS ('<-' ownedCoIterator=CoIteratorVariableCS)? ('=' ownedInitExpression=ExpCS)? | (':'
-	//	ownedType=TypeExpCS)? ('<-' ownedCoIterator=CoIteratorVariableCS)? 'in' ownedInitExpression=ExpCS)?
+	//	ownedNameExpression=NavigatingArgExpCS (('with' | '<-') ownedCoIterator=CoIteratorVariableCS ('='
+	//	ownedInitExpression=ExpCS)? | ':' ownedType=TypeExpCS (('with' | '<-') ownedCoIterator=CoIteratorVariableCS)? ('='
+	//	ownedInitExpression=ExpCS)? | (':' ownedType=TypeExpCS)? (('with' | '<-') ownedCoIterator=CoIteratorVariableCS)? 'in'
+	//	ownedInitExpression=ExpCS)?
 	//	| ':' ownedType=TypeExpCS;
 	public NavigatingArgCSElements getNavigatingArgCSAccess() {
 		return pNavigatingArgCS;
@@ -3774,9 +3845,9 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 	///* A navigating comma argument is a generalized rule for non-first argument in a round bracket clause. These are typically non-first operation
 	// * parameters or a second iterator. */
 	//NavigatingCommaArgCS NavigatingArgCS:
-	//	prefix=',' ownedNameExpression=NavigatingArgExpCS ('<-' ownedCoIterator=CoIteratorVariableCS ('='
-	//	ownedInitExpression=ExpCS)? | ':' ownedType=TypeExpCS ('<-' ownedCoIterator=CoIteratorVariableCS)? ('='
-	//	ownedInitExpression=ExpCS)? | (':' ownedType=TypeExpCS)? ('<-' ownedCoIterator=CoIteratorVariableCS)? 'in'
+	//	prefix=',' ownedNameExpression=NavigatingArgExpCS (('with' | '<-') ownedCoIterator=CoIteratorVariableCS ('='
+	//	ownedInitExpression=ExpCS)? | ':' ownedType=TypeExpCS (('with' | '<-') ownedCoIterator=CoIteratorVariableCS)? ('='
+	//	ownedInitExpression=ExpCS)? | (':' ownedType=TypeExpCS)? (('with' | '<-') ownedCoIterator=CoIteratorVariableCS)? 'in'
 	//	ownedInitExpression=ExpCS)?;
 	public NavigatingCommaArgCSElements getNavigatingCommaArgCSAccess() {
 		return pNavigatingCommaArgCS;

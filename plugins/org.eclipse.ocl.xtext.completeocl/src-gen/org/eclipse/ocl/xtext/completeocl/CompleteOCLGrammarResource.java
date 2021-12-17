@@ -9,7 +9,7 @@
  *     E.D.Willink - initial API and implementation
  *******************************************************************************
  * This code is 100% auto-generated
- * from: E:\GIT\org.eclipse.ocl\plugins..\..\plugins\org.eclipse.ocl.xtext.completeocl\src-gen\org\eclipse\ocl\xtext\completeocl\CompleteOCL.xtextbin
+ * from: E:\GIT\org.eclipse.ocl\examples..\..\plugins\org.eclipse.ocl.xtext.completeocl\src-gen\org\eclipse\ocl\xtext\completeocl\CompleteOCL.xtextbin
  * by: org.eclipse.ocl.examples.build.xtend.generateGrammar.xtend
  *
  * Do not edit it.
@@ -566,6 +566,7 @@ public class CompleteOCLGrammarResource extends AbstractGrammarResource
 					createKeyword("or"),
 					createKeyword("or2"),
 					createKeyword("then"),
+					createKeyword("with"),
 					createKeyword("xor"),
 					createKeyword("xor2")));
 			PR_EssentialOCLUnaryOperatorName.setAlternatives(
@@ -646,7 +647,9 @@ public class CompleteOCLGrammarResource extends AbstractGrammarResource
 			PR_MapLiteralPartCS.setAlternatives(
 				createGroup(
 					createAssignment("ownedKey", "=", createRuleCall(PR_ExpCS)),
-					createKeyword("<-"),
+					createAlternatives(
+						createKeyword("with"),
+						createKeyword("<-")),
 					createAssignment("ownedValue", "=", createRuleCall(PR_ExpCS))));
 			PR_MapTypeCS.setAlternatives(
 				createGroup(
@@ -674,7 +677,9 @@ public class CompleteOCLGrammarResource extends AbstractGrammarResource
 						createAssignment("ownedNameExpression", "=", createRuleCall(_CompleteOCL.PR_NavigatingArgExpCS)),
 						setCardinality("?", createAlternatives(
 							createGroup(
-								createKeyword("<-"),
+								createAlternatives(
+									createKeyword("with"),
+									createKeyword("<-")),
 								createAssignment("ownedCoIterator", "=", createRuleCall(PR_CoIteratorVariableCS)),
 								setCardinality("?", createGroup(
 									createKeyword("="),
@@ -683,7 +688,9 @@ public class CompleteOCLGrammarResource extends AbstractGrammarResource
 								createKeyword(":"),
 								createAssignment("ownedType", "=", createRuleCall(PR_TypeExpCS)),
 								setCardinality("?", createGroup(
-									createKeyword("<-"),
+									createAlternatives(
+										createKeyword("with"),
+										createKeyword("<-")),
 									createAssignment("ownedCoIterator", "=", createRuleCall(PR_CoIteratorVariableCS)))),
 								setCardinality("?", createGroup(
 									createKeyword("="),
@@ -693,7 +700,9 @@ public class CompleteOCLGrammarResource extends AbstractGrammarResource
 									createKeyword(":"),
 									createAssignment("ownedType", "=", createRuleCall(PR_TypeExpCS)))),
 								setCardinality("?", createGroup(
-									createKeyword("<-"),
+									createAlternatives(
+										createKeyword("with"),
+										createKeyword("<-")),
 									createAssignment("ownedCoIterator", "=", createRuleCall(PR_CoIteratorVariableCS)))),
 								createKeyword("in"),
 								createAssignment("ownedInitExpression", "=", createRuleCall(PR_ExpCS)))))),
@@ -718,7 +727,9 @@ public class CompleteOCLGrammarResource extends AbstractGrammarResource
 					createAssignment("ownedNameExpression", "=", createRuleCall(_CompleteOCL.PR_NavigatingArgExpCS)),
 					setCardinality("?", createAlternatives(
 						createGroup(
-							createKeyword("<-"),
+							createAlternatives(
+								createKeyword("with"),
+								createKeyword("<-")),
 							createAssignment("ownedCoIterator", "=", createRuleCall(PR_CoIteratorVariableCS)),
 							setCardinality("?", createGroup(
 								createKeyword("="),
@@ -727,7 +738,9 @@ public class CompleteOCLGrammarResource extends AbstractGrammarResource
 							createKeyword(":"),
 							createAssignment("ownedType", "=", createRuleCall(PR_TypeExpCS)),
 							setCardinality("?", createGroup(
-								createKeyword("<-"),
+								createAlternatives(
+									createKeyword("with"),
+									createKeyword("<-")),
 								createAssignment("ownedCoIterator", "=", createRuleCall(PR_CoIteratorVariableCS)))),
 							setCardinality("?", createGroup(
 								createKeyword("="),
@@ -737,7 +750,9 @@ public class CompleteOCLGrammarResource extends AbstractGrammarResource
 								createKeyword(":"),
 								createAssignment("ownedType", "=", createRuleCall(PR_TypeExpCS)))),
 							setCardinality("?", createGroup(
-								createKeyword("<-"),
+								createAlternatives(
+									createKeyword("with"),
+									createKeyword("<-")),
 								createAssignment("ownedCoIterator", "=", createRuleCall(PR_CoIteratorVariableCS)))),
 							createKeyword("in"),
 							createAssignment("ownedInitExpression", "=", createRuleCall(PR_ExpCS)))))));
