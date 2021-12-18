@@ -457,7 +457,6 @@ public class IteratorsTest4 extends PivotTestSuite
 		@NonNull Type packageType = ClassUtil.nonNullState(environmentFactory.getASClass("Package"));
 		CollectionTypeId typeId = TypeId.BAG.getSpecializedId(packageType.getTypeId());
 		CollectionValue expected1 = idResolver.createBagOfEach(typeId, "pkg2", "bob", "pkg3");
-
 		// complete form
 		ocl.assertQueryEquals(ocl.pkg1, expected1, "ownedPackages?->collect(p : ocl::Package | p.name)");
 
@@ -480,7 +479,7 @@ public class IteratorsTest4 extends PivotTestSuite
 
 		ocl.assertQueryResults(ocl.pkg1, "Sequence{1,4,9}", "Sequence{1..3}->collect(k | k*k)");
 		ocl.assertQueryResults(ocl.pkg1, "Sequence{null, null, null}", "Sequence{1..3}->collect(k | null)");
-		ocl.assertQueryResults(null, "Sequence{11,15,21,29,39,51}", "Sequence{10..15}->collect(i with x | i+x*x)");
+		ocl.assertQueryResults(null, "Sequence{11,15,21,29,39,51}", "Sequence{10..15}->collect(v with i | v+i*i)");
 
 		ocl.dispose();
 	}
@@ -726,10 +725,14 @@ public class IteratorsTest4 extends PivotTestSuite
 		ocl.assertInvariantTrue(ocl.pkg1, "Sequence{1, 2, 3, 4}->exists(e1, e2 | e1 = e2)");
 		ocl.assertInvariantTrue(ocl.pkg1, "Sequence{1, 2, 3, 4}->exists(e1, e2 | (e1 + e2) = 7)");
 		ocl.assertInvariantFalse(ocl.pkg1, "Sequence{1, 2, 3, 4}->exists(e1, e2 | (e1 + e2) = 0)");
+		ocl.assertInvariantTrue(ocl.pkg1, "Sequence{1, 2, 3, 4}->exists(e1, e2, e3 | (e1 + e2 + e3) > 2)");
 
 		// when there are no values, the the desired result implictly
 		// does not occur
 		ocl.assertInvariantFalse(ocl.pkg1, "Sequence{}->exists(e1, e2 | e1 = e2)");
+
+		ocl.assertQueryTrue(null, "Sequence{'1','2','3','4'}->exists(v1 with i1, v2 with i2 | v1 = i1.toString() and v2.toInteger() = i2)");
+		ocl.assertQueryTrue(null, "OrderedSet{'1','2','3','4'}->exists(v1 : String[1] with i1 : Integer[1], v2 : String[1] with i2 : Integer[1] | v1 = i1.toString() and v2.toInteger() = i2)");
 		ocl.dispose();
 	}
 
@@ -835,11 +838,14 @@ public class IteratorsTest4 extends PivotTestSuite
 	@Test public void test_forAll_multipleIteratorVariables() {
 		MyOCL ocl = createOCL();
 		ocl.assertInvariantFalse(ocl.pkg1, "Sequence{1, 2, 3, 4}->forAll(e1, e2 | e1 = e2)");
-
 		ocl.assertInvariantTrue(ocl.pkg1, "Sequence{1, 2, 3, 4}->forAll(e1, e2 | (e1 + e2) > e1)");
+		ocl.assertInvariantTrue(ocl.pkg1, "Sequence{1, 2, 3, 4}->forAll(e1, e2, e3 | (e1 + e2 + e3) > e1)");
 
 		// when there are no values, the the desired result implictly occurs
 		ocl.assertInvariantTrue(ocl.pkg1, "Sequence{}->forAll(e1, e2 | e1 = e2)");
+
+		ocl.assertQueryTrue(null, "Sequence{'1','2','3','4'}->forAll(v1 with i1, v2 with i2 | v1 = i1.toString() and v2.toInteger() = i2)");
+		ocl.assertQueryTrue(null, "OrderedSet{'1','2','3','4'}->forAll(v1 : String[1] with i1 : Integer[1], v2 : String[1] with i2 : Integer[1] | v1 = i1.toString() and v2.toInteger() = i2)");
 		ocl.dispose();
 	}
 
