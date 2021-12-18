@@ -24,11 +24,13 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.scoping.Attribution;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.xtext.base.attributes.ImportCSAttribution;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS.AbstractUnresolvedProxyMessageProvider;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS.MessageBinder;
+import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
 import org.eclipse.ocl.xtext.basecs.ImportCS;
@@ -205,9 +207,9 @@ public class EssentialOCLScoping
 		}
 
 		public String getOperationArguments(@NonNull RoundBracketedClauseCS csRoundBracketedClause) {
-			List<NavigatingArgCS> arguments = csRoundBracketedClause.getOwnedArguments();
+			List<@NonNull NavigatingArgCS> arguments = ClassUtil.nullFree(csRoundBracketedClause.getOwnedArguments());
 			StringBuilder s = new StringBuilder();
-			for (NavigatingArgCS csArgument : arguments) {
+			for (@NonNull NavigatingArgCS csArgument : arguments) {
 				TypedElement pivot = PivotUtil.getPivot(TypedElement.class, csArgument);
 				if ((pivot != null) && !pivot.eIsProxy()) {
 					if (s.length() > 0) {
@@ -217,7 +219,7 @@ public class EssentialOCLScoping
 					s.append(String.valueOf(type));
 				}
 				else {
-					s.append(csArgument.toString());
+					s.append(ElementUtil.getTrimmedText(csArgument));
 				}
 			}
 			return s.toString();

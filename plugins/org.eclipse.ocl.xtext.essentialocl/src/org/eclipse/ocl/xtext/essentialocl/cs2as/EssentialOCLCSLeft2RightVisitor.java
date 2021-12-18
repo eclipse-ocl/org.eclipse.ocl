@@ -883,7 +883,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 					helper.setType(acc, accType, accIsRequired == Boolean.TRUE, null);
 				}
 				if (pivotAccumulators.size() >= iteration.getOwnedAccumulators().size()) {
-					context.addError(csNameExp, EssentialOCLCS2ASMessages.IterateExp_TooManyAccumulators, csNameExp.getOwnedPathName());
+					context.addError(csNameExp, EssentialOCLCS2ASMessages.IterateExp_TooManyAccumulators, ElementUtil.getTrimmedText(csNameExp.getOwnedPathName()));
 					return false;
 				}
 				acc.setRepresentedParameter(iteration.getOwnedAccumulators().get(pivotAccumulators.size()));
@@ -908,11 +908,11 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		if (expression instanceof IterateExp) {
 			IterateExp iterateExp = (IterateExp)expression;
 			if (accumulatorCount > 1) {
-				context.addError(csNameExp, EssentialOCLCS2ASMessages.IterateExp_TooManyAccumulators, csNameExp.getOwnedPathName());
+				context.addError(csNameExp, EssentialOCLCS2ASMessages.IterateExp_TooManyAccumulators, ElementUtil.getTrimmedText(csNameExp.getOwnedPathName()));
 				return false;
 			}
 			else if (accumulatorCount < 1) {
-				context.addError(csNameExp, EssentialOCLCS2ASMessages.IterateExp_TooFewAccumulators, csNameExp.getOwnedPathName());
+				context.addError(csNameExp, EssentialOCLCS2ASMessages.IterateExp_TooFewAccumulators, ElementUtil.getTrimmedText(csNameExp.getOwnedPathName()));
 				return false;
 			}
 			else {
@@ -920,7 +920,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			}
 		}
 		else if (accumulatorCount > 0) {
-			context.addError(csNameExp, EssentialOCLCS2ASMessages.IteratorExp_TooManyAccumulators, csNameExp.getOwnedPathName());
+			context.addError(csNameExp, EssentialOCLCS2ASMessages.IteratorExp_TooManyAccumulators, ElementUtil.getTrimmedText(csNameExp.getOwnedPathName()));
 		}
 		return true;
 	}
@@ -1672,10 +1672,11 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		if (pivotElement != null) {
 			ExpCS csExpression = csContext.getOwnedExpression();
 			if (csExpression != null) {
-				pivotElement.setBody(csExpression.toString());
+				String bodyText = ElementUtil.getRawText(csExpression);
+				pivotElement.setBody(bodyText);
 				OCLExpression expression = context.visitLeft2Right(OCLExpression.class, csExpression);
 				if (expression != null) {
-					PivotUtil.setBody(pivotElement, expression, ElementUtil.getExpressionText(csExpression));
+					PivotUtil.setBody(pivotElement, expression, bodyText);
 					helper.setType(pivotElement, expression.getType(), expression.isIsRequired());
 				}
 			}

@@ -391,6 +391,7 @@ public class ShadowPartCSImpl
 	@Override
 	public String getName() {
 		if ((basicGetReferredProperty() == null) || basicGetReferredProperty().eIsProxy()) {
+			// FIXME is this fallback iregularity ever used / necessary ?
 			return ElementUtil.getText(this, EssentialOCLCSPackage.Literals.SHADOW_PART_CS__REFERRED_PROPERTY);
 		}
 		else {

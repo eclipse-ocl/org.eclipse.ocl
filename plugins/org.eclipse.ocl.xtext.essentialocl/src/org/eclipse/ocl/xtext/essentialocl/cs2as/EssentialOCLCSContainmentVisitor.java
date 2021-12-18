@@ -274,7 +274,7 @@ public class EssentialOCLCSContainmentVisitor extends AbstractEssentialOCLCSCont
 	@Override
 	public Continuation<?> visitContextCS(@NonNull ContextCS csElement) {
 		@NonNull ExpressionInOCL pivotElement = context.refreshModelElement(ExpressionInOCL.class, PivotPackage.Literals.EXPRESSION_IN_OCL, csElement);
-		PivotUtil.setBody(pivotElement, null, csElement.toString()/*ElementUtil.getExpressionText(csElement)*/);
+		PivotUtil.setBody(pivotElement, null, ElementUtil.getRawText(csElement));
 		ParserContext parserContext = ElementUtil.basicGetParserContext(csElement);
 		if (parserContext != null) {
 			parserContext.initialize(context, pivotElement);

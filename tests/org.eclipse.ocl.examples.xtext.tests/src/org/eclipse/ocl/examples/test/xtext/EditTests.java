@@ -56,6 +56,8 @@ import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.pivot.values.CollectionTypeParameters;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
+import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
+import org.eclipse.ocl.xtext.basecs.ElementCS;
 import org.eclipse.ocl.xtext.essentialocl.utilities.EssentialOCLCSResource;
 import org.eclipse.ocl.xtext.oclinecorecs.OCLinEcoreCSPackage;
 import org.eclipse.xtext.resource.impl.ListBasedDiagnosticConsumer;
@@ -139,7 +141,7 @@ public class EditTests extends XtextTestCase
 	}
 
 	protected void replace(@NonNull CSResource xtextResource, String oldString, String newString) {
-		String xtextContent = xtextResource.getContents().get(0).toString();
+		String xtextContent = ElementUtil.getRawText((ElementCS) xtextResource.getContents().get(0));
 		int index = xtextContent.indexOf(oldString);
 		assert index >= 0;
 		xtextResource.update(index, oldString.length(), newString);

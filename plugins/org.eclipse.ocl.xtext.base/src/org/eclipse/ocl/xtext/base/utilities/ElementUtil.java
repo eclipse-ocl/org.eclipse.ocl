@@ -370,13 +370,26 @@ public class ElementUtil
 	}
 
 	/**
-	 * Return the raw text associated with a csElement.
+	 * Return the raw text associated with a csElement. This preserves leading/internal/trailing whitespace, which is necessary when propagating
+	 * the original user formatting through an Ecore EAnnotation. Returns an empty string rather than null.
 	 */
+	public static @NonNull String getRawText(@Nullable ElementCS csElement) {
+		ICompositeNode node = csElement  != null ? NodeModelUtils.getNode(csElement) : null;
+		String rawText = node != null ? node.getText() : null;
+		return rawText != null ? rawText : "";
+	}
+
+	/**
+	 * Return the raw text associated with a csElement. This preserves leading/trailing whitespace, which is necessary when propagating
+	 * the original user formatting through an Ecore EAnnotation.
+	 */
+	@Deprecated	/* @deprecated use the clearer getRawText() unless getTrimmedText() was actually the intent. */
 	public static @Nullable String getText(@NonNull ElementCS csElement) {
 		ICompositeNode node = NodeModelUtils.getNode(csElement);
 		return node != null ? NodeModelUtils.getTokenText(node) : null;
 	}
 
+	// FIXME is this fallback iregularity just for ShadowPartCSImpl ever really used / necessary ?
 	public static @Nullable String getText(@NonNull ElementCS csElement, /*@NonNull*/ EReference feature) {
 		@SuppressWarnings("null")@NonNull List<INode> nodes = NodeModelUtils.findNodesForFeature(csElement, feature);
 		//		assert (nodes.size() == 1;
@@ -410,6 +423,14 @@ public class ElementUtil
 		else {
 			return text;
 		}
+	}
+
+	/**
+	 * Return the  text associated with a csElement excluding any leading or trailing whitespace.
+	 * Returns an empty string rather than null.
+	 */
+	public static @NonNull String getTrimmedText(@Nullable ElementCS csElement) {
+		return getRawText(csElement).trim();
 	}
 
 	public static int getUpper(@NonNull TypedElementCS csTypedElement) {

@@ -22,6 +22,7 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
 import org.eclipse.ocl.xtext.basecs.PathElementCS;
 import org.eclipse.ocl.xtext.basecs.PathNameCS;
 import org.eclipse.ocl.xtext.essentialoclcs.AbstractNameExpCS;
@@ -81,7 +82,7 @@ public class NavigationUtil
 		if ((unresolvedElement != null) && !unresolvedElement.eIsProxy()) {
 			return unresolvedElement instanceof Iteration;
 		}
-		String name = csPathElement.toString();
+		String name = ElementUtil.getTrimmedText(csPathElement);
 		assert name != null;
 		for (Operation operation : metamodelManager.getAllOperations(type, FeatureFilter.SELECT_NON_STATIC, name)) {
 			return operation instanceof Iteration;		// mixed overload are not allowed
