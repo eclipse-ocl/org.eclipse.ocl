@@ -1111,7 +1111,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 	}
 
 	/**
-	 * @since 1.17
+	 * @since 1.18
 	 */
 	public @Nullable PrimitiveType getBehavioralClass(org.eclipse.uml2.uml.@NonNull DataType umlDataType) {
 		if (umlDataType instanceof org.eclipse.uml2.uml.PrimitiveType) {
@@ -1149,7 +1149,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 	public abstract @NonNull UML2ASDeclarationSwitch getDeclarationPass();
 
 	/**
-	 * @since 1.17
+	 * @since 1.18
 	 */
 	public @Nullable PrimitiveType getPrimitiveTypeByEcoreStereotype(org.eclipse.uml2.uml.@NonNull Stereotype ecoreStereotype, @NonNull String instanceClassName) {
 		if ("boolean".equals(instanceClassName)) {
@@ -1180,7 +1180,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 	}
 
 	/**
-	 * @since 1.17
+	 * @since 1.18
 	 */
 	public @Nullable PrimitiveType getPrimitiveTypeByName(org.eclipse.uml2.uml.@NonNull PrimitiveType umlPrimitiveType) {
 		String name = umlPrimitiveType.getName();
@@ -1217,7 +1217,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 	}
 
 	/**
-	 * @since 1.17
+	 * @since 1.18
 	 */
 	public @Nullable PrimitiveType getPrimitiveTypeByOCLStereotype(org.eclipse.uml2.uml.@NonNull DataType umlDataType) {
 		if (umlDataType.getAppliedStereotype("OCLforUML::Integer") != null) {

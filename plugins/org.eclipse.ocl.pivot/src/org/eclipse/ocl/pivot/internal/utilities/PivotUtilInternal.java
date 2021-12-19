@@ -525,7 +525,7 @@ public class PivotUtilInternal //extends PivotUtil
 	}
 
 	/**
-	 * @since 1.17
+	 * @since 1.18
 	 */
 	public static @NonNull List<@NonNull Parameter> getOwnedAccumulatorsList(@NonNull Iteration iteration) {
 		return ClassUtil.nullFree(iteration.getOwnedAccumulators());
@@ -595,7 +595,7 @@ public class PivotUtilInternal //extends PivotUtil
 	}
 
 	/**
-	 * @since 1.17
+	 * @since 1.18
 	 */
 	public static @NonNull List<@NonNull Variable> getOwnedParametersList(@NonNull ExpressionInOCL expressionInOCL) {
 		return ClassUtil.nullFree(expressionInOCL.getOwnedParameters());

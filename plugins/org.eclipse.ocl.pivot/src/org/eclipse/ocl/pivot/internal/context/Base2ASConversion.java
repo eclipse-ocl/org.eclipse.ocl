@@ -24,7 +24,7 @@ import org.eclipse.ocl.pivot.utilities.PivotHelper;
 public interface Base2ASConversion
 {
 	/**
-	 * @since 1.17
+	 * @since 1.18
 	 */
 	@NonNull PivotHelper getHelper();
 	void setContextVariable(@NonNull ExpressionInOCL pivotSpecification, @NonNull String selfVariableName, @Nullable Type contextType, @Nullable Type contextInstance);

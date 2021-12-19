@@ -1,68 +1,54 @@
 /**
  * <copyright>
- * 
+ *
  * Copyright (c) 2015, 2020 Willink Transformations and others.
  * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
- * 
+ *
  * </copyright>
  */
 package org.eclipse.ocl.examples.xtext.tests.codegen.company.impl;
 
 import java.lang.reflect.InvocationTargetException;
-
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-
 import org.eclipse.emf.ecore.util.EcoreUtil;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-
 import org.eclipse.ocl.examples.xtext.tests.codegen.company.CodegencompanyPackage;
 import org.eclipse.ocl.examples.xtext.tests.codegen.company.CodegencompanyTables;
 import org.eclipse.ocl.examples.xtext.tests.codegen.company.Company;
 import org.eclipse.ocl.examples.xtext.tests.codegen.company.Employee;
-
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.IdResolver.IdResolverExtension;
-
 import org.eclipse.ocl.pivot.ids.TypeId;
-
 import org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation;
-
 import org.eclipse.ocl.pivot.library.collection.CollectionIncludesOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionNotEmptyOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionSizeOperation;
 import org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependOperation;
-
 import org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableGreaterThanOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
-
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
 import org.eclipse.ocl.pivot.library.string.StringSizeOperation;
-
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -371,9 +357,9 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 		final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
 		final /*@NonInvalid*/ @Nullable Employee manager_2 = this.getManager();
 		final /*@NonInvalid*/ boolean oclIsUndefined = manager_2 == null;
-		/*@Thrown*/ @NonNull OrderedSetValue symbol_6;
+		/*@Thrown*/ @NonNull OrderedSetValue symbol_0;
 		if (oclIsUndefined) {
-			symbol_6 = CodegencompanyTables.OrderedSet;
+			symbol_0 = CodegencompanyTables.OrderedSet;
 		}
 		else {
 			final /*@NonInvalid*/ @NonNull Object reportingChain = manager_2 == null;
@@ -392,10 +378,10 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 				throw new InvalidValueException("Null \'\'OrderedSet\'\' rather than \'\'OclVoid\'\' value required");
 			}
 			final /*@Thrown*/ @NonNull OrderedSetValue prepend = (@Nullable OrderedSetValue)OrderedCollectionPrependOperation.INSTANCE.evaluate(safe_reportingChain_source, manager_2);
-			symbol_6 = prepend;
+			symbol_0 = prepend;
 		}
-		final /*@Thrown*/ @NonNull List<Employee> ECORE_symbol_6 = ((IdResolverExtension)idResolver).ecoreValueOfAll(Employee.class, symbol_6);
-		return (EList<Employee>)ECORE_symbol_6;
+		final /*@Thrown*/ @NonNull List<Employee> ECORE_symbol_0 = ((IdResolverExtension)idResolver).ecoreValueOfAll(Employee.class, symbol_0);
+		return (EList<Employee>)ECORE_symbol_0;
 	}
 
 	/**
