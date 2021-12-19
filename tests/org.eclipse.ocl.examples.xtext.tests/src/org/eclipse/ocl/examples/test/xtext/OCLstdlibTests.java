@@ -217,7 +217,7 @@ public class OCLstdlibTests extends XtextTestCase
 						"    }\n"+
 						"    type Bag(T) : BagType conformsTo Collection(T) {}\n"+
 						"    type Class conformsTo OclAny {}\n"+
-						"    type Boolean : PrimitiveType conformsTo OclAny {}\n"+
+						"    type Boolean : BooleanType conformsTo OclAny {}\n"+
 						"    type Collection(T) : CollectionType conformsTo OclAny {}\n"+
 						"    type Integer : PrimitiveType conformsTo Real {}\n"+
 						"    type OclComparable conformsTo OclAny {\n"+

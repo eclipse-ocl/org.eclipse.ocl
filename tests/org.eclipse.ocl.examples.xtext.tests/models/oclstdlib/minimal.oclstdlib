@@ -1,7 +1,7 @@
 library lib : lib = 'http://minimal.oclstdlib'
 {
 	type Bag(T) : BagType conformsTo Collection(T) {}
-	type Boolean : PrimitiveType conformsTo OclAny {}
+	type Boolean : BooleanType conformsTo OclAny {}
 	type Class conformsTo OclAny {}	
 	type Collection(T) : CollectionType conformsTo OclAny {}
 	type Integer : PrimitiveType conformsTo Real {}
