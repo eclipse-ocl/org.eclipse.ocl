@@ -5,7 +5,7 @@ Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-SymbolicName: org.eclipse.ocl.examples.debug.vm.ui;singleton:=true
 Bundle-Version: 2.18.0.qualifier
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.eclipse.ocl.examples.debug.vm.ui,
  org.eclipse.ocl.examples.debug.vm.ui.actions,
  org.eclipse.ocl.examples.debug.vm.ui.launching,
