@@ -10,15 +10,18 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.util;
 
+import java.util.Collections;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.ResourceLocator;
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.EObjectValidator;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.ocl.pivot.*;
 import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
@@ -2499,6 +2502,12 @@ extends EObjectValidator {
 						new Object[] {expressionInOCL}));
 				}
 				return false;
+			} finally {	// See Bug 577928 - must manually recurse if parsed lazily
+				if ((diagnostics != null) && Boolean.FALSE.equals(context.get(DerivedConstants.VALIDATE_RECURSIVELY))) {
+			        for (TreeIterator<? extends EObject> i = EcoreUtil.getAllContents(Collections.singleton(expressionInOCL.getOwnedBody())); i.hasNext();) {
+			        	validate(i.next(), diagnostics, context);
+			        }
+				}
 			}
 		}
 		return validateExpressionInOCLGen(expressionInOCL, diagnostics, context);

@@ -34,4 +34,9 @@ public interface DerivedConstants
 	 */
 	static final @NonNull String ORG_ECLIPSE_JDT_ANNOTATION_NON_NULL = "org.eclipse.jdt.annotation.NonNull";
 	static final @NonNull String ORG_ECLIPSE_JDT_ANNOTATION_NULLABLE = "org.eclipse.jdt.annotation.Nullable";
+
+	/**
+	 * @since 1.18
+	 */
+	static final @NonNull String VALIDATE_RECURSIVELY = "VALIDATE_RECURSIVELY";		// Diagnostician.VALIDATE_RECURSIVELY since 2.14
 }

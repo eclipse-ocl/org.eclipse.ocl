@@ -60,6 +60,9 @@ public class SerializeTests extends XtextTestCase
 		default void assertSameModel(@NonNull Resource expectedResource, @NonNull Resource actualResource) throws IOException, InterruptedException {
 			TestUtil.assertSameModel(expectedResource, actualResource);
 		}
+		default @NonNull String @NonNull [] asFirstReValidationMessages() {
+			return asFirstValidationMessages();
+		}
 		default @NonNull String @NonNull [] asFirstValidationMessages() {
 			return NO_MESSAGES;
 		}
@@ -131,7 +134,12 @@ public class SerializeTests extends XtextTestCase
 			assertNoResourceErrors("Normalisation failed", asResource);
 			@NonNull String @Nullable [] asValidationMessages = testHelper.asFirstValidationMessages();
 			if (asValidationMessages != SUPPRESS_VALIDATION) {
-				assertValidationDiagnostics("Normalisation invalid", asResource, asValidationMessages);
+				assertValidationDiagnostics("Normalisation invalid 1", asResource, asValidationMessages);
+				@NonNull String @Nullable [] asReValidationMessages = testHelper.asFirstReValidationMessages();
+				if (asReValidationMessages != SUPPRESS_VALIDATION) {
+					// See Bug 577928 whereby a first validation was lightweight.
+					assertValidationDiagnostics("Normalisation invalid 2", asResource, asReValidationMessages);
+				}
 			}
 			//
 			//	Pivot to CS
@@ -729,22 +737,19 @@ public class SerializeTests extends XtextTestCase
 	}
 
 	public void testSerialize_States() throws Exception {
-		//		String message1 = StringUtil.bind("The ''State::NameIsLeadingUpperCase'' constraint is invalid: ''let firstLetter : String = invalid.substring(1, 1) in firstLetter.toUpperCase() = firstLetter''\n" +
-		//				"1: Unresolved Operation ''OclInvalid::substring(1, 1)''");
-		//		String message2 = StringUtil.bind("The ''CallExp::TypeIsNotInvalid'' constraint is violated for ''invalid.oclBadOperation()''");
-		//		String message3 = StringUtil.bind("OCL Validation error for \"let firstLetter : String[?] = invalid.oclBadOperation() in firstLetter.toUpperCase() = firstLetter\"\n" +
-		//				"	The ''LetVariable::CompatibleTypeForInitializer'' constraint is violated for ''firstLetter : String[?] = invalid.oclBadOperation()''");
-		//		String message4 = StringUtil.bind("Parsing error ''org.eclipse.ocl.pivot.utilities.SemanticException: The ''states::State'' constraint is invalid: ''let firstLetter : String = invalid.substring(1, 1) in firstLetter.toUpperCase() = firstLetter''\n" +
-		//				"1: Unresolved Operation ''OclInvalid::substring(1, 1)'''' for ''states::State'' ''NameIsLeadingUpperCase''");
+		String message1 = StringUtil.bind(PivotMessagesInternal.ValidationConstraintIsInvalid_ERROR_, PivotConstantsInternal.INVARIANT_ROLE,
+					"states::State::NameIsLeadingUpperCase", "let firstLetter : String = invalid.substring(1, 1) in firstLetter.toUpperCase() = firstLetter'"
+						+ "\n" + "1:36: Unresolved Operation 'OclInvalid::substring(1, 1)");
+		String message2 = StringUtil.bind("The ''CallExp::TypeIsNotInvalid'' constraint is violated for ''invalid.oclBadOperation()''");
 		doSerialize(getTestModelURI("models/ecore/States.ecore"), getTestModelURI("models/ecore/States.ecore"), new SerializeTestHelper()
 		{
 			@Override
+			public @NonNull String @NonNull [] asFirstReValidationMessages() {
+				return getMessages(message2);
+			}
+			@Override
 			public @NonNull String @NonNull [] asFirstValidationMessages() {
-				return //SUPPRESS_VALIDATION;
-		//		return NO_MESSAGES/*getMessages(message1, message2), NO_MESSAGESgetMessages(message4)*/;
-					new @NonNull String[] {StringUtil.bind(PivotMessagesInternal.ValidationConstraintIsInvalid_ERROR_, PivotConstantsInternal.INVARIANT_ROLE,
-						"states::State::NameIsLeadingUpperCase", "let firstLetter : String = invalid.substring(1, 1) in firstLetter.toUpperCase() = firstLetter'"
-							+ "\n" + "1:36: Unresolved Operation 'OclInvalid::substring(1, 1)")};
+				return getMessages(message1, message2);
 			}
 			@Override
 			public @NonNull String cs2asErrorMessages() {
