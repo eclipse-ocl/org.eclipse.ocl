@@ -1766,7 +1766,7 @@ extends EObjectValidator {
 	 */
 	public boolean validatePivotable(Pivotable pivotable, DiagnosticChain diagnostics, Map<Object, Object> context)
 	{
-		return validate_EveryDefaultConstraint((EObject)pivotable, diagnostics, context);
+		return validate_EveryDefaultConstraint(pivotable, diagnostics, context);
 	}
 
 	/**
@@ -2548,6 +2548,12 @@ extends EObjectValidator {
 						new Object[] {expressionInOCL}));
 				}
 				return false;
+			} finally {	// See Bug 577928 - must manually recurse if parsed lazily
+				if ((diagnostics != null) && Boolean.FALSE.equals(context.get(DerivedConstants.VALIDATE_RECURSIVELY))) {
+			        for (TreeIterator<? extends EObject> i = EcoreUtil.getAllContents(Collections.singleton(expressionInOCL.getOwnedBody())); i.hasNext();) {
+			        	validate(i.next(), diagnostics, context);
+			        }
+				}
 			}
 		} */
 		return validateExpressionInOCLGen(expressionInOCL, diagnostics, context);
@@ -3751,7 +3757,7 @@ extends EObjectValidator {
 	 */
 	public boolean validateMorePivotable(MorePivotable morePivotable, DiagnosticChain diagnostics, Map<Object, Object> context)
 	{
-		return validate_EveryDefaultConstraint((EObject)morePivotable, diagnostics, context);
+		return validate_EveryDefaultConstraint(morePivotable, diagnostics, context);
 	}
 
 	/**
