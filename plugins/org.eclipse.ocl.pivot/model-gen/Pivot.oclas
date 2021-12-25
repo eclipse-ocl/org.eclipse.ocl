@@ -46,6 +46,7 @@
       </ownedInvariants>
       <ownedProperties xmi:id="D6wzN" isUnsettable="true" name="booleanSymbol" type="#ZuwnB"/>
     </ownedClasses>
+    <ownedClasses xmi:id="zrclQ" name="BooleanType" superClasses="#ywnRJ"/>
     <ownedClasses xmi:id="QJrde" isAbstract="true" name="CallExp" superClasses="#BFtK4">
       <ownedInvariants xmi:id="6ILdu" isCallable="true" name="SafeSourceCanBeNull">
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="isSafe implies not ownedSource?.type.oclAsType(CollectionType).isNullFree&#xA;"/>
@@ -622,7 +623,9 @@
       </ownedInvariants>
       <ownedOperations xmi:id="cvF4g" name="isNonNull" type="#ZuwnB"/>
       <ownedOperations xmi:id="DBwi+" name="isNull" type="#ZuwnB"/>
-      <ownedProperties xmi:id="s8mFO" isRequired="false" isResolveProxies="false" isTransient="true" name="typeValue" type="#rrwsa"/>
+      <ownedProperties xmi:id="s8mFO" isRequired="false" isResolveProxies="false" isTransient="true" name="typeValue" type="#rrwsa">
+        <ownedComments body="When oclType() returns a Class value with a known actual type, the typeValue propagates the known type."/>
+      </ownedProperties>
       <ownedProperties xmi:id="0VFpK" isImplicit="true" isRequired="false" name="CallExp" opposite="#IjXu4" type="#QJrde"/>
       <ownedProperties xmi:id="ucQSI" isImplicit="true" isRequired="false" name="CollectionItem" opposite="#qB57w" type="#CKfVx"/>
       <ownedProperties xmi:id="BdVOq" isImplicit="true" isRequired="false" name="CollectionRange" opposite="#TGoSr" type="#wy8kd"/>
@@ -1249,6 +1252,7 @@
         <ownedComments body="The type of the TypedElement."/>
       </ownedProperties>
     </ownedClasses>
+    <ownedClasses xmi:id="pARyx" instanceClassName="java.lang.Object" isAbstract="true" isInterface="true" name="UmlAny" superClasses="&_0;#zfDWR"/>
     <ownedClasses xsi:type="pivot:PrimitiveType" xmi:id="5Oxgg" instanceClassName="java.lang.Number" name="UnlimitedNatural" superClasses="&_0;#jbMkR">
       <ownedComments body="UnlimitedNatural is a primitive type representing unlimited natural values."/>
     </ownedClasses>

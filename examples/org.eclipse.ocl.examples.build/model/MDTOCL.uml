@@ -412,6 +412,9 @@
       <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_iauzUOLYEeGCOa0Md3lQkQ" name="Boolean"/>
       <packagedElement xmi:type="uml:Class" xmi:id="_SmDkYC9fEeSc2LncrXmagQ" name="OCLExpression" isAbstract="true">
         <ownedAttribute xmi:id="_x-pUsC9bEeSc2LncrXmagQ" name="typeValue" type="_4hPfAC9bEeSc2LncrXmagQ">
+          <ownedComment xmi:id="_Wm0kMGKEEeyWDpoezNwncw">
+            <body>When oclType() returns a Class value with a known actual type, the typeValue propagates the known type.</body>
+          </ownedComment>
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_0q6GoC9bEeSc2LncrXmagQ"/>
         </ownedAttribute>
         <ownedOperation xmi:id="_hE1YAMb0EeaH8MVbKmGAtg" name="isNonNull">

@@ -22,6 +22,7 @@ import org.eclipse.ocl.pivot.AssociationClassCallExp;
 import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.Behavior;
 import org.eclipse.ocl.pivot.BooleanLiteralExp;
+import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CallOperationAction;
 import org.eclipse.ocl.pivot.CollectionItem;
@@ -239,6 +240,11 @@ extends AdapterFactoryImpl {
 			public Adapter caseBooleanLiteralExp(BooleanLiteralExp object)
 			{
 				return createBooleanLiteralExpAdapter();
+			}
+			@Override
+			public Adapter caseBooleanType(BooleanType object)
+			{
+				return createBooleanTypeAdapter();
 			}
 			@Override
 			public Adapter caseCallExp(CallExp object)
@@ -806,6 +812,11 @@ extends AdapterFactoryImpl {
 				return createTypedElementAdapter();
 			}
 			@Override
+			public Adapter caseUmlAny(Object object)
+			{
+				return createUmlAnyAdapter();
+			}
+			@Override
 			public Adapter caseUnlimitedNaturalLiteralExp(UnlimitedNaturalLiteralExp object)
 			{
 				return createUnlimitedNaturalLiteralExpAdapter();
@@ -1000,6 +1011,21 @@ extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createBooleanLiteralExpAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.BooleanType <em>Boolean Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.BooleanType
+	 * @generated
+	 */
+	public Adapter createBooleanTypeAdapter()
+	{
 		return null;
 	}
 
@@ -2358,6 +2384,21 @@ extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createTypedElementAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link java.lang.Object <em>Uml Any</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see java.lang.Object
+	 * @generated
+	 */
+	public Adapter createUmlAnyAdapter()
+	{
 		return null;
 	}
 

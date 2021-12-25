@@ -73,6 +73,11 @@ public abstract class AbstractNullVisitor<@Nullable R, C>
 	}
 
 	@Override
+	public R visitBooleanType(org.eclipse.ocl.pivot.@NonNull BooleanType object) {
+		return null;
+	}
+
+	@Override
 	public R visitCallExp(org.eclipse.ocl.pivot.@NonNull CallExp object) {
 		return null;
 	}

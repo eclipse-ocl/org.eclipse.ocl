@@ -19,6 +19,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.BagType;
+import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
@@ -380,6 +381,13 @@ public abstract class AbstractContents extends PivotUtil
 
 	protected @NonNull BagType getBagType(org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull String name) {
 		return (BagType) ClassUtil.nonNullState(asPackage.getOwnedClass(name));
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	protected @NonNull BooleanType getBooleanType(org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull String name) {
+		return (BooleanType) ClassUtil.nonNullState(asPackage.getOwnedClass(name));
 	}
 
 	protected org.eclipse.ocl.pivot.@NonNull Class getClass(org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull String name) {

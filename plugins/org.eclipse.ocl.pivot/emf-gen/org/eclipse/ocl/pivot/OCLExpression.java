@@ -41,6 +41,9 @@ public interface OCLExpression extends TypedElement {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * When oclType() returns a Class value with a known actual type, the typeValue propagates the known type.
+	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Type Value</em>' reference.
 	 * @see #setTypeValue(Type)
 	 * @see org.eclipse.ocl.pivot.PivotPackage#getOCLExpression_TypeValue()

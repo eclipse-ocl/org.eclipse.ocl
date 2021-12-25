@@ -108,6 +108,9 @@
     <generalization xmi:id="Ppivot.TBooleanLiteralExp.g0" general="Ppivot.TPrimitiveLiteralExp"/>
     <ownedAttribute xmi:id="Ppivot.TBooleanLiteralExp.PbooleanSymbol" name="booleanSymbol" visibility="public" type="Ppivot.TBoolean" isOrdered="true"/>
   </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TBooleanType" name="BooleanType">
+    <generalization xmi:id="Ppivot.TBooleanType.g0" general="Ppivot.TPrimitiveType"/>
+  </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TCallExp" name="CallExp" isAbstract="true">
     <generalization xmi:id="Ppivot.TCallExp.g0" general="Ppivot.TOCLExpression"/>
     <ownedAttribute xmi:id="Ppivot.TCallExp.PisImplicit" name="isImplicit" visibility="public" type="Ppivot.TBoolean" isOrdered="true">
@@ -1748,6 +1751,7 @@
       <ownedParameter xmi:id="Ppivot.TReferringElement.OgetReferredElement.Pnull" type="Ppivot.TElement" isOrdered="true" direction="return"/>
     </ownedOperation>
   </packagedElement>
+  <packagedElement xmi:type="uml:Interface" xmi:id="Ppivot.TUmlAny" name="UmlAny"/>
   <packagedElement xmi:type="uml:Interface" xmi:id="Ppivot.TVisitable" name="Visitable"/>
   <profileApplication xmi:id="Ppivot.pA0">
     <eAnnotations xmi:id="Ppivot.pA0.eA0" source="http://www.eclipse.org/uml2/2.0.0/UML">

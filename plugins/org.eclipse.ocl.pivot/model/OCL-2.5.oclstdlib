@@ -173,7 +173,7 @@ type Bag(T) : BagType conformsTo Collection(T) {
 The standard type Boolean represents the common true/false values.
 Boolean is itself an instance of the metatype PrimitiveType (from UML).
 **/
-type Boolean : PrimitiveType conformsTo OclAny {
+type Boolean : BooleanType conformsTo OclAny {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='Primitive');
 	/**
 	Returns oclText[true] if the logical value of oclText[self] is the same as the numeric value of object2, oclText[false] otherwise.

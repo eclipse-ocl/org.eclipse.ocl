@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot;
 
-
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Invalid Type</b></em>'.

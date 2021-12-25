@@ -90,6 +90,7 @@
         <genParameters ecoreParameter="Pivot.ecore#//BooleanLiteralExp/validateTypeIsBoolean/context"/>
       </genOperations>
     </genClasses>
+    <genClasses ecoreClass="Pivot.ecore#T-pivot-BooleanType"/>
     <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-CallExp">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#F-pivot-CallExp-isImplicit"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#F-pivot-CallExp-isSafe"/>
@@ -978,6 +979,7 @@
         <genParameters ecoreParameter="Pivot.ecore#//TypedElement/CompatibleBody/bodySpecification"/>
       </genOperations>
     </genClasses>
+    <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-UmlAny"/>
     <genClasses ecoreClass="Pivot.ecore#T-pivot-UnlimitedNaturalLiteralExp">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#F-pivot-UnlimitedNaturalLiteralExp-unlimitedNaturalSymbol"/>
     </genClasses>

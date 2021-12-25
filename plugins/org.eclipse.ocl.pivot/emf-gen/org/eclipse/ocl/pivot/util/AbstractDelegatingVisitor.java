@@ -90,6 +90,11 @@ public abstract class AbstractDelegatingVisitor<R, C, @NonNull D extends Visitor
 	}
 
 	@Override
+	public R visitBooleanType(org.eclipse.ocl.pivot.@NonNull BooleanType object) {
+		return delegate.visitBooleanType(object);
+	}
+
+	@Override
 	public R visitCallExp(org.eclipse.ocl.pivot.@NonNull CallExp object) {
 		return delegate.visitCallExp(object);
 	}

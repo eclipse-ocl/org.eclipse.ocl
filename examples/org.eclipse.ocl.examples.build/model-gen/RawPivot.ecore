@@ -127,6 +127,7 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BooleanType" eSuperTypes="#//PrimitiveType"/>
   <eClassifiers xsi:type="ecore:EClass" name="CallExp" abstract="true" eSuperTypes="#//OCLExpression">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isImplicit" eType="#//Boolean"
         defaultValueLiteral="false">
@@ -947,7 +948,11 @@
     <eOperations name="isNonNull" lowerBound="1" eType="#//Boolean"/>
     <eOperations name="isNull" lowerBound="1" eType="#//Boolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="typeValue" eType="#//Type"
-        transient="true" resolveProxies="false"/>
+        transient="true" resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="When oclType() returns a Class value with a known actual type, the typeValue propagates the known type."/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Operation" eSuperTypes="#//Feature #//Namespace #//TemplateableElement">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -1791,6 +1796,8 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="UmlAny" instanceClassName="java.lang.Object"
+      abstract="true" interface="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="UnlimitedNaturalLiteralExp" eSuperTypes="#//NumericLiteralExp">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="unlimitedNaturalSymbol"
         lowerBound="1" eType="#//UnlimitedNatural">

@@ -65,7 +65,26 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/PivotFactory.java" type="org.eclipse.ocl.pivot.PivotFactory">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotFactory"/>
+                <message_argument value="createBooleanType()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="createBooleanType()"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/PivotPackage.java" type="org.eclipse.ocl.pivot.PivotPackage">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="getBooleanType()"/>
+            </message_arguments>
+        </filter>
         <filter id="403804204">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
@@ -94,6 +113,12 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
                 <message_argument value="getLoopExp__ValidateNoNotOrderedCollectionCoIterators__DiagnosticChain_Map()"/>
+            </message_arguments>
+        </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="getUmlAny()"/>
             </message_arguments>
         </filter>
         <filter id="405901410">
@@ -104,6 +129,11 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
+                <message_argument value="getBooleanType()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
                 <message_argument value="getDataType__ValidateBehavioralClassHasDistinctName__DiagnosticChain_Map()"/>
             </message_arguments>
         </filter>
@@ -127,12 +157,22 @@
                 <message_argument value="getLoopExp__ValidateNoNotOrderedCollectionCoIterators__DiagnosticChain_Map()"/>
             </message_arguments>
         </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getUmlAny()"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/PivotPackage.java" type="org.eclipse.ocl.pivot.PivotPackage$Literals">
         <filter id="405864542">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotPackage.Literals"/>
                 <message_argument value="LOOP_EXP___VALIDATE_NO_COLLECTION_CO_ITERATORS__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="BOOLEAN_TYPE"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -160,6 +200,11 @@
                 <message_argument value="LOOP_EXP___VALIDATE_NO_NOT_ORDERED_COLLECTION_CO_ITERATORS__DIAGNOSTICCHAIN_MAP"/>
             </message_arguments>
         </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="UML_ANY"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/PivotTables.java" type="org.eclipse.ocl.pivot.PivotTables">
         <filter id="336658481">
@@ -179,6 +224,30 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotTables.Properties"/>
                 <message_argument value="_Variable__LoopExp__ownedCoIterators"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/PivotTables.java" type="org.eclipse.ocl.pivot.PivotTables$Types">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables.Types"/>
+                <message_argument value="_BooleanType"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables.Types"/>
+                <message_argument value="_UmlAny"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="_BooleanType"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="_UmlAny"/>
             </message_arguments>
         </filter>
     </resource>
@@ -499,6 +568,13 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/util/AbstractNullVisitor.java" type="org.eclipse.ocl.pivot.util.AbstractNullVisitor">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="visitBooleanType(BooleanType)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/util/AbstractVisitor.java" type="org.eclipse.ocl.pivot.util.AbstractVisitor">
         <filter comment="Bug 512402 workaround" id="576725006">
             <message_arguments>
@@ -520,6 +596,30 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.util.DerivedConstants"/>
                 <message_argument value="VALIDATE_RECURSIVELY"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/util/PivotAdapterFactory.java" type="org.eclipse.ocl.pivot.util.PivotAdapterFactory">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="createBooleanTypeAdapter()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="createUmlAnyAdapter()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/util/PivotSwitch.java" type="org.eclipse.ocl.pivot.util.PivotSwitch">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="caseBooleanType(BooleanType)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="caseUmlAny(Object)"/>
             </message_arguments>
         </filter>
     </resource>
@@ -1188,6 +1288,11 @@
         </filter>
         <filter id="1143996420">
             <message_arguments>
+                <message_argument value="validateBooleanType(BooleanType, DiagnosticChain, Map&lt;Object,Object&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
                 <message_argument value="validateDataType_validateBehavioralClassHasDistinctName(DataType, DiagnosticChain, Map&lt;Object,Object&gt;)"/>
             </message_arguments>
         </filter>
@@ -1209,6 +1314,18 @@
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="validateLoopExp_validateNoNotOrderedCollectionCoIterators(LoopExp, DiagnosticChain, Map&lt;Object,Object&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="validateUmlAny(Object, DiagnosticChain, Map&lt;Object,Object&gt;)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/util/Visitor.java" type="org.eclipse.ocl.pivot.util.Visitor">
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="visitBooleanType(BooleanType)"/>
             </message_arguments>
         </filter>
     </resource>

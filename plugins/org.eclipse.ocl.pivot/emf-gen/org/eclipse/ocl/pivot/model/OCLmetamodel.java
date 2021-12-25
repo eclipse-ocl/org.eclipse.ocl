@@ -18,7 +18,6 @@
 package	org.eclipse.ocl.pivot.model;
 
 import java.io.IOException;
-import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 
@@ -27,27 +26,34 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.*;
+import org.eclipse.ocl.pivot.AnyType;
+import org.eclipse.ocl.pivot.BagType;
+import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.Class;
+import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.DataType;
+import org.eclipse.ocl.pivot.Enumeration;
+import org.eclipse.ocl.pivot.EnumerationLiteral;
+import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.Package;
+import org.eclipse.ocl.pivot.Parameter;
+import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.PrimitiveType;
+import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.SequenceType;
+import org.eclipse.ocl.pivot.SetType;
+import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
-import org.eclipse.ocl.pivot.library.LibraryFeature;
-import org.eclipse.ocl.pivot.model.OCLstdlib;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
-import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
-
-import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
-import org.eclipse.ocl.pivot.PivotPackage;
 
 /**
  * This is the pivot representation of the http://www.eclipse.org/ocl/2015/Pivot metamodel
@@ -253,7 +259,7 @@ public class OCLmetamodel extends ASResourceImpl
 
 		private final @NonNull Package _ocl = standardLibrary;
 		private final @NonNull BagType _Bag = getBagType(_ocl, "Bag");
-		private final @NonNull PrimitiveType _Boolean = getPrimitiveType(_ocl, "Boolean");
+		private final @NonNull BooleanType _Boolean = getBooleanType(_ocl, "Boolean");
 		private final @NonNull CollectionType _Collection = getCollectionType(_ocl, "Collection");
 		private final @NonNull PrimitiveType _Integer = getPrimitiveType(_ocl, "Integer");
 		private final @NonNull AnyType _OclAny = getAnyType(_ocl, "OclAny");
@@ -288,6 +294,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Class _BagType = createClass(PivotPackage.Literals.BAG_TYPE);
 		private final @NonNull Class _Behavior = createClass(PivotPackage.Literals.BEHAVIOR);
 		private final @NonNull Class _BooleanLiteralExp = createClass(PivotPackage.Literals.BOOLEAN_LITERAL_EXP);
+		private final @NonNull Class _BooleanType = createClass(PivotPackage.Literals.BOOLEAN_TYPE);
 		private final @NonNull Class _CallExp = createClass(PivotPackage.Literals.CALL_EXP);
 		private final @NonNull Class _CallOperationAction = createClass(PivotPackage.Literals.CALL_OPERATION_ACTION);
 		private final @NonNull Class _Class = createClass(PivotPackage.Literals.CLASS);
@@ -404,6 +411,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Class _Type = createClass(PivotPackage.Literals.TYPE);
 		private final @NonNull Class _TypeExp = createClass(PivotPackage.Literals.TYPE_EXP);
 		private final @NonNull Class _TypedElement = createClass(PivotPackage.Literals.TYPED_ELEMENT);
+		private final @NonNull Class _UmlAny = createClass(PivotPackage.Literals.UML_ANY);
 		private final @NonNull Class _UnlimitedNaturalLiteralExp = createClass(PivotPackage.Literals.UNLIMITED_NATURAL_LITERAL_EXP);
 		private final @NonNull Class _UnspecifiedValueExp = createClass(PivotPackage.Literals.UNSPECIFIED_VALUE_EXP);
 		private final @NonNull Class _ValueSpecification = createClass(PivotPackage.Literals.VALUE_SPECIFICATION);
@@ -693,6 +701,9 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedClasses.add(type = _BooleanLiteralExp);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_PrimitiveLiteralExp);
+			ownedClasses.add(type = _BooleanType);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_PrimitiveType);
 			ownedClasses.add(type = _CallExp);
 			type.setIsAbstract(true);
 			superClasses = type.getSuperClasses();
@@ -1075,6 +1086,10 @@ public class OCLmetamodel extends ASResourceImpl
 			type.setIsAbstract(true);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_NamedElement);
+			ownedClasses.add(type = _UmlAny);
+			type.setIsAbstract(true);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OclElement);
 			ownedClasses.add(type = _UnlimitedNaturalLiteralExp);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_NumericLiteralExp);
@@ -4435,6 +4450,7 @@ public class OCLmetamodel extends ASResourceImpl
 			installComment(pr_NamedElement_name, "The name of the NamedElement.");
 			installComment(_Namespace, "A Namespace is an Element in a model that owns and/or imports a set of NamedElements that can be identified by name.");
 			installComment(pr_Namespace_ownedConstraints, "Specifies a set of Constraints owned by this Namespace.");
+			installComment(pr_OCLExpression_typeValue, "When oclType() returns a Class value with a known actual type, the typeValue propagates the known type.");
 			installComment(_Operation, "An Operation is a BehavioralFeature of a Classifier that specifies the name, type, parameters, and constraints for invoking an associated Behavior. An Operation may invoke both the execution of method behaviors as well as other behavioral responses. Operation specializes TemplateableElement in order to support specification of template operations and bound operations. Operation specializes ParameterableElement to specify that an operation can be exposed as a formal template parameter, and provided as an actual parameter in a binding of a template.");
 			installComment(pr_Operation_isInvalidating, "Whether this operation may return an invalid result for non-invalid (or invalid if also validating) inputs.");
 			installComment(pr_Operation_isValidating, "Whether this operation may return a non-invalid result for invalid inputs.");

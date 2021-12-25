@@ -118,7 +118,7 @@
         <ownedParameters xmi:id="k2OA6" name="T"/>
       </ownedSignature>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:PrimitiveType" xmi:id="XEMMs" name="Boolean" superClasses="#jbMkR">
+    <ownedClasses xsi:type="pivot:BooleanType" xmi:id="XEMMs" name="Boolean" superClasses="#jbMkR">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
         <ownedDetails name="ClassGroup">
           <values>Primitive</values>

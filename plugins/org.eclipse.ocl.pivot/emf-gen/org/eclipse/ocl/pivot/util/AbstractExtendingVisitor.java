@@ -73,6 +73,11 @@ public abstract class AbstractExtendingVisitor<R, C>
 	}
 
 	@Override
+	public R visitBooleanType(org.eclipse.ocl.pivot.@NonNull BooleanType object) {
+		return visitPrimitiveType(object);
+	}
+
+	@Override
 	public R visitCallExp(org.eclipse.ocl.pivot.@NonNull CallExp object) {
 		return visitOCLExpression(object);
 	}

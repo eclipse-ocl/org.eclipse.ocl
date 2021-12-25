@@ -65,6 +65,11 @@ public abstract class AbstractMergedVisitor<R, C>
 	}
 
 	@Override
+	public R visitBooleanType(org.eclipse.ocl.pivot.@NonNull BooleanType object) {
+		return visiting(object);
+	}
+
+	@Override
 	public R visitCallExp(org.eclipse.ocl.pivot.@NonNull CallExp object) {
 		return visiting(object);
 	}

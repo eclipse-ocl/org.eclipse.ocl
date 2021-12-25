@@ -48,6 +48,7 @@ public interface Visitor<R>
 	R visitBagType(org.eclipse.ocl.pivot.@NonNull BagType object);
 	R visitBehavior(org.eclipse.ocl.pivot.@NonNull Behavior object);
 	R visitBooleanLiteralExp(org.eclipse.ocl.pivot.@NonNull BooleanLiteralExp object);
+	R visitBooleanType(org.eclipse.ocl.pivot.@NonNull BooleanType object);
 	R visitCallExp(org.eclipse.ocl.pivot.@NonNull CallExp object);
 	R visitCallOperationAction(org.eclipse.ocl.pivot.@NonNull CallOperationAction object);
 	R visitClass(org.eclipse.ocl.pivot.@NonNull Class object);

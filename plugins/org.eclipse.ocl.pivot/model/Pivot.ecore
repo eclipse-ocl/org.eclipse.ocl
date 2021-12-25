@@ -144,6 +144,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-BooleanLiteralExp-booleanSymbol"
         name="booleanSymbol" lowerBound="1" eType="#T-pivot-Boolean" unsettable="true"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-BooleanType" name="BooleanType"
+      eSuperTypes="#T-pivot-PrimitiveType"/>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-CallExp" name="CallExp" abstract="true"
       eSuperTypes="#T-pivot-OCLExpression">
     <eOperations name="validateSafeSourceCanBeNull" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
@@ -1780,7 +1782,11 @@
       </eParameters>
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-OCLExpression-typeValue"
-        name="typeValue" eType="#T-pivot-Type" transient="true" resolveProxies="false"/>
+        name="typeValue" eType="#T-pivot-Type" transient="true" resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="When oclType() returns a Class value with a known actual type, the typeValue propagates the known type."/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-Operation" name="Operation"
       eSuperTypes="#T-pivot-Feature #T-pivot-Namespace #T-pivot-TemplateableElement">
@@ -3074,6 +3080,8 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-UmlAny" name="UmlAny" instanceClassName="java.lang.Object"
+      abstract="true" interface="true"/>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-UnlimitedNaturalLiteralExp"
       name="UnlimitedNaturalLiteralExp" eSuperTypes="#T-pivot-NumericLiteralExp">
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-UnlimitedNaturalLiteralExp-unlimitedNaturalSymbol"
