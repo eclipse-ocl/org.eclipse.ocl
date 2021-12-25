@@ -18,7 +18,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.CompletePackage;
-import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.PivotPackage;
@@ -31,7 +30,6 @@ import org.eclipse.ocl.pivot.ids.NsURIPackageId;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.RootPackageId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
-import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.executor.AbstractIdResolver;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
@@ -128,13 +126,6 @@ public class PivotIdResolver extends AbstractIdResolver
 		}
 		//		return new DomainInvalidTypeImpl(standardLibrary, "No object created by Ecore2AS");
 		return metamodelManager.getStandardLibrary().getOclInvalidType();
-	}
-
-	@Override
-	public @NonNull Type getType(@NonNull TypeId typeId, @Nullable Object context) {
-		Element type = typeId.accept(this);
-		assert type != null;
-		return (Type)type;
 	}
 
 	@Override

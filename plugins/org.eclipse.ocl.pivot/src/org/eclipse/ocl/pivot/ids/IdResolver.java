@@ -146,7 +146,7 @@ public interface IdResolver extends IdVisitor<Element>
 	/**
 	 * @since 1.7
 	 */
-	default org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOfValue(@Nullable Type staticType, @Nullable Object value) {
+	default org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOfValue(@Nullable Type contextType, @Nullable Object value) {
 		return getStaticTypeOf(value);
 	}
 
@@ -156,6 +156,12 @@ public interface IdResolver extends IdVisitor<Element>
 
 	org.eclipse.ocl.pivot.@NonNull Class getType(@NonNull EClassifier eClassifier);
 
+	/**
+	 * @since 1.18
+	 */
+	@NonNull Type getType(@NonNull TypeId typeId);
+
+	@Deprecated /* @deprecated omit redundant context argument */
 	@NonNull Type getType(@NonNull TypeId typeId, @Nullable Object context);
 
 	boolean oclEquals(@Nullable Object thisValue, @Nullable Object thatValue);

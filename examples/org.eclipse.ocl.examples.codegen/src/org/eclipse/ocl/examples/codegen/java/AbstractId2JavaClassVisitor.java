@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -47,7 +47,7 @@ import org.eclipse.ocl.pivot.values.TupleValue;
 public abstract class AbstractId2JavaClassVisitor implements IdVisitor<Class<?>>
 {
 	protected final @NonNull GenModelHelper genModelHelper;;
-	
+
 	protected AbstractId2JavaClassVisitor(@NonNull GenModelHelper genModelHelper) {
 		this.genModelHelper = genModelHelper;
 	}
@@ -60,7 +60,7 @@ public abstract class AbstractId2JavaClassVisitor implements IdVisitor<Class<?>>
 	public @NonNull Class<?> visitClassId(@NonNull ClassId id) {
 //		return visiting(id);
 		EnvironmentFactory environmentFactory = genModelHelper.getEnvironmentFactory();
-		Type type = environmentFactory.getIdResolver().getType(id, null);
+		Type type = environmentFactory.getIdResolver().getType(id);
 		EClass eClass = (EClass) type.getESObject();
 		if (eClass != null) {
 			try {
@@ -166,7 +166,7 @@ public abstract class AbstractId2JavaClassVisitor implements IdVisitor<Class<?>>
 	public @NonNull Class<?> visitUnspecifiedId(@NonNull UnspecifiedId id) {
 		return visiting(id);
 	}
-	
+
 	public @NonNull Class<?> visiting(@NonNull ElementId id) {
 		throw new UnsupportedOperationException(getClass().getSimpleName() + ": " + id.getClass().getName());
 	}

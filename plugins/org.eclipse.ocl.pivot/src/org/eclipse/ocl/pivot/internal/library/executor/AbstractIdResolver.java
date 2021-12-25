@@ -808,7 +808,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		}
 		else {
 			TypeId elementTypeId = typeId.getElementTypeId();
-			Type elementType = getType(elementTypeId, null);
+			Type elementType = getType(elementTypeId);
 			if (generalizedId == TypeId.BAG) {
 				return environment.getBagType(elementType, isNullFree, lower, upper);
 			}
@@ -837,7 +837,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 			CollectionTypeId collectionTypeId = collectionValue.getTypeId();
 			Type elementType = getDynamicTypeOf(collectionValue.iterable());
 			if (elementType == null) {
-				elementType = getType(collectionTypeId.getElementTypeId(), null);
+				elementType = getType(collectionTypeId.getElementTypeId());
 			}
 			CollectionTypeId collectedId = collectionTypeId;
 			CollectionTypeId collectionId = collectedId.getGeneralizedId();
@@ -950,8 +950,8 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		else {
 			TypeId keyTypeId = typeId.getKeyTypeId();
 			TypeId valueTypeId = typeId.getValueTypeId();
-			Type keyType = getType(keyTypeId, null);
-			Type valueType = getType(valueTypeId, null);
+			Type keyType = getType(keyTypeId);
+			Type valueType = getType(valueTypeId);
 			if (generalizedId == TypeId.MAP) {
 				return environment.getMapType(standardLibrary.getMapType(), keyType, keysAreNullFree, valueType, valuesAreNullFree);
 			}
@@ -1083,8 +1083,12 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOfValue(@Nullable Type staticType, @Nullable Object value) {
-		if (value instanceof EObject) {
+	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOfValue(@Nullable Type contextType, @Nullable Object value) {
+		//	assert !(value instanceof TypeId) : "Use getType...) directly";		// XXX
+		if (value instanceof Enumeration) {
+			return standardLibrary.getEnumerationType();
+		}
+		else if (value instanceof EObject) {
 			EClass eClass = ((EObject)value).eClass();
 			assert eClass != null;
 			Type type = key2type.get(eClass);
@@ -1101,7 +1105,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 			if (type == null) {
 				boolean isTemplated = typeId.isTemplated();
 				if (isTemplated) {
-					staticTypeStack.push(staticType);
+					staticTypeStack.push(contextType);
 					try {
 						type = (Type)typeId.accept(this);
 					}
@@ -1150,7 +1154,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 
 	@Override
 	public @NonNull TypedElement getTuplePart(@NonNull String name, @NonNull TypeId typeId) {
-		return getTuplePart(name, getType(typeId, null));
+		return getTuplePart(name, getType(typeId));
 	}
 
 	public synchronized @NonNull TypedElement getTuplePart(@NonNull String name, @NonNull Type type) {
@@ -1175,10 +1179,15 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	public abstract @NonNull TupleType getTupleType(@NonNull TupleTypeId typeId);
 
 	@Override
-	public @NonNull Type getType(@NonNull TypeId typeId, @Nullable Object context) {
+	public final @NonNull Type getType(@NonNull TypeId typeId) {
 		Element type = typeId.accept(this);
 		assert type != null;
 		return (Type)type;
+	}
+
+	@Override
+	public /*final*/ @NonNull Type getType(@NonNull TypeId typeId, @Nullable Object context) {
+		return getType(typeId);
 	}
 
 	private @NonNull Object getTypeKeyOf(@Nullable Object value) {
@@ -1907,7 +1916,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 
 	@Override
 	public @NonNull Type visitTemplateableTypeId(@NonNull TemplateableTypeId id) {
-		return getType(id, null);
+		return getType(id);
 	}
 
 	@Override

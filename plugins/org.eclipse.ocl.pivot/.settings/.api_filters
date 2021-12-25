@@ -182,11 +182,47 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/BagTypeImpl.java" type="org.eclipse.ocl.pivot.internal.BagTypeImpl">
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.BagTypeImpl"/>
+                <message_argument value="BAG_TYPE_OPERATION_COUNT"/>
+                <message_argument value="8"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/CollectionTypeImpl.java" type="org.eclipse.ocl.pivot.internal.CollectionTypeImpl">
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.CollectionTypeImpl"/>
+                <message_argument value="COLLECTION_TYPE_OPERATION_COUNT"/>
+                <message_argument value="8"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/internal/DataTypeImpl.java" type="org.eclipse.ocl.pivot.internal.DataTypeImpl">
         <filter id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.DataTypeImpl"/>
                 <message_argument value="DATA_TYPE_OPERATION_COUNT"/>
+                <message_argument value="8"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/EnumerationImpl.java" type="org.eclipse.ocl.pivot.internal.EnumerationImpl">
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.EnumerationImpl"/>
+                <message_argument value="ENUMERATION_OPERATION_COUNT"/>
+                <message_argument value="8"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/IterableTypeImpl.java" type="org.eclipse.ocl.pivot.internal.IterableTypeImpl">
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.IterableTypeImpl"/>
+                <message_argument value="ITERABLE_TYPE_OPERATION_COUNT"/>
                 <message_argument value="8"/>
             </message_arguments>
         </filter>
@@ -209,6 +245,15 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/LambdaTypeImpl.java" type="org.eclipse.ocl.pivot.internal.LambdaTypeImpl">
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.LambdaTypeImpl"/>
+                <message_argument value="LAMBDA_TYPE_OPERATION_COUNT"/>
+                <message_argument value="8"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/internal/LoopExpImpl.java" type="org.eclipse.ocl.pivot.internal.LoopExpImpl">
         <filter id="338792546">
             <message_arguments>
@@ -224,6 +269,24 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/MapTypeImpl.java" type="org.eclipse.ocl.pivot.internal.MapTypeImpl">
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.MapTypeImpl"/>
+                <message_argument value="MAP_TYPE_OPERATION_COUNT"/>
+                <message_argument value="8"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/OrderedSetTypeImpl.java" type="org.eclipse.ocl.pivot.internal.OrderedSetTypeImpl">
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.OrderedSetTypeImpl"/>
+                <message_argument value="ORDERED_SET_TYPE_OPERATION_COUNT"/>
+                <message_argument value="8"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/internal/PivotPackageImpl.java" type="org.eclipse.ocl.pivot.internal.PivotPackageImpl">
         <filter id="338792546">
             <message_arguments>
@@ -232,11 +295,47 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/PrimitiveTypeImpl.java" type="org.eclipse.ocl.pivot.internal.PrimitiveTypeImpl">
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.PrimitiveTypeImpl"/>
+                <message_argument value="PRIMITIVE_TYPE_OPERATION_COUNT"/>
+                <message_argument value="8"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/SequenceTypeImpl.java" type="org.eclipse.ocl.pivot.internal.SequenceTypeImpl">
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.SequenceTypeImpl"/>
+                <message_argument value="SEQUENCE_TYPE_OPERATION_COUNT"/>
+                <message_argument value="8"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/SetTypeImpl.java" type="org.eclipse.ocl.pivot.internal.SetTypeImpl">
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.SetTypeImpl"/>
+                <message_argument value="SET_TYPE_OPERATION_COUNT"/>
+                <message_argument value="8"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/internal/StandardLibraryImpl.java" type="org.eclipse.ocl.pivot.internal.StandardLibraryImpl">
         <filter comment="Bug 512402 workaround" id="576725006">
             <message_arguments>
                 <message_argument value="StandardLibraryInternal"/>
                 <message_argument value="StandardLibraryImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/TupleTypeImpl.java" type="org.eclipse.ocl.pivot.internal.TupleTypeImpl">
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.TupleTypeImpl"/>
+                <message_argument value="TUPLE_TYPE_OPERATION_COUNT"/>
+                <message_argument value="8"/>
             </message_arguments>
         </filter>
     </resource>
@@ -1118,6 +1217,14 @@
             <message_arguments>
                 <message_argument value="Visitor&lt;R&gt;"/>
                 <message_argument value="EvaluationVisitor"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/ids/IdResolver.java" type="org.eclipse.ocl.pivot.ids.IdResolver">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.ids.IdResolver"/>
+                <message_argument value="getType(TypeId)"/>
             </message_arguments>
         </filter>
     </resource>

@@ -186,8 +186,8 @@ public class TupleTypeManager
 					tupleType = new TupleTypeImpl(tupleTypeId);
 					@NonNull TuplePartId[] partIds = tupleTypeId.getPartIds();
 					List<Property> ownedAttributes = tupleType.getOwnedProperties();
-					for (TuplePartId partId : partIds) {
-						Type partType = idResolver.getType(partId.getTypeId(), tupleType);
+					for (@NonNull TuplePartId partId : partIds) {
+						Type partType = idResolver.getType(partId.getTypeId());
 						Type partType2 = metamodelManager.getPrimaryType(partType);
 						Property property = PivotUtil.createProperty(NameUtil.getSafeName(partId), partType2);
 						ownedAttributes.add(property);

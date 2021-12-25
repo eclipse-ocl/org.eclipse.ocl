@@ -110,7 +110,7 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOfValue(@Nullable Type staticType,  @Nullable Object value) {
-		if (value instanceof AbstractExecutorType) {	// The direct CGed Executor has no eClass() so use getMetaclass()
+		if (value instanceof AbstractExecutorType) {	// FIXME Bug 577889 The direct CGed Executor has no eClass() so use getMetaclass()
 			Type type = key2type.get(value);
 			if (type == null) {
 				type = standardLibrary.getMetaclass((AbstractExecutorType) value);

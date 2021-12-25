@@ -49,7 +49,7 @@ public class Id2EClassVisitor implements IdVisitor<@Nullable EClass>
 
 	@Override
 	public @Nullable EClass visitClassId(@NonNull ClassId id) {
-		Type type = metamodelManager.getEnvironmentFactory().getIdResolver().getType(id, null);
+		Type type = metamodelManager.getEnvironmentFactory().getIdResolver().getType(id);
 		return (EClass) type.getESObject();
 	}
 

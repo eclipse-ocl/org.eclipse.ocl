@@ -37,7 +37,7 @@ public class CollectionSumOperation extends AbstractUnaryOperation
 		// FIXME Bug 301351 Look for user-defined zero
 //			resultType.getZero();
 		StandardLibrary standardLibrary = executor.getStandardLibrary();
-		Type returnType = executor.getIdResolver().getType(returnTypeId, null);
+		Type returnType = executor.getIdResolver().getType(returnTypeId);
 		Object result;
 		if (returnType.conformsTo(standardLibrary, standardLibrary.getIntegerType())) {
 			result = ValueUtil.integerValueOf(0);
