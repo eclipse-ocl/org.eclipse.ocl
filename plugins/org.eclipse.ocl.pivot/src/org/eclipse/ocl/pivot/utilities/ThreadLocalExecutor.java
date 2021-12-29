@@ -19,6 +19,7 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
 import org.eclipse.ocl.pivot.internal.manager.PivotExecutorManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
@@ -184,16 +185,16 @@ public class ThreadLocalExecutor
 	}
 
 	/**
-	 * Set the Executor instance for the current thread. This is returned by basicGetExecutor() provided
+	 * Set or reset the Executor instance for the current thread. This is returned by basicGetExecutor() provided
 	 * only a single EnvironmentFactory instance is active.
 	 */
-	public static void setExecutor(@NonNull Executor executor) {
+	public static void setExecutor(@Nullable Executor executor) {
 		ThreadLocalExecutor threadLocalExecutor = get();
 		threadLocalExecutor.localSetExecutor(executor);
 	}
 
 	/**
-	 * Return true if this (worker) thread use a finalizer to release its resources.
+	 * Specify that this (worker) thread uses a finalizer to release its resources.
 	 *
 	 * @since 1.15
 	 */
@@ -363,16 +364,24 @@ public class ThreadLocalExecutor
 		}
 	}
 
-	private void localSetExecutor(@NonNull Executor executor) {
-		if (!concurrentEnvironmentFactories) {
-			this.executor = executor;
-		}
-		if (executor instanceof PivotExecutorManager) {
-			localAttachEnvironmentFactory((EnvironmentFactoryInternal) ((PivotExecutorManager)executor).getEnvironmentFactory());
+	private void localSetExecutor(@Nullable Executor executor) {
+		if (executor != null) {
+			if (!concurrentEnvironmentFactories) {
+				this.executor = executor;
+			}
+			if (executor instanceof PivotExecutorManager) {
+				localAttachEnvironmentFactory((EnvironmentFactoryInternal) ((PivotExecutorManager)executor).getEnvironmentFactory());
+			}
+		//	else {
+				if (THREAD_LOCAL_ENVIRONMENT_FACTORY.isActive()) {
+					THREAD_LOCAL_ENVIRONMENT_FACTORY.println(getThreadName() + " Set " + toString());
+				}
+		//	}
 		}
 		else {
+			this.executor = null;
 			if (THREAD_LOCAL_ENVIRONMENT_FACTORY.isActive()) {
-				THREAD_LOCAL_ENVIRONMENT_FACTORY.println(getThreadName() + " Set " + toString());
+				THREAD_LOCAL_ENVIRONMENT_FACTORY.println(getThreadName() + " Reset " + toString());
 			}
 		}
 	}
@@ -403,8 +412,22 @@ public class ThreadLocalExecutor
 	@Override
 	public @NonNull String toString() {
 		if (!concurrentEnvironmentFactories) {
-			return (environmentFactory != null ? NameUtil.debugSimpleName(environmentFactory) : "no-environmentFactory")
-					+ " " + (executor != null ? NameUtil.debugSimpleName(executor) : "no-executor");
+			StringBuilder s = new StringBuilder();
+			s.append(environmentFactory != null ? NameUtil.debugSimpleName(environmentFactory) : "no-environmentFactory");
+			s.append(" ");
+			Executor executor = this.executor;
+			if (executor != null) {
+				s.append(NameUtil.debugSimpleName(executor));
+				ExecutorInternal interpretedExecutor = executor.basicGetInterpretedExecutor();
+				if ((interpretedExecutor != null) && (interpretedExecutor != executor)) {
+					s.append("+");
+					s.append(NameUtil.debugSimpleName(interpretedExecutor));
+				}
+			}
+			else {
+				s.append("no-executor");
+			}
+			return s.toString();
 		}
 		else {
 			return "**** CONCURRENT ENVIRONMENT FACTORIES ****";

@@ -205,7 +205,9 @@ public class OCLConsolePage extends Page //implements MetamodelManagerListener
 					monitor.subTask(ConsoleMessages.Progress_Extent);
 					ModelManager modelManager = environmentFactory.createModelManager(contextObject);
 					//				EvaluationEnvironment evaluationEnvironment = environmentFactory.createEvaluationEnvironment(expressionInOCL, modelManager);
+					assert ThreadLocalExecutor.basicGetExecutor() == null;
 					ExecutorInternal executor = ((EnvironmentFactoryExtension)environmentFactory).createExecutor(modelManager);
+					ThreadLocalExecutor.setExecutor(executor);
 					executor.initializeEvaluationEnvironment(expressionInOCL);
 					EvaluationEnvironment evaluationEnvironment = executor.getRootEvaluationEnvironment();
 					Object contextValue = executor.getIdResolver().boxedValueOf(contextObject);
@@ -238,6 +240,7 @@ public class OCLConsolePage extends Page //implements MetamodelManagerListener
 						value = new InvalidValueException(e, ConsoleMessages.Result_EvaluationFailure);
 					} finally {
 						//				metamodelManager.setMonitor(null);
+						ThreadLocalExecutor.setExecutor(null);;
 					}
 				}
 				monitor.worked(4);
@@ -661,8 +664,11 @@ public class OCLConsolePage extends Page //implements MetamodelManagerListener
 						}
 					}});
 			}
-			catch (Exception e) {
-				append(e.getMessage(), ColorManager.OUTPUT_ERROR, false);
+			catch (Throwable e) {
+				while (e.getCause() != null) {
+					e = e.getCause();
+				}
+				append(e.toString(), ColorManager.OUTPUT_ERROR, false);
 			}
 			if (value instanceof InvalidValueException) {
 				InvalidValueException exception = (InvalidValueException)value;

@@ -33,6 +33,7 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.Envir
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ParserException;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 
 public class OCLVMExecutor extends BasicOCLExecutor implements VMExecutor
 {
@@ -100,16 +101,22 @@ public class OCLVMExecutor extends BasicOCLExecutor implements VMExecutor
 
 	@Override
 	public Object execute() {
-		initializeEvaluationEnvironment(expressionInOCL);
-		getRootEvaluationEnvironment();
-		Variable contextVariable = expressionInOCL.getOwnedContext();
-		if (contextVariable != null) {
-			add(contextVariable, context);
+		ThreadLocalExecutor.setExecutor(this);
+		try {
+			initializeEvaluationEnvironment(expressionInOCL);
+			getRootEvaluationEnvironment();
+			Variable contextVariable = expressionInOCL.getOwnedContext();
+			if (contextVariable != null) {
+				add(contextVariable, context);
+			}
+			OCLVMEvaluationVisitor visitor = (OCLVMEvaluationVisitor) getEvaluationVisitor();
+			VMEvaluationStepper vmStepper = visitor.getVMEvaluationStepper();
+			vmStepper.start(suspendOnStartup);
+			return expressionInOCL.accept(visitor);
 		}
-		OCLVMEvaluationVisitor visitor = (OCLVMEvaluationVisitor) getEvaluationVisitor();
-		VMEvaluationStepper vmStepper = visitor.getVMEvaluationStepper();
-		vmStepper.start(suspendOnStartup);
-		return expressionInOCL.accept(visitor);
+		finally {
+			ThreadLocalExecutor.setExecutor(null);
+		}
 	}
 
 	@Override

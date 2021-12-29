@@ -79,6 +79,7 @@ public class OCLinEcoreTutorialExamples extends PivotTestCaseWithAutoTearDown
 	public void testOCLinEcoreTutorialUsingPivotForLPG() throws Exception {
 		GlobalEnvironmentFactory.disposeInstance();
 		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);
+		getProjectMap().initializeResourceSet(resourceSet);
 		doTestOCLinEcoreTutorialUsingPivot(getTestModelURI("models/documentation/OCLinEcoreTutorialForLPG.xmi"));
 		GlobalEnvironmentFactory.disposeInstance();
 	}

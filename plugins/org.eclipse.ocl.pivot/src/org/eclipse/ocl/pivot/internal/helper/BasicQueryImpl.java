@@ -29,6 +29,7 @@ import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.EvaluationException;
 import org.eclipse.ocl.pivot.evaluation.EvaluationHaltedException;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
+import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
@@ -38,6 +39,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.Query;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 
 /**
@@ -135,33 +137,42 @@ public class BasicQueryImpl implements Query, ProblemAware
 
 	@Override
 	public @Nullable Object evaluateBoxed(@Nullable Object boxedValue) {
-		// lazily create the evaluation environment, if not already done by
-		//    the client.  Initialize it with the "self" context variable
-		EvaluationEnvironment myEnv = getEvaluationEnvironment(environmentFactory.getIdResolver().unboxedValueOf(boxedValue));
-		Variable contextVariable = ClassUtil.nonNullState(query.getOwnedContext());
-		myEnv.add(contextVariable, boxedValue);
-//		Variable resultVariable = specification.getResultVariable();
-//		if (resultVariable != null) {
-//			myEnv.add(resultVariable, null);
-//		}
-
-		EvaluationVisitor ev = environmentFactory.createEvaluationVisitor(myEnv);
-
-		Object boxedResult;
-
+		Executor savedExecutor = ThreadLocalExecutor.basicGetExecutor();
 		try {
-			boxedResult = expression.accept(ev);
-		} catch (EvaluationHaltedException e) {
-			evalProblems = e.getDiagnostic();
-//			result = valueFactory.createInvalidValue(obj, null, evalProblems.toString(), e);
-			throw e;
-//		} finally {
-//			myEnv.remove(specification.getContextVariable());
-//			if (resultVariable != null) {
-//				myEnv.add(resultVariable, null);
-//			}
+			if (savedExecutor != null) {
+				ThreadLocalExecutor.setExecutor(null);		// New evaluation needs new root EvaluationEnvironment and so new Executor, but old modelManager
+			}
+			// lazily create the evaluation environment, if not already done by
+			//    the client.  Initialize it with the "self" context variable
+			EvaluationEnvironment myEnv = getEvaluationEnvironment(environmentFactory.getIdResolver().unboxedValueOf(boxedValue));
+			Variable contextVariable = ClassUtil.nonNullState(query.getOwnedContext());
+			myEnv.add(contextVariable, boxedValue);
+	//		Variable resultVariable = specification.getResultVariable();
+	//		if (resultVariable != null) {
+	//			myEnv.add(resultVariable, null);
+	//		}
+
+			EvaluationVisitor ev = environmentFactory.createEvaluationVisitor(myEnv);
+
+			Object boxedResult;
+
+			try {
+				boxedResult = expression.accept(ev);
+			} catch (EvaluationHaltedException e) {
+				evalProblems = e.getDiagnostic();
+	//			result = valueFactory.createInvalidValue(obj, null, evalProblems.toString(), e);
+				throw e;
+	//		} finally {
+	//			myEnv.remove(specification.getContextVariable());
+	//			if (resultVariable != null) {
+	//				myEnv.add(resultVariable, null);
+	//			}
 		}
 		return boxedResult;
+	}
+	finally {
+		ThreadLocalExecutor.setExecutor(savedExecutor);		// Restore invoker's executor
+	}
 	}
 
 	@Override

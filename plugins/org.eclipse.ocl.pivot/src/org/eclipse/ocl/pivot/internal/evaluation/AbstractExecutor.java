@@ -110,6 +110,7 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 		this.environmentFactory = environmentFactory;
 		this.modelManager = null;
 		this.idResolver = (IdResolverExtension)environmentFactory.getIdResolver();
+	//	System.out.println("Create " + NameUtil.debugSimpleName(this));
 	}
 
 	/**
@@ -171,6 +172,14 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 	}
 
 	/**
+	 * @since 1.18
+	 */
+	@Override
+	public @NonNull ExecutorInternal basicGetInterpretedExecutor() {
+		return this;
+	}
+
+	/**
 	 * @since 1.3
 	 */
 	protected EvaluationEnvironment.@NonNull EvaluationEnvironmentExtension createNestedEvaluationEnvironment(EvaluationEnvironment.@NonNull EvaluationEnvironmentExtension evaluationEnvironment, @NonNull NamedElement executableObject, @Nullable Object caller) {
@@ -205,6 +214,12 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 	public @Nullable Object evaluate(@NonNull OCLExpression body) {
 		return evaluationVisitor.evaluate(body);
 	}
+
+//	@Override
+//	protected void finalize() throws Throwable {
+//		System.out.println("Finalize " + NameUtil.debugSimpleName(this));
+//		super.finalize();
+//	}
 
 	/**
 	 * @since 1.3
@@ -578,6 +593,14 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 	@Override
 	public void setCanceled(boolean isCanceled) {
 		evaluationVisitor.setCanceled(isCanceled);
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	@Override
+	public void setInterpretedExecutor(@Nullable ExecutorInternal executorInternal) {
+		throw new IllegalStateException("Interpreted executors do not nest");
 	}
 
 	@Override

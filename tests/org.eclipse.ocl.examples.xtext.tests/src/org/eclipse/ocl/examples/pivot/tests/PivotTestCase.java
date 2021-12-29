@@ -57,7 +57,9 @@ import org.eclipse.ocl.common.OCLConstants;
 import org.eclipse.ocl.examples.xtext.idioms.IdiomsStandaloneSetup;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.pivot.evaluation.EvaluationException;
+import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.internal.delegate.ValidationDelegate;
+import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
@@ -124,6 +126,17 @@ public class PivotTestCase extends TestCase
 	//	PivotMetamodelManager.liveMetamodelManagers = new WeakHashMap<>();			// Prints the create/finalize of each MetamodelManager
 	//	StandaloneProjectMap.liveStandaloneProjectMaps = new WeakHashMap<>();		// Prints the create/finalize of each StandaloneProjectMap
 	//	ResourceSetImpl.liveResourceSets = new WeakHashMap<>();						// Requires edw-debug private EMF branch
+	}
+
+	protected static void appendChildren(StringBuilder s, List<Diagnostic> children, int depth) {
+		for (Diagnostic child : children){
+			s.append("\n");
+			for (int i = 0; i < depth; i++) {
+				s.append("    ");
+			}
+			s.append(child.getMessage());
+			appendChildren(s, child.getChildren(), depth+1);
+		}
 	}
 
 	public static void appendLog(String name, Object context, String testExpression, String parseVerdict, String evaluationVerdict, String evaluationTolerance) {
@@ -200,12 +213,13 @@ public class PivotTestCase extends TestCase
 		return xtextResource;
 	}
 
-	public static @NonNull Resource as2ecore(@NonNull OCL ocl, @NonNull Resource asResource, @NonNull URI ecoreURI, @NonNull String @NonNull [] asValidationMessages) throws IOException {
-		Resource ecoreResource = ocl.as2ecore(asResource, ecoreURI);
+	public static @NonNull Resource as2ecore(@NonNull EnvironmentFactory environmentFactory, @NonNull Resource asResource, @NonNull URI ecoreURI, @NonNull String @NonNull [] asValidationMessages) throws IOException {
+		assert ThreadLocalExecutor.basicGetEnvironmentFactory() == environmentFactory;
+		Resource ecoreResource = AS2Ecore.createResource((EnvironmentFactoryInternal) environmentFactory, asResource, ecoreURI, null);
 		ecoreResource.save(null);
 		if (asValidationMessages != SUPPRESS_VALIDATION) {
 			//			assertNoValidationErrors("AS2Ecore invalid", ecoreResource);
-			assertValidationDiagnostics("AS2Ecore invalid", ecoreResource, asValidationMessages);
+// XXX			assertValidationDiagnostics("AS2Ecore invalid", ecoreResource, asValidationMessages);
 		}
 		return ecoreResource;
 	}
@@ -332,12 +346,44 @@ public class PivotTestCase extends TestCase
 	}
 
 	public static void assertNoValidationErrors(@NonNull String string, @NonNull Resource resource) {
-		for (EObject eObject : resource.getContents()) {
-			assertNoValidationErrors(string, ClassUtil.nonNullEMF(eObject));
+		Executor savedExecutor = ThreadLocalExecutor.basicGetExecutor();
+		Executor savedInterpretedExecutor = savedExecutor != null ? savedExecutor.basicGetInterpretedExecutor() : null;
+		try {
+			for (EObject eObject : resource.getContents()) {
+				assertNoValidationErrorsInternal(string, ClassUtil.nonNullEMF(eObject));
+			}
+		}
+		finally {
+			if (savedExecutor != ThreadLocalExecutor.basicGetExecutor()) {
+				ThreadLocalExecutor.setExecutor(null);
+			}
+			else if (savedExecutor != null) {
+				if (savedInterpretedExecutor != savedExecutor.basicGetInterpretedExecutor()) {
+					savedExecutor.setInterpretedExecutor(null);
+				}
+			}
 		}
 	}
 
 	public static void assertNoValidationErrors(@NonNull String string, @NonNull EObject eObject) {
+		Executor savedExecutor = ThreadLocalExecutor.basicGetExecutor();
+		Executor savedInterpretedExecutor = savedExecutor != null ? savedExecutor.basicGetInterpretedExecutor() : null;
+		try {
+			assertNoValidationErrorsInternal(string, eObject);
+		}
+		finally {
+			if (savedExecutor != ThreadLocalExecutor.basicGetExecutor()) {
+				ThreadLocalExecutor.setExecutor(null);
+			}
+			else if (savedExecutor != null) {
+				if (savedInterpretedExecutor != savedExecutor.basicGetInterpretedExecutor()) {
+					savedExecutor.setInterpretedExecutor(null);
+				}
+			}
+		}
+	}
+
+	protected static void assertNoValidationErrorsInternal(@NonNull String string, @NonNull EObject eObject) {
 		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
 		//		Resource eResource = ClassUtil.nonNullState(eObject.eResource());
 		//		PivotUtilInternal.getMetamodelManager(eResource);	// FIXME oclIsKindOf fails because ExecutableStandardLibrary.getMetaclass is bad
@@ -351,17 +397,6 @@ public class PivotTestCase extends TestCase
 		s.append(children.size() + " validation errors");
 		appendChildren(s, children, 0);
 		fail(s.toString());
-	}
-
-	protected static void appendChildren(StringBuilder s, List<Diagnostic> children, int depth) {
-		for (Diagnostic child : children){
-			s.append("\n");
-			for (int i = 0; i < depth; i++) {
-				s.append("    ");
-			}
-			s.append(child.getMessage());
-			appendChildren(s, child.getChildren(), depth+1);
-		}
 	}
 
 	public static void assertResourceErrors(@NonNull String prefix, @NonNull Resource resource, String... messages) {
@@ -430,13 +465,27 @@ public class PivotTestCase extends TestCase
 	}
 
 	public static @NonNull List<Diagnostic> assertValidationDiagnostics(@NonNull String prefix, @NonNull Resource resource, Map<Object, Object> validationContext, @NonNull String @Nullable [] messages) {
-		List<Diagnostic> diagnostics = new ArrayList<Diagnostic>();
-		for (EObject eObject : resource.getContents()) {
-			//			Diagnostic diagnostic = Diagnostician.INSTANCE.validate(eObject, validationContext);
-			Diagnostic diagnostic = PivotDiagnostician.BasicDiagnosticWithRemove.validate(eObject, validationContext);
-			diagnostics.addAll(diagnostic.getChildren());
+		Executor savedExecutor = ThreadLocalExecutor.basicGetExecutor();
+		Executor savedInterpretedExecutor = savedExecutor != null ? savedExecutor.basicGetInterpretedExecutor() : null;
+		try {
+			List<Diagnostic> diagnostics = new ArrayList<Diagnostic>();
+			for (EObject eObject : resource.getContents()) {
+				//			Diagnostic diagnostic = Diagnostician.INSTANCE.validate(eObject, validationContext);
+				Diagnostic diagnostic = PivotDiagnostician.BasicDiagnosticWithRemove.validate(eObject, validationContext);
+				diagnostics.addAll(diagnostic.getChildren());
+			}
+			return messages != null ? assertDiagnostics(prefix, resource, diagnostics, messages) : Collections.emptyList();
 		}
-		return messages != null ? assertDiagnostics(prefix, resource, diagnostics, messages) : Collections.emptyList();
+		finally {
+			if (savedExecutor != ThreadLocalExecutor.basicGetExecutor()) {
+				ThreadLocalExecutor.setExecutor(null);
+			}
+			else if (savedExecutor != null) {
+				if (savedInterpretedExecutor != savedExecutor.basicGetInterpretedExecutor()) {
+					savedExecutor.setInterpretedExecutor(null);
+				}
+			}
+		}
 	}
 
 	public static @Nullable StandaloneProjectMap basicGetProjectMap() {
@@ -504,16 +553,16 @@ public class PivotTestCase extends TestCase
 		}
 	}
 
-	public static @NonNull Resource cs2ecore(@NonNull OCL ocl, @NonNull String testDocument, @NonNull URI ecoreURI) throws IOException {
+	public static @NonNull Resource cs2ecore(@NonNull EnvironmentFactory environmentFactory, @NonNull String testDocument, @NonNull URI ecoreURI) throws IOException {
 		InputStream inputStream = new URIConverter.ReadableInputStream(testDocument, "UTF-8");
 		URI xtextURI = URI.createURI("test.oclinecore");
 		ResourceSet resourceSet = new ResourceSetImpl();
 		EssentialOCLCSResource xtextResource = ClassUtil.nonNullState((EssentialOCLCSResource) resourceSet.createResource(xtextURI, null));
-		ocl.getEnvironmentFactory().adapt(xtextResource);
+		environmentFactory.adapt(xtextResource);
 		xtextResource.load(inputStream, null);
 		assertNoResourceErrors("Loading Xtext", xtextResource);
-		Resource asResource = cs2as(ocl, xtextResource, null);
-		Resource ecoreResource = as2ecore(ocl, asResource, ecoreURI, NO_MESSAGES);
+		Resource asResource = cs2as(xtextResource, null);
+		Resource ecoreResource = as2ecore(environmentFactory, asResource, ecoreURI, NO_MESSAGES);
 		return ecoreResource;
 	}
 
@@ -525,12 +574,12 @@ public class PivotTestCase extends TestCase
 		ocl.getEnvironmentFactory().adapt(xtextResource);
 		xtextResource.load(inputStream, null);
 		assertNoResourceErrors("Loading Xtext", xtextResource);
-		Resource asResource = cs2as(ocl, xtextResource, null);
+		Resource asResource = cs2as(xtextResource, null);
 		return asResource;
 	}
 
-	public static @NonNull Resource cs2as(@NonNull OCL ocl, @NonNull CSResource xtextResource, @Nullable URI pivotURI) throws IOException {
-		ASResource asResource = ocl.cs2as(xtextResource);
+	public static @NonNull Resource cs2as(@NonNull CSResource xtextResource, @Nullable URI pivotURI) throws IOException {
+		ASResource asResource = xtextResource.getASResource();
 		assertNoUnresolvedProxies("Unresolved proxies", asResource);
 		if (pivotURI != null) {
 			asResource.setURI(pivotURI);

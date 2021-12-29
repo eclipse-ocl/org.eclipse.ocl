@@ -45,6 +45,7 @@ import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.SemanticException;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 
 /**
  * An implementation of an operation-invocation delegate for OCL body
@@ -114,34 +115,41 @@ public class OCLInvocationDelegate extends BasicInvocationDelegate
 	protected Object evaluate(@NonNull EnvironmentFactory environmentFactory, @NonNull ModelManager modelManager, InternalEObject ecoreObject, List<?> arguments) {
 		ExpressionInOCL query2 = query;
 		assert query2 != null;
-		IdResolver idResolver = environmentFactory.getIdResolver();
-		EvaluationEnvironment evaluationEnvironment = environmentFactory.createEvaluationEnvironment(query2, modelManager);
-		Object value = idResolver.boxedValueOf(ecoreObject);
-		evaluationEnvironment.add(ClassUtil.nonNullModel( query2.getOwnedContext()), value);
-		List<Variable> parms =  query2.getOwnedParameters();
-		if (!parms.isEmpty()) {
-			// bind arguments to parameter names
-			for (int i = 0; i < parms.size(); i++) {
-				Object object = arguments.get(i);
-				value = idResolver.boxedValueOf(object);
-				evaluationEnvironment.add(ClassUtil.nonNullModel(parms.get(i)), value);
+		Executor savedExecutor = ThreadLocalExecutor.basicGetExecutor();
+		try {
+			if (savedExecutor != null) {
+				ThreadLocalExecutor.setExecutor(null);		// New evaluation needs new root EvaluationEnvironment and so new Executor, but old modelManager
 			}
+			IdResolver idResolver = environmentFactory.getIdResolver();
+			EvaluationEnvironment evaluationEnvironment = environmentFactory.createEvaluationEnvironment(query2, modelManager);
+			Object boxedObject = idResolver.boxedValueOf(ecoreObject);
+			VariableDeclaration contextVariable = PivotUtil.getOwnedContext(query2);
+			OCLExpression expression = PivotUtil.getOwnedBody(query2);
+			evaluationEnvironment.add(contextVariable, boxedObject);
+			List<Variable> parms =  query2.getOwnedParameters();
+			if (!parms.isEmpty()) {
+				// bind arguments to parameter names
+				for (int i = 0; i < parms.size(); i++) {
+					Object argument = arguments.get(i);
+					Object boxedArgument = idResolver.boxedValueOf(argument);
+					evaluationEnvironment.add(ClassUtil.nonNullModel(parms.get(i)), boxedArgument);
+				}
+			}
+			//			Variable resultVariable = specification.getResultVariable();
+			//			if (resultVariable != null) {
+			//				myEnv.add(resultVariable, null);
+			//			}
+			EvaluationVisitor evaluationVisitor = environmentFactory.createEvaluationVisitor(evaluationEnvironment);
+			//	try {
+			Object boxedResult = expression.accept(evaluationVisitor);
+			return idResolver.ecoreValueOf(eOperation.getEType().getInstanceClass(), boxedResult);
+			//	} catch (EvaluationHaltedException e) {
+			//		throw e;
+			//	}
 		}
-		Object boxedValue = idResolver.boxedValueOf(ecoreObject);
-		VariableDeclaration contextVariable = PivotUtil.getOwnedContext(query2);
-		OCLExpression expression = PivotUtil.getOwnedBody(query2);
-		evaluationEnvironment.add(contextVariable, boxedValue);
-		//			Variable resultVariable = specification.getResultVariable();
-		//			if (resultVariable != null) {
-		//				myEnv.add(resultVariable, null);
-		//			}
-		EvaluationVisitor ev = environmentFactory.createEvaluationVisitor(evaluationEnvironment);
-		//	try {
-		Object boxedResult = expression.accept(ev);
-		return idResolver.ecoreValueOf(eOperation.getEType().getInstanceClass(), boxedResult);
-		//	} catch (EvaluationHaltedException e) {
-		//		throw e;
-		//	}
+		finally {
+			ThreadLocalExecutor.setExecutor(savedExecutor);		// Restore invoker's executor
+		}
 	}
 
 	public @NonNull Operation getOperation() {

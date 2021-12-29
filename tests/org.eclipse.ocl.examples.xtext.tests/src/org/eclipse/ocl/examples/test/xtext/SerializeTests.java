@@ -178,14 +178,14 @@ public class SerializeTests extends XtextTestCase
 			//
 			String pivotName2 = stem + "2.ecore.oclas";
 			URI pivotURI2 = getTestFileURI(pivotName2);
-			Resource pivotResource2 = cs2as(ocl2, xtextResource2, pivotURI2);
+			Resource pivotResource2 = cs2as(xtextResource2, pivotURI2);
 			//
 			//	Pivot to Ecore
 			//
 			String inputName2 = stem + "2.ecore";
 			URI ecoreURI2 = getTestFileURI(inputName2);
 			@NonNull String @Nullable [] asValidationMessages2 = testHelper.asSecondValidationMessages();
-			Resource ecoreResource2 = as2ecore(ocl2, pivotResource2, ecoreURI2, asValidationMessages2);
+			Resource ecoreResource2 = as2ecore(ocl2.getEnvironmentFactory(), pivotResource2, ecoreURI2, asValidationMessages2);
 			//
 		//	ThreadLocalExecutor.resetEnvironmentFactory();
 			//

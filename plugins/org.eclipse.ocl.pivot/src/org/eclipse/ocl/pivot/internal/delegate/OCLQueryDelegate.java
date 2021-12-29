@@ -26,6 +26,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.EvaluationException;
+import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.internal.context.EInvocationContext;
 import org.eclipse.ocl.pivot.internal.helper.BasicQueryImpl;
@@ -37,6 +38,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.Query;
 import org.eclipse.ocl.pivot.utilities.SemanticException;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 
 /**
  * An implementation of a query delegate for OCL expressions.
@@ -117,40 +119,52 @@ public class OCLQueryDelegate implements QueryDelegate
 				String message = StringUtil.bind(PivotMessagesInternal.MismatchedArgumentCount_ERROR_, argCount, parameterVariables.size());
 				throw new OCLDelegateException(new SemanticException(message));
 			}
-			Query query = new BasicQueryImpl(environmentFactory, nonNullSpecification);
-			EvaluationEnvironment env = query.getEvaluationEnvironment(target);
-			for (Variable parameterVariable : parameterVariables) {
-				// bind arguments to parameter names
-				String name = parameterVariable.getName();
-				Object object = nonNullArguments.get(name);
-				if ((object == null) && !nonNullArguments.containsKey(name)) {
-					String message = StringUtil.bind(PivotMessagesInternal.EvaluationResultIsInvalid_ERROR_, nonNullSpecification.getBody());
-					throw new OCLDelegateException(new SemanticException(message));
+
+			Executor savedExecutor = ThreadLocalExecutor.basicGetExecutor();
+			try {
+				if (savedExecutor != null) {
+					ThreadLocalExecutor.setExecutor(null);		// New evaluation needs new root EvaluationEnvironment and so new Executor, but old modelManager
 				}
-				Object value = idResolver.boxedValueOf(object);
-				requiredType = PivotUtil.getType(parameterVariable);
-				targetType = idResolver.getStaticTypeOfValue(requiredType, value);
-				if (!targetType.conformsTo(environmentFactory.getStandardLibrary(), requiredType)) {
-					String message = StringUtil.bind(PivotMessagesInternal.MismatchedArgumentType_ERROR_, name, targetType, requiredType);
-					throw new OCLDelegateException(new SemanticException(message));
+
+
+				Query query = new BasicQueryImpl(environmentFactory, nonNullSpecification);
+				EvaluationEnvironment env = query.getEvaluationEnvironment(target);
+				for (Variable parameterVariable : parameterVariables) {
+					// bind arguments to parameter names
+					String name = parameterVariable.getName();
+					Object object = nonNullArguments.get(name);
+					if ((object == null) && !nonNullArguments.containsKey(name)) {
+						String message = StringUtil.bind(PivotMessagesInternal.EvaluationResultIsInvalid_ERROR_, nonNullSpecification.getBody());
+						throw new OCLDelegateException(new SemanticException(message));
+					}
+					Object value = idResolver.boxedValueOf(object);
+					requiredType = PivotUtil.getType(parameterVariable);
+					targetType = idResolver.getStaticTypeOfValue(requiredType, value);
+					if (!targetType.conformsTo(environmentFactory.getStandardLibrary(), requiredType)) {
+						String message = StringUtil.bind(PivotMessagesInternal.MismatchedArgumentType_ERROR_, name, targetType, requiredType);
+						throw new OCLDelegateException(new SemanticException(message));
+					}
+					env.add(parameterVariable, value);
 				}
-				env.add(parameterVariable, value);
+				Object result = evaluate(query, target);
+				//			if (result.isInvalid()) {
+				//				String message = ClassUtil.bind(OCLMessages.EvaluationResultIsInvalid_ERROR_, getOperationName());
+				//				throw new OCLDelegateException(message);
+				//			}
+				//		if ((result == null) / * || ocl.isInvalid(result) * /) {
+				//			String message = ClassUtil.bind(OCLMessages.EvaluationResultIsNull_ERROR_, getOperationName());
+				//			throw new OCLDelegateException(message);
+				//		}
+				//		return converter.convert(ocl, result);
+				//			if (result == null) {
+				//				String message = NLS.bind(OCLMessages.EvaluationResultIsInvalid_ERROR_, PivotUtil.getBody(specification));
+				//				throw new InvocationTargetException(new OCLDelegateException(message));
+				//			}
+				return idResolver.ecoreValueOf(null, result);
 			}
-			Object result = evaluate(query, target);
-			//			if (result.isInvalid()) {
-			//				String message = ClassUtil.bind(OCLMessages.EvaluationResultIsInvalid_ERROR_, getOperationName());
-			//				throw new OCLDelegateException(message);
-			//			}
-			//		if ((result == null) / * || ocl.isInvalid(result) * /) {
-			//			String message = ClassUtil.bind(OCLMessages.EvaluationResultIsNull_ERROR_, getOperationName());
-			//			throw new OCLDelegateException(message);
-			//		}
-			//		return converter.convert(ocl, result);
-			//			if (result == null) {
-			//				String message = NLS.bind(OCLMessages.EvaluationResultIsInvalid_ERROR_, PivotUtil.getBody(specification));
-			//				throw new InvocationTargetException(new OCLDelegateException(message));
-			//			}
-			return idResolver.ecoreValueOf(null, result);
+			finally {
+				ThreadLocalExecutor.setExecutor(savedExecutor);		// Restore invoker's executor
+			}
 		}
 		catch (InvocationTargetException e) {
 			throw e;

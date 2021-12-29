@@ -24,7 +24,6 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.EvaluationException;
-import org.eclipse.ocl.pivot.evaluation.EvaluationHaltedException;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
@@ -38,6 +37,7 @@ import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.SemanticException;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 
 /**
  * An implementation of a setting delegate that computes OCL derived features.
@@ -130,19 +130,28 @@ public class OCLSettingDelegate extends BasicSettingDelegate.Stateless
 			Executor executor = PivotUtil.getExecutor(ecoreObject);
 			ModelManager modelManager = executor.getModelManager();
 			ExpressionInOCL query = getQuery();
-			VariableDeclaration contextVariable = PivotUtil.getOwnedContext(query);
-			OCLExpression expression = PivotUtil.getOwnedBody(query);
-			Class<?> instanceClass = eStructuralFeature.getEType().getInstanceClass();
-			IdResolver idResolver = environmentFactory.getIdResolver();
-			Object boxedValue = idResolver.boxedValueOf(ecoreObject);
-			EvaluationEnvironment evaluationEnvironment = environmentFactory.createEvaluationEnvironment(query, modelManager);
-			evaluationEnvironment.add(contextVariable, boxedValue);
-			EvaluationVisitor ev = environmentFactory.createEvaluationVisitor(evaluationEnvironment);
+			Executor savedExecutor = ThreadLocalExecutor.basicGetExecutor();
 			try {
-				Object boxedResult = expression.accept(ev);
-				return idResolver.ecoreValueOf(instanceClass, boxedResult);
-			} catch (EvaluationHaltedException e) {
-				throw e;
+				if (savedExecutor != null) {
+					ThreadLocalExecutor.setExecutor(null);		// New evaluation needs new root EvaluationEnvironment and so new Executor, but old modelManager
+				}
+				VariableDeclaration contextVariable = PivotUtil.getOwnedContext(query);
+				OCLExpression expression = PivotUtil.getOwnedBody(query);
+				Class<?> instanceClass = eStructuralFeature.getEType().getInstanceClass();
+				IdResolver idResolver = environmentFactory.getIdResolver();
+				Object boxedValue = idResolver.boxedValueOf(ecoreObject);
+				EvaluationEnvironment evaluationEnvironment = environmentFactory.createEvaluationEnvironment(query, modelManager);
+				evaluationEnvironment.add(contextVariable, boxedValue);
+				EvaluationVisitor ev = environmentFactory.createEvaluationVisitor(evaluationEnvironment);
+			//	try {
+					Object boxedResult = expression.accept(ev);
+					return idResolver.ecoreValueOf(instanceClass, boxedResult);
+			//	} catch (EvaluationHaltedException e) {
+			//		throw e;
+			//	}
+			}
+			finally {
+				ThreadLocalExecutor.setExecutor(savedExecutor);		// Restore invoker's executor
 			}
 		}
 		catch (EvaluationException e) {

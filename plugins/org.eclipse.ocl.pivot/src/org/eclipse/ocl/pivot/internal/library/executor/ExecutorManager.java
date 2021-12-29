@@ -30,6 +30,7 @@ import org.eclipse.ocl.pivot.evaluation.EvaluationLogger;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor.ExecutorExtension;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
+import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
@@ -158,6 +159,8 @@ public abstract class ExecutorManager implements ExecutorExtension
 	 */
 	private /*@LazyNonNull*/ Map<String, Pattern> regexPatterns = null;
 
+	private @Nullable ExecutorInternal interpretedExecutor = null;
+
 	/**
 	 * @since 1.7
 	 */
@@ -167,6 +170,7 @@ public abstract class ExecutorManager implements ExecutorExtension
 		CONSTRUCTION_COUNT++;
 		this.environment = environment;
 		this.standardLibrary = environment.getOwnedStandardLibrary();
+//		System.out.println("Create " + NameUtil.debugSimpleName(this));
 	}
 
 	/**
@@ -174,6 +178,11 @@ public abstract class ExecutorManager implements ExecutorExtension
 	 */
 	@Override
 	public void add(@NonNull TypedElement referredVariable, @Nullable Object value) {}
+
+	@Override
+	public @Nullable ExecutorInternal basicGetInterpretedExecutor() {
+		return interpretedExecutor;
+	}
 
 	/** @deprecated Evaluator no longer nests
 	 * @since 1.1*/
@@ -225,6 +234,12 @@ public abstract class ExecutorManager implements ExecutorExtension
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException();
 	}
+
+//	@Override
+//	protected void finalize() throws Throwable {
+//		System.out.println("Finalize " + NameUtil.debugSimpleName(this));
+//		super.finalize();
+//	}
 
 	@Override
 	public @NonNull CompleteEnvironment getCompleteEnvironment() {
@@ -411,6 +426,11 @@ public abstract class ExecutorManager implements ExecutorExtension
 	 */
 	@Override
 	public void resetCaches() {}
+
+	@Override
+	public void setInterpretedExecutor(@Nullable ExecutorInternal interpretedExecutor) {
+		this.interpretedExecutor = interpretedExecutor;;
+	}
 
 	/*	public DomainType typeOf(Value value, Value... values) {
 		DomainStandardLibrary standardLibrary = valueFactory.getStandardLibrary();

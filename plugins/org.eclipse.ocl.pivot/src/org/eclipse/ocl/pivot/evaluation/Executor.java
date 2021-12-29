@@ -21,6 +21,7 @@ import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.IdResolver;
+import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 
@@ -38,6 +39,17 @@ public interface Executor extends Evaluator
 		void resetCaches();
 	}
 	void add(@NonNull TypedElement referredVariable, @Nullable Object value);
+
+	/**
+	 * Return an executor suitable for iterpreted execution. May return this if already suitable for
+	 * interpretation execution, or a delegate if an interpreted executor has already been configured
+	 * for this lightweight executor,
+	 *
+	 * @since 1.18
+	 */
+	default @Nullable ExecutorInternal basicGetInterpretedExecutor() {
+		return null;
+	}
 	@Override
 	@Nullable Object evaluate(@NonNull OCLExpression body);
 	@Override
@@ -79,6 +91,13 @@ public interface Executor extends Evaluator
 	@Deprecated
 	@NonNull EvaluationEnvironment pushEvaluationEnvironment(@NonNull NamedElement executableObject, @Nullable OCLExpression callingObject);
 	void replace(@NonNull TypedElement referredVariable, @Nullable Object value);
+
+	/**
+	 * @since 1.18
+	 */
+	default void setInterpretedExecutor(@Nullable ExecutorInternal interpretedExecutor) {
+		return;
+	}
 	@Override
 	void setLogger(@Nullable EvaluationLogger logger);
 }

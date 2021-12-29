@@ -69,6 +69,7 @@ import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.EvaluationHaltedException;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
+import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.IterationManager;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
@@ -89,6 +90,7 @@ import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerRange;
@@ -158,6 +160,9 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 			throw new InvalidValueException("null expression");
 		}
 		try {
+			Executor executor = ThreadLocalExecutor.basicGetExecutor();
+			ExecutorInternal interpretedExecutor = executor != null? executor.basicGetInterpretedExecutor() :  null;
+			assert context == interpretedExecutor : "ThreadLocalExecutor's executor must be configured to support EMF API.";
 			Object result = v.accept(undecoratedVisitor);
 			assert ValueUtil.isBoxed(result);	// Make sure Integer/Real are boxed, invalid is an exception, null is null
 			return result;
@@ -431,7 +436,7 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 			else {
 				if (iSize == 1) {
 					VariableDeclaration firstIterator = ClassUtil.nonNullModel(iterators.get(0));
-					iterationManager = new EvaluatorSingleIterationManager(context, iterateExp, body, (CollectionValue)sourceValue, accumulatorVariable, initValue, firstIterator);
+					iterationManager = new EvaluatorSingleIterationManager(context, iterateExp, body, (CollectionValue)sourceValue, accumulatorVariable, initValue, firstIterator, null);
 				}
 				else {
 					VariableDeclaration[] variables = new VariableDeclaration[iSize];

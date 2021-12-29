@@ -37,6 +37,7 @@ import org.eclipse.ocl.pivot.internal.values.BagImpl;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.uml.internal.validation.UMLOCLEValidator;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.values.Bag;
@@ -105,10 +106,11 @@ public abstract class AbstractValidateTests extends PivotTestCaseWithAutoTearDow
 	public @NonNull Resource doLoadOCLinEcore(@NonNull OCL ocl, @NonNull URI inputURI, @NonNull URI ecoreURI) throws IOException {
 		CSResource xtextResource = ocl.getCSResource(inputURI);
 		assertNoResourceErrors("Load failed", xtextResource);
-		ASResource asResource = ocl.cs2as(xtextResource);
+		ASResource asResource = xtextResource.getASResource();
 		assertNoUnresolvedProxies("Unresolved proxies", xtextResource);
-		assertNoValidationErrors("Pivot validation errors", asResource.getModel());
-		Resource ecoreResource = as2ecore(ocl, asResource, ecoreURI, NO_MESSAGES);
+// XXX		assertNoValidationErrors("Pivot validation errors", asResource.getModel());
+		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
+		Resource ecoreResource = as2ecore(environmentFactory, asResource, ecoreURI, NO_MESSAGES);
 		return ecoreResource;
 	}
 
