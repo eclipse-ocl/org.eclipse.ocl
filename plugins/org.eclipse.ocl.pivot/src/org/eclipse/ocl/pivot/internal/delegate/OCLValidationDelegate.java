@@ -298,6 +298,7 @@ public class OCLValidationDelegate implements ValidationDelegate
 	//	OCL ocl = delegateDomain.getOCL();
 		EnvironmentFactory environmentFactory = PivotUtilInternal.getEnvironmentFactory(value);
 		Executor executor = (Executor)context.get(Executor.class);
+	//	assert executor == ThreadLocalExecutor.basicGetExecutor();			// XXX
 		ModelManager modelManager = executor != null ? executor.getModelManager() : null;
 	//	EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
 		EvaluationVisitor evaluationVisitor = environmentFactory.createEvaluationVisitor(value, query, modelManager);

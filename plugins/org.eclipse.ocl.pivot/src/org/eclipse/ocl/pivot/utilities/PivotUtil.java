@@ -229,6 +229,7 @@ public class PivotUtil
 	public static @Nullable Executor basicGetExecutor(@NonNull EObject eObject, @Nullable  Map<Object, Object> validationContext) {
 		if (validationContext != null) {
 			Executor executor = (Executor) validationContext.get(Executor.class);
+		//	assert executor == ThreadLocalExecutor.basicGetExecutor();			// XXX
 			if (executor != null) {
 				return executor;
 			}
@@ -1286,7 +1287,7 @@ public class PivotUtil
 		if (validationContext != null) {
 			Executor validationContextExecutor = (Executor) validationContext.get(Executor.class);
 			if (validationContextExecutor != null) {
-				assert (executor == null) || (validationContextExecutor == executor);
+				assert /*(executor == null) ||*/ (validationContextExecutor == executor);		// XXX
 				return validationContextExecutor;
 			}
 		}
