@@ -36,10 +36,10 @@ import org.eclipse.ocl.examples.emf.validation.validity.ui.view.SelectionUtil;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.URIUtil;
 import org.eclipse.ocl.xtext.base.ui.messages.BaseUIMessages;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
@@ -84,7 +84,7 @@ public class ExportCompleteOCLHandler extends AbstractHandler
 					if (xtextResource == null) {
 						return null;
 					}
-					EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.findEnvironmentFactory(ClassUtil.nonNullState(xtextResource));
+					EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 					if (environmentFactory != null) {
 						return environmentFactory.getResourceSet();
 					}

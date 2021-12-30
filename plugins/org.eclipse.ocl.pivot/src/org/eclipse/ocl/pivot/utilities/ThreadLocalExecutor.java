@@ -119,6 +119,24 @@ public class ThreadLocalExecutor
 		return threadLocalExecutor;
 	}
 
+	/**
+	 * Return the prevailing thread-unique EnvironmentFactory or throw an IllegalStateException none/many.
+	 *
+	 * @since 1.18
+	 */
+	public static @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
+		ThreadLocalExecutor threadLocalExecutor = get();
+		return ClassUtil.nonNullState(threadLocalExecutor.localBasicGetEnvironmentFactory());
+	}
+
+	/**
+	 * Return the prevailing thread-unique Executor or null if none/many.
+	 *
+	public static @NonNull Executor getExecutor() {
+		ThreadLocalExecutor threadLocalExecutor = get();
+		return ClassUtil.nonNullState(threadLocalExecutor.localBasicGetExecutor());
+	} */
+
 	private static @Nullable ThreadLocalExecutor readExtension() {
 		IExtensionRegistry extensionRegistry = Platform.getExtensionRegistry();
 		if (extensionRegistry == null) {

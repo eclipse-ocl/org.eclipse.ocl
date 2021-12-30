@@ -185,8 +185,7 @@ public class LeakTests extends PivotTestCaseWithAutoTearDown
 				// It doesn't matter what the results of validation are, only that
 				// OCL constraints were parsed by the OCL validation delegate
 
-				AbstractEnvironmentFactory environmentFactory = (AbstractEnvironmentFactory) ThreadLocalExecutor.basicGetEnvironmentFactory();
-				assert environmentFactory != null;
+				AbstractEnvironmentFactory environmentFactory = (AbstractEnvironmentFactory) ThreadLocalExecutor.getEnvironmentFactory();
 				org.eclipse.ocl.pivot.Profile asProfile = environmentFactory.getASOf(org.eclipse.ocl.pivot.Profile.class, umlProfile);
 				assertNotNull("No AS Profile for leak", asProfile);
 				umlProfileRef = new WeakReference<org.eclipse.uml2.uml.Profile>(umlProfile);

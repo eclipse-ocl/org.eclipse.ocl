@@ -146,7 +146,7 @@ public abstract class PivotDiagnostician extends Diagnostician
 		}
 		if (ocl == null) {
 			if (eObject != null) {
-				EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.findEnvironmentFactory(eObject);
+				EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 				if (environmentFactory != null) {
 					ocl = environmentFactory.createOCL();
 				}

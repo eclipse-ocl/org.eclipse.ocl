@@ -813,7 +813,7 @@ public class OCLConsolePage extends Page //implements MetamodelManagerListener
 						((BaseCSResource)resource).dispose();
 					}
 
-					EnvironmentFactory environmentFactory = ClassUtil.nonNullState(ThreadLocalExecutor.basicGetEnvironmentFactory()); //getEnvironmentFactory(contextObject);
+					EnvironmentFactory environmentFactory = ThreadLocalExecutor.getEnvironmentFactory();
 					IdResolver.IdResolverExtension idResolver = (IdResolver.IdResolverExtension)environmentFactory.getIdResolver();
 					//				DomainType staticType = idResolver.getStaticTypeOfValue(null, selectedObject);
 					org.eclipse.ocl.pivot.Class staticType = idResolver.getStaticTypeOfValue(null, contextObject);

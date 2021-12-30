@@ -37,10 +37,10 @@ import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrintOptions;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.HTMLBuffer;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
 import org.eclipse.ocl.xtext.markup.MarkupUtils;
 import org.eclipse.ocl.xtext.markupcs.Markup;
@@ -126,7 +126,7 @@ public class MarkupHoverProvider extends DefaultEObjectHoverProvider
 			return null;
 		}
 		try {
-			EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.findEnvironmentFactory(resource);
+			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 			if (environmentFactory == null) {
 				return null;
 			}
@@ -205,7 +205,7 @@ public class MarkupHoverProvider extends DefaultEObjectHoverProvider
 				}
 			};
 			if (namespace != null) {
-				EnvironmentFactory environmentFactory = PivotUtilInternal.findEnvironmentFactory(namespace);
+				EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 				if (environmentFactory != null) {
 					prettyPrintOptions.setEnvironmentFactory(environmentFactory);
 				}

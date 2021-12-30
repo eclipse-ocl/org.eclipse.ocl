@@ -28,9 +28,9 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.annotations.PivotAnnotationsPackage;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 
 /**
  *  An annotation validator for http://www.eclipse.org/OCL/Import annotations.
@@ -81,7 +81,7 @@ public final class OCL_Import_AnnotationValidator extends BasicEAnnotationValida
 		String importURI = entry.getValue();
 		if (importURI != null) {
 			ResourceSet resourceSet = null;
-			EnvironmentFactory environmentFactory = PivotUtilInternal.findEnvironmentFactory(eModelElement);
+			EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 			if (environmentFactory != null) {
 				resourceSet = environmentFactory.getResourceSet();
 			}

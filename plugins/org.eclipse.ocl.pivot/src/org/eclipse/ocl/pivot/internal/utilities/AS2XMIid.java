@@ -27,6 +27,7 @@ import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.AS2XMIidVisitor;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
 
 @Deprecated /* @deprecated only used to generate legacy Model.xmiidVersion 0 xmiids */
@@ -145,7 +146,7 @@ public class AS2XMIid
 				assignIds((ASResource)resource, options);
 			}
 		}
-		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.findEnvironmentFactory(asResourceSet);
+		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 		if (environmentFactory != null) {
 			environmentFactory.getMetamodelManager().assignLibraryIds(this, options);
 		}

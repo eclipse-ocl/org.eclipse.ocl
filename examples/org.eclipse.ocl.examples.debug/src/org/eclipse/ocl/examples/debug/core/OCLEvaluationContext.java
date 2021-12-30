@@ -13,46 +13,29 @@ package org.eclipse.ocl.examples.debug.core;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.debug.vm.core.EvaluationContext;
-import org.eclipse.ocl.examples.debug.vm.evaluator.VMContext;
 import org.eclipse.ocl.examples.debug.vm.evaluator.IVMContext;
+import org.eclipse.ocl.examples.debug.vm.evaluator.VMContext;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 
 public class OCLEvaluationContext extends EvaluationContext
 {
 	protected static @NonNull IVMContext createVMContext(@Nullable ExpressionInOCL expressionObject, @Nullable EObject contextObject) {
-		EnvironmentFactoryInternal environmentFactory = null;
-		ExpressionInOCL expressionObject2 = expressionObject;
-		if (expressionObject2 != null) {
-			Resource eResource = expressionObject2.eResource();
-			if (eResource != null) {
-				environmentFactory = PivotUtilInternal.findEnvironmentFactory(eResource);
-			}
-		}
-		if (environmentFactory == null) {
-			EObject contextObject2 = contextObject;
-			if (contextObject2 != null) {
-				Resource eResource = contextObject2.eResource();
-				if (eResource != null) {
-					environmentFactory = PivotUtilInternal.findEnvironmentFactory(eResource);
-				}
-			}
-		}
+		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 		if (environmentFactory == null) {
 			environmentFactory = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(OCL.NO_PROJECTS, null);
 		}
 		return new VMContext(environmentFactory);
 	}
-	
+
 	private final @Nullable ExpressionInOCL expressionObject;
 	private final @Nullable EObject contextObject;
 	private final @NonNull URI constraintURI;
@@ -110,6 +93,7 @@ public class OCLEvaluationContext extends EvaluationContext
 		return contextURI;
 	}
 
+	@Override
 	public @NonNull URI getDebuggableURI() {
 		return constraintURI;
 	}

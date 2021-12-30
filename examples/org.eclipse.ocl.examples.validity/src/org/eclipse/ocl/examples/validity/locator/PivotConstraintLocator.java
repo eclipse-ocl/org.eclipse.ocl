@@ -40,11 +40,11 @@ import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.internal.validation.PivotEObjectValidator;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
 import org.eclipse.ocl.xtext.basecs.ModelElementCS;
 
@@ -54,8 +54,8 @@ public class PivotConstraintLocator extends AbstractConstraintLocator
 
 	@Override
 	public @NonNull Set<@NonNull TypeURI> getAllTypes(@NonNull ValidityManager validityManager, @NonNull EObject constrainingObject) {
-		if (constrainingObject instanceof org.eclipse.ocl.pivot.Class) {
-			EnvironmentFactory environmentFactory = PivotUtilInternal.findEnvironmentFactory(constrainingObject);
+	//	if (constrainingObject instanceof org.eclipse.ocl.pivot.Class) {
+			EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 			if (environmentFactory != null) {
 				Set<@NonNull TypeURI> allTypes = new HashSet<@NonNull TypeURI>();
 				CompleteClass completeClass = environmentFactory.getCompleteModel().getCompleteClass((org.eclipse.ocl.pivot.Class)constrainingObject);
@@ -69,7 +69,7 @@ public class PivotConstraintLocator extends AbstractConstraintLocator
 				}
 				return allTypes;
 			}
-		}
+	//	}
 		return super.getAllTypes(validityManager, constrainingObject);
 	}
 
@@ -104,7 +104,7 @@ public class PivotConstraintLocator extends AbstractConstraintLocator
 				asResource = (ASResource) resource;
 			}
 			if (asResource != null) {
-				EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.findEnvironmentFactory(asResource);
+				EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 				if (environmentFactory != null) {
 					for (TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
 						if (monitor.isCanceled()) {
@@ -173,8 +173,8 @@ public class PivotConstraintLocator extends AbstractConstraintLocator
 
 	@Override
 	public @Nullable TypeURI getTypeURI(@NonNull EObject constrainedObject) {
-		if (constrainedObject instanceof org.eclipse.ocl.pivot.Class) {
-			EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.findEnvironmentFactory(constrainedObject);
+	//	if (constrainedObject instanceof org.eclipse.ocl.pivot.Class) {
+			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 			if (environmentFactory != null) {
 				CompleteClass completeClass = environmentFactory.getCompleteModel().getCompleteClass((org.eclipse.ocl.pivot.Class)constrainedObject);
 				for (org.eclipse.ocl.pivot.Class partialClass : completeClass.getPartialClasses()) {
@@ -189,7 +189,7 @@ public class PivotConstraintLocator extends AbstractConstraintLocator
 					return super.getTypeURI(eTarget);
 				}
 			}
-		}
+	//	}
 		return super.getTypeURI(constrainedObject);
 	}
 

@@ -61,12 +61,7 @@ public class OCLinEcoreLocalContext extends JavaLocalContext<@NonNull OCLinEcore
 		String utilClassName = ImportUtils.getAffixedName(PivotUtil.class);
 		StringBuilder s = new StringBuilder();
 		s.append(utilClassName);
-		s.append(".getExecutor(this");
-		if (contextName != null) {
-			s.append(", ");
-			s.append(contextName);
-		}
-		s.append(")");
+		s.append(".getExecutor(this)");
 		evaluator.setTextValue(s.toString());
 		return evaluator;
 	}

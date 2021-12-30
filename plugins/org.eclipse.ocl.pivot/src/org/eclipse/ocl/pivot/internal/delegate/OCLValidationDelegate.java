@@ -43,6 +43,7 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.SemanticException;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 
 /**
@@ -297,8 +298,8 @@ public class OCLValidationDelegate implements ValidationDelegate
 		};
 	//	OCL ocl = delegateDomain.getOCL();
 		EnvironmentFactory environmentFactory = PivotUtilInternal.getEnvironmentFactory(value);
-		Executor executor = (Executor)context.get(Executor.class);
-	//	assert executor == ThreadLocalExecutor.basicGetExecutor();			// XXX
+	//	Executor executor = (Executor)context.get(Executor.class);
+		Executor executor = ThreadLocalExecutor.basicGetExecutor();			// XXX
 		ModelManager modelManager = executor != null ? executor.getModelManager() : null;
 	//	EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
 		EvaluationVisitor evaluationVisitor = environmentFactory.createEvaluationVisitor(value, query, modelManager);
