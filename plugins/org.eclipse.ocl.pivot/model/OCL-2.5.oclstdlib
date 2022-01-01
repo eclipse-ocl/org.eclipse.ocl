@@ -117,10 +117,10 @@ type Bag(T) : BagType conformsTo Collection(T) {
 	The sub-bag of the source bag for which body is oclText[true].
 
 	oclCode[self->select(iterator | body) =
-        self->iterate(iterator; result : Bag(T) = Bag{} |
-                        if body then result->including(iterator)
-                                else result
-                        endif)]
+		self->iterate(iterator; result : Bag(T) = Bag{} |
+						if body then result->including(iterator)
+								else result
+						endif)]
 	**/
 	iteration select(i : T[?] | lambda : Lambda T() : Boolean[1]) : Bag(T) => 'org.eclipse.ocl.pivot.library.iterator.SelectIteration';
 	/**
@@ -185,8 +185,10 @@ type Boolean : BooleanType conformsTo OclAny {
 	operation "<>"(object2 : OclSelf[?]) : Boolean[1] precedence=EQUALITY => 'org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation';
 	/**
 	Returns oclText[Set{false, true}].
+	
+	@Deprecated - retained with broken signature for referential API compatibility.
 	*/
-	static operation allInstances() : Set(OclSelf[2|1]) => 'org.eclipse.ocl.pivot.library.logical.BooleanAllInstancesOperation';
+	operation allInstances(dummy : Integer) : Set(OclSelf[2|1]) => 'org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation';
 	/**
 	oclText[false] if either oclText[self] or oclText[b] is oclText[false].
 	Otherwise oclText[true].
@@ -194,9 +196,9 @@ type Boolean : BooleanType conformsTo OclAny {
 	operation and2(b : Boolean[1]) : Boolean[1] validating precedence=AND => 'org.eclipse.ocl.pivot.library.logical.BooleanAndOperation2'
 	{
 		body: if self = false then false
-		      elseif b = false then false
-		      else true
-		      endif;
+			  elseif b = false then false
+			  else true
+			  endif;
 	}
 	/**
 	oclText[false] if either oclText[self] or oclText[b] is oclText[false].
@@ -208,17 +210,17 @@ type Boolean : BooleanType conformsTo OclAny {
 	{
 	annotation 'http://www.omg.org/ocl'(ClassGroup='Primitive');
 		body: if self.oclIsInvalid() then
-		        if b.oclIsInvalid() then self
-		        elseif b = false then false
-		        else self
-		        endif
-		      elseif self = false then false
-		      elseif b.oclIsInvalid() then b
-		      elseif b = false then false
-		      elseif self = null then null
-		      elseif b = null then null
-		      else true
-		      endif;
+				if b.oclIsInvalid() then self
+				elseif b = false then false
+				else self
+				endif
+			  elseif self = false then false
+			  elseif b.oclIsInvalid() then b
+			  elseif b = false then false
+			  elseif self = null then null
+			  elseif b = null then null
+			  else true
+			  endif;
 	}
 	/**
 	oclText[true] if oclText[self] is oclText[false], or if oclText[b] is oclText[true].
@@ -227,9 +229,9 @@ type Boolean : BooleanType conformsTo OclAny {
 	operation implies2(b : Boolean[1]) : Boolean[1] validating precedence=IMPLIES => 'org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation2'
 	{
 		body: if self = false then true
-		      elseif b = true then true
-		      else false
-		      endif;
+			  elseif b = true then true
+			  else false
+			  endif;
 	}
 	/**
 	oclText[true] if oclText[self] is oclText[false], or if oclText[b] is oclText[true].
@@ -240,17 +242,17 @@ type Boolean : BooleanType conformsTo OclAny {
 	operation implies(b : Boolean[?]) : Boolean[?] validating invalidating precedence=IMPLIES => 'org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation'
 	{
 		body: if self.oclIsInvalid() then
-		        if b.oclIsInvalid() then self
-		        elseif b = true then true
-		        else self
-		        endif
-		      elseif self = false then true
-		      elseif b.oclIsInvalid() then b
-		      elseif b = true then true
-		      elseif self = null then null
-		      elseif b = null then b
-		      else false
-		      endif;
+				if b.oclIsInvalid() then self
+				elseif b = true then true
+				else self
+				endif
+			  elseif self = false then true
+			  elseif b.oclIsInvalid() then b
+			  elseif b = true then true
+			  elseif self = null then null
+			  elseif b = null then b
+			  else false
+			  endif;
 	}
 	/**
 	oclText[true] if oclText[self] is oclText[false].
@@ -269,9 +271,9 @@ type Boolean : BooleanType conformsTo OclAny {
 	operation not() : Boolean[?] validating invalidating precedence=UNARY => 'org.eclipse.ocl.pivot.library.logical.BooleanNotOperation'
 	{
 		body: if self.oclIsInvalid() then self
-		      elseif self = null then null
-		      else self = false
-		      endif;
+			  elseif self = null then null
+			  else self = false
+			  endif;
 	}
 	/**
 	oclText[true] if either oclText[self] or oclText[b] is oclText[true].
@@ -281,8 +283,8 @@ type Boolean : BooleanType conformsTo OclAny {
 	{
 		body: if self = true then true
 			  elseif b = true then true
-		      else false
-		      endif;
+			  else false
+			  endif;
 	}
 	/**
 	oclText[true] if either oclText[self] or oclText[b] is oclText[true].
@@ -293,17 +295,17 @@ type Boolean : BooleanType conformsTo OclAny {
 	operation or(b : Boolean[?]) : Boolean[?] validating invalidating precedence=OR => 'org.eclipse.ocl.pivot.library.logical.BooleanOrOperation'
 	{
 		body: if self.oclIsInvalid() then
-		        if b.oclIsInvalid() then self
-			    elseif b = true then true
-		        else self
-		        endif
-		      elseif self = true then true
+				if b.oclIsInvalid() then self
+				elseif b = true then true
+				else self
+				endif
+			  elseif self = true then true
 			  elseif b.oclIsInvalid() then b
 			  elseif b = true then true
 			  elseif self = null then null
 			  elseif b = null then null
-		      else false
-		      endif;
+			  else false
+			  endif;
 	}
 	/**
 	Converts oclText[self] to a string value.
@@ -326,15 +328,13 @@ type Boolean : BooleanType conformsTo OclAny {
 	operation xor(b : Boolean[?]) : Boolean[?] precedence=XOR => 'org.eclipse.ocl.pivot.library.logical.BooleanXorOperation'
 	{
 		body: if self.oclIsInvalid() then self
-		      elseif b.oclIsInvalid() then b
-		      elseif self = null then null
-		      elseif b = null then null
-		      else self <> b
-		      endif;
+			  elseif b.oclIsInvalid() then b
+			  elseif self = null then null
+			  elseif b = null then null
+			  else self <> b
+			  endif;
 	}
 }
-
-type Class conformsTo OclAny {}
 
 /**
 Collection is the abstract supertype of all collection types in the OCL Standard Library.
@@ -590,14 +590,6 @@ abstract type Collection(T) : CollectionType conformsTo OclAny {
 	Evaluates to the upper bound on the number of collection elements.
 	**/
 	static property upper : Integer[1] => 'org.eclipse.ocl.pivot.library.collection.CollectionUpperProperty';
-}
-
-/**
- @Deprecated: Use OclEnumeration
- The Enumeration type is the type of an OrderedSet of EnumerationLiteral.
- **/
-type Enumeration conformsTo OclEnumeration {
-	annotation 'http://www.omg.org/ocl'(ClassGroup='UML');
 }
 
 /**
@@ -999,8 +991,10 @@ abstract type OclElement conformsTo OclAny {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='OCL');
 	/**
 	Return a set of all instances of the type and derived types of self.
+	
+	@Deprecated - retained with broken signature for referential API compatibility.
 	*/
-	static operation allInstances() : Set(OclSelf[*|1]) => 'org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation';
+	operation allInstances(dummy : Integer) : Set(OclSelf[*|1]) => 'org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation';
 	/**
 	Evaluates to oclText[self], where oclText[self] is of the model type identified by oclText[TT].
 	
@@ -1064,21 +1058,6 @@ abstract type OclElement conformsTo OclAny {
 }
 
 /**
- The OclEnumeration type is the implicit supertype of any user Enumeration type.
- **/
-abstract type OclEnumeration conformsTo OclType {
-	annotation 'http://www.omg.org/ocl'(ClassGroup='UML');
-	/**
-	Return a set of all enumeration values of oclText[self].
-	*/
-	static operation allInstances() : Set(OclSelf[1|1]) => 'org.eclipse.ocl.pivot.library.enumeration.EnumerationAllInstancesOperation';
-	/**
-	Evaluates to the literals of the enumeration.
-	**/
-	static property allLiterals : OrderedSet(EnumerationLiteral) => 'org.eclipse.ocl.pivot.library.enumeration.EnumerationOwnedLiteralProperty';
-}
-
-/**
 The type OclInvalid is a type that conforms to all other types.
 It has one single instance, identified as  oclText[invalid].
 Any property call applied on invalid results in oclText[invalid], except for the operations oclIsUndefined() and oclIsInvalid().
@@ -1088,8 +1067,10 @@ abstract type OclInvalid : InvalidType conformsTo OclVoid {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='OCL');
 	/**
 	Returns oclText[invalid].
+	
+	@Deprecated - retained with broken signature for referential API compatibility.
 	*/
-	static operation allInstances() : Set(OclSelf) => 'org.eclipse.ocl.pivot.library.oclinvalid.OclInvalidAllInstancesOperation';
+	operation allInstances(dummy : Integer) : Set(OclSelf) => 'org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation';
 	/**
 	Returns oclText[invalid].
 	*/
@@ -1191,8 +1172,10 @@ abstract type OclStereotype conformsTo OclType {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='OCL');
 	/**
 	Return a set of all instances of the stereotype and derived types of self.
+	
+	@Deprecated - retained with broken signature for referential API compatibility.
 	*/
-	static operation allInstances() : Set(OclSelf[*|1]) => 'org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation';
+	operation allInstances(dummy : Integer) : Set(OclSelf[*|1]) => 'org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation';
 }
 
 /**
@@ -1226,18 +1209,6 @@ abstract type OclTuple conformsTo OclAny {
 }
 
 /**
-The type OclType is the implicit supertype of any UML type. Operations defined
-for OclType are therefore applicable to all UML types.
-**/
-abstract type OclType conformsTo OclElement {
-	annotation 'http://www.omg.org/ocl'(ClassGroup='OCL');
-	/**
-	Returns true if type2 conforms to self.
-	*/
-	operation conformsTo(type2 : OclType[?]) : Boolean[1] => 'org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation';
-}
-
-/**
 The type OclVoid is a type that conforms to all other types except OclInvalid.
 It has one single instance, identified as oclText[null], that corresponds with the UML LiteralNull value specification.
 Any property call applied on oclText[null] results in oclText[invalid], except for the
@@ -1252,8 +1223,10 @@ abstract type OclVoid : VoidType conformsTo OclAny {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='OCL');
 	/**
 	Returns oclText[Set{null}].
+	
+	@Deprecated - retained with broken signature for referential API compatibility.
 	*/
-	static operation allInstances() : Set(OclSelf[1|?]) => 'org.eclipse.ocl.pivot.library.oclvoid.OclVoidAllInstancesOperation';
+	operation allInstances(dummy : Integer) : Set(OclSelf[1|?]) => 'org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation';
 	/**
 	Redefines the OclAny operation, returning oclText[true] if object is oclText[null], oclText[invalid]
 	if object is oclText[invalid], oclText[false] otherwise.
@@ -1904,6 +1877,78 @@ type UnlimitedNatural : PrimitiveType conformsTo OclComparable {
 	Converts oclText[self] to an Integer value unless oclText[self] is e[unlimited] in which case oclText[self] is converted to oclText[null].
 	**/
 	operation toInteger() : Integer[?] => 'org.eclipse.ocl.pivot.library.numeric.UnlimitedNaturalToIntegerOperation';
+}
+
+/**
+The type OclType is the implicit supertype of any UML type. Operations defined
+for OclType are therefore applicable to all UML types.
+**/
+abstract type OclType conformsTo OclElement {
+	annotation 'http://www.omg.org/ocl'(ClassGroup='OCL');
+	/**
+	Returns true if type2 conforms to self.
+	*/
+	operation conformsTo(type2 : OclType[?]) : Boolean[1] => 'org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation';
+}
+
+/**
+ The OclEnumeration type is the implicit supertype of any user Enumeration type.
+ FIXME This is probably obsolete now that static / meta-types clarified.
+ **/
+abstract type OclEnumeration conformsTo OclType {
+	annotation 'http://www.omg.org/ocl'(ClassGroup='UML');
+	/**
+	Return a set of all enumeration values of oclText[self].
+	
+	@Deprecated - retained with broken signature for referential API compatibility.
+	*/
+	operation allInstances(dummy : Integer) : Set(OclSelf[1|1]) => 'org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation';
+}
+
+/**
+The standard type Boolean represents the common true/false values.
+Boolean is itself an instance of the metatype PrimitiveType (from UML).
+**/
+type BooleanType {
+	/**
+	Returns oclText[Set{false, true}].
+	*/
+	operation allInstances() : Set(OclSelf[2|1]) => 'org.eclipse.ocl.pivot.library.logical.BooleanAllInstancesOperation';
+}
+type Class {
+	/**
+	Return a set of all instances of the type and derived types of self.
+	*/
+	operation allInstances() : Set(OclSelf[*|1]) => 'org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation';
+}
+/**
+ @Deprecated: Use OclEnumeration
+ The Enumeration type is the type of an OrderedSet of EnumerationLiteral.
+ **/
+type Enumeration conformsTo OclType {
+	annotation 'http://www.omg.org/ocl'(ClassGroup='UML');
+	/**
+	Return a set of all enumeration values of oclText[self].
+	*/
+	operation allInstances() : Set(OclSelf[1|1]) => 'org.eclipse.ocl.pivot.library.enumeration.EnumerationAllInstancesOperation';
+}
+type InvalidType {
+	/**
+	Returns oclText[invalid].
+	*/
+	operation allInstances() : Set(OclSelf) => 'org.eclipse.ocl.pivot.library.oclinvalid.OclInvalidAllInstancesOperation';
+}
+type Stereotype {
+	/**
+	Return a set of all instances of the stereotype and derived types of self.
+	*/
+	operation allInstances() : Set(OclSelf[*|1]) => 'org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation';
+}
+type VoidType {
+	/**
+	Returns oclText[Set{null}].
+	*/
+	operation allInstances() : Set(OclSelf[1|?]) => 'org.eclipse.ocl.pivot.library.oclvoid.OclVoidAllInstancesOperation';
 }
 
 }

@@ -41,11 +41,15 @@ Workflow {
     	javaClassName = "OCLstdlib"
     	libraryName = "oclstdlib"
     	libraryNsPrefix = "oclstdlib"
+    	excludedEClassifierName = "BooleanType"
     	excludedEClassifierName = "Class"
     	excludedEClassifierName = "Enumeration"
     	excludedEClassifierName = "EnumerationLiteral"
+    	excludedEClassifierName = "InvalidType"
     	excludedEClassifierName = "State"
+    	excludedEClassifierName = "Stereotype"
     	excludedEClassifierName = "Type"
+    	excludedEClassifierName = "VoidType"
     }
     component = GenerateModel { oclInstanceSetup = oclInstanceSetup skipOnErrors = true clearResourceSet=false
     	genModel = "/${sourceName}/model/oclstdlib.genmodel"

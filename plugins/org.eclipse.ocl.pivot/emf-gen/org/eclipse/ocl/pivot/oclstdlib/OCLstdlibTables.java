@@ -526,8 +526,8 @@ public class OCLstdlibTables extends AbstractTables
 			5, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanOrOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Boolean__xor = new ExecutorOperation("xor", Parameters._Boolean, Types._Boolean,
 			6, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanXorOperation.INSTANCE);
-		public static final @NonNull ExecutorOperation _Boolean__allInstances = new ExecutorOperation("allInstances", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Boolean,
-			7, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanAllInstancesOperation.INSTANCE);
+		public static final @NonNull ExecutorOperation _Boolean__allInstances = new ExecutorOperation("allInstances", Parameters._Integer, Types._Boolean,
+			7, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Boolean__and2 = new ExecutorOperation("and2", Parameters._Boolean, Types._Boolean,
 			8, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanAndOperation2.INSTANCE);
 		public static final @NonNull ExecutorOperation _Boolean__implies2 = new ExecutorOperation("implies2", Parameters._Boolean, Types._Boolean,
@@ -776,8 +776,8 @@ public class OCLstdlibTables extends AbstractTables
 		public static final @NonNull ExecutorOperation _OclComparable__compareTo = new ExecutorOperation("compareTo", Parameters._OclSelf, Types._OclComparable,
 			4, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclComparableCompareToOperation.INSTANCE);
 
-		public static final @NonNull ExecutorOperation _OclElement__allInstances = new ExecutorOperation("allInstances", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclElement,
-			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
+		public static final @NonNull ExecutorOperation _OclElement__allInstances = new ExecutorOperation("allInstances", Parameters._Integer, Types._OclElement,
+			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _OclElement__oclAsModelType = new ExecutorOperation("oclAsModelType", Parameters._OclElement_oclAsModelType_TT, Types._OclElement,
 			1, TypeUtil.createTemplateParameters(TypeParameters.__OclElement__oclAsModelType_TT), org.eclipse.ocl.pivot.library.oclany.OclElementOclAsModelTypeOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _OclElement__oclContainer = new ExecutorOperation("oclContainer", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclElement,
@@ -791,8 +791,8 @@ public class OCLstdlibTables extends AbstractTables
 		public static final @NonNull ExecutorOperation _OclElement__oclModelTypes = new ExecutorOperation("oclModelTypes", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclElement,
 			6, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclElementOclModelTypesOperation.INSTANCE);
 
-		public static final @NonNull ExecutorOperation _OclEnumeration__allInstances = new ExecutorOperation("allInstances", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclEnumeration,
-			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.enumeration.EnumerationAllInstancesOperation.INSTANCE);
+		public static final @NonNull ExecutorOperation _OclEnumeration__allInstances = new ExecutorOperation("allInstances", Parameters._Integer, Types._OclEnumeration,
+			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
 
 		public static final @NonNull ExecutorOperation _OclInvalid___lt__gt_ = new ExecutorOperation("<>", Parameters._OclSelf, Types._OclInvalid,
 			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
@@ -804,8 +804,8 @@ public class OCLstdlibTables extends AbstractTables
 			3, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _OclInvalid__or = new ExecutorOperation("or", Parameters._Boolean, Types._OclInvalid,
 			4, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanAndOperation.INSTANCE);
-		public static final @NonNull ExecutorOperation _OclInvalid__allInstances = new ExecutorOperation("allInstances", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclInvalid,
-			5, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclinvalid.OclInvalidAllInstancesOperation.INSTANCE);
+		public static final @NonNull ExecutorOperation _OclInvalid__allInstances = new ExecutorOperation("allInstances", Parameters._Integer, Types._OclInvalid,
+			5, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _OclInvalid__oclAsSet = new ExecutorOperation("oclAsSet", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclInvalid,
 			6, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _OclInvalid__oclAsType = new ExecutorOperation("oclAsType", Parameters._OclInvalid_oclAsType_TT, Types._OclInvalid,
@@ -834,8 +834,8 @@ public class OCLstdlibTables extends AbstractTables
 		public static final @NonNull ExecutorOperation _OclMessage__result = new ExecutorOperation("result", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclMessage,
 			3, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
 
-		public static final @NonNull ExecutorOperation _OclStereotype__allInstances = new ExecutorOperation("allInstances", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclStereotype,
-			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
+		public static final @NonNull ExecutorOperation _OclStereotype__allInstances = new ExecutorOperation("allInstances", Parameters._Integer, Types._OclStereotype,
+			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
 
 		public static final @NonNull ExecutorOperation _OclSummable__sum = new ExecutorOperation("sum", Parameters._OclSelf, Types._OclSummable,
 			0, TemplateParameters.EMPTY_LIST, null);
@@ -866,8 +866,8 @@ public class OCLstdlibTables extends AbstractTables
 			6, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclvoid.OclVoidOrOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _OclVoid__xor = new ExecutorOperation("xor", Parameters._Boolean, Types._OclVoid,
 			7, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanXorOperation.INSTANCE);
-		public static final @NonNull ExecutorOperation _OclVoid__allInstances = new ExecutorOperation("allInstances", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclVoid,
-			8, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclvoid.OclVoidAllInstancesOperation.INSTANCE);
+		public static final @NonNull ExecutorOperation _OclVoid__allInstances = new ExecutorOperation("allInstances", Parameters._Integer, Types._OclVoid,
+			8, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _OclVoid__concat = new ExecutorOperation("concat", Parameters._String, Types._OclVoid,
 			9, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringConcatOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _OclVoid__oclAsSet = new ExecutorOperation("oclAsSet", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclVoid,
@@ -1550,7 +1550,7 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._Boolean__not /* _'not'() */,
 			OCLstdlibTables.Operations._Boolean__or /* _'or'(Boolean[?]) */,
 			OCLstdlibTables.Operations._Boolean__xor /* _'xor'(Boolean[?]) */,
-			OCLstdlibTables.Operations._Boolean__allInstances /* allInstances() */,
+			OCLstdlibTables.Operations._Boolean__allInstances /* allInstances(Integer[1]) */,
 			OCLstdlibTables.Operations._Boolean__and2 /* and2(Boolean[1]) */,
 			OCLstdlibTables.Operations._Boolean__implies2 /* implies2(Boolean[1]) */,
 			OCLstdlibTables.Operations._Boolean__not2 /* not2() */,
@@ -1801,7 +1801,7 @@ public class OCLstdlibTables extends AbstractTables
 		};
 
 		private static final @NonNull ExecutorOperation @NonNull [] _OclElement__OclElement = {
-			OCLstdlibTables.Operations._OclElement__allInstances /* allInstances() */,
+			OCLstdlibTables.Operations._OclElement__allInstances /* allInstances(Integer[1]) */,
 			OCLstdlibTables.Operations._OclElement__oclAsModelType /* oclAsModelType(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._OclElement__oclContainer /* oclContainer() */,
 			OCLstdlibTables.Operations._OclElement__oclContents /* oclContents() */,
@@ -1828,7 +1828,7 @@ public class OCLstdlibTables extends AbstractTables
 		};
 
 		private static final @NonNull ExecutorOperation @NonNull [] _OclEnumeration__OclEnumeration = {
-			OCLstdlibTables.Operations._OclEnumeration__allInstances /* allInstances() */
+			OCLstdlibTables.Operations._OclEnumeration__allInstances /* allInstances(Integer[1]) */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _OclEnumeration__OclAny = {
 			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
@@ -1848,7 +1848,7 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._OclAny__toString /* toString() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _OclEnumeration__OclElement = {
-			OCLstdlibTables.Operations._OclEnumeration__allInstances /* allInstances() */,
+			OCLstdlibTables.Operations._OclEnumeration__allInstances /* allInstances(Integer[1]) */,
 			OCLstdlibTables.Operations._OclElement__oclAsModelType /* oclAsModelType(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._OclElement__oclContainer /* oclContainer() */,
 			OCLstdlibTables.Operations._OclElement__oclContents /* oclContents() */,
@@ -1866,7 +1866,7 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._OclInvalid__and /* _'and'(Boolean[?]) */,
 			OCLstdlibTables.Operations._OclInvalid__implies /* _'implies'(Boolean[?]) */,
 			OCLstdlibTables.Operations._OclInvalid__or /* _'or'(Boolean[?]) */,
-			OCLstdlibTables.Operations._OclInvalid__allInstances /* allInstances() */,
+			OCLstdlibTables.Operations._OclInvalid__allInstances /* allInstances(Integer[1]) */,
 			OCLstdlibTables.Operations._OclInvalid__oclAsSet /* oclAsSet() */,
 			OCLstdlibTables.Operations._OclInvalid__oclAsType /* oclAsType(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._OclInvalid__oclBadOperation /* oclBadOperation() */,
@@ -1903,7 +1903,7 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._OclVoid__not /* _'not'() */,
 			OCLstdlibTables.Operations._OclInvalid__or /* _'or'(Boolean[?]) */,
 			OCLstdlibTables.Operations._OclVoid__xor /* _'xor'(Boolean[?]) */,
-			OCLstdlibTables.Operations._OclInvalid__allInstances /* allInstances() */,
+			OCLstdlibTables.Operations._OclInvalid__allInstances /* allInstances(Integer[1]) */,
 			OCLstdlibTables.Operations._OclVoid__concat /* concat(String[?]) */,
 			OCLstdlibTables.Operations._OclInvalid__oclAsSet /* oclAsSet() */,
 			OCLstdlibTables.Operations._OclInvalid__oclAsType /* oclAsType(TT)(TT[1]) */,
@@ -1998,7 +1998,7 @@ public class OCLstdlibTables extends AbstractTables
 		};
 
 		private static final @NonNull ExecutorOperation @NonNull [] _OclStereotype__OclStereotype = {
-			OCLstdlibTables.Operations._OclStereotype__allInstances /* allInstances() */
+			OCLstdlibTables.Operations._OclStereotype__allInstances /* allInstances(Integer[1]) */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _OclStereotype__OclAny = {
 			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
@@ -2018,7 +2018,7 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._OclAny__toString /* toString() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _OclStereotype__OclElement = {
-			OCLstdlibTables.Operations._OclStereotype__allInstances /* allInstances() */,
+			OCLstdlibTables.Operations._OclStereotype__allInstances /* allInstances(Integer[1]) */,
 			OCLstdlibTables.Operations._OclElement__oclAsModelType /* oclAsModelType(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._OclElement__oclContainer /* oclContainer() */,
 			OCLstdlibTables.Operations._OclElement__oclContents /* oclContents() */,
@@ -2095,7 +2095,7 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._OclAny__toString /* toString() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _OclType__OclElement = {
-			OCLstdlibTables.Operations._OclElement__allInstances /* allInstances() */,
+			OCLstdlibTables.Operations._OclElement__allInstances /* allInstances(Integer[1]) */,
 			OCLstdlibTables.Operations._OclElement__oclAsModelType /* oclAsModelType(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._OclElement__oclContainer /* oclContainer() */,
 			OCLstdlibTables.Operations._OclElement__oclContents /* oclContents() */,
@@ -2113,7 +2113,7 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.Operations._OclVoid__not /* _'not'() */,
 			OCLstdlibTables.Operations._OclVoid__or /* _'or'(Boolean[?]) */,
 			OCLstdlibTables.Operations._OclVoid__xor /* _'xor'(Boolean[?]) */,
-			OCLstdlibTables.Operations._OclVoid__allInstances /* allInstances() */,
+			OCLstdlibTables.Operations._OclVoid__allInstances /* allInstances(Integer[1]) */,
 			OCLstdlibTables.Operations._OclVoid__concat /* concat(String[?]) */,
 			OCLstdlibTables.Operations._OclVoid__oclAsSet /* oclAsSet() */,
 			OCLstdlibTables.Operations._OclVoid__oclAsType /* oclAsType(TT)(TT[1]) */,
