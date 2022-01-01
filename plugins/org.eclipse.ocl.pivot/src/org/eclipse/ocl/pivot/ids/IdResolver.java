@@ -162,7 +162,7 @@ public interface IdResolver extends IdVisitor<Element>
 	@NonNull Type getType(@NonNull TypeId typeId);
 
 	@Deprecated /* @deprecated omit redundant context argument */
-	@NonNull Type getType(@NonNull TypeId typeId, @Nullable Object context);
+	@NonNull Type/*Class*/ getType(@NonNull TypeId typeId, @Nullable Object/*Type*/ context);
 
 	boolean oclEquals(@Nullable Object thisValue, @Nullable Object thatValue);
 

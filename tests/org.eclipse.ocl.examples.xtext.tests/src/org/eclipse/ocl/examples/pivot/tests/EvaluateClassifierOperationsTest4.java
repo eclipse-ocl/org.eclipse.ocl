@@ -116,23 +116,51 @@ public class EvaluateClassifierOperationsTest4 extends PivotTestSuite
 		MetamodelManager metamodelManager = ocl.getMetamodelManager();
 		try {
 			org.eclipse.ocl.pivot.Class classType = metamodelManager.getStandardLibrary().getClassType();
-			ocl.assertQueryResults(null, "Set{CollectionKind::Bag,CollectionKind::Collection,CollectionKind::_'OrderedSet',CollectionKind::_'Sequence',CollectionKind::_'Set'}", "CollectionKind.allInstances()");
+			//
 			ocl.assertQueryResults(null, "Set{true,false}", "Boolean.allInstances()");
+			ocl.assertQueryResults(null, "Set{true,false}", "true.oclType().allInstances()");
+			ocl.assertSemanticErrorQuery(null, "true.allInstances()", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Boolean", "allInstances", "");
+			//
+			ocl.assertQueryResults(null, "Set{}", "Integer.allInstances()");
+			ocl.assertQueryResults(null, "Set{}", "4.oclType().allInstances()");
+			ocl.assertSemanticErrorQuery(null, "4.allInstances()", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Integer", "allInstances", "");
+			//
+			ocl.assertQueryResults(null, "Set{}", "String.allInstances()");
+			ocl.assertQueryResults(null, "Set{}", "''.oclType().allInstances()");
+			ocl.assertSemanticErrorQuery(null, "''.allInstances()", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "String", "allInstances", "");
+			//
+			ocl.assertQueryResults(null, "Set{}", "OclAny.allInstances()");
+			//
 			ocl.assertQueryResults(null, "Set{null}", "OclVoid.allInstances()");
+			ocl.assertQueryResults(null, "Set{null}", "null.oclType().allInstances()");
+			ocl.assertSemanticErrorQuery(null, "null.allInstances()", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "OclVoid", "allInstances", "");
+			//
+			ocl.assertQueryInvalid(null, "OclInvalid.allInstances()");
+			ocl.assertQueryInvalid(null, "invalid.oclType().allInstances()");
+			ocl.assertSemanticErrorQuery(null, "invalid.allInstances()", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "OclInvalid", "allInstances", "");
+			//
+			ocl.assertQueryResults(null, "Set{CollectionKind::Bag,CollectionKind::Collection,CollectionKind::_'OrderedSet',CollectionKind::_'Sequence',CollectionKind::_'Set'}", "CollectionKind.allInstances()");
+			ocl.assertQueryResults(null, "Set{CollectionKind::Bag,CollectionKind::Collection,CollectionKind::_'OrderedSet',CollectionKind::_'Sequence',CollectionKind::_'Set'}", "CollectionKind::_'Set'.oclType().allInstances()");
+			ocl.assertSemanticErrorQuery(null, "CollectionKind::_'Set'.allInstances()", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "CollectionKind", "allInstances", "");
+			//
 			ocl.assertQueryResults(null, "Set{}", "ocl::Package.allInstances()");
 			ocl.assertQueryEquals(ocl.pkg1, 8, "Package.allInstances()->size()");
-			ocl.assertSemanticErrorQuery(classType, "Integer.allInstances()", PivotMessagesInternal.UnresolvedStaticOperationCall_ERROR_, "Integer", "allInstances", "");
-			ocl.assertSemanticErrorQuery(classType, "String.allInstances()", PivotMessagesInternal.UnresolvedStaticOperationCall_ERROR_, "String", "allInstances", "");
-			ocl.assertSemanticErrorQuery(classType, "Set(Integer).allInstances()", PivotMessagesInternal.UnresolvedStaticOperationCall_ERROR_, "Set(Integer)", "allInstances", "");
-			ocl.assertSemanticErrorQuery(classType, "Tuple(a:Integer).allInstances()", PivotMessagesInternal.UnresolvedStaticOperationCall_ERROR_, "Tuple(a:Integer[1])", "allInstances", "");
-			ocl.assertSemanticErrorQuery(classType, "OclAny.allInstances()", PivotMessagesInternal.UnresolvedStaticOperationCall_ERROR_, "OclAny", "allInstances", "");
-			ocl.assertSemanticErrorQuery(classType, "4.allInstances()", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Integer", "allInstances", "");
-			ocl.assertSemanticErrorQuery(classType, "true.allInstances()", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Boolean", "allInstances", "");
-			//		ocl.assertQueryInvalid(null, "true.allInstances()");
-			//		ocl.assertQueryResults(null, "Set{true,false}", "true.allInstances()");
-			ocl.assertSemanticErrorQuery(classType, "Set{1}.allInstances()", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Set(Integer)", "allInstances", "");
+			//
+			ocl.assertQueryResults(null, "Set{}", "Set(Integer).allInstances()");
+			ocl.assertQueryResults(null, "Set{}", "Set{1}->oclType().allInstances()");
+			ocl.assertQueryResults(null, "Bag{}", "Set{1}.oclType().allInstances()");
+			ocl.assertSemanticErrorQuery(classType, "Set{1}->allInstances()", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Set(Integer)", "allInstances", "");
+			ocl.assertSemanticErrorQuery(classType, "Set{1}.allInstances()", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Integer", "allInstances", "");
+			//
+			ocl.assertQueryResults(null, "Set{}", "Map(Integer,String).allInstances()");
+			ocl.assertQueryResults(null, "Set{}", "Map{1 with '1'}->oclType().allInstances()");
+			ocl.assertQueryResults(null, "Bag{}", "Map{1 with '1'}.oclType().allInstances()");
+			ocl.assertSemanticErrorQuery(classType, "Map{1 with '1'}->allInstances()", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Map(Integer[1],String[1])", "allInstances", "");
+			ocl.assertSemanticErrorQuery(classType, "Map{1 with '1'}.allInstances()", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Integer", "allInstances", "");
+			//
+			ocl.assertQueryResults(null, "Set{}", "Tuple(a:Integer).allInstances()");
+			ocl.assertQueryResults(null, "Set{}", "Tuple(a:Integer).oclType().allInstances()");
 			ocl.assertSemanticErrorQuery(classType, "Tuple{a:Integer=1}.allInstances()", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Tuple(a:Integer[1])", "allInstances", "");
-			ocl.assertQueryInvalid(null, "OclInvalid.allInstances()");
 		} finally {
 			ocl.dispose();
 		}

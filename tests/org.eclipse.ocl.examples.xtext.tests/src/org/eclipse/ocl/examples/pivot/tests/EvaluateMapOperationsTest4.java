@@ -16,10 +16,12 @@ import java.util.Collection;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.xtext.essentialocl.cs2as.EssentialOCLCS2ASMessages;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -547,10 +549,10 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryResults(null, "Map{'a' with true, 'b' with false}", "Map{'a' with true, 'b' with true}->including('b', false)");
 		ocl.assertQueryResults(null, "Map{'a' with true, 'b' with 'c'}", "Map{'a' with true, 'b' with true}->including('b', 'c')");
 		ocl.assertQueryResults(null, "Map{'a' with true, 'b' with true, true with 'c'}", "Map{'a' with true, 'b' with true}->including(true, 'c')");
-		ocl.assertQueryEquals(null, standardLibrary.getStringType(), "Map{'a' with true, 'b' with true}->including('b', false).oclType().keyType");
-		ocl.assertQueryEquals(null, standardLibrary.getBooleanType(), "Map{'a' with true, 'b' with true}->including('b', false).oclType().valueType");
-		ocl.assertQueryEquals(null, standardLibrary.getOclAnyType(), "Map{'a' with true, 'b' with true}->including('b', 'c').oclType().valueType");
-		ocl.assertQueryEquals(null, standardLibrary.getOclAnyType(), "Map{'a' with true, 'b' with true}->including(true, 'c').oclType().keyType");
+		ocl.assertQueryEquals(null, standardLibrary.getStringType(), "Map{'a' with true, 'b' with true}->including('b', false)->oclType().keyType");
+		ocl.assertQueryEquals(null, standardLibrary.getBooleanType(), "Map{'a' with true, 'b' with true}->including('b', false)->oclType().valueType");
+		ocl.assertQueryEquals(null, standardLibrary.getOclAnyType(), "Map{'a' with true, 'b' with true}->including('b', 'c')->oclType().valueType");
+		ocl.assertQueryEquals(null, standardLibrary.getOclAnyType(), "Map{'a' with true, 'b' with true}->including(true, 'c')->oclType().keyType");
 
 		// invalid map
 		ocl.assertQueryInvalid(null, "let m : Map(String, Integer) = invalid in m->including('a', null)");
@@ -587,14 +589,34 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 	@Test public void testMapKeyType() {
 		TestOCL ocl = createOCL();
 		StandardLibrary standardLibrary = ocl.getStandardLibrary();
-		ocl.assertQueryEquals(null, standardLibrary.getStringType(), "Map{'1' with true}->oclType().keyType");
-		ocl.assertQueryEquals(null, standardLibrary.getOclAnyType(), "Map{1 with true, 2.0 with true, '3' with true}->oclType().keyType");
-		ocl.assertQueryEquals(null, standardLibrary.getIntegerType(), "Map{1 with true, 2 with true, 3 with true}->oclType().keyType");
-		ocl.assertQueryEquals(null, standardLibrary.getIntegerType(), "Map{1 with true, 2 with true, 3 with true}->oclAsType(Map(Real, Boolean))->oclType().keyType");
-		// FIXME fails because common type is Set(T) and then because T is not type-servable and has no OclAny inheritance
-		//		ocl.assertQueryEquals(null, metamodelManager.getSetType(), "Sequence{Set{1}, Set{2.0}, Set{'3'}}->elementType");
-		// FIXME fails because common type is inadequate for implicit collect
-		//				ocl.assertQueryEquals(null, metamodelManager.getOclAnyType(), "Sequence{Set{1}, Set{2.0}, Set{'3'}}.elementType");
+		org.eclipse.ocl.pivot.Class integerType = standardLibrary.getIntegerType();
+		org.eclipse.ocl.pivot.Class oclAnyType = standardLibrary.getOclAnyType();
+		org.eclipse.ocl.pivot.Class stringType = standardLibrary.getStringType();
+//
+		ocl.assertQueryEquals(null, stringType, "Map{'1' with true}->keyType");
+		ocl.assertQueryEquals(null, stringType, "Map{'1' with true}->_'Map'::keyType");
+		ocl.assertSemanticErrorQuery(null, "Map{'1' with true}->MapType::keyType", EssentialOCLCS2ASMessages.PropertyCallExp_IncompatibleProperty, "pivot::MapType::keyType");
+//
+		ocl.assertSemanticErrorQuery(null, "Map{'1' with true}.keyType", PivotMessagesInternal.UnresolvedProperty_ERROR_, "String", "keyType");
+		ocl.assertSemanticErrorQuery(null, "Map{'1' with true}.MapType::keyType", EssentialOCLCS2ASMessages.PropertyCallExp_IncompatibleProperty, "pivot::MapType::keyType");
+		ocl.assertSemanticErrorQuery(null, "Map{'1' with true}._'Map'::keyType", EssentialOCLCS2ASMessages.PropertyCallExp_IncompatibleProperty, "Map(K,V)::keyType");
+//
+		ocl.assertQueryEquals(null, stringType, "Map{'1' with true}->oclType().keyType");
+		ocl.assertQueryEquals(null, stringType, "Map{'1' with true}->oclType().MapType::keyType");
+		ocl.assertSemanticErrorQuery(null, "Map{'1' with true}->oclType()._'Map'::keyType", EssentialOCLCS2ASMessages.PropertyCallExp_IncompatibleProperty, "Map(K,V)::keyType");
+//
+		ocl.assertQueryEquals(null, stringType, "Map{'1' with true}->oclType().keyType");
+		ocl.assertQueryEquals(null, stringType, "Map{'1' with true}->oclType().MapType::keyType");
+		ocl.assertSemanticErrorQuery(null, "Map{'1' with true}->oclType()._'Map'::keyType", EssentialOCLCS2ASMessages.PropertyCallExp_IncompatibleProperty, "Map(K,V)::keyType");
+//
+		ocl.assertSemanticErrorQuery(null, "Map{'1' with true}.oclType().keyType", PivotMessagesInternal.UnresolvedProperty_ERROR_, "PrimitiveType", "keyType");
+		ocl.assertSemanticErrorQuery(null, "Map{'1' with true}.oclType().MapType::keyType", EssentialOCLCS2ASMessages.PropertyCallExp_IncompatibleProperty, "pivot::MapType::keyType");
+		ocl.assertSemanticErrorQuery(null, "Map{'1' with true}.oclType()._'Map'::keyType", EssentialOCLCS2ASMessages.PropertyCallExp_IncompatibleProperty, "Map(K,V)::keyType");
+//
+		ocl.assertQueryEquals(null, oclAnyType, "Map{1 with true, 2.0 with true, '3' with true}->oclType().keyType");
+		ocl.assertQueryEquals(null, integerType, "Map{1 with true, 2 with true, 3 with true}->oclType().keyType");
+		ocl.assertQueryEquals(null, integerType, "Map{1 with true, 2 with true, 3 with true}->oclAsType(Map(Real, Boolean))->oclType().keyType");
+		ocl.assertSemanticErrorQuery(null, "Map{'1' with true}->MapType::size()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Map(String[1],Boolean[1])", "size");
 	}
 
 	@Test public void testMapKeys() {
@@ -715,6 +737,9 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 		TestOCL ocl = createOCL();
 		ocl.assertQueryEquals(null, 0, "Map{}->size()");
 		ocl.assertQueryEquals(null, 1, "Map{'a' with 'b'}->size()");
+		ocl.assertQueryEquals(null, 1, "Map{'1' with true}->size()");
+		ocl.assertQueryEquals(null, 1, "Map{'1' with true}->_'Map'::size()");
+		ocl.assertSemanticErrorQuery(null, "Map{'1' with true}->MapType::size()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Map(String[1],Boolean[1])", "size");
 		ocl.dispose();
 	}
 
@@ -725,10 +750,6 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(null, standardLibrary.getOclAnyType(), "Map{'1' with 1, '2' with 2.0, '3' with '3'}->oclType().valueType");
 		ocl.assertQueryEquals(null, standardLibrary.getIntegerType(), "Map{'1' with 1, '2' with 2, '3' with 3}->oclType().valueType");
 		ocl.assertQueryEquals(null, standardLibrary.getIntegerType(), "Map{'1' with 1, '2' with 2, '3' with 3}->oclAsType(Map(String, Real))->oclType().valueType");
-		// FIXME fails because common type is Set(T) and then because T is not type-servable and has no OclAny inheritance
-		//		ocl.assertQueryEquals(null, metamodelManager.getSetType(), "Sequence{Set{1}, Set{2.0}, Set{'3'}}->valueType");
-		// FIXME fails because common type is inadequate for implicit collect
-		//				ocl.assertQueryEquals(null, metamodelManager.getOclAnyType(), "Sequence{Set{1}, Set{2.0}, Set{'3'}}.valueType");
 	}
 
 	@Test public void testMapValues() {

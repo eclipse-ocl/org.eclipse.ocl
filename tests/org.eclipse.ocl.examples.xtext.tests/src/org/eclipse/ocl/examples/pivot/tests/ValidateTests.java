@@ -420,8 +420,6 @@ public class ValidateTests extends AbstractValidateTests
 		try {
 			EObject testInstance = eCreate(validatePackage, "MyNumber");
 			checkValidationDiagnostics(testInstance, Diagnostic.WARNING);
-			ocl.assertQueryTrue(testInstance, "isPrimeNumber(17)");
-// XXX
 			ocl.assertQueryFalse(testInstance, "isPrimeNumber(0)");
 			ocl.assertQueryTrue(testInstance, "isPrimeNumber(1)");
 			ocl.assertQueryTrue(testInstance, "isPrimeNumber(2)");

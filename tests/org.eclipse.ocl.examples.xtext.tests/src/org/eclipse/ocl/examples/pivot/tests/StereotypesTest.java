@@ -240,11 +240,10 @@ public class StereotypesTest extends PivotTestSuite
 	 */
 	public void test_stereotypeM1Navigation() throws Exception {
 		MyOCL ocl = createOCL();
-		//		ocl.assertValidQuery(ocl.mm.englishClass, "self.oclType().extension_Internationalized");
-		//		ocl.assertValidQuery(ocl.mm.englishClass, "self.extension_Internationalized");
-		ocl.assertSemanticErrorQuery(ocl.mm.asEnglishClass, "self.extension_InEnglish", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Model::EnglishClass", "extension_InEnglish");
-		ocl.assertValidQuery(ocl.mm.asEnglishClass, "self.oclType().extension_Internationalized");
-		//		ocl.assertValidQuery(ocl.mm.englishClass, "self.oclType().extension_InEnglish");
+		ocl.assertValidQuery(ocl.mm.asEnglishClass, "self.extension_Internationalized");				// M1 - navigate reification of Extension
+		ocl.assertValidQuery(ocl.mm.asEnglishClass, "self.oclType().extension_Internationalized");		// M2 - navigate Extension
+		ocl.assertSemanticErrorQuery(ocl.mm.asEnglishClass, "self.extension_InEnglish",					// M1 - there is no derived reification
+			PivotMessagesInternal.UnresolvedProperty_ERROR_, "Model::EnglishClass", "extension_InEnglish");
 		ocl.assertValidQuery(ocl.mm.asEnglishClass, "self.extension_Internationalized.base_Class");
 		ocl.assertSemanticErrorQuery(ocl.mm.asEnglishClass, "self.extension_InGerman", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Model::EnglishClass", "extension_InGerman");
 		//xx		ocl.assertValidQuery(ocl.mm.englishClassInEnglish, "self.base_Class");

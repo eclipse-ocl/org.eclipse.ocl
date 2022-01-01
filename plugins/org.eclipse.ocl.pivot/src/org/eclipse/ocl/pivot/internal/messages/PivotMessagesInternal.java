@@ -22,7 +22,7 @@ public class PivotMessagesInternal
 	static {
 		NLS.initializeMessages(PivotMessagesInternal.class.getName(), PivotMessagesInternal.class);
 	}
-	
+
 	public static String ErrorsInResource;
 	public static String ErrorsInURI;
 	public static String WarningsInURI;
@@ -30,7 +30,7 @@ public class PivotMessagesInternal
 
 	public static String no_message;
     public static String Input_ERROR_;
-    
+
     public static String EnvRegistry_missingClass_ERROR_;
     public static String EnvRegistry_missingNsURI_ERROR_;
     public static String EnvRegistry_unknownElement_ERROR_;
@@ -38,7 +38,7 @@ public class PivotMessagesInternal
 	public static String InvalidSpecificationBody_ERROR_;
 	public static String MissingSpecification_ERROR_;
 	public static String MissingSpecificationBody_ERROR_;
-    
+
 	public static String BindingExist_ERROR_;
 	public static String UnknownOperation_ERROR_;
 	public static String IteratorNotImpl_ERROR_;
@@ -93,33 +93,33 @@ public class PivotMessagesInternal
 	public static String MissingTypeInTupleLiteralPart_ERROR_;
 	public static String TuplePartType_ERROR_;
 	public static String TypeConformanceTuplePartValue_ERROR_;
-	
+
 	public static String TypeConformanceTypeExp_ERROR_;
 	public static String TypeExpMissingType_ERROR_;
-	
+
 	public static String IllegalSignature_ERROR_;
 	public static String IteratorSource_ERROR_;
 	public static String IterateExpLoopVarInit_ERROR_;
 	public static String TooManyIteratorVariables_ERROR_;
-    
+
 	public static String IncompleteVariableExp_ERROR_;
 	public static String IncompleteLetExp_ERROR_;
 	public static String IncompleteIterateExp_ERROR_;
 	public static String IncompleteIfExp_ERROR_;
 	public static String IncompleteIteratorExp_ERROR_;
 	public static String MissingInitIterateExp_ERROR_;
-	
+
 	public static String ErrorMessage_ERROR_;
 	public static String ProblemMessage_ERROR_;
-	
-	
+
+
 	public static String VariableUsed_ERROR_;
 	public static String VariableDeclaration_ERROR_;
 	public static String BadArg_ERROR_;
 	public static String PackageNotFound_ERROR_;
 	public static String UnrecognizedContext_ERROR_;
 	public static String PropertyConstraints_ERROR_;
-	
+
 	public static String BooleanForIf_ERROR_;
 	public static String VarInNavExp_ERROR_;
 	public static String UnrecognizedVar_ERROR_;
@@ -127,18 +127,18 @@ public class PivotMessagesInternal
 	public static String DeclarationNoInitExp_ERROR_;
 	public static String DeclarationInitExp_ERROR_;
 	public static String UnrecognizedType_ERROR_;
-	
+
 	public static String DuplicateNameInTuple_ERROR_;
 	public static String InitExpNotAllowed_ERROR_;
 	public static String UnrecognizedEnum_ERROR_;
 	public static String FirstLastTypeMismatch_ERROR_;
-	
+
 	public static String NullArgExpectEObj_ERROR_;
 	public static String NullArgExpectlist_ERROR_;
 	public static String BooleanQuery_ERROR_;
-	
+
 	public static String EvaluationFailed_ERROR_;
-	
+
 	public static String Noncomforming_ERROR_;
 	public static String SourceEClass_ERROR_;
 	public static String SourceOperationCompareTo_ERROR_;
@@ -154,7 +154,7 @@ public class PivotMessagesInternal
 	public static String TupleFieldNumMismatch_ERROR_;
 	public static String RemoveUnsupported_ERROR_;
 	public static String OCLCollectionKindNotImpl_ERROR_;
-	
+
 	public static String IsInStateSignature_ERROR_;
 	public static String NoSuchState_ERROR_;
 	public static String AmbiguousState_ERROR_;
@@ -167,7 +167,7 @@ public class PivotMessagesInternal
 	public static String MissingSignalInCallAction_ERROR_;
 	public static String MessageArgumentCount_ERROR_;
 	public static String MessageArgConformance_ERROR_;
-	
+
 	public static String DefinitionConstraintFeature_ERROR_;
 	public static String DefinitionConstraintConformance_ERROR_;
 	public static String DuplicateProperty_ERROR_;
@@ -175,7 +175,7 @@ public class PivotMessagesInternal
 	public static String UnimplementedStatic_ERROR_;
 	public static String DuplicateOperation_ERROR_;
 	public static String InitOrDerConstraintConformance_ERROR_;
-	
+
 	public static String IllegalAtPre_ERROR_;
 	public static String AtPreInPostcondition_ERROR_;
 	public static String BodyConditionNotAllowed_ERROR_;
@@ -187,7 +187,7 @@ public class PivotMessagesInternal
 	public static String AssociationClassQualifierCount_ERROR_;
 	public static String AssociationClassQualifierType_ERROR_;
 	public static String AssociationClassAmbiguous_ERROR_;
-	
+
 	public static String WrongContextClassifier_ERROR_;
 	public static String BodyConditionForm_ERROR_;
 	public static String OperationConstraintBoolean_ERROR_;
@@ -201,44 +201,44 @@ public class PivotMessagesInternal
     public static String MismatchedResultVariable_ERROR_;
     public static String MissingResultVariable_ERROR_;
     public static String MissingBodyExpression_ERROR_;
-    
+
     public static String NonStaticAttribute_ERROR_;
     public static String NonStaticOperation_ERROR_;
-    
+
 	public static String InvalidOCL_ERROR_;
-	
+
 	public static String NonStd_DQuote_Escape_;
 	public static String NonStd_SQuote_Escape_;
     public static String NonStd_Operation_;
     public static String NonStd_Iterator_;
     public static String NonStd_InheritedFeatureContext_;
     public static String NonStd_CompareTo_;
-    
+
     public static String Ambig_AssocEnd_;
-    
+
     public static String StringNotProperlyClosed_ERROR;
     public static String InvalidEscapeSequence_ERROR;
-    
+
     public static String XorOrAndPrecedence_WARNING;
-	
-	public static String EvaluationResultIsInvalid_ERROR_;	
-	public static String MissingBodyForInvocationDelegate_ERROR_;	
+
+	public static String EvaluationResultIsInvalid_ERROR_;
+	public static String MissingBodyForInvocationDelegate_ERROR_;
 	public static String MissingDerivationForSettingDelegate_ERROR_;
-	
+
 	public static String ValidationConstraintException_ERROR_;
 	public static String ValidationConstraintIsNotBooleanType_ERROR_;
 	public static String ValidationConstraintIsInvalid_ERROR_;
 	public static String ValidationMessageException_ERROR_;
 	public static String ValidationMessageIsNotString_ERROR_;
-	public static String ValidationResultIsInvalid_ERROR_;	
-	public static String ValidationResultIsNull_ERROR_;	
+	public static String ValidationResultIsInvalid_ERROR_;
+	public static String ValidationResultIsNull_ERROR_;
 //	public static String ValidationResultIsNotBoolean_ERROR_;
-	
+
 	public static String HiddenOppositeOf;
 
 	public static String NoOperationReflection_WARNING_;
 	public static String ExtraArg_ERROR_;
-	
+
 	// above this line messages migrated from non-Pivot
 	//-----------------------------------------------------------
 	// below this line alphabetical messages known to be used for Pivot
@@ -256,11 +256,13 @@ public class PivotMessagesInternal
 	public static String UnresolvedOperation_ERROR_;
 	public static String UnresolvedOperationCall_ERROR_;
 	public static String UnresolvedProperty_ERROR_;
+	@Deprecated /* @deprecated ststic distinction eleminated */
 	public static String UnresolvedStaticOperationCall_ERROR_;
+	@Deprecated /* @deprecated ststic distinction eleminated */
 	public static String UnresolvedStaticProperty_ERROR_;
 	public static String UnresolvedType_ERROR_;
 	public static String Unresolved_ERROR_;
 	public static String UnstableXMIid_ERROR_;
-	
+
 	public static String FailedToEvaluate_ERROR_;
 }

@@ -1084,7 +1084,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOfValue(@Nullable Type contextType, @Nullable Object value) {
-		//	assert !(value instanceof TypeId) : "Use getType...) directly";		// XXX
+	//	assert !(value instanceof TypeId) : "Use getType...) directly";		// Only EnumerationLiteralId occurs
 		if (value instanceof Enumeration) {
 			return standardLibrary.getEnumerationType();
 		}

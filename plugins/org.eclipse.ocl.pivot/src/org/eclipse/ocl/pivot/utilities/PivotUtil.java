@@ -227,21 +227,15 @@ public class PivotUtil
 	 * @since 1.7
 	 */
 	public static @Nullable Executor basicGetExecutor(@NonNull EObject eObject, @Nullable  Map<Object, Object> validationContext) {
-	//	if (validationContext != null) {
-		//	Executor executor = (Executor) validationContext.get(Executor.class);
-			Executor executor = ThreadLocalExecutor.basicGetExecutor();			// XXX
-			if (executor != null) {
-				return executor;
-			}
-	//	}
+		Executor executor = ThreadLocalExecutor.basicGetExecutor();
+		if (executor != null) {
+			return executor;
+		}
 		Resource asResource = eObject.eResource();
 		if (asResource != null) {
 			EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 			if ((environmentFactory != null) && !environmentFactory.isDisposed()) {
 				executor = PivotExecutorManager.createAdapter(environmentFactory, eObject);
-			//	if (validationContext != null) {
-			//		validationContext.put(Executor.class, executor);
-			//	}
 				if (executor != null) {
 					ThreadLocalExecutor.setExecutor(executor);
 				}

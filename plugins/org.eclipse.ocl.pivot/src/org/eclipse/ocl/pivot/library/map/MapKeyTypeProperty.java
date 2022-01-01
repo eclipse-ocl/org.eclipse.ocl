@@ -16,9 +16,12 @@ import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.ids.IdResolver;
+import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.AbstractProperty;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.values.MapValue;
 
 /**
  * MapKeyTypeProperty realizes the Map::keyType library property.
@@ -26,12 +29,12 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 public class MapKeyTypeProperty extends AbstractProperty
 {
 	public static final @NonNull MapKeyTypeProperty INSTANCE = new MapKeyTypeProperty();
-	
+
 	/** @deprecated use Executor */
 	@Deprecated
 	@Override
 	public @Nullable Type evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
-		return evaluate(getExecutor(evaluator), returnTypeId, sourceValue); 
+		return evaluate(getExecutor(evaluator), returnTypeId, sourceValue);
 	}
 
 	/**
@@ -39,7 +42,14 @@ public class MapKeyTypeProperty extends AbstractProperty
 	 */
 	@Override
 	public @NonNull Type evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
-		MapType sourceType = asMapType(sourceValue);
-		return ClassUtil.nonNullModel(sourceType.getKeyType());
+		if (sourceValue instanceof MapType) {				// Legacy compatibility.
+		//	assert false: "Use MapType.getKeyType() directly";
+			return PivotUtil.getKeyType((MapType) sourceValue);
+		}
+		MapValue mapValue = asMapValue(sourceValue);
+		MapTypeId mapTypeId = mapValue.getTypeId();
+		TypeId keyTypeId = mapTypeId.getKeyTypeId();
+		IdResolver idResolver = executor.getIdResolver();
+		return idResolver.getType(keyTypeId);
 	}
 }

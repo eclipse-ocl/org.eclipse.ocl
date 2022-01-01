@@ -296,12 +296,9 @@ public class OCLValidationDelegate implements ValidationDelegate
 				return Boolean.FALSE;
 			}
 		};
-	//	OCL ocl = delegateDomain.getOCL();
 		EnvironmentFactory environmentFactory = PivotUtilInternal.getEnvironmentFactory(value);
-	//	Executor executor = (Executor)context.get(Executor.class);
-		Executor executor = ThreadLocalExecutor.basicGetExecutor();			// XXX
+		Executor executor = ThreadLocalExecutor.basicGetExecutor();
 		ModelManager modelManager = executor != null ? executor.getModelManager() : null;
-	//	EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
 		EvaluationVisitor evaluationVisitor = environmentFactory.createEvaluationVisitor(value, query, modelManager);
 		return constraintEvaluator.evaluate(evaluationVisitor);
 	}
@@ -314,11 +311,6 @@ public class OCLValidationDelegate implements ValidationDelegate
 			if (executor != null) {
 				metamodelManager = executor.getMetamodelManager();
 			}
-			//	ModelManager modelManager = (ModelManager) context.get(ModelManager.class);
-			//	if (modelManager == null) {
-			//		modelManager = metamodelManager.getEnvironmentFactory().createModelManager(value);
-			//		context.put(ModelManager.class, modelManager);
-			//	}
 		}
 		if (metamodelManager == null) {
 			metamodelManager = delegateDomain.getMetamodelManager();

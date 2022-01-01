@@ -108,7 +108,7 @@ public abstract class AbstractValidateTests extends PivotTestCaseWithAutoTearDow
 		assertNoResourceErrors("Load failed", xtextResource);
 		ASResource asResource = xtextResource.getASResource();
 		assertNoUnresolvedProxies("Unresolved proxies", xtextResource);
-// XXX		assertNoValidationErrors("Pivot validation errors", asResource.getModel());
+		assertNoValidationErrors("Pivot validation errors", asResource.getModel());
 		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
 		Resource ecoreResource = as2ecore(environmentFactory, asResource, ecoreURI, NO_MESSAGES);
 		return ecoreResource;

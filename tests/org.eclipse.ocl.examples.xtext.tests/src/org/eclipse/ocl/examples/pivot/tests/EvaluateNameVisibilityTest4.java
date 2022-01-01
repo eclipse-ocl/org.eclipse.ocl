@@ -53,6 +53,7 @@ import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.xtext.essentialocl.cs2as.EssentialOCLCS2ASMessages;
 import org.eclipse.ocl.xtext.oclinecore.OCLinEcoreStandaloneSetup;
 import org.eclipse.osgi.util.NLS;
 import org.junit.After;
@@ -120,12 +121,12 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		ocl.assertSemanticErrorQuery(null, "let a : Type = null in a.Package", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Type", "Package");
 		ocl.assertQueryNull(null, "let a : Type = null in a?.isClass()");
 		ocl.assertSemanticErrorQuery(null, "let a : Type = null in a.Package()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Type", "Package");
-		ocl.assertSemanticErrorQuery(null, "let a : Set(Type) = null in a.Package", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Set(Type)", "Package");
-		ocl.assertSemanticErrorQuery(null, "let a : Set(Type) = null in a.Package()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Set(Type)", "Package");
-		ocl.assertSemanticErrorQuery(null, "Type.Package", PivotMessagesInternal.UnresolvedStaticProperty_ERROR_, "Type", "Package");
-		ocl.assertSemanticErrorQuery(null, "Type.Package()", PivotMessagesInternal.UnresolvedStaticOperationCall_ERROR_, "Type", "Package", "");
-		ocl.assertSemanticErrorQuery(null, "Set(Type).Package", PivotMessagesInternal.UnresolvedStaticProperty_ERROR_, "Set(Type)", "Package");
-		ocl.assertSemanticErrorQuery(null, "Set(Type).Package()", PivotMessagesInternal.UnresolvedStaticOperationCall_ERROR_, "Set(Type)", "Package", "");
+		ocl.assertSemanticErrorQuery(null, "let a : Set(Type) = null in a.Package", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Type", "Package");
+		ocl.assertSemanticErrorQuery(null, "let a : Set(Type) = null in a.Package()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Type", "Package");
+		ocl.assertSemanticErrorQuery(null, "Type.Package", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Type", "Package");
+		ocl.assertSemanticErrorQuery(null, "Type.Package()", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Type", "Package", "");
+		ocl.assertSemanticErrorQuery(null, "Set(Type).Package", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Set(Type)", "Package");
+		ocl.assertSemanticErrorQuery(null, "Set(Type).Package()", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Set(Type)", "Package", "");
 		ocl.assertSemanticErrorQuery(null, "let a : Type = null in a->Package", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Set(Type)", "Package");
 		ocl.assertSemanticErrorQuery(null, "let a : Type = null in a->Package()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Set(Type)", "Package");
 		ocl.assertSemanticErrorQuery(null, "let a : Set(Type) = null in a->Package", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Set(Type)", "Package");
@@ -539,8 +540,10 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		ocl.assertQueryEquals(redApple, "RedApple", "self.name");
 		ocl.assertQueryEquals(redApple, "RedApple", "self.Fruit::name");
 		ocl.assertQueryEquals(redApple, "RedApple", "self.Apple::name");
-		ocl.assertValidationErrorQuery(appleType, "self.Tree::name",
-			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "PropertyCallExp::NonStaticSourceTypeIsConformant", "self.name");
+//		ocl.assertValidationErrorQuery(appleType, "self.Tree::name",
+//			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "PropertyCallExp::NonStaticSourceTypeIsConformant", "self.name");
+		ocl.assertSemanticErrorQuery(appleType, "self.Tree::name",
+			EssentialOCLCS2ASMessages.PropertyCallExp_IncompatibleProperty, "fruit::Tree::name");
 		//
 		ocl.assertQueryFalse(redApple, "self.color = Color::green");
 		ocl.assertQueryTrue(redApple, "self.color = Color::red");
@@ -581,7 +584,7 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 	 * Tests construction of a type instance with property values
 	 */
 	@Test public void test_type_construction() throws InvocationTargetException {
-		TestOCL ocl = createOCL();
+		TestOCL ocl = createOCLWithProjectMap();
 		initFruitPackage(ocl);
 		EObject context = fruitEFactory.create(tree);
 		ocl.assertValidationErrorQuery(ocl.getContextType(context), "Apple{stem=null}.label", "Missing initializers: color");

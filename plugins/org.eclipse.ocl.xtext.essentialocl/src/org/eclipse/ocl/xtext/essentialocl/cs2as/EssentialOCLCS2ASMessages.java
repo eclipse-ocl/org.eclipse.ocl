@@ -29,4 +29,5 @@ public class EssentialOCLCS2ASMessages
 	public static String IteratorExp_TooManyAccumulators;
 	public static String LoopExp_UnexpectedInitializer;
 	public static String LoopExp_UnexpectedType;
+	public static String PropertyCallExp_IncompatibleProperty;
 }

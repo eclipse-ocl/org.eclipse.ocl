@@ -219,7 +219,7 @@ public class PivotTestCase extends TestCase
 		ecoreResource.save(null);
 		if (asValidationMessages != SUPPRESS_VALIDATION) {
 			//			assertNoValidationErrors("AS2Ecore invalid", ecoreResource);
-// XXX			assertValidationDiagnostics("AS2Ecore invalid", ecoreResource, asValidationMessages);
+			assertValidationDiagnostics("AS2Ecore invalid", ecoreResource, asValidationMessages);
 		}
 		return ecoreResource;
 	}

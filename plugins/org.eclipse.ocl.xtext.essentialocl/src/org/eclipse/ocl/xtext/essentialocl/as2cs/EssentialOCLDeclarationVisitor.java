@@ -663,7 +663,7 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 			Variable asIterator = asIterators.get(i);
 			if (!asIterator.isIsImplicit()) {
 				NavigatingArgCS csNavigatingArg = createNavigatingArgCS(prefix, asIterator, asIterator, null);
-				if (i < asCoIterators.size()) {		// XXX swap for Map
+				if (i < asCoIterators.size()) {
 					Variable asCoIterator = asCoIterators.get(i);
 					if (!asCoIterator.isIsImplicit()) {
 						VariableCS csCoIterator = refreshVariable(VariableCS.class, EssentialOCLCSPackage.Literals.VARIABLE_CS, asCoIterator);

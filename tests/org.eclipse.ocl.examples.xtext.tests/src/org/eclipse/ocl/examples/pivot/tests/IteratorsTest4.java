@@ -520,7 +520,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
 		ocl.assertBadInvariant(SemanticException.class, Diagnostic.ERROR,
 			environmentFactory.getASClass("Package"), "ownedPackages.unknownAttribute",
-			PivotMessagesInternal.UnresolvedProperty_ERROR_, "Set(Package)", "unknownAttribute");
+			PivotMessagesInternal.UnresolvedProperty_ERROR_, "Package", "unknownAttribute");
 		ocl.dispose();
 	}
 
@@ -534,7 +534,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
 		ocl.assertBadInvariant(SemanticException.class, Diagnostic.ERROR,
 			environmentFactory.getASClass("Package"), "ownedPackages.unknownOperation(self)",
-			PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Set(Package)", "unknownOperation", PivotConstants.SELF_NAME);
+			PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Package", "unknownOperation", PivotConstants.SELF_NAME);
 		ocl.dispose();
 	}
 

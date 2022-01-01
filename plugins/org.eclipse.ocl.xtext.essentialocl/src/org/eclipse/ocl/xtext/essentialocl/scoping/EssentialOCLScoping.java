@@ -18,12 +18,17 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.IteratorExp;
 import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.scoping.Attribution;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
+import org.eclipse.ocl.pivot.library.LibraryFeature;
+import org.eclipse.ocl.pivot.library.iterator.CollectIteration;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.xtext.base.attributes.ImportCSAttribution;
@@ -113,11 +118,11 @@ public class EssentialOCLScoping
 						messageTemplate = PivotMessagesInternal.UnresolvedIterationCall_ERROR_;
 					}
 					else {
-						messageTemplate = csNameExp.getSourceTypeValue() != null ? PivotMessagesInternal.UnresolvedStaticOperationCall_ERROR_ : PivotMessagesInternal.UnresolvedOperationCall_ERROR_;
+						messageTemplate = /*csNameExp.getSourceTypeValue() != null ? PivotMessagesInternal.UnresolvedStaticOperationCall_ERROR_ :*/ PivotMessagesInternal.UnresolvedOperationCall_ERROR_;
 					}
 				}
 				else {
-					messageTemplate = csNameExp.getSourceTypeValue() != null ? PivotMessagesInternal.UnresolvedStaticProperty_ERROR_ : PivotMessagesInternal.UnresolvedProperty_ERROR_;
+					messageTemplate = /*csNameExp.getSourceTypeValue() != null ? PivotMessagesInternal.UnresolvedStaticProperty_ERROR_ :*/ PivotMessagesInternal.UnresolvedProperty_ERROR_;
 				}
 				if (csNameExp.getSourceTypeValue() != null) {
 					sourceType = csNameExp.getSourceTypeValue();
@@ -145,8 +150,9 @@ public class EssentialOCLScoping
 			assert messageTemplate != null;
 			TypedElement source = null;
 			ExpCS csSource = navigationArgument;
+			OperatorExpCS csOperator = null;
 			for (ExpCS aSource = csSource; aSource != null; ) {										// FIXME rewrite me
-				OperatorExpCS csOperator = aSource.getLocalParent();
+				csOperator = aSource.getLocalParent();
 				if ((csOperator != null) && (csOperator.getSource() != aSource)) {
 					csSource = csOperator.getSource();
 					break;
@@ -176,6 +182,32 @@ public class EssentialOCLScoping
 			if (source == null) {
 				if ((csSource != null) && (csSource != navigationArgument)) {
 					source = PivotUtil.getPivot(OCLExpression.class, csSource);
+				}
+			}
+			if (source != null) {
+				if (sourceType == null) {
+					sourceType = source.getType();
+				}
+				if (csOperator != null) {
+					boolean isAggregate = PivotUtil.isAggregate(sourceType);
+					if (isAggregate) {
+						String navigationOperatorName = csOperator.getName();
+						if (PivotUtil.isObjectNavigationOperator(navigationOperatorName)) {
+							if (source.eContainingFeature() == PivotPackage.Literals.CALL_EXP__OWNED_SOURCE) {
+								EObject eContainer = source.eContainer();
+								if (eContainer instanceof IteratorExp) {
+									IteratorExp iteratorExp = (IteratorExp)eContainer;
+									if (iteratorExp.isIsImplicit()) {
+										LibraryFeature iterationImplementation = iteratorExp.getReferredIteration().getImplementation();
+										if (iterationImplementation == CollectIteration.INSTANCE) {
+											Variable iterator = PivotUtil.getOwnedIterators(iteratorExp).iterator().next();
+											sourceType = PivotUtil.getType(iterator);
+										}
+									}
+								}
+							}
+						}
+					}
 				}
 			}
 			String typeText = "";

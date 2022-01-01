@@ -83,7 +83,7 @@ public class ErrorTests extends XtextTestCase
 		ocl.getEnvironmentFactory().adapt(xtextResource);
 		xtextResource.load(inputStream, null);
 		assertResourceErrors("Loading Xtext", xtextResource,
-			StringUtil.bind(PivotMessagesInternal.UnresolvedStaticProperty_ERROR_, "test::Test", "allInstances"));
+			StringUtil.bind(PivotMessagesInternal.UnresolvedProperty_ERROR_, "test::Test", "allInstances"));
 		//
 		ocl.dispose();
 	}

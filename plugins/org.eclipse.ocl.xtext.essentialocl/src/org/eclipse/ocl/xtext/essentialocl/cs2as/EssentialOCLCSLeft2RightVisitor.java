@@ -32,6 +32,7 @@ import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.EnumLiteralExp;
+import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.FeatureCallExp;
@@ -67,6 +68,7 @@ import org.eclipse.ocl.pivot.ShadowExp;
 import org.eclipse.ocl.pivot.ShadowPart;
 import org.eclipse.ocl.pivot.State;
 import org.eclipse.ocl.pivot.StateExp;
+import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.StringLiteralExp;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TupleLiteralExp;
@@ -624,9 +626,6 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			if (explicitSourceType == null) {
 				explicitSourceType = invocations.getSourceType();
 			}
-			if ("negEBigDecimal".equals(exampleOperation.getName())) {
-				getClass();		// XXX
-			}
 			Operation asOperation = null;
 			OperationMatcher matcher = new OperationMatcher(environmentFactory, explicitSourceType, csNameExp.getSourceTypeValue());
 			boolean isMatchable = matcher.init(csRoundBracketedClause);
@@ -706,7 +705,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 
 	protected @NonNull EnumLiteralExp resolveEnumLiteral(@NonNull ExpCS csExp, @NonNull EnumerationLiteral enumerationLiteral) {
 		EnumLiteralExp expression = context.refreshModelElement(EnumLiteralExp.class, PivotPackage.Literals.ENUM_LITERAL_EXP, csExp);
-		helper.setType(expression, enumerationLiteral.getOwningEnumeration(), true, null);
+		helper.setType(expression, enumerationLiteral.getOwningEnumeration(), true, null /* enumerationLiteral.getTypeId() */);
 		expression.setReferredLiteral(enumerationLiteral);
 		expression.setName(enumerationLiteral.getName());
 		return expression;
@@ -728,10 +727,17 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			propertyScopeFilter = new PropertyScopeFilter(csSquareBracketedClauses);
 		}
 		// FIXME Qualified navigation
-		Property namedElement = context.lookupProperty(csNameExp, ownedPathName, propertyScopeFilter);
-		if ((namedElement != null) && !namedElement.eIsProxy()) {
-			CallExp callExp = resolvePropertyCallExp(sourceExp, csNameExp, namedElement);
-			return callExp;
+		Property resolvedProperty = context.lookupProperty(csNameExp, ownedPathName, propertyScopeFilter);
+		if ((resolvedProperty != null) && !resolvedProperty.eIsProxy()) {
+			if (resolvedProperty.getType() instanceof Stereotype) {			// FIXME Bug 578010 - M2 properties need reification with correct types at M1
+				return resolvePropertyCallExp(sourceExp, csNameExp, resolvedProperty);
+			}
+			Type resolvedSourceType = PivotUtil.getType(sourceExp);
+			Type propertySourceType = PivotUtil.getOwningClass(resolvedProperty);
+			if (resolvedSourceType.conformsTo(standardLibrary, propertySourceType)) {
+				return resolvePropertyCallExp(sourceExp, csNameExp, resolvedProperty);
+			}
+			context.addError(csNameExp, EssentialOCLCS2ASMessages.PropertyCallExp_IncompatibleProperty, resolvedProperty);
 		}
 		Property oclInvalidProperty = standardLibrary.getOclInvalidProperty();
 		PropertyCallExp expression = refreshPropertyCallExp(csNameExp, sourceExp, oclInvalidProperty);
@@ -755,11 +761,22 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	 * The return call has no body or return type since they cannot be synthesised until the body is synthesised.
 	 */
 	protected @Nullable IteratorExp resolveImplicitCollect(@NonNull OCLExpression sourceExp, @NonNull InfixExpCS csOperator) {
+		Type elementType;
 		Type actualSourceType = sourceExp.getType();
-		if (!(actualSourceType instanceof CollectionType)) {
+		boolean isNullFree;
+		if (actualSourceType instanceof CollectionType) {
+			CollectionType collectionType = (CollectionType)actualSourceType;
+			elementType = collectionType.getElementType();
+			isNullFree = collectionType.isIsNullFree();
+		}
+		else if (actualSourceType instanceof MapType) {
+			MapType mapType = (MapType)actualSourceType;
+			elementType = mapType.getKeyType();
+			isNullFree = mapType.isKeysAreNullFree();
+		}
+		else {
 			return null;
 		}
-		Type elementType = ((CollectionType)actualSourceType).getElementType();
 		if (elementType == null) {
 			return null;
 		}
@@ -783,7 +800,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		Parameter resolvedIterator = asIteration.getOwnedIterators().get(0);
 		iterator.setRepresentedParameter(resolvedIterator);
 		helper.refreshName(iterator, "1_");
-		helper.setType(iterator, elementType, isSafe || ((CollectionType)actualSourceType).isIsNullFree(), null);
+		helper.setType(iterator, elementType, isSafe || isNullFree, null);
 		iterator.setIsImplicit(true);
 		implicitCollectExp.getOwnedIterators().add(iterator);
 		return implicitCollectExp;
@@ -1514,10 +1531,13 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	protected @NonNull TypeExp resolveTypeExp(@NonNull ExpCS csExp, @NonNull Type type) {
 		TypeExp expression = context.refreshModelElement(TypeExp.class, PivotPackage.Literals.TYPE_EXP, csExp);
 		Type asType = null;
-		if (type instanceof TemplateParameter) {
+		if (type instanceof Enumeration) {
+			asType = standardLibrary.getEnumerationType();
+		}
+		else if (type instanceof TemplateParameter) {
 			asType = metamodelManager.getOclType("TemplateParameter");
 		}
-		else {
+		else {				// ?? more alternatives
 			asType = standardLibrary.getClassType();
 		}
 		helper.setType(expression, asType, true, type);

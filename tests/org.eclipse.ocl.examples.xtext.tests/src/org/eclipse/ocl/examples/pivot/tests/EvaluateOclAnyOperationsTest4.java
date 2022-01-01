@@ -34,6 +34,7 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
+import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -367,8 +368,6 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 	@Test public void test_oclAsSet_implicit() {
 		MyOCL ocl = createOCL();
 		StandardLibrary standardLibrary = ocl.getStandardLibrary();
-		ocl.assertQueryEquals(null, standardLibrary.getBooleanType(), "true.oclType()");
-// XXX
 		ocl.assertQueryResults(null, "Set{true}", "true->select(true)");
 		ocl.assertQueryResults(null, "Set{true}", "Set{true}->select(true)");
 		ocl.assertQueryResults(null, "Set{}", "null->select(true)");
@@ -407,14 +406,15 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryInvalid(null, "invalid.oclAsType(Tuple(a:String))");
 		ocl.assertQueryInvalid(null, "invalid.oclAsType(ocl::Package)");
 		//
-		ocl.assertQueryInvalid(null, "let s : String = null.oclAsType(String) in s");
-		ocl.assertQueryInvalid(null, "null.oclAsType(Integer)");
-		ocl.assertQueryInvalid(null, "null.oclAsType(Class)");
-		ocl.assertQueryInvalid(null, "null.oclAsType(OclVoid)");
-		ocl.assertQueryInvalid(null, "null.oclAsType(OclInvalid)");
-		ocl.assertQueryInvalid(null, "null.oclAsType(Set(String))");
-		ocl.assertQueryInvalid(null, "null.oclAsType(Tuple(a:String))");
-		ocl.assertQueryInvalid(null, "null.oclAsType(ocl::Package)");
+		ocl.assertQueryNull(null, "let s : String = null.oclAsType(String) in s");
+		ocl.assertQueryNull(null, "null.oclAsType(Integer)");
+		ocl.assertQueryNull(null, "null.oclAsType(Class)");
+		ocl.assertQueryNull(null, "null.oclAsType(OclVoid)");
+		ocl.assertValidationErrorQuery(null, "null.oclAsType(OclInvalid)",
+			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "CallExp::TypeIsNotInvalid", "null.oclAsType(OclInvalid)");
+		ocl.assertQueryNull(null, "null.oclAsType(Set(String))");
+		ocl.assertQueryNull(null, "null.oclAsType(Tuple(a:String))");
+		ocl.assertQueryNull(null, "null.oclAsType(ocl::Package)");
 		//
 		ocl.assertQueryInvalid(null, "true.oclAsType(Integer)");
 		ocl.assertQueryInvalid(null, "true.oclAsType(String)");
@@ -753,7 +753,8 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(null, packageType, "Package");
 		ocl.assertQueryEquals(null, "Package", "Package.name");
 		ocl.assertQueryEquals(null, standardLibrary.getClassType(), "Package.oclType()");
-		ocl.assertQueryResults(null, "Set{}", "Package.allInstances()");
+	//	ocl.assertQueryTrue(null, "Package.allInstances()->size() > 1"); //.name->includes('pivot')");
+		ocl.assertQueryResults(null, "Set{}", "Package.allInstances()"); // new empty ModelManager
 		ocl.assertQueryEquals(ocl.pkg1, 8, "Package.allInstances()->size()");
 		ocl.assertQueryResults(ocl.pkg1, "self.oclAsType(Package)->closure(ownedPackages)->including(self)", "Package.allInstances()");
 		ocl.assertQueryEquals(ocl.pkg1, 8, "self.oclType().allInstances()->size()");
@@ -773,10 +774,14 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(null, completeEnvironment.getSetType(standardLibrary.getIntegerType(), false, null, null), "Set{1}->oclType()");
 		ocl.assertQueryResults(null, "Bag{'Integer'}", "Set{1}.oclType().name");
 		ocl.assertQueryEquals(null, "Set", "Set{1}->oclType().name");
-		ocl.assertSemanticErrorQuery(null, "Set{1}.allInstances()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Set(Integer)", "allInstances");
+		ocl.assertSemanticErrorQuery(null, "Set{1}.allInstances()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Integer", "allInstances");
 		ocl.assertSemanticErrorQuery(null, "Set{1}->allInstances()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Set(Integer)", "allInstances");
-		ocl.assertSemanticErrorQuery(null, "Set{1}.oclType().allInstances()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Bag(PrimitiveType)", "allInstances");
-		ocl.assertSemanticErrorQuery(null, "Set{1}->oclType().allInstances()", PivotMessagesInternal.UnresolvedStaticOperationCall_ERROR_, "Set(Integer)", "allInstances", "");
+	//	ocl.assertSemanticErrorQuery(null, "Set{1}.oclType().allInstances()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Bag(Class)", "allInstances");
+		ocl.assertQueryResults(null, "Bag{}", "Set{1}.oclType().allInstances()");
+	//	ocl.assertSemanticErrorQuery(null, "Set{1}->oclType().allInstances()", PivotMessagesInternal.UnresolvedStaticOperationCall_ERROR_, "Set(Integer)", "allInstances", "");
+		ocl.assertQueryResults(null, "Set{}", "Set{1}->oclType().allInstances()");
+	//	ocl.assertQueryResults(null, "Set{}", "Set.oclType().allInstances()");
+	//	ocl.assertQueryTrue(null, "Set.oclType().allInstances()->size() > 30");		// currently 33 distinct Set specializatons.
 		ocl.assertQueryResults(null, "Set{}", "Set.oclType().allInstances()");
 		ocl.assertQueryEquals(null, standardLibrary.getIntegerType(), "Set{1}->oclType().elementType");
 		ocl.dispose();
@@ -791,17 +796,16 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 		StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		@NonNull Type collectionKindType = ClassUtil.nonNullState(environmentFactory.getASClass("CollectionKind"));
 		org.eclipse.ocl.pivot.Class enumerationType = useCodeGen ? standardLibrary.getClassType() : standardLibrary.getEnumerationType();
-		//    	ocl.assertQueryEquals(null, metamodelManager.getPivotType("EnumerationLiteral"), "CollectionKind::Set.oclType()");
-		// NB this is not EnumerationLiteral: cf. 4.oclType() is Integer not IntegerLiteral.
 		ocl.assertQueryEquals(null, environmentFactory.getASClass("CollectionKind"), "CollectionKind::Set.oclType()");
 		ocl.assertQueryEquals(null, "CollectionKind", "CollectionKind::Set.oclType().name");
 		ocl.assertQueryEquals(null, collectionKindType, "CollectionKind");
 		ocl.assertQueryEquals(null, "CollectionKind", "CollectionKind.name");
 		ocl.assertQueryEquals(null, enumerationType, "CollectionKind.oclType()");
-		ocl.assertQueryEquals(null, 5, "CollectionKind.allLiterals->size()");
-		ocl.assertSemanticErrorQuery(null, "CollectionKind.oclType().ownedLiteral", PivotMessagesInternal.UnresolvedStaticProperty_ERROR_, "Class", "ownedLiteral");
+		ocl.assertQueryEquals(null, 5, "CollectionKind.allInstances()->size()");
+		ocl.assertSemanticErrorQuery(null, "CollectionKind.oclType().ownedLiteral", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Enumeration", "ownedLiteral");
 		ocl.assertQueryResults(null, "Set{CollectionKind::Bag,CollectionKind::Collection,CollectionKind::_'OrderedSet',CollectionKind::_'Sequence',CollectionKind::_'Set'}", "CollectionKind.allInstances()");
 		ocl.assertQueryResults(null, "Set{CollectionKind::Bag,CollectionKind::Collection,CollectionKind::OrderedSet,CollectionKind::Sequence,CollectionKind::Set}", "CollectionKind::Set.oclType().allInstances()");
+	//	ocl.assertQueryResults(null, "Set{AssociativityKind,CollectionKind,PseudostateKind,TransitionKind}", "CollectionKind.oclType().allInstances()");
 		ocl.assertQueryResults(null, "Set{}", "CollectionKind.oclType().allInstances()");
 		ocl.dispose();
 	}
@@ -820,8 +824,10 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(null, standardLibrary.getUnlimitedNaturalType(), "*.oclType()");
 		ocl.assertQueryEquals(null, primitiveType, "Integer.oclType()");
 		ocl.assertQueryEquals(null, integerType, "Integer");
-		ocl.assertSemanticErrorQuery(null, "Integer.allInstances()", PivotMessagesInternal.UnresolvedStaticOperationCall_ERROR_, "Integer", "allInstances", "");
-		ocl.assertSemanticErrorQuery(null, "3.oclType().allInstances()", PivotMessagesInternal.UnresolvedStaticOperationCall_ERROR_, "Integer", "allInstances", "");
+	//	ocl.assertSemanticErrorQuery(null, "Integer.allInstances()", PivotMessagesInternal.UnresolvedStaticOperationCall_ERROR_, "Integer", "allInstances", "");
+		ocl.assertQueryResults(null, "Set{}", "Integer.allInstances()");
+	//	ocl.assertSemanticErrorQuery(null, "3.oclType().allInstances()", PivotMessagesInternal.UnresolvedStaticOperationCall_ERROR_, "Integer", "allInstances", "");
+		ocl.assertQueryResults(null, "Set{}", "3.oclType().allInstances()");
 		ocl.assertQueryResults(null, "Set{}", "Integer.oclType().allInstances()");
 		ocl.assertQueryEquals(null, "Integer", "4.oclType().name");
 		ocl.dispose();
@@ -842,8 +848,10 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(null, anyType, "OclAny");
 		ocl.assertQueryEquals(null, "OclAny", "OclAny.name");
 		ocl.assertQueryEquals(null, anyTypeClass, "OclAny.oclType()");
-		ocl.assertSemanticErrorQuery(null, "OclAny.allInstances()", PivotMessagesInternal.UnresolvedStaticOperationCall_ERROR_, "OclAny", "allInstances", "");
-		ocl.assertSemanticErrorQuery(null, "null.oclAsType(OclAny).oclType().allInstances()", PivotMessagesInternal.UnresolvedStaticOperationCall_ERROR_, "OclAny", "allInstances", "");
+	//	ocl.assertSemanticErrorQuery(null, "OclAny.allInstances()", PivotMessagesInternal.UnresolvedStaticOperationCall_ERROR_, "OclAny", "allInstances", "");
+		ocl.assertQueryResults(null, "Set{}", "OclAny.allInstances()");
+	//	ocl.assertSemanticErrorQuery(null, "null.oclAsType(OclAny).oclType().allInstances()", PivotMessagesInternal.UnresolvedStaticOperationCall_ERROR_, "OclAny", "allInstances", "");
+		ocl.assertQueryResults(null, "Set{null}", "null.oclAsType(OclAny).oclType().allInstances()");
 		ocl.assertQueryResults(null, "Set{}", "OclAny.oclType().allInstances()");
 		ocl.dispose();
 	}
@@ -904,8 +912,10 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(null, tupleType, "Tuple{a:Integer=3}.oclType()");
 		ocl.assertQueryEquals(null, tupleType, "Tuple(a:Integer)");
 		ocl.assertQueryEquals(null, tupleTypeClass, "Tuple(a:Integer).oclType()");
-		ocl.assertSemanticErrorQuery(null, "Tuple(a:Integer).allInstances()", PivotMessagesInternal.UnresolvedStaticOperationCall_ERROR_, "Tuple(a:Integer[1])", "allInstances", "");
-		ocl.assertSemanticErrorQuery(null, "Tuple{a:Integer=3}.oclType().allInstances()", PivotMessagesInternal.UnresolvedStaticOperationCall_ERROR_, "Tuple(a:Integer[1])", "allInstances", "");	// FIXME
+	//	ocl.assertSemanticErrorQuery(null, "Tuple(a:Integer).allInstances()", PivotMessagesInternal.UnresolvedStaticOperationCall_ERROR_, "Tuple(a:Integer[1])", "allInstances", "");
+		ocl.assertQueryResults(null, "Set{}", "Tuple(a:Integer).allInstances()");
+	//	ocl.assertSemanticErrorQuery(null, "Tuple{a:Integer=3}.oclType().allInstances()", PivotMessagesInternal.UnresolvedStaticOperationCall_ERROR_, "Tuple(a:Integer[1])", "allInstances", "");	// FIXME
+		ocl.assertQueryResults(null, "Set{}", "Tuple{a:Integer=3}.oclType().allInstances()");	// FIXME
 		ocl.assertQueryResults(null, "Set{}", "Tuple(a:Integer).oclType().allInstances()");
 		ocl.assertQueryEquals(null, "Tuple", "Tuple{a:Integer=3}.oclType().name");
 		ocl.dispose();
