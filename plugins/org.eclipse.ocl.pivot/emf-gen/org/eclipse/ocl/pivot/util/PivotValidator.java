@@ -152,6 +152,7 @@ import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.Vertex;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.WildcardType;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.utilities.MorePivotable;
@@ -1311,50 +1312,48 @@ extends EObjectValidator {
 			case 120:
 				return validateTypedElement((TypedElement)value, diagnostics, context);
 			case 121:
-				return validateUmlAny(value, diagnostics, context);
-			case 122:
 				return validateUnlimitedNaturalLiteralExp((UnlimitedNaturalLiteralExp)value, diagnostics, context);
-			case 123:
+			case 122:
 				return validateUnspecifiedValueExp((UnspecifiedValueExp)value, diagnostics, context);
-			case 124:
+			case 123:
 				return validateValueSpecification((ValueSpecification)value, diagnostics, context);
-			case 125:
+			case 124:
 				return validateVariable((Variable)value, diagnostics, context);
-			case 126:
+			case 125:
 				return validateVariableDeclaration((VariableDeclaration)value, diagnostics, context);
-			case 127:
+			case 126:
 				return validateVariableExp((VariableExp)value, diagnostics, context);
-			case 128:
+			case 127:
 				return validateVertex((Vertex)value, diagnostics, context);
-			case 129:
+			case 128:
 				return validateVisitable((Visitable)value, diagnostics, context);
-			case 130:
+			case 129:
 				return validateVoidType((VoidType)value, diagnostics, context);
-			case 131:
+			case 130:
 				return validateWildcardType((WildcardType)value, diagnostics, context);
-			case 132:
+			case 131:
 				return validateAssociativityKind((AssociativityKind)value, diagnostics, context);
-			case 133:
+			case 132:
 				return validateCollectionKind((CollectionKind)value, diagnostics, context);
-			case 134:
+			case 133:
 				return validatePseudostateKind((PseudostateKind)value, diagnostics, context);
-			case 135:
+			case 134:
 				return validateTransitionKind((TransitionKind)value, diagnostics, context);
-			case 136:
+			case 135:
 				return validateBoolean((Boolean)value, diagnostics, context);
-			case 137:
+			case 136:
 				return validateInteger((Number)value, diagnostics, context);
-			case 138:
+			case 137:
 				return validateLibraryFeature((LibraryFeature)value, diagnostics, context);
-			case 139:
+			case 138:
 				return validateObject(value, diagnostics, context);
-			case 140:
+			case 139:
 				return validateReal((Number)value, diagnostics, context);
-			case 141:
+			case 140:
 				return validateString((String)value, diagnostics, context);
-			case 142:
+			case 141:
 				return validateThrowable((Throwable)value, diagnostics, context);
-			case 143:
+			case 142:
 				return validateUnlimitedNatural((Number)value, diagnostics, context);
 			default:
 				return true;
@@ -1538,16 +1537,6 @@ extends EObjectValidator {
 	public boolean validateTypedElement(TypedElement typedElement,
 			DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(typedElement, diagnostics, context);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean validateUmlAny(Object umlAny, DiagnosticChain diagnostics, Map<Object, Object> context)
-	{
-		return validate_EveryDefaultConstraint((EObject)umlAny, diagnostics, context);
 	}
 
 	/**
@@ -2661,7 +2650,7 @@ extends EObjectValidator {
 			assert context != null;
 			OCL ocl = PivotDiagnostician.getOCL(context, expressionInOCL);
 			try {
-				ocl.getMetamodelManager().parseSpecification(expressionInOCL);
+				((EnvironmentFactoryInternalExtension)ocl.getEnvironmentFactory()).parseSpecification(expressionInOCL);
 			} catch (ParserException e) {
 				if (diagnostics != null) {
 					diagnostics.add(new BasicDiagnostic(Diagnostic.ERROR, DIAGNOSTIC_SOURCE, 0,

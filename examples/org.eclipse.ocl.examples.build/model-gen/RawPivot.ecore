@@ -1796,8 +1796,6 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="UmlAny" instanceClassName="java.lang.Object"
-      abstract="true" interface="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="UnlimitedNaturalLiteralExp" eSuperTypes="#//NumericLiteralExp">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="unlimitedNaturalSymbol"
         lowerBound="1" eType="#//UnlimitedNatural">

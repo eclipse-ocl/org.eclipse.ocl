@@ -1751,7 +1751,6 @@
       <ownedParameter xmi:id="Ppivot.TReferringElement.OgetReferredElement.Pnull" type="Ppivot.TElement" isOrdered="true" direction="return"/>
     </ownedOperation>
   </packagedElement>
-  <packagedElement xmi:type="uml:Interface" xmi:id="Ppivot.TUmlAny" name="UmlAny"/>
   <packagedElement xmi:type="uml:Interface" xmi:id="Ppivot.TVisitable" name="Visitable"/>
   <profileApplication xmi:id="Ppivot.pA0">
     <eAnnotations xmi:id="Ppivot.pA0.eA0" source="http://www.eclipse.org/uml2/2.0.0/UML">

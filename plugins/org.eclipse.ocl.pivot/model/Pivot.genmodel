@@ -979,7 +979,6 @@
         <genParameters ecoreParameter="Pivot.ecore#//TypedElement/CompatibleBody/bodySpecification"/>
       </genOperations>
     </genClasses>
-    <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-UmlAny"/>
     <genClasses ecoreClass="Pivot.ecore#T-pivot-UnlimitedNaturalLiteralExp">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#F-pivot-UnlimitedNaturalLiteralExp-unlimitedNaturalSymbol"/>
     </genClasses>

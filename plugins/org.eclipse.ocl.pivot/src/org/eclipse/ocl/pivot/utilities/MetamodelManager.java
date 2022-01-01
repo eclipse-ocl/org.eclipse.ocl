@@ -61,9 +61,9 @@ public interface MetamodelManager
 	 *
 	 * @throws ParserException if text parsing fails
 	 *
-	 * @deprecated use PivotHelper.parseSpecification()
+	 * @deprecated use EnvironmentFactoryInternalExtension.parseSpecification()
 	 */
-	@Deprecated /* @deprecated use PivotHelper.parseSpecification() */
+	@Deprecated /* @deprecated use EnvironmentFactoryInternalExtension.parseSpecification() */
 	@NonNull ExpressionInOCL parseSpecification(@NonNull LanguageExpression specification) throws ParserException;
 
 }

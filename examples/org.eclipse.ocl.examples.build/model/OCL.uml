@@ -24,8 +24,7 @@
     </packagedElement>
     <packagedElement xmi:type="uml:Package" xmi:id="OCL-OCL_Classes" name="OCL_Classes">
       <packagedElement xmi:type="uml:Class" xmi:id="_0IHFYIkdEeSBZI5ewYKP9Q" name="Behavior" isAbstract="true"/>
-      <packagedElement xmi:type="uml:Class" xmi:id="_cxuwkGC-EeyqKuS8imMnrQ" name="BooleanType">
-      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_cxuwkGC-EeyqKuS8imMnrQ" name="BooleanType"/>
       <packagedElement xmi:type="uml:Class" xmi:id="OCL-OCL_Classes-Class" name="Class">
         <ownedAttribute xmi:id="_2yGVQBvWEeSIos3S87O_rg" name="owningPackage" type="_mZu_sBvWEeSIos3S87O_rg" association="__J2DUBvWEeSIos3S87O_rg">
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_4GWycBvWEeSIos3S87O_rg"/>
@@ -35,8 +34,7 @@
           <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_hk6zkhvbEeSIos3S87O_rg" value="*"/>
         </ownedAttribute>
       </packagedElement>
-      <packagedElement xmi:type="uml:Class" xmi:id="_zKvF0GCxEeyqKuS8imMnrQ" name="Classifier" isAbstract="true">
-      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_zKvF0GCxEeyqKuS8imMnrQ" name="Classifier" isAbstract="true"/>
       <packagedElement xmi:type="uml:Class" xmi:id="OCL-OCL_Classes-DataType" name="DataType">
         <generalization xmi:id="_XpnTEX7VEeOu79LxSz8Ylw" general="OCL-OCL_Classes-Class"/>
         <ownedAttribute xmi:id="_URrXEMLtEea2bfSf7M-nEQ" name="value" type="_isqz0MNXEea2bfSf7M-nEQ" isReadOnly="true" aggregation="composite" isDerived="true">
@@ -48,13 +46,11 @@
         </ownedAttribute>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_Hbk14GC_EeyqKuS8imMnrQ" name="Element" isAbstract="true"/>
-      <packagedElement xmi:type="uml:Class" xmi:id="_g92ywGC-EeyqKuS8imMnrQ" name="Enumeration">
-      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_g92ywGC-EeyqKuS8imMnrQ" name="Enumeration"/>
       <packagedElement xmi:type="uml:Class" xmi:id="_Nsf90Bu-EeSIos3S87O_rg" name="Feature" isAbstract="true">
         <generalization xmi:id="_SP0YABu-EeSIos3S87O_rg" general="_Qur8cBu-EeSIos3S87O_rg"/>
       </packagedElement>
-      <packagedElement xmi:type="uml:Class" xmi:id="_jwAKQGC-EeyqKuS8imMnrQ" name="InvalidType">
-      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_jwAKQGC-EeyqKuS8imMnrQ" name="InvalidType"/>
       <packagedElement xmi:type="uml:Class" xmi:id="OCL-OCL_Classes-Operation" name="Operation"/>
       <packagedElement xmi:type="uml:Class" xmi:id="_mZu_sBvWEeSIos3S87O_rg" name="Package">
         <ownedAttribute xmi:id="_qvzBABvWEeSIos3S87O_rg" name="ownedClasses" type="OCL-OCL_Classes-Class" aggregation="composite" association="__J2DUBvWEeSIos3S87O_rg">
@@ -77,13 +73,11 @@
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_mcgHcBs0EeSM9LreJtBwBg"/>
         </ownedAttribute>
       </packagedElement>
-      <packagedElement xmi:type="uml:Class" xmi:id="_olpDgGC-EeyqKuS8imMnrQ" name="Stereotype">
-      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_olpDgGC-EeyqKuS8imMnrQ" name="Stereotype"/>
       <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_isqz0MNXEea2bfSf7M-nEQ" name="String"/>
       <packagedElement xmi:type="uml:Class" xmi:id="OCL-OCL_Classes-Type" name="Type" isAbstract="true"/>
       <packagedElement xmi:type="uml:Class" xmi:id="_Qur8cBu-EeSIos3S87O_rg" name="TypedElement" isAbstract="true"/>
       <packagedElement xmi:type="uml:Association" xmi:id="__J2DUBvWEeSIos3S87O_rg" memberEnd="_2yGVQBvWEeSIos3S87O_rg _qvzBABvWEeSIos3S87O_rg"/>
-      <packagedElement xmi:type="uml:Interface" xmi:id="_p24dYGDIEeyqKuS8imMnrQ" name="UmlAny" isAbstract="true"/>
     </packagedElement>
     <packagedElement xmi:type="uml:Package" xmi:id="OCL-OCL_Collections" name="OCL_Collections">
       <packagedElement xmi:type="uml:Class" xmi:id="OCL-OCL_Types-BagType" name="BagType">
@@ -798,5 +792,5 @@
   <Ecore:EReference xmi:id="_8QDJEONmEeikDdDxOl7LOg" isTransient="true" isVolatile="true" isResolveProxies="false"/>
   <ocl4uml:Collection xmi:id="_pCKcgFQ-EeyApJvzs7_U4Q" base_MultiplicityElement="_8l704OjJEeiyDNW4lK79YQ"/>
   <ocl4uml:Collections xmi:id="_iZK0MFweEey-JugQk5CN7g" base_Package="OCL" isNullFree="true"/>
-  <Ecore:EClass xmi:id="_aQzD4GDJEeyqKuS8imMnrQ" instanceClassName="java.lang.Object" base_Interface="_p24dYGDIEeyqKuS8imMnrQ"/>
+  <Ecore:EClass xmi:id="_aQzD4GDJEeyqKuS8imMnrQ" instanceClassName="java.lang.Object"/>
 </xmi:XMI>

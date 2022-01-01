@@ -903,13 +903,6 @@ implements PivotPackage  {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass umlAnyEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	private EClass associationClassEClass = null;
 
 	/**
@@ -5841,17 +5834,6 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	@Override
-	public EClass getUmlAny()
-	{
-		return umlAnyEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public EAttribute getTypedElement_IsRequired()
 	{
 		return (EAttribute)typedElementEClass.getEStructuralFeatures().get(1);
@@ -7795,14 +7777,12 @@ implements PivotPackage  {
 		createEReference(typedElementEClass, 7);
 		createEOperation(typedElementEClass, 2);
 
-		umlAnyEClass = createEClass(121);
-
-		unlimitedNaturalLiteralExpEClass = createEClass(122);
+		unlimitedNaturalLiteralExpEClass = createEClass(121);
 		createEAttribute(unlimitedNaturalLiteralExpEClass, 9);
 
-		unspecifiedValueExpEClass = createEClass(123);
+		unspecifiedValueExpEClass = createEClass(122);
 
-		valueSpecificationEClass = createEClass(124);
+		valueSpecificationEClass = createEClass(123);
 		createEOperation(valueSpecificationEClass, 3);
 		createEOperation(valueSpecificationEClass, 4);
 		createEOperation(valueSpecificationEClass, 5);
@@ -7810,51 +7790,51 @@ implements PivotPackage  {
 		createEOperation(valueSpecificationEClass, 7);
 		createEOperation(valueSpecificationEClass, 8);
 
-		variableEClass = createEClass(125);
+		variableEClass = createEClass(124);
 		createEAttribute(variableEClass, 9);
 		createEReference(variableEClass, 10);
 		createEReference(variableEClass, 11);
 		createEOperation(variableEClass, 6);
 
-		variableDeclarationEClass = createEClass(126);
+		variableDeclarationEClass = createEClass(125);
 		createEReference(variableDeclarationEClass, 8);
 		createEOperation(variableDeclarationEClass, 3);
 		createEOperation(variableDeclarationEClass, 4);
 		createEOperation(variableDeclarationEClass, 5);
 
-		variableExpEClass = createEClass(127);
+		variableExpEClass = createEClass(126);
 		createEAttribute(variableExpEClass, 9);
 		createEReference(variableExpEClass, 10);
 		createEOperation(variableExpEClass, 7);
 
-		vertexEClass = createEClass(128);
+		vertexEClass = createEClass(127);
 		createEReference(vertexEClass, 5);
 		createEReference(vertexEClass, 6);
 		createEReference(vertexEClass, 7);
 
-		visitableEClass = createEClass(129);
+		visitableEClass = createEClass(128);
 
-		voidTypeEClass = createEClass(130);
+		voidTypeEClass = createEClass(129);
 
-		wildcardTypeEClass = createEClass(131);
+		wildcardTypeEClass = createEClass(130);
 		createEReference(wildcardTypeEClass, 20);
 		createEReference(wildcardTypeEClass, 21);
 
 		// Create enums
-		associativityKindEEnum = createEEnum(132);
-		collectionKindEEnum = createEEnum(133);
-		pseudostateKindEEnum = createEEnum(134);
-		transitionKindEEnum = createEEnum(135);
+		associativityKindEEnum = createEEnum(131);
+		collectionKindEEnum = createEEnum(132);
+		pseudostateKindEEnum = createEEnum(133);
+		transitionKindEEnum = createEEnum(134);
 
 		// Create data types
-		booleanEDataType = createEDataType(136);
-		integerEDataType = createEDataType(137);
-		libraryFeatureEDataType = createEDataType(138);
-		objectEDataType = createEDataType(139);
-		realEDataType = createEDataType(140);
-		stringEDataType = createEDataType(141);
-		throwableEDataType = createEDataType(142);
-		unlimitedNaturalEDataType = createEDataType(143);
+		booleanEDataType = createEDataType(135);
+		integerEDataType = createEDataType(136);
+		libraryFeatureEDataType = createEDataType(137);
+		objectEDataType = createEDataType(138);
+		realEDataType = createEDataType(139);
+		stringEDataType = createEDataType(140);
+		throwableEDataType = createEDataType(141);
+		unlimitedNaturalEDataType = createEDataType(142);
 	}
 
 	/**
@@ -9465,8 +9445,6 @@ implements PivotPackage  {
 
 		op = initEOperation(getTypedElement__CompatibleBody__ValueSpecification(), this.getBoolean(), "CompatibleBody", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getValueSpecification(), "bodySpecification", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(umlAnyEClass, Object.class, "UmlAny", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		initEClass(unlimitedNaturalLiteralExpEClass, UnlimitedNaturalLiteralExp.class, "UnlimitedNaturalLiteralExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEAttribute(getUnlimitedNaturalLiteralExp_UnlimitedNaturalSymbol(), this.getUnlimitedNatural(), "unlimitedNaturalSymbol", null, 1, 1, UnlimitedNaturalLiteralExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$

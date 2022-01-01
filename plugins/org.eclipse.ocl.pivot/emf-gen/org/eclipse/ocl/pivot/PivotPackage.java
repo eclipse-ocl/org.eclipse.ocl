@@ -4542,16 +4542,6 @@ extends EPackage
 	EOperation getTypedElement__CompatibleBody__ValueSpecification();
 
 	/**
-	 * Returns the meta object for class '{@link java.lang.Object <em>Uml Any</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Uml Any</em>'.
-	 * @see java.lang.Object
-	 * @generated
-	 */
-	EClass getUmlAny();
-
-	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.pivot.TypedElement#isIsRequired <em>Is Required</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -9467,16 +9457,6 @@ extends EPackage
 		 * @generated
 		 */
 		EOperation TYPED_ELEMENT___COMPATIBLE_BODY__VALUESPECIFICATION = eINSTANCE.getTypedElement__CompatibleBody__ValueSpecification();
-
-		/**
-		 * The meta object literal for the '{@link java.lang.Object <em>Uml Any</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see java.lang.Object
-		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getUmlAny()
-		 * @generated
-		 */
-		EClass UML_ANY = eINSTANCE.getUmlAny();
 
 		/**
 		 * The meta object literal for the '<em><b>Is Required</b></em>' attribute feature.

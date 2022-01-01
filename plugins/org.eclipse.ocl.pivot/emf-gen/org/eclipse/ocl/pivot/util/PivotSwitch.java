@@ -1566,13 +1566,6 @@ public class PivotSwitch<@Nullable T> extends Switch<T> {
 			}
 			case 121:
 			{
-				Object umlAny = theEObject;
-				T result = caseUmlAny(umlAny);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case 122:
-			{
 				UnlimitedNaturalLiteralExp unlimitedNaturalLiteralExp = (UnlimitedNaturalLiteralExp)theEObject;
 				T result = caseUnlimitedNaturalLiteralExp(unlimitedNaturalLiteralExp);
 				if (result == null) result = caseNumericLiteralExp(unlimitedNaturalLiteralExp);
@@ -1585,7 +1578,7 @@ public class PivotSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 123:
+			case 122:
 			{
 				UnspecifiedValueExp unspecifiedValueExp = (UnspecifiedValueExp)theEObject;
 				T result = caseUnspecifiedValueExp(unspecifiedValueExp);
@@ -1596,7 +1589,7 @@ public class PivotSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 124:
+			case 123:
 			{
 				ValueSpecification valueSpecification = (ValueSpecification)theEObject;
 				T result = caseValueSpecification(valueSpecification);
@@ -1606,7 +1599,7 @@ public class PivotSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 125:
+			case 124:
 			{
 				Variable variable = (Variable)theEObject;
 				T result = caseVariable(variable);
@@ -1617,7 +1610,7 @@ public class PivotSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 126:
+			case 125:
 			{
 				VariableDeclaration variableDeclaration = (VariableDeclaration)theEObject;
 				T result = caseVariableDeclaration(variableDeclaration);
@@ -1627,7 +1620,7 @@ public class PivotSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 127:
+			case 126:
 			{
 				VariableExp variableExp = (VariableExp)theEObject;
 				T result = caseVariableExp(variableExp);
@@ -1639,7 +1632,7 @@ public class PivotSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 128:
+			case 127:
 			{
 				Vertex vertex = (Vertex)theEObject;
 				T result = caseVertex(vertex);
@@ -1648,14 +1641,14 @@ public class PivotSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 129:
+			case 128:
 			{
 				Visitable visitable = (Visitable)theEObject;
 				T result = caseVisitable(visitable);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 130:
+			case 129:
 			{
 				VoidType voidType = (VoidType)theEObject;
 				T result = caseVoidType(voidType);
@@ -1668,7 +1661,7 @@ public class PivotSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 131:
+			case 130:
 			{
 				WildcardType wildcardType = (WildcardType)theEObject;
 				T result = caseWildcardType(wildcardType);
@@ -3289,22 +3282,6 @@ public class PivotSwitch<@Nullable T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseTypedElement(TypedElement object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Uml Any</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Uml Any</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseUmlAny(Object object)
-	{
 		return null;
 	}
 

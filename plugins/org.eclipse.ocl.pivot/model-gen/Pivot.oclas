@@ -1252,7 +1252,6 @@
         <ownedComments body="The type of the TypedElement."/>
       </ownedProperties>
     </ownedClasses>
-    <ownedClasses xmi:id="pARyx" instanceClassName="java.lang.Object" isAbstract="true" isInterface="true" name="UmlAny" superClasses="&_0;#zfDWR"/>
     <ownedClasses xsi:type="pivot:PrimitiveType" xmi:id="5Oxgg" instanceClassName="java.lang.Number" name="UnlimitedNatural" superClasses="&_0;#jbMkR">
       <ownedComments body="UnlimitedNatural is a primitive type representing unlimited natural values."/>
     </ownedClasses>

@@ -3080,8 +3080,6 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-UmlAny" name="UmlAny" instanceClassName="java.lang.Object"
-      abstract="true" interface="true"/>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-UnlimitedNaturalLiteralExp"
       name="UnlimitedNaturalLiteralExp" eSuperTypes="#T-pivot-NumericLiteralExp">
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-UnlimitedNaturalLiteralExp-unlimitedNaturalSymbol"
