@@ -52,7 +52,7 @@
   <setupTask
       xsi:type="setup:VariableTask"
       name="eclipse.target.platform"
-      defaultValue="2021-09"
+      defaultValue="2021-12"
       storageURI="scope://Workspace"/>
   <setupTask
       xsi:type="setup.p2:P2Task">
@@ -107,11 +107,18 @@
             url="https://download.eclipse.org/tools/orbit/downloads/latest-R"/>
       </repositoryList>
       <repositoryList
-          name="2021-12">
+          name="2022-03">
         <repository
             url="https://download.eclipse.org/releases/latest"/>
         <repository
             url="https://download.eclipse.org/tools/orbit/downloads/latest-R"/>
+      </repositoryList>
+      <repositoryList
+          name="2021-12">
+        <repository
+            url="https://download.eclipse.org/releases/2021-12"/>
+        <repository
+            url="https://download.eclipse.org/tools/orbit/downloads/drops/R20211213173813/repository"/>
       </repositoryList>
       <repositoryList
           name="2021-09">
@@ -508,6 +515,9 @@
         name="master"
         label="Master (Latest)"/>
     <stream
+        name="6.17.0"
+        label="6.17.0 (2021-12)"/>
+    <stream
         name="6.16.0"
         label="6.16.0 (2021-09)"/>
     <stream
@@ -698,6 +708,10 @@
     <stream
         name="master"
         label="Master (Latest)"/>
+    <stream
+        name="6.17.0"
+        label="6.17.0 (2021-12)">
+    </stream>
     <stream
         name="6.16.0"
         label="6.16.0 (2021-09)">
@@ -1264,6 +1278,9 @@
     <stream
         name="master"
         label="Master (Latest)"/>
+    <stream
+        name="6.17.0"
+        label="6.17.0 (2021-12)"/>
     <stream
         name="6.16.0"
         label="6.16.0 (2021-09)"/>
