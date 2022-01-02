@@ -12,10 +12,14 @@ package org.eclipse.ocl.pivot.library.oclany;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CallExp;
+import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.library.AbstractUntypedUnaryOperation;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  * OclAnyOclTypeOperation realises the OclAny::oclType() library operation.
@@ -23,12 +27,12 @@ import org.eclipse.ocl.pivot.library.AbstractUntypedUnaryOperation;
 public class OclAnyOclTypeOperation extends AbstractUntypedUnaryOperation
 {
 	public static final @NonNull OclAnyOclTypeOperation INSTANCE = new OclAnyOclTypeOperation();
-	
+
 	/** @deprecated use Executor */
 	@Deprecated
 	@Override
 	public @NonNull Type evaluate(@NonNull Evaluator evaluator, @Nullable Object sourceValue) {
-		return evaluate(getExecutor(evaluator), sourceValue); 
+		return evaluate(getExecutor(evaluator), sourceValue);
 	}
 
 	/**
@@ -38,5 +42,24 @@ public class OclAnyOclTypeOperation extends AbstractUntypedUnaryOperation
 	public @NonNull Type evaluate(@NonNull Executor executor, @Nullable Object sourceVal) {
 //		return executor.getStaticTypeOf(sourceVal);
 		return executor.getIdResolver().getDynamicTypeOf(sourceVal);
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	@Override
+	public @Nullable Type resolveReturnType(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, @Nullable Type returnType) {
+		OCLExpression source = PivotUtil.getOwnedSource(callExp);
+		Type sourceType = PivotUtil.getType(source);
+		return environmentFactory.getIdResolver().getStaticTypeOfValue(null, sourceType);
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	@Override
+	public @Nullable Object resolveReturnValue(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp) {
+		OCLExpression source = PivotUtil.getOwnedSource(callExp);
+		return PivotUtil.getType(source);
 	}
 }

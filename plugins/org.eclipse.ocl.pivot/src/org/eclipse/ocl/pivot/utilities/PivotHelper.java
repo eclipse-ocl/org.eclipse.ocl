@@ -729,35 +729,27 @@ public class PivotHelper
 		}
 		Type returnType = null;
 		Type formalType = asOperation.getType();
-		boolean isTypeof = asOperation.isIsTypeof();
 		boolean returnIsRequired = asOperation.isIsRequired();
+		Object returnValue = null;			// Currently always a Type - see Bug 577902
 		if ((formalType != null) && (sourceType != null)) {
-			if (isTypeof) {
-				returnType = TemplateParameterSubstitutionVisitor.specializeType(formalType, asCallExp, (EnvironmentFactoryInternal)environmentFactory, sourceType, null);
-			}
-			else {
-				returnType = TemplateParameterSubstitutionVisitor.specializeType(formalType, asCallExp, (EnvironmentFactoryInternal)environmentFactory, sourceType, sourceTypeValue);
-			}
+			returnType = TemplateParameterSubstitutionVisitor.specializeType(formalType, asCallExp, (EnvironmentFactoryInternal)environmentFactory, sourceType, sourceTypeValue);
 		}
 		//
 		//	The flattening of collect() and consequently implicit-collect is not modelled accurately.
 		//	Other library operations have subtle non-null/size computations.
-		//	Therefore allow an operation-specific TemplateParameterSubstitutionHelper to adjust the regular functionality above.
+		//	Therefore allow an operation-specific overrides to adjust the regular functionality above.
 		//
 		LibraryIterationOrOperation implementation = (LibraryIterationOrOperation)asOperation.getImplementation();
 		if (implementation != null) {		// Library classes have implementations, Complete OCL classes may be recursive
 			returnType = implementation.resolveReturnType(environmentFactory, asCallExp, returnType);
 			returnIsRequired = implementation.resolveReturnNullity(environmentFactory, asCallExp, returnIsRequired);
-		}
-		Type returnTypeValue;
-		if (isTypeof) {
-			returnTypeValue = returnType;
-			returnType = standardLibrary.getClassType();
+			returnValue = implementation.resolveReturnValue(environmentFactory, asCallExp);
+			assert (returnValue == null) || ((returnType != null) && returnType.getName().equals(((EObject)returnValue).eClass().getName()));
 		}
 		else {
-			returnTypeValue = null;
+			assert !asOperation.isIsTypeof();			// typeof return declaration must now be realized by an operation override
 		}
-		setType(asCallExp, returnType, returnIsRequired, returnTypeValue);
+		setType(asCallExp, returnType, returnIsRequired, (Type)returnValue);
 	}
 
 	public void setType(@NonNull OCLExpression asExpression, Type type, boolean isRequired, @Nullable Type typeValue) {

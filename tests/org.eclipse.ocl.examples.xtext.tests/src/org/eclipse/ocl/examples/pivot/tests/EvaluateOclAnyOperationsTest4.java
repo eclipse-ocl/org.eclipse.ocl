@@ -367,6 +367,8 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 	@Test public void test_oclAsSet_implicit() {
 		MyOCL ocl = createOCL();
 		StandardLibrary standardLibrary = ocl.getStandardLibrary();
+		ocl.assertQueryEquals(null, standardLibrary.getBooleanType(), "true.oclType()");
+// XXX
 		ocl.assertQueryResults(null, "Set{true}", "true->select(true)");
 		ocl.assertQueryResults(null, "Set{true}", "Set{true}->select(true)");
 		ocl.assertQueryResults(null, "Set{}", "null->select(true)");
@@ -773,7 +775,7 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(null, "Set", "Set{1}->oclType().name");
 		ocl.assertSemanticErrorQuery(null, "Set{1}.allInstances()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Set(Integer)", "allInstances");
 		ocl.assertSemanticErrorQuery(null, "Set{1}->allInstances()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Set(Integer)", "allInstances");
-		ocl.assertSemanticErrorQuery(null, "Set{1}.oclType().allInstances()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Bag(Class)", "allInstances");
+		ocl.assertSemanticErrorQuery(null, "Set{1}.oclType().allInstances()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Bag(PrimitiveType)", "allInstances");
 		ocl.assertSemanticErrorQuery(null, "Set{1}->oclType().allInstances()", PivotMessagesInternal.UnresolvedStaticOperationCall_ERROR_, "Set(Integer)", "allInstances", "");
 		ocl.assertQueryResults(null, "Set{}", "Set.oclType().allInstances()");
 		ocl.assertQueryEquals(null, standardLibrary.getIntegerType(), "Set{1}->oclType().elementType");

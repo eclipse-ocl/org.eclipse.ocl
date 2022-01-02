@@ -50,6 +50,19 @@ public interface LibraryIterationOrOperation extends LibraryFeature
 	}
 
 	/**
+	 * Return the statically determinate result of callExp or null if unkown or too complicated.
+	 * </br>
+	 * This is currently used to obsolete the typeof declarations in OCL.2.5.oclstdlib.
+	 * </br>
+	 * It may evolve to a full constant folder.
+	 *
+	 * The default implementation just returns null for not known.
+	 */
+	default @Nullable Object resolveReturnValue(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp) {
+		return null;
+	}
+
+	/**
 	 * Add any templateParameter substitutions to templateParameterSubstitutions that the regular library modeling omits.
 	 *
 	 * The default implementation adds nothing. The intended usage for flatten where the input/output types are irregular.
