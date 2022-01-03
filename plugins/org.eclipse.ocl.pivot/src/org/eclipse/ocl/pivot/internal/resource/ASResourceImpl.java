@@ -11,6 +11,9 @@
 package org.eclipse.ocl.pivot.internal.resource;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -59,6 +62,15 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	 * @since 1.5
 	 */
 	public static final TracingOption CHECK_IMMUTABILITY = new TracingOption(PivotPlugin.PLUGIN_ID, "resource/checkImmutability"); //$NON-NLS-1$
+
+	/**
+	 * QVTd JUnit tests may set this false to load the saved XMI as text for validation that it is free of
+	 * references to undeclared xmi:ids. The OCL JUnit tests do not have sufficient referential complexity to have problems.
+	 * See Bug 578030.
+	 *
+	 * @since 1.18
+	 */
+	public static boolean SKIP_CHECK_BAD_REFERENCES = false;
 
 	/**
 	 * An adapter implementation for tracking resource modification.
@@ -318,6 +330,32 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 		return 0;
 	}
 
+	/**
+	 * Read the serialized representation to confirm that all external references
+	 * use an xmi:id to enhance persistence in the case of model evolution.
+	 */
+	private boolean isFreeOfBadReferences() throws IOException {
+		InputStream inputStream = getResourceSet().getURIConverter().createInputStream(uri);
+		Reader reader = new InputStreamReader(inputStream);
+		StringBuilder s = new StringBuilder();
+		char[] buf = new char[4096];
+		for (int len; (len = reader.read(buf)) > 0; ) {
+			s.append(buf, 0, len);
+		}
+		reader.close();
+		String string = s.toString();
+		int index = string.indexOf(";#//@");
+		if (index < 0) {
+			return true;
+		}
+		int preIndex = string.lastIndexOf("\n", index);
+		int postIndex = string.indexOf("\n", index);
+		String refText = string.substring(preIndex, postIndex).trim();
+		System.err.println("Missing xmi:id for reference in \'" + uri + "'\n\t" + refText);
+		// PivotLUSSIDs.isExternallyReferenceable determines what gets xmi:ids
+		return false;
+	}
+
 	@Override
 	public boolean isOrphanage() {
 		return false;
@@ -353,6 +391,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 			}
 			XMIUtil.IdResourceEntityHandler.reset(options);
 			super.save(options);
+			assert SKIP_CHECK_BAD_REFERENCES || isFreeOfBadReferences();
 		}
 	}
 

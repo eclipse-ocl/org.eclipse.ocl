@@ -16,6 +16,7 @@ import java.util.Map;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CollectionLiteralPart;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
@@ -23,16 +24,19 @@ import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LambdaType;
+import org.eclipse.ocl.pivot.MapLiteralPart;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.ShadowPart;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
+import org.eclipse.ocl.pivot.TupleLiteralPart;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
@@ -232,13 +236,28 @@ public class PivotLUSSIDs extends LUSSIDs
 				return true;
 			}
 		}
+		else if (eObject instanceof CollectionLiteralPart) {
+			return true;
+		}
 		else if (eObject instanceof Constraint) {
 			return true;
 		}
 		else if (eObject instanceof EnumerationLiteral) {
 			return true;
 		}
+		else if (eObject instanceof MapLiteralPart) {
+			return true;
+		}
 		else if (eObject instanceof Model) {
+			return true;
+		}
+		else if (eObject instanceof Parameter) {
+			return true;
+		}
+		else if (eObject instanceof ShadowPart) {
+			return true;
+		}
+		else if (eObject instanceof TupleLiteralPart) {
 			return true;
 		}
 		return false;
