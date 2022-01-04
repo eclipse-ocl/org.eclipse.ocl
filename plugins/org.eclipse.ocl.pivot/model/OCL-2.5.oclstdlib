@@ -580,16 +580,22 @@ abstract type Collection(T) : CollectionType conformsTo OclAny {
 --	operation "->"(T)(object2 : OclAny) : T precedence=NAVIGATION => 'org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation';
 	/**
 	Evaluates to the type of the collection elements.
+	
+	@Deprecated Use regular CollectionType property
 	**/
-	static property elementType : T[1] => 'org.eclipse.ocl.pivot.library.collection.CollectionElementTypeProperty';
+	static property elementType : T[1] => 'org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation';
 	/**
 	Evaluates to the lower bound on the number of collection elements.
+	
+	@Deprecated Use regular CollectionType property
 	**/
-	static property lower : Integer[1] => 'org.eclipse.ocl.pivot.library.collection.CollectionLowerProperty';
+	static property lower : Integer[1] => 'org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation';
 	/**
 	Evaluates to the upper bound on the number of collection elements.
+	
+	@Deprecated Use regular CollectionType property
 	**/
-	static property upper : Integer[1] => 'org.eclipse.ocl.pivot.library.collection.CollectionUpperProperty';
+	static property upper : Integer[1] => 'org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation';
 }
 
 /**
@@ -830,14 +836,6 @@ type Map(K,V) : MapType conformsTo OclAny {
 	The Bag comprising all the values of the key-value pairs in oclText[self].
 	**/
 	operation values() : Bag(V) => 'org.eclipse.ocl.pivot.library.map.MapValuesOperation';
-	/**
-	The key type of the key-value pairs of oclText[self].
-	**/
-	static property keyType : K[1] => 'org.eclipse.ocl.pivot.library.map.MapKeyTypeProperty';
-	/**
-	The value type of the key-value pairs of oclText[self].
-	**/
-	static property valueType : V[1] => 'org.eclipse.ocl.pivot.library.map.MapValueTypeProperty';
 }
 
 	/**
@@ -1921,6 +1919,37 @@ type Class {
 	*/
 	operation allInstances() : Set(OclSelf[*|1]) => 'org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation';
 }
+
+
+type CollectionType {
+	annotation 'http://www.omg.org/ocl'(ClassGroup='UML');
+	/**
+	Evaluates to the type of the collection elements.
+	**/
+	property elementType : Type[1] => 'org.eclipse.ocl.pivot.library.collection.CollectionElementTypeProperty';
+	/**
+	Evaluates to the lower bound on the number of collection elements.
+	**/
+	property lower : Integer[1] => 'org.eclipse.ocl.pivot.library.collection.CollectionLowerProperty';
+	/**
+	Evaluates to the upper bound on the number of collection elements.
+	**/
+	property upper : Integer[1] => 'org.eclipse.ocl.pivot.library.collection.CollectionUpperProperty';
+}
+
+type MapType {
+	annotation 'http://www.omg.org/ocl'(ClassGroup='UML');
+	/**
+	The key type of the key-value pairs of oclText[self].
+	**/
+	property keyType : Type[1] => 'org.eclipse.ocl.pivot.library.map.MapKeyTypeProperty';
+	/**
+	The value type of the key-value pairs of oclText[self].
+	**/
+	property valueType : Type[1] => 'org.eclipse.ocl.pivot.library.map.MapValueTypeProperty';
+}
+
+
 /**
  @Deprecated: Use OclEnumeration
  The Enumeration type is the type of an OrderedSet of EnumerationLiteral.

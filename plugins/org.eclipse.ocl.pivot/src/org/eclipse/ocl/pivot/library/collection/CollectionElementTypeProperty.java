@@ -42,14 +42,15 @@ public class CollectionElementTypeProperty extends AbstractProperty
 	 */
 	@Override
 	public @NonNull Type evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
-		if (sourceValue instanceof CollectionType) {				// Legacy compatibility.
-		//	assert false: "Use MapType.getElementType() directly";
-			return PivotUtil.getElementType((CollectionType) sourceValue);
+		if (sourceValue instanceof CollectionValue) {				// Legacy compatibility.
+			CollectionValue collectionValue = asCollectionValue(sourceValue);
+			assert false: "Use CollectionType.getKeyType() directly";
+			CollectionTypeId collectionTypeId = collectionValue.getTypeId();
+			TypeId elementTypeId = collectionTypeId.getElementTypeId();
+			IdResolver idResolver = executor.getIdResolver();
+			return idResolver.getType(elementTypeId);
 		}
-		CollectionValue collectionValue = asCollectionValue(sourceValue);
-		CollectionTypeId collectionTypeId = collectionValue.getTypeId();
-		TypeId elementTypeId = collectionTypeId.getElementTypeId();
-		IdResolver idResolver = executor.getIdResolver();
-		return idResolver.getType(elementTypeId);
+		CollectionType collectionType = asCollectionType(sourceValue);
+		return PivotUtil.getElementType(collectionType);
 	}
 }

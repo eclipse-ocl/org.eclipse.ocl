@@ -33,7 +33,7 @@ public class EcoreExecutorPackage extends ExecutorPackage
 {
 	protected final EPackage ePackage;
 	private ExecutorStandardLibrary standardLibrary = null;
-	private ExecutorType[] types = null;
+	private @NonNull ExecutorType[] types = null;
 	private @Nullable List<org.eclipse.ocl.pivot.Package> packages = null;
 
 	public EcoreExecutorPackage(/*@NonNull*/ EPackage ePackage) {
@@ -103,7 +103,7 @@ public class EcoreExecutorPackage extends ExecutorPackage
 			return types[index];
 		}
 		//	Should be sorted, but do linear search just in case
-		for (org.eclipse.ocl.pivot.Class type : types) {
+		for (org.eclipse.ocl.pivot.@NonNull Class type : types) {
 			if (type.getName().equals(typeName)) {
 				return (ExecutorType) type;
 			}

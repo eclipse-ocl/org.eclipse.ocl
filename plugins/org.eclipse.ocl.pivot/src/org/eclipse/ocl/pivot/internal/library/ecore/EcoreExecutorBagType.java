@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2018 Willink Transformations and others.
+ * Copyright (c) 2021 Willink Transformations and others.
  * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -11,21 +11,18 @@
 package org.eclipse.ocl.pivot.internal.library.ecore;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.InvalidType;
-import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.ids.BuiltInTypeId;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorPackage;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorTypeParameter;
 
-public class EcoreExecutorInvalidType extends EcoreExecutorType implements InvalidType
+/**
+ * @since 1.18
+ */
+public class EcoreExecutorBagType extends EcoreExecutorCollectionType implements BagType
+//Initialization of OCLstdlibTables gives a NoSuchFieldError if EcoreExecutorAnyType is a nested class.
 {
-	public EcoreExecutorInvalidType(@NonNull BuiltInTypeId typeId, @NonNull ExecutorPackage evaluationPackage, int flags, @NonNull ExecutorTypeParameter @NonNull ... typeParameters) {
-		super(typeId, evaluationPackage, flags | OCL_INVALID, typeParameters);
-	}
-
-	@Override
-	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
-		return true;
+	public EcoreExecutorBagType(@NonNull BuiltInTypeId typeId, @NonNull ExecutorPackage evaluationPackage, int flags, @NonNull ExecutorTypeParameter typeParameter) {
+		super(typeId, evaluationPackage, flags, typeParameter);
 	}
 }

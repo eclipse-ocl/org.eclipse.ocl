@@ -14,20 +14,70 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.OrderedSetType;
+import org.eclipse.ocl.pivot.SequenceType;
+import org.eclipse.ocl.pivot.SetType;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
+import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.Unlimited;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
-public class ExecutorCollectionType extends AbstractSpecializedType implements CollectionType
+public /*abstract*/ class ExecutorCollectionType extends AbstractSpecializedType implements CollectionType
 {
+	/**
+	 * @since 1.18
+	 */
+	public static class ExecutorBagType extends ExecutorCollectionType implements BagType
+	{
+		public ExecutorBagType(@NonNull String name, org.eclipse.ocl.pivot.@NonNull Class containerType,
+				@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
+			super(name, containerType, elementType, isNullFree, lower, upper);
+		}
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	public static class ExecutorOrderedSetType extends ExecutorCollectionType implements OrderedSetType
+	{
+		public ExecutorOrderedSetType(@NonNull String name, org.eclipse.ocl.pivot.@NonNull Class containerType,
+				@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
+			super(name, containerType, elementType, isNullFree, lower, upper);
+		}
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	public static class ExecutorSequenceType extends ExecutorCollectionType implements SequenceType
+	{
+		public ExecutorSequenceType(@NonNull String name, org.eclipse.ocl.pivot.@NonNull Class containerType,
+				@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
+			super(name, containerType, elementType, isNullFree, lower, upper);
+		}
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	public static class ExecutorSetType extends ExecutorCollectionType implements SetType
+	{
+		public ExecutorSetType(@NonNull String name, org.eclipse.ocl.pivot.@NonNull Class containerType,
+				@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
+			super(name, containerType, elementType, isNullFree, lower, upper);
+		}
+	}
+
 	protected final @NonNull Type elementType;
 	protected final boolean isNullFree;
 	protected final @NonNull IntegerValue lower;
@@ -104,7 +154,7 @@ public class ExecutorCollectionType extends AbstractSpecializedType implements C
 
 	@Override
 	public Number getLower() {
-		throw new UnsupportedOperationException();
+		return lower.asNumber();
 	}
 
 	@Override
@@ -129,7 +179,7 @@ public class ExecutorCollectionType extends AbstractSpecializedType implements C
 
 	@Override
 	public Number getUpper() {
-		throw new UnsupportedOperationException();
+		return upper.isUnlimited() ? Unlimited.INSTANCE : upper.intValue();
 	}
 
 	@Override
@@ -193,6 +243,19 @@ public class ExecutorCollectionType extends AbstractSpecializedType implements C
 
 	@Override
 	public String toString() {
-		return String.valueOf(containerType) + "(" + String.valueOf(elementType) + ")"; //$NON-NLS-1$ //$NON-NLS-2$
+//		return String.valueOf(containerType) + "(" + String.valueOf(elementType) + ")"; //$NON-NLS-1$ //$NON-NLS-2$
+		StringBuilder s = new StringBuilder();
+		s.append(containerType);
+		s.append("(");
+		s.append(elementType.toString());
+		Number lower = getLower();
+		Number upper = getUpper();
+		long lowerValue = lower != null ? lower.longValue() : 0l;		// FIXME Handle BigInteger
+		long upperValue = (upper != null) && (upper != Unlimited.INSTANCE) ? upper.longValue() : -1l;
+		if (/*SHOW_ALL_MULTIPLICITIES ||*/ (lowerValue != 0) || (upperValue != -1) || !isIsNullFree()) {
+			StringUtil.appendMultiplicity(s, lowerValue, upperValue, isIsNullFree());
+		}
+		s.append(")");
+		return s.toString();
 	}
 }

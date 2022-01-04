@@ -59,7 +59,7 @@ public class ClassifierAllInstancesOperation extends AbstractUnaryOperation
 				instances = ecoreModelManager.getInstances(type.getTypeId());
 			}
 		}
-		else {	// Never happens always an EcoreModelManager
+		else {	// Never happens always an EcoreModelManager -- no still used by QVTi - testQVTiInterpreter_Graph2GraphHierarchical
 			instances = modelManager.get(type);
 		}
 		Set<Object> results = new HashSet<Object>();

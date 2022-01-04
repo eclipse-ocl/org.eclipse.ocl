@@ -1001,6 +1001,8 @@ public abstract class ValueUtil
 	}
 
 	public static boolean isUnlimited(@Nullable Object value) {
+		// FIXME Unify the two Unlimited classes
+		// return (value instanceof UnlimitedValue) && !(value instanceof NullValue);
 		return (value instanceof UnlimitedValue) && !(value instanceof NullValue);
 	}
 

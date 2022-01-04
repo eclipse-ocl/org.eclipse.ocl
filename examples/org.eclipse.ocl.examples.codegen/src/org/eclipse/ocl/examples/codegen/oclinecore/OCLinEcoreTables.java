@@ -33,6 +33,8 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.genmodel.OCLGenModelUtil;
 import org.eclipse.ocl.pivot.AnyType;
+import org.eclipse.ocl.pivot.BagType;
+import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Enumeration;
@@ -42,6 +44,7 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.ParameterTypes;
+import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
@@ -53,11 +56,19 @@ import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorAnyType;
+import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorBagType;
+import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorBooleanType;
+import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorCollectionType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorEnumeration;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorEnumerationLiteral;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorInvalidType;
+import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorOrderedSetType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorPackage;
+import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorPrimitiveType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorProperty;
+import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorSequenceType;
+import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorSetType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorVoidType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreLibraryOppositeProperty;
@@ -869,11 +880,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 	}
 
 	protected void declareType(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-		Class<?> typeClass =
-				asClass instanceof Enumeration ? EcoreExecutorEnumeration.class :
-					asClass instanceof InvalidType ? EcoreExecutorInvalidType.class :
-						asClass instanceof VoidType ? EcoreExecutorVoidType.class :
-							EcoreExecutorType.class;
+		Class<?> typeClass = getEcoreExecutorClass(asClass);
 		EClassifier eClassifier = ClassUtil.nonNullState((EClassifier)asClass.getESObject());
 		s.append("		public static final ");
 		s.appendClassReference(true, typeClass);
@@ -1235,6 +1242,43 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 
 	protected String getGenPackagePrefix() {
 		return genPackage.getPrefix();
+	}
+
+	protected @NonNull Class<?> getEcoreExecutorClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		if (asClass instanceof AnyType) {
+			return EcoreExecutorAnyType.class;
+		}
+		else if (asClass instanceof BagType) {
+			return EcoreExecutorBagType.class;
+		}
+		else if (asClass instanceof BooleanType) {
+			return EcoreExecutorBooleanType.class;
+		}
+		else if (asClass instanceof Enumeration) {
+			return EcoreExecutorEnumeration.class;
+		}
+		else if (asClass instanceof InvalidType) {
+			return EcoreExecutorInvalidType.class;
+		}
+		else if (asClass instanceof PrimitiveType) {
+			return EcoreExecutorPrimitiveType.class;
+		}
+		else if (asClass instanceof OrderedSetType) {
+			return EcoreExecutorOrderedSetType.class;
+		}
+		else if (asClass instanceof SequenceType) {
+			return EcoreExecutorSequenceType.class;
+		}
+		else if (asClass instanceof SetType) {
+			return EcoreExecutorSetType.class;
+		}
+		else if (asClass instanceof VoidType) {
+			return EcoreExecutorVoidType.class;
+		}
+		else if (asClass instanceof CollectionType) {
+			return EcoreExecutorCollectionType.class;
+		}
+		return EcoreExecutorType.class;
 	}
 
 	public @NonNull String getTablesClassName() {

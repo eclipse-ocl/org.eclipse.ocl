@@ -794,21 +794,40 @@
         <ownedComments body="The bag consisting of all elements in oclText[self] and all elements in c.&#xA;"/>
         <ownedParameters xmi:id="CoRBF" name="c" type="#IgEJU"/>
       </ownedOperations>
-      <ownedProperties xmi:id="WTuwp" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionElementTypeProperty" isStatic="true"
+      <ownedProperties xmi:id="WTuwp" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation" isStatic="true"
           name="elementType" type="#qs59R">
-        <ownedComments body="Evaluates to the type of the collection elements.&#xA;"/>
+        <ownedComments body="Evaluates to the type of the collection elements.&#xA;&#xA;@Deprecated Use regular CollectionType property&#xA;"/>
       </ownedProperties>
-      <ownedProperties xmi:id="BucvH" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionLowerProperty" isStatic="true"
+      <ownedProperties xmi:id="BucvH" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation" isStatic="true"
           name="lower" type="#tYtCd">
-        <ownedComments body="Evaluates to the lower bound on the number of collection elements.&#xA;"/>
+        <ownedComments body="Evaluates to the lower bound on the number of collection elements.&#xA;&#xA;@Deprecated Use regular CollectionType property&#xA;"/>
       </ownedProperties>
-      <ownedProperties xmi:id="ikPPI" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionUpperProperty" isStatic="true"
+      <ownedProperties xmi:id="ikPPI" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation" isStatic="true"
           name="upper" type="#tYtCd">
-        <ownedComments body="Evaluates to the upper bound on the number of collection elements.&#xA;"/>
+        <ownedComments body="Evaluates to the upper bound on the number of collection elements.&#xA;&#xA;@Deprecated Use regular CollectionType property&#xA;"/>
       </ownedProperties>
       <ownedSignature>
         <ownedParameters xmi:id="qs59R" name="T"/>
       </ownedSignature>
+    </ownedClasses>
+    <ownedClasses xmi:id="nwL7b" name="CollectionType" superClasses="#zfDWR">
+      <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
+        <ownedDetails name="ClassGroup">
+          <values>UML</values>
+        </ownedDetails>
+      </ownedAnnotations>
+      <ownedProperties xmi:id="5RgO0" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionElementTypeProperty" name="elementType"
+          type="#pBMRF">
+        <ownedComments body="Evaluates to the type of the collection elements.&#xA;"/>
+      </ownedProperties>
+      <ownedProperties xmi:id="ksONS" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionLowerProperty" name="lower"
+          type="#tYtCd">
+        <ownedComments body="Evaluates to the lower bound on the number of collection elements.&#xA;"/>
+      </ownedProperties>
+      <ownedProperties xmi:id="FjBtS" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionUpperProperty" name="upper"
+          type="#tYtCd">
+        <ownedComments body="Evaluates to the upper bound on the number of collection elements.&#xA;"/>
+      </ownedProperties>
     </ownedClasses>
     <ownedClasses xmi:id="28WYD" name="Enumeration" superClasses="#hlrMH">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
@@ -1144,18 +1163,23 @@
       <ownedOperations xmi:id="2hNV5" implementationClass="org.eclipse.ocl.pivot.library.map.MapValuesOperation" name="values" type="#uivet">
         <ownedComments body="The Bag comprising all the values of the key-value pairs in oclText[self].&#xA;"/>
       </ownedOperations>
-      <ownedProperties xmi:id="w,Rmk" implementationClass="org.eclipse.ocl.pivot.library.map.MapKeyTypeProperty" isStatic="true" name="keyType"
-          type="#8dAuH">
-        <ownedComments body="The key type of the key-value pairs of oclText[self].&#xA;"/>
-      </ownedProperties>
-      <ownedProperties xmi:id="CoDkn" implementationClass="org.eclipse.ocl.pivot.library.map.MapValueTypeProperty" isStatic="true" name="valueType"
-          type="#HeAuH">
-        <ownedComments body="The value type of the key-value pairs of oclText[self].&#xA;"/>
-      </ownedProperties>
       <ownedSignature>
         <ownedParameters xmi:id="8dAuH" name="K"/>
         <ownedParameters xmi:id="HeAuH" name="V"/>
       </ownedSignature>
+    </ownedClasses>
+    <ownedClasses xmi:id="l+ONa" name="MapType" superClasses="#zfDWR">
+      <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
+        <ownedDetails name="ClassGroup">
+          <values>UML</values>
+        </ownedDetails>
+      </ownedAnnotations>
+      <ownedProperties xmi:id="ifXaB" implementationClass="org.eclipse.ocl.pivot.library.map.MapKeyTypeProperty" name="keyType" type="#pBMRF">
+        <ownedComments body="The key type of the key-value pairs of oclText[self].&#xA;"/>
+      </ownedProperties>
+      <ownedProperties xmi:id="0HJYE" implementationClass="org.eclipse.ocl.pivot.library.map.MapValueTypeProperty" name="valueType" type="#pBMRF">
+        <ownedComments body="The value type of the key-value pairs of oclText[self].&#xA;"/>
+      </ownedProperties>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:AnyType" xmi:id="jbMkR" isAbstract="true" name="OclAny">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
@@ -2388,6 +2412,9 @@
         <ownedComments body="Returns true if type2 conforms to self."/>
         <ownedParameters xmi:id="8VOCv" isRequired="false" name="type2" type="#pBMRF"/>
       </ownedOperations>
+      <ownedProperties xmi:id="PjpFg" isImplicit="true" name="CollectionType" opposite="#5RgO0" type="#JSczz"/>
+      <ownedProperties xmi:id="CWW9w" isImplicit="true" name="MapType" opposite="#ifXaB" type="#Xt65a"/>
+      <ownedProperties xmi:id="AwxtF" isImplicit="true" name="MapType" opposite="#0HJYE" type="#Xt65a"/>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="5a0EE" isAbstract="true" name="UniqueCollection" superClasses="#AMe4i">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
@@ -2475,6 +2502,16 @@
     <ownedPrecedences xmi:id="1Odhg" name="IMPLIES"/>
   </ownedPackages>
   <ownedPackages URI="http://www.eclipse.org/ocl/2015/Orphanage" name="$$" nsPrefix="orphanage">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="JSczz" name="Bag" superClasses="#ftE1C">
+      <ownedBindings>
+        <ownedSubstitutions actual="#nwL7b" formal="#k2OA6"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="Xt65a" name="Bag" superClasses="#tIj7p">
+      <ownedBindings>
+        <ownedSubstitutions actual="#l+ONa" formal="#k2OA6"/>
+      </ownedBindings>
+    </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="158KG" name="Bag" superClasses="#LVlMV">
       <ownedBindings>
         <ownedSubstitutions actual="#zfDWR" formal="#k2OA6"/>
@@ -2535,6 +2572,11 @@
         <ownedSubstitutions actual="#BkHat" formal="#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="ftE1C" name="Collection" superClasses="#jbMkR">
+      <ownedBindings>
+        <ownedSubstitutions actual="#nwL7b" formal="#qs59R"/>
+      </ownedBindings>
+    </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="1d1Sm" name="Collection" superClasses="#jbMkR">
       <ownedBindings>
         <ownedSubstitutions actual="#tYtCd" formal="#qs59R"/>
@@ -2558,6 +2600,11 @@
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="svXg8" name="Collection" superClasses="#jbMkR">
       <ownedBindings>
         <ownedSubstitutions actual="#8dAuH" formal="#qs59R"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="tIj7p" name="Collection" superClasses="#jbMkR">
+      <ownedBindings>
+        <ownedSubstitutions actual="#l+ONa" formal="#qs59R"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="7aA3o" name="Collection" superClasses="#jbMkR">

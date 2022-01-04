@@ -39,6 +39,10 @@ import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorElement;
 import org.eclipse.ocl.pivot.internal.executor.ExecutorCollectionType;
+import org.eclipse.ocl.pivot.internal.executor.ExecutorCollectionType.ExecutorBagType;
+import org.eclipse.ocl.pivot.internal.executor.ExecutorCollectionType.ExecutorOrderedSetType;
+import org.eclipse.ocl.pivot.internal.executor.ExecutorCollectionType.ExecutorSequenceType;
+import org.eclipse.ocl.pivot.internal.executor.ExecutorCollectionType.ExecutorSetType;
 import org.eclipse.ocl.pivot.internal.executor.ExecutorMapType;
 import org.eclipse.ocl.pivot.internal.executor.ExecutorTupleType;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
@@ -140,7 +144,21 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 			specializedType = weakGet(map, typeParameters);
 		}
 		if (specializedType == null) {
-			specializedType = new ExecutorCollectionType(ClassUtil.nonNullModel(genericType.getName()), genericType, elementType, isNullFree, lower, upper);
+			if (genericType == getBagType()) {
+				specializedType = new ExecutorBagType(ClassUtil.nonNullModel(genericType.getName()), genericType, elementType, isNullFree, lower, upper);
+			}
+			else if (genericType == getOrderedSetType()) {
+				specializedType = new ExecutorOrderedSetType(ClassUtil.nonNullModel(genericType.getName()), genericType, elementType, isNullFree, lower, upper);
+			}
+			else if (genericType == getSequenceType()) {
+				specializedType = new ExecutorSequenceType(ClassUtil.nonNullModel(genericType.getName()), genericType, elementType, isNullFree, lower, upper);
+			}
+			else if (genericType == getSetType()) {
+				specializedType = new ExecutorSetType(ClassUtil.nonNullModel(genericType.getName()), genericType, elementType, isNullFree, lower, upper);
+			}
+			else {		// Never happens - ExecutorCollectionType could be abstract
+				specializedType = new ExecutorCollectionType(ClassUtil.nonNullModel(genericType.getName()), genericType, elementType, isNullFree, lower, upper);
+			}
 			map.put(typeParameters, new WeakReference<>(specializedType));
 		}
 		return specializedType;

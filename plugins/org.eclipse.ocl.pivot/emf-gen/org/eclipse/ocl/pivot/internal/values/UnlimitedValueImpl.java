@@ -31,6 +31,8 @@ import org.eclipse.ocl.pivot.values.ValuesPackage;
 
 /**
  * @generated NOT
+ *
+ * FIXME Unify with Unlimited
  */
 public class UnlimitedValueImpl extends NumberValueImpl implements UnlimitedValue
 {

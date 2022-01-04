@@ -42,14 +42,15 @@ public class MapValueTypeProperty extends AbstractProperty
 	 */
 	@Override
 	public @NonNull Type evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
-		if (sourceValue instanceof MapType) {				// Legacy compatibility.
-		//	assert false: "Use MapType.getValueType() directly";
-			return PivotUtil.getValueType((MapType) sourceValue);
+		if (sourceValue instanceof MapValue) {				// Legacy compatibility.
+			MapValue mapValue = asMapValue(sourceValue);
+			assert false: "Use MapType.getValueType() directly";
+			MapTypeId mapTypeId = mapValue.getTypeId();
+			TypeId valueTypeId = mapTypeId.getValueTypeId();
+			IdResolver idResolver = executor.getIdResolver();
+			return idResolver.getType(valueTypeId);
 		}
-		MapValue mapValue = asMapValue(sourceValue);
-		MapTypeId mapTypeId = mapValue.getTypeId();
-		TypeId valueTypeId = mapTypeId.getValueTypeId();
-		IdResolver idResolver = executor.getIdResolver();
-		return idResolver.getType(valueTypeId);
+		MapType mapType = asMapType(sourceValue);
+		return PivotUtil.getValueType(mapType);
 	}
 }

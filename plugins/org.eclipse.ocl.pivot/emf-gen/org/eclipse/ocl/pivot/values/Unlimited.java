@@ -14,6 +14,8 @@ import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * Unlimited represents the unlimited value as a distinct java.lang.Number derived class that can be identified by instanceof.
+ *
+ * FIXME Unify with UnlimitedValueImpl
  */
 public class Unlimited extends Number
 {

@@ -15,8 +15,11 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.AbstractProperty;
+import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 
 /**
@@ -25,12 +28,12 @@ import org.eclipse.ocl.pivot.values.IntegerValue;
 public class CollectionLowerProperty extends AbstractProperty
 {
 	public static final @NonNull CollectionLowerProperty INSTANCE = new CollectionLowerProperty();
-	
+
 	/** @deprecated use Executor */
 	@Deprecated
 	@Override
 	public @Nullable IntegerValue evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
-		return evaluate(getExecutor(evaluator), returnTypeId, sourceValue); 
+		return evaluate(getExecutor(evaluator), returnTypeId, sourceValue);
 	}
 
 	/**
@@ -38,7 +41,15 @@ public class CollectionLowerProperty extends AbstractProperty
 	 */
 	@Override
 	public @NonNull IntegerValue evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
-		CollectionType sourceType = asCollectionType(sourceValue);
-		return sourceType.getLowerValue();
+		if (sourceValue instanceof CollectionValue) {				// Legacy compatibility.
+			CollectionValue collectionValue = asCollectionValue(sourceValue);
+			assert false: "Use CollectionType.getLowerValue() directly";
+			CollectionTypeId collectionTypeId = collectionValue.getTypeId();
+			IdResolver idResolver = executor.getIdResolver();
+			CollectionType collectionType = (CollectionType) idResolver.getType(collectionTypeId);
+			return collectionType.getLowerValue();
+		}
+		CollectionType collectionType = asCollectionType(sourceValue);
+		return collectionType.getLowerValue();
 	}
 }
