@@ -435,7 +435,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	public void defineLibraryType(org.eclipse.ocl.pivot.@NonNull Class pivotType) {
 		Map<String, org.eclipse.ocl.pivot.Class> nameToLibraryTypeMap2 = nameToLibraryTypeMap;
 		if (nameToLibraryTypeMap2 == null) {
-			nameToLibraryTypeMap = nameToLibraryTypeMap2 = new HashMap<String, org.eclipse.ocl.pivot.Class>();
+			nameToLibraryTypeMap = nameToLibraryTypeMap2 = new HashMap<>();
 		}
 		String name = pivotType.getName();
 		org.eclipse.ocl.pivot.Class oldType = nameToLibraryTypeMap2.put(name, pivotType);
@@ -448,7 +448,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	public void defineLibraryTypes(@NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> pivotTypes) {
 		Map<String, org.eclipse.ocl.pivot.Class> nameToLibraryTypeMap2 = nameToLibraryTypeMap;
 		if (nameToLibraryTypeMap2 == null) {
-			nameToLibraryTypeMap = nameToLibraryTypeMap2 = new HashMap<String, org.eclipse.ocl.pivot.Class>();
+			nameToLibraryTypeMap = nameToLibraryTypeMap2 = new HashMap<>();
 		}
 		for (org.eclipse.ocl.pivot.@NonNull Class pivotType : pivotTypes) {
 			String name = pivotType.getName();
@@ -570,7 +570,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	public org.eclipse.ocl.pivot.Class getLibraryType(@NonNull String typeName) {
 		Map<String, org.eclipse.ocl.pivot.Class> nameToLibraryTypeMap2 = nameToLibraryTypeMap;
 		if (nameToLibraryTypeMap2 == null) {
-			nameToLibraryTypeMap = nameToLibraryTypeMap2 = new HashMap<String, org.eclipse.ocl.pivot.Class>();
+			nameToLibraryTypeMap = nameToLibraryTypeMap2 = new HashMap<>();
 			loadDefaultLibrary(defaultStandardLibraryURI);
 		}
 		return nameToLibraryTypeMap2.get(typeName);

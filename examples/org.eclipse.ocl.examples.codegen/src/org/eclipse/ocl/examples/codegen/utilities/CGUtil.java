@@ -41,13 +41,19 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
+import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.ElementId;
+import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OclVoidTypeId;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 public class CGUtil
 {
@@ -263,7 +269,29 @@ public class CGUtil
 	public static @Nullable Boolean isKindOf(@NonNull CGValuedElement cgValue, @NonNull CGExecutorType executorType) {
 		CGTypeId referenceTypeId = executorType.getUnderlyingTypeId();
 		CGTypeId actualTypeId = cgValue.getTypeId();
-		return referenceTypeId == actualTypeId ? Boolean.TRUE : null;			// FIXME support conformance somehow
+	//	return referenceTypeId == actualTypeId ? Boolean.TRUE : null;		// FIXME support conformance somehow
+		if (referenceTypeId == actualTypeId) {
+			return Boolean.TRUE;
+		}
+		Executor executor = PivotUtil.getExecutor(cgValue);
+		assert executor != null;
+		IdResolver idResolver = executor.getIdResolver();
+		StandardLibrary standardLibrary = executor.getStandardLibrary();
+		TypeId asReferenceTypeId = referenceTypeId.getASTypeId();
+		assert asReferenceTypeId != null;
+		TypeId asActualTypeId = actualTypeId.getASTypeId();
+		assert asActualTypeId != null;
+		Type asReferenceType = idResolver.getType(asReferenceTypeId);
+		Type asActualType = idResolver.getType(asActualTypeId);
+		if (asActualType.conformsTo(standardLibrary, asReferenceType)) {
+			return Boolean.TRUE;				// Guaranteed conformance
+		}
+		else if (!asReferenceType.conformsTo(standardLibrary, asActualType)) {
+			return Boolean.FALSE;				// Guaranteed non-conformance
+		}
+		else {
+			return null;						// Run-time conformance test required
+		}
 	}
 
 	/**
