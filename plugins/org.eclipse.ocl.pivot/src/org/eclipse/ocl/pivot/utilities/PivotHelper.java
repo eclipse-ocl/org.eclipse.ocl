@@ -15,6 +15,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.emf.common.util.TreeIterator;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
@@ -65,7 +66,6 @@ import org.eclipse.ocl.pivot.ShadowExp;
 import org.eclipse.ocl.pivot.ShadowPart;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.StringLiteralExp;
-import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TupleLiteralExp;
 import org.eclipse.ocl.pivot.TupleLiteralPart;
 import org.eclipse.ocl.pivot.TupleType;
@@ -494,7 +494,10 @@ public class PivotHelper
 		asTypeExp.setIsRequired(true);
 		asTypeExp.setReferredType(type);
 		asTypeExp.setName(type.getName());
-		asTypeExp.setType(type instanceof TemplateParameter ? metamodelManager.getOclType("TemplateParameter") : standardLibrary.getClassType());
+	//	asTypeExp.setType(type instanceof TemplateParameter ? metamodelManager.getOclType("TemplateParameter") : standardLibrary.getClassType());
+		EClass eClass = type.eClass();
+		assert eClass != null;
+		asTypeExp.setType(environmentFactory.getIdResolver().getType(eClass));
 		asTypeExp.setTypeValue(type);
 		return asTypeExp;
 	}
@@ -744,7 +747,7 @@ public class PivotHelper
 			returnType = implementation.resolveReturnType(environmentFactory, asCallExp, returnType);
 			returnIsRequired = implementation.resolveReturnNullity(environmentFactory, asCallExp, returnIsRequired);
 			returnValue = implementation.resolveReturnValue(environmentFactory, asCallExp);
-			assert (returnValue == null) || ((returnType != null) && returnType.getName().equals(((EObject)returnValue).eClass().getName()));
+		//	assert (returnValue == null) || ((returnType != null) && returnType.getName().equals(((EObject)returnValue).eClass().getName()));	// Not valid once AnyType/VoidType get involved
 		}
 		else {
 			assert !asOperation.isIsTypeof();			// typeof return declaration must now be realized by an operation override

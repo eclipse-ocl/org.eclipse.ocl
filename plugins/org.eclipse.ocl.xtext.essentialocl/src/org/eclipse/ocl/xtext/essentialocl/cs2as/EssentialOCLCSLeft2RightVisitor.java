@@ -32,7 +32,6 @@ import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.EnumLiteralExp;
-import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.FeatureCallExp;
@@ -79,6 +78,7 @@ import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
+import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
@@ -1531,16 +1531,8 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 
 	protected @NonNull TypeExp resolveTypeExp(@NonNull ExpCS csExp, @NonNull Type type) {
 		TypeExp expression = context.refreshModelElement(TypeExp.class, PivotPackage.Literals.TYPE_EXP, csExp);
-		Type asType = null;
-		if (type instanceof Enumeration) {
-			asType = standardLibrary.getEnumerationType();
-		}
-		else if (type instanceof TemplateParameter) {
-			asType = metamodelManager.getOclType("TemplateParameter");
-		}
-		else {				// ?? more alternatives
-			asType = standardLibrary.getClassType();
-		}
+		IdResolver idResolver = metamodelManager.getEnvironmentFactory().getIdResolver();
+		Type asType = idResolver.getStaticTypeOfValue(null, type);
 		helper.setType(expression, asType, true, type);
 		expression.setReferredType(type);
 		expression.setName(type.getName());
