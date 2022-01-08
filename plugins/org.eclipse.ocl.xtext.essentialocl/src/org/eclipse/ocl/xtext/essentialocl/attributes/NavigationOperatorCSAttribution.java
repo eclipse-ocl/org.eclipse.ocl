@@ -60,11 +60,11 @@ public class NavigationOperatorCSAttribution extends AbstractAttribution
 					}
 					if (staticType != null) {
 						try {
-							environmentView.addFilter(STATIC_SCOPE_FILTER);
+							environmentView.addFilter(EXTENSION_SCOPE_FILTER);
 							environmentView.addElementsOfScope(staticType, scopeView);
 						}
 						finally {
-							environmentView.removeFilter(STATIC_SCOPE_FILTER);
+							environmentView.removeFilter(EXTENSION_SCOPE_FILTER);
 						}
 					}
 				}

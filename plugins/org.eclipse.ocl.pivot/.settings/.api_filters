@@ -1460,6 +1460,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/scoping/AbstractAttribution.java" type="org.eclipse.ocl.pivot.internal.scoping.AbstractAttribution">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.scoping.AbstractAttribution"/>
+                <message_argument value="EXTENSION_SCOPE_FILTER"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/internal/utilities/AS2Moniker.java" type="org.eclipse.ocl.pivot.internal.utilities.AS2Moniker">
         <filter comment="Bug 512402 workaround" id="576725006">
             <message_arguments>
@@ -1614,6 +1622,14 @@
             <message_arguments>
                 <message_argument value="PivotConstantsInternal"/>
                 <message_argument value="AS2MonikerVisitor"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/utilities/FeatureFilter.java" type="org.eclipse.ocl.pivot.utilities.FeatureFilter">
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.utilities.FeatureFilter"/>
+                <message_argument value="SELECT_EXTENSION"/>
             </message_arguments>
         </filter>
     </resource>

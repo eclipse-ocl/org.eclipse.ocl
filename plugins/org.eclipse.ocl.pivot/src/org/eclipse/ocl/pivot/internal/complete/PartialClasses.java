@@ -209,7 +209,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 			}
 		}
 		extensionProperty.setIsRequired(isRequired);
-		extensionProperty.setIsStatic(true);
+		extensionProperty.setIsStatic(false);
 		return extensionProperty;
 	}
 
@@ -858,8 +858,8 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 					Type metatype = metaCompletePackage.getType(metatypeName);
 					if (metatype != null) {
 						CompleteClass metaCompleteClass = getCompleteModel().getCompleteClass(metatype);
-						for (@NonNull Property property : metaCompleteClass.getProperties(FeatureFilter.SELECT_STATIC)) {
-							didAddProperty(property);
+						for (@NonNull Property property : metaCompleteClass.getProperties(FeatureFilter.SELECT_EXTENSION)) {
+							didAddProperty(property);	// FIXME Clone the M2 property to have the correct M1 container/type
 						}
 					}
 				}

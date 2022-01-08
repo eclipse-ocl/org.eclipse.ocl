@@ -14,6 +14,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Feature;
+import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.Stereotype;
 
 /**
  * Ann AbstractAttribution provides the basic behaviour for a family of derived
@@ -23,9 +25,9 @@ import org.eclipse.ocl.pivot.Feature;
 public abstract class AbstractAttribution implements Attribution
 {
 	/**
-	 * @since 1.5
+	 * @since 1.18
 	 */
-	protected static final @NonNull ScopeFilter NOT_STATIC_SCOPE_FILTER = new ScopeFilter()
+	public static final @NonNull ScopeFilter NOT_STATIC_SCOPE_FILTER = new ScopeFilter()
 	{
 		@Override
 		public boolean matches(@NonNull EnvironmentView environmentView, @NonNull Object object) {
@@ -41,6 +43,17 @@ public abstract class AbstractAttribution implements Attribution
 		@Override
 		public boolean matches(@NonNull EnvironmentView environmentView, @NonNull Object object) {
 			return (object instanceof Feature) && ((Feature)object).isIsStatic();
+		}
+	};
+
+	/**
+	 * @since 1.18
+	 */
+	public static final @NonNull ScopeFilter EXTENSION_SCOPE_FILTER = new ScopeFilter()
+	{
+		@Override
+		public boolean matches(@NonNull EnvironmentView environmentView, @NonNull Object object) {
+			return (object instanceof Property) && (((Property)object).getType() instanceof Stereotype);
 		}
 	};
 

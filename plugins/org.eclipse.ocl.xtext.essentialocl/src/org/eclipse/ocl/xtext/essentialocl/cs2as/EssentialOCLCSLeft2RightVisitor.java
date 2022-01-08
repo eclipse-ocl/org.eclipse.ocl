@@ -84,6 +84,7 @@ import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
+import org.eclipse.ocl.pivot.internal.scoping.AbstractAttribution;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeFilter;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
@@ -716,7 +717,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	 */
 	protected @NonNull OCLExpression resolveExplicitSourceNavigation(@NonNull OCLExpression sourceExp, @NonNull NameExpCS csNameExp) {
 		PathNameCS ownedPathName = ClassUtil.nonNullState(csNameExp.getOwnedPathName());
-		PropertyScopeFilter propertyScopeFilter = null;
+		ScopeFilter propertyScopeFilter = AbstractAttribution.NOT_STATIC_SCOPE_FILTER;
 		List<SquareBracketedClauseCS> csSquareBracketedClauses = csNameExp.getOwnedSquareBracketedClauses();
 		if (csSquareBracketedClauses.size() > 0) {
 			for (SquareBracketedClauseCS csSquareBracketedClause : csSquareBracketedClauses) {
@@ -724,7 +725,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 					csExp.accept(this);
 				}
 			}
-			propertyScopeFilter = new PropertyScopeFilter(csSquareBracketedClauses);
+			propertyScopeFilter = new PropertyScopeFilter(csSquareBracketedClauses);	// FIXME nonStatic
 		}
 		// FIXME Qualified navigation
 		Property resolvedProperty = context.lookupProperty(csNameExp, ownedPathName, propertyScopeFilter);

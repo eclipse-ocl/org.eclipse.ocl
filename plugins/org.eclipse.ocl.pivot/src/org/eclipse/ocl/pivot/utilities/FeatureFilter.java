@@ -12,6 +12,8 @@ package org.eclipse.ocl.pivot.utilities;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Feature;
+import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.Stereotype;
 
 public interface FeatureFilter
 {
@@ -37,8 +39,23 @@ public interface FeatureFilter
 		}
 	}
 
+	/**
+	 * @since 1.18
+	 */
+	public static final class ExtensionFeatureFilter implements FeatureFilter
+	{
+		@Override
+		public boolean accept(@NonNull Feature asFeature) {
+			return (asFeature instanceof Property) && (((Property)asFeature).getType() instanceof Stereotype);
+		}
+	}
+
 	boolean accept(@NonNull Feature asFeature);
 
+	/**
+	 * @since 1.18
+	 */
+	public static final @NonNull FeatureFilter SELECT_EXTENSION = new ExtensionFeatureFilter();
 	public static final @NonNull FeatureFilter SELECT_NON_STATIC = new NonStaticFeatureFilter();
 	public static final @NonNull FeatureFilter SELECT_STATIC = new StaticFeatureFilter();
 }
