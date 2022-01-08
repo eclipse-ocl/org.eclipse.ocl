@@ -23,6 +23,7 @@ import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -43,7 +44,7 @@ public abstract class ExecutorType extends AbstractExecutorClass implements Exec
 	 * Depth ordered inheritance fragments. OclAny at depth 0, OclSelf at depth size-1.
 	 */
 	private @NonNull ExecutorFragment @Nullable [] fragments = null;
-	
+
 	/**
 	 * The index in fragments at which inheritance fragments at a given depth start.
 	 * depthIndexes[0] is always zero since OclAny is always at depth 0.
@@ -51,11 +52,11 @@ public abstract class ExecutorType extends AbstractExecutorClass implements Exec
 	 * depthIndexes[depthIndexes.length-1] is always depthIndexes.length to provide an easy end stop.
 	 */
 	private int[] indexes = null;
-	
+
 	protected final org.eclipse.ocl.pivot.@NonNull Package evaluationPackage;
 	private final @NonNull TemplateParameters typeParameters;
 	private /*@LazyNonNull*/ DomainProperties allProperties;
-	
+
 	public ExecutorType(@NonNull String name, @NonNull ExecutorPackage evaluationPackage, int flags, @NonNull ExecutorTypeParameter @NonNull ... typeParameters) {
 		super(name, flags);
 		this.evaluationPackage = evaluationPackage;
@@ -70,23 +71,23 @@ public abstract class ExecutorType extends AbstractExecutorClass implements Exec
 		}
 		return thatInheritance.isSuperInheritanceOf(this);
 	}
-	
+
 	@Override
 	public org.eclipse.ocl.pivot.Class flattenedType() {
 		return this;
 	}
-	
+
 	@Override
 	public final @NonNull FragmentIterable getAllProperSuperFragments() {
 		@NonNull InheritanceFragment @NonNull [] fragments2 = ClassUtil.nonNullState(fragments);
 		return new FragmentIterable(fragments2, 0, fragments2.length-1);
 	}
-	
+
 	@Override
 	public @NonNull FragmentIterable getAllSuperFragments() {
 		return new FragmentIterable(ClassUtil.nonNullState(fragments));
 	}
-	
+
 	@Override
 	public @NonNull Type getCommonType(@NonNull IdResolver idResolver, @NonNull Type type) {
 		if (this == type) {
@@ -102,7 +103,7 @@ public abstract class ExecutorType extends AbstractExecutorClass implements Exec
 	public int getDepth() {
 		return indexes.length-2;
 	}
-	
+
 	@Override
 	public @NonNull Iterable<@NonNull InheritanceFragment> getFragments() {
 		return new ArrayIterable<@NonNull InheritanceFragment>(fragments);
@@ -112,7 +113,7 @@ public abstract class ExecutorType extends AbstractExecutorClass implements Exec
 	public @NonNull ExecutorFragment getFragment(int fragmentNumber) {
 		return ClassUtil.nonNullState(fragments)[fragmentNumber];
 	}
-	
+
 	@Override
 	public int getIndex(int fragmentNumber) {
 		return indexes[fragmentNumber];
@@ -166,7 +167,7 @@ public abstract class ExecutorType extends AbstractExecutorClass implements Exec
 	public @NonNull List<Operation> getOwnedOperations() {
 		return getSelfFragment().getLocalOperations();
 	}
-	
+
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Package getOwningPackage() {
 		return evaluationPackage;
@@ -195,7 +196,7 @@ public abstract class ExecutorType extends AbstractExecutorClass implements Exec
 	public @NonNull List<org.eclipse.ocl.pivot.Class> getSuperClasses() {
 		return getSelfFragment().getSuperClasses();
 	}
-	
+
 	@Override
 	public final @NonNull FragmentIterable getSuperFragments(int depth) {
 		return new FragmentIterable(ClassUtil.nonNullState(fragments), indexes[depth], indexes[depth+1]);
@@ -264,9 +265,14 @@ public abstract class ExecutorType extends AbstractExecutorClass implements Exec
 	public int oclHashCode() {
 		return getTypeId().hashCode();
 	}
-	
+
 	@Override
 	public String toString() {
-		return String.valueOf(evaluationPackage) + "::" + String.valueOf(name); //$NON-NLS-1$
+		if (evaluationPackage.getPackageId() != IdManager.METAMODEL) {
+			return String.valueOf(evaluationPackage) + "::" + String.valueOf(name); //$NON-NLS-1$
+		}
+		else {
+			return String.valueOf(name);
+		}
 	}
 }

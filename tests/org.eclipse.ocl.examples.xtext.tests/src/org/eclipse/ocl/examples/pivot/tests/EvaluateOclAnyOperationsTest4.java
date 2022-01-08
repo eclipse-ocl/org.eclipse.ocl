@@ -842,8 +842,6 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 		StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		org.eclipse.ocl.pivot.Class anyType = standardLibrary.getOclAnyType();
 		org.eclipse.ocl.pivot.Class anyTypeClass = useCodeGen ? standardLibrary.getClassType() : environmentFactory.getASClass("AnyType");
-		ocl.assertQueryResults(null, "Set{null}", "null.oclAsType(OclAny).oclType().allInstances()");
-// XXX
 		ocl.assertQueryEquals(null, standardLibrary.getOclVoidType(), "null.oclType()");
 		//    	ocl.assertQueryEquals(null, standardLibrary.getOclVoidType(), "null.oclAsType(OclAny).oclType()");		// Cast does not change the dynamic type
 		//    	ocl.assertQueryEquals(null, "OclAny", "null.oclAsType(OclAny).name");

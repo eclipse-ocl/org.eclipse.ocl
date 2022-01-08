@@ -985,7 +985,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 					if (((index == 0) && !object.isKeysAreNullFree()) || ((index == 1) && !object.isValuesAreNullFree())) {
 						append("[?]");
 					}
-					else /*if (SHOW_ALL_MULTIPLICITIES)*/ {
+					else if (SHOW_ALL_MULTIPLICITIES) {
 						append("[1]");
 					}
 					prefix = ",";

@@ -26,6 +26,7 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.IfExp;
 import org.eclipse.ocl.pivot.IntegerLiteralExp;
 import org.eclipse.ocl.pivot.InvalidLiteralExp;
+import org.eclipse.ocl.pivot.IterableType;
 import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.IteratorExp;
@@ -88,7 +89,7 @@ public class EssentialOCLPrettyPrintVisitor extends PrettyPrintVisitor
 				else {
 					safeVisit(source);
 				}
-				if (source.getType() instanceof CollectionType) {
+				if (source.getType() instanceof IterableType) {
 					context.append(PivotUtil.getNavigationOperator(object.isIsSafe(), !object.isIsImplicit()));				// "." for implicit collect
 				}
 				else {
