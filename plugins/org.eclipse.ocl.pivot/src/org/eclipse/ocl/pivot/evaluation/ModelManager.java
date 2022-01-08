@@ -106,6 +106,16 @@ public interface ModelManager
 		}
 	};
 
-	@Deprecated /* @deprecated Use getInstances() */
+	@Deprecated /* @deprecated Use getInstances() to avoid compulsory Set */
 	@NonNull Set<@NonNull ? extends Object> get(org.eclipse.ocl.pivot.@NonNull Class type);
+
+	/**
+	 * Return the instances of the (Pivot) type and its subtypes, returning null for none.
+	 * A lazy analyze() is triggered.
+	 *
+	 * @since 1.18
+	 */
+	default @Nullable Iterable<@NonNull ? extends Object> getInstances(org.eclipse.ocl.pivot.@NonNull Class type) {
+		return get(type);
+	}
 }

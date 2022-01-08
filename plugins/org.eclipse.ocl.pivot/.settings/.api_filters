@@ -613,6 +613,86 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/oclstdlib/OCLstdlibTables.java" type="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables$Types">
+        <filter id="388161617">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Types"/>
+                <message_argument value="_Bag"/>
+            </message_arguments>
+        </filter>
+        <filter id="388161617">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Types"/>
+                <message_argument value="_Boolean"/>
+            </message_arguments>
+        </filter>
+        <filter id="388161617">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Types"/>
+                <message_argument value="_Collection"/>
+            </message_arguments>
+        </filter>
+        <filter id="388161617">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Types"/>
+                <message_argument value="_Integer"/>
+            </message_arguments>
+        </filter>
+        <filter id="388161617">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Types"/>
+                <message_argument value="_OclAny"/>
+            </message_arguments>
+        </filter>
+        <filter id="388161617">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Types"/>
+                <message_argument value="_OrderedCollection"/>
+            </message_arguments>
+        </filter>
+        <filter id="388161617">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Types"/>
+                <message_argument value="_OrderedSet"/>
+            </message_arguments>
+        </filter>
+        <filter id="388161617">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Types"/>
+                <message_argument value="_Real"/>
+            </message_arguments>
+        </filter>
+        <filter id="388161617">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Types"/>
+                <message_argument value="_Sequence"/>
+            </message_arguments>
+        </filter>
+        <filter id="388161617">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Types"/>
+                <message_argument value="_Set"/>
+            </message_arguments>
+        </filter>
+        <filter id="388161617">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Types"/>
+                <message_argument value="_String"/>
+            </message_arguments>
+        </filter>
+        <filter id="388161617">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Types"/>
+                <message_argument value="_UniqueCollection"/>
+            </message_arguments>
+        </filter>
+        <filter id="388161617">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Types"/>
+                <message_argument value="_UnlimitedNatural"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/util/AbstractDelegatingVisitor.java" type="org.eclipse.ocl.pivot.util.AbstractDelegatingVisitor">
         <filter comment="Bug 512402 workaround" id="576725006">
             <message_arguments>
@@ -1395,6 +1475,14 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.evaluation.Executor"/>
                 <message_argument value="setInterpretedExecutor(ExecutorInternal)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/evaluation/ModelManager.java" type="org.eclipse.ocl.pivot.evaluation.ModelManager">
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.evaluation.ModelManager"/>
+                <message_argument value="getInstances(Class)"/>
             </message_arguments>
         </filter>
     </resource>
