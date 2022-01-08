@@ -52,6 +52,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowPart;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGUnboxExp;
@@ -225,7 +226,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	/**
 	 * Insert a CGCastExp around cgChild.
 	 */
-	protected CGValuedElement rewriteAsCast(@Nullable CGVariableExp cgChild) {
+	protected CGValuedElement rewriteAsCast(@Nullable CGValuedElement/*CGVariableExp*/ cgChild) {
 		if (cgChild == null) {
 			return cgChild;
 		}
@@ -596,6 +597,13 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	public @Nullable Object visitCGShadowPart(@NonNull CGShadowPart cgShadowPart) {
 		rewriteAsUnboxed(cgShadowPart.getInit());
 		return super.visitCGShadowPart(cgShadowPart);
+	}
+
+	@Override
+	public @Nullable Object visitCGTypeExp(@NonNull CGTypeExp cgTypeExp) {
+		super.visitCGTypeExp(cgTypeExp);
+		rewriteAsCast(cgTypeExp);
+		return null;
 	}
 
 	@Override
