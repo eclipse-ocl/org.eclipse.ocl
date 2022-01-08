@@ -49,6 +49,7 @@ import org.eclipse.ocl.common.OCLCommon;
 import org.eclipse.ocl.pivot.Annotation;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.BagType;
+import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Constraint;
@@ -282,8 +283,10 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		assert eDataType != null;
 		Class<?> instanceClass = eDataType.getInstanceClass();
 		String newName = technology.getOriginalName(eDataType);
+		boolean isBoolean = false;
 		boolean isPrimitive = false;
 		if (TypeId.BOOLEAN_NAME.equals(newName) && ((instanceClass == Boolean.class) || (instanceClass == boolean.class))) {
+			isBoolean = true;
 			isPrimitive = true;
 		}
 		else if (TypeId.INTEGER_NAME.equals(newName) && ((instanceClass == IntegerValue.class)
@@ -312,7 +315,10 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 			isPrimitive = true;
 		}
 		DataType pivotElement;
-		if (isPrimitive) {
+		if (isBoolean) {
+			pivotElement = converter.refreshElement(BooleanType.class, PivotPackage.Literals.BOOLEAN_TYPE, eDataType);
+		}
+		else if (isPrimitive) {
 			pivotElement = converter.refreshElement(PrimitiveType.class, PivotPackage.Literals.PRIMITIVE_TYPE, eDataType);
 		}
 		else {

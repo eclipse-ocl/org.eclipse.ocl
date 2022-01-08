@@ -1162,7 +1162,7 @@ public class Ecore2AS extends AbstractExternal2AS
 		 */
 		resolveDeclarations(asResource, ecoreContents);
 		/*
-		 * Register any local declarations that establish novel ;library content..
+		 * Register any local declarations that establish novel library content..
 		 */
 		initializeLibrary();
 		/*

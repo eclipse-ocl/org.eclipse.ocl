@@ -1993,10 +1993,10 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull ExecutorProperty _CollectionRange__ownedFirst = new EcoreExecutorProperty(PivotPackage.Literals.COLLECTION_RANGE__OWNED_FIRST, Types._CollectionRange, 0);
 		public static final @NonNull ExecutorProperty _CollectionRange__ownedLast = new EcoreExecutorProperty(PivotPackage.Literals.COLLECTION_RANGE__OWNED_LAST, Types._CollectionRange, 1);
 
-		public static final @NonNull ExecutorProperty _CollectionType__elementType = new EcoreExecutorProperty(PivotPackage.Literals.COLLECTION_TYPE__ELEMENT_TYPE, Types._CollectionType, 0);
+		public static final @NonNull ExecutorProperty _CollectionType__elementType = new ExecutorPropertyWithImplementation("elementType", Types._CollectionType, 0, org.eclipse.ocl.pivot.library.collection.CollectionElementTypeProperty.INSTANCE);
 		public static final @NonNull ExecutorProperty _CollectionType__isNullFree = new EcoreExecutorProperty(PivotPackage.Literals.COLLECTION_TYPE__IS_NULL_FREE, Types._CollectionType, 1);
-		public static final @NonNull ExecutorProperty _CollectionType__lower = new EcoreExecutorProperty(PivotPackage.Literals.COLLECTION_TYPE__LOWER, Types._CollectionType, 2);
-		public static final @NonNull ExecutorProperty _CollectionType__upper = new EcoreExecutorProperty(PivotPackage.Literals.COLLECTION_TYPE__UPPER, Types._CollectionType, 3);
+		public static final @NonNull ExecutorProperty _CollectionType__lower = new ExecutorPropertyWithImplementation("lower", Types._CollectionType, 2, org.eclipse.ocl.pivot.library.collection.CollectionLowerProperty.INSTANCE);
+		public static final @NonNull ExecutorProperty _CollectionType__upper = new ExecutorPropertyWithImplementation("upper", Types._CollectionType, 3, org.eclipse.ocl.pivot.library.collection.CollectionUpperProperty.INSTANCE);
 
 		public static final @NonNull ExecutorProperty _Comment__annotatedElements = new EcoreExecutorProperty(PivotPackage.Literals.COMMENT__ANNOTATED_ELEMENTS, Types._Comment, 0);
 		public static final @NonNull ExecutorProperty _Comment__body = new EcoreExecutorProperty(PivotPackage.Literals.COMMENT__BODY, Types._Comment, 1);
@@ -2138,9 +2138,9 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull ExecutorProperty _MapLiteralPart__MapLiteralExp__ownedParts = new ExecutorPropertyWithImplementation("MapLiteralExp", Types._MapLiteralPart, 2, new EcoreLibraryOppositeProperty(PivotPackage.Literals.MAP_LITERAL_EXP__OWNED_PARTS));
 
 		public static final @NonNull ExecutorProperty _MapType__entryClass = new EcoreExecutorProperty(PivotPackage.Literals.MAP_TYPE__ENTRY_CLASS, Types._MapType, 0);
-		public static final @NonNull ExecutorProperty _MapType__keyType = new EcoreExecutorProperty(PivotPackage.Literals.MAP_TYPE__KEY_TYPE, Types._MapType, 1);
+		public static final @NonNull ExecutorProperty _MapType__keyType = new ExecutorPropertyWithImplementation("keyType", Types._MapType, 1, org.eclipse.ocl.pivot.library.map.MapKeyTypeProperty.INSTANCE);
 		public static final @NonNull ExecutorProperty _MapType__keysAreNullFree = new EcoreExecutorProperty(PivotPackage.Literals.MAP_TYPE__KEYS_ARE_NULL_FREE, Types._MapType, 2);
-		public static final @NonNull ExecutorProperty _MapType__valueType = new EcoreExecutorProperty(PivotPackage.Literals.MAP_TYPE__VALUE_TYPE, Types._MapType, 3);
+		public static final @NonNull ExecutorProperty _MapType__valueType = new ExecutorPropertyWithImplementation("valueType", Types._MapType, 3, org.eclipse.ocl.pivot.library.map.MapValueTypeProperty.INSTANCE);
 		public static final @NonNull ExecutorProperty _MapType__valuesAreNullFree = new EcoreExecutorProperty(PivotPackage.Literals.MAP_TYPE__VALUES_ARE_NULL_FREE, Types._MapType, 4);
 
 		public static final @NonNull ExecutorProperty _MessageExp__ownedArguments = new EcoreExecutorProperty(PivotPackage.Literals.MESSAGE_EXP__OWNED_ARGUMENTS, Types._MessageExp, 0);

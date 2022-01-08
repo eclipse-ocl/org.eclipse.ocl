@@ -37,7 +37,7 @@
       <ownedProperties xmi:id="bCQ,P" isImplicit="true" isRequired="false" name="State" opposite="#fFtPi" type="#CwtUf"/>
       <ownedProperties xmi:id="1SMka" isImplicit="true" isRequired="false" name="State" opposite="#1HRna" type="#CwtUf"/>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:PrimitiveType" xmi:id="ZuwnB" instanceClassName="boolean" name="Boolean" superClasses="&_0;#jbMkR">
+    <ownedClasses xsi:type="pivot:BooleanType" xmi:id="ZuwnB" instanceClassName="boolean" name="Boolean" superClasses="&_0;#jbMkR">
       <ownedComments body="Boolean is used for logical expressions, consisting of the predefined values true and false."/>
     </ownedClasses>
     <ownedClasses xmi:id="nyfXB" name="BooleanLiteralExp" superClasses="#mKorp">
