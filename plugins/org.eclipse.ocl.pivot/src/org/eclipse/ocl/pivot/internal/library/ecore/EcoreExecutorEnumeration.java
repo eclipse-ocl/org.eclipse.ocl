@@ -19,8 +19,12 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
+import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.EnumerationId;
+import org.eclipse.ocl.pivot.library.enumeration.EnumerationAllInstancesOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
+import org.eclipse.ocl.pivot.values.SetValue;
 import org.eclipse.osgi.util.NLS;
 
 import com.google.common.collect.Lists;
@@ -34,6 +38,14 @@ public class EcoreExecutorEnumeration extends EcoreExecutorType implements Enume
 	 */
 	public EcoreExecutorEnumeration(/*@NonNull*/ EEnum eEnum, @NonNull EcoreExecutorPackage evaluationPackage, int flags) {
 		super(eEnum, evaluationPackage, flags);
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	@Override
+	public @NonNull SetValue allInstances(@NonNull Executor executor, @NonNull CollectionTypeId returnTypeId) {
+		return EnumerationAllInstancesOperation.allInstances(returnTypeId, getOwnedLiterals());
 	}
 
 	@Override

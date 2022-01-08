@@ -22,11 +22,18 @@ import org.eclipse.ocl.pivot.values.SetValue;
  */
 public class OclInvalidAllInstancesOperation extends AbstractSimpleUnaryOperation
 {
+	@Deprecated /* @deprecated invoke the polymorphic InvalidTypeImpl.allInstances() */
 	public static final @NonNull OclInvalidAllInstancesOperation INSTANCE = new OclInvalidAllInstancesOperation();
+
+	/**
+	 * @since 1.18
+	 */
+	public static @NonNull SetValue allInstances() {
+		throw new InvalidValueException(PivotMessages.InvalidLiteral);
+	}
 
 	@Override
 	public @NonNull SetValue evaluate(@Nullable Object sourceVal) {
-		// OclInvalid has a single instance: invalid that cannot be returned in a collection
-		throw new InvalidValueException(PivotMessages.InvalidLiteral);
+		return allInstances();
 	}
 }

@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.ocl.pivot" version="2">
+    <resource path="emf-gen/org/eclipse/ocl/pivot/Class.java" type="org.eclipse.ocl.pivot.Class">
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.Class"/>
+                <message_argument value="allInstances(Executor, CollectionTypeId)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/DataType.java" type="org.eclipse.ocl.pivot.DataType">
         <filter id="403804204">
             <message_arguments>
@@ -389,70 +397,6 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/oclstdlib/OCLstdlibPackage.java" type="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage">
-        <filter id="338792546">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
-                <message_argument value="getCollection_ElementType()"/>
-            </message_arguments>
-        </filter>
-        <filter id="338792546">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
-                <message_argument value="getCollection_Lower()"/>
-            </message_arguments>
-        </filter>
-        <filter id="338792546">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
-                <message_argument value="getCollection_Upper()"/>
-            </message_arguments>
-        </filter>
-        <filter id="338792546">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
-                <message_argument value="getMap_KeyType()"/>
-            </message_arguments>
-        </filter>
-        <filter id="338792546">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage"/>
-                <message_argument value="getMap_ValueType()"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/oclstdlib/OCLstdlibPackage.java" type="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage$Literals">
-        <filter id="405864542">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage.Literals"/>
-                <message_argument value="COLLECTION__ELEMENT_TYPE"/>
-            </message_arguments>
-        </filter>
-        <filter id="405864542">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage.Literals"/>
-                <message_argument value="COLLECTION__LOWER"/>
-            </message_arguments>
-        </filter>
-        <filter id="405864542">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage.Literals"/>
-                <message_argument value="COLLECTION__UPPER"/>
-            </message_arguments>
-        </filter>
-        <filter id="405864542">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage.Literals"/>
-                <message_argument value="MAP__KEY_TYPE"/>
-            </message_arguments>
-        </filter>
-        <filter id="405864542">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage.Literals"/>
-                <message_argument value="MAP__VALUE_TYPE"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/oclstdlib/OCLstdlibTables.java" type="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables$Parameters">
         <filter id="338755678">
             <message_arguments>
@@ -578,38 +522,6 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Parameters"/>
                 <message_argument value="_Set_collect_V"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/oclstdlib/OCLstdlibTables.java" type="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables$Properties">
-        <filter id="338755678">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Properties"/>
-                <message_argument value="_Collection__elementType"/>
-            </message_arguments>
-        </filter>
-        <filter id="338755678">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Properties"/>
-                <message_argument value="_Collection__lower"/>
-            </message_arguments>
-        </filter>
-        <filter id="338755678">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Properties"/>
-                <message_argument value="_Collection__upper"/>
-            </message_arguments>
-        </filter>
-        <filter id="338755678">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Properties"/>
-                <message_argument value="_Map__keyType"/>
-            </message_arguments>
-        </filter>
-        <filter id="338755678">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables.Properties"/>
-                <message_argument value="_Map__valueType"/>
             </message_arguments>
         </filter>
     </resource>

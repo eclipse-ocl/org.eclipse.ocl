@@ -14,14 +14,26 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.BuiltInTypeId;
+import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorPackage;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorTypeParameter;
+import org.eclipse.ocl.pivot.library.oclinvalid.OclInvalidAllInstancesOperation;
+import org.eclipse.ocl.pivot.values.SetValue;
 
 public class EcoreExecutorInvalidType extends EcoreExecutorType implements InvalidType
 {
 	public EcoreExecutorInvalidType(@NonNull BuiltInTypeId typeId, @NonNull ExecutorPackage evaluationPackage, int flags, @NonNull ExecutorTypeParameter @NonNull ... typeParameters) {
 		super(typeId, evaluationPackage, flags | OCL_INVALID, typeParameters);
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	@Override
+	public @NonNull SetValue allInstances(@NonNull Executor executor, @NonNull CollectionTypeId returnTypeId) {
+		return OclInvalidAllInstancesOperation.allInstances();
 	}
 
 	@Override

@@ -1248,6 +1248,12 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 
 	@Test public void testCollectionLower() {
 		TestOCL ocl = createOCL();
+/*		ocl.assertQueryEquals(null, 3, "Sequence{1, 2.0, '3'}->oclAsType(Collection(OclAny))->oclType().lower");
+		ocl.assertQueryEquals(null, 3, "Sequence{1, 2.0, '3'}->oclAsType(Sequence(OclAny))->oclType().lower");
+		ocl.assertQueryEquals(null, 3, "Sequence{1, 2.0, '3'}->oclAsType(Set(OclAny))->oclType().lower");
+		ocl.assertQueryEquals(null, 3, "Sequence{1, 2.0, '3'}->oclAsType(OclVoid).oclType().lower");
+		ocl.assertQueryEquals(null, 3, "Sequence{1, 2.0, '3'}->oclAsType(OclAny).oclType().lower");
+// XXX */
 		ocl.assertQueryEquals(null, 3, "Sequence{1, 2.0, '3'}->oclType().lower");
 		ocl.assertQueryEquals(null, 3, "Sequence{1, 2.0, 3}->oclAsType(Collection(Real))->oclType().lower");
 		ocl.assertQueryEquals(null, 3, "Set{1, 2.0, 3}->oclAsType(Collection(Real[2..4]))->oclType().lower"); // no change to dynamic bound

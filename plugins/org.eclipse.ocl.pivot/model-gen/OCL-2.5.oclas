@@ -513,7 +513,7 @@
     </ownedClasses>
     <ownedClasses xmi:id="xB4J7" name="BooleanType" superClasses="#zfDWR">
       <ownedComments body="The standard type Boolean represents the common true/false values.&#xA;Boolean is itself an instance of the metatype PrimitiveType (from UML).&#xA;"/>
-      <ownedOperations xmi:id=",q,nx" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanAllInstancesOperation" name="allInstances"
+      <ownedOperations xmi:id=",q,nx" implementationClass="org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation" name="allInstances"
           type="#UQF4+">
         <ownedComments body="Returns oclText[Set{false, true}]."/>
       </ownedOperations>
@@ -836,8 +836,8 @@
         </ownedDetails>
       </ownedAnnotations>
       <ownedComments body="@Deprecated: Use OclEnumeration&#xA;The Enumeration type is the type of an OrderedSet of EnumerationLiteral.&#xA;"/>
-      <ownedOperations xmi:id="wJUrA" implementationClass="org.eclipse.ocl.pivot.library.enumeration.EnumerationAllInstancesOperation"
-          name="allInstances" type="#UQF4+">
+      <ownedOperations xmi:id="wJUrA" implementationClass="org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation" name="allInstances"
+          type="#UQF4+">
         <ownedComments body="Return a set of all enumeration values of oclText[self]."/>
       </ownedOperations>
     </ownedClasses>
@@ -909,7 +909,7 @@
       </ownedOperations>
     </ownedClasses>
     <ownedClasses xmi:id="Abotv" name="InvalidType" superClasses="#zfDWR">
-      <ownedOperations xmi:id="SPCDQ" implementationClass="org.eclipse.ocl.pivot.library.oclinvalid.OclInvalidAllInstancesOperation" name="allInstances"
+      <ownedOperations xmi:id="SPCDQ" implementationClass="org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation" name="allInstances"
           type="#UQF4+">
         <ownedComments body="Returns oclText[invalid]."/>
       </ownedOperations>
@@ -1163,6 +1163,14 @@
       <ownedOperations xmi:id="2hNV5" implementationClass="org.eclipse.ocl.pivot.library.map.MapValuesOperation" name="values" type="#uivet">
         <ownedComments body="The Bag comprising all the values of the key-value pairs in oclText[self].&#xA;"/>
       </ownedOperations>
+      <ownedProperties xmi:id="w,Rmk" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation" isStatic="true"
+          name="keyType" type="#8dAuH">
+        <ownedComments body="The key type of the key-value pairs of oclText[self].&#xA;&#xA;@Deprecated Use regular MapType property&#xA;"/>
+      </ownedProperties>
+      <ownedProperties xmi:id="CoDkn" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation" isStatic="true"
+          name="valueType" type="#HeAuH">
+        <ownedComments body="The value type of the key-value pairs of oclText[self].&#xA;&#xA;@Deprecated Use regular MapType property&#xA;"/>
+      </ownedProperties>
       <ownedSignature>
         <ownedParameters xmi:id="8dAuH" name="K"/>
         <ownedParameters xmi:id="HeAuH" name="V"/>
@@ -1236,7 +1244,7 @@
       </ownedOperations>
       <ownedOperations xmi:id="xOh0M" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation" isInvalidating="true"
           name="oclAsType" type="#HZ,i,">
-        <ownedComments body="Evaluates to oclText[self], where oclText[self] is of the type identified by oclText[TT].&#xA;The type oclText[TT] may be any classifier defined by OCL or a user metamodel;&#xA;if the actual type of oclText[self] at evaluation time does not conform to oclText[TT],&#xA;then the oclAsType operation evaluates to oclText[invalid].&#xA;&#xA;If oclText[self] is a multiply classified instance, the current classification used for OCL navigation&#xA;is changed to the classification to which oclText[TT] conforms. The oclAsType call is not well-formed if&#xA;the classification is ambiguous.&#xA;&#xA;In the case of feature redefinition, casting an object to a supertype of its actual type&#xA;does not access the supertype’s definition of the feature;&#xA;according to the semantics of redefinition, the redefined feature simply does not exist for the object.&#xA;However, when casting to a supertype, any features additionally defined by the subtype are suppressed."/>
+        <ownedComments body="Evaluates to oclText[self], where oclText[self] is of the type identified by oclText[TT].&#xA;The type oclText[TT] may be any classifier defined by OCL or a user metamodel;&#xA;if the actual type of oclText[self] at evaluation time does not conform to oclText[TT],&#xA;then the oclAsType operation evaluates to oclText[invalid].&#xA;&#xA;If oclText[self] is a multiply classified instance, the current classification used for OCL navigation&#xA;is changed to the classification to which oclText[TT] conforms. The oclAsType call is not well-formed if&#xA;the classification is ambiguous.&#xA;&#xA;In the case of feature redefinition, casting an object to a supertype of its actual type&#xA;does not access the supertype’s definition of the feature;&#xA;according to the semantics of redefinition, the redefined feature simply does not exist for the object.&#xA;However, when casting to a supertype, any features additionally defined by the subtype are suppressed.&#xA;&#xA;FIXME Bug 578060 return should be optional to support OclVoid returning null."/>
         <ownedParameters xmi:id="Shnpr" isTypeof="true" name="type" type="#HZ,i,"/>
         <ownedPostconditions xmi:id="0dG7z" name="IsSelf">
           <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="result = self" type="#XEMMs">
@@ -2484,7 +2492,7 @@
       </ownedOperations>
     </ownedClasses>
     <ownedClasses xmi:id="dw4aT" name="VoidType" superClasses="#zfDWR">
-      <ownedOperations xmi:id="7eoA5" implementationClass="org.eclipse.ocl.pivot.library.oclvoid.OclVoidAllInstancesOperation" name="allInstances"
+      <ownedOperations xmi:id="7eoA5" implementationClass="org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation" name="allInstances"
           type="#PRF4+">
         <ownedComments body="Returns oclText[Set{null}]."/>
       </ownedOperations>

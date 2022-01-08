@@ -12,9 +12,12 @@ package org.eclipse.ocl.pivot.library.oclany;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.CallExp;
+import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.library.AbstractUntypedUnaryOperation;
@@ -49,9 +52,19 @@ public class OclAnyOclTypeOperation extends AbstractUntypedUnaryOperation
 	 */
 	@Override
 	public @Nullable Type resolveReturnType(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, @Nullable Type returnType) {
+		assert returnType != null;
 		OCLExpression source = PivotUtil.getOwnedSource(callExp);
 		Type sourceType = PivotUtil.getType(source);
-		return environmentFactory.getIdResolver().getStaticTypeOfValue(null, sourceType);
+	//	if (sourceType.eClass() == PivotPackage.Literals.CLASS) {
+		if ((sourceType instanceof AnyType) || (sourceType instanceof InvalidType) || (sourceType instanceof VoidType)) {	// Irregular super/sub-meta-type conformance
+			return environmentFactory.getStandardLibrary().getClassType();	// Suppress the irregularity ?? Class<OclAny> rather than Class<Class>
+		}
+	//	if (sourceType instanceof DataType) {	// collections, maps, lambdas, tuples, enumerations
+			return environmentFactory.getIdResolver().getStaticTypeOfValue(null, sourceType);
+	//	}
+	//	else {
+	//		return environmentFactory.getStandardLibrary().getClassType();	// FIXME could be common type of all possible metatypes
+	//	}
 	}
 
 	/**

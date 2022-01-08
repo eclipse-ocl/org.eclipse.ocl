@@ -1841,7 +1841,7 @@ public class PivotTables extends AbstractTables
 		}
 
 		public static final @NonNull ExecutorOperation _BooleanType__allInstances = new ExecutorOperation("allInstances", TypeUtil.EMPTY_PARAMETER_TYPES, Types._BooleanType,
-			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanAllInstancesOperation.INSTANCE);
+			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 
 		public static final @NonNull ExecutorOperation _Class__allInstances = new ExecutorOperation("allInstances", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Class,
 			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
@@ -1858,10 +1858,10 @@ public class PivotTables extends AbstractTables
 			1, TemplateParameters.EMPTY_LIST, null);
 
 		public static final @NonNull ExecutorOperation _Enumeration__allInstances = new ExecutorOperation("allInstances", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Enumeration,
-			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.enumeration.EnumerationAllInstancesOperation.INSTANCE);
+			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 
 		public static final @NonNull ExecutorOperation _InvalidType__allInstances = new ExecutorOperation("allInstances", TypeUtil.EMPTY_PARAMETER_TYPES, Types._InvalidType,
-			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclinvalid.OclInvalidAllInstancesOperation.INSTANCE);
+			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 
 		public static final @NonNull ExecutorOperation _OCLExpression__isNonNull = new ExecutorOperation("isNonNull", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OCLExpression,
 			0, TemplateParameters.EMPTY_LIST, null);
@@ -1916,7 +1916,7 @@ public class PivotTables extends AbstractTables
 			5, TemplateParameters.EMPTY_LIST, null);
 
 		public static final @NonNull ExecutorOperation _VoidType__allInstances = new ExecutorOperation("allInstances", TypeUtil.EMPTY_PARAMETER_TYPES, Types._VoidType,
-			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclvoid.OclVoidAllInstancesOperation.INSTANCE);
+			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 
 		static {
 			Init.initEnd();

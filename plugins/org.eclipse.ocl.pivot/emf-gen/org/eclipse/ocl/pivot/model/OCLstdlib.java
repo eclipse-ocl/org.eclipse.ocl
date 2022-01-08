@@ -18,41 +18,50 @@
 package	org.eclipse.ocl.pivot.model;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.impl.BasicEObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.*;
+import org.eclipse.ocl.pivot.AnyType;
+import org.eclipse.ocl.pivot.AssociativityKind;
+import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.Class;
+import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.InvalidType;
+import org.eclipse.ocl.pivot.Iteration;
+import org.eclipse.ocl.pivot.LambdaType;
+import org.eclipse.ocl.pivot.Library;
+import org.eclipse.ocl.pivot.MapType;
+import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.Package;
+import org.eclipse.ocl.pivot.Parameter;
+import org.eclipse.ocl.pivot.Precedence;
+import org.eclipse.ocl.pivot.PrimitiveType;
+import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.SelfType;
+import org.eclipse.ocl.pivot.SequenceType;
+import org.eclipse.ocl.pivot.SetType;
+import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.TupleType;
+import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.ids.IdManager;
-import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
-import org.eclipse.ocl.pivot.model.OCLmetamodel;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
-import org.eclipse.ocl.pivot.utilities.PivotConstants;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
-
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
 /**
  * This is the http://www.eclipse.org/ocl/2015/Library Standard Library
@@ -1506,7 +1515,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Operation op_Bag_includingAll = createOperation("includingAll", _Bag_Bag_T, "org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation.INSTANCE);
 		private final @NonNull Operation op_Bag_selectByKind = createOperation("selectByKind", _Bag_Bag_selectByKind_TT_NullFree, "org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation.INSTANCE, tp_Bag_selectByKind_TT);
 		private final @NonNull Operation op_Bag_selectByType = createOperation("selectByType", _Bag_Bag_selectByType_TT_NullFree, "org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE, tp_Bag_selectByType_TT);
-		private final @NonNull Operation op_BooleanType_allInstances = createOperation("allInstances", _Set_OclSelf_NullFree, "org.eclipse.ocl.pivot.library.logical.BooleanAllInstancesOperation", org.eclipse.ocl.pivot.library.logical.BooleanAllInstancesOperation.INSTANCE);
+		private final @NonNull Operation op_BooleanType_allInstances = createOperation("allInstances", _Set_OclSelf_NullFree, "org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation", org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 		private final @NonNull Operation op_Class_allInstances = createOperation("allInstances", _Set_OclSelf_NullFree, "org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation", org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 		private final @NonNull Operation op_Collection__lt__gt_ = createOperation("<>", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		private final @NonNull Operation op_Collection__eq_ = createOperation("=", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
@@ -1536,8 +1545,8 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Operation op_Collection_size = createOperation("size", _Integer, "org.eclipse.ocl.pivot.library.collection.CollectionSizeOperation", org.eclipse.ocl.pivot.library.collection.CollectionSizeOperation.INSTANCE);
 		private final @NonNull Operation op_Collection_sum = createOperation("sum", tp_Collection_T, "org.eclipse.ocl.pivot.library.collection.CollectionSumOperation", org.eclipse.ocl.pivot.library.collection.CollectionSumOperation.INSTANCE);
 		private final @NonNull Operation op_Collection_union = createOperation("union", _Bag_Collection_T_NullFree, "org.eclipse.ocl.pivot.library.collection.CollectionUnionOperation", org.eclipse.ocl.pivot.library.collection.CollectionUnionOperation.INSTANCE);
-		private final @NonNull Operation op_Enumeration_allInstances = createOperation("allInstances", _Set_OclSelf_NullFree, "org.eclipse.ocl.pivot.library.enumeration.EnumerationAllInstancesOperation", org.eclipse.ocl.pivot.library.enumeration.EnumerationAllInstancesOperation.INSTANCE);
-		private final @NonNull Operation op_InvalidType_allInstances = createOperation("allInstances", _Set_OclSelf_NullFree, "org.eclipse.ocl.pivot.library.oclinvalid.OclInvalidAllInstancesOperation", org.eclipse.ocl.pivot.library.oclinvalid.OclInvalidAllInstancesOperation.INSTANCE);
+		private final @NonNull Operation op_Enumeration_allInstances = createOperation("allInstances", _Set_OclSelf_NullFree, "org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation", org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
+		private final @NonNull Operation op_InvalidType_allInstances = createOperation("allInstances", _Set_OclSelf_NullFree, "org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation", org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 		private final @NonNull Operation op_Map__lt__gt_ = createOperation("<>", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		private final @NonNull Operation op_Map__eq_ = createOperation("=", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
 		private final @NonNull Operation op_Map_at = createOperation("at", tp_Map_V, "org.eclipse.ocl.pivot.library.map.MapAtOperation", org.eclipse.ocl.pivot.library.map.MapAtOperation.INSTANCE);
@@ -1687,7 +1696,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Operation op_UniqueCollection_intersection = createOperation("intersection", _Set_UniqueCollection_T_NullFree, "org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation", org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation.INSTANCE);
 		private final @NonNull Operation op_UniqueCollection_symmetricDifference = createOperation("symmetricDifference", _Set_UniqueCollection_T_NullFree, "org.eclipse.ocl.pivot.library.collection.SetSymmetricDifferenceOperation", org.eclipse.ocl.pivot.library.collection.SetSymmetricDifferenceOperation.INSTANCE);
 		private final @NonNull Operation op_UniqueCollection_union = createOperation("union", _Set_UniqueCollection_T_NullFree, "org.eclipse.ocl.pivot.library.collection.CollectionUnionOperation", org.eclipse.ocl.pivot.library.collection.CollectionUnionOperation.INSTANCE);
-		private final @NonNull Operation op_VoidType_allInstances = createOperation("allInstances", _Set_OclSelf, "org.eclipse.ocl.pivot.library.oclvoid.OclVoidAllInstancesOperation", org.eclipse.ocl.pivot.library.oclvoid.OclVoidAllInstancesOperation.INSTANCE);
+		private final @NonNull Operation op_VoidType_allInstances = createOperation("allInstances", _Set_OclSelf, "org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation", org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 
 		private void installOperations() {
 			List<Operation> ownedOperations;
@@ -2936,6 +2945,8 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Property pr_CollectionType_elementType = createProperty("elementType", _Type);
 		private final @NonNull Property pr_CollectionType_lower = createProperty("lower", _Integer);
 		private final @NonNull Property pr_CollectionType_upper = createProperty("upper", _Integer);
+		private final @NonNull Property pr_Map_keyType = createProperty("keyType", tp_Map_K);
+		private final @NonNull Property pr_Map_valueType = createProperty("valueType", tp_Map_V);
 		private final @NonNull Property pr_MapType_keyType = createProperty("keyType", _Type);
 		private final @NonNull Property pr_MapType_valueType = createProperty("valueType", _Type);
 		private final @NonNull Property pr_OclAny_OclInvalid_oclBadProperty = createProperty("OclInvalid", _Bag_OclInvalid);
@@ -2983,6 +2994,18 @@ public class OCLstdlib extends ASResourceImpl
 			property.setIsResolveProxies(true);
 			property.setImplementationClass("org.eclipse.ocl.pivot.library.collection.CollectionUpperProperty");
 			property.setImplementation(org.eclipse.ocl.pivot.library.collection.CollectionUpperProperty.INSTANCE);
+
+			ownedProperties = _Map_Map_K_Map_V.getOwnedProperties();
+			ownedProperties.add(property = pr_Map_keyType);
+			property.setIsResolveProxies(true);
+			property.setIsStatic(true);
+			property.setImplementationClass("org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation");
+			property.setImplementation(org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
+			ownedProperties.add(property = pr_Map_valueType);
+			property.setIsResolveProxies(true);
+			property.setIsStatic(true);
+			property.setImplementationClass("org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation");
+			property.setImplementation(org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
 
 			ownedProperties = _MapType.getOwnedProperties();
 			ownedProperties.add(property = pr_MapType_keyType);
@@ -3476,18 +3499,20 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(op_Map_isEmpty, "True if oclText[self] is the empty map, oclText[false] otherwise.");
 			installComment(it_Map_isUnique, "Results in oclText[true] if body evaluates to a different value for each key oclText[k] in the source map; otherwise, result is oclText[false].");
 			installComment(it_Map_iterate, "Results in the final value of the accumulator oclText[acc] whose value is updated by evaluation of oclText[lambda] for each element oclText[i] in the source map.");
+			installComment(pr_Map_keyType, "The key type of the key-value pairs of oclText[self].\n\n@Deprecated Use regular MapType property");
 			installComment(op_Map_keys, "A Set comprising all the keys of the key-value pairs in oclText[self].");
 			installComment(op_Map_notEmpty, "True if oclText[self] not the empty map, oclText[false] otherwise.");
 			installComment(it_Map_one, "Results in oclText[true] if there is exactly one element in the source map for which body is oclText[true].");
 			installComment(it_Map_reject, "The subset of the source set for which body is oclText[false].");
 			installComment(it_Map_select, "The subset of set for which expr is oclText[true].");
 			installComment(op_Map_size, "The number of key-value pairs in oclText[self].");
+			installComment(pr_Map_valueType, "The value type of the key-value pairs of oclText[self].\n\n@Deprecated Use regular MapType property");
 			installComment(op_Map_values, "The Bag comprising all the values of the key-value pairs in oclText[self].");
 			installComment(_OclAny, "The number of elements in the collection oclText[self].essions.\nOclAny is itself an instance of the metatype AnyType.\n\nAll classes in a UML model inherit all operations defined on OclAny.\nTo avoid name conflicts between properties in the model and the properties inherited from OclAny,\nall names on the properties of OclAny start with \u2018ocl.\u2019\nAlthough theoretically there may still be name conflicts, they can be avoided.\nOne can also use qualification by OclAny (name of the type) to explicitly refer to the OclAny properties.\n\nOperations of OclAny, where the instance of OclAny is called object.");
 			installComment(op_OclAny__lt__gt_, "True if oclText[self] is a different object from object2. Infix operator.");
 			installComment(op_OclAny__eq_, "True if oclText[self] is the same object as object2. Infix operator.");
 			installComment(op_OclAny_oclAsSet, "Returns a Set with oclText[self] as the sole content, unless oclText[self] is oclText[null] in which case returns an empty set,");
-			installComment(op_OclAny_oclAsType, "Evaluates to oclText[self], where oclText[self] is of the type identified by oclText[TT].\nThe type oclText[TT] may be any classifier defined by OCL or a user metamodel;\nif the actual type of oclText[self] at evaluation time does not conform to oclText[TT],\nthen the oclAsType operation evaluates to oclText[invalid].\n\nIf oclText[self] is a multiply classified instance, the current classification used for OCL navigation\nis changed to the classification to which oclText[TT] conforms. The oclAsType call is not well-formed if\nthe classification is ambiguous.\n\nIn the case of feature redefinition, casting an object to a supertype of its actual type\ndoes not access the supertype\u2019s definition of the feature;\naccording to the semantics of redefinition, the redefined feature simply does not exist for the object.\nHowever, when casting to a supertype, any features additionally defined by the subtype are suppressed.");
+			installComment(op_OclAny_oclAsType, "Evaluates to oclText[self], where oclText[self] is of the type identified by oclText[TT].\nThe type oclText[TT] may be any classifier defined by OCL or a user metamodel;\nif the actual type of oclText[self] at evaluation time does not conform to oclText[TT],\nthen the oclAsType operation evaluates to oclText[invalid].\n\nIf oclText[self] is a multiply classified instance, the current classification used for OCL navigation\nis changed to the classification to which oclText[TT] conforms. The oclAsType call is not well-formed if\nthe classification is ambiguous.\n\nIn the case of feature redefinition, casting an object to a supertype of its actual type\ndoes not access the supertype\u2019s definition of the feature;\naccording to the semantics of redefinition, the redefined feature simply does not exist for the object.\nHowever, when casting to a supertype, any features additionally defined by the subtype are suppressed.\n\nFIXME Bug 578060 return should be optional to support OclVoid returning null.");
 			installComment(op_OclAny_oclIsInState, "Evaluates to oclText[true] if the oclText[self] is in the state identified by statespec.");
 			installComment(op_OclAny_oclIsInvalid, "Evaluates to oclText[true] if the oclText[self] is equal to OclInvalid.");
 			installComment(op_OclAny_oclIsKindOf, "Evaluates to oclText[true] if the type of oclText[self] conforms to oclText[type].\nThat is, oclText[self] is of type oclText[type] or a subtype of oclText[type].");

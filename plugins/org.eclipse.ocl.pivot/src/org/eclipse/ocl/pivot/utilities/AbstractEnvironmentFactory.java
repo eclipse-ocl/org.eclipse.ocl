@@ -261,7 +261,8 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	public void analyzeExpressions(@NonNull EObject eRootObject,
 			@NonNull Set<@NonNull CompleteClass> allInstancesCompleteClasses, @NonNull Set<@NonNull Property> implicitOppositeProperties) {
 		Type oclElementType = standardLibrary.getOclElementType();
-		OperationId allInstancesOperationId = oclElementType.getTypeId().getOperationId(0, "allInstances", IdManager.getParametersId());
+		Type classType = standardLibrary.getClassType();
+		OperationId allInstancesOperationId = classType.getTypeId().getOperationId(0, "allInstances", IdManager.getParametersId());
 		for (EObject eObject : new TreeIterable(eRootObject, true)) {
 			if (eObject instanceof OppositePropertyCallExp) {
 				OppositePropertyCallExp oppositePropertyCallExp = (OppositePropertyCallExp)eObject;

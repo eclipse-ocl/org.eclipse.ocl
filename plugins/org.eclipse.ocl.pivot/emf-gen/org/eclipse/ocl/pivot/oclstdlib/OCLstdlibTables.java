@@ -1173,6 +1173,13 @@ public class OCLstdlibTables extends AbstractTables
 		}
 
 
+		public static final @NonNull ExecutorProperty _Collection__elementType = new ExecutorPropertyWithImplementation("elementType", Types._Collection, 0, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
+		public static final @NonNull ExecutorProperty _Collection__lower = new ExecutorPropertyWithImplementation("lower", Types._Collection, 1, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
+		public static final @NonNull ExecutorProperty _Collection__upper = new ExecutorPropertyWithImplementation("upper", Types._Collection, 2, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
+
+		public static final @NonNull ExecutorProperty _Map__keyType = new ExecutorPropertyWithImplementation("keyType", Types._Map, 0, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
+		public static final @NonNull ExecutorProperty _Map__valueType = new ExecutorPropertyWithImplementation("valueType", Types._Map, 1, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
+
 		public static final @NonNull ExecutorProperty _OclAny__OclInvalid__oclBadProperty = new ExecutorPropertyWithImplementation("OclInvalid", Types._OclAny, 0, new EcoreLibraryOppositeProperty(OCLstdlibPackage.Literals.OCL_INVALID__OCL_BAD_PROPERTY));
 
 		public static final @NonNull ExecutorProperty _OclElement__oclContainer = new ExecutorPropertyWithImplementation("oclContainer", Types._OclElement, 0, org.eclipse.ocl.pivot.library.oclany.OclElementOclContainerProperty.INSTANCE);
@@ -2837,15 +2844,26 @@ public class OCLstdlibTables extends AbstractTables
 			FragmentOperations.init();
 		}
 
-		private static final @NonNull ExecutorProperty @NonNull [] _Bag = {};
+		private static final @NonNull ExecutorProperty @NonNull [] _Bag = {
+			OCLstdlibTables.Properties._Collection__elementType,
+			OCLstdlibTables.Properties._Collection__lower,
+			OCLstdlibTables.Properties._Collection__upper
+		};
 
 		private static final @NonNull ExecutorProperty @NonNull [] _Boolean = {};
 
-		private static final @NonNull ExecutorProperty @NonNull [] _Collection = {};
+		private static final @NonNull ExecutorProperty @NonNull [] _Collection = {
+			OCLstdlibTables.Properties._Collection__elementType,
+			OCLstdlibTables.Properties._Collection__lower,
+			OCLstdlibTables.Properties._Collection__upper
+		};
 
 		private static final @NonNull ExecutorProperty @NonNull [] _Integer = {};
 
-		private static final @NonNull ExecutorProperty @NonNull [] _Map = {};
+		private static final @NonNull ExecutorProperty @NonNull [] _Map = {
+			OCLstdlibTables.Properties._Map__keyType,
+			OCLstdlibTables.Properties._Map__valueType
+		};
 
 		private static final @NonNull ExecutorProperty @NonNull [] _OclAny = {};
 
@@ -2889,19 +2907,39 @@ public class OCLstdlibTables extends AbstractTables
 
 		private static final @NonNull ExecutorProperty @NonNull [] _OclVoid = {};
 
-		private static final @NonNull ExecutorProperty @NonNull [] _OrderedCollection = {};
+		private static final @NonNull ExecutorProperty @NonNull [] _OrderedCollection = {
+			OCLstdlibTables.Properties._Collection__elementType,
+			OCLstdlibTables.Properties._Collection__lower,
+			OCLstdlibTables.Properties._Collection__upper
+		};
 
-		private static final @NonNull ExecutorProperty @NonNull [] _OrderedSet = {};
+		private static final @NonNull ExecutorProperty @NonNull [] _OrderedSet = {
+			OCLstdlibTables.Properties._Collection__elementType,
+			OCLstdlibTables.Properties._Collection__lower,
+			OCLstdlibTables.Properties._Collection__upper
+		};
 
 		private static final @NonNull ExecutorProperty @NonNull [] _Real = {};
 
-		private static final @NonNull ExecutorProperty @NonNull [] _Sequence = {};
+		private static final @NonNull ExecutorProperty @NonNull [] _Sequence = {
+			OCLstdlibTables.Properties._Collection__elementType,
+			OCLstdlibTables.Properties._Collection__lower,
+			OCLstdlibTables.Properties._Collection__upper
+		};
 
-		private static final @NonNull ExecutorProperty @NonNull [] _Set = {};
+		private static final @NonNull ExecutorProperty @NonNull [] _Set = {
+			OCLstdlibTables.Properties._Collection__elementType,
+			OCLstdlibTables.Properties._Collection__lower,
+			OCLstdlibTables.Properties._Collection__upper
+		};
 
 		private static final @NonNull ExecutorProperty @NonNull [] _String = {};
 
-		private static final @NonNull ExecutorProperty @NonNull [] _UniqueCollection = {};
+		private static final @NonNull ExecutorProperty @NonNull [] _UniqueCollection = {
+			OCLstdlibTables.Properties._Collection__elementType,
+			OCLstdlibTables.Properties._Collection__lower,
+			OCLstdlibTables.Properties._Collection__upper
+		};
 
 		private static final @NonNull ExecutorProperty @NonNull [] _UnlimitedNatural = {};
 

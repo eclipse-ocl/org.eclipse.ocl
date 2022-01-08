@@ -17,8 +17,12 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VoidType;
+import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.library.oclvoid.OclVoidAllInstancesOperation;
 import org.eclipse.ocl.pivot.util.Visitor;
+import org.eclipse.ocl.pivot.values.SetValue;
 
 /**
  * <!-- begin-user-doc -->
@@ -70,6 +74,14 @@ public class VoidTypeImpl
 	@Override
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitVoidType(this);
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	@Override
+	public @NonNull SetValue allInstances(@NonNull Executor executor, @NonNull CollectionTypeId returnTypeId) {
+		return OclVoidAllInstancesOperation.allInstances();
 	}
 
 	@Override

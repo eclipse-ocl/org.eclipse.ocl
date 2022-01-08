@@ -836,6 +836,18 @@ type Map(K,V) : MapType conformsTo OclAny {
 	The Bag comprising all the values of the key-value pairs in oclText[self].
 	**/
 	operation values() : Bag(V) => 'org.eclipse.ocl.pivot.library.map.MapValuesOperation';
+	/**
+	The key type of the key-value pairs of oclText[self].
+	
+	@Deprecated Use regular MapType property
+	**/
+	static property keyType : K[1] => 'org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation';
+	/**
+	The value type of the key-value pairs of oclText[self].
+
+	@Deprecated Use regular MapType property
+	**/
+	static property valueType : V[1] => 'org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation';
 }
 
 	/**
@@ -884,6 +896,8 @@ abstract type OclAny : AnyType {
 	does not access the supertype’s definition of the feature;
 	according to the semantics of redefinition, the redefined feature simply does not exist for the object.
 	However, when casting to a supertype, any features additionally defined by the subtype are suppressed.
+
+	FIXME Bug 578060 return should be optional to support OclVoid returning null.
 	*/
 	operation oclAsType(TT)(type : typeof(TT)[1]) : TT[1] invalidating => 'org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation'
 	{
@@ -1911,7 +1925,7 @@ type BooleanType {
 	/**
 	Returns oclText[Set{false, true}].
 	*/
-	operation allInstances() : Set(OclSelf[2|1]) => 'org.eclipse.ocl.pivot.library.logical.BooleanAllInstancesOperation';
+	operation allInstances() : Set(OclSelf[2|1]) => 'org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation';
 }
 type Class {
 	/**
@@ -1959,13 +1973,13 @@ type Enumeration conformsTo OclType {
 	/**
 	Return a set of all enumeration values of oclText[self].
 	*/
-	operation allInstances() : Set(OclSelf[1|1]) => 'org.eclipse.ocl.pivot.library.enumeration.EnumerationAllInstancesOperation';
+	operation allInstances() : Set(OclSelf[1|1]) => 'org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation';
 }
 type InvalidType {
 	/**
 	Returns oclText[invalid].
 	*/
-	operation allInstances() : Set(OclSelf) => 'org.eclipse.ocl.pivot.library.oclinvalid.OclInvalidAllInstancesOperation';
+	operation allInstances() : Set(OclSelf) => 'org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation';
 }
 type Stereotype {
 	/**
@@ -1977,7 +1991,7 @@ type VoidType {
 	/**
 	Returns oclText[Set{null}].
 	*/
-	operation allInstances() : Set(OclSelf[1|?]) => 'org.eclipse.ocl.pivot.library.oclvoid.OclVoidAllInstancesOperation';
+	operation allInstances() : Set(OclSelf[1|?]) => 'org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation';
 }
 
 }

@@ -14,7 +14,11 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.library.logical.BooleanAllInstancesOperation;
 import org.eclipse.ocl.pivot.util.Visitor;
+import org.eclipse.ocl.pivot.values.SetValue;
 
 /**
  * <!-- begin-user-doc -->
@@ -73,6 +77,14 @@ public class BooleanTypeImpl extends PrimitiveTypeImpl implements BooleanType
 	@Override
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitBooleanType(this);
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	@Override
+	public @NonNull SetValue allInstances(@NonNull Executor executor, @NonNull CollectionTypeId returnTypeId) {
+		return BooleanAllInstancesOperation.allInstances();
 	}
 
 } //BooleanTypeImpl

@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -17,7 +18,11 @@ import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.SetValue;
 
 
 /**
@@ -291,6 +296,15 @@ extends Type, Namespace, TemplateableElement {
 	 * @generated
 	 */
 	@NonNull List<Property> getOwnedProperties();
+
+	/**
+	 * Return all instances of this class or an empty set if the number of instances is not finite.
+	 *
+	 * @since 1.18
+	 */
+	default @NonNull SetValue allInstances(@NonNull Executor executor, @NonNull CollectionTypeId returnTypeId) {
+		return ValueUtil.createSetValue(returnTypeId, Collections.emptySet());
+	}
 
 	/**
 	 * Return a new instance of this type from valueFactory. Properties may be initialised using

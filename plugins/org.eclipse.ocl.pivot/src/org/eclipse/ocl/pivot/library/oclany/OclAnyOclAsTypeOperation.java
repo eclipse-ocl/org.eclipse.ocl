@@ -36,7 +36,7 @@ public class OclAnyOclAsTypeOperation extends AbstractUntypedBinaryOperation
 		}
 		Type argType = asType(argVal);
 		Type sourceType = executor.getIdResolver().getDynamicTypeOf(sourceVal);
-		if (sourceVal == null) {
+		if (sourceVal == null) {				// null conforms to anything even though e.g. VoidType doesn't
 			return null;
 		}
 		StandardLibrary standardLibrary = executor.getStandardLibrary();

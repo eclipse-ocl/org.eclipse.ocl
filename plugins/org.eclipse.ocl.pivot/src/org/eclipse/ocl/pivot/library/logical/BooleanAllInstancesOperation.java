@@ -17,6 +17,7 @@ import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.AbstractUntypedUnaryOperation;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.SetValue;
 
 /**
@@ -24,22 +25,29 @@ import org.eclipse.ocl.pivot.values.SetValue;
  */
 public class BooleanAllInstancesOperation extends AbstractUntypedUnaryOperation
 {
+	@Deprecated /* @deprecated invoke the polymorphic BooleanTypeImpl.allInstances() */
 	public static final @NonNull BooleanAllInstancesOperation INSTANCE = new BooleanAllInstancesOperation();
 	public static final @NonNull CollectionTypeId SET_BOOLEAN = TypeId.SET.getSpecializedId(TypeId.BOOLEAN);
-	
+
+	/**
+	 * @since 1.18
+	 */
+	public static @NonNull SetValue allInstances() {
+		return ValueUtil.createSetOfEach(SET_BOOLEAN, Boolean.FALSE, Boolean.TRUE);
+	}
+
 	/** @deprecated use Executor */
 	@Deprecated
 	@Override
 	public @NonNull SetValue evaluate(@NonNull Evaluator evaluator, @Nullable Object sourceValue) {
-		return evaluate(getExecutor(evaluator), sourceValue); 
+		return evaluate(getExecutor(evaluator), sourceValue);
 	}
-	
+
 	/**
-	 * @since 1.1
+	 * @since 1.18
 	 */
 	@Override
 	public @NonNull SetValue evaluate(@NonNull Executor executor, @Nullable Object sourceVal) {
-		// Boolean has two instances: false, true
-		return executor.getIdResolver().createSetOfEach(SET_BOOLEAN, Boolean.FALSE, Boolean.TRUE);
+		return allInstances();
 	}
 }
