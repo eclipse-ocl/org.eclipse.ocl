@@ -75,9 +75,11 @@ import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.manager.PivotExecutorManager;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
+import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.scoping.Attribution;
 import org.eclipse.ocl.pivot.internal.scoping.NullAttribution;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
+import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
@@ -244,10 +246,23 @@ public class PivotUtilInternal //extends PivotUtil
 		return getEnvironmentFactory(object instanceof EObject ? ((EObject)object).eResource() : null);
 	}
 
-	public static @NonNull EnvironmentFactoryInternal getEnvironmentFactory(@Nullable Resource zzresource) {
+	public static @NonNull EnvironmentFactoryInternal getEnvironmentFactory(@Nullable Resource resource) {
 		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 		if (environmentFactory == null) {
-			environmentFactory = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(ProjectManager.CLASS_PATH, null, null);
+			ProjectManager projectManager = null;
+			ResourceSet asResourceSet = null;
+			if (resource instanceof ASResource) {							// ASResource has a MetamodelManager adapting its ResourceSet
+				asResourceSet = ClassUtil.nonNullState(resource.getResourceSet());
+			//	PivotMetamodelManager metamodelManager = PivotMetamodelManager.findAdapter(resourceSet);
+			//	if (metamodelManager != null) {								// The metamodelManager may be missing if a *.oclas is opened by EMF
+			//		return metamodelManager.getEnvironmentFactory();
+			//	}
+				projectManager = ProjectMap.findAdapter(asResourceSet);
+			}
+			if (projectManager == null) {
+				projectManager = ProjectManager.CLASS_PATH;
+			}
+			environmentFactory = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(projectManager, null, asResourceSet);
 		}
 		return environmentFactory;
 	}

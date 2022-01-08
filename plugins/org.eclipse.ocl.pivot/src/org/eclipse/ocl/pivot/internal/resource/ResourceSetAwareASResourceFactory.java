@@ -20,11 +20,10 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
-import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.OCL;
 
 /**
  * ResourceSetAwareASResourceFactory provides additional ASResourceFactory capabilities to allow a reference
@@ -60,7 +59,7 @@ public abstract class ResourceSetAwareASResourceFactory extends AbstractASResour
 	}
 
 	/**
-	 * Creates an instance of the resource, preferably by loading the AS, but if necessary and pssible by
+	 * Creates an instance of the resource, preferably by loading the AS, but if necessary and possible by
 	 * using the csResourceSet to load the CS.
 	 */
 	protected Resource createResource(@NonNull ResourceSet resourceSet, @NonNull URI uri) {
@@ -90,12 +89,12 @@ public abstract class ResourceSetAwareASResourceFactory extends AbstractASResour
 		if (pivotMetamodelManager != null) {
 			return pivotMetamodelManager.getEnvironmentFactory().getResourceSet();
 		}
-		ProjectManager projectManager = ProjectMap.findAdapter(resourceSet);
-		if (projectManager == null) {
-			projectManager = OCL.CLASS_PATH;
-		}
-		EnvironmentFactoryInternal environmentFactory = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(projectManager, null, resourceSet);
-		environmentFactory.getMetamodelManager();		// Create the AS ResourceSet adapter
+	//	ProjectManager projectManager = ProjectMap.findAdapter(resourceSet);
+	//	if (projectManager == null) {
+	//		projectManager = OCL.CLASS_PATH;
+	//	}
+		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(null);
+//		environmentFactory.getMetamodelManager();		// Create the AS ResourceSet adapter
 		return environmentFactory.getResourceSet();		// Return the auto-created CS ResourceSet
 	}
 
