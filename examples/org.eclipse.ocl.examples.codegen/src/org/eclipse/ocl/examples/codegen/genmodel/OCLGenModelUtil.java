@@ -30,6 +30,8 @@ import org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage;
 import org.eclipse.emf.codegen.ecore.genmodel.GenOperation;
 import org.eclipse.emf.codegen.ecore.genmodel.GenRuntimeVersion;
 import org.eclipse.emf.codegen.ecore.genmodel.util.GenModelUtil;
+import org.eclipse.emf.common.util.ECollections;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.resource.URIConverter;
@@ -50,6 +52,8 @@ public abstract class OCLGenModelUtil
 	public static @NonNull OCLGenModelUtil INSTANCE =
 			GenRuntimeVersion.get("2.26") != null ? new EMF_CodeGen_2_26() :			// 2021-06
 			GenRuntimeVersion.get("2.25") != null ? new EMF_CodeGen_2_25() :			// 2021-03
+			GenRuntimeVersion.get("2.19") != null ? new EMF_CodeGen_2_19() :			// 2019-09
+			GenRuntimeVersion.get("2.18") != null ? new EMF_CodeGen_2_18() :			// 2019-06
 			GenRuntimeVersion.get("2.17") != null ? new EMF_CodeGen_2_17() :			// 2019-03
 			GenRuntimeVersion.get("2.16") != null ? new EMF_CodeGen_2_16() :			// 2018-12
 			GenRuntimeVersion.get("2.14") != null ? new EMF_CodeGen_2_14() :			// Photon
@@ -66,6 +70,9 @@ public abstract class OCLGenModelUtil
 	public static final @NonNull String DERIVED_VISITOR_CLASS = "Derived Visitor Class";
 	public static final @NonNull String VISITABLE_CLASSES = "Visitable Classes";
 	public static final @NonNull String VISITABLE_INTERFACE = "Visitable Interface";
+
+	public static final Object UNNECESSARY_DEPRECATED_METHOD = new Object();			// CodeGenStyle
+	public static final Object UNNECESSARY_ASSIGNMENT_BEFORE_RETURN = new Object();		// CodeGenStyle
 
 	private static final GeneratorAdapterFactory.Descriptor UML_DESCRIPTOR1 = new GeneratorAdapterFactory.Descriptor() {
 		@Override
@@ -325,12 +332,15 @@ public abstract class OCLGenModelUtil
 	}
 
 	public abstract String getAPITags(GenBase genBase, String indentation);
+	public abstract String getAPITags(GenBase genBase, String indentation, boolean excludePrivate);
+	public abstract <T> EList<T> getCodeStyle(GenModel genModel);		// GenCodeStyle not available on all versions
 	public abstract String getImplicitAPITags(GenBase genBase, String indentation);
 	public abstract String getImplicitAPITags(GenBase genBase, String indentation, boolean excludeOwnDocumentation);
 	public abstract String getRawQualifiedInterfaceName(GenClass genClass);
 	public abstract boolean hasAPIDeprecatedTag(GenBase genBase);
 	public abstract boolean hasAPIDeprecatedTag(Collection<?>... elements);
 	public abstract boolean hasAPITags(GenBase genBase);
+	public abstract boolean hasAPITags(GenBase genBase, boolean excludePrivate);
 	public abstract boolean hasConstraintEAnnotations();	// Fixed by Bug 571760 in EMF 2.26 for 2021-06
 	public abstract boolean hasDoubleOverrideBug547424();
 	public abstract boolean hasImplicitAPITags(GenBase genBase);
@@ -338,6 +348,7 @@ public abstract class OCLGenModelUtil
 	public abstract boolean hasImplicitAPIDeprecatedTag(GenBase genBase);
 	public abstract boolean hasImplicitAPIDeprecatedTag(Collection<?>... elements);
 	public abstract boolean useInterfaceOverrideAnnotation(GenModel genModel);
+	public abstract boolean isSwitchMissingDefaultCase(GenModel genModel);
 
 	/**
 	 * Whether the ImportManager supports <%...%> within <%...%>
@@ -353,6 +364,17 @@ public abstract class OCLGenModelUtil
 		@Override
 		public String getAPITags(GenBase genBase, String indentation) {
 			return "";
+		}
+
+		@Override
+		public String getAPITags(GenBase genBase, String indentation, boolean excludePrivate) {
+			return getAPITags(genBase, indentation);
+		}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		public <T> EList<T> getCodeStyle(GenModel genModel) {
+			return (EList<T>)ECollections.EMPTY_ELIST;
 		}
 
 		@Override
@@ -398,6 +420,11 @@ public abstract class OCLGenModelUtil
 		}
 
 		@Override
+		public boolean hasAPITags(GenBase genBase, boolean excludePrivate) {
+			return hasAPITags(genBase);
+		}
+
+		@Override
 		public boolean hasConstraintEAnnotations() {
 			return false;
 		}
@@ -424,6 +451,11 @@ public abstract class OCLGenModelUtil
 
 		@Override
 		public boolean hasImplicitAPIDeprecatedTag(Collection<?>... elements) {
+			return false;
+		}
+
+		@Override
+		public boolean isSwitchMissingDefaultCase(GenModel genModel) {
 			return false;
 		}
 
@@ -530,10 +562,45 @@ public abstract class OCLGenModelUtil
 	}
 
 	/**
+	 * EMF_CodeGen_2_18 redirects GenModel facilities available in an EMF >= 2.18 platform to the
+	 * standard implementation.
+	 */
+	private static class EMF_CodeGen_2_18 extends EMF_CodeGen_2_17
+	{
+		@Override
+		public String getAPITags(GenBase genBase, String indentation, boolean excludePrivate) {
+			return genBase.getAPITags(indentation, excludePrivate);
+		}
+
+		@Override
+		public boolean hasAPITags(GenBase genBase, boolean excludePrivate) {
+			return genBase.hasAPITags(excludePrivate);
+		}
+
+		@Override
+		public boolean isSwitchMissingDefaultCase(GenModel genModel) {
+			return genModel.isSwitchMissingDefaultCase();
+		}
+	}
+
+	/**
+	 * EMF_CodeGen_2_19 redirects GenModel facilities available in an EMF >= 2.19 platform to the
+	 * standard implementation.
+	 */
+	private static class EMF_CodeGen_2_19 extends EMF_CodeGen_2_18
+	{
+		@SuppressWarnings("unchecked")
+		@Override
+		public <T> EList<T> getCodeStyle(GenModel genModel) {
+			return (EList<T>)genModel.getCodeStyle();
+		}
+	}
+
+	/**
 	 * EMF_CodeGen_2_25 redirects GenModel facilities available in an EMF >= 2.25 platform to the
 	 * standard implementation.
 	 */
-	private static class EMF_CodeGen_2_25 extends EMF_CodeGen_2_17
+	private static class EMF_CodeGen_2_25 extends EMF_CodeGen_2_19
 	{
 		@Override
 		public boolean hasDoubleOverrideBug547424() {
