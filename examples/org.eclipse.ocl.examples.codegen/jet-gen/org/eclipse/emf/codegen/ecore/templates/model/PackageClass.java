@@ -366,7 +366,7 @@ public class PackageClass
     final GenPackage genPackage = (GenPackage)((Object[])argument)[0]; final GenModel genModel=genPackage.getGenModel();
     final boolean isJDK50 = genModel.getComplianceLevel().getValue() >= GenJDKLevel.JDK50;
     boolean isInterface = Boolean.TRUE.equals(((Object[])argument)[1]); boolean isImplementation = Boolean.TRUE.equals(((Object[])argument)[2]);  boolean useInterfaceOverrideAnnotation = OCLGenModelUtil.INSTANCE.useInterfaceOverrideAnnotation(genModel) && !(isInterface && isImplementation);
-    boolean packageNeedsSuppressDeprecation = isJDK50 && OCLGenModelUtil.INSTANCE.hasAPIDeprecatedTag(genPackage.getOrderedGenClassifiers()) && !OCLGenModelUtil.INSTANCE.hasAPIDeprecatedTag(genPackage);
+    boolean packageNeedsSuppressDeprecation = isJDK50 && OCLGenModelUtil.INSTANCE.hasAPIDeprecatedTag(genPackage.getOrderedGenClassifiers()) && !OCLGenModelUtil.INSTANCE.hasAPIDeprecatedTag(genPackage) && !genModel.isSuppressEMFMetaData();
     String publicStaticFinalFlag = isImplementation ? "public static final " : "";
     boolean needsAddEOperation = false;
     boolean needsAddEParameter = false;
@@ -569,9 +569,9 @@ public class PackageClass
     }
     for (GenClassifier genClassifier : genPackage.getGenClassifiers()) {
     stringBuffer.append(TEXT_57);
-    if (OCLGenModelUtil.INSTANCE.hasAPITags(genClassifier)) {
+    if (OCLGenModelUtil.INSTANCE.hasAPITags(genClassifier, true)) {
     stringBuffer.append(TEXT_50);
-    stringBuffer.append(OCLGenModelUtil.INSTANCE.getAPITags(genClassifier, genModel.getIndentation(stringBuffer)));
+    stringBuffer.append(OCLGenModelUtil.INSTANCE.getAPITags(genClassifier, genModel.getIndentation(stringBuffer), true));
     }
     stringBuffer.append(TEXT_51);
     if (isJDK50 && OCLGenModelUtil.INSTANCE.hasAPIDeprecatedTag(genClassifier)) {
@@ -1110,7 +1110,7 @@ public class PackageClass
     if (isImplementation) {
     if (!genPackage.isLoadedInitialization()) {
     stringBuffer.append(TEXT_185);
-    {boolean needsSuppressDeprecation = false; if (!packageNeedsSuppressDeprecation && isJDK50) { LOOP: for (GenClass genClass : genPackage.getGenClasses()) { for (GenFeature genFeature : genClass.getGenFeatures()) { if (OCLGenModelUtil.INSTANCE.hasAPIDeprecatedTag(genFeature)) { needsSuppressDeprecation = true; break LOOP; }}
+    {boolean needsSuppressDeprecation = false; if (!packageNeedsSuppressDeprecation && isJDK50 && !genModel.isSuppressEMFMetaData()) { LOOP: for (GenClass genClass : genPackage.getGenClasses()) { for (GenFeature genFeature : genClass.getGenFeatures()) { if (OCLGenModelUtil.INSTANCE.hasAPIDeprecatedTag(genFeature)) { needsSuppressDeprecation = true; break LOOP; }}
       for (GenOperation genOperation : genClass.getGenOperations()) { if (OCLGenModelUtil.INSTANCE.hasAPIDeprecatedTag(genOperation)) { needsSuppressDeprecation = true; break LOOP; }}} if (needsSuppressDeprecation) {
     stringBuffer.append(TEXT_186);
     }}}
