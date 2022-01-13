@@ -9,12 +9,14 @@
  *
  * Contributors:
  *   IBM - Initial API and implementation
+ *   Alexander Fedorov <alexander.fedorov@arsysop.ru> - Bug 546714
  */
 %>
 <%final GenClass genClass = (GenClass)((Object[])argument)[0]; final GenPackage genPackage = genClass.getGenPackage(); final GenModel genModel=genPackage.getGenModel();%>
 <%final boolean isJDK50 = genModel.getComplianceLevel().getValue() >= GenJDKLevel.JDK50;%>
 <%final boolean isInterface = Boolean.TRUE.equals(((Object[])argument)[1]); final boolean isImplementation = Boolean.TRUE.equals(((Object[])argument)[2]); final boolean useInterfaceOverrideAnnotation = OCLGenModelUtil.INSTANCE.useInterfaceOverrideAnnotation(genModel) && !(isInterface && isImplementation);%>
 <%final boolean isGWT = genModel.getRuntimePlatform() == GenRuntimePlatform.GWT;%>
+<%final boolean forceDefaultCase = genModel.isSwitchMissingDefaultCase();String indentDefaultCase = forceDefaultCase ? "\t\t" : "";%>
 <%final String publicStaticFinalFlag = isImplementation ? "public static final " : "";%>
 <%final String singleWildcard = isJDK50 ? "<?>" : "";%>
 <%final String negativeOffsetCorrection = genClass.hasOffsetCorrection() ? " - " + genClass.getOffsetCorrectionField(null) : "";%>
@@ -1994,11 +1996,18 @@ if (index != -1) { head = typeName.substring(0, index); tail = "<code>" + CodeGe
 				return basicSet<%=genFeature.getAccessorName()%>((<%=genFeature.getImportedType(genClass)%>)otherEnd, msgs);
   <%}%>
 <%}%>
-		}
-<%if (genModel.isMinimalReflectiveMethods()) {%>
-		return super.eInverseAdd(otherEnd, featureID, msgs);
+<%if (forceDefaultCase) {%>
+			default:
 <%} else {%>
-		return eDynamicInverseAdd(otherEnd, featureID, msgs);
+		}
+<%}%>
+<%if (genModel.isMinimalReflectiveMethods()) {%>
+<%=indentDefaultCase%>		return super.eInverseAdd(otherEnd, featureID, msgs);
+<%} else {%>
+<%=indentDefaultCase%>		return eDynamicInverseAdd(otherEnd, featureID, msgs);
+<%}%>
+<%if (forceDefaultCase) {%>
+		}
 <%}%>
 	}
 
@@ -2034,12 +2043,19 @@ if (index != -1) { head = typeName.substring(0, index); tail = "<code>" + CodeGe
 				return basicSet<%=genFeature.getAccessorName()%>(null, msgs);
   <%}%>
 <%}%>
+<%if (forceDefaultCase) {%>
+			default:
+<%} else { // {%>
 		}
-<%if (genModel.isMinimalReflectiveMethods()) {%>
-		return super.eInverseRemove(otherEnd, featureID, msgs);
-<%} else {%>
-		return eDynamicInverseRemove(otherEnd, featureID, msgs);
 <%}%>
+<%if (genModel.isMinimalReflectiveMethods()) {%>
+<%=indentDefaultCase%>		return super.eInverseRemove(otherEnd, featureID, msgs);
+<%} else {%>
+<%=indentDefaultCase%>		return eDynamicInverseRemove(otherEnd, featureID, msgs);
+<%}%>
+<%if (forceDefaultCase) { // {%>
+		}
+<%} // }%>
 	}
 
 <%}%>
@@ -2061,12 +2077,19 @@ if (index != -1) { head = typeName.substring(0, index); tail = "<code>" + CodeGe
 			case <%=OCLGenModelUtil.getQualifiedFeatureValue(genClass, genFeature)%>:
 				return eInternalContainer().eInverseRemove(this, <%=OCLGenModelUtil.getQualifiedFeatureValue(targetClass, reverseFeature)%><%=reverseOffsetCorrection%>, <%=targetClass.getRawImportedInterfaceName()%>.class, msgs);
 <%}%>
+<%if (forceDefaultCase) {%>
+			default:
+<%} else { // {%>
 		}
-<%if (genModel.isMinimalReflectiveMethods()) {%>
-		return super.eBasicRemoveFromContainerFeature(msgs);
-<%} else {%>
-		return eDynamicBasicRemoveFromContainer(msgs);
 <%}%>
+<%if (genModel.isMinimalReflectiveMethods()) {%>
+<%=indentDefaultCase%>		return super.eBasicRemoveFromContainerFeature(msgs);
+<%} else {%>
+<%=indentDefaultCase%>		return eDynamicBasicRemoveFromContainer(msgs);
+<%}%>
+<%if (forceDefaultCase) { // {%>
+		}
+<%} // }%>
 	}
 
 <%}%>
@@ -2114,12 +2137,19 @@ if (index != -1) { head = typeName.substring(0, index); tail = "<code>" + CodeGe
 				return <%=genFeature.getGetAccessor()%>();
   <%}%>
 <%}%>
+<%if (forceDefaultCase) {%>
+			default:
+<%} else { // {%>
 		}
-<%if (genModel.isMinimalReflectiveMethods()) {%>
-		return super.eGet(featureID, resolve, coreType);
-<%} else {%>
-		return eDynamicGet(featureID, resolve, coreType);
 <%}%>
+<%if (genModel.isMinimalReflectiveMethods()) {%>
+<%=indentDefaultCase%>		return super.eGet(featureID, resolve, coreType);
+<%} else {%>
+<%=indentDefaultCase%>		return eDynamicGet(featureID, resolve, coreType);
+<%}%>
+<%if (forceDefaultCase) { // {%>
+		}
+<%} // }%>
 	}
 
 <%}%>
@@ -2167,12 +2197,25 @@ if (index != -1) { head = typeName.substring(0, index); tail = "<code>" + CodeGe
     <%}%>
 				return;
   <%}%>
+<%if (forceDefaultCase) {%>
+			default:
+<%} else { // {%>
 		}
+<%}%>
   <%if (genModel.isMinimalReflectiveMethods()) {%>
-		super.eSet(featureID, newValue);
+<%=indentDefaultCase%>		super.eSet(featureID, newValue);
+<%if (forceDefaultCase) {%>
+				return;
+<%}%>
   <%} else {%>
-		eDynamicSet(featureID, newValue);
+<%=indentDefaultCase%>		eDynamicSet(featureID, newValue);
+<%if (forceDefaultCase) {%>
+				return;
+<%}%>
   <%}%>
+<%if (forceDefaultCase) { // {%>
+		}
+<%} // }%>
 	}
 
 <%}%>
@@ -2210,12 +2253,25 @@ if (index != -1) { head = typeName.substring(0, index); tail = "<code>" + CodeGe
     <%}%>
 				return;
   <%}%>
+<%if (forceDefaultCase) {%>
+			default:
+<%} else { // {%>
 		}
+<%}%>
   <%if (genModel.isMinimalReflectiveMethods()) {%>
-		super.eUnset(featureID);
+<%=indentDefaultCase%>		super.eUnset(featureID);
+<%if (forceDefaultCase) {%>
+				return;
+<%}%>
   <%} else {%>
-		eDynamicUnset(featureID);
+<%=indentDefaultCase%>		eDynamicUnset(featureID);
+<%if (forceDefaultCase) {%>
+				return;
+<%}%>
   <%}%>
+<%if (forceDefaultCase) { // {%>
+		}
+<%} // }%>
 	}
 
 <%@ end %><%//Class/eUnset.override.javajetinc%>
@@ -2322,12 +2378,19 @@ if (index != -1) { head = typeName.substring(0, index); tail = "<code>" + CodeGe
     <%}%>
   <%}%>
 <%}%>
+<%if (forceDefaultCase) {%>
+			default:
+<%} else { // {%>
 		}
-<%if (genModel.isMinimalReflectiveMethods()) {%>
-		return super.eIsSet(featureID);
-<%} else {%>
-		return eDynamicIsSet(featureID);
 <%}%>
+<%if (genModel.isMinimalReflectiveMethods()) {%>
+<%=indentDefaultCase%>		return super.eIsSet(featureID);
+<%} else {%>
+<%=indentDefaultCase%>		return eDynamicIsSet(featureID);
+<%}%>
+<%if (forceDefaultCase) { // {%>
+		}
+<%} // }%>
 	}
 
 <%@ end %><%//Class/eIsSet.override.javajetinc%>
@@ -2569,12 +2632,19 @@ if (index != -1) { head = typeName.substring(0, index); tail = "<code>" + CodeGe
 				}
   <%}%>
 <%}%>
+<%if (forceDefaultCase) {%>
+			default:
+<%} else { // {%>
 		}
-<%if (genModel.isMinimalReflectiveMethods()) {%>
-		return super.eInvoke(operationID, arguments);
-<%} else {%>
-		return eDynamicInvoke(operationID, arguments);
 <%}%>
+<%if (genModel.isMinimalReflectiveMethods()) {%>
+<%=indentDefaultCase%>		return super.eInvoke(operationID, arguments);
+<%} else {%>
+<%=indentDefaultCase%>		return eDynamicInvoke(operationID, arguments);
+<%}%>
+<%if (forceDefaultCase) { // {%>
+		}
+<%} // }%>
 	}
 
 <%}%>
