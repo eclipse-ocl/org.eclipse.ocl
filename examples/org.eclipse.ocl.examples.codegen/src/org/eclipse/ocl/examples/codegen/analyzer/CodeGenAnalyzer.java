@@ -37,6 +37,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.examples.codegen.generator.CodeGenerator;
+import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -194,6 +195,7 @@ public class CodeGenAnalyzer
 			cgProperty = CGModelFactory.eINSTANCE.createCGExecutorCompositionProperty();
 			cgProperty.setUnderlyingPropertyId(cgPropertyId);
 			cgProperty.setAst(asOppositeProperty);
+			cgProperty.setTypeId(getTypeId(JavaConstants.UNBOXED_COMPOSITION_PROPERTY_TYPE_ID));
 			cgProperty.setName("IMPPROPid_" + asOppositeProperty.getName());
 			cgProperty.getDependsOn().add(cgPropertyId);
 		}
@@ -203,6 +205,7 @@ public class CodeGenAnalyzer
 			cgProperty.setUnderlyingPropertyId(cgPropertyId);
 			cgProperty.setAst(asProperty);
 			cgProperty.setName("IMPPROPid_" + asProperty.getName());
+			cgProperty.setTypeId(getTypeId(JavaConstants.UNBOXED_OPPOSITE_NAVIGATION_PROPERTY_TYPE_ID));
 			cgProperty.getDependsOn().add(cgPropertyId);
 		}
 		return cgProperty;
@@ -215,6 +218,7 @@ public class CodeGenAnalyzer
 		cgProperty.setUnderlyingPropertyId(cgPropertyId);
 		cgProperty.setAst(asProperty);
 		cgProperty.setName("IMPPROPid_" + asProperty.getName());
+		cgProperty.setTypeId(getTypeId(JavaConstants.UNBOXED_EXPLICIT_NAVIGATION_PROPERTY_TYPE_ID));
 		cgProperty.getDependsOn().add(cgPropertyId);
 		return cgProperty;
 	}
@@ -226,6 +230,7 @@ public class CodeGenAnalyzer
 		cgPart.setUnderlyingPropertyId(cgPropertyId);
 		cgPart.setAst(asProperty);
 		cgPart.setName("CTORid_" + asProperty.getName());
+		cgPart.setTypeId(getTypeId(JavaConstants.PROPERTY_TYPE_ID));
 		cgPart.getDependsOn().add(cgPropertyId);
 		return cgPart;
 	}
@@ -238,6 +243,7 @@ public class CodeGenAnalyzer
 		cgType.setAst(asType);
 		getGlobalNameManager().declareStandardName(cgType);
 		//		cgType.setValueName(cgType.getName());
+		cgType.setTypeId(getTypeId(JavaConstants.CLASS_TYPE_ID));
 		cgType.getDependsOn().add(cgTypeId);
 		return cgType;
 	}

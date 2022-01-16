@@ -343,16 +343,14 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 	public @Nullable Object visitCGExecutorCompositionProperty(@NonNull CGExecutorCompositionProperty cgExecutorProperty) {
 		Property asProperty = (Property) cgExecutorProperty.getAst();
 		if ((asProperty != null) && asProperty.isIsComposite()) {
-			TypeId javaPropertyTypeId = JavaConstants.UNBOXED_COMPOSITION_PROPERTY_TYPE_ID;
-			cgExecutorProperty.setTypeId(analyzer.getTypeId(javaPropertyTypeId));
+			assert cgExecutorProperty.getTypeId() == analyzer.getTypeId(JavaConstants.UNBOXED_COMPOSITION_PROPERTY_TYPE_ID);	// XXX  debugging evolution
 		}
 		return super.visitCGExecutorCompositionProperty(cgExecutorProperty);
 	}
 
 	@Override
 	public @Nullable Object visitCGExecutorNavigationProperty(@NonNull CGExecutorNavigationProperty cgExecutorProperty) {
-		TypeId javaPropertyTypeId = JavaConstants.UNBOXED_EXPLICIT_NAVIGATION_PROPERTY_TYPE_ID;
-		cgExecutorProperty.setTypeId(analyzer.getTypeId(javaPropertyTypeId));
+		assert cgExecutorProperty.getTypeId() == analyzer.getTypeId(JavaConstants.UNBOXED_EXPLICIT_NAVIGATION_PROPERTY_TYPE_ID);	// XXX  debugging evolution
 		return super.visitCGExecutorNavigationProperty(cgExecutorProperty);
 	}
 
@@ -378,8 +376,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 
 	@Override
 	public @Nullable Object visitCGExecutorOppositeProperty(@NonNull CGExecutorOppositeProperty cgExecutorProperty) {
-		TypeId javaPropertyTypeId = JavaConstants.UNBOXED_OPPOSITE_NAVIGATION_PROPERTY_TYPE_ID;
-		cgExecutorProperty.setTypeId(analyzer.getTypeId(javaPropertyTypeId));
+		assert cgExecutorProperty.getTypeId() == analyzer.getTypeId(JavaConstants.UNBOXED_OPPOSITE_NAVIGATION_PROPERTY_TYPE_ID);	// XXX  debugging evolution
 		return super.visitCGExecutorOppositeProperty(cgExecutorProperty);
 	}
 
@@ -433,7 +430,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 		if (cgTypeId != null) {
 			cgTypeId.accept(this);
 		}
-		cgExecutorType.setTypeId(analyzer.getTypeId(JavaConstants.CLASS_TYPE_ID));		// FIXME
+		assert cgExecutorType.getTypeId() == analyzer.getTypeId(JavaConstants.CLASS_TYPE_ID);	// XXX  debugging evolution
 		return super.visitCGExecutorType(cgExecutorType);
 	}
 
@@ -596,8 +593,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 	public @Nullable Object visitCGShadowPart(@NonNull CGShadowPart cgShadowPart) {
 		CGExecutorShadowPart cgExecutorConstructorPart = cgShadowPart.getExecutorPart();
 		cgExecutorConstructorPart.accept(this);
-		TypeId javaPropertyTypeId = JavaConstants.PROPERTY_TYPE_ID;
-		cgExecutorConstructorPart.setTypeId(analyzer.getTypeId(javaPropertyTypeId));
+		assert cgExecutorConstructorPart.getTypeId() == analyzer.getTypeId(JavaConstants.PROPERTY_TYPE_ID);	// XXX  debugging evolution
 		//		localContext.addLocalVariable(cgExecutorConstructorPart);
 		installIdResolverVariable(cgExecutorConstructorPart);
 		cgShadowPart.getOwns().add(cgExecutorConstructorPart);
