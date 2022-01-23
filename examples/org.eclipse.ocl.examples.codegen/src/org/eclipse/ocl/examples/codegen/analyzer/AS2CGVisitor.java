@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGAccumulator;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGBoolean;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBuiltInIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperationCallExp;
@@ -45,6 +46,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOppositePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcorePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGElementId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOppositePropertyCallExp;
@@ -53,6 +55,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGFinalVariable;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIfExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInteger;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIsEqual2Exp;
@@ -84,6 +87,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGReal;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowPart;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGString;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTemplateParameterExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTupleExp;
@@ -162,11 +166,13 @@ import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.ecore.EObjectOperation;
+import org.eclipse.ocl.pivot.internal.library.AbstractStaticOperation;
 import org.eclipse.ocl.pivot.internal.library.CompositionProperty;
 import org.eclipse.ocl.pivot.internal.library.ConstrainedOperation;
 import org.eclipse.ocl.pivot.internal.library.ConstrainedProperty;
 import org.eclipse.ocl.pivot.internal.library.EInvokeOperation;
 import org.eclipse.ocl.pivot.internal.library.ExplicitNavigationProperty;
+import org.eclipse.ocl.pivot.internal.library.ForeignOperation;
 import org.eclipse.ocl.pivot.internal.library.ImplicitNonCompositionProperty;
 import org.eclipse.ocl.pivot.internal.library.StaticProperty;
 import org.eclipse.ocl.pivot.internal.library.StereotypeProperty;
@@ -192,6 +198,8 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.RealValue;
 import org.eclipse.ocl.pivot.values.Unlimited;
 import org.eclipse.ocl.pivot.values.UnlimitedValue;
 
@@ -443,9 +451,37 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		else if (libraryOperation instanceof EObjectOperation) {
 			EOperation eOperation = (EOperation) asOperation.getESObject();
 			if (eOperation != null) {
-				CGEcoreOperation cgEcoreOperation = CGModelFactory.eINSTANCE.createCGEcoreOperation();
-				cgEcoreOperation.setEOperation(eOperation);
-				cgOperation = cgEcoreOperation;
+				boolean isForeign = PivotUtil.isStatic(eOperation);
+				if (!isForeign) {
+					try {
+						genModelHelper.getGenOperation(eOperation);
+					}
+					catch (GenModelException e) {
+						isForeign = true;
+					}
+				}
+				if (!isForeign) {
+					CGEcoreOperation cgEcoreOperation = CGModelFactory.eINSTANCE.createCGEcoreOperation();
+					cgEcoreOperation.setEOperation(eOperation);
+					cgOperation = cgEcoreOperation;
+				}
+				else {
+					cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
+				}
+			}
+		}
+		else if (libraryOperation instanceof ForeignOperation) {
+			EOperation eOperation = (EOperation) asOperation.getESObject();
+			if (eOperation != null) {
+				try {
+					genModelHelper.getGenOperation(eOperation);
+					CGEcoreOperation cgEcoreOperation = CGModelFactory.eINSTANCE.createCGEcoreOperation();
+					cgEcoreOperation.setEOperation(eOperation);
+					cgOperation = cgEcoreOperation;
+				}
+				catch (GenModelException e) {
+					cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
+				}
 			}
 		}
 		else if (libraryOperation instanceof ConstrainedOperation) {
@@ -676,24 +712,18 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			cgIsEqualExp.setValidating(true);
 			return cgIsEqualExp;
 		}
-		else if (libraryOperation instanceof NativeStaticOperation) {
-			LanguageExpression bodyExpression = asOperation.getBodyExpression();
-			if (bodyExpression != null) {
-				CGValuedElement cgOperationCallExp2 = inlineOperationCall(element, bodyExpression);
-				if (cgOperationCallExp2 != null) {
-					return cgOperationCallExp2;
-				}
-			}
-			CGNativeOperationCallExp cgNativeOperationCallExp = CGModelFactory.eINSTANCE.createCGNativeOperationCallExp();
-			cgNativeOperationCallExp.setSource(cgSource);
-			cgNativeOperationCallExp.setThisIsSelf(true);
+		else if (libraryOperation instanceof AbstractStaticOperation) {
+			assert cgSource == null;
+			assert asOperation.isIsStatic();
+			context.addForeignOperation(asOperation);
+			CGForeignOperationCallExp cgForeignOperationCallExp = CGModelFactory.eINSTANCE.createCGForeignOperationCallExp();
 			for (@NonNull OCLExpression pArgument : ClassUtil.nullFree(element.getOwnedArguments())) {
 				CGValuedElement cgArgument = doVisit(CGValuedElement.class, pArgument);
-				cgNativeOperationCallExp.getArguments().add(cgArgument);
+				cgForeignOperationCallExp.getArguments().add(cgArgument);
 			}
-			setAst(cgNativeOperationCallExp, element);
-			cgNativeOperationCallExp.setReferredOperation(asOperation);
-			return cgNativeOperationCallExp;
+			setAst(cgForeignOperationCallExp, element);
+			cgForeignOperationCallExp.setReferredOperation(asOperation);
+			return cgForeignOperationCallExp;
 		}
 		else if (libraryOperation instanceof NativeVisitorOperation) {
 			LanguageExpression bodyExpression = asOperation.getBodyExpression();
@@ -772,6 +802,20 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 						cgNativeOperationCallExp.setRequired(isRequired);
 						return cgNativeOperationCallExp;
 					}
+					else {
+						assert cgSource != null;
+						assert !asOperation.isIsStatic();
+						context.addForeignOperation(asOperation);
+						CGForeignOperationCallExp cgForeignOperationCallExp = CGModelFactory.eINSTANCE.createCGForeignOperationCallExp();
+						cgForeignOperationCallExp.setSource(cgSource);
+						for (@NonNull OCLExpression pArgument : ClassUtil.nullFree(element.getOwnedArguments())) {
+							CGValuedElement cgArgument = doVisit(CGValuedElement.class, pArgument);
+							cgForeignOperationCallExp.getArguments().add(cgArgument);
+						}
+						setAst(cgForeignOperationCallExp, element);
+						cgForeignOperationCallExp.setReferredOperation(asOperation);
+						return cgForeignOperationCallExp;
+					}
 				}
 			}
 		}
@@ -790,6 +834,9 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		}
 		if (cgOperationCallExp == null) {
 			CGExecutorOperationCallExp cgExecutorOperationCallExp = CGModelFactory.eINSTANCE.createCGExecutorOperationCallExp();
+			if (asOperation.isIsStatic()) {
+				context.addForeignOperation(asOperation);		// FIXME obsolete
+			}
 			CGExecutorOperation cgExecutorOperation = context.createExecutorOperation(asOperation);
 			cgExecutorOperationCallExp.setExecutorOperation(cgExecutorOperation);
 			cgExecutorOperationCallExp.getOwns().add(cgExecutorOperation);
@@ -851,7 +898,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return cgPropertyCallExp;
 	}
 
-	protected @NonNull CGValuedElement generatePropertyCallExp(@NonNull CGValuedElement cgSource, @NonNull PropertyCallExp element) {
+	protected @NonNull CGValuedElement generatePropertyCallExp(@Nullable CGValuedElement cgSource, @NonNull PropertyCallExp element) {
 		Property asProperty = ClassUtil.nonNullModel(element.getReferredProperty());
 		boolean isRequired = asProperty.isIsRequired();
 		LibraryProperty libraryProperty = metamodelManager.getImplementation(element, null, asProperty);
@@ -859,6 +906,54 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		if (libraryProperty instanceof NativeProperty) {
 			CGNativePropertyCallExp cgNativePropertyCallExp = CGModelFactory.eINSTANCE.createCGNativePropertyCallExp();
 			cgPropertyCallExp = cgNativePropertyCallExp;
+		}
+		else if (libraryProperty instanceof StaticProperty) {
+			assert cgSource == null;
+			CGForeignPropertyCallExp cgForeignPropertyCallExp = CGModelFactory.eINSTANCE.createCGForeignPropertyCallExp();
+			CGElementId cgPropertyId = context.getElementId(asProperty.getPropertyId());
+			cgForeignPropertyCallExp.getOwns().add(cgPropertyId);
+
+			LanguageExpression specification = asProperty.getOwnedExpression();
+			Object defaultValue = asProperty.getDefaultValue();
+			if (specification != null) {
+				try {
+					ExpressionInOCL query = environmentFactory.parseSpecification(specification);
+					Variable contextVariable = query.getOwnedContext();
+					if (contextVariable != null) {
+						getParameter(contextVariable, null);
+					}
+					cgForeignPropertyCallExp.setInitExpression(doVisit(CGValuedElement.class, query.getOwnedBody()));
+				} catch (ParserException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			else if (defaultValue instanceof Boolean) {
+				CGBoolean constant = context.getBoolean(((Boolean)defaultValue).booleanValue());
+				CGConstantExp cgLiteralExp = context.createCGConstantExp(element, constant);
+				cgForeignPropertyCallExp.setInitExpression(cgLiteralExp);
+			}
+			else if (defaultValue instanceof IntegerValue) {		// ?? Long etc
+				CGInteger constant = context.getInteger(((IntegerValue)defaultValue).asNumber());
+				CGConstantExp cgLiteralExp = context.createCGConstantExp(element, constant);
+				cgForeignPropertyCallExp.setInitExpression(cgLiteralExp);
+			}
+			else if (defaultValue instanceof RealValue) {
+				CGReal constant = context.getReal(((RealValue)defaultValue).asNumber());
+				CGConstantExp cgLiteralExp = context.createCGConstantExp(element, constant);
+				cgForeignPropertyCallExp.setInitExpression(cgLiteralExp);
+			}
+			else if (defaultValue instanceof String) {
+				CGString constant = context.getString((String)defaultValue);
+				CGConstantExp cgLiteralExp = context.createCGConstantExp(element, constant);
+				cgForeignPropertyCallExp.setInitExpression(cgLiteralExp);
+			}
+			else if (defaultValue instanceof Number) {
+				CGReal constant = context.getReal((Number)defaultValue);
+				CGConstantExp cgLiteralExp = context.createCGConstantExp(element, constant);
+				cgForeignPropertyCallExp.setInitExpression(cgLiteralExp);
+			}
+			cgPropertyCallExp = cgForeignPropertyCallExp;
 		}
 		else if (isEcoreProperty(libraryProperty)) {
 			EStructuralFeature eStructuralFeature = (EStructuralFeature) asProperty.getESObject();
@@ -873,8 +968,8 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 					//					}
 					isRequired = asProperty.isIsRequired();
 					cgPropertyCallExp = cgEcorePropertyCallExp;
-				} catch (GenModelException e) {
-					codeGenerator.addProblem(e);		// FIXME drop through to better default
+				} catch (GenModelException e) {			// There is no genmodel so
+					codeGenerator.addProblem(e);		// FIXME drop through to better default without a problem
 				}
 			}
 		}
@@ -1648,7 +1743,10 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	@Override
 	public final @NonNull CGValuedElement visitPropertyCallExp(@NonNull PropertyCallExp element) {
-		OCLExpression asSource = ClassUtil.nonNullModel(element.getOwnedSource());
+		OCLExpression asSource = element.getOwnedSource();
+		if (asSource == null) {
+			return generatePropertyCallExp(null, element);
+		}
 		CGValuedElement cgSource = doVisit(CGValuedElement.class, asSource);
 		if (!element.isIsSafe()) {
 			return generatePropertyCallExp(cgSource, element);

@@ -52,13 +52,9 @@ public class OCLinEcoreImportNameManager extends AbstractImportNameManager
 				s.append(className.substring(0, index+1));
 			}
 			if (OCLGenModelUtil.INSTANCE.useNestedImports()) {
-				s.append(ImportUtils.IMPORTS_PREFIX);
-				s.append("@");
-				s.append(ImportUtils.IMPORTS_PREFIX);
+				s.append(ImportUtils.IMPORTS_NESTED_ANNOTATION_PREFIX);
 				s.append(annotationClass.getName());
-				s.append(ImportUtils.IMPORTS_SUFFIX);
-				s.append(" ");
-				s.append(ImportUtils.IMPORTS_SUFFIX);
+				s.append(ImportUtils.IMPORTS_NESTED_ANNOTATION_SUFFIX);
 			}
 			else {
 				s.append("@");

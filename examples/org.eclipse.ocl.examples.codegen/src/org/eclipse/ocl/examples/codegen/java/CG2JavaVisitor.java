@@ -57,6 +57,8 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOppositePropertyCallEx
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignOperationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGGuardExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIfExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInteger;
@@ -133,6 +135,7 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.IterationManager;
+import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.ids.ClassId;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.ElementId;
@@ -140,6 +143,7 @@ import org.eclipse.ocl.pivot.ids.EnumerationId;
 import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.NestedTypeId;
+import org.eclipse.ocl.pivot.ids.PropertyId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.executor.AbstractDispatchOperation;
@@ -162,6 +166,7 @@ import org.eclipse.ocl.pivot.library.LibraryUntypedOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclElementOclContainerProperty;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
@@ -1810,17 +1815,34 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		js.append(".getOperation(");
 		js.appendIdReference(cgExecutorOperation.getUnderlyingOperationId().getElementId());
 		js.append(");\n");
+		SubStream castBody = new SubStream() {
+			@Override
+			public void append() {
+				try {
+					js.appendValueName(localContext.getIdResolverVariable(cgExecutorOperation));
+				}
+				catch (Exception e) {			// FIXME
+					js.appendString(String.valueOf(e));
+				}
+				js.append(".getOperation(");
+				js.appendIdReference(cgExecutorOperation.getUnderlyingOperationId().getElementId());
+				js.append(")");
+			}
+		};
+		js.appendClassCast(cgExecutorOperation, castBody);
+		js.append(";\n");
 		return true;
 	}
 
 	@Override
 	public @NonNull Boolean visitCGExecutorOperationCallExp(@NonNull CGExecutorOperationCallExp cgOperationCallExp) {
 		Operation pOperation = cgOperationCallExp.getReferredOperation();
-		CGValuedElement source = getExpression(cgOperationCallExp.getSource());
+		CGValuedElement asSource = cgOperationCallExp.getSource();
+		CGValuedElement cgSource = asSource != null ? getExpression(asSource) : null;
 		List<CGValuedElement> cgArguments = cgOperationCallExp.getArguments();
 		List<Parameter> pParameters = pOperation.getOwnedParameters();
 		//
-		if (!js.appendLocalStatements(source)) {
+		if ((cgSource != null) && !js.appendLocalStatements(cgSource)) {
 			return false;
 		}
 		for (@SuppressWarnings("null")@NonNull CGValuedElement cgArgument : cgArguments) {
@@ -1843,8 +1865,10 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 				js.append(globalContext.getExecutorName());
 				js.append(", ");
 				js.appendIdReference(cgOperationCallExp.getASTypeId());
-				js.append(", ");
-				js.appendValueName(source);
+				if (cgSource != null) {
+					js.append(", ");
+					js.appendValueName(cgSource);
+				}
 				int iMax = Math.min(pParameters.size(), cgArguments.size());
 				for (int i = 0; i < iMax; i++) {
 					js.append(", ");
@@ -1896,9 +1920,9 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 	@Override
 	public @NonNull Boolean visitCGExecutorPropertyCallExp(@NonNull CGExecutorPropertyCallExp cgPropertyCallExp) {
-		CGValuedElement source = getExpression(cgPropertyCallExp.getSource());
-		//
-		if (!js.appendLocalStatements(source)) {
+		CGValuedElement asSource = cgPropertyCallExp.getSource();
+		CGValuedElement cgSource = asSource != null ? getExpression(asSource) : null;
+		if ((cgSource != null) && !js.appendLocalStatements(cgSource)) {
 			return false;
 		}
 		//
@@ -1924,7 +1948,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 				js.append(", ");
 				js.appendIdReference(cgPropertyCallExp.getASTypeId());
 				js.append(", ");
-				js.appendValueName(source);
+				js.appendValueName(cgSource);
 				js.append(")");
 			}
 		};
@@ -1947,6 +1971,126 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			}
 		};
 		js.appendClassCast(cgExecutorType, Boolean.TRUE, org.eclipse.ocl.pivot.Class.class, castBody1);
+		js.append(";\n");
+		return true;
+	}
+
+
+	@Override
+	public @NonNull Boolean visitCGForeignOperationCallExp(@NonNull CGForeignOperationCallExp cgForeignOperationCallExp) {
+		Operation asReferredOperation = CGUtil.getReferredOperation(cgForeignOperationCallExp);
+		boolean isStatic = asReferredOperation.isIsStatic();
+		CGValuedElement cgSource = null;
+		List<CGValuedElement> cgArguments = cgForeignOperationCallExp.getArguments();
+		//
+		if (!isStatic) {
+			cgSource = getExpression(cgForeignOperationCallExp.getSource());
+			if (!js.appendLocalStatements(cgSource)) {
+				return false;
+			}
+		}
+		for (@SuppressWarnings("null")@NonNull CGValuedElement cgArgument : cgArguments) {
+			CGValuedElement argument = getExpression(cgArgument);
+			if (!js.appendLocalStatements(argument)) {
+				return false;
+			}
+		}
+		org.eclipse.ocl.pivot.Class asReferredClass = PivotUtil.getOwningClass(asReferredOperation);
+		List<Parameter> asParameters = asReferredOperation.getOwnedParameters();
+		//
+		CGClass cgReferringClass = CGUtil.getContainingClass(cgForeignOperationCallExp);
+		assert cgReferringClass != null;
+		String flattenedClassName = context.getFlattenedClassName(asReferredClass);
+		js.appendDeclaration(cgForeignOperationCallExp);
+		js.append(" = ");
+		js.append(flattenedClassName);
+		js.append(".");
+		js.append(PivotUtil.getName(asReferredOperation));
+		js.append("(");
+		if (!isStatic) {
+			CGTypeId cgTypeId = analyzer.getTypeId(asReferredOperation.getOwningClass().getTypeId());
+			TypeDescriptor sourceTypeDescriptor = context.getUnboxedDescriptor(ClassUtil.nonNullState(cgTypeId.getElementId()));
+			js.appendReferenceTo(sourceTypeDescriptor, cgSource);
+		}
+		int iMax = Math.min(asParameters.size(), cgArguments.size());
+		for (int i = 0; i < iMax; i++) {
+			if ((i > 0) || !isStatic) {
+				js.append(", ");
+			}
+			CGValuedElement cgArgument = cgArguments.get(i);
+			Parameter asParameter = asParameters.get(i);
+			CGTypeId cgTypeId = analyzer.getTypeId(asParameter.getTypeId());
+			TypeDescriptor parameterTypeDescriptor = context.getUnboxedDescriptor(ClassUtil.nonNullState(cgTypeId.getElementId()));
+			CGValuedElement argument = getExpression(cgArgument);
+			js.appendReferenceTo(parameterTypeDescriptor, argument);
+		}
+		js.append(");\n");
+		return true;
+	}
+
+	@Override
+	public @NonNull Boolean visitCGForeignPropertyCallExp(@NonNull CGForeignPropertyCallExp cgPropertyCallExp) {
+		assert cgPropertyCallExp.getSource() == null;
+		Property asProperty = cgPropertyCallExp.getReferredProperty();
+		assert asProperty.isIsStatic();
+		PropertyId propertyId = asProperty.getPropertyId();
+		String modelManagerName = globalContext.getModelManagerNameResolution().getResolvedName();
+		final String valueName = "XXX-value"; // XXX getSymbolName(null, "value");
+		final String initValueName = "XXX-initValue"; // XXX getSymbolName(null, "initValue");
+		CGValuedElement cgInitExpression = cgPropertyCallExp.getInitExpression();
+		assert cgInitExpression != null;
+		js.appendClassReference(true, ModelManager.class);
+		js.append(" " + modelManagerName + " = ");
+		js.append(globalContext.getExecutorName());
+		js.append(".getModelManager();\n");
+		//
+		js.append("Object ");
+		js.append(valueName);
+		js.append(" = ");
+		js.append(modelManagerName + ".basicGetStaticPropertyValue(");
+		js.appendIdReference(propertyId);
+		js.append(");\n");
+		//
+		js.append("if (");
+		js.append(valueName);
+		js.append(" == null) {\n");
+		js.pushIndentation(null);
+		//
+		if (!js.appendLocalStatements(cgInitExpression)) {
+			return false;
+		}
+		if (!cgInitExpression.isConstant()) {
+			js.append("Object ");
+			js.append(initValueName);
+			js.append(" = ");
+			js.appendValueName(cgInitExpression);
+		//	cgInitExpression.accept(this);
+			js.append(";\n");
+		}
+		//
+		js.append(valueName);
+		js.append(" = ");
+		js.append(modelManagerName + ".getStaticPropertyValue(");
+		js.appendIdReference(propertyId);
+		js.append(", null, ");
+		if (!cgInitExpression.isConstant()) {
+			js.append(initValueName);
+		}
+		else {
+			js.appendValueName(cgInitExpression);
+		}
+		js.append(");\n");
+		js.popIndentation();
+		js.append("}\n");
+		js.appendDeclaration(cgPropertyCallExp);
+		js.append(" = ");
+		SubStream castBody = new SubStream() {
+			@Override
+			public void append() {
+				js.append(valueName);
+			}
+		};
+		js.appendClassCast(cgPropertyCallExp, castBody);
 		js.append(";\n");
 		return true;
 	}
@@ -2764,17 +2908,23 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			List<CGParameter> cgParameters = cgOperation.getParameters();
 			CGValuedElement body = getExpression(cgOperation.getBody());
 			//
+			boolean isForeign = false;
+		//	boolean isStatic = false;
 			Element ast = cgOperation.getAst();
-			if (ast instanceof Operation) {
-				LanguageExpression expressionInOCL = ((Operation)ast).getBodyExpression();
-				if (ast instanceof Operation) {
-					String title = PrettyPrinter.printName(ast);
-					js.appendCommentWithOCL(title+"\n", expressionInOCL);
-				}
-			}
+			LanguageExpression expressionInOCL = ((Operation)ast).getBodyExpression();
+			Operation asOperation = (Operation)ast;
+			isForeign = analyzer.isForeign(asOperation);//cgOperation instanceof CGFo;
+			//	isStatic = asOperation.isIsStatic();
+			String title = PrettyPrinter.printName(ast);
+			js.appendCommentWithOCL(title+"\n", expressionInOCL);
 			//
-			js.append("@Override\n");
+			if (!isForeign) {
+				js.append("@Override\n");
+			}
 			js.append("public ");
+			if (isForeign) {
+				js.append("static ");
+			}
 			boolean cgOperationIsInvalid = cgOperation.getInvalidValue() != null;
 			js.appendIsCaught(!cgOperationIsInvalid, cgOperationIsInvalid);
 			js.append(" ");
