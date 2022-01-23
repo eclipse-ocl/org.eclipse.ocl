@@ -100,4 +100,9 @@ public interface Executor extends Evaluator
 	}
 	@Override
 	void setLogger(@Nullable EvaluationLogger logger);
+
+	/**
+	 * @since 1.18
+	 */
+	default void setModelManager(@Nullable ModelManager modelManager) {}
 }

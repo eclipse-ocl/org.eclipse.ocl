@@ -30,10 +30,11 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.AbstractOperation;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 
 /**
- * An EInvokeOperation supports evaluation of an operation call by using eInvoke on the underlying eObject.
+ * An EInvokeOperation supports evaluation of an Ecore operation call by using eInvoke on the source eObject.
  */
 public class EInvokeOperation extends AbstractOperation
 {
@@ -45,6 +46,7 @@ public class EInvokeOperation extends AbstractOperation
 		if (eType == null) {
 			throw new IllegalArgumentException("Non-query EOperation");
 		}
+		assert !PivotUtil.isStatic(eOperation);
 	}
 
 	@Override

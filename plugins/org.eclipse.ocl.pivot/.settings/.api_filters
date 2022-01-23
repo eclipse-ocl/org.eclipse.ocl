@@ -1476,12 +1476,36 @@
                 <message_argument value="setInterpretedExecutor(ExecutorInternal)"/>
             </message_arguments>
         </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.evaluation.Executor"/>
+                <message_argument value="setModelManager(ModelManager)"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/ocl/pivot/evaluation/ModelManager.java" type="org.eclipse.ocl.pivot.evaluation.ModelManager">
         <filter id="404000815">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.evaluation.ModelManager"/>
+                <message_argument value="basicGetStaticPropertyValue(PropertyId)"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.evaluation.ModelManager"/>
                 <message_argument value="getInstances(Class)"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.evaluation.ModelManager"/>
+                <message_argument value="getStaticPropertyValue(PropertyId, OCLExpression, Object)"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.evaluation.ModelManager"/>
+                <message_argument value="setStaticPropertyValue(PropertyId, Object)"/>
             </message_arguments>
         </filter>
     </resource>
@@ -1522,6 +1546,20 @@
             <message_arguments>
                 <message_argument value="PivotConstantsInternal"/>
                 <message_argument value="AbstractExternal2AS"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/library/StaticProperty.java" type="org.eclipse.ocl.pivot.internal.library.StaticProperty">
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.library.StaticProperty"/>
+                <message_argument value="evaluate(Evaluator, TypeId, Object)"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.library.StaticProperty"/>
+                <message_argument value="evaluate(Executor, TypeId, Object)"/>
             </message_arguments>
         </filter>
     </resource>

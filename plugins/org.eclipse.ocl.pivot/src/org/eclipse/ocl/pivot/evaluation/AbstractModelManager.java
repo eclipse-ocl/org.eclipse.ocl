@@ -10,12 +10,19 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.evaluation;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.ids.PropertyId;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
 
 /**
  * The abstract implementation of the ModelManager API for Objects supports use of EObject as the basis of models.
@@ -57,5 +64,52 @@ public abstract class AbstractModelManager implements ModelManager.ModelManagerE
 	@Override
 	public @Nullable Object eGet(@NonNull Object object, @NonNull EStructuralFeature eFeature) {
 		return ((EObject)object).eGet(eFeature);
+	}
+
+	private @Nullable Map<@NonNull PropertyId, @NonNull Object> staticPropertyId2value = null;
+
+	/**
+	 * @since 1.18
+	 */
+	@Override
+	public @Nullable Object basicGetStaticPropertyValue(@NonNull PropertyId propertyId) {
+		Map<@NonNull PropertyId, @NonNull Object> staticPropertyId2value2 = staticPropertyId2value;
+		if (staticPropertyId2value2 == null) {
+			return null;
+		}
+		Object value = staticPropertyId2value2.get(propertyId);
+		return value;
+	}
+
+	@Override
+	public @Nullable Object getStaticPropertyValue(@NonNull PropertyId propertyId, @Nullable OCLExpression initExpression, @Nullable Object defaultValue) {
+		Map<@NonNull PropertyId, @NonNull Object> staticPropertyId2value2 = staticPropertyId2value;
+		if (staticPropertyId2value2 == null) {
+			staticPropertyId2value = staticPropertyId2value2 = new HashMap<>();
+		}
+		Object value = staticPropertyId2value2.get(propertyId);
+		if (value == null) {
+			if (initExpression != null) {
+				Executor executor = PivotUtil.getExecutor(initExpression);
+				value = executor.evaluate(initExpression);
+			}
+			else {
+				value = defaultValue;
+			}
+			if (value == null) {
+				value = ValueUtil.NULL_VALUE;
+			}
+			staticPropertyId2value2.put(propertyId, value);
+		}
+		return value;
+	}
+
+	@Override
+	public @Nullable Object setStaticPropertyValue(@NonNull PropertyId propertyId, @NonNull Object value) {
+		Map<@NonNull PropertyId, @NonNull Object> staticPropertyId2value2 = staticPropertyId2value;
+		if (staticPropertyId2value2 == null) {
+			staticPropertyId2value = staticPropertyId2value2 = new HashMap<>();
+		}
+		return staticPropertyId2value2.put(propertyId, value);
 	}
 }

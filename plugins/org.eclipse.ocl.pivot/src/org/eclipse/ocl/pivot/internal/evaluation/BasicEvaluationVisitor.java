@@ -782,10 +782,11 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 		//		return evaluatePropertyCallExp(propertyCallExp, referredProperty);
 		if (referredProperty != null) {
 			OCLExpression source = propertyCallExp.getOwnedSource();
+			Object sourceValue = null;
 			if (source != null) {
-				Object sourceValue = source.accept(undecoratedVisitor);
-				return context.internalExecuteNavigationCallExp(propertyCallExp, referredProperty, sourceValue);
+				sourceValue = source.accept(undecoratedVisitor);
 			}
+			return context.internalExecuteNavigationCallExp(propertyCallExp, referredProperty, sourceValue);
 		}
 		return null;
 	}

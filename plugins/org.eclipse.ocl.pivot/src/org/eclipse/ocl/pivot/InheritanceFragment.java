@@ -54,10 +54,10 @@ public interface InheritanceFragment
 	/**
 	 * Return the operations within this fragment in operation index order.
 	 */
-	@NonNull Iterable<@NonNull ? extends Operation> getLocalOperations();
+	@NonNull Iterable<@NonNull Operation> getLocalOperations();
 
 	/**
 	 * Return the properties within this fragment in property index order.
 	 */
-	@NonNull Iterable<@NonNull ? extends Property> getLocalProperties();
+	@NonNull Iterable<@NonNull Property> getLocalProperties();
 }

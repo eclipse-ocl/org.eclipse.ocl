@@ -118,18 +118,18 @@ public class LetVariableImpl extends VariableImpl implements LetVariable
 				/*@Caught*/ @NonNull Object CAUGHT_result;
 				try {
 					final /*@NonInvalid*/ @Nullable OCLExpression ownedInit = this.getOwnedInit();
-					final /*@NonInvalid*/ @NonNull Object isRequired = ownedInit == null;
+					final /*@NonInvalid*/ @NonNull Object isRequired_1 = ownedInit == null;
 					/*@Thrown*/ @Nullable Boolean safe_isRequired_source;
-					if (isRequired == Boolean.TRUE) {
+					if (isRequired_1 == Boolean.TRUE) {
 						safe_isRequired_source = null;
 					}
 					else {
 						assert ownedInit != null;
-						final /*@Thrown*/ boolean isRequired_1 = ownedInit.isIsRequired();
-						safe_isRequired_source = isRequired_1;
+						final /*@Thrown*/ boolean isRequired_0 = ownedInit.isIsRequired();
+						safe_isRequired_source = isRequired_0;
 					}
-					final /*@NonInvalid*/ boolean isRequired_0 = this.isIsRequired();
-					final /*@Thrown*/ boolean result = (safe_isRequired_source == Boolean.TRUE) == isRequired_0;
+					final /*@NonInvalid*/ boolean isRequired = this.isIsRequired();
+					final /*@Thrown*/ boolean result = (safe_isRequired_source == Boolean.TRUE) == isRequired;
 					CAUGHT_result = result;
 				}
 				catch (Exception THROWN_result) {

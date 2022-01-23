@@ -130,6 +130,18 @@ public class ThreadLocalExecutor
 	}
 
 	/**
+	 * Return the prevailing thread-unique Executor or throw an IllegalStateException none/many.
+	 *
+	 * Use PivotUtil.getExecutor to lazily create an executor.
+	 *
+	 * @since 1.18
+	 */
+	public static @NonNull Executor getExecutor() {
+		ThreadLocalExecutor threadLocalExecutor = get();
+		return ClassUtil.nonNullState(threadLocalExecutor.localBasicGetExecutor());
+	}
+
+	/**
 	 * Return the prevailing thread-unique Executor or null if none/many.
 	 *
 	public static @NonNull Executor getExecutor() {

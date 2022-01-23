@@ -317,9 +317,11 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		// source is null when the property call expression is an
 		//    association class navigation qualifier
 		OCLExpression source = pc.getOwnedSource();
-		safeVisit(source);
-		Type sourceType = source != null ? source.getType() : null;
-		append(PivotUtil.getNavigationOperator(pc.isIsSafe(), PivotUtil.isAggregate(sourceType)));
+		if ((source != null) || ((property != null) && !property.isIsStatic())) {
+			safeVisit(source);
+			Type sourceType = source != null ? source.getType() : null;
+			append(PivotUtil.getNavigationOperator(pc.isIsSafe(), PivotUtil.isAggregate(sourceType)));
+		}
 		appendName(property);
 		appendAtPre(pc);
 		List<OCLExpression> qualifiers = pc.getQualifiers();
@@ -1064,14 +1066,19 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	@Override
 	public String visitOperationCallExp(@NonNull OperationCallExp oc) {
 		OCLExpression source = oc.getOwnedSource();
-		safeVisit(source);
 		Operation oper = oc.getReferredOperation();
+		if ((source != null) || ((oper != null) && !oper.isIsStatic())) {
+			safeVisit(source);
+			if (oper != null) {
+				Type sourceType = source != null ? source.getType() : null;
+				append(PivotUtil.getNavigationOperator(oc.isIsSafe(), PivotUtil.isAggregate(sourceType)));
+			} else {
+				append(PivotUtil.getNavigationOperator(false, false));
+			}
+		}
 		if (oper != null) {
-			Type sourceType = source != null ? source.getType() : null;
-			append(PivotUtil.getNavigationOperator(oc.isIsSafe(), PivotUtil.isAggregate(sourceType)));
 			appendName(oper);
 		} else {
-			append(PivotUtil.getNavigationOperator(false, false));
 			appendName(oc);
 		}
 		append("(");

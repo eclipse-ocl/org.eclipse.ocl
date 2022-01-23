@@ -15,12 +15,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.InheritanceFragment;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
+import org.eclipse.ocl.pivot.library.LibraryIterationOrOperation;
+import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation;
 import org.eclipse.ocl.pivot.types.AbstractFragment;
 
@@ -30,9 +33,9 @@ import org.eclipse.ocl.pivot.types.AbstractFragment;
  */
 public abstract class ReflectiveFragment extends AbstractFragment
 {
-	protected Map<@NonNull Operation, @NonNull LibraryFeature> operationMap = null;
+	protected Map<@NonNull Operation, @NonNull LibraryIterationOrOperation> operationMap = null;
 	protected Map<@NonNull Operation, @NonNull Operation> apparentOperation2actualOperation = null;
-	protected Map<@NonNull Property, @NonNull LibraryFeature> propertyMap = null;
+	protected Map<@NonNull Property, @NonNull LibraryProperty> propertyMap = null;
 
 	public ReflectiveFragment(@NonNull CompleteInheritance derivedInheritance, @NonNull CompleteInheritance baseInheritance) {
 		super(derivedInheritance, baseInheritance);
@@ -47,7 +50,7 @@ public abstract class ReflectiveFragment extends AbstractFragment
 				}
 			}
 		}
-		LibraryFeature libraryFeature = operationMap.get(apparentOperation);
+		LibraryIterationOrOperation libraryFeature = operationMap.get(apparentOperation);
 		if (libraryFeature != null) {
 			return libraryFeature;
 		}
@@ -63,7 +66,7 @@ public abstract class ReflectiveFragment extends AbstractFragment
 				}
 			}
 			if (localOperation != null) {				// Trivial case, there is a local operation
-				libraryFeature = PivotUtilInternal.getImplementation(localOperation);
+				libraryFeature = (LibraryIterationOrOperation) PivotUtilInternal.getImplementation(localOperation);
 			}
 			else {										// Non-trivial, search up the inheritance tree for an inherited operation
 				Operation bestOverload = null;
@@ -98,7 +101,7 @@ public abstract class ReflectiveFragment extends AbstractFragment
 					}
 				}
 				if (bestOverload != null) {
-					libraryFeature = PivotUtilInternal.getImplementation(bestOverload);
+					libraryFeature = (LibraryIterationOrOperation) PivotUtilInternal.getImplementation(bestOverload);
 				}
 				else {
 					libraryFeature = OclAnyUnsupportedOperation.AMBIGUOUS;
@@ -113,12 +116,17 @@ public abstract class ReflectiveFragment extends AbstractFragment
 	}
 
 	@Override
-	public @NonNull Iterable<@NonNull ? extends Operation> getLocalOperations() {
+	public @Nullable Operation getLocalOperation(@NonNull Operation apparentOperation) {
+		return apparentOperation2actualOperation.get(apparentOperation);
+	}
+
+	@Override
+	public @NonNull Iterable<@NonNull Operation> getLocalOperations() {
 		return operationMap != null ? operationMap.keySet() : Collections.<@NonNull Operation>emptyList();
 	}
 
 	@Override
-	public @NonNull Iterable<@NonNull ? extends Property> getLocalProperties() {
+	public @NonNull Iterable<@NonNull Property> getLocalProperties() {
 		return propertyMap != null ? propertyMap.keySet() : Collections.<@NonNull Property>emptyList();
 	}
 }

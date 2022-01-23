@@ -22,6 +22,7 @@ import org.eclipse.ocl.pivot.ParameterTypes;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -35,13 +36,33 @@ public class ExecutorOperation extends AbstractExecutorOperation
 	protected final int index;
 	protected final @NonNull LibraryFeature implementation;
 	protected final @NonNull TemplateParameters typeParameters;
-	
+
+	@Deprecated /* Use OperationId */
 	public ExecutorOperation(@NonNull String name, @NonNull ParameterTypes parameterTypes, @NonNull Type type, int index, @NonNull TemplateParameters typeParameters, @Nullable LibraryFeature implementation) {
 		super(name, type);
 		this.parameterTypes = parameterTypes;
 		this.index = index;
 		this.implementation = implementation != null ? implementation : OclAnyUnsupportedOperation.INSTANCE;		// FIXME
 		this.typeParameters = typeParameters;
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	public ExecutorOperation(@NonNull OperationId operationId, @NonNull ParameterTypes parameterTypes, @NonNull Type type, int index, @NonNull TemplateParameters typeParameters, @Nullable LibraryFeature implementation) {
+		super(operationId, type);
+		this.parameterTypes = parameterTypes;
+		this.index = index;
+		this.implementation = implementation != null ? implementation : OclAnyUnsupportedOperation.INSTANCE;		// FIXME
+		this.typeParameters = typeParameters;
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	public Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, Object... args) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -64,16 +85,6 @@ public class ExecutorOperation extends AbstractExecutorOperation
 		return (CompleteInheritance) type;
 	}
 
-	@Override
-	public final String getName() {
-		return name;
-	}
-
-	@Override
-	public @NonNull OperationId getOperationId() {
-		throw new UnsupportedOperationException();			// FIXME
-	}
-	
 	@Override
 	public @NonNull List<Constraint> getOwnedConstraints() {
 		throw new UnsupportedOperationException();			// FIXME
@@ -105,14 +116,14 @@ public class ExecutorOperation extends AbstractExecutorOperation
 	public @NonNull ParametersId getParametersId() {
 		return parameterTypes.getParametersId();
 	}
-	
+
 	@Override
 	public @NonNull ParameterTypes getParameterTypes() {
 		return parameterTypes;
 	}
 
-	
-	
+
+
 
 //	@Override
 //	public @NonNull DomainType getType() {

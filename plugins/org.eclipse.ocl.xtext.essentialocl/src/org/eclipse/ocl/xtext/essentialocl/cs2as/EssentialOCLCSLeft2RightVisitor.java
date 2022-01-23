@@ -435,10 +435,10 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 					asSourceType = lowerBound;
 				}
 			}
-			Invocations invocations = getInvocations(asSourceType, asSourceTypeValue, name, iteratorCount, expressionCount);
+			Invocations invocations = getInvocations(asSourceType, asSourceType, name, iteratorCount, expressionCount);
 			if ((invocations == null) && name.startsWith("_")) {
 				String unescapedName = name.substring(1);				// FIXME Compatibility
-				invocations = getInvocations(asSourceType, asSourceTypeValue, unescapedName, iteratorCount, expressionCount);
+				invocations = getInvocations(asSourceType, asSourceType, unescapedName, iteratorCount, expressionCount);
 			}
 			return invocations;
 		}
@@ -446,13 +446,13 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			Invocations invocations = null;
 			for (ImplicitSourceTypeIterator it = createImplicitSourceTypeIterator(csNameExp); (invocations == null) && it.hasNext(); ) {
 				Type asType = it.next();
-				invocations = getInvocations(asType, it.nextValue(), name, iteratorCount, expressionCount);
+				invocations = getInvocations(asType, asType, name, iteratorCount, expressionCount);
 			}
 			if ((invocations == null) && name.startsWith("_")) {
 				String unescapedName = name.substring(1);				// FIXME Compatibility
 				for (ImplicitSourceTypeIterator it = createImplicitSourceTypeIterator(csNameExp); (invocations == null) && it.hasNext(); ) {
 					Type asType = it.next();
-					invocations = getInvocations(asType, null, unescapedName, iteratorCount, expressionCount);
+					invocations = getInvocations(asType, asType, unescapedName, iteratorCount, expressionCount);
 				}
 			}
 			return invocations;
@@ -460,29 +460,30 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	}
 
 	/**
-	 * Return all operations/iterations in asType and its superclasses whose name is name. For iterations the number of iteration iterators must
+	 * Return all operations/iterations in dynamicType and its superclasses whose name is name. For iterations the number of iteration iterators must
 	 * match iteratorCount unless iteratorCount is zero. For operations the number of parameters must be expressionCount. Returns null if
-	 * nothing is found. If asTypeValue is non-null a fall-back attempt to look up a static operation in asTypeValue is made.
+	 * nothing is found. If staticType is non-null a fall-back attempt to look up a static operation in staticType is made.
 	 */
-	protected @Nullable Invocations getInvocations(@NonNull Type asType, @Nullable Type asTypeValue, @NonNull String name, int iteratorCount, int expressionCount) {
-		TemplateParameter asTemplateParameter = asType.isTemplateParameter();
+	protected @Nullable Invocations getInvocations(@NonNull Type dynamicType, @Nullable Type staticType, @NonNull String name, int iteratorCount, int expressionCount) {
+		assert (staticType == null) || (staticType == dynamicType);
+		TemplateParameter asTemplateParameter = dynamicType.isTemplateParameter();
 		if (asTemplateParameter != null) {
-			asType = PivotUtil.getLowerBound(asTemplateParameter, standardLibrary.getOclAnyType());
+			dynamicType = PivotUtil.getLowerBound(asTemplateParameter, standardLibrary.getOclAnyType());
 		}
-		Iterable<@NonNull ? extends Operation> nonStaticOperations = metamodelManager.getAllOperations(asType, FeatureFilter.SELECT_NON_STATIC, name);
+		Iterable<@NonNull ? extends Operation> nonStaticOperations = metamodelManager.getAllOperations(dynamicType, FeatureFilter.SELECT_NON_STATIC, name);
 		List<@NonNull NamedElement> invocations = getInvocationsInternal(null, nonStaticOperations, iteratorCount, expressionCount);
-		if (asType instanceof ElementExtension) {				// FIXME review me
-			Type asStereotype = ((ElementExtension)asType).getStereotype();
+		if (dynamicType instanceof ElementExtension) {				// FIXME review me
+			Type asStereotype = ((ElementExtension)dynamicType).getStereotype();
 			if (asStereotype != null) {
 				Iterable<@NonNull ? extends Operation> stereotypeOperations = metamodelManager.getAllOperations(asStereotype, FeatureFilter.SELECT_NON_STATIC, name);
 				invocations = getInvocationsInternal(invocations, stereotypeOperations, iteratorCount, expressionCount);
 			}
 		}
-		if (asTypeValue != null) {
-			Iterable<@NonNull ? extends Operation> staticOperations = metamodelManager.getAllOperations(asTypeValue, FeatureFilter.SELECT_STATIC, name);
+		if (staticType != null) {
+			Iterable<@NonNull ? extends Operation> staticOperations = metamodelManager.getAllOperations(staticType, FeatureFilter.SELECT_STATIC, name);
 			invocations = getInvocationsInternal(invocations, staticOperations, iteratorCount, expressionCount);
 		}
-		return invocations != null ? new UnresolvedInvocations(asType, invocations) : null;
+		return invocations != null ? new UnresolvedInvocations(dynamicType, invocations) : null;
 	}
 	protected @Nullable List<@NonNull NamedElement> getInvocationsInternal(@Nullable List<@NonNull NamedElement> invocations,
 			@NonNull Iterable<@NonNull ? extends Operation> allOperations, int iteratorCount, int expressionCount) {
@@ -545,7 +546,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		return callExp;
 	}
 
-	protected @NonNull PropertyCallExp refreshPropertyCallExp(@NonNull NameExpCS csNameExp, @NonNull OCLExpression sourceExp, @NonNull Property property) {
+	protected @NonNull PropertyCallExp refreshPropertyCallExp(@NonNull NameExpCS csNameExp, @Nullable OCLExpression sourceExp, @NonNull Property property) {
 		PropertyCallExp callExp = context.refreshModelElement(PropertyCallExp.class, PivotPackage.Literals.PROPERTY_CALL_EXP, csNameExp);
 		callExp.setOwnedSource(sourceExp);
 		callExp.setReferredProperty(property);
@@ -602,7 +603,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		}
 		Operation exampleOperation = getExampleOperation(invocations, sourceExp, csRoundBracketedClause);
 		if (exampleOperation != null) {
-			if (sourceExp == null) {
+			if ((sourceExp == null) && !exampleOperation.isIsStatic()) {
 				sourceExp = createImplicitSourceVariableExp(csNameExp, exampleOperation.getOwningClass());
 			}
 			OperationCallExp operationCallExp = refreshOperationCallExp(csNameExp, sourceExp);
@@ -670,7 +671,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 						}
 					}
 				}
-				if (asCoercion != null) {
+				if ((asCoercion != null) && (sourceExp != null)) {
 					operationCallExp.setOwnedSource(null);
 					OCLExpression asCoercionCallExp = new PivotHelper(environmentFactory).createCoercionCallExp(sourceExp, asCoercion);
 					operationCallExp.setOwnedSource(asCoercionCallExp);
@@ -1423,9 +1424,10 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		helper.setOperationReturnType(callExp, operation);
 	}
 
-	protected @NonNull CallExp resolvePropertyCallExp(@NonNull OCLExpression sourceExp, @NonNull NameExpCS csNameExp, @NonNull Property property) {
+	protected @NonNull CallExp resolvePropertyCallExp(@Nullable OCLExpression sourceExp, @NonNull NameExpCS csNameExp, @NonNull Property property) {
 		NavigationCallExp callExp;
 		if (property.isIsImplicit()) {
+			assert sourceExp != null;
 			callExp = refreshOppositePropertyCallExp(csNameExp, sourceExp, property);
 		}
 		else {
@@ -1501,7 +1503,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		}
 		else if (element instanceof Property) {
 			Property property = (Property) element;
-			OCLExpression sourceExp = createImplicitSourceVariableExp(csNameExp, property.getOwningClass());
+			OCLExpression sourceExp = property.isIsStatic() ? null : createImplicitSourceVariableExp(csNameExp, property.getOwningClass());
 			return resolvePropertyCallExp(sourceExp, csNameExp, property);
 		}
 		else if (element instanceof Operation) {
