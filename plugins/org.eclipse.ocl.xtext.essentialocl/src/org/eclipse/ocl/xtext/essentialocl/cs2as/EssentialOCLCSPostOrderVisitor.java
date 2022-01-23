@@ -12,11 +12,13 @@
 package org.eclipse.ocl.xtext.essentialocl.cs2as;
 
 import org.apache.log4j.Logger;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.TupleLiteralPart;
@@ -118,14 +120,19 @@ public class EssentialOCLCSPostOrderVisitor extends AbstractEssentialOCLCSPostOr
 		@Override
 		public BasicContinuation<?> execute() {
 			ExpressionInOCL asSpecification = PivotUtil.getPivot(ExpressionInOCL.class, csElement);
-			if ((asSpecification != null) && (asSpecification.eContainer() != null)) {		// null eContainer is a problem in the parent, no need for another diagnostic
-				context.refreshContextVariable(csElement, asSpecification);
-				ExpCS csExpression = csElement.getOwnedExpression();
-				OCLExpression asExpression = csExpression != null ? context.visitLeft2Right(OCLExpression.class, csExpression) : null;
-				String statusText = csExpression != null ? ElementUtil.getExpressionText(csExpression) : "null";
-				PivotUtil.setBody(asSpecification, asExpression, statusText);
-				boolean isRequired = (asExpression != null) && asExpression.isIsRequired();
-				helper.setType(asSpecification, asExpression != null ? asExpression.getType() : null, isRequired);
+			if (asSpecification != null) {
+				EObject eContainer = asSpecification.eContainer();
+				if (eContainer != null) {		// null eContainer is a problem in the parent, no need for another diagnostic
+					if (!(eContainer instanceof Feature) || !((Feature)eContainer).isIsStatic()) {
+						context.refreshContextVariable(csElement, asSpecification);
+					}
+					ExpCS csExpression = csElement.getOwnedExpression();
+					OCLExpression asExpression = csExpression != null ? context.visitLeft2Right(OCLExpression.class, csExpression) : null;
+					String statusText = csExpression != null ? ElementUtil.getExpressionText(csExpression) : "null";
+					PivotUtil.setBody(asSpecification, asExpression, statusText);
+					boolean isRequired = (asExpression != null) && asExpression.isIsRequired();
+					helper.setType(asSpecification, asExpression != null ? asExpression.getType() : null, isRequired);
+				}
 			}
 			return null;
 		}

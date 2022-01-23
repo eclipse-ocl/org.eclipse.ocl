@@ -32,7 +32,8 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.executor.AbstractReflectiveInheritanceType;
-import org.eclipse.ocl.pivot.internal.library.executor.DomainProperties;
+import org.eclipse.ocl.pivot.internal.library.executor.ReflectiveOperations;
+import org.eclipse.ocl.pivot.internal.library.executor.ReflectiveProperties;
 import org.eclipse.ocl.pivot.types.AbstractFragment;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -44,7 +45,8 @@ public class EcoreReflectiveType extends AbstractReflectiveInheritanceType
 	protected final @NonNull EcoreReflectivePackage evaluationPackage;
 	protected final @NonNull EClassifier eClassifier;
 	protected final @NonNull TemplateParameters typeParameters;
-	private /*@LazyNonNull*/ DomainProperties allProperties;
+	private /*@LazyNonNull*/ ReflectiveProperties allProperties;
+	private /*@LazyNonNull*/ ReflectiveOperations allOperations;
 
 	public EcoreReflectiveType(@NonNull EcoreReflectivePackage evaluationPackage, int flags, @NonNull EClassifier eClassifier, @NonNull TemplateParameter @NonNull ... typeParameters) {
 		super(ClassUtil.nonNullEMF(eClassifier.getName()), flags);
@@ -164,14 +166,18 @@ public class EcoreReflectiveType extends AbstractReflectiveInheritanceType
 
 	@Override
 	public @Nullable Operation getMemberOperation(@NonNull OperationId operationId) {
-		throw new UnsupportedOperationException();					// FIXME
+		ReflectiveOperations allOperations2 = allOperations;
+		if (allOperations2 == null) {
+			allOperations = allOperations2 = new ReflectiveOperations(this);
+		}
+		return allOperations2.getMemberOperation(operationId);
 	}
 
 	@Override
 	public @Nullable Property getMemberProperty(@NonNull String name) {
-		DomainProperties allProperties2 = allProperties;
+		ReflectiveProperties allProperties2 = allProperties;
 		if (allProperties2 == null) {
-			allProperties = allProperties2 = new DomainProperties(this);
+			allProperties = allProperties2 = new ReflectiveProperties(this);
 		}
 		return allProperties2.getMemberProperty(name);
 	}

@@ -15,7 +15,6 @@ package org.eclipse.ocl.pivot.internal.ecore.es2as;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -90,6 +89,7 @@ import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.delegate.SettingBehavior;
 import org.eclipse.ocl.pivot.internal.ecore.EObjectOperation;
+import org.eclipse.ocl.pivot.internal.library.ForeignOperation;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
 import org.eclipse.ocl.pivot.internal.utilities.AliasAdapter;
@@ -97,6 +97,7 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.internal.utilities.Technology;
+import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -105,6 +106,8 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.RealValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
+
+import com.google.common.collect.Lists;
 
 public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 {
@@ -161,7 +164,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		@SuppressWarnings("null") @NonNull EAttribute eObject2 = eObject;
 		EAnnotation umlEAnnotation = eObject2.getEAnnotation(DerivedConstants.UML2_UML_PACKAGE_2_0_NS_URI);
 		Property pivotElement = converter.refreshNamedElement(Property.class, PivotPackage.Literals.PROPERTY, eObject2);
-		copyStructuralFeature(pivotElement, eObject2, umlEAnnotation != null ? Collections.singletonList(umlEAnnotation) : null);
+		copyStructuralFeature(pivotElement, eObject2, umlEAnnotation != null ? Lists.newArrayList(umlEAnnotation) : null);
 		pivotElement.setIsStatic(Boolean.parseBoolean(EcoreUtil.getAnnotation(eObject2, DerivedConstants.UML2_UML_PACKAGE_2_0_NS_URI, "static")));
 		pivotElement.setIsID(eObject2.isID());
 		return pivotElement;
@@ -552,7 +555,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		copyStructuralFeature(pivotElement, eObject2, excludedAnnotations);
 		pivotElement.setIsComposite(eObject2.isContainment());
 		pivotElement.setIsResolveProxies(eObject2.isResolveProxies());
-		pivotElement.setIsStatic(Boolean.parseBoolean(EcoreUtil.getAnnotation(eObject2, DerivedConstants.UML2_UML_PACKAGE_2_0_NS_URI, "static")));
+		pivotElement.setIsStatic(PivotUtil.isStatic(eObject2));
 		if ((eObject2.getEOpposite() != null)
 				|| (excludedAnnotations != null)
 				|| !eObject2.getEKeys().isEmpty()) {
@@ -614,20 +617,20 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 	protected @NonNull Operation convertEOperation2Operation(@NonNull EOperation eOperation) {
 		EAnnotation umlEAnnotation = eOperation.getEAnnotation(DerivedConstants.UML2_UML_PACKAGE_2_0_NS_URI);
 		Operation pivotElement = converter.refreshNamedElement(Operation.class, PivotPackage.Literals.OPERATION, eOperation);
+		pivotElement.setIsStatic(Boolean.parseBoolean(EcoreUtil.getAnnotation(eOperation, DerivedConstants.UML2_UML_PACKAGE_2_0_NS_URI, "static")));
 		List<EAnnotation> excludedAnnotations = convertEOperationEAnnotations(pivotElement, eOperation);
 		if (umlEAnnotation != null) {
 			if (excludedAnnotations != null) {
 				excludedAnnotations.add(umlEAnnotation);
 			}
 			else {
-				excludedAnnotations = Collections.singletonList(umlEAnnotation);
+				excludedAnnotations = Lists.newArrayList(umlEAnnotation);
 			}
 		}
 		copyTypedElement(pivotElement, eOperation, excludedAnnotations);
 		doSwitchAll(pivotElement.getOwnedParameters(), eOperation.getEParameters());
 		@SuppressWarnings("null") @NonNull List<ETypeParameter> eTypeParameters = eOperation.getETypeParameters();
 		copyTemplateSignature(pivotElement,eTypeParameters);
-		pivotElement.setIsStatic(Boolean.parseBoolean(EcoreUtil.getAnnotation(eOperation, DerivedConstants.UML2_UML_PACKAGE_2_0_NS_URI, "static")));
 		doSwitchAll(eOperation.getEGenericExceptions());
 		converter.queueReference(eOperation);				// For superclasses
 		return pivotElement;
@@ -689,11 +692,17 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 				}
 				ExpressionInOCL specification = PivotFactory.eINSTANCE.createExpressionInOCL();
 				specification.setBody(value);
-				//				constraint.setExprString(entry.getValue());
-				//				constraint.setExprString(entry.getValue());
 				if (bodyName != null) {
 					pivotElement.setBodyExpression(specification);
-					pivotElement.setImplementation(new EObjectOperation(pivotElement, eOperation, specification));
+					boolean isStatic = pivotElement.isIsStatic();
+					LibraryOperation implementation;
+					if (isStatic) {
+						implementation = new ForeignOperation(specification);
+					}
+					else {
+						implementation = new EObjectOperation(pivotElement, eOperation, specification);
+					}
+					pivotElement.setImplementation(implementation);
 				}
 				else {
 					Constraint constraint = PivotFactory.eINSTANCE.createConstraint();

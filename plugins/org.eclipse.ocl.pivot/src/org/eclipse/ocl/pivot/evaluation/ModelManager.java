@@ -20,7 +20,9 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.ids.PropertyId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 
 /**
@@ -98,6 +100,7 @@ public interface ModelManager
 		void resetAnalysis();
 	}
 
+	@Deprecated /* @deprecated use a NullModelManger to support static properties */
 	@NonNull ModelManager NULL = new ModelManager()
 	{
 		@Override
@@ -105,6 +108,16 @@ public interface ModelManager
 			return Collections.<@NonNull Object>emptySet();
 		}
 	};
+
+	/**
+	 * Return the boxeed value of the static propertyId.
+	 * Returns null if no such property yet known. Returns ValueUtil.NULL_VALUE for a null value.
+	 *
+	 * @since 1.18
+	 */
+	default @Nullable Object basicGetStaticPropertyValue(@NonNull PropertyId propertyId) {
+		return null;
+	}
 
 	@Deprecated /* @deprecated Use getInstances() to avoid compulsory Set */
 	@NonNull Set<@NonNull ? extends Object> get(org.eclipse.ocl.pivot.@NonNull Class type);
@@ -117,5 +130,26 @@ public interface ModelManager
 	 */
 	default @Nullable Iterable<@NonNull ? extends Object> getInstances(org.eclipse.ocl.pivot.@NonNull Class type) {
 		return get(type);
+	}
+
+	/**
+	 * Return the boxeed value of the static propertyId, evaluating initExpression to initialize on first access.
+	 * Returns null if no such property known. Returns ValueUtil.NULL_VALUE for a null value.
+	 * @param defaultValue
+	 *
+	 * @since 1.18
+	 */
+	default @Nullable Object getStaticPropertyValue(@NonNull PropertyId propertyId, @Nullable OCLExpression initExpression, @Nullable Object defaultValue) {
+		return null;
+	}
+
+	/**
+	 * Specify the boxeed value of the not-read-only static propertyId.
+	 * Returns the previous value. Returns Invalud if read-only.
+	 *
+	 * @since 1.18
+	 */
+	default @Nullable Object setStaticPropertyValue(@NonNull PropertyId propertyId, @NonNull Object value) {
+		return null;
 	}
 }

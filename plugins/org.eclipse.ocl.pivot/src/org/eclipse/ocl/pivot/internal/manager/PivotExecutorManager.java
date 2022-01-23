@@ -117,10 +117,18 @@ public class PivotExecutorManager extends ExecutorManager
 	private @Nullable ModelManager modelManager = null;
 
 	public PivotExecutorManager(@NonNull EnvironmentFactory environmentFactory, @NonNull EObject contextObject) {
+		this(environmentFactory, contextObject, null);
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	public PivotExecutorManager(@NonNull EnvironmentFactory environmentFactory, @NonNull EObject contextObject, @Nullable ModelManager modelManager) {
 		super(environmentFactory.getCompleteEnvironment());
 		this.environmentFactory = environmentFactory;
 		this.idResolver = environmentFactory.getIdResolver();
 		this.contextObject = contextObject;
+		this.modelManager = modelManager;
 		idResolver.addRoot(ClassUtil.nonNullEMF(EcoreUtil.getRootContainer(contextObject)));
 	}
 
