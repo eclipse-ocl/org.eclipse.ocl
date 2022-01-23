@@ -19,7 +19,7 @@ import java.lang.reflect.Method;
  *
  * <!-- begin-model-doc -->
  * A call of an operation using its Java declaration. The OCL self may be passed as an extra argument.
- * Other arguments are passed using the unboxed representation.
+ * Other arguments and returns use the unboxed representation.
  * <!-- end-model-doc -->
  *
  * <p>
