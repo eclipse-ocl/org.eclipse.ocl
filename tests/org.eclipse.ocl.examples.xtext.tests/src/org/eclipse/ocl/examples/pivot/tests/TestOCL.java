@@ -71,6 +71,7 @@ import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.SemanticException;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
@@ -800,7 +801,6 @@ public class TestOCL extends OCLInternal
 	}
 
 	public @Nullable Object evaluate(Object unusedHelper, @Nullable Object context, @NonNull String expression) throws Exception {
-		MetamodelManager metamodelManager = getMetamodelManager();
 		org.eclipse.ocl.pivot.Class classContext = getContextType(context);
 		ParserContext parserContext = new ClassContext(getEnvironmentFactory(), null, classContext, (context instanceof Type) && !(context instanceof ElementExtension) ? (Type)context : null);
 		ExpressionInOCL query = parserContext.parse(classContext, expression);
@@ -808,6 +808,7 @@ public class TestOCL extends OCLInternal
 		try {
 			return evaluate(query, context);
 		} finally {
+			MetamodelManager metamodelManager = getMetamodelManager();
 			metamodelManager.getASResourceSet().getResources().remove(query.eResource());
 		}
 	}
@@ -833,15 +834,20 @@ public class TestOCL extends OCLInternal
 			String className = "TestClass" + testCounter++;
 			LibraryUnaryOperation.LibraryUnaryOperationExtension testInstance = (LibraryUnaryOperation.LibraryUnaryOperationExtension) genModelHelper.loadClass(expr, targetFolder, packageName, className, true);
 			assert testInstance != null;
-			Executor executor = new EcoreExecutorManager(self, PivotTables.LIBRARY);
-			OperationCallExp callExp = PivotFactory.eINSTANCE.createOperationCallExp();
-			callExp.setType(expr.getType());
-			result = testInstance.evaluate(executor, callExp.getTypeId(), self);
+			Executor savedExecutor = ThreadLocalExecutor.basicGetExecutor();
+			try {
+				Executor executor = new EcoreExecutorManager(self, PivotTables.LIBRARY, getModelManager());
+				ThreadLocalExecutor.setExecutor(executor);
+				OperationCallExp callExp = PivotFactory.eINSTANCE.createOperationCallExp();
+				callExp.setType(expr.getType());
+				result = testInstance.evaluate(executor, callExp.getTypeId(), self);
+			}
+			finally {
+				if (savedExecutor != ThreadLocalExecutor.basicGetExecutor()) {
+					ThreadLocalExecutor.setExecutor(null);
+				}
+			}
 		}
-		//    	} catch (Exception e) {
-		//    		fail("Evaluation failed: " + e.getLocalizedMessage());
-		//    	}
-
 		return result;
 	}
 

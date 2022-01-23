@@ -28,6 +28,7 @@ import org.eclipse.ocl.examples.xtext.console.OCLConsole;
 import org.eclipse.ocl.examples.xtext.console.OCLConsolePage;
 import org.eclipse.ocl.examples.xtext.tests.TestUIUtil;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
+import org.eclipse.ocl.pivot.evaluation.NullModelManager;
 import org.eclipse.ocl.pivot.internal.library.executor.LazyEcoreModelManager;
 import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -182,7 +183,7 @@ public abstract class AbstractConsoleTests extends PivotTestCaseWithAutoTearDown
 				List<@NonNull EObject> rootList = Collections.singletonList(rootContainer);
 				return new LazyEcoreModelManager(rootList, null, null);
 			}
-			return ModelManager.NULL;
+			return new NullModelManager();
 		}
 	}
 

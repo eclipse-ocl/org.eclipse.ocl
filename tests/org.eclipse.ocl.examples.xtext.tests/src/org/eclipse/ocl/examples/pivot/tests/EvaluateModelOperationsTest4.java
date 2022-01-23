@@ -35,14 +35,22 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.genmodel.OCLGenModelUtil;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.examples.xtext.tests.company.CompanyPackage;
+import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.evaluation.ModelManager;
+import org.eclipse.ocl.pivot.evaluation.NullModelManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
+import org.eclipse.ocl.pivot.ids.PropertyId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.values.BagImpl;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.Value;
 import org.junit.After;
@@ -583,5 +591,131 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryOCLNotEquals(null, BigDecimal.valueOf(255), "255.1");
 		//
 		ocl.dispose();
+	}
+
+	/**
+	 * Test container/containment navigation.
+	 */
+	@Test public void test_static_operation() throws Exception {
+		String metamodelText =
+				"package statics : pfx = 'http://staticOperation'\n" +
+						"{\n" +
+						"	class Parent\n" +
+						"	{\n" +
+						"		static operation static_count() : Integer { body: 55; }\n" +
+						"		operation count() : Integer { body: static_count(); }\n" +
+						"	}\n" +
+						"}\n";
+		OCL ocl1 = createOCL();
+		Resource metamodel = cs2ecore(ocl1.getEnvironmentFactory(), metamodelText, getTestFileURI("test.ecore"));
+		EPackage ePackage = (EPackage) metamodel.getContents().get(0);
+		EClass parentClass = ClassUtil.nonNullState((EClass) ePackage.getEClassifier("Parent"));
+		EObject parent = eCreate(parentClass);
+		ThreadLocalExecutor.resetEnvironmentFactory();
+
+		TestOCL ocl2 = createOCL();
+		IdResolver idResolver = ocl2.getIdResolver();
+		ModelManager modelManager = new NullModelManager();
+		ocl2.setModelManager(modelManager);
+
+		org.eclipse.ocl.pivot.Class parentType = idResolver.getType(parentClass);
+		//
+//		Property staticCountProperty = NameUtil.getNameable(parentType.getOwnedProperties(), "static_count");
+//		assert staticCountProperty != null;
+//		PropertyId staticCountPropertyId = staticCountProperty.getPropertyId();
+		//
+		IntegerValue int55 = ValueUtil.integerValueOf(55);
+		IntegerValue int77 = ValueUtil.integerValueOf(77);
+		//
+//		assertNull(modelManager.basicGetStaticPropertyValue(staticCountPropertyId));
+//		ocl2.assertQueryEquals(parent, int55, "count");
+		ocl2.assertQueryEquals(parent, int55, "statics::Parent::static_count()");
+//		assertEquals(int55, modelManager.basicGetStaticPropertyValue(staticCountPropertyId));
+		//
+//		modelManager.setStaticPropertyValue(staticCountPropertyId, int77);
+//		assertEquals(int77, modelManager.basicGetStaticPropertyValue(staticCountPropertyId));
+		ocl2.assertQueryEquals(parent, int55, "static_count()");
+//		assertEquals(int77, modelManager.basicGetStaticPropertyValue(staticCountPropertyId));
+		ocl2.assertQueryEquals(parent, int55, "count()");
+
+		// Eliminate shared ModelManager => new ModelManager, Executor per query
+		modelManager = null;
+		ocl2.setModelManager(modelManager);
+
+		ocl2.assertQueryEquals(parent, int55, "count()");
+		modelManager = PivotUtil.getExecutor(null).getModelManager();
+//		assertNull(modelManager.basicGetStaticPropertyValue(staticCountPropertyId));
+//		modelManager.setStaticPropertyValue(staticCountPropertyId, int77);
+//		assertEquals(int77, modelManager.basicGetStaticPropertyValue(staticCountPropertyId));
+		//
+		ocl2.assertQueryEquals(parent, int55, "count()");
+//		assertEquals(int77, modelManager.basicGetStaticPropertyValue(staticCountPropertyId));
+
+		ocl1.dispose();
+		ocl2.dispose();
+	}
+
+	/**
+	 * Test container/containment navigation.
+	 */
+	@Test public void test_static_property() throws Exception {
+		String metamodelText =
+				"package statics : pfx = 'http://staticProperty'\n" +
+						"{\n" +
+						"	class Parent\n" +
+						"	{\n" +
+						"		static property static_count : Integer = '55';\n" +
+						"		static operation static_count() : Integer { body: static_count; }\n" +
+						"		property count : Integer {initial: static_count; }\n" +
+						"		operation count() : Integer { body: static_count(); }\n" +
+						"	}\n" +
+						"}\n";
+		OCL ocl1 = createOCL();
+		Resource metamodel = cs2ecore(ocl1.getEnvironmentFactory(), metamodelText, getTestFileURI("test.ecore"));
+		EPackage ePackage = (EPackage) metamodel.getContents().get(0);
+		EClass parentClass = ClassUtil.nonNullState((EClass) ePackage.getEClassifier("Parent"));
+		EObject parent = eCreate(parentClass);
+		ThreadLocalExecutor.resetEnvironmentFactory();
+
+		TestOCL ocl2 = createOCL();
+		IdResolver idResolver = ocl2.getIdResolver();
+		ModelManager modelManager = new NullModelManager();
+		ocl2.setModelManager(modelManager);
+
+		org.eclipse.ocl.pivot.Class parentType = idResolver.getType(parentClass);
+		//
+		Property staticCountProperty = NameUtil.getNameable(parentType.getOwnedProperties(), "static_count");
+		assert staticCountProperty != null;
+		PropertyId staticCountPropertyId = staticCountProperty.getPropertyId();
+		//
+		IntegerValue int55 = ValueUtil.integerValueOf(55);
+		IntegerValue int77 = ValueUtil.integerValueOf(77);
+		//
+		assertNull(modelManager.basicGetStaticPropertyValue(staticCountPropertyId));
+//		ocl2.assertQueryEquals(parent, int55, "count");
+		ocl2.assertQueryEquals(null, int55, "statics::Parent::static_count");
+		assertEquals(int55, modelManager.basicGetStaticPropertyValue(staticCountPropertyId));
+		//
+		modelManager.setStaticPropertyValue(staticCountPropertyId, int77);
+		assertEquals(int77, modelManager.basicGetStaticPropertyValue(staticCountPropertyId));
+		ocl2.assertQueryEquals(parent, int77, "static_count");
+		assertEquals(int77, modelManager.basicGetStaticPropertyValue(staticCountPropertyId));
+		ocl2.assertQueryEquals(parent, int77, "count");
+
+		// Eliminate shared ModelManager => new ModelManager, Executor per query
+		modelManager = null;
+		ocl2.setModelManager(modelManager);
+
+		ocl2.assertQueryEquals(parent, int55, "count");
+		modelManager = PivotUtil.getExecutor(null).getModelManager();
+		assertNull(modelManager.basicGetStaticPropertyValue(staticCountPropertyId));
+		modelManager.setStaticPropertyValue(staticCountPropertyId, int77);
+		assertEquals(int77, modelManager.basicGetStaticPropertyValue(staticCountPropertyId));
+		//
+		ocl2.assertQueryEquals(parent, int55, "count");
+		assertEquals(int77, modelManager.basicGetStaticPropertyValue(staticCountPropertyId));
+
+		ocl1.dispose();
+		ocl2.dispose();
 	}
 }
