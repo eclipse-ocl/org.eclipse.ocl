@@ -182,6 +182,7 @@ implements DelegatedBehavior<E, R, F> {
 	}
 
 	public void validate(@NonNull EObject eObject) {
+		// uses prevakiling executor, modelManager
 		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
 		BasicDiagnostic diagnostics = Diagnostician.INSTANCE.createDefaultDiagnostic(eObject);
 		if (!Diagnostician.INSTANCE.validate(eObject, diagnostics, validationContext)) {

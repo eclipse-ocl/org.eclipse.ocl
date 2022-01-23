@@ -36,6 +36,7 @@ import org.eclipse.ocl.examples.codegen.genmodel.OCLGenModelUtil;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.examples.xtext.tests.company.CompanyPackage;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.evaluation.AbstractModelManager;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.evaluation.NullModelManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
@@ -568,6 +569,7 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 
 	@Test
 	public void test_ecore_number_equality() throws Exception {
+		int oldAbstractModelManager_CONSTRUCTION_COUNT = AbstractModelManager.CONSTRUCTION_COUNT;
 		TestOCL ocl = createOCL();
 		//
 		ocl.assertQueryOCLEquals(null, Byte.valueOf((byte)255), "-1");
@@ -579,7 +581,11 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryOCLEquals(null, Float.valueOf(255), "255");
 		ocl.assertQueryOCLEquals(null, Double.valueOf(255), "255");
 		ocl.assertQueryOCLEquals(null, BigDecimal.valueOf(255), "255");
+		int newAbstractModelManager_CONSTRUCTION_COUNT = AbstractModelManager.CONSTRUCTION_COUNT;
+		assertEquals(useCodeGen ? 0 : 9, newAbstractModelManager_CONSTRUCTION_COUNT - oldAbstractModelManager_CONSTRUCTION_COUNT);	// FIXME Bug 578335
 		//
+		ocl.setModelManager(new NullModelManager());;
+		assertEquals(1, AbstractModelManager.CONSTRUCTION_COUNT - newAbstractModelManager_CONSTRUCTION_COUNT);
 		ocl.assertQueryOCLNotEquals(null, Byte.valueOf((byte)255), "254");
 		ocl.assertQueryOCLNotEquals(null, Character.valueOf((char)255), "254");
 		ocl.assertQueryOCLNotEquals(null, Short.valueOf((short)255), "254");
@@ -591,6 +597,7 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryOCLNotEquals(null, BigDecimal.valueOf(255), "255.1");
 		//
 		ocl.dispose();
+		assertEquals(1, AbstractModelManager.CONSTRUCTION_COUNT - newAbstractModelManager_CONSTRUCTION_COUNT);
 	}
 
 	/**
