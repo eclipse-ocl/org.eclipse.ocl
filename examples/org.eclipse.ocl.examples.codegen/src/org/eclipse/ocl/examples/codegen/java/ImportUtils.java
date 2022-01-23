@@ -24,6 +24,8 @@ public class ImportUtils
 	public static final String IMPORTS_MARKER = "<%**imports**%>";
 	public static final String IMPORTS_PREFIX = "<%";
 	public static final String IMPORTS_SUFFIX = "%>";
+	public static final String IMPORTS_NESTED_ANNOTATION_PREFIX = IMPORTS_PREFIX + "@" + IMPORTS_PREFIX;
+	public static final String IMPORTS_NESTED_ANNOTATION_SUFFIX = IMPORTS_SUFFIX + " " + IMPORTS_SUFFIX;
 
 	public static @NonNull String getAffixedName(@NonNull Class<?> javaClass) {
 		return IMPORTS_PREFIX + javaClass.getName() + IMPORTS_SUFFIX;
@@ -167,8 +169,8 @@ public class ImportUtils
 	/**
 	 * Rewrite double imports to suit the EMF generators. If importManager is null, as is the case
 	 * since it is not obvious how to re-use the ImportManager between the OCL pre-generate and the Ecore generate
-	 * sessions, an import such as <%x.y.@p.q z%> is changed to x.y.@<%p.q%> z so that the @p.q gets handler by
-	 * the Ecore ImportmManager. If importManager is non-null both imports are shortened.
+	 * sessions, an import such as <%x.y.@p.q z%> is changed to x.y.@<%p.q%> z so that the @p.q gets handled by
+	 * the Ecore ImportManager. If importManager is non-null both imports are shortened.
 	 */
 	public static @NonNull String rewriteManagedImports(@NonNull String source, @Nullable ImportManager importManager)
 	{

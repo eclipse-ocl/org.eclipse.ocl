@@ -27,14 +27,19 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIfExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterator;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLetExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTupleExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTuplePart;
@@ -44,6 +49,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
@@ -190,6 +196,10 @@ public class CGUtil
 		return ClassUtil.nonNullState((Constraint)cgConstraint.getAst());
 	}
 
+	public static @NonNull Property getAST(@NonNull CGExecutorProperty cgExecutorProperty) {
+		return ClassUtil.nonNullState((Property)cgExecutorProperty.getAst());
+	}
+
 	public static @NonNull Type getAST(@NonNull CGExecutorType cgExecutorType) {
 		return ClassUtil.nonNullState((Type)cgExecutorType.getAst());
 	}
@@ -198,8 +208,16 @@ public class CGUtil
 		return ClassUtil.nonNullState((Variable)cgIterator.getAst());
 	}
 
+	public static @NonNull Operation getAST(@NonNull CGOperation cgOperation) {
+		return ClassUtil.nonNullState((Operation)cgOperation.getAst());
+	}
+
 	public static @NonNull /*ParameterVariable*/ VariableDeclaration getAST(@NonNull CGParameter cgParameter) {
 		return ClassUtil.nonNullState((VariableDeclaration)cgParameter.getAst());
+	}
+
+	public static @NonNull Property getAST(@NonNull CGProperty cgProperty) {
+		return ClassUtil.nonNullState((Property)cgProperty.getAst());
 	}
 
 	public static @NonNull List<@NonNull CGIterator> getCoIteratorsList(@NonNull CGIterationCallExp cgIterationCallExp) {
@@ -265,6 +283,10 @@ public class CGUtil
 		return ClassUtil.nullFree(cgIterationCallExp.getIterators());
 	}
 
+	public static @NonNull String getName(@NonNull CGNamedElement cgNamedElement) {
+		return ClassUtil.nonNullState(cgNamedElement.getName());
+	}
+
 	public static Iterable<@NonNull CGTuplePart> getParts(@NonNull CGTupleExp cgTupleExp) {
 		return ClassUtil.nullFree(cgTupleExp.getParts());
 	}
@@ -275,6 +297,10 @@ public class CGUtil
 
 	public static @NonNull Property getReferredProperty(@NonNull CGNavigationCallExp cgNavigationCallExp) {
 		return ClassUtil.nonNullState(cgNavigationCallExp.getReferredProperty());
+	}
+
+	public static @NonNull Operation getReferredOperation(@NonNull CGOperationCallExp cgOperationCallExp) {
+		return ClassUtil.nonNullState(cgOperationCallExp.getReferredOperation());
 	}
 
 	public static @NonNull CGValuedElement getReferredVariable(@NonNull CGVariableExp cgVariableExp) {

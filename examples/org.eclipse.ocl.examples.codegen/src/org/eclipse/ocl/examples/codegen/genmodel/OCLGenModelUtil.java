@@ -166,18 +166,6 @@ public abstract class OCLGenModelUtil
 		return baseCountID + " + " + Integer.toString(genClass.getFeatureCount() - base.getFeatureCount());
 	}
 
-	public static List<GenOperation> getDeclaredGenOperations(GenClass genClass) {
-		ArrayList<GenOperation> results = new ArrayList<>();
-		for (GenOperation genOperation : genClass.getDeclaredGenOperations()) {
-			EOperation ecoreOperation = genOperation.getEcoreOperation();
-			assert ecoreOperation != null;
-			if (!PivotUtil.isStatic(ecoreOperation)) {
-				results.add(genOperation);
-			}
-		}
-		return results;
-	}
-
 	public static @NonNull Iterable<GeneratorAdapterFactory.@NonNull Descriptor> getGeneratorAdapterFactoryDescriptors() {
 		List<GeneratorAdapterFactory.@NonNull Descriptor> descriptors = new ArrayList<>();
 		// Replacement for EMF to fix BUG 543870

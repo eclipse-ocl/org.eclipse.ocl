@@ -24,6 +24,7 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.UnboxedCompositionProperty;
 import org.eclipse.ocl.pivot.internal.library.UnboxedExplicitNavigationProperty;
 import org.eclipse.ocl.pivot.internal.library.UnboxedOppositeNavigationProperty;
+import org.eclipse.ocl.pivot.internal.library.executor.ExecutorOperation;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 public class JavaConstants {
@@ -50,37 +51,20 @@ public class JavaConstants {
 	public static final @NonNull String THIS_NAME = "this";
 	public static final @NonNull String TYPE_ID_NAME = "typeId";
 
-	public static final @NonNull TypeId CLASS_TYPE_ID = getJavaTypeId(
-		org.eclipse.ocl.pivot.Class.class);
+	public static final @NonNull String FLATTENED_CLASS_PREFIX = "FLAT_";
 
-	public static final @NonNull TypeId PROPERTY_TYPE_ID = getJavaTypeId(
-		Property.class);
-
-	public static final @NonNull TypeId EXECUTOR_TYPE_ID = getJavaTypeId(
-		Executor.class);
-
-	public static final @NonNull TypeId ID_RESOLVER_TYPE_ID = getJavaTypeId(
-		IdResolver.class);
-
-	public static final @NonNull TypeId MODEL_MANAGER_TYPE_ID = getJavaTypeId(
-		ModelManager.class);
-
-	// public static final @NonNull TypeId SELF_TYPE_ID =
-	// getJavaTypeId(Object.class);
-	public static final @NonNull TypeId STANDARD_LIBRARY_TYPE_ID = getJavaTypeId(
-		StandardLibrary.class);
-
-	public static final @NonNull TypeId TYPE_ID_TYPE_ID = getJavaTypeId(
-		TypeId.class);
-
-	public static final @NonNull TypeId UNBOXED_COMPOSITION_PROPERTY_TYPE_ID = getJavaTypeId(
-		UnboxedCompositionProperty.class);
-
-	public static final @NonNull TypeId UNBOXED_EXPLICIT_NAVIGATION_PROPERTY_TYPE_ID = getJavaTypeId(
-		UnboxedExplicitNavigationProperty.class);
-
-	public static final @NonNull TypeId UNBOXED_OPPOSITE_NAVIGATION_PROPERTY_TYPE_ID = getJavaTypeId(
-		UnboxedOppositeNavigationProperty.class);
+	public static final @NonNull TypeId CLASS_TYPE_ID = getJavaTypeId(org.eclipse.ocl.pivot.Class.class);
+	public static final @NonNull TypeId PROPERTY_TYPE_ID = getJavaTypeId(Property.class);
+	public static final @NonNull TypeId EXECUTOR_OPERATION_TYPE_ID = getJavaTypeId(ExecutorOperation.class);
+	public static final @NonNull TypeId EXECUTOR_TYPE_ID = getJavaTypeId(Executor.class);
+	public static final @NonNull TypeId ID_RESOLVER_TYPE_ID = getJavaTypeId(IdResolver.class);
+	public static final @NonNull TypeId MODEL_MANAGER_TYPE_ID = getJavaTypeId(ModelManager.class);
+	//	public static final @NonNull TypeId SELF_TYPE_ID = getJavaTypeId(Object.class);
+	public static final @NonNull TypeId STANDARD_LIBRARY_TYPE_ID = getJavaTypeId(StandardLibrary.class);
+	public static final @NonNull TypeId TYPE_ID_TYPE_ID = getJavaTypeId(TypeId.class);
+	public static final @NonNull TypeId UNBOXED_COMPOSITION_PROPERTY_TYPE_ID = getJavaTypeId(UnboxedCompositionProperty.class);
+	public static final @NonNull TypeId UNBOXED_EXPLICIT_NAVIGATION_PROPERTY_TYPE_ID = getJavaTypeId(UnboxedExplicitNavigationProperty.class);
+	public static final @NonNull TypeId UNBOXED_OPPOSITE_NAVIGATION_PROPERTY_TYPE_ID = getJavaTypeId(UnboxedOppositeNavigationProperty.class);
 
 	public static final Method EXECUTOR_GET_ID_RESOLVER_METHOD;
 
