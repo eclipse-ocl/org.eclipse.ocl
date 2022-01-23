@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.EOperation;
  * <!-- end-user-doc -->
  *
  * <!-- begin-model-doc -->
- * A call of an operation using the Ecore Operation calling convention; Collections are passed as EList.
+ * A call of an operation using the Ecore Operation calling convention; Collections are passed as EList. All arguments and returns use the ecore representation.
  * <!-- end-model-doc -->
  *
  * <p>

@@ -392,6 +392,24 @@ public interface CGModelFactory extends EFactory {
 	@NonNull CGShadowPart createCGShadowPart();
 
 	/**
+	 * Returns a new object of class '<em>CG Foreign Operation Call Exp</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>CG Foreign Operation Call Exp</em>'.
+	 * @generated
+	 */
+	@NonNull CGForeignOperationCallExp createCGForeignOperationCallExp();
+
+	/**
+	 * Returns a new object of class '<em>CG Foreign Property Call Exp</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>CG Foreign Property Call Exp</em>'.
+	 * @generated
+	 */
+	@NonNull CGForeignPropertyCallExp createCGForeignPropertyCallExp();
+
+	/**
 	 * Returns a new object of class '<em>CG Ecore Class Shadow Exp</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

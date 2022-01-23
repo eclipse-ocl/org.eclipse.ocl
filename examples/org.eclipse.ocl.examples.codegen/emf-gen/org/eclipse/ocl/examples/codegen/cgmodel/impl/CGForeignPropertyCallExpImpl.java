@@ -1,13 +1,17 @@
-/*******************************************************************************
- * Copyright (c) 2013, 2019 CEA LIST and others.
+/**
+ * <copyright>
+ *
+ * Copyright (c) 2015, 2022 Willink Transformations and others.
  * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
  *
  * Contributors:
- *   E.D.Willink(CEA LIST) - Initial API and implementation
- *******************************************************************************/
+ *   E.D.Willink - Initial API and implementation
+ *
+ * </copyright>
+ */
 package org.eclipse.ocl.examples.codegen.cgmodel.impl;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -17,35 +21,36 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGElementId;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorProperty;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInvalid;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>CG Executor Property</b></em>'.
+ * An implementation of the model object '<em><b>CG Foreign Property Call Exp</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGExecutorPropertyImpl#getInitExpression <em>Init Expression</em>}</li>
- *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGExecutorPropertyImpl#getUnderlyingPropertyId <em>Underlying Property Id</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGForeignPropertyCallExpImpl#getInitExpression <em>Init Expression</em>}</li>
  * </ul>
  *
  * @generated
  */
-public abstract class CGExecutorPropertyImpl extends CGValuedElementImpl implements CGExecutorProperty {
+public class CGForeignPropertyCallExpImpl extends CGPropertyCallExpImpl implements CGForeignPropertyCallExp {
 	/**
-	 * The number of structural features of the '<em>CG Executor Property</em>' class.
+	 * The number of structural features of the '<em>CG Foreign Property Call Exp</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	public static final int CG_EXECUTOR_PROPERTY_FEATURE_COUNT = CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2;
+	public static final int CG_FOREIGN_PROPERTY_CALL_EXP_FEATURE_COUNT = CGPropertyCallExpImpl.CG_PROPERTY_CALL_EXP_FEATURE_COUNT + 1;
+
+
 	/**
 	 * The cached value of the '{@link #getInitExpression() <em>Init Expression</em>}' containment reference.
 	 * <!-- begin-user-doc -->
@@ -55,22 +60,14 @@ public abstract class CGExecutorPropertyImpl extends CGValuedElementImpl impleme
 	 * @ordered
 	 */
 	protected CGValuedElement initExpression;
-	/**
-	 * The cached value of the '{@link #getUnderlyingPropertyId() <em>Underlying Property Id</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getUnderlyingPropertyId()
-	 * @generated
-	 * @ordered
-	 */
-	protected CGElementId underlyingPropertyId;
+
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected CGExecutorPropertyImpl() {
+	protected CGForeignPropertyCallExpImpl() {
 		super();
 	}
 
@@ -81,7 +78,7 @@ public abstract class CGExecutorPropertyImpl extends CGValuedElementImpl impleme
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return CGModelPackage.Literals.CG_EXECUTOR_PROPERTY;
+		return CGModelPackage.Literals.CG_FOREIGN_PROPERTY_CALL_EXP;
 	}
 
 	/**
@@ -103,7 +100,7 @@ public abstract class CGExecutorPropertyImpl extends CGValuedElementImpl impleme
 		CGValuedElement oldInitExpression = initExpression;
 		initExpression = newInitExpression;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 6, oldInitExpression, newInitExpression);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 10, oldInitExpression, newInitExpression);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -119,37 +116,14 @@ public abstract class CGExecutorPropertyImpl extends CGValuedElementImpl impleme
 		if (newInitExpression != initExpression) {
 			NotificationChain msgs = null;
 			if (initExpression != null)
-				msgs = ((InternalEObject)initExpression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (6), null, msgs);
+				msgs = ((InternalEObject)initExpression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (10), null, msgs);
 			if (newInitExpression != null)
-				msgs = ((InternalEObject)newInitExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (6), null, msgs);
+				msgs = ((InternalEObject)newInitExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (10), null, msgs);
 			msgs = basicSetInitExpression(newInitExpression, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 6, newInitExpression, newInitExpression));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public CGElementId getUnderlyingPropertyId() {
-		return underlyingPropertyId;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setUnderlyingPropertyId(CGElementId newUnderlyingPropertyId) {
-		CGElementId oldUnderlyingPropertyId = underlyingPropertyId;
-		underlyingPropertyId = newUnderlyingPropertyId;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 7, oldUnderlyingPropertyId, underlyingPropertyId));
+			eNotify(new ENotificationImpl(this, Notification.SET, 10, newInitExpression, newInitExpression));
 	}
 
 	/**
@@ -160,7 +134,7 @@ public abstract class CGExecutorPropertyImpl extends CGValuedElementImpl impleme
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case 6:
+			case 10:
 				return basicSetInitExpression(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -174,10 +148,8 @@ public abstract class CGExecutorPropertyImpl extends CGValuedElementImpl impleme
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 6:
+			case 10:
 				return getInitExpression();
-			case 7:
-				return getUnderlyingPropertyId();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -190,11 +162,8 @@ public abstract class CGExecutorPropertyImpl extends CGValuedElementImpl impleme
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 6:
+			case 10:
 				setInitExpression((CGValuedElement)newValue);
-				return;
-			case 7:
-				setUnderlyingPropertyId((CGElementId)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -208,11 +177,8 @@ public abstract class CGExecutorPropertyImpl extends CGValuedElementImpl impleme
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 6:
+			case 10:
 				setInitExpression((CGValuedElement)null);
-				return;
-			case 7:
-				setUnderlyingPropertyId((CGElementId)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -226,12 +192,19 @@ public abstract class CGExecutorPropertyImpl extends CGValuedElementImpl impleme
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 6:
+			case 10:
 				return initExpression != null;
-			case 7:
-				return underlyingPropertyId != null;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
+	public <R> R accept(@NonNull CGModelVisitor<R> visitor) {
+		return visitor.visitCGForeignPropertyCallExp(this);
 	}
 
 	/**
@@ -257,61 +230,7 @@ public abstract class CGExecutorPropertyImpl extends CGValuedElementImpl impleme
 	 * @generated
 	 */
 	@Override
-	public boolean isCaught() {
-		return false;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * @generated
-	 */
-	@Override
-	public boolean isConstant() {
-		return true;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * @generated
-	 */
-	@Override
-	public boolean isContext() {
-		return true;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * @generated
-	 */
-	@Override
 	public boolean isEcore() {
-		return false;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * @generated
-	 */
-	@Override
-	public @Nullable Boolean isEquivalentToInternal(@NonNull CGValuedElement thatValue) {
-		throw new UnsupportedOperationException(getClass().getName() + ".isEquivalentToInternal()");
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * @generated
-	 */
-	@Override
-	public boolean isGlobal() {
-		return false;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * @generated
-	 */
-	@Override
-	public boolean isInlined() {
 		return false;
 	}
 
@@ -329,43 +248,8 @@ public abstract class CGExecutorPropertyImpl extends CGValuedElementImpl impleme
 	 * @generated
 	 */
 	@Override
-	public boolean isNonNull() {
-		return true;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * @generated
-	 */
-	@Override
-	public boolean isNull() {
-		return false;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * @generated
-	 */
-	@Override
 	public boolean isUnboxed() {
 		return false;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 * @generated
-	 */
-	@Override
-	public boolean isUncommonable() {
-		return false;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * @generated
-	 */
-	@Override
-	public void setCaught(boolean isCaught) {
-		assert !isCaught;
-	}
-} //CGExecutorPropertyImpl
+} //CGForeignPropertyCallExpImpl
