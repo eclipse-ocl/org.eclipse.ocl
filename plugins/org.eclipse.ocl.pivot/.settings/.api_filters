@@ -152,6 +152,12 @@
                 <message_argument value="getLoopExp__ValidateNoNotOrderedCollectionCoIterators__DiagnosticChain_Map()"/>
             </message_arguments>
         </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="getProperty__ValidateStaticPropertyHasInitializer__DiagnosticChain_Map()"/>
+            </message_arguments>
+        </filter>
         <filter id="405901410">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
@@ -201,6 +207,11 @@
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="getLoopExp__ValidateNoNotOrderedCollectionCoIterators__DiagnosticChain_Map()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getProperty__ValidateStaticPropertyHasInitializer__DiagnosticChain_Map()"/>
             </message_arguments>
         </filter>
     </resource>
@@ -254,6 +265,11 @@
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="LOOP_EXP___VALIDATE_NO_NOT_ORDERED_COLLECTION_CO_ITERATORS__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="PROPERTY___VALIDATE_STATIC_PROPERTY_HAS_INITIALIZER__DIAGNOSTICCHAIN_MAP"/>
             </message_arguments>
         </filter>
     </resource>
@@ -444,6 +460,19 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/Property.java" type="org.eclipse.ocl.pivot.Property">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.Property"/>
+                <message_argument value="validateStaticPropertyHasInitializer(DiagnosticChain, Map&lt;Object,Object&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="validateStaticPropertyHasInitializer(DiagnosticChain, Map&lt;Object,Object&gt;)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/internal/BagTypeImpl.java" type="org.eclipse.ocl.pivot.internal.BagTypeImpl">
         <filter id="388194388">
             <message_arguments>
@@ -584,6 +613,15 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.PrimitiveTypeImpl"/>
                 <message_argument value="PRIMITIVE_TYPE_OPERATION_COUNT"/>
+                <message_argument value="8"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/PropertyImpl.java" type="org.eclipse.ocl.pivot.internal.PropertyImpl">
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.PropertyImpl"/>
+                <message_argument value="PROPERTY_OPERATION_COUNT"/>
                 <message_argument value="8"/>
             </message_arguments>
         </filter>
@@ -1063,6 +1101,12 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
                 <message_argument value="LOOP_EXP__VALIDATE_NO_NOT_ORDERED_COLLECTION_CO_ITERATORS"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="PROPERTY__VALIDATE_STATIC_PROPERTY_HAS_INITIALIZER"/>
             </message_arguments>
         </filter>
         <filter id="338755678">
@@ -1699,6 +1743,11 @@
         </filter>
         <filter id="1143996420">
             <message_arguments>
+                <message_argument value="PROPERTY__VALIDATE_STATIC_PROPERTY_HAS_INITIALIZER"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
                 <message_argument value="validateBooleanType(BooleanType, DiagnosticChain, Map&lt;Object,Object&gt;)"/>
             </message_arguments>
         </filter>
@@ -1735,6 +1784,11 @@
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="validateLoopExp_validateNoNotOrderedCollectionCoIterators(LoopExp, DiagnosticChain, Map&lt;Object,Object&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="validateProperty_validateStaticPropertyHasInitializer(Property, DiagnosticChain, Map&lt;Object,Object&gt;)"/>
             </message_arguments>
         </filter>
     </resource>
