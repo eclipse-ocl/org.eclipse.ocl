@@ -17,6 +17,7 @@ import java.util.Map;
 
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
+import org.eclipse.emf.codegen.util.ImportManager;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -33,6 +34,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
+import org.eclipse.ocl.examples.codegen.java.ImportUtils;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.pivot.AnyType;
@@ -72,6 +74,7 @@ import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -347,8 +350,47 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		}
 	}
 
+	public static class FeatureBody implements Nameable
+	{
+		private final @NonNull String uri;
+		private final boolean isStatic;
+		private final @NonNull String className;
+		private @NonNull String bodyText;
+
+		public FeatureBody(@NonNull String uri, boolean isStatic, @NonNull String className, @NonNull String bodyText) {
+			this.uri = uri;
+			this.isStatic = isStatic;
+			this.className = className;
+			this.bodyText = bodyText;
+		}
+
+		public @NonNull String getBodyText() {
+			return bodyText;
+		}
+
+		@Override
+		public @NonNull String getName() {
+			return className;
+		}
+
+		public @NonNull String getURI() {
+			return uri;
+		}
+
+		public void rewriteManagedImports(@Nullable ImportManager importManager) {
+			if (!isStatic) {
+				// non-static bodies are embedded in XXXImpl.java for which ImportUtils.IMPORTS_NESTED_ANNOTATION_PREFIX etc must be adjusted to the limitations of EMFs JET handling.
+				bodyText = ImportUtils.rewriteManagedImports(bodyText, null);	// FIXME transfer imports between CG sessions
+			}
+			else {
+				// static bodies are embedded in XXXTables.java for which OCLinEcoreTablesUtils.CodeGenString.appendMarkup sorts out ImportUtils.IMPORTS_NESTED_ANNOTATION_PREFIX etc.
+			}
+		}
+	}
+
 	public static void generatePackage(@NonNull GenPackage genPackage,
-			@NonNull Map<String, String> uri2body, @NonNull Map<GenPackage, String> constantsTexts) {
+			@NonNull Map<@NonNull String, @NonNull FeatureBody> uri2body,
+			@NonNull Map<@NonNull GenPackage, @NonNull String> constantsTexts) {
 		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(genPackage);
 		OCLinEcoreCodeGenerator generator = new OCLinEcoreCodeGenerator(environmentFactory, genPackage);
 		generator.generate(uri2body, constantsTexts);
@@ -398,7 +440,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		return new OCLinEcoreImportNameManager();
 	}
 
-	protected void generate(@NonNull Map<String, String> uri2body, @NonNull Map<GenPackage, String> constantsTexts) {
+	protected void generate(@NonNull Map<@NonNull String, @NonNull FeatureBody> uri2body, @NonNull Map<GenPackage, String> constantsTexts) {
 		Map<@NonNull ExpressionInOCL, @NonNull ExpressionInOCL> newQuery2oldQuery2 = newQuery2oldQuery = new HashMap<>();
 		try {
 			EPackage ecorePackage = genPackage.getEcorePackage();
@@ -416,8 +458,8 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 			}
 			resolveNames(cgPackage);
 			OCLinEcoreCG2JavaVisitor cg2java = new OCLinEcoreCG2JavaVisitor(this, genPackage, cgPackage);
-			Map<String, String> results = cg2java.generateBodies();
-			for (Map.Entry<String, String> entry : results.entrySet()) {
+			Map<@NonNull String, @NonNull FeatureBody> results = cg2java.generateBodies();
+			for (Map.Entry<@NonNull String, @NonNull FeatureBody> entry : results.entrySet()) {
 				uri2body.put(entry.getKey(), entry.getValue());
 			}
 	//		Iterable<@NonNull CGValuedElement> sortedGlobals = prepareGlobals();

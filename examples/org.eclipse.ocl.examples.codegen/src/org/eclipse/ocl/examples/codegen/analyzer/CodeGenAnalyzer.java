@@ -53,6 +53,7 @@ import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.internal.cse.CommonSubExpressionAnalysis;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.UniqueList;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 
 /**
@@ -100,6 +101,8 @@ public class CodeGenAnalyzer
 	private final @NonNull Map<@NonNull Number, @NonNull CGReal> cgReals = new HashMap<>();
 	private final @NonNull Map<@NonNull String, @NonNull CGString> cgStrings = new HashMap<>();
 	private /*@LazyNonNull*/ Map<@NonNull ExpressionInOCL, @NonNull CommonSubExpressionAnalysis> expression2cseAnalsis = null;
+	// UniqueList allows nested discovery of more foreign Operations
+	private /*@LazyNonNull*/ UniqueList<@NonNull Operation> foreignOperations = null;
 
 	public CodeGenAnalyzer(@NonNull CodeGenerator codeGenerator) {
 		this.codeGenerator = codeGenerator;
@@ -107,6 +110,15 @@ public class CodeGenAnalyzer
 		cgFalse = createCGBoolean(false);
 		cgTrue = createCGBoolean(true);
 		cgNull = createCGNull();
+	}
+
+	public void addForeignOperation(@NonNull Operation asOperation) {
+	//	assert asOperation.isIsStatic();
+		UniqueList<@NonNull Operation> foreignOperations2 = foreignOperations;
+		if (foreignOperations2 == null) {
+			foreignOperations = foreignOperations2 = new UniqueList<>();
+		}
+		foreignOperations2.add(asOperation);
 	}
 
 	public void analyze(@NonNull CGElement cgRoot) {
@@ -175,7 +187,7 @@ public class CodeGenAnalyzer
 		OperationId operationId = asOperation.getOperationId();
 		CGExecutorOperation cgOperation = CGModelFactory.eINSTANCE.createCGExecutorOperation();
 		CGElementId cgOperationId = getElementId(operationId);
-		cgOperation.setTypeId(getTypeId(asOperation.getTypeId()));
+	//	cgOperation.setTypeId(getTypeId(asOperation.getTypeId()));
 		cgOperation.setUnderlyingOperationId(cgOperationId);
 		cgOperation.setAst(asOperation);
 		globalNameManager.declareStandardName(cgOperation);
@@ -212,13 +224,15 @@ public class CodeGenAnalyzer
 	}
 
 	public @NonNull CGExecutorProperty createExecutorProperty(@NonNull Property asProperty) {
+		assert !asProperty.isIsStatic();			// static is inlined
 		PropertyId propertyId = asProperty.getPropertyId();
 		CGElementId cgPropertyId = getElementId(propertyId);
 		CGExecutorProperty cgProperty = CGModelFactory.eINSTANCE.createCGExecutorNavigationProperty();
 		cgProperty.setUnderlyingPropertyId(cgPropertyId);
 		cgProperty.setAst(asProperty);
 		cgProperty.setName("IMPPROPid_" + asProperty.getName());
-		cgProperty.setTypeId(getTypeId(JavaConstants.UNBOXED_EXPLICIT_NAVIGATION_PROPERTY_TYPE_ID));
+		TypeId javaPropertyTypeId = JavaConstants.UNBOXED_EXPLICIT_NAVIGATION_PROPERTY_TYPE_ID;
+		cgProperty.setTypeId(getTypeId(javaPropertyTypeId));
 		cgProperty.getDependsOn().add(cgPropertyId);
 		return cgProperty;
 	}
@@ -302,6 +316,10 @@ public class CodeGenAnalyzer
 		return cgExpression;
 	}
 
+	public @Nullable UniqueList<@NonNull Operation> getForeignOperations() {
+		return foreignOperations;
+	}
+
 	public @NonNull GlobalNameManager getGlobalNameManager() {
 		return ClassUtil.nonNullState(globalNameManager);
 	}
@@ -339,6 +357,10 @@ public class CodeGenAnalyzer
 		}
 		return cgInvalid;
 	}
+
+//	public @NonNull NameManager getNameManager() {
+//		return ClassUtil.nonNullState(nameManager);
+//	}
 
 	public @NonNull CGNull getNull() {
 		return cgNull;
@@ -390,6 +412,10 @@ public class CodeGenAnalyzer
 			cgUnlimited2.setTypeId(getTypeId(TypeId.UNLIMITED_NATURAL));
 		}
 		return cgUnlimited2;
+	}
+
+	public boolean isForeign(@NonNull Operation asOperation) {
+		return (foreignOperations != null) && foreignOperations.contains(asOperation);
 	}
 
 	/**

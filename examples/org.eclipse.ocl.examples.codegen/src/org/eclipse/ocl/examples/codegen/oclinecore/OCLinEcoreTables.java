@@ -29,9 +29,11 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.genmodel.OCLGenModelUtil;
+import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreCodeGenerator.FeatureBody;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.BooleanType;
@@ -84,6 +86,8 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
+
+import com.google.common.collect.Lists;
 
 public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 {
@@ -183,9 +187,9 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("	/**\n");
 		s.append("	 *	Constants used by auto-generated code.\n");
 		s.append("	 */\n");
-		int i = 0;
-		int iMax = constants.length();
 		if (OCLGenModelUtil.INSTANCE.useNestedImports()) {
+			int i = 0;
+			int iMax = constants.length();
 			while (i < iMax) {
 				char c = constants.charAt(i++);
 				if ((c == '<') && (i < iMax) && (constants.charAt(i) == '%')) {
@@ -199,42 +203,48 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 			}
 		}
 		else {
-			while (i < iMax) {
-				int j = constants.indexOf("<%", i);
-				if (j >= 0) {
-					int k = constants.indexOf("%>", j+2);
-					if (k >= 0) {
-						s.append(constants.substring(i, j));
-						Boolean isRequired = null;
-						String longClassName;
-						int atStart = constants.indexOf("@", j+2);
-						if ((0 <= atStart) && (atStart <= k)) {
-							int atEnd = constants.indexOf(" ", atStart);
-							String longAnnotationName = constants.substring(atStart+1, atEnd);
-							if (NonNull.class.getName().equals(longAnnotationName)) {
-								isRequired = true;
-							}
-							else if (Nullable.class.getName().equals(longAnnotationName)) {
-								isRequired = false;
-							}
-							longClassName = constants.substring(j+2, atStart) + constants.substring(atEnd+1, k);
+			appendMarkedUpText(constants);
+		}
+	}
+
+	protected void appendMarkedUpText(@NonNull String markedUpText) {
+		int i = 0;
+		int iMax = markedUpText.length();
+		while (i < iMax) {
+			int j = markedUpText.indexOf("<%", i);
+			if (j >= 0) {
+				int k = markedUpText.indexOf("%>", j+2);
+				if (k >= 0) {
+					s.append(markedUpText.substring(i, j));
+					Boolean isRequired = null;
+					String longClassName;
+					int atStart = markedUpText.indexOf("@", j+2);
+					if ((0 <= atStart) && (atStart <= k)) {
+						int atEnd = markedUpText.indexOf(" ", atStart);
+						String longAnnotationName = markedUpText.substring(atStart+1, atEnd);
+						if (NonNull.class.getName().equals(longAnnotationName)) {
+							isRequired = true;
 						}
-						else {
-							longClassName = constants.substring(j+2,  k);
+						else if (Nullable.class.getName().equals(longAnnotationName)) {
+							isRequired = false;
 						}
-						s.appendClassReference(isRequired, longClassName);
-						i = k+2;
+						longClassName = markedUpText.substring(j+2, atStart) + markedUpText.substring(atEnd+1, k);
 					}
 					else {
-						break;
+						longClassName = markedUpText.substring(j+2,  k);
 					}
+					s.appendClassReference(isRequired, longClassName);
+					i = k+2;
 				}
 				else {
 					break;
 				}
 			}
-			s.append(constants.substring(i));
+			else {
+				break;
+			}
 		}
+		s.append(markedUpText.substring(i));
 	}
 
 	protected void appendInitializationStart(@NonNull String name) {
@@ -403,7 +413,9 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("	/**\n");
 		s.append("	 *	The lists of enumeration literals for each enumeration.\n");
 		s.append("	 */\n");
-		s.append("	public static class EnumerationLiterals {\n");
+		s.append("	public static class ");
+		s.appendClassDefinition("EnumerationLiterals");
+		s.append(" {\n");
 		appendInitializationStart("EnumerationLiterals");
 		for (org.eclipse.ocl.pivot.@NonNull Class asClass : activeClassesSortedByName) {
 			EClassifier eClassifier = ClassUtil.nonNullState((EClassifier)asClass.getESObject());
@@ -467,7 +479,9 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("	/**\n");
 		s.append("	 *	The fragment descriptors for the local elements of each type and its supertypes.\n");
 		s.append("	 */\n");
-		s.append("	public static class Fragments {\n");
+		s.append("	public static class ");
+		s.appendClassDefinition("Fragments");
+		s.append(" {\n");
 		appendInitializationStart("Fragments");
 		for (org.eclipse.ocl.pivot.@NonNull Class asClass : activeClassesSortedByName) {
 			s.append("\n");
@@ -490,6 +504,22 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("	}\n");
 	}
 
+	protected void declareForeignOperations(@NonNull Iterable<@NonNull Operation> foreignOperations, @NonNull Map<@NonNull String, @NonNull FeatureBody> uri2body) {
+	//	s.append("\n");
+	//	s.append("	/**\n");
+	//	s.append("	 *	The foreign operation implementations.\n");
+	//	s.append("	 */");
+		List<@NonNull Operation> sortedForeignOperations = Lists.newArrayList(foreignOperations);
+		Collections.sort(sortedForeignOperations, NameUtil.NAMEABLE_COMPARATOR);
+		for (@NonNull Operation foreignOperation : sortedForeignOperations) {
+			String fragmentURI = String.valueOf(EcoreUtil.getURI(foreignOperation).fragment());
+			FeatureBody body = uri2body.get(fragmentURI);
+			if (body != null) {
+				s.appendMarkup(("\t" + body.getBodyText()).replace("\n", "\n\t"));
+			}
+		}
+	}
+
 	protected void declareFragmentOperations(@NonNull List<@NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Operation>>>> paginatedFragmentOperations) {
 		s.append("	/**\n");
 		s.append("	 *	The lists of local operations or local operation overrides for each fragment of each type.\n");
@@ -498,7 +528,8 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		int pageMax = paginatedFragmentOperations.size();
 		for (@NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Operation>>> fragmentOperations : paginatedFragmentOperations) {
 			String pagedName = getPagedName("FragmentOperations", page, pageMax);
-			s.append("	public static class " + pagedName);
+			s.append("	public static class ");
+			s.appendClassDefinition(pagedName);
 			s.append(" {\n");
 			appendInitializationStart(pagedName);
 			for (org.eclipse.ocl.pivot.@NonNull Class asClass : fragmentOperations.keySet()) {
@@ -567,7 +598,8 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		int pageMax = paginatedFragmentProperties.size();
 		for (@NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Property>> fragmentProperties : paginatedFragmentProperties) {
 			String pagedName = getPagedName("FragmentProperties", page, pageMax);
-			s.append("	public static class " + pagedName);
+			s.append("	public static class ");
+			s.appendClassDefinition(pagedName);
 			s.append(" {\n");
 			appendInitializationStart(pagedName);
 			for (org.eclipse.ocl.pivot.@NonNull Class asClass : fragmentProperties.keySet()) {
@@ -706,7 +738,9 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("	 * @noinstantiate This class is not intended to be instantiated by clients.\n");
 		s.append("	 * @noreference This class is not intended to be referenced by clients.\n");
 		s.append("	 */\n");
-		s.append("	public static class Operations {\n");
+		s.append("	public static class ");
+		s.appendClassDefinition("Operations");
+		s.append(" {\n");
 		appendInitializationStart("Operations");
 		for (org.eclipse.ocl.pivot.@NonNull Class pClass : activeClassesSortedByName) {
 			List<@NonNull Operation> sortedOperations = new ArrayList<>(getOperations(pClass));
@@ -772,7 +806,9 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("	 * @noinstantiate This class is not intended to be instantiated by clients.\n");
 		s.append("	 * @noreference This class is not intended to be referenced by clients.\n");
 		s.append("	 */\n");
-		s.append("	public static class Parameters {\n");
+		s.append("	public static class ");
+		s.appendClassDefinition("Parameters");
+		s.append(" {\n");
 		appendInitializationStart("Parameters");
 		s.append("\n");
 		List<@NonNull ParameterTypes> sortedLists = new ArrayList<>(allLists);
@@ -808,7 +844,9 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("	 * @noinstantiate This class is not intended to be instantiated by clients.\n");
 		s.append("	 * @noreference This class is not intended to be referenced by clients.\n");
 		s.append("	 */\n");
-		s.append("	public static class Properties {\n");
+		s.append("	public static class ");
+		s.appendClassDefinition("Properties");
+		s.append(" {\n");
 		appendInitializationStart("Properties");
 		boolean isFirst = false;
 		for (org.eclipse.ocl.pivot.@NonNull Class pClass : activeClassesSortedByName) {
@@ -879,6 +917,22 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("	}\n");
 	}
 
+	protected void declareStaticProperties(@NonNull Iterable<@NonNull Property> staticProperties, @NonNull Map<@NonNull String, @NonNull FeatureBody> uri2body) {
+	//	s.append("\n");
+	//	s.append("	/**\n");
+	//	s.append("	 *	The static property initializer implementations.\n");
+	//	s.append("	 */");
+		List<@NonNull Property> sortedStaticProperties = Lists.newArrayList(staticProperties);
+		Collections.sort(sortedStaticProperties, NameUtil.NAMEABLE_COMPARATOR);
+		for (@NonNull Property staticProperty : sortedStaticProperties) {
+			String fragmentURI = String.valueOf(EcoreUtil.getURI(staticProperty).fragment());
+			FeatureBody body = uri2body.get(fragmentURI);
+			if (body != null) {
+				s.appendMarkup(("\t" + body.getBodyText()).replace("\n", "\n\t"));
+			}
+		}
+	}
+
 	protected void declareType(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		Class<?> typeClass = getEcoreExecutorClass(asClass);
 		EClassifier eClassifier = ClassUtil.nonNullState((EClassifier)asClass.getESObject());
@@ -923,7 +977,9 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("	/**\n");
 		s.append("	 *	The type descriptors for each type.\n");
 		s.append("	 */\n");
-		s.append("	public static class Types {\n");
+		s.append("	public static class ");
+		s.appendClassDefinition("Types");
+		s.append(" {\n");
 		appendInitializationStart("Types");
 		s.append("\n");
 		for (org.eclipse.ocl.pivot.@NonNull Class pClass : activeClassesSortedByName) {
@@ -965,7 +1021,9 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("	/**\n");
 		s.append("	 *	The fragments for all base types in depth order: OclAny first, OclSelf last.\n");
 		s.append("	 */\n");
-		s.append("	public static class TypeFragments {\n");
+		s.append("	public static class ");
+		s.appendClassDefinition("TypeFragments");
+		s.append(" {\n");
 		appendInitializationStart("TypeFragments");
 		for (org.eclipse.ocl.pivot.@NonNull Class asClass : activeClassesSortedByName) {
 			final Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull Integer> allSuperTypes = new HashMap<>();
@@ -1050,7 +1108,9 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("	/**\n");
 		s.append("	 *	The type parameters for templated types and operations.\n");
 		s.append("	 */\n");
-		s.append("	public static class TypeParameters {\n");
+		s.append("	public static class ");
+		s.appendClassDefinition("TypeParameters");
+		s.append(" {\n");
 		appendInitializationStart("TypeParameters");
 		for (org.eclipse.ocl.pivot.@NonNull Class pClass : activeClassesSortedByName) {
 			TemplateSignature templateSignature = pClass.getOwnedSignature();
@@ -1128,7 +1188,8 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		return uri;
 	}
 
-	public @NonNull String generateTablesClass(@Nullable String constants) {
+	public @NonNull String generateTablesClass(@Nullable String constants, @Nullable Iterable<@NonNull Operation> foreignOperations,
+			@Nullable Iterable<@NonNull Property> staticProperties, @Nullable Map<@NonNull String, @NonNull FeatureBody> uri2body) {
 		//		if (constants != null) {
 		//			constants = s.rewriteManagedImports(constants);
 		//		}
@@ -1213,6 +1274,17 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		declareFragmentProperties(paginatedFragmentProperties);
 		//		s.append("\n");
 		declareEnumerationLiterals();
+		if (uri2body != null) {
+			if (foreignOperations != null) {
+				declareForeignOperations(foreignOperations, uri2body);
+			}
+			if (staticProperties != null) {
+				declareStaticProperties(staticProperties, uri2body);
+			}
+		}
+		if (tablesPostamble != null) {
+			s.append(tablesPostamble);
+		}
 		s.append("\n");
 		declareInit();
 		s.append("\n");
@@ -1233,9 +1305,6 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("	}\n");
 		declareAllInstances();
 		declareImplicitOpposites();
-		if (tablesPostamble != null) {
-			s.append(tablesPostamble);
-		}
 		s.append("}\n");
 		return s.toString();
 	}

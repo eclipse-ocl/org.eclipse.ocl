@@ -29,16 +29,15 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcorePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElementId;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorCompositionProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorNavigationProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOperationCallExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOppositeProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOppositePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterator;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLetExp;
@@ -193,6 +192,14 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 		return getTreeContext().getExecutorVariable();
 	}
 
+/*	protected @Nullable CGValuedElement installExecutorVariable(@NonNull CGValuedElement cgValuedElement) {
+		CGValuedElement executorVariable = localContext.createExecutorVariable(getContextName(cgValuedElement));
+		if (executorVariable != null) {
+			cgValuedElement.getOwns().add(executorVariable);
+		}
+		return localContext = savedLocalContext;
+	} */
+
 	protected @NonNull CGVariable installIdResolverVariable(@NonNull CGValuedElement cgElement) {
 		return getTreeContext().getIdResolverVariable();
 	}
@@ -340,22 +347,18 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 	}
 
 	@Override
-	public @Nullable Object visitCGExecutorCompositionProperty(@NonNull CGExecutorCompositionProperty cgExecutorProperty) {
-		Property asProperty = (Property) cgExecutorProperty.getAst();
-		if ((asProperty != null) && asProperty.isIsComposite()) {
-			assert cgExecutorProperty.getTypeId() == analyzer.getTypeId(JavaConstants.UNBOXED_COMPOSITION_PROPERTY_TYPE_ID);	// XXX  debugging evolution
-		}
-		return super.visitCGExecutorCompositionProperty(cgExecutorProperty);
-	}
-
-	@Override
 	public @Nullable Object visitCGExecutorNavigationProperty(@NonNull CGExecutorNavigationProperty cgExecutorProperty) {
-		assert cgExecutorProperty.getTypeId() == analyzer.getTypeId(JavaConstants.UNBOXED_EXPLICIT_NAVIGATION_PROPERTY_TYPE_ID);	// XXX  debugging evolution
+		Property asProperty = CGUtil.getAST(cgExecutorProperty);
+		if (asProperty.isIsStatic()) {
+			TypeId asOwningTypeId = PivotUtil.getOwningClass(asProperty).getTypeId();
+			addOwnedTypeId(cgExecutorProperty, asOwningTypeId);
+		}
 		return super.visitCGExecutorNavigationProperty(cgExecutorProperty);
 	}
 
 	@Override
 	public @Nullable Object visitCGExecutorOperation(@NonNull CGExecutorOperation cgExecutorOperation) {
+		cgExecutorOperation.setTypeId(analyzer.getTypeId(JavaConstants.EXECUTOR_OPERATION_TYPE_ID));
 		installIdResolverVariable(cgExecutorOperation);
 		CGElementId cgOperationId = cgExecutorOperation.getUnderlyingOperationId();
 		if (cgOperationId != null) {
@@ -366,18 +369,11 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 
 	@Override
 	public @Nullable Object visitCGExecutorOperationCallExp(@NonNull CGExecutorOperationCallExp cgExecutorOperationCallExp) {
-		//		Operation referredOperation = cgExecutorOperationCallExp.getReferredOperation();
-		//		OperationId operationId = referredOperation.getOperationId();
-		//		CGExecutorOperation cgExecutorOperation = analyzer.getExecutorOperation(operationId);
-		//		cgExecutorOperation.accept(this);
-		//		localContext.getOuterContext().addLocalVariable(cgExecutorOperation);
+		CGExecutorOperation cgExecutorOperation = cgExecutorOperationCallExp.getExecutorOperation();
+		if (cgExecutorOperation != null) {		// FIXME this is contained so ignored by super
+			cgExecutorOperation.accept(this);
+		}
 		return super.visitCGExecutorOperationCallExp(cgExecutorOperationCallExp);
-	}
-
-	@Override
-	public @Nullable Object visitCGExecutorOppositeProperty(@NonNull CGExecutorOppositeProperty cgExecutorProperty) {
-		assert cgExecutorProperty.getTypeId() == analyzer.getTypeId(JavaConstants.UNBOXED_OPPOSITE_NAVIGATION_PROPERTY_TYPE_ID);	// XXX  debugging evolution
-		return super.visitCGExecutorOppositeProperty(cgExecutorProperty);
 	}
 
 	@Override
@@ -430,7 +426,6 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 		if (cgTypeId != null) {
 			cgTypeId.accept(this);
 		}
-		assert cgExecutorType.getTypeId() == analyzer.getTypeId(JavaConstants.CLASS_TYPE_ID);	// XXX  debugging evolution
 		return super.visitCGExecutorType(cgExecutorType);
 	}
 
@@ -593,13 +588,18 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 	public @Nullable Object visitCGShadowPart(@NonNull CGShadowPart cgShadowPart) {
 		CGExecutorShadowPart cgExecutorConstructorPart = cgShadowPart.getExecutorPart();
 		cgExecutorConstructorPart.accept(this);
-		assert cgExecutorConstructorPart.getTypeId() == analyzer.getTypeId(JavaConstants.PROPERTY_TYPE_ID);	// XXX  debugging evolution
 		//		localContext.addLocalVariable(cgExecutorConstructorPart);
 		installIdResolverVariable(cgExecutorConstructorPart);
 		cgShadowPart.getOwns().add(cgExecutorConstructorPart);
 		cgShadowPart.getDependsOn().add(cgExecutorConstructorPart);
 		//		cgShadowPart.getDependsOn().add(cgShadowPart.getShadowExp());
 		return super.visitCGShadowPart(cgShadowPart);
+	}
+
+	@Override
+	public @Nullable Object visitCGForeignPropertyCallExp(@NonNull CGForeignPropertyCallExp cgForeignPropertyCallExp) {
+		installExecutorVariable(cgForeignPropertyCallExp);
+		return super.visitCGForeignPropertyCallExp(cgForeignPropertyCallExp);
 	}
 
 	@Override

@@ -28,6 +28,7 @@ import org.eclipse.emf.codegen.ecore.genmodel.GenFeature;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -48,6 +49,7 @@ import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.MapType;
+import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Package;
@@ -278,6 +280,20 @@ public class OCLinEcoreTablesUtils
 			s.append(AbstractGenModelHelper.encodeName(namedElement));
 		}
 
+		public void appendAndEncodeQualifiedName(@NonNull NamedElement namedElement) {
+			EObject eContainer = namedElement.eContainer();
+			if ((eContainer instanceof NamedElement) && !(eContainer instanceof Model)) {
+				appendAndEncodeQualifiedName((NamedElement)eContainer);
+				append("_");
+			}
+			appendAndEncodeName(namedElement);
+		}
+
+		public void appendClassDefinition(@NonNull String className) {
+			s.append(className);
+			importNameManager.reserveLocalName(className);
+		}
+
 		@Deprecated /* @deprecated use isRequired argument */
 		public void appendClassReference(@NonNull Class<?> referencedClass) {
 			appendClassReference(null, referencedClass);
@@ -306,6 +322,77 @@ public class OCLinEcoreTablesUtils
 			}
 			//	addClassReference(key, referencedClass); */
 			s.append(addImport(isRequired, referencedClass));
+		}
+
+		/**
+		 * Append text that may contain IMPORTS_PREFIX/SUFFIX and IMPORTS_NESTED_ANNOTATION_PREFOX/SUFFIX
+		 */
+		public void appendMarkup(@NonNull String markedUpText) {
+			int iMax = markedUpText.length();
+			int iStart =  0;
+			while (iStart < iMax) {
+				int iPrefix = markedUpText.indexOf(ImportUtils.IMPORTS_PREFIX, iStart);
+				if (iPrefix < 0) {
+					break;
+				}
+				int iSuffix = markedUpText.indexOf(ImportUtils.IMPORTS_SUFFIX, iPrefix);
+				if (iSuffix < 0) {
+					break;
+				}
+				append(markedUpText.substring(iStart, iPrefix));
+				int iPrefixEnd = iPrefix + ImportUtils.IMPORTS_PREFIX.length();
+				int iNestedPrefix = markedUpText.indexOf(ImportUtils.IMPORTS_NESTED_ANNOTATION_PREFIX, iPrefix);
+				if ((iPrefix < iNestedPrefix && (iNestedPrefix < iSuffix))) {
+					int iNestedPrefixEnd = iNestedPrefix + ImportUtils.IMPORTS_NESTED_ANNOTATION_PREFIX.length();
+					int iNestedSuffix = markedUpText.indexOf(ImportUtils.IMPORTS_NESTED_ANNOTATION_SUFFIX, iNestedPrefix);
+					int iNestedSuffixEnd = iNestedSuffix + ImportUtils.IMPORTS_NESTED_ANNOTATION_SUFFIX.length();
+					iSuffix = markedUpText.indexOf(ImportUtils.IMPORTS_SUFFIX, iNestedSuffixEnd);
+					assert (iNestedPrefix <= iNestedSuffix) && (iNestedSuffix <= iSuffix);
+					String outerQualifier = markedUpText.substring(iPrefixEnd, iNestedPrefix);
+					String outerStem = markedUpText.substring(iNestedSuffixEnd, iSuffix);
+					String longOuterName = outerQualifier + outerStem;
+					String longInnerName = markedUpText.substring(iNestedPrefixEnd, iNestedSuffix);
+					String shortOuterName = importNameManager.addImport(longOuterName);
+					String shortInnerName = importNameManager.addImport(longInnerName);
+					if (shortOuterName != null) {
+						append("@");
+						if (shortInnerName != null) {
+							append(shortInnerName);
+						}
+						else {
+							append(longInnerName);
+						}
+						append(" ");
+						append(shortOuterName);
+					}
+					else {
+						append(outerQualifier);
+						append("@");
+						if (shortInnerName != null) {
+							append(shortInnerName);
+						}
+						else {
+							append(longInnerName);
+						}
+						append(" ");
+						append(outerStem);
+					}
+
+				}
+				else {
+					String longName = markedUpText.substring(iPrefixEnd, iSuffix);
+				//	importNameManager.addImport(longName);
+					String shortName = importNameManager.addImport(longName);
+					if (shortName != null) {
+						append(shortName);
+					}
+					else {
+						append(longName);
+					}
+				}
+				iStart = iSuffix + ImportUtils.IMPORTS_SUFFIX.length();
+			}
+			append(markedUpText.substring(iStart, iMax));
 		}
 
 		protected void appendString(@NonNull String string) {
@@ -355,7 +442,7 @@ public class OCLinEcoreTablesUtils
 		 * sessions, an import such as &lt;%x.y.@p.q z%&gt; is chnaged to x.y.@&lt;%p.q%&gt; z so that the @p.q gets handler by
 		 * the Ecore ImportmManager. If importManager is non-null both imports are shortened.
 		 */
-		@Deprecated /* no longer used; use ImportNameManager */
+		@Deprecated /* no longer used; use ImportNameManager */  // FIXME importNameManager not accessible
 		public @NonNull String rewriteManagedImports(@NonNull String source)
 		{
 			return ImportUtils.resolveImports(source, importNameManager.getLong2ShortImportNames(), true);

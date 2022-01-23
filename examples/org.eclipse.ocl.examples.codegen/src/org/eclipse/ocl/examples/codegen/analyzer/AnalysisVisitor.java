@@ -310,9 +310,10 @@ public class AnalysisVisitor extends AbstractExtendingCGModelVisitor<@Nullable O
 	@Override
 	public @Nullable Object visitCGOperationCallExp(@NonNull CGOperationCallExp cgOperationCallExp) {
 		super.visitCGOperationCallExp(cgOperationCallExp);
-		CGValuedElement cgSource = context.getExpression(cgOperationCallExp.getSource());
+		CGValuedElement asSource = cgOperationCallExp.getSource();
+		CGValuedElement cgSource = asSource != null ? context.getExpression(asSource) : null;
 		if (!cgOperationCallExp.isValidating()) {
-			CGInvalid cgInvalidValue = cgSource.getInvalidValue();
+			CGInvalid cgInvalidValue = cgSource != null ? cgSource.getInvalidValue() : null;
 			if (cgInvalidValue == null) {
 				for (@SuppressWarnings("null")@NonNull CGValuedElement cgArgument : cgOperationCallExp.getArguments()) {
 					cgInvalidValue = cgArgument.getInvalidValue();
@@ -357,13 +358,19 @@ public class AnalysisVisitor extends AbstractExtendingCGModelVisitor<@Nullable O
 		//		Property referredProperty = ClassUtil.nonNullModel(element.getReferredProperty());
 		//		thisAnalysis.initHashSource(referredProperty);
 		//		context.addNamedElement(referredProperty);
-		CGValuedElement cgSource = context.getExpression(cgPropertyCallExp.getSource());
-		CGInvalid cgInvalidValue = cgSource.getInvalidValue();
-		if (cgInvalidValue != null) {
-			context.setConstant(cgPropertyCallExp, cgInvalidValue);
+		CGValuedElement source = cgPropertyCallExp.getSource();
+		if (source == null) {		// FIXME CGNative/ForeignPropertyCallExp
+			assert cgPropertyCallExp.getReferredProperty().isIsStatic();
 		}
-		else if (cgSource.isNull()) {
-			context.setConstant(cgPropertyCallExp, context.getInvalid());
+		else {
+			CGValuedElement cgSource = context.getExpression(source);
+			CGInvalid cgInvalidValue = cgSource.getInvalidValue();
+			if (cgInvalidValue != null) {
+				context.setConstant(cgPropertyCallExp, cgInvalidValue);
+			}
+			else if (cgSource.isNull()) {
+				context.setConstant(cgPropertyCallExp, context.getInvalid());
+			}
 		}
 		return null;
 	}

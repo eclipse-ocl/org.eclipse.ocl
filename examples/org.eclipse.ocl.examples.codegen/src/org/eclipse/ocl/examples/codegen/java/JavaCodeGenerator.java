@@ -63,6 +63,7 @@ import org.eclipse.ocl.examples.codegen.java.types.BoxedDescriptor;
 import org.eclipse.ocl.examples.codegen.java.types.EcoreDescriptor;
 import org.eclipse.ocl.examples.codegen.java.types.Id2BoxedDescriptorVisitor;
 import org.eclipse.ocl.examples.codegen.java.types.UnboxedDescriptor;
+import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreTablesUtils.CodeGenString;
 import org.eclipse.ocl.examples.codegen.utilities.AbstractCGModelResourceFactory;
 import org.eclipse.ocl.examples.codegen.utilities.CGModelResource;
 import org.eclipse.ocl.examples.codegen.utilities.CGModelResourceFactory;
@@ -321,6 +322,13 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		return CG_RESOURCE_FACTORY;
 	}
 
+	public @NonNull String getFlattenedClassName(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		CodeGenString s = new CodeGenString(environmentFactory.getMetamodelManager(), false);
+		s.append(JavaConstants.FLATTENED_CLASS_PREFIX);
+		s.appendAndEncodeQualifiedName(asClass);
+		return s.toString();
+	}
+
 	@Override
 	public @Nullable String getConstantsClass() {
 		return null;
@@ -366,6 +374,10 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 			id2EClassVisitor = id2EClassVisitor2 = createId2EClassVisitor();
 		}
 		return id2EClassVisitor2;
+	}
+
+	public @NonNull ImportNameManager getImportNameManager() {
+		return getGlobalContext().getImportNameManager();
 	}
 
 	/**

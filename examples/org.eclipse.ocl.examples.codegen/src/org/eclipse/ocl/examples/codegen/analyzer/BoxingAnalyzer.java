@@ -35,6 +35,8 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOppositePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignOperationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGGuardExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIfExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInvalid;
@@ -49,6 +51,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNativePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
@@ -404,6 +407,21 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	}
 
 	@Override
+	public @Nullable Object visitCGForeignOperationCallExp(@NonNull CGForeignOperationCallExp cgElement) {
+		super.visitCGForeignOperationCallExp(cgElement);;
+		Operation referredOperation = cgElement.getReferredOperation();
+		if (!referredOperation.isIsStatic()) {
+			rewriteAsGuarded(cgElement.getSource(), false, "source for '" + referredOperation + "'");
+		}
+		return null;
+	}
+
+	@Override
+	public @Nullable Object visitCGForeignPropertyCallExp(@NonNull CGForeignPropertyCallExp cgElement) {
+		return null;
+	}
+
+	@Override
 	public @Nullable Object visitCGIfExp(@NonNull CGIfExp cgElement) {
 		super.visitCGIfExp(cgElement);
 		rewriteAsGuarded(cgElement.getCondition(), false, "if condition");
@@ -561,6 +579,11 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 			rewriteAsUnboxed(cgArguments.get(i));
 		}
 		return null;
+	}
+
+	@Override
+	public @Nullable Object visitCGNativePropertyCallExp(@NonNull CGNativePropertyCallExp cgElement) {
+		return super.visitCGNativePropertyCallExp(cgElement);
 	}
 
 	@Override

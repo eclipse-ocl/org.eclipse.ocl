@@ -98,8 +98,10 @@ public class DependencyVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 				if (dependencies == null) {
 					dependencies = new HashSet<>();
 					directDependencies.put(cgPrimaryElement, dependencies);
-					for (@NonNull CGValuedElement cgDependent : new ArrayList<>(dependsOns)) {
-						addDependency(cgPrimaryElement, cgDependent);
+					if (!dependsOns.isEmpty()) {
+						for (@NonNull CGValuedElement cgDependent : new ArrayList<>(dependsOns)) {
+							addDependency(cgPrimaryElement, cgDependent);
+						}
 					}
 					for (@NonNull EStructuralFeature eFeature : ClassUtil.nullFree(cgPrimaryElement.eClass().getEAllStructuralFeatures())) {
 						if (eFeature instanceof EReference) {

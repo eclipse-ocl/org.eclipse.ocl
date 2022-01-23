@@ -23,6 +23,7 @@ import org.eclipse.emf.codegen.ecore.genmodel.GenParameter;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
@@ -38,6 +39,8 @@ import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VoidType;
+import org.eclipse.ocl.pivot.ids.IdManager;
+import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.AbstractBinaryOperation;
@@ -462,6 +465,34 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 		}
 		return null;
 	} */
+
+	@Override
+	public @NonNull GenOperation getGenOperation(@NonNull EOperation eOperation) throws GenModelException {
+		EClass eClass = eOperation.getEContainingClass();
+		if (eClass != null) {
+			GenClass genClass = getGenClass(eClass);
+			for (GenOperation genOperation : genClass.getAllGenOperations()) {
+				EOperation genEcoreOperation = genOperation.getEcoreOperation();
+				if (eOperation == genEcoreOperation) {
+					return genOperation;
+				}
+			}
+			ParametersId parametersId = IdManager.getParametersId(eOperation);
+			String name = eOperation.getName();			// GenerateOCLstdlib has metamodel schizophrenia- Bug 571494#11
+			for (GenOperation genOperation : genClass.getAllGenOperations()) {
+				EOperation genEcoreOperation = genOperation.getEcoreOperation();
+				String operationName = genEcoreOperation.getName();
+				if (name.equals(operationName)) {
+					ParametersId genParametersId = IdManager.getParametersId(genEcoreOperation);
+					if (parametersId == genParametersId) {			// Ignore Class - genClass re-uses ancestors
+						return genOperation;
+					}
+					return genOperation;
+				}
+			}
+		}
+		throw new GenModelException("No GenOperation for " + eOperation);
+	}
 
 	@Override
 	public @NonNull GenOperation getGenOperation(@NonNull Operation operation) throws GenModelException {
