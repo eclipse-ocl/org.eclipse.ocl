@@ -4521,6 +4521,16 @@ extends EPackage
 	EOperation getProperty__ValidateCompatibleDefaultExpression__DiagnosticChain_Map();
 
 	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.Property#validateStaticPropertyHasInitializer(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Static Property Has Initializer</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate Static Property Has Initializer</em>' operation.
+	 * @see org.eclipse.ocl.pivot.Property#validateStaticPropertyHasInitializer(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @generated
+	 */
+	EOperation getProperty__ValidateStaticPropertyHasInitializer__DiagnosticChain_Map();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.TypedElement <em>Typed Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -9472,6 +9482,14 @@ extends EPackage
 		 * @generated
 		 */
 		EOperation PROPERTY___VALIDATE_COMPATIBLE_DEFAULT_EXPRESSION__DIAGNOSTICCHAIN_MAP = eINSTANCE.getProperty__ValidateCompatibleDefaultExpression__DiagnosticChain_Map();
+
+		/**
+		 * The meta object literal for the '<em><b>Validate Static Property Has Initializer</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation PROPERTY___VALIDATE_STATIC_PROPERTY_HAS_INITIALIZER__DIAGNOSTICCHAIN_MAP = eINSTANCE.getProperty__ValidateStaticPropertyHasInitializer__DiagnosticChain_Map();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.TypedElementImpl <em>Typed Element</em>}' class.

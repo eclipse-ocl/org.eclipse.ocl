@@ -73,9 +73,8 @@ public abstract class AbstractExecutorProperty extends AbstractExecutorFeature i
 	}
 
 	@Override
-	@NonNull
-	public PropertyId getPropertyId() {
-		throw new UnsupportedOperationException();
+	public @NonNull PropertyId getPropertyId() {
+		return getTypeId().getPropertyId(name);
 	}
 
 	@Override
@@ -238,6 +237,11 @@ public abstract class AbstractExecutorProperty extends AbstractExecutorFeature i
 
 	@Override
 	public boolean validateCompatibleDefaultExpression(DiagnosticChain diagnostics, Map<Object, Object> context) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean validateStaticPropertyHasInitializer(DiagnosticChain diagnostics, Map<Object, Object> context) {
 		throw new UnsupportedOperationException();
 	}
 }
