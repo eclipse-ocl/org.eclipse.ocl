@@ -16,14 +16,15 @@ import java.util.Map;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.internal.library.executor.ReflectiveFragment;
-import org.eclipse.ocl.pivot.library.LibraryFeature;
+import org.eclipse.ocl.pivot.library.LibraryIterationOrOperation;
+import org.eclipse.ocl.pivot.library.LibraryProperty;
 
 public class EcoreReflectiveFragment extends ReflectiveFragment
 {
@@ -39,8 +40,22 @@ public class EcoreReflectiveFragment extends ReflectiveFragment
 	}
 
 	@Override
-	public @NonNull Iterable<@NonNull ? extends Property> getLocalProperties() {
-		Map<@NonNull Property, @NonNull LibraryFeature> propertyMap2 = propertyMap;
+	public @NonNull Iterable<@NonNull Operation> getLocalOperations() {
+		Map<@NonNull Operation, @NonNull LibraryIterationOrOperation> operationMap2 = operationMap;
+		if (operationMap2 == null) {
+			synchronized (this) {
+				operationMap2 = operationMap;
+				if (operationMap2 == null) {
+					operationMap = operationMap2 = initOperations();		// Optimize to reuse single super map if no local ops
+				}
+			}
+		}
+		return operationMap2.keySet();
+	}
+
+	@Override
+	public @NonNull Iterable<@NonNull Property> getLocalProperties() {
+		Map<@NonNull Property, @NonNull LibraryProperty> propertyMap2 = propertyMap;
 		if (propertyMap2 == null) {
 			synchronized (this) {
 				propertyMap2 = propertyMap;
@@ -52,13 +67,22 @@ public class EcoreReflectiveFragment extends ReflectiveFragment
 		return propertyMap2.keySet();
 	}
 
-	@Override
-	public @Nullable Operation getLocalOperation(@NonNull Operation baseOperation) {
-		throw new UnsupportedOperationException();		// FIXME
+	/**
+	 * @since 1.18
+	 */
+	protected @NonNull Map<@NonNull Operation, @NonNull LibraryIterationOrOperation> initOperations() {
+		Map<@NonNull Operation, @NonNull LibraryIterationOrOperation> map = new HashMap<>();
+		List<EOperation> eOperations = ((EClass) eClassifier).getEOperations();
+		for (int i = 0; i < eOperations.size(); i++) {
+			@SuppressWarnings("null")@NonNull EOperation eOperation = eOperations.get(i);
+			EcoreExecutorOperation operationAndImplementation = new EcoreExecutorOperation(eOperation, (EcoreReflectiveType)getDerivedInheritance(), i);
+			map.put(operationAndImplementation, operationAndImplementation);
+		}
+		return map;
 	}
 
-	protected @NonNull Map<@NonNull Property, @NonNull LibraryFeature> initProperties() {
-		Map<@NonNull Property, @NonNull LibraryFeature> map = new HashMap<>();
+	protected @NonNull Map<@NonNull Property, @NonNull LibraryProperty> initProperties() {
+		Map<@NonNull Property, @NonNull LibraryProperty> map = new HashMap<>();
 		List<EStructuralFeature> eStructuralFeatures = ((EClass) eClassifier).getEStructuralFeatures();
 		for (int i = 0; i < eStructuralFeatures.size(); i++) {
 			@SuppressWarnings("null")@NonNull EStructuralFeature eFeature = eStructuralFeatures.get(i);

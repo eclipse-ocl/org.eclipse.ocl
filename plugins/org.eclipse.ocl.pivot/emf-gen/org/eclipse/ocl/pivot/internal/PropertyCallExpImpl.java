@@ -557,15 +557,15 @@ implements PropertyCallExp {
 						/*@Caught*/ @Nullable Object CAUGHT_safe_isStatic_source;
 						try {
 							final /*@NonInvalid*/ @Nullable Property referredProperty = this.getReferredProperty();
-							final /*@NonInvalid*/ @NonNull Object isStatic = referredProperty == null;
+							final /*@NonInvalid*/ @NonNull Object isStatic_0 = referredProperty == null;
 							/*@Thrown*/ @Nullable Boolean safe_isStatic_source;
-							if (isStatic == Boolean.TRUE) {
+							if (isStatic_0 == Boolean.TRUE) {
 								safe_isStatic_source = null;
 							}
 							else {
 								assert referredProperty != null;
-								final /*@Thrown*/ boolean isStatic_0 = referredProperty.isIsStatic();
-								safe_isStatic_source = isStatic_0;
+								final /*@Thrown*/ boolean isStatic = referredProperty.isIsStatic();
+								safe_isStatic_source = isStatic;
 							}
 							CAUGHT_safe_isStatic_source = safe_isStatic_source;
 						}
@@ -600,15 +600,15 @@ implements PropertyCallExp {
 						/*@Caught*/ @Nullable Object CAUGHT_safe_conformsTo_source;
 						try {
 							final /*@NonInvalid*/ @Nullable OCLExpression ownedSource = this.getOwnedSource();
-							final /*@NonInvalid*/ @NonNull Object type_0 = ownedSource == null;
+							final /*@NonInvalid*/ @NonNull Object type = ownedSource == null;
 							/*@Thrown*/ @Nullable Type safe_type_source;
-							if (type_0 == Boolean.TRUE) {
+							if (type == Boolean.TRUE) {
 								safe_type_source = null;
 							}
 							else {
 								assert ownedSource != null;
-								final /*@Thrown*/ @Nullable Type type = ownedSource.getType();
-								safe_type_source = type;
+								final /*@Thrown*/ @Nullable Type type_0 = ownedSource.getType();
+								safe_type_source = type_0;
 							}
 							/*@Caught*/ @Nullable Object CAUGHT_safe_type_source;
 							try {
@@ -617,9 +617,9 @@ implements PropertyCallExp {
 							catch (Exception THROWN_safe_type_source) {
 								CAUGHT_safe_type_source = ValueUtil.createInvalidValue(THROWN_safe_type_source);
 							}
-							final /*@NonInvalid*/ @NonNull Object conformsTo_0 = CAUGHT_safe_type_source == null;
+							final /*@NonInvalid*/ @NonNull Object conformsTo = CAUGHT_safe_type_source == null;
 							/*@Thrown*/ @Nullable Boolean safe_conformsTo_source;
-							if (conformsTo_0 == Boolean.TRUE) {
+							if (conformsTo == Boolean.TRUE) {
 								safe_conformsTo_source = null;
 							}
 							else {
@@ -628,8 +628,8 @@ implements PropertyCallExp {
 								}
 								@SuppressWarnings("null")
 								final /*@NonInvalid*/ @NonNull Type getSpecializedReferredPropertyOwningType = this.getSpecializedReferredPropertyOwningType();
-								final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, safe_type_source, getSpecializedReferredPropertyOwningType).booleanValue();
-								safe_conformsTo_source = conformsTo;
+								final /*@Thrown*/ boolean conformsTo_0 = OclTypeConformsToOperation.INSTANCE.evaluate(executor, safe_type_source, getSpecializedReferredPropertyOwningType).booleanValue();
+								safe_conformsTo_source = conformsTo_0;
 							}
 							CAUGHT_safe_conformsTo_source = safe_conformsTo_source;
 						}
@@ -822,8 +822,8 @@ implements PropertyCallExp {
 				try {
 					/*@Caught*/ @Nullable Object CAUGHT_and;
 					try {
-						final /*@NonInvalid*/ @Nullable OCLExpression ownedSource = this.getOwnedSource();
-						final /*@NonInvalid*/ boolean ne = ownedSource != null;
+						final /*@NonInvalid*/ @Nullable OCLExpression ownedSource_0 = this.getOwnedSource();
+						final /*@NonInvalid*/ boolean ne = ownedSource_0 != null;
 						final /*@Thrown*/ @Nullable Boolean and;
 						if (!ne) {
 							and = ValueUtil.FALSE_VALUE;
@@ -866,11 +866,11 @@ implements PropertyCallExp {
 					else {
 						/*@Caught*/ @NonNull Object CAUGHT_isNonNull;
 						try {
-							final /*@NonInvalid*/ @Nullable OCLExpression ownedSource_0 = this.getOwnedSource();
-							if (ownedSource_0 == null) {
+							final /*@NonInvalid*/ @Nullable OCLExpression ownedSource = this.getOwnedSource();
+							if (ownedSource == null) {
 								throw new InvalidValueException("Null source for \'pivot::OCLExpression::isNonNull() : Boolean[1]\'");
 							}
-							final /*@Thrown*/ boolean isNonNull = ownedSource_0.isNonNull();
+							final /*@Thrown*/ boolean isNonNull = ownedSource.isNonNull();
 							CAUGHT_isNonNull = isNonNull;
 						}
 						catch (Exception THROWN_isNonNull) {

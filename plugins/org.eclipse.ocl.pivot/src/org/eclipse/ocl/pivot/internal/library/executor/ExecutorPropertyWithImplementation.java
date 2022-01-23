@@ -17,7 +17,7 @@ import org.eclipse.ocl.pivot.library.LibraryProperty;
 public class ExecutorPropertyWithImplementation extends ExecutorProperty
 {
 	protected final @NonNull LibraryProperty implementation;
-	
+
 	public ExecutorPropertyWithImplementation(@NonNull  String name, @NonNull Type executorType, int propertyIndex, @NonNull LibraryProperty implementation) {
 		super(name, executorType, propertyIndex);
 		this.implementation = implementation;

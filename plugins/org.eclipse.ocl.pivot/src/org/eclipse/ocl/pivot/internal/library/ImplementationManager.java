@@ -118,6 +118,10 @@ public class ImplementationManager
 				return UnsupportedOperation.INSTANCE;
 			}
 		}
+		if (property.isIsStatic()) {
+			StaticProperty staticProperty = StaticProperty.createStaticProperty(environmentFactory, property);
+			return staticProperty != null ? staticProperty : UnsupportedOperation.INSTANCE;
+		}
 		Type type = property.getType();
 		if ((type instanceof Stereotype) && property.getName().startsWith(DerivedConstants.STEREOTYPE_EXTENSION_PREFIX)) {
 			return technology.createExtensionPropertyImplementation(environmentFactory, property);
@@ -172,9 +176,6 @@ public class ImplementationManager
 			TuplePartId tuplePartId = tupleType.getTypeId().getPartId(name);
 			assert tuplePartId != null;
 			return new TuplePartProperty(tuplePartId);
-		}
-		if (property.isIsStatic()) {
-			return new StaticProperty(property);
 		}
 		if ((property.getOwningClass() instanceof ElementExtension)			// direct access to extension property
 				|| (property.getOwningClass() instanceof Stereotype)) {			// indirect access from a Stereotype operation

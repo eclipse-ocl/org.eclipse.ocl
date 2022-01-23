@@ -14,6 +14,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -46,7 +47,9 @@ public class ClassContext extends AbstractParserContext
 	@Override
 	public void initialize(@NonNull Base2ASConversion conversion, @NonNull ExpressionInOCL expression) {
 		super.initialize(conversion, expression);
-		conversion.getHelper().setContextVariable(expression, selfName, classContext, instanceContext);
+		if ( !(expression.eContainer() instanceof Feature) || !((Feature)expression.eContainer()).isIsStatic()) {
+			conversion.getHelper().setContextVariable(expression, selfName, classContext, instanceContext);
+		}
 	}
 
 	/**
