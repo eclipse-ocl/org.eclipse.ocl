@@ -33,6 +33,7 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -131,6 +132,7 @@ import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.messages.StatusCodes.Severity;
 import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.resource.CSResource;
+import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.Unlimited;
@@ -2187,6 +2189,14 @@ public class PivotUtil
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	public static boolean isStatic(@NonNull ETypedElement eTypedElement) {
+		String eAnnotation = EcoreUtil.getAnnotation(eTypedElement, DerivedConstants.UML2_UML_PACKAGE_2_0_NS_URI, "static");
+		return Boolean.parseBoolean(eAnnotation);
 	}
 
 	/**
