@@ -17,7 +17,7 @@ package org.eclipse.ocl.examples.codegen.cgmodel;
  * <!-- end-user-doc -->
  *
  * <!-- begin-model-doc -->
- * An operation that must be called using the LibraryOperation calling convention.
+ * An operation that must be called using the LibraryOperation calling convention. Source argument and result values are boxed.
  * <!-- end-model-doc -->
  *
  *

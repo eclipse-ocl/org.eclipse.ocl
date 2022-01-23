@@ -52,6 +52,8 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGFinalVariable;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignOperationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGGuardExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIfExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInteger;
@@ -187,49 +189,51 @@ public class CGModelFactoryImpl extends EFactoryImpl implements CGModelFactory {
 			case 34: return createCGExecutorShadowPart();
 			case 35: return createCGExecutorType();
 			case 36: return createCGFinalVariable();
-			case 37: return createCGGuardExp();
-			case 38: return createCGIfExp();
-			case 39: return createCGInteger();
-			case 40: return createCGInvalid();
-			case 41: return createCGIsEqualExp();
-			case 42: return createCGIsEqual2Exp();
-			case 43: return createCGIsInvalidExp();
-			case 44: return createCGIsKindOfExp();
-			case 45: return createCGIsUndefinedExp();
-			case 47: return createCGIterator();
-			case 48: return createCGLetExp();
-			case 49: return createCGLibraryIterateCallExp();
-			case 50: return createCGLibraryIterationCallExp();
-			case 51: return createCGLibraryOperation();
-			case 52: return createCGLibraryOperationCallExp();
-			case 53: return createCGLibraryPropertyCallExp();
-			case 54: return createCGLocalVariable();
-			case 55: return createCGMapExp();
-			case 56: return createCGMapPart();
-			case 57: return createCGModel();
-			case 59: return createCGNativeOperation();
-			case 60: return createCGNativeOperationCallExp();
-			case 61: return createCGNativeProperty();
-			case 62: return createCGNativePropertyCallExp();
-			case 64: return createCGNull();
-			case 69: return createCGPackage();
-			case 70: return createCGParameter();
-			case 71: return createCGProperty();
-			case 73: return createCGReal();
-			case 74: return createCGSettableVariable();
-			case 76: return createCGShadowPart();
-			case 77: return createCGString();
-			case 78: return createCGTemplateParameterExp();
-			case 79: return createCGText();
-			case 80: return createCGThrowExp();
-			case 81: return createCGTupleExp();
-			case 82: return createCGTuplePart();
-			case 83: return createCGTuplePartCallExp();
-			case 84: return createCGTypeId();
-			case 85: return createCGTypeExp();
-			case 87: return createCGUnboxExp();
-			case 88: return createCGUnlimited();
-			case 91: return createCGVariableExp();
+			case 37: return createCGForeignOperationCallExp();
+			case 38: return createCGForeignPropertyCallExp();
+			case 39: return createCGGuardExp();
+			case 40: return createCGIfExp();
+			case 41: return createCGInteger();
+			case 42: return createCGInvalid();
+			case 43: return createCGIsEqualExp();
+			case 44: return createCGIsEqual2Exp();
+			case 45: return createCGIsInvalidExp();
+			case 46: return createCGIsKindOfExp();
+			case 47: return createCGIsUndefinedExp();
+			case 49: return createCGIterator();
+			case 50: return createCGLetExp();
+			case 51: return createCGLibraryIterateCallExp();
+			case 52: return createCGLibraryIterationCallExp();
+			case 53: return createCGLibraryOperation();
+			case 54: return createCGLibraryOperationCallExp();
+			case 55: return createCGLibraryPropertyCallExp();
+			case 56: return createCGLocalVariable();
+			case 57: return createCGMapExp();
+			case 58: return createCGMapPart();
+			case 59: return createCGModel();
+			case 61: return createCGNativeOperation();
+			case 62: return createCGNativeOperationCallExp();
+			case 63: return createCGNativeProperty();
+			case 64: return createCGNativePropertyCallExp();
+			case 66: return createCGNull();
+			case 71: return createCGPackage();
+			case 72: return createCGParameter();
+			case 73: return createCGProperty();
+			case 75: return createCGReal();
+			case 76: return createCGSettableVariable();
+			case 78: return createCGShadowPart();
+			case 79: return createCGString();
+			case 80: return createCGTemplateParameterExp();
+			case 81: return createCGText();
+			case 82: return createCGThrowExp();
+			case 83: return createCGTupleExp();
+			case 84: return createCGTuplePart();
+			case 85: return createCGTuplePartCallExp();
+			case 86: return createCGTypeId();
+			case 87: return createCGTypeExp();
+			case 89: return createCGUnboxExp();
+			case 90: return createCGUnlimited();
+			case 93: return createCGVariableExp();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -243,37 +247,37 @@ public class CGModelFactoryImpl extends EFactoryImpl implements CGModelFactory {
 	@Override
 	public Object createFromString(EDataType eDataType, String initialValue) {
 		switch (eDataType.getClassifierID()) {
-			case 93:
-				return createElementFromString(eDataType, initialValue);
-			case 94:
-				return createElementIdFromString(eDataType, initialValue);
 			case 95:
-				return createEnumerationLiteralIdFromString(eDataType, initialValue);
+				return createElementFromString(eDataType, initialValue);
 			case 96:
-				return createIterationFromString(eDataType, initialValue);
+				return createElementIdFromString(eDataType, initialValue);
 			case 97:
-				return createFieldFromString(eDataType, initialValue);
+				return createEnumerationLiteralIdFromString(eDataType, initialValue);
 			case 98:
-				return createLibraryIterationFromString(eDataType, initialValue);
+				return createIterationFromString(eDataType, initialValue);
 			case 99:
-				return createLibraryOperationFromString(eDataType, initialValue);
+				return createFieldFromString(eDataType, initialValue);
 			case 100:
-				return createLibraryPropertyFromString(eDataType, initialValue);
+				return createLibraryIterationFromString(eDataType, initialValue);
 			case 101:
-				return createMethodFromString(eDataType, initialValue);
+				return createLibraryOperationFromString(eDataType, initialValue);
 			case 102:
-				return createNumberFromString(eDataType, initialValue);
+				return createLibraryPropertyFromString(eDataType, initialValue);
 			case 103:
-				return createObjectFromString(eDataType, initialValue);
+				return createMethodFromString(eDataType, initialValue);
 			case 104:
-				return createOperationFromString(eDataType, initialValue);
+				return createNumberFromString(eDataType, initialValue);
 			case 105:
-				return createPropertyFromString(eDataType, initialValue);
+				return createObjectFromString(eDataType, initialValue);
 			case 106:
-				return createTuplePartIdFromString(eDataType, initialValue);
+				return createOperationFromString(eDataType, initialValue);
 			case 107:
-				return createTypeFromString(eDataType, initialValue);
+				return createPropertyFromString(eDataType, initialValue);
 			case 108:
+				return createTuplePartIdFromString(eDataType, initialValue);
+			case 109:
+				return createTypeFromString(eDataType, initialValue);
+			case 110:
 				return createTypeIdFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
@@ -288,37 +292,37 @@ public class CGModelFactoryImpl extends EFactoryImpl implements CGModelFactory {
 	@Override
 	public String convertToString(EDataType eDataType, Object instanceValue) {
 		switch (eDataType.getClassifierID()) {
-			case 93:
-				return convertElementToString(eDataType, instanceValue);
-			case 94:
-				return convertElementIdToString(eDataType, instanceValue);
 			case 95:
-				return convertEnumerationLiteralIdToString(eDataType, instanceValue);
+				return convertElementToString(eDataType, instanceValue);
 			case 96:
-				return convertIterationToString(eDataType, instanceValue);
+				return convertElementIdToString(eDataType, instanceValue);
 			case 97:
-				return convertFieldToString(eDataType, instanceValue);
+				return convertEnumerationLiteralIdToString(eDataType, instanceValue);
 			case 98:
-				return convertLibraryIterationToString(eDataType, instanceValue);
+				return convertIterationToString(eDataType, instanceValue);
 			case 99:
-				return convertLibraryOperationToString(eDataType, instanceValue);
+				return convertFieldToString(eDataType, instanceValue);
 			case 100:
-				return convertLibraryPropertyToString(eDataType, instanceValue);
+				return convertLibraryIterationToString(eDataType, instanceValue);
 			case 101:
-				return convertMethodToString(eDataType, instanceValue);
+				return convertLibraryOperationToString(eDataType, instanceValue);
 			case 102:
-				return convertNumberToString(eDataType, instanceValue);
+				return convertLibraryPropertyToString(eDataType, instanceValue);
 			case 103:
-				return convertObjectToString(eDataType, instanceValue);
+				return convertMethodToString(eDataType, instanceValue);
 			case 104:
-				return convertOperationToString(eDataType, instanceValue);
+				return convertNumberToString(eDataType, instanceValue);
 			case 105:
-				return convertPropertyToString(eDataType, instanceValue);
+				return convertObjectToString(eDataType, instanceValue);
 			case 106:
-				return convertTuplePartIdToString(eDataType, instanceValue);
+				return convertOperationToString(eDataType, instanceValue);
 			case 107:
-				return convertTypeToString(eDataType, instanceValue);
+				return convertPropertyToString(eDataType, instanceValue);
 			case 108:
+				return convertTuplePartIdToString(eDataType, instanceValue);
+			case 109:
+				return convertTypeToString(eDataType, instanceValue);
+			case 110:
 				return convertTypeIdToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
@@ -488,6 +492,28 @@ public class CGModelFactoryImpl extends EFactoryImpl implements CGModelFactory {
 	public @NonNull CGShadowPart createCGShadowPart() {
 		CGShadowPartImpl cgShadowPart = new CGShadowPartImpl();
 		return cgShadowPart;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public @NonNull CGForeignOperationCallExp createCGForeignOperationCallExp() {
+		CGForeignOperationCallExpImpl cgForeignOperationCallExp = new CGForeignOperationCallExpImpl();
+		return cgForeignOperationCallExp;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public @NonNull CGForeignPropertyCallExp createCGForeignPropertyCallExp() {
+		CGForeignPropertyCallExpImpl cgForeignPropertyCallExp = new CGForeignPropertyCallExpImpl();
+		return cgForeignPropertyCallExp;
 	}
 
 	/**

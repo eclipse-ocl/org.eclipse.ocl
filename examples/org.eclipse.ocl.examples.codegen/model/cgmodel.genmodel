@@ -131,6 +131,7 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGExecutorOppositePropertyCallExp/executorProperty"/>
     </genClasses>
     <genClasses image="false" ecoreClass="cgmodel.ecore#//CGExecutorProperty">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGExecutorProperty/initExpression"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGExecutorProperty/underlyingPropertyId"/>
     </genClasses>
     <genClasses ecoreClass="cgmodel.ecore#//CGExecutorPropertyCallExp">
@@ -141,6 +142,10 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGExecutorType/underlyingTypeId"/>
     </genClasses>
     <genClasses ecoreClass="cgmodel.ecore#//CGFinalVariable"/>
+    <genClasses ecoreClass="cgmodel.ecore#//CGForeignOperationCallExp"/>
+    <genClasses ecoreClass="cgmodel.ecore#//CGForeignPropertyCallExp">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGForeignPropertyCallExp/initExpression"/>
+    </genClasses>
     <genClasses ecoreClass="cgmodel.ecore#//CGGuardExp">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cgmodel.ecore#//CGGuardExp/message"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cgmodel.ecore#//CGGuardExp/safe"/>

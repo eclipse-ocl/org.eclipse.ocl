@@ -225,6 +225,16 @@ public abstract class AbstractNullCGModelVisitor<@Nullable R, C>
 	}
 
 	@Override
+	public R visitCGForeignOperationCallExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGForeignOperationCallExp object) {
+		return null;
+	}
+
+	@Override
+	public R visitCGForeignPropertyCallExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGForeignPropertyCallExp object) {
+		return null;
+	}
+
+	@Override
 	public R visitCGGuardExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGGuardExp object) {
 		return null;
 	}
