@@ -74,7 +74,7 @@ public class OCLQueryDelegate implements QueryDelegate
 		this.expression = expression;
 	}
 
-	protected@Nullable Object evaluate(@NonNull Query query, @Nullable Object target) {
+	protected @Nullable Object evaluate(@NonNull Query query, @Nullable Object target) {
 		return query.evaluateEcore(target);
 	}
 

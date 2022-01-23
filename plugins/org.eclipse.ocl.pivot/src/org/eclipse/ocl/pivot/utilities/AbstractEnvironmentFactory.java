@@ -373,7 +373,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		ThreadLocalExecutor.setExecutor(null);					// Eliminate obsolete dropping from previous EvaluationVisitor
 		if (modelManager == null) {
 			// let the evaluation environment create one
-			modelManager = createModelManager(context);
+			modelManager = createModelManager(context);		// FIXME defer ModelManager creation till actually needed (same as CG)
 		}
 		// can determine a more appropriate context from the context
 		// variable of the expression, to account for stereotype constraints
