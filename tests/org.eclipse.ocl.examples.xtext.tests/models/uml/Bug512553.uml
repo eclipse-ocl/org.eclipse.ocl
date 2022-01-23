@@ -19,4 +19,7 @@
       </ownedParameter>
     </ownedOperation>
   </packagedElement>
+  <packagedElement xmi:type="uml:InstanceSpecification" xmi:id="_9Qg7cHtqEeyp89VRMoNsGw" name="aPerson" classifier="_0BeX8N48EeaBrOB63Eenfw">
+    <specification xmi:type="uml:InstanceValue" xmi:id="_GjHvQHtrEeyp89VRMoNsGw" type="_0BeX8N48EeaBrOB63Eenfw" instance="_9Qg7cHtqEeyp89VRMoNsGw"/>
+  </packagedElement>
 </uml:Model>

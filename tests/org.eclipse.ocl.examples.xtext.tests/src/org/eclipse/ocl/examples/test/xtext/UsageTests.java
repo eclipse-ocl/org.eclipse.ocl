@@ -78,8 +78,10 @@ import org.eclipse.ocl.pivot.internal.evaluation.AbstractExecutor;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorManager;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
+import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.AbstractTables;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
@@ -2050,6 +2052,10 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	}
 
 	public void testStaticProperty() throws Throwable {
+		OCLstdlibTables.init();
+		AbstractTables oclstdlibTables = AbstractTables.basicGet(OCLstdlibPackage.eNS_URI);
+		assert oclstdlibTables != null;
+	//	oclstdlibTables.getPropertyId2executorProperty();
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws Exception {
@@ -2061,21 +2067,58 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 								+ "{\n"
 								+ "    class StaticProperty\n"
 								+ "    {\n"
-								+ "    	   static attribute startTime : ecore::EDate[1];\n"
-								+ "        operation startTime() : ecore::EDate[1] {"
-								+ "             body : startTime;\n"
+//								+ "    	   static attribute startTime1 : ecore::EDate[1] { initial: null; 3}\n"
+								+ "    	   static attribute startTime2 : Integer[1] { derived readonly transient volatile } { initial: 3; }\n"
+								+ "    	   static attribute startTime3 : Integer[1] { derived readonly transient volatile }  { initial: startTime2; }\n"
+								+ "        static operation startTime1() :Integer[1] {"
+								+ "             body : 55;\n"
+								+ "        }\n"
+								+ "        static operation startTime2() :String[1] {"
+								+ "             body : '77';\n"
 								+ "        }\n"
 								+ "    }\n"
 								+ "}\n";
-				String genmodelFile = createEcoreGenModelContent(testFileStem, null);
+				Map<@NonNull String, @Nullable String> genOptions = new HashMap<>();
+				genOptions.put("templateDirectory", "/org.eclipse.ocl.examples.codegen/templates");
+				String genmodelFile = createEcoreGenModelContent(testFileStem, genOptions);
 				createManifestFile();
 				URI genModelURI = createModels(testFileStem, oclinecoreFile, genmodelFile);
 				doGenModel(genModelURI);
-				TestOCL ocl = createOCL();
-				doEcoreCompile(ocl, testProjectName);
-				ocl.dispose();
+				TestOCL ocl1 = createOCL();
+				doEcoreCompile(ocl1, testProjectName);
+				ocl1.dispose();
+				ocl1 = null;
+
+				TestOCL ocl2 = createOCL();
+
+				String qualifiedPackageName = testProjectName + "." + testFileStem + "Package";
+				File classFilePath = getTestProject().getOutputFolder(JavaFileUtil.TEST_BIN_FOLDER_NAME + "/").getFile();
+				List<@NonNull String> packagePaths = JavaFileUtil.gatherPackageNames(classFilePath, null);
+				ExplicitClassLoader classLoader = new ExplicitClassLoader(classFilePath, packagePaths, getClass().getClassLoader());
+				EPackage ePackage = doLoadPackage(classLoader, qualifiedPackageName);
+				EClass eClass = (EClass) ePackage.getEClassifier("StaticProperty");
+			//	EStructuralFeature eStructuralFeature = eClass.getEStructuralFeature("name");
+				EFactory eFactory = ePackage.getEFactoryInstance();
+				//
+				EObject eObject = eFactory.create(eClass);
+			//	ocl2.assertQueryEquals(eObject, "77", "staticProperty::StaticProperty::startTime2()");
+				ocl2.assertQueryEquals(eObject, 3, "staticProperty::StaticProperty::startTime3");
+			//	ocl.assertQueryTrue(eObject, "complement(true) = false");
+			//	eObject.eSet(eStructuralFeature, "testing");
+			//	ocl.assertQueryFalse(eObject, "name = null");
+			//	ocl.assertQueryTrue(eObject, "name = 'testing'");
+			//	ocl.assertQueryEquals(eObject, "XtestingY", "self.myPrefixedName('X', 'Y')");
+			//	ocl.assertQueryEquals(eObject, eObject, "self.me()");
+
+
+
+
+
+
+				ocl2.dispose();
 			}
 		});
+		// FIXME Execute something to test compilation
 	}
 
 	public void testTemplateTypes471201() throws Throwable {

@@ -833,9 +833,9 @@ public class RoundTripTests extends XtextTestCase
 						"	class c\n" +
 						"	{\n" +
 						"		property a : Integer;\n" +
-						"		static property as : Integer;\n" +
+						"		static property as : Integer = '0';\n" +
 						"		property p : Port[*|1] { ordered };\n" +
-						"		static property ps : Port[*|1] { ordered };\n" +
+						"		static property ps : Port[*|1] { ordered } { initial: null; }\n" +
 						"		operation f() : Port[?];\n" +
 						"		static operation fs() : Port[?];\n" +
 						"	}\n" +
