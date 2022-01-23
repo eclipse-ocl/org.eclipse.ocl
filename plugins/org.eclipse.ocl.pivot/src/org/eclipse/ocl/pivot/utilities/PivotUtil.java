@@ -112,10 +112,12 @@ import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorManager;
+import org.eclipse.ocl.pivot.internal.library.executor.LazyEcoreModelManager;
 import org.eclipse.ocl.pivot.internal.manager.PivotExecutorManager;
 import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
@@ -1397,6 +1399,21 @@ public class PivotUtil
 			}
 		}
 		throw new IllegalStateException();
+	}
+
+	/**
+	 * Return the ModelManager for the current executor else create one for the ResourceSet of ecoreObject,
+	 *
+	 * @since 1.18
+	 */
+	public static @NonNull ModelManager getModelManager(@NonNull EObject ecoreObject) {
+		Executor executor = ThreadLocalExecutor.basicGetExecutor();
+		if (executor != null) {
+			return executor.getModelManager();
+		}
+		else {
+			return new LazyEcoreModelManager(ecoreObject);
+		}
 	}
 
 	/**

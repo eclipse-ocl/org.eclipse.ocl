@@ -75,7 +75,9 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.evaluation.AbstractModelManager;
 import org.eclipse.ocl.pivot.evaluation.EvaluationException;
+import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.internal.delegate.DelegateDomain;
 import org.eclipse.ocl.pivot.internal.delegate.DelegateEPackageAdapter;
 import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
@@ -387,6 +389,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	}
 
 	public void doTest_allInstances(@NonNull ResourceSet resourceSet, @NonNull String modelName) {
+		int oldAbstractModelManager_CONSTRUCTION_COUNT = AbstractModelManager.CONSTRUCTION_COUNT;
 		initModel(resourceSet, modelName);
 		Collection<EObject> amyAllReports = allReports(employee("Amy"));
 		assertEquals(5, amyAllReports.size());
@@ -398,10 +401,10 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 
 		// change the set of all instances of Employee
 		set(create(acme, companyEmployees, employeeClass, "Manuel"), employeeManager, employee("Bob"));
-		ThreadLocalExecutor.reset();		// invalidate ModelManager caches
 		amyAllReports = allReports(employee("Amy"));
 		assertEquals(6, amyAllReports.size());
 		assertTrue(amyAllReports.contains(employee("Manuel")));
+		assertEquals(2, AbstractModelManager.CONSTRUCTION_COUNT - oldAbstractModelManager_CONSTRUCTION_COUNT);
 	}
 
 	public void test_changeableNonVolatileAttribute_418716() {
@@ -1693,19 +1696,18 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		}
 	}
 
-	void add(EObject owner, EStructuralFeature feature, Object value) {
+	protected void add(EObject owner, EStructuralFeature feature, Object value) {
 		this.<EList<Object>> get(owner, feature).add(value);
 	}
 
-	Collection<EObject> allReports(EObject employee) {
+	protected Collection<EObject> allReports(EObject employee) {
 		Collection<EObject> collection = get(employee, employeeAllReports);
 		assertTrue(collection instanceof InternalEList<?>);				// Check EMF internal API (fixing Bug 412690)
 		assertTrue(collection instanceof EStructuralFeature.Setting);	// Check EMF internal API (fixing Bug 412690)
 		return collection;
 	}
 
-	EObject create(EObject owner, EReference containment, EClass type,
-			String name) {
+	protected EObject create(EObject owner, EReference containment, EClass type, String name) {
 		EObject result = companyFactory.create(type);
 
 		if (containment.isMany()) {
@@ -1721,11 +1723,11 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		return result;
 	}
 
-	EList<EObject> directReports(EObject employee) {
+	protected EList<EObject> directReports(EObject employee) {
 		return get(employee, employeeDirectReports);
 	}
 
-	EObject employee(String name) {
+	protected EObject employee(String name) {
 		EObject result = employees.get(name);
 
 		if (result == null) {
@@ -1744,14 +1746,20 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		return result;
 	}
 
-	EList<EObject> employees(EObject company) {
+	protected EList<EObject> employees(EObject company) {
 		return get(company, companyEmployees);
 	}
 
 	@SuppressWarnings("unchecked")
-	<T> T get(EObject owner, EStructuralFeature feature) {
-		Object result = owner.eGet(feature);
-		return (T) result;
+	protected <T> T get(EObject owner, EStructuralFeature feature) {
+		Executor savedExecutor = ThreadLocalExecutor.basicGetExecutor();
+		try {
+			Object result = owner.eGet(feature);
+			return (T) result;
+		}
+		finally {
+			ThreadLocalExecutor.setExecutor(savedExecutor);
+		}
 	}
 
 	protected String getErrorsInMessage(@NonNull String role, String qualifiedName, String source) {
@@ -1795,7 +1803,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	}
 
 	@SuppressWarnings("unchecked")
-	<T> T invoke(EObject target, EOperation operation, Object... arguments) throws InvocationTargetException {
+	protected <T> T invoke(EObject target, EOperation operation, Object... arguments) throws InvocationTargetException {
 		//		try {
 		return (T) target.eInvoke(operation, (arguments.length == 0)
 			? ECollections.<Object> emptyEList()
@@ -1825,8 +1833,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		fail("Expected to find: " + name);
 	}
 
-	Object execute(QueryDelegate delegate, Object target,
-			Map<String, Object> bindings) {
+	protected Object execute(QueryDelegate delegate, Object target, Map<String, Object> bindings) {
 		try {
 			return delegate.execute(target, bindings);
 		} catch (InvocationTargetException ite) {
@@ -1860,23 +1867,21 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		}
 	}
 
-	EObject manager(EObject employee) {
+	protected EObject manager(EObject employee) {
 		return get(employee, employeeManager);
 	}
 
-	String name(EObject employeeOrCompany) {
-		EAttribute name = employeeClass.isInstance(employeeOrCompany)
-				? employeeName
-					: companyName;
+	protected String name(EObject employeeOrCompany) {
+		EAttribute name = employeeClass.isInstance(employeeOrCompany) ? employeeName : companyName;
 
 		return get(employeeOrCompany, name);
 	}
 
-	void set(EObject owner, EStructuralFeature feature, Object value) {
+	protected void set(EObject owner, EStructuralFeature feature, Object value) {
 		owner.eSet(feature, value);
 	}
 
-	Enumerator size(EObject company) {
+	protected Enumerator size(EObject company) {
 		return get(company, companySize);
 	}
 
