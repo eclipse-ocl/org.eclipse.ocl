@@ -5792,6 +5792,17 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	@Override
+	public EOperation getProperty__ValidateStaticPropertyHasInitializer__DiagnosticChain_Map()
+	{
+		return propertyEClass.getEOperations().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EClass getTypedElement() {
 		return typedElementEClass;
 	}
@@ -7608,6 +7619,7 @@ implements PivotPackage  {
 		createEReference(propertyEClass, 29);
 		createEOperation(propertyEClass, 6);
 		createEOperation(propertyEClass, 7);
+		createEOperation(propertyEClass, 8);
 
 		propertyCallExpEClass = createEClass(87);
 		createEReference(propertyCallExpEClass, 15);
@@ -9112,6 +9124,15 @@ implements PivotPackage  {
 		g1.getETypeArguments().add(g2);
 		addEParameter(op, g1, "context", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
+		op = initEOperation(getProperty__ValidateStaticPropertyHasInitializer__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "validateStaticPropertyHasInitializer", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostics", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(ecorePackage.getEMap());
+		g2 = createEGenericType(ecorePackage.getEJavaObject());
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType(ecorePackage.getEJavaObject());
+		g1.getETypeArguments().add(g2);
+		addEParameter(op, g1, "context", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+
 		initEClass(propertyCallExpEClass, PropertyCallExp.class, "PropertyCallExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getPropertyCallExp_ReferredProperty(), this.getProperty(), null, "referredProperty", null, 0, 1, PropertyCallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
@@ -10246,7 +10267,14 @@ implements PivotPackage  {
 		   source,
 		   new String[]
 		   {
-			   "body", "ownedExpression <> null and ownedExpression.oclAsType(ExpressionInOCL).ownedBody <> null implies CompatibleBody(ownedExpression)\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "ownedExpression <> null and ownedExpression.oclAsType(ExpressionInOCL).ownedBody <> null implies CompatibleBody(ownedExpression)\n" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getProperty__ValidateStaticPropertyHasInitializer__DiagnosticChain_Map(),
+		   source,
+		   new String[]
+		   {
+			   "body", "isStatic implies ownedExpression <> null or defaultValueString <> null or implementationClass <> null\n\n" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getPropertyCallExp__GetSpecializedReferredPropertyOwningType(),
@@ -11029,6 +11057,13 @@ implements PivotPackage  {
 		   new String[]
 		   {
 			   "originalName", "CompatibleDefaultExpression" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getProperty__ValidateStaticPropertyHasInitializer__DiagnosticChain_Map(),
+		   source,
+		   new String[]
+		   {
+			   "originalName", "StaticPropertyHasInitializer" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getPropertyCallExp__ValidateCompatibleResultType__DiagnosticChain_Map(),
