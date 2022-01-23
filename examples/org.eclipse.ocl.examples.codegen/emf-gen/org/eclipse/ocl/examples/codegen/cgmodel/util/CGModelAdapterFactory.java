@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -15,7 +15,101 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.cgmodel.*;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGAccumulator;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGAssertNonNullExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGBoolean;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGBoxExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGBuiltInIterationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGCallable;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGCastExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGCatchExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGCollectionExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGCollectionPart;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGConstant;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreClassShadowExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreDataTypeShadowExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOperation;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOperationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOppositePropertyCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGEcorePropertyCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGElementId;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorCompositionProperty;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorNavigationProperty;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOperation;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOperationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOppositeProperty;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOppositePropertyCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorProperty;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorPropertyCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorShadowPart;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGFinalVariable;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignOperationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignPropertyCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGGuardExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGIfExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGInteger;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGInvalid;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGIsEqual2Exp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGIsEqualExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGIsInvalidExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGIsKindOfExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGIsUndefinedExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGIterator;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGLetExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryIterateCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryIterationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperation;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryPropertyCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGLocalVariable;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGMapExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGMapPart;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGModel;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperation;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeProperty;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNativePropertyCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNull;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNumber;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGOppositePropertyCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGPropertyCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGReal;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGSettableVariable;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowPart;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGString;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGTemplateParameterExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGText;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGThrowExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGTupleExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGTuplePart;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGTuplePartCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGTypedElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGUnboxExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGUnlimited;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 
 /**
@@ -221,6 +315,14 @@ public class CGModelAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseCGFinalVariable(CGFinalVariable object) {
 				return createCGFinalVariableAdapter();
+			}
+			@Override
+			public Adapter caseCGForeignOperationCallExp(CGForeignOperationCallExp object) {
+				return createCGForeignOperationCallExpAdapter();
+			}
+			@Override
+			public Adapter caseCGForeignPropertyCallExp(CGForeignPropertyCallExp object) {
+				return createCGForeignPropertyCallExpAdapter();
 			}
 			@Override
 			public Adapter caseCGGuardExp(CGGuardExp object) {
@@ -953,6 +1055,34 @@ public class CGModelAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createCGShadowPartAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGForeignOperationCallExp <em>CG Foreign Operation Call Exp</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGForeignOperationCallExp
+	 * @generated
+	 */
+	public Adapter createCGForeignOperationCallExpAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGForeignPropertyCallExp <em>CG Foreign Property Call Exp</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGForeignPropertyCallExp
+	 * @generated
+	 */
+	public Adapter createCGForeignPropertyCallExpAdapter() {
 		return null;
 	}
 

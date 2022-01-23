@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.EOperation;
  * <!-- end-user-doc -->
  *
  * <!-- begin-model-doc -->
- * An operation that must be called using the Ecore Operation calling convention.
+ * An operation that must be called using the Ecore Operation calling convention. Source argument and result values are ecore.
  * <!-- end-model-doc -->
  *
  * <p>

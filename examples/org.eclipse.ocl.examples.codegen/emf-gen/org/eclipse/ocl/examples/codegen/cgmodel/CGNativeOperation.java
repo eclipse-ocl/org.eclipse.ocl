@@ -16,7 +16,7 @@ package org.eclipse.ocl.examples.codegen.cgmodel;
  * <!-- end-user-doc -->
  *
  * <!-- begin-model-doc -->
- * A native operation that must be called using the native calling convention.
+ * A native operation that must be called using the native calling convention. Source argument and result values are unboxed.
  * <!-- end-model-doc -->
  *
  *

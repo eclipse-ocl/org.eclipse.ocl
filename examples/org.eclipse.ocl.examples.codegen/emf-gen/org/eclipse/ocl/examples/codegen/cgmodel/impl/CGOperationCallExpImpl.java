@@ -268,7 +268,12 @@ public abstract class CGOperationCallExpImpl extends CGCallExpImpl implements CG
 				// normal use case - nonInvalid if all inputs nonInvalid
 			}
 		}
-		if (!source.isNonNull() || !source.isNonInvalid()) {
+		if (referredOperation.isIsStatic()) {
+			if (source != null) {
+				return false;
+			}
+		}
+		else if (!source.isNonNull() || !source.isNonInvalid()) {
 			return false;
 		}
 		for (@NonNull CGValuedElement argument : ClassUtil.nullFree(getArguments())) {
