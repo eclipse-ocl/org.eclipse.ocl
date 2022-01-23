@@ -27,6 +27,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
+import org.eclipse.ocl.pivot.evaluation.NullModelManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorManager;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorStandardLibrary;
@@ -63,8 +64,16 @@ public class EcoreExecutorManager extends ExecutorManager
 	 * @param standardLibrary the OCL facilities
 	 */
 	public EcoreExecutorManager(@Nullable Object contextObject, @NonNull ExecutorStandardLibrary standardLibrary) {
+		this(contextObject, standardLibrary, null);
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	public EcoreExecutorManager(@Nullable Object contextObject, @NonNull ExecutorStandardLibrary standardLibrary, @Nullable ModelManager modelManager) {
 		super(standardLibrary);
 		this.contextObject = contextObject;
+		this.modelManager = modelManager;
 	}
 
 	protected @NonNull IdResolver createIdResolver() {
@@ -179,7 +188,7 @@ public class EcoreExecutorManager extends ExecutorManager
 						modelManager2 = new LazyEcoreModelManager(allRootContents, allInstancesClassesList, implicitOppositesList);
 					}
 					else {
-						modelManager2 = ModelManager.NULL;
+						modelManager2 = new NullModelManager();
 					}
 					modelManager = modelManager2;
 				}

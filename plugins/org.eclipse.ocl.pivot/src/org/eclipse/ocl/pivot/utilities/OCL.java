@@ -31,12 +31,12 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
+import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
-import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
 import org.eclipse.ocl.pivot.internal.helper.HelperUtil;
 import org.eclipse.ocl.pivot.internal.helper.OCLHelperImpl;
 import org.eclipse.ocl.pivot.internal.helper.QueryImpl;
@@ -426,14 +426,14 @@ public class OCL
 	 * @see #check(Object, ExpressionInOCL)
 	 */
 	public @Nullable Object evaluate(@Nullable Object context, @NonNull ExpressionInOCL expression) {
-		assert ThreadLocalExecutor.basicGetExecutor() == null;
+		Executor savedExecutor = ThreadLocalExecutor.basicGetExecutor();
+		ThreadLocalExecutor.setExecutor(null);
 		EvaluationVisitor evaluationVisitor = createEvaluationVisitor(context, expression);
-		assert ThreadLocalExecutor.basicGetExecutor() instanceof ExecutorInternal;
 		try {
 			return expression.accept(evaluationVisitor);
 		}
 		finally {
-			ThreadLocalExecutor.setExecutor(null);
+			ThreadLocalExecutor.setExecutor(savedExecutor);
 		}
 	}
 

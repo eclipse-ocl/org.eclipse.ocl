@@ -32,6 +32,7 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.EnumLiteralExp;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.IfExp;
 import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.IntegerLiteralExp;
@@ -698,6 +699,7 @@ public class PivotHelper
 	public void setContextVariable(@NonNull ExpressionInOCL pivotSpecification, @NonNull String selfVariableName, @Nullable Type contextType, @Nullable Type contextInstance) {
 		Variable contextVariable = pivotSpecification.getOwnedContext();
 		if (contextVariable == null) {
+			assert !(pivotSpecification.eContainer() instanceof Feature) || !((Feature)pivotSpecification.eContainer()).isIsStatic();
 			@NonNull ParameterVariable nonNullContextVariable = PivotFactory.eINSTANCE.createParameterVariable();
 			contextVariable = nonNullContextVariable;
 			pivotSpecification.setOwnedContext(contextVariable);
@@ -729,7 +731,7 @@ public class PivotHelper
 		Type formalType = asOperation.getType();
 		boolean returnIsRequired = asOperation.isIsRequired();
 		Object returnValue = null;			// Currently always a Type - see Bug 577902
-		if ((formalType != null) && (sourceType != null)) {
+		if (formalType != null) {
 			returnType = TemplateParameterSubstitutionVisitor.specializeType(formalType, asCallExp, (EnvironmentFactoryInternal)environmentFactory, sourceType, null);
 		}
 		//

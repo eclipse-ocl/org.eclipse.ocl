@@ -304,8 +304,8 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 				try {
 					/*@Caught*/ @Nullable Object CAUGHT_and;
 					try {
-						final /*@NonInvalid*/ @Nullable OCLExpression ownedSource = this.getOwnedSource();
-						final /*@NonInvalid*/ boolean ne = ownedSource != null;
+						final /*@NonInvalid*/ @Nullable OCLExpression ownedSource_0 = this.getOwnedSource();
+						final /*@NonInvalid*/ boolean ne = ownedSource_0 != null;
 						final /*@Thrown*/ @Nullable Boolean and;
 						if (!ne) {
 							and = ValueUtil.FALSE_VALUE;
@@ -348,11 +348,11 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 					else {
 						/*@Caught*/ @NonNull Object CAUGHT_isNonNull;
 						try {
-							final /*@NonInvalid*/ @Nullable OCLExpression ownedSource_0 = this.getOwnedSource();
-							if (ownedSource_0 == null) {
+							final /*@NonInvalid*/ @Nullable OCLExpression ownedSource = this.getOwnedSource();
+							if (ownedSource == null) {
 								throw new InvalidValueException("Null source for \'pivot::OCLExpression::isNonNull() : Boolean[1]\'");
 							}
-							final /*@Thrown*/ boolean isNonNull = ownedSource_0.isNonNull();
+							final /*@Thrown*/ boolean isNonNull = ownedSource.isNonNull();
 							CAUGHT_isNonNull = isNonNull;
 						}
 						catch (Exception THROWN_isNonNull) {

@@ -28,7 +28,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
@@ -41,7 +40,6 @@ import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.State;
 import org.eclipse.ocl.pivot.Transition;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -481,8 +479,8 @@ implements Constraint {
 			else {
 				/*@Caught*/ @Nullable Object CAUGHT_result;
 				try {
-					final /*@NonInvalid*/ @NonNull BooleanType TYP_Boolean = (@NonNull BooleanType)idResolver.getClass(TypeId.BOOLEAN, null);
-					final /*@NonInvalid*/ @NonNull VoidType TYP_OclVoid = (@NonNull VoidType)idResolver.getClass(TypeId.OCL_VOID, null);
+					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Boolean_0 = idResolver.getClass(TypeId.BOOLEAN, null);
+					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OclVoid = idResolver.getClass(TypeId.OCL_VOID, null);
 					@SuppressWarnings("null")
 					final /*@NonInvalid*/ @NonNull LanguageExpression ownedSpecification = this.getOwnedSpecification();
 					final /*@NonInvalid*/ @Nullable Type type = ownedSpecification.getType();
@@ -494,7 +492,7 @@ implements Constraint {
 						result = ValueUtil.TRUE_VALUE;
 					}
 					else {
-						final /*@NonInvalid*/ boolean eq_0 = (type != null) ? (type.getTypeId() == TYP_Boolean.getTypeId()) : false;
+						final /*@NonInvalid*/ boolean eq_0 = (type != null) ? (type.getTypeId() == TYP_Boolean_0.getTypeId()) : false;
 						final /*@NonInvalid*/ @Nullable Boolean or;
 						if (eq_0) {
 							or = ValueUtil.TRUE_VALUE;

@@ -27,7 +27,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
-import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
@@ -198,8 +197,8 @@ implements TupleLiteralPart {
 				try {
 					/*@Caught*/ @Nullable Object CAUGHT_and;
 					try {
-						final /*@NonInvalid*/ @Nullable OCLExpression ownedInit_0 = this.getOwnedInit();
-						final /*@NonInvalid*/ boolean ne_0 = ownedInit_0 != null;
+						final /*@NonInvalid*/ @Nullable OCLExpression ownedInit = this.getOwnedInit();
+						final /*@NonInvalid*/ boolean ne_0 = ownedInit != null;
 						final /*@Thrown*/ @Nullable Boolean and;
 						if (!ne_0) {
 							and = ValueUtil.FALSE_VALUE;
@@ -207,10 +206,10 @@ implements TupleLiteralPart {
 						else {
 							/*@Caught*/ @NonNull Object CAUGHT__l_g;
 							try {
-								if (ownedInit_0 == null) {
+								if (ownedInit == null) {
 									throw new InvalidValueException("Null source for \'TypedElement::type\'");
 								}
-								final /*@Thrown*/ @Nullable Type type_1 = ownedInit_0.getType();
+								final /*@Thrown*/ @Nullable Type type_1 = ownedInit.getType();
 								final /*@Thrown*/ boolean ne = type_1 != null;
 								CAUGHT__l_g = ne;
 							}
@@ -239,11 +238,11 @@ implements TupleLiteralPart {
 					else {
 						/*@Caught*/ @NonNull Object CAUGHT_conformsTo;
 						try {
-							final /*@NonInvalid*/ @Nullable OCLExpression ownedInit = this.getOwnedInit();
-							if (ownedInit == null) {
+							final /*@NonInvalid*/ @Nullable OCLExpression ownedInit_0 = this.getOwnedInit();
+							if (ownedInit_0 == null) {
 								throw new InvalidValueException("Null source for \'TypedElement::type\'");
 							}
-							final /*@Thrown*/ @Nullable Type type = ownedInit.getType();
+							final /*@Thrown*/ @Nullable Type type = ownedInit_0.getType();
 							if (type == null) {
 								throw new InvalidValueException("Null \'\'Type\'\' rather than \'\'OclVoid\'\' value required");
 							}
@@ -319,9 +318,9 @@ implements TupleLiteralPart {
 				IF__l_q = true;
 			}
 			else {
-				final /*@NonInvalid*/ @NonNull InvalidType TYP_OclInvalid_2 = (@NonNull InvalidType)idResolver.getClass(TypeId.OCL_INVALID, null);
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OclInvalid = idResolver.getClass(TypeId.OCL_INVALID, null);
 				final /*@NonInvalid*/ @Nullable Type type = this.getType();
-				final /*@NonInvalid*/ boolean result = (type != null) ? (type.getTypeId() != TYP_OclInvalid_2.getTypeId()) : true;
+				final /*@NonInvalid*/ boolean result = (type != null) ? (type.getTypeId() != TYP_OclInvalid.getTypeId()) : true;
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, result, PivotTables.INT_0).booleanValue();
 				IF__l_q = logDiagnostic;
 			}

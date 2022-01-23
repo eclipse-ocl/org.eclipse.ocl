@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -24,7 +25,9 @@ import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypeParameter;
 import org.eclipse.jdt.annotation.NonNull;
@@ -66,6 +69,7 @@ import com.google.common.collect.Iterables;
  * IdManager supervises the thread-safe allocation of unique hierarchical identifier to each metamodel element.
  *
  * @see ElementId
+ * @since 1.18
  */
 public final class IdManager
 {
@@ -364,6 +368,36 @@ public final class IdManager
 			nsURIPackageId.setEPackage(ePackage);
 		}
 		return nsURIPackageId;
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	public static @NonNull OperationId getOperationId(@NonNull EOperation eOperation) {
+		EClass eContainingClass = eOperation.getEContainingClass();
+		assert eContainingClass != null;
+		ClassId classId = getClassId(eContainingClass);
+		int templateParameters = 0;			// FIXME templates ... static
+		String name = eOperation.getName();
+		assert name != null;
+		ParametersId parametersId = getParametersId(eOperation);
+		return classId.getOperationId(templateParameters, name, parametersId);
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	public static @NonNull ParametersId getParametersId(@NonNull EOperation eOperation) {
+		EList<EParameter> eParameters = eOperation.getEParameters();
+		@NonNull TypeId typeIds[] = new @NonNull TypeId[eParameters.size()];
+		int i = 0;
+		for (EParameter eParameter : eParameters) {
+			EClassifier eType = eParameter.getEType();
+			assert eType != null;
+			typeIds[i++] = getTypeId(eType);
+		}
+		ParametersId parametersId = getParametersId(typeIds);
+		return parametersId;
 	}
 
 	/**

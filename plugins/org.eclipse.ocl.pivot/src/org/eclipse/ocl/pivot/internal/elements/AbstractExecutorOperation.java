@@ -38,8 +38,31 @@ import org.eclipse.ocl.pivot.ids.ParametersId;
  */
 public class AbstractExecutorOperation extends AbstractExecutorFeature implements Operation
 {
+	/**
+	 * @since 1.18
+	 */
+	private final /*@NonNull*/ OperationId operationId;
+
+	@Deprecated /* use operationId */
 	public AbstractExecutorOperation(@NonNull String name, @NonNull Type executorType) {
 		super(name, executorType);
+		this.operationId = null;
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	public AbstractExecutorOperation(@NonNull OperationId operationId, @NonNull Type executorType) {
+		super(operationId.getName(), executorType);
+		this.operationId = operationId;
+	}
+
+	@Override
+	public @NonNull OperationId getOperationId() {
+		if (operationId == null) {
+			throw new UnsupportedOperationException();
+		}
+		return operationId;
 	}
 
 	@Override
@@ -187,12 +210,6 @@ public class AbstractExecutorOperation extends AbstractExecutorFeature implement
 	@Nullable
 	public CompleteInheritance getInheritance(
 			@NonNull StandardLibrary standardLibrary) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	@NonNull
-	public OperationId getOperationId() {
 		throw new UnsupportedOperationException();
 	}
 
