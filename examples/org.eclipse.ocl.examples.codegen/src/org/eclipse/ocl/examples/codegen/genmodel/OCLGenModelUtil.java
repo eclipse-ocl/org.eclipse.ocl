@@ -34,12 +34,15 @@ import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EOperation;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.java.ImportUtils;
 import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreGenModelGeneratorAdapter;
 import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreGeneratorAdapterFactory;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  * OCLGenModelUtil provides helpers for use by OCL's JET templates.
@@ -163,6 +166,18 @@ public abstract class OCLGenModelUtil
 		return baseCountID + " + " + Integer.toString(genClass.getFeatureCount() - base.getFeatureCount());
 	}
 
+	public static List<GenOperation> getDeclaredGenOperations(GenClass genClass) {
+		ArrayList<GenOperation> results = new ArrayList<>();
+		for (GenOperation genOperation : genClass.getDeclaredGenOperations()) {
+			EOperation ecoreOperation = genOperation.getEcoreOperation();
+			assert ecoreOperation != null;
+			if (!PivotUtil.isStatic(ecoreOperation)) {
+				results.add(genOperation);
+			}
+		}
+		return results;
+	}
+
 	public static @NonNull Iterable<GeneratorAdapterFactory.@NonNull Descriptor> getGeneratorAdapterFactoryDescriptors() {
 		List<GeneratorAdapterFactory.@NonNull Descriptor> descriptors = new ArrayList<>();
 		// Replacement for EMF to fix BUG 543870
@@ -270,6 +285,16 @@ public abstract class OCLGenModelUtil
 		return getQualifiedOperationValue(genClass, genOperation);
 	}
 
+	public static List<GenFeature> getToStringGenFeatures(GenClass genClass) {
+		List<GenFeature> results = new ArrayList<>();
+		for (GenFeature genFeature : genClass.getToStringGenFeatures()) {
+			if (!isStatic(genFeature)) {
+				results.add(genFeature);
+			}
+		}
+		return results;
+	}
+
 	public static /*@Nullable*/ String getVisitableClass(@NonNull GenModel genModel) {		// @Nullable breaks Xtend
 		return GenModelUtil.getAnnotation(genModel, OCL_GENMODEL_VISITOR_URI, VISITABLE_INTERFACE);
 	}
@@ -308,6 +333,16 @@ public abstract class OCLGenModelUtil
 		return (visitableClasses != null) && visitableClasses.contains(interfaceName);
 	}
 
+	public static boolean isStatic(GenFeature genFeature) {
+		EStructuralFeature eStructuralFeature = genFeature != null ? genFeature.getEcoreFeature() : null;
+		return (eStructuralFeature != null) && PivotUtil.isStatic(eStructuralFeature);
+	}
+
+	public static boolean isStatic(GenOperation genOperation) {
+		EOperation eOperation = genOperation != null ? genOperation.getEcoreOperation() : null;
+		return (eOperation != null) && PivotUtil.isStatic(eOperation);
+	}
+
 	public static @NonNull String resolveImports(GenModel genModel, String source)
 	{
 		int iMax = source.length();
@@ -329,6 +364,14 @@ public abstract class OCLGenModelUtil
 		}
 		s.append(source, iStart, iMax);
 		return s.toString();
+	}
+
+	public static String staticQualifier(GenFeature genFeature) {
+		return isStatic(genFeature) ? " static " : " ";
+	}
+
+	public static String staticQualifier(GenOperation genOperation) {
+		return isStatic(genOperation) ? " static " : " ";
 	}
 
 	public abstract String getAPITags(GenBase genBase, String indentation);
