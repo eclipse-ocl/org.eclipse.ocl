@@ -80,6 +80,8 @@ public interface CGModelVisitor<R>
 	R visitCGExecutorShadowPart(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGExecutorShadowPart object);
 	R visitCGExecutorType(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGExecutorType object);
 	R visitCGFinalVariable(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGFinalVariable object);
+	R visitCGForeignOperationCallExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGForeignOperationCallExp object);
+	R visitCGForeignPropertyCallExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGForeignPropertyCallExp object);
 	R visitCGGuardExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGGuardExp object);
 	R visitCGIfExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGIfExp object);
 	R visitCGInteger(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGInteger object);

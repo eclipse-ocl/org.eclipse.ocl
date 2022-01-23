@@ -19,7 +19,7 @@ import org.eclipse.ocl.pivot.library.LibraryOperation;
  *
  * <!-- begin-model-doc -->
  * A call of an operation using the derived polymorphic LibraryOperation.dispatch/evaluate API. There is no implicit self/this. Since arguments
- * are typed as Object, that required type cannot be determined. All arguments are therefore passed using the boxed representation.
+ * are typed as Object, that required type cannot be determined. All arguments and returns use the boxed representation.
  * <!-- end-model-doc -->
  *
  * <p>

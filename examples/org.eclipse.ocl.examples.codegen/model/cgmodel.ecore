@@ -39,7 +39,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGCachedOperation" eSuperTypes="#//CGOperation">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="A native operation that must be called using the native calling convention."/>
+      <details key="documentation" value="A native operation that must be called using the native calling convention. Source argument and result values are boxed."/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="finalOperations" upperBound="-1"
         eType="#//CGCachedOperation" eOpposite="#//CGCachedOperation/virtualOperations"/>
@@ -186,13 +186,13 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGEcoreOperation" eSuperTypes="#//CGOperation">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="An operation that must be called using the Ecore Operation calling convention."/>
+      <details key="documentation" value="An operation that must be called using the Ecore Operation calling convention. Source argument and result values are ecore."/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="eOperation" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EOperation"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGEcoreOperationCallExp" eSuperTypes="#//CGOperationCallExp">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="A call of an operation using the Ecore Operation calling convention; Collections are passed as EList."/>
+      <details key="documentation" value="A call of an operation using the Ecore Operation calling convention; Collections are passed as EList. All arguments and returns use the ecore representation."/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="eOperation" lowerBound="1"
         eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EOperation" resolveProxies="false"/>
@@ -257,6 +257,8 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGExecutorProperty" abstract="true"
       eSuperTypes="#//CGValuedElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="initExpression" eType="#//CGValuedElement"
+        containment="true" resolveProxies="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="underlyingPropertyId" eType="#//CGElementId"
         resolveProxies="false"/>
   </eClassifiers>
@@ -280,6 +282,22 @@
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A CGFinalVariable defines a Static Single Assignment variable, that is one&#xA;whose value is defined before use and never changed."/>
     </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CGForeignOperationCallExp" eSuperTypes="#//CGOperationCallExp">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A call of an operation using the ForeignOperation.dispatch/evaluate API. There is no implicit self/this. Since arguments&#xA;are typed as Object, that required type cannot be determined. All arguments are therefore passed using the boxed representation."/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CGForeignPropertyCallExp" eSuperTypes="#//CGPropertyCallExp">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A call of an operation using the ForeignProperty boxed-value access API."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="initExpression" eType="#//CGValuedElement"
+        containment="true" resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The optional initializer or derivation."/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGGuardExp" eSuperTypes="#//CGCallExp">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -411,12 +429,12 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGLibraryOperation" eSuperTypes="#//CGOperation">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="An operation that must be called using the LibraryOperation calling convention."/>
+      <details key="documentation" value="An operation that must be called using the LibraryOperation calling convention. Source argument and result values are boxed."/>
     </eAnnotations>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGLibraryOperationCallExp" eSuperTypes="#//CGOperationCallExp">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="A call of an operation using the derived polymorphic LibraryOperation.dispatch/evaluate API. There is no implicit self/this. Since arguments&#xA;are typed as Object, that required type cannot be determined. All arguments are therefore passed using the boxed representation."/>
+      <details key="documentation" value="A call of an operation using the derived polymorphic LibraryOperation.dispatch/evaluate API. There is no implicit self/this. Since arguments&#xA;are typed as Object, that required type cannot be determined. All arguments and returns use the boxed representation."/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="libraryOperation" lowerBound="1"
         eType="#//LibraryOperation"/>
@@ -454,12 +472,12 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGNativeOperation" eSuperTypes="#//CGOperation">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="A native operation that must be called using the native calling convention."/>
+      <details key="documentation" value="A native operation that must be called using the native calling convention. Source argument and result values are unboxed."/>
     </eAnnotations>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGNativeOperationCallExp" eSuperTypes="#//CGOperationCallExp">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="A call of an operation using its Java declaration. The OCL self may be passed as an extra argument.&#xA;Other arguments are passed using the unboxed representation."/>
+      <details key="documentation" value="A call of an operation using its Java declaration. The OCL self may be passed as an extra argument.&#xA;Other arguments and returns use the unboxed representation."/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="method" lowerBound="1"
         eType="#//Method"/>
