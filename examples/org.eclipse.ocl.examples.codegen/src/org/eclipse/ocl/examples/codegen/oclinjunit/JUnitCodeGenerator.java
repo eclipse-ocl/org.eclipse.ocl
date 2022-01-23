@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.oclinjunit;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,14 +31,18 @@ import org.eclipse.ocl.examples.codegen.java.ImportUtils;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.java.JavaGlobalContext;
+import org.eclipse.ocl.examples.codegen.java.JavaImportNameManager;
 import org.eclipse.ocl.examples.codegen.java.JavaLocalContext;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.UniqueList;
 
 /**
  * JUnitCodeGenerator supports generation of an ExpressionInOCL for execution in a JUNit test.
@@ -112,6 +117,27 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		CGValuedElement cgBody = (CGValuedElement) ClassUtil.nonNullState(expInOcl.accept(as2cgVisitor));
 		cgOperation.setBody(cgBody);
 		cgClass.getOperations().add(cgOperation);
+		UniqueList<@NonNull Operation> foreignOperations = cgAnalyzer.getForeignOperations();
+		if (foreignOperations != null) {
+			JavaImportNameManager importNameManager = getImportNameManager();
+			Map <@NonNull String, @NonNull CGClass> name2class = new HashMap<>();
+			for (int i = 0; i < foreignOperations.size(); i++) {
+				@NonNull Operation foreignOperation = foreignOperations.get(i);
+				org.eclipse.ocl.pivot.Class foreignClass = PivotUtil.getOwningClass(foreignOperation);
+				String foreignClassName = getFlattenedClassName(foreignClass);
+				CGClass cgStaticClass = name2class.get(foreignClassName);
+				if (cgStaticClass == null) {
+					importNameManager.reserveLocalName(foreignClassName);
+					cgStaticClass = CGModelFactory.eINSTANCE.createCGClass();
+					cgStaticClass.setName(foreignClassName);
+					cgStaticClass.setAst(foreignClass);
+					cgClass.getClasses().add(cgStaticClass);
+					name2class.put(foreignClassName, cgStaticClass);
+				}
+				CGOperation cgForeignOperation = (CGOperation)foreignOperation.accept(as2cgVisitor);
+				cgStaticClass.getOperations().add(cgForeignOperation);
+			}
+		}
 		as2cgVisitor.popLocalContext(cgOperation);
 		as2cgVisitor.freeze();
 		return cgPackage;
@@ -130,6 +156,11 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		JUnitCG2JavaClassVisitor cg2JavaClassVisitor = new JUnitCG2JavaClassVisitor(this, expInOcl, sortedGlobals);
 		cg2JavaClassVisitor.safeVisit(cgPackage);
 		ImportNameManager importNameManager = cg2JavaClassVisitor.getImportNameManager();
+	//	for (@NonNull CGClass cgClass : cgPackage.getClasses()) {
+	//		for (@NonNull CGClass cgClass : cgPackage.getClasses()) {
+	//			importNameManager.reserveLocalName(CGUtil.getName(cgClass));
+	//		}
+	//	}
 		Map<@NonNull String, @Nullable String> long2ShortImportNames = importNameManager.getLong2ShortImportNames();
 		return ImportUtils.resolveImports(cg2JavaClassVisitor.toString(), long2ShortImportNames, false);
 	}
@@ -142,5 +173,10 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 	@Override
 	public @NonNull JavaGlobalContext<@NonNull JUnitCodeGenerator> getGlobalContext() {
 		return globalContext;
+	}
+
+	@Override
+	public @NonNull JavaImportNameManager getImportNameManager() {
+		return (JavaImportNameManager) super.getImportNameManager();
 	}
 }
