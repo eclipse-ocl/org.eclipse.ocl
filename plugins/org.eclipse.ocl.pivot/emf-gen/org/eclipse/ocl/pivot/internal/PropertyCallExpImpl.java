@@ -600,15 +600,15 @@ implements PropertyCallExp {
 						/*@Caught*/ @Nullable Object CAUGHT_safe_conformsTo_source;
 						try {
 							final /*@NonInvalid*/ @Nullable OCLExpression ownedSource = this.getOwnedSource();
-							final /*@NonInvalid*/ @NonNull Object type_0 = ownedSource == null;
+							final /*@NonInvalid*/ @NonNull Object type = ownedSource == null;
 							/*@Thrown*/ @Nullable Type safe_type_source;
-							if (type_0 == Boolean.TRUE) {
+							if (type == Boolean.TRUE) {
 								safe_type_source = null;
 							}
 							else {
 								assert ownedSource != null;
-								final /*@Thrown*/ @Nullable Type type = ownedSource.getType();
-								safe_type_source = type;
+								final /*@Thrown*/ @Nullable Type type_0 = ownedSource.getType();
+								safe_type_source = type_0;
 							}
 							/*@Caught*/ @Nullable Object CAUGHT_safe_type_source;
 							try {
@@ -822,8 +822,8 @@ implements PropertyCallExp {
 				try {
 					/*@Caught*/ @Nullable Object CAUGHT_and;
 					try {
-						final /*@NonInvalid*/ @Nullable OCLExpression ownedSource_0 = this.getOwnedSource();
-						final /*@NonInvalid*/ boolean ne = ownedSource_0 != null;
+						final /*@NonInvalid*/ @Nullable OCLExpression ownedSource = this.getOwnedSource();
+						final /*@NonInvalid*/ boolean ne = ownedSource != null;
 						final /*@Thrown*/ @Nullable Boolean and;
 						if (!ne) {
 							and = ValueUtil.FALSE_VALUE;
@@ -866,11 +866,11 @@ implements PropertyCallExp {
 					else {
 						/*@Caught*/ @NonNull Object CAUGHT_isNonNull;
 						try {
-							final /*@NonInvalid*/ @Nullable OCLExpression ownedSource = this.getOwnedSource();
-							if (ownedSource == null) {
+							final /*@NonInvalid*/ @Nullable OCLExpression ownedSource_0 = this.getOwnedSource();
+							if (ownedSource_0 == null) {
 								throw new InvalidValueException("Null source for \'pivot::OCLExpression::isNonNull() : Boolean[1]\'");
 							}
-							final /*@Thrown*/ boolean isNonNull = ownedSource.isNonNull();
+							final /*@Thrown*/ boolean isNonNull = ownedSource_0.isNonNull();
 							CAUGHT_isNonNull = isNonNull;
 						}
 						catch (Exception THROWN_isNonNull) {

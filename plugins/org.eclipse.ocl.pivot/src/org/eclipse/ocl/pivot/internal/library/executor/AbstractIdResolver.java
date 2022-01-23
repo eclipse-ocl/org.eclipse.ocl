@@ -1815,11 +1815,11 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 
 	@Override
 	public @NonNull Operation visitOperationId(@NonNull OperationId id) {
-		org.eclipse.ocl.pivot.Class domainType = (org.eclipse.ocl.pivot.Class) id.getParent().accept(this);
-		if (domainType == null) {
+		org.eclipse.ocl.pivot.Class asType = (org.eclipse.ocl.pivot.Class) id.getParent().accept(this);
+		if (asType == null) {
 			throw new UnsupportedOperationException();
 		}
-		CompleteInheritance inheritance = standardLibrary.getInheritance(domainType);
+		CompleteInheritance inheritance = standardLibrary.getInheritance(asType);
 		Operation memberOperation = inheritance.getMemberOperation(id);
 		if (memberOperation == null) {
 			throw new UnsupportedOperationException();
@@ -1838,11 +1838,11 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 
 	@Override
 	public @NonNull Property visitPropertyId(@NonNull PropertyId id) {
-		org.eclipse.ocl.pivot.Class domainType = (org.eclipse.ocl.pivot.Class) id.getParent().accept(this);
-		if (domainType == null) {
+		org.eclipse.ocl.pivot.Class asType = (org.eclipse.ocl.pivot.Class) id.getParent().accept(this);
+		if (asType == null) {
 			throw new UnsupportedOperationException();
 		}
-		CompleteInheritance inheritance = standardLibrary.getInheritance(domainType);
+		CompleteInheritance inheritance = standardLibrary.getInheritance(asType);
 		Property memberProperty = inheritance.getMemberProperty(id.getName());
 		if (memberProperty == null) {
 			throw new UnsupportedOperationException();

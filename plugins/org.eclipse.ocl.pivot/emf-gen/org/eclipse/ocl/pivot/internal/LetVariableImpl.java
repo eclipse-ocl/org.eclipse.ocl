@@ -125,11 +125,11 @@ public class LetVariableImpl extends VariableImpl implements LetVariable
 					}
 					else {
 						assert ownedInit != null;
-						final /*@Thrown*/ boolean isRequired_1 = ownedInit.isIsRequired();
-						safe_isRequired_source = isRequired_1;
+						final /*@Thrown*/ boolean isRequired = ownedInit.isIsRequired();
+						safe_isRequired_source = isRequired;
 					}
-					final /*@NonInvalid*/ boolean isRequired = this.isIsRequired();
-					final /*@Thrown*/ boolean result = (safe_isRequired_source == Boolean.TRUE) == isRequired;
+					final /*@NonInvalid*/ boolean isRequired_1 = this.isIsRequired();
+					final /*@Thrown*/ boolean result = (safe_isRequired_source == Boolean.TRUE) == isRequired_1;
 					CAUGHT_result = result;
 				}
 				catch (Exception THROWN_result) {
@@ -199,9 +199,9 @@ public class LetVariableImpl extends VariableImpl implements LetVariable
 							catch (Exception THROWN_type) {
 								CAUGHT_type = ValueUtil.createInvalidValue(THROWN_type);
 							}
-							final /*@NonInvalid*/ @NonNull Object conformsTo_0 = CAUGHT_type == null;
+							final /*@NonInvalid*/ @NonNull Object conformsTo = CAUGHT_type == null;
 							/*@Thrown*/ @Nullable Boolean safe_conformsTo_source;
-							if (conformsTo_0 == Boolean.TRUE) {
+							if (conformsTo == Boolean.TRUE) {
 								safe_conformsTo_source = null;
 							}
 							else {
@@ -209,8 +209,8 @@ public class LetVariableImpl extends VariableImpl implements LetVariable
 									throw new InvalidValueException("Null \'\'Type\'\' rather than \'\'OclVoid\'\' value required");
 								}
 								final /*@NonInvalid*/ @Nullable Type type_0 = this.getType();
-								final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, type_0).booleanValue();
-								safe_conformsTo_source = conformsTo;
+								final /*@Thrown*/ boolean conformsTo_0 = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, type_0).booleanValue();
+								safe_conformsTo_source = conformsTo_0;
 							}
 							CAUGHT_safe_conformsTo_source = safe_conformsTo_source;
 						}

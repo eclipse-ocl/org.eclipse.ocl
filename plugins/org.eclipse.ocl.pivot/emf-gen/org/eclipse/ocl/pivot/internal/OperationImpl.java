@@ -794,21 +794,21 @@ implements Operation {
 				try {
 					/*@Caught*/ @Nullable Object CAUGHT_and;
 					try {
-						final /*@NonInvalid*/ @Nullable LanguageExpression bodyExpression = this.getBodyExpression();
-						final /*@NonInvalid*/ boolean ne_0 = bodyExpression != null;
+						final /*@NonInvalid*/ @Nullable LanguageExpression bodyExpression_0 = this.getBodyExpression();
+						final /*@NonInvalid*/ boolean ne = bodyExpression_0 != null;
 						final /*@Thrown*/ @Nullable Boolean and;
-						if (!ne_0) {
+						if (!ne) {
 							and = ValueUtil.FALSE_VALUE;
 						}
 						else {
 							/*@Caught*/ @NonNull Object CAUGHT__l_g;
 							try {
-								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_ExpressionInOCL_0 = idResolver.getClass(PivotTables.CLSSid_ExpressionInOCL, null);
+								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_ExpressionInOCL = idResolver.getClass(PivotTables.CLSSid_ExpressionInOCL, null);
 								@SuppressWarnings("null")
-								final /*@Thrown*/ @NonNull ExpressionInOCL oclAsType = (@NonNull ExpressionInOCL)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, bodyExpression, TYP_ExpressionInOCL_0);
+								final /*@Thrown*/ @NonNull ExpressionInOCL oclAsType = (@NonNull ExpressionInOCL)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, bodyExpression_0, TYP_ExpressionInOCL);
 								final /*@Thrown*/ @Nullable OCLExpression ownedBody = oclAsType.getOwnedBody();
-								final /*@Thrown*/ boolean ne = ownedBody != null;
-								CAUGHT__l_g = ne;
+								final /*@Thrown*/ boolean ne_0 = ownedBody != null;
+								CAUGHT__l_g = ne_0;
 							}
 							catch (Exception THROWN__l_g) {
 								CAUGHT__l_g = ValueUtil.createInvalidValue(THROWN__l_g);
@@ -835,8 +835,8 @@ implements Operation {
 					else {
 						/*@Caught*/ @NonNull Object CAUGHT_CompatibleBody;
 						try {
-							final /*@NonInvalid*/ @Nullable LanguageExpression bodyExpression_0 = this.getBodyExpression();
-							final /*@Thrown*/ boolean CompatibleBody = this.CompatibleBody(bodyExpression_0);
+							final /*@NonInvalid*/ @Nullable LanguageExpression bodyExpression = this.getBodyExpression();
+							final /*@Thrown*/ boolean CompatibleBody = this.CompatibleBody(bodyExpression);
 							CAUGHT_CompatibleBody = CompatibleBody;
 						}
 						catch (Exception THROWN_CompatibleBody) {
