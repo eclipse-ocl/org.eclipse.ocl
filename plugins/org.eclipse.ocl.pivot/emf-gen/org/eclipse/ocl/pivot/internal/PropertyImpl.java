@@ -122,7 +122,7 @@ implements Property {
 	 * @generated
 	 * @ordered
 	 */
-	public static final int PROPERTY_OPERATION_COUNT = FeatureImpl.FEATURE_OPERATION_COUNT + 2;
+	public static final int PROPERTY_OPERATION_COUNT = FeatureImpl.FEATURE_OPERATION_COUNT + 3;
 
 	/**
 	 * The cached value of the '{@link #getAssociationClass() <em>Association Class</em>}' reference.
@@ -1190,6 +1190,117 @@ implements Property {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
+	public boolean validateStaticPropertyHasInitializer(final DiagnosticChain diagnostics, final Map<Object, Object> context)
+	{
+		final @NonNull String constraintName = "Property::StaticPropertyHasInitializer";
+		try {
+			/**
+			 *
+			 * inv StaticPropertyHasInitializer:
+			 *   let severity : Integer[1] = constraintName.getSeverity()
+			 *   in
+			 *     if severity <= 0
+			 *     then true
+			 *     else
+			 *       let result : Boolean[?] = isStatic implies ownedExpression <> null or defaultValueString <> null or implementationClass <> null
+			 *       in
+			 *         constraintName.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
+			 *     endif
+			 */
+			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this);
+			final /*@NonInvalid*/ @NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.PROPERTY___VALIDATE_STATIC_PROPERTY_HAS_INITIALIZER__DIAGNOSTICCHAIN_MAP);
+			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
+			/*@NonInvalid*/ boolean symbol_0;
+			if (le) {
+				symbol_0 = true;
+			}
+			else {
+				/*@Caught*/ @Nullable Object CAUGHT_result;
+				try {
+					final /*@NonInvalid*/ boolean isStatic = this.isIsStatic();
+					final /*@Thrown*/ @Nullable Boolean result;
+					if (!isStatic) {
+						result = ValueUtil.TRUE_VALUE;
+					}
+					else {
+						/*@Caught*/ @Nullable Object CAUGHT_or_0;
+						try {
+							final /*@NonInvalid*/ @Nullable LanguageExpression ownedExpression = this.getOwnedExpression();
+							final /*@NonInvalid*/ boolean ne = ownedExpression != null;
+							final /*@NonInvalid*/ @Nullable Boolean or;
+							if (ne) {
+								or = ValueUtil.TRUE_VALUE;
+							}
+							else {
+								final /*@NonInvalid*/ @Nullable String defaultValueString = this.getDefaultValueString();
+								final /*@NonInvalid*/ boolean ne_0 = defaultValueString != null;
+								if (ne_0) {
+									or = ValueUtil.TRUE_VALUE;
+								}
+								else {
+									or = ValueUtil.FALSE_VALUE;
+								}
+							}
+							final /*@Thrown*/ @Nullable Boolean or_0;
+							if (or == ValueUtil.TRUE_VALUE) {
+								or_0 = ValueUtil.TRUE_VALUE;
+							}
+							else {
+								final /*@NonInvalid*/ @Nullable String implementationClass = this.getImplementationClass();
+								final /*@NonInvalid*/ boolean ne_1 = implementationClass != null;
+								if (ne_1) {
+									or_0 = ValueUtil.TRUE_VALUE;
+								}
+								else {
+									if (or == null) {
+										or_0 = null;
+									}
+									else {
+										or_0 = ValueUtil.FALSE_VALUE;
+									}
+								}
+							}
+							CAUGHT_or_0 = or_0;
+						}
+						catch (Exception e) {
+							CAUGHT_or_0 = ValueUtil.createInvalidValue(e);
+						}
+						if (CAUGHT_or_0 == ValueUtil.TRUE_VALUE) {
+							result = ValueUtil.TRUE_VALUE;
+						}
+						else {
+							if (CAUGHT_or_0 instanceof InvalidValueException) {
+								throw (InvalidValueException)CAUGHT_or_0;
+							}
+							if (CAUGHT_or_0 == null) {
+								result = null;
+							}
+							else {
+								result = ValueUtil.FALSE_VALUE;
+							}
+						}
+					}
+					CAUGHT_result = result;
+				}
+				catch (Exception e) {
+					CAUGHT_result = ValueUtil.createInvalidValue(e);
+				}
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_result, PivotTables.INT_0).booleanValue();
+				symbol_0 = logDiagnostic;
+			}
+			return symbol_0;
+		}
+		catch (Throwable e) {
+			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd,
@@ -1643,6 +1754,8 @@ implements Property {
 				return isAttribute((Property)arguments.get(0));
 			case 7:
 				return validateCompatibleDefaultExpression((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
+			case 8:
+				return validateStaticPropertyHasInitializer((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return eDynamicInvoke(operationID, arguments);
 	}

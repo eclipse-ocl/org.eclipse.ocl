@@ -806,7 +806,10 @@
     <ownedClasses xmi:id="Gm0Mj" name="Property" superClasses="#nphZD">
       <ownedComments body="A Property is a StructuralFeature. A Property related by ownedAttribute to a Classifier (other than an association) represents an attribute and might also represent an association end. It relates an instance of the Classifier to a value or set of values of the type of the attribute. A Property related by memberEnd to an Association represents an end of the Association. The type of the Property is the type of the end of the Association. A Property has the capability of being a DeploymentTarget in a Deployment relationship. This enables modeling the deployment to hierarchical nodes that have Properties functioning as internal parts.  Property specializes ParameterableElement to specify that a Property can be exposed as a formal template parameter, and provided as an actual parameter in a binding of a template."/>
       <ownedInvariants xmi:id="rSkQY" isCallable="true" name="CompatibleDefaultExpression">
-        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="ownedExpression &lt;> null and ownedExpression.oclAsType(ExpressionInOCL).ownedBody &lt;> null implies CompatibleBody(ownedExpression)&#xA;&#xA;"/>
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="ownedExpression &lt;> null and ownedExpression.oclAsType(ExpressionInOCL).ownedBody &lt;> null implies CompatibleBody(ownedExpression)&#xA;"/>
+      </ownedInvariants>
+      <ownedInvariants xmi:id="R7Xoo" isCallable="true" name="StaticPropertyHasInitializer">
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="isStatic implies ownedExpression &lt;> null or defaultValueString &lt;> null or implementationClass &lt;> null&#xA;&#xA;"/>
       </ownedInvariants>
       <ownedOperations xmi:id="nycUW" name="isAttribute" type="#ZuwnB">
         <bodyExpression xsi:type="pivot:ExpressionInOCL" body="&#xA;--Type.allInstances()->exists(c| c.ownedAttribute->includes(p))&#xA;let container : ocl::OclElement = oclContainer() in container.oclIsKindOf(Class) and container.oclAsType(Class).ownedProperties->includes(self)&#xA;&#xA;"/>

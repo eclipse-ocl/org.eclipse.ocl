@@ -481,6 +481,13 @@ public interface Property extends Feature {
 	boolean validateCompatibleDefaultExpression(DiagnosticChain diagnostics, Map<Object, Object> context);
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	boolean validateStaticPropertyHasInitializer(DiagnosticChain diagnostics, Map<Object, Object> context);
+
+	/**
 	 * Returns the value of the '<em><b>Owning Class</b></em>' container reference.
 	 * It is bidirectional and its opposite is '{@link org.eclipse.ocl.pivot.Class#getOwnedProperties <em>Owned Properties</em>}'.
 	 * <!-- begin-user-doc -->

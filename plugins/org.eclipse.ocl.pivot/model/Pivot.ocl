@@ -74,6 +74,7 @@ let container : ocl::OclElement = oclContainer() in container.oclIsKindOf(Class)
 --inv CompatibleInitializer: isDerived implies defaultExpression <> null
 
 inv CompatibleDefaultExpression: ownedExpression <> null and ownedExpression.oclAsType(ExpressionInOCL).ownedBody <> null implies CompatibleBody(ownedExpression)
+inv StaticPropertyHasInitializer: isStatic implies ownedExpression <> null or defaultValueString <> null or implementationClass <> null
 
 context OCLExpression
 inv TypeIsNotNull : type <> null
