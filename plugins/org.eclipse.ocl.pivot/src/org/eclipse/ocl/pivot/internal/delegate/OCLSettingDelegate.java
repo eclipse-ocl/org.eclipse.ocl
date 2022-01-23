@@ -125,37 +125,30 @@ public class OCLSettingDelegate extends BasicSettingDelegate.Stateless
 	@Override
 	protected Object get(InternalEObject ecoreObject, boolean resolve, boolean coreType) {
 		assert ecoreObject != null;
+		ModelManager modelManager = PivotUtil.getModelManager(ecoreObject);
+		ExpressionInOCL query = getQuery();
+		Executor savedExecutor = ThreadLocalExecutor.basicGetExecutor();
 		try {
+			if (savedExecutor != null) {
+				ThreadLocalExecutor.setExecutor(null);		// New evaluation needs new root EvaluationEnvironment and so new Executor, but old modelManager
+			}
 			EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(ecoreObject);
-			Executor executor = PivotUtil.getExecutor(ecoreObject);
-			ModelManager modelManager = executor.getModelManager();
-			ExpressionInOCL query = getQuery();
-			Executor savedExecutor = ThreadLocalExecutor.basicGetExecutor();
-			try {
-				if (savedExecutor != null) {
-					ThreadLocalExecutor.setExecutor(null);		// New evaluation needs new root EvaluationEnvironment and so new Executor, but old modelManager
-				}
-				VariableDeclaration contextVariable = PivotUtil.getOwnedContext(query);
-				OCLExpression expression = PivotUtil.getOwnedBody(query);
-				Class<?> instanceClass = eStructuralFeature.getEType().getInstanceClass();
-				IdResolver idResolver = environmentFactory.getIdResolver();
-				Object boxedValue = idResolver.boxedValueOf(ecoreObject);
-				EvaluationEnvironment evaluationEnvironment = environmentFactory.createEvaluationEnvironment(query, modelManager);
-				evaluationEnvironment.add(contextVariable, boxedValue);
-				EvaluationVisitor ev = environmentFactory.createEvaluationVisitor(evaluationEnvironment);
-			//	try {
-					Object boxedResult = expression.accept(ev);
-					return idResolver.ecoreValueOf(instanceClass, boxedResult);
-			//	} catch (EvaluationHaltedException e) {
-			//		throw e;
-			//	}
-			}
-			finally {
-				ThreadLocalExecutor.setExecutor(savedExecutor);		// Restore invoker's executor
-			}
+			EvaluationEnvironment evaluationEnvironment = environmentFactory.createEvaluationEnvironment(query, modelManager);
+			EvaluationVisitor evaluationVisitor = environmentFactory.createEvaluationVisitor(evaluationEnvironment);
+			IdResolver idResolver = environmentFactory.getIdResolver();
+			Object boxedValue = idResolver.boxedValueOf(ecoreObject);
+			VariableDeclaration contextVariable = PivotUtil.getOwnedContext(query);
+			OCLExpression expression = PivotUtil.getOwnedBody(query);
+			evaluationEnvironment.add(contextVariable, boxedValue);
+			Object boxedResult = expression.accept(evaluationVisitor);		// New executor,evaluationVisitor,evaluationEnvironment old environmentFactory,modelManager
+			Class<?> instanceClass = eStructuralFeature.getEType().getInstanceClass();
+			return idResolver.ecoreValueOf(instanceClass, boxedResult);
 		}
 		catch (EvaluationException e) {
 			throw new OCLDelegateException(new EvaluationException(e, PivotMessagesInternal.EvaluationResultIsInvalid_ERROR_, property));
+		}
+		finally {
+			ThreadLocalExecutor.setExecutor(savedExecutor);		// Restore invoker's executor
 		}
 	}
 
@@ -178,10 +171,16 @@ public class OCLSettingDelegate extends BasicSettingDelegate.Stateless
 		if (query2 == null) {
 		//	OCL ocl = delegateDomain.getOCL();
 		//	MetamodelManager metamodelManager = ocl.getMetamodelManager();
-			EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(null);
-			Property property2 = getProperty();
-			query2 = query = SettingBehavior.INSTANCE.getQueryOrThrow(environmentFactory.getMetamodelManager(), property2);
-			SettingBehavior.INSTANCE.validate(property2);
+			Executor savedExecutor = ThreadLocalExecutor.basicGetExecutor();
+			try {
+				EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(null);
+				Property property2 = getProperty();
+				query2 = query = SettingBehavior.INSTANCE.getQueryOrThrow(environmentFactory.getMetamodelManager(), property2);
+				SettingBehavior.INSTANCE.validate(property2);
+			}
+			finally {
+				ThreadLocalExecutor.setExecutor(savedExecutor);
+			}
 		}
 		return query2;
 	}
