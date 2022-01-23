@@ -37,18 +37,26 @@ import org.eclipse.ocl.examples.codegen.generator.GenModelHelper;
 import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
+import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreCodeGenerator.FeatureBody;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Feature;
+import org.eclipse.ocl.pivot.LanguageExpression;
+import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VariableDeclaration;
+import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.ids.TemplateableId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.library.AbstractStaticOperation;
+import org.eclipse.ocl.pivot.internal.library.AbstractStaticProperty;
+import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -118,8 +126,8 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 		return null;
 	}
 
-	public @NonNull Map<String, String> generateBodies() {
-		Map<String, String> bodies = new HashMap<String, String>();
+	public @NonNull Map<@NonNull String, @NonNull FeatureBody> generateBodies() {
+		Map<@NonNull String, @NonNull FeatureBody> bodies = new HashMap<>();
 		for (CGClass cgClass : cgPackage.getClasses()) {
 			for (CGConstraint cgConstraint : cgClass.getInvariants()) {
 				CGValuedElement cgBody = cgConstraint.getBody();
@@ -130,29 +138,37 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 					localContext = globalContext.basicGetLocalContext(cgConstraint);
 					String bodyText = generateValidatorBody(cgBody, asConstraint, (org.eclipse.ocl.pivot.Class)pivotClass);
 					String fragmentURI = getFragmentURI(pivotClass) + "==" + getRuleName(asConstraint);
-					bodies.put(fragmentURI, bodyText);
+					bodies.put(fragmentURI, new FeatureBody(fragmentURI, false, "n/a", bodyText));
 				}
 			}
-			for (CGOperation cgOperation : cgClass.getOperations()) {
+			for (@NonNull CGOperation cgOperation : ClassUtil.nullFree(cgClass.getOperations())) {
+				Operation asOperation = CGUtil.getAST(cgOperation);
+				FeatureBody body = null;
 				CGValuedElement cgBody = cgOperation.getBody();
-				Element asOperation = cgOperation.getAst();
-				if ((cgBody != null) && (asOperation instanceof Operation)) {
-					String returnClassName = genModelHelper.getOperationReturnType((Operation)asOperation);
+				if (cgBody != null) {
+					String returnClassName = genModelHelper.getOperationReturnType(asOperation);
 					localContext = globalContext.basicGetLocalContext(cgOperation);
 					String bodyText = generateBody(cgOperation.getParameters(), cgBody, returnClassName);
 					String fragmentURI = getFragmentURI(asOperation);
-					bodies.put(fragmentURI, bodyText);
+					body = new FeatureBody(fragmentURI, asOperation.isIsStatic(), "n/a", bodyText);
+				}
+				if (body != null) {
+					bodies.put(body.getURI(), body);
 				}
 			}
 			for (CGProperty cgProperty : cgClass.getProperties()) {
 				CGValuedElement cgBody = cgProperty.getBody();
-				Element asProperty = cgProperty.getAst();
-				if ((cgBody != null) && (asProperty instanceof Property)) {
-					String returnClassName = genModelHelper.getPropertyResultType((Property)asProperty);
+				Property asProperty = CGUtil.getAST(cgProperty);
+				FeatureBody body = null;
+				if (cgBody != null) {
+					String returnClassName = genModelHelper.getPropertyResultType(asProperty);
 					localContext = globalContext.basicGetLocalContext(cgProperty);
 					String bodyText = generateBody(null, cgBody, returnClassName);
 					String fragmentURI = getFragmentURI(asProperty);
-					bodies.put(fragmentURI, bodyText);
+					body = new FeatureBody(fragmentURI, asProperty.isIsStatic(), "n/a", bodyText);
+				}
+				if (body != null) {
+					bodies.put(body.getURI(), body);
 				}
 			}
 		}
@@ -202,6 +218,156 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 			generateGlobals(sortedGlobals);
 		}
 		return toString();
+	}
+
+	protected @NonNull FeatureBody generateStaticOperation(@NonNull CGOperation cgOperation) {
+		localContext = globalContext.getLocalContext(cgOperation);
+		js.resetStream();
+		//
+		Operation asOperation = CGUtil.getAST(cgOperation);
+		assert asOperation.isIsStatic();
+		String className = "SO_" + context.getFlattenedClassName(PivotUtil.getOwningClass(asOperation));
+		List<CGParameter> cgParameters = cgOperation.getParameters();
+		LanguageExpression expressionInOCL = asOperation.getBodyExpression();
+		CGValuedElement cgBody = cgOperation.getBody();
+		assert cgBody != null;
+		String title = PrettyPrinter.printName(asOperation);
+		js.append("\n");
+		js.append("/**\n");
+		js.append(" *\t");
+		js.append(title);
+		js.append("\n");
+		js.append(" */\n");
+		js.append("public static class " + className + " extends ");
+		js.appendClassReference(null, AbstractStaticOperation.class);
+		js.pushClassBody(className);
+
+		js.append("public static final ");
+		js.appendIsRequired(true);
+		js.append(" ");
+		js.append(className);
+		js.append(" ");
+		js.append(globalContext.getInstanceName());
+		js.append(" = new ");
+		js.append(className);
+		js.append("();\n");
+		js.append("\n");
+
+		js.appendCommentWithOCL(null, expressionInOCL);
+	//	js.append("@Override\n");
+		js.append("public ");
+		boolean cgOperationIsInvalid = cgOperation.getInvalidValue() != null;
+		js.appendIsCaught(!cgOperationIsInvalid, cgOperationIsInvalid);
+		js.append(" ");
+		js.appendClassReference(cgOperation.isRequired() ? true : null, cgOperation);
+		js.append(" ");
+		js.append(globalContext.getEvaluateName());
+		js.append("(");
+		boolean isFirst = true;
+		for (@SuppressWarnings("null")@NonNull CGParameter cgParameter : cgParameters) {
+			if (!isFirst) {
+				js.append(", ");
+			}
+			js.appendDeclaration(cgParameter);
+			isFirst = false;
+		}
+		js.append(") {\n");
+		js.pushIndentation(null);
+		appendReturn(cgBody);
+		js.popIndentation();
+		js.append("}\n");
+		js.popClassBody(false);
+		assert js.peekClassNameStack() == null;
+		String bodyText = toString();
+		String fragmentURI = getFragmentURI(asOperation);
+		return new FeatureBody(fragmentURI, true, className, bodyText);
+	}
+
+	protected @NonNull FeatureBody generateStaticProperty(@NonNull CGProperty cgProperty) {
+		localContext = globalContext.getLocalContext(cgProperty);
+		js.resetStream();
+		//
+		Property asProperty = CGUtil.getAST(cgProperty);
+		assert asProperty.isIsStatic();
+		String className = "SP_" + context.getFlattenedClassName(PivotUtil.getOwningClass(asProperty));
+		LanguageExpression expressionInOCL = asProperty.getOwnedExpression();
+		CGValuedElement cgBody = cgProperty.getBody();
+		assert cgBody != null;
+		String title = PrettyPrinter.printName(asProperty);
+		js.append("\n");
+		js.append("/**\n");
+		js.append(" *\t");
+		js.append(title);
+		js.append("\n");
+		js.append(" */\n");
+		js.append("public static class " + className + " extends ");
+		js.appendClassReference(null, AbstractStaticProperty.class);
+		js.pushClassBody(className);
+
+		js.append("public static final ");
+		js.appendIsRequired(true);
+		js.append(" ");
+		js.append(className);
+		js.append(" ");
+		js.append(globalContext.getInstanceName());
+		js.append(" = new ");
+		js.append(className);
+		js.append("(");
+		appendIdPath(asProperty);
+		js.append(");\n");
+		js.append("\n");
+
+		js.append("private ");
+		js.append(className);
+		js.append("() {\n");
+		js.pushIndentation(null);
+		js.append("super(");
+	//	js.append(className);
+		js.append(");\n");
+		js.popIndentation();
+		js.append("}\n");
+		js.append("\n");
+
+		js.appendCommentWithOCL(null, expressionInOCL);
+		js.append("@Override\n");
+		js.append("public ");
+		boolean cgPropertyIsInvalid = cgProperty.getInvalidValue() != null;
+		js.appendIsCaught(!cgPropertyIsInvalid, cgPropertyIsInvalid);
+		js.append(" ");
+		js.appendClassReference(false, Object.class);
+		js.append(" initialValue(");
+		js.appendClassReference(true, Executor.class);
+		js.append(JavaConstants.EXECUTOR_NAME);
+		js.append(") {\n");
+		js.pushIndentation(null);
+		appendReturn(cgBody);
+		js.popIndentation();
+		js.append("}\n");
+		js.popClassBody(false);
+		assert js.peekClassNameStack() == null;
+		String bodyText = toString();
+		String fragmentURI = getFragmentURI(asProperty);
+		return new FeatureBody(fragmentURI, true, className, bodyText);
+	}
+
+	private void appendIdPath(@NonNull Element element) {
+		EObject parent = element.eContainer();
+		if ((parent instanceof Element) && !(parent instanceof Model)) {
+			appendIdPath((Element)parent);
+			js.append(", ");
+		}
+		if (element instanceof org.eclipse.ocl.pivot.Package) {
+			js.appendString(((org.eclipse.ocl.pivot.Package)element).getPackageId().getDisplayName());
+		}
+		else if (element instanceof Type) {
+			js.appendString(((TemplateableId)((Type)element).getTypeId()).getName());
+		}
+		else if (element instanceof Property) {
+			js.appendString(((Property)element).getPropertyId().getName());
+		}
+		else {
+			throw new UnsupportedOperationException("OCLinEcoreCG2JavaVisitor.appendIdPath for " + element.getClass().getSimpleName());
+		}
 	}
 
 	protected @NonNull String generateValidatorBody(@NonNull CGValuedElement cgBody, @NonNull Constraint asConstraint, org.eclipse.ocl.pivot.@NonNull Class asType) {
@@ -295,9 +461,6 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 			return true;
 		}
 		if (globalConstant != null) {
-			if (!cgConstantExp.isInlined()) {
-				appendGlobalPrefix();
-			}
 			js.appendValueName(globalConstant);
 		}
 		return true;

@@ -23,18 +23,6 @@ public class OCLinEcoreLocalContext extends JavaLocalContext<@NonNull OCLinEcore
 {
 	public OCLinEcoreLocalContext(@NonNull OCLinEcoreGlobalContext globalContext, @Nullable OCLinEcoreLocalContext outerContext, @NonNull CGNamedElement cgScope, @NonNull NamedElement asScope) {
 		super(globalContext, outerContext, cgScope, asScope, false);
-/*		if (cgScope instanceof CGConstraint) {
-			this.contextName = queueValueName(globalContext.getContextParameter());
-			this.diagnosticsName = queueValueName(globalContext.getDiagnosticsParameter());
-			this.messageName = queueValueName(globalContext.getMessageParameter());
-			this.severityName = queueValueName(globalContext.getSeverityParameter());
-		}
-		else {
-			this.contextName = null;
-			this.diagnosticsName = null;
-			this.messageName = null;
-			this.severityName = null;
-		} */
 	}
 
 	@Override

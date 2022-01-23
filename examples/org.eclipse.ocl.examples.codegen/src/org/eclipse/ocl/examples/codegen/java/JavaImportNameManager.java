@@ -81,7 +81,7 @@ public class JavaImportNameManager extends AbstractImportNameManager
 	 * Reserve and return the short class name for the oot-separate newLongName.
 	 * Returns null if no short name can be allocated - reserved for a primitive/important class or another user class.
 	 */
-	private @Nullable String addImport(@NonNull String newLongName) {
+	public @Nullable String addImport(@NonNull String newLongName) {
 		int index = newLongName.lastIndexOf(".");
 		String shortName = index >= 0 ? newLongName.substring(index+1) : newLongName;
 		String oldLongName = short2longName.get(shortName);
@@ -147,5 +147,16 @@ public class JavaImportNameManager extends AbstractImportNameManager
 		reserveImportName(int.class);
 		reserveImportName(long.class);
 		reserveImportName(short.class);
+	}
+
+	/**
+	 * Register classname as a locally defined nested class to prevent its use as an imported name.
+	 * THrows an IllegalStateException if already reserved.
+	 */
+	public void reserveLocalName(@NonNull String className) {
+		String oldName = short2longName.put(className, className);
+		if (oldName != null) {
+			throw new IllegalStateException(className + " already reserved");
+		}
 	}
 }
