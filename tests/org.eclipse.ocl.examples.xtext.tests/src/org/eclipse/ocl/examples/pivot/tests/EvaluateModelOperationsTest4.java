@@ -11,6 +11,7 @@
 
 package org.eclipse.ocl.examples.pivot.tests;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -20,9 +21,11 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -30,9 +33,12 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.genmodel.OCLGenModelUtil;
+import org.eclipse.ocl.examples.xtext.tests.TestFile;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.examples.xtext.tests.company.CompanyPackage;
 import org.eclipse.ocl.pivot.Property;
@@ -45,15 +51,20 @@ import org.eclipse.ocl.pivot.ids.PropertyId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.evaluation.AbstractExecutor;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorManager;
+import org.eclipse.ocl.pivot.internal.library.executor.LazyEcoreModelManager;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.values.BagImpl;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
+import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.Value;
@@ -83,6 +94,53 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 
 	protected @NonNull TestOCL createOCLWithProjectMap() {
 		return new TestOCL(getTestFileSystem(), getTestPackageName(), getName(), getProjectMap(), null);
+	}
+
+	protected void createPeopleModel(@NonNull ResourceSet resourceSet, @NonNull URI fileURI, @NonNull Resource personMetamodel) throws IOException {
+		EPackage ePackage = (EPackage) personMetamodel.getContents().get(0);
+		EClass personClass = ClassUtil.nonNullState((EClass) ePackage.getEClassifier("Person"));
+		EAttribute nameAttribute = ClassUtil.nonNullState((EAttribute) personClass.getEStructuralFeature("name"));
+		EReference childrenReference = ClassUtil.nonNullState((EReference) personClass.getEStructuralFeature("children"));
+		XMLResource model = (XMLResource) resourceSet.createResource(fileURI);
+		EObject root = eCreate(personClass);
+		int nameCounter = 1;
+		root.eSet(nameAttribute, "" + nameCounter++);
+		model.getContents().add(root);
+		List<EObject> children = (List<EObject>)root.eGet(childrenReference);
+		for (int i = 0; i < 4; i++) {
+			EObject child = eCreate(personClass);
+			child.eSet(nameAttribute, "" + nameCounter++);
+			children.add(child);
+			List<EObject> grandchildren = (List<EObject>)child.eGet(childrenReference);
+			for (int j = 0; j < 4; j++) {
+				EObject grandchild = eCreate(personClass);
+				grandchild.eSet(nameAttribute, "" + nameCounter++);
+				grandchildren.add(grandchild);
+				List<EObject> greatgrandchildren = (List<EObject>)grandchild.eGet(childrenReference);
+				for (int k = 0; k < 4; k++) {
+					EObject greatgrandchild = eCreate(personClass);
+					greatgrandchild.eSet(nameAttribute, "" + nameCounter++);
+					greatgrandchildren.add(greatgrandchild);
+				}
+			}
+		}
+		Map<Object, Object> modelSaveOptions = XMIUtil.createSaveOptions(model);
+		modelSaveOptions.put(XMLResource.OPTION_SCHEMA_LOCATION, Boolean.TRUE);
+		model.save(modelSaveOptions);
+	}
+
+	protected @NonNull XMLResource createPersonMetamodel(@NonNull EnvironmentFactory environmentFactory) throws IOException {
+		String metamodelText =
+				"package statics : pfx = 'http://staticCompleteOCL'\n" +
+				"{\n" +
+				"	class Person\n" +
+				"	{\n" +
+				"		property name : String[1];\n" +
+				"		property parent#children : Person[?];\n" +
+				"		property children#parent : Person[*|1] { ordered composes };\n" +
+				"	}\n" +
+				"}\n";
+		return (XMLResource) cs2ecore(environmentFactory, metamodelText, getTestFileURI("person.ecore"));
 	}
 
 	@Override
@@ -633,6 +691,53 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 			assertEquals(9, ExecutorManager.CONSTRUCTION_COUNT - oldExecutorManager_CONSTRUCTION_COUNT);							// 1 per validate
 			assertEquals(0, AbstractModelManager.CONSTRUCTION_COUNT - oldAbstractModelManager_CONSTRUCTION_COUNT);
 		}
+	}
+
+	/**
+	 * Test the allocation of a complement that defines a statically unqiue id to each element.
+	 */
+	@Test public void test_static_ids() throws Exception {
+		TestUtil.doCompleteOCLSetup();
+		OCL ocl1 = createOCL();
+		EnvironmentFactory environmentFactory1 = ocl1.getEnvironmentFactory();
+		Resource metamodel = createPersonMetamodel(environmentFactory1);
+		String completeOCLtext =
+				"package ocl\n" +
+				"context OclElement\n" +
+				"	static def: employee2index : Map(OclElement,Integer)\n" +
+				"		= ocl::OclElement.allInstances()->asSequence()->collectBy(value with index | index)\n" +
+				"	def: id : String\n" +
+				"		= employee2index->at(self).toString()\n" +
+				"endpackage\n";
+		TestFile oclFile = createFile("ids.ocl", completeOCLtext);
+		URI testFileURI = getTestFileURI("people.xmi");
+		createPeopleModel(ocl1.getResourceSet(), testFileURI, metamodel);
+		//
+		ThreadLocalExecutor.resetEnvironmentFactory();
+		TestOCL ocl2 = createOCL();
+		Resource loadedResource = ocl2.getResourceSet().getResource(testFileURI, true);
+		EObject root = loadedResource.getContents().get(0);
+		EClass personClass = root.eClass();
+		EAttribute nameAttribute = ClassUtil.nonNullState((EAttribute) personClass.getEStructuralFeature("name"));
+		EReference childrenReference = ClassUtil.nonNullState((EReference) personClass.getEStructuralFeature("children"));
+		//
+		ModelManager modelManager = new LazyEcoreModelManager(root);
+		ocl2.setModelManager(modelManager);
+		//
+		CSResource xtextResource = ocl2.getCSResource(oclFile.getURI(), completeOCLtext);
+		assertNoResourceErrors("Load ids.ocl", xtextResource);
+		assertNoValidationErrors("Load ids.ocl", xtextResource);
+		ASResource asResource = xtextResource.getASResource();
+		assertNoResourceErrors("Load ids.oclas", asResource);
+		assertNoValidationErrors("Load ids.oclas", asResource);
+		//
+		@SuppressWarnings("unchecked")
+		List<EObject> loadedChildren = (List<EObject>)root.eGet(childrenReference);
+		ocl2.assertQueryEquals(root, root.eGet(nameAttribute), "self.id");			// Exploits the selective determinism of allInstances() and SetValue
+		ocl2.assertQueryEquals(loadedChildren.get(2), loadedChildren.get(2).eGet(nameAttribute), "self.id");
+		//
+		ocl1.dispose();
+		ocl2.dispose();
 	}
 
 	/**

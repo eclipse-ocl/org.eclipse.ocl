@@ -90,7 +90,7 @@ public abstract class AbstractModelManager implements ModelManager.ModelManagerE
 		Object value = staticPropertyId2value2.get(propertyId);
 		if (value == null) {
 			if (initExpression != null) {
-				Executor executor = PivotUtil.getExecutor(initExpression);
+				Executor executor = PivotUtil.getExecutor(null);		// use this ModelManager
 				value = executor.evaluate(initExpression);
 			}
 			else {
