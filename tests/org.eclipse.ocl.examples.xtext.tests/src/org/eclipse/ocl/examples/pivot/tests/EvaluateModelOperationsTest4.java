@@ -37,11 +37,14 @@ import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.examples.xtext.tests.company.CompanyPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.evaluation.AbstractModelManager;
+import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.evaluation.NullModelManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PropertyId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.evaluation.AbstractExecutor;
+import org.eclipse.ocl.pivot.internal.library.executor.ExecutorManager;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.values.BagImpl;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
@@ -568,6 +571,8 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 
 	@Test
 	public void test_ecore_number_equality() throws Exception {
+		int oldAbstractExecutor_CONSTRUCTION_COUNT = AbstractExecutor.CONSTRUCTION_COUNT;
+		int oldExecutorManager_CONSTRUCTION_COUNT = ExecutorManager.CONSTRUCTION_COUNT;
 		int oldAbstractModelManager_CONSTRUCTION_COUNT = AbstractModelManager.CONSTRUCTION_COUNT;
 		TestOCL ocl = createOCL();
 		//
@@ -580,12 +585,33 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryOCLEquals(null, Float.valueOf(255), "255");
 		ocl.assertQueryOCLEquals(null, Double.valueOf(255), "255");
 		ocl.assertQueryOCLEquals(null, BigDecimal.valueOf(255), "255");
-		int newAbstractModelManager_CONSTRUCTION_COUNT = AbstractModelManager.CONSTRUCTION_COUNT;
-		assertEquals(useCodeGen ? 0 : 9, newAbstractModelManager_CONSTRUCTION_COUNT - oldAbstractModelManager_CONSTRUCTION_COUNT);	// FIXME Bug 578335
+		if (useCodeGen) {
+			assertEquals(0, AbstractExecutor.CONSTRUCTION_COUNT - oldAbstractExecutor_CONSTRUCTION_COUNT);
+			assertEquals(18, ExecutorManager.CONSTRUCTION_COUNT - oldExecutorManager_CONSTRUCTION_COUNT);							// 1 per validate, 1 per evaluate
+			assertEquals(0, AbstractModelManager.CONSTRUCTION_COUNT - oldAbstractModelManager_CONSTRUCTION_COUNT);
+		}
+		else {
+			assertEquals(9, AbstractExecutor.CONSTRUCTION_COUNT - oldAbstractExecutor_CONSTRUCTION_COUNT);							// 1 per interpreted evaluate
+			assertEquals(9, ExecutorManager.CONSTRUCTION_COUNT - oldExecutorManager_CONSTRUCTION_COUNT);							// 1 per validate
+			assertEquals(9, AbstractModelManager.CONSTRUCTION_COUNT - oldAbstractModelManager_CONSTRUCTION_COUNT);					// FIXME Bug 578335
+		}
 		//
+		oldAbstractExecutor_CONSTRUCTION_COUNT = AbstractExecutor.CONSTRUCTION_COUNT;
+		oldExecutorManager_CONSTRUCTION_COUNT = ExecutorManager.CONSTRUCTION_COUNT;
+		oldAbstractModelManager_CONSTRUCTION_COUNT = AbstractModelManager.CONSTRUCTION_COUNT;
 		ocl.setModelManager(new NullModelManager());;
-		assertEquals(1, AbstractModelManager.CONSTRUCTION_COUNT - newAbstractModelManager_CONSTRUCTION_COUNT);
+		Executor executor = PivotUtil.getExecutor(null);								// Not actually used - makes no difference to constructions
+		assertEquals(executor, ThreadLocalExecutor.basicGetExecutor());
+		assertEquals(0, AbstractExecutor.CONSTRUCTION_COUNT - oldAbstractExecutor_CONSTRUCTION_COUNT);
+		assertEquals(1, ExecutorManager.CONSTRUCTION_COUNT - oldExecutorManager_CONSTRUCTION_COUNT);
+		assertEquals(1, AbstractModelManager.CONSTRUCTION_COUNT - oldAbstractModelManager_CONSTRUCTION_COUNT);
+		//
+		oldAbstractExecutor_CONSTRUCTION_COUNT = AbstractExecutor.CONSTRUCTION_COUNT;
+		oldExecutorManager_CONSTRUCTION_COUNT = ExecutorManager.CONSTRUCTION_COUNT;
+		oldAbstractModelManager_CONSTRUCTION_COUNT = AbstractModelManager.CONSTRUCTION_COUNT;
+		assertEquals(executor, ThreadLocalExecutor.basicGetExecutor());
 		ocl.assertQueryOCLNotEquals(null, Byte.valueOf((byte)255), "254");
+		assertEquals(executor, ThreadLocalExecutor.basicGetExecutor());
 		ocl.assertQueryOCLNotEquals(null, Character.valueOf((char)255), "254");
 		ocl.assertQueryOCLNotEquals(null, Short.valueOf((short)255), "254");
 		ocl.assertQueryOCLNotEquals(null, Integer.valueOf(255), "254");
@@ -595,8 +621,18 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryOCLNotEquals(null, Double.valueOf(255), "255.1");
 		ocl.assertQueryOCLNotEquals(null, BigDecimal.valueOf(255), "255.1");
 		//
+		assertEquals(executor, ThreadLocalExecutor.basicGetExecutor());
 		ocl.dispose();
-		assertEquals(1, AbstractModelManager.CONSTRUCTION_COUNT - newAbstractModelManager_CONSTRUCTION_COUNT);
+		if (useCodeGen) {
+			assertEquals(0, AbstractExecutor.CONSTRUCTION_COUNT - oldAbstractExecutor_CONSTRUCTION_COUNT);
+			assertEquals(18, ExecutorManager.CONSTRUCTION_COUNT - oldExecutorManager_CONSTRUCTION_COUNT);							// 1 per validate, 1 per evaluate
+			assertEquals(0, AbstractModelManager.CONSTRUCTION_COUNT - oldAbstractModelManager_CONSTRUCTION_COUNT);
+		}
+		else {
+			assertEquals(9, AbstractExecutor.CONSTRUCTION_COUNT - oldAbstractExecutor_CONSTRUCTION_COUNT);							// 1 per interpreted evaluate
+			assertEquals(9, ExecutorManager.CONSTRUCTION_COUNT - oldExecutorManager_CONSTRUCTION_COUNT);							// 1 per validate
+			assertEquals(0, AbstractModelManager.CONSTRUCTION_COUNT - oldAbstractModelManager_CONSTRUCTION_COUNT);
+		}
 	}
 
 	/**

@@ -93,7 +93,9 @@ import org.eclipse.ocl.pivot.internal.delegate.OCLValidationDelegateFactory;
 import org.eclipse.ocl.pivot.internal.delegate.SettingBehavior;
 import org.eclipse.ocl.pivot.internal.delegate.ValidationDelegate;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
+import org.eclipse.ocl.pivot.internal.evaluation.AbstractExecutor;
 import org.eclipse.ocl.pivot.internal.evaluation.OCLEvaluationVisitor;
+import org.eclipse.ocl.pivot.internal.library.executor.ExecutorManager;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -388,7 +390,9 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		GlobalEnvironmentFactory.disposeInstance();
 	}
 
-	public void doTest_allInstances(@NonNull ResourceSet resourceSet, @NonNull String modelName) {
+	public void doTest_allInstances(@NonNull ResourceSet resourceSet, @NonNull String modelName, boolean isCodegen) {
+		int oldAbstractExecutor_CONSTRUCTION_COUNT = AbstractExecutor.CONSTRUCTION_COUNT;
+		int oldExecutorManager_CONSTRUCTION_COUNT = ExecutorManager.CONSTRUCTION_COUNT;
 		int oldAbstractModelManager_CONSTRUCTION_COUNT = AbstractModelManager.CONSTRUCTION_COUNT;
 		initModel(resourceSet, modelName);
 		Collection<EObject> amyAllReports = allReports(employee("Amy"));
@@ -398,13 +402,21 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		assertTrue(amyAllReports.contains(employee("Fred")));
 		assertTrue(amyAllReports.contains(employee("Norbert")));
 		assertTrue(amyAllReports.contains(employee("Sally")));
+		assertEquals(isCodegen ? 0 : 1, AbstractExecutor.CONSTRUCTION_COUNT - oldAbstractExecutor_CONSTRUCTION_COUNT);
+		assertEquals(1, ExecutorManager.CONSTRUCTION_COUNT - oldExecutorManager_CONSTRUCTION_COUNT);
+		assertEquals(1, AbstractModelManager.CONSTRUCTION_COUNT - oldAbstractModelManager_CONSTRUCTION_COUNT);
 
+		oldAbstractExecutor_CONSTRUCTION_COUNT = AbstractExecutor.CONSTRUCTION_COUNT;
+		oldExecutorManager_CONSTRUCTION_COUNT = ExecutorManager.CONSTRUCTION_COUNT;
+		oldAbstractModelManager_CONSTRUCTION_COUNT = AbstractModelManager.CONSTRUCTION_COUNT;
 		// change the set of all instances of Employee
 		set(create(acme, companyEmployees, employeeClass, "Manuel"), employeeManager, employee("Bob"));
 		amyAllReports = allReports(employee("Amy"));
 		assertEquals(6, amyAllReports.size());
 		assertTrue(amyAllReports.contains(employee("Manuel")));
-		assertEquals(2, AbstractModelManager.CONSTRUCTION_COUNT - oldAbstractModelManager_CONSTRUCTION_COUNT);
+		assertEquals(isCodegen ? 0 : 1, AbstractExecutor.CONSTRUCTION_COUNT - oldAbstractExecutor_CONSTRUCTION_COUNT);
+		assertEquals(isCodegen ? 1 : 0, ExecutorManager.CONSTRUCTION_COUNT - oldExecutorManager_CONSTRUCTION_COUNT);
+		assertEquals(1, AbstractModelManager.CONSTRUCTION_COUNT - oldAbstractModelManager_CONSTRUCTION_COUNT);
 	}
 
 	public void test_changeableNonVolatileAttribute_418716() {
@@ -612,7 +624,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 			public void runWithThrowable() {
 				GlobalEnvironmentFactory.disposeInstance();
 				ResourceSet resourceSet = createResourceSet();
-				doTest_allInstances(resourceSet, COMPANY_XMI);
+				doTest_allInstances(resourceSet, COMPANY_XMI, false);
 				assertTrue(usedLocalRegistry);
 				unloadResourceSet(resourceSet);
 			}
@@ -626,7 +638,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 				GlobalEnvironmentFactory.disposeInstance();
 				ResourceSet resourceSet = createResourceSet();
 				initPackageRegistrations(resourceSet);
-				doTest_allInstances(resourceSet, COMPANY_XMI);
+				doTest_allInstances(resourceSet, COMPANY_XMI, false);
 				assertFalse(usedLocalRegistry);
 				unloadResourceSet(resourceSet);
 			}
@@ -639,7 +651,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 			public void runWithThrowable() {
 				ResourceSet resourceSet = createResourceSet();
 				initCodeGeneratedPackageRegistrations(resourceSet);
-				doTest_allInstances(resourceSet, COMPANY_XMI);
+				doTest_allInstances(resourceSet, COMPANY_XMI, true);
 				assertFalse(usedLocalRegistry);
 				unloadResourceSet(resourceSet);
 			}

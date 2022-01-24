@@ -370,17 +370,22 @@ public class PivotTestCase extends TestCase
 		Executor savedExecutor = ThreadLocalExecutor.basicGetExecutor();
 		Executor savedInterpretedExecutor = savedExecutor != null ? savedExecutor.basicGetInterpretedExecutor() : null;
 		try {
+			ThreadLocalExecutor.setExecutor(null);
 			assertNoValidationErrorsInternal(string, eObject);
 		}
 		finally {
-			if (savedExecutor != ThreadLocalExecutor.basicGetExecutor()) {
+			ThreadLocalExecutor.setExecutor(savedExecutor);
+			if (savedExecutor != null) {
+				savedExecutor.setInterpretedExecutor(null);						// XXX ????
+			}
+		/*	if (savedExecutor != ThreadLocalExecutor.basicGetExecutor()) {
 				ThreadLocalExecutor.setExecutor(null);
 			}
 			else if (savedExecutor != null) {
 				if (savedInterpretedExecutor != savedExecutor.basicGetInterpretedExecutor()) {
-					savedExecutor.setInterpretedExecutor(null);
+					savedExecutor.setInterpretedExecutor(null);						// XXX ????
 				}
-			}
+			} */
 		}
 	}
 
