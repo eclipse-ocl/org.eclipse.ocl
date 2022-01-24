@@ -17,7 +17,6 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
@@ -35,7 +34,6 @@ import org.eclipse.ocl.pivot.internal.utilities.Technology;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.library.UnsupportedOperation;
-import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 
 /**
@@ -118,32 +116,69 @@ public class ImplementationManager
 				return UnsupportedOperation.INSTANCE;
 			}
 		}
+		//
+		//	No source instance of the owning class.
+		//
 		if (property.isIsStatic()) {
 			StaticProperty staticProperty = StaticProperty.createStaticProperty(environmentFactory, property);
 			return staticProperty != null ? staticProperty : UnsupportedOperation.INSTANCE;
 		}
+		//
+		//	Source type discrimination.
+		//
+		Property opposite = property.getOpposite();
+		org.eclipse.ocl.pivot.Class owningClass = property.getOwningClass();
+		if (owningClass instanceof TupleType) {
+			TupleType tupleType = (TupleType)owningClass;
+			String name = property.getName();
+			assert name != null;
+			TuplePartId tuplePartId = tupleType.getTypeId().getPartId(name);
+			assert tuplePartId != null;
+			return new TuplePartProperty(tuplePartId);
+		}
+		else if (owningClass instanceof ElementExtension) {			// direct access to extension property
+			return technology.createStereotypePropertyImplementation(environmentFactory, property);
+		}
+		else if (owningClass instanceof Stereotype) {				// indirect access from a Stereotype operation
+			if ((opposite != null) && opposite.isIsComposite()) {
+				return technology.createBasePropertyImplementation(environmentFactory, property);
+			}
+			else {
+				return technology.createStereotypePropertyImplementation(environmentFactory, property);
+			}
+		}
+		//
+		//	Target type discrimination.
+		//
 		Type type = property.getType();
+		if (type == null) {
+			return UnsupportedOperation.INSTANCE;
+		}
 		if ((type instanceof Stereotype) && property.getName().startsWith(DerivedConstants.STEREOTYPE_EXTENSION_PREFIX)) {
 			return technology.createExtensionPropertyImplementation(environmentFactory, property);
 		}
-		//		if (property.getOwningType() instanceof Stereotype) {
-		//			return new BaseProperty(property);
-		//		}
 		ExpressionInOCL specification = metamodelManager.getDefaultExpression(property);
+		if (property.getESObject() != null) {											// If this is a modeled Ecore navigation
+		//	if (property.isIsDerived() && (specification != null)) {
+		//		return new ConstrainedProperty(property);
+		//	}
+			return technology.createExplicitNavigationPropertyImplementation(environmentFactory, asNavigationExp, sourceValue, property);
+		}
 		if (property.isIsDerived() && (specification != null)) {
 			return new ConstrainedProperty(property);
 		}
-		Property opposite = property.getOpposite();
-		if ((opposite != null) && opposite.isIsComposite()) {
-			if (property.eContainer() instanceof Stereotype) {
-				return technology.createBasePropertyImplementation(environmentFactory, property);
-			}
-			if (type != null) {
-				EObject eTarget = opposite.getESObject();
-				if (eTarget instanceof EReference) {
-					return new CompositionProperty((EReference) eTarget, opposite.getPropertyId());
+		if (opposite != null) {
+			EObject eTarget = opposite.getESObject();
+			if (eTarget instanceof EReference) {						// If this is the opposite of a modeled Ecore navigation
+				if (opposite.isIsComposite()) {							// If there is fundamental Ecore support for the implicit container access
+					return new CompositionProperty((EReference)eTarget, opposite.getPropertyId());
 				}
-				if (eTarget != null) {
+				else {
+					assert property.isIsImplicit();
+					return new ImplicitNonCompositionProperty(property);
+				}
+					/*	}
+				if (eTarget != null) {									// FIXME Why does this happen ?
 					Resource resource = opposite.eResource();
 					if (resource instanceof ASResource) {
 						ASResource asResource = (ASResource)resource;
@@ -152,34 +187,19 @@ public class ImplementationManager
 							return new CompositionProperty(eReference, opposite.getPropertyId());
 						}
 					}
-				}
-				/*				eTarget = type.getETarget();
-				if (eTarget != null) {
-					EClass eOwningClass = eTarget.eClass();
-					EClass eOwnedClass = property.getOwningType().getETarget().eClass();
-					EList<EStructuralFeature> ownerStructuralFeatures = eOwningClass.getEAllStructuralFeatures();
-					EList<EStructuralFeature> ownedStructuralFeatures = eOwnedClass.getEAllStructuralFeatures();
-					EStructuralFeature eFeature = EcoreUtils.getNamedElement(ownerStructuralFeatures, opposite.getName());
-					if (eFeature instanceof EReference) {
-						return new CompositionProperty((EReference) eFeature, opposite.getPropertyId());
-					}
 				} */
 			}
 		}
-		if (property.isIsImplicit()) {
+	/*	if (property.isIsImplicit()) {
+			assert opposite != null;
+			EObject eTarget = opposite.getESObject();
+			assert eTarget instanceof EReference;
+			assert !opposite.isIsComposite();
 			return new ImplicitNonCompositionProperty(property);
-		}
-		if (property.getOwningClass() instanceof TupleType) {
-			TupleType tupleType = (TupleType)property.getOwningClass();
-			String name = property.getName();
-			assert name != null;
-			TuplePartId tuplePartId = tupleType.getTypeId().getPartId(name);
-			assert tuplePartId != null;
-			return new TuplePartProperty(tuplePartId);
-		}
-		if ((property.getOwningClass() instanceof ElementExtension)			// direct access to extension property
-				|| (property.getOwningClass() instanceof Stereotype)) {			// indirect access from a Stereotype operation
-			return technology.createStereotypePropertyImplementation(environmentFactory, property);
+		} */
+		if (property.getESObject() == null) {
+			ForeignProperty foreignProperty = ForeignProperty.createForeignProperty(environmentFactory, property);
+			return foreignProperty != null ? foreignProperty : UnsupportedOperation.INSTANCE;
 		}
 		return technology.createExplicitNavigationPropertyImplementation(environmentFactory, asNavigationExp, sourceValue, property);
 	}

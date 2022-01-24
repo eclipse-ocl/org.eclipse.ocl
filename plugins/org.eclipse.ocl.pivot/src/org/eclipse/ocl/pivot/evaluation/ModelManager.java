@@ -110,12 +110,33 @@ public interface ModelManager
 	};
 
 	/**
-	 * Return the boxeed value of the static propertyId.
+	 * Return the boxed value of the foreign propertyId of object.
+	 * Returns null if no such property yet known. Returns ValueUtil.NULL_VALUE for a null value.
+	 *
+	 * @since 1.18
+	 */
+	default @Nullable Object basicGetForeignPropertyValue(@NonNull Object object, @NonNull PropertyId propertyId) {
+		return null;
+	}
+
+	/**
+	 * Return the boxed value of the static propertyId.
 	 * Returns null if no such property yet known. Returns ValueUtil.NULL_VALUE for a null value.
 	 *
 	 * @since 1.18
 	 */
 	default @Nullable Object basicGetStaticPropertyValue(@NonNull PropertyId propertyId) {
+		return null;
+	}
+
+	/**
+	 * Return the boxed value of the foreign propertyId of value, evaluating initExpression to initialize on first access.
+	 * Returns null if no such property known. Returns ValueUtil.NULL_VALUE for a null value.
+	 * @param defaultValue
+	 *
+	 * @since 1.18
+	 */
+	default @Nullable Object getForeignPropertyValue(@NonNull Object object, @NonNull PropertyId propertyId, @Nullable OCLExpression initExpression, @Nullable Object defaultValue) {
 		return null;
 	}
 
@@ -133,7 +154,7 @@ public interface ModelManager
 	}
 
 	/**
-	 * Return the boxeed value of the static propertyId, evaluating initExpression to initialize on first access.
+	 * Return the boxed value of the static propertyId, evaluating initExpression to initialize on first access.
 	 * Returns null if no such property known. Returns ValueUtil.NULL_VALUE for a null value.
 	 * @param defaultValue
 	 *
@@ -144,8 +165,18 @@ public interface ModelManager
 	}
 
 	/**
-	 * Specify the boxeed value of the not-read-only static propertyId.
-	 * Returns the previous value. Returns Invalud if read-only.
+	 * Specify the boxed value of the not-read-only foreign propertyId of object.
+	 * Returns the previous value. Returns Invalid if read-only.
+	 *
+	 * @since 1.18
+	 */
+	default @Nullable Object setForeignPropertyValue(@NonNull Object object, @NonNull PropertyId propertyId, @NonNull Object value) {
+		return null;
+	}
+
+	/**
+	 * Specify the boxed value of the not-read-only static propertyId.
+	 * Returns the previous value. Returns Invalid if read-only.
 	 *
 	 * @since 1.18
 	 */

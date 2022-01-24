@@ -1162,7 +1162,7 @@ implements OperationCallExp {
 	@Override
 	public boolean hasOclVoidOverload()
 	{
-		final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtil.getExecutor(this, null);
+		final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtil.getExecutor(this);
 		Operation referredOperation = getReferredOperation();
 		OperationId baseOperationId = referredOperation.getOperationId();
 		org.eclipse.ocl.pivot.Class oclVoidType = executor.getStandardLibrary().getOclVoidType();

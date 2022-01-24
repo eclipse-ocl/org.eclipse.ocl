@@ -704,8 +704,10 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 		String completeOCLtext =
 				"package ocl\n" +
 				"context OclElement\n" +
+				"	static def: allElements() : Sequence(OclElement)\n" +
+				"		= ocl::OclElement.allInstances()->asSequence()\n" +
 				"	static def: employee2index : Map(OclElement,Integer)\n" +
-				"		= ocl::OclElement.allInstances()->asSequence()->collectBy(value with index | index)\n" +
+				"		= OclElement::allElements()->collectBy(value with index | index)\n" +
 				"	def: id : String\n" +
 				"		= employee2index->at(self).toString()\n" +
 				"endpackage\n";

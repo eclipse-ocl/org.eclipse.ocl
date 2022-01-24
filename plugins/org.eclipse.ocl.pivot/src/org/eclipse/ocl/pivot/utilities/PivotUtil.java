@@ -1331,6 +1331,29 @@ public class PivotUtil
 	}
 
 	/**
+	 * Locate an OCL Executor from the Resource containing an eObject, else create a default one.
+	 *
+	 * @since 1.18
+	 */
+	public static @NonNull Executor getExecutor(@Nullable EObject eObject, @NonNull ModelManager modelManager) {
+		Executor executor = ThreadLocalExecutor.basicGetExecutor();
+		if (executor != null) {
+			return executor;
+		}
+		if (eObject != null) {
+			EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+			if (environmentFactory != null) {
+				executor = new PivotExecutorManager(environmentFactory, eObject, modelManager);
+			}
+		}
+		if (executor == null) {
+			executor = new EcoreExecutorManager(eObject, PivotTables.LIBRARY, modelManager);
+		}
+		ThreadLocalExecutor.setExecutor(executor);
+		return executor;
+	}
+
+	/**
 	 * Locate an OCL Executor from the Executor.class slot in validationContext, else
 	 * from the Resource containing an eObject, else create a default one.
 	 *

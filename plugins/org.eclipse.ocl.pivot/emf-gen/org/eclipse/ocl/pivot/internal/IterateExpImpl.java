@@ -676,8 +676,8 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 								final /*@Thrown*/ @Nullable Type type_0 = ownedSource.getType();
 								safe_type_source = type_0;
 							}
-							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_MapType_2 = idResolver.getClass(PivotTables.CLSSid_MapType, null);
-							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class CAST_TYP_MapType = (org.eclipse.ocl.pivot.Class)TYP_MapType_2;
+							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_MapType_1 = idResolver.getClass(PivotTables.CLSSid_MapType, null);
+							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class CAST_TYP_MapType = (org.eclipse.ocl.pivot.Class)TYP_MapType_1;
 							final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, safe_type_source, CAST_TYP_MapType).booleanValue();
 							/*@Thrown*/ boolean IF_oclIsKindOf;
 							if (oclIsKindOf) {

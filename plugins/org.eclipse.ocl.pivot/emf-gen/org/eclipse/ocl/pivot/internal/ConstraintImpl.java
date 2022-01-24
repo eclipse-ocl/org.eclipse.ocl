@@ -481,8 +481,8 @@ implements Constraint {
 			else {
 				/*@Caught*/ @Nullable Object CAUGHT_result;
 				try {
-					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OclVoid = idResolver.getClass(TypeId.OCL_VOID, null);
 					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Boolean = idResolver.getClass(TypeId.BOOLEAN, null);
+					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OclVoid = idResolver.getClass(TypeId.OCL_VOID, null);
 					@SuppressWarnings("null")
 					final /*@NonInvalid*/ @NonNull LanguageExpression ownedSpecification = this.getOwnedSpecification();
 					final /*@NonInvalid*/ @Nullable Type type = ownedSpecification.getType();

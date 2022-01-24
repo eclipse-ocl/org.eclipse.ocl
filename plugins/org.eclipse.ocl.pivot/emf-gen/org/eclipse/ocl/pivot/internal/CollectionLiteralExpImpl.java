@@ -294,9 +294,9 @@ implements CollectionLiteralExp {
 					else {
 						/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
 						try {
-							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_SetType = idResolver.getClass(PivotTables.CLSSid_SetType, null);
+							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_SetType_0 = idResolver.getClass(PivotTables.CLSSid_SetType, null);
 							final /*@NonInvalid*/ @Nullable Type type = this.getType();
-							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class CAST_TYP_SetType = (org.eclipse.ocl.pivot.Class)TYP_SetType;
+							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class CAST_TYP_SetType = (org.eclipse.ocl.pivot.Class)TYP_SetType_0;
 							final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, CAST_TYP_SetType).booleanValue();
 							CAUGHT_oclIsKindOf = oclIsKindOf;
 						}

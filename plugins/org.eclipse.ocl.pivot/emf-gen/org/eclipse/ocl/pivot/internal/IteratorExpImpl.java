@@ -1477,11 +1477,11 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 					else {
 						/*@Caught*/ @Nullable Object CAUGHT_forAll;
 						try {
-							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType_10 = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
+							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType_9 = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
 							if (CAUGHT_safe_type_source instanceof InvalidValueException) {
 								throw (InvalidValueException)CAUGHT_safe_type_source;
 							}
-							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class CAST_TYP_CollectionType_0 = (org.eclipse.ocl.pivot.Class)TYP_CollectionType_10;
+							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class CAST_TYP_CollectionType_0 = (org.eclipse.ocl.pivot.Class)TYP_CollectionType_9;
 							@SuppressWarnings("null")
 							final /*@Thrown*/ @NonNull CollectionType oclAsType = (@NonNull CollectionType)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, CAUGHT_safe_type_source, CAST_TYP_CollectionType_0);
 							final /*@Thrown*/ @NonNull Type sourceElementType = CollectionElementTypeProperty.INSTANCE.evaluate(executor, PivotTables.CLSSid_Type, oclAsType);

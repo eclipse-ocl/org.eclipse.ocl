@@ -700,9 +700,9 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 							/**
 							 * type.oclIsKindOf(CollectionType)
 							 */
-							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType_8 = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
+							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType_7 = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
 							final /*@NonInvalid*/ @Nullable Type type_0 = _1_1.getType();
-							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class CAST_TYP_CollectionType = (org.eclipse.ocl.pivot.Class)TYP_CollectionType_8;
+							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class CAST_TYP_CollectionType = (org.eclipse.ocl.pivot.Class)TYP_CollectionType_7;
 							final /*@Thrown*/ boolean oclIsKindOf_0 = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type_0, CAST_TYP_CollectionType).booleanValue();
 							//
 							if (oclIsKindOf_0 == ValueUtil.FALSE_VALUE) {

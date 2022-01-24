@@ -899,7 +899,7 @@ implements LoopExp {
 						else {
 							/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
 							try {
-								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_SetType_0 = idResolver.getClass(PivotTables.CLSSid_SetType, null);
+								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_SetType = idResolver.getClass(PivotTables.CLSSid_SetType, null);
 								final /*@NonInvalid*/ @Nullable OCLExpression ownedSource = this.getOwnedSource();
 								final /*@NonInvalid*/ @NonNull Object type = ownedSource == null;
 								/*@Thrown*/ @Nullable Type safe_type_source_0;
@@ -911,7 +911,7 @@ implements LoopExp {
 									final /*@Thrown*/ @Nullable Type type_2 = ownedSource.getType();
 									safe_type_source_0 = type_2;
 								}
-								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class CAST_TYP_SetType = (org.eclipse.ocl.pivot.Class)TYP_SetType_0;
+								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class CAST_TYP_SetType = (org.eclipse.ocl.pivot.Class)TYP_SetType;
 								final /*@Thrown*/ boolean oclIsKindOf_0 = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, safe_type_source_0, CAST_TYP_SetType).booleanValue();
 								CAUGHT_oclIsKindOf = oclIsKindOf_0;
 							}

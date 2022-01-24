@@ -1487,7 +1487,19 @@
         <filter id="404000815">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.evaluation.ModelManager"/>
+                <message_argument value="basicGetForeignPropertyValue(Object, PropertyId)"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.evaluation.ModelManager"/>
                 <message_argument value="basicGetStaticPropertyValue(PropertyId)"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.evaluation.ModelManager"/>
+                <message_argument value="getForeignPropertyValue(Object, PropertyId, OCLExpression, Object)"/>
             </message_arguments>
         </filter>
         <filter id="404000815">
@@ -1500,6 +1512,12 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.evaluation.ModelManager"/>
                 <message_argument value="getStaticPropertyValue(PropertyId, OCLExpression, Object)"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.evaluation.ModelManager"/>
+                <message_argument value="setForeignPropertyValue(Object, PropertyId, Object)"/>
             </message_arguments>
         </filter>
         <filter id="404000815">

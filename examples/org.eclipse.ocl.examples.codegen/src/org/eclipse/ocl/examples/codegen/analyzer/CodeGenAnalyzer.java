@@ -225,6 +225,7 @@ public class CodeGenAnalyzer
 
 	public @NonNull CGExecutorProperty createExecutorProperty(@NonNull Property asProperty) {
 		assert !asProperty.isIsStatic();			// static is inlined
+		// XXX asProperty.esObject == null => ForeignProperty
 		PropertyId propertyId = asProperty.getPropertyId();
 		CGElementId cgPropertyId = getElementId(propertyId);
 		CGExecutorProperty cgProperty = CGModelFactory.eINSTANCE.createCGExecutorNavigationProperty();

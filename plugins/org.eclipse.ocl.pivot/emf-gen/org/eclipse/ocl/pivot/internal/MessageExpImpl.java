@@ -411,11 +411,11 @@ public class MessageExpImpl
 				try {
 					/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
 					try {
-						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType_9 = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
+						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType_8 = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
 						@SuppressWarnings("null")
 						final /*@NonInvalid*/ @NonNull OCLExpression ownedTarget = this.getOwnedTarget();
 						final /*@NonInvalid*/ @Nullable Type type = ownedTarget.getType();
-						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class CAST_TYP_CollectionType = (org.eclipse.ocl.pivot.Class)TYP_CollectionType_9;
+						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class CAST_TYP_CollectionType = (org.eclipse.ocl.pivot.Class)TYP_CollectionType_8;
 						final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, CAST_TYP_CollectionType).booleanValue();
 						CAUGHT_oclIsKindOf = oclIsKindOf;
 					}
