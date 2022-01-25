@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.library.classifier;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -23,7 +24,7 @@ import org.eclipse.ocl.pivot.library.AbstractUnaryOperation;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.SetValue;
 
-import com.google.common.collect.Lists;
+import com.google.common.collect.Iterables;
 
 /**
  * ClassifierAllInstancesOperation realises the Classifier::allInstances() library operation.
@@ -42,8 +43,11 @@ public class ClassifierAllInstancesOperation extends AbstractUnaryOperation
 			return ValueUtil.createSetOfEach(returnTypeId);
 		}
 		else {
-			List<Object> results = Lists.newArrayList(instances);		// Classifier instances are boxed and ecore and unboxed all at once
-			return ValueUtil.createSetValue(returnTypeId, results);		// Exploit the selective determinism of SetValue with a List of elements
+			List<Object> results = new ArrayList<>(Iterables.size(instances));		// Classifier instances are boxed and ecore and unboxed all at once
+			for (Object instance : instances) {							// Manual copy since QVTd's IterableAsSet does not support toArray
+				results.add(instance);
+			}
+			return ValueUtil.createSetValue(returnTypeId, results);		// Bug 482583 Exploit the selective determinism of SetValue with a List of elements
 		}
 	}
 
