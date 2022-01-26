@@ -288,6 +288,11 @@
       <details key="documentation" value="A call of an operation using the ForeignOperation.dispatch/evaluate API. There is no implicit self/this. Since arguments&#xA;are typed as Object, that required type cannot be determined. All arguments are therefore passed using the boxed representation."/>
     </eAnnotations>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CGForeignProperty" eSuperTypes="#//CGProperty">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="An operation that must be called to evaluate a ConstrainedProperty. Source, argument and result values are boxed."/>
+    </eAnnotations>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGForeignPropertyCallExp" eSuperTypes="#//CGPropertyCallExp">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A call of an operation using the ForeignProperty boxed-value access API."/>

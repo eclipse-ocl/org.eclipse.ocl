@@ -971,6 +971,16 @@ public interface CGModelPackage extends EPackage {
 	EClass getCGForeignOperationCallExp();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty <em>CG Foreign Property</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>CG Foreign Property</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty
+	 * @generated
+	 */
+	EClass getCGForeignProperty();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGForeignPropertyCallExp <em>CG Foreign Property Call Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3135,6 +3145,16 @@ public interface CGModelPackage extends EPackage {
 		 * @generated
 		 */
 		EClass CG_FOREIGN_OPERATION_CALL_EXP = eINSTANCE.getCGForeignOperationCallExp();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGForeignPropertyImpl <em>CG Foreign Property</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGForeignPropertyImpl
+		 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getCGForeignProperty()
+		 * @generated
+		 */
+		EClass CG_FOREIGN_PROPERTY = eINSTANCE.getCGForeignProperty();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGForeignPropertyCallExpImpl <em>CG Foreign Property Call Exp</em>}' class.

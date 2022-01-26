@@ -101,9 +101,9 @@ public class ImplementationManager
 
 	// See Bug 458394 for the need for the asNavigationExp argument.
 	public @NonNull LibraryProperty getPropertyImplementation(@Nullable Element asNavigationExp, @Nullable Object sourceValue, @NonNull Property property) {
-		LibraryFeature implementation = property.getImplementation();
 		String implementationClassName = property.getImplementationClass();
 		if (implementationClassName != null) {
+			LibraryFeature implementation = property.getImplementation();
 			if ((implementation == null) || !implementation.getClass().getName().equals(implementationClassName)) {
 				try {
 					implementation = loadImplementation(property);
@@ -124,7 +124,7 @@ public class ImplementationManager
 			return staticProperty != null ? staticProperty : UnsupportedOperation.INSTANCE;
 		}
 		//
-		//	Source type discrimination.
+		//	Source type discrimination for non-Class properties.
 		//
 		Property opposite = property.getOpposite();
 		org.eclipse.ocl.pivot.Class owningClass = property.getOwningClass();
@@ -148,7 +148,7 @@ public class ImplementationManager
 			}
 		}
 		//
-		//	Target type discrimination.
+		//	Target type discrimination for non-Class properties..
 		//
 		Type type = property.getType();
 		if (type == null) {
@@ -157,51 +157,37 @@ public class ImplementationManager
 		if ((type instanceof Stereotype) && property.getName().startsWith(DerivedConstants.STEREOTYPE_EXTENSION_PREFIX)) {
 			return technology.createExtensionPropertyImplementation(environmentFactory, property);
 		}
-		ExpressionInOCL specification = metamodelManager.getDefaultExpression(property);
-		if (property.getESObject() != null) {											// If this is a modeled Ecore navigation
-		//	if (property.isIsDerived() && (specification != null)) {
-		//		return new ConstrainedProperty(property);
-		//	}
-			return technology.createExplicitNavigationPropertyImplementation(environmentFactory, asNavigationExp, sourceValue, property);
+		//
+		//	Resudual Class properties.
+		//
+		if (property.isIsDerived()) {													// If there is OCL code to compute the navigation.
+			ExpressionInOCL specification = metamodelManager.getDefaultExpression(property);
+			if (specification != null) {
+				return new ConstrainedProperty(property);
+			}
 		}
-		if (property.isIsDerived() && (specification != null)) {
-			return new ConstrainedProperty(property);
+		if (property.getESObject() != null) {											// If this is a forward modeled Ecore navigation
+			return technology.createExplicitNavigationPropertyImplementation(environmentFactory, asNavigationExp, sourceValue, property);
 		}
 		if (opposite != null) {
 			EObject eTarget = opposite.getESObject();
-			if (eTarget instanceof EReference) {						// If this is the opposite of a modeled Ecore navigation
-				if (opposite.isIsComposite()) {							// If there is fundamental Ecore support for the implicit container access
+			if (eTarget instanceof EReference) {										// If this is the opposite of a modeled Ecore navigation
+				if (opposite.isIsComposite()) {											// If there is fundamental Ecore support for the implicit container access
 					return new CompositionProperty((EReference)eTarget, opposite.getPropertyId());
 				}
 				else {
 					assert property.isIsImplicit();
 					return new ImplicitNonCompositionProperty(property);
 				}
-					/*	}
-				if (eTarget != null) {									// FIXME Why does this happen ?
-					Resource resource = opposite.eResource();
-					if (resource instanceof ASResource) {
-						ASResource asResource = (ASResource)resource;
-						EReference eReference = asResource.getASResourceFactory().getEReference(asResource, eTarget);
-						if (eReference != null) {
-							return new CompositionProperty(eReference, opposite.getPropertyId());
-						}
-					}
-				} */
 			}
 		}
-	/*	if (property.isIsImplicit()) {
-			assert opposite != null;
-			EObject eTarget = opposite.getESObject();
-			assert eTarget instanceof EReference;
-			assert !opposite.isIsComposite();
-			return new ImplicitNonCompositionProperty(property);
-		} */
+		return UnsupportedOperation.INSTANCE;
+	/*	assert false;
 		if (property.getESObject() == null) {
 			ForeignProperty foreignProperty = ForeignProperty.createForeignProperty(environmentFactory, property);
 			return foreignProperty != null ? foreignProperty : UnsupportedOperation.INSTANCE;
 		}
-		return technology.createExplicitNavigationPropertyImplementation(environmentFactory, asNavigationExp, sourceValue, property);
+		return technology.createExplicitNavigationPropertyImplementation(environmentFactory, asNavigationExp, sourceValue, property); */
 	}
 
 	public void dispose() {

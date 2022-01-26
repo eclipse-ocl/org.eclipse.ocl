@@ -2023,9 +2023,9 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 	@Override
 	public @NonNull Boolean visitCGForeignPropertyCallExp(@NonNull CGForeignPropertyCallExp cgPropertyCallExp) {
-		assert cgPropertyCallExp.getSource() == null;
+	//	assert cgPropertyCallExp.getSource() == null;		// XXX
 		Property asProperty = cgPropertyCallExp.getReferredProperty();
-		assert asProperty.isIsStatic();
+	//	assert asProperty.isIsStatic();		// XXX
 		PropertyId propertyId = asProperty.getPropertyId();
 		String modelManagerName = globalContext.getModelManagerNameResolution().getResolvedName();
 		final String valueName = "XXX-value"; // XXX getSymbolName(null, "value");

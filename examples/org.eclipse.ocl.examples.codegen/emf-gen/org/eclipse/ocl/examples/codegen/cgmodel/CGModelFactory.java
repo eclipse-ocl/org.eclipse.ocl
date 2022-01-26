@@ -401,6 +401,15 @@ public interface CGModelFactory extends EFactory {
 	@NonNull CGForeignOperationCallExp createCGForeignOperationCallExp();
 
 	/**
+	 * Returns a new object of class '<em>CG Foreign Property</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>CG Foreign Property</em>'.
+	 * @generated
+	 */
+	@NonNull CGForeignProperty createCGForeignProperty();
+
+	/**
 	 * Returns a new object of class '<em>CG Foreign Property Call Exp</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

@@ -35,6 +35,7 @@ import org.eclipse.ocl.examples.codegen.java.JavaImportNameManager;
 import org.eclipse.ocl.examples.codegen.java.JavaLocalContext;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -117,10 +118,18 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		CGValuedElement cgBody = (CGValuedElement) ClassUtil.nonNullState(expInOcl.accept(as2cgVisitor));
 		cgOperation.setBody(cgBody);
 		cgClass.getOperations().add(cgOperation);
+
+		JavaImportNameManager importNameManager = null;
+		Map <@NonNull String, @NonNull CGClass> name2class = null;
+
 		UniqueList<@NonNull Operation> foreignOperations = cgAnalyzer.getForeignOperations();
 		if (foreignOperations != null) {
-			JavaImportNameManager importNameManager = getImportNameManager();
-			Map <@NonNull String, @NonNull CGClass> name2class = new HashMap<>();
+			if (importNameManager == null) {
+				importNameManager = getImportNameManager();
+			}
+			if (name2class == null) {
+				name2class = new HashMap<>();
+			}
 			for (int i = 0; i < foreignOperations.size(); i++) {
 				@NonNull Operation foreignOperation = foreignOperations.get(i);
 				org.eclipse.ocl.pivot.Class foreignClass = PivotUtil.getOwningClass(foreignOperation);
@@ -135,6 +144,31 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 					name2class.put(foreignClassName, cgStaticClass);
 				}
 				CGOperation cgForeignOperation = (CGOperation)foreignOperation.accept(as2cgVisitor);
+				cgStaticClass.getOperations().add(cgForeignOperation);
+			}
+		}
+		UniqueList<@NonNull Property> foreignProperties = cgAnalyzer.getForeignProperties();
+		if (foreignProperties != null) {
+			if (importNameManager == null) {
+				importNameManager = getImportNameManager();
+			}
+			if (name2class == null) {
+				name2class = new HashMap<>();
+			}
+			for (int i = 0; i < foreignProperties.size(); i++) {
+				@NonNull Property foreignProperty = foreignProperties.get(i);
+				org.eclipse.ocl.pivot.Class foreignClass = PivotUtil.getOwningClass(foreignProperty);
+				String foreignClassName = getFlattenedClassName(foreignClass);
+				CGClass cgStaticClass = name2class.get(foreignClassName);
+				if (cgStaticClass == null) {
+					importNameManager.reserveLocalName(foreignClassName);
+					cgStaticClass = CGModelFactory.eINSTANCE.createCGClass();
+					cgStaticClass.setName(foreignClassName);
+					cgStaticClass.setAst(foreignClass);
+					cgClass.getClasses().add(cgStaticClass);
+					name2class.put(foreignClassName, cgStaticClass);
+				}
+				CGOperation cgForeignOperation = (CGOperation)foreignProperty.accept(as2cgVisitor);
 				cgStaticClass.getOperations().add(cgForeignOperation);
 			}
 		}

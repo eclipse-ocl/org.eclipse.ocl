@@ -1016,13 +1016,14 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		return completeModel.getCompletePackage(asPackage);
 	}
 
-	public @Nullable ExpressionInOCL getDefaultExpression(@NonNull Property property) {
+	public @Nullable ExpressionInOCL getDefaultExpression(@NonNull Property asProperty) {
 		ExpressionInOCL defaultExpression = null;
-		for (@SuppressWarnings("null")@NonNull Property domainProperty : getAllProperties(property)) {
-			LanguageExpression anExpression = domainProperty.getOwnedExpression();
+		for (@SuppressWarnings("null")@NonNull Property aProperty : getAllProperties(asProperty)) {
+			LanguageExpression anExpression = aProperty.getOwnedExpression();
+			Object defaultValue = aProperty.getDefaultValue();
 			if (anExpression != null) {
 				if (defaultExpression != null) {
-					throw new IllegalStateException("Multiple derivations for " + property);
+					throw new IllegalStateException("Multiple derivations for " + asProperty);
 				}
 				try {
 					defaultExpression = ((EnvironmentFactoryInternalExtension)environmentFactory).parseSpecification(anExpression);
@@ -1035,6 +1036,31 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 					defaultExpression = PivotUtil.createExpressionInOCLError(message);
 				}
 			}
+		/*	else if (defaultValue instanceof Boolean) {
+				CGBoolean constant = context.getBoolean(((Boolean)defaultValue).booleanValue());
+				CGConstantExp cgLiteralExp = context.createCGConstantExp(element, constant);
+				cgForeignPropertyCallExp.setInitExpression(cgLiteralExp);
+			}
+			else if (defaultValue instanceof IntegerValue) {		// ?? Long etc
+				CGInteger constant = context.getInteger(((IntegerValue)defaultValue).asNumber());
+				CGConstantExp cgLiteralExp = context.createCGConstantExp(element, constant);
+				cgForeignPropertyCallExp.setInitExpression(cgLiteralExp);
+			}
+			else if (defaultValue instanceof RealValue) {
+				CGReal constant = context.getReal(((RealValue)defaultValue).asNumber());
+				CGConstantExp cgLiteralExp = context.createCGConstantExp(element, constant);
+				cgForeignPropertyCallExp.setInitExpression(cgLiteralExp);
+			}
+			else if (defaultValue instanceof String) {
+				CGString constant = context.getString((String)defaultValue);
+				CGConstantExp cgLiteralExp = context.createCGConstantExp(element, constant);
+				cgForeignPropertyCallExp.setInitExpression(cgLiteralExp);
+			}
+			else if (defaultValue instanceof Number) {
+				CGReal constant = context.getReal((Number)defaultValue);
+				CGConstantExp cgLiteralExp = context.createCGConstantExp(element, constant);
+				cgForeignPropertyCallExp.setInitExpression(cgLiteralExp);
+			} */
 		}
 		return defaultExpression;
 	}

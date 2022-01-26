@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.library;
 
+import org.apache.log4j.Logger;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -33,6 +34,8 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
  */
 public class StaticProperty extends AbstractProperty
 {
+	private static final Logger logger = Logger.getLogger(StaticProperty.class);
+
 	/**
 	 * @since 1.18
 	 */
@@ -51,8 +54,12 @@ public class StaticProperty extends AbstractProperty
 				return new StaticProperty(property.getPropertyId(), null, defaultValue != null ? defaultValue : ValueUtil.NULL_VALUE);
 			}
 		} catch (ParserException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			String message = e.getMessage();
+			if (message == null) {
+				message = "";
+			}
+			logger.error(message);
+		//	defaultExpression = PivotUtil.createExpressionInOCLError(message);
 		}
 		return null;
 	}

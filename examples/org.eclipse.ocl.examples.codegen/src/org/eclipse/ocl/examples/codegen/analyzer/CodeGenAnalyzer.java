@@ -103,6 +103,7 @@ public class CodeGenAnalyzer
 	private /*@LazyNonNull*/ Map<@NonNull ExpressionInOCL, @NonNull CommonSubExpressionAnalysis> expression2cseAnalsis = null;
 	// UniqueList allows nested discovery of more foreign Operations
 	private /*@LazyNonNull*/ UniqueList<@NonNull Operation> foreignOperations = null;
+	private /*@LazyNonNull*/ UniqueList<@NonNull Property> foreignProperties = null;
 
 	public CodeGenAnalyzer(@NonNull CodeGenerator codeGenerator) {
 		this.codeGenerator = codeGenerator;
@@ -119,6 +120,15 @@ public class CodeGenAnalyzer
 			foreignOperations = foreignOperations2 = new UniqueList<>();
 		}
 		foreignOperations2.add(asOperation);
+	}
+
+	public void addForeignProperty(@NonNull Property asProperty) {
+	//	assert asOperation.isIsStatic();
+		UniqueList<@NonNull Property> foreignProperties2 = foreignProperties;
+		if (foreignProperties2 == null) {
+			foreignProperties = foreignProperties2 = new UniqueList<>();
+		}
+		foreignProperties2.add(asProperty);
 	}
 
 	public void analyze(@NonNull CGElement cgRoot) {
@@ -319,6 +329,10 @@ public class CodeGenAnalyzer
 
 	public @Nullable UniqueList<@NonNull Operation> getForeignOperations() {
 		return foreignOperations;
+	}
+
+	public @Nullable UniqueList<@NonNull Property> getForeignProperties() {
+		return foreignProperties;
 	}
 
 	public @NonNull GlobalNameManager getGlobalNameManager() {
