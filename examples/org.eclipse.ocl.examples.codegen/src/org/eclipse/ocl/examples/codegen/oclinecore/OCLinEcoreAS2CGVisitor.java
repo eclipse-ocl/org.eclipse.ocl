@@ -21,6 +21,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
@@ -69,7 +70,7 @@ public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 	public @NonNull CGParameter getParameter(@NonNull Variable aParameter, @Nullable String name) {
 		CGParameter cgParameter = super.getParameter(aParameter, name);
 		if (PivotConstants.SELF_NAME.equals(aParameter.getName())) {
-			cgParameter.setValueName("this");
+			cgParameter.setValueName(JavaConstants.THIS_NAME);
 		}
 		return cgParameter;
 	}

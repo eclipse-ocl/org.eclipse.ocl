@@ -99,7 +99,7 @@ public class LookupFilterCG2JavaVisitor extends AutoCG2JavaVisitor<@NonNull Look
 	protected void doConstructor(@NonNull CGClass cgClass) {
 		js.append("public " + cgClass.getName() + "(");
 		js.appendClassReference(true, Executor.class);
-		js.append(" "+JavaConstants.EXECUTOR_NAME);
+		js.append(" "+ globalContext.getExecutorName());
 		// We add the original operation parameters
 		addFilterParameters(cgClass); // The first and unique OP will have the filtering operation
 		js.append(") {\n");
@@ -110,11 +110,11 @@ public class LookupFilterCG2JavaVisitor extends AutoCG2JavaVisitor<@NonNull Look
 		js.append(");\n");
 
 		addFilterPropsInit(cgClass);
-		js.append("this." + JavaConstants.EXECUTOR_NAME + " = " +JavaConstants.EXECUTOR_NAME + ";\n");
-		js.append("this." + JavaConstants.ID_RESOLVER_NAME + " = " + JavaConstants.EXECUTOR_NAME + ".getIdResolver();\n");
+		js.append("this." + globalContext.getExecutorName() + " = " + globalContext.getExecutorName() + ";\n");
+		js.append("this." + JavaConstants.ID_RESOLVER_NAME + " = " + globalContext.getExecutorName() + ".getIdResolver();\n");
 		js.append("this." + JavaConstants.EVALUATION_CACHE_NAME + " = ((");
 		js.appendClassReference(null, ExecutorInternalExtension.class);
-		js.append(")" + JavaConstants.EXECUTOR_NAME + ").getEvaluationCache();\n");
+		js.append(")" + globalContext.getExecutorName() + ").getEvaluationCache();\n");
 
 		js.popIndentation();
 		js.append("}\n");

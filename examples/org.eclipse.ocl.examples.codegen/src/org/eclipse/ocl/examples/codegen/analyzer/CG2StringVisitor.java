@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.analyzer;
 
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,6 +56,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGMapPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModel;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOppositePropertyCallExp;
@@ -649,6 +651,31 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<@Nullable 
 	}
 
 	@Override
+	public @Nullable String visitCGNativeOperationCallExp(@NonNull CGNativeOperationCallExp oc) {
+		CGValuedElement source = oc.getSource();
+		if (source != null) {
+			safeVisit(source);
+			append(".");
+		}
+	//	OperationCallExp operationCallExp = (OperationCallExp) oc.getAst();
+		Method method = oc.getMethod();
+	//	Type sourceType = operationCallExp.getOwnedSource() != null ? operationCallExp.getOwnedSource().getType() : null;
+	//	append(PivotUtil.getNavigationOperator(false/*operationCallExp.isIsSafe()*/, PivotUtil.isAggregate(sourceType)));
+	//	appendName(oper);
+		append(method.toString());
+		append("(");
+		String prefix = "";//$NON-NLS-1$
+		for (CGValuedElement argument : oc.getArguments()) {
+			append(prefix);
+			safeVisit(argument);
+			prefix = ", ";//$NON-NLS-1$
+		}
+		append(")");
+		//		appendAtPre(oc);
+		return null;
+	}
+
+	@Override
 	public @Nullable String visitCGOperation(@NonNull CGOperation cgOperation) {
 		appendQualifiedName(cgOperation.getContainingClass(), ".", cgOperation);
 		append("(");
@@ -753,7 +780,7 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<@Nullable 
 
 	//	@Override
 	//	public @Nullable String visitCGSelfParameter(@NonNull CGSelfParameter cgSelfParameter) {
-	//		append("this");
+	//		append(JavaConstants.THIS_NAME);
 	//		return null;
 	//	}
 

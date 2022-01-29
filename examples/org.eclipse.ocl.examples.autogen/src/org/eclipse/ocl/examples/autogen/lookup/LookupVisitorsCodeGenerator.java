@@ -125,7 +125,7 @@ public abstract class LookupVisitorsCodeGenerator extends AutoVisitorsCodeGenera
 		//
 		//	Create new AS Visitor helper properties
 		//
-		this.asEvaluatorProperty = createNativeProperty(JavaConstants.EXECUTOR_NAME, Executor.class, true, true);
+		this.asEvaluatorProperty = createNativeProperty(getGlobalContext().getExecutorName(), Executor.class, true, true);
 		this.asIdResolverProperty = createNativeProperty(JavaConstants.ID_RESOLVER_NAME, IdResolver.class, true, true);
 		List<Property> asVisitorProperties = asVisitorClass.getOwnedProperties();
 		asVisitorProperties.add(asEvaluatorProperty);
