@@ -28,11 +28,14 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGInteger;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInvalid;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNull;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGReal;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGString;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGUnlimited;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.examples.codegen.generator.CodeGenerator;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.OCLExpression;
@@ -110,6 +113,14 @@ public class CodeGenAnalyzer
 		fieldingAnalyzer.analyze(cgRoot, false);
 	}
 
+	public @NonNull CGBoolean createCGBoolean(boolean booleanValue) {
+		CGBoolean cgBoolean = CGModelFactory.eINSTANCE.createCGBoolean();
+		setExplicitNames(cgBoolean, booleanValue);
+		cgBoolean.setBooleanValue(booleanValue);
+		cgBoolean.setTypeId(getTypeId(TypeId.BOOLEAN));
+		return cgBoolean;
+	}
+
 	public @NonNull CGValuedElement createCGConstantExp(@NonNull CGConstant cgConstant) {
 		CGConstantExp cgConstantExp = CGModelFactory.eINSTANCE.createCGConstantExp();
 		cgConstantExp.setAst(cgConstant.getAst());
@@ -126,19 +137,29 @@ public class CodeGenAnalyzer
 		return cgConstantExp;
 	}
 
-	protected @NonNull CGBoolean createCGBoolean(boolean booleanValue) {
-		CGBoolean cgBoolean = CGModelFactory.eINSTANCE.createCGBoolean();
-		setExplicitNames(cgBoolean, booleanValue);
-		cgBoolean.setBooleanValue(booleanValue);
-		cgBoolean.setTypeId(getTypeId(TypeId.BOOLEAN));
-		return cgBoolean;
-	}
-
-	protected @NonNull CGNull createCGNull() {
+	public @NonNull CGNull createCGNull() {
 		CGNull cgNull = CGModelFactory.eINSTANCE.createCGNull();
 		setExplicitNames(cgNull, null);
 		cgNull.setTypeId(getTypeId(TypeId.OCL_VOID));
 		return cgNull;
+	}
+
+	public @NonNull CGParameter createCGParameter(@NonNull String name, @NonNull CGTypeId typeId, boolean isRequired) {
+		CGParameter cgParameter = CGModelFactory.eINSTANCE.createCGParameter();
+		cgParameter.setName(name);
+		cgParameter.setTypeId(typeId);
+		cgParameter.setRequired(isRequired);
+		if (isRequired) {
+			cgParameter.setNonNull();
+		}
+		return cgParameter;
+	}
+
+	public @NonNull CGVariableExp createCGVariableExp(@NonNull CGVariable cgVariable) {
+		CGVariableExp cgVariableExp = CGModelFactory.eINSTANCE.createCGVariableExp();
+	//	setAst(cgVariableExp, asVariableExp);
+		cgVariableExp.setReferredVariable(cgVariable);
+		return cgVariableExp;
 	}
 
 	public @NonNull CGExecutorOperation createExecutorOperation(@NonNull Operation asOperation) {

@@ -38,6 +38,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGThrowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGUnboxExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.CollectionLiteralExp;
 import org.eclipse.ocl.pivot.CollectionRange;
@@ -202,7 +203,7 @@ public class NameManager
 		reservedJavaNames.add("false");
 		reservedJavaNames.add("null");
 		reservedJavaNames.add("super");
-		reservedJavaNames.add("this");
+		reservedJavaNames.add(JavaConstants.THIS_NAME);
 		reservedJavaNames.add("true");
 	}
 
