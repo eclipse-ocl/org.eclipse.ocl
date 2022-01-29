@@ -12,7 +12,6 @@ package org.eclipse.ocl.examples.autogen.java;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.JavaLocalContext;
 
 /**
@@ -21,17 +20,12 @@ import org.eclipse.ocl.examples.codegen.java.JavaLocalContext;
 public class AutoLocalContext<@NonNull CG extends AutoCodeGenerator> extends JavaLocalContext<CG>
 {
 	public AutoLocalContext(@NonNull AutoGlobalContext<CG> globalContext, @NonNull CGElement cgScope) {
-		super(globalContext, cgScope);
+		super(globalContext, cgScope, false);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public @NonNull AutoGlobalContext<CG> getGlobalContext() {
 		return (AutoGlobalContext<CG>) globalContext;
-	}
-
-	@Override
-	public @NonNull CGValuedElement getIdResolverVariable(@NonNull CGValuedElement cgValuedElement) {
-		return getGlobalContext().getIdResolverVariable(cgValuedElement);
 	}
 }

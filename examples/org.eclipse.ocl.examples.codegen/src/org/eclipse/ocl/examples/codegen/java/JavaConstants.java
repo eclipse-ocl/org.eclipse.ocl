@@ -10,16 +10,21 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.java;
 
+import java.lang.reflect.Method;
+
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.java.types.JavaTypeId.JavaTypeIdSingletonScope;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.UnboxedCompositionProperty;
 import org.eclipse.ocl.pivot.internal.library.UnboxedExplicitNavigationProperty;
 import org.eclipse.ocl.pivot.internal.library.UnboxedOppositeNavigationProperty;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 public class JavaConstants
 {
@@ -36,21 +41,40 @@ public class JavaConstants
 	public static final @NonNull String EXECUTOR_NAME = "executor";
 	public static final @NonNull String ID_RESOLVER_NAME = "idResolver";
 	public static final @NonNull String INSTANCE_NAME = "INSTANCE";
+	public static final @NonNull String MODEL_MANAGER_NAME = "modelManager";
 	public static final @NonNull String SELF_NAME = "self";
 	public static final @NonNull String SOURCE_AND_ARGUMENT_VALUES_NAME = "sourceAndArgumentValues";
 	public static final @NonNull String STANDARD_LIBRARY_NAME = "standardLibrary";
+	public static final @NonNull String THIS_NAME = "this";
 	public static final @NonNull String TYPE_ID_NAME = "typeId";
 
 	public static final @NonNull TypeId CLASS_TYPE_ID = getJavaTypeId(org.eclipse.ocl.pivot.Class.class);
 	public static final @NonNull TypeId PROPERTY_TYPE_ID = getJavaTypeId(Property.class);
 	public static final @NonNull TypeId EXECUTOR_TYPE_ID = getJavaTypeId(Executor.class);
 	public static final @NonNull TypeId ID_RESOLVER_TYPE_ID = getJavaTypeId(IdResolver.class);
+	public static final @NonNull TypeId MODEL_MANAGER_TYPE_ID = getJavaTypeId(ModelManager.class);
 	//	public static final @NonNull TypeId SELF_TYPE_ID = getJavaTypeId(Object.class);
 	public static final @NonNull TypeId STANDARD_LIBRARY_TYPE_ID = getJavaTypeId(StandardLibrary.class);
 	public static final @NonNull TypeId TYPE_ID_TYPE_ID = getJavaTypeId(TypeId.class);
 	public static final @NonNull TypeId UNBOXED_COMPOSITION_PROPERTY_TYPE_ID = getJavaTypeId(UnboxedCompositionProperty.class);
 	public static final @NonNull TypeId UNBOXED_EXPLICIT_NAVIGATION_PROPERTY_TYPE_ID = getJavaTypeId(UnboxedExplicitNavigationProperty.class);
 	public static final @NonNull TypeId UNBOXED_OPPOSITE_NAVIGATION_PROPERTY_TYPE_ID = getJavaTypeId(UnboxedOppositeNavigationProperty.class);
+
+	public static final Method EXECUTOR_GET_ID_RESOLVER_METHOD;
+	public static final Method EXECUTOR_GET_MODEL_MANAGER_METHOD;
+	public static final Method EXECUTOR_GET_STANDARD_LIBRARY_METHOD;
+	public static final Method PIVOT_UTIL_GET_EXECUTOR_GET_METHOD;
+
+	static {
+		try {
+			EXECUTOR_GET_ID_RESOLVER_METHOD = Executor.class.getMethod("getIdResolver");
+			EXECUTOR_GET_MODEL_MANAGER_METHOD = Executor.class.getMethod("getModelManager");
+			EXECUTOR_GET_STANDARD_LIBRARY_METHOD = Executor.class.getMethod("getStandardLibrary");
+			PIVOT_UTIL_GET_EXECUTOR_GET_METHOD = PivotUtil.class.getMethod("getExecutor", EObject.class);
+		} catch (NoSuchMethodException | SecurityException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
 	/**
 	 * Return the named Java typeId.
