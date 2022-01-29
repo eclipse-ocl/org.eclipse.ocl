@@ -170,13 +170,6 @@ public class CGUtil
 		return classFileContent;
 	}
 
-	public static @NonNull CGParameter createCGParameter(@NonNull String name, @NonNull CGTypeId typeId) {
-		CGParameter cgParameter = CGModelFactory.eINSTANCE.createCGParameter();
-		cgParameter.setName(name);
-		cgParameter.setTypeId(typeId);
-		return cgParameter;
-	}
-
 	public static @NonNull CGIterator getAccumulator(@NonNull CGBuiltInIterationCallExp cgIterationCallExp) {
 		return ClassUtil.nonNullState(cgIterationCallExp.getAccumulator());
 	}
@@ -328,6 +321,19 @@ public class CGUtil
 		assert oldElement.eContainer() == null;
 		assert newElement.eContainer() == oldContainer;
 		return oldElement;
+	}
+
+	/**
+	 * Insert and return a CGLetExp above cgIn for cgCSE.
+	 */
+	public static @NonNull CGLetExp rewriteAsLet(@NonNull CGValuedElement cgIn, @NonNull CGVariable cgVariable) {
+		CGLetExp cgLetExp = CGModelFactory.eINSTANCE.createCGLetExp();
+		cgLetExp.setTypeId(cgIn.getTypeId());
+		cgLetExp.setAst(cgIn.getAst());
+		CGUtil.replace(cgIn, cgLetExp);
+		cgLetExp.setIn(cgIn);
+		cgLetExp.setInit(cgVariable);
+		return cgLetExp;
 	}
 
 	/**

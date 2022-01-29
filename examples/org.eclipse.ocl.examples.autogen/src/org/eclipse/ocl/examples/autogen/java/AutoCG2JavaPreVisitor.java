@@ -11,8 +11,6 @@
 package org.eclipse.ocl.examples.autogen.java;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaPreVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaGlobalContext;
 
@@ -22,8 +20,8 @@ public class AutoCG2JavaPreVisitor extends CG2JavaPreVisitor
 		super(javaContext);
 	}
 
-	@Override
-	protected @Nullable CGValuedElement installIdResolverVariable(@NonNull CGValuedElement cgValuedElement) {
-		return localContext.getIdResolverVariable(cgValuedElement);
-	}
+//	@Override
+//	protected @NonNull CGVariable installIdResolverVariable(@NonNull CGValuedElement cgValuedElement) {
+//		return getTreeContext().getIdResolverVariable();
+//	}
 }

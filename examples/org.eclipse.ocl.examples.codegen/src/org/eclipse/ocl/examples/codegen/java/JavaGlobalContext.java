@@ -22,6 +22,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.NameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.generator.GlobalContext;
 import org.eclipse.ocl.pivot.ids.ElementId;
@@ -39,8 +40,15 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 	private @NonNull Map<@NonNull CGElement, @NonNull JavaLocalContext<@NonNull ? extends CG>> localContexts = new HashMap<>();
 	private @NonNull Set<@NonNull CGValuedElement> globals = new HashSet<>();
 
+	//
+	//	Built-in special purpose names are dynamically reserved using a static value as the hint.
+	//	The dynamic value will therefore be the same as the statc hint unless the hint is usurped by a
+	//	Java reserved word. Access should therefore use globalContext.getXXX rather than JavaConstnats.XXX
+	//	to minimize eiting if a new Java reserved word interferes.
+	//
 	protected final @NonNull String eName;
 	protected final @NonNull String evaluateName;
+	protected final @NonNull String executorName;
 	protected final @NonNull String instanceName;
 	protected final @NonNull String selfName;
 	protected final @NonNull String sourceAndArgumentValuesName;
@@ -51,6 +59,7 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 		this.importNameManager = codeGenerator.createImportNameManager();
 		this.eName = nameManager.reserveName(JavaConstants.E_NAME, null);
 		this.evaluateName = nameManager.reserveName(JavaConstants.EVALUATE_NAME, null);
+		this.executorName = nameManager.reserveName(JavaConstants.EXECUTOR_NAME, null);
 		this.instanceName = nameManager.reserveName(JavaConstants.INSTANCE_NAME, null);
 		this.selfName = nameManager.reserveName(PivotConstants.SELF_NAME, null);
 		this.sourceAndArgumentValuesName = nameManager.reserveName(JavaConstants.SOURCE_AND_ARGUMENT_VALUES_NAME, null);
@@ -65,7 +74,7 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 	}
 
 	protected @NonNull JavaLocalContext<@NonNull ? extends CG> createNestedContext(@NonNull CGElement cgScope) {
-		return new JavaLocalContext<CG>(this, cgScope);
+		return new JavaLocalContext<CG>(this, cgScope, true);
 	}
 
 	public @Nullable EClass getEClass(@NonNull ElementId elementId) {
@@ -81,6 +90,10 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 		return evaluateName;
 	}
 
+	public @NonNull String getExecutorName() {
+		return executorName;
+	}
+
 	public @NonNull Collection<@NonNull CGValuedElement> getGlobals() {
 		return globals;
 	}
@@ -90,7 +103,7 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 	}
 
 	@Deprecated /* deprecated use getImportManager */
-	public @NonNull Set<String> getImports() {
+	public @NonNull Set<@NonNull String> getImports() {
 		return importNameManager.getLong2ShortImportNames().keySet();
 	}
 
@@ -99,7 +112,7 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 	}
 
 	@Override
-	public @Nullable JavaLocalContext<@NonNull ? extends CG> getLocalContext(@NonNull CGElement cgElement) {
+	public @Nullable JavaLocalContext<@NonNull ? extends CG> getLocalContext(@NonNull CGNamedElement cgElement) {
 		JavaLocalContext<@NonNull ? extends CG> localContext = localContexts.get(cgElement);
 		if (localContext == null) {
 			CGElement cgScope = cgElement;
