@@ -52,7 +52,7 @@ public abstract class AbstractCollectionDescriptor extends AbstractDescriptor im
 		if (typeId instanceof CollectionTypeId) {
 			collectionName = ((CollectionTypeId)typeId).getGeneralizedId().getName();
 		}
-		js.appendReferenceTo(localContext.getIdResolverVariable(cgBoxExp));
+		js.appendReferenceTo(localContext.getIdResolverVariable());
 		js.append(".create" + collectionName + "OfAll(");
 		js.appendIdReference(typeId);
 		js.append(", ");
@@ -73,7 +73,7 @@ public abstract class AbstractCollectionDescriptor extends AbstractDescriptor im
 			js.appendReferenceTo(nonEcoreValue);
 			js.append(" == null ? null : ");
 		}
-		js.appendAtomicReferenceTo(IdResolver.IdResolverExtension.class, localContext.getIdResolverVariable(cgEcoreExp));
+		js.appendAtomicReferenceTo(IdResolver.IdResolverExtension.class, localContext.getIdResolverVariable());
 		js.append(".ecoreValueOfAll(");
 		//		js.appendIdReference(typeId);
 		js.appendClassReference(null, elementEcoreDescriptor);

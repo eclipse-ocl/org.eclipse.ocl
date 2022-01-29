@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
@@ -252,6 +252,18 @@ public class CGNativeOperationCallExpImpl extends CGOperationCallExpImpl impleme
 	@Override
 	public boolean isEcore() {
 		return false;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
+	public boolean isNonInvalid() {
+		if (method == null) {
+			return false;
+		}
+		return method.getExceptionTypes().length == 0;
 	}
 
 	/**

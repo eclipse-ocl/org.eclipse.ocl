@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -18,7 +18,6 @@ import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGLetExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
@@ -104,12 +103,12 @@ public class CommonAnalysis extends AbstractAnalysis
 	public int getStructuralHashCode() {
 		return primaryAnalysis.getStructuralHashCode();
 	}
-	
+
 	@Override
 	public boolean isStructurallyEqualTo(@NonNull AbstractAnalysis thatAnalysis) {
 		return primaryAnalysis.isStructurallyEqualTo(thatAnalysis);
 	}
-	
+
 	@Override
 	public boolean isStructurallyEqualTo(@NonNull SimpleAnalysis thatAnalysis) {
 		return primaryAnalysis.isStructurallyEqualTo(thatAnalysis);
@@ -135,7 +134,7 @@ public class CommonAnalysis extends AbstractAnalysis
 					rewriteAsVariableExp(commonElement, cgVariable);
 				}
 			}
-			rewriteAsLet(controlElement, cgVariable);
+			CGUtil.rewriteAsLet(controlElement, cgVariable);
 			if (cgCSE.eResource() == null) {
 				PivotUtilInternal.resetContainer(cgCSE);
 			}
@@ -150,19 +149,6 @@ public class CommonAnalysis extends AbstractAnalysis
 			}
 			cgVariable.setInit(cgCSE);						// After all rewrites complete
 		}
-	}
-
-	/**
-	 * Insert a CGLetExp above cgIn for cgCSE.
-	 */
-	protected @NonNull CGLetExp rewriteAsLet(@NonNull CGValuedElement cgIn, @NonNull CGVariable cgVariable) {
-		CGLetExp cgLetExp = CGModelFactory.eINSTANCE.createCGLetExp();
-		cgLetExp.setTypeId(cgIn.getTypeId());
-		cgLetExp.setAst(cgIn.getAst());
-		CGUtil.replace(cgIn, cgLetExp);
-		cgLetExp.setIn(cgIn);
-		cgLetExp.setInit(cgVariable);
-		return cgLetExp;
 	}
 
 	protected void rewriteAsVariableExp(@NonNull CGValuedElement cgElement, @NonNull CGVariable cgVariable) {

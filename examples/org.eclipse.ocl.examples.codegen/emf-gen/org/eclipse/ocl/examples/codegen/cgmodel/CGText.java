@@ -15,6 +15,8 @@ package org.eclipse.ocl.examples.codegen.cgmodel;
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>CG Text</b></em>'.
+ *
+ * @deprecated no longer used
  * <!-- end-user-doc -->
  *
  * <!-- begin-model-doc -->
@@ -32,6 +34,7 @@ package org.eclipse.ocl.examples.codegen.cgmodel;
  * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGText()
  * @generated
  */
+@Deprecated
 public interface CGText extends CGConstant {
 
 	/**

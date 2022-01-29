@@ -747,18 +747,18 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 	 *         (ownedParameters+=ParameterCS ownedParameters+=ParameterCS*)?
 	 *         ownedType=TypedMultiplicityRefCS?
 	 *         (ownedExceptions+=TypedRefCS ownedExceptions+=TypedRefCS*)?
-	 *         qualifiers+='!transient'?
+	 *         qualifiers+='ordered'?
 	 *         (
 	 *             (
 	 *                 qualifiers+='derived' |
 	 *                 qualifiers+='!derived' |
-	 *                 qualifiers+='ordered' |
 	 *                 qualifiers+='!ordered' |
 	 *                 qualifiers+='transient' |
+	 *                 qualifiers+='!transient' |
 	 *                 qualifiers+='unique' |
 	 *                 qualifiers+='!unique'
 	 *             )?
-	 *             qualifiers+='!transient'?
+	 *             qualifiers+='ordered'?
 	 *         )*
 	 *         (
 	 *             ownedAnnotations+=AnnotationElementCS |
@@ -857,14 +857,14 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 	 *         referredOpposite=[Property|UnrestrictedName]?
 	 *         ownedType=TypedMultiplicityRefCS?
 	 *         default=SINGLE_QUOTED_STRING?
-	 *         qualifiers+='ordered'?
+	 *         qualifiers+='!ordered'?
 	 *         (
 	 *             (
 	 *                 qualifiers+='composes' |
 	 *                 qualifiers+='!composes' |
 	 *                 qualifiers+='derived' |
 	 *                 qualifiers+='!derived' |
-	 *                 qualifiers+='!ordered' |
+	 *                 qualifiers+='ordered' |
 	 *                 qualifiers+='readonly' |
 	 *                 qualifiers+='!readonly' |
 	 *                 qualifiers+='resolve' |
@@ -878,7 +878,7 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 	 *                 qualifiers+='volatile' |
 	 *                 qualifiers+='!volatile'
 	 *             )?
-	 *             qualifiers+='ordered'?
+	 *             qualifiers+='!ordered'?
 	 *         )*
 	 *         (
 	 *             (

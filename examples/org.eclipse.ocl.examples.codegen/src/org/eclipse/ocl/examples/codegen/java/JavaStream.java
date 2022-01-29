@@ -261,6 +261,9 @@ public class JavaStream
 
 	public void append(@Nullable String string) {
 		if (string != null) {
+			if ("executor".equals(string)) {
+				getClass();		// XXX
+			}
 			if (indentationStack.isEmpty()) {
 				s.append(string);
 			}
@@ -1080,7 +1083,7 @@ public class JavaStream
 			append(className);
 			append(".");
 		}
-		append("this");
+		append(JavaConstants.THIS_NAME);
 	}
 
 	public boolean appendThrowBooleanInvalidValueException(/*@NonNull*/ String message, @NonNull String... arguments) {
@@ -1169,8 +1172,10 @@ public class JavaStream
 		//			for (CGValuedElement cgNext; (cgNext = cgValue.getReferredValuedElement()) != cgValue; cgValue = cgNext) {}
 		//			cgValue.accept(cg2java);
 		//		}
-		else if ("this".equals(cgElement.toString())) {		// FIXME use a CGThisVariable that is inlined
-			appendThis(cg2java.getThisName(cgElement));		// FIXME Move to QVTiCG
+		else if (JavaConstants.THIS_NAME.equals(cgElement.toString())) {		// FIXME use a CGThisVariable that is inlined
+		//	appendThis(cg2java.getThisName(cgElement));		// FIXME Move to QVTiCG
+		//	String valueName = cg2java.getValueName(cgElement);
+			append(JavaConstants.THIS_NAME);
 		}
 		else {
 			if (cgElement.isGlobal()) {

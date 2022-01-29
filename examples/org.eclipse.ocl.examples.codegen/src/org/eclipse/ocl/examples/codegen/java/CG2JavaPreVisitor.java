@@ -44,17 +44,18 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGMapExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGMapPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTemplateParameterExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGText;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGUnboxExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.util.AbstractExtendingCGModelVisitor;
 import org.eclipse.ocl.examples.codegen.generator.GenModelHelper;
 import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
@@ -74,6 +75,7 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.library.LibrarySimpleOperation;
 import org.eclipse.ocl.pivot.library.LibraryUntypedOperation;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
@@ -85,11 +87,12 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 	protected final @NonNull JavaCodeGenerator codeGenerator;
 	protected final @NonNull GenModelHelper genModelHelper;
 	protected final @NonNull CodeGenAnalyzer analyzer;
-	protected JavaLocalContext<@NonNull ?> localContext;
+	private @Nullable JavaLocalContext<@NonNull ?> treeContext;
+	private @Nullable JavaLocalContext<@NonNull ?> localContext;
 
-	public CG2JavaPreVisitor(@NonNull JavaGlobalContext<@NonNull ? extends JavaCodeGenerator> javaContext) {
-		super(javaContext);
-		this.codeGenerator = javaContext.getCodeGenerator();
+	public CG2JavaPreVisitor(@NonNull JavaGlobalContext<@NonNull ? extends JavaCodeGenerator> globalContext) {
+		super(globalContext);
+		this.codeGenerator = globalContext.getCodeGenerator();
 		this.analyzer = codeGenerator.getAnalyzer();
 		this.genModelHelper = codeGenerator.getGenModelHelper();
 	}
@@ -146,8 +149,9 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 			addOwnedTypeId(cgValuedElement, asTypeId);
 		}
 		if (cgValuedElement.getNamedValue() == cgValuedElement) {
-			if ((localContext != null) && !cgValuedElement.isGlobal()) {
-				localContext.getValueName(cgValuedElement);
+			JavaLocalContext<@NonNull ?> localContext2 = localContext;
+			if ((localContext2 != null) && !cgValuedElement.isGlobal()) {
+				localContext2.getValueName(cgValuedElement);
 			}
 			else {
 				context.getValueName(cgValuedElement);
@@ -159,37 +163,63 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 		return codeGenerator;
 	}
 
-	/**
-	 * Return the non-null name of a validation contrext if there is one available for cgValuedElement.
-	 */
-	private @Nullable String getContextName(@NonNull CGValuedElement cgValuedElement) {
-		CGConstraint cgConstraint = CGUtil.getContainingConstraint(cgValuedElement);
-		if (cgConstraint == null) {
-			return null;
+//	protected @NonNull JavaLocalContext<@NonNull ?> getLocalContext() {
+//		return ClassUtil.nonNullState(localContext);
+//	}
+
+	protected @NonNull JavaLocalContext<@NonNull ?> getTreeContext() {
+		return ClassUtil.nonNullState(treeContext);
+	}
+
+	protected @Nullable CGVariable installExecutorVariable(@NonNull CGValuedElement cgElement) {
+		return getTreeContext().getExecutorVariable();
+	}
+
+	protected @NonNull CGVariable installIdResolverVariable(@NonNull CGValuedElement cgElement) {
+		return getTreeContext().getIdResolverVariable();
+	}
+
+	protected @NonNull CGVariable installStandardLibraryVariable(@NonNull CGValuedElement cgElement) {
+		return getTreeContext().getStandardLibraryVariable();
+	}
+
+	protected JavaLocalContext<@NonNull ?> popLocalContext(@Nullable JavaLocalContext<?> savedLocalContext) {
+		if (savedLocalContext == null) {
+			JavaLocalContext<@NonNull ?> localContext2 = localContext;
+			assert localContext2 != null;
+			CGValuedElement cgTree = localContext2.getBody();
+			if (cgTree != null) {
+				CGVariable standardLibraryVariable = localContext2.basicGetStandardLibraryVariable();
+				if (standardLibraryVariable != null) {
+					cgTree = CGUtil.rewriteAsLet(cgTree, standardLibraryVariable);
+				}
+				CGVariable modelManagerVariable = localContext2.basicGetModelManagerVariable();
+				if (modelManagerVariable != null) {
+					cgTree = CGUtil.rewriteAsLet(cgTree, modelManagerVariable);
+				}
+				CGVariable idResolverVariable = localContext2.basicGetIdResolverVariable();
+				if (idResolverVariable != null) {
+					cgTree = CGUtil.rewriteAsLet(cgTree, idResolverVariable);
+				}
+				CGVariable executorVariable = localContext2.basicGetExecutorVariable();
+				if (executorVariable != null) {
+					cgTree = CGUtil.rewriteAsLet(cgTree, executorVariable);
+				}
+			}
 		}
-		return "context";
-	}
-
-	protected @Nullable CGValuedElement installExecutorVariable(@NonNull CGValuedElement cgValuedElement) {
-		CGValuedElement executorVariable = localContext.createExecutorVariable(getContextName(cgValuedElement));
-		if (executorVariable != null) {
-			cgValuedElement.getOwns().add(executorVariable);
+		if (savedLocalContext == null) {
+			treeContext = null;
 		}
-		return executorVariable;
+		return localContext = savedLocalContext;
 	}
 
-
-	protected @Nullable CGValuedElement installIdResolverVariable(@NonNull CGValuedElement cgValuedElement) {
-		CGValuedElement idResolverVariable = localContext.createIdResolverVariable(getContextName(cgValuedElement));
-		cgValuedElement.getOwns().add(idResolverVariable);
-		return idResolverVariable;
-	}
-
-	protected @NonNull CGText installStandardLibraryVariable(@NonNull CGValuedElement cgValuedElement) {
-		CGText standardLibraryVariable = localContext.createStandardLibraryVariable(getContextName(cgValuedElement));
-		cgValuedElement.getOwns().add(standardLibraryVariable);
-		installIdResolverVariable(standardLibraryVariable);
-		return standardLibraryVariable;
+	protected @Nullable JavaLocalContext<?> pushLocalContext(@NonNull CGNamedElement cgNamedlement) {
+		JavaLocalContext<?> savedLocalContext = localContext;
+		localContext = context.getLocalContext(cgNamedlement);
+		if (savedLocalContext == null) {
+			treeContext = localContext;
+		}
+		return savedLocalContext;
 	}
 
 	@Override
@@ -254,12 +284,12 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 
 	@Override
 	public @Nullable Object visitCGConstraint(@NonNull CGConstraint cgConstraint) {
-		localContext = context.getLocalContext(cgConstraint);
+		JavaLocalContext<?> savedLocalContext = pushLocalContext(cgConstraint);
 		try {
 			return super.visitCGConstraint(cgConstraint);
 		}
 		finally {
-			localContext = null;
+			popLocalContext(savedLocalContext);
 		}
 	}
 
@@ -399,8 +429,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 				cgInit.accept(this);
 			}
 		}
-		JavaLocalContext<@NonNull ?> savedLocalContext = localContext;
-		localContext = context.getLocalContext(cgIterationCallExp);
+		JavaLocalContext<@NonNull ?> savedLocalContext = pushLocalContext(cgIterationCallExp);
 		try {
 			CGValuedElement cgBody = cgIterationCallExp.getBody();
 			if (cgBody != null) {
@@ -412,7 +441,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 			return null;
 		}
 		finally {
-			localContext = savedLocalContext;
+			popLocalContext(savedLocalContext);
 		}
 	}
 
@@ -497,23 +526,23 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 
 	@Override
 	public @Nullable Object visitCGOperation(@NonNull CGOperation cgOperation) {
-		localContext = context.getLocalContext(cgOperation);
+		JavaLocalContext<?> savedLocalContext = pushLocalContext(cgOperation);
 		try {
 			return super.visitCGOperation(cgOperation);
 		}
 		finally {
-			localContext = null;
+			popLocalContext(savedLocalContext);
 		}
 	}
 
 	@Override
 	public @Nullable Object visitCGProperty(@NonNull CGProperty cgProperty) {
-		localContext = context.getLocalContext(cgProperty);
+		JavaLocalContext<?> savedLocalContext = pushLocalContext(cgProperty);
 		try {
 			return super.visitCGProperty(cgProperty);
 		}
 		finally {
-			localContext = null;
+			popLocalContext(savedLocalContext);
 		}
 	}
 

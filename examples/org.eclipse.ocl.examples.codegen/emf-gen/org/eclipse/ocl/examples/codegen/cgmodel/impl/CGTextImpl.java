@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -25,6 +25,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>CG Text</b></em>'.
+ * @deprecated no longer used
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
@@ -35,6 +36,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
  *
  * @generated
  */
+@Deprecated
 public class CGTextImpl extends CGConstantImpl implements CGText {
 	/**
 	 * The number of structural features of the '<em>CG Text</em>' class.
