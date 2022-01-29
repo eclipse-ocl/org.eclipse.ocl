@@ -37,7 +37,7 @@ public class OCLinEcoreGlobalContext extends JavaGlobalContext<@NonNull OCLinEco
 		cgTextParameter.setName(contextVariable.getName());
 		cgTextParameter.setValueName(getSelfName());
 		cgTextParameter.setAst(contextVariable);
-		cgTextParameter.setTextValue("this");
+		cgTextParameter.setTextValue(JavaConstants.THIS_NAME);
 		cgTextParameter.setNonInvalid();
 		cgTextParameter.setNonNull();
 		cgTextParameter.setTypeId(analyzer.getTypeId(contextVariable.getTypeId()));

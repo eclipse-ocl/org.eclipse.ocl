@@ -112,7 +112,7 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 			result.add(asPackage);
 			org.eclipse.ocl.pivot.Class asClass = createASClass(asPackage, filteredClassName + "Filter");
 			// We create the properties
-			Property asEvaluatorProperty = createNativeProperty(JavaConstants.EXECUTOR_NAME, Executor.class, true, true);
+			Property asEvaluatorProperty = createNativeProperty(getGlobalContext().getExecutorName(), Executor.class, true, true);
 			Property asIdResolverProperty = createNativeProperty(JavaConstants.ID_RESOLVER_NAME, IdResolver.class, true, true);
 			List<Property> asProperties = asClass.getOwnedProperties();
 			asProperties.add(asEvaluatorProperty);
@@ -323,7 +323,7 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 		// not generated. Therefore we have to add this hack to provide CG for executor property
 		// accesses
 		if (cgEvaluatorVariable == null) {
-			Property prop = createNativeProperty(JavaConstants.EXECUTOR_NAME, Executor.class, true, true);
+			Property prop = createNativeProperty(getGlobalContext().getExecutorName(), Executor.class, true, true);
 			cgEvaluatorVariable = as2cgVisitor.visitProperty(prop);
 		}
 		return ClassUtil.nonNullState(cgEvaluatorVariable);

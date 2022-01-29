@@ -774,18 +774,30 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 	 *         (ownedParameters+=ParameterCS ownedParameters+=ParameterCS*)?
 	 *         ownedType=TypedMultiplicityRefCS?
 	 *         (ownedExceptions+=TypedRefCS ownedExceptions+=TypedRefCS*)?
+<<<<<<< Upstream, based on origin/master
 	 *         qualifiers+='!derived'?
+=======
+	 *         qualifiers+='ordered'?
+>>>>>>> 28fb766 [578443] Eliminate usage of CGText
 	 *         (
 	 *             (
 	 *                 qualifiers+='derived' |
+<<<<<<< Upstream, based on origin/master
 	 *                 qualifiers+='ordered' |
+=======
+	 *                 qualifiers+='!derived' |
+>>>>>>> 28fb766 [578443] Eliminate usage of CGText
 	 *                 qualifiers+='!ordered' |
 	 *                 qualifiers+='transient' |
 	 *                 qualifiers+='!transient' |
 	 *                 qualifiers+='unique' |
 	 *                 qualifiers+='!unique'
 	 *             )?
+<<<<<<< Upstream, based on origin/master
 	 *             qualifiers+='!derived'?
+=======
+	 *             qualifiers+='ordered'?
+>>>>>>> 28fb766 [578443] Eliminate usage of CGText
 	 *         )*
 	 *         (
 	 *             ownedAnnotations+=AnnotationElementCS |
@@ -896,7 +908,11 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 	 *         referredOpposite=[Property|UnrestrictedName]?
 	 *         ownedType=TypedMultiplicityRefCS?
 	 *         default=SINGLE_QUOTED_STRING?
+<<<<<<< Upstream, based on origin/master
 	 *         qualifiers+='readonly'?
+=======
+	 *         qualifiers+='!ordered'?
+>>>>>>> 28fb766 [578443] Eliminate usage of CGText
 	 *         (
 	 *             (
 	 *                 qualifiers+='composes' |
@@ -904,7 +920,11 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 	 *                 qualifiers+='derived' |
 	 *                 qualifiers+='!derived' |
 	 *                 qualifiers+='ordered' |
+<<<<<<< Upstream, based on origin/master
 	 *                 qualifiers+='!ordered' |
+=======
+	 *                 qualifiers+='readonly' |
+>>>>>>> 28fb766 [578443] Eliminate usage of CGText
 	 *                 qualifiers+='!readonly' |
 	 *                 qualifiers+='resolve' |
 	 *                 qualifiers+='!resolve' |
@@ -917,7 +937,11 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 	 *                 qualifiers+='volatile' |
 	 *                 qualifiers+='!volatile'
 	 *             )?
+<<<<<<< Upstream, based on origin/master
 	 *             qualifiers+='readonly'?
+=======
+	 *             qualifiers+='!ordered'?
+>>>>>>> 28fb766 [578443] Eliminate usage of CGText
 	 *         )*
 	 *         (
 	 *             (

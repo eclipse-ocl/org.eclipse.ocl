@@ -27,6 +27,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
 import org.eclipse.ocl.examples.codegen.java.ImportUtils;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
+import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.java.JavaGlobalContext;
 import org.eclipse.ocl.examples.codegen.java.JavaLocalContext;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -58,7 +59,7 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		}
 	}
 
-	protected final @NonNull JavaGlobalContext<@NonNull JUnitCodeGenerator> globalContext = new JavaGlobalContext<>(this);
+	protected final @NonNull JavaGlobalContext<@NonNull JUnitCodeGenerator> globalContext = new JUnitGlobalContext(this);
 	protected final @NonNull CodeGenAnalyzer cgAnalyzer;
 
 	protected JUnitCodeGenerator(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable GenModel genModel, boolean useNullAnnotations) {
@@ -86,14 +87,10 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		List<CGParameter> cgParameters = cgOperation.getParameters();
 		JavaLocalContext<@NonNull ?> localContext = globalContext.getLocalContext(cgOperation);
 		if (localContext != null) {
-			CGParameter executorParameter = localContext.createExecutorParameter();
-			if (executorParameter != null) {
-				cgParameters.add(executorParameter);
-			}
-			CGParameter typeIdParameter = localContext.createTypeIdParameter();
-			if (typeIdParameter != null) {
-				cgParameters.add(typeIdParameter);
-			}
+			CGParameter executorParameter = (CGParameter) localContext.getExecutorVariable();
+			cgParameters.add(executorParameter);
+			CGParameter typeIdParameter = cgAnalyzer.createCGParameter(JavaConstants.TYPE_ID_NAME, cgAnalyzer.getTypeId(JavaConstants.TYPE_ID_TYPE_ID), true);
+			cgParameters.add(typeIdParameter);
 		}
 		if (contextVariable != null) {
 			CGParameter cgContext = as2cgVisitor.getParameter(contextVariable, null);
