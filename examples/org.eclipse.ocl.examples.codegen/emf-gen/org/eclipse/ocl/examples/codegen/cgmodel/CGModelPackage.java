@@ -981,6 +981,28 @@ public interface CGModelPackage extends EPackage {
 	EClass getCGForeignProperty();
 
 	/**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty#getParameter <em>Parameter</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Parameter</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty#getParameter()
+	 * @see #getCGForeignProperty()
+	 * @generated
+	 */
+	EReference getCGForeignProperty_Parameter();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty#getInitExpression <em>Init Expression</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Init Expression</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty#getInitExpression()
+	 * @see #getCGForeignProperty()
+	 * @generated
+	 */
+	EReference getCGForeignProperty_InitExpression();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGForeignPropertyCallExp <em>CG Foreign Property Call Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -989,17 +1011,6 @@ public interface CGModelPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getCGForeignPropertyCallExp();
-
-	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGForeignPropertyCallExp#getInitExpression <em>Init Expression</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Init Expression</em>'.
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGForeignPropertyCallExp#getInitExpression()
-	 * @see #getCGForeignPropertyCallExp()
-	 * @generated
-	 */
-	EReference getCGForeignPropertyCallExp_InitExpression();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreClassShadowExp <em>CG Ecore Class Shadow Exp</em>}'.
@@ -3157,6 +3168,22 @@ public interface CGModelPackage extends EPackage {
 		EClass CG_FOREIGN_PROPERTY = eINSTANCE.getCGForeignProperty();
 
 		/**
+		 * The meta object literal for the '<em><b>Parameter</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CG_FOREIGN_PROPERTY__PARAMETER = eINSTANCE.getCGForeignProperty_Parameter();
+
+		/**
+		 * The meta object literal for the '<em><b>Init Expression</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CG_FOREIGN_PROPERTY__INIT_EXPRESSION = eINSTANCE.getCGForeignProperty_InitExpression();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGForeignPropertyCallExpImpl <em>CG Foreign Property Call Exp</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -3165,14 +3192,6 @@ public interface CGModelPackage extends EPackage {
 		 * @generated
 		 */
 		EClass CG_FOREIGN_PROPERTY_CALL_EXP = eINSTANCE.getCGForeignPropertyCallExp();
-
-		/**
-		 * The meta object literal for the '<em><b>Init Expression</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference CG_FOREIGN_PROPERTY_CALL_EXP__INIT_EXPRESSION = eINSTANCE.getCGForeignPropertyCallExp_InitExpression();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGEcoreClassShadowExpImpl <em>CG Ecore Class Shadow Exp</em>}' class.

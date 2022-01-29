@@ -10,12 +10,15 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.analyzer;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBoolean;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstant;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
@@ -27,8 +30,11 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInteger;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInvalid;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNull;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGReal;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGString;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
@@ -37,10 +43,12 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.examples.codegen.generator.CodeGenerator;
+import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
@@ -101,9 +109,8 @@ public class CodeGenAnalyzer
 	private final @NonNull Map<@NonNull Number, @NonNull CGReal> cgReals = new HashMap<>();
 	private final @NonNull Map<@NonNull String, @NonNull CGString> cgStrings = new HashMap<>();
 	private /*@LazyNonNull*/ Map<@NonNull ExpressionInOCL, @NonNull CommonSubExpressionAnalysis> expression2cseAnalsis = null;
-	// UniqueList allows nested discovery of more foreign Operations
-	private /*@LazyNonNull*/ UniqueList<@NonNull Operation> foreignOperations = null;
-	private /*@LazyNonNull*/ UniqueList<@NonNull Property> foreignProperties = null;
+	// UniqueList allows recursive discovery of more foreign Features
+	private /*@LazyNonNull*/ UniqueList<@NonNull Feature> foreignFeatures = null;
 
 	public CodeGenAnalyzer(@NonNull CodeGenerator codeGenerator) {
 		this.codeGenerator = codeGenerator;
@@ -113,22 +120,12 @@ public class CodeGenAnalyzer
 		cgNull = createCGNull();
 	}
 
-	public void addForeignOperation(@NonNull Operation asOperation) {
-	//	assert asOperation.isIsStatic();
-		UniqueList<@NonNull Operation> foreignOperations2 = foreignOperations;
-		if (foreignOperations2 == null) {
-			foreignOperations = foreignOperations2 = new UniqueList<>();
+	public void addForeignFeature(@NonNull Feature asFeature) {
+		UniqueList<@NonNull Feature> foreignFeatures2 = foreignFeatures;
+		if (foreignFeatures2 == null) {
+			foreignFeatures = foreignFeatures2 = new UniqueList<>();
 		}
-		foreignOperations2.add(asOperation);
-	}
-
-	public void addForeignProperty(@NonNull Property asProperty) {
-	//	assert asOperation.isIsStatic();
-		UniqueList<@NonNull Property> foreignProperties2 = foreignProperties;
-		if (foreignProperties2 == null) {
-			foreignProperties = foreignProperties2 = new UniqueList<>();
-		}
-		foreignProperties2.add(asProperty);
+		foreignFeatures2.add(asFeature);
 	}
 
 	public void analyze(@NonNull CGElement cgRoot) {
@@ -149,6 +146,41 @@ public class CodeGenAnalyzer
 		cgBoolean.setTypeId(getTypeId(TypeId.BOOLEAN));
 		globalNameManager.declareStandardName(cgBoolean);
 		return cgBoolean;
+}
+
+	public @Nullable Iterable<@NonNull CGClass> analyzeForeignFeatures(@NonNull AS2CGVisitor as2cgVisitor) {
+		UniqueList<@NonNull Feature> foreignFeatures = getForeignFeatures();
+		if (foreignFeatures == null) {
+			return null;
+		}
+		List<@NonNull CGClass> cgForeignClasses = new ArrayList<>();
+		ImportNameManager importNameManager = codeGenerator.getImportNameManager();
+		Map <@NonNull String, @NonNull CGClass> name2class = new HashMap<>();
+		for (int i = 0; i < foreignFeatures.size(); i++) {
+			@NonNull Feature foreignFeature = foreignFeatures.get(i);
+			org.eclipse.ocl.pivot.Class foreignClass = PivotUtil.getOwningClass(foreignFeature);
+			String foreignClassName = codeGenerator.getForeignClassName(foreignClass);
+			CGClass cgStaticClass = name2class.get(foreignClassName);
+			if (cgStaticClass == null) {
+				importNameManager.reserveLocalName(foreignClassName);
+				cgStaticClass = CGModelFactory.eINSTANCE.createCGClass();
+				cgStaticClass.setName(foreignClassName);
+				cgStaticClass.setAst(foreignClass);
+				cgForeignClasses.add(cgStaticClass);
+				name2class.put(foreignClassName, cgStaticClass);
+			}
+			CGNamedElement cgForeignFeature = foreignFeature.accept(as2cgVisitor);
+			if (cgForeignFeature instanceof CGOperation) {
+				cgStaticClass.getOperations().add((CGOperation) cgForeignFeature);
+			}
+			else if (cgForeignFeature instanceof CGProperty) {
+				cgStaticClass.getProperties().add((CGProperty) cgForeignFeature);
+			}
+			else if (cgForeignFeature != null) {
+				throw new UnsupportedOperationException("Expected a foreign feature rather than a " + cgForeignFeature.getClass().getSimpleName());
+			}
+		}
+		return cgForeignClasses;
 	}
 
 	public @NonNull CGValuedElement createCGConstantExp(@NonNull CGConstant cgConstant) {
@@ -327,12 +359,8 @@ public class CodeGenAnalyzer
 		return cgExpression;
 	}
 
-	public @Nullable UniqueList<@NonNull Operation> getForeignOperations() {
-		return foreignOperations;
-	}
-
-	public @Nullable UniqueList<@NonNull Property> getForeignProperties() {
-		return foreignProperties;
+	public @Nullable UniqueList<@NonNull Feature> getForeignFeatures() {
+		return foreignFeatures;
 	}
 
 	public @NonNull GlobalNameManager getGlobalNameManager() {
@@ -429,8 +457,8 @@ public class CodeGenAnalyzer
 		return cgUnlimited2;
 	}
 
-	public boolean isForeign(@NonNull Operation asOperation) {
-		return (foreignOperations != null) && foreignOperations.contains(asOperation);
+	public boolean isForeign(@NonNull Feature asFeature) {
+		return (foreignFeatures != null) && foreignFeatures.contains(asFeature);
 	}
 
 	/**

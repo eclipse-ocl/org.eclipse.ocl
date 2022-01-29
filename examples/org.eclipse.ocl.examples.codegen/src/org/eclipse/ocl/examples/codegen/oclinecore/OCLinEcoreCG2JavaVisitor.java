@@ -226,7 +226,7 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 		//
 		Operation asOperation = CGUtil.getAST(cgOperation);
 		assert asOperation.isIsStatic();
-		String className = "SO_" + context.getFlattenedClassName(PivotUtil.getOwningClass(asOperation));
+		String className = "SO_" + context.getForeignClassName(PivotUtil.getOwningClass(asOperation));
 		List<CGParameter> cgParameters = cgOperation.getParameters();
 		LanguageExpression expressionInOCL = asOperation.getBodyExpression();
 		CGValuedElement cgBody = cgOperation.getBody();
@@ -289,7 +289,7 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 		//
 		Property asProperty = CGUtil.getAST(cgProperty);
 		assert asProperty.isIsStatic();
-		String className = "SP_" + context.getFlattenedClassName(PivotUtil.getOwningClass(asProperty));
+		String className = "SP_" + context.getForeignClassName(PivotUtil.getOwningClass(asProperty));
 		LanguageExpression expressionInOCL = asProperty.getOwnedExpression();
 		CGValuedElement cgBody = cgProperty.getBody();
 		assert cgBody != null;

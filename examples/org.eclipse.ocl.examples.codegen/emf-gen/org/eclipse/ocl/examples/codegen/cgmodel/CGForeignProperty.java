@@ -24,9 +24,64 @@ package org.eclipse.ocl.examples.codegen.cgmodel;
  * An operation that must be called to evaluate a ConstrainedProperty. Source, argument and result values are boxed.
  * <!-- end-model-doc -->
  *
+ * <p>
+ * The following features are supported:
+ * </p>
+ * <ul>
+ *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty#getParameter <em>Parameter</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty#getInitExpression <em>Init Expression</em>}</li>
+ * </ul>
  *
  * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGForeignProperty()
  * @generated
  */
 public interface CGForeignProperty extends CGProperty {
+
+	/**
+	 * Returns the value of the '<em><b>Parameter</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The parameters of this operation, with 'self' as the first parameter.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Parameter</em>' containment reference.
+	 * @see #setParameter(CGParameter)
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGForeignProperty_Parameter()
+	 * @generated
+	 */
+	CGParameter getParameter();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty#getParameter <em>Parameter</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Parameter</em>' containment reference.
+	 * @see #getParameter()
+	 * @generated
+	 */
+	void setParameter(CGParameter value);
+
+	/**
+	 * Returns the value of the '<em><b>Init Expression</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The optional initializer or derivation.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Init Expression</em>' containment reference.
+	 * @see #setInitExpression(CGValuedElement)
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGForeignProperty_InitExpression()
+	 * @generated
+	 */
+	CGValuedElement getInitExpression();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty#getInitExpression <em>Init Expression</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Init Expression</em>' containment reference.
+	 * @see #getInitExpression()
+	 * @generated
+	 */
+	void setInitExpression(CGValuedElement value);
 } // CGForeignProperty

@@ -37,6 +37,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.cse.CommonSubexpressionEliminator;
 import org.eclipse.ocl.examples.codegen.genmodel.OCLGenModelUtil;
 import org.eclipse.ocl.examples.xtext.tests.TestFile;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
@@ -586,6 +587,11 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 
 	@Test
 	public void test_ecore_collection_equality() throws Exception {
+		CommonSubexpressionEliminator.CSE_PLACES.setState(true);
+		CommonSubexpressionEliminator.CSE_PRUNE.setState(true);
+		CommonSubexpressionEliminator.CSE_PULL_UP.setState(true);
+		CommonSubexpressionEliminator.CSE_PUSH_UP.setState(true);
+		CommonSubexpressionEliminator.CSE_REWRITE.setState(true);
 		TestOCL ocl = createOCL();
 		//
 		EList<EStructuralFeature> eStructuralFeatures = EcorePackage.Literals.ECLASS.getEStructuralFeatures();
@@ -697,7 +703,12 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 	 * Test the allocation of a complement that defines a statically unqiue id to each element.
 	 */
 	@Test public void test_static_ids() throws Exception {
-		TestUtil.doCompleteOCLSetup();
+				CommonSubexpressionEliminator.CSE_PLACES.setState(true);
+				CommonSubexpressionEliminator.CSE_PRUNE.setState(true);
+				CommonSubexpressionEliminator.CSE_PULL_UP.setState(true);
+				CommonSubexpressionEliminator.CSE_PUSH_UP.setState(true);
+				CommonSubexpressionEliminator.CSE_REWRITE.setState(true);
+				TestUtil.doCompleteOCLSetup();
 		OCL ocl1 = createOCL();
 		EnvironmentFactory environmentFactory1 = ocl1.getEnvironmentFactory();
 		Resource metamodel = createPersonMetamodel(environmentFactory1);
@@ -706,9 +717,9 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 				"context OclElement\n" +
 				"	static def: allElements() : Sequence(OclElement)\n" +
 				"		= ocl::OclElement.allInstances()->asSequence()\n" +
-				"	static def: employee2index : Map(OclElement,Integer)\n" +
+				"	static def: employee2index : Map(OclElement,Integer)[1]\n" +
 				"		= OclElement::allElements()->collectBy(value with index | index)\n" +
-				"	def: id : String\n" +
+				"	def: id : String[1]\n" +
 				"		= employee2index->at(self).toString()\n" +
 				"endpackage\n";
 		TestFile oclFile = createFile("ids.ocl", completeOCLtext);
@@ -776,15 +787,15 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 		IntegerValue int55 = ValueUtil.integerValueOf(55);
 		IntegerValue int77 = ValueUtil.integerValueOf(77);
 		//
-//		assertNull(modelManager.basicGetStaticPropertyValue(staticCountPropertyId));
+//		assertNull(modelManager.basicGetForeignPropertyValue(null, staticCountPropertyId));
 //		ocl2.assertQueryEquals(parent, int55, "count");
 		ocl2.assertQueryEquals(parent, int55, "statics::Parent::static_count()");
-//		assertEquals(int55, modelManager.basicGetStaticPropertyValue(staticCountPropertyId));
+//		assertEquals(int55, modelManager.basicGetForeignPropertyValue(null, staticCountPropertyId));
 		//
-//		modelManager.setStaticPropertyValue(staticCountPropertyId, int77);
-//		assertEquals(int77, modelManager.basicGetStaticPropertyValue(staticCountPropertyId));
+//		modelManager.setForeignPropertyValue(null, staticCountPropertyId, int77);
+//		assertEquals(int77, modelManager.basicGetForeignPropertyValue(null, staticCountPropertyId));
 		ocl2.assertQueryEquals(parent, int55, "static_count()");
-//		assertEquals(int77, modelManager.basicGetStaticPropertyValue(staticCountPropertyId));
+//		assertEquals(int77, modelManager.basicGetForeignPropertyValue(null, staticCountPropertyId));
 		ocl2.assertQueryEquals(parent, int55, "count()");
 
 		// Eliminate shared ModelManager => new ModelManager, Executor per query
@@ -793,12 +804,12 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 
 		ocl2.assertQueryEquals(parent, int55, "count()");
 		modelManager = PivotUtil.getExecutor(null).getModelManager();
-//		assertNull(modelManager.basicGetStaticPropertyValue(staticCountPropertyId));
-//		modelManager.setStaticPropertyValue(staticCountPropertyId, int77);
-//		assertEquals(int77, modelManager.basicGetStaticPropertyValue(staticCountPropertyId));
+//		assertNull(modelManager.basicGetForeignPropertyValue(null, staticCountPropertyId));
+//		modelManager.setForeignPropertyValue(null, staticCountPropertyId, int77);
+//		assertEquals(int77, modelManager.basicGetForeignPropertyValue(null, staticCountPropertyId));
 		//
 		ocl2.assertQueryEquals(parent, int55, "count()");
-//		assertEquals(int77, modelManager.basicGetStaticPropertyValue(staticCountPropertyId));
+//		assertEquals(int77, modelManager.basicGetForeignPropertyValue(null, staticCountPropertyId));
 
 		ocl1.dispose();
 		ocl2.dispose();
@@ -840,15 +851,15 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 		IntegerValue int55 = ValueUtil.integerValueOf(55);
 		IntegerValue int77 = ValueUtil.integerValueOf(77);
 		//
-		assertNull(modelManager.basicGetStaticPropertyValue(staticCountPropertyId));
+		assertNull(modelManager.basicGetForeignPropertyValue(null, staticCountPropertyId));
 //		ocl2.assertQueryEquals(parent, int55, "count");
 		ocl2.assertQueryEquals(null, int55, "statics::Parent::static_count");
-		assertEquals(int55, modelManager.basicGetStaticPropertyValue(staticCountPropertyId));
+		assertEquals(int55, modelManager.basicGetForeignPropertyValue(null, staticCountPropertyId));
 		//
-		modelManager.setStaticPropertyValue(staticCountPropertyId, int77);
-		assertEquals(int77, modelManager.basicGetStaticPropertyValue(staticCountPropertyId));
+		modelManager.setForeignPropertyValue(null, staticCountPropertyId, int77);
+		assertEquals(int77, modelManager.basicGetForeignPropertyValue(null, staticCountPropertyId));
 		ocl2.assertQueryEquals(parent, int77, "static_count");
-		assertEquals(int77, modelManager.basicGetStaticPropertyValue(staticCountPropertyId));
+		assertEquals(int77, modelManager.basicGetForeignPropertyValue(null, staticCountPropertyId));
 		ocl2.assertQueryEquals(parent, int77, "count");
 
 		// Eliminate shared ModelManager => new ModelManager, Executor per query
@@ -857,12 +868,12 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 
 		ocl2.assertQueryEquals(parent, int55, "count");
 		modelManager = PivotUtil.getExecutor(null).getModelManager();
-		assertNull(modelManager.basicGetStaticPropertyValue(staticCountPropertyId));
-		modelManager.setStaticPropertyValue(staticCountPropertyId, int77);
-		assertEquals(int77, modelManager.basicGetStaticPropertyValue(staticCountPropertyId));
+		assertNull(modelManager.basicGetForeignPropertyValue(null, staticCountPropertyId));
+		modelManager.setForeignPropertyValue(null, staticCountPropertyId, int77);
+		assertEquals(int77, modelManager.basicGetForeignPropertyValue(null, staticCountPropertyId));
 		//
 		ocl2.assertQueryEquals(parent, int55, "count");
-		assertEquals(int77, modelManager.basicGetStaticPropertyValue(staticCountPropertyId));
+		assertEquals(int77, modelManager.basicGetForeignPropertyValue(null, staticCountPropertyId));
 
 		ocl1.dispose();
 		ocl2.dispose();

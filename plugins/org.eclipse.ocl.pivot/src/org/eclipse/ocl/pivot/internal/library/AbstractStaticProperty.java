@@ -43,10 +43,10 @@ public abstract class AbstractStaticProperty extends AbstractOperation
 	@Override
 	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull TypedElement caller, @Nullable Object @NonNull [] sourceAndArgumentValues) {
 		ModelManager modelManager = executor.getModelManager();
-		Object value = modelManager.basicGetStaticPropertyValue(propertyId);
+		Object value = modelManager.basicGetForeignPropertyValue(null, propertyId);
 		if (value == null) {
 			value = initialValue(executor);
-			modelManager.setStaticPropertyValue(propertyId, value == null ? ValueUtil.NULL_VALUE : value);
+			modelManager.setForeignPropertyValue(null, propertyId, value == null ? ValueUtil.NULL_VALUE : value);
 		}
 		return value == ValueUtil.NULL_VALUE ? null : value;
 	}

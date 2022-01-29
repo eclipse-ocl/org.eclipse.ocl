@@ -56,6 +56,9 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGFinalVariable;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignOperationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGGuardExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIfExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInteger;
@@ -98,9 +101,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGReal;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGSettableVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowPart;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignOperationCallExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGString;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTemplateParameterExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGText;
@@ -1508,8 +1508,8 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 	 * @generated
 	 */
 	@Override
-	public EClass getCGForeignPropertyCallExp() {
-		return cgForeignPropertyCallExpEClass;
+	public EReference getCGForeignProperty_Parameter() {
+		return (EReference)cgForeignPropertyEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -1518,8 +1518,18 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 	 * @generated
 	 */
 	@Override
-	public EReference getCGForeignPropertyCallExp_InitExpression() {
-		return (EReference)cgForeignPropertyCallExpEClass.getEStructuralFeatures().get(0);
+	public EReference getCGForeignProperty_InitExpression() {
+		return (EReference)cgForeignPropertyEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EClass getCGForeignPropertyCallExp() {
+		return cgForeignPropertyCallExpEClass;
 	}
 
 	/**
@@ -3319,9 +3329,10 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		cgForeignOperationCallExpEClass = createEClass(37);
 
 		cgForeignPropertyEClass = createEClass(38);
+		createEReference(cgForeignPropertyEClass, 8);
+		createEReference(cgForeignPropertyEClass, 9);
 
 		cgForeignPropertyCallExpEClass = createEClass(39);
-		createEReference(cgForeignPropertyCallExpEClass, 10);
 
 		cgGuardExpEClass = createEClass(40);
 		createEAttribute(cgGuardExpEClass, 9);
@@ -3761,9 +3772,10 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		initEClass(cgForeignOperationCallExpEClass, CGForeignOperationCallExp.class, "CGForeignOperationCallExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(cgForeignPropertyEClass, CGForeignProperty.class, "CGForeignProperty", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getCGForeignProperty_Parameter(), this.getCGParameter(), null, "parameter", null, 1, 1, CGForeignProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getCGForeignProperty_InitExpression(), this.getCGValuedElement(), null, "initExpression", null, 0, 1, CGForeignProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(cgForeignPropertyCallExpEClass, CGForeignPropertyCallExp.class, "CGForeignPropertyCallExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getCGForeignPropertyCallExp_InitExpression(), this.getCGValuedElement(), null, "initExpression", null, 0, 1, CGForeignPropertyCallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(cgGuardExpEClass, CGGuardExp.class, "CGGuardExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getCGGuardExp_Message(), ecorePackage.getEString(), "message", null, 1, 1, CGGuardExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

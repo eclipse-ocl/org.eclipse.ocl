@@ -31,12 +31,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>CG Foreign Property Call Exp</b></em>'.
  * <!-- end-user-doc -->
- * <p>
- * The following features are implemented:
- * </p>
- * <ul>
- *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGForeignPropertyCallExpImpl#getInitExpression <em>Init Expression</em>}</li>
- * </ul>
  *
  * @generated
  */
@@ -48,18 +42,7 @@ public class CGForeignPropertyCallExpImpl extends CGPropertyCallExpImpl implemen
 	 * @generated
 	 * @ordered
 	 */
-	public static final int CG_FOREIGN_PROPERTY_CALL_EXP_FEATURE_COUNT = CGPropertyCallExpImpl.CG_PROPERTY_CALL_EXP_FEATURE_COUNT + 1;
-
-
-	/**
-	 * The cached value of the '{@link #getInitExpression() <em>Init Expression</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getInitExpression()
-	 * @generated
-	 * @ordered
-	 */
-	protected CGValuedElement initExpression;
+	public static final int CG_FOREIGN_PROPERTY_CALL_EXP_FEATURE_COUNT = CGPropertyCallExpImpl.CG_PROPERTY_CALL_EXP_FEATURE_COUNT + 0;
 
 
 	/**
@@ -79,123 +62,6 @@ public class CGForeignPropertyCallExpImpl extends CGPropertyCallExpImpl implemen
 	@Override
 	protected EClass eStaticClass() {
 		return CGModelPackage.Literals.CG_FOREIGN_PROPERTY_CALL_EXP;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public CGValuedElement getInitExpression() {
-		return initExpression;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetInitExpression(CGValuedElement newInitExpression, NotificationChain msgs) {
-		CGValuedElement oldInitExpression = initExpression;
-		initExpression = newInitExpression;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 10, oldInitExpression, newInitExpression);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setInitExpression(CGValuedElement newInitExpression) {
-		if (newInitExpression != initExpression) {
-			NotificationChain msgs = null;
-			if (initExpression != null)
-				msgs = ((InternalEObject)initExpression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (10), null, msgs);
-			if (newInitExpression != null)
-				msgs = ((InternalEObject)newInitExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (10), null, msgs);
-			msgs = basicSetInitExpression(newInitExpression, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 10, newInitExpression, newInitExpression));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case 10:
-				return basicSetInitExpression(null, msgs);
-		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case 10:
-				return getInitExpression();
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case 10:
-				setInitExpression((CGValuedElement)newValue);
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void eUnset(int featureID) {
-		switch (featureID) {
-			case 10:
-				setInitExpression((CGValuedElement)null);
-				return;
-		}
-		super.eUnset(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case 10:
-				return initExpression != null;
-		}
-		return super.eIsSet(featureID);
 	}
 
 	/**

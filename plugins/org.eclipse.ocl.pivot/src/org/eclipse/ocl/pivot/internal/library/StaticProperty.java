@@ -101,7 +101,7 @@ public class StaticProperty extends AbstractProperty
 	@Override
 	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
 		ModelManager modelManager = executor.getModelManager();
-		Object value = modelManager.getStaticPropertyValue(propertyId, initExpression, defaultValue);
+		Object value = modelManager.getForeignPropertyValue(null, propertyId, initExpression, defaultValue);
 		return value == ValueUtil.NULL_VALUE ? null : value;
 	}
 }

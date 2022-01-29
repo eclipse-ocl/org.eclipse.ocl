@@ -143,10 +143,11 @@
     </genClasses>
     <genClasses ecoreClass="cgmodel.ecore#//CGFinalVariable"/>
     <genClasses ecoreClass="cgmodel.ecore#//CGForeignOperationCallExp"/>
-    <genClasses ecoreClass="cgmodel.ecore#//CGForeignProperty"/>
-    <genClasses ecoreClass="cgmodel.ecore#//CGForeignPropertyCallExp">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGForeignPropertyCallExp/initExpression"/>
+    <genClasses ecoreClass="cgmodel.ecore#//CGForeignProperty">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGForeignProperty/parameter"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGForeignProperty/initExpression"/>
     </genClasses>
+    <genClasses ecoreClass="cgmodel.ecore#//CGForeignPropertyCallExp"/>
     <genClasses ecoreClass="cgmodel.ecore#//CGGuardExp">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cgmodel.ecore#//CGGuardExp/message"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cgmodel.ecore#//CGGuardExp/safe"/>

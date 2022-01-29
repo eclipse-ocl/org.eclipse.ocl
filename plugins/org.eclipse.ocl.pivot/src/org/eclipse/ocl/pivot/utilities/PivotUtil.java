@@ -1826,8 +1826,16 @@ public class PivotUtil
 	}
 
 	/**
+	 * @since 1.18
+	 */
+	public static org.eclipse.ocl.pivot.@NonNull Class getOwningClass(@NonNull Feature feature) {
+		return ClassUtil.nonNullState(feature.getOwningClass());
+	}
+
+	/**
 	 * @since 1.3
 	 */
+	@Deprecated /* @deprecated use Feature */
 	public static org.eclipse.ocl.pivot.@NonNull Class getOwningClass(@NonNull Operation operation) {
 		return ClassUtil.nonNullState(operation.getOwningClass());
 	}
@@ -1835,6 +1843,7 @@ public class PivotUtil
 	/**
 	 * @since 1.3
 	 */
+	@Deprecated /* @deprecated use Feature */
 	public static org.eclipse.ocl.pivot.@NonNull Class getOwningClass(@NonNull Property property) {
 		return ClassUtil.nonNullState(property.getOwningClass());
 	}

@@ -28,6 +28,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGCollectionPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElementId;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterator;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGMapExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGMapPart;
@@ -299,6 +300,12 @@ public class DependencyVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 	public @Nullable Object visitCGElementId(@NonNull CGElementId cgElementId) {
 		cgElementId.getElementId().accept(id2DependencyVisitor);
 		return super.visitCGElementId(cgElementId);
+	}
+
+	@Override
+	public @Nullable Object visitCGForeignProperty(@NonNull CGForeignProperty cgForeignProperty) {
+		// TODO Auto-generated method stub
+		return super.visitCGForeignProperty(cgForeignProperty);
 	}
 
 	@Override

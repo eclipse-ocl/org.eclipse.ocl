@@ -58,6 +58,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignOperationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGGuardExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIfExp;
@@ -123,6 +124,7 @@ import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionLiteralExp;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Enumeration;
+import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.MapType;
@@ -1968,6 +1970,110 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		return true;
 	}
 
+	@Override
+	public @NonNull Boolean visitCGForeignProperty(@NonNull CGForeignProperty cgForeignProperty) {
+		JavaLocalContext<@NonNull ?> localContext2 = globalContext.getLocalContext(cgForeignProperty);
+		if (localContext2 != null) {
+			localContext = localContext2;
+			try {
+			//	if (!js.appendLocalStatements(cgForeignProperty)) {
+			//		return false;
+			//	}
+				Property asProperty = CGUtil.getAST(cgForeignProperty);
+				CGParameter cgParameter = cgForeignProperty.getParameter();
+			//	assert (cgParameter == null) == asProperty.isIsStatic();		// XXX
+				PropertyId propertyId = asProperty.getPropertyId();
+				String modelManagerName = getSymbolName(null, "modelManager");
+				final String valueName = getSymbolName(null, "value");
+				final String initValueName = getSymbolName(null, "initValue");
+				if (cgParameter != null) {
+					CGValuedElement cgSource = getExpression(cgParameter);
+					if (!js.appendLocalStatements(cgSource)) {
+						return false;
+					}
+				}
+				CGValuedElement cgInitExpression = cgForeignProperty.getInitExpression();
+				assert cgInitExpression != null;
+
+				js.append("public static ");
+				js.appendTypeDeclaration(cgForeignProperty);
+				js.append(" ");
+				js.append(asProperty.getName());		// FIXME valid Java name
+				js.append("(");
+				if (cgParameter != null) {
+					js.appendTypeDeclaration(cgParameter);
+				}
+				js.append(") {\n");
+				js.pushIndentation(null);
+
+
+				if (!js.appendLocalStatements(cgInitExpression)) {
+					return false;
+				}
+
+
+				js.appendClassReference(true, ModelManager.class);
+				js.append(" " + modelManagerName + " = ");
+				js.append(JavaConstants.EXECUTOR_NAME);
+				js.append(".getModelManager();\n");
+				//
+				js.append("Object ");
+				js.append(valueName);
+				js.append(" = ");
+				js.append(modelManagerName + ".basicGetForeignPropertyValue(null, ");
+				js.appendIdReference(propertyId);
+				js.append(");\n");
+				//
+				js.append("if (");
+				js.append(valueName);
+				js.append(" == null) {\n");
+				js.pushIndentation(null);
+				//
+				if (!cgInitExpression.isConstant()) {
+					js.append("Object ");
+					js.append(initValueName);
+					js.append(" = ");
+					js.appendValueName(cgInitExpression);
+				//	cgInitExpression.accept(this);
+					js.append(";\n");
+				}
+				//
+				js.append(valueName);
+				js.append(" = ");
+				js.append(modelManagerName + ".getForeignPropertyValue(null, ");
+				js.appendIdReference(propertyId);
+				js.append(", null, ");
+				if (!cgInitExpression.isConstant()) {
+					js.append(initValueName);
+				}
+				else {
+					js.appendValueName(cgInitExpression);
+				}
+				js.append(");\n");
+				js.popIndentation();
+				js.append("}\n");
+				js.appendDeclaration(cgForeignProperty);
+				js.append(" = ");
+				SubStream castBody = new SubStream() {
+					@Override
+					public void append() {
+						js.append(valueName);
+					}
+				};
+				js.appendClassCast(cgForeignProperty, castBody);
+				js.append(";\n");
+				js.append("return ");
+				js.appendValueName(cgForeignProperty);
+				js.append(";\n");
+				js.popIndentation();
+				js.append("}\n");
+			}
+			finally {
+				localContext = null;
+			}
+		}
+		return true;
+	}
 
 	@Override
 	public @NonNull Boolean visitCGForeignOperationCallExp(@NonNull CGForeignOperationCallExp cgForeignOperationCallExp) {
@@ -1993,7 +2099,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		//
 		CGClass cgReferringClass = CGUtil.getContainingClass(cgForeignOperationCallExp);
 		assert cgReferringClass != null;
-		String flattenedClassName = context.getFlattenedClassName(asReferredClass);
+		String flattenedClassName = context.getForeignClassName(asReferredClass);
 		js.appendDeclaration(cgForeignOperationCallExp);
 		js.append(" = ");
 		js.append(flattenedClassName);
@@ -2022,68 +2128,37 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	}
 
 	@Override
-	public @NonNull Boolean visitCGForeignPropertyCallExp(@NonNull CGForeignPropertyCallExp cgPropertyCallExp) {
+	public @NonNull Boolean visitCGForeignPropertyCallExp(@NonNull CGForeignPropertyCallExp cgForeignPropertyCallExp) {
 	//	assert cgPropertyCallExp.getSource() == null;		// XXX
-		Property asProperty = cgPropertyCallExp.getReferredProperty();
-	//	assert asProperty.isIsStatic();		// XXX
-		PropertyId propertyId = asProperty.getPropertyId();
-		String modelManagerName = globalContext.getModelManagerNameResolution().getResolvedName();
-		final String valueName = "XXX-value"; // XXX getSymbolName(null, "value");
-		final String initValueName = "XXX-initValue"; // XXX getSymbolName(null, "initValue");
-		CGValuedElement cgInitExpression = cgPropertyCallExp.getInitExpression();
-		assert cgInitExpression != null;
-		js.appendClassReference(true, ModelManager.class);
-		js.append(" " + modelManagerName + " = ");
-		js.append(globalContext.getExecutorName());
-		js.append(".getModelManager();\n");
-		//
-		js.append("Object ");
-		js.append(valueName);
-		js.append(" = ");
-		js.append(modelManagerName + ".basicGetStaticPropertyValue(");
-		js.appendIdReference(propertyId);
-		js.append(");\n");
-		//
-		js.append("if (");
-		js.append(valueName);
-		js.append(" == null) {\n");
-		js.pushIndentation(null);
-		//
-		if (!js.appendLocalStatements(cgInitExpression)) {
-			return false;
-		}
-		if (!cgInitExpression.isConstant()) {
-			js.append("Object ");
-			js.append(initValueName);
-			js.append(" = ");
-			js.appendValueName(cgInitExpression);
-		//	cgInitExpression.accept(this);
-			js.append(";\n");
+		Property asProperty = CGUtil.getReferredProperty(cgForeignPropertyCallExp);
+		org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass((Feature)asProperty);
+		String foreignClassName = context.getForeignClassName(asClass);
+		String propertyName = PivotUtil.getName(asProperty);
+		CGValuedElement cgSource = cgForeignPropertyCallExp.getSource();
+		if (cgSource != null) {
+			CGValuedElement source = getExpression(cgSource);
+			//
+			if (!js.appendLocalStatements(source)) {
+				return false;
+			}
 		}
 		//
-		js.append(valueName);
-		js.append(" = ");
-		js.append(modelManagerName + ".getStaticPropertyValue(");
-		js.appendIdReference(propertyId);
-		js.append(", null, ");
-		if (!cgInitExpression.isConstant()) {
-			js.append(initValueName);
-		}
-		else {
-			js.appendValueName(cgInitExpression);
-		}
-		js.append(");\n");
-		js.popIndentation();
-		js.append("}\n");
-		js.appendDeclaration(cgPropertyCallExp);
+		js.appendDeclaration(cgForeignPropertyCallExp);
 		js.append(" = ");
 		SubStream castBody = new SubStream() {
 			@Override
 			public void append() {
-				js.append(valueName);
+				js.appendClassReference(null, foreignClassName);
+				js.append(".");
+				js.append(propertyName);
+				js.append("(");
+				if (cgSource != null) {
+					js.appendValueName(cgSource);
+				}
+				js.append(")");
 			}
 		};
-		js.appendClassCast(cgPropertyCallExp, castBody);
+		js.appendClassCast(cgForeignPropertyCallExp, castBody);
 		js.append(";\n");
 		return true;
 	}

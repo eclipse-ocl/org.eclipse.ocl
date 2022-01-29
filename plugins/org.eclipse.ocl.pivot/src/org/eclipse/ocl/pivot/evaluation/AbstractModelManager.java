@@ -80,109 +80,106 @@ public abstract class AbstractModelManager implements ModelManager.ModelManagerE
 	 * @since 1.18
 	 */
 	@Override
-	public @Nullable Object basicGetForeignPropertyValue(@NonNull Object object, @NonNull PropertyId propertyId) {
-		Map<@NonNull PropertyId, @NonNull Map<@NonNull Object, @NonNull Object>> foreignPropertyId2object2value2 = foreignPropertyId2object2value;
-		if (foreignPropertyId2object2value2 == null) {
-			return null;
+	public @Nullable Object basicGetForeignPropertyValue(@Nullable Object object, @NonNull PropertyId propertyId) {
+		if (object != null) {
+			Map<@NonNull PropertyId, @NonNull Map<@NonNull Object, @NonNull Object>> foreignPropertyId2object2value2 = foreignPropertyId2object2value;
+			if (foreignPropertyId2object2value2 == null) {
+				return null;
+			}
+			Map<@NonNull Object, @NonNull Object> object2value = foreignPropertyId2object2value2.get(propertyId);
+			if (object2value == null) {
+				return null;
+			}
+			Object value = object2value.get(object);
+			return value;
 		}
-		Map<@NonNull Object, @NonNull Object> object2value = foreignPropertyId2object2value2.get(propertyId);
-		if (object2value == null) {
-			return null;
+		else {
+			Map<@NonNull PropertyId, @NonNull Object> staticPropertyId2value2 = staticPropertyId2value;
+			if (staticPropertyId2value2 == null) {
+				return null;
+			}
+			Object value = staticPropertyId2value2.get(propertyId);
+			return value;
 		}
-		Object value = object2value.get(object);
-		return value;
 	}
 
 	/**
 	 * @since 1.18
 	 */
 	@Override
-	public @Nullable Object basicGetStaticPropertyValue(@NonNull PropertyId propertyId) {
-		Map<@NonNull PropertyId, @NonNull Object> staticPropertyId2value2 = staticPropertyId2value;
-		if (staticPropertyId2value2 == null) {
-			return null;
-		}
-		Object value = staticPropertyId2value2.get(propertyId);
-		return value;
-	}
-
-	/**
-	 * @since 1.18
-	 */
-	@Override
-	public @Nullable Object getForeignPropertyValue(@NonNull Object object, @NonNull PropertyId propertyId, @Nullable OCLExpression initExpression, @Nullable Object defaultValue) {
-		Map<@NonNull PropertyId, @NonNull Map<@NonNull Object, @NonNull Object>> foreignPropertyId2object2value2 = foreignPropertyId2object2value;
-		if (foreignPropertyId2object2value2 == null) {
-			foreignPropertyId2object2value = foreignPropertyId2object2value2 = new HashMap<>();
-		}
-		Map<@NonNull Object, @NonNull Object> object2value = foreignPropertyId2object2value2.get(propertyId);
-		if (object2value == null) {
-			object2value = new HashMap<>();
-			foreignPropertyId2object2value2.put(propertyId, object2value);
-		}
-		Object value = object2value.get(object);
-		if (value == null) {
-			if (initExpression != null) {
-				Executor executor = PivotUtil.getExecutor(null, this);
-				value = executor.evaluate(initExpression);
+	public @Nullable Object getForeignPropertyValue(@Nullable Object object, @NonNull PropertyId propertyId, @Nullable OCLExpression initExpression, @Nullable Object defaultValue) {
+		if (object != null) {
+			Map<@NonNull PropertyId, @NonNull Map<@NonNull Object, @NonNull Object>> foreignPropertyId2object2value2 = foreignPropertyId2object2value;
+			if (foreignPropertyId2object2value2 == null) {
+				foreignPropertyId2object2value = foreignPropertyId2object2value2 = new HashMap<>();
 			}
-			else {
-				value = defaultValue;
+			Map<@NonNull Object, @NonNull Object> object2value = foreignPropertyId2object2value2.get(propertyId);
+			if (object2value == null) {
+				object2value = new HashMap<>();
+				foreignPropertyId2object2value2.put(propertyId, object2value);
 			}
+			Object value = object2value.get(object);
 			if (value == null) {
-				value = ValueUtil.NULL_VALUE;
+				if (initExpression != null) {
+					Executor executor = PivotUtil.getExecutor(null, this);
+					value = executor.evaluate(initExpression);
+				}
+				else {
+					value = defaultValue;
+				}
+				if (value == null) {
+					value = ValueUtil.NULL_VALUE;
+				}
+				object2value.put(object, value);
 			}
-			object2value.put(object, value);
+			return value;
 		}
-		return value;
-	}
-
-	@Override
-	public @Nullable Object getStaticPropertyValue(@NonNull PropertyId propertyId, @Nullable OCLExpression initExpression, @Nullable Object defaultValue) {
-		Map<@NonNull PropertyId, @NonNull Object> staticPropertyId2value2 = staticPropertyId2value;
-		if (staticPropertyId2value2 == null) {
-			staticPropertyId2value = staticPropertyId2value2 = new HashMap<>();
-		}
-		Object value = staticPropertyId2value2.get(propertyId);
-		if (value == null) {
-			if (initExpression != null) {
-				Executor executor = PivotUtil.getExecutor(null, this);
-				value = executor.evaluate(initExpression);
+		else {
+			Map<@NonNull PropertyId, @NonNull Object> staticPropertyId2value2 = staticPropertyId2value;
+			if (staticPropertyId2value2 == null) {
+				staticPropertyId2value = staticPropertyId2value2 = new HashMap<>();
 			}
-			else {
-				value = defaultValue;
-			}
+			Object value = staticPropertyId2value2.get(propertyId);
 			if (value == null) {
-				value = ValueUtil.NULL_VALUE;
+				if (initExpression != null) {
+					Executor executor = PivotUtil.getExecutor(null, this);
+					value = executor.evaluate(initExpression);
+				}
+				else {
+					value = defaultValue;
+				}
+				if (value == null) {
+					value = ValueUtil.NULL_VALUE;
+				}
+				staticPropertyId2value2.put(propertyId, value);
 			}
-			staticPropertyId2value2.put(propertyId, value);
+			return value;
 		}
-		return value;
 	}
 
 	/**
 	 * @since 1.18
 	 */
 	@Override
-	public @Nullable Object setForeignPropertyValue(@NonNull Object object, @NonNull PropertyId propertyId, @NonNull Object value) {
-		Map<@NonNull PropertyId, @NonNull Map<@NonNull Object, @NonNull Object>> foreignPropertyId2object2value2 = foreignPropertyId2object2value;
-		if (foreignPropertyId2object2value2 == null) {
-			foreignPropertyId2object2value = foreignPropertyId2object2value2 = new HashMap<>();
+	public @Nullable Object setForeignPropertyValue(@Nullable Object object, @NonNull PropertyId propertyId, @NonNull Object value) {
+		if (object != null) {
+			Map<@NonNull PropertyId, @NonNull Map<@NonNull Object, @NonNull Object>> foreignPropertyId2object2value2 = foreignPropertyId2object2value;
+			if (foreignPropertyId2object2value2 == null) {
+				foreignPropertyId2object2value = foreignPropertyId2object2value2 = new HashMap<>();
+			}
+			Map<@NonNull Object, @NonNull Object> object2value = foreignPropertyId2object2value2.get(propertyId);
+			if (object2value == null) {
+				object2value = new HashMap<>();
+				foreignPropertyId2object2value2.put(propertyId, object2value);
+			}
+			return object2value.put(object, value);
 		}
-		Map<@NonNull Object, @NonNull Object> object2value = foreignPropertyId2object2value2.get(propertyId);
-		if (object2value == null) {
-			object2value = new HashMap<>();
-			foreignPropertyId2object2value2.put(propertyId, object2value);
+		else {
+			Map<@NonNull PropertyId, @NonNull Object> staticPropertyId2value2 = staticPropertyId2value;
+			if (staticPropertyId2value2 == null) {
+				staticPropertyId2value = staticPropertyId2value2 = new HashMap<>();
+			}
+			return staticPropertyId2value2.put(propertyId, value);
 		}
-		return object2value.put(object, value);
-	}
-
-	@Override
-	public @Nullable Object setStaticPropertyValue(@NonNull PropertyId propertyId, @NonNull Object value) {
-		Map<@NonNull PropertyId, @NonNull Object> staticPropertyId2value2 = staticPropertyId2value;
-		if (staticPropertyId2value2 == null) {
-			staticPropertyId2value = staticPropertyId2value2 = new HashMap<>();
-		}
-		return staticPropertyId2value2.put(propertyId, value);
 	}
 }
