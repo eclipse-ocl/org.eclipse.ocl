@@ -206,6 +206,41 @@ public class PivotUtil
 	}
 
 	/**
+	 * @since 1.18
+	 */
+	public static @Nullable Operation basicGetContainingOperation(@Nullable EObject element) {
+		for (EObject eObject = element; eObject != null; eObject = eObject.eContainer()) {
+			if (eObject instanceof Operation) {
+				return (Operation)eObject;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	public static @Nullable Type basicGetContainingType(@Nullable EObject element) {
+		if (element != null) {
+			EObject eObject = element;
+			while (true) {
+				if (eObject instanceof Type) {
+					return (Type)eObject;
+				}
+				EObject eContainer = eObject.eContainer();
+				if (eContainer == null) {
+					if (eObject instanceof ExpressionInOCL) {
+						return ((ExpressionInOCL)eObject).getOwnedContext().getType();
+					}
+					break;
+				}
+				eObject = eContainer;
+			}
+		}
+		return null;
+	}
+
+	/**
 	 * Locate an OCL Executor from the Resource containing an eObject, else create a default one.
 	 *
 	 * @since 1.14
@@ -1135,6 +1170,7 @@ public class PivotUtil
 		return null;
 	}
 
+	// WIP evolving to @NonNull use basicGetContainingOperation
 	public static @Nullable Operation getContainingOperation(@Nullable EObject element) {
 		for (EObject eObject = element; eObject != null; eObject = eObject.eContainer()) {
 			if (eObject instanceof Operation) {
@@ -1161,6 +1197,7 @@ public class PivotUtil
 		return getContainingModel(element);
 	}
 
+	// WIP evolving to @NonNull use basicGetContainingType
 	public static @Nullable Type getContainingType(@Nullable EObject element) {
 		if (element != null) {
 			EObject eObject = element;

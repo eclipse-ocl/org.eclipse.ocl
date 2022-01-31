@@ -261,9 +261,6 @@ public class JavaStream
 
 	public void append(@Nullable String string) {
 		if (string != null) {
-			if ("executor".equals(string)) {
-				getClass();		// XXX
-			}
 			if (indentationStack.isEmpty()) {
 				s.append(string);
 			}
@@ -1076,8 +1073,11 @@ public class JavaStream
 		return true;
 	}
 
-	@Deprecated /* @deprecated this is QVTi specific */
+	/**
+	 * append 'classname'.this or just this if this is the current class scope.
+	 */
 	public void appendThis(@NonNull String className) {
+		// This is used by QVTi but not by OCL at present. Obsolete by use of qualifiedThisVariable
 		String currentClassName = classNameStack.peek();
 		if (!className.equals(currentClassName)) {
 			append(className);
@@ -1166,16 +1166,6 @@ public class JavaStream
 			else {
 				cgElement.accept(cg2java);
 			}
-		}
-		//		else if (cgElement.isInlined() && (cgElement.isInvalid() || cgElement.isNull() || cgElement.isTrue() || cgElement.isFalse() || !cgElement.isGlobal())) {	// FIXME
-		//			CGValuedElement cgValue = cgElement;
-		//			for (CGValuedElement cgNext; (cgNext = cgValue.getReferredValuedElement()) != cgValue; cgValue = cgNext) {}
-		//			cgValue.accept(cg2java);
-		//		}
-		else if (JavaConstants.THIS_NAME.equals(cgElement.toString())) {		// FIXME use a CGThisVariable that is inlined
-		//	appendThis(cg2java.getThisName(cgElement));		// FIXME Move to QVTiCG
-		//	String valueName = cg2java.getValueName(cgElement);
-			append(JavaConstants.THIS_NAME);
 		}
 		else {
 			if (cgElement.isGlobal()) {

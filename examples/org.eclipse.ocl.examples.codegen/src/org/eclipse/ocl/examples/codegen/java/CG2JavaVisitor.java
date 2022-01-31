@@ -951,32 +951,22 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		return localContext.getNameManagerContext().getSymbolName(anObject, nameHints);
 	}
 
-	@Deprecated /* @deprecated this is QVTi specific */
-	protected @NonNull String getThisName(@NonNull CGElement cgElement) {
-		return JavaConstants.THIS_NAME;
-/*		for (EObject eObject = cgElement; eObject != null; eObject = eObject.eContainer()) {
-			if (eObject instanceof CGClass) {
-				return ClassUtil.nonNullState(((CGClass)eObject).getName());
-			}
-		}
-		assert false;
-		return ""; */
-	}
-
 	protected String getValueName(@NonNull CGValuedElement cgElement) {
 		String valueName = localContext != null ? localContext.getValueName(cgElement) : globalContext.getValueName(cgElement);
 		return valueName;
 	}
 
+	@Deprecated /* @deprecated no longer used */
 	protected @Nullable CGVariable installExecutorVariable(@NonNull CGValuedElement cgValuedElement) {
 		return localContext.getExecutorVariable();
 	}
 
-
+	@Deprecated /* @deprecated no longer used */
 	protected @Nullable CGVariable installIdResolverVariable(@NonNull CGValuedElement cgValuedElement) {
 		return localContext.createIdResolverVariable();
 	}
 
+	@Deprecated /* @deprecated no longer used */
 	protected @NonNull CGVariable installStandardLibraryVariable(@NonNull CGValuedElement cgValuedElement) {
 		return localContext.createStandardLibraryVariable();
 	}

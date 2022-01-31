@@ -99,6 +99,8 @@ import org.eclipse.ocl.examples.codegen.generator.CodeGenerator;
 import org.eclipse.ocl.examples.codegen.generator.GenModelException;
 import org.eclipse.ocl.examples.codegen.generator.GenModelHelper;
 import org.eclipse.ocl.examples.codegen.generator.IterationHelper;
+import org.eclipse.ocl.examples.codegen.java.JavaConstants;
+import org.eclipse.ocl.examples.codegen.java.JavaLocalContext;
 import org.eclipse.ocl.examples.codegen.library.NativeProperty;
 import org.eclipse.ocl.examples.codegen.library.NativeStaticOperation;
 import org.eclipse.ocl.examples.codegen.library.NativeVisitorOperation;
@@ -376,6 +378,53 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return cgLetExp;
 	}
 
+	public @NonNull CGVariable createCGVariable(@NonNull VariableDeclaration asVariable) {
+		CGVariable cgVariable = variablesStack.getVariable(asVariable);
+		if (cgVariable == null) {
+			CGFinalVariable cgVariable2 = CGModelFactory.eINSTANCE.createCGFinalVariable();
+			cgVariable = cgVariable2;
+			variablesStack.putVariable(asVariable, cgVariable);
+		}
+		else {
+			assert cgVariable.eContainer() == null;
+		}
+		setAst(cgVariable, asVariable);
+		//		cgVariable.setInit(doVisit(CGValuedElement.class, asVariable.getInitExpression()));
+		return cgVariable;
+	}
+
+	protected CGVariable createCGVariable(@NonNull Variable contextVariable, @NonNull OCLExpression source) {
+		CGVariable cgVariable = createCGVariable(contextVariable);
+		cgVariable.setInit(doVisit(CGValuedElement.class, source));
+		return cgVariable;
+	}
+
+	public CGVariableExp createCGVariableExp(@NonNull VariableExp asVariableExp) {
+		VariableDeclaration asVariable = PivotUtil.getReferredVariable(asVariableExp);
+		CGVariableExp cgVariableExp = CGModelFactory.eINSTANCE.createCGVariableExp();
+		setAst(cgVariableExp, asVariableExp);
+		CGVariable cgVariable;
+		if ((asVariable instanceof Parameter) && isThis((Parameter)asVariable)) {
+			JavaLocalContext<?> localContext = (JavaLocalContext<?>)codeGenerator.getGlobalContext().getLocalContext(getCurrentClass());
+			assert localContext != null;
+			if (isQualifiedThis(asVariableExp, (Parameter)asVariable)) {
+				cgVariable = localContext.getQualifiedThisVariable();
+			}
+			else {
+				cgVariable = localContext.getThisParameter();
+			}
+		}
+		else {
+			cgVariable = getVariable(asVariable);
+		}
+		cgVariableExp.setReferredVariable(cgVariable);
+		return cgVariableExp;
+	}
+
+	protected <T extends EObject> @NonNull T createCopy(@NonNull T anEObject) {
+		return EcoreUtil.copy(anEObject);
+	}
+
 	protected @NonNull CGOperation createFinalCGOperationWithoutBody(@NonNull Operation asOperation) {
 		CGOperation cgOperation = null;
 		LibraryFeature libraryOperation = metamodelManager.getImplementation(asOperation);
@@ -406,64 +455,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return cgOperation;
 	}
 
-	protected @NonNull CGOperation createVirtualCGOperationWithoutBody(@NonNull Operation asOperation, @NonNull List<@NonNull CGCachedOperation> cgOperations) {
-		CGCachedOperation cgOperation = CGModelFactory.eINSTANCE.createCGCachedOperation();
-		setAst(cgOperation, asOperation);
-		cgOperation.setRequired(asOperation.isIsRequired());
-		LanguageExpression specification = asOperation.getBodyExpression();
-		if (specification != null) {
-			Variables savedVariablesStack = variablesStack;
-			try {
-				ExpressionInOCL query = environmentFactory.parseSpecification(specification);
-				variablesStack = new Variables(null);
-				createParameters(cgOperation, query);
-			} catch (ParserException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} finally {
-				variablesStack = savedVariablesStack;
-			}
-		}
-		cgOperation.getFinalOperations().addAll(cgOperations);
-		CGOperation oldCGOperation = asVirtualOperation2cgOperation.put(asOperation, cgOperation);
-		assert oldCGOperation == null;
-		return cgOperation;
-	}
-
-	public @NonNull CGVariable createCGVariable(@NonNull VariableDeclaration asVariable) {
-		CGVariable cgVariable = variablesStack.getVariable(asVariable);
-		if (cgVariable == null) {
-			CGFinalVariable cgVariable2 = CGModelFactory.eINSTANCE.createCGFinalVariable();
-			cgVariable = cgVariable2;
-			variablesStack.putVariable(asVariable, cgVariable);
-		}
-		else {
-			assert cgVariable.eContainer() == null;
-		}
-		setAst(cgVariable, asVariable);
-		//		cgVariable.setInit(doVisit(CGValuedElement.class, asVariable.getInitExpression()));
-		return cgVariable;
-	}
-
-	protected CGVariable createCGVariable(@NonNull Variable contextVariable, @NonNull OCLExpression source) {
-		CGVariable cgVariable = createCGVariable(contextVariable);
-		cgVariable.setInit(doVisit(CGValuedElement.class, source));
-		return cgVariable;
-	}
-
-	public CGVariableExp createCGVariableExp(@NonNull VariableExp asVariableExp, @Nullable VariableDeclaration referredVariable) {
-		CGVariableExp cgVariableExp = CGModelFactory.eINSTANCE.createCGVariableExp();
-		setAst(cgVariableExp, asVariableExp);
-		if (referredVariable != null) {
-			cgVariableExp.setReferredVariable(getVariable(referredVariable));
-		}
-		return cgVariableExp;
-	}
-
-	protected <T extends EObject> @NonNull T createCopy(@NonNull T anEObject) {
-		return EcoreUtil.copy(anEObject);
-	}
-
 	/**
 	 * Wrap asIn in a LetExp in which a clone of asInit is assigned to asVariable.
 	 * @since 1.3
@@ -491,6 +482,30 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			//			cgParameter.setRequired(parameterVariable.isIsRequired());
 			cgOperation.getParameters().add(cgParameter);
 		}
+	}
+
+	protected @NonNull CGOperation createVirtualCGOperationWithoutBody(@NonNull Operation asOperation, @NonNull List<@NonNull CGCachedOperation> cgOperations) {
+		CGCachedOperation cgOperation = CGModelFactory.eINSTANCE.createCGCachedOperation();
+		setAst(cgOperation, asOperation);
+		cgOperation.setRequired(asOperation.isIsRequired());
+		LanguageExpression specification = asOperation.getBodyExpression();
+		if (specification != null) {
+			Variables savedVariablesStack = variablesStack;
+			try {
+				ExpressionInOCL query = environmentFactory.parseSpecification(specification);
+				variablesStack = new Variables(null);
+				createParameters(cgOperation, query);
+			} catch (ParserException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				variablesStack = savedVariablesStack;
+			}
+		}
+		cgOperation.getFinalOperations().addAll(cgOperations);
+		CGOperation oldCGOperation = asVirtualOperation2cgOperation.put(asOperation, cgOperation);
+		assert oldCGOperation == null;
+		return cgOperation;
 	}
 
 	public @NonNull <T extends CGElement> T doVisit(@NonNull Class<T> requiredClass, @Nullable Element pElement) {
@@ -999,6 +1014,10 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return context;
 	}
 
+	protected @NonNull CGClass getCurrentClass() {
+		return ClassUtil.nonNullState(currentClass);
+	}
+
 	public @NonNull CGIterator getIterator(@NonNull VariableDeclaration asVariable) {
 		CGParameter cgParameter = (CGParameter) variablesStack.getVariable(asVariable);
 		if (cgParameter == null) {
@@ -1130,9 +1149,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	public @NonNull CGVariable getVariable(@NonNull VariableDeclaration asVariable) {
 		CGVariable cgVariable = variablesStack.getVariable(asVariable);
 		if (cgVariable == null) {
-			cgVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();
-			setAst(cgVariable, asVariable);
-			variablesStack.putVariable(asVariable, cgVariable);
+			cgVariable = createCGVariable(asVariable);
 			if (asVariable.isIsRequired()) {
 				cgVariable.setNonInvalid();
 				cgVariable.setNonNull();
@@ -1208,6 +1225,20 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 				|| (libraryProperty instanceof StereotypeProperty)
 				|| (libraryProperty instanceof ConstrainedProperty)
 				|| (libraryProperty instanceof org.eclipse.ocl.pivot.internal.ecore.EObjectProperty);
+	}
+
+	/**
+	 * Return true if the asVariableExp reference to asParameter is a reference to 'this' and needs mapping to the qualifiedThisVariable equivalent.
+	 */
+	protected boolean isQualifiedThis(@NonNull VariableExp asVariableExp, @NonNull Parameter asParameter) {
+		return false;
+	}
+
+	/**
+	 * Return true if asParameter is a 'this' parameter.
+	 */
+	protected boolean isThis(@NonNull Parameter asParameter) {
+		return JavaConstants.THIS_NAME.equals(asParameter.getName());
 	}
 
 	/**
@@ -1761,8 +1792,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	@Override
 	public @Nullable CGValuedElement visitVariableExp(@NonNull VariableExp asVariableExp) {
-		VariableDeclaration referredVariable = asVariableExp.getReferredVariable();
-		CGVariableExp cgVariableExp = createCGVariableExp(asVariableExp, referredVariable);
+		CGVariableExp cgVariableExp = createCGVariableExp(asVariableExp);
 		return cgVariableExp;
 	}
 
