@@ -85,6 +85,7 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		CGValuedElement cgBody = (CGValuedElement) ClassUtil.nonNullState(expInOcl.accept(as2cgVisitor));
 		CGOperation cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
 		List<CGParameter> cgParameters = cgOperation.getParameters();
+		cgOperation.setAst(expInOcl);
 		JavaLocalContext<@NonNull ?> localContext = globalContext.getLocalContext(cgOperation);
 		if (localContext != null) {
 			CGParameter executorParameter = (CGParameter) localContext.getExecutorVariable();
@@ -100,7 +101,6 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 			CGParameter cgParameter = as2cgVisitor.getParameter(parameterVariable, null);
 			cgParameters.add(cgParameter);
 		}
-		cgOperation.setAst(expInOcl);
 		Type type = expInOcl.getType();
 		assert type != null;
 		TypeId asTypeId = type/*.behavioralType()*/.getTypeId();

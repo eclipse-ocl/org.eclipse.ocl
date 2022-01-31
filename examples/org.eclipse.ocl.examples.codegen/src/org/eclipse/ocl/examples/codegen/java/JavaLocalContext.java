@@ -14,7 +14,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.NameManager;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
@@ -23,14 +22,16 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.examples.codegen.generator.LocalContext;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.Feature;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  * A JavaLocalContext maintains the Java-specific context for generation of coide from a CGOperation.
@@ -40,17 +41,19 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 	protected final @NonNull JavaGlobalContext<@NonNull ? extends CG> globalContext;
 	protected final @Nullable JavaLocalContext<@NonNull ? extends CG> parentContext;
 	protected final @NonNull CGElement cgScope;
+	protected final @NonNull Type asType;
 	protected final NameManager.@NonNull Context nameManagerContext;
 	protected final boolean executorIsParameter;
 	protected final boolean isStatic;
 
-	private /*@LazyNonNull*/ CGVariable executorVariable = null;
-	private /*@LazyNonNull*/ CGVariable idResolverVariable = null;
-	private /*@LazyNonNull*/ CGVariable modelManagerVariable = null;
-	private /*@LazyNonNull*/ CGVariable standardLibraryVariable = null;
-	private /*@LazyNonNull*/ CGVariable thisVariable = null;
+	private /*@LazyNonNull*/ CGVariable executorVariable = null;			// Passed executor paramter / caached local thread lookup
+	private /*@LazyNonNull*/ CGVariable idResolverVariable = null;			// A convenience cache of execitpr.getIdResolver()
+	private /*@LazyNonNull*/ CGVariable modelManagerVariable = null;		// A convenience cache of execitpr.getModelManager()
+	private /*@LazyNonNull*/ CGVariable qualifiedThisVariable = null;		// An unambiguous spelling of this for external access.
+	private /*@LazyNonNull*/ CGVariable standardLibraryVariable = null;		// A convenience cache of execitpr.getStandardVariable()
+	private /*@LazyNonNull*/ CGParameter thisParameter = null;				// THe orphan "this" text.
 
-	@Deprecated /* @depreced specify executorIsParameter */
+	@Deprecated /* @deprecated specify executorIsParameter */
 	public JavaLocalContext(@NonNull JavaGlobalContext<@NonNull ? extends CG> globalContext, @NonNull CGElement cgScope) {
 		this(globalContext, cgScope, false);
 	}
@@ -60,6 +63,7 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 		this.globalContext = globalContext;
 		this.parentContext = null;
 		this.cgScope = cgScope;
+		this.asType = ClassUtil.nonNullState(PivotUtil.getContainingType(((CGNamedElement)cgScope).getAst()));
 		this.nameManagerContext = codeGenerator.getNameManager().createNestedContext();
 		this.executorIsParameter = executorIsParameter;
 		EObject esObject = cgScope instanceof CGNamedElement ? ((CGNamedElement)cgScope).getAst() : null;
@@ -77,6 +81,10 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 
 	public @Nullable CGVariable basicGetModelManagerVariable() {
 		return modelManagerVariable;
+	}
+
+	public @Nullable CGVariable basicGetQualifiedThisVariable() {
+		return qualifiedThisVariable;
 	}
 
 	public @Nullable CGVariable basicGetStandardLibraryVariable() {
@@ -100,7 +108,7 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 		setNames2(executorInit, executorName, JavaConstants.EXECUTOR_TYPE_ID);
 		executorInit.setValueName(executorName);
 		executorInit.setMethod(JavaConstants.PIVOT_UTIL_GET_EXECUTOR_GET_METHOD);
-		executorInit.getArguments().add(isStatic ? analyzer.createCGNull() : analyzer.createCGVariableExp(getThisVariable()));
+		executorInit.getArguments().add(isStatic ? analyzer.createCGNull() : analyzer.createCGVariableExp(getThisParameter()));
 		executorInit.setRequired(true);
 		executorInit.setInvalidating(false);
 		CGVariable executorVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();
@@ -146,6 +154,16 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 		return modelManagerVariable;
 	}
 
+	public @NonNull CGVariable createQualifiedThisVariable() {
+		String qualifiedThisName = asType.getName() + "_" + JavaConstants.THIS_NAME;
+		CGVariable qualifiedThisVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();
+		setNames2(qualifiedThisVariable, qualifiedThisName, asType.getTypeId());
+		qualifiedThisVariable.setInit(getThisParameter());
+		qualifiedThisVariable.setNonInvalid();
+		qualifiedThisVariable.setNonNull();
+		return qualifiedThisVariable;
+	}
+
 	public @NonNull CGVariable createStandardLibraryVariable() {
 		CGNativeOperationCallExp standardLibraryInit = CGModelFactory.eINSTANCE.createCGNativeOperationCallExp();
 		String standardLibraryName = JavaConstants.STANDARD_LIBRARY_NAME;
@@ -163,10 +181,10 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 		return standardLibraryVariable;
 	}
 
-	protected @NonNull CGParameter createThisVariable() {
+	protected @NonNull CGParameter createThisParameter() {
 		assert !isStatic;
 		String thisName = JavaConstants.THIS_NAME;
-		CGParameter thisVariable = analyzer.createCGParameter(thisName, getScopeTypeId(), true);
+		CGParameter thisVariable = analyzer.createCGParameter(thisName, analyzer.getTypeId(asType.getTypeId()), true);
 		thisVariable.setValueName(thisName);
 		thisVariable.setNonInvalid();
 		thisVariable.setNonNull();
@@ -271,17 +289,12 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 		throw new IllegalStateException("No '" + name + "' in " + cgValuedElement);
 	}
 
-	protected @NonNull CGTypeId getScopeTypeId() {
-		if (cgScope instanceof CGConstraint) {
-			return analyzer.getTypeId(CGUtil.getAST((CGClass)cgScope.eContainer()).getTypeId());
+	public @NonNull CGVariable getQualifiedThisVariable() {
+		CGVariable qualifiedThisVariable2 = qualifiedThisVariable;
+		if (qualifiedThisVariable2 == null) {
+			qualifiedThisVariable = qualifiedThisVariable2 = createQualifiedThisVariable();
 		}
-		else if (cgScope instanceof CGOperation) {
-			return analyzer.getTypeId(CGUtil.getAST((CGClass)cgScope.eContainer()).getTypeId());
-		}
-		else if (cgScope instanceof CGProperty) {
-			return analyzer.getTypeId(CGUtil.getAST((CGClass)cgScope.eContainer()).getTypeId());
-		}
-		throw new UnsupportedOperationException();
+		return qualifiedThisVariable2;
 	}
 
 	@Deprecated /* @deprecated unnecessary argument */
@@ -297,13 +310,13 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 		return standardLibraryVariable2;
 	}
 
-	private @NonNull CGVariable getThisVariable() {
+	public @NonNull CGParameter getThisParameter() {
 		assert !isStatic;
-		CGVariable thisVariable2 = thisVariable;
-		if (thisVariable2 == null) {
-			thisVariable = thisVariable2 = createThisVariable();
+		CGParameter thisParameter2 = thisParameter;
+		if (thisParameter2 == null) {
+			thisParameter = thisParameter2 = createThisParameter();
 		}
-		return thisVariable2;
+		return thisParameter2;
 	}
 
 	public @NonNull String getValueName(@NonNull CGValuedElement cgElement) {
@@ -361,5 +374,29 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 			cgVariable.setNonInvalid();
 			cgVariable.setNonNull();
 		}
+	}
+
+	public @NonNull CGValuedElement wrapLetVariables(@NonNull CGValuedElement cgTree) {
+		CGVariable qualifiedThisVariable = basicGetQualifiedThisVariable();
+		if (qualifiedThisVariable != null) {
+			cgTree = CGUtil.rewriteAsLet(cgTree, qualifiedThisVariable);
+		}
+		CGVariable standardLibraryVariable = basicGetStandardLibraryVariable();
+		if (standardLibraryVariable != null) {
+			cgTree = CGUtil.rewriteAsLet(cgTree, standardLibraryVariable);
+		}
+		CGVariable modelManagerVariable = basicGetModelManagerVariable();
+		if (modelManagerVariable != null) {
+			cgTree = CGUtil.rewriteAsLet(cgTree, modelManagerVariable);
+		}
+		CGVariable idResolverVariable = basicGetIdResolverVariable();
+		if (idResolverVariable != null) {
+			cgTree = CGUtil.rewriteAsLet(cgTree, idResolverVariable);
+		}
+		CGVariable executorVariable = basicGetExecutorVariable();
+		if (executorVariable != null) {
+			cgTree = CGUtil.rewriteAsLet(cgTree, executorVariable);
+		}
+		return cgTree;
 	}
 }
