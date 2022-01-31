@@ -59,7 +59,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.util.AbstractExtendingCGModelVisitor;
 import org.eclipse.ocl.examples.codegen.generator.GenModelHelper;
 import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
-import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.CollectionLiteralExp;
 import org.eclipse.ocl.pivot.MapLiteralExp;
 import org.eclipse.ocl.pivot.Property;
@@ -190,22 +189,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 			assert localContext2 != null;
 			CGValuedElement cgTree = localContext2.getBody();
 			if (cgTree != null) {
-				CGVariable standardLibraryVariable = localContext2.basicGetStandardLibraryVariable();
-				if (standardLibraryVariable != null) {
-					cgTree = CGUtil.rewriteAsLet(cgTree, standardLibraryVariable);
-				}
-				CGVariable modelManagerVariable = localContext2.basicGetModelManagerVariable();
-				if (modelManagerVariable != null) {
-					cgTree = CGUtil.rewriteAsLet(cgTree, modelManagerVariable);
-				}
-				CGVariable idResolverVariable = localContext2.basicGetIdResolverVariable();
-				if (idResolverVariable != null) {
-					cgTree = CGUtil.rewriteAsLet(cgTree, idResolverVariable);
-				}
-				CGVariable executorVariable = localContext2.basicGetExecutorVariable();
-				if (executorVariable != null) {
-					cgTree = CGUtil.rewriteAsLet(cgTree, executorVariable);
-				}
+				cgTree = localContext2.wrapLetVariables(cgTree);
 			}
 		}
 		if (savedLocalContext == null) {
