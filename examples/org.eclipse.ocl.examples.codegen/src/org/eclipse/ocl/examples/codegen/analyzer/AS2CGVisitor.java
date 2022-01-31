@@ -398,11 +398,11 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return cgIsEqual;
 	}
 
-	protected @NonNull CGValuedElement createCGJavaCall(@Nullable CGValuedElement cgSource, @NonNull String javaMethod,
+/*	protected @NonNull CGValuedElement createCGJavaCall(@Nullable CGValuedElement cgSource, @NonNull String javaMethod,
 			@Nullable CGValuedElement... cgparameters) {
 		// TODO Auto-generated method stub
 		return null;
-	}
+	} */
 
 	protected @NonNull CGLetExp createCGLetExp(@NonNull TypedElement element, @NonNull CGFinalVariable cgVariable, @NonNull CGValuedElement cgIn) {
 		CGLetExp cgLetExp = CGModelFactory.eINSTANCE.createCGLetExp();
@@ -640,7 +640,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 
 
-		CGValuedElement cgExecutorValue = createCGJavaCall(null, "PivotUtil.getExecutor", null);
+		CGValuedElement cgExecutorValue = LocalContext;
 		CGValuedElement cgModelManagerValue = createCGJavaCall(cgExecutorValue, "getModelManager");
 		CGValuedElement cgBasicForeignValueExp = createCGJavaCall(cgModelManagerValue, "basicGetForeignValue", null, cgForeignProperty);
 		CGVariable cgBasicForeignVariable = createCGVariable("basicValue", cgBasicForeignValueExp);
@@ -1140,6 +1140,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	protected @Nullable CGValuedElement getInitExpression(@NonNull PropertyCallExp asPropertyCallExp) {
 		Property asProperty = PivotUtil.getReferredProperty(asPropertyCallExp);
+		return getInitExpression(asProperty);
 	}
 
 	protected @Nullable CGValuedElement getInitExpression(@NonNull Property asProperty) {
