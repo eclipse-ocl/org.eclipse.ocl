@@ -19,11 +19,8 @@ import org.eclipse.ocl.examples.codegen.java.JavaGlobalContext;
  */
 public class JUnitGlobalContext extends JavaGlobalContext<@NonNull JUnitCodeGenerator>
 {
-//	protected final @NonNull GenPackage genPackage;
-
 	public JUnitGlobalContext(@NonNull JUnitCodeGenerator codeGenerator) {
 		super(codeGenerator);
-//		this.genPackage = genPackage;
 	}
 
 	@Override

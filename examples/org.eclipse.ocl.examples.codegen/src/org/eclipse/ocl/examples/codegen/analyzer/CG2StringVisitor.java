@@ -657,11 +657,7 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<@Nullable 
 			safeVisit(source);
 			append(".");
 		}
-	//	OperationCallExp operationCallExp = (OperationCallExp) oc.getAst();
 		Method method = oc.getMethod();
-	//	Type sourceType = operationCallExp.getOwnedSource() != null ? operationCallExp.getOwnedSource().getType() : null;
-	//	append(PivotUtil.getNavigationOperator(false/*operationCallExp.isIsSafe()*/, PivotUtil.isAggregate(sourceType)));
-	//	appendName(oper);
 		append(method.toString());
 		append("(");
 		String prefix = "";//$NON-NLS-1$
@@ -671,7 +667,6 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<@Nullable 
 			prefix = ", ";//$NON-NLS-1$
 		}
 		append(")");
-		//		appendAtPre(oc);
 		return null;
 	}
 

@@ -14,7 +14,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.java.JavaLocalContext;
 
 /**
@@ -41,11 +40,6 @@ public class OCLinEcoreLocalContext extends JavaLocalContext<@NonNull OCLinEcore
 			this.messageName = null;
 			this.severityName = null;
 		}
-	}
-
-	@Override
-	public @Nullable CGParameter createTypeIdParameter() {
-		return null;
 	}
 
 	public @Nullable String getContextName() {

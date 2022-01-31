@@ -21,7 +21,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot;
 
-import java.lang.String;
 import org.eclipse.jdt.annotation.NonNull;
 // import org.eclipse.ocl.pivot.ParameterTypes;
 // import org.eclipse.ocl.pivot.PivotTables;
