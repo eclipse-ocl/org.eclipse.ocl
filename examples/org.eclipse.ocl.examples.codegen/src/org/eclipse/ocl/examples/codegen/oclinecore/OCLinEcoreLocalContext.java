@@ -12,54 +12,33 @@ package org.eclipse.ocl.examples.codegen.oclinecore;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.java.JavaLocalContext;
+import org.eclipse.ocl.pivot.NamedElement;
 
 /**
  * A JavaLocalContext maintains the Java-specific context for generation of code from a CGOperation.
  */
 public class OCLinEcoreLocalContext extends JavaLocalContext<@NonNull OCLinEcoreCodeGenerator>
 {
-	protected final @Nullable String contextName;
-	protected final @Nullable String diagnosticsName;
-	protected final @Nullable String messageName;
-	protected final @Nullable String severityName;
-
-	public OCLinEcoreLocalContext(@NonNull OCLinEcoreGlobalContext globalContext, @NonNull CGElement cgScope) {
-		super(globalContext, cgScope, false);
-		if (cgScope instanceof CGConstraint) {
-			this.contextName = nameManagerContext.getSymbolName(null, "context");
-			this.diagnosticsName = nameManagerContext.getSymbolName(null, "diagnostics");
-			this.messageName = nameManagerContext.getSymbolName(null, "message");
-			this.severityName = nameManagerContext.getSymbolName(null, "severity");
+	public OCLinEcoreLocalContext(@NonNull OCLinEcoreGlobalContext globalContext, @Nullable OCLinEcoreLocalContext outerContext, @NonNull CGNamedElement cgScope, @NonNull NamedElement asScope) {
+		super(globalContext, outerContext, cgScope, asScope, false);
+/*		if (cgScope instanceof CGConstraint) {
+			this.contextName = queueValueName(globalContext.getContextParameter());
+			this.diagnosticsName = queueValueName(globalContext.getDiagnosticsParameter());
+			this.messageName = queueValueName(globalContext.getMessageParameter());
+			this.severityName = queueValueName(globalContext.getSeverityParameter());
 		}
 		else {
 			this.contextName = null;
 			this.diagnosticsName = null;
 			this.messageName = null;
 			this.severityName = null;
-		}
-	}
-
-	public @Nullable String getContextName() {
-		return contextName;
-	}
-
-	public @Nullable String getDiagnosticsName() {
-		return diagnosticsName;
+		} */
 	}
 
 	@Override
 	public @NonNull OCLinEcoreGlobalContext getGlobalContext() {
 		return (OCLinEcoreGlobalContext) globalContext;
-	}
-
-	public @Nullable String getMessageName() {
-		return messageName;
-	}
-
-	public @Nullable String getSeverityName() {
-		return severityName;
 	}
 }

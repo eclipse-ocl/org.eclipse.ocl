@@ -19,7 +19,8 @@ import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.DependencyVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.FieldingAnalyzer;
-import org.eclipse.ocl.examples.codegen.analyzer.NameManager;
+import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
+import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager.NameVariant;
 import org.eclipse.ocl.examples.codegen.analyzer.ReferencesVisitor;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cse.CommonSubexpressionEliminator;
@@ -54,7 +55,7 @@ public interface CodeGenerator
 	@NonNull GlobalContext getGlobalContext();
 	@NonNull GlobalPlace getGlobalPlace();
 	@Nullable IterationHelper getIterationHelper(@NonNull Iteration iteration);
-	@NonNull NameManager getNameManager();
+	@NonNull GlobalNameManager getGlobalNameManager();
 	@NonNull CodeGenOptions getOptions();
 	@Nullable List<@NonNull Exception> getProblems();
 	@NonNull TypeDescriptor getTypeDescriptor(@NonNull CGValuedElement cgElement);
@@ -85,4 +86,6 @@ public interface CodeGenerator
 	 * Return true if cgValue could be represented by a primitive value. i.e. if it cannot convey a null or invalid value.
 	 */
 	boolean maybePrimitive(@NonNull CGValuedElement cgValue);
+
+	@NonNull NameVariant getSAFE_NameVariant();
 }

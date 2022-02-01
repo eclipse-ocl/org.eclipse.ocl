@@ -81,13 +81,4 @@ public class CGLocalVariableImpl extends CGVariableImpl implements CGLocalVariab
 		return init != null ? init.getTypedValue() : this;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 * @generated
-	 */
-	@Override
-	public @Nullable String getValueName() {
-		return init != null ? init.getValueName() : null;
-	}
-
 } //CGLocalVariableImpl
