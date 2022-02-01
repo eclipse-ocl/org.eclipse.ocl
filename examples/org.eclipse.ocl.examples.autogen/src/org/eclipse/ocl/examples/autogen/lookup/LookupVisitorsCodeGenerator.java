@@ -34,7 +34,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaPreVisitor;
-import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.library.NativeVisitorOperation;
 import org.eclipse.ocl.examples.codegen.utilities.RereferencingCopier;
 import org.eclipse.ocl.pivot.CompleteClass;
@@ -120,13 +119,14 @@ public abstract class LookupVisitorsCodeGenerator extends AutoVisitorsCodeGenera
 		this.asThisVariable = helper.createParameterVariable("this", asVisitorClass, true);
 		this.asContextVariable = helper.createParameterVariable(LookupVisitorsClassContext.CONTEXT_NAME, asEnvironmentType, true);
 		CGVariable cgVariable = as2cgVisitor.getVariable(asContextVariable);
-		nameManager.reserveName(LookupVisitorsClassContext.CONTEXT_NAME, cgVariable);
+		globalNameManager.declareStandardName(cgVariable, /*null,*/ LookupVisitorsClassContext.CONTEXT_NAME);
 
 		//
 		//	Create new AS Visitor helper properties
 		//
-		this.asEvaluatorProperty = createNativeProperty(getGlobalContext().getExecutorName(), Executor.class, true, true);
-		this.asIdResolverProperty = createNativeProperty(JavaConstants.ID_RESOLVER_NAME, IdResolver.class, true, true);
+		LookupVisitorsClassContext globalContext = getGlobalContext();
+		this.asEvaluatorProperty = createNativeProperty(globalContext.getExecutorName(), Executor.class, true, true);
+		this.asIdResolverProperty = createNativeProperty(globalContext.getIdResolverName(), IdResolver.class, true, true);
 		List<Property> asVisitorProperties = asVisitorClass.getOwnedProperties();
 		asVisitorProperties.add(asEvaluatorProperty);
 		asVisitorProperties.add(asIdResolverProperty);

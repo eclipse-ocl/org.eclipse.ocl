@@ -13,7 +13,6 @@ package org.eclipse.ocl.pivot.ids;
 import java.util.Comparator;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * An ElementId provides a unique hierarchical identifier for a metamodel element. The identifier is structured in that it comprises nested scopes but
@@ -50,7 +49,7 @@ public interface ElementId
 		}
 	}
 
-	@Nullable <R> R accept(@NonNull IdVisitor<R> visitor);
+	<R> R accept(@NonNull IdVisitor<R> visitor);
 
 	/**
 	 * Return a simple name for diagnostics.

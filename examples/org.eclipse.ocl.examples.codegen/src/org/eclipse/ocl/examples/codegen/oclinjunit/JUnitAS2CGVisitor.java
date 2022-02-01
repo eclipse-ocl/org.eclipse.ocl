@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
@@ -32,13 +32,13 @@ public final class JUnitAS2CGVisitor extends AS2CGVisitor
 	public @NonNull CGValuedElement visitExpressionInOCL(@NonNull ExpressionInOCL element) {
 		Variable contextVariable = element.getOwnedContext();
 		if (contextVariable != null) {
-			CGVariable cgContext = getParameter(contextVariable, null);
+			CGVariable cgContext = getParameter(contextVariable, (String)null);
 			cgContext.setTypeId(context.getTypeId(TypeId.OCL_VOID));			// FIXME Java-specific
 			cgContext.setNonInvalid();
 //			cgContext.setNonNull();
 		}
 		for (@SuppressWarnings("null")@NonNull Variable parameterVariable : element.getOwnedParameters()) {
-			@SuppressWarnings("unused") CGVariable cgParameter = getParameter(parameterVariable, null);
+			@SuppressWarnings("unused") CGVariable cgParameter = getParameter(parameterVariable, (String)null);
 		}
 		CGValuedElement cgBody = doVisit(CGValuedElement.class, element.getOwnedBody());
 //		cgOperation.getDependsOn().add(cgBody);
