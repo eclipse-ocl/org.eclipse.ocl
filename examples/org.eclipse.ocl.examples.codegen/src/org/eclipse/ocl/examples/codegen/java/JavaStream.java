@@ -180,7 +180,7 @@ public class JavaStream
 			}
 			appendTypeDeclaration(cgElement);
 			js.append(" ");
-			String valueName = js.cg2java.getValueName(cgElement);
+			String valueName = js.cg2java.getResolvedName(cgElement);
 			js.append(valueName);
 		}
 
@@ -1172,7 +1172,7 @@ public class JavaStream
 			if (cgElement.isGlobal()) {
 				cg2java.appendGlobalPrefix();
 			}
-			String valueName = cg2java.getValueName(cgElement);
+			String valueName = cg2java.getResolvedName(cgElement);
 			append(valueName);
 		}
 	}
@@ -1198,14 +1198,15 @@ public class JavaStream
 	}
 
 	protected @NonNull String getValueName(@NonNull CGValuedElement cgElement) {
-		String name = cgElement.getValueName();
-		if (name == null) {
-			name = cgElement.getName();
-		}
-		if (name == null) {
-			name = "<null-" + cgElement.eClass().getName() + ">";
-		}
-		return name;
+	//	String name = cgElement.getValueName();
+		return cgElement.getResolvedName();
+	//	if (name == null) {
+	//		name = cgElement.getName();
+	//	}
+	//	if (name == null) {
+	//		name = "<null-" + cgElement.eClass().getName() + ">";
+	//	}
+	//	return name;
 	}
 
 	/** @deprecated use isPrimitive() */

@@ -25,8 +25,8 @@ public class LookupFilterClassContext extends AutoGlobalContext<@NonNull LookupF
 
 	public LookupFilterClassContext(@NonNull LookupFilterGenerator codeGenerator, org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		super(codeGenerator, asPackage);
-		nameManager.reserveName(APPLIES_FILTER_OP_PREFIX, null);
-		nameManager.reserveName(ELEMENT_NAME, null);
-		nameManager.reserveName(MATCHES_OP_NAME, null);
+		globalNameManager.declareGlobalName(null, APPLIES_FILTER_OP_PREFIX);
+		globalNameManager.declareGlobalName(null, ELEMENT_NAME);
+		globalNameManager.declareGlobalName(null, MATCHES_OP_NAME);
 	}
 }

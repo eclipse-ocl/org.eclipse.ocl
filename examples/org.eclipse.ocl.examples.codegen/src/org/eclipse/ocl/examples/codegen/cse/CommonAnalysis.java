@@ -15,6 +15,7 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
+import org.eclipse.ocl.examples.codegen.analyzer.NameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
@@ -22,6 +23,8 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
+import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
+import org.eclipse.ocl.examples.codegen.java.JavaGlobalContext;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 
@@ -121,11 +124,13 @@ public class CommonAnalysis extends AbstractAnalysis
 	public void rewrite(@NonNull CodeGenAnalyzer analyzer, @NonNull CGValuedElement controlElement) {
 		CGValuedElement cgCSE = primaryAnalysis.getElement();
 		if ((simpleAnalyses.size() > 1) || !cgCSE.isUncommonable()) {
+			JavaGlobalContext<@NonNull ?> globalContext = ((JavaCodeGenerator)analyzer.getCodeGenerator()).getGlobalContext();
+			NameManager nameManager = globalContext.getLocalContext(controlElement).getNameManager();;
 			CGVariable cgVariable = CGModelFactory.eINSTANCE.createCGLocalVariable();
 			cgVariable.setTypeId(cgCSE.getTypeId());
 			cgVariable.setRequired(cgCSE.isNonNull());
 			cgVariable.setAst(cgCSE.getAst());
-			cgVariable.setName(analyzer.getNameManager().getGlobalSymbolName(cgVariable, "_cse"));
+		//	nameManager.queueValueName(cgVariable, null, "_cse");		// let post-order nameHint resolution find a name
 			for (SimpleAnalysis simpleAnalysis : simpleAnalyses) {
 				CGValuedElement commonElement = simpleAnalysis.getElement();
 				CGElement cgParent = commonElement.getParent();
@@ -201,7 +206,18 @@ public class CommonAnalysis extends AbstractAnalysis
 							CGUtil.replace(secondaryElement, secondaryConstantExp);
 						}
 					}
-					secondaryConstantExp.setReferredConstant(primaryConstantExp.getReferredConstant());
+					CGValuedElement primaryConstant = primaryConstantExp.getReferredConstant();
+					CGValuedElement secondaryConstant = secondaryConstantExp.getReferredConstant();
+					if ((primaryConstant.getAst() != null) && (secondaryConstant.getAst() != null)) {
+						if (analyzer.equals(primaryConstant.getAst(), secondaryConstant.getAst())) {
+							secondaryConstantExp.setReferredConstant(primaryConstant);
+						}
+					}
+					else if ((primaryConstant.getASTypeId() != null) && (secondaryConstant.getASTypeId() != null)) {
+						if (primaryConstant.getASTypeId() == secondaryConstant.getASTypeId()) {
+							secondaryConstantExp.setReferredConstant(primaryConstant);
+						}
+					}
 				}
 			}
 		}

@@ -290,15 +290,6 @@ public class CGTuplePartImpl extends CGValuedElementImpl implements CGTuplePart 
 	 * @generated
 	 */
 	@Override
-	public @Nullable String getValueName() {
-		return init != null ? init.getValueName() : null;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * @generated
-	 */
-	@Override
 	public boolean isBoxed() {
 		return true;
 	}

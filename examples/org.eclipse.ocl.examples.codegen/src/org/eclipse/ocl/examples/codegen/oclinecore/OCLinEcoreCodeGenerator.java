@@ -406,13 +406,21 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 			assert asPackage != null;
 			AS2CGVisitor as2cgVisitor = new OCLinEcoreAS2CGVisitor(cgAnalyzer, globalContext);
 			CGPackage cgPackage = (CGPackage) ClassUtil.nonNullState(asPackage.accept(as2cgVisitor));
+			as2cgVisitor.freeze();
 			optimize(cgPackage);
+			Iterable<@NonNull CGValuedElement> sortedGlobals = prepareGlobals();
+			if (sortedGlobals != null) {
+				for (@NonNull CGValuedElement global : sortedGlobals) {
+					visitInPostOrder(global);
+				}
+			}
+			resolveNames(cgPackage);
 			OCLinEcoreCG2JavaVisitor cg2java = new OCLinEcoreCG2JavaVisitor(this, genPackage, cgPackage);
 			Map<String, String> results = cg2java.generateBodies();
 			for (Map.Entry<String, String> entry : results.entrySet()) {
 				uri2body.put(entry.getKey(), entry.getValue());
 			}
-			Iterable<@NonNull CGValuedElement> sortedGlobals = prepareGlobals();
+	//		Iterable<@NonNull CGValuedElement> sortedGlobals = prepareGlobals();
 			String constantsText = cg2java.generateConstants(sortedGlobals);
 			constantsTexts.put(genPackage, constantsText);
 		}
