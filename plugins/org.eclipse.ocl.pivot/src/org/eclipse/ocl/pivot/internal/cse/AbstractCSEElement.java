@@ -54,7 +54,7 @@ public abstract class AbstractCSEElement implements CSEElement
 	/**
 	 * A CSEMapLiteralPartElement is the irregular non-TypedElement implementation for a MapLiteralPart.
 	 */
-	// XXX Delete me once MapLiteralPart is a TypedElement
+	// BUG 577242 Delete me once MapLiteralPart is a TypedElement
 	@Deprecated
 	public static class CSEMapLiteralPartElement extends AbstractCSEElement
 	{
@@ -160,7 +160,7 @@ public abstract class AbstractCSEElement implements CSEElement
 	/**
 	 * The elements for which this is the CSE element.
 	 *
-	 * XXX FIXME this could be TypedElement if MapLiteralPart was a TypedElement.
+	 * BUG 577242 this could be TypedElement if MapLiteralPart was a TypedElement.
 	 */
 	private final @NonNull List<@NonNull TypedElement> elements = new ArrayList<>();
 

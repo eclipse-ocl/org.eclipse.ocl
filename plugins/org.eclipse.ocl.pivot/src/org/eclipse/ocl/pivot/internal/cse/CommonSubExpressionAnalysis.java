@@ -264,7 +264,7 @@ public class CommonSubExpressionAnalysis
 		return true;
 	}
 
-	// XXX Change to TypedElement once MapLiteralPart is a TypedElement
+	// BUG 577242 Change to TypedElement once MapLiteralPart is a TypedElement
 	public @NonNull CSEElement getCSEElement(@NonNull Element element) {
 		CSEElement cseElement = element2cse.get(element);
 		if (cseElement == null) {
@@ -319,7 +319,7 @@ public class CommonSubExpressionAnalysis
 		return cseElement;
 	}
 
-	// XXX Delete me once MapLiteralPart is a TypedElement
+	// BUG 577242 Delete me once MapLiteralPart is a TypedElement
 	@Deprecated
 	public @NonNull CSEElement getNamespaceCSE(@NonNull MapLiteralPart element, @NonNull List<@NonNull CSEElement> cseElements) {
 		assert !element2cse.containsKey(element);

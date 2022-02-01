@@ -18,6 +18,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
+import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
@@ -70,6 +71,8 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 
 	protected @NonNull CGPackage createCGPackage(@NonNull ExpressionInOCL expInOcl,
 			@NonNull String packageName, @NonNull String className) {
+		NameResolution evaluateNameResolution = globalContext.getEvaluateNameResolution();
+		NameResolution typeIdNameResolution = globalContext.getTypeIdNameResolution();
 		CGPackage cgPackage = CGModelFactory.eINSTANCE.createCGPackage();
 		cgPackage.setName(packageName);
 		//
@@ -82,32 +85,35 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 			contextVariable.setIsRequired(false); // May be null for test
 		}
 		AS2CGVisitor as2cgVisitor = new JUnitAS2CGVisitor(cgAnalyzer);
-		CGValuedElement cgBody = (CGValuedElement) ClassUtil.nonNullState(expInOcl.accept(as2cgVisitor));
 		CGOperation cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
+		as2cgVisitor.pushLocalContext(cgOperation, expInOcl);
 		List<CGParameter> cgParameters = cgOperation.getParameters();
-		cgOperation.setAst(expInOcl);
 		JavaLocalContext<@NonNull ?> localContext = globalContext.getLocalContext(cgOperation);
-		if (localContext != null) {
-			CGParameter executorParameter = (CGParameter) localContext.getExecutorVariable();
-			cgParameters.add(executorParameter);
-			CGParameter typeIdParameter = cgAnalyzer.createCGParameter(JavaConstants.TYPE_ID_NAME, cgAnalyzer.getTypeId(JavaConstants.TYPE_ID_TYPE_ID), true);
-			cgParameters.add(typeIdParameter);
-		}
+		CGParameter executorParameter = (CGParameter) localContext.getExecutorVariable();
+		cgParameters.add(executorParameter);
+		CGParameter typeIdParameter = cgAnalyzer.createCGParameter(typeIdNameResolution.getResolvedName(), cgAnalyzer.getTypeId(JavaConstants.TYPE_ID_TYPE_ID), true);
+		cgParameters.add(typeIdParameter);
 		if (contextVariable != null) {
-			CGParameter cgContext = as2cgVisitor.getParameter(contextVariable, null);
+			CGParameter cgContext = as2cgVisitor.getParameter(contextVariable, (String)null);
 			cgParameters.add(cgContext);
 		}
+		typeIdNameResolution.addSecondaryElement(typeIdParameter);
+	//	globalNameManager.declareStandardName(typeIdParameter, typeIdName);
 		for (@SuppressWarnings("null")@NonNull Variable parameterVariable : expInOcl.getOwnedParameters()) {
-			CGParameter cgParameter = as2cgVisitor.getParameter(parameterVariable, null);
+			CGParameter cgParameter = as2cgVisitor.getParameter(parameterVariable, (String)null);
 			cgParameters.add(cgParameter);
 		}
 		Type type = expInOcl.getType();
 		assert type != null;
 		TypeId asTypeId = type/*.behavioralType()*/.getTypeId();
 		cgOperation.setTypeId(cgAnalyzer.getTypeId(asTypeId));
-		cgOperation.setName(globalContext.getEvaluateName());
+	//	cgOperation.setName(evaluateName);
+		evaluateNameResolution.addSecondaryElement(cgOperation);
+		CGValuedElement cgBody = (CGValuedElement) ClassUtil.nonNullState(expInOcl.accept(as2cgVisitor));
 		cgOperation.setBody(cgBody);
 		cgClass.getOperations().add(cgOperation);
+		as2cgVisitor.popLocalContext(cgOperation);
+		as2cgVisitor.freeze();
 		return cgPackage;
 	}
 
@@ -115,6 +121,12 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		CGPackage cgPackage = createCGPackage(expInOcl, packageName, className);
 		optimize(cgPackage);
 		Iterable<@NonNull CGValuedElement> sortedGlobals = prepareGlobals();
+		if (sortedGlobals != null) {
+			for (@NonNull CGValuedElement global : sortedGlobals) {
+				visitInPostOrder(global);
+			}
+		}
+		resolveNames(cgPackage);
 		JUnitCG2JavaClassVisitor cg2JavaClassVisitor = new JUnitCG2JavaClassVisitor(this, expInOcl, sortedGlobals);
 		cg2JavaClassVisitor.safeVisit(cgPackage);
 		ImportNameManager importNameManager = cg2JavaClassVisitor.getImportNameManager();

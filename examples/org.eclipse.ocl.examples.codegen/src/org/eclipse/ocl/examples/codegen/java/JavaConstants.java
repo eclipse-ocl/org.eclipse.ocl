@@ -26,19 +26,21 @@ import org.eclipse.ocl.pivot.internal.library.UnboxedExplicitNavigationProperty;
 import org.eclipse.ocl.pivot.internal.library.UnboxedOppositeNavigationProperty;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
-public class JavaConstants
-{
+public class JavaConstants {
+
 	/**
 	 * Map from a Java class to the corresponding JavaTypeId singleton.
 	 */
 	private static @NonNull JavaTypeIdSingletonScope javaTypes = new JavaTypeIdSingletonScope();
 
 	public static final @NonNull String CONSTRAINT_NAME_NAME = "constraintName";
+
 	public static final @NonNull String E_CONTAINER_NAME = "eContainer";
-	public static final @NonNull String E_NAME = "e";
+
 	public static final @NonNull String EVALUATE_NAME = "evaluate";
 	public static final @NonNull String EVALUATION_CACHE_NAME = "evaluationCache";
 	public static final @NonNull String EXECUTOR_NAME = "executor";
+	public static final @NonNull String GET_CACHED_EVLUATION_RESULT_NAME = "getCachedEvaluationResult";
 	public static final @NonNull String ID_RESOLVER_NAME = "idResolver";
 	public static final @NonNull String INSTANCE_NAME = "INSTANCE";
 	public static final @NonNull String MODEL_MANAGER_NAME = "modelManager";
@@ -48,29 +50,56 @@ public class JavaConstants
 	public static final @NonNull String THIS_NAME = "this";
 	public static final @NonNull String TYPE_ID_NAME = "typeId";
 
-	public static final @NonNull TypeId CLASS_TYPE_ID = getJavaTypeId(org.eclipse.ocl.pivot.Class.class);
-	public static final @NonNull TypeId PROPERTY_TYPE_ID = getJavaTypeId(Property.class);
-	public static final @NonNull TypeId EXECUTOR_TYPE_ID = getJavaTypeId(Executor.class);
-	public static final @NonNull TypeId ID_RESOLVER_TYPE_ID = getJavaTypeId(IdResolver.class);
-	public static final @NonNull TypeId MODEL_MANAGER_TYPE_ID = getJavaTypeId(ModelManager.class);
-	//	public static final @NonNull TypeId SELF_TYPE_ID = getJavaTypeId(Object.class);
-	public static final @NonNull TypeId STANDARD_LIBRARY_TYPE_ID = getJavaTypeId(StandardLibrary.class);
-	public static final @NonNull TypeId TYPE_ID_TYPE_ID = getJavaTypeId(TypeId.class);
-	public static final @NonNull TypeId UNBOXED_COMPOSITION_PROPERTY_TYPE_ID = getJavaTypeId(UnboxedCompositionProperty.class);
-	public static final @NonNull TypeId UNBOXED_EXPLICIT_NAVIGATION_PROPERTY_TYPE_ID = getJavaTypeId(UnboxedExplicitNavigationProperty.class);
-	public static final @NonNull TypeId UNBOXED_OPPOSITE_NAVIGATION_PROPERTY_TYPE_ID = getJavaTypeId(UnboxedOppositeNavigationProperty.class);
+	public static final @NonNull TypeId CLASS_TYPE_ID = getJavaTypeId(
+		org.eclipse.ocl.pivot.Class.class);
+
+	public static final @NonNull TypeId PROPERTY_TYPE_ID = getJavaTypeId(
+		Property.class);
+
+	public static final @NonNull TypeId EXECUTOR_TYPE_ID = getJavaTypeId(
+		Executor.class);
+
+	public static final @NonNull TypeId ID_RESOLVER_TYPE_ID = getJavaTypeId(
+		IdResolver.class);
+
+	public static final @NonNull TypeId MODEL_MANAGER_TYPE_ID = getJavaTypeId(
+		ModelManager.class);
+
+	// public static final @NonNull TypeId SELF_TYPE_ID =
+	// getJavaTypeId(Object.class);
+	public static final @NonNull TypeId STANDARD_LIBRARY_TYPE_ID = getJavaTypeId(
+		StandardLibrary.class);
+
+	public static final @NonNull TypeId TYPE_ID_TYPE_ID = getJavaTypeId(
+		TypeId.class);
+
+	public static final @NonNull TypeId UNBOXED_COMPOSITION_PROPERTY_TYPE_ID = getJavaTypeId(
+		UnboxedCompositionProperty.class);
+
+	public static final @NonNull TypeId UNBOXED_EXPLICIT_NAVIGATION_PROPERTY_TYPE_ID = getJavaTypeId(
+		UnboxedExplicitNavigationProperty.class);
+
+	public static final @NonNull TypeId UNBOXED_OPPOSITE_NAVIGATION_PROPERTY_TYPE_ID = getJavaTypeId(
+		UnboxedOppositeNavigationProperty.class);
 
 	public static final Method EXECUTOR_GET_ID_RESOLVER_METHOD;
+
 	public static final Method EXECUTOR_GET_MODEL_MANAGER_METHOD;
+
 	public static final Method EXECUTOR_GET_STANDARD_LIBRARY_METHOD;
+
 	public static final Method PIVOT_UTIL_GET_EXECUTOR_GET_METHOD;
 
 	static {
 		try {
-			EXECUTOR_GET_ID_RESOLVER_METHOD = Executor.class.getMethod("getIdResolver");
-			EXECUTOR_GET_MODEL_MANAGER_METHOD = Executor.class.getMethod("getModelManager");
-			EXECUTOR_GET_STANDARD_LIBRARY_METHOD = Executor.class.getMethod("getStandardLibrary");
-			PIVOT_UTIL_GET_EXECUTOR_GET_METHOD = PivotUtil.class.getMethod("getExecutor", EObject.class);
+			EXECUTOR_GET_ID_RESOLVER_METHOD = Executor.class
+				.getMethod("getIdResolver");
+			EXECUTOR_GET_MODEL_MANAGER_METHOD = Executor.class
+				.getMethod("getModelManager");
+			EXECUTOR_GET_STANDARD_LIBRARY_METHOD = Executor.class
+				.getMethod("getStandardLibrary");
+			PIVOT_UTIL_GET_EXECUTOR_GET_METHOD = PivotUtil.class
+				.getMethod("getExecutor", EObject.class);
 		} catch (NoSuchMethodException | SecurityException e) {
 			throw new RuntimeException(e);
 		}
@@ -82,8 +111,7 @@ public class JavaConstants
 	public static @NonNull TypeId getJavaTypeId(@NonNull Class<?> javaClass) {
 		if (javaClass == Boolean.class) {
 			return TypeId.BOOLEAN;
-		}
-		else if (javaClass == String.class) {
+		} else if (javaClass == String.class) {
 			return TypeId.STRING;
 		}
 		return javaTypes.getSingleton(javaClass);

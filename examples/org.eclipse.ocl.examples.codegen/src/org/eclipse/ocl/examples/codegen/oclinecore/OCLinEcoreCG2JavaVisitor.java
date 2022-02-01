@@ -98,7 +98,11 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 							js.appendDeclaration(cgOperationCallExp);
 							js.append(" = ");
 							js.appendClassReference(null, CGStringGetSeverityOperation.class);
-							js.append("."+ globalContext.getInstanceName() + "."+ globalContext.getEvaluateName() + "(");
+							js.append(".");
+							js.append(globalContext.getInstanceName());
+							js.append(".");
+							js.append(globalContext.getEvaluateName());
+							js.append("(");
 							js.append(globalContext.getExecutorName());
 							js.append(", ");
 							js.appendClassReference(null, genClassifier.getGenPackage().getQualifiedPackageInterfaceName());
@@ -123,7 +127,7 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 				Element asElement = cgConstraint.getAst();
 				if ((cgBody != null) && (pivotClass instanceof org.eclipse.ocl.pivot.Class) && (asElement instanceof Constraint)) {
 					Constraint asConstraint = (Constraint) asElement;
-					localContext = globalContext.getLocalContext(cgConstraint);
+					localContext = globalContext.basicGetLocalContext(cgConstraint);
 					String bodyText = generateValidatorBody(cgBody, asConstraint, (org.eclipse.ocl.pivot.Class)pivotClass);
 					String fragmentURI = getFragmentURI(pivotClass) + "==" + getRuleName(asConstraint);
 					bodies.put(fragmentURI, bodyText);
@@ -134,7 +138,7 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 				Element asOperation = cgOperation.getAst();
 				if ((cgBody != null) && (asOperation instanceof Operation)) {
 					String returnClassName = genModelHelper.getOperationReturnType((Operation)asOperation);
-					localContext = globalContext.getLocalContext(cgOperation);
+					localContext = globalContext.basicGetLocalContext(cgOperation);
 					String bodyText = generateBody(cgOperation.getParameters(), cgBody, returnClassName);
 					String fragmentURI = getFragmentURI(asOperation);
 					bodies.put(fragmentURI, bodyText);
@@ -145,7 +149,7 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 				Element asProperty = cgProperty.getAst();
 				if ((cgBody != null) && (asProperty instanceof Property)) {
 					String returnClassName = genModelHelper.getPropertyResultType((Property)asProperty);
-					localContext = globalContext.getLocalContext(cgProperty);
+					localContext = globalContext.basicGetLocalContext(cgProperty);
 					String bodyText = generateBody(null, cgBody, returnClassName);
 					String fragmentURI = getFragmentURI(asProperty);
 					bodies.put(fragmentURI, bodyText);

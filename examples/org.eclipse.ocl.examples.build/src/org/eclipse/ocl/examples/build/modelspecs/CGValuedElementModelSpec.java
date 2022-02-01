@@ -354,19 +354,16 @@ public class CGValuedElementModelSpec extends ModelSpec
 			}
 			@Override public @Nullable String generateIsBoxed(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				return classRef(CGValuedElement.class) + " referredValue = getReferredValue();\n" +
-						"//		CGValuedElement value = getNamedValue();\n" +
 						"		assert referredValue != this : \"isBoxed must be overridden for a \" + getClass().getSimpleName() + \" since referredValue returns this\";\n" +
 						"		return referredValue.isBoxed();";
 			}
 			@Override public @Nullable String generateIsEcore(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				return classRef(CGValuedElement.class) + " referredValue = getReferredValue();\n" +
-						"//		CGValuedElement value = getNamedValue();\n" +
 						"		assert referredValue != this : \"isEcore must be overridden for a \" + getClass().getSimpleName() + \" since referredValue returns this\";\n" +
 						"		return referredValue.isEcore();";
 			}
 			@Override public @Nullable String generateIsUnboxed(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				return classRef(CGValuedElement.class) + " referredValue = getReferredValue();\n" +
-						"//		CGValuedElement value = getNamedValue();\n" +
 						"		assert referredValue != this : \"isUnboxed must be overridden for a \" + getClass().getSimpleName() + \" since referredValue returns this\";\n" +
 						"		return referredValue.isUnboxed();";
 			}
@@ -2085,7 +2082,6 @@ public class CGValuedElementModelSpec extends ModelSpec
 		@Nullable String generateGetReferredValue(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel);
 		@Nullable String generateGetSourceValue(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel);
 		@Nullable String generateGetTypedValue(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel);
-		@Nullable String generateGetValueName(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel);
 
 		public static final @NonNull Val DELEG = new Val() {
 			@Override public @Nullable String generateGetNamedValue(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
@@ -2099,9 +2095,6 @@ public class CGValuedElementModelSpec extends ModelSpec
 			};
 			@Override public @Nullable String generateGetTypedValue(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				return "return " + cgModelSpec.delegate + " != null ? " + cgModelSpec.delegate + ".getTypedValue() : this;";
-			}
-			@Override public @Nullable String generateGetValueName(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-				return "return " + cgModelSpec.delegate + " != null ? " + cgModelSpec.delegate + ".getValueName() : null;";
 			}
 		};
 
@@ -2118,9 +2111,6 @@ public class CGValuedElementModelSpec extends ModelSpec
 			@Override public @Nullable String generateGetTypedValue(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				return "return this;";
 			}
-			@Override public @Nullable String generateGetValueName(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-				return "return " + cgModelSpec.delegate + " != null ? " + cgModelSpec.delegate + ".getValueName() : null;";
-			}
 		};
 
 		public static final @NonNull Val DELTY = new Val() {
@@ -2136,9 +2126,6 @@ public class CGValuedElementModelSpec extends ModelSpec
 			@Override public @Nullable String generateGetTypedValue(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				return "return source != null ? source.getTypedValue() : this;";
 			}
-			@Override public @Nullable String generateGetValueName(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-				return null;
-			}
 		};
 
 		public static final @NonNull Val DELVL = new Val() {
@@ -2153,9 +2140,6 @@ public class CGValuedElementModelSpec extends ModelSpec
 			};
 			@Override public @Nullable String generateGetTypedValue(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				return "return this;";
-			}
-			@Override public @Nullable String generateGetValueName(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-				return null;
 			}
 		};
 
@@ -2175,10 +2159,6 @@ public class CGValuedElementModelSpec extends ModelSpec
 				return classRef(CGValuedElement.class) + " value = getThisValue();\n" +
 						"		return value != this ? value.getTypedValue() : value;";
 			}
-			@Override public @Nullable String generateGetValueName(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-				return classRef(CGValuedElement.class) + " value = getThisValue();\n" +
-						"		return value != this ? value.getValueName() : valueName;";
-			}
 		};
 
 		public static final @NonNull Val THIS = new Val() {
@@ -2193,9 +2173,6 @@ public class CGValuedElementModelSpec extends ModelSpec
 			};
 			@Override public @Nullable String generateGetTypedValue(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				return "return this;";
-			}
-			@Override public @Nullable String generateGetValueName(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-				return null;
 			}
 		};
 
@@ -2245,29 +2222,6 @@ public class CGValuedElementModelSpec extends ModelSpec
 			protected @Nullable String getBody(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				Val val = cgModelSpec.val;
 				return val != null ? val.generateGetTypedValue(cgModelSpec, genModel) : null;
-			}
-		};
-
-		public static MethodSpec getValueName = new MyMethodSpec(CGValuedElement.class, "@Nullable String getValueName()", null,
-			"Return the declared name value of this element. The text is valid for use in the target language and\n"+
-				"unique within the context in which this element is declared.")
-		{
-			@Override
-			protected @Nullable String getBody(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-				Val val = cgModelSpec.val;
-				return val != null ? val.generateGetValueName(cgModelSpec, genModel) : null;
-			}
-		};
-
-		public static MethodSpec setValueName = new MyMethodSpec(CGValuedElement.class, "void setValueName(@NonNull String valueName)", "String valueName = null",
-				"Set the name of the value.")
-		{
-			@Override
-			protected @Nullable String getBody(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-				if (cgModelSpec.cgClass != rootClass) {
-					return null;
-				}
-				return "this.valueName = valueName;";
 			}
 		};
 	}
@@ -2431,7 +2385,6 @@ public class CGValuedElementModelSpec extends ModelSpec
 		Val.getSourceValue.generate(s, this, genModel, isImplementation);
 		Ths.getThisValue.generate(s, this, genModel, isImplementation);
 		Val.getTypedValue.generate(s, this, genModel, isImplementation);
-		Val.getValueName.generate(s, this, genModel, isImplementation);
 		Nul.isAssertedNonNull.generate(s, this, genModel, isImplementation);
 		Box.isBoxed.generate(s, this, genModel, isImplementation);
 		Ct.isCaught.generate(s, this, genModel, isImplementation);
@@ -2461,6 +2414,5 @@ public class CGValuedElementModelSpec extends ModelSpec
 		Nul.setNonNull2.generate(s, this, genModel, isImplementation);
 		Nul.setNonNull3.generate(s, this, genModel, isImplementation);
 		Set.setSettable.generate(s, this, genModel, isImplementation);
-		Val.setValueName.generate(s, this, genModel, isImplementation);
 	}
 }

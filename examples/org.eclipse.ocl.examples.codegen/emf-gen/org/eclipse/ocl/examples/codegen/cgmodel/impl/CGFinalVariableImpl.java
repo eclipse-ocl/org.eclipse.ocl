@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -12,7 +12,6 @@ package org.eclipse.ocl.examples.codegen.cgmodel.impl;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGFinalVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
@@ -79,15 +78,6 @@ public class CGFinalVariableImpl extends CGVariableImpl implements CGFinalVariab
 	@Override
 	public @NonNull CGValuedElement getTypedValue() {
 		return init != null ? init.getTypedValue() : this;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * @generated
-	 */
-	@Override
-	public @Nullable String getValueName() {
-		return init != null ? init.getValueName() : null;
 	}
 
 } //CGFinalVariableImpl
