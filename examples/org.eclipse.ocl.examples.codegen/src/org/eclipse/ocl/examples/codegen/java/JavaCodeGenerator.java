@@ -28,16 +28,23 @@ import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.DependencyVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.FieldingAnalyzer;
+import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
+import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager.NameVariant;
 import org.eclipse.ocl.examples.codegen.analyzer.NameManager;
+import org.eclipse.ocl.examples.codegen.analyzer.NameManagerHelper;
 import org.eclipse.ocl.examples.codegen.analyzer.ReferencesVisitor;
 import org.eclipse.ocl.examples.codegen.asm5.ASM5JavaAnnotationReader;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGUnboxExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.impl.CGValuedElementImpl;
 import org.eclipse.ocl.examples.codegen.cse.CommonSubexpressionEliminator;
 import org.eclipse.ocl.examples.codegen.cse.GlobalPlace;
 import org.eclipse.ocl.examples.codegen.generator.AbstractCodeGenerator;
@@ -200,6 +207,15 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	private @NonNull Map<ElementId, BoxedDescriptor> boxedDescriptors = new HashMap<ElementId, BoxedDescriptor>();
 	private /*@LazyNonNull*/ ASM5JavaAnnotationReader annotationReader = null;
 
+	private final @NonNull NameVariant BODY_NameVariant;
+	private final @NonNull NameVariant IMPL_NameVariant;
+	private final @NonNull NameVariant ITER_NameVariant;
+	private final @NonNull NameVariant MGR_NameVariant;
+	private final @NonNull NameVariant SAFE_NameVariant;
+	private final @NonNull NameVariant THROWN_NameVariant;
+	private final @NonNull NameVariant TYPE_NameVariant;
+
+
 	@Deprecated /* @deprecated pass a genmodel - necessary for UML support */
 	public JavaCodeGenerator(@NonNull EnvironmentFactoryInternal environmentFactory) {
 		this(environmentFactory, null);
@@ -207,6 +223,13 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 
 	public JavaCodeGenerator(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable GenModel genModel) {
 		super(environmentFactory, genModel);
+		BODY_NameVariant = globalNameManager.addNameVariantPrefix("BODY_");
+		IMPL_NameVariant = globalNameManager.addNameVariantPrefix("IMPL_");
+		ITER_NameVariant = globalNameManager.addNameVariantPrefix("ITER_");
+		MGR_NameVariant = globalNameManager.addNameVariantPrefix("MGR_");
+		SAFE_NameVariant = globalNameManager.addNameVariantPrefix("SAFE_");
+		THROWN_NameVariant = globalNameManager.addNameVariantPrefix("THROWN_");
+		TYPE_NameVariant = globalNameManager.addNameVariantPrefix("TYPE_");
 	}
 
 	@Override
@@ -249,6 +272,11 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		return AbstractGenModelHelper.create(metamodelManager, genModel);
 	}
 
+	@Override
+	protected @NonNull GlobalNameManager createGlobalNameManager() {
+		return new GlobalNameManager(createNameManagerHelper());
+	}
+
 	protected @NonNull Id2EClassVisitor createId2EClassVisitor() {
 		return new Id2EClassVisitor(metamodelManager);
 	}
@@ -266,15 +294,17 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		return new JavaStream(this, cg2JavaVisitor);
 	}
 
-	@Override
-	protected @NonNull NameManager createNameManager() {
-		return new NameManager();
+	protected @NonNull NameManagerHelper createNameManagerHelper() {
+		return new NameManagerHelper();
 	}
 
 	@Override
-	@NonNull
-	public ReferencesVisitor createReferencesVisitor() {
+	public @NonNull ReferencesVisitor createReferencesVisitor() {
 		return ReferencesVisitor.INSTANCE;
+	}
+
+	public @NonNull NameVariant getBODY_NameVariant() {
+		return BODY_NameVariant;
 	}
 
 	@Override
@@ -314,6 +344,14 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 			globalPlace = globalPlace2 = new GlobalPlace(getAnalyzer());
 		}
 		return globalPlace2;
+	}
+
+	public @NonNull NameVariant getIMPL_NameVariant() {
+		return IMPL_NameVariant;
+	}
+
+	public @NonNull NameVariant getITER_NameVariant() {
+		return ITER_NameVariant;
 	}
 
 	public @NonNull Id2BoxedDescriptorVisitor getId2BoxedDescriptorVisitor() {
@@ -426,6 +464,23 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 			}
 		}
 		return null;
+	}
+
+	public @NonNull NameVariant getMGR_NameVariant() {
+		return MGR_NameVariant;
+	}
+
+	@Override
+	public @NonNull NameVariant getSAFE_NameVariant() {
+		return SAFE_NameVariant;
+	}
+
+	public @NonNull NameVariant getTHROWN_NameVariant() {
+		return THROWN_NameVariant;
+	}
+
+	public @NonNull NameVariant getTYPE_NameVariant() {
+		return TYPE_NameVariant;
 	}
 
 	@Override
@@ -588,5 +643,80 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		dependencyVisitor.visitAll(globals);
 		List<@NonNull CGValuedElement> sortedGlobals = getGlobalPlace().getSortedGlobals(dependencyVisitor);
 		return sortedGlobals;
+	}
+
+	public void resolveNames(@NonNull CGPackage cgPackage) {
+//		JavaGlobalContext<@NonNull ? extends JavaCodeGenerator> globalContext = getGlobalContext();
+		visitInPostOrder(cgPackage);
+/*		for (EObject eObject : new TreeIterable(cgPackage, true)) {
+			if (eObject instanceof CGValuedElement) {
+				CGValuedElement cgValuedElement = (CGValuedElement)eObject;
+				if (cgValuedElement instanceof CGBuiltInIterationCallExp) {
+					getClass();		// XXX
+				}
+				JavaLocalContext<?> localContext = globalContext.getLocalContext(cgValuedElement);
+			//	if (cgValuedElement.getName() == null) {
+			//		cgValuedElement.setName("XXX");				// XXX
+			//	}
+				localContext.getNameManager().queueValueName(cgValuedElement, null, null);
+			}
+		} */
+		globalNameManager.assignNames();
+		CGValuedElementImpl.ALLOW_GET_VALUE_NAME = true;
+	}
+
+	protected void visitInPostOrder(@NonNull CGElement cgElement) {
+		if (cgElement instanceof CGParameter) {
+			getClass();		// XXX
+		}
+		JavaGlobalContext<@NonNull ? extends JavaCodeGenerator> globalContext = getGlobalContext();
+		for (EObject eObject : cgElement.eContents()) {					// XXX Surely preorder - no post order to satisfy bottom up dependency evaluation
+			if (eObject instanceof CGElement) {
+				visitInPostOrder((CGElement)eObject);
+				if (eObject instanceof CGValuedElement) {
+					CGValuedElement cgValuedElement = (CGValuedElement)eObject;
+					if (cgValuedElement instanceof CGNativeOperationCallExp) {
+						getClass();		// XXX
+					}
+				//	JavaLocalContext<?> localContext = globalContext.basicGetLocalContext(cgValuedElement);
+				//	if (cgValuedElement.getName() == null) {
+				//		cgValuedElement.setName("XXX");				// XXX
+				//	}
+				/*	if ((cgValuedElement.basicGetNameResolution() == null) && !cgValuedElement.isInlined()) {
+						JavaLocalContext<?> localContext = globalContext.basicGetLocalContext(cgValuedElement);
+						NameManager nameManager = localContext != null ? localContext.getNameManager() : globalNameManager;
+						nameManager.declareStandardName(cgValuedElement);
+					} */
+				}
+			}
+		}
+		if (cgElement instanceof CGValuedElement) {
+			CGValuedElement cgValuedElement2 = (CGValuedElement)cgElement;
+			if ((cgValuedElement2.basicGetNameResolution() == null) && !cgValuedElement2.isInlined()) {
+				JavaLocalContext<?> localContext = globalContext.basicGetLocalContext(cgValuedElement2);
+				NameManager nameManager = localContext != null ? localContext.getNameManager() : globalNameManager;
+				nameManager.declareStandardName(cgValuedElement2);
+			}
+			for (EObject eObject : ((CGValuedElement)cgElement).getOwns()) {					// XXX Surely preorder - no post order to satisfy bottom up dependency evaluation
+				if (eObject instanceof CGElement) {
+					visitInPostOrder((CGElement)eObject);
+					if (eObject instanceof CGValuedElement) {
+						CGValuedElement cgValuedElement = (CGValuedElement)eObject;
+						if (cgValuedElement instanceof CGNativeOperationCallExp) {
+							getClass();		// XXX
+						}
+					//	JavaLocalContext<?> localContext = globalContext.basicGetLocalContext(cgValuedElement);
+					//	if (cgValuedElement.getName() == null) {
+					//		cgValuedElement.setName("XXX");				// XXX
+					//	}
+						if ((cgValuedElement.basicGetNameResolution() == null) && !cgValuedElement.isInlined()) {
+							JavaLocalContext<?> localContext = globalContext.basicGetLocalContext(cgValuedElement);
+							NameManager nameManager = localContext != null ? localContext.getNameManager() : globalNameManager;
+							nameManager.declareStandardName(cgValuedElement);
+						}
+					}
+				}
+			}
+		}
 	}
 }

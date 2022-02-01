@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -15,6 +15,7 @@ import java.util.List;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 
 
 
@@ -312,4 +313,8 @@ public interface CGValuedElement extends CGTypedElement {
 	 */
 	// Generated from org.eclipse.ocl.examples.build.modelspecs.CGValuedElementModelSpec$Val$11
 	void setValueName(@NonNull String valueName);
+
+	@Nullable NameResolution basicGetNameResolution();
+	@NonNull NameResolution getNameResolution();
+	void setNameResolution(@NonNull NameResolution nameResolution);
 } // CGValuedElement

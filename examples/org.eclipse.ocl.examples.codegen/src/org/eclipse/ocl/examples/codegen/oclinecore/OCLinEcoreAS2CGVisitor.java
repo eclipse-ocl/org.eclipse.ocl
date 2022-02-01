@@ -17,11 +17,11 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
+import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
-import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
@@ -61,6 +61,7 @@ public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 			if (genParameter != null) {
 				String name = ClassUtil.nonNullState(genParameter.getName());
 				cgParameter.setValueName(name);
+			//	nameManager.getGlobalNameManager().queueValueName(executorParameter, null, executorName);
 				// reserve name
 			}
 		}
@@ -70,7 +71,8 @@ public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 	public @NonNull CGParameter getParameter(@NonNull Variable aParameter, @Nullable String name) {
 		CGParameter cgParameter = super.getParameter(aParameter, name);
 		if (PivotConstants.SELF_NAME.equals(aParameter.getName())) {
-			cgParameter.setValueName(JavaConstants.THIS_NAME);
+			globalContext.getThisName().addSecondaryElement(cgParameter);;
+		//	cgParameter.setValueName(JavaConstants.THIS_NAME);
 		}
 		return cgParameter;
 	}
@@ -78,7 +80,7 @@ public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 	@Override
 	public @Nullable CGConstraint visitConstraint(@NonNull Constraint element) {
 		CGConstraint cgConstraint = CGModelFactory.eINSTANCE.createCGConstraint();
-		setAst(cgConstraint, element);
+		pushLocalContext(cgConstraint, element);
 		LanguageExpression specification = element.getOwnedSpecification();
 		if (specification != null) {
 			try {
@@ -93,21 +95,21 @@ public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 				}
 				ExpressionInOCL asSynthesizedQuery = ((OCLinEcoreCodeGenerator)codeGenerator).rewriteQuery(oldQuery);
 				OCLExpression asSynthesizedExpression = asSynthesizedQuery.getOwnedBody();
-				OCLinEcoreLocalContext localContext = (OCLinEcoreLocalContext) globalContext.getLocalContext(cgConstraint);
+			//	OCLinEcoreLocalContext localContext = (OCLinEcoreLocalContext) globalContext.basicGetLocalContext(cgConstraint);
 				Variable contextVariable = asSynthesizedQuery.getOwnedContext();
 				if (contextVariable != null) {
 					CGParameter cgParameter = getParameter(contextVariable, null);
 					cgConstraint.getParameters().add(cgParameter);
 				}
 				for (@SuppressWarnings("null")@NonNull Variable parameterVariable : asSynthesizedQuery.getOwnedParameters()) {
-					String diagnosticsName = localContext != null ? localContext.getDiagnosticsName() : null;
-					String contextName = localContext != null ? localContext.getContextName() : null;
+					NameResolution diagnosticsName = globalContext.getDiagnosticsName();
+					NameResolution contextName = globalContext.getContextName() ;
 					CGParameter cgParameter;
-					if ((diagnosticsName != null) && diagnosticsName.equals(parameterVariable.getName())) {
-						cgParameter = getParameter(parameterVariable, diagnosticsName);
+					if (diagnosticsName.equals(parameterVariable.getName())) {		// XXX NameResolution
+						cgParameter = getParameter(parameterVariable, diagnosticsName.getResolvedName());
 					}
-					else if ((contextName != null) && contextName.equals(parameterVariable.getName())) {
-						cgParameter = getParameter(parameterVariable, contextName);
+					else if (contextName.equals(parameterVariable.getName())) {
+						cgParameter = getParameter(parameterVariable, contextName.getResolvedName());
 					}
 					else {
 						cgParameter = getParameter(parameterVariable, null);
@@ -119,6 +121,7 @@ public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 				throw new WrappedException(e);
 			}
 		}
+		popLocalContext(cgConstraint);
 		return cgConstraint;
 	}
 }

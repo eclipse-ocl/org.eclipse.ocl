@@ -32,6 +32,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterator;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLetExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTupleExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTuplePart;
@@ -41,6 +42,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
@@ -186,6 +188,10 @@ public class CGUtil
 		return ClassUtil.nonNullState((Constraint)cgConstraint.getAst());
 	}
 
+	public static @NonNull Type getAST(@NonNull CGExecutorType cgExecutorType) {
+		return ClassUtil.nonNullState((Type)cgExecutorType.getAst());
+	}
+
 	public static @NonNull Variable getAST(@NonNull CGIterator cgIterator) {
 		return ClassUtil.nonNullState((Variable)cgIterator.getAst());
 	}
@@ -237,6 +243,14 @@ public class CGUtil
 		return ClassUtil.nonNullState(cgVariable.getInit());
 	}
 
+	public static @NonNull CGIterator getIterator(@NonNull CGIterationCallExp cgIterationCallExp, int i) {
+		return ClassUtil.nonNullState(cgIterationCallExp.getIterators().get(i));
+	}
+
+	public static @NonNull Iterable<@NonNull CGIterator> getIterators(@NonNull CGIterationCallExp cgIterationCallExp) {
+		return ClassUtil.nullFree(cgIterationCallExp.getIterators());
+	}
+
 	public static @NonNull List<@NonNull CGIterator> getIteratorsList(@NonNull CGIterationCallExp cgIterationCallExp) {
 		return ClassUtil.nullFree(cgIterationCallExp.getIterators());
 	}
@@ -249,8 +263,16 @@ public class CGUtil
 		return ClassUtil.nonNullState(cgConstantExp.getReferredConstant());
 	}
 
+	public static @NonNull Property getReferredProperty(@NonNull CGNavigationCallExp cgNavigationCallExp) {
+		return ClassUtil.nonNullState(cgNavigationCallExp.getReferredProperty());
+	}
+
 	public static @NonNull CGValuedElement getReferredVariable(@NonNull CGVariableExp cgVariableExp) {
 		return ClassUtil.nonNullState(cgVariableExp.getReferredVariable());
+	}
+
+	public static @NonNull CGValuedElement getSource(@NonNull CGCallExp cgCallExp) {
+		return ClassUtil.nonNullState(cgCallExp.getSource());
 	}
 
 	public static boolean isInlinedId(@NonNull ElementId elementId) {

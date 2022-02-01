@@ -19,8 +19,11 @@ import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AnalysisVisitor;
-import org.eclipse.ocl.examples.codegen.analyzer.NameManager;
+import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
+import org.eclipse.ocl.examples.codegen.java.JavaGlobalContext;
+import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.internal.manager.FinalAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
@@ -34,7 +37,7 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 
 	protected final @NonNull EnvironmentFactoryInternalExtension environmentFactory;
 	protected final @NonNull PivotMetamodelManager metamodelManager;
-	protected final @NonNull NameManager nameManager;
+	protected final @NonNull GlobalNameManager globalNameManager;
 	protected final @NonNull GenModelHelper genModelHelper;
 	private /*@LazyNonNull*/ Set<@NonNull Operation> constrainedOperations = null;
 
@@ -43,18 +46,45 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 	private /*@LazyNonNull*/ List<@NonNull Exception> problems = null;
 	private @NonNull String defaultIndent = "    ";
 
+//	private final @NonNull Map<@NonNull CGNamedElement, @NonNull DebugLocalContext> debugContexts = new HashMap<>();
+
+/*	public class DebugLocalContext
+	{
+		private @Nullable DebugLocalContext outerContext;
+		private @NonNull CGNamedElement cgNamedElement;
+		private @NonNull NamedElement asNamedElement;
+		private @NonNull LocalContext localContext;
+
+		public DebugLocalContext(@Nullable DebugLocalContext outerContext, @NonNull CGNamedElement cgNamedElement, @NonNull NamedElement asNamedElement) {
+			this.outerContext = outerContext;
+			this.cgNamedElement = cgNamedElement;
+			this.asNamedElement = asNamedElement;
+			assert asNamedElement == cgNamedElement.getAst();
+			JavaLocalContext<@NonNull ?> outerContext2 = outerContext  != null ? (JavaLocalContext<@NonNull ?>) outerContext.getLocalContext() : null;
+			localContext = ((JavaGlobalContext<?>)getGlobalContext()).createLocalContext(outerContext2, cgNamedElement, asNamedElement);
+		}
+
+		public @NonNull LocalContext getLocalContext() {
+			return localContext;
+		}
+	} */
+
+//	public DebugLocalContext debugGet(CGNamedElement cgNamedElement) {
+//		return debugContexts.get(cgNamedElement);
+//	}
+
 	protected AbstractCodeGenerator(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable GenModel genModel) {
 		this.environmentFactory = (EnvironmentFactoryInternalExtension) environmentFactory;
 		this.metamodelManager = environmentFactory.getMetamodelManager();
-		this.nameManager = createNameManager();
+		this.globalNameManager = createGlobalNameManager();
 		this.genModelHelper = createGenModelHelper(genModel);
 	}
 
-	protected AbstractCodeGenerator(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull NameManager nameManager,
+	protected AbstractCodeGenerator(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull GlobalNameManager globalNameManager,
 			@NonNull GenModelHelper genModelHelper) {
 		this.environmentFactory = (EnvironmentFactoryInternalExtension) environmentFactory;
 		this.metamodelManager = environmentFactory.getMetamodelManager();
-		this.nameManager = nameManager;
+		this.globalNameManager = globalNameManager;
 		this.genModelHelper = genModelHelper;
 	}
 
@@ -82,9 +112,9 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 
 	protected abstract @NonNull GenModelHelper createGenModelHelper(@Nullable GenModel genModel);
 
-	public abstract @NonNull ImportNameManager createImportNameManager();
+	protected abstract @NonNull GlobalNameManager createGlobalNameManager();
 
-	protected abstract @NonNull NameManager createNameManager();
+	public abstract @NonNull ImportNameManager createImportNameManager();
 
 	protected @NonNull CodeGenOptions createOptions() {
 		return new CodeGenOptions();
@@ -110,8 +140,8 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 	}
 
 	@Override
-	public @NonNull NameManager getNameManager() {
-		return nameManager;
+	public @NonNull GlobalNameManager getGlobalNameManager() {
+		return globalNameManager;
 	}
 
 	@Override
@@ -126,6 +156,14 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 	@Override
 	public @Nullable List<@NonNull Exception> getProblems() {
 		return problems;
+	}
+
+	public @NonNull LocalContext initLocalContext(@Nullable LocalContext outerContext, @NonNull CGNamedElement cgNamedElement, @NonNull NamedElement asNamedElement) {
+	//	assert cgNamedElement.getAst() != null;
+	//	LocalContext localContext = new DebugLocalContext(outerContext, cgNamedElement, asNamedElement); //codeGenerator.getGlobalContext().createLocalContext(cgNamedElement);
+	//	LocalContext old = debugContexts.put(cgNamedElement, localContext);
+	//	assert old == null;
+		return ((JavaGlobalContext<?>)getGlobalContext()).initLocalContext(outerContext, cgNamedElement, asNamedElement);
 	}
 
 	@Override

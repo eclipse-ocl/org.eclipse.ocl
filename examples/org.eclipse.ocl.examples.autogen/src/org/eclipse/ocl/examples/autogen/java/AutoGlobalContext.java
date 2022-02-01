@@ -11,22 +11,25 @@
 package org.eclipse.ocl.examples.autogen.java;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
+import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.java.JavaGlobalContext;
+import org.eclipse.ocl.examples.codegen.java.JavaLocalContext;
+import org.eclipse.ocl.pivot.NamedElement;
 
 public class AutoGlobalContext<@NonNull CG extends AutoCodeGenerator> extends JavaGlobalContext<CG> {
 
 	public AutoGlobalContext(CG codeGenerator, org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		super(codeGenerator);
-		//		nameManager.reserveName(JavaConstants.EXECUTOR_NAME, null);
-		nameManager.reserveName(JavaConstants.EVALUATION_CACHE_NAME, null);
+		//		globalNameManager.reserveName(JavaConstants.EXECUTOR_NAME);
+		globalNameManager.declareReservedName(null, JavaConstants.EVALUATION_CACHE_NAME);
 	}
 
 	@Override
-	protected @NonNull AutoLocalContext<CG> createNestedContext(@NonNull CGElement cgScope) {
-		return new AutoLocalContext<CG>(this, cgScope);
+	public @NonNull AutoLocalContext<CG> createLocalContext(@Nullable JavaLocalContext<@NonNull ?> outerContext, @NonNull CGNamedElement cgNamedElement, @NonNull NamedElement asNamedElement) {
+		return new AutoLocalContext<CG>(this, (AutoLocalContext<@NonNull CG>)outerContext, cgNamedElement, asNamedElement);
 	}
 
 	public @NonNull CGValuedElement getIdResolverVariable(@NonNull CGValuedElement cgValuedElement) {

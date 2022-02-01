@@ -16,5 +16,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 
 public interface GlobalContext
 {
-	@Nullable LocalContext getLocalContext(@NonNull CGNamedElement asElement);
+	@Nullable LocalContext basicGetLocalContext(@NonNull CGNamedElement asElement);
+//	@NonNull LocalContext createLocalContext(@NonNull CGNamedElement cgElement);
+	@NonNull LocalContext getLocalContext(@NonNull CGNamedElement asElement);
 }

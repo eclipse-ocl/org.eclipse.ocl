@@ -257,4 +257,12 @@ public class CGCachedOperationImpl extends CGOperationImpl implements CGCachedOp
 		return false;
 	}
 
+	@Override
+	public void setName(String newName) {
+		if ("_unqualified_env_Class".equals(newName)) {
+			getClass();		// XXX
+		}
+		super.setName(newName);
+	}
+
 } //CGCachedOperationImpl

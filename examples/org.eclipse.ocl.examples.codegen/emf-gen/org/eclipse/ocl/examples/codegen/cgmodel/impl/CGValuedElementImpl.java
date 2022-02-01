@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -15,27 +15,23 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-
+import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInvalid;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
-
 import org.eclipse.ocl.examples.codegen.cse.AbstractPlace;
 import org.eclipse.ocl.examples.codegen.cse.ControlPlace;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -298,12 +294,29 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 		return value != this ? value.getTypedValue() : value;
 	}
 
+	public static boolean ALLOW_GET_VALUE_NAME = false;
+
+	@Override
+	public @Nullable Boolean isEquivalentToInternal(
+			@NonNull CGValuedElement thatValue) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+//	@Override
+//	public @Nullable String basicGetValueName() {
+	//	CGValuedElement value = getThisValue();
+	//	return value != this ? value.getValueName() : valueName;
+//		return valueName;			// XXX
+//	}
+
 	/**
 	 * {@inheritDoc}
 	 * @generated
 	 */
 	@Override
 	public @Nullable String getValueName() {
+		assert ALLOW_GET_VALUE_NAME : "ALLOW_GET_VALUE_NAME";
 		CGValuedElement value = getThisValue();
 		return value != this ? value.getValueName() : valueName;
 	}
@@ -535,7 +548,28 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	 */
 	@Override
 	public void setValueName(@NonNull String valueName) {
+		if (valueName.startsWith("collect")) {
+			getClass();		// XXX
+		}
 		this.valueName = valueName;
+	}
+
+	private @Nullable NameResolution nameResolution = null;
+
+	@Override
+	public @Nullable NameResolution basicGetNameResolution() {
+		return nameResolution;
+	}
+
+	@Override
+	public @NonNull NameResolution getNameResolution() {
+		return ClassUtil.nonNullState(nameResolution);
+	}
+
+	@Override
+	public void setNameResolution(@NonNull NameResolution nameResolution) {
+		assert this.nameResolution == null;
+		this.nameResolution = nameResolution;
 	}
 
 } //CGValuedElementImpl

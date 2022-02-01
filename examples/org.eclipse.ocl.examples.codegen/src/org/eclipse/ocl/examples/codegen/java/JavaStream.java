@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
+import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInvalid;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
@@ -180,7 +181,7 @@ public class JavaStream
 			}
 			appendTypeDeclaration(cgElement);
 			js.append(" ");
-			String valueName = js.cg2java.getValueName(cgElement);
+			String valueName = js.cg2java.getResolvedName(cgElement);
 			js.append(valueName);
 		}
 
@@ -949,6 +950,10 @@ public class JavaStream
 		return true;
 	}
 
+	public void appendName(@NonNull NameResolution nameResolution) {
+		append(nameResolution.getResolvedName());
+	}
+
 	public void appendNotEqualsBoolean(@NonNull CGValuedElement cgValue, boolean value) {
 		if (cgValue.isNonNull() && cgValue.isNonInvalid()) {
 			if (value) {
@@ -1171,7 +1176,7 @@ public class JavaStream
 			if (cgElement.isGlobal()) {
 				cg2java.appendGlobalPrefix();
 			}
-			String valueName = cg2java.getValueName(cgElement);
+			String valueName = cg2java.getResolvedName(cgElement);
 			append(valueName);
 		}
 	}

@@ -220,7 +220,7 @@ public class EvaluateClassifierOperationsTest4 extends PivotTestSuite
 	 * Tests the oclContents() operator.
 	 */
 	@Test public void test_oclContents() {
-		MyOCL ocl = createOCL(OCL.NO_PROJECTS, null);
+		MyOCL ocl = createOCL(OCL.CLASS_PATH, null);
 		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
 		try {
 			IdResolver idResolver = environmentFactory.getIdResolver();
