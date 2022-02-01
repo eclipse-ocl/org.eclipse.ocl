@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -15,27 +15,24 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-
+import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager.NameVariant;
+import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInvalid;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
-
 import org.eclipse.ocl.examples.codegen.cse.AbstractPlace;
 import org.eclipse.ocl.examples.codegen.cse.ControlPlace;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -298,15 +295,7 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 		return value != this ? value.getTypedValue() : value;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 * @generated
-	 */
-	@Override
-	public @Nullable String getValueName() {
-		CGValuedElement value = getThisValue();
-		return value != this ? value.getValueName() : valueName;
-	}
+	public static boolean ALLOW_GET_VALUE_NAME = false;
 
 	/**
 	 * {@inheritDoc}
@@ -324,7 +313,6 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	@Override
 	public boolean isBoxed() {
 		CGValuedElement referredValue = getReferredValue();
-//		CGValuedElement value = getNamedValue();
 		assert referredValue != this : "isBoxed must be overridden for a " + getClass().getSimpleName() + " since referredValue returns this";
 		return referredValue.isBoxed();
 	}
@@ -373,7 +361,6 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	@Override
 	public boolean isEcore() {
 		CGValuedElement referredValue = getReferredValue();
-//		CGValuedElement value = getNamedValue();
 		assert referredValue != this : "isEcore must be overridden for a " + getClass().getSimpleName() + " since referredValue returns this";
 		return referredValue.isEcore();
 	}
@@ -487,7 +474,6 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	@Override
 	public boolean isUnboxed() {
 		CGValuedElement referredValue = getReferredValue();
-//		CGValuedElement value = getNamedValue();
 		assert referredValue != this : "isUnboxed must be overridden for a " + getClass().getSimpleName() + " since referredValue returns this";
 		return referredValue.isUnboxed();
 	}
@@ -524,18 +510,32 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 		caught = isCaught;
 	}
 
-	/**
-	 * @generated
-	 */
-	protected String valueName = null;
+	private @Nullable NameResolution nameResolution = null;
 
-	/**
-	 * {@inheritDoc}
-	 * @generated
-	 */
 	@Override
-	public void setValueName(@NonNull String valueName) {
-		this.valueName = valueName;
+	public @Nullable NameResolution basicGetNameResolution() {
+		return nameResolution;
+	}
+
+	@Override
+	public @NonNull NameResolution getNameResolution() {
+		return ClassUtil.nonNullState(nameResolution);
+	}
+
+	@Override
+	public @NonNull String getResolvedName() {
+		return getNameResolution().getResolvedName();
+	}
+
+	@Override
+	public @NonNull String getVariantResolvedName(@NonNull NameVariant nameVariant) {
+		return getNameResolution().getVariantResolvedName(nameVariant);
+	}
+
+	@Override
+	public void setNameResolution(@NonNull NameResolution nameResolution) {
+		assert this.nameResolution == null;
+		this.nameResolution = nameResolution;
 	}
 
 } //CGValuedElementImpl

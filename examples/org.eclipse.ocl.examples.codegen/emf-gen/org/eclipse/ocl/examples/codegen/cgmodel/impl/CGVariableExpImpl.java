@@ -213,15 +213,6 @@ public class CGVariableExpImpl extends CGValuedElementImpl implements CGVariable
 	 * @generated
 	 */
 	@Override
-	public @Nullable String getValueName() {
-		return referredVariable != null ? referredVariable.getValueName() : null;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * @generated
-	 */
-	@Override
 	public boolean isBoxed() {
 		return (referredVariable != null) && referredVariable.isBoxed();
 	}

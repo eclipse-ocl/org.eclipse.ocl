@@ -38,6 +38,8 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.examples.codegen.generator.CodeGenerator;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
+import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
@@ -46,7 +48,10 @@ import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.PropertyId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.cse.CSEElement;
+import org.eclipse.ocl.pivot.internal.cse.CommonSubExpressionAnalysis;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 
 /**
@@ -83,20 +88,21 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
 public class CodeGenAnalyzer
 {
 	protected final @NonNull CodeGenerator codeGenerator;
-	protected final @NonNull NameManager nameManager;
-	private @NonNull Map<ElementId, CGElementId> cgElementIds = new HashMap<ElementId, CGElementId>();
+	protected final @NonNull GlobalNameManager globalNameManager;
+	private final @NonNull Map<@NonNull ElementId, @NonNull CGElementId> cgElementIds = new HashMap<>();
 	protected final @NonNull CGBoolean cgFalse;
 	protected final @NonNull CGBoolean cgTrue;
 	private /*@LazyNonNull*/ CGUnlimited cgUnlimited = null;
 	private /*@LazyNonNull*/ CGInvalid cgInvalid = null;
 	protected final @NonNull CGNull cgNull;
-	private final @NonNull Map<Number, CGInteger> cgIntegers = new HashMap<Number, CGInteger>();
-	private final @NonNull Map<Number, CGReal> cgReals = new HashMap<Number, CGReal>();
-	private final @NonNull Map<String, CGString> cgStrings = new HashMap<String, CGString>();
+	private final @NonNull Map<@NonNull Number, @NonNull CGInteger> cgIntegers = new HashMap<>();
+	private final @NonNull Map<@NonNull Number, @NonNull CGReal> cgReals = new HashMap<>();
+	private final @NonNull Map<@NonNull String, @NonNull CGString> cgStrings = new HashMap<>();
+	private /*@LazyNonNull*/ Map<@NonNull ExpressionInOCL, @NonNull CommonSubExpressionAnalysis> expression2cseAnalsis = null;
 
 	public CodeGenAnalyzer(@NonNull CodeGenerator codeGenerator) {
 		this.codeGenerator = codeGenerator;
-		this.nameManager = codeGenerator.getNameManager();
+		this.globalNameManager = codeGenerator.getGlobalNameManager();
 		cgFalse = createCGBoolean(false);
 		cgTrue = createCGBoolean(true);
 		cgNull = createCGNull();
@@ -115,9 +121,10 @@ public class CodeGenAnalyzer
 
 	public @NonNull CGBoolean createCGBoolean(boolean booleanValue) {
 		CGBoolean cgBoolean = CGModelFactory.eINSTANCE.createCGBoolean();
-		setExplicitNames(cgBoolean, booleanValue);
+	//	setExplicitNames(cgBoolean, booleanValue);
 		cgBoolean.setBooleanValue(booleanValue);
 		cgBoolean.setTypeId(getTypeId(TypeId.BOOLEAN));
+		globalNameManager.declareStandardName(cgBoolean);
 		return cgBoolean;
 	}
 
@@ -139,8 +146,9 @@ public class CodeGenAnalyzer
 
 	public @NonNull CGNull createCGNull() {
 		CGNull cgNull = CGModelFactory.eINSTANCE.createCGNull();
-		setExplicitNames(cgNull, null);
+	//	setExplicitNames(cgNull, null);
 		cgNull.setTypeId(getTypeId(TypeId.OCL_VOID));
+		globalNameManager.declareStandardName(cgNull);
 		return cgNull;
 	}
 
@@ -169,7 +177,8 @@ public class CodeGenAnalyzer
 		cgOperation.setTypeId(getTypeId(asOperation.getTypeId()));
 		cgOperation.setUnderlyingOperationId(cgOperationId);
 		cgOperation.setAst(asOperation);
-		cgOperation.setName(nameManager.getGlobalSymbolName(asOperation));
+		globalNameManager.declareStandardName(cgOperation);
+	//	cgOperation.setName(globalNameManager.getGlobalSymbolName(asOperation));
 		//		cgOperation.setValueName(cgOperation.getName());
 		cgOperation.getDependsOn().add(cgOperationId);
 		return cgOperation;
@@ -227,10 +236,31 @@ public class CodeGenAnalyzer
 		CGTypeId cgTypeId = getTypeId(typeId);
 		cgType.setUnderlyingTypeId(cgTypeId);
 		cgType.setAst(asType);
-		cgType.setName(getNameManager().getGlobalSymbolName(asType));
+		getGlobalNameManager().declareStandardName(cgType);
 		//		cgType.setValueName(cgType.getName());
 		cgType.getDependsOn().add(cgTypeId);
 		return cgType;
+	}
+
+	public boolean equals(@NonNull Element asElement1, @NonNull Element asElement2) {
+		ExpressionInOCL asExpressionInOCL1 = PivotUtil.getContainingExpressionInOCL(asElement1);
+		ExpressionInOCL asExpressionInOCL2 = PivotUtil.getContainingExpressionInOCL(asElement2);
+		if ((asExpressionInOCL1 == null) || (asExpressionInOCL2 == null)) {// || (asExpressionInOCL1 != asExpressionInOCL2)) {
+			return false;
+		}
+		Map<@NonNull ExpressionInOCL, @NonNull CommonSubExpressionAnalysis> expression2cseAnalsis2 = expression2cseAnalsis;
+		if (expression2cseAnalsis2 == null) {
+			expression2cseAnalsis = expression2cseAnalsis2 = new HashMap<>();
+		}
+		CommonSubExpressionAnalysis cseAnalysis = expression2cseAnalsis2.get(asExpressionInOCL1);
+		if (cseAnalysis == null) {
+			cseAnalysis = new CommonSubExpressionAnalysis();
+		}
+		cseAnalysis.analyze(asExpressionInOCL1);
+		cseAnalysis.analyze(asExpressionInOCL2);
+		CSEElement cseElement1 = cseAnalysis.getCSEElement(asElement1);
+		CSEElement cseElement2 = cseAnalysis.getCSEElement(asElement2);
+		return cseElement1 == cseElement2;
 	}
 
 	public @NonNull CGBoolean getBoolean(boolean aBoolean) {
@@ -264,6 +294,10 @@ public class CodeGenAnalyzer
 			cgExpression = cgLiteralExp;
 		};
 		return cgExpression;
+	}
+
+	public @NonNull GlobalNameManager getGlobalNameManager() {
+		return ClassUtil.nonNullState(globalNameManager);
 	}
 
 	public @NonNull CGInteger getInteger(@NonNull Number aNumber) {
@@ -328,18 +362,15 @@ public class CodeGenAnalyzer
 		return cgString;
 	}
 
-	public @NonNull NameManager getNameManager() {
-		return ClassUtil.nonNullState(nameManager);
-	}
-
 	public @NonNull CGTypeId getTypeId(@NonNull TypeId typeId) {
 		CGElementId cgElementId = cgElementIds.get(typeId);
 		CGTypeId cgTypeId = (CGTypeId)cgElementId;
 		if (cgTypeId == null) {
 			cgTypeId = CGModelFactory.eINSTANCE.createCGTypeId();
 			cgTypeId.setElementId(typeId);
-			cgTypeId.setName(nameManager.getGlobalSymbolName(typeId));
-			cgTypeId.setValueName(ClassUtil.nonNullState(cgTypeId.getName()));
+			globalNameManager.declareStandardName(cgTypeId);
+		//	cgTypeId.setName(globalNameManager.getGlobalSymbolName(typeId));
+		//	cgTypeId.setValueName(ClassUtil.nonNullState(cgTypeId.getName()));
 			cgElementIds.put(typeId, cgTypeId);
 		}
 		return cgTypeId;
@@ -374,15 +405,18 @@ public class CodeGenAnalyzer
 		CGUtil.replace(oldElement, newElement);
 	}
 
-	public void setExplicitNames(@NonNull CGValuedElement cgValue, @Nullable Object anObject) {
-		String name = nameManager.getExplicitName(anObject);
-		cgValue.setName(name);
-		cgValue.setValueName(name);
-	}
+/*	@Deprecated public void setExplicitNames(@NonNull CGValuedElement cgValue, @Nullable Object anObject) {
+		String name = globalNameManager.getExplicitName(anObject);
+	//	cgValue.setName(name);
+	//	cgValue.setValueName(name);
+		globalNameManager.queueValueName(cgValue, null, name);
+	} */
 
 	public void setNames(@NonNull CGValuedElement cgValue, @NonNull Object anObject) {
-		String name = nameManager.getGlobalSymbolName(anObject);
-		cgValue.setName(name);
-		cgValue.setValueName(name);
+		String name = globalNameManager.getNameHint(anObject);
+	//	String name = globalNameManager.helper.getNameHint(anObject);
+	//	cgValue.setName(name);
+	//	cgValue.setValueName(name);
+		globalNameManager.declareStandardName(cgValue, name);
 	}
 }

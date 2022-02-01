@@ -102,7 +102,7 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 	}
 
 	private @NonNull List<org.eclipse.ocl.pivot.Package> createASPackages() {
-
+		LookupFilterClassContext globalContext = getGlobalContext();
 		List<org.eclipse.ocl.pivot.Package> result = new ArrayList<org.eclipse.ocl.pivot.Package>();
 		List<Operation> filteringOps = gatherFilteringOps(asPackage);
 
@@ -112,8 +112,8 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 			result.add(asPackage);
 			org.eclipse.ocl.pivot.Class asClass = createASClass(asPackage, filteredClassName + "Filter");
 			// We create the properties
-			Property asEvaluatorProperty = createNativeProperty(getGlobalContext().getExecutorName(), Executor.class, true, true);
-			Property asIdResolverProperty = createNativeProperty(JavaConstants.ID_RESOLVER_NAME, IdResolver.class, true, true);
+			Property asEvaluatorProperty = createNativeProperty(globalContext.getExecutorName(), Executor.class, true, true);
+			Property asIdResolverProperty = createNativeProperty(globalContext.getIdResolverName(), IdResolver.class, true, true);
 			List<Property> asProperties = asClass.getOwnedProperties();
 			asProperties.add(asEvaluatorProperty);
 			asProperties.add(asIdResolverProperty);
