@@ -52,7 +52,6 @@ import org.eclipse.ocl.pivot.StringLiteralExp;
 import org.eclipse.ocl.pivot.TupleLiteralExp;
 import org.eclipse.ocl.pivot.TupleLiteralPart;
 import org.eclipse.ocl.pivot.TypeExp;
-import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
@@ -60,6 +59,7 @@ import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.internal.cse.AbstractCSEElement.CSEVariableElement;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
+import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 
@@ -280,7 +280,7 @@ public class CSEVisitor extends AbstractExtendingVisitor<@NonNull CSEElement, @N
 
 	@Override
 	public @NonNull CSEElement visitShadowExp(@NonNull ShadowExp shadowExp) {
-		Map<@NonNull TypedElement, @NonNull CSEElement> property2element = new HashMap<>();
+		Map<@NonNull Nameable, @NonNull CSEElement> property2element = new HashMap<>();
 		for (@NonNull ShadowPart shadowPart : PivotUtil.getOwnedParts(shadowExp)) {
 			Property shadowProperty = PivotUtil.getReferredProperty(shadowPart);
 			CSEElement partCSE = context.getCSEElement(shadowPart);
@@ -302,10 +302,10 @@ public class CSEVisitor extends AbstractExtendingVisitor<@NonNull CSEElement, @N
 
 	@Override
 	public @NonNull CSEElement visitTupleLiteralExp(@NonNull TupleLiteralExp tupleLiteralExp) {
-		Map<@NonNull TypedElement, @NonNull CSEElement> property2element = new HashMap<>();
+		Map<@NonNull Nameable, @NonNull CSEElement> property2element = new HashMap<>();
 		for (@NonNull TupleLiteralPart tuplePart : PivotUtil.getOwnedParts(tupleLiteralExp)) {
 			CSEElement partCSE = context.getCSEElement(tuplePart);
-			property2element.put(tuplePart, partCSE);
+			property2element.put(PivotUtil.getPartId(tuplePart), partCSE);
 		}
 		return context.getMappedCSE(tupleLiteralExp, property2element);
 	}

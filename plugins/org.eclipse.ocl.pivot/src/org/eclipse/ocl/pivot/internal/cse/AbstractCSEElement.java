@@ -26,6 +26,7 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
@@ -38,9 +39,9 @@ public abstract class AbstractCSEElement implements CSEElement
 	 */
 	public static class CSEMappedElement extends AbstractCSEElement
 	{
-		private final @NonNull Map<@NonNull TypedElement, @NonNull CSEElement> key2element;
+		private final @NonNull Map<@NonNull Nameable, @NonNull CSEElement> key2element;
 
-		public CSEMappedElement(@NonNull CommonSubExpressionAnalysis cseAnalysis, int height, @NonNull Map<@NonNull TypedElement, @NonNull CSEElement> key2element) {
+		public CSEMappedElement(@NonNull CommonSubExpressionAnalysis cseAnalysis, int height, @NonNull Map<@NonNull Nameable, @NonNull CSEElement> key2element) {
 			super(cseAnalysis, height);
 			this.key2element = key2element;
 		}

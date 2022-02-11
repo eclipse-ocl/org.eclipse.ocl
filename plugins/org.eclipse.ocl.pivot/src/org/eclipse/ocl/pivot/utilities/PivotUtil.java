@@ -1842,6 +1842,13 @@ public class PivotUtil
 	}
 
 	/**
+	 * @since 1.18
+	 */
+	public static @NonNull Nameable getPartId(@NonNull TupleLiteralPart tuplePart) {
+		return ClassUtil.nonNullState(tuplePart.getPartId());
+	}
+
+	/**
 	 * @since 1.3
 	 */
 	public static @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getPartialClasses(@NonNull CompleteClass completeClass) {

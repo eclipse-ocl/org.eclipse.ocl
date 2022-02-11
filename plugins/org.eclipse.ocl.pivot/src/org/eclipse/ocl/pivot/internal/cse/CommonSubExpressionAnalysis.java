@@ -33,6 +33,7 @@ import org.eclipse.ocl.pivot.internal.cse.AbstractCSEElement.CSEMappedElement;
 import org.eclipse.ocl.pivot.internal.cse.AbstractCSEElement.CSESimpleElement;
 import org.eclipse.ocl.pivot.internal.cse.AbstractCSEElement.CSEValueElement;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
@@ -44,7 +45,7 @@ import com.google.common.collect.Iterables;
  * using a CSEVisitor to handle each distinct child and referenced Pivot Element. Caches avoid reation
  * of duplicates.
  *
- * @since 1.17
+ * @since 1.18
  */
 public class CommonSubExpressionAnalysis
 {
@@ -170,7 +171,7 @@ public class CommonSubExpressionAnalysis
 	/**
 	 * The CSEs for specific keyed model elements such as ShadowPart and TupleLiteralPart
 	 */
-	private @Nullable Map<@NonNull Map<@NonNull TypedElement, @NonNull CSEElement>, @NonNull CSEMappedElement> key2element2cse = null;
+	private @Nullable Map<@NonNull Map<@NonNull Nameable, @NonNull CSEElement>, @NonNull CSEMappedElement> key2element2cse = null;
 
 	/**
 	 * The CSEs for specific values.
@@ -277,8 +278,8 @@ public class CommonSubExpressionAnalysis
 		return cseElement;
 	}
 
-	public @NonNull CSEElement getMappedCSE(@NonNull TypedElement element, @NonNull Map<@NonNull TypedElement, @NonNull CSEElement> property2element) {
-		Map<@NonNull Map<@NonNull TypedElement, @NonNull CSEElement>, @NonNull CSEMappedElement> key2element2cse2 = key2element2cse;
+	public @NonNull CSEElement getMappedCSE(@NonNull TypedElement element, @NonNull Map<@NonNull Nameable, @NonNull CSEElement> property2element) {
+		Map<@NonNull Map<@NonNull Nameable, @NonNull CSEElement>, @NonNull CSEMappedElement> key2element2cse2 = key2element2cse;
 		if (key2element2cse2 == null) {
 			key2element2cse = key2element2cse2 = new HashMap<>();
 		}
