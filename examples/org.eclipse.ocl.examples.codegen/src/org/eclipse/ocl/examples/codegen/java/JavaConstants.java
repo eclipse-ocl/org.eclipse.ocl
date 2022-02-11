@@ -37,27 +37,17 @@ public class JavaConstants {
 
 	public static final @NonNull String E_CONTAINER_NAME = "eContainer";
 
-//	public static final @NonNull String E_NAME = "e";
 	public static final @NonNull String EVALUATE_NAME = "evaluate";
-
 	public static final @NonNull String EVALUATION_CACHE_NAME = "evaluationCache";
-
 	public static final @NonNull String EXECUTOR_NAME = "executor";
-
+	public static final @NonNull String GET_CACHED_EVLUATION_RESULT_NAME = "getCachedEvaluationResult";
 	public static final @NonNull String ID_RESOLVER_NAME = "idResolver";
-
 	public static final @NonNull String INSTANCE_NAME = "INSTANCE";
-
 	public static final @NonNull String MODEL_MANAGER_NAME = "modelManager";
-
 	public static final @NonNull String SELF_NAME = "self";
-
 	public static final @NonNull String SOURCE_AND_ARGUMENT_VALUES_NAME = "sourceAndArgumentValues";
-
 	public static final @NonNull String STANDARD_LIBRARY_NAME = "standardLibrary";
-
 	public static final @NonNull String THIS_NAME = "this";
-
 	public static final @NonNull String TYPE_ID_NAME = "typeId";
 
 	public static final @NonNull TypeId CLASS_TYPE_ID = getJavaTypeId(

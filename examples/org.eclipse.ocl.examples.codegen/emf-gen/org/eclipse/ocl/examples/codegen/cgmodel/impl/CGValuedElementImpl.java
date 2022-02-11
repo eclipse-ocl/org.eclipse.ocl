@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.util.EObjectEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager.NameVariant;
 import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInvalid;
@@ -296,31 +297,6 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 
 	public static boolean ALLOW_GET_VALUE_NAME = false;
 
-	@Override
-	public @Nullable Boolean isEquivalentToInternal(
-			@NonNull CGValuedElement thatValue) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-//	@Override
-//	public @Nullable String basicGetValueName() {
-	//	CGValuedElement value = getThisValue();
-	//	return value != this ? value.getValueName() : valueName;
-//		return valueName;			// XXX
-//	}
-
-	/**
-	 * {@inheritDoc}
-	 * @generated
-	 */
-	@Override
-	public @Nullable String getValueName() {
-		assert ALLOW_GET_VALUE_NAME : "ALLOW_GET_VALUE_NAME";
-		CGValuedElement value = getThisValue();
-		return value != this ? value.getValueName() : valueName;
-	}
-
 	/**
 	 * {@inheritDoc}
 	 * @generated
@@ -337,7 +313,6 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	@Override
 	public boolean isBoxed() {
 		CGValuedElement referredValue = getReferredValue();
-//		CGValuedElement value = getNamedValue();
 		assert referredValue != this : "isBoxed must be overridden for a " + getClass().getSimpleName() + " since referredValue returns this";
 		return referredValue.isBoxed();
 	}
@@ -386,7 +361,6 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	@Override
 	public boolean isEcore() {
 		CGValuedElement referredValue = getReferredValue();
-//		CGValuedElement value = getNamedValue();
 		assert referredValue != this : "isEcore must be overridden for a " + getClass().getSimpleName() + " since referredValue returns this";
 		return referredValue.isEcore();
 	}
@@ -500,7 +474,6 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	@Override
 	public boolean isUnboxed() {
 		CGValuedElement referredValue = getReferredValue();
-//		CGValuedElement value = getNamedValue();
 		assert referredValue != this : "isUnboxed must be overridden for a " + getClass().getSimpleName() + " since referredValue returns this";
 		return referredValue.isUnboxed();
 	}
@@ -537,23 +510,6 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 		caught = isCaught;
 	}
 
-	/**
-	 * @generated
-	 */
-	protected String valueName = null;
-
-	/**
-	 * {@inheritDoc}
-	 * @generated
-	 */
-	@Override
-	public void setValueName(@NonNull String valueName) {
-		if (valueName.startsWith("collect")) {
-			getClass();		// XXX
-		}
-		this.valueName = valueName;
-	}
-
 	private @Nullable NameResolution nameResolution = null;
 
 	@Override
@@ -564,6 +520,16 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	@Override
 	public @NonNull NameResolution getNameResolution() {
 		return ClassUtil.nonNullState(nameResolution);
+	}
+
+	@Override
+	public @NonNull String getResolvedName() {
+		return getNameResolution().getResolvedName();
+	}
+
+	@Override
+	public @NonNull String getVariantResolvedName(@NonNull NameVariant nameVariant) {
+		return getNameResolution().getVariantResolvedName(nameVariant);
 	}
 
 	@Override

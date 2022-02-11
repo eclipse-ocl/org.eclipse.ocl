@@ -299,15 +299,6 @@ public class CGGuardExpImpl extends CGCallExpImpl implements CGGuardExp {
 	 * @generated
 	 */
 	@Override
-	public @Nullable String getValueName() {
-		return source != null ? source.getValueName() : null;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * @generated
-	 */
-	@Override
 	public boolean isBoxed() {
 		return (source != null) && source.isBoxed();
 	}

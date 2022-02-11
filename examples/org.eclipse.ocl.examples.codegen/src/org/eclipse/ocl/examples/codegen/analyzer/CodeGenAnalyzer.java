@@ -243,12 +243,9 @@ public class CodeGenAnalyzer
 	}
 
 	public boolean equals(@NonNull Element asElement1, @NonNull Element asElement2) {
-		if ((asElement1 == null) || (asElement2 == null)) {
-			return false;
-		}
 		ExpressionInOCL asExpressionInOCL1 = PivotUtil.getContainingExpressionInOCL(asElement1);
 		ExpressionInOCL asExpressionInOCL2 = PivotUtil.getContainingExpressionInOCL(asElement2);
-		if ((asExpressionInOCL1 == null) || (asExpressionInOCL2 == null) || (asExpressionInOCL1 != asExpressionInOCL2)) {
+		if ((asExpressionInOCL1 == null) || (asExpressionInOCL2 == null)) {// || (asExpressionInOCL1 != asExpressionInOCL2)) {
 			return false;
 		}
 		Map<@NonNull ExpressionInOCL, @NonNull CommonSubExpressionAnalysis> expression2cseAnalsis2 = expression2cseAnalsis;
@@ -258,8 +255,9 @@ public class CodeGenAnalyzer
 		CommonSubExpressionAnalysis cseAnalysis = expression2cseAnalsis2.get(asExpressionInOCL1);
 		if (cseAnalysis == null) {
 			cseAnalysis = new CommonSubExpressionAnalysis();
-			cseAnalysis.analyze(asExpressionInOCL1);
 		}
+		cseAnalysis.analyze(asExpressionInOCL1);
+		cseAnalysis.analyze(asExpressionInOCL2);
 		CSEElement cseElement1 = cseAnalysis.getCSEElement(asElement1);
 		CSEElement cseElement2 = cseAnalysis.getCSEElement(asElement2);
 		return cseElement1 == cseElement2;

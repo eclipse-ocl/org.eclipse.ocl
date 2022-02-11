@@ -202,15 +202,6 @@ public class CGTypeExpImpl extends CGValuedElementImpl implements CGTypeExp {
 	 * @generated
 	 */
 	@Override
-	public @Nullable String getValueName() {
-		return executorType != null ? executorType.getValueName() : null;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * @generated
-	 */
-	@Override
 	public boolean isBoxed() {
 		return true;
 	}

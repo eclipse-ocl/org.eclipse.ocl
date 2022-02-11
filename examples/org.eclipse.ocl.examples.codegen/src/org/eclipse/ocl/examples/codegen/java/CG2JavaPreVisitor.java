@@ -440,16 +440,15 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 	@Override
 	public @Nullable Object visitCGIterationCallExp(@NonNull CGIterationCallExp cgIterationCallExp) {
 		Iteration asIteration = ClassUtil.nonNullState(cgIterationCallExp.getReferredIteration());
-//		LibraryIteration libraryIteration = (LibraryIteration) metamodelManager.getImplementation(asIteration);
 		IterationHelper iterationHelper = codeGenerator.getIterationHelper(asIteration);
 		doValuedElement(cgIterationCallExp);				// Resolve name in outer context
 		doTypedElement(cgIterationCallExp);
 		CGValuedElement cgSource = cgIterationCallExp.getSource();
+		NameManager nameManager = getNameManager();
 		if (cgSource != null) {
+			nameManager.declareStandardName(cgSource);
 			cgSource.accept(this);
 		}
-		NameManager nameManager = getNameManager();
-	//	CGIterator cgIterator0 = CGUtil.getIterator(cgIterationCallExp, 0);
 		NameResolution iterationNameResolution = nameManager.declareStandardName(cgIterationCallExp);
 		iterationNameResolution.addNameVariant(codeGenerator.getBODY_NameVariant());
 		iterationNameResolution.addNameVariant(codeGenerator.getIMPL_NameVariant());
@@ -459,11 +458,10 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 		if (iterationHelper == null) {					// No helper nests iterators/accumulators in a nested function.
 			savedLocalContext = pushLocalContext(cgIterationCallExp);
 		}
-		for (CGIterator cgIterator : cgIterationCallExp.getIterators()) {
-			CGValuedElement cgInit = cgIterator.getInit();
-			if (cgInit != null) {
-				cgInit.accept(this);
-			}
+		for (CGIterator cgIterator : CGUtil.getIterators(cgIterationCallExp)) {
+			NameResolution iteratorNameResolution = nameManager.declareStandardName(cgIterator);
+			iteratorNameResolution.addNameVariant(codeGenerator.getITER_NameVariant());
+			cgIterator.accept(this);
 		}
 		if (cgIterationCallExp instanceof CGBuiltInIterationCallExp) {
 			CGIterator cgAccumulator = ((CGBuiltInIterationCallExp)cgIterationCallExp).getAccumulator();
@@ -472,12 +470,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 				cgAccumulator.accept(this);;
 			}
 		}
-		for (@NonNull CGIterator cgIterator : CGUtil.getIterators(cgIterationCallExp)) {
-			NameResolution iteratorNameResolution = nameManager.declareStandardName(cgIterator);
-			iteratorNameResolution.addNameVariant(codeGenerator.getITER_NameVariant());
-			cgIterator.accept(this);
-		}
-		if (iterationHelper != null) {					// No helper only has a nesyed scipe for the body.
+		if (iterationHelper != null) {					// No helper only has a nested scope for the body.
 			savedLocalContext = pushLocalContext(cgIterationCallExp);
 		}
 		assert savedLocalContext != null;
@@ -511,19 +504,8 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 	@Override
 	public @Nullable Object visitCGLibraryIterationCallExp(@NonNull CGLibraryIterationCallExp cgLibraryIterationCallExp) {
 		installStandardLibraryVariable(cgLibraryIterationCallExp);
-		//		TypeId asTypeId = cgLibraryIterationCallExp.getASTypeId();
-		//		if (asTypeId != null) {
-		//			addOwnedTypeId(cgLibraryIterationCallExp, asTypeId);
-		//		}
 		return super.visitCGLibraryIterationCallExp(cgLibraryIterationCallExp);
 	}
-
-/*	@Override
-	public @Nullable Object visitCGLibraryOperation(
-			@NonNull CGLibraryOperation object) {
-		// TODO Auto-generated method stub
-		return super.visitCGLibraryOperation(object);
-	} */
 
 	@Override
 	public @Nullable Object visitCGLibraryOperationCallExp(@NonNull CGLibraryOperationCallExp cgOperationCallExp) {

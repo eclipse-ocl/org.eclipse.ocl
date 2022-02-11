@@ -46,12 +46,14 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 	//
 	//	Built-in special purpose names are dynamically reserved using a static value as the hint.
 	//	The dynamic value will therefore be the same as the statc hint unless the hint is usurped by a
-	//	Java reserved word. Access should therefore use globalContext.getXXX rather than JavaConstnats.XXX
+	//	Java reserved word. Access should therefore use globalContext.getYYY rather than JavaConstants.YYY
 	//	to minimize eiting if a new Java reserved word interferes.
 	//
 //	protected final @NonNull NameResolution eName;
 	protected final @NonNull NameResolution evaluateName;
+	protected final @NonNull NameResolution evaluationCacheName;
 	protected final @NonNull NameResolution executorName;
+	protected final @NonNull NameResolution getCachedEvaluationResult;
 	protected final @NonNull NameResolution idResolverName;
 	protected final @NonNull NameResolution instanceName;
 	protected final @NonNull NameResolution modelManagerName;
@@ -70,7 +72,9 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 		//
 //		this.eName = globalNameManager.declareGlobalName(null, JavaConstants.E_NAME);
 		this.evaluateName = globalNameManager.declareGlobalName(null, JavaConstants.EVALUATE_NAME);
+		this.evaluationCacheName = globalNameManager.declareGlobalName(null, JavaConstants.EVALUATION_CACHE_NAME);
 		this.executorName = globalNameManager.declareGlobalName(null, JavaConstants.EXECUTOR_NAME);
+		this.getCachedEvaluationResult = globalNameManager.declareGlobalName(null, JavaConstants.GET_CACHED_EVLUATION_RESULT_NAME);
 		this.idResolverName = globalNameManager.declareGlobalName(null, JavaConstants.ID_RESOLVER_NAME);
 		this.instanceName = globalNameManager.declareGlobalName(null, JavaConstants.INSTANCE_NAME);
 		this.modelManagerName = globalNameManager.declareGlobalName(null, JavaConstants.MODEL_MANAGER_NAME);
@@ -138,31 +142,47 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 	} */
 
 	public @NonNull JavaLocalContext<@NonNull ? extends CG> createLocalContext(@Nullable JavaLocalContext<@NonNull ?> outerContext, @NonNull CGNamedElement cgNamedElement, @NonNull NamedElement asNamedElement) {
-		return new JavaLocalContext<CG>(this, (JavaLocalContext<@NonNull ? extends @NonNull CG>)outerContext, cgNamedElement, asNamedElement, true);
+		return new JavaLocalContext<CG>(this, (JavaLocalContext<@NonNull ? extends CG>)outerContext, cgNamedElement, asNamedElement, true);
 	}
 
 	public @Nullable EClass getEClass(@NonNull ElementId elementId) {
-		IdVisitor<EClass> id2EClassVisitor = codeGenerator.getId2EClassVisitor();
+		IdVisitor<@Nullable EClass> id2EClassVisitor = codeGenerator.getId2EClassVisitor();
 		return elementId.accept(id2EClassVisitor);
 	}
 
-//	public @NonNull NameResolution getEName() {
-//		return eName;
-//	}
+	public @NonNull String getEvaluateName() {
+		return evaluateName.getResolvedName();
+	}
 
-	public @NonNull NameResolution getEvaluateName() {
+	public @NonNull NameResolution getEvaluateNameResolution() {
 		return evaluateName;
 	}
 
-	public @NonNull NameResolution getExecutorName() {
+	public @NonNull String getEvaluationCacheName() {
+		return evaluationCacheName.getResolvedName();
+	}
+
+	public @NonNull String getExecutorName() {
+		return executorName.getResolvedName();
+	}
+
+	public @NonNull NameResolution getExecutorNameResolution() {
 		return executorName;
+	}
+
+	public @NonNull String getGetCachedEvaluationResultName() {
+		return getCachedEvaluationResult.getResolvedName();
 	}
 
 	public @NonNull Collection<@NonNull CGValuedElement> getGlobals() {
 		return globals;
 	}
 
-	public @NonNull NameResolution getIdResolverName() {
+	public @NonNull String getIdResolverName() {
+		return idResolverName.getResolvedName();
+	}
+
+	public @NonNull NameResolution getIdResolverNameResolution() {
 		return idResolverName;
 	}
 
@@ -175,7 +195,11 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 		return importNameManager.getLong2ShortImportNames().keySet();
 	}
 
-	public @NonNull NameResolution getInstanceName() {
+	public @NonNull String getInstanceName() {
+		return instanceName.getResolvedName();
+	}
+
+	public @NonNull NameResolution getInstanceNameResolution() {
 		return instanceName;
 	}
 
@@ -184,7 +208,7 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 		return ClassUtil.nonNullState(basicGetLocalContext(cgElement));
 	}
 
-	public @NonNull NameResolution getModelManagerName() {
+	public @NonNull NameResolution getModelManagerNameResolution() {
 		return modelManagerName;
 	}
 
@@ -211,23 +235,23 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 		} * /
 	} */
 
-	public @NonNull NameResolution getSelfName() {
-		return selfName;
+	public @NonNull String getSelfName() {
+		return selfName.getResolvedName();
 	}
 
-	public @NonNull NameResolution getSourceAndArgumentValuesName() {
-		return sourceAndArgumentValuesName;
+	public @NonNull String getSourceAndArgumentValuesName() {
+		return sourceAndArgumentValuesName.getResolvedName();
 	}
 
-	public @NonNull NameResolution getStandardLibraryVariableName() {
+	public @NonNull NameResolution getStandardLibraryVariableNameResolution() {
 		return standardLibraryVariableName;
 	}
 
-	public @NonNull NameResolution getThisName() {
+	public @NonNull NameResolution getThisNameResolution() {
 		return thisName;
 	}
 
-	public @NonNull NameResolution getTypeIdName() {
+	public @NonNull NameResolution getTypeIdNameResolution() {
 		return typeIdName;
 	}
 

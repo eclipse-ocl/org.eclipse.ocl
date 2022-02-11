@@ -20,10 +20,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AnalysisVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
-import org.eclipse.ocl.examples.codegen.java.JavaGlobalContext;
-import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.internal.manager.FinalAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
@@ -156,14 +153,6 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 	@Override
 	public @Nullable List<@NonNull Exception> getProblems() {
 		return problems;
-	}
-
-	public @NonNull LocalContext initLocalContext(@Nullable LocalContext outerContext, @NonNull CGNamedElement cgNamedElement, @NonNull NamedElement asNamedElement) {
-	//	assert cgNamedElement.getAst() != null;
-	//	LocalContext localContext = new DebugLocalContext(outerContext, cgNamedElement, asNamedElement); //codeGenerator.getGlobalContext().createLocalContext(cgNamedElement);
-	//	LocalContext old = debugContexts.put(cgNamedElement, localContext);
-	//	assert old == null;
-		return ((JavaGlobalContext<?>)getGlobalContext()).initLocalContext(outerContext, cgNamedElement, asNamedElement);
 	}
 
 	@Override

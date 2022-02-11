@@ -85,9 +85,6 @@ public class NameResolution
 		this.primaryElement = primaryElement;
 		this.nameHint = nameHint;
 		assert !(primaryElement instanceof CGVariableExp) : "Should have redirected to getNamedValue()";
-		if (nameHint.equals("k")) {
-			getClass();		// XXX
-		}
 		if (primaryElement != null) {
 			primaryElement.setNameResolution(this);
 			nameManager.addNameResolution(primaryElement);
@@ -111,17 +108,21 @@ public class NameResolution
 	}
 
 	public void addNameVariant(@NonNull NameVariant nameVariant) {
-		assert resolvedName == null : "Cannot addNameVariant after name is resolvved";
+		assert resolvedName == null : "Cannot addNameVariant after name is resolved";
 		Map<@NonNull NameVariant, @NonNull String> nameVariant2resolvedName2 = nameVariant2resolvedName;
 		if (nameVariant2resolvedName2 == null) {
 			nameVariant2resolvedName = nameVariant2resolvedName2 = new HashMap<>();
 		}
 		String old = nameVariant2resolvedName2.put(nameVariant, NOT_YET_RESOLVED);
-		assert old == null;
+		assert (old == null) || (old == NOT_YET_RESOLVED) : "Duplicate " + nameVariant;		// variant may be declared/used multple times
 	}
 
 	public @Nullable CGValuedElement basicGetPrimaryElement() {
 		return primaryElement;
+	}
+
+	public @Nullable String basicGetResolvedName() {
+		return resolvedName;
 	}
 
 	public @NonNull NameManager getNameManager() {
@@ -165,9 +166,6 @@ public class NameResolution
 
 	protected void setResolvedName(@NonNull String resolvedName) {
 		this.resolvedName = resolvedName;
-		if (resolvedName.startsWith("k")) {
-			getClass();		// XXX
-		}
 	}
 
 	@Override

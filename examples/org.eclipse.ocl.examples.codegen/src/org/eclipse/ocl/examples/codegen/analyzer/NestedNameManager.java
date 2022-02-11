@@ -10,9 +10,13 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.analyzer;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
@@ -23,19 +27,12 @@ public class NestedNameManager extends NameManager
 {
 	protected final @NonNull NameManager parent;
 	protected final @NonNull CGElement cgScope;
+	private @Nullable List<@NonNull NameResolution> reservedNameResolutions = null;;
 
 	/**
 	 * The value name assignments.
 	 */
 	private @Nullable Context context = null;		// Non-null once value name allocation is permitted.
-
-	/**
-	 * Queue of elements whose unique valueName is pending. Each element may have an optional list of prefixes for additional
-	 * special purpose declarations.
-	 */
-//	private @NonNull Map<@NonNull Object, @NonNull List<@NonNull PrefixedValueNames>> object2prefixedValueNames = new HashMap<>();
-
-//	private @NonNull Map<@NonNull Object, @NonNull List<@NonNull PrefixedValueNames>> object2nameResolution = new HashMap<>();
 
 	public NestedNameManager(@NonNull NameManager parent, @NonNull CGElement cgScope) {
 		super(parent, parent.helper);
@@ -48,64 +45,34 @@ public class NestedNameManager extends NameManager
 		Context context2 = context;
 		assert context2 == null;
 		this.context = context2 = new Context(this);
+		if (reservedNameResolutions != null) {
+			for (@NonNull NameResolution nameResolution : reservedNameResolutions) {
+				String resolvedName = nameResolution.getResolvedName();
+				CGValuedElement primaryElement = nameResolution.getPrimaryElement();
+				context2.reserveName(resolvedName, primaryElement);
+			}
+		}
 		assignNames(context2);
+	}
+
+	public @NonNull NameResolution declareReservedName(@NonNull CGValuedElement cgElement, @NonNull String nameHint) {
+		assert !cgElement.isGlobal();
+		CGValuedElement cgNamedValue = cgElement.getNamedValue();
+		assert cgElement == cgNamedValue;
+		NameResolution nameResolution = cgNamedValue.basicGetNameResolution();
+		assert nameResolution == null;
+		nameResolution = new NameResolution(this, cgNamedValue, nameHint);
+		nameResolution.setResolvedName(nameHint);
+		List<@NonNull NameResolution> reservedNameResolutions2 = reservedNameResolutions;
+		if (reservedNameResolutions2 == null) {
+			reservedNameResolutions = reservedNameResolutions2 = new ArrayList<>();
+		}
+		reservedNameResolutions2.add(nameResolution);
+		return nameResolution;
 	}
 
 	@Override
 	protected @NonNull Context getContext() {
 		return ClassUtil.nonNullState(context);
 	}
-
-/*	@Override
-	public @NonNull String queueValueName(@Nullable String nameHint, @Nullable PrefixedValueNames prefixedValueNames, @NonNull Object anObject) {
-		if (anObject instanceof CGBuiltInIterationCallExp) {
-			getClass();		// XXX
-		}
-		assert !(anObject instanceof String);			// XXX
-		PrefixedValueNames defaultValueNames = globalNameManager.getDefaultValueNames();
-		if (prefixedValueNames == null) {
-			prefixedValueNames = defaultValueNames;
-		}
-
-
-		if (nameHint == null) {
-			nameHint = (String) helper.getNameHint(anObject);
-			if (nameHint == null) {
-				nameHint = (String) helper.getNameHint(anObject);		// XXX debugging
-				nameHint = "XXX";				// XXX
-			}
-		}
-	//	if (cgValuedElement.getName() != null) {
-	//		assert
-	//	}
-		assert nameHint != null;
-		List<@NonNull PrefixedValueNames> allPrefixedValueNames = object2prefixedValueNames.get(anObject);
-		if (allPrefixedValueNames != null) {
-			if (allPrefixedValueNames.contains(prefixedValueNames)) {
-				return nameHint;
-			}
-		}
-
-		if (anObject instanceof CGValuedElement) {
-			CGValuedElement cgValuedElement = (CGValuedElement)anObject;
-			if (prefixedValueNames == defaultValueNames) {
-				assert (cgValuedElement.getName() == null) || (cgValuedElement.getName().equals(nameHint));
-				nameHint = prefixedValueNames.prefix + nameHint;
-				cgValuedElement.setName(nameHint);
-			}
-			else {
-				assert cgValuedElement.getName() != null : "Assign defaultPrefixedValueNames first";
-			}
-		}
-		if (allPrefixedValueNames == null) {
-			allPrefixedValueNames = new UniqueList<>();
-			object2prefixedValueNames.put(anObject, allPrefixedValueNames);
-			if (prefixedValueNames != defaultValueNames) {
-				allPrefixedValueNames.add(defaultValueNames);
-			}
-		}
-		allPrefixedValueNames.add(prefixedValueNames);
-		globalNameManager.assignNameManager(anObject, this);
-		return nameHint;
-	} */
 }

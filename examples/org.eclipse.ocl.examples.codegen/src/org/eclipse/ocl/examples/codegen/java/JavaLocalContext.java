@@ -13,8 +13,8 @@ package org.eclipse.ocl.examples.codegen.java;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
-import org.eclipse.ocl.examples.codegen.analyzer.NameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
+import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
@@ -46,7 +46,7 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 	protected final @NonNull CGNamedElement cgScope;
 	protected final @NonNull NamedElement asScope;
 	protected final @NonNull Type asType;
-	protected final @NonNull NameManager nameManager;
+	protected final @NonNull NestedNameManager nameManager;
 	protected final boolean executorIsParameter;
 	protected final boolean isStatic;
 
@@ -105,7 +105,7 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 
 	protected @NonNull CGParameter createExecutorParameter() {
 		assert executorIsParameter;
-		NameResolution executorName = globalContext.getExecutorName();
+		NameResolution executorName = globalContext.getExecutorNameResolution();
 		CGParameter executorParameter = analyzer.createCGParameter(executorName.getResolvedName(), analyzer.getTypeId(JavaConstants.EXECUTOR_TYPE_ID), true);
 	//	executorParameter.setValueName(executorName);
 		executorParameter.setNonInvalid();
@@ -117,7 +117,7 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 	protected @NonNull CGVariable createExecutorVariable() {
 		assert !executorIsParameter;
 		CGNativeOperationCallExp executorInit = CGModelFactory.eINSTANCE.createCGNativeOperationCallExp();
-		NameResolution executorName = globalContext.getExecutorName();
+		NameResolution executorName = globalContext.getExecutorNameResolution();
 		setNames2(executorInit, executorName, JavaConstants.EXECUTOR_TYPE_ID);
 	//	executorInit.setValueName(executorName.getResolvedName());
 		executorInit.setMethod(JavaConstants.PIVOT_UTIL_GET_EXECUTOR_GET_METHOD);
@@ -136,25 +136,25 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 
 	public @NonNull CGVariable createIdResolverVariable() {
 		CGNativeOperationCallExp idResolverInit = CGModelFactory.eINSTANCE.createCGNativeOperationCallExp();
-		NameResolution idResolverName = globalContext.getIdResolverName();
-		setNames2(idResolverInit, idResolverName, JavaConstants.ID_RESOLVER_TYPE_ID);
+		NameResolution idResolverNameResolution = globalContext.getIdResolverNameResolution();
+		setNames2(idResolverInit, idResolverNameResolution, JavaConstants.ID_RESOLVER_TYPE_ID);
 		idResolverInit.setSource(analyzer.createCGVariableExp(getExecutorVariable()));
 		idResolverInit.setMethod(JavaConstants.EXECUTOR_GET_ID_RESOLVER_METHOD);
 		idResolverInit.setRequired(true);
 		idResolverInit.setInvalidating(false);
 		CGVariable idResolverVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();
-		setNames2(idResolverVariable, idResolverName, JavaConstants.ID_RESOLVER_TYPE_ID);
+		setNames2(idResolverVariable, idResolverNameResolution, JavaConstants.ID_RESOLVER_TYPE_ID);
 		idResolverVariable.setInit(idResolverInit);
 	//	idResolverVariable.setValueName(idResolverName);
 		idResolverVariable.setNonInvalid();
 		idResolverVariable.setNonNull();
-		idResolverName.addSecondaryElement(idResolverVariable);
+		idResolverNameResolution.addSecondaryElement(idResolverVariable);
 		return idResolverVariable;
 	}
 
 	public @NonNull CGVariable createModelManagerVariable() {
 		CGNativeOperationCallExp modelManagerInit = CGModelFactory.eINSTANCE.createCGNativeOperationCallExp();
-		NameResolution modelManagerName = globalContext.getModelManagerName();
+		NameResolution modelManagerName = globalContext.getModelManagerNameResolution();
 		setNames2(modelManagerInit, modelManagerName, JavaConstants.MODEL_MANAGER_TYPE_ID);
 		modelManagerInit.setSource(analyzer.createCGVariableExp(getExecutorVariable()));
 		modelManagerInit.setMethod(JavaConstants.EXECUTOR_GET_MODEL_MANAGER_METHOD);
@@ -183,25 +183,25 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 
 	public @NonNull CGVariable createStandardLibraryVariable() {
 		CGNativeOperationCallExp standardLibraryInit = CGModelFactory.eINSTANCE.createCGNativeOperationCallExp();
-		NameResolution standardLibraryName = globalContext.getStandardLibraryVariableName();
-		setNames2(standardLibraryInit, standardLibraryName, JavaConstants.STANDARD_LIBRARY_TYPE_ID);
+		NameResolution standardLibraryNameResolution = globalContext.getStandardLibraryVariableNameResolution();
+		setNames2(standardLibraryInit, standardLibraryNameResolution, JavaConstants.STANDARD_LIBRARY_TYPE_ID);
 		standardLibraryInit.setSource(analyzer.createCGVariableExp(getExecutorVariable()));
 		standardLibraryInit.setMethod(JavaConstants.EXECUTOR_GET_STANDARD_LIBRARY_METHOD);
 		standardLibraryInit.setRequired(true);
 		standardLibraryInit.setInvalidating(false);
 		CGVariable standardLibraryVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();
-		setNames2(standardLibraryVariable, standardLibraryName, JavaConstants.STANDARD_LIBRARY_TYPE_ID);
+		setNames2(standardLibraryVariable, standardLibraryNameResolution, JavaConstants.STANDARD_LIBRARY_TYPE_ID);
 		standardLibraryVariable.setInit(standardLibraryInit);
 	//	standardLibraryVariable.setValueName(standardLibraryName);
 		standardLibraryVariable.setNonInvalid();
 		standardLibraryVariable.setNonNull();
-		standardLibraryName.addSecondaryElement(standardLibraryVariable);
+		standardLibraryNameResolution.addSecondaryElement(standardLibraryVariable);
 		return standardLibraryVariable;
 	}
 
 	protected @NonNull CGParameter createThisParameter() {
 		assert !isStatic;
-		NameResolution thisName = globalContext.getThisName();
+		NameResolution thisName = globalContext.getThisNameResolution();
 		CGParameter thisVariable = analyzer.createCGParameter(thisName.getResolvedName(), analyzer.getTypeId(asType.getTypeId()), true);
 	//	thisVariable.setValueName(thisName);
 		thisVariable.setNonInvalid();
@@ -212,12 +212,12 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 
 	@Deprecated /* @deprecated no longer used */
 	public @Nullable CGParameter createTypeIdParameter() {
-		NameResolution typeIdName = globalContext.getTypeIdName();
-		CGParameter typeIdParameter = analyzer.createCGParameter(typeIdName.getResolvedName(), analyzer.getTypeId(JavaConstants.TYPE_ID_TYPE_ID), true);
+		NameResolution typeIdNameResolution = globalContext.getTypeIdNameResolution();
+		CGParameter typeIdParameter = analyzer.createCGParameter(typeIdNameResolution.getResolvedName(), analyzer.getTypeId(JavaConstants.TYPE_ID_TYPE_ID), true);
 	//	typeIdParameter.setValueName(typeIdName);
 		typeIdParameter.setNonInvalid();
 		typeIdParameter.setNonNull();
-		typeIdName.addSecondaryElement(typeIdParameter);
+		typeIdNameResolution.addSecondaryElement(typeIdParameter);
 		return typeIdParameter;
 	}
 
@@ -231,7 +231,8 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 		else if (cgScope instanceof CGProperty) {
 			return ((CGProperty)cgScope).getBody();
 		}
-		throw new UnsupportedOperationException();
+		assert false;;
+		return null;
 	}
 
 	public @NonNull CGVariable getExecutorVariable() {
@@ -268,7 +269,7 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 	}
 
 	@Override
-	public @NonNull NameManager getNameManager() {
+	public @NonNull NestedNameManager getNameManager() {
 		return nameManager;
 	}
 
@@ -323,58 +324,6 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 		}
 		return thisParameter2;
 	}
-
-/*	public @NonNull String getValueName(@NonNull CGValuedElement cgElement) {
-		return globalNameManager.getValueName(cgElement, (PrefixedValueNames)null);
-	CGValuedElement cgValue = cgElement;
-		String valueName = cgElement.getValueName();
-		if (valueName != null) {
-			return valueName;
-		}
-		/*		if (cgValue != cgValue.getValue()) {
-			CGValuedElement cgValue2 = cgValue.getValue();
-			String valueName2 = cgElement.getValueName();
-			String valueName3 = cgValue.getValueName();
-			assert false;
-		} * /
-		//FIXME		assert cgValue == cgValue.getValue();
-		cgValue = cgValue.getNamedValue();
-		valueName = cgValue.getValueName();
-		if (valueName == null) {
-			valueName = nameManager.getValueName(cgValue, cgValue.getName());
-			cgValue.setValueName(valueName);
-			globalNameManager.queueValueName(cgValue, null, null);
-		}
-		return valueName; * /
-	} */
-
-/*	@Override
-	public void setNames(@NonNull CGValuedElement cgValuedElement, @NonNull CGValuedElement cgExpression) {
-		String nameHint = cgExpression.getName();
-		if ("root".equals(nameHint)) {
-			getClass();		// XXX
-		}
-		if (nameHint == null) {
-			nameHint = nameManager.getNameHint(cgExpression);
-		}
-	//	cgValuedElement.setName(nameHint);
-		nameManager.queueValueName(cgValuedElement, null, nameHint);
-	//	String name = nameManager.getSymbolName(null, nameHint);
-	//	cgValueElement.setValueName(name);
-	} */
-
-/*	protected void setNames(@NonNull CGValuedElement cgValuedElement, @NonNull String nameHint, @NonNull TypeId typeId) {
-	//	String name = nameManager.getSymbolName(cgValuedElement, nameHint);
-	//	cgValuedElement.setName(nameHint);
-		nameManager.queueValueName(cgValuedElement, null, nameHint);
-	//	cgValuedElement.setValueName(name);
-		cgValuedElement.setTypeId(analyzer.getTypeId(typeId));
-		if (cgValuedElement instanceof CGVariable) {
-			CGVariable cgVariable = (CGVariable)cgValuedElement;
-			cgVariable.setNonInvalid();
-			cgVariable.setNonNull();
-		}
-	} */
 
 	protected void setNames2(@NonNull CGValuedElement cgValuedElement, @NonNull NameResolution nameHint, @NonNull TypeId typeId) {
 		//		String name = nameManagerContext.getSymbolName(null, nameHint);

@@ -335,15 +335,6 @@ public class CGShadowPartImpl extends CGValuedElementImpl implements CGShadowPar
 	 * @generated
 	 */
 	@Override
-	public @Nullable String getValueName() {
-		return init != null ? init.getValueName() : null;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * @generated
-	 */
-	@Override
 	public boolean isBoxed() {
 		return true;
 	}

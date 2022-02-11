@@ -15,6 +15,7 @@ import java.util.List;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager.NameVariant;
 import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 
 
@@ -135,15 +136,6 @@ public interface CGValuedElement extends CGTypedElement {
 	 */
 	// Generated from org.eclipse.ocl.examples.build.modelspecs.CGValuedElementModelSpec$Val$9
 	@NonNull CGValuedElement getTypedValue();
-
-	/**
-	 * Return the declared name value of this element. The text is valid for use in the target language and
-	 * unique within the context in which this element is declared.
-	 *
-	 * @generated
-	 */
-	// Generated from org.eclipse.ocl.examples.build.modelspecs.CGValuedElementModelSpec$Val$10
-	@Nullable String getValueName();
 
 	/**
 	 * Return true if this value is not null, possibly with the aid of an assertion.
@@ -306,15 +298,9 @@ public interface CGValuedElement extends CGTypedElement {
 	// Generated from org.eclipse.ocl.examples.build.modelspecs.CGValuedElementModelSpec$Ct$5
 	void setCaught(boolean isCaught);
 
-	/**
-	 * Set the name of the value.
-	 *
-	 * @generated
-	 */
-	// Generated from org.eclipse.ocl.examples.build.modelspecs.CGValuedElementModelSpec$Val$11
-	void setValueName(@NonNull String valueName);
-
 	@Nullable NameResolution basicGetNameResolution();
 	@NonNull NameResolution getNameResolution();
+	@NonNull String getResolvedName();
+	@NonNull String getVariantResolvedName(@NonNull NameVariant nameVariant);
 	void setNameResolution(@NonNull NameResolution nameResolution);
 } // CGValuedElement

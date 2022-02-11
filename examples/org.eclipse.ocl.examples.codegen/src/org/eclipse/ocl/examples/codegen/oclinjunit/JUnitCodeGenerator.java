@@ -71,8 +71,8 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 
 	protected @NonNull CGPackage createCGPackage(@NonNull ExpressionInOCL expInOcl,
 			@NonNull String packageName, @NonNull String className) {
-		NameResolution evaluateName = globalContext.getEvaluateName();
-		NameResolution typeIdName = globalContext.getTypeIdName();
+		NameResolution evaluateNameResolution = globalContext.getEvaluateNameResolution();
+		NameResolution typeIdNameResolution = globalContext.getTypeIdNameResolution();
 		CGPackage cgPackage = CGModelFactory.eINSTANCE.createCGPackage();
 		cgPackage.setName(packageName);
 		//
@@ -91,16 +91,16 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		JavaLocalContext<@NonNull ?> localContext = globalContext.getLocalContext(cgOperation);
 		CGParameter executorParameter = (CGParameter) localContext.getExecutorVariable();
 		cgParameters.add(executorParameter);
-		CGParameter typeIdParameter = cgAnalyzer.createCGParameter(typeIdName.getResolvedName(), cgAnalyzer.getTypeId(JavaConstants.TYPE_ID_TYPE_ID), true);
+		CGParameter typeIdParameter = cgAnalyzer.createCGParameter(typeIdNameResolution.getResolvedName(), cgAnalyzer.getTypeId(JavaConstants.TYPE_ID_TYPE_ID), true);
 		cgParameters.add(typeIdParameter);
 		if (contextVariable != null) {
-			CGParameter cgContext = as2cgVisitor.getParameter(contextVariable, null);
+			CGParameter cgContext = as2cgVisitor.getParameter(contextVariable, (String)null);
 			cgParameters.add(cgContext);
 		}
-		typeIdName.addSecondaryElement(typeIdParameter);
+		typeIdNameResolution.addSecondaryElement(typeIdParameter);
 	//	globalNameManager.declareStandardName(typeIdParameter, typeIdName);
 		for (@SuppressWarnings("null")@NonNull Variable parameterVariable : expInOcl.getOwnedParameters()) {
-			CGParameter cgParameter = as2cgVisitor.getParameter(parameterVariable, null);
+			CGParameter cgParameter = as2cgVisitor.getParameter(parameterVariable, (String)null);
 			cgParameters.add(cgParameter);
 		}
 		Type type = expInOcl.getType();
@@ -108,7 +108,7 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		TypeId asTypeId = type/*.behavioralType()*/.getTypeId();
 		cgOperation.setTypeId(cgAnalyzer.getTypeId(asTypeId));
 	//	cgOperation.setName(evaluateName);
-		evaluateName.addSecondaryElement(cgOperation);
+		evaluateNameResolution.addSecondaryElement(cgOperation);
 		CGValuedElement cgBody = (CGValuedElement) ClassUtil.nonNullState(expInOcl.accept(as2cgVisitor));
 		cgOperation.setBody(cgBody);
 		cgClass.getOperations().add(cgOperation);

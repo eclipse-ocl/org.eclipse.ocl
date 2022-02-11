@@ -29,7 +29,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager.NameVariant;
-import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGAssertNonNullExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBoolean;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBoxExp;
@@ -347,6 +346,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		boolean expectedIsNonNull = cgIterationCallExp.isNonNull();
 		final String astName = getResolvedName(cgIterationCallExp);
 		final String bodyName = getVariantResolvedName(cgIterationCallExp, context.getBODY_NameVariant());
+		final String executorName = globalContext.getExecutorName();
 		final String implementationName = getVariantResolvedName(cgIterationCallExp, context.getIMPL_NameVariant());
 		final String managerName = getVariantResolvedName(cgIterationCallExp, context.getMGR_NameVariant());
 		final String staticTypeName = getVariantResolvedName(cgIterationCallExp, context.getTYPE_NameVariant());
@@ -364,7 +364,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		js.appendClassReference(true, org.eclipse.ocl.pivot.Class.class);
 		js.append(" " + staticTypeName + " = ");
 		//		js.appendReferenceTo(evaluatorParameter);
-		js.appendName(globalContext.getExecutorName());
+		js.append(executorName);
 		js.append(".getStaticTypeOfValue(null, ");
 		js.appendValueName(source);
 		js.append(");\n");
@@ -383,7 +383,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		//
 		if (iterateResult != null) {
 			CGValuedElement init = CGUtil.getInit(iterateResult);
-			accumulatorName = init.getNameResolution().getResolvedName();
+			accumulatorName = init.getResolvedName();
 			if (!js.appendLocalStatements(init)) {
 				return false;
 			}
@@ -407,7 +407,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			js.appendIsRequired(true);
 			js.append(" Object " + accumulatorName + " = " + implementationName + ".createAccumulatorValue(");
 			//			js.appendValueName(evaluatorParameter);
-			js.appendName(globalContext.getExecutorName());
+			js.append(executorName);
 			js.append(", ");
 			js.appendValueName(resultType);
 			js.append(", ");
@@ -428,18 +428,19 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		js.append("@Override\n");
 		js.append("public ");
 		js.appendIsRequired(false);
-		js.append(" Object evaluate(");
-		js.append("final ");
+		js.append(" Object ");
+		js.append(globalContext.getEvaluateName());
+		js.append("(final ");
 		//		js.appendDeclaration(evaluatorParameter);
 		js.appendClassReference(true, Executor.class);
 		js.append(" ");
-		js.appendName(globalContext.getExecutorName());
+		js.append(executorName);
 		js.append(", ");
 		js.append("final ");
 		//		js.appendDeclaration(localContext.getTypeIdParameter(cgIterateCallExp));
 		js.appendClassReference(true, TypeId.class);
 		js.append(" ");
-		js.appendName(globalContext.getTypeIdName());
+		js.append(globalContext.getTypeIdNameResolution().getResolvedName());
 		if (isMap || (arity > 1)) {
 			js.append(", final ");
 			js.appendIsRequired(false);
@@ -540,7 +541,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		js.appendClassReference(null, managerClass);
 		js.append("(");
 		//		js.appendReferenceTo(evaluatorParameter);
-		js.appendName(globalContext.getExecutorName());
+		js.append(executorName);
 		js.append(", ");
 		if (isMap || (arity > 1)) {
 			js.append(arity + ", ");
@@ -662,7 +663,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		js.append(" basicEvaluate(");
 		js.appendClassReference(true, Executor.class);
 		js.append(" ");
-		js.appendName(globalContext.getExecutorName());
+		js.append(globalContext.getExecutorName());
 		js.append(", ");
 		js.appendClassReference(true, TypedElement.class);
 		js.append(" ");
@@ -741,7 +742,9 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		//				js.appendIsCaught(!cgOperationIsInvalid, cgOperationIsInvalid);
 		//				js.append(" ");
 		js.appendClassReference(isRequiredReturn, cgOperation);
-		js.append(" evaluate(");
+		js.append(" ");
+		js.append(globalContext.getEvaluateName());
+		js.append("(");
 		boolean isFirst = true;
 		for (@NonNull CGParameter cgParameter : cgParameters) {
 			if (!isFirst) {
@@ -755,8 +758,10 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		js.append("return (");
 		js.appendClassReference(isRequiredReturn, cgOperation);
 		js.append(")");
-		js.append(JavaConstants.EVALUATION_CACHE_NAME);
-		js.append(".getCachedEvaluationResult(this, caller, new ");
+		js.append(globalContext.getEvaluationCacheName());
+		js.append(".");
+		js.append(globalContext.getGetCachedEvaluationResultName());
+		js.append("(this, caller, new ");
 		js.appendClassReference(false, Object.class);
 		js.append("[]{");
 		isFirst = true;
@@ -957,13 +962,11 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	}
 
 	protected @NonNull String getResolvedName(@NonNull CGValuedElement cgElement) {
-		NameResolution nameResolution = cgElement.getNameResolution();
-		return nameResolution.getResolvedName();
+		return cgElement.getResolvedName();
 	}
 
 	protected @NonNull String getVariantResolvedName(@NonNull CGValuedElement cgElement, @NonNull NameVariant nameVariant) {
-		NameResolution nameResolution = cgElement.getNameResolution();
-		return nameResolution.getVariantResolvedName(nameVariant);
+		return cgElement.getVariantResolvedName(nameVariant);
 	}
 
 //	protected @NonNull String getValueName(@NonNull CGValuedElement cgElement) {
@@ -1325,7 +1328,8 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			js.append(JavaConstants.THIS_NAME);
 		} */
 		js.append(getNativeOperationInstanceName(pOperation));
-		js.append(".evaluate");
+		js.append(".");
+		js.append(globalContext.getEvaluateName());
 		//		js.append(cgOperationCallExp.getReferredOperation().getName());
 		js.append("(");
 		if (!thisIsSelf) {
@@ -1739,7 +1743,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			js.append(" ");
 			js.appendClassReference(true, elementId.accept(id2JavaInterfaceVisitor));
 			js.append(" ");
-			js.append(cgElementId.getNameResolution().getResolvedName());
+			js.append(cgElementId.getResolvedName());
 			js.append(" = ");
 			js.appendIdReference2(elementId);
 			js.append(";\n");
@@ -1832,9 +1836,11 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			@Override
 			public void append() {
 				js.appendReferenceTo(cgOperationCallExp.getExecutorOperation());
-				js.append(".evaluate(");
+				js.append(".");
+				js.append(globalContext.getEvaluateName());
+				js.append("(");
 				//		js.append(getValueName(localContext.getEvaluatorParameter(cgOperationCallExp)));
-				js.appendName(globalContext.getExecutorName());
+				js.append(globalContext.getExecutorName());
 				js.append(", ");
 				js.appendIdReference(cgOperationCallExp.getASTypeId());
 				js.append(", ");
@@ -1871,9 +1877,11 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			@Override
 			public void append() {
 				js.appendReferenceTo(cgPropertyCallExp.getExecutorProperty());
-				js.append(".evaluate(");
+				js.append(".");
+				js.append(globalContext.getEvaluateName());
+				js.append("(");
 				//		js.append(getValueName(localContext.getEvaluatorParameter(cgPropertyCallExp)));
-				js.appendName(globalContext.getExecutorName());
+				js.append(globalContext.getExecutorName());
 				js.append(", ");
 				js.appendIdReference(cgPropertyCallExp.getASTypeId());
 				js.append(", ");
@@ -1908,9 +1916,11 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			@Override
 			public void append() {
 				js.appendReferenceTo(cgPropertyCallExp.getExecutorProperty());
-				js.append(".evaluate(");
+				js.append(".");
+				js.append(globalContext.getEvaluateName());
+				js.append("(");
 				//		js.append(getValueName(localContext.getEvaluatorParameter(cgPropertyCallExp)));
-				js.appendName(globalContext.getExecutorName());
+				js.append(globalContext.getExecutorName());
 				js.append(", ");
 				js.appendIdReference(cgPropertyCallExp.getASTypeId());
 				js.append(", ");
@@ -2332,7 +2342,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			js.append(" ");
 			js.append(operationName);
 			js.append(" ");
-			js.appendName(globalContext.getInstanceName());
+			js.append(globalContext.getInstanceName());
 			js.append(" = new ");
 			js.append(operationName);
 			js.append("();\n");
@@ -2358,7 +2368,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			js.append(" ");
 			js.appendClassReference(cgOperation.isRequired() ? true : null, cgOperation);
 			js.append(" ");
-			js.appendName(globalContext.getEvaluateName());
+			js.append(globalContext.getEvaluateName());
 			js.append("(");
 			boolean isFirst = true;
 			for (@SuppressWarnings("null")@NonNull CGParameter cgParameter : cgParameters) {
@@ -2465,13 +2475,13 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			public void append() {
 				js.appendClassReference(null, libraryOperation.getClass());
 				js.append(".");
-				js.appendName(globalContext.getInstanceName());
+				js.append(globalContext.getInstanceName());
 				js.append(".");
-				js.appendName(globalContext.getEvaluateName());
+				js.append(globalContext.getEvaluateName());
 				js.append("(");
 				if (!(libraryOperation instanceof LibrarySimpleOperation)) {
 					//					js.append(getValueName(localContext.getEvaluatorParameter(cgOperationCallExp)));
-					js.appendName(globalContext.getExecutorName());
+					js.append(globalContext.getExecutorName());
 					js.append(", ");
 					if (!(libraryOperation instanceof LibraryUntypedOperation)) {
 						//						CGTypeVariable typeVariable = localContext.getTypeVariable(resultType);
@@ -2528,13 +2538,13 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 				js.appendClassReference(null, libraryProperty.getClass());
 				//		CGOperation cgOperation = ClassUtil.nonNullState(CGUtils.getContainingOperation(cgPropertyCallExp));
 				js.append(".");
-				js.appendName(globalContext.getInstanceName());
+				js.append(globalContext.getInstanceName());
 				js.append(".");
-				js.appendName(globalContext.getEvaluateName());
+				js.append(globalContext.getEvaluateName());
 				js.append("(");
 				//		if (!(libraryOperation instanceof LibrarySimpleOperation)) {
 				//			js.append(getValueName(localContext.getEvaluatorParameter(cgPropertyCallExp)));
-				js.appendName(globalContext.getExecutorName());
+				js.append(globalContext.getExecutorName());
 				js.append(", ");
 				//			if (!(libraryProperty instanceof LibraryUntypedOperation)) {
 				//				CGTypeVariable typeVariable = localContext.getTypeVariable(resultType);

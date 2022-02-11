@@ -249,16 +249,13 @@ public abstract class NameManager
 	{
 		private final @NonNull NameManager nameManager;
 		private @NonNull Map<@NonNull String, @NonNull Object> name2object;		// User of each name, null if name ambiguous
-//		private @NonNull Map<@NonNull Object, @NonNull String> object2name;		// Unambiguous name for each object, null if not determined
 		private @Nullable Map<@NonNull String, @NonNull Integer> name2counter;	// Auto-generation counter for each colliding name
-//		private @Nullable Map<@NonNull String, @NonNull Map<@NonNull CGValuedElement, @NonNull String>> extra2element2name;	// Additional prefixed names
 		private boolean hasChildren = false;									// Set tru once a child context has copied state
 
 		protected Context(@NonNull NameManager nameManager) {
 			this.nameManager = nameManager;
 			if (nameManager instanceof GlobalNameManager) {
 				this.name2object = new HashMap<>();
-//				this.object2name = new HashMap<>();
 				this.name2counter = null;
 			}
 			else {
@@ -266,7 +263,6 @@ public abstract class NameManager
 				Context parentContext = parent.getContext();
 				parentContext.hasChildren = true;
 				this.name2object = new HashMap<>(parentContext.name2object);
-//				this.object2name = new HashMap<>(parentContext.object2name);
 				this.name2counter = parentContext.name2counter != null ? new HashMap<>(parentContext.name2counter) : null;
 			}
 		}
@@ -276,9 +272,6 @@ public abstract class NameManager
 			boolean isJavaReservedName = reservedJavaNames.contains(validHint);
 			boolean isNative = (anObject instanceof CGValuedElement) && isNative((CGValuedElement)anObject);
 			if (!isJavaReservedName || isNative) {
-				if (validHint.startsWith("accumulator")) {
-					getClass();		// XXX
-				}
 				if (anObject != NOT_AN_OBJECT) {
 					Object oldElement = name2object.get(validHint);
 					if (oldElement == null) {									// New allocation
@@ -298,10 +291,6 @@ public abstract class NameManager
 					}
 				}
 			}
-		//	String lastResort = null;
-		//	if (lastResort == null) {
-		//		lastResort = nameManager.helper.getLastResort(nameManager instanceof GlobalNameManager);
-		//	}
 			Map<@NonNull String, @NonNull Integer> name2counter2 = name2counter;
 			if (name2counter2 == null) {
 				name2counter = name2counter2 = new HashMap<>();
@@ -312,46 +301,10 @@ public abstract class NameManager
 				String attempt = validHint + "_" + Integer.toString(count);
 				if (!name2object.containsKey(attempt)) {		// Assumes that reserved names do not end in _ count
 					name2counter2.put(validHint, ++count);
-					if (attempt.startsWith("accumulator")) {
-						getClass();		// XXX
-					}
 					return attempt;
 				}
 			}
 		}
-
-		/**
-		 * Return a unique name using some nameHints to suggest preferred names and allocate that name to anObject.
-		 * <p>
-		 * If anObject is non-null, any already allocated name is returned rather than allocating another name.
-		 * <p>
-		 * If anObject is null, the returned name is allocated to no object; not to the null value.
-		 * <p>
-		 * If nameHints is null a default name is generated.
-		 * <p>
-		 *
-		protected @NonNull String getUniqueName(@Nullable Object anObject, @Nullable String... nameHints) {
-			if ((anObject instanceof RealValue) && !(anObject instanceof InvalidValue)) {
-				anObject = ((RealValue)anObject).asNumber();
-			}
-			if (anObject != null) {
-				GlobalNameManager globalNameManager = nameManager.globalNameManager;
-				String knownName = globalNameManager.basicGetValueName(anObject, (prefixedValueNames)null);	// XXX
-				if (knownName != null) {
-					return knownName;
-				}
-			}
-			String uniqueName = allocateUniqueName(nameHint, anObject);
-			//FIXME			assert !frozen;
-			assert !(anObject instanceof RealValue) || (anObject instanceof InvalidValue);
-			assert anObject != NOT_AN_OBJECT;
-			assert !hasChildren;
-			name2object.put(uniqueName, anObject != null ? anObject : NOT_AN_OBJECT);
-		//	if (anObject != null) {
-		//		object2name.put(anObject, uniqueName);
-		//	}
-			return uniqueName;
-		} */
 
 		public boolean hasChildren() {
 			return hasChildren;
@@ -372,8 +325,8 @@ public abstract class NameManager
 			return false;
 		}
 
-		public void reserveName(@NonNull String name) {
-			Object old = name2object.put(name, NOT_AN_OBJECT);
+		public void reserveName(@NonNull String name, @NonNull Object object) {
+			Object old = name2object.put(name, object);
 			assert old == null;
 		}
 
@@ -410,7 +363,6 @@ public abstract class NameManager
 
 	protected NameManager(@Nullable NameManager parent, @NonNull NameManagerHelper helper) {
 		this.globalNameManager = parent != null ? parent.globalNameManager : (GlobalNameManager)this;
-	//	this.parent = parent;
 		this.helper = helper;
 	}
 
@@ -438,7 +390,9 @@ public abstract class NameManager
 		List<@NonNull NameResolution> nameResolutions = new ArrayList<>(element2nameResolution.values());
 // XXX		Collections.sort(nameResolutions);
 		for (@NonNull NameResolution nameResolution : nameResolutions) {
-			nameResolution.resolveIn(context);
+			if (nameResolution.basicGetResolvedName() == null) {
+				nameResolution.resolveIn(context);
+			}
 		}
 		if (children != null) {
 			for (@NonNull NestedNameManager child : children) {
@@ -451,14 +405,8 @@ public abstract class NameManager
 		return new NestedNameManager(this, cgScope);
 	}
 
-//	public void declareNameVariant(@NonNull CGValuedElement cgElement, @NonNull NameVariant nameVariant) {
-		// TODO Auto-generated method stub
-
-//	}
-
 	public @NonNull NameResolution declareStandardName(@NonNull CGValuedElement anObject) {
 		String nameHint = helper.getNameHint(anObject);
-		assert nameHint != null;
 		return declareStandardName(anObject, nameHint);
 	}
 
@@ -477,18 +425,6 @@ public abstract class NameManager
 	@Deprecated // not needed
 	protected abstract @NonNull Context getContext();
 
-/*	@Deprecated public @NonNull String getExplicitName(@Nullable Object anObject) {
-		if (anObject == null) {
-			return "null";
-		}
-		else if (anObject instanceof Boolean) {
-			return ((Boolean)anObject).booleanValue() ? "true" : "false";
-		}
-		else {
-			return "<null-" + anObject.getClass().getSimpleName() + ">";
-		}
-	} */
-
 	public @NonNull GlobalNameManager getGlobalNameManager() {
 		return globalNameManager;
 	}
@@ -496,70 +432,4 @@ public abstract class NameManager
 	public @NonNull String getNameHint(@NonNull Object anObject) {
 		return ClassUtil.nonNullState(helper.getNameHint(anObject));
 	}
-
-/*	@Deprecated
-	public @NonNull String getGlobalSymbolName(@Nullable Object anObject, @Nullable String... nameHints) {
-		if ((nameHints != null) && (nameHints.length > 0)) {
-			return getGlobalUniqueName(anObject, nameHints);
-		}
-		else {
-			return getGlobalUniqueName(anObject, anObject != null ? helper.getNameHint(anObject) : null);
-		}
-	} */
-
-/*	@Deprecated
-	protected @NonNull String getGlobalUniqueName(@Nullable Object anObject, @Nullable String... nameHints) {
-		return globalNameManager.getGlobalUniqueName(anObject, nameHints);
-	} */
-
-/*	@Deprecated
-	public @NonNull String getValueName(@Nullable Object anObject, @Nullable String... nameHints) {
-	//	if (parent != null) {
-	//		getClass();		// XXX debugging
-	//	}
-		if ((nameHints != null) && (nameHints.length > 0) && (nameHints[0] != null)) {
-			return getContext().getUniqueName(anObject, nameHints);
-		}
-		else {
-			return getContext().getUniqueName(anObject, anObject != null ? helper.getNameHint(anObject) : null);
-		}
-	} */
-
-//	public @NonNull String getValueName(@NonNull Object cgValuedElement, @NonNull PrefixedValueNames prefixedValueNames) {
-//		return globalNameManager.getValueName(cgValuedElement, prefixedValueNames);
-//	}
-
-//	public @NonNull String queueValueName(@NonNull CGValuedElement cgElement) {
-//		return queueValueName(null, null, cgElement);
-//	}
-
-//	@Deprecated
-//	public void queueValueName(@NonNull Object anObject, @Nullable PrefixedValueNames prefixedValueNames, @Nullable String nameHint ) {
-//		queueValueName(nameHint, prefixedValueNames, anObject);
-//	}
-//	public abstract @NonNull String queueValueName(@Nullable String nameHint, @Nullable PrefixedValueNames prefixedValueNames, @NonNull Object anObject);
-
-/*	public void queueExtraValueName(@NonNull CGValuedElement cgValuedElement, @NonNull String extraNamePrefix) {
-		List<@NonNull String> extras = cgValuedElement2valueName.get(cgValuedElement);
-		assert extras != null;
-		if (extras == Collections.EMPTY_LIST) {
-			assert cgValuedElement2valueName.containsKey(cgValuedElement);
-			extras = new UniqueList<>();
-			cgValuedElement2valueName.put(cgValuedElement, extras);
-		}
-		assert extras.add(extraNamePrefix);
-	} */
-
-/*	public void queueValueName(@NonNull CGValuedElement cgValuedElement, @Nullable String nameHint) {
-		if (cgValuedElement instanceof CGBuiltInIterationCallExp) {
-			getClass();		// XXX
-		}
-		if (nameHint != null) {
-			cgValuedElement.setName(nameHint);
-		}
-		else {
-			assert cgValuedElement.getName() != null;
-		}
-		queueValueName(cgValuedElement, null, nameHint);
-	} */
 }

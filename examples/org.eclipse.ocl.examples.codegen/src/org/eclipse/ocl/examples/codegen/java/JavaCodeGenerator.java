@@ -37,10 +37,8 @@ import org.eclipse.ocl.examples.codegen.asm5.ASM5JavaAnnotationReader;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGUnboxExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
@@ -646,55 +644,23 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	}
 
 	public void resolveNames(@NonNull CGPackage cgPackage) {
-//		JavaGlobalContext<@NonNull ? extends JavaCodeGenerator> globalContext = getGlobalContext();
 		visitInPostOrder(cgPackage);
-/*		for (EObject eObject : new TreeIterable(cgPackage, true)) {
-			if (eObject instanceof CGValuedElement) {
-				CGValuedElement cgValuedElement = (CGValuedElement)eObject;
-				if (cgValuedElement instanceof CGBuiltInIterationCallExp) {
-					getClass();		// XXX
-				}
-				JavaLocalContext<?> localContext = globalContext.getLocalContext(cgValuedElement);
-			//	if (cgValuedElement.getName() == null) {
-			//		cgValuedElement.setName("XXX");				// XXX
-			//	}
-				localContext.getNameManager().queueValueName(cgValuedElement, null, null);
-			}
-		} */
 		globalNameManager.assignNames();
 		CGValuedElementImpl.ALLOW_GET_VALUE_NAME = true;
 	}
 
 	protected void visitInPostOrder(@NonNull CGElement cgElement) {
-		if (cgElement instanceof CGParameter) {
-			getClass();		// XXX
-		}
 		JavaGlobalContext<@NonNull ? extends JavaCodeGenerator> globalContext = getGlobalContext();
 		for (EObject eObject : cgElement.eContents()) {					// XXX Surely preorder - no post order to satisfy bottom up dependency evaluation
 			if (eObject instanceof CGElement) {
 				visitInPostOrder((CGElement)eObject);
-				if (eObject instanceof CGValuedElement) {
-					CGValuedElement cgValuedElement = (CGValuedElement)eObject;
-					if (cgValuedElement instanceof CGNativeOperationCallExp) {
-						getClass();		// XXX
-					}
-				//	JavaLocalContext<?> localContext = globalContext.basicGetLocalContext(cgValuedElement);
-				//	if (cgValuedElement.getName() == null) {
-				//		cgValuedElement.setName("XXX");				// XXX
-				//	}
-				/*	if ((cgValuedElement.basicGetNameResolution() == null) && !cgValuedElement.isInlined()) {
-						JavaLocalContext<?> localContext = globalContext.basicGetLocalContext(cgValuedElement);
-						NameManager nameManager = localContext != null ? localContext.getNameManager() : globalNameManager;
-						nameManager.declareStandardName(cgValuedElement);
-					} */
-				}
 			}
 		}
 		if (cgElement instanceof CGValuedElement) {
 			CGValuedElement cgValuedElement2 = (CGValuedElement)cgElement;
 			if ((cgValuedElement2.basicGetNameResolution() == null) && !cgValuedElement2.isInlined()) {
 				JavaLocalContext<?> localContext = globalContext.basicGetLocalContext(cgValuedElement2);
-				NameManager nameManager = localContext != null ? localContext.getNameManager() : globalNameManager;
+				NameManager nameManager = (localContext != null) && !cgValuedElement2.isGlobal() ? localContext.getNameManager() : globalNameManager;
 				nameManager.declareStandardName(cgValuedElement2);
 			}
 			for (EObject eObject : ((CGValuedElement)cgElement).getOwns()) {					// XXX Surely preorder - no post order to satisfy bottom up dependency evaluation
@@ -702,13 +668,6 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 					visitInPostOrder((CGElement)eObject);
 					if (eObject instanceof CGValuedElement) {
 						CGValuedElement cgValuedElement = (CGValuedElement)eObject;
-						if (cgValuedElement instanceof CGNativeOperationCallExp) {
-							getClass();		// XXX
-						}
-					//	JavaLocalContext<?> localContext = globalContext.basicGetLocalContext(cgValuedElement);
-					//	if (cgValuedElement.getName() == null) {
-					//		cgValuedElement.setName("XXX");				// XXX
-					//	}
 						if ((cgValuedElement.basicGetNameResolution() == null) && !cgValuedElement.isInlined()) {
 							JavaLocalContext<?> localContext = globalContext.basicGetLocalContext(cgValuedElement);
 							NameManager nameManager = localContext != null ? localContext.getNameManager() : globalNameManager;

@@ -28,12 +28,14 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGIfExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterator;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLetExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTupleExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTuplePart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
@@ -204,6 +206,10 @@ public class CGUtil
 		return ClassUtil.nullFree(cgIterationCallExp.getCoIterators());
 	}
 
+	public static @NonNull CGValuedElement getCondition(@NonNull CGIfExp object) {
+		return ClassUtil.nonNullState(object.getCondition());
+	}
+
 	public static @Nullable CGClass getContainingClass(@NonNull CGElement cgExpression) {
 		for (CGElement cgElement = cgExpression; cgElement != null; cgElement = cgElement.getParent()) {
 			if (cgElement instanceof CGClass) {
@@ -230,6 +236,10 @@ public class CGUtil
 		}
 		return null;
 	} */
+
+	public static @NonNull CGExecutorType getExecutorType(@NonNull CGShadowExp object) {
+		return ClassUtil.nonNullState(object.getExecutorType());
+	}
 
 	public static @NonNull CGValuedElement getIn(@NonNull CGLetExp cgLetExp) {
 		return ClassUtil.nonNullState(cgLetExp.getIn());

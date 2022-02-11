@@ -22,7 +22,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
-import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInvalid;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
@@ -950,10 +949,6 @@ public class JavaStream
 		return true;
 	}
 
-	public void appendName(@NonNull NameResolution nameResolution) {
-		append(nameResolution.getResolvedName());
-	}
-
 	public void appendNotEqualsBoolean(@NonNull CGValuedElement cgValue, boolean value) {
 		if (cgValue.isNonNull() && cgValue.isNonInvalid()) {
 			if (value) {
@@ -1202,14 +1197,15 @@ public class JavaStream
 	}
 
 	protected @NonNull String getValueName(@NonNull CGValuedElement cgElement) {
-		String name = cgElement.getValueName();
-		if (name == null) {
-			name = cgElement.getName();
-		}
-		if (name == null) {
-			name = "<null-" + cgElement.eClass().getName() + ">";
-		}
-		return name;
+	//	String name = cgElement.getValueName();
+		return cgElement.getResolvedName();
+	//	if (name == null) {
+	//		name = cgElement.getName();
+	//	}
+	//	if (name == null) {
+	//		name = "<null-" + cgElement.eClass().getName() + ">";
+	//	}
+	//	return name;
 	}
 
 	/** @deprecated use isPrimitive() */

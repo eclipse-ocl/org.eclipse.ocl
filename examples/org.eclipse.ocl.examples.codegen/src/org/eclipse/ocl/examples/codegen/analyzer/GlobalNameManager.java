@@ -27,27 +27,6 @@ import org.eclipse.ocl.pivot.utilities.UniqueList;
 public class GlobalNameManager extends NameManager
 {
 	/**
-	 * A GlobalName wraps the globally unique actual spelling for a requested spelling.
-	 *
-	public static class GlobalName
-	{
-		protected final @NonNull String name;
-
-		private GlobalName(@NonNull String name) {
-			this.name = name;
-		}
-
-		public @NonNull String getName() {
-			return name;
-		}
-
-		@Override
-		public @NonNull String toString() {
-			return name;
-		}
-	} */
-
-	/**
 	 * A NameVariant specifies an algorithm for creating a variant of some name.
 	 */
 	public static interface NameVariant
@@ -56,6 +35,39 @@ public class GlobalNameManager extends NameManager
 
 		@Override
 		@NonNull String toString();
+	}
+
+	/**
+	 * A NameVariantPreferred specifies apreferred (local) name spelling that is likely to be acceptable but may
+	 * get renamed if necessary.
+	 */
+	private static class NameVariantPreferred implements NameVariant
+	{
+		protected final @NonNull String name;
+
+		private NameVariantPreferred(@NonNull String name) {
+			this.name = name;
+		}
+
+		@Override
+		public boolean equals(Object that) {
+			return (that instanceof NameVariantPreferred) && this.name.equals(((NameVariantPreferred)that).name);
+		}
+
+		@Override
+		public int hashCode() {
+			return name.hashCode();
+		}
+
+		@Override
+		public @NonNull String getName(@NonNull String name) {
+			return this.name;
+		}
+
+		@Override
+		public @NonNull String toString() {
+			return name;
+		}
 	}
 
 	/**
@@ -96,9 +108,8 @@ public class GlobalNameManager extends NameManager
 	private final @NonNull Context context;
 
 	/**
-	 * The distinct value name spaces indexed by their lexical prefix.
+	 * The distinct value name spaces.
 	 */
-//	private final @NonNull Map<@NonNull String, @NonNull PrefixedValueNames> prefix2prefixedValueNames = new HashMap<>();
 	private final @NonNull List<@NonNull NameVariant> nameVariants = new UniqueList<>();
 
 	/**
@@ -111,27 +122,17 @@ public class GlobalNameManager extends NameManager
 		this.context = new Context(this);			// Global can allocate names straightawy
 	}
 
-/*	public void assignValueName(@NonNull Object object, @NonNull PrefixedValueNames prefixedValueNames, @NonNull String valueName) {
-		if (object instanceof CGLocalVariable) {
-			getClass();		// XXX
-		}
-		if ("collect".equals(valueName)) {
-			getClass();		// XXX
-		}
-		assert !(object instanceof CGValuedElement) || ((CGValuedElement)object).getName() != null;
-		prefixedValueNames.putValueName(object, valueName);
-	} */
+	public @NonNull NameVariant addNameVariantPreferred(@NonNull String name) {
+		NameVariant nameVariant = new NameVariantPreferred(name);
+		assert nameVariants.add(nameVariant);
+		return nameVariant;
+	}
 
 	public @NonNull NameVariant addNameVariantPrefix(@NonNull String prefix) {
 		NameVariant nameVariant = new NameVariantPrefix(prefix);
 		assert nameVariants.add(nameVariant);
 		return nameVariant;
 	}
-
-/*	public void assignNameManager(@NonNull Object anObject, @NonNull NameManager nameManager) {
-		NameManager old = object2nameManager.put(anObject, nameManager);
-		assert (old == null) || (old == nameManager) : "Duplicate NameManager for " + anObject;
-	} */
 
 	public void assignNames() {
 		assignNames(context);
@@ -142,17 +143,6 @@ public class GlobalNameManager extends NameManager
 		nameResolution.resolveIn(context);
 		return nameResolution;
 	}
-
-	/**
-	 * Assign the resolved spelling of the shared global name for use by cgValuedElement.
-	 *
-	 * The caller is responsible for ensuring that the multiple shared usages do not occur in conflicting code contexts.
-	 * For instance the same name may be used for many Operation Parameters.
-	 *
-	public void declareGlobalValue(@NonNull CGValuedElement cgValuedElement, @NonNull GlobalName globalName) {
-		NameResolution nameResolution = new GlobalNameResolution(this, cgValuedElement, globalName.getName());
-		addNameResolution(nameResolution);
-	} */
 
 	public @NonNull NameResolution declareReservedName(@Nullable CGValuedElement object, @NonNull String name) {
 		NameResolution nameResolution = new NameResolution(this, object, name);
@@ -166,52 +156,9 @@ public class GlobalNameManager extends NameManager
 		return context;
 	}
 
-/*	public @NonNull GlobalName getGlobalName(@NonNull String name) {
-		GlobalName globalName = name2globalNames.get(name);
-		String uniqueName;
-		if (globalName == null) {
-			assert !context.hasKey(name);
-			uniqueName = name;
-		}
-		else {
-			uniqueName = context.allocateUniqueName(name, NOT_AN_OBJECT);
-		}
-		globalName = new GlobalName(uniqueName);
-		name2globalNames.put(name, globalName);
-		return globalName;
-	} */
-
 	public @NonNull String getReservedName(@NonNull String name) {
 		return ClassUtil.nonNullState(name2reservedNameResolutions.get(name)).getResolvedName();
 	}
-
-	/**
-	 * GlobalNameManager override reserves names immediately rather than queuing for assignValueNames().
-	 *
-	@Override
-	public @NonNull String queueValueName(@Nullable String nameHint, @Nullable PrefixedValueNames prefixedValueNames, @NonNull Object anObject) {
-		assert !(anObject instanceof String);					// XXX
-		if (prefixedValueNames == null) {
-			prefixedValueNames = defaultPrefixedValueNames;;
-		}
-		if (nameHint == null) {
-			nameHint = (String) helper.getNameHint(anObject);
-			if (nameHint == null) {
-				nameHint = (String) helper.getNameHint(anObject);		// XXX debugging
-				nameHint = "XXX";				// XXX
-			}
-		}
-		assert nameHint != null;
-		reserveName(nameHint, anObject, prefixedValueNames);
-	/*	if (anObject instanceof CGValuedElement) {
-			CGValuedElement cgValuedElement = (CGValuedElement)anObject;
-			assert (cgValuedElement.getName() == null) || (cgValuedElement.getName().equals(nameHint));
-			nameHint = prefixedValueNames.prefix + nameHint;
-			cgValuedElement.setName(nameHint);
-		}
-		prefixedValueNames.putValueName(anObject, zznameHint); * /
-		return nameHint;
-	} */
 
 	@Override
 	public @NonNull String toString() {

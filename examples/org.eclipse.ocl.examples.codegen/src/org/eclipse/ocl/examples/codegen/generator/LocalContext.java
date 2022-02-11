@@ -11,11 +11,9 @@
 package org.eclipse.ocl.examples.codegen.generator;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.examples.codegen.analyzer.NameManager;
+import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
 
 public interface LocalContext
 {
-	@NonNull NameManager getNameManager();
-
-//	void setNames(@NonNull CGValuedElement cgValueElement, @NonNull CGValuedElement cgExpression);
+	@NonNull NestedNameManager getNameManager();
 }

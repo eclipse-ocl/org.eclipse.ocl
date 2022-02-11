@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -328,15 +328,6 @@ public class CGLetExpImpl extends CGValuedElementImpl implements CGLetExp {
 	@Override
 	public @NonNull CGValuedElement getTypedValue() {
 		return in != null ? in.getTypedValue() : this;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * @generated
-	 */
-	@Override
-	public @Nullable String getValueName() {
-		return in != null ? in.getValueName() : null;
 	}
 
 	/**
