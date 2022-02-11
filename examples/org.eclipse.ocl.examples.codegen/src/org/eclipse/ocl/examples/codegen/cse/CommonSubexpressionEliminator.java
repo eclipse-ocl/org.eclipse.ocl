@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -19,8 +19,9 @@ import org.eclipse.ocl.pivot.utilities.TracingOption;
 /**
  * A CommonSubexpressionEliminator supervises the rewrites of structurally equivalent CG nodes with shared CG nodes.
  */
+// FIXME Bug 575412 replace by org.eclipse.ocl.pivot.internal.cse.CommonSubExpressionAnalysis
 public class CommonSubexpressionEliminator
-{	
+{
 	public static final @NonNull TracingOption CSE_BUILD = new TracingOption(CodeGenConstants.PLUGIN_ID, "cse/build");
 	public static final @NonNull TracingOption CSE_PLACES = new TracingOption(CodeGenConstants.PLUGIN_ID, "cse/places");
 	public static final @NonNull TracingOption CSE_PRUNE = new TracingOption(CodeGenConstants.PLUGIN_ID, "cse/prune");
@@ -28,9 +29,9 @@ public class CommonSubexpressionEliminator
 	public static final @NonNull TracingOption CSE_PUSH_UP = new TracingOption(CodeGenConstants.PLUGIN_ID, "cse/pushUp");
 	public static final @NonNull TracingOption CSE_REWRITE = new TracingOption(CodeGenConstants.PLUGIN_ID, "cse/rewrite");
 
-	
+
 	protected final @NonNull CodeGenerator codeGenerator;
-	
+
 	public CommonSubexpressionEliminator(@NonNull CodeGenerator codeGenerator) {
 		this.codeGenerator = codeGenerator;
 	}

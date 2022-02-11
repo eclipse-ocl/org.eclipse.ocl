@@ -68,6 +68,7 @@ import org.eclipse.ocl.pivot.IteratorVariable;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LetExp;
 import org.eclipse.ocl.pivot.LoopExp;
+import org.eclipse.ocl.pivot.MapLiteralExp;
 import org.eclipse.ocl.pivot.MapLiteralPart;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
@@ -90,6 +91,7 @@ import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.SelfType;
 import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
+import org.eclipse.ocl.pivot.ShadowExp;
 import org.eclipse.ocl.pivot.ShadowPart;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.StringLiteralExp;
@@ -1240,6 +1242,32 @@ public class PivotUtil
 	}
 
 	/**
+	 * @since 1.18
+	 */
+	public static @Nullable Element getDelegate(@NonNull Element typedElement) {
+		Element delegate = null;
+		if (typedElement instanceof CollectionItem) {
+			delegate = PivotUtil.getOwnedItem((CollectionItem)typedElement);
+		}
+	//	else if (typedElement instanceof ExpressionInOCL) {
+	//		delegate = ((ExpressionInOCL)typedElement).getOwnedBody();
+	//	}
+	//	else if (typedElement instanceof LetExp) {
+	//		delegate = PivotUtil.getOwnedIn((LetExp)typedElement);
+	//	}
+	//	else if (typedElement instanceof ShadowPart) {
+	//		delegate = PivotUtil.getReferredProperty((ShadowPart)typedElement);
+	//	}
+	//	else if (typedElement instanceof Variable) {
+	//		delegate = ((Variable)typedElement).getOwnedInit();
+	//	}
+		else if (typedElement instanceof VariableExp) {
+			delegate = PivotUtil.getReferredVariable((VariableExp)typedElement);
+		}
+		return delegate;
+	}
+
+	/**
 	 * Return the Java Class used by Ecore for elements of asProperty, or null if not known.
 	 */
 	public static @Nullable Class<?> getEcoreInstanceClass(@Nullable Property asProperty) {
@@ -1560,6 +1588,13 @@ public class PivotUtil
 	}
 
 	/**
+	 * @since 1.18
+	 */
+	public static @NonNull OCLExpression getOwnedInit(@NonNull TupleLiteralPart tupleLiteralPart) {
+		return ClassUtil.nonNullState(tupleLiteralPart.getOwnedInit());
+	}
+
+	/**
 	 * @since 1.3
 	 */
 	public static @NonNull OCLExpression getOwnedInit(@NonNull Variable variable) {
@@ -1637,6 +1672,13 @@ public class PivotUtil
 	}
 
 	/**
+	 * @since 1.18
+	 */
+	public static @NonNull Iterable<@NonNull Variable> getOwnedParameters(@NonNull ExpressionInOCL expressionInOCL) {
+		return ClassUtil.nullFree(expressionInOCL.getOwnedParameters());
+	}
+
+	/**
 	 * @since 1.3
 	 */
 	public static @NonNull Iterable<@NonNull Parameter> getOwnedParameters(@NonNull Operation operation) {
@@ -1655,6 +1697,20 @@ public class PivotUtil
 	 */
 	public static @NonNull Iterable<@NonNull CollectionLiteralPart> getOwnedParts(@NonNull CollectionLiteralExp asCollectionLiteralExp) {
 		return ClassUtil.nullFree(asCollectionLiteralExp.getOwnedParts());
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	public static @NonNull Iterable<@NonNull MapLiteralPart> getOwnedParts(@NonNull MapLiteralExp asMapLiteralExp) {
+		return ClassUtil.nullFree(asMapLiteralExp.getOwnedParts());
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	public static @NonNull Iterable<@NonNull ShadowPart> getOwnedParts(@NonNull ShadowExp asShadowExp) {
+		return ClassUtil.nullFree(asShadowExp.getOwnedParts());
 	}
 
 	/**
@@ -1783,6 +1839,13 @@ public class PivotUtil
 	 */
 	public static @NonNull List<@NonNull Type> getParameterType(@NonNull LambdaType lambdaType) {
 		return ClassUtil.nullFree(lambdaType.getParameterType());
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	public static @NonNull Nameable getPartId(@NonNull TupleLiteralPart tuplePart) {
+		return ClassUtil.nonNullState(tuplePart.getPartId());
 	}
 
 	/**
@@ -1957,6 +2020,14 @@ public class PivotUtil
 	public static @NonNull Type getResultType(@NonNull LambdaType lambdaType) {
 		return ClassUtil.nonNullState(lambdaType.getResultType());
 	}
+
+	/**
+	 * @since 1.18
+	 */
+	public static @NonNull String getStringSymbol(@NonNull StringLiteralExp stringLiteralExp) {
+		return ClassUtil.nonNullState(stringLiteralExp.getStringSymbol());
+	}
+
 
 	/**
 	 * Return the type of a TypedElement, exploiting the known non-null characteristics.
