@@ -170,38 +170,38 @@ public class EnumLiteralExpImpl
 			 *     endif
 			 */
 			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this);
-			final /*@NonInvalid*/ @NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.ENUM_LITERAL_EXP___VALIDATE_TYPE_IS_ENUMERATION_TYPE__DIAGNOSTICCHAIN_MAP);
-			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
-			/*@NonInvalid*/ boolean IF_le;
+			final /*@NonInvalid*/ @NonNull IntegerValue severity = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.ENUM_LITERAL_EXP___VALIDATE_TYPE_IS_ENUMERATION_TYPE__DIAGNOSTICCHAIN_MAP);
+			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity, PivotTables.INT_0).booleanValue();
+			/*@NonInvalid*/ boolean IF__l_q;
 			if (le) {
-				IF_le = true;
+				IF__l_q = true;
 			}
 			else {
 				/*@Caught*/ @NonNull Object CAUGHT_result;
 				try {
 					final /*@NonInvalid*/ @Nullable Type type = this.getType();
 					final /*@NonInvalid*/ @Nullable EnumerationLiteral referredLiteral = this.getReferredLiteral();
-					final /*@NonInvalid*/ @NonNull Object owningEnumeration = referredLiteral == null;
+					final /*@NonInvalid*/ @NonNull Object owningEnumeration_0 = referredLiteral == null;
 					/*@Thrown*/ @Nullable Enumeration safe_owningEnumeration_source;
-					if (owningEnumeration == Boolean.TRUE) {
+					if (owningEnumeration_0 == Boolean.TRUE) {
 						safe_owningEnumeration_source = null;
 					}
 					else {
 						assert referredLiteral != null;
 						@SuppressWarnings("null")
-						final /*@Thrown*/ @NonNull Enumeration owningEnumeration_0 = referredLiteral.getOwningEnumeration();
-						safe_owningEnumeration_source = owningEnumeration_0;
+						final /*@Thrown*/ @NonNull Enumeration owningEnumeration = referredLiteral.getOwningEnumeration();
+						safe_owningEnumeration_source = owningEnumeration;
 					}
 					final /*@Thrown*/ boolean result = (type != null) && (safe_owningEnumeration_source != null) ? (type.getTypeId() == safe_owningEnumeration_source.getTypeId()) : false;
 					CAUGHT_result = result;
 				}
-				catch (Exception e) {
-					CAUGHT_result = ValueUtil.createInvalidValue(e);
+				catch (Exception THROWN_result) {
+					CAUGHT_result = ValueUtil.createInvalidValue(THROWN_result);
 				}
-				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_result, PivotTables.INT_0).booleanValue();
-				IF_le = logDiagnostic;
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, CAUGHT_result, PivotTables.INT_0).booleanValue();
+				IF__l_q = logDiagnostic;
 			}
-			return IF_le;
+			return IF__l_q;
 		}
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);

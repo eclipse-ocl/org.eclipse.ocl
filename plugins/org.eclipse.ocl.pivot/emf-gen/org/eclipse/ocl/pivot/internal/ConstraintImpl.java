@@ -472,36 +472,36 @@ implements Constraint {
 			 */
 			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this);
 			final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
-			final /*@NonInvalid*/ @NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.CONSTRAINT___VALIDATE_BOOLEAN_VALUED__DIAGNOSTICCHAIN_MAP);
-			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
-			/*@NonInvalid*/ boolean IF_le;
+			final /*@NonInvalid*/ @NonNull IntegerValue severity = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.CONSTRAINT___VALIDATE_BOOLEAN_VALUED__DIAGNOSTICCHAIN_MAP);
+			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity, PivotTables.INT_0).booleanValue();
+			/*@NonInvalid*/ boolean IF__l_q;
 			if (le) {
-				IF_le = true;
+				IF__l_q = true;
 			}
 			else {
 				/*@Caught*/ @Nullable Object CAUGHT_result;
 				try {
-					final /*@NonInvalid*/ @NonNull BooleanType TYP_Boolean_0 = (@NonNull BooleanType)idResolver.getClass(TypeId.BOOLEAN, null);
+					final /*@NonInvalid*/ @NonNull BooleanType TYP_Boolean = (@NonNull BooleanType)idResolver.getClass(TypeId.BOOLEAN, null);
 					final /*@NonInvalid*/ @NonNull VoidType TYP_OclVoid = (@NonNull VoidType)idResolver.getClass(TypeId.OCL_VOID, null);
 					@SuppressWarnings("null")
-					final /*@NonInvalid*/ @NonNull LanguageExpression ownedSpecification_0 = this.getOwnedSpecification();
-					final /*@NonInvalid*/ @Nullable Type type_0 = ownedSpecification_0.getType();
+					final /*@NonInvalid*/ @NonNull LanguageExpression ownedSpecification = this.getOwnedSpecification();
+					final /*@NonInvalid*/ @Nullable Type type = ownedSpecification.getType();
 					final /*@NonInvalid*/ @Nullable Boolean and;
-					final /*@NonInvalid*/ boolean ne = type_0 != null;
+					final /*@NonInvalid*/ boolean ne = type != null;
 					and = ne;
 					final /*@Thrown*/ @Nullable Boolean result;
 					if (and == ValueUtil.FALSE_VALUE) {
 						result = ValueUtil.TRUE_VALUE;
 					}
 					else {
-						final /*@NonInvalid*/ boolean eq = (type_0 != null) ? (type_0.getTypeId() == TYP_Boolean_0.getTypeId()) : false;
+						final /*@NonInvalid*/ boolean eq_0 = (type != null) ? (type.getTypeId() == TYP_Boolean.getTypeId()) : false;
 						final /*@NonInvalid*/ @Nullable Boolean or;
-						if (eq) {
+						if (eq_0) {
 							or = ValueUtil.TRUE_VALUE;
 						}
 						else {
-							final /*@NonInvalid*/ boolean eq_0 = (type_0 != null) ? (type_0.getTypeId() == TYP_OclVoid.getTypeId()) : false;
-							if (eq_0) {
+							final /*@NonInvalid*/ boolean eq = (type != null) ? (type.getTypeId() == TYP_OclVoid.getTypeId()) : false;
+							if (eq) {
 								or = ValueUtil.TRUE_VALUE;
 							}
 							else {
@@ -522,13 +522,13 @@ implements Constraint {
 					}
 					CAUGHT_result = result;
 				}
-				catch (Exception e) {
-					CAUGHT_result = ValueUtil.createInvalidValue(e);
+				catch (Exception THROWN_result) {
+					CAUGHT_result = ValueUtil.createInvalidValue(THROWN_result);
 				}
-				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_result, PivotTables.INT_0).booleanValue();
-				IF_le = logDiagnostic;
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, CAUGHT_result, PivotTables.INT_0).booleanValue();
+				IF__l_q = logDiagnostic;
 			}
-			return IF_le;
+			return IF__l_q;
 		}
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);
