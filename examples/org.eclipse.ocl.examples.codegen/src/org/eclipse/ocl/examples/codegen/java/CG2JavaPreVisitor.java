@@ -420,7 +420,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 
 	@Override
 	public @Nullable Object visitCGForeignProperty(@NonNull CGForeignProperty cgForeignProperty) {
-		localContext = context.getLocalContext(cgForeignProperty);
+	/*	localContext = context.getLocalContext(cgForeignProperty);
 		try {
 			installExecutorVariable(cgForeignProperty);
 		//	installExecutorVariable(cgForeignProperty.getInitExpression());			// FIXME dependency at root confuses
@@ -428,6 +428,15 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 		}
 		finally {
 			localContext = null;
+		} */
+		JavaLocalContext<?> savedLocalContext = pushLocalContext(cgForeignProperty);
+		try {
+			installExecutorVariable(cgForeignProperty);
+		//	installExecutorVariable(cgForeignProperty.getInitExpression());			// FIXME dependency at root confuses
+			return super.visitCGProperty(cgForeignProperty);
+		}
+		finally {
+			popLocalContext(savedLocalContext);
 		}
 	}
 

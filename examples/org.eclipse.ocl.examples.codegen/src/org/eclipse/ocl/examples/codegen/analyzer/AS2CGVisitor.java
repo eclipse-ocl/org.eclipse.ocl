@@ -632,6 +632,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	protected @NonNull CGProperty generateConstrainedProperty(@NonNull Property asProperty) {
 		CGForeignProperty cgForeignProperty = CGModelFactory.eINSTANCE.createCGForeignProperty();
 		setAst(cgForeignProperty, asProperty);
+		pushLocalContext(cgForeignProperty, asProperty);
 		cgForeignProperty.setRequired(asProperty.isIsRequired());
 		CGValuedElement cgInitValue = getInitExpression(asProperty);
 		if (cgInitValue != null) {
@@ -662,6 +663,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	//	else {
 	//		cgNativeProperty.setNonNull();
 	//	} */
+		popLocalContext(cgForeignProperty);
 		return cgForeignProperty;
 	}
 
