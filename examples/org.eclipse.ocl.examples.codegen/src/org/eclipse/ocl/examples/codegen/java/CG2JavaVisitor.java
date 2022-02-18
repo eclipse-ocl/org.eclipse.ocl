@@ -1983,9 +1983,9 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 				CGParameter cgParameter = cgForeignProperty.getParameter();
 			//	assert (cgParameter == null) == asProperty.isIsStatic();		// XXX
 				PropertyId propertyId = asProperty.getPropertyId();
-				String modelManagerName = getSymbolName(null, "modelManager");
-				final String valueName = getSymbolName(null, "value");
-				final String initValueName = getSymbolName(null, "initValue");
+				String modelManagerName = globalContext.getModelManagerName();
+				String valueName = globalContext.getValueName();
+				String initValueName = globalContext.getInitValueName();
 				if (cgParameter != null) {
 					CGValuedElement cgSource = getExpression(cgParameter);
 					if (!js.appendLocalStatements(cgSource)) {

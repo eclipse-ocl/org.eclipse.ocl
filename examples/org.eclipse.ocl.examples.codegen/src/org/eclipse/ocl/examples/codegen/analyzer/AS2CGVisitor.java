@@ -640,7 +640,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 
 
-		CGValuedElement cgExecutorValue = LocalContext;
+/*		CGValuedElement cgExecutorValue = LocalContext;
 		CGValuedElement cgModelManagerValue = createCGJavaCall(cgExecutorValue, "getModelManager");
 		CGValuedElement cgBasicForeignValueExp = createCGJavaCall(cgModelManagerValue, "basicGetForeignValue", null, cgForeignProperty);
 		CGVariable cgBasicForeignVariable = createCGVariable("basicValue", cgBasicForeignValueExp);
@@ -661,7 +661,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	//	}
 	//	else {
 	//		cgNativeProperty.setNonNull();
-	//	}
+	//	} */
 		return cgForeignProperty;
 	}
 
