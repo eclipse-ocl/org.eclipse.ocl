@@ -33,7 +33,8 @@ public class NotOperationHandler extends AbstractLibraryOperationHandler
 			//
 			//	Trivial source cases
 			//
-			final CGValuedElement cgSource = cgOperationCallExp.getSource();
+			assert cgOperationCallExp.getCgThis() == null;
+			final @NonNull CGValuedElement cgSource = cgOperationCallExp.getFirstArgument();
 			if (appendThrowIfInvalid(cgSource, "not source")) {
 				return false;
 			}

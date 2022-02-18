@@ -787,7 +787,7 @@ public class PivotTestCase extends TestCase
 			testThread.start();
 			synchronized (testThread) {
 				try {
-					testThread.wait(1000000);		// Needlessly long wait to avoid confusing debug session
+					testThread.wait(10000000);		// Needlessly long wait to avoid confusing debug session
 				} catch (InterruptedException e) {
 					// Don't care -- e.printStackTrace();
 				}

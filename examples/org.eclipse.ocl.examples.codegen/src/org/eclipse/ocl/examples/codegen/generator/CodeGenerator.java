@@ -21,7 +21,10 @@ import org.eclipse.ocl.examples.codegen.analyzer.DependencyVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.FieldingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager.NameVariant;
+import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 import org.eclipse.ocl.examples.codegen.analyzer.ReferencesVisitor;
+import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.PropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cse.CommonSubexpressionEliminator;
 import org.eclipse.ocl.examples.codegen.cse.GlobalPlace;
@@ -35,6 +38,7 @@ import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.library.LibraryProperty;
 
 public interface CodeGenerator
 {
@@ -48,6 +52,8 @@ public interface CodeGenerator
 	@NonNull ReferencesVisitor createReferencesVisitor();
 	@NonNull CodeGenAnalyzer getAnalyzer();
 	@NonNull BoxedDescriptor getBoxedDescriptor(@NonNull ElementId elementId);
+	@NonNull OperationCallingConvention getCallingConvention(@NonNull Operation asOperation);
+	@NonNull PropertyCallingConvention getCallingConvention(@NonNull Property asProperty, @NonNull LibraryProperty libraryProperty);
 	@Nullable String getConstantsClass();
 	@NonNull String getDefaultIndent();
 	@NonNull EcoreDescriptor getEcoreDescriptor(@NonNull ElementId elementId, @Nullable Class<?> instanceClass);
@@ -59,6 +65,7 @@ public interface CodeGenerator
 	@NonNull ImportNameManager getImportNameManager();
 	@Nullable IterationHelper getIterationHelper(@NonNull Iteration iteration);
 	@NonNull GlobalNameManager getGlobalNameManager();
+	@NonNull NameResolution getNameResolution(@NonNull CGValuedElement cgChild);
 	@NonNull CodeGenOptions getOptions();
 	@Nullable List<@NonNull Exception> getProblems();
 	@NonNull TypeDescriptor getTypeDescriptor(@NonNull CGValuedElement cgElement);
@@ -90,5 +97,8 @@ public interface CodeGenerator
 	 */
 	boolean maybePrimitive(@NonNull CGValuedElement cgValue);
 
+	@NonNull NameVariant getBOXED_NameVariant();
+	@NonNull NameVariant getCAUGHT_NameVariant();
+//	@NonNull NameVariant getGUARDED_NameVariant();
 	@NonNull NameVariant getSAFE_NameVariant();
 }

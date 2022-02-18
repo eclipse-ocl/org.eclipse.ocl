@@ -775,6 +775,11 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 	}
 
 	@Override
+	public @NonNull String getQualifiedTableClassName(@NonNull GenPackage genPackage) {
+		return genPackage.getReflectionPackageName() + "." + genPackage.getPrefix() + TABLES_CLASS_SUFFIX;
+	}
+
+	@Override
 	public @NonNull String getQualifiedValidatorClassName(@NonNull GenPackage genPackage) {
 		return ClassUtil.nonNullEMF(genPackage.getQualifiedValidatorClassName());
 	}
@@ -791,6 +796,6 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 
 	@Override
 	public @NonNull String getTablesClassName(@NonNull GenPackage genPackage) {
-		return ImportUtils.getAffixedName(genPackage.getReflectionPackageName() + "." + genPackage.getPrefix() + TABLES_CLASS_SUFFIX);
+		return ImportUtils.getAffixedName(getQualifiedTableClassName(genPackage));
 	}
 }

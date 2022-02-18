@@ -39,7 +39,7 @@ import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
  *
  * @generated
  */
-public class CGIsKindOfExpImpl extends CGCallExpImpl implements CGIsKindOfExp {
+public class CGIsKindOfExpImpl extends CGSourcedCallExpImpl implements CGIsKindOfExp {
 	/**
 	 * The number of structural features of the '<em>CG Is Kind Of Exp</em>' class.
 	 * <!-- begin-user-doc -->
@@ -47,7 +47,7 @@ public class CGIsKindOfExpImpl extends CGCallExpImpl implements CGIsKindOfExp {
 	 * @generated
 	 * @ordered
 	 */
-	public static final int CG_IS_KIND_OF_EXP_FEATURE_COUNT = CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 1;
+	public static final int CG_IS_KIND_OF_EXP_FEATURE_COUNT = CGSourcedCallExpImpl.CG_SOURCED_CALL_EXP_FEATURE_COUNT + 1;
 	/**
 	 * The cached value of the '{@link #getExecutorType() <em>Executor Type</em>}' reference.
 	 * <!-- begin-user-doc -->

@@ -29,12 +29,12 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
  * OclComparableComparisonOperation provides the abstract support for a comparison operation.
  */
 public abstract class OclComparableComparisonOperation extends AbstractUntypedBinaryOperation
-{	
+{
 	/** @deprecated use Executor */
 	@Deprecated
 	@Override
 	public @Nullable Boolean evaluate(@NonNull Evaluator evaluator, @Nullable Object left, @Nullable Object right) {
-		return evaluate(getExecutor(evaluator), left, right); 
+		return evaluate(getExecutor(evaluator), left, right);
 	}
 
 	/**
@@ -67,6 +67,16 @@ public abstract class OclComparableComparisonOperation extends AbstractUntypedBi
 		else {
 			throw new InvalidValueException("Unsupported compareTo for ''{0}''", left != null ? left.getClass().getName() : NULL_STRING); //$NON-NLS-1$
 		}
+	}
+
+	private static final Class<?>@NonNull [] evaluateArguments = new Class<?>@NonNull [] {Executor.class, Object.class, Object.class};
+
+	/**
+	 * @since 1.18
+	 */
+	@Override
+	protected Class<?>@NonNull [] getEvaluateArguments(@NonNull Operation asOperation){
+		return evaluateArguments;
 	}
 
 	protected abstract boolean getResultValue(Integer comparison);

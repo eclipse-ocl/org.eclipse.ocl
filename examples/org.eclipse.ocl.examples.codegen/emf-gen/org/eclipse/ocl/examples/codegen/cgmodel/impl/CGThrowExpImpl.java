@@ -31,7 +31,7 @@ import org.eclipse.ocl.examples.codegen.cse.ThrowPlace;
  *
  * @generated
  */
-public class CGThrowExpImpl extends CGCallExpImpl implements CGThrowExp {
+public class CGThrowExpImpl extends CGSourcedCallExpImpl implements CGThrowExp {
 	/**
 	 * The number of structural features of the '<em>CG Throw Exp</em>' class.
 	 * <!-- begin-user-doc -->
@@ -39,7 +39,7 @@ public class CGThrowExpImpl extends CGCallExpImpl implements CGThrowExp {
 	 * @generated
 	 * @ordered
 	 */
-	public static final int CG_THROW_EXP_FEATURE_COUNT = CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0;
+	public static final int CG_THROW_EXP_FEATURE_COUNT = CGSourcedCallExpImpl.CG_SOURCED_CALL_EXP_FEATURE_COUNT + 0;
 
 	/**
 	 * <!-- begin-user-doc -->

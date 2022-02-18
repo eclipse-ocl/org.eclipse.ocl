@@ -43,6 +43,8 @@ import org.eclipse.ocl.pivot.Variable;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGParameterImpl#getCallable <em>Callable</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGParameterImpl#isIsSelf <em>Is Self</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGParameterImpl#isIsThis <em>Is This</em>}</li>
  * </ul>
  *
  * @generated
@@ -55,7 +57,47 @@ public class CGParameterImpl extends CGVariableImpl implements CGParameter {
 	 * @generated
 	 * @ordered
 	 */
-	public static final int CG_PARAMETER_FEATURE_COUNT = CGVariableImpl.CG_VARIABLE_FEATURE_COUNT + 1;
+	public static final int CG_PARAMETER_FEATURE_COUNT = CGVariableImpl.CG_VARIABLE_FEATURE_COUNT + 3;
+
+	/**
+	 * The default value of the '{@link #isIsSelf() <em>Is Self</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isIsSelf()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean IS_SELF_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isIsSelf() <em>Is Self</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isIsSelf()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean isSelf = IS_SELF_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #isIsThis() <em>Is This</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isIsThis()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean IS_THIS_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isIsThis() <em>Is This</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isIsThis()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean isThis = IS_THIS_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -125,6 +167,52 @@ public class CGParameterImpl extends CGVariableImpl implements CGParameter {
 	 * @generated
 	 */
 	@Override
+	public boolean isIsSelf() {
+		return isSelf;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setIsSelf(boolean newIsSelf) {
+		boolean oldIsSelf = isSelf;
+		isSelf = newIsSelf;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, 8, oldIsSelf, isSelf));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public boolean isIsThis() {
+		return isThis;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setIsThis(boolean newIsThis) {
+		boolean oldIsThis = isThis;
+		isThis = newIsThis;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, 9, oldIsThis, isThis));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case 7:
@@ -173,6 +261,10 @@ public class CGParameterImpl extends CGVariableImpl implements CGParameter {
 		switch (featureID) {
 			case 7:
 				return getCallable();
+			case 8:
+				return isIsSelf();
+			case 9:
+				return isIsThis();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -187,6 +279,12 @@ public class CGParameterImpl extends CGVariableImpl implements CGParameter {
 		switch (featureID) {
 			case 7:
 				setCallable((CGCallable)newValue);
+				return;
+			case 8:
+				setIsSelf((Boolean)newValue);
+				return;
+			case 9:
+				setIsThis((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -203,6 +301,12 @@ public class CGParameterImpl extends CGVariableImpl implements CGParameter {
 			case 7:
 				setCallable((CGCallable)null);
 				return;
+			case 8:
+				setIsSelf(IS_SELF_EDEFAULT);
+				return;
+			case 9:
+				setIsThis(IS_THIS_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -217,8 +321,22 @@ public class CGParameterImpl extends CGVariableImpl implements CGParameter {
 		switch (featureID) {
 			case 7:
 				return getCallable() != null;
+			case 8:
+				return isSelf != IS_SELF_EDEFAULT;
+			case 9:
+				return isThis != IS_THIS_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
+	public String toString() {
+		return super.toString();
 	}
 
 	/**

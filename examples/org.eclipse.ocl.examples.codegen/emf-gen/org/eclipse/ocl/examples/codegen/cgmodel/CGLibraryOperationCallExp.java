@@ -4,12 +4,13 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.cgmodel;
 
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 
 /**
@@ -57,5 +58,8 @@ public interface CGLibraryOperationCallExp extends CGOperationCallExp {
 	 * @generated
 	 */
 	void setLibraryOperation(LibraryOperation value);
+
+	@NonNull CGValuedElement getFirstArgument();
+	@NonNull CGValuedElement getSecondArgument();
 
 } // CGLibraryOperationCallExp

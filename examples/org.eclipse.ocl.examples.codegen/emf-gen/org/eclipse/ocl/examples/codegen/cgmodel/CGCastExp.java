@@ -30,7 +30,7 @@ package org.eclipse.ocl.examples.codegen.cgmodel;
  * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGCastExp()
  * @generated
  */
-public interface CGCastExp extends CGCallExp {
+public interface CGCastExp extends CGSourcedCallExp {
 	/**
 	 * Returns the value of the '<em><b>Executor Type</b></em>' reference.
 	 * <!-- begin-user-doc -->

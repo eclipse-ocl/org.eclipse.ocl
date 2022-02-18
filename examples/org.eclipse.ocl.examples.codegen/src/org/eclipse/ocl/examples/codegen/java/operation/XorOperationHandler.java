@@ -33,15 +33,15 @@ public class XorOperationHandler extends AbstractLibraryOperationHandler
 			//
 			//	Trivial source cases
 			//
-			final CGValuedElement cgSource = cgOperationCallExp.getSource();
+			assert cgOperationCallExp.getCgThis() == null;
+			final @NonNull CGValuedElement cgSource = cgOperationCallExp.getFirstArgument();
 			if (appendThrowIfInvalid(cgSource, "xor source")) {
 				return false;
 			}
 			//
 			//	Trivial argument cases
 			//
-			CGValuedElement cgArgument = cgOperationCallExp.getArguments().get(0);
-			assert cgArgument != null;
+			final @NonNull CGValuedElement cgArgument = cgOperationCallExp.getSecondArgument();
 			if (appendThrowIfInvalid(cgArgument, "xor argument")) {
 				return false;
 			}

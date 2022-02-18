@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.calling.PropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
@@ -39,6 +40,7 @@ import org.eclipse.ocl.examples.codegen.cse.OuterStackPlace;
  * <ul>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGPropertyImpl#getContainingClass <em>Containing Class</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGPropertyImpl#getBody <em>Body</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGPropertyImpl#getCallingConvention <em>Calling Convention</em>}</li>
  * </ul>
  *
  * @generated
@@ -51,7 +53,7 @@ public class CGPropertyImpl extends CGValuedElementImpl implements CGProperty {
 	 * @generated
 	 * @ordered
 	 */
-	public static final int CG_PROPERTY_FEATURE_COUNT = CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2;
+	public static final int CG_PROPERTY_FEATURE_COUNT = CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 3;
 	/**
 	 * The cached value of the '{@link #getBody() <em>Body</em>}' containment reference.
 	 * <!-- begin-user-doc -->
@@ -61,6 +63,25 @@ public class CGPropertyImpl extends CGValuedElementImpl implements CGProperty {
 	 * @ordered
 	 */
 	protected CGValuedElement body;
+
+	/**
+	 * The default value of the '{@link #getCallingConvention() <em>Calling Convention</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCallingConvention()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final PropertyCallingConvention CALLING_CONVENTION_EDEFAULT = null;
+	/**
+	 * The cached value of the '{@link #getCallingConvention() <em>Calling Convention</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCallingConvention()
+	 * @generated
+	 * @ordered
+	 */
+	protected PropertyCallingConvention callingConvention = CALLING_CONVENTION_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -175,6 +196,29 @@ public class CGPropertyImpl extends CGValuedElementImpl implements CGProperty {
 	 * @generated
 	 */
 	@Override
+	public PropertyCallingConvention getCallingConvention() {
+		return callingConvention;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setCallingConvention(PropertyCallingConvention newCallingConvention) {
+		PropertyCallingConvention oldCallingConvention = callingConvention;
+		callingConvention = newCallingConvention;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, 8, oldCallingConvention, callingConvention));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case 6:
@@ -227,6 +271,8 @@ public class CGPropertyImpl extends CGValuedElementImpl implements CGProperty {
 				return getContainingClass();
 			case 7:
 				return getBody();
+			case 8:
+				return getCallingConvention();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -244,6 +290,9 @@ public class CGPropertyImpl extends CGValuedElementImpl implements CGProperty {
 				return;
 			case 7:
 				setBody((CGValuedElement)newValue);
+				return;
+			case 8:
+				setCallingConvention((PropertyCallingConvention)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -263,6 +312,9 @@ public class CGPropertyImpl extends CGValuedElementImpl implements CGProperty {
 			case 7:
 				setBody((CGValuedElement)null);
 				return;
+			case 8:
+				setCallingConvention(CALLING_CONVENTION_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -279,8 +331,26 @@ public class CGPropertyImpl extends CGValuedElementImpl implements CGProperty {
 				return getContainingClass() != null;
 			case 7:
 				return body != null;
+			case 8:
+				return CALLING_CONVENTION_EDEFAULT == null ? callingConvention != null : !CALLING_CONVENTION_EDEFAULT.equals(callingConvention);
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuilder result = new StringBuilder(super.toString());
+		result.append(" (callingConvention: ");
+		result.append(callingConvention);
+		result.append(')');
+		return result.toString();
 	}
 
 	/**

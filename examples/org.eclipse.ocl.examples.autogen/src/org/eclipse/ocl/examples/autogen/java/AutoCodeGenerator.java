@@ -147,13 +147,10 @@ public abstract class AutoCodeGenerator extends JavaCodeGenerator
 		return new AutoCodeGenOptions();
 	}
 
-
-
 	public @NonNull String generateClassFile(@NonNull CGPackage cgPackage) {
-
 		optimize(cgPackage);
 		List<@NonNull CGValuedElement> sortedGlobals = prepareGlobals();
-		resolveNames(cgPackage);
+		resolveNames(sortedGlobals, cgPackage);
 		AutoCG2JavaVisitor<@NonNull ?> generator = createCG2JavaVisitor(cgPackage, sortedGlobals);
 		generator.safeVisit(cgPackage);
 		ImportNameManager importNameManager = generator.getImportNameManager();

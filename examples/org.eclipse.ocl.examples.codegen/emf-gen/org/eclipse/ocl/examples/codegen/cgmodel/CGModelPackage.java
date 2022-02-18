@@ -381,17 +381,6 @@ public interface CGModelPackage extends EPackage {
 	EAttribute getCGCallExp_Validating();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp#getSource <em>Source</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Source</em>'.
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp#getSource()
-	 * @see #getCGCallExp()
-	 * @generated
-	 */
-	EReference getCGCallExp_Source();
-
-	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGCastExp <em>CG Cast Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -961,6 +950,27 @@ public interface CGModelPackage extends EPackage {
 	EReference getCGShadowPart_ExecutorPart();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGSourcedCallExp <em>CG Sourced Call Exp</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>CG Sourced Call Exp</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGSourcedCallExp
+	 * @generated
+	 */
+	EClass getCGSourcedCallExp();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGSourcedCallExp#getSource <em>Source</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Source</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGSourcedCallExp#getSource()
+	 * @see #getCGSourcedCallExp()
+	 * @generated
+	 */
+	EReference getCGSourcedCallExp_Source();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGForeignOperationCallExp <em>CG Foreign Operation Call Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -981,26 +991,15 @@ public interface CGModelPackage extends EPackage {
 	EClass getCGForeignProperty();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty#getParameter <em>Parameter</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty#getParameters <em>Parameters</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Parameter</em>'.
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty#getParameter()
+	 * @return the meta object for the containment reference list '<em>Parameters</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty#getParameters()
 	 * @see #getCGForeignProperty()
 	 * @generated
 	 */
-	EReference getCGForeignProperty_Parameter();
-
-	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty#getInitExpression <em>Init Expression</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Init Expression</em>'.
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty#getInitExpression()
-	 * @see #getCGForeignProperty()
-	 * @generated
-	 */
-	EReference getCGForeignProperty_InitExpression();
+	EReference getCGForeignProperty_Parameters();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGForeignPropertyCallExp <em>CG Foreign Property Call Exp</em>}'.
@@ -1601,15 +1600,37 @@ public interface CGModelPackage extends EPackage {
 	EAttribute getCGNativeOperationCallExp_Method();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp#isThisIsSelf <em>This Is Self</em>}'.
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp#isValueIsBoxed <em>Value Is Boxed</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>This Is Self</em>'.
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp#isThisIsSelf()
+	 * @return the meta object for the attribute '<em>Value Is Boxed</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp#isValueIsBoxed()
 	 * @see #getCGNativeOperationCallExp()
 	 * @generated
 	 */
-	EAttribute getCGNativeOperationCallExp_ThisIsSelf();
+	EAttribute getCGNativeOperationCallExp_ValueIsBoxed();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp#isValueIsEcore <em>Value Is Ecore</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Value Is Ecore</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp#isValueIsEcore()
+	 * @see #getCGNativeOperationCallExp()
+	 * @generated
+	 */
+	EAttribute getCGNativeOperationCallExp_ValueIsEcore();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp#getCgThis <em>Cg This</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Cg This</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp#getCgThis()
+	 * @see #getCGNativeOperationCallExp()
+	 * @generated
+	 */
+	EReference getCGNativeOperationCallExp_CgThis();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNativeProperty <em>CG Native Property</em>}'.
@@ -1662,6 +1683,17 @@ public interface CGModelPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getCGNavigationCallExp_ReferredProperty();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp#getCgProperty <em>Cg Property</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Cg Property</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp#getCgProperty()
+	 * @see #getCGNavigationCallExp()
+	 * @generated
+	 */
+	EReference getCGNavigationCallExp_CgProperty();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNull <em>CG Null</em>}'.
@@ -1738,6 +1770,17 @@ public interface CGModelPackage extends EPackage {
 	EReference getCGOperation_ContainingClass();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOperation#getCallingConvention <em>Calling Convention</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Calling Convention</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGOperation#getCallingConvention()
+	 * @see #getCGOperation()
+	 * @generated
+	 */
+	EAttribute getCGOperation_CallingConvention();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp <em>CG Operation Call Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1746,6 +1789,17 @@ public interface CGModelPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getCGOperationCallExp();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getCgArguments <em>Cg Arguments</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Cg Arguments</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getCgArguments()
+	 * @see #getCGOperationCallExp()
+	 * @generated
+	 */
+	EReference getCGOperationCallExp_CgArguments();
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getReferredOperation <em>Referred Operation</em>}'.
@@ -1759,6 +1813,17 @@ public interface CGModelPackage extends EPackage {
 	EAttribute getCGOperationCallExp_ReferredOperation();
 
 	/**
+	 * Returns the meta object for the reference '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getCgOperation <em>Cg Operation</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Cg Operation</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getCgOperation()
+	 * @see #getCGOperationCallExp()
+	 * @generated
+	 */
+	EReference getCGOperationCallExp_CgOperation();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOppositePropertyCallExp <em>CG Opposite Property Call Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1767,17 +1832,6 @@ public interface CGModelPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getCGOppositePropertyCallExp();
-
-	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getArguments <em>Arguments</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Arguments</em>'.
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getArguments()
-	 * @see #getCGOperationCallExp()
-	 * @generated
-	 */
-	EReference getCGOperationCallExp_Arguments();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGPackage <em>CG Package</em>}'.
@@ -1844,6 +1898,28 @@ public interface CGModelPackage extends EPackage {
 	EReference getCGParameter_Callable();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGParameter#isIsSelf <em>Is Self</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Is Self</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGParameter#isIsSelf()
+	 * @see #getCGParameter()
+	 * @generated
+	 */
+	EAttribute getCGParameter_IsSelf();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGParameter#isIsThis <em>Is This</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Is This</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGParameter#isIsThis()
+	 * @see #getCGParameter()
+	 * @generated
+	 */
+	EAttribute getCGParameter_IsThis();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGProperty <em>CG Property</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1874,6 +1950,17 @@ public interface CGModelPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getCGProperty_Body();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGProperty#getCallingConvention <em>Calling Convention</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Calling Convention</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGProperty#getCallingConvention()
+	 * @see #getCGProperty()
+	 * @generated
+	 */
+	EAttribute getCGProperty_CallingConvention();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGPropertyCallExp <em>CG Property Call Exp</em>}'.
@@ -1957,27 +2044,6 @@ public interface CGModelPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getCGTemplateParameterExp_Index();
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGText <em>CG Text</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>CG Text</em>'.
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGText
-	 * @generated
-	 */
-	EClass getCGText();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGText#getTextValue <em>Text Value</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Text Value</em>'.
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGText#getTextValue()
-	 * @see #getCGText()
-	 * @generated
-	 */
-	EAttribute getCGText_TextValue();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGThrowExp <em>CG Throw Exp</em>}'.
@@ -2351,6 +2417,16 @@ public interface CGModelPackage extends EPackage {
 	EDataType getOperation();
 
 	/**
+	 * Returns the meta object for data type '{@link org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention <em>Operation Calling Convention</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Operation Calling Convention</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention
+	 * @generated
+	 */
+	EDataType getOperationCallingConvention();
+
+	/**
 	 * Returns the meta object for data type '{@link org.eclipse.ocl.pivot.Property <em>Property</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2389,6 +2465,16 @@ public interface CGModelPackage extends EPackage {
 	 * @generated
 	 */
 	EDataType getTypeId();
+
+	/**
+	 * Returns the meta object for data type '{@link org.eclipse.ocl.examples.codegen.calling.PropertyCallingConvention <em>Property Calling Convention</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Property Calling Convention</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.calling.PropertyCallingConvention
+	 * @generated
+	 */
+	EDataType getPropertyCallingConvention();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -2656,14 +2742,6 @@ public interface CGModelPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute CG_CALL_EXP__VALIDATING = eINSTANCE.getCGCallExp_Validating();
-
-		/**
-		 * The meta object literal for the '<em><b>Source</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference CG_CALL_EXP__SOURCE = eINSTANCE.getCGCallExp_Source();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGCastExpImpl <em>CG Cast Exp</em>}' class.
@@ -3148,6 +3226,24 @@ public interface CGModelPackage extends EPackage {
 		EReference CG_SHADOW_PART__EXECUTOR_PART = eINSTANCE.getCGShadowPart_ExecutorPart();
 
 		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGSourcedCallExpImpl <em>CG Sourced Call Exp</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGSourcedCallExpImpl
+		 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getCGSourcedCallExp()
+		 * @generated
+		 */
+		EClass CG_SOURCED_CALL_EXP = eINSTANCE.getCGSourcedCallExp();
+
+		/**
+		 * The meta object literal for the '<em><b>Source</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CG_SOURCED_CALL_EXP__SOURCE = eINSTANCE.getCGSourcedCallExp_Source();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGForeignOperationCallExpImpl <em>CG Foreign Operation Call Exp</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -3168,20 +3264,12 @@ public interface CGModelPackage extends EPackage {
 		EClass CG_FOREIGN_PROPERTY = eINSTANCE.getCGForeignProperty();
 
 		/**
-		 * The meta object literal for the '<em><b>Parameter</b></em>' containment reference feature.
+		 * The meta object literal for the '<em><b>Parameters</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference CG_FOREIGN_PROPERTY__PARAMETER = eINSTANCE.getCGForeignProperty_Parameter();
-
-		/**
-		 * The meta object literal for the '<em><b>Init Expression</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference CG_FOREIGN_PROPERTY__INIT_EXPRESSION = eINSTANCE.getCGForeignProperty_InitExpression();
+		EReference CG_FOREIGN_PROPERTY__PARAMETERS = eINSTANCE.getCGForeignProperty_Parameters();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGForeignPropertyCallExpImpl <em>CG Foreign Property Call Exp</em>}' class.
@@ -3698,12 +3786,28 @@ public interface CGModelPackage extends EPackage {
 		EAttribute CG_NATIVE_OPERATION_CALL_EXP__METHOD = eINSTANCE.getCGNativeOperationCallExp_Method();
 
 		/**
-		 * The meta object literal for the '<em><b>This Is Self</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Value Is Boxed</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute CG_NATIVE_OPERATION_CALL_EXP__THIS_IS_SELF = eINSTANCE.getCGNativeOperationCallExp_ThisIsSelf();
+		EAttribute CG_NATIVE_OPERATION_CALL_EXP__VALUE_IS_BOXED = eINSTANCE.getCGNativeOperationCallExp_ValueIsBoxed();
+
+		/**
+		 * The meta object literal for the '<em><b>Value Is Ecore</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CG_NATIVE_OPERATION_CALL_EXP__VALUE_IS_ECORE = eINSTANCE.getCGNativeOperationCallExp_ValueIsEcore();
+
+		/**
+		 * The meta object literal for the '<em><b>Cg This</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CG_NATIVE_OPERATION_CALL_EXP__CG_THIS = eINSTANCE.getCGNativeOperationCallExp_CgThis();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGNativePropertyImpl <em>CG Native Property</em>}' class.
@@ -3750,6 +3854,14 @@ public interface CGModelPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute CG_NAVIGATION_CALL_EXP__REFERRED_PROPERTY = eINSTANCE.getCGNavigationCallExp_ReferredProperty();
+
+		/**
+		 * The meta object literal for the '<em><b>Cg Property</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CG_NAVIGATION_CALL_EXP__CG_PROPERTY = eINSTANCE.getCGNavigationCallExp_CgProperty();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGNullImpl <em>CG Null</em>}' class.
@@ -3814,6 +3926,14 @@ public interface CGModelPackage extends EPackage {
 		EReference CG_OPERATION__CONTAINING_CLASS = eINSTANCE.getCGOperation_ContainingClass();
 
 		/**
+		 * The meta object literal for the '<em><b>Calling Convention</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CG_OPERATION__CALLING_CONVENTION = eINSTANCE.getCGOperation_CallingConvention();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGOperationCallExpImpl <em>CG Operation Call Exp</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -3824,12 +3944,28 @@ public interface CGModelPackage extends EPackage {
 		EClass CG_OPERATION_CALL_EXP = eINSTANCE.getCGOperationCallExp();
 
 		/**
+		 * The meta object literal for the '<em><b>Cg Arguments</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CG_OPERATION_CALL_EXP__CG_ARGUMENTS = eINSTANCE.getCGOperationCallExp_CgArguments();
+
+		/**
 		 * The meta object literal for the '<em><b>Referred Operation</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EAttribute CG_OPERATION_CALL_EXP__REFERRED_OPERATION = eINSTANCE.getCGOperationCallExp_ReferredOperation();
+
+		/**
+		 * The meta object literal for the '<em><b>Cg Operation</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CG_OPERATION_CALL_EXP__CG_OPERATION = eINSTANCE.getCGOperationCallExp_CgOperation();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGOppositePropertyCallExpImpl <em>CG Opposite Property Call Exp</em>}' class.
@@ -3840,14 +3976,6 @@ public interface CGModelPackage extends EPackage {
 		 * @generated
 		 */
 		EClass CG_OPPOSITE_PROPERTY_CALL_EXP = eINSTANCE.getCGOppositePropertyCallExp();
-
-		/**
-		 * The meta object literal for the '<em><b>Arguments</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference CG_OPERATION_CALL_EXP__ARGUMENTS = eINSTANCE.getCGOperationCallExp_Arguments();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGPackageImpl <em>CG Package</em>}' class.
@@ -3902,6 +4030,22 @@ public interface CGModelPackage extends EPackage {
 		EReference CG_PARAMETER__CALLABLE = eINSTANCE.getCGParameter_Callable();
 
 		/**
+		 * The meta object literal for the '<em><b>Is Self</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CG_PARAMETER__IS_SELF = eINSTANCE.getCGParameter_IsSelf();
+
+		/**
+		 * The meta object literal for the '<em><b>Is This</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CG_PARAMETER__IS_THIS = eINSTANCE.getCGParameter_IsThis();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGPropertyImpl <em>CG Property</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -3926,6 +4070,14 @@ public interface CGModelPackage extends EPackage {
 		 * @generated
 		 */
 		EReference CG_PROPERTY__BODY = eINSTANCE.getCGProperty_Body();
+
+		/**
+		 * The meta object literal for the '<em><b>Calling Convention</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CG_PROPERTY__CALLING_CONVENTION = eINSTANCE.getCGProperty_CallingConvention();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGPropertyCallExpImpl <em>CG Property Call Exp</em>}' class.
@@ -4000,24 +4152,6 @@ public interface CGModelPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute CG_TEMPLATE_PARAMETER_EXP__INDEX = eINSTANCE.getCGTemplateParameterExp_Index();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGTextImpl <em>CG Text</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGTextImpl
-		 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getCGText()
-		 * @generated
-		 */
-		EClass CG_TEXT = eINSTANCE.getCGText();
-
-		/**
-		 * The meta object literal for the '<em><b>Text Value</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute CG_TEXT__TEXT_VALUE = eINSTANCE.getCGText_TextValue();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGThrowExpImpl <em>CG Throw Exp</em>}' class.
@@ -4358,6 +4492,16 @@ public interface CGModelPackage extends EPackage {
 		EDataType OPERATION = eINSTANCE.getOperation();
 
 		/**
+		 * The meta object literal for the '<em>Operation Calling Convention</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention
+		 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getOperationCallingConvention()
+		 * @generated
+		 */
+		EDataType OPERATION_CALLING_CONVENTION = eINSTANCE.getOperationCallingConvention();
+
+		/**
 		 * The meta object literal for the '<em>Property</em>' data type.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -4396,6 +4540,16 @@ public interface CGModelPackage extends EPackage {
 		 * @generated
 		 */
 		EDataType TYPE_ID = eINSTANCE.getTypeId();
+
+		/**
+		 * The meta object literal for the '<em>Property Calling Convention</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.examples.codegen.calling.PropertyCallingConvention
+		 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getPropertyCallingConvention()
+		 * @generated
+		 */
+		EDataType PROPERTY_CALLING_CONVENTION = eINSTANCE.getPropertyCallingConvention();
 
 	}
 

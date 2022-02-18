@@ -14,7 +14,6 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCollectionExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCollectionPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIfExp;
@@ -28,6 +27,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGNumber;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowPart;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGSourcedCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTupleExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTuplePart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
@@ -61,24 +61,6 @@ import org.eclipse.ocl.pivot.values.RealValue;
  */
 public class EquivalenceUtil
 {
-	public static @Nullable Boolean isEquivalent(@NonNull CGCallExp thisValue, @NonNull CGCallExp thatValue) {
-		if (thisValue == thatValue) {
-			return Boolean.TRUE;
-		}
-		CGValuedElement thisSource = thisValue.getSource();
-		CGValuedElement thatSource = thatValue.getSource();
-		if ((thisSource != null) || (thatSource != null)) {
-			if ((thisSource == null) || (thatSource == null)) {
-				return null;			// Inconsistent sources should never happen
-			}
-			Boolean equivalence = thisSource.isEquivalentTo(thatSource);
-			if (equivalence != Boolean.TRUE) {
-				return null;			// Different sources do not guarantee different results
-			}
-		}
-		return Boolean.TRUE;
-	}
-
 	public static @Nullable Boolean isEquivalent(@NonNull CGCollectionExp thisValue, @NonNull CGCollectionExp thatValue) {
 		if (thisValue == thatValue) {
 			return Boolean.TRUE;
@@ -385,19 +367,19 @@ public class EquivalenceUtil
 			return null;			// Different operations do not guarantee different results
 		}
 		// FIXME non-conformant return types can be guaranteed to be different
-		CGValuedElement thisSource = thisValue.getSource();
-		CGValuedElement thatSource = thatValue.getSource();
-		if ((thisSource != null) || (thatSource != null)) {
-			if ((thisSource == null) || (thatSource == null)) {
+		CGValuedElement thisThis = thisValue.getCgThis();
+		CGValuedElement thatThis = thatValue.getCgThis();
+		if ((thisThis != null) || (thatThis != null)) {
+			if ((thisThis == null) || (thatThis == null)) {
 				return null;			// Inconsistently null sources should never happen
 			}
-			Boolean equivalence = thisSource.isEquivalentTo(thatSource);
+			Boolean equivalence = thisThis.isEquivalentTo(thatThis);
 			if (equivalence != Boolean.TRUE) {
 				return null;			// Different sources do not guarantee different results
 			}
 		}
-		List<CGValuedElement> theseArguments = thisValue.getArguments();
-		List<CGValuedElement> thoseArguments = thatValue.getArguments();
+		List<CGValuedElement> theseArguments = thisValue.getCgArguments();
+		List<CGValuedElement> thoseArguments = thatValue.getCgArguments();
 		int iSize = theseArguments.size();
 		if (iSize != thoseArguments.size()) {
 			return null;				// Different argument lists do not guarantee different results
@@ -500,6 +482,24 @@ public class EquivalenceUtil
 			return null;			// Null inits should never happen
 		}
 		return thisPartInit.isEquivalentTo(thatPartInit);
+	}
+
+	public static @Nullable Boolean isEquivalent(@NonNull CGSourcedCallExp thisValue, @NonNull CGSourcedCallExp thatValue) {
+		if (thisValue == thatValue) {
+			return Boolean.TRUE;
+		}
+		CGValuedElement thisSource = thisValue.getSource();
+		CGValuedElement thatSource = thatValue.getSource();
+		if ((thisSource != null) || (thatSource != null)) {
+			if ((thisSource == null) || (thatSource == null)) {
+				return null;			// Inconsistent sources should never happen
+			}
+			Boolean equivalence = thisSource.isEquivalentTo(thatSource);
+			if (equivalence != Boolean.TRUE) {
+				return null;			// Different sources do not guarantee different results
+			}
+		}
+		return Boolean.TRUE;
 	}
 
 	public static @Nullable Boolean isEquivalent(@NonNull CGTupleExp thisValue, @NonNull CGTupleExp thatValue) {

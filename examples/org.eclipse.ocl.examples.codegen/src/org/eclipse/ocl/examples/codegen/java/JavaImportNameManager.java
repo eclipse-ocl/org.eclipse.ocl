@@ -45,6 +45,9 @@ public class JavaImportNameManager extends AbstractImportNameManager
 	 */
 	@Override
 	public @NonNull String addImport(@Nullable Boolean isRequired, @NonNull String fullyQualifiedClassName) {
+		if (fullyQualifiedClassName.contains("FOREIGN")) {
+			getClass();		// XXX
+		}
 		String dollarPrefix = fullyQualifiedClassName;
 		String dollarSuffix = "";
 		int dollarIndex = fullyQualifiedClassName.indexOf('$');

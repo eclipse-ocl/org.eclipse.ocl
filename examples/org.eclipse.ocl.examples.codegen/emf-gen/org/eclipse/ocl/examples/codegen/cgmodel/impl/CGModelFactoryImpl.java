@@ -20,6 +20,8 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.PropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.*;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGAccumulator;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGAssertNonNullExp;
@@ -91,7 +93,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGSettableVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGString;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTemplateParameterExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGText;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGThrowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTupleExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTuplePart;
@@ -225,9 +226,8 @@ public class CGModelFactoryImpl extends EFactoryImpl implements CGModelFactory {
 			case 76: return createCGReal();
 			case 77: return createCGSettableVariable();
 			case 79: return createCGShadowPart();
-			case 80: return createCGString();
-			case 81: return createCGTemplateParameterExp();
-			case 82: return createCGText();
+			case 81: return createCGString();
+			case 82: return createCGTemplateParameterExp();
 			case 83: return createCGThrowExp();
 			case 84: return createCGTupleExp();
 			case 85: return createCGTuplePart();
@@ -275,13 +275,17 @@ public class CGModelFactoryImpl extends EFactoryImpl implements CGModelFactory {
 			case 107:
 				return createOperationFromString(eDataType, initialValue);
 			case 108:
-				return createPropertyFromString(eDataType, initialValue);
+				return createOperationCallingConventionFromString(eDataType, initialValue);
 			case 109:
-				return createTuplePartIdFromString(eDataType, initialValue);
+				return createPropertyFromString(eDataType, initialValue);
 			case 110:
-				return createTypeFromString(eDataType, initialValue);
+				return createTuplePartIdFromString(eDataType, initialValue);
 			case 111:
+				return createTypeFromString(eDataType, initialValue);
+			case 112:
 				return createTypeIdFromString(eDataType, initialValue);
+			case 113:
+				return createPropertyCallingConventionFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -320,13 +324,17 @@ public class CGModelFactoryImpl extends EFactoryImpl implements CGModelFactory {
 			case 107:
 				return convertOperationToString(eDataType, instanceValue);
 			case 108:
-				return convertPropertyToString(eDataType, instanceValue);
+				return convertOperationCallingConventionToString(eDataType, instanceValue);
 			case 109:
-				return convertTuplePartIdToString(eDataType, instanceValue);
+				return convertPropertyToString(eDataType, instanceValue);
 			case 110:
-				return convertTypeToString(eDataType, instanceValue);
+				return convertTuplePartIdToString(eDataType, instanceValue);
 			case 111:
+				return convertTypeToString(eDataType, instanceValue);
+			case 112:
 				return convertTypeIdToString(eDataType, instanceValue);
+			case 113:
+				return convertPropertyCallingConventionToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -1086,17 +1094,6 @@ public class CGModelFactoryImpl extends EFactoryImpl implements CGModelFactory {
 	 * @generated
 	 */
 	@Override
-	public @NonNull CGText createCGText() {
-		CGTextImpl cgText = new CGTextImpl();
-		return cgText;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public @NonNull CGThrowExp createCGThrowExp() {
 		CGThrowExpImpl cgThrowExp = new CGThrowExpImpl();
 		return cgThrowExp;
@@ -1418,6 +1415,24 @@ public class CGModelFactoryImpl extends EFactoryImpl implements CGModelFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public OperationCallingConvention createOperationCallingConventionFromString(EDataType eDataType, String initialValue) {
+		return (OperationCallingConvention)super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertOperationCallingConventionToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public Property createPropertyFromString(EDataType eDataType, String initialValue) {
 		return (Property)super.createFromString(eDataType, initialValue);
 	}
@@ -1482,6 +1497,24 @@ public class CGModelFactoryImpl extends EFactoryImpl implements CGModelFactory {
 	 * @generated
 	 */
 	public String convertTypeIdToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public PropertyCallingConvention createPropertyCallingConventionFromString(EDataType eDataType, String initialValue) {
+		return (PropertyCallingConvention)super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertPropertyCallingConventionToString(EDataType eDataType, Object instanceValue) {
 		return super.convertToString(eDataType, instanceValue);
 	}
 

@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.cgmodel;
 
+import org.eclipse.ocl.examples.codegen.calling.PropertyCallingConvention;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -22,6 +24,7 @@ package org.eclipse.ocl.examples.codegen.cgmodel;
  * <ul>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGProperty#getContainingClass <em>Containing Class</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGProperty#getBody <em>Body</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGProperty#getCallingConvention <em>Calling Convention</em>}</li>
  * </ul>
  *
  * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGProperty()
@@ -78,5 +81,26 @@ public interface CGProperty extends CGValuedElement {
 	 * @generated
 	 */
 	void setBody(CGValuedElement value);
+
+	/**
+	 * Returns the value of the '<em><b>Calling Convention</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Calling Convention</em>' attribute.
+	 * @see #setCallingConvention(PropertyCallingConvention)
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGProperty_CallingConvention()
+	 * @generated
+	 */
+	PropertyCallingConvention getCallingConvention();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGProperty#getCallingConvention <em>Calling Convention</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Calling Convention</em>' attribute.
+	 * @see #getCallingConvention()
+	 * @generated
+	 */
+	void setCallingConvention(PropertyCallingConvention value);
 
 } // CGProperty
