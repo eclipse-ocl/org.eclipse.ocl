@@ -10,8 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.library.classifier;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -19,11 +19,12 @@ import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
-import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.AbstractUnaryOperation;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.SetValue;
+
+import com.google.common.collect.Iterables;
 
 /**
  * ClassifierAllInstancesOperation realises the Classifier::allInstances() library operation.
@@ -38,14 +39,16 @@ public class ClassifierAllInstancesOperation extends AbstractUnaryOperation
 	public static @NonNull SetValue allInstances(@NonNull Executor executor, @NonNull CollectionTypeId returnTypeId, org.eclipse.ocl.pivot.@NonNull Class type) {
 		ModelManager modelManager = executor.getModelManager();
 		Iterable<?> instances = modelManager.getInstances(type);
-		Set<Object> results = new HashSet<Object>();
-		if (instances != null) {
-			IdResolver idResolver = executor.getIdResolver();
-			for (Object instance : instances) {
-				results.add(idResolver.boxedValueOf(instance));
-			}
+		if (instances == null) {
+			return ValueUtil.createSetOfEach(returnTypeId);
 		}
-		return ValueUtil.createSetValue(returnTypeId, results);
+		else {
+			List<Object> results = new ArrayList<>(Iterables.size(instances));		// Classifier instances are boxed and ecore and unboxed all at once
+			for (Object instance : instances) {							// Manual copy since QVTd's IterableAsSet does not support toArray
+				results.add(instance);
+			}
+			return ValueUtil.createSetValue(returnTypeId, results);		// Bug 482583 Exploit the selective determinism of SetValue with a List of elements
+		}
 	}
 
 	/** @deprecated use Executor */

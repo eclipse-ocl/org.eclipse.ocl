@@ -650,8 +650,8 @@ implements DataType {
 					else {
 						/*@Caught*/ @Nullable Object CAUGHT_forAll;
 						try {
-							final /*@NonInvalid*/ @NonNull List<org.eclipse.ocl.pivot.Class> superClasses = this.getSuperClasses();
-							final /*@NonInvalid*/ @NonNull SetValue BOXED_superClasses = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Class, superClasses);
+							final /*@NonInvalid*/ @NonNull List<org.eclipse.ocl.pivot.Class> superClasses_0 = this.getSuperClasses();
+							final /*@NonInvalid*/ @NonNull SetValue BOXED_superClasses = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Class, superClasses_0);
 							final org.eclipse.ocl.pivot.@NonNull Class TYPE_closure = executor.getStaticTypeOfValue(null, BOXED_superClasses);
 							final @NonNull LibraryIterationExtension IMPL_closure = (LibraryIterationExtension)TYPE_closure.lookupImplementation(standardLibrary, OCLstdlibTables.Operations._Set__closure);
 							final @NonNull Object ACC_closure = IMPL_closure.createAccumulatorValue(executor, PivotTables.SET_CLSSid_Class, PivotTables.SET_CLSSid_Class);
@@ -669,8 +669,8 @@ implements DataType {
 									if (CAST_1_ == null) {
 										throw new InvalidValueException("Null source for \'Class::superClasses\'");
 									}
-									final /*@Thrown*/ @NonNull List<org.eclipse.ocl.pivot.Class> superClasses_0 = CAST_1_.getSuperClasses();
-									final /*@Thrown*/ @NonNull SetValue BOXED_superClasses_0 = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Class, superClasses_0);
+									final /*@Thrown*/ @NonNull List<org.eclipse.ocl.pivot.Class> superClasses = CAST_1_.getSuperClasses();
+									final /*@Thrown*/ @NonNull SetValue BOXED_superClasses_0 = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Class, superClasses);
 									return BOXED_superClasses_0;
 								}
 							};
@@ -695,9 +695,9 @@ implements DataType {
 								/**
 								 * b.name <> name
 								 */
-								final /*@NonInvalid*/ @Nullable String name_0 = b.getName();
-								final /*@NonInvalid*/ @Nullable String name = this.getName();
-								final /*@NonInvalid*/ boolean ne_0 = (name_0 != null) ? !name_0.equals(name) : (name != null);
+								final /*@NonInvalid*/ @Nullable String name = b.getName();
+								final /*@NonInvalid*/ @Nullable String name_0 = this.getName();
+								final /*@NonInvalid*/ boolean ne_0 = (name != null) ? !name.equals(name_0) : (name_0 != null);
 								//
 								if (!ne_0) {					// Normal unsuccessful body evaluation result
 									forAll = ValueUtil.FALSE_VALUE;

@@ -17,11 +17,12 @@ import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.AbstractProperty;
 
-/** 
+/**
  * An EcoreLibraryOppositeProperty provides the LibraryProperty to implement a
  * PropertyCallExp using the inverse navigation of an EStructuralFeature.
  */
 public class EcoreLibraryOppositeProperty extends AbstractProperty
+// FIXME This seems to be an overdesign - flatten the eFeature into the caller
 {
 	protected final EStructuralFeature eFeature;
 

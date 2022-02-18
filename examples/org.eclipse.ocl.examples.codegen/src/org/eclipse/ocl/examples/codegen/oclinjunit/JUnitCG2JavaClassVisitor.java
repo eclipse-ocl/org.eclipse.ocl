@@ -18,6 +18,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
@@ -89,11 +90,18 @@ public class JUnitCG2JavaClassVisitor extends CG2JavaVisitor<@NonNull JUnitCodeG
 			assert js.peekClassNameStack() == null;
 		}
 		else {
-			String title = cgClass.getName() + " provides the Java implementation for the static features of\n";
+			String title = cgClass.getName() + " provides the Java implementation for the additional non-Ecore features of\n";
 			js.appendCommentWithOCL(title, CGUtil.getAST(cgClass));
 			js.append("public static class " + className);
 			js.pushClassBody(className);
 			boolean first = true;
+			for (CGProperty cgProperty : cgClass.getProperties()) {
+				if (!first) {
+					js.append("\n");
+				}
+				cgProperty.accept(this);
+				first = false;
+			}
 			for (CGOperation cgOperation : cgClass.getOperations()) {
 				if (!first) {
 					js.append("\n");

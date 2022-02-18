@@ -203,9 +203,9 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 					@SuppressWarnings("null")
 					final /*@NonInvalid*/ @NonNull OCLExpression ownedInit = this.getOwnedInit();
 					final /*@NonInvalid*/ @Nullable Type type = ownedInit.getType();
-					final /*@NonInvalid*/ @NonNull Object conformsTo = type == null;
+					final /*@NonInvalid*/ @NonNull Object conformsTo_0 = type == null;
 					/*@Thrown*/ @Nullable Boolean safe_conformsTo_source;
-					if (conformsTo == Boolean.TRUE) {
+					if (conformsTo_0 == Boolean.TRUE) {
 						safe_conformsTo_source = null;
 					}
 					else {
@@ -213,8 +213,8 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 							throw new InvalidValueException("Null \'\'Type\'\' rather than \'\'OclVoid\'\' value required");
 						}
 						final /*@NonInvalid*/ @Nullable Type type_0 = this.getType();
-						final /*@Thrown*/ boolean conformsTo_0 = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, type_0).booleanValue();
-						safe_conformsTo_source = conformsTo_0;
+						final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, type_0).booleanValue();
+						safe_conformsTo_source = conformsTo;
 					}
 					CAUGHT_safe_conformsTo_source = safe_conformsTo_source;
 				}
@@ -263,9 +263,9 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 				IF__l_q = true;
 			}
 			else {
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OclInvalid = idResolver.getClass(TypeId.OCL_INVALID, null);
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OclInvalid_8 = idResolver.getClass(TypeId.OCL_INVALID, null);
 				final /*@NonInvalid*/ @Nullable Type type = this.getType();
-				final /*@NonInvalid*/ boolean result = (type != null) ? (type.getTypeId() != TYP_OclInvalid.getTypeId()) : true;
+				final /*@NonInvalid*/ boolean result = (type != null) ? (type.getTypeId() != TYP_OclInvalid_8.getTypeId()) : true;
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, result, PivotTables.INT_0).booleanValue();
 				IF__l_q = logDiagnostic;
 			}

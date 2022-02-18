@@ -294,9 +294,9 @@ implements CollectionLiteralExp {
 					else {
 						/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
 						try {
-							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_SetType_1 = idResolver.getClass(PivotTables.CLSSid_SetType, null);
+							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_SetType_0 = idResolver.getClass(PivotTables.CLSSid_SetType, null);
 							final /*@NonInvalid*/ @Nullable Type type = this.getType();
-							final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, TYP_SetType_1).booleanValue();
+							final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, TYP_SetType_0).booleanValue();
 							CAUGHT_oclIsKindOf = oclIsKindOf;
 						}
 						catch (Exception THROWN_oclIsKindOf) {
@@ -373,9 +373,9 @@ implements CollectionLiteralExp {
 					else {
 						/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
 						try {
-							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OrderedSetType = idResolver.getClass(PivotTables.CLSSid_OrderedSetType, null);
+							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OrderedSetType_3 = idResolver.getClass(PivotTables.CLSSid_OrderedSetType, null);
 							final /*@NonInvalid*/ @Nullable Type type = this.getType();
-							final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, TYP_OrderedSetType).booleanValue();
+							final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, TYP_OrderedSetType_3).booleanValue();
 							CAUGHT_oclIsKindOf = oclIsKindOf;
 						}
 						catch (Exception THROWN_oclIsKindOf) {
@@ -452,9 +452,9 @@ implements CollectionLiteralExp {
 					else {
 						/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
 						try {
-							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_SequenceType_4 = idResolver.getClass(PivotTables.CLSSid_SequenceType, null);
+							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_SequenceType = idResolver.getClass(PivotTables.CLSSid_SequenceType, null);
 							final /*@NonInvalid*/ @Nullable Type type = this.getType();
-							final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, TYP_SequenceType_4).booleanValue();
+							final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, TYP_SequenceType).booleanValue();
 							CAUGHT_oclIsKindOf = oclIsKindOf;
 						}
 						catch (Exception THROWN_oclIsKindOf) {
@@ -531,9 +531,9 @@ implements CollectionLiteralExp {
 					else {
 						/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
 						try {
-							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_BagType_1 = idResolver.getClass(PivotTables.CLSSid_BagType, null);
+							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_BagType_2 = idResolver.getClass(PivotTables.CLSSid_BagType, null);
 							final /*@NonInvalid*/ @Nullable Type type = this.getType();
-							final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, TYP_BagType_1).booleanValue();
+							final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, TYP_BagType_2).booleanValue();
 							CAUGHT_oclIsKindOf = oclIsKindOf;
 						}
 						catch (Exception THROWN_oclIsKindOf) {

@@ -230,6 +230,11 @@ public abstract class AbstractExtendingCGModelVisitor<R, C>
 	}
 
 	@Override
+	public R visitCGForeignProperty(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGForeignProperty object) {
+		return visitCGProperty(object);
+	}
+
+	@Override
 	public R visitCGForeignPropertyCallExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGForeignPropertyCallExp object) {
 		return visitCGPropertyCallExp(object);
 	}

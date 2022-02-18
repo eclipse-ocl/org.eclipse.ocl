@@ -356,11 +356,11 @@ implements IfExp {
 				IF__l_q = true;
 			}
 			else {
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Boolean_0 = idResolver.getClass(TypeId.BOOLEAN, null);
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Boolean_1 = idResolver.getClass(TypeId.BOOLEAN, null);
 				@SuppressWarnings("null")
 				final /*@NonInvalid*/ @NonNull OCLExpression ownedCondition = this.getOwnedCondition();
 				final /*@NonInvalid*/ @Nullable Type type = ownedCondition.getType();
-				final /*@NonInvalid*/ boolean result = (type != null) ? (type.getTypeId() == TYP_Boolean_0.getTypeId()) : false;
+				final /*@NonInvalid*/ boolean result = (type != null) ? (type.getTypeId() == TYP_Boolean_1.getTypeId()) : false;
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, result, PivotTables.INT_0).booleanValue();
 				IF__l_q = logDiagnostic;
 			}
@@ -403,9 +403,9 @@ implements IfExp {
 				IF__l_q = true;
 			}
 			else {
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OclInvalid_0 = idResolver.getClass(TypeId.OCL_INVALID, null);
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OclInvalid_5 = idResolver.getClass(TypeId.OCL_INVALID, null);
 				final /*@NonInvalid*/ @Nullable Type type = this.getType();
-				final /*@NonInvalid*/ boolean result = (type != null) ? (type.getTypeId() != TYP_OclInvalid_0.getTypeId()) : true;
+				final /*@NonInvalid*/ boolean result = (type != null) ? (type.getTypeId() != TYP_OclInvalid_5.getTypeId()) : true;
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, result, PivotTables.INT_0).booleanValue();
 				IF__l_q = logDiagnostic;
 			}

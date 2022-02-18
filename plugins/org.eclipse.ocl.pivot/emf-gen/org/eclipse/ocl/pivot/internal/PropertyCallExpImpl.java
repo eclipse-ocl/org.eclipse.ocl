@@ -557,15 +557,15 @@ implements PropertyCallExp {
 						/*@Caught*/ @Nullable Object CAUGHT_safe_isStatic_source;
 						try {
 							final /*@NonInvalid*/ @Nullable Property referredProperty = this.getReferredProperty();
-							final /*@NonInvalid*/ @NonNull Object isStatic_0 = referredProperty == null;
+							final /*@NonInvalid*/ @NonNull Object isStatic = referredProperty == null;
 							/*@Thrown*/ @Nullable Boolean safe_isStatic_source;
-							if (isStatic_0 == Boolean.TRUE) {
+							if (isStatic == Boolean.TRUE) {
 								safe_isStatic_source = null;
 							}
 							else {
 								assert referredProperty != null;
-								final /*@Thrown*/ boolean isStatic = referredProperty.isIsStatic();
-								safe_isStatic_source = isStatic;
+								final /*@Thrown*/ boolean isStatic_0 = referredProperty.isIsStatic();
+								safe_isStatic_source = isStatic_0;
 							}
 							CAUGHT_safe_isStatic_source = safe_isStatic_source;
 						}
@@ -822,8 +822,8 @@ implements PropertyCallExp {
 				try {
 					/*@Caught*/ @Nullable Object CAUGHT_and;
 					try {
-						final /*@NonInvalid*/ @Nullable OCLExpression ownedSource = this.getOwnedSource();
-						final /*@NonInvalid*/ boolean ne = ownedSource != null;
+						final /*@NonInvalid*/ @Nullable OCLExpression ownedSource_0 = this.getOwnedSource();
+						final /*@NonInvalid*/ boolean ne = ownedSource_0 != null;
 						final /*@Thrown*/ @Nullable Boolean and;
 						if (!ne) {
 							and = ValueUtil.FALSE_VALUE;
@@ -866,11 +866,11 @@ implements PropertyCallExp {
 					else {
 						/*@Caught*/ @NonNull Object CAUGHT_isNonNull;
 						try {
-							final /*@NonInvalid*/ @Nullable OCLExpression ownedSource_0 = this.getOwnedSource();
-							if (ownedSource_0 == null) {
+							final /*@NonInvalid*/ @Nullable OCLExpression ownedSource = this.getOwnedSource();
+							if (ownedSource == null) {
 								throw new InvalidValueException("Null source for \'pivot::OCLExpression::isNonNull() : Boolean[1]\'");
 							}
-							final /*@Thrown*/ boolean isNonNull = ownedSource_0.isNonNull();
+							final /*@Thrown*/ boolean isNonNull = ownedSource.isNonNull();
 							CAUGHT_isNonNull = isNonNull;
 						}
 						catch (Exception THROWN_isNonNull) {
