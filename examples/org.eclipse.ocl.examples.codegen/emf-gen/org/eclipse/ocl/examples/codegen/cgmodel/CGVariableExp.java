@@ -4,12 +4,14 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.cgmodel;
 
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager.NameVariant;
 
 /**
  * <!-- begin-user-doc -->
@@ -56,4 +58,7 @@ public interface CGVariableExp extends CGValuedElement {
 	 */
 	void setReferredVariable(CGVariable value);
 
+	void replaceNameResolutionWithVariant(@NonNull NameVariant nameVariant);
+
+	void resetNameResolution();
 } // CGVariableExp

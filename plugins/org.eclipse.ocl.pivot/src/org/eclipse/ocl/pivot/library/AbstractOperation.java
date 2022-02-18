@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.library;
 
+import java.lang.reflect.Method;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -21,6 +22,7 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.EvaluationHaltedException;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal.ExecutorInternalExtension;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -129,6 +131,83 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 		}
 		return castExecutor.internalExecuteOperationCallExp(callExp, sourceAndArgumentValues);
 	}
+
+	private static final Class<?>@NonNull [] evaluateArguments = new Class<?>@NonNull [] {};
+	/**
+	 * @since 1.18
+	 */
+	protected static final Class<?>@NonNull [] evaluateArguments1 = new Class<?>@NonNull [] {Executor.class, TypeId.class, Object.class, Object.class};
+	/**
+	 * @since 1.18
+	 */
+	protected static final Class<?>@NonNull [] evaluateArguments2 = new Class<?>@NonNull [] {Executor.class, TypeId.class, Object.class, Object.class, Object.class};
+
+	/**
+	 * @since 1.18
+	 */
+	protected /*@NonNull*/ Class<?> @NonNull [] getEvaluateArguments(@NonNull Operation asOperation) {
+		return evaluateArguments;		// No argument won't exist
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	@SuppressWarnings("null")
+	@Override
+	public final @NonNull Method getEvaluateMethod(@NonNull Operation asOperation) {
+		Class<?>[] evaluateArguments = getEvaluateArguments(asOperation);
+		try {
+			return getClass().getMethod("evaluate"/*JavaConstants.EVALUATE_NAME*/, evaluateArguments);
+		} catch (Exception e) {
+			for (Method method : getClass().getDeclaredMethods()) {
+				if ("evaluate".equals(method.getName()) ) {
+					for (Class<?> parameter : method.getParameterTypes()) {
+						parameter.toString();
+					}
+				}
+			}
+			StringBuilder s = new StringBuilder();
+			s.append(getClass().getName());
+			s.append(".evaluate(");
+			boolean isFirst = true;
+			for (Class<?> evaluateArgument : evaluateArguments) {
+				if (!isFirst) {
+					s.append(",");
+				}
+				s.append(evaluateArgument.getSimpleName());
+				isFirst = false;
+			}
+			s.append(")");
+			throw new UnsupportedOperationException(s.toString());
+		}
+	}
+
+/*	private Method getJavaMethod(@NonNull LibraryOperation libraryOperation, int argumentSize) {
+		try {
+			Class<? extends LibraryOperation> implementationClass = libraryOperation.getClass();
+			Class<?>[] arguments;
+			int i = 0;
+			if (libraryOperation instanceof LibrarySimpleOperation) {
+				arguments = new Class<?>[argumentSize+1];
+			}
+			else if (libraryOperation instanceof LibraryUntypedOperation) {
+				arguments = new Class<?>[argumentSize+2];
+				arguments[i++] = Executor.class;
+			}
+			else {
+				arguments = new Class<?>[argumentSize+3];
+				arguments[i++] = Executor.class;
+				arguments[i++] = TypeId.class;
+			}
+			while (i < arguments.length) {
+				arguments[i++] = Object.class;
+			}
+			Method method = implementationClass.getMethod("evaluate", arguments);
+			return method;
+		} catch (Exception e) {
+			return null;
+		}
+	} */
 
 	/**
 	 * @since 1.3

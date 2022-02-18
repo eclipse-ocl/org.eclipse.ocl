@@ -65,7 +65,7 @@ public abstract class AbstractNonNullExtendingCGModelVisitor<R, C>
 
 	@Override
 	public @NonNull R visitCGAssertNonNullExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGAssertNonNullExp object) {
-		return visitCGCallExp(object);
+		return visitCGSourcedCallExp(object);
 	}
 
 	@Override
@@ -75,7 +75,7 @@ public abstract class AbstractNonNullExtendingCGModelVisitor<R, C>
 
 	@Override
 	public @NonNull R visitCGBoxExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGBoxExp object) {
-		return visitCGCallExp(object);
+		return visitCGSourcedCallExp(object);
 	}
 
 	@Override
@@ -105,12 +105,12 @@ public abstract class AbstractNonNullExtendingCGModelVisitor<R, C>
 
 	@Override
 	public @NonNull R visitCGCastExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGCastExp object) {
-		return visitCGCallExp(object);
+		return visitCGSourcedCallExp(object);
 	}
 
 	@Override
 	public @NonNull R visitCGCatchExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGCatchExp object) {
-		return visitCGCallExp(object);
+		return visitCGSourcedCallExp(object);
 	}
 
 	@Override
@@ -155,7 +155,7 @@ public abstract class AbstractNonNullExtendingCGModelVisitor<R, C>
 
 	@Override
 	public @NonNull R visitCGEcoreExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGEcoreExp object) {
-		return visitCGCallExp(object);
+		return visitCGSourcedCallExp(object);
 	}
 
 	@Override
@@ -260,7 +260,7 @@ public abstract class AbstractNonNullExtendingCGModelVisitor<R, C>
 
 	@Override
 	public @NonNull R visitCGGuardExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGGuardExp object) {
-		return visitCGCallExp(object);
+		return visitCGSourcedCallExp(object);
 	}
 
 	@Override
@@ -280,32 +280,32 @@ public abstract class AbstractNonNullExtendingCGModelVisitor<R, C>
 
 	@Override
 	public @NonNull R visitCGIsEqual2Exp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGIsEqual2Exp object) {
-		return visitCGCallExp(object);
+		return visitCGSourcedCallExp(object);
 	}
 
 	@Override
 	public @NonNull R visitCGIsEqualExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGIsEqualExp object) {
-		return visitCGCallExp(object);
+		return visitCGSourcedCallExp(object);
 	}
 
 	@Override
 	public @NonNull R visitCGIsInvalidExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGIsInvalidExp object) {
-		return visitCGCallExp(object);
+		return visitCGSourcedCallExp(object);
 	}
 
 	@Override
 	public @NonNull R visitCGIsKindOfExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGIsKindOfExp object) {
-		return visitCGCallExp(object);
+		return visitCGSourcedCallExp(object);
 	}
 
 	@Override
 	public @NonNull R visitCGIsUndefinedExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGIsUndefinedExp object) {
-		return visitCGCallExp(object);
+		return visitCGSourcedCallExp(object);
 	}
 
 	@Override
 	public @NonNull R visitCGIterationCallExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGIterationCallExp object) {
-		return visitCGCallExp(object);
+		return visitCGSourcedCallExp(object);
 	}
 
 	@Override
@@ -390,7 +390,7 @@ public abstract class AbstractNonNullExtendingCGModelVisitor<R, C>
 
 	@Override
 	public @NonNull R visitCGNavigationCallExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGNavigationCallExp object) {
-		return visitCGCallExp(object);
+		return visitCGSourcedCallExp(object);
 	}
 
 	@Override
@@ -459,6 +459,11 @@ public abstract class AbstractNonNullExtendingCGModelVisitor<R, C>
 	}
 
 	@Override
+	public @NonNull R visitCGSourcedCallExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGSourcedCallExp object) {
+		return visitCGCallExp(object);
+	}
+
+	@Override
 	public @NonNull R visitCGString(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGString object) {
 		return visitCGConstant(object);
 	}
@@ -469,13 +474,8 @@ public abstract class AbstractNonNullExtendingCGModelVisitor<R, C>
 	}
 
 	@Override
-	public @NonNull R visitCGText(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGText object) {
-		return visitCGConstant(object);
-	}
-
-	@Override
 	public @NonNull R visitCGThrowExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGThrowExp object) {
-		return visitCGCallExp(object);
+		return visitCGSourcedCallExp(object);
 	}
 
 	@Override
@@ -510,7 +510,7 @@ public abstract class AbstractNonNullExtendingCGModelVisitor<R, C>
 
 	@Override
 	public @NonNull R visitCGUnboxExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGUnboxExp object) {
-		return visitCGCallExp(object);
+		return visitCGSourcedCallExp(object);
 	}
 
 	@Override

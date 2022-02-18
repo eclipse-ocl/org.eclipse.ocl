@@ -158,7 +158,7 @@ public class ImplementationManager
 			return technology.createExtensionPropertyImplementation(environmentFactory, property);
 		}
 		//
-		//	Resudual Class properties.
+		//	Residual Class properties.
 		//
 		if (property.isIsDerived()) {													// If there is OCL code to compute the navigation.
 			ExpressionInOCL specification = metamodelManager.getDefaultExpression(property);

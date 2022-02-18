@@ -10,15 +10,12 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.cse;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCatchExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGText;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 
 /**
@@ -45,7 +42,7 @@ public class CatchPlace extends ControlPlace
 		super.pushUp();
 		HashedAnalyses mySet = getHashedAnalyses();
 		ControlPlace parentPlace = getControlPlace(getParentPlace());
-		List<@NonNull AbstractAnalysis> pushUps = null;
+	/*	List<@NonNull AbstractAnalysis> pushUps = null;
 		for (@NonNull AbstractAnalysis commonAnalysis : mySet) {
 			if (commonAnalysis.getPrimaryElement() instanceof CGText) {
 				if (pushUps == null) {
@@ -59,6 +56,6 @@ public class CatchPlace extends ControlPlace
 				mySet.remove(commonAnalysis);
 				parentPlace.addAnalysis(commonAnalysis);
 			}
-		}
+		} */
 	}
 }

@@ -24,5 +24,5 @@ package org.eclipse.ocl.examples.codegen.cgmodel;
  * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGIsInvalidExp()
  * @generated
  */
-public interface CGIsInvalidExp extends CGCallExp {
+public interface CGIsInvalidExp extends CGSourcedCallExp {
 } // CGIsInvalidExp

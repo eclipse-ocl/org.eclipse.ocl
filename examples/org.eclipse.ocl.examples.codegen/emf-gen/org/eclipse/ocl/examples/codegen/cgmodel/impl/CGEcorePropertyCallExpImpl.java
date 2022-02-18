@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -92,7 +92,7 @@ public class CGEcorePropertyCallExpImpl extends CGPropertyCallExpImpl implements
 		EStructuralFeature oldEStructuralFeature = eStructuralFeature;
 		eStructuralFeature = newEStructuralFeature;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 10, oldEStructuralFeature, eStructuralFeature));
+			eNotify(new ENotificationImpl(this, Notification.SET, 11, oldEStructuralFeature, eStructuralFeature));
 	}
 
 	/**
@@ -103,7 +103,7 @@ public class CGEcorePropertyCallExpImpl extends CGPropertyCallExpImpl implements
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 10:
+			case 11:
 				return getEStructuralFeature();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -117,7 +117,7 @@ public class CGEcorePropertyCallExpImpl extends CGPropertyCallExpImpl implements
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 10:
+			case 11:
 				setEStructuralFeature((EStructuralFeature)newValue);
 				return;
 		}
@@ -132,7 +132,7 @@ public class CGEcorePropertyCallExpImpl extends CGPropertyCallExpImpl implements
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 10:
+			case 11:
 				setEStructuralFeature((EStructuralFeature)null);
 				return;
 		}
@@ -147,7 +147,7 @@ public class CGEcorePropertyCallExpImpl extends CGPropertyCallExpImpl implements
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 10:
+			case 11:
 				return eStructuralFeature != null;
 		}
 		return super.eIsSet(featureID);

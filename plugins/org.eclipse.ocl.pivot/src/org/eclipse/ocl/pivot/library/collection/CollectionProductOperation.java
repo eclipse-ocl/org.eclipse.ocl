@@ -14,6 +14,7 @@ import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
@@ -31,12 +32,12 @@ import org.eclipse.ocl.pivot.values.TupleValue;
 public class CollectionProductOperation extends AbstractBinaryOperation
 {
 	public static final @NonNull CollectionProductOperation INSTANCE = new CollectionProductOperation();
-	
+
 	/** @deprecated use Executor */
 	@Deprecated
 	@Override
 	public @Nullable CollectionValue evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @Nullable Object sourceVal, @Nullable Object argVal) {
-		return evaluate(getExecutor(evaluator), returnTypeId, sourceVal, argVal); 
+		return evaluate(getExecutor(evaluator), returnTypeId, sourceVal, argVal);
 	}
 
 	/**
@@ -55,5 +56,13 @@ public class CollectionProductOperation extends AbstractBinaryOperation
         else {
         	throw new InvalidValueException(PivotMessages.MissingResult, "product"); //$NON-NLS-1$
         }
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	@Override
+	protected Class<?>@NonNull [] getEvaluateArguments(@NonNull Operation asOperation){
+		return evaluateArguments1;
 	}
 }

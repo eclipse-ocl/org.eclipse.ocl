@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.analyzer;
 
+import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +19,8 @@ import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.calling.NativeOperationCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBoolean;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstant;
@@ -31,6 +35,8 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGInteger;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInvalid;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperation;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNull;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
@@ -43,16 +49,22 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.examples.codegen.generator.CodeGenerator;
+import org.eclipse.ocl.examples.codegen.generator.LocalContext;
 import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
+import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
+import org.eclipse.ocl.examples.codegen.java.JavaGlobalContext;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
+import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Feature;
-import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.BindingsId;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.OperationId;
@@ -61,10 +73,11 @@ import org.eclipse.ocl.pivot.ids.SpecializedId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.internal.cse.CommonSubExpressionAnalysis;
+import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.UniqueList;
-import org.eclipse.ocl.pivot.utilities.ValueUtil;
 
 /**
  * A CodeGenAnalyzer performs the analysis of a Pivot AST in preparation for code generation.
@@ -113,6 +126,12 @@ public class CodeGenAnalyzer
 	private /*@LazyNonNull*/ Map<@NonNull ExpressionInOCL, @NonNull CommonSubExpressionAnalysis> expression2cseAnalsis = null;
 	// UniqueList allows recursive discovery of more foreign Features
 	private /*@LazyNonNull*/ UniqueList<@NonNull Feature> foreignFeatures = null;
+	private @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull CGClass> asClass2cgClass = new HashMap<>();
+	private @NonNull Map<@NonNull Operation, @NonNull CGOperation> asOperation2cgOperation = new HashMap<>();
+	private @NonNull Map<@NonNull Property, @NonNull CGProperty> asProperty2cgProperty = new HashMap<>();
+	private @NonNull List<@NonNull CGNamedElement> cgOrphans = new ArrayList<>();
+
+	private @Nullable Model nativeModel = null;
 
 	public CodeGenAnalyzer(@NonNull CodeGenerator codeGenerator) {
 		this.codeGenerator = codeGenerator;
@@ -130,6 +149,26 @@ public class CodeGenAnalyzer
 		foreignFeatures2.add(asFeature);
 	}
 
+	public void addClass(@NonNull CGClass cgClass) {
+		org.eclipse.ocl.pivot.Class asClass = CGUtil.getAST(cgClass);
+		CGClass old = asClass2cgClass.put(asClass, cgClass);
+		assert old == null;
+	}
+
+	public void addOperation(@NonNull CGOperation cgOperation) {
+		Operation asOperation = CGUtil.getAST(cgOperation);
+		CGOperation old = asOperation2cgOperation.put(asOperation, cgOperation);
+		cgOrphans.add(cgOperation);
+		assert old == null;
+	}
+
+	public void addProperty(@NonNull CGProperty cgProperty) {
+		Property asProperty = CGUtil.getAST(cgProperty);
+		CGProperty old = asProperty2cgProperty.put(asProperty, cgProperty);
+		cgOrphans.add(cgProperty);
+		assert old == null;
+	}
+
 	public void analyze(@NonNull CGElement cgRoot) {
 		AnalysisVisitor analysisVisitor = codeGenerator.createAnalysisVisitor();
 		cgRoot.accept(analysisVisitor);
@@ -140,15 +179,6 @@ public class CodeGenAnalyzer
 		FieldingAnalyzer fieldingAnalyzer = codeGenerator.createFieldingAnalyzer();
 		fieldingAnalyzer.analyze(cgRoot, false);
 	}
-
-	public @NonNull CGBoolean createCGBoolean(boolean booleanValue) {
-		CGBoolean cgBoolean = CGModelFactory.eINSTANCE.createCGBoolean();
-	//	setExplicitNames(cgBoolean, booleanValue);
-		cgBoolean.setBooleanValue(booleanValue);
-		cgBoolean.setTypeId(getTypeId(TypeId.BOOLEAN));
-		globalNameManager.declareStandardName(cgBoolean);
-		return cgBoolean;
-}
 
 	public @Nullable Iterable<@NonNull CGClass> analyzeForeignFeatures(@NonNull AS2CGVisitor as2cgVisitor) {
 		UniqueList<@NonNull Feature> foreignFeatures = getForeignFeatures();
@@ -185,6 +215,26 @@ public class CodeGenAnalyzer
 		return cgForeignClasses;
 	}
 
+	public @Nullable CGClass basicGetClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		return asClass2cgClass.get(asClass);
+	}
+
+	public @Nullable CGOperation basicGetOperation(@NonNull Operation asOperation) {
+		return asOperation2cgOperation.get(asOperation);
+	}
+
+	public @Nullable CGProperty basicGetProperty(@NonNull Property asProperty) {
+		return asProperty2cgProperty.get(asProperty);
+	}
+
+	public @NonNull CGBoolean createCGBoolean(boolean booleanValue) {
+		CGBoolean cgBoolean = CGModelFactory.eINSTANCE.createCGBoolean();
+		cgBoolean.setBooleanValue(booleanValue);
+		cgBoolean.setTypeId(getTypeId(TypeId.BOOLEAN));
+		globalNameManager.declareLazyName(cgBoolean);
+		return cgBoolean;
+	}
+
 	public @NonNull CGValuedElement createCGConstantExp(@NonNull CGConstant cgConstant) {
 		CGConstantExp cgConstantExp = CGModelFactory.eINSTANCE.createCGConstantExp();
 		cgConstantExp.setAst(cgConstant.getAst());
@@ -193,7 +243,7 @@ public class CodeGenAnalyzer
 		return cgConstantExp;
 	}
 
-	public @NonNull CGConstantExp createCGConstantExp(@NonNull OCLExpression element, @NonNull CGConstant cgConstant) {
+	public @NonNull CGConstantExp createCGConstantExp(@NonNull TypedElement element, @NonNull CGConstant cgConstant) {
 		CGConstantExp cgConstantExp = CGModelFactory.eINSTANCE.createCGConstantExp();
 		cgConstantExp.setAst(element);
 		cgConstantExp.setReferredConstant(cgConstant);
@@ -201,17 +251,32 @@ public class CodeGenAnalyzer
 		return cgConstantExp;
 	}
 
+	public @NonNull CGNativeOperationCallExp createCGNativeOperationCallExp(@Nullable Method method) {		// XXX @NonNull
+		assert method != null;
+		return createCGNativeOperationCallExp(method, NativeOperationCallingConvention.INSTANCE);
+	}
+
+	public @NonNull CGNativeOperationCallExp createCGNativeOperationCallExp(@NonNull Method method, @NonNull OperationCallingConvention callingConvention) {		// XXX @NonNull
+		assert method != null;
+		CGNativeOperationCallExp cgNativeOperationCallExp = CGModelFactory.eINSTANCE.createCGNativeOperationCallExp();
+		cgNativeOperationCallExp.setMethod(method);
+		Operation asOperation = getNativeOperation(method, callingConvention);
+		CGOperation cgOperation = getOperation(asOperation);
+		cgNativeOperationCallExp.setCgOperation(cgOperation);
+	//	callingConvention.createCGOperationCallExp(null, cgOperation, null, cgOperation, null)
+		return cgNativeOperationCallExp;
+	}
+
 	public @NonNull CGNull createCGNull() {
 		CGNull cgNull = CGModelFactory.eINSTANCE.createCGNull();
-	//	setExplicitNames(cgNull, null);
 		cgNull.setTypeId(getTypeId(TypeId.OCL_VOID));
-		globalNameManager.declareStandardName(cgNull);
+		globalNameManager.declareLazyName(cgNull);
 		return cgNull;
 	}
 
-	public @NonNull CGParameter createCGParameter(@NonNull String name, @NonNull CGTypeId typeId, boolean isRequired) {
+	public @NonNull CGParameter createCGParameter(@NonNull BaseNameResolution nameResolution, @NonNull CGTypeId typeId, boolean isRequired) {
 		CGParameter cgParameter = CGModelFactory.eINSTANCE.createCGParameter();
-		cgParameter.setName(name);
+		nameResolution.addCGElement(cgParameter);
 		cgParameter.setTypeId(typeId);
 		cgParameter.setRequired(isRequired);
 		if (isRequired) {
@@ -224,6 +289,9 @@ public class CodeGenAnalyzer
 		CGVariableExp cgVariableExp = CGModelFactory.eINSTANCE.createCGVariableExp();
 	//	setAst(cgVariableExp, asVariableExp);
 		cgVariableExp.setReferredVariable(cgVariable);
+		cgVariableExp.setTypeId(cgVariable.getTypeId());
+	//	cgVariableExp.setRequired(cgVariable.getIs);
+		cgVariable.getNameResolution().addCGElement(cgVariableExp);
 		return cgVariableExp;
 	}
 
@@ -234,9 +302,7 @@ public class CodeGenAnalyzer
 	//	cgOperation.setTypeId(getTypeId(asOperation.getTypeId()));
 		cgOperation.setUnderlyingOperationId(cgOperationId);
 		cgOperation.setAst(asOperation);
-		globalNameManager.declareStandardName(cgOperation);
-	//	cgOperation.setName(globalNameManager.getGlobalSymbolName(asOperation));
-		//		cgOperation.setValueName(cgOperation.getName());
+		globalNameManager.declareLazyName(cgOperation);
 		cgOperation.getDependsOn().add(cgOperationId);
 		return cgOperation;
 	}
@@ -252,7 +318,7 @@ public class CodeGenAnalyzer
 			cgProperty.setUnderlyingPropertyId(cgPropertyId);
 			cgProperty.setAst(asOppositeProperty);
 			cgProperty.setTypeId(getTypeId(JavaConstants.UNBOXED_COMPOSITION_PROPERTY_TYPE_ID));
-			cgProperty.setName("IMPPROPid_" + asOppositeProperty.getName());
+			globalNameManager.declareLazyName(cgProperty);
 			cgProperty.getDependsOn().add(cgPropertyId);
 		}
 		else {
@@ -260,7 +326,7 @@ public class CodeGenAnalyzer
 			cgProperty = CGModelFactory.eINSTANCE.createCGExecutorOppositeProperty();
 			cgProperty.setUnderlyingPropertyId(cgPropertyId);
 			cgProperty.setAst(asProperty);
-			cgProperty.setName("IMPPROPid_" + asProperty.getName());
+			globalNameManager.declareLazyName(cgProperty);
 			cgProperty.setTypeId(getTypeId(JavaConstants.UNBOXED_OPPOSITE_NAVIGATION_PROPERTY_TYPE_ID));
 			cgProperty.getDependsOn().add(cgPropertyId);
 		}
@@ -275,7 +341,7 @@ public class CodeGenAnalyzer
 		CGExecutorProperty cgProperty = CGModelFactory.eINSTANCE.createCGExecutorNavigationProperty();
 		cgProperty.setUnderlyingPropertyId(cgPropertyId);
 		cgProperty.setAst(asProperty);
-		cgProperty.setName("IMPPROPid_" + asProperty.getName());
+		globalNameManager.declareLazyName(cgProperty);
 		TypeId javaPropertyTypeId = JavaConstants.UNBOXED_EXPLICIT_NAVIGATION_PROPERTY_TYPE_ID;
 		cgProperty.setTypeId(getTypeId(javaPropertyTypeId));
 		cgProperty.getDependsOn().add(cgPropertyId);
@@ -288,7 +354,7 @@ public class CodeGenAnalyzer
 		CGElementId cgPropertyId = getElementId(propertyId);
 		cgPart.setUnderlyingPropertyId(cgPropertyId);
 		cgPart.setAst(asProperty);
-		cgPart.setName("CTORid_" + asProperty.getName());
+		globalNameManager.declareLazyName(cgPart);
 		cgPart.setTypeId(getTypeId(JavaConstants.PROPERTY_TYPE_ID));
 		cgPart.getDependsOn().add(cgPropertyId);
 		return cgPart;
@@ -300,9 +366,9 @@ public class CodeGenAnalyzer
 		CGTypeId cgTypeId = getTypeId(typeId);
 		cgType.setUnderlyingTypeId(cgTypeId);
 		cgType.setAst(asType);
-		getGlobalNameManager().declareStandardName(cgType);
-		//		cgType.setValueName(cgType.getName());
+		getGlobalNameManager().declareLazyName(cgType);
 		cgType.setTypeId(getTypeId(JavaConstants.CLASS_TYPE_ID));
+	//	cgType.setTypeId(getTypeId(asType.getTypeId()));
 		cgType.getDependsOn().add(cgTypeId);
 		return cgType;
 	}
@@ -332,8 +398,8 @@ public class CodeGenAnalyzer
 		return aBoolean ? cgTrue : cgFalse;
 	}
 
-	public @NonNull Iterable<@NonNull CGElementId> getCGElementIds() {
-		return cgElementIds.values();
+	public @NonNull CGClass getClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		return ClassUtil.nonNullState(asClass2cgClass.get(asClass));
 	}
 
 	public @NonNull CodeGenerator getCodeGenerator() {
@@ -348,16 +414,20 @@ public class CodeGenAnalyzer
 			}
 			cgElementId = CGModelFactory.eINSTANCE.createCGElementId();
 			cgElementId.setElementId(elementId);
-			setNames(cgElementId, elementId);
+			cgElementId.setTypeId(getTypeId(TypeId.OCL_ANY));		// XXX do better
 			cgElementIds.put(elementId, cgElementId);
 		}
 		return cgElementId;
 	}
 
+	public @NonNull Iterable<@NonNull CGElementId> getCGElementIds() {
+		return cgElementIds.values();
+	}
+
 	public @NonNull CGValuedElement getExpression(@Nullable CGValuedElement cgExpression) {
 		if (cgExpression == null) {
 			CGConstantExp cgLiteralExp = CGModelFactory.eINSTANCE.createCGConstantExp();
-			//			cgLiteralExp.setAst(element);
+			//	cgLiteralExp.setAst(element);
 			cgLiteralExp.setReferredConstant(getInvalid());
 			cgLiteralExp.setTypeId(getTypeId(TypeId.OCL_INVALID));
 			cgExpression = cgLiteralExp;
@@ -377,9 +447,9 @@ public class CodeGenAnalyzer
 		CGInteger cgInteger = cgIntegers.get(aNumber);
 		if (cgInteger == null) {
 			cgInteger = CGModelFactory.eINSTANCE.createCGInteger();
-			setNames(cgInteger, aNumber);
 			cgInteger.setNumericValue(aNumber);
 			cgInteger.setTypeId(getTypeId(TypeId.INTEGER));
+			globalNameManager.declareLazyName(cgInteger);
 			cgIntegers.put(aNumber, cgInteger);
 		}
 		return cgInteger;
@@ -388,23 +458,145 @@ public class CodeGenAnalyzer
 	public @NonNull CGInvalid getInvalid() {
 		CGInvalid cgInvalid2 = cgInvalid;
 		if (cgInvalid2 == null) {
-			cgInvalid = cgInvalid2 = CGModelFactory.eINSTANCE.createCGInvalid();
-			//			cgInvalid.setAst(ValuesUtil.INVALID_VALUE);
-			setNames(cgInvalid2, ValueUtil.INVALID_VALUE);
+			cgInvalid2 = CGModelFactory.eINSTANCE.createCGInvalid();
+			//	cgInvalid.setAst(ValuesUtil.INVALID_VALUE);
 			cgInvalid2.setTypeId(getTypeId(TypeId.OCL_INVALID));
+			globalNameManager.declareLazyName(cgInvalid2);
+			cgInvalid = cgInvalid2;
 		}
 		return cgInvalid2;
 	}
 
 	public @NonNull CGInvalid getInvalid(/*@NonNull*/ String messageTemplate, Object... bindings) {
 		CGInvalid cgInvalid = CGModelFactory.eINSTANCE.createCGInvalid();
-		setNames(cgInvalid, ValueUtil.INVALID_VALUE);
 		cgInvalid.setTypeId(getTypeId(TypeId.OCL_INVALID));
 		cgInvalid.setMessageTemplate(messageTemplate);
 		for (Object binding : bindings) {
 			cgInvalid.getBindings().add(binding);
 		}
+		globalNameManager.declareLazyName(cgInvalid);
 		return cgInvalid;
+	}
+
+	/*
+	 * Return a native class for jClass flattening nested classes.
+	 */
+	private org.eclipse.ocl.pivot.@NonNull Class getNativeClass(/*@NonNull */Class<?> jClass) {
+		assert jClass != null;
+		Package jPackage = jClass.getPackage();
+		assert jPackage != null;
+		org.eclipse.ocl.pivot.@NonNull Package asPackage = getNativePackage(jPackage);
+		String verboseName = jClass.getName();
+		int iStart = 0;
+		for (int iDot; (iDot = verboseName.indexOf('.', iStart)) >= 0; ) {
+			iStart = iDot+1;
+		}
+		String trimmedName = verboseName.substring(iStart);
+		List<org.eclipse.ocl.pivot.Class> asClasses = asPackage.getOwnedClasses();
+		org.eclipse.ocl.pivot.Class asClass = NameUtil.getNameable(asClasses, trimmedName);
+		if (asClass == null) {
+			asClass = PivotFactory.eINSTANCE.createClass();
+			asClass.setName(trimmedName);
+			asClasses.add(asClass);
+		}
+		return asClass;
+	}
+
+	@NonNull
+	public Model getNativeModel() {
+		Model asModel = nativeModel;
+		if (asModel == null) {
+			asModel = PivotFactory.eINSTANCE.createModel();
+			asModel.setName("native-java");
+			nativeModel = asModel;
+		}
+		return asModel;
+	}
+
+	/*
+	 * Return a native operation for method flattening the signature into the name.
+	 */
+	public @NonNull Operation getNativeOperation(@NonNull Method method, @NonNull OperationCallingConvention callingConvention) {
+		Class<?> jClass = method.getDeclaringClass();
+		assert jClass != null;
+		org.eclipse.ocl.pivot.Class asClass = getNativeClass(jClass);
+		String verboseName = method.toGenericString();
+		int iOpen = verboseName.indexOf('(');
+		int iClose = verboseName.indexOf(')', iOpen);
+		int iStart = verboseName.lastIndexOf('.', iOpen);
+		if (iStart < 0) {
+			iStart = verboseName.lastIndexOf(' ', iOpen);
+		}
+		String trimmedName = verboseName.substring(iStart+1, iOpen) + "::" + verboseName.substring(iOpen+1, iClose);
+		List<Operation> asOperations = asClass.getOwnedOperations();
+		Operation asOperation = NameUtil.getNameable(asOperations, trimmedName);
+		if (asOperation == null) {
+			Class<?> jReturnClass = method.getReturnType();
+			Type asReturnType = getNativeClass(jReturnClass);
+			boolean isRequired = ((JavaCodeGenerator)codeGenerator).getIsNonNull(method) == Boolean.TRUE;
+			asOperation = PivotFactory.eINSTANCE.createOperation();
+			asOperation.setName(trimmedName);
+			asOperation.setType(asReturnType);
+			asOperation.setIsRequired(isRequired);
+			//	asOperation.setImplementationClass(implementationClass);
+			//	asOperation.setImplementation(implementation);
+			asOperations.add(asOperation);
+		//	LibraryOperation libraryOperation = (LibraryOperation)codeGenerator.getEnvironmentFactory().getMetamodelManager().getImplementation(asOperation);
+		//	asOperation.setImplementation(libraryOperation);
+			CGNativeOperation cgOperation = CGModelFactory.eINSTANCE.createCGNativeOperation();
+			cgOperation.setAst(asOperation);
+			TypeId asTypeId = asOperation.getTypeId();
+			globalNameManager.declareLazyName(cgOperation);
+			cgOperation.setTypeId(getTypeId(asTypeId));
+			cgOperation.setRequired(asOperation.isIsRequired());
+			cgOperation.setCallingConvention(callingConvention);
+			cgOperation.setAst(asOperation);
+			cgOperation.setRequired(isRequired);
+			JavaGlobalContext<?> globalContext = (JavaGlobalContext<?>)codeGenerator.getGlobalContext();
+			LocalContext localContext = globalContext.initLocalContext(null, cgOperation, asOperation);
+		//	LocalContext localContext = globalContext.getLocalContext(cgOperation);
+			List<org.eclipse.ocl.pivot.Parameter> asParameters = asOperation.getOwnedParameters();
+			List<CGParameter> cgParameters = cgOperation.getParameters();
+			for (Parameter jParameter : method.getParameters()) {
+				Class<?> jParameterClass = jParameter.getType();
+				isRequired = ((JavaCodeGenerator)codeGenerator).getIsNonNull(method, cgParameters.size()) == Boolean.TRUE;
+				Type asParameterType = getNativeClass(jParameterClass);
+				org.eclipse.ocl.pivot.Parameter asParameter = PivotFactory.eINSTANCE.createParameter();
+				asParameter.setName(jParameter.getName());
+				asParameter.setType(asParameterType);		// isRequired
+				asParameter.setIsRequired(isRequired);
+				asParameters.add(asParameter);
+				CGParameter cgParameter = CGModelFactory.eINSTANCE.createCGParameter();
+				cgParameter.setAst(asParameter);
+				localContext.getNameManager().declarePreferredName(cgParameter);
+				cgParameter.setTypeId(getTypeId(asParameterType.getTypeId()));
+				cgParameter.setRequired(isRequired);
+				cgParameters.add(cgParameter);
+			}
+			addOperation(cgOperation);
+		}
+		return asOperation;
+	}
+
+//	public @NonNull Operation getNativeOperation(@NonNull Method method) {
+		// TODO Auto-generated method stub
+//		return null;
+//	}
+
+	/*
+	 * Return a native package for jPackage flattening nested packages.
+	 */
+	private org.eclipse.ocl.pivot.@NonNull Package getNativePackage(@NonNull Package jPackage) {
+		Model asModel = getNativeModel();
+		String qualifiedName = jPackage.getName();
+		List<org.eclipse.ocl.pivot.Package> asPackages = asModel.getOwnedPackages();
+		org.eclipse.ocl.pivot.Package asPackage = NameUtil.getNameable(asPackages, qualifiedName);
+		if (asPackage == null) {
+			asPackage = PivotFactory.eINSTANCE.createPackage();
+			asPackage.setName(qualifiedName);
+			asPackages.add(asPackage);
+		}
+		return asPackage;
 	}
 
 //	public @NonNull NameManager getNameManager() {
@@ -415,13 +607,25 @@ public class CodeGenAnalyzer
 		return cgNull;
 	}
 
+	public @NonNull Iterable<@NonNull CGNamedElement> getOrphans() {
+		return cgOrphans;
+	}
+
+	public @NonNull CGOperation getOperation(@NonNull Operation asOperation) {
+		return ClassUtil.nonNullState(asOperation2cgOperation.get(asOperation));
+	}
+
+	public @NonNull CGProperty getProperty(@NonNull Property asProperty) {
+		return ClassUtil.nonNullState(asProperty2cgProperty.get(asProperty));
+	}
+
 	public @NonNull CGReal getReal(@NonNull Number aNumber) {
 		CGReal cgReal = cgReals.get(aNumber);
 		if (cgReal == null) {
 			cgReal = CGModelFactory.eINSTANCE.createCGReal();
-			setNames(cgReal, aNumber);
 			cgReal.setNumericValue(aNumber);
 			cgReal.setTypeId(getTypeId(TypeId.REAL));
+			globalNameManager.declareLazyName(cgReal);
 			cgReals.put(aNumber, cgReal);
 		}
 		return cgReal;
@@ -431,9 +635,9 @@ public class CodeGenAnalyzer
 		CGString cgString = cgStrings.get(aString);
 		if (cgString == null) {
 			cgString = CGModelFactory.eINSTANCE.createCGString();
-			setNames(cgString, aString);
 			cgString.setStringValue(aString);
 			cgString.setTypeId(getTypeId(TypeId.STRING));
+			globalNameManager.declareLazyName(cgString);
 			cgStrings.put(aString, cgString);
 		}
 		return cgString;
@@ -445,9 +649,7 @@ public class CodeGenAnalyzer
 		if (cgTypeId == null) {
 			cgTypeId = CGModelFactory.eINSTANCE.createCGTypeId();
 			cgTypeId.setElementId(typeId);
-			globalNameManager.declareStandardName(cgTypeId);
-		//	cgTypeId.setName(globalNameManager.getGlobalSymbolName(typeId));
-		//	cgTypeId.setValueName(ClassUtil.nonNullState(cgTypeId.getName()));
+			globalNameManager.declareLazyName(cgTypeId);
 			cgElementIds.put(typeId, cgTypeId);
 			if (typeId instanceof SpecializedId) {
 				BindingsId templateBindings = ((SpecializedId)typeId).getTemplateBindings();
@@ -456,6 +658,8 @@ public class CodeGenAnalyzer
 					getElementId(elementId);
 				}
 			}
+
+			cgTypeId.setTypeId(getTypeId(TypeId.OCL_ANY)); // XXX better tyoe ??
 		}
 		return cgTypeId;
 	}
@@ -463,11 +667,27 @@ public class CodeGenAnalyzer
 	public @NonNull CGUnlimited getUnlimited() {
 		CGUnlimited cgUnlimited2 = cgUnlimited;
 		if (cgUnlimited2 == null) {
-			cgUnlimited = cgUnlimited2 = CGModelFactory.eINSTANCE.createCGUnlimited();
-			setNames(cgUnlimited2, ValueUtil.UNLIMITED_VALUE);
+			cgUnlimited2 = CGModelFactory.eINSTANCE.createCGUnlimited();
 			cgUnlimited2.setTypeId(getTypeId(TypeId.UNLIMITED_NATURAL));
+		//	globalNameManager.declareLazyName(cgUnlimited2); -- inlined so missing AST etc ok
+			cgUnlimited = cgUnlimited2;
 		}
 		return cgUnlimited2;
+	}
+
+	public boolean hasOclVoidOperation(@NonNull OperationId operationId) {
+		PivotMetamodelManager metamodelManager = codeGenerator.getEnvironmentFactory().getMetamodelManager();
+		CompleteClass completeClass = metamodelManager.getCompleteClass(metamodelManager.getStandardLibrary().getOclVoidType());
+		Operation memberOperation = completeClass.getOperation(operationId);
+		if (memberOperation == null) {
+			return false;
+		}
+		org.eclipse.ocl.pivot.Class owningType = memberOperation.getOwningClass();
+		if (owningType == null) {
+			return false;
+		}
+		CompleteClass owningCompleteClass = metamodelManager.getCompleteClass(owningType);
+		return completeClass == owningCompleteClass;
 	}
 
 	public boolean isForeign(@NonNull Feature asFeature) {
@@ -491,20 +711,5 @@ public class CodeGenAnalyzer
 		newElement.setTypeId(oldElement.getTypeId());
 		newElement.setAst(oldElement.getAst());
 		CGUtil.replace(oldElement, newElement);
-	}
-
-/*	@Deprecated public void setExplicitNames(@NonNull CGValuedElement cgValue, @Nullable Object anObject) {
-		String name = globalNameManager.getExplicitName(anObject);
-	//	cgValue.setName(name);
-	//	cgValue.setValueName(name);
-		globalNameManager.queueValueName(cgValue, null, name);
-	} */
-
-	public void setNames(@NonNull CGValuedElement cgValue, @NonNull Object anObject) {
-		String name = globalNameManager.getNameHint(anObject);
-	//	String name = globalNameManager.helper.getNameHint(anObject);
-	//	cgValue.setName(name);
-	//	cgValue.setValueName(name);
-		globalNameManager.declareStandardName(cgValue, name);
 	}
 }

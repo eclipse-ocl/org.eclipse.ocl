@@ -33,7 +33,7 @@ import org.eclipse.ocl.pivot.Iteration;
  * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGIterationCallExp()
  * @generated
  */
-public interface CGIterationCallExp extends CGCallExp {
+public interface CGIterationCallExp extends CGSourcedCallExp {
 	/**
 	 * Returns the value of the '<em><b>Referred Iteration</b></em>' attribute.
 	 * <!-- begin-user-doc -->

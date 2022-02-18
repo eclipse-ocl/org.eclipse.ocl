@@ -10,8 +10,11 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.library;
 
+import java.lang.reflect.Method;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -34,4 +37,9 @@ public interface LibraryProperty extends LibraryFeature
 	/** @deprecated use Executor */
 	@Deprecated
 	@Nullable Object evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @Nullable Object sourceValue);
+
+	/**
+	 * @since 1.18
+	 */
+	default @NonNull Method getEvaluateMethod(@NonNull Property asProperty) { throw new UnsupportedOperationException(); }
 }

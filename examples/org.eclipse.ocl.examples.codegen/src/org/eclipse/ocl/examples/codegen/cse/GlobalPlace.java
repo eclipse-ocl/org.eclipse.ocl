@@ -25,7 +25,6 @@ import org.eclipse.ocl.examples.codegen.analyzer.DependencyVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.ReferencesVisitor;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGText;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
@@ -79,9 +78,6 @@ public class GlobalPlace extends AbstractPlace
 	protected @Nullable SimpleAnalysis buildSimpleAnalysisTree(@NonNull CGElement cgElement, int depth) {
 		if (CommonSubexpressionEliminator.CSE_BUILD.isActive()) {
 			CommonSubexpressionEliminator.CSE_BUILD.println(StringUtil.getIndentation(depth, "  ") + "Build " + NameUtil.debugSimpleName(cgElement) + " " + StringUtil.convertToOCLString(cgElement.toString()));
-		}
-		if (cgElement instanceof CGText) {
-			getClass();				// XXX
 		}
 		//
 		//	Create the Place hierarchy in Preorder

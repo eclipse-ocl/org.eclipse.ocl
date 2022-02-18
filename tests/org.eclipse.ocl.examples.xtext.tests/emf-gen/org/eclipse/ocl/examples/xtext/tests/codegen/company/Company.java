@@ -97,6 +97,7 @@ public interface Company extends EObject {
 	 * @see org.eclipse.ocl.examples.xtext.tests.codegen.company.CompanySizeKind
 	 * @see org.eclipse.ocl.examples.xtext.tests.codegen.company.CodegencompanyPackage#getCompany_Size()
 	 * @model required="true" transient="true" changeable="false" volatile="true" derived="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot derivation='let table = Set{Tuple{range = Sequence{0..49}, size = CompanySizeKind::small}, Tuple{range = Sequence{50..999}, size = CompanySizeKind::medium}, Tuple{range = Sequence{1000..1000000}, size = CompanySizeKind::large}} in table-&gt;any(range-&gt;includes(employees-&gt;size())).size'"
 	 * @generated
 	 */
 	CompanySizeKind getSize();

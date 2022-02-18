@@ -138,17 +138,26 @@ public class GlobalNameManager extends NameManager
 		assignNames(context);
 	}
 
-	public @NonNull NameResolution declareGlobalName(@Nullable CGValuedElement object, @NonNull String name) {
-		NameResolution nameResolution = new NameResolution(this, object, name);
-		nameResolution.resolveIn(context);
-		return nameResolution;
+	/**
+	 * Declare that cgElement has a name which should immediately default to nameHint.
+	 * This is typically used to provide an eager name reservation for globl particularly Ecore names.
+	 */
+	public @NonNull BaseNameResolution declareGlobalName(@Nullable CGValuedElement cgElement, @NonNull String nameHint) {
+		BaseNameResolution baseNameResolution = new BaseNameResolution(this, cgElement, nameHint);
+		baseNameResolution.resolveIn(context);
+		return baseNameResolution;
 	}
 
-	public @NonNull NameResolution declareReservedName(@Nullable CGValuedElement object, @NonNull String name) {
-		NameResolution nameResolution = new NameResolution(this, object, name);
-		assert reservedJavaNames.contains(name);
-		nameResolution.setResolvedName(name);
-		return nameResolution;
+	/**
+	 * Declare that cgElement has a name which should immediately equate to nameHint.
+	 * This is typically used to ensure that reserved Java names are used only for their Java purpose.
+	 */
+	@Override
+	public @NonNull BaseNameResolution declareReservedName(@Nullable CGValuedElement cgElement, @NonNull String nameHint) {
+		BaseNameResolution baseNameResolution = new BaseNameResolution(this, cgElement, nameHint);
+		assert reservedJavaNames.contains(nameHint);
+		baseNameResolution.setResolvedName(nameHint);
+		return baseNameResolution;
 	}
 
 	@Override
@@ -156,8 +165,18 @@ public class GlobalNameManager extends NameManager
 		return context;
 	}
 
+	@Override
+	protected @NonNull String getLazyNameHint(@NonNull CGValuedElement cgNamedValue) {
+		return helper.getNameHint(cgNamedValue);
+	}
+
 	public @NonNull String getReservedName(@NonNull String name) {
 		return ClassUtil.nonNullState(name2reservedNameResolutions.get(name)).getResolvedName();
+	}
+
+	@Override
+	public boolean isGlobal() {
+		return true;
 	}
 
 	@Override

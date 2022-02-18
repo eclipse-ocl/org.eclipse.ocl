@@ -558,6 +558,12 @@ public class CodegencompanyPackageImpl extends EPackageImpl implements Codegenco
 			   "body", "true" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
+		  (getCompany_Size(),
+		   source,
+		   new String[] {
+			   "derivation", "let table = Set{Tuple{range = Sequence{0..49}, size = CompanySizeKind::small}, Tuple{range = Sequence{50..999}, size = CompanySizeKind::medium}, Tuple{range = Sequence{1000..1000000}, size = CompanySizeKind::large}} in table->any(range->includes(employees->size())).size" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
 		  (getEmployee__ReportsTo__Employee(),
 		   source,
 		   new String[] {
@@ -586,6 +592,36 @@ public class CodegencompanyPackageImpl extends EPackageImpl implements Codegenco
 		   source,
 		   new String[] {
 			   "body", "name->notEmpty() implies name.size() > 0" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getEmployee_DirectReports(),
+		   source,
+		   new String[] {
+			   "derivation", "company.employees->select(manager = self)" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getEmployee_AllReports(),
+		   source,
+		   new String[] {
+			   "derivation", "Employee.allInstances()->select(reportsTo(self))" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getEmployee_ReportingChain(),
+		   source,
+		   new String[] {
+			   "derivation", "if manager.oclIsUndefined() then OrderedSet{} else manager?.reportingChain->prepend(manager) endif" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getEmployee_HasNameAsAttribute(),
+		   source,
+		   new String[] {
+			   "derivation", "name <> null" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getBug418716_AttributeWithInitital(),
+		   source,
+		   new String[] {
+			   "derivation", "100" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 	}
 
