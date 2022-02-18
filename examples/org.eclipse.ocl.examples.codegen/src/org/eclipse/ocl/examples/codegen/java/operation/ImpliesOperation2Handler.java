@@ -34,7 +34,8 @@ public class ImpliesOperation2Handler extends AbstractLibraryOperationHandler
 			//
 			//	Trivial source cases
 			//
-			final CGValuedElement cgSource = cgOperationCallExp.getSource();
+			assert cgOperationCallExp.getCgThis() == null;
+			final @NonNull CGValuedElement cgSource = cgOperationCallExp.getFirstArgument();
 			if (appendThrowIfNull(cgSource, "implies2 source")) {
 				return false;
 			}
@@ -48,8 +49,7 @@ public class ImpliesOperation2Handler extends AbstractLibraryOperationHandler
 			//
 			//	Trivial argument cases
 			//
-			CGValuedElement cgArgument = cgOperationCallExp.getArguments().get(0);
-			assert cgArgument != null;
+			final @NonNull CGValuedElement cgArgument = cgOperationCallExp.getSecondArgument();
 			if (cgArgument.isTrue()) {
 				appendAssignBooleanLiteral(hasDeclaration, cgOperationCallExp, true);
 				return true;

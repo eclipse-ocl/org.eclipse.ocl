@@ -33,7 +33,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
  *
  * @generated
  */
-public class CGCastExpImpl extends CGCallExpImpl implements CGCastExp {
+public class CGCastExpImpl extends CGSourcedCallExpImpl implements CGCastExp {
 	/**
 	 * The number of structural features of the '<em>CG Cast Exp</em>' class.
 	 * <!-- begin-user-doc -->
@@ -41,7 +41,7 @@ public class CGCastExpImpl extends CGCallExpImpl implements CGCastExp {
 	 * @generated
 	 * @ordered
 	 */
-	public static final int CG_CAST_EXP_FEATURE_COUNT = CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 1;
+	public static final int CG_CAST_EXP_FEATURE_COUNT = CGSourcedCallExpImpl.CG_SOURCED_CALL_EXP_FEATURE_COUNT + 1;
 	/**
 	 * The cached value of the '{@link #getExecutorType() <em>Executor Type</em>}' reference.
 	 * <!-- begin-user-doc -->

@@ -37,7 +37,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
  *
  * @generated
  */
-public class CGGuardExpImpl extends CGCallExpImpl implements CGGuardExp {
+public class CGGuardExpImpl extends CGSourcedCallExpImpl implements CGGuardExp {
 	/**
 	 * The number of structural features of the '<em>CG Guard Exp</em>' class.
 	 * <!-- begin-user-doc -->
@@ -45,7 +45,7 @@ public class CGGuardExpImpl extends CGCallExpImpl implements CGGuardExp {
 	 * @generated
 	 * @ordered
 	 */
-	public static final int CG_GUARD_EXP_FEATURE_COUNT = CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 2;
+	public static final int CG_GUARD_EXP_FEATURE_COUNT = CGSourcedCallExpImpl.CG_SOURCED_CALL_EXP_FEATURE_COUNT + 2;
 	/**
 	 * The default value of the '{@link #getMessage() <em>Message</em>}' attribute.
 	 * <!-- begin-user-doc -->

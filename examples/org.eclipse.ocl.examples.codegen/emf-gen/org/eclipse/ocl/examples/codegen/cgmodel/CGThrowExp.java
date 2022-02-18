@@ -24,6 +24,6 @@ package org.eclipse.ocl.examples.codegen.cgmodel;
  * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGThrowExp()
  * @generated
  */
-public interface CGThrowExp extends CGCallExp {
+public interface CGThrowExp extends CGSourcedCallExp {
 
 } // CGThrowExp

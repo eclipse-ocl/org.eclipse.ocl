@@ -14,6 +14,7 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
 
 /**
  * <!-- begin-user-doc -->
@@ -27,6 +28,7 @@ import org.eclipse.jdt.annotation.Nullable;
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOperation#getPreconditions <em>Preconditions</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOperation#getPostconditions <em>Postconditions</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOperation#getContainingClass <em>Containing Class</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOperation#getCallingConvention <em>Calling Convention</em>}</li>
  * </ul>
  *
  * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGOperation()
@@ -87,5 +89,26 @@ public interface CGOperation extends CGCallable {
 	 * @generated
 	 */
 	void setContainingClass(CGClass value);
+
+	/**
+	 * Returns the value of the '<em><b>Calling Convention</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Calling Convention</em>' attribute.
+	 * @see #setCallingConvention(OperationCallingConvention)
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGOperation_CallingConvention()
+	 * @generated
+	 */
+	OperationCallingConvention getCallingConvention();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOperation#getCallingConvention <em>Calling Convention</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Calling Convention</em>' attribute.
+	 * @see #getCallingConvention()
+	 * @generated
+	 */
+	void setCallingConvention(OperationCallingConvention value);
 
 } // CGOperation

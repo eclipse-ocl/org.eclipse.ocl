@@ -24,5 +24,5 @@ package org.eclipse.ocl.examples.codegen.cgmodel;
  * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGBoxExp()
  * @generated
  */
-public interface CGBoxExp extends CGCallExp {
+public interface CGBoxExp extends CGSourcedCallExp {
 } // CGBoxExp

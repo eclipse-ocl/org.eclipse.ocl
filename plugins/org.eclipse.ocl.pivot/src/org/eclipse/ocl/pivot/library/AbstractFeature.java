@@ -10,10 +10,17 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.library;
 
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 
 /**
  */
 public abstract class AbstractFeature extends ValueUtil implements LibraryFeature
 {
+	/**
+	 * @since 1.18
+	 */
+	protected static final Class<?>@NonNull [] evaluateArguments0 = new Class<?>@NonNull [] {Executor.class, TypeId.class, Object.class};
 }

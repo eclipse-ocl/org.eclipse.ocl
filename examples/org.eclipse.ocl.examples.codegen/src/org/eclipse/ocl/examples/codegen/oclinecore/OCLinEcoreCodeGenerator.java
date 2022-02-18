@@ -15,8 +15,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.codegen.ecore.genmodel.GenFeature;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
+import org.eclipse.emf.codegen.ecore.genmodel.GenOperation;
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
+import org.eclipse.emf.codegen.ecore.genmodel.GenTypedElement;
 import org.eclipse.emf.codegen.util.ImportManager;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
@@ -37,6 +40,8 @@ import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
 import org.eclipse.ocl.examples.codegen.java.ImportUtils;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
+import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreTablesUtils.CodeGenString;
+import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.BooleanLiteralExp;
 import org.eclipse.ocl.pivot.CallExp;
@@ -47,10 +52,12 @@ import org.eclipse.ocl.pivot.CollectionRange;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.IfExp;
 import org.eclipse.ocl.pivot.LetExp;
 import org.eclipse.ocl.pivot.LetVariable;
 import org.eclipse.ocl.pivot.LoopExp;
+import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
@@ -68,13 +75,14 @@ import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
+import org.eclipse.ocl.pivot.internal.library.StaticProperty;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
-import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -109,14 +117,16 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		@Override
 		public @Nullable Object visitCGProperty(@NonNull CGProperty cgProperty) {
 			super.visitCGProperty(cgProperty);
-			Element asProperty = cgProperty.getAst();
-			if (asProperty instanceof Property) {
-				EObject eObject = ((Property)asProperty).getESObject();
-				if (eObject instanceof ETypedElement) {
-					EClassifier eType = ((ETypedElement)eObject).getEType();
-					if (eType != null) {
-						rewriteAsEcore(cgProperty.getBody(), eType);
-					}
+			Property asProperty = CGUtil.getAST(cgProperty);
+			EObject eObject = asProperty.getESObject();
+			LibraryFeature implementation = asProperty.getImplementation();
+			if (implementation instanceof StaticProperty) {
+				rewriteAsBoxed(cgProperty.getBody());
+			}
+			else if (eObject instanceof ETypedElement) {
+				EClassifier eType = ((ETypedElement)eObject).getEType();
+				if (eType != null) {
+					rewriteAsEcore(cgProperty.getBody(), eType);
 				}
 			}
 			return null;
@@ -350,27 +360,71 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		}
 	}
 
-	public static class FeatureBody implements Nameable
+	public static enum FeatureLocality
+	{
+		ECORE_IMPL,			// A standard non-static Ecore feature is genmodelled within the Ecore *Impl.java
+		ECORE_STATIC,		// A non-standard static 'Ecore' feature is genmodelled within a FOREIGN *Tables.java sub-class
+		FOREIGN_IMPL,		// A non-static Complete OCL feature is genmodelled within a FOREIGN *Tables.java sub-class
+		FOREIGN_STATIC;		// A static Complete OCL feature is genmodelled within a FOREIGN *Tables.java sub-class
+
+		boolean hasSelf() { return this == ECORE_STATIC; }
+		boolean hasThis() { return this == ECORE_IMPL; }
+		boolean isEcore() { return this == ECORE_IMPL; }
+		public boolean isForeign() { return (this == ECORE_STATIC) || (this == FOREIGN_IMPL) || (this == FOREIGN_STATIC); }
+		boolean isStatic() { return (this == ECORE_STATIC) || (this == FOREIGN_STATIC); }
+	//	@SuppressWarnings("null")
+	//	@Override
+	//	public @NonNull String toString() {
+	//		return this.name();
+	//	}
+	}
+
+	public static class FeatureBody //implements Nameable
 	{
 		private final @NonNull String uri;
-		private final boolean isStatic;
+		private final @NonNull NamedElement namedElement;
+		private final @NonNull FeatureLocality featureLocality;
+		private final @NonNull String packageName;
 		private final @NonNull String className;
 		private @NonNull String bodyText;
 
-		public FeatureBody(@NonNull String uri, boolean isStatic, @NonNull String className, @NonNull String bodyText) {
+		public FeatureBody(@NonNull String uri, @NonNull NamedElement namedElement, @NonNull FeatureLocality featureLocality, @NonNull String packageName, @NonNull String className, @NonNull String bodyText) {
 			this.uri = uri;
-			this.isStatic = isStatic;
+			this.namedElement = namedElement;
+			this.featureLocality = featureLocality;
+			this.packageName = packageName;
 			this.className = className;
 			this.bodyText = bodyText;
+		//	assert featureLocality.isStatic() == ((namedElement instanceof Feature) && ((Feature)namedElement).isIsStatic());		// XXX isStatic redundant
 		}
 
 		public @NonNull String getBodyText() {
 			return bodyText;
 		}
 
-		@Override
-		public @NonNull String getName() {
+		public @NonNull String getClassName() {
 			return className;
+		}
+
+		public @NonNull FeatureLocality getFeatureLocality() {
+			return featureLocality;
+		}
+
+		public @NonNull String getFeatureName() {
+			return namedElement.getName();
+		}
+
+	//	@Override
+	//	public @NonNull String getName() {
+	//		return className;
+	//	}
+
+		public @NonNull String getPackageName() {
+			return packageName;
+		}
+
+		public @NonNull String getQualifiedClassName() {
+			return packageName + "." + className;
 		}
 
 		public @NonNull String getURI() {
@@ -378,7 +432,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		}
 
 		public void rewriteManagedImports(@Nullable ImportManager importManager) {
-			if (!isStatic) {
+			if (featureLocality.isEcore()) {
 				// non-static bodies are embedded in XXXImpl.java for which ImportUtils.IMPORTS_NESTED_ANNOTATION_PREFIX etc must be adjusted to the limitations of EMFs JET handling.
 				bodyText = ImportUtils.rewriteManagedImports(bodyText, null);	// FIXME transfer imports between CG sessions
 			}
@@ -386,14 +440,20 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 				// static bodies are embedded in XXXTables.java for which OCLinEcoreTablesUtils.CodeGenString.appendMarkup sorts out ImportUtils.IMPORTS_NESTED_ANNOTATION_PREFIX etc.
 			}
 		}
+
+		@Override
+		public @NonNull String toString() {
+			return uri + ":" + packageName  + "." + className + "::" + namedElement.getName();// + "=>" + bodyText;
+		}
 	}
 
 	public static void generatePackage(@NonNull GenPackage genPackage,
 			@NonNull Map<@NonNull String, @NonNull FeatureBody> uri2body,
-			@NonNull Map<@NonNull GenPackage, @NonNull String> constantsTexts) {
+			@NonNull Map<@NonNull GenPackage, @NonNull String> constantsTexts,
+			@NonNull Map<@NonNull Feature, @NonNull GenTypedElement> foreignFeaures) {
 		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(genPackage);
 		OCLinEcoreCodeGenerator generator = new OCLinEcoreCodeGenerator(environmentFactory, genPackage);
-		generator.generate(uri2body, constantsTexts);
+		generator.generate(uri2body, constantsTexts, foreignFeaures);
 	}
 
 	protected final @NonNull OCLinEcoreGlobalContext globalContext;
@@ -440,7 +500,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		return new OCLinEcoreImportNameManager();
 	}
 
-	protected void generate(@NonNull Map<@NonNull String, @NonNull FeatureBody> uri2body, @NonNull Map<GenPackage, String> constantsTexts) {
+	protected void generate(@NonNull Map<@NonNull String, @NonNull FeatureBody> uri2body, @NonNull Map<GenPackage, String> constantsTexts, @NonNull Map<@NonNull Feature, @NonNull GenTypedElement> foreignFeatures) {
 		Map<@NonNull ExpressionInOCL, @NonNull ExpressionInOCL> newQuery2oldQuery2 = newQuery2oldQuery = new HashMap<>();
 		try {
 			EPackage ecorePackage = genPackage.getEcorePackage();
@@ -451,12 +511,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 			as2cgVisitor.freeze();
 			optimize(cgPackage);
 			Iterable<@NonNull CGValuedElement> sortedGlobals = prepareGlobals();
-			if (sortedGlobals != null) {
-				for (@NonNull CGValuedElement global : sortedGlobals) {
-					visitInPostOrder(global);
-				}
-			}
-			resolveNames(cgPackage);
+			resolveNames(sortedGlobals, cgPackage);
 			OCLinEcoreCG2JavaVisitor cg2java = new OCLinEcoreCG2JavaVisitor(this, genPackage, cgPackage);
 			Map<@NonNull String, @NonNull FeatureBody> results = cg2java.generateBodies();
 			for (Map.Entry<@NonNull String, @NonNull FeatureBody> entry : results.entrySet()) {
@@ -465,6 +520,23 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 	//		Iterable<@NonNull CGValuedElement> sortedGlobals = prepareGlobals();
 			String constantsText = cg2java.generateConstants(sortedGlobals);
 			constantsTexts.put(genPackage, constantsText);
+			Iterable<@NonNull Feature> foreignFeatures2 = cgAnalyzer.getForeignFeatures();
+			if (foreignFeatures2 != null) {
+				for (@NonNull Feature foreignFeature : foreignFeatures2) {
+					if (foreignFeature instanceof Operation) {
+						GenOperation genOperation = genModelHelper.getGenOperation((Operation)foreignFeature);
+						assert genOperation != null;
+						foreignFeatures.put(foreignFeature, genOperation);
+					}
+					else if (foreignFeature instanceof Property) {
+						GenFeature genFeature = genModelHelper.getGenFeature((Property)foreignFeature);
+						foreignFeatures.put(foreignFeature, genFeature);
+					}
+					else {
+						assert false;
+					}
+				}
+			}
 		}
 		finally {
 			for (Map.Entry<@NonNull ExpressionInOCL, @NonNull ExpressionInOCL> entry : newQuery2oldQuery2.entrySet()) {
@@ -486,6 +558,16 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 	@Override
 	public @NonNull OCLinEcoreGlobalContext getGlobalContext() {
 		return globalContext;
+	}
+
+	@Override
+	public @NonNull String getQualifiedForeignClassName(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		CodeGenString s = new CodeGenString(environmentFactory.getMetamodelManager(), false);
+		s.append(genModelHelper.getQualifiedTableClassName(genPackage));
+		s.append(".");
+		s.append(JavaConstants.FOREIGN_CLASS_PREFIX);
+		s.appendAndEncodeQualifiedName(asClass);
+		return s.toString();
 	}
 
 	protected @NonNull ExpressionInOCL rewriteQuery(@NonNull ExpressionInOCL oldQuery) {
@@ -526,10 +608,10 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 			asSynthesizedQuery.setBody(null);
 		}
 		Variable asSelfVariable = ClassUtil.nonNullState(asSynthesizedQuery.getOwnedContext());
-		Variable asDiagnosticsVariable = asHelper.createParameterVariable("diagnostics", oclAnyType, false);
+		Variable asDiagnosticsVariable = asHelper.createParameterVariable(JavaConstants.CONSTRAINT_DIAGNOSTICS_NAME, oclAnyType, false);
 		Variable asConstraintNameNameVariable = asHelper.createParameterVariable(JavaConstants.CONSTRAINT_NAME_NAME, stringType, true);
 		asSynthesizedQuery.getOwnedParameters().add(asDiagnosticsVariable);
-		Variable asContextVariable = asHelper.createParameterVariable("context", oclAnyType, false);
+		Variable asContextVariable = asHelper.createParameterVariable(JavaConstants.CONSTRAINT_CONTEXT_NAME, oclAnyType, false);
 		asSynthesizedQuery.getOwnedParameters().add(asContextVariable);
 		//
 		//	Cache the result in a let-variable

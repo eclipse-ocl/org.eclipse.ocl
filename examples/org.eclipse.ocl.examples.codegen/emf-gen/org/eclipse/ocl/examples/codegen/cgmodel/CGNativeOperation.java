@@ -16,7 +16,7 @@ package org.eclipse.ocl.examples.codegen.cgmodel;
  * <!-- end-user-doc -->
  *
  * <!-- begin-model-doc -->
- * A native operation that must be called using the native calling convention. Source argument and result values are unboxed.
+ * A native operation that is called using a Java method. Boxing of source argument and result values are determined by the calling convention.
  * <!-- end-model-doc -->
  *
  *

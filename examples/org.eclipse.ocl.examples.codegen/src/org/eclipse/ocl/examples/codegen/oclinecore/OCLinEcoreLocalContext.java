@@ -22,7 +22,7 @@ import org.eclipse.ocl.pivot.NamedElement;
 public class OCLinEcoreLocalContext extends JavaLocalContext<@NonNull OCLinEcoreCodeGenerator>
 {
 	public OCLinEcoreLocalContext(@NonNull OCLinEcoreGlobalContext globalContext, @Nullable OCLinEcoreLocalContext outerContext, @NonNull CGNamedElement cgScope, @NonNull NamedElement asScope) {
-		super(globalContext, outerContext, cgScope, asScope, false);
+		super(globalContext, outerContext, cgScope, asScope);
 	}
 
 	@Override

@@ -310,6 +310,27 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/Property.java" type="org.eclipse.ocl.pivot.Property">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.Property"/>
+                <message_argument value="validateStaticPropertyHasInitializer(DiagnosticChain, Map&lt;Object,Object&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="validateStaticPropertyHasInitializer(DiagnosticChain, Map&lt;Object,Object&gt;)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/StandardLibrary.java" type="org.eclipse.ocl.pivot.StandardLibrary">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.StandardLibrary"/>
+                <message_argument value="getCollectionExcludingOperation()"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/Type.java" type="org.eclipse.ocl.pivot.Type">
         <filter id="404000815">
             <message_arguments>
@@ -323,19 +344,6 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.TypedElement"/>
                 <message_argument value="getNormalizedTypeId()"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/Property.java" type="org.eclipse.ocl.pivot.Property">
-        <filter id="403804204">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.Property"/>
-                <message_argument value="validateStaticPropertyHasInitializer(DiagnosticChain, Map&lt;Object,Object&gt;)"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
-                <message_argument value="validateStaticPropertyHasInitializer(DiagnosticChain, Map&lt;Object,Object&gt;)"/>
             </message_arguments>
         </filter>
     </resource>
@@ -1683,6 +1691,12 @@
         <filter id="404000815">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.evaluation.ModelManager"/>
+                <message_argument value="getForeignPropertyValue(Object, PropertyId, Object)"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.evaluation.ModelManager"/>
                 <message_argument value="getInstances(Class)"/>
             </message_arguments>
         </filter>
@@ -1816,17 +1830,6 @@
                 <message_argument value="visitWildcardId(WildcardId)"/>
             </message_arguments>
         </filter>
-        <filter id="403804204">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.ids.IdVisitor"/>
-                <message_argument value="visitWildcardId(WildcardId)"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
-                <message_argument value="visitWildcardId(WildcardId)"/>
-            </message_arguments>
-        </filter>
     </resource>
     <resource path="src/org/eclipse/ocl/pivot/ids/MapTypeId.java" type="org.eclipse.ocl.pivot.ids.MapTypeId">
         <filter id="403804204">
@@ -1845,6 +1848,14 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.ids.MapTypeId"/>
                 <message_argument value="getSpecializedId(ElementId, ElementId, boolean, boolean)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/ids/ParametersId.java" type="org.eclipse.ocl.pivot.ids.ParametersId">
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.ids.ParametersId"/>
+                <message_argument value="T_0"/>
             </message_arguments>
         </filter>
     </resource>
@@ -1875,6 +1886,12 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.ids.TypeId"/>
                 <message_argument value="BOOLEAN_TYPE_NAME"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.ids.TypeId"/>
+                <message_argument value="EXCLUDING_NAME"/>
             </message_arguments>
         </filter>
         <filter id="403767336">
@@ -1966,6 +1983,20 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/library/StaticProperty.java" type="org.eclipse.ocl.pivot.internal.library.StaticProperty">
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.library.StaticProperty"/>
+                <message_argument value="evaluate(Evaluator, TypeId, Object)"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.library.StaticProperty"/>
+                <message_argument value="evaluate(Executor, TypeId, Object)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/internal/messages/PivotMessagesInternal.java" type="org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal">
         <filter id="336658481">
             <message_arguments>
@@ -1984,20 +2015,6 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.resource.ASResourceFactory"/>
                 <message_argument value="createASSaverNormalizeVisitor(AbstractASSaver)"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/internal/library/StaticProperty.java" type="org.eclipse.ocl.pivot.internal.library.StaticProperty">
-        <filter id="338792546">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.internal.library.StaticProperty"/>
-                <message_argument value="evaluate(Evaluator, TypeId, Object)"/>
-            </message_arguments>
-        </filter>
-        <filter id="338792546">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.internal.library.StaticProperty"/>
-                <message_argument value="evaluate(Executor, TypeId, Object)"/>
             </message_arguments>
         </filter>
     </resource>
@@ -2085,6 +2102,28 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/library/AbstractFeature.java" type="org.eclipse.ocl.pivot.library.AbstractFeature">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.library.AbstractFeature"/>
+                <message_argument value="evaluateArguments0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/library/AbstractOperation.java" type="org.eclipse.ocl.pivot.library.AbstractOperation">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.library.AbstractOperation"/>
+                <message_argument value="evaluateArguments1"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.library.AbstractOperation"/>
+                <message_argument value="evaluateArguments2"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/library/LibraryBinaryOperation.java" type="org.eclipse.ocl.pivot.library.LibraryBinaryOperation">
         <filter id="403984517">
             <message_arguments>
@@ -2102,6 +2141,12 @@
                 <message_argument value="resolveBodyType(EnvironmentFactory, CallExp, Type)"/>
             </message_arguments>
         </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.library.LibraryIteration"/>
+                <message_argument value="getEvaluateMethod(Iteration)"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/ocl/pivot/library/LibraryOperation.java" type="org.eclipse.ocl.pivot.library.LibraryOperation">
         <filter id="403984517">
@@ -2109,6 +2154,20 @@
                 <message_argument value="org.eclipse.ocl.pivot.library.LibraryOperation"/>
                 <message_argument value="org.eclipse.ocl.pivot.library.LibraryIterationOrOperation"/>
                 <message_argument value="resolveBodyType(EnvironmentFactory, CallExp, Type)"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.library.LibraryOperation"/>
+                <message_argument value="getEvaluateMethod(Operation)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/library/LibraryProperty.java" type="org.eclipse.ocl.pivot.library.LibraryProperty">
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.library.LibraryProperty"/>
+                <message_argument value="getEvaluateMethod(Property)"/>
             </message_arguments>
         </filter>
     </resource>
@@ -2239,6 +2298,20 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.utilities.FeatureFilter"/>
                 <message_argument value="SELECT_EXTENSION"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/utilities/PivotUtil.java" type="org.eclipse.ocl.pivot.utilities.PivotUtil">
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.utilities.PivotUtil"/>
+                <message_argument value="getOwningClass(Operation)"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.utilities.PivotUtil"/>
+                <message_argument value="getOwningClass(Property)"/>
             </message_arguments>
         </filter>
     </resource>

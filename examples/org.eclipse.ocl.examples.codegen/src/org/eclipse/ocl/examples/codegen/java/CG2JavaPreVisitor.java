@@ -70,6 +70,7 @@ import org.eclipse.ocl.pivot.CollectionLiteralExp;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.MapLiteralExp;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
@@ -143,12 +144,12 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 	}
 
 //	protected void declareNameVariant(@NonNull CGValuedElement cgElement, @NonNull NameVariant nameVariant) {
-//		getNameManager().declareStandardName(cgElement, nameVariant);
+//		getNameManager().declareLazyName(cgElement, nameVariant);
 //	}
 
 	protected void doTypedElement(@NonNull CGTypedElement cgTypedElement) {
 		CGTypeId cgTypeId = cgTypedElement.getTypeId();
-		if (cgTypeId != null) {
+		if ((cgTypeId != null) && (cgTypeId != cgTypedElement)) {		// XXX Better way to terminate mta recursion
 			cgTypeId.accept(this);
 		}
 	}
@@ -250,8 +251,8 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 	@Override
 	public @Nullable Object visitCGCatchExp(@NonNull CGCatchExp cgCatchExp) {
 		CGValuedElement cgSource = CGUtil.getSource(cgCatchExp);
-		NameResolution catchNameResolution = getNameManager().declareStandardName(cgSource);
-		catchNameResolution.addNameVariant(codeGenerator.getTHROWN_NameVariant());
+		NameResolution rawNameResolution = getNameManager().declareLazyName(cgSource);
+		rawNameResolution.addNameVariant(codeGenerator.getTHROWN_NameVariant());
 		return super.visitCGCatchExp(cgCatchExp);
 	}
 
@@ -320,7 +321,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 		TypeId typeId = asClass.getTypeId();
 		CGTypeId cgTypeId = codeGenerator.getAnalyzer().getTypeId(typeId);
 	//	String nameHint = globalNameManager.getNameHint(typeId);
-		globalNameManager.declareStandardName(cgTypeId);		// XXX promote / generalize
+		globalNameManager.declareLazyName(cgTypeId);		// XXX promote / generalize
 		return super.visitCGEcorePropertyCallExp(cgEcorePropertyCallExp);
 	}
 
@@ -415,12 +416,15 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 		if (cgTypeId != null) {
 			cgTypeId.accept(this);
 		}
+		Type asType = CGUtil.getAST(cgExecutorType);
+		Type asMetaType = codeGenerator.getEnvironmentFactory().getStandardLibrary().getMetaclass(asType);
+		cgExecutorType.setTypeId(analyzer.getTypeId(asMetaType.getTypeId()));
 		return super.visitCGExecutorType(cgExecutorType);
 	}
 
 	@Override
 	public @Nullable Object visitCGForeignProperty(@NonNull CGForeignProperty cgForeignProperty) {
-		localContext = context.getLocalContext(cgForeignProperty);
+	/*	localContext = context.getLocalContext(cgForeignProperty);
 		try {
 			installExecutorVariable(cgForeignProperty);
 		//	installExecutorVariable(cgForeignProperty.getInitExpression());			// FIXME dependency at root confuses
@@ -428,6 +432,15 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 		}
 		finally {
 			localContext = null;
+		} */
+		JavaLocalContext<?> savedLocalContext = pushLocalContext(cgForeignProperty);
+		try {
+			installExecutorVariable(cgForeignProperty);
+		//	installExecutorVariable(cgForeignProperty.getInitExpression());			// FIXME dependency at root confuses
+			return super.visitCGProperty(cgForeignProperty);
+		}
+		finally {
+			popLocalContext(savedLocalContext);
 		}
 	}
 
@@ -446,10 +459,10 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 		CGValuedElement cgSource = cgIterationCallExp.getSource();
 		NameManager nameManager = getNameManager();
 		if (cgSource != null) {
-			nameManager.declareStandardName(cgSource);
+			nameManager.declareLazyName(cgSource);		// source must be declared in outer namespace
 			cgSource.accept(this);
 		}
-		NameResolution iterationNameResolution = nameManager.declareStandardName(cgIterationCallExp);
+		NameResolution iterationNameResolution = nameManager.declareLazyName(cgIterationCallExp);
 		iterationNameResolution.addNameVariant(codeGenerator.getBODY_NameVariant());
 		iterationNameResolution.addNameVariant(codeGenerator.getIMPL_NameVariant());
 		iterationNameResolution.addNameVariant(codeGenerator.getMGR_NameVariant());
@@ -459,14 +472,14 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 			savedLocalContext = pushLocalContext(cgIterationCallExp);
 		}
 		for (CGIterator cgIterator : CGUtil.getIterators(cgIterationCallExp)) {
-			NameResolution iteratorNameResolution = nameManager.declareStandardName(cgIterator);
+			NameResolution iteratorNameResolution = nameManager.declareLazyName(cgIterator);
 			iteratorNameResolution.addNameVariant(codeGenerator.getITER_NameVariant());
 			cgIterator.accept(this);
 		}
 		if (cgIterationCallExp instanceof CGBuiltInIterationCallExp) {
 			CGIterator cgAccumulator = ((CGBuiltInIterationCallExp)cgIterationCallExp).getAccumulator();
 			if (cgAccumulator != null) {
-				nameManager.declareStandardName(cgAccumulator);
+				nameManager.declareLazyName(cgAccumulator);
 				cgAccumulator.accept(this);;
 			}
 		}

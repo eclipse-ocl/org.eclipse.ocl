@@ -99,7 +99,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGString;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTemplateParameterExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGText;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGThrowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTupleExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTuplePart;
@@ -491,16 +490,16 @@ public class CGModelAdapterFactory extends AdapterFactoryImpl {
 				return createCGShadowPartAdapter();
 			}
 			@Override
+			public Adapter caseCGSourcedCallExp(CGSourcedCallExp object) {
+				return createCGSourcedCallExpAdapter();
+			}
+			@Override
 			public Adapter caseCGString(CGString object) {
 				return createCGStringAdapter();
 			}
 			@Override
 			public Adapter caseCGTemplateParameterExp(CGTemplateParameterExp object) {
 				return createCGTemplateParameterExpAdapter();
-			}
-			@Override
-			public Adapter caseCGText(CGText object) {
-				return createCGTextAdapter();
 			}
 			@Override
 			public Adapter caseCGThrowExp(CGThrowExp object) {
@@ -1061,6 +1060,20 @@ public class CGModelAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createCGShadowPartAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGSourcedCallExp <em>CG Sourced Call Exp</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGSourcedCallExp
+	 * @generated
+	 */
+	public Adapter createCGSourcedCallExpAdapter() {
 		return null;
 	}
 
@@ -1719,20 +1732,6 @@ public class CGModelAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createCGTemplateParameterExpAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGText <em>CG Text</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGText
-	 * @generated
-	 */
-	public Adapter createCGTextAdapter() {
 		return null;
 	}
 

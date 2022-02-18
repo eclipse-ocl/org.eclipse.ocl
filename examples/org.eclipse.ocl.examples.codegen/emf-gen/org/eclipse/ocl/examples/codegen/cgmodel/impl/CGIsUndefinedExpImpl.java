@@ -26,7 +26,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
  *
  * @generated
  */
-public class CGIsUndefinedExpImpl extends CGCallExpImpl implements CGIsUndefinedExp {
+public class CGIsUndefinedExpImpl extends CGSourcedCallExpImpl implements CGIsUndefinedExp {
 	/**
 	 * The number of structural features of the '<em>CG Is Undefined Exp</em>' class.
 	 * <!-- begin-user-doc -->
@@ -34,7 +34,7 @@ public class CGIsUndefinedExpImpl extends CGCallExpImpl implements CGIsUndefined
 	 * @generated
 	 * @ordered
 	 */
-	public static final int CG_IS_UNDEFINED_EXP_FEATURE_COUNT = CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0;
+	public static final int CG_IS_UNDEFINED_EXP_FEATURE_COUNT = CGSourcedCallExpImpl.CG_SOURCED_CALL_EXP_FEATURE_COUNT + 0;
 
 	/**
 	 * <!-- begin-user-doc -->

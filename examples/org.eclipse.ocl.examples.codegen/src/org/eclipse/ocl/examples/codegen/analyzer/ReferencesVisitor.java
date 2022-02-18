@@ -15,7 +15,6 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCastExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstant;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
@@ -70,10 +69,10 @@ public class ReferencesVisitor extends AbstractExtendingCGModelVisitor<@NonNull 
 		throw new UnsupportedOperationException("Unsupported " + getClass().getName() + " visit");
 	}
 
-	@Override
-	public @NonNull List<@Nullable Object> visitCGCallExp(@NonNull CGCallExp cgElement) {
-		return append(super.visitCGCallExp(cgElement), cgElement.getSource());
-	}
+//	@Override
+//	public @NonNull List<@Nullable Object> visitCGCallExp(@NonNull CGCallExp cgElement) {
+//		return append(super.visitCGCallExp(cgElement), cgElement.getSource());
+//	}
 
 	@Override
 	public @NonNull List<@Nullable Object> visitCGCastExp(@NonNull CGCastExp cgElement) {
@@ -173,7 +172,7 @@ public class ReferencesVisitor extends AbstractExtendingCGModelVisitor<@NonNull 
 	@Override
 	public @NonNull List<@Nullable Object> visitCGOperationCallExp(@NonNull CGOperationCallExp cgElement) {
 		List<@Nullable Object> elements = append(super.visitCGOperationCallExp(cgElement), cgElement.getReferredOperation());
-		elements.addAll(cgElement.getArguments());
+		elements.addAll(cgElement.getCgArguments());
 		return elements;
 	}
 

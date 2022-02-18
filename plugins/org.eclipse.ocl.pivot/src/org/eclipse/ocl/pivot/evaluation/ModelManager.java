@@ -135,8 +135,15 @@ public interface ModelManager
 	 *
 	 * @since 1.18
 	 */
+	default @Nullable Object getForeignPropertyValue(@Nullable Object object, @NonNull PropertyId propertyId, @Nullable Object defaultValue) {
+		return defaultValue;
+	}
+	// XXX move initExpression eval to caller
+	/**
+	 * @since 1.18
+	 */
 	default @Nullable Object getForeignPropertyValue(@Nullable Object object, @NonNull PropertyId propertyId, @Nullable OCLExpression initExpression, @Nullable Object defaultValue) {
-		return null;
+		return defaultValue;
 	}
 
 	@Deprecated /* @deprecated Use getInstances() to avoid compulsory Set */

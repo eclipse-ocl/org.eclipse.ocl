@@ -101,7 +101,7 @@ public class CGTuplePartCallExpImpl extends CGPropertyCallExpImpl implements CGT
 		TuplePartId oldAstTuplePartId = astTuplePartId;
 		astTuplePartId = newAstTuplePartId;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 10, oldAstTuplePartId, astTuplePartId));
+			eNotify(new ENotificationImpl(this, Notification.SET, 11, oldAstTuplePartId, astTuplePartId));
 	}
 
 	/**
@@ -122,7 +122,7 @@ public class CGTuplePartCallExpImpl extends CGPropertyCallExpImpl implements CGT
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 10:
+			case 11:
 				return getAstTuplePartId();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -136,7 +136,7 @@ public class CGTuplePartCallExpImpl extends CGPropertyCallExpImpl implements CGT
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 10:
+			case 11:
 				setAstTuplePartId((TuplePartId)newValue);
 				return;
 		}
@@ -151,7 +151,7 @@ public class CGTuplePartCallExpImpl extends CGPropertyCallExpImpl implements CGT
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 10:
+			case 11:
 				setAstTuplePartId(AST_TUPLE_PART_ID_EDEFAULT);
 				return;
 		}
@@ -166,7 +166,7 @@ public class CGTuplePartCallExpImpl extends CGPropertyCallExpImpl implements CGT
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 10:
+			case 11:
 				return AST_TUPLE_PART_ID_EDEFAULT == null ? astTuplePartId != null : !AST_TUPLE_PART_ID_EDEFAULT.equals(astTuplePartId);
 		}
 		return super.eIsSet(featureID);

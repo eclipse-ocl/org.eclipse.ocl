@@ -342,6 +342,14 @@ public class OCLinEcoreTablesUtils
 		 */
 		public void appendMarkup(@NonNull String markedUpText) {
 			int iMax = markedUpText.length();
+			while (iMax > 0) {
+				if (markedUpText.charAt(iMax-1) == '\t') {
+					iMax--;
+				}
+				else {
+					break;
+				}
+			}
 			int iStart =  0;
 			while (iStart < iMax) {
 				int iPrefix = markedUpText.indexOf(ImportUtils.IMPORTS_PREFIX, iStart);

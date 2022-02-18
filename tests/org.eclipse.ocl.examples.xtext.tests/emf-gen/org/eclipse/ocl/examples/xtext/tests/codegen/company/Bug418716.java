@@ -46,6 +46,7 @@ public interface Bug418716 extends EObject {
 	 * @see #setAttributeWithInitital(int)
 	 * @see org.eclipse.ocl.examples.xtext.tests.codegen.company.CodegencompanyPackage#getBug418716_AttributeWithInitital()
 	 * @model required="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot derivation='100'"
 	 * @generated
 	 */
 	int getAttributeWithInitital();

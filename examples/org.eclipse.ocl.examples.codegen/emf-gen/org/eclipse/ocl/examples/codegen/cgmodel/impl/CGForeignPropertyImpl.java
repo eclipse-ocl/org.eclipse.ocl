@@ -14,11 +14,15 @@
  */
 package org.eclipse.ocl.examples.codegen.cgmodel.impl;
 
-import org.eclipse.emf.common.notify.Notification;
+import java.util.Collection;
+import java.util.List;
+
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
@@ -34,8 +38,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGForeignPropertyImpl#getParameter <em>Parameter</em>}</li>
- *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGForeignPropertyImpl#getInitExpression <em>Init Expression</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGForeignPropertyImpl#getParameters <em>Parameters</em>}</li>
  * </ul>
  *
  * @generated
@@ -48,18 +51,18 @@ public class CGForeignPropertyImpl extends CGPropertyImpl implements CGForeignPr
 	 * @generated
 	 * @ordered
 	 */
-	public static final int CG_FOREIGN_PROPERTY_FEATURE_COUNT = CGPropertyImpl.CG_PROPERTY_FEATURE_COUNT + 2;
+	public static final int CG_FOREIGN_PROPERTY_FEATURE_COUNT = CGPropertyImpl.CG_PROPERTY_FEATURE_COUNT + 1;
 
 
 	/**
-	 * The cached value of the '{@link #getParameter() <em>Parameter</em>}' containment reference.
+	 * The cached value of the '{@link #getParameters() <em>Parameters</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getParameter()
+	 * @see #getParameters()
 	 * @generated
 	 * @ordered
 	 */
-	protected CGParameter parameter;
+	protected EList<CGParameter> parameters;
 
 
 	/**
@@ -70,7 +73,7 @@ public class CGForeignPropertyImpl extends CGPropertyImpl implements CGForeignPr
 	 * @generated
 	 * @ordered
 	 */
-	protected CGValuedElement initExpression;
+//	protected CGValuedElement initExpression;
 
 
 	/**
@@ -98,88 +101,11 @@ public class CGForeignPropertyImpl extends CGPropertyImpl implements CGForeignPr
 	 * @generated
 	 */
 	@Override
-	public CGParameter getParameter() {
-		return parameter;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetParameter(CGParameter newParameter, NotificationChain msgs) {
-		CGParameter oldParameter = parameter;
-		parameter = newParameter;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 8, oldParameter, newParameter);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
+	public List<CGParameter> getParameters() {
+		if (parameters == null) {
+			parameters = new EObjectContainmentEList<CGParameter>(CGParameter.class, this, 9);
 		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setParameter(CGParameter newParameter) {
-		if (newParameter != parameter) {
-			NotificationChain msgs = null;
-			if (parameter != null)
-				msgs = ((InternalEObject)parameter).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (8), null, msgs);
-			if (newParameter != null)
-				msgs = ((InternalEObject)newParameter).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (8), null, msgs);
-			msgs = basicSetParameter(newParameter, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 8, newParameter, newParameter));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public CGValuedElement getInitExpression() {
-		return initExpression;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetInitExpression(CGValuedElement newInitExpression, NotificationChain msgs) {
-		CGValuedElement oldInitExpression = initExpression;
-		initExpression = newInitExpression;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 9, oldInitExpression, newInitExpression);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setInitExpression(CGValuedElement newInitExpression) {
-		if (newInitExpression != initExpression) {
-			NotificationChain msgs = null;
-			if (initExpression != null)
-				msgs = ((InternalEObject)initExpression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (9), null, msgs);
-			if (newInitExpression != null)
-				msgs = ((InternalEObject)newInitExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (9), null, msgs);
-			msgs = basicSetInitExpression(newInitExpression, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 9, newInitExpression, newInitExpression));
+		return parameters;
 	}
 
 	/**
@@ -190,10 +116,8 @@ public class CGForeignPropertyImpl extends CGPropertyImpl implements CGForeignPr
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case 8:
-				return basicSetParameter(null, msgs);
 			case 9:
-				return basicSetInitExpression(null, msgs);
+				return ((InternalEList<?>)getParameters()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -206,10 +130,8 @@ public class CGForeignPropertyImpl extends CGPropertyImpl implements CGForeignPr
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 8:
-				return getParameter();
 			case 9:
-				return getInitExpression();
+				return getParameters();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -219,14 +141,13 @@ public class CGForeignPropertyImpl extends CGPropertyImpl implements CGForeignPr
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 8:
-				setParameter((CGParameter)newValue);
-				return;
 			case 9:
-				setInitExpression((CGValuedElement)newValue);
+				getParameters().clear();
+				getParameters().addAll((Collection<? extends CGParameter>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -240,11 +161,8 @@ public class CGForeignPropertyImpl extends CGPropertyImpl implements CGForeignPr
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 8:
-				setParameter((CGParameter)null);
-				return;
 			case 9:
-				setInitExpression((CGValuedElement)null);
+				getParameters().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -258,10 +176,8 @@ public class CGForeignPropertyImpl extends CGPropertyImpl implements CGForeignPr
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 8:
-				return parameter != null;
 			case 9:
-				return initExpression != null;
+				return parameters != null && !parameters.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

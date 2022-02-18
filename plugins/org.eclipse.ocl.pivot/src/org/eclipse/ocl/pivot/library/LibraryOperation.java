@@ -10,8 +10,11 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.library;
 
+import java.lang.reflect.Method;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.EvaluationHaltedException;
@@ -68,4 +71,9 @@ public interface LibraryOperation extends LibraryIterationOrOperation
 	/** @deprecated use Executor */
 	@Deprecated
 	@Nullable Object dispatch(@NonNull Evaluator evaluator, @NonNull OperationCallExp callExp, @Nullable Object sourceValue);
+
+	/**
+	 * @since 1.18
+	 */
+	default @NonNull Method getEvaluateMethod(@NonNull Operation asOperation) { throw new UnsupportedOperationException(); }
 }
