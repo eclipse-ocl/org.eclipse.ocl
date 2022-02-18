@@ -42,7 +42,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
  *
  * @generated
  */
-public class CGEcoreExpImpl extends CGCallExpImpl implements CGEcoreExp {
+public class CGEcoreExpImpl extends CGSourcedCallExpImpl implements CGEcoreExp {
 	/**
 	 * The number of structural features of the '<em>CG Ecore Exp</em>' class.
 	 * <!-- begin-user-doc -->
@@ -50,7 +50,7 @@ public class CGEcoreExpImpl extends CGCallExpImpl implements CGEcoreExp {
 	 * @generated
 	 * @ordered
 	 */
-	public static final int CG_ECORE_EXP_FEATURE_COUNT = CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 1;
+	public static final int CG_ECORE_EXP_FEATURE_COUNT = CGSourcedCallExpImpl.CG_SOURCED_CALL_EXP_FEATURE_COUNT + 1;
 	/**
 	 * The cached value of the '{@link #getEClassifier() <em>EClassifier</em>}' reference.
 	 * <!-- begin-user-doc -->

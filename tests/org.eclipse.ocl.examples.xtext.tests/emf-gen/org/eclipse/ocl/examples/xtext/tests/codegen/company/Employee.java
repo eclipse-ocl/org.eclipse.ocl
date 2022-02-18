@@ -136,6 +136,7 @@ public interface Employee extends EObject {
 	 * @return the value of the '<em>Direct Reports</em>' reference list.
 	 * @see org.eclipse.ocl.examples.xtext.tests.codegen.company.CodegencompanyPackage#getEmployee_DirectReports()
 	 * @model transient="true" changeable="false" volatile="true" derived="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot derivation='company.employees-&gt;select(manager = self)'"
 	 * @generated
 	 */
 	EList<Employee> getDirectReports();
@@ -152,6 +153,7 @@ public interface Employee extends EObject {
 	 * @return the value of the '<em>All Reports</em>' reference list.
 	 * @see org.eclipse.ocl.examples.xtext.tests.codegen.company.CodegencompanyPackage#getEmployee_AllReports()
 	 * @model transient="true" changeable="false" volatile="true" derived="true" ordered="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot derivation='Employee.allInstances()-&gt;select(reportsTo(self))'"
 	 * @generated
 	 */
 	EList<Employee> getAllReports();
@@ -168,6 +170,7 @@ public interface Employee extends EObject {
 	 * @return the value of the '<em>Reporting Chain</em>' reference list.
 	 * @see org.eclipse.ocl.examples.xtext.tests.codegen.company.CodegencompanyPackage#getEmployee_ReportingChain()
 	 * @model transient="true" changeable="false" volatile="true" derived="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot derivation='if manager.oclIsUndefined() then OrderedSet{} else manager?.reportingChain-&gt;prepend(manager) endif'"
 	 * @generated
 	 */
 	EList<Employee> getReportingChain();
@@ -183,6 +186,7 @@ public interface Employee extends EObject {
 	 * @return the value of the '<em>Has Name As Attribute</em>' attribute.
 	 * @see org.eclipse.ocl.examples.xtext.tests.codegen.company.CodegencompanyPackage#getEmployee_HasNameAsAttribute()
 	 * @model required="true" transient="true" changeable="false" volatile="true" derived="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot derivation='name &lt;&gt; null'"
 	 * @generated
 	 */
 	boolean isHasNameAsAttribute();

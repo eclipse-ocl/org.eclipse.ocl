@@ -33,9 +33,9 @@ public class OrOperationHandler extends AbstractLibraryOperationHandler
 			//
 			//	Short-circuit cases
 			//
-			final CGValuedElement cgSource = cgOperationCallExp.getSource();
-			CGValuedElement cgArgument = cgOperationCallExp.getArguments().get(0);
-			assert cgArgument != null;
+			assert cgOperationCallExp.getCgThis() == null;
+			final @NonNull CGValuedElement cgSource = cgOperationCallExp.getFirstArgument();
+			final @NonNull CGValuedElement cgArgument = cgOperationCallExp.getSecondArgument();
 			if (cgSource.isTrue() || cgArgument.isTrue()) {
 				appendAssignBooleanLiteral(hasDeclaration, cgOperationCallExp, true);
 				return true;

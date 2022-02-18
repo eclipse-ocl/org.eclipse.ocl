@@ -71,6 +71,7 @@ public interface GenModelHelper
 	@Nullable String getQualifiedFactoryInstanceAccessor(@NonNull EPackage ePackage);
 	@Nullable String getQualifiedFactoryInstanceAccessor(org.eclipse.ocl.pivot.@NonNull Class type);
 	@Nullable String getQualifiedPackageInterfaceName(@NonNull EPackage ePackage);
+	@NonNull String getQualifiedTableClassName(@NonNull GenPackage genPackage);
 	@NonNull String getQualifiedValidatorClassName(@NonNull GenPackage genPackage);
 	@NonNull String getSetAccessor(@NonNull EStructuralFeature eStructuralFeature);
 	@NonNull String getTablesClassName(@NonNull GenPackage genPackage);

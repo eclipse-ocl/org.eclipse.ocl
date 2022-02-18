@@ -105,6 +105,11 @@ public interface StandardLibrary extends Element
 	org.eclipse.ocl.pivot.@NonNull Class getClassType();
 
 	/**
+	 * @since 1.18
+	 */
+	@NonNull Operation getCollectionExcludingOperation();
+
+	/**
 	 * Obtains the generic instance of the CollectionType metatype, named
 	 * <tt>Collection(T)</tt>.
 	 *

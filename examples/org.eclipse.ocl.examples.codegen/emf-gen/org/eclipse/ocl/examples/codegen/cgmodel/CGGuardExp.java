@@ -31,7 +31,7 @@ package org.eclipse.ocl.examples.codegen.cgmodel;
  * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGGuardExp()
  * @generated
  */
-public interface CGGuardExp extends CGCallExp {
+public interface CGGuardExp extends CGSourcedCallExp {
 
 	/**
 	 * Returns the value of the '<em><b>Message</b></em>' attribute.

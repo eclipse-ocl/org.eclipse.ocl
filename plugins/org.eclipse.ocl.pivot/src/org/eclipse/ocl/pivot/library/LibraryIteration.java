@@ -10,8 +10,11 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.library;
 
+import java.lang.reflect.Method;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.IterationManager;
@@ -49,4 +52,9 @@ public interface LibraryIteration extends LibraryIterationOrOperation
 	 * @throws InvalidValueException if a body evaluates to invalid
 	 */
 	@Nullable Object evaluateIteration(@NonNull IterationManager iterationManager);
+
+	/**
+	 * @since 1.18
+	 */
+	default @NonNull Method getEvaluateMethod(@NonNull Iteration asIteration) { throw new UnsupportedOperationException(); }
 }

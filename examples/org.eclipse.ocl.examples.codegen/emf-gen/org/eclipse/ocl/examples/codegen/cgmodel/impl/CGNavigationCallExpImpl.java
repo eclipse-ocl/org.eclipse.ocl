@@ -17,6 +17,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.utilities.EquivalenceUtil;
 import org.eclipse.ocl.pivot.Property;
@@ -30,11 +31,12 @@ import org.eclipse.ocl.pivot.Property;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGNavigationCallExpImpl#getReferredProperty <em>Referred Property</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGNavigationCallExpImpl#getCgProperty <em>Cg Property</em>}</li>
  * </ul>
  *
  * @generated
  */
-public abstract class CGNavigationCallExpImpl extends CGCallExpImpl implements CGNavigationCallExp {
+public abstract class CGNavigationCallExpImpl extends CGSourcedCallExpImpl implements CGNavigationCallExp {
 	/**
 	 * The number of structural features of the '<em>CG Navigation Call Exp</em>' class.
 	 * <!-- begin-user-doc -->
@@ -42,7 +44,7 @@ public abstract class CGNavigationCallExpImpl extends CGCallExpImpl implements C
 	 * @generated
 	 * @ordered
 	 */
-	public static final int CG_NAVIGATION_CALL_EXP_FEATURE_COUNT = CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 1;
+	public static final int CG_NAVIGATION_CALL_EXP_FEATURE_COUNT = CGSourcedCallExpImpl.CG_SOURCED_CALL_EXP_FEATURE_COUNT + 2;
 
 	/**
 	 * The default value of the '{@link #getReferredProperty() <em>Referred Property</em>}' attribute.
@@ -63,6 +65,16 @@ public abstract class CGNavigationCallExpImpl extends CGCallExpImpl implements C
 	 * @ordered
 	 */
 	protected Property referredProperty = REFERRED_PROPERTY_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getCgProperty() <em>Cg Property</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCgProperty()
+	 * @generated
+	 * @ordered
+	 */
+	protected CGProperty cgProperty;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -109,6 +121,29 @@ public abstract class CGNavigationCallExpImpl extends CGCallExpImpl implements C
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public CGProperty getCgProperty() {
+		return cgProperty;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setCgProperty(CGProperty newCgProperty) {
+		CGProperty oldCgProperty = cgProperty;
+		cgProperty = newCgProperty;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, 10, oldCgProperty, cgProperty));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
 	@Override
@@ -126,6 +161,8 @@ public abstract class CGNavigationCallExpImpl extends CGCallExpImpl implements C
 		switch (featureID) {
 			case 9:
 				return getReferredProperty();
+			case 10:
+				return getCgProperty();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -140,6 +177,9 @@ public abstract class CGNavigationCallExpImpl extends CGCallExpImpl implements C
 		switch (featureID) {
 			case 9:
 				setReferredProperty((Property)newValue);
+				return;
+			case 10:
+				setCgProperty((CGProperty)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -156,6 +196,9 @@ public abstract class CGNavigationCallExpImpl extends CGCallExpImpl implements C
 			case 9:
 				setReferredProperty(REFERRED_PROPERTY_EDEFAULT);
 				return;
+			case 10:
+				setCgProperty((CGProperty)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -170,6 +213,8 @@ public abstract class CGNavigationCallExpImpl extends CGCallExpImpl implements C
 		switch (featureID) {
 			case 9:
 				return REFERRED_PROPERTY_EDEFAULT == null ? referredProperty != null : !REFERRED_PROPERTY_EDEFAULT.equals(referredProperty);
+			case 10:
+				return cgProperty != null;
 		}
 		return super.eIsSet(featureID);
 	}

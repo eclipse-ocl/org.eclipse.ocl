@@ -170,7 +170,7 @@ public class EvaluateClassifierOperationsTest4 extends PivotTestSuite
 	 * Tests the conformsTo() operator.
 	 */
 	@Test public void test_conformsTo() {
-		MyOCL ocl = createOCL(OCL.NO_PROJECTS, null);
+		MyOCL ocl = createOCL(OCL.CLASS_PATH, null);
 		try {
 			//		ocl.assertQueryTrue(null, "true.conformsTo(Boolean)");
 			ocl.assertQueryTrue(null, "Boolean.conformsTo(Boolean)");

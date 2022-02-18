@@ -37,7 +37,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
  *
  * @generated
  */
-public class CGIsEqualExpImpl extends CGCallExpImpl implements CGIsEqualExp {
+public class CGIsEqualExpImpl extends CGSourcedCallExpImpl implements CGIsEqualExp {
 	/**
 	 * The number of structural features of the '<em>CG Is Equal Exp</em>' class.
 	 * <!-- begin-user-doc -->
@@ -45,7 +45,7 @@ public class CGIsEqualExpImpl extends CGCallExpImpl implements CGIsEqualExp {
 	 * @generated
 	 * @ordered
 	 */
-	public static final int CG_IS_EQUAL_EXP_FEATURE_COUNT = CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 2;
+	public static final int CG_IS_EQUAL_EXP_FEATURE_COUNT = CGSourcedCallExpImpl.CG_SOURCED_CALL_EXP_FEATURE_COUNT + 2;
 
 	/**
 	 * The cached value of the '{@link #getArgument() <em>Argument</em>}' containment reference.

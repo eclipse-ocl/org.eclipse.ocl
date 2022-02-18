@@ -21,7 +21,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.DependencyVisitor;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGText;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
@@ -204,7 +203,7 @@ public class ControlPlace extends LocalPlace
 		//
 		//	This is a pragmatic fudge to share "evaluator"
 		//
-		if (!hashedAnalyses.isEmpty()) {
+	/*	if (!hashedAnalyses.isEmpty()) {
 			List<@NonNull AbstractAnalysis> pushUps = null;
 			for (AbstractAnalysis analysis : hashedAnalyses) {
 				CGValuedElement primaryElement = analysis.getPrimaryElement();
@@ -225,7 +224,7 @@ public class ControlPlace extends LocalPlace
 					}
 				}
 			}
-		}
+		} */
 	}
 
 	@Override

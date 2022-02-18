@@ -15,8 +15,11 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
@@ -26,18 +29,19 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 public class NestedNameManager extends NameManager
 {
 	protected final @NonNull NameManager parent;
-	protected final @NonNull CGElement cgScope;
-	private @Nullable List<@NonNull NameResolution> reservedNameResolutions = null;;
+	protected final @NonNull CGNamedElement cgScope;
+	private @Nullable List<@NonNull BaseNameResolution> reservedNameResolutions = null;
 
 	/**
 	 * The value name assignments.
 	 */
 	private @Nullable Context context = null;		// Non-null once value name allocation is permitted.
 
-	public NestedNameManager(@NonNull NameManager parent, @NonNull CGElement cgScope) {
+	public NestedNameManager(@NonNull NameManager parent, @NonNull CGNamedElement cgScope) {
 		super(parent, parent.helper);
 		this.parent = parent;
 		this.cgScope = cgScope;
+		assert !(parent instanceof NestedNameManager) || (((NestedNameManager)parent).cgScope != cgScope);		// XXX
 		parent.addChild(this);
 	}
 
@@ -46,7 +50,7 @@ public class NestedNameManager extends NameManager
 		assert context2 == null;
 		this.context = context2 = new Context(this);
 		if (reservedNameResolutions != null) {
-			for (@NonNull NameResolution nameResolution : reservedNameResolutions) {
+			for (@NonNull BaseNameResolution nameResolution : reservedNameResolutions) {
 				String resolvedName = nameResolution.getResolvedName();
 				CGValuedElement primaryElement = nameResolution.getPrimaryElement();
 				context2.reserveName(resolvedName, primaryElement);
@@ -55,24 +59,80 @@ public class NestedNameManager extends NameManager
 		assignNames(context2);
 	}
 
-	public @NonNull NameResolution declareReservedName(@NonNull CGValuedElement cgElement, @NonNull String nameHint) {
+	@Override
+	public @NonNull NameResolution declareLazyName(@NonNull CGValuedElement cgElement) {
+		if (cgElement.isGlobal()) {
+			return globalNameManager.declareLazyName(cgElement);
+		}
+		return super.declareLazyName(cgElement);
+	}
+
+	/**
+	 * Declare that cgElement has a name which can eventually default to its preferred value.
+	 * This is typically used to provide an eager name resolution for a variable without reserving the name.
+	 */
+	public @NonNull NameResolution declarePreferredName(@NonNull CGValuedElement cgElement) {
+	//	assert cgElement.getNamedValue() == cgElement;
+		NameResolution nameResolution = cgElement.basicGetNameResolution();
+		if (nameResolution != null) {
+			return nameResolution;
+		}
+		String nameHint = helper.getNameHint(cgElement);
+		return new BaseNameResolution(this, cgElement, nameHint);
+	}
+
+	@Override
+	public @NonNull BaseNameResolution declareReservedName(@NonNull CGValuedElement cgElement, @NonNull String nameHint) {
 		assert !cgElement.isGlobal();
-		CGValuedElement cgNamedValue = cgElement.getNamedValue();
-		assert cgElement == cgNamedValue;
-		NameResolution nameResolution = cgNamedValue.basicGetNameResolution();
-		assert nameResolution == null;
-		nameResolution = new NameResolution(this, cgNamedValue, nameHint);
-		nameResolution.setResolvedName(nameHint);
-		List<@NonNull NameResolution> reservedNameResolutions2 = reservedNameResolutions;
+		assert cgElement.getNamedValue() == cgElement;
+		NameResolution nameResolution2 = cgElement.basicGetNameResolution();
+		assert nameResolution2 == null;
+		BaseNameResolution baseNameResolution = new BaseNameResolution(this, cgElement, nameHint);
+		baseNameResolution.setResolvedName(nameHint);
+		List<@NonNull BaseNameResolution> reservedNameResolutions2 = reservedNameResolutions;
 		if (reservedNameResolutions2 == null) {
 			reservedNameResolutions = reservedNameResolutions2 = new ArrayList<>();
 		}
-		reservedNameResolutions2.add(nameResolution);
-		return nameResolution;
+		reservedNameResolutions2.add(baseNameResolution);
+		return baseNameResolution;
 	}
 
 	@Override
 	protected @NonNull Context getContext() {
 		return ClassUtil.nonNullState(context);
+	}
+
+	@Override
+	protected @Nullable String getLazyNameHint(@NonNull CGValuedElement cgNamedValue) {
+		if (cgNamedValue instanceof CGForeignProperty) {
+			// FIXME if we make CGForeignProperty we have worse problems with dependences for non-trivial initializers
+			return getNameHint(cgNamedValue);
+		}
+		if (cgNamedValue instanceof CGProperty) {
+			return getNameHint(cgNamedValue);
+		}
+		return null;
+	}
+
+	public @NonNull NameResolution getNameResolution(@NonNull CGValuedElement cgElement) {
+		NameResolution unsafeNameResolution = cgElement.basicGetNameResolution();
+		if (unsafeNameResolution == null) {
+			unsafeNameResolution = declareLazyName(cgElement);
+		}
+		return unsafeNameResolution;
+	}
+
+	@Override
+	public boolean isGlobal() {
+		return false;
+	}
+
+	public boolean isReserved(@NonNull NameResolution nameResolution) {
+		return (reservedNameResolutions != null) && reservedNameResolutions.contains(nameResolution);
+	}
+
+	@Override
+	public @NonNull String toString() {
+		return "locals-" + cgScope.eClass().getName() + "-" + CGUtil.getAST(cgScope).getName();
 	}
 }

@@ -22,12 +22,13 @@ import org.eclipse.ocl.pivot.Property;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp#getReferredProperty <em>Referred Property</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp#getCgProperty <em>Cg Property</em>}</li>
  * </ul>
  *
  * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGNavigationCallExp()
  * @generated
  */
-public interface CGNavigationCallExp extends CGCallExp {
+public interface CGNavigationCallExp extends CGSourcedCallExp {
 	/**
 	 * Returns the value of the '<em><b>Referred Property</b></em>' attribute.
 	 * <!-- begin-user-doc -->
@@ -52,5 +53,29 @@ public interface CGNavigationCallExp extends CGCallExp {
 	 * @generated
 	 */
 	void setReferredProperty(Property value);
+
+	/**
+	 * Returns the value of the '<em><b>Cg Property</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The this expression for the call when invoking a native or ecore implementation.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Cg Property</em>' reference.
+	 * @see #setCgProperty(CGProperty)
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGNavigationCallExp_CgProperty()
+	 * @generated
+	 */
+	CGProperty getCgProperty();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp#getCgProperty <em>Cg Property</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Cg Property</em>' reference.
+	 * @see #getCgProperty()
+	 * @generated
+	 */
+	void setCgProperty(CGProperty value);
 
 } // CGNavigationCallExp

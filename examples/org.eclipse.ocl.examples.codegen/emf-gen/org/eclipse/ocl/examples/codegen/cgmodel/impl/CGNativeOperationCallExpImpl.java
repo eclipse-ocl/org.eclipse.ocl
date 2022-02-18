@@ -13,11 +13,14 @@ package org.eclipse.ocl.examples.codegen.cgmodel.impl;
 import java.lang.reflect.Method;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
 
 /**
@@ -29,7 +32,9 @@ import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGNativeOperationCallExpImpl#getMethod <em>Method</em>}</li>
- *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGNativeOperationCallExpImpl#isThisIsSelf <em>This Is Self</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGNativeOperationCallExpImpl#isValueIsBoxed <em>Value Is Boxed</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGNativeOperationCallExpImpl#isValueIsEcore <em>Value Is Ecore</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGNativeOperationCallExpImpl#getCgThis <em>Cg This</em>}</li>
  * </ul>
  *
  * @generated
@@ -42,7 +47,7 @@ public class CGNativeOperationCallExpImpl extends CGOperationCallExpImpl impleme
 	 * @generated
 	 * @ordered
 	 */
-	public static final int CG_NATIVE_OPERATION_CALL_EXP_FEATURE_COUNT = CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 2;
+	public static final int CG_NATIVE_OPERATION_CALL_EXP_FEATURE_COUNT = CGOperationCallExpImpl.CG_OPERATION_CALL_EXP_FEATURE_COUNT + 4;
 
 	/**
 	 * The default value of the '{@link #getMethod() <em>Method</em>}' attribute.
@@ -65,24 +70,54 @@ public class CGNativeOperationCallExpImpl extends CGOperationCallExpImpl impleme
 	protected Method method = METHOD_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #isThisIsSelf() <em>This Is Self</em>}' attribute.
+	 * The default value of the '{@link #isValueIsBoxed() <em>Value Is Boxed</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isThisIsSelf()
+	 * @see #isValueIsBoxed()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final boolean THIS_IS_SELF_EDEFAULT = false;
+	protected static final boolean VALUE_IS_BOXED_EDEFAULT = false;
 
 	/**
-	 * The cached value of the '{@link #isThisIsSelf() <em>This Is Self</em>}' attribute.
+	 * The cached value of the '{@link #isValueIsBoxed() <em>Value Is Boxed</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isThisIsSelf()
+	 * @see #isValueIsBoxed()
 	 * @generated
 	 * @ordered
 	 */
-	protected boolean thisIsSelf = THIS_IS_SELF_EDEFAULT;
+	protected boolean valueIsBoxed = VALUE_IS_BOXED_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #isValueIsEcore() <em>Value Is Ecore</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isValueIsEcore()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean VALUE_IS_ECORE_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isValueIsEcore() <em>Value Is Ecore</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isValueIsEcore()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean valueIsEcore = VALUE_IS_ECORE_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getCgThis() <em>Cg This</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCgThis()
+	 * @generated
+	 * @ordered
+	 */
+	protected CGValuedElement cgThis;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -132,8 +167,8 @@ public class CGNativeOperationCallExpImpl extends CGOperationCallExpImpl impleme
 	 * @generated
 	 */
 	@Override
-	public boolean isThisIsSelf() {
-		return thisIsSelf;
+	public boolean isValueIsBoxed() {
+		return valueIsBoxed;
 	}
 
 	/**
@@ -142,11 +177,93 @@ public class CGNativeOperationCallExpImpl extends CGOperationCallExpImpl impleme
 	 * @generated
 	 */
 	@Override
-	public void setThisIsSelf(boolean newThisIsSelf) {
-		boolean oldThisIsSelf = thisIsSelf;
-		thisIsSelf = newThisIsSelf;
+	public void setValueIsBoxed(boolean newValueIsBoxed) {
+		boolean oldValueIsBoxed = valueIsBoxed;
+		valueIsBoxed = newValueIsBoxed;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 12, oldThisIsSelf, thisIsSelf));
+			eNotify(new ENotificationImpl(this, Notification.SET, 12, oldValueIsBoxed, valueIsBoxed));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public boolean isValueIsEcore() {
+		return valueIsEcore;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setValueIsEcore(boolean newValueIsEcore) {
+		boolean oldValueIsEcore = valueIsEcore;
+		valueIsEcore = newValueIsEcore;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, 13, oldValueIsEcore, valueIsEcore));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public CGValuedElement getCgThis() {
+		return cgThis;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetCgThis(CGValuedElement newCgThis, NotificationChain msgs) {
+		CGValuedElement oldCgThis = cgThis;
+		cgThis = newCgThis;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 14, oldCgThis, newCgThis);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setCgThis(CGValuedElement newCgThis) {
+		if (newCgThis != cgThis) {
+			NotificationChain msgs = null;
+			if (cgThis != null)
+				msgs = ((InternalEObject)cgThis).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (14), null, msgs);
+			if (newCgThis != null)
+				msgs = ((InternalEObject)newCgThis).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (14), null, msgs);
+			msgs = basicSetCgThis(newCgThis, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, 14, newCgThis, newCgThis));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case 14:
+				return basicSetCgThis(null, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
 	/**
@@ -170,7 +287,11 @@ public class CGNativeOperationCallExpImpl extends CGOperationCallExpImpl impleme
 			case 11:
 				return getMethod();
 			case 12:
-				return isThisIsSelf();
+				return isValueIsBoxed();
+			case 13:
+				return isValueIsEcore();
+			case 14:
+				return getCgThis();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -187,7 +308,13 @@ public class CGNativeOperationCallExpImpl extends CGOperationCallExpImpl impleme
 				setMethod((Method)newValue);
 				return;
 			case 12:
-				setThisIsSelf((Boolean)newValue);
+				setValueIsBoxed((Boolean)newValue);
+				return;
+			case 13:
+				setValueIsEcore((Boolean)newValue);
+				return;
+			case 14:
+				setCgThis((CGValuedElement)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -205,7 +332,13 @@ public class CGNativeOperationCallExpImpl extends CGOperationCallExpImpl impleme
 				setMethod(METHOD_EDEFAULT);
 				return;
 			case 12:
-				setThisIsSelf(THIS_IS_SELF_EDEFAULT);
+				setValueIsBoxed(VALUE_IS_BOXED_EDEFAULT);
+				return;
+			case 13:
+				setValueIsEcore(VALUE_IS_ECORE_EDEFAULT);
+				return;
+			case 14:
+				setCgThis((CGValuedElement)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -222,7 +355,11 @@ public class CGNativeOperationCallExpImpl extends CGOperationCallExpImpl impleme
 			case 11:
 				return METHOD_EDEFAULT == null ? method != null : !METHOD_EDEFAULT.equals(method);
 			case 12:
-				return thisIsSelf != THIS_IS_SELF_EDEFAULT;
+				return valueIsBoxed != VALUE_IS_BOXED_EDEFAULT;
+			case 13:
+				return valueIsEcore != VALUE_IS_ECORE_EDEFAULT;
+			case 14:
+				return cgThis != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -242,7 +379,7 @@ public class CGNativeOperationCallExpImpl extends CGOperationCallExpImpl impleme
 	 */
 	@Override
 	public boolean isBoxed() {
-		return false;
+		return valueIsBoxed;
 	}
 
 	/**
@@ -251,7 +388,7 @@ public class CGNativeOperationCallExpImpl extends CGOperationCallExpImpl impleme
 	 */
 	@Override
 	public boolean isEcore() {
-		return false;
+		return valueIsEcore;
 	}
 
 	/**
@@ -272,7 +409,7 @@ public class CGNativeOperationCallExpImpl extends CGOperationCallExpImpl impleme
 	 */
 	@Override
 	public boolean isUnboxed() {
-		return true;
+		return !valueIsBoxed && !valueIsEcore;
 	}
 
 } //CGMethodOperationCallExpImpl

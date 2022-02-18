@@ -51,7 +51,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
  *
  * @generated
  */
-public abstract class CGIterationCallExpImpl extends CGCallExpImpl implements CGIterationCallExp {
+public abstract class CGIterationCallExpImpl extends CGSourcedCallExpImpl implements CGIterationCallExp {
 	/**
 	 * The number of structural features of the '<em>CG Iteration Call Exp</em>' class.
 	 * <!-- begin-user-doc -->
@@ -59,7 +59,7 @@ public abstract class CGIterationCallExpImpl extends CGCallExpImpl implements CG
 	 * @generated
 	 * @ordered
 	 */
-	public static final int CG_ITERATION_CALL_EXP_FEATURE_COUNT = CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 4;
+	public static final int CG_ITERATION_CALL_EXP_FEATURE_COUNT = CGSourcedCallExpImpl.CG_SOURCED_CALL_EXP_FEATURE_COUNT + 4;
 
 	/**
 	 * The default value of the '{@link #getReferredIteration() <em>Referred Iteration</em>}' attribute.

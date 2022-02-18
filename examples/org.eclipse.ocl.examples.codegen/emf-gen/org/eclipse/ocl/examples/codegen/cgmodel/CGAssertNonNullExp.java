@@ -24,5 +24,5 @@ package org.eclipse.ocl.examples.codegen.cgmodel;
  * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGAssertNonNullExp()
  * @generated
  */
-public interface CGAssertNonNullExp extends CGCallExp {
+public interface CGAssertNonNullExp extends CGSourcedCallExp {
 } // CGAssertNonNullExp

@@ -161,6 +161,36 @@ public abstract class AbstractModelManager implements ModelManager.ModelManagerE
 	 * @since 1.18
 	 */
 	@Override
+	public @Nullable Object getForeignPropertyValue(@Nullable Object object, @NonNull PropertyId propertyId, @Nullable Object initValue) {
+		if (object != null) {
+			Map<@NonNull PropertyId, @NonNull Map<@NonNull Object, @NonNull Object>> foreignPropertyId2object2value2 = foreignPropertyId2object2value;
+			if (foreignPropertyId2object2value2 == null) {
+				foreignPropertyId2object2value = foreignPropertyId2object2value2 = new HashMap<>();
+			}
+			Map<@NonNull Object, @NonNull Object> object2value = foreignPropertyId2object2value2.get(propertyId);
+			if (object2value == null) {
+				object2value = new HashMap<>();
+				foreignPropertyId2object2value2.put(propertyId, object2value);
+			}
+			assert !object2value.containsKey(object);
+			object2value.put(object, initValue != null ? initValue : ValueUtil.NULL_VALUE);
+			return initValue;
+		}
+		else {
+			Map<@NonNull PropertyId, @NonNull Object> staticPropertyId2value2 = staticPropertyId2value;
+			if (staticPropertyId2value2 == null) {
+				staticPropertyId2value = staticPropertyId2value2 = new HashMap<>();
+			}
+			assert !staticPropertyId2value2.containsKey(propertyId);
+			staticPropertyId2value2.put(propertyId, initValue != null ? initValue : ValueUtil.NULL_VALUE);
+			return initValue;
+		}
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	@Override
 	public @Nullable Object setForeignPropertyValue(@Nullable Object object, @NonNull PropertyId propertyId, @NonNull Object value) {
 		if (object != null) {
 			Map<@NonNull PropertyId, @NonNull Map<@NonNull Object, @NonNull Object>> foreignPropertyId2object2value2 = foreignPropertyId2object2value;

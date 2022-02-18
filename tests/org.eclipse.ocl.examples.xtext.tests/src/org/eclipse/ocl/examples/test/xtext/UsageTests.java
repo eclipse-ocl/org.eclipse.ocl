@@ -2060,16 +2060,16 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 			@Override
 			public void runWithThrowable() throws Exception {
 				String testFileStem = "StaticProperty";
-				String testProjectName = "staticProperty";
+				String testProjectName = "statics";
 				String oclinecoreFile =
 						"import ecore : 'http://www.eclipse.org/emf/2002/Ecore#/';\n"
-								+ "package staticProperty : staticProperty = 'http://staticProperty'\n"
+								+ "package statics : statics = 'http://staticProperty'\n"
 								+ "{\n"
-								+ "    class StaticProperty\n"
+								+ "    class Statics\n"
 								+ "    {\n"
 //								+ "    	   static attribute startTime1 : ecore::EDate[1] { initial: null; 3}\n"
 								+ "    	   static attribute startTime2 : Integer[1] { derived readonly transient volatile } { initial: 3; }\n"
-								+ "    	   static attribute startTime3 : Integer[1] { derived readonly transient volatile }  { initial: startTime2; }\n"
+								+ "    	   static attribute startTime3 : Integer[1] { derived readonly transient volatile }  { initial: startTime2 + Statics::startTime1(); }\n"
 								+ "        static operation startTime1() :Integer[1] {"
 								+ "             body : 55;\n"
 								+ "        }\n"
@@ -2096,13 +2096,13 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				List<@NonNull String> packagePaths = JavaFileUtil.gatherPackageNames(classFilePath, null);
 				ExplicitClassLoader classLoader = new ExplicitClassLoader(classFilePath, packagePaths, getClass().getClassLoader());
 				EPackage ePackage = doLoadPackage(classLoader, qualifiedPackageName);
-				EClass eClass = (EClass) ePackage.getEClassifier("StaticProperty");
+				EClass eClass = (EClass) ePackage.getEClassifier("Statics");
 			//	EStructuralFeature eStructuralFeature = eClass.getEStructuralFeature("name");
 				EFactory eFactory = ePackage.getEFactoryInstance();
 				//
 				EObject eObject = eFactory.create(eClass);
 			//	ocl2.assertQueryEquals(eObject, "77", "staticProperty::StaticProperty::startTime2()");
-				ocl2.assertQueryEquals(eObject, 3, "staticProperty::StaticProperty::startTime3");
+				ocl2.assertQueryEquals(eObject, 3, "statics::Statics::startTime3");
 			//	ocl.assertQueryTrue(eObject, "complement(true) = false");
 			//	eObject.eSet(eStructuralFeature, "testing");
 			//	ocl.assertQueryFalse(eObject, "name = null");

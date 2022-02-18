@@ -34,7 +34,8 @@ public class NotOperation2Handler extends AbstractLibraryOperationHandler
 			//
 			//	Trivial source cases
 			//
-			final CGValuedElement cgSource = cgOperationCallExp.getSource();
+			assert cgOperationCallExp.getCgThis() == null;
+			final @NonNull CGValuedElement cgSource = cgOperationCallExp.getFirstArgument();
 			if (cgSource.isFalse()) {
 				appendAssignBooleanLiteral(hasDeclaration, cgOperationCallExp, true);
 				return true;
