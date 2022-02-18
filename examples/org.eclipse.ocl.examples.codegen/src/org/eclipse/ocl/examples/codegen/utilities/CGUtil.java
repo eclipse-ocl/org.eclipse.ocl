@@ -29,6 +29,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIfExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterator;
@@ -271,6 +272,10 @@ public class CGUtil
 		return ClassUtil.nonNullState(cgVariable.getInit());
 	}
 
+	public static @NonNull CGValuedElement getInitExpression(@NonNull CGForeignProperty cgForeignProperty) {
+		return ClassUtil.nonNullState(cgForeignProperty.getInitExpression());
+	}
+
 	public static @NonNull CGIterator getIterator(@NonNull CGIterationCallExp cgIterationCallExp, int i) {
 		return ClassUtil.nonNullState(cgIterationCallExp.getIterators().get(i));
 	}
@@ -295,12 +300,12 @@ public class CGUtil
 		return ClassUtil.nonNullState(cgConstantExp.getReferredConstant());
 	}
 
-	public static @NonNull Property getReferredProperty(@NonNull CGNavigationCallExp cgNavigationCallExp) {
-		return ClassUtil.nonNullState(cgNavigationCallExp.getReferredProperty());
-	}
-
 	public static @NonNull Operation getReferredOperation(@NonNull CGOperationCallExp cgOperationCallExp) {
 		return ClassUtil.nonNullState(cgOperationCallExp.getReferredOperation());
+	}
+
+	public static  @NonNull Property getReferredProperty(@NonNull CGNavigationCallExp cgNavigationCallExp) {
+		return ClassUtil.nonNullState(cgNavigationCallExp.getReferredProperty());
 	}
 
 	public static @NonNull CGValuedElement getReferredVariable(@NonNull CGVariableExp cgVariableExp) {

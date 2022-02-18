@@ -261,6 +261,9 @@ public class JavaStream
 
 	public void append(@Nullable String string) {
 		if (string != null) {
+			if (string.contains("getExecutor")) {
+				getClass();		// XXX
+			}
 			if (indentationStack.isEmpty()) {
 				s.append(string);
 			}

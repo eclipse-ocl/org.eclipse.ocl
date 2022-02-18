@@ -110,12 +110,32 @@ public interface ModelManager
 	};
 
 	/**
-	 * Return the boxeed value of the static propertyId.
+	 * Return the boxed value of the foreign propertyId of object, which should be null for a static properyId.
 	 * Returns null if no such property yet known. Returns ValueUtil.NULL_VALUE for a null value.
 	 *
 	 * @since 1.18
 	 */
+	default @Nullable Object basicGetForeignPropertyValue(@Nullable Object object, @NonNull PropertyId propertyId) {
+		return null;
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	@Deprecated // XXX
 	default @Nullable Object basicGetStaticPropertyValue(@NonNull PropertyId propertyId) {
+		return basicGetForeignPropertyValue(null, propertyId);
+	}
+
+	/**
+	 * Return the boxed value of the foreign propertyId of object, which should be null for a static properyId.
+	 * initExpression or defaultValue is used to initialize on first access.
+	 * Returns null if no such property known. Returns ValueUtil.NULL_VALUE for a null value.
+	 * @param defaultValue
+	 *
+	 * @since 1.18
+	 */
+	default @Nullable Object getForeignPropertyValue(@Nullable Object object, @NonNull PropertyId propertyId, @Nullable OCLExpression initExpression, @Nullable Object defaultValue) {
 		return null;
 	}
 
@@ -133,23 +153,28 @@ public interface ModelManager
 	}
 
 	/**
-	 * Return the boxeed value of the static propertyId, evaluating initExpression to initialize on first access.
-	 * Returns null if no such property known. Returns ValueUtil.NULL_VALUE for a null value.
-	 * @param defaultValue
+	 * @since 1.18
+	 */
+	@Deprecated // XXX
+	default @Nullable Object getStaticPropertyValue(@NonNull PropertyId propertyId, @Nullable OCLExpression initExpression, @Nullable Object defaultValue) {
+		return getForeignPropertyValue(null, propertyId, initExpression, defaultValue);
+	}
+
+	/**
+	 * Specify the boxed value of the not-read-only foreign propertyId of object, which should be null for a static properyId.
+	 * Returns the previous value. Returns Invalid if read-only.
 	 *
 	 * @since 1.18
 	 */
-	default @Nullable Object getStaticPropertyValue(@NonNull PropertyId propertyId, @Nullable OCLExpression initExpression, @Nullable Object defaultValue) {
+	default @Nullable Object setForeignPropertyValue(@Nullable Object object, @NonNull PropertyId propertyId, @NonNull Object value) {
 		return null;
 	}
 
 	/**
-	 * Specify the boxeed value of the not-read-only static propertyId.
-	 * Returns the previous value. Returns Invalud if read-only.
-	 *
 	 * @since 1.18
 	 */
+	@Deprecated // XXX
 	default @Nullable Object setStaticPropertyValue(@NonNull PropertyId propertyId, @NonNull Object value) {
-		return null;
+		return setForeignPropertyValue(null, propertyId, value);
 	}
 }

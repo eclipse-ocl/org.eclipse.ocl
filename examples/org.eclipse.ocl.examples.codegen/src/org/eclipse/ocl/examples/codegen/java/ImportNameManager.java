@@ -30,4 +30,6 @@ public interface ImportNameManager
 	@NonNull String addImport(@Nullable Boolean isRequired, @NonNull String newLongName);
 
 	@NonNull Map<@NonNull String, @Nullable String> getLong2ShortImportNames();
+
+	void reserveLocalName(@NonNull String foreignClassName);
 }

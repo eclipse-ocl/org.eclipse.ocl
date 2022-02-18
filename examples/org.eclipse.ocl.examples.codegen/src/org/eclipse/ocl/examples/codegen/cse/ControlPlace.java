@@ -44,9 +44,13 @@ public class ControlPlace extends LocalPlace
 		if (parentPlace instanceof ControlPlace) {
 			return parentPlace;
 		}
-		else {
-			return new ControlPlace(getLocalPlace(element2place, cgParent), cgElement);
+		if (parentPlace instanceof OuterStackPlace) {
+			ControlPlace controlPlace = ((OuterStackPlace)parentPlace).basicGetControlPlace();
+			if (controlPlace != null) {
+				return controlPlace;
+			}
 		}
+		return new ControlPlace(getLocalPlace(element2place, cgParent), cgElement);
 	}
 
 	public static @NonNull ControlPlace getControlPlace(@NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place, @NonNull CGValuedElement cgElement) {
@@ -63,6 +67,12 @@ public class ControlPlace extends LocalPlace
 			AbstractPlace parentPlace = element2place.get(cgParent);
 			if (parentPlace instanceof ControlPlace) {
 				controlPlace = (ControlPlace) parentPlace;
+			}
+			else if (parentPlace instanceof OuterStackPlace) {
+				controlPlace = ((OuterStackPlace)parentPlace).basicGetControlPlace();
+				if (controlPlace == null) {
+					controlPlace = new ControlPlace(getLocalPlace(element2place, cgParent), cgElement);
+				}
 			}
 			else {
 				controlPlace = new ControlPlace(getLocalPlace(element2place, cgParent), cgElement);
@@ -225,7 +235,9 @@ public class ControlPlace extends LocalPlace
 		if (!hashedAnalyses.isEmpty()) {
 			Map<@NonNull CGValuedElement, @NonNull AbstractAnalysis> locals = new HashMap<>();
 			for (@NonNull AbstractAnalysis analysis : hashedAnalyses) {
-				locals.put(analysis.getPrimaryElement(), analysis);
+				CGValuedElement primaryElement = analysis.getPrimaryElement();
+			//	assert primaryElement != placedElement;		// XXX
+				locals.put(primaryElement, analysis);
 			}
 			DependencyVisitor dependencyVisitor = analyzer.getCodeGenerator().createDependencyVisitor();
 			HashSet<@NonNull CGValuedElement> allElements = new HashSet<>(locals.keySet());

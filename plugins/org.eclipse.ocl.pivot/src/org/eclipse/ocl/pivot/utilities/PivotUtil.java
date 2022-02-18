@@ -1352,6 +1352,29 @@ public class PivotUtil
 	}
 
 	/**
+	 * Locate an OCL Executor from the Resource containing an eObject, else create a default one.
+	 *
+	 * @since 1.18
+	 */
+	public static @NonNull Executor getExecutor(@Nullable EObject eObject, @NonNull ModelManager modelManager) {
+		Executor executor = ThreadLocalExecutor.basicGetExecutor();
+		if (executor != null) {
+			return executor;
+		}
+		if (eObject != null) {
+			EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+			if (environmentFactory != null) {
+				executor = new PivotExecutorManager(environmentFactory, eObject, modelManager);
+			}
+		}
+		if (executor == null) {
+			executor = new EcoreExecutorManager(eObject, PivotTables.LIBRARY, modelManager);
+		}
+		ThreadLocalExecutor.setExecutor(executor);
+		return executor;
+	}
+
+	/**
 	 * Locate an OCL Executor from the Executor.class slot in validationContext, else
 	 * from the Resource containing an eObject, else create a default one.
 	 *
@@ -1831,8 +1854,16 @@ public class PivotUtil
 	}
 
 	/**
+	 * @since 1.18
+	 */
+	public static org.eclipse.ocl.pivot.@NonNull Class getOwningClass(@NonNull Feature feature) {
+		return ClassUtil.nonNullState(feature.getOwningClass());
+	}
+
+	/**
 	 * @since 1.3
 	 */
+	@Deprecated /* @deprecated use Feature */
 	public static org.eclipse.ocl.pivot.@NonNull Class getOwningClass(@NonNull Operation operation) {
 		return ClassUtil.nonNullState(operation.getOwningClass());
 	}
@@ -1840,6 +1871,7 @@ public class PivotUtil
 	/**
 	 * @since 1.3
 	 */
+	@Deprecated /* @deprecated use Feature */
 	public static org.eclipse.ocl.pivot.@NonNull Class getOwningClass(@NonNull Property property) {
 		return ClassUtil.nonNullState(property.getOwningClass());
 	}

@@ -153,6 +153,7 @@ public class JavaImportNameManager extends AbstractImportNameManager
 	 * Register classname as a locally defined nested class to prevent its use as an imported name.
 	 * THrows an IllegalStateException if already reserved.
 	 */
+	@Override
 	public void reserveLocalName(@NonNull String className) {
 		String oldName = short2longName.put(className, className);
 		if (oldName != null) {

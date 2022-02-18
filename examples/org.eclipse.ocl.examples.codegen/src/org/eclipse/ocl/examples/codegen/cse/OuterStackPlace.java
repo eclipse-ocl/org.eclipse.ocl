@@ -24,9 +24,22 @@ public class OuterStackPlace extends StackPlace
 		return stackPlace;
 	}
 
+	private /*@LazyNonNull*/ ControlPlace controlPlace = null;
+
 	protected OuterStackPlace(@NonNull GlobalPlace globalPlace, @NonNull CGElement stackElement) {
 		super(globalPlace, stackElement);
 		globalPlace.addStackPlace(this);
+	}
+
+	@Override
+	public void addControlPlace(@NonNull ControlPlace controlPlace) {
+		assert this.controlPlace == null;
+		this.controlPlace = controlPlace;
+		super.addControlPlace(controlPlace);
+	}
+
+	public @Nullable ControlPlace basicGetControlPlace() {
+		return controlPlace;
 	}
 
 	@Override

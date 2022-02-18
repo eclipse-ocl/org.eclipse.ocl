@@ -13,10 +13,12 @@ package org.eclipse.ocl.examples.codegen.generator;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
+import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
 
 public interface GlobalContext
 {
 	@Nullable LocalContext basicGetLocalContext(@NonNull CGNamedElement asElement);
 //	@NonNull LocalContext createLocalContext(@NonNull CGNamedElement cgElement);
+	@NonNull ImportNameManager getImportNameManager();
 	@NonNull LocalContext getLocalContext(@NonNull CGNamedElement asElement);
 }

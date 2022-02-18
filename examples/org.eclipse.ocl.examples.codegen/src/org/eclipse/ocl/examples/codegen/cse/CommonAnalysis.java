@@ -13,12 +13,14 @@ package org.eclipse.ocl.examples.codegen.cse;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.NameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
@@ -123,6 +125,16 @@ public class CommonAnalysis extends AbstractAnalysis
 
 	public void rewrite(@NonNull CodeGenAnalyzer analyzer, @NonNull CGValuedElement controlElement) {
 		CGValuedElement cgCSE = primaryAnalysis.getElement();
+		if (cgCSE == controlElement) {
+			getClass();		// XXX
+			EObject eContainer = controlElement.eContainer();
+			if (eContainer instanceof CGForeignProperty ) {
+				controlElement = CGUtil.getInitExpression((CGForeignProperty)eContainer);
+			}
+			else {
+				throw new UnsupportedOperationException();		// FIXME many more ?? a polymorphic method
+			}
+		}
 		if ((simpleAnalyses.size() > 1) || !cgCSE.isUncommonable()) {
 			JavaGlobalContext<@NonNull ?> globalContext = ((JavaCodeGenerator)analyzer.getCodeGenerator()).getGlobalContext();
 			NameManager nameManager = globalContext.getLocalContext(controlElement).getNameManager();;
@@ -140,7 +152,8 @@ public class CommonAnalysis extends AbstractAnalysis
 				}
 			}
 			CGUtil.rewriteAsLet(controlElement, cgVariable);
-			if (cgCSE.eResource() == null) {
+			// resetContainer needed  if commonElement.getParent() was rewriteable (for e.g. a TypeExp where the containment is a helpful 'owns' rather than a necessary child.)
+			if (cgCSE.eResource() == null) {						// XXX FIXME surely !=
 				PivotUtilInternal.resetContainer(cgCSE);
 			}
 			else if (cgCSE instanceof CGExecutorType) {

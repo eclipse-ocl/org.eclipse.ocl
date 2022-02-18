@@ -37,6 +37,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterator;
@@ -176,10 +177,6 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 		return codeGenerator;
 	}
 
-//	protected @NonNull JavaLocalContext<@NonNull ?> getLocalContext() {
-//		return ClassUtil.nonNullState(localContext);
-//	}
-
 	protected @NonNull NameManager getNameManager() {
 		return ClassUtil.nonNullState(localContext).getNameManager();
 	}
@@ -191,14 +188,6 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 	protected @Nullable CGVariable installExecutorVariable(@NonNull CGValuedElement cgElement) {
 		return getTreeContext().getExecutorVariable();
 	}
-
-/*	protected @Nullable CGValuedElement installExecutorVariable(@NonNull CGValuedElement cgValuedElement) {
-		CGValuedElement executorVariable = localContext.createExecutorVariable(getContextName(cgValuedElement));
-		if (executorVariable != null) {
-			cgValuedElement.getOwns().add(executorVariable);
-		}
-		return localContext = savedLocalContext;
-	} */
 
 	protected @NonNull CGVariable installIdResolverVariable(@NonNull CGValuedElement cgElement) {
 		return getTreeContext().getIdResolverVariable();
@@ -430,6 +419,25 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 	}
 
 	@Override
+	public @Nullable Object visitCGForeignProperty(@NonNull CGForeignProperty cgForeignProperty) {
+		localContext = context.getLocalContext(cgForeignProperty);
+		try {
+			installExecutorVariable(cgForeignProperty);
+		//	installExecutorVariable(cgForeignProperty.getInitExpression());			// FIXME dependency at root confuses
+			return super.visitCGProperty(cgForeignProperty);		// FIXME leapfrog to avoid double localContext
+		}
+		finally {
+			localContext = null;
+		}
+	}
+
+	@Override
+	public @Nullable Object visitCGForeignPropertyCallExp(@NonNull CGForeignPropertyCallExp cgForeignPropertyCallExp) {
+	//	installExecutorVariable(cgForeignPropertyCallExp);
+		return super.visitCGForeignPropertyCallExp(cgForeignPropertyCallExp);
+	}
+
+	@Override
 	public @Nullable Object visitCGIterationCallExp(@NonNull CGIterationCallExp cgIterationCallExp) {
 		Iteration asIteration = ClassUtil.nonNullState(cgIterationCallExp.getReferredIteration());
 		IterationHelper iterationHelper = codeGenerator.getIterationHelper(asIteration);
@@ -594,12 +602,6 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 		cgShadowPart.getDependsOn().add(cgExecutorConstructorPart);
 		//		cgShadowPart.getDependsOn().add(cgShadowPart.getShadowExp());
 		return super.visitCGShadowPart(cgShadowPart);
-	}
-
-	@Override
-	public @Nullable Object visitCGForeignPropertyCallExp(@NonNull CGForeignPropertyCallExp cgForeignPropertyCallExp) {
-		installExecutorVariable(cgForeignPropertyCallExp);
-		return super.visitCGForeignPropertyCallExp(cgForeignPropertyCallExp);
 	}
 
 	@Override

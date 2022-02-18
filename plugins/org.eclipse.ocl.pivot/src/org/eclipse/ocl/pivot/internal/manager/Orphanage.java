@@ -497,6 +497,8 @@ public class Orphanage extends PackageImpl
 
 	/**
 	 * Return the Orphanage for a resourceSet if non-null. Obsolete deprecated functionality returns a global Orphanage if null.
+	 *
+	 * @since 1.18
 	 */
 	public static @NonNull Orphanage getOrphanage(@Nullable ResourceSet resourceSet) {
 		if (resourceSet == null) {

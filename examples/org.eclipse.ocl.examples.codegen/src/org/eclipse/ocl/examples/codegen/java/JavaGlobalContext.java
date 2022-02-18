@@ -55,6 +55,7 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 	protected final @NonNull NameResolution executorName;
 	protected final @NonNull NameResolution getCachedEvaluationResult;
 	protected final @NonNull NameResolution idResolverName;
+	protected final @NonNull NameResolution initValueName;
 	protected final @NonNull NameResolution instanceName;
 	protected final @NonNull NameResolution modelManagerName;
 	protected final @NonNull NameResolution selfName;
@@ -62,6 +63,7 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 	protected final @NonNull NameResolution standardLibraryVariableName;
 	protected final @NonNull NameResolution thisName;
 	protected final @NonNull NameResolution typeIdName;
+	protected final @NonNull NameResolution valueName;
 
 	public JavaGlobalContext(@NonNull CG codeGenerator) {
 		super(codeGenerator);
@@ -76,6 +78,7 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 		this.executorName = globalNameManager.declareGlobalName(null, JavaConstants.EXECUTOR_NAME);
 		this.getCachedEvaluationResult = globalNameManager.declareGlobalName(null, JavaConstants.GET_CACHED_EVLUATION_RESULT_NAME);
 		this.idResolverName = globalNameManager.declareGlobalName(null, JavaConstants.ID_RESOLVER_NAME);
+		this.initValueName = globalNameManager.declareGlobalName(null, "initValue");
 		this.instanceName = globalNameManager.declareGlobalName(null, JavaConstants.INSTANCE_NAME);
 		this.modelManagerName = globalNameManager.declareGlobalName(null, JavaConstants.MODEL_MANAGER_NAME);
 		this.selfName = globalNameManager.declareGlobalName(null, PivotConstants.SELF_NAME);
@@ -83,6 +86,7 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 		this.standardLibraryVariableName = globalNameManager.declareGlobalName(null, JavaConstants.STANDARD_LIBRARY_NAME);
 //.		this.thisName = globalNameManager.getReservedName(null, JavaConstants.THIS_NAME);
 		this.typeIdName = globalNameManager.declareGlobalName(null, JavaConstants.TYPE_ID_NAME);
+		this.valueName = globalNameManager.declareGlobalName(null, "value");
 	}
 
 	protected void addGlobal(@NonNull CGValuedElement cgGlobal) {
@@ -186,6 +190,7 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 		return idResolverName;
 	}
 
+	@Override
 	public @NonNull ImportNameManager getImportNameManager() {
 		return importNameManager;
 	}
@@ -193,6 +198,10 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 	@Deprecated /* deprecated use getImportManager */
 	public @NonNull Set<@NonNull String> getImports() {
 		return importNameManager.getLong2ShortImportNames().keySet();
+	}
+
+	public @NonNull String getInitValueName() {
+		return initValueName.getResolvedName();
 	}
 
 	public @NonNull String getInstanceName() {
@@ -206,6 +215,10 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 	@Override
 	public @NonNull JavaLocalContext<@NonNull ? extends CG> getLocalContext(@NonNull CGNamedElement cgElement) {
 		return ClassUtil.nonNullState(basicGetLocalContext(cgElement));
+	}
+
+	public @NonNull String getModelManagerName() {
+		return modelManagerName.getResolvedName();
 	}
 
 	public @NonNull NameResolution getModelManagerNameResolution() {
@@ -253,6 +266,10 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 
 	public @NonNull NameResolution getTypeIdNameResolution() {
 		return typeIdName;
+	}
+
+	public @NonNull String getValueName() {
+		return valueName.getResolvedName();
 	}
 
 	public @NonNull LocalContext initLocalContext(@Nullable LocalContext outerContext, @NonNull CGNamedElement cgNamedElement, @NonNull NamedElement asNamedElement) {
