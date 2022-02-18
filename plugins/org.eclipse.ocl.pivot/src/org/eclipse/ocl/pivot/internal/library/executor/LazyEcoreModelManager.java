@@ -17,6 +17,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -35,6 +36,7 @@ import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.ids.ClassId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 
@@ -196,7 +198,7 @@ public class LazyEcoreModelManager extends LazyModelManager implements ModelMana
 		 * Analyze all the superclasses to determine whether a superclass needs to use our localInstances as its instances too.
 		 */
 		public void analyzeInheritance() {
-			for (EClass eSuperClass : eClass.getEAllSuperTypes()) {
+			for (EClass eSuperClass : getEAllSuperTypes(eClass)) {
 				assert eSuperClass != null;
 				EClassAnalysis eClassAnalysis = modelManager.basicGetEClassAnalysis(eSuperClass);
 				if (eClassAnalysis instanceof EClassAnalysisWithInstances) {
@@ -395,6 +397,42 @@ public class LazyEcoreModelManager extends LazyModelManager implements ModelMana
 	}
 
 
+	private static @NonNull Iterable</*@NonNull*/ EClass> getEAllSuperTypes(@NonNull EClass eClass) {
+		if (eClass == OCLstdlibPackage.Literals.OCL_TYPE) {
+			return Lists.newArrayList(OCLstdlibPackage.Literals.OCL_ELEMENT, OCLstdlibPackage.Literals.OCL_ANY);
+		}
+		else if (eClass == OCLstdlibPackage.Literals.OCL_ELEMENT) {
+			return Collections.singletonList(OCLstdlibPackage.Literals.OCL_ANY);
+		}
+		else if (eClass == OCLstdlibPackage.Literals.OCL_ANY) {
+			return Collections.emptyList();
+		}
+		else {
+			return Iterables.concat(eClass.getEAllSuperTypes(), Lists.newArrayList(OCLstdlibPackage.Literals.OCL_ELEMENT, OCLstdlibPackage.Literals.OCL_ANY));
+		}
+	}
+
+	private static @NonNull Iterable<EClass> getESuperTypes(@NonNull EClass eClass) {
+		if (eClass == OCLstdlibPackage.Literals.OCL_TYPE) {
+			return Collections.singletonList(OCLstdlibPackage.Literals.OCL_ELEMENT);
+		}
+		else if (eClass == OCLstdlibPackage.Literals.OCL_ELEMENT) {
+			return Collections.singletonList(OCLstdlibPackage.Literals.OCL_ANY);
+		}
+		else if (eClass == OCLstdlibPackage.Literals.OCL_ANY) {
+			return Collections.emptyList();
+		}
+		else {
+			EList<EClass> eSuperTypes = eClass.getESuperTypes();
+			if (eSuperTypes.isEmpty()) {
+				return Collections.singletonList(OCLstdlibPackage.Literals.OCL_ELEMENT);
+			}
+			else {
+				return eSuperTypes;
+			}
+		}
+	}
+
 	/**
 	 * The root EObjects that together with their transitive containment descendants comprise the extent for allInstances() and implicit opposites.
 	 */
@@ -522,7 +560,7 @@ public class LazyEcoreModelManager extends LazyModelManager implements ModelMana
 			//	inheritances avoid duplicates by caching allInstances at the join.
 			//
 			EClassAnalysisWithInstances theEClassAnalysisWithInstances = null;
-			for (EClass eSuperClass : eClass.getESuperTypes()) {
+			for (EClass eSuperClass : getESuperTypes(eClass)) {
 				assert eSuperClass != null;
 				EClassAnalysis eSuperClassAnalysis = getEClassAnalysis(eSuperClass);
 				EClassAnalysisWithInstances eClassAnalysisWithInstances = eSuperClassAnalysis.basicGetEClassAnalysisWithInstances();

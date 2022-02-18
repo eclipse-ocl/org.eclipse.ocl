@@ -23,7 +23,9 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.DependencyVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.ReferencesVisitor;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGText;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
@@ -78,6 +80,9 @@ public class GlobalPlace extends AbstractPlace
 		if (CommonSubexpressionEliminator.CSE_BUILD.isActive()) {
 			CommonSubexpressionEliminator.CSE_BUILD.println(StringUtil.getIndentation(depth, "  ") + "Build " + NameUtil.debugSimpleName(cgElement) + " " + StringUtil.convertToOCLString(cgElement.toString()));
 		}
+		if (cgElement instanceof CGText) {
+			getClass();				// XXX
+		}
 		//
 		//	Create the Place hierarchy in Preorder
 		//
@@ -113,6 +118,10 @@ public class GlobalPlace extends AbstractPlace
 			}
 		}
 		if (!(cgElement instanceof CGValuedElement)) {
+			return null;
+		}
+		if ((cgElement instanceof CGClass) && (cgElement.eContainer() instanceof CGClass)) {
+		//	getClass();				// Nested classes are flattened outer places
 			return null;
 		}
 		CGValuedElement cgValuedElement = (CGValuedElement)cgElement;

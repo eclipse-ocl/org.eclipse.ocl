@@ -18,8 +18,8 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 
 /**
  * The interface for evaluation a Property Implementation.
- * 
- * This interface should nlot be instnatiated directly. Clients should implement AbstractProperty.
+ *
+ * This interface should not be instnatiated directly. Clients should implement AbstractProperty.
  */
 public interface LibraryProperty extends LibraryFeature
 {

@@ -11,6 +11,7 @@
 
 package org.eclipse.ocl.examples.pivot.tests;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -20,9 +21,11 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -30,27 +33,39 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.cse.CommonSubexpressionEliminator;
 import org.eclipse.ocl.examples.codegen.genmodel.OCLGenModelUtil;
+import org.eclipse.ocl.examples.xtext.tests.TestFile;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.examples.xtext.tests.company.CompanyPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.evaluation.AbstractModelManager;
+import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.evaluation.NullModelManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PropertyId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.evaluation.AbstractExecutor;
+import org.eclipse.ocl.pivot.internal.library.executor.ExecutorManager;
+import org.eclipse.ocl.pivot.internal.library.executor.LazyEcoreModelManager;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.values.BagImpl;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
+import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.Value;
@@ -80,6 +95,53 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 
 	protected @NonNull TestOCL createOCLWithProjectMap() {
 		return new TestOCL(getTestFileSystem(), getTestPackageName(), getName(), getProjectMap(), null);
+	}
+
+	protected void createPeopleModel(@NonNull ResourceSet resourceSet, @NonNull URI fileURI, @NonNull Resource personMetamodel) throws IOException {
+		EPackage ePackage = (EPackage) personMetamodel.getContents().get(0);
+		EClass personClass = ClassUtil.nonNullState((EClass) ePackage.getEClassifier("Person"));
+		EAttribute nameAttribute = ClassUtil.nonNullState((EAttribute) personClass.getEStructuralFeature("name"));
+		EReference childrenReference = ClassUtil.nonNullState((EReference) personClass.getEStructuralFeature("children"));
+		XMLResource model = (XMLResource) resourceSet.createResource(fileURI);
+		EObject root = eCreate(personClass);
+		int nameCounter = 1;
+		root.eSet(nameAttribute, "" + nameCounter++);
+		model.getContents().add(root);
+		List<EObject> children = (List<EObject>)root.eGet(childrenReference);
+		for (int i = 0; i < 4; i++) {
+			EObject child = eCreate(personClass);
+			child.eSet(nameAttribute, "" + nameCounter++);
+			children.add(child);
+			List<EObject> grandchildren = (List<EObject>)child.eGet(childrenReference);
+			for (int j = 0; j < 4; j++) {
+				EObject grandchild = eCreate(personClass);
+				grandchild.eSet(nameAttribute, "" + nameCounter++);
+				grandchildren.add(grandchild);
+				List<EObject> greatgrandchildren = (List<EObject>)grandchild.eGet(childrenReference);
+				for (int k = 0; k < 4; k++) {
+					EObject greatgrandchild = eCreate(personClass);
+					greatgrandchild.eSet(nameAttribute, "" + nameCounter++);
+					greatgrandchildren.add(greatgrandchild);
+				}
+			}
+		}
+		Map<Object, Object> modelSaveOptions = XMIUtil.createSaveOptions(model);
+		modelSaveOptions.put(XMLResource.OPTION_SCHEMA_LOCATION, Boolean.TRUE);
+		model.save(modelSaveOptions);
+	}
+
+	protected @NonNull XMLResource createPersonMetamodel(@NonNull EnvironmentFactory environmentFactory) throws IOException {
+		String metamodelText =
+				"package statics : pfx = 'http://staticCompleteOCL'\n" +
+				"{\n" +
+				"	class Person\n" +
+				"	{\n" +
+				"		property name : String[1];\n" +
+				"		property parent#children : Person[?];\n" +
+				"		property children#parent : Person[*|1] { ordered composes };\n" +
+				"	}\n" +
+				"}\n";
+		return (XMLResource) cs2ecore(environmentFactory, metamodelText, getTestFileURI("person.ecore"));
 	}
 
 	@Override
@@ -526,6 +588,11 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 
 	@Test
 	public void test_ecore_collection_equality() throws Exception {
+		CommonSubexpressionEliminator.CSE_PLACES.setState(true);
+		CommonSubexpressionEliminator.CSE_PRUNE.setState(true);
+		CommonSubexpressionEliminator.CSE_PULL_UP.setState(true);
+		CommonSubexpressionEliminator.CSE_PUSH_UP.setState(true);
+		CommonSubexpressionEliminator.CSE_REWRITE.setState(true);
 		TestOCL ocl = createOCL();
 		//
 		EList<EStructuralFeature> eStructuralFeatures = EcorePackage.Literals.ECLASS.getEStructuralFeatures();
@@ -569,6 +636,8 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 
 	@Test
 	public void test_ecore_number_equality() throws Exception {
+		int oldAbstractExecutor_CONSTRUCTION_COUNT = AbstractExecutor.CONSTRUCTION_COUNT;
+		int oldExecutorManager_CONSTRUCTION_COUNT = ExecutorManager.CONSTRUCTION_COUNT;
 		int oldAbstractModelManager_CONSTRUCTION_COUNT = AbstractModelManager.CONSTRUCTION_COUNT;
 		TestOCL ocl = createOCL();
 		//
@@ -581,12 +650,33 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryOCLEquals(null, Float.valueOf(255), "255");
 		ocl.assertQueryOCLEquals(null, Double.valueOf(255), "255");
 		ocl.assertQueryOCLEquals(null, BigDecimal.valueOf(255), "255");
-		int newAbstractModelManager_CONSTRUCTION_COUNT = AbstractModelManager.CONSTRUCTION_COUNT;
-		assertEquals(useCodeGen ? 0 : 9, newAbstractModelManager_CONSTRUCTION_COUNT - oldAbstractModelManager_CONSTRUCTION_COUNT);	// FIXME Bug 578335
+		if (useCodeGen) {
+			assertEquals(0, AbstractExecutor.CONSTRUCTION_COUNT - oldAbstractExecutor_CONSTRUCTION_COUNT);
+			assertEquals(18, ExecutorManager.CONSTRUCTION_COUNT - oldExecutorManager_CONSTRUCTION_COUNT);							// 1 per validate, 1 per evaluate
+			assertEquals(0, AbstractModelManager.CONSTRUCTION_COUNT - oldAbstractModelManager_CONSTRUCTION_COUNT);
+		}
+		else {
+			assertEquals(9, AbstractExecutor.CONSTRUCTION_COUNT - oldAbstractExecutor_CONSTRUCTION_COUNT);							// 1 per interpreted evaluate
+			assertEquals(9, ExecutorManager.CONSTRUCTION_COUNT - oldExecutorManager_CONSTRUCTION_COUNT);							// 1 per validate
+			assertEquals(9, AbstractModelManager.CONSTRUCTION_COUNT - oldAbstractModelManager_CONSTRUCTION_COUNT);					// FIXME Bug 578335
+		}
 		//
+		oldAbstractExecutor_CONSTRUCTION_COUNT = AbstractExecutor.CONSTRUCTION_COUNT;
+		oldExecutorManager_CONSTRUCTION_COUNT = ExecutorManager.CONSTRUCTION_COUNT;
+		oldAbstractModelManager_CONSTRUCTION_COUNT = AbstractModelManager.CONSTRUCTION_COUNT;
 		ocl.setModelManager(new NullModelManager());;
-		assertEquals(1, AbstractModelManager.CONSTRUCTION_COUNT - newAbstractModelManager_CONSTRUCTION_COUNT);
+		Executor executor = PivotUtil.getExecutor(null);								// Not actually used - makes no difference to constructions
+		assertEquals(executor, ThreadLocalExecutor.basicGetExecutor());
+		assertEquals(0, AbstractExecutor.CONSTRUCTION_COUNT - oldAbstractExecutor_CONSTRUCTION_COUNT);
+		assertEquals(1, ExecutorManager.CONSTRUCTION_COUNT - oldExecutorManager_CONSTRUCTION_COUNT);
+		assertEquals(1, AbstractModelManager.CONSTRUCTION_COUNT - oldAbstractModelManager_CONSTRUCTION_COUNT);
+		//
+		oldAbstractExecutor_CONSTRUCTION_COUNT = AbstractExecutor.CONSTRUCTION_COUNT;
+		oldExecutorManager_CONSTRUCTION_COUNT = ExecutorManager.CONSTRUCTION_COUNT;
+		oldAbstractModelManager_CONSTRUCTION_COUNT = AbstractModelManager.CONSTRUCTION_COUNT;
+		assertEquals(executor, ThreadLocalExecutor.basicGetExecutor());
 		ocl.assertQueryOCLNotEquals(null, Byte.valueOf((byte)255), "254");
+		assertEquals(executor, ThreadLocalExecutor.basicGetExecutor());
 		ocl.assertQueryOCLNotEquals(null, Character.valueOf((char)255), "254");
 		ocl.assertQueryOCLNotEquals(null, Short.valueOf((short)255), "254");
 		ocl.assertQueryOCLNotEquals(null, Integer.valueOf(255), "254");
@@ -596,8 +686,72 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryOCLNotEquals(null, Double.valueOf(255), "255.1");
 		ocl.assertQueryOCLNotEquals(null, BigDecimal.valueOf(255), "255.1");
 		//
+		assertEquals(executor, ThreadLocalExecutor.basicGetExecutor());
 		ocl.dispose();
-		assertEquals(1, AbstractModelManager.CONSTRUCTION_COUNT - newAbstractModelManager_CONSTRUCTION_COUNT);
+		if (useCodeGen) {
+			assertEquals(0, AbstractExecutor.CONSTRUCTION_COUNT - oldAbstractExecutor_CONSTRUCTION_COUNT);
+			assertEquals(18, ExecutorManager.CONSTRUCTION_COUNT - oldExecutorManager_CONSTRUCTION_COUNT);							// 1 per validate, 1 per evaluate
+			assertEquals(0, AbstractModelManager.CONSTRUCTION_COUNT - oldAbstractModelManager_CONSTRUCTION_COUNT);
+		}
+		else {
+			assertEquals(9, AbstractExecutor.CONSTRUCTION_COUNT - oldAbstractExecutor_CONSTRUCTION_COUNT);							// 1 per interpreted evaluate
+			assertEquals(9, ExecutorManager.CONSTRUCTION_COUNT - oldExecutorManager_CONSTRUCTION_COUNT);							// 1 per validate
+			assertEquals(0, AbstractModelManager.CONSTRUCTION_COUNT - oldAbstractModelManager_CONSTRUCTION_COUNT);
+		}
+	}
+
+	/**
+	 * Test the allocation of a complement that defines a statically unqiue id to each element.
+	 */
+	@Test public void test_static_ids() throws Exception {
+				CommonSubexpressionEliminator.CSE_PLACES.setState(true);
+				CommonSubexpressionEliminator.CSE_PRUNE.setState(true);
+				CommonSubexpressionEliminator.CSE_PULL_UP.setState(true);
+				CommonSubexpressionEliminator.CSE_PUSH_UP.setState(true);
+				CommonSubexpressionEliminator.CSE_REWRITE.setState(true);
+				TestUtil.doCompleteOCLSetup();
+		OCL ocl1 = createOCL();
+		EnvironmentFactory environmentFactory1 = ocl1.getEnvironmentFactory();
+		Resource metamodel = createPersonMetamodel(environmentFactory1);
+		String completeOCLtext =
+				"package ocl\n" +
+				"context OclElement\n" +
+				"	static def: allElements() : Sequence(OclElement)\n" +
+				"		= ocl::OclElement.allInstances()->asSequence()\n" +
+				"	static def: employee2index : Map(OclElement,Integer)[1]\n" +
+				"		= OclElement::allElements()->collectBy(value with index | index)\n" +
+				"	def: id : String[1]\n" +
+				"		= employee2index->at(self).toString()\n" +
+				"endpackage\n";
+		TestFile oclFile = createFile("ids.ocl", completeOCLtext);
+		URI testFileURI = getTestFileURI("people.xmi");
+		createPeopleModel(ocl1.getResourceSet(), testFileURI, metamodel);
+		//
+		ThreadLocalExecutor.resetEnvironmentFactory();
+		TestOCL ocl2 = createOCL();
+		Resource loadedResource = ocl2.getResourceSet().getResource(testFileURI, true);
+		EObject root = loadedResource.getContents().get(0);
+		EClass personClass = root.eClass();
+		EAttribute nameAttribute = ClassUtil.nonNullState((EAttribute) personClass.getEStructuralFeature("name"));
+		EReference childrenReference = ClassUtil.nonNullState((EReference) personClass.getEStructuralFeature("children"));
+		//
+		ModelManager modelManager = new LazyEcoreModelManager(root);
+		ocl2.setModelManager(modelManager);
+		//
+		CSResource xtextResource = ocl2.getCSResource(oclFile.getURI(), completeOCLtext);
+		assertNoResourceErrors("Load ids.ocl", xtextResource);
+		assertNoValidationErrors("Load ids.ocl", xtextResource);
+		ASResource asResource = xtextResource.getASResource();
+		assertNoResourceErrors("Load ids.oclas", asResource);
+		assertNoValidationErrors("Load ids.oclas", asResource);
+		//
+		@SuppressWarnings("unchecked")
+		List<EObject> loadedChildren = (List<EObject>)root.eGet(childrenReference);
+		ocl2.assertQueryEquals(root, root.eGet(nameAttribute), "self.id");			// Exploits the selective determinism of allInstances() and SetValue
+		ocl2.assertQueryEquals(loadedChildren.get(2), loadedChildren.get(2).eGet(nameAttribute), "self.id");
+		//
+		ocl1.dispose();
+		ocl2.dispose();
 	}
 
 	/**
@@ -634,15 +788,15 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 		IntegerValue int55 = ValueUtil.integerValueOf(55);
 		IntegerValue int77 = ValueUtil.integerValueOf(77);
 		//
-//		assertNull(modelManager.basicGetStaticPropertyValue(staticCountPropertyId));
+//		assertNull(modelManager.basicGetForeignPropertyValue(null, staticCountPropertyId));
 //		ocl2.assertQueryEquals(parent, int55, "count");
 		ocl2.assertQueryEquals(parent, int55, "statics::Parent::static_count()");
-//		assertEquals(int55, modelManager.basicGetStaticPropertyValue(staticCountPropertyId));
+//		assertEquals(int55, modelManager.basicGetForeignPropertyValue(null, staticCountPropertyId));
 		//
-//		modelManager.setStaticPropertyValue(staticCountPropertyId, int77);
-//		assertEquals(int77, modelManager.basicGetStaticPropertyValue(staticCountPropertyId));
+//		modelManager.setForeignPropertyValue(null, staticCountPropertyId, int77);
+//		assertEquals(int77, modelManager.basicGetForeignPropertyValue(null, staticCountPropertyId));
 		ocl2.assertQueryEquals(parent, int55, "static_count()");
-//		assertEquals(int77, modelManager.basicGetStaticPropertyValue(staticCountPropertyId));
+//		assertEquals(int77, modelManager.basicGetForeignPropertyValue(null, staticCountPropertyId));
 		ocl2.assertQueryEquals(parent, int55, "count()");
 
 		// Eliminate shared ModelManager => new ModelManager, Executor per query
@@ -651,12 +805,12 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 
 		ocl2.assertQueryEquals(parent, int55, "count()");
 		modelManager = PivotUtil.getExecutor(null).getModelManager();
-//		assertNull(modelManager.basicGetStaticPropertyValue(staticCountPropertyId));
-//		modelManager.setStaticPropertyValue(staticCountPropertyId, int77);
-//		assertEquals(int77, modelManager.basicGetStaticPropertyValue(staticCountPropertyId));
+//		assertNull(modelManager.basicGetForeignPropertyValue(null, staticCountPropertyId));
+//		modelManager.setForeignPropertyValue(null, staticCountPropertyId, int77);
+//		assertEquals(int77, modelManager.basicGetForeignPropertyValue(null, staticCountPropertyId));
 		//
 		ocl2.assertQueryEquals(parent, int55, "count()");
-//		assertEquals(int77, modelManager.basicGetStaticPropertyValue(staticCountPropertyId));
+//		assertEquals(int77, modelManager.basicGetForeignPropertyValue(null, staticCountPropertyId));
 
 		ocl1.dispose();
 		ocl2.dispose();
@@ -698,15 +852,15 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 		IntegerValue int55 = ValueUtil.integerValueOf(55);
 		IntegerValue int77 = ValueUtil.integerValueOf(77);
 		//
-		assertNull(modelManager.basicGetStaticPropertyValue(staticCountPropertyId));
+		assertNull(modelManager.basicGetForeignPropertyValue(null, staticCountPropertyId));
 //		ocl2.assertQueryEquals(parent, int55, "count");
 		ocl2.assertQueryEquals(null, int55, "statics::Parent::static_count");
-		assertEquals(int55, modelManager.basicGetStaticPropertyValue(staticCountPropertyId));
+		assertEquals(int55, modelManager.basicGetForeignPropertyValue(null, staticCountPropertyId));
 		//
-		modelManager.setStaticPropertyValue(staticCountPropertyId, int77);
-		assertEquals(int77, modelManager.basicGetStaticPropertyValue(staticCountPropertyId));
+		modelManager.setForeignPropertyValue(null, staticCountPropertyId, int77);
+		assertEquals(int77, modelManager.basicGetForeignPropertyValue(null, staticCountPropertyId));
 		ocl2.assertQueryEquals(parent, int77, "static_count");
-		assertEquals(int77, modelManager.basicGetStaticPropertyValue(staticCountPropertyId));
+		assertEquals(int77, modelManager.basicGetForeignPropertyValue(null, staticCountPropertyId));
 		ocl2.assertQueryEquals(parent, int77, "count");
 
 		// Eliminate shared ModelManager => new ModelManager, Executor per query
@@ -715,12 +869,12 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 
 		ocl2.assertQueryEquals(parent, int55, "count");
 		modelManager = PivotUtil.getExecutor(null).getModelManager();
-		assertNull(modelManager.basicGetStaticPropertyValue(staticCountPropertyId));
-		modelManager.setStaticPropertyValue(staticCountPropertyId, int77);
-		assertEquals(int77, modelManager.basicGetStaticPropertyValue(staticCountPropertyId));
+		assertNull(modelManager.basicGetForeignPropertyValue(null, staticCountPropertyId));
+		modelManager.setForeignPropertyValue(null, staticCountPropertyId, int77);
+		assertEquals(int77, modelManager.basicGetForeignPropertyValue(null, staticCountPropertyId));
 		//
 		ocl2.assertQueryEquals(parent, int55, "count");
-		assertEquals(int77, modelManager.basicGetStaticPropertyValue(staticCountPropertyId));
+		assertEquals(int77, modelManager.basicGetForeignPropertyValue(null, staticCountPropertyId));
 
 		ocl1.dispose();
 		ocl2.dispose();

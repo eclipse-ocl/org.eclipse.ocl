@@ -89,7 +89,7 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 
 	public @Nullable CGVariable basicGetIdResolverVariable() {
 		return idResolverVariable;
-	}
+}
 
 	public @Nullable CGVariable basicGetModelManagerVariable() {
 		return modelManagerVariable;
