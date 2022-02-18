@@ -325,9 +325,10 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		return CG_RESOURCE_FACTORY;
 	}
 
-	public @NonNull String getFlattenedClassName(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+	@Override
+	public @NonNull String getForeignClassName(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		CodeGenString s = new CodeGenString(environmentFactory.getMetamodelManager(), false);
-		s.append(JavaConstants.FLATTENED_CLASS_PREFIX);
+		s.append(JavaConstants.FOREIGN_CLASS_PREFIX);
 		s.appendAndEncodeQualifiedName(asClass);
 		return s.toString();
 	}
@@ -377,10 +378,6 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 			id2EClassVisitor = id2EClassVisitor2 = createId2EClassVisitor();
 		}
 		return id2EClassVisitor2;
-	}
-
-	public @NonNull ImportNameManager getImportNameManager() {
-		return getGlobalContext().getImportNameManager();
 	}
 
 	/**

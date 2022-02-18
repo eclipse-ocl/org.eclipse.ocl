@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.library;
 
-import org.apache.log4j.Logger;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -29,17 +28,17 @@ import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 
 /**
- * A StaticProperty instance supports evaluation of a static property by lookup in the ModelManager cache.
- * (A static property has a single instance for the owning class, rather than one per instance of the owning class.)
+ * A ForeignProperty instance supports evaluation of a foreign property by lookup in the ModelManager cache.
+ * (A static property has an instance of the owning class, but not defined by the owning class.)
+ *
+ * @since 1.18
  */
-public class StaticProperty extends AbstractProperty
+public class ForeignProperty extends AbstractProperty
 {
-	private static final Logger logger = Logger.getLogger(StaticProperty.class);
-
 	/**
 	 * @since 1.18
 	 */
-	public static @Nullable StaticProperty createStaticProperty(@NonNull EnvironmentFactory environmentFactory, @NonNull Property property) {
+	public static @Nullable ForeignProperty createForeignProperty(@NonNull EnvironmentFactory environmentFactory, @NonNull Property property) {
 		try {
 			OCLExpression bodyExpression = null;
 			LanguageExpression asLanguageExpression = property.getOwnedExpression();
@@ -47,45 +46,27 @@ public class StaticProperty extends AbstractProperty
 				ExpressionInOCL expression = ((AbstractEnvironmentFactory) environmentFactory).parseSpecification(asLanguageExpression);
 				bodyExpression = expression.getOwnedBody();
 				assert bodyExpression != null;
-				return new StaticProperty(property.getPropertyId(), bodyExpression, null);
+				return new ForeignProperty(property.getPropertyId(), bodyExpression, null);
 			}
 			else {
 				Object defaultValue = property.getDefaultValue();
-				return new StaticProperty(property.getPropertyId(), null, defaultValue != null ? defaultValue : ValueUtil.NULL_VALUE);
+				return new ForeignProperty(property.getPropertyId(), null, defaultValue != null ? defaultValue : ValueUtil.NULL_VALUE);
 			}
 		} catch (ParserException e) {
-			String message = e.getMessage();
-			if (message == null) {
-				message = "";
-			}
-			logger.error(message);
-		//	defaultExpression = PivotUtil.createExpressionInOCLError(message);
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return null;
 	}
 
-	@Deprecated		/* @deprecated not used */
-	protected @Nullable Property property;
 	private final @NonNull PropertyId propertyId;
 	private final @Nullable OCLExpression initExpression;
 	private final @Nullable Object defaultValue;
 
-	@Deprecated		/* deprecated not used */
-	public StaticProperty(@NonNull Property property) {
-		this.property = property;
-		this.propertyId = property.getPropertyId();
-		this.initExpression = (OCLExpression) property.getOwnedExpression();
-		this.defaultValue = property.getDefaultValue();
-	}
-
-	/**
-	 * @since 1.18
-	 */
-	private StaticProperty(@NonNull PropertyId propertyId, @Nullable OCLExpression initExpression, @Nullable Object defaultValue) {
+	private ForeignProperty(@NonNull PropertyId propertyId, @Nullable OCLExpression initExpression, @Nullable Object defaultValue) {
 		this.propertyId = propertyId;
 		this.initExpression = initExpression;
 		this.defaultValue = defaultValue;
-		this.property = null;
 	}
 
 	/** @deprecated use Executor */
@@ -100,8 +81,9 @@ public class StaticProperty extends AbstractProperty
 	 */
 	@Override
 	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
+		assert sourceValue != null;
 		ModelManager modelManager = executor.getModelManager();
-		Object value = modelManager.getForeignPropertyValue(null, propertyId, initExpression, defaultValue);
+		Object value = modelManager.getForeignPropertyValue(sourceValue, propertyId, initExpression, defaultValue);
 		return value == ValueUtil.NULL_VALUE ? null : value;
 	}
 }

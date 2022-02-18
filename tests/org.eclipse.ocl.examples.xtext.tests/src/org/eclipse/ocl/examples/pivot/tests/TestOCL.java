@@ -843,9 +843,7 @@ public class TestOCL extends OCLInternal
 				result = testInstance.evaluate(executor, callExp.getTypeId(), self);
 			}
 			finally {
-				if (savedExecutor != ThreadLocalExecutor.basicGetExecutor()) {
-					ThreadLocalExecutor.setExecutor(null);
-				}
+				ThreadLocalExecutor.setExecutor(savedExecutor);
 			}
 		}
 		return result;

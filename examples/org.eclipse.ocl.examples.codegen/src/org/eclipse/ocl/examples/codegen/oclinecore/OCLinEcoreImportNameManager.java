@@ -76,4 +76,9 @@ public class OCLinEcoreImportNameManager extends AbstractImportNameManager
 	public @NonNull Map<@NonNull String, @Nullable String> getLong2ShortImportNames() {
 		return Collections.emptyMap();
 	}
+
+	@Override
+	public void reserveLocalName(@NonNull String foreignClassName) {
+		throw new UnsupportedOperationException();
+	}
 }

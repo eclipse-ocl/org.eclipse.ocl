@@ -398,6 +398,7 @@ public class CompleteOCLCSContainmentVisitor extends AbstractCompleteOCLCSContai
 		@NonNull Operation contextOperation = refreshNamedElement(Operation.class, PivotPackage.Literals.OPERATION, csElement);
 		context.refreshPivotList(Parameter.class, contextOperation.getOwnedParameters(), csElement.getOwnedParameters());
 		ExpressionInOCL pivotSpecification = PivotUtil.getPivot(ExpressionInOCL.class, csElement.getOwnedSpecification());
+		contextOperation.setIsStatic(csElement.isIsStatic());
 		contextOperation.setBodyExpression(pivotSpecification);
 		return null;
 	}
@@ -410,6 +411,7 @@ public class CompleteOCLCSContainmentVisitor extends AbstractCompleteOCLCSContai
 		contextProperty.setIsTransient(true);
 		contextProperty.setIsVolatile(true);
 		contextProperty.setIsResolveProxies(false);
+		contextProperty.setIsStatic(csElement.isIsStatic());
 		ExpressionInOCL pivotSpecification = PivotUtil.getPivot(ExpressionInOCL.class, csElement.getOwnedSpecification());
 		contextProperty.setOwnedExpression(pivotSpecification);
 		return null;
