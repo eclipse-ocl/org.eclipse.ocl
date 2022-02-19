@@ -129,7 +129,7 @@ public class CommonAnalysis extends AbstractAnalysis
 			getClass();		// XXX
 			EObject eContainer = controlElement.eContainer();
 			if (eContainer instanceof CGForeignProperty ) {
-				controlElement = CGUtil.getInitExpression((CGForeignProperty)eContainer);
+				controlElement = CGUtil.getBody((CGForeignProperty)eContainer);
 			}
 			else {
 				throw new UnsupportedOperationException();		// FIXME many more ?? a polymorphic method

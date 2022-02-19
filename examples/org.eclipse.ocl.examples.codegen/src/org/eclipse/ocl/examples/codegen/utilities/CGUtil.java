@@ -29,7 +29,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIfExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterator;
@@ -221,6 +220,10 @@ public class CGUtil
 		return ClassUtil.nonNullState((Property)cgProperty.getAst());
 	}
 
+	public static @NonNull CGValuedElement getBody(@NonNull CGProperty cgProperty) {
+		return ClassUtil.nonNullState(cgProperty.getBody());
+	}
+
 	public static @NonNull List<@NonNull CGIterator> getCoIteratorsList(@NonNull CGIterationCallExp cgIterationCallExp) {
 		return ClassUtil.nullFree(cgIterationCallExp.getCoIterators());
 	}
@@ -270,10 +273,6 @@ public class CGUtil
 
 	public static @NonNull CGValuedElement getInit(@NonNull CGVariable cgVariable) {
 		return ClassUtil.nonNullState(cgVariable.getInit());
-	}
-
-	public static @NonNull CGValuedElement getInitExpression(@NonNull CGForeignProperty cgForeignProperty) {
-		return ClassUtil.nonNullState(cgForeignProperty.getInitExpression());
 	}
 
 	public static @NonNull CGIterator getIterator(@NonNull CGIterationCallExp cgIterationCallExp, int i) {

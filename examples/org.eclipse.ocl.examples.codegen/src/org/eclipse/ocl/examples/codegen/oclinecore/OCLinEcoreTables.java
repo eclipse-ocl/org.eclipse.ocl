@@ -23,7 +23,6 @@ import java.util.Set;
 
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
-import org.eclipse.emf.codegen.util.ImportManager;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
@@ -41,6 +40,7 @@ import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
+import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
@@ -86,8 +86,6 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
-
-import com.google.common.collect.Lists;
 
 public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 {
@@ -162,7 +160,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 	private final @Nullable String tablesPostamble;
 	private @Nullable String precedingPackageName = null;		// Initialization linkage
 	private @Nullable String currentPackageName = null;			// Initialization linkage
-	protected final @NonNull ImportManager importManager;
+//	protected final @NonNull ImportManager importManager;
 	private final @NonNull Set<@NonNull CompleteClass> allInstancesCompleteClasses = new HashSet<>();
 	private final @NonNull Set<@NonNull Property> implicitOppositeProperties = new HashSet<>();
 
@@ -170,7 +168,28 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		super(genPackage);
 		GenModel genModel = ClassUtil.nonNullState(genPackage.getGenModel());
 		this.tablesPostamble = OCLinEcoreGenModelGeneratorAdapter.tablesPostamble(genModel);
-		this.importManager = new ImportManager(getTablesPackageName());
+/*		this.importManager = new ImportManager(getTablesPackageName()) {
+
+			@Override
+			public void addImport(String qualifiedName) {
+				if (qualifiedName.contains("FOREIGN")) {
+					getClass();		// XXX
+				}
+				super.addImport(qualifiedName);
+			}
+
+			@Override
+			public void addImport(String packageName, String shortName) {
+				if (packageName.contains("FOREIGN")) {
+					getClass();		// XXX
+				}
+				if (shortName.contains("FOREIGN")) {
+					getClass();		// XXX
+				}
+				super.addImport(packageName, shortName);
+			}
+
+		}; */
 	}
 
 	public void analyzeExpressions() {
@@ -475,6 +494,66 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("	}\n");
 	}
 
+/*	protected void declareForeignOperations(@NonNull Iterable<@NonNull Operation> foreignOperations, @NonNull Map<@NonNull String, @NonNull FeatureBody> uri2body) {
+	//	s.append("\n");
+	//	s.append("	/**\n");
+	//	s.append("	 *	The foreign operation implementations.\n");
+	//	s.append("	 * /");
+		List<@NonNull Operation> sortedForeignOperations = Lists.newArrayList(foreignOperations);
+		Collections.sort(sortedForeignOperations, NameUtil.NAMEABLE_COMPARATOR);
+		for (@NonNull Operation foreignOperation : sortedForeignOperations) {
+			String fragmentURI = String.valueOf(EcoreUtil.getURI(foreignOperation).fragment());
+			FeatureBody body = uri2body.get(fragmentURI);
+			if (body != null) {
+				s.appendMarkup(("\t" + body.getBodyText()).replace("\n", "\n\t"));
+			}
+		}
+	} */
+
+	protected void declareForeignFeatures(@NonNull Iterable<@NonNull Feature> foreignFeatures, @NonNull Map<@NonNull String, @NonNull FeatureBody> uri2body) {
+	//	s.append("\n");
+	//	s.append("	/**\n");
+	//	s.append("	 *	The static property initializer implementations.\n");
+	//	s.append("	 */");
+	//	List<@NonNull Property> sortedStaticProperties = Lists.newArrayList(foreignFeatures);
+	//	Collections.sort(sortedStaticProperties, NameUtil.NAMEABLE_COMPARATOR);
+		Map<@NonNull String, @NonNull List<@NonNull FeatureBody>> className2bodies = new HashMap<>();
+		for (@NonNull Feature foreignFeature : foreignFeatures) {
+			String fragmentURI = String.valueOf(EcoreUtil.getURI(foreignFeature).fragment());
+			FeatureBody body = uri2body.get(fragmentURI);
+			if (body != null) {
+				String className = body.getClassName();
+				List<@NonNull FeatureBody> bodies = className2bodies.get(className);
+				if (bodies == null) {
+					bodies = new ArrayList<>();
+					className2bodies.put(className, bodies);
+				}
+				bodies.add(body);
+			}
+		}
+		ArrayList<@NonNull String> classNames = new ArrayList<>(className2bodies.keySet());
+		Collections.sort(classNames);
+		for (@NonNull String className : classNames) {
+			List<@NonNull FeatureBody> bodies = className2bodies.get(className);
+			assert bodies != null;
+			Collections.sort(bodies, new Comparator<@NonNull FeatureBody>()
+			{
+				@Override
+				public int compare(@NonNull FeatureBody o1, @NonNull FeatureBody o2) {
+					return o1.getFeatureName().compareTo(o2.getFeatureName());
+				}
+			});
+			s.append("\n\tpublic static class " + className);
+			s.append("\n\t{");
+			for (@NonNull FeatureBody body : bodies) {
+				s.append("\n\t\tpublic static Object " + body.getFeatureName() + "() {\n");
+				s.appendMarkup(("\t\t\t" + body.getBodyText()).replace("\n", "\n\t\t\t"));
+				s.append("\n\t\t}\n");
+			}
+			s.append("\t}\n");
+		}
+	}
+
 	protected void declareFragments() {
 		s.append("	/**\n");
 		s.append("	 *	The fragment descriptors for the local elements of each type and its supertypes.\n");
@@ -502,22 +581,6 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		}
 		appendInitializationEnd(false);
 		s.append("	}\n");
-	}
-
-	protected void declareForeignOperations(@NonNull Iterable<@NonNull Operation> foreignOperations, @NonNull Map<@NonNull String, @NonNull FeatureBody> uri2body) {
-	//	s.append("\n");
-	//	s.append("	/**\n");
-	//	s.append("	 *	The foreign operation implementations.\n");
-	//	s.append("	 */");
-		List<@NonNull Operation> sortedForeignOperations = Lists.newArrayList(foreignOperations);
-		Collections.sort(sortedForeignOperations, NameUtil.NAMEABLE_COMPARATOR);
-		for (@NonNull Operation foreignOperation : sortedForeignOperations) {
-			String fragmentURI = String.valueOf(EcoreUtil.getURI(foreignOperation).fragment());
-			FeatureBody body = uri2body.get(fragmentURI);
-			if (body != null) {
-				s.appendMarkup(("\t" + body.getBodyText()).replace("\n", "\n\t"));
-			}
-		}
 	}
 
 	protected void declareFragmentOperations(@NonNull List<@NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Operation>>>> paginatedFragmentOperations) {
@@ -917,22 +980,6 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("	}\n");
 	}
 
-	protected void declareStaticProperties(@NonNull Iterable<@NonNull Property> staticProperties, @NonNull Map<@NonNull String, @NonNull FeatureBody> uri2body) {
-	//	s.append("\n");
-	//	s.append("	/**\n");
-	//	s.append("	 *	The static property initializer implementations.\n");
-	//	s.append("	 */");
-		List<@NonNull Property> sortedStaticProperties = Lists.newArrayList(staticProperties);
-		Collections.sort(sortedStaticProperties, NameUtil.NAMEABLE_COMPARATOR);
-		for (@NonNull Property staticProperty : sortedStaticProperties) {
-			String fragmentURI = String.valueOf(EcoreUtil.getURI(staticProperty).fragment());
-			FeatureBody body = uri2body.get(fragmentURI);
-			if (body != null) {
-				s.appendMarkup(("\t" + body.getBodyText()).replace("\n", "\n\t"));
-			}
-		}
-	}
-
 	protected void declareType(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		Class<?> typeClass = getEcoreExecutorClass(asClass);
 		EClassifier eClassifier = ClassUtil.nonNullState((EClassifier)asClass.getESObject());
@@ -1188,8 +1235,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		return uri;
 	}
 
-	public @NonNull String generateTablesClass(@Nullable String constants, @Nullable Iterable<@NonNull Operation> foreignOperations,
-			@Nullable Iterable<@NonNull Property> staticProperties, @Nullable Map<@NonNull String, @NonNull FeatureBody> uri2body) {
+	public @NonNull String generateTablesClass(@Nullable String constants, @Nullable Iterable<@NonNull Feature> foreignFeatures, @Nullable Map<@NonNull String, @NonNull FeatureBody> uri2body) {
 		//		if (constants != null) {
 		//			constants = s.rewriteManagedImports(constants);
 		//		}
@@ -1274,13 +1320,8 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		declareFragmentProperties(paginatedFragmentProperties);
 		//		s.append("\n");
 		declareEnumerationLiterals();
-		if (uri2body != null) {
-			if (foreignOperations != null) {
-				declareForeignOperations(foreignOperations, uri2body);
-			}
-			if (staticProperties != null) {
-				declareStaticProperties(staticProperties, uri2body);
-			}
+		if ((uri2body != null) && (foreignFeatures != null)) {
+			declareForeignFeatures(foreignFeatures, uri2body);
 		}
 		if (tablesPostamble != null) {
 			s.append(tablesPostamble);

@@ -131,14 +131,16 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 		for (CGClass cgClass : cgPackage.getClasses()) {
 			for (CGConstraint cgConstraint : cgClass.getInvariants()) {
 				CGValuedElement cgBody = cgConstraint.getBody();
-				Element pivotClass = cgClass.getAst();
+				org.eclipse.ocl.pivot.Class asClass = CGUtil.getAST(cgClass);
 				Element asElement = cgConstraint.getAst();
-				if ((cgBody != null) && (pivotClass instanceof org.eclipse.ocl.pivot.Class) && (asElement instanceof Constraint)) {
+				if ((cgBody != null) && (asElement instanceof Constraint)) {
 					Constraint asConstraint = (Constraint) asElement;
 					localContext = globalContext.basicGetLocalContext(cgConstraint);
-					String bodyText = generateValidatorBody(cgBody, asConstraint, (org.eclipse.ocl.pivot.Class)pivotClass);
-					String fragmentURI = getFragmentURI(pivotClass) + "==" + getRuleName(asConstraint);
-					bodies.put(fragmentURI, new FeatureBody(fragmentURI, false, "n/a", bodyText));
+					String bodyText = generateValidatorBody(cgBody, asConstraint, asClass);
+					String fragmentURI = getFragmentURI(asClass) + "==" + getRuleName(asConstraint);
+					String foreignPackageName = genPackage.getReflectionPackageName();//getGlobalContext().getTablesClassName();
+					String foreignClassName = context.getForeignClassName(asClass);
+					bodies.put(fragmentURI, new FeatureBody(fragmentURI, asConstraint, false, foreignPackageName,foreignClassName, bodyText));
 				}
 			}
 			for (@NonNull CGOperation cgOperation : ClassUtil.nullFree(cgClass.getOperations())) {
@@ -150,7 +152,9 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 					localContext = globalContext.basicGetLocalContext(cgOperation);
 					String bodyText = generateBody(cgOperation.getParameters(), cgBody, returnClassName);
 					String fragmentURI = getFragmentURI(asOperation);
-					body = new FeatureBody(fragmentURI, asOperation.isIsStatic(), "n/a", bodyText);
+					String foreignPackageName = genPackage.getReflectionPackageName();//getGlobalContext().getTablesClassName();
+					String foreignClassName = context.getForeignClassName(asOperation.getOwningClass());
+					body = new FeatureBody(fragmentURI, asOperation, asOperation.isIsStatic(), foreignPackageName, foreignClassName, bodyText);
 				}
 				if (body != null) {
 					bodies.put(body.getURI(), body);
@@ -165,7 +169,9 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 					localContext = globalContext.basicGetLocalContext(cgProperty);
 					String bodyText = generateBody(null, cgBody, returnClassName);
 					String fragmentURI = getFragmentURI(asProperty);
-					body = new FeatureBody(fragmentURI, asProperty.isIsStatic(), "n/a", bodyText);
+					String foreignPackageName = genPackage.getReflectionPackageName();//getGlobalContext().getTablesClassName();
+					String foreignClassName = context.getForeignClassName(asProperty.getOwningClass());
+					body = new FeatureBody(fragmentURI, asProperty, asProperty.isIsStatic(), foreignPackageName, foreignClassName, bodyText);
 				}
 				if (body != null) {
 					bodies.put(body.getURI(), body);
@@ -280,7 +286,8 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 		assert js.peekClassNameStack() == null;
 		String bodyText = toString();
 		String fragmentURI = getFragmentURI(asOperation);
-		return new FeatureBody(fragmentURI, true, className, bodyText);
+		String foreignPackageName = getGlobalContext().getTablesClassName();
+		return new FeatureBody(fragmentURI, asOperation, true, foreignPackageName, className, bodyText);
 	}
 
 	protected @NonNull FeatureBody generateStaticProperty(@NonNull CGProperty cgProperty) {
@@ -347,7 +354,8 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 		assert js.peekClassNameStack() == null;
 		String bodyText = toString();
 		String fragmentURI = getFragmentURI(asProperty);
-		return new FeatureBody(fragmentURI, true, className, bodyText);
+		String foreignPackageName = getGlobalContext().getTablesClassName();
+		return new FeatureBody(fragmentURI, asProperty, true, foreignPackageName, className, bodyText);
 	}
 
 	private void appendIdPath(@NonNull Element element) {

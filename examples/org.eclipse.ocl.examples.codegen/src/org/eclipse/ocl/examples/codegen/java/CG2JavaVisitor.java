@@ -1992,7 +1992,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 						return false;
 					}
 				}
-				CGValuedElement cgInitExpression = cgForeignProperty.getInitExpression();
+				CGValuedElement cgInitExpression = cgForeignProperty.getBody();
 				assert cgInitExpression != null;
 
 				js.append("public static ");
@@ -2099,7 +2099,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		//
 		CGClass cgReferringClass = CGUtil.getContainingClass(cgForeignOperationCallExp);
 		assert cgReferringClass != null;
-		String flattenedClassName = context.getForeignClassName(asReferredClass);
+		String flattenedClassName = context.getQualifiedForeignClassName(asReferredClass);
 		js.appendDeclaration(cgForeignOperationCallExp);
 		js.append(" = ");
 		js.append(flattenedClassName);
@@ -2132,7 +2132,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	//	assert cgPropertyCallExp.getSource() == null;		// XXX
 		Property asProperty = CGUtil.getReferredProperty(cgForeignPropertyCallExp);
 		org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass((Feature)asProperty);
-		String foreignClassName = context.getForeignClassName(asClass);
+		String foreignClassName = context.getQualifiedForeignClassName(asClass);
 		String propertyName = PivotUtil.getName(asProperty);
 		CGValuedElement cgSource = cgForeignPropertyCallExp.getSource();
 		if (cgSource != null) {

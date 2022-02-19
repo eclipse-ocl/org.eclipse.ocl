@@ -636,7 +636,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		cgForeignProperty.setRequired(asProperty.isIsRequired());
 		CGValuedElement cgInitValue = getInitExpression(asProperty);
 		if (cgInitValue != null) {
-			cgForeignProperty.setInitExpression(cgInitValue);
+			cgForeignProperty.setBody(cgInitValue);
 		}
 
 
@@ -1805,7 +1805,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	@Override
 	public @Nullable CGProperty visitProperty(@NonNull Property element) {
 		CGProperty cgProperty = null;
-		LibraryFeature propertyImplementation = element.getImplementation();
+		LibraryProperty propertyImplementation = metamodelManager.getImplementation(null, null, element);
 		if (propertyImplementation instanceof NativeProperty) {
 			CGNativeProperty cgNativeProperty = CGModelFactory.eINSTANCE.createCGNativeProperty();
 			cgNativeProperty = CGModelFactory.eINSTANCE.createCGNativeProperty();
@@ -1819,6 +1819,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		}
 		else if (propertyImplementation instanceof ConstrainedProperty) {
 			return generateConstrainedProperty(element);
+		//	cgProperty = CGModelFactory.eINSTANCE.createCGProperty();
 		}
 		else if (propertyImplementation instanceof StaticProperty) {
 			return generateConstrainedProperty(element);
@@ -1839,7 +1840,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 				cgProperty.setBody(doVisit(CGValuedElement.class, query.getOwnedBody()));
 			} catch (ParserException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				e.printStackTrace();		// XXX
 			}
 		}
 		popLocalContext(cgProperty);

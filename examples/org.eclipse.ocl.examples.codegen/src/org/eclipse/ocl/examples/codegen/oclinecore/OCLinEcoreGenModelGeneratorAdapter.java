@@ -66,6 +66,7 @@ import org.eclipse.ocl.examples.codegen.model.CGLibrary;
 import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreCodeGenerator.FeatureBody;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
@@ -356,6 +357,8 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 
 		private @NonNull Map<@NonNull String, @NonNull FeatureBody> uri2body = new HashMap<>();
 
+		private @NonNull List<@NonNull Feature> foreignFeatures = new ArrayList<>();
+
 		private OCLinEcoreStateAdapter(@NonNull GenModel genModel) {
 			Resource eResource = genModel.eResource();
 			ResourceSet resourceSet = eResource != null ? eResource.getResourceSet() : null;
@@ -481,7 +484,7 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 			@SuppressWarnings("null")@NonNull List<GenPackage> allGenPackagesWithClassifiers = genModel.getAllGenPackagesWithClassifiers();
 			List<@NonNull GenPackage> genPackages = ClassUtil.nullFree(allGenPackagesWithClassifiers);
 			for (GenPackage genPackage : genPackages) {
-				OCLinEcoreCodeGenerator.generatePackage(genPackage, uri2body, constantTexts);
+				OCLinEcoreCodeGenerator.generatePackage(genPackage, uri2body, constantTexts, foreignFeatures);
 			}
 			return uri2body;
 		}
@@ -497,6 +500,10 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 
 		public @NonNull Map<@NonNull GenPackage, @NonNull String> getConstantTexts() {
 			return constantTexts;
+		}
+
+		public @Nullable Iterable<@NonNull Feature> getForeignFeatures() {
+			return foreignFeatures;
 		}
 
 		protected @NonNull OCLinEcoreGenModelGeneratorAdapter getGenModelGeneratorAdapter() {
@@ -641,8 +648,7 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 		try {
 			OCLinEcoreStateAdapter stateAdapter = getStateAdapter(genModel);
 			Map<@NonNull GenPackage, @NonNull String> constantTexts = stateAdapter.getConstantTexts();
-			Iterable<@NonNull Operation> foreignOperations = null; //stateAdapter.getStaticOperations();
-			Iterable<@NonNull Property> staticProperties = null; //stateAdapter.getStaticProperties();
+			Iterable<@NonNull Feature> foreignFeatures = stateAdapter.getForeignFeatures();
 			Map<@NonNull String, @NonNull FeatureBody> uri2body = stateAdapter.getUri2body();
 			String lineDelimiter = getLineDelimiter(genModel);
 			genModel.setLineDelimiter(lineDelimiter);
@@ -654,7 +660,7 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 				String tablesClass = generateTables.getTablesClassName();
 				String dir = genPackage.getReflectionPackageName().replace(".", "/");
 				String constants = constantTexts.get(genPackage);
-				generateTables.generateTablesClass(constants, foreignOperations, staticProperties, uri2body);
+				generateTables.generateTablesClass(constants, foreignFeatures, uri2body);
 				String str = generateTables.toString();
 				File tablesFolder = new File(projectFolder, dir);
 				tablesFolder.mkdirs();
@@ -722,6 +728,7 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 					body.rewriteManagedImports(importManager);		// Adjust non-staic bodoes to suit JET
 				}
 				stateAdapter.installJavaBodies(metamodelManager, genModel, results);
+		//		stateAdapter.installForeignFeatures(foreignFeatures);
 				stateAdapter.pruneDelegates(genModel);
 			}
 		} catch (Exception e) {

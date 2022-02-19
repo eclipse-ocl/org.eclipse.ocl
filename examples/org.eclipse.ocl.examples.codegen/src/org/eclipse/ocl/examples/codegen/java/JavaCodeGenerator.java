@@ -323,14 +323,6 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	}
 
 	@Override
-	public @NonNull String getForeignClassName(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-		CodeGenString s = new CodeGenString(environmentFactory.getMetamodelManager(), false);
-		s.append(JavaConstants.FOREIGN_CLASS_PREFIX);
-		s.appendAndEncodeQualifiedName(asClass);
-		return s.toString();
-	}
-
-	@Override
 	public @Nullable String getConstantsClass() {
 		return null;
 	}
@@ -339,6 +331,14 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	public @NonNull EcoreDescriptor getEcoreDescriptor(@NonNull ElementId elementId, @Nullable Class<?> instanceClass) {
 		BoxedDescriptor boxedDescriptor = getBoxedDescriptor(elementId);
 		return boxedDescriptor.getEcoreDescriptor(this, instanceClass);
+	}
+
+	@Override
+	public @NonNull String getForeignClassName(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		CodeGenString s = new CodeGenString(environmentFactory.getMetamodelManager(), false);
+		s.append(JavaConstants.FOREIGN_CLASS_PREFIX);
+		s.appendAndEncodeQualifiedName(asClass);
+		return s.toString();
 	}
 
 	@Override
@@ -475,6 +475,11 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 
 	public @NonNull NameVariant getMGR_NameVariant() {
 		return MGR_NameVariant;
+	}
+
+	public @NonNull String getQualifiedForeignClassName(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		assert false : "Unsupported getQualifiedForeignClassName";
+		return asClass.getName();
 	}
 
 	@Override

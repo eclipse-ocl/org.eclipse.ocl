@@ -139,15 +139,6 @@ public class CodeGenAnalyzer
 		fieldingAnalyzer.analyze(cgRoot, false);
 	}
 
-	public @NonNull CGBoolean createCGBoolean(boolean booleanValue) {
-		CGBoolean cgBoolean = CGModelFactory.eINSTANCE.createCGBoolean();
-	//	setExplicitNames(cgBoolean, booleanValue);
-		cgBoolean.setBooleanValue(booleanValue);
-		cgBoolean.setTypeId(getTypeId(TypeId.BOOLEAN));
-		globalNameManager.declareStandardName(cgBoolean);
-		return cgBoolean;
-}
-
 	public @Nullable Iterable<@NonNull CGClass> analyzeForeignFeatures(@NonNull AS2CGVisitor as2cgVisitor) {
 		UniqueList<@NonNull Feature> foreignFeatures = getForeignFeatures();
 		if (foreignFeatures == null) {
@@ -181,6 +172,15 @@ public class CodeGenAnalyzer
 			}
 		}
 		return cgForeignClasses;
+	}
+
+	public @NonNull CGBoolean createCGBoolean(boolean booleanValue) {
+		CGBoolean cgBoolean = CGModelFactory.eINSTANCE.createCGBoolean();
+	//	setExplicitNames(cgBoolean, booleanValue);
+		cgBoolean.setBooleanValue(booleanValue);
+		cgBoolean.setTypeId(getTypeId(TypeId.BOOLEAN));
+		globalNameManager.declareStandardName(cgBoolean);
+		return cgBoolean;
 	}
 
 	public @NonNull CGValuedElement createCGConstantExp(@NonNull CGConstant cgConstant) {
