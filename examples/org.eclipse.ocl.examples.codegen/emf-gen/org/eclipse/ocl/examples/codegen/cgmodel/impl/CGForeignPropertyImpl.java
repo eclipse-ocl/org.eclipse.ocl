@@ -35,7 +35,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGForeignPropertyImpl#getParameter <em>Parameter</em>}</li>
- *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGForeignPropertyImpl#getInitExpression <em>Init Expression</em>}</li>
  * </ul>
  *
  * @generated
@@ -48,7 +47,7 @@ public class CGForeignPropertyImpl extends CGPropertyImpl implements CGForeignPr
 	 * @generated
 	 * @ordered
 	 */
-	public static final int CG_FOREIGN_PROPERTY_FEATURE_COUNT = CGPropertyImpl.CG_PROPERTY_FEATURE_COUNT + 2;
+	public static final int CG_FOREIGN_PROPERTY_FEATURE_COUNT = CGPropertyImpl.CG_PROPERTY_FEATURE_COUNT + 1;
 
 
 	/**
@@ -147,8 +146,6 @@ public class CGForeignPropertyImpl extends CGPropertyImpl implements CGForeignPr
 		switch (featureID) {
 			case 8:
 				return basicSetParameter(null, msgs);
-			case 9:
-				return null;
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -163,8 +160,6 @@ public class CGForeignPropertyImpl extends CGPropertyImpl implements CGForeignPr
 		switch (featureID) {
 			case 8:
 				return getParameter();
-			case 9:
-				return null;
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -179,8 +174,6 @@ public class CGForeignPropertyImpl extends CGPropertyImpl implements CGForeignPr
 		switch (featureID) {
 			case 8:
 				setParameter((CGParameter)newValue);
-				return;
-			case 9:
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -197,8 +190,6 @@ public class CGForeignPropertyImpl extends CGPropertyImpl implements CGForeignPr
 			case 8:
 				setParameter((CGParameter)null);
 				return;
-			case 9:
-				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -213,8 +204,6 @@ public class CGForeignPropertyImpl extends CGPropertyImpl implements CGForeignPr
 		switch (featureID) {
 			case 8:
 				return parameter != null;
-			case 9:
-				return false;
 		}
 		return super.eIsSet(featureID);
 	}

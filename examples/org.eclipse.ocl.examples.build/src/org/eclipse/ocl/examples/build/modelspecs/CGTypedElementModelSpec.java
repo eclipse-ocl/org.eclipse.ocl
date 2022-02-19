@@ -14,7 +14,6 @@ import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGText;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypedElement;
 import org.eclipse.ocl.examples.codegen.genmodel.MethodSpec;
@@ -81,7 +80,6 @@ public class CGTypedElementModelSpec extends ModelSpec
 	  public Register() {
 		new CGTypedElementModelSpec(CGTypedElement.class, ATI_ROOT );
 		new CGTypedElementModelSpec(CGExecutorType.class, ATI_TYPE );
-		new CGTypedElementModelSpec(CGText.class, ATI_TEXT );
 		new CGTypedElementModelSpec(CGTypeId.class, ATI_T_ID );
 	  }
 	}

@@ -29,7 +29,6 @@ package org.eclipse.ocl.examples.codegen.cgmodel;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty#getParameter <em>Parameter</em>}</li>
- *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty#getInitExpression <em>Init Expression</em>}</li>
  * </ul>
  *
  * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGForeignProperty()

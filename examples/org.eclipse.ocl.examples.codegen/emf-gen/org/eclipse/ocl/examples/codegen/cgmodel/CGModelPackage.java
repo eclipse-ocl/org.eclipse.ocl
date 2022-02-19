@@ -992,17 +992,6 @@ public interface CGModelPackage extends EPackage {
 	EReference getCGForeignProperty_Parameter();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty#getInitExpression <em>Init Expression</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Init Expression</em>'.
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty#getInitExpression()
-	 * @see #getCGForeignProperty()
-	 * @generated
-	 */
-	EReference getCGForeignProperty_InitExpression();
-
-	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGForeignPropertyCallExp <em>CG Foreign Property Call Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1957,27 +1946,6 @@ public interface CGModelPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getCGTemplateParameterExp_Index();
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGText <em>CG Text</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>CG Text</em>'.
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGText
-	 * @generated
-	 */
-	EClass getCGText();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGText#getTextValue <em>Text Value</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Text Value</em>'.
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGText#getTextValue()
-	 * @see #getCGText()
-	 * @generated
-	 */
-	EAttribute getCGText_TextValue();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGThrowExp <em>CG Throw Exp</em>}'.
@@ -3176,14 +3144,6 @@ public interface CGModelPackage extends EPackage {
 		EReference CG_FOREIGN_PROPERTY__PARAMETER = eINSTANCE.getCGForeignProperty_Parameter();
 
 		/**
-		 * The meta object literal for the '<em><b>Init Expression</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference CG_FOREIGN_PROPERTY__INIT_EXPRESSION = eINSTANCE.getCGForeignProperty_InitExpression();
-
-		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGForeignPropertyCallExpImpl <em>CG Foreign Property Call Exp</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -4000,24 +3960,6 @@ public interface CGModelPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute CG_TEMPLATE_PARAMETER_EXP__INDEX = eINSTANCE.getCGTemplateParameterExp_Index();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGTextImpl <em>CG Text</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGTextImpl
-		 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getCGText()
-		 * @generated
-		 */
-		EClass CG_TEXT = eINSTANCE.getCGText();
-
-		/**
-		 * The meta object literal for the '<em><b>Text Value</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute CG_TEXT__TEXT_VALUE = eINSTANCE.getCGText_TextValue();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGThrowExpImpl <em>CG Throw Exp</em>}' class.

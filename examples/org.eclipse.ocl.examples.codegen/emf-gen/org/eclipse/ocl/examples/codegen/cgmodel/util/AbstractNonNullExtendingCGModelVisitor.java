@@ -469,11 +469,6 @@ public abstract class AbstractNonNullExtendingCGModelVisitor<R, C>
 	}
 
 	@Override
-	public @NonNull R visitCGText(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGText object) {
-		return visitCGConstant(object);
-	}
-
-	@Override
 	public @NonNull R visitCGThrowExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGThrowExp object) {
 		return visitCGCallExp(object);
 	}
