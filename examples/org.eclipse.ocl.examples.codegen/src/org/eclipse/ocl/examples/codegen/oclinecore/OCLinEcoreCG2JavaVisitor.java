@@ -39,6 +39,7 @@ import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreCodeGenerator.FeatureBody;
+import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreCodeGenerator.FeatureLocality;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.CollectionType;
@@ -142,7 +143,7 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 					String fragmentURI = getFragmentURI(asClass) + "==" + getRuleName(asConstraint);
 					String foreignPackageName = genPackage.getReflectionPackageName();//getGlobalContext().getTablesClassName();
 					String foreignClassName = context.getForeignClassName(asClass);
-					bodies.put(fragmentURI, new FeatureBody(fragmentURI, asConstraint, false, foreignPackageName,foreignClassName, bodyText));
+					bodies.put(fragmentURI, new FeatureBody(fragmentURI, asConstraint, FeatureLocality.ECORE_IMPL, foreignPackageName,foreignClassName, bodyText));
 				}
 			}
 			for (@NonNull CGOperation cgOperation : ClassUtil.nullFree(cgClass.getOperations())) {
@@ -156,7 +157,8 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 					String fragmentURI = getFragmentURI(asOperation);
 					String foreignPackageName = genPackage.getReflectionPackageName();//getGlobalContext().getTablesClassName();
 					String foreignClassName = context.getForeignClassName(asOperation.getOwningClass());
-					body = new FeatureBody(fragmentURI, asOperation, asOperation.isIsStatic(), foreignPackageName, foreignClassName, bodyText);
+					FeatureLocality featureLocality = asOperation.isIsStatic() ? FeatureLocality.FOREIGN_STATIC : FeatureLocality.ECORE_IMPL;
+					body = new FeatureBody(fragmentURI, asOperation, featureLocality, foreignPackageName, foreignClassName, bodyText);
 				}
 				if (body != null) {
 					bodies.put(body.getURI(), body);
@@ -194,7 +196,8 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 					assert packageName != null;
 					assert className != null;
 					String fragmentURI = getFragmentURI(asProperty);
-					body = new FeatureBody(fragmentURI, asProperty, isStatic, packageName, className, bodyText);
+					FeatureLocality featureLocality = asProperty.isIsStatic() ? FeatureLocality.FOREIGN_STATIC : FeatureLocality.ECORE_IMPL;
+					body = new FeatureBody(fragmentURI, asProperty, featureLocality, packageName, className, bodyText);
 					bodies.put(body.getURI(), body);
 				}
 			}
@@ -308,7 +311,8 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 		String bodyText = toString();
 		String fragmentURI = getFragmentURI(asOperation);
 		String foreignPackageName = getGlobalContext().getTablesClassName();
-		return new FeatureBody(fragmentURI, asOperation, true, foreignPackageName, className, bodyText);
+		FeatureLocality featureLocality = FeatureLocality.FOREIGN_STATIC;
+		return new FeatureBody(fragmentURI, asOperation, featureLocality, foreignPackageName, className, bodyText);
 	}
 
 	protected @NonNull FeatureBody generateStaticProperty(@NonNull CGProperty cgProperty) {
@@ -376,7 +380,8 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 		String bodyText = toString();
 		String fragmentURI = getFragmentURI(asProperty);
 		String foreignPackageName = getGlobalContext().getTablesClassName();
-		return new FeatureBody(fragmentURI, asProperty, true, foreignPackageName, className, bodyText);
+		FeatureLocality featureLocality = FeatureLocality.FOREIGN_STATIC;
+		return new FeatureBody(fragmentURI, asProperty, featureLocality, foreignPackageName, className, bodyText);
 	}
 
 	private void appendIdPath(@NonNull Element element) {

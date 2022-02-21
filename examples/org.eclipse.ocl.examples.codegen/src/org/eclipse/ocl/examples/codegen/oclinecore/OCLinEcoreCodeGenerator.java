@@ -352,23 +352,37 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		}
 	}
 
+	public static enum FeatureLocality
+	{
+		ECORE_IMPL,			// The traditional locality of a non-ststic Ecore feature within an Ecore *Impl.java
+		ECORE_STATIC,		// The locality of a static 'Ecore' feature within a FOREIGN *Tables.java sub-class
+		FOREIGN_IMPL,		// The locality of a non-static Complete OCL feature within a FOREIGN *Tables.java sub-class
+		FOREIGN_STATIC;		// The locality of a static Complete OCL feature within a FOREIGN *Tables.java sub-class
+
+		boolean hasSelf() { return this == ECORE_STATIC; }
+		boolean hasThis() { return this == ECORE_IMPL; }
+		boolean isEcore() { return this == ECORE_IMPL; }
+		boolean isForeign() { return (this == ECORE_STATIC) || (this == FOREIGN_IMPL) || (this == FOREIGN_STATIC); }
+		boolean isStatic() { return (this == ECORE_STATIC) || (this == FOREIGN_STATIC); }
+	}
+
 	public static class FeatureBody //implements Nameable
 	{
 		private final @NonNull String uri;
 		private final @NonNull NamedElement namedElement;
-		private final boolean isStatic;
+		private final @NonNull FeatureLocality featureLocality;
 		private final @NonNull String packageName;
 		private final @NonNull String className;
 		private @NonNull String bodyText;
 
-		public FeatureBody(@NonNull String uri, @NonNull NamedElement namedElement, boolean isStatic, @NonNull String packageName, @NonNull String className, @NonNull String bodyText) {
+		public FeatureBody(@NonNull String uri, @NonNull NamedElement namedElement, @NonNull FeatureLocality featureLocality, @NonNull String packageName, @NonNull String className, @NonNull String bodyText) {
 			this.uri = uri;
 			this.namedElement = namedElement;
-			this.isStatic = isStatic;
+			this.featureLocality = featureLocality;
 			this.packageName = packageName;
 			this.className = className;
 			this.bodyText = bodyText;
-			assert isStatic == ((namedElement instanceof Feature) && ((Feature)namedElement).isIsStatic());		// XXX isStatic redundant
+		//	assert featureLocality.isStatic() == ((namedElement instanceof Feature) && ((Feature)namedElement).isIsStatic());		// XXX isStatic redundant
 		}
 
 		public @NonNull String getBodyText() {
@@ -401,7 +415,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		}
 
 		public void rewriteManagedImports(@Nullable ImportManager importManager) {
-			if (!isStatic) {
+			if (featureLocality.isEcore()) {
 				// non-static bodies are embedded in XXXImpl.java for which ImportUtils.IMPORTS_NESTED_ANNOTATION_PREFIX etc must be adjusted to the limitations of EMFs JET handling.
 				bodyText = ImportUtils.rewriteManagedImports(bodyText, null);	// FIXME transfer imports between CG sessions
 			}

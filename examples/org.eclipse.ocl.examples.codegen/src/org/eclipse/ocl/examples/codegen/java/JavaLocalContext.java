@@ -100,6 +100,10 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 		return qualifiedThisVariable;
 	}
 
+	public @Nullable CGParameter basicGetSelfParameter() {
+		return selfParameter;
+	}
+
 	public @Nullable CGVariable basicGetStandardLibraryVariable() {
 		return standardLibraryVariable;
 	}
@@ -122,7 +126,20 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 		setNames2(executorInit, executorName, JavaConstants.EXECUTOR_TYPE_ID);
 	//	executorInit.setValueName(executorName.getResolvedName());
 		executorInit.setMethod(JavaConstants.PIVOT_UTIL_GET_EXECUTOR_GET_METHOD);
-		executorInit.getArguments().add(isStatic ? analyzer.createCGNull() : analyzer.createCGVariableExp(getThisParameter()));
+		CGValuedElement contextParameter;
+		if (isStatic) {
+			CGParameter selfParameter = basicGetSelfParameter();
+			if (selfParameter == null) {
+				contextParameter = analyzer.createCGNull();
+			}
+			else {
+				contextParameter = analyzer.createCGVariableExp(selfParameter);
+			}
+		}
+		else {
+			contextParameter = analyzer.createCGVariableExp(getThisParameter());
+		}
+		executorInit.getArguments().add(contextParameter);
 		executorInit.setRequired(true);
 		executorInit.setInvalidating(false);
 		CGVariable executorVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();
