@@ -658,7 +658,7 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<@Nullable 
 			append(".");
 		}
 		Method method = oc.getMethod();
-		append(method.toString());
+		append(method.getName());
 		append("(");
 		String prefix = "";//$NON-NLS-1$
 		for (CGValuedElement argument : oc.getArguments()) {

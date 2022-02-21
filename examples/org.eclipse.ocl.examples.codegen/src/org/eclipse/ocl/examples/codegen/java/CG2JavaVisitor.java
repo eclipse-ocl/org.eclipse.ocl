@@ -136,7 +136,6 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.IterationManager;
-import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.ids.ClassId;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.ElementId;
@@ -144,7 +143,6 @@ import org.eclipse.ocl.pivot.ids.EnumerationId;
 import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.NestedTypeId;
-import org.eclipse.ocl.pivot.ids.PropertyId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.executor.AbstractDispatchOperation;
@@ -1972,106 +1970,34 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	@Override
 	public @NonNull Boolean visitCGForeignProperty(@NonNull CGForeignProperty cgForeignProperty) {
 		JavaLocalContext<@NonNull ?> localContext2 = globalContext.getLocalContext(cgForeignProperty);
-		if (localContext2 != null) {
-			localContext = localContext2;
-			try {
-			//	if (!js.appendLocalStatements(cgForeignProperty)) {
-			//		return false;
-			//	}
-				Property asProperty = CGUtil.getAST(cgForeignProperty);
-				CGParameter cgParameter = cgForeignProperty.getParameter();
-			//	assert (cgParameter == null) == asProperty.isIsStatic();		// XXX
-				PropertyId propertyId = asProperty.getPropertyId();
-				String modelManagerName = globalContext.getModelManagerName();
-				String valueName = globalContext.getValueName();
-				String initValueName = globalContext.getInitValueName();
-				if (cgParameter != null) {
-					CGValuedElement cgSource = getExpression(cgParameter);
-					if (!js.appendLocalStatements(cgSource)) {
-						return false;
-					}
-				}
-				CGValuedElement cgInitExpression = cgForeignProperty.getBody();
-				assert cgInitExpression != null;
-
-				js.append("public static ");
-				js.appendTypeDeclaration(cgForeignProperty);
-				js.append(" ");
-				js.append(asProperty.getName());		// FIXME valid Java name
-				js.append("(");
-				if (cgParameter != null) {
-					js.appendTypeDeclaration(cgParameter);
-				}
-				js.append(") {\n");
-				js.pushIndentation(null);
-
-
-				if (!js.appendLocalStatements(cgInitExpression)) {
-					return false;
-				}
-
-
-				js.appendClassReference(true, ModelManager.class);
-				js.append(" " + modelManagerName + " = ");
-				js.append(JavaConstants.EXECUTOR_NAME);
-				js.append(".getModelManager();\n");
-				//
-				js.append("Object ");
-				js.append(valueName);
-				js.append(" = ");
-				js.append(modelManagerName + ".basicGetForeignPropertyValue(null, ");
-				js.appendIdReference(propertyId);
-				js.append(");\n");
-				//
-				js.append("if (");
-				js.append(valueName);
-				js.append(" == null) {\n");
-				js.pushIndentation(null);
-				//
-				if (!cgInitExpression.isConstant()) {
-					js.append("Object ");
-					js.append(initValueName);
-					js.append(" = ");
-					js.appendValueName(cgInitExpression);
-				//	cgInitExpression.accept(this);
-					js.append(";\n");
-				}
-				//
-				js.append(valueName);
-				js.append(" = ");
-				js.append(modelManagerName + ".getForeignPropertyValue(null, ");
-				js.appendIdReference(propertyId);
-				js.append(", null, ");
-				if (!cgInitExpression.isConstant()) {
-					js.append(initValueName);
-				}
-				else {
-					js.appendValueName(cgInitExpression);
-				}
-				js.append(");\n");
-				js.popIndentation();
-				js.append("}\n");
-				js.appendDeclaration(cgForeignProperty);
-				js.append(" = ");
-				SubStream castBody = new SubStream() {
-					@Override
-					public void append() {
-						js.append(valueName);
-					}
-				};
-				js.appendClassCast(cgForeignProperty, castBody);
-				js.append(";\n");
-				js.append("return ");
-				js.appendValueName(cgForeignProperty);
-				js.append(";\n");
-				js.popIndentation();
-				js.append("}\n");
+		localContext = localContext2;
+		try {
+			Property asProperty = CGUtil.getAST(cgForeignProperty);
+			CGParameter cgParameter = cgForeignProperty.getParameter();
+			CGValuedElement cgInitExpression = getExpression(cgForeignProperty.getBody());
+			js.append("public static ");
+			js.appendTypeDeclaration(cgForeignProperty);
+			js.append(" ");
+			js.append(asProperty.getName());		// FIXME valid Java name
+			js.append("(");
+			if (cgParameter != null) {
+				js.appendDeclaration(cgParameter);
 			}
-			finally {
-				localContext = null;
+			js.append(") {\n");
+			js.pushIndentation(null);
+			if (!js.appendLocalStatements(cgInitExpression)) {
+				return false;
 			}
+			js.append("return ");
+			js.appendValueName(cgInitExpression);
+			js.append(";\n");
+			js.popIndentation();
+			js.append("}\n");
+			return true;
 		}
-		return true;
+		finally {
+			localContext = null;
+		}
 	}
 
 	@Override
@@ -2978,12 +2904,17 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			boolean isForeign = false;
 		//	boolean isStatic = false;
 			Element ast = cgOperation.getAst();
-			LanguageExpression expressionInOCL = ((Operation)ast).getBodyExpression();
-			Operation asOperation = (Operation)ast;
-			isForeign = analyzer.isForeign(asOperation);//cgOperation instanceof CGFo;
-			//	isStatic = asOperation.isIsStatic();
-			String title = PrettyPrinter.printName(ast);
-			js.appendCommentWithOCL(title+"\n", expressionInOCL);
+			if (ast instanceof Operation) {
+				Operation asOperation = (Operation)ast;
+				isForeign = analyzer.isForeign(asOperation);//cgOperation instanceof CGFo;
+				//	isStatic = asOperation.isIsStatic();
+				LanguageExpression expressionInOCL = asOperation.getBodyExpression();
+				if (ast instanceof Operation) {
+					String title = PrettyPrinter.printName(ast);
+					js.appendCommentWithOCL(title+"\n", expressionInOCL);
+				}
+			}
+			//
 			//
 			if (!isForeign) {
 				js.append("@Override\n");

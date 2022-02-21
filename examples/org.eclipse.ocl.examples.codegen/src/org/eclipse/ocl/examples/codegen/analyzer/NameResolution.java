@@ -84,6 +84,9 @@ public class NameResolution
 		this.nameManager = nameManager;
 		this.primaryElement = primaryElement;
 		this.nameHint = nameHint;
+		if ("PROPid_size".equals(nameHint)) {
+			getClass();		// XXX
+		}
 		assert !(primaryElement instanceof CGVariableExp) : "Should have redirected to getNamedValue()";
 		if (primaryElement != null) {
 			primaryElement.setNameResolution(this);

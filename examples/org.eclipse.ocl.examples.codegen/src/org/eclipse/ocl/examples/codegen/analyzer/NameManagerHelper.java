@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.analyzer;
 
+import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
@@ -38,6 +39,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGIsKindOfExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIsUndefinedExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGMapPart;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNull;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOppositePropertyCallExp;
@@ -369,22 +371,22 @@ public class NameManagerHelper
 
 		@Override
 		public @NonNull String visitCGIsEqualExp(@NonNull CGIsEqualExp object) {
-			return "ISEQ_";
+			return "IsEQ_";
 		}
 
 		@Override
 		public @NonNull String visitCGIsEqual2Exp(@NonNull CGIsEqual2Exp object) {
-			return "ISEQ2_";
+			return "IsEQ2_";
 		}
 
 		@Override
 		public @NonNull String visitCGIsKindOfExp(@NonNull CGIsKindOfExp object) {
-			return "ISKINDOF_";
+			return "IsKINDOF_";
 		}
 
 		@Override
 		public @NonNull String visitCGIsUndefinedExp(@NonNull CGIsUndefinedExp object) {
-			return "ISUNDEF_" + context.getNameHint(object.getSourceValue());
+			return "IsUNDEF_" + context.getNameHint(object.getSourceValue());
 		}
 
 		@Override
@@ -409,6 +411,12 @@ public class NameManagerHelper
 		public @NonNull String visitCGMapPart(@NonNull CGMapPart object) {
 			String nameHint = MAP_PART_HINT_PREFIX;
 			return nameHint;
+		}
+
+		@Override
+		public @NonNull String visitCGNativeOperationCallExp(@NonNull CGNativeOperationCallExp object) {
+			Method method = object.getMethod();
+			return method.getName();
 		}
 
 		@Override

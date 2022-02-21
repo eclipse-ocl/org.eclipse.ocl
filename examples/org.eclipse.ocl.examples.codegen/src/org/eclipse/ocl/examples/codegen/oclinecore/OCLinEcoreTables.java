@@ -546,9 +546,8 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 			s.append("\n\tpublic static class " + className);
 			s.append("\n\t{");
 			for (@NonNull FeatureBody body : bodies) {
-				s.append("\n\t\tpublic static Object " + body.getFeatureName() + "() {\n");
-				s.appendMarkup(("\t\t\t" + body.getBodyText()).replace("\n", "\n\t\t\t"));
-				s.append("\n\t\t}\n");
+				s.append("\n\t\t");
+				s.appendMarkup((body.getBodyText()).replace("\n", "\n\t\t"));
 			}
 			s.append("\t}\n");
 		}

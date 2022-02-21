@@ -252,6 +252,10 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 		return selfName.getResolvedName();
 	}
 
+	public @NonNull NameResolution getSelfNameResolution() {
+		return selfName;
+	}
+
 	public @NonNull String getSourceAndArgumentValuesName() {
 		return sourceAndArgumentValuesName.getResolvedName();
 	}

@@ -15,11 +15,13 @@ import java.lang.reflect.Method;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.java.types.JavaTypeId.JavaTypeIdSingletonScope;
+import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
+import org.eclipse.ocl.pivot.ids.PropertyId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.UnboxedCompositionProperty;
 import org.eclipse.ocl.pivot.internal.library.UnboxedExplicitNavigationProperty;
@@ -27,6 +29,7 @@ import org.eclipse.ocl.pivot.internal.library.UnboxedOppositeNavigationProperty;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorOperation;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
+@SuppressWarnings("null")
 public class JavaConstants {
 
 	/**
@@ -66,24 +69,25 @@ public class JavaConstants {
 	public static final @NonNull TypeId UNBOXED_EXPLICIT_NAVIGATION_PROPERTY_TYPE_ID = getJavaTypeId(UnboxedExplicitNavigationProperty.class);
 	public static final @NonNull TypeId UNBOXED_OPPOSITE_NAVIGATION_PROPERTY_TYPE_ID = getJavaTypeId(UnboxedOppositeNavigationProperty.class);
 
-	public static final Method EXECUTOR_GET_ID_RESOLVER_METHOD;
+	public static final @NonNull Method EXECUTOR_GET_ID_RESOLVER_METHOD;
+	public static final @NonNull Method EXECUTOR_GET_MODEL_MANAGER_METHOD;
+	public static final @NonNull Method EXECUTOR_GET_STANDARD_LIBRARY_METHOD;
 
-	public static final Method EXECUTOR_GET_MODEL_MANAGER_METHOD;
+	public static final @NonNull Method MODEL_MANAGER_BASIC_GET_FOREIGN_PROPERTY_VALUE_METHOD;
+	public static final @NonNull Method MODEL_MANAGER_GET_FOREIGN_PROPERTY_VALUE_METHOD;
+	public static final @NonNull Method MODEL_MANAGER_SET_FOREIGN_PROPERTY_VALUE_METHOD;
 
-	public static final Method EXECUTOR_GET_STANDARD_LIBRARY_METHOD;
-
-	public static final Method PIVOT_UTIL_GET_EXECUTOR_GET_METHOD;
+	public static final @NonNull Method PIVOT_UTIL_GET_EXECUTOR_GET_METHOD;
 
 	static {
 		try {
-			EXECUTOR_GET_ID_RESOLVER_METHOD = Executor.class
-				.getMethod("getIdResolver");
-			EXECUTOR_GET_MODEL_MANAGER_METHOD = Executor.class
-				.getMethod("getModelManager");
-			EXECUTOR_GET_STANDARD_LIBRARY_METHOD = Executor.class
-				.getMethod("getStandardLibrary");
-			PIVOT_UTIL_GET_EXECUTOR_GET_METHOD = PivotUtil.class
-				.getMethod("getExecutor", EObject.class);
+			EXECUTOR_GET_ID_RESOLVER_METHOD = Executor.class.getMethod("getIdResolver");
+			EXECUTOR_GET_MODEL_MANAGER_METHOD = Executor.class.getMethod("getModelManager");
+			EXECUTOR_GET_STANDARD_LIBRARY_METHOD = Executor.class.getMethod("getStandardLibrary");
+			MODEL_MANAGER_BASIC_GET_FOREIGN_PROPERTY_VALUE_METHOD = ModelManager.class.getMethod("basicGetForeignPropertyValue", Object.class, PropertyId.class);
+			MODEL_MANAGER_GET_FOREIGN_PROPERTY_VALUE_METHOD = ModelManager.class.getMethod("getForeignPropertyValue", Object.class, PropertyId.class, OCLExpression.class, Object.class);
+			MODEL_MANAGER_SET_FOREIGN_PROPERTY_VALUE_METHOD = ModelManager.class.getMethod("setForeignPropertyValue", Object.class, PropertyId.class, Object.class);
+			PIVOT_UTIL_GET_EXECUTOR_GET_METHOD = PivotUtil.class.getMethod("getExecutor", EObject.class);
 		} catch (NoSuchMethodException | SecurityException e) {
 			throw new RuntimeException(e);
 		}

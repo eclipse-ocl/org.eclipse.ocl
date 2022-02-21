@@ -26,6 +26,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInvalid;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
@@ -39,6 +40,7 @@ import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreCodeGenerator.FeatureBody;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
+import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
@@ -165,15 +167,34 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 				Property asProperty = CGUtil.getAST(cgProperty);
 				FeatureBody body = null;
 				if (cgBody != null) {
-					String returnClassName = genModelHelper.getPropertyResultType(asProperty);
-					localContext = globalContext.basicGetLocalContext(cgProperty);
-					String bodyText = generateBody(null, cgBody, returnClassName);
+					Class asClass = PivotUtil.getOwningClass((Feature)asProperty);
+					boolean isStatic = asProperty.isIsStatic();
+					String packageName;
+					String className;
+					String bodyText;
+					if (cgProperty instanceof CGForeignProperty) {
+						localContext = globalContext.basicGetLocalContext(cgProperty);
+						js.resetStream();
+						js.appendCommentWithOCL(null, cgBody.getAst());
+						cgProperty.accept(this);
+						bodyText = toString();
+						packageName = genPackage.getReflectionPackageName();
+						className = context.getForeignClassName(asClass);
+					}
+					else {
+						assert !isStatic;
+						localContext = globalContext.getLocalContext(cgProperty);
+						String returnClassName = genModelHelper.getPropertyResultType(asProperty);
+						bodyText = generateBody(null, cgBody, returnClassName);
+						packageName = genPackage.getReflectionClassPackageName();
+						GenClass genClass = (GenClass)genModelHelper.getGenClassifier(asClass);
+						assert genClass != null;
+						className = genClass.getClassName();
+					}
+					assert packageName != null;
+					assert className != null;
 					String fragmentURI = getFragmentURI(asProperty);
-					String foreignPackageName = genPackage.getReflectionPackageName();//getGlobalContext().getTablesClassName();
-					String foreignClassName = context.getForeignClassName(asProperty.getOwningClass());
-					body = new FeatureBody(fragmentURI, asProperty, asProperty.isIsStatic(), foreignPackageName, foreignClassName, bodyText);
-				}
-				if (body != null) {
+					body = new FeatureBody(fragmentURI, asProperty, isStatic, packageName, className, bodyText);
 					bodies.put(body.getURI(), body);
 				}
 			}

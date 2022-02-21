@@ -55,7 +55,8 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 	private /*@LazyNonNull*/ CGVariable modelManagerVariable = null;		// A convenience cache of execitpr.getModelManager()
 	private /*@LazyNonNull*/ CGVariable qualifiedThisVariable = null;		// An unambiguous spelling of this for external access.
 	private /*@LazyNonNull*/ CGVariable standardLibraryVariable = null;		// A convenience cache of execitpr.getStandardVariable()
-	private /*@LazyNonNull*/ CGParameter thisParameter = null;				// THe orphan "this" text.
+	private /*@LazyNonNull*/ CGParameter selfParameter = null;				// A local parameter spelled "self" to be added to the signature
+	private /*@LazyNonNull*/ CGParameter thisParameter = null;				// A local orphan parameter spelled "this"
 
 	@Deprecated /* @deprecated specify executorIsParameter */
 	public JavaLocalContext(@NonNull JavaGlobalContext<@NonNull ? extends CG> globalContext, @NonNull CGElement cgScope) {
@@ -181,6 +182,16 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 		return qualifiedThisVariable;
 	}
 
+	protected @NonNull CGParameter createSelfParameter() {
+	//	assert !isStatic;
+		NameResolution selfName = globalContext.getSelfNameResolution();
+		CGParameter selfParameter = analyzer.createCGParameter(selfName.getResolvedName(), analyzer.getTypeId(asType.getTypeId()), true);
+		selfParameter.setNonInvalid();
+		selfParameter.setNonNull();
+		selfName.addSecondaryElement(selfParameter);
+		return selfParameter;
+	}
+
 	public @NonNull CGVariable createStandardLibraryVariable() {
 		CGNativeOperationCallExp standardLibraryInit = CGModelFactory.eINSTANCE.createCGNativeOperationCallExp();
 		NameResolution standardLibraryNameResolution = globalContext.getStandardLibraryVariableNameResolution();
@@ -202,12 +213,11 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 	protected @NonNull CGParameter createThisParameter() {
 		assert !isStatic;
 		NameResolution thisName = globalContext.getThisNameResolution();
-		CGParameter thisVariable = analyzer.createCGParameter(thisName.getResolvedName(), analyzer.getTypeId(asType.getTypeId()), true);
-	//	thisVariable.setValueName(thisName);
-		thisVariable.setNonInvalid();
-		thisVariable.setNonNull();
-		thisName.addSecondaryElement(thisVariable);
-		return thisVariable;
+		CGParameter thisParameter = analyzer.createCGParameter(thisName.getResolvedName(), analyzer.getTypeId(asType.getTypeId()), true);
+		thisParameter.setNonInvalid();
+		thisParameter.setNonNull();
+		thisName.addSecondaryElement(thisParameter);
+		return thisParameter;
 	}
 
 	@Deprecated /* @deprecated no longer used */
@@ -301,6 +311,15 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 			qualifiedThisVariable = qualifiedThisVariable2 = createQualifiedThisVariable();
 		}
 		return qualifiedThisVariable2;
+	}
+
+	public @NonNull CGParameter getSelfParameter() {
+	//	assert !isStatic;
+		CGParameter selfParameter2 = selfParameter;
+		if (selfParameter2 == null) {
+			selfParameter = selfParameter2 = createSelfParameter();
+		}
+		return selfParameter2;
 	}
 
 	@Deprecated /* @deprecated unnecessary argument */
