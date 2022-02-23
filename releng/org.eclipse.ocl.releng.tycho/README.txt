@@ -46,16 +46,16 @@ ssh genie.ocl@projects-storage.eclipse.org rm -rf  /home/data/httpd/download.ecl
 -- Updates maintenance -- https://download.eclipse.org/modeling/mdt/ocl/updates/releases
 ssh genie.ocl@projects-storage.eclipse.org ls -la /home/data/httpd/download.eclipse.org/modeling/mdt/ocl/updates/releases
 ssh genie.ocl@projects-storage.eclipse.org pwd ; cd /home/data/httpd/download.eclipse.org/modeling/mdt/ocl/updates/releases ; pwd ; ls -la
-ssh genie.ocl@projects-storage.eclipse.org cd /home/data/httpd/download.eclipse.org/modeling/mdt/ocl/updates/releases ; ant -f /shared/modeling/tools/promotion/manage-composite.xml remove -Dchild.repository=6.12.0
+ssh genie.ocl@projects-storage.eclipse.org cd /home/data/httpd/download.eclipse.org/modeling/mdt/ocl/updates/releases ; export JAVA_HOME=/shared/common/jdk1.8.0_x64-latest ; java -version ; /shared/common/apache-ant-latest/bin/ant -f /shared/modeling/tools/promotion/manage-composite.xml remove -Dchild.repository=6.12.0
 ssh genie.ocl@projects-storage.eclipse.org rm -rf /home/data/httpd/download.eclipse.org/modeling/mdt/ocl/updates/releases/6.12.0
 
-ssh genie.ocl@projects-storage.eclipse.org cd /home/data/httpd/download.eclipse.org/modeling/mdt/ocl/updates/nightly ; ant -f /shared/modeling/tools/promotion/manage-composite.xml remove -Dchild.repository=6.12.0
+ssh genie.ocl@projects-storage.eclipse.org cd /home/data/httpd/download.eclipse.org/modeling/mdt/ocl/updates/nightly ; export JAVA_HOME=/shared/common/jdk1.8.0_x64-latest ; java -version ; /shared/common/apache-ant-latest/bin/ant -f /shared/modeling/tools/promotion/manage-composite.xml remove -Dchild.repository=6.12.0
 ssh genie.ocl@projects-storage.eclipse.org rm -rf /home/data/httpd/download.eclipse.org/modeling/mdt/ocl/updates/nightly/6.12.0
 
-ssh genie.ocl@projects-storage.eclipse.org cd /home/data/httpd/download.eclipse.org/modeling/mdt/ocl/updates/interim ; ant -f /shared/modeling/tools/promotion/manage-composite.xml remove -Dchild.repository=6.12.0
+ssh genie.ocl@projects-storage.eclipse.org cd /home/data/httpd/download.eclipse.org/modeling/mdt/ocl/updates/interim ; export JAVA_HOME=/shared/common/jdk1.8.0_x64-latest ; java -version ; /shared/common/apache-ant-latest/bin/ant -f /shared/modeling/tools/promotion/manage-composite.xml remove -Dchild.repository=6.12.0
 ssh genie.ocl@projects-storage.eclipse.org rm -rf /home/data/httpd/download.eclipse.org/modeling/mdt/ocl/updates/interim/6.12.0
 
-ssh genie.ocl@projects-storage.eclipse.org cd /home/data/httpd/download.eclipse.org/modeling/mdt/ocl/updates/milestones ; ant -f /shared/modeling/tools/promotion/manage-composite.xml remove -Dchild.repository=6.12.0
+ssh genie.ocl@projects-storage.eclipse.org cd /home/data/httpd/download.eclipse.org/modeling/mdt/ocl/updates/milestones ; export JAVA_HOME=/shared/common/jdk1.8.0_x64-latest ; java -version ; /shared/common/apache-ant-latest/bin/ant -f /shared/modeling/tools/promotion/manage-composite.xml remove -Dchild.repository=6.12.0
 ssh genie.ocl@projects-storage.eclipse.org rm -rf /home/data/httpd/download.eclipse.org/modeling/mdt/ocl/updates/milestones/6.12.0
 
 
@@ -67,9 +67,9 @@ ssh genie.ocl@projects-storage.eclipse.org cd /home/data/httpd/download.eclipse.
 ssh genie.ocl@projects-storage.eclipse.org ls -la /home/data/httpd/archive.eclipse.org/modeling/mdt/ocl/updates/releases
 ssh genie.ocl@projects-storage.eclipse.org rm -rf /home/data/httpd/archive.eclipse.org/modeling/mdt/ocl/updates/releases/zz*
 
-ssh genie.ocl@projects-storage.eclipse.org cd /home/data/httpd/download.eclipse.org/modeling/mdt/ocl/updates/releases ; ant -f /shared/modeling/tools/promotion/manage-composite.xml remove -Dchild.repository=6.12.0
+ssh genie.ocl@projects-storage.eclipse.org cd /home/data/httpd/download.eclipse.org/modeling/mdt/ocl/updates/releases ; export JAVA_HOME=/shared/common/jdk1.8.0_x64-latest ; java -version ; /shared/common/apache-ant-latest/bin/ant -f /shared/modeling/tools/promotion/manage-composite.xml remove -Dchild.repository=6.12.0
 ssh genie.ocl@projects-storage.eclipse.org cd /home/data/httpd/download.eclipse.org/modeling/mdt/ocl/updates/releases ; mv 6.12.0 /home/data/httpd/archive.eclipse.org/modeling/mdt/ocl/updates/releases
-ssh genie.ocl@projects-storage.eclipse.org cd /home/data/httpd/archive.eclipse.org/modeling/mdt/ocl/updates/releases ; ant -f /shared/modeling/tools/promotion/manage-composite.xml add -Dchild.repository=6.12.0
+ssh genie.ocl@projects-storage.eclipse.org cd /home/data/httpd/archive.eclipse.org/modeling/mdt/ocl/updates/releases ; export JAVA_HOME=/shared/common/jdk1.8.0_x64-latest ; java -version ; /shared/common/apache-ant-latest/bin/ant -f /shared/modeling/tools/promotion/manage-composite.xml add -Dchild.repository=6.12.0
 
 
 -- Doc maintenance -- https://download.eclipse.org/ocl/doc/
