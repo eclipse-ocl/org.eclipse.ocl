@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2021 Willink Transformations and others.
+ * Copyright (c) 2015, 2022 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -9,7 +9,7 @@
  *     E.D.Willink - initial API and implementation
  *******************************************************************************
  * This code is 100% auto-generated
- * from: E:\GIT\org.eclipse.ocl\plugins..\..\plugins\org.eclipse.ocl.xtext.base\src-gen\org\eclipse\ocl\xtext\base\Base.xtextbin
+ * from: C:\Users\ed\ocl-6-17-0\git\org.eclipse.ocl\plugins..\..\plugins\org.eclipse.ocl.xtext.base\src-gen\org\eclipse\ocl\xtext\base\Base.xtextbin
  * by: org.eclipse.ocl.examples.build.xtend.generateGrammar.xtend
  *
  * Do not edit it.

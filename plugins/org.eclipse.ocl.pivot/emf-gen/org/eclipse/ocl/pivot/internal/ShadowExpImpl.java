@@ -249,9 +249,9 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 			final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
 			final /*@NonInvalid*/ @NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.SHADOW_EXP___VALIDATE_DATA_TYPE_HAS_ONE_PART_INITIALIZER__DIAGNOSTICCHAIN_MAP);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
-			/*@NonInvalid*/ boolean symbol_0;
+			/*@NonInvalid*/ boolean local_0;
 			if (le) {
-				symbol_0 = true;
+				local_0 = true;
 			}
 			else {
 				/*@Caught*/ @Nullable Object CAUGHT_result;
@@ -291,9 +291,9 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 					CAUGHT_result = ValueUtil.createInvalidValue(e);
 				}
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_result, PivotTables.INT_0).booleanValue();
-				symbol_0 = logDiagnostic;
+				local_0 = logDiagnostic;
 			}
-			return symbol_0;
+			return local_0;
 		}
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);
@@ -410,9 +410,9 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 			final /*@NonInvalid*/ @NonNull StandardLibrary standardLibrary = idResolver.getStandardLibrary();
 			final /*@NonInvalid*/ @NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.SHADOW_EXP___VALIDATE_INITIALIZES_ALL_CLASS_PROPERTIES__DIAGNOSTICCHAIN_MAP);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
-			/*@NonInvalid*/ boolean symbol_7;
+			/*@NonInvalid*/ boolean local_7;
 			if (le) {
-				symbol_7 = true;
+				local_7 = true;
 			}
 			else {
 				/*@Caught*/ @NonNull Object CAUGHT_result;
@@ -463,11 +463,11 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 							 */
 							@Override
 							public @Nullable Object evaluate(final @NonNull Executor executor, final @NonNull TypeId typeId, final @Nullable Object oclAsSet, final /*@NonInvalid*/ @Nullable Object _1_0) {
-								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Class symbol_0 = (org.eclipse.ocl.pivot.Class)_1_0;
-								if (symbol_0 == null) {
+								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Class local_0 = (org.eclipse.ocl.pivot.Class)_1_0;
+								if (local_0 == null) {
 									throw new InvalidValueException("Null source for \'Class::superClasses\'");
 								}
-								final /*@Thrown*/ @NonNull List<org.eclipse.ocl.pivot.Class> superClasses = symbol_0.getSuperClasses();
+								final /*@Thrown*/ @NonNull List<org.eclipse.ocl.pivot.Class> superClasses = local_0.getSuperClasses();
 								final /*@Thrown*/ @NonNull SetValue BOXED_superClasses = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Class, superClasses);
 								return BOXED_superClasses;
 							}
@@ -759,7 +759,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 						final /*@Thrown*/ @NonNull SetValue extraProperties = (@Nullable SetValue)CollectionExcludingAllOperation.INSTANCE.evaluate(partProperties, classProperties);
 						final /*@Thrown*/ @NonNull SetValue missingProperties = (@Nullable SetValue)CollectionExcludingAllOperation.INSTANCE.evaluate(requiredClassProperties, partProperties);
 						final /*@Thrown*/ boolean notEmpty = CollectionNotEmptyOperation.INSTANCE.evaluate(extraProperties).booleanValue();
-						/*@Thrown*/ @NonNull Object symbol_6;
+						/*@Thrown*/ @NonNull Object local_6;
 						if (notEmpty) {
 							final org.eclipse.ocl.pivot.@NonNull Class TYPE_sortedBy_1 = executor.getStaticTypeOfValue(null, extraProperties);
 							final @NonNull LibraryIterationExtension IMPL_sortedBy_1 = (LibraryIterationExtension)TYPE_sortedBy_1.lookupImplementation(standardLibrary, OCLstdlibTables.Operations._Set__sortedBy);
@@ -774,11 +774,11 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 								 */
 								@Override
 								public @Nullable Object evaluate(final @NonNull Executor executor, final @NonNull TypeId typeId, final @Nullable Object extraProperties, final /*@NonInvalid*/ @Nullable Object _1_8) {
-									final /*@NonInvalid*/ @Nullable NamedElement symbol_1 = (NamedElement)_1_8;
-									if (symbol_1 == null) {
+									final /*@NonInvalid*/ @Nullable NamedElement local_1 = (NamedElement)_1_8;
+									if (local_1 == null) {
 										throw new InvalidValueException("Null source for \'NamedElement::name\'");
 									}
-									final /*@Thrown*/ @Nullable String name_0 = symbol_1.getName();
+									final /*@Thrown*/ @Nullable String name_0 = local_1.getName();
 									return name_0;
 								}
 							};
@@ -804,12 +804,12 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 								//
 								acc = sum_0;
 							}
-							final /*@Thrown*/ @NonNull TupleValue symbol_2 = ValueUtil.createTupleOfEach(PivotTables.TUPLid_, iterate, ValueUtil.FALSE_VALUE);
-							symbol_6 = symbol_2;
+							final /*@Thrown*/ @NonNull TupleValue local_2 = ValueUtil.createTupleOfEach(PivotTables.TUPLid_, iterate, ValueUtil.FALSE_VALUE);
+							local_6 = local_2;
 						}
 						else {
 							final /*@Thrown*/ boolean notEmpty_0 = CollectionNotEmptyOperation.INSTANCE.evaluate(missingProperties).booleanValue();
-							/*@Thrown*/ @NonNull Object symbol_5;
+							/*@Thrown*/ @NonNull Object local_5;
 							if (notEmpty_0) {
 								final org.eclipse.ocl.pivot.@NonNull Class TYPE_sortedBy_0_0 = executor.getStaticTypeOfValue(null, missingProperties);
 								final @NonNull LibraryIterationExtension IMPL_sortedBy_0_0 = (LibraryIterationExtension)TYPE_sortedBy_0_0.lookupImplementation(standardLibrary, OCLstdlibTables.Operations._Set__sortedBy);
@@ -824,11 +824,11 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 									 */
 									@Override
 									public @Nullable Object evaluate(final @NonNull Executor executor, final @NonNull TypeId typeId, final @Nullable Object missingProperties, final /*@NonInvalid*/ @Nullable Object _1_9) {
-										final /*@NonInvalid*/ @Nullable NamedElement symbol_3 = (NamedElement)_1_9;
-										if (symbol_3 == null) {
+										final /*@NonInvalid*/ @Nullable NamedElement local_3 = (NamedElement)_1_9;
+										if (local_3 == null) {
 											throw new InvalidValueException("Null source for \'NamedElement::name\'");
 										}
-										final /*@Thrown*/ @Nullable String name_2 = symbol_3.getName();
+										final /*@Thrown*/ @Nullable String name_2 = local_3.getName();
 										return name_2;
 									}
 								};
@@ -854,15 +854,15 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 									//
 									acc_0 = sum_2;
 								}
-								final /*@Thrown*/ @NonNull TupleValue symbol_4 = ValueUtil.createTupleOfEach(PivotTables.TUPLid_, iterate_0, ValueUtil.FALSE_VALUE);
-								symbol_5 = symbol_4;
+								final /*@Thrown*/ @NonNull TupleValue local_4 = ValueUtil.createTupleOfEach(PivotTables.TUPLid_, iterate_0, ValueUtil.FALSE_VALUE);
+								local_5 = local_4;
 							}
 							else {
-								symbol_5 = ValueUtil.TRUE_VALUE;
+								local_5 = ValueUtil.TRUE_VALUE;
 							}
-							symbol_6 = symbol_5;
+							local_6 = local_5;
 						}
-						result = symbol_6;
+						result = local_6;
 					}
 					CAUGHT_result = result;
 				}
@@ -870,9 +870,9 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 					CAUGHT_result = ValueUtil.createInvalidValue(e);
 				}
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_result, PivotTables.INT_0).booleanValue();
-				symbol_7 = logDiagnostic;
+				local_7 = logDiagnostic;
 			}
-			return symbol_7;
+			return local_7;
 		}
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);
@@ -906,18 +906,18 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 			final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
 			final /*@NonInvalid*/ @NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.SHADOW_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
-			/*@NonInvalid*/ boolean symbol_0;
+			/*@NonInvalid*/ boolean local_0;
 			if (le) {
-				symbol_0 = true;
+				local_0 = true;
 			}
 			else {
 				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OclInvalid_0 = idResolver.getClass(TypeId.OCL_INVALID, null);
 				final /*@NonInvalid*/ @Nullable Type type = this.getType();
 				final /*@NonInvalid*/ boolean result = (type != null) ? (type.getTypeId() != TYP_OclInvalid_0.getTypeId()) : true;
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, result, PivotTables.INT_0).booleanValue();
-				symbol_0 = logDiagnostic;
+				local_0 = logDiagnostic;
 			}
-			return symbol_0;
+			return local_0;
 		}
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);
