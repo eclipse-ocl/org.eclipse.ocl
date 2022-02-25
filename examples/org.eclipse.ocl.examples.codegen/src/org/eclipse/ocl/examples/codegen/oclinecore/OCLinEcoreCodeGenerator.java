@@ -393,6 +393,10 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 			return className;
 		}
 
+		public @NonNull FeatureLocality getFeatureLocality() {
+			return featureLocality;
+		}
+
 		public @NonNull String getFeatureName() {
 			return namedElement.getName();
 		}
