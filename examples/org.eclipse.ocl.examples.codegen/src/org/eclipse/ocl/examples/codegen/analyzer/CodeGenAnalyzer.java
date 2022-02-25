@@ -344,6 +344,7 @@ public class CodeGenAnalyzer
 			cgElementId.setElementId(elementId);
 			setNames(cgElementId, elementId);
 			cgElementIds.put(elementId, cgElementId);
+			cgElementId.setTypeId(getTypeId(TypeId.OCL_ANY));		// XXX do better
 		}
 		return cgElementId;
 	}
@@ -443,6 +444,8 @@ public class CodeGenAnalyzer
 		//	cgTypeId.setName(globalNameManager.getGlobalSymbolName(typeId));
 		//	cgTypeId.setValueName(ClassUtil.nonNullState(cgTypeId.getName()));
 			cgElementIds.put(typeId, cgTypeId);
+
+			cgTypeId.setTypeId(getTypeId(TypeId.OCL_ANY)); // XXX better tyoe ??
 		}
 		return cgTypeId;
 	}

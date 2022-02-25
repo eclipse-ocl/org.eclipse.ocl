@@ -128,6 +128,10 @@ public class NameResolution
 		return resolvedName;
 	}
 
+	public @NonNull String getNameHint() {
+		return nameHint;
+	}
+
 	public @NonNull NameManager getNameManager() {
 		return nameManager;
 	}

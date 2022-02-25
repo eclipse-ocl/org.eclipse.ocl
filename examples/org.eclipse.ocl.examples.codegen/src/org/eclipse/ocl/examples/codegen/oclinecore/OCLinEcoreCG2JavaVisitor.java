@@ -59,7 +59,9 @@ import org.eclipse.ocl.pivot.ids.TemplateableId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.AbstractStaticOperation;
 import org.eclipse.ocl.pivot.internal.library.AbstractStaticProperty;
+import org.eclipse.ocl.pivot.internal.library.ForeignOperation;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
+import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -148,19 +150,36 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 			}
 			for (@NonNull CGOperation cgOperation : ClassUtil.nullFree(cgClass.getOperations())) {
 				Operation asOperation = CGUtil.getAST(cgOperation);
-				FeatureBody body = null;
 				CGValuedElement cgBody = cgOperation.getBody();
 				if (cgBody != null) {
-					String returnClassName = genModelHelper.getOperationReturnType(asOperation);
-					localContext = globalContext.basicGetLocalContext(cgOperation);
-					String bodyText = generateBody(cgOperation.getParameters(), cgBody, returnClassName);
+					Class asClass = PivotUtil.getOwningClass((Feature)asOperation);
+					boolean isStatic = asOperation.isIsStatic();
+					LibraryFeature operationImplementation = asOperation.getImplementation();
+					String packageName;
+					String className;
+					String bodyText;
+					if (operationImplementation instanceof ForeignOperation) {
+						localContext = globalContext.basicGetLocalContext(cgOperation);
+						js.resetStream();
+						js.appendCommentWithOCL(null, cgOperation.getAst());
+						cgOperation.accept(this);
+						bodyText = toString();
+						packageName = genPackage.getReflectionPackageName();
+						className = context.getForeignClassName(asClass);
+					}
+					else {
+						assert !isStatic;
+						String returnClassName = genModelHelper.getOperationReturnType(asOperation);
+						localContext = globalContext.basicGetLocalContext(cgOperation);
+						bodyText = generateBody(cgOperation.getParameters(), cgBody, returnClassName);
+						packageName = genPackage.getReflectionPackageName();//getGlobalContext().getTablesClassName();
+						className = context.getForeignClassName(asOperation.getOwningClass());
+					}
 					String fragmentURI = getFragmentURI(asOperation);
-					String foreignPackageName = genPackage.getReflectionPackageName();//getGlobalContext().getTablesClassName();
-					String foreignClassName = context.getForeignClassName(asOperation.getOwningClass());
 					FeatureLocality featureLocality = asOperation.isIsStatic() ? FeatureLocality.FOREIGN_STATIC : FeatureLocality.ECORE_IMPL;
-					body = new FeatureBody(fragmentURI, asOperation, featureLocality, foreignPackageName, foreignClassName, bodyText);
-				}
-				if (body != null) {
+					FeatureBody body = new FeatureBody(fragmentURI, asOperation, featureLocality, packageName, className, bodyText);
+			//	}
+			//	if (body != null) {
 					bodies.put(body.getURI(), body);
 				}
 			}
@@ -177,7 +196,7 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 					if (cgProperty instanceof CGForeignProperty) {
 						localContext = globalContext.basicGetLocalContext(cgProperty);
 						js.resetStream();
-						js.appendCommentWithOCL(null, cgBody.getAst());
+						js.appendCommentWithOCL(null, cgProperty.getAst());
 						cgProperty.accept(this);
 						bodyText = toString();
 						packageName = genPackage.getReflectionPackageName();
@@ -512,10 +531,10 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 		return super.visitCGLibraryOperationCallExp(cgOperationCallExp);
 	}
 
-	@Override
-	public @NonNull Boolean visitCGOperation(@NonNull CGOperation cgOperation) {
-		return true;
-	}
+//	@Override
+//	public @NonNull Boolean visitCGOperation(@NonNull CGOperation cgOperation) {
+//		return true;
+//	}
 
 	@Override
 	public @NonNull Boolean visitCGPackage(@NonNull CGPackage cgPackage) {

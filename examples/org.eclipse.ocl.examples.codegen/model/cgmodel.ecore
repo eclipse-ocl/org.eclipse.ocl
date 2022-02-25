@@ -492,6 +492,18 @@
         <details key="documentation" value="true when OCL's self is Java's this, false when OCL's self is passed as an additional first argument"/>
       </eAnnotations>
     </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="valueIsBoxed" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="true when OCL's self is Java's this, false when OCL's self is passed as an additional first argument"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="valueIsEcore" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="true when OCL's self is Java's this, false when OCL's self is passed as an additional first argument"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGNativeProperty" eSuperTypes="#//CGProperty">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">

@@ -2069,7 +2069,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 								+ "    {\n"
 //								+ "    	   static attribute startTime1 : ecore::EDate[1] { initial: null; 3}\n"
 								+ "    	   static attribute startTime2 : Integer[1] { derived readonly transient volatile } { initial: 3; }\n"
-								+ "    	   static attribute startTime3 : Integer[1] { derived readonly transient volatile }  { initial: startTime2; }\n"
+								+ "    	   static attribute startTime3 : Integer[1] { derived readonly transient volatile }  { initial: startTime2 + StaticProperty::startTime1(); }\n"
 								+ "        static operation startTime1() :Integer[1] {"
 								+ "             body : 55;\n"
 								+ "        }\n"

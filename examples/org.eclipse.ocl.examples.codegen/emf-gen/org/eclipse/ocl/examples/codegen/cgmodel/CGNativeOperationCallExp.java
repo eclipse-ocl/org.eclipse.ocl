@@ -28,6 +28,8 @@ import java.lang.reflect.Method;
  * <ul>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp#getMethod <em>Method</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp#isThisIsSelf <em>This Is Self</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp#isValueIsBoxed <em>Value Is Boxed</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp#isValueIsEcore <em>Value Is Ecore</em>}</li>
  * </ul>
  *
  * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGNativeOperationCallExp()
@@ -82,5 +84,53 @@ public interface CGNativeOperationCallExp extends CGOperationCallExp {
 	 * @generated
 	 */
 	void setThisIsSelf(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Value Is Boxed</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * true when OCL's self is Java's this, false when OCL's self is passed as an additional first argument
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Value Is Boxed</em>' attribute.
+	 * @see #setValueIsBoxed(boolean)
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGNativeOperationCallExp_ValueIsBoxed()
+	 * @generated
+	 */
+	boolean isValueIsBoxed();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp#isValueIsBoxed <em>Value Is Boxed</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Value Is Boxed</em>' attribute.
+	 * @see #isValueIsBoxed()
+	 * @generated
+	 */
+	void setValueIsBoxed(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Value Is Ecore</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * true when OCL's self is Java's this, false when OCL's self is passed as an additional first argument
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Value Is Ecore</em>' attribute.
+	 * @see #setValueIsEcore(boolean)
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGNativeOperationCallExp_ValueIsEcore()
+	 * @generated
+	 */
+	boolean isValueIsEcore();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp#isValueIsEcore <em>Value Is Ecore</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Value Is Ecore</em>' attribute.
+	 * @see #isValueIsEcore()
+	 * @generated
+	 */
+	void setValueIsEcore(boolean value);
 
 } // CGMethodOperationCallExp

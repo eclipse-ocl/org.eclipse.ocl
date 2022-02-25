@@ -218,6 +218,8 @@
     <genClasses ecoreClass="cgmodel.ecore#//CGNativeOperationCallExp">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cgmodel.ecore#//CGNativeOperationCallExp/method"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cgmodel.ecore#//CGNativeOperationCallExp/thisIsSelf"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cgmodel.ecore#//CGNativeOperationCallExp/valueIsBoxed"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cgmodel.ecore#//CGNativeOperationCallExp/valueIsEcore"/>
     </genClasses>
     <genClasses ecoreClass="cgmodel.ecore#//CGNativeProperty"/>
     <genClasses ecoreClass="cgmodel.ecore#//CGNativePropertyCallExp">

@@ -518,6 +518,21 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	}
 
 	@Override
+	public String getName() {
+		NameResolution nameResolution2 = nameResolution;
+		if (nameResolution2 ==  null) {
+			return super.getName();			// XXX Obsolete the name field
+		}
+		String resolvedName = nameResolution2.basicGetResolvedName();
+		if (resolvedName != null) {
+			return resolvedName;
+		}
+		else {
+			return nameResolution2.getNameHint();
+		}
+	}
+
+	@Override
 	public @NonNull NameResolution getNameResolution() {
 		return ClassUtil.nonNullState(nameResolution);
 	}

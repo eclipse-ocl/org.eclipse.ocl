@@ -2420,6 +2420,26 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 	 * @generated
 	 */
 	@Override
+	public EAttribute getCGNativeOperationCallExp_ValueIsBoxed() {
+		return (EAttribute)cgNativeOperationCallExpEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EAttribute getCGNativeOperationCallExp_ValueIsEcore() {
+		return (EAttribute)cgNativeOperationCallExpEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EClass getCGNativeProperty() {
 		return cgNativePropertyEClass;
 	}
@@ -3373,6 +3393,8 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		cgNativeOperationCallExpEClass = createEClass(63);
 		createEAttribute(cgNativeOperationCallExpEClass, 11);
 		createEAttribute(cgNativeOperationCallExpEClass, 12);
+		createEAttribute(cgNativeOperationCallExpEClass, 13);
+		createEAttribute(cgNativeOperationCallExpEClass, 14);
 
 		cgNativePropertyEClass = createEClass(64);
 
@@ -3811,6 +3833,8 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		initEClass(cgNativeOperationCallExpEClass, CGNativeOperationCallExp.class, "CGNativeOperationCallExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getCGNativeOperationCallExp_Method(), this.getMethod(), "method", null, 1, 1, CGNativeOperationCallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getCGNativeOperationCallExp_ThisIsSelf(), ecorePackage.getEBoolean(), "thisIsSelf", null, 1, 1, CGNativeOperationCallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCGNativeOperationCallExp_ValueIsBoxed(), ecorePackage.getEBoolean(), "valueIsBoxed", null, 1, 1, CGNativeOperationCallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCGNativeOperationCallExp_ValueIsEcore(), ecorePackage.getEBoolean(), "valueIsEcore", null, 1, 1, CGNativeOperationCallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(cgNativePropertyEClass, CGNativeProperty.class, "CGNativeProperty", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

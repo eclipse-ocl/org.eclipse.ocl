@@ -36,6 +36,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOppositePropertyCallEx
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignOperationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGGuardExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIfExp;
@@ -417,6 +418,13 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	}
 
 	@Override
+	public @Nullable Object visitCGForeignProperty(@NonNull CGForeignProperty cgForeignProperty) {
+		super.visitCGForeignProperty(cgForeignProperty);
+		rewriteAsBoxed(cgForeignProperty.getBody());
+		return null;
+	}
+
+	@Override
 	public @Nullable Object visitCGForeignPropertyCallExp(@NonNull CGForeignPropertyCallExp cgElement) {
 		return null;
 	}
@@ -572,11 +580,28 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 		super.visitCGNativeOperationCallExp(cgElement);
 		CGValuedElement cgSource = cgElement.getSource();
 		rewriteAsGuarded(cgSource, isSafe(cgElement), "source for '" + cgElement.getReferredOperation() + "'");
-		rewriteAsUnboxed(cgSource);
+		if (cgElement.isBoxed()) {
+			rewriteAsBoxed(cgSource);
+		}
+		else if (cgElement.isEcore()) {
+			rewriteAsEcore(cgSource, null);		// XXX eClassifier
+		}
+		else {
+			rewriteAsUnboxed(cgSource);
+		}
 		List<CGValuedElement> cgArguments = cgElement.getArguments();
 		int iMax = cgArguments.size();
 		for (int i = 0; i < iMax; i++) {			// Avoid CME from rewrite
-			rewriteAsUnboxed(cgArguments.get(i));
+			CGValuedElement cgArgument = cgArguments.get(i);
+			if (cgElement.isBoxed()) {
+				rewriteAsBoxed(cgArgument);
+			}
+			else if (cgElement.isEcore()) {
+				rewriteAsEcore(cgArgument, null);		// XXX eClassifier
+			}
+			else {
+				rewriteAsUnboxed(cgArgument);
+			}
 		}
 		return null;
 	}

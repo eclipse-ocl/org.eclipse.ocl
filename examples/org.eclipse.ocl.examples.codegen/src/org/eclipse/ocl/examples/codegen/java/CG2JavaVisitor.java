@@ -1236,6 +1236,9 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	@Override
 	public @NonNull Boolean visitCGCastExp(@NonNull CGCastExp cgCastExp) {
 		CGValuedElement cgSource = getExpression(cgCastExp.getSource());
+		if (!js.appendLocalStatements(cgSource)) {
+			return false;
+		}
 		CGExecutorType cgType = cgCastExp.getExecutorType();
 		if (cgType != null) {
 			TypeDescriptor typeDescriptor = context.getTypeDescriptor(cgCastExp);
@@ -1967,8 +1970,8 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		return true;
 	}
 
-	@Override
-	public @NonNull Boolean visitCGForeignProperty(@NonNull CGForeignProperty cgForeignProperty) {
+/*	@Override
+	public @NonNull Boolean visitCGForeignOperation(@NonNull CGForeignOperation cgForeignOperation) {
 		JavaLocalContext<@NonNull ?> localContext2 = globalContext.getLocalContext(cgForeignProperty);
 		localContext = localContext2;
 		try {
@@ -1977,7 +1980,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			CGValuedElement cgInitExpression = getExpression(cgForeignProperty.getBody());
 			js.append("public static ");
 			js.appendTypeDeclaration(cgForeignProperty);
-			js.append(" ");
+			js.append(" at_");
 			js.append(asProperty.getName());		// FIXME valid Java name
 			js.append("(");
 			if (cgParameter != null) {
@@ -1998,7 +2001,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		finally {
 			localContext = null;
 		}
-	}
+	} */
 
 	@Override
 	public @NonNull Boolean visitCGForeignOperationCallExp(@NonNull CGForeignOperationCallExp cgForeignOperationCallExp) {
@@ -2028,7 +2031,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		js.appendDeclaration(cgForeignOperationCallExp);
 		js.append(" = ");
 		js.append(flattenedClassName);
-		js.append(".");
+		js.append(".op_");
 		js.append(PivotUtil.getName(asReferredOperation));
 		js.append("(");
 		if (!isStatic) {
@@ -2053,6 +2056,39 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	}
 
 	@Override
+	public @NonNull Boolean visitCGForeignProperty(@NonNull CGForeignProperty cgForeignProperty) {
+		JavaLocalContext<@NonNull ?> localContext2 = globalContext.getLocalContext(cgForeignProperty);
+		localContext = localContext2;
+		try {
+			Property asProperty = CGUtil.getAST(cgForeignProperty);
+			CGParameter cgParameter = cgForeignProperty.getParameter();
+			CGValuedElement cgInitExpression = getExpression(cgForeignProperty.getBody());
+			js.append("public static ");
+			js.appendTypeDeclaration(cgForeignProperty);
+			js.append(" at_");
+			js.append(asProperty.getName());		// FIXME valid Java name
+			js.append("(");
+			if (cgParameter != null) {
+				js.appendDeclaration(cgParameter);
+			}
+			js.append(") {\n");
+			js.pushIndentation(null);
+			if (!js.appendLocalStatements(cgInitExpression)) {
+				return false;
+			}
+			js.append("return ");
+			js.appendValueName(cgInitExpression);
+			js.append(";\n");
+			js.popIndentation();
+			js.append("}\n");
+			return true;
+		}
+		finally {
+			localContext = null;
+		}
+	}
+
+	@Override
 	public @NonNull Boolean visitCGForeignPropertyCallExp(@NonNull CGForeignPropertyCallExp cgForeignPropertyCallExp) {
 	//	assert cgPropertyCallExp.getSource() == null;		// XXX
 		Property asProperty = CGUtil.getReferredProperty(cgForeignPropertyCallExp);
@@ -2074,7 +2110,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			@Override
 			public void append() {
 				js.appendClassReference(null, foreignClassName);
-				js.append(".");
+				js.append(".at_");
 				js.append(propertyName);
 				js.append("(");
 				if (cgSource != null) {

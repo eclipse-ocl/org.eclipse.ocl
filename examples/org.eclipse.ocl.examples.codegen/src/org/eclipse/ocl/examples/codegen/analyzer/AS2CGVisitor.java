@@ -33,6 +33,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGAccumulator;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBuiltInIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGCastExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCollectionExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCollectionPart;
@@ -185,6 +186,7 @@ import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.LibraryIteration;
+import org.eclipse.ocl.pivot.library.LibraryIterationOrOperation;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.library.collection.CollectionElementTypeProperty;
@@ -392,6 +394,14 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			//			}
 		}
 		return cgOperationCallExp;
+	}
+
+	protected @NonNull CGCastExp createCGCastExp(@NonNull CGExecutorType cgCastType, @NonNull CGValuedElement cgValue) {
+		CGCastExp cgCastExp = CGModelFactory.eINSTANCE.createCGCastExp();
+		cgCastExp.setSource(cgValue);
+		cgCastExp.setExecutorType(cgCastType);
+		cgCastExp.setTypeId(cgCastType.getTypeId());
+		return cgCastExp;
 	}
 
 	protected @NonNull CGIfExp createCGIfExp(@NonNull CGValuedElement cgCondition, @NonNull CGValuedElement cgThenExpression, @NonNull CGValuedElement cgElseExpression) {
@@ -685,11 +695,12 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	}
 
 
-	protected @NonNull CGProperty generateConstrainedProperty(@NonNull Property asProperty) {
+	protected @NonNull CGProperty generateForeignProperty(@NonNull Property asProperty) {
 		context.addForeignFeature(asProperty);
 		CGForeignProperty cgForeignProperty = CGModelFactory.eINSTANCE.createCGForeignProperty();
 		setAst(cgForeignProperty, asProperty);
 		JavaLocalContext<?> localContext = (JavaLocalContext<?>) pushLocalContext(cgForeignProperty, asProperty);
+		NestedNameManager nameManager = getNameManager();
 		CGParameter cgParameter = localContext.getSelfParameter();
 		cgForeignProperty.setParameter(cgParameter);
 
@@ -699,12 +710,31 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		CGValuedElement cgInitValue = getInitExpression(/*cgParameter,*/ asProperty);
 		assert cgInitValue != null;
 		CGVariable modelManagerVariable = localContext.getModelManagerVariable();
-		CGValuedElement basicGetValueInit = createCGNativeOperationCallExp(createCGVariableExp(modelManagerVariable), JavaConstants.MODEL_MANAGER_BASIC_GET_FOREIGN_PROPERTY_VALUE_METHOD, createCGVariableExp(cgParameter));
-		CGFinalVariable basicGetValueVariable = createCGVariable(basicGetValueInit);
+
+
+		CGElementId cgPropertyId = context.getElementId(asProperty.getPropertyId());
+		CGTypeId cacheTypeId = context.getTypeId(asProperty.getTypeId());
+		CGExecutorType cgCastType = context.createExecutorType(asProperty.getType());
+		CGNativeOperationCallExp basicGetValueInit = createCGNativeOperationCallExp(createCGVariableExp(modelManagerVariable), JavaConstants.MODEL_MANAGER_BASIC_GET_FOREIGN_PROPERTY_VALUE_METHOD,
+			createCGVariableExp(cgParameter), context.createCGConstantExp(cgPropertyId));
+		basicGetValueInit.setTypeId(cacheTypeId);
+		basicGetValueInit.setValueIsBoxed(true);
+		CGValuedElement castBasicGetValueInit = createCGCastExp(cgCastType, basicGetValueInit);
+		CGFinalVariable basicGetValueVariable = createCGVariable(castBasicGetValueInit);
+		nameManager.declareStandardName(basicGetValueVariable);
 		CGValuedElement cgCondition = createCGIsEqual(createCGVariableExp(basicGetValueVariable), context.createCGNull());
-		CGValuedElement getValue = createCGNativeOperationCallExp(createCGVariableExp(modelManagerVariable), JavaConstants.MODEL_MANAGER_GET_FOREIGN_PROPERTY_VALUE_METHOD, createCGVariableExp(cgParameter), cgInitValue);
-		CGValuedElement ifValue = createCGIfExp(cgCondition, getValue, createCGVariableExp(basicGetValueVariable));
-		ifValue.setRequired(true);
+		CGNativeOperationCallExp getValue = createCGNativeOperationCallExp(createCGVariableExp(modelManagerVariable), JavaConstants.MODEL_MANAGER_GET_FOREIGN_PROPERTY_VALUE_METHOD,
+			createCGVariableExp(cgParameter), context.createCGConstantExp(cgPropertyId), cgInitValue);
+		getValue.setTypeId(cacheTypeId);
+		getValue.setValueIsBoxed(true);
+		CGValuedElement castGetValue = createCGCastExp(cgCastType, getValue);
+		if (asProperty.isIsRequired()) {
+			getValue.setRequired(true);
+		}
+		CGValuedElement ifValue = createCGIfExp(cgCondition, castGetValue, createCGVariableExp(basicGetValueVariable));
+		if (asProperty.isIsRequired()) {
+			ifValue.setRequired(true);
+		}
 		CGValuedElement withBasicGetValue = createCGLetExp(basicGetValueVariable, ifValue);
 		cgForeignProperty.setBody(withBasicGetValue);
 	//	if (!element.isIsReadOnly()) {
@@ -1816,6 +1846,10 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	@Override
 	public @Nullable CGOperation visitOperation(@NonNull Operation asOperation) {
+		LibraryIterationOrOperation operationImplementation = (LibraryIterationOrOperation)metamodelManager.getImplementation(asOperation);
+		if (operationImplementation instanceof ForeignOperation) {
+			context.addForeignFeature(asOperation);
+		}
 		CGOperation cgOperation = asFinalOperation2cgOperation.get(asOperation);
 		if (cgOperation == null) {
 			cgOperation = createFinalCGOperationWithoutBody(asOperation);
@@ -1907,7 +1941,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			cgProperty = CGModelFactory.eINSTANCE.createCGProperty();
 		}
 		else if (propertyImplementation instanceof StaticProperty) {
-			return generateConstrainedProperty(element);
+			return generateForeignProperty(element);
 		}
 		else {
 			cgProperty = CGModelFactory.eINSTANCE.createCGProperty();

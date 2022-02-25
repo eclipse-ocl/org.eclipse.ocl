@@ -148,7 +148,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 
 	protected void doTypedElement(@NonNull CGTypedElement cgTypedElement) {
 		CGTypeId cgTypeId = cgTypedElement.getTypeId();
-		if (cgTypeId != null) {
+		if ((cgTypeId != null) && (cgTypeId != cgTypedElement)) {		// XXX Better way to terminate mta recursion
 			cgTypeId.accept(this);
 		}
 	}

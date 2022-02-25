@@ -308,6 +308,21 @@ public class CGValuedElementModelSpec extends ModelSpec
 			}
 		};
 
+		public static final @NonNull Box NAT = new Box() {
+			@Override public @Nullable String generateGetEcoreClassifier(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
+				return "return null;";
+			}
+			@Override public @Nullable String generateIsBoxed(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
+				return "return valueIsBoxed;";
+			}
+			@Override public @Nullable String generateIsEcore(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
+				return "return valueIsEcore;";
+			}
+			@Override public @Nullable String generateIsUnboxed(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
+				return "return !valueIsBoxed && !valueIsEcore;";
+			}
+		};
+
 		public static final @NonNull Box PARAM = new Box() {
 			@Override public @Nullable String generateGetEcoreClassifier(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				return "if (ast instanceof " + classRef(Variable.class) + ") {\n" +
@@ -2277,7 +2292,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 			new CGValuedElementModelSpec(CGExecutorOperationCallExp.class, null,		Box.BOX  , null     , null     , null     , null     , null     , null     , null     , null    , null     , null     , null     , null     , null     , null     , null     , null    );
 			new CGValuedElementModelSpec(CGForeignOperationCallExp.class, null,			Box.BOX  , null     , null     , null     , Inv.NEVER, null     , null     , null     , null    , null     , null     , null     , null     , null     , null     , null     , null    );
 			new CGValuedElementModelSpec(CGLibraryOperationCallExp.class, null,			Box.BOX  , null     , null     , null     , null     , null     , null     , null     , null    , null     , null     , null     , null     , null     , null     , null     , null    );
-			new CGValuedElementModelSpec(CGNativeOperationCallExp.class, null,			Box.UNBOX, null     , null     , null     , Inv.NATOP, null     , null     , null     , null    , null     , null     , null     , null     , null     , null     , null     , null    );
+			new CGValuedElementModelSpec(CGNativeOperationCallExp.class, null,			Box.NAT  , null     , null     , null     , Inv.NATOP, null     , null     , null     , null    , null     , null     , null     , null     , null     , null     , null     , null    );
 
 			new CGValuedElementModelSpec(CGNavigationCallExp.class, "referredProperty",	null     , null     , null     , Nul.FEAT , Inv.PRPTY, null     , null     , null     , null    , null     , null     , null     , null     , null     , null     , null     , Eq.EQUIV);
 			new CGValuedElementModelSpec(CGEcoreOppositePropertyCallExp.class, null,	Box.E_PRO, null     , null     , Nul.ECORE, null     , null     , null     , null     , null    , null     , null     , null     , null     , null     , null     , null     , null    );

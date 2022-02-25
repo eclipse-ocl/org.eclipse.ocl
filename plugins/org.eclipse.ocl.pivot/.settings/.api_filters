@@ -1505,6 +1505,12 @@
         <filter id="404000815">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.evaluation.ModelManager"/>
+                <message_argument value="getForeignPropertyValue(Object, PropertyId, Object)"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.evaluation.ModelManager"/>
                 <message_argument value="getInstances(Class)"/>
             </message_arguments>
         </filter>

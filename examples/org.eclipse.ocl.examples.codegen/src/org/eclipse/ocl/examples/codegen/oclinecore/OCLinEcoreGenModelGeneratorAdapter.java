@@ -564,11 +564,13 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 				}
 				body = "throw new UnsupportedOperationException();  // FIXME Unimplemented " + (pOperation != null ? AS2Moniker.toString(pOperation) : "");
 			}
-			addEAnnotationDetail(eOperation, GenModelPackage.eNS_URI, "body", body);
-			//	removeEAnnotation(eOperation.getEAnnotation(OCLConstants.OCL_DELEGATE_URI));
-			//	removeEAnnotation(eOperation.getEAnnotation(OCLConstants.OCL_DELEGATE_URI_LPG));
-			//	removeEAnnotation(eOperation.getEAnnotation(PivotConstants.OCL_DELEGATE_URI_PIVOT));
-			removeEAnnotation(eOperation.getEAnnotation(UML2GenModelUtil.UML2_GEN_MODEL_PACKAGE_1_1_NS_URI));
+			if ((featureBody != null) && featureBody.getFeatureLocality().isEcore()) {
+				addEAnnotationDetail(eOperation, GenModelPackage.eNS_URI, "body", body);
+				//	removeEAnnotation(eOperation.getEAnnotation(OCLConstants.OCL_DELEGATE_URI));
+				//	removeEAnnotation(eOperation.getEAnnotation(OCLConstants.OCL_DELEGATE_URI_LPG));
+				//	removeEAnnotation(eOperation.getEAnnotation(PivotConstants.OCL_DELEGATE_URI_PIVOT));
+				removeEAnnotation(eOperation.getEAnnotation(UML2GenModelUtil.UML2_GEN_MODEL_PACKAGE_1_1_NS_URI));
+			}
 		}
 
 		protected void installProperty(@NonNull Ecore2AS ecore2as, @NonNull EStructuralFeature eFeature, @NonNull Map<@NonNull String, @NonNull FeatureBody> results) {
@@ -583,11 +585,13 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 				}
 				body = "throw new UnsupportedOperationException();  // FIXME Unimplemented " + (pProperty != null ? AS2Moniker.toString(pProperty) : "");
 			}
-			addEAnnotationDetail(eFeature, GenModelPackage.eNS_URI, "get", body);
-			//	removeEAnnotation(eFeature.getEAnnotation(OCLConstants.OCL_DELEGATE_URI));
-			//	removeEAnnotation(eFeature.getEAnnotation(OCLConstants.OCL_DELEGATE_URI_LPG));
-			//	removeEAnnotation(eFeature.getEAnnotation(PivotConstants.OCL_DELEGATE_URI_PIVOT));
-			removeEAnnotation(eFeature.getEAnnotation(UML2GenModelUtil.UML2_GEN_MODEL_PACKAGE_1_1_NS_URI));
+			if ((featureBody != null) && featureBody.getFeatureLocality().isEcore()) {
+				addEAnnotationDetail(eFeature, GenModelPackage.eNS_URI, "get", body);
+				//	removeEAnnotation(eFeature.getEAnnotation(OCLConstants.OCL_DELEGATE_URI));
+				//	removeEAnnotation(eFeature.getEAnnotation(OCLConstants.OCL_DELEGATE_URI_LPG));
+				//	removeEAnnotation(eFeature.getEAnnotation(PivotConstants.OCL_DELEGATE_URI_PIVOT));
+				removeEAnnotation(eFeature.getEAnnotation(UML2GenModelUtil.UML2_GEN_MODEL_PACKAGE_1_1_NS_URI));
+			}
 		}
 
 		/**

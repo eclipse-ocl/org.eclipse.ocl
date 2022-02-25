@@ -38,6 +38,7 @@ import org.eclipse.ocl.examples.codegen.java.ImportUtils;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreTablesUtils.CodeGenString;
+import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.BooleanLiteralExp;
 import org.eclipse.ocl.pivot.CallExp;
@@ -71,8 +72,10 @@ import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
+import org.eclipse.ocl.pivot.internal.library.StaticProperty;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -111,14 +114,16 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		@Override
 		public @Nullable Object visitCGProperty(@NonNull CGProperty cgProperty) {
 			super.visitCGProperty(cgProperty);
-			Element asProperty = cgProperty.getAst();
-			if (asProperty instanceof Property) {
-				EObject eObject = ((Property)asProperty).getESObject();
-				if (eObject instanceof ETypedElement) {
-					EClassifier eType = ((ETypedElement)eObject).getEType();
-					if (eType != null) {
-						rewriteAsEcore(cgProperty.getBody(), eType);
-					}
+			Property asProperty = CGUtil.getAST(cgProperty);
+			EObject eObject = asProperty.getESObject();
+			LibraryFeature implementation = asProperty.getImplementation();
+			if (implementation instanceof StaticProperty) {
+				rewriteAsBoxed(cgProperty.getBody());
+			}
+			else if (eObject instanceof ETypedElement) {
+				EClassifier eType = ((ETypedElement)eObject).getEType();
+				if (eType != null) {
+					rewriteAsEcore(cgProperty.getBody(), eType);
 				}
 			}
 			return null;
@@ -364,6 +369,11 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		boolean isEcore() { return this == ECORE_IMPL; }
 		boolean isForeign() { return (this == ECORE_STATIC) || (this == FOREIGN_IMPL) || (this == FOREIGN_STATIC); }
 		boolean isStatic() { return (this == ECORE_STATIC) || (this == FOREIGN_STATIC); }
+	//	@SuppressWarnings("null")
+	//	@Override
+	//	public @NonNull String toString() {
+	//		return this.name();
+	//	}
 	}
 
 	public static class FeatureBody //implements Nameable

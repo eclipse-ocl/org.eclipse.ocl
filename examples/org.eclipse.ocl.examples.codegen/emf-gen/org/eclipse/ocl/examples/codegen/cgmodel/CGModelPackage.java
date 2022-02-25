@@ -1601,6 +1601,28 @@ public interface CGModelPackage extends EPackage {
 	EAttribute getCGNativeOperationCallExp_ThisIsSelf();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp#isValueIsBoxed <em>Value Is Boxed</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Value Is Boxed</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp#isValueIsBoxed()
+	 * @see #getCGNativeOperationCallExp()
+	 * @generated
+	 */
+	EAttribute getCGNativeOperationCallExp_ValueIsBoxed();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp#isValueIsEcore <em>Value Is Ecore</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Value Is Ecore</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp#isValueIsEcore()
+	 * @see #getCGNativeOperationCallExp()
+	 * @generated
+	 */
+	EAttribute getCGNativeOperationCallExp_ValueIsEcore();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNativeProperty <em>CG Native Property</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3664,6 +3686,22 @@ public interface CGModelPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute CG_NATIVE_OPERATION_CALL_EXP__THIS_IS_SELF = eINSTANCE.getCGNativeOperationCallExp_ThisIsSelf();
+
+		/**
+		 * The meta object literal for the '<em><b>Value Is Boxed</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CG_NATIVE_OPERATION_CALL_EXP__VALUE_IS_BOXED = eINSTANCE.getCGNativeOperationCallExp_ValueIsBoxed();
+
+		/**
+		 * The meta object literal for the '<em><b>Value Is Ecore</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CG_NATIVE_OPERATION_CALL_EXP__VALUE_IS_ECORE = eINSTANCE.getCGNativeOperationCallExp_ValueIsEcore();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGNativePropertyImpl <em>CG Native Property</em>}' class.
