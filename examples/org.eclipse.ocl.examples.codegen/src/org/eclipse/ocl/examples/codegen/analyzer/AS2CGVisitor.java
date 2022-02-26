@@ -114,6 +114,7 @@ import org.eclipse.ocl.examples.codegen.java.types.JavaTypeId;
 import org.eclipse.ocl.examples.codegen.library.NativeProperty;
 import org.eclipse.ocl.examples.codegen.library.NativeStaticOperation;
 import org.eclipse.ocl.examples.codegen.library.NativeVisitorOperation;
+import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.BooleanLiteralExp;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionItem;
@@ -396,12 +397,26 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return cgOperationCallExp;
 	}
 
-	protected @NonNull CGCastExp createCGCastExp(@NonNull CGExecutorType cgCastType, @NonNull CGValuedElement cgValue) {
+	protected @NonNull CGCastExp createCGCastExp(@NonNull CGExecutorType cgExecutorType, @NonNull CGValuedElement cgValue) {
 		CGCastExp cgCastExp = CGModelFactory.eINSTANCE.createCGCastExp();
 		cgCastExp.setSource(cgValue);
-		cgCastExp.setExecutorType(cgCastType);
-		cgCastExp.setTypeId(cgCastType.getTypeId());
+		cgCastExp.setExecutorType(cgExecutorType);
+		cgCastExp.setTypeId(codeGenerator.getAnalyzer().getTypeId(CGUtil.getAST(cgExecutorType).getTypeId()));
 		return cgCastExp;
+
+
+
+	//	TypedElement pivot = (TypedElement) cgChild.getAst();
+	//	Type asType = cgCastType; //pivot.getType();
+	//	CGCastExp cgCastExp = CGModelFactory.eINSTANCE.createCGCastExp();
+	//	CGUtil.wrap(cgCastExp, cgChild);
+	//	cgCastExp.setAst(pivot);
+	//	if (asType != null) {
+	//		CGExecutorType cgExecutorType = context.createExecutorType(asType);
+	//		cgCastExp.setExecutorType(cgExecutorType);
+	//	}
+	//	cgCastExp.setTypeId(codeGenerator.getAnalyzer().getTypeId(pivot.getTypeId()));
+		//	return cgCastExp;
 	}
 
 	protected @NonNull CGIfExp createCGIfExp(@NonNull CGValuedElement cgCondition, @NonNull CGValuedElement cgThenExpression, @NonNull CGValuedElement cgElseExpression) {
@@ -717,7 +732,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		CGExecutorType cgCastType = context.createExecutorType(asProperty.getType());
 		CGNativeOperationCallExp basicGetValueInit = createCGNativeOperationCallExp(createCGVariableExp(modelManagerVariable), JavaConstants.MODEL_MANAGER_BASIC_GET_FOREIGN_PROPERTY_VALUE_METHOD,
 			createCGVariableExp(cgParameter), context.createCGConstantExp(cgPropertyId));
-		basicGetValueInit.setTypeId(cacheTypeId);
+	//	basicGetValueInit.setTypeId(cacheTypeId);
 		basicGetValueInit.setValueIsBoxed(true);
 		CGValuedElement castBasicGetValueInit = createCGCastExp(cgCastType, basicGetValueInit);
 		CGFinalVariable basicGetValueVariable = createCGVariable(castBasicGetValueInit);
@@ -725,7 +740,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		CGValuedElement cgCondition = createCGIsEqual(createCGVariableExp(basicGetValueVariable), context.createCGNull());
 		CGNativeOperationCallExp getValue = createCGNativeOperationCallExp(createCGVariableExp(modelManagerVariable), JavaConstants.MODEL_MANAGER_GET_FOREIGN_PROPERTY_VALUE_METHOD,
 			createCGVariableExp(cgParameter), context.createCGConstantExp(cgPropertyId), cgInitValue);
-		getValue.setTypeId(cacheTypeId);
+	//	getValue.setTypeId(cacheTypeId);
 		getValue.setValueIsBoxed(true);
 		CGValuedElement castGetValue = createCGCastExp(cgCastType, getValue);
 		if (asProperty.isIsRequired()) {
