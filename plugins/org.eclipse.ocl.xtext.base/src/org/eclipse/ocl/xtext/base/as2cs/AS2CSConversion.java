@@ -30,12 +30,14 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Namespace;
+import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
@@ -83,6 +85,8 @@ import org.eclipse.ocl.xtext.basecs.TemplateSignatureCS;
 import org.eclipse.ocl.xtext.basecs.TypedElementCS;
 import org.eclipse.ocl.xtext.basecs.TypedRefCS;
 import org.eclipse.ocl.xtext.basecs.TypedTypeRefCS;
+
+import com.google.common.collect.Iterables;
 
 public class AS2CSConversion extends AbstractConversion implements PivotConstantsInternal
 {
@@ -324,6 +328,29 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 		}
 	}
 
+	/**
+	 * Return the qualifying NamedElement path from global to element (inclusive if a NamedElement).
+	 */
+	private @NonNull List<@NonNull NamedElement> getPath(@NonNull Element element) {
+		List<@NonNull NamedElement> path = new ArrayList<>();
+		for (EObject eContainer = element/*.eContainer()*/; eContainer instanceof Element; eContainer = eContainer.eContainer()) {
+			eContainer = metamodelManager.getPrimaryElement(eContainer);
+			if (eContainer instanceof Model) {
+				break;				// Skip root Model
+			}
+			if ((eContainer instanceof org.eclipse.ocl.pivot.Package) && Orphanage.isTypeOrphanage((org.eclipse.ocl.pivot.Package)eContainer)) {
+				break;				// Skip orphan package
+			}
+			if (eContainer instanceof TemplateSignature) {
+				continue;			// Skip signature
+			}
+			if (eContainer instanceof NamedElement) {
+				path.add(0, (NamedElement)eContainer);
+			}
+		}
+		return path;
+	}
+
 	public @NonNull PrecedenceManager getPrecedenceManager() {
 		return metamodelManager.getPrecedenceManager();
 	}
@@ -450,56 +477,89 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 	 * that the result is C::D::E.
 	 */
 	public void refreshPathName(@NonNull PathNameCS csPathName, @NonNull Element element, @Nullable Namespace scope) {//, @Nullable Resource csResource) {
-		Namespace safeScope = scope;
+		boolean hasFinalTarget = false;
+		List<PathElementCS> csPath = csPathName.getOwnedPathElements();
+		csPath.clear();		// FIXME re-use
 		Element primaryElement = metamodelManager.getPrimaryElement(element);
-		if ((safeScope != null) && (primaryElement instanceof Type)) {
-			String name = ((Type)primaryElement).getName();
-			for (EObject eObject = safeScope; eObject != null; eObject = eObject.eContainer()) {
-				if (eObject instanceof Namespace) {
-					safeScope = (Namespace) eObject;
-				}
-				if (eObject instanceof org.eclipse.ocl.pivot.Package) {
-					CompletePackage completePackage = metamodelManager.getCompletePackage((org.eclipse.ocl.pivot.Package)eObject);
-					org.eclipse.ocl.pivot.Class memberType = completePackage.getMemberType(name);
-					if (memberType == primaryElement) {
-						if ((eObject != scope) && (eObject != PivotUtil.getContainingPackage(scope))) {
-							eObject = eObject.eContainer(); // If eObject is needed in path, optional scope is its container
-						}
-						if (eObject instanceof Namespace) {
-							safeScope = (Namespace) eObject;
-						}
+		BaseCSResource csResource2 = this.csResource;
+		if ((csResource2 != null) && (csResource2.isPathable(primaryElement) != null)) {
+			List<@NonNull NamedElement> targetPath = getPath(element);
+			int iTargetStart = 0;
+			int iTargetSize = targetPath.size();
+			if ((scope != null) && (0 < iTargetSize)) {
+				List<@NonNull NamedElement> scopePath = getPath(scope);
+				int iScopeSize = scopePath.size();
+				int iMax = Math.min(iTargetSize, iScopeSize);
+				//
+				//	Necessary outer qualification, keep the common element of target and scope Path
+				//
+				for ( ; iTargetStart < iMax; iTargetStart++) {
+					NamedElement targetChildElement = targetPath.get(iTargetStart);
+					NamedElement scopeChildElement = scopePath.get(iTargetStart);
+					if (targetChildElement != scopeChildElement) {
 						break;
 					}
 				}
-			}
-		}
-		List<PathElementCS> csPath = csPathName.getOwnedPathElements();
-		csPath.clear();		// FIXME re-use
-		PathElementCS csSimpleRef = BaseCSFactory.eINSTANCE.createPathElementCS();
-		csPath.add(csSimpleRef);
-		csSimpleRef.setReferredElement(primaryElement);
-		BaseCSResource csResource2 = this.csResource;
-		if ((csResource2 == null) || (csResource2.isPathable(primaryElement) == null)) {
-			return;
-		}
-		for (EObject eContainer = primaryElement.eContainer(); eContainer instanceof Element; eContainer = eContainer.eContainer()) {
-			if (eContainer instanceof Model) {
-				return;				// Skip root package
-			}
-			if ((eContainer instanceof org.eclipse.ocl.pivot.Package) && Orphanage.isTypeOrphanage((org.eclipse.ocl.pivot.Package)eContainer)) {
-				return;				// Skip orphan package
-			}
-			if (eContainer instanceof TemplateSignature) {
-				continue;			// Skip signature
-			}
-			for (EObject aScope = safeScope; aScope != null; aScope = aScope.eContainer()) {
-				if (metamodelManager.getPrimaryElement(aScope) == metamodelManager.getPrimaryElement(eContainer)) { 		// If element ancestor is scope or an ancestor
-					return;							// no need for further qualification
+				//
+				//	Redundant inner qualification no alternative resolutions for first qualifier.
+				//
+				if ((0 < iTargetStart) && (iTargetStart < iTargetSize)) {
+					String targetName = targetPath.get(iTargetStart).getName(); //((NamedElement)primaryElement).getName();
+					boolean noAlternatives = true;
+					for (int i = iTargetStart; i < iScopeSize-1; i++) {
+						NamedElement intermediateScopeElement = scopePath.get(i);
+						if (intermediateScopeElement instanceof org.eclipse.ocl.pivot.Package) {
+							CompletePackage completePackage = metamodelManager.getCompletePackage((org.eclipse.ocl.pivot.Package)intermediateScopeElement);
+							CompletePackage memberPackage = completePackage.getOwnedCompletePackage(targetName);
+							if (memberPackage != null) {
+								noAlternatives = false;
+								break;
+							}
+							org.eclipse.ocl.pivot.Class memberClass = completePackage.getMemberType(targetName);
+							if (memberClass  != null) {
+								noAlternatives = false;
+								break;
+							}
+						}
+						else if (intermediateScopeElement instanceof org.eclipse.ocl.pivot.Class) {
+							CompleteClass completeClass = metamodelManager.getCompleteClass((org.eclipse.ocl.pivot.Class)intermediateScopeElement);
+							Iterable<@NonNull Property> memberProperties = completeClass.getProperties((Property)primaryElement);
+							if ((memberProperties != null) && !Iterables.isEmpty(memberProperties)) {
+								noAlternatives = false;
+								break;
+							}
+							Iterable<@NonNull Operation> memberOperations = completeClass.getOperations(null, targetName);
+							assert memberOperations != null;
+							if (!Iterables.isEmpty(memberOperations)) {
+								noAlternatives = false;
+								break;
+							}
+						}
+					}
+					if (!noAlternatives) {
+						iTargetStart = iTargetStart-1;
+					}
 				}
 			}
-			csSimpleRef = BaseCSFactory.eINSTANCE.createPathElementCS();
-			csPath.add(0, csSimpleRef);
-			csSimpleRef.setReferredElement((Element) eContainer);
+			//
+			//	Refresh with targetPath[iTargetStart...iTargetSize]
+			//
+			for (int i = iTargetStart; i < iTargetSize; i++) {
+				PathElementCS csSimpleRef = BaseCSFactory.eINSTANCE.createPathElementCS();
+				NamedElement pathElement = targetPath.get(i);
+				csSimpleRef.setReferredElement(pathElement);
+				csPath.add(csSimpleRef);
+				if (pathElement == primaryElement) {
+					hasFinalTarget = true;
+					assert (i+1) == iTargetSize;
+					break;
+				}
+			}
+		}
+		if (!hasFinalTarget) {
+			PathElementCS csSimpleRef = BaseCSFactory.eINSTANCE.createPathElementCS();
+			csSimpleRef.setReferredElement(primaryElement);
+			csPath.add(csSimpleRef);
 		}
 	}
 
