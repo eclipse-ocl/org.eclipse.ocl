@@ -261,9 +261,6 @@ public class JavaStream
 
 	public void append(@Nullable String string) {
 		if (string != null) {
-			if ("symbol_3".equals(string)) {
-				getClass();		// XXX
-			}
 			if (indentationStack.isEmpty()) {
 				s.append(string);
 			}

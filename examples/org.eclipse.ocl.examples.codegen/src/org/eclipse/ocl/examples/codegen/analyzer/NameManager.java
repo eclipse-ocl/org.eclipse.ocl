@@ -582,9 +582,6 @@ public class NameManager
 				if (!name2object.containsKey(attempt)) {		// Assumes that reserved names do not end in _ count
 					install(attempt, anObject);
 					name2counter.put(lastResort, ++count);
-					if ("symbol_3".equals(attempt)) {
-						getClass();			// XXX
-					}
 					return attempt;
 				}
 			}
