@@ -42,7 +42,6 @@ import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotPackage;
-import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
@@ -54,6 +53,9 @@ import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+
+import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
+import org.eclipse.ocl.pivot.PivotPackage;
 
 /**
  * This is the pivot representation of the http://www.eclipse.org/ocl/2015/Pivot metamodel
@@ -259,20 +261,20 @@ public class OCLmetamodel extends ASResourceImpl
 
 		private final @NonNull Package _ocl = standardLibrary;
 		private final @NonNull BagType _Bag = getBagType(_ocl, "Bag");
-		private final @NonNull BooleanType _Boolean = getBooleanType(_ocl, "Boolean");
+		private final @NonNull Class _Boolean = getBooleanType(_ocl, "Boolean");
 		private final @NonNull CollectionType _Collection = getCollectionType(_ocl, "Collection");
-		private final @NonNull PrimitiveType _Integer = getPrimitiveType(_ocl, "Integer");
+		private final @NonNull Class _Integer = getPrimitiveType(_ocl, "Integer");
 		private final @NonNull AnyType _OclAny = getAnyType(_ocl, "OclAny");
 		private final @NonNull Class _OclElement = getClass(_ocl, "OclElement");
 		private final @NonNull Class _OclEnumeration = getClass(_ocl, "OclEnumeration");
 		private final @NonNull CollectionType _OrderedCollection = getCollectionType(_ocl, "OrderedCollection");
 		private final @NonNull OrderedSetType _OrderedSet = getOrderedSetType(_ocl, "OrderedSet");
-		private final @NonNull PrimitiveType _Real = getPrimitiveType(_ocl, "Real");
+		private final @NonNull Class _Real = getPrimitiveType(_ocl, "Real");
 		private final @NonNull SequenceType _Sequence = getSequenceType(_ocl, "Sequence");
 		private final @NonNull SetType _Set = getSetType(_ocl, "Set");
-		private final @NonNull PrimitiveType _String = getPrimitiveType(_ocl, "String");
+		private final @NonNull Class _String = getPrimitiveType(_ocl, "String");
 		private final @NonNull CollectionType _UniqueCollection = getCollectionType(_ocl, "UniqueCollection");
-		private final @NonNull PrimitiveType _UnlimitedNatural = getPrimitiveType(_ocl, "UnlimitedNatural");
+		private final @NonNull Class _UnlimitedNatural = getPrimitiveType(_ocl, "UnlimitedNatural");
 		private final @NonNull TemplateParameter _Bag_T = getTemplateParameter(_Bag, 0);
 		private final @NonNull TemplateParameter _Collection_T = getTemplateParameter(_Collection, 0);
 		private final @NonNull TemplateParameter _OrderedCollection_T = getTemplateParameter(_OrderedCollection, 0);

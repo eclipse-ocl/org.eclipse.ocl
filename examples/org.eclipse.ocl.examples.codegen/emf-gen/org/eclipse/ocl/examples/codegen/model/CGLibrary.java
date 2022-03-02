@@ -252,11 +252,11 @@ public class CGLibrary extends ASResourceImpl
 		}
 
 		private final @NonNull Package _ocl = getPackage(org.eclipse.ocl.pivot.model.OCLstdlib.getDefaultModel(), "ocl");
-		private final @NonNull PrimitiveType _Boolean = getPrimitiveType(_ocl, "Boolean");
-		private final @NonNull PrimitiveType _Integer = getPrimitiveType(_ocl, "Integer");
+		private final @NonNull Class _Boolean = getPrimitiveType(_ocl, "Boolean");
+		private final @NonNull Class _Integer = getPrimitiveType(_ocl, "Integer");
 		private final @NonNull AnyType _OclAny = getAnyType(_ocl, "OclAny");
 		private final @NonNull Class _OclElement = getClass(_ocl, "OclElement");
-		private final @NonNull PrimitiveType _String = getPrimitiveType(_ocl, "String");
+		private final @NonNull Class _String = getPrimitiveType(_ocl, "String");
 
 		private void installPackages() {
 			model.getOwnedPackages().add(ocl);

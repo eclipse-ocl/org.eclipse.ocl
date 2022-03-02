@@ -123,7 +123,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 			«FOR pkge : sortedPackages»
 
 				«FOR type : ClassUtil.nullFree(pkge2primitiveTypes.get(pkge))»
-				private final @NonNull PrimitiveType «type.getPrefixedSymbolNameWithoutNormalization("_" + type.partialName())» = createPrimitiveType("«type.name»");
+				private final @NonNull Class «type.getPrefixedSymbolNameWithoutNormalization("_" + type.partialName())» = createPrimitiveType("«type.name»");
 				«ENDFOR»
 			«ENDFOR»
 		'''
@@ -272,6 +272,8 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 			«FOR name : externals»«var element = ClassUtil.nonNullState(name2external.get(name))»
 			«IF element instanceof Package»
 			private final @NonNull Package «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
+			«ELSEIF element instanceof PrimitiveType»
+			private final @NonNull Class «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
 			«ELSE»
 			private final @NonNull «element.eClass().getName()» «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
 			«ENDIF»

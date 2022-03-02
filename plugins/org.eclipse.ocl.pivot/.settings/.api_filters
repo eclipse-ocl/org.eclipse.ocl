@@ -1515,6 +1515,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/utilities/AbstractContents.java" type="org.eclipse.ocl.pivot.internal.utilities.AbstractContents">
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.utilities.AbstractContents"/>
+                <message_argument value="getPrimitiveType(Package, String)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/internal/utilities/AbstractTechnology.java" type="org.eclipse.ocl.pivot.internal.utilities.AbstractTechnology">
         <filter comment="Bug 512402 workaround" id="576725006">
             <message_arguments>
