@@ -231,6 +231,7 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 						Contents contents = new Contents("«lib.getURI»");
 						String asURI = STDLIB_URI + PivotConstants.DOT_OCL_AS_FILE_EXTENSION;
 						oclstdlib = INSTANCE = new ReadOnly(asURI, contents.getModel());
+						oclstdlib.setSaveable(false);
 					}
 					return oclstdlib;
 				}
@@ -321,7 +322,6 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 				{
 					protected ReadOnly(@NonNull String asURI, @NonNull Model libraryModel) {
 						super(asURI, libraryModel);
-						setSaveable(false);
 					}
 			
 					/**

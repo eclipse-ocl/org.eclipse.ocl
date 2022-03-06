@@ -165,6 +165,7 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 						metamodel = INSTANCE = new ReadOnly(PIVOT_AS_URI);
 						Contents contents = new Contents(OCLstdlib.getDefaultPackage(), "«pkg.name»", "«pkg.nsPrefix»", PIVOT_URI);
 						metamodel.getContents().add(contents.getModel());
+						metamodel.setSaveable(false);
 					}
 					return metamodel;
 				}
@@ -261,7 +262,6 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 				{
 					protected ReadOnly(@NonNull URI uri) {
 						super(uri);
-						setSaveable(false);
 					}
 			
 					/**
