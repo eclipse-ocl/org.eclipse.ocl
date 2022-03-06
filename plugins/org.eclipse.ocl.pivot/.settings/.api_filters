@@ -1478,6 +1478,12 @@
                 <message_argument value="SKIP_CHECK_BAD_REFERENCES"/>
             </message_arguments>
         </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.resource.ASResourceImpl"/>
+                <message_argument value="setSaveable(boolean)"/>
+            </message_arguments>
+        </filter>
         <filter id="576725006">
             <message_arguments>
                 <message_argument value="ASResource"/>
@@ -1639,6 +1645,14 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.messages.PivotMessages"/>
                 <message_argument value="IllegalCoIterator"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/resource/ASResource.java" type="org.eclipse.ocl.pivot.resource.ASResource">
+        <filter id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.resource.ASResource"/>
+                <message_argument value="setSaveable(boolean)"/>
             </message_arguments>
         </filter>
     </resource>

@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
 import org.eclipse.ocl.pivot.internal.ecore.Ecore2Moniker;
+import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
@@ -178,10 +179,12 @@ public class MonikerTests extends XtextTestCase
 		//
 		//	Get the pivot resource and check for load failures
 		//
-		Resource asResource = csResource.getASResource();
+		ASResource asResource = csResource.getASResource();
 		assertNoValidationErrors("Pivot validation problems", asResource);
-		asResource.setURI(pivotURI);
-		asResource.save(XMIUtil.createSaveOptions());
+		if (asResource.isSaveable()) {
+			asResource.setURI(pivotURI);
+			asResource.save(XMIUtil.createSaveOptions(asResource));
+		}
 		//
 		//	Check CS-Pivot moniker consistency
 		//

@@ -191,10 +191,11 @@ public class PivotTestCase extends TestCase
 		//
 		URI savedURI = ClassUtil.nonNullState(asResource.getURI());
 		//		asResource.setURI(PivotUtil.getNonPivotURI(savedURI).appendFileExtension(PivotConstants.OCL_AS_FILE_EXTENSION));
-		asResource.setURI(outputURI.trimFileExtension().trimFileExtension().appendFileExtension(PivotConstants.OCL_AS_FILE_EXTENSION));
-		asResource.save(null);
-		asResource.setURI(savedURI);
-
+		if (asResource.isSaveable()) {
+			asResource.setURI(outputURI.trimFileExtension().trimFileExtension().appendFileExtension(PivotConstants.OCL_AS_FILE_EXTENSION));
+			asResource.save(null);
+			asResource.setURI(savedURI);
+		}
 		assertNoDiagnosticErrors("Concrete Syntax validation failed", xtextResource);
 		try {
 			DebugTimestamp debugTimestamp = new DebugTimestamp(ClassUtil.nonNullState(xtextResource.getURI().toString()));
@@ -581,7 +582,7 @@ public class PivotTestCase extends TestCase
 	public static @NonNull Resource cs2as(@NonNull CSResource xtextResource, @Nullable URI pivotURI) throws IOException {
 		ASResource asResource = xtextResource.getASResource();
 		assertNoUnresolvedProxies("Unresolved proxies", asResource);
-		if (pivotURI != null) {
+		if ((pivotURI != null) && asResource.isSaveable()) {
 			asResource.setURI(pivotURI);
 			asResource.save(null);
 		}

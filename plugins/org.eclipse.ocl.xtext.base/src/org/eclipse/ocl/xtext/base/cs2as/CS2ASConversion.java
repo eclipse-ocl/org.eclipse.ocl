@@ -1371,7 +1371,9 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		oldPackagesByName = new HashMap<String, org.eclipse.ocl.pivot.Package>();
 		oldPackagesByQualifiedName = new HashMap<String, org.eclipse.ocl.pivot.Package>();
 		ASResource asResource = converter.csi2asMapping.getASResource(csResource);
+		boolean wasUpdating = false;
 		if (asResource != null) {
+			wasUpdating = asResource.setUpdating(true);
 			for (EObject eObject : asResource.getContents()) {
 				if (eObject instanceof Model) {
 					List<org.eclipse.ocl.pivot.Package> nestedPackage = ((Model)eObject).getOwnedPackages();
@@ -1504,6 +1506,11 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 				}
 			}
 		}
+		if (asResource == null) {
+			asResource = converter.csi2asMapping.getASResource(csResource);
+			assert asResource != null;
+		}
+		asResource.setUpdating(wasUpdating);
 		return true;
 	}
 

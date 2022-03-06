@@ -688,6 +688,11 @@ public abstract class CS2AS extends AbstractConversion	// FIXME migrate function
 		//			System.out.println("CS " + csResource.getClass().getName() + "@" + csResource.hashCode() + " " + csResource.getURI());
 		//		}
 		CS2ASConversion conversion = createConversion(diagnosticsConsumer, csResource);
+		boolean wasUpdating = false;
+		ASResource asResource = csi2asMapping.getASResource(csResource);
+		if (asResource != null) {
+			asResource.setUpdating(true);
+		}
 		conversion.update(csResource);
 		//		System.out.println("---------------------------------------------------------------------------");
 		//		Collection<? extends Resource> pivotResources = cs2asResourceMap.values();
@@ -703,7 +708,8 @@ public abstract class CS2AS extends AbstractConversion	// FIXME migrate function
 //			metamodelManager.kill(deadPivot);
 		} */
 		Map<BaseCSResource, ASResource> cs2asResourceMap = new HashMap<BaseCSResource, ASResource>();
-		ASResource asResource = csi2asMapping.getASResource(csResource);
+		asResource = csi2asMapping.getASResource(csResource);
+		assert asResource != null;
 		cs2asResourceMap.put(csResource, asResource);
 		AbstractJavaClassScope javaClassScope = AbstractJavaClassScope.findAdapter(csResource);
 		if (javaClassScope != null) {
@@ -712,5 +718,6 @@ public abstract class CS2AS extends AbstractConversion	// FIXME migrate function
 		conversion.garbageCollect(cs2asResourceMap);
 		csi2asMapping.update();
 		//		printDiagnostic("CS2AS.update end", false, 0);
+		asResource.setUpdating(wasUpdating);
 	}
 }

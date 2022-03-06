@@ -226,7 +226,7 @@ public class PivotTests extends XtextTestCase
 		//	Create Pivot model from CS
 		//
 		CS2AS cs2as = ClassUtil.nonNullState(csResource.findCS2AS());
-		Resource asResource = cs2as.getASResource();
+		ASResource asResource = cs2as.getASResource();
 		OCLstdlibCS2AS creator = (OCLstdlibCS2AS) cs2as;
 		//
 		//	Check that Pivot model is ready for damage
@@ -236,10 +236,12 @@ public class PivotTests extends XtextTestCase
 		//	Save Pivot Model for manual inspection
 		//
 		assertNoValidationErrors("Pivot validation problems", asResource);
-		URI savedPivotURI = asResource.getURI();
-		asResource.setURI(pivotURI);
-		asResource.save(XMIUtil.createSaveOptions());
-		asResource.setURI(savedPivotURI);
+		if (asResource.isSaveable()) {
+			URI savedPivotURI = asResource.getURI();
+			asResource.setURI(pivotURI);
+			asResource.save(XMIUtil.createSaveOptions(asResource));
+			asResource.setURI(savedPivotURI);
+		}
 		//
 		//	Check CS and Pivot have consistent content
 		//

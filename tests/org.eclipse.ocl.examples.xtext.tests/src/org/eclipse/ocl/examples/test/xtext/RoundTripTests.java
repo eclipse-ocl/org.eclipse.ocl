@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.xtext.tests.TestFile;
@@ -208,7 +209,8 @@ public class RoundTripTests extends XtextTestCase
 
 		Ecore2AS ecore2as = Ecore2AS.getAdapter(inputResource, environmentFactory);
 		Model pivotModel = ecore2as.getASModel();
-		Resource asResource = pivotModel.eResource();
+		ASResource asResource = (ASResource) pivotModel.eResource();
+		boolean wasSaveable = asResource.setSaveable(true);
 		asResource.setURI(pivotURI);
 		assertNoResourceErrors("Ecore2AS failed", asResource);
 		//		int i = 0;
@@ -223,13 +225,14 @@ public class RoundTripTests extends XtextTestCase
 				tit.prune();
 			}
 		}
-		asResource.save(XMIUtil.createSaveOptions());
+		asResource.save(XMIUtil.createSaveOptions(asResource));
+		asResource.setSaveable(wasSaveable);
 		@NonNull String @NonNull[] validationDiagnostics = saveOptions != null ? (@NonNull String @NonNull[])saveOptions.get(AS2ES_VALIDATION_ERRORS) : NO_MESSAGES;
 		assertValidationDiagnostics("Ecore2AS invalid", asResource, validationDiagnostics);
-		Resource outputResource = AS2Ecore.createResource(environmentFactory, asResource, inputURI, saveOptions);
+		XMLResource outputResource = AS2Ecore.createResource(environmentFactory, asResource, inputURI, saveOptions);
 		assertNoResourceErrors("Ecore2AS failed", outputResource);
 		OutputStream outputStream = resourceSet.getURIConverter().createOutputStream(outputURI);
-		outputResource.save(outputStream, XMIUtil.createSaveOptions());
+		outputResource.save(outputStream, XMIUtil.createSaveOptions(outputResource));
 		outputStream.close();
 		assertNoValidationErrors("Ecore2AS invalid", outputResource);
 

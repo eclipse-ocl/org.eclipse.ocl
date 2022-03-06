@@ -591,7 +591,7 @@ public class LoadTests extends XtextTestCase
 		URI cstURI = getTestFileURI(cstName);
 		URI pivotURI = getTestFileURI(pivotName);
 		URI savedURI = getTestFileURI(savedName);
-		Resource asResource = xtextResource.getASResource();
+		ASResource asResource = xtextResource.getASResource();
 		assertNoUnresolvedProxies("Unresolved proxies", xtextResource);
 		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " validate()");
 		//FIXME		assertNoValidationErrors("Validation errors", xtextResource.getContents().get(0));
@@ -606,9 +606,11 @@ public class LoadTests extends XtextTestCase
 		xtextResource.setURI(inputURI);
 		assertNoResourceErrors("Save failed", xtextResource);
 		saveAsXMI(xtextResource, cstURI);
-		asResource.setURI(pivotURI);
 		assertNoValidationErrors("Pivot validation errors", asResource.getContents().get(0));
-		asResource.save(saveOptions);
+		if (asResource.isSaveable()) {
+			asResource.setURI(pivotURI);
+			asResource.save(saveOptions);
+		}
 		return asResource;
 	}
 
@@ -1480,8 +1482,8 @@ public class LoadTests extends XtextTestCase
 		//	Save the *.oclas and cache the xmi:ids
 		//
 		URI esasURI = getTestFileURI(ecoreFileName + ".oclas");
-		asResource.setURI(esasURI);
 		asResource.setSaveable(true);
+		asResource.setURI(esasURI);
 		Map<String, Object> options = new HashMap<String, Object>();
 		//		options.put(ASResource.OPTION_INTERNAL_UUIDS, Boolean.TRUE);
 		asResource.save(options);
@@ -1505,7 +1507,7 @@ public class LoadTests extends XtextTestCase
 		//
 		URI asURI = esasURI.trimFileExtension().trimFileExtension().appendFileExtension("oclas");
 		asResource.setURI(asURI);
-		asResource.save(XMIUtil.createSaveOptions());		// Bug 418412 gave a duplicate xmi:id ISE failure here.
+		asResource.save(XMIUtil.createSaveOptions(asResource));		// Bug 418412 gave a duplicate xmi:id ISE failure here.
 		for (TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
 			EObject eObject = tit.next();
 			String id = asResource.getID(eObject);

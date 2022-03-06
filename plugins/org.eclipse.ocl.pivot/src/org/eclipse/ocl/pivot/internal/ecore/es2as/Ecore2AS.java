@@ -367,7 +367,10 @@ public class Ecore2AS extends AbstractExternal2AS
 		if (pivotModel2 == null) {
 			loadImports(ecoreResource);
 			pivotModel2 = pivotModel = importObjects(ClassUtil.nonNullEMF(ecoreResource.getContents()), createPivotURI());
+			ASResource asResource = (ASResource) pivotModel.eResource();
+			boolean wasUpdating = asResource.setUpdating(true);
 			installImports();
+			asResource.setUpdating(wasUpdating);
 		}
 		return pivotModel2;
 	}
@@ -1157,6 +1160,7 @@ public class Ecore2AS extends AbstractExternal2AS
 		referencers = new HashSet<>();
 		genericTypes = new ArrayList<>();
 		eDataTypes = new ArrayList<>();
+		boolean wasUpdating = ((ASResource)asResource).setUpdating(true);
 		/*
 		 * Establish the declarations.
 		 */
@@ -1188,5 +1192,10 @@ public class Ecore2AS extends AbstractExternal2AS
 		 */
 		resolveReferences();
 		resolveIds(ecoreContents);
+		((ASResource)asResource).setUpdating(wasUpdating);
+		if (!((ASResource)asResource).isSaveable()) {
+			((ASResource)asResource).setSaveable(true);
+			((ASResource)asResource).setSaveable(false);
+		}
 	}
 }

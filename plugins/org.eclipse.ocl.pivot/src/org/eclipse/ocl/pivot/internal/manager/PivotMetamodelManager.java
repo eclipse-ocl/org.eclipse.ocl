@@ -2162,10 +2162,12 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 												if (pivot instanceof Model) {
 													Model root = (Model)pivot;
 													completeModel.getPartialModels().remove(root);
-													Resource asResource = root.eResource();
+													ASResource asResource = (ASResource) root.eResource();
 													if (asResource != null) {
+														boolean wasUpdating = asResource.setUpdating(true);
 														asResourceSet.getResources().remove(asResource);
 														asResource.unload();
+														asResource.setUpdating(wasUpdating);
 													}
 												}
 											}

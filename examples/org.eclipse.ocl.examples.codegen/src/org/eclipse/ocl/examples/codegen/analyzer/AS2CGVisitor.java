@@ -24,7 +24,6 @@ import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -180,6 +179,7 @@ import org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsUndefinedOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclElementOclContainerProperty;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
+import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -1189,13 +1189,17 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		Variable asVariable = asClone.getOwnedContext();
 		asClone.setOwnedContext(null);				// Defeat child-stealing detector
 		asExpression = createLetExp(asVariable, callExp.getOwnedSource(), asExpression);
-		Resource eResource = specification.eResource();
+		ASResource asResource = (ASResource) specification.eResource();
 		try {
-			eResource.getContents().add(asExpression);					// Ensure that asExpression is not a Resource-less orphan; needed for FlowAnalysis
+			boolean wasUpdating = asResource.setUpdating(true);			// FIXME Avoid immutable change
+			asResource.getContents().add(asExpression);					// Ensure that asExpression is not a Resource-less orphan; needed for FlowAnalysis
+			asResource.setUpdating(wasUpdating);
 			return doVisit(CGValuedElement.class, asExpression);
 		}
 		finally {
-			eResource.getContents().remove(asExpression);
+			boolean wasUpdating = asResource.setUpdating(true);			// FIXME Avoid immutable change
+			asResource.getContents().remove(asExpression);
+			asResource.setUpdating(wasUpdating);
 		}
 	}
 

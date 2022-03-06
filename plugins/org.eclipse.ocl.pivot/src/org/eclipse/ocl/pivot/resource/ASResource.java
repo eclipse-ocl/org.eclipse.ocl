@@ -142,9 +142,17 @@ public interface ASResource extends XMIResource
 	 * the resource saveable and ensuring that the URI references a writeable location (i.e probably not an
 	 * http: or platform:/plugin location).
 	 *
-	 * @since 1.5
+	 * @since 1.18
 	 */
-	void setSaveable(boolean isSaveable);
+	boolean setSaveable(boolean isSaveable);
+
+	/**
+	 * Configure an immutable ASResource to tolerate updates, returning the pripr state for restoration
+	 * once the immutable updatres are done.
+	 *
+	 * @since 1.18
+	 */
+	default boolean setUpdating(boolean isUpdating) { return false; }
 
 	/**
 	 * Define the version number identifying the xmi:id allocation algorithm for this resource.

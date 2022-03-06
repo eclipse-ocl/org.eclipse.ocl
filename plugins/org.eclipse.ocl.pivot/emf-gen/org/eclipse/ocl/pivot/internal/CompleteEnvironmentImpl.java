@@ -473,6 +473,8 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 				return conformsToTupleType((TupleType)firstType, firstSubstitutions, (TupleType)secondType, secondSubstitutions);
 			}
 		}
+		firstCompleteClass = getCompleteClass(firstType);
+		secondCompleteClass = getCompleteClass(secondType);
 		CompleteInheritance firstInheritance = firstCompleteClass.getCompleteInheritance();
 		CompleteInheritance secondInheritance = secondCompleteClass.getCompleteInheritance();
 		return firstInheritance.isSubInheritanceOf(secondInheritance);
