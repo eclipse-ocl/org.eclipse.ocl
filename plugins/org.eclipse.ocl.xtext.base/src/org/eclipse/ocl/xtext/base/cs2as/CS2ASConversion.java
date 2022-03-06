@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2020 Willink Transformations and others.
+ * Copyright (c) 2010, 2022 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -339,7 +339,6 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		}
 		allPivotResources.addAll(metamodelManager.getLibraries());			// Library elements are not dead
 		allPivotResources.addAll(cs2asResourceMap.keySet());			// Incoming elements are not dead
-		allPivotResources.remove(metamodelManager.getCompleteModel().getOrphanage().eResource());
 		@SuppressWarnings("serial")
 		Map<EObject, Collection<Setting>> referencesToOrphans = new EcoreUtil.CrossReferencer(allPivotResources)
 		{

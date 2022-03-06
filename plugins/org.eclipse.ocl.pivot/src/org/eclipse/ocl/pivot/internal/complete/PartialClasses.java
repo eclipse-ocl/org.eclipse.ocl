@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014, 2019 Willink Transformations and others.
+ * Copyright (c) 2014, 2022 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -242,8 +242,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 //			specializedMetaclass.setInstanceType(instanceType);
 //		}
 		specializedType.setUnspecializedElement(unspecializedType);
-		PivotMetamodelManager metamodelManager = getCompleteModel().getMetamodelManager();
-		Orphanage orphanage = Orphanage.getOrphanage(metamodelManager.getASResourceSet());
+		Orphanage orphanage = Orphanage.getOrphanage();
 		specializedType.setOwningPackage(orphanage);
 		return specializedType;
 	}

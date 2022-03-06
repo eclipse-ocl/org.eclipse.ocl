@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014, 2019 Willink Transformations and others.
+ * Copyright (c) 2014, 2022 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -37,7 +37,6 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.CompleteClassImpl;
 import org.eclipse.ocl.pivot.internal.CompletePackageImpl;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -99,8 +98,7 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 				logger.error("Out of range upper bound", e);
 			}
 			specializedType.setUnspecializedElement(unspecializedType);
-			PivotMetamodelManager metamodelManager = getCompleteModel().getMetamodelManager();
-			Orphanage orphanage = Orphanage.getOrphanage(metamodelManager.getASResourceSet());
+			Orphanage orphanage = Orphanage.getOrphanage();
 			specializedType.setOwningPackage(orphanage);
 			return specializedType;
 		}
@@ -198,8 +196,7 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 			specializedMapType.setKeysAreNullFree(typeParameters.isKeysAreNullFree());
 			specializedMapType.setValuesAreNullFree(typeParameters.isValuesAreNullFree());
 			specializedMapType.setUnspecializedElement(unspecializedType);
-			PivotMetamodelManager metamodelManager = getCompleteModel().getMetamodelManager();
-			Orphanage orphanage = Orphanage.getOrphanage(metamodelManager.getASResourceSet());
+			Orphanage orphanage = Orphanage.getOrphanage();
 			specializedMapType.setOwningPackage(orphanage);
 			specializedMapType.setEntryClass(typeParameters.getEntryClass());
 			return specializedMapType;

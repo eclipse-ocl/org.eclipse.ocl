@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017, 2018 Willink Transformations and others.
+ * Copyright (c) 2017, 2022 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -33,14 +33,14 @@ import org.eclipse.ocl.pivot.utilities.TreeIterable;
 
 /**
  * The LUSSIDs class maintains the element to LUSSID and LUSSID to element mapping for the elements
- * of an ASResource. It also privides the ability to return predictable xmi:id values.
+ * of an ASResource. It also provides the ability to return predictable xmi:id values.
  *
  * An xmi:id is provided for every explicitly referenced, and every potentially externally referenced element,
- * so that the EMF fall-back to @x/@y.1 style id referemces is never required.
+ * so that the EMF fall-back to @x/@y.1 style id references is never required.
  *
  * The xmi:id typically comprises a 5 Base64-like letter encoding of the bottom 30 bits of the LUSSID of the element.
  * Additional Base64 letters are occasionally needed to disambiguate duplicates. Disambiguation favours the externally
- * referenceable xmi:ids before falling back on hierachical position. Disambiguation is therefore very likley to give
+ * referenceable xmi:ids before falling back on hierachical position. Disambiguation is therefore very likely to give
  * stable results after many forms of model evolution.
  *
  * The LUSSID (Locally Unique Semantically Sentsitive ID) is the hashcode of the hierarchical path of the element.
@@ -419,6 +419,7 @@ public abstract class LUSSIDs
 	}
 
 	protected void assignXMIIDs(@NonNull AS2ID as2id) {
+		assert !asResource.isOrphanage();
 		Map<@NonNull String, @NonNull List<@NonNull Element>> xmiid2collisions2 = xmiid2collisions;
 		for (@NonNull Element element : identifiedElement2lussid.keySet()) {
 			Integer lussid = identifiedElement2lussid.get(element);

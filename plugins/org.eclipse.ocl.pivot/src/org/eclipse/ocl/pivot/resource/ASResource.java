@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2018 Willink Transformations and others.
+ * Copyright (c) 2010, 2022 Willink Transformations and others.
  * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -99,7 +99,7 @@ public interface ASResource extends XMIResource
 	 *
 	 * @since 1.5
 	 */
-	public @NonNull LUSSIDs getLUSSIDs(@NonNull Map<@NonNull Object, @Nullable Object> options);
+	 @NonNull LUSSIDs getLUSSIDs(@NonNull Map<@NonNull Object, @Nullable Object> options);
 
 	/**
 	 * Return the Model that provides the sole root content. Throws an IllegalStateException if there is none.
@@ -111,7 +111,7 @@ public interface ASResource extends XMIResource
 	 *
 	 * @since 1.5
 	 */
-	public int getXmiidVersion();
+	 int getXmiidVersion();
 
 	/**
 	 * Return true if this Resource is a container for orphan model elements.
@@ -134,7 +134,7 @@ public interface ASResource extends XMIResource
 	 *
 	 * @since 1.5
 	 */
-	public void resetLUSSIDs();
+	void resetLUSSIDs();
 
 	/**
 	 * Enable or disable saving of this resource. Saving is normally disabled automatically for model content
@@ -144,12 +144,12 @@ public interface ASResource extends XMIResource
 	 *
 	 * @since 1.5
 	 */
-	public void setSaveable(boolean isSaveable);
+	void setSaveable(boolean isSaveable);
 
 	/**
 	 * Define the version number identifying the xmi:id allocation algorithm for this resource.
 	 *
 	 * @since 1.5
 	 */
-	public void setXmiidVersion(int xmiidVersion);
+	void setXmiidVersion(int xmiidVersion);
 }

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2021 Willink Transformations and others.
+ * Copyright (c) 2011, 2022 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -37,6 +37,7 @@ import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
@@ -47,11 +48,21 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
  */
 public class Orphanage extends PackageImpl
 {
+	/**
+	 * The OrphanResource tailors the inherited ASREsorce functionality to support the single Resource shared by all
+	 * OCL consumers, but not included in any REsourceSEt. It is nt saved and hso has no xmi:ids but it does have LUSSIDs
+	 * in order to contribute to the signatures of operations.
+	 */
 	protected static class OrphanResource extends ASResourceImpl
 	{
 		protected OrphanResource(@NonNull URI uri) {
 			super(uri, OCLASResourceFactory.getInstance());
-			setSaveable(false);
+			setUpdating(true);
+		}
+
+		@Override
+		public NotificationChain basicSetResourceSet(ResourceSet resourceSet, NotificationChain notifications) {
+			return notifications; 	// The OrphanResource is in no, rather than latest, ResourceSt
 		}
 
 		@Override
@@ -65,6 +76,18 @@ public class Orphanage extends PackageImpl
 				contents = null;
 			}
 			//			super.doUnload();
+		}
+
+		@Override
+		public String getURIFragment(EObject eObject) {
+			// The OrphanResource cannot be saved so has no LUSSID-based xmi:ids, but Xtext serialization needs a URI
+			return superGetURIFragment(eObject);
+		}
+
+		@Override
+		public ResourceSet getResourceSet() {
+			// OrphanResource can be shared across many ResourceSets - use the current one
+			return PivotUtilInternal.getEnvironmentFactory(null).getMetamodelManager().getASResourceSet();
 		}
 
 		@Override
@@ -89,11 +112,11 @@ public class Orphanage extends PackageImpl
 		 */
 		protected static class ListIterator<T> implements java.util.ListIterator<T>
 		{
-			protected final @NonNull List<Map.Entry<T,Integer>> list;
+			protected final @NonNull List<Map.@NonNull Entry<@NonNull T, @NonNull Integer>> list;
 			private final int size;
 			private int cursor;
 
-			public ListIterator(@NonNull List<Map.Entry<T,Integer>> list, int index) {
+			public ListIterator(@NonNull List<Map.@NonNull Entry<@NonNull T, @NonNull Integer>> list, int index) {
 				this.list = list;
 				this.size = list.size();
 				this.cursor = index;
@@ -159,7 +182,7 @@ public class Orphanage extends PackageImpl
 		/**
 		 * Map of content-value to list-index.
 		 */
-		private final @NonNull WeakHashMap<T, Integer> weakMap = new WeakHashMap<T, Integer>();
+		private final @NonNull WeakHashMap<@NonNull T, @NonNull Integer> weakMap = new WeakHashMap<>();
 
 		/**
 		 * Incrermenting counter used to sort the list into a predictable order.
@@ -169,7 +192,7 @@ public class Orphanage extends PackageImpl
 		/**
 		 * The most recent ordered view of the weakMap.
 		 */
-		private @Nullable List<Entry<T, Integer>> weakList = null;
+		private @Nullable List<@NonNull Entry<@NonNull T, @NonNull Integer>> weakList = null;
 
 		@Override
 		public boolean addAllUnique(Object[] objects, int start, int end) {
@@ -203,6 +226,7 @@ public class Orphanage extends PackageImpl
 
 		@Override
 		public NotificationChain basicAdd(T object, NotificationChain notifications) {
+			assert object != null;
 			synchronized (weakMap) {
 				if (!weakMap.containsKey(object)) {
 					weakMap.put(object, Integer.valueOf(counter++));
@@ -281,16 +305,16 @@ public class Orphanage extends PackageImpl
 
 		@Override
 		public T get(int index) {
-			List<Entry<T, Integer>> weakList2 = getList();
+			List<@NonNull Entry<@NonNull T, @NonNull Integer>> weakList2 = getList();
 			return weakList2.get(index).getKey();
 		}
 
-		private @NonNull List<Entry<T, Integer>> getList() {
-			List<Entry<T, Integer>> weakList2;
+		private @NonNull List<@NonNull Entry<@NonNull T, @NonNull Integer>> getList() {
+			List<@NonNull Entry<@NonNull T, @NonNull Integer>> weakList2;
 			synchronized (weakMap) {
 				weakList2 = weakList;
 				if (weakList2 == null) {
-					weakList2 = weakList = new ArrayList<Entry<T, Integer>>(weakMap.entrySet());
+					weakList2 = weakList = new ArrayList<>(weakMap.entrySet());
 					Collections.sort(weakList2, new Comparator<Entry<T, Integer>>()
 					{
 						@Override
@@ -365,12 +389,14 @@ public class Orphanage extends PackageImpl
 	}
 
 	public static final @NonNull URI ORPHANAGE_URI = ClassUtil.nonNullEMF(URI.createURI(PivotConstants.ORPHANAGE_URI + PivotConstants.DOT_OCL_AS_FILE_EXTENSION));
-	private static Orphanage INSTANCE = null;
+	private static Orphanage ORPHAN_PACKAGE = null;
+	private static OrphanResource ORPHAN_RESOURCE = null;
 
 	public static void disposeInstance() {
-		if (INSTANCE != null) {
-			INSTANCE.dispose();
-			INSTANCE = null;
+		if (ORPHAN_PACKAGE != null) {
+			ORPHAN_PACKAGE.dispose();
+			ORPHAN_PACKAGE = null;
+			ORPHAN_RESOURCE = null;
 		}
 	}
 
@@ -378,6 +404,7 @@ public class Orphanage extends PackageImpl
 	 * Return the Orphanage for an eObject, which is the Orphanage resource in the same ResourceSet as
 	 * the eObject, else the global Orphanage.
 	 */
+	@Deprecated /* @deprecated Not used, the global orphanage should always be used - See Bug 579051 */
 	public static @Nullable Orphanage getOrphanage(@NonNull EObject eObject) {
 		//		if (eObject == null) {
 		//			return null;
@@ -391,37 +418,46 @@ public class Orphanage extends PackageImpl
 	}
 
 	/**
-	 * Return the Orphanage for an eObject, which is the Orphanage resource in the resourceSet
-	 * if non-null, else the global Orphanage.
+	 * Return the global Orphanage.
 	 */
-	public static @NonNull Orphanage getOrphanage(@Nullable ResourceSet resourceSet) {
-		if (resourceSet == null) {
-			Orphanage instance2 = INSTANCE;
-			if (instance2 == null) {
-				instance2 = INSTANCE = new Orphanage(PivotConstants.ORPHANAGE_NAME, PivotConstants.ORPHANAGE_URI);
-			}
-			return instance2;
+	public static @NonNull Orphanage getOrphanage() {
+		OrphanResource orphanResource = ORPHAN_RESOURCE;
+		Orphanage orphanPackage = ORPHAN_PACKAGE;
+		if (orphanPackage == null) {
+			orphanPackage = ORPHAN_PACKAGE = new Orphanage(PivotConstants.ORPHANAGE_NAME, PivotConstants.ORPHANAGE_URI);
+			Model orphanModel = PivotFactory.eINSTANCE.createModel();
+			orphanModel.setName(PivotConstants.ORPHANAGE_NAME);;
+			orphanModel.setExternalURI(PivotConstants.ORPHANAGE_URI);
+			orphanModel.getOwnedPackages().add(orphanPackage);
+			orphanResource = ORPHAN_RESOURCE = new OrphanResource(ORPHANAGE_URI);
+			orphanResource.getContents().add(orphanModel);
+			orphanResource.setSaveable(false);
 		}
-		for (Resource aResource : resourceSet.getResources()) {
-			for (EObject eContent : aResource.getContents()) {
-				if (eContent instanceof Model) {
-					for (org.eclipse.ocl.pivot.Package asPackage : ((Model)eContent).getOwnedPackages()) {
-						if (asPackage instanceof Orphanage) {
-							return (Orphanage) asPackage;
-						}
-					}
-				}
+		return orphanPackage;
+	}
+
+	/**
+	 * Return the Orphanage for resourceSet.
+	 * The global orphanage contains the globally unique shared orphan,
+	 * A local orphanage holds the subset of the overall orphans necessary to support serialization.
+	 */
+	@Deprecated /* @deprecated - not used - use the shared global Prphange */
+	public static @NonNull Orphanage getOrphanage(@NonNull ResourceSet resourceSet) {
+		if (ORPHAN_PACKAGE == null) {
+			return getOrphanage();
+		}
+		Orphanage orphanPackage = ORPHAN_PACKAGE;
+		OrphanResource orphanResource = ORPHAN_RESOURCE;
+		assert orphanPackage != null;
+		assert orphanResource != null;
+		EList<@NonNull Resource> resources = resourceSet.getResources();
+		for (Resource aResource : resources) {
+			if (aResource == orphanResource) {
+				return orphanPackage;
 			}
 		}
-		Orphanage orphanage = new Orphanage(PivotConstants.ORPHANAGE_NAME, PivotConstants.ORPHANAGE_URI);
-		Model orphanModel = PivotFactory.eINSTANCE.createModel();
-		orphanModel.setName(PivotConstants.ORPHANAGE_NAME);;
-		orphanModel.setExternalURI(PivotConstants.ORPHANAGE_URI);
-		orphanModel.getOwnedPackages().add(orphanage);
-		Resource orphanageResource = new OrphanResource(ORPHANAGE_URI);
-		orphanageResource.getContents().add(orphanModel);
-		resourceSet.getResources().add(orphanageResource);
-		return orphanage;
+		resources.add(orphanResource);
+		return orphanPackage;
 	}
 
 	/**

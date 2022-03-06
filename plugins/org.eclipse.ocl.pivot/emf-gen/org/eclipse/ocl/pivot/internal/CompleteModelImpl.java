@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2010, 2019 Willink Transformations and others.
+ * Copyright (c) 2010, 2022 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -595,7 +595,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	public @NonNull Orphanage getOrphanage() {
 		Orphanage orphanage2 = orphanage;
 		if (orphanage2 == null) {
-			orphanage2 = orphanage = environmentFactory.getMetamodelManager().createOrphanage();
+			orphanage2 = orphanage = Orphanage.getOrphanage();
 			orphanage2.addPackageListener(getOrphanCompletePackage().getPartialPackages());
 		}
 		return orphanage2;
