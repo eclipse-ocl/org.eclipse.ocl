@@ -99,6 +99,8 @@
           name="org.eclipse.uml2.sdk.feature.group"/>
       <requirement
           name="org.eclipse.xtext.sdk.feature.group"/>
+      <requirement
+          name="org.eclipse.xtext.generator"/>
       <repositoryList
           name="Latest">
         <repository
@@ -109,9 +111,9 @@
       <repositoryList
           name="2022-03">
         <repository
-            url="https://download.eclipse.org/releases/latest"/>
+            url="https://download.eclipse.org/releases/2022-03"/>
         <repository
-            url="https://download.eclipse.org/tools/orbit/downloads/latest-R"/>
+            url="https://download.eclipse.org/tools/orbit/downloads/drops/R20220302172233/repository"/>
       </repositoryList>
       <repositoryList
           name="2021-12">
@@ -577,6 +579,8 @@
           name="org.eclipse.m2m.qvt.oml.sdk.feature.group"/>
       <requirement
           name="org.eclipse.xtext.sdk.feature.group"/>
+      <requirement
+          name="org.eclipse.xtext.generator"/>
     </setupTask>
     <setupTask
         xsi:type="projects:ProjectsImportTask">
