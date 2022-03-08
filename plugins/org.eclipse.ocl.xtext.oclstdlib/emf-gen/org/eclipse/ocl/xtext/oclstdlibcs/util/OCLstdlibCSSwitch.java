@@ -121,6 +121,7 @@ public class OCLstdlibCSSwitch<@Nullable T>
 				LibClassCS libClassCS = (LibClassCS)theEObject;
 				T result = caseLibClassCS(libClassCS);
 				if (result == null) result = caseStructuredClassCS(libClassCS);
+				if (result == null) result = caseJavaImplementationCS(libClassCS);
 				if (result == null) result = caseClassCS(libClassCS);
 				if (result == null) result = caseNamespaceCS(libClassCS);
 				if (result == null) result = caseNamedElementCS(libClassCS);

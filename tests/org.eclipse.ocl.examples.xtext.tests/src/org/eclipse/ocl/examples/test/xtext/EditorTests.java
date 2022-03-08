@@ -385,7 +385,7 @@ public class EditorTests extends XtextTestCase
 	public void testEditor_OpenOCLStdLibEditor4OCL_OCLstdlib() throws Exception {
 		URI uri = URI.createPlatformPluginURI("org.eclipse.ocl.pivot/model/OCL-2.5.oclstdlib", true);
 		String documentText = doTestEditor(OCLstdlibUiModule.EDITOR_ID, uri);
-		assertTrue(documentText.contains("type UniqueCollection(T) : CollectionType conformsTo Collection(T) {"));
+		assertTrue(documentText.contains("type UniqueCollection(T) : CollectionType conformsTo Collection(T)"));
 	}
 
 	public void testEditor_OpenOCLinEcoreEditor4Ecore_Ecore() throws Exception {

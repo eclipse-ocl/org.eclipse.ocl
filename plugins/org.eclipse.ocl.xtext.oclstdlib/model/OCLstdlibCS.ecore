@@ -7,7 +7,7 @@
       eSuperTypes="../../org.eclipse.ocl.xtext.base/model/BaseCS.ecore#//ElementCS">
     <eStructuralFeatures xsi:type="ecore:EReference" name="implementation" eType="#//JavaClassCS"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="LibClassCS" eSuperTypes="../../org.eclipse.ocl.xtext.base/model/BaseCS.ecore#//StructuredClassCS">
+  <eClassifiers xsi:type="ecore:EClass" name="LibClassCS" eSuperTypes="../../org.eclipse.ocl.xtext.base/model/BaseCS.ecore#//StructuredClassCS #//JavaImplementationCS">
     <eStructuralFeatures xsi:type="ecore:EReference" name="metaclassName" eType="#//MetaclassNameCS"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="LibCoercionCS" eSuperTypes="../../org.eclipse.ocl.xtext.base/model/BaseCS.ecore#//OperationCS #//JavaImplementationCS"/>

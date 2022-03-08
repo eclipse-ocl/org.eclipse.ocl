@@ -520,11 +520,13 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 	}
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     AccumulatorCS returns ParameterCS
 	 *
 	 * Constraint:
 	 *     (name=Identifier ownedType=TypedMultiplicityRefCS)
+	 * </pre>
 	 */
 	protected void sequence_AccumulatorCS(ISerializationContext context, ParameterCS semanticObject) {
 		if (errorAcceptor != null) {
@@ -541,12 +543,14 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     AnnotationCS returns AnnotationCS
 	 *     AnnotationElementCS returns AnnotationCS
 	 *
 	 * Constraint:
 	 *     ((name=Identifier | name=SINGLE_QUOTED_STRING) (ownedDetails+=DetailCS ownedDetails+=DetailCS*)? ownedAnnotations+=AnnotationElementCS?)
+	 * </pre>
 	 */
 	protected void sequence_AnnotationCS(ISerializationContext context, AnnotationCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -554,11 +558,13 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     DetailCS returns DetailCS
 	 *
 	 * Constraint:
 	 *     ((name=Name | name=SINGLE_QUOTED_STRING) values+=SINGLE_QUOTED_STRING? (values+=ML_SINGLE_QUOTED_STRING? values+=SINGLE_QUOTED_STRING?)*)
+	 * </pre>
 	 */
 	protected void sequence_DetailCS(ISerializationContext context, DetailCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -566,12 +572,14 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     AnnotationElementCS returns DocumentationCS
 	 *     DocumentationCS returns DocumentationCS
 	 *
 	 * Constraint:
 	 *     (value=SINGLE_QUOTED_STRING? (ownedDetails+=DetailCS ownedDetails+=DetailCS*)?)
+	 * </pre>
 	 */
 	protected void sequence_DocumentationCS(ISerializationContext context, DocumentationCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -579,11 +587,13 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ImportCS returns ImportCS
 	 *
 	 * Constraint:
 	 *     (name=Identifier? ownedPathName=URIPathNameCS isAll?='::*'?)
+	 * </pre>
 	 */
 	protected void sequence_ImportCS(ISerializationContext context, ImportCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -591,11 +601,13 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     InvCS returns LibConstraintCS
 	 *
 	 * Constraint:
 	 *     (stereotype='inv' (name=UnrestrictedName ownedMessageSpecification=SpecificationCS?)? ownedSpecification=SpecificationCS)
+	 * </pre>
 	 */
 	protected void sequence_InvCS(ISerializationContext context, LibConstraintCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -603,11 +615,13 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     IteratorCS returns ParameterCS
 	 *
 	 * Constraint:
 	 *     (name=Identifier ownedType=TypedMultiplicityRefCS)
+	 * </pre>
 	 */
 	protected void sequence_IteratorCS(ISerializationContext context, ParameterCS semanticObject) {
 		if (errorAcceptor != null) {
@@ -624,11 +638,13 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     LambdaContextTypeRefCS returns TypedTypeRefCS
 	 *
 	 * Constraint:
 	 *     ownedPathName=LibPathNameCS
+	 * </pre>
 	 */
 	protected void sequence_LambdaContextTypeRefCS(ISerializationContext context, TypedTypeRefCS semanticObject) {
 		if (errorAcceptor != null) {
@@ -642,6 +658,7 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     LambdaTypeCS returns LambdaTypeCS
 	 *     TypedRefCS returns LambdaTypeCS
@@ -655,6 +672,7 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 	 *         (ownedParameterTypes+=TypedMultiplicityRefCS ownedParameterTypes+=TypedMultiplicityRefCS*)?
 	 *         ownedResultType=TypedRefCS
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_LambdaTypeCS(ISerializationContext context, LambdaTypeCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -662,6 +680,7 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     TypedMultiplicityRefCS returns LambdaTypeCS
 	 *
@@ -674,6 +693,7 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 	 *         ownedResultType=TypedRefCS
 	 *         ownedMultiplicity=MultiplicityCS?
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_LambdaTypeCS_TypedMultiplicityRefCS(ISerializationContext context, LambdaTypeCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -681,6 +701,7 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     LibClassCS returns LibClassCS
 	 *     ClassCS returns LibClassCS
@@ -692,8 +713,10 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 	 *         ownedSignature=TemplateSignatureCS?
 	 *         metaclassName=[MetaclassNameCS|AnyName]?
 	 *         (ownedSuperTypes+=TypedRefCS ownedSuperTypes+=TypedRefCS*)?
+	 *         implementation=[JavaClassCS|SINGLE_QUOTED_STRING]?
 	 *         (ownedOperations+=OperationCS | ownedProperties+=LibPropertyCS | ownedConstraints+=InvCS | ownedAnnotations+=AnnotationElementCS)*
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_LibClassCS(ISerializationContext context, LibClassCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -701,6 +724,7 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     LibCoercionCS returns LibCoercionCS
 	 *     OperationCS returns LibCoercionCS
@@ -712,6 +736,7 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 	 *         implementation=[JavaClassCS|SINGLE_QUOTED_STRING]?
 	 *         (ownedAnnotations+=AnnotationElementCS | ownedPreconditions+=PostCS | ownedPostconditions+=PreCS)*
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_LibCoercionCS(ISerializationContext context, LibCoercionCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -719,6 +744,7 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     LibIterationCS returns LibIterationCS
 	 *     OperationCS returns LibIterationCS
@@ -737,6 +763,7 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 	 *         implementation=[JavaClassCS|SINGLE_QUOTED_STRING]?
 	 *         (ownedAnnotations+=AnnotationElementCS | ownedPreconditions+=PostCS | ownedPostconditions+=PreCS)*
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_LibIterationCS(ISerializationContext context, LibIterationCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -744,6 +771,7 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     OperationCS returns LibOperationCS
 	 *     LibOperationCS returns LibOperationCS
@@ -761,6 +789,7 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 	 *         implementation=[JavaClassCS|SINGLE_QUOTED_STRING]?
 	 *         (ownedAnnotations+=AnnotationElementCS | ownedBodyExpressions+=SpecificationCS | ownedPostconditions+=PostCS | ownedPreconditions+=PreCS)*
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_LibOperationCS(ISerializationContext context, LibOperationCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -768,11 +797,13 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     LibOppositeCS returns LibOppositeCS
 	 *
 	 * Constraint:
 	 *     (name=Name ownedType=TypedMultiplicityRefCS)
+	 * </pre>
 	 */
 	protected void sequence_LibOppositeCS(ISerializationContext context, LibOppositeCS semanticObject) {
 		if (errorAcceptor != null) {
@@ -789,6 +820,7 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     LibPackageCS returns LibPackageCS
 	 *
@@ -798,6 +830,7 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 	 *         (nsPrefix=Identifier nsURI=URI)?
 	 *         (ownedPackages+=PackageCS | ownedPrecedences+=PrecedenceCS | ownedClasses+=ClassCS | ownedAnnotations+=AnnotationElementCS)*
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_LibPackageCS(ISerializationContext context, LibPackageCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -805,11 +838,13 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     LibPathElementCS returns PathElementCS
 	 *
 	 * Constraint:
 	 *     referredElement=[NamedElement|Name]
+	 * </pre>
 	 */
 	protected void sequence_LibPathElementCS(ISerializationContext context, PathElementCS semanticObject) {
 		if (errorAcceptor != null) {
@@ -823,11 +858,13 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     LibPathNameCS returns PathNameCS
 	 *
 	 * Constraint:
 	 *     (ownedPathElements+=LibPathElementCS ownedPathElements+=LibPathElementCS*)
+	 * </pre>
 	 */
 	protected void sequence_LibPathNameCS(ISerializationContext context, PathNameCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -835,6 +872,7 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     LibPropertyCS returns LibPropertyCS
 	 *
@@ -847,6 +885,7 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 	 *         implementation=[JavaClassCS|SINGLE_QUOTED_STRING]?
 	 *         ownedAnnotations+=AnnotationElementCS*
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_LibPropertyCS(ISerializationContext context, LibPropertyCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -854,11 +893,13 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Library returns LibRootPackageCS
 	 *
 	 * Constraint:
 	 *     ((ownedImports+=ImportCS+ ownedPackages+=LibPackageCS+) | ownedPackages+=LibPackageCS+)?
+	 * </pre>
 	 */
 	protected void sequence_Library(ISerializationContext context, LibRootPackageCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -866,11 +907,13 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     TypedMultiplicityRefCS returns MapTypeCS
 	 *
 	 * Constraint:
 	 *     (name='Map' (ownedKeyType=TypeExpCS ownedValueType=TypeExpCS)? ownedMultiplicity=MultiplicityCS?)
+	 * </pre>
 	 */
 	protected void sequence_MapTypeCS_TypedMultiplicityRefCS(ISerializationContext context, MapTypeCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -878,11 +921,13 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     PackageCS returns PackageCS
 	 *
 	 * Constraint:
 	 *     (name=Name (nsPrefix=Identifier nsURI=URI)? (ownedPackages+=PackageCS | ownedClasses+=ClassCS | ownedAnnotations+=AnnotationElementCS)*)
+	 * </pre>
 	 */
 	protected void sequence_PackageCS(ISerializationContext context, PackageCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -890,11 +935,13 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ParameterCS returns ParameterCS
 	 *
 	 * Constraint:
 	 *     (name=Identifier ownedType=TypedMultiplicityRefCS)
+	 * </pre>
 	 */
 	protected void sequence_ParameterCS(ISerializationContext context, ParameterCS semanticObject) {
 		if (errorAcceptor != null) {
@@ -911,11 +958,13 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     PostCS returns LibConstraintCS
 	 *
 	 * Constraint:
 	 *     (stereotype='post' (name=UnrestrictedName ownedMessageSpecification=SpecificationCS?)? ownedSpecification=SpecificationCS)
+	 * </pre>
 	 */
 	protected void sequence_PostCS(ISerializationContext context, LibConstraintCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -923,11 +972,13 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     PreCS returns LibConstraintCS
 	 *
 	 * Constraint:
 	 *     (stereotype='pre' (name=UnrestrictedName ownedMessageSpecification=SpecificationCS?)? ownedSpecification=SpecificationCS)
+	 * </pre>
 	 */
 	protected void sequence_PreCS(ISerializationContext context, LibConstraintCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -935,11 +986,13 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     PrecedenceCS returns PrecedenceCS
 	 *
 	 * Constraint:
 	 *     (isRightAssociative?='right'? name=Name)
+	 * </pre>
 	 */
 	protected void sequence_PrecedenceCS(ISerializationContext context, PrecedenceCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -947,11 +1000,13 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     SpecificationCS returns ExpSpecificationCS
 	 *
 	 * Constraint:
 	 *     ownedExpression=ExpCS
+	 * </pre>
 	 */
 	protected void sequence_SpecificationCS(ISerializationContext context, ExpSpecificationCS semanticObject) {
 		if (errorAcceptor != null) {
@@ -965,11 +1020,13 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     TuplePartCS returns TuplePartCS
 	 *
 	 * Constraint:
 	 *     (name=Identifier ownedType=TypedMultiplicityRefCS)
+	 * </pre>
 	 */
 	protected void sequence_TuplePartCS(ISerializationContext context, TuplePartCS semanticObject) {
 		if (errorAcceptor != null) {
@@ -986,11 +1043,13 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     TypedMultiplicityRefCS returns TupleTypeCS
 	 *
 	 * Constraint:
 	 *     (name='Tuple' (ownedParts+=TuplePartCS ownedParts+=TuplePartCS*)? ownedMultiplicity=MultiplicityCS?)
+	 * </pre>
 	 */
 	protected void sequence_TupleTypeCS_TypedMultiplicityRefCS(ISerializationContext context, TupleTypeCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -998,6 +1057,7 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     TypedMultiplicityRefCS returns TypedTypeRefCS
 	 *
@@ -1006,6 +1066,7 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 	 *         ((isTypeof?='typeof' ownedPathName=LibPathNameCS) | (ownedPathName=LibPathNameCS ownedBinding=TemplateBindingCS?))
 	 *         ownedMultiplicity=MultiplicityCS?
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_TypedMultiplicityRefCS_TypedTypeRefCS(ISerializationContext context, TypedTypeRefCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1013,6 +1074,7 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     TypedRefCS returns TypedTypeRefCS
 	 *     TypedTypeRefCS returns TypedTypeRefCS
@@ -1020,6 +1082,7 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 	 *
 	 * Constraint:
 	 *     ((isTypeof?='typeof' ownedPathName=LibPathNameCS) | (ownedPathName=LibPathNameCS ownedBinding=TemplateBindingCS?))
+	 * </pre>
 	 */
 	protected void sequence_TypedTypeRefCS(ISerializationContext context, TypedTypeRefCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

@@ -19,7 +19,7 @@
 '<='=66
 '<>'=68
 '='=67
-'=>'=97
+'=>'=96
 '>'=63
 '>='=65
 '?'=88
@@ -49,7 +49,7 @@
 'and2'=43
 'annotation'=17
 'body'=99
-'coercion'=96
+'coercion'=97
 'conformsTo'=18
 'documentation'=19
 'else'=44

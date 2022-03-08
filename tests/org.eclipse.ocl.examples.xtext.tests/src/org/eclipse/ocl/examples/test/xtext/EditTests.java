@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.common.internal.options.CommonOptions;
+import org.eclipse.ocl.examples.xtext.tests.TestCaseAppender;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
 import org.eclipse.ocl.pivot.SequenceType;
@@ -262,6 +263,86 @@ public class EditTests extends XtextTestCase
 		ocl.dispose();
 	}
 
+	public void testEdit_Paste_OCLstdlib_541380() throws Exception {
+		OCL ocl = OCL.newInstance(getProjectMap());
+		EnvironmentFactory environmentFactory = ocl.getEnvironmentFactory();
+		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
+		String testDocument =
+				"library lib : lib = 'http://Bug541380.oclstdlib'\n"
+				+ "{\n"
+				+ "	type Bag(T) : BagType conformsTo Collection(T) {}\n"
+				+ "	type Boolean : BooleanType conformsTo OclAny => 'java.lang.Boolean' {}\n"
+				+ "	type Class conformsTo OclAny {}	\n"
+				+ "	type Collection(T) : CollectionType conformsTo OclAny {}\n"
+				+ "	type Integer : PrimitiveType conformsTo Real => 'org.eclipse.ocl.pivot.values.IntegerValue' {}\n"
+				+ "	type Map(K,V) : MapType conformsTo OclAny {}\n"
+				+ "	type Metaclass(T) : Metaclass conformsTo OclAny {}\n"
+				+ "	type OclAny : AnyType {\n"
+	//			+ "		operation \"=\"(object2 : OclAny) : Boolean;\n"
+				+ "	}\n"
+				+ "	type OclComparable conformsTo OclAny {\n"
+				+ "		operation compareTo(that : OclSelf) : Integer[1] => 'org.eclipse.ocl.pivot.library.oclany.OclComparableCompareToOperation';	\n"
+				+ "	}\n"
+				+ "	type OclElement conformsTo OclAny {}	\n"
+				+ "	abstract type OclEnumeration conformsTo OclType {}\n"
+				+ "	type OclInvalid : InvalidType conformsTo OclVoid {}\n"
+				+ "	type OclLambda conformsTo OclAny {}	\n"
+				+ "	type OclSelf : SelfType conformsTo OclAny {}\n"
+				+ "	type OclTuple conformsTo OclAny {}	\n"
+				+ "	abstract type OclType conformsTo OclElement {}\n"
+				+ "	type OclVoid : VoidType conformsTo OclAny {}\n"
+				+ "	type OrderedCollection(T) : CollectionType conformsTo Collection(T) {}\n"
+				+ "	type OrderedSet(T) : OrderedSetType conformsTo Collection(T) {}\n"
+				+ "	type Real : PrimitiveType conformsTo OclAny => 'org.eclipse.ocl.pivot.values.RealValue' {}\n"
+				+ "	type Sequence(T) : SequenceType conformsTo Collection(T) {}\n"
+				+ "	type Set(T) : SetType conformsTo Collection(T) {}\n"
+				+ "	type String : PrimitiveType conformsTo OclAny => 'java.lang.String' {}\n"
+				+ "	type UniqueCollection(T) : CollectionType conformsTo Collection(T) {}\n"
+				+ "	type UnlimitedNatural : PrimitiveType conformsTo Integer => 'org.eclipse.ocl.pivot.values.UnlimitedNaturalValue' {}\n"
+				+ "}\n";
+		CSResource xtextResource;
+		Resource asResource;
+		{
+			URI outputURI = getTestFileURI("Bug541380.oclstdlib");
+			xtextResource = ocl.getCSResource(outputURI, testDocument);
+			asResource = cs2as(xtextResource, null);
+//			@SuppressWarnings("unused") Resource ecoreResource1 = as2ecore(ocl, asResource, ecoreURI1, NO_MESSAGES);
+			assertNoResourceErrors("Loading operation", xtextResource);
+			assertNoValidationErrors("Loading operation", xtextResource);
+			assertNoResourceErrors("Loading operation", asResource);
+			assertNoValidationErrors("Loading operation", asResource);
+			URI ecoreURI1 = getTestFileURI("Bug541380.oclstdlib1.ecore");
+			@SuppressWarnings("unused") Resource ecoreResource1 = as2ecore(environmentFactory, asResource, ecoreURI1, NO_MESSAGES);
+		}
+		//
+		//	Change metatype.
+		//
+		String newDocument = testDocument.replace("type Boolean : PrimitiveType conformsTo", "type BooleanType conformsTo");
+		{
+			TestCaseAppender.INSTANCE.uninstall();
+			replace(xtextResource, "type Boolean : BooleanType conformsTo", "type Boolean conformsTo");
+		//	assertNoResourceErrors("Pasting operation", xtextResource);
+		//	assertNoValidationErrors("Pasting operation", xtextResource);
+		//	assertNoResourceErrors("Pasting operation", asResource);
+		//	assertNoValidationErrors("Pasting operation", asResource);
+			URI ecoreURI2 = getTestFileURI("Bug541380.oclstdlib2.ecore");
+			@SuppressWarnings("unused") Resource ecoreResource2 = as2ecore(environmentFactory, asResource, ecoreURI2, SUPPRESS_VALIDATION);
+			TestCaseAppender.INSTANCE.install();
+		}
+		//
+		//	Revert metatype.
+		//
+		{
+			replace(xtextResource, "type Boolean conformsTo", "type Boolean : BooleanType conformsTo");
+			assertNoResourceErrors("Unpasting operation", xtextResource);
+			assertNoValidationErrors("Unpasting operation", xtextResource);
+			assertNoResourceErrors("Unpasting operation", asResource);
+			assertNoValidationErrors("Unpasting operation", asResource);
+			URI ecoreURI3 = getTestFileURI("Bug541380.oclstdlib3.ecore");
+			@SuppressWarnings("unused") Resource ecoreResource3 = as2ecore(environmentFactory, asResource, ecoreURI3, NO_MESSAGES);
+		}
+		ocl.dispose();
+	}
 
 	public void testEdit_Paste_operation_394057() throws Exception {
 		OCL ocl = OCL.newInstance(getProjectMap());

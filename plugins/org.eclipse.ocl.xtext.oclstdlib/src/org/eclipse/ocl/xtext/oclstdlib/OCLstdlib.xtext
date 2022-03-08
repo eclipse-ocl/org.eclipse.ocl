@@ -99,6 +99,7 @@ LibClassCS returns LibClassCS:
 	(ownedSignature=TemplateSignatureCS)?
 	(':' metaclassName=[MetaclassNameCS|AnyName])?
 	('conformsTo' ownedSuperTypes+=TypedRefCS (',' ownedSuperTypes+=TypedRefCS)*)?
+	('=>' implementation=[JavaClassCS|SINGLE_QUOTED_STRING])?
 	'{' (ownedOperations+=OperationCS
 	   | ownedProperties+=LibPropertyCS
 	   | ownedConstraints+=InvCS

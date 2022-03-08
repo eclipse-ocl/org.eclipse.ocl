@@ -20,6 +20,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.xtext.base.cs2as.CS2ASConversion;
 import org.eclipse.ocl.xtext.base.cs2as.Continuation;
 import org.eclipse.ocl.xtext.oclstdlibcs.JavaClassCS;
+import org.eclipse.ocl.xtext.oclstdlibcs.LibClassCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibCoercionCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibIterationCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibOperationCS;
@@ -32,6 +33,18 @@ public class OCLstdlibCSPreOrderVisitor extends AbstractOCLstdlibCSPreOrderVisit
 {
 	public OCLstdlibCSPreOrderVisitor(@NonNull CS2ASConversion context) {
 		super(context);
+	}
+
+	@Override
+	public Continuation<?> visitLibClassCS(@NonNull LibClassCS csClass) {
+		org.eclipse.ocl.pivot.Class pivotElement = PivotUtil.getPivot(org.eclipse.ocl.pivot.Class.class, csClass);
+		if (pivotElement != null) {
+			JavaClassCS implementation = csClass.getImplementation();
+			if ((implementation != null) && !implementation.eIsProxy()) {
+		//		pivotElement.setInstanceClassName(implementation.getName());
+			}
+		}
+		return super.visitLibClassCS(csClass);
 	}
 
 	@Override

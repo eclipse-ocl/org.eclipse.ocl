@@ -29,7 +29,7 @@ import org.eclipse.ocl.xtext.basecs.StructuredClassCS;
  * @generated
  */
 public interface LibClassCS
-		extends StructuredClassCS {
+		extends StructuredClassCS, JavaImplementationCS {
 
 	/**
 	 * Returns the value of the '<em><b>Metaclass Name</b></em>' reference.

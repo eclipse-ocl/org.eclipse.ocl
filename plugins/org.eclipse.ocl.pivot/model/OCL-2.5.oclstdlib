@@ -96,7 +96,7 @@ A bag is a collection with duplicates allowed. That is, one object can be an ele
 There is no ordering defined on the elements in a bag.
 Bag is itself an instance of the metatype BagType.
 **/
-type Bag(T) : BagType conformsTo Collection(T) {
+type Bag(T) : BagType conformsTo Collection(T) => 'org.eclipse.ocl.pivot.values.Bag' {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='Collection');
 	/**
 	The closure of applying body transitively to every distinct element of the source collection.
@@ -173,7 +173,7 @@ type Bag(T) : BagType conformsTo Collection(T) {
 The standard type Boolean represents the common true/false values.
 Boolean is itself an instance of the metatype PrimitiveType (from UML).
 **/
-type Boolean : BooleanType conformsTo OclAny {
+type Boolean : BooleanType conformsTo OclAny => 'java.lang.Boolean' {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='Primitive');
 	/**
 	Returns oclText[true] if the logical value of oclText[self] is the same as the numeric value of object2, oclText[false] otherwise.
@@ -361,7 +361,7 @@ Well-formedness rules
 	context Collection
 	inv: self->forAll(not oclIsInvalid())
 */
-abstract type Collection(T) : CollectionType conformsTo OclAny {
+abstract type Collection(T) : CollectionType conformsTo OclAny => 'java.util.Collection' {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='Collection');
 	/**
 	Returns any element in the e[source] null-free collection for which e[body] evaluates to oclText[true].
@@ -609,7 +609,7 @@ type EnumerationLiteral conformsTo OclAny {
 The standard type Integer represents the mathematical concept of integer.
 Integer is itself an instance of the metatype PrimitiveType (from UML).
 **/
-type Integer : PrimitiveType conformsTo Real {
+type Integer : PrimitiveType conformsTo Real => 'org.eclipse.ocl.pivot.values.IntegerValue' {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='Primitive');
 	/**
 	The negative value of oclText[self].
@@ -668,7 +668,7 @@ type Integer : PrimitiveType conformsTo Real {
  * A Map provides a Set of key values, each of which has an associated value.
  * Keys and values may be null, but neither may be invalid.
  */
-type Map(K,V) : MapType conformsTo OclAny {
+type Map(K,V) : MapType conformsTo OclAny => 'java.util.Map' {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='Collection');
 	/**
 	Returns the key of any element in the e[source] map for which e[body] evaluates to oclText[true].
@@ -1277,7 +1277,7 @@ The OrderedCollection type provides the shared functionality of the OrderedSet a
 collections for which the elements are ordered.
 The common supertype of OrderedCollection is Collection.
 **/
-abstract type OrderedCollection(T) : CollectionType conformsTo Collection(T) {
+abstract type OrderedCollection(T) : CollectionType conformsTo Collection(T) => 'java.util.Collection' {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='Collection');
 	/**
 	The i-th element of ordered collection.
@@ -1303,7 +1303,7 @@ It contains no duplicates. OrderedSet is itself an instance of the metatype Orde
 An OrderedSet is not a subtype of Set, neither a subtype of Sequence.
 The common supertype of Sets and OrderedSets is Collection.
 **/
-type OrderedSet(T) : OrderedSetType conformsTo OrderedCollection(T),UniqueCollection(T) {
+type OrderedSet(T) : OrderedSetType conformsTo OrderedCollection(T),UniqueCollection(T) => 'org.eclipse.ocl.pivot.values.OrderedSet' {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='Collection');
 	/**
 	The closure of applying body transitively to every distinct element of the source collection.
@@ -1420,7 +1420,7 @@ Note that Integer is a subclass of Real,
 so for each parameter of type Real, you can use an integer as the actual parameter.
 Real is itself an instance of the metatype PrimitiveType (from UML).
 **/
-type Real : PrimitiveType conformsTo OclComparable, OclSummable {
+type Real : PrimitiveType conformsTo OclComparable, OclSummable => 'org.eclipse.ocl.pivot.values.RealValue' {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='Primitive');
 	/**
 	Returns oclText[true] if the numeric value of oclText[self] is the same as the numeric value of object2, oclText[false] otherwise.
@@ -1483,7 +1483,7 @@ Sequence is itself an instance of the metatype SequenceType.
 A Sentence is not a subtype of Bag.
 The common supertype of Sentence and Bags is Collection.
 **/
-type Sequence(T) : SequenceType conformsTo OrderedCollection(T) {
+type Sequence(T) : SequenceType conformsTo OrderedCollection(T) => 'java.util.List' {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='Collection');
 	/**
 	The closure of applying body transitively to every distinct element of the source collection.
@@ -1584,7 +1584,7 @@ type Sequence(T) : SequenceType conformsTo OrderedCollection(T) {
 	operation subSequence(lower : Integer[1], upper : Integer[1]) : Sequence(T) invalidating => 'org.eclipse.ocl.pivot.library.collection.SequenceSubSequenceOperation';
 }
 
-type Set(T) : SetType conformsTo UniqueCollection(T) {
+type Set(T) : SetType conformsTo UniqueCollection(T) => 'java.util.Set' {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='Collection');
 	/**
 	The closure of applying body transitively to every distinct element of the source collection.
@@ -1666,7 +1666,7 @@ type State conformsTo OclState {
 The standard type String represents strings, which can be both ASCII or Unicode.
 String is itself an instance of the metatype PrimitiveType (from UML).
 **/
-type String : PrimitiveType conformsTo OclComparable, OclSummable {
+type String : PrimitiveType conformsTo OclComparable, OclSummable => 'java.lang.String' {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='Primitive');
 	operation "="(object2 : OclSelf[?]) : Boolean[1] precedence=EQUALITY => 'org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation';
 	operation "<>"(object2 : OclSelf[?]) : Boolean[1] precedence=EQUALITY => 'org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation';
@@ -1829,7 +1829,7 @@ The UniqueCollection type provides the shared functionality of the OrderedSet an
 collections for which the elements are unique.
 The common supertype of UniqueCollection is Collection.
 **/
-abstract type UniqueCollection(T) : CollectionType conformsTo Collection(T) {
+abstract type UniqueCollection(T) : CollectionType conformsTo Collection(T) => 'java.util.Collection' {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='Collection');
 	/**
 	Results in the ordered set containing all elements of the source collection.
@@ -1863,7 +1863,7 @@ UnlimitedNatural is itself an instance of the metatype UnlimitedNaturalType.
 
 Note that UnlimitedNatural is not a subclass of Integer.
 **/
-type UnlimitedNatural : PrimitiveType conformsTo OclComparable {
+type UnlimitedNatural : PrimitiveType conformsTo OclComparable => 'org.eclipse.ocl.pivot.values.UnlimitedNaturalValue' {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='Primitive');
 	/**
 	The maximum of oclText[self] an i.

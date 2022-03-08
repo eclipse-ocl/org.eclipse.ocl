@@ -34,6 +34,7 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.values.NumberValue;
 import org.eclipse.ocl.xtext.base.cs2as.CS2ASConversion;
 import org.eclipse.ocl.xtext.base.cs2as.Continuation;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
@@ -72,23 +73,62 @@ public class OCLstdlibCSContainmentVisitor extends AbstractOCLstdlibCSContainmen
 	}
 
 	@Override
-	public Continuation<?> visitLibClassCS(@NonNull LibClassCS csElement) {
+	public Continuation<?> visitLibClassCS(@NonNull LibClassCS csClass) {
 		EClass eClass = null;
-		MetaclassNameCS metaType = ((OCLstdlibCS2AS)context.getConverter()).lookUpMetaTypeName(csElement, OCLstdlibCSPackage.Literals.LIB_CLASS_CS__METACLASS_NAME);
-		if ((metaType != null) && !metaType.eIsProxy()) {
-			String metaTypeName = metaType.getName();
-			eClass = (EClass) NameUtil.getENamedElement(PivotPackage.eINSTANCE.getEClassifiers(), metaTypeName);
+		String instanceClassName = null;
+		JavaClassCS implementation = csClass.getImplementation();
+		if ((implementation != null) && !implementation.eIsProxy()) {
+			instanceClassName = implementation.getName();
+		}
+		Class<?> instanceClass = null;
+		if (instanceClassName != null) {
+			try {
+				instanceClass = metamodelManager.getImplementationManager().loadImplementation(csClass, instanceClassName);
+			} catch (ClassNotFoundException e) {
+				context.addError(csClass, e.toString(), e);
+			}
+		}
+		if (Boolean.class == instanceClass) {
+			eClass = PivotPackage.Literals.BOOLEAN_TYPE;
+		}
+		else if (String.class == instanceClass) {
+			eClass = PivotPackage.Literals.PRIMITIVE_TYPE;
+		}
+		else if (instanceClass != null) {
+			if (NumberValue.class.isAssignableFrom(instanceClass)) {
+				eClass = PivotPackage.Literals.PRIMITIVE_TYPE;
+			}
+			else if (Number.class.isAssignableFrom(instanceClass)) {
+				eClass = PivotPackage.Literals.PRIMITIVE_TYPE;
+			}
 		}
 		if (eClass == null) {
-			eClass = PivotPackage.Literals.CLASS;
+			MetaclassNameCS metaType = ((OCLstdlibCS2AS)context.getConverter()).lookUpMetaTypeName(csClass, OCLstdlibCSPackage.Literals.LIB_CLASS_CS__METACLASS_NAME);
+			if ((metaType != null) && !metaType.eIsProxy()) {
+				String metaTypeName = metaType.getName();
+				eClass = (EClass) NameUtil.getENamedElement(PivotPackage.eINSTANCE.getEClassifiers(), metaTypeName);
+				if (eClass != null) {
+					instanceClass = eClass.getInstanceClass();
+				}
+			}
+			if (eClass == null) {
+				eClass = PivotPackage.Literals.CLASS;
+			}
+		}
+		if (instanceClass == null) {
+			instanceClass = Object.class;
+		}
+		if (instanceClassName == null) {
+			instanceClassName = instanceClass.getName();
 		}
 		@SuppressWarnings("unchecked")
-		Class<org.eclipse.ocl.pivot.Class> instanceClass = (Class<org.eclipse.ocl.pivot.Class>)eClass.getInstanceClass();
-		if (instanceClass != null) {
-			org.eclipse.ocl.pivot.Class pivotElement = refreshNamedElement(instanceClass, eClass, csElement);
-			refreshClass(pivotElement, csElement);
+		Class<org.eclipse.ocl.pivot.Class> eInstanceClass = (Class<org.eclipse.ocl.pivot.Class>)eClass.getInstanceClass();
+		if (eInstanceClass != null) {
+			org.eclipse.ocl.pivot.Class pivotElement = refreshNamedElement(eInstanceClass, eClass, csClass);
+			refreshClass(pivotElement, csClass);
+			pivotElement.setInstanceClassName(instanceClassName);
 			List<Operation> coercions = null;
-			for (OperationCS csOperation : csElement.getOwnedOperations()) {
+			for (OperationCS csOperation : csClass.getOwnedOperations()) {
 				if (csOperation instanceof LibCoercionCS) {
 					if (pivotElement instanceof PrimitiveType) {
 						if (coercions == null) {

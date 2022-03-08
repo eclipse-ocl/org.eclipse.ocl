@@ -234,4 +234,35 @@ public class ImplementationManager
 		}
 		return implementation;
 	}
+
+	/**
+	 * @since 1.18
+	 */
+	public @Nullable Class<?> loadImplementation(@NonNull Object context, @NonNull String className) throws ClassNotFoundException {
+		Class<?> theClass = null;
+		ClassLoader contextClassLoader = context.getClass().getClassLoader();
+		if (contextClassLoader != null) {
+			addClassLoader(contextClassLoader);
+		}
+		ClassNotFoundException e = null;
+		for (@NonNull ClassLoader classLoader : getClassLoaders()) {
+			try {
+				theClass = classLoader.loadClass(className);
+				e = null;
+				break;
+			} catch (ClassNotFoundException e1) {
+				if (e == null) {
+					e = e1;
+				}
+			}
+		}
+		if (e != null) {
+			throw e;
+		}
+	//	if (theClass != null) {
+	//		Field field = theClass.getField("INSTANCE");
+	//		implementation = (LibraryFeature) field.get(null);
+	//	}
+		return theClass;
+	}
 }

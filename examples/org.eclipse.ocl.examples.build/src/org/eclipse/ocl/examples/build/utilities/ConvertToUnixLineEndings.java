@@ -75,7 +75,7 @@ public class ConvertToUnixLineEndings extends AbstractWorkflowComponent2 {
 	protected void invokeInternal(final WorkflowContext model, final ProgressMonitor monitor, final Issues issues) {
 		LOG.info(getLogMessage());
 		if (directory != null) {
-			System.out.println(new File(directory).getAbsolutePath());
+		//	System.out.println(new File(directory).getAbsolutePath());
 			final StringTokenizer st = new StringTokenizer(directory, ",");
 			while (st.hasMoreElements()) {
 				final String dir = st.nextToken().trim();

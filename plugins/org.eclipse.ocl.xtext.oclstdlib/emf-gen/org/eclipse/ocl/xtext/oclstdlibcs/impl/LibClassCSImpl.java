@@ -15,8 +15,11 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.xtext.basecs.impl.ElementCSImpl;
 import org.eclipse.ocl.xtext.basecs.impl.StructuredClassCSImpl;
 import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
+import org.eclipse.ocl.xtext.oclstdlibcs.JavaClassCS;
+import org.eclipse.ocl.xtext.oclstdlibcs.JavaImplementationCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibClassCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.MetaclassNameCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.OCLstdlibCSPackage;
@@ -30,6 +33,7 @@ import org.eclipse.ocl.xtext.oclstdlibcs.util.OCLstdlibCSVisitor;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link org.eclipse.ocl.xtext.oclstdlibcs.impl.LibClassCSImpl#getImplementation <em>Implementation</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.oclstdlibcs.impl.LibClassCSImpl#getMetaclassName <em>Metaclass Name</em>}</li>
  * </ul>
  *
@@ -46,7 +50,16 @@ public class LibClassCSImpl
 	 * @generated
 	 * @ordered
 	 */
-	public static final int LIB_CLASS_CS_FEATURE_COUNT = StructuredClassCSImpl.STRUCTURED_CLASS_CS_FEATURE_COUNT + 1;
+	public static final int LIB_CLASS_CS_FEATURE_COUNT = StructuredClassCSImpl.STRUCTURED_CLASS_CS_FEATURE_COUNT + 2;
+	/**
+	 * The cached value of the '{@link #getImplementation() <em>Implementation</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getImplementation()
+	 * @generated
+	 * @ordered
+	 */
+	protected JavaClassCS implementation;
 	/**
 	 * The cached value of the '{@link #getMetaclassName() <em>Metaclass Name</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -81,6 +94,51 @@ public class LibClassCSImpl
 	 * @generated
 	 */
 	@Override
+	public JavaClassCS getImplementation()
+	{
+		if (implementation != null && implementation.eIsProxy())
+		{
+			InternalEObject oldImplementation = (InternalEObject)implementation;
+			implementation = (JavaClassCS)eResolveProxy(oldImplementation);
+			if (implementation != oldImplementation)
+			{
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, StructuredClassCSImpl.STRUCTURED_CLASS_CS_FEATURE_COUNT + 0, oldImplementation, implementation));
+			}
+		}
+		return implementation;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public JavaClassCS basicGetImplementation()
+	{
+		return implementation;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setImplementation(JavaClassCS newImplementation)
+	{
+		JavaClassCS oldImplementation = implementation;
+		implementation = newImplementation;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, StructuredClassCSImpl.STRUCTURED_CLASS_CS_FEATURE_COUNT + 0, oldImplementation, implementation));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public MetaclassNameCS getMetaclassName() {
 		if (metaclassName != null && metaclassName.eIsProxy())
 		{
@@ -89,7 +147,7 @@ public class LibClassCSImpl
 			if (metaclassName != oldMetaclassName)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, StructuredClassCSImpl.STRUCTURED_CLASS_CS_FEATURE_COUNT + 0, oldMetaclassName, metaclassName));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, StructuredClassCSImpl.STRUCTURED_CLASS_CS_FEATURE_COUNT + 1, oldMetaclassName, metaclassName));
 			}
 		}
 		return metaclassName;
@@ -115,7 +173,7 @@ public class LibClassCSImpl
 		MetaclassNameCS oldMetaclassName = metaclassName;
 		metaclassName = newMetaclassName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, StructuredClassCSImpl.STRUCTURED_CLASS_CS_FEATURE_COUNT + 0, oldMetaclassName, metaclassName));
+			eNotify(new ENotificationImpl(this, Notification.SET, StructuredClassCSImpl.STRUCTURED_CLASS_CS_FEATURE_COUNT + 1, oldMetaclassName, metaclassName));
 	}
 
 	/**
@@ -128,6 +186,9 @@ public class LibClassCSImpl
 		switch (featureID)
 		{
 			case StructuredClassCSImpl.STRUCTURED_CLASS_CS_FEATURE_COUNT + 0:
+				if (resolve) return getImplementation();
+				return basicGetImplementation();
+			case StructuredClassCSImpl.STRUCTURED_CLASS_CS_FEATURE_COUNT + 1:
 				if (resolve) return getMetaclassName();
 				return basicGetMetaclassName();
 		}
@@ -144,6 +205,9 @@ public class LibClassCSImpl
 		switch (featureID)
 		{
 			case StructuredClassCSImpl.STRUCTURED_CLASS_CS_FEATURE_COUNT + 0:
+				setImplementation((JavaClassCS)newValue);
+				return;
+			case StructuredClassCSImpl.STRUCTURED_CLASS_CS_FEATURE_COUNT + 1:
 				setMetaclassName((MetaclassNameCS)newValue);
 				return;
 		}
@@ -160,6 +224,9 @@ public class LibClassCSImpl
 		switch (featureID)
 		{
 			case StructuredClassCSImpl.STRUCTURED_CLASS_CS_FEATURE_COUNT + 0:
+				setImplementation((JavaClassCS)null);
+				return;
+			case StructuredClassCSImpl.STRUCTURED_CLASS_CS_FEATURE_COUNT + 1:
 				setMetaclassName((MetaclassNameCS)null);
 				return;
 		}
@@ -176,9 +243,49 @@ public class LibClassCSImpl
 		switch (featureID)
 		{
 			case StructuredClassCSImpl.STRUCTURED_CLASS_CS_FEATURE_COUNT + 0:
+				return implementation != null;
+			case StructuredClassCSImpl.STRUCTURED_CLASS_CS_FEATURE_COUNT + 1:
 				return metaclassName != null;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass)
+	{
+		if (baseClass == JavaImplementationCS.class)
+		{
+			switch (derivedFeatureID)
+			{
+				case StructuredClassCSImpl.STRUCTURED_CLASS_CS_FEATURE_COUNT + 0: return ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0;
+				default: return -1;
+			}
+		}
+		return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass)
+	{
+		if (baseClass == JavaImplementationCS.class)
+		{
+			switch (baseFeatureID)
+			{
+				case ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0: return StructuredClassCSImpl.STRUCTURED_CLASS_CS_FEATURE_COUNT + 0;
+				default: return -1;
+			}
+		}
+		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
 	}
 
 	/**

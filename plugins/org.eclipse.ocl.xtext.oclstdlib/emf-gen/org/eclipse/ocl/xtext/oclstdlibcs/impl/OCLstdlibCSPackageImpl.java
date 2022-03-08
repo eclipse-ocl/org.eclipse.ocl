@@ -541,7 +541,7 @@ implements OCLstdlibCSPackage {
 		createEReference(javaImplementationCSEClass, ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 0);
 
 		libClassCSEClass = createEClass(2);
-		createEReference(libClassCSEClass, StructuredClassCSImpl.STRUCTURED_CLASS_CS_FEATURE_COUNT + 0);
+		createEReference(libClassCSEClass, StructuredClassCSImpl.STRUCTURED_CLASS_CS_FEATURE_COUNT + 1);
 
 		libCoercionCSEClass = createEClass(3);
 
@@ -612,6 +612,7 @@ implements OCLstdlibCSPackage {
 		javaClassCSEClass.getESuperTypes().add(theBaseCSPackage.getNamedElementCS());
 		javaImplementationCSEClass.getESuperTypes().add(theBaseCSPackage.getElementCS());
 		libClassCSEClass.getESuperTypes().add(theBaseCSPackage.getStructuredClassCS());
+		libClassCSEClass.getESuperTypes().add(this.getJavaImplementationCS());
 		libCoercionCSEClass.getESuperTypes().add(theBaseCSPackage.getOperationCS());
 		libCoercionCSEClass.getESuperTypes().add(this.getJavaImplementationCS());
 		libConstraintCSEClass.getESuperTypes().add(theBaseCSPackage.getConstraintCS());
