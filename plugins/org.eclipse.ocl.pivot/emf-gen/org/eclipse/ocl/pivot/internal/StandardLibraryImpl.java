@@ -663,6 +663,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	public @NonNull Operation getOclInvalidOperation() {
 		Operation oclInvalidOperation2 = oclInvalidOperation;
 		if (oclInvalidOperation2 == null) {
+			AnyType anyType = getOclAnyType();
 			InvalidType invalidType = getOclInvalidType();
 			List<Operation> invalidOperations = invalidType.getOwnedOperations();
 			String invalidName = "oclBadOperation";
@@ -670,7 +671,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 			if (oclInvalidOperation2 == null) {
 				oclInvalidOperation2 = PivotFactory.eINSTANCE.createOperation();
 				oclInvalidOperation2.setName(invalidName);
-				oclInvalidOperation2.setType(invalidType);
+				oclInvalidOperation2.setType(anyType);
 				oclInvalidOperation2.setImplementation(OclAnyUnsupportedOperation.INSTANCE);
 				invalidOperations.add(oclInvalidOperation2);
 			}
@@ -683,6 +684,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	public @NonNull Property getOclInvalidProperty() {
 		Property oclInvalidProperty2 = oclInvalidProperty;
 		if (oclInvalidProperty2 == null) {
+			AnyType anyType = getOclAnyType();
 			InvalidType invalidType = getOclInvalidType();
 			List<Property> invalidProperties = invalidType.getOwnedProperties();
 			String invalidName = "oclBadProperty";
@@ -690,7 +692,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 			if (oclInvalidProperty2 == null) {
 				oclInvalidProperty2 = PivotFactory.eINSTANCE.createProperty();
 				oclInvalidProperty2.setName(invalidName);
-				oclInvalidProperty2.setType(invalidType);
+				oclInvalidProperty2.setType(anyType);
 				oclInvalidProperty2.setImplementation(OclAnyUnsupportedOperation.INSTANCE);
 				invalidProperties.add(oclInvalidProperty2);
 			}
