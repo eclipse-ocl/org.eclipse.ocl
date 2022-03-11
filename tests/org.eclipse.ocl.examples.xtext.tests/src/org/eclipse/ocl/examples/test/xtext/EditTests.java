@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.URIConverter;
+import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.common.internal.options.CommonOptions;
 import org.eclipse.ocl.examples.xtext.tests.TestCaseAppender;
@@ -276,7 +277,6 @@ public class EditTests extends XtextTestCase
 				+ "	type Collection(T) : CollectionType conformsTo OclAny {}\n"
 				+ "	type Integer : PrimitiveType conformsTo Real => 'org.eclipse.ocl.pivot.values.IntegerValue' {}\n"
 				+ "	type Map(K,V) : MapType conformsTo OclAny {}\n"
-				+ "	type Metaclass(T) : Metaclass conformsTo OclAny {}\n"
 				+ "	type OclAny : AnyType {\n"
 	//			+ "		operation \"=\"(object2 : OclAny) : Boolean;\n"
 				+ "	}\n"
@@ -317,6 +317,7 @@ public class EditTests extends XtextTestCase
 		//
 		//	Change metatype.
 		//
+		@SuppressWarnings("unused")
 		String newDocument = testDocument.replace("type Boolean : PrimitiveType conformsTo", "type BooleanType conformsTo");
 		{
 			TestCaseAppender.INSTANCE.uninstall();
@@ -771,7 +772,7 @@ public class EditTests extends XtextTestCase
 		//	Load and instrument test document
 		//
 		OCLInternal ocl1 = OCLInternal.newInstance(getProjectMap(), null);
-		Resource ecoreResource = ClassUtil.nonNullEMF(ocl1.getResourceSet().getResource(ecoreURI, true));
+		XMLResource ecoreResource = (XMLResource) ClassUtil.nonNullEMF(ocl1.getResourceSet().getResource(ecoreURI, true));
 		assertNoResourceErrors("Ecore load", ecoreResource);
 		assertNoValidationErrors("Ecore load", ecoreResource);
 		ASResource asResource = ocl1.ecore2as(ecoreResource);
@@ -806,7 +807,7 @@ public class EditTests extends XtextTestCase
 		//
 		StringWriter writer = new StringWriter();
 		OutputStream outputStream = new URIConverter.WriteableOutputStream(writer, "UTF-8");
-		ecoreResource.save(outputStream, XMIUtil.createSaveOptions());
+		ecoreResource.save(outputStream, XMIUtil.createSaveOptions(ecoreResource));
 		ecoreResource.unload();
 		InputStream inputStream = new URIConverter.ReadableInputStream(writer.toString().replace("tuttut",  "tut"), "UTF-8");
 		ecoreResource.load(inputStream, null);

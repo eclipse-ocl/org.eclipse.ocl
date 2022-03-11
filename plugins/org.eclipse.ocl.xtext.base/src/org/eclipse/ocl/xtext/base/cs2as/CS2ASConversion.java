@@ -197,8 +197,12 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	}
 
 	public void addError(@NonNull ElementCS csElement, /*@NonNull*/ String message, Object... bindings) {
-		String boundMessage = NLS.bind(message, bindings);
 		INode node = NodeModelUtils.getNode(csElement);
+		addError(csElement, node, message, bindings);
+	}
+
+	public void addError(@NonNull ElementCS csElement, /*@NonNull*/ INode node, /*@NonNull*/ String message, Object... bindings) {
+		String boundMessage = NLS.bind(message, bindings);
 		Resource.Diagnostic resourceDiagnostic = new ValidationDiagnostic(node, boundMessage);
 		csElement.eResource().getErrors().add(resourceDiagnostic);
 	}
@@ -207,8 +211,12 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	 * @see org.eclipse.ocl.xtext.base.cs2as.DiagnosticHandler#addWarning(org.eclipse.ocl.xtext.basecs.ModelElementCS, java.lang.String, java.lang.Object)
 	 */
 	public void addWarning(@NonNull ModelElementCS csElement, /*@NonNull*/ String message, Object... bindings) {
-		String boundMessage = NLS.bind(message, bindings);
 		INode node = NodeModelUtils.getNode(csElement);
+		addWarning(csElement, node, message, bindings);
+	}
+
+	public void addWarning(@NonNull ModelElementCS csElement, /*@NonNull*/ INode node, /*@NonNull*/ String message, Object... bindings) {
+		String boundMessage = NLS.bind(message, bindings);
 		Resource.Diagnostic resourceDiagnostic = new ValidationDiagnostic(node, boundMessage);
 		csElement.eResource().getWarnings().add(resourceDiagnostic);
 	}

@@ -6,7 +6,6 @@ library lib : lib = 'http://minimal.oclstdlib'
 	type Collection(T) : CollectionType conformsTo OclAny {}
 	type Integer : PrimitiveType conformsTo Real {}
 	type Map(K,V) : MapType conformsTo OclAny {}
-	type Metaclass(T) : Metaclass conformsTo OclAny {}
 	type OclAny : AnyType {
 		operation "="(object2 : OclAny) : Boolean;
 	}

@@ -53,32 +53,38 @@ public class OCLstdlibCS2AS extends EssentialOCLCS2AS
 		}
 	}
 
+	@Deprecated /* @deprecated - pass String argument */
 	public @Nullable MetaclassNameCS lookUpMetaTypeName(@NonNull EObject csElement, /*@NonNull*/ EStructuralFeature eFeature) {
-		Map<String, MetaclassNameCS> metaTypeNames2 = metaTypeNames;
+		List<INode> featureNodes = NodeModelUtils.findNodesForFeature(csElement, eFeature);
+		if ((featureNodes != null) && (featureNodes.size() > 0)) {
+			String metaclassNameText = NodeModelUtils.getTokenText(featureNodes.get(0));
+			MetaclassNameCS csMetaclassName = metaclassNameText != null ? getMetaclassName(metaclassNameText) : null;
+			csElement.eSet(eFeature, csMetaclassName);
+			return csMetaclassName;
+		}
+		return null;
+	}
+
+	public @Nullable MetaclassNameCS getMetaclassName(@NonNull String metaclassNameText) {
+		Map<@NonNull String, @NonNull MetaclassNameCS> metaTypeNames2 = metaTypeNames;
 		if (metaTypeNames2 == null) {
 			Resource metaTypeResource = new ResourceImpl(URI.createURI("internal_list;;//of_meta-type_names"));
-			List<EObject> metaTypes = metaTypeResource.getContents();
+			List<@NonNull EObject> metaTypes = metaTypeResource.getContents();
 			metaTypeNames2 = metaTypeNames = new HashMap<>();
 			for (EClassifier eClassifier : PivotPackage.eINSTANCE.getEClassifiers()) {
 				if (eClassifier instanceof EClass) {
 					if (PivotPackage.Literals.CLASS.isSuperTypeOf((EClass) eClassifier)) {
-						MetaclassNameCS metaTypeName = OCLstdlibCSFactory.eINSTANCE.createMetaclassNameCS();
+						MetaclassNameCS csMetaclassName = OCLstdlibCSFactory.eINSTANCE.createMetaclassNameCS();
 						String name = eClassifier.getName();
-						metaTypeName.setName(name);
-						metaTypeNames2.put(name, metaTypeName);
-						metaTypes.add(metaTypeName);			// Avoid detection of orphans by EnvironmentView.addElement()
+						assert name != null;
+						csMetaclassName.setName(name);
+						metaTypeNames2.put(name, csMetaclassName);
+						metaTypes.add(csMetaclassName);			// Avoid detection of orphans by EnvironmentView.addElement()
 					}
 				}
 			}
 		}
-		List<INode> featureNodes = NodeModelUtils.findNodesForFeature(csElement, eFeature);
-		if ((featureNodes != null) && (featureNodes.size() > 0)) {
-			String metaTypeNameText = NodeModelUtils.getTokenText(featureNodes.get(0));
-			MetaclassNameCS metaTypeName = metaTypeNames2.get(metaTypeNameText);
-			csElement.eSet(eFeature, metaTypeName);
-			return metaTypeName;
-		}
-		return null;
+		return metaTypeNames2.get(metaclassNameText);
 	}
 
 	public OCLstdlibCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull BaseCSResource csResource, @NonNull ASResource asResource) {
