@@ -1381,7 +1381,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		ASResource asResource = converter.csi2asMapping.getASResource(csResource);
 		boolean wasUpdating = false;
 		if (asResource != null) {
-			wasUpdating = asResource.setUpdating(true);
+			asResource.resetLUSSIDs();			// Hopefully reset already, not wanted till save. See Bug 579052.
 			for (EObject eObject : asResource.getContents()) {
 				if (eObject instanceof Model) {
 					List<org.eclipse.ocl.pivot.Package> nestedPackage = ((Model)eObject).getOwnedPackages();

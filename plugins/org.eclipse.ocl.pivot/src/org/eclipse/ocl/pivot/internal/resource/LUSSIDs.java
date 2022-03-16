@@ -36,7 +36,8 @@ import org.eclipse.ocl.pivot.utilities.TreeIterable;
  * of an ASResource. It also provides the ability to return predictable xmi:id values.
  *
  * An xmi:id is provided for every explicitly referenced, and every potentially externally referenced element,
- * so that the EMF fall-back to @x/@y.1 style id references is never required.
+ * so that the EMF fall-back to @x/@y.1 style id references is never required in a persisted resource. However
+ * for casual use such as by Diagnostician.getObjectLabel the conventional URI is used.
  *
  * The xmi:id typically comprises a 5 Base64-like letter encoding of the bottom 30 bits of the LUSSID of the element.
  * Additional Base64 letters are occasionally needed to disambiguate duplicates. Disambiguation favours the externally

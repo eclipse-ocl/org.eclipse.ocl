@@ -1154,7 +1154,9 @@ public class Ecore2AS extends AbstractExternal2AS
 		return String.valueOf(ecoreResource.getURI());
 	}
 
-	public void update(@NonNull Resource asResource, @NonNull Collection<@NonNull EObject> ecoreContents) {
+	public void update(@NonNull Resource resource, @NonNull Collection<@NonNull EObject> ecoreContents) {
+		ASResource asResource = (ASResource)resource;		// FIXME change signature
+		asResource.resetLUSSIDs();			// Hopefully reset already, not wanted till save. See Bug 579052.
 		allConverters.clear();
 		newCreateMap = new HashMap<>();
 		referencers = new HashSet<>();
@@ -1192,6 +1194,6 @@ public class Ecore2AS extends AbstractExternal2AS
 		 */
 		resolveReferences();
 		resolveIds(ecoreContents);
-		assert ((ASResource)asResource).basicGetLUSSIDs() == null;			// Confirming Bug 579025
+		assert asResource.basicGetLUSSIDs() == null;			// Confirming Bug 579025
 	}
 }
