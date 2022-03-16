@@ -247,7 +247,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	private boolean isUnloading = false;
 
 	/**
-	 * Set true/false by setUpdating()(
+	 * Set true/false by setUpdating(). (See Bug 579109, we can aspire to elimiinating many usages of this.)
 	 */
 	private boolean isUpdating = false;
 
@@ -413,13 +413,13 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 		return (Model)eObject;
 	}
 
-	@Override
-	public String getURIFragment(EObject eObject) {
-		if ((unloadingContents == null) && (idToEObjectMap == null)) {
-			AS2ID.assignIds(this, null);
-		}
-		return super.getURIFragment(eObject);
-	}
+//	Deleted by Bug 579025; LUSSIDs are not to be created prior to save
+//	public String getURIFragment(EObject eObject) {
+//		if ((unloadingContents == null) && (idToEObjectMap == null)) {
+//			AS2ID.assignIds(this, null);
+//		}
+//		return super.getURIFragment(eObject);
+//	}
 
 	/**
 	 * @since 1.4

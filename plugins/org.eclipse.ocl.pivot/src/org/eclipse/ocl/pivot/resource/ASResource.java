@@ -147,8 +147,8 @@ public interface ASResource extends XMIResource
 	boolean setSaveable(boolean isSaveable);
 
 	/**
-	 * Configure an immutable ASResource to tolerate updates, returning the pripr state for restoration
-	 * once the immutable updatres are done.
+	 * Configure an immutable ASResource to tolerate updates, returning the prior state for restoration
+	 * once the immutable updates are done.
 	 *
 	 * @since 1.18
 	 */

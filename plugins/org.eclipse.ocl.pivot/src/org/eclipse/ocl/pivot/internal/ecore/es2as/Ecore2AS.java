@@ -1192,10 +1192,6 @@ public class Ecore2AS extends AbstractExternal2AS
 		 */
 		resolveReferences();
 		resolveIds(ecoreContents);
-		((ASResource)asResource).setUpdating(wasUpdating);
-		if (!((ASResource)asResource).isSaveable()) {
-			((ASResource)asResource).setSaveable(true);
-			((ASResource)asResource).setSaveable(false);
-		}
+		assert ((ASResource)asResource).basicGetLUSSIDs() == null;			// Confirming Bug 579025
 	}
 }

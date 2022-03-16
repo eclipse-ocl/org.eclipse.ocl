@@ -558,6 +558,10 @@ public class LoadTests extends XtextTestCase
 		CS2AS cs2as = xtextResource.findCS2AS();
 		if (cs2as != null) {
 			ASResource asResource = cs2as.getASResource();
+			Map<Object, Object> saveOptions = XMIUtil.createSaveOptions(asResource);
+			saveOptions.put(AS2ID.DEBUG_LUSSID_COLLISIONS, Boolean.TRUE);
+			saveOptions.put(AS2ID.DEBUG_XMIID_COLLISIONS, Boolean.TRUE);
+			AS2ID.assignIds(asResource, saveOptions);
 			assertResourceErrors("Pre-save", asResource, resourceErrors);
 		}
 		Resource asResource = doLoad_Concrete2(xtextResource, inputURI);
@@ -573,11 +577,11 @@ public class LoadTests extends XtextTestCase
 		CS2AS cs2as = xtextResource.findCS2AS();
 		if (cs2as != null) {
 			ASResource asResource = cs2as.getASResource();
-			Map<Object, Object> saveOptions = XMIUtil.createSaveOptions();
-			saveOptions.put(AS2ID.DEBUG_LUSSID_COLLISIONS, Boolean.TRUE);
-			saveOptions.put(AS2ID.DEBUG_XMIID_COLLISIONS, Boolean.TRUE);
-			AS2ID.assignIds(asResource, saveOptions);
 			assertNoValidationErrors("Loaded pivot", asResource);
+		//	Map<Object, Object> saveOptions = XMIUtil.createSaveOptions(asResource);
+		//	saveOptions.put(AS2ID.DEBUG_LUSSID_COLLISIONS, Boolean.TRUE);
+		//	saveOptions.put(AS2ID.DEBUG_XMIID_COLLISIONS, Boolean.TRUE);
+		//	AS2ID.assignIds(asResource, saveOptions);
 		}
 		return xtextResource;
 	}
@@ -880,7 +884,7 @@ public class LoadTests extends XtextTestCase
 	}
 
 	public void testLoad_oclstdlib_oclstdlib() throws IOException, InterruptedException {
-		OCL ocl = createOCL();
+		OCL ocl = createOCLWithProjectMap();
 		//		StandardLibraryContribution.REGISTRY.put(MetamodelManager.DEFAULT_OCL_STDLIB_URI, StandardLibraryContribution.NULL);
 		Resource asResource = doLoad_Concrete(ocl, getTestModelURI("models/oclstdlib/oclstdlib.oclstdlib"));
 		//		checkMonikers(asResource);
@@ -889,7 +893,7 @@ public class LoadTests extends XtextTestCase
 		Map<String,Object> options = new HashMap<String,Object>();
 		options.put(PivotConstants.PRIMITIVE_TYPES_URI_PREFIX, "models/ecore/primitives.ecore#//");
 		XMLResource ecoreResource = AS2Ecore.createResource((EnvironmentFactoryInternal) ocl.getEnvironmentFactory(), asResource, ecoreURI, options);
-		ecoreResource.save(XMIUtil.createSaveOptions());
+		ecoreResource.save(XMIUtil.createSaveOptions(ecoreResource));
 		ocl.dispose();
 	}
 

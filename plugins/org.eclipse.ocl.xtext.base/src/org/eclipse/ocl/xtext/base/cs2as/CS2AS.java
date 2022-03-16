@@ -718,6 +718,6 @@ public abstract class CS2AS extends AbstractConversion	// FIXME migrate function
 		conversion.garbageCollect(cs2asResourceMap);
 		csi2asMapping.update();
 		//		printDiagnostic("CS2AS.update end", false, 0);
-		asResource.setUpdating(wasUpdating);
+		assert asResource.basicGetLUSSIDs() == null;			// Confirming Bug 579025
 	}
 }
