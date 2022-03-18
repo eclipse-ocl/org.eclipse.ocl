@@ -511,14 +511,14 @@
         <ownedParameters xmi:id="5q5vu" name="b" type="#XEMMs"/>
       </ownedOperations>
     </ownedClasses>
-    <ownedClasses xmi:id="xB4J7" instanceClassName="java.lang.Object" name="BooleanType" superClasses="#zfDWR">
+    <ownedClasses xmi:id="xB4J7" name="BooleanType" superClasses="#zfDWR">
       <ownedComments body="The standard type Boolean represents the common true/false values.&#xA;Boolean is itself an instance of the metatype PrimitiveType (from UML).&#xA;"/>
       <ownedOperations xmi:id=",q,nx" implementationClass="org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation" name="allInstances"
           type="#UQF4+">
         <ownedComments body="Returns oclText[Set{false, true}]."/>
       </ownedOperations>
     </ownedClasses>
-    <ownedClasses xmi:id="nZ3,I" instanceClassName="java.lang.Object" name="Class" superClasses="#zfDWR">
+    <ownedClasses xmi:id="nZ3,I" name="Class" superClasses="#zfDWR">
       <ownedOperations xmi:id="dD,7n" implementationClass="org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation" name="allInstances"
           type="#UQF4+">
         <ownedComments body="Return a set of all instances of the type and derived types of self."/>
@@ -811,7 +811,7 @@
         <ownedParameters xmi:id="qs59R" name="T"/>
       </ownedSignature>
     </ownedClasses>
-    <ownedClasses xmi:id="nwL7b" instanceClassName="java.lang.Object" name="CollectionType" superClasses="#zfDWR">
+    <ownedClasses xmi:id="nwL7b" name="CollectionType" superClasses="#zfDWR">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
         <ownedDetails name="ClassGroup">
           <values>UML</values>
@@ -830,7 +830,7 @@
         <ownedComments body="Evaluates to the upper bound on the number of collection elements.&#xA;"/>
       </ownedProperties>
     </ownedClasses>
-    <ownedClasses xmi:id="28WYD" instanceClassName="java.lang.Object" name="Enumeration" superClasses="#hlrMH">
+    <ownedClasses xmi:id="28WYD" name="Enumeration" superClasses="#hlrMH">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
         <ownedDetails name="ClassGroup">
           <values>UML</values>
@@ -842,7 +842,7 @@
         <ownedComments body="Return a set of all enumeration values of oclText[self]."/>
       </ownedOperations>
     </ownedClasses>
-    <ownedClasses xmi:id="Xml8E" instanceClassName="java.lang.Object" name="EnumerationLiteral" superClasses="#jbMkR">
+    <ownedClasses xmi:id="Xml8E" name="EnumerationLiteral" superClasses="#jbMkR">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
         <ownedDetails name="ClassGroup">
           <values>UML</values>
@@ -910,7 +910,7 @@
         <ownedComments body="Converts a non-negative oclText[self] to an UnlimitedNatural value. A negative oclText[self] is converted to oclText[invalid].&#xA;An automatic coersion may be synthesized if the coercion enables an operation reference to be resolved&#xA;in an expression where no operation was available without coercion.&#xA;"/>
       </ownedOperations>
     </ownedClasses>
-    <ownedClasses xmi:id="Abotv" instanceClassName="java.lang.Object" name="InvalidType" superClasses="#zfDWR">
+    <ownedClasses xmi:id="Abotv" name="InvalidType" superClasses="#zfDWR">
       <ownedOperations xmi:id="SPCDQ" implementationClass="org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation" name="allInstances"
           type="#UQF4+">
         <ownedComments body="Returns oclText[invalid]."/>
@@ -1178,7 +1178,7 @@
         <ownedParameters xmi:id="HeAuH" name="V"/>
       </ownedSignature>
     </ownedClasses>
-    <ownedClasses xmi:id="l+ONa" instanceClassName="java.lang.Object" name="MapType" superClasses="#zfDWR">
+    <ownedClasses xmi:id="l+ONa" name="MapType" superClasses="#zfDWR">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
         <ownedDetails name="ClassGroup">
           <values>UML</values>
@@ -1311,7 +1311,7 @@
       </ownedOperations>
       <ownedProperties xmi:id="c8rKW" isImplicit="true" name="OclInvalid" opposite="#QSjNW" type="#4eSgX"/>
     </ownedClasses>
-    <ownedClasses xmi:id="BEwMu" instanceClassName="java.lang.Object" isAbstract="true" name="OclComparable" superClasses="#jbMkR">
+    <ownedClasses xmi:id="BEwMu" isAbstract="true" name="OclComparable" superClasses="#jbMkR">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
         <ownedDetails name="ClassGroup">
           <values>OCL</values>
@@ -1344,7 +1344,7 @@
         <ownedParameters xmi:id="hSadl" name="that" type="#zlfMH"/>
       </ownedOperations>
     </ownedClasses>
-    <ownedClasses xmi:id="zfDWR" instanceClassName="java.lang.Object" isAbstract="true" name="OclElement" superClasses="#jbMkR">
+    <ownedClasses xmi:id="zfDWR" isAbstract="true" name="OclElement" superClasses="#jbMkR">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
         <ownedDetails name="ClassGroup">
           <values>OCL</values>
@@ -1407,7 +1407,7 @@
       <ownedProperties xmi:id="i+8xQ" isImplicit="true" name="OclElement" opposite="#IcnIy" type="#158KG"/>
       <ownedProperties xmi:id="hXMRj" isImplicit="true" name="OclElement" opposite="#REFNQ" type="#158KG"/>
     </ownedClasses>
-    <ownedClasses xmi:id="+8+by" instanceClassName="java.lang.Object" isAbstract="true" name="OclEnumeration" superClasses="#hlrMH">
+    <ownedClasses xmi:id="+8+by" isAbstract="true" name="OclEnumeration" superClasses="#hlrMH">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
         <ownedDetails name="ClassGroup">
           <values>UML</values>
@@ -1489,7 +1489,7 @@
         <ownedComments body="An oclBadProperty may be used as a placeholder in an unsuccessfully created OCLExpression."/>
       </ownedProperties>
     </ownedClasses>
-    <ownedClasses xmi:id="ufpqK" instanceClassName="java.lang.Object" isAbstract="true" name="OclLambda" superClasses="#jbMkR">
+    <ownedClasses xmi:id="ufpqK" isAbstract="true" name="OclLambda" superClasses="#jbMkR">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
         <ownedDetails name="ClassGroup">
           <values>OCL</values>
@@ -1497,7 +1497,7 @@
       </ownedAnnotations>
       <ownedComments body="The type OclLambda is the implicit supertype of all Lambda types. The operations defined for OclLambda&#xA;therefore apply to all lambda expressions.&#xA;"/>
     </ownedClasses>
-    <ownedClasses xmi:id="+jBYt" instanceClassName="java.lang.Object" isAbstract="true" name="OclMessage" superClasses="#jbMkR">
+    <ownedClasses xmi:id="+jBYt" isAbstract="true" name="OclMessage" superClasses="#jbMkR">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
         <ownedDetails name="ClassGroup">
           <values>UML</values>
@@ -1530,14 +1530,14 @@
       </ownedAnnotations>
       <ownedComments body="The pseudo-type OclSelf denotes the statically determinate type of oclText[self] in Operation&#xA;and Iteration signatures. Instances of OclSelf are never created.&#xA;"/>
     </ownedClasses>
-    <ownedClasses xmi:id="IebtF" instanceClassName="java.lang.Object" isAbstract="true" name="OclState" superClasses="#jbMkR">
+    <ownedClasses xmi:id="IebtF" isAbstract="true" name="OclState" superClasses="#jbMkR">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
         <ownedDetails name="ClassGroup">
           <values>UML</values>
         </ownedDetails>
       </ownedAnnotations>
     </ownedClasses>
-    <ownedClasses xmi:id="ZNWlJ" instanceClassName="java.lang.Object" isAbstract="true" name="OclStereotype" superClasses="#hlrMH">
+    <ownedClasses xmi:id="ZNWlJ" isAbstract="true" name="OclStereotype" superClasses="#hlrMH">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
         <ownedDetails name="ClassGroup">
           <values>OCL</values>
@@ -1550,7 +1550,7 @@
         <ownedParameters xmi:id="5Tbqr" name="dummy" type="#tYtCd"/>
       </ownedOperations>
     </ownedClasses>
-    <ownedClasses xmi:id="D4eXY" instanceClassName="java.lang.Object" isAbstract="true" name="OclSummable" superClasses="#jbMkR">
+    <ownedClasses xmi:id="D4eXY" isAbstract="true" name="OclSummable" superClasses="#jbMkR">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
         <ownedDetails name="ClassGroup">
           <values>OCL</values>
@@ -1565,7 +1565,7 @@
         <ownedComments body="Return the 'zero' value of self to initialize a summation.&#xA;&#xA;zero().sum(self) = self."/>
       </ownedOperations>
     </ownedClasses>
-    <ownedClasses xmi:id=",qHxF" instanceClassName="java.lang.Object" isAbstract="true" name="OclTuple" superClasses="#jbMkR">
+    <ownedClasses xmi:id=",qHxF" isAbstract="true" name="OclTuple" superClasses="#jbMkR">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
         <ownedDetails name="ClassGroup">
           <values>OCL</values>
@@ -1581,7 +1581,7 @@
         <ownedParameters xmi:id="E2Wwj" isRequired="false" name="object2" type="#zlfMH"/>
       </ownedOperations>
     </ownedClasses>
-    <ownedClasses xmi:id="hlrMH" instanceClassName="java.lang.Object" isAbstract="true" name="OclType" superClasses="#zfDWR">
+    <ownedClasses xmi:id="hlrMH" isAbstract="true" name="OclType" superClasses="#zfDWR">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
         <ownedDetails name="ClassGroup">
           <values>OCL</values>
@@ -2231,14 +2231,14 @@
         <ownedParameters xmi:id="ODsm5" name="T"/>
       </ownedSignature>
     </ownedClasses>
-    <ownedClasses xmi:id="AGJ5J" instanceClassName="java.lang.Object" name="State" superClasses="#IebtF">
+    <ownedClasses xmi:id="AGJ5J" name="State" superClasses="#IebtF">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
         <ownedDetails name="ClassGroup">
           <values>UML</values>
         </ownedDetails>
       </ownedAnnotations>
     </ownedClasses>
-    <ownedClasses xmi:id="hRA+k" instanceClassName="java.lang.Object" name="Stereotype" superClasses="#zfDWR">
+    <ownedClasses xmi:id="hRA+k" name="Stereotype" superClasses="#zfDWR">
       <ownedOperations xmi:id="v7iP2" implementationClass="org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation" name="allInstances"
           type="#UQF4+">
         <ownedComments body="Return a set of all instances of the stereotype and derived types of self."/>
@@ -2416,7 +2416,7 @@
         <ownedComments body="Return oclText[self] with leading and trailing whitespace removed.&#xA;"/>
       </ownedOperations>
     </ownedClasses>
-    <ownedClasses xmi:id="pBMRF" instanceClassName="java.lang.Object" name="Type" superClasses="#hlrMH">
+    <ownedClasses xmi:id="pBMRF" name="Type" superClasses="#hlrMH">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
         <ownedDetails name="ClassGroup">
           <values>UML</values>
@@ -2501,7 +2501,7 @@
         <ownedComments body="Converts oclText[self] to an Integer value unless oclText[self] is e[unlimited] in which case oclText[self] is converted to oclText[null].&#xA;"/>
       </ownedOperations>
     </ownedClasses>
-    <ownedClasses xmi:id="dw4aT" instanceClassName="java.lang.Object" name="VoidType" superClasses="#zfDWR">
+    <ownedClasses xmi:id="dw4aT" name="VoidType" superClasses="#zfDWR">
       <ownedOperations xmi:id="7eoA5" implementationClass="org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation" name="allInstances"
           type="#PRF4+">
         <ownedComments body="Returns oclText[Set{null}]."/>
