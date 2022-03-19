@@ -15,8 +15,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.codegen.ecore.genmodel.GenFeature;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
+import org.eclipse.emf.codegen.ecore.genmodel.GenOperation;
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
+import org.eclipse.emf.codegen.ecore.genmodel.GenTypedElement;
 import org.eclipse.emf.codegen.util.ImportManager;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
@@ -359,10 +362,10 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 
 	public static enum FeatureLocality
 	{
-		ECORE_IMPL,			// The traditional locality of a non-ststic Ecore feature within an Ecore *Impl.java
-		ECORE_STATIC,		// The locality of a static 'Ecore' feature within a FOREIGN *Tables.java sub-class
-		FOREIGN_IMPL,		// The locality of a non-static Complete OCL feature within a FOREIGN *Tables.java sub-class
-		FOREIGN_STATIC;		// The locality of a static Complete OCL feature within a FOREIGN *Tables.java sub-class
+		ECORE_IMPL,			// A standard non-static Ecore feature is genmodelled within the Ecore *Impl.java
+		ECORE_STATIC,		// A non-standard static 'Ecore' feature is genmodelled within a FOREIGN *Tables.java sub-class
+		FOREIGN_IMPL,		// A non-static Complete OCL feature is genmodelled within a FOREIGN *Tables.java sub-class
+		FOREIGN_STATIC;		// A static Complete OCL feature is genmodelled within a FOREIGN *Tables.java sub-class
 
 		boolean hasSelf() { return this == ECORE_STATIC; }
 		boolean hasThis() { return this == ECORE_IMPL; }
@@ -447,7 +450,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 	public static void generatePackage(@NonNull GenPackage genPackage,
 			@NonNull Map<@NonNull String, @NonNull FeatureBody> uri2body,
 			@NonNull Map<@NonNull GenPackage, @NonNull String> constantsTexts,
-			@NonNull List<@NonNull Feature> foreignFeaures) {
+			@NonNull Map<@NonNull Feature, @NonNull GenTypedElement> foreignFeaures) {
 		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(genPackage);
 		OCLinEcoreCodeGenerator generator = new OCLinEcoreCodeGenerator(environmentFactory, genPackage);
 		generator.generate(uri2body, constantsTexts, foreignFeaures);
@@ -497,7 +500,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		return new OCLinEcoreImportNameManager();
 	}
 
-	protected void generate(@NonNull Map<@NonNull String, @NonNull FeatureBody> uri2body, @NonNull Map<GenPackage, String> constantsTexts, @NonNull List<@NonNull Feature> foreignFeatures) {
+	protected void generate(@NonNull Map<@NonNull String, @NonNull FeatureBody> uri2body, @NonNull Map<GenPackage, String> constantsTexts, @NonNull Map<@NonNull Feature, @NonNull GenTypedElement> foreignFeatures) {
 		Map<@NonNull ExpressionInOCL, @NonNull ExpressionInOCL> newQuery2oldQuery2 = newQuery2oldQuery = new HashMap<>();
 		try {
 			EPackage ecorePackage = genPackage.getEcorePackage();
@@ -525,7 +528,18 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 			Iterable<@NonNull Feature> foreignFeatures2 = cgAnalyzer.getForeignFeatures();
 			if (foreignFeatures2 != null) {
 				for (@NonNull Feature foreignFeature : foreignFeatures2) {
-					foreignFeatures.add(foreignFeature);
+					if (foreignFeature instanceof Operation) {
+						GenOperation genOperation = genModelHelper.getGenOperation((Operation)foreignFeature);
+						assert genOperation != null;
+						foreignFeatures.put(foreignFeature, genOperation);
+					}
+					else if (foreignFeature instanceof Property) {
+						GenFeature genFeature = genModelHelper.getGenFeature((Property)foreignFeature);
+						foreignFeatures.put(foreignFeature, genFeature);
+					}
+					else {
+						assert false;
+					}
 				}
 			}
 		}
