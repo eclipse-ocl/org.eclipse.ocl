@@ -406,11 +406,11 @@ public abstract class CallExpImpl
 								try {
 									/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
 									try {
-										final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_MapType_3 = idResolver.getClass(PivotTables.CLSSid_MapType, null);
+										final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_MapType_4 = idResolver.getClass(PivotTables.CLSSid_MapType, null);
 										if (CAUGHT_safe_type_source instanceof InvalidValueException) {
 											throw (InvalidValueException)CAUGHT_safe_type_source;
 										}
-										final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class CAST_TYP_MapType = (org.eclipse.ocl.pivot.Class)TYP_MapType_3;
+										final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class CAST_TYP_MapType = (org.eclipse.ocl.pivot.Class)TYP_MapType_4;
 										final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, CAUGHT_safe_type_source, CAST_TYP_MapType).booleanValue();
 										CAUGHT_oclIsKindOf = oclIsKindOf;
 									}
@@ -522,9 +522,9 @@ public abstract class CallExpImpl
 				IF__l_q = true;
 			}
 			else {
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OclInvalid_2 = idResolver.getClass(TypeId.OCL_INVALID, null);
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OclInvalid_3 = idResolver.getClass(TypeId.OCL_INVALID, null);
 				final /*@NonInvalid*/ @Nullable Type type = this.getType();
-				final /*@NonInvalid*/ @NonNull InvalidType CAST_TYP_OclInvalid = (InvalidType)TYP_OclInvalid_2;
+				final /*@NonInvalid*/ @NonNull InvalidType CAST_TYP_OclInvalid = (InvalidType)TYP_OclInvalid_3;
 				final /*@NonInvalid*/ boolean result = (type != null) ? (type.getTypeId() != CAST_TYP_OclInvalid.getTypeId()) : true;
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, result, PivotTables.INT_0).booleanValue();
 				IF__l_q = logDiagnostic;

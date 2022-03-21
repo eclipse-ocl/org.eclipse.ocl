@@ -1022,8 +1022,8 @@ implements Property {
 		final /*@NonInvalid*/ @Nullable Object container = ClassifierOclContainerOperation.INSTANCE.evaluate(executor, this);
 		/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
 		try {
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Class_30 = idResolver.getClass(PivotTables.CLSSid_Class, null);
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class CAST_TYP_Class = (org.eclipse.ocl.pivot.Class)TYP_Class_30;
+			final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Class_21 = idResolver.getClass(PivotTables.CLSSid_Class, null);
+			final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class CAST_TYP_Class = (org.eclipse.ocl.pivot.Class)TYP_Class_21;
 			final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, container, CAST_TYP_Class).booleanValue();
 			CAUGHT_oclIsKindOf = oclIsKindOf;
 		}
@@ -1037,8 +1037,8 @@ implements Property {
 		else {
 			/*@Caught*/ @NonNull Object CAUGHT_includes;
 			try {
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Class_24 = idResolver.getClass(PivotTables.CLSSid_Class, null);
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class CAST_TYP_Class_0 = (org.eclipse.ocl.pivot.Class)TYP_Class_24;
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Class_32 = idResolver.getClass(PivotTables.CLSSid_Class, null);
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class CAST_TYP_Class_0 = (org.eclipse.ocl.pivot.Class)TYP_Class_32;
 				@SuppressWarnings("null")
 				final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull Class oclAsType = (org.eclipse.ocl.pivot.@NonNull Class)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, container, CAST_TYP_Class_0);
 				final /*@Thrown*/ @NonNull List<Property> ownedProperties = oclAsType.getOwnedProperties();
@@ -1106,8 +1106,8 @@ implements Property {
 				try {
 					/*@Caught*/ @Nullable Object CAUGHT_and;
 					try {
-						final /*@NonInvalid*/ @Nullable LanguageExpression ownedExpression_0 = this.getOwnedExpression();
-						final /*@NonInvalid*/ boolean ne = ownedExpression_0 != null;
+						final /*@NonInvalid*/ @Nullable LanguageExpression ownedExpression = this.getOwnedExpression();
+						final /*@NonInvalid*/ boolean ne = ownedExpression != null;
 						final /*@Thrown*/ @Nullable Boolean and;
 						if (!ne) {
 							and = ValueUtil.FALSE_VALUE;
@@ -1115,10 +1115,10 @@ implements Property {
 						else {
 							/*@Caught*/ @NonNull Object CAUGHT__l_g;
 							try {
-								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_ExpressionInOCL_0 = idResolver.getClass(PivotTables.CLSSid_ExpressionInOCL, null);
-								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class CAST_TYP_ExpressionInOCL = (org.eclipse.ocl.pivot.Class)TYP_ExpressionInOCL_0;
+								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_ExpressionInOCL = idResolver.getClass(PivotTables.CLSSid_ExpressionInOCL, null);
+								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class CAST_TYP_ExpressionInOCL = (org.eclipse.ocl.pivot.Class)TYP_ExpressionInOCL;
 								@SuppressWarnings("null")
-								final /*@Thrown*/ @NonNull ExpressionInOCL oclAsType = (@NonNull ExpressionInOCL)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, ownedExpression_0, CAST_TYP_ExpressionInOCL);
+								final /*@Thrown*/ @NonNull ExpressionInOCL oclAsType = (@NonNull ExpressionInOCL)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, ownedExpression, CAST_TYP_ExpressionInOCL);
 								final /*@Thrown*/ @Nullable OCLExpression ownedBody = oclAsType.getOwnedBody();
 								final /*@Thrown*/ boolean ne_0 = ownedBody != null;
 								CAUGHT__l_g = ne_0;
@@ -1148,8 +1148,8 @@ implements Property {
 					else {
 						/*@Caught*/ @NonNull Object CAUGHT_CompatibleBody;
 						try {
-							final /*@NonInvalid*/ @Nullable LanguageExpression ownedExpression = this.getOwnedExpression();
-							final /*@Thrown*/ boolean CompatibleBody = this.CompatibleBody(ownedExpression);
+							final /*@NonInvalid*/ @Nullable LanguageExpression ownedExpression_0 = this.getOwnedExpression();
+							final /*@Thrown*/ boolean CompatibleBody = this.CompatibleBody(ownedExpression_0);
 							CAUGHT_CompatibleBody = CompatibleBody;
 						}
 						catch (Exception THROWN_CompatibleBody) {
@@ -1230,41 +1230,41 @@ implements Property {
 						/*@Caught*/ @Nullable Object CAUGHT_or;
 						try {
 							final /*@NonInvalid*/ @Nullable LanguageExpression ownedExpression = this.getOwnedExpression();
-							final /*@NonInvalid*/ boolean ne = ownedExpression != null;
-							final /*@NonInvalid*/ @Nullable Boolean or_0;
-							if (ne) {
-								or_0 = ValueUtil.TRUE_VALUE;
-							}
-							else {
-								final /*@NonInvalid*/ @Nullable String defaultValueString = this.getDefaultValueString();
-								final /*@NonInvalid*/ boolean ne_0 = defaultValueString != null;
-								if (ne_0) {
-									or_0 = ValueUtil.TRUE_VALUE;
-								}
-								else {
-									or_0 = ValueUtil.FALSE_VALUE;
-								}
-							}
-							final /*@Thrown*/ @Nullable Boolean or;
-							if (or_0 == ValueUtil.TRUE_VALUE) {
+							final /*@NonInvalid*/ boolean ne_0 = ownedExpression != null;
+							final /*@NonInvalid*/ @Nullable Boolean or;
+							if (ne_0) {
 								or = ValueUtil.TRUE_VALUE;
 							}
 							else {
-								final /*@NonInvalid*/ @Nullable String implementationClass = this.getImplementationClass();
-								final /*@NonInvalid*/ boolean ne_1 = implementationClass != null;
+								final /*@NonInvalid*/ @Nullable String defaultValueString = this.getDefaultValueString();
+								final /*@NonInvalid*/ boolean ne_1 = defaultValueString != null;
 								if (ne_1) {
 									or = ValueUtil.TRUE_VALUE;
 								}
 								else {
-									if (or_0 == null) {
-										or = null;
+									or = ValueUtil.FALSE_VALUE;
+								}
+							}
+							final /*@Thrown*/ @Nullable Boolean or_0;
+							if (or == ValueUtil.TRUE_VALUE) {
+								or_0 = ValueUtil.TRUE_VALUE;
+							}
+							else {
+								final /*@NonInvalid*/ @Nullable String implementationClass = this.getImplementationClass();
+								final /*@NonInvalid*/ boolean ne = implementationClass != null;
+								if (ne) {
+									or_0 = ValueUtil.TRUE_VALUE;
+								}
+								else {
+									if (or == null) {
+										or_0 = null;
 									}
 									else {
-										or = ValueUtil.FALSE_VALUE;
+										or_0 = ValueUtil.FALSE_VALUE;
 									}
 								}
 							}
-							CAUGHT_or = or;
+							CAUGHT_or = or_0;
 						}
 						catch (Exception THROWN_or) {
 							CAUGHT_or = ValueUtil.createInvalidValue(THROWN_or);
