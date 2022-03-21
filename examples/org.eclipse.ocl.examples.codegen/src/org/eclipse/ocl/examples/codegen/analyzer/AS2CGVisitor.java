@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.calling.BuiltInOperationCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.ConstrainedOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.ForeignOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.NativeOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
@@ -323,11 +324,15 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		variablesStack.putParameter(asVariable, cgParameter);
 	}
 
+	public @Nullable CGClass basicGetCurrentClass() {
+		return currentClass;
+	}
+
 	public @Nullable CGVariable basicGetParameter(@NonNull Variable aParameter) {
 		return variablesStack.getParameter(aParameter);
 	}
 
-	protected @NonNull CGValuedElement cachedOperationCall(@NonNull OperationCallExp element, @NonNull CGClass currentClass, CGValuedElement cgSource,
+	public @NonNull CGCallExp cachedOperationCall(@NonNull OperationCallExp element, @NonNull CGClass currentClass, CGValuedElement cgSource,
 			@NonNull Operation asOperation, @Nullable Iterable<@NonNull Operation> asOverrideOperations) {
 		List<@NonNull Operation> asNewOperations = new ArrayList<>();
 		List<@NonNull CGCachedOperation> cgOperations = new ArrayList<>();
@@ -371,27 +376,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 				//				asNewOperations.add(asOperation);
 				currentClass.getOperations().add(cgOperation);
 			}
-		}
-		return cgOperationCallExp;
-	}
-
-	protected @NonNull CGValuedElement constrainedOperationCall(@NonNull OperationCallExp element,
-			CGValuedElement cgSource, @NonNull Operation finalOperation, @NonNull ConstrainedOperation constrainedOperation) {
-		@NonNull CGLibraryOperationCallExp cgOperationCallExp = CGModelFactory.eINSTANCE.createCGLibraryOperationCallExp();
-		cgOperationCallExp.setSource(cgSource);
-		//		cgOperationCallExp.setThisIsSelf(false);
-		for (@NonNull OCLExpression pArgument : ClassUtil.nullFree(element.getOwnedArguments())) {
-			CGValuedElement cgArgument = doVisit(CGValuedElement.class, pArgument);
-			cgOperationCallExp.getArguments().add(cgArgument);
-		}
-		setAst(cgOperationCallExp, element);
-		cgOperationCallExp.setReferredOperation(finalOperation);
-		cgOperationCallExp.setLibraryOperation(constrainedOperation);
-		if (codeGenerator.addConstrainedOperation(finalOperation)) {
-			//			CGNamedElement cgOperation = finalOperation.accept(this);
-			//			if (cgOperation != null) {
-			//				cgOperation.toString();
-			//			}
 		}
 		return cgOperationCallExp;
 	}
@@ -865,62 +849,18 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	protected @NonNull CGValuedElement generateOperationCallExp(@Nullable CGValuedElement cgSource, @NonNull OperationCallExp element) {
 		Operation asOperation = ClassUtil.nonNullState(element.getReferredOperation());
 		boolean isRequired = asOperation.isIsRequired();
-		OCLExpression asSource = element.getOwnedSource();
 		LibraryOperation libraryOperation = (LibraryOperation) metamodelManager.getImplementation(asOperation);
 		OperationCallingConvention callingConvention = getCallingConvention(asOperation, libraryOperation);
 		if (callingConvention != null) {
-			CGCallExp cgCallExp = callingConvention.createCGOperationCallExp(this, libraryOperation, cgSource, element);
-			cgCallExp.setCallingConvention(callingConvention);
+			CGValuedElement cgCallExp = callingConvention.createCGOperationCallExp(this, libraryOperation, cgSource, element);
+			if (cgCallExp instanceof CGCallExp) {
+				((CGCallExp)cgCallExp).setCallingConvention(callingConvention);
+				// XXX ((CGCallExp)cgCallExp).setReferredOperation(asOperation);
+			}
 			return cgCallExp;
 		}
 		CGOperationCallExp cgOperationCallExp = null;
-		if (libraryOperation instanceof NativeVisitorOperation) {
-			LanguageExpression bodyExpression = asOperation.getBodyExpression();
-			if (bodyExpression != null) {
-				CGValuedElement cgOperationCallExp2 = inlineOperationCall(element, bodyExpression);
-				if (cgOperationCallExp2 != null) {
-					return cgOperationCallExp2;
-				}
-			}
-			CGNativeOperationCallExp cgNativeOperationCallExp = CGModelFactory.eINSTANCE.createCGNativeOperationCallExp();
-			cgNativeOperationCallExp.setSource(cgSource);
-			cgNativeOperationCallExp.setThisIsSelf(true);
-			for (@NonNull OCLExpression pArgument : ClassUtil.nullFree(element.getOwnedArguments())) {
-				CGValuedElement cgArgument = doVisit(CGValuedElement.class, pArgument);
-				cgNativeOperationCallExp.getArguments().add(cgArgument);
-			}
-			setAst(cgNativeOperationCallExp, element);
-			cgNativeOperationCallExp.setReferredOperation(asOperation);
-			return cgNativeOperationCallExp;
-		}
-		else if (libraryOperation instanceof ConstrainedOperation) {
-			if (asSource != null) {
-				Type sourceType = ClassUtil.nonNullState(asSource.getType());
-				Operation finalOperation = codeGenerator.isFinal(asOperation, (org.eclipse.ocl.pivot.Class)sourceType);	// FIXME cast
-				CGClass currentClass2 = currentClass;
-				if (finalOperation != null) {
-					LanguageExpression bodyExpression = asOperation.getBodyExpression();
-					if (bodyExpression != null) {
-						CGValuedElement cgOperationCallExp2 = inlineOperationCall(element, bodyExpression);
-						if (cgOperationCallExp2 != null) {
-							return cgOperationCallExp2;
-						} else if (currentClass2 != null) {
-							return cachedOperationCall(element, currentClass2, cgSource, finalOperation, null);
-						} else {
-							return constrainedOperationCall(element, cgSource, finalOperation, (ConstrainedOperation)libraryOperation);
-						}
-					}
-				}
-				if (currentClass2 != null) {
-					Iterable<@NonNull Operation> overrides = environmentFactory.getMetamodelManager().getFinalAnalysis().getOverrides(asOperation);
-					return cachedOperationCall(element, currentClass2, cgSource, asOperation, overrides);
-				} else {
-					Operation baseOperation = asOperation;	// FIXME
-					return constrainedOperationCall(element, cgSource, baseOperation, (ConstrainedOperation)libraryOperation);
-				}
-			}
-		}
-		else if ((libraryOperation instanceof EObjectOperation) || (libraryOperation instanceof EInvokeOperation)) {
+		if ((libraryOperation instanceof EObjectOperation) || (libraryOperation instanceof EInvokeOperation)) {
 			EOperation eOperation = (EOperation) asOperation.getESObject();
 			if (eOperation != null) {
 				try {
@@ -1257,10 +1197,13 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		//	return NativeOperationCallingConvention.INSTANCE;
 			throw new UnsupportedOperationException();
 		}
-	/*	if (libraryOperation instanceof ConstrainedOperation) {
-			return ConstrainedOperationCallingConvention.INSTANCE;
+		if (libraryOperation instanceof ConstrainedOperation) {
+		//	OCLExpression asSource = asOperationCallExp.getOwnedSource();
+		//	if (asSource != null) {
+				return ConstrainedOperationCallingConvention.INSTANCE;
+		//	}
 		}
-		if ((libraryOperation instanceof EObjectOperation) || (libraryOperation instanceof EInvokeOperation)) {
+	/*	if ((libraryOperation instanceof EObjectOperation) || (libraryOperation instanceof EInvokeOperation)) {
 			return EcoreOperationCallingConvention.INSTANCE;
 		}
 		else {
@@ -1290,7 +1233,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return codeGenerator;
 	}
 
-	protected @NonNull CGClass getCurrentClass() {
+	public @NonNull CGClass getCurrentClass() {
 		return ClassUtil.nonNullState(currentClass);
 	}
 
@@ -1560,7 +1503,8 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return variablesStack;
 	}
 
-	protected @Nullable CGValuedElement inlineOperationCall(@NonNull OperationCallExp callExp, @NonNull LanguageExpression specification) {
+	@Nullable
+	public CGValuedElement inlineOperationCall(@NonNull OperationCallExp callExp, @NonNull LanguageExpression specification) {
 		ExpressionInOCL prototype = null;
 		try {
 			prototype = environmentFactory.parseSpecification(specification);
@@ -2217,8 +2161,8 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	}
 
 	@Override
-	@Nullable
-	public CGValuedElement visiting(@NonNull Visitable visitable) {
+
+	public @Nullable CGValuedElement visiting(@NonNull Visitable visitable) {
 		throw new UnsupportedOperationException(getClass().getSimpleName() + ": " + visitable.getClass().getSimpleName());
 	}
 }
