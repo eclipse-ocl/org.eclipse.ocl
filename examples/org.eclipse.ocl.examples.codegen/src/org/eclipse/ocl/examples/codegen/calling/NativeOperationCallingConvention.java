@@ -25,6 +25,8 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
  *  NativeOperationCallingConvention defines the support for the call of a native (Java) operation.
+ *  </br>
+ *  e.g. as anObject.anOperation(arguments)
  */
 public class NativeOperationCallingConvention extends AbstractOperationCallingConvention
 {

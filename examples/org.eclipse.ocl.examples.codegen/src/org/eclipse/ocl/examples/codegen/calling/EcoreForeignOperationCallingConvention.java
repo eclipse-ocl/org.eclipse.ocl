@@ -17,7 +17,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
@@ -27,23 +26,22 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 /**
  *  ForeignOperationCallingConvention defines the support for the call of an operation realized by an
  *  implementation in the *Tables class.
- *   *  </br>
- *  e.g. as XXXTables.FOREIGN_qualified_class.FC_class.INSTANCE.evaluate(executor, arguments)
+ *
+ *  ???
  */
-public class ForeignOperationCallingConvention extends AbstractOperationCallingConvention
+public class EcoreForeignOperationCallingConvention extends AbstractOperationCallingConvention
 {
-	public static final @NonNull ForeignOperationCallingConvention INSTANCE = new ForeignOperationCallingConvention();
+	public static final @NonNull EcoreForeignOperationCallingConvention INSTANCE = new EcoreForeignOperationCallingConvention();
 
 	@Override
 	public @NonNull CGCallExp createCGOperationCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull LibraryOperation libraryOperation,
 			@Nullable CGValuedElement cgSource, @NonNull OperationCallExp asOperationCallExp) {
 		Operation asOperation = ClassUtil.nonNullState(asOperationCallExp.getReferredOperation());
-		assert cgSource == null;
-		assert asOperation.isIsStatic();
+		assert cgSource != null;
+		assert !asOperation.isIsStatic();
 		as2cgVisitor.getAnalyzer().addForeignFeature(asOperation);
 		CGForeignOperationCallExp cgForeignOperationCallExp = CGModelFactory.eINSTANCE.createCGForeignOperationCallExp();
-		CGVariable executorVariable = as2cgVisitor.getExecutorVariable();
-		cgForeignOperationCallExp.getArguments().add(as2cgVisitor.createCGVariableExp(executorVariable));
+		cgForeignOperationCallExp.setSource(cgSource);
 		for (@NonNull OCLExpression pArgument : ClassUtil.nullFree(asOperationCallExp.getOwnedArguments())) {
 			CGValuedElement cgArgument = as2cgVisitor.doVisit(CGValuedElement.class, pArgument);
 			cgForeignOperationCallExp.getArguments().add(cgArgument);
