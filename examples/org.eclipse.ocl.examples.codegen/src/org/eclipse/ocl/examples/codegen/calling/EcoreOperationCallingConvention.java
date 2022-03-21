@@ -64,6 +64,7 @@ public class EcoreOperationCallingConvention extends AbstractOperationCallingCon
 			if (ecoreIsRequired != null) {
 				isRequired = ecoreIsRequired;
 			}
+			init(as2cgVisitor, cgEcoreOperationCallExp, cgSource, asOperationCallExp, isRequired);
 			return cgEcoreOperationCallExp;
 		} catch (GenModelException e) {
 			throw new IllegalStateException(e);

@@ -17,7 +17,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
-import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
@@ -38,17 +37,8 @@ public class EcoreNativeOperationCallingConvention extends AbstractOperationCall
 		Operation asOperation = ClassUtil.nonNullState(asOperationCallExp.getReferredOperation());
 		boolean isRequired = asOperation.isIsRequired();
 		CGNativeOperationCallExp cgNativeOperationCallExp = CGModelFactory.eINSTANCE.createCGNativeOperationCallExp();
-		cgNativeOperationCallExp.setSource(cgSource);
 		cgNativeOperationCallExp.setThisIsSelf(true);
-		for (@NonNull OCLExpression pArgument : ClassUtil.nullFree(asOperationCallExp.getOwnedArguments())) {
-			CGValuedElement cgArgument = as2cgVisitor.doVisit(CGValuedElement.class, pArgument);
-			cgNativeOperationCallExp.getArguments().add(cgArgument);
-		}
-		as2cgVisitor.setAst(cgNativeOperationCallExp, asOperationCallExp);
-		cgNativeOperationCallExp.setReferredOperation(asOperation);
-		cgNativeOperationCallExp.setInvalidating(asOperation.isIsInvalidating());
-		cgNativeOperationCallExp.setValidating(asOperation.isIsValidating());
-		cgNativeOperationCallExp.setRequired(isRequired);
+		init(as2cgVisitor, cgNativeOperationCallExp, cgSource, asOperationCallExp, isRequired);
 		return cgNativeOperationCallExp;
 	}
 

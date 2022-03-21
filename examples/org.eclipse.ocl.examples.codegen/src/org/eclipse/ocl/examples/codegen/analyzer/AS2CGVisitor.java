@@ -31,6 +31,9 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.calling.BuiltInOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.ConstrainedOperationCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.EcoreForeignOperationCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.EcoreNativeOperationCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.EcoreOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.ForeignOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.NativeOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
@@ -49,20 +52,16 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreClassShadowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreDataTypeShadowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOperation;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOppositePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcorePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElementId;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOperation;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOppositePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGFinalVariable;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIfExp;
@@ -860,90 +859,20 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			return cgCallExp;
 		}
 		CGOperationCallExp cgOperationCallExp = null;
-		if ((libraryOperation instanceof EObjectOperation) || (libraryOperation instanceof EInvokeOperation)) {
-			EOperation eOperation = (EOperation) asOperation.getESObject();
-			if (eOperation != null) {
-				try {
-					genModelHelper.getOperationAccessor(asOperation);
-					CGEcoreOperationCallExp cgEcoreOperationCallExp = CGModelFactory.eINSTANCE.createCGEcoreOperationCallExp();
-					cgEcoreOperationCallExp.setEOperation(eOperation);
-					Boolean ecoreIsRequired = codeGenerator.isNonNull(element);
-					if (ecoreIsRequired != null) {
-						isRequired = ecoreIsRequired;
-					}
-					cgOperationCallExp = cgEcoreOperationCallExp;
-				} catch (GenModelException e) {
-					codeGenerator.addProblem(e);
-					org.eclipse.ocl.pivot.Class asType = asOperation.getOwningClass();
-					String className = asType.getInstanceClassName();
-					if (className != null) {
-						CGNativeOperationCallExp cgNativeOperationCallExp = CGModelFactory.eINSTANCE.createCGNativeOperationCallExp();
-						cgNativeOperationCallExp.setSource(cgSource);
-						cgNativeOperationCallExp.setThisIsSelf(true);
-						for (@NonNull OCLExpression pArgument : ClassUtil.nullFree(element.getOwnedArguments())) {
-							CGValuedElement cgArgument = doVisit(CGValuedElement.class, pArgument);
-							cgNativeOperationCallExp.getArguments().add(cgArgument);
-						}
-						setAst(cgNativeOperationCallExp, element);
-						cgNativeOperationCallExp.setReferredOperation(asOperation);
-						cgNativeOperationCallExp.setInvalidating(asOperation.isIsInvalidating());
-						cgNativeOperationCallExp.setValidating(asOperation.isIsValidating());
-						cgNativeOperationCallExp.setRequired(isRequired);
-						return cgNativeOperationCallExp;
-					}
-					else {
-						assert cgSource != null;
-						assert !asOperation.isIsStatic();
-						context.addForeignFeature(asOperation);
-						CGForeignOperationCallExp cgForeignOperationCallExp = CGModelFactory.eINSTANCE.createCGForeignOperationCallExp();
-						cgForeignOperationCallExp.setSource(cgSource);
-						for (@NonNull OCLExpression pArgument : ClassUtil.nullFree(element.getOwnedArguments())) {
-							CGValuedElement cgArgument = doVisit(CGValuedElement.class, pArgument);
-							cgForeignOperationCallExp.getArguments().add(cgArgument);
-						}
-						setAst(cgForeignOperationCallExp, element);
-						cgForeignOperationCallExp.setReferredOperation(asOperation);
-						return cgForeignOperationCallExp;
-					}
-				}
-			}
-		}
-		else {
-			//FIXME BUG 458774			LanguageExpression bodyExpression = asOperation.getBodyExpression();
-			//			if (bodyExpression != null) {
-			//				CGValuedElement cgOperationCallExp2 = inlineOperationCall(element, bodyExpression);
-			//				if (cgOperationCallExp2 != null) {
-			//					return cgOperationCallExp2;
-			//				}
-			//			}
-			CGLibraryOperationCallExp cgLibraryOperationCallExp = CGModelFactory.eINSTANCE.createCGLibraryOperationCallExp();
-			cgLibraryOperationCallExp.setLibraryOperation(libraryOperation);
-			cgLibraryOperationCallExp.setReferredOperation(asOperation);
-			cgOperationCallExp = cgLibraryOperationCallExp;
-		}
-		if (cgOperationCallExp == null) {
-			CGExecutorOperationCallExp cgExecutorOperationCallExp = CGModelFactory.eINSTANCE.createCGExecutorOperationCallExp();
-			if (asOperation.isIsStatic()) {
-				context.addForeignFeature(asOperation);		// FIXME obsolete
-			}
-			CGExecutorOperation cgExecutorOperation = context.createExecutorOperation(asOperation);
-			cgExecutorOperationCallExp.setExecutorOperation(cgExecutorOperation);
-			cgExecutorOperationCallExp.getOwns().add(cgExecutorOperation);
-			cgOperationCallExp = cgExecutorOperationCallExp;
-		}
+		CGLibraryOperationCallExp cgLibraryOperationCallExp = CGModelFactory.eINSTANCE.createCGLibraryOperationCallExp();
+		cgLibraryOperationCallExp.setLibraryOperation(libraryOperation);
+		cgLibraryOperationCallExp.setReferredOperation(asOperation);
+		cgOperationCallExp = cgLibraryOperationCallExp;
 		cgOperationCallExp.setReferredOperation(asOperation);
 		setAst(cgOperationCallExp, element);
 		cgOperationCallExp.setInvalidating(asOperation.isIsInvalidating());
 		cgOperationCallExp.setValidating(asOperation.isIsValidating());
 		cgOperationCallExp.setRequired(isRequired);
 		cgOperationCallExp.setSource(cgSource);
-		//		cgOperationCallExp.getDependsOn().add(cgSource);
 		for (@NonNull OCLExpression pArgument : ClassUtil.nullFree(element.getOwnedArguments())) {
 			CGValuedElement cgArgument = doVisit(CGValuedElement.class, pArgument);
 			cgOperationCallExp.getArguments().add(cgArgument);
-			//			cgOperationCallExp.getDependsOn().add(cgArgument);
 		}
-		//		cgOperationCallExp.setOperation(getOperation(element.getReferredOperation()));
 		return cgOperationCallExp;
 	}
 
@@ -1202,6 +1131,19 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		//	if (asSource != null) {
 				return ConstrainedOperationCallingConvention.INSTANCE;
 		//	}
+		}
+		if ((libraryOperation instanceof EObjectOperation) || (libraryOperation instanceof EInvokeOperation)) {
+			if (EcoreOperationCallingConvention.INSTANCE.canHandle(this, asOperation)) {
+				return EcoreOperationCallingConvention.INSTANCE;
+			}
+			org.eclipse.ocl.pivot.Class asType = asOperation.getOwningClass();
+			String className = asType.getInstanceClassName();
+			if (className != null) {
+				return EcoreNativeOperationCallingConvention.INSTANCE;
+			}
+			else {
+				return EcoreForeignOperationCallingConvention.INSTANCE;
+			}
 		}
 	/*	if ((libraryOperation instanceof EObjectOperation) || (libraryOperation instanceof EInvokeOperation)) {
 			return EcoreOperationCallingConvention.INSTANCE;
