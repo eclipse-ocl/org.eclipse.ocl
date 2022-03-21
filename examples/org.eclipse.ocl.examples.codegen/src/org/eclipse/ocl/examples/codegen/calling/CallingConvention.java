@@ -1,0 +1,33 @@
+/*******************************************************************************
+ * Copyright (c) 2022 Willink Transformation and others.
+ * All rights reserved.   This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v2.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v20.html
+ *
+ * Contributors:
+ *   E.D.Willink - Initial API and implementation
+ *******************************************************************************/
+package org.eclipse.ocl.examples.codegen.calling;
+
+/**
+ *  CallingConvention defines a particular style of Operation or Property call with support for
+ *  generation of a declaration or invocation.
+ */
+public interface CallingConvention
+{
+	/**
+	 * Return true if the calling interactions use the standard OCL boxed representation - Value except for special cases.
+	 */
+	default boolean isBoxed() { return false; }
+
+	/**
+	 * Return true if the calling interactions use the standard Ecore representation
+	 */
+	default boolean isEcore() { return false; }
+
+	/**
+	 * Return true if the calling interactions use the unboxed (or native) representation
+	 */
+	default boolean isUnboxed() { return false; }
+}

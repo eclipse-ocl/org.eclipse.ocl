@@ -301,5 +301,4 @@ public abstract class CGOperationCallExpImpl extends CGCallExpImpl implements CG
 	public boolean isNull() {
 		return false;
 	}
-
 } //CGOperationCallExpImpl

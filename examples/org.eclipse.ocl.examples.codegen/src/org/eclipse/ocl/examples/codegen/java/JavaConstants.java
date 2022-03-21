@@ -41,6 +41,7 @@ public class JavaConstants {
 
 	public static final @NonNull String E_CONTAINER_NAME = "eContainer";
 
+	public static final @NonNull String ANY_NAME = "any";
 	public static final @NonNull String EVALUATE_NAME = "evaluate";
 	public static final @NonNull String EVALUATION_CACHE_NAME = "evaluationCache";
 	public static final @NonNull String EXECUTOR_NAME = "executor";
@@ -54,7 +55,9 @@ public class JavaConstants {
 	public static final @NonNull String THIS_NAME = "this";
 	public static final @NonNull String TYPE_ID_NAME = "typeId";
 
-	public static final @NonNull String FOREIGN_CLASS_PREFIX = "FOREIGN_";
+	public static final @NonNull String FOREIGN_CLASS_PREFIX = "FC_";
+	public static final @NonNull String FOREIGN_OPERATION_PREFIX = "FO_";
+	public static final @NonNull String FOREIGN_PROPERTY_PREFIX = "FP_";
 
 	public static final @NonNull TypeId CLASS_TYPE_ID = getJavaTypeId(org.eclipse.ocl.pivot.Class.class);
 	public static final @NonNull TypeId PROPERTY_TYPE_ID = getJavaTypeId(Property.class);

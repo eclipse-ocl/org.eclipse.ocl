@@ -49,6 +49,7 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 	//	Java reserved word. Access should therefore use globalContext.getYYY rather than JavaConstants.YYY
 	//	to minimize eiting if a new Java reserved word interferes.
 	//
+	protected final @NonNull NameResolution anyName;
 //	protected final @NonNull NameResolution eName;
 	protected final @NonNull NameResolution evaluateName;
 	protected final @NonNull NameResolution evaluationCacheName;
@@ -72,6 +73,7 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 		//
 		this.thisName = globalNameManager.declareReservedName(null, JavaConstants.THIS_NAME);
 		//
+		this.anyName = globalNameManager.declareGlobalName(null, JavaConstants.ANY_NAME);
 //		this.eName = globalNameManager.declareGlobalName(null, JavaConstants.E_NAME);
 		this.evaluateName = globalNameManager.declareGlobalName(null, JavaConstants.EVALUATE_NAME);
 		this.evaluationCacheName = globalNameManager.declareGlobalName(null, JavaConstants.EVALUATION_CACHE_NAME);
@@ -147,6 +149,10 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 
 	public @NonNull JavaLocalContext<@NonNull ? extends CG> createLocalContext(@Nullable JavaLocalContext<@NonNull ?> outerContext, @NonNull CGNamedElement cgNamedElement, @NonNull NamedElement asNamedElement) {
 		return new JavaLocalContext<CG>(this, (JavaLocalContext<@NonNull ? extends CG>)outerContext, cgNamedElement, asNamedElement, true);
+	}
+
+	public @NonNull NameResolution getAnyNameResolution() {
+		return anyName;
 	}
 
 	public @Nullable EClass getEClass(@NonNull ElementId elementId) {

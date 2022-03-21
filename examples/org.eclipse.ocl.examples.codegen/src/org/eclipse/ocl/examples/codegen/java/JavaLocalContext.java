@@ -57,6 +57,7 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 	private /*@LazyNonNull*/ CGVariable standardLibraryVariable = null;		// A convenience cache of execitpr.getStandardVariable()
 	private /*@LazyNonNull*/ CGParameter selfParameter = null;				// A local parameter spelled "self" to be added to the signature
 	private /*@LazyNonNull*/ CGParameter thisParameter = null;				// A local orphan parameter spelled "this"
+	private /*@LazyNonNull*/ CGParameter anyParameter = null;				// A local parameter spelled "any" to be added to the static signature
 
 	@Deprecated /* @deprecated specify executorIsParameter */
 	public JavaLocalContext(@NonNull JavaGlobalContext<@NonNull ? extends CG> globalContext, @NonNull CGElement cgScope) {
@@ -84,6 +85,10 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 		this.isStatic = /*(asScope == null) ||*/ staticFeature;
 	}
 
+	public @Nullable CGParameter basicGetAnyParameter() {
+		return anyParameter;
+	}
+
 	public @Nullable CGVariable basicGetExecutorVariable() {
 		return (executorVariable != null) && !(executorVariable instanceof CGParameter) ? executorVariable : null;
 	}
@@ -108,6 +113,15 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 		return standardLibraryVariable;
 	}
 
+	protected @NonNull CGParameter createAnyParameter() {
+		assert isStatic;
+		NameResolution anyName = globalContext.getAnyNameResolution();
+		CGParameter anyParameter = analyzer.createCGParameter(anyName.getResolvedName(), analyzer.getTypeId(asType.getTypeId()), false);
+		anyParameter.setNonInvalid();
+		anyName.addSecondaryElement(anyParameter);
+		return anyParameter;
+	}
+
 	protected @NonNull CGParameter createExecutorParameter() {
 		assert executorIsParameter;
 		NameResolution executorName = globalContext.getExecutorNameResolution();
@@ -127,17 +141,23 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 	//	executorInit.setValueName(executorName.getResolvedName());
 		executorInit.setMethod(JavaConstants.PIVOT_UTIL_GET_EXECUTOR_GET_METHOD);
 		CGValuedElement contextParameter;
-		if (isStatic) {
-			CGParameter selfParameter = basicGetSelfParameter();
-			if (selfParameter == null) {
-				contextParameter = analyzer.createCGNull();
-			}
-			else {
-				contextParameter = analyzer.createCGVariableExp(selfParameter);
-			}
+		if (!isStatic) {
+			contextParameter = analyzer.createCGVariableExp(getThisParameter());
 		}
 		else {
-			contextParameter = analyzer.createCGVariableExp(getThisParameter());
+			CGParameter selfParameter = basicGetSelfParameter();
+			if (selfParameter != null) {
+				contextParameter = analyzer.createCGVariableExp(selfParameter);
+			}
+			else {
+				CGParameter anyParameter = basicGetAnyParameter();
+				if (anyParameter != null) {
+					contextParameter = analyzer.createCGVariableExp(anyParameter);
+				}
+				else {
+					contextParameter = analyzer.createCGNull();
+				}
+			}
 		}
 		executorInit.getArguments().add(contextParameter);
 		executorInit.setRequired(true);
@@ -246,6 +266,15 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 		typeIdParameter.setNonNull();
 		typeIdNameResolution.addSecondaryElement(typeIdParameter);
 		return typeIdParameter;
+	}
+
+	public @NonNull CGParameter getAnyParameter() {
+	//	assert !isStatic;
+		CGParameter anyParameter2 = anyParameter;
+		if (anyParameter2 == null) {
+			anyParameter = anyParameter2 = createAnyParameter();
+		}
+		return anyParameter;
 	}
 
 	public @Nullable CGValuedElement getBody() {

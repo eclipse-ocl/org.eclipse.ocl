@@ -67,6 +67,24 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 public class CGUtil
 {
+	public static @Nullable CGOperation basicGetContainingOperation(@NonNull CGValuedElement cgExpression) {
+		for (CGElement cgElement = cgExpression; cgElement != null; cgElement = cgElement.getParent()) {
+			if (cgElement instanceof CGOperation) {
+				return (CGOperation) cgElement;
+			}
+		}
+		return null;
+	}
+
+	public static @Nullable CGProperty basicGetContainingProperty(@NonNull CGValuedElement cgExpression) {
+		for (CGElement cgElement = cgExpression; cgElement != null; cgElement = cgElement.getParent()) {
+			if (cgElement instanceof CGProperty) {
+				return (CGProperty) cgElement;
+			}
+		}
+		return null;
+	}
+
 	/**
 	 * Simplify org.eclipse.jdt.annotation references that unnecessarily use long firm within a long firm.
 	 * e.g. replace
@@ -258,6 +276,18 @@ public class CGUtil
 		}
 		return null;
 	} */
+
+	public static @NonNull CGValuedElement getContainingFeature(@Nullable CGElement cgElement) {
+		for ( ; cgElement != null; cgElement = cgElement.getParent()) {
+			if (cgElement instanceof CGOperation) {
+				return (CGOperation) cgElement;
+			}
+			if (cgElement instanceof CGProperty) {
+				return (CGProperty) cgElement;
+			}
+		}
+		throw new IllegalStateException("No containing Feature for " + cgElement);
+	}
 
 	public static @NonNull CGExecutorType getExecutorType(@NonNull CGShadowExp object) {
 		return ClassUtil.nonNullState(object.getExecutorType());
