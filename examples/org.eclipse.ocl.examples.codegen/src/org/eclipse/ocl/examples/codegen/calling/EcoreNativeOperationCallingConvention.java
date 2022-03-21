@@ -27,6 +27,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
  *
  *  ????
  */
+@Deprecated
 public class EcoreNativeOperationCallingConvention extends AbstractOperationCallingConvention
 {
 	public static final @NonNull EcoreNativeOperationCallingConvention INSTANCE = new EcoreNativeOperationCallingConvention();

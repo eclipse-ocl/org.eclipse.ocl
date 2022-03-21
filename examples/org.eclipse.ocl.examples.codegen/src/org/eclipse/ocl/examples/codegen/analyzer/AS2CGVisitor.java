@@ -32,9 +32,9 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.calling.BuiltInOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.ConstrainedOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.EcoreForeignOperationCallingConvention;
-import org.eclipse.ocl.examples.codegen.calling.EcoreNativeOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.EcoreOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.ForeignOperationCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.LibraryOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.NativeOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGAccumulator;
@@ -84,7 +84,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOppositePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
@@ -847,33 +846,14 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	protected @NonNull CGValuedElement generateOperationCallExp(@Nullable CGValuedElement cgSource, @NonNull OperationCallExp element) {
 		Operation asOperation = ClassUtil.nonNullState(element.getReferredOperation());
-		boolean isRequired = asOperation.isIsRequired();
-		LibraryOperation libraryOperation = (LibraryOperation) metamodelManager.getImplementation(asOperation);
+		LibraryOperation libraryOperation = (LibraryOperation)metamodelManager.getImplementation(asOperation);
 		OperationCallingConvention callingConvention = getCallingConvention(asOperation, libraryOperation);
-		if (callingConvention != null) {
-			CGValuedElement cgCallExp = callingConvention.createCGOperationCallExp(this, libraryOperation, cgSource, element);
-			if (cgCallExp instanceof CGCallExp) {
-				((CGCallExp)cgCallExp).setCallingConvention(callingConvention);
-				// XXX ((CGCallExp)cgCallExp).setReferredOperation(asOperation);
-			}
-			return cgCallExp;
+		CGValuedElement cgCallExp = callingConvention.createCGOperationCallExp(this, libraryOperation, cgSource, element);
+		if (cgCallExp instanceof CGCallExp) {
+			((CGCallExp)cgCallExp).setCallingConvention(callingConvention);
+			// XXX ((CGCallExp)cgCallExp).setReferredOperation(asOperation);
 		}
-		CGOperationCallExp cgOperationCallExp = null;
-		CGLibraryOperationCallExp cgLibraryOperationCallExp = CGModelFactory.eINSTANCE.createCGLibraryOperationCallExp();
-		cgLibraryOperationCallExp.setLibraryOperation(libraryOperation);
-		cgLibraryOperationCallExp.setReferredOperation(asOperation);
-		cgOperationCallExp = cgLibraryOperationCallExp;
-		cgOperationCallExp.setReferredOperation(asOperation);
-		setAst(cgOperationCallExp, element);
-		cgOperationCallExp.setInvalidating(asOperation.isIsInvalidating());
-		cgOperationCallExp.setValidating(asOperation.isIsValidating());
-		cgOperationCallExp.setRequired(isRequired);
-		cgOperationCallExp.setSource(cgSource);
-		for (@NonNull OCLExpression pArgument : ClassUtil.nullFree(element.getOwnedArguments())) {
-			CGValuedElement cgArgument = doVisit(CGValuedElement.class, pArgument);
-			cgOperationCallExp.getArguments().add(cgArgument);
-		}
-		return cgOperationCallExp;
+		return cgCallExp;
 	}
 
 	protected @NonNull CGValuedElement generateOppositePropertyCallExp(@NonNull CGValuedElement cgSource, @NonNull OppositePropertyCallExp element) {
@@ -1107,7 +1087,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return context;
 	}
 
-	protected /*@NonNull*/ OperationCallingConvention getCallingConvention(@NonNull Operation asOperation, @NonNull LibraryOperation libraryOperation) {
+	protected @NonNull OperationCallingConvention getCallingConvention(@NonNull Operation asOperation, @NonNull LibraryOperation libraryOperation) {
 		if (BuiltInOperationCallingConvention.INSTANCE.canHandle(libraryOperation)) {
 			return BuiltInOperationCallingConvention.INSTANCE;
 		}
@@ -1139,7 +1119,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			org.eclipse.ocl.pivot.Class asType = asOperation.getOwningClass();
 			String className = asType.getInstanceClassName();
 			if (className != null) {
-				return EcoreNativeOperationCallingConvention.INSTANCE;
+				return /*Ecore*/NativeOperationCallingConvention.INSTANCE;
 			}
 			else {
 				return EcoreForeignOperationCallingConvention.INSTANCE;
@@ -1168,7 +1148,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			}
 			CGExecutorOperation cgExecutorOperation = context.createExecutorOperation(asOperation);
 			*/
-		return null;
+		return LibraryOperationCallingConvention.INSTANCE;
 	}
 
 	public @NonNull CodeGenerator getCodeGenerator() {

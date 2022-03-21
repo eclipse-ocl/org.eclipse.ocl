@@ -36,10 +36,11 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 	public @NonNull CGCallExp createCGOperationCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull LibraryOperation libraryOperation,
 			@Nullable CGValuedElement cgSource, @NonNull OperationCallExp asOperationCallExp) {
 		Operation asOperation = ClassUtil.nonNullState(asOperationCallExp.getReferredOperation());
-		CGLibraryOperationCallExp cgLibraryOperationCallExp = CGModelFactory.eINSTANCE.createCGLibraryOperationCallExp();
-		cgLibraryOperationCallExp.setLibraryOperation(libraryOperation);
-		cgLibraryOperationCallExp.setReferredOperation(asOperation);
-		return cgLibraryOperationCallExp;
+		boolean isRequired = asOperation.isIsRequired();
+		CGLibraryOperationCallExp cgOperationCallExp = CGModelFactory.eINSTANCE.createCGLibraryOperationCallExp();
+		cgOperationCallExp.setLibraryOperation(libraryOperation);
+		init(as2cgVisitor, cgOperationCallExp, cgSource, asOperationCallExp, isRequired);
+		return cgOperationCallExp;
 	}
 
 	@Override

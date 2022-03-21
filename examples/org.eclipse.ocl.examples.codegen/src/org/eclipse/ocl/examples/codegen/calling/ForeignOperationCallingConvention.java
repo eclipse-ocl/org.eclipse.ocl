@@ -18,7 +18,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
-import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
@@ -41,15 +40,17 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 		assert cgSource == null;
 		assert asOperation.isIsStatic();
 		as2cgVisitor.getAnalyzer().addForeignFeature(asOperation);
+		boolean isRequired = asOperation.isIsRequired();
 		CGForeignOperationCallExp cgForeignOperationCallExp = CGModelFactory.eINSTANCE.createCGForeignOperationCallExp();
 		CGVariable executorVariable = as2cgVisitor.getExecutorVariable();
 		cgForeignOperationCallExp.getArguments().add(as2cgVisitor.createCGVariableExp(executorVariable));
-		for (@NonNull OCLExpression pArgument : ClassUtil.nullFree(asOperationCallExp.getOwnedArguments())) {
-			CGValuedElement cgArgument = as2cgVisitor.doVisit(CGValuedElement.class, pArgument);
-			cgForeignOperationCallExp.getArguments().add(cgArgument);
-		}
-		as2cgVisitor.setAst(cgForeignOperationCallExp, asOperationCallExp);
-		cgForeignOperationCallExp.setReferredOperation(asOperation);
+	//	for (@NonNull OCLExpression pArgument : ClassUtil.nullFree(asOperationCallExp.getOwnedArguments())) {
+	//		CGValuedElement cgArgument = as2cgVisitor.doVisit(CGValuedElement.class, pArgument);
+	//		cgForeignOperationCallExp.getArguments().add(cgArgument);
+	//	}
+	//	as2cgVisitor.setAst(cgForeignOperationCallExp, asOperationCallExp);
+	//	cgForeignOperationCallExp.setReferredOperation(asOperation);
+		init(as2cgVisitor, cgForeignOperationCallExp, cgSource, asOperationCallExp, isRequired);
 		return cgForeignOperationCallExp;
 	}
 

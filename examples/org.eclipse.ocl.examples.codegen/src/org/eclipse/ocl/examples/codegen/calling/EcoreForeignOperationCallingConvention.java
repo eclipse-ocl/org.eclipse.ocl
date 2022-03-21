@@ -41,13 +41,6 @@ public class EcoreForeignOperationCallingConvention extends AbstractOperationCal
 		boolean isRequired = asOperation.isIsRequired();
 		as2cgVisitor.getAnalyzer().addForeignFeature(asOperation);
 		CGForeignOperationCallExp cgForeignOperationCallExp = CGModelFactory.eINSTANCE.createCGForeignOperationCallExp();
-//		cgForeignOperationCallExp.setSource(cgSource);
-//		for (@NonNull OCLExpression pArgument : ClassUtil.nullFree(asOperationCallExp.getOwnedArguments())) {
-//			CGValuedElement cgArgument = as2cgVisitor.doVisit(CGValuedElement.class, pArgument);
-//			cgForeignOperationCallExp.getArguments().add(cgArgument);
-//		}
-//		as2cgVisitor.setAst(cgForeignOperationCallExp, asOperationCallExp);
-//		cgForeignOperationCallExp.setReferredOperation(asOperation);
 		init(as2cgVisitor, cgForeignOperationCallExp, cgSource, asOperationCallExp, isRequired);
 		return cgForeignOperationCallExp;
 	}
