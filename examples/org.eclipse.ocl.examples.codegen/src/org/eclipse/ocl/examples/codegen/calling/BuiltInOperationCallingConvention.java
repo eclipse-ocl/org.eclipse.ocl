@@ -35,7 +35,6 @@ public class BuiltInOperationCallingConvention extends AbstractOperationCallingC
 {
 	public static final @NonNull BuiltInOperationCallingConvention INSTANCE = new BuiltInOperationCallingConvention();
 
-//	@Override
 	public boolean canHandle(@NonNull LibraryOperation libraryOperation) {
 		if (libraryOperation instanceof OclAnyOclIsInvalidOperation) {
 			return true;
@@ -52,9 +51,6 @@ public class BuiltInOperationCallingConvention extends AbstractOperationCallingC
 	@Override
 	public @NonNull CGCallExp createCGOperationCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull LibraryOperation libraryOperation,
 			@Nullable CGValuedElement cgSource, @NonNull OperationCallExp asOperationCallExp) {
-	//	Operation asOperation = ClassUtil.nonNullState(asOperationCallExp.getReferredOperation());
-	//	LibraryFeature libraryOperation = as2cgVisitor.getMetamodelManager().getImplementation(asOperation);
-		CGCallExp cgCallExp = null;
 		if (libraryOperation instanceof OclAnyOclIsInvalidOperation) {
 			CGIsInvalidExp cgIsInvalidExp = CGModelFactory.eINSTANCE.createCGIsInvalidExp();
 			cgIsInvalidExp.setSource(cgSource);

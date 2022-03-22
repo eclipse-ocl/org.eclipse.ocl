@@ -10,13 +10,18 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.calling;
 
+import java.lang.reflect.Method;
+import java.util.List;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
+import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
@@ -36,17 +41,77 @@ public class NativeOperationCallingConvention extends AbstractOperationCallingCo
 			@Nullable CGValuedElement cgSource, @NonNull OperationCallExp asOperationCallExp) {
 		Operation asOperation = ClassUtil.nonNullState(asOperationCallExp.getReferredOperation());
 		boolean isRequired = asOperation.isIsRequired();
-		CGNativeOperationCallExp cgNativeOperationCallExp = CGModelFactory.eINSTANCE.createCGNativeOperationCallExp();
+		CGNativeOperationCallExp cgNativeOperationCallExp = as2cgVisitor.getAnalyzer().createCGNativeOperationCallExp(null);
 		cgNativeOperationCallExp.setThisIsSelf(true);
-	//	cgNativeOperationCallExp.setSource(cgSource);
-	//	for (@NonNull OCLExpression pArgument : ClassUtil.nullFree(asOperationCallExp.getOwnedArguments())) {
-	//		CGValuedElement cgArgument = as2cgVisitor.doVisit(CGValuedElement.class, pArgument);
-	//		cgNativeOperationCallExp.getArguments().add(cgArgument);
-	//	}
-	//	as2cgVisitor.setAst(cgNativeOperationCallExp, asOperationCallExp);
-	//	cgNativeOperationCallExp.setReferredOperation(asOperation);
 		init(as2cgVisitor, cgNativeOperationCallExp, cgSource, asOperationCallExp, isRequired);
 		return cgNativeOperationCallExp;
+	}
+
+	@Override
+	public @NonNull Boolean generateJava(@NonNull CG2JavaVisitor<?> cg2JavaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
+		CGNativeOperationCallExp cgNativeOperationCallExp = (CGNativeOperationCallExp)cgOperationCallExp;
+		//	Operation asOperation = cgOperationCallExp.getReferredOperation();
+		boolean thisIsSelf = cgNativeOperationCallExp.isThisIsSelf();
+		CGValuedElement cgSource = cgNativeOperationCallExp.getSource();
+		CGValuedElement source = cgSource != null ? cg2JavaVisitor.getExpression(cgSource) :  null;
+		//
+		if ((source != null) && !js.appendLocalStatements(source)) {
+			return false;
+		}
+		Method javaMethod = cgNativeOperationCallExp.getMethod();
+		List<CGValuedElement> cgArguments = cgNativeOperationCallExp.getArguments();
+		//	List<Parameter> pParameters = asOperation.getOwnedParameters();
+		java.lang.reflect.Parameter[] javaParameters = javaMethod.getParameters();
+		for (@SuppressWarnings("null")@NonNull CGValuedElement cgArgument : cgArguments) {
+			CGValuedElement argument = cg2JavaVisitor.getExpression(cgArgument);
+			if (!js.appendLocalStatements(argument)) {
+				return false;
+			}
+		}
+		//
+		js.appendDeclaration(cgNativeOperationCallExp);
+		js.append(" = ");
+		if ((source != null) && !thisIsSelf) {
+			js.appendValueName(source);
+		}
+		else {
+			js.appendClassReference(null, javaMethod.getDeclaringClass());
+		}
+		js.append(".");
+		js.append(javaMethod.getName());
+		//		js.appendClassCast(cgOperationCallExp);
+		/*		if (thisIsSelf) {
+			js.appendValueName(source);
+		}
+		else {
+			if (localPrefix != null) {
+				js.append(localPrefix);
+				js.append(".");
+			}
+			js.append(JavaConstants.THIS_NAME);
+		} */
+	//	js.appendThis(ClassUtil.nonNullState(cgOperationCallExp.getReferredOperation().getOwningClass().getName()));
+	//	js.append(".");
+	//	js.append(cgOperationCallExp.getReferredOperation().getName());
+		js.append("(");
+	//	if ((source != null) && !thisIsSelf) {
+	//		js.appendValueName(source);
+	//	}
+		int iMax = Math.min(javaParameters.length, cgArguments.size());
+		for (int i = 0; i < iMax; i++) {
+			if ((i > 0)) {// || !thisIsSelf) {
+				js.append(", ");
+			}
+			CGValuedElement cgArgument = cgArguments.get(i);
+			java.lang.reflect.Parameter javaParameter = javaParameters[i];
+		//	CGTypeId cgTypeId = analyzer.getTypeId(pParameter.getTypeId());
+		//	TypeDescriptor parameterTypeDescriptor = context.getUnboxedDescriptor(ClassUtil.nonNullState(cgTypeId.getElementId()));
+			CGValuedElement argument = cg2JavaVisitor.getExpression(cgArgument);
+		//	js.appendReferenceTo(parameterTypeDescriptor, argument);
+			js.appendValueName(argument);
+		}
+		js.append(");\n");
+		return true;
 	}
 
 	@Override

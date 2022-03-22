@@ -450,9 +450,8 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	}
 
 	protected @NonNull CGNativeOperationCallExp createCGNativeOperationCallExp(@Nullable CGValuedElement cgSource, @NonNull Method method, @NonNull CGValuedElement... cgArguments) {
-		CGNativeOperationCallExp cgCallExp = CGModelFactory.eINSTANCE.createCGNativeOperationCallExp();
+		CGNativeOperationCallExp cgCallExp = context.createCGNativeOperationCallExp(method);
 		cgCallExp.setSource(cgSource);
-		cgCallExp.setMethod(method);
 		if (cgArguments != null) {
 			List<CGValuedElement> cgArguments2 = cgCallExp.getArguments();
 			for (@NonNull CGValuedElement cgArgument : cgArguments) {
@@ -1125,35 +1124,12 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			org.eclipse.ocl.pivot.Class asType = asOperation.getOwningClass();
 			String className = asType.getInstanceClassName();
 			if (className != null) {
-				return /*Ecore*/NativeOperationCallingConvention.INSTANCE;
+				return NativeOperationCallingConvention.INSTANCE;
 			}
 			else {
 				return EcoreForeignOperationCallingConvention.INSTANCE;
 			}
 		}
-	/*	if ((libraryOperation instanceof EObjectOperation) || (libraryOperation instanceof EInvokeOperation)) {
-			return EcoreOperationCallingConvention.INSTANCE;
-		}
-		else {
-			//FIXME BUG 458774			LanguageExpression bodyExpression = asOperation.getBodyExpression();
-			//			if (bodyExpression != null) {
-			//				CGValuedElement cgOperationCallExp2 = inlineOperationCall(element, bodyExpression);
-			//				if (cgOperationCallExp2 != null) {
-			//					return cgOperationCallExp2;
-			//				}
-			//			}
-			CGLibraryOperationCallExp cgLibraryOperationCallExp = CGModelFactory.eINSTANCE.createCGLibraryOperationCallExp();
-			cgLibraryOperationCallExp.setLibraryOperation(libraryOperation);
-			cgLibraryOperationCallExp.setReferredOperation(asOperation);
-			cgOperationCallExp = cgLibraryOperationCallExp;
-		}
-		if (cgOperationCallExp == null) {
-			CGExecutorOperationCallExp cgExecutorOperationCallExp = CGModelFactory.eINSTANCE.createCGExecutorOperationCallExp();
-			if (asOperation.isIsStatic()) {
-				context.addForeignFeature(asOperation);		// FIXME obsolete
-			}
-			CGExecutorOperation cgExecutorOperation = context.createExecutorOperation(asOperation);
-			*/
 		return LibraryOperationCallingConvention.INSTANCE;
 	}
 

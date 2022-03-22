@@ -13,7 +13,10 @@ package org.eclipse.ocl.examples.codegen.calling;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
+import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 
@@ -24,14 +27,11 @@ import org.eclipse.ocl.pivot.library.LibraryOperation;
 public interface OperationCallingConvention extends CallingConvention
 {
 	/**
-	 * Return true if this OperationCallingConvention can handle asOperation.
-	 */
-//	boolean canHandle(@NonNull LibraryOperation libraryOperation);
-
-	/**
 	 * Create the appropriate CGOperationCallExp for asOperationCallExp with cgSource, or retirn null
 	 * if this OperationCallingConvention cannot handle it.
 	 */
 	@NonNull CGValuedElement createCGOperationCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull LibraryOperation libraryOperation,
 			@Nullable CGValuedElement cgSource, @NonNull OperationCallExp asOperationCallExp);
+
+	@NonNull Boolean generateJava(@NonNull CG2JavaVisitor<?> cg2JavaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp);
 }

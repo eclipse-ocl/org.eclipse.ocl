@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.analyzer;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.calling.NativeOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBoolean;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstant;
@@ -31,6 +33,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGInteger;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInvalid;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNull;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
@@ -197,6 +200,14 @@ public class CodeGenAnalyzer
 		cgConstantExp.setReferredConstant(cgConstant);
 		cgConstantExp.setTypeId(getTypeId(element.getTypeId()));
 		return cgConstantExp;
+	}
+
+	public @NonNull CGNativeOperationCallExp createCGNativeOperationCallExp(@Nullable Method method) {		// XXX @NonNull
+		assert method != null;
+		CGNativeOperationCallExp cgNativeOperationCallExp = CGModelFactory.eINSTANCE.createCGNativeOperationCallExp();
+		cgNativeOperationCallExp.setCallingConvention(NativeOperationCallingConvention.INSTANCE);
+		cgNativeOperationCallExp.setMethod(method);
+		return cgNativeOperationCallExp;
 	}
 
 	public @NonNull CGNull createCGNull() {

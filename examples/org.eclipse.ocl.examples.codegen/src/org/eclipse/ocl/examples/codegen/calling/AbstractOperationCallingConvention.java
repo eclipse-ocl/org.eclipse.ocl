@@ -15,6 +15,8 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
+import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
@@ -25,6 +27,11 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
  */
 public abstract class AbstractOperationCallingConvention implements OperationCallingConvention
 {
+	@Override
+	public @NonNull Boolean generateJava(@NonNull CG2JavaVisitor<?> cg2JavaVisitor, @NonNull JavaStream js,@NonNull CGOperationCallExp cgOperationCallExp) {
+		throw new UnsupportedOperationException();		// XXX
+	}
+
 	protected void init(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperationCallExp cgOperationCallExp,
 			@Nullable CGValuedElement cgSource, @NonNull OperationCallExp asOperationCallExp, boolean isRequired) {
 		Operation asOperation = ClassUtil.nonNullState(asOperationCallExp.getReferredOperation());
@@ -34,11 +41,9 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 		cgOperationCallExp.setValidating(asOperation.isIsValidating());
 		cgOperationCallExp.setRequired(isRequired);
 		cgOperationCallExp.setSource(cgSource);
-		//		cgOperationCallExp.getDependsOn().add(cgSource);
 		for (@NonNull OCLExpression asArgument : ClassUtil.nullFree(asOperationCallExp.getOwnedArguments())) {
 			CGValuedElement cgArgument = as2cgVisitor.doVisit(CGValuedElement.class, asArgument);
 			cgOperationCallExp.getArguments().add(cgArgument);
-			//			cgOperationCallExp.getDependsOn().add(cgArgument);
 		}
 	}
 }
