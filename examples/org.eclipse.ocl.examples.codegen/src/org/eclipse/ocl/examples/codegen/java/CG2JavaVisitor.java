@@ -44,7 +44,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreDataTypeShadowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcorePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElementId;
@@ -57,7 +56,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOppositePropertyCallEx
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGGuardExp;
@@ -74,16 +72,15 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGLetExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryIterateCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperation;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGMapExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGMapPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperation;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNull;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
@@ -584,6 +581,10 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		return true;
 	}
 
+	public @Nullable LibraryOperationHandler basicGetLibraryOperationHandler(@NonNull Class<? extends LibraryOperation> libraryOperation) {
+		return libraryOperation2handler.get(libraryOperation);
+	}
+
 	public String getBodyPrefixedName() {
 		return "BODY_";
 	}
@@ -928,7 +929,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		}
 	}
 
-	private Method getJavaMethod(@NonNull LibraryOperation libraryOperation, int argumentSize) {
+	public Method getJavaMethod(@NonNull LibraryOperation libraryOperation, int argumentSize) {
 		try {
 			Class<? extends LibraryOperation> implementationClass = libraryOperation.getClass();
 			Class<?>[] arguments;
@@ -1732,12 +1733,6 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	}
 
 	@Override
-	public @NonNull Boolean visitCGEcoreOperationCallExp(@NonNull CGEcoreOperationCallExp cgOperationCallExp) {
-		OperationCallingConvention callingConvention = cgOperationCallExp.getCallingConvention();
-		return callingConvention.generateJava(this, js, cgOperationCallExp);
-	}
-
-	@Override
 	public @NonNull Boolean visitCGEcorePropertyCallExp(@NonNull CGEcorePropertyCallExp cgPropertyCallExp) {
 		return appendCGEcorePropertyCallExp(cgPropertyCallExp, null);
 	}
@@ -2003,12 +1998,6 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			localContext = null;
 		}
 	} */
-
-	@Override
-	public @NonNull Boolean visitCGForeignOperationCallExp(@NonNull CGForeignOperationCallExp cgForeignOperationCallExp) {
-		OperationCallingConvention callingConvention = cgForeignOperationCallExp.getCallingConvention();
-		return callingConvention.generateJava(this, js, cgForeignOperationCallExp);
-	}
 
 	@Override
 	public @NonNull Boolean visitCGForeignProperty(@NonNull CGForeignProperty cgForeignProperty) {
@@ -2542,126 +2531,6 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	}
 
 	@Override
-	public @NonNull Boolean visitCGLibraryOperationCallExp(@NonNull CGLibraryOperationCallExp cgOperationCallExp) {
-		final LibraryOperation libraryOperation = ClassUtil.nonNullState(cgOperationCallExp.getLibraryOperation());
-		LibraryOperationHandler libraryOperationHandler = libraryOperation2handler.get(libraryOperation.getClass());
-		if (libraryOperationHandler != null) {
-			return libraryOperationHandler.generate(cgOperationCallExp);
-		}
-	// false;		// XXX
-		final CGValuedElement source = getExpression(cgOperationCallExp.getSource());
-		final List<CGValuedElement> arguments = cgOperationCallExp.getArguments();
-		Method actualMethod = getJavaMethod(libraryOperation, arguments.size());
-		Class<?> actualReturnClass = actualMethod != null ? actualMethod.getReturnType() : null;
-		boolean actualIsNonNull = (actualMethod != null) && (context.getIsNonNull(actualMethod) == Boolean.TRUE);
-		boolean expectedIsNonNull = cgOperationCallExp.isNonNull();
-		final CGTypeId resultType = cgOperationCallExp.getTypeId();
-		if (!js.appendLocalStatements(source)) {
-			return false;
-		}
-		for (@SuppressWarnings("null")@NonNull CGValuedElement cgArgument : arguments) {
-			if (!js.appendLocalStatements(cgArgument)) {
-				return false;
-			}
-		}
-		for (int i = 0; i < arguments.size(); i++) {
-			CGValuedElement cgArgument = arguments.get(i);
-			Parameter asParameter = cgOperationCallExp.getReferredOperation().getOwnedParameters().get(i);
-			if (asParameter.isIsRequired()) {
-				if (cgArgument.isNull()) {
-					js.append("throw new ");
-					js.appendClassReference(null, InvalidValueException.class);
-					js.append("(\"Null argument\");\n");
-					return false;
-				}
-				else if (cgArgument.isInvalid()) {
-					js.append("throw new ");
-					js.appendClassReference(null, InvalidValueException.class);
-					js.append("(\"Invalid argument\");\n");
-					return false;
-				}
-				else {
-					if (!cgArgument.isNonNull()) {
-						js.append("if (");
-						js.appendValueName(cgArgument);
-						js.append(" == null) {\n");
-						js.pushIndentation(null);
-						js.append("throw new ");
-						js.appendClassReference(null, InvalidValueException.class);
-						js.append("(\"Null argument\");\n");
-						js.popIndentation();
-						js.append("}\n");
-					}
-					if (!cgArgument.isNonInvalid()) {
-						js.append("if (");
-						js.appendValueName(cgArgument);
-						js.append(" instanceof ");
-						js.appendClassReference(null, InvalidValueException.class);
-						js.append(") {\n");
-						js.pushIndentation(null);
-						js.append("throw (");
-						js.appendClassReference(null, InvalidValueException.class);
-						js.append(")");
-						js.appendValueName(cgArgument);
-						js.append(";\n");
-						js.popIndentation();
-						js.append("}\n");
-					}
-				}
-			}
-		}
-		if (expectedIsNonNull && !actualIsNonNull) {
-			js.appendSuppressWarningsNull(true);
-		}
-		js.appendDeclaration(cgOperationCallExp);
-		js.append(" = ");
-		boolean isRequiredNullCast = expectedIsNonNull && !actualIsNonNull;
-		//		if (expectedIsNonNull && !actualIsNonNull) {
-		//			js.appendClassReference(null, ClassUtil.class);
-		//			js.append(".nonNullState(");
-		//		}
-		js.appendClassCast(cgOperationCallExp, isRequiredNullCast, actualReturnClass, new JavaStream.SubStream()
-		{
-			@Override
-			public void append() {
-				js.appendClassReference(null, libraryOperation.getClass());
-				js.append(".");
-				js.append(globalContext.getInstanceName());
-				js.append(".");
-				js.append(globalContext.getEvaluateName());
-				js.append("(");
-				if (!(libraryOperation instanceof LibrarySimpleOperation)) {
-					//					js.append(getValueName(localContext.getEvaluatorParameter(cgOperationCallExp)));
-					js.append(globalContext.getExecutorName());
-					js.append(", ");
-					if (!(libraryOperation instanceof LibraryUntypedOperation)) {
-						//						CGTypeVariable typeVariable = localContext.getTypeVariable(resultType);
-						js.appendValueName(resultType);
-						js.append(", ");
-					}
-				}
-				if (source.isNull()) {
-					js.append("(Object)");
-				}
-				js.appendValueName(source);
-				for (@SuppressWarnings("null")@NonNull CGValuedElement cgArgument : arguments) {
-					js.append(", ");
-					if (cgArgument.isNull()) {
-						js.append("(Object)");
-					}
-					js.appendValueName(cgArgument);		// FIXME cast
-				}
-				js.append(")");
-			}
-		});
-		//		if (expectedIsNonNull && !actualIsNonNull) {
-		//			js.append(")");
-		//		}
-		js.append(";\n");
-		return true;
-	}
-
-	@Override
 	public @NonNull Boolean visitCGLibraryPropertyCallExp(@NonNull CGLibraryPropertyCallExp cgPropertyCallExp) {
 		CGValuedElement source = getExpression(cgPropertyCallExp.getSource());
 		LibraryProperty libraryProperty = ClassUtil.nonNullState(cgPropertyCallExp.getLibraryProperty());
@@ -2791,12 +2660,6 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	}
 
 	@Override
-	public @NonNull Boolean visitCGNativeOperationCallExp(@NonNull CGNativeOperationCallExp cgNativeOperationCallExp) {
-		OperationCallingConvention callingConvention = cgNativeOperationCallExp.getCallingConvention();
-		return callingConvention.generateJava(this, js, cgNativeOperationCallExp);
-	}
-
-	@Override
 	public @NonNull Boolean visitCGNativeProperty(@NonNull CGNativeProperty cgNativeProperty) {
 		localContext = globalContext.getLocalContext(cgNativeProperty);
 		try {
@@ -2842,6 +2705,12 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	@Override
 	public @NonNull Boolean visitCGOperation(@NonNull CGOperation cgOperation) {
 		return doOperation(cgOperation, false);
+	}
+
+	@Override
+	public @NonNull Boolean visitCGOperationCallExp(@NonNull CGOperationCallExp cgOperationCallExp) {
+		OperationCallingConvention callingConvention = cgOperationCallExp.getCallingConvention();
+		return callingConvention.generateJava(this, js, cgOperationCallExp);
 	}
 
 	@Override
