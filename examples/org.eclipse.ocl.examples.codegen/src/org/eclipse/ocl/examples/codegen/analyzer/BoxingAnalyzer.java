@@ -36,7 +36,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOppositePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGGuardExp;
@@ -49,10 +48,8 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGIterator;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryIterateCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperation;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperation;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
@@ -118,114 +115,6 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 		super(analyzer);
 		codeGenerator = analyzer.getCodeGenerator();
 	}
-
-	protected void doOperationCallRewrites(@NonNull CGOperationCallExp cgElement) {
-		OperationCallingConvention callingConvention = cgElement.getCallingConvention();
-		boolean isBoxed = callingConvention.isBoxed();
-		boolean isEcore = callingConvention.isEcore();
-		boolean isUnboxed = callingConvention.isUnboxed();
-		assert isBoxed == cgElement.isBoxed();
-		assert isEcore == cgElement.isEcore();
-		assert isUnboxed == cgElement.isUnboxed();
-		Operation referredOperation = cgElement.getReferredOperation();
-		//
-		boolean sourceMayBeNull = false;
-		if (isBoxed) {
-			OperationId operationId = referredOperation.getOperationId();
-			sourceMayBeNull = hasOclVoidOperation(operationId);
-		}
-		//
-		EOperation eOperation = null;
-		List<EParameter> eParameters = null;
-		if (isEcore) {
-			eOperation = ((CGEcoreOperationCallExp)cgElement).getEOperation();
-			assert eOperation != null;
-			eParameters = eOperation.getEParameters();
-		}
-		//
-		//	Guard / cast source
-		//
-		CGValuedElement cgSource = cgElement.getSource();
-		if (!referredOperation.isIsStatic()) {
-			rewriteAsGuarded(cgElement.getSource(), isSafe(cgElement), "source for '" + referredOperation + "'");
-		}
-	//	rewriteAsGuarded(cgSource, isSafe(cgElement), "source for '" + cgElement.getReferredOperation() + "'");
-
-		if (isBoxed) {
-			rewriteAsBoxed(cgSource);
-		}
-		else if (eOperation != null) {
-			rewriteAsEcore(cgSource, eOperation.getEContainingClass());
-			if (eOperation.isMany()) {
-				rewriteAsAssertNonNulled(cgElement);
-			}
-		}
-		else {
-			rewriteAsUnboxed(cgSource);
-		}
-		//
-		//	Guard / cast arguments
-		//
-		List<CGValuedElement> cgArguments = cgElement.getArguments();
-		int iMax = cgArguments.size();
-		for (int i = 0; i < iMax; i++) {			// Avoid CME from rewrite
-			CGValuedElement cgArgument = cgArguments.get(i);
-			if (isBoxed) {
-				rewriteAsBoxed(cgArgument);
-			}
-			else if (eParameters != null) {
-				rewriteAsEcore(cgArgument, eParameters.get(i).getEType());
-			}
-			else {
-				rewriteAsUnboxed(cgArgument);
-			}
-		}
-	}
-	/*		Operation referredOperation = cgElement.getReferredOperation();
-	OperationId operationId = referredOperation.getOperationId();
-	boolean sourceMayBeNull = hasOclVoidOperation(operationId);
-	CGValuedElement cgSource = cgElement.getSource();
-	if (!sourceMayBeNull) {
-		if (cgSource.isNull()) {
-//			CGInvalid cgInvalid = context.getInvalid("null value1 for source parameter");
-			CGInvalid cgInvalid = context.getInvalid("''" + referredOperation.getOwningClass().getName() + "'' rather than ''OclVoid'' value required");
-			CGConstantExp cgLiteralExp = context.createCGConstantExp(CGUtil.getAST(cgElement), cgInvalid);
-			CGUtil.replace(cgElement, cgLiteralExp);
-			return null;
-		}
-	}
-	List<Parameter> ownedParameters = referredOperation.getOwnedParameters();
-	List<CGValuedElement> cgArguments = cgElement.getArguments();
-	int iMax = cgArguments.size();
-	if (!referredOperation.isIsValidating()) {
-		for (int i = 0; i < iMax; i++) {			// Avoid CME from rewrite
-			CGValuedElement cgArgument = cgArguments.get(i);
-			Parameter asParameter = ownedParameters.get(i);
-			if (asParameter.isIsRequired()) {
-				if (cgArgument.isNull()) {
-//					CGInvalid cgInvalid = context.getInvalid("null value2 for " + asParameter.getName() + " parameter");
-					CGInvalid cgInvalid = context.getInvalid("''" + asParameter.getType().getName() + "'' rather than ''OclVoid'' value required");
-					CGConstantExp cgLiteralExp = context.createCGConstantExp(CGUtil.getAST(cgElement), cgInvalid);
-					CGUtil.replace(cgElement, cgLiteralExp);
-					return null;
-				}
-			}
-		}
-	}
-	rewriteAsBoxed(cgSource);
-	if (!sourceMayBeNull && !cgSource.isNonNull()) {
-//		rewriteAsGuarded(cgSource, false, "value3 for source parameter");
-		rewriteAsGuarded(cgSource, false, "''" + referredOperation.getOwningClass().getName() + "'' rather than ''OclVoid'' value required");
-	}
-	for (int i = 0; i < iMax; i++) {			// Avoid CME from rewrite
-		CGValuedElement cgArgument = cgArguments.get(i);
-		rewriteAsBoxed(cgArgument);
-		Parameter asParameter = ownedParameters.get(i);
-		if (asParameter.isIsRequired() && !cgArgument.isNonNull()) {
-//			rewriteAsGuarded(cgArgument, false, "value4 for " + asParameter.getName() + " parameter");
-			rewriteAsGuarded(cgArgument, false, "''" + asParameter.getType().getName() + "'' rather than ''OclVoid'' value required");
-		}
-	} */
 
 	protected boolean hasOclVoidOperation(@NonNull OperationId operationId) {
 		PivotMetamodelManager metamodelManager = codeGenerator.getEnvironmentFactory().getMetamodelManager();
@@ -449,13 +338,6 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	}
 
 	@Override
-	public @Nullable Object visitCGEcoreOperationCallExp(@NonNull CGEcoreOperationCallExp cgElement) {
-		super.visitCGEcoreOperationCallExp(cgElement);
-		doOperationCallRewrites(cgElement);
-		return null;
-	}
-
-	@Override
 	public @Nullable Object visitCGEcoreOppositePropertyCallExp(@NonNull CGEcoreOppositePropertyCallExp cgElement) {
 		super.visitCGEcoreOppositePropertyCallExp(cgElement);
 		rewriteAsEcore(cgElement.getSource(), cgElement.getEStructuralFeature().getEType());
@@ -502,13 +384,6 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 		for (@NonNull CGElement cgChild : cgElement.getChildren()) {
 			cgChild.accept(this);
 		}
-		return null;
-	}
-
-	@Override
-	public @Nullable Object visitCGForeignOperationCallExp(@NonNull CGForeignOperationCallExp cgElement) {
-		super.visitCGForeignOperationCallExp(cgElement);;
-		doOperationCallRewrites(cgElement);
 		return null;
 	}
 
@@ -613,68 +488,9 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	}
 
 	@Override
-	public @Nullable Object visitCGLibraryOperationCallExp(@NonNull CGLibraryOperationCallExp cgElement) {
-		super.visitCGLibraryOperationCallExp(cgElement);
-//		doOperationCallRewrites(cgElement);
-		Operation referredOperation = cgElement.getReferredOperation();
-		OperationId operationId = referredOperation.getOperationId();
-		boolean sourceMayBeNull = hasOclVoidOperation(operationId);
-		CGValuedElement cgSource = cgElement.getSource();
-		if (!sourceMayBeNull) {
-			if (cgSource.isNull()) {
-//				CGInvalid cgInvalid = context.getInvalid("null value1 for source parameter");
-				CGInvalid cgInvalid = context.getInvalid("''" + referredOperation.getOwningClass().getName() + "'' rather than ''OclVoid'' value required");
-				CGConstantExp cgLiteralExp = context.createCGConstantExp(CGUtil.getAST(cgElement), cgInvalid);
-				CGUtil.replace(cgElement, cgLiteralExp);
-				return null;
-			}
-		}
-		rewriteAsBoxed(cgSource);
-		if (!sourceMayBeNull && !cgSource.isNonNull()) {
-//			rewriteAsGuarded(cgSource, false, "value3 for source parameter");
-			rewriteAsGuarded(cgSource, false, "''" + referredOperation.getOwningClass().getName() + "'' rather than ''OclVoid'' value required");
-		}
-		List<Parameter> ownedParameters = referredOperation.getOwnedParameters();
-		List<CGValuedElement> cgArguments = cgElement.getArguments();
-		int iMax = cgArguments.size();
-		if (!referredOperation.isIsValidating()) {
-			for (int i = 0; i < iMax; i++) {			// Avoid CME from rewrite
-				CGValuedElement cgArgument = cgArguments.get(i);
-				Parameter asParameter = ownedParameters.get(i);
-				if (asParameter.isIsRequired()) {
-					if (cgArgument.isNull()) {
-	//					CGInvalid cgInvalid = context.getInvalid("null value2 for " + asParameter.getName() + " parameter");
-						CGInvalid cgInvalid = context.getInvalid("''" + asParameter.getType().getName() + "'' rather than ''OclVoid'' value required");
-						CGConstantExp cgLiteralExp = context.createCGConstantExp(CGUtil.getAST(cgElement), cgInvalid);
-						CGUtil.replace(cgElement, cgLiteralExp);
-						return null;
-					}
-				}
-			}
-		}
-		for (int i = 0; i < iMax; i++) {			// Avoid CME from rewrite
-			CGValuedElement cgArgument = cgArguments.get(i);
-			rewriteAsBoxed(cgArgument);
-			Parameter asParameter = ownedParameters.get(i);
-			if (asParameter.isIsRequired() && !cgArgument.isNonNull()) {
-//				rewriteAsGuarded(cgArgument, false, "value4 for " + asParameter.getName() + " parameter");
-				rewriteAsGuarded(cgArgument, false, "''" + asParameter.getType().getName() + "'' rather than ''OclVoid'' value required");
-			}
-		}
-		return null;
-	}
-
-	@Override
 	public @Nullable Object visitCGNativeOperation(@NonNull CGNativeOperation cgNativeOperation) {
 		super.visitCGNativeOperation(cgNativeOperation);
 		rewriteAsUnboxed(cgNativeOperation.getBody());
-		return null;
-	}
-
-	@Override
-	public @Nullable Object visitCGNativeOperationCallExp(@NonNull CGNativeOperationCallExp cgElement) {
-		super.visitCGNativeOperationCallExp(cgElement);
-		doOperationCallRewrites(cgElement);
 		return null;
 	}
 
@@ -719,7 +535,118 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 
 	@Override
 	public @Nullable Object visitCGOperationCallExp(@NonNull CGOperationCallExp cgElement) {
-		super.visitCGOperationCallExp(cgElement);
+		super.visitCGOperationCallExp(cgElement);;
+		OperationCallingConvention callingConvention = cgElement.getCallingConvention();
+		boolean isBoxed = callingConvention.isBoxed();
+		boolean isEcore = callingConvention.isEcore();
+		boolean isUnboxed = callingConvention.isUnboxed();
+		assert isBoxed == cgElement.isBoxed();
+		assert isEcore == cgElement.isEcore();
+		assert isUnboxed == cgElement.isUnboxed();
+		Operation referredOperation = cgElement.getReferredOperation();
+		if (isBoxed) {
+			assert isBoxed;
+	//		doOperationCallRewrites(cgElement);
+			OperationId operationId = referredOperation.getOperationId();
+			boolean sourceMayBeNull = hasOclVoidOperation(operationId);
+			CGValuedElement cgSource = cgElement.getSource();
+			if (!sourceMayBeNull) {
+				if (cgSource.isNull()) {
+	//				CGInvalid cgInvalid = context.getInvalid("null value1 for source parameter");
+					CGInvalid cgInvalid = context.getInvalid("''" + referredOperation.getOwningClass().getName() + "'' rather than ''OclVoid'' value required");
+					CGConstantExp cgLiteralExp = context.createCGConstantExp(CGUtil.getAST(cgElement), cgInvalid);
+					CGUtil.replace(cgElement, cgLiteralExp);
+					return null;
+				}
+			}
+			rewriteAsBoxed(cgSource);
+			if (!sourceMayBeNull && !cgSource.isNonNull()) {
+	//			rewriteAsGuarded(cgSource, false, "value3 for source parameter");
+				rewriteAsGuarded(cgSource, false, "''" + referredOperation.getOwningClass().getName() + "'' rather than ''OclVoid'' value required");
+			}
+			List<Parameter> ownedParameters = referredOperation.getOwnedParameters();
+			List<CGValuedElement> cgArguments = cgElement.getArguments();
+			int iMax = cgArguments.size();
+			if (!referredOperation.isIsValidating()) {
+				for (int i = 0; i < iMax; i++) {			// Avoid CME from rewrite
+					CGValuedElement cgArgument = cgArguments.get(i);
+					Parameter asParameter = ownedParameters.get(i);
+					if (asParameter.isIsRequired()) {
+						if (cgArgument.isNull()) {
+		//					CGInvalid cgInvalid = context.getInvalid("null value2 for " + asParameter.getName() + " parameter");
+							CGInvalid cgInvalid = context.getInvalid("''" + asParameter.getType().getName() + "'' rather than ''OclVoid'' value required");
+							CGConstantExp cgLiteralExp = context.createCGConstantExp(CGUtil.getAST(cgElement), cgInvalid);
+							CGUtil.replace(cgElement, cgLiteralExp);
+							return null;
+						}
+					}
+				}
+			}
+			for (int i = 0; i < iMax; i++) {			// Avoid CME from rewrite
+				CGValuedElement cgArgument = cgArguments.get(i);
+				rewriteAsBoxed(cgArgument);
+				Parameter asParameter = ownedParameters.get(i);
+				if (asParameter.isIsRequired() && !cgArgument.isNonNull()) {
+	//				rewriteAsGuarded(cgArgument, false, "value4 for " + asParameter.getName() + " parameter");
+					rewriteAsGuarded(cgArgument, false, "''" + asParameter.getType().getName() + "'' rather than ''OclVoid'' value required");
+				}
+			}
+		}
+		else {
+			//
+			assert !isBoxed;
+			boolean sourceMayBeNull = false;
+			if (isBoxed) {
+				OperationId operationId = referredOperation.getOperationId();
+				sourceMayBeNull = hasOclVoidOperation(operationId);
+			}
+			//
+			EOperation eOperation = null;
+			List<EParameter> eParameters = null;
+			if (isEcore) {
+				eOperation = ((CGEcoreOperationCallExp)cgElement).getEOperation();
+				assert eOperation != null;
+				eParameters = eOperation.getEParameters();
+			}
+			//
+			//	Guard / cast source
+			//
+			CGValuedElement cgSource = cgElement.getSource();
+			if (!referredOperation.isIsStatic()) {
+				rewriteAsGuarded(cgElement.getSource(), isSafe(cgElement), "source for '" + referredOperation + "'");
+			}
+		//	rewriteAsGuarded(cgSource, isSafe(cgElement), "source for '" + cgElement.getReferredOperation() + "'");
+
+			if (isBoxed) {
+				rewriteAsBoxed(cgSource);
+			}
+			else if (eOperation != null) {
+				rewriteAsEcore(cgSource, eOperation.getEContainingClass());
+				if (eOperation.isMany()) {
+					rewriteAsAssertNonNulled(cgElement);
+				}
+			}
+			else {
+				rewriteAsUnboxed(cgSource);
+			}
+			//
+			//	Guard / cast arguments
+			//
+			List<CGValuedElement> cgArguments = cgElement.getArguments();
+			int iMax = cgArguments.size();
+			for (int i = 0; i < iMax; i++) {			// Avoid CME from rewrite
+				CGValuedElement cgArgument = cgArguments.get(i);
+				if (isBoxed) {
+					rewriteAsBoxed(cgArgument);
+				}
+				else if (eParameters != null) {
+					rewriteAsEcore(cgArgument, eParameters.get(i).getEType());
+				}
+				else {
+					rewriteAsUnboxed(cgArgument);
+				}
+			}
+		}
 		return null;
 	}
 

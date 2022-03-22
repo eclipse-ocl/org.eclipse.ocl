@@ -16,7 +16,6 @@ import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperationCallExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.OCLExpression;
@@ -36,7 +35,7 @@ public class ConstrainedOperationCallingConvention extends AbstractOperationCall
 
 	protected @NonNull CGCallExp constrainedOperationCall(@NonNull AS2CGVisitor as2cgVisitor, @NonNull OperationCallExp element,
 			CGValuedElement cgSource, @NonNull Operation finalOperation, @NonNull ConstrainedOperation constrainedOperation) {
-		@NonNull CGLibraryOperationCallExp cgOperationCallExp = CGModelFactory.eINSTANCE.createCGLibraryOperationCallExp();
+		@NonNull CGLibraryOperationCallExp cgOperationCallExp = as2cgVisitor.createCGLibraryOperationCallExp(constrainedOperation);
 		cgOperationCallExp.setSource(cgSource);
 		//		cgOperationCallExp.setThisIsSelf(false);
 		for (@NonNull OCLExpression pArgument : ClassUtil.nullFree(element.getOwnedArguments())) {
@@ -45,7 +44,6 @@ public class ConstrainedOperationCallingConvention extends AbstractOperationCall
 		}
 		as2cgVisitor.setAst(cgOperationCallExp, element);
 		cgOperationCallExp.setReferredOperation(finalOperation);
-		cgOperationCallExp.setLibraryOperation(constrainedOperation);
 		if (as2cgVisitor.getCodeGenerator().addConstrainedOperation(finalOperation)) {
 			//			CGNamedElement cgOperation = finalOperation.accept(this);
 			//			if (cgOperation != null) {
