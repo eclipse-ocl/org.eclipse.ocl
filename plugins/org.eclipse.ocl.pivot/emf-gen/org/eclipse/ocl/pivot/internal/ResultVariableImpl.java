@@ -122,15 +122,15 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 						/*@Caught*/ @Nullable Object CAUGHT_safe_isRequired_source;
 						try {
 							final /*@NonInvalid*/ @Nullable OCLExpression ownedInit = this.getOwnedInit();
-							final /*@NonInvalid*/ @NonNull Object isRequired = ownedInit == null;
+							final /*@NonInvalid*/ @NonNull Object isRequired_1 = ownedInit == null;
 							/*@Thrown*/ @Nullable Boolean safe_isRequired_source;
-							if (isRequired == Boolean.TRUE) {
+							if (isRequired_1 == Boolean.TRUE) {
 								safe_isRequired_source = null;
 							}
 							else {
 								assert ownedInit != null;
-								final /*@Thrown*/ boolean isRequired_1 = ownedInit.isIsRequired();
-								safe_isRequired_source = isRequired_1;
+								final /*@Thrown*/ boolean isRequired = ownedInit.isIsRequired();
+								safe_isRequired_source = isRequired;
 							}
 							CAUGHT_safe_isRequired_source = safe_isRequired_source;
 						}
@@ -251,10 +251,10 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 							if (ownedInit == null) {
 								throw new InvalidValueException("Null source for \'TypedElement::type\'");
 							}
-							final /*@Thrown*/ @Nullable Type type = ownedInit.getType();
+							final /*@Thrown*/ @Nullable Type type_0 = ownedInit.getType();
 							/*@Caught*/ @Nullable Object CAUGHT_type;
 							try {
-								CAUGHT_type = type;
+								CAUGHT_type = type_0;
 							}
 							catch (Exception THROWN_type) {
 								CAUGHT_type = ValueUtil.createInvalidValue(THROWN_type);
@@ -265,11 +265,11 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 								safe_conformsTo_source = null;
 							}
 							else {
-								if (type == null) {
+								if (type_0 == null) {
 									throw new InvalidValueException("Null \'\'Type\'\' rather than \'\'OclVoid\'\' value required");
 								}
-								final /*@NonInvalid*/ @Nullable Type type_0 = this.getType();
-								final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, type_0).booleanValue();
+								final /*@NonInvalid*/ @Nullable Type type = this.getType();
+								final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type_0, type).booleanValue();
 								safe_conformsTo_source = conformsTo;
 							}
 							CAUGHT_safe_conformsTo_source = safe_conformsTo_source;

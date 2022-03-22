@@ -481,7 +481,7 @@ implements Constraint {
 			else {
 				/*@Caught*/ @Nullable Object CAUGHT_result;
 				try {
-					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Boolean_0 = idResolver.getClass(TypeId.BOOLEAN, null);
+					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Boolean = idResolver.getClass(TypeId.BOOLEAN, null);
 					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OclVoid = idResolver.getClass(TypeId.OCL_VOID, null);
 					@SuppressWarnings("null")
 					final /*@NonInvalid*/ @NonNull LanguageExpression ownedSpecification = this.getOwnedSpecification();
@@ -494,16 +494,16 @@ implements Constraint {
 						result = ValueUtil.TRUE_VALUE;
 					}
 					else {
-						final /*@NonInvalid*/ @NonNull BooleanType CAST_TYP_Boolean = (BooleanType)TYP_Boolean_0;
-						final /*@NonInvalid*/ boolean eq = (type != null) ? (type.getTypeId() == CAST_TYP_Boolean.getTypeId()) : false;
+						final /*@NonInvalid*/ @NonNull BooleanType CAST_TYP_Boolean = (BooleanType)TYP_Boolean;
+						final /*@NonInvalid*/ boolean eq_0 = (type != null) ? (type.getTypeId() == CAST_TYP_Boolean.getTypeId()) : false;
 						final /*@NonInvalid*/ @Nullable Boolean or;
-						if (eq) {
+						if (eq_0) {
 							or = ValueUtil.TRUE_VALUE;
 						}
 						else {
 							final /*@NonInvalid*/ @NonNull VoidType CAST_TYP_OclVoid = (VoidType)TYP_OclVoid;
-							final /*@NonInvalid*/ boolean eq_0 = (type != null) ? (type.getTypeId() == CAST_TYP_OclVoid.getTypeId()) : false;
-							if (eq_0) {
+							final /*@NonInvalid*/ boolean eq = (type != null) ? (type.getTypeId() == CAST_TYP_OclVoid.getTypeId()) : false;
+							if (eq) {
 								or = ValueUtil.TRUE_VALUE;
 							}
 							else {
