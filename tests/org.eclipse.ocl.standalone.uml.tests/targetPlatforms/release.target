@@ -1,31 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><?pde version="3.8"?><target includeMode="feature" name="Eclipse OCL Standalone Build Target Platform" sequenceNumber="16">
 <locations>
   <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="false" type="InstallableUnit">
+    <unit id="lpg.runtime.java" version="0.0.0"/>
     <unit id="org.eclipse.emf.common" version="0.0.0"/>
     <unit id="org.eclipse.emf.ecore" version="0.0.0"/>
     <unit id="org.eclipse.emf.ecore.xmi" version="0.0.0"/>
     <unit id="org.eclipse.emf.mapping.ecore2xml" version="0.0.0"/>
-    <unit id="org.hamcrest.core" version="0.0.0"/>
-    <unit id="org.junit" version="0.0.0"/>
-    <repository location="https://download.eclipse.org/releases/latest"/>
-    <repository location="https://download.eclipse.org/staging/2020-12"/>
-  </location>
-  <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="false" type="InstallableUnit">
+    <unit id="org.eclipse.ocl" version="0.0.0"/>
+    <unit id="org.eclipse.ocl.common" version="0.0.0"/>
+    <unit id="org.eclipse.ocl.uml" version="0.0.0"/>
     <unit id="org.eclipse.uml2.common" version="0.0.0"/>
     <unit id="org.eclipse.uml2.types" version="0.0.0"/>
     <unit id="org.eclipse.uml2.uml" version="0.0.0"/>
     <unit id="org.eclipse.uml2.uml.profile.standard" version="0.0.0"/>
     <unit id="org.eclipse.uml2.uml.resources" version="0.0.0"/>
-    <repository location="https://download.eclipse.org/modeling/mdt/uml2/updates/milestones"/>
+    <unit id="org.hamcrest.core" version="0.0.0"/>
+    <unit id="org.junit" version="0.0.0"/>
+    <repository location="https://download.eclipse.org/releases/latest"/>
+    <repository location="https://download.eclipse.org/staging/2022-03"/>
   </location>
   <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="false" type="InstallableUnit">
-    <unit id="lpg.runtime.java" version="0.0.0"/>
-    <unit id="org.eclipse.ocl" version="0.0.0"/>
-    <unit id="org.eclipse.ocl.common" version="0.0.0"/>
     <unit id="org.eclipse.ocl.tests" version="0.0.0"/>
-    <unit id="org.eclipse.ocl.uml" version="0.0.0"/>
     <unit id="org.eclipse.ocl.uml.tests" version="0.0.0"/>
-    <repository location="https://download.eclipse.org/modeling/mdt/ocl/updates/releases"/>
+    <repository location="https://download.eclipse.org/modeling/mdt/ocl/updates/releases/latest"/>
   </location>
 </locations>
 </target>
