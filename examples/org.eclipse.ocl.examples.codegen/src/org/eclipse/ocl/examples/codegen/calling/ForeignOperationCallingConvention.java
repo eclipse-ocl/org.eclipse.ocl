@@ -20,7 +20,9 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
@@ -29,6 +31,7 @@ import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Parameter;
@@ -47,7 +50,7 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 	public static final @NonNull ForeignOperationCallingConvention INSTANCE = new ForeignOperationCallingConvention();
 
 	@Override
-	public @NonNull CGCallExp createCGOperationCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull LibraryOperation libraryOperation,
+	public @NonNull CGCallExp createCGOperationCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @NonNull LibraryOperation libraryOperation,
 			@Nullable CGValuedElement cgSource, @NonNull OperationCallExp asOperationCallExp) {
 		Operation asOperation = ClassUtil.nonNullState(asOperationCallExp.getReferredOperation());
 		assert cgSource == null;
@@ -57,8 +60,15 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 		CGForeignOperationCallExp cgForeignOperationCallExp = CGModelFactory.eINSTANCE.createCGForeignOperationCallExp();
 		CGVariable executorVariable = as2cgVisitor.getExecutorVariable();
 		cgForeignOperationCallExp.getArguments().add(as2cgVisitor.createCGVariableExp(executorVariable));
-		init(as2cgVisitor, cgForeignOperationCallExp, cgSource, asOperationCallExp, isRequired);
+		init(as2cgVisitor, cgForeignOperationCallExp, asOperationCallExp, cgOperation, cgSource, isRequired);
 		return cgForeignOperationCallExp;
+	}
+
+	@Override
+	public void createParameters(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL expressionInOCL) {
+		CGParameter cgParameter = (CGParameter) as2cgVisitor.getExecutorVariable();
+		cgOperation.getParameters().add(cgParameter);
+		super.createParameters(as2cgVisitor, cgOperation, expressionInOCL);
 	}
 
 	@Override
@@ -113,6 +123,11 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 			js.appendReferenceTo(parameterTypeDescriptor, argument);
 		}
 		js.append(");\n");
+		return true;
+	}
+
+	@Override
+	public boolean getExecutorIsParameter() {
 		return true;
 	}
 

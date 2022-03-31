@@ -10,9 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.cgmodel;
 
-import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
-
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>CG Call Exp</b></em>'.
@@ -118,7 +115,7 @@ public interface CGCallExp extends CGValuedElement {
 	 */
 	void setSource(CGValuedElement value);
 
-	@NonNull OperationCallingConvention getCallingConvention();
+//	@NonNull OperationCallingConvention getCallingConvention();
 
-	void setCallingConvention(@NonNull OperationCallingConvention callingConvention);
+//	void setCallingConvention(@NonNull OperationCallingConvention callingConvention);
 } // CGCallExp

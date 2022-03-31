@@ -17,12 +17,10 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.utilities.EquivalenceUtil;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -328,18 +326,4 @@ public abstract class CGCallExpImpl extends CGValuedElementImpl implements CGCal
 	public boolean isGlobal() {
 		return false;
 	}
-
-	private /*@LazyNonNull*/ OperationCallingConvention callingConvention;
-
-	@Override
-	public @NonNull OperationCallingConvention getCallingConvention() {
-		return ClassUtil.nonNullState(callingConvention);
-	}
-
-	@Override
-	public void setCallingConvention(@NonNull OperationCallingConvention callingConvention) {
-		assert this.callingConvention == null;
-		this.callingConvention = callingConvention;
-	}
-
 } //CGCallExpImpl

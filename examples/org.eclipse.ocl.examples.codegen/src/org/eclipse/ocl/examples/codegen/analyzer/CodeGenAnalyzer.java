@@ -19,6 +19,7 @@ import java.util.Map;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.calling.NativeOperationCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBoolean;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstant;
@@ -52,8 +53,10 @@ import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Feature;
+import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.ElementId;
@@ -63,6 +66,7 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.internal.cse.CommonSubExpressionAnalysis;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.UniqueList;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
@@ -114,6 +118,8 @@ public class CodeGenAnalyzer
 	private /*@LazyNonNull*/ Map<@NonNull ExpressionInOCL, @NonNull CommonSubExpressionAnalysis> expression2cseAnalsis = null;
 	// UniqueList allows recursive discovery of more foreign Features
 	private /*@LazyNonNull*/ UniqueList<@NonNull Feature> foreignFeatures = null;
+	private @NonNull Map<@NonNull Operation, @NonNull CGOperation> asOperation2cgOperation = new HashMap<>();
+	private @Nullable Model nativeModel = null;
 
 	public CodeGenAnalyzer(@NonNull CodeGenerator codeGenerator) {
 		this.codeGenerator = codeGenerator;
@@ -129,6 +135,11 @@ public class CodeGenAnalyzer
 			foreignFeatures = foreignFeatures2 = new UniqueList<>();
 		}
 		foreignFeatures2.add(asFeature);
+	}
+
+	public void addOperation(@NonNull Operation asOperation, @NonNull CGOperation cgOperation) {
+		CGOperation old = asOperation2cgOperation.put(asOperation, cgOperation);
+		assert old == null;
 	}
 
 	public void analyze(@NonNull CGElement cgRoot) {
@@ -177,6 +188,10 @@ public class CodeGenAnalyzer
 		return cgForeignClasses;
 	}
 
+	public @Nullable CGOperation basicGetOperation(@NonNull Operation asOperation) {
+		return asOperation2cgOperation.get(asOperation);
+	}
+
 	public @NonNull CGBoolean createCGBoolean(boolean booleanValue) {
 		CGBoolean cgBoolean = CGModelFactory.eINSTANCE.createCGBoolean();
 	//	setExplicitNames(cgBoolean, booleanValue);
@@ -204,9 +219,16 @@ public class CodeGenAnalyzer
 
 	public @NonNull CGNativeOperationCallExp createCGNativeOperationCallExp(@Nullable Method method) {		// XXX @NonNull
 		assert method != null;
+		return createCGNativeOperationCallExp(method, NativeOperationCallingConvention.INSTANCE);
+	}
+
+	public @NonNull CGNativeOperationCallExp createCGNativeOperationCallExp(@NonNull Method method, @NonNull OperationCallingConvention callingConvention) {		// XXX @NonNull
+		assert method != null;
 		CGNativeOperationCallExp cgNativeOperationCallExp = CGModelFactory.eINSTANCE.createCGNativeOperationCallExp();
-		cgNativeOperationCallExp.setCallingConvention(NativeOperationCallingConvention.INSTANCE);
 		cgNativeOperationCallExp.setMethod(method);
+		Operation asOperation = getNativeOperation(method);
+		CGOperation cgOperation = getOperation(asOperation);
+		cgNativeOperationCallExp.setOperation(cgOperation);
 		return cgNativeOperationCallExp;
 	}
 
@@ -413,12 +435,77 @@ public class CodeGenAnalyzer
 		return cgInvalid;
 	}
 
+	private org.eclipse.ocl.pivot.@NonNull Class getNativeClass(@NonNull Class<?> jClass) {
+		Package jPackage = jClass.getPackage();
+		assert jPackage != null;
+		org.eclipse.ocl.pivot.@NonNull Package asPackage = getNativePackage(jPackage);
+		String name = jClass.getName();					// FIXME Is this the right method t capture all enclosing classes/methods ? certainly don't need enclosing package
+		List<org.eclipse.ocl.pivot.Class> asClasses = asPackage.getOwnedClasses();
+		org.eclipse.ocl.pivot.Class asClass = NameUtil.getNameable(asClasses, name);
+		if (asClass == null) {
+			asClass = PivotFactory.eINSTANCE.createClass();
+			asClass.setName(name);
+			asClasses.add(asClass);
+		}
+		return asClass;
+	}
+
+	private @NonNull Model getNativeModel() {
+		Model asModel = nativeModel;
+		if (asModel == null) {
+			asModel = PivotFactory.eINSTANCE.createModel();
+			asModel.setName("native-java");
+			nativeModel = asModel;
+		}
+		return asModel;
+	}
+
+	private @NonNull Operation getNativeOperation2(@NonNull Method method) {
+		Class<?> jClass = method.getDeclaringClass();
+		assert jClass != null;
+		org.eclipse.ocl.pivot.Class asClass = getNativeClass(jClass);
+		String name = method.getName();
+		List<Operation> asOperations = asClass.getOwnedOperations();
+		Operation asOperation = NameUtil.getNameable(asOperations, name);	// FIXME overloads
+		if (asOperation == null) {
+			asOperation = PivotFactory.eINSTANCE.createOperation();
+			asOperation.setName(name);
+			//	asOperation.setType(type);
+			//	asOperation.setImplementationClass(implementationClass);
+			//	asOperation.setImplementation(implementation);
+			asOperations.add(asOperation);
+		}
+		return asOperation;
+	}
+
+	public @NonNull Operation getNativeOperation(@NonNull Method method) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private org.eclipse.ocl.pivot.@NonNull Package getNativePackage(@NonNull Package jPackage) {
+		Model asModel = getNativeModel();
+		String qualifiedName = jPackage.getName();
+		List<org.eclipse.ocl.pivot.Package> asPackages = asModel.getOwnedPackages();
+		org.eclipse.ocl.pivot.Package asPackage = NameUtil.getNameable(asPackages, qualifiedName);
+		if (asPackage == null) {
+			asPackage = PivotFactory.eINSTANCE.createPackage();
+			asPackage.setName(qualifiedName);
+			asPackages.add(asPackage);
+		}
+		return asPackage;
+	}
+
 //	public @NonNull NameManager getNameManager() {
 //		return ClassUtil.nonNullState(nameManager);
 //	}
 
 	public @NonNull CGNull getNull() {
 		return cgNull;
+	}
+
+	public @NonNull CGOperation getOperation(@NonNull Operation asOperation) {
+		return ClassUtil.nonNullState(asOperation2cgOperation.get(asOperation));
 	}
 
 	public @NonNull CGReal getReal(@NonNull Number aNumber) {

@@ -477,12 +477,12 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGNativeOperation" eSuperTypes="#//CGOperation">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="A native operation that must be called using the native calling convention. Source argument and result values are unboxed."/>
+      <details key="documentation" value="A native operation that is called using a Java method. Boxing of source argument and result values are determined by the calling convention."/>
     </eAnnotations>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGNativeOperationCallExp" eSuperTypes="#//CGOperationCallExp">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="A call of an operation using its Java declaration. The OCL self may be passed as an extra argument.&#xA;Other arguments and returns use the unboxed representation."/>
+      <details key="documentation" value="A call of an operation using its Java method declaration. The OCL self may be passed as an extra argument.&#xA;Other arguments and returns use the unboxed representation."/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="method" lowerBound="1"
         eType="#//Method"/>

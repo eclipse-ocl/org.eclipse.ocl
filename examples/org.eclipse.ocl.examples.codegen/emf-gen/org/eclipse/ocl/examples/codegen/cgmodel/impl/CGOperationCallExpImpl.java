@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.utilities.EquivalenceUtil;
@@ -300,5 +301,18 @@ public abstract class CGOperationCallExpImpl extends CGCallExpImpl implements CG
 	@Override
 	public boolean isNull() {
 		return false;
+	}
+
+	private /*@LazyNonNull*/ CGOperation cgOperation;
+
+	@Override
+	public @NonNull CGOperation getOperation() {
+		return ClassUtil.nonNullState(cgOperation);
+	}
+
+	@Override
+	public void setOperation(@NonNull CGOperation cgOperation) {
+		assert this.cgOperation == null;
+		this.cgOperation = cgOperation;
 	}
 } //CGOperationCallExpImpl

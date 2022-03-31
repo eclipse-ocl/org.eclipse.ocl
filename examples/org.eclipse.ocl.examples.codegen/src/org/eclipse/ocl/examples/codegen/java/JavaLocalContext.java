@@ -15,6 +15,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
+import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
@@ -65,8 +66,9 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 	}
 
 	public JavaLocalContext(@NonNull JavaGlobalContext<@NonNull ? extends CG> globalContext, @Nullable JavaLocalContext<@NonNull ? extends CG> outerContext,
-			@NonNull CGNamedElement cgScope, @NonNull NamedElement asScope, boolean executorIsParameter) {
+			@NonNull CGNamedElement cgScope, @NonNull NamedElement asScope, boolean zzexecutorIsParameter) {
 		super(globalContext.getCodeGenerator());
+		assert zzexecutorIsParameter == false;
 		this.globalContext = globalContext;
 		this.globalNameManager = codeGenerator.getGlobalNameManager();
 		this.outerContext = outerContext;
@@ -80,7 +82,13 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 			this.asType = ClassUtil.nonNullState(PivotUtil.getContainingType(asScope));
 			this.nameManager = globalNameManager.createNestedNameManager(cgScope);
 		}
-		this.executorIsParameter = executorIsParameter;
+		if (cgScope instanceof CGOperation) {
+			OperationCallingConvention callingConvention = ((CGOperation)cgScope).getCallingConvention();
+			this.executorIsParameter = callingConvention.getExecutorIsParameter();
+		}
+		else {
+			this.executorIsParameter = zzexecutorIsParameter;
+		}
 		boolean staticFeature = (asScope instanceof Feature) && ((Feature)asScope).isIsStatic();
 		this.isStatic = /*(asScope == null) ||*/ staticFeature;
 	}

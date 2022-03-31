@@ -18,6 +18,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
@@ -28,7 +29,8 @@ import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
- *  NativeOperationCallingConvention defines the support for the call of a native (Java) operation.
+ *  NativeOperationCallingConvention defines the support for the call of a native (Java) operation
+ *  defined by a Java method and using unboxed source and arguments.
  *  </br>
  *  e.g. as anObject.anOperation(arguments)
  */
@@ -37,13 +39,13 @@ public class NativeOperationCallingConvention extends AbstractOperationCallingCo
 	public static final @NonNull NativeOperationCallingConvention INSTANCE = new NativeOperationCallingConvention();
 
 	@Override
-	public @NonNull CGCallExp createCGOperationCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull LibraryOperation libraryOperation,
+	public @NonNull CGCallExp createCGOperationCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @NonNull LibraryOperation libraryOperation,
 			@Nullable CGValuedElement cgSource, @NonNull OperationCallExp asOperationCallExp) {
 		Operation asOperation = ClassUtil.nonNullState(asOperationCallExp.getReferredOperation());
 		boolean isRequired = asOperation.isIsRequired();
 		CGNativeOperationCallExp cgNativeOperationCallExp = as2cgVisitor.getAnalyzer().createCGNativeOperationCallExp(null);
 		cgNativeOperationCallExp.setThisIsSelf(true);
-		init(as2cgVisitor, cgNativeOperationCallExp, cgSource, asOperationCallExp, isRequired);
+		init(as2cgVisitor, cgNativeOperationCallExp, asOperationCallExp, cgOperation, cgSource, isRequired);
 		return cgNativeOperationCallExp;
 	}
 

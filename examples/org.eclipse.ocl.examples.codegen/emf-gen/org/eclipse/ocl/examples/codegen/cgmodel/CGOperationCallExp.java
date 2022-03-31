@@ -72,4 +72,8 @@ public interface CGOperationCallExp extends CGCallExp {
 	 */
 	@NonNull List<CGValuedElement> getArguments();
 
+	@NonNull CGOperation getOperation();
+
+	void setOperation(@NonNull CGOperation cgOperation);
+
 } // CGOperationCallExp

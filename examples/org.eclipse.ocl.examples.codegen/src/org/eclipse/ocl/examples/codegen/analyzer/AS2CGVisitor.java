@@ -37,6 +37,7 @@ import org.eclipse.ocl.examples.codegen.calling.ForeignOperationCallingConventio
 import org.eclipse.ocl.examples.codegen.calling.LibraryOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.NativeOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.SupportOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGAccumulator;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBuiltInIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation;
@@ -189,7 +190,6 @@ import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.LibraryIteration;
-import org.eclipse.ocl.pivot.library.LibraryIterationOrOperation;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.library.collection.CollectionElementTypeProperty;
@@ -378,6 +378,22 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return cgOperationCallExp;
 	}
 
+	protected @NonNull CGNativeOperationCallExp createCGBoxedNativeOperationCallExp(@Nullable CGValuedElement cgSource, @NonNull Method method, @NonNull CGValuedElement... cgArguments) {
+		CGNativeOperationCallExp cgCallExp = context.createCGNativeOperationCallExp(method, SupportOperationCallingConvention.INSTANCE);
+		cgCallExp.setSource(cgSource);
+		if (cgArguments != null) {
+			List<CGValuedElement> cgArguments2 = cgCallExp.getArguments();
+			for (@NonNull CGValuedElement cgArgument : cgArguments) {
+				cgArguments2.add(cgArgument);
+			}
+		}
+		cgCallExp.setRequired(((JavaCodeGenerator)codeGenerator).getIsNonNull(method) == Boolean.TRUE);
+	//	cgCallExp.setInvalidating(false));
+		cgCallExp.setTypeId(context.getTypeId(new JavaTypeId(method.getReturnType())));		// XXX cache
+		getNameManager().declareStandardName(cgCallExp);
+		return cgCallExp;
+	}
+
 	protected @NonNull CGCastExp createCGCastExp(@NonNull CGExecutorType cgExecutorType, @NonNull CGValuedElement cgValue) {
 		CGCastExp cgCastExp = CGModelFactory.eINSTANCE.createCGCastExp();
 		cgCastExp.setSource(cgValue);
@@ -445,7 +461,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	public @NonNull CGLibraryOperationCallExp createCGLibraryOperationCallExp(@NonNull LibraryOperation libraryOperation) {
 		CGLibraryOperationCallExp cgOperationCallExp = CGModelFactory.eINSTANCE.createCGLibraryOperationCallExp();
 		cgOperationCallExp.setLibraryOperation(libraryOperation);
-		cgOperationCallExp.setCallingConvention(LibraryOperationCallingConvention.INSTANCE);
+	//	cgOperationCallExp.setCallingConvention(LibraryOperationCallingConvention.INSTANCE);
 		return cgOperationCallExp;
 	}
 
@@ -618,6 +634,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		cgOperation.setRequired(asOperation.isIsRequired());
 		CGOperation oldCGOperation = asFinalOperation2cgOperation.put(asOperation, cgOperation);
 		assert oldCGOperation == null;
+		context.addOperation(asOperation, cgOperation);
 		return cgOperation;
 	}
 
@@ -677,6 +694,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		cgOperation.getFinalOperations().addAll(cgOperations);
 		CGOperation oldCGOperation = asVirtualOperation2cgOperation.put(asOperation, cgOperation);
 		assert oldCGOperation == null;
+		context.addOperation(asOperation, cgOperation);
 		popLocalContext(cgOperation);
 		return cgOperation;
 	}
@@ -719,13 +737,15 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		cgForeignProperty.setRequired(asProperty.isIsRequired());
 		CGValuedElement cgInitValue = getInitExpression(/*cgParameter,*/ asProperty);
 		assert cgInitValue != null;
-		CGVariable modelManagerVariable = localContext.getModelManagerVariable();
+		Operation nativeOperation = context.getNativeOperation(JavaConstants.EXECUTOR_GET_MODEL_MANAGER_METHOD);
+		CGOperation cgOperation = generateOperation(nativeOperation);
+		CGVariable modelManagerVariable = localContext.getModelManagerVariable(cgOperation);
 
 
 		CGElementId cgPropertyId = context.getElementId(asProperty.getPropertyId());
 		CGTypeId cacheTypeId = context.getTypeId(asProperty.getTypeId());
 		CGExecutorType cgCastType = context.createExecutorType(asProperty.getType());
-		CGNativeOperationCallExp basicGetValueInit = createCGNativeOperationCallExp(createCGVariableExp(modelManagerVariable), JavaConstants.MODEL_MANAGER_BASIC_GET_FOREIGN_PROPERTY_VALUE_METHOD,
+		CGNativeOperationCallExp basicGetValueInit = createCGBoxedNativeOperationCallExp(createCGVariableExp(modelManagerVariable), JavaConstants.MODEL_MANAGER_BASIC_GET_FOREIGN_PROPERTY_VALUE_METHOD,
 			asProperty.isIsStatic() ? context.createCGNull() : createCGVariableExp(cgParameter), context.createCGConstantExp(cgPropertyId));
 	//	basicGetValueInit.setTypeId(cacheTypeId);
 		basicGetValueInit.setValueIsBoxed(true);
@@ -733,7 +753,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		CGFinalVariable basicGetValueVariable = createCGVariable(castBasicGetValueInit);
 		nameManager.declareStandardName(basicGetValueVariable);
 		CGValuedElement cgCondition = createCGIsEqual(createCGVariableExp(basicGetValueVariable), context.createCGNull());
-		CGNativeOperationCallExp getValue = createCGNativeOperationCallExp(createCGVariableExp(modelManagerVariable), JavaConstants.MODEL_MANAGER_GET_FOREIGN_PROPERTY_VALUE_METHOD,
+		CGNativeOperationCallExp getValue = createCGBoxedNativeOperationCallExp(createCGVariableExp(modelManagerVariable), JavaConstants.MODEL_MANAGER_GET_FOREIGN_PROPERTY_VALUE_METHOD,
 			createCGVariableExp(cgParameter), context.createCGConstantExp(cgPropertyId), cgInitValue);
 	//	getValue.setTypeId(cacheTypeId);
 		getValue.setValueIsBoxed(true);
@@ -850,15 +870,50 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return cgIterationCallExp;
 	}
 
+	protected @NonNull CGOperation generateOperation(@NonNull Operation asOperation) {
+		CGOperation cgOperation = context.basicGetOperation(asOperation);
+		if (cgOperation == null) {
+			LibraryOperation libraryOperation = (LibraryOperation)metamodelManager.getImplementation(asOperation);
+			OperationCallingConvention callingConvention = getCallingConvention(asOperation, libraryOperation);
+			if (libraryOperation instanceof ForeignOperation) {
+				context.addForeignFeature(asOperation);
+			}
+			cgOperation = asFinalOperation2cgOperation.get(asOperation);
+			if (cgOperation == null) {
+				cgOperation = createFinalCGOperationWithoutBody(asOperation);
+			}
+			cgOperation.setCallingConvention(callingConvention);
+			pushLocalContext(cgOperation, asOperation);
+			ExpressionInOCL query = null;
+			LanguageExpression specification = asOperation.getBodyExpression();
+			if (specification != null) {
+				try {
+					query = environmentFactory.parseSpecification(specification);
+				} catch (ParserException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			callingConvention.createParameters(this, cgOperation, query);
+			if (query != null) {
+				cgOperation.setBody(doVisit(CGValuedElement.class, query.getOwnedBody()));
+			}
+			popLocalContext(cgOperation);
+		}
+		return cgOperation;
+	}
+
 	protected @NonNull CGValuedElement generateOperationCallExp(@Nullable CGValuedElement cgSource, @NonNull OperationCallExp element) {
 		Operation asOperation = ClassUtil.nonNullState(element.getReferredOperation());
 		LibraryOperation libraryOperation = (LibraryOperation)metamodelManager.getImplementation(asOperation);
-		OperationCallingConvention callingConvention = getCallingConvention(asOperation, libraryOperation);
-		CGValuedElement cgCallExp = callingConvention.createCGOperationCallExp(this, libraryOperation, cgSource, element);
-		if (cgCallExp instanceof CGCallExp) {
-			((CGCallExp)cgCallExp).setCallingConvention(callingConvention);
-			// XXX ((CGCallExp)cgCallExp).setReferredOperation(asOperation);
-		}
+		CGOperation cgOperation = generateOperation(asOperation);
+		OperationCallingConvention callingConvention = cgOperation.getCallingConvention();
+		CGValuedElement cgCallExp = callingConvention.createCGOperationCallExp(this, cgOperation, libraryOperation, cgSource, element);
+	//	if (cgCallExp instanceof CGOperationCallExp) {		// inlined code is not a CallExp
+	//		CGOperationCallExp cgOperationCallExp = (CGOperationCallExp)cgCallExp;
+		//	cgOperationCallExp.setCallingConvention(callingConvention);
+	//		cgOperationCallExp.setOperation(cgOperation);
+	//	}
 		return cgCallExp;
 	}
 
@@ -1243,7 +1298,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	public @NonNull CGParameter getParameter(@NonNull Variable aParameter) {
 		return getParameter(aParameter, (String)null);
 	}
-	public @NonNull CGParameter getParameter(@NonNull Variable aParameter, @Nullable String explicitName) {
+	public @NonNull CGParameter getParameter(@NonNull VariableDeclaration aParameter, @Nullable String explicitName) {
 		CGParameter cgParameter = variablesStack.getParameter(aParameter);
 		if (cgParameter == null) {
 			cgParameter = CGModelFactory.eINSTANCE.createCGParameter();
@@ -1349,6 +1404,10 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			}
 		}
 		return referencedOperations;
+	}
+
+	public @NonNull CGParameter getSelfParameter() {
+		return ((JavaLocalContext<?>)contextStack.peek()).getSelfParameter();
 	}
 
 	public @NonNull CGParameter getSelfParameter(@NonNull Variable aParameter) {
@@ -1750,29 +1809,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	@Override
 	public @Nullable CGOperation visitOperation(@NonNull Operation asOperation) {
-		LibraryIterationOrOperation operationImplementation = (LibraryIterationOrOperation)metamodelManager.getImplementation(asOperation);
-		if (operationImplementation instanceof ForeignOperation) {
-			context.addForeignFeature(asOperation);
-		}
-		CGOperation cgOperation = asFinalOperation2cgOperation.get(asOperation);
-		if (cgOperation == null) {
-			cgOperation = createFinalCGOperationWithoutBody(asOperation);
-		}
-			pushLocalContext(cgOperation, asOperation);
-			LanguageExpression specification = asOperation.getBodyExpression();
-			if (specification != null) {
-				try {
-					ExpressionInOCL query = environmentFactory.parseSpecification(specification);
-					createParameters(cgOperation, query);
-					cgOperation.setBody(doVisit(CGValuedElement.class, query.getOwnedBody()));
-				} catch (ParserException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			popLocalContext(cgOperation);
-	//	}
-		return cgOperation;
+		return generateOperation(asOperation);
 	}
 
 	@Override
