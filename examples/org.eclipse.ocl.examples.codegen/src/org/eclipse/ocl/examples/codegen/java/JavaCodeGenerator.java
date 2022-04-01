@@ -387,6 +387,13 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		return annotationReader.getIsNonNull(method);
 	}
 
+	public @Nullable Boolean getIsNonNull(@NonNull Method method, int parameter) {
+		if (annotationReader == null) {
+			annotationReader = new ASM5JavaAnnotationReader();
+		}
+		return annotationReader.getIsNonNull(method, parameter);
+	}
+
 	@Override
 	public @Nullable Iteration2Java getIterationHelper(@NonNull Iteration asIteration) {
 		LibraryIteration libraryIteration = (LibraryIteration) metamodelManager.getImplementation(asIteration);

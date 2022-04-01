@@ -100,4 +100,9 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 			cgOperationCallExp.getArguments().add(cgArgument);
 		}
 	}
+
+	@Override
+	public @NonNull String toString() {
+		return getClass().getSimpleName() + (isBoxed() ? " boxed" : "") + (isEcore() ? " ecore" : "") + (isUnboxed() ? " unboxed" : "");
+	}
 }

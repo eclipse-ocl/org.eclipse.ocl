@@ -48,13 +48,12 @@ public class EcoreOperationCallingConvention extends AbstractOperationCallingCon
 {
 	public static final @NonNull EcoreOperationCallingConvention INSTANCE = new EcoreOperationCallingConvention();
 
-	public boolean canHandle(@NonNull AS2CGVisitor as2cgVisitor, @NonNull Operation asOperation) {
-		GenModelHelper genModelHelper = as2cgVisitor.getGenModelHelper();
+	public boolean canHandle(@NonNull CodeGenerator codeGenerator, @NonNull Operation asOperation) {
+		GenModelHelper genModelHelper = codeGenerator.getGenModelHelper();
 		try {
 			genModelHelper.getOperationAccessor(asOperation);
 			return true;
 		} catch (GenModelException e) {
-			CodeGenerator codeGenerator = as2cgVisitor.getCodeGenerator();
 			codeGenerator.addProblem(e);
 		}
 		return false;

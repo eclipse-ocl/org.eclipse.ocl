@@ -11,6 +11,7 @@
 package org.eclipse.ocl.examples.codegen.analyzer;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,6 +35,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGInteger;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInvalid;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNull;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
@@ -48,6 +50,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.examples.codegen.generator.CodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
+import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.Element;
@@ -118,6 +121,7 @@ public class CodeGenAnalyzer
 	private /*@LazyNonNull*/ Map<@NonNull ExpressionInOCL, @NonNull CommonSubExpressionAnalysis> expression2cseAnalsis = null;
 	// UniqueList allows recursive discovery of more foreign Features
 	private /*@LazyNonNull*/ UniqueList<@NonNull Feature> foreignFeatures = null;
+	private @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull CGClass> asClass2cgClass = new HashMap<>();
 	private @NonNull Map<@NonNull Operation, @NonNull CGOperation> asOperation2cgOperation = new HashMap<>();
 	private @Nullable Model nativeModel = null;
 
@@ -137,7 +141,14 @@ public class CodeGenAnalyzer
 		foreignFeatures2.add(asFeature);
 	}
 
-	public void addOperation(@NonNull Operation asOperation, @NonNull CGOperation cgOperation) {
+	public void addClass(@NonNull CGClass cgClass) {
+		org.eclipse.ocl.pivot.Class asClass = CGUtil.getAST(cgClass);
+		CGClass old = asClass2cgClass.put(asClass, cgClass);
+		assert old == null;
+	}
+
+	public void addOperation(@NonNull CGOperation cgOperation) {
+		Operation asOperation = CGUtil.getAST(cgOperation);
 		CGOperation old = asOperation2cgOperation.put(asOperation, cgOperation);
 		assert old == null;
 	}
@@ -186,6 +197,10 @@ public class CodeGenAnalyzer
 			}
 		}
 		return cgForeignClasses;
+	}
+
+	public @Nullable CGClass basicGetClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		return asClass2cgClass.get(asClass);
 	}
 
 	public @Nullable CGOperation basicGetOperation(@NonNull Operation asOperation) {
@@ -435,16 +450,25 @@ public class CodeGenAnalyzer
 		return cgInvalid;
 	}
 
-	private org.eclipse.ocl.pivot.@NonNull Class getNativeClass(@NonNull Class<?> jClass) {
+	/*
+	 * Return a native class for jClass flattening nested classes.
+	 */
+	private org.eclipse.ocl.pivot.@NonNull Class getNativeClass(/*@NonNull */Class<?> jClass) {
+		assert jClass != null;
 		Package jPackage = jClass.getPackage();
 		assert jPackage != null;
 		org.eclipse.ocl.pivot.@NonNull Package asPackage = getNativePackage(jPackage);
-		String name = jClass.getName();					// FIXME Is this the right method t capture all enclosing classes/methods ? certainly don't need enclosing package
+		String verboseName = jClass.getName();
+		int iStart = 0;
+		for (int iDot; (iDot = verboseName.indexOf('.', iStart)) >= 0; ) {
+			iStart = iDot+1;
+		}
+		String trimmedName = verboseName.substring(iStart);
 		List<org.eclipse.ocl.pivot.Class> asClasses = asPackage.getOwnedClasses();
-		org.eclipse.ocl.pivot.Class asClass = NameUtil.getNameable(asClasses, name);
+		org.eclipse.ocl.pivot.Class asClass = NameUtil.getNameable(asClasses, trimmedName);
 		if (asClass == null) {
 			asClass = PivotFactory.eINSTANCE.createClass();
-			asClass.setName(name);
+			asClass.setName(trimmedName);
 			asClasses.add(asClass);
 		}
 		return asClass;
@@ -460,29 +484,76 @@ public class CodeGenAnalyzer
 		return asModel;
 	}
 
-	private @NonNull Operation getNativeOperation2(@NonNull Method method) {
+	/*
+	 * Return a native operation for method flattening the signature into the name.
+	 */
+	public @NonNull Operation getNativeOperation(@NonNull Method method) {
 		Class<?> jClass = method.getDeclaringClass();
 		assert jClass != null;
 		org.eclipse.ocl.pivot.Class asClass = getNativeClass(jClass);
-		String name = method.getName();
+		String verboseName = method.toGenericString();
+		int iOpen = verboseName.indexOf('(');
+		int iClose = verboseName.indexOf(')', iOpen);
+		int iStart = verboseName.lastIndexOf('.', iOpen);
+		if (iStart < 0) {
+			iStart = verboseName.lastIndexOf(' ', iOpen);
+		}
+		String trimmedName = verboseName.substring(iStart+1, iOpen) + "::" + verboseName.substring(iOpen+1, iClose);
 		List<Operation> asOperations = asClass.getOwnedOperations();
-		Operation asOperation = NameUtil.getNameable(asOperations, name);	// FIXME overloads
+		Operation asOperation = NameUtil.getNameable(asOperations, trimmedName);
 		if (asOperation == null) {
+			Class<?> jReturnClass = method.getReturnType();
+			Type asReturnType = getNativeClass(jReturnClass);
+			boolean isRequired = ((JavaCodeGenerator)codeGenerator).getIsNonNull(method) == Boolean.TRUE;
 			asOperation = PivotFactory.eINSTANCE.createOperation();
-			asOperation.setName(name);
-			//	asOperation.setType(type);
+			asOperation.setName(trimmedName);
+			asOperation.setType(asReturnType);
+			asOperation.setIsRequired(isRequired);
 			//	asOperation.setImplementationClass(implementationClass);
 			//	asOperation.setImplementation(implementation);
 			asOperations.add(asOperation);
+		//	LibraryOperation libraryOperation = (LibraryOperation)codeGenerator.getEnvironmentFactory().getMetamodelManager().getImplementation(asOperation);
+		//	asOperation.setImplementation(libraryOperation);
+			CGNativeOperation cgOperation = CGModelFactory.eINSTANCE.createCGNativeOperation();
+			cgOperation.setAst(asOperation);
+			TypeId asTypeId = asOperation.getTypeId();
+			cgOperation.setName(trimmedName);
+			cgOperation.setTypeId(getTypeId(asTypeId));
+			cgOperation.setRequired(asOperation.isIsRequired());
+			cgOperation.setCallingConvention(NativeOperationCallingConvention.INSTANCE);
+			cgOperation.setAst(asOperation);
+			cgOperation.setRequired(isRequired);
+			List<org.eclipse.ocl.pivot.Parameter> asParameters = asOperation.getOwnedParameters();
+			List<CGParameter> cgParameters = cgOperation.getParameters();
+			for (Parameter jParameter : method.getParameters()) {
+				Class<?> jParameterClass = jParameter.getType();
+				isRequired = ((JavaCodeGenerator)codeGenerator).getIsNonNull(method, cgParameters.size()) == Boolean.TRUE;
+				Type asParameterType = getNativeClass(jParameterClass);
+				org.eclipse.ocl.pivot.Parameter asParameter = PivotFactory.eINSTANCE.createParameter();
+				asParameter.setName(jParameter.getName());
+				asParameter.setType(asParameterType);		// isRequired
+				asParameter.setIsRequired(isRequired);
+				asParameters.add(asParameter);
+				CGParameter cgParameter = CGModelFactory.eINSTANCE.createCGParameter();
+				cgParameter.setAst(asParameter);
+				cgParameter.setName(jParameter.getName());
+				cgParameter.setTypeId(getTypeId(asParameterType.getTypeId()));
+				cgParameter.setRequired(isRequired);
+				cgParameters.add(cgParameter);
+			}
+			addOperation(cgOperation);
 		}
 		return asOperation;
 	}
 
-	public @NonNull Operation getNativeOperation(@NonNull Method method) {
+//	public @NonNull Operation getNativeOperation(@NonNull Method method) {
 		// TODO Auto-generated method stub
-		return null;
-	}
+//		return null;
+//	}
 
+	/*
+	 * Return a native package for jPackage flattening nested packages.
+	 */
 	private org.eclipse.ocl.pivot.@NonNull Package getNativePackage(@NonNull Package jPackage) {
 		Model asModel = getNativeModel();
 		String qualifiedName = jPackage.getName();
@@ -502,6 +573,10 @@ public class CodeGenAnalyzer
 
 	public @NonNull CGNull getNull() {
 		return cgNull;
+	}
+
+	public @NonNull CGClass getClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		return ClassUtil.nonNullState(asClass2cgClass.get(asClass));
 	}
 
 	public @NonNull CGOperation getOperation(@NonNull Operation asOperation) {

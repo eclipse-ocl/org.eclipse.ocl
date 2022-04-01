@@ -66,10 +66,21 @@ public class ASM5JavaAnnotationReader
 	}
 
 	public @Nullable Boolean getIsNonNull(@NonNull Method method) {
+		return getIsNonNull(method, -1);
+	}
+
+	public @Nullable Boolean getIsNonNull(@NonNull Method method, int parameterIndex) {
 		final String className = method.getDeclaringClass().getName();
 		final String requiredDesc = getMethodKey(className, method.getName(), Type.getMethodDescriptor(method));
 		Map<@NonNull Integer, @Nullable Boolean> typeref2state = desc2typerefValue2state.get(requiredDesc);
-		Integer returnTypeReference = TypeReference.newTypeReference(TypeReference.METHOD_RETURN).getValue();
+		TypeReference typeReference;
+		if (parameterIndex < 0) {
+			typeReference = TypeReference.newTypeReference(TypeReference.METHOD_RETURN);
+		}
+		else {
+			typeReference = TypeReference.newTypeParameterReference(TypeReference.METHOD_FORMAL_PARAMETER, parameterIndex);
+		}
+		Integer returnTypeReference = typeReference.getValue();
 		if (typeref2state != null) {
 			return typeref2state.get(returnTypeReference);
 		}
@@ -214,7 +225,8 @@ public class ASM5JavaAnnotationReader
 						public void visitMultiANewArrayInsn(String desc, int dims) {}
 
 						@Override
-						public void visitParameter(String name, int access) { }
+						public void visitParameter(String name, int access) { 	getClass();		// XXX
+						}
 
 						@Override
 						public AnnotationVisitor visitParameterAnnotation(int parameter, String desc, boolean visible) {

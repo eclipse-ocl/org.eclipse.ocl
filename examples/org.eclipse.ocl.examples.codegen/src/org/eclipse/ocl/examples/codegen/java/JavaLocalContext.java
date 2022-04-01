@@ -363,6 +363,11 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 		return qualifiedThisVariable2;
 	}
 
+	@Override
+	public @NonNull CGNamedElement getScope() {
+		return cgScope;
+	}
+
 	public @NonNull CGParameter getSelfParameter() {
 	//	assert !isStatic;
 		CGParameter selfParameter2 = selfParameter;

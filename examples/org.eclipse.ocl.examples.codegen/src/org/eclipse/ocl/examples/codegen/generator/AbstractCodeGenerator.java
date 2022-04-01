@@ -20,12 +20,27 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AnalysisVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
+import org.eclipse.ocl.examples.codegen.calling.BuiltInOperationCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.ConstrainedOperationCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.EcoreForeignOperationCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.EcoreOperationCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.ForeignOperationCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.LibraryOperationCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.NativeOperationCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
+import org.eclipse.ocl.examples.codegen.library.NativeVisitorOperation;
+import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.internal.ecore.EObjectOperation;
+import org.eclipse.ocl.pivot.internal.library.AbstractStaticOperation;
+import org.eclipse.ocl.pivot.internal.library.ConstrainedOperation;
+import org.eclipse.ocl.pivot.internal.library.EInvokeOperation;
 import org.eclipse.ocl.pivot.internal.manager.FinalAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
+import org.eclipse.ocl.pivot.library.LibraryOperation;
 
 public abstract class AbstractCodeGenerator implements CodeGenerator
 {
@@ -115,6 +130,48 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 
 	protected @NonNull CodeGenOptions createOptions() {
 		return new CodeGenOptions();
+	}
+
+	@Override
+	public @NonNull OperationCallingConvention getCallingConvention(@NonNull Operation asOperation, @NonNull LibraryOperation libraryOperation) {
+		if (BuiltInOperationCallingConvention.INSTANCE.canHandle(libraryOperation)) {
+			return BuiltInOperationCallingConvention.INSTANCE;
+		}
+		if (libraryOperation instanceof AbstractStaticOperation) {
+			return ForeignOperationCallingConvention.INSTANCE;
+		}
+		if (libraryOperation instanceof NativeVisitorOperation) {
+			LanguageExpression bodyExpression = asOperation.getBodyExpression();
+			if (bodyExpression == null) {
+				return NativeOperationCallingConvention.INSTANCE;
+			}
+		//	CGValuedElement cgOperationCallExp2 = inlineOperationCall(element, bodyExpression);
+		//	if (cgOperationCallExp2 != null) {
+		//		return cgOperationCallExp2;
+		//	}
+		//	return NativeOperationCallingConvention.INSTANCE;
+			throw new UnsupportedOperationException();
+		}
+		if (libraryOperation instanceof ConstrainedOperation) {
+		//	OCLExpression asSource = asOperationCallExp.getOwnedSource();
+		//	if (asSource != null) {
+				return ConstrainedOperationCallingConvention.INSTANCE;
+		//	}
+		}
+		if ((libraryOperation instanceof EObjectOperation) || (libraryOperation instanceof EInvokeOperation)) {
+			if (EcoreOperationCallingConvention.INSTANCE.canHandle(this, asOperation)) {
+				return EcoreOperationCallingConvention.INSTANCE;
+			}
+			org.eclipse.ocl.pivot.Class asType = asOperation.getOwningClass();
+			String className = asType.getInstanceClassName();
+			if (className != null) {
+				return NativeOperationCallingConvention.INSTANCE;
+			}
+			else {
+				return EcoreForeignOperationCallingConvention.INSTANCE;
+			}
+		}
+		return LibraryOperationCallingConvention.INSTANCE;
 	}
 
 	protected @Nullable Iterable<@NonNull Operation> getConstrainedOperations() {

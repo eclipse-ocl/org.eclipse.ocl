@@ -38,6 +38,7 @@ public class NestedNameManager extends NameManager
 		super(parent, parent.helper);
 		this.parent = parent;
 		this.cgScope = cgScope;
+		assert !(parent instanceof NestedNameManager) || (((NestedNameManager)parent).cgScope != cgScope);		// XXX
 		parent.addChild(this);
 	}
 
