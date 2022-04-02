@@ -16,8 +16,10 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -206,6 +208,39 @@ public class CGLibraryOperationCallExpImpl extends CGOperationCallExpImpl implem
 	@Override
 	public boolean isUnboxed() {
 		return false;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated NOT XXX
+	 */
+	@Override
+	public boolean isNonInvalid() {
+		if (referredOperation == null) {
+			return false;
+		}
+		if (referredOperation.isIsValidating()) {
+			if (referredOperation.isIsInvalidating()) {
+				// e.g AND, forAll - nonInvalid if all inputs nonInvalid
+			}
+			else {
+				return true;				// e.g oclIsInvalid
+			}
+		}
+		else {
+			if (referredOperation.isIsInvalidating()) {
+				return false;				// e.g divide-by-zero
+			}
+			else {
+				// normal use case - nonInvalid if all inputs nonInvalid
+			}
+		}
+		for (@NonNull CGValuedElement argument : ClassUtil.nullFree(getArguments())) {
+			if (!argument.isNonNull() || !argument.isNonInvalid()) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 } //CGLibraryOperationCallExpImpl

@@ -76,4 +76,9 @@ public class NestedNameManager extends NameManager
 	protected @NonNull Context getContext() {
 		return ClassUtil.nonNullState(context);
 	}
+
+	@Override
+	public @NonNull String toString() {
+		return "locals " + cgScope.eClass().getName() + " : " + cgScope.toString();
+	}
 }

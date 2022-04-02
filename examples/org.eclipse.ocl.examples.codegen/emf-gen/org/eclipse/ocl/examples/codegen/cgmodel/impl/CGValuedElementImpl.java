@@ -534,6 +534,9 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 
 	@Override
 	public @NonNull NameResolution getNameResolution() {
+		if (nameResolution == null) {
+			isInlined();		// XXX
+		}
 		return ClassUtil.nonNullState(nameResolution);
 	}
 
@@ -551,6 +554,7 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	public void setNameResolution(@NonNull NameResolution nameResolution) {
 		assert this.nameResolution == null;
 		this.nameResolution = nameResolution;
+		System.out.println("setNameResolution " + eClass().getName() + " = " + nameResolution);		// XXX
 	}
 
 } //CGValuedElementImpl

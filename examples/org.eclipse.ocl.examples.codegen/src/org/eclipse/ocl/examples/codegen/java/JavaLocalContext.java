@@ -58,6 +58,7 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 	private /*@LazyNonNull*/ CGVariable standardLibraryVariable = null;		// A convenience cache of execitpr.getStandardVariable()
 	private /*@LazyNonNull*/ CGParameter selfParameter = null;				// A local parameter spelled "self" to be added to the signature
 	private /*@LazyNonNull*/ CGParameter thisParameter = null;				// A local orphan parameter spelled "this"
+	private /*@LazyNonNull*/ CGParameter typeIdParameter = null;			// A local orphan parameter spelled "typeId"
 	private /*@LazyNonNull*/ CGParameter anyParameter = null;				// A local parameter spelled "any" to be added to the static signature
 
 	@Deprecated /* @deprecated specify executorIsParameter */
@@ -131,7 +132,7 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 	}
 
 	protected @NonNull CGParameter createExecutorParameter() {
-		assert executorIsParameter;
+	//	assert executorIsParameter;
 		NameResolution executorName = globalContext.getExecutorNameResolution();
 		CGParameter executorParameter = analyzer.createCGParameter(executorName.getResolvedName(), analyzer.getTypeId(JavaConstants.EXECUTOR_TYPE_ID), true);
 	//	executorParameter.setValueName(executorName);
@@ -142,7 +143,7 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 	}
 
 	protected @NonNull CGVariable createExecutorVariable() {
-		assert !executorIsParameter;
+	//	assert !executorIsParameter;
 		CGNativeOperationCallExp executorInit = analyzer.createCGNativeOperationCallExp(JavaConstants.PIVOT_UTIL_GET_EXECUTOR_GET_METHOD);
 		NameResolution executorName = globalContext.getExecutorNameResolution();
 		setNames2(executorInit, executorName, JavaConstants.EXECUTOR_TYPE_ID);
@@ -278,7 +279,7 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 		if (anyParameter2 == null) {
 			anyParameter = anyParameter2 = createAnyParameter();
 		}
-		return anyParameter;
+		return anyParameter2;
 	}
 
 	public @Nullable CGValuedElement getBody() {
@@ -295,10 +296,19 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 		return null;
 	}
 
+	public @NonNull CGParameter getExecutorParameter() {
+	//	assert executorIsParameter;
+		CGVariable executorVariable2 = executorVariable;
+		if (executorVariable2 == null) {
+			executorVariable = executorVariable2 = createExecutorParameter();
+		}
+		return (CGParameter)executorVariable2;
+	}
+
 	public @NonNull CGVariable getExecutorVariable() {
 		CGVariable executorVariable2 = executorVariable;
 		if (executorVariable2 == null) {
-			executorVariable = executorVariable2 = executorIsParameter ? createExecutorParameter() : createExecutorVariable();
+			executorVariable = executorVariable2 = createExecutorVariable();
 		}
 		return executorVariable2;
 	}
@@ -399,6 +409,15 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 		return thisParameter2;
 	}
 
+	public CGParameter getTypeIdParameter() {
+		assert !isStatic;
+		CGParameter typeIdParameter2 = typeIdParameter;
+		if (typeIdParameter2 == null) {
+			typeIdParameter = typeIdParameter2 = createTypeIdParameter();
+		}
+		return typeIdParameter2;
+	}
+
 	protected void setNames2(@NonNull CGValuedElement cgValuedElement, @NonNull NameResolution nameHint, @NonNull TypeId typeId) {
 		//		String name = nameManagerContext.getSymbolName(null, nameHint);
 		cgValuedElement.setName(nameHint.getResolvedName());
@@ -409,6 +428,11 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 			cgVariable.setNonInvalid();
 			cgVariable.setNonNull();
 		}
+	}
+
+	@Override
+	public @NonNull String toString() {
+		return nameManager.toString();
 	}
 
 	public @NonNull CGValuedElement wrapLetVariables(@NonNull CGValuedElement cgTree) {

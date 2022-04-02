@@ -32,6 +32,7 @@ import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager.NameVariant;
 import org.eclipse.ocl.examples.codegen.analyzer.NameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.NameManagerHelper;
+import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 import org.eclipse.ocl.examples.codegen.analyzer.ReferencesVisitor;
 import org.eclipse.ocl.examples.codegen.asm5.ASM5JavaAnnotationReader;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
@@ -85,6 +86,7 @@ import org.eclipse.ocl.pivot.library.iterator.OneIteration;
 import org.eclipse.ocl.pivot.library.iterator.RejectIteration;
 import org.eclipse.ocl.pivot.library.iterator.SelectIteration;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.TreeIterable;
 
 /**
  * OCL2JavaClass supports generation of the content of a JavaClassFile to
@@ -671,10 +673,20 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	}
 
 	protected void visitInPostOrder(@NonNull CGElement cgElement) {
+		visitInPostOrder2(cgElement);
+		for (EObject eObject : new TreeIterable(cgElement, true)) {		// XXX debugging
+			if ((eObject instanceof CGValuedElement) && !((CGValuedElement)eObject).isInlined()) {
+				NameResolution nameResolution = ((CGValuedElement)eObject).basicGetNameResolution();
+				assert nameResolution != null;
+			}
+		}
+	}
+
+	protected void visitInPostOrder2(@NonNull CGElement cgElement) {
 		JavaGlobalContext<@NonNull ? extends JavaCodeGenerator> globalContext = getGlobalContext();
 		for (EObject eObject : cgElement.eContents()) {					// XXX Surely preorder - no post order to satisfy bottom up dependency evaluation
 			if (eObject instanceof CGElement) {
-				visitInPostOrder((CGElement)eObject);
+				visitInPostOrder2((CGElement)eObject);
 			}
 		}
 		if (cgElement instanceof CGValuedElement) {
@@ -686,7 +698,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 			}
 			for (EObject eObject : ((CGValuedElement)cgElement).getOwns()) {					// XXX Surely preorder - no post order to satisfy bottom up dependency evaluation
 				if (eObject instanceof CGElement) {
-					visitInPostOrder((CGElement)eObject);
+					visitInPostOrder2((CGElement)eObject);
 					if (eObject instanceof CGValuedElement) {
 						CGValuedElement cgValuedElement = (CGValuedElement)eObject;
 						if ((cgValuedElement.basicGetNameResolution() == null) && !cgValuedElement.isInlined()) {

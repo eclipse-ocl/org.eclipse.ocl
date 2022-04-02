@@ -123,6 +123,7 @@ import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.EnumLiteralExp;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.IfExp;
 import org.eclipse.ocl.pivot.IntegerLiteralExp;
 import org.eclipse.ocl.pivot.InvalidLiteralExp;
@@ -333,7 +334,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 				if (cgOperation == null) {
 					cgOperation = createFinalCGOperationWithoutBody(asOverride);
 					pushLocalContext(cgOperation, asOverride);
-					popLocalContext(cgOperation);
+					popLocalContext();
 					asNewOperations.add(asOverride);
 				}
 				cgOperations.add((CGCachedOperation) cgOperation);
@@ -687,7 +688,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		CGOperation oldCGOperation = asVirtualOperation2cgOperation.put(asOperation, cgOperation);
 		assert oldCGOperation == null;
 		context.addOperation(cgOperation);
-		popLocalContext(cgOperation);
+		popLocalContext();
 		return cgOperation;
 	}
 
@@ -766,7 +767,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	//	else {
 	//		cgNativeProperty.setNonNull();
 	//	}
-		popLocalContext(cgForeignProperty);
+		popLocalContext();
 		return cgForeignProperty;
 	}
 
@@ -859,7 +860,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		}
 		//			cgBuiltInIterationCallExp.setNonNull();
 		cgIterationCallExp.setRequired(isRequired);
-		popLocalContext(cgIterationCallExp);
+		popLocalContext();
 		return cgIterationCallExp;
 	}
 
@@ -867,8 +868,8 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		CGOperation cgOperation = context.basicGetOperation(asOperation);
 		if (cgOperation == null) {
 
-			org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asOperation);
-			CGClass cgClass = pushClassContext(asClass);
+			org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass((Feature)asOperation);
+			pushClassContext(asClass);
 			LibraryOperation libraryOperation = (LibraryOperation)metamodelManager.getImplementation(asOperation);
 			OperationCallingConvention callingConvention = codeGenerator.getCallingConvention(asOperation, libraryOperation);
 			if (libraryOperation instanceof ForeignOperation) {
@@ -894,8 +895,8 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			if (query != null) {
 				cgOperation.setBody(doVisit(CGValuedElement.class, query.getOwnedBody()));
 			}
-			popLocalContext(cgOperation);
-			popClassContext(cgClass);
+			popLocalContext();
+			popClassContext();
 		}
 		return cgOperation;
 	}
@@ -1157,7 +1158,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	}
 
 	public @NonNull CGVariable getExecutorVariable() {
-		LocalContext localContext = /*contextStack.isEmpty() ? null :*/ contextStack.peek();
+		LocalContext localContext = /*contextStack.isEmpty() ? null :*/ getLocalContext();
 		return ((JavaLocalContext<?>)localContext).getExecutorVariable();
 	}
 
@@ -1221,6 +1222,10 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return (CGIterator) cgParameter;
 	}
 
+	public @NonNull JavaLocalContext<?> getLocalContext() {
+		return (JavaLocalContext<?>)contextStack.peek();
+	}
+
 	public @NonNull CGVariable getLocalVariable(@NonNull VariableDeclaration asVariable) {
 		CGVariable cgVariable = variablesStack.getLocalVariable(asVariable);
 		if (cgVariable == null) {
@@ -1236,7 +1241,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	}
 
 	protected @NonNull NestedNameManager getNameManager() {
-		return contextStack.peek().getNameManager();
+		return getLocalContext().getNameManager();
 	}
 
 /*	protected @NonNull CGIterator getNullableIterator(@NonNull Variable iterator) {
@@ -1260,7 +1265,15 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			cgParameter = CGModelFactory.eINSTANCE.createCGParameter();
 			setAst(cgParameter, aParameter);
 			if (explicitName == null) {
-				context.setNames(cgParameter, aParameter);
+			//	context.setNames(cgParameter, aParameter);
+
+				String name = context.getGlobalNameManager().getNameHint(aParameter);
+				//	String name = globalNameManager.helper.getNameHint(anObject);
+				//	cgValue.setName(name);
+				//	cgValue.setValueName(name);
+				getNameManager().declareStandardName(cgParameter, name);
+
+
 			//	NameResolution nameResolution = cgParameter.getNameResolution();
 			//	nameResolution.setResolvedName(parameterVariable.getName());
 			//	getNameManager().addNameResolution(nameResolution);
@@ -1360,10 +1373,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			}
 		}
 		return referencedOperations;
-	}
-
-	public @NonNull CGParameter getSelfParameter() {
-		return ((JavaLocalContext<?>)contextStack.peek()).getSelfParameter();
 	}
 
 	public @NonNull CGParameter getSelfParameter(@NonNull Variable aParameter) {
@@ -1495,17 +1504,17 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return JavaConstants.THIS_NAME.equals(asParameter.getName());
 	}
 
-	public void popClassContext(@NonNull CGClass cgClass) {
-		popLocalContext(cgClass);
+	protected void popClassContext(/*@NonNull CGClass cgClass*/) {
+		popLocalContext(/*cgClass*/);
 		contextStack = contextStackStack.pop();
 	}
 
-	public @NonNull LocalContext popLocalContext(@NonNull CGNamedElement cgNamedElement) {
+	public @NonNull LocalContext popLocalContext(/*@NonNull CGNamedElement cgNamedElement*/) {
 		return contextStack.pop();
 	}
 
-	private @NonNull CGClass pushClassContext(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-		JavaGlobalContext<@NonNull ? extends JavaCodeGenerator> globalContext = ((JavaCodeGenerator)codeGenerator).getGlobalContext();
+	protected @NonNull LocalContext pushClassContext(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+	//	JavaGlobalContext<@NonNull ? extends JavaCodeGenerator> globalContext = ((JavaCodeGenerator)codeGenerator).getGlobalContext();
 		CGClass cgClass = context.basicGetClass(asClass);
 		if (cgClass == null) {
 			cgClass = CGModelFactory.eINSTANCE.createCGClass();
@@ -1514,8 +1523,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		}
 		contextStackStack.push(contextStack);
 		contextStack = new Stack<>();
-		pushLocalContext(cgClass, asClass);
-		return cgClass;
+		return pushLocalContext(cgClass, asClass);
 	}
 
 	public @NonNull LocalContext pushLocalContext(@NonNull CGNamedElement cgNamedElement, @NonNull NamedElement asNamedElement) {
@@ -1525,7 +1533,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		else {
 			setAst(cgNamedElement, asNamedElement);
 		}
-		LocalContext outerContext = contextStack.isEmpty() ? null : contextStack.peek();
+		LocalContext outerContext = contextStack.isEmpty() ? null : getLocalContext();
 		JavaGlobalContext<@NonNull ? extends JavaCodeGenerator> globalContext = ((JavaCodeGenerator)codeGenerator).getGlobalContext();
 	//	LocalContext outerContext = globalContext.getLocalContext(cgNamedElement);;
 		LocalContext localContext = globalContext.basicGetLocalContext(cgNamedElement);
@@ -1585,7 +1593,8 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	 */
 	@Override
 	public @NonNull CGClass visitClass(org.eclipse.ocl.pivot.@NonNull Class element) {
-		CGClass cgClass = pushClassContext(element);
+		LocalContext classContext = pushClassContext(element);
+		CGClass cgClass = (CGClass)classContext.getScope();
 		for (@NonNull Constraint asConstraint : ClassUtil.nullFree(element.getOwnedInvariants())) {
 			CGConstraint cgConstraint = doVisit(CGConstraint.class, asConstraint);
 			cgClass.getInvariants().add(cgConstraint);
@@ -1598,7 +1607,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			CGProperty cgProperty = doVisit(CGProperty.class, asProperty);
 			cgClass.getProperties().add(cgProperty);
 		}
-		popClassContext(cgClass);
+		popClassContext();
 		return cgClass;
 	}
 
@@ -1656,7 +1665,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 				e.printStackTrace();
 			}
 		}
-		popLocalContext(cgConstraint);
+		popLocalContext();
 		return cgConstraint;
 	}
 
@@ -1869,7 +1878,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 				e.printStackTrace();		// XXX
 			}
 		}
-		popLocalContext(cgProperty);
+		popLocalContext();
 		return cgProperty;
 	}
 

@@ -79,6 +79,18 @@ public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 		return cgParameter;
 	}
 
+/*	@Override
+	public @NonNull CGClass visitClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		List<Constraint> asConstraints = asClass.getOwnedConstraints();
+		if (!asConstraints.isEmpty()) {
+			LocalContext classContext = pushClassContext(asClass);
+		//	classContext.getNameManager().
+		//	CGClass cgClass = (CGClass)classContext.getScope();
+			popClassContext();
+		}
+		return super.visitClass(asClass);
+	} */
+
 	@Override
 	public @Nullable CGConstraint visitConstraint(@NonNull Constraint element) {
 		CGConstraint cgConstraint = CGModelFactory.eINSTANCE.createCGConstraint();
@@ -112,7 +124,7 @@ public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 				throw new WrappedException(e);
 			}
 		}
-		popLocalContext(cgConstraint);
+		popLocalContext();
 		return cgConstraint;
 	}
 }

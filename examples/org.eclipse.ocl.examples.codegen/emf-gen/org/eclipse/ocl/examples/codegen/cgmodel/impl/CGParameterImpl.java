@@ -323,4 +323,12 @@ public class CGParameterImpl extends CGVariableImpl implements CGParameter {
 		return (init != null) ? init.isUnboxed() : callable != null ? callable.isUnboxed() : false;
 	}
 
+	@Override
+	public void setName(String newName) {
+		if ("feature".equals(newName)) {
+			getClass();		//	XXX
+		}
+		super.setName(newName);
+	}
+
 } //CGParameterImpl

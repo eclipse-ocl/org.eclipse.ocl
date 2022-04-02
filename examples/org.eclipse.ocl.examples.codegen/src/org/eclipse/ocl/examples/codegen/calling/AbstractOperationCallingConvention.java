@@ -61,7 +61,7 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 		else {
 			Operation asOperation = CGUtil.getAST(cgOperation);
 			if (!asOperation.isIsStatic()) {
-				CGParameter cgParameter = as2cgVisitor.getSelfParameter();
+				CGParameter cgParameter = as2cgVisitor.getLocalContext().getSelfParameter();
 				//			cgParameter.setTypeId(context.getTypeId(JavaConstants.getJavaTypeId(Object.class)));
 				//			cgParameter.setRequired(contextVariable.isIsRequired());
 				cgOperation.getParameters().add(cgParameter);
@@ -99,6 +99,12 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 			CGValuedElement cgArgument = as2cgVisitor.doVisit(CGValuedElement.class, asArgument);
 			cgOperationCallExp.getArguments().add(cgArgument);
 		}
+	}
+
+	@Override
+	public boolean isStatic(@NonNull CGOperation cgOperation) {
+		Operation asOperation = CGUtil.getAST(cgOperation);
+		return asOperation.isIsStatic();
 	}
 
 	@Override

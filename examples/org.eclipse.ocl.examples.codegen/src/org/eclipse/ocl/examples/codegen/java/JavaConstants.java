@@ -38,6 +38,8 @@ public class JavaConstants {
 	private static @NonNull JavaTypeIdSingletonScope javaTypes = new JavaTypeIdSingletonScope();
 
 	public static final @NonNull String CONSTRAINT_NAME_NAME = "constraintName";
+	public static final @NonNull String CONSTRAINT_CONTEXT_NAME = "context";
+	public static final @NonNull String CONSTRAINT_DIAGNOSTICS_NAME = "diagnostics";
 
 	public static final @NonNull String E_CONTAINER_NAME = "eContainer";
 

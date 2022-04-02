@@ -84,6 +84,9 @@ public class NameResolution
 		this.nameManager = nameManager;
 		this.primaryElement = primaryElement;
 		this.nameHint = nameHint;
+		if ("diagnostics".equals(nameHint)) {
+			getClass();			// XXX
+		}
 		if ("PROPid_size".equals(nameHint)) {
 			getClass();		// XXX
 		}

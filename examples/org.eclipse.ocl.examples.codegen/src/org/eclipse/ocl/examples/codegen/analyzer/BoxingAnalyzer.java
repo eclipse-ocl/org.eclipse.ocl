@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.analyzer;
 
-import java.lang.reflect.Modifier;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EClassifier;
@@ -51,7 +50,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperation;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
@@ -552,13 +550,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 		//	Guard / cast source
 		//
 		if (isBoxed) {
-			boolean isStatic = false;
-			if (referredOperation != null) {
-				isStatic = referredOperation.isIsStatic();
-			}
-			else if (cgElement instanceof CGNativeOperationCallExp) {
-				isStatic = Modifier.isStatic(((CGNativeOperationCallExp)cgElement).getMethod().getModifiers());
-			}
+			boolean isStatic = callingConvention.isStatic(cgOperation);
 			if (!isStatic) {
 				boolean sourceMayBeNull = false;
 				if (referredOperation != null) {
@@ -605,6 +597,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 			if (isBoxed) {
 				List<CGValuedElement> cgArguments = cgElement.getArguments();
 				int iMax = cgArguments.size();
+				assert iMax == cgParameters.size();
 				if (!referredOperation.isIsValidating()) {
 					for (int i = 0; i < iMax; i++) {			// Avoid CME from rewrite
 						CGValuedElement cgArgument = cgArguments.get(i);
@@ -637,14 +630,14 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 			CGValuedElement cgArgument = cgArguments.get(i);
 			if (isBoxed) {
 				rewriteAsBoxed(cgArgument);
-				if (cgParameters != null) {
+			//	if (cgParameters != null) {
 				//	Parameter asParameter = ownedParameters.get(i);
 					CGParameter cgParameter = cgParameters.get(i);
 					if (cgParameter.isRequired() && !cgArgument.isNonNull()) {
 						//	rewriteAsGuarded(cgArgument, false, "value4 for " + asParameter.getName() + " parameter");
 							rewriteAsGuarded(cgArgument, false, "''" + cgParameter.getTypeId() + "'' rather than ''OclVoid'' value required");
 					}
-				}
+			//	}
 			}
 			else if (eParameters != null) {
 				EParameter eParameter = eParameters.get(i);

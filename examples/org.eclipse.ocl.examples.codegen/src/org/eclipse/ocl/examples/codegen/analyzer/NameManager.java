@@ -275,6 +275,9 @@ public abstract class NameManager
 				if (anObject != NOT_AN_OBJECT) {
 					Object oldElement = name2object.get(validHint);
 					if (oldElement == null) {									// New allocation
+						if ("diagnostics".equals(validHint)) {
+							getClass();			// XXX
+						}
 						name2object.put(validHint, anObject);
 						return validHint;
 					}
@@ -326,6 +329,9 @@ public abstract class NameManager
 		}
 
 		public void reserveName(@NonNull String name, @NonNull Object object) {
+			if ("diagnostics".equals(name)) {
+				getClass();			// XXX
+			}
 			Object old = name2object.put(name, object);
 			assert old == null;
 		}

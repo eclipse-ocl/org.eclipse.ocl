@@ -121,7 +121,7 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 				cgNestedClasses.add(cgForeignClass);
 			}
 		}
-		as2cgVisitor.popLocalContext(cgOperation);
+		as2cgVisitor.popLocalContext();
 		as2cgVisitor.freeze();
 		return cgPackage;
 	}

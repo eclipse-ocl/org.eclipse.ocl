@@ -663,11 +663,12 @@ public class CodeGenAnalyzer
 		globalNameManager.queueValueName(cgValue, null, name);
 	} */
 
-	public void setNames(@NonNull CGValuedElement cgValue, @NonNull Object anObject) {
+	public void setNames(@NonNull CGValuedElement cgValue, @NonNull Object anObject) {		// XXX why global ??
 		String name = globalNameManager.getNameHint(anObject);
 	//	String name = globalNameManager.helper.getNameHint(anObject);
 	//	cgValue.setName(name);
 	//	cgValue.setValueName(name);
+
 		globalNameManager.declareStandardName(cgValue, name);
 	}
 }

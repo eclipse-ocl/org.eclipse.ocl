@@ -156,8 +156,6 @@ import org.eclipse.ocl.pivot.library.AbstractSimpleOperation;
 import org.eclipse.ocl.pivot.library.LibraryIteration;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
-import org.eclipse.ocl.pivot.library.LibrarySimpleOperation;
-import org.eclipse.ocl.pivot.library.LibraryUntypedOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclElementOclContainerProperty;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -923,33 +921,6 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		try {
 			Class<? extends LibraryIteration> implementationClass = libraryIteration.getClass();
 			Method method = implementationClass.getMethod("evaluateIteration", IterationManager.class);
-			return method;
-		} catch (Exception e) {
-			return null;
-		}
-	}
-
-	public Method getJavaMethod(@NonNull LibraryOperation libraryOperation, int argumentSize) {
-		try {
-			Class<? extends LibraryOperation> implementationClass = libraryOperation.getClass();
-			Class<?>[] arguments;
-			int i = 0;
-			if (libraryOperation instanceof LibrarySimpleOperation) {
-				arguments = new Class<?>[argumentSize+1];
-			}
-			else if (libraryOperation instanceof LibraryUntypedOperation) {
-				arguments = new Class<?>[argumentSize+2];
-				arguments[i++] = Executor.class;
-			}
-			else {
-				arguments = new Class<?>[argumentSize+3];
-				arguments[i++] = Executor.class;
-				arguments[i++] = TypeId.class;
-			}
-			while (i < arguments.length) {
-				arguments[i++] = Object.class;
-			}
-			Method method = implementationClass.getMethod("evaluate", arguments);
 			return method;
 		} catch (Exception e) {
 			return null;
