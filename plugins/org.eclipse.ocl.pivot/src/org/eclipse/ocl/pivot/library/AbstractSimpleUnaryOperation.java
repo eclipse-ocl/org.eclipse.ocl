@@ -79,4 +79,14 @@ public abstract class AbstractSimpleUnaryOperation extends AbstractUntypedUnaryO
 	// Redundant declaration needed for API compatibility.
 	@Override
 	public abstract @Nullable /*@Thrown*/ Object evaluate(@Nullable Object sourceValue);
+
+	private static final Class<?>@NonNull [] evaluateArguments = new Class<?>@NonNull [] {Object.class};
+
+	/**
+	 * @since 1.18
+	 */
+	@Override
+	protected Class<?>@NonNull [] getEvaluateArguments(){
+		return evaluateArguments;
+	}
 }

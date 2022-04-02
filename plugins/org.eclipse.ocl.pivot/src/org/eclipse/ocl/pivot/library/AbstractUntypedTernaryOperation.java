@@ -72,4 +72,14 @@ public abstract class AbstractUntypedTernaryOperation extends AbstractTernaryOpe
 	@Deprecated
 	@Override
 	public abstract @Nullable /*@Thrown*/ Object evaluate(@NonNull Evaluator evaluator, @Nullable Object sourceValue, @Nullable Object firstArgumentValue, @Nullable Object secondArgumentValue);
+
+	private static final Class<?>@NonNull [] evaluateArguments = new Class<?>@NonNull [] {Executor.class, Object.class, Object.class, Object.class};
+
+	/**
+	 * @since 1.18
+	 */
+	@Override
+	protected Class<?>@NonNull [] getEvaluateArguments(){
+		return evaluateArguments;
+	}
 }

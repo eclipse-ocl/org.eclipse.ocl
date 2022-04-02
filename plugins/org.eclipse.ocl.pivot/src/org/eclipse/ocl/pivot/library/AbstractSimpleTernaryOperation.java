@@ -94,4 +94,14 @@ public abstract class AbstractSimpleTernaryOperation extends AbstractUntypedTern
 	// Redundant declaration needed for API compatibility.
 	@Override
 	public abstract @Nullable /*@Thrown*/ Object evaluate(@Nullable Object sourceValue, @Nullable Object firstArgumentValue, @Nullable Object secondArgumentValue);
+
+	private static final Class<?>@NonNull [] evaluateArguments = new Class<?>@NonNull [] {Object.class, Object.class, Object.class};
+
+	/**
+	 * @since 1.18
+	 */
+	@Override
+	protected Class<?>@NonNull [] getEvaluateArguments(){
+		return evaluateArguments;
+	}
 }

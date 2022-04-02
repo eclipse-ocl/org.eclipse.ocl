@@ -190,4 +190,14 @@ public class CGStringLogDiagnosticOperation extends AbstractOperation
 			String constraintName, DiagnosticChain diagnostics, Object severity, Object object) {
 		return evaluate(getExecutor(evaluator), returnTypeId, constraintName, diagnostics, severity, object);
 	}
+
+	private static final Class<?>@NonNull [] evaluateArguments = new Class<?>@NonNull [] {Executor.class, TypeId.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class};
+
+	/**
+	 * @since 1.18
+	 */
+	@Override
+	protected Class<?>@NonNull [] getEvaluateArguments(){
+		return evaluateArguments;
+	}
 }

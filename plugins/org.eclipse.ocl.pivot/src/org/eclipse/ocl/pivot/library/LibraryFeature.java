@@ -10,8 +10,16 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.library;
 
+import java.lang.reflect.Method;
+
+import org.eclipse.jdt.annotation.NonNull;
+
 /**
  */
 public interface LibraryFeature
 {
+	/**
+	 * @since 1.18
+	 */
+	default @NonNull Method getEvaluateMethod() { throw new UnsupportedOperationException(); }
 }

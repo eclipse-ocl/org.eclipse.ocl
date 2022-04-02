@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.library;
 
+import java.lang.reflect.Method;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.evaluation.IterationManager;
@@ -93,6 +95,22 @@ public abstract class AbstractIteration extends AbstractIterationOrOperation imp
 	 */
 	protected @Nullable Object resolveTerminalValue(@NonNull IterationManager iterationManager) {
 		return iterationManager.getAccumulatorValue();
+	}
+
+//	private static final Class<?>@NonNull [] evaluateArguments = new Class<?>@NonNull [] {Executor.class, TypeId.class, Object.class};
+
+	/**
+	 * @since 1.18
+	 */
+	@SuppressWarnings("null")
+	@Override
+	public @NonNull Method getEvaluateMethod() {
+		try {
+			Class<? extends LibraryIteration> implementationClass = getClass();
+			return implementationClass.getMethod("evaluateIteration", IterationManager.class);
+		} catch (Exception e) {
+			throw new UnsupportedOperationException(getClass().getName() + ".evaluateIteration(IterationManager)");
+		}
 	}
 
 	/**

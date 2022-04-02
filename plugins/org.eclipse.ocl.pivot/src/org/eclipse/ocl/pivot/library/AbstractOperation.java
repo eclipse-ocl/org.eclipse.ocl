@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.library;
 
+import java.lang.reflect.Method;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -129,6 +130,68 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 		}
 		return castExecutor.internalExecuteOperationCallExp(callExp, sourceAndArgumentValues);
 	}
+
+	private static final Class<?>@NonNull [] evaluateArguments = new Class<?>@NonNull [] {Object.class};
+
+	/**
+	 * @since 1.18
+	 */
+	protected Class<?>@NonNull [] getEvaluateArguments() {
+		return evaluateArguments;
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	@SuppressWarnings("null")
+	@Override
+	public final @NonNull Method getEvaluateMethod() {
+		Class<?>[] evaluateArguments = getEvaluateArguments();
+		try {
+			return getClass().getMethod("evaluate"/*JavaConstants.EVALUATE_NAME*/, evaluateArguments);
+		} catch (Exception e) {
+			StringBuilder s = new StringBuilder();
+			s.append(getClass().getName());
+			s.append(".evaluate(");
+			boolean isFirst = true;
+			for (Class<?> evaluateArgument : evaluateArguments) {
+				if (!isFirst) {
+					s.append(",");
+				}
+				s.append(evaluateArgument.getSimpleName());
+				isFirst = false;
+			}
+			s.append(")");
+			throw new UnsupportedOperationException(s.toString());
+		}
+	}
+
+/*	private Method getJavaMethod(@NonNull LibraryOperation libraryOperation, int argumentSize) {
+		try {
+			Class<? extends LibraryOperation> implementationClass = libraryOperation.getClass();
+			Class<?>[] arguments;
+			int i = 0;
+			if (libraryOperation instanceof LibrarySimpleOperation) {
+				arguments = new Class<?>[argumentSize+1];
+			}
+			else if (libraryOperation instanceof LibraryUntypedOperation) {
+				arguments = new Class<?>[argumentSize+2];
+				arguments[i++] = Executor.class;
+			}
+			else {
+				arguments = new Class<?>[argumentSize+3];
+				arguments[i++] = Executor.class;
+				arguments[i++] = TypeId.class;
+			}
+			while (i < arguments.length) {
+				arguments[i++] = Object.class;
+			}
+			Method method = implementationClass.getMethod("evaluate", arguments);
+			return method;
+		} catch (Exception e) {
+			return null;
+		}
+	} */
 
 	/**
 	 * @since 1.3

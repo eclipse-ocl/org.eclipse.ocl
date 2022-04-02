@@ -1656,6 +1656,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/library/LibraryFeature.java" type="org.eclipse.ocl.pivot.library.LibraryFeature">
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.library.LibraryFeature"/>
+                <message_argument value="getEvaluateMethod()"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/library/LibraryIteration.java" type="org.eclipse.ocl.pivot.library.LibraryIteration">
         <filter id="403984517">
             <message_arguments>
@@ -1671,6 +1679,12 @@
                 <message_argument value="org.eclipse.ocl.pivot.library.LibraryOperation"/>
                 <message_argument value="org.eclipse.ocl.pivot.library.LibraryIterationOrOperation"/>
                 <message_argument value="resolveBodyType(EnvironmentFactory, CallExp, Type)"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.library.LibraryOperation"/>
+                <message_argument value="getEvaluateMethod()"/>
             </message_arguments>
         </filter>
     </resource>

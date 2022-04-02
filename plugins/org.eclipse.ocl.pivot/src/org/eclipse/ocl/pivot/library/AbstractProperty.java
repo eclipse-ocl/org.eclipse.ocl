@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.library;
 
+import java.lang.reflect.Method;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
@@ -70,5 +72,17 @@ public abstract class AbstractProperty extends AbstractFeature implements Librar
 	@Override
 	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
 		throw new UnsupportedOperationException();
+	}
+
+	private static final Class<?>@NonNull [] evaluateArguments = new Class<?>@NonNull [] {Executor.class, TypeId.class, Object.class};
+
+	@SuppressWarnings("null")
+	@Override
+	public @NonNull Method getEvaluateMethod() {
+		try {
+			return getClass().getMethod("evaluate"/*JavaConstants.EVALUATE_NAME*/, evaluateArguments);
+		} catch (Exception e) {
+			throw new UnsupportedOperationException(getClass().getName() + ".evaluate(Executor, TypeId, Object)");
+		}
 	}
 }

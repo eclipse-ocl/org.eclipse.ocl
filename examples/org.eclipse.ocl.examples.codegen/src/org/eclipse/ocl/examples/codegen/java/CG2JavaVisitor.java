@@ -338,9 +338,9 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			passesCoIterators = true;
 		}
 		final LibraryIteration libraryIteration = ClassUtil.nonNullState(cgIterationCallExp.getLibraryIteration());
-		final Method actualMethod = getJavaMethod(libraryIteration);
-		final Class<?> actualReturnClass = actualMethod != null ? actualMethod.getReturnType() : null;
-		boolean actualIsNonNull = (actualMethod != null) && (context.getIsNonNull(actualMethod) == Boolean.TRUE);
+		final Method actualMethod = libraryIteration.getEvaluateMethod();
+		final Class<?> actualReturnClass = actualMethod.getReturnType();
+		boolean actualIsNonNull = context.getIsNonNull(actualMethod) == Boolean.TRUE;
 		boolean expectedIsNonNull = cgIterationCallExp.isNonNull();
 		final String astName = getResolvedName(cgIterationCallExp);
 		final String bodyName = getVariantResolvedName(cgIterationCallExp, context.getBODY_NameVariant());
@@ -915,30 +915,6 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 	public @NonNull ImportNameManager getImportNameManager() {
 		return globalContext.getImportNameManager();
-	}
-
-	private Method getJavaMethod(@NonNull LibraryIteration libraryIteration) {
-		try {
-			Class<? extends LibraryIteration> implementationClass = libraryIteration.getClass();
-			Method method = implementationClass.getMethod("evaluateIteration", IterationManager.class);
-			return method;
-		} catch (Exception e) {
-			return null;
-		}
-	}
-
-	private Method getJavaMethod(@NonNull LibraryProperty libraryProperty) {
-		try {
-			Class<? extends LibraryProperty> implementationClass = libraryProperty.getClass();
-			Class<?>@NonNull [] arguments = new Class<?>@NonNull [3];
-			arguments[0] = Executor.class;
-			arguments[1] = TypeId.class;
-			arguments[2] = Object.class;
-			Method method = implementationClass.getMethod("evaluate", arguments);
-			return method;
-		} catch (Exception e) {
-			return null;
-		}
 	}
 
 	protected @Nullable Class<?> getLeastDerivedClass(Class<?> requiredClass, @NonNull String getAccessor) {
@@ -2505,9 +2481,9 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	public @NonNull Boolean visitCGLibraryPropertyCallExp(@NonNull CGLibraryPropertyCallExp cgPropertyCallExp) {
 		CGValuedElement source = getExpression(cgPropertyCallExp.getSource());
 		LibraryProperty libraryProperty = ClassUtil.nonNullState(cgPropertyCallExp.getLibraryProperty());
-		Method actualMethod = getJavaMethod(libraryProperty);
-		Class<?> actualReturnClass = actualMethod != null ? actualMethod.getReturnType() : null;
-		boolean actualIsNonNull = (actualMethod != null) && (context.getIsNonNull(actualMethod) == Boolean.TRUE);
+		Method actualMethod = libraryProperty.getEvaluateMethod();
+		Class<?> actualReturnClass = actualMethod.getReturnType();
+		boolean actualIsNonNull = context.getIsNonNull(actualMethod) == Boolean.TRUE;
 		boolean expectedIsNonNull = cgPropertyCallExp.isNonNull();
 		//		Class<?> actualBoxedReturnClass = getBoxedReturnClass(libraryProperty);
 		//		CGValuedElement resultVariable = cgOperationCallExp; //.getValue();
