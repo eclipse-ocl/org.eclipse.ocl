@@ -108,4 +108,14 @@ LibraryTernaryOperation.LibraryTernaryOperationExtension
 		}
 		return evaluate(executor, typeId, boxedSourceAndArgumentValues);
 	}
+
+	private static final Class<?>@NonNull [] evaluateArguments = new Class<?>@NonNull [] {Executor.class, TypedElement.class, Object[].class};
+
+	/**
+	 * @since 1.18
+	 */
+	@Override
+	protected Class<?>@NonNull [] getEvaluateArguments(){
+		return evaluateArguments;
+	}
 }

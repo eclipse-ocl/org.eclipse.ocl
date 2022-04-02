@@ -67,4 +67,14 @@ public abstract class AbstractBinaryOperation extends AbstractOperation implemen
 			return super.evaluate(executor, caller, boxedSourceAndArgumentValues);
 		}
 	}
+
+	private static final Class<?>@NonNull [] evaluateArguments = new Class<?>@NonNull [] {Executor.class, TypeId.class, Object.class, Object.class};
+
+	/**
+	 * @since 1.18
+	 */
+	@Override
+	protected Class<?>@NonNull [] getEvaluateArguments(){
+		return evaluateArguments;
+	}
 }

@@ -31,12 +31,12 @@ import org.eclipse.ocl.pivot.values.TupleValue;
 public class CollectionProductOperation extends AbstractBinaryOperation
 {
 	public static final @NonNull CollectionProductOperation INSTANCE = new CollectionProductOperation();
-	
+
 	/** @deprecated use Executor */
 	@Deprecated
 	@Override
 	public @Nullable CollectionValue evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @Nullable Object sourceVal, @Nullable Object argVal) {
-		return evaluate(getExecutor(evaluator), returnTypeId, sourceVal, argVal); 
+		return evaluate(getExecutor(evaluator), returnTypeId, sourceVal, argVal);
 	}
 
 	/**
@@ -55,5 +55,15 @@ public class CollectionProductOperation extends AbstractBinaryOperation
         else {
         	throw new InvalidValueException(PivotMessages.MissingResult, "product"); //$NON-NLS-1$
         }
+	}
+
+	private static final Class<?>@NonNull [] evaluateArguments = new Class<?>@NonNull [] {Executor.class, TypeId.class, Object.class, Object.class};
+
+	/**
+	 * @since 1.18
+	 */
+	@Override
+	protected Class<?>@NonNull [] getEvaluateArguments(){
+		return evaluateArguments;
 	}
 }

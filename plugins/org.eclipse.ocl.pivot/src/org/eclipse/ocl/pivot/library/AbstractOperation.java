@@ -131,13 +131,13 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 		return castExecutor.internalExecuteOperationCallExp(callExp, sourceAndArgumentValues);
 	}
 
-	private static final Class<?>@NonNull [] evaluateArguments = new Class<?>@NonNull [] {Object.class};
+	private static final Class<?>@NonNull [] evaluateArguments = new Class<?>@NonNull [] {};
 
 	/**
 	 * @since 1.18
 	 */
 	protected Class<?>@NonNull [] getEvaluateArguments() {
-		return evaluateArguments;
+		return evaluateArguments;		// No argument won't exist
 	}
 
 	/**
@@ -150,6 +150,13 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 		try {
 			return getClass().getMethod("evaluate"/*JavaConstants.EVALUATE_NAME*/, evaluateArguments);
 		} catch (Exception e) {
+			for (Method method : getClass().getDeclaredMethods()) {
+				if ("evaluate".equals(method.getName()) ) {
+					for (Class<?> parameter : method.getParameterTypes()) {
+						parameter.toString();
+					}
+				}
+			}
 			StringBuilder s = new StringBuilder();
 			s.append(getClass().getName());
 			s.append(".evaluate(");
