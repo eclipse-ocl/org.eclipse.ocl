@@ -263,7 +263,7 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 	}
 
 	@Deprecated /* @deprecated no longer used */
-	public @Nullable CGParameter createTypeIdParameter() {
+	public @NonNull CGParameter createTypeIdParameter() {
 		NameResolution typeIdNameResolution = globalContext.getTypeIdNameResolution();
 		CGParameter typeIdParameter = analyzer.createCGParameter(typeIdNameResolution.getResolvedName(), analyzer.getTypeId(JavaConstants.TYPE_ID_TYPE_ID), true);
 	//	typeIdParameter.setValueName(typeIdName);
@@ -409,7 +409,7 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 		return thisParameter2;
 	}
 
-	public CGParameter getTypeIdParameter() {
+	public @NonNull CGParameter getTypeIdParameter() {
 		assert !isStatic;
 		CGParameter typeIdParameter2 = typeIdParameter;
 		if (typeIdParameter2 == null) {

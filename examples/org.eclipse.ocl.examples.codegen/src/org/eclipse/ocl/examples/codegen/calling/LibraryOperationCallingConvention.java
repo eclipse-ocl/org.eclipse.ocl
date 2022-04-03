@@ -22,11 +22,9 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
-import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.java.JavaGlobalContext;
 import org.eclipse.ocl.examples.codegen.java.JavaLocalContext;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
@@ -36,9 +34,9 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Parameter;
+import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
-import org.eclipse.ocl.pivot.library.LibrarySimpleOperation;
-import org.eclipse.ocl.pivot.library.LibraryUntypedOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 
@@ -47,6 +45,13 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
  *  typically custom code. The arguments depend on the derived AbstractOperation from which CustomOperation derives
  *   *  </br>
  *  e.g. as CustomOperation.INSTANCE.evaluate(executor, arguments)
+ *  </br>
+ *  The call adapts to the actual signature of the invoked method foor which
+ *  </br> An Executor parameter is passed the prevailing executor
+ *  </br> A TypeId parameter is passed the return TypeId
+ *  </br> A first Object parameter is passed the source value
+ *  </br> Subsequent Object parameters are passed the argument values in order
+ *  </br> An Object[] parameter is passed source and argument values
  */
 public class LibraryOperationCallingConvention extends AbstractOperationCallingConvention
 {
@@ -55,75 +60,101 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 	@Override
 	public @NonNull CGCallExp createCGOperationCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @NonNull LibraryOperation libraryOperation,
 			@Nullable CGValuedElement cgSource, @NonNull OperationCallExp asOperationCallExp) {
+		JavaLocalContext<?> localContext = as2cgVisitor.getLocalContext();
 		Operation asOperation = ClassUtil.nonNullState(asOperationCallExp.getReferredOperation());
-		boolean isRequired = asOperation.isIsRequired();
+		assert (cgSource == null) == asOperation.isIsStatic();
+		Method jMethod = libraryOperation.getEvaluateMethod();
 		CGLibraryOperationCallExp cgOperationCallExp = CGModelFactory.eINSTANCE.createCGLibraryOperationCallExp();
 		cgOperationCallExp.setLibraryOperation(libraryOperation);
-		cgOperationCallExp.getArguments().add(cgSource);
+		List<CGValuedElement> cgArguments = cgOperationCallExp.getArguments();
+		for (Class<?> jParameterType : jMethod.getParameterTypes()) {
+			if (jParameterType == Executor.class) {
+				cgArguments.add(as2cgVisitor.createCGVariableExp(localContext.getExecutorVariable()));
+			}
+			else if (jParameterType == TypeId.class) {
+				cgArguments.add(cgOperation.getTypeId());
+			}
+			else if (jParameterType == Object.class) {
+				if (cgSource != null) {
+					cgArguments.add(cgSource);
+				}
+				break;
+			}
+			else {
+				throw new UnsupportedOperationException();
+			}
+		}
+		boolean isRequired = asOperation.isIsRequired();
 		init(as2cgVisitor, cgOperationCallExp, asOperationCallExp, cgOperation, null, isRequired);
 		return cgOperationCallExp;
 	}
 
 	@Override
 	public void createParameters(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL expressionInOCL) {
-	//	super.createParameters(as2cgVisitor, cgOperation, expressionInOCL);
 	//	assert expressionInOCL == null;		-- some library operations also have OCL bodies
+		Operation asOperation = CGUtil.getAST(cgOperation);
 		JavaLocalContext<?> localContext = as2cgVisitor.getLocalContext();
 		List<CGParameter> cgParameters = cgOperation.getParameters();
-		Operation asOperation = CGUtil.getAST(cgOperation);
-		final LibraryOperation libraryOperation = (LibraryOperation) asOperation.getImplementation();		// XXX
-		if (libraryOperation instanceof LibrarySimpleOperation) {
+		LibraryOperation libraryOperation = (LibraryOperation)as2cgVisitor.getMetamodelManager().getImplementation(asOperation);
+		Method jMethod = libraryOperation.getEvaluateMethod();
+		List<@NonNull Parameter> asParameters = ClassUtil.nullFree(asOperation.getOwnedParameters());
+		int i = asOperation.isIsStatic() ? 0 : -1;
+		for (Class<?> jParameterType : jMethod.getParameterTypes()) {
+			if (jParameterType == Executor.class) {
+				cgParameters.add(localContext.getExecutorParameter());
+			}
+			else if (jParameterType == TypeId.class) {
+			//	cgParameters.add(localContext.getTypeIdParameter());
+				cgParameters.add(localContext.getTypeIdParameter());
+			}
+		//	else if (jParameterType == Object[].class) {		// XXX
+		//
+		//	}
+			else if (jParameterType == Object.class) {
+				if (i < 0) {
+					cgParameters.add(localContext.getSelfParameter());
+					i = 0;
+				}
+				else {
+					Parameter aParameter = asParameters.get(i++);
+					CGParameter cgParameter = as2cgVisitor.getParameter(aParameter, (String)null);
+					cgParameters.add(cgParameter);
+				}
+			}
+			else {
+				throw new UnsupportedOperationException();
+			}
 		}
-		else if (libraryOperation instanceof LibraryUntypedOperation) {
-			cgParameters.add(localContext.getExecutorParameter());
-		}
-		else {
-			cgParameters.add(localContext.getExecutorParameter());
-			cgParameters.add(localContext.getTypeIdParameter());
-		}
-		if (!asOperation.isIsStatic()) {
-			cgParameters.add(localContext.getSelfParameter());
-		}
-		for (@NonNull Parameter asParameter : ClassUtil.nullFree(asOperation.getOwnedParameters())) {
-			CGParameter cgParameter = as2cgVisitor.getParameter(asParameter, (String)null);
-			cgParameters.add(cgParameter);
-		}
+		assert i == asParameters.size();
 	}
 
 	@Override
 	public @NonNull Boolean generateJava(@NonNull CG2JavaVisitor<?> cg2JavaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
 		CGLibraryOperationCallExp cgLibraryOperationCallExp = (CGLibraryOperationCallExp)cgOperationCallExp;
+		assert cgOperationCallExp.getSource() == null;
 		final LibraryOperation libraryOperation = ClassUtil.nonNullState(cgLibraryOperationCallExp.getLibraryOperation());
 		LibraryOperationHandler libraryOperationHandler = cg2JavaVisitor.basicGetLibraryOperationHandler(libraryOperation.getClass());
 		if (libraryOperationHandler != null) {
 			return libraryOperationHandler.generate(cgLibraryOperationCallExp);		// XXX BuiltIn ??
 		}
-	// false;		// XXX
-		assert cgOperationCallExp.getSource() == null;
-	//	final CGValuedElement source = cg2JavaVisitor.getExpression(cgOperationCallExp.getSource());
-		final List<CGValuedElement> cgArguments = cgOperationCallExp.getArguments();
+		final List<@NonNull CGValuedElement> cgArguments = ClassUtil.nullFree(cgOperationCallExp.getArguments());
 		int iMax = cgArguments.size();
 		CGOperation cgOperation = cgOperationCallExp.getOperation();
-		Method actualMethod = getJavaMethod(cgOperation, libraryOperation);
-		Class<?> actualReturnClass = actualMethod != null ? actualMethod.getReturnType() : null;
-		boolean actualIsNonNull = (actualMethod != null) && (cg2JavaVisitor.getCodeGenerator().getIsNonNull(actualMethod) == Boolean.TRUE);
+		Method actualMethod = libraryOperation.getEvaluateMethod();
+		Class<?> actualReturnClass = actualMethod.getReturnType();
+		boolean actualIsNonNull = cg2JavaVisitor.getCodeGenerator().getIsNonNull(actualMethod) == Boolean.TRUE;
 		boolean expectedIsNonNull = cgOperationCallExp.isNonNull();
-		final CGTypeId resultType = cgOperationCallExp.getTypeId();
-	//	if (!js.appendLocalStatements(source)) {
-	//		return false;
-	//	}
-		for (@SuppressWarnings("null")@NonNull CGValuedElement cgArgument : cgArguments) {
+		for (@NonNull CGValuedElement cgArgument : cgArguments) {
 			if (!js.appendLocalStatements(cgArgument)) {
 				return false;
 			}
 		}
-		List<CGParameter> cgParameters = cgOperation.getParameters();
+		List<@NonNull CGParameter> cgParameters = ClassUtil.nullFree(cgOperation.getParameters());
 		assert cgParameters.size() == iMax;
 		for (int i = 0; i < iMax; i++) {
-			CGValuedElement cgArgument = cgArguments.get(i);
-		//	Parameter asParameter = cgOperationCallExp.getReferredOperation().getOwnedParameters().get(i);
-			CGParameter cgParameter = cgParameters.get(i);
+			@NonNull CGParameter cgParameter = cgParameters.get(i);
 			if (cgParameter.isRequired()) {
+				CGValuedElement cgArgument = cgArguments.get(i);
 				if (cgArgument.isNull()) {
 					js.append("throw new ");
 					js.appendClassReference(null, InvalidValueException.class);
@@ -187,22 +218,8 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 				js.append(".");
 				js.append(globalContext.getEvaluateName());
 				js.append("(");
-				if (!(libraryOperation instanceof LibrarySimpleOperation)) {		// XXX reify as true CG parameters/arguments
-					//					js.append(getValueName(localContext.getEvaluatorParameter(cgOperationCallExp)));
-					js.append(globalContext.getExecutorName());
-					js.append(", ");
-					if (!(libraryOperation instanceof LibraryUntypedOperation)) {
-						//						CGTypeVariable typeVariable = localContext.getTypeVariable(resultType);
-						js.appendValueName(resultType);
-						js.append(", ");
-					}
-				}
-		//		if (source.isNull()) {
-		//			js.append("(Object)");
-		//		}
-		//		js.appendValueName(source);
 				boolean needsComma = false;
-				for (@SuppressWarnings("null")@NonNull CGValuedElement cgArgument : cgArguments) {
+				for (@NonNull CGValuedElement cgArgument : cgArguments) {
 					if (needsComma) {
 						js.append(", ");
 					}
@@ -220,38 +237,6 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 		//		}
 		js.append(";\n");
 		return true;
-	}
-
-	public Method getJavaMethod(@NonNull CGOperation cgOperation, @NonNull LibraryOperation libraryOperation) {
-		try {
-			Class<? extends LibraryOperation> implementationClass = libraryOperation.getClass();
-			List<CGParameter> cgParameters = cgOperation.getParameters();
-			Class<?>[] arguments = new Class<?>[cgParameters.size()];
-			int i = 0;
-			for (CGParameter cgParameter : cgParameters) {
-				arguments[i++] = Object.class;
-			}
-		/*	int i = 0;
-			if (libraryOperation instanceof LibrarySimpleOperation) {
-				arguments = new Class<?>[argumentSize+1];
-			}
-			else if (libraryOperation instanceof LibraryUntypedOperation) {
-				arguments = new Class<?>[argumentSize+2];
-				arguments[i++] = Executor.class;
-			}
-			else {
-				arguments = new Class<?>[argumentSize+3];
-				arguments[i++] = Executor.class;
-				arguments[i++] = TypeId.class;
-			}
-			while (i < arguments.length) {
-				arguments[i++] = Object.class;
-			} */
-			Method method = implementationClass.getMethod(JavaConstants.EVALUATE_NAME, arguments);
-			return method;
-		} catch (Exception e) {
-			return null;
-		}
 	}
 
 	@Override
