@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.java.operation;
 
+import java.util.List;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
@@ -34,7 +36,10 @@ public class AndOperation2Handler extends AbstractLibraryOperationHandler
 			//
 			//	Trivial source cases
 			//
-			final CGValuedElement cgSource = cgOperationCallExp.getSource();
+			assert cgOperationCallExp.getSource() == null;
+			final List<CGValuedElement> cgArguments = cgOperationCallExp.getArguments();
+			final CGValuedElement cgSource = cgArguments.get(0);
+			assert cgSource != null;
 			if (appendThrowIfNull(cgSource, "and2 source")) {
 				return false;
 			}
@@ -48,7 +53,7 @@ public class AndOperation2Handler extends AbstractLibraryOperationHandler
 			//
 			//	Trivial argument cases
 			//
-			CGValuedElement cgArgument = cgOperationCallExp.getArguments().get(0);
+			final CGValuedElement cgArgument = cgArguments.get(1);
 			assert cgArgument != null;
 			if (cgArgument.isFalse()) {
 				appendAssignBooleanLiteral(hasDeclaration, cgOperationCallExp, false);

@@ -85,9 +85,14 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 
 	protected void init(@NonNull AS2CGVisitor as2cgVisitor,
 			@NonNull CGOperationCallExp cgOperationCallExp, @NonNull OperationCallExp asOperationCallExp,
-			@NonNull CGOperation cgOperation, @Nullable CGValuedElement cgSource, boolean isRequired) {
+			@NonNull CGOperation cgOperation, @Nullable CGValuedElement cgSource, boolean isRequired) {		// XXX wip eliminate isRequired
 		Operation asOperation = ClassUtil.nonNullState(asOperationCallExp.getReferredOperation());
-		assert isRequired == asOperation.isIsRequired();
+		boolean isRequired2 = asOperation.isIsRequired();
+		Boolean ecoreIsRequired = as2cgVisitor.getCodeGenerator().isNonNull(asOperationCallExp);
+		if (ecoreIsRequired != null) {
+			isRequired2 = ecoreIsRequired;
+		}
+		assert isRequired == isRequired2;
 		cgOperationCallExp.setReferredOperation(asOperation);
 		as2cgVisitor.setAst(cgOperationCallExp, asOperationCallExp);
 		cgOperationCallExp.setOperation(cgOperation);

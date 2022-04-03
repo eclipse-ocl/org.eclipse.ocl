@@ -29,6 +29,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.examples.codegen.generator.LocalContext;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
+import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Type;
@@ -262,8 +263,8 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 		return thisParameter;
 	}
 
-	@Deprecated /* @deprecated no longer used */
-	public @NonNull CGParameter createTypeIdParameter() {
+//	@Deprecated /* @deprecated no longer used */
+	protected @NonNull CGParameter createTypeIdParameter() {
 		NameResolution typeIdNameResolution = globalContext.getTypeIdNameResolution();
 		CGParameter typeIdParameter = analyzer.createCGParameter(typeIdNameResolution.getResolvedName(), analyzer.getTypeId(JavaConstants.TYPE_ID_TYPE_ID), true);
 	//	typeIdParameter.setValueName(typeIdName);
@@ -306,6 +307,10 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 	}
 
 	public @NonNull CGVariable getExecutorVariable() {
+		if (asScope instanceof CallExp) {
+			assert outerContext != null;
+			return outerContext.getExecutorVariable();
+		}
 		CGVariable executorVariable2 = executorVariable;
 		if (executorVariable2 == null) {
 			executorVariable = executorVariable2 = createExecutorVariable();
@@ -317,12 +322,16 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 		return globalContext;
 	}
 
-	@Deprecated /* @deprecated unnecessary argument */
-	public @NonNull CGVariable getIdResolverVariable(@NonNull CGValuedElement cgValuedElement) {
-		return getIdResolverVariable();
-	}
+//	@Deprecated /* @deprecated unnecessary argument */
+//	public @NonNull CGVariable getIdResolverVariable(@NonNull CGValuedElement cgValuedElement) {
+//		return getIdResolverVariable();
+//	}
 
 	public @NonNull CGVariable getIdResolverVariable() {
+		if (asScope instanceof CallExp) {
+			assert outerContext != null;
+			return outerContext.getIdResolverVariable();
+		}
 		CGVariable idResolverVariable2 = idResolverVariable;
 		if (idResolverVariable2 == null) {
 			idResolverVariable = idResolverVariable2 = createIdResolverVariable();
@@ -331,6 +340,10 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 	}
 
 	public @NonNull CGVariable getModelManagerVariable() {
+		if (asScope instanceof CallExp) {
+			assert outerContext != null;
+			return outerContext.getModelManagerVariable();
+		}
 		CGVariable modelManagerVariable2 = modelManagerVariable;
 		if (modelManagerVariable2 == null) {
 			modelManagerVariable = modelManagerVariable2 = createModelManagerVariable();
@@ -366,6 +379,10 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 	}
 
 	public @NonNull CGVariable getQualifiedThisVariable() {
+		if (asScope instanceof CallExp) {
+			assert outerContext != null;
+			return outerContext.getQualifiedThisVariable();
+		}
 		CGVariable qualifiedThisVariable2 = qualifiedThisVariable;
 		if (qualifiedThisVariable2 == null) {
 			qualifiedThisVariable = qualifiedThisVariable2 = createQualifiedThisVariable();
@@ -387,12 +404,16 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 		return selfParameter2;
 	}
 
-	@Deprecated /* @deprecated unnecessary argument */
-	public @NonNull CGVariable getStandardLibraryVariable(@NonNull CGValuedElement cgValuedElement) {
-		return getStandardLibraryVariable();
-	}
+//	@Deprecated /* @deprecated unnecessary argument */
+//	public @NonNull CGVariable getStandardLibraryVariable(@NonNull CGValuedElement cgValuedElement) {
+//		return getStandardLibraryVariable();
+//	}
 
 	public @NonNull CGVariable getStandardLibraryVariable() {
+		if (asScope instanceof CallExp) {
+			assert outerContext != null;
+			return outerContext.getStandardLibraryVariable();
+		}
 		CGVariable standardLibraryVariable2 = standardLibraryVariable;
 		if (standardLibraryVariable2 == null) {
 			standardLibraryVariable = standardLibraryVariable2 = createStandardLibraryVariable();

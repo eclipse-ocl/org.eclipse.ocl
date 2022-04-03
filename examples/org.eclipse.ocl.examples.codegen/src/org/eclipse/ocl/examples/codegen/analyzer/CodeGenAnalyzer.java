@@ -270,6 +270,8 @@ public class CodeGenAnalyzer
 		CGVariableExp cgVariableExp = CGModelFactory.eINSTANCE.createCGVariableExp();
 	//	setAst(cgVariableExp, asVariableExp);
 		cgVariableExp.setReferredVariable(cgVariable);
+		cgVariableExp.setTypeId(cgVariable.getTypeId());
+	//	cgVariableExp.setRequired(cgVariable.getIs);
 		return cgVariableExp;
 	}
 

@@ -44,6 +44,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTupleExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTuplePart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGTypedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
@@ -343,6 +344,10 @@ public class CGUtil
 
 	public static @NonNull CGValuedElement getSource(@NonNull CGCallExp cgCallExp) {
 		return ClassUtil.nonNullState(cgCallExp.getSource());
+	}
+
+	public static @NonNull CGTypeId getTypeId(@NonNull CGTypedElement cgTypedElement) {
+		return ClassUtil.nonNullState(cgTypedElement.getTypeId());
 	}
 
 	public static boolean isInlinedId(@NonNull ElementId elementId) {

@@ -72,7 +72,7 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 				cgArguments.add(as2cgVisitor.createCGVariableExp(localContext.getExecutorVariable()));
 			}
 			else if (jParameterType == TypeId.class) {
-				cgArguments.add(cgOperation.getTypeId());
+				cgArguments.add(as2cgVisitor.getAnalyzer().createCGConstantExp(CGUtil.getTypeId(cgOperation)));
 			}
 			else if (jParameterType == Object.class) {
 				if (cgSource != null) {

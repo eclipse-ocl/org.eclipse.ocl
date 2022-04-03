@@ -131,7 +131,6 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.evaluation.Executor;
-import org.eclipse.ocl.pivot.evaluation.IterationManager;
 import org.eclipse.ocl.pivot.ids.ClassId;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.ElementId;
@@ -1764,7 +1763,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			@Override
 			public void append() {
 				try {
-					js.appendValueName(localContext.getIdResolverVariable(cgExecutorOperation));
+					js.appendValueName(localContext.getIdResolverVariable());
 				}
 				catch (Exception e) {			// FIXME
 					js.appendString(String.valueOf(e));

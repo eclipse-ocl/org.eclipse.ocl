@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.java.operation;
 
+import java.util.List;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
@@ -33,7 +35,10 @@ public class NotOperationHandler extends AbstractLibraryOperationHandler
 			//
 			//	Trivial source cases
 			//
-			final CGValuedElement cgSource = cgOperationCallExp.getSource();
+			assert cgOperationCallExp.getSource() == null;
+			final List<CGValuedElement> cgArguments = cgOperationCallExp.getArguments();
+			final CGValuedElement cgSource = cgArguments.get(0);
+			assert cgSource != null;
 			if (appendThrowIfInvalid(cgSource, "not source")) {
 				return false;
 			}

@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.java.operation;
 
+import java.util.List;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
@@ -33,14 +35,17 @@ public class XorOperationHandler extends AbstractLibraryOperationHandler
 			//
 			//	Trivial source cases
 			//
-			final CGValuedElement cgSource = cgOperationCallExp.getSource();
+			assert cgOperationCallExp.getSource() == null;
+			final List<CGValuedElement> cgArguments = cgOperationCallExp.getArguments();
+			final CGValuedElement cgSource = cgArguments.get(0);
+			assert cgSource != null;
 			if (appendThrowIfInvalid(cgSource, "xor source")) {
 				return false;
 			}
 			//
 			//	Trivial argument cases
 			//
-			CGValuedElement cgArgument = cgOperationCallExp.getArguments().get(0);
+			final CGValuedElement cgArgument = cgArguments.get(1);
 			assert cgArgument != null;
 			if (appendThrowIfInvalid(cgArgument, "xor argument")) {
 				return false;

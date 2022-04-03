@@ -523,12 +523,14 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return cgVariableExp;
 	}
 
+	@Deprecated /* @deprecated use Analyser version */
 	public @NonNull CGVariableExp createCGVariableExp(@NonNull CGVariable cgVariable) {
-		CGVariableExp cgVariableExp = CGModelFactory.eINSTANCE.createCGVariableExp();
-		cgVariableExp.setReferredVariable(cgVariable);
-		cgVariableExp.setTypeId(cgVariable.getTypeId());
-	//	cgVariableExp.setRequired(cgVariable.getIs);
-		return cgVariableExp;
+	//	CGVariableExp cgVariableExp = CGModelFactory.eINSTANCE.createCGVariableExp();
+	//	cgVariableExp.setReferredVariable(cgVariable);
+	//	cgVariableExp.setTypeId(cgVariable.getTypeId());
+	////	cgVariableExp.setRequired(cgVariable.getIs);
+	//	return cgVariableExp;
+		return context.createCGVariableExp(cgVariable);
 	}
 
 /*	protected @NonNull CGVariable createCGVariable(@NonNull String name, @NonNull CGValuedElement cgInitValue) {

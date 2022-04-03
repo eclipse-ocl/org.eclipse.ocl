@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.java.operation;
 
+import java.util.List;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
@@ -33,8 +35,11 @@ public class OrOperationHandler extends AbstractLibraryOperationHandler
 			//
 			//	Short-circuit cases
 			//
-			final CGValuedElement cgSource = cgOperationCallExp.getSource();
-			CGValuedElement cgArgument = cgOperationCallExp.getArguments().get(0);
+			assert cgOperationCallExp.getSource() == null;
+			final List<CGValuedElement> cgArguments = cgOperationCallExp.getArguments();
+			final CGValuedElement cgSource = cgArguments.get(0);
+			final CGValuedElement cgArgument = cgArguments.get(1);
+			assert cgSource != null;
 			assert cgArgument != null;
 			if (cgSource.isTrue() || cgArgument.isTrue()) {
 				appendAssignBooleanLiteral(hasDeclaration, cgOperationCallExp, true);
