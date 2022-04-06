@@ -6,7 +6,7 @@
  * http://www.eclipse.org/legal/epl-v20.html
  *
  * Contributors:
- *   Obeo - initial API and implementation 
+ *   Obeo - initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.examples.emf.validation.validity.export;
 
@@ -16,8 +16,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import org.apache.commons.lang.StringEscapeUtils;
+import org.eclipse.emf.codegen.util.CodeGenUtil;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -34,7 +33,7 @@ public class HTMLExporter extends AbstractExporter
 {
 	public static final @NonNull String EXPORTER_TYPE = "html";
 	public static final @NonNull HTMLExporter INSTANCE = new HTMLExporter();
-	
+
 	private void appendTitlesTable(@NonNull Appendable s) throws IOException {
 		s.append("\t\t\t<tr>\n");
 		s.append("\t\t\t\t<td><b>Resource</b></td>\n");
@@ -66,15 +65,15 @@ public class HTMLExporter extends AbstractExporter
 				+ "</td>\n");
 		}
 		s.append("\t\t\t\t<td>" + severity + "</td>\n");
-		s.append("\t\t\t\t<td>" + StringEscapeUtils.escapeHtml(getMessage(node.getWorstResult())) + "</td>\n");
+		s.append("\t\t\t\t<td>" + CodeGenUtil.xmlEscapeEncode(getMessage(node.getWorstResult())) + "</td>\n");
 		s.append("\t\t\t</tr>\n");
 	}
-	
+
 	/**
 	 * Returns a stream containing the initial contents to be given to new
 	 * exported validation results file resource instances.
-	 * 
-	 * @throws IOException 
+	 *
+	 * @throws IOException
 	 */
 	@Override
 	public void createContents(@NonNull Appendable html, @NonNull RootNode rootNode, @Nullable String exportedFileName) throws IOException {
@@ -133,12 +132,12 @@ public class HTMLExporter extends AbstractExporter
 		html.append("\t\t\t\t<td><b>Number of Success: </b></td>\n");
 		html.append("\t\t\t\t<td>" + validationSuccess.size() + "</td>\n");
 		html.append("\t\t\t</tr>\n");
-		
+
 		html.append("\t\t\t<tr>\n");
 		html.append("\t\t\t\t<td><b>Number of Infos: </b></td>\n");
 		html.append("\t\t\t\t<td>" + validationInfos.size() + "</td>\n");
 		html.append("\t\t\t</tr>\n");
-		
+
 		html.append("\t\t\t<tr>\n");
 		html.append("\t\t\t\t<td><b>Number of Warnings: </b></td>\n");
 		html.append("\t\t\t\t<td>" + validationWarnings.size() + "</td>\n");
@@ -148,7 +147,7 @@ public class HTMLExporter extends AbstractExporter
 		html.append("\t\t\t\t<td><b>Number of Errors: </b></td>\n");
 		html.append("\t\t\t\t<td>" + validationErrors.size() + "</td>\n");
 		html.append("\t\t\t</tr>\n");
-		
+
 		html.append("\t\t\t<tr>\n");
 		html.append("\t\t\t\t<td><b>Number of Failures: </b></td>\n");
 		html.append("\t\t\t\t<td>" + validationFailures.size() + "</td>\n");
@@ -215,7 +214,8 @@ public class HTMLExporter extends AbstractExporter
 		html.append("</body>\n");
 		html.append("</html>\n");
 	}
-	
+
+	@Override
 	public @NonNull String getExporterType() { return EXPORTER_TYPE; }
 
 	@Override
