@@ -25,6 +25,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGCastExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCatchExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCollectionExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCollectionPart;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElementId;
@@ -57,6 +58,7 @@ import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.CollectionLiteralExp;
 import org.eclipse.ocl.pivot.CollectionRange;
 import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.IfExp;
 import org.eclipse.ocl.pivot.IntegerLiteralExp;
@@ -127,6 +129,7 @@ public class NameManagerHelper
 {
 	public static final String BAG_NAME_HINT_PREFIX = "BAG";
 	public static final String COLLECTION_NAME_HINT_PREFIX = "COL";
+	public static final String CONSTRAINT_NAME_HINT_PREFIX = "";
 	public static final String DEFAULT_GLOBAL_NAME_PREFIX = "global";
 	public static final String DEFAULT_LOCAL_NAME_PREFIX = "symbol";
 	//	public static final String ID_NAME_HINT_PREFIX = "TID";
@@ -168,6 +171,11 @@ public class NameManagerHelper
 		@Override
 		public @NonNull String visitCollectionRange(@NonNull CollectionRange object) {
 			return RANGE_NAME_HINT_PREFIX;
+		}
+
+		@Override
+		public @NonNull String visitConstraint(@NonNull Constraint object) {
+			return context.getConstraintNameHint(object);
 		}
 
 		@Override
@@ -340,6 +348,12 @@ public class NameManagerHelper
 		@Override
 		public @NonNull String visitCGCollectionPart(@NonNull CGCollectionPart object) {
 			return RANGE_NAME_HINT_PREFIX;
+		}
+
+		@Override
+		public @NonNull String visitCGConstraint(@NonNull CGConstraint object) {
+			Constraint asConstraint = CGUtil.getAST(object);
+			return context.getConstraintNameHint(asConstraint);
 		}
 
 		@Override
@@ -660,6 +674,19 @@ public class NameManagerHelper
 //	protected @NonNull CGNameHelper getCgVisitor() {
 //		return cgVisitor;
 //	}
+
+	protected @NonNull String getConstraintNameHint(@Nullable Constraint aConstraint) {
+		if (aConstraint != null) {
+			String string = aConstraint.getName();
+			if (string == null) {
+				string = "anon";
+			}
+			return CONSTRAINT_NAME_HINT_PREFIX + NameManager.getValidJavaIdentifier(string, CONSTRAINT_NAME_HINT_PREFIX.length() > 0, aConstraint);
+		}
+		else {
+			return getFallBackHint("constraint");
+		}
+	}
 
 	/**
 	 * Return defaultHint as a fall-back after failing to provide a better hint. This routine is just a communal debug opportinity.

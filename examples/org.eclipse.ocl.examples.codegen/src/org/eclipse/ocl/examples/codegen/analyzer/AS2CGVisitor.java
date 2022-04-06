@@ -1242,6 +1242,15 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return metamodelManager;
 	}
 
+/*	protected @NonNull NameManager getNameManager() {
+		if (contextStack.isEmpty()) {
+			return codeGenerator.getGlobalNameManager();
+		}
+		else {
+			return getNestedNameManager();
+		}
+	} */
+
 	protected @NonNull NestedNameManager getNameManager() {
 		return getLocalContext().getNameManager();
 	}
@@ -1552,7 +1561,13 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	protected void setAst(@NonNull CGNamedElement cgElement, @NonNull NamedElement asElement) {
 		cgElement.setAst(asElement);
-		cgElement.setName(asElement.getName());
+	//	cgElement.setName(asElement.getName());
+		if (cgElement instanceof CGValuedElement) {
+			getNameManager().declareStandardName((CGValuedElement) cgElement);
+		}
+		else {
+			cgElement.setName(asElement.getName());
+		}
 	}
 
 	protected void setAst(@NonNull CGTypedElement cgElement, @NonNull TypeId typeId, String symbolName) {
@@ -1565,6 +1580,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		TypeId asTypeId = asElement.getTypeId();
 		cgElement.setTypeId(context.getTypeId(asTypeId));
 		cgElement.setName(asElement.getName());
+	//	getNameManager().declareStandardName((CGValuedElement) cgElement, asElement.getName());
 	}
 
 	private void setNullableIterator(@NonNull CGIterator cgIterator, @NonNull Variable iterator) {

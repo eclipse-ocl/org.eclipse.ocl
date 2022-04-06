@@ -33,6 +33,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cse.AbstractPlace;
 import org.eclipse.ocl.examples.codegen.cse.ControlPlace;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -551,10 +552,27 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	}
 
 	@Override
+	public void setName(String newName) {
+	//	assert newName != null;
+		NameResolution nameResolution2 = nameResolution;
+		if (newName == null) {
+			System.out.println("null setName for " + NameUtil.debugSimpleName(this));
+		}
+		else if (nameResolution2 == null) {
+			System.out.println("Premature setName '" + newName + "' for " + NameUtil.debugSimpleName(this));
+		}
+		else if (!newName.equals(nameResolution2.getResolvedName())) {
+			System.out.println("Inconsistent setName '" + newName + "' for " + NameUtil.debugSimpleName(this));
+		}
+	//	assert newName.equals(getNameResolution().getResolvedName());
+		super.setName(newName);
+	}
+
+	@Override
 	public void setNameResolution(@NonNull NameResolution nameResolution) {
 		assert this.nameResolution == null;
 		this.nameResolution = nameResolution;
-		System.out.println("setNameResolution " + eClass().getName() + " = " + nameResolution);		// XXX
+	//	System.out.println("setNameResolution " + eClass().getName() + " = " + nameResolution);		// XXX
 	}
 
 } //CGValuedElementImpl
