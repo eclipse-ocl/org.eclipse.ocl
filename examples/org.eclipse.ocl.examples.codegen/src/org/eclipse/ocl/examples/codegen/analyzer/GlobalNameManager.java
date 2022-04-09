@@ -138,17 +138,17 @@ public class GlobalNameManager extends NameManager
 		assignNames(context);
 	}
 
-	public @NonNull NameResolution declareGlobalName(@Nullable CGValuedElement object, @NonNull String name) {
-		NameResolution nameResolution = new NameResolution(this, object, name);
-		nameResolution.resolveIn(context);
-		return nameResolution;
+	public @NonNull BaseNameResolution declareGlobalName(@Nullable CGValuedElement object, @NonNull String name) {
+		BaseNameResolution baseNameResolution = new BaseNameResolution(this, object, name);
+		baseNameResolution.resolveIn(context);
+		return baseNameResolution;
 	}
 
-	public @NonNull NameResolution declareReservedName(@Nullable CGValuedElement object, @NonNull String name) {
-		NameResolution nameResolution = new NameResolution(this, object, name);
+	public @NonNull BaseNameResolution declareReservedName(@Nullable CGValuedElement object, @NonNull String name) {
+		BaseNameResolution baseNameResolution = new BaseNameResolution(this, object, name);
 		assert reservedJavaNames.contains(name);
-		nameResolution.setResolvedName(name);
-		return nameResolution;
+		baseNameResolution.setResolvedName(name);
+		return baseNameResolution;
 	}
 
 	@Override

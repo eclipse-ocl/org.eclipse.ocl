@@ -360,7 +360,7 @@ public abstract class NameManager
 	/**
 	 * The NameResolution for each element declared in this NameManager.
 	 */
-	private final @NonNull Map<@NonNull CGValuedElement, @NonNull NameResolution> element2nameResolution = new HashMap<>();
+	private final @NonNull Map<@NonNull CGValuedElement, @NonNull BaseNameResolution> element2baseNameResolution = new HashMap<>();
 
 	/**
 	 * All the NameResolutions declared in this NameManager. This avoid repeats from re-used names, or omissions from globl names.
@@ -388,16 +388,18 @@ public abstract class NameManager
 	public void addNameResolution(@NonNull CGValuedElement cgElement) {
 		NameResolution nameResolution = cgElement.getNameResolution();
 		assert nameResolution.getNameManager() == this;
-		NameResolution old = element2nameResolution.put(cgElement, nameResolution);
-		assert old == null;
+		if (nameResolution instanceof BaseNameResolution) {
+			NameResolution old = element2baseNameResolution.put(cgElement, (BaseNameResolution)nameResolution);
+			assert old == null;
+		}
 	}
 
 	protected void assignNames(@NonNull Context context) {
-		List<@NonNull NameResolution> nameResolutions = new ArrayList<>(element2nameResolution.values());
+		List<@NonNull BaseNameResolution> baseNameResolutions = new ArrayList<>(element2baseNameResolution.values());
 // XXX		Collections.sort(nameResolutions);
-		for (@NonNull NameResolution nameResolution : nameResolutions) {
-			if (nameResolution.basicGetResolvedName() == null) {
-				nameResolution.resolveIn(context);
+		for (@NonNull BaseNameResolution baseNameResolution : baseNameResolutions) {
+			if (baseNameResolution.basicGetResolvedName() == null) {
+				baseNameResolution.resolveIn(context);
 			}
 		}
 		if (children != null) {
@@ -411,8 +413,8 @@ public abstract class NameManager
 		return new NestedNameManager(this, cgScope);
 	}
 
-	public @NonNull NameResolution declareStandardName(@NonNull CGValuedElement anObject) {
-		NameResolution nameResolution = anObject.basicGetNameResolution();
+	public @NonNull BaseNameResolution declareStandardName(@NonNull CGValuedElement anObject) {
+		BaseNameResolution nameResolution = (BaseNameResolution)anObject.basicGetNameResolution();		// XXX cast
 		if (nameResolution != null) {
 			return nameResolution;
 		}
@@ -422,14 +424,14 @@ public abstract class NameManager
 		}
 	}
 
-	public @NonNull NameResolution declareStandardName(@NonNull CGValuedElement cgElement, @NonNull String nameHint) {
+	public @NonNull BaseNameResolution declareStandardName(@NonNull CGValuedElement cgElement, @NonNull String nameHint) {
 		CGValuedElement cgNamedValue = cgElement.getNamedValue();
-		NameResolution nameResolution = cgNamedValue.basicGetNameResolution();
+		BaseNameResolution nameResolution = (BaseNameResolution)cgNamedValue.basicGetNameResolution();		// XXX cast
 		if (nameResolution == null) {
-			nameResolution = new NameResolution(this, cgNamedValue, nameHint);
+			nameResolution = new BaseNameResolution(this, cgNamedValue, nameHint);
 		}
 		if (cgElement != cgNamedValue) {
-			nameResolution.addSecondaryElement(cgElement);
+			nameResolution.addCGElement(cgElement);
 		}
 		return nameResolution;
 	}
@@ -446,7 +448,7 @@ public abstract class NameManager
 	}
 
 	public void removeNameResolution(@NonNull CGValuedElement cgElement) {
-		NameResolution old = element2nameResolution.remove(cgElement);
+		NameResolution old = element2baseNameResolution.remove(cgElement);
 		assert old != null;
 	}
 }

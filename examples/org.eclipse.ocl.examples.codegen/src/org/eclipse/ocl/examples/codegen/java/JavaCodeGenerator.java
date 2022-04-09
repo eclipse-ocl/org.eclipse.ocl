@@ -348,6 +348,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	@Override
 	public abstract @NonNull JavaGlobalContext<@NonNull ? extends JavaCodeGenerator> getGlobalContext();
 
+	@Override
 	public @NonNull NameVariant getCAUGHT_NameVariant() {
 		return CAUGHT_NameVariant;
 	}

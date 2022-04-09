@@ -1367,6 +1367,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	public @NonNull Boolean visitCGCatchExp(@NonNull CGCatchExp cgCatchExp) {
 		CGValuedElement cgSource = getExpression(cgCatchExp.getSource());
 		final String thrownName = getVariantResolvedName(cgSource, context.getTHROWN_NameVariant());
+	//	final String caughtName = cgCatchExp.getResolvedName();
 		if (cgSource.isNonInvalid()) {
 			if (!js.appendLocalStatements(cgSource)) {
 				return false;

@@ -534,8 +534,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			cgVariable = getVariable(asVariable);
 		}
 		cgVariableExp.setReferredVariable(cgVariable);
-		cgVariable.getNameResolution().addSecondaryElement(cgVariableExp);
-	//	getNameManager().declareStandardName(cgVariableExp);
+		cgVariable.getNameResolution().addCGElement(cgVariableExp);
 		return cgVariableExp;
 	}
 
@@ -1098,7 +1097,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 		cgOperationCallExp.setTypeId(context.getTypeId(asSource.getTypeId()));
 	//	cgOperationCallExp.setName("safe_" + callExp.getName() + "_sources");
-		NameResolution callNameResolution = getNameManager().declareStandardName(cgOperationCallExp);
+		BaseNameResolution callNameResolution = getNameManager().declareStandardName(cgOperationCallExp);
 	//	NameResolution callNameResolution = codeGenerator.getGlobalNameManager().getNameResolution(cgOperationCallExp);
 		callNameResolution.addNameVariant(codeGenerator.getSAFE_NameVariant());
 	//	setAst(cgOperationCallExp, asSource.getTypeId(), "safe_" + callExp.getName() + "_sources"/*nameManagerContext.getSymbolName(callExp, "safe")*/);
@@ -1337,13 +1336,12 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		}
 		return cgParameter;
 	}
-	public @NonNull CGParameter getParameter(@NonNull Variable aParameter, @NonNull NameResolution nameResolution) {
+	public @NonNull CGParameter getParameter(@NonNull Variable aParameter, @NonNull BaseNameResolution nameResolution) {
 		CGParameter cgParameter = variablesStack.getParameter(aParameter);
 		if (cgParameter == null) {
 			cgParameter = CGModelFactory.eINSTANCE.createCGParameter();
 			cgParameter.setName(aParameter.getName());
-		//	cgParameter.setValueName(explicitName);
-			nameResolution.addSecondaryElement(cgParameter);
+			nameResolution.addCGElement(cgParameter);
 			setAst(cgParameter, aParameter);
 			//			cgParameter.setTypeId(context.getTypeId(aParameter.getTypeId()));
 			addParameter(aParameter, cgParameter);
@@ -1433,7 +1431,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		//	getNameManager().declareStandardName((CGValuedElement) cgElement, asElement.getName());
 		//	getNameManager().getGlobalNameManager().declareGlobalName(cgParameter, aParameter.getName());
 
-			((JavaGlobalContext<?>)codeGenerator.getGlobalContext()).getSelfNameResolution().addSecondaryElement(cgParameter);
+			((JavaGlobalContext<?>)codeGenerator.getGlobalContext()).getSelfNameResolution().addCGElement(cgParameter);
 
 
 			//			cgParameter.setTypeId(context.getTypeId(aParameter.getTypeId()));
@@ -1466,7 +1464,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		//	getNameManager().declareStandardName((CGValuedElement) cgElement, asElement.getName());
 		//	getNameManager().getGlobalNameManager().declareGlobalName(cgParameter, aParameter.getName());
 
-			((JavaGlobalContext<?>)codeGenerator.getGlobalContext()).getThisNameResolution().addSecondaryElement(cgParameter);
+			((JavaGlobalContext<?>)codeGenerator.getGlobalContext()).getThisNameResolution().addCGElement(cgParameter);
 
 
 			//			cgParameter.setTypeId(context.getTypeId(aParameter.getTypeId()));

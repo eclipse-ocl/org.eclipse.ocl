@@ -548,7 +548,7 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 
 	@Override
 	public @NonNull String getVariantResolvedName(@NonNull NameVariant nameVariant) {
-		return getNameResolution().getVariantResolvedName(nameVariant);
+		return getNameResolution().getBaseNameResolution().getVariantResolvedName(nameVariant);
 	}
 
 	@Override
@@ -572,11 +572,11 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	public void replaceNameResolution(@NonNull NameResolution nameResolution) {
 		NameResolution oldNameResolution = this.nameResolution;
 		assert oldNameResolution != null;
-		assert oldNameResolution.getPrimaryElement() == this;
-		assert oldNameResolution.getSecondaryElements() == null;
+	//	assert oldNameResolution.getBaseNameResolution().getPrimaryElement() == this;
+	//	assert oldNameResolution.getCGElements() == null;
 		this.nameResolution = null;
 		oldNameResolution.getNameManager().removeNameResolution(this);
-		nameResolution.addSecondaryElement(this);
+		nameResolution.addCGElement(this);
 	//	System.out.println("setNameResolution " + eClass().getName() + " = " + nameResolution);		// XXX
 	}
 

@@ -19,6 +19,7 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager.NameVariant;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCatchExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstant;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
@@ -208,6 +209,9 @@ public class FieldingAnalyzer
 			assert !(cgChild instanceof CGCatchExp);
 			if (!cgChild.isNonInvalid()) {
 				CGCatchExp cgCatchExp = CGModelFactory.eINSTANCE.createCGCatchExp();
+				NameVariant caughtNameVariant = context.getCodeGenerator().getCAUGHT_NameVariant();
+				NameResolution caughtNameResolution = cgChild.getNameResolution().getNameVariant(caughtNameVariant);
+				caughtNameResolution.addCGElement(cgCatchExp);
 				cgCatchExp.setCaught(true);
 				CGUtil.wrap(cgCatchExp, cgChild);
 			}
@@ -453,6 +457,10 @@ public class FieldingAnalyzer
 			CGVariable referredVariable = cgElement.getReferredVariable();
 			boolean isCaught = referredVariable.isCaught() || externalVariables.contains(referredVariable);
 			cgElement.setCaught(isCaught);
+			if (isCaught) {
+				NameVariant caughtNameVariant = context.getCodeGenerator().getCAUGHT_NameVariant();
+				cgElement.replaceNameResolution(cgElement.getNameResolution().getNameVariant(caughtNameVariant));
+			}
 			return isCaught;
 		}
 	}

@@ -1174,13 +1174,7 @@ public class JavaStream
 			if (cgElement.isGlobal()) {
 				cg2java.appendGlobalPrefix();
 			}
-			String valueName;
-			if (cgElement.isCaught()) {
-				valueName = cg2java.getVariantResolvedName(cgElement, codeGenerator.getTHROWN_NameVariant());
-			}
-			else {
-				valueName = cg2java.getResolvedName(cgElement);
-			}
+			String valueName = cg2java.getResolvedName(cgElement);
 			append(valueName);
 		}
 	}

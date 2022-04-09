@@ -27,7 +27,7 @@ public class NestedNameManager extends NameManager
 {
 	protected final @NonNull NameManager parent;
 	protected final @NonNull CGElement cgScope;
-	private @Nullable List<@NonNull NameResolution> reservedNameResolutions = null;;
+	private @Nullable List<@NonNull BaseNameResolution> reservedNameResolutions = null;;
 
 	/**
 	 * The value name assignments.
@@ -47,7 +47,7 @@ public class NestedNameManager extends NameManager
 		assert context2 == null;
 		this.context = context2 = new Context(this);
 		if (reservedNameResolutions != null) {
-			for (@NonNull NameResolution nameResolution : reservedNameResolutions) {
+			for (@NonNull BaseNameResolution nameResolution : reservedNameResolutions) {
 				String resolvedName = nameResolution.getResolvedName();
 				CGValuedElement primaryElement = nameResolution.getPrimaryElement();
 				context2.reserveName(resolvedName, primaryElement);
@@ -60,16 +60,16 @@ public class NestedNameManager extends NameManager
 		assert !cgElement.isGlobal();
 		CGValuedElement cgNamedValue = cgElement.getNamedValue();
 		assert cgElement == cgNamedValue;
-		NameResolution nameResolution = cgNamedValue.basicGetNameResolution();
-		assert nameResolution == null;
-		nameResolution = new NameResolution(this, cgNamedValue, nameHint);
-		nameResolution.setResolvedName(nameHint);
-		List<@NonNull NameResolution> reservedNameResolutions2 = reservedNameResolutions;
+		NameResolution nameResolution2 = cgNamedValue.basicGetNameResolution();
+		assert nameResolution2 == null;
+		BaseNameResolution baseNameResolution = new BaseNameResolution(this, cgNamedValue, nameHint);
+		baseNameResolution.setResolvedName(nameHint);
+		List<@NonNull BaseNameResolution> reservedNameResolutions2 = reservedNameResolutions;
 		if (reservedNameResolutions2 == null) {
 			reservedNameResolutions = reservedNameResolutions2 = new ArrayList<>();
 		}
-		reservedNameResolutions2.add(nameResolution);
-		return nameResolution;
+		reservedNameResolutions2.add(baseNameResolution);
+		return baseNameResolution;
 	}
 
 	@Override

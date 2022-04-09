@@ -271,10 +271,9 @@ public class CodeGenAnalyzer
 		return cgParameter;
 	} */
 
-	public @NonNull CGParameter createCGParameter(@NonNull NameResolution nameResolution, @NonNull CGTypeId typeId, boolean isRequired) {
+	public @NonNull CGParameter createCGParameter(@NonNull BaseNameResolution nameResolution, @NonNull CGTypeId typeId, boolean isRequired) {
 		CGParameter cgParameter = CGModelFactory.eINSTANCE.createCGParameter();
-	//	cgParameter.setName(name);
-		nameResolution.addSecondaryElement(cgParameter);
+		nameResolution.addCGElement(cgParameter);
 		cgParameter.setTypeId(typeId);
 		cgParameter.setRequired(isRequired);
 		if (isRequired) {
@@ -289,7 +288,7 @@ public class CodeGenAnalyzer
 		cgVariableExp.setReferredVariable(cgVariable);
 		cgVariableExp.setTypeId(cgVariable.getTypeId());
 	//	cgVariableExp.setRequired(cgVariable.getIs);
-		cgVariable.getNameResolution().addSecondaryElement(cgVariableExp);
+		cgVariable.getNameResolution().addCGElement(cgVariableExp);
 		return cgVariableExp;
 	}
 

@@ -17,8 +17,8 @@ import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
+import org.eclipse.ocl.examples.codegen.analyzer.BaseNameResolution;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
-import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
@@ -72,8 +72,8 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 
 	protected @NonNull CGPackage createCGPackage(@NonNull ExpressionInOCL expInOcl,
 			@NonNull String packageName, @NonNull String className) {
-		NameResolution evaluateNameResolution = globalContext.getEvaluateNameResolution();
-		NameResolution typeIdNameResolution = globalContext.getTypeIdNameResolution();
+		BaseNameResolution evaluateNameResolution = globalContext.getEvaluateNameResolution();
+		BaseNameResolution typeIdNameResolution = globalContext.getTypeIdNameResolution();
 		CGPackage cgPackage = CGModelFactory.eINSTANCE.createCGPackage();
 		cgPackage.setName(packageName);
 		//
@@ -98,7 +98,7 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 			CGParameter cgContext = as2cgVisitor.getParameter(contextVariable, (String)null);
 			cgParameters.add(cgContext);
 		}
-		typeIdNameResolution.addSecondaryElement(typeIdParameter);
+		typeIdNameResolution.addCGElement(typeIdParameter);
 	//	globalNameManager.declareStandardName(typeIdParameter, typeIdName);
 		for (@SuppressWarnings("null")@NonNull Variable parameterVariable : expInOcl.getOwnedParameters()) {
 			CGParameter cgParameter = as2cgVisitor.getParameter(parameterVariable, (String)null);
@@ -108,8 +108,7 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		assert type != null;
 		TypeId asTypeId = type/*.behavioralType()*/.getTypeId();
 		cgOperation.setTypeId(cgAnalyzer.getTypeId(asTypeId));
-	//	cgOperation.setName(evaluateName);
-		evaluateNameResolution.addSecondaryElement(cgOperation);
+		evaluateNameResolution.addCGElement(cgOperation);
 		CGValuedElement cgBody = (CGValuedElement) ClassUtil.nonNullState(expInOcl.accept(as2cgVisitor));
 		cgOperation.setBody(cgBody);
 		cgClass.getOperations().add(cgOperation);
