@@ -71,9 +71,10 @@ public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 
 	@Override
 	public @NonNull CGParameter getSelfParameter(@NonNull Variable aParameter) {
-		CGParameter cgParameter = super.getSelfParameter(aParameter);
+		CGParameter cgParameter = super.getThisParameter(aParameter);
 	//	assert (PivotConstants.SELF_NAME.equals(aParameter.getName())) {
-		globalContext.getThisNameResolution().addSecondaryElement(cgParameter);;
+	//	globalContext.getThisNameResolution().addSecondaryElement(cgParameter);
+	//	globalContext.getSelfNameResolution().addSecondaryElement(cgParameter);
 		//	cgParameter.setValueName(JavaConstants.THIS_NAME);
 	//	}
 		return cgParameter;

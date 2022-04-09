@@ -38,7 +38,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTupleExp;
@@ -49,6 +48,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.pivot.Constraint;
+import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
@@ -227,12 +227,16 @@ public class CGUtil
 		return ClassUtil.nonNullState((Variable)cgIterator.getAst());
 	}
 
+	public static @NonNull NamedElement getAST(@NonNull CGNamedElement cgNamedElement) {
+		return ClassUtil.nonNullState((NamedElement)cgNamedElement.getAst());
+	}
+
 	public static @NonNull Operation getAST(@NonNull CGOperation cgOperation) {
 		return ClassUtil.nonNullState((Operation)cgOperation.getAst());
 	}
 
-	public static @NonNull /*ParameterVariable*/ VariableDeclaration getAST(@NonNull CGParameter cgParameter) {
-		return ClassUtil.nonNullState((VariableDeclaration)cgParameter.getAst());
+	public static @NonNull /*ParameterVariable*/ VariableDeclaration getAST(@NonNull CGVariable cgVariable) {
+		return ClassUtil.nonNullState((VariableDeclaration)cgVariable.getAst());
 	}
 
 	public static @NonNull Property getAST(@NonNull CGProperty cgProperty) {
@@ -338,7 +342,7 @@ public class CGUtil
 		return ClassUtil.nonNullState(cgNavigationCallExp.getReferredProperty());
 	}
 
-	public static @NonNull CGValuedElement getReferredVariable(@NonNull CGVariableExp cgVariableExp) {
+	public static @NonNull CGVariable getReferredVariable(@NonNull CGVariableExp cgVariableExp) {
 		return ClassUtil.nonNullState(cgVariableExp.getReferredVariable());
 	}
 

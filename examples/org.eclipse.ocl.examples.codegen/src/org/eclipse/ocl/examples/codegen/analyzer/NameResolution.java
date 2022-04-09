@@ -84,10 +84,13 @@ public class NameResolution
 		this.nameManager = nameManager;
 		this.primaryElement = primaryElement;
 		this.nameHint = nameHint;
-		if ("diagnostics".equals(nameHint)) {
+		if ("self".equals(nameHint)) {
 			getClass();			// XXX
 		}
-		if ("PROPid_size".equals(nameHint)) {
+		if ("diagnostics".equals(nameHint)) {
+			getClass();		// XXX
+		}
+		if ("getSeverity".equals(nameHint)) {
 			getClass();		// XXX
 		}
 		assert !(primaryElement instanceof CGVariableExp) : "Should have redirected to getNamedValue()";
@@ -99,6 +102,9 @@ public class NameResolution
 	}
 
 	public void addSecondaryElement(@NonNull CGValuedElement cgElement) {
+		if ("gt".equals(nameHint) ) {
+			getClass();		// XXX
+		}
 		if (cgElement != primaryElement) {
 			List<@NonNull CGElement> secondaryElements2 = secondaryElements;
 			if (secondaryElements2 == null) {
@@ -175,6 +181,9 @@ public class NameResolution
 	}
 
 	protected void setResolvedName(@NonNull String resolvedName) {
+		if ("getSeverity".equals(resolvedName)) {
+			getClass();		// XXX
+		}
 		this.resolvedName = resolvedName;
 	}
 

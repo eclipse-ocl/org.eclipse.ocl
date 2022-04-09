@@ -32,6 +32,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
@@ -515,6 +516,9 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 				for (@NonNull CGValuedElement global : sortedGlobals) {
 					visitInPostOrder(global);
 				}
+			}
+			for (@NonNull CGNamedElement cgNamedElment : getAnalyzer().getOrphans()) {
+				visitInPostOrder(cgNamedElment);
 			}
 			resolveNames(cgPackage);
 			OCLinEcoreCG2JavaVisitor cg2java = new OCLinEcoreCG2JavaVisitor(this, genPackage, cgPackage);

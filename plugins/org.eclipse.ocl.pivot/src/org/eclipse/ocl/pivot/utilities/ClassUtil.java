@@ -291,7 +291,7 @@ public class ClassUtil
 	 */
 	public static @NonNull <T> T nonNullState(@Nullable T aT) {
 		if (aT == null) {
-			throw new IllegalStateException();
+			throw new IllegalStateException("Unexpected null");
 		}
 		return aT;
 	}

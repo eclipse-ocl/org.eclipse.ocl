@@ -12,6 +12,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.utilities;
 
+import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Comparator;
@@ -950,12 +951,14 @@ public class PivotUtil
 			for (Object obj : diagnostic.getData()) {
 				s.append(newLine);
 				s.append("\t");
-				//				if (obj instanceof Throwable) {
-				//					s.append(((Throwable)obj).getMessage());
-				//				}
-				//				else {
-				s.append(obj);
-				//				}
+				if (obj instanceof Throwable) {
+					Throwable t = (Throwable)obj;
+				//	s.append(t.getMessage());
+					t.printStackTrace(new PrintWriter(new StringBuilderWriter(s)));
+				}
+				else {
+					s.append(obj);
+					}
 			}
 			for (Diagnostic childDiagnostic : diagnostic.getChildren()) {
 				if (childDiagnostic != null) {

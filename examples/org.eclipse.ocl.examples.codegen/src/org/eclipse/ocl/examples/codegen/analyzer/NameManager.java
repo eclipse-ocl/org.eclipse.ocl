@@ -412,8 +412,14 @@ public abstract class NameManager
 	}
 
 	public @NonNull NameResolution declareStandardName(@NonNull CGValuedElement anObject) {
-		String nameHint = helper.getNameHint(anObject);
-		return declareStandardName(anObject, nameHint);
+		NameResolution nameResolution = anObject.basicGetNameResolution();
+		if (nameResolution != null) {
+			return nameResolution;
+		}
+		else {
+			String nameHint = helper.getNameHint(anObject);
+			return declareStandardName(anObject, nameHint);
+		}
 	}
 
 	public @NonNull NameResolution declareStandardName(@NonNull CGValuedElement cgElement, @NonNull String nameHint) {
@@ -437,5 +443,10 @@ public abstract class NameManager
 
 	public @NonNull String getNameHint(@NonNull Object anObject) {
 		return ClassUtil.nonNullState(helper.getNameHint(anObject));
+	}
+
+	public void removeNameResolution(@NonNull CGValuedElement cgElement) {
+		NameResolution old = element2nameResolution.remove(cgElement);
+		assert old != null;
 	}
 }

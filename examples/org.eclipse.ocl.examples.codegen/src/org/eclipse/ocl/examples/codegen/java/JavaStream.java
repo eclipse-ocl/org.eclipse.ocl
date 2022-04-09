@@ -261,7 +261,7 @@ public class JavaStream
 
 	public void append(@Nullable String string) {
 		if (string != null) {
-			if (string.contains("getExecutor")) {
+			if (string.contains("CGStringLogDiagnosticOperation")) {
 				getClass();		// XXX
 			}
 			if (indentationStack.isEmpty()) {
@@ -1174,7 +1174,13 @@ public class JavaStream
 			if (cgElement.isGlobal()) {
 				cg2java.appendGlobalPrefix();
 			}
-			String valueName = cg2java.getResolvedName(cgElement);
+			String valueName;
+			if (cgElement.isCaught()) {
+				valueName = cg2java.getVariantResolvedName(cgElement, codeGenerator.getTHROWN_NameVariant());
+			}
+			else {
+				valueName = cg2java.getResolvedName(cgElement);
+			}
 			append(valueName);
 		}
 	}

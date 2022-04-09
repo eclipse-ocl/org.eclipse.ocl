@@ -251,7 +251,8 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 	public @Nullable Object visitCGCatchExp(@NonNull CGCatchExp cgCatchExp) {
 		CGValuedElement cgSource = CGUtil.getSource(cgCatchExp);
 		NameResolution catchNameResolution = getNameManager().declareStandardName(cgSource);
-		catchNameResolution.addNameVariant(codeGenerator.getTHROWN_NameVariant());
+		catchNameResolution.addNameVariant(codeGenerator.getCAUGHT_NameVariant());
+		catchNameResolution.addNameVariant(codeGenerator.getTHROWN_NameVariant());		// XXX
 		return super.visitCGCatchExp(cgCatchExp);
 	}
 

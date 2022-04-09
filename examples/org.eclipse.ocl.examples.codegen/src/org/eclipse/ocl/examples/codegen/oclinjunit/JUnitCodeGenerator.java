@@ -92,7 +92,7 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		JavaLocalContext<@NonNull ?> localContext = globalContext.getLocalContext(cgOperation);
 		CGParameter executorParameter = (CGParameter) localContext.getExecutorVariable();
 		cgParameters.add(executorParameter);
-		CGParameter typeIdParameter = cgAnalyzer.createCGParameter(typeIdNameResolution.getResolvedName(), cgAnalyzer.getTypeId(JavaConstants.TYPE_ID_TYPE_ID), true);
+		CGParameter typeIdParameter = cgAnalyzer.createCGParameter(typeIdNameResolution, cgAnalyzer.getTypeId(JavaConstants.TYPE_ID_TYPE_ID), true);
 		cgParameters.add(typeIdParameter);
 		if (contextVariable != null) {
 			CGParameter cgContext = as2cgVisitor.getParameter(contextVariable, (String)null);

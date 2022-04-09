@@ -434,11 +434,15 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return null;
 	} */
 
-	protected @NonNull CGLetExp createCGLetExp(@NonNull TypedElement element, @NonNull CGFinalVariable cgVariable, @NonNull CGValuedElement cgIn) {
+	protected @NonNull CGLetExp createCGLetExp(@NonNull TypedElement asElement, @NonNull CGFinalVariable cgVariable, @NonNull CGValuedElement cgIn) {
 		CGLetExp cgLetExp = CGModelFactory.eINSTANCE.createCGLetExp();
-		setAst(cgLetExp, element);
+	//	setAst(cgLetExp, element);
 		cgLetExp.setInit(cgVariable);
 		cgLetExp.setIn(cgIn);
+		cgLetExp.setAst(asElement);
+		TypeId asTypeId = asElement.getTypeId();
+		cgLetExp.setTypeId(context.getTypeId(asTypeId));
+		getNameManager().declareStandardName(cgLetExp);
 		return cgLetExp;
 	}
 
@@ -484,7 +488,10 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		else {
 			assert cgVariable.eContainer() == null;
 		}
-		setAst(cgVariable, asVariable);
+		cgVariable.setAst(asVariable);
+		TypeId asTypeId = asVariable.getTypeId();
+		cgVariable.setTypeId(context.getTypeId(asTypeId));
+		getNameManager().declareStandardName(cgVariable);
 		//		cgVariable.setInit(doVisit(CGValuedElement.class, asVariable.getInitExpression()));
 		return cgVariable;
 	}
@@ -505,7 +512,14 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	public @NonNull CGVariableExp createCGVariableExp(@NonNull VariableExp asVariableExp) {
 		VariableDeclaration asVariable = PivotUtil.getReferredVariable(asVariableExp);
 		CGVariableExp cgVariableExp = CGModelFactory.eINSTANCE.createCGVariableExp();
-		setAst(cgVariableExp, asVariableExp);
+//		setAst(cgVariableExp, asVariableExp);
+
+		cgVariableExp.setAst(asVariableExp);
+		TypeId asTypeId = asVariableExp.getTypeId();
+		cgVariableExp.setTypeId(context.getTypeId(asTypeId));
+	//	cgElement.setName(asElement.getName());
+	//	getNameManager().declareStandardName((CGValuedElement) cgElement, asElement.getName());
+
 		CGVariable cgVariable;
 		if ((asVariable instanceof Parameter) && isThis((Parameter)asVariable)) {
 			JavaLocalContext<?> localContext = (JavaLocalContext<?>)codeGenerator.getGlobalContext().getLocalContext(getCurrentClass());
@@ -520,6 +534,8 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			cgVariable = getVariable(asVariable);
 		}
 		cgVariableExp.setReferredVariable(cgVariable);
+		cgVariable.getNameResolution().addSecondaryElement(cgVariableExp);
+	//	getNameManager().declareStandardName(cgVariableExp);
 		return cgVariableExp;
 	}
 
@@ -1274,7 +1290,18 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		CGParameter cgParameter = variablesStack.getParameter(aParameter);
 		if (cgParameter == null) {
 			cgParameter = CGModelFactory.eINSTANCE.createCGParameter();
-			setAst(cgParameter, aParameter);
+		//	setAst(cgParameter, aParameter);
+			cgParameter.setAst(aParameter);
+			TypeId asTypeId = aParameter.getTypeId();
+			cgParameter.setTypeId(context.getTypeId(asTypeId));
+		//	cgElement.setName(asElement.getName());
+		//	getNameManager().declareStandardName((CGValuedElement) cgElement, asElement.getName());
+//			if (cgParameter instanceof CGValuedElement) {
+//				getNameManager().declareStandardName((CGValuedElement) cgParameter);
+//			}
+//			else {
+//				cgParameter.setName(aParameter.getName());
+//			}
 			if (explicitName == null) {
 			//	context.setNames(cgParameter, aParameter);
 
@@ -1397,7 +1424,51 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		//		cgParameter.setName(aParameter.getName());
 		//		cgParameter.setValueName(explicitName);
 		//	}
-			setAst(cgParameter, aParameter);
+//			setAst(cgParameter, aParameter);
+
+			cgParameter.setAst(aParameter);
+			TypeId asTypeId = aParameter.getTypeId();
+			cgParameter.setTypeId(context.getTypeId(asTypeId));
+		//	cgElement.setName(asElement.getName());
+		//	getNameManager().declareStandardName((CGValuedElement) cgElement, asElement.getName());
+		//	getNameManager().getGlobalNameManager().declareGlobalName(cgParameter, aParameter.getName());
+
+			((JavaGlobalContext<?>)codeGenerator.getGlobalContext()).getSelfNameResolution().addSecondaryElement(cgParameter);
+
+
+			//			cgParameter.setTypeId(context.getTypeId(aParameter.getTypeId()));
+			addParameter(aParameter, cgParameter);
+			cgParameter.setRequired(aParameter.isIsRequired());
+			if (aParameter.isIsRequired()) {
+				cgParameter.setNonNull();
+			}
+		}
+		return cgParameter;
+	}
+
+	public @NonNull CGParameter getThisParameter(@NonNull Variable aParameter) {
+		CGParameter cgParameter = variablesStack.getParameter(aParameter);
+		if (cgParameter == null) {
+			cgParameter = CGModelFactory.eINSTANCE.createCGParameter();
+		//	if (explicitName == null) {
+		//		context.setNames(cgParameter, aParameter);
+		//	}
+		//	else {
+		//		cgParameter.setName(aParameter.getName());
+		//		cgParameter.setValueName(explicitName);
+		//	}
+//			setAst(cgParameter, aParameter);
+
+			cgParameter.setAst(aParameter);
+			TypeId asTypeId = aParameter.getTypeId();
+			cgParameter.setTypeId(context.getTypeId(asTypeId));
+		//	cgElement.setName(asElement.getName());
+		//	getNameManager().declareStandardName((CGValuedElement) cgElement, asElement.getName());
+		//	getNameManager().getGlobalNameManager().declareGlobalName(cgParameter, aParameter.getName());
+
+			((JavaGlobalContext<?>)codeGenerator.getGlobalContext()).getThisNameResolution().addSecondaryElement(cgParameter);
+
+
 			//			cgParameter.setTypeId(context.getTypeId(aParameter.getTypeId()));
 			addParameter(aParameter, cgParameter);
 			cgParameter.setRequired(aParameter.isIsRequired());
@@ -1559,7 +1630,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		cgElement.setAst(asElement);
 	}
 
-	protected void setAst(@NonNull CGNamedElement cgElement, @NonNull NamedElement asElement) {
+	protected void setAst(@NonNull CGNamedElement cgElement, @NonNull NamedElement asElement) {		// XXX
 		cgElement.setAst(asElement);
 	//	cgElement.setName(asElement.getName());
 		if (cgElement instanceof CGValuedElement) {
@@ -1579,8 +1650,14 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		cgElement.setAst(asElement);
 		TypeId asTypeId = asElement.getTypeId();
 		cgElement.setTypeId(context.getTypeId(asTypeId));
-		cgElement.setName(asElement.getName());
+	//	cgElement.setName(asElement.getName());
 	//	getNameManager().declareStandardName((CGValuedElement) cgElement, asElement.getName());
+		if (cgElement instanceof CGValuedElement) {
+			getNameManager().declareStandardName((CGValuedElement) cgElement);
+		}
+		else {
+			cgElement.setName(asElement.getName());
+		}
 	}
 
 	private void setNullableIterator(@NonNull CGIterator cgIterator, @NonNull Variable iterator) {
@@ -1742,10 +1819,13 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	@Override
 	public @Nullable CGLetExp visitLetExp(@NonNull LetExp element) {
 		Variable variable = element.getOwnedVariable();
-		CGValuedElement initExpression = doVisit(CGValuedElement.class, variable.getOwnedInit());
-		initExpression.setName(variable.getName());
+		CGValuedElement cgInit = doVisit(CGValuedElement.class, variable.getOwnedInit());
+	//	initExpression.setName(variable.getName());
+
 		CGFinalVariable cgVariable = (CGFinalVariable) createCGVariable(variable);		// FIXME Lose cast
-		cgVariable.setInit(initExpression);
+	//	cgVariable.getNameResolution().addSecondaryElement(initExpression);
+		cgVariable.setInit(cgInit);
+		cgInit.replaceNameResolution(cgVariable.getNameResolution());
 		//		initExpression.setVariableValue(cgVariable);
 		//		variables.put(variable, cgVariable);
 		CGValuedElement inExpression = doVisit(CGValuedElement.class, element.getOwnedIn());

@@ -40,11 +40,11 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGIsKindOfExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIsUndefinedExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGMapPart;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNull;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGOppositePropertyCallExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGPropertyCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGReal;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGString;
@@ -52,6 +52,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGThrowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTupleExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGUnboxExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.util.AbstractExtendingCGModelVisitor;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.BagType;
@@ -59,6 +60,7 @@ import org.eclipse.ocl.pivot.CollectionLiteralExp;
 import org.eclipse.ocl.pivot.CollectionRange;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Constraint;
+import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.IfExp;
 import org.eclipse.ocl.pivot.IntegerLiteralExp;
@@ -428,6 +430,12 @@ public class NameManagerHelper
 		}
 
 		@Override
+		public @NonNull String visitCGNamedElement(@NonNull CGNamedElement object) {
+			NamedElement asNamedElement = CGUtil.getAST(object);
+			return context.getNameHint(asNamedElement);
+		}
+
+		@Override
 		public @NonNull String visitCGNativeOperationCallExp(@NonNull CGNativeOperationCallExp object) {
 			Method method = object.getMethod();
 			return method.getName();
@@ -440,25 +448,32 @@ public class NameManagerHelper
 		}
 
 		@Override
-		public @NonNull String visitCGOperationCallExp(@NonNull CGOperationCallExp object) {
-			Operation referredOperation = object.getReferredOperation();
-			return context.getOperationCallExpNameHint(referredOperation);
+		public @NonNull String visitCGOperation(@NonNull CGOperation object) {
+			Operation asOperation = CGUtil.getAST(object);
+			return context.getNameableHint(asOperation);
 		}
 
-		@Override
-		public @NonNull String visitCGOppositePropertyCallExp(@NonNull CGOppositePropertyCallExp object) {
-		//	Property referredOppositeProperty = ((OppositePropertyCallExp)object.getAst()).getReferredProperty();
-			Property referredOppositeProperty = object.getReferredProperty();
-			Property referredProperty = referredOppositeProperty != null ? referredOppositeProperty.getOpposite() : null;
-			return context.getPropertyNameHint(referredProperty);
-		}
+//		@Override
+//		public @NonNull String visitCGOperationCallExp(@NonNull CGOperationCallExp object) {
+	//		Operation referredOperation = object.getReferredOperation();
+	//		return context.getOperationCallExpNameHint(referredOperation);
+//		return super.visitCGOperationCallExp(object);
+//		}
 
-		@Override
-		public @NonNull String visitCGPropertyCallExp(@NonNull CGPropertyCallExp object) {
-		//	Property referredProperty = ((PropertyCallExp)object.getAst()).getReferredProperty();
-			Property referredProperty = object.getReferredProperty();
-			return context.getPropertyNameHint(referredProperty);
-		}
+//		@Override
+//		public @NonNull String visitCGOppositePropertyCallExp(@NonNull CGOppositePropertyCallExp object) {
+//		//	Property referredOppositeProperty = ((OppositePropertyCallExp)object.getAst()).getReferredProperty();
+//			Property referredOppositeProperty = object.getReferredProperty();
+//			Property referredProperty = referredOppositeProperty != null ? referredOppositeProperty.getOpposite() : null;
+//			return context.getPropertyNameHint(referredProperty);
+//		}
+
+//		@Override
+//		public @NonNull String visitCGPropertyCallExp(@NonNull CGPropertyCallExp object) {
+//		//	Property referredProperty = ((PropertyCallExp)object.getAst()).getReferredProperty();
+//			Property referredProperty = object.getReferredProperty();
+//			return context.getPropertyNameHint(referredProperty);
+//		}
 
 		@Override
 		public @NonNull String visitCGReal(@NonNull CGReal object) {
@@ -491,6 +506,43 @@ public class NameManagerHelper
 		@Override
 		public @NonNull String visitCGUnboxExp(@NonNull CGUnboxExp object) {
 			return "UNBOXED_" + context.getNameHint(object.getSourceValue());
+		}
+
+		@Override
+		public @NonNull String visitCGValuedElement(@NonNull CGValuedElement object) {
+			NameResolution nameResolution = object.basicGetNameResolution();
+			if (nameResolution != null) {
+				return nameResolution.getNameHint();
+			}
+			Element asElement = object.getAst();
+			if (asElement != null) {
+			//	return super.visitCGValuedElement(object);
+				return context.getNameHint(asElement);
+		}
+		//	NameResolution nameResolution = object.basicGetNameResolution();
+		//	assert nameResolution == null;
+//				return nameResolution.getNameHint();
+//			}
+			CGValuedElement namedValue = object.getNamedValue();
+			if (namedValue != object) {
+				return context.getNameHint(namedValue);
+			}
+			else {
+				return super.visitCGValuedElement(object);
+			}
+		}
+
+//		@Override
+//		public @NonNull String visitCGVariable(@NonNull CGVariable object) {
+//			return visitCGNamedElement(object);		// Leapfrog getNamedValue reirection
+//		}
+
+		@Override
+		public @NonNull String visitCGVariableExp(@NonNull CGVariableExp object) {
+		//	CGVariable cgVariable = CGUtil.getReferredVariable(object);
+		//	String name = cgVariable.accept(this);
+		//	return context.getNameHint(cgVariable);
+			return visiting(object);			// CGVariableExp should redirect to CGVariable when created
 		}
 
 		@Override
@@ -743,14 +795,17 @@ public class NameManagerHelper
 	 */
 	public @NonNull String getNameHint(@NonNull Object anObject) {
 		if (anObject instanceof CGElement) {
-			if (anObject instanceof CGValuedElement) {
+			if (anObject instanceof CGProperty) {
+				getClass();		// XXX;
+			}
+		/*	if (anObject instanceof CGValuedElement) {
 				CGValuedElement cgValuedElement = ((CGValuedElement)anObject).getNamedValue();
 				String name = cgValuedElement.getName();
 				if (name != null) {
 					return name;
 				}
 				anObject = cgValuedElement;
-			}
+			} */
 			return ((CGElement)anObject).accept(cgVisitor);
 		}
 		else if (anObject instanceof Visitable) {

@@ -79,7 +79,7 @@ public class DelegateInstaller
 				return "body";
 			}
 			else {
-				return name != null ? name : "null";
+				return name != null ? name : "anon";
 			}
 		}
 		else if (eContainingFeature == PivotPackage.Literals.OPERATION__OWNED_PRECONDITIONS) {
@@ -91,7 +91,7 @@ public class DelegateInstaller
 		else {
 			//			error("Unsupported " + pivotConstraint);
 		}
-		return "null";
+		return "anon";
 	}
 
 	public static @Nullable String getDelegateURI(@NonNull List<EObject> contents) {
