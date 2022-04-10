@@ -413,16 +413,7 @@ public abstract class NameManager
 		return new NestedNameManager(this, cgScope);
 	}
 
-	public @NonNull NameResolution declareStandardName(@NonNull CGValuedElement anObject) {
-		NameResolution nameResolution = anObject.basicGetNameResolution();
-		if (nameResolution != null) {
-			return nameResolution;
-		}
-		else {
-			String nameHint = helper.getNameHint(anObject);
-			return declareStandardName(anObject, nameHint);
-		}
-	}
+	public abstract @NonNull NameResolution declareStandardName(@NonNull CGValuedElement cgElement);
 
 	public @NonNull NameResolution declareStandardName(@NonNull CGValuedElement cgElement, @NonNull String nameHint) {
 		CGValuedElement cgNamedValue = cgElement.getNamedValue();

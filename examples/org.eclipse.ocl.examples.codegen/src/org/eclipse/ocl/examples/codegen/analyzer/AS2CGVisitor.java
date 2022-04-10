@@ -442,7 +442,8 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		cgLetExp.setAst(asElement);
 		TypeId asTypeId = asElement.getTypeId();
 		cgLetExp.setTypeId(context.getTypeId(asTypeId));
-		getNameManager().declareStandardName(cgLetExp);
+		cgIn.getNameResolution().addCGElement(cgLetExp);		// cgIn has variable name
+	//	getNameManager().declareStandardName(cgLetExp);
 		return cgLetExp;
 	}
 
@@ -491,7 +492,9 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		cgVariable.setAst(asVariable);
 		TypeId asTypeId = asVariable.getTypeId();
 		cgVariable.setTypeId(context.getTypeId(asTypeId));
-		getNameManager().declareStandardName(cgVariable);
+	//	getNameManager().declareStandardName(cgVariable);
+		NameResolution nameResolution = getNameManager().getNameResolution(asVariable);
+		nameResolution.addCGElement(cgVariable);
 		//		cgVariable.setInit(doVisit(CGValuedElement.class, asVariable.getInitExpression()));
 		return cgVariable;
 	}
@@ -1857,7 +1860,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		CGFinalVariable cgVariable = (CGFinalVariable) createCGVariable(variable);		// FIXME Lose cast
 	//	cgVariable.getNameResolution().addSecondaryElement(initExpression);
 		cgVariable.setInit(cgInit);
-		cgInit.replaceNameResolution(cgVariable.getNameResolution());
+	//	cgInit.replaceNameResolution(cgVariable.getNameResolution());
 		//		initExpression.setVariableValue(cgVariable);
 		//		variables.put(variable, cgVariable);
 		CGValuedElement inExpression = doVisit(CGValuedElement.class, element.getOwnedIn());

@@ -16,6 +16,7 @@ import java.util.List;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
+import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
@@ -60,6 +61,7 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 	@Override
 	public @NonNull CGCallExp createCGOperationCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @NonNull LibraryOperation libraryOperation,
 			@Nullable CGValuedElement cgSource, @NonNull OperationCallExp asOperationCallExp) {
+		CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();
 		JavaLocalContext<?> localContext = as2cgVisitor.getLocalContext();
 		Operation asOperation = ClassUtil.nonNullState(asOperationCallExp.getReferredOperation());
 		assert (cgSource == null) == asOperation.isIsStatic();
@@ -69,11 +71,11 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 		List<CGValuedElement> cgArguments = cgOperationCallExp.getArguments();
 		for (Class<?> jParameterType : jMethod.getParameterTypes()) {
 			if (jParameterType == Executor.class) {
-				cgArguments.add(as2cgVisitor.createCGVariableExp(localContext.getExecutorVariable()));
+				cgArguments.add(analyzer.createCGVariableExp(localContext.getExecutorVariable()));
 			}
 			else if (jParameterType == TypeId.class) {
 				TypeId asTypeId = asOperationCallExp.getTypeId();
-				cgArguments.add(as2cgVisitor.getAnalyzer().createCGConstantExp(as2cgVisitor.getAnalyzer().getTypeId(asTypeId)));
+				cgArguments.add(analyzer.createCGConstantExp(analyzer.getTypeId(asTypeId)));
 			}
 			else if (jParameterType == Object.class) {
 				if (cgSource != null) {

@@ -40,8 +40,6 @@ public interface NameResolution
 
 	void addCGElement(@NonNull CGValuedElement cgElement);
 
-//	@Nullable CGValuedElement basicGetPrimaryElement();
-
 	@Nullable String basicGetResolvedName();
 
 	@NonNull BaseNameResolution getBaseNameResolution();
@@ -56,13 +54,7 @@ public interface NameResolution
 
 	@NonNull VariantNameResolution getNameVariant(@NonNull NameVariant nameVariant);
 
-//	@NonNull String getVariantResolvedName(@NonNull NameVariant nameVariant);
-
-//	@Nullable Iterable<@NonNull CGElement> getSecondaryElements();
-
-//	void resolveIn(@NonNull Context context);
-
-//	protected void setResolvedName(@NonNull String resolvedName);
+	@NonNull String getVariantResolvedName(@NonNull NameVariant nameVariant);
 
 	@Override
 	@NonNull String toString();

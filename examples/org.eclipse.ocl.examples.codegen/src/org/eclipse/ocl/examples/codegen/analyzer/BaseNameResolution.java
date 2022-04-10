@@ -68,7 +68,7 @@ public class BaseNameResolution extends AbstractNameResolution
 		if ("diagnostics".equals(nameHint)) {
 			getClass();		// XXX
 		}
-		if ("getSeverity".equals(nameHint)) {
+		if ("severity".equals(nameHint)) {
 			getClass();		// XXX
 		}
 		assert !(primaryElement instanceof CGVariableExp) : "Should have redirected to getNamedValue()";

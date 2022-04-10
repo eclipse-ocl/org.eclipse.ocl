@@ -78,6 +78,7 @@ public abstract class AbstractNameResolution implements NameResolution
 		return variantNameResolution;
 	}
 
+	@Override
 	public @NonNull String getVariantResolvedName(@NonNull NameVariant nameVariant) {
 		assert nameVariant2variantNameResolution != null;
 		VariantNameResolution variantNameResolution = nameVariant2variantNameResolution.get(nameVariant);

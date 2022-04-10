@@ -46,7 +46,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNull;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGReal;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGString;
@@ -326,7 +325,7 @@ public class NameManagerHelper
 		@Override
 		public @NonNull String visitCGBoxExp(@NonNull CGBoxExp object) {
 //			return "BOXED_" + context.getNameHint(object.getSourceValue());
-			return visiting(object);			// NameVariant should be eager;y declared
+			return visiting(object);			// NameVariant should be eagerly declared
 		}
 
 		@Override
@@ -342,7 +341,7 @@ public class NameManagerHelper
 		@Override
 		public @NonNull String visitCGCatchExp(@NonNull CGCatchExp object) {
 //			return "CAUGHT_" + context.getNameHint(object.getSourceValue());
-			return visiting(object);			// NameVariant should be eager;y declared
+			return visiting(object);			// NameVariant should be eagerly declared
 		}
 
 		@Override
@@ -394,7 +393,8 @@ public class NameManagerHelper
 
 		@Override
 		public @NonNull String visitCGGuardExp(@NonNull CGGuardExp object) {
-			return "GUARDED_" + context.getNameHint(object.getSourceValue());
+		//	return "GUARDED_" + context.getNameHint(object.getSourceValue());
+			return visiting(object);			// NameVariant should be eagerly declared
 		}
 
 		@Override
@@ -811,18 +811,24 @@ public class NameManagerHelper
 	 * The returned name is not guaranteed to be unique. Uniqueness is enforced when the hint is passed to getSymbolName().
 	 */
 	public @NonNull String getNameHint(@NonNull Object anObject) {
-		if (anObject instanceof CGElement) {
-			if (anObject instanceof CGProperty) {
-				getClass();		// XXX;
-			}
-		/*	if (anObject instanceof CGValuedElement) {
-				CGValuedElement cgValuedElement = ((CGValuedElement)anObject).getNamedValue();
-				String name = cgValuedElement.getName();
-				if (name != null) {
-					return name;
+	/*	if (anObject instanceof CGNamedElement) {
+			CGNamedElement cgNamedElement = (CGNamedElement)anObject;
+			Element asElement = cgNamedElement.getAst();
+			if (asElement != null) {
+				EObject eContainer = asElement;
+				EStructuralFeature eContainingFeature;
+				while ((eContainingFeature = eContainer.eContainingFeature()) == PivotPackage.Literals.LET_EXP__OWNED_IN) {
+					eContainer = eContainer.eContainer();
 				}
-				anObject = cgValuedElement;
-			} */
+				if (eContainingFeature == PivotPackage.Literals.VARIABLE__OWNED_INIT) {
+					eContainer = eContainer.eContainer();
+					assert eContainer != null;
+					return getNameHint(eContainer);
+				}
+			}
+			return cgNamedElement.accept(cgVisitor);
+		}
+		else */ if (anObject instanceof CGElement) {
 			return ((CGElement)anObject).accept(cgVisitor);
 		}
 		else if (anObject instanceof Visitable) {

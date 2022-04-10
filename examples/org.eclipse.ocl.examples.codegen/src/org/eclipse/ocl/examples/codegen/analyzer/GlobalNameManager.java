@@ -152,6 +152,18 @@ public class GlobalNameManager extends NameManager
 	}
 
 	@Override
+	public @NonNull NameResolution declareStandardName(@NonNull CGValuedElement cgElement) {
+		NameResolution nameResolution = cgElement.basicGetNameResolution();
+		if (nameResolution != null) {
+			return nameResolution;
+		}
+		else {
+			String nameHint = helper.getNameHint(cgElement);
+			return declareStandardName(cgElement, nameHint);
+		}
+	}
+
+	@Override
 	protected @NonNull Context getContext() {
 		return context;
 	}

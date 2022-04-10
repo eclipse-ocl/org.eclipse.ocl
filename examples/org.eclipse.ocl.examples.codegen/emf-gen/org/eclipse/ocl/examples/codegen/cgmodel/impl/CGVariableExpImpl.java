@@ -262,12 +262,4 @@ public class CGVariableExpImpl extends CGValuedElementImpl implements CGVariable
 		return (referredVariable != null) && referredVariable.isUnboxed();
 	}
 
-	@Override
-	public void setCaught(boolean isCaught) {
-		if (isCaught) {
-			getClass();		// XXX
-		}
-		super.setCaught(isCaught);
-	}
-
 } //CGVariableExpImpl
