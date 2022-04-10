@@ -556,13 +556,13 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	//	assert newName != null;
 		NameResolution nameResolution2 = nameResolution;
 		if (newName == null) {
-			System.out.println("null setName for " + NameUtil.debugSimpleName(this));
+			System.out.println("null CGValuedElementImpl::setName for " + NameUtil.debugSimpleName(this));
 		}
-		else if (nameResolution2 == null) {
-			System.out.println("Premature setName '" + newName + "' for " + NameUtil.debugSimpleName(this));
+		else if ((nameResolution2 == null) || (nameResolution2.basicGetResolvedName() == null)) {
+			System.out.println("Premature CGValuedElementImpl::setName '" + newName + "' for " + NameUtil.debugSimpleName(this));
 		}
 		else if (!newName.equals(nameResolution2.getResolvedName())) {
-			System.out.println("Inconsistent setName '" + newName + "' for " + NameUtil.debugSimpleName(this));
+			System.out.println("Inconsistent CGValuedElementImpl::setName '" + newName + "' for " + NameUtil.debugSimpleName(this));
 		}
 	//	assert newName.equals(getNameResolution().getResolvedName());
 		super.setName(newName);

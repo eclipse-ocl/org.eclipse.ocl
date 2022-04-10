@@ -1744,7 +1744,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	public @Nullable CGCollectionExp visitCollectionLiteralExp(@NonNull CollectionLiteralExp element) {
 		CGCollectionExp cgCollectionExp = CGModelFactory.eINSTANCE.createCGCollectionExp();
 		setAst(cgCollectionExp, element);
-		cgCollectionExp.setName(element.getKind().getName());
 		List<CGCollectionPart> cgParts = cgCollectionExp.getParts();
 		for (@NonNull CollectionLiteralPart asPart : ClassUtil.nullFree(element.getOwnedParts())) {
 			cgParts.add(doVisit(CGCollectionPart.class, asPart));

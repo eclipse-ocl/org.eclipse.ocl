@@ -29,6 +29,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElementId;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGGuardExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIfExp;
@@ -345,8 +346,9 @@ public class NameManagerHelper
 
 		@Override
 		public @NonNull String visitCGCollectionExp(@NonNull CGCollectionExp object) {
-			String kind = object.getName();
-			return context.getKindHint(kind);
+			CollectionLiteralExp asCollectionLiteralExp = CGUtil.getAST(object);
+			return context.getTypeNameHint(asCollectionLiteralExp.getType());
+//			return String.valueOf(asCollectionLiteralExp.getKind().getName());
 		}
 
 		@Override
@@ -369,6 +371,12 @@ public class NameManagerHelper
 		public @NonNull String visitCGElementId(@NonNull CGElementId object) {
 			ElementId elementId = object.getElementId();
 			return elementId.accept(context.idVisitor);
+		}
+
+		@Override
+		public @NonNull String visitCGExecutorShadowPart(@NonNull CGExecutorShadowPart object) {
+			Property asProperty = CGUtil.getAST(object);
+			return "CTORid_" + context.getPropertyNameHint(asProperty);
 		}
 
 		@Override

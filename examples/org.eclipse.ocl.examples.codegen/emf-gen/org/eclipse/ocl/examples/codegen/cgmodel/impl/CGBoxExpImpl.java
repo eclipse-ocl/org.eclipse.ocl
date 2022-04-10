@@ -10,15 +10,12 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.cgmodel.impl;
 
-import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBoxExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -126,32 +123,6 @@ public class CGBoxExpImpl extends CGCallExpImpl implements CGBoxExp {
 	@Override
 	public boolean isUnboxed() {
 		return false;
-	}
-
-	@Override
-	protected void eBasicSetContainer(InternalEObject newContainer,		// XXX
-			int newContainerFeatureID) {
-		// TODO Auto-generated method stub
-//		System.out.println("eBasicSetContainer2" + NameUtil.debugSimpleName(this) + " : " + NameUtil.debugSimpleName(newContainer));
-		super.eBasicSetContainer(newContainer, newContainerFeatureID);
-	}
-
-	@Override
-	public NotificationChain eBasicSetContainer(InternalEObject newContainer,		// XXX
-			int newContainerFeatureID, NotificationChain msgs) {
-		// TODO Auto-generated method stub
-//		System.out.println("eBasicSetContainer3" + NameUtil.debugSimpleName(this) + " : " + NameUtil.debugSimpleName(newContainer));
-		return super.eBasicSetContainer(newContainer, newContainerFeatureID, msgs);
-	}
-
-	@Override
-	protected void eBasicSetContainer(InternalEObject newContainer) {		// XXX
-		// TODO Auto-generated method stub
-		if (newContainer == null) {
-			getClass();		// XXX
-		}
-		System.out.println("eBasicSetContainer1" + NameUtil.debugSimpleName(this) + " : " + NameUtil.debugSimpleName(newContainer));
-		super.eBasicSetContainer(newContainer);
 	}
 
 } //CGBoxExpImpl

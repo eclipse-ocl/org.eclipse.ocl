@@ -20,7 +20,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -72,7 +71,6 @@ public class CGLibraryOperationCallExpImpl extends CGOperationCallExpImpl implem
 	 */
 	protected CGLibraryOperationCallExpImpl() {
 		super();
-		System.out.println("Create " + NameUtil.debugSimpleName(this));
 	}
 
 	/**

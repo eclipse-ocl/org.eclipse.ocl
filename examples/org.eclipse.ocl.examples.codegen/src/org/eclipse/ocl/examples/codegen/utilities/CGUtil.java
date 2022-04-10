@@ -24,6 +24,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBuiltInIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGCollectionExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
@@ -47,6 +48,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGTypedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
+import org.eclipse.ocl.pivot.CollectionLiteralExp;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.OCLExpression;
@@ -64,9 +66,7 @@ import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.utilities.TreeIterable;
 
 public class CGUtil
 {
@@ -211,6 +211,10 @@ public class CGUtil
 
 	public static org.eclipse.ocl.pivot.@NonNull Class getAST(@NonNull CGClass cgClass) {
 		return ClassUtil.nonNullState((org.eclipse.ocl.pivot.Class)cgClass.getAst());
+	}
+
+	public static @NonNull CollectionLiteralExp getAST(@NonNull CGCollectionExp cgCollectionExp) {
+		return ClassUtil.nonNullState((CollectionLiteralExp)cgCollectionExp.getAst());
 	}
 
 	public static @NonNull Constraint getAST(@NonNull CGConstraint cgConstraint) {
@@ -432,10 +436,10 @@ public class CGUtil
 		CGUtil.replace(cgIn, cgLetExp);
 		cgLetExp.setIn(cgIn);
 		cgLetExp.setInit(cgVariable);
-		System.out.println("re-let " + NameUtil.debugSimpleName(cgLetExp) + " : " + cgLetExp.toString());
-		for (EObject eObject : new TreeIterable(cgLetExp, true)) {		// XXX
-			System.out.println("\t" + NameUtil.debugSimpleName(eObject) + " : " + eObject.toString());
-		}
+//		System.out.println("re-let " + NameUtil.debugSimpleName(cgLetExp) + " : " + cgLetExp.toString());
+//		for (EObject eObject : new TreeIterable(cgLetExp, true)) {		// XXX
+//			System.out.println("\t" + NameUtil.debugSimpleName(eObject) + " : " + eObject.toString());
+//		}
 		return cgLetExp;
 	}
 
