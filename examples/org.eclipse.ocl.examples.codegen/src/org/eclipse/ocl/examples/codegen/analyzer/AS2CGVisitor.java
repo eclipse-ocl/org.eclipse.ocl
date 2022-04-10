@@ -2138,7 +2138,9 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			//		cgTypeExp.setReferredType(codeGenerator.getGlobalContext().getLocalContext(cgTypeExp).getExecutorType(pTypeExp.getReferredType()));
 			TypeId asTypeId = pTypeExp.getTypeId();
 			cgTypeExp.setTypeId(context.getTypeId(asTypeId)); //-- no need to reify the metaclassid
-			cgTypeExp.setName(cgExecutorType.getName());
+		//	cgTypeExp.setName(cgExecutorType.getName());
+			BaseNameResolution nameResolution = getNameManager().declareStandardName(cgTypeExp);
+			assert nameResolution.getNameHint().equals(cgExecutorType.getName());		// XXX
 			return cgTypeExp;
 		}
 		TemplateParameter referredTemplateParameter = (TemplateParameter)referredType;

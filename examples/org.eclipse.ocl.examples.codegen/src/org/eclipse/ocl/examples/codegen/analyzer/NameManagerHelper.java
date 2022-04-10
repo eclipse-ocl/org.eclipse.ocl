@@ -29,6 +29,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElementId;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGGuardExp;
@@ -371,6 +372,12 @@ public class NameManagerHelper
 		public @NonNull String visitCGElementId(@NonNull CGElementId object) {
 			ElementId elementId = object.getElementId();
 			return elementId.accept(context.idVisitor);
+		}
+
+		@Override
+		public @NonNull String visitCGExecutorProperty(@NonNull CGExecutorProperty object) {
+			Property asProperty = CGUtil.getAST(object);
+			return "IMPPROPid_" + context.getPropertyNameHint(asProperty);
 		}
 
 		@Override

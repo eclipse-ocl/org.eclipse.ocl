@@ -327,7 +327,6 @@ public class CodeGenAnalyzer
 			cgProperty = CGModelFactory.eINSTANCE.createCGExecutorOppositeProperty();
 			cgProperty.setUnderlyingPropertyId(cgPropertyId);
 			cgProperty.setAst(asProperty);
-//			cgProperty.setName("IMPPROPid_" + asProperty.getName());
 			BaseNameResolution nameResolution = globalNameManager.declareStandardName(cgProperty);
 			assert nameResolution.getNameHint().equals("IMPPROPid_" + asProperty.getName());		// XXX
 			cgProperty.setTypeId(getTypeId(JavaConstants.UNBOXED_OPPOSITE_NAVIGATION_PROPERTY_TYPE_ID));
