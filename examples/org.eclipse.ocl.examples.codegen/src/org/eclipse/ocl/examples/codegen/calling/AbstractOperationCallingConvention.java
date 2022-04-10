@@ -27,6 +27,7 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Variable;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
@@ -94,7 +95,9 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 		}
 		assert isRequired == isRequired2;
 		cgOperationCallExp.setReferredOperation(asOperation);
-		as2cgVisitor.setAst(cgOperationCallExp, asOperationCallExp);
+		cgOperationCallExp.setAst(asOperationCallExp);
+		TypeId asTypeId = asOperationCallExp.getTypeId();
+		cgOperationCallExp.setTypeId(as2cgVisitor.getAnalyzer().getTypeId(asTypeId));
 		cgOperationCallExp.setOperation(cgOperation);
 		cgOperationCallExp.setInvalidating(asOperation.isIsInvalidating());
 		cgOperationCallExp.setValidating(asOperation.isIsValidating());
@@ -104,6 +107,7 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 			CGValuedElement cgArgument = as2cgVisitor.doVisit(CGValuedElement.class, asArgument);
 			cgOperationCallExp.getArguments().add(cgArgument);
 		}
+		as2cgVisitor.getNameManager().declareStandardName(cgOperationCallExp);
 	}
 
 	@Override

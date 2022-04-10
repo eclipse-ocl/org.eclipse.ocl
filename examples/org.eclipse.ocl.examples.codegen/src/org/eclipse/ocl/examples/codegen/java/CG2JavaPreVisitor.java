@@ -14,10 +14,10 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.analyzer.BaseNameResolution;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.NameManager;
+import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBoxExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBuiltInIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCatchExp;
@@ -250,7 +250,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 	@Override
 	public @Nullable Object visitCGCatchExp(@NonNull CGCatchExp cgCatchExp) {
 		CGValuedElement cgSource = CGUtil.getSource(cgCatchExp);
-		BaseNameResolution rawNameResolution = getNameManager().declareStandardName(cgSource);
+		NameResolution rawNameResolution = getNameManager().declareStandardName(cgSource);
 	//	catchNameResolution.addNameVariant(codeGenerator.getCAUGHT_NameVariant());
 		rawNameResolution.addNameVariant(codeGenerator.getTHROWN_NameVariant());		// XXX
 		return super.visitCGCatchExp(cgCatchExp);
@@ -459,7 +459,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 			nameManager.declareStandardName(cgSource);
 			cgSource.accept(this);
 		}
-		BaseNameResolution iterationNameResolution = nameManager.declareStandardName(cgIterationCallExp);
+		NameResolution iterationNameResolution = nameManager.declareStandardName(cgIterationCallExp);
 		iterationNameResolution.addNameVariant(codeGenerator.getBODY_NameVariant());
 		iterationNameResolution.addNameVariant(codeGenerator.getIMPL_NameVariant());
 		iterationNameResolution.addNameVariant(codeGenerator.getMGR_NameVariant());
@@ -469,7 +469,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 			savedLocalContext = pushLocalContext(cgIterationCallExp);
 		}
 		for (CGIterator cgIterator : CGUtil.getIterators(cgIterationCallExp)) {
-			BaseNameResolution iteratorNameResolution = nameManager.declareStandardName(cgIterator);
+			NameResolution iteratorNameResolution = nameManager.declareStandardName(cgIterator);
 			iteratorNameResolution.addNameVariant(codeGenerator.getITER_NameVariant());
 			cgIterator.accept(this);
 		}

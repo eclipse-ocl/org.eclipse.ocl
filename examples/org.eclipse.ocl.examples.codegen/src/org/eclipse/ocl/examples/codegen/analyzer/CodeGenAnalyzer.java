@@ -318,7 +318,7 @@ public class CodeGenAnalyzer
 			cgProperty.setAst(asOppositeProperty);
 			cgProperty.setTypeId(getTypeId(JavaConstants.UNBOXED_COMPOSITION_PROPERTY_TYPE_ID));
 //			cgProperty.setName("IMPPROPid_" + asOppositeProperty.getName());
-			BaseNameResolution nameResolution = globalNameManager.declareStandardName(cgProperty);
+			NameResolution nameResolution = globalNameManager.declareStandardName(cgProperty);
 			assert nameResolution.getNameHint().equals("IMPPROPid_" + asOppositeProperty.getName());		// XXX
 			cgProperty.getDependsOn().add(cgPropertyId);
 		}
@@ -327,7 +327,7 @@ public class CodeGenAnalyzer
 			cgProperty = CGModelFactory.eINSTANCE.createCGExecutorOppositeProperty();
 			cgProperty.setUnderlyingPropertyId(cgPropertyId);
 			cgProperty.setAst(asProperty);
-			BaseNameResolution nameResolution = globalNameManager.declareStandardName(cgProperty);
+			NameResolution nameResolution = globalNameManager.declareStandardName(cgProperty);
 			assert nameResolution.getNameHint().equals("IMPPROPid_" + asProperty.getName());		// XXX
 			cgProperty.setTypeId(getTypeId(JavaConstants.UNBOXED_OPPOSITE_NAVIGATION_PROPERTY_TYPE_ID));
 			cgProperty.getDependsOn().add(cgPropertyId);
@@ -344,7 +344,7 @@ public class CodeGenAnalyzer
 		cgProperty.setUnderlyingPropertyId(cgPropertyId);
 		cgProperty.setAst(asProperty);
 //		cgProperty.setName("IMPPROPid_" + asProperty.getName());
-		BaseNameResolution nameResolution = globalNameManager.declareStandardName(cgProperty);
+		NameResolution nameResolution = globalNameManager.declareStandardName(cgProperty);
 		assert nameResolution.getNameHint().equals("IMPPROPid_" + asProperty.getName());		// XXX
 		TypeId javaPropertyTypeId = JavaConstants.UNBOXED_EXPLICIT_NAVIGATION_PROPERTY_TYPE_ID;
 		cgProperty.setTypeId(getTypeId(javaPropertyTypeId));
