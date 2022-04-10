@@ -93,6 +93,7 @@ public interface CodeGenerator
 	 */
 	boolean maybePrimitive(@NonNull CGValuedElement cgValue);
 
+	@NonNull NameVariant getBOXED_NameVariant();
 	@NonNull NameVariant getCAUGHT_NameVariant();
 	@NonNull NameVariant getSAFE_NameVariant();
 }

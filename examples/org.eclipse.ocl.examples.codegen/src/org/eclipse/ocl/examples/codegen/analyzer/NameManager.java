@@ -398,9 +398,9 @@ public abstract class NameManager
 		List<@NonNull BaseNameResolution> baseNameResolutions = new ArrayList<>(element2baseNameResolution.values());
 // XXX		Collections.sort(nameResolutions);
 		for (@NonNull BaseNameResolution baseNameResolution : baseNameResolutions) {
-			if (baseNameResolution.basicGetResolvedName() == null) {
+		//	if (baseNameResolution.basicGetResolvedName() == null) {
 				baseNameResolution.resolveIn(context);
-			}
+		//	}
 		}
 		if (children != null) {
 			for (@NonNull NestedNameManager child : children) {

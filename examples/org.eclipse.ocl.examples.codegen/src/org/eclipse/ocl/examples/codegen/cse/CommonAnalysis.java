@@ -142,6 +142,8 @@ public class CommonAnalysis extends AbstractAnalysis
 			cgVariable.setTypeId(cgCSE.getTypeId());
 			cgVariable.setRequired(cgCSE.isNonNull());
 			cgVariable.setAst(cgCSE.getAst());
+		//	nameManager.declareStandardName(cgVariable);
+			cgCSE.getNameResolution().addCGElement(cgVariable);
 		//	nameManager.queueValueName(cgVariable, null, "_cse");		// let post-order nameHint resolution find a name
 			for (SimpleAnalysis simpleAnalysis : simpleAnalyses) {
 				CGValuedElement commonElement = simpleAnalysis.getElement();
@@ -170,11 +172,12 @@ public class CommonAnalysis extends AbstractAnalysis
 	}
 
 	protected void rewriteAsVariableExp(@NonNull CGValuedElement cgElement, @NonNull CGVariable cgVariable) {
-		CGVariableExp cgVarExp = CGModelFactory.eINSTANCE.createCGVariableExp();
-		cgVarExp.setTypeId(cgVariable.getTypeId());
-		cgVarExp.setAst(cgVariable.getAst());
-		cgVarExp.setReferredVariable(cgVariable);
-		CGUtil.replace(cgElement, cgVarExp);
+		CGVariableExp cgVariableExp = CGModelFactory.eINSTANCE.createCGVariableExp();
+		cgVariableExp.setTypeId(cgVariable.getTypeId());
+		cgVariableExp.setAst(cgVariable.getAst());
+		cgVariableExp.setReferredVariable(cgVariable);
+		cgVariable.getNameResolution().addCGElement(cgVariableExp);
+		CGUtil.replace(cgElement, cgVariableExp);
 	}
 
 	public void rewriteGlobal(@NonNull CodeGenAnalyzer analyzer) {

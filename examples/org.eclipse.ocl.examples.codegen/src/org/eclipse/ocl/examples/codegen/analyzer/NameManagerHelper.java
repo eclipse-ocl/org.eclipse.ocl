@@ -323,7 +323,8 @@ public class NameManagerHelper
 
 		@Override
 		public @NonNull String visitCGBoxExp(@NonNull CGBoxExp object) {
-			return "BOXED_" + context.getNameHint(object.getSourceValue());
+//			return "BOXED_" + context.getNameHint(object.getSourceValue());
+			return visiting(object);			// NameVariant should be eager;y declared
 		}
 
 		@Override
@@ -338,7 +339,8 @@ public class NameManagerHelper
 
 		@Override
 		public @NonNull String visitCGCatchExp(@NonNull CGCatchExp object) {
-			return "CAUGHT_" + context.getNameHint(object.getSourceValue());
+//			return "CAUGHT_" + context.getNameHint(object.getSourceValue());
+			return visiting(object);			// NameVariant should be eager;y declared
 		}
 
 		@Override

@@ -79,6 +79,6 @@ public class VariantNameResolution extends AbstractNameResolution
 
 	@Override
 	public @NonNull String toString() {
-		return getNameManager() + ":" + getNameHint() + " => " + (resolvedVariantName != null ? resolvedVariantName : "???");
+		return nameVariant + "-" + getNameManager() + ":" + getNameHint() + " => " + (resolvedVariantName != null ? resolvedVariantName : "???");
 	}
 }

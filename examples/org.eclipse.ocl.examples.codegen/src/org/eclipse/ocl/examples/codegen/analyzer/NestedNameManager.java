@@ -77,6 +77,10 @@ public class NestedNameManager extends NameManager
 		return ClassUtil.nonNullState(context);
 	}
 
+	public boolean isReserved(@NonNull NameResolution nameResolution) {
+		return (reservedNameResolutions != null) && reservedNameResolutions.contains(nameResolution);
+	}
+
 	@Override
 	public @NonNull String toString() {
 		return "locals " + cgScope.eClass().getName() + " : " + cgScope.toString();

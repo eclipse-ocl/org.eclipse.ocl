@@ -122,16 +122,16 @@ public class BaseNameResolution extends AbstractNameResolution
 
 //	@Override
 	public void resolveIn(@NonNull Context context) {
+		Object cgElement = primaryElement != null ? primaryElement : NameManager.NOT_AN_OBJECT;
 		if (resolvedName == null) {
-			Object cgElement = primaryElement != null ? primaryElement : NameManager.NOT_AN_OBJECT;
 			String resolvedName = context.allocateUniqueName(nameHint, cgElement);
 			setResolvedName(resolvedName);
-			resolveVariants(context, cgElement);
 		}
+		resolveVariants(context, cgElement);
 	}
 
 	protected void setResolvedName(@NonNull String resolvedName) {
-		if ("getSeverity".equals(resolvedName)) {
+		if ("a".equals(resolvedName)) {
 			getClass();		// XXX
 		}
 		this.resolvedName = resolvedName;

@@ -209,6 +209,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	private /*@LazyNonNull*/ ASM5JavaAnnotationReader annotationReader = null;
 
 	private final @NonNull NameVariant BODY_NameVariant;
+	private final @NonNull NameVariant BOXED_NameVariant;
 	private final @NonNull NameVariant CAUGHT_NameVariant;
 	private final @NonNull NameVariant IMPL_NameVariant;
 	private final @NonNull NameVariant ITER_NameVariant;
@@ -226,6 +227,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	public JavaCodeGenerator(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable GenModel genModel) {
 		super(environmentFactory, genModel);
 		BODY_NameVariant = globalNameManager.addNameVariantPrefix("BODY_");
+		BOXED_NameVariant = globalNameManager.addNameVariantPrefix("BOXED_");
 		CAUGHT_NameVariant = globalNameManager.addNameVariantPrefix("CAUGHT_");
 		IMPL_NameVariant = globalNameManager.addNameVariantPrefix("IMPL_");
 		ITER_NameVariant = globalNameManager.addNameVariantPrefix("ITER_");
@@ -311,6 +313,11 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	}
 
 	@Override
+	public @NonNull NameVariant getBOXED_NameVariant() {
+		return BOXED_NameVariant;
+	}
+
+	@Override
 	public @NonNull BoxedDescriptor getBoxedDescriptor(@NonNull ElementId elementId) {
 		BoxedDescriptor boxedDescriptor = boxedDescriptors.get(elementId);
 		if (boxedDescriptor != null) {
@@ -320,6 +327,11 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		assert boxedDescriptor != null;
 		boxedDescriptors.put(elementId, boxedDescriptor);
 		return boxedDescriptor;
+	}
+
+	@Override
+	public @NonNull NameVariant getCAUGHT_NameVariant() {
+		return CAUGHT_NameVariant;
 	}
 
 	public @NonNull CGModelResourceFactory getCGResourceFactory() {
@@ -347,11 +359,6 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 
 	@Override
 	public abstract @NonNull JavaGlobalContext<@NonNull ? extends JavaCodeGenerator> getGlobalContext();
-
-	@Override
-	public @NonNull NameVariant getCAUGHT_NameVariant() {
-		return CAUGHT_NameVariant;
-	}
 
 	@Override
 	public @NonNull GlobalPlace getGlobalPlace() {

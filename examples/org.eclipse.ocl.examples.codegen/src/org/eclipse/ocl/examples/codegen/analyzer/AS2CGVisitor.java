@@ -1117,6 +1117,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		CGVariableExp cgVariableExp = CGModelFactory.eINSTANCE.createCGVariableExp();
 		setAst(cgVariableExp, ClassUtil.nonNullModel(callExp.getOwnedSource()));
 		cgVariableExp.setReferredVariable(cgVariable);
+		cgVariable.getNameResolution().addCGElement(cgVariableExp);
 		//
 		CGConstantExp cgNullExpression = context.createCGConstantExp(callExp, context.getNull());
 		setAst(cgNullExpression, callExp);
@@ -1155,6 +1156,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		CGVariableExp cgVariableExp = CGModelFactory.eINSTANCE.createCGVariableExp();
 		setAst(cgVariableExp, element);
 		cgVariableExp.setReferredVariable(cgVariable);
+		cgVariable.getNameResolution().addCGElement(cgVariableExp);
 		return cgVariableExp;
 	}
 
@@ -1608,10 +1610,29 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	public @NonNull LocalContext pushLocalContext(@NonNull CGNamedElement cgNamedElement, @NonNull NamedElement asNamedElement) {
 		if ((cgNamedElement instanceof CGTypedElement) && (asNamedElement instanceof TypedElement)) {
-			setAst((CGTypedElement)cgNamedElement, (TypedElement)asNamedElement);			// FIXME Fragile overload
+		//	setAst((CGTypedElement)cgNamedElement, (TypedElement)asNamedElement);			// FIXME Fragile overload
+			cgNamedElement.setAst(asNamedElement);
+			TypeId asTypeId = ((TypedElement)asNamedElement).getTypeId();
+			((CGTypedElement)cgNamedElement).setTypeId(context.getTypeId(asTypeId));
+		//	cgElement.setName(asElement.getName());
+		//	getNameManager().declareStandardName((CGValuedElement) cgElement, asElement.getName());
+			if (cgNamedElement instanceof CGValuedElement) {
+				getNameManager().declareStandardName((CGValuedElement) cgNamedElement);
+			}
+			else {
+				cgNamedElement.setName(asNamedElement.getName());
+			}
 		}
 		else {
-			setAst(cgNamedElement, asNamedElement);
+		//	setAst(cgNamedElement, asNamedElement);
+			cgNamedElement.setAst(asNamedElement);
+			//	cgElement.setName(asElement.getName());
+				if (cgNamedElement instanceof CGValuedElement) {
+					getNameManager().declareStandardName((CGValuedElement) cgNamedElement);
+				}
+				else {
+					cgNamedElement.setName(asNamedElement.getName());
+				}
 		}
 		LocalContext outerContext = contextStack.isEmpty() ? null : getLocalContext();
 		JavaGlobalContext<@NonNull ? extends JavaCodeGenerator> globalContext = ((JavaCodeGenerator)codeGenerator).getGlobalContext();
@@ -1624,11 +1645,11 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return localContext;
 	}
 
-	protected void setAst(@NonNull CGNamedElement cgElement, @NonNull Element asElement) {
-		cgElement.setAst(asElement);
-	}
+//	protected void setAst(@NonNull CGNamedElement cgElement, @NonNull Element asElement) {
+//		cgElement.setAst(asElement);
+//	}
 
-	protected void setAst(@NonNull CGNamedElement cgElement, @NonNull NamedElement asElement) {		// XXX
+/*	protected void setAst(@NonNull CGNamedElement cgElement, @NonNull NamedElement asElement) {		// XXX
 		cgElement.setAst(asElement);
 	//	cgElement.setName(asElement.getName());
 		if (cgElement instanceof CGValuedElement) {
@@ -1637,14 +1658,21 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		else {
 			cgElement.setName(asElement.getName());
 		}
-	}
+	} */
 
-	protected void setAst(@NonNull CGTypedElement cgElement, @NonNull TypeId typeId, String symbolName) {
+/*	protected void setAst(@NonNull CGTypedElement cgElement, @NonNull TypeId typeId, String symbolName) {	// XXX
 		cgElement.setTypeId(context.getTypeId(typeId));
 		cgElement.setName(symbolName);
+	} */
+
+	public void setAst(@NonNull CGValuedElement cgElement, @NonNull TypedElement asElement) {		// XXX
+		cgElement.setAst(asElement);
+		TypeId asTypeId = asElement.getTypeId();
+		cgElement.setTypeId(context.getTypeId(asTypeId));
+		getNameManager().declareStandardName(cgElement);
 	}
 
-	public void setAst(@NonNull CGTypedElement cgElement, @NonNull TypedElement asElement) {
+/*	public void setAst2(@NonNull CGTypedElement cgElement, @NonNull TypedElement asElement) {		// XXX
 		cgElement.setAst(asElement);
 		TypeId asTypeId = asElement.getTypeId();
 		cgElement.setTypeId(context.getTypeId(asTypeId));
@@ -1656,7 +1684,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		else {
 			cgElement.setName(asElement.getName());
 		}
-	}
+	} */
 
 	private void setNullableIterator(@NonNull CGIterator cgIterator, @NonNull Variable iterator) {
 		cgIterator.setTypeId(context.getTypeId(iterator.getTypeId()));
@@ -1923,10 +1951,11 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	}
 
 	@Override
-	public @Nullable CGNamedElement visitPackage(org.eclipse.ocl.pivot.@NonNull Package element) {
+	public @Nullable CGNamedElement visitPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		CGPackage cgPackage = CGModelFactory.eINSTANCE.createCGPackage();
-		setAst(cgPackage, element);
-		for (org.eclipse.ocl.pivot.@NonNull Class asType : ClassUtil.nullFree(element.getOwnedClasses())) {
+		cgPackage.setAst(asPackage);
+		cgPackage.setName(asPackage.getName());			// XXX nameResolution
+		for (org.eclipse.ocl.pivot.@NonNull Class asType : ClassUtil.nullFree(asPackage.getOwnedClasses())) {
 			CGClass cgClass = doVisit(CGClass.class, asType);
 			cgPackage.getClasses().add(cgClass);
 		}

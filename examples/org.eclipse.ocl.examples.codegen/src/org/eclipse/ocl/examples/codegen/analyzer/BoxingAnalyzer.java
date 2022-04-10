@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager.NameVariant;
 import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGAssertNonNullExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBoxExp;
@@ -177,6 +178,9 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 			}
 		}
 		CGBoxExp cgBoxExp = CGModelFactory.eINSTANCE.createCGBoxExp();
+		NameVariant boxedNameVariant = context.getCodeGenerator().getBOXED_NameVariant();
+		VariantNameResolution boxedNameResolution = cgChild.getNameResolution().getNameVariant(boxedNameVariant);
+		boxedNameResolution.addCGElement(cgBoxExp);
 		CGUtil.wrap(cgBoxExp, cgChild);
 		return cgBoxExp;
 	}

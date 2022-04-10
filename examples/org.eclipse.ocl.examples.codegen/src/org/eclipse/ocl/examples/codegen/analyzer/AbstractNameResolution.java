@@ -39,7 +39,7 @@ public abstract class AbstractNameResolution implements NameResolution
 
 	@Override
 	public @NonNull VariantNameResolution addNameVariant(@NonNull NameVariant nameVariant) {
-		assert basicGetResolvedName() == null : "Cannot addNameVariant after name is resolved";
+		assert (basicGetResolvedName() == null) || ((NestedNameManager)getNameManager()).isReserved(this) : "Cannot addNameVariant after name is resolved";
 		Map<@NonNull NameVariant, @NonNull VariantNameResolution> nameVariant2variantNameResolution2 = nameVariant2variantNameResolution;
 		if (nameVariant2variantNameResolution2 == null) {
 			nameVariant2variantNameResolution = nameVariant2variantNameResolution2 = new HashMap<>();

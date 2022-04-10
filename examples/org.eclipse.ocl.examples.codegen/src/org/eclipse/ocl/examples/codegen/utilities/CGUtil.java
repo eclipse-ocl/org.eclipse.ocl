@@ -64,7 +64,9 @@ import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.TreeIterable;
 
 public class CGUtil
 {
@@ -430,6 +432,10 @@ public class CGUtil
 		CGUtil.replace(cgIn, cgLetExp);
 		cgLetExp.setIn(cgIn);
 		cgLetExp.setInit(cgVariable);
+		System.out.println("re-let " + NameUtil.debugSimpleName(cgLetExp) + " : " + cgLetExp.toString());
+		for (EObject eObject : new TreeIterable(cgLetExp, true)) {		// XXX
+			System.out.println("\t" + NameUtil.debugSimpleName(eObject) + " : " + eObject.toString());
+		}
 		return cgLetExp;
 	}
 
