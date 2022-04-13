@@ -78,7 +78,7 @@ public class BaseNameResolution extends AbstractNameResolution
 		if (this.nameHint.contains("manyDates")) {
 			getClass();		// XXX
 		}
-		if ("and".equals(nameHint)) {
+		if ("eColor".equals(nameHint)) {
 			getClass();			// XXX
 		}
 		if ("diagnostics".equals(nameHint)) {
@@ -109,7 +109,7 @@ public class BaseNameResolution extends AbstractNameResolution
 		//	nameManager.addNameResolution(primaryElement);
 		}
 		nameManager.addNameResolution(this);
-		System.out.println("BaseNameResolution '" + nameHint + "' : " + nameManager.toString() + " : " + primaryElement);
+	//	System.out.println("BaseNameResolution '" + nameHint + "' : " + nameManager.toString() + " : " + primaryElement);
 		if (nameManager instanceof NestedNameManager) {
 			getClass();		// XXX)
 		}
@@ -189,7 +189,7 @@ public class BaseNameResolution extends AbstractNameResolution
 			if (nameHint.contains("manyDates")) {
 				getClass();		// XXX
 			}
-			if ("and".equals(nameHint)) {
+			if ("eColor".equals(nameHint)) {
 				getClass();			// XXX
 			}
 		}

@@ -333,7 +333,10 @@ public abstract class NameManager
 				getClass();			// XXX
 			}
 			Object old = name2object.put(name, object);
-			assert old == null;
+		//	assert old == null;
+			if (old != null) {
+				System.out.println(object + " occludes " + old);
+			}
 		}
 
 		@Override
