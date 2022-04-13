@@ -852,6 +852,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 					if (!asIteration.isIsValidating()) {
 						cgAccumulator.setNonInvalid();
 					}
+					getNameManager().declareStandardName2(cgAccumulator);
 					cgBuiltInIterationCallExp.setAccumulator(cgAccumulator);
 				}
 			}
@@ -1236,14 +1237,18 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	}
 
 	public @NonNull CGIterator getIterator(@NonNull VariableDeclaration asVariable) {
-		CGParameter cgParameter = (CGParameter) variablesStack.getVariable(asVariable);
-		if (cgParameter == null) {
-			cgParameter = CGModelFactory.eINSTANCE.createCGIterator();
-			setAst(cgParameter, asVariable);
-			cgParameter.setTypeId(context.getTypeId(TypeId.OCL_VOID));			// FIXME Java-specific type of polymorphic operation parameter
-			variablesStack.putVariable(asVariable, cgParameter);
+		CGIterator cgIterator = (CGIterator) variablesStack.getVariable(asVariable);
+		if (cgIterator == null) {
+			cgIterator = CGModelFactory.eINSTANCE.createCGIterator();
+		//	setAst(cgParameter, asVariable);
+			cgIterator.setAst(asVariable);
+		//	TypeId asTypeId = asVariable.getTypeId();
+		//	cgIterator.setTypeId(context.getTypeId(asTypeId));
+			getNameManager().declareStandardName2(cgIterator);
+			cgIterator.setTypeId(context.getTypeId(TypeId.OCL_VOID));			// FIXME Java-specific type of polymorphic operation parameter
+			variablesStack.putVariable(asVariable, cgIterator);
 		}
-		return (CGIterator) cgParameter;
+		return cgIterator;
 	}
 
 	public @NonNull JavaLocalContext<?> getLocalContext() {
