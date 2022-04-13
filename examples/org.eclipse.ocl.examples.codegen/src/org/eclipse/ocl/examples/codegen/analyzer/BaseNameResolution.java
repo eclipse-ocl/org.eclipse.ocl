@@ -75,7 +75,10 @@ public class BaseNameResolution extends AbstractNameResolution
 		if (nameManager instanceof NestedNameManager) {
 			getClass();		// XXX)
 		}
-		if ("size".equals(nameHint)) {
+		if (this.nameHint.contains("manyDates")) {
+			getClass();		// XXX
+		}
+		if ("and".equals(nameHint)) {
 			getClass();			// XXX
 		}
 		if ("diagnostics".equals(nameHint)) {
@@ -182,6 +185,12 @@ public class BaseNameResolution extends AbstractNameResolution
 			nameHint = nameManager.getNameHint(primaryElement2);
 			if ("getSeverity".equals(nameHint)) {
 				getClass();		// XXX
+			}
+			if (nameHint.contains("manyDates")) {
+				getClass();		// XXX
+			}
+			if ("and".equals(nameHint)) {
+				getClass();			// XXX
 			}
 		}
 	}

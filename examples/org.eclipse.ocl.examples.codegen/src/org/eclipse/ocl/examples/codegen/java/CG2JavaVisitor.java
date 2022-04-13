@@ -28,6 +28,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager.NameVariant;
+import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGAssertNonNullExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBoolean;
@@ -2390,11 +2391,18 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	@Override
 	public @NonNull Boolean visitCGLetExp(@NonNull CGLetExp cgLetExp) {
 		cgLetExp.getInit().accept(this);
-		CGValuedElement cgIn = cgLetExp.getIn();
-		if (cgIn != null) {
-			if (!js.appendLocalStatements(cgIn)) {
-				return false;
-			}
+		CGValuedElement cgIn = CGUtil.getIn(cgLetExp);
+		if (!js.appendLocalStatements(cgIn)) {
+			return false;
+		}
+		// FIXME the following fallback would not be required if the inner name propagated better, see testBug458724
+		NameResolution inNameResolution = cgIn.getNameResolution();
+		NameResolution letNameResolution = cgLetExp.getNameResolution();
+		if (inNameResolution != letNameResolution) {
+			js.appendDeclaration(cgLetExp);
+			js.append(" = ");
+			js.appendValueName(cgIn);
+			js.append(";\n");
 		}
 		return true;
 	}

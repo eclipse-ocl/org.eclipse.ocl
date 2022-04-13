@@ -436,16 +436,11 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	protected @NonNull CGLetExp createCGLetExp(@NonNull TypedElement asElement, @NonNull CGFinalVariable cgVariable, @NonNull CGValuedElement cgIn) {
 		CGLetExp cgLetExp = CGModelFactory.eINSTANCE.createCGLetExp();
-	//	setAst(cgLetExp, element);
 		cgLetExp.setInit(cgVariable);
 		cgLetExp.setIn(cgIn);
 		cgLetExp.setAst(asElement);
 		TypeId asTypeId = asElement.getTypeId();
 		cgLetExp.setTypeId(context.getTypeId(asTypeId));
-	//	cgIn.getNameResolution().addCGElement(cgLetExp);		// cgIn has variable name
-	//	assert cgIn.getNameResolution() == cgLetExp.getNameResolution();
-	//	getNameManager().declareStandardName(cgLetExp);
-	//	getNameManager().addNameResolution(asElement, (NamedElement) cgIn.getAst());
 		return cgLetExp;
 	}
 
@@ -494,8 +489,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		cgVariable.setAst(asVariable);
 		TypeId asTypeId = asVariable.getTypeId();
 		cgVariable.setTypeId(context.getTypeId(asTypeId));
-		NameResolution nameResolution = getNameManager().declareStandardName(cgVariable, asVariable.getName());// getNameResolution(asVariable);
-	//	nameResolution.addCGElement(cgVariable);
+		getNameManager().declareStandardName(cgVariable, asVariable.getName());
 		return cgVariable;
 	}
 
@@ -508,7 +502,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	protected @NonNull CGFinalVariable createCGVariable(@NonNull CGValuedElement cgInit) {
 		CGFinalVariable cgVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();
-	//	cgVariable.setInit(cgInit);
 		cgVariable.setTypeId(cgInit.getTypeId());
 		setCGVariableInit(cgVariable, cgInit);
 		return cgVariable;
@@ -1700,18 +1693,23 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	} */
 
 	protected void setCGVariableInit(@NonNull CGVariable cgVariable, @NonNull CGValuedElement cgInit) {
-		if (cgInit.isUnresolved()) {
-			cgVariable.getNameResolution().addCGElement(cgInit);
+		NameResolution variableNameResolution = cgVariable.getNameResolution();
+		if (cgInit.basicGetNameResolution() == null) {
+			//
+			//	Propagate the variable name resultion to its initializer and intervening lets.
+			//
+			CGValuedElement cgElement = cgInit;
+			while (true) {
+				variableNameResolution.addCGElement(cgElement);
+				if (cgElement instanceof CGLetExp) {
+					cgElement = CGUtil.getIn((CGLetExp)cgElement);
+				}
+				else {
+					break;
+				}
+			}
 		}
 		cgVariable.setInit(cgInit);
-	//	VariableDeclaration contextVariable = CGUtil.getAST(cgVariable);
-	//	NamedElement asInit = CGUtil.getAST(cgInit);
-	//	NestedNameManager nameManager = getNameManager();
-	//	while (asInit instanceof LetExp) {
-	//		nameManager.addNameResolution(contextVariable, asInit);
-	//		asInit = PivotUtil.getOwnedIn((LetExp)asInit);
-	//	}
-	//	nameManager.addNameResolution(contextVariable, asInit);
 	}
 
 	private void setNullableIterator(@NonNull CGIterator cgIterator, @NonNull Variable iterator) {
@@ -1897,6 +1895,17 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		if (inNameResolution != null) {
 			inNameResolution.addCGElement(cgLetExp);
 		}
+	/*	else {
+			NameResolution letNameResolution = cgLetExp.basicGetNameResolution();
+			if (asLetExp.eContainmentFeature() == PivotPackage.Literals.LET_EXP__OWNED_IN) {		// Child nested let
+				getClass();
+				//		inNameResolution = getNameManager().declareStandardName(cgIn);
+			}
+			else {		// Cgild nested let
+				getClass();
+				//		inNameResolution = getNameManager().declareStandardName(cgIn);
+			}
+		} */
 	/*	else {
 			NameResolution letNameResolution = getNameManager().declareStandardName(cgLetExp);
 			CGValuedElement cgIn2 = cgIn;
