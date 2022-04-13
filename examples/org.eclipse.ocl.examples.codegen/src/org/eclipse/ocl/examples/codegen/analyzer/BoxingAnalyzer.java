@@ -178,8 +178,12 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 			}
 		}
 		CGBoxExp cgBoxExp = CGModelFactory.eINSTANCE.createCGBoxExp();
+		NameResolution unboxedNameResolution = cgChild.basicGetNameResolution(); //.getNameVariant(guardedNameVariant);
+		if (unboxedNameResolution == null) {
+			unboxedNameResolution = codeGenerator.getGlobalContext().getLocalContext(cgChild).getNameManager().declareStandardName(cgChild);
+		}
 		NameVariant boxedNameVariant = context.getCodeGenerator().getBOXED_NameVariant();
-		VariantNameResolution boxedNameResolution = cgChild.getNameResolution().getNameVariant(boxedNameVariant);
+		VariantNameResolution boxedNameResolution = unboxedNameResolution.getNameVariant(boxedNameVariant);
 		boxedNameResolution.addCGElement(cgBoxExp);
 		CGUtil.wrap(cgBoxExp, cgChild);
 		return cgBoxExp;
