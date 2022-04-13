@@ -688,6 +688,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	}
 
 	public void resolveNames(@NonNull CGPackage cgPackage) {
+		System.out.println("-----------------resolveNames--------------------");
 		visitInPostOrder(cgPackage);
 		globalNameManager.assignNames();
 		CGValuedElementImpl.ALLOW_GET_VALUE_NAME = true;
@@ -712,10 +713,14 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		}
 		if (cgElement instanceof CGValuedElement) {
 			CGValuedElement cgValuedElement2 = (CGValuedElement)cgElement;
-			if ((cgValuedElement2.basicGetNameResolution() == null) && !cgValuedElement2.isInlined()) {
-				JavaLocalContext<?> localContext = globalContext.basicGetLocalContext(cgValuedElement2);
-				NameManager nameManager = (localContext != null) && !cgValuedElement2.isGlobal() ? localContext.getNameManager() : globalNameManager;
-				nameManager.declareStandardName(cgValuedElement2);
+			NameResolution nameResolution = cgValuedElement2.basicGetNameResolution();
+			if (!cgValuedElement2.isInlined()) {
+				if (nameResolution == null) {
+					JavaLocalContext<?> localContext = globalContext.basicGetLocalContext(cgValuedElement2);
+					NameManager nameManager = (localContext != null) && !cgValuedElement2.isGlobal() ? localContext.getNameManager() : globalNameManager;
+					nameResolution = nameManager.declareStandardName(cgValuedElement2);
+				}
+				nameResolution.resolveNameHint();
 			}
 			for (EObject eObject : ((CGValuedElement)cgElement).getOwns()) {					// XXX Surely preorder - no post order to satisfy bottom up dependency evaluation
 				if (eObject instanceof CGElement) {

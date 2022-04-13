@@ -302,6 +302,7 @@ public interface CGValuedElement extends CGTypedElement {
 	@NonNull NameResolution getNameResolution();
 	@NonNull String getResolvedName();
 	@NonNull String getVariantResolvedName(@NonNull NameVariant nameVariant);
+	boolean isUnresolved();
 	void replaceNameResolution(@NonNull NameResolution nameResolution);
 	void setNameResolution(@NonNull NameResolution nameResolution);
 

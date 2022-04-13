@@ -36,6 +36,7 @@ public class VariantNameResolution extends AbstractNameResolution
 	protected VariantNameResolution(@NonNull NameResolution baserNameResolution, @NonNull NameVariant nameVariant) {
 		this.baserNameResolution = baserNameResolution;
 		this.nameVariant = nameVariant;
+		System.out.println("VariantNameResolution '" + nameVariant + "' : " + baserNameResolution);
 	}
 
 	@Override
@@ -66,6 +67,14 @@ public class VariantNameResolution extends AbstractNameResolution
 	public @NonNull String getResolvedName() {
 		return ClassUtil.nonNullState(resolvedVariantName);
 	}
+
+	@Override
+	public boolean isUnresolved() {
+		return getBaseNameResolution().isUnresolved();
+	}
+
+	@Override
+	public void resolveNameHint() {}
 
 	protected void resolveVariant(@NonNull Context context, @NonNull Object cgElement, @NonNull String nameHint) {
 		String variantNameHint = nameVariant.getName(nameHint);

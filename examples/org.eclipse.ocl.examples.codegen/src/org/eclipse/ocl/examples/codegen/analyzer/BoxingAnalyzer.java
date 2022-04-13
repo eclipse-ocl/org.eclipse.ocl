@@ -227,9 +227,11 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 		CGGuardExp cgGuardExp = CGModelFactory.eINSTANCE.createCGGuardExp();
 		cgGuardExp.setMessage(message);
 		cgGuardExp.setSafe(isSafe);
-		// Guard is a prefix IF so new new variable name required.
-	//	NameVariant guardedNameVariant = context.getCodeGenerator().getGUARDED_NameVariant();
-		NameResolution guardedNameResolution = cgChild.getNameResolution(); //.getNameVariant(guardedNameVariant);
+		// Guard is a prefix IF so new new variable name required; just a copyable resolution..
+		NameResolution guardedNameResolution = cgChild.basicGetNameResolution(); //.getNameVariant(guardedNameVariant);
+		if (guardedNameResolution == null) {
+			guardedNameResolution = codeGenerator.getGlobalContext().getLocalContext(cgChild).getNameManager().declareStandardName(cgChild);
+		}
 		guardedNameResolution.addCGElement(cgGuardExp);
 		CGUtil.wrap(cgGuardExp, cgChild);
 		return cgGuardExp;

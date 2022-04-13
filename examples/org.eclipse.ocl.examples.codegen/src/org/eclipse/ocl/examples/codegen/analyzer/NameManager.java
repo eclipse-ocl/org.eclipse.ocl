@@ -20,7 +20,7 @@ import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.pivot.Operation;
@@ -409,23 +409,11 @@ public abstract class NameManager
 		}
 	}
 
-	public @NonNull NestedNameManager createNestedNameManager(@NonNull CGElement cgScope) {
+	public @NonNull NestedNameManager createNestedNameManager(@NonNull CGNamedElement cgScope) {
 		return new NestedNameManager(this, cgScope);
 	}
 
 	public abstract @NonNull NameResolution declareStandardName(@NonNull CGValuedElement cgElement);
-
-	public @NonNull NameResolution declareStandardName(@NonNull CGValuedElement cgElement, @NonNull String nameHint) {
-		CGValuedElement cgNamedValue = cgElement.getNamedValue();
-		NameResolution nameResolution = cgNamedValue.basicGetNameResolution();
-		if (nameResolution == null) {
-			nameResolution = new BaseNameResolution(this, cgNamedValue, nameHint);
-		}
-		if (cgElement != cgNamedValue) {
-			nameResolution.addCGElement(cgElement);
-		}
-		return nameResolution;
-	}
 
 	@Deprecated // not needed
 	protected abstract @NonNull Context getContext();

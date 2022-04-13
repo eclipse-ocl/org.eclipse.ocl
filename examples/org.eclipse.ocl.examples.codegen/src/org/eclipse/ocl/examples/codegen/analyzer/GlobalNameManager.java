@@ -158,9 +158,21 @@ public class GlobalNameManager extends NameManager
 			return nameResolution;
 		}
 		else {
-			String nameHint = helper.getNameHint(cgElement);
+			String nameHint = helper.getNameHint(cgElement);			// XXX null nameHint for globals too
 			return declareStandardName(cgElement, nameHint);
 		}
+	}
+
+	public @NonNull NameResolution declareStandardName(@NonNull CGValuedElement cgElement, @NonNull String nameHint) {
+		CGValuedElement cgNamedValue = cgElement.getNamedValue();
+		NameResolution nameResolution = cgNamedValue.basicGetNameResolution();
+		if (nameResolution == null) {
+			nameResolution = new BaseNameResolution(this, cgNamedValue, nameHint);
+		}
+		if (cgElement != cgNamedValue) {
+			nameResolution.addCGElement(cgElement);
+		}
+		return nameResolution;
 	}
 
 	@Override

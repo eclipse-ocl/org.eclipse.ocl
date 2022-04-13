@@ -65,6 +65,7 @@ public abstract class AbstractNameResolution implements NameResolution
 		cgElements2.add(cgElement);
 		cgElement.setNameResolution(this);
 		getNameManager().addNameResolution(cgElement);
+		System.out.println("addCGElement '" + this + "' : " + cgElement.eClass().getName() + ":" + cgElement);
 	}
 
 	@Override

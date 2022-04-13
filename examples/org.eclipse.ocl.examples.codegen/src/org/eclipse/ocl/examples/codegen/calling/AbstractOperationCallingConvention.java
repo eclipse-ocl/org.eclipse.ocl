@@ -107,7 +107,7 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 			CGValuedElement cgArgument = as2cgVisitor.doVisit(CGValuedElement.class, asArgument);
 			cgOperationCallExp.getArguments().add(cgArgument);
 		}
-		as2cgVisitor.getNameManager().declareStandardName(cgOperationCallExp);
+	//	as2cgVisitor.getNameManager().declareStandardName(cgOperationCallExp);
 	}
 
 	@Override

@@ -442,8 +442,10 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		cgLetExp.setAst(asElement);
 		TypeId asTypeId = asElement.getTypeId();
 		cgLetExp.setTypeId(context.getTypeId(asTypeId));
-		cgIn.getNameResolution().addCGElement(cgLetExp);		// cgIn has variable name
+	//	cgIn.getNameResolution().addCGElement(cgLetExp);		// cgIn has variable name
+	//	assert cgIn.getNameResolution() == cgLetExp.getNameResolution();
 	//	getNameManager().declareStandardName(cgLetExp);
+	//	getNameManager().addNameResolution(asElement, (NamedElement) cgIn.getAst());
 		return cgLetExp;
 	}
 
@@ -492,23 +494,23 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		cgVariable.setAst(asVariable);
 		TypeId asTypeId = asVariable.getTypeId();
 		cgVariable.setTypeId(context.getTypeId(asTypeId));
-	//	getNameManager().declareStandardName(cgVariable);
-		NameResolution nameResolution = getNameManager().getNameResolution(asVariable);
-		nameResolution.addCGElement(cgVariable);
-		//		cgVariable.setInit(doVisit(CGValuedElement.class, asVariable.getInitExpression()));
+		NameResolution nameResolution = getNameManager().declareStandardName(cgVariable, asVariable.getName());// getNameResolution(asVariable);
+	//	nameResolution.addCGElement(cgVariable);
 		return cgVariable;
 	}
 
 	protected @NonNull CGVariable createCGVariable(@NonNull Variable contextVariable, @NonNull OCLExpression source) {
 		CGVariable cgVariable = createCGVariable(contextVariable);
-		cgVariable.setInit(doVisit(CGValuedElement.class, source));
+		CGValuedElement cgInit = doVisit(CGValuedElement.class, source);
+		setCGVariableInit(cgVariable, cgInit);
 		return cgVariable;
 	}
 
 	protected @NonNull CGFinalVariable createCGVariable(@NonNull CGValuedElement cgInit) {
 		CGFinalVariable cgVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();
-		cgVariable.setInit(cgInit);
+	//	cgVariable.setInit(cgInit);
 		cgVariable.setTypeId(cgInit.getTypeId());
+		setCGVariableInit(cgVariable, cgInit);
 		return cgVariable;
 	}
 
@@ -983,10 +985,10 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return cgPropertyCallExp;
 	}
 
-	protected @NonNull CGValuedElement generatePropertyCallExp(@Nullable CGValuedElement cgSource, @NonNull PropertyCallExp element) {
-		Property asProperty = PivotUtil.getReferredProperty(element);
+	protected @NonNull CGValuedElement generatePropertyCallExp(@Nullable CGValuedElement cgSource, @NonNull PropertyCallExp asElement) {
+		Property asProperty = PivotUtil.getReferredProperty(asElement);
 		boolean isRequired = asProperty.isIsRequired();
-		LibraryProperty libraryProperty = metamodelManager.getImplementation(element, null, asProperty);
+		LibraryProperty libraryProperty = metamodelManager.getImplementation(asElement, null, asProperty);
 		CGPropertyCallExp cgPropertyCallExp = null;
 		if (libraryProperty instanceof NativeProperty) {
 			CGNativePropertyCallExp cgNativePropertyCallExp = CGModelFactory.eINSTANCE.createCGNativePropertyCallExp();
@@ -1084,7 +1086,11 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			cgPropertyCallExp = cgExecutorPropertyCallExp;
 		}
 		cgPropertyCallExp.setReferredProperty(asProperty);
-		setAst(cgPropertyCallExp, element);
+	//	setAst(cgPropertyCallExp, element);
+		cgPropertyCallExp.setAst(asElement);
+		TypeId asTypeId = asElement.getTypeId();
+		cgPropertyCallExp.setTypeId(context.getTypeId(asTypeId));
+	//	getNameManager().declareStandardName(cgPropertyCallExp);
 		cgPropertyCallExp.setRequired(isRequired || codeGenerator.isPrimitive(cgPropertyCallExp));
 		cgPropertyCallExp.setSource(cgSource);
 		return cgPropertyCallExp;
@@ -1144,13 +1150,14 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return cgLetExp;
 	}
 
-	protected @NonNull CGFinalVariable generateSafeVariable(@NonNull CGValuedElement cgSource, String nameHint) {
+	protected @NonNull CGFinalVariable generateSafeVariable(@NonNull CGValuedElement cgInit, String nameHint) {
 		CGFinalVariable cgVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();
 		//			variablesStack.putVariable(asVariable, cgVariable);
 		//			setAst(cgVariable, asVariable);
-		cgVariable.setInit(cgSource);
-		cgVariable.setAst(cgSource.getAst());
-		cgVariable.setTypeId(cgSource.getTypeId());
+		cgVariable.setInit(cgInit);
+		cgVariable.setAst(cgInit.getAst());
+		cgVariable.setTypeId(cgInit.getTypeId());
+		setCGVariableInit(cgVariable, cgInit);
 	//	cgVariable.setName(nameHint);
 		getNameManager().declareStandardName(cgVariable, nameHint);
 		return cgVariable;
@@ -1622,7 +1629,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		//	cgElement.setName(asElement.getName());
 		//	getNameManager().declareStandardName((CGValuedElement) cgElement, asElement.getName());
 			if (cgNamedElement instanceof CGValuedElement) {
-				getNameManager().declareStandardName((CGValuedElement) cgNamedElement);
+				getNameManager().declareStandardName2((CGValuedElement) cgNamedElement);
 			}
 			else {
 				cgNamedElement.setName(asNamedElement.getName());
@@ -1633,7 +1640,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			cgNamedElement.setAst(asNamedElement);
 			//	cgElement.setName(asElement.getName());
 				if (cgNamedElement instanceof CGValuedElement) {
-					getNameManager().declareStandardName((CGValuedElement) cgNamedElement);
+					getNameManager().declareStandardName2((CGValuedElement) cgNamedElement);
 				}
 				else {
 					cgNamedElement.setName(asNamedElement.getName());
@@ -1691,6 +1698,21 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			cgElement.setName(asElement.getName());
 		}
 	} */
+
+	protected void setCGVariableInit(@NonNull CGVariable cgVariable, @NonNull CGValuedElement cgInit) {
+		if (cgInit.isUnresolved()) {
+			cgVariable.getNameResolution().addCGElement(cgInit);
+		}
+		cgVariable.setInit(cgInit);
+	//	VariableDeclaration contextVariable = CGUtil.getAST(cgVariable);
+	//	NamedElement asInit = CGUtil.getAST(cgInit);
+	//	NestedNameManager nameManager = getNameManager();
+	//	while (asInit instanceof LetExp) {
+	//		nameManager.addNameResolution(contextVariable, asInit);
+	//		asInit = PivotUtil.getOwnedIn((LetExp)asInit);
+	//	}
+	//	nameManager.addNameResolution(contextVariable, asInit);
+	}
 
 	private void setNullableIterator(@NonNull CGIterator cgIterator, @NonNull Variable iterator) {
 		cgIterator.setTypeId(context.getTypeId(iterator.getTypeId()));
@@ -1826,12 +1848,16 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	}
 
 	@Override
-	public @NonNull CGIfExp visitIfExp(@NonNull IfExp element) {
-		CGValuedElement cgCondition = doVisit(CGValuedElement.class, element.getOwnedCondition());
-		CGValuedElement cgThenExpression = doVisit(CGValuedElement.class, element.getOwnedThen());
-		CGValuedElement cgElseExpression = doVisit(CGValuedElement.class, element.getOwnedElse());
+	public @NonNull CGIfExp visitIfExp(@NonNull IfExp asIfExp) {
+		CGValuedElement cgCondition = doVisit(CGValuedElement.class, asIfExp.getOwnedCondition());
+		CGValuedElement cgThenExpression = doVisit(CGValuedElement.class, asIfExp.getOwnedThen());
+		CGValuedElement cgElseExpression = doVisit(CGValuedElement.class, asIfExp.getOwnedElse());
 		CGIfExp cgIfExp = createCGIfExp(cgCondition, cgThenExpression, cgElseExpression);
-		setAst(cgIfExp, element);
+	//	setAst(cgIfExp, asIfExp);
+		cgIfExp.setAst(asIfExp);
+		TypeId asTypeId = asIfExp.getTypeId();
+		cgIfExp.setTypeId(context.getTypeId(asTypeId));
+	//	getNameManager().declareStandardName(cgIfExp);
 		return cgIfExp;
 	}
 
@@ -1852,19 +1878,39 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	}
 
 	@Override
-	public @Nullable CGLetExp visitLetExp(@NonNull LetExp element) {
-		Variable variable = element.getOwnedVariable();
-		CGValuedElement cgInit = doVisit(CGValuedElement.class, variable.getOwnedInit());
+	public @Nullable CGLetExp visitLetExp(@NonNull LetExp asLetExp) {
+		Variable asVariable = PivotUtil.getOwnedVariable(asLetExp);
 	//	initExpression.setName(variable.getName());
 
-		CGFinalVariable cgVariable = (CGFinalVariable) createCGVariable(variable);		// FIXME Lose cast
+		CGFinalVariable cgVariable = (CGFinalVariable) createCGVariable(asVariable);		// FIXME Lose cast
+	//	getNameManager().getNameResolution(asLetExp);
+	//	getNameManager().addNameResolution(asLetExp, PivotUtil.getOwnedIn(asLetExp));
 	//	cgVariable.getNameResolution().addSecondaryElement(initExpression);
-		cgVariable.setInit(cgInit);
+		CGValuedElement cgInit = doVisit(CGValuedElement.class, asVariable.getOwnedInit());
+		setCGVariableInit(cgVariable, cgInit);;
 	//	cgInit.replaceNameResolution(cgVariable.getNameResolution());
 		//		initExpression.setVariableValue(cgVariable);
 		//		variables.put(variable, cgVariable);
-		CGValuedElement inExpression = doVisit(CGValuedElement.class, element.getOwnedIn());
-		return createCGLetExp(element, cgVariable, inExpression);
+		CGValuedElement cgIn = doVisit(CGValuedElement.class, asLetExp.getOwnedIn());
+		CGLetExp cgLetExp = createCGLetExp(asLetExp, cgVariable, cgIn);
+		NameResolution inNameResolution = cgIn.basicGetNameResolution();
+		if (inNameResolution != null) {
+			inNameResolution.addCGElement(cgLetExp);
+		}
+	/*	else {
+			NameResolution letNameResolution = getNameManager().declareStandardName(cgLetExp);
+			CGValuedElement cgIn2 = cgIn;
+			while (true) {
+				letNameResolution.addCGElement(cgIn2);
+				if (cgIn2 instanceof CGLetExp) {
+					cgIn2 = ((CGLetExp)cgIn2).getIn();;
+				}
+				else {
+					break;
+				}
+			}
+		} */
+		return cgLetExp;
 	}
 
 	@Override

@@ -552,6 +552,12 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	}
 
 	@Override
+	public boolean isUnresolved() {
+		NameResolution nameResolution2 = nameResolution;
+		return (nameResolution2 == null) || nameResolution2.isUnresolved();
+	}
+
+	@Override
 	public void setName(String newName) {
 	//	assert newName != null;
 		NameResolution nameResolution2 = nameResolution;

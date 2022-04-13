@@ -529,7 +529,9 @@ public class NameManagerHelper
 		public @NonNull String visitCGValuedElement(@NonNull CGValuedElement object) {
 			NameResolution nameResolution = object.basicGetNameResolution();
 			if (nameResolution != null) {
-				return nameResolution.getNameHint();
+				if (!nameResolution.isUnresolved()) {
+					return nameResolution.getNameHint();
+				}
 			}
 			Element asElement = object.getAst();
 			if (asElement != null) {

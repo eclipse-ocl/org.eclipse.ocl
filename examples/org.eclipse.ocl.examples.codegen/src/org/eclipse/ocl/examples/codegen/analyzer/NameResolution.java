@@ -56,6 +56,10 @@ public interface NameResolution
 
 	@NonNull String getVariantResolvedName(@NonNull NameVariant nameVariant);
 
+	boolean isUnresolved();
+
+	void resolveNameHint();
+
 	@Override
 	@NonNull String toString();
 }

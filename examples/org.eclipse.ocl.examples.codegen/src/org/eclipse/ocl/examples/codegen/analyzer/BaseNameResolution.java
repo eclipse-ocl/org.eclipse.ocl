@@ -13,7 +13,11 @@ package org.eclipse.ocl.examples.codegen.analyzer;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.NameManager.Context;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGCallable;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
@@ -39,6 +43,11 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 public class BaseNameResolution extends AbstractNameResolution
 {
 	/**
+	 * A non-null placeholder for a nameHint whose resolution is deferred until the CG containment tree is sound.
+	 */
+	private static final @NonNull String UNRESOLVED = "«UNRESOLVED»";
+
+	/**
 	 * The namespace at and below whch this resolved name and all its variants must be unique.
 	 */
 	protected final @NonNull NameManager nameManager;
@@ -46,7 +55,7 @@ public class BaseNameResolution extends AbstractNameResolution
 	/**
 	 * A hint as to what could make a readable resolved name.
 	 */
-	protected final @NonNull String nameHint;
+	private @NonNull String nameHint;
 
 	/**
 	 * The CGElement that computes the value to be accessed by the resolved name. May be null for uncomputed globals.
@@ -58,18 +67,37 @@ public class BaseNameResolution extends AbstractNameResolution
 	 */
 	private @Nullable String resolvedName = null;
 
-	public BaseNameResolution(@NonNull NameManager nameManager, @Nullable CGValuedElement primaryElement, @NonNull String nameHint) {
+	public BaseNameResolution(@NonNull NameManager nameManager, @Nullable CGValuedElement primaryElement, @Nullable String nameHint) {
 		this.nameManager = nameManager;
 		this.primaryElement = primaryElement;
-		this.nameHint = nameHint;
-		if ("self".equals(nameHint)) {
+		this.nameHint = nameHint != null ? nameHint : UNRESOLVED;
+		assert (primaryElement != null) || (nameHint != null);
+		if (nameManager instanceof NestedNameManager) {
+			getClass();		// XXX)
+		}
+		if ("size".equals(nameHint)) {
 			getClass();			// XXX
 		}
 		if ("diagnostics".equals(nameHint)) {
 			getClass();		// XXX
 		}
-		if ("severity".equals(nameHint)) {
+		if ("getSeverity".equals(nameHint)) {
 			getClass();		// XXX
+		}
+		if (primaryElement instanceof CGCallExp) {
+			getClass();		// XXX
+		}
+		if (primaryElement == null) {
+			assert nameHint != null : "Expected BaseNameResolution for null";
+		}
+		else {
+			boolean expectNameHint = (nameManager instanceof GlobalNameManager) || (primaryElement instanceof CGCallable) || (primaryElement instanceof CGProperty) || (primaryElement instanceof CGVariable);
+			if (expectNameHint) {
+				assert nameHint != null  : "Expected BaseNameResolution for " + primaryElement.getClass().getName();
+			}
+			else {
+				assert nameHint == null : "Unexpected BaseNameResolution for " + primaryElement.getClass().getName();
+			}
 		}
 		assert !(primaryElement instanceof CGVariableExp) : "Should have redirected to getNamedValue()";
 		if (primaryElement != null) {
@@ -78,9 +106,13 @@ public class BaseNameResolution extends AbstractNameResolution
 		//	nameManager.addNameResolution(primaryElement);
 		}
 		nameManager.addNameResolution(this);
+		System.out.println("BaseNameResolution '" + nameHint + "' : " + nameManager.toString() + " : " + primaryElement);
+		if (nameManager instanceof NestedNameManager) {
+			getClass();		// XXX)
+		}
 	}
 
-//	@Override
+	//	@Override
 	public @Nullable CGValuedElement basicGetPrimaryElement() {
 		return primaryElement;
 	}
@@ -112,7 +144,13 @@ public class BaseNameResolution extends AbstractNameResolution
 
 	@Override
 	public @NonNull String getResolvedName() {
+		assert !isUnresolved();
 		return ClassUtil.nonNullState(resolvedName);
+	}
+
+@Override
+	public boolean isUnresolved() {
+		return nameHint == UNRESOLVED;
 	}
 
 //	@Override
@@ -122,12 +160,30 @@ public class BaseNameResolution extends AbstractNameResolution
 
 //	@Override
 	public void resolveIn(@NonNull Context context) {
+	//	if (nameHint == UNRESOLVED) {
+	//		CGValuedElement primaryElement2 = primaryElement;
+	//		assert primaryElement2 != null;
+	//		nameHint = nameManager.getNameHint(primaryElement2);
+	//	}
+		assert !isUnresolved();
 		Object cgElement = primaryElement != null ? primaryElement : NameManager.NOT_AN_OBJECT;
 		if (resolvedName == null) {
-			String resolvedName = context.allocateUniqueName(nameHint, cgElement);
+			String resolvedName = context.allocateUniqueName(getNameHint(), cgElement);
 			setResolvedName(resolvedName);
 		}
 		resolveVariants(context, cgElement);
+	}
+
+	@Override
+	public void resolveNameHint() {
+		if (nameHint == UNRESOLVED) {
+			CGValuedElement primaryElement2 = primaryElement;
+			assert primaryElement2 != null;
+			nameHint = nameManager.getNameHint(primaryElement2);
+			if ("getSeverity".equals(nameHint)) {
+				getClass();		// XXX
+			}
+		}
 	}
 
 	protected void setResolvedName(@NonNull String resolvedName) {
@@ -139,6 +195,12 @@ public class BaseNameResolution extends AbstractNameResolution
 
 	@Override
 	public @NonNull String toString() {
-		return nameManager + ":" + nameHint + " => " + (resolvedName != null ? resolvedName : "???");
+		String nameHint2 = nameHint;
+		if (nameHint2 == null) {
+			CGValuedElement primaryElement2 = primaryElement;
+			assert primaryElement2 != null;
+			nameHint2 = nameManager.getNameHint(primaryElement2);		// NB does not assign nameHint as a toString() side effect of debugging
+		}
+		return nameManager + " : " + nameHint2 + " => " + (resolvedName != null ? resolvedName : "???");
 	}
 }
