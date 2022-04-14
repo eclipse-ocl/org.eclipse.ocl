@@ -210,7 +210,11 @@ public class FieldingAnalyzer
 			if (!cgChild.isNonInvalid()) {
 				CGCatchExp cgCatchExp = CGModelFactory.eINSTANCE.createCGCatchExp();
 				NameVariant caughtNameVariant = context.getCodeGenerator().getCAUGHT_NameVariant();
-				NameResolution caughtNameResolution = cgChild.getNameResolution().getNameVariant(caughtNameVariant);
+				NameResolution uncaughtNameResolution = cgChild.basicGetNameResolution();
+				if (uncaughtNameResolution == null) {
+					uncaughtNameResolution = context.getCodeGenerator().getGlobalContext().getLocalContext(cgChild).getNameManager().declareLazyName(cgChild);
+				}
+				NameResolution caughtNameResolution = uncaughtNameResolution.getNameVariant(caughtNameVariant);
 				caughtNameResolution.addCGElement(cgCatchExp);
 				cgCatchExp.setCaught(true);
 				CGUtil.wrap(cgCatchExp, cgChild);
@@ -459,6 +463,9 @@ public class FieldingAnalyzer
 			cgElement.setCaught(isCaught);
 			if (isCaught) {
 				NameVariant caughtNameVariant = context.getCodeGenerator().getCAUGHT_NameVariant();
+			//	VariantNameResolution caughtNameResolution = cgElement.getNameResolution().getNameVariant(caughtNameVariant);
+			//	caughtNameResolution.addCGElement(cgElement);
+			//	cgElement.replaceNameResolution(uncaughtNameResolution);			// XXX replacw not needed
 				cgElement.replaceNameResolution(cgElement.getNameResolution().getNameVariant(caughtNameVariant));			// XXX replacw not needed
 			}
 			return isCaught;

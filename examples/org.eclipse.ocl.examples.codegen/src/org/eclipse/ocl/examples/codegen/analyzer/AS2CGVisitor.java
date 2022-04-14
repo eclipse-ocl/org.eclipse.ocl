@@ -1117,42 +1117,43 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	protected @NonNull CGValuedElement generateSafeNavigationGuard(@NonNull CallExp callExp, @NonNull CGFinalVariable cgVariable, @NonNull CGValuedElement cgUnsafeExp) {
 		//
-		CGVariableExp cgVariableExp = CGModelFactory.eINSTANCE.createCGVariableExp();
-		setAst(cgVariableExp, ClassUtil.nonNullModel(callExp.getOwnedSource()));
-		cgVariableExp.setReferredVariable(cgVariable);
-		cgVariable.getNameResolution().addCGElement(cgVariableExp);
+		CGVariableExp cgVariableExp = context.createCGVariableExp(cgVariable);
 		//
 		CGConstantExp cgNullExpression = context.createCGConstantExp(callExp, context.getNull());
-		setAst(cgNullExpression, callExp);
 		//
 		CGIsEqual2Exp cgCondition = CGModelFactory.eINSTANCE.createCGIsEqual2Exp();
+		cgCondition.setAst(callExp);
+		cgCondition.setTypeId(context.getTypeId(TypeId.BOOLEAN));
 		cgCondition.setSource(cgVariableExp);
 		cgCondition.setArgument(cgNullExpression);
-		setAst(cgCondition, callExp);
-		cgCondition.setTypeId(context.getTypeId(TypeId.BOOLEAN));
 		cgCondition.setInvalidating(false);
 		cgCondition.setValidating(true);
 		//
 		CGConstantExp cgThenExpression = context.createCGConstantExp(callExp, context.getNull());
-		setAst(cgThenExpression, callExp);
 		//
 		CGIfExp cgIfExp = createCGIfExp(cgCondition, cgThenExpression, cgUnsafeExp);
-		setAst(cgIfExp, callExp);
-		cgIfExp.setName(cgVariable.getName());
+		cgIfExp.setAst(callExp);
+		cgIfExp.setTypeId(context.getTypeId(callExp.getTypeId()));
 		//
 		CGLetExp cgLetExp = createCGLetExp(callExp, cgVariable, cgIfExp);
 		return cgLetExp;
 	}
 
-	protected @NonNull CGFinalVariable generateSafeVariable(@NonNull CGValuedElement cgInit, String nameHint) {
+	protected @NonNull CGFinalVariable generateSafeVariable(@NonNull CGValuedElement cgInit) {
+		NameResolution unsafeNameResolution = cgInit.basicGetNameResolution();
+		if (unsafeNameResolution == null) {
+			unsafeNameResolution = getNameManager().declareLazyName(cgInit);
+		}
+		NameResolution safeNameResolution = unsafeNameResolution.getNameVariant(codeGenerator.getSAFE_NameVariant());
 		CGFinalVariable cgVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();
 		//			variablesStack.putVariable(asVariable, cgVariable);
 		//			setAst(cgVariable, asVariable);
 		cgVariable.setInit(cgInit);
 		cgVariable.setAst(cgInit.getAst());
 		cgVariable.setTypeId(cgInit.getTypeId());
-		getNameManager().declarePreferredName(cgVariable);
-		setCGVariableInit(cgVariable, cgInit);
+	//	getNameManager().declarePreferredName(cgVariable);
+		safeNameResolution.addCGElement(cgVariable);
+	//	setCGVariableInit(cgVariable, cgInit);
 	//	cgVariable.setName(nameHint);
 	//	getNameManager().declareLazyName(cgVariable, nameHint);
 		return cgVariable;
@@ -2004,7 +2005,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		}
 		else {
 			String operationName = element.getReferredOperation().getName();
-			CGFinalVariable cgVariable = generateSafeVariable(cgSource, "safe_" + operationName + "_source");
+			CGFinalVariable cgVariable = generateSafeVariable(cgSource);
 			CGVariableExp cgVariableExp = generateSafeVariableExp(pSource, cgVariable);
 			CGValuedElement cgUnsafeExp = generateOperationCallExp(cgVariableExp, element);
 			return generateSafeNavigationGuard(element, cgVariable, cgUnsafeExp);
@@ -2018,7 +2019,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		if (!element.isIsSafe()) {
 			return generateOppositePropertyCallExp(cgSource, element);
 		}
-		CGFinalVariable cgVariable = generateSafeVariable(cgSource, "safe_" + element.getReferredProperty().getName() + "_source");
+		CGFinalVariable cgVariable = generateSafeVariable(cgSource);
 		CGVariableExp cgVariableExp = generateSafeVariableExp(asSource, cgVariable);
 		CGValuedElement cgUnsafeExp = generateOppositePropertyCallExp(cgVariableExp, element);
 		return generateSafeNavigationGuard(element, cgVariable, cgUnsafeExp);
@@ -2091,7 +2092,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		if (!element.isIsSafe()) {
 			return generatePropertyCallExp(cgSource, element);
 		}
-		CGFinalVariable cgVariable = generateSafeVariable(cgSource, "safe_" + element.getReferredProperty().getName() + "_source");
+		CGFinalVariable cgVariable = generateSafeVariable(cgSource);
 		CGVariableExp cgVariableExp = generateSafeVariableExp(asSource, cgVariable);
 		CGValuedElement cgUnsafeExp = generatePropertyCallExp(cgVariableExp, element);
 		return generateSafeNavigationGuard(element, cgVariable, cgUnsafeExp);

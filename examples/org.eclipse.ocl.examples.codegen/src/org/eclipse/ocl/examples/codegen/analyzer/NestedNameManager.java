@@ -62,7 +62,7 @@ public class NestedNameManager extends NameManager
 	 * This is typically used to provide an eager name resolution for a variable without reserving the name.
 	 */
 	public @NonNull NameResolution declarePreferredName(@NonNull CGValuedElement cgElement) {
-		assert cgElement.getNamedValue() == cgElement;
+	//	assert cgElement.getNamedValue() == cgElement;
 		NameResolution nameResolution = cgElement.basicGetNameResolution();
 		if (nameResolution != null) {
 			return nameResolution;

@@ -44,9 +44,14 @@ public abstract class AbstractNameResolution implements NameResolution
 		if (nameVariant2variantNameResolution2 == null) {
 			nameVariant2variantNameResolution = nameVariant2variantNameResolution2 = new HashMap<>();
 		}
+		else {
+			VariantNameResolution variantNameResolution = nameVariant2variantNameResolution2.get(nameVariant);
+			if (variantNameResolution != null) {
+				return variantNameResolution;
+			}
+		}
 		VariantNameResolution variantNameResolution = new VariantNameResolution(this, nameVariant);
-		VariantNameResolution old = nameVariant2variantNameResolution2.put(nameVariant, variantNameResolution);
-		assert old == null : "Duplicate " + nameVariant;		// variant may be declared/used multple times
+		nameVariant2variantNameResolution2.put(nameVariant, variantNameResolution);
 		return variantNameResolution;
 	}
 
