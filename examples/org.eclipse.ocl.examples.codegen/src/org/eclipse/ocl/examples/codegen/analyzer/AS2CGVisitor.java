@@ -1140,10 +1140,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	}
 
 	protected @NonNull CGFinalVariable generateSafeVariable(@NonNull CGValuedElement cgInit) {
-		NameResolution unsafeNameResolution = cgInit.basicGetNameResolution();
-		if (unsafeNameResolution == null) {
-			unsafeNameResolution = getNameManager().declareLazyName(cgInit);
-		}
+		NameResolution unsafeNameResolution = getNameManager().getNameResolution(cgInit);
 		NameResolution safeNameResolution = unsafeNameResolution.getNameVariant(codeGenerator.getSAFE_NameVariant());
 		CGFinalVariable cgVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();
 		//			variablesStack.putVariable(asVariable, cgVariable);

@@ -16,7 +16,6 @@ import java.util.List;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
-import org.eclipse.ocl.examples.codegen.analyzer.NameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
@@ -25,8 +24,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
-import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
-import org.eclipse.ocl.examples.codegen.java.JavaGlobalContext;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 
@@ -136,14 +133,14 @@ public class CommonAnalysis extends AbstractAnalysis
 			}
 		}
 		if ((simpleAnalyses.size() > 1) || !cgCSE.isUncommonable()) {
-			JavaGlobalContext<@NonNull ?> globalContext = ((JavaCodeGenerator)analyzer.getCodeGenerator()).getGlobalContext();
-			NameManager nameManager = globalContext.getLocalContext(controlElement).getNameManager();;
+		//	JavaGlobalContext<@NonNull ?> globalContext = ((JavaCodeGenerator)analyzer.getCodeGenerator()).getGlobalContext();
+		//	NameManager nameManager = globalContext.getLocalContext(controlElement).getNameManager();;
 			CGVariable cgVariable = CGModelFactory.eINSTANCE.createCGLocalVariable();
 			cgVariable.setTypeId(cgCSE.getTypeId());
 			cgVariable.setRequired(cgCSE.isNonNull());
 			cgVariable.setAst(cgCSE.getAst());
 		//	nameManager.declareStandardName(cgVariable);
-			cgCSE.getNameResolution().addCGElement(cgVariable);
+			analyzer.getCodeGenerator().getNameResolution(cgCSE).addCGElement(cgVariable);
 		//	nameManager.queueValueName(cgVariable, null, "_cse");		// let post-order nameHint resolution find a name
 			for (SimpleAnalysis simpleAnalysis : simpleAnalyses) {
 				CGValuedElement commonElement = simpleAnalysis.getElement();

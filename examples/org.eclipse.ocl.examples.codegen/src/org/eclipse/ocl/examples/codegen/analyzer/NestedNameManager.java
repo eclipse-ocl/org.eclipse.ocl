@@ -97,6 +97,14 @@ public class NestedNameManager extends NameManager
 		return null;
 	}
 
+	public @NonNull NameResolution getNameResolution(@NonNull CGValuedElement cgElement) {
+		NameResolution unsafeNameResolution = cgElement.basicGetNameResolution();
+		if (unsafeNameResolution == null) {
+			unsafeNameResolution = declareLazyName(cgElement);
+		}
+		return unsafeNameResolution;
+	}
+
 	public boolean isReserved(@NonNull NameResolution nameResolution) {
 		return (reservedNameResolutions != null) && reservedNameResolutions.contains(nameResolution);
 	}

@@ -132,6 +132,14 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	}
 
 	/**
+	 * Return true if cgCallExp uses a safe navigation operator.
+	 */
+	protected boolean isSafe(@NonNull CGCallExp cgCallExp) {
+		Element asElement = cgCallExp.getAst();
+		return (asElement instanceof CallExp) && ((CallExp)asElement).isIsSafe();
+	}
+
+	/**
 	 * Insert a CGAssertNonNullExp around cgChild.
 	 */
 	protected @Nullable CGValuedElement rewriteAsAssertNonNulled(@Nullable CGValuedElement cgChild) {
@@ -141,14 +149,6 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 		CGAssertNonNullExp cgAssertExp = CGModelFactory.eINSTANCE.createCGAssertNonNullExp();
 		CGUtil.wrap(cgAssertExp, cgChild);
 		return cgAssertExp;
-	}
-
-	/**
-	 * Return true if cgCallExp uses a safe navigation operator.
-	 */
-	protected boolean isSafe(@NonNull CGCallExp cgCallExp) {
-		Element asElement = cgCallExp.getAst();
-		return (asElement instanceof CallExp) && ((CallExp)asElement).isIsSafe();
 	}
 
 	/**
@@ -178,11 +178,8 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 			}
 		}
 		CGBoxExp cgBoxExp = CGModelFactory.eINSTANCE.createCGBoxExp();
-		NameResolution unboxedNameResolution = cgChild.basicGetNameResolution(); //.getNameVariant(guardedNameVariant);
-		if (unboxedNameResolution == null) {
-			unboxedNameResolution = codeGenerator.getGlobalContext().getLocalContext(cgChild).getNameManager().declareLazyName(cgChild);
-		}
-		NameVariant boxedNameVariant = context.getCodeGenerator().getBOXED_NameVariant();
+		NameResolution unboxedNameResolution = codeGenerator.getNameResolution(cgChild);
+		NameVariant boxedNameVariant = codeGenerator.getBOXED_NameVariant();
 		VariantNameResolution boxedNameResolution = unboxedNameResolution.getNameVariant(boxedNameVariant);
 		boxedNameResolution.addCGElement(cgBoxExp);
 		CGUtil.wrap(cgBoxExp, cgChild);
@@ -232,10 +229,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 		cgGuardExp.setMessage(message);
 		cgGuardExp.setSafe(isSafe);
 		// Guard is a prefix IF so new new variable name required; just a copyable resolution..
-		NameResolution guardedNameResolution = cgChild.basicGetNameResolution(); //.getNameVariant(guardedNameVariant);
-		if (guardedNameResolution == null) {
-			guardedNameResolution = codeGenerator.getGlobalContext().getLocalContext(cgChild).getNameManager().declareLazyName(cgChild);
-		}
+		NameResolution guardedNameResolution = codeGenerator.getNameResolution(cgChild);
 		guardedNameResolution.addCGElement(cgGuardExp);
 		CGUtil.wrap(cgGuardExp, cgChild);
 		return cgGuardExp;

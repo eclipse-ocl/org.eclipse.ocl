@@ -42,6 +42,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.util.AbstractExtendingCGModelVisitor;
+import org.eclipse.ocl.examples.codegen.generator.CodeGenerator;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
@@ -208,12 +209,10 @@ public class FieldingAnalyzer
 		protected void insertCatch(@NonNull CGValuedElement cgChild) {
 			assert !(cgChild instanceof CGCatchExp);
 			if (!cgChild.isNonInvalid()) {
+				CodeGenerator codeGenerator = context.getCodeGenerator();
 				CGCatchExp cgCatchExp = CGModelFactory.eINSTANCE.createCGCatchExp();
-				NameVariant caughtNameVariant = context.getCodeGenerator().getCAUGHT_NameVariant();
-				NameResolution uncaughtNameResolution = cgChild.basicGetNameResolution();
-				if (uncaughtNameResolution == null) {
-					uncaughtNameResolution = context.getCodeGenerator().getGlobalContext().getLocalContext(cgChild).getNameManager().declareLazyName(cgChild);
-				}
+				NameResolution uncaughtNameResolution = codeGenerator.getNameResolution(cgChild);
+				NameVariant caughtNameVariant = codeGenerator.getCAUGHT_NameVariant();
 				NameResolution caughtNameResolution = uncaughtNameResolution.getNameVariant(caughtNameVariant);
 				caughtNameResolution.addCGElement(cgCatchExp);
 				cgCatchExp.setCaught(true);
@@ -466,7 +465,7 @@ public class FieldingAnalyzer
 			//	VariantNameResolution caughtNameResolution = cgElement.getNameResolution().getNameVariant(caughtNameVariant);
 			//	caughtNameResolution.addCGElement(cgElement);
 			//	cgElement.replaceNameResolution(uncaughtNameResolution);			// XXX replacw not needed
-				cgElement.replaceNameResolution(cgElement.getNameResolution().getNameVariant(caughtNameVariant));			// XXX replacw not needed
+				cgElement.replaceNameResolution(cgElement.getNameResolution().getNameVariant(caughtNameVariant));			// XXX replace not needed
 			}
 			return isCaught;
 		}

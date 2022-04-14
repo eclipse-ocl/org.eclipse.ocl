@@ -33,6 +33,7 @@ import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager.NameVariant;
 import org.eclipse.ocl.examples.codegen.analyzer.NameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.NameManagerHelper;
 import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
+import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.ReferencesVisitor;
 import org.eclipse.ocl.examples.codegen.asm5.ASM5JavaAnnotationReader;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
@@ -505,6 +506,16 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 
 	public @NonNull NameVariant getMGR_NameVariant() {
 		return MGR_NameVariant;
+	}
+
+	@Override
+	public @NonNull NameResolution getNameResolution(@NonNull CGValuedElement cgElement) {
+		NameResolution unboxedNameResolution = cgElement.basicGetNameResolution(); //.getNameVariant(guardedNameVariant);
+		if (unboxedNameResolution == null) {
+			NestedNameManager nameManager = getGlobalContext().getLocalContext(cgElement).getNameManager();
+			unboxedNameResolution = nameManager.declareLazyName(cgElement);
+		}
+		return unboxedNameResolution;
 	}
 
 	public @NonNull String getQualifiedForeignClassName(org.eclipse.ocl.pivot.@NonNull Class asClass) {
