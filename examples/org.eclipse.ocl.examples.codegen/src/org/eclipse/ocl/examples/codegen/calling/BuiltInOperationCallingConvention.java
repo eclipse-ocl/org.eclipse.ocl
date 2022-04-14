@@ -55,7 +55,8 @@ public class BuiltInOperationCallingConvention extends AbstractOperationCallingC
 		if (libraryOperation instanceof OclAnyOclIsInvalidOperation) {
 			CGIsInvalidExp cgIsInvalidExp = CGModelFactory.eINSTANCE.createCGIsInvalidExp();
 			cgIsInvalidExp.setSource(cgSource);
-			as2cgVisitor.setAst(cgIsInvalidExp, asOperationCallExp);
+			as2cgVisitor.initAst(cgIsInvalidExp, asOperationCallExp);
+			as2cgVisitor.declareLazyName(cgIsInvalidExp);
 			cgIsInvalidExp.setInvalidating(false);
 			cgIsInvalidExp.setValidating(true);
 			return cgIsInvalidExp;
@@ -63,7 +64,8 @@ public class BuiltInOperationCallingConvention extends AbstractOperationCallingC
 		if (libraryOperation instanceof OclAnyOclIsUndefinedOperation) {
 			CGIsUndefinedExp cgIsUndefinedExp = CGModelFactory.eINSTANCE.createCGIsUndefinedExp();
 			cgIsUndefinedExp.setSource(cgSource);
-			as2cgVisitor.setAst(cgIsUndefinedExp, asOperationCallExp);
+			as2cgVisitor.initAst(cgIsUndefinedExp, asOperationCallExp);
+			as2cgVisitor.declareLazyName(cgIsUndefinedExp);
 			cgIsUndefinedExp.setInvalidating(false);
 			cgIsUndefinedExp.setValidating(true);
 			return cgIsUndefinedExp;
@@ -75,7 +77,8 @@ public class BuiltInOperationCallingConvention extends AbstractOperationCallingC
 			cgIsEqualExp.setNotEquals(libraryOperation instanceof OclAnyNotEqualOperation);
 			cgIsEqualExp.setSource(cgSource);
 			cgIsEqualExp.setArgument(cgArgument);
-			as2cgVisitor.setAst(cgIsEqualExp, asOperationCallExp);
+			as2cgVisitor.initAst(cgIsEqualExp, asOperationCallExp);
+			as2cgVisitor.declareLazyName(cgIsEqualExp);
 			cgIsEqualExp.setInvalidating(false);
 			cgIsEqualExp.setValidating(true);
 			return cgIsEqualExp;

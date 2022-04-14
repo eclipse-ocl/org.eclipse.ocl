@@ -43,7 +43,8 @@ public class ConstrainedOperationCallingConvention extends AbstractOperationCall
 			CGValuedElement cgArgument = as2cgVisitor.doVisit(CGValuedElement.class, pArgument);
 			cgOperationCallExp.getArguments().add(cgArgument);
 		}
-		as2cgVisitor.setAst(cgOperationCallExp, element);
+		as2cgVisitor.initAst(cgOperationCallExp, element);
+		as2cgVisitor.declareLazyName(cgOperationCallExp);
 		cgOperationCallExp.setReferredOperation(finalOperation);
 		if (as2cgVisitor.getCodeGenerator().addConstrainedOperation(finalOperation)) {
 		}
