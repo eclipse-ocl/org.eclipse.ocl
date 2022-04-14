@@ -180,7 +180,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 		CGBoxExp cgBoxExp = CGModelFactory.eINSTANCE.createCGBoxExp();
 		NameResolution unboxedNameResolution = cgChild.basicGetNameResolution(); //.getNameVariant(guardedNameVariant);
 		if (unboxedNameResolution == null) {
-			unboxedNameResolution = codeGenerator.getGlobalContext().getLocalContext(cgChild).getNameManager().declareStandardName(cgChild);
+			unboxedNameResolution = codeGenerator.getGlobalContext().getLocalContext(cgChild).getNameManager().declareLazyName(cgChild);
 		}
 		NameVariant boxedNameVariant = context.getCodeGenerator().getBOXED_NameVariant();
 		VariantNameResolution boxedNameResolution = unboxedNameResolution.getNameVariant(boxedNameVariant);
@@ -234,7 +234,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 		// Guard is a prefix IF so new new variable name required; just a copyable resolution..
 		NameResolution guardedNameResolution = cgChild.basicGetNameResolution(); //.getNameVariant(guardedNameVariant);
 		if (guardedNameResolution == null) {
-			guardedNameResolution = codeGenerator.getGlobalContext().getLocalContext(cgChild).getNameManager().declareStandardName(cgChild);
+			guardedNameResolution = codeGenerator.getGlobalContext().getLocalContext(cgChild).getNameManager().declareLazyName(cgChild);
 		}
 		guardedNameResolution.addCGElement(cgGuardExp);
 		CGUtil.wrap(cgGuardExp, cgChild);

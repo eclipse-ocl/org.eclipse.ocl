@@ -718,7 +718,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 				if (nameResolution == null) {
 					JavaLocalContext<?> localContext = globalContext.basicGetLocalContext(cgValuedElement2);
 					NameManager nameManager = (localContext != null) && !cgValuedElement2.isGlobal() ? localContext.getNameManager() : globalNameManager;
-					nameResolution = nameManager.declareStandardName(cgValuedElement2);
+					nameResolution = nameManager.declareLazyName(cgValuedElement2);
 				}
 				nameResolution.resolveNameHint();
 			}
@@ -730,7 +730,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 						if ((cgValuedElement.basicGetNameResolution() == null) && !cgValuedElement.isInlined()) {
 							JavaLocalContext<?> localContext = globalContext.basicGetLocalContext(cgValuedElement);
 							NameManager nameManager = localContext != null ? localContext.getNameManager() : globalNameManager;
-							nameManager.declareStandardName(cgValuedElement);
+							nameManager.declareLazyName(cgValuedElement);
 						}
 					}
 				}

@@ -138,46 +138,36 @@ public class GlobalNameManager extends NameManager
 		assignNames(context);
 	}
 
-	public @NonNull BaseNameResolution declareGlobalName(@Nullable CGValuedElement object, @NonNull String name) {
-		BaseNameResolution baseNameResolution = new BaseNameResolution(this, object, name);
+	/**
+	 * Declare that cgElement has a name which should immediately default to nameHint.
+	 * This is typically used to provide an eager name reservation for globl particularly Ecore names.
+	 */
+	public @NonNull BaseNameResolution declareGlobalName(@Nullable CGValuedElement cgElement, @NonNull String nameHint) {
+		BaseNameResolution baseNameResolution = new BaseNameResolution(this, cgElement, nameHint);
 		baseNameResolution.resolveIn(context);
 		return baseNameResolution;
 	}
 
-	public @NonNull BaseNameResolution declareReservedName(@Nullable CGValuedElement object, @NonNull String name) {
-		BaseNameResolution baseNameResolution = new BaseNameResolution(this, object, name);
-		assert reservedJavaNames.contains(name);
-		baseNameResolution.setResolvedName(name);
-		return baseNameResolution;
-	}
-
+	/**
+	 * Declare that cgElement has a name which should immediately equate to nameHint.
+	 * This is typically used to ensure that reserved Java names are used only for their Java purpose.
+	 */
 	@Override
-	public @NonNull NameResolution declareStandardName(@NonNull CGValuedElement cgElement) {
-		NameResolution nameResolution = cgElement.basicGetNameResolution();
-		if (nameResolution != null) {
-			return nameResolution;
-		}
-		else {
-			String nameHint = helper.getNameHint(cgElement);			// XXX null nameHint for globals too
-			return declareStandardName(cgElement, nameHint);
-		}
-	}
-
-	public @NonNull NameResolution declareStandardName(@NonNull CGValuedElement cgElement, @NonNull String nameHint) {
-		CGValuedElement cgNamedValue = cgElement.getNamedValue();
-		NameResolution nameResolution = cgNamedValue.basicGetNameResolution();
-		if (nameResolution == null) {
-			nameResolution = new BaseNameResolution(this, cgNamedValue, nameHint);
-		}
-		if (cgElement != cgNamedValue) {
-			nameResolution.addCGElement(cgElement);
-		}
-		return nameResolution;
+	public @NonNull BaseNameResolution declareReservedName(@Nullable CGValuedElement cgElement, @NonNull String nameHint) {
+		BaseNameResolution baseNameResolution = new BaseNameResolution(this, cgElement, nameHint);
+		assert reservedJavaNames.contains(nameHint);
+		baseNameResolution.setResolvedName(nameHint);
+		return baseNameResolution;
 	}
 
 	@Override
 	protected @NonNull Context getContext() {
 		return context;
+	}
+
+	@Override
+	protected @NonNull String getLazyNameHint(@NonNull CGValuedElement cgNamedValue) {
+		return helper.getNameHint(cgNamedValue);
 	}
 
 	public @NonNull String getReservedName(@NonNull String name) {

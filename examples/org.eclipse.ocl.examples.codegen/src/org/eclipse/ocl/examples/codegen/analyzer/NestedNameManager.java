@@ -28,19 +28,12 @@ public class NestedNameManager extends NameManager
 {
 	protected final @NonNull NameManager parent;
 	protected final @NonNull CGNamedElement cgScope;
-	private @Nullable List<@NonNull BaseNameResolution> reservedNameResolutions = null;;
+	private @Nullable List<@NonNull BaseNameResolution> reservedNameResolutions = null;
 
 	/**
 	 * The value name assignments.
 	 */
 	private @Nullable Context context = null;		// Non-null once value name allocation is permitted.
-
-	/**
-	 * The name declaration for important AS elements, especially variables and their initializers.
-	 * These are allocated early to enable initializer expressions
-	 * to use the name of the initialized variable long before the containment tree is complete.
-	 */
-//	private final @NonNull Map<@NonNull NamedElement, @NonNull NameResolution> asElement2nameResolution = new HashMap<>();
 
 	public NestedNameManager(@NonNull NameManager parent, @NonNull CGNamedElement cgScope) {
 		super(parent, parent.helper);
@@ -49,14 +42,6 @@ public class NestedNameManager extends NameManager
 		assert !(parent instanceof NestedNameManager) || (((NestedNameManager)parent).cgScope != cgScope);		// XXX
 		parent.addChild(this);
 	}
-
-/*	public @NonNull NameResolution addNameResolution(@NonNull NamedElement asVariable, @NonNull NamedElement asNamedElement) {
-		assert asElement2nameResolution.get(asNamedElement) == null;
-		NameResolution nameResolution = asElement2nameResolution.get(asVariable);
-		assert nameResolution != null;
-		asElement2nameResolution.put(asNamedElement, nameResolution);
-		return nameResolution;
-	} */
 
 	public void assignNames() {
 		Context context2 = context;
@@ -72,20 +57,28 @@ public class NestedNameManager extends NameManager
 		assignNames(context2);
 	}
 
-/*	public @Nullable NameResolution basicGetNameResolution(@NonNull NamedElement asElement) {
-		return asElement2nameResolution.get(asElement);
-	} */
-
-	public @NonNull NameResolution declareReservedName(@NonNull CGValuedElement cgElement, @Nullable String nameHint) {
-		assert !cgElement.isGlobal();
-		CGValuedElement cgNamedValue = cgElement.getNamedValue();
-		assert cgElement == cgNamedValue;
-		NameResolution nameResolution2 = cgNamedValue.basicGetNameResolution();
-		assert nameResolution2 == null;
-		BaseNameResolution baseNameResolution = new BaseNameResolution(this, cgNamedValue, nameHint);
-		if (nameHint != null) {
-			baseNameResolution.setResolvedName(nameHint);
+	/**
+	 * Declare that cgElement has a name which can eventually default to its preferred value.
+	 * This is typically used to provide an eager name resolution for a variable without reserving the name.
+	 */
+	public @NonNull NameResolution declarePreferredName(@NonNull CGValuedElement cgElement) {
+		assert cgElement.getNamedValue() == cgElement;
+		NameResolution nameResolution = cgElement.basicGetNameResolution();
+		if (nameResolution != null) {
+			return nameResolution;
 		}
+		String nameHint = helper.getNameHint(cgElement);
+		return new BaseNameResolution(this, cgElement, nameHint);
+	}
+
+	@Override
+	public @NonNull BaseNameResolution declareReservedName(@NonNull CGValuedElement cgElement, @NonNull String nameHint) {
+		assert !cgElement.isGlobal();
+		assert cgElement.getNamedValue() == cgElement;
+		NameResolution nameResolution2 = cgElement.basicGetNameResolution();
+		assert nameResolution2 == null;
+		BaseNameResolution baseNameResolution = new BaseNameResolution(this, cgElement, nameHint);
+		baseNameResolution.setResolvedName(nameHint);
 		List<@NonNull BaseNameResolution> reservedNameResolutions2 = reservedNameResolutions;
 		if (reservedNameResolutions2 == null) {
 			reservedNameResolutions = reservedNameResolutions2 = new ArrayList<>();
@@ -95,99 +88,14 @@ public class NestedNameManager extends NameManager
 	}
 
 	@Override
-	public @NonNull NameResolution declareStandardName(@NonNull CGValuedElement cgElement) {
-		NameResolution nameResolution = cgElement.basicGetNameResolution();
-		if (nameResolution != null) {
-			return nameResolution;
-		}
-		else {
-		/*	Element asElement = cgElement.getAst();
-			if (asElement != null) {
-				nameResolution = asElement2nameResolution.get(asElement);
-				if (nameResolution != null) {
-					return nameResolution;
-				}
-				EObject eContainer = asElement;
-				EStructuralFeature eContainingFeature;
-				while ((eContainingFeature = eContainer.eContainingFeature()) == PivotPackage.Literals.LET_EXP__OWNED_IN) {
-					eContainer = eContainer.eContainer();
-				}
-				if (eContainingFeature == PivotPackage.Literals.VARIABLE__OWNED_INIT) {
-					eContainer = eContainer.eContainer();
-					assert eContainer != null;
-					nameResolution = basicGetNameResolution((VariableDeclaration)eContainer);
-					assert nameResolution != null;			// XXX
-					nameResolution = basicGetNameResolution((NamedElement) asElement);
-					assert nameResolution != null;			// XXX
-				//	nameResolution = getNameResolution((VariableDeclaration)eContainer);
-				//	nameResolution.addCGElement(cgElement);
-					return nameResolution;
-				}
-			} */
-		//	String nameHint = helper.getNameHint(cgElement);
-			return declareStandardName(cgElement, null);
-		}
-	}
-
-	public @NonNull NameResolution declareStandardName2(@NonNull CGValuedElement cgElement) {
-		NameResolution nameResolution = cgElement.basicGetNameResolution();
-		if (nameResolution != null) {
-			return nameResolution;
-		}
-		else {
-		/*	Element asElement = cgElement.getAst();
-			if (asElement != null) {
-				nameResolution = asElement2nameResolution.get(asElement);
-				if (nameResolution != null) {
-					return nameResolution;
-				}
-				EObject eContainer = asElement;
-				EStructuralFeature eContainingFeature;
-				while ((eContainingFeature = eContainer.eContainingFeature()) == PivotPackage.Literals.LET_EXP__OWNED_IN) {
-					eContainer = eContainer.eContainer();
-				}
-				if (eContainingFeature == PivotPackage.Literals.VARIABLE__OWNED_INIT) {
-					eContainer = eContainer.eContainer();
-					assert eContainer != null;
-					nameResolution = basicGetNameResolution((VariableDeclaration)eContainer);
-					assert nameResolution != null;			// XXX
-					nameResolution = basicGetNameResolution((NamedElement) asElement);
-					assert nameResolution != null;			// XXX
-				//	nameResolution = getNameResolution((VariableDeclaration)eContainer);
-				//	nameResolution.addCGElement(cgElement);
-					return nameResolution;
-				}
-			} */
-			String nameHint = helper.getNameHint(cgElement);
-			return declareStandardName(cgElement, nameHint);
-		}
-	}
-
-	public @NonNull NameResolution declareStandardName(@NonNull CGValuedElement cgElement, @Nullable String nameHint) {
-		CGValuedElement cgNamedValue = cgElement.getNamedValue();
-		NameResolution nameResolution = cgNamedValue.basicGetNameResolution();
-		if (nameResolution == null) {
-			nameResolution = new BaseNameResolution(this, cgNamedValue, nameHint);
-		}
-		if (cgElement != cgNamedValue) {
-			nameResolution.addCGElement(cgElement);
-		}
-		return nameResolution;
-	}
-
-	@Override
 	protected @NonNull Context getContext() {
 		return ClassUtil.nonNullState(context);
 	}
 
-/*	public @NonNull NameResolution getNameResolution(@NonNull NamedElement asNamedElement) {
-		NameResolution nameResolution = asElement2nameResolution.get(asNamedElement);
-		if (nameResolution == null) {
-			nameResolution = new BaseNameResolution(this, null, getNameHint(asNamedElement));
-			asElement2nameResolution.put(asNamedElement, nameResolution);
-		}
-		return nameResolution;
-	} */
+	@Override
+	protected @Nullable String getLazyNameHint(@NonNull CGValuedElement cgNamedValue) {
+		return null;
+	}
 
 	public boolean isReserved(@NonNull NameResolution nameResolution) {
 		return (reservedNameResolutions != null) && reservedNameResolutions.contains(nameResolution);

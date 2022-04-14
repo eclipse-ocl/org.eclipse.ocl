@@ -416,7 +416,32 @@ public abstract class NameManager
 		return new NestedNameManager(this, cgScope);
 	}
 
-	public abstract @NonNull NameResolution declareStandardName(@NonNull CGValuedElement cgElement);
+	/**
+	 * Declare that cgElement must eventually have a distinct name that can default to its natural value once all other
+	 * name preferences have been satisfied. This is the normal form of name resolution.
+	 */
+	public @NonNull NameResolution declareLazyName(@NonNull CGValuedElement cgElement) {
+		NameResolution nameResolution = cgElement.basicGetNameResolution();
+		if (nameResolution != null) {
+			return nameResolution;
+		}
+		CGValuedElement cgNamedValue = cgElement.getNamedValue();
+		nameResolution = cgNamedValue.basicGetNameResolution();
+		if (nameResolution == null) {
+			String nameHint = getLazyNameHint(cgNamedValue);		// globals must have a name soon, nested resolve later
+			nameResolution = new BaseNameResolution(this, cgNamedValue, nameHint);
+		}
+		if (cgElement != cgNamedValue) {
+			nameResolution.addCGElement(cgElement);
+		}
+		return nameResolution;
+	}
+
+	/**
+	 * Declare that cgElement has a name which should immediately default to nameHint.
+	 * This is typically used to provide an eager name reservation for an Ecore operation parameter.
+	 */
+	public abstract @NonNull BaseNameResolution declareReservedName(@NonNull CGValuedElement cgElement, @NonNull String nameHint);
 
 	@Deprecated // not needed
 	protected abstract @NonNull Context getContext();
@@ -428,6 +453,8 @@ public abstract class NameManager
 	public @NonNull String getNameHint(@NonNull Object anObject) {
 		return ClassUtil.nonNullState(helper.getNameHint(anObject));
 	}
+
+	protected abstract @Nullable String getLazyNameHint(@NonNull CGValuedElement cgNamedValue);
 
 	public void removeNameResolution(@NonNull CGValuedElement cgElement) {
 		NameResolution old = element2baseNameResolution.remove(cgElement);
