@@ -36,6 +36,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGTupleExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
 import org.eclipse.ocl.examples.codegen.java.ImportUtils;
@@ -514,6 +515,9 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 			Iterable<@NonNull CGValuedElement> sortedGlobals = prepareGlobals();
 			if (sortedGlobals != null) {
 				for (@NonNull CGValuedElement global : sortedGlobals) {
+					if (global instanceof CGTupleExp) {
+						getClass();		// XXX
+					}
 					assert global.getNameResolution().getNameManager().isGlobal();
 					visitInPostOrder(global);
 				}

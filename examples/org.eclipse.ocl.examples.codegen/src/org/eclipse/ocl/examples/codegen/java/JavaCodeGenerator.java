@@ -37,11 +37,11 @@ import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.ReferencesVisitor;
 import org.eclipse.ocl.examples.codegen.asm5.ASM5JavaAnnotationReader;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGCollectionExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGTupleExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGUnboxExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
@@ -717,6 +717,9 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	}
 
 	protected void visitInPostOrder2(@NonNull CGElement cgElement) {
+		if (cgElement instanceof CGTupleExp) {
+			getClass();		// XXX
+		}
 		JavaGlobalContext<@NonNull ? extends JavaCodeGenerator> globalContext = getGlobalContext();
 		for (EObject eObject : cgElement.eContents()) {					// XXX Surely preorder - no post order to satisfy bottom up dependency evaluation
 			if (eObject instanceof CGElement) {
@@ -727,9 +730,6 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 			CGValuedElement cgValuedElement2 = (CGValuedElement)cgElement;
 			NameResolution nameResolution = cgValuedElement2.basicGetNameResolution();
 			if (!cgValuedElement2.isInlined()) {
-				if (cgValuedElement2 instanceof CGCollectionExp) {
-					getClass();		// XXX
-				}
 				if (nameResolution == null) {
 					JavaLocalContext<?> localContext = globalContext.basicGetLocalContext(cgValuedElement2);
 					NameManager nameManager = (localContext != null) && !cgValuedElement2.isGlobal() ? localContext.getNameManager() : globalNameManager;

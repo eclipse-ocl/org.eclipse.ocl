@@ -13,9 +13,9 @@ package org.eclipse.ocl.examples.codegen.analyzer;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.NameManager.Context;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGTuplePart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
@@ -76,7 +76,8 @@ public class BaseNameResolution extends AbstractNameResolution
 		}
 		this.nameHint = nameHint != null ? nameHint : UNRESOLVED;
 		assert debugNameHint();
-		if (primaryElement instanceof CGCallExp) {
+		if (primaryElement instanceof CGTuplePart) {
+			primaryElement.isGlobal();
 			getClass();		// XXX
 		}
 		assert (primaryElement == null) || nameManager.isGlobal() || !primaryElement.isGlobal();
@@ -113,7 +114,7 @@ public class BaseNameResolution extends AbstractNameResolution
 		if (nameHint.contains("manyDates")) {
 			getClass();		// XXX
 		}
-		if ("SET".equals(nameHint)) {
+		if ("TUP__1".equals(nameHint)) {
 			getClass();			// XXX
 		}
 		if ("diagnostics".equals(nameHint)) {
@@ -185,6 +186,13 @@ public class BaseNameResolution extends AbstractNameResolution
 			getClass();		// XXX
 		}
 		this.resolvedName = resolvedName;
+		if (primaryElement != null) {
+			System.out.println(nameHint + " => " + resolvedName + " : " + primaryElement.eClass().getName()  + " : " + nameManager.getClass().getSimpleName());
+		}
+		else {
+			System.out.println(nameHint + " => " + resolvedName);
+		}
+
 	}
 
 	@Override
