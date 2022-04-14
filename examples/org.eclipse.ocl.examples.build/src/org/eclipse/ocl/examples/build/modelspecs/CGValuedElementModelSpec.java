@@ -542,6 +542,9 @@ public class CGValuedElementModelSpec extends ModelSpec
 		public static final @NonNull Con TORF = new Con() { @Override public @NonNull String generateIsConstant(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 			return "return isFalse() || isTrue();";
 		}};
+		public static final @NonNull Con TPART = new Con() { @Override public @NonNull String generateIsConstant(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
+			return "return init.isConstant();";
+		}};
 		public static final @NonNull Con TRUE = new Con() { @Override public @NonNull String generateIsConstant(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 			return "return true;";
 		}};
@@ -1096,6 +1099,9 @@ public class CGValuedElementModelSpec extends ModelSpec
 					"		" + classRef(CGValuedElement.class) + " referredValue = getNamedValue();\n" +
 					"		return (referredValue != this) && referredValue.isGlobal();";
 		}};
+		public static final @NonNull Glo TPART = new Glo() { @Override public @NonNull String generateIsGlobal(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
+			return "return init.isGlobal();";
+		}};
 		public static final @NonNull Glo TRUE = new Glo() { @Override public @NonNull String generateIsGlobal(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 			return "return true;";
 		}};
@@ -1472,6 +1478,18 @@ public class CGValuedElementModelSpec extends ModelSpec
 			@Override public @Nullable String generateIsNonInvalid(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				return classRef(CGValuedElement.class) + " referredValue = getReferredValue();\n" +
 						"		return (referredValue != this) && referredValue.isNonInvalid();";
+			}
+		};
+
+		public static final @NonNull Inv TPART = new Inv() {
+			@Override public @Nullable String generateGetInvalidValue(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
+				return "return init.getInvalidValue();";
+			}
+			@Override public @Nullable String generateIsInvalid(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
+				return null;
+			}
+			@Override public @Nullable String generateIsNonInvalid(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
+				return "return init.isNonInvalid();";
 			}
 		};
 
@@ -2328,7 +2346,8 @@ public class CGValuedElementModelSpec extends ModelSpec
 			new CGValuedElementModelSpec(CGLetExp.class, "in",							Box.DELEG, null     , null     , null     , null     , Glo.FALSE, null     , null     , null    , null     , Val.DELEG, null     , null     , Ctl.LET  , null     , null     , Eq.EQUIV);
 			new CGValuedElementModelSpec(CGMapExp.class, "CGMapPart",					Box.BOX  , Ths.PARTS, null     , Nul.NEVER, Inv.PARTS, Glo.PARTS, null     , null     , null    , Con.PARTS, null     , null     , null     , Ctl.LORG , null     , null     , Eq.EQUIV);
 			new CGValuedElementModelSpec(CGMapPart.class, null,							Box.BOX  , null     , null     , Nul.NEVER, Inv.MPART, Glo.MPART, null     , null     , null    , Con.MPART, null     , null     , null     , null     , Com.FALSE, null     , Eq.EQUIV);
-			new CGValuedElementModelSpec(CGShadowPart.class, "init",					Box.BOX  , null     , null     , null     , null     , Glo.FALSE, null     , null     , null    , Con.FALSE, Val.DELEG, null     , null     , null     , Com.FALSE, Rew.PART , Eq.DELEG);
+			new CGValuedElementModelSpec(CGShadowPart.class, "init",					Box.BOX  , null     , null     , Nul.NEVER, null     , Glo.FALSE, null     , null     , null    , Con.FALSE, Val.DELEG, null     , null     , null     , Com.FALSE, Rew.PART , Eq.DELEG);
+			new CGValuedElementModelSpec(CGTuplePart.class, "init",						Box.BOX  , null     , null     , Nul.NEVER, Inv.TPART, Glo.TPART, Inl.TRUE , null     , null    , Con.TPART, Val.DELEG, null     , null     , null     , Com.FALSE, null     , Eq.EQUIV);
 
 			new CGValuedElementModelSpec(CGCallable.class, null,						null     , null     , null     , null     , null     , null     , null     , null     , null    , null     , null     , null     , Ctx.TRUE , Ctl.BODY , null     , null     , Eq.UNSUP);
 			new CGValuedElementModelSpec(CGConstraint.class, null,						Box.UNBOX, null     , null     , null     , null     , null     , null     , null     , null    , null     , null     , null     , null     , null     , null     , null     , null    );
@@ -2342,7 +2361,6 @@ public class CGValuedElementModelSpec extends ModelSpec
 			new CGValuedElementModelSpec(CGForeignProperty.class, null,					Box.BOX  , null     , null     , Nul.ECORE, null     , null     , null     , null     , null    , null     , null     , null     , null     , null     , null     , null     , null    );
 			new CGValuedElementModelSpec(CGNativeProperty.class, null,					Box.UNBOX, null     , null     , Nul.VAL  , null     , null     , null     , Set.VAL  , null    , null     , null     , null     , null     , null     , null     , null     , null    );
 			new CGValuedElementModelSpec(CGTupleExp.class, "CGTuplePart",				Box.BOX  , Ths.PARTS, null     , Nul.NEVER, Inv.PARTS, Glo.PARTS, null     , null     , null    , Con.PARTS, null     , null     , null     , null     , null     , null     , Eq.EQUIV);
-			new CGValuedElementModelSpec(CGTuplePart.class, "init",						Box.BOX  , null     , null     , null     , null     , null     , Inl.TRUE , null     , null    , null     , Val.DELEG, null     , null     , null     , Com.FALSE, null     , Eq.EQUIV);
 			new CGValuedElementModelSpec(CGTemplateParameterExp.class, null,			Box.BOX  , null     , null     , null     , null     , null     , null     , null     , null    , null     , null     , null     , null     , null     , null     , null     , Eq.TPARM);
 			new CGValuedElementModelSpec(CGTypeExp.class, "executorType",				Box.BOX  , null     , null     , null     , null     , null     , null     , null     , null    , null     , Val.DELEG, null     , null     , null     , null     , Rew.TYPE , Eq.DELEG);
 			new CGValuedElementModelSpec(CGVariableExp.class, "referredVariable",		Box.DELEG, null     , null     , null     , null     , null     , null     , null     , null    , null     , Val.DELEG, null     , null     , null     , Com.FALSE, null     , Eq.DELEG);

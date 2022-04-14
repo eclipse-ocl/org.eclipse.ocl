@@ -17,6 +17,8 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorShadowPart;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGInvalid;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTupleExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTuplePart;
@@ -254,6 +256,15 @@ public class CGTuplePartImpl extends CGValuedElementImpl implements CGTuplePart 
 	 * @generated
 	 */
 	@Override
+	public @Nullable CGInvalid getInvalidValue() {
+		return init.getInvalidValue();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
 	public @NonNull CGValuedElement getNamedValue() {
 		return init != null ? init.getNamedValue() : this;
 	}
@@ -308,6 +319,15 @@ public class CGTuplePartImpl extends CGValuedElementImpl implements CGTuplePart 
 	 * @generated
 	 */
 	@Override
+	public boolean isConstant() {
+		return init.isConstant();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
 	public boolean isEcore() {
 		return false;
 	}
@@ -316,7 +336,6 @@ public class CGTuplePartImpl extends CGValuedElementImpl implements CGTuplePart 
 	 * {@inheritDoc}
 	 * @generated
 	 */
-	@Override
 	public @Nullable Boolean isEquivalentToInternal(@NonNull CGValuedElement thatValue) {
 		return (getClass() == thatValue.getClass()) ? EquivalenceUtil.isEquivalent(this, (CGTuplePart)thatValue) : null;
 	}
@@ -326,8 +345,44 @@ public class CGTuplePartImpl extends CGValuedElementImpl implements CGTuplePart 
 	 * @generated
 	 */
 	@Override
+	public boolean isGlobal() {
+		return init.isGlobal();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
 	public boolean isInlined() {
 		return true;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
+	public boolean isNonInvalid() {
+		return init.isNonInvalid();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
+	public boolean isNonNull() {
+		return true;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
+	public boolean isNull() {
+		return false;
 	}
 
 	/**
