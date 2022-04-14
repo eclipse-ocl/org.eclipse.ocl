@@ -543,7 +543,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 			return "return isFalse() || isTrue();";
 		}};
 		public static final @NonNull Con TPART = new Con() { @Override public @NonNull String generateIsConstant(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-			return "return init.isConstant();";
+			return "return (init != null) && init.isConstant();";
 		}};
 		public static final @NonNull Con TRUE = new Con() { @Override public @NonNull String generateIsConstant(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 			return "return true;";
@@ -1100,7 +1100,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 					"		return (referredValue != this) && referredValue.isGlobal();";
 		}};
 		public static final @NonNull Glo TPART = new Glo() { @Override public @NonNull String generateIsGlobal(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-			return "return init.isGlobal();";
+			return "return (init != null) && init.isGlobal();";
 		}};
 		public static final @NonNull Glo TRUE = new Glo() { @Override public @NonNull String generateIsGlobal(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 			return "return true;";
@@ -1483,13 +1483,13 @@ public class CGValuedElementModelSpec extends ModelSpec
 
 		public static final @NonNull Inv TPART = new Inv() {
 			@Override public @Nullable String generateGetInvalidValue(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-				return "return init.getInvalidValue();";
+				return "return init != null ? init.getInvalidValue() : null;";
 			}
 			@Override public @Nullable String generateIsInvalid(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				return null;
 			}
 			@Override public @Nullable String generateIsNonInvalid(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-				return "return init.isNonInvalid();";
+				return "return (init != null) && init.isNonInvalid();";
 			}
 		};
 

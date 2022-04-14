@@ -17,7 +17,6 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInvalid;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTupleExp;
@@ -257,7 +256,7 @@ public class CGTuplePartImpl extends CGValuedElementImpl implements CGTuplePart 
 	 */
 	@Override
 	public @Nullable CGInvalid getInvalidValue() {
-		return init.getInvalidValue();
+		return init != null ? init.getInvalidValue() : null;
 	}
 
 	/**
@@ -320,7 +319,7 @@ public class CGTuplePartImpl extends CGValuedElementImpl implements CGTuplePart 
 	 */
 	@Override
 	public boolean isConstant() {
-		return init.isConstant();
+		return (init != null) && init.isConstant();
 	}
 
 	/**
@@ -336,6 +335,7 @@ public class CGTuplePartImpl extends CGValuedElementImpl implements CGTuplePart 
 	 * {@inheritDoc}
 	 * @generated
 	 */
+	@Override
 	public @Nullable Boolean isEquivalentToInternal(@NonNull CGValuedElement thatValue) {
 		return (getClass() == thatValue.getClass()) ? EquivalenceUtil.isEquivalent(this, (CGTuplePart)thatValue) : null;
 	}
@@ -346,7 +346,7 @@ public class CGTuplePartImpl extends CGValuedElementImpl implements CGTuplePart 
 	 */
 	@Override
 	public boolean isGlobal() {
-		return init.isGlobal();
+		return (init != null) && init.isGlobal();
 	}
 
 	/**
@@ -364,7 +364,7 @@ public class CGTuplePartImpl extends CGValuedElementImpl implements CGTuplePart 
 	 */
 	@Override
 	public boolean isNonInvalid() {
-		return init.isNonInvalid();
+		return (init != null) && init.isNonInvalid();
 	}
 
 	/**
