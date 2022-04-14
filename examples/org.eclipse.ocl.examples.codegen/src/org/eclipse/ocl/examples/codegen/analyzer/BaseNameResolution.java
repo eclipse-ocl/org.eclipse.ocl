@@ -186,13 +186,12 @@ public class BaseNameResolution extends AbstractNameResolution
 			getClass();		// XXX
 		}
 		this.resolvedName = resolvedName;
-		if (primaryElement != null) {
-			System.out.println(nameHint + " => " + resolvedName + " : " + primaryElement.eClass().getName()  + " : " + nameManager.getClass().getSimpleName());
-		}
-		else {
-			System.out.println(nameHint + " => " + resolvedName);
-		}
-
+	//	if (primaryElement != null) {
+	//		System.out.println(nameHint + " => " + resolvedName + " : " + primaryElement.eClass().getName()  + " : " + nameManager.getClass().getSimpleName());
+	//	}
+	//	else {
+	//		System.out.println(nameHint + " => " + resolvedName);
+	//	}
 	}
 
 	@Override

@@ -1073,6 +1073,8 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	protected @NonNull CGValuedElement generateSafeNavigationGuard(@NonNull CallExp callExp, @NonNull CGFinalVariable cgVariable, @NonNull CGValuedElement cgUnsafeExp) {
 		//
 		CGVariableExp cgVariableExp = context.createCGVariableExp(cgVariable);
+		NameResolution unsafeNameResolution = cgVariableExp.getNameResolution();
+		NameResolution safeNameResolution = unsafeNameResolution.getNameVariant(codeGenerator.getSAFE_NameVariant());
 		//
 		CGConstantExp cgNullExpression = context.createCGConstantExp(callExp, context.getNull());
 		//
@@ -1088,6 +1090,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		//
 		CGIfExp cgIfExp = createCGIfExp(cgCondition, cgThenExpression, cgUnsafeExp);
 		initAst(cgIfExp, callExp);
+		safeNameResolution.addCGElement(cgIfExp);
 		//
 		CGLetExp cgLetExp = createCGLetExp(callExp, cgVariable, cgIfExp);
 		return cgLetExp;
@@ -1095,7 +1098,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	protected @NonNull CGFinalVariable generateSafeVariable(@NonNull CGValuedElement cgInit) {
 		NameResolution unsafeNameResolution = getNameManager().getNameResolution(cgInit);
-		NameResolution safeNameResolution = unsafeNameResolution.getNameVariant(codeGenerator.getSAFE_NameVariant());
 		CGFinalVariable cgVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();
 		//			variablesStack.putVariable(asVariable, cgVariable);
 		//			setAst(cgVariable, asVariable);
@@ -1103,7 +1105,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		cgVariable.setAst(cgInit.getAst());
 		cgVariable.setTypeId(cgInit.getTypeId());
 	//	getNameManager().declarePreferredName(cgVariable);
-		safeNameResolution.addCGElement(cgVariable);
+		unsafeNameResolution.addCGElement(cgVariable);
 	//	setCGVariableInit(cgVariable, cgInit);
 	//	cgVariable.setName(nameHint);
 	//	declareLazyName(cgVariable, nameHint);
@@ -2040,8 +2042,8 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	public @Nullable CGTuplePart visitTupleLiteralPart(@NonNull TupleLiteralPart element) {
 		CGTuplePart cgTuplePart = CGModelFactory.eINSTANCE.createCGTuplePart();
 		initAst(cgTuplePart, element);
-		declareLazyName(cgTuplePart);
 		cgTuplePart.setInit(doVisit(CGValuedElement.class, element.getOwnedInit()));
+		declareLazyName(cgTuplePart);
 		TuplePartId partId = element.getPartId();
 		if (partId != null) {
 			context.getElementId(partId);
