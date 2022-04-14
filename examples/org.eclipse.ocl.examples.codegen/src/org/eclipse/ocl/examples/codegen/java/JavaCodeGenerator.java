@@ -37,6 +37,7 @@ import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.ReferencesVisitor;
 import org.eclipse.ocl.examples.codegen.asm5.ASM5JavaAnnotationReader;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGCollectionExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
@@ -726,11 +727,15 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 			CGValuedElement cgValuedElement2 = (CGValuedElement)cgElement;
 			NameResolution nameResolution = cgValuedElement2.basicGetNameResolution();
 			if (!cgValuedElement2.isInlined()) {
+				if (cgValuedElement2 instanceof CGCollectionExp) {
+					getClass();		// XXX
+				}
 				if (nameResolution == null) {
 					JavaLocalContext<?> localContext = globalContext.basicGetLocalContext(cgValuedElement2);
 					NameManager nameManager = (localContext != null) && !cgValuedElement2.isGlobal() ? localContext.getNameManager() : globalNameManager;
 					nameResolution = nameManager.declareLazyName(cgValuedElement2);
 				}
+				boolean isGlobal = cgValuedElement2.isGlobal();
 				nameResolution.resolveNameHint();
 			}
 			for (EObject eObject : ((CGValuedElement)cgElement).getOwns()) {					// XXX Surely preorder - no post order to satisfy bottom up dependency evaluation

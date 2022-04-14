@@ -514,6 +514,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 			Iterable<@NonNull CGValuedElement> sortedGlobals = prepareGlobals();
 			if (sortedGlobals != null) {
 				for (@NonNull CGValuedElement global : sortedGlobals) {
+					assert global.getNameResolution().getNameManager().isGlobal();
 					visitInPostOrder(global);
 				}
 			}

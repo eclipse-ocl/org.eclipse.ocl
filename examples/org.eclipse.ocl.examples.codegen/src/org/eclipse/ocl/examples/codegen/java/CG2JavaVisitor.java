@@ -866,6 +866,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 	public void generateGlobals(@NonNull Iterable<@NonNull ? extends CGValuedElement> sortedElements) {
 		for (@NonNull CGValuedElement cgElement : sortedElements) {
+			assert cgElement.isGlobal();
 			cgElement.accept(this);
 		}
 	}

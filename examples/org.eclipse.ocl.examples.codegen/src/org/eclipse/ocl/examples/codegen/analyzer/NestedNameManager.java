@@ -105,6 +105,11 @@ public class NestedNameManager extends NameManager
 		return unsafeNameResolution;
 	}
 
+	@Override
+	public boolean isGlobal() {
+		return false;
+	}
+
 	public boolean isReserved(@NonNull NameResolution nameResolution) {
 		return (reservedNameResolutions != null) && reservedNameResolutions.contains(nameResolution);
 	}

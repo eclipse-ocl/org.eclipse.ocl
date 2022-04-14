@@ -70,31 +70,21 @@ public class BaseNameResolution extends AbstractNameResolution
 	public BaseNameResolution(@NonNull NameManager nameManager, @Nullable CGValuedElement primaryElement, @Nullable String nameHint) {
 		this.nameManager = nameManager;
 		this.primaryElement = primaryElement;
-		this.nameHint = nameHint != null ? nameHint : UNRESOLVED;
 		assert (primaryElement != null) || (nameHint != null);
 		if (nameManager instanceof NestedNameManager) {
 			getClass();		// XXX)
 		}
-		if (this.nameHint.contains("manyDates")) {
-			getClass();		// XXX
-		}
-		if ("eColor".equals(nameHint)) {
-			getClass();			// XXX
-		}
-		if ("diagnostics".equals(nameHint)) {
-			getClass();		// XXX
-		}
-		if ("getSeverity".equals(nameHint)) {
-			getClass();		// XXX
-		}
+		this.nameHint = nameHint != null ? nameHint : UNRESOLVED;
+		assert debugNameHint();
 		if (primaryElement instanceof CGCallExp) {
 			getClass();		// XXX
 		}
+		assert (primaryElement == null) || nameManager.isGlobal() || !primaryElement.isGlobal();
 		if (primaryElement == null) {
 			assert nameHint != null : "Expected BaseNameResolution for null";
 		}
 		else {
-			boolean expectNameHint = (nameManager instanceof GlobalNameManager) || (primaryElement instanceof CGCallable) || (primaryElement instanceof CGProperty) || (primaryElement instanceof CGVariable);
+			boolean expectNameHint = nameManager.isGlobal() || (primaryElement instanceof CGCallable) || (primaryElement instanceof CGProperty) || (primaryElement instanceof CGVariable);
 			if (expectNameHint) {
 				assert nameHint != null  : "Expected BaseNameResolution for " + primaryElement.getClass().getName();
 			}
@@ -105,17 +95,11 @@ public class BaseNameResolution extends AbstractNameResolution
 		assert !(primaryElement instanceof CGVariableExp) : "Should have redirected to getNamedValue()";
 		if (primaryElement != null) {
 			addCGElement(primaryElement);
-		//	primaryElement.setNameResolution(this);
-		//	nameManager.addNameResolution(primaryElement);
 		}
 		nameManager.addNameResolution(this);
 	//	System.out.println("BaseNameResolution '" + nameHint + "' : " + nameManager.toString() + " : " + primaryElement);
-		if (nameManager instanceof NestedNameManager) {
-			getClass();		// XXX)
-		}
 	}
 
-	//	@Override
 	public @Nullable CGValuedElement basicGetPrimaryElement() {
 		return primaryElement;
 	}
@@ -123,6 +107,22 @@ public class BaseNameResolution extends AbstractNameResolution
 	@Override
 	public @Nullable String basicGetResolvedName() {
 		return resolvedName;
+	}
+
+	protected boolean debugNameHint() {
+		if (nameHint.contains("manyDates")) {
+			getClass();		// XXX
+		}
+		if ("SET".equals(nameHint)) {
+			getClass();			// XXX
+		}
+		if ("diagnostics".equals(nameHint)) {
+			getClass();		// XXX
+		}
+		if ("getSeverity".equals(nameHint)) {
+			getClass();		// XXX
+		}
+		return true;
 	}
 
 	@Override
@@ -140,7 +140,6 @@ public class BaseNameResolution extends AbstractNameResolution
 		return nameManager;
 	}
 
-//	@Override
 	public @NonNull CGValuedElement getPrimaryElement() {
 		return ClassUtil.nonNullState(primaryElement);
 	}
@@ -151,17 +150,11 @@ public class BaseNameResolution extends AbstractNameResolution
 		return ClassUtil.nonNullState(resolvedName);
 	}
 
-@Override
+	@Override
 	public boolean isUnresolved() {
 		return nameHint == UNRESOLVED;
 	}
 
-//	@Override
-//	public @Nullable Iterable<@NonNull CGElement> getSecondaryElements() {
-//		return secondaryElements;
-//	}
-
-//	@Override
 	public void resolveIn(@NonNull Context context) {
 	//	if (nameHint == UNRESOLVED) {
 	//		CGValuedElement primaryElement2 = primaryElement;
@@ -183,15 +176,7 @@ public class BaseNameResolution extends AbstractNameResolution
 			CGValuedElement primaryElement2 = primaryElement;
 			assert primaryElement2 != null;
 			nameHint = nameManager.getNameHint(primaryElement2);
-			if ("getSeverity".equals(nameHint)) {
-				getClass();		// XXX
-			}
-			if (nameHint.contains("manyDates")) {
-				getClass();		// XXX
-			}
-			if ("eColor".equals(nameHint)) {
-				getClass();			// XXX
-			}
+			assert debugNameHint();
 		}
 	}
 
@@ -204,12 +189,6 @@ public class BaseNameResolution extends AbstractNameResolution
 
 	@Override
 	public @NonNull String toString() {
-		String nameHint2 = nameHint;
-		if (nameHint2 == null) {
-			CGValuedElement primaryElement2 = primaryElement;
-			assert primaryElement2 != null;
-			nameHint2 = nameManager.getNameHint(primaryElement2);		// NB does not assign nameHint as a toString() side effect of debugging
-		}
-		return nameManager + " : " + nameHint2 + " => " + (resolvedName != null ? resolvedName : "???");
+		return nameManager + " : " + nameHint + " => " + (resolvedName != null ? resolvedName : "???");
 	}
 }

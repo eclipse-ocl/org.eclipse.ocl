@@ -175,6 +175,11 @@ public class GlobalNameManager extends NameManager
 	}
 
 	@Override
+	public boolean isGlobal() {
+		return true;
+	}
+
+	@Override
 	public @NonNull String toString() {
 		return "globals";
 	}

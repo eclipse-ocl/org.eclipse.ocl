@@ -264,6 +264,9 @@ public class JavaStream
 			if (string.contains("CGStringLogDiagnosticOperation")) {
 				getClass();		// XXX
 			}
+			if ("SET".equals(string)) {
+				getClass();		// XXX
+			}
 			if (indentationStack.isEmpty()) {
 				s.append(string);
 			}

@@ -254,7 +254,7 @@ public abstract class NameManager
 
 		protected Context(@NonNull NameManager nameManager) {
 			this.nameManager = nameManager;
-			if (nameManager instanceof GlobalNameManager) {
+			if (nameManager.isGlobal()) {
 				this.name2object = new HashMap<>();
 				this.name2counter = null;
 			}
@@ -455,6 +455,8 @@ public abstract class NameManager
 	}
 
 	protected abstract @Nullable String getLazyNameHint(@NonNull CGValuedElement cgNamedValue);
+
+	public abstract boolean isGlobal();
 
 	public void removeNameResolution(@NonNull CGValuedElement cgElement) {
 		NameResolution old = element2baseNameResolution.remove(cgElement);
