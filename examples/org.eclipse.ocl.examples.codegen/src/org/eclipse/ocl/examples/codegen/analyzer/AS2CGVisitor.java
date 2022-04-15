@@ -749,7 +749,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			cgIterationCallExp = cgLibraryIterationCallExp;
 		}
 		initAst(cgIterationCallExp, element);
-		declareLazyName(cgIterationCallExp);
+	// XXX YYY	declareLazyName(cgIterationCallExp);
 		cgIterationCallExp.setReferredIteration(asIteration);
 		cgIterationCallExp.setInvalidating(asIteration.isIsInvalidating());
 		cgIterationCallExp.setValidating(asIteration.isIsValidating());
@@ -833,7 +833,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	protected @NonNull CGOperation generateOperation(@NonNull Operation asOperation) {
 		CGOperation cgOperation = context.basicGetOperation(asOperation);
 		if (cgOperation == null) {
-
 			org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass((Feature)asOperation);
 			pushClassContext(asClass);
 			LibraryOperation libraryOperation = (LibraryOperation)metamodelManager.getImplementation(asOperation);
@@ -846,7 +845,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 				cgOperation = createFinalCGOperationWithoutBody(asOperation);
 			}
 			cgOperation.setCallingConvention(callingConvention);
-			pushLocalContext(cgOperation, asOperation);
+			pushDeclarationContext(cgOperation, asOperation);
 			ExpressionInOCL query = null;
 			LanguageExpression specification = asOperation.getBodyExpression();
 			if (specification != null) {
@@ -1490,23 +1489,10 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		contextStack = new Stack<>();
 		cgClass.setAst(asClass);
 		cgClass.setName(asClass.getName());
-		LocalContext outerContext = contextStack.isEmpty() ? null : getLocalContext();
-		JavaGlobalContext<@NonNull ? extends JavaCodeGenerator> globalContext = ((JavaCodeGenerator)codeGenerator).getGlobalContext();
-		LocalContext localContext = globalContext.basicGetLocalContext(cgClass);
-		if (localContext == null) {
-			localContext = globalContext.initLocalContext(outerContext, cgClass, asClass);
-		}
-		contextStack.push(localContext);
-		return localContext;
+		return pushContext(cgClass, asClass);
 	}
 
-	public @NonNull LocalContext pushLocalContext(@NonNull CGValuedElement cgElement, @NonNull NamedElement asElement) {
-		cgElement.setAst(asElement);
-		if (asElement instanceof TypedElement) {
-			TypeId asTypeId = ((TypedElement)asElement).getTypeId();
-			cgElement.setTypeId(context.getTypeId(asTypeId));
-		}
-		getNameManager().declarePreferredName(cgElement);
+	protected @NonNull LocalContext pushContext(@NonNull CGNamedElement cgElement, @NonNull NamedElement asElement) {
 		LocalContext outerContext = contextStack.isEmpty() ? null : getLocalContext();
 		JavaGlobalContext<@NonNull ? extends JavaCodeGenerator> globalContext = ((JavaCodeGenerator)codeGenerator).getGlobalContext();
 		LocalContext localContext = globalContext.basicGetLocalContext(cgElement);
@@ -1515,6 +1501,18 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		}
 		contextStack.push(localContext);
 		return localContext;
+	}
+
+	public @NonNull LocalContext pushDeclarationContext(@NonNull CGValuedElement cgElement, @NonNull NamedElement asElement) {
+		assert cgElement.basicGetNameResolution() == null;
+		cgElement.setAst(asElement);
+		getNameManager().declarePreferredName(cgElement);
+		return pushContext(cgElement, asElement);
+	}
+
+	public @NonNull LocalContext pushLocalContext(@NonNull CGValuedElement cgElement, @NonNull TypedElement asElement) {
+		initAst(cgElement, asElement);
+		return pushContext(cgElement, asElement);
 	}
 
 	protected void setCGVariableInit(@NonNull CGVariable cgVariable, @NonNull CGValuedElement cgInit) {
@@ -1617,10 +1615,10 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	}
 
 	@Override
-	public @Nullable CGConstraint visitConstraint(@NonNull Constraint element) {
+	public @Nullable CGConstraint visitConstraint(@NonNull Constraint asConstraint) {
 		CGConstraint cgConstraint = CGModelFactory.eINSTANCE.createCGConstraint();
-		pushLocalContext(cgConstraint, element);
-		LanguageExpression specification = element.getOwnedSpecification();
+		pushDeclarationContext(cgConstraint, asConstraint);
+		LanguageExpression specification = asConstraint.getOwnedSpecification();
 		if (specification != null) {
 			try {
 				ExpressionInOCL query = environmentFactory.parseSpecification(specification);
@@ -1870,7 +1868,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		else {
 			cgProperty = CGModelFactory.eINSTANCE.createCGProperty();
 		}
-		pushLocalContext(cgProperty, element);
+		pushDeclarationContext(cgProperty, element);
 		cgProperty.setRequired(element.isIsRequired());
 		LanguageExpression specification = element.getOwnedExpression();
 		if (specification != null) {

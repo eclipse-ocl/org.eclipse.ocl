@@ -95,7 +95,7 @@ public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 	@Override
 	public @Nullable CGConstraint visitConstraint(@NonNull Constraint element) {
 		CGConstraint cgConstraint = CGModelFactory.eINSTANCE.createCGConstraint();
-		pushLocalContext(cgConstraint, element);
+		pushDeclarationContext(cgConstraint, element);
 		LanguageExpression specification = element.getOwnedSpecification();
 		if (specification != null) {
 			try {

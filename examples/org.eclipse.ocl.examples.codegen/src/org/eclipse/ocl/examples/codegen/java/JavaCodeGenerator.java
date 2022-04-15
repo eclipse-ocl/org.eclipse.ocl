@@ -88,6 +88,7 @@ import org.eclipse.ocl.pivot.library.iterator.OneIteration;
 import org.eclipse.ocl.pivot.library.iterator.RejectIteration;
 import org.eclipse.ocl.pivot.library.iterator.SelectIteration;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
 
 /**
@@ -521,7 +522,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 
 	public @NonNull String getQualifiedForeignClassName(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		assert false : "Unsupported getQualifiedForeignClassName";
-		return asClass.getName();
+		return PivotUtil.getName(asClass);
 	}
 
 	@Override
@@ -735,7 +736,6 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 					NameManager nameManager = (localContext != null) && !cgValuedElement2.isGlobal() ? localContext.getNameManager() : globalNameManager;
 					nameResolution = nameManager.declareLazyName(cgValuedElement2);
 				}
-				boolean isGlobal = cgValuedElement2.isGlobal();
 				nameResolution.resolveNameHint();
 			}
 			for (EObject eObject : ((CGValuedElement)cgElement).getOwns()) {					// XXX Surely preorder - no post order to satisfy bottom up dependency evaluation
