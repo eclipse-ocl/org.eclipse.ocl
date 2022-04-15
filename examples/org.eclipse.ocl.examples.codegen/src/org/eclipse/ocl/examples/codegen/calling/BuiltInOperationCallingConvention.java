@@ -78,7 +78,7 @@ public class BuiltInOperationCallingConvention extends AbstractOperationCallingC
 			cgIsEqualExp.setSource(cgSource);
 			cgIsEqualExp.setArgument(cgArgument);
 			as2cgVisitor.initAst(cgIsEqualExp, asOperationCallExp);
-			as2cgVisitor.declareLazyName(cgIsEqualExp);
+		// XXX YYY	as2cgVisitor.declareLazyName(cgIsEqualExp);
 			cgIsEqualExp.setInvalidating(false);
 			cgIsEqualExp.setValidating(true);
 			return cgIsEqualExp;

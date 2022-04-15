@@ -2396,7 +2396,8 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		if (!js.appendLocalStatements(cgIn)) {
 			return false;
 		}
-		// FIXME the following fallback would not be required if the inner name propagated better, see testBug458724
+		// The following fallback would not be required if the inner name propagated better, see testBug458724
+		// (a rewrite of an in might fail to re-down-propagate the let name).
 		NameResolution inNameResolution = cgIn.getNameResolution();
 		NameResolution letNameResolution = cgLetExp.getNameResolution();
 		if (inNameResolution != letNameResolution) {
@@ -2965,18 +2966,24 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 	@Override
 	public @NonNull Boolean visitCGVariable(@NonNull CGVariable cgVariable) {
-		CGValuedElement init = cgVariable.getInit();
-		if (init != null) {
-			if (!js.appendLocalStatements(init)) {
+		CGValuedElement cgInit = cgVariable.getInit();
+		if (cgInit != null) {
+			if (!js.appendLocalStatements(cgInit)) {
 				return false;
 			}
+			if (!cgInit.isGlobal()) {
+				// The following fallback would not be required if the init name propagated better, see testSysML_QUDV
+				// (a rewrite of an init might fail to re-down-propagate the variable name).
+				NameResolution varNameResolution = cgVariable.getNameResolution();
+				NameResolution initNameResolution = cgInit.getNameResolution();
+				if (varNameResolution != initNameResolution) {
+					js.appendDeclaration(cgVariable);
+					js.append(" = ");
+					js.appendValueName(cgInit);
+					js.append(";\n");
+				}
+			}
 		}
-		//		js.appendDeclaration(cgVariable);
-		//		if (init != null) {
-		//			js.append(" = ");
-		//			js.appendValueName(init);
-		//		}
-		//		js.append(";\n");
 		return true;
 	}
 

@@ -113,7 +113,7 @@ public class BaseNameResolution extends AbstractNameResolution
 		if (nameHint.contains("manyDates")) {
 			getClass();		// XXX
 		}
-		if ("exists".equals(nameHint)) {
+		if ("isInvertible".equals(nameHint)) {
 			getClass();			// XXX
 		}
 		if ("result".equals(nameHint)) {
@@ -143,7 +143,7 @@ public class BaseNameResolution extends AbstractNameResolution
 
 	@Override
 	public @NonNull String getResolvedName() {
-		assert !isUnresolved();
+		// assert !isUnresolved();	-- maybe unresolved if containerless as a result of a CSE rewrite
 		return ClassUtil.nonNullState(resolvedName);
 	}
 
@@ -153,12 +153,7 @@ public class BaseNameResolution extends AbstractNameResolution
 	}
 
 	public void resolveIn(@NonNull Context context) {
-	//	if (nameHint == UNRESOLVED) {
-	//		CGValuedElement primaryElement2 = primaryElement;
-	//		assert primaryElement2 != null;
-	//		nameHint = nameManager.getNameHint(primaryElement2);
-	//	}
-		assert !isUnresolved();
+	// assert !isUnresolved();	-- maybe unresolved if containerless as a result of a CSE rewrite
 		Object cgElement = primaryElement != null ? primaryElement : NameManager.NOT_AN_OBJECT;
 		if (resolvedName == null) {
 			String resolvedName = context.allocateUniqueName(getNameHint(), cgElement);

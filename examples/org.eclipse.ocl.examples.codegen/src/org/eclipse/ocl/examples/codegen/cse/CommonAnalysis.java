@@ -194,7 +194,7 @@ public class CommonAnalysis extends AbstractAnalysis
 					primaryConstantExp.setReferredConstant(primaryElement);
 					primaryConstantExp.setAst(primaryElement.getAst());
 					primaryConstantExp.setTypeId(primaryElement.getTypeId());
-					primaryConstantExp.setName(primaryElement.getName());
+				//	primaryConstantExp.setName(primaryElement.getName());
 					CGUtil.replace(primaryElement, primaryConstantExp);
 				}
 			}
@@ -215,7 +215,7 @@ public class CommonAnalysis extends AbstractAnalysis
 							secondaryConstantExp.setReferredConstant(secondaryElement);
 							secondaryConstantExp.setAst(secondaryElement.getAst());
 							secondaryConstantExp.setTypeId(secondaryElement.getTypeId());
-							secondaryConstantExp.setName(secondaryElement.getName());
+						//	secondaryConstantExp.setName(secondaryElement.getName());
 							CGUtil.replace(secondaryElement, secondaryConstantExp);
 						}
 					}
