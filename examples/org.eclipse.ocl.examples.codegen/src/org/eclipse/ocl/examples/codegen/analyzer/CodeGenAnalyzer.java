@@ -55,6 +55,7 @@ import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.java.JavaGlobalContext;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
+import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Feature;
@@ -70,6 +71,7 @@ import org.eclipse.ocl.pivot.ids.PropertyId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.internal.cse.CommonSubExpressionAnalysis;
+import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -215,6 +217,7 @@ public class CodeGenAnalyzer
 		CGBoolean cgBoolean = CGModelFactory.eINSTANCE.createCGBoolean();
 		cgBoolean.setBooleanValue(booleanValue);
 		cgBoolean.setTypeId(getTypeId(TypeId.BOOLEAN));
+		globalNameManager.declareLazyName(cgBoolean);
 		return cgBoolean;
 	}
 
@@ -252,6 +255,7 @@ public class CodeGenAnalyzer
 	public @NonNull CGNull createCGNull() {
 		CGNull cgNull = CGModelFactory.eINSTANCE.createCGNull();
 		cgNull.setTypeId(getTypeId(TypeId.OCL_VOID));
+		globalNameManager.declareLazyName(cgNull);
 		return cgNull;
 	}
 
@@ -425,6 +429,7 @@ public class CodeGenAnalyzer
 			cgInteger = CGModelFactory.eINSTANCE.createCGInteger();
 			cgInteger.setNumericValue(aNumber);
 			cgInteger.setTypeId(getTypeId(TypeId.INTEGER));
+			globalNameManager.declareLazyName(cgInteger);
 			cgIntegers.put(aNumber, cgInteger);
 		}
 		return cgInteger;
@@ -436,6 +441,7 @@ public class CodeGenAnalyzer
 			cgInvalid2 = CGModelFactory.eINSTANCE.createCGInvalid();
 			//	cgInvalid.setAst(ValuesUtil.INVALID_VALUE);
 			cgInvalid2.setTypeId(getTypeId(TypeId.OCL_INVALID));
+			globalNameManager.declareLazyName(cgInvalid2);
 			cgInvalid = cgInvalid2;
 		}
 		return cgInvalid2;
@@ -448,6 +454,7 @@ public class CodeGenAnalyzer
 		for (Object binding : bindings) {
 			cgInvalid.getBindings().add(binding);
 		}
+		globalNameManager.declareLazyName(cgInvalid);
 		return cgInvalid;
 	}
 
@@ -594,6 +601,7 @@ public class CodeGenAnalyzer
 			cgReal = CGModelFactory.eINSTANCE.createCGReal();
 			cgReal.setNumericValue(aNumber);
 			cgReal.setTypeId(getTypeId(TypeId.REAL));
+			globalNameManager.declareLazyName(cgReal);
 			cgReals.put(aNumber, cgReal);
 		}
 		return cgReal;
@@ -605,6 +613,7 @@ public class CodeGenAnalyzer
 			cgString = CGModelFactory.eINSTANCE.createCGString();
 			cgString.setStringValue(aString);
 			cgString.setTypeId(getTypeId(TypeId.STRING));
+			globalNameManager.declareLazyName(cgString);
 			cgStrings.put(aString, cgString);
 		}
 		return cgString;
@@ -616,6 +625,7 @@ public class CodeGenAnalyzer
 		if (cgTypeId == null) {
 			cgTypeId = CGModelFactory.eINSTANCE.createCGTypeId();
 			cgTypeId.setElementId(typeId);
+			globalNameManager.declareLazyName(cgTypeId);
 			cgElementIds.put(typeId, cgTypeId);
 
 			cgTypeId.setTypeId(getTypeId(TypeId.OCL_ANY)); // XXX better tyoe ??
@@ -628,9 +638,25 @@ public class CodeGenAnalyzer
 		if (cgUnlimited2 == null) {
 			cgUnlimited2 = CGModelFactory.eINSTANCE.createCGUnlimited();
 			cgUnlimited2.setTypeId(getTypeId(TypeId.UNLIMITED_NATURAL));
+			globalNameManager.declareLazyName(cgUnlimited2);
 			cgUnlimited = cgUnlimited2;
 		}
 		return cgUnlimited2;
+	}
+
+	public boolean hasOclVoidOperation(@NonNull OperationId operationId) {
+		PivotMetamodelManager metamodelManager = codeGenerator.getEnvironmentFactory().getMetamodelManager();
+		CompleteClass completeClass = metamodelManager.getCompleteClass(metamodelManager.getStandardLibrary().getOclVoidType());
+		Operation memberOperation = completeClass.getOperation(operationId);
+		if (memberOperation == null) {
+			return false;
+		}
+		org.eclipse.ocl.pivot.Class owningType = memberOperation.getOwningClass();
+		if (owningType == null) {
+			return false;
+		}
+		CompleteClass owningCompleteClass = metamodelManager.getCompleteClass(owningType);
+		return completeClass == owningCompleteClass;
 	}
 
 	public boolean isForeign(@NonNull Feature asFeature) {

@@ -15,7 +15,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.BaseNameResolution;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
-import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
@@ -32,7 +31,9 @@ import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.NamedElement;
+import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
@@ -48,7 +49,6 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 	protected final @NonNull NamedElement asScope;
 	protected final @NonNull Type asType;
 	protected final @NonNull NestedNameManager nameManager;
-	protected final boolean executorIsParameter;
 	protected final boolean isStatic;
 
 	private /*@LazyNonNull*/ CGVariable executorVariable = null;			// Passed executor paramter / caached local thread lookup
@@ -63,13 +63,13 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 
 	@Deprecated /* @deprecated specify executorIsParameter */
 	public JavaLocalContext(@NonNull JavaGlobalContext<@NonNull ? extends CG> globalContext, @NonNull CGElement cgScope) {
-		this(globalContext, null, (CGNamedElement)cgScope, (NamedElement)((CGNamedElement)cgScope).getAst(), false);
+		this(globalContext, null, (CGNamedElement)cgScope, (NamedElement)((CGNamedElement)cgScope).getAst());
 	}
 
 	public JavaLocalContext(@NonNull JavaGlobalContext<@NonNull ? extends CG> globalContext, @Nullable JavaLocalContext<@NonNull ? extends CG> outerContext,
-			@NonNull CGNamedElement cgScope, @NonNull NamedElement asScope, boolean zzexecutorIsParameter) {
+			@NonNull CGNamedElement cgScope, @NonNull NamedElement asScope) {
 		super(globalContext.getCodeGenerator());
-		assert zzexecutorIsParameter == false;
+	//	assert zzexecutorIsParameter == false;
 		this.globalContext = globalContext;
 		this.globalNameManager = codeGenerator.getGlobalNameManager();
 		this.outerContext = outerContext;
@@ -82,13 +82,6 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 		else {
 			this.asType = ClassUtil.nonNullState(PivotUtil.getContainingType(asScope));
 			this.nameManager = globalNameManager.createNestedNameManager(cgScope);
-		}
-		if (cgScope instanceof CGOperation) {
-			OperationCallingConvention callingConvention = ((CGOperation)cgScope).getCallingConvention();
-			this.executorIsParameter = callingConvention.getExecutorIsParameter();
-		}
-		else {
-			this.executorIsParameter = zzexecutorIsParameter;
 		}
 		boolean staticFeature = (asScope instanceof Feature) && ((Feature)asScope).isIsStatic();
 		this.isStatic = /*(asScope == null) ||*/ staticFeature;
@@ -224,8 +217,12 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 
 	protected @NonNull CGParameter createSelfParameter() {
 	//	assert !isStatic;
+		CGNamedElement scope = getScope();
+		Operation referredOperation = CGUtil.getAST(((CGOperation)scope));
+		OperationId operationId = referredOperation.getOperationId();
+		boolean sourceMayBeNull = analyzer.hasOclVoidOperation(operationId);
 		BaseNameResolution selfName = globalContext.getSelfNameResolution();
-		CGParameter selfParameter = analyzer.createCGParameter(selfName, analyzer.getTypeId(asType.getTypeId()), true);
+		CGParameter selfParameter = analyzer.createCGParameter(selfName, analyzer.getTypeId(asType.getTypeId()), !sourceMayBeNull);
 		selfParameter.setNonInvalid();
 		selfParameter.setNonNull();
 		return selfParameter;

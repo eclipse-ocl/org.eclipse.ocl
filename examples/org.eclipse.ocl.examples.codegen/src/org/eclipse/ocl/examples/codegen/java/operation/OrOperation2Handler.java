@@ -53,7 +53,7 @@ public class OrOperation2Handler extends AbstractLibraryOperationHandler
 			//
 			//	Trivial argument cases
 			//
-			CGValuedElement cgArgument = cgOperationCallExp.getArguments().get(0);
+			CGValuedElement cgArgument = cgOperationCallExp.getArguments().get(1);
 			assert cgArgument != null;
 			if (cgArgument.isTrue()) {
 				appendAssignBooleanLiteral(hasDeclaration, cgOperationCallExp, true);

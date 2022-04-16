@@ -23,15 +23,12 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
 import org.eclipse.ocl.examples.codegen.java.ImportUtils;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
-import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.java.JavaGlobalContext;
 import org.eclipse.ocl.examples.codegen.java.JavaImportNameManager;
-import org.eclipse.ocl.examples.codegen.java.JavaLocalContext;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
@@ -87,23 +84,11 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		}
 		AS2CGVisitor as2cgVisitor = new JUnitAS2CGVisitor(cgAnalyzer);
 		CGOperation cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
+		JUnitOperationCallingConvention callingConvention = JUnitOperationCallingConvention.INSTANCE;
+		cgOperation.setCallingConvention(callingConvention);
 		as2cgVisitor.pushLocalContext(cgOperation, expInOcl);
-		List<CGParameter> cgParameters = cgOperation.getParameters();
-		JavaLocalContext<@NonNull ?> localContext = globalContext.getLocalContext(cgOperation);
-		CGParameter executorParameter = (CGParameter) localContext.getExecutorVariable();
-		cgParameters.add(executorParameter);
-		CGParameter typeIdParameter = cgAnalyzer.createCGParameter(typeIdNameResolution, cgAnalyzer.getTypeId(JavaConstants.TYPE_ID_TYPE_ID), true);
-		cgParameters.add(typeIdParameter);
-		if (contextVariable != null) {
-			CGParameter cgContext = as2cgVisitor.getParameter(contextVariable, (String)null);
-			cgParameters.add(cgContext);
-		}
-		typeIdNameResolution.addCGElement(typeIdParameter);
-	//	globalNameManager.declareStandardName(typeIdParameter, typeIdName);
-		for (@SuppressWarnings("null")@NonNull Variable parameterVariable : expInOcl.getOwnedParameters()) {
-			CGParameter cgParameter = as2cgVisitor.getParameter(parameterVariable, (String)null);
-			cgParameters.add(cgParameter);
-		}
+		callingConvention.createParameters(as2cgVisitor, cgOperation, expInOcl);
+	//	cgOperation.setAst(expInOcl);
 		Type type = expInOcl.getType();
 		assert type != null;
 		TypeId asTypeId = type/*.behavioralType()*/.getTypeId();

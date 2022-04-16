@@ -575,23 +575,14 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	}
 
 	@Override
-	@Deprecated /* @deprecated eliminate this kludge */
-	public void replaceNameResolution(@NonNull NameResolution nameResolution) {
-		NameResolution oldNameResolution = this.nameResolution;
-		assert oldNameResolution != null;
-	//	assert oldNameResolution.getBaseNameResolution().getPrimaryElement() == this;
-	//	assert oldNameResolution.getCGElements() == null;
-		this.nameResolution = null;
-		oldNameResolution.getNameManager().removeNameResolution(this);
-		nameResolution.addCGElement(this);
-	//	System.out.println("setNameResolution " + eClass().getName() + " = " + nameResolution);		// XXX
-	}
-
-	@Override
 	public void setNameResolution(@NonNull NameResolution nameResolution) {
 		assert this.nameResolution == null;
 		this.nameResolution = nameResolution;
 	//	System.out.println("setNameResolution " + eClass().getName() + " = " + nameResolution);		// XXX
+	}
+
+	protected void resetNameResolution() {
+		nameResolution = null;
 	}
 
 } //CGValuedElementImpl

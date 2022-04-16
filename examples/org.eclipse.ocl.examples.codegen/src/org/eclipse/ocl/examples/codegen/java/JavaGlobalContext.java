@@ -148,7 +148,7 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 	} */
 
 	public @NonNull JavaLocalContext<@NonNull ? extends CG> createLocalContext(@Nullable JavaLocalContext<@NonNull ?> outerContext, @NonNull CGNamedElement cgNamedElement, @NonNull NamedElement asNamedElement) {
-		return new JavaLocalContext<CG>(this, (JavaLocalContext<@NonNull ? extends CG>)outerContext, cgNamedElement, asNamedElement, true);
+		return new JavaLocalContext<CG>(this, (JavaLocalContext<@NonNull ? extends CG>)outerContext, cgNamedElement, asNamedElement);
 	}
 
 	public @NonNull BaseNameResolution getAnyNameResolution() {

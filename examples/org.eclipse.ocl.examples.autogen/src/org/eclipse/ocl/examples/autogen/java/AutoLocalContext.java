@@ -23,7 +23,7 @@ public class AutoLocalContext<@NonNull CG extends AutoCodeGenerator> extends Jav
 {
 	public AutoLocalContext(@NonNull AutoGlobalContext<CG> globalContext, @Nullable AutoLocalContext<@NonNull CG> outerContext,
 			@NonNull CGNamedElement cgScope, @NonNull NamedElement asScope) {
-		super(globalContext, outerContext, cgScope, asScope, false);
+		super(globalContext, outerContext, cgScope, asScope);
 	}
 
 	@SuppressWarnings("unchecked")

@@ -773,7 +773,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	}
 
 	public void resolveNames(@NonNull CGPackage cgPackage) {
-		System.out.println("-----------------resolveNames--------------------");
+	//	System.out.println("-----------------resolveNames--------------------");
 		visitInPostOrder(cgPackage);
 		globalNameManager.assignNames();
 		CGValuedElementImpl.ALLOW_GET_VALUE_NAME = true;
@@ -793,7 +793,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		if (cgElement instanceof CGValuedElement) {
 			CGValuedElement cgValuedElement2 = (CGValuedElement)cgElement;
 			NameResolution nameResolution = cgValuedElement2.basicGetNameResolution();
-			assert (nameResolution == null) || debugCheckNameResolution(cgValuedElement2, nameResolution);
+		//	assert (nameResolution == null) || debugCheckNameResolution(cgValuedElement2, nameResolution);
 		}
 		JavaGlobalContext<@NonNull ? extends JavaCodeGenerator> globalContext = getGlobalContext();
 		for (EObject eObject : cgElement.eContents()) {					// XXX Surely preorder - no post order to satisfy bottom up dependency evaluation

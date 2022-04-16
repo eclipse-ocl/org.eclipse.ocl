@@ -73,7 +73,6 @@ import org.eclipse.ocl.examples.codegen.java.types.EcoreDescriptor;
 import org.eclipse.ocl.examples.codegen.java.types.UnboxedDescriptor;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.CallExp;
-import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
@@ -83,7 +82,6 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.PropertyId;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.library.LibraryIteration;
 import org.eclipse.ocl.pivot.library.iterator.IterateIteration;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
@@ -114,21 +112,6 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	public BoxingAnalyzer(@NonNull CodeGenAnalyzer analyzer) {
 		super(analyzer);
 		codeGenerator = analyzer.getCodeGenerator();
-	}
-
-	protected boolean hasOclVoidOperation(@NonNull OperationId operationId) {
-		PivotMetamodelManager metamodelManager = codeGenerator.getEnvironmentFactory().getMetamodelManager();
-		CompleteClass completeClass = metamodelManager.getCompleteClass(metamodelManager.getStandardLibrary().getOclVoidType());
-		Operation memberOperation = completeClass.getOperation(operationId);
-		if (memberOperation == null) {
-			return false;
-		}
-		org.eclipse.ocl.pivot.Class owningType = memberOperation.getOwningClass();
-		if (owningType == null) {
-			return false;
-		}
-		CompleteClass owningCompleteClass = metamodelManager.getCompleteClass(owningType);
-		return completeClass == owningCompleteClass;
 	}
 
 	/**
@@ -563,7 +546,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 				boolean sourceMayBeNull = false;
 				if (referredOperation != null) {
 					OperationId operationId = referredOperation.getOperationId();
-					sourceMayBeNull = hasOclVoidOperation(operationId);
+					sourceMayBeNull = context.hasOclVoidOperation(operationId);
 					if (!sourceMayBeNull && cgSource.isNull()) {
 			//			CGInvalid cgInvalid = context.getInvalid("null value1 for source parameter");
 						CGInvalid cgInvalid = context.getInvalid("''" + referredOperation.getOwningClass().getName() + "'' rather than ''OclVoid'' value required");
