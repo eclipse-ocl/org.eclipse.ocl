@@ -455,7 +455,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 		CGValuedElement cgSource = cgIterationCallExp.getSource();
 		NameManager nameManager = getNameManager();
 		if (cgSource != null) {
-			nameManager.declareLazyName(cgSource);
+			nameManager.declareLazyName(cgSource);		// source must be declared in outer namespace
 			cgSource.accept(this);
 		}
 		NameResolution iterationNameResolution = nameManager.declareLazyName(cgIterationCallExp);

@@ -48,13 +48,13 @@ public interface NameResolution
 
 	@NonNull NameManager getNameManager();
 
-//	@NonNull CGValuedElement getPrimaryElement();
-
 	@NonNull String getResolvedName();
 
 	@NonNull VariantNameResolution getNameVariant(@NonNull NameVariant nameVariant);
 
 	@NonNull String getVariantResolvedName(@NonNull NameVariant nameVariant);
+
+	boolean hasVariants();
 
 	boolean isUnresolved();
 

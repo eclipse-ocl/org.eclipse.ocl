@@ -92,6 +92,11 @@ public abstract class AbstractNameResolution implements NameResolution
 		return variantNameResolution.getResolvedName();
 	}
 
+	@Override
+	public boolean hasVariants() {
+		return (nameVariant2variantNameResolution != null) && (nameVariant2variantNameResolution.size() > 0);
+	}
+
 	protected void resolveVariants(@NonNull Context context, @NonNull Object cgElement) {
 		Map<@NonNull NameVariant, @NonNull VariantNameResolution> nameVariant2variantNameResolution2 = nameVariant2variantNameResolution;
 		if (nameVariant2variantNameResolution2 != null) {

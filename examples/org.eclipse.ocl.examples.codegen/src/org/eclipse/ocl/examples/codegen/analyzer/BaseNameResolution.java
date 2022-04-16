@@ -113,7 +113,7 @@ public class BaseNameResolution extends AbstractNameResolution
 		if (nameHint.contains("manyDates")) {
 			getClass();		// XXX
 		}
-		if ("isInvertible".equals(nameHint)) {
+		if ("gt".equals(nameHint)) {
 			getClass();			// XXX
 		}
 		if ("result".equals(nameHint)) {

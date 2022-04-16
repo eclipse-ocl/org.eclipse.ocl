@@ -14,6 +14,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
@@ -243,4 +244,10 @@ public class CGLibraryOperationCallExpImpl extends CGOperationCallExpImpl implem
 		return true;
 	}
 
+	@Override
+	public void setNameResolution(@NonNull NameResolution nameResolution) {
+		String string = ast.toString();
+//		System.out.println("Set " + NameUtil.debugSimpleName(nameResolution) + " for " + NameUtil.debugSimpleName(this));		// XXX YYY
+		super.setNameResolution(nameResolution);
+	}
 } //CGLibraryOperationCallExpImpl

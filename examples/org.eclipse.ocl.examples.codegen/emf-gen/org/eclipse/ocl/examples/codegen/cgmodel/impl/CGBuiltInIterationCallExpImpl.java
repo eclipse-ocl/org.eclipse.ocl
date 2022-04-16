@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBuiltInIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterator;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
@@ -281,6 +282,12 @@ public class CGBuiltInIterationCallExpImpl extends CGIterationCallExpImpl implem
 			getClass();
 		}
 		super.eBasicSetContainer(newContainer);
+	}
+
+	@Override
+	public void setNameResolution(@NonNull NameResolution nameResolution) {
+//		System.out.println("Set " + NameUtil.debugSimpleName(nameResolution) + " for " + NameUtil.debugSimpleName(this));		// XXX YYY
+		super.setNameResolution(nameResolution);
 	}
 
 } //CGBuiltInIterationCallExpImpl

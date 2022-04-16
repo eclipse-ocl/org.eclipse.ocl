@@ -36,15 +36,23 @@ import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.ReferencesVisitor;
 import org.eclipse.ocl.examples.codegen.asm5.ASM5JavaAnnotationReader;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGCatchExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGGuardExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGTupleExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGUnboxExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.impl.CGValuedElementImpl;
 import org.eclipse.ocl.examples.codegen.cse.CommonSubexpressionEliminator;
 import org.eclipse.ocl.examples.codegen.cse.GlobalPlace;
@@ -88,6 +96,7 @@ import org.eclipse.ocl.pivot.library.iterator.OneIteration;
 import org.eclipse.ocl.pivot.library.iterator.RejectIteration;
 import org.eclipse.ocl.pivot.library.iterator.SelectIteration;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
 
@@ -311,6 +320,69 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	@Override
 	public @NonNull ReferencesVisitor createReferencesVisitor() {
 		return ReferencesVisitor.INSTANCE;
+	}
+
+	/**
+	 * Diagnose the over-earger declaration of element names that can inhibit the sharing of
+	 * a name and consequently a CGEd variable for a shared value. In principle names should only
+	 * be declared when really needed, e.g. for a let-variable or global.
+	 */
+	protected boolean debugCheckNameResolution(@NonNull CGValuedElement cgElement, @NonNull NameResolution nameResolution) {
+		if ((cgElement instanceof CGConstraint) || (cgElement instanceof CGOperation) || (cgElement instanceof CGProperty) || (cgElement instanceof CGVariable)) {
+			// ok declaration has own name
+		}
+	//	else if (cgElement instanceof CGCatchExp) {
+	//		NameResolution sourceNameResolution = ((CGCatchExp)cgElement).getSource().basicGetNameResolution();
+	//		assert sourceNameResolution == nameResolution.getBaseNameResolution();
+	//	}
+		else if (nameResolution != nameResolution.getBaseNameResolution()) {
+			// variant is ok
+		}
+		else if (nameResolution.hasVariants()) {
+			// with-variants is ok
+		}
+		else if (cgElement instanceof CGConstantExp) {
+			NameResolution referredNameResolution = ((CGConstantExp)cgElement).getReferredValue().basicGetNameResolution();
+			assert referredNameResolution == nameResolution;
+		}
+		else if (cgElement instanceof CGGuardExp) {
+			NameResolution sourceNameResolution = ((CGGuardExp)cgElement).getSource().basicGetNameResolution();
+			assert sourceNameResolution == nameResolution;
+		}
+		else if (cgElement instanceof CGVariableExp) {
+			NameResolution variableNameResolution = ((CGVariableExp)cgElement).getReferredValue().basicGetNameResolution();
+			assert (variableNameResolution == nameResolution) || (variableNameResolution == nameResolution.getBaseNameResolution());
+		}
+		else {
+			EObject eContainer = cgElement.eContainer();
+			if (cgElement.isGlobal() || (eContainer == null)) {
+				// ok -global or root
+			}
+			else if (eContainer instanceof CGCatchExp) {
+				NameResolution catchResolution = ((CGCatchExp)eContainer).basicGetNameResolution();
+				assert (catchResolution != null) && (catchResolution.getBaseNameResolution() == nameResolution);
+			}
+			else if (eContainer instanceof CGGuardExp) {
+				NameResolution guardResolution = ((CGGuardExp)eContainer).basicGetNameResolution();
+				assert guardResolution == nameResolution;
+			}
+			else if ((eContainer instanceof CGIterationCallExp) && (cgElement.eContainmentFeature() == CGModelPackage.Literals.CG_CALL_EXP__SOURCE)) {
+				// itetation outer source ok
+			}
+			else if (eContainer instanceof CGVariable) {
+				NameResolution containerNameResolution = ((CGValuedElement)eContainer).basicGetNameResolution();
+				if (containerNameResolution != containerNameResolution) {
+					System.out.println("Bad " + NameUtil.debugSimpleName(nameResolution) + " for " + NameUtil.debugSimpleName(cgElement) + " below " + NameUtil.debugSimpleName(((CGValuedElement)eContainer).basicGetNameResolution()) + " for " + NameUtil.debugSimpleName(eContainer));		// XXX YYY
+				}
+				assert (nameResolution.getBaseNameResolution() == containerNameResolution);
+			}
+			else {
+			//	assert false : "Unexpected nameResolution for a " + cgValuedElement2.eClass().getName();		// XXX YYY
+				System.out.println("Unexpected " + NameUtil.debugSimpleName(nameResolution) + " for " + NameUtil.debugSimpleName(cgElement) + " below " + NameUtil.debugSimpleName(((CGValuedElement)eContainer).basicGetNameResolution()) + " for " + NameUtil.debugSimpleName(eContainer));		// XXX YYY
+				getClass();
+			}
+		}
+		return true;
 	}
 
 	public @NonNull NameVariant getBODY_NameVariant() {
@@ -718,8 +790,10 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	}
 
 	protected void visitInPostOrder2(@NonNull CGElement cgElement) {
-		if (cgElement instanceof CGTupleExp) {
-			getClass();		// XXX
+		if (cgElement instanceof CGValuedElement) {
+			CGValuedElement cgValuedElement2 = (CGValuedElement)cgElement;
+			NameResolution nameResolution = cgValuedElement2.basicGetNameResolution();
+			assert (nameResolution == null) || debugCheckNameResolution(cgValuedElement2, nameResolution);
 		}
 		JavaGlobalContext<@NonNull ? extends JavaCodeGenerator> globalContext = getGlobalContext();
 		for (EObject eObject : cgElement.eContents()) {					// XXX Surely preorder - no post order to satisfy bottom up dependency evaluation

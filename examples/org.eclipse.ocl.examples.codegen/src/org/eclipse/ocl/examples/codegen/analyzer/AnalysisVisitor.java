@@ -441,7 +441,7 @@ public class AnalysisVisitor extends AbstractExtendingCGModelVisitor<@Nullable O
 		CGValuedElement oldInit = cgVariable.getInit();
 		if (oldInit != null) {
 			oldInit.accept(this);
-			CGValuedElement newInit = cgVariable.getInit();		// May have chnaged via a rewrite
+			CGValuedElement newInit = cgVariable.getInit();		// May have changed via a rewrite
 			if (newInit.basicGetNameResolution() == null) {
 				// XXX YYY				cgVariable.getNameResolution().addCGElement(newInit);
 			}

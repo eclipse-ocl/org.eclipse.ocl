@@ -1519,7 +1519,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		NameResolution variableNameResolution = cgVariable.getNameResolution();
 		if (cgInit.basicGetNameResolution() == null) {
 			//
-			//	Propagate the variable name resultion to its initializer and intervening lets.
+			//	Propagate the variable name resolution to its initializer and intervening lets.
 			//
 			CGValuedElement cgElement = cgInit;
 			while (true) {
@@ -2021,8 +2021,8 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			CGExecutorType cgExecutorType = context.createExecutorType(referredType);
 			cgTypeExp.setExecutorType(cgExecutorType);
 			cgTypeExp.getOwns().add(cgExecutorType);
-			NameResolution nameResolution = declareLazyName(cgTypeExp);
-			assert nameResolution.getNameHint().equals(cgExecutorType.getName());		// XXX
+		//	NameResolution nameResolution = declareLazyName(cgTypeExp);
+		//	assert nameResolution.getNameHint().equals(cgExecutorType.getName());		// XXX
 			return cgTypeExp;
 		}
 		TemplateParameter referredTemplateParameter = (TemplateParameter)referredType;
