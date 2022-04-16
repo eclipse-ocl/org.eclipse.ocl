@@ -56,7 +56,7 @@ public class BuiltInOperationCallingConvention extends AbstractOperationCallingC
 			CGIsInvalidExp cgIsInvalidExp = CGModelFactory.eINSTANCE.createCGIsInvalidExp();
 			cgIsInvalidExp.setSource(cgSource);
 			as2cgVisitor.initAst(cgIsInvalidExp, asOperationCallExp);
-			as2cgVisitor.declareLazyName(cgIsInvalidExp);
+		//	as2cgVisitor.declareLazyName(cgIsInvalidExp);
 			cgIsInvalidExp.setInvalidating(false);
 			cgIsInvalidExp.setValidating(true);
 			return cgIsInvalidExp;
@@ -65,7 +65,7 @@ public class BuiltInOperationCallingConvention extends AbstractOperationCallingC
 			CGIsUndefinedExp cgIsUndefinedExp = CGModelFactory.eINSTANCE.createCGIsUndefinedExp();
 			cgIsUndefinedExp.setSource(cgSource);
 			as2cgVisitor.initAst(cgIsUndefinedExp, asOperationCallExp);
-			as2cgVisitor.declareLazyName(cgIsUndefinedExp);
+		//	as2cgVisitor.declareLazyName(cgIsUndefinedExp);
 			cgIsUndefinedExp.setInvalidating(false);
 			cgIsUndefinedExp.setValidating(true);
 			return cgIsUndefinedExp;
@@ -78,7 +78,7 @@ public class BuiltInOperationCallingConvention extends AbstractOperationCallingC
 			cgIsEqualExp.setSource(cgSource);
 			cgIsEqualExp.setArgument(cgArgument);
 			as2cgVisitor.initAst(cgIsEqualExp, asOperationCallExp);
-		/* XXX YYY	*/as2cgVisitor.declareLazyName(cgIsEqualExp);
+		//	as2cgVisitor.declareLazyName(cgIsEqualExp);
 			cgIsEqualExp.setInvalidating(false);
 			cgIsEqualExp.setValidating(true);
 			return cgIsEqualExp;

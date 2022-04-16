@@ -518,7 +518,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 					if (global instanceof CGTupleExp) {
 						getClass();		// XXX
 					}
-					assert global.getNameResolution().getNameManager().isGlobal();
+					// too soon assert global.getNameResolution().getNameManager().isGlobal();
 					visitInPostOrder(global);
 				}
 			}

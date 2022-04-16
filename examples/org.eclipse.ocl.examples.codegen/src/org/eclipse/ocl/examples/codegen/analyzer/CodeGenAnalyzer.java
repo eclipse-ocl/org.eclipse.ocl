@@ -213,10 +213,8 @@ public class CodeGenAnalyzer
 
 	public @NonNull CGBoolean createCGBoolean(boolean booleanValue) {
 		CGBoolean cgBoolean = CGModelFactory.eINSTANCE.createCGBoolean();
-	//	setExplicitNames(cgBoolean, booleanValue);
 		cgBoolean.setBooleanValue(booleanValue);
 		cgBoolean.setTypeId(getTypeId(TypeId.BOOLEAN));
-		globalNameManager.declareLazyName(cgBoolean);
 		return cgBoolean;
 	}
 
@@ -253,22 +251,9 @@ public class CodeGenAnalyzer
 
 	public @NonNull CGNull createCGNull() {
 		CGNull cgNull = CGModelFactory.eINSTANCE.createCGNull();
-	//	setExplicitNames(cgNull, null);
 		cgNull.setTypeId(getTypeId(TypeId.OCL_VOID));
-		globalNameManager.declareLazyName(cgNull);
 		return cgNull;
 	}
-
-/*	public @NonNull CGParameter createCGParameter(@NonNull String name, @NonNull CGTypeId typeId, boolean isRequired) {
-		CGParameter cgParameter = CGModelFactory.eINSTANCE.createCGParameter();
-		cgParameter.setName(name);
-		cgParameter.setTypeId(typeId);
-		cgParameter.setRequired(isRequired);
-		if (isRequired) {
-			cgParameter.setNonNull();
-		}
-		return cgParameter;
-	} */
 
 	public @NonNull CGParameter createCGParameter(@NonNull BaseNameResolution nameResolution, @NonNull CGTypeId typeId, boolean isRequired) {
 		CGParameter cgParameter = CGModelFactory.eINSTANCE.createCGParameter();
@@ -299,8 +284,6 @@ public class CodeGenAnalyzer
 		cgOperation.setUnderlyingOperationId(cgOperationId);
 		cgOperation.setAst(asOperation);
 		globalNameManager.declareLazyName(cgOperation);
-	//	cgOperation.setName(globalNameManager.getGlobalSymbolName(asOperation));
-		//		cgOperation.setValueName(cgOperation.getName());
 		cgOperation.getDependsOn().add(cgOperationId);
 		return cgOperation;
 	}
@@ -316,9 +299,7 @@ public class CodeGenAnalyzer
 			cgProperty.setUnderlyingPropertyId(cgPropertyId);
 			cgProperty.setAst(asOppositeProperty);
 			cgProperty.setTypeId(getTypeId(JavaConstants.UNBOXED_COMPOSITION_PROPERTY_TYPE_ID));
-//			cgProperty.setName("IMPPROPid_" + asOppositeProperty.getName());
-			NameResolution nameResolution = globalNameManager.declareLazyName(cgProperty);
-			assert nameResolution.getNameHint().equals("IMPPROPid_" + asOppositeProperty.getName());		// XXX
+			globalNameManager.declareLazyName(cgProperty);
 			cgProperty.getDependsOn().add(cgPropertyId);
 		}
 		else {
@@ -326,8 +307,7 @@ public class CodeGenAnalyzer
 			cgProperty = CGModelFactory.eINSTANCE.createCGExecutorOppositeProperty();
 			cgProperty.setUnderlyingPropertyId(cgPropertyId);
 			cgProperty.setAst(asProperty);
-			NameResolution nameResolution = globalNameManager.declareLazyName(cgProperty);
-			assert nameResolution.getNameHint().equals("IMPPROPid_" + asProperty.getName());		// XXX
+			globalNameManager.declareLazyName(cgProperty);
 			cgProperty.setTypeId(getTypeId(JavaConstants.UNBOXED_OPPOSITE_NAVIGATION_PROPERTY_TYPE_ID));
 			cgProperty.getDependsOn().add(cgPropertyId);
 		}
@@ -342,9 +322,7 @@ public class CodeGenAnalyzer
 		CGExecutorProperty cgProperty = CGModelFactory.eINSTANCE.createCGExecutorNavigationProperty();
 		cgProperty.setUnderlyingPropertyId(cgPropertyId);
 		cgProperty.setAst(asProperty);
-//		cgProperty.setName("IMPPROPid_" + asProperty.getName());
-		NameResolution nameResolution = globalNameManager.declareLazyName(cgProperty);
-		assert nameResolution.getNameHint().equals("IMPPROPid_" + asProperty.getName());		// XXX
+		globalNameManager.declareLazyName(cgProperty);
 		TypeId javaPropertyTypeId = JavaConstants.UNBOXED_EXPLICIT_NAVIGATION_PROPERTY_TYPE_ID;
 		cgProperty.setTypeId(getTypeId(javaPropertyTypeId));
 		cgProperty.getDependsOn().add(cgPropertyId);
@@ -370,7 +348,6 @@ public class CodeGenAnalyzer
 		cgType.setUnderlyingTypeId(cgTypeId);
 		cgType.setAst(asType);
 		getGlobalNameManager().declareLazyName(cgType);
-		//		cgType.setValueName(cgType.getName());
 		cgType.setTypeId(getTypeId(JavaConstants.CLASS_TYPE_ID));
 		cgType.getDependsOn().add(cgTypeId);
 		return cgType;
@@ -418,7 +395,6 @@ public class CodeGenAnalyzer
 			cgElementId = CGModelFactory.eINSTANCE.createCGElementId();
 			cgElementId.setElementId(elementId);
 			cgElementId.setTypeId(getTypeId(TypeId.OCL_ANY));		// XXX do better
-			globalNameManager.declareLazyName(cgElementId);
 			cgElementIds.put(elementId, cgElementId);
 		}
 		return cgElementId;
@@ -427,7 +403,7 @@ public class CodeGenAnalyzer
 	public @NonNull CGValuedElement getExpression(@Nullable CGValuedElement cgExpression) {
 		if (cgExpression == null) {
 			CGConstantExp cgLiteralExp = CGModelFactory.eINSTANCE.createCGConstantExp();
-			//			cgLiteralExp.setAst(element);
+			//	cgLiteralExp.setAst(element);
 			cgLiteralExp.setReferredConstant(getInvalid());
 			cgLiteralExp.setTypeId(getTypeId(TypeId.OCL_INVALID));
 			cgExpression = cgLiteralExp;
@@ -449,7 +425,6 @@ public class CodeGenAnalyzer
 			cgInteger = CGModelFactory.eINSTANCE.createCGInteger();
 			cgInteger.setNumericValue(aNumber);
 			cgInteger.setTypeId(getTypeId(TypeId.INTEGER));
-			globalNameManager.declareLazyName(cgInteger);
 			cgIntegers.put(aNumber, cgInteger);
 		}
 		return cgInteger;
@@ -459,10 +434,8 @@ public class CodeGenAnalyzer
 		CGInvalid cgInvalid2 = cgInvalid;
 		if (cgInvalid2 == null) {
 			cgInvalid2 = CGModelFactory.eINSTANCE.createCGInvalid();
-			//			cgInvalid.setAst(ValuesUtil.INVALID_VALUE);
-		//	setNames(cgInvalid2, ValueUtil.INVALID_VALUE);
+			//	cgInvalid.setAst(ValuesUtil.INVALID_VALUE);
 			cgInvalid2.setTypeId(getTypeId(TypeId.OCL_INVALID));
-			globalNameManager.declareLazyName(cgInvalid2);
 			cgInvalid = cgInvalid2;
 		}
 		return cgInvalid2;
@@ -470,13 +443,11 @@ public class CodeGenAnalyzer
 
 	public @NonNull CGInvalid getInvalid(/*@NonNull*/ String messageTemplate, Object... bindings) {
 		CGInvalid cgInvalid = CGModelFactory.eINSTANCE.createCGInvalid();
-	//	setNames(cgInvalid, ValueUtil.INVALID_VALUE);
 		cgInvalid.setTypeId(getTypeId(TypeId.OCL_INVALID));
 		cgInvalid.setMessageTemplate(messageTemplate);
 		for (Object binding : bindings) {
 			cgInvalid.getBindings().add(binding);
 		}
-		globalNameManager.declareLazyName(cgInvalid);
 		return cgInvalid;
 	}
 
@@ -548,8 +519,7 @@ public class CodeGenAnalyzer
 			CGNativeOperation cgOperation = CGModelFactory.eINSTANCE.createCGNativeOperation();
 			cgOperation.setAst(asOperation);
 			TypeId asTypeId = asOperation.getTypeId();
-			codeGenerator.getGlobalNameManager().declareLazyName(cgOperation);
-		//	cgOperation.setName(trimmedName);
+			globalNameManager.declareLazyName(cgOperation);
 			cgOperation.setTypeId(getTypeId(asTypeId));
 			cgOperation.setRequired(asOperation.isIsRequired());
 			cgOperation.setCallingConvention(NativeOperationCallingConvention.INSTANCE);
@@ -571,7 +541,6 @@ public class CodeGenAnalyzer
 				asParameters.add(asParameter);
 				CGParameter cgParameter = CGModelFactory.eINSTANCE.createCGParameter();
 				cgParameter.setAst(asParameter);
-			//	cgParameter.setName(jParameter.getName());
 				localContext.getNameManager().declarePreferredName(cgParameter);
 				cgParameter.setTypeId(getTypeId(asParameterType.getTypeId()));
 				cgParameter.setRequired(isRequired);
@@ -623,10 +592,8 @@ public class CodeGenAnalyzer
 		CGReal cgReal = cgReals.get(aNumber);
 		if (cgReal == null) {
 			cgReal = CGModelFactory.eINSTANCE.createCGReal();
-		//	setNames(cgReal, aNumber);
 			cgReal.setNumericValue(aNumber);
 			cgReal.setTypeId(getTypeId(TypeId.REAL));
-			globalNameManager.declareLazyName(cgReal);
 			cgReals.put(aNumber, cgReal);
 		}
 		return cgReal;
@@ -636,10 +603,8 @@ public class CodeGenAnalyzer
 		CGString cgString = cgStrings.get(aString);
 		if (cgString == null) {
 			cgString = CGModelFactory.eINSTANCE.createCGString();
-		//	setNames(cgString, aString);
 			cgString.setStringValue(aString);
 			cgString.setTypeId(getTypeId(TypeId.STRING));
-			globalNameManager.declareLazyName(cgString);
 			cgStrings.put(aString, cgString);
 		}
 		return cgString;
@@ -651,9 +616,6 @@ public class CodeGenAnalyzer
 		if (cgTypeId == null) {
 			cgTypeId = CGModelFactory.eINSTANCE.createCGTypeId();
 			cgTypeId.setElementId(typeId);
-			globalNameManager.declareLazyName(cgTypeId);
-		//	cgTypeId.setName(globalNameManager.getGlobalSymbolName(typeId));
-		//	cgTypeId.setValueName(ClassUtil.nonNullState(cgTypeId.getName()));
 			cgElementIds.put(typeId, cgTypeId);
 
 			cgTypeId.setTypeId(getTypeId(TypeId.OCL_ANY)); // XXX better tyoe ??
@@ -665,9 +627,7 @@ public class CodeGenAnalyzer
 		CGUnlimited cgUnlimited2 = cgUnlimited;
 		if (cgUnlimited2 == null) {
 			cgUnlimited2 = CGModelFactory.eINSTANCE.createCGUnlimited();
-		//	setNames(cgUnlimited2, ValueUtil.UNLIMITED_VALUE);
 			cgUnlimited2.setTypeId(getTypeId(TypeId.UNLIMITED_NATURAL));
-			globalNameManager.declareLazyName(cgUnlimited2);
 			cgUnlimited = cgUnlimited2;
 		}
 		return cgUnlimited2;
@@ -695,20 +655,4 @@ public class CodeGenAnalyzer
 		newElement.setAst(oldElement.getAst());
 		CGUtil.replace(oldElement, newElement);
 	}
-
-/*	@Deprecated public void setExplicitNames(@NonNull CGValuedElement cgValue, @Nullable Object anObject) {
-		String name = globalNameManager.getExplicitName(anObject);
-	//	cgValue.setName(name);
-	//	cgValue.setValueName(name);
-		globalNameManager.queueValueName(cgValue, null, name);
-	} */
-
-/*	public void setNames(@NonNull CGValuedElement cgValue, @NonNull Object anObject) {		// XXX why global ??
-		String name = globalNameManager.getNameHint(anObject);
-	//	String name = globalNameManager.helper.getNameHint(anObject);
-	//	cgValue.setName(name);
-	//	cgValue.setValueName(name);
-
-		globalNameManager.declareLazyName(cgValue, name);
-	} */
 }

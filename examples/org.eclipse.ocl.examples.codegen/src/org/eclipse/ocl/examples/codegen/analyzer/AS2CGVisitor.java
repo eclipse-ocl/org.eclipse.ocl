@@ -357,13 +357,11 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			cgOperationCallExp.getArguments().add(cgArgument);
 		}
 		initAst(cgOperationCallExp, element);
-		declareLazyName(cgOperationCallExp);
 		cgOperationCallExp.setReferredOperation(asOperation);
 		if (asOverrideOperations != null) {
 			CGOperation cgOperation = asVirtualOperation2cgOperation.get(asOperation);
 			if (cgOperation == null) {
 				cgOperation = createVirtualCGOperationWithoutBody(asOperation, cgOperations);
-				//				asNewOperations.add(asOperation);
 				currentClass.getOperations().add(cgOperation);
 			}
 		}
@@ -382,7 +380,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		cgCallExp.setRequired(((JavaCodeGenerator)codeGenerator).getIsNonNull(method) == Boolean.TRUE);
 	//	cgCallExp.setInvalidating(false));
 		cgCallExp.setTypeId(context.getTypeId(new JavaTypeId(method.getReturnType())));		// XXX cache
-		declareLazyName(cgCallExp);
 		return cgCallExp;
 	}
 
@@ -464,7 +461,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		cgCallExp.setRequired(((JavaCodeGenerator)codeGenerator).getIsNonNull(method) == Boolean.TRUE);
 	//	cgCallExp.setInvalidating(false));
 		cgCallExp.setTypeId(context.getTypeId(new JavaTypeId(method.getReturnType())));		// XXX cache
-		declareLazyName(cgCallExp);
 		return cgCallExp;
 	}
 
@@ -650,11 +646,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return cgOperation;
 	}
 
-	public @NonNull NameResolution declareLazyName(@NonNull CGValuedElement cgElement) {
-		NameManager nameManager = cgElement.isGlobal() ? codeGenerator.getGlobalNameManager() : getNameManager();
-		return nameManager.declareLazyName(cgElement);
-	}
-
 	public @NonNull <T extends CGElement> T doVisit(@NonNull Class<T> requiredClass, @Nullable Element pElement) {
 		if (pElement == null) {
 			throw new NullPointerException("null source for mapping to " + requiredClass.getName());
@@ -684,7 +675,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		context.addForeignFeature(asProperty);
 		CGForeignProperty cgForeignProperty = CGModelFactory.eINSTANCE.createCGForeignProperty();
 		initAst(cgForeignProperty, asProperty);
-		declareLazyName(cgForeignProperty);
 		JavaLocalContext<?> localContext = (JavaLocalContext<?>) pushLocalContext(cgForeignProperty, asProperty);
 		NestedNameManager nameManager = getNameManager();
 		CGParameter cgParameter = asProperty.isIsStatic() ? localContext.getAnyParameter() : localContext.getSelfParameter();
@@ -749,7 +739,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			cgIterationCallExp = cgLibraryIterationCallExp;
 		}
 		initAst(cgIterationCallExp, element);
-	// XXX YYY	declareLazyName(cgIterationCallExp);
 		cgIterationCallExp.setReferredIteration(asIteration);
 		cgIterationCallExp.setInvalidating(asIteration.isIsInvalidating());
 		cgIterationCallExp.setValidating(asIteration.isIsValidating());
@@ -923,7 +912,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		}
 		cgPropertyCallExp.setReferredProperty(asProperty);
 		initAst(cgPropertyCallExp, element);
-		declareLazyName(cgPropertyCallExp);
 		cgPropertyCallExp.setRequired(isRequired);
 		cgPropertyCallExp.setSource(cgSource);
 		return cgPropertyCallExp;
@@ -1045,7 +1033,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		OCLExpression asSource = callExp.getOwnedSource();
 
 		cgOperationCallExp.setTypeId(context.getTypeId(asSource.getTypeId()));
-		NameResolution callNameResolution = declareLazyName(cgOperationCallExp);
+		NameResolution callNameResolution = getNameManager().declareLazyName(cgOperationCallExp);
 		callNameResolution.addNameVariant(codeGenerator.getSAFE_NameVariant());
 		cgOperationCallExp.setRequired(true);
 		cgOperationCallExp.setSource(cgSource);
@@ -1173,7 +1161,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		if (cgVariable == null) {
 			cgVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();
 			initAst(cgVariable, asVariable);
-			declareLazyName(cgVariable);
+			getNameManager().declareLazyName(cgVariable);
 			variablesStack.putVariable(asVariable, cgVariable);
 		}
 		return cgVariable;
@@ -1182,15 +1170,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	public @NonNull PivotMetamodelManager getMetamodelManager() {
 		return metamodelManager;
 	}
-
-/*	protected @NonNull NameManager getNameManager() {
-		if (contextStack.isEmpty()) {
-			return codeGenerator.getGlobalNameManager();
-		}
-		else {
-			return getNestedNameManager();
-		}
-	} */
 
 	public @NonNull NestedNameManager getNameManager() {
 		return getLocalContext().getNameManager();
@@ -1258,7 +1237,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			cgParameter.setName(aParameter.getName());
 			nameResolution.addCGElement(cgParameter);
 			initAst(cgParameter, aParameter);
-			declareLazyName(cgParameter);
+			getNameManager().declareLazyName(cgParameter);
 			addParameter(aParameter, cgParameter);
 			cgParameter.setRequired(aParameter.isIsRequired());
 			if (aParameter.isIsRequired()) {
@@ -1555,7 +1534,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		CGConstant constant = context.getBoolean(element.isBooleanSymbol());
 		CGConstantExp cgLiteralExp = context.createCGConstantExp(element, constant);
 		initAst(cgLiteralExp, element);
-		declareLazyName(cgLiteralExp);
 		return cgLiteralExp;
 	}
 
@@ -1587,7 +1565,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		CGCollectionPart cgCollectionPart = CGModelFactory.eINSTANCE.createCGCollectionPart();
 		initAst(cgCollectionPart, asElement);
 		cgCollectionPart.setFirst(doVisit(CGValuedElement.class, asElement.getOwnedItem()));
-		declareLazyName(cgCollectionPart);
 		return cgCollectionPart;
 	}
 
@@ -1599,7 +1576,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		for (@NonNull CollectionLiteralPart asPart : ClassUtil.nullFree(asCollectionLiteralExp.getOwnedParts())) {
 			cgParts.add(doVisit(CGCollectionPart.class, asPart));
 		}
-		declareLazyName(cgCollectionExp);
 		return cgCollectionExp;
 	}
 
@@ -1610,7 +1586,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		cgCollectionPart.setTypeId(context.getTypeId(TypeId.INTEGER_RANGE));
 		cgCollectionPart.setFirst(doVisit(CGValuedElement.class, asElement.getOwnedFirst()));
 		cgCollectionPart.setLast(doVisit(CGValuedElement.class, asElement.getOwnedLast()));
-		declareLazyName(cgCollectionPart);
 		return cgCollectionPart;
 	}
 
@@ -1647,7 +1622,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		CGConstant constant = context.getElementId(element.getReferredLiteral().getEnumerationLiteralId());
 		CGConstantExp cgLiteralExp = context.createCGConstantExp(element, constant);
 		initAst(cgLiteralExp, element);
-		declareLazyName(cgLiteralExp);
 		return cgLiteralExp;
 	}
 
@@ -1684,7 +1658,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		CGInteger constant = context.getInteger(integerSymbol != null ? integerSymbol : 0);
 		CGConstantExp cgLiteralExp = context.createCGConstantExp(element, constant);
 		initAst(cgLiteralExp, element);
-		declareLazyName(cgLiteralExp);
 		return cgLiteralExp;
 	}
 
@@ -1692,54 +1665,21 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	public @Nullable CGConstantExp visitInvalidLiteralExp(@NonNull InvalidLiteralExp element) {
 		CGConstantExp cgLiteralExp = context.createCGConstantExp(element, context.getInvalid());
 		initAst(cgLiteralExp, element);
-		declareLazyName(cgLiteralExp);
 		return cgLiteralExp;
 	}
 
 	@Override
 	public @Nullable CGLetExp visitLetExp(@NonNull LetExp asLetExp) {
 		Variable asVariable = PivotUtil.getOwnedVariable(asLetExp);
-	//	initExpression.setName(variable.getName());
-
 		CGFinalVariable cgVariable = (CGFinalVariable) createCGVariable(asVariable);		// FIXME Lose cast
-	//	getNameManager().getNameResolution(asLetExp);
-	//	getNameManager().addNameResolution(asLetExp, PivotUtil.getOwnedIn(asLetExp));
-	//	cgVariable.getNameResolution().addSecondaryElement(initExpression);
 		CGValuedElement cgInit = doVisit(CGValuedElement.class, asVariable.getOwnedInit());
 		setCGVariableInit(cgVariable, cgInit);;
-	//	cgInit.replaceNameResolution(cgVariable.getNameResolution());
-		//		initExpression.setVariableValue(cgVariable);
-		//		variables.put(variable, cgVariable);
 		CGValuedElement cgIn = doVisit(CGValuedElement.class, asLetExp.getOwnedIn());
 		CGLetExp cgLetExp = createCGLetExp(asLetExp, cgVariable, cgIn);
 		NameResolution inNameResolution = cgIn.basicGetNameResolution();
 		if (inNameResolution != null) {
 			inNameResolution.addCGElement(cgLetExp);
 		}
-	/*	else {
-			NameResolution letNameResolution = cgLetExp.basicGetNameResolution();
-			if (asLetExp.eContainmentFeature() == PivotPackage.Literals.LET_EXP__OWNED_IN) {		// Child nested let
-				getClass();
-				//		inNameResolution = declareLazyName(cgIn);
-			}
-			else {		// Cgild nested let
-				getClass();
-				//		inNameResolution = declareLazyName(cgIn);
-			}
-		} */
-	/*	else {
-			NameResolution letNameResolution = declareLazyName(cgLetExp);
-			CGValuedElement cgIn2 = cgIn;
-			while (true) {
-				letNameResolution.addCGElement(cgIn2);
-				if (cgIn2 instanceof CGLetExp) {
-					cgIn2 = ((CGLetExp)cgIn2).getIn();;
-				}
-				else {
-					break;
-				}
-			}
-		} */
 		return cgLetExp;
 	}
 
@@ -1754,8 +1694,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	public @Nullable CGNamedElement visitMapLiteralExp(@NonNull MapLiteralExp element) {
 		CGMapExp cgMapExp = CGModelFactory.eINSTANCE.createCGMapExp();
 		initAst(cgMapExp, element);
-		declareLazyName(cgMapExp);
-		cgMapExp.setName("Map");
 		List<@NonNull CGMapPart> cgParts = ClassUtil.nullFree(cgMapExp.getParts());
 		for (@NonNull MapLiteralPart asPart : ClassUtil.nullFree(element.getOwnedParts())) {
 			cgParts.add(doVisit(CGMapPart.class, asPart));
@@ -1784,7 +1722,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	public @Nullable CGConstantExp visitNullLiteralExp(@NonNull NullLiteralExp element) {
 		CGConstantExp cgLiteralExp = context.createCGConstantExp(element, context.getNull());
 		initAst(cgLiteralExp, element);
-		declareLazyName(cgLiteralExp);
 		return cgLiteralExp;
 	}
 
@@ -1911,7 +1848,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		CGReal cgReal = context.getReal(realSymbol != null ? realSymbol : Double.valueOf(0.0));
 		CGConstantExp cgLiteralExp = context.createCGConstantExp(element, cgReal);
 		initAst(cgLiteralExp, element);
-		declareLazyName(cgLiteralExp);
 		return cgLiteralExp;
 	}
 
@@ -1944,8 +1880,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			cgShadowExp.setExecutorType(cgExecutorType);
 			cgShadowExp.getOwns().add(cgExecutorType);
 			initAst(cgShadowExp, element);
-			declareLazyName(cgShadowExp);
-			//			context.setNames(cgShadowExp, element);
 			List<@NonNull ShadowPart> asParts = new ArrayList<>(ClassUtil.nullFree(element.getOwnedParts()));
 			Collections.sort(asParts, NameUtil.NAMEABLE_COMPARATOR);
 			List<@NonNull CGShadowPart> cgParts = ClassUtil.nullFree(cgShadowExp.getParts());		// Ensure deterministic CGShadowPart order
@@ -1960,7 +1894,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	public @Nullable CGShadowPart visitShadowPart(@NonNull ShadowPart element) {
 		CGShadowPart cgShadowPart = CGModelFactory.eINSTANCE.createCGShadowPart();
 		initAst(cgShadowPart, element);
-		declareLazyName(cgShadowPart);
 		cgShadowPart.setInit(doVisit(CGValuedElement.class, element.getOwnedInit()));
 		Property referredProperty = element.getReferredProperty();
 		if (referredProperty != null) {
@@ -1988,7 +1921,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	public @Nullable CGTupleExp visitTupleLiteralExp(@NonNull TupleLiteralExp element) {
 		CGTupleExp cgTupleExp = CGModelFactory.eINSTANCE.createCGTupleExp();
 		initAst(cgTupleExp, element);
-		declareLazyName(cgTupleExp);
 		List<@NonNull CGTuplePart> cgParts = new ArrayList<>();
 		for (@NonNull TupleLiteralPart asPart : ClassUtil.nullFree(element.getOwnedParts())) {
 			cgParts.add(doVisit(CGTuplePart.class, asPart));
@@ -2004,7 +1936,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		CGTuplePart cgTuplePart = CGModelFactory.eINSTANCE.createCGTuplePart();
 		initAst(cgTuplePart, element);
 		cgTuplePart.setInit(doVisit(CGValuedElement.class, element.getOwnedInit()));
-		declareLazyName(cgTuplePart);
 		TuplePartId partId = element.getPartId();
 		if (partId != null) {
 			context.getElementId(partId);
@@ -2021,8 +1952,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			CGExecutorType cgExecutorType = context.createExecutorType(referredType);
 			cgTypeExp.setExecutorType(cgExecutorType);
 			cgTypeExp.getOwns().add(cgExecutorType);
-		//	NameResolution nameResolution = declareLazyName(cgTypeExp);
-		//	assert nameResolution.getNameHint().equals(cgExecutorType.getName());		// XXX
 			return cgTypeExp;
 		}
 		TemplateParameter referredTemplateParameter = (TemplateParameter)referredType;
@@ -2065,7 +1994,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			cgLiteralExp = context.createCGConstantExp(element, context.getInteger(0));
 		}
 		initAst(cgLiteralExp, element);
-		declareLazyName(cgLiteralExp);
 		return cgLiteralExp;
 	}
 
