@@ -48,6 +48,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGTupleExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGUnboxExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
@@ -772,7 +773,19 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		return sortedGlobals;
 	}
 
-	public void resolveNames(@NonNull CGPackage cgPackage) {
+	protected void resolveNames(@Nullable Iterable<@NonNull CGValuedElement> sortedGlobals, @NonNull CGPackage cgPackage) {
+		if (sortedGlobals != null) {
+			for (@NonNull CGValuedElement global : sortedGlobals) {
+				if (global instanceof CGTupleExp) {
+					getClass();		// XXX
+				}
+				// too soon assert global.getNameResolution().getNameManager().isGlobal();
+				visitInPostOrder(global);
+			}
+		}
+		for (@NonNull CGNamedElement cgNamedElment : getAnalyzer().getOrphans()) {
+			visitInPostOrder(cgNamedElment);
+		}
 	//	System.out.println("-----------------resolveNames--------------------");
 		visitInPostOrder(cgPackage);
 		globalNameManager.assignNames();

@@ -114,12 +114,7 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		CGPackage cgPackage = createCGPackage(expInOcl, packageName, className);
 		optimize(cgPackage);
 		Iterable<@NonNull CGValuedElement> sortedGlobals = prepareGlobals();
-		if (sortedGlobals != null) {
-			for (@NonNull CGValuedElement global : sortedGlobals) {
-				visitInPostOrder(global);
-			}
-		}
-		resolveNames(cgPackage);
+		resolveNames(sortedGlobals, cgPackage);		// XXX share with OCLinEcoreCG
 		JUnitCG2JavaClassVisitor cg2JavaClassVisitor = new JUnitCG2JavaClassVisitor(this, expInOcl, sortedGlobals);
 		cg2JavaClassVisitor.safeVisit(cgPackage);
 		ImportNameManager importNameManager = cg2JavaClassVisitor.getImportNameManager();

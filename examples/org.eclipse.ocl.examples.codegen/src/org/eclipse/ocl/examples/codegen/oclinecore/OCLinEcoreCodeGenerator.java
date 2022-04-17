@@ -32,11 +32,9 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGTupleExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
 import org.eclipse.ocl.examples.codegen.java.ImportUtils;
@@ -513,19 +511,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 			as2cgVisitor.freeze();
 			optimize(cgPackage);
 			Iterable<@NonNull CGValuedElement> sortedGlobals = prepareGlobals();
-			if (sortedGlobals != null) {
-				for (@NonNull CGValuedElement global : sortedGlobals) {
-					if (global instanceof CGTupleExp) {
-						getClass();		// XXX
-					}
-					// too soon assert global.getNameResolution().getNameManager().isGlobal();
-					visitInPostOrder(global);
-				}
-			}
-			for (@NonNull CGNamedElement cgNamedElment : getAnalyzer().getOrphans()) {
-				visitInPostOrder(cgNamedElment);
-			}
-			resolveNames(cgPackage);
+			resolveNames(sortedGlobals, cgPackage);
 			OCLinEcoreCG2JavaVisitor cg2java = new OCLinEcoreCG2JavaVisitor(this, genPackage, cgPackage);
 			Map<@NonNull String, @NonNull FeatureBody> results = cg2java.generateBodies();
 			for (Map.Entry<@NonNull String, @NonNull FeatureBody> entry : results.entrySet()) {
