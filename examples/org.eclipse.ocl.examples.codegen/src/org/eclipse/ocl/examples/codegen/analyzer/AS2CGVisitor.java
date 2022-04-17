@@ -828,7 +828,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			pushClassContext(asClass);
 			LibraryOperation libraryOperation = (LibraryOperation)metamodelManager.getImplementation(asOperation);
 			OperationCallingConvention callingConvention = codeGenerator.getCallingConvention(asOperation, libraryOperation);
-			if (libraryOperation instanceof ForeignOperation) {
+			if (libraryOperation instanceof ForeignOperation) {			// XXX this parses stdlib bodies unnecessarily
 				context.addForeignFeature(asOperation);
 			}
 			cgOperation = asFinalOperation2cgOperation.get(asOperation);
@@ -1506,7 +1506,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			//	Propagate the variable name resolution to its initializer and intervening lets.
 			//
 			CGValuedElement cgElement = cgInit;
-			while (true) {
+			while (cgElement.basicGetNameResolution() == null) {
 				variableNameResolution.addCGElement(cgElement);
 				if (cgElement instanceof CGLetExp) {
 					cgElement = CGUtil.getIn((CGLetExp)cgElement);

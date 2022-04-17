@@ -585,12 +585,12 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 
 	@Override
 	public @NonNull NameResolution getNameResolution(@NonNull CGValuedElement cgElement) {
-		NameResolution unboxedNameResolution = cgElement.basicGetNameResolution(); //.getNameVariant(guardedNameVariant);
-		if (unboxedNameResolution == null) {
+		NameResolution nameResolution = cgElement.basicGetNameResolution(); //.getNameVariant(guardedNameVariant);
+		if (nameResolution == null) {
 			NestedNameManager nameManager = getGlobalContext().getLocalContext(cgElement).getNameManager();
-			unboxedNameResolution = nameManager.declareLazyName(cgElement);
+			nameResolution = nameManager.declareLazyName(cgElement);
 		}
-		return unboxedNameResolution;
+		return nameResolution;
 	}
 
 	public @NonNull String getQualifiedForeignClassName(org.eclipse.ocl.pivot.@NonNull Class asClass) {
