@@ -224,7 +224,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	private final @NonNull NameVariant BODY_NameVariant;
 	private final @NonNull NameVariant BOXED_NameVariant;
 	private final @NonNull NameVariant CAUGHT_NameVariant;
-//	private final @NonNull NameVariant GUARDED_NameVariant;
+	private final @NonNull NameVariant GUARDED_NameVariant;
 	private final @NonNull NameVariant IMPL_NameVariant;
 	private final @NonNull NameVariant ITER_NameVariant;
 	private final @NonNull NameVariant MGR_NameVariant;
@@ -243,7 +243,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		BODY_NameVariant = globalNameManager.addNameVariantPrefix("BODY_");
 		BOXED_NameVariant = globalNameManager.addNameVariantPrefix("BOXED_");
 		CAUGHT_NameVariant = globalNameManager.addNameVariantPrefix("CAUGHT_");
-//		GUARDED_NameVariant = globalNameManager.addNameVariantPrefix("GUARDED_");
+		GUARDED_NameVariant = globalNameManager.addNameVariantPrefix("GUARDED_");
 		IMPL_NameVariant = globalNameManager.addNameVariantPrefix("IMPL_");
 		ITER_NameVariant = globalNameManager.addNameVariantPrefix("ITER_");
 		MGR_NameVariant = globalNameManager.addNameVariantPrefix("MGR_");
@@ -438,10 +438,10 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	@Override
 	public abstract @NonNull JavaGlobalContext<@NonNull ? extends JavaCodeGenerator> getGlobalContext();
 
-//	@Override
-//	public @NonNull NameVariant getGUARDED_NameVariant() {
-//		return GUARDED_NameVariant;
-//	}
+	@Override
+	public @NonNull NameVariant getGUARDED_NameVariant() {
+		return GUARDED_NameVariant;
+	}
 
 	@Override
 	public @NonNull GlobalPlace getGlobalPlace() {

@@ -97,6 +97,6 @@ public interface CodeGenerator
 
 	@NonNull NameVariant getBOXED_NameVariant();
 	@NonNull NameVariant getCAUGHT_NameVariant();
-//	@NonNull NameVariant getGUARDED_NameVariant();
+	@NonNull NameVariant getGUARDED_NameVariant();
 	@NonNull NameVariant getSAFE_NameVariant();
 }

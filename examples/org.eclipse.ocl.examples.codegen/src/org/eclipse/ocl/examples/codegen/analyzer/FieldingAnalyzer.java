@@ -213,7 +213,7 @@ public class FieldingAnalyzer
 				CGCatchExp cgCatchExp = CGModelFactory.eINSTANCE.createCGCatchExp();
 				NameResolution uncaughtNameResolution = codeGenerator.getNameResolution(cgChild);
 				NameVariant caughtNameVariant = codeGenerator.getCAUGHT_NameVariant();
-				NameResolution caughtNameResolution = uncaughtNameResolution.getNameVariant(caughtNameVariant);
+				NameResolution caughtNameResolution = uncaughtNameResolution.addNameVariant(caughtNameVariant);
 				caughtNameResolution.addCGElement(cgCatchExp);
 				cgCatchExp.setCaught(true);
 				CGUtil.wrap(cgCatchExp, cgChild);
