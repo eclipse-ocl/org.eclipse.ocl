@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
@@ -197,7 +198,7 @@ public class CGStringLogDiagnosticOperation extends AbstractOperation
 	 * @since 1.18
 	 */
 	@Override
-	protected Class<?>@NonNull [] getEvaluateArguments(){
+	protected Class<?>@NonNull [] getEvaluateArguments(@NonNull Operation asOperation){
 		return evaluateArguments;
 	}
 }

@@ -638,7 +638,7 @@ public class CodeGenAnalyzer
 		if (cgUnlimited2 == null) {
 			cgUnlimited2 = CGModelFactory.eINSTANCE.createCGUnlimited();
 			cgUnlimited2.setTypeId(getTypeId(TypeId.UNLIMITED_NATURAL));
-			globalNameManager.declareLazyName(cgUnlimited2);
+		//	globalNameManager.declareLazyName(cgUnlimited2); -- inlined so missing AST etc ok
 			cgUnlimited = cgUnlimited2;
 		}
 		return cgUnlimited2;

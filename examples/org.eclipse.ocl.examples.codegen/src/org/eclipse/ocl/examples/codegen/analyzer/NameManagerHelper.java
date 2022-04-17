@@ -53,6 +53,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGString;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGThrowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTupleExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGUnboxExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGUnlimited;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.util.AbstractExtendingCGModelVisitor;
@@ -533,6 +534,13 @@ public class NameManagerHelper
 		@Override
 		public @NonNull String visitCGUnboxExp(@NonNull CGUnboxExp object) {
 			return "UNBOXED_" + context.getNameHint(object.getSourceValue());
+		}
+
+		@Override
+		public @NonNull String visitCGUnlimited(@NonNull CGUnlimited object) {
+		//	Number numericValue = object.getNumericValue();
+		//	return context.getNumericNameHint(numericValue);
+			return "XXYYZ";
 		}
 
 		@Override

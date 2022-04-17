@@ -14,6 +14,7 @@ import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
@@ -57,13 +58,11 @@ public class CollectionProductOperation extends AbstractBinaryOperation
         }
 	}
 
-	private static final Class<?>@NonNull [] evaluateArguments = new Class<?>@NonNull [] {Executor.class, TypeId.class, Object.class, Object.class};
-
 	/**
 	 * @since 1.18
 	 */
 	@Override
-	protected Class<?>@NonNull [] getEvaluateArguments(){
-		return evaluateArguments;
+	protected Class<?>@NonNull [] getEvaluateArguments(@NonNull Operation asOperation){
+		return evaluateArguments1;
 	}
 }

@@ -14,6 +14,7 @@ import java.lang.reflect.Method;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.evaluation.IterationManager;
 
 /**
@@ -97,14 +98,12 @@ public abstract class AbstractIteration extends AbstractIterationOrOperation imp
 		return iterationManager.getAccumulatorValue();
 	}
 
-//	private static final Class<?>@NonNull [] evaluateArguments = new Class<?>@NonNull [] {Executor.class, TypeId.class, Object.class};
-
 	/**
 	 * @since 1.18
 	 */
 	@SuppressWarnings("null")
 	@Override
-	public @NonNull Method getEvaluateMethod() {
+	public @NonNull Method getEvaluateMethod(@NonNull Iteration asIteration) {
 		try {
 			Class<? extends LibraryIteration> implementationClass = getClass();
 			return implementationClass.getMethod("evaluateIteration", IterationManager.class);

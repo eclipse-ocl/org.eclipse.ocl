@@ -15,6 +15,7 @@ import java.util.List;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
@@ -101,7 +102,7 @@ public abstract class AbstractSimpleTernaryOperation extends AbstractUntypedTern
 	 * @since 1.18
 	 */
 	@Override
-	protected Class<?>@NonNull [] getEvaluateArguments(){
+	protected Class<?>@NonNull [] getEvaluateArguments(@NonNull Operation asOperation){
 		return evaluateArguments;
 	}
 }

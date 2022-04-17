@@ -15,13 +15,11 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -255,13 +253,6 @@ public class CGTypeExpImpl extends CGValuedElementImpl implements CGTypeExp {
 			return true;
 		}
 		return false;
-	}
-
-	@Override
-	public void setNameResolution(@NonNull NameResolution nameResolution) {
-		String string = ast.toString();
-		System.out.println("Set " + NameUtil.debugSimpleName(nameResolution) + " for " + NameUtil.debugSimpleName(this));		// XXX YYY
-		super.setNameResolution(nameResolution);
 	}
 
 } //CGTypeExpImpl

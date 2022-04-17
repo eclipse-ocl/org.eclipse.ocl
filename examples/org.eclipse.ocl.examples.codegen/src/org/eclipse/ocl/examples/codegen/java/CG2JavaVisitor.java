@@ -122,6 +122,7 @@ import org.eclipse.ocl.pivot.CollectionLiteralExp;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.Feature;
+import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.MapType;
@@ -315,9 +316,10 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		final List<@NonNull CGIterator> coIterators = CGUtil.getCoIteratorsList(cgIterationCallExp);
 		final CGValuedElement body = getExpression(cgIterationCallExp.getBody());
 		final CGTypeId resultType = cgIterationCallExp.getTypeId();
-		final Operation referredOperation = ((LoopExp)cgIterationCallExp.getAst()).getReferredIteration();
+		LoopExp asLoopExp = (LoopExp) CGUtil.getAST(cgIterationCallExp);
+		final Iteration referredIteration = PivotUtil.getReferredIteration(asLoopExp);
 		final int arity = iterators.size();
-		Type sourceType = ((CallExp)CGUtil.getAST(cgIterationCallExp)).getOwnedSource().getType();
+		Type sourceType = ((CallExp)asLoopExp).getOwnedSource().getType();
 		boolean isMap = sourceType instanceof MapType;
 		final Class<?> managerClass; 	// FIXME ExecutorMultipleIterationManager
 		final Class<?> operationClass;
@@ -338,7 +340,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			passesCoIterators = true;
 		}
 		final LibraryIteration libraryIteration = ClassUtil.nonNullState(cgIterationCallExp.getLibraryIteration());
-		final Method actualMethod = libraryIteration.getEvaluateMethod();
+		final Method actualMethod = libraryIteration.getEvaluateMethod(referredIteration);
 		final Class<?> actualReturnClass = actualMethod.getReturnType();
 		boolean actualIsNonNull = context.getIsNonNull(actualMethod) == Boolean.TRUE;
 		boolean expectedIsNonNull = cgIterationCallExp.isNonNull();
@@ -376,7 +378,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		js.append( ")" + staticTypeName + ".lookupImplementation(");
 		js.appendReferenceTo(localContext.getStandardLibraryVariable());
 		js.append(", ");
-		js.appendQualifiedLiteralName(ClassUtil.nonNullState(referredOperation));
+		js.appendQualifiedLiteralName(referredIteration);
 		js.append(");\n");
 		//
 		if (iterateResult != null) {
@@ -1369,7 +1371,6 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	public @NonNull Boolean visitCGCatchExp(@NonNull CGCatchExp cgCatchExp) {
 		CGValuedElement cgSource = getExpression(cgCatchExp.getSource());
 		final String thrownName = getVariantResolvedName(cgSource, context.getTHROWN_NameVariant());
-	//	final String caughtName = cgCatchExp.getResolvedName();
 		if (cgSource.isNonInvalid()) {
 			if (!js.appendLocalStatements(cgSource)) {
 				return false;
@@ -2491,7 +2492,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	public @NonNull Boolean visitCGLibraryPropertyCallExp(@NonNull CGLibraryPropertyCallExp cgPropertyCallExp) {
 		CGValuedElement source = getExpression(cgPropertyCallExp.getSource());
 		LibraryProperty libraryProperty = ClassUtil.nonNullState(cgPropertyCallExp.getLibraryProperty());
-		Method actualMethod = libraryProperty.getEvaluateMethod();
+		Method actualMethod = libraryProperty.getEvaluateMethod(CGUtil.getReferredProperty(cgPropertyCallExp));
 		Class<?> actualReturnClass = actualMethod.getReturnType();
 		boolean actualIsNonNull = context.getIsNonNull(actualMethod) == Boolean.TRUE;
 		boolean expectedIsNonNull = cgPropertyCallExp.isNonNull();

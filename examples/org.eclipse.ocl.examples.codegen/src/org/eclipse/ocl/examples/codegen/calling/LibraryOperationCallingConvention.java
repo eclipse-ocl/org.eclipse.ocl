@@ -11,6 +11,7 @@
 package org.eclipse.ocl.examples.codegen.calling;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -23,6 +24,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
@@ -47,10 +49,10 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
  *   *  </br>
  *  e.g. as CustomOperation.INSTANCE.evaluate(executor, arguments)
  *  </br>
- *  The call adapts to the actual signature of the invoked method foor which
+ *  The call adapts to the actual signature of the invoked method for which
  *  </br> An Executor parameter is passed the prevailing executor
  *  </br> A TypeId parameter is passed the return TypeId
- *  </br> A first Object parameter is passed the source value
+ *  </br> If non-static, a first Object parameter is passed the source value
  *  </br> Subsequent Object parameters are passed the argument values in order
  *  </br> An Object[] parameter is passed source and argument values
  */
@@ -65,7 +67,8 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 		JavaLocalContext<?> localContext = as2cgVisitor.getLocalContext();
 		Operation asOperation = ClassUtil.nonNullState(asOperationCallExp.getReferredOperation());
 		assert (cgSource == null) == asOperation.isIsStatic();
-		Method jMethod = libraryOperation.getEvaluateMethod();
+		Method jMethod = libraryOperation.getEvaluateMethod(asOperation);
+	//	assert (cgSource == null) == Modifier.isStatic(jMethod.getModifiers());
 		CGLibraryOperationCallExp cgOperationCallExp = CGModelFactory.eINSTANCE.createCGLibraryOperationCallExp();
 		cgOperationCallExp.setLibraryOperation(libraryOperation);
 		List<CGValuedElement> cgArguments = cgOperationCallExp.getArguments();
@@ -75,7 +78,8 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 			}
 			else if (jParameterType == TypeId.class) {
 				TypeId asTypeId = asOperationCallExp.getTypeId();
-				cgArguments.add(analyzer.createCGConstantExp(analyzer.getTypeId(asTypeId)));
+				CGTypeId cgTypeId = analyzer.getTypeId(asTypeId);
+				cgArguments.add(analyzer.createCGConstantExp(cgTypeId));
 			}
 			else if (jParameterType == Object.class) {
 				if (cgSource != null) {
@@ -99,9 +103,12 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 		JavaLocalContext<?> localContext = as2cgVisitor.getLocalContext();
 		List<CGParameter> cgParameters = cgOperation.getParameters();
 		LibraryOperation libraryOperation = (LibraryOperation)as2cgVisitor.getMetamodelManager().getImplementation(asOperation);
-		Method jMethod = libraryOperation.getEvaluateMethod();
+		Method jMethod = libraryOperation.getEvaluateMethod(asOperation);
 		List<@NonNull Parameter> asParameters = ClassUtil.nullFree(asOperation.getOwnedParameters());
 		int i = asOperation.isIsStatic() ? 0 : -1;
+		if (Modifier.isStatic(jMethod.getModifiers())) {
+			cgParameters.add(localContext.getThisParameter());
+		}
 		for (Class<?> jParameterType : jMethod.getParameterTypes()) {
 			if (jParameterType == Executor.class) {
 				cgParameters.add(localContext.getExecutorParameter());
@@ -110,10 +117,10 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 			//	cgParameters.add(localContext.getTypeIdParameter());
 				cgParameters.add(localContext.getTypeIdParameter());
 			}
-		//	else if (jParameterType == Object[].class) {		// XXX
-		//
-		//	}
-			else if (jParameterType == Object.class) {
+			else if (jParameterType == Object[].class) {		// XXX
+				throw new UnsupportedOperationException();
+			}
+			else { //if (jParameterType == Object.class) {
 				if (i < 0) {
 					cgParameters.add(localContext.getSelfParameter());
 					i = 0;
@@ -124,9 +131,9 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 					cgParameters.add(cgParameter);
 				}
 			}
-			else {
-				throw new UnsupportedOperationException();
-			}
+		//	else {
+		//		throw new UnsupportedOperationException();
+		//	}
 		}
 		assert i == asParameters.size();
 	}
@@ -143,9 +150,9 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 		final List<@NonNull CGValuedElement> cgArguments = ClassUtil.nullFree(cgOperationCallExp.getArguments());
 		int iMax = cgArguments.size();
 		CGOperation cgOperation = cgOperationCallExp.getOperation();
-		Method actualMethod = libraryOperation.getEvaluateMethod();
-		Class<?> actualReturnClass = actualMethod.getReturnType();
-		boolean actualIsNonNull = cg2JavaVisitor.getCodeGenerator().getIsNonNull(actualMethod) == Boolean.TRUE;
+		Method jMethod = libraryOperation.getEvaluateMethod(CGUtil.getAST(cgOperation));
+		Class<?> actualReturnClass = jMethod.getReturnType();
+		boolean actualIsNonNull = cg2JavaVisitor.getCodeGenerator().getIsNonNull(jMethod) == Boolean.TRUE;
 		boolean expectedIsNonNull = cgOperationCallExp.isNonNull();
 		for (@NonNull CGValuedElement cgArgument : cgArguments) {
 			if (!js.appendLocalStatements(cgArgument)) {
@@ -156,7 +163,7 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 		assert cgParameters.size() == iMax;
 		for (int i = 0; i < iMax; i++) {
 			@NonNull CGParameter cgParameter = cgParameters.get(i);
-			if (cgParameter.isRequired()) {
+			if (cgParameter.isRequired() /*&& !cgParameter.isSelf()*/) {			// XXX YYY isSelf
 				CGValuedElement cgArgument = cgArguments.get(i);
 				if (cgArgument.isNull()) {
 					js.append("throw new ");

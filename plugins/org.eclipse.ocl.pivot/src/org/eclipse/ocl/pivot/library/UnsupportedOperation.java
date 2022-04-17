@@ -12,6 +12,7 @@ package org.eclipse.ocl.pivot.library;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
@@ -47,13 +48,11 @@ public class UnsupportedOperation extends AbstractOperation implements LibraryPr
 		throw new UnsupportedOperationException();
 	}
 
-	private static final Class<?>@NonNull [] evaluateArguments = new Class<?>@NonNull [] {Executor.class, TypeId.class, Object.class};
-
 	/**
 	 * @since 1.18
 	 */
 	@Override
-	protected Class<?>@NonNull [] getEvaluateArguments(){
-		return evaluateArguments;
+	protected Class<?>@NonNull [] getEvaluateArguments(@NonNull Operation asOperation){
+		return evaluateArguments0;
 	}
 }

@@ -15,6 +15,7 @@ import java.util.List;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
@@ -109,13 +110,16 @@ LibraryTernaryOperation.LibraryTernaryOperationExtension
 		return evaluate(executor, typeId, boxedSourceAndArgumentValues);
 	}
 
-	private static final Class<?>@NonNull [] evaluateArguments = new Class<?>@NonNull [] {Executor.class, TypedElement.class, Object[].class};
-
 	/**
 	 * @since 1.18
 	 */
 	@Override
-	protected Class<?>@NonNull [] getEvaluateArguments(){
-		return evaluateArguments;
+	protected Class<?>@NonNull [] getEvaluateArguments(@NonNull Operation asOperation){
+		switch (asOperation.getOwnedParameters().size()) {
+			case 0: return evaluateArguments0;
+			case 1: return evaluateArguments1;
+			case 2: return evaluateArguments2;
+		}
+		throw new UnsupportedOperationException("getEvaluateArguments for " + asOperation);
 	}
 }

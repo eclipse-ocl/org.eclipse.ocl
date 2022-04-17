@@ -14,6 +14,7 @@ import java.lang.reflect.Method;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -74,13 +75,14 @@ public abstract class AbstractProperty extends AbstractFeature implements Librar
 		throw new UnsupportedOperationException();
 	}
 
-	private static final Class<?>@NonNull [] evaluateArguments = new Class<?>@NonNull [] {Executor.class, TypeId.class, Object.class};
-
+	/**
+	 * @since 1.18
+	 */
 	@SuppressWarnings("null")
 	@Override
-	public @NonNull Method getEvaluateMethod() {
+	public @NonNull Method getEvaluateMethod(@NonNull Property asProperty) {
 		try {
-			return getClass().getMethod("evaluate"/*JavaConstants.EVALUATE_NAME*/, evaluateArguments);
+			return getClass().getMethod("evaluate"/*JavaConstants.EVALUATE_NAME*/, evaluateArguments0);
 		} catch (Exception e) {
 			throw new UnsupportedOperationException(getClass().getName() + ".evaluate(Executor, TypeId, Object)");
 		}

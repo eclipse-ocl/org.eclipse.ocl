@@ -1663,6 +1663,28 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/library/AbstractFeature.java" type="org.eclipse.ocl.pivot.library.AbstractFeature">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.library.AbstractFeature"/>
+                <message_argument value="evaluateArguments0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/library/AbstractOperation.java" type="org.eclipse.ocl.pivot.library.AbstractOperation">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.library.AbstractOperation"/>
+                <message_argument value="evaluateArguments1"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.library.AbstractOperation"/>
+                <message_argument value="evaluateArguments2"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/library/LibraryBinaryOperation.java" type="org.eclipse.ocl.pivot.library.LibraryBinaryOperation">
         <filter id="403984517">
             <message_arguments>
@@ -1688,6 +1710,12 @@
                 <message_argument value="resolveBodyType(EnvironmentFactory, CallExp, Type)"/>
             </message_arguments>
         </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.library.LibraryIteration"/>
+                <message_argument value="getEvaluateMethod(Iteration)"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/ocl/pivot/library/LibraryOperation.java" type="org.eclipse.ocl.pivot.library.LibraryOperation">
         <filter id="403984517">
@@ -1700,7 +1728,15 @@
         <filter id="404000815">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.library.LibraryOperation"/>
-                <message_argument value="getEvaluateMethod()"/>
+                <message_argument value="getEvaluateMethod(Operation)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/library/LibraryProperty.java" type="org.eclipse.ocl.pivot.library.LibraryProperty">
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.library.LibraryProperty"/>
+                <message_argument value="getEvaluateMethod(Property)"/>
             </message_arguments>
         </filter>
     </resource>

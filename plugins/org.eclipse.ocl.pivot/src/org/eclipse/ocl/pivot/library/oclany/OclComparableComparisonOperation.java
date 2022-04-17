@@ -75,7 +75,7 @@ public abstract class OclComparableComparisonOperation extends AbstractUntypedBi
 	 * @since 1.18
 	 */
 	@Override
-	protected Class<?>@NonNull [] getEvaluateArguments(){
+	protected Class<?>@NonNull [] getEvaluateArguments(@NonNull Operation asOperation){
 		return evaluateArguments;
 	}
 
