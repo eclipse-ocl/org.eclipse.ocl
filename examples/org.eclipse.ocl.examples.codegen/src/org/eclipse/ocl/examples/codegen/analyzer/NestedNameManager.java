@@ -57,6 +57,14 @@ public class NestedNameManager extends NameManager
 		assignNames(context2);
 	}
 
+	@Override
+	public @NonNull NameResolution declareLazyName(@NonNull CGValuedElement cgElement) {
+		if (cgElement.isGlobal()) {
+			return globalNameManager.declareLazyName(cgElement);
+		}
+		return super.declareLazyName(cgElement);
+	}
+
 	/**
 	 * Declare that cgElement has a name which can eventually default to its preferred value.
 	 * This is typically used to provide an eager name resolution for a variable without reserving the name.

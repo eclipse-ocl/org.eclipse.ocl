@@ -1541,6 +1541,22 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/ids/OperationId.java" type="org.eclipse.ocl.pivot.ids.OperationId">
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.ids.OperationId"/>
+                <message_argument value="COLLECTION_EXCLUDING"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/ids/ParametersId.java" type="org.eclipse.ocl.pivot.ids.ParametersId">
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.ids.ParametersId"/>
+                <message_argument value="T_1"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/internal/context/AbstractParserContext.java" type="org.eclipse.ocl.pivot.internal.context.AbstractParserContext">
         <filter comment="Bug 512402 workaround" id="576725006">
             <message_arguments>

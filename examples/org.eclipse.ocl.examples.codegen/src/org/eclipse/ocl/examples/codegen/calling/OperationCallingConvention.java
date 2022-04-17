@@ -40,7 +40,5 @@ public interface OperationCallingConvention extends CallingConvention
 
 	@NonNull Boolean generateJava(@NonNull CG2JavaVisitor<?> cg2JavaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp);
 
-	boolean getExecutorIsParameter();
-
 	boolean isStatic(@NonNull CGOperation cgOperation);
 }

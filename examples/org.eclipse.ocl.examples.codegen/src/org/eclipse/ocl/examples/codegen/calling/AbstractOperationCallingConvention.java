@@ -75,11 +75,6 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 	}
 
 	@Override
-	public boolean getExecutorIsParameter() {
-		return false;
-	}
-
-	@Override
 	public @NonNull Boolean generateJava(@NonNull CG2JavaVisitor<?> cg2JavaVisitor, @NonNull JavaStream js,@NonNull CGOperationCallExp cgOperationCallExp) {
 		throw new UnsupportedOperationException();		// XXX
 	}

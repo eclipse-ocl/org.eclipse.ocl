@@ -41,6 +41,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGIsEqualExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIsKindOfExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIsUndefinedExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGMapPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
@@ -438,6 +439,15 @@ public class NameManagerHelper
 		public @NonNull String visitCGInvalid(@NonNull CGInvalid object) {
 			String nameHint = INVALID_NAME_HINT_PREFIX;
 			return nameHint;
+		}
+
+		@Override
+		public @NonNull String visitCGLibraryOperationCallExp(@NonNull CGLibraryOperationCallExp object) {
+			Element asElement = object.getAst();
+			if (asElement == null) {		// Synthetic operation call such as excluding()
+				return context.getNameableHint(object);
+			}
+			return super.visitCGLibraryOperationCallExp(object);
 		}
 
 		@Override

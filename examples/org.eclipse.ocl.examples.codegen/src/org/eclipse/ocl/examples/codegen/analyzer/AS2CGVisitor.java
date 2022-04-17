@@ -162,8 +162,10 @@ import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.ids.IdManager;
+import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.ecore.EObjectOperation;
 import org.eclipse.ocl.pivot.internal.library.CompositionProperty;
@@ -1028,15 +1030,18 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		CGLibraryOperationCallExp cgOperationCallExp = createCGLibraryOperationCallExp(CollectionExcludingOperation.INSTANCE);
 		StandardLibraryInternal standardLibrary = environmentFactory.getStandardLibrary();
 		CollectionType collectionType = standardLibrary.getCollectionType();
-		Operation asOperation = NameUtil.getNameable(collectionType.getOwnedOperations(), "excluding");		// FIXME Promote QVTd's StandardLibraryHelper
+		CompleteClassInternal completeCollectionType = environmentFactory.getCompleteModel().getCompleteClass(collectionType);
+		Operation asOperation = completeCollectionType.getOperation(OperationId.COLLECTION_EXCLUDING);
+		assert asOperation != null;
 		cgOperationCallExp.setReferredOperation(asOperation);
+		CGOperation cgOperation = generateOperation(asOperation);
+		cgOperationCallExp.setOperation(cgOperation);
 		OCLExpression asSource = callExp.getOwnedSource();
-
 		cgOperationCallExp.setTypeId(context.getTypeId(asSource.getTypeId()));
 		NameResolution callNameResolution = getNameManager().declareLazyName(cgOperationCallExp);
 		callNameResolution.addNameVariant(codeGenerator.getSAFE_NameVariant());
 		cgOperationCallExp.setRequired(true);
-		cgOperationCallExp.setSource(cgSource);
+		cgOperationCallExp.getArguments().add(cgSource);
 		CGConstantExp cgArgument = CGModelFactory.eINSTANCE.createCGConstantExp();
 		cgArgument.setReferredConstant(context.getNull());
 		cgArgument.setTypeId(context.getTypeId(TypeId.OCL_VOID));

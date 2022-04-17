@@ -46,6 +46,11 @@ public interface OperationId extends TemplateableId
 	public static final @NonNull OperationId BOOLEAN_XOR = TypeId.BOOLEAN.getOperationId(0, "xor", ParametersId.BOOLEAN);
 
 	/**
+	 * @since 1.18
+	 */
+	public static final @NonNull OperationId COLLECTION_EXCLUDING = TypeId.COLLECTION.getOperationId(0, "excluding", ParametersId.T_1);
+
+	/**
 	 * @since 1.3
 	 */
 	public static final @NonNull OperationId OCLANY_EQUALS = TypeId.OCL_ANY.getOperationId(0, "=", ParametersId.OCL_SELF);

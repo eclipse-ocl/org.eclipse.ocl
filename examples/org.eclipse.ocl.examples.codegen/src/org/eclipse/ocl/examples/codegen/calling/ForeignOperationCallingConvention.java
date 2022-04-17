@@ -128,11 +128,6 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 	}
 
 	@Override
-	public boolean getExecutorIsParameter() {
-		return true;
-	}
-
-	@Override
 	public boolean isBoxed() {
 		return true;
 	}
