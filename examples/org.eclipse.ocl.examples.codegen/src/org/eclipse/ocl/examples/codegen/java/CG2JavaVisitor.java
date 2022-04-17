@@ -2976,7 +2976,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 				// The following fallback would not be required if the init name propagated better, see testSysML_QUDV
 				// (a rewrite of an init might fail to re-down-propagate the variable name).
 				NameResolution varNameResolution = cgVariable.getNameResolution();
-				NameResolution initNameResolution = cgInit.getNameResolution();
+				NameResolution initNameResolution = cgInit.getNameResolution().getBaseNameResolution();
 				if (varNameResolution != initNameResolution) {
 					js.appendDeclaration(cgVariable);
 					js.append(" = ");
