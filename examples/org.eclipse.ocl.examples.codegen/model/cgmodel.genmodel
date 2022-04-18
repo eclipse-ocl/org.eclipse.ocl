@@ -249,6 +249,8 @@
     </genClasses>
     <genClasses ecoreClass="cgmodel.ecore#//CGParameter">
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference cgmodel.ecore#//CGParameter/callable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cgmodel.ecore#//CGParameter/isSelf"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cgmodel.ecore#//CGParameter/isThis"/>
     </genClasses>
     <genClasses image="false" ecoreClass="cgmodel.ecore#//CGProperty">
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference cgmodel.ecore#//CGProperty/containingClass"/>

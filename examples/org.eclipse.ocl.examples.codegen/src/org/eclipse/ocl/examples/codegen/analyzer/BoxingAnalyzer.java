@@ -601,7 +601,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 			//					CGInvalid cgInvalid = context.getInvalid("null value2 for " + asParameter.getName() + " parameter");
 								StringBuilder s= new StringBuilder();
 								s.append("''");
-								if (cgParameter.isSelf()) {
+								if (cgParameter.isIsSelf()) {
 									s.append(referredOperation.getOwningClass().getName());
 								}
 								else {

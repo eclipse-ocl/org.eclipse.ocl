@@ -391,7 +391,7 @@ public class CGUtil
 		for (int i = 0; i < iMax; i++) {
 			CGParameter cgParameter = cgParameters.get(i);
 			CGValuedElement cgSourceOrArgument;
-			if (cgParameter.isThis()) {
+			if (cgParameter.isIsThis()) {
 				cgSourceOrArgument = getSource(cgOperationCallExp);
 			}
 			else {

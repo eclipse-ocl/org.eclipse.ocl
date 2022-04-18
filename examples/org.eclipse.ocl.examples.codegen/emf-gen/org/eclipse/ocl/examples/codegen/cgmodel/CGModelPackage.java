@@ -1855,6 +1855,28 @@ public interface CGModelPackage extends EPackage {
 	EReference getCGParameter_Callable();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGParameter#isIsSelf <em>Is Self</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Is Self</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGParameter#isIsSelf()
+	 * @see #getCGParameter()
+	 * @generated
+	 */
+	EAttribute getCGParameter_IsSelf();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGParameter#isIsThis <em>Is This</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Is This</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGParameter#isIsThis()
+	 * @see #getCGParameter()
+	 * @generated
+	 */
+	EAttribute getCGParameter_IsThis();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGProperty <em>CG Property</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3898,6 +3920,22 @@ public interface CGModelPackage extends EPackage {
 		 * @generated
 		 */
 		EReference CG_PARAMETER__CALLABLE = eINSTANCE.getCGParameter_Callable();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Self</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CG_PARAMETER__IS_SELF = eINSTANCE.getCGParameter_IsSelf();
+
+		/**
+		 * The meta object literal for the '<em><b>Is This</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CG_PARAMETER__IS_THIS = eINSTANCE.getCGParameter_IsThis();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGPropertyImpl <em>CG Property</em>}' class.
