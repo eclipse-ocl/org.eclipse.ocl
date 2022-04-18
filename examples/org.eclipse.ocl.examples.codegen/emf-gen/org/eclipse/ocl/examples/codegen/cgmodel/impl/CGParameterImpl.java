@@ -323,12 +323,27 @@ public class CGParameterImpl extends CGVariableImpl implements CGParameter {
 		return (init != null) ? init.isUnboxed() : callable != null ? callable.isUnboxed() : false;
 	}
 
+	private boolean asSelf;
+	private boolean cgThis;
+
 	@Override
-	public void setName(String newName) {
-		if ("feature".equals(newName)) {
-			getClass();		//	XXX
-		}
-		super.setName(newName);
+	public boolean isSelf() {
+		return asSelf;
+	}
+
+	@Override
+	public boolean isThis() {
+		return cgThis;
+	}
+
+	@Override
+	public void setIsSelf(boolean asSelf) {
+		this.asSelf = asSelf;
+	}
+
+	@Override
+	public void setIsThis(boolean cgThis) {
+		this.cgThis = cgThis;
 	}
 
 } //CGParameterImpl

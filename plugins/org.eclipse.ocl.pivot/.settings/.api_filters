@@ -1870,4 +1870,18 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/utilities/PivotUtil.java" type="org.eclipse.ocl.pivot.utilities.PivotUtil">
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.utilities.PivotUtil"/>
+                <message_argument value="getOwningClass(Operation)"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.utilities.PivotUtil"/>
+                <message_argument value="getOwningClass(Property)"/>
+            </message_arguments>
+        </filter>
+    </resource>
 </component>

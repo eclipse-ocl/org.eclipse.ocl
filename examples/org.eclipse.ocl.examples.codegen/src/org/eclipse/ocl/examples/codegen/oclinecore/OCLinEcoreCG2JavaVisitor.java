@@ -214,7 +214,7 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 	protected @NonNull FeatureBody generateOperationBody(@NonNull CGOperation cgOperation, @NonNull CGValuedElement cgBody) {
 		Operation asOperation = CGUtil.getAST(cgOperation);
 		assert asOperation != null;
-		Class asClass = PivotUtil.getOwningClass((Feature)asOperation);
+		Class asClass = PivotUtil.getOwningClass(asOperation);
 		FeatureLocality featureLocality = getFeatureLocality(asOperation);
 		String packageName;
 		String className;
@@ -258,7 +258,7 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 
 	protected @NonNull FeatureBody generatePropertyBody(@NonNull CGProperty cgProperty, @NonNull CGValuedElement cgBody) {
 		Property asProperty = CGUtil.getAST(cgProperty);
-		Class asClass = PivotUtil.getOwningClass((Feature)asProperty);
+		Class asClass = PivotUtil.getOwningClass(asProperty);
 		FeatureLocality featureLocality = getFeatureLocality(asProperty);
 		String packageName;
 		String className;
@@ -309,7 +309,7 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 		Operation asOperation = CGUtil.getAST(cgOperation);
 		assert asOperation != null;
 		assert asOperation.isIsStatic();
-		String className = "SO_" + context.getForeignClassName(PivotUtil.getOwningClass((Feature)asOperation));
+		String className = "SO_" + context.getForeignClassName(PivotUtil.getOwningClass(asOperation));
 		List<CGParameter> cgParameters = cgOperation.getParameters();
 		LanguageExpression expressionInOCL = asOperation.getBodyExpression();
 		CGValuedElement cgBody = cgOperation.getBody();
@@ -374,7 +374,7 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 		//
 		Property asProperty = CGUtil.getAST(cgProperty);
 		assert asProperty.isIsStatic();
-		String className = "SP_" + context.getForeignClassName(PivotUtil.getOwningClass((Feature)asProperty));
+		String className = "SP_" + context.getForeignClassName(PivotUtil.getOwningClass(asProperty));
 		LanguageExpression expressionInOCL = asProperty.getOwnedExpression();
 		CGValuedElement cgBody = cgProperty.getBody();
 		assert cgBody != null;

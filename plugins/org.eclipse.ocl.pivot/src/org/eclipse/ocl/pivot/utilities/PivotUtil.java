@@ -1836,22 +1836,6 @@ public class PivotUtil
 	}
 
 	/**
-	 * @since 1.3
-	 */
-	@Deprecated /* @deprecated use Feature */
-	public static org.eclipse.ocl.pivot.@NonNull Class getOwningClass(@NonNull Operation operation) {
-		return ClassUtil.nonNullState(operation.getOwningClass());
-	}
-
-	/**
-	 * @since 1.3
-	 */
-	@Deprecated /* @deprecated use Feature */
-	public static org.eclipse.ocl.pivot.@NonNull Class getOwningClass(@NonNull Property property) {
-		return ClassUtil.nonNullState(property.getOwningClass());
-	}
-
-	/**
 	 * @since 1.9
 	 */
 	public static @NonNull TemplateableElement getOwningElement(@NonNull TemplateSignature templateSignature) {

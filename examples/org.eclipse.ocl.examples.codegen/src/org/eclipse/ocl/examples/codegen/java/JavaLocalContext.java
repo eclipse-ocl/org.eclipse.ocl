@@ -220,9 +220,10 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 		CGNamedElement scope = getScope();
 		Operation referredOperation = CGUtil.getAST(((CGOperation)scope));
 		OperationId operationId = referredOperation.getOperationId();
-		boolean sourceMayBeNull = analyzer.hasOclVoidOperation(operationId);
+		boolean sourceMayBeNull = analyzer.hasOclVoidOperation(operationId);	// FIXME redundant since LibraryOperationCallingConvention.createParaeters invokes hasOclVoidOperation
 		BaseNameResolution selfName = globalContext.getSelfNameResolution();
 		CGParameter selfParameter = analyzer.createCGParameter(selfName, analyzer.getTypeId(asType.getTypeId()), !sourceMayBeNull);
+		selfParameter.setIsSelf(true);
 		selfParameter.setNonInvalid();
 		selfParameter.setNonNull();
 		return selfParameter;
@@ -249,6 +250,7 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 		assert !isStatic;
 		BaseNameResolution thisName = globalContext.getThisNameResolution();
 		CGParameter thisParameter = analyzer.createCGParameter(thisName, analyzer.getTypeId(asType.getTypeId()), true);
+		thisParameter.setIsThis(true);
 		thisParameter.setNonInvalid();
 		thisParameter.setNonNull();
 		return thisParameter;

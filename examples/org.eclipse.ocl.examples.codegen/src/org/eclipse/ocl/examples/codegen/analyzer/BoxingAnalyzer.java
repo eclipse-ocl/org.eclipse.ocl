@@ -546,7 +546,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 				boolean sourceMayBeNull = false;
 				if (referredOperation != null) {
 					OperationId operationId = referredOperation.getOperationId();
-					sourceMayBeNull = context.hasOclVoidOperation(operationId);
+					sourceMayBeNull = context.hasOclVoidOperation(operationId);		// FIXME redundant since LibraryOperationCallingConvention.createParaeters invokes hasOclVoidOperation
 					if (!sourceMayBeNull && cgSource.isNull()) {
 			//			CGInvalid cgInvalid = context.getInvalid("null value1 for source parameter");
 						CGInvalid cgInvalid = context.getInvalid("''" + referredOperation.getOwningClass().getName() + "'' rather than ''OclVoid'' value required");
@@ -598,7 +598,16 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 						if (cgParameter.isRequired()) {
 							if (cgArgument.isNull()) {
 			//					CGInvalid cgInvalid = context.getInvalid("null value2 for " + asParameter.getName() + " parameter");
-								CGInvalid cgInvalid = context.getInvalid("''" + cgParameter.getTypeId() + "'' rather than ''OclVoid'' value required");
+								StringBuilder s= new StringBuilder();
+								s.append("''");
+								if (cgParameter.isSelf()) {
+									s.append(referredOperation.getOwningClass().getName());
+								}
+								else {
+									s.append(cgParameter.getTypeId());
+								}
+								s.append("'' rather than ''OclVoid'' value required");
+								CGInvalid cgInvalid = context.getInvalid(s.toString());
 								CGConstantExp cgLiteralExp = context.createCGConstantExp(CGUtil.getAST(cgElement), cgInvalid);
 								CGUtil.replace(cgElement, cgLiteralExp);
 								return null;

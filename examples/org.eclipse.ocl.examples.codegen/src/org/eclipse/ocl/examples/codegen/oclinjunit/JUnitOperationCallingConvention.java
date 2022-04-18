@@ -44,6 +44,7 @@ public class JUnitOperationCallingConvention extends LibraryOperationCallingConv
 		cgParameters.add(localContext.createTypeIdParameter());
 		if (contextVariable != null) {
 			CGParameter cgContext = as2cgVisitor.getParameter(contextVariable, (String)null);			// getSelf ???
+			cgContext.setIsSelf(true);
 			cgParameters.add(cgContext);
 		}
 		for (@NonNull Variable parameterVariable : PivotUtil.getOwnedParameters(expressionInOCL)) {

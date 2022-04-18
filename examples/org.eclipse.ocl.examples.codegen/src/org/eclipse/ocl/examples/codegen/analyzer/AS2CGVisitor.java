@@ -122,7 +122,6 @@ import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.EnumLiteralExp;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
-import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.IfExp;
 import org.eclipse.ocl.pivot.IntegerLiteralExp;
 import org.eclipse.ocl.pivot.InvalidLiteralExp;
@@ -824,7 +823,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	protected @NonNull CGOperation generateOperation(@NonNull Operation asOperation) {
 		CGOperation cgOperation = context.basicGetOperation(asOperation);
 		if (cgOperation == null) {
-			org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass((Feature)asOperation);
+			org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asOperation);
 			pushClassContext(asClass);
 			LibraryOperation libraryOperation = (LibraryOperation)metamodelManager.getImplementation(asOperation);
 			OperationCallingConvention callingConvention = codeGenerator.getCallingConvention(asOperation, libraryOperation);
@@ -857,12 +856,12 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return cgOperation;
 	}
 
-	protected @NonNull CGValuedElement generateOperationCallExp(@Nullable CGValuedElement cgSource, @NonNull OperationCallExp element) {
-		Operation asOperation = ClassUtil.nonNullState(element.getReferredOperation());
+	protected @NonNull CGValuedElement generateOperationCallExp(@Nullable CGValuedElement cgSource, @NonNull OperationCallExp asOperationCallExp) {
+		Operation asOperation = ClassUtil.nonNullState(asOperationCallExp.getReferredOperation());
 		LibraryOperation libraryOperation = (LibraryOperation)metamodelManager.getImplementation(asOperation);
 		CGOperation cgOperation = generateOperation(asOperation);
 		OperationCallingConvention callingConvention = cgOperation.getCallingConvention();
-		CGValuedElement cgCallExp = callingConvention.createCGOperationCallExp(this, cgOperation, libraryOperation, cgSource, element);
+		CGValuedElement cgCallExp = callingConvention.createCGOperationCallExp(this, cgOperation, libraryOperation, cgSource, asOperationCallExp);
 	//	if (cgCallExp instanceof CGOperationCallExp) {		// inlined code is not a CallExp
 	//		CGOperationCallExp cgOperationCallExp = (CGOperationCallExp)cgCallExp;
 		//	cgOperationCallExp.setCallingConvention(callingConvention);
