@@ -230,7 +230,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 		@Override
 		public int compare(@NonNull CGTuplePart o1, @NonNull CGTuplePart o2) {
-			return ClassUtil.safeCompareTo(o1.getName(), o2.getName());
+			return ClassUtil.safeCompareTo(CGUtil.getAST(o1).getName(), CGUtil.getAST(o2).getName());
 		}
 	}
 
