@@ -13,6 +13,7 @@ package org.eclipse.ocl.examples.codegen.utilities;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -23,6 +24,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBuiltInIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGCallable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCollectionExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
@@ -39,6 +41,8 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTupleExp;
@@ -50,6 +54,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.pivot.CollectionLiteralExp;
 import org.eclipse.ocl.pivot.Constraint;
+import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
@@ -67,6 +72,7 @@ import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.Pair;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 public class CGUtil
@@ -206,6 +212,14 @@ public class CGUtil
 		return ClassUtil.nonNullState(cgIterationCallExp.getAccumulator());
 	}
 
+	public static @NonNull Iterable<@NonNull CGValuedElement> getArguments(@NonNull CGOperationCallExp cgOperationCallExp) {
+		return getArgumentsList(cgOperationCallExp);
+	}
+
+	public static @NonNull List<@NonNull CGValuedElement> getArgumentsList(@NonNull CGOperationCallExp cgOperationCallExp) {
+		return ClassUtil.nullFree(cgOperationCallExp.getArguments());
+	}
+
 	public static @NonNull OCLExpression getAST(@NonNull CGCallExp cgCallExp) {
 		return ClassUtil.nonNullState((OCLExpression)cgCallExp.getAst());
 	}
@@ -242,6 +256,10 @@ public class CGUtil
 		return ClassUtil.nonNullState((Operation)cgOperation.getAst());
 	}
 
+	public static @NonNull /*ParameterVariable*/ VariableDeclaration getAST(@NonNull CGParameter cgParameter) {
+		return ClassUtil.nonNullState((VariableDeclaration)cgParameter.getAst());
+	}
+
 	public static @NonNull TypedElement getAST(@NonNull CGTypedElement cgTypedElement) {
 		return ClassUtil.nonNullState((TypedElement)cgTypedElement.getAst());
 	}
@@ -256,6 +274,10 @@ public class CGUtil
 
 	public static @NonNull CGValuedElement getBody(@NonNull CGProperty cgProperty) {
 		return ClassUtil.nonNullState(cgProperty.getBody());
+	}
+
+	public static @NonNull Iterable<@NonNull CGClass> getClasses(@NonNull CGPackage cgPackage) {
+		return ClassUtil.nullFree(cgPackage.getClasses());
 	}
 
 	public static @NonNull List<@NonNull CGIterator> getCoIteratorsList(@NonNull CGIterationCallExp cgIterationCallExp) {
@@ -337,12 +359,58 @@ public class CGUtil
 		return ClassUtil.nonNullState(cgNamedElement.getName());
 	}
 
+	/**
+	 * Return an ordered list of pairs of CGParameter to correspond CG argument vaalue for the operation call.
+	 * If the CG operation is non-static the CG parameter of the first binding has cgThis set true.
+	 * If the AS operation is non-static the CG parameter of the corresponding binding has asSelf set true;
+	 * CGParamters with null getAST() are synthetic for CG purposes such as the executor.
+	 */
+	public static @NonNull Iterable<@NonNull Pair<@NonNull CGParameter, @NonNull CGValuedElement>> getParameterBindings(@NonNull CGOperationCallExp cgOperationCallExp) {
+		List<@NonNull Pair<@NonNull CGParameter, @NonNull CGValuedElement>> bindings = new ArrayList<>();
+		CGOperation cgOperation = cgOperationCallExp.getOperation();
+	//	Operation asOperation = getAST(cgOperation);
+	//	OperationCallingConvention callingConvention = cgOperation.getCallingConvention();
+		List<@NonNull CGParameter> cgParameters = getParametersList(cgOperation);
+		List<@NonNull CGValuedElement> cgArguments = getArgumentsList(cgOperationCallExp);
+		int iMax = cgParameters.size();
+		assert iMax == cgArguments.size();
+	//	CGValuedElement cgSource = cgOperationCallExp.getSource();
+	//	assert (cgSource != null) == callingConvention.hasSource();
+	//	if (cgSource != null) {
+	//		bindings.add(new Pair<>(null, cgSource));
+	//	}
+		for (int i = 0; i < iMax; i++) {
+			CGParameter cgParameter = cgParameters.get(i);
+			CGValuedElement cgSourceOrArgument;
+			if (cgParameter.isThis()) {
+				cgSourceOrArgument = getSource(cgOperationCallExp);
+			}
+			else {
+				cgSourceOrArgument = cgArguments.get(i);
+			}
+			bindings.add(new Pair<>(cgParameter, cgSourceOrArgument));
+		}
+		return bindings;
+	}
+
+	public static @NonNull Iterable<@NonNull CGParameter> getParameters(@NonNull CGCallable cgOperation) {
+		return getParametersList(cgOperation);
+	}
+
+	public static @NonNull List<@NonNull CGParameter> getParametersList(@NonNull CGCallable cgOperation) {
+		return ClassUtil.nullFree(cgOperation.getParameters());
+	}
+
 	public static Iterable<@NonNull CGTuplePart> getParts(@NonNull CGTupleExp cgTupleExp) {
 		return ClassUtil.nullFree(cgTupleExp.getParts());
 	}
 
 	public static @NonNull CGValuedElement getReferredConstant(@NonNull CGConstantExp cgConstantExp) {
 		return ClassUtil.nonNullState(cgConstantExp.getReferredConstant());
+	}
+
+	public static @NonNull Iteration getReferredIteration(@NonNull CGIterationCallExp cgIterationCallExp) {
+		return ClassUtil.nonNullState(cgIterationCallExp.getReferredIteration());
 	}
 
 	public static @NonNull Operation getReferredOperation(@NonNull CGOperationCallExp cgOperationCallExp) {

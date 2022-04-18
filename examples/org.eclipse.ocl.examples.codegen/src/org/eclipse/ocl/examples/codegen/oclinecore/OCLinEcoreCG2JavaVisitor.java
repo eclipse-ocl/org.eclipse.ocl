@@ -133,7 +133,7 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 
 	public @NonNull Map<@NonNull String, @NonNull FeatureBody> generateBodies() {
 		Map<@NonNull String, @NonNull FeatureBody> bodies = new HashMap<>();
-		for (CGClass cgClass : cgPackage.getClasses()) {
+		for (@NonNull CGClass cgClass : CGUtil.getClasses(cgPackage)) {
 			for (CGConstraint cgConstraint : cgClass.getInvariants()) {
 				CGValuedElement cgBody = cgConstraint.getBody();
 				org.eclipse.ocl.pivot.Class asClass = CGUtil.getAST(cgClass);
@@ -144,8 +144,9 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 					String bodyText = generateValidatorBody(cgBody, asConstraint, asClass);
 					String fragmentURI = getFragmentURI(asClass) + "==" + getRuleName(asConstraint);
 					String foreignPackageName = genPackage.getReflectionPackageName();//getGlobalContext().getTablesClassName();
+					assert foreignPackageName != null;
 					String foreignClassName = context.getForeignClassName(asClass);
-					bodies.put(fragmentURI, new FeatureBody(fragmentURI, asConstraint, FeatureLocality.ECORE_IMPL, foreignPackageName,foreignClassName, bodyText));
+					bodies.put(fragmentURI, new FeatureBody(fragmentURI, asConstraint, FeatureLocality.ECORE_IMPL, foreignPackageName, foreignClassName, bodyText));
 				}
 			}
 			for (@NonNull CGOperation cgOperation : ClassUtil.nullFree(cgClass.getOperations())) {

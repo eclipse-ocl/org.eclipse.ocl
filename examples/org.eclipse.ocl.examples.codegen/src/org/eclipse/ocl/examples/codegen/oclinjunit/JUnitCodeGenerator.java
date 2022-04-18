@@ -84,10 +84,10 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		}
 		AS2CGVisitor as2cgVisitor = new JUnitAS2CGVisitor(cgAnalyzer);
 		CGOperation cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
-		JUnitOperationCallingConvention callingConvention = JUnitOperationCallingConvention.INSTANCE;
-		cgOperation.setCallingConvention(callingConvention);
+		JUnitOperationCallingConvention junitCallingConvention = JUnitOperationCallingConvention.INSTANCE;
+		cgOperation.setCallingConvention(junitCallingConvention);
 		as2cgVisitor.pushLocalContext(cgOperation, expInOcl);
-		callingConvention.createParameters(as2cgVisitor, cgOperation, expInOcl);
+		junitCallingConvention.createParameters(as2cgVisitor, cgOperation, expInOcl);
 	//	cgOperation.setAst(expInOcl);
 		Type type = expInOcl.getType();
 		assert type != null;

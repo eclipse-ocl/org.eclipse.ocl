@@ -69,7 +69,6 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 	public JavaLocalContext(@NonNull JavaGlobalContext<@NonNull ? extends CG> globalContext, @Nullable JavaLocalContext<@NonNull ? extends CG> outerContext,
 			@NonNull CGNamedElement cgScope, @NonNull NamedElement asScope) {
 		super(globalContext.getCodeGenerator());
-	//	assert zzexecutorIsParameter == false;
 		this.globalContext = globalContext;
 		this.globalNameManager = codeGenerator.getGlobalNameManager();
 		this.outerContext = outerContext;

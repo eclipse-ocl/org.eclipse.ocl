@@ -611,8 +611,7 @@ public class PivotHelper
 			org.eclipse.ocl.pivot.Class oclAnyType = standardLibrary.getOclAnyType();
 			Operation oclEqualsOperation = NameUtil.getNameable(oclAnyType.getOwnedOperations(), "=");
 			assert oclEqualsOperation != null;
-			org.eclipse.ocl.pivot.Class collectionType = standardLibrary.getCollectionType();
-			Operation excludingOperation = NameUtil.getNameable(collectionType.getOwnedOperations(), "excluding");
+			Operation excludingOperation = standardLibrary.getCollectionExcludingOperation();
 			assert excludingOperation != null;
 			for (CallExp unsafeCallExp : unsafeCallExps) {
 				OCLExpression source = unsafeCallExp.getOwnedSource();
