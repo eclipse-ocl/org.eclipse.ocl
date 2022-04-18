@@ -18,7 +18,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager.NameVariant;
 import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
-import org.eclipse.ocl.examples.codegen.analyzer.VariantNameResolution;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
@@ -266,12 +265,16 @@ public class CGVariableExpImpl extends CGValuedElementImpl implements CGVariable
 	}
 
 	@Override
-	public void replaceNameResolutionWithvariant(@NonNull NameVariant nameVariant) {
+	public void replaceNameResolutionWithVariant(@NonNull NameVariant nameVariant) {
 		NameResolution oldNameResolution = getNameResolution();
-		VariantNameResolution newNameResolution = oldNameResolution.getNameVariant(nameVariant);
-		resetNameResolution();
-		oldNameResolution.getNameManager().removeNameResolution(this);
+		NameResolution newNameResolution = oldNameResolution.addNameVariant(nameVariant);
+		oldNameResolution.removeCGElement(this);
 		newNameResolution.addCGElement(this);
+	}
+
+	@Override
+	public void resetNameResolution() {
+		super.resetNameResolution();
 	}
 
 } //CGVariableExpImpl

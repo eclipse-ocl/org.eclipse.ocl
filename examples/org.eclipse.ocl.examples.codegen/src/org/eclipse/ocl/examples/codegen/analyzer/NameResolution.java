@@ -14,6 +14,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager.NameVariant;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 
 /**
  * A NameResolution represents a future name for the value of an expression and for all unmodified clients of that value.
@@ -44,6 +45,8 @@ public interface NameResolution
 
 	@NonNull BaseNameResolution getBaseNameResolution();
 
+	@Nullable Iterable<@NonNull CGValuedElement> getCGElements();
+
 	@NonNull String getNameHint();
 
 	@NonNull NameManager getNameManager();
@@ -57,6 +60,8 @@ public interface NameResolution
 	boolean hasVariants();
 
 	boolean isUnresolved();
+
+	void removeCGElement(@NonNull CGVariableExp cgElement);
 
 	void resolveNameHint();
 

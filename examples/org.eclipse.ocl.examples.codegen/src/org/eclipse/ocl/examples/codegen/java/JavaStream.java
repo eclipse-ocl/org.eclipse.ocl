@@ -265,6 +265,9 @@ public class JavaStream
 				s.append(string);
 			}
 			else {
+				if ("CAUGHT_bodySpecification".equals(string)) {
+					getClass();		// XXX
+				}
 				int sLength = s.length();
 				boolean atStartOfLine = (sLength == 0) || (s.charAt(sLength-1) == '\n');
 				for (int i = 0; i < string.length(); i++) {

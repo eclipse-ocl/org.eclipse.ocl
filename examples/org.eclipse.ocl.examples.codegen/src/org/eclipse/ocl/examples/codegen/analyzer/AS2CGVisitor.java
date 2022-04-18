@@ -1069,6 +1069,29 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return cgLetExp;
 	}
 
+	protected @NonNull CGValuedElement generateSafeNavigationGuard(@NonNull CallExp callExp, @NonNull CGVariableExp cgVariableExp, @NonNull CGValuedElement cgUnsafeExp) {
+		NameResolution unsafeNameResolution = cgVariableExp.getNameResolution();
+		NameResolution safeNameResolution = unsafeNameResolution.getNameVariant(codeGenerator.getSAFE_NameVariant());
+		//
+		CGConstantExp cgNullExpression = context.createCGConstantExp(callExp, context.getNull());
+		//
+		CGIsEqual2Exp cgCondition = CGModelFactory.eINSTANCE.createCGIsEqual2Exp();
+		cgCondition.setAst(callExp);
+		cgCondition.setTypeId(context.getTypeId(TypeId.BOOLEAN));
+		cgCondition.setSource(cgVariableExp);
+		cgCondition.setArgument(cgNullExpression);
+		cgCondition.setInvalidating(false);
+		cgCondition.setValidating(true);
+		//
+		CGConstantExp cgThenExpression = context.createCGConstantExp(callExp, context.getNull());
+		//
+		CGIfExp cgIfExp = createCGIfExp(cgCondition, cgThenExpression, cgUnsafeExp);
+		initAst(cgIfExp, callExp);
+		safeNameResolution.addCGElement(cgIfExp);
+		//
+		return cgIfExp;
+	}
+
 	public @NonNull CodeGenAnalyzer getAnalyzer() {
 		return context;
 	}
@@ -1779,10 +1802,19 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			return generateOperationCallExp(cgSource, asOperationCallExp);
 		}
 		else {
-			CGFinalVariable cgVariable = createCGFinalVariable(cgSource);
-			CGVariableExp cgVariableExp = context.createCGVariableExp(cgVariable);
-			CGValuedElement cgUnsafeExp = generateOperationCallExp(cgVariableExp, asOperationCallExp);
-			return generateSafeNavigationGuard(asOperationCallExp, cgVariable, cgUnsafeExp);
+			if (cgSource instanceof CGVariableExp) {
+				CGVariable cgVariable = CGUtil.getReferredVariable((CGVariableExp)cgSource);
+				CGVariableExp cgVariableExp1 = context.createCGVariableExp(cgVariable);
+				CGVariableExp cgVariableExp2 = context.createCGVariableExp(cgVariable);
+				CGValuedElement cgUnsafeExp = generateOperationCallExp(cgVariableExp1, asOperationCallExp);
+				return generateSafeNavigationGuard(asOperationCallExp, cgVariableExp2, cgUnsafeExp);
+			}
+			else {
+				CGFinalVariable cgVariable = createCGFinalVariable(cgSource);
+				CGVariableExp cgVariableExp = context.createCGVariableExp(cgVariable);
+				CGValuedElement cgUnsafeExp = generateOperationCallExp(cgVariableExp, asOperationCallExp);
+				return generateSafeNavigationGuard(asOperationCallExp, cgVariable, cgUnsafeExp);
+			}
 		}
 	}
 
@@ -1866,10 +1898,19 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		if (!asPropertyCallExp.isIsSafe()) {
 			return generatePropertyCallExp(cgSource, asPropertyCallExp);
 		}
-		CGFinalVariable cgVariable = createCGFinalVariable(cgSource);
-		CGVariableExp cgVariableExp = context.createCGVariableExp(cgVariable);
-		CGValuedElement cgUnsafeExp = generatePropertyCallExp(cgVariableExp, asPropertyCallExp);
-		return generateSafeNavigationGuard(asPropertyCallExp, cgVariable, cgUnsafeExp);
+		if (cgSource instanceof CGVariableExp) {
+			CGVariable cgVariable = CGUtil.getReferredVariable((CGVariableExp)cgSource);
+			CGVariableExp cgVariableExp1 = context.createCGVariableExp(cgVariable);
+			CGVariableExp cgVariableExp2 = context.createCGVariableExp(cgVariable);
+			CGValuedElement cgUnsafeExp = generatePropertyCallExp(cgVariableExp1, asPropertyCallExp);
+			return generateSafeNavigationGuard(asPropertyCallExp, cgVariableExp2, cgUnsafeExp);
+		}
+		else {
+			CGFinalVariable cgVariable = createCGFinalVariable(cgSource);
+			CGVariableExp cgVariableExp = context.createCGVariableExp(cgVariable);
+			CGValuedElement cgUnsafeExp = generatePropertyCallExp(cgVariableExp, asPropertyCallExp);
+			return generateSafeNavigationGuard(asPropertyCallExp, cgVariable, cgUnsafeExp);
+		}
 	}
 
 	@Override

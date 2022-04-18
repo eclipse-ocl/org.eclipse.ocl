@@ -462,7 +462,7 @@ public class FieldingAnalyzer
 			cgElement.setCaught(isCaught);
 			if (isCaught) {
 				NameVariant caughtNameVariant = context.getCodeGenerator().getCAUGHT_NameVariant();
-				cgElement.replaceNameResolutionWithvariant(caughtNameVariant);
+				cgElement.replaceNameResolutionWithVariant(caughtNameVariant);
 			}
 			return isCaught;
 		}

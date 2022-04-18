@@ -20,6 +20,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager.NameVariant;
 import org.eclipse.ocl.examples.codegen.analyzer.NameManager.Context;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 
 public abstract class AbstractNameResolution implements NameResolution
 {
@@ -74,6 +75,11 @@ public abstract class AbstractNameResolution implements NameResolution
 	}
 
 	@Override
+	public @Nullable Iterable<@NonNull CGValuedElement> getCGElements() {
+		return cgElements;
+	}
+
+	@Override
 	public @NonNull VariantNameResolution getNameVariant(@NonNull NameVariant nameVariant) {
 		Map<@NonNull NameVariant, @NonNull VariantNameResolution> nameVariant2variantNameResolution2 = nameVariant2variantNameResolution;
 		if (nameVariant2variantNameResolution2 == null) {
@@ -95,6 +101,21 @@ public abstract class AbstractNameResolution implements NameResolution
 	@Override
 	public boolean hasVariants() {
 		return (nameVariant2variantNameResolution != null) && (nameVariant2variantNameResolution.size() > 0);
+	}
+
+	@Override
+	public void removeCGElement(@NonNull CGVariableExp cgElement) {
+	//	if ("gt".equals(nameHint) ) {
+	//		getClass();		// XXX
+	//	}
+		List<@NonNull CGValuedElement> cgElements2 = cgElements;
+		assert cgElements2 != null;
+		assert cgElements2.contains(cgElement);
+		cgElements2.remove(cgElement);
+		getNameManager().removeNameResolution(cgElement);
+		cgElement.resetNameResolution();
+	//	cgElement.setNameResolution(this);
+	//	System.out.println("addCGElement '" + this + "' : " + cgElement.eClass().getName() + ":" + cgElement);
 	}
 
 	protected void resolveVariants(@NonNull Context context, @NonNull Object cgElement) {

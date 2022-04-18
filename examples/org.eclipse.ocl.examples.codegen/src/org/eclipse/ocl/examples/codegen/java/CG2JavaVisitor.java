@@ -2978,10 +2978,25 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 				if (varNameResolution == varNameResolution.getBaseNameResolution()) {			// A variant did not need propagating.
 					NameResolution initNameResolution = cgInit.getNameResolution().getBaseNameResolution();
 					if (varNameResolution != initNameResolution) {
-						js.appendDeclaration(cgVariable);
-						js.append(" = ");
-						js.appendValueName(cgInit);
-						js.append(";\n");
+						boolean hasAccess = false;
+						Iterable<@NonNull CGValuedElement> cgElements = varNameResolution.getCGElements();
+						if (cgElements != null) {
+							for (CGValuedElement cgElement : cgElements) {
+								if (cgElement instanceof CGVariableExp) {
+									CGPackage cgPackage = CGUtil.basicGetContainingPackage(cgElement);
+									if (cgPackage != null) {
+										hasAccess = true;
+										break;
+									}
+								}
+							}
+						}
+						if (hasAccess) {
+							js.appendDeclaration(cgVariable);
+							js.append(" = ");
+							js.appendValueName(cgInit);
+							js.append(";\n");
+						}
 					}
 				}
 			}

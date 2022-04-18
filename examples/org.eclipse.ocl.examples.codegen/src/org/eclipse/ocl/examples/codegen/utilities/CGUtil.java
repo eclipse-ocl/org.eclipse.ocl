@@ -86,6 +86,15 @@ public class CGUtil
 		return null;
 	}
 
+	public static @Nullable CGPackage basicGetContainingPackage(@NonNull CGValuedElement cgExpression) {
+		for (CGElement cgElement = cgExpression; cgElement != null; cgElement = cgElement.getParent()) {
+			if (cgElement instanceof CGPackage) {
+				return (CGPackage) cgElement;
+			}
+		}
+		return null;
+	}
+
 	public static @Nullable CGProperty basicGetContainingProperty(@NonNull CGValuedElement cgExpression) {
 		for (CGElement cgElement = cgExpression; cgElement != null; cgElement = cgElement.getParent()) {
 			if (cgElement instanceof CGProperty) {
