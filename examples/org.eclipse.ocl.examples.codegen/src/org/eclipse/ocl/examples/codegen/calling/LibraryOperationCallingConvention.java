@@ -165,7 +165,7 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 		Class<?> actualReturnClass = jMethod.getReturnType();
 		Boolean actualNullity = cg2JavaVisitor.getCodeGenerator().getIsNonNull(jMethod);
 		boolean actualIsNonNull = actualNullity == Boolean.TRUE;
-		boolean actualIsNullable = actualNullity == Boolean.FALSE;
+	//	boolean actualIsNullable = actualNullity == Boolean.FALSE;
 		boolean expectedIsNonNull = cgOperationCallExp.isNonNull();
 		for (@NonNull CGValuedElement cgArgument : cgArguments) {
 			if (!js.appendLocalStatements(cgArgument)) {
@@ -224,7 +224,7 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 		if (expectedIsNonNull && !actualIsNonNull) {
 			js.appendSuppressWarningsNull(true);
 		}
-		js.appendDeclaration(cgOperationCallExp);		// FIXME Look for Java method to detect @Nullable
+		js.appendDeclaration(cgOperationCallExp);
 		js.append(" = ");
 		boolean isRequiredNullCast = expectedIsNonNull && !actualIsNonNull;
 		//		if (expectedIsNonNull && !actualIsNonNull) {
