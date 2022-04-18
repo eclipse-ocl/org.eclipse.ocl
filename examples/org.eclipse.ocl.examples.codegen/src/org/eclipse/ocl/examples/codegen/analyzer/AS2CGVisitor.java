@@ -1091,6 +1091,14 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return environmentFactory;
 	}
 
+/*	public @NonNull CGParameter getExecutorParameter() {
+		LocalContext localContext = / *contextStack.isEmpty() ? null :* / getLocalContext();
+		CGParameter executorParameter = ((JavaLocalContext<?>)localContext).getExecutorParameter();
+		assert executorParameter.eContainer() == null;
+		addParameter((VariableDeclaration)executorParameter.getAst(), executorParameter);
+		return executorParameter;
+	} */
+
 	public @NonNull CGVariable getExecutorVariable() {
 		LocalContext localContext = /*contextStack.isEmpty() ? null :*/ getLocalContext();
 		return ((JavaLocalContext<?>)localContext).getExecutorVariable();
@@ -1310,7 +1318,15 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return referencedOperations;
 	}
 
-	public @NonNull CGParameter getSelfParameter(@NonNull Variable aParameter) {
+/*	public @NonNull CGParameter getSelfParameter() {
+		LocalContext localContext = / *contextStack.isEmpty() ? null :* / getLocalContext();
+		CGParameter selfParameter = ((JavaLocalContext<?>)localContext).getSelfParameter();
+		assert selfParameter.eContainer() == null;
+		addParameter((VariableDeclaration)selfParameter.getAst(), selfParameter);
+		return selfParameter;
+	} */
+
+	public @NonNull CGParameter getSelfParameter(@NonNull VariableDeclaration aParameter) {
 		CGParameter cgParameter = variablesStack.getParameter(aParameter);
 		if (cgParameter == null) {
 			cgParameter = CGModelFactory.eINSTANCE.createCGParameter();
@@ -1325,7 +1341,15 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return cgParameter;
 	}
 
-	public @NonNull CGParameter getThisParameter(@NonNull Variable aParameter) {
+/*	public @NonNull CGParameter getThisParameter() {
+		LocalContext localContext = / *contextStack.isEmpty() ? null :* / getLocalContext();
+		CGParameter thisParameter = ((JavaLocalContext<?>)localContext).getThisParameter();
+		assert thisParameter.eContainer() == null;
+		addParameter((VariableDeclaration)thisParameter.getAst(), thisParameter);
+		return thisParameter;
+	} */
+
+	public @NonNull CGParameter getThisParameter(@NonNull VariableDeclaration aParameter) {
 		CGParameter cgParameter = variablesStack.getParameter(aParameter);
 		if (cgParameter == null) {
 			cgParameter = CGModelFactory.eINSTANCE.createCGParameter();
@@ -1356,6 +1380,14 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 				}
 			}
 		}
+	}
+
+	public @NonNull CGParameter getTypeIdParameter() {
+		LocalContext localContext = /*contextStack.isEmpty() ? null :*/ getLocalContext();
+		CGParameter typeIdParameter = ((JavaLocalContext<?>)localContext).getTypeIdParameter();
+		assert typeIdParameter.eContainer() == null;
+		addParameter((VariableDeclaration)typeIdParameter.getAst(), typeIdParameter);
+		return typeIdParameter;
 	}
 
 	public @NonNull CGVariable getVariable(@NonNull VariableDeclaration asVariable) {

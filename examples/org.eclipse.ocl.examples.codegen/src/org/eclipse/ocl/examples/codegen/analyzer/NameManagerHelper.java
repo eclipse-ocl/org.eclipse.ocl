@@ -55,7 +55,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGTupleExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGUnboxExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGUnlimited;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.util.AbstractExtendingCGModelVisitor;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.BagType;
@@ -574,13 +573,15 @@ public class NameManagerHelper
 //			return visitCGNamedElement(object);		// Leapfrog getNamedValue reirection
 //		}
 
-		@Override
-		public @NonNull String visitCGVariableExp(@NonNull CGVariableExp object) {
+	//	@Override
+	//	public @NonNull String visitCGVariableExp(@NonNull CGVariableExp object) {
+		//	assert object.basicGetNameResolution() ==
 		//	CGVariable cgVariable = CGUtil.getReferredVariable(object);
 		//	String name = cgVariable.accept(this);
 		//	return context.getNameHint(cgVariable);
-			return visiting(object);			// CGVariableExp should redirect to CGVariable when created
-		}
+		//	return visiting(object);			// CGVariableExp should redirect to CGVariable when created
+	//		return super.visitCGVariableExp(object);			// CGVariableExp should redirect to CGVariable when created
+	//	}
 
 		@Override
 		public @NonNull String visiting(@NonNull CGElement visitable) {

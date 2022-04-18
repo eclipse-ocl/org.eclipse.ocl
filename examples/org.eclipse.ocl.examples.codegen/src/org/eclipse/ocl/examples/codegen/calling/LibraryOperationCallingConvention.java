@@ -41,6 +41,7 @@ import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 
 /**
@@ -114,15 +115,24 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 				cgParameters.add(localContext.getExecutorParameter());
 			}
 			else if (jParameterType == TypeId.class) {
-			//	cgParameters.add(localContext.getTypeIdParameter());
 				cgParameters.add(localContext.getTypeIdParameter());
 			}
-			else if (jParameterType == Object[].class) {		// XXX
-				throw new UnsupportedOperationException();
-			}
-			else { //if (jParameterType == Object.class) {
+		//	else if (jParameterType == Object[].class) {		// XXX
+		//		throw new UnsupportedOperationException();
+		//	}
+			else if (jParameterType == Object.class) {
 				if (i < 0) {
-					cgParameters.add(localContext.getSelfParameter());
+					CGParameter selfParameter;
+					if (expressionInOCL != null) {
+						selfParameter = as2cgVisitor.getSelfParameter(PivotUtil.getOwnedContext(expressionInOCL));
+					}
+					else {
+						selfParameter = localContext.getSelfParameter();
+					}
+					if (as2cgVisitor.getAnalyzer().hasOclVoidOperation(asOperation.getOperationId())) {
+						selfParameter.setRequired(false);
+					}
+					cgParameters.add(selfParameter);
 					i = 0;
 				}
 				else {
@@ -131,9 +141,9 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 					cgParameters.add(cgParameter);
 				}
 			}
-		//	else {
-		//		throw new UnsupportedOperationException();
-		//	}
+			else {
+				throw new UnsupportedOperationException();
+			}
 		}
 		assert i == asParameters.size();
 	}
