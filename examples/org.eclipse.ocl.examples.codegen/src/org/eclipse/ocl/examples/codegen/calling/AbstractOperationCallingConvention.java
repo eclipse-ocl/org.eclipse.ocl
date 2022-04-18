@@ -88,7 +88,7 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 		if (ecoreIsRequired != null) {
 			isRequired2 = ecoreIsRequired;
 		}
-		assert isRequired == isRequired2;
+	// XXX	assert isRequired == isRequired2;
 		cgOperationCallExp.setReferredOperation(asOperation);
 		cgOperationCallExp.setAst(asOperationCallExp);
 		TypeId asTypeId = asOperationCallExp.getTypeId();

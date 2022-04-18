@@ -1802,7 +1802,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			return generateOperationCallExp(cgSource, asOperationCallExp);
 		}
 		else {
-			if (cgSource instanceof CGVariableExp) {
+			if (cgSource instanceof CGVariableExp) {			// XXX share 3-way
 				CGVariable cgVariable = CGUtil.getReferredVariable((CGVariableExp)cgSource);
 				CGVariableExp cgVariableExp1 = context.createCGVariableExp(cgVariable);
 				CGVariableExp cgVariableExp2 = context.createCGVariableExp(cgVariable);

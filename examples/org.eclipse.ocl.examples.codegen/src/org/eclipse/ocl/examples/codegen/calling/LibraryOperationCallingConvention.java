@@ -92,7 +92,7 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 				throw new UnsupportedOperationException();
 			}
 		}
-		boolean isRequired = asOperation.isIsRequired();
+		boolean isRequired = cgOperation.isRequired();
 		init(as2cgVisitor, cgOperationCallExp, asOperationCallExp, cgOperation, null, isRequired);
 		return cgOperationCallExp;
 	}
@@ -105,6 +105,7 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 		List<CGParameter> cgParameters = cgOperation.getParameters();
 		LibraryOperation libraryOperation = (LibraryOperation)as2cgVisitor.getMetamodelManager().getImplementation(asOperation);
 		Method jMethod = libraryOperation.getEvaluateMethod(asOperation);
+		cgOperation.setRequired(((JavaCodeGenerator)as2cgVisitor.getCodeGenerator()).getIsNonNull(jMethod) == Boolean.TRUE);
 		List<@NonNull Parameter> asParameters = ClassUtil.nullFree(asOperation.getOwnedParameters());
 		int i = asOperation.isIsStatic() ? 0 : -1;
 		if (Modifier.isStatic(jMethod.getModifiers())) {
@@ -162,7 +163,9 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 		CGOperation cgOperation = cgOperationCallExp.getOperation();
 		Method jMethod = libraryOperation.getEvaluateMethod(CGUtil.getAST(cgOperation));
 		Class<?> actualReturnClass = jMethod.getReturnType();
-		boolean actualIsNonNull = cg2JavaVisitor.getCodeGenerator().getIsNonNull(jMethod) == Boolean.TRUE;
+		Boolean actualNullity = cg2JavaVisitor.getCodeGenerator().getIsNonNull(jMethod);
+		boolean actualIsNonNull = actualNullity == Boolean.TRUE;
+		boolean actualIsNullable = actualNullity == Boolean.FALSE;
 		boolean expectedIsNonNull = cgOperationCallExp.isNonNull();
 		for (@NonNull CGValuedElement cgArgument : cgArguments) {
 			if (!js.appendLocalStatements(cgArgument)) {
@@ -217,10 +220,11 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 				}
 			}
 		}
+	//	Boolean returnNullity = cg2JavaVisitor.getCodeGenerator().getIsNonNull(jMethod);
 		if (expectedIsNonNull && !actualIsNonNull) {
 			js.appendSuppressWarningsNull(true);
 		}
-		js.appendDeclaration(cgOperationCallExp);
+		js.appendDeclaration(cgOperationCallExp);		// FIXME Look for Java method to detect @Nullable
 		js.append(" = ");
 		boolean isRequiredNullCast = expectedIsNonNull && !actualIsNonNull;
 		//		if (expectedIsNonNull && !actualIsNonNull) {
