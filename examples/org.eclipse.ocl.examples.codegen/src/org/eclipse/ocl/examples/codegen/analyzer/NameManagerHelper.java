@@ -394,8 +394,9 @@ public class NameManagerHelper
 
 		@Override
 		public @NonNull String visitCGGuardExp(@NonNull CGGuardExp object) {
-		//	return "GUARDED_" + context.getNameHint(object.getSourceValue());
-			return visiting(object);			// NameVariant should be eagerly declared
+		//	return "GUARDED2_" + context.getNameHint(object.getSourceValue());			// XXX
+			//	return visiting(object);			// NameVariant should be eagerly declared
+				return super.visitCGGuardExp(object);			// NameVariant should be eagerly declared
 		}
 
 		@Override
