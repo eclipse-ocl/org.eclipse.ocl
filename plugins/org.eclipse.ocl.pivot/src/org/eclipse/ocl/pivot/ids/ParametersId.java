@@ -33,10 +33,15 @@ public interface ParametersId extends IndexableIterable<@NonNull TypeId>	//  ?? 
 	/**
 	 * @since 1.3
 	 */
+//	public static final @NonNull ParametersId OCL_ANY = IdManager.getParametersId(TypeId.OCL_ANY);
+
+	/**
+	 * @since 1.3
+	 */
 	public static final @NonNull ParametersId OCL_SELF = IdManager.getParametersId(TypeId.OCL_SELF);
 
 	/**
 	 * @since 1.18
 	 */
-	public static final @NonNull ParametersId T_1 = IdManager.getParametersId(TypeId.T_1);
+	public static final @NonNull ParametersId T_0 = IdManager.getParametersId(IdManager.getTemplateParameterId(0));
 }

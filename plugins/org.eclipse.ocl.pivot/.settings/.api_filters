@@ -294,6 +294,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/StandardLibrary.java" type="org.eclipse.ocl.pivot.StandardLibrary">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.StandardLibrary"/>
+                <message_argument value="getCollectionExcludingOperation()"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/internal/BagTypeImpl.java" type="org.eclipse.ocl.pivot.internal.BagTypeImpl">
         <filter id="388194388">
             <message_arguments>
@@ -1553,7 +1561,21 @@
         <filter id="403767336">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.ids.ParametersId"/>
+                <message_argument value="T_0"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.ids.ParametersId"/>
                 <message_argument value="T_1"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/ids/TypeId.java" type="org.eclipse.ocl.pivot.ids.TypeId">
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.ids.TypeId"/>
+                <message_argument value="EXCLUDING_NAME"/>
             </message_arguments>
         </filter>
     </resource>

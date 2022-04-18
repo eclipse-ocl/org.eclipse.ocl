@@ -955,7 +955,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 								"        elementNameNotReservedWord: \n" +
 								"            let name: String = self.name.toLower() in\n" +
 								"            name <> 'reserved_1' and\n" +
-/*								"            name <> 'reserved_2' and\n" +
+								"            name <> 'reserved_2' and\n" +
 								"            name <> 'reserved_3' and\n" +
 								"            name <> 'reserved_4' and\n" +
 								"            name <> 'reserved_5' and\n" +
@@ -971,7 +971,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 								"            name <> 'reserved_15' and\n" +
 								"            name <> 'reserved_16' and\n" +
 								"            name <> 'reserved_17' and\n" +
-								"            name <> 'reserved_18' and\n" + */
+								"            name <> 'reserved_18' and\n" +
 								"            name <> 'reserved_19';\n" +
 								"    }\n" +
 								"}\n";

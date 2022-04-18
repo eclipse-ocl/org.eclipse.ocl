@@ -51,6 +51,7 @@ import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VoidType;
+import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
@@ -378,6 +379,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	private @Nullable PrimitiveType booleanType = null;
 	private org.eclipse.ocl.pivot.@Nullable Class classType = null;
 	private @Nullable CollectionType collectionType = null;
+	private @Nullable Operation collectionExcludingOperation = null;
 	private org.eclipse.ocl.pivot.@Nullable Class enumerationType = null;
 	private @Nullable PrimitiveType integerType = null;
 	private org.eclipse.ocl.pivot.@Nullable Package libraryPackage = null;
@@ -509,6 +511,15 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 			classType2 = classType = resolveRequiredSimpleType(org.eclipse.ocl.pivot.Class.class, TypeId.CLASS_NAME);
 		}
 		return classType2;
+	}
+
+	@Override
+	public @NonNull Operation getCollectionExcludingOperation() {
+		Operation collectionExcludingOperation2 = collectionExcludingOperation;
+		if (collectionExcludingOperation2 == null) {
+			collectionExcludingOperation2 = collectionExcludingOperation = resolveRequiredOperation(getCollectionType(), TypeId.EXCLUDING_NAME, ParametersId.T_0);
+		}
+		return collectionExcludingOperation2;
 	}
 
 	@Override
@@ -976,6 +987,18 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 		uniqueCollectionType = null;
 		unlimitedNaturalType = null;
 		nameToLibraryTypeMap = null;
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	protected @NonNull Operation resolveRequiredOperation(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull String operationName, @NonNull ParametersId parametersId) {
+		for (Operation asOperation : asClass.getOwnedOperations()) {
+			if (operationName.equals(asOperation.getName()) && (parametersId == asOperation.getParametersId())) {
+				return asOperation;
+			}
+		}
+		throw new IllegalLibraryException("No " + operationName + "(" + parametersId + ") in " + asClass);
 	}
 
 	protected @NonNull <T extends TemplateableElement> T resolveRequiredSimpleType(@NonNull Class<T> requiredClassType, @NonNull String name) {

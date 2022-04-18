@@ -161,10 +161,8 @@ import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.ids.IdManager;
-import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.ecore.EObjectOperation;
 import org.eclipse.ocl.pivot.internal.library.CompositionProperty;
@@ -1028,12 +1026,9 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	protected @NonNull CGValuedElement generateSafeExclusion(@NonNull CallExp callExp, @NonNull CGValuedElement cgSource) {
 		CGLibraryOperationCallExp cgOperationCallExp = createCGLibraryOperationCallExp(CollectionExcludingOperation.INSTANCE);
 		StandardLibraryInternal standardLibrary = environmentFactory.getStandardLibrary();
-		CollectionType collectionType = standardLibrary.getCollectionType();
-		CompleteClassInternal completeCollectionType = environmentFactory.getCompleteModel().getCompleteClass(collectionType);
-		Operation asOperation = completeCollectionType.getOperation(OperationId.COLLECTION_EXCLUDING);
-		assert asOperation != null;
-		cgOperationCallExp.setReferredOperation(asOperation);
-		CGOperation cgOperation = generateOperation(asOperation);
+		Operation asExcludingOperation = standardLibrary.getCollectionExcludingOperation();
+		cgOperationCallExp.setReferredOperation(asExcludingOperation);
+		CGOperation cgOperation = generateOperation(asExcludingOperation);
 		cgOperationCallExp.setOperation(cgOperation);
 		OCLExpression asSource = callExp.getOwnedSource();
 		cgOperationCallExp.setTypeId(context.getTypeId(asSource.getTypeId()));
