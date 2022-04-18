@@ -672,7 +672,10 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	@Override
 	public @Nullable Object visitCGTypeExp(@NonNull CGTypeExp cgTypeExp) {
 		super.visitCGTypeExp(cgTypeExp);
-		rewriteAsCast(cgTypeExp);
+		TypeDescriptor typeDescriptor = codeGenerator.getTypeDescriptor(cgTypeExp);
+		if (typeDescriptor.getJavaClass() != org.eclipse.ocl.pivot.Class.class) {
+			rewriteAsCast(cgTypeExp);			// XXX
+		}
 		return null;
 	}
 

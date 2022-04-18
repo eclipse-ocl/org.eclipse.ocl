@@ -1250,21 +1250,21 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		CGExecutorType cgType = cgCastExp.getExecutorType();
 		if (cgType != null) {
 			TypeDescriptor requiredTypeDescriptor = context.getTypeDescriptor(cgCastExp);
-			TypeDescriptor actualTypeDescriptor;
-			if (cgSource instanceof CGVariableExp) {	// CAST self has a distinct OclVoid type
-				actualTypeDescriptor = context.getTypeDescriptor(CGUtil.getReferredVariable((CGVariableExp)cgSource));
-			}
-			else {
-				actualTypeDescriptor = context.getTypeDescriptor(cgSource);
-			}
+		//	TypeDescriptor actualTypeDescriptor;
+		//	if (cgSource instanceof CGVariableExp) {	// CAST self has a distinct OclVoid type
+		//		actualTypeDescriptor = context.getTypeDescriptor(CGUtil.getReferredVariable((CGVariableExp)cgSource));
+		//	}
+		//	else {
+		//		actualTypeDescriptor = context.getTypeDescriptor(cgSource);
+		//	}
 			js.appendDeclaration(cgCastExp);
 			js.append(" = ");
-			if (requiredTypeDescriptor != actualTypeDescriptor) {
+		//	if (requiredTypeDescriptor != actualTypeDescriptor) {
 				requiredTypeDescriptor.appendCastTerm(js, cgSource);
-			}
-			else {
-				js.appendReferenceTo(cgSource);
-			}
+		//	}
+		//	else {
+		//		js.appendReferenceTo(cgSource);
+		//	}
 			js.append(";\n");
 		}
 		return true;
