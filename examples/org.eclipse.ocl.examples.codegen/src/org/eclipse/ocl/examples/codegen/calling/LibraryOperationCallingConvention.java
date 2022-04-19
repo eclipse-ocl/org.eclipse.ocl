@@ -24,7 +24,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
@@ -65,7 +64,6 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 	public @NonNull CGCallExp createCGOperationCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @NonNull LibraryOperation libraryOperation,
 			@Nullable CGValuedElement cgSource, @NonNull OperationCallExp asOperationCallExp) {
 		CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();
-		JavaLocalContext<?> localContext = as2cgVisitor.getLocalContext();
 		Operation asOperation = ClassUtil.nonNullState(asOperationCallExp.getReferredOperation());
 		assert (cgSource == null) == asOperation.isIsStatic();
 		Method jMethod = libraryOperation.getEvaluateMethod(asOperation);
@@ -75,12 +73,10 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 		List<CGValuedElement> cgArguments = cgOperationCallExp.getArguments();
 		for (Class<?> jParameterType : jMethod.getParameterTypes()) {
 			if (jParameterType == Executor.class) {
-				cgArguments.add(analyzer.createCGVariableExp(localContext.getExecutorVariable()));
+				addExecutorArgument(as2cgVisitor, cgOperationCallExp);
 			}
 			else if (jParameterType == TypeId.class) {
-				TypeId asTypeId = asOperationCallExp.getTypeId();
-				CGTypeId cgTypeId = analyzer.getTypeId(asTypeId);
-				cgArguments.add(analyzer.createCGConstantExp(cgTypeId));
+				addTypeIdArgument(as2cgVisitor, cgOperationCallExp, asOperationCallExp.getTypeId());
 			}
 			else if (jParameterType == Object.class) {
 				if (cgSource != null) {

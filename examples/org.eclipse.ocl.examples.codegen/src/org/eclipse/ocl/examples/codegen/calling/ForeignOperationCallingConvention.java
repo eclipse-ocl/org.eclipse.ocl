@@ -25,7 +25,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
@@ -34,7 +33,6 @@ import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
-import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -59,22 +57,21 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 		analyzer.addForeignFeature(asOperation);
 		boolean isRequired = asOperation.isIsRequired();
 		CGForeignOperationCallExp cgForeignOperationCallExp = CGModelFactory.eINSTANCE.createCGForeignOperationCallExp();
-		CGVariable executorVariable = as2cgVisitor.getExecutorVariable();
-		cgForeignOperationCallExp.getArguments().add(as2cgVisitor.createCGVariableExp(executorVariable));
+		addExecutorArgument(as2cgVisitor, cgForeignOperationCallExp);
 		init(as2cgVisitor, cgForeignOperationCallExp, asOperationCallExp, cgOperation, cgSource, isRequired);
 		return cgForeignOperationCallExp;
 	}
 
 	@Override
 	public void createParameters(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL expressionInOCL) {
-		CGParameter cgParameter = (CGParameter) as2cgVisitor.getExecutorVariable();
-		cgOperation.getParameters().add(cgParameter);
+		addExecutorParameter(as2cgVisitor, cgOperation);
 		super.createParameters(as2cgVisitor, cgOperation, expressionInOCL);
 	}
 
 	@Override
 	public @NonNull Boolean generateJava(@NonNull CG2JavaVisitor<?> cg2JavaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
 		CGForeignOperationCallExp cgForeignOperationCallExp = (CGForeignOperationCallExp)cgOperationCallExp;
+		CGOperation cgOperation = cgForeignOperationCallExp.getOperation();
 		CodeGenAnalyzer analyzer = cg2JavaVisitor.getAnalyzer();
 		JavaCodeGenerator codeGenerator = cg2JavaVisitor.getCodeGenerator();
 		Operation asReferredOperation = CGUtil.getReferredOperation(cgForeignOperationCallExp);
@@ -95,7 +92,8 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 			}
 		}
 		org.eclipse.ocl.pivot.Class asReferredClass = PivotUtil.getOwningClass(asReferredOperation);
-		List<Parameter> asParameters = asReferredOperation.getOwnedParameters();
+	//	List<Parameter> asParameters = asReferredOperation.getOwnedParameters();
+		List<CGParameter> cgParameters = cgOperation.getParameters();
 		//
 		CGClass cgReferringClass = CGUtil.getContainingClass(cgForeignOperationCallExp);
 		assert cgReferringClass != null;
@@ -111,14 +109,14 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 			TypeDescriptor sourceTypeDescriptor = codeGenerator.getUnboxedDescriptor(ClassUtil.nonNullState(cgTypeId.getElementId()));
 			js.appendReferenceTo(sourceTypeDescriptor, cgSource);
 		}
-		int iMax = Math.min(asParameters.size(), cgArguments.size());
+		int iMax = Math.min(cgParameters.size(), cgArguments.size());
 		for (int i = 0; i < iMax; i++) {
 			if ((i > 0) || !isStatic) {
 				js.append(", ");
 			}
 			CGValuedElement cgArgument = cgArguments.get(i);
-			Parameter asParameter = asParameters.get(i);
-			CGTypeId cgTypeId = analyzer.getTypeId(asParameter.getTypeId());
+			CGParameter cgParameter = cgParameters.get(i);
+			CGTypeId cgTypeId = cgParameter.getTypeId();
 			TypeDescriptor parameterTypeDescriptor = codeGenerator.getUnboxedDescriptor(ClassUtil.nonNullState(cgTypeId.getElementId()));
 			CGValuedElement argument = cg2JavaVisitor.getExpression(cgArgument);
 			js.appendReferenceTo(parameterTypeDescriptor, argument);

@@ -27,8 +27,10 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
 import org.eclipse.ocl.examples.codegen.java.ImportUtils;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
+import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.java.JavaGlobalContext;
 import org.eclipse.ocl.examples.codegen.java.JavaImportNameManager;
+import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreTablesUtils.CodeGenString;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
@@ -140,5 +142,17 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 	@Override
 	public @NonNull JavaImportNameManager getImportNameManager() {
 		return (JavaImportNameManager) super.getImportNameManager();
+	}
+
+	@Override
+	public @NonNull String getQualifiedForeignClassName(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+	// XXX	assert false : "Unsupported getQualifiedForeignClassName";
+	//	return JavaConstants.FOREIGN_CLASS_PREFIX + "statics_" + PivotUtil.getName(asClass);
+		CodeGenString s = new CodeGenString(environmentFactory.getMetamodelManager(), false);
+	//	s.append(genModelHelper.getQualifiedTableClassName(genPackage));
+	//	s.append(".");
+		s.append(JavaConstants.FOREIGN_CLASS_PREFIX);
+		s.appendAndEncodeQualifiedName(asClass);
+		return s.toString();
 	}
 }

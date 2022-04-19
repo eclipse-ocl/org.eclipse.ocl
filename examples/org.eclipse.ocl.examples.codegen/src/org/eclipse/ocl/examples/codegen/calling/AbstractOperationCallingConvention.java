@@ -10,14 +10,19 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.calling;
 
+import java.util.List;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
+import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
@@ -35,6 +40,38 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
  */
 public abstract class AbstractOperationCallingConvention implements OperationCallingConvention
 {
+	protected void addExecutorArgument(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperationCallExp cgOperationCallExp) {
+		CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();
+		CGVariable executorVariable = as2cgVisitor.getExecutorVariable();
+		cgOperationCallExp.getArguments().add(analyzer.createCGVariableExp(executorVariable));
+	}
+
+	protected void addExecutorParameter(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation) {
+		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
+		cgParameters.add(as2cgVisitor.getExecutorParameter());
+	}
+
+	protected void addExpressionInOCLParameters(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @NonNull ExpressionInOCL expressionInOCL) {
+		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
+		Variable contextVariable = expressionInOCL.getOwnedContext();
+		assert isStatic(cgOperation) == (contextVariable == null);
+		if (contextVariable != null) {
+			cgParameters.add(as2cgVisitor.getSelfParameter(contextVariable));
+		}
+		boolean hasExternalNames = cgOperation instanceof CGEcoreOperation;		// Ecore has genmodel-defined names
+		for (@NonNull Variable parameterVariable : ClassUtil.nullFree(expressionInOCL.getOwnedParameters())) {
+			String name = hasExternalNames ? parameterVariable.getName() : null;
+			CGParameter cgParameter = as2cgVisitor.getParameter(parameterVariable, name);
+			cgParameters.add(cgParameter);
+		}
+	}
+
+	protected void addTypeIdArgument(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperationCallExp cgOperationCallExp, @NonNull TypeId asTypeId) {
+		CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();
+		List<CGValuedElement> cgArguments = cgOperationCallExp.getArguments();
+		CGTypeId cgTypeId = analyzer.getTypeId(asTypeId);
+		cgArguments.add(analyzer.createCGConstantExp(cgTypeId));
+	}
 
 	@Override
 	public void createParameters(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL expressionInOCL) {

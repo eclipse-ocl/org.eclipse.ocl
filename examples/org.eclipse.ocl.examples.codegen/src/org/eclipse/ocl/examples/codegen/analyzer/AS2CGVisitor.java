@@ -1090,6 +1090,11 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return executorParameter;
 	} */
 
+	public @NonNull CGParameter getExecutorParameter() {
+		LocalContext localContext = /*contextStack.isEmpty() ? null :*/ getLocalContext();
+		return ((JavaLocalContext<?>)localContext).getExecutorParameter();
+	}
+
 	public @NonNull CGVariable getExecutorVariable() {
 		LocalContext localContext = /*contextStack.isEmpty() ? null :*/ getLocalContext();
 		return ((JavaLocalContext<?>)localContext).getExecutorVariable();
