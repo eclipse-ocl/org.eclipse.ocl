@@ -21,7 +21,6 @@ package org.eclipse.ocl.examples.codegen.cgmodel;
  * <ul>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp#isInvalidating <em>Invalidating</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp#isValidating <em>Validating</em>}</li>
- *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp#getSource <em>Source</em>}</li>
  * </ul>
  *
  * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGCallExp()
@@ -86,34 +85,6 @@ public interface CGCallExp extends CGValuedElement {
 	 * @generated
 	 */
 	void setValidating(boolean value);
-
-	/**
-	 * Returns the value of the '<em><b>Source</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Source</em>' containment reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * The source expression for the call.
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Source</em>' containment reference.
-	 * @see #setSource(CGValuedElement)
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGCallExp_Source()
-	 * @generated
-	 */
-	CGValuedElement getSource();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp#getSource <em>Source</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Source</em>' containment reference.
-	 * @see #getSource()
-	 * @generated
-	 */
-	void setSource(CGValuedElement value);
 
 //	@NonNull OperationCallingConvention getCallingConvention();
 

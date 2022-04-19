@@ -63,7 +63,6 @@
     <genClasses image="false" ecoreClass="cgmodel.ecore#//CGCallExp">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cgmodel.ecore#//CGCallExp/invalidating"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cgmodel.ecore#//CGCallExp/validating"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGCallExp/source"/>
     </genClasses>
     <genClasses ecoreClass="cgmodel.ecore#//CGCastExp">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGCastExp/executorType"/>
@@ -238,8 +237,9 @@
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference cgmodel.ecore#//CGOperation/containingClass"/>
     </genClasses>
     <genClasses image="false" ecoreClass="cgmodel.ecore#//CGOperationCallExp">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGOperationCallExp/arguments"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGOperationCallExp/cgArguments"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EAttribute cgmodel.ecore#//CGOperationCallExp/referredOperation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGOperationCallExp/cgThis"/>
     </genClasses>
     <genClasses image="false" ecoreClass="cgmodel.ecore#//CGOppositePropertyCallExp"/>
     <genClasses ecoreClass="cgmodel.ecore#//CGPackage">
@@ -267,6 +267,9 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGShadowPart/init"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference cgmodel.ecore#//CGShadowPart/shadowExp"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGShadowPart/executorPart"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="cgmodel.ecore#//CGSourcedCallExp">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGSourcedCallExp/source"/>
     </genClasses>
     <genClasses ecoreClass="cgmodel.ecore#//CGString">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cgmodel.ecore#//CGString/stringValue"/>

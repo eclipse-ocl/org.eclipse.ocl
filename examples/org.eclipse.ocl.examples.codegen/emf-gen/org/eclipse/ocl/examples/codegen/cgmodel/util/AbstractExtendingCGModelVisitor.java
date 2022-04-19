@@ -46,7 +46,7 @@ public abstract class AbstractExtendingCGModelVisitor<R, C>
 
 	@Override
 	public R visitCGAssertNonNullExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGAssertNonNullExp object) {
-		return visitCGCallExp(object);
+		return visitCGSourcedCallExp(object);
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public abstract class AbstractExtendingCGModelVisitor<R, C>
 
 	@Override
 	public R visitCGBoxExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGBoxExp object) {
-		return visitCGCallExp(object);
+		return visitCGSourcedCallExp(object);
 	}
 
 	@Override
@@ -86,12 +86,12 @@ public abstract class AbstractExtendingCGModelVisitor<R, C>
 
 	@Override
 	public R visitCGCastExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGCastExp object) {
-		return visitCGCallExp(object);
+		return visitCGSourcedCallExp(object);
 	}
 
 	@Override
 	public R visitCGCatchExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGCatchExp object) {
-		return visitCGCallExp(object);
+		return visitCGSourcedCallExp(object);
 	}
 
 	@Override
@@ -136,7 +136,7 @@ public abstract class AbstractExtendingCGModelVisitor<R, C>
 
 	@Override
 	public R visitCGEcoreExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGEcoreExp object) {
-		return visitCGCallExp(object);
+		return visitCGSourcedCallExp(object);
 	}
 
 	@Override
@@ -241,7 +241,7 @@ public abstract class AbstractExtendingCGModelVisitor<R, C>
 
 	@Override
 	public R visitCGGuardExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGGuardExp object) {
-		return visitCGCallExp(object);
+		return visitCGSourcedCallExp(object);
 	}
 
 	@Override
@@ -261,32 +261,32 @@ public abstract class AbstractExtendingCGModelVisitor<R, C>
 
 	@Override
 	public R visitCGIsEqual2Exp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGIsEqual2Exp object) {
-		return visitCGCallExp(object);
+		return visitCGSourcedCallExp(object);
 	}
 
 	@Override
 	public R visitCGIsEqualExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGIsEqualExp object) {
-		return visitCGCallExp(object);
+		return visitCGSourcedCallExp(object);
 	}
 
 	@Override
 	public R visitCGIsInvalidExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGIsInvalidExp object) {
-		return visitCGCallExp(object);
+		return visitCGSourcedCallExp(object);
 	}
 
 	@Override
 	public R visitCGIsKindOfExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGIsKindOfExp object) {
-		return visitCGCallExp(object);
+		return visitCGSourcedCallExp(object);
 	}
 
 	@Override
 	public R visitCGIsUndefinedExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGIsUndefinedExp object) {
-		return visitCGCallExp(object);
+		return visitCGSourcedCallExp(object);
 	}
 
 	@Override
 	public R visitCGIterationCallExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGIterationCallExp object) {
-		return visitCGCallExp(object);
+		return visitCGSourcedCallExp(object);
 	}
 
 	@Override
@@ -371,7 +371,7 @@ public abstract class AbstractExtendingCGModelVisitor<R, C>
 
 	@Override
 	public R visitCGNavigationCallExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGNavigationCallExp object) {
-		return visitCGCallExp(object);
+		return visitCGSourcedCallExp(object);
 	}
 
 	@Override
@@ -440,6 +440,11 @@ public abstract class AbstractExtendingCGModelVisitor<R, C>
 	}
 
 	@Override
+	public R visitCGSourcedCallExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGSourcedCallExp object) {
+		return visitCGCallExp(object);
+	}
+
+	@Override
 	public R visitCGString(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGString object) {
 		return visitCGConstant(object);
 	}
@@ -451,7 +456,7 @@ public abstract class AbstractExtendingCGModelVisitor<R, C>
 
 	@Override
 	public R visitCGThrowExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGThrowExp object) {
-		return visitCGCallExp(object);
+		return visitCGSourcedCallExp(object);
 	}
 
 	@Override
@@ -486,7 +491,7 @@ public abstract class AbstractExtendingCGModelVisitor<R, C>
 
 	@Override
 	public R visitCGUnboxExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGUnboxExp object) {
-		return visitCGCallExp(object);
+		return visitCGSourcedCallExp(object);
 	}
 
 	@Override

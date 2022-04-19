@@ -39,8 +39,9 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGOperationCallExpImpl#getArguments <em>Arguments</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGOperationCallExpImpl#getCgArguments <em>Cg Arguments</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGOperationCallExpImpl#getReferredOperation <em>Referred Operation</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGOperationCallExpImpl#getCgThis <em>Cg This</em>}</li>
  * </ul>
  *
  * @generated
@@ -53,17 +54,17 @@ public abstract class CGOperationCallExpImpl extends CGCallExpImpl implements CG
 	 * @generated
 	 * @ordered
 	 */
-	public static final int CG_OPERATION_CALL_EXP_FEATURE_COUNT = CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 2;
+	public static final int CG_OPERATION_CALL_EXP_FEATURE_COUNT = CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 3;
 
 	/**
-	 * The cached value of the '{@link #getArguments() <em>Arguments</em>}' containment reference list.
+	 * The cached value of the '{@link #getCgArguments() <em>Cg Arguments</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getArguments()
+	 * @see #getCgArguments()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<CGValuedElement> arguments;
+	protected EList<CGValuedElement> cgArguments;
 
 	/**
 	 * The default value of the '{@link #getReferredOperation() <em>Referred Operation</em>}' attribute.
@@ -84,6 +85,16 @@ public abstract class CGOperationCallExpImpl extends CGCallExpImpl implements CG
 	 * @ordered
 	 */
 	protected Operation referredOperation = REFERRED_OPERATION_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getCgThis() <em>Cg This</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCgThis()
+	 * @generated
+	 * @ordered
+	 */
+	protected CGValuedElement cgThis;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -110,12 +121,11 @@ public abstract class CGOperationCallExpImpl extends CGCallExpImpl implements CG
 	 * @generated
 	 */
 	@Override
-	@SuppressWarnings("null")
-	public @NonNull List<CGValuedElement> getArguments() {
-		if (arguments == null) {
-			arguments = new EObjectContainmentEList<CGValuedElement>(CGValuedElement.class, this, 9);
+	public List<CGValuedElement> getCgArguments() {
+		if (cgArguments == null) {
+			cgArguments = new EObjectContainmentEList<CGValuedElement>(CGValuedElement.class, this, 8);
 		}
-		return arguments;
+		return cgArguments;
 	}
 
 	/**
@@ -138,7 +148,52 @@ public abstract class CGOperationCallExpImpl extends CGCallExpImpl implements CG
 		Operation oldReferredOperation = referredOperation;
 		referredOperation = newReferredOperation;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 10, oldReferredOperation, referredOperation));
+			eNotify(new ENotificationImpl(this, Notification.SET, 9, oldReferredOperation, referredOperation));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public CGValuedElement getCgThis() {
+		return cgThis;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetCgThis(CGValuedElement newCgThis, NotificationChain msgs) {
+		CGValuedElement oldCgThis = cgThis;
+		cgThis = newCgThis;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 10, oldCgThis, newCgThis);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setCgThis(CGValuedElement newCgThis) {
+		if (newCgThis != cgThis) {
+			NotificationChain msgs = null;
+			if (cgThis != null)
+				msgs = ((InternalEObject)cgThis).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (10), null, msgs);
+			if (newCgThis != null)
+				msgs = ((InternalEObject)newCgThis).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (10), null, msgs);
+			msgs = basicSetCgThis(newCgThis, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, 10, newCgThis, newCgThis));
 	}
 
 	/**
@@ -159,8 +214,10 @@ public abstract class CGOperationCallExpImpl extends CGCallExpImpl implements CG
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case 9:
-				return ((InternalEList<?>)getArguments()).basicRemove(otherEnd, msgs);
+			case 8:
+				return ((InternalEList<?>)getCgArguments()).basicRemove(otherEnd, msgs);
+			case 10:
+				return basicSetCgThis(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -173,10 +230,12 @@ public abstract class CGOperationCallExpImpl extends CGCallExpImpl implements CG
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+			case 8:
+				return getCgArguments();
 			case 9:
-				return getArguments();
-			case 10:
 				return getReferredOperation();
+			case 10:
+				return getCgThis();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -190,12 +249,15 @@ public abstract class CGOperationCallExpImpl extends CGCallExpImpl implements CG
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
+			case 8:
+				getCgArguments().clear();
+				getCgArguments().addAll((Collection<? extends CGValuedElement>)newValue);
+				return;
 			case 9:
-				getArguments().clear();
-				getArguments().addAll((Collection<? extends CGValuedElement>)newValue);
+				setReferredOperation((Operation)newValue);
 				return;
 			case 10:
-				setReferredOperation((Operation)newValue);
+				setCgThis((CGValuedElement)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -209,11 +271,14 @@ public abstract class CGOperationCallExpImpl extends CGCallExpImpl implements CG
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
+			case 8:
+				getCgArguments().clear();
+				return;
 			case 9:
-				getArguments().clear();
+				setReferredOperation(REFERRED_OPERATION_EDEFAULT);
 				return;
 			case 10:
-				setReferredOperation(REFERRED_OPERATION_EDEFAULT);
+				setCgThis((CGValuedElement)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -227,10 +292,12 @@ public abstract class CGOperationCallExpImpl extends CGCallExpImpl implements CG
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
+			case 8:
+				return cgArguments != null && !cgArguments.isEmpty();
 			case 9:
-				return arguments != null && !arguments.isEmpty();
-			case 10:
 				return REFERRED_OPERATION_EDEFAULT == null ? referredOperation != null : !REFERRED_OPERATION_EDEFAULT.equals(referredOperation);
+			case 10:
+				return cgThis != null;
 		}
 		return super.eIsSet(featureID);
 	}

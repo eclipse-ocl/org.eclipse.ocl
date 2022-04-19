@@ -36,7 +36,7 @@ import org.eclipse.emf.ecore.EClassifier;
  * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGEcoreExp()
  * @generated
  */
-public interface CGEcoreExp extends CGCallExp {
+public interface CGEcoreExp extends CGSourcedCallExp {
 
 	/**
 	 * Returns the value of the '<em><b>EClassifier</b></em>' reference.

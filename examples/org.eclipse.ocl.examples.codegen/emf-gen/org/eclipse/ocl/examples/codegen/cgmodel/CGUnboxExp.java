@@ -24,5 +24,5 @@ package org.eclipse.ocl.examples.codegen.cgmodel;
  * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGUnboxExp()
  * @generated
  */
-public interface CGUnboxExp extends CGCallExp {
+public interface CGUnboxExp extends CGSourcedCallExp {
 } // CGUnboxExp

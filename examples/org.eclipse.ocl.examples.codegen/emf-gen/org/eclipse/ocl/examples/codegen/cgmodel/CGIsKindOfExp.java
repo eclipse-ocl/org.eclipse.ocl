@@ -34,7 +34,7 @@ package org.eclipse.ocl.examples.codegen.cgmodel;
  * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGIsKindOfExp()
  * @generated
  */
-public interface CGIsKindOfExp extends CGCallExp {
+public interface CGIsKindOfExp extends CGSourcedCallExp {
 	/**
 	 * Returns the value of the '<em><b>Executor Type</b></em>' reference.
 	 * <!-- begin-user-doc -->

@@ -24,14 +24,29 @@ import org.eclipse.ocl.pivot.Operation;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getArguments <em>Arguments</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getCgArguments <em>Cg Arguments</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getReferredOperation <em>Referred Operation</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getCgThis <em>Cg This</em>}</li>
  * </ul>
  *
  * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGOperationCallExp()
  * @generated
  */
 public interface CGOperationCallExp extends CGCallExp {
+	/**
+	 * Returns the value of the '<em><b>Cg Arguments</b></em>' containment reference list.
+	 * The list contents are of type {@link org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * All argument expressions for the call often corresponding to executor then typeid then source/self then arguments
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Cg Arguments</em>' containment reference list.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGOperationCallExp_CgArguments()
+	 * @generated
+	 */
+	List<CGValuedElement> getCgArguments();
+
 	/**
 	 * Returns the value of the '<em><b>Referred Operation</b></em>' attribute.
 	 * <!-- begin-user-doc -->
@@ -58,19 +73,28 @@ public interface CGOperationCallExp extends CGCallExp {
 	void setReferredOperation(Operation value);
 
 	/**
-	 * Returns the value of the '<em><b>Arguments</b></em>' containment reference list.
-	 * The list contents are of type {@link org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement}.
+	 * Returns the value of the '<em><b>Cg This</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Arguments</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Arguments</em>' containment reference list.
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGOperationCallExp_Arguments()
+	 * <!-- begin-model-doc -->
+	 * The this expression for the call when invoking a native or ecore implementation.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Cg This</em>' containment reference.
+	 * @see #setCgThis(CGValuedElement)
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGOperationCallExp_CgThis()
 	 * @generated
 	 */
-	@NonNull List<CGValuedElement> getArguments();
+	CGValuedElement getCgThis();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getCgThis <em>Cg This</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Cg This</em>' containment reference.
+	 * @see #getCgThis()
+	 * @generated
+	 */
+	void setCgThis(CGValuedElement value);
 
 	@NonNull CGOperation getOperation();
 

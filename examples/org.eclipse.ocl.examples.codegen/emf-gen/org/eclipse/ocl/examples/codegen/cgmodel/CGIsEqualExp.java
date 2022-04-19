@@ -31,7 +31,7 @@ package org.eclipse.ocl.examples.codegen.cgmodel;
  * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGIsEqualExp()
  * @generated
  */
-public interface CGIsEqualExp extends CGCallExp {
+public interface CGIsEqualExp extends CGSourcedCallExp {
 
 	/**
 	 * Returns the value of the '<em><b>Argument</b></em>' containment reference.

@@ -34,7 +34,7 @@ import org.eclipse.ocl.pivot.Property;
  *
  * @generated
  */
-public abstract class CGNavigationCallExpImpl extends CGCallExpImpl implements CGNavigationCallExp {
+public abstract class CGNavigationCallExpImpl extends CGSourcedCallExpImpl implements CGNavigationCallExp {
 	/**
 	 * The number of structural features of the '<em>CG Navigation Call Exp</em>' class.
 	 * <!-- begin-user-doc -->
@@ -42,7 +42,7 @@ public abstract class CGNavigationCallExpImpl extends CGCallExpImpl implements C
 	 * @generated
 	 * @ordered
 	 */
-	public static final int CG_NAVIGATION_CALL_EXP_FEATURE_COUNT = CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 1;
+	public static final int CG_NAVIGATION_CALL_EXP_FEATURE_COUNT = CGSourcedCallExpImpl.CG_SOURCED_CALL_EXP_FEATURE_COUNT + 1;
 
 	/**
 	 * The default value of the '{@link #getReferredProperty() <em>Referred Property</em>}' attribute.
