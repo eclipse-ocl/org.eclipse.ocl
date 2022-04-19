@@ -242,4 +242,14 @@ public class CGLibraryOperationCallExpImpl extends CGOperationCallExpImpl implem
 		}
 		return true;
 	}
+
+	@Override
+	public @NonNull CGValuedElement getFirstArgument() {
+		return getCgArguments().get(0);
+	}
+
+	@Override
+	public @NonNull CGValuedElement getSecondArgument() {
+		return getCgArguments().get(1);
+	}
 } //CGLibraryOperationCallExpImpl
