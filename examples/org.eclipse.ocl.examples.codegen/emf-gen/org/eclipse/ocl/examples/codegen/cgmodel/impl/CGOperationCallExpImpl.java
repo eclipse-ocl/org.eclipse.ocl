@@ -337,14 +337,14 @@ public abstract class CGOperationCallExpImpl extends CGCallExpImpl implements CG
 			}
 		}
 		if (referredOperation.isIsStatic()) {
-			if (source != null) {
+			if (cgThis != null) {
 				return false;
 			}
 		}
-		else if (!source.isNonNull() || !source.isNonInvalid()) {
+		else if (!cgThis.isNonNull() || !cgThis.isNonInvalid()) {
 			return false;
 		}
-		for (@NonNull CGValuedElement argument : ClassUtil.nullFree(getArguments())) {
+		for (@NonNull CGValuedElement argument : ClassUtil.nullFree(getCgArguments())) {
 			if (!argument.isNonNull() || !argument.isNonInvalid()) {
 				return false;
 			}

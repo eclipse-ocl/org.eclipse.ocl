@@ -235,7 +235,7 @@ public class CGLibraryOperationCallExpImpl extends CGOperationCallExpImpl implem
 				// normal use case - nonInvalid if all inputs nonInvalid
 			}
 		}
-		for (@NonNull CGValuedElement argument : ClassUtil.nullFree(getArguments())) {
+		for (@NonNull CGValuedElement argument : ClassUtil.nullFree(getCgArguments())) {
 			if (!argument.isNonNull() || !argument.isNonInvalid()) {
 				return false;
 			}

@@ -1327,13 +1327,14 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	public @NonNull Boolean visitCGCachedOperationCallExp(@NonNull CGCachedOperationCallExp cgOperationCallExp) {
 		Operation pOperation = cgOperationCallExp.getReferredOperation();
 		boolean thisIsSelf = cgOperationCallExp.isThisIsSelf();
-		CGValuedElement source = getExpression(cgOperationCallExp.getSource());
-		List<CGValuedElement> cgArguments = cgOperationCallExp.getArguments();
+		assert cgOperationCallExp.getCgThis() == null;
+	//	CGValuedElement source = getExpression(cgOperationCallExp.getSource());
+		List<CGValuedElement> cgArguments = cgOperationCallExp.getCgArguments();
 		List<Parameter> pParameters = pOperation.getOwnedParameters();
 		//
-		if (!js.appendLocalStatements(source)) {
-			return false;
-		}
+	//	if (!js.appendLocalStatements(source)) {
+	//		return false;
+	//	}
 		for (@SuppressWarnings("null")@NonNull CGValuedElement cgArgument : cgArguments) {
 			CGValuedElement argument = getExpression(cgArgument);
 			if (!js.appendLocalStatements(argument)) {
@@ -1359,8 +1360,9 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		js.append(globalContext.getEvaluateName());
 		//		js.append(cgOperationCallExp.getReferredOperation().getName());
 		js.append("(");
+		assert thisIsSelf;
 		if (!thisIsSelf) {
-			js.appendValueName(source);
+		//	js.appendValueName(source);
 		}
 		int iMax = Math.min(pParameters.size(), cgArguments.size());
 		for (int i = 0; i < iMax; i++) {
@@ -1796,9 +1798,9 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	@Override
 	public @NonNull Boolean visitCGExecutorOperationCallExp(@NonNull CGExecutorOperationCallExp cgOperationCallExp) {
 		Operation pOperation = cgOperationCallExp.getReferredOperation();
-		CGValuedElement asSource = cgOperationCallExp.getSource();
-		CGValuedElement cgSource = asSource != null ? getExpression(asSource) : null;
-		List<CGValuedElement> cgArguments = cgOperationCallExp.getArguments();
+		CGValuedElement cgThis = cgOperationCallExp.getCgThis();
+		CGValuedElement cgSource = cgThis != null ? getExpression(cgThis) : null;
+		List<CGValuedElement> cgArguments = cgOperationCallExp.getCgArguments();
 		List<Parameter> pParameters = pOperation.getOwnedParameters();
 		//
 		if ((cgSource != null) && !js.appendLocalStatements(cgSource)) {

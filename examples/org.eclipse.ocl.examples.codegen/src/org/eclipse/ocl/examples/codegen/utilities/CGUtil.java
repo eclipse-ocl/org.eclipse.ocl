@@ -45,6 +45,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGSourcedCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTupleExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTuplePart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
@@ -226,7 +227,7 @@ public class CGUtil
 	}
 
 	public static @NonNull List<@NonNull CGValuedElement> getArgumentsList(@NonNull CGOperationCallExp cgOperationCallExp) {
-		return ClassUtil.nullFree(cgOperationCallExp.getArguments());
+		return ClassUtil.nullFree(cgOperationCallExp.getCgArguments());
 	}
 
 	public static @NonNull OCLExpression getAST(@NonNull CGCallExp cgCallExp) {
@@ -392,7 +393,7 @@ public class CGUtil
 			CGParameter cgParameter = cgParameters.get(i);
 			CGValuedElement cgSourceOrArgument;
 			if (cgParameter.isIsThis()) {
-				cgSourceOrArgument = getSource(cgOperationCallExp);
+				cgSourceOrArgument = getThis(cgOperationCallExp);
 			}
 			else {
 				cgSourceOrArgument = cgArguments.get(i);
@@ -434,8 +435,12 @@ public class CGUtil
 		return ClassUtil.nonNullState(cgVariableExp.getReferredVariable());
 	}
 
-	public static @NonNull CGValuedElement getSource(@NonNull CGCallExp cgCallExp) {
-		return ClassUtil.nonNullState(cgCallExp.getSource());
+	public static @NonNull CGValuedElement getSource(@NonNull CGSourcedCallExp cgSourcedCallExp) {
+		return ClassUtil.nonNullState(cgSourcedCallExp.getSource());
+	}
+
+	public static @NonNull CGValuedElement getThis(@NonNull CGOperationCallExp cgOperationCallExp) {
+		return ClassUtil.nonNullState(cgOperationCallExp.getCgThis());
 	}
 
 	public static @NonNull CGTypeId getTypeId(@NonNull CGTypedElement cgTypedElement) {
@@ -552,7 +557,7 @@ public class CGUtil
 	/**
 	 * Use wrapExp to wrap wrappedExp.
 	 */
-	public static void wrap(@NonNull CGCallExp wrapExp, @NonNull CGValuedElement wrappedExp) {
+	public static void wrap(@NonNull CGSourcedCallExp wrapExp, @NonNull CGValuedElement wrappedExp) {
 		wrapExp.setTypeId(wrappedExp.getTypeId());
 		wrapExp.setAst(wrappedExp.getAst());
 		replace(wrappedExp, wrapExp);

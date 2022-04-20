@@ -367,7 +367,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 				NameResolution guardResolution = ((CGGuardExp)eContainer).basicGetNameResolution();
 				assert guardResolution == nameResolution;
 			}
-			else if ((eContainer instanceof CGIterationCallExp) && (cgElement.eContainmentFeature() == CGModelPackage.Literals.CG_CALL_EXP__SOURCE)) {
+			else if ((eContainer instanceof CGIterationCallExp) && (cgElement.eContainmentFeature() == CGModelPackage.Literals.CG_SOURCED_CALL_EXP__SOURCE)) {
 				// itetation outer source ok
 			}
 			else if (eContainer instanceof CGVariable) {

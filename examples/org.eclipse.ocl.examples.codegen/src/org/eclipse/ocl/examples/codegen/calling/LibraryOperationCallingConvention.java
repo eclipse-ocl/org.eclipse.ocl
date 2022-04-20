@@ -17,7 +17,6 @@ import java.util.List;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
-import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
@@ -63,14 +62,14 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 	@Override
 	public @NonNull CGCallExp createCGOperationCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @NonNull LibraryOperation libraryOperation,
 			@Nullable CGValuedElement cgSource, @NonNull OperationCallExp asOperationCallExp) {
-		CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();
+	//	CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();
 		Operation asOperation = ClassUtil.nonNullState(asOperationCallExp.getReferredOperation());
 		assert (cgSource == null) == asOperation.isIsStatic();
 		Method jMethod = libraryOperation.getEvaluateMethod(asOperation);
 	//	assert (cgSource == null) == Modifier.isStatic(jMethod.getModifiers());
 		CGLibraryOperationCallExp cgOperationCallExp = CGModelFactory.eINSTANCE.createCGLibraryOperationCallExp();
 		cgOperationCallExp.setLibraryOperation(libraryOperation);
-		List<CGValuedElement> cgArguments = cgOperationCallExp.getArguments();
+		List<CGValuedElement> cgArguments = cgOperationCallExp.getCgArguments();
 		for (Class<?> jParameterType : jMethod.getParameterTypes()) {
 			if (jParameterType == Executor.class) {
 				addExecutorArgument(as2cgVisitor, cgOperationCallExp);
@@ -148,13 +147,13 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 	@Override
 	public @NonNull Boolean generateJava(@NonNull CG2JavaVisitor<?> cg2JavaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
 		CGLibraryOperationCallExp cgLibraryOperationCallExp = (CGLibraryOperationCallExp)cgOperationCallExp;
-		assert cgOperationCallExp.getSource() == null;
+		assert cgOperationCallExp.getCgThis() == null;
 		final LibraryOperation libraryOperation = ClassUtil.nonNullState(cgLibraryOperationCallExp.getLibraryOperation());
 		LibraryOperationHandler libraryOperationHandler = cg2JavaVisitor.basicGetLibraryOperationHandler(libraryOperation.getClass());
 		if (libraryOperationHandler != null) {
 			return libraryOperationHandler.generate(cgLibraryOperationCallExp);		// XXX BuiltIn ??
 		}
-		final List<@NonNull CGValuedElement> cgArguments = ClassUtil.nullFree(cgOperationCallExp.getArguments());
+		final List<@NonNull CGValuedElement> cgArguments = ClassUtil.nullFree(cgOperationCallExp.getCgArguments());
 		int iMax = cgArguments.size();
 		CGOperation cgOperation = cgOperationCallExp.getOperation();
 		Method jMethod = libraryOperation.getEvaluateMethod(CGUtil.getAST(cgOperation));

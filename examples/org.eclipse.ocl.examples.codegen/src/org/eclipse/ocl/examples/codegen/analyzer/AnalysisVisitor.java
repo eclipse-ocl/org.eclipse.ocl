@@ -310,12 +310,12 @@ public class AnalysisVisitor extends AbstractExtendingCGModelVisitor<@Nullable O
 	@Override
 	public @Nullable Object visitCGOperationCallExp(@NonNull CGOperationCallExp cgOperationCallExp) {
 		super.visitCGOperationCallExp(cgOperationCallExp);
-		CGValuedElement asSource = cgOperationCallExp.getSource();
-		CGValuedElement cgSource = asSource != null ? context.getExpression(asSource) : null;
+		CGValuedElement cgThis = cgOperationCallExp.getCgThis();
+		CGValuedElement cgThis2 = cgThis != null ? context.getExpression(cgThis) : null;
 		if (!cgOperationCallExp.isValidating()) {
-			CGInvalid cgInvalidValue = cgSource != null ? cgSource.getInvalidValue() : null;
+			CGInvalid cgInvalidValue = cgThis2 != null ? cgThis2.getInvalidValue() : null;		// XXX cgTHis / cgSource
 			if (cgInvalidValue == null) {
-				for (@SuppressWarnings("null")@NonNull CGValuedElement cgArgument : cgOperationCallExp.getArguments()) {
+				for (@SuppressWarnings("null")@NonNull CGValuedElement cgArgument : cgOperationCallExp.getCgArguments()) {
 					cgInvalidValue = cgArgument.getInvalidValue();
 					if (cgInvalidValue != null) {
 						break;

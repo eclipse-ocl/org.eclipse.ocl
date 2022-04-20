@@ -37,11 +37,11 @@ public class ConstrainedOperationCallingConvention extends AbstractOperationCall
 	protected @NonNull CGCallExp constrainedOperationCall(@NonNull AS2CGVisitor as2cgVisitor, @NonNull OperationCallExp element,
 			CGValuedElement cgSource, @NonNull Operation finalOperation, @NonNull ConstrainedOperation constrainedOperation) {
 		@NonNull CGLibraryOperationCallExp cgOperationCallExp = as2cgVisitor.createCGLibraryOperationCallExp(constrainedOperation);
-		cgOperationCallExp.setSource(cgSource);
+		cgOperationCallExp.getCgArguments().add(cgSource);
 		//		cgOperationCallExp.setThisIsSelf(false);
 		for (@NonNull OCLExpression pArgument : ClassUtil.nullFree(element.getOwnedArguments())) {
 			CGValuedElement cgArgument = as2cgVisitor.doVisit(CGValuedElement.class, pArgument);
-			cgOperationCallExp.getArguments().add(cgArgument);
+			cgOperationCallExp.getCgArguments().add(cgArgument);
 		}
 		as2cgVisitor.initAst(cgOperationCallExp, element);
 	//	as2cgVisitor.declareLazyName(cgOperationCallExp);

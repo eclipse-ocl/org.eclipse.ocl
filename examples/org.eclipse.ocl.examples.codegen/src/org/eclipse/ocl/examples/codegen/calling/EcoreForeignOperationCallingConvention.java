@@ -53,7 +53,7 @@ public class EcoreForeignOperationCallingConvention extends AbstractOperationCal
 		boolean isStatic = isStatic(cgOperation);
 		assert isStatic == (cgSource == null);
 		if (!isStatic) {
-			cgForeignOperationCallExp.getArguments().add(cgSource);
+			cgForeignOperationCallExp.getCgArguments().add(cgSource);
 		}
 		init(as2cgVisitor, cgForeignOperationCallExp, asOperationCallExp, cgOperation, null, isRequired);
 		return cgForeignOperationCallExp;

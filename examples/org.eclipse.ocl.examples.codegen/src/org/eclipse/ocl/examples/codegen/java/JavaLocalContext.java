@@ -157,7 +157,7 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 				}
 			}
 		}
-		executorInit.getArguments().add(contextParameter);
+		executorInit.getCgArguments().add(contextParameter);
 		executorInit.setRequired(true);
 		executorInit.setInvalidating(false);
 		CGVariable executorVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();
@@ -174,7 +174,7 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 		BaseNameResolution idResolverNameResolution = globalContext.getIdResolverNameResolution();
 		idResolverNameResolution.addCGElement(idResolverInit);
 		idResolverInit.setTypeId(analyzer.getTypeId(JavaConstants.ID_RESOLVER_TYPE_ID));
-		idResolverInit.setSource(analyzer.createCGVariableExp(getExecutorVariable()));
+		idResolverInit.setCgThis(analyzer.createCGVariableExp(getExecutorVariable()));
 		idResolverInit.setRequired(true);
 		idResolverInit.setInvalidating(false);
 		CGVariable idResolverVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();
@@ -191,7 +191,7 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 		BaseNameResolution modelManagerNameResolution = globalContext.getModelManagerNameResolution();
 		modelManagerNameResolution.addCGElement(modelManagerInit);
 		modelManagerInit.setTypeId(analyzer.getTypeId(JavaConstants.MODEL_MANAGER_TYPE_ID));
-		modelManagerInit.setSource(analyzer.createCGVariableExp(getExecutorVariable()));
+		modelManagerInit.setCgThis(analyzer.createCGVariableExp(getExecutorVariable()));
 		modelManagerInit.setRequired(true);
 		modelManagerInit.setInvalidating(false);
 		CGVariable modelManagerVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();
@@ -233,7 +233,7 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 		BaseNameResolution standardLibraryNameResolution = globalContext.getStandardLibraryVariableNameResolution();
 		standardLibraryNameResolution.addCGElement(standardLibraryInit);
 		standardLibraryInit.setTypeId(analyzer.getTypeId(JavaConstants.STANDARD_LIBRARY_TYPE_ID));
-		standardLibraryInit.setSource(analyzer.createCGVariableExp(getExecutorVariable()));
+		standardLibraryInit.setCgThis(analyzer.createCGVariableExp(getExecutorVariable()));
 		standardLibraryInit.setRequired(true);
 		standardLibraryInit.setInvalidating(false);
 		CGVariable standardLibraryVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();

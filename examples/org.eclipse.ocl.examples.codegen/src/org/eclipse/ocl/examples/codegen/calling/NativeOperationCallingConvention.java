@@ -54,14 +54,14 @@ public class NativeOperationCallingConvention extends AbstractOperationCallingCo
 		CGNativeOperationCallExp cgNativeOperationCallExp = (CGNativeOperationCallExp)cgOperationCallExp;
 		//	Operation asOperation = cgOperationCallExp.getReferredOperation();
 		boolean thisIsSelf = cgNativeOperationCallExp.isThisIsSelf();
-		CGValuedElement cgSource = cgNativeOperationCallExp.getSource();
-		CGValuedElement source = cgSource != null ? cg2JavaVisitor.getExpression(cgSource) :  null;
+		CGValuedElement cgThis = cgNativeOperationCallExp.getCgThis();
+		CGValuedElement cgThis2 = cgThis != null ? cg2JavaVisitor.getExpression(cgThis) :  null;
 		//
-		if ((source != null) && !js.appendLocalStatements(source)) {
+		if ((cgThis2 != null) && !js.appendLocalStatements(cgThis2)) {
 			return false;
 		}
 		Method javaMethod = cgNativeOperationCallExp.getMethod();
-		List<CGValuedElement> cgArguments = cgNativeOperationCallExp.getArguments();
+		List<CGValuedElement> cgArguments = cgNativeOperationCallExp.getCgArguments();
 		//	List<Parameter> pParameters = asOperation.getOwnedParameters();
 		java.lang.reflect.Parameter[] javaParameters = javaMethod.getParameters();
 		for (@SuppressWarnings("null")@NonNull CGValuedElement cgArgument : cgArguments) {
@@ -73,8 +73,9 @@ public class NativeOperationCallingConvention extends AbstractOperationCallingCo
 		//
 		js.appendDeclaration(cgNativeOperationCallExp);
 		js.append(" = ");
-		if ((source != null) && !thisIsSelf) {
-			js.appendValueName(source);
+		assert !thisIsSelf;
+		if ((cgThis2 != null) && !thisIsSelf) {
+			js.appendValueName(cgThis2);
 		}
 		else {
 			js.appendClassReference(null, javaMethod.getDeclaringClass());

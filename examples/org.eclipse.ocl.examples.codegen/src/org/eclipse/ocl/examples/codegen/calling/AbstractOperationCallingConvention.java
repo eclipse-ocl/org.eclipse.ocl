@@ -43,7 +43,7 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 	protected void addExecutorArgument(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperationCallExp cgOperationCallExp) {
 		CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();
 		CGVariable executorVariable = as2cgVisitor.getExecutorVariable();
-		cgOperationCallExp.getArguments().add(analyzer.createCGVariableExp(executorVariable));
+		cgOperationCallExp.getCgArguments().add(analyzer.createCGVariableExp(executorVariable));
 	}
 
 	protected void addExecutorParameter(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation) {
@@ -68,7 +68,7 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 
 	protected void addTypeIdArgument(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperationCallExp cgOperationCallExp, @NonNull TypeId asTypeId) {
 		CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();
-		List<CGValuedElement> cgArguments = cgOperationCallExp.getArguments();
+		List<CGValuedElement> cgArguments = cgOperationCallExp.getCgArguments();
 		CGTypeId cgTypeId = analyzer.getTypeId(asTypeId);
 		cgArguments.add(analyzer.createCGConstantExp(cgTypeId));
 	}
@@ -118,7 +118,7 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 
 	protected void init(@NonNull AS2CGVisitor as2cgVisitor,
 			@NonNull CGOperationCallExp cgOperationCallExp, @NonNull OperationCallExp asOperationCallExp,
-			@NonNull CGOperation cgOperation, @Nullable CGValuedElement cgSource, boolean isRequired) {		// XXX wip eliminate isRequired
+			@NonNull CGOperation cgOperation, @Nullable CGValuedElement cgThis, boolean isRequired) {		// XXX wip eliminate isRequired
 		Operation asOperation = ClassUtil.nonNullState(asOperationCallExp.getReferredOperation());
 	//	boolean isRequired2 = asOperation.isIsRequired();
 	//	Boolean ecoreIsRequired = as2cgVisitor.getCodeGenerator().isNonNull(asOperationCallExp);
@@ -134,10 +134,10 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 		cgOperationCallExp.setInvalidating(asOperation.isIsInvalidating());
 		cgOperationCallExp.setValidating(asOperation.isIsValidating());
 		cgOperationCallExp.setRequired(isRequired);
-		cgOperationCallExp.setSource(cgSource);
+		cgOperationCallExp.setCgThis(cgThis);
 		for (@NonNull OCLExpression asArgument : ClassUtil.nullFree(asOperationCallExp.getOwnedArguments())) {
 			CGValuedElement cgArgument = as2cgVisitor.doVisit(CGValuedElement.class, asArgument);
-			cgOperationCallExp.getArguments().add(cgArgument);
+			cgOperationCallExp.getCgArguments().add(cgArgument);
 		}
 	//	as2cgVisitor.getNameManager().declareStandardName(cgOperationCallExp);
 	}

@@ -349,11 +349,12 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			currentClass.getOperations().add(cgOperation);
 		}
 		CGCachedOperationCallExp cgOperationCallExp = CGModelFactory.eINSTANCE.createCGCachedOperationCallExp();
-		cgOperationCallExp.setSource(cgSource);
+		List<CGValuedElement> cgArguments = cgOperationCallExp.getCgArguments();
+		cgArguments.add(cgSource);
 		cgOperationCallExp.setThisIsSelf(false);
 		for (@NonNull OCLExpression pArgument : ClassUtil.nullFree(element.getOwnedArguments())) {
 			CGValuedElement cgArgument = doVisit(CGValuedElement.class, pArgument);
-			cgOperationCallExp.getArguments().add(cgArgument);
+			cgArguments.add(cgArgument);
 		}
 		initAst(cgOperationCallExp, element);
 		cgOperationCallExp.setReferredOperation(asOperation);
@@ -367,11 +368,11 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return cgOperationCallExp;
 	}
 
-	protected @NonNull CGNativeOperationCallExp createCGBoxedNativeOperationCallExp(@Nullable CGValuedElement cgSource, @NonNull Method method, @NonNull CGValuedElement... cgArguments) {
+	protected @NonNull CGNativeOperationCallExp createCGBoxedNativeOperationCallExp(@Nullable CGValuedElement cgThis, @NonNull Method method, @NonNull CGValuedElement... cgArguments) {
 		CGNativeOperationCallExp cgCallExp = context.createCGNativeOperationCallExp(method, SupportOperationCallingConvention.INSTANCE);
-		cgCallExp.setSource(cgSource);
+		cgCallExp.setCgThis(cgThis);
 		if (cgArguments != null) {
-			List<CGValuedElement> cgArguments2 = cgCallExp.getArguments();
+			List<CGValuedElement> cgArguments2 = cgCallExp.getCgArguments();
 			for (@NonNull CGValuedElement cgArgument : cgArguments) {
 				cgArguments2.add(cgArgument);
 			}
@@ -448,11 +449,11 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return cgOperationCallExp;
 	}
 
-	protected @NonNull CGNativeOperationCallExp createCGNativeOperationCallExp(@Nullable CGValuedElement cgSource, @NonNull Method method, @NonNull CGValuedElement... cgArguments) {
+	protected @NonNull CGNativeOperationCallExp createCGNativeOperationCallExp(@Nullable CGValuedElement cgThis, @NonNull Method method, @NonNull CGValuedElement... cgArguments) {
 		CGNativeOperationCallExp cgCallExp = context.createCGNativeOperationCallExp(method);
-		cgCallExp.setSource(cgSource);
+		cgCallExp.setCgThis(cgThis);
 		if (cgArguments != null) {
-			List<CGValuedElement> cgArguments2 = cgCallExp.getArguments();
+			List<CGValuedElement> cgArguments2 = cgCallExp.getCgArguments();
 			for (@NonNull CGValuedElement cgArgument : cgArguments) {
 				cgArguments2.add(cgArgument);
 			}
@@ -1035,11 +1036,11 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		NameResolution callNameResolution = getNameManager().declareLazyName(cgOperationCallExp);
 		callNameResolution.addNameVariant(codeGenerator.getSAFE_NameVariant());
 		cgOperationCallExp.setRequired(true);
-		cgOperationCallExp.getArguments().add(cgSource);
+		cgOperationCallExp.getCgArguments().add(cgSource);
 		CGConstantExp cgArgument = CGModelFactory.eINSTANCE.createCGConstantExp();
 		cgArgument.setReferredConstant(context.getNull());
 		cgArgument.setTypeId(context.getTypeId(TypeId.OCL_VOID));
-		cgOperationCallExp.getArguments().add(cgArgument);
+		cgOperationCallExp.getCgArguments().add(cgArgument);
 		return cgOperationCallExp;
 	}
 

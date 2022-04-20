@@ -76,12 +76,12 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 		JavaCodeGenerator codeGenerator = cg2JavaVisitor.getCodeGenerator();
 		Operation asReferredOperation = CGUtil.getReferredOperation(cgForeignOperationCallExp);
 		boolean isStatic = asReferredOperation.isIsStatic();
-		CGValuedElement cgSource = null;
-		List<CGValuedElement> cgArguments = cgForeignOperationCallExp.getArguments();
+		CGValuedElement cgThis = null;
+		List<CGValuedElement> cgArguments = cgForeignOperationCallExp.getCgArguments();
 		//
 		if (!isStatic) {
-			cgSource = cg2JavaVisitor.getExpression(cgForeignOperationCallExp.getSource());
-			if (!js.appendLocalStatements(cgSource)) {
+			cgThis = cg2JavaVisitor.getExpression(cgForeignOperationCallExp.getCgThis());
+			if (!js.appendLocalStatements(cgThis)) {
 				return false;
 			}
 		}
@@ -106,8 +106,8 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 		js.append("(");
 		if (!isStatic) {
 			CGTypeId cgTypeId = analyzer.getTypeId(asReferredOperation.getOwningClass().getTypeId());
-			TypeDescriptor sourceTypeDescriptor = codeGenerator.getUnboxedDescriptor(ClassUtil.nonNullState(cgTypeId.getElementId()));
-			js.appendReferenceTo(sourceTypeDescriptor, cgSource);
+			TypeDescriptor thisTypeDescriptor = codeGenerator.getUnboxedDescriptor(ClassUtil.nonNullState(cgTypeId.getElementId()));
+			js.appendReferenceTo(thisTypeDescriptor, cgThis);
 		}
 		int iMax = Math.min(cgParameters.size(), cgArguments.size());
 		for (int i = 0; i < iMax; i++) {
