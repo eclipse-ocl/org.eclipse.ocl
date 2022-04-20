@@ -118,7 +118,7 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 
 	protected void init(@NonNull AS2CGVisitor as2cgVisitor,
 			@NonNull CGOperationCallExp cgOperationCallExp, @NonNull OperationCallExp asOperationCallExp,
-			@NonNull CGOperation cgOperation, @Nullable CGValuedElement cgThis, boolean isRequired) {		// XXX wip eliminate isRequired
+			@NonNull CGOperation cgOperation, boolean isRequired) {		// XXX wip eliminate isRequired
 		Operation asOperation = ClassUtil.nonNullState(asOperationCallExp.getReferredOperation());
 	//	boolean isRequired2 = asOperation.isIsRequired();
 	//	Boolean ecoreIsRequired = as2cgVisitor.getCodeGenerator().isNonNull(asOperationCallExp);
@@ -134,7 +134,6 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 		cgOperationCallExp.setInvalidating(asOperation.isIsInvalidating());
 		cgOperationCallExp.setValidating(asOperation.isIsValidating());
 		cgOperationCallExp.setRequired(isRequired);
-		cgOperationCallExp.setCgThis(cgThis);
 		for (@NonNull OCLExpression asArgument : ClassUtil.nullFree(asOperationCallExp.getOwnedArguments())) {
 			CGValuedElement cgArgument = as2cgVisitor.doVisit(CGValuedElement.class, asArgument);
 			cgOperationCallExp.getCgArguments().add(cgArgument);

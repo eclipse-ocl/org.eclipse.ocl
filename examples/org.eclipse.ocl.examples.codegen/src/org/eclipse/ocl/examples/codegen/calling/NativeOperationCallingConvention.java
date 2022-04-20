@@ -23,10 +23,8 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
-import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
  *  NativeOperationCallingConvention defines the support for the call of a native (Java) operation
@@ -41,19 +39,19 @@ public class NativeOperationCallingConvention extends AbstractOperationCallingCo
 	@Override
 	public @NonNull CGCallExp createCGOperationCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @NonNull LibraryOperation libraryOperation,
 			@Nullable CGValuedElement cgSource, @NonNull OperationCallExp asOperationCallExp) {
-		Operation asOperation = ClassUtil.nonNullState(asOperationCallExp.getReferredOperation());
+		throw new UnsupportedOperationException();		// FIXME constryction is irregular
+	/*	Operation asOperation = ClassUtil.nonNullState(asOperationCallExp.getReferredOperation());
 		boolean isRequired = asOperation.isIsRequired();
 		CGNativeOperationCallExp cgNativeOperationCallExp = as2cgVisitor.getAnalyzer().createCGNativeOperationCallExp(null);
 		cgNativeOperationCallExp.setThisIsSelf(true);
 		init(as2cgVisitor, cgNativeOperationCallExp, asOperationCallExp, cgOperation, cgSource, isRequired);
-		return cgNativeOperationCallExp;
+		return cgNativeOperationCallExp; */
 	}
 
 	@Override
 	public @NonNull Boolean generateJava(@NonNull CG2JavaVisitor<?> cg2JavaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
 		CGNativeOperationCallExp cgNativeOperationCallExp = (CGNativeOperationCallExp)cgOperationCallExp;
 		//	Operation asOperation = cgOperationCallExp.getReferredOperation();
-		boolean thisIsSelf = cgNativeOperationCallExp.isThisIsSelf();
 		CGValuedElement cgThis = cgNativeOperationCallExp.getCgThis();
 		CGValuedElement cgThis2 = cgThis != null ? cg2JavaVisitor.getExpression(cgThis) :  null;
 		//
@@ -73,8 +71,7 @@ public class NativeOperationCallingConvention extends AbstractOperationCallingCo
 		//
 		js.appendDeclaration(cgNativeOperationCallExp);
 		js.append(" = ");
-		assert !thisIsSelf;
-		if ((cgThis2 != null) && !thisIsSelf) {
+		if (cgThis2 != null) {
 			js.appendValueName(cgThis2);
 		}
 		else {

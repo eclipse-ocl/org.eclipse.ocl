@@ -12,7 +12,6 @@ package org.eclipse.ocl.examples.codegen.cgmodel;
 
 import java.util.List;
 
-import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Operation;
 
 /**
@@ -27,7 +26,6 @@ import org.eclipse.ocl.pivot.Operation;
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getReferredOperation <em>Referred Operation</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getCgOperation <em>Cg Operation</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getCgArguments <em>Cg Arguments</em>}</li>
- *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getCgThis <em>Cg This</em>}</li>
  * </ul>
  *
  * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGOperationCallExp()
@@ -97,27 +95,5 @@ public interface CGOperationCallExp extends CGCallExp {
 	 */
 	void setCgOperation(CGOperation value);
 
-	/**
-	 * Returns the value of the '<em><b>Cg This</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * The this expression for the call when invoking a native or ecore implementation.
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Cg This</em>' containment reference.
-	 * @see #setCgThis(CGValuedElement)
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGOperationCallExp_CgThis()
-	 * @generated
-	 */
-	CGValuedElement getCgThis();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getCgThis <em>Cg This</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Cg This</em>' containment reference.
-	 * @see #getCgThis()
-	 * @generated
-	 */
-	void setCgThis(CGValuedElement value);
+	default CGValuedElement getCgThis() { return null; }
 } // CGOperationCallExp

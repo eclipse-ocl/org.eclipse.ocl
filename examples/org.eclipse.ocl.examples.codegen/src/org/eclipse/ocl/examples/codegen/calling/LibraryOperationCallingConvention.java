@@ -88,7 +88,7 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 			}
 		}
 		boolean isRequired = cgOperation.isRequired();
-		init(as2cgVisitor, cgOperationCallExp, asOperationCallExp, cgOperation, null, isRequired);
+		init(as2cgVisitor, cgOperationCallExp, asOperationCallExp, cgOperation, isRequired);
 		return cgOperationCallExp;
 	}
 

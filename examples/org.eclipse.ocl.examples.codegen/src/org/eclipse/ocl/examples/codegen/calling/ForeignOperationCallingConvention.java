@@ -58,7 +58,7 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 		boolean isRequired = asOperation.isIsRequired();
 		CGForeignOperationCallExp cgForeignOperationCallExp = CGModelFactory.eINSTANCE.createCGForeignOperationCallExp();
 		addExecutorArgument(as2cgVisitor, cgForeignOperationCallExp);
-		init(as2cgVisitor, cgForeignOperationCallExp, asOperationCallExp, cgOperation, cgSource, isRequired);
+		init(as2cgVisitor, cgForeignOperationCallExp, asOperationCallExp, cgOperation, isRequired);
 		return cgForeignOperationCallExp;
 	}
 

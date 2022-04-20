@@ -560,6 +560,17 @@ public interface CGModelPackage extends EPackage {
 	EReference getCGEcoreOperationCallExp_EOperation();
 
 	/**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOperationCallExp#getCgThis <em>Cg This</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Cg This</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOperationCallExp#getCgThis()
+	 * @see #getCGEcoreOperationCallExp()
+	 * @generated
+	 */
+	EReference getCGEcoreOperationCallExp_CgThis();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOppositePropertyCallExp <em>CG Ecore Opposite Property Call Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1600,17 +1611,6 @@ public interface CGModelPackage extends EPackage {
 	EAttribute getCGNativeOperationCallExp_Method();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp#isThisIsSelf <em>This Is Self</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>This Is Self</em>'.
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp#isThisIsSelf()
-	 * @see #getCGNativeOperationCallExp()
-	 * @generated
-	 */
-	EAttribute getCGNativeOperationCallExp_ThisIsSelf();
-
-	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp#isValueIsBoxed <em>Value Is Boxed</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1631,6 +1631,17 @@ public interface CGModelPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getCGNativeOperationCallExp_ValueIsEcore();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp#getCgThis <em>Cg This</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Cg This</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp#getCgThis()
+	 * @see #getCGNativeOperationCallExp()
+	 * @generated
+	 */
+	EReference getCGNativeOperationCallExp_CgThis();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNativeProperty <em>CG Native Property</em>}'.
@@ -1800,17 +1811,6 @@ public interface CGModelPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getCGOperationCallExp_CgOperation();
-
-	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getCgThis <em>Cg This</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Cg This</em>'.
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getCgThis()
-	 * @see #getCGOperationCallExp()
-	 * @generated
-	 */
-	EReference getCGOperationCallExp_CgThis();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOppositePropertyCallExp <em>CG Opposite Property Call Exp</em>}'.
@@ -2854,6 +2854,14 @@ public interface CGModelPackage extends EPackage {
 		EReference CG_ECORE_OPERATION_CALL_EXP__EOPERATION = eINSTANCE.getCGEcoreOperationCallExp_EOperation();
 
 		/**
+		 * The meta object literal for the '<em><b>Cg This</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CG_ECORE_OPERATION_CALL_EXP__CG_THIS = eINSTANCE.getCGEcoreOperationCallExp_CgThis();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGEcoreOppositePropertyCallExpImpl <em>CG Ecore Opposite Property Call Exp</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -3744,14 +3752,6 @@ public interface CGModelPackage extends EPackage {
 		EAttribute CG_NATIVE_OPERATION_CALL_EXP__METHOD = eINSTANCE.getCGNativeOperationCallExp_Method();
 
 		/**
-		 * The meta object literal for the '<em><b>This Is Self</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute CG_NATIVE_OPERATION_CALL_EXP__THIS_IS_SELF = eINSTANCE.getCGNativeOperationCallExp_ThisIsSelf();
-
-		/**
 		 * The meta object literal for the '<em><b>Value Is Boxed</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -3766,6 +3766,14 @@ public interface CGModelPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute CG_NATIVE_OPERATION_CALL_EXP__VALUE_IS_ECORE = eINSTANCE.getCGNativeOperationCallExp_ValueIsEcore();
+
+		/**
+		 * The meta object literal for the '<em><b>Cg This</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CG_NATIVE_OPERATION_CALL_EXP__CG_THIS = eINSTANCE.getCGNativeOperationCallExp_CgThis();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGNativePropertyImpl <em>CG Native Property</em>}' class.
@@ -3908,14 +3916,6 @@ public interface CGModelPackage extends EPackage {
 		 * @generated
 		 */
 		EReference CG_OPERATION_CALL_EXP__CG_OPERATION = eINSTANCE.getCGOperationCallExp_CgOperation();
-
-		/**
-		 * The meta object literal for the '<em><b>Cg This</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference CG_OPERATION_CALL_EXP__CG_THIS = eINSTANCE.getCGOperationCallExp_CgThis();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGOppositePropertyCallExpImpl <em>CG Opposite Property Call Exp</em>}' class.

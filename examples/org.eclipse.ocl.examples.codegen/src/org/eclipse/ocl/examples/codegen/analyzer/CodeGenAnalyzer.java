@@ -249,6 +249,7 @@ public class CodeGenAnalyzer
 		Operation asOperation = getNativeOperation(method);
 		CGOperation cgOperation = getOperation(asOperation);
 		cgNativeOperationCallExp.setCgOperation(cgOperation);
+	//	callingConvention.createCGOperationCallExp(null, cgOperation, null, cgOperation, null)
 		return cgNativeOperationCallExp;
 	}
 

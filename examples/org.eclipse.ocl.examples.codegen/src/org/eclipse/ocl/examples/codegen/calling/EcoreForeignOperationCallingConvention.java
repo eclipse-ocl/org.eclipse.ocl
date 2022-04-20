@@ -55,7 +55,7 @@ public class EcoreForeignOperationCallingConvention extends AbstractOperationCal
 		if (!isStatic) {
 			cgForeignOperationCallExp.getCgArguments().add(cgSource);
 		}
-		init(as2cgVisitor, cgForeignOperationCallExp, asOperationCallExp, cgOperation, null, isRequired);
+		init(as2cgVisitor, cgForeignOperationCallExp, asOperationCallExp, cgOperation, isRequired);
 		return cgForeignOperationCallExp;
 	}
 
