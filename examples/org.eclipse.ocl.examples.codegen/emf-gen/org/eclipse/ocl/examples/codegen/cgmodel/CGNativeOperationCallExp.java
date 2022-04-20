@@ -121,6 +121,7 @@ public interface CGNativeOperationCallExp extends CGOperationCallExp {
 	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGNativeOperationCallExp_CgThis()
 	 * @generated
 	 */
+	@Override
 	CGValuedElement getCgThis();
 
 	/**
