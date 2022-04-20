@@ -106,7 +106,6 @@
     </genClasses>
     <genClasses ecoreClass="cgmodel.ecore#//CGEcoreOperationCallExp">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGEcoreOperationCallExp/eOperation"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGEcoreOperationCallExp/cgThis"/>
     </genClasses>
     <genClasses ecoreClass="cgmodel.ecore#//CGEcoreOppositePropertyCallExp">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGEcoreOppositePropertyCallExp/eStructuralFeature"/>

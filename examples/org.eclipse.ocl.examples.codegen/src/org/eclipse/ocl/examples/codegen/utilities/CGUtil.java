@@ -270,6 +270,10 @@ public class CGUtil
 		return ClassUtil.nonNullState((VariableDeclaration)cgParameter.getAst());
 	}
 
+//	public static @NonNull Parameter getAST(@NonNull CGParameter cgParameter) {
+//		return ClassUtil.nonNullState((Parameter)cgParameter.getAst());
+//	}
+
 	public static @NonNull TypedElement getAST(@NonNull CGTypedElement cgTypedElement) {
 		return ClassUtil.nonNullState((TypedElement)cgTypedElement.getAst());
 	}
@@ -369,6 +373,10 @@ public class CGUtil
 		return ClassUtil.nonNullState(cgNamedElement.getName());
 	}
 
+	public static @NonNull CGOperation getOperation(@NonNull CGOperationCallExp cgOperationCallExp) {
+		return ClassUtil.nonNullState(cgOperationCallExp.getCgOperation());
+	}
+
 	/**
 	 * Return an ordered list of pairs of CGParameter to correspond CG argument vaalue for the operation call.
 	 * If the CG operation is non-static the CG parameter of the first binding has cgThis set true.
@@ -377,7 +385,7 @@ public class CGUtil
 	 */
 	public static @NonNull Iterable<@NonNull Pair<@NonNull CGParameter, @NonNull CGValuedElement>> getParameterBindings(@NonNull CGOperationCallExp cgOperationCallExp) {
 		List<@NonNull Pair<@NonNull CGParameter, @NonNull CGValuedElement>> bindings = new ArrayList<>();
-		CGOperation cgOperation = cgOperationCallExp.getCgOperation();
+		CGOperation cgOperation = getOperation(cgOperationCallExp);
 	//	Operation asOperation = getAST(cgOperation);
 	//	OperationCallingConvention callingConvention = cgOperation.getCallingConvention();
 		List<@NonNull CGParameter> cgParameters = getParametersList(cgOperation);

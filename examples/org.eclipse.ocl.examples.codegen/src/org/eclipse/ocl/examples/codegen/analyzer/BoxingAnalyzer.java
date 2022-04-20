@@ -633,19 +633,19 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 		int iMax = cgArguments.size();
 		for (int i = 0; i < iMax; i++) {			// Avoid CME from rewrite
 			CGValuedElement cgArgument = cgArguments.get(i);
+			CGParameter cgParameter = cgParameters.get(i);
 			if (isBoxed) {
 				rewriteAsBoxed(cgArgument);
 			//	if (cgParameters != null) {
 				//	Parameter asParameter = ownedParameters.get(i);
-					CGParameter cgParameter = cgParameters.get(i);
 					if (cgParameter.isRequired() && !cgArgument.isNonNull()) {
 						//	rewriteAsGuarded(cgArgument, false, "value4 for " + asParameter.getName() + " parameter");
 							rewriteAsGuarded(cgArgument, false, "''" + cgParameter.getTypeId() + "'' rather than ''OclVoid'' value required");
 					}
 			//	}
 			}
-			else if (eParameters != null) {
-				EParameter eParameter = eParameters.get(i);
+			else if ((eParameters != null) && !cgParameter.isIsSelf()) {
+				EParameter eParameter = eParameters.get(i-1);
 				rewriteAsEcore(cgArgument, eParameter.getEType());
 			}
 			else {

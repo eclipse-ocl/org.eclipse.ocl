@@ -1638,16 +1638,6 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 	 * @generated
 	 */
 	@Override
-	public EReference getCGEcoreOperationCallExp_CgThis() {
-		return (EReference)cgEcoreOperationCallExpEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public EClass getCGEcoreOppositePropertyCallExp() {
 		return cgEcoreOppositePropertyCallExpEClass;
 	}
@@ -3324,7 +3314,6 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 
 		cgEcoreOperationCallExpEClass = createEClass(21);
 		createEReference(cgEcoreOperationCallExpEClass, 11);
-		createEReference(cgEcoreOperationCallExpEClass, 12);
 
 		cgEcoreOppositePropertyCallExpEClass = createEClass(22);
 		createEReference(cgEcoreOppositePropertyCallExpEClass, 10);
@@ -3771,7 +3760,6 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 
 		initEClass(cgEcoreOperationCallExpEClass, CGEcoreOperationCallExp.class, "CGEcoreOperationCallExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getCGEcoreOperationCallExp_EOperation(), ecorePackage.getEOperation(), null, "eOperation", null, 1, 1, CGEcoreOperationCallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getCGEcoreOperationCallExp_CgThis(), this.getCGValuedElement(), null, "cgThis", null, 0, 1, CGEcoreOperationCallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(cgEcoreOppositePropertyCallExpEClass, CGEcoreOppositePropertyCallExp.class, "CGEcoreOppositePropertyCallExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getCGEcoreOppositePropertyCallExp_EStructuralFeature(), ecorePackage.getEStructuralFeature(), null, "eStructuralFeature", null, 1, 1, CGEcoreOppositePropertyCallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

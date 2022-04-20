@@ -560,17 +560,6 @@ public interface CGModelPackage extends EPackage {
 	EReference getCGEcoreOperationCallExp_EOperation();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOperationCallExp#getCgThis <em>Cg This</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Cg This</em>'.
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOperationCallExp#getCgThis()
-	 * @see #getCGEcoreOperationCallExp()
-	 * @generated
-	 */
-	EReference getCGEcoreOperationCallExp_CgThis();
-
-	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOppositePropertyCallExp <em>CG Ecore Opposite Property Call Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2852,14 +2841,6 @@ public interface CGModelPackage extends EPackage {
 		 * @generated
 		 */
 		EReference CG_ECORE_OPERATION_CALL_EXP__EOPERATION = eINSTANCE.getCGEcoreOperationCallExp_EOperation();
-
-		/**
-		 * The meta object literal for the '<em><b>Cg This</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference CG_ECORE_OPERATION_CALL_EXP__CG_THIS = eINSTANCE.getCGEcoreOperationCallExp_CgThis();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGEcoreOppositePropertyCallExpImpl <em>CG Ecore Opposite Property Call Exp</em>}' class.

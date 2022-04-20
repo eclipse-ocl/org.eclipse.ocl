@@ -1357,6 +1357,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			if (aParameter.isIsRequired()) {
 				cgParameter.setNonNull();
 			}
+			cgParameter.setIsSelf(true);
 		}
 		return cgParameter;
 	}
