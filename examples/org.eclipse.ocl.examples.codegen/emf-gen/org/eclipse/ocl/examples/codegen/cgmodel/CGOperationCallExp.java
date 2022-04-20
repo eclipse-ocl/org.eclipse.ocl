@@ -24,8 +24,9 @@ import org.eclipse.ocl.pivot.Operation;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getCgArguments <em>Cg Arguments</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getReferredOperation <em>Referred Operation</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getCgOperation <em>Cg Operation</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getCgArguments <em>Cg Arguments</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getCgThis <em>Cg This</em>}</li>
  * </ul>
  *
@@ -73,6 +74,30 @@ public interface CGOperationCallExp extends CGCallExp {
 	void setReferredOperation(Operation value);
 
 	/**
+	 * Returns the value of the '<em><b>Cg Operation</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The this expression for the call when invoking a native or ecore implementation.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Cg Operation</em>' reference.
+	 * @see #setCgOperation(CGOperation)
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGOperationCallExp_CgOperation()
+	 * @generated
+	 */
+	CGOperation getCgOperation();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getCgOperation <em>Cg Operation</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Cg Operation</em>' reference.
+	 * @see #getCgOperation()
+	 * @generated
+	 */
+	void setCgOperation(CGOperation value);
+
+	/**
 	 * Returns the value of the '<em><b>Cg This</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -95,9 +120,4 @@ public interface CGOperationCallExp extends CGCallExp {
 	 * @generated
 	 */
 	void setCgThis(CGValuedElement value);
-
-	@NonNull CGOperation getOperation();
-
-	void setOperation(@NonNull CGOperation cgOperation);
-
 } // CGOperationCallExp

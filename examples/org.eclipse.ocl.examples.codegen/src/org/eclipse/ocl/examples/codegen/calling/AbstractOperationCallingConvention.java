@@ -130,7 +130,7 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 		cgOperationCallExp.setAst(asOperationCallExp);
 		TypeId asTypeId = asOperationCallExp.getTypeId();
 		cgOperationCallExp.setTypeId(as2cgVisitor.getAnalyzer().getTypeId(asTypeId));
-		cgOperationCallExp.setOperation(cgOperation);
+		cgOperationCallExp.setCgOperation(cgOperation);
 		cgOperationCallExp.setInvalidating(asOperation.isIsInvalidating());
 		cgOperationCallExp.setValidating(asOperation.isIsValidating());
 		cgOperationCallExp.setRequired(isRequired);

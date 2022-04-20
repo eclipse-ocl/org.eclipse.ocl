@@ -92,7 +92,7 @@ public class CGEcoreOperationCallExpImpl extends CGOperationCallExpImpl implemen
 		EOperation oldEOperation = eOperation;
 		eOperation = newEOperation;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 11, oldEOperation, eOperation));
+			eNotify(new ENotificationImpl(this, Notification.SET, 12, oldEOperation, eOperation));
 	}
 
 	/**
@@ -103,7 +103,7 @@ public class CGEcoreOperationCallExpImpl extends CGOperationCallExpImpl implemen
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 11:
+			case 12:
 				return getEOperation();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -117,7 +117,7 @@ public class CGEcoreOperationCallExpImpl extends CGOperationCallExpImpl implemen
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 11:
+			case 12:
 				setEOperation((EOperation)newValue);
 				return;
 		}
@@ -132,7 +132,7 @@ public class CGEcoreOperationCallExpImpl extends CGOperationCallExpImpl implemen
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 11:
+			case 12:
 				setEOperation((EOperation)null);
 				return;
 		}
@@ -147,7 +147,7 @@ public class CGEcoreOperationCallExpImpl extends CGOperationCallExpImpl implemen
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 11:
+			case 12:
 				return eOperation != null;
 		}
 		return super.eIsSet(featureID);

@@ -529,7 +529,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	@Override
 	public @Nullable Object visitCGOperationCallExp(@NonNull CGOperationCallExp cgElement) {
 		super.visitCGOperationCallExp(cgElement);;
-		CGOperation cgOperation = cgElement.getOperation();
+		CGOperation cgOperation = cgElement.getCgOperation();
 		OperationCallingConvention callingConvention = cgOperation.getCallingConvention();
 		boolean isBoxed = callingConvention.isBoxed();
 		boolean isEcore = callingConvention.isEcore();
@@ -539,13 +539,15 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 		assert isUnboxed == cgElement.isUnboxed();
 		Operation referredOperation = cgElement.getReferredOperation();
 		CGValuedElement cgThis = cgElement.getCgThis();
+	//	assert (cgThis == null) || cgThis.isEcore() || cgThis.isUnboxed();
 		EOperation eOperation = null;
 		//
 		//	Guard / cast source
-		// XXX chThis / cgSource
+		// XXX cgThis / cgSource
 		if (isBoxed) {
 			boolean isStatic = callingConvention.isStatic(cgOperation);
 			if (!isStatic) {
+				assert cgThis != null;
 				boolean sourceMayBeNull = false;
 				if (referredOperation != null) {
 					OperationId operationId = referredOperation.getOperationId();

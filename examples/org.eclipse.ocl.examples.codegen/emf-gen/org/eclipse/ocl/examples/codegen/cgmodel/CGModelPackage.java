@@ -1791,6 +1791,17 @@ public interface CGModelPackage extends EPackage {
 	EAttribute getCGOperationCallExp_ReferredOperation();
 
 	/**
+	 * Returns the meta object for the reference '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getCgOperation <em>Cg Operation</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Cg Operation</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getCgOperation()
+	 * @see #getCGOperationCallExp()
+	 * @generated
+	 */
+	EReference getCGOperationCallExp_CgOperation();
+
+	/**
 	 * Returns the meta object for the containment reference '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getCgThis <em>Cg This</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3889,6 +3900,14 @@ public interface CGModelPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute CG_OPERATION_CALL_EXP__REFERRED_OPERATION = eINSTANCE.getCGOperationCallExp_ReferredOperation();
+
+		/**
+		 * The meta object literal for the '<em><b>Cg Operation</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CG_OPERATION_CALL_EXP__CG_OPERATION = eINSTANCE.getCGOperationCallExp_CgOperation();
 
 		/**
 		 * The meta object literal for the '<em><b>Cg This</b></em>' containment reference feature.

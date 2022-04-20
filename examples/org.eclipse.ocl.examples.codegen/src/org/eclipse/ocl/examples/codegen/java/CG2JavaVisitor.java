@@ -2680,7 +2680,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 	@Override
 	public @NonNull Boolean visitCGOperationCallExp(@NonNull CGOperationCallExp cgOperationCallExp) {
-		CGOperation cgOperation = cgOperationCallExp.getOperation();
+		CGOperation cgOperation = cgOperationCallExp.getCgOperation();
 		OperationCallingConvention callingConvention = cgOperation.getCallingConvention();
 		return callingConvention.generateJava(this, js, cgOperationCallExp);
 	}

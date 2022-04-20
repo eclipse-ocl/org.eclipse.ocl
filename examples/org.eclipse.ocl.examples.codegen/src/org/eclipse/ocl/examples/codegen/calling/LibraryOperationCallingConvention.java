@@ -155,7 +155,7 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 		}
 		final List<@NonNull CGValuedElement> cgArguments = ClassUtil.nullFree(cgOperationCallExp.getCgArguments());
 		int iMax = cgArguments.size();
-		CGOperation cgOperation = cgOperationCallExp.getOperation();
+		CGOperation cgOperation = cgOperationCallExp.getCgOperation();
 		Method jMethod = libraryOperation.getEvaluateMethod(CGUtil.getAST(cgOperation));
 		Class<?> actualReturnClass = jMethod.getReturnType();
 		Boolean actualNullity = cg2JavaVisitor.getCodeGenerator().getIsNonNull(jMethod);

@@ -71,7 +71,7 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 	@Override
 	public @NonNull Boolean generateJava(@NonNull CG2JavaVisitor<?> cg2JavaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
 		CGForeignOperationCallExp cgForeignOperationCallExp = (CGForeignOperationCallExp)cgOperationCallExp;
-		CGOperation cgOperation = cgForeignOperationCallExp.getOperation();
+		CGOperation cgOperation = cgForeignOperationCallExp.getCgOperation();
 		CodeGenAnalyzer analyzer = cg2JavaVisitor.getAnalyzer();
 		JavaCodeGenerator codeGenerator = cg2JavaVisitor.getCodeGenerator();
 		Operation asReferredOperation = CGUtil.getReferredOperation(cgForeignOperationCallExp);

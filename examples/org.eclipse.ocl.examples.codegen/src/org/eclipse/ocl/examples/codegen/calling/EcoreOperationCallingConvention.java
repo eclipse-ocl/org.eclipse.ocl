@@ -92,10 +92,13 @@ public class EcoreOperationCallingConvention extends AbstractOperationCallingCon
 		CGTypeId cgTypeId = analyzer.getTypeId(pOperation.getOwningClass().getTypeId());
 		//		TypeDescriptor requiredTypeDescriptor = context.getUnboxedDescriptor(cgTypeId.getElementId());
 		TypeDescriptor requiredTypeDescriptor = codeGenerator.getUnboxedDescriptor(ClassUtil.nonNullState(cgTypeId.getElementId()));
-		assert cgOperationCallExp.getCgThis() == null;
+		CGValuedElement cgThis = cg2JavaVisitor.getExpression(cgOperationCallExp.getCgThis());
 		List<CGValuedElement> cgArguments = cgOperationCallExp.getCgArguments();
 		List<Parameter> pParameters = pOperation.getOwnedParameters();
 		//
+		if (!js.appendLocalStatements(cgThis)) {
+			return false;
+		}
 		for (@SuppressWarnings("null")@NonNull CGValuedElement cgArgument : cgArguments) {
 			CGValuedElement argument = cg2JavaVisitor.getExpression(cgArgument);
 			if (!js.appendLocalStatements(argument)) {
@@ -117,7 +120,7 @@ public class EcoreOperationCallingConvention extends AbstractOperationCallingCon
 		cg2JavaVisitor.appendSuppressWarningsNull(cgOperationCallExp, ecoreIsRequired);
 		js.appendDeclaration(cgOperationCallExp);
 		js.append(" = ");
-	//	js.appendAtomicReferenceTo(requiredTypeDescriptor, source);
+		js.appendAtomicReferenceTo(requiredTypeDescriptor, cgThis);
 		js.append(".");
 		js.append(operationAccessor);
 		js.append("(");

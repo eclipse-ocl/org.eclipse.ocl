@@ -1030,7 +1030,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		Operation asExcludingOperation = standardLibrary.getCollectionExcludingOperation();
 		cgOperationCallExp.setReferredOperation(asExcludingOperation);
 		CGOperation cgOperation = generateOperation(asExcludingOperation);
-		cgOperationCallExp.setOperation(cgOperation);
+		cgOperationCallExp.setCgOperation(cgOperation);
 		OCLExpression asSource = callExp.getOwnedSource();
 		cgOperationCallExp.setTypeId(context.getTypeId(asSource.getTypeId()));
 		NameResolution callNameResolution = getNameManager().declareLazyName(cgOperationCallExp);

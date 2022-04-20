@@ -165,7 +165,7 @@ public class CGNativeOperationCallExpImpl extends CGOperationCallExpImpl impleme
 		Method oldMethod = method;
 		method = newMethod;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 11, oldMethod, method));
+			eNotify(new ENotificationImpl(this, Notification.SET, 12, oldMethod, method));
 	}
 
 	/**
@@ -188,7 +188,7 @@ public class CGNativeOperationCallExpImpl extends CGOperationCallExpImpl impleme
 		boolean oldThisIsSelf = thisIsSelf;
 		thisIsSelf = newThisIsSelf;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 12, oldThisIsSelf, thisIsSelf));
+			eNotify(new ENotificationImpl(this, Notification.SET, 13, oldThisIsSelf, thisIsSelf));
 	}
 
 	/**
@@ -211,7 +211,7 @@ public class CGNativeOperationCallExpImpl extends CGOperationCallExpImpl impleme
 		boolean oldValueIsBoxed = valueIsBoxed;
 		valueIsBoxed = newValueIsBoxed;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 13, oldValueIsBoxed, valueIsBoxed));
+			eNotify(new ENotificationImpl(this, Notification.SET, 14, oldValueIsBoxed, valueIsBoxed));
 	}
 
 	/**
@@ -234,7 +234,7 @@ public class CGNativeOperationCallExpImpl extends CGOperationCallExpImpl impleme
 		boolean oldValueIsEcore = valueIsEcore;
 		valueIsEcore = newValueIsEcore;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 14, oldValueIsEcore, valueIsEcore));
+			eNotify(new ENotificationImpl(this, Notification.SET, 15, oldValueIsEcore, valueIsEcore));
 	}
 
 	/**
@@ -255,13 +255,13 @@ public class CGNativeOperationCallExpImpl extends CGOperationCallExpImpl impleme
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 11:
-				return getMethod();
 			case 12:
-				return isThisIsSelf();
+				return getMethod();
 			case 13:
-				return isValueIsBoxed();
+				return isThisIsSelf();
 			case 14:
+				return isValueIsBoxed();
+			case 15:
 				return isValueIsEcore();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -275,16 +275,16 @@ public class CGNativeOperationCallExpImpl extends CGOperationCallExpImpl impleme
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 11:
+			case 12:
 				setMethod((Method)newValue);
 				return;
-			case 12:
+			case 13:
 				setThisIsSelf((Boolean)newValue);
 				return;
-			case 13:
+			case 14:
 				setValueIsBoxed((Boolean)newValue);
 				return;
-			case 14:
+			case 15:
 				setValueIsEcore((Boolean)newValue);
 				return;
 		}
@@ -299,16 +299,16 @@ public class CGNativeOperationCallExpImpl extends CGOperationCallExpImpl impleme
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 11:
+			case 12:
 				setMethod(METHOD_EDEFAULT);
 				return;
-			case 12:
+			case 13:
 				setThisIsSelf(THIS_IS_SELF_EDEFAULT);
 				return;
-			case 13:
+			case 14:
 				setValueIsBoxed(VALUE_IS_BOXED_EDEFAULT);
 				return;
-			case 14:
+			case 15:
 				setValueIsEcore(VALUE_IS_ECORE_EDEFAULT);
 				return;
 		}
@@ -323,13 +323,13 @@ public class CGNativeOperationCallExpImpl extends CGOperationCallExpImpl impleme
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 11:
-				return METHOD_EDEFAULT == null ? method != null : !METHOD_EDEFAULT.equals(method);
 			case 12:
-				return thisIsSelf != THIS_IS_SELF_EDEFAULT;
+				return METHOD_EDEFAULT == null ? method != null : !METHOD_EDEFAULT.equals(method);
 			case 13:
-				return valueIsBoxed != VALUE_IS_BOXED_EDEFAULT;
+				return thisIsSelf != THIS_IS_SELF_EDEFAULT;
 			case 14:
+				return valueIsBoxed != VALUE_IS_BOXED_EDEFAULT;
+			case 15:
 				return valueIsEcore != VALUE_IS_ECORE_EDEFAULT;
 		}
 		return super.eIsSet(featureID);

@@ -2589,7 +2589,7 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 	 */
 	@Override
 	public EReference getCGOperationCallExp_CgArguments() {
-		return (EReference)cgOperationCallExpEClass.getEStructuralFeatures().get(0);
+		return (EReference)cgOperationCallExpEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -2599,7 +2599,17 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 	 */
 	@Override
 	public EAttribute getCGOperationCallExp_ReferredOperation() {
-		return (EAttribute)cgOperationCallExpEClass.getEStructuralFeatures().get(1);
+		return (EAttribute)cgOperationCallExpEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EReference getCGOperationCallExp_CgOperation() {
+		return (EReference)cgOperationCallExpEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -2609,7 +2619,7 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 	 */
 	@Override
 	public EReference getCGOperationCallExp_CgThis() {
-		return (EReference)cgOperationCallExpEClass.getEStructuralFeatures().get(2);
+		return (EReference)cgOperationCallExpEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -3258,8 +3268,8 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		createEReference(cgCachedOperationEClass, 12);
 
 		cgCachedOperationCallExpEClass = createEClass(6);
-		createEAttribute(cgCachedOperationCallExpEClass, 11);
 		createEAttribute(cgCachedOperationCallExpEClass, 12);
+		createEAttribute(cgCachedOperationCallExpEClass, 13);
 
 		cgCallableEClass = createEClass(7);
 		createEReference(cgCallableEClass, 6);
@@ -3313,7 +3323,7 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		createEReference(cgEcoreOperationEClass, 11);
 
 		cgEcoreOperationCallExpEClass = createEClass(21);
-		createEReference(cgEcoreOperationCallExpEClass, 11);
+		createEReference(cgEcoreOperationCallExpEClass, 12);
 
 		cgEcoreOppositePropertyCallExpEClass = createEClass(22);
 		createEReference(cgEcoreOppositePropertyCallExpEClass, 10);
@@ -3336,7 +3346,7 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		createEReference(cgExecutorOperationEClass, 6);
 
 		cgExecutorOperationCallExpEClass = createEClass(30);
-		createEReference(cgExecutorOperationCallExpEClass, 11);
+		createEReference(cgExecutorOperationCallExpEClass, 12);
 
 		cgExecutorOppositePropertyCallExpEClass = createEClass(31);
 		createEReference(cgExecutorOppositePropertyCallExpEClass, 10);
@@ -3412,7 +3422,7 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		cgLibraryOperationEClass = createEClass(54);
 
 		cgLibraryOperationCallExpEClass = createEClass(55);
-		createEAttribute(cgLibraryOperationCallExpEClass, 11);
+		createEAttribute(cgLibraryOperationCallExpEClass, 12);
 
 		cgLibraryPropertyCallExpEClass = createEClass(56);
 		createEAttribute(cgLibraryPropertyCallExpEClass, 10);
@@ -3438,10 +3448,10 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		cgNativeOperationEClass = createEClass(62);
 
 		cgNativeOperationCallExpEClass = createEClass(63);
-		createEAttribute(cgNativeOperationCallExpEClass, 11);
 		createEAttribute(cgNativeOperationCallExpEClass, 12);
 		createEAttribute(cgNativeOperationCallExpEClass, 13);
 		createEAttribute(cgNativeOperationCallExpEClass, 14);
+		createEAttribute(cgNativeOperationCallExpEClass, 15);
 
 		cgNativePropertyEClass = createEClass(64);
 
@@ -3462,9 +3472,10 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		createEReference(cgOperationEClass, 10);
 
 		cgOperationCallExpEClass = createEClass(70);
-		createEReference(cgOperationCallExpEClass, 8);
-		createEAttribute(cgOperationCallExpEClass, 9);
+		createEAttribute(cgOperationCallExpEClass, 8);
+		createEReference(cgOperationCallExpEClass, 9);
 		createEReference(cgOperationCallExpEClass, 10);
+		createEReference(cgOperationCallExpEClass, 11);
 
 		cgOppositePropertyCallExpEClass = createEClass(71);
 
@@ -3908,8 +3919,9 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		initEReference(getCGOperation_ContainingClass(), this.getCGClass(), this.getCGClass_Operations(), "containingClass", null, 1, 1, CGOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(cgOperationCallExpEClass, CGOperationCallExp.class, "CGOperationCallExp", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getCGOperationCallExp_CgArguments(), this.getCGValuedElement(), null, "cgArguments", null, 0, -1, CGOperationCallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getCGOperationCallExp_ReferredOperation(), this.getOperation(), "referredOperation", null, 1, 1, CGOperationCallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getCGOperationCallExp_CgOperation(), this.getCGOperation(), null, "cgOperation", null, 1, 1, CGOperationCallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getCGOperationCallExp_CgArguments(), this.getCGValuedElement(), null, "cgArguments", null, 0, -1, CGOperationCallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getCGOperationCallExp_CgThis(), this.getCGValuedElement(), null, "cgThis", null, 0, 1, CGOperationCallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(cgOppositePropertyCallExpEClass, CGOppositePropertyCallExp.class, "CGOppositePropertyCallExp", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

@@ -377,7 +377,7 @@ public class CGUtil
 	 */
 	public static @NonNull Iterable<@NonNull Pair<@NonNull CGParameter, @NonNull CGValuedElement>> getParameterBindings(@NonNull CGOperationCallExp cgOperationCallExp) {
 		List<@NonNull Pair<@NonNull CGParameter, @NonNull CGValuedElement>> bindings = new ArrayList<>();
-		CGOperation cgOperation = cgOperationCallExp.getOperation();
+		CGOperation cgOperation = cgOperationCallExp.getCgOperation();
 	//	Operation asOperation = getAST(cgOperation);
 	//	OperationCallingConvention callingConvention = cgOperation.getCallingConvention();
 		List<@NonNull CGParameter> cgParameters = getParametersList(cgOperation);
