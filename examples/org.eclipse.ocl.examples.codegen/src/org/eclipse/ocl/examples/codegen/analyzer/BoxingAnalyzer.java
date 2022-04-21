@@ -545,8 +545,8 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 		//	Guard / cast source
 		// XXX cgThis / cgSource
 		if (isBoxed) {
-			boolean isStatic = callingConvention.isStatic(cgOperation);
-			if (!isStatic) {
+			boolean isStatic = cgThis != null; // XXXcallingConvention.isStatic(cgOperation);
+			if (isStatic) {
 				assert cgThis != null;
 				boolean sourceMayBeNull = false;
 				if (referredOperation != null) {
@@ -696,9 +696,11 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 		}
 		else if (referredVariable instanceof CGParameter) {
 			CGParameter cgParameter = (CGParameter)referredVariable;
-			EObject cgOperation = cgParameter.eContainer();
-			if (cgOperation instanceof CGLibraryOperation) {
-				rewriteAsCast(cgElement);
+			if (cgParameter.getAst() != null) {		// Skip synthetic parameters such as executor
+				EObject cgOperation = cgParameter.eContainer();
+				if (cgOperation instanceof CGLibraryOperation) {
+					rewriteAsCast(cgElement);
+				}
 			}
 		}
 		return null;

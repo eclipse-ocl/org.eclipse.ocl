@@ -190,6 +190,8 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.RealValue;
 import org.eclipse.ocl.pivot.values.Unlimited;
 import org.eclipse.ocl.pivot.values.UnlimitedValue;
 
@@ -389,7 +391,8 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	protected @NonNull CGFinalVariable createCGFinalVariable(@NonNull CGValuedElement cgInit) {
 		NameResolution nameResolution = getNameManager().getNameResolution(cgInit);
 		CGFinalVariable cgVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();
-		initAst(cgVariable, CGUtil.getAST(cgInit));
+		cgVariable.setAst(cgInit.getAst());
+		cgVariable.setTypeId(cgInit.getTypeId());
 		cgVariable.setInit(cgInit);
 		nameResolution.addCGElement(cgVariable);
 		return cgVariable;
@@ -771,23 +774,24 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 					context.addForeignFeature(asOperation);
 				}
 				cgOperation = createCGOperationWithoutBody(asOperation, callingConvention);
-			}
-			pushDeclarationContext(cgOperation, asOperation);
-			ExpressionInOCL query = null;
-			LanguageExpression specification = asOperation.getBodyExpression();
-			if (specification != null) {
-				try {
-					query = environmentFactory.parseSpecification(specification);
-				} catch (ParserException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+		//	}
+				pushDeclarationContext(cgOperation, asOperation);
+				ExpressionInOCL query = null;
+				LanguageExpression specification = asOperation.getBodyExpression();
+				if (specification != null) {
+					try {
+						query = environmentFactory.parseSpecification(specification);
+					} catch (ParserException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
+				callingConvention.createCGParameters(this, cgOperation, query);
+				if (query != null) {
+					cgOperation.setBody(doVisit(CGValuedElement.class, query.getOwnedBody()));
+				}
+				popLocalContext();
 			}
-			cgOperation.getCallingConvention().createCGParameters(this, cgOperation, query);
-			if (query != null) {
-				cgOperation.setBody(doVisit(CGValuedElement.class, query.getOwnedBody()));
-			}
-			popLocalContext();
 			popClassContext();
 		}
 		return cgOperation;
@@ -1065,26 +1069,31 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 				e.printStackTrace();
 			}
 		}
-	/*	else if (defaultValue instanceof Boolean) {
-			CGBoolean constant = context.getBoolean(((Boolean)defaultValue).booleanValue());
-			initExpression = context.createCGConstantExp(asProperty, constant);
+		else {
+			CGConstant cgConstant;
+			if (defaultValue instanceof Boolean) {
+				cgConstant = context.getBoolean(((Boolean)defaultValue).booleanValue());
+			}
+			else if (defaultValue instanceof IntegerValue) {		// ?? Long etc
+				cgConstant = context.getInteger(((IntegerValue)defaultValue).asNumber());
+			}
+			else if (defaultValue instanceof RealValue) {
+				cgConstant = context.getReal(((RealValue)defaultValue).asNumber());
+			}
+			else if (defaultValue instanceof String) {
+				cgConstant = context.getString((String)defaultValue);
+			}
+			else if (defaultValue instanceof Number) {
+				cgConstant = context.getReal((Number)defaultValue);
+			}
+			else {
+				cgConstant = null;
+			}
+			if (cgConstant != null) {
+				initExpression = context.createCGConstantExp(asProperty, cgConstant);
+
+			}
 		}
-		else if (defaultValue instanceof IntegerValue) {		// ?? Long etc
-			CGInteger constant = context.getInteger(((IntegerValue)defaultValue).asNumber());
-			initExpression = context.createCGConstantExp(asProperty, constant);
-		}
-		else if (defaultValue instanceof RealValue) {
-			CGReal constant = context.getReal(((RealValue)defaultValue).asNumber());
-			initExpression = context.createCGConstantExp(asProperty, constant);
-		}
-		else if (defaultValue instanceof String) {
-			CGString constant = context.getString((String)defaultValue);
-			initExpression = context.createCGConstantExp(asProperty, constant);
-		}
-		else if (defaultValue instanceof Number) {
-			CGReal constant = context.getReal((Number)defaultValue);
-			initExpression = context.createCGConstantExp(asProperty, constant);
-		} */
 		return initExpression;
 	}
 

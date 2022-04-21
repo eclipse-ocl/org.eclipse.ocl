@@ -278,8 +278,8 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 		return true;
 	}
 
-	@Override
-	public boolean isStatic(@NonNull CGOperation cgOperation) {
-		return true;
-	}
+//	@Override
+//	public boolean isStatic(@NonNull CGOperation cgOperation) {
+//		return true;
+//	}
 }

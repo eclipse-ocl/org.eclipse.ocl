@@ -52,29 +52,19 @@ public class EcoreForeignOperationCallingConvention extends AbstractOperationCal
 		PivotMetamodelManager metamodelManager = as2cgVisitor.getMetamodelManager();
 		GenModelHelper genModelHelper = as2cgVisitor.getGenModelHelper();
 		LibraryFeature libraryOperation = metamodelManager.getImplementation(asOperation);
-		if (libraryOperation instanceof EObjectOperation) {
-			EOperation eOperation = (EOperation) asOperation.getESObject();
-			if (eOperation != null) {
-				boolean isForeign = PivotUtil.isStatic(eOperation);
-				if (!isForeign) {
-					try {
-						genModelHelper.getGenOperation(eOperation);
-					}
-					catch (GenModelException e) {
-						isForeign = true;
-					}
-				}
-				if (!isForeign) {
-					CGEcoreOperation cgEcoreOperation = CGModelFactory.eINSTANCE.createCGEcoreOperation();
-					cgEcoreOperation.setEOperation(eOperation);
-					return cgEcoreOperation;
-				}
-				else {
-					return CGModelFactory.eINSTANCE.createCGLibraryOperation();
-				}
-			}
+		assert libraryOperation instanceof EObjectOperation;
+		EOperation eOperation = (EOperation) asOperation.getESObject();
+		assert eOperation != null;
+		assert (!PivotUtil.isStatic(eOperation));
+		try {
+			genModelHelper.getGenOperation(eOperation);
+			CGEcoreOperation cgEcoreOperation = CGModelFactory.eINSTANCE.createCGEcoreOperation();
+			cgEcoreOperation.setEOperation(eOperation);
+			return cgEcoreOperation;
 		}
-		assert false : "Fallback overload for " + this;		// XXX
+		catch (GenModelException e) {
+			// No genmodel so fallback
+		}
 		return CGModelFactory.eINSTANCE.createCGLibraryOperation();
 	}
 
@@ -89,9 +79,9 @@ public class EcoreForeignOperationCallingConvention extends AbstractOperationCal
 		analyzer.addForeignFeature(asOperation);
 		CGForeignOperationCallExp cgForeignOperationCallExp = CGModelFactory.eINSTANCE.createCGForeignOperationCallExp();
 		addExecutorArgument(as2cgVisitor, cgForeignOperationCallExp);
-		boolean isStatic = isStatic(cgOperation);
+	//	boolean isStatic = isStatic(cgOperation);
 	//	assert isStatic == (cgSource == null);
-		if (!isStatic) {
+		if (cgSource != null) {
 			cgForeignOperationCallExp.getCgArguments().add(cgSource);
 		}
 		init(as2cgVisitor, cgForeignOperationCallExp, asOperationCallExp, cgOperation, isRequired);
@@ -107,11 +97,20 @@ public class EcoreForeignOperationCallingConvention extends AbstractOperationCal
 	}
 
 	@Override
-	public @NonNull Boolean generateJava(
-			@NonNull CG2JavaVisitor<?> cg2JavaVisitor, @NonNull JavaStream js,
-			@NonNull CGOperationCallExp cgOperationCallExp) {
-		// TODO Auto-generated method stub
-		return super.generateJava(cg2JavaVisitor, js, cgOperationCallExp);
+	public @NonNull Boolean generateJava(@NonNull CG2JavaVisitor<?> cg2JavaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
+		CGForeignOperationCallExp cgForeignOperationCallExp = (CGForeignOperationCallExp)cgOperationCallExp;
+		//
+		if (!generateLocals(cg2JavaVisitor, js, cgOperationCallExp)) {
+			return false;
+		}
+		//
+		js.appendDeclaration(cgForeignOperationCallExp);
+		js.append(" = ");
+		appendForeignOperationName(cg2JavaVisitor, js, cgOperationCallExp);
+		js.append("(");
+		generateArgumentList(cg2JavaVisitor, js, cgOperationCallExp);
+		js.append(");\n");
+		return true;
 	}
 
 	@Override
@@ -119,8 +118,8 @@ public class EcoreForeignOperationCallingConvention extends AbstractOperationCal
 		return true;
 	}
 
-	@Override
-	public boolean isStatic(@NonNull CGOperation cgOperation) {
-		return true;
-	}
+//	@Override
+//	public boolean isStatic(@NonNull CGOperation cgOperation) {
+//		return true;
+//	}
 }

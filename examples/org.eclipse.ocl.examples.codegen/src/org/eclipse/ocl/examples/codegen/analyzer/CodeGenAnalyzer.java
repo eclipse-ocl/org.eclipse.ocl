@@ -60,11 +60,11 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.Model;
-import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.PropertyId;
@@ -229,7 +229,7 @@ public class CodeGenAnalyzer
 		return cgConstantExp;
 	}
 
-	public @NonNull CGConstantExp createCGConstantExp(@NonNull OCLExpression element, @NonNull CGConstant cgConstant) {
+	public @NonNull CGConstantExp createCGConstantExp(@NonNull TypedElement element, @NonNull CGConstant cgConstant) {
 		CGConstantExp cgConstantExp = CGModelFactory.eINSTANCE.createCGConstantExp();
 		cgConstantExp.setAst(element);
 		cgConstantExp.setReferredConstant(cgConstant);
@@ -246,7 +246,7 @@ public class CodeGenAnalyzer
 		assert method != null;
 		CGNativeOperationCallExp cgNativeOperationCallExp = CGModelFactory.eINSTANCE.createCGNativeOperationCallExp();
 		cgNativeOperationCallExp.setMethod(method);
-		Operation asOperation = getNativeOperation(method);
+		Operation asOperation = getNativeOperation(method, callingConvention);
 		CGOperation cgOperation = getOperation(asOperation);
 		cgNativeOperationCallExp.setCgOperation(cgOperation);
 	//	callingConvention.createCGOperationCallExp(null, cgOperation, null, cgOperation, null)
@@ -497,7 +497,7 @@ public class CodeGenAnalyzer
 	/*
 	 * Return a native operation for method flattening the signature into the name.
 	 */
-	public @NonNull Operation getNativeOperation(@NonNull Method method) {
+	public @NonNull Operation getNativeOperation(@NonNull Method method, @NonNull OperationCallingConvention callingConvention) {
 		Class<?> jClass = method.getDeclaringClass();
 		assert jClass != null;
 		org.eclipse.ocl.pivot.Class asClass = getNativeClass(jClass);
@@ -530,7 +530,7 @@ public class CodeGenAnalyzer
 			globalNameManager.declareLazyName(cgOperation);
 			cgOperation.setTypeId(getTypeId(asTypeId));
 			cgOperation.setRequired(asOperation.isIsRequired());
-			cgOperation.setCallingConvention(NativeOperationCallingConvention.INSTANCE);
+			cgOperation.setCallingConvention(callingConvention);
 			cgOperation.setAst(asOperation);
 			cgOperation.setRequired(isRequired);
 			JavaGlobalContext<?> globalContext = (JavaGlobalContext<?>)codeGenerator.getGlobalContext();

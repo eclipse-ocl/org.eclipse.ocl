@@ -785,8 +785,6 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 		//
 		IntegerValue int55 = ValueUtil.integerValueOf(55);
 		IntegerValue int77 = ValueUtil.integerValueOf(77);
-		ocl2.assertQueryEquals(parent, int55, "count()");
-// XXX
 //
 //		assertNull(modelManager.basicGetForeignPropertyValue(null, staticCountPropertyId));
 //		ocl2.assertQueryEquals(parent, int55, "count");

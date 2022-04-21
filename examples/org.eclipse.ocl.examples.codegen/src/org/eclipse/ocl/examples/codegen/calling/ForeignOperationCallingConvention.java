@@ -18,7 +18,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
@@ -109,46 +108,34 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 	public @NonNull Boolean generateJava(@NonNull CG2JavaVisitor<?> cg2JavaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
 		CGForeignOperationCallExp cgForeignOperationCallExp = (CGForeignOperationCallExp)cgOperationCallExp;
 		CGOperation cgOperation = cgForeignOperationCallExp.getCgOperation();
-		CodeGenAnalyzer analyzer = cg2JavaVisitor.getAnalyzer();
 		JavaCodeGenerator codeGenerator = cg2JavaVisitor.getCodeGenerator();
-		Operation asReferredOperation = CGUtil.getReferredOperation(cgForeignOperationCallExp);
-		boolean isStatic = asReferredOperation.isIsStatic();
-		CGValuedElement cgThis = null;
-		List<CGValuedElement> cgArguments = cgForeignOperationCallExp.getCgArguments();
+	//	boolean isStatic = asReferredOperation.isIsStatic();
+	//	CGValuedElement cgThis = null;
+		List<@NonNull CGValuedElement> cgArguments = CGUtil.getArgumentsList(cgForeignOperationCallExp);
 		//
-		if (!isStatic) {
-			cgThis = cg2JavaVisitor.getExpression(cgForeignOperationCallExp.getCgThis());
-			if (!js.appendLocalStatements(cgThis)) {
-				return false;
-			}
+	//	if (!isStatic) {
+	//		cgThis = cg2JavaVisitor.getExpression(cgForeignOperationCallExp.getCgThis());
+	//		if (!js.appendLocalStatements(cgThis)) {
+	//			return false;
+	//		}
+	//	}
+		if (!generateLocals(cg2JavaVisitor, js, cgOperationCallExp)) {
+			return false;
 		}
-		for (@SuppressWarnings("null")@NonNull CGValuedElement cgArgument : cgArguments) {
-			CGValuedElement argument = cg2JavaVisitor.getExpression(cgArgument);
-			if (!js.appendLocalStatements(argument)) {
-				return false;
-			}
-		}
-		org.eclipse.ocl.pivot.Class asReferredClass = PivotUtil.getOwningClass(asReferredOperation);
-	//	List<Parameter> asParameters = asReferredOperation.getOwnedParameters();
 		List<CGParameter> cgParameters = cgOperation.getParameters();
 		//
-		CGClass cgReferringClass = CGUtil.getContainingClass(cgForeignOperationCallExp);
-		assert cgReferringClass != null;
-		String flattenedClassName = codeGenerator.getQualifiedForeignClassName(asReferredClass);
 		js.appendDeclaration(cgForeignOperationCallExp);
 		js.append(" = ");
-		js.append(flattenedClassName);
-		js.append(".op_");
-		js.append(PivotUtil.getName(asReferredOperation));
+		appendForeignOperationName(cg2JavaVisitor, js, cgOperationCallExp);
 		js.append("(");
-		if (!isStatic) {
-			CGTypeId cgTypeId = analyzer.getTypeId(asReferredOperation.getOwningClass().getTypeId());
-			TypeDescriptor thisTypeDescriptor = codeGenerator.getUnboxedDescriptor(ClassUtil.nonNullState(cgTypeId.getElementId()));
-			js.appendReferenceTo(thisTypeDescriptor, cgThis);
-		}
+	//	if (!isStatic) {
+	//		CGTypeId cgTypeId = analyzer.getTypeId(asReferredOperation.getOwningClass().getTypeId());
+	//		TypeDescriptor thisTypeDescriptor = codeGenerator.getUnboxedDescriptor(ClassUtil.nonNullState(cgTypeId.getElementId()));
+	//		js.appendReferenceTo(thisTypeDescriptor, cgThis);
+	//	}
 		int iMax = Math.min(cgParameters.size(), cgArguments.size());
 		for (int i = 0; i < iMax; i++) {
-			if ((i > 0) || !isStatic) {
+			if (i > 0) { // || !isStatic) {
 				js.append(", ");
 			}
 			CGValuedElement cgArgument = cgArguments.get(i);
