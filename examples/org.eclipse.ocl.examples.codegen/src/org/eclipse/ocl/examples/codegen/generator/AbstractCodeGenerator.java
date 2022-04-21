@@ -133,7 +133,8 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 	}
 
 	@Override
-	public @NonNull OperationCallingConvention getCallingConvention(@NonNull Operation asOperation, @NonNull LibraryOperation libraryOperation) {
+	public @NonNull OperationCallingConvention getCallingConvention(@NonNull Operation asOperation) {
+		LibraryOperation libraryOperation = (LibraryOperation)metamodelManager.getImplementation(asOperation);
 		if (BuiltInOperationCallingConvention.INSTANCE.canHandle(libraryOperation)) {
 			return BuiltInOperationCallingConvention.INSTANCE;
 		}

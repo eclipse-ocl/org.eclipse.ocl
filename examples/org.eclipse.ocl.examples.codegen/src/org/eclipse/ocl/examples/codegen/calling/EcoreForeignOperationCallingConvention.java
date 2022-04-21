@@ -51,7 +51,7 @@ public class EcoreForeignOperationCallingConvention extends AbstractOperationCal
 		CGForeignOperationCallExp cgForeignOperationCallExp = CGModelFactory.eINSTANCE.createCGForeignOperationCallExp();
 		addExecutorArgument(as2cgVisitor, cgForeignOperationCallExp);
 		boolean isStatic = isStatic(cgOperation);
-		assert isStatic == (cgSource == null);
+	//	assert isStatic == (cgSource == null);
 		if (!isStatic) {
 			cgForeignOperationCallExp.getCgArguments().add(cgSource);
 		}
@@ -77,6 +77,11 @@ public class EcoreForeignOperationCallingConvention extends AbstractOperationCal
 
 	@Override
 	public boolean isBoxed() {
+		return true;
+	}
+
+	@Override
+	public boolean isStatic(@NonNull CGOperation cgOperation) {
 		return true;
 	}
 }

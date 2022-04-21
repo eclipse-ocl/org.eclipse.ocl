@@ -73,7 +73,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGMapExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGMapPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativePropertyCallExp;
@@ -107,8 +106,6 @@ import org.eclipse.ocl.examples.codegen.java.JavaGlobalContext;
 import org.eclipse.ocl.examples.codegen.java.JavaLocalContext;
 import org.eclipse.ocl.examples.codegen.java.types.JavaTypeId;
 import org.eclipse.ocl.examples.codegen.library.NativeProperty;
-import org.eclipse.ocl.examples.codegen.library.NativeStaticOperation;
-import org.eclipse.ocl.examples.codegen.library.NativeVisitorOperation;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.BooleanLiteralExp;
 import org.eclipse.ocl.pivot.CallExp;
@@ -129,7 +126,6 @@ import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.LetExp;
-import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.MapLiteralExp;
 import org.eclipse.ocl.pivot.MapLiteralPart;
@@ -164,9 +160,7 @@ import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
-import org.eclipse.ocl.pivot.internal.ecore.EObjectOperation;
 import org.eclipse.ocl.pivot.internal.library.CompositionProperty;
-import org.eclipse.ocl.pivot.internal.library.ConstrainedOperation;
 import org.eclipse.ocl.pivot.internal.library.ConstrainedProperty;
 import org.eclipse.ocl.pivot.internal.library.ExplicitNavigationProperty;
 import org.eclipse.ocl.pivot.internal.library.ExtensionProperty;
@@ -177,7 +171,6 @@ import org.eclipse.ocl.pivot.internal.library.TuplePartProperty;
 import org.eclipse.ocl.pivot.internal.manager.FinalAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
-import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.LibraryIteration;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
@@ -302,6 +295,12 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 //		contextStack.push(codeGenerator.getGlobalContext());
 	}
 
+	public void addOperation(@NonNull Operation asOperation, @NonNull CGOperation cgOperation) {
+		CGOperation oldCGOperation = asFinalOperation2cgOperation.put(asOperation, cgOperation);
+		assert oldCGOperation == null;
+		context.addOperation(cgOperation);
+	}
+
 	protected void addParameter(@NonNull VariableDeclaration asVariable, @NonNull CGParameter cgParameter) {
 		variablesStack.putParameter(asVariable, cgParameter);
 	}
@@ -329,7 +328,8 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			for (@NonNull Operation asOverride : asOverrideOperations) {
 				CGOperation cgOperation = asFinalOperation2cgOperation.get(asOverride);
 				if (cgOperation == null) {
-					cgOperation = createFinalCGOperationWithoutBody(asOverride);
+					OperationCallingConvention callingConvention = codeGenerator.getCallingConvention(asOverride);
+					cgOperation = callingConvention.createCGOperationWithoutBody(this, asOverride);
 					pushLocalContext(cgOperation, asOverride);
 					popLocalContext();
 					asNewOperations.add(asOverride);
@@ -340,7 +340,8 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		else {
 			CGOperation cgOperation = asFinalOperation2cgOperation.get(asOperation);
 			if (cgOperation == null) {
-				cgOperation = createFinalCGOperationWithoutBody(asOperation);
+				OperationCallingConvention callingConvention = codeGenerator.getCallingConvention(asOperation);
+				cgOperation = callingConvention.createCGOperationWithoutBody(this, asOperation);
 				asNewOperations.add(asOperation);
 			}
 		}
@@ -518,7 +519,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return EcoreUtil.copy(anEObject);
 	}
 
-	protected @NonNull CGOperation createFinalCGOperationWithoutBody(@NonNull Operation asOperation) {
+/*	protected @NonNull CGOperation zzcreateFinalCGOperationWithoutBody(@NonNull Operation asOperation) {
 		CGOperation cgOperation = null;
 		LibraryFeature libraryOperation = metamodelManager.getImplementation(asOperation);
 		if ((libraryOperation instanceof NativeStaticOperation) || (libraryOperation instanceof NativeVisitorOperation)) {
@@ -583,7 +584,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		assert oldCGOperation == null;
 		context.addOperation(cgOperation);
 		return cgOperation;
-	}
+	} */
 
 	/**
 	 * Wrap asIn in a LetExp in which a clone of asInit is assigned to asVariable.
@@ -825,15 +826,19 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asOperation);
 			pushClassContext(asClass);
 			LibraryOperation libraryOperation = (LibraryOperation)metamodelManager.getImplementation(asOperation);
-			OperationCallingConvention callingConvention = codeGenerator.getCallingConvention(asOperation, libraryOperation);
+			OperationCallingConvention callingConvention = codeGenerator.getCallingConvention(asOperation);
 			if (libraryOperation instanceof ForeignOperation) {			// XXX this parses stdlib bodies unnecessarily
 				context.addForeignFeature(asOperation);
 			}
 			cgOperation = asFinalOperation2cgOperation.get(asOperation);
 			if (cgOperation == null) {
-				cgOperation = createFinalCGOperationWithoutBody(asOperation);
+			//	cgOperation = createFinalCGOperationWithoutBody(asOperation);
+			//	cgOperation.setCallingConvention(callingConvention);
+				cgOperation = callingConvention.createCGOperationWithoutBody(this, asOperation);
 			}
-			cgOperation.setCallingConvention(callingConvention);
+			else {
+				assert cgOperation.getCallingConvention() == callingConvention;
+			}
 			pushDeclarationContext(cgOperation, asOperation);
 			ExpressionInOCL query = null;
 			LanguageExpression specification = asOperation.getBodyExpression();

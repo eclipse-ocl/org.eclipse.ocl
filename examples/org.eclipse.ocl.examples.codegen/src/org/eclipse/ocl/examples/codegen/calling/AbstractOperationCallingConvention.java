@@ -12,28 +12,42 @@ package org.eclipse.ocl.examples.codegen.calling;
 
 import java.util.List;
 
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOperation;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
+import org.eclipse.ocl.examples.codegen.generator.GenModelException;
+import org.eclipse.ocl.examples.codegen.generator.GenModelHelper;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
+import org.eclipse.ocl.examples.codegen.library.NativeStaticOperation;
+import org.eclipse.ocl.examples.codegen.library.NativeVisitorOperation;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.ecore.EObjectOperation;
+import org.eclipse.ocl.pivot.internal.library.ConstrainedOperation;
+import org.eclipse.ocl.pivot.internal.library.ForeignOperation;
+import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
+import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  *  AbstractOperationCallingConvention defines the default support for an operation declaration or call.
@@ -54,7 +68,7 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 	protected void addExpressionInOCLParameters(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @NonNull ExpressionInOCL expressionInOCL) {
 		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
 		Variable contextVariable = expressionInOCL.getOwnedContext();
-		assert isStatic(cgOperation) == (contextVariable == null);
+	//	assert isStatic(cgOperation) == (contextVariable == null);
 		if (contextVariable != null) {
 			cgParameters.add(as2cgVisitor.getSelfParameter(contextVariable));
 		}
@@ -71,6 +85,74 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 		List<CGValuedElement> cgArguments = cgOperationCallExp.getCgArguments();
 		CGTypeId cgTypeId = analyzer.getTypeId(asTypeId);
 		cgArguments.add(analyzer.createCGConstantExp(cgTypeId));
+	}
+
+	public @NonNull CGOperation createCGOperationWithoutBody(@NonNull AS2CGVisitor as2cgVisitor, @NonNull Operation asOperation) {
+		PivotMetamodelManager metamodelManager = as2cgVisitor.getMetamodelManager();
+		GenModelHelper genModelHelper = as2cgVisitor.getGenModelHelper();
+		CGOperation cgOperation = null;
+		LibraryFeature libraryOperation = metamodelManager.getImplementation(asOperation);
+		if ((libraryOperation instanceof NativeStaticOperation) || (libraryOperation instanceof NativeVisitorOperation)) {
+			CGNativeOperation cgNativeOperation = CGModelFactory.eINSTANCE.createCGNativeOperation();
+			cgOperation = cgNativeOperation;
+		}
+		else if (libraryOperation instanceof EObjectOperation) {
+			EOperation eOperation = (EOperation) asOperation.getESObject();
+			if (eOperation != null) {
+				boolean isForeign = PivotUtil.isStatic(eOperation);
+				if (!isForeign) {
+					try {
+						genModelHelper.getGenOperation(eOperation);
+					}
+					catch (GenModelException e) {
+						isForeign = true;
+					}
+				}
+				if (!isForeign) {
+					CGEcoreOperation cgEcoreOperation = CGModelFactory.eINSTANCE.createCGEcoreOperation();
+					cgEcoreOperation.setEOperation(eOperation);
+					cgOperation = cgEcoreOperation;
+				}
+				else {
+					cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
+				}
+			}
+		}
+		else if (libraryOperation instanceof ForeignOperation) {
+			EOperation eOperation = (EOperation) asOperation.getESObject();
+			if (eOperation != null) {
+				boolean isForeign = PivotUtil.isStatic(eOperation);
+				if (isForeign) {
+					cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
+				//	CGParameter cgParameter = context.get    getSelfParameter(contextVariable);
+				//	cgOperation.getParameters().add(cgParameter);
+				}
+				else {
+					try {
+						genModelHelper.getGenOperation(eOperation);
+						CGEcoreOperation cgEcoreOperation = CGModelFactory.eINSTANCE.createCGEcoreOperation();
+						cgEcoreOperation.setEOperation(eOperation);
+						cgOperation = cgEcoreOperation;
+					}
+					catch (GenModelException e) {
+						cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
+					}
+				}
+			}
+		}
+		else if (libraryOperation instanceof ConstrainedOperation) {
+			org.eclipse.ocl.pivot.Package pPackage = asOperation.getOwningClass().getOwningPackage();
+			cgOperation = pPackage instanceof Library ? CGModelFactory.eINSTANCE.createCGLibraryOperation()
+				: CGModelFactory.eINSTANCE.createCGCachedOperation();
+		}
+		if (cgOperation == null) {
+			cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
+		}
+		as2cgVisitor.initAst(cgOperation, asOperation);
+		cgOperation.setRequired(asOperation.isIsRequired());
+		cgOperation.setCallingConvention(this);
+		as2cgVisitor.addOperation(asOperation, cgOperation);
+		return cgOperation;
 	}
 
 	@Override
