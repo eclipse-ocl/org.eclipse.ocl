@@ -30,8 +30,6 @@ import org.eclipse.ocl.pivot.library.LibraryOperation;
 public interface OperationCallingConvention extends CallingConvention
 {
 	@NonNull CGOperation createCGOperationWithoutBody(@NonNull AS2CGVisitor as2cgVisitor, @NonNull Operation asOperation);
-
-	void createParameters(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL query);
 	/**
 	 * Create the appropriate CGOperationCallExp for asOperationCallExp with cgSource, or retirn null
 	 * if this OperationCallingConvention cannot handle it.
@@ -39,6 +37,8 @@ public interface OperationCallingConvention extends CallingConvention
 	 */
 	@NonNull CGValuedElement createCGOperationCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @NonNull LibraryOperation libraryOperation,
 			@Nullable CGValuedElement cgSource, @NonNull OperationCallExp asOperationCallExp);
+
+	void createCGParameters(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL query);
 
 	@NonNull Boolean generateJava(@NonNull CG2JavaVisitor<?> cg2JavaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp);
 

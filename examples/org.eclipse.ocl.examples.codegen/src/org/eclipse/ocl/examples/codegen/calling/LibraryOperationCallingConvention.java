@@ -37,6 +37,11 @@ import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.ecore.EObjectOperation;
+import org.eclipse.ocl.pivot.internal.library.ConstrainedOperation;
+import org.eclipse.ocl.pivot.internal.library.ForeignOperation;
+import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
+import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -58,6 +63,16 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
 public class LibraryOperationCallingConvention extends AbstractOperationCallingConvention
 {
 	public static final @NonNull LibraryOperationCallingConvention INSTANCE = new LibraryOperationCallingConvention();
+
+	@Override
+	public @NonNull CGOperation createCGOperationWithoutBody(@NonNull AS2CGVisitor as2cgVisitor, @NonNull Operation asOperation) {
+ 		PivotMetamodelManager metamodelManager = as2cgVisitor.getMetamodelManager();
+		LibraryFeature libraryOperation = metamodelManager.getImplementation(asOperation);
+		assert !(libraryOperation instanceof EObjectOperation);
+		assert !(libraryOperation instanceof ForeignOperation);
+		assert !(libraryOperation instanceof ConstrainedOperation);
+		return CGModelFactory.eINSTANCE.createCGLibraryOperation();
+	}
 
 	@Override
 	public @NonNull CGCallExp createCGOperationCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @NonNull LibraryOperation libraryOperation,
@@ -93,7 +108,7 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 	}
 
 	@Override
-	public void createParameters(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL expressionInOCL) {
+	public void createCGParameters(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL expressionInOCL) {
 	//	assert expressionInOCL == null;		-- some library operations also have OCL bodies
 		Operation asOperation = CGUtil.getAST(cgOperation);
 		JavaLocalContext<?> localContext = as2cgVisitor.getLocalContext();

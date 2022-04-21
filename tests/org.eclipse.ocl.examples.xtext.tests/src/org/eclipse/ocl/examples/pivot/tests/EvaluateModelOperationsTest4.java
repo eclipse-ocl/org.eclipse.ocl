@@ -37,7 +37,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.cse.CommonSubexpressionEliminator;
 import org.eclipse.ocl.examples.codegen.genmodel.OCLGenModelUtil;
 import org.eclipse.ocl.examples.xtext.tests.TestFile;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
@@ -587,11 +586,11 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 
 	@Test
 	public void test_ecore_collection_equality() throws Exception {
-		CommonSubexpressionEliminator.CSE_PLACES.setState(true);
-		CommonSubexpressionEliminator.CSE_PRUNE.setState(true);
-		CommonSubexpressionEliminator.CSE_PULL_UP.setState(true);
-		CommonSubexpressionEliminator.CSE_PUSH_UP.setState(true);
-		CommonSubexpressionEliminator.CSE_REWRITE.setState(true);
+	//	CommonSubexpressionEliminator.CSE_PLACES.setState(true);
+	//	CommonSubexpressionEliminator.CSE_PRUNE.setState(true);
+	//	CommonSubexpressionEliminator.CSE_PULL_UP.setState(true);
+	//	CommonSubexpressionEliminator.CSE_PUSH_UP.setState(true);
+	//	CommonSubexpressionEliminator.CSE_REWRITE.setState(true);
 		TestOCL ocl = createOCL();
 		//
 		EList<EStructuralFeature> eStructuralFeatures = EcorePackage.Literals.ECLASS.getEStructuralFeatures();
@@ -703,11 +702,11 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 	 * Test the allocation of a complement that defines a statically unqiue id to each element.
 	 */
 	@Test public void test_static_ids() throws Exception {
-				CommonSubexpressionEliminator.CSE_PLACES.setState(true);
-				CommonSubexpressionEliminator.CSE_PRUNE.setState(true);
-				CommonSubexpressionEliminator.CSE_PULL_UP.setState(true);
-				CommonSubexpressionEliminator.CSE_PUSH_UP.setState(true);
-				CommonSubexpressionEliminator.CSE_REWRITE.setState(true);
+			//	CommonSubexpressionEliminator.CSE_PLACES.setState(true);
+			//	CommonSubexpressionEliminator.CSE_PRUNE.setState(true);
+			//	CommonSubexpressionEliminator.CSE_PULL_UP.setState(true);
+			//	CommonSubexpressionEliminator.CSE_PUSH_UP.setState(true);
+			//	CommonSubexpressionEliminator.CSE_REWRITE.setState(true);
 				TestUtil.doCompleteOCLSetup();
 		OCL ocl1 = createOCL();
 		EnvironmentFactory environmentFactory1 = ocl1.getEnvironmentFactory();

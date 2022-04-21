@@ -295,12 +295,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 //		contextStack.push(codeGenerator.getGlobalContext());
 	}
 
-	public void addOperation(@NonNull Operation asOperation, @NonNull CGOperation cgOperation) {
-		CGOperation oldCGOperation = asFinalOperation2cgOperation.put(asOperation, cgOperation);
-		assert oldCGOperation == null;
-		context.addOperation(cgOperation);
-	}
-
 	protected void addParameter(@NonNull VariableDeclaration asVariable, @NonNull CGParameter cgParameter) {
 		variablesStack.putParameter(asVariable, cgParameter);
 	}
@@ -329,7 +323,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 				CGOperation cgOperation = asFinalOperation2cgOperation.get(asOverride);
 				if (cgOperation == null) {
 					OperationCallingConvention callingConvention = codeGenerator.getCallingConvention(asOverride);
-					cgOperation = callingConvention.createCGOperationWithoutBody(this, asOverride);
+					cgOperation = createCGOperationWithoutBody(asOverride, callingConvention);
 					pushLocalContext(cgOperation, asOverride);
 					popLocalContext();
 					asNewOperations.add(asOverride);
@@ -341,7 +335,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			CGOperation cgOperation = asFinalOperation2cgOperation.get(asOperation);
 			if (cgOperation == null) {
 				OperationCallingConvention callingConvention = codeGenerator.getCallingConvention(asOperation);
-				cgOperation = callingConvention.createCGOperationWithoutBody(this, asOperation);
+				cgOperation = createCGOperationWithoutBody(asOperation, callingConvention);
 				asNewOperations.add(asOperation);
 			}
 		}
@@ -465,6 +459,17 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return cgCallExp;
 	}
 
+	protected @NonNull CGOperation createCGOperationWithoutBody(@NonNull Operation asOperation, @NonNull OperationCallingConvention callingConvention) {
+		CGOperation cgOperation = callingConvention.createCGOperationWithoutBody(this, asOperation);
+		initAst(cgOperation, asOperation);
+		cgOperation.setRequired(asOperation.isIsRequired());
+		cgOperation.setCallingConvention(callingConvention);
+		CGOperation oldCGOperation = asFinalOperation2cgOperation.put(asOperation, cgOperation);
+		assert oldCGOperation == null;
+		context.addOperation(cgOperation);
+		return cgOperation;
+	}
+
 	public @NonNull CGVariable createCGVariable(@NonNull VariableDeclaration asVariable) {
 		CGVariable cgVariable = variablesStack.getVariable(asVariable);
 		if (cgVariable == null) {
@@ -518,73 +523,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	protected <T extends EObject> @NonNull T createCopy(@NonNull T anEObject) {
 		return EcoreUtil.copy(anEObject);
 	}
-
-/*	protected @NonNull CGOperation zzcreateFinalCGOperationWithoutBody(@NonNull Operation asOperation) {
-		CGOperation cgOperation = null;
-		LibraryFeature libraryOperation = metamodelManager.getImplementation(asOperation);
-		if ((libraryOperation instanceof NativeStaticOperation) || (libraryOperation instanceof NativeVisitorOperation)) {
-			CGNativeOperation cgNativeOperation = CGModelFactory.eINSTANCE.createCGNativeOperation();
-			cgOperation = cgNativeOperation;
-		}
-		else if (libraryOperation instanceof EObjectOperation) {
-			EOperation eOperation = (EOperation) asOperation.getESObject();
-			if (eOperation != null) {
-				boolean isForeign = PivotUtil.isStatic(eOperation);
-				if (!isForeign) {
-					try {
-						genModelHelper.getGenOperation(eOperation);
-					}
-					catch (GenModelException e) {
-						isForeign = true;
-					}
-				}
-				if (!isForeign) {
-					CGEcoreOperation cgEcoreOperation = CGModelFactory.eINSTANCE.createCGEcoreOperation();
-					cgEcoreOperation.setEOperation(eOperation);
-					cgOperation = cgEcoreOperation;
-				}
-				else {
-					cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
-				}
-			}
-		}
-		else if (libraryOperation instanceof ForeignOperation) {
-			EOperation eOperation = (EOperation) asOperation.getESObject();
-			if (eOperation != null) {
-				boolean isForeign = PivotUtil.isStatic(eOperation);
-				if (isForeign) {
-					cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
-				//	CGParameter cgParameter = context.get    getSelfParameter(contextVariable);
-				//	cgOperation.getParameters().add(cgParameter);
-				}
-				else {
-					try {
-						genModelHelper.getGenOperation(eOperation);
-						CGEcoreOperation cgEcoreOperation = CGModelFactory.eINSTANCE.createCGEcoreOperation();
-						cgEcoreOperation.setEOperation(eOperation);
-						cgOperation = cgEcoreOperation;
-					}
-					catch (GenModelException e) {
-						cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
-					}
-				}
-			}
-		}
-		else if (libraryOperation instanceof ConstrainedOperation) {
-			org.eclipse.ocl.pivot.Package pPackage = asOperation.getOwningClass().getOwningPackage();
-			cgOperation = pPackage instanceof Library ? CGModelFactory.eINSTANCE.createCGLibraryOperation()
-				: CGModelFactory.eINSTANCE.createCGCachedOperation();
-		}
-		if (cgOperation == null) {
-			cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
-		}
-		initAst(cgOperation, asOperation);
-		cgOperation.setRequired(asOperation.isIsRequired());
-		CGOperation oldCGOperation = asFinalOperation2cgOperation.put(asOperation, cgOperation);
-		assert oldCGOperation == null;
-		context.addOperation(cgOperation);
-		return cgOperation;
-	} */
 
 	/**
 	 * Wrap asIn in a LetExp in which a clone of asInit is assigned to asVariable.
@@ -825,19 +763,14 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		if (cgOperation == null) {
 			org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asOperation);
 			pushClassContext(asClass);
-			LibraryOperation libraryOperation = (LibraryOperation)metamodelManager.getImplementation(asOperation);
-			OperationCallingConvention callingConvention = codeGenerator.getCallingConvention(asOperation);
-			if (libraryOperation instanceof ForeignOperation) {			// XXX this parses stdlib bodies unnecessarily
-				context.addForeignFeature(asOperation);
-			}
 			cgOperation = asFinalOperation2cgOperation.get(asOperation);
 			if (cgOperation == null) {
-			//	cgOperation = createFinalCGOperationWithoutBody(asOperation);
-			//	cgOperation.setCallingConvention(callingConvention);
-				cgOperation = callingConvention.createCGOperationWithoutBody(this, asOperation);
-			}
-			else {
-				assert cgOperation.getCallingConvention() == callingConvention;
+				LibraryOperation libraryOperation = (LibraryOperation)metamodelManager.getImplementation(asOperation);
+				OperationCallingConvention callingConvention = codeGenerator.getCallingConvention(asOperation);
+				if (libraryOperation instanceof ForeignOperation) {			// XXX this parses stdlib bodies unnecessarily
+					context.addForeignFeature(asOperation);
+				}
+				cgOperation = createCGOperationWithoutBody(asOperation, callingConvention);
 			}
 			pushDeclarationContext(cgOperation, asOperation);
 			ExpressionInOCL query = null;
@@ -850,7 +783,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 					e.printStackTrace();
 				}
 			}
-			callingConvention.createParameters(this, cgOperation, query);
+			cgOperation.getCallingConvention().createCGParameters(this, cgOperation, query);
 			if (query != null) {
 				cgOperation.setBody(doVisit(CGValuedElement.class, query.getOwnedBody()));
 			}

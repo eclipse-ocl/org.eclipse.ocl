@@ -17,13 +17,19 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
+import org.eclipse.ocl.examples.codegen.library.NativeStaticOperation;
+import org.eclipse.ocl.examples.codegen.library.NativeVisitorOperation;
+import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
+import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
+import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 
 /**
@@ -37,9 +43,17 @@ public class NativeOperationCallingConvention extends AbstractOperationCallingCo
 	public static final @NonNull NativeOperationCallingConvention INSTANCE = new NativeOperationCallingConvention();
 
 	@Override
+	public @NonNull CGOperation createCGOperationWithoutBody(@NonNull AS2CGVisitor as2cgVisitor, @NonNull Operation asOperation) {
+		PivotMetamodelManager metamodelManager = as2cgVisitor.getMetamodelManager();
+		LibraryFeature libraryOperation = metamodelManager.getImplementation(asOperation);
+		assert (libraryOperation instanceof NativeStaticOperation) || (libraryOperation instanceof NativeVisitorOperation);
+		return CGModelFactory.eINSTANCE.createCGNativeOperation();
+	}
+
+	@Override
 	public @NonNull CGCallExp createCGOperationCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @NonNull LibraryOperation libraryOperation,
 			@Nullable CGValuedElement cgSource, @NonNull OperationCallExp asOperationCallExp) {
-		throw new UnsupportedOperationException();		// FIXME constryction is irregular
+		throw new UnsupportedOperationException();		// FIXME construction is irregular
 	/*	Operation asOperation = ClassUtil.nonNullState(asOperationCallExp.getReferredOperation());
 		boolean isRequired = asOperation.isIsRequired();
 		CGNativeOperationCallExp cgNativeOperationCallExp = as2cgVisitor.getAnalyzer().createCGNativeOperationCallExp(null);

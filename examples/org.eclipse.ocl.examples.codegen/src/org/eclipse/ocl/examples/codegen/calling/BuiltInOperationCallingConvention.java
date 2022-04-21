@@ -21,7 +21,13 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
+import org.eclipse.ocl.pivot.internal.ecore.EObjectOperation;
+import org.eclipse.ocl.pivot.internal.library.ConstrainedOperation;
+import org.eclipse.ocl.pivot.internal.library.ForeignOperation;
+import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
+import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation;
@@ -47,6 +53,17 @@ public class BuiltInOperationCallingConvention extends AbstractOperationCallingC
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public @NonNull CGOperation createCGOperationWithoutBody(@NonNull AS2CGVisitor as2cgVisitor, @NonNull Operation asOperation) {
+//		return fallbackCreateCGOperationWithoutBody(as2cgVisitor, asOperation);
+ 		PivotMetamodelManager metamodelManager = as2cgVisitor.getMetamodelManager();
+		LibraryFeature libraryOperation = metamodelManager.getImplementation(asOperation);
+		assert !(libraryOperation instanceof EObjectOperation);
+		assert !(libraryOperation instanceof ForeignOperation);
+		assert !(libraryOperation instanceof ConstrainedOperation);
+		return CGModelFactory.eINSTANCE.createCGLibraryOperation();
 	}
 
 	@Override

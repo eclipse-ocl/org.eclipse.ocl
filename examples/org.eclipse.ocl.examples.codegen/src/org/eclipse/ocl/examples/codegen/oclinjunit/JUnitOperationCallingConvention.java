@@ -19,6 +19,7 @@ import org.eclipse.ocl.examples.codegen.calling.LibraryOperationCallingConventio
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
@@ -32,7 +33,12 @@ public class JUnitOperationCallingConvention extends LibraryOperationCallingConv
 	public static final @NonNull JUnitOperationCallingConvention INSTANCE = new JUnitOperationCallingConvention();
 
 	@Override
-	public void createParameters(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL expressionInOCL) {
+	public @NonNull CGOperation createCGOperationWithoutBody(@NonNull AS2CGVisitor as2cgVisitor,@NonNull Operation asOperation) {
+		throw new UnsupportedOperationException();		// Construction is irregular.
+	}
+
+	@Override
+	public void createCGParameters(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL expressionInOCL) {
 		assert expressionInOCL != null;
 		Variable contextVariable = expressionInOCL.getOwnedContext();
 		if (contextVariable != null) {

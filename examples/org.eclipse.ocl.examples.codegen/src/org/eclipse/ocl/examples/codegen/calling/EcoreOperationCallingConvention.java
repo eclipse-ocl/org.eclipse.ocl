@@ -19,6 +19,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
@@ -35,14 +36,18 @@ import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.Element;
-import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.ParameterVariable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
+import org.eclipse.ocl.pivot.internal.ecore.EObjectOperation;
+import org.eclipse.ocl.pivot.internal.library.EInvokeOperation;
+import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
+import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  *  EcoreOperationCallingConvention defines the support for the call of an Ecore operation within its *Impl file,
@@ -62,6 +67,36 @@ public class EcoreOperationCallingConvention extends AbstractOperationCallingCon
 			codeGenerator.addProblem(e);
 		}
 		return false;
+	}
+
+	@Override
+	public @NonNull CGOperation createCGOperationWithoutBody(@NonNull AS2CGVisitor as2cgVisitor, @NonNull Operation asOperation) {
+		PivotMetamodelManager metamodelManager = as2cgVisitor.getMetamodelManager();
+		GenModelHelper genModelHelper = as2cgVisitor.getGenModelHelper();
+		LibraryFeature libraryOperation = metamodelManager.getImplementation(asOperation);
+		EOperation eOperation;
+		if (libraryOperation instanceof EInvokeOperation) {
+			eOperation = ((EInvokeOperation)libraryOperation).getEOperation();
+		}
+		else {
+			assert (libraryOperation instanceof EObjectOperation);
+		// System.out.println("Non EInvokeOperation overload for " + this);		// XXX
+			eOperation = (EOperation) asOperation.getESObject();
+		}
+		assert (eOperation != null);
+		assert !PivotUtil.isStatic(eOperation);
+		try {
+			genModelHelper.getGenOperation(eOperation);
+			CGEcoreOperation cgEcoreOperation = CGModelFactory.eINSTANCE.createCGEcoreOperation();
+			cgEcoreOperation.setEOperation(eOperation);
+			return cgEcoreOperation;
+		}
+		catch (GenModelException e) {
+			// No genmodel so fallback
+		}
+	//	assert false : "Fallback overload for " + this;		// XXX
+		System.out.println("Fallback overload for " + this);		// XXX
+		return CGModelFactory.eINSTANCE.createCGLibraryOperation();
 	}
 
 	@Override
@@ -88,14 +123,6 @@ public class EcoreOperationCallingConvention extends AbstractOperationCallingCon
 		} catch (GenModelException e) {
 			throw new IllegalStateException(e);
 		}
-	}
-
-	@Override
-	public void createParameters(@NonNull AS2CGVisitor as2cgVisitor,
-			@NonNull CGOperation cgOperation,
-			@Nullable ExpressionInOCL expressionInOCL) {
-		// TODO Auto-generated method stub
-		super.createParameters(as2cgVisitor, cgOperation, expressionInOCL);
 	}
 
 	@Override

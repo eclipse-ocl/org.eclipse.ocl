@@ -10,23 +10,31 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.calling;
 
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.examples.codegen.generator.GenModelException;
+import org.eclipse.ocl.examples.codegen.generator.GenModelHelper;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
+import org.eclipse.ocl.pivot.internal.ecore.EObjectOperation;
+import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
+import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  *  EcoreForeignOperationCallingConvention defines the support for the call of an operation for which an EOPeration is
@@ -38,6 +46,37 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 public class EcoreForeignOperationCallingConvention extends AbstractOperationCallingConvention
 {
 	public static final @NonNull EcoreForeignOperationCallingConvention INSTANCE = new EcoreForeignOperationCallingConvention();
+
+	@Override
+	public @NonNull CGOperation createCGOperationWithoutBody(@NonNull AS2CGVisitor as2cgVisitor, @NonNull Operation asOperation) {
+		PivotMetamodelManager metamodelManager = as2cgVisitor.getMetamodelManager();
+		GenModelHelper genModelHelper = as2cgVisitor.getGenModelHelper();
+		LibraryFeature libraryOperation = metamodelManager.getImplementation(asOperation);
+		if (libraryOperation instanceof EObjectOperation) {
+			EOperation eOperation = (EOperation) asOperation.getESObject();
+			if (eOperation != null) {
+				boolean isForeign = PivotUtil.isStatic(eOperation);
+				if (!isForeign) {
+					try {
+						genModelHelper.getGenOperation(eOperation);
+					}
+					catch (GenModelException e) {
+						isForeign = true;
+					}
+				}
+				if (!isForeign) {
+					CGEcoreOperation cgEcoreOperation = CGModelFactory.eINSTANCE.createCGEcoreOperation();
+					cgEcoreOperation.setEOperation(eOperation);
+					return cgEcoreOperation;
+				}
+				else {
+					return CGModelFactory.eINSTANCE.createCGLibraryOperation();
+				}
+			}
+		}
+		assert false : "Fallback overload for " + this;		// XXX
+		return CGModelFactory.eINSTANCE.createCGLibraryOperation();
+	}
 
 	@Override
 	public @NonNull CGCallExp createCGOperationCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @NonNull LibraryOperation libraryOperation,
@@ -60,7 +99,7 @@ public class EcoreForeignOperationCallingConvention extends AbstractOperationCal
 	}
 
 	@Override
-	public void createParameters(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL expressionInOCL) {
+	public void createCGParameters(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL expressionInOCL) {
 		assert expressionInOCL != null;
 		addExecutorParameter(as2cgVisitor, cgOperation);
 		addExpressionInOCLParameters(as2cgVisitor, cgOperation, expressionInOCL);

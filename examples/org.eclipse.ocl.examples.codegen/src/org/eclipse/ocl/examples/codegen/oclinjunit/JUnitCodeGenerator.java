@@ -89,7 +89,7 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		JUnitOperationCallingConvention junitCallingConvention = JUnitOperationCallingConvention.INSTANCE;
 		cgOperation.setCallingConvention(junitCallingConvention);
 		as2cgVisitor.pushLocalContext(cgOperation, expInOcl);
-		junitCallingConvention.createParameters(as2cgVisitor, cgOperation, expInOcl);
+		junitCallingConvention.createCGParameters(as2cgVisitor, cgOperation, expInOcl);
 	//	cgOperation.setAst(expInOcl);
 		Type type = expInOcl.getType();
 		assert type != null;

@@ -16,9 +16,11 @@ import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.pivot.LanguageExpression;
+import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
@@ -26,13 +28,28 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.library.ConstrainedOperation;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  *  ConstrainedOperationCallingConvention defines the support for the call of a Complete OCL-defined operation.
+ *  If defined as part of an OCL stdlib, he operation is ioked when called. If defined as part of a
+ *  Complete OCL document or OCLinEcore enrichment, the operations is invoked via a cache to avoid re-execution.
  */
 public class ConstrainedOperationCallingConvention extends AbstractOperationCallingConvention
 {
 	public static final @NonNull ConstrainedOperationCallingConvention INSTANCE = new ConstrainedOperationCallingConvention();
+
+	@Override
+	public @NonNull CGOperation createCGOperationWithoutBody(@NonNull AS2CGVisitor as2cgVisitor, @NonNull Operation asOperation) {
+		assert as2cgVisitor.getMetamodelManager().getImplementation(asOperation) instanceof ConstrainedOperation;
+		org.eclipse.ocl.pivot.Package asPackage = PivotUtil.getOwningPackage(PivotUtil.getOwningClass(asOperation));
+		if (asPackage instanceof Library) {
+			return CGModelFactory.eINSTANCE.createCGLibraryOperation();
+		}
+		else {
+			return CGModelFactory.eINSTANCE.createCGCachedOperation();
+		}
+	}
 
 	protected @NonNull CGCallExp constrainedOperationCall(@NonNull AS2CGVisitor as2cgVisitor, @NonNull OperationCallExp element,
 			CGValuedElement cgSource, @NonNull Operation finalOperation, @NonNull ConstrainedOperation constrainedOperation) {
