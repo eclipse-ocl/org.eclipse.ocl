@@ -1518,7 +1518,7 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 	 * @generated
 	 */
 	@Override
-	public EReference getCGForeignProperty_Parameter() {
+	public EReference getCGForeignProperty_Parameters() {
 		return (EReference)cgForeignPropertyEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -3804,7 +3804,7 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		initEClass(cgForeignOperationCallExpEClass, CGForeignOperationCallExp.class, "CGForeignOperationCallExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(cgForeignPropertyEClass, CGForeignProperty.class, "CGForeignProperty", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getCGForeignProperty_Parameter(), this.getCGParameter(), null, "parameter", null, 1, 1, CGForeignProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getCGForeignProperty_Parameters(), this.getCGParameter(), null, "parameters", null, 0, -1, CGForeignProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
 		initEClass(cgForeignPropertyCallExpEClass, CGForeignPropertyCallExp.class, "CGForeignPropertyCallExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

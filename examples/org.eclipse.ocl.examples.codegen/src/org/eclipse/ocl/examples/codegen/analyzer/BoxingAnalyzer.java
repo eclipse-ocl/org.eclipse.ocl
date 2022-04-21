@@ -549,7 +549,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 			if (isStatic) {
 				assert cgThis != null;
 				boolean sourceMayBeNull = false;
-				if (referredOperation != null) {
+				if (referredOperation != null) {			// XXX cgOperation is non-null
 					OperationId operationId = referredOperation.getOperationId();
 					sourceMayBeNull = context.hasOclVoidOperation(operationId);		// FIXME redundant since LibraryOperationCallingConvention.createParaeters invokes hasOclVoidOperation
 					if (!sourceMayBeNull && cgThis.isNull()) {

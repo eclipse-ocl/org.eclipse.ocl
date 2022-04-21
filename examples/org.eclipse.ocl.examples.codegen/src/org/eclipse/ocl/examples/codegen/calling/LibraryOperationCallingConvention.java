@@ -177,10 +177,8 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 		boolean actualIsNonNull = actualNullity == Boolean.TRUE;
 	//	boolean actualIsNullable = actualNullity == Boolean.FALSE;
 		boolean expectedIsNonNull = cgOperationCallExp.isNonNull();
-		for (@NonNull CGValuedElement cgArgument : cgArguments) {
-			if (!js.appendLocalStatements(cgArgument)) {
-				return false;
-			}
+		if (!generateLocals(cg2JavaVisitor, js, cgOperationCallExp)) {
+			return false;
 		}
 		List<@NonNull CGParameter> cgParameters = ClassUtil.nullFree(cgOperation.getParameters());
 		assert cgParameters.size() == iMax;

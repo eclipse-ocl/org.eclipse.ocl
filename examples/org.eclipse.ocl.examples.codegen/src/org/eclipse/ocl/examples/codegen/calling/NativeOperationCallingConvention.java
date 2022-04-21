@@ -76,11 +76,8 @@ public class NativeOperationCallingConvention extends AbstractOperationCallingCo
 		List<CGValuedElement> cgArguments = cgNativeOperationCallExp.getCgArguments();
 		//	List<Parameter> pParameters = asOperation.getOwnedParameters();
 		java.lang.reflect.Parameter[] javaParameters = javaMethod.getParameters();
-		for (@SuppressWarnings("null")@NonNull CGValuedElement cgArgument : cgArguments) {
-			CGValuedElement argument = cg2JavaVisitor.getExpression(cgArgument);
-			if (!js.appendLocalStatements(argument)) {
-				return false;
-			}
+		if (!generateLocals(cg2JavaVisitor, js, cgOperationCallExp)) {
+			return false;
 		}
 		//
 		js.appendDeclaration(cgNativeOperationCallExp);

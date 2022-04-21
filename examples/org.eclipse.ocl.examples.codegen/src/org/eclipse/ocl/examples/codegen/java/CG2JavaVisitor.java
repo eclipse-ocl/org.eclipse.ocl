@@ -1968,15 +1968,20 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		localContext = localContext2;
 		try {
 			Property asProperty = CGUtil.getAST(cgForeignProperty);
-			CGParameter cgParameter = cgForeignProperty.getParameter();
+			Iterable<@NonNull CGParameter> cgParameters = CGUtil.getParameters(cgForeignProperty);
 			CGValuedElement cgInitExpression = getExpression(cgForeignProperty.getBody());
 			js.append("public static ");
 			js.appendTypeDeclaration(cgForeignProperty);
 			js.append(" " + JavaConstants.FOREIGN_PROPERTY_PREFIX);
 			js.append(asProperty.getName());		// FIXME valid Java name
 			js.append("(");
-			if (cgParameter != null) {
+			boolean isFirst = true;
+			for (@NonNull CGParameter cgParameter : cgParameters) {
+				if (!isFirst) {
+					js.append(", ");
+				}
 				js.appendDeclaration(cgParameter);
+				isFirst = false;
 			}
 			js.append(") {\n");
 			js.pushIndentation(null);
@@ -2026,13 +2031,23 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 				else if (asProperty.isIsStatic()) {
 					CGOperation cgOperation = CGUtil.basicGetContainingOperation(cgForeignPropertyCallExp);
 					if (cgOperation != null) {
-						cgOperation.getParameters();
+						List<CGParameter> cgParameters = cgOperation.getParameters();
+						js.appendValueName(cgParameters.get(0));		// executor
+						js.append(", ");
+						js.appendValueName(cgParameters.get(2));		// self
 					}
 					else {
 						CGProperty cgProperty = CGUtil.basicGetContainingProperty(cgForeignPropertyCallExp);
 						if (cgProperty instanceof CGForeignProperty) {
-							CGParameter cgParameter = ((CGForeignProperty)cgProperty).getParameter();
-							js.appendValueName(cgParameter);
+							Iterable<@NonNull CGParameter> cgParameters = CGUtil.getParameters((CGForeignProperty)cgProperty);
+							boolean isFirst = true;
+							for (@NonNull CGParameter cgParameter : cgParameters) {
+								if (!isFirst) {
+									js.append(", ");
+								}
+								js.appendDeclaration(cgParameter);
+								isFirst = false;
+							}
 						}
 					}
 				}

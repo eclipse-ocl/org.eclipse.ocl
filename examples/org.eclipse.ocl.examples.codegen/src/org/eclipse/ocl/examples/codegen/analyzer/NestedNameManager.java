@@ -15,6 +15,7 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
@@ -102,6 +103,10 @@ public class NestedNameManager extends NameManager
 
 	@Override
 	protected @Nullable String getLazyNameHint(@NonNull CGValuedElement cgNamedValue) {
+		if (cgNamedValue instanceof CGForeignProperty) {
+			// FIXME if we make CGForeignProperty we ave worse problems with dependences for non-trivial initializers
+			return getNameHint(cgNamedValue);
+		}
 		return null;
 	}
 

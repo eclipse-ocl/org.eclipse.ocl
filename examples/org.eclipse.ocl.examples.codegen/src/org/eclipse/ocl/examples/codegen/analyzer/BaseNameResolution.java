@@ -13,8 +13,8 @@ package org.eclipse.ocl.examples.codegen.analyzer;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.NameManager.Context;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGBuiltInIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallable;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
@@ -76,7 +76,7 @@ public class BaseNameResolution extends AbstractNameResolution
 		}
 		this.nameHint = nameHint != null ? nameHint : UNRESOLVED;
 		assert debugNameHint();
-		if (primaryElement instanceof CGBuiltInIterationCallExp) {
+		if (primaryElement instanceof CGForeignProperty) {
 			getClass();		// XXX
 		}
 		assert (primaryElement == null) || nameManager.isGlobal() || !primaryElement.isGlobal();

@@ -144,11 +144,8 @@ public class EcoreOperationCallingConvention extends AbstractOperationCallingCon
 	//	if (!js.appendLocalStatements(cgThis)) {
 	//		return false;
 	//	}
-		for (@SuppressWarnings("null")@NonNull CGValuedElement cgArgument : cgArguments) {
-			CGValuedElement argument = cg2JavaVisitor.getExpression(cgArgument);
-			if (!js.appendLocalStatements(argument)) {
-				return false;
-			}
+		if (!generateLocals(cg2JavaVisitor, js, cgOperationCallExp)) {
+			return false;
 		}
 		//
 		String operationAccessor = genModelHelper.getOperationAccessor(asOperation);

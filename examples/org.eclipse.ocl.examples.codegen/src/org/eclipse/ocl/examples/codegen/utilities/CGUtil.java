@@ -32,6 +32,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIfExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterator;
@@ -413,6 +414,10 @@ public class CGUtil
 
 	public static @NonNull Iterable<@NonNull CGParameter> getParameters(@NonNull CGCallable cgOperation) {
 		return getParametersList(cgOperation);
+	}
+
+	public static @NonNull Iterable<@NonNull CGParameter> getParameters(@NonNull CGForeignProperty cgForeignProperty) {
+		return ClassUtil.nullFree(cgForeignProperty.getParameters());
 	}
 
 	public static @NonNull List<@NonNull CGParameter> getParametersList(@NonNull CGCallable cgOperation) {

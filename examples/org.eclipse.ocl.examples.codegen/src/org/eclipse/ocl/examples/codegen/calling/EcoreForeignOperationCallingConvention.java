@@ -98,13 +98,10 @@ public class EcoreForeignOperationCallingConvention extends AbstractOperationCal
 
 	@Override
 	public @NonNull Boolean generateJava(@NonNull CG2JavaVisitor<?> cg2JavaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
-		CGForeignOperationCallExp cgForeignOperationCallExp = (CGForeignOperationCallExp)cgOperationCallExp;
-		//
 		if (!generateLocals(cg2JavaVisitor, js, cgOperationCallExp)) {
 			return false;
 		}
-		//
-		js.appendDeclaration(cgForeignOperationCallExp);
+		js.appendDeclaration(cgOperationCallExp);
 		js.append(" = ");
 		appendForeignOperationName(cg2JavaVisitor, js, cgOperationCallExp);
 		js.append("(");
