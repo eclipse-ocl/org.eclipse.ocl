@@ -29,6 +29,11 @@ import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager.NameVariant;
 import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
+import org.eclipse.ocl.examples.codegen.calling.EcorePropertyCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.ExecutorPropertyCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.ForeignPropertyCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.LibraryPropertyCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.NativePropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGAssertNonNullExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBoolean;
@@ -49,11 +54,10 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGEcorePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElementId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorCompositionProperty;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorNavigationProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOperationCallExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOppositeProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOppositePropertyCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
@@ -79,6 +83,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGMapPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativePropertyCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNull;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
@@ -243,7 +248,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	/**
 	 * Append the code for an EcorePropertyCall. If source is null, the code for the source will also be appended.
 	 * If source is non-null the caller has already appended it.
-	 */
+	 *
 	protected @NonNull Boolean appendCGEcorePropertyCallExp(@NonNull CGEcorePropertyCallExp cgPropertyCallExp, @Nullable CGValuedElement source) {
 		Property asProperty = ClassUtil.nonNullState(cgPropertyCallExp.getReferredProperty());
 		assert getESObject(asProperty) == ClassUtil.nonNullState(cgPropertyCallExp.getEStructuralFeature());
@@ -258,15 +263,15 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		Boolean ecoreIsRequired = context.isNonNull(asProperty);
 		boolean isPrimitive = js.isPrimitive(cgPropertyCallExp);
 		if (!isPrimitive) appendSuppressWarningsNull(cgPropertyCallExp, ecoreIsRequired);
-		//		js.append("/* " + ecoreIsRequired + " " + isRequired + " */\n");
+		//		js.append("/ * " + ecoreIsRequired + " " + isRequired + " * /\n");
 		js.appendDeclaration(cgPropertyCallExp);
 		js.append(" = ");
 		appendEcoreGet(source, asProperty);
 		js.append(";\n");
 		return true;
-	}
+	} */
 
-	protected void appendEcoreGet(@NonNull CGValuedElement cgSource, @NonNull Property asProperty) {
+/*	protected void appendEcoreGet(@NonNull CGValuedElement cgSource, @NonNull Property asProperty) {
 		CGTypeId cgTypeId = analyzer.getTypeId(asProperty.getOwningClass().getTypeId());
 		ElementId elementId = ClassUtil.nonNullState(cgTypeId.getElementId());
 		TypeDescriptor requiredTypeDescriptor = context.getUnboxedDescriptor(elementId);
@@ -297,7 +302,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		js.append(".");
 		js.append(getAccessor);
 		js.append("()");
-	}
+	} */
 
 	protected void appendGlobalPrefix() {}
 
@@ -826,7 +831,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		return context;
 	}
 
-	protected @Nullable EStructuralFeature getESObject(@NonNull Property asProperty) {
+	public @Nullable EStructuralFeature getESObject(@NonNull Property asProperty) {
 		EObject esObject = asProperty.getESObject();
 		if (esObject instanceof EStructuralFeature) {
 			return (EStructuralFeature)esObject;
@@ -1637,11 +1642,6 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	}
 
 	@Override
-	public @NonNull Boolean visitCGEcorePropertyCallExp(@NonNull CGEcorePropertyCallExp cgPropertyCallExp) {
-		return appendCGEcorePropertyCallExp(cgPropertyCallExp, null);
-	}
-
-	@Override
 	public @NonNull Boolean visitCGElementId(@NonNull CGElementId cgElementId) {
 		ElementId elementId = cgElementId.getElementId();
 		if ((elementId != null) && !CGUtil.isInlinedId(elementId)) {
@@ -1676,30 +1676,6 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		js.appendValueName(localContext.getIdResolverVariable());
 		js.append(".getProperty(");
 		js.appendIdReference(cgExecutorShadowPart.getUnderlyingPropertyId().getElementId());
-		js.append(");\n");
-		return true;
-	}
-
-	@Override
-	public @NonNull Boolean visitCGExecutorNavigationProperty(@NonNull CGExecutorNavigationProperty cgExecutorProperty) {
-		js.appendDeclaration(cgExecutorProperty);
-		js.append(" = new ");
-		js.appendClassReference(null, cgExecutorProperty);
-		js.append("(");
-		js.appendIdReference(cgExecutorProperty.getUnderlyingPropertyId().getElementId());
-		js.append(");\n");
-		return true;
-	}
-
-	@Override
-	public @NonNull Boolean visitCGExecutorOppositeProperty(@NonNull CGExecutorOppositeProperty cgExecutorProperty) {
-		Property asProperty = (Property) cgExecutorProperty.getAst();
-		Property asOppositeProperty = asProperty.getOpposite();
-		js.appendDeclaration(cgExecutorProperty);
-		js.append(" = new ");
-		js.appendClassReference(null, cgExecutorProperty);
-		js.append("(");
-		js.appendIdReference(asOppositeProperty.getPropertyId());
 		js.append(");\n");
 		return true;
 	}
@@ -1790,73 +1766,8 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	}
 
 	@Override
-	public @NonNull Boolean visitCGExecutorOppositePropertyCallExp(@NonNull CGExecutorOppositePropertyCallExp cgPropertyCallExp) {
-		CGValuedElement source = getExpression(cgPropertyCallExp.getSource());
-		//
-		if (!js.appendLocalStatements(source)) {
-			return false;
-		}
-		//
-		js.appendDeclaration(cgPropertyCallExp);
-		js.append(" = ");
-		SubStream castBody = new SubStream() {
-			@Override
-			public void append() {
-				js.appendReferenceTo(cgPropertyCallExp.getExecutorProperty());
-				js.append(".");
-				js.append(globalContext.getEvaluateName());
-				js.append("(");
-				//		js.append(getValueName(localContext.getEvaluatorParameter(cgPropertyCallExp)));
-				js.append(globalContext.getExecutorName());
-				js.append(", ");
-				js.appendIdReference(cgPropertyCallExp.getASTypeId());
-				js.append(", ");
-				js.appendValueName(source);
-				js.append(")");
-			}
-		};
-		js.appendClassCast(cgPropertyCallExp, castBody);
-		js.append(";\n");
-		return true;
-	}
-
-	@Override
-	public @NonNull Boolean visitCGExecutorPropertyCallExp(@NonNull CGExecutorPropertyCallExp cgPropertyCallExp) {
-		CGValuedElement asSource = cgPropertyCallExp.getSource();
-		CGValuedElement cgSource = asSource != null ? getExpression(asSource) : null;
-		if ((cgSource != null) && !js.appendLocalStatements(cgSource)) {
-			return false;
-		}
-		//
-		//	CGExecutorProperty cgExecutorProperty = ClassUtil.nonNullState(cgPropertyCallExp.getExecutorProperty());
-		Boolean ecoreIsRequired = Boolean.FALSE;						// CP properties evaluate is nullable -- FIXME compute rather than assume
-		//	boolean isPrimitive = js.isPrimitive(cgPropertyCallExp);
-		Boolean isRequired = context.isRequired(cgPropertyCallExp);
-		if ((isRequired == Boolean.TRUE) && (ecoreIsRequired != Boolean.TRUE)) {
-			js.appendSuppressWarningsNull(true);
-		}
-		js.appendDeclaration(cgPropertyCallExp);
-		js.append(" = ");
-		TypeDescriptor typeDescriptor = context.getTypeDescriptor(cgPropertyCallExp);
-		JavaStream.SubStream castBody = new JavaStream.SubStream() {
-			@Override
-			public void append() {
-				js.appendReferenceTo(cgPropertyCallExp.getExecutorProperty());
-				js.append(".");
-				js.append(globalContext.getEvaluateName());
-				js.append("(");
-				//		js.append(getValueName(localContext.getEvaluatorParameter(cgPropertyCallExp)));
-				js.append(globalContext.getExecutorName());
-				js.append(", ");
-				js.appendIdReference(cgPropertyCallExp.getASTypeId());
-				js.append(", ");
-				js.appendValueName(cgSource);
-				js.append(")");
-			}
-		};
-		typeDescriptor.appendCast(js, isRequired, null, castBody);
-		js.append(";\n");
-		return true;
+	public @NonNull Boolean visitCGExecutorProperty(@NonNull CGExecutorProperty cgExecutorProperty) {
+		return ExecutorPropertyCallingConvention.INSTANCE.generateJavaDeclaration(this, js, cgExecutorProperty);
 	}
 
 	@Override
@@ -1867,136 +1778,6 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		js.append(".getClass(");
 		js.appendIdReference(cgExecutorType.getUnderlyingTypeId().getElementId());
 		js.append(", null);\n");
-		return true;
-	}
-
-/*	@Override
-	public @NonNull Boolean visitCGForeignOperation(@NonNull CGForeignOperation cgForeignOperation) {
-		JavaLocalContext<@NonNull ?> localContext2 = globalContext.getLocalContext(cgForeignProperty);
-		localContext = localContext2;
-		try {
-			Property asProperty = CGUtil.getAST(cgForeignProperty);
-			CGParameter cgParameter = cgForeignProperty.getParameter();
-			CGValuedElement cgInitExpression = getExpression(cgForeignProperty.getBody());
-			js.append("public static ");
-			js.appendTypeDeclaration(cgForeignProperty);
-			js.append(" " + JavaConstants.FOREIGN_PROPERTY_PREFIX);
-			js.append(asProperty.getName());		// FIXME valid Java name
-			js.append("(");
-			if (cgParameter != null) {
-				js.appendDeclaration(cgParameter);
-			}
-			js.append(") {\n");
-			js.pushIndentation(null);
-			if (!js.appendLocalStatements(cgInitExpression)) {
-				return false;
-			}
-			js.append("return ");
-			js.appendValueName(cgInitExpression);
-			js.append(";\n");
-			js.popIndentation();
-			js.append("}\n");
-			return true;
-		}
-		finally {
-			localContext = null;
-		}
-	} */
-
-	@Override
-	public @NonNull Boolean visitCGForeignProperty(@NonNull CGForeignProperty cgForeignProperty) {
-		JavaLocalContext<@NonNull ?> localContext2 = globalContext.getLocalContext(cgForeignProperty);
-		localContext = localContext2;
-		try {
-			Property asProperty = CGUtil.getAST(cgForeignProperty);
-			Iterable<@NonNull CGParameter> cgParameters = CGUtil.getParameters(cgForeignProperty);
-			CGValuedElement cgInitExpression = getExpression(cgForeignProperty.getBody());
-			js.append("public static ");
-			js.appendTypeDeclaration(cgForeignProperty);
-			js.append(" " + JavaConstants.FOREIGN_PROPERTY_PREFIX);
-			js.append(asProperty.getName());		// FIXME valid Java name
-			js.append("(");
-			boolean isFirst = true;
-			for (@NonNull CGParameter cgParameter : cgParameters) {
-				if (!isFirst) {
-					js.append(", ");
-				}
-				js.appendDeclaration(cgParameter);
-				isFirst = false;
-			}
-			js.append(") {\n");
-			js.pushIndentation(null);
-			if (!js.appendLocalStatements(cgInitExpression)) {
-				return false;
-			}
-			js.append("return ");
-			js.appendValueName(cgInitExpression);
-			js.append(";\n");
-			js.popIndentation();
-			js.append("}\n");
-			return true;
-		}
-		finally {
-			localContext = null;
-		}
-	}
-
-	@Override
-	public @NonNull Boolean visitCGForeignPropertyCallExp(@NonNull CGForeignPropertyCallExp cgForeignPropertyCallExp) {
-	//	assert cgPropertyCallExp.getSource() == null;		// XXX
-		Property asProperty = CGUtil.getReferredProperty(cgForeignPropertyCallExp);
-		org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asProperty);
-		String foreignClassName = context.getQualifiedForeignClassName(asClass);
-		String propertyName = PivotUtil.getName(asProperty);
-		CGValuedElement cgSource = cgForeignPropertyCallExp.getSource();
-		if (cgSource != null) {
-			CGValuedElement source = getExpression(cgSource);
-			//
-			if (!js.appendLocalStatements(source)) {
-				return false;
-			}
-		}
-		//
-		js.appendDeclaration(cgForeignPropertyCallExp);
-		js.append(" = ");
-		SubStream castBody = new SubStream() {
-			@Override
-			public void append() {
-				js.appendClassReference(null, foreignClassName);
-				js.append("." + JavaConstants.FOREIGN_PROPERTY_PREFIX);
-				js.append(propertyName);
-				js.append("(");
-				if (cgSource != null) {
-					js.appendValueName(cgSource);
-				}
-				else if (asProperty.isIsStatic()) {
-					CGOperation cgOperation = CGUtil.basicGetContainingOperation(cgForeignPropertyCallExp);
-					if (cgOperation != null) {
-						List<CGParameter> cgParameters = cgOperation.getParameters();
-						js.appendValueName(cgParameters.get(0));		// executor
-						js.append(", ");
-						js.appendValueName(cgParameters.get(2));		// self
-					}
-					else {
-						CGProperty cgProperty = CGUtil.basicGetContainingProperty(cgForeignPropertyCallExp);
-						if (cgProperty instanceof CGForeignProperty) {
-							Iterable<@NonNull CGParameter> cgParameters = CGUtil.getParameters((CGForeignProperty)cgProperty);
-							boolean isFirst = true;
-							for (@NonNull CGParameter cgParameter : cgParameters) {
-								if (!isFirst) {
-									js.append(", ");
-								}
-								js.appendValueName(cgParameter);
-								isFirst = false;
-							}
-						}
-					}
-				}
-				js.append(")");
-			}
-		};
-		js.appendClassCast(cgForeignPropertyCallExp, castBody);
-		js.append(";\n");
 		return true;
 	}
 
@@ -2458,60 +2239,6 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	}
 
 	@Override
-	public @NonNull Boolean visitCGLibraryPropertyCallExp(@NonNull CGLibraryPropertyCallExp cgPropertyCallExp) {
-		CGValuedElement source = getExpression(cgPropertyCallExp.getSource());
-		LibraryProperty libraryProperty = ClassUtil.nonNullState(cgPropertyCallExp.getLibraryProperty());
-		Method actualMethod = libraryProperty.getEvaluateMethod(CGUtil.getReferredProperty(cgPropertyCallExp));
-		Class<?> actualReturnClass = actualMethod.getReturnType();
-		boolean actualIsNonNull = context.getIsNonNull(actualMethod) == Boolean.TRUE;
-		boolean expectedIsNonNull = cgPropertyCallExp.isNonNull();
-		//		Class<?> actualBoxedReturnClass = getBoxedReturnClass(libraryProperty);
-		//		CGValuedElement resultVariable = cgOperationCallExp; //.getValue();
-		CGTypeId resultType = cgPropertyCallExp.getTypeId();
-		//		Class<?> requiredBoxedReturnClass = context.getBoxedClass(resultType.getElementId());
-		if (!js.appendLocalStatements(source)) {
-			return false;
-		}
-		js.appendDeclaration(cgPropertyCallExp);
-		js.append(" = ");
-		boolean isRequiredNullCast = expectedIsNonNull && !actualIsNonNull;
-		//		if (expectedIsNonNull && !actualIsNonNull) {
-		//			js.appendClassReference(null, ClassUtil.class);
-		//			js.append(".nonNullState(");
-		//		}
-		SubStream castBody = new SubStream() {
-			@Override
-			public void append() {
-				js.appendClassReference(null, libraryProperty.getClass());
-				//		CGOperation cgOperation = ClassUtil.nonNullState(CGUtils.getContainingOperation(cgPropertyCallExp));
-				js.append(".");
-				js.append(globalContext.getInstanceName());
-				js.append(".");
-				js.append(globalContext.getEvaluateName());
-				js.append("(");
-				//		if (!(libraryOperation instanceof LibrarySimpleOperation)) {
-				//			js.append(getValueName(localContext.getEvaluatorParameter(cgPropertyCallExp)));
-				js.append(globalContext.getExecutorName());
-				js.append(", ");
-				//			if (!(libraryProperty instanceof LibraryUntypedOperation)) {
-				//				CGTypeVariable typeVariable = localContext.getTypeVariable(resultType);
-				js.appendValueName(resultType);
-				js.append(", ");
-				//			}
-				//		}
-				js.appendValueName(source);
-				//				if (expectedIsNonNull && !actualIsNonNull) {
-				//					js.append(")");
-				//				}
-				js.append(")");
-			}
-		};
-		js.appendClassCast(cgPropertyCallExp, isRequiredNullCast, actualReturnClass, castBody);
-		js.append(";\n");
-		return true;
-	}
-
-	@Override
 	public @NonNull Boolean visitCGMapExp(@NonNull CGMapExp cgMapExp) {
 		for (CGMapPart cgPart : cgMapExp.getParts()) {
 			if ((cgPart != null) && !js.appendLocalStatements(cgPart)) {
@@ -2587,40 +2314,26 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	}
 
 	@Override
-	public @NonNull Boolean visitCGNativeProperty(@NonNull CGNativeProperty cgNativeProperty) {
-		localContext = globalContext.getLocalContext(cgNativeProperty);
-		try {
-			js.append("protected ");
-			js.appendDeclaration(cgNativeProperty);
-			js.append(";\n");
-			return true;
+	public @NonNull Boolean visitCGNavigationCallExp(@NonNull CGNavigationCallExp cgGNavigationCallExp) {
+		if (cgGNavigationCallExp instanceof CGEcorePropertyCallExp) {
+			return EcorePropertyCallingConvention.INSTANCE.generateJavaCall(this, js, cgGNavigationCallExp);
 		}
-		finally {
-			localContext = null;
+		if (cgGNavigationCallExp instanceof CGExecutorOppositePropertyCallExp) {
+			return ExecutorPropertyCallingConvention.INSTANCE.generateJavaCall(this, js, cgGNavigationCallExp);
 		}
-	}
-
-	@Override
-	public @NonNull Boolean visitCGNativePropertyCallExp(@NonNull CGNativePropertyCallExp cgPropertyCallExp) {
-		CGValuedElement source = getExpression(cgPropertyCallExp.getSource());
-		//
-		if (!js.appendLocalStatements(source)) {
-			return false;
+		if (cgGNavigationCallExp instanceof CGExecutorPropertyCallExp) {
+			return ExecutorPropertyCallingConvention.INSTANCE.generateJavaCall(this, js, cgGNavigationCallExp);
 		}
-		//
-		js.appendDeclaration(cgPropertyCallExp);
-		js.append(" = ");
-		SubStream castBody = new SubStream() {
-			@Override
-			public void append() {
-				js.appendValueName(source);
-				js.append(".");
-				js.append(cgPropertyCallExp.getReferredProperty().getName());
-			}
-		};
-		js.appendClassCast(cgPropertyCallExp, castBody);
-		js.append(";\n");
-		return true;
+		if (cgGNavigationCallExp instanceof CGForeignPropertyCallExp) {
+			return ForeignPropertyCallingConvention.INSTANCE.generateJavaCall(this, js, cgGNavigationCallExp);
+		}
+		if (cgGNavigationCallExp instanceof CGLibraryPropertyCallExp) {
+			return LibraryPropertyCallingConvention.INSTANCE.generateJavaCall(this, js, cgGNavigationCallExp);
+		}
+		if (cgGNavigationCallExp instanceof CGNativePropertyCallExp) {
+			return NativePropertyCallingConvention.INSTANCE.generateJavaCall(this, js, cgGNavigationCallExp);
+		}
+		return super.visitCGNavigationCallExp(cgGNavigationCallExp);
 	}
 
 	@Override
@@ -2669,6 +2382,12 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	public @NonNull Boolean visitCGProperty(@NonNull CGProperty cgProperty) {
 		localContext = globalContext.getLocalContext(cgProperty);
 		try {
+			if (cgProperty instanceof CGForeignProperty) {
+				return ForeignPropertyCallingConvention.INSTANCE.generateJavaDeclaration(this, js, cgProperty);
+			}
+			if (cgProperty instanceof CGNativeProperty) {
+				return NativePropertyCallingConvention.INSTANCE.generateJavaDeclaration(this, js, cgProperty);
+			}
 			Boolean flowContinues = super.visitCGProperty(cgProperty);
 			assert flowContinues != null;
 			return flowContinues;

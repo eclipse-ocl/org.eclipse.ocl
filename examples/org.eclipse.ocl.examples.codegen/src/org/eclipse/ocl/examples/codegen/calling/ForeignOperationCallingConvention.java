@@ -29,9 +29,6 @@ import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
-import org.eclipse.ocl.pivot.internal.library.ForeignOperation;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
-import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -86,10 +83,11 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 		}
 		assert false : "Fallback overload for " + this;		// XXX
 		return CGModelFactory.eINSTANCE.createCGLibraryOperation(); */
-		PivotMetamodelManager metamodelManager = as2cgVisitor.getMetamodelManager();
+	//	PivotMetamodelManager metamodelManager = as2cgVisitor.getMetamodelManager();
 		GenModelHelper genModelHelper = as2cgVisitor.getGenModelHelper();
-		LibraryFeature libraryOperation = metamodelManager.getImplementation(asOperation);
-		assert libraryOperation instanceof ForeignOperation;
+	//	LibraryFeature libraryOperation = metamodelManager.getImplementation(asOperation);
+	//	assert libraryOperation instanceof ForeignOperation;	-- ForeignOperationCallingConvention
+	//	assert libraryOperation instanceof EObjectOperation;	-- EcoreForeignOperationCallingConvention
 		EOperation eOperation = (EOperation) asOperation.getESObject();
 		assert eOperation != null;
 		if (!PivotUtil.isStatic(eOperation)) {
