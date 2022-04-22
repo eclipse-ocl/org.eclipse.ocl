@@ -2524,6 +2524,16 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 	 * @generated
 	 */
 	@Override
+	public EReference getCGNavigationCallExp_CgProperty() {
+		return (EReference)cgNavigationCallExpEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EClass getCGNull() {
 		return cgNullEClass;
 	}
@@ -3372,10 +3382,10 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		createEReference(cgEcoreOperationCallExpEClass, 11);
 
 		cgEcoreOppositePropertyCallExpEClass = createEClass(22);
-		createEReference(cgEcoreOppositePropertyCallExpEClass, 10);
+		createEReference(cgEcoreOppositePropertyCallExpEClass, 11);
 
 		cgEcorePropertyCallExpEClass = createEClass(23);
-		createEReference(cgEcorePropertyCallExpEClass, 10);
+		createEReference(cgEcorePropertyCallExpEClass, 11);
 
 		cgElementEClass = createEClass(24);
 
@@ -3395,14 +3405,14 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		createEReference(cgExecutorOperationCallExpEClass, 11);
 
 		cgExecutorOppositePropertyCallExpEClass = createEClass(31);
-		createEReference(cgExecutorOppositePropertyCallExpEClass, 10);
+		createEReference(cgExecutorOppositePropertyCallExpEClass, 11);
 
 		cgExecutorPropertyEClass = createEClass(32);
 		createEReference(cgExecutorPropertyEClass, 6);
 		createEReference(cgExecutorPropertyEClass, 7);
 
 		cgExecutorPropertyCallExpEClass = createEClass(33);
-		createEReference(cgExecutorPropertyCallExpEClass, 10);
+		createEReference(cgExecutorPropertyCallExpEClass, 11);
 
 		cgExecutorShadowPartEClass = createEClass(34);
 
@@ -3471,7 +3481,7 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		createEAttribute(cgLibraryOperationCallExpEClass, 11);
 
 		cgLibraryPropertyCallExpEClass = createEClass(56);
-		createEAttribute(cgLibraryPropertyCallExpEClass, 10);
+		createEAttribute(cgLibraryPropertyCallExpEClass, 11);
 
 		cgLocalVariableEClass = createEClass(57);
 
@@ -3502,10 +3512,11 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		cgNativePropertyEClass = createEClass(64);
 
 		cgNativePropertyCallExpEClass = createEClass(65);
-		createEAttribute(cgNativePropertyCallExpEClass, 10);
+		createEAttribute(cgNativePropertyCallExpEClass, 11);
 
 		cgNavigationCallExpEClass = createEClass(66);
 		createEAttribute(cgNavigationCallExpEClass, 9);
+		createEReference(cgNavigationCallExpEClass, 10);
 
 		cgNullEClass = createEClass(67);
 
@@ -3575,7 +3586,7 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		createEReference(cgTuplePartEClass, 7);
 
 		cgTuplePartCallExpEClass = createEClass(86);
-		createEAttribute(cgTuplePartCallExpEClass, 10);
+		createEAttribute(cgTuplePartCallExpEClass, 11);
 
 		cgTypeIdEClass = createEClass(87);
 
@@ -3956,6 +3967,7 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 
 		initEClass(cgNavigationCallExpEClass, CGNavigationCallExp.class, "CGNavigationCallExp", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getCGNavigationCallExp_ReferredProperty(), this.getProperty(), "referredProperty", null, 1, 1, CGNavigationCallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getCGNavigationCallExp_CgProperty(), this.getCGProperty(), null, "cgProperty", null, 1, 1, CGNavigationCallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(cgNullEClass, CGNull.class, "CGNull", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

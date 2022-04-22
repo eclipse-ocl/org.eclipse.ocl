@@ -11,9 +11,7 @@
 package org.eclipse.ocl.examples.codegen.calling;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
-import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorNavigationProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOppositeProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOppositePropertyCallExp;
@@ -30,10 +28,12 @@ import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaGlobalContext;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.java.JavaStream.SubStream;
-import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
-import org.eclipse.ocl.pivot.NavigationCallExp;
+import org.eclipse.ocl.pivot.OppositePropertyCallExp;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.internal.library.CompositionProperty;
+import org.eclipse.ocl.pivot.internal.library.ImplicitNonCompositionProperty;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
  *  ForeignPropertyCallingConvention defines the support for the call of a property realized by an
@@ -41,11 +41,11 @@ import org.eclipse.ocl.pivot.library.LibraryProperty;
  *   *  </br>
  *  e.g. as XXXTables.FOREIGN_qualified_class.FC_class.INSTANCE.evaluate(executor, arguments)
  */
-public class ExecutorPropertyCallingConvention extends AbstractPropertyCallingConvention
+public class ExecutorOppositePropertyCallingConvention extends AbstractPropertyCallingConvention
 {
-	public static final @NonNull ExecutorPropertyCallingConvention INSTANCE = new ExecutorPropertyCallingConvention();
+	public static final @NonNull ExecutorOppositePropertyCallingConvention INSTANCE = new ExecutorOppositePropertyCallingConvention();
 
-/*	@Override
+	@Override
 	public @NonNull CGValuedElement createCGOppositePropertyCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGProperty cgProperty,
 			@NonNull LibraryProperty libraryProperty, @NonNull CGValuedElement cgSource, @NonNull OppositePropertyCallExp asOppositePropertyCallExp) {
 		CodeGenerator codeGenerator = as2cgVisitor.getCodeGenerator();
@@ -54,7 +54,7 @@ public class ExecutorPropertyCallingConvention extends AbstractPropertyCallingCo
 		boolean isRequired = asProperty.isIsRequired();
 		LibraryProperty libraryProperty2 = codeGenerator.getEnvironmentFactory().getMetamodelManager().getImplementation(asOppositePropertyCallExp, null, asProperty);
 		assert libraryProperty2 == libraryProperty;
-		assert libraryProperty instanceof ExtensionProperty;
+		assert (libraryProperty instanceof CompositionProperty) || (libraryProperty instanceof ImplicitNonCompositionProperty);
 		CGExecutorOppositePropertyCallExp cgPropertyCallExp = CGModelFactory.eINSTANCE.createCGExecutorOppositePropertyCallExp();
 		CGExecutorProperty cgExecutorProperty = as2cgVisitor.getAnalyzer().createExecutorOppositeProperty(asProperty);
 		cgPropertyCallExp.setExecutorProperty(cgExecutorProperty);
@@ -65,9 +65,9 @@ public class ExecutorPropertyCallingConvention extends AbstractPropertyCallingCo
 		cgPropertyCallExp.setSource(cgSource);
 		cgPropertyCallExp.setCgProperty(cgProperty);
 		return cgPropertyCallExp;
-	} */
+	}
 
-	@Override
+/*	@Override
 	public @NonNull CGValuedElement createCGPropertyCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGProperty cgProperty,
 			@NonNull LibraryProperty libraryProperty, @Nullable CGValuedElement cgSource, @NonNull NavigationCallExp asPropertyCallExp) {
 		CodeGenerator codeGenerator = as2cgVisitor.getCodeGenerator();
@@ -78,6 +78,7 @@ public class ExecutorPropertyCallingConvention extends AbstractPropertyCallingCo
 		CGExecutorProperty cgExecutorProperty = analyzer.createExecutorProperty(asProperty);
 		cgExecutorPropertyCallExp.setExecutorProperty(cgExecutorProperty);
 		cgExecutorPropertyCallExp.getOwns().add(cgExecutorProperty);
+		cgExecutorPropertyCallExp = cgExecutorPropertyCallExp;
 		cgExecutorPropertyCallExp.setCgProperty(cgProperty);
 		cgExecutorPropertyCallExp.setReferredProperty(asProperty);
 		cgExecutorPropertyCallExp.setAst(asPropertyCallExp);
@@ -85,7 +86,7 @@ public class ExecutorPropertyCallingConvention extends AbstractPropertyCallingCo
 		cgExecutorPropertyCallExp.setRequired(isRequired || codeGenerator.isPrimitive(cgExecutorPropertyCallExp));
 		cgExecutorPropertyCallExp.setSource(cgSource);
 		return cgExecutorPropertyCallExp;
-	}
+	} */
 
 	protected boolean generateForwardJavaCall(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGExecutorPropertyCallExp cgPropertyCallExp) {
 		CGValuedElement asSource = cgPropertyCallExp.getSource();

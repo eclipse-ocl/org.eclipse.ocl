@@ -29,11 +29,7 @@ import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager.NameVariant;
 import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
-import org.eclipse.ocl.examples.codegen.calling.EcorePropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.ExecutorPropertyCallingConvention;
-import org.eclipse.ocl.examples.codegen.calling.ForeignPropertyCallingConvention;
-import org.eclipse.ocl.examples.codegen.calling.LibraryPropertyCallingConvention;
-import org.eclipse.ocl.examples.codegen.calling.NativePropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGAssertNonNullExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBoolean;
@@ -50,19 +46,14 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreDataTypeShadowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGEcorePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElementId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorCompositionProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOperationCallExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOppositePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorProperty;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGGuardExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIfExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInteger;
@@ -77,12 +68,9 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGLetExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryIterateCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperation;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGMapExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGMapPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperation;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeProperty;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGNativePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNull;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
@@ -98,7 +86,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGTemplateParameterExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGThrowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTupleExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTuplePart;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGTuplePartCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGUnboxExp;
@@ -144,7 +131,6 @@ import org.eclipse.ocl.pivot.ids.EnumerationId;
 import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.NestedTypeId;
-import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.executor.AbstractDispatchOperation;
 import org.eclipse.ocl.pivot.internal.library.executor.AbstractEvaluationOperation;
@@ -170,7 +156,6 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.MapValue;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
-import org.eclipse.ocl.pivot.values.TupleValue;
 
 import com.google.common.collect.Iterables;
 
@@ -2315,7 +2300,8 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 	@Override
 	public @NonNull Boolean visitCGNavigationCallExp(@NonNull CGNavigationCallExp cgGNavigationCallExp) {
-		if (cgGNavigationCallExp instanceof CGEcorePropertyCallExp) {
+		return cgGNavigationCallExp.getCgProperty().getCallingConvention().generateJavaCall(this, js, cgGNavigationCallExp);
+	/*	if (cgGNavigationCallExp instanceof CGEcorePropertyCallExp) {
 			return EcorePropertyCallingConvention.INSTANCE.generateJavaCall(this, js, cgGNavigationCallExp);
 		}
 		if (cgGNavigationCallExp instanceof CGExecutorOppositePropertyCallExp) {
@@ -2333,7 +2319,10 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		if (cgGNavigationCallExp instanceof CGNativePropertyCallExp) {
 			return NativePropertyCallingConvention.INSTANCE.generateJavaCall(this, js, cgGNavigationCallExp);
 		}
-		return super.visitCGNavigationCallExp(cgGNavigationCallExp);
+		if (cgGNavigationCallExp instanceof CGTuplePartCallExp) {
+			return TuplePropertyCallingConvention.INSTANCE.generateJavaCall(this, js, cgGNavigationCallExp);
+		}
+		return super.visitCGNavigationCallExp(cgGNavigationCallExp); */
 	}
 
 	@Override
@@ -2382,7 +2371,8 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	public @NonNull Boolean visitCGProperty(@NonNull CGProperty cgProperty) {
 		localContext = globalContext.getLocalContext(cgProperty);
 		try {
-			if (cgProperty instanceof CGForeignProperty) {
+			return cgProperty.getCallingConvention().generateJavaDeclaration(this, js, cgProperty);
+		/*	if (cgProperty instanceof CGForeignProperty) {
 				return ForeignPropertyCallingConvention.INSTANCE.generateJavaDeclaration(this, js, cgProperty);
 			}
 			if (cgProperty instanceof CGNativeProperty) {
@@ -2390,7 +2380,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			}
 			Boolean flowContinues = super.visitCGProperty(cgProperty);
 			assert flowContinues != null;
-			return flowContinues;
+			return flowContinues; */
 		}
 		finally {
 			localContext = null;
@@ -2586,39 +2576,6 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	//		js.appendLocalStatements(cgTuplePart.getInit());
 	//		return true;
 	//	}
-
-	@Override
-	public @NonNull Boolean visitCGTuplePartCallExp(@NonNull CGTuplePartCallExp cgTuplePartCallExp) {
-		CGValuedElement source = getExpression(cgTuplePartCallExp.getSource());
-		//		CGTypeId resultType = cgTuplePartCallExp.getTypeId();
-		//		Class<?> requiredBoxedReturnClass = context.getBoxedClass(resultType.getElementId());
-		TuplePartId partId = cgTuplePartCallExp.getAstTuplePartId();
-		//
-		if (!js.appendLocalStatements(source)) {
-			return false;
-		}
-		//
-		boolean isRequired = cgTuplePartCallExp.isNonNull();
-		boolean isPrimitive = js.isPrimitive(cgTuplePartCallExp);
-		if (!isPrimitive && isRequired /*&& (ecoreIsRequired == Boolean.FALSE)*/) {
-			js.appendSuppressWarningsNull(true);
-		}
-		js.appendDeclaration(cgTuplePartCallExp);
-		js.append(" = ");
-		//		js.appendClassReference(null, ClassUtil.class);
-		//		js.append(".nonNullState(");
-		SubStream castBody = new SubStream() {
-			@Override
-			public void append() {
-				js.appendAtomicReferenceTo(TupleValue.class, source);
-				js.append(".getValue(" + partId.getIndex() + "/*" + partId.getName() + "*/)");
-			}
-		};
-		js.appendClassCast(cgTuplePartCallExp, castBody);
-		//		js.append(")");
-		js.append(";\n");
-		return true;
-	}
 
 	@Override
 	public @NonNull Boolean visitCGTypeId(@NonNull CGTypeId cgTypeId) {

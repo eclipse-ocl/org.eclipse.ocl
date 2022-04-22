@@ -95,7 +95,7 @@ public class CGExecutorOppositePropertyCallExpImpl extends CGOppositePropertyCal
 		CGExecutorProperty oldExecutorProperty = executorProperty;
 		executorProperty = newExecutorProperty;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 10, oldExecutorProperty, executorProperty));
+			eNotify(new ENotificationImpl(this, Notification.SET, 11, oldExecutorProperty, executorProperty));
 	}
 
 	/**
@@ -106,7 +106,7 @@ public class CGExecutorOppositePropertyCallExpImpl extends CGOppositePropertyCal
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 10:
+			case 11:
 				return getExecutorProperty();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -120,7 +120,7 @@ public class CGExecutorOppositePropertyCallExpImpl extends CGOppositePropertyCal
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 10:
+			case 11:
 				setExecutorProperty((CGExecutorProperty)newValue);
 				return;
 		}
@@ -135,7 +135,7 @@ public class CGExecutorOppositePropertyCallExpImpl extends CGOppositePropertyCal
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 10:
+			case 11:
 				setExecutorProperty((CGExecutorProperty)null);
 				return;
 		}
@@ -150,7 +150,7 @@ public class CGExecutorOppositePropertyCallExpImpl extends CGOppositePropertyCal
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 10:
+			case 11:
 				return executorProperty != null;
 		}
 		return super.eIsSet(featureID);

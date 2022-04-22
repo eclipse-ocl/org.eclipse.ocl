@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AnalysisVisitor;
@@ -24,23 +25,49 @@ import org.eclipse.ocl.examples.codegen.calling.BuiltInOperationCallingConventio
 import org.eclipse.ocl.examples.codegen.calling.ConstrainedOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.EcoreForeignOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.EcoreOperationCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.EcoreOppositePropertyCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.EcorePropertyCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.ExecutorOppositePropertyCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.ExecutorPropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.ForeignOperationCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.ForeignPropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.LibraryOperationCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.LibraryPropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.NativeOperationCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.NativePropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.PropertyCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.TuplePropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
+import org.eclipse.ocl.examples.codegen.library.NativeProperty;
 import org.eclipse.ocl.examples.codegen.library.NativeVisitorOperation;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.internal.ecore.EObjectOperation;
 import org.eclipse.ocl.pivot.internal.library.AbstractStaticOperation;
+import org.eclipse.ocl.pivot.internal.library.CompositionProperty;
 import org.eclipse.ocl.pivot.internal.library.ConstrainedOperation;
+import org.eclipse.ocl.pivot.internal.library.ConstrainedProperty;
 import org.eclipse.ocl.pivot.internal.library.EInvokeOperation;
+import org.eclipse.ocl.pivot.internal.library.ExplicitNavigationProperty;
+import org.eclipse.ocl.pivot.internal.library.ExtensionProperty;
+import org.eclipse.ocl.pivot.internal.library.ImplicitNonCompositionProperty;
+import org.eclipse.ocl.pivot.internal.library.StaticProperty;
+import org.eclipse.ocl.pivot.internal.library.TuplePartProperty;
 import org.eclipse.ocl.pivot.internal.manager.FinalAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
+import org.eclipse.ocl.pivot.library.LibraryProperty;
+import org.eclipse.ocl.pivot.library.collection.CollectionElementTypeProperty;
+import org.eclipse.ocl.pivot.library.collection.CollectionLowerProperty;
+import org.eclipse.ocl.pivot.library.collection.CollectionUpperProperty;
+import org.eclipse.ocl.pivot.library.map.MapKeyTypeProperty;
+import org.eclipse.ocl.pivot.library.map.MapValueTypeProperty;
+import org.eclipse.ocl.pivot.library.oclany.OclElementOclContainerProperty;
+import org.eclipse.ocl.pivot.library.oclany.OclElementOclContentsProperty;
 
 public abstract class AbstractCodeGenerator implements CodeGenerator
 {
@@ -173,6 +200,74 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 			}
 		}
 		return LibraryOperationCallingConvention.INSTANCE;
+	}
+
+	@Override
+	public @NonNull PropertyCallingConvention getCallingConvention(@NonNull Property asProperty, @NonNull LibraryProperty libraryProperty) {
+		if (libraryProperty instanceof NativeProperty) {
+			return NativePropertyCallingConvention.INSTANCE;
+		}
+		else if (libraryProperty instanceof OclElementOclContainerProperty) {
+			return EcorePropertyCallingConvention.INSTANCE;
+		}
+		else if ((libraryProperty instanceof CompositionProperty) || (libraryProperty instanceof ImplicitNonCompositionProperty)) {
+			EStructuralFeature eStructuralFeature = (EStructuralFeature) asProperty.getESObject();
+			if (eStructuralFeature != null) {
+				try {
+					getGenModelHelper().getGetAccessor(eStructuralFeature);
+					return EcoreOppositePropertyCallingConvention.INSTANCE;
+				} catch (GenModelException e) {
+					addProblem(e);		// FIXME drop through to better default
+				}
+			}
+			return ExecutorOppositePropertyCallingConvention.INSTANCE;
+		}
+		if (libraryProperty instanceof ExtensionProperty) {
+			return ExecutorOppositePropertyCallingConvention.INSTANCE;	// opposite
+		}
+		else if (libraryProperty instanceof StaticProperty) {
+			return ForeignPropertyCallingConvention.INSTANCE;
+		}
+		else if (libraryProperty instanceof TuplePartProperty) {
+			return TuplePropertyCallingConvention.INSTANCE;
+		}
+		else if (libraryProperty instanceof ConstrainedProperty) {
+			EStructuralFeature eStructuralFeature = (EStructuralFeature) asProperty.getESObject();
+			if (eStructuralFeature != null) {
+				try {
+					getGenModelHelper().getGetAccessor(eStructuralFeature);
+					return EcorePropertyCallingConvention.INSTANCE;
+				} catch (GenModelException e) {
+					addProblem(e);		// FIXME drop through to better default
+				}
+			}
+			return ExecutorPropertyCallingConvention.INSTANCE;
+		}
+		else if (libraryProperty instanceof ExplicitNavigationProperty) {
+				//	|| (libraryProperty instanceof CompositionProperty)
+				//	|| (libraryProperty instanceof ImplicitNonCompositionProperty)		// FIXME surely this isn't Ecore
+				//	|| (libraryProperty instanceof StaticProperty)
+				//	|| (libraryProperty instanceof StereotypeProperty)) {
+			EStructuralFeature eStructuralFeature = (EStructuralFeature) asProperty.getESObject();
+			if (eStructuralFeature != null) {
+				try {
+					getGenModelHelper().getGetAccessor(eStructuralFeature);
+					return EcorePropertyCallingConvention.INSTANCE;
+				} catch (GenModelException e) {
+					addProblem(e);		// FIXME drop through to better default
+				}
+			}
+			return ExecutorPropertyCallingConvention.INSTANCE;
+		}
+		else if ((libraryProperty instanceof OclElementOclContentsProperty)
+				  || (libraryProperty instanceof CollectionElementTypeProperty)
+				  || (libraryProperty instanceof CollectionLowerProperty)
+				  || (libraryProperty instanceof CollectionUpperProperty)
+				  || (libraryProperty instanceof MapKeyTypeProperty)
+				  || (libraryProperty instanceof MapValueTypeProperty)) {
+			return LibraryPropertyCallingConvention.INSTANCE;
+		}
+		return LibraryPropertyCallingConvention.INSTANCE;
 	}
 
 	protected @Nullable Iterable<@NonNull Operation> getConstrainedOperations() {

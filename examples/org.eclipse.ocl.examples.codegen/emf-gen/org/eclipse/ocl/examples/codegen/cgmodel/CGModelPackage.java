@@ -1685,6 +1685,17 @@ public interface CGModelPackage extends EPackage {
 	EAttribute getCGNavigationCallExp_ReferredProperty();
 
 	/**
+	 * Returns the meta object for the reference '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp#getCgProperty <em>Cg Property</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Cg Property</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp#getCgProperty()
+	 * @see #getCGNavigationCallExp()
+	 * @generated
+	 */
+	EReference getCGNavigationCallExp_CgProperty();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNull <em>CG Null</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3843,6 +3854,14 @@ public interface CGModelPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute CG_NAVIGATION_CALL_EXP__REFERRED_PROPERTY = eINSTANCE.getCGNavigationCallExp_ReferredProperty();
+
+		/**
+		 * The meta object literal for the '<em><b>Cg Property</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CG_NAVIGATION_CALL_EXP__CG_PROPERTY = eINSTANCE.getCGNavigationCallExp_CgProperty();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGNullImpl <em>CG Null</em>}' class.

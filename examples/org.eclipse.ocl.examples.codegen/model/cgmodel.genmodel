@@ -228,6 +228,7 @@
     </genClasses>
     <genClasses image="false" ecoreClass="cgmodel.ecore#//CGNavigationCallExp">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cgmodel.ecore#//CGNavigationCallExp/referredProperty"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGNavigationCallExp/cgProperty"/>
     </genClasses>
     <genClasses ecoreClass="cgmodel.ecore#//CGNull"/>
     <genClasses image="false" ecoreClass="cgmodel.ecore#//CGNumber">

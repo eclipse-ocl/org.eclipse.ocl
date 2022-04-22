@@ -17,14 +17,18 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOppositePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcorePropertyCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOppositePropertyCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGOppositePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.generator.CodeGenerator;
+import org.eclipse.ocl.examples.codegen.generator.GenModelException;
 import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
@@ -34,10 +38,9 @@ import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.NavigationCallExp;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.ids.ElementId;
-import org.eclipse.ocl.pivot.internal.library.ConstrainedProperty;
-import org.eclipse.ocl.pivot.internal.library.ExplicitNavigationProperty;
+import org.eclipse.ocl.pivot.internal.library.CompositionProperty;
+import org.eclipse.ocl.pivot.internal.library.ImplicitNonCompositionProperty;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
-import org.eclipse.ocl.pivot.library.oclany.OclElementOclContainerProperty;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
@@ -46,9 +49,9 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
  *   *  </br>
  *  e.g. as XXXTables.FOREIGN_qualified_class.FC_class.INSTANCE.evaluate(executor, arguments)
  */
-public class EcorePropertyCallingConvention extends AbstractPropertyCallingConvention
+public class EcoreOppositePropertyCallingConvention extends AbstractPropertyCallingConvention
 {
-	public static final @NonNull EcorePropertyCallingConvention INSTANCE = new EcorePropertyCallingConvention();
+	public static final @NonNull EcoreOppositePropertyCallingConvention INSTANCE = new EcoreOppositePropertyCallingConvention();
 
 	protected void appendEcoreGet(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGValuedElement cgSource, @NonNull Property asProperty) {
 		CGTypeId cgTypeId = cg2javaVisitor.getAnalyzer().getTypeId(asProperty.getOwningClass().getTypeId());
@@ -91,41 +94,40 @@ public class EcorePropertyCallingConvention extends AbstractPropertyCallingConve
 		CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();
 		Property asProperty = CGUtil.getAST(cgProperty);
 		boolean isRequired = asProperty.isIsRequired();
-		CGPropertyCallExp cgPropertyCallExp = null;
+		CGOppositePropertyCallExp cgPropertyCallExp = null;
 		EStructuralFeature eStructuralFeature = null;
-		if (libraryProperty instanceof OclElementOclContainerProperty) {
-			eStructuralFeature = OCLstdlibPackage.Literals.OCL_ELEMENT__OCL_CONTAINER;
-		}
-		else if (libraryProperty instanceof ConstrainedProperty) {
-			eStructuralFeature = (EStructuralFeature) asProperty.getESObject();
-			if (eStructuralFeature != null) {
+		assert (libraryProperty instanceof CompositionProperty) || (libraryProperty instanceof ImplicitNonCompositionProperty);
+		eStructuralFeature = (EStructuralFeature) asProperty.getESObject();
+		if (eStructuralFeature != null) {
+			try {
+				codeGenerator.getGenModelHelper().getGetAccessor(eStructuralFeature);
 				isRequired = asProperty.isIsRequired();
+			} catch (GenModelException e) {
+				eStructuralFeature = null;
+				codeGenerator.addProblem(e);		// FIXME drop through to better default
 			}
 		}
-		else if (libraryProperty instanceof ExplicitNavigationProperty) {
-				//	|| (libraryProperty instanceof CompositionProperty)
-				//	|| (libraryProperty instanceof ImplicitNonCompositionProperty)		// FIXME surely this isn't Ecore
-				//	|| (libraryProperty instanceof StaticProperty)
-				//	|| (libraryProperty instanceof StereotypeProperty)) {
-			eStructuralFeature = (EStructuralFeature) asProperty.getESObject();
+		if (eStructuralFeature != null) {
+			CGEcoreOppositePropertyCallExp cgEcorePropertyCallExp = CGModelFactory.eINSTANCE.createCGEcoreOppositePropertyCallExp();
+			cgEcorePropertyCallExp.setEStructuralFeature(eStructuralFeature);
+			Boolean ecoreIsRequired = codeGenerator.isNonNull(asProperty);
+			if (ecoreIsRequired != null) {
+				isRequired = ecoreIsRequired;
+			}
+			cgPropertyCallExp = cgEcorePropertyCallExp;
 		}
-		assert eStructuralFeature != null;
-		CGEcorePropertyCallExp cgEcorePropertyCallExp = CGModelFactory.eINSTANCE.createCGEcorePropertyCallExp();
-		cgEcorePropertyCallExp.setEStructuralFeature(eStructuralFeature);
-		cgPropertyCallExp = cgEcorePropertyCallExp;
-	/*	}
 		else {
-			CGExecutorPropertyCallExp cgExecutorPropertyCallExp = CGModelFactory.eINSTANCE.createCGExecutorPropertyCallExp();
-			CGExecutorProperty cgExecutorProperty = analyzer.createExecutorProperty(asProperty);
+			CGExecutorOppositePropertyCallExp cgExecutorPropertyCallExp = CGModelFactory.eINSTANCE.createCGExecutorOppositePropertyCallExp();
+			CGExecutorProperty cgExecutorProperty = analyzer.createExecutorOppositeProperty(asProperty);
 			cgExecutorPropertyCallExp.setExecutorProperty(cgExecutorProperty);
 			cgExecutorPropertyCallExp.getOwns().add(cgExecutorProperty);
 			cgPropertyCallExp = cgExecutorPropertyCallExp;
-		} */
+		}
 		cgPropertyCallExp.setCgProperty(cgProperty);
 		cgPropertyCallExp.setReferredProperty(asProperty);
 		cgPropertyCallExp.setAst(asPropertyCallExp);
 		cgPropertyCallExp.setTypeId(analyzer.getTypeId(asPropertyCallExp.getTypeId()));
-		cgPropertyCallExp.setRequired(isRequired || codeGenerator.isPrimitive(cgPropertyCallExp));
+		cgPropertyCallExp.setRequired(isRequired); // || codeGenerator.isPrimitive(cgPropertyCallExp));
 		cgPropertyCallExp.setSource(cgSource);
 		return cgPropertyCallExp;
 	}

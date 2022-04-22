@@ -126,6 +126,7 @@ public class CodeGenAnalyzer
 	private /*@LazyNonNull*/ UniqueList<@NonNull Feature> foreignFeatures = null;
 	private @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull CGClass> asClass2cgClass = new HashMap<>();
 	private @NonNull Map<@NonNull Operation, @NonNull CGOperation> asOperation2cgOperation = new HashMap<>();
+	private @NonNull Map<@NonNull Property, @NonNull CGProperty> asProperty2cgProperty = new HashMap<>();
 	private @NonNull List<@NonNull CGNamedElement> cgOrphans = new ArrayList<>();
 
 	private @Nullable Model nativeModel = null;
@@ -156,6 +157,13 @@ public class CodeGenAnalyzer
 		Operation asOperation = CGUtil.getAST(cgOperation);
 		CGOperation old = asOperation2cgOperation.put(asOperation, cgOperation);
 		cgOrphans.add(cgOperation);
+		assert old == null;
+	}
+
+	public void addProperty(@NonNull CGProperty cgProperty) {
+		Property asProperty = CGUtil.getAST(cgProperty);
+		CGProperty old = asProperty2cgProperty.put(asProperty, cgProperty);
+		cgOrphans.add(cgProperty);
 		assert old == null;
 	}
 
@@ -211,6 +219,10 @@ public class CodeGenAnalyzer
 
 	public @Nullable CGOperation basicGetOperation(@NonNull Operation asOperation) {
 		return asOperation2cgOperation.get(asOperation);
+	}
+
+	public @Nullable CGProperty basicGetProperty(@NonNull Property asProperty) {
+		return asProperty2cgProperty.get(asProperty);
 	}
 
 	public @NonNull CGBoolean createCGBoolean(boolean booleanValue) {
@@ -594,6 +606,10 @@ public class CodeGenAnalyzer
 
 	public @NonNull CGOperation getOperation(@NonNull Operation asOperation) {
 		return ClassUtil.nonNullState(asOperation2cgOperation.get(asOperation));
+	}
+
+	public @NonNull CGProperty getProperty(@NonNull Property asProperty) {
+		return ClassUtil.nonNullState(asProperty2cgProperty.get(asProperty));
 	}
 
 	public @NonNull CGReal getReal(@NonNull Number aNumber) {

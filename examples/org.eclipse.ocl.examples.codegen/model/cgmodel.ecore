@@ -514,6 +514,12 @@
       eSuperTypes="#//CGSourcedCallExp">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="referredProperty" lowerBound="1"
         eType="#//Property"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cgProperty" lowerBound="1"
+        eType="#//CGProperty" resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The this expression for the call when invoking a native or ecore implementation."/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGNull" eSuperTypes="#//CGConstant">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
