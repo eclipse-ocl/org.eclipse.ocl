@@ -588,7 +588,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		return "BODY_";
 	}
 
-	protected void appendReturn(@NonNull CGValuedElement body) {
+	public void appendReturn(@NonNull CGValuedElement body) {
 		if (js.appendLocalStatements(body)) {
 			if (body instanceof CGThrowExp) {				// FIXME generalize
 				body.accept(this);
@@ -804,65 +804,6 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			needsBlankLine = true;
 		}
 		return needsBlankLine;
-	}
-
-	protected @NonNull Boolean doOperation(@NonNull CGOperation cgOperation, boolean isForeign) {
-		localContext = globalContext.getLocalContext(cgOperation);
-		try {
-			//				CGValuedElement evaluatorParameter = localContext2.getEvaluatorParameter(cgOperation);
-			//				CGParameter typeIdParameter = localContext2.getTypeIdParameter(cgOperation);
-			List<CGParameter> cgParameters = cgOperation.getParameters();
-			CGValuedElement body = getExpression(cgOperation.getBody());
-			//
-		//	boolean isStatic = false;
-			Element ast = cgOperation.getAst();
-			if (ast instanceof Operation) {
-				Operation asOperation = (Operation)ast;
-				isForeign = analyzer.isForeign(asOperation);//cgOperation instanceof CGFo;
-				//	isStatic = asOperation.isIsStatic();
-				LanguageExpression expressionInOCL = asOperation.getBodyExpression();
-				if (ast instanceof Operation) {
-					String title = PrettyPrinter.printName(ast);
-					js.appendCommentWithOCL(title+"\n", expressionInOCL);
-				}
-			}
-			//
-			//
-			if (!isForeign) {
-				js.append("@Override\n");
-			}
-			js.append("public ");
-			if (isForeign) {
-				js.append("static ");
-			}
-			boolean cgOperationIsInvalid = cgOperation.getInvalidValue() != null;
-			js.appendIsCaught(!cgOperationIsInvalid, cgOperationIsInvalid);
-			js.append(" ");
-			js.appendClassReference(cgOperation.isRequired() ? true : null, cgOperation);
-			js.append(" ");
-			if (isForeign) {
-				js.append("op_");
-			}
-			js.appendValueName(cgOperation);
-			js.append("(");
-			boolean isFirst = true;
-			for (@SuppressWarnings("null")@NonNull CGParameter cgParameter : cgParameters) {
-				if (!isFirst) {
-					js.append(", ");
-				}
-				js.appendDeclaration(cgParameter);
-				isFirst = false;
-			}
-			js.append(") {\n");
-			js.pushIndentation(null);
-			appendReturn(body);
-			js.popIndentation();
-			js.append("}\n");
-		}
-		finally {
-			localContext = null;
-		}
-		return true;
 	}
 
 	public void generateGlobals(@NonNull Iterable<@NonNull ? extends CGValuedElement> sortedElements) {
@@ -2690,14 +2631,22 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 	@Override
 	public @NonNull Boolean visitCGOperation(@NonNull CGOperation cgOperation) {
-		return doOperation(cgOperation, false);
+		localContext = globalContext.getLocalContext(cgOperation);
+		try {
+			OperationCallingConvention callingConvention = cgOperation.getCallingConvention();
+			callingConvention.generateJavaDeclaration(this, js, cgOperation);
+		}
+		finally {
+			localContext = null;
+		}
+		return true;
 	}
 
 	@Override
 	public @NonNull Boolean visitCGOperationCallExp(@NonNull CGOperationCallExp cgOperationCallExp) {
 		CGOperation cgOperation = cgOperationCallExp.getCgOperation();
 		OperationCallingConvention callingConvention = cgOperation.getCallingConvention();
-		return callingConvention.generateJava(this, js, cgOperationCallExp);
+		return callingConvention.generateJavaCall(this, js, cgOperationCallExp);
 	}
 
 	@Override

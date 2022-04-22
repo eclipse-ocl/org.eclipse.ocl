@@ -18,6 +18,8 @@ import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.calling.LibraryOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
+import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
+import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Variable;
@@ -31,6 +33,18 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 public class JUnitOperationCallingConvention extends LibraryOperationCallingConvention
 {
 	public static final @NonNull JUnitOperationCallingConvention INSTANCE = new JUnitOperationCallingConvention();
+
+	@Override
+	protected void appendDeclaration(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+		js.append("@Override\n");
+		js.append("public ");
+		boolean cgOperationIsInvalid = cgOperation.getInvalidValue() != null;
+		js.appendIsCaught(!cgOperationIsInvalid, cgOperationIsInvalid);
+		js.append(" ");
+		js.appendClassReference(cgOperation.isRequired() ? true : null, cgOperation);
+		js.append(" ");
+		js.appendValueName(cgOperation);
+	}
 
 	@Override
 	public @NonNull CGOperation createCGOperationWithoutBody(@NonNull AS2CGVisitor as2cgVisitor,@NonNull Operation asOperation) {

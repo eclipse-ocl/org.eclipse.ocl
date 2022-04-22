@@ -126,7 +126,7 @@ public class EcoreOperationCallingConvention extends AbstractOperationCallingCon
 	}
 
 	@Override
-	public @NonNull Boolean generateJava(@NonNull CG2JavaVisitor<?> cg2JavaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor<?> cg2JavaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
 	//	Operation asOperation = cgOperationCallExp.getReferredOperation();
 		CGOperation cgOperation = CGUtil.getOperation(cgOperationCallExp);
 		Operation asOperation = CGUtil.getAST(cgOperation);

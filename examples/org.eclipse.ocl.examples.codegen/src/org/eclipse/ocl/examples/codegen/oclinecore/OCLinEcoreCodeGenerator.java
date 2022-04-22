@@ -370,7 +370,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		boolean hasSelf() { return this == ECORE_STATIC; }
 		boolean hasThis() { return this == ECORE_IMPL; }
 		boolean isEcore() { return this == ECORE_IMPL; }
-		boolean isForeign() { return (this == ECORE_STATIC) || (this == FOREIGN_IMPL) || (this == FOREIGN_STATIC); }
+		public boolean isForeign() { return (this == ECORE_STATIC) || (this == FOREIGN_IMPL) || (this == FOREIGN_STATIC); }
 		boolean isStatic() { return (this == ECORE_STATIC) || (this == FOREIGN_STATIC); }
 	//	@SuppressWarnings("null")
 	//	@Override

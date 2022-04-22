@@ -72,15 +72,11 @@ public class EcoreForeignOperationCallingConvention extends AbstractOperationCal
 	public @NonNull CGCallExp createCGOperationCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @NonNull LibraryOperation libraryOperation,
 			@Nullable CGValuedElement cgSource, @NonNull OperationCallExp asOperationCallExp) {
 		Operation asOperation = ClassUtil.nonNullState(asOperationCallExp.getReferredOperation());
-	//	assert cgSource != null;
-	//	assert !asOperation.isIsStatic();
 		boolean isRequired = asOperation.isIsRequired();
 		CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();
 		analyzer.addForeignFeature(asOperation);
 		CGForeignOperationCallExp cgForeignOperationCallExp = CGModelFactory.eINSTANCE.createCGForeignOperationCallExp();
 		addExecutorArgument(as2cgVisitor, cgForeignOperationCallExp);
-	//	boolean isStatic = isStatic(cgOperation);
-	//	assert isStatic == (cgSource == null);
 		if (cgSource != null) {
 			cgForeignOperationCallExp.getCgArguments().add(cgSource);
 		}
@@ -93,11 +89,10 @@ public class EcoreForeignOperationCallingConvention extends AbstractOperationCal
 		assert expressionInOCL != null;
 		addExecutorParameter(as2cgVisitor, cgOperation);
 		addExpressionInOCLParameters(as2cgVisitor, cgOperation, expressionInOCL);
-//		super.createParameters(as2cgVisitor, cgOperation, expressionInOCL);
 	}
 
 	@Override
-	public @NonNull Boolean generateJava(@NonNull CG2JavaVisitor<?> cg2JavaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor<?> cg2JavaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
 		if (!generateLocals(cg2JavaVisitor, js, cgOperationCallExp)) {
 			return false;
 		}
@@ -114,9 +109,4 @@ public class EcoreForeignOperationCallingConvention extends AbstractOperationCal
 	public boolean isBoxed() {
 		return true;
 	}
-
-//	@Override
-//	public boolean isStatic(@NonNull CGOperation cgOperation) {
-//		return true;
-//	}
 }

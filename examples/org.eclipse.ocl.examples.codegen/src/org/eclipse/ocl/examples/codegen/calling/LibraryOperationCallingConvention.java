@@ -160,7 +160,7 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 	}
 
 	@Override
-	public @NonNull Boolean generateJava(@NonNull CG2JavaVisitor<?> cg2JavaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor<?> cg2JavaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
 		CGLibraryOperationCallExp cgLibraryOperationCallExp = (CGLibraryOperationCallExp)cgOperationCallExp;
 		assert cgOperationCallExp.getCgThis() == null;
 		final LibraryOperation libraryOperation = ClassUtil.nonNullState(cgLibraryOperationCallExp.getLibraryOperation());
@@ -275,9 +275,4 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 	public boolean isBoxed() {
 		return true;
 	}
-
-//	@Override
-//	public boolean isStatic(@NonNull CGOperation cgOperation) {
-//		return true;
-//	}
 }

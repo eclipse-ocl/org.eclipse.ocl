@@ -609,14 +609,6 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 	}
 
 	@Override
-	public @NonNull Boolean visitCGOperation(@NonNull CGOperation cgOperation) {
-		Operation asOperation = CGUtil.getAST(cgOperation);
-		assert asOperation != null;
-		FeatureLocality featureLocality = getFeatureLocality(asOperation);
-		return doOperation(cgOperation, featureLocality.isForeign());
-	}
-
-	@Override
 	public @NonNull Boolean visitCGPackage(@NonNull CGPackage cgPackage) {
 		return true;
 	}

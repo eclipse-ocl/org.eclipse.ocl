@@ -63,7 +63,7 @@ public class NativeOperationCallingConvention extends AbstractOperationCallingCo
 	}
 
 	@Override
-	public @NonNull Boolean generateJava(@NonNull CG2JavaVisitor<?> cg2JavaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor<?> cg2JavaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
 		CGNativeOperationCallExp cgNativeOperationCallExp = (CGNativeOperationCallExp)cgOperationCallExp;
 		//	Operation asOperation = cgOperationCallExp.getReferredOperation();
 		CGValuedElement cgThis = cgNativeOperationCallExp.getCgThis();

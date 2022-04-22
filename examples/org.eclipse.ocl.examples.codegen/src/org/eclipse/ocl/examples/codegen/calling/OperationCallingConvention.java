@@ -29,18 +29,33 @@ import org.eclipse.ocl.pivot.library.LibraryOperation;
  */
 public interface OperationCallingConvention extends CallingConvention
 {
-	@NonNull CGOperation createCGOperationWithoutBody(@NonNull AS2CGVisitor as2cgVisitor, @NonNull Operation asOperation);
 	/**
-	 * Create the appropriate CGOperationCallExp for asOperationCallExp with cgSource, or retirn null
+	 * Create the appropriate CGOperation less parameters and body.
+	 */
+	@NonNull CGOperation createCGOperationWithoutBody(@NonNull AS2CGVisitor as2cgVisitor, @NonNull Operation asOperation);
+
+	/**
+	 * Create the appropriate CGOperationCallExp for asOperationCallExp with cgSource, or return null
 	 * if this OperationCallingConvention cannot handle it.
 	 * @param cgOperation
 	 */
 	@NonNull CGValuedElement createCGOperationCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @NonNull LibraryOperation libraryOperation,
 			@Nullable CGValuedElement cgSource, @NonNull OperationCallExp asOperationCallExp);
 
+	/**
+	 * Elaborate the CGOperation with the parameters appropriate to query.
+	 */
 	void createCGParameters(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL query);
 
-	@NonNull Boolean generateJava(@NonNull CG2JavaVisitor<?> cg2JavaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp);
+	/**
+	 * Generate the Java code for an Operation call.
+	 * Returns true if control flow continues, false if an exception throw has been synthesized.
+	 */
+	boolean generateJavaCall(@NonNull CG2JavaVisitor<?> cg2JavaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp);
 
-//	boolean isStatic(@NonNull CGOperation cgOperation);
+	/**
+	 * Generate the Java code for an Operation declaration.
+	 * Returns true if control flow continues, false if an exception throw has been synthesized.
+	 */
+	boolean generateJavaDeclaration(@NonNull CG2JavaVisitor<?> cg2JavaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation);
 }

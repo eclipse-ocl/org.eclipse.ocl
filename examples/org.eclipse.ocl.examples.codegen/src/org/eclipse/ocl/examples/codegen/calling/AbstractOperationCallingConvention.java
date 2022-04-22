@@ -29,13 +29,16 @@ import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
+import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
@@ -77,8 +80,49 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 		cgArguments.add(analyzer.createCGConstantExp(cgTypeId));
 	}
 
-	protected void appendForeignOperationName(@NonNull CG2JavaVisitor<?> cg2JavaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
-		JavaCodeGenerator codeGenerator = cg2JavaVisitor.getCodeGenerator();
+	protected void appendBody(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGValuedElement body) {
+		js.append(" {\n");
+		js.pushIndentation(null);
+		cg2javaVisitor.appendReturn(body);
+		js.popIndentation();
+		js.append("}\n");
+	}
+
+	protected void appendDeclaration(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+		assert false : "Missing overload for " + cgOperation.getCallingConvention().getClass().getSimpleName();
+		boolean isForeign = false;
+		Element ast = cgOperation.getAst();
+		if (ast instanceof Operation) {
+			Operation asOperation = (Operation)ast;
+			isForeign = cg2javaVisitor.getAnalyzer().isForeign(asOperation);//cgOperation instanceof CGFo;
+			LanguageExpression expressionInOCL = asOperation.getBodyExpression();
+			if (ast instanceof Operation) {
+				String title = PrettyPrinter.printName(asOperation);
+				js.appendCommentWithOCL(title+"\n", expressionInOCL);
+			}
+		}
+		//
+		//
+		if (!isForeign) {
+			js.append("@Override\n");
+		}
+		js.append("public ");
+		if (isForeign) {
+			js.append("static ");
+		}
+		boolean cgOperationIsInvalid = cgOperation.getInvalidValue() != null;
+		js.appendIsCaught(!cgOperationIsInvalid, cgOperationIsInvalid);
+		js.append(" ");
+		js.appendClassReference(cgOperation.isRequired() ? true : null, cgOperation);
+		js.append(" ");
+		if (isForeign) {
+			js.append("op_");
+		}
+		js.appendValueName(cgOperation);
+	}
+
+	protected void appendForeignOperationName(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
+		JavaCodeGenerator codeGenerator = cg2javaVisitor.getCodeGenerator();
 		Operation asReferredOperation = CGUtil.getReferredOperation(cgOperationCallExp);
 		org.eclipse.ocl.pivot.Class asReferredClass = PivotUtil.getOwningClass(asReferredOperation);
 		CGClass cgReferringClass = CGUtil.getContainingClass(cgOperationCallExp);
@@ -89,7 +133,8 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 		js.append(PivotUtil.getName(asReferredOperation));
 	}
 
-/*	protected @NonNull CGOperation createCGOperationWithoutBody(@NonNull AS2CGVisitor as2cgVisitor, @NonNull Operation asOperation) {
+/*	Original merged function  temporaily retained in case derivations need review.
+  	protected @NonNull CGOperation createCGOperationWithoutBody(@NonNull AS2CGVisitor as2cgVisitor, @NonNull Operation asOperation) {
 		PivotMetamodelManager metamodelManager = as2cgVisitor.getMetamodelManager();
 		GenModelHelper genModelHelper = as2cgVisitor.getGenModelHelper();
 		CGOperation cgOperation = null;
@@ -153,6 +198,19 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 		return cgOperation;
 	} */
 
+	protected void appendParameterList(@NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+		js.append("(");
+		boolean isFirst = true;
+		for (@NonNull CGParameter cgParameter : CGUtil.getParameters(cgOperation)) {
+			if (!isFirst) {
+				js.append(", ");
+			}
+			js.appendDeclaration(cgParameter);
+			isFirst = false;
+		}
+		js.append(")");
+	}
+
 	@Override
 	public void createCGParameters(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL expressionInOCL) {
 		if (expressionInOCL != null) {
@@ -191,11 +249,11 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 		}
 	}
 
-	protected void generateArgumentList(@NonNull CG2JavaVisitor<?> cg2JavaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
+	protected void generateArgumentList(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
 		CGOperation cgOperation = CGUtil.getOperation(cgOperationCallExp);
 		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
 		List<@NonNull CGValuedElement> cgArguments = CGUtil.getArgumentsList(cgOperationCallExp);
-		JavaCodeGenerator codeGenerator = cg2JavaVisitor.getCodeGenerator();
+		JavaCodeGenerator codeGenerator = cg2javaVisitor.getCodeGenerator();
 		int iMax = cgArguments.size();
 		assert iMax == cgParameters.size();
 		for (int i = 0; i < iMax; i++) {
@@ -206,20 +264,30 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 			CGParameter cgParameter = cgParameters.get(i);
 			CGTypeId cgTypeId = cgParameter.getTypeId();
 			TypeDescriptor parameterTypeDescriptor = codeGenerator.getUnboxedDescriptor(ClassUtil.nonNullState(cgTypeId.getElementId()));
-			CGValuedElement argument = cg2JavaVisitor.getExpression(cgArgument);
+			CGValuedElement argument = cg2javaVisitor.getExpression(cgArgument);
 			js.appendReferenceTo(parameterTypeDescriptor, argument);
 		}
 	}
 
 	@Override
-	public @NonNull Boolean generateJava(@NonNull CG2JavaVisitor<?> cg2JavaVisitor, @NonNull JavaStream js,@NonNull CGOperationCallExp cgOperationCallExp) {
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
 		throw new UnsupportedOperationException();		// XXX
 	}
 
-	protected boolean generateLocals(@NonNull CG2JavaVisitor<?> cg2JavaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
+	@Override
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+		CGValuedElement body = cg2javaVisitor.getExpression(cgOperation.getBody());
+		//
+		appendDeclaration(cg2javaVisitor, js, cgOperation);
+		appendParameterList(js, cgOperation);
+		appendBody(cg2javaVisitor, js, body);
+		return true;
+	}
+
+	protected boolean generateLocals(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
 		Iterable<@NonNull CGValuedElement> cgArguments = CGUtil.getArgumentsList(cgOperationCallExp);
 		for (@NonNull CGValuedElement cgArgument : cgArguments) {
-			CGValuedElement argument = cg2JavaVisitor.getExpression(cgArgument);
+			CGValuedElement argument = cg2javaVisitor.getExpression(cgArgument);
 			if (!js.appendLocalStatements(argument)) {
 				return false;
 			}
@@ -251,12 +319,6 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 		}
 	//	as2cgVisitor.getNameManager().declareStandardName(cgOperationCallExp);
 	}
-
-//	@Override
-//	public boolean isStatic(@NonNull CGOperation cgOperation) {
-//		Operation asOperation = CGUtil.getAST(cgOperation);
-//		return asOperation.isIsStatic();
-//	}
 
 	@Override
 	public @NonNull String toString() {
