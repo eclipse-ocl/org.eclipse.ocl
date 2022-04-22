@@ -546,6 +546,8 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="containingClass" lowerBound="1"
         eType="#//CGClass" resolveProxies="false" eOpposite="#//CGClass/operations"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="callingConvention" lowerBound="1"
+        eType="#//OperationCallingConvention" transient="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGOperationCallExp" abstract="true"
       eSuperTypes="#//CGCallExp">
@@ -601,6 +603,8 @@
         <details key="documentation" value="The optional initializer or derivation."/>
       </eAnnotations>
     </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="callingConvention" lowerBound="1"
+        eType="#//PropertyCallingConvention" transient="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGPropertyCallExp" abstract="true" eSuperTypes="#//CGNavigationCallExp"/>
   <eClassifiers xsi:type="ecore:EClass" name="CGReal" eSuperTypes="#//CGNumber">
@@ -759,8 +763,10 @@
   <eClassifiers xsi:type="ecore:EDataType" name="Number" instanceClassName="java.lang.Number"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Object" instanceClassName="java.lang.Object"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Operation" instanceClassName="org.eclipse.ocl.pivot.Operation"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="OperationCallingConvention" instanceClassName="org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Property" instanceClassName="org.eclipse.ocl.pivot.Property"/>
   <eClassifiers xsi:type="ecore:EDataType" name="TuplePartId" instanceClassName="org.eclipse.ocl.pivot.ids.TuplePartId"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Type" instanceClassName="org.eclipse.ocl.pivot.Type"/>
   <eClassifiers xsi:type="ecore:EDataType" name="TypeId" instanceClassName="org.eclipse.ocl.pivot.ids.TypeId"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="PropertyCallingConvention" instanceClassName="org.eclipse.ocl.examples.codegen.calling.PropertyCallingConvention"/>
 </ecore:EPackage>

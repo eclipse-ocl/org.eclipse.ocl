@@ -35,10 +35,12 @@
     <genDataTypes ecoreDataType="cgmodel.ecore#//Number"/>
     <genDataTypes ecoreDataType="cgmodel.ecore#//Object"/>
     <genDataTypes ecoreDataType="cgmodel.ecore#//Operation"/>
+    <genDataTypes ecoreDataType="cgmodel.ecore#//OperationCallingConvention"/>
     <genDataTypes ecoreDataType="cgmodel.ecore#//Property"/>
     <genDataTypes ecoreDataType="cgmodel.ecore#//TuplePartId"/>
     <genDataTypes ecoreDataType="cgmodel.ecore#//Type"/>
     <genDataTypes ecoreDataType="cgmodel.ecore#//TypeId"/>
+    <genDataTypes ecoreDataType="cgmodel.ecore#//PropertyCallingConvention"/>
     <genClasses ecoreClass="cgmodel.ecore#//CGAccumulator"/>
     <genClasses ecoreClass="cgmodel.ecore#//CGAssertNonNullExp"/>
     <genClasses ecoreClass="cgmodel.ecore#//CGBoolean">
@@ -235,6 +237,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGOperation/preconditions"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGOperation/postconditions"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference cgmodel.ecore#//CGOperation/containingClass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cgmodel.ecore#//CGOperation/callingConvention"/>
     </genClasses>
     <genClasses image="false" ecoreClass="cgmodel.ecore#//CGOperationCallExp">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EAttribute cgmodel.ecore#//CGOperationCallExp/referredOperation"/>
@@ -255,6 +258,7 @@
     <genClasses image="false" ecoreClass="cgmodel.ecore#//CGProperty">
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference cgmodel.ecore#//CGProperty/containingClass"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGProperty/body"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cgmodel.ecore#//CGProperty/callingConvention"/>
     </genClasses>
     <genClasses image="false" ecoreClass="cgmodel.ecore#//CGPropertyCallExp"/>
     <genClasses ecoreClass="cgmodel.ecore#//CGReal"/>

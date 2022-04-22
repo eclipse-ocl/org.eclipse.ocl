@@ -19,6 +19,8 @@ import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
+import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.PropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGAccumulator;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGAssertNonNullExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBoolean;
@@ -898,6 +900,13 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EDataType operationCallingConventionEDataType = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EDataType propertyEDataType = null;
 
 	/**
@@ -920,6 +929,13 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 	 * @generated
 	 */
 	private EDataType typeIdEDataType = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EDataType propertyCallingConventionEDataType = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -2578,6 +2594,16 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 	 * @generated
 	 */
 	@Override
+	public EAttribute getCGOperation_CallingConvention() {
+		return (EAttribute)cgOperationEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EClass getCGOperationCallExp() {
 		return cgOperationCallExpEClass;
 	}
@@ -2730,6 +2756,16 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 	@Override
 	public EReference getCGProperty_Body() {
 		return (EReference)cgPropertyEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EAttribute getCGProperty_CallingConvention() {
+		return (EAttribute)cgPropertyEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -3178,6 +3214,16 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 	 * @generated
 	 */
 	@Override
+	public EDataType getOperationCallingConvention() {
+		return operationCallingConventionEDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EDataType getProperty() {
 		return propertyEDataType;
 	}
@@ -3210,6 +3256,16 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 	@Override
 	public EDataType getTypeId() {
 		return typeIdEDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EDataType getPropertyCallingConvention() {
+		return propertyCallingConventionEDataType;
 	}
 
 	/**
@@ -3254,8 +3310,8 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		createEReference(cgBuiltInIterationCallExpEClass, 13);
 
 		cgCachedOperationEClass = createEClass(5);
-		createEReference(cgCachedOperationEClass, 11);
 		createEReference(cgCachedOperationEClass, 12);
+		createEReference(cgCachedOperationEClass, 13);
 
 		cgCachedOperationCallExpEClass = createEClass(6);
 		createEAttribute(cgCachedOperationCallExpEClass, 11);
@@ -3310,7 +3366,7 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		createEReference(cgEcoreExpEClass, 9);
 
 		cgEcoreOperationEClass = createEClass(20);
-		createEReference(cgEcoreOperationEClass, 11);
+		createEReference(cgEcoreOperationEClass, 12);
 
 		cgEcoreOperationCallExpEClass = createEClass(21);
 		createEReference(cgEcoreOperationCallExpEClass, 11);
@@ -3358,7 +3414,7 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		cgForeignOperationCallExpEClass = createEClass(37);
 
 		cgForeignPropertyEClass = createEClass(38);
-		createEReference(cgForeignPropertyEClass, 8);
+		createEReference(cgForeignPropertyEClass, 9);
 
 		cgForeignPropertyCallExpEClass = createEClass(39);
 
@@ -3460,6 +3516,7 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		createEReference(cgOperationEClass, 8);
 		createEReference(cgOperationEClass, 9);
 		createEReference(cgOperationEClass, 10);
+		createEAttribute(cgOperationEClass, 11);
 
 		cgOperationCallExpEClass = createEClass(70);
 		createEAttribute(cgOperationCallExpEClass, 8);
@@ -3481,6 +3538,7 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		cgPropertyEClass = createEClass(74);
 		createEReference(cgPropertyEClass, 6);
 		createEReference(cgPropertyEClass, 7);
+		createEAttribute(cgPropertyEClass, 8);
 
 		cgPropertyCallExpEClass = createEClass(75);
 
@@ -3557,10 +3615,12 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		numberEDataType = createEDataType(105);
 		objectEDataType = createEDataType(106);
 		operationEDataType = createEDataType(107);
-		propertyEDataType = createEDataType(108);
-		tuplePartIdEDataType = createEDataType(109);
-		typeEDataType = createEDataType(110);
-		typeIdEDataType = createEDataType(111);
+		operationCallingConventionEDataType = createEDataType(108);
+		propertyEDataType = createEDataType(109);
+		tuplePartIdEDataType = createEDataType(110);
+		typeEDataType = createEDataType(111);
+		typeIdEDataType = createEDataType(112);
+		propertyCallingConventionEDataType = createEDataType(113);
 	}
 
 	/**
@@ -3906,6 +3966,7 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		initEReference(getCGOperation_Preconditions(), this.getCGConstraint(), null, "preconditions", null, 0, -1, CGOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getCGOperation_Postconditions(), this.getCGConstraint(), null, "postconditions", null, 0, -1, CGOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getCGOperation_ContainingClass(), this.getCGClass(), this.getCGClass_Operations(), "containingClass", null, 1, 1, CGOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCGOperation_CallingConvention(), this.getOperationCallingConvention(), "callingConvention", null, 1, 1, CGOperation.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(cgOperationCallExpEClass, CGOperationCallExp.class, "CGOperationCallExp", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getCGOperationCallExp_ReferredOperation(), this.getOperation(), "referredOperation", null, 1, 1, CGOperationCallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3927,6 +3988,7 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		initEClass(cgPropertyEClass, CGProperty.class, "CGProperty", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getCGProperty_ContainingClass(), this.getCGClass(), this.getCGClass_Properties(), "containingClass", null, 1, 1, CGProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getCGProperty_Body(), this.getCGValuedElement(), null, "body", null, 0, 1, CGProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCGProperty_CallingConvention(), this.getPropertyCallingConvention(), "callingConvention", null, 1, 1, CGProperty.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(cgPropertyCallExpEClass, CGPropertyCallExp.class, "CGPropertyCallExp", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -4003,10 +4065,12 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		initEDataType(numberEDataType, Number.class, "Number", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(objectEDataType, Object.class, "Object", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(operationEDataType, Operation.class, "Operation", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(operationCallingConventionEDataType, OperationCallingConvention.class, "OperationCallingConvention", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(propertyEDataType, Property.class, "Property", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(tuplePartIdEDataType, TuplePartId.class, "TuplePartId", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(typeEDataType, Type.class, "Type", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(typeIdEDataType, TypeId.class, "TypeId", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(propertyCallingConventionEDataType, PropertyCallingConvention.class, "PropertyCallingConvention", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 
 		// Create resource
 		createResource(eNS_URI);

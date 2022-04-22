@@ -24,7 +24,6 @@ import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
@@ -32,7 +31,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cse.AbstractPlace;
 import org.eclipse.ocl.examples.codegen.cse.OuterStackPlace;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -284,16 +282,4 @@ public abstract class CGCallableImpl extends CGValuedElementImpl implements CGCa
 		throw new UnsupportedOperationException(getClass().getName() + ".isEquivalentToInternal()");
 	}
 
-	private /*@LazyNonNull*/ OperationCallingConvention callingConvention;
-
-	@Override
-	public @NonNull OperationCallingConvention getCallingConvention() {
-		return ClassUtil.nonNullState(callingConvention);
-	}
-
-	@Override
-	public void setCallingConvention(@NonNull OperationCallingConvention callingConvention) {
-		assert this.callingConvention == null;
-		this.callingConvention = callingConvention;
-	}
 } //CGCallableImpl

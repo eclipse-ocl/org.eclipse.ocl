@@ -13,7 +13,6 @@ package org.eclipse.ocl.examples.codegen.cgmodel;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
 
 /**
  * <!-- begin-user-doc -->
@@ -77,7 +76,4 @@ public interface CGCallable extends CGValuedElement {
 	 */
 	void setBody(CGValuedElement value);
 
-	@NonNull OperationCallingConvention getCallingConvention();
-
-	void setCallingConvention(@NonNull OperationCallingConvention callingConvention);
 } // CGCallable

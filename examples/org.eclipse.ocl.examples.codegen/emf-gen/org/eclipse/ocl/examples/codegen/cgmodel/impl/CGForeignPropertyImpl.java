@@ -16,12 +16,11 @@ package org.eclipse.ocl.examples.codegen.cgmodel.impl;
 
 import java.util.Collection;
 import java.util.List;
-import org.eclipse.emf.common.notify.Notification;
+
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
@@ -104,7 +103,7 @@ public class CGForeignPropertyImpl extends CGPropertyImpl implements CGForeignPr
 	@Override
 	public List<CGParameter> getParameters() {
 		if (parameters == null) {
-			parameters = new EObjectContainmentEList<CGParameter>(CGParameter.class, this, 8);
+			parameters = new EObjectContainmentEList<CGParameter>(CGParameter.class, this, 9);
 		}
 		return parameters;
 	}
@@ -117,7 +116,7 @@ public class CGForeignPropertyImpl extends CGPropertyImpl implements CGForeignPr
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case 8:
+			case 9:
 				return ((InternalEList<?>)getParameters()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -131,7 +130,7 @@ public class CGForeignPropertyImpl extends CGPropertyImpl implements CGForeignPr
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 8:
+			case 9:
 				return getParameters();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -146,7 +145,7 @@ public class CGForeignPropertyImpl extends CGPropertyImpl implements CGForeignPr
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 8:
+			case 9:
 				getParameters().clear();
 				getParameters().addAll((Collection<? extends CGParameter>)newValue);
 				return;
@@ -162,7 +161,7 @@ public class CGForeignPropertyImpl extends CGPropertyImpl implements CGForeignPr
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 8:
+			case 9:
 				getParameters().clear();
 				return;
 		}
@@ -177,7 +176,7 @@ public class CGForeignPropertyImpl extends CGPropertyImpl implements CGForeignPr
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 8:
+			case 9:
 				return parameters != null && !parameters.isEmpty();
 		}
 		return super.eIsSet(featureID);
