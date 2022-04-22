@@ -88,11 +88,18 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 		js.append("}\n");
 	}
 
+	protected void appendCommentWithOCL(@NonNull  JavaStream js, @NonNull CGOperation cgOperation) {
+		Operation asOperation = CGUtil.getAST(cgOperation);
+		LanguageExpression expressionInOCL = asOperation.getBodyExpression();
+		String title = PrettyPrinter.printName(asOperation);
+		js.appendCommentWithOCL(title + "\n", expressionInOCL);
+	}
+
 	protected void appendDeclaration(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
 		assert false : "Missing overload for " + cgOperation.getCallingConvention().getClass().getSimpleName();
 		boolean isForeign = false;
 		Element ast = cgOperation.getAst();
-		if (ast instanceof Operation) {
+		assert (ast instanceof Operation); {
 			Operation asOperation = (Operation)ast;
 			isForeign = cg2javaVisitor.getAnalyzer().isForeign(asOperation);//cgOperation instanceof CGFo;
 			LanguageExpression expressionInOCL = asOperation.getBodyExpression();

@@ -199,6 +199,11 @@ public class EcoreOperationCallingConvention extends AbstractOperationCallingCon
 	}
 
 	@Override
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+		throw new UnsupportedOperationException();		// Ecore operations are declared by genmodel
+	}
+
+	@Override
 	public boolean isEcore() {
 		return true;
 	}

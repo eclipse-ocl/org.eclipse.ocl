@@ -1986,7 +1986,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 								if (!isFirst) {
 									js.append(", ");
 								}
-								js.appendDeclaration(cgParameter);
+								js.appendValueName(cgParameter);
 								isFirst = false;
 							}
 						}

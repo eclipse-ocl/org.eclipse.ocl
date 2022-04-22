@@ -126,6 +126,11 @@ public class NativeOperationCallingConvention extends AbstractOperationCallingCo
 	}
 
 	@Override
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+		throw new UnsupportedOperationException();		// Native operations are declared natively
+	}
+
+	@Override
 	public boolean isUnboxed() {
 		return true;
 	}
