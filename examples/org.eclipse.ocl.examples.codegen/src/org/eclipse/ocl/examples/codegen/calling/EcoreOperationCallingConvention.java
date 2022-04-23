@@ -41,8 +41,6 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Parameter;
-import org.eclipse.ocl.pivot.ParameterVariable;
-import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.internal.ecore.EObjectOperation;
 import org.eclipse.ocl.pivot.internal.library.EInvokeOperation;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
@@ -180,8 +178,7 @@ public class EcoreOperationCallingConvention extends AbstractOperationCallingCon
 				}
 				CGValuedElement argument = cg2JavaVisitor.getExpression(cgArgument);
 			//	Parameter asParameter = ClassUtil.nonNullState(asParameters.get(i));
-				VariableDeclaration asParameterVariable = CGUtil.getAST(cgParameter);
-				Parameter asParameter = asParameterVariable instanceof Parameter ? (Parameter)asParameterVariable : ((ParameterVariable)asParameterVariable).getRepresentedParameter();
+				Parameter asParameter = CGUtil.getParameter(cgParameter);
 				GenParameter genParameter = genModelHelper.getGenParameter(asParameter);
 				if (genParameter != null) {
 					String rawBoundType = ClassUtil.nonNullState(genParameter.getRawBoundType());
@@ -206,12 +203,7 @@ public class EcoreOperationCallingConvention extends AbstractOperationCallingCon
 	}
 
 	@Override
-	public boolean isEcore() {
-		return true;
-	}
-
-	@Override
-	public boolean rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGOperationCallExp cgOperationCallExp) {
+	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGOperationCallExp cgOperationCallExp) {
 		CGEcoreOperationCallExp cgEcoreOperationCallExp = (CGEcoreOperationCallExp)cgOperationCallExp;
 		if ("specializeIn".equals(cgOperationCallExp.getReferredOperation().getName())) {
 			getClass();		// XXX
@@ -231,15 +223,15 @@ public class EcoreOperationCallingConvention extends AbstractOperationCallingCon
 				boxingAnalyzer.rewriteAsEcore(cgArgument, eOperation.getEContainingClass());
 			}
 			else {
-				ParameterVariable asParameterVariable = (ParameterVariable)cgParameter.getAst();
-				Parameter asParameter = asParameterVariable.getRepresentedParameter();
-				EParameter eParameter = (EParameter) asParameter.getESObject();
+				Parameter asParameter = CGUtil.basicGetParameter(cgParameter);
+				if (asParameter != null) {
+					EParameter eParameter = (EParameter) asParameter.getESObject();
 				boxingAnalyzer.rewriteAsEcore(cgArgument, eParameter.getEType());
+			}
 			}
 		}
 		if (eOperation.isMany()) {
 			boxingAnalyzer.rewriteAsAssertNonNulled(cgEcoreOperationCallExp);
 		}
-		return true;
 	}
 }

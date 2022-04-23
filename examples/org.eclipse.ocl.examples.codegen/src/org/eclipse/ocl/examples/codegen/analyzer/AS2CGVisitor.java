@@ -616,7 +616,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	//	CGTypeId cacheTypeId = context.getTypeId(asProperty.getTypeId());
 		CGExecutorType cgCastType = context.createExecutorType(PivotUtil.getType(asProperty));
 		CGNativeOperationCallExp basicGetValueInit = createCGBoxedNativeOperationCallExp(context.createCGVariableExp(modelManagerVariable), JavaConstants.MODEL_MANAGER_BASIC_GET_FOREIGN_PROPERTY_VALUE_METHOD,
-			asProperty.isIsStatic() ? context.createCGNull() : context.createCGVariableExp(cgParameter), context.createCGConstantExp(cgPropertyId));
+			asProperty.isIsStatic() ? context.createCGConstantExp(context.createCGNull()) : context.createCGVariableExp(cgParameter), context.createCGConstantExp(cgPropertyId));
 	//	basicGetValueInit.setTypeId(cacheTypeId);
 		basicGetValueInit.setValueIsBoxed(true);
 		CGValuedElement castBasicGetValueInit = createCGCastExp(cgCastType, basicGetValueInit);
@@ -624,7 +624,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		nameManager.declareLazyName(basicGetValueVariable);
 		CGValuedElement cgCondition = createCGIsEqual(context.createCGVariableExp(basicGetValueVariable), context.createCGNull());
 		CGNativeOperationCallExp getValue = createCGBoxedNativeOperationCallExp(context.createCGVariableExp(modelManagerVariable), JavaConstants.MODEL_MANAGER_GET_FOREIGN_PROPERTY_VALUE_METHOD,
-			context.createCGVariableExp(cgParameter), context.createCGConstantExp(cgPropertyId), cgInitValue);
+			asProperty.isIsStatic() ? context.createCGConstantExp(context.createCGNull()) : context.createCGVariableExp(cgParameter), context.createCGConstantExp(cgPropertyId), cgInitValue);
 	//	getValue.setTypeId(cacheTypeId);
 		getValue.setValueIsBoxed(true);
 		CGValuedElement castGetValue = createCGCastExp(cgCastType, getValue);

@@ -96,9 +96,4 @@ public class NativePropertyCallingConvention extends AbstractPropertyCallingConv
 		js.append(";\n");
 		return true;
 	}
-
-	@Override
-	public boolean isUnboxed() {
-		return true;
-	}
 }

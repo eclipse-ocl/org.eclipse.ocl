@@ -14,8 +14,6 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EOperation;
-import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager.NameVariant;
@@ -27,10 +25,8 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCastExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOperation;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOppositePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcorePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
@@ -41,7 +37,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGGuardExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIfExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGInvalid;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIsEqual2Exp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIsEqualExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp;
@@ -74,13 +69,11 @@ import org.eclipse.ocl.examples.codegen.java.types.UnboxedDescriptor;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.Element;
-import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.ElementId;
-import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.PropertyId;
 import org.eclipse.ocl.pivot.library.LibraryIteration;
 import org.eclipse.ocl.pivot.library.iterator.IterateIteration;
@@ -114,6 +107,14 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 		codeGenerator = analyzer.getCodeGenerator();
 	}
 
+	public @NonNull CodeGenAnalyzer getAnalyzer() {
+		return context;
+	}
+
+	public @NonNull CodeGenerator getCodeGenerator() {
+		return codeGenerator;
+	}
+
 	/**
 	 * Return true if cgCallExp uses a safe navigation operator.
 	 */
@@ -137,7 +138,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	/**
 	 * Insert a CGBoxExp around cgChild.
 	 */
-	protected CGValuedElement rewriteAsBoxed(@Nullable CGValuedElement cgChild) {
+	public @Nullable CGValuedElement rewriteAsBoxed(@Nullable CGValuedElement cgChild) {
 		if ((cgChild == null) || cgChild.isBoxed()) {
 			return cgChild;
 		}
@@ -246,7 +247,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	/**
 	 * Insert a CGUnboxExp around cgChild.
 	 */
-	protected CGValuedElement rewriteAsUnboxed(@Nullable CGValuedElement cgChild) {
+	public @Nullable CGValuedElement rewriteAsUnboxed(@Nullable CGValuedElement cgChild) {
 		if ((cgChild == null) || cgChild.isUnboxed()) {
 			return cgChild;
 		}
@@ -534,11 +535,10 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 			getClass();		// XXX
 		}
 		OperationCallingConvention callingConvention = cgOperation.getCallingConvention();
-		if (callingConvention.rewriteWithBoxingAndGuards(this, cgElement)) {
-			return null;
-		}
+		callingConvention.rewriteWithBoxingAndGuards(this, cgElement);
+		return null;
 
-		boolean isBoxed = callingConvention.isBoxed();
+/*		boolean isBoxed = callingConvention.isBoxed();
 		boolean isEcore = callingConvention.isEcore();
 		boolean isUnboxed = callingConvention.isUnboxed();
 		assert isBoxed == cgElement.isBoxed();
@@ -659,7 +659,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 				rewriteAsUnboxed(cgArgument);
 			}
 		}
-		return null;
+		return null; */
 	}
 
 	@Override

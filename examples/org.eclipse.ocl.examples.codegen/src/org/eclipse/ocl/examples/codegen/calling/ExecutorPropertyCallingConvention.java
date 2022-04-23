@@ -199,9 +199,4 @@ public class ExecutorPropertyCallingConvention extends AbstractPropertyCallingCo
 		js.append(");\n");
 		return true;
 	}
-
-	@Override
-	public boolean isBoxed() {
-		return true;
-	}
 }

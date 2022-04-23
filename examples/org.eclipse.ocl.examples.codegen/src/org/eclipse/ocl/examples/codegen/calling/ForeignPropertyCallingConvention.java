@@ -222,9 +222,4 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 		js.append("}\n");
 		return true;
 	}
-
-	@Override
-	public boolean isBoxed() {
-		return true;
-	}
 }

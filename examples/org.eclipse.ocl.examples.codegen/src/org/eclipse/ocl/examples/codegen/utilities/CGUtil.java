@@ -56,10 +56,13 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.pivot.CollectionLiteralExp;
 import org.eclipse.ocl.pivot.Constraint;
+import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.Parameter;
+import org.eclipse.ocl.pivot.ParameterVariable;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
@@ -104,6 +107,12 @@ public class CGUtil
 			}
 		}
 		return null;
+	}
+
+	public static @Nullable Parameter basicGetParameter(@NonNull CGParameter cgParameter) {
+		Element ast1 = cgParameter.getAst();
+		Element ast2 = ast1 instanceof ParameterVariable ? ((ParameterVariable)ast1).getRepresentedParameter() : ast1;
+		return ast2 instanceof Parameter ? (Parameter)ast2 : null;
 	}
 
 	/**
@@ -376,6 +385,12 @@ public class CGUtil
 
 	public static @NonNull CGOperation getOperation(@NonNull CGOperationCallExp cgOperationCallExp) {
 		return ClassUtil.nonNullState(cgOperationCallExp.getCgOperation());
+	}
+
+	public static @NonNull Parameter getParameter(@NonNull CGParameter cgParameter) {
+		Element ast1 = cgParameter.getAst();
+		Element ast2 = ast1 instanceof ParameterVariable ? ((ParameterVariable)ast1).getRepresentedParameter() : ast1;
+		return (Parameter)ClassUtil.nonNullState(ast2);
 	}
 
 	/**

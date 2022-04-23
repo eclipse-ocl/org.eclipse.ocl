@@ -278,11 +278,6 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 	}
 
 	@Override
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
-		throw new UnsupportedOperationException();		// XXX
-	}
-
-	@Override
 	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
 		CGValuedElement body = cg2javaVisitor.getExpression(cgOperation.getBody());
 		//
@@ -329,12 +324,12 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 	}
 
 	@Override
-	public boolean rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer,@NonNull CGOperationCallExp cgOperationCallExp) {
-		return false;			// xxx
+	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer,@NonNull CGOperationCallExp cgOperationCallExp) {
+		throw new UnsupportedOperationException("Missing/No support for " + getClass().getSimpleName() + ".rewriteWithBoxingAndGuards");	// XXX
 	}
 
 	@Override
 	public @NonNull String toString() {
-		return getClass().getSimpleName() + (isBoxed() ? " boxed" : "") + (isEcore() ? " ecore" : "") + (isUnboxed() ? " unboxed" : "");
+		return getClass().getSimpleName();
 	}
 }

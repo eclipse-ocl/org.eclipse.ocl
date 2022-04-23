@@ -204,9 +204,4 @@ public class ExecutorOppositePropertyCallingConvention extends AbstractPropertyC
 		js.append(");\n");
 		return true;
 	}
-
-	@Override
-	public boolean isBoxed() {
-		return true;
-	}
 }

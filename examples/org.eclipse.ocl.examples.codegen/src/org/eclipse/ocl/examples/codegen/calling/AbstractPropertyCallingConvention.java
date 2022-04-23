@@ -40,6 +40,6 @@ public abstract class AbstractPropertyCallingConvention implements PropertyCalli
 
 	@Override
 	public @NonNull String toString() {
-		return getClass().getSimpleName() + (isBoxed() ? " boxed" : "") + (isEcore() ? " ecore" : "") + (isUnboxed() ? " unboxed" : "");
+		return getClass().getSimpleName();
 	}
 }

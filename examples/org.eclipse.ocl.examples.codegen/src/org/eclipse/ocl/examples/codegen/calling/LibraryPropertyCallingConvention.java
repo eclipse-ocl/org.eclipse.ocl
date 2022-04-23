@@ -180,9 +180,4 @@ public class LibraryPropertyCallingConvention extends AbstractPropertyCallingCon
 		js.append(";\n");
 		return true;
 	}
-
-	@Override
-	public boolean isBoxed() {
-		return true;
-	}
 }

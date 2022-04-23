@@ -155,9 +155,4 @@ public class EcoreOppositePropertyCallingConvention extends AbstractPropertyCall
 		js.append(";\n");
 		return true;
 	}
-
-	@Override
-	public boolean isEcore() {
-		return true;
-	}
 }

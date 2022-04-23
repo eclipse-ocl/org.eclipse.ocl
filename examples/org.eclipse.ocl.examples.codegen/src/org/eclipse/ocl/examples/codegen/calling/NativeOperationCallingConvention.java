@@ -16,6 +16,7 @@ import java.util.List;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
+import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
@@ -26,6 +27,7 @@ import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.library.NativeStaticOperation;
 import org.eclipse.ocl.examples.codegen.library.NativeVisitorOperation;
+import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
@@ -114,7 +116,7 @@ public class NativeOperationCallingConvention extends AbstractOperationCallingCo
 				js.append(", ");
 			}
 			CGValuedElement cgArgument = cgArguments.get(i);
-			java.lang.reflect.Parameter javaParameter = javaParameters[i];
+		//	java.lang.reflect.Parameter javaParameter = javaParameters[i];
 		//	CGTypeId cgTypeId = analyzer.getTypeId(pParameter.getTypeId());
 		//	TypeDescriptor parameterTypeDescriptor = context.getUnboxedDescriptor(ClassUtil.nonNullState(cgTypeId.getElementId()));
 			CGValuedElement argument = cg2JavaVisitor.getExpression(cgArgument);
@@ -131,7 +133,19 @@ public class NativeOperationCallingConvention extends AbstractOperationCallingCo
 	}
 
 	@Override
-	public boolean isUnboxed() {
-		return true;
+	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGOperationCallExp cgOperationCallExp) {
+		CGNativeOperationCallExp cgNativeOperationCallExp = (CGNativeOperationCallExp)cgOperationCallExp;
+		CGOperation cgOperation = CGUtil.getOperation(cgNativeOperationCallExp);
+		Operation asOperation = CGUtil.getAST(cgOperation);
+		// No boxing for cgThis
+		List<@NonNull CGValuedElement> cgArguments = CGUtil.getArgumentsList(cgNativeOperationCallExp);
+		int iMax = cgArguments.size();
+		for (int i = 0; i < iMax; i++) {			// Avoid CME from rewrite
+			CGValuedElement cgArgument = cgArguments.get(i);
+			if (i == 0) {
+				boxingAnalyzer.rewriteAsGuarded(cgArgument, boxingAnalyzer.isSafe(cgNativeOperationCallExp), "source for '" + asOperation + "'");
+			}
+			boxingAnalyzer.rewriteAsUnboxed(cgArgument);
+		}
 	}
 }

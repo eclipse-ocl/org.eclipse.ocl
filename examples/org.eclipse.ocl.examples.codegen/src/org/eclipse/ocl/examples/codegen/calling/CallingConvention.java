@@ -16,18 +16,4 @@ package org.eclipse.ocl.examples.codegen.calling;
  */
 public interface CallingConvention
 {
-	/**
-	 * Return true if the calling interactions use the standard OCL boxed representation - Value except for special cases.
-	 */
-	default boolean isBoxed() { return false; }
-
-	/**
-	 * Return true if the calling interactions use the standard Ecore representation
-	 */
-	default boolean isEcore() { return false; }
-
-	/**
-	 * Return true if the calling interactions use the unboxed (or native) representation
-	 */
-	default boolean isUnboxed() { return false; }
 }

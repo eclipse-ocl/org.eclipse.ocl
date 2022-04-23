@@ -91,9 +91,4 @@ public class TuplePropertyCallingConvention extends AbstractPropertyCallingConve
 		js.append(";\n");
 		return true;
 	}
-
-	@Override
-	public boolean isBoxed() {
-		return true;
-	}
 }
