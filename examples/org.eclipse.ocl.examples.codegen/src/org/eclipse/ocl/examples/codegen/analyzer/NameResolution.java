@@ -39,9 +39,7 @@ public interface NameResolution
 {
 	void addCGElement(@NonNull CGValuedElement cgElement);
 
-	@NonNull VariantNameResolution addKeyedNameVariant(@NonNull NameVariant nameVariant);
-
-	@NonNull VariantNameResolution addNameVariant(@NonNull NameVariant nameVariant);
+	@NonNull NameResolution addNameVariant(@NonNull NameVariant nameVariant);
 
 	@Nullable String basicGetResolvedName();
 

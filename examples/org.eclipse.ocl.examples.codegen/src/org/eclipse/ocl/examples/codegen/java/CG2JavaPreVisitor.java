@@ -251,7 +251,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 	public @Nullable Object visitCGCatchExp(@NonNull CGCatchExp cgCatchExp) {
 		CGValuedElement cgSource = CGUtil.getSource(cgCatchExp);
 		NameResolution rawNameResolution = getNameManager().declareLazyName(cgSource);
-		rawNameResolution.addKeyedNameVariant(codeGenerator.getTHROWN_NameVariant());
+		rawNameResolution.addNameVariant(codeGenerator.getTHROWN_NameVariant());
 		return super.visitCGCatchExp(cgCatchExp);
 	}
 
@@ -459,17 +459,17 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 			cgSource.accept(this);
 		}
 		NameResolution iterationNameResolution = nameManager.declareLazyName(cgIterationCallExp);
-		iterationNameResolution.addKeyedNameVariant(codeGenerator.getBODY_NameVariant());
-		iterationNameResolution.addKeyedNameVariant(codeGenerator.getIMPL_NameVariant());
-		iterationNameResolution.addKeyedNameVariant(codeGenerator.getMGR_NameVariant());
-		iterationNameResolution.addKeyedNameVariant(codeGenerator.getTYPE_NameVariant());
+		iterationNameResolution.addNameVariant(codeGenerator.getBODY_NameVariant());
+		iterationNameResolution.addNameVariant(codeGenerator.getIMPL_NameVariant());
+		iterationNameResolution.addNameVariant(codeGenerator.getMGR_NameVariant());
+		iterationNameResolution.addNameVariant(codeGenerator.getTYPE_NameVariant());
 		JavaLocalContext<@NonNull ?> savedLocalContext = null;
 		if (iterationHelper == null) {					// No helper nests iterators/accumulators in a nested function.
 			savedLocalContext = pushLocalContext(cgIterationCallExp);
 		}
 		for (CGIterator cgIterator : CGUtil.getIterators(cgIterationCallExp)) {
 			NameResolution iteratorNameResolution = nameManager.declareLazyName(cgIterator);
-			iteratorNameResolution.addKeyedNameVariant(codeGenerator.getITER_NameVariant());
+			iteratorNameResolution.addNameVariant(codeGenerator.getITER_NameVariant());
 			cgIterator.accept(this);
 		}
 		if (cgIterationCallExp instanceof CGBuiltInIterationCallExp) {
