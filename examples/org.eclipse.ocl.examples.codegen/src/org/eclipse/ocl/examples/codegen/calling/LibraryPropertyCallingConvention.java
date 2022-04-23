@@ -12,22 +12,16 @@ package org.eclipse.ocl.examples.codegen.calling;
 
 import java.lang.reflect.Method;
 
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOppositePropertyCallExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOppositePropertyCallExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGOppositePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.generator.CodeGenerator;
-import org.eclipse.ocl.examples.codegen.generator.GenModelException;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaGlobalContext;
@@ -35,11 +29,7 @@ import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.java.JavaStream.SubStream;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.NavigationCallExp;
-import org.eclipse.ocl.pivot.OppositePropertyCallExp;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.internal.library.CompositionProperty;
-import org.eclipse.ocl.pivot.internal.library.ExtensionProperty;
-import org.eclipse.ocl.pivot.internal.library.ImplicitNonCompositionProperty;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.library.collection.CollectionElementTypeProperty;
 import org.eclipse.ocl.pivot.library.collection.CollectionLowerProperty;
@@ -58,7 +48,7 @@ public class LibraryPropertyCallingConvention extends AbstractPropertyCallingCon
 {
 	public static final @NonNull LibraryPropertyCallingConvention INSTANCE = new LibraryPropertyCallingConvention();
 
-	@Override
+/*	@Override
 	public @NonNull CGValuedElement createCGOppositePropertyCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGProperty cgProperty,
 			@NonNull LibraryProperty libraryProperty, @NonNull CGValuedElement cgSource, @NonNull OppositePropertyCallExp asOppositePropertyCallExp) {
 //		throw new UnsupportedOperationException();
@@ -110,7 +100,7 @@ public class LibraryPropertyCallingConvention extends AbstractPropertyCallingCon
 		cgPropertyCallExp.setSource(cgSource);
 		cgPropertyCallExp.setCgProperty(cgProperty);
 		return cgPropertyCallExp;
-	}
+	} */
 
 	@Override
 	public @NonNull CGValuedElement createCGPropertyCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGProperty cgProperty,

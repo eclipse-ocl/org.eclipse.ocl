@@ -36,6 +36,7 @@ import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.NavigationCallExp;
+import org.eclipse.ocl.pivot.OppositePropertyCallExp;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.internal.library.CompositionProperty;
@@ -89,7 +90,8 @@ public class EcoreOppositePropertyCallingConvention extends AbstractPropertyCall
 
 	@Override
 	public @NonNull CGValuedElement createCGPropertyCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGProperty cgProperty,
-			@NonNull LibraryProperty libraryProperty, @Nullable CGValuedElement cgSource, @NonNull NavigationCallExp asPropertyCallExp) {
+			@NonNull LibraryProperty libraryProperty, @Nullable CGValuedElement cgSource, @NonNull NavigationCallExp asNavigationCallExp) {
+		OppositePropertyCallExp asOppositePropertyCallExp = (OppositePropertyCallExp)asNavigationCallExp;
 		CodeGenerator codeGenerator = as2cgVisitor.getCodeGenerator();
 		CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();
 		Property asProperty = CGUtil.getAST(cgProperty);
@@ -125,8 +127,8 @@ public class EcoreOppositePropertyCallingConvention extends AbstractPropertyCall
 		}
 		cgPropertyCallExp.setCgProperty(cgProperty);
 		cgPropertyCallExp.setReferredProperty(asProperty);
-		cgPropertyCallExp.setAst(asPropertyCallExp);
-		cgPropertyCallExp.setTypeId(analyzer.getTypeId(asPropertyCallExp.getTypeId()));
+		cgPropertyCallExp.setAst(asOppositePropertyCallExp);
+		cgPropertyCallExp.setTypeId(analyzer.getTypeId(asOppositePropertyCallExp.getTypeId()));
 		cgPropertyCallExp.setRequired(isRequired); // || codeGenerator.isPrimitive(cgPropertyCallExp));
 		cgPropertyCallExp.setSource(cgSource);
 		return cgPropertyCallExp;
