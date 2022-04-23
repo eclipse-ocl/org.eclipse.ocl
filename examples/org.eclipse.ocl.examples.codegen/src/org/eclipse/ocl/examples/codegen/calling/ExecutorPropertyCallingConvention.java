@@ -68,7 +68,7 @@ public class ExecutorPropertyCallingConvention extends AbstractPropertyCallingCo
 	} */
 
 	@Override
-	public @NonNull CGValuedElement createCGPropertyCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGProperty cgProperty,
+	public @NonNull CGValuedElement createCGNavigationCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGProperty cgProperty,
 			@NonNull LibraryProperty libraryProperty, @Nullable CGValuedElement cgSource, @NonNull NavigationCallExp asPropertyCallExp) {
 		CodeGenerator codeGenerator = as2cgVisitor.getCodeGenerator();
 		CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();

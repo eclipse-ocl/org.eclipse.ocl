@@ -29,20 +29,17 @@ import org.eclipse.ocl.pivot.library.LibraryProperty;
  */
 public interface PropertyCallingConvention extends CallingConvention
 {
-	void createImplementation(@NonNull AS2CGVisitor as2cgVisitor, @NonNull JavaLocalContext<?> localContext, @NonNull CGProperty cgProperty);
-
-//	@NonNull CGValuedElement createCGOppositePropertyCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGProperty cgProperty, @NonNull LibraryProperty libraryProperty,
-//			@NonNull CGValuedElement cgSource, @NonNull OppositePropertyCallExp asOppositePropertyCallExp);
-
-	@NonNull CGProperty createCGProperty(@NonNull AS2CGVisitor as2cgVisitor, @NonNull Property asProperty);
-
 	/**
 	 * Create the appropriate CGOperationCallExp for asOperationCallExp with cgSource, or return null
 	 * if this OperationCallingConvention cannot handle it.
 	 * @param cgOperation
 	 */
-	@NonNull CGValuedElement createCGPropertyCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGProperty cgProperty, @NonNull LibraryProperty libraryProperty,
+	@NonNull CGValuedElement createCGNavigationCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGProperty cgProperty, @NonNull LibraryProperty libraryProperty,
 			@Nullable CGValuedElement cgSource, @NonNull NavigationCallExp asPropertyCallExp);
+
+	@NonNull CGProperty createCGProperty(@NonNull AS2CGVisitor as2cgVisitor, @NonNull Property asProperty);
+
+	void createImplementation(@NonNull AS2CGVisitor as2cgVisitor, @NonNull JavaLocalContext<?> localContext, @NonNull CGProperty cgProperty);
 
 	/**
 	 * Generate the Java code for a Property call.

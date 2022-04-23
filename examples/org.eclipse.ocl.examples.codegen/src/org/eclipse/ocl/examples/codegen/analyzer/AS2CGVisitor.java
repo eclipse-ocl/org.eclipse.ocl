@@ -796,7 +796,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		LibraryProperty libraryProperty = metamodelManager.getImplementation(null, null, asProperty);
 		CGProperty cgProperty = generateProperty(asProperty, libraryProperty);		// XXX ??? normalize to opposite
 		PropertyCallingConvention callingConvention = cgProperty.getCallingConvention();
-		return callingConvention.createCGPropertyCallExp(this, cgProperty, libraryProperty, cgSource, asOppositePropertyCallExp);
+		return callingConvention.createCGNavigationCallExp(this, cgProperty, libraryProperty, cgSource, asOppositePropertyCallExp);
 	/*	Property asOppositeProperty = ClassUtil.nonNullModel(element.getReferredProperty());
 		Property asProperty = ClassUtil.nonNullModel(asOppositeProperty.getOpposite());
 		boolean isRequired = asProperty.isIsRequired();
@@ -869,7 +869,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		LibraryProperty libraryProperty = metamodelManager.getImplementation(null, null, asProperty);
 		CGProperty cgProperty = generateProperty(asProperty, libraryProperty);
 		PropertyCallingConvention callingConvention = cgProperty.getCallingConvention();
-		return callingConvention.createCGPropertyCallExp(this, cgProperty, libraryProperty, cgSource, asPropertyCallExp);
+		return callingConvention.createCGNavigationCallExp(this, cgProperty, libraryProperty, cgSource, asPropertyCallExp);
 	/*	if (cgValuedElement != null) {	// XXX
 			return cgValuedElement;
 		}

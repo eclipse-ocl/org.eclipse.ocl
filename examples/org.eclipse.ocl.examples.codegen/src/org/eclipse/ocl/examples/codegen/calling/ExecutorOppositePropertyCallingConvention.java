@@ -49,7 +49,7 @@ public class ExecutorOppositePropertyCallingConvention extends AbstractPropertyC
 	public static final @NonNull ExecutorOppositePropertyCallingConvention INSTANCE = new ExecutorOppositePropertyCallingConvention();
 
 	@Override
-	public @NonNull CGValuedElement createCGPropertyCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGProperty cgProperty,
+	public @NonNull CGValuedElement createCGNavigationCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGProperty cgProperty,
 			@NonNull LibraryProperty libraryProperty, @Nullable CGValuedElement cgSource, @NonNull NavigationCallExp asNavigationCallExp) {
 		CodeGenerator codeGenerator = as2cgVisitor.getCodeGenerator();
 		OppositePropertyCallExp asOppositePropertyCallExp = (OppositePropertyCallExp)asNavigationCallExp;
@@ -72,7 +72,7 @@ public class ExecutorOppositePropertyCallingConvention extends AbstractPropertyC
 	}
 
 /*	@Override
-	public @NonNull CGValuedElement createCGPropertyCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGProperty cgProperty,
+	public @NonNull CGValuedElement createCGNavigationCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGProperty cgProperty,
 			@NonNull LibraryProperty libraryProperty, @Nullable CGValuedElement cgSource, @NonNull NavigationCallExp asPropertyCallExp) {
 		CodeGenerator codeGenerator = as2cgVisitor.getCodeGenerator();
 		CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();

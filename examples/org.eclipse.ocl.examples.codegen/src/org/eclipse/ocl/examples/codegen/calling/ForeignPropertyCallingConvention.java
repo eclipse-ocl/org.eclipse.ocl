@@ -54,14 +54,7 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 	public static final @NonNull ForeignPropertyCallingConvention INSTANCE = new ForeignPropertyCallingConvention();
 
 	@Override
-	public @NonNull CGProperty createCGProperty(@NonNull AS2CGVisitor as2cgVisitor, @NonNull Property asProperty) {
-		CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();
-		analyzer.addForeignFeature(asProperty);
-		return CGModelFactory.eINSTANCE.createCGForeignProperty();
-	}
-
-	@Override
-	public @NonNull CGValuedElement createCGPropertyCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGProperty cgProperty,
+	public @NonNull CGValuedElement createCGNavigationCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGProperty cgProperty,
 			@NonNull LibraryProperty libraryProperty, @Nullable CGValuedElement cgSource, @NonNull NavigationCallExp asPropertyCallExp) {
 		CodeGenerator codeGenerator = as2cgVisitor.getCodeGenerator();
 		CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();
@@ -78,6 +71,13 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 		cgPropertyCallExp.setRequired(isRequired || codeGenerator.isPrimitive(cgPropertyCallExp));
 		cgPropertyCallExp.setSource(cgSource);
 		return cgPropertyCallExp;
+	}
+
+	@Override
+	public @NonNull CGProperty createCGProperty(@NonNull AS2CGVisitor as2cgVisitor, @NonNull Property asProperty) {
+		CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();
+		analyzer.addForeignFeature(asProperty);
+		return CGModelFactory.eINSTANCE.createCGForeignProperty();
 	}
 
 	@Override

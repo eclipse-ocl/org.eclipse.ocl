@@ -39,19 +39,7 @@ public class NativePropertyCallingConvention extends AbstractPropertyCallingConv
 	public static final @NonNull NativePropertyCallingConvention INSTANCE = new NativePropertyCallingConvention();
 
 	@Override
-	public @NonNull CGProperty createCGProperty(@NonNull AS2CGVisitor as2cgVisitor, @NonNull Property asProperty) {
-		CGNativeProperty cgNativeProperty = CGModelFactory.eINSTANCE.createCGNativeProperty();
-		if (!asProperty.isIsReadOnly()) {
-			cgNativeProperty.setSettable();
-		}
-		else {
-			cgNativeProperty.setNonNull();
-		}
-		return cgNativeProperty;
-	}
-
-	@Override
-	public @NonNull CGValuedElement createCGPropertyCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGProperty cgProperty,
+	public @NonNull CGValuedElement createCGNavigationCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGProperty cgProperty,
 			@NonNull LibraryProperty libraryProperty, @Nullable CGValuedElement cgSource, @NonNull NavigationCallExp asPropertyCallExp) {
 		CodeGenerator codeGenerator = as2cgVisitor.getCodeGenerator();
 		Property asProperty = CGUtil.getAST(cgProperty);
@@ -64,6 +52,18 @@ public class NativePropertyCallingConvention extends AbstractPropertyCallingConv
 		cgPropertyCallExp.setRequired(isRequired || codeGenerator.isPrimitive(cgPropertyCallExp));
 		cgPropertyCallExp.setSource(cgSource);
 		return cgPropertyCallExp;
+	}
+
+	@Override
+	public @NonNull CGProperty createCGProperty(@NonNull AS2CGVisitor as2cgVisitor, @NonNull Property asProperty) {
+		CGNativeProperty cgNativeProperty = CGModelFactory.eINSTANCE.createCGNativeProperty();
+		if (!asProperty.isIsReadOnly()) {
+			cgNativeProperty.setSettable();
+		}
+		else {
+			cgNativeProperty.setNonNull();
+		}
+		return cgNativeProperty;
 	}
 
 	@Override
