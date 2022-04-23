@@ -240,16 +240,16 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 
 	public JavaCodeGenerator(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable GenModel genModel) {
 		super(environmentFactory, genModel);
-		BODY_NameVariant = globalNameManager.addNameVariantPrefix("BODY_");
-		BOXED_NameVariant = globalNameManager.addNameVariantPrefix("BOXED_");
-		CAUGHT_NameVariant = globalNameManager.addNameVariantPrefix("CAUGHT_");
-//		GUARDED_NameVariant = globalNameManager.addNameVariantPrefix("GUARDED_");
-		IMPL_NameVariant = globalNameManager.addNameVariantPrefix("IMPL_");
-		ITER_NameVariant = globalNameManager.addNameVariantPrefix("ITER_");
-		MGR_NameVariant = globalNameManager.addNameVariantPrefix("MGR_");
-		SAFE_NameVariant = globalNameManager.addNameVariantPrefix("SAFE_");
-		THROWN_NameVariant = globalNameManager.addNameVariantPrefix("THROWN_");
-		TYPE_NameVariant = globalNameManager.addNameVariantPrefix("TYPE_");
+		BODY_NameVariant = globalNameManager.addNameVariantPrefix("BODY_", true);
+		BOXED_NameVariant = globalNameManager.addNameVariantPrefix("BOXED_", true);
+		CAUGHT_NameVariant = globalNameManager.addNameVariantPrefix("CAUGHT_", true);
+//		GUARDED_NameVariant = globalNameManager.addNameVariantPrefix("GUARDED_", true);
+		IMPL_NameVariant = globalNameManager.addNameVariantPrefix("IMPL_", true);
+		ITER_NameVariant = globalNameManager.addNameVariantPrefix("ITER_", true);
+		MGR_NameVariant = globalNameManager.addNameVariantPrefix("MGR_", true);
+		SAFE_NameVariant = globalNameManager.addNameVariantPrefix("SAFE_", false);
+		THROWN_NameVariant = globalNameManager.addNameVariantPrefix("THROWN_", true);
+		TYPE_NameVariant = globalNameManager.addNameVariantPrefix("TYPE_", true);
 	}
 
 	@Override

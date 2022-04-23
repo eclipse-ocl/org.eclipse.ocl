@@ -67,7 +67,7 @@ public abstract class AbstractNameResolution implements NameResolution
 	@Override
 	public @NonNull VariantNameResolution addKeyedNameVariant(@NonNull NameVariant nameVariant) {
 		assert (basicGetResolvedName() == null) || ((NestedNameManager)getNameManager()).isReserved(this) : "Cannot addNameVariant after name is resolved";
-
+		assert nameVariant.isSingleton();
 		Map<@NonNull NameVariant, @NonNull VariantNameResolution> nameVariant2variantNameResolution2 = nameVariant2variantNameResolution;
 		if (nameVariant2variantNameResolution2 == null) {
 			nameVariant2variantNameResolution = nameVariant2variantNameResolution2 = new HashMap<>();
@@ -110,6 +110,7 @@ public abstract class AbstractNameResolution implements NameResolution
 
 	@Override
 	public @NonNull String getVariantResolvedName(@NonNull NameVariant nameVariant) {
+		assert nameVariant.isSingleton();
 		assert nameVariant2variantNameResolution != null;
 		VariantNameResolution variantNameResolution = nameVariant2variantNameResolution.get(nameVariant);
 		assert variantNameResolution != null;
@@ -140,7 +141,11 @@ public abstract class AbstractNameResolution implements NameResolution
 		List<@NonNull VariantNameResolution> variantNameResolutions2 = variantNameResolutions;
 		if (variantNameResolutions2 != null) {
 			for (@NonNull VariantNameResolution variantNameResolution : variantNameResolutions2) {
-				variantNameResolution.resolveVariant(context, cgElement, getResolvedName());
+				Object cgContextElement = cgElement;
+				if (!variantNameResolution.getNameVariant().isSingleton()) {
+					cgContextElement = this;
+				}
+				variantNameResolution.resolveVariant(context, cgContextElement, getResolvedName());
 			}
 		}
 	}

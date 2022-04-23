@@ -33,6 +33,14 @@ public class GlobalNameManager extends NameManager
 	{
 		@NonNull String getName(@NonNull String name);
 
+		/**
+		 * Return true if there is guaranteed to be only one use of the variant per context; typically one of many
+		 * variables for an iteration or function.
+		 *
+		 * Return false if CSE may fail to avoid duplicates; typically SAFE guards.
+		 */
+		boolean isSingleton();
+
 		@Override
 		@NonNull String toString();
 	}
@@ -44,9 +52,12 @@ public class GlobalNameManager extends NameManager
 	private static class NameVariantPreferred implements NameVariant
 	{
 		protected final @NonNull String name;
+		protected final boolean isSingleton;
 
-		private NameVariantPreferred(@NonNull String name) {
+
+		private NameVariantPreferred(@NonNull String name, boolean isSingleton) {
 			this.name = name;
+			this.isSingleton = isSingleton;
 		}
 
 		@Override
@@ -65,6 +76,11 @@ public class GlobalNameManager extends NameManager
 		}
 
 		@Override
+		public boolean isSingleton() {
+			return isSingleton;
+		}
+
+		@Override
 		public @NonNull String toString() {
 			return name;
 		}
@@ -76,9 +92,11 @@ public class GlobalNameManager extends NameManager
 	private static class NameVariantPrefix implements NameVariant
 	{
 		protected final @NonNull String prefix;
+		protected final boolean isSingleton;
 
-		private NameVariantPrefix(@NonNull String prefix) {
+		private NameVariantPrefix(@NonNull String prefix, boolean isSingleton) {
 			this.prefix = prefix;
+			this.isSingleton = isSingleton;
 		}
 
 		@Override
@@ -94,6 +112,11 @@ public class GlobalNameManager extends NameManager
 		@Override
 		public @NonNull String getName(@NonNull String name) {
 			return prefix + name;
+		}
+
+		@Override
+		public boolean isSingleton() {
+			return isSingleton;
 		}
 
 		@Override
@@ -122,14 +145,14 @@ public class GlobalNameManager extends NameManager
 		this.context = new Context(this);			// Global can allocate names straightawy
 	}
 
-	public @NonNull NameVariant addNameVariantPreferred(@NonNull String name) {
-		NameVariant nameVariant = new NameVariantPreferred(name);
+	public @NonNull NameVariant addNameVariantPreferred(@NonNull String name, boolean isSingleton) {
+		NameVariant nameVariant = new NameVariantPreferred(name, isSingleton);
 		assert nameVariants.add(nameVariant);
 		return nameVariant;
 	}
 
-	public @NonNull NameVariant addNameVariantPrefix(@NonNull String prefix) {
-		NameVariant nameVariant = new NameVariantPrefix(prefix);
+	public @NonNull NameVariant addNameVariantPrefix(@NonNull String prefix, boolean isSingleton) {
+		NameVariant nameVariant = new NameVariantPrefix(prefix, isSingleton);
 		assert nameVariants.add(nameVariant);
 		return nameVariant;
 	}

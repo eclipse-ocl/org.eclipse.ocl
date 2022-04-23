@@ -998,7 +998,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	}
 
 	protected @NonNull CGIfExp generateSafeNavigationGuard(@NonNull CallExp callExp, @NonNull CGVariableExp cgVariableExp, @NonNull CGValuedElement cgUnsafeExp) {
-		NameResolution unsafeNameResolution = cgVariableExp.getNameResolution();
+		NameResolution unsafeNameResolution = getNameManager().declareLazyName(cgUnsafeExp);
 		NameResolution safeNameResolution = unsafeNameResolution.addNameVariant(codeGenerator.getSAFE_NameVariant());
 		//
 		CGConstantExp cgNullExpression = context.createCGConstantExp(callExp, context.getNull());

@@ -38,6 +38,10 @@ public class VariantNameResolution extends AbstractNameResolution
 		this.baserNameResolution = baserNameResolution;
 		this.nameVariant = nameVariant;
 	//	System.out.println("VariantNameResolution '" + nameVariant + "' : " + baserNameResolution);
+		if ("operation".equals(getNameHint())) {
+		//	System.out.println(variantNameHint + " for1 " + NameUtil.debugSimpleName(cgElement) + " " + cgElement);
+			getClass();		// XXX
+		}
 	}
 
 	@Override
