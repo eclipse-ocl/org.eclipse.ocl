@@ -31,6 +31,7 @@ import org.eclipse.ocl.examples.codegen.java.JavaStream.SubStream;
 import org.eclipse.ocl.pivot.OppositePropertyCallExp;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.internal.library.CompositionProperty;
+import org.eclipse.ocl.pivot.internal.library.ExtensionProperty;
 import org.eclipse.ocl.pivot.internal.library.ImplicitNonCompositionProperty;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -53,8 +54,8 @@ public class ExecutorOppositePropertyCallingConvention extends AbstractPropertyC
 		Property asProperty = ClassUtil.nonNullModel(asOppositeProperty.getOpposite());
 		boolean isRequired = asProperty.isIsRequired();
 		LibraryProperty libraryProperty2 = codeGenerator.getEnvironmentFactory().getMetamodelManager().getImplementation(asOppositePropertyCallExp, null, asProperty);
-		assert libraryProperty2 == libraryProperty;
-		assert (libraryProperty instanceof CompositionProperty) || (libraryProperty instanceof ImplicitNonCompositionProperty);
+		assert libraryProperty2 == libraryProperty;				// XXX
+		assert (libraryProperty instanceof CompositionProperty) || (libraryProperty instanceof ImplicitNonCompositionProperty) || (libraryProperty instanceof ExtensionProperty);
 		CGExecutorOppositePropertyCallExp cgPropertyCallExp = CGModelFactory.eINSTANCE.createCGExecutorOppositePropertyCallExp();
 		CGExecutorProperty cgExecutorProperty = as2cgVisitor.getAnalyzer().createExecutorOppositeProperty(asProperty);
 		cgPropertyCallExp.setExecutorProperty(cgExecutorProperty);

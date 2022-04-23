@@ -37,9 +37,11 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
  */
 public interface NameResolution
 {
-	@NonNull NameResolution addNameVariant(@NonNull NameVariant nameVariant);
-
 	void addCGElement(@NonNull CGValuedElement cgElement);
+
+	@NonNull VariantNameResolution addKeyedNameVariant(@NonNull NameVariant nameVariant);
+
+	@NonNull VariantNameResolution addNameVariant(@NonNull NameVariant nameVariant);
 
 	@Nullable String basicGetResolvedName();
 
@@ -53,7 +55,7 @@ public interface NameResolution
 
 	@NonNull String getResolvedName();
 
-	@NonNull VariantNameResolution getNameVariant(@NonNull NameVariant nameVariant);
+//	@NonNull VariantNameResolution getNameVariant(@NonNull NameVariant nameVariant);
 
 	@NonNull String getVariantResolvedName(@NonNull NameVariant nameVariant);
 

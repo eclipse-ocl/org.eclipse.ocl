@@ -163,7 +163,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 		CGBoxExp cgBoxExp = CGModelFactory.eINSTANCE.createCGBoxExp();
 		NameResolution unboxedNameResolution = codeGenerator.getNameResolution(cgChild);
 		NameVariant boxedNameVariant = codeGenerator.getBOXED_NameVariant();
-		VariantNameResolution boxedNameResolution = unboxedNameResolution.getNameVariant(boxedNameVariant);
+		NameResolution boxedNameResolution = unboxedNameResolution.addNameVariant(boxedNameVariant);
 		boxedNameResolution.addCGElement(cgBoxExp);
 		CGUtil.wrap(cgBoxExp, cgChild);
 		return cgBoxExp;
