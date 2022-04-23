@@ -14,9 +14,11 @@ import java.util.List;
 
 import org.eclipse.emf.codegen.ecore.genmodel.GenParameter;
 import org.eclipse.emf.ecore.EOperation;
+import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
+import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOperation;
@@ -205,6 +207,39 @@ public class EcoreOperationCallingConvention extends AbstractOperationCallingCon
 
 	@Override
 	public boolean isEcore() {
+		return true;
+	}
+
+	@Override
+	public boolean rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGOperationCallExp cgOperationCallExp) {
+		CGEcoreOperationCallExp cgEcoreOperationCallExp = (CGEcoreOperationCallExp)cgOperationCallExp;
+		if ("specializeIn".equals(cgOperationCallExp.getReferredOperation().getName())) {
+			getClass();		// XXX
+		}
+		CGOperation cgOperation = CGUtil.getOperation(cgEcoreOperationCallExp);
+		Operation asOperation = CGUtil.getAST(cgOperation);
+		EOperation eOperation = cgEcoreOperationCallExp.getEOperation();
+		List<@NonNull CGValuedElement> cgArguments = CGUtil.getArgumentsList(cgEcoreOperationCallExp);
+		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
+		int iMax = cgArguments.size();
+		assert iMax == cgParameters.size();
+		for (int i = 0; i < iMax; i++) {			// Avoid CME from rewrite
+			CGParameter cgParameter = cgParameters.get(i);
+			CGValuedElement cgArgument = cgArguments.get(i);
+			if (i == 0) {
+				boxingAnalyzer.rewriteAsGuarded(cgArgument, boxingAnalyzer.isSafe(cgEcoreOperationCallExp), "source for '" + asOperation + "'");
+				boxingAnalyzer.rewriteAsEcore(cgArgument, eOperation.getEContainingClass());
+			}
+			else {
+				ParameterVariable asParameterVariable = (ParameterVariable)cgParameter.getAst();
+				Parameter asParameter = asParameterVariable.getRepresentedParameter();
+				EParameter eParameter = (EParameter) asParameter.getESObject();
+				boxingAnalyzer.rewriteAsEcore(cgArgument, eParameter.getEType());
+			}
+		}
+		if (eOperation.isMany()) {
+			boxingAnalyzer.rewriteAsAssertNonNulled(cgEcoreOperationCallExp);
+		}
 		return true;
 	}
 }

@@ -117,7 +117,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	/**
 	 * Return true if cgCallExp uses a safe navigation operator.
 	 */
-	protected boolean isSafe(@NonNull CGCallExp cgCallExp) {
+	public boolean isSafe(@NonNull CGCallExp cgCallExp) {
 		Element asElement = cgCallExp.getAst();
 		return (asElement instanceof CallExp) && ((CallExp)asElement).isIsSafe();
 	}
@@ -125,7 +125,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	/**
 	 * Insert a CGAssertNonNullExp around cgChild.
 	 */
-	protected @Nullable CGValuedElement rewriteAsAssertNonNulled(@Nullable CGValuedElement cgChild) {
+	public @Nullable CGValuedElement rewriteAsAssertNonNulled(@Nullable CGValuedElement cgChild) {
 		if ((cgChild == null) || cgChild.isNonNull() /*|| (cgParent instanceof CGGuardExp)*/) {
 			return cgChild;
 		}
@@ -172,7 +172,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	/**
 	 * Insert a CGEcoreExp around cgChild.
 	 */
-	protected CGValuedElement rewriteAsEcore(@Nullable CGValuedElement cgChild, /*@NonNull*/ EClassifier eClassifier) {
+	public @Nullable CGValuedElement rewriteAsEcore(@Nullable CGValuedElement cgChild, /*@NonNull*/ EClassifier eClassifier) {
 		if ((cgChild == null) || cgChild.isEcore()) {
 			return cgChild;
 		}
@@ -204,7 +204,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	/**
 	 * Insert a CGGuardExp around cgChild.
 	 */
-	protected @Nullable CGValuedElement rewriteAsGuarded(@Nullable CGValuedElement cgChild, boolean isSafe, @NonNull String message) {
+	public @Nullable CGValuedElement rewriteAsGuarded(@Nullable CGValuedElement cgChild, boolean isSafe, @NonNull String message) {
 		if ((cgChild == null) || cgChild.isNonNull() /*|| (cgParent instanceof CGGuardExp)*/) {
 			return cgChild;
 		}
@@ -530,7 +530,14 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	public @Nullable Object visitCGOperationCallExp(@NonNull CGOperationCallExp cgElement) {
 		super.visitCGOperationCallExp(cgElement);;
 		CGOperation cgOperation = cgElement.getCgOperation();
+		if ("specializeIn".equals(cgOperation.getName())) {
+			getClass();		// XXX
+		}
 		OperationCallingConvention callingConvention = cgOperation.getCallingConvention();
+		if (callingConvention.rewriteWithBoxingAndGuards(this, cgElement)) {
+			return null;
+		}
+
 		boolean isBoxed = callingConvention.isBoxed();
 		boolean isEcore = callingConvention.isEcore();
 		boolean isUnboxed = callingConvention.isUnboxed();

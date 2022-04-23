@@ -15,6 +15,7 @@ import java.util.List;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
+import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOperation;
@@ -325,6 +326,11 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 			cgOperationCallExp.getCgArguments().add(cgArgument);
 		}
 	//	as2cgVisitor.getNameManager().declareStandardName(cgOperationCallExp);
+	}
+
+	@Override
+	public boolean rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer,@NonNull CGOperationCallExp cgOperationCallExp) {
+		return false;			// xxx
 	}
 
 	@Override

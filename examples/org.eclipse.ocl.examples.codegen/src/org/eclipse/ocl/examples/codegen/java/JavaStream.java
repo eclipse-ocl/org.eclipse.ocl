@@ -265,7 +265,7 @@ public class JavaStream
 				s.append(string);
 			}
 			else {
-				if ("CAST_TYP_OclElement".equals(string)) {
+				if ("SAFE_specializeIn".equals(string)) {
 					getClass();		// XXX
 				}
 				int sLength = s.length();
