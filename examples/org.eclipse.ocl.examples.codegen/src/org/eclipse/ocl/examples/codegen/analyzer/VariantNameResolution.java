@@ -15,6 +15,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager.NameVariant;
 import org.eclipse.ocl.examples.codegen.analyzer.NameManager.Context;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 /**
  * A VariantNameResolution represents a future name that whose preferred resolution is algorithmically derived from
@@ -78,8 +79,13 @@ public class VariantNameResolution extends AbstractNameResolution
 
 	protected void resolveVariant(@NonNull Context context, @NonNull Object cgElement, @NonNull String nameHint) {
 		String variantNameHint = nameVariant.getName(nameHint);
+		if ("SAFE_operation".equals(variantNameHint)) {
+			System.out.println(variantNameHint + " for1 " + NameUtil.debugSimpleName(cgElement) + " " + cgElement);
+			getClass();		// XXX
+		}
 		String resolvedVariantName = context.allocateUniqueName(variantNameHint, cgElement);
-		if ("getSeverity".equals(resolvedVariantName)) {
+		if ("SAFE_operation".equals(resolvedVariantName)) {
+			System.out.println(resolvedVariantName + " for2 " + NameUtil.debugSimpleName(cgElement) + " " + cgElement);
 			getClass();		// XXX
 		}
 		this.resolvedVariantName = resolvedVariantName;

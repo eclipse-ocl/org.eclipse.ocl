@@ -251,6 +251,11 @@
         </filter>
         <filter id="1143996420">
             <message_arguments>
+                <message_argument value="CLSSid_ReferringElement"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
                 <message_argument value="CLSSid_VoidType"/>
             </message_arguments>
         </filter>

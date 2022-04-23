@@ -173,7 +173,7 @@ public class BaseNameResolution extends AbstractNameResolution
 	}
 
 	protected void setResolvedName(@NonNull String resolvedName) {
-		if ("a".equals(resolvedName)) {
+		if ("SAFE_operation".equals(resolvedName)) {
 			getClass();		// XXX
 		}
 		this.resolvedName = resolvedName;
