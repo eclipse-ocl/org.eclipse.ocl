@@ -61,6 +61,7 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
+import org.eclipse.ocl.pivot.library.NativeOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionElementTypeProperty;
 import org.eclipse.ocl.pivot.library.collection.CollectionLowerProperty;
 import org.eclipse.ocl.pivot.library.collection.CollectionUpperProperty;
@@ -168,7 +169,10 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 		if (libraryOperation instanceof AbstractStaticOperation) {
 			return ForeignOperationCallingConvention.INSTANCE;
 		}
-		if (libraryOperation instanceof NativeVisitorOperation) {
+		if (libraryOperation instanceof NativeOperation) {
+			return NativeOperationCallingConvention.INSTANCE;
+		}
+		if (libraryOperation instanceof NativeVisitorOperation) {		// XXX this might be obsolete
 			LanguageExpression bodyExpression = asOperation.getBodyExpression();
 			if (bodyExpression == null) {
 				return NativeOperationCallingConvention.INSTANCE;

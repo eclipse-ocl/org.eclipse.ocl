@@ -1372,7 +1372,10 @@ public class CGValuedElementModelSpec extends ModelSpec
 				return "if (method == null) {\n" +
 				"			return false;\n" +
 				"		}\n" +
-				"		return method.getExceptionTypes().length == 0;";
+				"		if (method.getExceptionTypes().length > 0) {\n" +
+				"			return false;\n" +
+				"		}\n" +
+				"		return !cgOperation.getCallingConvention().mayThrowException();";
 			}
 		};
 
