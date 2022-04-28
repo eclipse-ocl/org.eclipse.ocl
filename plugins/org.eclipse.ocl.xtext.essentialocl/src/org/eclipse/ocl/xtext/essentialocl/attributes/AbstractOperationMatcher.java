@@ -34,9 +34,9 @@ import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.utilities.Invocations;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
-import org.eclipse.ocl.xtext.essentialocl.cs2as.EssentialOCLCSLeft2RightVisitor.Invocations;
 
 public abstract class AbstractOperationMatcher implements OperationArguments
 {
@@ -205,29 +205,26 @@ public abstract class AbstractOperationMatcher implements OperationArguments
 		Operation bestOperation = null;
 		TemplateParameterSubstitutions bestBindings = TemplateParameterSubstitutions.EMPTY;
 		List<@NonNull Operation> ambiguities2 = ambiguities;
-		for (NamedElement namedElement : invocations) {
-			if (namedElement instanceof Operation) {
-				Operation candidateOperation = (Operation)namedElement;
-				TemplateParameterSubstitutions candidateBindings = matches(candidateOperation, useCoercions);
-				if (candidateBindings != null) {
-					if (bestOperation == null) {
+		for (@NonNull Operation candidateOperation : invocations) {
+			TemplateParameterSubstitutions candidateBindings = matches(candidateOperation, useCoercions);
+			if (candidateBindings != null) {
+				if (bestOperation == null) {
+					bestOperation = candidateOperation;
+					bestBindings = candidateBindings;
+				}
+				else {
+					int comparison = compareMatches(bestOperation, bestBindings, candidateOperation, candidateBindings, useCoercions);
+					if (comparison < 0) {
 						bestOperation = candidateOperation;
 						bestBindings = candidateBindings;
+						ambiguities = null;
 					}
-					else {
-						int comparison = compareMatches(bestOperation, bestBindings, candidateOperation, candidateBindings, useCoercions);
-						if (comparison < 0) {
-							bestOperation = candidateOperation;
-							bestBindings = candidateBindings;
-							ambiguities = null;
+					else if (comparison == 0) {
+						if (ambiguities2 == null) {
+							ambiguities = ambiguities2 = new ArrayList<>();
+							ambiguities2.add(bestOperation);
 						}
-						else if (comparison == 0) {
-							if (ambiguities2 == null) {
-								ambiguities = ambiguities2 = new ArrayList<>();
-								ambiguities2.add(bestOperation);
-							}
-							ambiguities2.add(candidateOperation);
-						}
+						ambiguities2.add(candidateOperation);
 					}
 				}
 			}
