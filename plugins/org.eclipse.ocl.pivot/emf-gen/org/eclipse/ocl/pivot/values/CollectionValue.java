@@ -57,6 +57,12 @@ public interface CollectionValue extends IterableValue {
 
 	/**
 	 * @generated NOT
+	 * @since 1.18
+	 */
+	@NonNull <T> List<T> asUnboxedObjects(@NonNull IdResolver idResolver);
+
+	/**
+	 * @generated NOT
 	 */
 	@NonNull IntegerValue count(@Nullable Object value);
 
