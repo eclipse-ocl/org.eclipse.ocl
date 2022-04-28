@@ -324,6 +324,11 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 	}
 
 	@Override
+	public boolean mayThrowException() {
+		return false;
+	}
+
+	@Override
 	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer,@NonNull CGOperationCallExp cgOperationCallExp) {
 		throw new UnsupportedOperationException("Missing/No support for " + getClass().getSimpleName() + ".rewriteWithBoxingAndGuards");	// XXX
 	}
