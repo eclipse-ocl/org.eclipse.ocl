@@ -49,11 +49,9 @@ public class BoxedMapDescriptor extends AbstractValueDescriptor implements Boxed
 			js.appendValueName(cgUnboxExp);
 			js.append(" = ");
 			js.appendValueName(boxedValue);
-			js.append(".asEcoreObjects(");
+			js.append(".asUnboxedObjects(");
 			js.appendReferenceTo(localContext.getIdResolverVariable());
-			js.append(", ");
-			unboxedDescriptor.appendElement(js, true);
-			js.append(".class);\n");
+			js.append(");\n");
 			//
 			js.append("assert ");
 			js.appendValueName(cgUnboxExp);
