@@ -145,6 +145,8 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	 */
 	private /*LazyNonNull*/ Map<Object, StatusCodes.Severity> validationKey2severity = null;
 
+	private /*LazyNonNull*/ Map<@NonNull String, @NonNull LanguageSupport> language2support = null;
+
 	/**
 	 * Leak debugging aid. Set non-null to diagnose EnvironmentFactory construction and finalization.
 	 *
@@ -870,6 +872,20 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			return "OCLstdlibStandaloneSetup.doSetup()";
 		}
 		return null;
+	}
+
+	@Override
+	public @Nullable LanguageSupport getLanguageSupport(@NonNull String language) {
+		Map<@NonNull String, @NonNull LanguageSupport> language2support2 = language2support;
+		if (language2support2 == null) {
+			language2support = language2support2 = new HashMap<>();
+		}
+		LanguageSupport languageSupport = language2support2.get(language);
+		if (languageSupport == null) {
+			languageSupport = LanguageSupport.getLanguageSupport(language, this);
+			language2support2.put(language, languageSupport);
+		}
+		return languageSupport;
 	}
 
 	@Override

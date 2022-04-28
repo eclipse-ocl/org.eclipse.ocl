@@ -10,6 +10,7 @@
    <extension-point id="label_generator" name="%_UI_LabelGenerator_extensionpoint" schema="schema/label_generator.exsd"/>
    <extension-point id="standard_library" name="OCL Standard Library" schema="schema/standard_library.exsd"/>
    <extension-point id="thread_local" name="OCL Thread Local manager" schema="schema/thread_local.exsd"/>
+   <extension-point id="language_support" name="Language Support" schema="schema/language_support.exsd"/>
 
    <extension point="org.eclipse.core.runtime.preferences">
       <initializer class="org.eclipse.ocl.pivot.options.OCLinEcorePreferenceInitializer"/>

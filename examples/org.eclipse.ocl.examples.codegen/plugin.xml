@@ -38,5 +38,12 @@
          </describer>
       </content-type>
    </extension>
+   <extension
+         point="org.eclipse.ocl.pivot.language_support">
+      <language
+            class="org.eclipse.ocl.examples.codegen.java.JavaLanguageSupport$Factory"
+            name="java">
+      </language>
+   </extension>
 
 </plugin>
