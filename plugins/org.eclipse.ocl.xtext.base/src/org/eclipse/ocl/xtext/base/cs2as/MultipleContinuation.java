@@ -12,13 +12,13 @@ package org.eclipse.ocl.xtext.base.cs2as;
 
 import java.util.List;
 
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.NamedElement;
+import org.eclipse.ocl.xtext.basecs.ElementCS;
 
-public abstract class MultipleContinuation<T extends EObject> extends BasicContinuation<List<? extends T>>
+public abstract class MultipleContinuation<T extends ElementCS> extends BasicContinuation<List<? extends T>>
 {
 	public MultipleContinuation(@NonNull CS2ASConversion context,
 			NamedElement pivotParent, EStructuralFeature pivotFeature,
