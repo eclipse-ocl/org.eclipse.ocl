@@ -30,6 +30,13 @@ bc..
 org.eclipse.ocl.pivot.uml.UMLStandaloneSetup.init(); 							// *.uml
 
 p. 
+
+If you want to use direct calls to Java operations, the "java:" parsing and evaluation support must be activated.
+
+bc.. 
+org.eclipse.ocl.examples.codegen.java.JavaLanguageSupport.FACTORY.install();
+
+p. 
 The following initializations that were once recommended should happen automatically.
 
 bc.. 
