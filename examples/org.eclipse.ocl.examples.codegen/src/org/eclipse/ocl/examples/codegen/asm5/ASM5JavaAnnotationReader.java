@@ -12,6 +12,7 @@ package org.eclipse.ocl.examples.codegen.asm5;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -41,6 +42,18 @@ import org.objectweb.asm.TypeReference;
  */
 public class ASM5JavaAnnotationReader
 {
+	private static int ASM_VERSION = Opcodes.ASM5;		// Default to first Java 8 version
+
+	static {
+		try {
+			for (int i = 6; true; i++) {				// Loop for as many versions are available
+				Field asmField = org.objectweb.asm.Opcodes.class.getField("ASM" + i);
+				ASM_VERSION = asmField.getInt(null);
+			}
+		} catch (Throwable exception) {
+		}
+	}
+
 	private static final Logger logger = Logger.getLogger(ASM5JavaAnnotationReader.class);
 
 	private final @NonNull Map<@NonNull String, Map<@NonNull Integer, @Nullable Boolean>> desc2typerefValue2state = new HashMap<@NonNull String, Map<@NonNull Integer, @Nullable Boolean>>();
@@ -81,6 +94,9 @@ public class ASM5JavaAnnotationReader
 		try {
 			final int flags = ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES | ClassReader.SKIP_CODE;
 			ClassLoader methodClassLoader = method.getDeclaringClass().getClassLoader();
+			if (methodClassLoader == null) {
+				methodClassLoader = ClassLoader.getSystemClassLoader();
+			}
 			String classFileName = className.replace('.', '/') + ".class";
 			classStream = methodClassLoader.getResourceAsStream(classFileName);
 			final ClassReader cr = new ClassReader(classStream)
@@ -104,7 +120,7 @@ public class ASM5JavaAnnotationReader
 					return readShort;
 				}
 			};
-			ClassVisitor cv = new ClassVisitor(Opcodes.ASM5)
+			ClassVisitor cv = new ClassVisitor(ASM_VERSION)
 			{
 				@Override
 				public void visit(int version, int access, String name, String signature, String superName, String[] interfaces) {}
@@ -134,7 +150,7 @@ public class ASM5JavaAnnotationReader
 					//					System.out.println("  ClassVisitor.visitMethod: " + methodDesc);
 					final HashMap<@NonNull Integer, @Nullable Boolean> typerefValue2state = new HashMap<@NonNull Integer, @Nullable Boolean>();
 					desc2typerefValue2state.put(methodDesc, typerefValue2state);
-					return new MethodVisitor(Opcodes.ASM5)
+					return new MethodVisitor(ASM_VERSION)
 					{
 						@Override
 						public AnnotationVisitor visitAnnotation(String annotationDesc, boolean visible) {
