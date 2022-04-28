@@ -60,5 +60,10 @@ public interface OperationCallingConvention extends CallingConvention
 	 */
 	boolean generateJavaDeclaration(@NonNull CG2JavaVisitor<?> cg2JavaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation);
 
+	/**
+	 * Return true if the invoked operation may throw an exception, that the caller must handle as an OCL invalid.
+	 */
+	boolean mayThrowException();
+
 	void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGOperationCallExp cgOperationCallExp);
 }
