@@ -60,6 +60,22 @@ public class PivotMessages
 	public static String MissingSourceValue;
 	public static String MissingSubstring;
 	public static String MissingValue;
+	/**
+	 * @since 1.18
+	 */
+	public static String NoCompatibleLanguageSupport;
+	/**
+	 * @since 1.18
+	 */
+	public static String NoLanguageSupport;
+	/**
+	 * @since 1.18
+	 */
+	public static String NoLoadableLanguageSupport;
+	/**
+	 * @since 1.18
+	 */
+	public static String NoNonStaticLanguageSupport;
 	public static String NonBinaryOperation;
 	public static String NonBooleanBody;
 	public static String NonFiniteIntegerValue;
