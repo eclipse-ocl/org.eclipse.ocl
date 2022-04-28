@@ -11,6 +11,7 @@
 package org.eclipse.ocl.examples.codegen.calling;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -24,6 +25,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
+import org.eclipse.ocl.examples.codegen.java.JavaLanguageSupport;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.library.NativeStaticOperation;
 import org.eclipse.ocl.examples.codegen.library.NativeVisitorOperation;
@@ -33,6 +35,8 @@ import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
+import org.eclipse.ocl.pivot.library.NativeOperation;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
  *  NativeOperationCallingConvention defines the support for the call of a native (Java) operation
@@ -48,80 +52,67 @@ public class NativeOperationCallingConvention extends AbstractOperationCallingCo
 	public @NonNull CGOperation createCGOperationWithoutBody(@NonNull AS2CGVisitor as2cgVisitor, @NonNull Operation asOperation) {
 		PivotMetamodelManager metamodelManager = as2cgVisitor.getMetamodelManager();
 		LibraryFeature libraryOperation = metamodelManager.getImplementation(asOperation);
-		assert (libraryOperation instanceof NativeStaticOperation) || (libraryOperation instanceof NativeVisitorOperation);
+		assert (libraryOperation instanceof NativeOperation) || (libraryOperation instanceof NativeStaticOperation) || (libraryOperation instanceof NativeVisitorOperation);
 		return CGModelFactory.eINSTANCE.createCGNativeOperation();
 	}
 
 	@Override
 	public @NonNull CGCallExp createCGOperationCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @NonNull LibraryOperation libraryOperation,
 			@Nullable CGValuedElement cgSource, @NonNull OperationCallExp asOperationCallExp) {
-		throw new UnsupportedOperationException();		// FIXME construction is irregular
-	/*	Operation asOperation = ClassUtil.nonNullState(asOperationCallExp.getReferredOperation());
+	//	throw new UnsupportedOperationException();		// FIXME construction is irregular
+		Operation asOperation = ClassUtil.nonNullState(asOperationCallExp.getReferredOperation());
 		boolean isRequired = asOperation.isIsRequired();
-		CGNativeOperationCallExp cgNativeOperationCallExp = as2cgVisitor.getAnalyzer().createCGNativeOperationCallExp(null);
-		cgNativeOperationCallExp.setThisIsSelf(true);
-		init(as2cgVisitor, cgNativeOperationCallExp, asOperationCallExp, cgOperation, cgSource, isRequired);
-		return cgNativeOperationCallExp; */
+		Method method = ((JavaLanguageSupport.JavaNativeOperation)asOperation.getImplementation()).getMethod();
+		CGNativeOperationCallExp cgNativeOperationCallExp = as2cgVisitor.getAnalyzer().createCGNativeOperationCallExp(method, this);
+	//	cgNativeOperationCallExp.setThisIsSelf(true);
+		init(as2cgVisitor, cgNativeOperationCallExp, asOperationCallExp, cgOperation, isRequired);
+		if ((cgSource != null) && !Modifier.isStatic(method.getModifiers())) {
+			cgNativeOperationCallExp.setCgThis(cgSource);
+		}
+		return cgNativeOperationCallExp;
 	}
 
 	@Override
 	public boolean generateJavaCall(@NonNull CG2JavaVisitor<?> cg2JavaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
 		CGNativeOperationCallExp cgNativeOperationCallExp = (CGNativeOperationCallExp)cgOperationCallExp;
-		//	Operation asOperation = cgOperationCallExp.getReferredOperation();
 		CGValuedElement cgThis = cgNativeOperationCallExp.getCgThis();
 		CGValuedElement cgThis2 = cgThis != null ? cg2JavaVisitor.getExpression(cgThis) :  null;
 		//
 		if ((cgThis2 != null) && !js.appendLocalStatements(cgThis2)) {
 			return false;
 		}
-		Method javaMethod = cgNativeOperationCallExp.getMethod();
-		List<CGValuedElement> cgArguments = cgNativeOperationCallExp.getCgArguments();
-		//	List<Parameter> pParameters = asOperation.getOwnedParameters();
-		java.lang.reflect.Parameter[] javaParameters = javaMethod.getParameters();
 		if (!generateLocals(cg2JavaVisitor, js, cgOperationCallExp)) {
 			return false;
 		}
 		//
+		Method jMethod = cgNativeOperationCallExp.getMethod();
+		List<CGValuedElement> cgArguments = cgNativeOperationCallExp.getCgArguments();
+		Class<?>[] jParameterTypes = jMethod.getParameterTypes();
 		js.appendDeclaration(cgNativeOperationCallExp);
 		js.append(" = ");
 		if (cgThis2 != null) {
 			js.appendValueName(cgThis2);
 		}
 		else {
-			js.appendClassReference(null, javaMethod.getDeclaringClass());
+			js.appendClassReference(null, jMethod.getDeclaringClass());
 		}
 		js.append(".");
-		js.append(javaMethod.getName());
-		//		js.appendClassCast(cgOperationCallExp);
-		/*		if (thisIsSelf) {
-			js.appendValueName(source);
-		}
-		else {
-			if (localPrefix != null) {
-				js.append(localPrefix);
-				js.append(".");
-			}
-			js.append(JavaConstants.THIS_NAME);
-		} */
-	//	js.appendThis(ClassUtil.nonNullState(cgOperationCallExp.getReferredOperation().getOwningClass().getName()));
-	//	js.append(".");
-	//	js.append(cgOperationCallExp.getReferredOperation().getName());
+		js.append(jMethod.getName());
 		js.append("(");
-	//	if ((source != null) && !thisIsSelf) {
-	//		js.appendValueName(source);
-	//	}
-		int iMax = Math.min(javaParameters.length, cgArguments.size());
+		int iMax = Math.min(jParameterTypes.length, cgArguments.size());
 		for (int i = 0; i < iMax; i++) {
-			if ((i > 0)) {// || !thisIsSelf) {
+			if (i > 0) {
 				js.append(", ");
 			}
+			Class<?> jParameterType = jParameterTypes[i];
 			CGValuedElement cgArgument = cgArguments.get(i);
-		//	java.lang.reflect.Parameter javaParameter = javaParameters[i];
-		//	CGTypeId cgTypeId = analyzer.getTypeId(pParameter.getTypeId());
-		//	TypeDescriptor parameterTypeDescriptor = context.getUnboxedDescriptor(ClassUtil.nonNullState(cgTypeId.getElementId()));
 			CGValuedElement argument = cg2JavaVisitor.getExpression(cgArgument);
-		//	js.appendReferenceTo(parameterTypeDescriptor, argument);
 			js.appendValueName(argument);
+			if (jParameterType == Object[].class) {
+				js.append(".toArray(new Object[");
+				js.appendValueName(argument);
+				js.append(".size()])");
+			}
 		}
 		js.append(");\n");
 		return true;
@@ -130,6 +121,11 @@ public class NativeOperationCallingConvention extends AbstractOperationCallingCo
 	@Override
 	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
 		throw new UnsupportedOperationException();		// Native operations are declared natively
+	}
+
+	@Override
+	public boolean mayThrowException() {
+		return true;
 	}
 
 	@Override

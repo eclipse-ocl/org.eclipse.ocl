@@ -133,10 +133,7 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 			else if (jParameterType == TypeId.class) {
 				cgParameters.add(localContext.getTypeIdParameter());
 			}
-		//	else if (jParameterType == Object[].class) {		// XXX
-		//		throw new UnsupportedOperationException();
-		//	}
-			else if (jParameterType == Object.class) {
+			else if (jParameterType == Object.class)  {
 				if (i < 0) {
 					CGParameter selfParameter;
 					if (expressionInOCL != null) {
