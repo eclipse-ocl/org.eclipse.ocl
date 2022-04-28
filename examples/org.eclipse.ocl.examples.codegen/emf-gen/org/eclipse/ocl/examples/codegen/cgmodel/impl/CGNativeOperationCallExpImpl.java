@@ -400,7 +400,10 @@ public class CGNativeOperationCallExpImpl extends CGOperationCallExpImpl impleme
 		if (method == null) {
 			return false;
 		}
-		return method.getExceptionTypes().length == 0;
+		if (method.getExceptionTypes().length > 0) {
+			return false;
+		}
+		return !cgOperation.getCallingConvention().mayThrowException();
 	}
 
 	/**
