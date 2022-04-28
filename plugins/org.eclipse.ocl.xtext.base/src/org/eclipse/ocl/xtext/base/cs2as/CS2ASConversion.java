@@ -197,15 +197,26 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		addError(csElement, boundMessage);
 	}
 
+	public void addError(@NonNull ElementCS csElement, /*@NonNull*/ String boundMessage) {
+		INode node = NodeModelUtils.getNode(csElement);
+		addError(csElement, node, boundMessage);
+	}
+
+	public void addError(@NonNull ElementCS csElement, /*@NonNull*/ INode node, /*@NonNull*/ String boundMessage) {
+//		INode node = NodeModelUtils.getNode(csElement);
+		Resource.Diagnostic resourceDiagnostic = new ValidationDiagnostic(node, boundMessage);
+		csElement.eResource().getErrors().add(resourceDiagnostic);
+	}
+
 	public void addError(@NonNull ElementCS csElement, /*@NonNull*/ String message, Object... bindings) {
 		INode node = NodeModelUtils.getNode(csElement);
-		addError(csElement, node, message, bindings);
+		String boundMessage = NLS.bind(message, bindings);
+		addError(csElement, node, boundMessage);
 	}
 
 	public void addError(@NonNull ElementCS csElement, /*@NonNull*/ INode node, /*@NonNull*/ String message, Object... bindings) {
 		String boundMessage = NLS.bind(message, bindings);
-		Resource.Diagnostic resourceDiagnostic = new ValidationDiagnostic(node, boundMessage);
-		csElement.eResource().getErrors().add(resourceDiagnostic);
+		addError(csElement, node, boundMessage);
 	}
 
 	/* (non-Javadoc)
