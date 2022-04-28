@@ -54,6 +54,7 @@ import org.eclipse.emf.ecore.xml.namespace.XMLNamespacePackage;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.common.OCLConstants;
+import org.eclipse.ocl.examples.codegen.java.JavaLanguageSupport;
 import org.eclipse.ocl.examples.xtext.idioms.IdiomsStandaloneSetup;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.pivot.evaluation.EvaluationException;
@@ -874,6 +875,7 @@ public class PivotTestCase extends TestCase
 	protected void setUp() throws Exception {
 		PivotUtilInternal.debugReset();
 		GlobalEnvironmentFactory.resetSafeNavigationValidations();
+		JavaLanguageSupport.FACTORY.install();		// Central standalone registration
 		ThreadLocalExecutor.reset();
 		//		EssentialOCLLinkingService.DEBUG_RETRY = true;
 		ASResourceImpl.CHECK_IMMUTABILITY.setState(true);
