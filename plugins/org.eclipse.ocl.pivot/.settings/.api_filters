@@ -1455,6 +1455,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/values/CollectionValue.java" type="org.eclipse.ocl.pivot.values.CollectionValue">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.CollectionValue"/>
+                <message_argument value="asUnboxedObjects(IdResolver)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/evaluation/EvaluationVisitor.java" type="org.eclipse.ocl.pivot.evaluation.EvaluationVisitor">
         <filter comment="Bug 512402 workaround" id="576725006">
             <message_arguments>
@@ -1765,6 +1773,30 @@
                 <message_argument value="IllegalCoIterator"/>
             </message_arguments>
         </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.messages.PivotMessages"/>
+                <message_argument value="NoCompatibleLanguageSupport"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.messages.PivotMessages"/>
+                <message_argument value="NoLanguageSupport"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.messages.PivotMessages"/>
+                <message_argument value="NoLoadableLanguageSupport"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.messages.PivotMessages"/>
+                <message_argument value="NoNonStaticLanguageSupport"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/ocl/pivot/resource/ASResource.java" type="org.eclipse.ocl.pivot.resource.ASResource">
         <filter id="405901410">
@@ -1787,6 +1819,14 @@
             <message_arguments>
                 <message_argument value="PivotConstantsInternal"/>
                 <message_argument value="AS2MonikerVisitor"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/utilities/EnvironmentFactory.java" type="org.eclipse.ocl.pivot.utilities.EnvironmentFactory">
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.utilities.EnvironmentFactory"/>
+                <message_argument value="getLanguageSupport(String)"/>
             </message_arguments>
         </filter>
     </resource>

@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.calling.ForeignPropertyCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.NativeOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.PropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.SupportOperationCallingConvention;
@@ -423,7 +424,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	}
 
 	protected @NonNull CGNativeOperationCallExp createCGNativeOperationCallExp(@Nullable CGValuedElement cgThis, @NonNull Method method, @NonNull CGValuedElement... cgArguments) {
-		CGNativeOperationCallExp cgCallExp = context.createCGNativeOperationCallExp(method);
+		CGNativeOperationCallExp cgCallExp = context.createCGNativeOperationCallExp(method, NativeOperationCallingConvention.INSTANCE);
 		cgCallExp.setCgThis(cgThis);
 		if (cgArguments != null) {
 			List<CGValuedElement> cgArguments2 = cgCallExp.getCgArguments();
