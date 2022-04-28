@@ -187,6 +187,13 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	@NonNull IdResolver getIdResolver();
 
 	/**
+	 * @since 1.18
+	 */
+	default @Nullable LanguageSupport getLanguageSupport(@NonNull String language) {
+		return null;
+	}
+
+	/**
 	 * Return the MetamodelManager used to supervise the normalized Abstract Syntax representations of the metamodels.
 	 */
 	@NonNull MetamodelManager getMetamodelManager();
