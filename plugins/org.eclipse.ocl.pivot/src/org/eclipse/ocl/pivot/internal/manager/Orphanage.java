@@ -443,7 +443,7 @@ public class Orphanage extends PackageImpl
 	 * The global orphanage contains the globally unique shared orphan,
 	 * A local orphanage holds the subset of the overall orphans necessary to support serialization.
 	 */
-	@Deprecated /* @deprecated - not used - use the shared global Prphange */
+	@Deprecated /* @deprecated - not used - use the shared global Orphange */
 	public static @NonNull Orphanage getOrphanage(@NonNull ResourceSet resourceSet) {
 		if (ORPHAN_PACKAGE == null) {
 			return getOrphanage();
