@@ -36,6 +36,14 @@ public final class PivotPlugin extends EMFPlugin
 
 	public static final @NonNull String AS_RESOURCE_FACTORY_PPID = "as_resource_factory";
 	public static final @NonNull String LABEL_GENERATOR_PPID = "label_generator";
+	/**
+	 * @since 1.18
+	 */
+	public static final @NonNull String LANGUAGE_SUPPORT_PPID = "language_support";
+	/**
+	 * @since 1.18
+	 */
+	public static final @NonNull String LANGUAGE_SUPPORT_QPID = PLUGIN_ID + "." + LANGUAGE_SUPPORT_PPID;
 	public static final @NonNull String STANDARD_LIBRARY_PPID = "standard_library";
 	public static final @NonNull String COMPLETE_OCL_REGISTRY_PID = "complete_ocl_registry";
 	public static final @NonNull String COMPLETE_OCL_REGISTRY_QPID = PLUGIN_ID + "." + COMPLETE_OCL_REGISTRY_PID;
