@@ -13,6 +13,7 @@ package org.eclipse.ocl.examples.pivot.tests;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.IllegalFormatConversionException;
 import java.util.regex.PatternSyntaxException;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -324,6 +325,27 @@ public class EvaluateStringOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryInvalid(null, "'repla ce operation'.matches(invalid)");
 		// -- visual inspection of println's demonstrates cache re-use; this test just conforms cache still ok once full
 		ocl.assertQueryEquals(null, 50, "let seq = Sequence{1..20}, rseq = seq->reverse(), seqs = Sequence{seq,rseq,seq,rseq,seq}->flatten() in seqs->iterate(i; acc : Integer = 0 | if '123456789'.matches('.*' + i.toString() + '.*') then acc + 1 else acc endif)");
+		ocl.dispose();
+	}
+
+	@Test public void testStringNative() {
+		TestOCL ocl = createOCL();
+		org.eclipse.ocl.pivot.Class classType = ocl.getStandardLibrary().getClassType();
+		org.eclipse.ocl.pivot.Class nullType = ocl.getStandardLibrary().getOclVoidType();
+		ocl.assertQueryEquals(null, "xyzzy", "'XYzzy'._'java:java.lang.String.toLowerCase'()");
+		ocl.assertSemanticErrorQuery(classType, "_'java:java.lang.String.toLowerCase'()", PivotMessages.NoCompatibleLanguageSupport, "java", "java.lang.String.toLowerCase", "Class");
+		ocl.assertSemanticErrorQuery(classType, "self._'java:java.lang.String.toLowerCase'()", PivotMessages.NoCompatibleLanguageSupport, "java", "java.lang.String.toLowerCase", "Class");
+		ocl.assertSemanticErrorQuery(classType, "null._'java:java.lang.String.toLowerCase'()", PivotMessages.NoCompatibleLanguageSupport, "java", "java.lang.String.toLowerCase", "OclVoid");
+		ocl.assertSemanticErrorQuery(nullType, "_'java:java.lang.String.toLowerCase'()", PivotMessages.NoCompatibleLanguageSupport, "java", "java.lang.String.toLowerCase", "OclVoid");
+		ocl.assertSemanticErrorQuery(null, "4._'java:java.lang.String.toLowerCase'()", PivotMessages.NoCompatibleLanguageSupport, "java", "java.lang.String.toLowerCase", "Integer");
+		ocl.assertSemanticErrorQuery(null, "_'java:java.lang.String.toLowerCase'()", PivotMessages.NoCompatibleLanguageSupport, "java", "java.lang.String.toLowerCase", "OclVoid");
+		ocl.assertSemanticErrorQuery(null, "_'ada:no.such.language'()", PivotMessages.NoLanguageSupport, "ada");
+		ocl.assertSemanticErrorQuery(null, "_'java:no.such.Class.noSuchMethod'()", PivotMessages.NoLoadableLanguageSupport, "java", "no.such.Class.noSuchMethod", "java.lang.ClassNotFoundException: no.such.Class");
+		ocl.assertSemanticErrorQuery(null, "_'java:java.lang.String.noSuchMethod'()", PivotMessages.NoLoadableLanguageSupport, "java", "java.lang.String.noSuchMethod", "unknown declared method");
+		//
+		ocl.assertQueryEquals(null, "The result is 7.7000,33\n", "_'java:java.lang.String.format'('The result is %4.4f,%2d\n', Sequence{7.7,33})");
+		ocl.assertQueryInvalid(null, "_'java:java.lang.String.format'('%4d\n', Sequence(OclAny){7.7})", "d != java.math.BigDecimal", IllegalFormatConversionException.class);
+		ocl.assertSemanticErrorQuery(null, "'XYzzy'._'java:java.lang.String.format'('%4d\n', Sequence(OclAny){7.7})", PivotMessages.NoNonStaticLanguageSupport, "java", "java.lang.String.format");
 		ocl.dispose();
 	}
 
