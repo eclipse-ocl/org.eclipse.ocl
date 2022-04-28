@@ -15,14 +15,11 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.xtext.basecs.ModelElementCS;
 import org.eclipse.ocl.xtext.basecs.PivotableElementCS;
-import org.eclipse.xtext.nodemodel.INode;
-import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 
 /**
  * A BasicContinuation defines a conversion activity that needs to be performed once
@@ -60,10 +57,7 @@ public abstract class BasicContinuation<T> implements Continuation<T>
 
 	public void addError(@NonNull String message) {
 		if (csElement instanceof ModelElementCS) {
-			ModelElementCS csModelElement = (ModelElementCS) csElement;
-			INode node = NodeModelUtils.getNode(csModelElement);
-			Resource.Diagnostic resourceDiagnostic = new ValidationDiagnostic(node, message);
-			csModelElement.eResource().getErrors().add(resourceDiagnostic);
+			context.addError((ModelElementCS)csElement, message);
 		}
 		else {
 			logger.error(message);
