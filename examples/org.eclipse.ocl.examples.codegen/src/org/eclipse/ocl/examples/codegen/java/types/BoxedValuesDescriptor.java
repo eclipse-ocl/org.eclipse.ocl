@@ -59,11 +59,9 @@ public class BoxedValuesDescriptor extends AbstractValueDescriptor implements Bo
 			js.appendValueName(cgUnboxExp);
 			js.append(" = ");
 			js.appendValueName(boxedValue);
-			js.append(".asEcoreObjects(");
+			js.append(".asUnboxedObjects(");
 			js.appendReferenceTo(localContext.getIdResolverVariable());
-			js.append(", ");
-			((CollectionDescriptor)unboxedDescriptor).appendElement(js, true);
-			js.append(".class);\n");
+			js.append(");\n");
 			//
 			js.append("assert ");
 			js.appendValueName(cgUnboxExp);

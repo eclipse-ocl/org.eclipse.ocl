@@ -166,6 +166,13 @@ public class MapValueImpl extends ValueImpl implements MapValue {
 	}
 
 	@Override
+	public @Nullable Object asUnboxedObject(@NonNull IdResolver idResolver) {
+		//		EMap<Object, Object> eMap = new BasicEMap<Object, Object>();
+		//		return eMap;
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public Object at(Object value) {
 		if (value instanceof InvalidValueException) {
 			throw (InvalidValueException)value;

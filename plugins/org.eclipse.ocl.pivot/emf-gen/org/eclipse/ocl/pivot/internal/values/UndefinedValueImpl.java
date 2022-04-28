@@ -218,6 +218,14 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 		throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.TUPLE_NAME, getTypeName());
 	}
 
+	/**
+	 * @since 1.18
+	 */
+	@Override
+	public <T> @NonNull List<T> asUnboxedObjects(@NonNull IdResolver idResolver) {
+		throw new InvalidValueException(this, "asUnboxedObjects");
+	}
+
 	@Override
 	public @NonNull UniqueCollectionValue asUniqueCollectionValue() {
 		throw new InvalidValueException(PivotMessages.TypedValueRequired, "Unique Collection", getTypeName());

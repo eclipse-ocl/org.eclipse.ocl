@@ -352,6 +352,15 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	}
 
 	/**
+	 * @since 1.18
+	 */
+	@Override
+	@SuppressWarnings("unchecked")			// FIXME check element types
+	public @NonNull <T> List<T> asUnboxedObjects(@NonNull IdResolver idResolver) {
+		return (@NonNull List<T>) asUnboxedObject(idResolver);
+	}
+
+	/**
 	 * Implementation of the OCL
 	 * <tt>Collection::count(object : T) : Integer</tt>
 	 * operation.
