@@ -20,7 +20,6 @@ import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.pivot.Operation;
@@ -268,6 +267,10 @@ public abstract class NameManager
 		}
 
 		protected @NonNull String allocateUniqueName(@NonNull String nameHint, @NonNull Object anObject) {
+			if (nameHint == NameResolution.NOT_NEEDED) {
+				assert debugAllocatedName(nameHint);
+				return nameHint;
+			}
 			String validHint = getValidJavaIdentifier(nameHint, false, anObject);
 			boolean isJavaReservedName = reservedJavaNames.contains(validHint);
 			boolean isNative = (anObject instanceof CGValuedElement) && isNative((CGValuedElement)anObject);
@@ -275,13 +278,12 @@ public abstract class NameManager
 				if (anObject != NOT_AN_OBJECT) {
 					Object oldElement = name2object.get(validHint);
 					if (oldElement == null) {									// New allocation
-						if ("diagnostics".equals(validHint)) {
-							getClass();			// XXX
-						}
 						name2object.put(validHint, anObject);
+						assert debugAllocatedName(validHint);
 						return validHint;
 					}
 					else if (oldElement == anObject) {							// Re-allocation of object
+						assert debugAllocatedName(validHint);
 						return validHint;
 					}
 					else {
@@ -290,6 +292,7 @@ public abstract class NameManager
 				}
 				else {
 					if (!name2object.containsKey(validHint)) {
+						assert debugAllocatedName(validHint);
 						return validHint;
 					}
 				}
@@ -347,9 +350,20 @@ public abstract class NameManager
 				String attempt = validHint + "_" + Integer.toString(count);
 				if (!name2object.containsKey(attempt)) {		// Assumes that reserved names do not end in _ count
 					name2counter2.put(validHint, ++count);
+					if ("self_0".equals(attempt)) {
+						getClass();			// XXX
+					}
+					assert debugAllocatedName(attempt);
 					return attempt;
 				}
 			}
+		}
+
+		private boolean debugAllocatedName(@NonNull String name) {
+			if (name.contains("getCommonType")) {
+				getClass();			// XXX
+			}
+			return true;
 		}
 
 		public boolean hasChildren() {
@@ -406,12 +420,12 @@ public abstract class NameManager
 	/**
 	 * The NameResolution for each element declared in this NameManager.
 	 */
-	private final @NonNull Map<@NonNull CGValuedElement, @NonNull NameResolution> element2nameResolution = new HashMap<>();
+//	private final @NonNull Map<@NonNull CGValuedElement, @NonNull NameResolution> element2nameResolution = new HashMap<>();
 
 	/**
 	 * All the NameResolutions declared in this NameManager. This avoid repeats from re-used names, or omissions from globl names.
 	 */
-	private final @NonNull List<@NonNull NameResolution> nameResolutions = new ArrayList<>();
+//	private final @NonNull List<@NonNull NameResolution> nameResolutions = new ArrayList<>();
 
 	protected NameManager(@Nullable NameManager parent, @NonNull NameManagerHelper helper) {
 		this.globalNameManager = parent != null ? parent.globalNameManager : (GlobalNameManager)this;
@@ -427,65 +441,37 @@ public abstract class NameManager
 		children2.add(sibling);
 	}
 
-	public void addNameResolution(@NonNull NameResolution nameResolution) {
-		nameResolutions.add(nameResolution);
-	}
+//	public void addNameResolution(@NonNull NameResolution nameResolution) {
+//		nameResolutions.add(nameResolution);
+//	}
 
-	public void addNameResolution(@NonNull CGValuedElement cgElement) {
-		NameResolution nameResolution = cgElement.getNameResolution();
-		assert nameResolution.getNameManager() == this;
-		NameResolution old = element2nameResolution.put(cgElement, nameResolution);
-		assert old == null;
-	}
+//	public void addNameResolution(@NonNull CGValuedElement cgElement) {
+//		NameResolution nameResolution = cgElement.getNameResolution();
+//		assert nameResolution.getNameManager() == this;
+//		NameResolution old = element2nameResolution.put(cgElement, nameResolution);
+//		assert old == null;
+//	}
 
-	protected void assignLocalNames(@NonNull Context context) {
-		List<@NonNull NameResolution> nameResolutions = new ArrayList<>(element2nameResolution.values());
+	protected void assignLocalNames(@NonNull Context context, @NonNull Map<@NonNull NameManager, @NonNull List<@NonNull CGValuedElement>> nameManager2namedElements) {
+		Iterable<@NonNull CGValuedElement> namedElements = nameManager2namedElements.get(this);
 		// XXX		Collections.sort(nameResolutions);
-		for (@NonNull NameResolution nameResolution : nameResolutions) {
-		//	if (nameResolution.basicGetResolvedName() == null) {
-			nameResolution.resolveIn(context);
-		//	}
-		}
-	}
-
-	protected void assignNestedNames() {
-		if (children != null) {
-			for (@NonNull NestedNameManager child : children) {
-				child.assignNames();
+		if (namedElements != null) {
+			for (@NonNull CGValuedElement namedElement : namedElements) {
+				NameResolution nameResolution = namedElement.getNameResolution();
+			//	if (nameResolution.basicGetResolvedName() == null) {
+				nameResolution.resolveIn(context, namedElement);
+			//	}
 			}
 		}
 	}
 
-	public @NonNull NestedNameManager createNestedNameManager(@NonNull CGNamedElement cgScope) {
-		return new NestedNameManager(this, cgScope);
+	protected void assignNestedNames(@NonNull Map<@NonNull NameManager, @NonNull List<@NonNull CGValuedElement>> nameManager2namedElements) {
+		if (children != null) {
+			for (@NonNull NestedNameManager child : children) {
+				child.assignNames(nameManager2namedElements);
+			}
+		}
 	}
-
-	/**
-	 * Declare that cgElement must eventually have a distinct name that can default to its natural value once all other
-	 * name preferences have been satisfied. This is the normal form of name resolution.
-	 */
-	public @NonNull NameResolution declareLazyName(@NonNull CGValuedElement cgElement) {
-		NameResolution nameResolution = cgElement.basicGetNameResolution();
-		if (nameResolution != null) {
-			return nameResolution;
-		}
-		CGValuedElement cgNamedValue = cgElement.getNamedValue();
-		nameResolution = cgNamedValue.basicGetNameResolution();
-		if (nameResolution == null) {
-			String nameHint = getLazyNameHint(cgNamedValue);		// globals must have a name soon, nested resolve later
-			nameResolution = new NameResolution(this, cgNamedValue, nameHint);
-		}
-		if (cgElement != cgNamedValue) {
-			nameResolution.addCGElement(cgElement);
-		}
-		return nameResolution;
-	}
-
-	/**
-	 * Declare that cgElement has a name which should immediately default to nameHint.
-	 * This is typically used to provide an eager name reservation for an Ecore operation parameter.
-	 */
-	public abstract @NonNull NameResolution declareReservedName(@NonNull CGValuedElement cgElement, @NonNull String nameHint);
 
 	@Deprecated // not needed
 	protected abstract @NonNull Context getContext();
@@ -498,12 +484,7 @@ public abstract class NameManager
 		return ClassUtil.nonNullState(helper.getNameHint(anObject));
 	}
 
-	protected abstract @Nullable String getLazyNameHint(@NonNull CGValuedElement cgNamedValue);
+	public abstract @NonNull NameResolution getNameResolution(@NonNull CGValuedElement cgElement);
 
 	public abstract boolean isGlobal();
-
-//	public void removeNameResolution(@NonNull CGValuedElement cgElement) {
-//		NameResolution old = element2nameResolution.remove(cgElement);
-//		assert old != null;
-//	}
 }

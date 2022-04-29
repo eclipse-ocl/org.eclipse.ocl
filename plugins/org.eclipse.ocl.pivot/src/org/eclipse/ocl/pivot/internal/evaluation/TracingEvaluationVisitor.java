@@ -25,6 +25,8 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.IfExp;
 import org.eclipse.ocl.pivot.IntegerLiteralExp;
 import org.eclipse.ocl.pivot.InvalidLiteralExp;
+import org.eclipse.ocl.pivot.IterateExp;
+import org.eclipse.ocl.pivot.IteratorExp;
 import org.eclipse.ocl.pivot.LetExp;
 import org.eclipse.ocl.pivot.MapLiteralExp;
 import org.eclipse.ocl.pivot.MapLiteralPart;
@@ -54,7 +56,9 @@ import org.eclipse.ocl.pivot.utilities.MetamodelManager;
  * A decorator for evaluation visitors that is installed when evaluation tracing
  * is enabled, to trace interim evaluation results to the console.
  */
-public class TracingEvaluationVisitor extends EvaluationVisitorDecorator implements EvaluationVisitor.EvaluationVisitorExtension {
+public class TracingEvaluationVisitor extends EvaluationVisitorDecorator implements EvaluationVisitor.EvaluationVisitorExtension
+{
+	private int indentDepth = 0;
 
 	/**
 	 * Initializes me with the visitor whose evaluation I trace to the console.
@@ -80,167 +84,222 @@ public class TracingEvaluationVisitor extends EvaluationVisitorDecorator impleme
 		return delegate.getMetamodelManager();
 	}
 
-	protected @Nullable Object trace(@NonNull Element expression, @Nullable Object value) {
-		try {
-			HelperUtil.trace("Evaluate: " + expression); //$NON-NLS-1$
-			HelperUtil.trace("Result  : " + //$NON-NLS-1$
-					(value != null ? TypeId.OCL_INVALID_NAME : String.valueOf(value)));
-		} catch (Exception e) {
-			// tracing must not interfere with evaluation
-		} catch (AssertionError e) {
-			// tracing must not interfere with evaluation
-		}
+	/**
+	 * @since 1.18
+	 */
+	protected void trace(@NonNull String indent, @NonNull String message) {
+		HelperUtil.trace(indent + message);
+	}
 
-		return value;
+	/**
+	 * @since 1.18
+	 */
+	protected @Nullable Object trace(@NonNull Element element) {
+		int savedIndent = indentDepth++;
+		try {
+			StringBuilder s = new StringBuilder();
+			for (int i = 0; i < savedIndent; i++) {
+				s.append("  ");
+			}
+			String indent = s.toString();
+			trace(indent, element.eClass().getName() + ": " + element);
+			try {
+				Object value = element.accept(delegate);
+				if (value == null) {
+					value = TypeId.OCL_INVALID_NAME;
+				}
+				trace(indent, "=> " + String.valueOf(value));
+				return value;
+			} catch (Throwable e) {
+				try {
+					trace(indent, "!! " + e);
+				} catch (Throwable e2) {}
+				throw e;
+			}
+		} catch (Throwable e) {
+			throw e;
+		} finally {
+			indentDepth = savedIndent;
+		}
+	}
+
+	@Deprecated
+	/* @deprecated drop argument to guarantee indented evaluation and exception detection */
+	protected @Nullable Object trace(@NonNull Element element, @Nullable Object value) {
+		try {
+			HelperUtil.trace(element.eClass().getName() + ": " + element); //$NON-NLS-1$
+			if (value == null) {
+				value = TypeId.OCL_INVALID_NAME;
+			}
+			HelperUtil.trace("=> " + String.valueOf(value));
+			return value;
+		} catch (Throwable e) {
+			throw e;
+		}
 	}
 
 	@Override
 	public @Nullable Object visitAssociationClassCallExp(@NonNull AssociationClassCallExp callExp) {
-		return trace(callExp, delegate.visitAssociationClassCallExp(callExp));
+		return trace(callExp);
 	}
 
 	@Override
 	public @Nullable Object visitBooleanLiteralExp(@NonNull BooleanLiteralExp literalExp) {
-		return trace(literalExp, delegate.visitBooleanLiteralExp(literalExp));
+		return trace(literalExp);
 	}
 
 	@Override
 	public @Nullable Object visitCollectionItem(@NonNull CollectionItem item) {
-		return trace(item, delegate.visitCollectionItem(item));
+		return trace(item);
 	}
 
 	@Override
 	public @Nullable Object visitCollectionLiteralExp(@NonNull CollectionLiteralExp literalExp) {
-		return trace(literalExp, delegate.visitCollectionLiteralExp(literalExp));
+		return trace(literalExp);
 	}
 
 	@Override
 	public @Nullable Object visitCollectionRange(@NonNull CollectionRange range) {
-		return trace(range, delegate.visitCollectionRange(range));
+		return trace(range);
 	}
 
 	@Override
 	public @Nullable Object visitConstraint(@NonNull Constraint constraint) {
-		return trace(constraint, delegate.visitConstraint(constraint));
+		return trace(constraint);
+	}
+
+	@Override
+	public Object visitElement(@NonNull Element element) {
+		return trace(element);		// THis handles all derived cases - derivation are just an 'optimization'
 	}
 
 	@Override
 	public @Nullable Object visitEnumLiteralExp(@NonNull EnumLiteralExp literalExp) {
-		return trace(literalExp, delegate.visitEnumLiteralExp(literalExp));
+		return trace(literalExp);
 	}
 
 	@Override
 	public @Nullable Object visitExpressionInOCL(@NonNull ExpressionInOCL expression) {
-		return trace(expression, delegate.visitExpressionInOCL(expression));
+		return trace(expression);
 	}
 
 	@Override
 	public @Nullable Object visitIfExp(@NonNull IfExp ifExp) {
-		return trace(ifExp, delegate.visitIfExp(ifExp));
+		return trace(ifExp);
 	}
 
 	@Override
 	public @Nullable Object visitIntegerLiteralExp(@NonNull IntegerLiteralExp literalExp) {
-		return trace(literalExp, delegate.visitIntegerLiteralExp(literalExp));
+		return trace(literalExp);
 	}
 
 	@Override
 	public @Nullable Object visitInvalidLiteralExp(@NonNull InvalidLiteralExp literalExp) {
-		return trace(literalExp, delegate.visitInvalidLiteralExp(literalExp));
+		return trace(literalExp);
+	}
+
+	@Override
+	public Object visitIterateExp(@NonNull IterateExp iterateExp) {
+		return trace(iterateExp);
+	}
+
+	@Override
+	public Object visitIteratorExp(@NonNull IteratorExp iteratorExp) {
+		return trace(iteratorExp);
 	}
 
 	@Override
 	public @Nullable Object visitLetExp(@NonNull LetExp letExp) {
-		return trace(letExp, delegate.visitLetExp(letExp));
+		return trace(letExp);
 	}
 
 	@Override
 	public @Nullable Object visitMapLiteralExp(@NonNull MapLiteralExp literalExp) {
-		return trace(literalExp, delegate.visitMapLiteralExp(literalExp));
+		return trace(literalExp);
 	}
 
 	@Override
 	public @Nullable Object visitMapLiteralPart(@NonNull MapLiteralPart range) {
-		return trace(range, delegate.visitMapLiteralPart(range));
+		return trace(range);
 	}
 
 	@Override
 	public @Nullable Object visitMessageExp(@NonNull MessageExp messageExp) {
-		return trace(messageExp, delegate.visitMessageExp(messageExp));
+		return trace(messageExp);
 	}
 
 	@Override
 	public @Nullable Object visitNullLiteralExp(@NonNull NullLiteralExp literalExp) {
-		return trace(literalExp, delegate.visitNullLiteralExp(literalExp));
+		return trace(literalExp);
 	}
 
 	@Override
 	public @Nullable Object visitOperationCallExp(@NonNull OperationCallExp callExp) {
-		return trace(callExp, delegate.visitOperationCallExp(callExp));
+		return trace(callExp);
 	}
 
 	@Override
 	public @Nullable Object visitOppositePropertyCallExp(@NonNull OppositePropertyCallExp callExp) {
-		return trace(callExp, delegate.visitOppositePropertyCallExp(callExp));
+		return trace(callExp);
 	}
 
 	@Override
 	public @Nullable Object visitPropertyCallExp(@NonNull PropertyCallExp callExp) {
-		return trace(callExp, delegate.visitPropertyCallExp(callExp));
+		return trace(callExp);
 	}
 
 	@Override
 	public @Nullable Object visitRealLiteralExp(@NonNull RealLiteralExp literalExp) {
-		return trace(literalExp, delegate.visitRealLiteralExp(literalExp));
+		return trace(literalExp);
 	}
 
 	@Override
 	public @Nullable Object visitShadowExp(@NonNull ShadowExp shadowExp) {
-		return trace(shadowExp, delegate.visitShadowExp(shadowExp));
+		return trace(shadowExp);
 	}
 
 	@Override
 	public @Nullable Object visitStateExp(@NonNull StateExp stateExp) {
-		return trace(stateExp, delegate.visitStateExp(stateExp));
+		return trace(stateExp);
 	}
 
 	@Override
 	public @Nullable Object visitStringLiteralExp(@NonNull StringLiteralExp literalExp) {
-		return trace(literalExp, delegate.visitStringLiteralExp(literalExp));
+		return trace(literalExp);
 	}
 
 	@Override
 	public @Nullable Object visitTupleLiteralExp(@NonNull TupleLiteralExp literalExp) {
-		return trace(literalExp, delegate.visitTupleLiteralExp(literalExp));
+		return trace(literalExp);
 	}
 
 	@Override
 	public @Nullable Object visitTupleLiteralPart(@NonNull TupleLiteralPart part) {
-		return trace(part, delegate.visitTupleLiteralPart(part));
+		return trace(part);
 	}
 
 	@Override
 	public @Nullable Object visitTypeExp(@NonNull TypeExp typeExp) {
-		return trace(typeExp, delegate.visitTypeExp(typeExp));
+		return trace(typeExp);
 	}
 
 	@Override
 	public @Nullable Object visitUnlimitedNaturalLiteralExp(@NonNull UnlimitedNaturalLiteralExp literalExp) {
-		return trace(literalExp, delegate.visitUnlimitedNaturalLiteralExp(literalExp));
+		return trace(literalExp);
 	}
 
 	@Override
 	public @Nullable Object visitUnspecifiedValueExp(@NonNull UnspecifiedValueExp unspecExp) {
-		return trace(unspecExp, delegate.visitUnspecifiedValueExp(unspecExp));
+		return trace(unspecExp);
 	}
 
 	@Override
 	public @Nullable Object visitVariable(@NonNull Variable variable) {
-		return trace(variable, delegate.visitVariable(variable));
+		return trace(variable);
 	}
 
 	@Override
 	public @Nullable Object visitVariableExp(@NonNull VariableExp variableExp) {
-		return trace(variableExp, delegate.visitVariableExp(variableExp));
+		return trace(variableExp);
 	}
 }

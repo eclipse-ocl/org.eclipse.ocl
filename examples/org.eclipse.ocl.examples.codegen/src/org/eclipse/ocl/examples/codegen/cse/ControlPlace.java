@@ -29,7 +29,7 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
 /**
- * A ControlPlace is associated with a location in the CG AST such as the then or else (but not condition) ig a CGIfExp
+ * A ControlPlace is associated with a location in the CG AST such as the then or else (but not condition) of a CGIfExp
  * at which child nodes cannot be hoisted without violating control dependencies.
  */
 public class ControlPlace extends LocalPlace

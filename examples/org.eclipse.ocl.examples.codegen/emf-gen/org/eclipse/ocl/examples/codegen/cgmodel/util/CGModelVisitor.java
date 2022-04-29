@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
- * 
+ *
  * </copyright>
  *
  * This code is auto-generated
@@ -45,6 +45,7 @@ public interface CGModelVisitor<R>
 
 	R visitCGAccumulator(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGAccumulator object);
 	R visitCGAssertNonNullExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGAssertNonNullExp object);
+	R visitCGBodiedProperty(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGBodiedProperty object);
 	R visitCGBoolean(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGBoolean object);
 	R visitCGBoxExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGBoxExp object);
 	R visitCGBuiltInIterationCallExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGBuiltInIterationCallExp object);
@@ -59,6 +60,7 @@ public interface CGModelVisitor<R>
 	R visitCGCollectionPart(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGCollectionPart object);
 	R visitCGConstant(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGConstant object);
 	R visitCGConstantExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGConstantExp object);
+	R visitCGConstrainedProperty(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGConstrainedProperty object);
 	R visitCGConstraint(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGConstraint object);
 	R visitCGEcoreClassShadowExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGEcoreClassShadowExp object);
 	R visitCGEcoreDataTypeShadowExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGEcoreDataTypeShadowExp object);
@@ -71,8 +73,6 @@ public interface CGModelVisitor<R>
 	R visitCGElementId(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGElementId object);
 	R visitCGExecutorCompositionProperty(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGExecutorCompositionProperty object);
 	R visitCGExecutorNavigationProperty(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGExecutorNavigationProperty object);
-	R visitCGExecutorOperation(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGExecutorOperation object);
-	R visitCGExecutorOperationCallExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGExecutorOperationCallExp object);
 	R visitCGExecutorOppositeProperty(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGExecutorOppositeProperty object);
 	R visitCGExecutorOppositePropertyCallExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGExecutorOppositePropertyCallExp object);
 	R visitCGExecutorProperty(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGExecutorProperty object);
@@ -85,6 +85,7 @@ public interface CGModelVisitor<R>
 	R visitCGForeignPropertyCallExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGForeignPropertyCallExp object);
 	R visitCGGuardExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGGuardExp object);
 	R visitCGIfExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGIfExp object);
+	R visitCGInlinedOperation(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGInlinedOperation object);
 	R visitCGInteger(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGInteger object);
 	R visitCGInvalid(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGInvalid object);
 	R visitCGIsEqual2Exp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGIsEqual2Exp object);

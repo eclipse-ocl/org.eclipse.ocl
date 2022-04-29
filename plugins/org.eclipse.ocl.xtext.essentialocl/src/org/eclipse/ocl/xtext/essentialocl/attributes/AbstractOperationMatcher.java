@@ -205,26 +205,29 @@ public abstract class AbstractOperationMatcher implements OperationArguments
 		Operation bestOperation = null;
 		TemplateParameterSubstitutions bestBindings = TemplateParameterSubstitutions.EMPTY;
 		List<@NonNull Operation> ambiguities2 = ambiguities;
-		for (@NonNull Operation candidateOperation : invocations) {
-			TemplateParameterSubstitutions candidateBindings = matches(candidateOperation, useCoercions);
-			if (candidateBindings != null) {
-				if (bestOperation == null) {
-					bestOperation = candidateOperation;
-					bestBindings = candidateBindings;
-				}
-				else {
-					int comparison = compareMatches(bestOperation, bestBindings, candidateOperation, candidateBindings, useCoercions);
-					if (comparison < 0) {
+		for (NamedElement namedElement : invocations) {
+			if (namedElement instanceof Operation) {
+				Operation candidateOperation = (Operation)namedElement;
+				TemplateParameterSubstitutions candidateBindings = matches(candidateOperation, useCoercions);
+				if (candidateBindings != null) {
+					if (bestOperation == null) {
 						bestOperation = candidateOperation;
 						bestBindings = candidateBindings;
-						ambiguities = null;
 					}
-					else if (comparison == 0) {
-						if (ambiguities2 == null) {
-							ambiguities = ambiguities2 = new ArrayList<>();
-							ambiguities2.add(bestOperation);
+					else {
+						int comparison = compareMatches(bestOperation, bestBindings, candidateOperation, candidateBindings, useCoercions);
+						if (comparison < 0) {
+							bestOperation = candidateOperation;
+							bestBindings = candidateBindings;
+							ambiguities = null;
 						}
-						ambiguities2.add(candidateOperation);
+						else if (comparison == 0) {
+							if (ambiguities2 == null) {
+								ambiguities = ambiguities2 = new ArrayList<>();
+								ambiguities2.add(bestOperation);
+							}
+							ambiguities2.add(candidateOperation);
+						}
 					}
 				}
 			}

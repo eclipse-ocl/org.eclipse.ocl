@@ -317,7 +317,7 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<@Nullable 
 	public @Nullable String visitCGBuiltInIterationCallExp(@NonNull CGBuiltInIterationCallExp cgExp) {
 		safeVisit(cgExp.getSource());
 		append("->");
-		appendName(cgExp.getReferredIteration());
+		appendName(cgExp.getAsIteration());
 		append("("); //$NON-NLS-1$
 		boolean isFirst = true;
 		List<CGIterator> cgIterators = cgExp.getIterators();
@@ -595,7 +595,7 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<@Nullable 
 			append(name);
 			append("(");
 			String prefix = "";//$NON-NLS-1$
-			for (CGValuedElement argument : oc.getCgArguments()) {
+			for (CGValuedElement argument : oc.getArguments()) {
 				append(prefix);
 				safeVisit(argument);
 				prefix = ", ";//$NON-NLS-1$
@@ -663,7 +663,7 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<@Nullable 
 		append(method.getName());
 		append("(");
 		String prefix = "";//$NON-NLS-1$
-		for (CGValuedElement argument : oc.getCgArguments()) {
+		for (CGValuedElement argument : oc.getArguments()) {
 			append(prefix);
 			safeVisit(argument);
 			prefix = ", ";//$NON-NLS-1$
@@ -697,10 +697,14 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<@Nullable 
 		Operation oper = operationCallExp.getReferredOperation();
 		Type sourceType = operationCallExp.getOwnedSource() != null ? operationCallExp.getOwnedSource().getType() : null;
 		append(PivotUtil.getNavigationOperator(false/*operationCallExp.isIsSafe()*/, PivotUtil.isAggregate(sourceType)));
+		if (oper.isIsStatic()) {
+			appendName(oper.getOwningClass());
+			append("::");
+		}
 		appendName(oper);
 		append("(");
 		String prefix = "";//$NON-NLS-1$
-		for (CGValuedElement argument : oc.getCgArguments()) {
+		for (CGValuedElement argument : oc.getArguments()) {
 			append(prefix);
 			safeVisit(argument);
 			prefix = ", ";//$NON-NLS-1$

@@ -780,8 +780,8 @@ implements DataType {
 			else {
 				/*@Caught*/ @Nullable Object result;
 				try {
-					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Class behavioralClass_0 = this.getBehavioralClass();
-					final /*@NonInvalid*/ boolean IsEQ_ = behavioralClass_0 != null;
+					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Class behavioralClass = this.getBehavioralClass();
+					final /*@NonInvalid*/ boolean IsEQ_ = behavioralClass != null;
 					final /*@Thrown*/ @Nullable Boolean implies;
 					if (!IsEQ_) {
 						implies = ValueUtil.TRUE_VALUE;
@@ -790,7 +790,7 @@ implements DataType {
 						/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
 						try {
 							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_PrimitiveType = idResolver.getClass(PivotTables.CLSSid_PrimitiveType, null);
-							final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, behavioralClass_0, TYP_PrimitiveType).booleanValue();
+							final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, behavioralClass, TYP_PrimitiveType).booleanValue();
 							CAUGHT_oclIsKindOf = oclIsKindOf;
 						}
 						catch (Exception THROWN_CAUGHT_oclIsKindOf) {
@@ -856,8 +856,8 @@ implements DataType {
 			else {
 				/*@Caught*/ @Nullable Object result;
 				try {
-					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Class behavioralClass_0 = this.getBehavioralClass();
-					final /*@NonInvalid*/ boolean IsEQ_ = behavioralClass_0 != null;
+					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Class behavioralClass = this.getBehavioralClass();
+					final /*@NonInvalid*/ boolean IsEQ_ = behavioralClass != null;
 					final /*@Thrown*/ @Nullable Boolean implies;
 					if (!IsEQ_) {
 						implies = ValueUtil.TRUE_VALUE;
@@ -867,7 +867,7 @@ implements DataType {
 						try {
 							final /*@NonInvalid*/ @NonNull List<org.eclipse.ocl.pivot.Class> superClasses = this.getSuperClasses();
 							final /*@NonInvalid*/ @NonNull SetValue BOXED_superClasses = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Class, superClasses);
-							final /*@Thrown*/ boolean includes = CollectionIncludesOperation.INSTANCE.evaluate(BOXED_superClasses, behavioralClass_0).booleanValue();
+							final /*@Thrown*/ boolean includes = CollectionIncludesOperation.INSTANCE.evaluate(BOXED_superClasses, behavioralClass).booleanValue();
 							CAUGHT_includes = includes;
 						}
 						catch (Exception THROWN_CAUGHT_includes) {

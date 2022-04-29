@@ -63,7 +63,11 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  */
 public class LookupFilterGenerator extends AutoCodeGenerator
 {
-	protected final @NonNull LookupFilterClassContext classContext;
+	public static final @NonNull String APPLIES_FILTER_OP_PREFIX = "_appliesFilter_";
+
+	public static final @NonNull String MATCHES_OP_NAME = "matches";
+	public static final @NonNull String ELEMENT_NAME = "element";
+
 	protected final @NonNull AS2CGVisitor as2cgVisitor;
 	protected final @NonNull String lookupPackageName;
 	protected final @Nullable String superLookupPackageName;
@@ -96,13 +100,14 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 		this.baseLookupPackage = baseLookupPackage != null ? baseLookupPackage :
 			superLookupPackageName != null ? superLookupPackageName :
 				lookupPackageName;
-		this.classContext = new LookupFilterClassContext(this, asPackage);
 		this.as2cgVisitor = createAS2CGVisitor();
 		this.asPackages = createASPackages();
+		globalNameManager.declareGlobalName(null, APPLIES_FILTER_OP_PREFIX);
+		globalNameManager.declareGlobalName(null, ELEMENT_NAME);
+		globalNameManager.declareGlobalName(null, MATCHES_OP_NAME);
 	}
 
 	private @NonNull List<org.eclipse.ocl.pivot.Package> createASPackages() {
-		LookupFilterClassContext globalContext = getGlobalContext();
 		List<org.eclipse.ocl.pivot.Package> result = new ArrayList<org.eclipse.ocl.pivot.Package>();
 		List<Operation> filteringOps = gatherFilteringOps(asPackage);
 
@@ -112,8 +117,8 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 			result.add(asPackage);
 			org.eclipse.ocl.pivot.Class asClass = createASClass(asPackage, filteredClassName + "Filter");
 			// We create the properties
-			Property asEvaluatorProperty = createNativeProperty(globalContext.getExecutorName(), Executor.class, true, true);
-			Property asIdResolverProperty = createNativeProperty(globalContext.getIdResolverName(), IdResolver.class, true, true);
+			Property asEvaluatorProperty = createNativeProperty(globalNameManager.getExecutorName(), Executor.class, true, true);
+			Property asIdResolverProperty = createNativeProperty(globalNameManager.getIdResolverName(), IdResolver.class, true, true);
 			List<Property> asProperties = asClass.getOwnedProperties();
 			asProperties.add(asEvaluatorProperty);
 			asProperties.add(asIdResolverProperty);
@@ -144,7 +149,7 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 
 		Type filteringOpType = filteringOp.getType();
 		assert filteringOpType != null;
-		Operation asOperation = PivotUtil.createOperation("_" + LookupFilterClassContext.MATCHES_OP_NAME, filteringOpType, null, null);
+		Operation asOperation = PivotUtil.createOperation("_" + MATCHES_OP_NAME, filteringOpType, null, null);
 		asOperation.setBodyExpression(newExpressionInOCL);
 		// Filtering op params are translated as asClass properties
 		LetExp letRoot = null;
@@ -175,7 +180,7 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 
 		// Filtering op context is translated as asOperation parameter
 		org.eclipse.ocl.pivot.Class asType = ClassUtil.nonNullState(filteringOp.getOwningClass());
-		Variable asParamVar = helper.createParameterVariable(LookupFilterClassContext.ELEMENT_NAME, asType,true);
+		Variable asParamVar = helper.createParameterVariable(ELEMENT_NAME, asType,true);
 		newExpressionInOCL.getOwnedParameters().add(asParamVar);
 		redefinitions.put(oldExpressionInOCL.getOwnedContext(), asParamVar);
 
@@ -205,7 +210,7 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 		return asPackage.getOwnedClasses().stream()
 				.map(c -> c.getOwnedOperations())
 				.flatMap(o -> o.stream())
-				.filter(o -> o.getName().startsWith(LookupFilterClassContext.APPLIES_FILTER_OP_PREFIX))	// interested op
+				.filter(o -> o.getName().startsWith(APPLIES_FILTER_OP_PREFIX))	// interested op
 				//.map(o -> o.getName().substring(o.getName().indexOf(LookupFilterClassContext.APPLIES_FILTER_OP_PREFIX))) // type name is after appliesFilter prefix
 				.collect(Collectors.toList());
 
@@ -287,13 +292,13 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 	}
 
 	@Override
-	protected @NonNull LookupFilterCG2JavaVisitor createCG2JavaVisitor(@NonNull CGPackage cgPackage, @Nullable List<CGValuedElement> sortedGlobals) {
+	protected @NonNull LookupFilterCG2JavaVisitor createCG2JavaVisitor(@NonNull CGPackage cgPackage, @Nullable Iterable<@NonNull CGValuedElement> sortedGlobals) {
 		return new LookupFilterCG2JavaVisitor(this, cgPackage, sortedGlobals);
 	}
 
 	@Override
 	public @NonNull CG2JavaPreVisitor createCG2JavaPreVisitor() {
-		return new AutoCG2JavaPreVisitor(classContext);
+		return new AutoCG2JavaPreVisitor(this);
 	}
 
 	/**
@@ -323,16 +328,10 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 		// not generated. Therefore we have to add this hack to provide CG for executor property
 		// accesses
 		if (cgEvaluatorVariable == null) {
-			Property prop = createNativeProperty(getGlobalContext().getExecutorName(), Executor.class, true, true);
+			Property prop = createNativeProperty(globalNameManager.getExecutorName(), Executor.class, true, true);
 			cgEvaluatorVariable = as2cgVisitor.visitProperty(prop);
 		}
 		return ClassUtil.nonNullState(cgEvaluatorVariable);
-	}
-
-
-	@Override
-	public @NonNull LookupFilterClassContext getGlobalContext() {
-		return classContext;
 	}
 
 	@Override

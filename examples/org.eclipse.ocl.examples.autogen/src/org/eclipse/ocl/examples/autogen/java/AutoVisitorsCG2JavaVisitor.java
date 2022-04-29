@@ -11,8 +11,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.autogen.java;
 
-import java.util.List;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
@@ -23,20 +21,25 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
  * AutoCG2JavaVisitor refines the regular generation of Java code from an optimized Auto CG transformation tree
  * to add contributions that are inadequately represented by the CG model.
  */
-public abstract class AutoVisitorsCG2JavaVisitor<@NonNull CG extends AutoVisitorsCodeGenerator> extends AutoCG2JavaVisitor<CG>
+public abstract class AutoVisitorsCG2JavaVisitor extends AutoCG2JavaVisitor
 {
 
-	public AutoVisitorsCG2JavaVisitor(@NonNull CG codeGenerator, @NonNull CGPackage cgPackage,
-			@Nullable List<CGValuedElement> sortedGlobals) {
+	public AutoVisitorsCG2JavaVisitor(@NonNull AutoVisitorsCodeGenerator codeGenerator, @NonNull CGPackage cgPackage,
+			@Nullable Iterable<CGValuedElement> sortedGlobals) {
 		super(codeGenerator, cgPackage, sortedGlobals);
 
 	}
 
 	@Override
 	protected void doMoreClassMethods(@NonNull CGClass cgClass) {
-		if (context.isBaseVisitorsGeneration()) {
+		if (getCodeGenerator().isBaseVisitorsGeneration()) {
 			doVisiting(cgClass);
 		}
+	}
+
+	@Override
+	public @NonNull AutoVisitorsCodeGenerator getCodeGenerator() {
+		return (AutoVisitorsCodeGenerator)context;
 	}
 
 	/**
@@ -47,9 +50,9 @@ public abstract class AutoVisitorsCG2JavaVisitor<@NonNull CG extends AutoVisitor
 		js.append("\n");
 		js.append("@Override\n");
 		js.append("public ");
-		js.appendClassReference(false, context.getVisitorResultClass());
+		js.appendClassReference(false, getCodeGenerator().getVisitorResultClass());
 		js.append(" visiting(");
-		js.appendClassReference(true, context.getVisitableClass());
+		js.appendClassReference(true, getCodeGenerator().getVisitableClass());
 		js.append(" visitable) {\n");
 		js.pushIndentation(null);
 		js.append("throw new UnsupportedOperationException(\"");

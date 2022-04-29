@@ -163,7 +163,16 @@ public class ImplementationManager
 		if (property.isIsDerived()) {													// If there is OCL code to compute the navigation.
 			ExpressionInOCL specification = metamodelManager.getDefaultExpression(property);
 			if (specification != null) {
-				return new ConstrainedProperty(property);
+				EObject esObject = property.getESObject();
+				if (esObject != null) {
+					return new ConstrainedProperty(property);
+				}
+				else {
+					ForeignProperty asForeignProperty = ForeignProperty.createForeignProperty(environmentFactory, property);
+					if (asForeignProperty != null) {
+						return asForeignProperty;
+					}
+				}
 			}
 		}
 		if (property.getESObject() != null) {											// If this is a forward modeled Ecore navigation

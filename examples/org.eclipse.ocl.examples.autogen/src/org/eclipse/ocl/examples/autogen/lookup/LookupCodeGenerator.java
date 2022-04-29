@@ -65,17 +65,17 @@ public class LookupCodeGenerator
 				}
 			}
 
-			for (String unqualifiedOpName : gatherEnvOpNames(oclDocPackage, LookupVisitorsClassContext.UNQUALIFIED_ENV_NAME)) {
+			for (String unqualifiedOpName : gatherEnvOpNames(oclDocPackage, LookupVisitorsCodeGenerator.UNQUALIFIED_ENV_NAME)) {
 				new LookupUnqualifiedCodeGenerator(environmentFactory, oclDocPackage, asSuperPackage, basePackage,
 					genPackage,superGenPackage, baseGenPackage, unqualifiedOpName).saveSourceFile();
 			}
 
-			for (String exportedEnvOpName : gatherEnvOpNames(oclDocPackage, LookupVisitorsClassContext.EXPORTED_ENV_NAME)) {
+			for (String exportedEnvOpName : gatherEnvOpNames(oclDocPackage, LookupVisitorsCodeGenerator.EXPORTED_ENV_NAME)) {
 				new LookupExportedVisitorCodeGenerator(environmentFactory, oclDocPackage, asSuperPackage, basePackage,
 					genPackage,superGenPackage, baseGenPackage, exportedEnvOpName).saveSourceFile();
 			}
 
-			for (String qualifiedEnvOpName : gatherEnvOpNames(oclDocPackage, LookupVisitorsClassContext.QUALIFIED_ENV_NAME)) {
+			for (String qualifiedEnvOpName : gatherEnvOpNames(oclDocPackage, LookupVisitorsCodeGenerator.QUALIFIED_ENV_NAME)) {
 				new LookupQualifiedCodeGenerator(environmentFactory, oclDocPackage, asSuperPackage, basePackage,
 					genPackage,superGenPackage, baseGenPackage, qualifiedEnvOpName).saveSourceFile();
 			}

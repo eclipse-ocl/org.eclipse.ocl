@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
+import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcorePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
@@ -36,6 +37,8 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.internal.library.ConstrainedProperty;
 import org.eclipse.ocl.pivot.internal.library.ExplicitNavigationProperty;
+import org.eclipse.ocl.pivot.internal.library.ForeignProperty;
+import org.eclipse.ocl.pivot.internal.library.StereotypeProperty;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.library.oclany.OclElementOclContainerProperty;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
@@ -50,8 +53,8 @@ public class EcorePropertyCallingConvention extends AbstractPropertyCallingConve
 {
 	public static final @NonNull EcorePropertyCallingConvention INSTANCE = new EcorePropertyCallingConvention();
 
-	protected void appendEcoreGet(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGValuedElement cgSource, @NonNull Property asProperty) {
-		CGTypeId cgTypeId = cg2javaVisitor.getAnalyzer().getTypeId(asProperty.getOwningClass().getTypeId());
+	protected void appendEcoreGet(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGValuedElement cgSource, @NonNull Property asProperty) {
+		CGTypeId cgTypeId = cg2javaVisitor.getAnalyzer().getCGTypeId(asProperty.getOwningClass().getTypeId());
 		ElementId elementId = ClassUtil.nonNullState(cgTypeId.getElementId());
 		JavaCodeGenerator codeGenerator = cg2javaVisitor.getCodeGenerator();
 		TypeDescriptor requiredTypeDescriptor = codeGenerator.getUnboxedDescriptor(elementId);
@@ -96,11 +99,21 @@ public class EcorePropertyCallingConvention extends AbstractPropertyCallingConve
 		if (libraryProperty instanceof OclElementOclContainerProperty) {
 			eStructuralFeature = OCLstdlibPackage.Literals.OCL_ELEMENT__OCL_CONTAINER;
 		}
-		else if (libraryProperty instanceof ConstrainedProperty) {
+		else if (libraryProperty instanceof StereotypeProperty) {
 			eStructuralFeature = (EStructuralFeature) asProperty.getESObject();
 			if (eStructuralFeature != null) {
 				isRequired = asProperty.isIsRequired();
 			}
+		}
+		else if (libraryProperty instanceof ForeignProperty) {
+			eStructuralFeature = (EStructuralFeature) asProperty.getESObject();
+			assert eStructuralFeature == null;
+			isRequired = asProperty.isIsRequired();
+		}
+		else if (libraryProperty instanceof ConstrainedProperty) {
+			eStructuralFeature = (EStructuralFeature) asProperty.getESObject();
+		//	assert eStructuralFeature != null;
+			isRequired = asProperty.isIsRequired();
 		}
 		else if (libraryProperty instanceof ExplicitNavigationProperty) {
 				//	|| (libraryProperty instanceof CompositionProperty)
@@ -121,19 +134,19 @@ public class EcorePropertyCallingConvention extends AbstractPropertyCallingConve
 			cgExecutorPropertyCallExp.getOwns().add(cgExecutorProperty);
 			cgPropertyCallExp = cgExecutorPropertyCallExp;
 		} */
-		cgPropertyCallExp.setCgProperty(cgProperty);
-		cgPropertyCallExp.setReferredProperty(asProperty);
+		cgPropertyCallExp.setReferredProperty(cgProperty);
+		cgPropertyCallExp.setAsProperty(asProperty);
 		cgPropertyCallExp.setAst(asPropertyCallExp);
-		cgPropertyCallExp.setTypeId(analyzer.getTypeId(asPropertyCallExp.getTypeId()));
+		cgPropertyCallExp.setTypeId(analyzer.getCGTypeId(asPropertyCallExp.getTypeId()));
 		cgPropertyCallExp.setRequired(isRequired || codeGenerator.isPrimitive(cgPropertyCallExp));
 		cgPropertyCallExp.setSource(cgSource);
 		return cgPropertyCallExp;
 	}
 
 	@Override
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGNavigationCallExp cgPropertyCallExp) {
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGNavigationCallExp cgPropertyCallExp) {
 		CGEcorePropertyCallExp cgEcorePropertyCallExp = (CGEcorePropertyCallExp) cgPropertyCallExp;
-		Property asProperty = ClassUtil.nonNullState(cgPropertyCallExp.getReferredProperty());
+		Property asProperty = ClassUtil.nonNullState(cgPropertyCallExp.getAsProperty());
 		assert cg2javaVisitor.getESObject(asProperty) == ClassUtil.nonNullState(cgEcorePropertyCallExp.getEStructuralFeature());
 		//
 		CGValuedElement source = cg2javaVisitor.getExpression(cgPropertyCallExp.getSource());
@@ -150,5 +163,32 @@ public class EcorePropertyCallingConvention extends AbstractPropertyCallingConve
 		appendEcoreGet(cg2javaVisitor, js, source, asProperty);
 		js.append(";\n");
 		return true;
+	}
+
+	@Override
+	public boolean generateJavaDeclaration(
+			@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js,
+			@NonNull CGProperty cgProperty) {
+		// TODO Auto-generated method stub
+		return super.generateJavaDeclaration(cg2javaVisitor, js, cgProperty);
+	}
+
+	@Override
+	public boolean needsGeneration() {
+		return false;
+	}
+
+	@Override
+	protected void rewriteWithResultBoxing(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGNavigationCallExp cgNavigationCallExp) {
+		CGEcorePropertyCallExp cgEcorePropertyCallExp = (CGEcorePropertyCallExp) cgNavigationCallExp;
+		if (cgEcorePropertyCallExp.getEStructuralFeature().isMany()) {
+			boxingAnalyzer.rewriteAsAssertNonNulled(cgEcorePropertyCallExp);
+		}
+	}
+
+	@Override
+	protected void rewriteWithSourceBoxing(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGNavigationCallExp cgNavigationCallExp) {
+		CGEcorePropertyCallExp cgEcorePropertyCallExp = (CGEcorePropertyCallExp) cgNavigationCallExp;
+		boxingAnalyzer.rewriteAsEcore(cgEcorePropertyCallExp.getSource(), cgEcorePropertyCallExp.getEStructuralFeature().getEContainingClass());
 	}
 }

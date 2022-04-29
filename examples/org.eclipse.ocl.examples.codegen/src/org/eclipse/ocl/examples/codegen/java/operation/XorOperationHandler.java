@@ -28,7 +28,7 @@ public class XorOperationHandler extends AbstractLibraryOperationHandler
 
 		@Override
 		public @NonNull Boolean generate(@NonNull CGLibraryOperationCallExp cgOperationCallExp) {
-			assert !cgOperationCallExp.getReferredOperation().isIsValidating();
+			assert !cgOperationCallExp.getAsOperation().isIsValidating();
 			boolean hasDeclaration = false;
 			//
 			//	Trivial source cases

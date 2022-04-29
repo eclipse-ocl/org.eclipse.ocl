@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
- * 
+ *
  * </copyright>
  *
  * This code is auto-generated
@@ -66,6 +66,11 @@ public abstract class AbstractNonNullExtendingCGModelVisitor<R, C>
 	@Override
 	public @NonNull R visitCGAssertNonNullExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGAssertNonNullExp object) {
 		return visitCGSourcedCallExp(object);
+	}
+
+	@Override
+	public @NonNull R visitCGBodiedProperty(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGBodiedProperty object) {
+		return visitCGProperty(object);
 	}
 
 	@Override
@@ -139,6 +144,11 @@ public abstract class AbstractNonNullExtendingCGModelVisitor<R, C>
 	}
 
 	@Override
+	public @NonNull R visitCGConstrainedProperty(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGConstrainedProperty object) {
+		return visitCGBodiedProperty(object);
+	}
+
+	@Override
 	public @NonNull R visitCGConstraint(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGConstraint object) {
 		return visitCGCallable(object);
 	}
@@ -199,16 +209,6 @@ public abstract class AbstractNonNullExtendingCGModelVisitor<R, C>
 	}
 
 	@Override
-	public @NonNull R visitCGExecutorOperation(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGExecutorOperation object) {
-		return visitCGValuedElement(object);
-	}
-
-	@Override
-	public @NonNull R visitCGExecutorOperationCallExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGExecutorOperationCallExp object) {
-		return visitCGOperationCallExp(object);
-	}
-
-	@Override
 	public @NonNull R visitCGExecutorOppositeProperty(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGExecutorOppositeProperty object) {
 		return visitCGExecutorProperty(object);
 	}
@@ -220,7 +220,7 @@ public abstract class AbstractNonNullExtendingCGModelVisitor<R, C>
 
 	@Override
 	public @NonNull R visitCGExecutorProperty(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGExecutorProperty object) {
-		return visitCGValuedElement(object);
+		return visitCGProperty(object);
 	}
 
 	@Override
@@ -250,7 +250,7 @@ public abstract class AbstractNonNullExtendingCGModelVisitor<R, C>
 
 	@Override
 	public @NonNull R visitCGForeignProperty(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGForeignProperty object) {
-		return visitCGProperty(object);
+		return visitCGBodiedProperty(object);
 	}
 
 	@Override
@@ -266,6 +266,11 @@ public abstract class AbstractNonNullExtendingCGModelVisitor<R, C>
 	@Override
 	public @NonNull R visitCGIfExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGIfExp object) {
 		return visitCGValuedElement(object);
+	}
+
+	@Override
+	public @NonNull R visitCGInlinedOperation(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGInlinedOperation object) {
+		return visitCGOperation(object);
 	}
 
 	@Override
@@ -380,7 +385,7 @@ public abstract class AbstractNonNullExtendingCGModelVisitor<R, C>
 
 	@Override
 	public @NonNull R visitCGNativeProperty(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGNativeProperty object) {
-		return visitCGProperty(object);
+		return visitCGBodiedProperty(object);
 	}
 
 	@Override

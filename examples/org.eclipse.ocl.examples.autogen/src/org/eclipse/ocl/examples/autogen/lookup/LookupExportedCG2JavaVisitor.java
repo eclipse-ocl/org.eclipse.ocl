@@ -10,32 +10,31 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.autogen.lookup;
 
-import java.util.List;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 
-public class LookupExportedCG2JavaVisitor extends LookupVisitorsCG2JavaVisitor<@NonNull LookupExportedVisitorCodeGenerator> {
+public class LookupExportedCG2JavaVisitor extends LookupVisitorsCG2JavaVisitor {
 
 	public LookupExportedCG2JavaVisitor(
 			@NonNull LookupExportedVisitorCodeGenerator codeGenerator,
 			@NonNull CGPackage cgPackage,
-			@Nullable List<CGValuedElement> sortedGlobals) {
+			@Nullable Iterable<@NonNull CGValuedElement> sortedGlobals) {
 		super(codeGenerator, cgPackage, sortedGlobals);
 	}
 
 	@Override
 	protected void doInternalVisiting(@NonNull CGClass cgClass) {
 		// We we return the context
+		LookupExportedVisitorCodeGenerator codeGenerator = getCodeGenerator();
 		js.append("\n");
 		js.append("@Override\n");
 		js.append("protected ");
-		js.appendClassReference(false, context.getVisitorResultClass());
+		js.appendClassReference(false, codeGenerator.getVisitorResultClass());
 		js.append(" doVisiting(");
-		js.appendClassReference(true, context.getVisitableClass());
+		js.appendClassReference(true, codeGenerator.getVisitableClass());
 		js.append(" visitable) {\n");
 		js.pushIndentation(null);
 		js.append("return context;\n");
@@ -48,22 +47,26 @@ public class LookupExportedCG2JavaVisitor extends LookupVisitorsCG2JavaVisitor<@
 			@NonNull CGClass cgClass) {
 		js.append(", ");
 		js.appendClassReference(true, Object.class);
-		js.append(" " + LookupVisitorsClassContext.INMPORTER_NAME);
+		js.append(" " + LookupVisitorsCodeGenerator.INMPORTER_NAME);
 	}
 
 	@Override
 	protected void doAdditionalFieldsInitialization(
 			@NonNull CGClass cgClass) {
 		js.append("this.");
-		js.appendReferenceTo(context.getImporterProperty());
-		js.append(" = " +  LookupVisitorsClassContext.INMPORTER_NAME + ";\n");
+		js.appendReferenceTo(getCodeGenerator().getImporterProperty());
+		js.append(" = " +  LookupVisitorsCodeGenerator.INMPORTER_NAME + ";\n");
 	}
 
 	@Override
 	protected void doAdditionalSuperLookupVisitorArgs(
 			@NonNull CGClass cgClass) {
 		js.append(",");
-		js.appendReferenceTo(context.getImporterProperty());
+		js.appendReferenceTo(getCodeGenerator().getImporterProperty());
 	}
 
+	@Override
+	public @NonNull LookupExportedVisitorCodeGenerator getCodeGenerator() {
+		return (LookupExportedVisitorCodeGenerator)context;
+	}
 }
