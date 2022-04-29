@@ -24,7 +24,6 @@ import org.eclipse.emf.ecore.util.EObjectEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager.NameVariant;
 import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInvalid;
@@ -547,11 +546,6 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	}
 
 	@Override
-	public @NonNull String getVariantResolvedName(@NonNull NameVariant nameVariant) {
-		return getNameResolution().getVariantResolvedName(nameVariant);
-	}
-
-	@Override
 	public boolean isUnresolved() {
 		NameResolution nameResolution2 = nameResolution;
 		return (nameResolution2 == null) || nameResolution2.isUnresolved();
@@ -581,8 +575,8 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	//	System.out.println("setNameResolution " + eClass().getName() + " = " + nameResolution);		// XXX
 	}
 
+	@Deprecated /* @deprecated nolonger used */		// XXX
 	protected void resetNameResolution() {
 		nameResolution = null;
 	}
-
 } //CGValuedElementImpl

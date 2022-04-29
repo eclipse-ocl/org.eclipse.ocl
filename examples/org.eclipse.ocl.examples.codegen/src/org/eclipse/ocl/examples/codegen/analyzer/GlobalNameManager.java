@@ -16,6 +16,7 @@ import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.UniqueList;
@@ -117,6 +118,12 @@ public class GlobalNameManager extends NameManager
 	 */
 	private final @NonNull Map<@NonNull String, @NonNull NameResolution> name2reservedNameResolutions = new HashMap<>();
 
+	/**
+	 * The NameManager in which an element is scoped. This may be eaferly declared to ensure that children of
+	 * e.g. an iteration have the correct inner/outer scope.
+	 */
+	private final @NonNull Map<@NonNull CGNamedElement, @NonNull NameManager> element2nameManager = new HashMap<>();
+
 	public GlobalNameManager(@NonNull NameManagerHelper helper) {
 		super(null, helper);
 		this.context = new Context(this);			// Global can allocate names straightawy
@@ -135,15 +142,20 @@ public class GlobalNameManager extends NameManager
 	}
 
 	public void assignNames() {
-		assignNames(context);
+		assignLocalNames(context);
+		assignNestedNames();
+	}
+
+	public @Nullable NameManager bascGetScope(@NonNull CGNamedElement cgElement) {
+		return element2nameManager.get(cgElement);
 	}
 
 	/**
 	 * Declare that cgElement has a name which should immediately default to nameHint.
 	 * This is typically used to provide an eager name reservation for globl particularly Ecore names.
 	 */
-	public @NonNull BaseNameResolution declareGlobalName(@Nullable CGValuedElement cgElement, @NonNull String nameHint) {
-		BaseNameResolution baseNameResolution = new BaseNameResolution(this, cgElement, nameHint);
+	public @NonNull NameResolution declareGlobalName(@Nullable CGValuedElement cgElement, @NonNull String nameHint) {
+		NameResolution baseNameResolution = new NameResolution(this, cgElement, nameHint);
 		baseNameResolution.resolveIn(context);
 		return baseNameResolution;
 	}
@@ -153,11 +165,16 @@ public class GlobalNameManager extends NameManager
 	 * This is typically used to ensure that reserved Java names are used only for their Java purpose.
 	 */
 	@Override
-	public @NonNull BaseNameResolution declareReservedName(@Nullable CGValuedElement cgElement, @NonNull String nameHint) {
-		BaseNameResolution baseNameResolution = new BaseNameResolution(this, cgElement, nameHint);
+	public @NonNull NameResolution declareReservedName(@Nullable CGValuedElement cgElement, @NonNull String nameHint) {
+		NameResolution baseNameResolution = new NameResolution(this, cgElement, nameHint);
 		assert reservedJavaNames.contains(nameHint);
 		baseNameResolution.setResolvedName(nameHint);
 		return baseNameResolution;
+	}
+
+	public void declareScope(@NonNull CGNamedElement cgElement, @NonNull NameManager nameManager) {
+		NameManager old = element2nameManager.put(cgElement, nameManager);
+		assert (old == null) || (old == nameManager);
 	}
 
 	@Override
