@@ -265,7 +265,7 @@ public class JavaStream
 				s.append(string);
 			}
 			else {
-				if ("SAFE_specializeIn".equals(string)) {
+				if ("CAUGHT_sourceType".equals(string)) {
 					getClass();		// XXX
 				}
 				int sLength = s.length();

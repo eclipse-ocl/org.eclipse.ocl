@@ -39,6 +39,7 @@ import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.PropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.TuplePropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
+import org.eclipse.ocl.examples.codegen.java.JavaLanguageSupport;
 import org.eclipse.ocl.examples.codegen.library.NativeProperty;
 import org.eclipse.ocl.examples.codegen.library.NativeVisitorOperation;
 import org.eclipse.ocl.pivot.LanguageExpression;
@@ -118,6 +119,7 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 		this.metamodelManager = environmentFactory.getMetamodelManager();
 		this.globalNameManager = createGlobalNameManager();
 		this.genModelHelper = createGenModelHelper(genModel);
+		JavaLanguageSupport.FACTORY.install();
 	}
 
 	protected AbstractCodeGenerator(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull GlobalNameManager globalNameManager,
@@ -126,6 +128,7 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 		this.metamodelManager = environmentFactory.getMetamodelManager();
 		this.globalNameManager = globalNameManager;
 		this.genModelHelper = genModelHelper;
+		JavaLanguageSupport.FACTORY.install();
 	}
 
 	@Override
