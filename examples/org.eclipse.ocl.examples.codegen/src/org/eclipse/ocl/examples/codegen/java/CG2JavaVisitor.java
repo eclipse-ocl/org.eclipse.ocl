@@ -909,7 +909,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	}
 
 	protected @NonNull String getVariantResolvedName(@NonNull CGValuedElement cgElement, @NonNull NameVariant nameVariant) {
-		return cgElement.getVariantResolvedName(nameVariant);
+		return localContext.getNameManager().getVariantResolvedName(cgElement, nameVariant);
 	}
 
 //	protected @NonNull String getValueName(@NonNull CGValuedElement cgElement) {
@@ -1092,83 +1092,90 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		//
 		js.appendDeclaration(cgIterationCallExp);
 		js.append(";\n");
-		//
-		//	Declare loop head
-		//
-		js.append("while (true) {\n");
-		js.pushIndentation(null);
-		//
-		//	Terminate loop once done
-		//
-		js.append("if (!" + iteratorName + ".hasNext()) {\n");
-		js.pushIndentation(null);
-		if (iterationHelper.appendFinalValue(js, cgIterationCallExp)) {
-			js.append("break;\n");
-			flowContinues = true;
-		}
-		js.popIndentation();
-		js.append("}\n");
-		//
-		// Declare iterator advance.
-		//
-		appendSuppressWarningsNull(cgIterator, Boolean.FALSE);
-		js.appendDeclaration(cgIterator);
-		js.append(" = ");
-		SubStream castBody1 = new SubStream() {
-			@Override
-			public void append() {
-				js.append(iteratorName + ".next()");
-			}
-		};
-		js.appendClassCast(cgIterator, castBody1);
-		js.append(";\n");
-		//
-		// Declare coiterator/key access.
-		//
-		if (isMap && (cgCoIterator != null)) { // && !isImplicit
-			Variable asCoIterator = CGUtil.getAST(cgCoIterator);
-			if (!asCoIterator.isIsImplicit()) {
-				if (cgCoIterator.isRequired()) {
-					js.appendSuppressWarningsNull(true);
-				}
-				js.appendDeclaration(cgCoIterator);
-				js.append(" = ");
-				SubStream castBody2 = new SubStream() {
-					@Override
-					public void append() {
-						js.appendReferenceTo(cgSource);
-						js.append(".at(");
-						js.appendReferenceTo(cgIterator);
-						js.append(")");
-					}
-				};
-				js.appendClassCast(cgCoIterator, castBody2);
-				js.append(";\n");
-			}
-		}
-		//
-		// Declare iteration body.
-		//
-		js.appendCommentWithOCL(null, cgBody.getAst());
-		if (js.appendLocalStatements(cgBody)) {
-			js.append("//\n");
-			if (iterationHelper.appendUpdate(js, cgIterationCallExp)) {
+		JavaLocalContext<@NonNull ?> savedLocalContext = localContext;
+		try {
+			localContext = globalContext.getLocalContext(cgIterationCallExp);
+			//
+			//	Declare loop head
+			//
+			js.append("while (true) {\n");
+			js.pushIndentation(null);
+			//
+			//	Terminate loop once done
+			//
+			js.append("if (!" + iteratorName + ".hasNext()) {\n");
+			js.pushIndentation(null);
+			if (iterationHelper.appendFinalValue(js, cgIterationCallExp)) {
+				js.append("break;\n");
 				flowContinues = true;
 			}
-		}
-		if (!isMap && (cgCoIterator != null)) {
-			js.appendReferenceTo(cgCoIterator);
+			js.popIndentation();
+			js.append("}\n");
+			//
+			// Declare iterator advance.
+			//
+			appendSuppressWarningsNull(cgIterator, Boolean.FALSE);
+			js.appendDeclaration(cgIterator);
 			js.append(" = ");
-			js.appendReferenceTo(cgCoIterator);
-			js.append(".addInteger(");
-			js.appendClassReference(null, ValueUtil.class);
-			js.append(".ONE_VALUE);\n");
+			SubStream castBody1 = new SubStream() {
+				@Override
+				public void append() {
+					js.append(iteratorName + ".next()");
+				}
+			};
+			js.appendClassCast(cgIterator, castBody1);
+			js.append(";\n");
+			//
+			// Declare coiterator/key access.
+			//
+			if (isMap && (cgCoIterator != null)) { // && !isImplicit
+				Variable asCoIterator = CGUtil.getAST(cgCoIterator);
+				if (!asCoIterator.isIsImplicit()) {
+					if (cgCoIterator.isRequired()) {
+						js.appendSuppressWarningsNull(true);
+					}
+					js.appendDeclaration(cgCoIterator);
+					js.append(" = ");
+					SubStream castBody2 = new SubStream() {
+						@Override
+						public void append() {
+							js.appendReferenceTo(cgSource);
+							js.append(".at(");
+							js.appendReferenceTo(cgIterator);
+							js.append(")");
+						}
+					};
+					js.appendClassCast(cgCoIterator, castBody2);
+					js.append(";\n");
+				}
+			}
+			//
+			// Declare iteration body.
+			//
+			js.appendCommentWithOCL(null, cgBody.getAst());
+			if (js.appendLocalStatements(cgBody)) {
+				js.append("//\n");
+				if (iterationHelper.appendUpdate(js, cgIterationCallExp)) {
+					flowContinues = true;
+				}
+			}
+			if (!isMap && (cgCoIterator != null)) {
+				js.appendReferenceTo(cgCoIterator);
+				js.append(" = ");
+				js.appendReferenceTo(cgCoIterator);
+				js.append(".addInteger(");
+				js.appendClassReference(null, ValueUtil.class);
+				js.append(".ONE_VALUE);\n");
+			}
+			//
+			//	Declare loop tail
+			//
+			js.popIndentation();
+			js.append("}\n");
 		}
-		//
-		//	Declare loop tail
-		//
-		js.popIndentation();
-		js.append("}\n");
+		finally {
+			localContext = savedLocalContext;
+		}
 		return flowContinues;
 	}
 
@@ -1314,7 +1321,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	@Override
 	public @NonNull Boolean visitCGCatchExp(@NonNull CGCatchExp cgCatchExp) {
 		CGValuedElement cgSource = getExpression(cgCatchExp.getSource());
-		final String thrownName = getVariantResolvedName(cgSource, context.getTHROWN_NameVariant());
+		final String thrownName = getVariantResolvedName(cgCatchExp, context.getTHROWN_NameVariant());
 		if (cgSource.isNonInvalid()) {
 			if (!js.appendLocalStatements(cgSource)) {
 				return false;
@@ -2629,10 +2636,11 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 				// The following fallback would not be required if the init name propagated better, see testSysML_QUDV
 				// (a rewrite of an init might fail to re-down-propagate the variable name).
 				NameResolution varNameResolution = cgVariable.getNameResolution();
-				if (varNameResolution == varNameResolution.getBaseNameResolution()) {			// A variant did not need propagating.
-					NameResolution initNameResolution = cgInit.getNameResolution().getBaseNameResolution();
+			//	if (varNameResolution == varNameResolution.getNameResolution()) {			// A variant did not need propagating.
+					NameResolution initNameResolution = cgInit.getNameResolution();//.getNameResolution();
 					if (varNameResolution != initNameResolution) {
 						boolean hasAccess = false;
+						assert false;
 						Iterable<@NonNull CGValuedElement> cgElements = varNameResolution.getCGElements();
 						if (cgElements != null) {
 							for (CGValuedElement cgElement : cgElements) {
@@ -2652,7 +2660,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 							js.append(";\n");
 						}
 					}
-				}
+			//	}
 			}
 		}
 		return true;
