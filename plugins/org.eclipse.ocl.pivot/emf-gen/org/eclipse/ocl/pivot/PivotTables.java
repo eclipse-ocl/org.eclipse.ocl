@@ -79,20 +79,10 @@ public class PivotTables extends AbstractTables
 	/**
 	 *	Constants used by auto-generated code.
 	 */
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId COL_ = TypeId.COLLECTION;
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId COL__0 = TypeId.COLLECTION;
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_ = TypeId.SET;
 	public static final /*@NonInvalid*/ @NonNull RootPackageId PACKid_$metamodel$ = IdManager.getRootPackageId("$metamodel$");
-	public static final /*@NonInvalid*/ @NonNull IntegerValue INT_0 = ValueUtil.integerValueOf("0");
-	public static final /*@NonInvalid*/ @NonNull IntegerValue INT_1 = ValueUtil.integerValueOf("1");
-	public static final /*@NonInvalid*/ @NonNull String STR__32 = " ";
-	public static final /*@NonInvalid*/ @NonNull String STR_Missing_32_initializers_c = "Missing initializers:";
-	public static final /*@NonInvalid*/ @NonNull String STR_Unexpected_32_initializers_c = "Unexpected initializers:";
-	public static final /*@NonInvalid*/ @NonNull String STR_closure = "closure";
-	public static final /*@NonInvalid*/ @NonNull String STR_collect = "collect";
-	public static final /*@NonInvalid*/ @NonNull String STR_ocl = "ocl";
-	public static final /*@NonInvalid*/ @NonNull String STR_sortedBy = "sortedBy";
-	public static final /*@NonInvalid*/ @NonNull EnumerationId ENUMid_AssociativityKind = PivotTables.PACKid_$metamodel$.getEnumerationId("AssociativityKind");
-	public static final /*@NonInvalid*/ @NonNull EnumerationId ENUMid_CollectionKind = PivotTables.PACKid_$metamodel$.getEnumerationId("CollectionKind");
-	public static final /*@NonInvalid*/ @NonNull EnumerationId ENUMid_PseudostateKind = PivotTables.PACKid_$metamodel$.getEnumerationId("PseudostateKind");
-	public static final /*@NonInvalid*/ @NonNull EnumerationId ENUMid_TransitionKind = PivotTables.PACKid_$metamodel$.getEnumerationId("TransitionKind");
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_Annotation = PivotTables.PACKid_$metamodel$.getClassId("Annotation", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_AssociationClass = PivotTables.PACKid_$metamodel$.getClassId("AssociationClass", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_AssociationClassCallExp = PivotTables.PACKid_$metamodel$.getClassId("AssociationClassCallExp", 0);
@@ -120,7 +110,6 @@ public class PivotTables extends AbstractTables
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_DynamicElement = PivotTables.PACKid_$metamodel$.getClassId("DynamicElement", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_DynamicProperty = PivotTables.PACKid_$metamodel$.getClassId("DynamicProperty", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_DynamicType = PivotTables.PACKid_$metamodel$.getClassId("DynamicType", 0);
-	public static final /*@NonInvalid*/ @NonNull DataTypeId DATAid_EcoreObject = PivotTables.PACKid_$metamodel$.getDataTypeId("EcoreObject", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_Element = PivotTables.PACKid_$metamodel$.getClassId("Element", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_ElementExtension = PivotTables.PACKid_$metamodel$.getClassId("ElementExtension", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_EnumLiteralExp = PivotTables.PACKid_$metamodel$.getClassId("EnumLiteralExp", 0);
@@ -143,7 +132,6 @@ public class PivotTables extends AbstractTables
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_LetExp = PivotTables.PACKid_$metamodel$.getClassId("LetExp", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_LetVariable = PivotTables.PACKid_$metamodel$.getClassId("LetVariable", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_Library = PivotTables.PACKid_$metamodel$.getClassId("Library", 0);
-	public static final /*@NonInvalid*/ @NonNull DataTypeId DATAid_LibraryFeature = PivotTables.PACKid_$metamodel$.getDataTypeId("LibraryFeature", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_LoopExp = PivotTables.PACKid_$metamodel$.getClassId("LoopExp", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_MapLiteralExp = PivotTables.PACKid_$metamodel$.getClassId("MapLiteralExp", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_MapLiteralPart = PivotTables.PACKid_$metamodel$.getClassId("MapLiteralPart", 0);
@@ -155,8 +143,9 @@ public class PivotTables extends AbstractTables
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_Namespace = PivotTables.PACKid_$metamodel$.getClassId("Namespace", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_NavigationCallExp = PivotTables.PACKid_$metamodel$.getClassId("NavigationCallExp", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_OCLExpression = PivotTables.PACKid_$metamodel$.getClassId("OCLExpression", 0);
-	public static final /*@NonInvalid*/ @NonNull DataTypeId DATAid_Object = PivotTables.PACKid_$metamodel$.getDataTypeId("Object", 0);
+	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_OclComparable = PivotTables.PACKid_$metamodel$.getClassId("OclComparable", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_OclElement = PivotTables.PACKid_$metamodel$.getClassId("OclElement", 0);
+	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_OclType = PivotTables.PACKid_$metamodel$.getClassId("OclType", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_Operation = PivotTables.PACKid_$metamodel$.getClassId("Operation", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_OperationCallExp = PivotTables.PACKid_$metamodel$.getClassId("OperationCallExp", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_OppositePropertyCallExp = PivotTables.PACKid_$metamodel$.getClassId("OppositePropertyCallExp", 0);
@@ -173,13 +162,12 @@ public class PivotTables extends AbstractTables
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_Property = PivotTables.PACKid_$metamodel$.getClassId("Property", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_PropertyCallExp = PivotTables.PACKid_$metamodel$.getClassId("PropertyCallExp", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_Pseudostate = PivotTables.PACKid_$metamodel$.getClassId("Pseudostate", 0);
+	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_ReferringElement = PivotTables.PACKid_$metamodel$.getClassId("ReferringElement", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_Region = PivotTables.PACKid_$metamodel$.getClassId("Region", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_ResultVariable = PivotTables.PACKid_$metamodel$.getClassId("ResultVariable", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_SelfType = PivotTables.PACKid_$metamodel$.getClassId("SelfType", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_SendSignalAction = PivotTables.PACKid_$metamodel$.getClassId("SendSignalAction", 0);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SEQ_PRIMid_Integer = TypeId.SEQUENCE.getSpecializedId(TypeId.INTEGER, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_SequenceType = PivotTables.PACKid_$metamodel$.getClassId("SequenceType", 0);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_PRIMid_String = TypeId.SET.getSpecializedId(TypeId.STRING, true, ValueUtil.ONE_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_SetType = PivotTables.PACKid_$metamodel$.getClassId("SetType", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_ShadowExp = PivotTables.PACKid_$metamodel$.getClassId("ShadowExp", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_ShadowPart = PivotTables.PACKid_$metamodel$.getClassId("ShadowPart", 0);
@@ -210,13 +198,30 @@ public class PivotTables extends AbstractTables
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_Vertex = PivotTables.PACKid_$metamodel$.getClassId("Vertex", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_VoidType = PivotTables.PACKid_$metamodel$.getClassId("VoidType", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_WildcardType = PivotTables.PACKid_$metamodel$.getClassId("WildcardType", 0);
-	public static final /*@NonInvalid*/ @NonNull TuplePartId PARTid__0 = IdManager.getTuplePartId(0, "message", TypeId.STRING);
-	public static final /*@NonInvalid*/ @NonNull TuplePartId PARTid_ = IdManager.getTuplePartId(1, "status", TypeId.BOOLEAN);
-	public static final /*@NonInvalid*/ @NonNull EnumerationLiteralId ELITid_Bag = PivotTables.ENUMid_CollectionKind.getEnumerationLiteralId("Bag");
-	public static final /*@NonInvalid*/ @NonNull EnumerationLiteralId ELITid_Collection = PivotTables.ENUMid_CollectionKind.getEnumerationLiteralId("Collection");
-	public static final /*@NonInvalid*/ @NonNull EnumerationLiteralId ELITid_OrderedSet = PivotTables.ENUMid_CollectionKind.getEnumerationLiteralId("OrderedSet");
-	public static final /*@NonInvalid*/ @NonNull EnumerationLiteralId ELITid_Sequence = PivotTables.ENUMid_CollectionKind.getEnumerationLiteralId("Sequence");
-	public static final /*@NonInvalid*/ @NonNull EnumerationLiteralId ELITid_Set = PivotTables.ENUMid_CollectionKind.getEnumerationLiteralId("Set");
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId COL_TMPLid_ = TypeId.COLLECTION.getSpecializedId(IdManager.getTemplateParameterId(0), true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull DataTypeId DATAid_EcoreObject = PivotTables.PACKid_$metamodel$.getDataTypeId("EcoreObject", 0);
+	public static final /*@NonInvalid*/ @NonNull DataTypeId DATAid_LibraryFeature = PivotTables.PACKid_$metamodel$.getDataTypeId("LibraryFeature", 0);
+	public static final /*@NonInvalid*/ @NonNull DataTypeId DATAid_Object = PivotTables.PACKid_$metamodel$.getDataTypeId("Object", 0);
+	public static final /*@NonInvalid*/ @NonNull EnumerationId ENUMid_AssociativityKind = PivotTables.PACKid_$metamodel$.getEnumerationId("AssociativityKind");
+	public static final /*@NonInvalid*/ @NonNull EnumerationId ENUMid_CollectionKind = PivotTables.PACKid_$metamodel$.getEnumerationId("CollectionKind");
+	public static final /*@NonInvalid*/ @NonNull EnumerationId ENUMid_PseudostateKind = PivotTables.PACKid_$metamodel$.getEnumerationId("PseudostateKind");
+	public static final /*@NonInvalid*/ @NonNull EnumerationId ENUMid_TransitionKind = PivotTables.PACKid_$metamodel$.getEnumerationId("TransitionKind");
+	public static final /*@NonInvalid*/ @NonNull IntegerValue INT_0 = ValueUtil.integerValueOf("0");
+	public static final /*@NonInvalid*/ @NonNull IntegerValue INT_1 = ValueUtil.integerValueOf("1");
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SEQ_PRIMid_Integer = TypeId.SEQUENCE.getSpecializedId(TypeId.INTEGER, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_PRIMid_OclSelf = TypeId.SET.getSpecializedId(TypeId.OCL_SELF, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_PRIMid_String = TypeId.SET.getSpecializedId(TypeId.STRING, true, ValueUtil.ONE_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_TMPLid__0 = TypeId.SET.getSpecializedId(IdManager.getTemplateParameterId(0), true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_TMPLid_ = TypeId.SET.getSpecializedId(IdManager.getTemplateParameterId(1), true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull String STR_Missing_32_initializers_c = "Missing initializers:";
+	public static final /*@NonInvalid*/ @NonNull String STR_Unexpected_32_initializers_c = "Unexpected initializers:";
+	public static final /*@NonInvalid*/ @NonNull String STR__32 = " ";
+	public static final /*@NonInvalid*/ @NonNull String STR_closure = "closure";
+	public static final /*@NonInvalid*/ @NonNull String STR_collect = "collect";
+	public static final /*@NonInvalid*/ @NonNull String STR_ocl = "ocl";
+	public static final /*@NonInvalid*/ @NonNull String STR_sortedBy = "sortedBy";
+	public static final /*@NonInvalid*/ @NonNull TuplePartId PARTid_ = IdManager.getTuplePartId(0, "message", TypeId.STRING);
+	public static final /*@NonInvalid*/ @NonNull TuplePartId PARTid__0 = IdManager.getTuplePartId(1, "status", TypeId.BOOLEAN);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_Annotation = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_Annotation, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_AssociationClassCallExp = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_AssociationClassCallExp, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_CallOperationAction = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_CallOperationAction, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
@@ -245,8 +250,8 @@ public class PivotTables extends AbstractTables
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_OppositePropertyCallExp = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_OppositePropertyCallExp, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_Package = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_Package, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_PrimitiveType = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_PrimitiveType, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_Property = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_Property, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_Property_0 = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_Property, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_Property_0 = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_Property, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_Property = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_Property, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_PropertyCallExp = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_PropertyCallExp, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_Region = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_Region, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_SendSignalAction = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_SendSignalAction, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
@@ -265,6 +270,11 @@ public class PivotTables extends AbstractTables
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_VariableDeclaration = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_VariableDeclaration, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_VariableExp = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_VariableExp, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_WildcardType = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_WildcardType, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull EnumerationLiteralId ELITid_Bag = PivotTables.ENUMid_CollectionKind.getEnumerationLiteralId("Bag");
+	public static final /*@NonInvalid*/ @NonNull EnumerationLiteralId ELITid_Collection = PivotTables.ENUMid_CollectionKind.getEnumerationLiteralId("Collection");
+	public static final /*@NonInvalid*/ @NonNull EnumerationLiteralId ELITid_OrderedSet = PivotTables.ENUMid_CollectionKind.getEnumerationLiteralId("OrderedSet");
+	public static final /*@NonInvalid*/ @NonNull EnumerationLiteralId ELITid_Sequence = PivotTables.ENUMid_CollectionKind.getEnumerationLiteralId("Sequence");
+	public static final /*@NonInvalid*/ @NonNull EnumerationLiteralId ELITid_Set = PivotTables.ENUMid_CollectionKind.getEnumerationLiteralId("Set");
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_CollectionLiteralPart = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_CollectionLiteralPart, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_Detail = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_Detail, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_Element = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_Element, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
@@ -306,8 +316,8 @@ public class PivotTables extends AbstractTables
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_ProfileApplication = TypeId.SET.getSpecializedId(PivotTables.CLSSid_ProfileApplication, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Property = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Property, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Pseudostate = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Pseudostate, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Region = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Region, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Region_0 = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Region, true, ValueUtil.ONE_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Region_0 = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Region, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Region = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Region, true, ValueUtil.ONE_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_SendSignalAction = TypeId.SET.getSpecializedId(PivotTables.CLSSid_SendSignalAction, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Slot = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Slot, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_State = TypeId.SET.getSpecializedId(PivotTables.CLSSid_State, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
@@ -319,7 +329,7 @@ public class PivotTables extends AbstractTables
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Trigger = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Trigger, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Type = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Type, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Vertex = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Vertex, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull TupleTypeId TUPLid_ = IdManager.getTupleTypeId("Tuple", PivotTables.PARTid__0, PivotTables.PARTid_);
+	public static final /*@NonInvalid*/ @NonNull TupleTypeId TUPLid_ = IdManager.getTupleTypeId("Tuple", PivotTables.PARTid_, PivotTables.PARTid__0);
 
 	/**
 	 *	The type parameters for templated types and operations.

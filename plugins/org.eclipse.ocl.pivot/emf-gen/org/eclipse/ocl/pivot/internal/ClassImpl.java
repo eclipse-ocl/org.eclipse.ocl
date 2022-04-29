@@ -700,25 +700,25 @@ implements org.eclipse.ocl.pivot.Class {
 			final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
 			final /*@NonInvalid*/ @NonNull IntegerValue severity = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.CLASS___VALIDATE_UNIQUE_INVARIANT_NAME__DIAGNOSTICCHAIN_MAP);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity, PivotTables.INT_0).booleanValue();
-			/*@NonInvalid*/ boolean IF__l_q;
+			/*@NonInvalid*/ boolean IF_le;
 			if (le) {
-				IF__l_q = true;
+				IF_le = true;
 			}
 			else {
 				/*@Caught*/ @NonNull Object CAUGHT_result;
 				try {
-					final /*@NonInvalid*/ @NonNull List<Constraint> ownedInvariants = this.getOwnedInvariants();
-					final /*@NonInvalid*/ @NonNull SetValue BOXED_ownedInvariants = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Constraint, ownedInvariants);
+					final /*@NonInvalid*/ @NonNull List<Constraint> ownedInvariants_0 = this.getOwnedInvariants();
+					final /*@NonInvalid*/ @NonNull SetValue BOXED_ownedInvariants_0 = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Constraint, ownedInvariants_0);
 					/*@Thrown*/ @NonNull Accumulator accumulator = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Constraint);
-					@NonNull Iterator<Object> ITER_1_ = BOXED_ownedInvariants.iterator();
+					@NonNull Iterator<Object> ITER__1 = BOXED_ownedInvariants_0.iterator();
 					/*@Thrown*/ boolean result;
 					while (true) {
-						if (!ITER_1_.hasNext()) {
+						if (!ITER__1.hasNext()) {
 							result = true;
 							break;
 						}
 						@SuppressWarnings("null")
-						/*@NonInvalid*/ @NonNull Constraint _1 = (@NonNull Constraint)ITER_1_.next();
+						/*@NonInvalid*/ @NonNull Constraint _1 = (@NonNull Constraint)ITER__1.next();
 						/**
 						 * name
 						 */
@@ -738,9 +738,9 @@ implements org.eclipse.ocl.pivot.Class {
 					CAUGHT_result = ValueUtil.createInvalidValue(THROWN_result);
 				}
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, CAUGHT_result, PivotTables.INT_0).booleanValue();
-				IF__l_q = logDiagnostic;
+				IF_le = logDiagnostic;
 			}
-			return IF__l_q;
+			return IF_le;
 		}
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);
@@ -1311,17 +1311,17 @@ implements org.eclipse.ocl.pivot.Class {
 			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this);
 			final /*@NonInvalid*/ @NonNull IntegerValue severity = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.CLASS___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity, PivotTables.INT_0).booleanValue();
-			/*@NonInvalid*/ boolean IF__l_q;
+			/*@NonInvalid*/ boolean IF_le;
 			if (le) {
-				IF__l_q = true;
+				IF_le = true;
 			}
 			else {
 				final /*@NonInvalid*/ @Nullable String name = this.getName();
 				final /*@NonInvalid*/ boolean result = name != null;
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, result, PivotTables.INT_0).booleanValue();
-				IF__l_q = logDiagnostic;
+				IF_le = logDiagnostic;
 			}
-			return IF__l_q;
+			return IF_le;
 		}
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);
