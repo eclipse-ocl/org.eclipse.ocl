@@ -2143,12 +2143,12 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		// (a rewrite of an in might fail to re-down-propagate the let name).
 		NameResolution inNameResolution = cgIn.getNameResolution();
 		NameResolution letNameResolution = cgLetExp.getNameResolution();
-	/*	if (inNameResolution != letNameResolution) {
+		if (inNameResolution != letNameResolution) {
 			js.appendDeclaration(cgLetExp);
 			js.append(" = ");
 			js.appendValueName(cgIn);
 			js.append(";\n");
-		} */
+		}
 		return true;
 	}
 
