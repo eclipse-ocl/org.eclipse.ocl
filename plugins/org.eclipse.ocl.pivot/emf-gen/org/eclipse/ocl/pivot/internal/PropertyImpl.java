@@ -1036,8 +1036,8 @@ implements Property {
 		else {
 			/*@Caught*/ @NonNull Object CAUGHT_includes;
 			try {
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Class_3 = idResolver.getClass(PivotTables.CLSSid_Class, null);
-				final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Class oclAsType = (org.eclipse.ocl.pivot.@Nullable Class)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, container, TYP_Class_3);
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Class_1 = idResolver.getClass(PivotTables.CLSSid_Class, null);
+				final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Class oclAsType = (org.eclipse.ocl.pivot.@Nullable Class)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, container, TYP_Class_1);
 				if (oclAsType == null) {
 					throw new InvalidValueException("Null source for \'Class::ownedProperties\'");
 				}
@@ -1107,22 +1107,22 @@ implements Property {
 					/*@Caught*/ @Nullable Object CAUGHT_and;
 					try {
 						final /*@NonInvalid*/ @Nullable LanguageExpression ownedExpression_0 = this.getOwnedExpression();
-						final /*@NonInvalid*/ boolean IsEQ__0 = ownedExpression_0 != null;
+						final /*@NonInvalid*/ boolean IsEQ_ = ownedExpression_0 != null;
 						final /*@Thrown*/ @Nullable Boolean and;
-						if (!IsEQ__0) {
+						if (!IsEQ_) {
 							and = ValueUtil.FALSE_VALUE;
 						}
 						else {
 							/*@Caught*/ @NonNull Object CAUGHT_IsEQ_;
 							try {
-								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_ExpressionInOCL = idResolver.getClass(PivotTables.CLSSid_ExpressionInOCL, null);
-								final /*@Thrown*/ @Nullable ExpressionInOCL oclAsType = (@Nullable ExpressionInOCL)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, ownedExpression_0, TYP_ExpressionInOCL);
+								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_ExpressionInOCL_0 = idResolver.getClass(PivotTables.CLSSid_ExpressionInOCL, null);
+								final /*@Thrown*/ @Nullable ExpressionInOCL oclAsType = (@Nullable ExpressionInOCL)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, ownedExpression_0, TYP_ExpressionInOCL_0);
 								if (oclAsType == null) {
 									throw new InvalidValueException("Null source for \'ExpressionInOCL::ownedBody\'");
 								}
 								final /*@Thrown*/ @Nullable OCLExpression ownedBody = oclAsType.getOwnedBody();
-								final /*@Thrown*/ boolean IsEQ_ = ownedBody != null;
-								CAUGHT_IsEQ_ = IsEQ_;
+								final /*@Thrown*/ boolean IsEQ__0 = ownedBody != null;
+								CAUGHT_IsEQ_ = IsEQ__0;
 							}
 							catch (Exception THROWN_CAUGHT_IsEQ_) {
 								CAUGHT_IsEQ_ = ValueUtil.createInvalidValue(THROWN_CAUGHT_IsEQ_);
@@ -1230,8 +1230,8 @@ implements Property {
 					else {
 						/*@Caught*/ @Nullable Object CAUGHT_or;
 						try {
-							final /*@NonInvalid*/ @Nullable LanguageExpression ownedExpression_0 = this.getOwnedExpression();
-							final /*@NonInvalid*/ boolean IsEQ_ = ownedExpression_0 != null;
+							final /*@NonInvalid*/ @Nullable LanguageExpression ownedExpression = this.getOwnedExpression();
+							final /*@NonInvalid*/ boolean IsEQ_ = ownedExpression != null;
 							final /*@NonInvalid*/ @Nullable Boolean or_0;
 							if (IsEQ_) {
 								or_0 = ValueUtil.TRUE_VALUE;

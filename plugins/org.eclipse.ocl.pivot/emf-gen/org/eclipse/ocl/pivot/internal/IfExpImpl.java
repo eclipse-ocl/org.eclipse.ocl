@@ -406,9 +406,9 @@ implements IfExp {
 				IF_le = true;
 			}
 			else {
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OclInvalid_1 = idResolver.getClass(TypeId.OCL_INVALID, null);
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OclInvalid_2 = idResolver.getClass(TypeId.OCL_INVALID, null);
 				final /*@NonInvalid*/ @Nullable Type type = this.getType();
-				final /*@NonInvalid*/ @NonNull InvalidType CAST_TYP_OclInvalid = (InvalidType)TYP_OclInvalid_1;
+				final /*@NonInvalid*/ @NonNull InvalidType CAST_TYP_OclInvalid = (InvalidType)TYP_OclInvalid_2;
 				final /*@NonInvalid*/ boolean result = (type != null) ? (type.getTypeId() != CAST_TYP_OclInvalid.getTypeId()) : true;
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, result, PivotTables.INT_0).booleanValue();
 				IF_le = logDiagnostic;

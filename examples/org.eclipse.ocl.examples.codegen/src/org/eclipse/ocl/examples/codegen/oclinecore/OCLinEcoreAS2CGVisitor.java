@@ -15,7 +15,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
-import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
+import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
@@ -26,19 +26,13 @@ import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Variable;
-import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 {
-	protected final @NonNull OCLinEcoreGlobalContext globalContext;
-
-	public OCLinEcoreAS2CGVisitor(@NonNull CodeGenAnalyzer analyzer, @NonNull OCLinEcoreGlobalContext globalContext) {
-		super(analyzer);
-		this.globalContext = globalContext;
-//		EnvironmentFactoryInternal environmentFactory = analyzer.getCodeGenerator().getEnvironmentFactory();
-//		createSeverityOperations(environmentFactory);
+	public OCLinEcoreAS2CGVisitor(@NonNull OCLinEcoreCodeGenerator codeGenerator) {
+		super(codeGenerator);
 	}
 
 //	private void createSeverityOperations(@NonNull EnvironmentFactoryInternal environmentFactory) {
@@ -71,14 +65,8 @@ public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 	} */
 
 	@Override
-	public @NonNull CGParameter getSelfParameter(@NonNull VariableDeclaration aParameter) {
-		CGParameter cgParameter = super.getThisParameter(aParameter);
-	//	assert (PivotConstants.SELF_NAME.equals(aParameter.getName())) {
-	//	globalContext.getThisNameResolution().addSecondaryElement(cgParameter);
-	//	globalContext.getSelfNameResolution().addSecondaryElement(cgParameter);
-		//	cgParameter.setValueName(JavaConstants.THIS_NAME);
-	//	}
-		return cgParameter;
+	public @NonNull OCLinEcoreCodeGenerator getCodeGenerator() {
+		return (OCLinEcoreCodeGenerator)context;
 	}
 
 /*	@Override
@@ -94,39 +82,44 @@ public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 	} */
 
 	@Override
-	public @Nullable CGConstraint visitConstraint(@NonNull Constraint element) {
+	public @Nullable CGConstraint visitConstraint(@NonNull Constraint asConstraint) {
 		CGConstraint cgConstraint = CGModelFactory.eINSTANCE.createCGConstraint();
-		pushDeclarationContext(cgConstraint, element);
-		LanguageExpression specification = element.getOwnedSpecification();
+		LanguageExpression specification = asConstraint.getOwnedSpecification();
 		if (specification != null) {
+			assert cgConstraint.basicGetNameResolution() == null;
+			cgConstraint.setAst(asConstraint);
+//			getNameManager().declarePreferredName(cgConstraint);
+			pushNameManager(cgConstraint);
+			NestedNameManager nameManager = getNameManager();
 			try {
 				ExpressionInOCL oldQuery = environmentFactory.parseSpecification(specification);
-				String constraintName = PivotUtil.getName(element);
-				EObject eContainer = element.eContainer();
+				String constraintName = PivotUtil.getName(asConstraint);
+				EObject eContainer = asConstraint.eContainer();
 				if (eContainer instanceof NamedElement) {
 					String containerName = ((NamedElement)eContainer).getName();
 					if (containerName != null) {
 						constraintName = containerName + "::" + constraintName;
 					}
 				}
-				ExpressionInOCL asSynthesizedQuery = ((OCLinEcoreCodeGenerator)codeGenerator).rewriteQuery(oldQuery);
+				ExpressionInOCL asSynthesizedQuery = getCodeGenerator().rewriteQuery(oldQuery);
 				OCLExpression asSynthesizedExpression = asSynthesizedQuery.getOwnedBody();
 			//	OCLinEcoreLocalContext localContext = (OCLinEcoreLocalContext) globalContext.basicGetLocalContext(cgConstraint);
 				Variable contextVariable = asSynthesizedQuery.getOwnedContext();
 				if (contextVariable != null) {
-					CGParameter cgParameter = getSelfParameter(contextVariable);
+					CGParameter cgParameter = nameManager.getSelfParameter(contextVariable);
 					cgConstraint.getParameters().add(cgParameter);
 				}
 				for (@NonNull Variable parameterVariable : PivotUtil.getOwnedParameters(asSynthesizedQuery)) {
-					CGParameter cgParameter = getParameter(parameterVariable, parameterVariable.getName());
+					CGParameter cgParameter = nameManager.getParameter(parameterVariable, parameterVariable.getName());
 					cgConstraint.getParameters().add(cgParameter);
 				}
 				cgConstraint.setBody(doVisit(CGValuedElement.class, asSynthesizedExpression));
 			} catch (ParserException e) {
 				throw new WrappedException(e);
+			} finally {
+				popNameManager();
 			}
 		}
-		popLocalContext();
 		return cgConstraint;
 	}
 }

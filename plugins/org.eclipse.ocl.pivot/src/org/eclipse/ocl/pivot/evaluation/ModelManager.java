@@ -115,7 +115,8 @@ public interface ModelManager
 	 *
 	 * @since 1.18
 	 */
-	default @Nullable Object basicGetForeignPropertyValue(@Nullable Object object, @NonNull PropertyId propertyId) {
+	default /*@NoThrow*/ @Nullable Object basicGetForeignPropertyValue(@Nullable Object object, @NonNull PropertyId propertyId)
+			throws VirtualMachineError {	// Just VirtualMachineError explicitly means @NoThrow CG-wise
 		return null;
 	}
 
@@ -142,7 +143,8 @@ public interface ModelManager
 	/**
 	 * @since 1.18
 	 */
-	default @Nullable Object getForeignPropertyValue(@Nullable Object object, @NonNull PropertyId propertyId, @Nullable OCLExpression initExpression, @Nullable Object defaultValue) {
+	default /*@NoThrow*/ @Nullable Object getForeignPropertyValue(@Nullable Object object, @NonNull PropertyId propertyId, @Nullable OCLExpression initExpression, @Nullable Object defaultValue)
+			throws VirtualMachineError {	// Just VirtualMachineError explicitly means @NoThrow CG-wise
 		return defaultValue;
 	}
 
@@ -173,7 +175,8 @@ public interface ModelManager
 	 *
 	 * @since 1.18
 	 */
-	default @Nullable Object setForeignPropertyValue(@Nullable Object object, @NonNull PropertyId propertyId, @NonNull Object value) {
+	default /*@NoThrow*/ @Nullable Object setForeignPropertyValue(@Nullable Object object, @NonNull PropertyId propertyId, @NonNull Object value)
+			throws VirtualMachineError {	// Just VirtualMachineError explicitly means @NoThrow CG-wise
 		return null;
 	}
 

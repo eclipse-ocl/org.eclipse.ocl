@@ -16,7 +16,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCatchExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
@@ -177,12 +176,6 @@ public class CGCatchExpImpl extends CGSourcedCallExpImpl implements CGCatchExp {
 	public void setCaught(boolean isCaught) {
 		assert isCaught;
 		super.setCaught(true);
-	}
-
-	@Override
-	public void setNameResolution(@NonNull NameResolution nameResolution) {
-		// TODO Auto-generated method stub
-		super.setNameResolution(nameResolution);
 	}
 
 } //CGCatchExpImpl

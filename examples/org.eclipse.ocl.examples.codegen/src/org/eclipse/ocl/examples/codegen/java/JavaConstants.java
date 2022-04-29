@@ -57,9 +57,9 @@ public class JavaConstants {
 	public static final @NonNull String THIS_NAME = "this";
 	public static final @NonNull String TYPE_ID_NAME = "typeId";
 
-	public static final @NonNull String FOREIGN_CLASS_PREFIX = "FC_";
-	public static final @NonNull String FOREIGN_OPERATION_PREFIX = "FO_";
-	public static final @NonNull String FOREIGN_PROPERTY_PREFIX = "FP_";
+	public static final @NonNull String EXTERNAL_CLASS_PREFIX = "EC_";
+	public static final @NonNull String EXTERNAL_OPERATION_PREFIX = "EO_";
+	public static final @NonNull String EXTERNAL_PROPERTY_PREFIX = "EP_";
 
 	public static final @NonNull TypeId CLASS_TYPE_ID = getJavaTypeId(org.eclipse.ocl.pivot.Class.class);
 	public static final @NonNull TypeId PROPERTY_TYPE_ID = getJavaTypeId(Property.class);

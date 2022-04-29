@@ -11,6 +11,7 @@
 package org.eclipse.ocl.examples.codegen.java;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -48,6 +49,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTupleExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
@@ -229,7 +231,6 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	private final @NonNull NameVariant THROWN_NameVariant;
 	private final @NonNull NameVariant TYPE_NameVariant;
 
-
 	@Deprecated /* @deprecated pass a genmodel - necessary for UML support */
 	public JavaCodeGenerator(@NonNull EnvironmentFactoryInternal environmentFactory) {
 		this(environmentFactory, null);
@@ -256,11 +257,11 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	}
 
 	public @NonNull CG2JavaNameVisitor createCG2JavaNameVisitor() {
-		return new CG2JavaNameVisitor(getGlobalContext());
+		return new CG2JavaNameVisitor(this);
 	}
 
 	public @NonNull CG2JavaPreVisitor createCG2JavaPreVisitor() {
-		return new CG2JavaPreVisitor(getGlobalContext());
+		return new CG2JavaPreVisitor(this);
 	}
 
 	protected void createConstrainedOperations(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGClass cgClass) {
@@ -276,7 +277,17 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 
 	@Override
 	public @NonNull DependencyVisitor createDependencyVisitor() {
-		return new JavaDependencyVisitor(getAnalyzer(), getGlobalContext(), getGlobalPlace());
+		return new JavaDependencyVisitor(this, getGlobalPlace());
+	}
+
+	public @NonNull CGParameter createExecutorParameter() {
+	//	assert executorIsParameter;
+		NameResolution executorName = globalNameManager.getExecutorNameResolution();
+		CGParameter executorParameter = getAnalyzer().createCGParameter(executorName, getAnalyzer().getCGTypeId(JavaConstants.EXECUTOR_TYPE_ID), true);
+	//	executorParameter.setValueName(executorName);
+		executorParameter.setNonInvalid();
+		executorParameter.setNonNull();
+		return executorParameter;
 	}
 
 	@Override
@@ -291,7 +302,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 
 	@Override
 	protected @NonNull GlobalNameManager createGlobalNameManager() {
-		return new GlobalNameManager(createNameManagerHelper());
+		return new GlobalNameManager(this, createNameManagerHelper());
 	}
 
 	protected @NonNull Id2EClassVisitor createId2EClassVisitor() {
@@ -307,17 +318,31 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		return new JavaImportNameManager();
 	}
 
-	public @NonNull JavaStream createJavaStream(@NonNull CG2JavaVisitor<@NonNull ?> cg2JavaVisitor) {
-		return new JavaStream(this, cg2JavaVisitor);
+	public @NonNull JavaStream createJavaStream(@NonNull CG2JavaVisitor cg2javaVisitor) {
+		return new JavaStream(this, cg2javaVisitor);
 	}
 
 	protected @NonNull NameManagerHelper createNameManagerHelper() {
 		return new NameManagerHelper();
 	}
 
+	public @NonNull NestedNameManager createNestedNameManager(@NonNull NameManager outerNameManager, @NonNull CGNamedElement cgScope) {
+		return new NestedNameManager(this, outerNameManager, cgScope);
+	}
+
 	@Override
 	public @NonNull ReferencesVisitor createReferencesVisitor() {
 		return ReferencesVisitor.INSTANCE;
+	}
+
+//	@Deprecated /* @deprecated no longer used */
+	public @NonNull CGParameter createTypeIdParameter() {
+		NameResolution typeIdNameResolution = globalNameManager.getTypeIdNameResolution();
+		CGParameter typeIdParameter = getAnalyzer().createCGParameter(typeIdNameResolution, getAnalyzer().getCGTypeId(JavaConstants.TYPE_ID_TYPE_ID), true);
+	//	typeIdParameter.setValueName(typeIdName);
+		typeIdParameter.setNonInvalid();
+		typeIdParameter.setNonNull();
+		return typeIdParameter;
 	}
 
 	/**
@@ -383,6 +408,22 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		return true;
 	}
 
+	// Fold into visitInPostOrder
+	private void gatherNames(@NonNull CGValuedElement cgElement, @NonNull Map<@NonNull NameManager, @NonNull List<@NonNull CGValuedElement>> nameManager2namedElements) {
+		NameResolution nameResolution = cgElement.basicGetNameResolution();
+		assert nameResolution != null;
+		NameManager nameManager = nameResolution.getNameManager();
+		List<@NonNull CGValuedElement> namedElements = nameManager2namedElements.get(nameManager);
+		if (namedElements == null) {
+			namedElements = new ArrayList<>();
+			nameManager2namedElements.put(nameManager, namedElements);
+		}
+		namedElements.add(cgElement);
+		if (NameResolution.NAMES_GATHER.isActive()) {
+			NameResolution.NAMES_GATHER.println(NameUtil.debugSimpleName(cgElement) + " : " + NameUtil.debugSimpleName(nameResolution) + " in " + NameUtil.debugSimpleName(nameManager));
+		}
+	}
+
 	public @NonNull NameVariant getBODY_NameVariant() {
 		return BODY_NameVariant;
 	}
@@ -415,15 +456,12 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	}
 
 	@Override
-	public @NonNull String getForeignClassName(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+	public @NonNull String getExternalClassName(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		CodeGenString s = new CodeGenString(environmentFactory.getMetamodelManager(), false);
-		s.append(JavaConstants.FOREIGN_CLASS_PREFIX);
+		s.append(JavaConstants.EXTERNAL_CLASS_PREFIX);
 		s.appendAndEncodeQualifiedName(asClass);
 		return s.toString();
 	}
-
-	@Override
-	public abstract @NonNull JavaGlobalContext<@NonNull ? extends JavaCodeGenerator> getGlobalContext();
 
 	@Override
 	public @NonNull GlobalPlace getGlobalPlace() {
@@ -565,15 +603,15 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		return MGR_NameVariant;
 	}
 
-	@Override
+/*	@Override
 	public @NonNull NameResolution getNameResolution(@NonNull CGValuedElement cgElement) {
 		NameResolution nameResolution = cgElement.basicGetNameResolution(); //.getNameVariant(guardedNameVariant);
 		if (nameResolution == null) {
-			NestedNameManager nameManager = getGlobalContext().getLocalContext(cgElement).getNameManager();
-			nameResolution = nameManager.declareLazyName(cgElement);
+			NestedNameManager nameManager = globalNameManager.findNestedNameManager(cgElement);
+			nameResolution = nameManager.declareLazyName2(cgElement);
 		}
 		return nameResolution;
-	}
+	} */
 
 	public @NonNull String getQualifiedForeignClassName(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		assert false : "Unsupported getQualifiedForeignClassName";
@@ -624,7 +662,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		if (!(eOperation instanceof EOperation)) {
 			return null;
 		}
-		CGTypeId cgTypeId = getAnalyzer().getTypeId(asOperation.getOwningClass().getTypeId());
+		CGTypeId cgTypeId = getAnalyzer().getCGTypeId(asOperation.getOwningClass().getTypeId());
 		ElementId elementId = ClassUtil.nonNullState(cgTypeId.getElementId());
 		TypeDescriptor requiredTypeDescriptor = getUnboxedDescriptor(elementId);
 		String getAccessor = genModelHelper.getOperationAccessor(asOperation);
@@ -645,7 +683,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		if (!(eStructuralFeature instanceof EStructuralFeature)) {
 			return null;
 		}
-		CGTypeId cgTypeId = getAnalyzer().getTypeId(asProperty.getOwningClass().getTypeId());
+		CGTypeId cgTypeId = getAnalyzer().getCGTypeId(asProperty.getOwningClass().getTypeId());
 		ElementId elementId = ClassUtil.nonNullState(cgTypeId.getElementId());
 		TypeDescriptor requiredTypeDescriptor = getUnboxedDescriptor(elementId);
 		String getAccessor = genModelHelper.getGetAccessor((EStructuralFeature)eStructuralFeature);
@@ -724,9 +762,10 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	}
 
 	/**
-	 * Perform the overall optimization of the CG tree.
+	 * Perform the overall optimization of the CG tree culminating in CSE rewrites.
 	 */
 	protected void optimize(@NonNull CGPackage cgPackage) {
+		NameResolution.inhibitNameResolution = true;
 		CGModelResource resource = getCGResourceFactory().createResource(URI.createURI("cg.xmi"));
 		resource.getContents().add(cgPackage);
 		getAnalyzer().analyze(cgPackage);
@@ -734,16 +773,26 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		cgPackage.accept(cg2PreVisitor);
 		CommonSubexpressionEliminator cseEliminator = createCommonSubexpressionEliminator();
 		cseEliminator.optimize(cgPackage);
+	}
+
+	/**
+	 * Perform additional analysis of the final optimized CG tree; no rewrites occur.
+	 * Globals are identified and a hierarchy of name spaces is established to ensure that hierarchy unique names can be resolved.
+	 */
+	protected @Nullable Iterable<@NonNull CGValuedElement> pregenerate(@NonNull CGPackage cgPackage) {
 		CG2JavaNameVisitor cg2nameVisitor = createCG2JavaNameVisitor();
 		cgPackage.accept(cg2nameVisitor);
+		Iterable<@NonNull CGValuedElement> sortedGlobals = prepareGlobals();
+		resolveUniqueNames(sortedGlobals, cgPackage);
+		return sortedGlobals;
 	}
 
 	/**
 	 * After overall optimization, return a sorted list of global declarations.
 	 */
-	public @Nullable List<@NonNull CGValuedElement> prepareGlobals() {
+	private @Nullable List<@NonNull CGValuedElement> prepareGlobals() {
 		DependencyVisitor dependencyVisitor = createDependencyVisitor();
-		Collection<@NonNull CGValuedElement> globals = getGlobalContext().getGlobals();
+		Collection<@NonNull CGValuedElement> globals = globalNameManager.getGlobals();
 		for (@NonNull CGValuedElement cgGlobal : globals) {
 			assert cgGlobal.isGlobal();
 		}
@@ -752,27 +801,90 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		return sortedGlobals;
 	}
 
-	protected void resolveNames(@Nullable Iterable<@NonNull CGValuedElement> sortedGlobals, @NonNull CGPackage cgPackage) {
-		if (sortedGlobals != null) {
-			for (@NonNull CGValuedElement global : sortedGlobals) {
-				if (global instanceof CGTupleExp) {
-					getClass();		// XXX
+	/**
+	 * Propagate the parennt name hint down to the descendants of cgElement so that initializers for variables use a name
+	 * based on the user's name for the variable rather than a totally synthetic name for the functionality.
+	 */
+	protected void propagateNameResolution(@NonNull CGElement cgElement, @Nullable NameResolution parentNameResolution) {
+		for (EObject eObject : cgElement.eContents()) {					// XXX Surely preorder - no post order to satisfy bottom up dependency evaluation
+			if (eObject instanceof CGElement) {
+				CGElement cgChild = (CGElement)eObject;
+				EReference eContainmentFeature = cgChild.eContainmentFeature();
+				if (eContainmentFeature == CGModelPackage.Literals.CG_VARIABLE__INIT) {
+					CGVariable cgVariable = (@NonNull CGVariable)cgElement;
+					NameResolution nameResolution = cgVariable.basicGetNameResolution();
+					if (nameResolution == null) {
+						if (cgVariable.toString().contains("create('pkg'::A::bs)")) {
+							getClass();		// XXX
+						}
+						NestedNameManager nestedNameManager = globalNameManager.findNestedNameManager(cgVariable);
+						nameResolution = nestedNameManager.getNameResolution(cgVariable);
+					}
+					propagateNameResolution(cgChild, nameResolution);
 				}
-				// too soon assert global.getNameResolution().getNameManager().isGlobal();
-				visitInPostOrder(global);
+				else if (eContainmentFeature == CGModelPackage.Literals.CG_LET_EXP__INIT) {
+					propagateNameResolution(cgChild, null);
+				}
+				else if (eContainmentFeature == CGModelPackage.Literals.CG_LET_EXP__IN) {
+					propagateNameResolution(cgChild, parentNameResolution);
+				}
+				else if ((eContainmentFeature == CGModelPackage.Literals.CG_SOURCED_CALL_EXP__SOURCE) && (cgElement instanceof CGGuardExp)) {
+					propagateNameResolution(cgChild, parentNameResolution);	// Guard is an if predicate name re-use
+				}
+				else {
+					propagateNameResolution(cgChild, null);
+				}
 			}
 		}
-		for (@NonNull CGNamedElement cgNamedElment : getAnalyzer().getOrphans()) {
-			visitInPostOrder(cgNamedElment);
+		if (cgElement instanceof CGValuedElement) {
+			if (cgElement.eClass().getName().equals("CGFunction")) {
+				getClass();		// XXX
+			}
+			CGValuedElement cgValuedElement2 = (CGValuedElement)cgElement;
+			if (!cgValuedElement2.isInlined()) {
+				NameResolution nameResolution = cgValuedElement2.basicGetNameResolution();
+				if (nameResolution == null) {
+					if (cgValuedElement2.isGlobal()) {
+						nameResolution = globalNameManager.getNameResolution(cgValuedElement2);
+					}
+					else if (parentNameResolution != null) {
+						parentNameResolution.addCGElement(cgValuedElement2);
+					}
+					else {
+						NestedNameManager nameManager = globalNameManager.basicFindNestedNameManager(cgValuedElement2);
+						if (nameManager != null) {
+							nameResolution = nameManager.getNameResolution(cgValuedElement2);
+						}
+						else {
+							nameResolution = globalNameManager.getNameResolution(cgValuedElement2);
+						}
+					}
+				}
+				if (nameResolution != null) {
+					nameResolution.resolveNameHint();
+				}
+			}
+			for (EObject eObject : ((CGValuedElement)cgElement).getOwns()) {					// XXX Surely preorder - no post order to satisfy bottom up dependency evaluation
+				if (eObject instanceof CGElement) {
+					propagateNameResolution((CGElement)eObject, null);
+					if (eObject instanceof CGValuedElement) {
+						CGValuedElement cgValuedElement = (CGValuedElement)eObject;
+						if ((cgValuedElement.basicGetNameResolution() == null) && !cgValuedElement.isInlined()) {
+							NestedNameManager localNameManager = globalNameManager.findNestedNameManager(cgValuedElement);
+							localNameManager.getNameResolution(cgValuedElement);		// XXX redundant ??
+						}
+					}
+				}
+			}
 		}
-	//	System.out.println("-----------------resolveNames--------------------");
-		visitInPostOrder(cgPackage);
-		globalNameManager.assignNames();
-		CGValuedElementImpl.ALLOW_GET_VALUE_NAME = true;
 	}
 
-	protected void visitInPostOrder(@NonNull CGElement cgElement) {
-		visitInPostOrder2(cgElement, null);
+	/**
+	 * Propagate name hints down the cgElement hierarchy  that initializers for variables use a name
+	 * based on the user's name for the variable rather than a totally synthetic name for the functionality.
+	 */
+	protected void propagateNames(@NonNull CGElement cgElement) {
+		propagateNameResolution(cgElement, null);
 		for (EObject eObject : new TreeIterable(cgElement, true)) {		// XXX debugging
 			if ((eObject instanceof CGValuedElement) && !((CGValuedElement)eObject).isInlined()) {
 				NameResolution nameResolution = ((CGValuedElement)eObject).basicGetNameResolution();
@@ -781,82 +893,43 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		}
 	}
 
-	protected void visitInPostOrder2(@NonNull CGElement cgElement, @Nullable NameResolution parentNameResolution) {
-		if (cgElement instanceof CGValuedElement) {
-			if ("cu = .oclAsType(executor, u, TYP_SysML_ValueTypes_QUDV_c_c_QUDV_c_c_ConversionBasedUnit)".equals(cgElement.toString())) {
-				getClass();		// XXX
-			}
-			CGValuedElement cgValuedElement2 = (CGValuedElement)cgElement;
-			NameResolution nameResolution = cgValuedElement2.basicGetNameResolution();
-		//	assert (nameResolution == null) || debugCheckNameResolution(cgValuedElement2, nameResolution);
-		}
-		JavaGlobalContext<@NonNull ? extends JavaCodeGenerator> globalContext = getGlobalContext();
-		for (EObject eObject : cgElement.eContents()) {					// XXX Surely preorder - no post order to satisfy bottom up dependency evaluation
-			if (eObject instanceof CGElement) {
-				CGElement cgChild = (CGElement)eObject;
-				EReference eContainmentFeature = cgChild.eContainmentFeature();
-				if (eContainmentFeature == CGModelPackage.Literals.CG_VARIABLE__INIT) {
-					NameResolution nameResolution = ((CGVariable)cgElement).basicGetNameResolution();
-					if (nameResolution == null) {
-						nameResolution = getGlobalContext().getLocalContext((CGVariable)cgElement).getNameManager().declareLazyName((CGVariable)cgElement);
-					}
-					visitInPostOrder2(cgChild, nameResolution);
+	/**
+	 * Resolve the name hints as hierarchically unique names throughout the sortedGlobals and cgPackage hierarchy.
+	 */
+	private void resolveUniqueNames(@Nullable Iterable<@NonNull CGValuedElement> sortedGlobals, @NonNull CGPackage cgPackage) {
+		NameResolution.inhibitNameResolution = false;
+		if (sortedGlobals != null) {
+			for (@NonNull CGValuedElement global : sortedGlobals) {
+				if (global instanceof CGTupleExp) {
+					getClass();		// XXX
 				}
-				else if (eContainmentFeature == CGModelPackage.Literals.CG_LET_EXP__INIT) {
-					visitInPostOrder2(cgChild, null);
-				}
-				else if (eContainmentFeature == CGModelPackage.Literals.CG_LET_EXP__IN) {
-					visitInPostOrder2(cgChild, parentNameResolution);
-				}
-				else {
-					visitInPostOrder2(cgChild, null);
-				}
+				// too soon assert global.getNameResolution().getNameManager().isGlobal();
+				propagateNames(global);
 			}
 		}
-		if (cgElement instanceof CGValuedElement) {
-			CGValuedElement cgValuedElement2 = (CGValuedElement)cgElement;
-			if (!cgValuedElement2.isInlined()) {
-				NameResolution nameResolution = cgValuedElement2.basicGetNameResolution();
-				if (nameResolution == null) {
-					if ((parentNameResolution != null) && !cgValuedElement2.isGlobal()) {
-						parentNameResolution.addCGElement(cgValuedElement2);
-					}
-					else {
-					//	assert false;			// XXX wip
-						NameManager nameManager = globalNameManager.bascGetScope(cgValuedElement2);
-						if (nameManager == null) {
-							JavaLocalContext<?> localContext = globalContext.basicGetLocalContext(cgValuedElement2);
-							nameManager = (localContext != null) && !cgValuedElement2.isGlobal() ? localContext.getNameManager() : globalNameManager;
-						}
-						nameResolution = nameManager.declareLazyName(cgValuedElement2);
-						nameResolution.resolveNameHint();
-					}
-				}
-				else {
-				//	if (parentNameResolution != null) {
-				//		nameResolution.setDelegateTo(parentNameResolution);
-				//	}
-				//	else {
-				//		if (nameResolution.isUnresolved()) {
-				//			getClass();
-				//		}
-				//	}
-					nameResolution.resolveNameHint();
-				}
-			}
-			for (EObject eObject : ((CGValuedElement)cgElement).getOwns()) {					// XXX Surely preorder - no post order to satisfy bottom up dependency evaluation
-				if (eObject instanceof CGElement) {
-					visitInPostOrder2((CGElement)eObject, null);
-					if (eObject instanceof CGValuedElement) {
-						CGValuedElement cgValuedElement = (CGValuedElement)eObject;
-						if ((cgValuedElement.basicGetNameResolution() == null) && !cgValuedElement.isInlined()) {
-							JavaLocalContext<?> localContext = globalContext.basicGetLocalContext(cgValuedElement);
-							NameManager nameManager = localContext != null ? localContext.getNameManager() : globalNameManager;
-							nameManager.declareLazyName(cgValuedElement);
-						}
+	//	System.out.println("-----------------resolveNames--------------------");
+		propagateNames(cgPackage);
+		Map<@NonNull NameManager, @NonNull List<@NonNull CGValuedElement>> nameManager2namedElements = new HashMap<>();
+		if (sortedGlobals != null) {
+			for (@NonNull CGNamedElement cgNamedElement : sortedGlobals) {
+				if (cgNamedElement instanceof CGValuedElement) {
+					CGValuedElement cgElement = (CGValuedElement)cgNamedElement;
+					if (!cgElement.isInlined()) {
+						gatherNames(cgElement, nameManager2namedElements);
 					}
 				}
 			}
 		}
+		for (EObject eObject : new TreeIterable(cgPackage, true)) {		// XXX debugging
+			if (eObject instanceof CGValuedElement) {
+				CGValuedElement cgElement = (CGValuedElement)eObject;
+				if (!cgElement.isInlined()) {
+					gatherNames(cgElement, nameManager2namedElements);
+				}
+			}
+		}
+		globalNameManager.assignNames(nameManager2namedElements);
+		CGValuedElementImpl.ALLOW_GET_VALUE_NAME = true;
+		NameResolution.inhibitNameResolution = true;
 	}
 }

@@ -32,6 +32,14 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
+import org.eclipse.ocl.examples.codegen.analyzer.NameManager;
+import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGConstrainedProperty;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
@@ -50,7 +58,6 @@ import org.eclipse.ocl.pivot.CollectionLiteralExp;
 import org.eclipse.ocl.pivot.CollectionLiteralPart;
 import org.eclipse.ocl.pivot.CollectionRange;
 import org.eclipse.ocl.pivot.Constraint;
-import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.IfExp;
@@ -99,24 +106,8 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		}
 
 		@Override
-		public @Nullable Object visitCGOperation(@NonNull CGOperation cgOperation) {
-			super.visitCGOperation(cgOperation);
-			Element asOperation = cgOperation.getAst();
-			if (asOperation instanceof Operation) {
-				EObject eObject = ((Operation)asOperation).getESObject();
-				if (eObject instanceof ETypedElement) {
-					EClassifier eType = ((ETypedElement)eObject).getEType();
-					if (eType != null) {
-						rewriteAsEcore(cgOperation.getBody(), eType);
-					}
-				}
-			}
-			return null;
-		}
-
-		@Override
-		public @Nullable Object visitCGProperty(@NonNull CGProperty cgProperty) {
-			super.visitCGProperty(cgProperty);
+		public @Nullable Object visitCGConstrainedProperty(@NonNull CGConstrainedProperty cgProperty) {
+			super.visitCGConstrainedProperty(cgProperty);
 			Property asProperty = CGUtil.getAST(cgProperty);
 			EObject eObject = asProperty.getESObject();
 			LibraryFeature implementation = asProperty.getImplementation();
@@ -129,6 +120,64 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 					rewriteAsEcore(cgProperty.getBody(), eType);
 				}
 			}
+			return null;
+		}
+
+		@Override
+		public @Nullable Object visitCGForeignProperty(@NonNull CGForeignProperty cgProperty) {
+			super.visitCGForeignProperty(cgProperty);
+			Property asProperty = CGUtil.getAST(cgProperty);
+			EObject eObject = asProperty.getESObject();
+			LibraryFeature implementation = asProperty.getImplementation();
+			if (implementation instanceof StaticProperty) {
+				rewriteAsBoxed(cgProperty.getBody());
+			}
+			else if (eObject instanceof ETypedElement) {
+				EClassifier eType = ((ETypedElement)eObject).getEType();
+				if (eType != null) {
+					rewriteAsEcore(cgProperty.getBody(), eType);
+				}
+			}
+			return null;
+		}
+
+		@Override
+		public @Nullable Object visitCGNativeProperty(@NonNull CGNativeProperty cgProperty) {
+			super.visitCGNativeProperty(cgProperty);
+			Property asProperty = CGUtil.getAST(cgProperty);
+			EObject eObject = asProperty.getESObject();
+			LibraryFeature implementation = asProperty.getImplementation();
+			if (implementation instanceof StaticProperty) {
+				rewriteAsBoxed(cgProperty.getBody());
+			}
+			else if (eObject instanceof ETypedElement) {
+				EClassifier eType = ((ETypedElement)eObject).getEType();
+				if (eType != null) {
+					rewriteAsEcore(cgProperty.getBody(), eType);
+				}
+			}
+			return null;
+		}
+
+		@Override
+		public @Nullable Object visitCGOperation(@NonNull CGOperation cgOperation) {
+			super.visitCGOperation(cgOperation);
+		/*	Element asOperation = cgOperation.getAst();
+			if (asOperation instanceof Operation) {
+				EObject eObject = ((Operation)asOperation).getESObject();
+				if (eObject instanceof ETypedElement) {
+					EClassifier eType = ((ETypedElement)eObject).getEType();
+					if (eType != null) {
+						rewriteAsEcore(cgOperation.getBody(), eType);
+					}
+				}
+			} */
+			return null;
+		}
+
+		@Override
+		public @Nullable Object visitCGProperty(@NonNull CGProperty cgProperty) {
+			super.visitCGProperty(cgProperty);			// XXX
 			return null;
 		}
 	}
@@ -456,7 +505,6 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		generator.generate(uri2body, constantsTexts, foreignFeaures);
 	}
 
-	protected final @NonNull OCLinEcoreGlobalContext globalContext;
 	protected final @NonNull StandardLibraryInternal standardLibrary;
 	protected final @NonNull CodeGenAnalyzer cgAnalyzer;
 	protected final @NonNull GenPackage genPackage;
@@ -476,7 +524,6 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		getOptions().setUseNullAnnotations(OCLinEcoreGenModelGeneratorAdapter.useNullAnnotations(genModel));
 		this.cgAnalyzer = new CodeGenAnalyzer(this);
 		this.genPackage = genPackage;
-		this.globalContext = new OCLinEcoreGlobalContext(this, genPackage);
 		asHelper = new PivotHelper(environmentFactory);
 		this.oclAnyType = standardLibrary.getOclAnyType();
 		this.booleanType = standardLibrary.getBooleanType();
@@ -488,6 +535,8 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		//		CommonSubexpressionEliminator.CSE_PULL_UP.setState(true);
 		//		CommonSubexpressionEliminator.CSE_PUSH_UP.setState(true);
 		//		CommonSubexpressionEliminator.CSE_REWRITE.setState(true);
+		CGClass cgClass = CGModelFactory.eINSTANCE.createCGClass();
+		cgAnalyzer.setCGRootClass(cgClass);
 	}
 
 	@Override
@@ -500,18 +549,22 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		return new OCLinEcoreImportNameManager();
 	}
 
+	@Override
+	public @NonNull NestedNameManager createNestedNameManager(@NonNull NameManager outerNameManager, @NonNull CGNamedElement cgScope) {
+		return new OCLinEcoreNestedNameManager(this, outerNameManager, cgScope);
+	}
+
 	protected void generate(@NonNull Map<@NonNull String, @NonNull FeatureBody> uri2body, @NonNull Map<GenPackage, String> constantsTexts, @NonNull Map<@NonNull Feature, @NonNull GenTypedElement> foreignFeatures) {
 		Map<@NonNull ExpressionInOCL, @NonNull ExpressionInOCL> newQuery2oldQuery2 = newQuery2oldQuery = new HashMap<>();
 		try {
 			EPackage ecorePackage = genPackage.getEcorePackage();
 			org.eclipse.ocl.pivot.Package asPackage = metamodelManager.getASOfEcore(org.eclipse.ocl.pivot.Package.class, ecorePackage);
 			assert asPackage != null;
-			AS2CGVisitor as2cgVisitor = new OCLinEcoreAS2CGVisitor(cgAnalyzer, globalContext);
+			AS2CGVisitor as2cgVisitor = new OCLinEcoreAS2CGVisitor(this);
 			CGPackage cgPackage = (CGPackage) ClassUtil.nonNullState(asPackage.accept(as2cgVisitor));
 			as2cgVisitor.freeze();
 			optimize(cgPackage);
-			Iterable<@NonNull CGValuedElement> sortedGlobals = prepareGlobals();
-			resolveNames(sortedGlobals, cgPackage);
+			Iterable<@NonNull CGValuedElement> sortedGlobals = pregenerate(cgPackage);
 			OCLinEcoreCG2JavaVisitor cg2java = new OCLinEcoreCG2JavaVisitor(this, genPackage, cgPackage);
 			Map<@NonNull String, @NonNull FeatureBody> results = cg2java.generateBodies();
 			for (Map.Entry<@NonNull String, @NonNull FeatureBody> entry : results.entrySet()) {
@@ -520,7 +573,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 	//		Iterable<@NonNull CGValuedElement> sortedGlobals = prepareGlobals();
 			String constantsText = cg2java.generateConstants(sortedGlobals);
 			constantsTexts.put(genPackage, constantsText);
-			Iterable<@NonNull Feature> foreignFeatures2 = cgAnalyzer.getForeignFeatures();
+			Iterable<@NonNull Feature> foreignFeatures2 = cgAnalyzer.getExternalFeatures();
 			if (foreignFeatures2 != null) {
 				for (@NonNull Feature foreignFeature : foreignFeatures2) {
 					if (foreignFeature instanceof Operation) {
@@ -554,20 +607,18 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 	public @NonNull CodeGenAnalyzer getAnalyzer() {
 		return cgAnalyzer;
 	}
-
-	@Override
-	public @NonNull OCLinEcoreGlobalContext getGlobalContext() {
-		return globalContext;
-	}
-
 	@Override
 	public @NonNull String getQualifiedForeignClassName(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		CodeGenString s = new CodeGenString(environmentFactory.getMetamodelManager(), false);
 		s.append(genModelHelper.getQualifiedTableClassName(genPackage));
 		s.append(".");
-		s.append(JavaConstants.FOREIGN_CLASS_PREFIX);
+		s.append(JavaConstants.EXTERNAL_CLASS_PREFIX);
 		s.appendAndEncodeQualifiedName(asClass);
 		return s.toString();
+	}
+
+	public @NonNull String getTablesClassName() {
+		return getGenModelHelper().getTablesClassName(genPackage);
 	}
 
 	protected @NonNull ExpressionInOCL rewriteQuery(@NonNull ExpressionInOCL oldQuery) {

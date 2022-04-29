@@ -11,11 +11,10 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.autogen.lookup;
 
-import java.util.List;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.autogen.java.AutoCG2JavaVisitor;
+import org.eclipse.ocl.examples.codegen.calling.AbstractCachedOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
@@ -33,10 +32,10 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
  * LookupCG2JavaVisitor refines the regular generation of Java code from an optimized Auto CG transformation tree
  * to add contributions that are inadequately represented by the CG model.
  */
-public class LookupFilterCG2JavaVisitor extends AutoCG2JavaVisitor<@NonNull LookupFilterGenerator>
+public class LookupFilterCG2JavaVisitor extends AutoCG2JavaVisitor
 {
 	public LookupFilterCG2JavaVisitor(@NonNull LookupFilterGenerator codeGenerator, @NonNull CGPackage cgPackage,
-			@Nullable List<CGValuedElement> sortedGlobals) {
+			@Nullable Iterable<CGValuedElement> sortedGlobals) {
 		super(codeGenerator, cgPackage, sortedGlobals);
 	}
 
@@ -48,7 +47,7 @@ public class LookupFilterCG2JavaVisitor extends AutoCG2JavaVisitor<@NonNull Look
 		js.append("protected final ");
 		js.appendClassReference(true, EvaluationCache.class);
 		js.append(" ");
-		js.append(globalContext.getEvaluationCacheName());
+		js.append(globalNameManager.getEvaluationCacheName());
 		js.append(";\n");
 		return super.doClassFields(cgClass, false);
 	}
@@ -78,7 +77,7 @@ public class LookupFilterCG2JavaVisitor extends AutoCG2JavaVisitor<@NonNull Look
 				js.append(") {\n");
 				js.pushIndentation(null);
 				js.append("return ");
-				js.append(getNativeOperationInstanceName(asOperation));
+				js.append(AbstractCachedOperationCallingConvention.getNativeOperationInstanceName(asOperation));
 				js.append(".evaluate(");
 				isFirst = true;
 				for (@NonNull CGParameter cgParameter : cgParameters) {
@@ -97,7 +96,7 @@ public class LookupFilterCG2JavaVisitor extends AutoCG2JavaVisitor<@NonNull Look
 
 	@Override
 	protected void doConstructor(@NonNull CGClass cgClass) {
-		String executorName = globalContext.getExecutorName();
+		String executorName = globalNameManager.getExecutorName();
 		js.append("public " + cgClass.getName() + "(");
 		js.appendClassReference(true, Executor.class);
 		js.append(" "+ executorName);
@@ -112,9 +111,9 @@ public class LookupFilterCG2JavaVisitor extends AutoCG2JavaVisitor<@NonNull Look
 
 		addFilterPropsInit(cgClass);
 		js.append("this." + executorName + " = " + executorName + ";\n");
-		js.append("this." + globalContext.getIdResolverName() + " = " + executorName + ".getIdResolver();\n");
+		js.append("this." + globalNameManager.getIdResolverName() + " = " + executorName + ".getIdResolver();\n");
 		js.append("this.");
-		js.append(globalContext.getEvaluationCacheName());
+		js.append(globalNameManager.getEvaluationCacheName());
 		js.append(" = ((");
 		js.appendClassReference(null, ExecutorInternalExtension.class);
 		js.append(")" + executorName + ").getEvaluationCache();\n");
@@ -125,14 +124,14 @@ public class LookupFilterCG2JavaVisitor extends AutoCG2JavaVisitor<@NonNull Look
 
 
 	private void addFilterParameters(CGClass cgClass) {
-		for (CGProperty filteringVar : context.getFilteringVars(cgClass)) {
+		for (CGProperty filteringVar : getCodeGenerator().getFilteringVars(cgClass)) {
 			js.append(",");
 			js.appendDeclaration(filteringVar);
 		}
 	}
 
 	private void addFilterPropsInit(CGClass cgClass) {
-		for (CGProperty filteringVar : context.getFilteringVars(cgClass)) {
+		for (CGProperty filteringVar : getCodeGenerator().getFilteringVars(cgClass)) {
 			String varName = filteringVar.getResolvedName();
 			js.append("this.");
 			js.append(varName);
@@ -140,6 +139,11 @@ public class LookupFilterCG2JavaVisitor extends AutoCG2JavaVisitor<@NonNull Look
 			js.append(varName);
 			js.append(";\n");
 		}
+	}
+
+	@Override
+	public @NonNull LookupFilterGenerator getCodeGenerator() {
+		return (LookupFilterGenerator)context;
 	}
 
 	private CGValuedElement getFilteredType(CGClass cgClass) {

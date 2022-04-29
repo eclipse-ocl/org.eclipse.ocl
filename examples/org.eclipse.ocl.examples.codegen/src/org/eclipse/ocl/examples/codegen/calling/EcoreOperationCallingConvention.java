@@ -41,6 +41,7 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Parameter;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.ecore.EObjectOperation;
 import org.eclipse.ocl.pivot.internal.library.EInvokeOperation;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
@@ -70,9 +71,9 @@ public class EcoreOperationCallingConvention extends AbstractOperationCallingCon
 	}
 
 	@Override
-	public @NonNull CGOperation createCGOperationWithoutBody(@NonNull AS2CGVisitor as2cgVisitor, @NonNull Operation asOperation) {
-		PivotMetamodelManager metamodelManager = as2cgVisitor.getMetamodelManager();
-		GenModelHelper genModelHelper = as2cgVisitor.getGenModelHelper();
+	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @Nullable Type asSourceType, @NonNull Operation asOperation) {
+		PivotMetamodelManager metamodelManager = analyzer.getMetamodelManager();
+		GenModelHelper genModelHelper = analyzer.getGenModelHelper();
 		LibraryFeature libraryOperation = metamodelManager.getImplementation(asOperation);
 		EOperation eOperation;
 		if (libraryOperation instanceof EInvokeOperation) {
@@ -85,18 +86,23 @@ public class EcoreOperationCallingConvention extends AbstractOperationCallingCon
 		}
 		assert (eOperation != null);
 		assert !PivotUtil.isStatic(eOperation);
+		CGOperation cgOperation = null;
 		try {
 			genModelHelper.getGenOperation(eOperation);
 			CGEcoreOperation cgEcoreOperation = CGModelFactory.eINSTANCE.createCGEcoreOperation();
 			cgEcoreOperation.setEOperation(eOperation);
-			return cgEcoreOperation;
+			cgOperation = cgEcoreOperation;
 		}
 		catch (GenModelException e) {
 			// No genmodel so fallback
 		}
-	//	assert false : "Fallback overload for " + this;		// XXX
-		System.out.println("Fallback overload for " + this);		// XXX
-		return CGModelFactory.eINSTANCE.createCGLibraryOperation();
+		if (cgOperation == null) {
+			//	assert false : "Fallback overload for " + this;		// XXX
+			System.out.println("Fallback overload for " + this);		// XXX
+			cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
+		}
+		analyzer.installOperation(asOperation, cgOperation, this);
+		return cgOperation;
 	}
 
 	@Override
@@ -110,15 +116,16 @@ public class EcoreOperationCallingConvention extends AbstractOperationCallingCon
 		CodeGenerator codeGenerator = as2cgVisitor.getCodeGenerator();
 		try {
 			genModelHelper.getOperationAccessor(asOperation);
-			CGEcoreOperationCallExp cgEcoreOperationCallExp = CGModelFactory.eINSTANCE.createCGEcoreOperationCallExp();
-			cgEcoreOperationCallExp.setEOperation(eOperation);
 			Boolean ecoreIsRequired = codeGenerator.isNonNull(asOperationCallExp);
 			if (ecoreIsRequired != null) {
 				isRequired = ecoreIsRequired;
 			}
+			CGEcoreOperationCallExp cgEcoreOperationCallExp = CGModelFactory.eINSTANCE.createCGEcoreOperationCallExp();
+			cgEcoreOperationCallExp.setEOperation(eOperation);
+			initCallExp(as2cgVisitor, cgEcoreOperationCallExp, asOperationCallExp, cgOperation, isRequired);
 		//	cgEcoreOperationCallExp.setCgThis(cgSource);
-			cgEcoreOperationCallExp.getCgArguments().add(cgSource);
-			init(as2cgVisitor, cgEcoreOperationCallExp, asOperationCallExp, cgOperation, isRequired);
+			cgEcoreOperationCallExp.getArguments().add(cgSource);
+			initCallArguments(as2cgVisitor, cgEcoreOperationCallExp);
 			return cgEcoreOperationCallExp;
 		} catch (GenModelException e) {
 			throw new IllegalStateException(e);
@@ -126,25 +133,25 @@ public class EcoreOperationCallingConvention extends AbstractOperationCallingCon
 	}
 
 	@Override
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor<?> cg2JavaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
 	//	Operation asOperation = cgOperationCallExp.getReferredOperation();
 		CGOperation cgOperation = CGUtil.getOperation(cgOperationCallExp);
 		Operation asOperation = CGUtil.getAST(cgOperation);
-		CodeGenAnalyzer analyzer = cg2JavaVisitor.getAnalyzer();
-		GenModelHelper genModelHelper = cg2JavaVisitor.getGenModelHelper();
-		JavaCodeGenerator codeGenerator = cg2JavaVisitor.getCodeGenerator();
-		CGTypeId cgTypeId = analyzer.getTypeId(asOperation.getOwningClass().getTypeId());
+		CodeGenAnalyzer analyzer = cg2javaVisitor.getAnalyzer();
+		GenModelHelper genModelHelper = cg2javaVisitor.getGenModelHelper();
+		JavaCodeGenerator codeGenerator = cg2javaVisitor.getCodeGenerator();
+		CGTypeId cgTypeId = analyzer.getCGTypeId(asOperation.getOwningClass().getTypeId());
 		//		TypeDescriptor requiredTypeDescriptor = context.getUnboxedDescriptor(cgTypeId.getElementId());
 		TypeDescriptor requiredTypeDescriptor = codeGenerator.getUnboxedDescriptor(ClassUtil.nonNullState(cgTypeId.getElementId()));
-	//	CGValuedElement cgThis = cg2JavaVisitor.getExpression(cgOperationCallExp.getCgThis());
-		List<CGValuedElement> cgArguments = cgOperationCallExp.getCgArguments();
+	//	CGValuedElement cgThis = cg2javaVisitor.getExpression(cgOperationCallExp.getCgThis());
+		List<CGValuedElement> cgArguments = cgOperationCallExp.getArguments();
 	//	List<@NonNullParameter> asParameters = asOperation.getOwnedParameters();
 		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
 		//
 	//	if (!js.appendLocalStatements(cgThis)) {
 	//		return false;
 	//	}
-		if (!generateLocals(cg2JavaVisitor, js, cgOperationCallExp)) {
+		if (!generateLocals(cg2javaVisitor, js, cgOperationCallExp)) {
 			return false;
 		}
 		//
@@ -159,7 +166,7 @@ public class EcoreOperationCallingConvention extends AbstractOperationCallingCon
 		//		}
 		Element asOperationCallExp = cgOperationCallExp.getAst();
 		Boolean ecoreIsRequired = asOperationCallExp instanceof OperationCallExp ? codeGenerator.isNonNull((OperationCallExp) asOperationCallExp) : null;
-		cg2JavaVisitor.appendSuppressWarningsNull(cgOperationCallExp, ecoreIsRequired);
+		cg2javaVisitor.appendSuppressWarningsNull(cgOperationCallExp, ecoreIsRequired);
 		js.appendDeclaration(cgOperationCallExp);
 		js.append(" = ");
 		int iMax = Math.min(cgParameters.size(), cgArguments.size());
@@ -176,7 +183,7 @@ public class EcoreOperationCallingConvention extends AbstractOperationCallingCon
 				if (i > 1) {
 					js.append(", ");
 				}
-				CGValuedElement argument = cg2JavaVisitor.getExpression(cgArgument);
+				CGValuedElement argument = cg2javaVisitor.getExpression(cgArgument);
 			//	Parameter asParameter = ClassUtil.nonNullState(asParameters.get(i));
 				Parameter asParameter = CGUtil.getParameter(cgParameter);
 				GenParameter genParameter = genModelHelper.getGenParameter(asParameter);
@@ -186,7 +193,7 @@ public class EcoreOperationCallingConvention extends AbstractOperationCallingCon
 					typeDescriptor.appendEcoreValue(js, rawBoundType, argument);
 				}
 				else {	// ? never happens
-					CGTypeId cgParameterTypeId = analyzer.getTypeId(asParameter.getTypeId());
+					CGTypeId cgParameterTypeId = analyzer.getCGTypeId(asParameter.getTypeId());
 					TypeDescriptor parameterTypeDescriptor = codeGenerator.getUnboxedDescriptor(ClassUtil.nonNullState(cgParameterTypeId.getElementId()));
 					js.appendReferenceTo(parameterTypeDescriptor, argument);
 
@@ -198,14 +205,29 @@ public class EcoreOperationCallingConvention extends AbstractOperationCallingCon
 	}
 
 	@Override
-	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
 		throw new UnsupportedOperationException();		// Ecore operations are declared by genmodel
+	}
+
+	@Override
+	public boolean needsGeneration() {
+		return false;
+	}
+
+	@Override
+	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGOperation cgOperation) {
+		CGEcoreOperation cgEcoreOperation = (CGEcoreOperation)cgOperation;
+		super.rewriteWithBoxingAndGuards(boxingAnalyzer, cgEcoreOperation);
+		CGValuedElement body = cgEcoreOperation.getBody();
+		if (body != null) {
+			boxingAnalyzer.rewriteAsEcore(body, cgEcoreOperation.getEOperation().getEType());
+		}
 	}
 
 	@Override
 	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGOperationCallExp cgOperationCallExp) {
 		CGEcoreOperationCallExp cgEcoreOperationCallExp = (CGEcoreOperationCallExp)cgOperationCallExp;
-		if ("specializeIn".equals(cgOperationCallExp.getReferredOperation().getName())) {
+		if ("specializeIn".equals(cgEcoreOperationCallExp.getAsOperation().getName())) {
 			getClass();		// XXX
 		}
 		CGOperation cgOperation = CGUtil.getOperation(cgEcoreOperationCallExp);

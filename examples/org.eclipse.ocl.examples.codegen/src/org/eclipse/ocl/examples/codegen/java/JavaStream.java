@@ -233,7 +233,7 @@ public class JavaStream
 	}
 
 	protected @NonNull JavaCodeGenerator codeGenerator;
-	protected @NonNull CG2JavaVisitor<@NonNull ?> cg2java;
+	protected @NonNull CG2JavaVisitor cg2java;
 	protected @NonNull CodeGenAnalyzer analyzer;
 	protected final @NonNull Id2JavaExpressionVisitor id2JavaExpressionVisitor;
 	protected final boolean useNullAnnotations;
@@ -247,7 +247,7 @@ public class JavaStream
 	private final @NonNull TypeRepresentation boxedTypeRepresentation;
 	private final @NonNull TypeRepresentation unboxedTypeRepresentation;
 
-	public JavaStream(@NonNull JavaCodeGenerator codeGenerator, @NonNull CG2JavaVisitor<@NonNull ?> cg2java) {
+	public JavaStream(@NonNull JavaCodeGenerator codeGenerator, @NonNull CG2JavaVisitor cg2java) {
 		this.codeGenerator = codeGenerator;
 		this.cg2java = cg2java;
 		this.analyzer = codeGenerator.getAnalyzer();
@@ -265,7 +265,10 @@ public class JavaStream
 				s.append(string);
 			}
 			else {
-				if ("CAUGHT_sourceType".equals(string)) {
+				if (string.contains("FUN_getCommonType")) {
+					getClass();		// XXX
+				}
+				if (string.contains("IF_CAUGHT_isEmpty")) {
 					getClass();		// XXX
 				}
 				int sLength = s.length();
@@ -908,7 +911,7 @@ public class JavaStream
 			elementId.accept(id2JavaExpressionVisitor);
 		}
 		else {
-			appendValueName(analyzer.getElementId(elementId));
+			appendValueName(analyzer.getCGElementId(elementId));
 		}
 	}
 
@@ -1015,9 +1018,8 @@ public class JavaStream
 		}
 		else {
 			TypeDescriptor actualTypeDescriptor = codeGenerator.getTypeDescriptor(cgValue);
-			if (!cgValue.isNull()) {
-				boolean isCaught = cgValue.getNamedValue().isCaught();
-				if (isCaught || !requiredTypeDescriptor.isAssignableFrom(actualTypeDescriptor)) {
+			if (!cgValue.isNull() && !cgValue.getNamedValue().isCaught()) {
+				if (!requiredTypeDescriptor.isAssignableFrom(actualTypeDescriptor)) {
 					Boolean isRequired = null;
 					SubStream castBody = new SubStream() {
 						@Override
@@ -1025,7 +1027,7 @@ public class JavaStream
 							appendValueName(cgValue);
 						}
 					};
-					requiredTypeDescriptor.appendCast(this, isRequired, isCaught ? null : actualTypeDescriptor.getJavaClass(), castBody);
+					requiredTypeDescriptor.appendCast(this, isRequired, /*isCaught ?*/ null /*: actualTypeDescriptor.getJavaClass()*/, castBody);
 					return;
 				}
 				else if (requiredTypeDescriptor.isPrimitive()) { // && cgValue.isConstant() && (cgValue.getTypeId() == TypeId.BOOLEAN)) {

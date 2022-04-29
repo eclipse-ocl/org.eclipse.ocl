@@ -31,7 +31,7 @@ import org.eclipse.ocl.pivot.Property;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGNavigationCallExpImpl#getReferredProperty <em>Referred Property</em>}</li>
- *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGNavigationCallExpImpl#getCgProperty <em>Cg Property</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGNavigationCallExpImpl#getAsProperty <em>As Property</em>}</li>
  * </ul>
  *
  * @generated
@@ -47,34 +47,34 @@ public abstract class CGNavigationCallExpImpl extends CGSourcedCallExpImpl imple
 	public static final int CG_NAVIGATION_CALL_EXP_FEATURE_COUNT = CGSourcedCallExpImpl.CG_SOURCED_CALL_EXP_FEATURE_COUNT + 2;
 
 	/**
-	 * The default value of the '{@link #getReferredProperty() <em>Referred Property</em>}' attribute.
+	 * The cached value of the '{@link #getReferredProperty() <em>Referred Property</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getReferredProperty()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final Property REFERRED_PROPERTY_EDEFAULT = null;
+	protected CGProperty referredProperty;
 
 	/**
-	 * The cached value of the '{@link #getReferredProperty() <em>Referred Property</em>}' attribute.
+	 * The default value of the '{@link #getAsProperty() <em>As Property</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getReferredProperty()
+	 * @see #getAsProperty()
 	 * @generated
 	 * @ordered
 	 */
-	protected Property referredProperty = REFERRED_PROPERTY_EDEFAULT;
+	protected static final Property AS_PROPERTY_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getCgProperty() <em>Cg Property</em>}' reference.
+	 * The cached value of the '{@link #getAsProperty() <em>As Property</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getCgProperty()
+	 * @see #getAsProperty()
 	 * @generated
 	 * @ordered
 	 */
-	protected CGProperty cgProperty;
+	protected Property asProperty = AS_PROPERTY_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -101,7 +101,7 @@ public abstract class CGNavigationCallExpImpl extends CGSourcedCallExpImpl imple
 	 * @generated
 	 */
 	@Override
-	public Property getReferredProperty() {
+	public CGProperty getReferredProperty() {
 		return referredProperty;
 	}
 
@@ -111,8 +111,8 @@ public abstract class CGNavigationCallExpImpl extends CGSourcedCallExpImpl imple
 	 * @generated
 	 */
 	@Override
-	public void setReferredProperty(Property newReferredProperty) {
-		Property oldReferredProperty = referredProperty;
+	public void setReferredProperty(CGProperty newReferredProperty) {
+		CGProperty oldReferredProperty = referredProperty;
 		referredProperty = newReferredProperty;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, 9, oldReferredProperty, referredProperty));
@@ -124,8 +124,8 @@ public abstract class CGNavigationCallExpImpl extends CGSourcedCallExpImpl imple
 	 * @generated
 	 */
 	@Override
-	public CGProperty getCgProperty() {
-		return cgProperty;
+	public Property getAsProperty() {
+		return asProperty;
 	}
 
 	/**
@@ -134,11 +134,11 @@ public abstract class CGNavigationCallExpImpl extends CGSourcedCallExpImpl imple
 	 * @generated
 	 */
 	@Override
-	public void setCgProperty(CGProperty newCgProperty) {
-		CGProperty oldCgProperty = cgProperty;
-		cgProperty = newCgProperty;
+	public void setAsProperty(Property newAsProperty) {
+		Property oldAsProperty = asProperty;
+		asProperty = newAsProperty;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 10, oldCgProperty, cgProperty));
+			eNotify(new ENotificationImpl(this, Notification.SET, 10, oldAsProperty, asProperty));
 	}
 
 	/**
@@ -162,7 +162,7 @@ public abstract class CGNavigationCallExpImpl extends CGSourcedCallExpImpl imple
 			case 9:
 				return getReferredProperty();
 			case 10:
-				return getCgProperty();
+				return getAsProperty();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -176,10 +176,10 @@ public abstract class CGNavigationCallExpImpl extends CGSourcedCallExpImpl imple
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case 9:
-				setReferredProperty((Property)newValue);
+				setReferredProperty((CGProperty)newValue);
 				return;
 			case 10:
-				setCgProperty((CGProperty)newValue);
+				setAsProperty((Property)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -194,10 +194,10 @@ public abstract class CGNavigationCallExpImpl extends CGSourcedCallExpImpl imple
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case 9:
-				setReferredProperty(REFERRED_PROPERTY_EDEFAULT);
+				setReferredProperty((CGProperty)null);
 				return;
 			case 10:
-				setCgProperty((CGProperty)null);
+				setAsProperty(AS_PROPERTY_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -212,9 +212,9 @@ public abstract class CGNavigationCallExpImpl extends CGSourcedCallExpImpl imple
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case 9:
-				return REFERRED_PROPERTY_EDEFAULT == null ? referredProperty != null : !REFERRED_PROPERTY_EDEFAULT.equals(referredProperty);
+				return referredProperty != null;
 			case 10:
-				return cgProperty != null;
+				return AS_PROPERTY_EDEFAULT == null ? asProperty != null : !AS_PROPERTY_EDEFAULT.equals(asProperty);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -230,12 +230,12 @@ public abstract class CGNavigationCallExpImpl extends CGSourcedCallExpImpl imple
 
 	/**
 	 * {@inheritDoc}
-	 * @generated
+	 * @generated NOT XXX
 	 */
 	@Override
 	public boolean isNonInvalid() {
 		CGValuedElement source = getSource();
-		return source.isNonNull() && source.isNonInvalid();
+		return ((asProperty != null) && asProperty.isIsStatic()) || (source.isNonNull() && source.isNonInvalid());
 	}
 
 	/**
@@ -244,7 +244,7 @@ public abstract class CGNavigationCallExpImpl extends CGSourcedCallExpImpl imple
 	 */
 	@Override
 	public boolean isNonNull() {
-		return (referredProperty != null) && referredProperty.isIsRequired();
+		return (asProperty != null) && asProperty.isIsRequired();
 	}
 
 	/**

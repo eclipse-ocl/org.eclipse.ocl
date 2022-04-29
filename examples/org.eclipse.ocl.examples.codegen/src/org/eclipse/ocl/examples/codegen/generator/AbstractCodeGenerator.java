@@ -16,21 +16,27 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AnalysisVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
+import org.eclipse.ocl.examples.codegen.calling.BuiltInIterationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.BuiltInOperationCallingConvention;
-import org.eclipse.ocl.examples.codegen.calling.ConstrainedOperationCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.CachedOperationCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.ConstrainedPropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.EcoreForeignOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.EcoreOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.EcoreOppositePropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.EcorePropertyCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.ExecutorCompositionPropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.ExecutorOppositePropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.ExecutorPropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.ForeignOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.ForeignPropertyCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.InlinedOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.LibraryOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.LibraryPropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.NativeOperationCallingConvention;
@@ -38,11 +44,15 @@ import org.eclipse.ocl.examples.codegen.calling.NativePropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.PropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.TuplePropertyCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.VirtualOperationCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.VolatileOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
 import org.eclipse.ocl.examples.codegen.java.JavaLanguageSupport;
-import org.eclipse.ocl.examples.codegen.library.NativeProperty;
 import org.eclipse.ocl.examples.codegen.library.NativeVisitorOperation;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LanguageExpression;
+import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.internal.ecore.EObjectOperation;
@@ -53,8 +63,10 @@ import org.eclipse.ocl.pivot.internal.library.ConstrainedProperty;
 import org.eclipse.ocl.pivot.internal.library.EInvokeOperation;
 import org.eclipse.ocl.pivot.internal.library.ExplicitNavigationProperty;
 import org.eclipse.ocl.pivot.internal.library.ExtensionProperty;
+import org.eclipse.ocl.pivot.internal.library.ForeignProperty;
 import org.eclipse.ocl.pivot.internal.library.ImplicitNonCompositionProperty;
 import org.eclipse.ocl.pivot.internal.library.StaticProperty;
+import org.eclipse.ocl.pivot.internal.library.StereotypeProperty;
 import org.eclipse.ocl.pivot.internal.library.TuplePartProperty;
 import org.eclipse.ocl.pivot.internal.manager.FinalAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
@@ -63,6 +75,7 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.Envir
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.library.NativeOperation;
+import org.eclipse.ocl.pivot.library.NativeProperty;
 import org.eclipse.ocl.pivot.library.collection.CollectionElementTypeProperty;
 import org.eclipse.ocl.pivot.library.collection.CollectionLowerProperty;
 import org.eclipse.ocl.pivot.library.collection.CollectionUpperProperty;
@@ -70,6 +83,9 @@ import org.eclipse.ocl.pivot.library.map.MapKeyTypeProperty;
 import org.eclipse.ocl.pivot.library.map.MapValueTypeProperty;
 import org.eclipse.ocl.pivot.library.oclany.OclElementOclContainerProperty;
 import org.eclipse.ocl.pivot.library.oclany.OclElementOclContentsProperty;
+import org.eclipse.ocl.pivot.utilities.ParserException;
+
+import com.google.common.collect.Iterables;
 
 public abstract class AbstractCodeGenerator implements CodeGenerator
 {
@@ -164,10 +180,13 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 	}
 
 	@Override
-	public @NonNull OperationCallingConvention getCallingConvention(@NonNull Operation asOperation) {
+	public @NonNull OperationCallingConvention getCallingConvention(@NonNull Operation asOperation, boolean requireFinal) {
+		if (asOperation instanceof Iteration) {
+			return BuiltInIterationCallingConvention.INSTANCE;
+		}
 		LibraryOperation libraryOperation = (LibraryOperation)metamodelManager.getImplementation(asOperation);
 		if (BuiltInOperationCallingConvention.INSTANCE.canHandle(libraryOperation)) {
-			return BuiltInOperationCallingConvention.INSTANCE;
+				return BuiltInOperationCallingConvention.INSTANCE;
 		}
 		if (libraryOperation instanceof AbstractStaticOperation) {
 			return ForeignOperationCallingConvention.INSTANCE;
@@ -188,10 +207,38 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 			throw new UnsupportedOperationException();
 		}
 		if (libraryOperation instanceof ConstrainedOperation) {
-		//	OCLExpression asSource = asOperationCallExp.getOwnedSource();
-		//	if (asSource != null) {
-				return ConstrainedOperationCallingConvention.INSTANCE;
-		//	}
+			if ("classes::Visitable::_lookupUnqualifiedPackage(String[1]) : classes::Package[?]".equals(libraryOperation.toString())) {
+				getClass();			// XXX
+			}
+			if ("classes::Package::_unqualified_env_Class(OclElement[1]) : lookup::LookupEnvironment[1]".equals(libraryOperation.toString())) {
+				getClass();			// XXX
+			}
+			org.eclipse.ocl.pivot.Package asPackage = asOperation.getOwningClass().getOwningPackage();
+			if (asPackage instanceof Library) {
+				return VolatileOperationCallingConvention.INSTANCE;			// Library operations handle polymorphism internally
+			}
+			else {
+				FinalAnalysis finalAnalysis = metamodelManager.getFinalAnalysis();
+				if (!requireFinal) {
+					Iterable<@NonNull Operation> asOverrides = finalAnalysis.getOverrides(asOperation);
+					if (Iterables.size(asOverrides) > 1) {
+						return VirtualOperationCallingConvention.INSTANCE;		// Need a polymorphic dispatcher
+					}
+					LanguageExpression bodyExpression = asOperation.getBodyExpression();
+					if (bodyExpression != null) {
+						Set<@NonNull Operation> referencedFinalOperations = new HashSet<>();
+						getTransitivelyReferencedFinalOperations(referencedFinalOperations, finalAnalysis, bodyExpression);
+						if (!referencedFinalOperations.contains(asOperation)) {
+							Iterable<@NonNull Operation> referencedNonFinalOperations = getReferencedNonFinalOperations(finalAnalysis, bodyExpression);
+							if (referencedNonFinalOperations == null) {
+								// a simple heavy heuristic might avoid some unpleasant bloat
+								return InlinedOperationCallingConvention.INSTANCE;
+							}
+						}
+					}
+				}
+				return CachedOperationCallingConvention.INSTANCE;
+			}
 		}
 		if ((libraryOperation instanceof EObjectOperation) || (libraryOperation instanceof EInvokeOperation)) {
 			if (EcoreOperationCallingConvention.INSTANCE.canHandle(this, asOperation)) {
@@ -210,14 +257,27 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 	}
 
 	@Override
-	public @NonNull PropertyCallingConvention getCallingConvention(@NonNull Property asProperty, @NonNull LibraryProperty libraryProperty) {
+	public @NonNull PropertyCallingConvention getCallingConvention(@NonNull Property asProperty) {
+		LibraryProperty libraryProperty = metamodelManager.getImplementation(null, null, asProperty);
 		if (libraryProperty instanceof NativeProperty) {
 			return NativePropertyCallingConvention.INSTANCE;
 		}
 		else if (libraryProperty instanceof OclElementOclContainerProperty) {
 			return EcorePropertyCallingConvention.INSTANCE;
 		}
-		else if ((libraryProperty instanceof CompositionProperty) || (libraryProperty instanceof ImplicitNonCompositionProperty)) {
+		else if (libraryProperty instanceof CompositionProperty) {
+		/*	EStructuralFeature eStructuralFeature = (EStructuralFeature) asProperty.getESObject();
+			if (eStructuralFeature != null) {
+				try {
+					getGenModelHelper().getGetAccessor(eStructuralFeature);
+					return EcoreOppositePropertyCallingConvention.INSTANCE;
+				} catch (GenModelException e) {
+					addProblem(e);		// FIXME drop through to better default
+				}
+			} */
+			return ExecutorCompositionPropertyCallingConvention.INSTANCE;
+		}
+		else if (/*(libraryProperty instanceof CompositionProperty) ||*/ (libraryProperty instanceof ImplicitNonCompositionProperty)) {
 			EStructuralFeature eStructuralFeature = (EStructuralFeature) asProperty.getESObject();
 			if (eStructuralFeature != null) {
 				try {
@@ -238,8 +298,13 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 		else if (libraryProperty instanceof TuplePartProperty) {
 			return TuplePropertyCallingConvention.INSTANCE;
 		}
-		else if (libraryProperty instanceof ConstrainedProperty) {
-			EStructuralFeature eStructuralFeature = (EStructuralFeature) asProperty.getESObject();
+		else if (libraryProperty instanceof ForeignProperty) {
+			EStructuralFeature eStructuralFeature = (EStructuralFeature)asProperty.getESObject();
+			assert eStructuralFeature == null;
+			return ForeignPropertyCallingConvention.INSTANCE;
+		}
+		else if (libraryProperty instanceof StereotypeProperty) {
+			EStructuralFeature eStructuralFeature = (EStructuralFeature)asProperty.getESObject();
 			if (eStructuralFeature != null) {
 				try {
 					getGenModelHelper().getGetAccessor(eStructuralFeature);
@@ -248,7 +313,18 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 					addProblem(e);		// FIXME drop through to better default
 				}
 			}
-			return ExecutorPropertyCallingConvention.INSTANCE;
+			return ConstrainedPropertyCallingConvention.INSTANCE;
+		}
+		else if (libraryProperty instanceof ConstrainedProperty) {
+			EStructuralFeature eStructuralFeature = (EStructuralFeature) asProperty.getESObject();
+			assert eStructuralFeature != null;
+			try {
+				getGenModelHelper().getGetAccessor(eStructuralFeature);
+				return EcorePropertyCallingConvention.INSTANCE;
+			} catch (GenModelException e) {
+				addProblem(e);		// FIXME drop through to better default
+			}
+			return ForeignPropertyCallingConvention.INSTANCE;
 		}
 		else if (libraryProperty instanceof ExplicitNavigationProperty) {
 				//	|| (libraryProperty instanceof CompositionProperty)
@@ -264,7 +340,7 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 					addProblem(e);		// FIXME drop through to better default
 				}
 			}
-			return ExecutorPropertyCallingConvention.INSTANCE;
+			return ExecutorPropertyCallingConvention.INSTANCE;		// Used by e.g. test_oclAsSet_351512 - JUnit of dynamic Ecore
 		}
 		else if ((libraryProperty instanceof OclElementOclContentsProperty)
 				  || (libraryProperty instanceof CollectionElementTypeProperty)
@@ -303,7 +379,7 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 
 	@Override
 	public @NonNull ImportNameManager getImportNameManager() {
-		return getGlobalContext().getImportNameManager();
+		return globalNameManager.getImportNameManager();
 	}
 
 /*	@Override
@@ -323,6 +399,82 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 	@Override
 	public @Nullable List<@NonNull Exception> getProblems() {
 		return problems;
+	}
+
+	/**
+	 * Return all final operations directly referenced by opaqueExpression, or null if none.
+	 * @since 1.3
+	 */
+	protected @Nullable Iterable<@NonNull Operation> getReferencedFinalOperations(@NonNull FinalAnalysis finalAnalysis, @NonNull LanguageExpression specification) {
+		ExpressionInOCL prototype = null;
+		try {
+			prototype = environmentFactory.parseSpecification(specification);
+		}
+		catch (ParserException e) {
+			// FIXME log error
+			e.printStackTrace();
+		}
+		if (prototype == null) {
+			return null;
+		}
+		Set<@NonNull Operation> referencedOperations = null;
+		for (EObject crossReference : EcoreUtil.ExternalCrossReferencer.find(prototype).keySet()) {
+			if (crossReference instanceof Operation) {
+				Operation operation = (Operation) crossReference;
+				if (finalAnalysis.isFinal(operation)) {
+					if (referencedOperations == null) {
+						referencedOperations = new HashSet<>();
+					}
+					referencedOperations.add(operation);
+				}
+			}
+		}
+		return referencedOperations;
+	}
+
+	/*protected*/ public @Nullable Iterable<@NonNull Operation> getReferencedNonFinalOperations(@NonNull FinalAnalysis finalAnalysis, @NonNull LanguageExpression specification) {
+		ExpressionInOCL prototype = null;
+		try {
+			prototype = environmentFactory.parseSpecification(specification);
+		}
+		catch (ParserException e) {
+			// FIXME log error
+			e.printStackTrace();
+		}
+		if (prototype == null) {
+			return null;
+		}
+		Set<@NonNull Operation> referencedOperations = null;
+		for (EObject crossReference : EcoreUtil.ExternalCrossReferencer.find(prototype).keySet()) {
+			if (crossReference instanceof Operation) {
+				Operation operation = (Operation) crossReference;
+				if (!finalAnalysis.isFinal(operation)) {
+					if (referencedOperations == null) {
+						referencedOperations = new HashSet<>();
+					}
+					referencedOperations.add(operation);
+				}
+			}
+		}
+		return referencedOperations;
+	}
+
+	/**
+	 * Return all final operations transitively referenced by opaqueExpression, or null if none.
+	 * @since 1.3
+	 */
+	/*protected*/ public void getTransitivelyReferencedFinalOperations(@NonNull Set<@NonNull Operation> alreadyReferencedFinalOperations, @NonNull FinalAnalysis finalAnalysis, @NonNull LanguageExpression expressionInOCL) {
+		Iterable<@NonNull Operation> newlyReferencedFinalOperations = getReferencedFinalOperations(finalAnalysis, expressionInOCL);
+		if (newlyReferencedFinalOperations != null) {
+			for (@NonNull Operation newlyReferencedFinalOperation : newlyReferencedFinalOperations) {
+				if (alreadyReferencedFinalOperations.add(newlyReferencedFinalOperation)) {
+					LanguageExpression anotherExpressionInOCL = newlyReferencedFinalOperation.getBodyExpression();
+					if (anotherExpressionInOCL != null) {
+						getTransitivelyReferencedFinalOperations(alreadyReferencedFinalOperations, finalAnalysis, anotherExpressionInOCL);
+					}
+				}
+			}
+		}
 	}
 
 	@Override

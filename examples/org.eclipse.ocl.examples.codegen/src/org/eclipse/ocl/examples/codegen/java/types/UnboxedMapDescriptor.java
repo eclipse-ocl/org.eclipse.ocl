@@ -15,12 +15,12 @@ import java.util.Set;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBoxExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.generator.CodeGenerator;
 import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
-import org.eclipse.ocl.examples.codegen.java.JavaLocalContext;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
@@ -53,7 +53,7 @@ public class UnboxedMapDescriptor extends /*AbstractCollectionDescriptor*/Abstra
 	}
 
 	@Override
-	public @NonNull Boolean appendBox(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext, @NonNull CGBoxExp cgBoxExp, @NonNull CGValuedElement unboxedValue) {
+	public @NonNull Boolean appendBox(@NonNull JavaStream js, @NonNull NestedNameManager localNameManager, @NonNull CGBoxExp cgBoxExp, @NonNull CGValuedElement unboxedValue) {
 		TypeId typeId = unboxedValue.getASTypeId();
 		MapTypeId mapTypeId = typeId instanceof MapTypeId ? (MapTypeId)typeId : null;
 		if (js.getCodeGenerator().isRequired(cgBoxExp) == Boolean.TRUE) {
@@ -65,7 +65,7 @@ public class UnboxedMapDescriptor extends /*AbstractCollectionDescriptor*/Abstra
 			js.appendReferenceTo(unboxedValue);
 			js.append(" == null ? null : ");
 		}
-		js.appendReferenceTo(localContext.getIdResolverVariable());
+		js.appendReferenceTo(localNameManager.getIdResolverVariable());
 		js.append(".createMapOfAll(");
 		js.appendIdReference(mapTypeId != null ? mapTypeId.getKeyTypeId() : null);
 		js.append(", ");
@@ -77,7 +77,7 @@ public class UnboxedMapDescriptor extends /*AbstractCollectionDescriptor*/Abstra
 	}
 
 	@Override
-	public @NonNull Boolean appendEcore(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext, @NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement unboxedValue) {
+	public @NonNull Boolean appendEcore(@NonNull JavaStream js, @NonNull NestedNameManager localNameManager, @NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement unboxedValue) {
 		// FIXME It seems unlikely that we should ever want to create an EMap. Rather we might want to unbox a MapValue into an existing EMap.
 		// return appendEcoreLegacy(js, localContext, cgEcoreExp, unboxedValue);
 		throw new UnsupportedOperationException("UnboxedMapDescriptor::appendEcore");

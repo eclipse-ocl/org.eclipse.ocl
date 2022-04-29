@@ -210,10 +210,10 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 						IF_IsEQ2_ = null;
 					}
 					else {
-						final /*@NonInvalid*/ @Nullable Type type_0 = this.getType();
 						if (type == null) {
-							throw new InvalidValueException("Null argument");
+							throw new InvalidValueException("Null \'\'$metamodel$::IteratorExp\'\' rather than \'\'OclVoid\'\' value required");
 						}
+						final /*@NonInvalid*/ @Nullable Type type_0 = this.getType();
 						final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, type_0).booleanValue();
 						IF_IsEQ2_ = conformsTo;
 					}
@@ -264,9 +264,9 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 				IF_le = true;
 			}
 			else {
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OclInvalid_7 = idResolver.getClass(TypeId.OCL_INVALID, null);
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OclInvalid_5 = idResolver.getClass(TypeId.OCL_INVALID, null);
 				final /*@NonInvalid*/ @Nullable Type type = this.getType();
-				final /*@NonInvalid*/ @NonNull InvalidType CAST_TYP_OclInvalid = (InvalidType)TYP_OclInvalid_7;
+				final /*@NonInvalid*/ @NonNull InvalidType CAST_TYP_OclInvalid = (InvalidType)TYP_OclInvalid_5;
 				final /*@NonInvalid*/ boolean result = (type != null) ? (type.getTypeId() != CAST_TYP_OclInvalid.getTypeId()) : true;
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, result, PivotTables.INT_0).booleanValue();
 				IF_le = logDiagnostic;

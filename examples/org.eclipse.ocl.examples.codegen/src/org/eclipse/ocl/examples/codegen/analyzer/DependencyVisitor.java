@@ -43,6 +43,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.util.AbstractExtendingCGModelVisitor;
 import org.eclipse.ocl.examples.codegen.cse.GlobalPlace;
 import org.eclipse.ocl.examples.codegen.cse.SimpleAnalysis;
+import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.pivot.ids.BindingsId;
 import org.eclipse.ocl.pivot.ids.ClassId;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
@@ -74,17 +75,19 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 /**
  * Traverses the AST adding any internode dependencies to ensure correct declaration ordering.
  */
-public class DependencyVisitor extends AbstractExtendingCGModelVisitor<@Nullable Object, @NonNull CodeGenAnalyzer>
+public class DependencyVisitor extends AbstractExtendingCGModelVisitor<@Nullable Object, @NonNull JavaCodeGenerator>
 {
 	private static final int TOUCHED = -1;
 	protected static final int NOT_AVAILABLE = -2;
 
 	private @NonNull Map<@NonNull CGValuedElement, @NonNull Set<@NonNull CGValuedElement>> directDependencies = new HashMap<>();
+	protected @NonNull CodeGenAnalyzer analyzer;
 	protected @NonNull Id2DependencyVisitor id2DependencyVisitor = new Id2DependencyVisitor();
 	protected final @NonNull GlobalPlace globalPlace;
 
-	public DependencyVisitor(@NonNull CodeGenAnalyzer analyzer, @NonNull GlobalPlace globalPlace) {
-		super(analyzer);
+	public DependencyVisitor(@NonNull JavaCodeGenerator codeGenerator, @NonNull GlobalPlace globalPlace) {
+		super(codeGenerator);
+		this.analyzer = codeGenerator.getAnalyzer();
 		this.globalPlace = globalPlace;
 	}
 
@@ -144,8 +147,8 @@ public class DependencyVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 	}
 
 	private void addElementIdDependency(@NonNull ElementId elementId, @NonNull ElementId dependsOn) {
-		CGElementId cgElementId = context.getElementId(elementId);
-		CGElementId cgDependsOn = context.getElementId(dependsOn);
+		CGElementId cgElementId = analyzer.getCGElementId(elementId);
+		CGElementId cgDependsOn = analyzer.getCGElementId(dependsOn);
 		dependsOn.accept(id2DependencyVisitor);
 		addDependency(cgElementId, cgDependsOn);
 	}

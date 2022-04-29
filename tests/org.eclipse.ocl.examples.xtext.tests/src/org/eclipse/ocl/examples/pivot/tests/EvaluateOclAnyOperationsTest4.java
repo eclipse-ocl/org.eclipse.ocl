@@ -397,6 +397,8 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 	 */
 	@Test public void test_oclAsType() {
 		MyOCL ocl = createOCL();
+		ocl.assertQueryNull(null, "let s : String = null.oclAsType(String) in s");
+// XXX
 		ocl.assertQueryInvalid(null, "invalid.oclAsType(String)");
 		ocl.assertQueryInvalid(null, "invalid.oclAsType(Integer)");
 		ocl.assertQueryInvalid(null, "invalid.oclAsType(Class)");

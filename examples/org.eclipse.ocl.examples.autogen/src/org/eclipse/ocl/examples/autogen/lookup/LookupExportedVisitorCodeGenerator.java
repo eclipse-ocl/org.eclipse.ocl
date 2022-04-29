@@ -18,7 +18,6 @@ import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.autogen.java.AutoCG2JavaVisitor;
-import org.eclipse.ocl.examples.autogen.java.AutoCodeGenerator;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
@@ -52,7 +51,7 @@ public class LookupExportedVisitorCodeGenerator extends LookupVisitorsCodeGenera
 			@Nullable GenPackage superGenPackage,
 			@Nullable GenPackage baseGenPackage) {
 		this(environmentFactory, asPackage, asSuperPackage, asBasePackage, genPackage,
-			superGenPackage, baseGenPackage, LookupVisitorsClassContext.EXPORTED_ENV_NAME);
+			superGenPackage, baseGenPackage, LookupVisitorsCodeGenerator.EXPORTED_ENV_NAME);
 	}
 
 	protected LookupExportedVisitorCodeGenerator(
@@ -67,22 +66,20 @@ public class LookupExportedVisitorCodeGenerator extends LookupVisitorsCodeGenera
 	}
 
 	@Override
-	protected @NonNull AutoCG2JavaVisitor<@NonNull ? extends AutoCodeGenerator> createCG2JavaVisitor(
-			@NonNull CGPackage cgPackage,
-			@Nullable List<CGValuedElement> sortedGlobals) {
+	protected @NonNull AutoCG2JavaVisitor createCG2JavaVisitor(@NonNull CGPackage cgPackage, @Nullable Iterable<@NonNull CGValuedElement> sortedGlobals) {
 		return new LookupExportedCG2JavaVisitor(this, cgPackage, sortedGlobals);
 	}
 
 	@Override
 	protected @NonNull String getLookupVisitorClassName(@NonNull String prefix) {
-		String typeName = extractTypeNameFromEnvOp(LookupVisitorsClassContext.EXPORTED_ENV_NAME);
+		String typeName = extractTypeNameFromEnvOp(LookupVisitorsCodeGenerator.EXPORTED_ENV_NAME);
 		return prefix + "Exported" + typeName + "LookupVisitor";
 	}
 
 	@Override
 	protected List<Property> createAdditionalASProperties() {
 		Type asOclElement = metamodelManager.getStandardLibrary().getOclElementType();
-		this.asImporterProperty = createNativeProperty(LookupVisitorsClassContext.INMPORTER_NAME, asOclElement, true, true);
+		this.asImporterProperty = createNativeProperty(LookupVisitorsCodeGenerator.INMPORTER_NAME, asOclElement, true, true);
 		return Collections.singletonList(asImporterProperty);
 	}
 
@@ -111,12 +108,12 @@ public class LookupExportedVisitorCodeGenerator extends LookupVisitorsCodeGenera
 		ExpressionInOCL envExpressionInOCL = getExpressionInOCL(operation);
 		//
 		org.eclipse.ocl.pivot.Class asType = ClassUtil.nonNullState(operation.getOwningClass());
-		Variable asElement = helper.createParameterVariable(LookupVisitorsClassContext.ELEMENT_NAME, asType, true);
+		Variable asElement = helper.createParameterVariable(LookupVisitorsCodeGenerator.ELEMENT_NAME, asType, true);
 		reDefinitions.put(envExpressionInOCL.getOwnedContext(), asElement);
 		//
 		VariableExp asImporterSource = createThisVariableExp(asThisVariable);
 		PropertyCallExp asImporterAccess = PivotUtil.createPropertyCallExp(asImporterSource, ClassUtil.nonNull(asImporterProperty));
-		Variable asImporter = helper.createLetVariable(LookupVisitorsClassContext.CHILD_NAME, asImporterAccess);
+		Variable asImporter = helper.createLetVariable(LookupVisitorsCodeGenerator.CHILD_NAME, asImporterAccess);
 		reDefinitions.put(envExpressionInOCL.getOwnedParameters().get(0), asImporter);
 
 		//rewrite LookupEnvironment ShadowExp as accessing the context variable (it might be the init of let variable)

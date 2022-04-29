@@ -737,7 +737,8 @@ public class PivotUtil
 		return pivotProperty;
 	}
 
-	public static @NonNull PropertyCallExp createPropertyCallExp(@NonNull OCLExpression asSource, @NonNull Property asProperty) {
+	public static @NonNull PropertyCallExp createPropertyCallExp(@Nullable OCLExpression asSource, @NonNull Property asProperty) {
+		assert (asSource == null) == asProperty.isIsStatic();
 		PropertyCallExp asChild = PivotFactory.eINSTANCE.createPropertyCallExp();
 		asChild.setOwnedSource(asSource);
 		asChild.setReferredProperty(asProperty);
@@ -1315,7 +1316,8 @@ public class PivotUtil
 	 *
 	 * @since 1.7
 	 */
-	public static @NonNull Executor getExecutor(@Nullable EObject eObject) {
+	public static /*@NoThrow*/ @NonNull Executor getExecutor(@Nullable EObject eObject)
+			throws VirtualMachineError {	// Just VirtualMachineError explicitly means @NoThrow CG-wise
 		Executor executor = ThreadLocalExecutor.basicGetExecutor();
 		if (executor != null) {
 			return executor;

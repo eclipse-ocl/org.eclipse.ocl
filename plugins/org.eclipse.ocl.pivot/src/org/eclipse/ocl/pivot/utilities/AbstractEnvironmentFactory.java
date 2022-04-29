@@ -885,6 +885,9 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		return null;
 	}
 
+	/**
+	 * @since 1.18
+	 */
 	@Override
 	public @Nullable LanguageSupport getLanguageSupport(@NonNull String language) {
 		Map<@NonNull String, @NonNull LanguageSupport> language2support2 = language2support;

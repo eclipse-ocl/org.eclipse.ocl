@@ -349,11 +349,11 @@ public class MessageExpImpl
 				/*@Caught*/ @NonNull Object result;
 				try {
 					final /*@NonInvalid*/ @Nullable CallOperationAction ownedCalledOperation_0 = this.getOwnedCalledOperation();
-					final /*@Thrown*/ @NonNull SetValue oclAsSet_0 = OclAnyOclAsSetOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_CallOperationAction, ownedCalledOperation_0);
-					final /*@Thrown*/ @NonNull IntegerValue size = CollectionSizeOperation.INSTANCE.evaluate(oclAsSet_0);
+					final /*@Thrown*/ @NonNull SetValue oclAsSet = OclAnyOclAsSetOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_CallOperationAction, ownedCalledOperation_0);
+					final /*@Thrown*/ @NonNull IntegerValue size = CollectionSizeOperation.INSTANCE.evaluate(oclAsSet);
 					final /*@NonInvalid*/ @Nullable SendSignalAction ownedSentSignal_0 = this.getOwnedSentSignal();
-					final /*@Thrown*/ @NonNull SetValue oclAsSet = OclAnyOclAsSetOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_SendSignalAction, ownedSentSignal_0);
-					final /*@Thrown*/ @NonNull IntegerValue size_0 = CollectionSizeOperation.INSTANCE.evaluate(oclAsSet);
+					final /*@Thrown*/ @NonNull SetValue oclAsSet_0 = OclAnyOclAsSetOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_SendSignalAction, ownedSentSignal_0);
+					final /*@Thrown*/ @NonNull IntegerValue size_0 = CollectionSizeOperation.INSTANCE.evaluate(oclAsSet_0);
 					final /*@Thrown*/ @NonNull IntegerValue sum = (@Nullable IntegerValue)NumericPlusOperation.INSTANCE.evaluate(size, size_0);
 					final /*@Thrown*/ boolean IsEQ_ = sum.equals(PivotTables.INT_1);
 					result = IsEQ_;
@@ -408,11 +408,11 @@ public class MessageExpImpl
 				try {
 					/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
 					try {
-						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType_4 = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
+						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType_10 = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
 						@SuppressWarnings("null")
 						final /*@NonInvalid*/ @NonNull OCLExpression ownedTarget_0 = this.getOwnedTarget();
 						final /*@NonInvalid*/ @Nullable Type type = ownedTarget_0.getType();
-						final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, TYP_CollectionType_4).booleanValue();
+						final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, TYP_CollectionType_10).booleanValue();
 						CAUGHT_oclIsKindOf = oclIsKindOf;
 					}
 					catch (Exception THROWN_CAUGHT_oclIsKindOf) {

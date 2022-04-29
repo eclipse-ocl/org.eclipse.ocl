@@ -558,16 +558,16 @@ implements PropertyCallExp {
 						try {
 							final /*@NonInvalid*/ @Nullable Property referredProperty_0 = this.getReferredProperty();
 							final /*@NonInvalid*/ @NonNull Object IsEQ2_ = referredProperty_0 == null;
-							/*@Thrown*/ @Nullable Boolean IF_IsEQ2__1;
+							/*@Thrown*/ @Nullable Boolean IF_IsEQ2_;
 							if (IsEQ2_ == Boolean.TRUE) {
-								IF_IsEQ2__1 = null;
+								IF_IsEQ2_ = null;
 							}
 							else {
 								assert referredProperty_0 != null;
 								final /*@Thrown*/ boolean isStatic = referredProperty_0.isIsStatic();
-								IF_IsEQ2__1 = isStatic;
+								IF_IsEQ2_ = isStatic;
 							}
-							CAUGHT_IF_IsEQ2_ = IF_IsEQ2__1;
+							CAUGHT_IF_IsEQ2_ = IF_IsEQ2_;
 						}
 						catch (Exception THROWN_CAUGHT_IF_IsEQ2_) {
 							CAUGHT_IF_IsEQ2_ = ValueUtil.createInvalidValue(THROWN_CAUGHT_IF_IsEQ2_);
@@ -597,56 +597,56 @@ implements PropertyCallExp {
 						implies = ValueUtil.TRUE_VALUE;
 					}
 					else {
-						/*@Caught*/ @Nullable Object CAUGHT_IF_IsEQ2__1;
+						/*@Caught*/ @Nullable Object CAUGHT_IF_IsEQ2__0;
 						try {
 							final /*@NonInvalid*/ @Nullable OCLExpression ownedSource = this.getOwnedSource();
-							final /*@NonInvalid*/ @NonNull Object IsEQ2__1 = ownedSource == null;
-							/*@Thrown*/ @Nullable Type IF_IsEQ2_;
-							if (IsEQ2__1 == Boolean.TRUE) {
-								IF_IsEQ2_ = null;
+							final /*@NonInvalid*/ @NonNull Object IsEQ2__0 = ownedSource == null;
+							/*@Thrown*/ @Nullable Type IF_IsEQ2__1;
+							if (IsEQ2__0 == Boolean.TRUE) {
+								IF_IsEQ2__1 = null;
 							}
 							else {
 								assert ownedSource != null;
 								final /*@Thrown*/ @Nullable Type type = ownedSource.getType();
-								IF_IsEQ2_ = type;
+								IF_IsEQ2__1 = type;
 							}
-							/*@Caught*/ @Nullable Object CAUGHT_IF_IsEQ2__0;
+							/*@Caught*/ @Nullable Object CAUGHT_IF_IsEQ2__1;
 							try {
-								CAUGHT_IF_IsEQ2__0 = IF_IsEQ2_;
+								CAUGHT_IF_IsEQ2__1 = IF_IsEQ2__1;
 							}
-							catch (Exception THROWN_CAUGHT_IF_IsEQ2__0) {
-								CAUGHT_IF_IsEQ2__0 = ValueUtil.createInvalidValue(THROWN_CAUGHT_IF_IsEQ2__0);
+							catch (Exception THROWN_CAUGHT_IF_IsEQ2__1) {
+								CAUGHT_IF_IsEQ2__1 = ValueUtil.createInvalidValue(THROWN_CAUGHT_IF_IsEQ2__1);
 							}
-							final /*@NonInvalid*/ @NonNull Object IsEQ2__0 = CAUGHT_IF_IsEQ2__0 == null;
+							final /*@NonInvalid*/ @NonNull Object IsEQ2__1 = CAUGHT_IF_IsEQ2__1 == null;
 							/*@Thrown*/ @Nullable Boolean IF_IsEQ2__0;
-							if (IsEQ2__0 == Boolean.TRUE) {
+							if (IsEQ2__1 == Boolean.TRUE) {
 								IF_IsEQ2__0 = null;
 							}
 							else {
+								if (IF_IsEQ2__1 == null) {
+									throw new InvalidValueException("Null \'\'$metamodel$::IteratorExp\'\' rather than \'\'OclVoid\'\' value required");
+								}
 								@SuppressWarnings("null")
 								final /*@NonInvalid*/ @NonNull Type getSpecializedReferredPropertyOwningType_0 = this.getSpecializedReferredPropertyOwningType();
-								if (IF_IsEQ2_ == null) {
-									throw new InvalidValueException("Null argument");
-								}
-								final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, IF_IsEQ2_, getSpecializedReferredPropertyOwningType_0).booleanValue();
+								final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, IF_IsEQ2__1, getSpecializedReferredPropertyOwningType_0).booleanValue();
 								IF_IsEQ2__0 = conformsTo;
 							}
-							CAUGHT_IF_IsEQ2__1 = IF_IsEQ2__0;
+							CAUGHT_IF_IsEQ2__0 = IF_IsEQ2__0;
 						}
-						catch (Exception THROWN_CAUGHT_IF_IsEQ2__1) {
-							CAUGHT_IF_IsEQ2__1 = ValueUtil.createInvalidValue(THROWN_CAUGHT_IF_IsEQ2__1);
+						catch (Exception THROWN_CAUGHT_IF_IsEQ2__0) {
+							CAUGHT_IF_IsEQ2__0 = ValueUtil.createInvalidValue(THROWN_CAUGHT_IF_IsEQ2__0);
 						}
-						if (CAUGHT_IF_IsEQ2__1 == ValueUtil.TRUE_VALUE) {
+						if (CAUGHT_IF_IsEQ2__0 == ValueUtil.TRUE_VALUE) {
 							implies = ValueUtil.TRUE_VALUE;
 						}
 						else {
 							if (CAUGHT_not instanceof InvalidValueException) {
 								throw (InvalidValueException)CAUGHT_not;
 							}
-							if (CAUGHT_IF_IsEQ2__1 instanceof InvalidValueException) {
-								throw (InvalidValueException)CAUGHT_IF_IsEQ2__1;
+							if (CAUGHT_IF_IsEQ2__0 instanceof InvalidValueException) {
+								throw (InvalidValueException)CAUGHT_IF_IsEQ2__0;
 							}
-							if ((CAUGHT_not == null) || (CAUGHT_IF_IsEQ2__1 == null)) {
+							if ((CAUGHT_not == null) || (CAUGHT_IF_IsEQ2__0 == null)) {
 								implies = null;
 							}
 							else {
