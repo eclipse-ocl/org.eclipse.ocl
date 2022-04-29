@@ -283,7 +283,8 @@ public class CGTupleExpImpl extends CGValuedElementImpl implements CGTupleExp {
 	@Override
 	public boolean isNonInvalid() {
 		for (CGTuplePart cgPart : getParts()) {
-			if (!cgPart.isNonInvalid()) {
+			boolean mayBeInvalid = !cgPart.isNonInvalid();
+			if (mayBeInvalid) {
 				return false;
 			}
 		}

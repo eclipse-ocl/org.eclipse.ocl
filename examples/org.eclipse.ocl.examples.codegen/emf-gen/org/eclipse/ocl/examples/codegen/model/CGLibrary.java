@@ -24,17 +24,35 @@ import java.util.Map;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AnyType;
+import org.eclipse.ocl.pivot.AssociativityKind;
+import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.Class;
+import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.InvalidType;
+import org.eclipse.ocl.pivot.Iteration;
+import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.Library;
+import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.Parameter;
+import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.PrimitiveType;
+import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.SelfType;
+import org.eclipse.ocl.pivot.SequenceType;
+import org.eclipse.ocl.pivot.SetType;
+import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.TupleType;
+import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
@@ -44,6 +62,9 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.model.OCLmetamodel;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+
+import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
+import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 
 /**
  * This is the http://www.eclipse.org/ocl/2015/CGLibrary Standard Library
@@ -71,6 +92,22 @@ public class CGLibrary extends ASResourceImpl
 	public static final @NonNull String STDLIB_URI = "http://www.eclipse.org/ocl/2015/CGLibrary";
 
 	/**
+	 *	The URI of the AS representation of this Standard Library.
+	 */
+	public static final @NonNull URI STDLIB_AS_URI = URI.createURI("http://www.eclipse.org/ocl/2015/CGLibrary" + PivotConstants.DOT_OCL_AS_FILE_EXTENSION);
+
+	/**
+	 * Return the default http://www.eclipse.org/ocl/2015/CGLibrary standard Library Resource
+	 * if it jas been created, or null if not.
+	 *  This static definition auto-generated from /org.eclipse.ocl.examples.codegen/model/CGLibrary.oclstdlib
+	 *  is used as the default when no overriding copy is registered.
+	 * It cannot be unloaded or rather unloading has no effect.
+	 */
+	public static @Nullable CGLibrary basicGetDefault() {
+		return INSTANCE;
+	}
+
+	/**
 	 * Return the default http://www.eclipse.org/ocl/2015/CGLibrary standard Library Resource.
 	 *  This static definition auto-generated from /org.eclipse.ocl.examples.codegen/model/CGLibrary.oclstdlib
 	 *  is used as the default when no overriding copy is registered.
@@ -82,6 +119,7 @@ public class CGLibrary extends ASResourceImpl
 			Contents contents = new Contents("http://www.eclipse.org/ocl/2015/Library");
 			String asURI = STDLIB_URI + PivotConstants.DOT_OCL_AS_FILE_EXTENSION;
 			oclstdlib = INSTANCE = new ReadOnly(asURI, contents.getModel());
+			oclstdlib.setSaveable(false);
 		}
 		return oclstdlib;
 	}
@@ -109,17 +147,22 @@ public class CGLibrary extends ASResourceImpl
 	}
 
 	/**
-	 * Install this library in the {@link StandardLibraryContribution#REGISTRY}.
+	 * Install this library in the {@link StandardLibraryContribution#REGISTRY}
+	 * and the {@link OCLASResourceFactory#REGISTRY}.
 	 * This method may be invoked by standalone applications to replicate
 	 * the registration that should appear as a standard_library plugin
 	 * extension when running within Eclipse.
 	 */
 	public static void install() {
-		StandardLibraryContribution.REGISTRY.put(STDLIB_URI, new Loader());
+		EPackage.Registry.INSTANCE.put(OCLstdlibPackage.eNS_URI, OCLstdlibPackage.eINSTANCE);
+		Loader contribution = new Loader();
+		StandardLibraryContribution.REGISTRY.put(STDLIB_URI, contribution);
+		OCLASResourceFactory.REGISTRY.put(STDLIB_AS_URI, contribution);
 	}
 
 	/**
 	 * Install this library in the {@link StandardLibraryContribution#REGISTRY}
+	 * and the {@link OCLASResourceFactory#REGISTRY}
 	 * unless some other library contribution has already been installed.
 	 */
 	public static void lazyInstall() {
@@ -129,12 +172,14 @@ public class CGLibrary extends ASResourceImpl
 	}
 
 	/**
-	 * Unnstall this library from the {@link StandardLibraryContribution#REGISTRY}.
+	 * Uninstall this library from the {@link StandardLibraryContribution#REGISTRY}
+	 * and the {@link OCLASResourceFactory#REGISTRY}.
 	 * This method may be invoked by standalone applications to release the library
 	 * resources for garbage collection and memory leakage detection.
 	 */
 	public static void uninstall() {
 		StandardLibraryContribution.REGISTRY.remove(STDLIB_URI);
+		OCLASResourceFactory.REGISTRY.remove(STDLIB_AS_URI);
 		INSTANCE = null;
 	}
 
@@ -158,14 +203,11 @@ public class CGLibrary extends ASResourceImpl
 
 	/**
 	 * A ReadOnly CGLibrary overrides inherited functionality to impose immutable shared behaviour.
-	 *
-	 * @since 1.5
 	 */
 	protected static class ReadOnly extends CGLibrary implements ImmutableResource
 	{
 		protected ReadOnly(@NonNull String asURI, @NonNull Model libraryModel) {
 			super(asURI, libraryModel);
-			setSaveable(false);
 		}
 
 		/**
@@ -240,7 +282,7 @@ public class CGLibrary extends ASResourceImpl
 		private Contents(@NonNull String asURI)
 		{
 			model = createModel(asURI);
-			ocl = createLibrary("ocl", "ocl", "http://www.eclipse.org/ocl/2015/Library", IdManager.METAMODEL);
+			ocl = createLibrary("ocl", "ocl", "http://www.eclipse.org/ocl/2015/Library", IdManager.METAMODEL, OCLstdlibPackage.eINSTANCE);
 			installPackages();
 			installPrimitiveTypes();
 			installOperations();
@@ -250,39 +292,39 @@ public class CGLibrary extends ASResourceImpl
 		public @NonNull Model getModel() {
 			return model;
 		}
-
+		
 		private final @NonNull Package _ocl = getPackage(org.eclipse.ocl.pivot.model.OCLstdlib.getDefaultModel(), "ocl");
-		private final @NonNull Class _Boolean = getPrimitiveType(_ocl, "Boolean");
+		private final @NonNull Class _Boolean = getBooleanType(_ocl, "Boolean");
 		private final @NonNull Class _Integer = getPrimitiveType(_ocl, "Integer");
 		private final @NonNull AnyType _OclAny = getAnyType(_ocl, "OclAny");
 		private final @NonNull Class _OclElement = getClass(_ocl, "OclElement");
 		private final @NonNull Class _String = getPrimitiveType(_ocl, "String");
-
+		
 		private void installPackages() {
 			model.getOwnedPackages().add(ocl);
 			model.getOwnedImports().add(createImport(null, _ocl));
 		}
-
-		private final @NonNull PrimitiveType _String_1 = createPrimitiveType("String");
-
+		
+		private final @NonNull PrimitiveType _String_1 = createPrimitiveType(OCLstdlibPackage.Literals.STRING);
+		
 		private void installPrimitiveTypes() {
 			List<Class> ownedClasses;
 			PrimitiveType type;
-
+		
 			ownedClasses = ocl.getOwnedClasses();
 			ownedClasses.add(type = _String_1);
 		}
-
+		
 		private final @NonNull Operation op_String_getSeverity = createOperation("getSeverity", _Integer, "org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation", org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation.INSTANCE);
 		private final @NonNull Operation op_String_logDiagnostic = createOperation("logDiagnostic", _Boolean, "org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation", org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation.INSTANCE);
 		private final @NonNull Operation op_String_logDiagnostic_1 = createOperation("logDiagnostic", _Boolean, "org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation", org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation.INSTANCE);
-
+		
 		private void installOperations() {
 			List<Operation> ownedOperations;
 			List<Parameter> ownedParameters;
 			Operation operation;
 			Parameter parameter;
-
+		
 			ownedOperations = _String_1.getOwnedOperations();
 			ownedOperations.add(operation = op_String_getSeverity);
 			ownedOperations.add(operation = op_String_logDiagnostic);
@@ -306,7 +348,7 @@ public class CGLibrary extends ASResourceImpl
 			ownedParameters.add(parameter = createParameter("status", _OclAny, false));
 			ownedParameters.add(parameter = createParameter("code", _Integer, true));
 		}
-
+		
 		private void installComments() {
 		}
 	}

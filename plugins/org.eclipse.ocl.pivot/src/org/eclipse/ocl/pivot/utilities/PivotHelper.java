@@ -426,7 +426,7 @@ public class PivotHelper
 	/**
 	 * @since 1.11
 	 */
-	public @NonNull PropertyCallExp createPropertyCallExp(@NonNull OCLExpression asSource, @NonNull Property asProperty) {
+	public @NonNull PropertyCallExp createPropertyCallExp(@Nullable OCLExpression asSource, @NonNull Property asProperty) {
 		return PivotUtil.createPropertyCallExp(asSource, asProperty);
 	}
 

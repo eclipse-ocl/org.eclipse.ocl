@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
- * 
+ *
  * </copyright>
  *
  * This code is auto-generated
@@ -46,6 +46,11 @@ public abstract class AbstractNullCGModelVisitor<@Nullable R, C>
 
 	@Override
 	public R visitCGAssertNonNullExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGAssertNonNullExp object) {
+		return null;
+	}
+
+	@Override
+	public R visitCGBodiedProperty(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGBodiedProperty object) {
 		return null;
 	}
 
@@ -120,6 +125,11 @@ public abstract class AbstractNullCGModelVisitor<@Nullable R, C>
 	}
 
 	@Override
+	public R visitCGConstrainedProperty(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGConstrainedProperty object) {
+		return null;
+	}
+
+	@Override
 	public R visitCGConstraint(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGConstraint object) {
 		return null;
 	}
@@ -180,16 +190,6 @@ public abstract class AbstractNullCGModelVisitor<@Nullable R, C>
 	}
 
 	@Override
-	public R visitCGExecutorOperation(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGExecutorOperation object) {
-		return null;
-	}
-
-	@Override
-	public R visitCGExecutorOperationCallExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGExecutorOperationCallExp object) {
-		return null;
-	}
-
-	@Override
 	public R visitCGExecutorOppositeProperty(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGExecutorOppositeProperty object) {
 		return null;
 	}
@@ -246,6 +246,11 @@ public abstract class AbstractNullCGModelVisitor<@Nullable R, C>
 
 	@Override
 	public R visitCGIfExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGIfExp object) {
+		return null;
+	}
+
+	@Override
+	public R visitCGInlinedOperation(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGInlinedOperation object) {
 		return null;
 	}
 

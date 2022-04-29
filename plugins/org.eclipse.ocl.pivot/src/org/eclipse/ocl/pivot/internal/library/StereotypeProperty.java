@@ -32,10 +32,10 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
 /**
  * An instance of StereotypeProperty supports evaluation of a property call that accesses a stereotype extension property.
  */
-public class StereotypeProperty extends ConstrainedProperty
+public class StereotypeProperty extends ConstrainedProperty		// XXX leapfrog to AbstractProperty
 {
 	public StereotypeProperty(@NonNull Property property) {
-		super(property);
+		super(property, true);
 	}
 
 	@Override

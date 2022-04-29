@@ -63,6 +63,6 @@ public class OneIteration2Java extends AbstractAccumulation2Java
 
 	@Override
 	public @Nullable CGTypeId getAccumulatorTypeId(@NonNull CodeGenAnalyzer analyzer, @NonNull CGBuiltInIterationCallExp cgIterationCallExp) {
-		return analyzer.getTypeId(TypeId.BOOLEAN);
+		return analyzer.getCGTypeId(TypeId.BOOLEAN);
 	}
 }

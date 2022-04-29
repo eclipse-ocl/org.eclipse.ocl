@@ -93,7 +93,7 @@ public class CGLibraryIterateCallExpImpl extends CGLibraryIterationCallExpImpl i
 		CGIterator oldResult = result;
 		result = newResult;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 14, oldResult, newResult);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 15, oldResult, newResult);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -109,14 +109,14 @@ public class CGLibraryIterateCallExpImpl extends CGLibraryIterationCallExpImpl i
 		if (newResult != result) {
 			NotificationChain msgs = null;
 			if (result != null)
-				msgs = ((InternalEObject)result).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (14), null, msgs);
+				msgs = ((InternalEObject)result).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (15), null, msgs);
 			if (newResult != null)
-				msgs = ((InternalEObject)newResult).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (14), null, msgs);
+				msgs = ((InternalEObject)newResult).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (15), null, msgs);
 			msgs = basicSetResult(newResult, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 14, newResult, newResult));
+			eNotify(new ENotificationImpl(this, Notification.SET, 15, newResult, newResult));
 	}
 
 	/**
@@ -127,7 +127,7 @@ public class CGLibraryIterateCallExpImpl extends CGLibraryIterationCallExpImpl i
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case 14:
+			case 15:
 				return basicSetResult(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -141,7 +141,7 @@ public class CGLibraryIterateCallExpImpl extends CGLibraryIterationCallExpImpl i
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 14:
+			case 15:
 				return getResult();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -155,7 +155,7 @@ public class CGLibraryIterateCallExpImpl extends CGLibraryIterationCallExpImpl i
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 14:
+			case 15:
 				setResult((CGIterator)newValue);
 				return;
 		}
@@ -170,7 +170,7 @@ public class CGLibraryIterateCallExpImpl extends CGLibraryIterationCallExpImpl i
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 14:
+			case 15:
 				setResult((CGIterator)null);
 				return;
 		}
@@ -185,7 +185,7 @@ public class CGLibraryIterateCallExpImpl extends CGLibraryIterationCallExpImpl i
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 14:
+			case 15:
 				return result != null;
 		}
 		return super.eIsSet(featureID);
@@ -206,11 +206,11 @@ public class CGLibraryIterateCallExpImpl extends CGLibraryIterationCallExpImpl i
 	 */
 	@Override
 	public boolean isNonInvalid() {
-		if (referredIteration == null) {
+		if (asIteration == null) {
 			return false;
 		}
-		if (referredIteration.isIsValidating()) {
-			if (referredIteration.isIsInvalidating()) {
+		if (asIteration.isIsValidating()) {
+			if (asIteration.isIsInvalidating()) {
 				// e.g AND, forAll - nonInvalid if all inputs nonInvalid
 			}
 			else {
@@ -218,7 +218,7 @@ public class CGLibraryIterateCallExpImpl extends CGLibraryIterationCallExpImpl i
 			}
 		}
 		else {
-			if (referredIteration.isIsInvalidating()) {
+			if (asIteration.isIsInvalidating()) {
 				return false;				// e.g divide-by-zero
 			}
 			else {

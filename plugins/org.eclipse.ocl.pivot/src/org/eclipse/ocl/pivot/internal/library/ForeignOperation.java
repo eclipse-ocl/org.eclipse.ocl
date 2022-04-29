@@ -54,7 +54,8 @@ public class ForeignOperation extends AbstractStaticOperation
 	 */
 	@Override
 	public @Nullable Object basicEvaluate(@NonNull Executor executor, @NonNull TypedElement caller, @Nullable Object @NonNull [] boxedSourceAndArgumentValues) {
-		assert boxedSourceAndArgumentValues[0] == null;
+		boolean isStatic = ((OperationCallExp)caller).getReferredOperation().isIsStatic();
+		assert (boxedSourceAndArgumentValues[0] == null) == isStatic;
 		if (specification.getOwnedBody() == null) {
 			try {
 				EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) executor.getEnvironmentFactory();
@@ -63,9 +64,12 @@ public class ForeignOperation extends AbstractStaticOperation
 				throw new InvalidValueException(e, "parse failure", executor.getEvaluationEnvironment(), boxedSourceAndArgumentValues[0], caller);
 			}
 		}
-		Variable ownedContext = specification.getOwnedContext();
-		assert ownedContext == null;
 		EvaluationEnvironment nestedEvaluationEnvironment = ((ExecutorExtension)executor).pushEvaluationEnvironment(specification, caller);
+		Variable ownedContext = specification.getOwnedContext();
+		assert (ownedContext == null) == isStatic;
+		if (ownedContext != null) {
+			nestedEvaluationEnvironment.add(ownedContext, boxedSourceAndArgumentValues[0]);
+		}
 		List<Variable> parameterVariables = specification.getOwnedParameters();
 		int iMax = Math.min(parameterVariables.size(), boxedSourceAndArgumentValues.length-1);
 		for (int i = 0; i < iMax; i++) {
@@ -81,12 +85,13 @@ public class ForeignOperation extends AbstractStaticOperation
 
 	@Override
 	public @Nullable Object dispatch(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object sourceValue) {
-		assert sourceValue == null;
+	//	assert sourceValue == null;
+		assert (sourceValue == null) == callExp.getReferredOperation().isIsStatic();
 		assert !PivotUtil.getReferredOperation(callExp).isIsValidating();
 		List<@NonNull OCLExpression> arguments = ClassUtil.nullFree(callExp.getOwnedArguments());
 		@Nullable Object[] sourceAndArgumentValues = new @Nullable Object[1+arguments.size()];
 		int argumentIndex = 0;
-		sourceAndArgumentValues[argumentIndex++] = null;
+		sourceAndArgumentValues[argumentIndex++] = sourceValue;
 		for (@NonNull OCLExpression argument : arguments) {
 			sourceAndArgumentValues[argumentIndex++] = executor.evaluate(argument);
 		}

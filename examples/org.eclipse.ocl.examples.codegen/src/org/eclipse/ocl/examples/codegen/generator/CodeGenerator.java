@@ -20,8 +20,6 @@ import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.DependencyVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.FieldingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
-import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager.NameVariant;
-import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 import org.eclipse.ocl.examples.codegen.analyzer.ReferencesVisitor;
 import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.PropertyCallingConvention;
@@ -38,7 +36,6 @@ import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.library.LibraryProperty;
 
 public interface CodeGenerator
 {
@@ -52,20 +49,29 @@ public interface CodeGenerator
 	@NonNull ReferencesVisitor createReferencesVisitor();
 	@NonNull CodeGenAnalyzer getAnalyzer();
 	@NonNull BoxedDescriptor getBoxedDescriptor(@NonNull ElementId elementId);
-	@NonNull OperationCallingConvention getCallingConvention(@NonNull Operation asOperation);
-	@NonNull PropertyCallingConvention getCallingConvention(@NonNull Property asProperty, @NonNull LibraryProperty libraryProperty);
+
+	/**
+	 * Determine the calling convention appropriate to asOperation. If requireFinal is false and asOperation has overrides
+	 * a dynamic dispatching calling convention is returned. ... inline ... Otherwise a direct calling convention.
+	 */
+	@NonNull OperationCallingConvention getCallingConvention(@NonNull Operation asOperation, boolean requireFinal);
+
+	/**
+	 * Determine the calling convention appropriate to asProperty.
+	 */
+	@NonNull PropertyCallingConvention getCallingConvention(@NonNull Property asProperty);
 	@Nullable String getConstantsClass();
 	@NonNull String getDefaultIndent();
 	@NonNull EcoreDescriptor getEcoreDescriptor(@NonNull ElementId elementId, @Nullable Class<?> instanceClass);
 	@NonNull EnvironmentFactoryInternal getEnvironmentFactory();
-	@NonNull String getForeignClassName(org.eclipse.ocl.pivot.@NonNull Class asClass);
+	@NonNull String getExternalClassName(org.eclipse.ocl.pivot.@NonNull Class asClass);
 	@NonNull GenModelHelper getGenModelHelper();
-	@NonNull GlobalContext getGlobalContext();
+//	@NonNull GlobalContext getGlobalContext();
 	@NonNull GlobalPlace getGlobalPlace();
 	@NonNull ImportNameManager getImportNameManager();
 	@Nullable IterationHelper getIterationHelper(@NonNull Iteration iteration);
 	@NonNull GlobalNameManager getGlobalNameManager();
-	@NonNull NameResolution getNameResolution(@NonNull CGValuedElement cgChild);
+//	@NonNull NameResolution getNameResolution(@NonNull CGValuedElement cgChild);
 	@NonNull CodeGenOptions getOptions();
 	@Nullable List<@NonNull Exception> getProblems();
 	@NonNull TypeDescriptor getTypeDescriptor(@NonNull CGValuedElement cgElement);
@@ -96,9 +102,4 @@ public interface CodeGenerator
 	 * Return true if cgValue could be represented by a primitive value. i.e. if it cannot convey a null or invalid value.
 	 */
 	boolean maybePrimitive(@NonNull CGValuedElement cgValue);
-
-	@NonNull NameVariant getBOXED_NameVariant();
-	@NonNull NameVariant getCAUGHT_NameVariant();
-//	@NonNull NameVariant getGUARDED_NameVariant();
-	@NonNull NameVariant getSAFE_NameVariant();
 }

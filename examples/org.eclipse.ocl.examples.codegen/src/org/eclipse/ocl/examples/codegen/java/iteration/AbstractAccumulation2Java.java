@@ -49,7 +49,7 @@ public abstract class AbstractAccumulation2Java extends AbstractIteration2Java
 	}
 
 	protected @NonNull Class<?> getAccumulatorClass(@NonNull CodeGenAnalyzer analyzer, @NonNull CollectionTypeId typeId) {
-		JavaCodeGenerator codeGenerator = (JavaCodeGenerator)analyzer.getCodeGenerator();
+		JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
 		TypeDescriptor boxedTypeDescriptor = codeGenerator.getBoxedDescriptor(typeId);
 		Class<?> boxedClass = boxedTypeDescriptor.getJavaClass();
 		for (Class<?> nestedClass : boxedClass.getClasses()) {
@@ -65,6 +65,6 @@ public abstract class AbstractAccumulation2Java extends AbstractIteration2Java
 		CGTypeId cgAccumulatorId = cgIterationCallExp.getTypeId();
 		ElementId elementId = cgAccumulatorId.getElementId();
 		Class<?> accumulatorClass = elementId instanceof CollectionTypeId ? getAccumulatorClass(analyzer, (CollectionTypeId) elementId) : Object.class;
-		return analyzer.getTypeId(JavaConstants.getJavaTypeId(accumulatorClass));
+		return analyzer.getCGTypeId(JavaConstants.getJavaTypeId(accumulatorClass));
 	}
 }

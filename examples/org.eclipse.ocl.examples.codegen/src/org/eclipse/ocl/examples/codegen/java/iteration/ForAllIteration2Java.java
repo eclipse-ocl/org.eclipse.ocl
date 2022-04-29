@@ -162,7 +162,7 @@ public class ForAllIteration2Java extends AbstractIteration2Java
 
 	@Override
 	public @Nullable CGTypeId getAccumulatorTypeId(@NonNull CodeGenAnalyzer analyzer, @NonNull CGBuiltInIterationCallExp cgIterationCallExp) {
-		return analyzer.getTypeId(new JavaTypeId(Object.class));
+		return analyzer.getCGTypeId(new JavaTypeId(Object.class));
 	}
 
 	@Override

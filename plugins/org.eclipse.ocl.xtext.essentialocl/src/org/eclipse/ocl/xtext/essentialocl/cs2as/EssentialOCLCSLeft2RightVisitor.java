@@ -289,20 +289,23 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	 * The example determines whether an implicit source needs synthesis gor a non-static operation.
 	 */
 	protected @Nullable Operation getExampleOperation(@NonNull Invocations invocations, @Nullable OCLExpression sourceExp, @NonNull RoundBracketedClauseCS csRoundBracketedClause) {
-		Operation operation = invocations.getSingleResult();
-		if (operation != null) {
-			return operation;
+		NamedElement namedElement = invocations.getSingleResult();
+		if (namedElement != null) {
+			return namedElement instanceof Operation ? (Operation)namedElement : null;
 		}
 		Operation bestOperation = null;
 		int bestDepth = 0;
-		for (Operation invocation : invocations) {
-			org.eclipse.ocl.pivot.Class owningClass = invocation.getOwningClass();
-			if (owningClass != null) {
-				CompleteClass completeClass = metamodelManager.getCompleteClass(owningClass);
-				int depth = completeClass.getCompleteInheritance().getDepth();
-				if ((bestOperation == null) || (depth > bestDepth)) {
-					bestOperation = invocation;
-					bestDepth = depth;
+		for (NamedElement invocation : invocations) {
+			if (invocation instanceof Operation) {
+				Operation operation = (Operation)invocation;
+				org.eclipse.ocl.pivot.Class owningClass = operation.getOwningClass();
+				if (owningClass != null) {
+					CompleteClass completeClass = metamodelManager.getCompleteClass(owningClass);
+					int depth = completeClass.getCompleteInheritance().getDepth();
+					if ((bestOperation == null) || (depth > bestDepth)) {
+						bestOperation = operation;
+						bestDepth = depth;
+					}
 				}
 			}
 		}
@@ -426,7 +429,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			sourceType = PivotUtil.getLowerBound(asTemplateParameter, standardLibrary.getOclAnyType());
 		}
 		Iterable<@NonNull Operation> nonStaticOperations = metamodelManager.getAllOperations(sourceType, FeatureFilter.SELECT_NON_STATIC, name);
-		List<@NonNull Operation> invocations = getInvocationsInternal(null, nonStaticOperations, iteratorCount, expressionCount);
+		List<@NonNull NamedElement> invocations = getInvocationsInternal(null, nonStaticOperations, iteratorCount, expressionCount);
 		if (sourceType instanceof ElementExtension) {				// FIXME review me
 			Type asStereotype = ((ElementExtension)sourceType).getStereotype();
 			if (asStereotype != null) {
@@ -440,8 +443,8 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		}
 		return invocations != null ? new Invocations.UnresolvedInvocations(sourceType, invocations) : null;
 	}
-	protected @Nullable List<@NonNull Operation> getInvocationsInternal(@Nullable List<@NonNull Operation> invocations,
-			@NonNull Iterable<@NonNull Operation> allOperations, int iteratorCount, int expressionCount) {
+	protected @Nullable List<@NonNull NamedElement> getInvocationsInternal(@Nullable List<@NonNull NamedElement> invocations,
+			@NonNull Iterable<@NonNull ? extends Operation> allOperations, int iteratorCount, int expressionCount) {
 		for (@NonNull Operation operation : allOperations) {
 			Operation asOperation = null;
 			if (operation instanceof Iteration) {
@@ -1456,7 +1459,8 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		}
 		Type asType = context.lookupType(csNameExp, pathName);
 		@NonNull ShadowExp pivotElement = context.refreshModelElement(ShadowExp.class, PivotPackage.Literals.SHADOW_EXP, csNameExp);
-		pivotElement.setType(asType);
+	//	pivotElement.setType(asType);		// XXX refresh
+		helper.setType(pivotElement, asType, true);
 		for (ShadowPartCS csPart : csCurlyBracketedClause.getOwnedParts()) {
 			assert csPart != null;
 			context.visitLeft2Right(ShadowPart.class, csPart);

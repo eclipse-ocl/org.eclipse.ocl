@@ -306,7 +306,8 @@ public class CGMapExpImpl extends CGValuedElementImpl implements CGMapExp {
 	@Override
 	public boolean isNonInvalid() {
 		for (CGMapPart cgPart : getParts()) {
-			if (!cgPart.isNonInvalid()) {
+			boolean mayBeInvalid = !cgPart.isNonInvalid();
+			if (mayBeInvalid) {
 				return false;
 			}
 		}

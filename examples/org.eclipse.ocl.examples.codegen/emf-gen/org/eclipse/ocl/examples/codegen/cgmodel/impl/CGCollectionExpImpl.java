@@ -296,7 +296,8 @@ public class CGCollectionExpImpl extends CGValuedElementImpl implements CGCollec
 	@Override
 	public boolean isNonInvalid() {
 		for (CGCollectionPart cgPart : getParts()) {
-			if (!cgPart.isNonInvalid()) {
+			boolean mayBeInvalid = !cgPart.isNonInvalid();
+			if (mayBeInvalid) {
 				return false;
 			}
 		}

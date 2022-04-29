@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
@@ -13,15 +13,11 @@ package org.eclipse.ocl.examples.codegen.cgmodel.impl;
 import java.lang.reflect.Field;
 
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGNativePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
-
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNativePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
 
 /**
@@ -211,6 +207,15 @@ public class CGNativePropertyCallExpImpl extends CGPropertyCallExpImpl implement
 	@Override
 	public boolean isUnboxed() {
 		return true;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated NOT XXX
+	 */
+	@Override
+	public boolean isInlined() {
+		return (asProperty != null) && asProperty.isIsStatic();
 	}
 
 } //CGFieldPropertyCallExpImpl

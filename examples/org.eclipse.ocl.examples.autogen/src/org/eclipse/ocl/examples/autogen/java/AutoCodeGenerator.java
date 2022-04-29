@@ -36,7 +36,7 @@ import org.eclipse.ocl.examples.codegen.java.CG2JavaPreVisitor;
 import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
 import org.eclipse.ocl.examples.codegen.java.ImportUtils;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
-import org.eclipse.ocl.examples.codegen.library.NativeProperty;
+import org.eclipse.ocl.examples.codegen.library.AbstractNativeProperty;
 import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreGenModelGeneratorAdapter;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
@@ -117,13 +117,13 @@ public abstract class AutoCodeGenerator extends JavaCodeGenerator
 
 
 	protected @NonNull AS2CGVisitor createAS2CGVisitor() {
-		return new AS2CGVisitor(cgAnalyzer);
+		return new AS2CGVisitor(this);
 	}
 
 	@Override
 	public abstract @NonNull CG2JavaPreVisitor createCG2JavaPreVisitor();
 
-	protected abstract @NonNull AutoCG2JavaVisitor<@NonNull ? extends AutoCodeGenerator> createCG2JavaVisitor(@NonNull CGPackage cgPackage, @Nullable List</*@NonNull*/ CGValuedElement> sortedGlobals);
+	protected abstract @NonNull AutoCG2JavaVisitor createCG2JavaVisitor(@NonNull CGPackage cgPackage, @Nullable Iterable<@NonNull CGValuedElement> sortedGlobals);
 
 	protected abstract @NonNull List<CGPackage> createCGPackages() throws ParserException;
 
@@ -149,9 +149,8 @@ public abstract class AutoCodeGenerator extends JavaCodeGenerator
 
 	public @NonNull String generateClassFile(@NonNull CGPackage cgPackage) {
 		optimize(cgPackage);
-		List<@NonNull CGValuedElement> sortedGlobals = prepareGlobals();
-		resolveNames(sortedGlobals, cgPackage);
-		AutoCG2JavaVisitor<@NonNull ?> generator = createCG2JavaVisitor(cgPackage, sortedGlobals);
+		Iterable<@NonNull CGValuedElement> sortedGlobals = pregenerate(cgPackage);
+		AutoCG2JavaVisitor generator = createCG2JavaVisitor(cgPackage, sortedGlobals);
 		generator.safeVisit(cgPackage);
 		ImportNameManager importNameManager = generator.getImportNameManager();
 		Map<@NonNull String, @Nullable String> long2ShortImportNames = importNameManager.getLong2ShortImportNames();
@@ -277,7 +276,7 @@ public abstract class AutoCodeGenerator extends JavaCodeGenerator
 	protected @NonNull Property createNativeProperty(@NonNull String name, @NonNull Type asElementType,
 			boolean isReadOnly, boolean isRequired) {
 		Property asProperty = PivotUtil.createProperty(name, asElementType);
-		asProperty.setImplementation(NativeProperty.INSTANCE);
+		asProperty.setImplementation(AbstractNativeProperty.INSTANCE);
 		asProperty.setIsReadOnly(isReadOnly);
 		asProperty.setIsRequired(isReadOnly);
 		return asProperty;

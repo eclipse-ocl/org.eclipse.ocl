@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
@@ -215,12 +216,12 @@ public class CGLibraryOperationCallExpImpl extends CGOperationCallExpImpl implem
 	 * @generated NOT XXX
 	 */
 	@Override
-	public boolean isNonInvalid() {
-		if (referredOperation == null) {
+	public boolean isNonInvalid() {			// XXX more cases e.g.invalidValue
+		if (asOperation == null) {
 			return false;
 		}
-		if (referredOperation.isIsValidating()) {
-			if (referredOperation.isIsInvalidating()) {
+		if (asOperation.isIsValidating()) {
+			if (asOperation.isIsInvalidating()) {
 				// e.g AND, forAll - nonInvalid if all inputs nonInvalid
 			}
 			else {
@@ -228,14 +229,14 @@ public class CGLibraryOperationCallExpImpl extends CGOperationCallExpImpl implem
 			}
 		}
 		else {
-			if (referredOperation.isIsInvalidating()) {
+			if (asOperation.isIsInvalidating()) {
 				return false;				// e.g divide-by-zero
 			}
 			else {
 				// normal use case - nonInvalid if all inputs nonInvalid
 			}
 		}
-		for (@NonNull CGValuedElement argument : ClassUtil.nullFree(getCgArguments())) {
+		for (@NonNull CGValuedElement argument : ClassUtil.nullFree(getArguments())) {		// Need to redirect to operation implementation for e.g. not() on a constant
 			if (!argument.isNonNull() || !argument.isNonInvalid()) {
 				return false;
 			}
@@ -245,11 +246,18 @@ public class CGLibraryOperationCallExpImpl extends CGOperationCallExpImpl implem
 
 	@Override
 	public @NonNull CGValuedElement getFirstArgument() {
-		return getCgArguments().get(0);
+		return ClassUtil.nonNullState(getArguments().get(0));
 	}
 
 	@Override
 	public @NonNull CGValuedElement getSecondArgument() {
-		return getCgArguments().get(1);
+		return ClassUtil.nonNullState(getArguments().get(1));
 	}
+
+	@Override
+	public void setReferredOperation(CGOperation newReferredOperation) {
+	//	assert (newReferredOperation == null) || !newReferredOperation.eClass().getName().equals("CGFunction");		// XXX
+		super.setReferredOperation(newReferredOperation);
+	}
+
 } //CGLibraryOperationCallExpImpl

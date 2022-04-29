@@ -1077,6 +1077,10 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 			}
 		}
 		if (oper != null) {
+			if (oper.isIsStatic()) {
+				appendName(oper.getOwningClass());
+				append("::");
+			}
 			appendName(oper);
 		} else {
 			appendName(oc);

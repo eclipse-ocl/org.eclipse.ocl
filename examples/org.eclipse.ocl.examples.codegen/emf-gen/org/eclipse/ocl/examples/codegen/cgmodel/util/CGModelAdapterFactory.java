@@ -44,8 +44,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElementId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorCompositionProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorNavigationProperty;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOperation;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOppositeProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOppositePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorProperty;
@@ -97,6 +95,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGReal;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGSettableVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowPart;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGSourcedCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGString;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTemplateParameterExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGThrowExp;
@@ -178,6 +177,10 @@ public class CGModelAdapterFactory extends AdapterFactoryImpl {
 				return createCGAssertNonNullExpAdapter();
 			}
 			@Override
+			public Adapter caseCGBodiedProperty(CGBodiedProperty object) {
+				return createCGBodiedPropertyAdapter();
+			}
+			@Override
 			public Adapter caseCGBoolean(CGBoolean object) {
 				return createCGBooleanAdapter();
 			}
@@ -234,6 +237,10 @@ public class CGModelAdapterFactory extends AdapterFactoryImpl {
 				return createCGConstantExpAdapter();
 			}
 			@Override
+			public Adapter caseCGConstrainedProperty(CGConstrainedProperty object) {
+				return createCGConstrainedPropertyAdapter();
+			}
+			@Override
 			public Adapter caseCGConstraint(CGConstraint object) {
 				return createCGConstraintAdapter();
 			}
@@ -286,14 +293,6 @@ public class CGModelAdapterFactory extends AdapterFactoryImpl {
 				return createCGExecutorOppositePropertyAdapter();
 			}
 			@Override
-			public Adapter caseCGExecutorOperation(CGExecutorOperation object) {
-				return createCGExecutorOperationAdapter();
-			}
-			@Override
-			public Adapter caseCGExecutorOperationCallExp(CGExecutorOperationCallExp object) {
-				return createCGExecutorOperationCallExpAdapter();
-			}
-			@Override
 			public Adapter caseCGExecutorOppositePropertyCallExp(CGExecutorOppositePropertyCallExp object) {
 				return createCGExecutorOppositePropertyCallExpAdapter();
 			}
@@ -336,6 +335,10 @@ public class CGModelAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseCGIfExp(CGIfExp object) {
 				return createCGIfExpAdapter();
+			}
+			@Override
+			public Adapter caseCGInlinedOperation(CGInlinedOperation object) {
+				return createCGInlinedOperationAdapter();
 			}
 			@Override
 			public Adapter caseCGInteger(CGInteger object) {
@@ -598,6 +601,20 @@ public class CGModelAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createCGAssertNonNullExpAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGBodiedProperty <em>CG Bodied Property</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGBodiedProperty
+	 * @generated
+	 */
+	public Adapter createCGBodiedPropertyAdapter() {
 		return null;
 	}
 
@@ -1022,6 +1039,20 @@ public class CGModelAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGConstrainedProperty <em>CG Constrained Property</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGConstrainedProperty
+	 * @generated
+	 */
+	public Adapter createCGConstrainedPropertyAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint <em>CG Constraint</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -1358,34 +1389,6 @@ public class CGModelAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOperation <em>CG Executor Operation</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOperation
-	 * @generated
-	 */
-	public Adapter createCGExecutorOperationAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOperationCallExp <em>CG Executor Operation Call Exp</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOperationCallExp
-	 * @generated
-	 */
-	public Adapter createCGExecutorOperationCallExpAdapter() {
-		return null;
-	}
-
-	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOppositePropertyCallExp <em>CG Executor Opposite Property Call Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -1466,6 +1469,20 @@ public class CGModelAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createCGIfExpAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGInlinedOperation <em>CG Inlined Operation</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGInlinedOperation
+	 * @generated
+	 */
+	public Adapter createCGInlinedOperationAdapter() {
 		return null;
 	}
 
