@@ -196,24 +196,24 @@ implements TypedElement {
 		 * bodySpecification.type?.conformsTo(self.type)
 		 */
 		final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this);
-		final /*@NonInvalid*/ @Nullable Type type = bodySpecification.getType();
-		final /*@NonInvalid*/ @NonNull Object conformsTo_0 = type == null;
-		/*@Thrown*/ @Nullable Boolean safe_conformsTo_source;
-		if (conformsTo_0 == Boolean.TRUE) {
-			safe_conformsTo_source = null;
+		final /*@NonInvalid*/ @Nullable Type type_0 = bodySpecification.getType();
+		final /*@NonInvalid*/ @NonNull Object IsEQ2_ = type_0 == null;
+		/*@Thrown*/ @Nullable Boolean SAFE_conformsTo;
+		if (IsEQ2_ == Boolean.TRUE) {
+			SAFE_conformsTo = null;
 		}
 		else {
-			if (type == null) {
-				throw new InvalidValueException("Null \'\'Type\'\' rather than \'\'OclVoid\'\' value required");
+			final /*@NonInvalid*/ @Nullable Type type_1 = this.getType();
+			if (type_0 == null) {
+				throw new InvalidValueException("Null argument");
 			}
-			final /*@NonInvalid*/ @Nullable Type type_0 = this.getType();
-			final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, type_0).booleanValue();
-			safe_conformsTo_source = conformsTo;
+			final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type_0, type_1).booleanValue();
+			SAFE_conformsTo = conformsTo;
 		}
-		if (safe_conformsTo_source == null) {
+		if (SAFE_conformsTo == null) {
 			throw new InvalidValueException("Null body for \'pivot::TypedElement::CompatibleBody(ValueSpecification[1]) : Boolean[1]\'");
 		}
-		return safe_conformsTo_source;
+		return SAFE_conformsTo;
 	}
 
 	/**

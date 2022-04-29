@@ -353,21 +353,21 @@ implements IfExp {
 			final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
 			final /*@NonInvalid*/ @NonNull IntegerValue severity = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.IF_EXP___VALIDATE_CONDITION_TYPE_IS_BOOLEAN__DIAGNOSTICCHAIN_MAP);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity, PivotTables.INT_0).booleanValue();
-			/*@NonInvalid*/ boolean IF__l_q;
+			/*@NonInvalid*/ boolean IF_le;
 			if (le) {
-				IF__l_q = true;
+				IF_le = true;
 			}
 			else {
 				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Boolean_0 = idResolver.getClass(TypeId.BOOLEAN, null);
 				@SuppressWarnings("null")
-				final /*@NonInvalid*/ @NonNull OCLExpression ownedCondition = this.getOwnedCondition();
-				final /*@NonInvalid*/ @Nullable Type type = ownedCondition.getType();
+				final /*@NonInvalid*/ @NonNull OCLExpression ownedCondition_0 = this.getOwnedCondition();
+				final /*@NonInvalid*/ @Nullable Type type = ownedCondition_0.getType();
 				final /*@NonInvalid*/ @NonNull BooleanType CAST_TYP_Boolean = (BooleanType)TYP_Boolean_0;
 				final /*@NonInvalid*/ boolean result = (type != null) ? (type.getTypeId() == CAST_TYP_Boolean.getTypeId()) : false;
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, result, PivotTables.INT_0).booleanValue();
-				IF__l_q = logDiagnostic;
+				IF_le = logDiagnostic;
 			}
-			return IF__l_q;
+			return IF_le;
 		}
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);
@@ -401,19 +401,19 @@ implements IfExp {
 			final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
 			final /*@NonInvalid*/ @NonNull IntegerValue severity = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.IF_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity, PivotTables.INT_0).booleanValue();
-			/*@NonInvalid*/ boolean IF__l_q;
+			/*@NonInvalid*/ boolean IF_le;
 			if (le) {
-				IF__l_q = true;
+				IF_le = true;
 			}
 			else {
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OclInvalid_6 = idResolver.getClass(TypeId.OCL_INVALID, null);
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OclInvalid_2 = idResolver.getClass(TypeId.OCL_INVALID, null);
 				final /*@NonInvalid*/ @Nullable Type type = this.getType();
-				final /*@NonInvalid*/ @NonNull InvalidType CAST_TYP_OclInvalid = (InvalidType)TYP_OclInvalid_6;
+				final /*@NonInvalid*/ @NonNull InvalidType CAST_TYP_OclInvalid = (InvalidType)TYP_OclInvalid_2;
 				final /*@NonInvalid*/ boolean result = (type != null) ? (type.getTypeId() != CAST_TYP_OclInvalid.getTypeId()) : true;
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, result, PivotTables.INT_0).booleanValue();
-				IF__l_q = logDiagnostic;
+				IF_le = logDiagnostic;
 			}
-			return IF__l_q;
+			return IF_le;
 		}
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);

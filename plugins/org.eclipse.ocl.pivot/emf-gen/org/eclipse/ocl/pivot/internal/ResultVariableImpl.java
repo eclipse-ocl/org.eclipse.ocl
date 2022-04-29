@@ -110,65 +110,65 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this);
 			final /*@NonInvalid*/ @NonNull IntegerValue severity = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.RESULT_VARIABLE___VALIDATE_COMPATIBLE_NULLITY_FOR_INITIALIZER__DIAGNOSTICCHAIN_MAP);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity, PivotTables.INT_0).booleanValue();
-			/*@NonInvalid*/ boolean IF__l_q;
+			/*@NonInvalid*/ boolean IF_le;
 			if (le) {
-				IF__l_q = true;
+				IF_le = true;
 			}
 			else {
 				/*@Caught*/ @Nullable Object CAUGHT_result;
 				try {
-					/*@Caught*/ @Nullable Object CAUGHT_not;
+					/*@Caught*/ @Nullable Object CAUGHT_not_0;
 					try {
-						/*@Caught*/ @Nullable Object CAUGHT_safe_isRequired_source;
+						/*@Caught*/ @Nullable Object CAUGHT_SAFE_isRequired;
 						try {
 							final /*@NonInvalid*/ @Nullable OCLExpression ownedInit = this.getOwnedInit();
-							final /*@NonInvalid*/ @NonNull Object isRequired_1 = ownedInit == null;
-							/*@Thrown*/ @Nullable Boolean safe_isRequired_source;
-							if (isRequired_1 == Boolean.TRUE) {
-								safe_isRequired_source = null;
+							final /*@NonInvalid*/ @NonNull Object IsEQ2_ = ownedInit == null;
+							/*@Thrown*/ @Nullable Boolean SAFE_isRequired;
+							if (IsEQ2_ == Boolean.TRUE) {
+								SAFE_isRequired = null;
 							}
 							else {
 								assert ownedInit != null;
-								final /*@Thrown*/ boolean isRequired_0 = ownedInit.isIsRequired();
-								safe_isRequired_source = isRequired_0;
+								final /*@Thrown*/ boolean isRequired = ownedInit.isIsRequired();
+								SAFE_isRequired = isRequired;
 							}
-							CAUGHT_safe_isRequired_source = safe_isRequired_source;
+							CAUGHT_SAFE_isRequired = SAFE_isRequired;
 						}
-						catch (Exception THROWN_safe_isRequired_source) {
-							CAUGHT_safe_isRequired_source = ValueUtil.createInvalidValue(THROWN_safe_isRequired_source);
+						catch (Exception THROWN_SAFE_isRequired) {
+							CAUGHT_SAFE_isRequired = ValueUtil.createInvalidValue(THROWN_SAFE_isRequired);
 						}
-						if (CAUGHT_safe_isRequired_source instanceof InvalidValueException) {
-							throw (InvalidValueException)CAUGHT_safe_isRequired_source;
+						if (CAUGHT_SAFE_isRequired instanceof InvalidValueException) {
+							throw (InvalidValueException)CAUGHT_SAFE_isRequired;
 						}
 						final /*@Thrown*/ @Nullable Boolean not_0;
-						if (CAUGHT_safe_isRequired_source == ValueUtil.FALSE_VALUE) {
+						if (CAUGHT_SAFE_isRequired == ValueUtil.FALSE_VALUE) {
 							not_0 = ValueUtil.TRUE_VALUE;
 						}
 						else {
-							if (CAUGHT_safe_isRequired_source == ValueUtil.TRUE_VALUE) {
+							if (CAUGHT_SAFE_isRequired == ValueUtil.TRUE_VALUE) {
 								not_0 = ValueUtil.FALSE_VALUE;
 							}
 							else {
 								not_0 = null;
 							}
 						}
-						CAUGHT_not = not_0;
+						CAUGHT_not_0 = not_0;
 					}
-					catch (Exception THROWN_not) {
-						CAUGHT_not = ValueUtil.createInvalidValue(THROWN_not);
+					catch (Exception THROWN_not_0) {
+						CAUGHT_not_0 = ValueUtil.createInvalidValue(THROWN_not_0);
 					}
 					final /*@Thrown*/ @Nullable Boolean result;
-					if (CAUGHT_not == ValueUtil.FALSE_VALUE) {
+					if (CAUGHT_not_0 == ValueUtil.FALSE_VALUE) {
 						result = ValueUtil.TRUE_VALUE;
 					}
 					else {
-						final /*@NonInvalid*/ boolean isRequired = this.isIsRequired();
+						final /*@NonInvalid*/ boolean isRequired_0 = this.isIsRequired();
 						final /*@NonInvalid*/ @Nullable Boolean not;
-						if (!isRequired) {
+						if (!isRequired_0) {
 							not = ValueUtil.TRUE_VALUE;
 						}
 						else {
-							if (isRequired) {
+							if (isRequired_0) {
 								not = ValueUtil.FALSE_VALUE;
 							}
 							else {
@@ -179,10 +179,10 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 							result = ValueUtil.TRUE_VALUE;
 						}
 						else {
-							if (CAUGHT_not instanceof InvalidValueException) {
-								throw (InvalidValueException)CAUGHT_not;
+							if (CAUGHT_not_0 instanceof InvalidValueException) {
+								throw (InvalidValueException)CAUGHT_not_0;
 							}
-							if ((CAUGHT_not == null) || (not == null)) {
+							if ((CAUGHT_not_0 == null) || (not == null)) {
 								result = null;
 							}
 							else {
@@ -196,9 +196,9 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 					CAUGHT_result = ValueUtil.createInvalidValue(THROWN_result);
 				}
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, CAUGHT_result, PivotTables.INT_0).booleanValue();
-				IF__l_q = logDiagnostic;
+				IF_le = logDiagnostic;
 			}
-			return IF__l_q;
+			return IF_le;
 		}
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);
@@ -232,22 +232,23 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this);
 			final /*@NonInvalid*/ @NonNull IntegerValue severity = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.RESULT_VARIABLE___VALIDATE_COMPATIBLE_TYPE_FOR_INITIALIZER__DIAGNOSTICCHAIN_MAP);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity, PivotTables.INT_0).booleanValue();
-			/*@NonInvalid*/ boolean IF__l_q;
+			/*@NonInvalid*/ boolean IF_le;
 			if (le) {
-				IF__l_q = true;
+				IF_le = true;
 			}
 			else {
 				/*@Caught*/ @Nullable Object CAUGHT_result;
 				try {
-					final /*@NonInvalid*/ @Nullable OCLExpression ownedInit = this.getOwnedInit();
-					final /*@NonInvalid*/ boolean ne = ownedInit != null;
+					final /*@NonInvalid*/ @Nullable OCLExpression ownedInit_0 = this.getOwnedInit();
+					final /*@NonInvalid*/ boolean IsEQ_ = ownedInit_0 != null;
 					final /*@Thrown*/ @Nullable Boolean result;
-					if (!ne) {
+					if (!IsEQ_) {
 						result = ValueUtil.TRUE_VALUE;
 					}
 					else {
-						/*@Caught*/ @Nullable Object CAUGHT_safe_conformsTo_source;
+						/*@Caught*/ @Nullable Object CAUGHT_SAFE_conformsTo;
 						try {
+							final /*@NonInvalid*/ @Nullable OCLExpression ownedInit = this.getOwnedInit();
 							if (ownedInit == null) {
 								throw new InvalidValueException("Null source for \'TypedElement::type\'");
 							}
@@ -259,32 +260,32 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 							catch (Exception THROWN_type) {
 								CAUGHT_type = ValueUtil.createInvalidValue(THROWN_type);
 							}
-							final /*@NonInvalid*/ @NonNull Object conformsTo = CAUGHT_type == null;
-							/*@Thrown*/ @Nullable Boolean safe_conformsTo_source;
-							if (conformsTo == Boolean.TRUE) {
-								safe_conformsTo_source = null;
+							final /*@NonInvalid*/ @NonNull Object IsEQ2_ = CAUGHT_type == null;
+							/*@Thrown*/ @Nullable Boolean SAFE_conformsTo;
+							if (IsEQ2_ == Boolean.TRUE) {
+								SAFE_conformsTo = null;
 							}
 							else {
-								if (type == null) {
-									throw new InvalidValueException("Null \'\'Type\'\' rather than \'\'OclVoid\'\' value required");
-								}
 								final /*@NonInvalid*/ @Nullable Type type_0 = this.getType();
-								final /*@Thrown*/ boolean conformsTo_0 = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, type_0).booleanValue();
-								safe_conformsTo_source = conformsTo_0;
+								if (type == null) {
+									throw new InvalidValueException("Null argument");
+								}
+								final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, type_0).booleanValue();
+								SAFE_conformsTo = conformsTo;
 							}
-							CAUGHT_safe_conformsTo_source = safe_conformsTo_source;
+							CAUGHT_SAFE_conformsTo = SAFE_conformsTo;
 						}
-						catch (Exception THROWN_safe_conformsTo_source) {
-							CAUGHT_safe_conformsTo_source = ValueUtil.createInvalidValue(THROWN_safe_conformsTo_source);
+						catch (Exception THROWN_SAFE_conformsTo) {
+							CAUGHT_SAFE_conformsTo = ValueUtil.createInvalidValue(THROWN_SAFE_conformsTo);
 						}
-						if (CAUGHT_safe_conformsTo_source == ValueUtil.TRUE_VALUE) {
+						if (CAUGHT_SAFE_conformsTo == ValueUtil.TRUE_VALUE) {
 							result = ValueUtil.TRUE_VALUE;
 						}
 						else {
-							if (CAUGHT_safe_conformsTo_source instanceof InvalidValueException) {
-								throw (InvalidValueException)CAUGHT_safe_conformsTo_source;
+							if (CAUGHT_SAFE_conformsTo instanceof InvalidValueException) {
+								throw (InvalidValueException)CAUGHT_SAFE_conformsTo;
 							}
-							if (CAUGHT_safe_conformsTo_source == null) {
+							if (CAUGHT_SAFE_conformsTo == null) {
 								result = null;
 							}
 							else {
@@ -298,9 +299,9 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 					CAUGHT_result = ValueUtil.createInvalidValue(THROWN_result);
 				}
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, CAUGHT_result, PivotTables.INT_0).booleanValue();
-				IF__l_q = logDiagnostic;
+				IF_le = logDiagnostic;
 			}
-			return IF__l_q;
+			return IF_le;
 		}
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);
@@ -333,17 +334,17 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this);
 			final /*@NonInvalid*/ @NonNull IntegerValue severity = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.RESULT_VARIABLE___VALIDATE_HAS_INITIALIZER__DIAGNOSTICCHAIN_MAP);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity, PivotTables.INT_0).booleanValue();
-			/*@NonInvalid*/ boolean IF__l_q;
+			/*@NonInvalid*/ boolean IF_le;
 			if (le) {
-				IF__l_q = true;
+				IF_le = true;
 			}
 			else {
 				final /*@NonInvalid*/ @Nullable OCLExpression ownedInit = this.getOwnedInit();
 				final /*@NonInvalid*/ boolean result = ownedInit != null;
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, result, PivotTables.INT_0).booleanValue();
-				IF__l_q = logDiagnostic;
+				IF_le = logDiagnostic;
 			}
-			return IF__l_q;
+			return IF_le;
 		}
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);

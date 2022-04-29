@@ -178,17 +178,17 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this);
 			final /*@NonInvalid*/ @NonNull IntegerValue severity = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.OPPOSITE_PROPERTY_CALL_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity, PivotTables.INT_0).booleanValue();
-			/*@NonInvalid*/ boolean IF__l_q;
+			/*@NonInvalid*/ boolean IF_le;
 			if (le) {
-				IF__l_q = true;
+				IF_le = true;
 			}
 			else {
 				/*@Caught*/ @Nullable Object CAUGHT_result;
 				try {
 					final /*@NonInvalid*/ @Nullable OCLExpression ownedSource = this.getOwnedSource();
-					final /*@NonInvalid*/ boolean ne = ownedSource != null;
+					final /*@NonInvalid*/ boolean IsEQ_ = ownedSource != null;
 					final /*@NonInvalid*/ @Nullable Boolean and;
-					if (!ne) {
+					if (!IsEQ_) {
 						and = ValueUtil.FALSE_VALUE;
 					}
 					else {
@@ -209,10 +209,11 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 						try {
 							/*@Caught*/ @NonNull Object CAUGHT_isNonNull;
 							try {
-								if (ownedSource == null) {
+								final /*@NonInvalid*/ @Nullable OCLExpression ownedSource_0 = this.getOwnedSource();
+								if (ownedSource_0 == null) {
 									throw new InvalidValueException("Null source for \'pivot::OCLExpression::isNonNull() : Boolean[1]\'");
 								}
-								final /*@Thrown*/ boolean isNonNull = ownedSource.isNonNull();
+								final /*@Thrown*/ boolean isNonNull = ownedSource_0.isNonNull();
 								CAUGHT_isNonNull = isNonNull;
 							}
 							catch (Exception THROWN_isNonNull) {
@@ -259,9 +260,9 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 					CAUGHT_result = ValueUtil.createInvalidValue(THROWN_result);
 				}
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, CAUGHT_result, PivotTables.INT_0).booleanValue();
-				IF__l_q = logDiagnostic;
+				IF_le = logDiagnostic;
 			}
-			return IF__l_q;
+			return IF_le;
 		}
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);
@@ -295,9 +296,9 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this);
 			final /*@NonInvalid*/ @NonNull IntegerValue severity = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.OPPOSITE_PROPERTY_CALL_EXP___VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL__DIAGNOSTICCHAIN_MAP);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity, PivotTables.INT_0).booleanValue();
-			/*@NonInvalid*/ boolean IF__l_q;
+			/*@NonInvalid*/ boolean IF_le;
 			if (le) {
-				IF__l_q = true;
+				IF_le = true;
 			}
 			else {
 				/*@Caught*/ @Nullable Object CAUGHT_result;
@@ -305,9 +306,9 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 					/*@Caught*/ @Nullable Object CAUGHT_and;
 					try {
 						final /*@NonInvalid*/ @Nullable OCLExpression ownedSource_0 = this.getOwnedSource();
-						final /*@NonInvalid*/ boolean ne = ownedSource_0 != null;
+						final /*@NonInvalid*/ boolean IsEQ_ = ownedSource_0 != null;
 						final /*@Thrown*/ @Nullable Boolean and;
-						if (!ne) {
+						if (!IsEQ_) {
 							and = ValueUtil.FALSE_VALUE;
 						}
 						else {
@@ -382,9 +383,9 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 					CAUGHT_result = ValueUtil.createInvalidValue(THROWN_result);
 				}
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, CAUGHT_result, PivotTables.INT_0).booleanValue();
-				IF__l_q = logDiagnostic;
+				IF_le = logDiagnostic;
 			}
-			return IF__l_q;
+			return IF_le;
 		}
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);

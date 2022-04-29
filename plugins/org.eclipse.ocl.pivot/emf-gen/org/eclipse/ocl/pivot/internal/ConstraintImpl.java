@@ -474,9 +474,9 @@ implements Constraint {
 			final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
 			final /*@NonInvalid*/ @NonNull IntegerValue severity = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.CONSTRAINT___VALIDATE_BOOLEAN_VALUED__DIAGNOSTICCHAIN_MAP);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity, PivotTables.INT_0).booleanValue();
-			/*@NonInvalid*/ boolean IF__l_q;
+			/*@NonInvalid*/ boolean IF_le;
 			if (le) {
-				IF__l_q = true;
+				IF_le = true;
 			}
 			else {
 				/*@Caught*/ @Nullable Object CAUGHT_result;
@@ -484,26 +484,26 @@ implements Constraint {
 					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Boolean = idResolver.getClass(TypeId.BOOLEAN, null);
 					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OclVoid = idResolver.getClass(TypeId.OCL_VOID, null);
 					@SuppressWarnings("null")
-					final /*@NonInvalid*/ @NonNull LanguageExpression ownedSpecification = this.getOwnedSpecification();
-					final /*@NonInvalid*/ @Nullable Type type = ownedSpecification.getType();
+					final /*@NonInvalid*/ @NonNull LanguageExpression ownedSpecification_0 = this.getOwnedSpecification();
+					final /*@NonInvalid*/ @Nullable Type type = ownedSpecification_0.getType();
 					final /*@NonInvalid*/ @Nullable Boolean and;
-					final /*@NonInvalid*/ boolean ne = type != null;
-					and = ne;
+					final /*@NonInvalid*/ boolean IsEQ_ = type != null;
+					and = IsEQ_;
 					final /*@Thrown*/ @Nullable Boolean result;
 					if (and == ValueUtil.FALSE_VALUE) {
 						result = ValueUtil.TRUE_VALUE;
 					}
 					else {
 						final /*@NonInvalid*/ @NonNull BooleanType CAST_TYP_Boolean = (BooleanType)TYP_Boolean;
-						final /*@NonInvalid*/ boolean eq = (type != null) ? (type.getTypeId() == CAST_TYP_Boolean.getTypeId()) : false;
+						final /*@NonInvalid*/ boolean IsEQ__0 = (type != null) ? (type.getTypeId() == CAST_TYP_Boolean.getTypeId()) : false;
 						final /*@NonInvalid*/ @Nullable Boolean or;
-						if (eq) {
+						if (IsEQ__0) {
 							or = ValueUtil.TRUE_VALUE;
 						}
 						else {
 							final /*@NonInvalid*/ @NonNull VoidType CAST_TYP_OclVoid = (VoidType)TYP_OclVoid;
-							final /*@NonInvalid*/ boolean eq_0 = (type != null) ? (type.getTypeId() == CAST_TYP_OclVoid.getTypeId()) : false;
-							if (eq_0) {
+							final /*@NonInvalid*/ boolean IsEQ__1 = (type != null) ? (type.getTypeId() == CAST_TYP_OclVoid.getTypeId()) : false;
+							if (IsEQ__1) {
 								or = ValueUtil.TRUE_VALUE;
 							}
 							else {
@@ -528,9 +528,9 @@ implements Constraint {
 					CAUGHT_result = ValueUtil.createInvalidValue(THROWN_result);
 				}
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, CAUGHT_result, PivotTables.INT_0).booleanValue();
-				IF__l_q = logDiagnostic;
+				IF_le = logDiagnostic;
 			}
-			return IF__l_q;
+			return IF_le;
 		}
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);
