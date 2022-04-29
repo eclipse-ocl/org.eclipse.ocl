@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.library;
 
+import java.lang.reflect.Method;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -23,19 +25,41 @@ import org.eclipse.ocl.pivot.library.AbstractProperty;
 
 public class UnboxedExplicitNavigationProperty extends AbstractProperty
 {
+	/**
+	 * @since 1.18
+	 */
+	public static @NonNull UnboxedExplicitNavigationProperty create(@NonNull PropertyId propertyId)
+			throws VirtualMachineError { // Explicitly just VirtualMachineError is used to signal nothrow.
+		return new UnboxedExplicitNavigationProperty(propertyId);
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	public static @NonNull Method CREATE_METHOD;
+	static {
+		try {
+			Method method = UnboxedExplicitNavigationProperty.class.getDeclaredMethod("create", PropertyId.class);
+			assert method != null;
+			CREATE_METHOD = method;
+		} catch (NoSuchMethodException | SecurityException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	protected @NonNull PropertyId propertyId;
 //		protected @NonNull DomainProperty property;
 	private EStructuralFeature eFeature = null;
-	
+
 	public UnboxedExplicitNavigationProperty(@NonNull PropertyId propertyId) {
 		this.propertyId = propertyId;
 		// FIXME static attempt at eFeature
 	}
-	
+
 	@Override
 	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
 		assert sourceValue != null;
-		EObject eObject = (EObject)sourceValue; 
+		EObject eObject = (EObject)sourceValue;
 		EStructuralFeature eFeature2 = eFeature;
 		if (eFeature2 == null) {
 			EClass eClass = eObject.eClass();

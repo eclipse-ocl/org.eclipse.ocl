@@ -10,36 +10,40 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.autogen.lookup;
 
-import java.util.List;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 
-public class LookupQualifiedCG2JavaVisitor  extends LookupVisitorsCG2JavaVisitor<@NonNull LookupQualifiedCodeGenerator> {
+public class LookupQualifiedCG2JavaVisitor extends LookupVisitorsCG2JavaVisitor {
 
 	public LookupQualifiedCG2JavaVisitor(
 			@NonNull LookupQualifiedCodeGenerator codeGenerator,
 			@NonNull CGPackage cgPackage,
-			@Nullable List<CGValuedElement> sortedGlobals) {
+			@Nullable Iterable<CGValuedElement> sortedGlobals) {
 		super(codeGenerator, cgPackage, sortedGlobals);
 	}
 
 	@Override
 	protected void doInternalVisiting(@NonNull CGClass cgClass) {
 		// We we return the context
+		LookupQualifiedCodeGenerator codeGenerator = getCodeGenerator();
 		js.append("\n");
 		js.append("@Override\n");
 		js.append("protected ");
-		js.appendClassReference(false, context.getVisitorResultClass());
+		js.appendClassReference(false, codeGenerator.getVisitorResultClass());
 		js.append(" doVisiting(");
-		js.appendClassReference(true, context.getVisitableClass());
+		js.appendClassReference(true, codeGenerator.getVisitableClass());
 		js.append(" visitable) {\n");
 		js.pushIndentation(null);
 		js.append("return context;\n");
 		js.popIndentation();
 		js.append("}\n");
+	}
+
+	@Override
+	public @NonNull LookupQualifiedCodeGenerator getCodeGenerator() {
+		return (LookupQualifiedCodeGenerator)context;
 	}
 }

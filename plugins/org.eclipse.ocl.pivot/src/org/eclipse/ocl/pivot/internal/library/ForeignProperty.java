@@ -16,6 +16,8 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.Variable;
+import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
@@ -25,6 +27,7 @@ import org.eclipse.ocl.pivot.library.AbstractProperty;
 import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ParserException;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 
 /**
@@ -83,7 +86,24 @@ public class ForeignProperty extends AbstractProperty
 	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
 		assert sourceValue != null;
 		ModelManager modelManager = executor.getModelManager();
-		Object value = modelManager.getForeignPropertyValue(sourceValue, propertyId, initExpression, defaultValue);
+		Object value;
+		ExpressionInOCL expressionInOCL = PivotUtil.getContainingExpressionInOCL(initExpression);
+		if (expressionInOCL != null) {
+			EvaluationEnvironment nestedEvaluationEnvironment = ((Executor.ExecutorExtension)executor).pushEvaluationEnvironment(expressionInOCL, (Object)null);
+			try {
+				Variable contextVariable = expressionInOCL.getOwnedContext();
+				if (contextVariable != null) {
+					nestedEvaluationEnvironment.add(contextVariable, sourceValue);
+				}
+				value = modelManager.getForeignPropertyValue(sourceValue, propertyId, initExpression, defaultValue);
+			}
+			finally {
+				executor.popEvaluationEnvironment();
+			}
+		}
+		else {
+			value = modelManager.getForeignPropertyValue(sourceValue, propertyId, initExpression, defaultValue);
+		}
 		return value == ValueUtil.NULL_VALUE ? null : value;
 	}
 }

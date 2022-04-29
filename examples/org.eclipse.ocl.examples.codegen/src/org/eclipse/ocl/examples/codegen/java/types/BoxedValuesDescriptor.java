@@ -16,12 +16,12 @@ import java.util.Map;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGUnboxExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.generator.CodeGenerator;
 import org.eclipse.ocl.examples.codegen.generator.GenModelHelper;
 import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
-import org.eclipse.ocl.examples.codegen.java.JavaLocalContext;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Type;
@@ -47,7 +47,7 @@ public class BoxedValuesDescriptor extends AbstractValueDescriptor implements Bo
 	}
 
 	@Override
-	public @NonNull Boolean appendUnboxStatements(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext,
+	public @NonNull Boolean appendUnboxStatements(@NonNull JavaStream js, @NonNull NestedNameManager localNameManager,
 			@NonNull CGUnboxExp cgUnboxExp, @NonNull CGValuedElement boxedValue) {
 //		if (collectionDescriptor != null) {
 			js.append("final ");
@@ -60,7 +60,7 @@ public class BoxedValuesDescriptor extends AbstractValueDescriptor implements Bo
 			js.append(" = ");
 			js.appendValueName(boxedValue);
 			js.append(".asUnboxedObjects(");
-			js.appendReferenceTo(localContext.getIdResolverVariable());
+			js.appendReferenceTo(localNameManager.getIdResolverVariable());
 			js.append(");\n");
 			//
 			js.append("assert ");

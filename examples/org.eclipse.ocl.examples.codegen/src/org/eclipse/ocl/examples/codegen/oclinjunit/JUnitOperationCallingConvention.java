@@ -15,13 +15,19 @@ import java.util.List;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
+import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
+import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.calling.LibraryOperationCallingConvention;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
+import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
@@ -35,7 +41,7 @@ public class JUnitOperationCallingConvention extends LibraryOperationCallingConv
 	public static final @NonNull JUnitOperationCallingConvention INSTANCE = new JUnitOperationCallingConvention();
 
 	@Override
-	protected void appendDeclaration(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+	protected void appendDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
 		js.append("@Override\n");
 		js.append("public ");
 		boolean cgOperationIsInvalid = cgOperation.getInvalidValue() != null;
@@ -47,29 +53,45 @@ public class JUnitOperationCallingConvention extends LibraryOperationCallingConv
 	}
 
 	@Override
-	public @NonNull CGOperation createCGOperationWithoutBody(@NonNull AS2CGVisitor as2cgVisitor,@NonNull Operation asOperation) {
-		throw new UnsupportedOperationException();		// Construction is irregular.
+	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @Nullable Type asSourceType, @NonNull Operation asOperation) {
+		return CGModelFactory.eINSTANCE.createCGLibraryOperation();
 	}
 
 	@Override
 	public void createCGParameters(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL expressionInOCL) {
 		assert expressionInOCL != null;
+		JavaCodeGenerator codeGenerator = as2cgVisitor.getCodeGenerator();
+		NestedNameManager nameManager = as2cgVisitor.getNameManager();
 		Variable contextVariable = expressionInOCL.getOwnedContext();
 		if (contextVariable != null) {
 			contextVariable.setIsRequired(false); 				// May be null for test
 		}
-		JUnitLocalContext localContext = (JUnitLocalContext)as2cgVisitor.getLocalContext();
 		List<CGParameter> cgParameters = cgOperation.getParameters();
-		cgParameters.add(localContext.createExecutorParameter());
-		cgParameters.add(localContext.createTypeIdParameter());
+		cgParameters.add(codeGenerator.createExecutorParameter());
+		cgParameters.add(codeGenerator.createTypeIdParameter());
 		if (contextVariable != null) {
-			CGParameter cgContext = as2cgVisitor.getParameter(contextVariable, (String)null);			// getSelf ???
+			CGParameter cgContext = nameManager.getParameter(contextVariable, (String)null);			// getSelf ???
 			cgContext.setIsSelf(true);
 			cgParameters.add(cgContext);
 		}
 		for (@NonNull Variable parameterVariable : PivotUtil.getOwnedParameters(expressionInOCL)) {
-			CGParameter cgParameter = as2cgVisitor.getParameter(parameterVariable, (String)null);
+			CGParameter cgParameter = nameManager.getParameter(parameterVariable, (String)null);
 			cgParameters.add(cgParameter);
 		}
+	}
+
+	@Override
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+		CGValuedElement body = cg2javaVisitor.getExpression(cgOperation.getBody());
+		//
+		appendDeclaration(cg2javaVisitor, js, cgOperation);
+		appendParameterList(js, cgOperation);
+		appendBody(cg2javaVisitor, js, body);
+		return true;
+	}
+
+	@Override
+	public boolean needsGeneration() {
+		return true;
 	}
 }

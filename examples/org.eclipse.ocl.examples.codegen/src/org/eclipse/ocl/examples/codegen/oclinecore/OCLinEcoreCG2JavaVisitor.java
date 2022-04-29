@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGBodiedProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
@@ -46,21 +47,16 @@ import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Feature;
-import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VariableDeclaration;
-import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TemplateableId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.library.AbstractStaticOperation;
-import org.eclipse.ocl.pivot.internal.library.AbstractStaticProperty;
 import org.eclipse.ocl.pivot.internal.library.ForeignOperation;
 import org.eclipse.ocl.pivot.internal.library.ForeignProperty;
-import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
@@ -72,7 +68,7 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
  * An OCLinEcoreCG2JavaVisitor supports generation of the OCL embedded in an Ecore model
  * into the Java bodies of the code producxed by GenModel.
  */
-public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcoreCodeGenerator>
+public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor
 {
 	protected final @NonNull GenPackage genPackage;
 	protected final @NonNull CGPackage cgPackage;
@@ -88,7 +84,7 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 
 	@Override
 	protected void appendGlobalPrefix() {
-		js.append(getGlobalContext().getTablesClassName());
+		js.append(getCodeGenerator().getTablesClassName());
 		js.append(".");
 	}
 
@@ -112,11 +108,11 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 							js.append(" = ");
 							js.appendClassReference(null, CGStringGetSeverityOperation.class);
 							js.append(".");
-							js.append(globalContext.getInstanceName());
+							js.append(globalNameManager.getInstanceName());
 							js.append(".");
-							js.append(globalContext.getEvaluateName());
+							js.append(globalNameManager.getEvaluateName());
 							js.append("(");
-							js.append(globalContext.getExecutorName());
+							js.append(globalNameManager.getExecutorName());
 							js.append(", ");
 							js.appendClassReference(null, genClassifier.getGenPackage().getQualifiedPackageInterfaceName());
 							js.append(".Literals.");
@@ -140,31 +136,35 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 				Element asElement = cgConstraint.getAst();
 				if ((cgBody != null) && (asElement instanceof Constraint)) {
 					Constraint asConstraint = (Constraint) asElement;
-					localContext = globalContext.basicGetLocalContext(cgConstraint);
+					pushNameManager(cgConstraint);
 					String bodyText = generateValidatorBody(cgBody, asConstraint, asClass);
 					String fragmentURI = getFragmentURI(asClass) + "==" + getRuleName(asConstraint);
-					String foreignPackageName = genPackage.getReflectionPackageName();//getGlobalContext().getTablesClassName();
-					assert foreignPackageName != null;
-					String foreignClassName = context.getForeignClassName(asClass);
-					bodies.put(fragmentURI, new FeatureBody(fragmentURI, asConstraint, FeatureLocality.ECORE_IMPL, foreignPackageName, foreignClassName, bodyText));
+					String externalPackageName = genPackage.getReflectionPackageName();//getGlobalContext().getTablesClassName();
+					assert externalPackageName != null;
+					String externalClassName = context.getExternalClassName(asClass);
+					bodies.put(fragmentURI, new FeatureBody(fragmentURI, asConstraint, FeatureLocality.ECORE_IMPL, externalPackageName, externalClassName, bodyText));
+					popNameManager();
 				}
 			}
 			for (@NonNull CGOperation cgOperation : ClassUtil.nullFree(cgClass.getOperations())) {
 				CGValuedElement cgBody = cgOperation.getBody();
 				if (cgBody != null) {
+					pushNameManager(cgOperation);
 					FeatureBody body = generateOperationBody(cgOperation, cgBody);
 					bodies.put(body.getURI(), body);
+					popNameManager();
 				}
 			}
 			for (CGProperty cgProperty : cgClass.getProperties()) {
-				CGValuedElement cgBody = cgProperty.getBody();
+				CGValuedElement cgBody = ((CGBodiedProperty)cgProperty).getBody();
 				if (cgBody != null) {
+					pushNameManager(cgProperty);
 					FeatureBody body = generatePropertyBody(cgProperty, cgBody);
 					bodies.put(body.getURI(), body);
+					popNameManager();
 				}
 			}
 		}
-		localContext = null;
 		return bodies;
 	}
 
@@ -221,30 +221,30 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 		String className;
 		String bodyText;
 		if (featureLocality == FeatureLocality.FOREIGN_STATIC) {
-			localContext = globalContext.basicGetLocalContext(cgOperation);
+		//	currentNameManager = globalNameManager.getNestedNameManager(cgOperation);
 			js.resetStream();
 		//	js.appendCommentWithOCL(null, cgOperation.getAst());
 			cgOperation.accept(this);
 			bodyText = toString();
 			packageName = genPackage.getReflectionPackageName();
-			className = context.getForeignClassName(asClass);
+			className = context.getExternalClassName(asClass);
 		}
 		else if (featureLocality == FeatureLocality.FOREIGN_IMPL) {
-			localContext = globalContext.basicGetLocalContext(cgOperation);
+		//	currentNameManager = globalNameManager.getNestedNameManager(cgOperation);
 			js.resetStream();
 			js.appendCommentWithOCL(null, cgOperation.getAst());
 			cgOperation.accept(this);
 			bodyText = toString();
 			packageName = genPackage.getReflectionPackageName();
-			className = context.getForeignClassName(asClass);
+			className = context.getExternalClassName(asClass);
 		}
 		else if (featureLocality == FeatureLocality.ECORE_IMPL) {
 			featureLocality = FeatureLocality.ECORE_IMPL;
 			String returnClassName = genModelHelper.getOperationReturnType(asOperation);
-			localContext = globalContext.basicGetLocalContext(cgOperation);
+		//	currentNameManager = globalNameManager.getNestedNameManager(cgOperation);
 			bodyText = generateBody(cgOperation.getParameters(), cgBody, returnClassName);
 			packageName = genPackage.getReflectionPackageName();//getGlobalContext().getTablesClassName();
-			className = context.getForeignClassName(asClass);
+			className = context.getExternalClassName(asClass);
 		}
 		else {
 			assert false;
@@ -265,25 +265,25 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 		String className;
 		String bodyText;
 		if (featureLocality == FeatureLocality.FOREIGN_IMPL) {
-			localContext = globalContext.basicGetLocalContext(cgProperty);
+		//	pushNameManager(cgProperty);
 			js.resetStream();
 			js.appendCommentWithOCL(null, cgProperty.getAst());
 			cgProperty.accept(this);
 			bodyText = toString();
 			packageName = genPackage.getReflectionPackageName();
-			className = context.getForeignClassName(asClass);
+			className = context.getExternalClassName(asClass);
 		}
 		else if (featureLocality == FeatureLocality.FOREIGN_STATIC) {
-			localContext = globalContext.basicGetLocalContext(cgProperty);
+		//	pushNameManager(cgProperty);
 			js.resetStream();
 			js.appendCommentWithOCL(null, cgProperty.getAst());
 			cgProperty.accept(this);
 			bodyText = toString();
 			packageName = genPackage.getReflectionPackageName();
-			className = context.getForeignClassName(asClass);
+			className = context.getExternalClassName(asClass);
 		}
 		else if (featureLocality == FeatureLocality.ECORE_IMPL) {
-			localContext = globalContext.getLocalContext(cgProperty);
+		//	pushNameManager(cgProperty);
 			String returnClassName = genModelHelper.getPropertyResultType(asProperty);
 			bodyText = generateBody(null, cgBody, returnClassName);
 			packageName = genPackage.getReflectionClassPackageName();
@@ -303,14 +303,14 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 		return new FeatureBody(fragmentURI, asProperty, featureLocality, packageName, className, bodyText);
 	}
 
-	protected @NonNull FeatureBody generateStaticOperation(@NonNull CGOperation cgOperation) {
-		localContext = globalContext.getLocalContext(cgOperation);
+/*	protected @NonNull FeatureBody generateStaticOperation(@NonNull CGOperation cgOperation) {
+		currentNameManager = globalNameManager.getNestedNameManager(cgOperation);
 		js.resetStream();
 		//
 		Operation asOperation = CGUtil.getAST(cgOperation);
 		assert asOperation != null;
 		assert asOperation.isIsStatic();
-		String className = "SO_" + context.getForeignClassName(PivotUtil.getOwningClass(asOperation));
+		String className = "SO_" + context.getExternalClassName(PivotUtil.getOwningClass(asOperation));
 		List<CGParameter> cgParameters = cgOperation.getParameters();
 		LanguageExpression expressionInOCL = asOperation.getBodyExpression();
 		CGValuedElement cgBody = cgOperation.getBody();
@@ -321,7 +321,7 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 		js.append(" *\t");
 		js.append(title);
 		js.append("\n");
-		js.append(" */\n");
+		js.append(" * /\n");
 		js.append("public static class " + className + " extends ");
 		js.appendClassReference(null, AbstractStaticOperation.class);
 		js.pushClassBody(className);
@@ -331,7 +331,7 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 		js.append(" ");
 		js.append(className);
 		js.append(" ");
-		js.append(globalContext.getInstanceName());
+		js.append(globalNameManager.getInstanceName());
 		js.append(" = new ");
 		js.append(className);
 		js.append("();\n");
@@ -345,7 +345,7 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 		js.append(" ");
 		js.appendClassReference(cgOperation.isRequired() ? true : null, cgOperation);
 		js.append(" ");
-		js.append(globalContext.getEvaluateName());
+		js.append(globalNameManager.getEvaluateName());
 		js.append("(");
 		boolean isFirst = true;
 		for (@SuppressWarnings("null")@NonNull CGParameter cgParameter : cgParameters) {
@@ -364,20 +364,20 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 		assert js.peekClassNameStack() == null;
 		String bodyText = toString();
 		String fragmentURI = getFragmentURI(asOperation);
-		String foreignPackageName = getGlobalContext().getTablesClassName();
+		String externalPackageName = getCodeGenerator().getTablesClassName();
 		FeatureLocality featureLocality = FeatureLocality.FOREIGN_STATIC;
-		return new FeatureBody(fragmentURI, asOperation, featureLocality, foreignPackageName, className, bodyText);
-	}
+		return new FeatureBody(fragmentURI, asOperation, featureLocality, externalPackageName, className, bodyText);
+	} */
 
-	protected @NonNull FeatureBody generateStaticProperty(@NonNull CGProperty cgProperty) {
-		localContext = globalContext.getLocalContext(cgProperty);
+/*	protected @NonNull FeatureBody generateStaticProperty(@NonNull CGProperty cgProperty) {
+		currentNameManager = globalNameManager.getNestedNameManager(cgProperty);
 		js.resetStream();
 		//
 		Property asProperty = CGUtil.getAST(cgProperty);
 		assert asProperty.isIsStatic();
-		String className = "SP_" + context.getForeignClassName(PivotUtil.getOwningClass(asProperty));
+		String className = "SP_" + context.getExternalClassName(PivotUtil.getOwningClass(asProperty));
 		LanguageExpression expressionInOCL = asProperty.getOwnedExpression();
-		CGValuedElement cgBody = cgProperty.getBody();
+		CGValuedElement cgBody = ((CGBodiedProperty)cgProperty).getBody();
 		assert cgBody != null;
 		String title = PrettyPrinter.printName(asProperty);
 		js.append("\n");
@@ -385,7 +385,7 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 		js.append(" *\t");
 		js.append(title);
 		js.append("\n");
-		js.append(" */\n");
+		js.append(" * /\n");
 		js.append("public static class " + className + " extends ");
 		js.appendClassReference(null, AbstractStaticProperty.class);
 		js.pushClassBody(className);
@@ -395,7 +395,7 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 		js.append(" ");
 		js.append(className);
 		js.append(" ");
-		js.append(globalContext.getInstanceName());
+		js.append(globalNameManager.getInstanceName());
 		js.append(" = new ");
 		js.append(className);
 		js.append("(");
@@ -433,10 +433,10 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 		assert js.peekClassNameStack() == null;
 		String bodyText = toString();
 		String fragmentURI = getFragmentURI(asProperty);
-		String foreignPackageName = getGlobalContext().getTablesClassName();
+		String externalPackageName = getCodeGenerator().getTablesClassName();
 		FeatureLocality featureLocality = FeatureLocality.FOREIGN_STATIC;
-		return new FeatureBody(fragmentURI, asProperty, featureLocality, foreignPackageName, className, bodyText);
-	}
+		return new FeatureBody(fragmentURI, asProperty, featureLocality, externalPackageName, className, bodyText);
+	} */
 
 	private void appendIdPath(@NonNull Element element) {
 		EObject parent = element.eContainer();
@@ -515,6 +515,11 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 		return toString();
 	}
 
+	@Override
+	public @NonNull OCLinEcoreCodeGenerator getCodeGenerator() {
+		return (OCLinEcoreCodeGenerator)context;
+	}
+
 	protected @NonNull FeatureLocality getFeatureLocality(@NonNull Operation asOperation) {
 		boolean isStatic = asOperation.isIsStatic();
 		LibraryFeature operationImplementation = asOperation.getImplementation();
@@ -566,14 +571,6 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 		return genPackage;
 	}
 
-	protected @NonNull OCLinEcoreGlobalContext getGlobalContext() {
-		return (OCLinEcoreGlobalContext) globalContext;
-	}
-
-	protected @NonNull OCLinEcoreLocalContext getLocalContext() {
-		return ClassUtil.nonNullState((OCLinEcoreLocalContext) localContext);
-	}
-
 	protected String getRuleName(@NonNull Constraint constraint) {
 		String name = constraint.getName();
 		return name != null ? name : "";
@@ -611,11 +608,5 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 	@Override
 	public @NonNull Boolean visitCGPackage(@NonNull CGPackage cgPackage) {
 		return true;
-	}
-
-	@Override
-	public @NonNull Boolean visitCGProperty(@NonNull CGProperty cgProperty) {
-		// TODO Auto-generated method stub
-		return super.visitCGProperty(cgProperty);
 	}
 }

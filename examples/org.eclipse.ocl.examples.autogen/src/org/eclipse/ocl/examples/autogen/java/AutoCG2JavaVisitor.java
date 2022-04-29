@@ -11,8 +11,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.autogen.java;
 
-import java.util.List;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
@@ -25,14 +23,14 @@ import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
  * AutoCG2JavaVisitor refines the regular generation of Java code from an optimized Auto CG transformation tree
  * to add contributions that are inadequately represented by the CG model.
  */
-public abstract class AutoCG2JavaVisitor<@NonNull CG extends AutoCodeGenerator> extends CG2JavaVisitor<CG>
+public abstract class AutoCG2JavaVisitor extends CG2JavaVisitor
 {
 	protected final @NonNull CodeGenAnalyzer analyzer;
 	protected final @NonNull CGPackage cgPackage;
-	protected final @Nullable List<CGValuedElement> sortedGlobals;
+	protected final @Nullable Iterable<CGValuedElement> sortedGlobals;
 
-	public AutoCG2JavaVisitor(@NonNull CG codeGenerator, @NonNull CGPackage cgPackage,
-			@Nullable List<CGValuedElement> sortedGlobals) {
+	public AutoCG2JavaVisitor(@NonNull AutoCodeGenerator codeGenerator, @NonNull CGPackage cgPackage,
+			@Nullable Iterable<CGValuedElement> sortedGlobals) {
 		super(codeGenerator);
 		this.analyzer = codeGenerator.getAnalyzer();
 		this.cgPackage = cgPackage;
@@ -56,7 +54,7 @@ public abstract class AutoCG2JavaVisitor<@NonNull CG extends AutoCodeGenerator> 
 	@Override
 	protected boolean doClassStatics(@NonNull CGClass cgClass, boolean needsBlankLine) {
 		@Nullable
-		List<CGValuedElement> sortedGlobals2 = sortedGlobals;
+		Iterable<CGValuedElement> sortedGlobals2 = sortedGlobals;
 		if (sortedGlobals2 != null) {
 			if (needsBlankLine) {
 				js.append("\n");

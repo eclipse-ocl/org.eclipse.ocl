@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.calling;
 
+import java.util.List;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
@@ -18,10 +20,8 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
-import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
-import org.eclipse.ocl.examples.codegen.java.JavaStream;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
@@ -39,24 +39,16 @@ public class EcoreForeignOperationCallingConvention extends ForeignOperationCall
 	public static final @NonNull EcoreForeignOperationCallingConvention INSTANCE = new EcoreForeignOperationCallingConvention();
 
 /*	@Override
-	public @NonNull CGOperation createCGOperationWithoutBody(@NonNull AS2CGVisitor as2cgVisitor, @NonNull Operation asOperation) {
-		PivotMetamodelManager metamodelManager = as2cgVisitor.getMetamodelManager();
-		GenModelHelper genModelHelper = as2cgVisitor.getGenModelHelper();
-		LibraryFeature libraryOperation = metamodelManager.getImplementation(asOperation);
-		assert libraryOperation instanceof EObjectOperation;
-		EOperation eOperation = (EOperation) asOperation.getESObject();
-		assert eOperation != null;
-		assert (!PivotUtil.isStatic(eOperation));
-		try {
-			genModelHelper.getGenOperation(eOperation);
-			CGEcoreOperation cgEcoreOperation = CGModelFactory.eINSTANCE.createCGEcoreOperation();
-			cgEcoreOperation.setEOperation(eOperation);
-			return cgEcoreOperation;
-		}
-		catch (GenModelException e) {
-			// No genmodel so fallback
-		}
-		return CGModelFactory.eINSTANCE.createCGLibraryOperation();
+	protected void appendForeignOperationName(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
+		JavaCodeGenerator codeGenerator = cg2javaVisitor.getCodeGenerator();
+		Operation asReferredOperation = CGUtil.getReferredOperation(cgOperationCallExp);
+		org.eclipse.ocl.pivot.Class asReferredClass = PivotUtil.getOwningClass(asReferredOperation);
+		CGClass cgReferringClass = CGUtil.getContainingClass(cgOperationCallExp);
+		assert cgReferringClass != null;
+		String flattenedClassName = codeGenerator.getQualifiedForeignClassName(asReferredClass);
+		js.append(flattenedClassName);
+		js.append(".op_");
+		js.append(PivotUtil.getName(asReferredOperation));
 	} */
 
 	@Override		// XXX cf super
@@ -65,39 +57,16 @@ public class EcoreForeignOperationCallingConvention extends ForeignOperationCall
 		Operation asOperation = ClassUtil.nonNullState(asOperationCallExp.getReferredOperation());
 		boolean isRequired = asOperation.isIsRequired();
 		CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();
-		analyzer.addForeignFeature(asOperation);
+		analyzer.addExternalFeature(asOperation);
 		CGForeignOperationCallExp cgForeignOperationCallExp = CGModelFactory.eINSTANCE.createCGForeignOperationCallExp();
-		addExecutorArgument(as2cgVisitor, cgForeignOperationCallExp);
+		initCallExp(as2cgVisitor, cgForeignOperationCallExp, asOperationCallExp, cgOperation, isRequired);
+		List<CGValuedElement> cgArguments = cgForeignOperationCallExp.getArguments();
+		CGVariable executorVariable = as2cgVisitor.getNameManager().getExecutorVariable();
+		cgArguments.add(analyzer.createCGVariableExp(executorVariable));
 		if (cgSource != null) {
-			cgForeignOperationCallExp.getCgArguments().add(cgSource);
+			cgArguments.add(cgSource);
 		}
-		init(as2cgVisitor, cgForeignOperationCallExp, asOperationCallExp, cgOperation, isRequired);
+		initCallArguments(as2cgVisitor, cgForeignOperationCallExp);
 		return cgForeignOperationCallExp;
 	}
-
-/*	@Override
-	public void createCGParameters(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL expressionInOCL) {
-		assert expressionInOCL != null;
-		addExecutorParameter(as2cgVisitor, cgOperation);
-		addExpressionInOCLParameters(as2cgVisitor, cgOperation, expressionInOCL);
-	} */
-
-	@Override	// XXX cf super
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor<?> cg2JavaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
-		if (!generateLocals(cg2JavaVisitor, js, cgOperationCallExp)) {
-			return false;
-		}
-		js.appendDeclaration(cgOperationCallExp);
-		js.append(" = ");
-		appendForeignOperationName(cg2JavaVisitor, js, cgOperationCallExp);
-		js.append("(");
-		generateArgumentList(cg2JavaVisitor, js, cgOperationCallExp);
-		js.append(");\n");
-		return true;
-	}
-
-/*	@Override
-	public boolean isBoxed() {
-		return true;
-	} */
 }

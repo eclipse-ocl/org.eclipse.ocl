@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
+import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOppositePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcorePropertyCallExp;
@@ -54,8 +55,8 @@ public class EcoreOppositePropertyCallingConvention extends AbstractPropertyCall
 {
 	public static final @NonNull EcoreOppositePropertyCallingConvention INSTANCE = new EcoreOppositePropertyCallingConvention();
 
-	protected void appendEcoreGet(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGValuedElement cgSource, @NonNull Property asProperty) {
-		CGTypeId cgTypeId = cg2javaVisitor.getAnalyzer().getTypeId(asProperty.getOwningClass().getTypeId());
+	protected void appendEcoreGet(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGValuedElement cgSource, @NonNull Property asProperty) {
+		CGTypeId cgTypeId = cg2javaVisitor.getAnalyzer().getCGTypeId(asProperty.getOwningClass().getTypeId());
 		ElementId elementId = ClassUtil.nonNullState(cgTypeId.getElementId());
 		JavaCodeGenerator codeGenerator = cg2javaVisitor.getCodeGenerator();
 		TypeDescriptor requiredTypeDescriptor = codeGenerator.getUnboxedDescriptor(elementId);
@@ -125,19 +126,19 @@ public class EcoreOppositePropertyCallingConvention extends AbstractPropertyCall
 			cgExecutorPropertyCallExp.getOwns().add(cgExecutorProperty);
 			cgPropertyCallExp = cgExecutorPropertyCallExp;
 		}
-		cgPropertyCallExp.setCgProperty(cgProperty);
-		cgPropertyCallExp.setReferredProperty(asProperty);
+		cgPropertyCallExp.setReferredProperty(cgProperty);
+		cgPropertyCallExp.setAsProperty(asProperty);
 		cgPropertyCallExp.setAst(asOppositePropertyCallExp);
-		cgPropertyCallExp.setTypeId(analyzer.getTypeId(asOppositePropertyCallExp.getTypeId()));
+		cgPropertyCallExp.setTypeId(analyzer.getCGTypeId(asOppositePropertyCallExp.getTypeId()));
 		cgPropertyCallExp.setRequired(isRequired); // || codeGenerator.isPrimitive(cgPropertyCallExp));
 		cgPropertyCallExp.setSource(cgSource);
 		return cgPropertyCallExp;
 	}
 
 	@Override
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGNavigationCallExp cgPropertyCallExp) {
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGNavigationCallExp cgPropertyCallExp) {
 		CGEcorePropertyCallExp cgEcorePropertyCallExp = (CGEcorePropertyCallExp) cgPropertyCallExp;
-		Property asProperty = ClassUtil.nonNullState(cgPropertyCallExp.getReferredProperty());
+		Property asProperty = ClassUtil.nonNullState(cgPropertyCallExp.getAsProperty());
 		assert cg2javaVisitor.getESObject(asProperty) == ClassUtil.nonNullState(cgEcorePropertyCallExp.getEStructuralFeature());
 		//
 		CGValuedElement source = cg2javaVisitor.getExpression(cgPropertyCallExp.getSource());
@@ -154,5 +155,24 @@ public class EcoreOppositePropertyCallingConvention extends AbstractPropertyCall
 		appendEcoreGet(cg2javaVisitor, js, source, asProperty);
 		js.append(";\n");
 		return true;
+	}
+
+	@Override
+	public boolean needsGeneration() {
+		return false;
+	}
+
+	@Override
+	protected void rewriteWithResultBoxing(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGNavigationCallExp cgNavigationCallExp) {
+		CGEcoreOppositePropertyCallExp cgEcoreOppositePropertyCallExp = (CGEcoreOppositePropertyCallExp) cgNavigationCallExp;
+		if (cgEcoreOppositePropertyCallExp.getEStructuralFeature().isMany()) {
+			boxingAnalyzer.rewriteAsAssertNonNulled(cgEcoreOppositePropertyCallExp);
+		}
+	}
+
+	@Override
+	protected void rewriteWithSourceBoxing(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGNavigationCallExp cgNavigationCallExp) {
+		CGEcoreOppositePropertyCallExp cgEcoreOppositePropertyCallExp = (CGEcoreOppositePropertyCallExp) cgNavigationCallExp;
+		boxingAnalyzer.rewriteAsEcore(cgEcoreOppositePropertyCallExp.getSource(), cgEcoreOppositePropertyCallExp.getEStructuralFeature().getEType());
 	}
 }

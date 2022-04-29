@@ -115,6 +115,7 @@ import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.ids.UnspecifiedId;
 import org.eclipse.ocl.pivot.ids.WildcardId;
+import org.eclipse.ocl.pivot.internal.library.UnboxedExplicitNavigationProperty;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
@@ -472,9 +473,14 @@ public class NameManagerHelper
 		}
 
 		@Override
-		public @NonNull String visitCGNativeOperationCallExp(@NonNull CGNativeOperationCallExp object) {
-			Method method = object.getMethod();
-			return method.getName();
+		public @NonNull String visitCGNativeOperationCallExp(@NonNull CGNativeOperationCallExp cgNativeOperationCallExp) {
+			Method method = cgNativeOperationCallExp.getMethod();
+			if (method == UnboxedExplicitNavigationProperty.CREATE_METHOD) {
+				return "IMP" + context.getNameHint(cgNativeOperationCallExp.getArguments().get(0));
+			}
+			else {
+				return method.getName();
+			}
 		}
 
 		@Override

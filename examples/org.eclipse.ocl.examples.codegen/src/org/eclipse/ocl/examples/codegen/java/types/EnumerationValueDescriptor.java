@@ -14,11 +14,11 @@ import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGUnboxExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
-import org.eclipse.ocl.examples.codegen.java.JavaLocalContext;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
@@ -38,14 +38,14 @@ public class EnumerationValueDescriptor extends BoxedValueDescriptor //implement
 	}
 
 	@Override
-	public @NonNull Boolean appendEcoreStatements(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext,
+	public @NonNull Boolean appendEcoreStatements(@NonNull JavaStream js, @NonNull NestedNameManager localNameManager,
 			@NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement boxedValue) {
 		js.appendSuppressWarningsNull(true);
 		js.appendDeclaration(cgEcoreExp);
 		js.append(" = (");
 		js.appendClassReference(true, ecoreJavaClass);
 		js.append(")");
-		js.appendReferenceTo(localContext.getIdResolverVariable());
+		js.appendReferenceTo(localNameManager.getIdResolverVariable());
 		js.append(".ecoreValueOf(");
 		js.appendClassReference(null, Enumerator.class);
 		js.append(".class, ");
@@ -69,11 +69,11 @@ public class EnumerationValueDescriptor extends BoxedValueDescriptor //implement
 	}
 
 	@Override
-	public @NonNull Boolean appendUnboxStatements(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext,
+	public @NonNull Boolean appendUnboxStatements(@NonNull JavaStream js, @NonNull NestedNameManager localNameManager,
 			@NonNull CGUnboxExp cgUnboxExp, @NonNull CGValuedElement boxedValue) {
 		js.appendDeclaration(cgUnboxExp);
 		js.append(" = ");
-		js.appendReferenceTo(localContext.getIdResolverVariable());
+		js.appendReferenceTo(localNameManager.getIdResolverVariable());
 		js.append(".unboxedValueOf(");
 		js.appendValueName(boxedValue);
 		js.append(");\n");

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -21,7 +21,7 @@ package org.eclipse.ocl.examples.codegen.cgmodel;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorPropertyCallExp#getExecutorProperty <em>Executor Property</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorPropertyCallExp#getCgArgument <em>Cg Argument</em>}</li>
  * </ul>
  *
  * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGExecutorPropertyCallExp()
@@ -30,27 +30,26 @@ package org.eclipse.ocl.examples.codegen.cgmodel;
 public interface CGExecutorPropertyCallExp extends CGPropertyCallExp {
 
 	/**
-	 * Returns the value of the '<em><b>Executor Property</b></em>' reference.
+	 * Returns the value of the '<em><b>Cg Argument</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Executor Property</em>' reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Executor Property</em>' reference.
-	 * @see #setExecutorProperty(CGExecutorProperty)
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGExecutorPropertyCallExp_ExecutorProperty()
+	 * <!-- begin-model-doc -->
+	 * Extra argument optionally identifying a dynamically resolved Property
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Cg Argument</em>' containment reference.
+	 * @see #setCgArgument(CGValuedElement)
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGExecutorPropertyCallExp_CgArgument()
 	 * @generated
 	 */
-	CGExecutorProperty getExecutorProperty();
+	CGValuedElement getCgArgument();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorPropertyCallExp#getExecutorProperty <em>Executor Property</em>}' reference.
+	 * Sets the value of the '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorPropertyCallExp#getCgArgument <em>Cg Argument</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Executor Property</em>' reference.
-	 * @see #getExecutorProperty()
+	 * @param value the new value of the '<em>Cg Argument</em>' containment reference.
+	 * @see #getCgArgument()
 	 * @generated
 	 */
-	void setExecutorProperty(CGExecutorProperty value);
+	void setCgArgument(CGValuedElement value);
 } // CGExecutorPropertyCallExp

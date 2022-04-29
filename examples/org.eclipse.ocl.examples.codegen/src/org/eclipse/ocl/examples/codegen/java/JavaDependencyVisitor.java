@@ -12,8 +12,8 @@ package org.eclipse.ocl.examples.codegen.java;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.DependencyVisitor;
+import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBoxExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
@@ -25,20 +25,18 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 
 public class JavaDependencyVisitor extends DependencyVisitor
 {
-	protected final @NonNull JavaGlobalContext<@NonNull ?> globalContext;
-	protected final JavaLocalContext<@NonNull ?> localContext;
+	protected final NestedNameManager localNameManager;
 
-	public JavaDependencyVisitor(@NonNull CodeGenAnalyzer analyzer, @NonNull JavaGlobalContext<@NonNull ?> globalContext, @NonNull GlobalPlace globalPlace) {
-        super(analyzer, globalPlace);
-        this.globalContext = globalContext;
-        this.localContext = null;
+	public JavaDependencyVisitor(@NonNull JavaCodeGenerator codeGenerator, @NonNull GlobalPlace globalPlace) {
+        super(codeGenerator, globalPlace);
+        this.localNameManager = null;
 	}
 
 	@Override
 	public @Nullable Object visitCGBoxExp(@NonNull CGBoxExp cgBoxExp) {
 		TypeId typeId = cgBoxExp.getSource().getASTypeId();
 		if (typeId != null) {
-			addDependency(cgBoxExp, context.getElementId(typeId));
+			addDependency(cgBoxExp, analyzer.getCGElementId(typeId));
 			typeId.accept(id2DependencyVisitor);						// FIXME this should be automatic (needed for OclAny testNotEqual)
 		}
 		return super.visitCGBoxExp(cgBoxExp);
@@ -48,7 +46,7 @@ public class JavaDependencyVisitor extends DependencyVisitor
 	public @Nullable Object visitCGEcoreExp(@NonNull CGEcoreExp cgEcoreExp) {
 		TypeId typeId = cgEcoreExp.getSource().getASTypeId();
 		if (typeId != null) {
-			addDependency(cgEcoreExp, context.getElementId(typeId));
+			addDependency(cgEcoreExp, analyzer.getCGElementId(typeId));
 			typeId.accept(id2DependencyVisitor);						// FIXME this should be automatic (needed for OclAny testNotEqual)
 		}
 		return super.visitCGEcoreExp(cgEcoreExp);
