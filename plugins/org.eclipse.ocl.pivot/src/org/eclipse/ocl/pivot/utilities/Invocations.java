@@ -14,6 +14,7 @@ import java.util.Iterator;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Type;
 
@@ -23,11 +24,13 @@ import com.google.common.collect.Iterables;
  * Invocations (or rather its derived implementations) support the capture of a set of candidate
  * operation matches.
  *
+ * For OCL the elements are always Operation, but for QVT they may be  Rule, so NamedElement as the common type.
+ *
  * @since 1.18
  */
-public interface Invocations extends Iterable<@NonNull Operation>
+public interface Invocations extends Iterable<@NonNull NamedElement>
 {
-	default @Nullable Operation getSingleResult() {
+	default @Nullable NamedElement getSingleResult() {
 		return null;
 	}
 
@@ -48,7 +51,7 @@ public interface Invocations extends Iterable<@NonNull Operation>
 		}
 
 		@Override
-		public @NonNull Operation getSingleResult() {
+		public @NonNull NamedElement getSingleResult() {
 			return invocation;
 		}
 
@@ -58,23 +61,23 @@ public interface Invocations extends Iterable<@NonNull Operation>
 		}
 
 		@Override
-		public @NonNull Iterator<@NonNull Operation> iterator() {
-			return new SingletonIterator<@NonNull Operation>(invocation);
+		public @NonNull Iterator<@NonNull NamedElement> iterator() {
+			return new SingletonIterator<@NonNull NamedElement>(invocation);
 		}
 	}
 
 	public static class UnresolvedInvocations implements Invocations
 	{
 		protected final @NonNull Type asType;
-		protected final @NonNull Iterable<@NonNull Operation> invocations;
+		protected final @NonNull Iterable<@NonNull NamedElement> invocations;
 
-		public UnresolvedInvocations(@NonNull Type asType, @NonNull Iterable<@NonNull Operation> invocations) {
+		public UnresolvedInvocations(@NonNull Type asType, @NonNull Iterable<@NonNull NamedElement> invocations) {
 			this.asType = asType;
 			this.invocations = invocations;
 		}
 
 		@Override
-		public @Nullable Operation getSingleResult() {
+		public @Nullable NamedElement getSingleResult() {
 			return Iterables.size(invocations) == 1 ? invocations.iterator().next() : null;
 		}
 
@@ -84,7 +87,7 @@ public interface Invocations extends Iterable<@NonNull Operation>
 		}
 
 		@Override
-		public @NonNull Iterator<@NonNull Operation> iterator() {
+		public @NonNull Iterator<@NonNull NamedElement> iterator() {
 			return invocations.iterator();
 		}
 	}
@@ -103,7 +106,7 @@ public interface Invocations extends Iterable<@NonNull Operation>
 		}
 
 		@Override
-		public @NonNull Iterator<@NonNull Operation> iterator() {
+		public @NonNull Iterator<@NonNull NamedElement> iterator() {
 			throw new UnsupportedOperationException();
 		}
 	}

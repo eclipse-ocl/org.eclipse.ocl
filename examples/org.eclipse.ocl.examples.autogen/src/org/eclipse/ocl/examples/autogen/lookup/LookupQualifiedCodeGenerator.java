@@ -10,14 +10,12 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.autogen.lookup;
 
-import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.autogen.java.AutoCG2JavaVisitor;
-import org.eclipse.ocl.examples.autogen.java.AutoCodeGenerator;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.pivot.Element;
@@ -42,7 +40,7 @@ public class LookupQualifiedCodeGenerator extends LookupVisitorsCodeGenerator {
 			@Nullable GenPackage superGenPackage,
 			@Nullable GenPackage baseGenPackage) {
 		this(environmentFactory, asPackage, asSuperPackage, asBasePackage, genPackage,
-			superGenPackage, baseGenPackage, LookupVisitorsClassContext.QUALIFIED_ENV_NAME);
+			superGenPackage, baseGenPackage, LookupVisitorsCodeGenerator.QUALIFIED_ENV_NAME);
 	}
 
 	protected LookupQualifiedCodeGenerator(
@@ -57,15 +55,13 @@ public class LookupQualifiedCodeGenerator extends LookupVisitorsCodeGenerator {
 	}
 
 	@Override
-	protected @NonNull AutoCG2JavaVisitor<@NonNull ? extends AutoCodeGenerator> createCG2JavaVisitor(
-			@NonNull CGPackage cgPackage,
-			@Nullable List<CGValuedElement> sortedGlobals) {
+	protected @NonNull AutoCG2JavaVisitor createCG2JavaVisitor(@NonNull CGPackage cgPackage, @Nullable Iterable<@NonNull CGValuedElement> sortedGlobals) {
 		return new LookupQualifiedCG2JavaVisitor(this, cgPackage, sortedGlobals);
 	}
 
 	@Override
 	protected @NonNull String getLookupVisitorClassName(@NonNull String prefix) {
-		String typeName = extractTypeNameFromEnvOp(LookupVisitorsClassContext.QUALIFIED_ENV_NAME);
+		String typeName = extractTypeNameFromEnvOp(LookupVisitorsCodeGenerator.QUALIFIED_ENV_NAME);
 		return prefix + "Qualified" + typeName + "LookupVisitor";
 	}
 
@@ -91,7 +87,7 @@ public class LookupQualifiedCodeGenerator extends LookupVisitorsCodeGenerator {
 		ExpressionInOCL envExpressionInOCL = getExpressionInOCL(operation);
 		//
 		org.eclipse.ocl.pivot.Class asType = ClassUtil.nonNullState(operation.getOwningClass());
-		Variable asElement = helper.createParameterVariable(LookupVisitorsClassContext.ELEMENT_NAME, asType, true);
+		Variable asElement = helper.createParameterVariable(LookupVisitorsCodeGenerator.ELEMENT_NAME, asType, true);
 		reDefinitions.put(envExpressionInOCL.getOwnedContext(), asElement);
 
 		//rewrite LookupEnvironment ShadowExp as accessing the context variable (it might be the init of let variable)

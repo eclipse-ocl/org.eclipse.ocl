@@ -65,6 +65,6 @@ public abstract class AbstractAccumulation2Java extends AbstractIteration2Java
 		CGTypeId cgAccumulatorId = cgIterationCallExp.getTypeId();
 		ElementId elementId = cgAccumulatorId.getElementId();
 		Class<?> accumulatorClass = elementId instanceof CollectionTypeId ? getAccumulatorClass(analyzer, (CollectionTypeId) elementId) : Object.class;
-		return analyzer.getTypeId(JavaConstants.getJavaTypeId(accumulatorClass));
+		return analyzer.getCGTypeId(JavaConstants.getJavaTypeId(accumulatorClass));
 	}
 }

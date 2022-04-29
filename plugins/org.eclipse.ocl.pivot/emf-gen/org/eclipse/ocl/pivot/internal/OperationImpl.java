@@ -795,9 +795,9 @@ implements Operation {
 					/*@Caught*/ @Nullable Object CAUGHT_and;
 					try {
 						final /*@NonInvalid*/ @Nullable LanguageExpression bodyExpression_0 = this.getBodyExpression();
-						final /*@NonInvalid*/ boolean IsEQ__0 = bodyExpression_0 != null;
+						final /*@NonInvalid*/ boolean IsEQ_ = bodyExpression_0 != null;
 						final /*@Thrown*/ @Nullable Boolean and;
-						if (!IsEQ__0) {
+						if (!IsEQ_) {
 							and = ValueUtil.FALSE_VALUE;
 						}
 						else {
@@ -809,8 +809,8 @@ implements Operation {
 									throw new InvalidValueException("Null source for \'ExpressionInOCL::ownedBody\'");
 								}
 								final /*@Thrown*/ @Nullable OCLExpression ownedBody = oclAsType.getOwnedBody();
-								final /*@Thrown*/ boolean IsEQ_ = ownedBody != null;
-								CAUGHT_IsEQ_ = IsEQ_;
+								final /*@Thrown*/ boolean IsEQ__0 = ownedBody != null;
+								CAUGHT_IsEQ_ = IsEQ__0;
 							}
 							catch (Exception THROWN_CAUGHT_IsEQ_) {
 								CAUGHT_IsEQ_ = ValueUtil.createInvalidValue(THROWN_CAUGHT_IsEQ_);

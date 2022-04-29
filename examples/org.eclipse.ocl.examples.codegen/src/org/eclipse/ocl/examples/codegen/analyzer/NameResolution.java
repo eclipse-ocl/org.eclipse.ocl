@@ -15,14 +15,14 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.CodeGenConstants;
 import org.eclipse.ocl.examples.codegen.analyzer.NameManager.Context;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGBuiltInIterationCallExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGCallable;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.TracingOption;
 
 /**
  * A NameResolution represents a future name for the value of an expression and for all unmodified clients of that value.
@@ -30,7 +30,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
  * The need for a neme is first declared and an actual name, hierarchically unique within the NameManager unique,
  * is assigned just before the CG2Java generation.
  *  </p>
- *  Declarations occur at various timres.
+ *  Declarations occur at various times.
  *  </br>Java reserved words are excluded.
  *  </br>However certain reserved words such as "this" my be assigned for precisely their Java purpose.
  *  </br>Global names may be declared in the GlobalNameManager.
@@ -45,10 +45,19 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
  */
 public class NameResolution
 {
+	public static final @NonNull TracingOption NAMES_GATHER = new TracingOption(CodeGenConstants.PLUGIN_ID, "names/gather");
+	public static final @NonNull TracingOption NAMES_RESOLVE = new TracingOption(CodeGenConstants.PLUGIN_ID, "names/resolve");
+
+	public static boolean inhibitNameResolution = true;
 	/**
 	 * A non-null placeholder for a nameHint whose resolution is deferred until the CG containment tree is sound.
 	 */
 	private static final @NonNull String UNRESOLVED = "«UNRESOLVED»";
+
+	/**
+	 * A non-null placeholder for a nameHint whose resolution will not be used.
+	 */
+	public static final @NonNull String NOT_NEEDED = "«NOT_NEEDED»";
 
 	/**
 	 * The namespace at and below whch this resolved name and all its variants must be unique.
@@ -73,16 +82,16 @@ public class NameResolution
 	/**
 	 * Additional CGElements that propagate the unchanged value to be accessed by the resolved name.
 	 */
-	private @Nullable List<@NonNull CGValuedElement> cgElements = null;
+	private @Nullable List<@NonNull CGValuedElement> cgElements = null;		// XXX obsolete
 
 	public NameResolution(@NonNull NameManager nameManager, @Nullable CGValuedElement primaryElement, @Nullable String nameHint) {
 		this.nameManager = nameManager;
 		this.primaryElement = primaryElement;
 		assert (primaryElement != null) || (nameHint != null);
-		if (nameManager instanceof NestedNameManager) {
-			getClass();		// XXX)
+		if (primaryElement instanceof CGNativeOperationCallExp) {
+			getClass();		// XXX
 		}
-		if (primaryElement instanceof CGBuiltInIterationCallExp) {
+		if (nameManager instanceof NestedNameManager) {
 			getClass();		// XXX)
 		}
 		this.nameHint = nameHint != null ? nameHint : UNRESOLVED;
@@ -91,15 +100,15 @@ public class NameResolution
 		if (primaryElement == null) {
 			assert nameHint != null : "Expected NameResolution for null";
 		}
-		else {
+	/*	else {			-- too fussy
 			boolean expectNameHint = nameManager.isGlobal() || (primaryElement instanceof CGCallable) || (primaryElement instanceof CGProperty) || (primaryElement instanceof CGVariable);
 			if (expectNameHint) {
-				assert nameHint != null  : "Expected NameResolution for " + primaryElement.getClass().getName();
+				assert nameHint != null : "Expected NameResolution for " + primaryElement.getClass().getName();
 			}
 			else {
 				assert nameHint == null : "Unexpected NameResolution for " + primaryElement.getClass().getName();
 			}
-		}
+		} */
 		assert !(primaryElement instanceof CGVariableExp) : "Should have redirected to getNamedValue()";
 		if ((primaryElement != null) && "u.oclAsType(SysML_ValueTypes_QUDV::QUDV::ConversionBasedUnit)".equals(String.valueOf(primaryElement.getAst()))) {
 			getClass();		// XXX
@@ -107,11 +116,15 @@ public class NameResolution
 		if (primaryElement != null) {
 			addCGElement(primaryElement);
 		}
-		nameManager.addNameResolution(this);
+	//	nameManager.addNameResolution(this);
 	//	System.out.println("NameResolution '" + nameHint + "' : " + nameManager.toString() + " : " + primaryElement);
 	}
 
 	public void addCGElement(@NonNull CGValuedElement cgElement) {
+		assert !inhibitNameResolution || (nameManager instanceof GlobalNameManager);
+		if (String.valueOf(primaryElement).contains("oclContainer")) {
+			getClass();		// XXX
+		}
 		List<@NonNull CGValuedElement> cgElements2 = cgElements;
 		if (cgElements2 == null) {
 			cgElements = cgElements2 = new ArrayList<>();
@@ -124,7 +137,7 @@ public class NameResolution
 		}
 		if (this != cgElement.basicGetNameResolution()) {			// XXX
 			cgElement.setNameResolution(this);
-			getNameManager().addNameResolution(cgElement);
+		//	getNameManager().addNameResolution(cgElement);
 		}
 	//	System.out.println("addCGElement '" + this + "' : " + cgElement.eClass().getName() + ":" + cgElement);
 	//	assert (primaryElement == null) || (cgElements2.size() == 1);
@@ -139,13 +152,13 @@ public class NameResolution
 	}
 
 	protected boolean debugNameHint() {
-		if (nameHint.contains("manyDates")) {
+		if (nameHint.contains("getCommonType")) {
 			getClass();		// XXX
 		}
-		if ("oclAsType".equals(nameHint)) {
+		if ("IMPPROPid_d3atlExpression".equals(nameHint)) {
 			getClass();			// XXX
 		}
-		if ("CAUGHT_gt".equals(nameHint)) {
+		if ("create".equals(nameHint)) {
 			getClass();			// XXX
 		}
 		return true;
@@ -168,7 +181,15 @@ public class NameResolution
 	}
 
 	public @NonNull String getResolvedName() {
-		// XXX assert !isUnresolved();	-- maybe unresolved if containerless as a result of a CSE rewrite
+	/*	StringBuilder s = new StringBuilder();
+		s.append("getResolvedName " + NameUtil.debugSimpleName(this) + " in " + NameUtil.debugSimpleName(nameManager) + " " + nameHint + " => " + resolvedName);
+		if (cgElements != null) {
+			for (@NonNull CGValuedElement cgElement : cgElements) {
+				s.append(" " + NameUtil.debugSimpleName(cgElement));
+			}
+		}
+		System.out.println(s.toString());
+	*/	// XXX assert !isUnresolved();	-- maybe unresolved if containerless as a result of a CSE rewrite
 		return ClassUtil.nonNullState(basicGetResolvedName());
 	}
 
@@ -176,36 +197,64 @@ public class NameResolution
 		return nameHint == UNRESOLVED;
 	}
 
+	/**
+	 * Provide the resolution of a global name using the constructed hint
+	 */
 	public void resolveIn(@NonNull Context context) {
-	// assert !isUnresolved();	-- maybe unresolved if containerless as a result of a CSE rewrite
-		Object cgElement = primaryElement != null ? primaryElement : NameManager.NOT_AN_OBJECT;
+		assert !isUnresolved();
+		assert resolvedName == null;
+		String resolvedName = context.allocateUniqueName(getNameHint(), NameManager.NOT_AN_OBJECT);
+		setResolvedName(resolvedName);
+		if (NAMES_RESOLVE.isActive()) {
+			StringBuilder s = new StringBuilder();
+			s.append(NameUtil.debugSimpleName(this) + " in " + NameUtil.debugSimpleName(nameManager) + " " + nameHint + " => " + resolvedName);
+			if (cgElements != null) {
+				for (@NonNull CGValuedElement cgElement2 : cgElements) {
+					s.append(" " + NameUtil.debugSimpleName(cgElement2));
+				}
+			}
+			NAMES_RESOLVE.println(s.toString());
+		}
+		assert resolvedName != null;
+	}
+
+	/**
+	 * Provide the resolution of a non-global name using cgElement to provide the nameHint.
+	 */
+	public void resolveIn(@NonNull Context context, @NonNull CGValuedElement cgElement) {
+		assert !isUnresolved();
+		if (cgElement.eClass().getName().equals("CGFunction")) {
+			getClass();		// XXX
+		}
 		if (resolvedName == null) {
-			assert !isUnresolved() || (primaryElement == null);
+		//	CGPackage cgPackage = CGUtil.basicGetContainingPackage(cgElement);
+		//	assert (cgPackage != null) || cgElement.isGlobal() || (cgElement instanceof CGLibraryOperation) || (cgElement instanceof CGNativeOperation);
 			String resolvedName = context.allocateUniqueName(getNameHint(), cgElement);
 			setResolvedName(resolvedName);
-		/*	Iterable<@NonNull NameVariant> nameVariants = cgElement.getNameVariants();
-			if (nameVariants != null) {
-				for (@NonNull NameVariant nameVariant : nameVariants) {
-					String variantNameHint = nameVariant.getName(resolvedName);
-					String variantName = context.allocateUniqueName(variantNameHint, cgElement);
-					cgElement.setNameVariant(nameVariant, variantName);
-				}
-			} */
 		}
-	/*	Map<@NonNull NameVariant, @Nullable String> nameVariant2name2 = nameVariant2name;
-		if (nameVariant2name2 != null) {
-			for (@NonNull NameVariant nameVariant : nameVariant2name2.keySet()) {
-				assert nameVariant2name2.get(nameVariant) != null;;
+		if (NAMES_RESOLVE.isActive()) {
+			StringBuilder s = new StringBuilder();
+			s.append("resolveIn " + NameUtil.debugSimpleName(this) + " in " + NameUtil.debugSimpleName(nameManager) + " " + nameHint + " => " + resolvedName);
+			if (cgElements != null) {
+				for (@NonNull CGValuedElement cgElement2 : cgElements) {
+					s.append(" " + NameUtil.debugSimpleName(cgElement2));
+				}
 			}
-		} */
+			NAMES_RESOLVE.println(s.toString());
+		}
+		assert resolvedName != null;
 	}
 
 	public void resolveNameHint() {
+		assert !inhibitNameResolution || (nameManager instanceof GlobalNameManager);
 		if (nameHint == UNRESOLVED) {
 			CGValuedElement primaryElement2 = primaryElement;
 			assert primaryElement2 != null;
 			nameHint = nameManager.getNameHint(primaryElement2);
 			if ("_171_UNRESOLVED_187".equals(nameHint)) {			// XXX
+				nameManager.getNameHint(primaryElement2);
+			}
+			if ("XXX_171_UNRESOLVED_187".equals(nameHint)) {			// XXX
 				nameManager.getNameHint(primaryElement2);
 			}
 			assert !"_171_UNRESOLVED_187".equals(nameHint);
@@ -214,7 +263,8 @@ public class NameResolution
 	}
 
 	protected void setResolvedName(@NonNull String resolvedName) {
-		if ("allInstances".equals(resolvedName)) {
+		assert !inhibitNameResolution || (nameManager instanceof GlobalNameManager);
+		if ("create".equals(resolvedName)) {
 			getClass();		// XXX
 		}
 		assert !resolvedName.contains("UNRESOLVED");

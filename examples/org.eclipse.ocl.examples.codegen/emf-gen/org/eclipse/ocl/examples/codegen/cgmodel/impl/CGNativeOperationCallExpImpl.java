@@ -393,17 +393,20 @@ public class CGNativeOperationCallExpImpl extends CGOperationCallExpImpl impleme
 
 	/**
 	 * {@inheritDoc}
-	 * @generated
+	 * @generated NOT XXX
 	 */
 	@Override
 	public boolean isNonInvalid() {
-		if (method == null) {
-			return false;
+		Method jMethod = method;
+		if (jMethod != null) {
+			Class<?>[] jExceptionTypes = jMethod.getExceptionTypes();
+			if (jExceptionTypes.length == 1) {
+				// All methods may throw an abstract VirtualMachineError, so hijack the throw of just a VirtualMachineError
+				// as a @NoThrow CG-wise indication. Add another exception if VirtualMachineError really needs a mention.
+				return jExceptionTypes[0] == VirtualMachineError.class;
+			}
 		}
-		if (method.getExceptionTypes().length > 0) {
-			return false;
-		}
-		return !cgOperation.getCallingConvention().mayThrowException();
+		return false;
 	}
 
 	/**

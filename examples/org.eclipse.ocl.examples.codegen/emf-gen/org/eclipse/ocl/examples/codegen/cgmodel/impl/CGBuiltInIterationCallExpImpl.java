@@ -16,7 +16,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBuiltInIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterator;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
@@ -92,7 +91,7 @@ public class CGBuiltInIterationCallExpImpl extends CGIterationCallExpImpl implem
 		CGIterator oldAccumulator = accumulator;
 		accumulator = newAccumulator;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 13, oldAccumulator, newAccumulator);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 14, oldAccumulator, newAccumulator);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -108,14 +107,14 @@ public class CGBuiltInIterationCallExpImpl extends CGIterationCallExpImpl implem
 		if (newAccumulator != accumulator) {
 			NotificationChain msgs = null;
 			if (accumulator != null)
-				msgs = ((InternalEObject)accumulator).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (13), null, msgs);
+				msgs = ((InternalEObject)accumulator).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (14), null, msgs);
 			if (newAccumulator != null)
-				msgs = ((InternalEObject)newAccumulator).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (13), null, msgs);
+				msgs = ((InternalEObject)newAccumulator).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (14), null, msgs);
 			msgs = basicSetAccumulator(newAccumulator, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 13, newAccumulator, newAccumulator));
+			eNotify(new ENotificationImpl(this, Notification.SET, 14, newAccumulator, newAccumulator));
 	}
 
 	/**
@@ -126,7 +125,7 @@ public class CGBuiltInIterationCallExpImpl extends CGIterationCallExpImpl implem
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case 13:
+			case 14:
 				return basicSetAccumulator(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -140,7 +139,7 @@ public class CGBuiltInIterationCallExpImpl extends CGIterationCallExpImpl implem
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 13:
+			case 14:
 				return getAccumulator();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -154,7 +153,7 @@ public class CGBuiltInIterationCallExpImpl extends CGIterationCallExpImpl implem
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 13:
+			case 14:
 				setAccumulator((CGIterator)newValue);
 				return;
 		}
@@ -169,7 +168,7 @@ public class CGBuiltInIterationCallExpImpl extends CGIterationCallExpImpl implem
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 13:
+			case 14:
 				setAccumulator((CGIterator)null);
 				return;
 		}
@@ -184,7 +183,7 @@ public class CGBuiltInIterationCallExpImpl extends CGIterationCallExpImpl implem
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 13:
+			case 14:
 				return accumulator != null;
 		}
 		return super.eIsSet(featureID);
@@ -232,7 +231,7 @@ public class CGBuiltInIterationCallExpImpl extends CGIterationCallExpImpl implem
 	 */
 	@Override
 	public boolean isNonNull() {
-		return nonNull || ((referredIteration != null) && referredIteration.isIsRequired());
+		return nonNull || ((asIteration != null) && asIteration.isIsRequired());
 	}
 
 	/**
@@ -255,11 +254,11 @@ public class CGBuiltInIterationCallExpImpl extends CGIterationCallExpImpl implem
 
 	/**
 	 * {@inheritDoc}
-	 * @generated
+	 * @generated NOT XXX
 	 */
 	@Override
 	public void setCaught(boolean isCaught) {
-		assert !isCaught;
+	//	assert !isCaught;		// test_cg_tuple_access uses a invalitating any()
 	}
 
 	/**
@@ -274,20 +273,6 @@ public class CGBuiltInIterationCallExpImpl extends CGIterationCallExpImpl implem
 	@Override
 	public void setNonNull() {
 		nonNull = true;
-	}
-
-	@Override
-	protected void eBasicSetContainer(InternalEObject newContainer) {
-		if (newContainer == null) {
-			getClass();
-		}
-		super.eBasicSetContainer(newContainer);
-	}
-
-	@Override
-	public void setNameResolution(@NonNull NameResolution nameResolution) {
-//		System.out.println("Set " + NameUtil.debugSimpleName(nameResolution) + " for " + NameUtil.debugSimpleName(this));		// XXX YYY
-		super.setNameResolution(nameResolution);
 	}
 
 } //CGBuiltInIterationCallExpImpl

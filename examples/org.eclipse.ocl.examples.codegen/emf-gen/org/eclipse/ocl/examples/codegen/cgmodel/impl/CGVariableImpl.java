@@ -18,13 +18,11 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGFinalVariable;
+import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInvalid;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
-import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -107,7 +105,8 @@ public abstract class CGVariableImpl extends CGValuedElementImpl implements CGVa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setInitGen(CGValuedElement newInit) {
+	@Override
+	public void setInit(CGValuedElement newInit) {
 		if (newInit != init) {
 			NotificationChain msgs = null;
 			if (init != null)
@@ -119,11 +118,6 @@ public abstract class CGVariableImpl extends CGValuedElementImpl implements CGVa
 		}
 		else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, 6, newInit, newInit));
-	}
-	@Override
-	public void setInit(CGValuedElement newInit) {
-		assert !(newInit instanceof CGVariableExp) || !(CGUtil.getReferredVariable((CGVariableExp) newInit) instanceof CGFinalVariable) : "Cascaded variable " + this;
-		setInitGen(newInit);
 	}
 
 	/**
@@ -359,6 +353,12 @@ public abstract class CGVariableImpl extends CGValuedElementImpl implements CGVa
 	@Override
 	public void setNonNull() {
 		nonNull = true;
+	}
+
+	@Override
+	public void setNameResolution(@NonNull NameResolution nameResolution) {
+		// TODO Auto-generated method stub
+		super.setNameResolution(nameResolution);
 	}
 
 } //CGVariableImpl

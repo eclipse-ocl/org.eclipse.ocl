@@ -11,6 +11,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.library;
 
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -38,6 +39,16 @@ public class ConstrainedProperty extends AbstractProperty
 
 	public ConstrainedProperty(@NonNull Property property) {
 		this.property = property;
+		assert property.getESObject() instanceof EStructuralFeature;
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	@Deprecated /* @deprecated preserves API till StereotypeProperty leapfrogs */
+	protected ConstrainedProperty(@NonNull Property property, boolean isDeprecatedDerivation) {
+		this.property = property;
+		assert isDeprecatedDerivation;
 	}
 
 	@Override

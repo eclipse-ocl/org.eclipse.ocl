@@ -16,8 +16,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGFinalVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
-import org.eclipse.ocl.pivot.Element;
-import org.eclipse.ocl.pivot.NamedElement;
 
 /**
  * <!-- begin-user-doc -->
@@ -80,14 +78,6 @@ public class CGFinalVariableImpl extends CGVariableImpl implements CGFinalVariab
 	@Override
 	public @NonNull CGValuedElement getTypedValue() {
 		return init != null ? init.getTypedValue() : this;
-	}
-
-	@Override
-	public void setAst(Element newAst) {
-		if ((newAst != null) && "self".equals(((NamedElement)newAst).getName())) {
-			getClass();		// XXX
-		}
-		super.setAst(newAst);
 	}
 
 } //CGFinalVariableImpl

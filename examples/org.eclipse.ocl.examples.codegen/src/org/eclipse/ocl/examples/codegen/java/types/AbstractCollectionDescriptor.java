@@ -15,10 +15,10 @@ import java.util.List;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBoxExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
-import org.eclipse.ocl.examples.codegen.java.JavaLocalContext;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.java.JavaStream.TypeRepresentation;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
@@ -40,7 +40,7 @@ public abstract class AbstractCollectionDescriptor extends AbstractDescriptor im
 	}
 
 	@Override
-	public @NonNull Boolean appendBox(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext, @NonNull CGBoxExp cgBoxExp, @NonNull CGValuedElement unboxedValue) {
+	public @NonNull Boolean appendBox(@NonNull JavaStream js, @NonNull NestedNameManager localNameManager, @NonNull CGBoxExp cgBoxExp, @NonNull CGValuedElement unboxedValue) {
 		TypeId typeId = unboxedValue.getASTypeId();
 		js.appendDeclaration(cgBoxExp);
 		js.append(" = ");
@@ -52,7 +52,7 @@ public abstract class AbstractCollectionDescriptor extends AbstractDescriptor im
 		if (typeId instanceof CollectionTypeId) {
 			collectionName = ((CollectionTypeId)typeId).getGeneralizedId().getName();
 		}
-		js.appendReferenceTo(localContext.getIdResolverVariable());
+		js.appendReferenceTo(localNameManager.getIdResolverVariable());
 		js.append(".create" + collectionName + "OfAll(");
 		js.appendIdReference(typeId);
 		js.append(", ");
@@ -61,7 +61,7 @@ public abstract class AbstractCollectionDescriptor extends AbstractDescriptor im
 		return true;
 	}
 
-	public @NonNull Boolean appendEcore(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext, @NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement nonEcoreValue) {
+	public @NonNull Boolean appendEcore(@NonNull JavaStream js, @NonNull NestedNameManager localNameManager, @NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement nonEcoreValue) {
 		//		TypeId typeId = nonEcoreValue.getASTypeId();
 		EClassifier eClassifier = cgEcoreExp.getEcoreClassifier();
 		Class<?> instanceClass = eClassifier != null ? eClassifier.getInstanceClass() : null;
@@ -73,7 +73,7 @@ public abstract class AbstractCollectionDescriptor extends AbstractDescriptor im
 			js.appendReferenceTo(nonEcoreValue);
 			js.append(" == null ? null : ");
 		}
-		js.appendAtomicReferenceTo(IdResolver.IdResolverExtension.class, localContext.getIdResolverVariable());
+		js.appendAtomicReferenceTo(IdResolver.IdResolverExtension.class, localNameManager.getIdResolverVariable());
 		js.append(".ecoreValueOfAll(");
 		//		js.appendIdReference(typeId);
 		js.appendClassReference(null, elementEcoreDescriptor);

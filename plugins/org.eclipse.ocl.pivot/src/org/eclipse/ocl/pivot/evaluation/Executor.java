@@ -59,18 +59,18 @@ public interface Executor extends Evaluator
 	@Override
 	@NonNull EvaluationEnvironment getEvaluationEnvironment();
 	@Override
-	@NonNull IdResolver getIdResolver();
+	/*@NoThrow*/ @NonNull IdResolver getIdResolver() throws VirtualMachineError;	// Just VirtualMachineError explicitly means @NoThrow CG-wise
 	@Override
 	@Nullable EvaluationLogger getLogger();
 	@NonNull MetamodelManager getMetamodelManager();
 	@Override
-	@NonNull ModelManager getModelManager();
+	/*@NoThrow*/ @NonNull ModelManager getModelManager() throws VirtualMachineError;	// Just VirtualMachineError explicitly means @NoThrow CG-wise
 	@Override
 	@NonNull Pattern getRegexPattern(@NonNull String regex);
 	@Override
 	int getSeverity(@Nullable Object validationKey);
 	@Override
-	@NonNull StandardLibrary getStandardLibrary();
+	/*@NoThrow*/ @NonNull StandardLibrary getStandardLibrary() throws VirtualMachineError;	// Just VirtualMachineError explicitly means @NoThrow CG-wise
 	@Override
 	@Deprecated /* @deprecated getStaticTypeOfValue to enable TemplateParameters to be resolved */
 	org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value);

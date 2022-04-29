@@ -63,10 +63,23 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  */
 public abstract class LookupVisitorsCodeGenerator extends AutoVisitorsCodeGenerator
 {
+	public static final @NonNull String CHILD_NAME = "child";
+	public static final @NonNull String CONTEXT_NAME = "context";
+	public static final @NonNull String ELEMENT_NAME = "element";
+	public static final @NonNull String UNQUALIFIED_ENV_NAME = "_unqualified_env";
+	public static final @NonNull String EXPORTED_ENV_NAME = "_exported_env";
+	public static final @NonNull String HAS_FINAL_RESULT_NAME = "hasFinalResult";
+	public static final @NonNull String INMPORTER_NAME = "importer";
+	//public static final @NonNull String INNER_ENV_NAME = "innerEnv";
+	public static final @NonNull String NESTED_ENV_NAME = "nestedEnv";
+	//public static final @NonNull String OUTER_ENV_NAME = "outerEnv";
+	public static final @NonNull String PARENT_NAME = "parent";
+	public static final @NonNull String PARENT_ENV_NAME = "parentEnv";
+	public static final @NonNull String QUALIFIED_ENV_NAME = "_qualified_env";
+
 	protected final @NonNull String packageName;
 	protected final @NonNull String visitorClassName;
 
-	protected final @NonNull LookupVisitorsClassContext classContext;
 	protected final @NonNull AS2CGVisitor as2cgVisitor;
 
 	protected final @NonNull String envOperationName;
@@ -99,7 +112,6 @@ public abstract class LookupVisitorsCodeGenerator extends AutoVisitorsCodeGenera
 		this.packageName = getSourcePackageName();
 		this.visitorClassName = getLookupVisitorClassName(getProjectPrefix());
 
-		this.classContext = new LookupVisitorsClassContext(this, asPackage);
 		this.as2cgVisitor = createAS2CGVisitor();
 		//
 		//	Find expected AS elements
@@ -117,16 +129,15 @@ public abstract class LookupVisitorsCodeGenerator extends AutoVisitorsCodeGenera
 		org.eclipse.ocl.pivot.Package asVisitorPackage = createASPackage(packageName);
 		this.asVisitorClass = createASClass(asVisitorPackage, visitorClassName);
 		this.asThisVariable = helper.createParameterVariable("this", asVisitorClass, true);
-		this.asContextVariable = helper.createParameterVariable(LookupVisitorsClassContext.CONTEXT_NAME, asEnvironmentType, true);
-		CGVariable cgVariable = as2cgVisitor.getVariable(asContextVariable);
-		globalNameManager.declareReservedName(cgVariable, /*null,*/ LookupVisitorsClassContext.CONTEXT_NAME);
+		this.asContextVariable = helper.createParameterVariable(CONTEXT_NAME, asEnvironmentType, true);
+		CGVariable cgVariable = as2cgVisitor.getNameManager().getCGVariable(asContextVariable);
+		globalNameManager.declareReservedName(cgVariable, /*null,*/ CONTEXT_NAME);
 
 		//
 		//	Create new AS Visitor helper properties
 		//
-		LookupVisitorsClassContext globalContext = getGlobalContext();
-		this.asEvaluatorProperty = createNativeProperty(globalContext.getExecutorName(), Executor.class, true, true);
-		this.asIdResolverProperty = createNativeProperty(globalContext.getIdResolverName(), IdResolver.class, true, true);
+		this.asEvaluatorProperty = createNativeProperty(globalNameManager.getExecutorName(), Executor.class, true, true);
+		this.asIdResolverProperty = createNativeProperty(globalNameManager.getIdResolverName(), IdResolver.class, true, true);
 		List<Property> asVisitorProperties = asVisitorClass.getOwnedProperties();
 		asVisitorProperties.add(asEvaluatorProperty);
 		asVisitorProperties.add(asIdResolverProperty);
@@ -137,6 +148,17 @@ public abstract class LookupVisitorsCodeGenerator extends AutoVisitorsCodeGenera
 		//
 		List<Operation> asVisitorOperations = asVisitorClass.getOwnedOperations();
 		asVisitorOperations.addAll(createAdditionalASOperations());
+		globalNameManager.declareGlobalName(null, CHILD_NAME);
+		//		globalNameManager.declareGlobalName(null, CONTEXT_NAME);
+		globalNameManager.declareGlobalName(null, ELEMENT_NAME);
+		globalNameManager.declareGlobalName(null, UNQUALIFIED_ENV_NAME);
+		globalNameManager.declareGlobalName(null, EXPORTED_ENV_NAME);
+		globalNameManager.declareGlobalName(null, HAS_FINAL_RESULT_NAME);
+		globalNameManager.declareGlobalName(null, INMPORTER_NAME);
+		globalNameManager.declareGlobalName(null, NESTED_ENV_NAME);
+		globalNameManager.declareGlobalName(null, PARENT_NAME);
+		globalNameManager.declareGlobalName(null, PARENT_ENV_NAME);
+		globalNameManager.declareGlobalName(null, QUALIFIED_ENV_NAME);
 	}
 
 
@@ -163,7 +185,7 @@ public abstract class LookupVisitorsCodeGenerator extends AutoVisitorsCodeGenera
 
 	@Override
 	public @NonNull CG2JavaPreVisitor createCG2JavaPreVisitor() {
-		return new AutoCG2JavaPreVisitor(classContext);
+		return new AutoCG2JavaPreVisitor(this);
 	}
 
 	/**
@@ -288,11 +310,6 @@ public abstract class LookupVisitorsCodeGenerator extends AutoVisitorsCodeGenera
 
 	public @NonNull CGValuedElement getEvaluatorVariable() {
 		return ClassUtil.nonNullState(cgEvaluatorVariable);
-	}
-
-	@Override
-	public @NonNull LookupVisitorsClassContext getGlobalContext() {
-		return classContext;
 	}
 
 	@Override

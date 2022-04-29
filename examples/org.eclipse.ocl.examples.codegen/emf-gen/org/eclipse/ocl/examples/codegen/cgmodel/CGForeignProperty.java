@@ -36,7 +36,7 @@ import java.util.List;
  * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGForeignProperty()
  * @generated
  */
-public interface CGForeignProperty extends CGProperty {
+public interface CGForeignProperty extends CGBodiedProperty {
 
 	/**
 	 * Returns the value of the '<em><b>Parameters</b></em>' containment reference list.

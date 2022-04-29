@@ -37,6 +37,8 @@ public class ConstrainedOperation extends AbstractOperation
 
 	public ConstrainedOperation(@NonNull ExpressionInOCL expressionInOCL) {
 		this.expressionInOCL = expressionInOCL;
+	//	Operation asOperation = (Operation) expressionInOCL.eContainer();
+	//	assert asOperation.getESObject() instanceof EOperation;			-- may be a Complete OCL operation
 	}
 
 	/**

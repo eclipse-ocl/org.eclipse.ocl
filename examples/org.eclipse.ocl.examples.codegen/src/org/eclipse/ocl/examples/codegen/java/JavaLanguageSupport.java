@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.java;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -27,8 +28,10 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.asm5.ASM5JavaAnnotationReader;
 import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotFactory;
+import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
@@ -36,7 +39,9 @@ import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.AbstractOperation;
+import org.eclipse.ocl.pivot.library.AbstractProperty;
 import org.eclipse.ocl.pivot.library.NativeOperation;
+import org.eclipse.ocl.pivot.library.NativeProperty;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.Invocations;
@@ -72,7 +77,6 @@ public class JavaLanguageSupport extends LanguageSupport
 	}
 
 	public static final LanguageSupport.@NonNull Factory FACTORY = new Factory();
-
 
 	public static class JavaNativeOperation extends AbstractOperation implements NativeOperation
 	{
@@ -122,15 +126,45 @@ public class JavaLanguageSupport extends LanguageSupport
 			}
 		}
 
-		protected static final Class<?>@NonNull [] evaluateArguments = new Class<?>@NonNull [] {Executor.class, TypeId.class, Object[].class};
-
-		@Override
-		protected /*@NonNull*/ Class<?> @NonNull [] getEvaluateArguments(@NonNull Operation asOperation) {
-			return evaluateArguments;
-		}
-
 		public @NonNull Method getMethod() {
 			return method;
+		}
+	}
+
+	public static class JavaNativeProperty extends AbstractProperty implements NativeProperty
+	{
+		protected final @NonNull Field field;
+
+		public JavaNativeProperty(@NonNull Field field) {
+			this.field = field;
+		}
+
+	//	@Override
+		public @Nullable Object evaluate(@NonNull Executor executor, @NonNull TypedElement caller, @Nullable Object @NonNull [] sourceAndArgumentValues) {
+			return evaluate(executor, caller.getTypeId(), sourceAndArgumentValues);
+		}
+
+		public @Nullable Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object @NonNull [] sourceAndArgumentValues) {
+			IdResolver idResolver = executor.getIdResolver();
+			Object source = idResolver.unboxedValueOf(sourceAndArgumentValues[0]);
+			if (Modifier.isStatic(field.getModifiers())) {
+				assert source == null;
+			}
+			else {
+				if (source == null) {
+					throw new InvalidValueException("Null source for " + field);
+				}
+			}
+			try {
+				Object result = field.get(source);
+				return idResolver.boxedValueOf(result);
+			} catch (IllegalAccessException | IllegalArgumentException e) {
+				throw new InvalidValueException(e);
+			}
+		}
+
+		public @NonNull Field getField() {
+			return field;
 		}
 	}
 
@@ -172,6 +206,13 @@ public class JavaLanguageSupport extends LanguageSupport
 		}
 		// track EObject inheritance
 		return standardLibrary.getOclAnyType(); //getNativeClass(jClass);
+	}
+
+	private @Nullable Boolean getIsNonNull(@NonNull Field field) {
+		if (annotationReader == null) {
+			annotationReader = new ASM5JavaAnnotationReader();
+		}
+		return Boolean.TRUE;		// FIXME annotationReader.getIsNonNull(field);
 	}
 
 	private @Nullable Boolean getIsNonNull(@NonNull Method method, int parameter) {
@@ -249,6 +290,7 @@ public class JavaLanguageSupport extends LanguageSupport
 			asOperation.setIsRequired(isRequired);
 			asOperation.setIsStatic(Modifier.isStatic(method.getModifiers()));
 			asOperation.setImplementation(new JavaNativeOperation(method));
+			asOperation.setImplementationClass(jClass.getCanonicalName());
 			asOperations.add(asOperation);
 			List<org.eclipse.ocl.pivot.Parameter> asParameters = asOperation.getOwnedParameters();
 			for (Parameter jParameter : method.getParameters()) {
@@ -264,6 +306,32 @@ public class JavaLanguageSupport extends LanguageSupport
 			}
 		}
 		return asOperation;
+	}
+
+	/*
+	 * Return a native property for method flattening the signature into the name.
+	 */
+	public @NonNull Property getNativeProperty(@NonNull Field field) { //; , @NonNull PropertyCallingConvention zcallingConvention) {
+		Class<?> jClass = field.getDeclaringClass();
+		assert jClass != null;
+		org.eclipse.ocl.pivot.Class asClass = getNativeClass(jClass);
+		String trimmedName = field.getName();
+		List<Property> asProperties = asClass.getOwnedProperties();
+		Property asProperty = NameUtil.getNameable(asProperties, trimmedName);
+		if (asProperty == null) {
+			Class<?> jReturnClass = field.getType();
+			Type asReturnType = jReturnClass != null ? getBoxedType(jReturnClass) : null;
+			boolean isRequired = getIsNonNull(field) == Boolean.TRUE;
+			asProperty = PivotFactory.eINSTANCE.createProperty();
+			asProperty.setName(trimmedName);
+			asProperty.setType(asReturnType);
+			asProperty.setIsRequired(isRequired);
+			asProperty.setIsStatic(Modifier.isStatic(field.getModifiers()));
+			asProperty.setImplementation(new JavaNativeProperty(field));
+			asProperty.setImplementationClass(jClass.getCanonicalName());
+			asProperties.add(asProperty);
+		}
+		return asProperty;
 	}
 
 	/*
@@ -325,7 +393,7 @@ public class JavaLanguageSupport extends LanguageSupport
 			String className = qualifiedOperationName.substring(0, lastDot);
 			String methodName = qualifiedOperationName.substring(lastDot+1);
 			try {
-				List<@NonNull Operation> invocations = null;
+				List<@NonNull NamedElement> invocations = null;
 				boolean hasNonStaticMethodNameMatches = false;
 				boolean hasStaticMethodNameMatches = false;
 				Class<?> loadedClass = Thread.currentThread().getContextClassLoader().loadClass(className);

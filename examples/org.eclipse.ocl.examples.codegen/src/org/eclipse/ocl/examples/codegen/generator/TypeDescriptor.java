@@ -13,11 +13,11 @@ package org.eclipse.ocl.examples.codegen.generator;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBoxExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGUnboxExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
-import org.eclipse.ocl.examples.codegen.java.JavaLocalContext;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.java.JavaStream.SubStream;
 import org.eclipse.ocl.examples.codegen.java.types.CollectionDescriptor;
@@ -39,7 +39,7 @@ public interface TypeDescriptor
 	/**
 	 * Append the appropriate statements to js to create the boxed value for cgBboxExp from its unboxedValue.
 	 */
-	@NonNull Boolean appendBox(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext,
+	@NonNull Boolean appendBox(@NonNull JavaStream js, @NonNull NestedNameManager localNameManager,
 			@NonNull CGBoxExp cgBoxExp, @NonNull CGValuedElement unboxedValue);
 
 	/**
@@ -55,7 +55,7 @@ public interface TypeDescriptor
 	/**
 	 * Append the appropriate statements to js to create the ecore value for cgEcoreExp from its boxedValue.
 	 */
-	@NonNull Boolean appendEcoreStatements(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext2,
+	@NonNull Boolean appendEcoreStatements(@NonNull JavaStream js, @NonNull NestedNameManager localNameManager,
 			@NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement boxedValue);
 
 	/**
@@ -79,7 +79,7 @@ public interface TypeDescriptor
 	/**
 	 * Append the appropriate statements to js to create the unboxed value for cgUnboxExp from its boxedValue.
 	 */
-	@NonNull Boolean appendUnboxStatements(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext,
+	@NonNull Boolean appendUnboxStatements(@NonNull JavaStream js, @NonNull NestedNameManager localNameManager,
 			@NonNull CGUnboxExp cgUnboxExp, @NonNull CGValuedElement boxedValue);
 
 	/**

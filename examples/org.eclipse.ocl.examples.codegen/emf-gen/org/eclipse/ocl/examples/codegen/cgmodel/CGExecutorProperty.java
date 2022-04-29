@@ -27,7 +27,7 @@ package org.eclipse.ocl.examples.codegen.cgmodel;
  * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGExecutorProperty()
  * @generated
  */
-public interface CGExecutorProperty extends CGValuedElement {
+public interface CGExecutorProperty extends CGProperty {
 	/**
 	 * Returns the value of the '<em><b>Init Expression</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
