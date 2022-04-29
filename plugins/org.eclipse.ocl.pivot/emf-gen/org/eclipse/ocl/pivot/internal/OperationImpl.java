@@ -785,41 +785,42 @@ implements Operation {
 			final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
 			final /*@NonInvalid*/ @NonNull IntegerValue severity = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.OPERATION___VALIDATE_COMPATIBLE_RETURN__DIAGNOSTICCHAIN_MAP);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity, PivotTables.INT_0).booleanValue();
-			/*@NonInvalid*/ boolean IF__l_q;
+			/*@NonInvalid*/ boolean IF_le;
 			if (le) {
-				IF__l_q = true;
+				IF_le = true;
 			}
 			else {
 				/*@Caught*/ @Nullable Object CAUGHT_result;
 				try {
 					/*@Caught*/ @Nullable Object CAUGHT_and;
 					try {
-						final /*@NonInvalid*/ @Nullable LanguageExpression bodyExpression = this.getBodyExpression();
-						final /*@NonInvalid*/ boolean ne = bodyExpression != null;
+						final /*@NonInvalid*/ @Nullable LanguageExpression bodyExpression_0 = this.getBodyExpression();
+						final /*@NonInvalid*/ boolean IsEQ_ = bodyExpression_0 != null;
 						final /*@Thrown*/ @Nullable Boolean and;
-						if (!ne) {
+						if (!IsEQ_) {
 							and = ValueUtil.FALSE_VALUE;
 						}
 						else {
-							/*@Caught*/ @NonNull Object CAUGHT__l_g;
+							/*@Caught*/ @NonNull Object CAUGHT_IsEQ__0;
 							try {
 								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_ExpressionInOCL_0 = idResolver.getClass(PivotTables.CLSSid_ExpressionInOCL, null);
-								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class CAST_TYP_ExpressionInOCL = (org.eclipse.ocl.pivot.Class)TYP_ExpressionInOCL_0;
-								@SuppressWarnings("null")
-								final /*@Thrown*/ @NonNull ExpressionInOCL oclAsType = (@NonNull ExpressionInOCL)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, bodyExpression, CAST_TYP_ExpressionInOCL);
+								final /*@Thrown*/ @Nullable ExpressionInOCL oclAsType = (@Nullable ExpressionInOCL)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, bodyExpression_0, TYP_ExpressionInOCL_0);
+								if (oclAsType == null) {
+									throw new InvalidValueException("Null source for \'ExpressionInOCL::ownedBody\'");
+								}
 								final /*@Thrown*/ @Nullable OCLExpression ownedBody = oclAsType.getOwnedBody();
-								final /*@Thrown*/ boolean ne_0 = ownedBody != null;
-								CAUGHT__l_g = ne_0;
+								final /*@Thrown*/ boolean IsEQ__0 = ownedBody != null;
+								CAUGHT_IsEQ__0 = IsEQ__0;
 							}
-							catch (Exception THROWN__l_g) {
-								CAUGHT__l_g = ValueUtil.createInvalidValue(THROWN__l_g);
+							catch (Exception THROWN_IsEQ__0) {
+								CAUGHT_IsEQ__0 = ValueUtil.createInvalidValue(THROWN_IsEQ__0);
 							}
-							if (CAUGHT__l_g == ValueUtil.FALSE_VALUE) {
+							if (CAUGHT_IsEQ__0 == ValueUtil.FALSE_VALUE) {
 								and = ValueUtil.FALSE_VALUE;
 							}
 							else {
-								if (CAUGHT__l_g instanceof InvalidValueException) {
-									throw (InvalidValueException)CAUGHT__l_g;
+								if (CAUGHT_IsEQ__0 instanceof InvalidValueException) {
+									throw (InvalidValueException)CAUGHT_IsEQ__0;
 								}
 								and = ValueUtil.TRUE_VALUE;
 							}
@@ -836,8 +837,8 @@ implements Operation {
 					else {
 						/*@Caught*/ @NonNull Object CAUGHT_CompatibleBody;
 						try {
-							final /*@NonInvalid*/ @Nullable LanguageExpression bodyExpression_0 = this.getBodyExpression();
-							final /*@Thrown*/ boolean CompatibleBody = this.CompatibleBody(bodyExpression_0);
+							final /*@NonInvalid*/ @Nullable LanguageExpression bodyExpression_1 = this.getBodyExpression();
+							final /*@Thrown*/ boolean CompatibleBody = this.CompatibleBody(bodyExpression_1);
 							CAUGHT_CompatibleBody = CompatibleBody;
 						}
 						catch (Exception THROWN_CompatibleBody) {
@@ -867,9 +868,9 @@ implements Operation {
 					CAUGHT_result = ValueUtil.createInvalidValue(THROWN_result);
 				}
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, CAUGHT_result, PivotTables.INT_0).booleanValue();
-				IF__l_q = logDiagnostic;
+				IF_le = logDiagnostic;
 			}
-			return IF__l_q;
+			return IF_le;
 		}
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);
@@ -917,25 +918,25 @@ implements Operation {
 			final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
 			final /*@NonInvalid*/ @NonNull IntegerValue severity = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.OPERATION___VALIDATE_UNIQUE_PRECONDITION_NAME__DIAGNOSTICCHAIN_MAP);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity, PivotTables.INT_0).booleanValue();
-			/*@NonInvalid*/ boolean IF__l_q;
+			/*@NonInvalid*/ boolean IF_le;
 			if (le) {
-				IF__l_q = true;
+				IF_le = true;
 			}
 			else {
 				/*@Caught*/ @NonNull Object CAUGHT_result;
 				try {
-					final /*@NonInvalid*/ @NonNull List<Constraint> ownedPreconditions = this.getOwnedPreconditions();
-					final /*@NonInvalid*/ @NonNull SetValue BOXED_ownedPreconditions = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Constraint, ownedPreconditions);
+					final /*@NonInvalid*/ @NonNull List<Constraint> ownedPreconditions_0 = this.getOwnedPreconditions();
+					final /*@NonInvalid*/ @NonNull SetValue BOXED_ownedPreconditions_0 = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Constraint, ownedPreconditions_0);
 					/*@Thrown*/ @NonNull Accumulator accumulator = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Constraint);
-					@NonNull Iterator<Object> ITER_1_ = BOXED_ownedPreconditions.iterator();
+					@NonNull Iterator<Object> ITER__1 = BOXED_ownedPreconditions_0.iterator();
 					/*@Thrown*/ boolean result;
 					while (true) {
-						if (!ITER_1_.hasNext()) {
+						if (!ITER__1.hasNext()) {
 							result = true;
 							break;
 						}
 						@SuppressWarnings("null")
-						/*@NonInvalid*/ @NonNull Constraint _1 = (@NonNull Constraint)ITER_1_.next();
+						/*@NonInvalid*/ @NonNull Constraint _1 = (@NonNull Constraint)ITER__1.next();
 						/**
 						 * name
 						 */
@@ -955,9 +956,9 @@ implements Operation {
 					CAUGHT_result = ValueUtil.createInvalidValue(THROWN_result);
 				}
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, CAUGHT_result, PivotTables.INT_0).booleanValue();
-				IF__l_q = logDiagnostic;
+				IF_le = logDiagnostic;
 			}
-			return IF__l_q;
+			return IF_le;
 		}
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);
@@ -991,25 +992,25 @@ implements Operation {
 			final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
 			final /*@NonInvalid*/ @NonNull IntegerValue severity = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.OPERATION___VALIDATE_UNIQUE_POSTCONDITION_NAME__DIAGNOSTICCHAIN_MAP);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity, PivotTables.INT_0).booleanValue();
-			/*@NonInvalid*/ boolean IF__l_q;
+			/*@NonInvalid*/ boolean IF_le;
 			if (le) {
-				IF__l_q = true;
+				IF_le = true;
 			}
 			else {
 				/*@Caught*/ @NonNull Object CAUGHT_result;
 				try {
-					final /*@NonInvalid*/ @NonNull List<Constraint> ownedPostconditions = this.getOwnedPostconditions();
-					final /*@NonInvalid*/ @NonNull SetValue BOXED_ownedPostconditions = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Constraint, ownedPostconditions);
+					final /*@NonInvalid*/ @NonNull List<Constraint> ownedPostconditions_0 = this.getOwnedPostconditions();
+					final /*@NonInvalid*/ @NonNull SetValue BOXED_ownedPostconditions_0 = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Constraint, ownedPostconditions_0);
 					/*@Thrown*/ @NonNull Accumulator accumulator = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Constraint);
-					@NonNull Iterator<Object> ITER_1_ = BOXED_ownedPostconditions.iterator();
+					@NonNull Iterator<Object> ITER__1 = BOXED_ownedPostconditions_0.iterator();
 					/*@Thrown*/ boolean result;
 					while (true) {
-						if (!ITER_1_.hasNext()) {
+						if (!ITER__1.hasNext()) {
 							result = true;
 							break;
 						}
 						@SuppressWarnings("null")
-						/*@NonInvalid*/ @NonNull Constraint _1 = (@NonNull Constraint)ITER_1_.next();
+						/*@NonInvalid*/ @NonNull Constraint _1 = (@NonNull Constraint)ITER__1.next();
 						/**
 						 * name
 						 */
@@ -1029,9 +1030,9 @@ implements Operation {
 					CAUGHT_result = ValueUtil.createInvalidValue(THROWN_result);
 				}
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, CAUGHT_result, PivotTables.INT_0).booleanValue();
-				IF__l_q = logDiagnostic;
+				IF_le = logDiagnostic;
 			}
-			return IF__l_q;
+			return IF_le;
 		}
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);

@@ -21,6 +21,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot;
 
+import java.lang.String;
 import org.eclipse.jdt.annotation.NonNull;
 // import org.eclipse.ocl.pivot.ParameterTypes;
 // import org.eclipse.ocl.pivot.PivotTables;
@@ -156,6 +157,7 @@ public class PivotTables extends AbstractTables
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_Property = PivotTables.PACKid_$metamodel$.getClassId("Property", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_PropertyCallExp = PivotTables.PACKid_$metamodel$.getClassId("PropertyCallExp", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_Pseudostate = PivotTables.PACKid_$metamodel$.getClassId("Pseudostate", 0);
+	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_ReferringElement = PivotTables.PACKid_$metamodel$.getClassId("ReferringElement", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_Region = PivotTables.PACKid_$metamodel$.getClassId("Region", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_ResultVariable = PivotTables.PACKid_$metamodel$.getClassId("ResultVariable", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_SelfType = PivotTables.PACKid_$metamodel$.getClassId("SelfType", 0);
@@ -199,8 +201,6 @@ public class PivotTables extends AbstractTables
 	public static final /*@NonInvalid*/ @NonNull EnumerationId ENUMid_TransitionKind = PivotTables.PACKid_$metamodel$.getEnumerationId("TransitionKind");
 	public static final /*@NonInvalid*/ @NonNull IntegerValue INT_0 = ValueUtil.integerValueOf("0");
 	public static final /*@NonInvalid*/ @NonNull IntegerValue INT_1 = ValueUtil.integerValueOf("1");
-	public static final /*@NonInvalid*/ @NonNull TuplePartId PARTid__0 = IdManager.getTuplePartId(0, "message", TypeId.STRING);
-	public static final /*@NonInvalid*/ @NonNull TuplePartId PARTid_ = IdManager.getTuplePartId(1, "status", TypeId.BOOLEAN);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SEQ_PRIMid_Integer = TypeId.SEQUENCE.getSpecializedId(TypeId.INTEGER);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_PRIMid_String = TypeId.SET.getSpecializedId(TypeId.STRING);
 	public static final /*@NonInvalid*/ @NonNull String STR_Missing_32_initializers_c = "Missing initializers:";
@@ -210,6 +210,8 @@ public class PivotTables extends AbstractTables
 	public static final /*@NonInvalid*/ @NonNull String STR_collect = "collect";
 	public static final /*@NonInvalid*/ @NonNull String STR_ocl = "ocl";
 	public static final /*@NonInvalid*/ @NonNull String STR_sortedBy = "sortedBy";
+	public static final /*@NonInvalid*/ @NonNull TuplePartId PARTid_ = IdManager.getTuplePartId(0, "message", TypeId.STRING);
+	public static final /*@NonInvalid*/ @NonNull TuplePartId PARTid__0 = IdManager.getTuplePartId(1, "status", TypeId.BOOLEAN);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_Annotation = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_Annotation);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_AssociationClassCallExp = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_AssociationClassCallExp);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_CallOperationAction = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_CallOperationAction);
@@ -315,7 +317,7 @@ public class PivotTables extends AbstractTables
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Trigger = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Trigger);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Type = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Type);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Vertex = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Vertex);
-	public static final /*@NonInvalid*/ @NonNull TupleTypeId TUPLid_ = IdManager.getTupleTypeId("Tuple", PivotTables.PARTid__0, PivotTables.PARTid_);
+	public static final /*@NonInvalid*/ @NonNull TupleTypeId TUPLid_ = IdManager.getTupleTypeId("Tuple", PivotTables.PARTid_, PivotTables.PARTid__0);
 
 	/**
 	 *	The type parameters for templated types and operations.

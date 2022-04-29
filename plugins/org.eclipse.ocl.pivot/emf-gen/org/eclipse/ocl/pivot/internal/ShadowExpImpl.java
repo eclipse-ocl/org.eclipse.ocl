@@ -250,9 +250,9 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 			final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
 			final /*@NonInvalid*/ @NonNull IntegerValue severity = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.SHADOW_EXP___VALIDATE_DATA_TYPE_HAS_ONE_PART_INITIALIZER__DIAGNOSTICCHAIN_MAP);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity, PivotTables.INT_0).booleanValue();
-			/*@NonInvalid*/ boolean IF__l_q;
+			/*@NonInvalid*/ boolean IF_le;
 			if (le) {
-				IF__l_q = true;
+				IF_le = true;
 			}
 			else {
 				/*@Caught*/ @Nullable Object CAUGHT_result;
@@ -261,8 +261,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 					try {
 						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_DataType_0 = idResolver.getClass(PivotTables.CLSSid_DataType, null);
 						final /*@NonInvalid*/ @Nullable Type type = this.getType();
-						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class CAST_TYP_DataType = (org.eclipse.ocl.pivot.Class)TYP_DataType_0;
-						final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, CAST_TYP_DataType).booleanValue();
+						final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, TYP_DataType_0).booleanValue();
 						CAUGHT_oclIsKindOf = oclIsKindOf;
 					}
 					catch (Exception THROWN_oclIsKindOf) {
@@ -273,11 +272,11 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 						result = ValueUtil.TRUE_VALUE;
 					}
 					else {
-						final /*@NonInvalid*/ @NonNull List<ShadowPart> ownedParts = this.getOwnedParts();
-						final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedParts = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_ShadowPart, ownedParts);
-						final /*@NonInvalid*/ @NonNull IntegerValue size = CollectionSizeOperation.INSTANCE.evaluate(BOXED_ownedParts);
-						final /*@NonInvalid*/ boolean eq = size.equals(PivotTables.INT_1);
-						if (eq) {
+						final /*@NonInvalid*/ @NonNull List<ShadowPart> ownedParts_0 = this.getOwnedParts();
+						final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedParts_0 = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_ShadowPart, ownedParts_0);
+						final /*@NonInvalid*/ @NonNull IntegerValue size = CollectionSizeOperation.INSTANCE.evaluate(BOXED_ownedParts_0);
+						final /*@NonInvalid*/ boolean IsEQ_ = size.equals(PivotTables.INT_1);
+						if (IsEQ_) {
 							result = ValueUtil.TRUE_VALUE;
 						}
 						else {
@@ -293,9 +292,9 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 					CAUGHT_result = ValueUtil.createInvalidValue(THROWN_result);
 				}
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, CAUGHT_result, PivotTables.INT_0).booleanValue();
-				IF__l_q = logDiagnostic;
+				IF_le = logDiagnostic;
 			}
-			return IF__l_q;
+			return IF_le;
 		}
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);
@@ -412,47 +411,44 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 			final /*@NonInvalid*/ @NonNull StandardLibrary standardLibrary = executor.getStandardLibrary();
 			final /*@NonInvalid*/ @NonNull IntegerValue severity = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.SHADOW_EXP___VALIDATE_INITIALIZES_ALL_CLASS_PROPERTIES__DIAGNOSTICCHAIN_MAP);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity, PivotTables.INT_0).booleanValue();
-			/*@NonInvalid*/ boolean IF__l_q;
+			/*@NonInvalid*/ boolean IF_le;
 			if (le) {
-				IF__l_q = true;
+				IF_le = true;
 			}
 			else {
 				/*@Caught*/ @NonNull Object CAUGHT_result;
 				try {
 					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_DataType = idResolver.getClass(PivotTables.CLSSid_DataType, null);
 					final /*@NonInvalid*/ @Nullable Type type = this.getType();
-					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class CAST_TYP_DataType = (org.eclipse.ocl.pivot.Class)TYP_DataType;
-					final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, CAST_TYP_DataType).booleanValue();
+					final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, TYP_DataType).booleanValue();
 					/*@Thrown*/ @NonNull Object result;
 					if (oclIsKindOf) {
 						result = ValueUtil.TRUE_VALUE;
 					}
 					else {
-						final /*@NonInvalid*/ @NonNull List<ShadowPart> ownedParts = this.getOwnedParts();
-						final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedParts = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_ShadowPart, ownedParts);
-						/*@Thrown*/ @NonNull Accumulator accumulator_1 = ValueUtil.createSequenceAccumulatorValue(PivotTables.SEQ_CLSSid_Property);
-						@NonNull Iterator<Object> ITER_1__0 = BOXED_ownedParts.iterator();
-						/*@NonInvalid*/ @NonNull SequenceValue collect_0;
+						final /*@NonInvalid*/ @NonNull List<ShadowPart> ownedParts_0 = this.getOwnedParts();
+						final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedParts_0 = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_ShadowPart, ownedParts_0);
+						/*@Thrown*/ @NonNull Accumulator accumulator_4 = ValueUtil.createSequenceAccumulatorValue(PivotTables.SEQ_CLSSid_Property);
+						@NonNull Iterator<Object> ITER__1_5 = BOXED_ownedParts_0.iterator();
+						/*@NonInvalid*/ @NonNull SequenceValue collect;
 						while (true) {
-							if (!ITER_1__0.hasNext()) {
-								collect_0 = accumulator_1;
+							if (!ITER__1_5.hasNext()) {
+								collect = accumulator_4;
 								break;
 							}
 							@SuppressWarnings("null")
-							/*@NonInvalid*/ @NonNull ShadowPart _1_0 = (@NonNull ShadowPart)ITER_1__0.next();
+							/*@NonInvalid*/ @NonNull ShadowPart _1_5 = (@NonNull ShadowPart)ITER__1_5.next();
 							/**
 							 * referredProperty
 							 */
 							@SuppressWarnings("null")
-							final /*@NonInvalid*/ @NonNull Property referredProperty = _1_0.getReferredProperty();
+							final /*@NonInvalid*/ @NonNull Property referredProperty = _1_5.getReferredProperty();
 							//
-							accumulator_1.add(referredProperty);
+							accumulator_4.add(referredProperty);
 						}
-						final /*@NonInvalid*/ @NonNull SetValue partProperties = CollectionAsSetOperation.INSTANCE.evaluate(collect_0);
-						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Class_27 = idResolver.getClass(PivotTables.CLSSid_Class, null);
-						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class CAST_TYP_Class = (org.eclipse.ocl.pivot.Class)TYP_Class_27;
-						@SuppressWarnings("null")
-						final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull Class oclAsType = (org.eclipse.ocl.pivot.@NonNull Class)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, type, CAST_TYP_Class);
+						final /*@NonInvalid*/ @NonNull SetValue partProperties = CollectionAsSetOperation.INSTANCE.evaluate(collect);
+						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Class_5 = idResolver.getClass(PivotTables.CLSSid_Class, null);
+						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Class oclAsType = (org.eclipse.ocl.pivot.@Nullable Class)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, type, TYP_Class_5);
 						final /*@Thrown*/ @NonNull SetValue oclAsSet = OclAnyOclAsSetOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_Class, oclAsType);
 						final org.eclipse.ocl.pivot.@NonNull Class TYPE_closure = executor.getStaticTypeOfValue(null, oclAsSet);
 						final @NonNull LibraryIterationExtension IMPL_closure = (LibraryIterationExtension)TYPE_closure.lookupImplementation(standardLibrary, OCLstdlibTables.Operations._Set__closure);
@@ -466,8 +462,8 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 							 * superClasses
 							 */
 							@Override
-							public @Nullable Object evaluate(final @NonNull Executor executor, final @NonNull TypeId typeId, final @Nullable Object oclAsSet, final /*@NonInvalid*/ @Nullable Object _1) {
-								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Class CAST_1_ = (org.eclipse.ocl.pivot.Class)_1;
+							public @Nullable Object evaluate(final @NonNull Executor executor, final @NonNull TypeId typeId, final @Nullable Object oclAsSet, final /*@NonInvalid*/ @Nullable Object _1_7) {
+								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Class CAST_1_ = (org.eclipse.ocl.pivot.Class)_1_7;
 								if (CAST_1_ == null) {
 									throw new InvalidValueException("Null source for \'Class::superClasses\'");
 								}
@@ -480,66 +476,66 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 						@SuppressWarnings("null")
 						final /*@Thrown*/ @NonNull SetValue closure = (@NonNull SetValue)IMPL_closure.evaluateIteration(MGR_closure);
 						/*@Thrown*/ org.eclipse.ocl.pivot.values.BagValue.@NonNull Accumulator accumulator = ValueUtil.createBagAccumulatorValue(PivotTables.BAG_CLSSid_Property);
-						@NonNull Iterator<Object> ITER_1__4 = closure.iterator();
-						/*@Thrown*/ @NonNull BagValue collect;
+						@NonNull Iterator<Object> ITER__1_6 = closure.iterator();
+						/*@Thrown*/ @NonNull BagValue collect_0;
 						while (true) {
-							if (!ITER_1__4.hasNext()) {
-								collect = accumulator;
+							if (!ITER__1_6.hasNext()) {
+								collect_0 = accumulator;
 								break;
 							}
 							@SuppressWarnings("null")
-							/*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class _1_4 = (org.eclipse.ocl.pivot.@NonNull Class)ITER_1__4.next();
+							/*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class _1_6 = (org.eclipse.ocl.pivot.@NonNull Class)ITER__1_6.next();
 							/**
 							 * ownedProperties
 							 */
-							final /*@NonInvalid*/ @NonNull List<Property> ownedProperties = _1_4.getOwnedProperties();
+							final /*@NonInvalid*/ @NonNull List<Property> ownedProperties = _1_6.getOwnedProperties();
 							final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedProperties = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Property, ownedProperties);
 							//
 							for (Object value : BOXED_ownedProperties.flatten().getElements()) {
 								accumulator.add(value);
 							}
 						}
-						final /*@Thrown*/ @NonNull SetValue allProperties = CollectionAsSetOperation.INSTANCE.evaluate(collect);
-						/*@Thrown*/ org.eclipse.ocl.pivot.values.SetValue.@NonNull Accumulator accumulator_3 = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Property);
-						@NonNull Iterator<Object> ITER_1__2 = allProperties.iterator();
-						/*@Thrown*/ @NonNull SetValue reject_1;
+						final /*@Thrown*/ @NonNull SetValue allProperties = CollectionAsSetOperation.INSTANCE.evaluate(collect_0);
+						/*@Thrown*/ org.eclipse.ocl.pivot.values.SetValue.@NonNull Accumulator accumulator_1 = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Property);
+						@NonNull Iterator<Object> ITER__1 = allProperties.iterator();
+						/*@Thrown*/ @NonNull SetValue reject;
 						while (true) {
-							if (!ITER_1__2.hasNext()) {
-								reject_1 = accumulator_3;
+							if (!ITER__1.hasNext()) {
+								reject = accumulator_1;
 								break;
 							}
 							@SuppressWarnings("null")
-							/*@NonInvalid*/ @NonNull Property _1_2 = (@NonNull Property)ITER_1__2.next();
+							/*@NonInvalid*/ @NonNull Property _1 = (@NonNull Property)ITER__1.next();
 							/**
 							 * isDerived or isImplicit or isStatic or isTransient
 							 */
 							/*@Caught*/ @Nullable Object CAUGHT_or;
 							try {
-								final /*@NonInvalid*/ boolean isDerived = _1_2.isIsDerived();
-								final /*@NonInvalid*/ @Nullable Boolean or_0;
+								final /*@NonInvalid*/ boolean isDerived = _1.isIsDerived();
+								final /*@NonInvalid*/ @Nullable Boolean or_1;
 								if (isDerived) {
-									or_0 = ValueUtil.TRUE_VALUE;
+									or_1 = ValueUtil.TRUE_VALUE;
 								}
 								else {
-									final /*@NonInvalid*/ boolean isImplicit = _1_2.isIsImplicit();
+									final /*@NonInvalid*/ boolean isImplicit = _1.isIsImplicit();
 									if (isImplicit) {
-										or_0 = ValueUtil.TRUE_VALUE;
+										or_1 = ValueUtil.TRUE_VALUE;
 									}
 									else {
-										or_0 = ValueUtil.FALSE_VALUE;
+										or_1 = ValueUtil.FALSE_VALUE;
 									}
 								}
 								final /*@Thrown*/ @Nullable Boolean or;
-								if (or_0 == ValueUtil.TRUE_VALUE) {
+								if (or_1 == ValueUtil.TRUE_VALUE) {
 									or = ValueUtil.TRUE_VALUE;
 								}
 								else {
-									final /*@NonInvalid*/ boolean isStatic = _1_2.isIsStatic();
+									final /*@NonInvalid*/ boolean isStatic = _1.isIsStatic();
 									if (isStatic) {
 										or = ValueUtil.TRUE_VALUE;
 									}
 									else {
-										if (or_0 == null) {
+										if (or_1 == null) {
 											or = null;
 										}
 										else {
@@ -552,109 +548,109 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 							catch (Exception THROWN_or) {
 								CAUGHT_or = ValueUtil.createInvalidValue(THROWN_or);
 							}
-							final /*@Thrown*/ @Nullable Boolean or_1;
+							final /*@Thrown*/ @Nullable Boolean or_0;
 							if (CAUGHT_or == ValueUtil.TRUE_VALUE) {
-								or_1 = ValueUtil.TRUE_VALUE;
+								or_0 = ValueUtil.TRUE_VALUE;
 							}
 							else {
-								final /*@NonInvalid*/ boolean isTransient = _1_2.isIsTransient();
+								final /*@NonInvalid*/ boolean isTransient = _1.isIsTransient();
 								if (isTransient) {
-									or_1 = ValueUtil.TRUE_VALUE;
+									or_0 = ValueUtil.TRUE_VALUE;
 								}
 								else {
 									if (CAUGHT_or instanceof InvalidValueException) {
 										throw (InvalidValueException)CAUGHT_or;
 									}
 									if (CAUGHT_or == null) {
-										or_1 = null;
+										or_0 = null;
 									}
 									else {
-										or_1 = ValueUtil.FALSE_VALUE;
+										or_0 = ValueUtil.FALSE_VALUE;
 									}
 								}
 							}
-							if (or_1 == null) {
+							if (or_0 == null) {
 								throw new InvalidValueException("Null body for \'Set(T).reject(Set.T[?] | Lambda T() : Boolean[1]) : Set(T)\'");
 							}
 							//
-							if (or_1 == ValueUtil.FALSE_VALUE) {
-								accumulator_3.add(_1_2);
+							if (or_0 == ValueUtil.FALSE_VALUE) {
+								accumulator_1.add(_1);
 							}
 						}
-						/*@Thrown*/ org.eclipse.ocl.pivot.values.SetValue.@NonNull Accumulator accumulator_4 = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Property);
-						@NonNull Iterator<Object> ITER_1__8 = reject_1.iterator();
+						/*@Thrown*/ org.eclipse.ocl.pivot.values.SetValue.@NonNull Accumulator accumulator_0 = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Property);
+						@NonNull Iterator<Object> ITER__1_2 = reject.iterator();
 						/*@Thrown*/ @NonNull SetValue classProperties;
 						while (true) {
-							if (!ITER_1__8.hasNext()) {
-								classProperties = accumulator_4;
+							if (!ITER__1_2.hasNext()) {
+								classProperties = accumulator_0;
 								break;
 							}
 							@SuppressWarnings("null")
-							/*@NonInvalid*/ @NonNull Property _1_8 = (@NonNull Property)ITER_1__8.next();
+							/*@NonInvalid*/ @NonNull Property _1_2 = (@NonNull Property)ITER__1_2.next();
 							/**
 							 * name?.startsWith('ocl')
 							 */
-							final /*@NonInvalid*/ @Nullable String name = _1_8.getName();
-							final /*@NonInvalid*/ @NonNull Object startsWith_0 = name == null;
-							/*@Thrown*/ @Nullable Boolean safe_startsWith_source;
-							if (startsWith_0 == Boolean.TRUE) {
-								safe_startsWith_source = null;
+							final /*@NonInvalid*/ @Nullable String name = _1_2.getName();
+							final /*@NonInvalid*/ @NonNull Object IsEQ2_ = name == null;
+							/*@Thrown*/ @Nullable Boolean SAFE_startsWith;
+							if (IsEQ2_ == Boolean.TRUE) {
+								SAFE_startsWith = null;
 							}
 							else {
 								if (name == null) {
 									throw new InvalidValueException("Null \'\'String\'\' rather than \'\'OclVoid\'\' value required");
 								}
 								final /*@Thrown*/ boolean startsWith = StringStartsWithOperation.INSTANCE.evaluate(name, PivotTables.STR_ocl).booleanValue();
-								safe_startsWith_source = startsWith;
+								SAFE_startsWith = startsWith;
 							}
-							if (safe_startsWith_source == null) {
+							if (SAFE_startsWith == null) {
 								throw new InvalidValueException("Null body for \'Set(T).reject(Set.T[?] | Lambda T() : Boolean[1]) : Set(T)\'");
 							}
 							//
-							if (safe_startsWith_source == ValueUtil.FALSE_VALUE) {
-								accumulator_4.add(_1_8);
+							if (SAFE_startsWith == ValueUtil.FALSE_VALUE) {
+								accumulator_0.add(_1_2);
 							}
 						}
-						/*@Thrown*/ org.eclipse.ocl.pivot.values.SetValue.@NonNull Accumulator accumulator_0 = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Property);
-						@NonNull Iterator<Object> ITER_1__6 = classProperties.iterator();
-						/*@Thrown*/ @NonNull SetValue reject_2;
+						/*@Thrown*/ org.eclipse.ocl.pivot.values.SetValue.@NonNull Accumulator accumulator_3 = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Property);
+						@NonNull Iterator<Object> ITER__1_4 = classProperties.iterator();
+						/*@Thrown*/ @NonNull SetValue reject_1;
 						while (true) {
-							if (!ITER_1__6.hasNext()) {
-								reject_2 = accumulator_0;
+							if (!ITER__1_4.hasNext()) {
+								reject_1 = accumulator_3;
 								break;
 							}
 							@SuppressWarnings("null")
-							/*@NonInvalid*/ @NonNull Property _1_6 = (@NonNull Property)ITER_1__6.next();
+							/*@NonInvalid*/ @NonNull Property _1_4 = (@NonNull Property)ITER__1_4.next();
 							/**
 							 * defaultValueString <> null
 							 */
-							final /*@NonInvalid*/ @Nullable String defaultValueString = _1_6.getDefaultValueString();
-							final /*@NonInvalid*/ boolean ne = defaultValueString != null;
+							final /*@NonInvalid*/ @Nullable String defaultValueString = _1_4.getDefaultValueString();
+							final /*@NonInvalid*/ boolean IsEQ_ = defaultValueString != null;
 							//
-							if (!ne) {
-								accumulator_0.add(_1_6);
+							if (!IsEQ_) {
+								accumulator_3.add(_1_4);
 							}
 						}
-						/*@Thrown*/ org.eclipse.ocl.pivot.values.SetValue.@NonNull Accumulator accumulator_2 = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Property);
-						@NonNull Iterator<Object> ITER_1__9 = reject_2.iterator();
-						/*@Thrown*/ @NonNull SetValue reject_0;
+						/*@Thrown*/ org.eclipse.ocl.pivot.values.SetValue.@NonNull Accumulator accumulator_6 = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Property);
+						@NonNull Iterator<Object> ITER__1_0 = reject_1.iterator();
+						/*@Thrown*/ @NonNull SetValue reject_2;
 						while (true) {
-							if (!ITER_1__9.hasNext()) {
-								reject_0 = accumulator_2;
+							if (!ITER__1_0.hasNext()) {
+								reject_2 = accumulator_6;
 								break;
 							}
 							@SuppressWarnings("null")
-							/*@NonInvalid*/ @NonNull Property _1_9 = (@NonNull Property)ITER_1__9.next();
+							/*@NonInvalid*/ @NonNull Property _1_0 = (@NonNull Property)ITER__1_0.next();
 							/**
 							 * isVolatile or not isRequired
 							 */
-							final /*@NonInvalid*/ boolean isVolatile = _1_9.isIsVolatile();
+							final /*@NonInvalid*/ boolean isVolatile = _1_0.isIsVolatile();
 							final /*@Thrown*/ @Nullable Boolean or;
 							if (isVolatile) {
 								or = ValueUtil.TRUE_VALUE;
 							}
 							else {
-								final /*@NonInvalid*/ boolean isRequired = _1_9.isIsRequired();
+								final /*@NonInvalid*/ boolean isRequired = _1_0.isIsRequired();
 								final /*@NonInvalid*/ @Nullable Boolean not;
 								if (!isRequired) {
 									not = ValueUtil.TRUE_VALUE;
@@ -684,53 +680,53 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 							}
 							//
 							if (or == ValueUtil.FALSE_VALUE) {
-								accumulator_2.add(_1_9);
+								accumulator_6.add(_1_0);
 							}
 						}
-						/*@Thrown*/ org.eclipse.ocl.pivot.values.SetValue.@NonNull Accumulator accumulator_6 = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Property);
-						@NonNull Iterator<Object> ITER_1__1 = reject_0.iterator();
-						/*@Thrown*/ @NonNull SetValue reject;
+						/*@Thrown*/ org.eclipse.ocl.pivot.values.SetValue.@NonNull Accumulator accumulator_2 = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Property);
+						@NonNull Iterator<Object> ITER__1_1 = reject_2.iterator();
+						/*@Thrown*/ @NonNull SetValue reject_0;
 						while (true) {
-							if (!ITER_1__1.hasNext()) {
-								reject = accumulator_6;
+							if (!ITER__1_1.hasNext()) {
+								reject_0 = accumulator_2;
 								break;
 							}
 							@SuppressWarnings("null")
-							/*@NonInvalid*/ @NonNull Property _1_1 = (@NonNull Property)ITER_1__1.next();
+							/*@NonInvalid*/ @NonNull Property _1_1 = (@NonNull Property)ITER__1_1.next();
 							/**
 							 * type.oclIsKindOf(CollectionType)
 							 */
-							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType_6 = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
+							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
 							final /*@NonInvalid*/ @Nullable Type type_0 = _1_1.getType();
-							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class CAST_TYP_CollectionType = (org.eclipse.ocl.pivot.Class)TYP_CollectionType_6;
-							final /*@Thrown*/ boolean oclIsKindOf_0 = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type_0, CAST_TYP_CollectionType).booleanValue();
+							final /*@Thrown*/ boolean oclIsKindOf_0 = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type_0, TYP_CollectionType).booleanValue();
 							//
 							if (oclIsKindOf_0 == ValueUtil.FALSE_VALUE) {
-								accumulator_6.add(_1_1);
+								accumulator_2.add(_1_1);
 							}
 						}
 						/*@Thrown*/ org.eclipse.ocl.pivot.values.SetValue.@NonNull Accumulator accumulator_5 = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Property);
-						@NonNull Iterator<Object> ITER_1__3 = reject.iterator();
+						@NonNull Iterator<Object> ITER__1_3 = reject_0.iterator();
 						/*@Thrown*/ @NonNull SetValue requiredClassProperties;
 						while (true) {
-							if (!ITER_1__3.hasNext()) {
+							if (!ITER__1_3.hasNext()) {
 								requiredClassProperties = accumulator_5;
 								break;
 							}
 							@SuppressWarnings("null")
-							/*@NonInvalid*/ @NonNull Property _1_3 = (@NonNull Property)ITER_1__3.next();
+							/*@NonInvalid*/ @NonNull Property _1_3 = (@NonNull Property)ITER__1_3.next();
 							/**
 							 * opposite <> null and opposite.isComposite
 							 */
-							final /*@NonInvalid*/ @Nullable Property opposite = _1_3.getOpposite();
-							final /*@NonInvalid*/ boolean ne = opposite != null;
+							final /*@NonInvalid*/ @Nullable Property opposite_0 = _1_3.getOpposite();
+							final /*@NonInvalid*/ boolean IsEQ_ = opposite_0 != null;
 							final /*@Thrown*/ @Nullable Boolean and;
-							if (!ne) {
+							if (!IsEQ_) {
 								and = ValueUtil.FALSE_VALUE;
 							}
 							else {
 								/*@Caught*/ @NonNull Object CAUGHT_isComposite;
 								try {
+									final /*@NonInvalid*/ @Nullable Property opposite = _1_3.getOpposite();
 									if (opposite == null) {
 										throw new InvalidValueException("Null source for \'Property::isComposite\'");
 									}
@@ -758,21 +754,18 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 								accumulator_5.add(_1_3);
 							}
 						}
-						if (classProperties instanceof InvalidValueException) {
-							throw (InvalidValueException)classProperties;
-						}
 						final /*@Thrown*/ @NonNull SetValue extraProperties = (@Nullable SetValue)CollectionExcludingAllOperation.INSTANCE.evaluate(partProperties, classProperties);
 						final /*@Thrown*/ @NonNull SetValue missingProperties = (@Nullable SetValue)CollectionExcludingAllOperation.INSTANCE.evaluate(requiredClassProperties, partProperties);
-						final /*@Thrown*/ boolean notEmpty = CollectionNotEmptyOperation.INSTANCE.evaluate(extraProperties).booleanValue();
+						final /*@Thrown*/ boolean notEmpty_0 = CollectionNotEmptyOperation.INSTANCE.evaluate(extraProperties).booleanValue();
 						/*@Thrown*/ @NonNull Object IF_notEmpty;
-						if (notEmpty) {
-							final org.eclipse.ocl.pivot.@NonNull Class TYPE_sortedBy_0 = executor.getStaticTypeOfValue(null, extraProperties);
-							final @NonNull LibraryIterationExtension IMPL_sortedBy_0 = (LibraryIterationExtension)TYPE_sortedBy_0.lookupImplementation(standardLibrary, OCLstdlibTables.Operations._Set__sortedBy);
-							final @NonNull Object ACC_sortedBy_0 = IMPL_sortedBy_0.createAccumulatorValue(executor, PivotTables.ORD_CLSSid_NamedElement, TypeId.STRING);
+						if (notEmpty_0) {
+							final org.eclipse.ocl.pivot.@NonNull Class TYPE_sortedBy = executor.getStaticTypeOfValue(null, extraProperties);
+							final @NonNull LibraryIterationExtension IMPL_sortedBy = (LibraryIterationExtension)TYPE_sortedBy.lookupImplementation(standardLibrary, OCLstdlibTables.Operations._Set__sortedBy);
+							final @NonNull Object ACC_sortedBy = IMPL_sortedBy.createAccumulatorValue(executor, PivotTables.ORD_CLSSid_NamedElement, TypeId.STRING);
 							/**
 							 * Implementation of the iterator body.
 							 */
-							final @NonNull AbstractBinaryOperation BODY_sortedBy_0 = new AbstractBinaryOperation()
+							final @NonNull AbstractBinaryOperation BODY_sortedBy = new AbstractBinaryOperation()
 							{
 								/**
 								 * name
@@ -787,15 +780,15 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 									return name;
 								}
 							};
-							final @NonNull ExecutorSingleIterationManager MGR_sortedBy_0 = new ExecutorSingleIterationManager(executor, PivotTables.ORD_CLSSid_NamedElement, BODY_sortedBy_0, extraProperties, ACC_sortedBy_0);
+							final @NonNull ExecutorSingleIterationManager MGR_sortedBy = new ExecutorSingleIterationManager(executor, PivotTables.ORD_CLSSid_NamedElement, BODY_sortedBy, extraProperties, ACC_sortedBy);
 							@SuppressWarnings("null")
-							final /*@Thrown*/ @NonNull OrderedSetValue sortedBy_0 = (@NonNull OrderedSetValue)IMPL_sortedBy_0.evaluateIteration(MGR_sortedBy_0);
+							final /*@Thrown*/ @NonNull OrderedSetValue sortedBy = (@NonNull OrderedSetValue)IMPL_sortedBy.evaluateIteration(MGR_sortedBy);
 							/*@NonInvalid*/ @NonNull String acc_0 = PivotTables.STR_Unexpected_32_initializers_c;
-							@NonNull Iterator<Object> ITER_p_0 = sortedBy_0.iterator();
-							/*@Thrown*/ @Nullable String iterate_0;
+							@NonNull Iterator<Object> ITER_p_0 = sortedBy.iterator();
+							/*@Thrown*/ @Nullable String iterate;
 							while (true) {
 								if (!ITER_p_0.hasNext()) {
-									iterate_0 = acc_0;
+									iterate = acc_0;
 									break;
 								}
 								@SuppressWarnings("null")
@@ -803,33 +796,33 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 								/**
 								 * acc + ' ' + p.name
 								 */
-								final /*@NonInvalid*/ @NonNull String sum = StringConcatOperation.INSTANCE.evaluate(acc_0, PivotTables.STR__32);
+								final /*@NonInvalid*/ @NonNull String sum_0 = StringConcatOperation.INSTANCE.evaluate(acc_0, PivotTables.STR__32);
 								final /*@NonInvalid*/ @Nullable String name = p_0.getName();
-								final /*@Thrown*/ @NonNull String sum_0 = StringConcatOperation.INSTANCE.evaluate(sum, name);
+								final /*@Thrown*/ @NonNull String sum = StringConcatOperation.INSTANCE.evaluate(sum_0, name);
 								//
-								acc_0 = sum_0;
+								acc_0 = sum;
 							}
-							final /*@Thrown*/ @NonNull TupleValue TUP_ = ValueUtil.createTupleOfEach(PivotTables.TUPLid_, iterate_0, ValueUtil.FALSE_VALUE);
-							IF_notEmpty = TUP_;
+							final /*@Thrown*/ @NonNull TupleValue TUP__0 = ValueUtil.createTupleOfEach(PivotTables.TUPLid_, iterate, ValueUtil.FALSE_VALUE);
+							IF_notEmpty = TUP__0;
 						}
 						else {
-							final /*@Thrown*/ boolean notEmpty_0 = CollectionNotEmptyOperation.INSTANCE.evaluate(missingProperties).booleanValue();
+							final /*@Thrown*/ boolean notEmpty = CollectionNotEmptyOperation.INSTANCE.evaluate(missingProperties).booleanValue();
 							/*@Thrown*/ @NonNull Object IF_notEmpty_0;
-							if (notEmpty_0) {
-								final org.eclipse.ocl.pivot.@NonNull Class TYPE_sortedBy = executor.getStaticTypeOfValue(null, missingProperties);
-								final @NonNull LibraryIterationExtension IMPL_sortedBy = (LibraryIterationExtension)TYPE_sortedBy.lookupImplementation(standardLibrary, OCLstdlibTables.Operations._Set__sortedBy);
-								final @NonNull Object ACC_sortedBy = IMPL_sortedBy.createAccumulatorValue(executor, PivotTables.ORD_CLSSid_NamedElement, TypeId.STRING);
+							if (notEmpty) {
+								final org.eclipse.ocl.pivot.@NonNull Class TYPE_sortedBy_0 = executor.getStaticTypeOfValue(null, missingProperties);
+								final @NonNull LibraryIterationExtension IMPL_sortedBy_0 = (LibraryIterationExtension)TYPE_sortedBy_0.lookupImplementation(standardLibrary, OCLstdlibTables.Operations._Set__sortedBy);
+								final @NonNull Object ACC_sortedBy_0 = IMPL_sortedBy_0.createAccumulatorValue(executor, PivotTables.ORD_CLSSid_NamedElement, TypeId.STRING);
 								/**
 								 * Implementation of the iterator body.
 								 */
-								final @NonNull AbstractBinaryOperation BODY_sortedBy = new AbstractBinaryOperation()
+								final @NonNull AbstractBinaryOperation BODY_sortedBy_0 = new AbstractBinaryOperation()
 								{
 									/**
 									 * name
 									 */
 									@Override
-									public @Nullable Object evaluate(final @NonNull Executor executor, final @NonNull TypeId typeId, final @Nullable Object missingProperties, final /*@NonInvalid*/ @Nullable Object _1_5) {
-										final /*@NonInvalid*/ @Nullable NamedElement CAST_1_ = (NamedElement)_1_5;
+									public @Nullable Object evaluate(final @NonNull Executor executor, final @NonNull TypeId typeId, final @Nullable Object missingProperties, final /*@NonInvalid*/ @Nullable Object _1_7) {
+										final /*@NonInvalid*/ @Nullable NamedElement CAST_1_ = (NamedElement)_1_7;
 										if (CAST_1_ == null) {
 											throw new InvalidValueException("Null source for \'NamedElement::name\'");
 										}
@@ -837,15 +830,15 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 										return name;
 									}
 								};
-								final @NonNull ExecutorSingleIterationManager MGR_sortedBy = new ExecutorSingleIterationManager(executor, PivotTables.ORD_CLSSid_NamedElement, BODY_sortedBy, missingProperties, ACC_sortedBy);
+								final @NonNull ExecutorSingleIterationManager MGR_sortedBy_0 = new ExecutorSingleIterationManager(executor, PivotTables.ORD_CLSSid_NamedElement, BODY_sortedBy_0, missingProperties, ACC_sortedBy_0);
 								@SuppressWarnings("null")
-								final /*@Thrown*/ @NonNull OrderedSetValue sortedBy = (@NonNull OrderedSetValue)IMPL_sortedBy.evaluateIteration(MGR_sortedBy);
+								final /*@Thrown*/ @NonNull OrderedSetValue sortedBy_0 = (@NonNull OrderedSetValue)IMPL_sortedBy_0.evaluateIteration(MGR_sortedBy_0);
 								/*@NonInvalid*/ @NonNull String acc = PivotTables.STR_Missing_32_initializers_c;
-								@NonNull Iterator<Object> ITER_p = sortedBy.iterator();
-								/*@Thrown*/ @Nullable String iterate;
+								@NonNull Iterator<Object> ITER_p = sortedBy_0.iterator();
+								/*@Thrown*/ @Nullable String iterate_0;
 								while (true) {
 									if (!ITER_p.hasNext()) {
-										iterate = acc;
+										iterate_0 = acc;
 										break;
 									}
 									@SuppressWarnings("null")
@@ -859,8 +852,8 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 									//
 									acc = sum;
 								}
-								final /*@Thrown*/ @NonNull TupleValue TUP__0 = ValueUtil.createTupleOfEach(PivotTables.TUPLid_, iterate, ValueUtil.FALSE_VALUE);
-								IF_notEmpty_0 = TUP__0;
+								final /*@Thrown*/ @NonNull TupleValue TUP_ = ValueUtil.createTupleOfEach(PivotTables.TUPLid_, iterate_0, ValueUtil.FALSE_VALUE);
+								IF_notEmpty_0 = TUP_;
 							}
 							else {
 								IF_notEmpty_0 = ValueUtil.TRUE_VALUE;
@@ -875,9 +868,9 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 					CAUGHT_result = ValueUtil.createInvalidValue(THROWN_result);
 				}
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, CAUGHT_result, PivotTables.INT_0).booleanValue();
-				IF__l_q = logDiagnostic;
+				IF_le = logDiagnostic;
 			}
-			return IF__l_q;
+			return IF_le;
 		}
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);
@@ -911,19 +904,19 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 			final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
 			final /*@NonInvalid*/ @NonNull IntegerValue severity = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.SHADOW_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity, PivotTables.INT_0).booleanValue();
-			/*@NonInvalid*/ boolean IF__l_q;
+			/*@NonInvalid*/ boolean IF_le;
 			if (le) {
-				IF__l_q = true;
+				IF_le = true;
 			}
 			else {
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OclInvalid_6 = idResolver.getClass(TypeId.OCL_INVALID, null);
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OclInvalid_1 = idResolver.getClass(TypeId.OCL_INVALID, null);
 				final /*@NonInvalid*/ @Nullable Type type = this.getType();
-				final /*@NonInvalid*/ @NonNull InvalidType CAST_TYP_OclInvalid = (InvalidType)TYP_OclInvalid_6;
+				final /*@NonInvalid*/ @NonNull InvalidType CAST_TYP_OclInvalid = (InvalidType)TYP_OclInvalid_1;
 				final /*@NonInvalid*/ boolean result = (type != null) ? (type.getTypeId() != CAST_TYP_OclInvalid.getTypeId()) : true;
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, result, PivotTables.INT_0).booleanValue();
-				IF__l_q = logDiagnostic;
+				IF_le = logDiagnostic;
 			}
-			return IF__l_q;
+			return IF_le;
 		}
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);

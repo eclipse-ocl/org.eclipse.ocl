@@ -189,40 +189,41 @@ implements TupleLiteralPart {
 			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this);
 			final /*@NonInvalid*/ @NonNull IntegerValue severity = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.TUPLE_LITERAL_PART___VALIDATE_COMPATIBLE_INITIALISER_TYPE__DIAGNOSTICCHAIN_MAP);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity, PivotTables.INT_0).booleanValue();
-			/*@NonInvalid*/ boolean IF__l_q;
+			/*@NonInvalid*/ boolean IF_le;
 			if (le) {
-				IF__l_q = true;
+				IF_le = true;
 			}
 			else {
 				/*@Caught*/ @Nullable Object CAUGHT_result;
 				try {
 					/*@Caught*/ @Nullable Object CAUGHT_and;
 					try {
-						final /*@NonInvalid*/ @Nullable OCLExpression ownedInit = this.getOwnedInit();
-						final /*@NonInvalid*/ boolean ne = ownedInit != null;
+						final /*@NonInvalid*/ @Nullable OCLExpression ownedInit_1 = this.getOwnedInit();
+						final /*@NonInvalid*/ boolean IsEQ_ = ownedInit_1 != null;
 						final /*@Thrown*/ @Nullable Boolean and;
-						if (!ne) {
+						if (!IsEQ_) {
 							and = ValueUtil.FALSE_VALUE;
 						}
 						else {
-							/*@Caught*/ @NonNull Object CAUGHT__l_g;
+							/*@Caught*/ @NonNull Object CAUGHT_IsEQ__0;
 							try {
-								if (ownedInit == null) {
+								final /*@NonInvalid*/ @Nullable OCLExpression ownedInit_2 = this.getOwnedInit();
+								if (ownedInit_2 == null) {
 									throw new InvalidValueException("Null source for \'TypedElement::type\'");
 								}
-								final /*@Thrown*/ @Nullable Type type = ownedInit.getType();
-								final /*@Thrown*/ boolean ne_0 = type != null;
-								CAUGHT__l_g = ne_0;
+								final /*@Thrown*/ @Nullable Type type_1 = ownedInit_2.getType();
+								final /*@Thrown*/ boolean IsEQ__0 = type_1 != null;
+								CAUGHT_IsEQ__0 = IsEQ__0;
 							}
-							catch (Exception THROWN__l_g) {
-								CAUGHT__l_g = ValueUtil.createInvalidValue(THROWN__l_g);
+							catch (Exception THROWN_IsEQ__0) {
+								CAUGHT_IsEQ__0 = ValueUtil.createInvalidValue(THROWN_IsEQ__0);
 							}
-							if (CAUGHT__l_g == ValueUtil.FALSE_VALUE) {
+							if (CAUGHT_IsEQ__0 == ValueUtil.FALSE_VALUE) {
 								and = ValueUtil.FALSE_VALUE;
 							}
 							else {
-								if (CAUGHT__l_g instanceof InvalidValueException) {
-									throw (InvalidValueException)CAUGHT__l_g;
+								if (CAUGHT_IsEQ__0 instanceof InvalidValueException) {
+									throw (InvalidValueException)CAUGHT_IsEQ__0;
 								}
 								and = ValueUtil.TRUE_VALUE;
 							}
@@ -243,12 +244,12 @@ implements TupleLiteralPart {
 							if (ownedInit_0 == null) {
 								throw new InvalidValueException("Null source for \'TypedElement::type\'");
 							}
-							final /*@Thrown*/ @Nullable Type type_1 = ownedInit_0.getType();
-							if (type_1 == null) {
-								throw new InvalidValueException("Null \'\'Type\'\' rather than \'\'OclVoid\'\' value required");
+							final /*@Thrown*/ @Nullable Type type_0 = ownedInit_0.getType();
+							final /*@NonInvalid*/ @Nullable Type type = this.getType();
+							if (type_0 == null) {
+								throw new InvalidValueException("Null argument");
 							}
-							final /*@NonInvalid*/ @Nullable Type type_0 = this.getType();
-							final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type_1, type_0).booleanValue();
+							final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type_0, type).booleanValue();
 							CAUGHT_conformsTo = conformsTo;
 						}
 						catch (Exception THROWN_conformsTo) {
@@ -278,9 +279,9 @@ implements TupleLiteralPart {
 					CAUGHT_result = ValueUtil.createInvalidValue(THROWN_result);
 				}
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, CAUGHT_result, PivotTables.INT_0).booleanValue();
-				IF__l_q = logDiagnostic;
+				IF_le = logDiagnostic;
 			}
-			return IF__l_q;
+			return IF_le;
 		}
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);
@@ -314,19 +315,19 @@ implements TupleLiteralPart {
 			final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
 			final /*@NonInvalid*/ @NonNull IntegerValue severity = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.TUPLE_LITERAL_PART___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity, PivotTables.INT_0).booleanValue();
-			/*@NonInvalid*/ boolean IF__l_q;
+			/*@NonInvalid*/ boolean IF_le;
 			if (le) {
-				IF__l_q = true;
+				IF_le = true;
 			}
 			else {
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OclInvalid_3 = idResolver.getClass(TypeId.OCL_INVALID, null);
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OclInvalid_0 = idResolver.getClass(TypeId.OCL_INVALID, null);
 				final /*@NonInvalid*/ @Nullable Type type = this.getType();
-				final /*@NonInvalid*/ @NonNull InvalidType CAST_TYP_OclInvalid = (InvalidType)TYP_OclInvalid_3;
+				final /*@NonInvalid*/ @NonNull InvalidType CAST_TYP_OclInvalid = (InvalidType)TYP_OclInvalid_0;
 				final /*@NonInvalid*/ boolean result = (type != null) ? (type.getTypeId() != CAST_TYP_OclInvalid.getTypeId()) : true;
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, result, PivotTables.INT_0).booleanValue();
-				IF__l_q = logDiagnostic;
+				IF_le = logDiagnostic;
 			}
-			return IF__l_q;
+			return IF_le;
 		}
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);

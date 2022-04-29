@@ -580,9 +580,9 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 			final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
 			final /*@NonInvalid*/ @NonNull IntegerValue severity = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.ITERATE_EXP___VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL__DIAGNOSTICCHAIN_MAP);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity, PivotTables.INT_0).booleanValue();
-			/*@NonInvalid*/ boolean IF__l_q;
+			/*@NonInvalid*/ boolean IF_le;
 			if (le) {
-				IF__l_q = true;
+				IF_le = true;
 			}
 			else {
 				/*@Caught*/ @Nullable Object CAUGHT_result;
@@ -611,10 +611,10 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 							final /*@NonInvalid*/ @NonNull List<Variable> ownedIterators = this.getOwnedIterators();
 							final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Variable, ownedIterators);
 							/*@Thrown*/ @Nullable Object accumulator = ValueUtil.FALSE_VALUE;
-							@NonNull Iterator<Object> ITER_1_ = BOXED_ownedIterators.iterator();
+							@NonNull Iterator<Object> ITER__1 = BOXED_ownedIterators.iterator();
 							/*@NonInvalid*/ @Nullable Boolean exists;
 							while (true) {
-								if (!ITER_1_.hasNext()) {
+								if (!ITER__1.hasNext()) {
 									if (accumulator == ValueUtil.FALSE_VALUE) {
 										exists = ValueUtil.FALSE_VALUE;
 									}
@@ -624,7 +624,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 									break;
 								}
 								@SuppressWarnings("null")
-								/*@NonInvalid*/ @NonNull Variable _1 = (@NonNull Variable)ITER_1_.next();
+								/*@NonInvalid*/ @NonNull Variable _1 = (@NonNull Variable)ITER__1.next();
 								/**
 								 * isRequired
 								 */
@@ -666,32 +666,35 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 						/*@Caught*/ @NonNull Object CAUGHT_IF_oclIsKindOf;
 						try {
 							final /*@NonInvalid*/ @Nullable OCLExpression ownedSource = this.getOwnedSource();
-							final /*@NonInvalid*/ @NonNull Object type_0 = ownedSource == null;
-							/*@Thrown*/ @Nullable Type safe_type_source;
-							if (type_0 == Boolean.TRUE) {
-								safe_type_source = null;
+							final /*@NonInvalid*/ @NonNull Object IsEQ2_ = ownedSource == null;
+							/*@Thrown*/ @Nullable Type SAFE_type;
+							if (IsEQ2_ == Boolean.TRUE) {
+								SAFE_type = null;
 							}
 							else {
 								assert ownedSource != null;
 								final /*@Thrown*/ @Nullable Type type = ownedSource.getType();
-								safe_type_source = type;
+								SAFE_type = type;
 							}
-							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_MapType_3 = idResolver.getClass(PivotTables.CLSSid_MapType, null);
-							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class CAST_TYP_MapType = (org.eclipse.ocl.pivot.Class)TYP_MapType_3;
-							final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, safe_type_source, CAST_TYP_MapType).booleanValue();
+							final /*@Thrown*/ @Nullable Type sourceType = SAFE_type;
+							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_MapType = idResolver.getClass(PivotTables.CLSSid_MapType, null);
+							final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, sourceType, TYP_MapType).booleanValue();
 							/*@Thrown*/ boolean IF_oclIsKindOf;
 							if (oclIsKindOf) {
-								@SuppressWarnings("null")
-								final /*@Thrown*/ @NonNull MapType oclAsType = (@NonNull MapType)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, safe_type_source, CAST_TYP_MapType);
-								final /*@Thrown*/ boolean keysAreNullFree = oclAsType.isKeysAreNullFree();
+								final /*@Thrown*/ @Nullable MapType oclAsType_0 = (@Nullable MapType)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, sourceType, TYP_MapType);
+								if (oclAsType_0 == null) {
+									throw new InvalidValueException("Null source for \'MapType::keysAreNullFree\'");
+								}
+								final /*@Thrown*/ boolean keysAreNullFree = oclAsType_0.isKeysAreNullFree();
 								IF_oclIsKindOf = keysAreNullFree;
 							}
 							else {
-								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType_11 = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
-								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class CAST_TYP_CollectionType = (org.eclipse.ocl.pivot.Class)TYP_CollectionType_11;
-								@SuppressWarnings("null")
-								final /*@Thrown*/ @NonNull CollectionType oclAsType_0 = (@NonNull CollectionType)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, safe_type_source, CAST_TYP_CollectionType);
-								final /*@Thrown*/ boolean isNullFree = oclAsType_0.isIsNullFree();
+								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType_12 = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
+								final /*@Thrown*/ @Nullable CollectionType oclAsType = (@Nullable CollectionType)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, sourceType, TYP_CollectionType_12);
+								if (oclAsType == null) {
+									throw new InvalidValueException("Null source for \'CollectionType::isNullFree\'");
+								}
+								final /*@Thrown*/ boolean isNullFree = oclAsType.isIsNullFree();
 								IF_oclIsKindOf = isNullFree;
 							}
 							CAUGHT_IF_oclIsKindOf = IF_oclIsKindOf;
@@ -723,9 +726,9 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 					CAUGHT_result = ValueUtil.createInvalidValue(THROWN_result);
 				}
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, CAUGHT_result, PivotTables.INT_0).booleanValue();
-				IF__l_q = logDiagnostic;
+				IF_le = logDiagnostic;
 			}
-			return IF__l_q;
+			return IF_le;
 		}
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);
@@ -788,9 +791,9 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 			final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
 			final /*@NonInvalid*/ @NonNull IntegerValue severity = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.ITERATE_EXP___VALIDATE_SAFE_ITERATOR_IS_REQUIRED__DIAGNOSTICCHAIN_MAP);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity, PivotTables.INT_0).booleanValue();
-			/*@NonInvalid*/ boolean IF__l_q;
+			/*@NonInvalid*/ boolean IF_le;
 			if (le) {
-				IF__l_q = true;
+				IF_le = true;
 			}
 			else {
 				/*@Caught*/ @Nullable Object CAUGHT_result;
@@ -805,10 +808,10 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 						final /*@NonInvalid*/ @NonNull List<Variable> ownedIterators = this.getOwnedIterators();
 						final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Variable, ownedIterators);
 						/*@Thrown*/ @Nullable Object accumulator = ValueUtil.TRUE_VALUE;
-						@NonNull Iterator<Object> ITER_1_ = BOXED_ownedIterators.iterator();
+						@NonNull Iterator<Object> ITER__1 = BOXED_ownedIterators.iterator();
 						/*@NonInvalid*/ @Nullable Boolean forAll;
 						while (true) {
-							if (!ITER_1_.hasNext()) {
+							if (!ITER__1.hasNext()) {
 								if (accumulator == ValueUtil.TRUE_VALUE) {
 									forAll = ValueUtil.TRUE_VALUE;
 								}
@@ -818,7 +821,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 								break;
 							}
 							@SuppressWarnings("null")
-							/*@NonInvalid*/ @NonNull Variable _1 = (@NonNull Variable)ITER_1_.next();
+							/*@NonInvalid*/ @NonNull Variable _1 = (@NonNull Variable)ITER__1.next();
 							/**
 							 * isRequired
 							 */
@@ -853,9 +856,9 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 					CAUGHT_result = ValueUtil.createInvalidValue(THROWN_result);
 				}
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, CAUGHT_result, PivotTables.INT_0).booleanValue();
-				IF__l_q = logDiagnostic;
+				IF_le = logDiagnostic;
 			}
-			return IF__l_q;
+			return IF_le;
 		}
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);
@@ -895,9 +898,9 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 			final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
 			final /*@NonInvalid*/ @NonNull IntegerValue severity = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.ITERATE_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP);
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity, PivotTables.INT_0).booleanValue();
-			/*@NonInvalid*/ boolean IF__l_q;
+			/*@NonInvalid*/ boolean IF_le;
 			if (le) {
-				IF__l_q = true;
+				IF_le = true;
 			}
 			else {
 				/*@Caught*/ @Nullable Object CAUGHT_result;
@@ -913,31 +916,34 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 							/*@Caught*/ @NonNull Object CAUGHT_IF_oclIsKindOf;
 							try {
 								final /*@NonInvalid*/ @Nullable OCLExpression ownedSource = this.getOwnedSource();
-								final /*@NonInvalid*/ @NonNull Object type_0 = ownedSource == null;
-								/*@Thrown*/ @Nullable Type safe_type_source;
-								if (type_0 == Boolean.TRUE) {
-									safe_type_source = null;
+								final /*@NonInvalid*/ @NonNull Object IsEQ2_ = ownedSource == null;
+								/*@Thrown*/ @Nullable Type SAFE_type;
+								if (IsEQ2_ == Boolean.TRUE) {
+									SAFE_type = null;
 								}
 								else {
 									assert ownedSource != null;
 									final /*@Thrown*/ @Nullable Type type = ownedSource.getType();
-									safe_type_source = type;
+									SAFE_type = type;
 								}
+								final /*@Thrown*/ @Nullable Type sourceType = SAFE_type;
 								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_MapType_8 = idResolver.getClass(PivotTables.CLSSid_MapType, null);
-								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class CAST_TYP_MapType = (org.eclipse.ocl.pivot.Class)TYP_MapType_8;
-								final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, safe_type_source, CAST_TYP_MapType).booleanValue();
+								final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, sourceType, TYP_MapType_8).booleanValue();
 								/*@Thrown*/ boolean IF_oclIsKindOf;
 								if (oclIsKindOf) {
-									@SuppressWarnings("null")
-									final /*@Thrown*/ @NonNull MapType oclAsType_0 = (@NonNull MapType)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, safe_type_source, CAST_TYP_MapType);
+									final /*@Thrown*/ @Nullable MapType oclAsType_0 = (@Nullable MapType)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, sourceType, TYP_MapType_8);
+									if (oclAsType_0 == null) {
+										throw new InvalidValueException("Null source for \'MapType::keysAreNullFree\'");
+									}
 									final /*@Thrown*/ boolean keysAreNullFree = oclAsType_0.isKeysAreNullFree();
 									IF_oclIsKindOf = keysAreNullFree;
 								}
 								else {
 									final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType_0 = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
-									final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class CAST_TYP_CollectionType = (org.eclipse.ocl.pivot.Class)TYP_CollectionType_0;
-									@SuppressWarnings("null")
-									final /*@Thrown*/ @NonNull CollectionType oclAsType = (@NonNull CollectionType)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, safe_type_source, CAST_TYP_CollectionType);
+									final /*@Thrown*/ @Nullable CollectionType oclAsType = (@Nullable CollectionType)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, sourceType, TYP_CollectionType_0);
+									if (oclAsType == null) {
+										throw new InvalidValueException("Null source for \'CollectionType::isNullFree\'");
+									}
 									final /*@Thrown*/ boolean isNullFree = oclAsType.isIsNullFree();
 									IF_oclIsKindOf = isNullFree;
 								}
@@ -987,9 +993,9 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 					CAUGHT_result = ValueUtil.createInvalidValue(THROWN_result);
 				}
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, CAUGHT_result, PivotTables.INT_0).booleanValue();
-				IF__l_q = logDiagnostic;
+				IF_le = logDiagnostic;
 			}
-			return IF__l_q;
+			return IF_le;
 		}
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);
