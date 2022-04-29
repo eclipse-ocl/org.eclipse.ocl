@@ -406,7 +406,7 @@ public abstract class NameManager
 	/**
 	 * The NameResolution for each element declared in this NameManager.
 	 */
-	private final @NonNull Map<@NonNull CGValuedElement, @NonNull BaseNameResolution> element2baseNameResolution = new HashMap<>();
+	private final @NonNull Map<@NonNull CGValuedElement, @NonNull NameResolution> element2nameResolution = new HashMap<>();
 
 	/**
 	 * All the NameResolutions declared in this NameManager. This avoid repeats from re-used names, or omissions from globl names.
@@ -434,20 +434,21 @@ public abstract class NameManager
 	public void addNameResolution(@NonNull CGValuedElement cgElement) {
 		NameResolution nameResolution = cgElement.getNameResolution();
 		assert nameResolution.getNameManager() == this;
-		if (nameResolution instanceof BaseNameResolution) {
-			NameResolution old = element2baseNameResolution.put(cgElement, (BaseNameResolution)nameResolution);
-			assert old == null;
+		NameResolution old = element2nameResolution.put(cgElement, nameResolution);
+		assert old == null;
+	}
+
+	protected void assignLocalNames(@NonNull Context context) {
+		List<@NonNull NameResolution> nameResolutions = new ArrayList<>(element2nameResolution.values());
+		// XXX		Collections.sort(nameResolutions);
+		for (@NonNull NameResolution nameResolution : nameResolutions) {
+		//	if (nameResolution.basicGetResolvedName() == null) {
+			nameResolution.resolveIn(context);
+		//	}
 		}
 	}
 
-	protected void assignNames(@NonNull Context context) {
-		List<@NonNull BaseNameResolution> baseNameResolutions = new ArrayList<>(element2baseNameResolution.values());
-// XXX		Collections.sort(nameResolutions);
-		for (@NonNull BaseNameResolution baseNameResolution : baseNameResolutions) {
-		//	if (baseNameResolution.basicGetResolvedName() == null) {
-				baseNameResolution.resolveIn(context);
-		//	}
-		}
+	protected void assignNestedNames() {
 		if (children != null) {
 			for (@NonNull NestedNameManager child : children) {
 				child.assignNames();
@@ -472,7 +473,7 @@ public abstract class NameManager
 		nameResolution = cgNamedValue.basicGetNameResolution();
 		if (nameResolution == null) {
 			String nameHint = getLazyNameHint(cgNamedValue);		// globals must have a name soon, nested resolve later
-			nameResolution = new BaseNameResolution(this, cgNamedValue, nameHint);
+			nameResolution = new NameResolution(this, cgNamedValue, nameHint);
 		}
 		if (cgElement != cgNamedValue) {
 			nameResolution.addCGElement(cgElement);
@@ -484,7 +485,7 @@ public abstract class NameManager
 	 * Declare that cgElement has a name which should immediately default to nameHint.
 	 * This is typically used to provide an eager name reservation for an Ecore operation parameter.
 	 */
-	public abstract @NonNull BaseNameResolution declareReservedName(@NonNull CGValuedElement cgElement, @NonNull String nameHint);
+	public abstract @NonNull NameResolution declareReservedName(@NonNull CGValuedElement cgElement, @NonNull String nameHint);
 
 	@Deprecated // not needed
 	protected abstract @NonNull Context getContext();
@@ -501,8 +502,8 @@ public abstract class NameManager
 
 	public abstract boolean isGlobal();
 
-	public void removeNameResolution(@NonNull CGValuedElement cgElement) {
-		NameResolution old = element2baseNameResolution.remove(cgElement);
-		assert old != null;
-	}
+//	public void removeNameResolution(@NonNull CGValuedElement cgElement) {
+//		NameResolution old = element2nameResolution.remove(cgElement);
+//		assert old != null;
+//	}
 }

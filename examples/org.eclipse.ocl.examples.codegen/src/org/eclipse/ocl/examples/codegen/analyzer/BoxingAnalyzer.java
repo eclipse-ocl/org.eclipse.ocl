@@ -16,7 +16,6 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager.NameVariant;
 import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGAssertNonNullExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBoxExp;
@@ -162,10 +161,10 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 			}
 		}
 		CGBoxExp cgBoxExp = CGModelFactory.eINSTANCE.createCGBoxExp();
-		NameResolution unboxedNameResolution = codeGenerator.getNameResolution(cgChild);
-		NameVariant boxedNameVariant = codeGenerator.getBOXED_NameVariant();
-		NameResolution boxedNameResolution = unboxedNameResolution.addNameVariant(boxedNameVariant);
-		boxedNameResolution.addCGElement(cgBoxExp);
+//		NameResolution unboxedNameResolution = codeGenerator.getNameResolution(cgChild);
+//		NameVariant boxedNameVariant = codeGenerator.getBOXED_NameVariant();
+//		NameResolution boxedNameResolution = unboxedNameResolution.addNameVariant(boxedNameVariant);
+//		boxedNameResolution.addCGElement(cgBoxExp);
 		CGUtil.wrap(cgBoxExp, cgChild);
 		return cgBoxExp;
 	}
@@ -213,9 +212,9 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 		cgGuardExp.setMessage(message);
 		cgGuardExp.setSafe(isSafe);
 		// Guard is a prefix IF so new new variable name required; just a copyable resolution..
-		NameResolution unguardedNameResolution = codeGenerator.getNameResolution(cgChild);
+	//	NameResolution unguardedNameResolution = codeGenerator.getNameResolution(cgChild);
 	//	NameResolution guardedNameResolution = unguardedNameResolution.addNameVariant(codeGenerator.getGUARDED_NameVariant());
-		unguardedNameResolution.addCGElement(cgGuardExp);		// XXX GUARD is a prefix throw - no new variable
+	//	unguardedNameResolution.addCGElement(cgGuardExp);		// XXX GUARD is a prefix throw - no new variable
 		CGUtil.wrap(cgGuardExp, cgChild);
 		return cgGuardExp;
 	}

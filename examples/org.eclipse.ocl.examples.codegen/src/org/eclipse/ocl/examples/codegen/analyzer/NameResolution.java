@@ -10,11 +10,19 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.analyzer;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager.NameVariant;
+import org.eclipse.ocl.examples.codegen.analyzer.NameManager.Context;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGBuiltInIterationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGCallable;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
  * A NameResolution represents a future name for the value of an expression and for all unmodified clients of that value.
@@ -35,36 +43,192 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
  *  </br>Unassigned names are resolved at the end of CodeGenerator resolveNames.
  *  </br>All names are resolved when needed by CG2Java.
  */
-public interface NameResolution
+public class NameResolution
 {
-	void addCGElement(@NonNull CGValuedElement cgElement);
+	/**
+	 * A non-null placeholder for a nameHint whose resolution is deferred until the CG containment tree is sound.
+	 */
+	private static final @NonNull String UNRESOLVED = "«UNRESOLVED»";
 
-	@NonNull NameResolution addNameVariant(@NonNull NameVariant nameVariant);
+	/**
+	 * The namespace at and below whch this resolved name and all its variants must be unique.
+	 */
+	protected final @NonNull NameManager nameManager;
 
-	@Nullable String basicGetResolvedName();
+	/**
+	 * A hint as to what could make a readable resolved name.
+	 */
+	private @NonNull String nameHint;
 
-	@NonNull BaseNameResolution getBaseNameResolution();
+	/**
+	 * The CGElement that computes the value to be accessed by the resolved name. May be null for uncomputed globals.
+	 */
+	protected final @Nullable CGValuedElement primaryElement;
 
-	@Nullable Iterable<@NonNull CGValuedElement> getCGElements();
+	/**
+	 * The resolved name based on nameHint after ensuring that it is unique at and below the nameManager. Non-null once resolved.
+	 */
+	private @Nullable String resolvedName = null;
 
-	@NonNull String getNameHint();
+	/**
+	 * Additional CGElements that propagate the unchanged value to be accessed by the resolved name.
+	 */
+	private @Nullable List<@NonNull CGValuedElement> cgElements = null;
 
-	@NonNull NameManager getNameManager();
+	public NameResolution(@NonNull NameManager nameManager, @Nullable CGValuedElement primaryElement, @Nullable String nameHint) {
+		this.nameManager = nameManager;
+		this.primaryElement = primaryElement;
+		assert (primaryElement != null) || (nameHint != null);
+		if (nameManager instanceof NestedNameManager) {
+			getClass();		// XXX)
+		}
+		if (primaryElement instanceof CGBuiltInIterationCallExp) {
+			getClass();		// XXX)
+		}
+		this.nameHint = nameHint != null ? nameHint : UNRESOLVED;
+		assert debugNameHint();
+		assert (primaryElement == null) || nameManager.isGlobal() || !primaryElement.isGlobal();
+		if (primaryElement == null) {
+			assert nameHint != null : "Expected NameResolution for null";
+		}
+		else {
+			boolean expectNameHint = nameManager.isGlobal() || (primaryElement instanceof CGCallable) || (primaryElement instanceof CGProperty) || (primaryElement instanceof CGVariable);
+			if (expectNameHint) {
+				assert nameHint != null  : "Expected NameResolution for " + primaryElement.getClass().getName();
+			}
+			else {
+				assert nameHint == null : "Unexpected NameResolution for " + primaryElement.getClass().getName();
+			}
+		}
+		assert !(primaryElement instanceof CGVariableExp) : "Should have redirected to getNamedValue()";
+		if ((primaryElement != null) && "u.oclAsType(SysML_ValueTypes_QUDV::QUDV::ConversionBasedUnit)".equals(String.valueOf(primaryElement.getAst()))) {
+			getClass();		// XXX
+		}
+		if (primaryElement != null) {
+			addCGElement(primaryElement);
+		}
+		nameManager.addNameResolution(this);
+	//	System.out.println("NameResolution '" + nameHint + "' : " + nameManager.toString() + " : " + primaryElement);
+	}
 
-	@NonNull String getResolvedName();
+	public void addCGElement(@NonNull CGValuedElement cgElement) {
+		List<@NonNull CGValuedElement> cgElements2 = cgElements;
+		if (cgElements2 == null) {
+			cgElements = cgElements2 = new ArrayList<>();
+		}
+		else {
+		//	assert !cgElements2.contains(cgElement);
+		}
+		if (!cgElements2.contains(cgElement)) {		// XXX
+			cgElements2.add(cgElement);
+		}
+		if (this != cgElement.basicGetNameResolution()) {			// XXX
+			cgElement.setNameResolution(this);
+			getNameManager().addNameResolution(cgElement);
+		}
+	//	System.out.println("addCGElement '" + this + "' : " + cgElement.eClass().getName() + ":" + cgElement);
+	//	assert (primaryElement == null) || (cgElements2.size() == 1);
+	}
 
-//	@NonNull VariantNameResolution getNameVariant(@NonNull NameVariant nameVariant);
+	public @Nullable CGValuedElement basicGetPrimaryElement() {
+		return primaryElement;
+	}
 
-	@NonNull String getVariantResolvedName(@NonNull NameVariant nameVariant);
+	public @Nullable String basicGetResolvedName() {
+		return resolvedName != UNRESOLVED ? resolvedName : null;
+	}
 
-	boolean hasVariants();
+	protected boolean debugNameHint() {
+		if (nameHint.contains("manyDates")) {
+			getClass();		// XXX
+		}
+		if ("oclAsType".equals(nameHint)) {
+			getClass();			// XXX
+		}
+		if ("CAUGHT_gt".equals(nameHint)) {
+			getClass();			// XXX
+		}
+		return true;
+	}
 
-	boolean isUnresolved();
+	public @Nullable Iterable<@NonNull CGValuedElement> getCGElements() {
+		return cgElements;
+	}
 
-	void removeCGElement(@NonNull CGVariableExp cgElement);
+	public @NonNull String getNameHint() {
+		return nameHint;
+	}
 
-	void resolveNameHint();
+	public @NonNull NameManager getNameManager() {
+		return nameManager;
+	}
+
+	public @NonNull CGValuedElement getPrimaryElement() {
+		return ClassUtil.nonNullState(primaryElement);
+	}
+
+	public @NonNull String getResolvedName() {
+		// XXX assert !isUnresolved();	-- maybe unresolved if containerless as a result of a CSE rewrite
+		return ClassUtil.nonNullState(basicGetResolvedName());
+	}
+
+	public boolean isUnresolved() {
+		return nameHint == UNRESOLVED;
+	}
+
+	public void resolveIn(@NonNull Context context) {
+	// assert !isUnresolved();	-- maybe unresolved if containerless as a result of a CSE rewrite
+		Object cgElement = primaryElement != null ? primaryElement : NameManager.NOT_AN_OBJECT;
+		if (resolvedName == null) {
+			assert !isUnresolved() || (primaryElement == null);
+			String resolvedName = context.allocateUniqueName(getNameHint(), cgElement);
+			setResolvedName(resolvedName);
+		/*	Iterable<@NonNull NameVariant> nameVariants = cgElement.getNameVariants();
+			if (nameVariants != null) {
+				for (@NonNull NameVariant nameVariant : nameVariants) {
+					String variantNameHint = nameVariant.getName(resolvedName);
+					String variantName = context.allocateUniqueName(variantNameHint, cgElement);
+					cgElement.setNameVariant(nameVariant, variantName);
+				}
+			} */
+		}
+	/*	Map<@NonNull NameVariant, @Nullable String> nameVariant2name2 = nameVariant2name;
+		if (nameVariant2name2 != null) {
+			for (@NonNull NameVariant nameVariant : nameVariant2name2.keySet()) {
+				assert nameVariant2name2.get(nameVariant) != null;;
+			}
+		} */
+	}
+
+	public void resolveNameHint() {
+		if (nameHint == UNRESOLVED) {
+			CGValuedElement primaryElement2 = primaryElement;
+			assert primaryElement2 != null;
+			nameHint = nameManager.getNameHint(primaryElement2);
+			if ("_171_UNRESOLVED_187".equals(nameHint)) {			// XXX
+				nameManager.getNameHint(primaryElement2);
+			}
+			assert !"_171_UNRESOLVED_187".equals(nameHint);
+			assert debugNameHint();
+		}
+	}
+
+	protected void setResolvedName(@NonNull String resolvedName) {
+		if ("allInstances".equals(resolvedName)) {
+			getClass();		// XXX
+		}
+		assert !resolvedName.contains("UNRESOLVED");
+		this.resolvedName = resolvedName;
+	//	if (primaryElement != null) {
+	//		System.out.println(nameHint + " => " + resolvedName + " : " + primaryElement.eClass().getName()  + " : " + nameManager.getClass().getSimpleName());
+	//	}
+	//	else {
+	//		System.out.println(nameHint + " => " + resolvedName);
+	//	}
+	}
 
 	@Override
-	@NonNull String toString();
+	public @NonNull String toString() {
+		return nameManager + " : " + nameHint + " => " + (resolvedName != null ? resolvedName : "???");
+	}
 }

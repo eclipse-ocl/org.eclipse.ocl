@@ -15,7 +15,6 @@ import java.util.List;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager.NameVariant;
 import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 
 
@@ -301,7 +300,7 @@ public interface CGValuedElement extends CGTypedElement {
 	@Nullable NameResolution basicGetNameResolution();
 	@NonNull NameResolution getNameResolution();
 	@NonNull String getResolvedName();
-	@NonNull String getVariantResolvedName(@NonNull NameVariant nameVariant);
+//	@NonNull String getVariantResolvedName(@NonNull NameVariant nameVariant);
 	boolean isUnresolved();
 	void setNameResolution(@NonNull NameResolution nameResolution);
 

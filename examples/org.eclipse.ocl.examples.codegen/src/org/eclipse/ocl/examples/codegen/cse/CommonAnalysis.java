@@ -140,7 +140,7 @@ public class CommonAnalysis extends AbstractAnalysis
 			cgVariable.setRequired(cgCSE.isNonNull());
 			cgVariable.setAst(cgCSE.getAst());
 		//	nameManager.declareStandardName(cgVariable);
-			analyzer.getCodeGenerator().getNameResolution(cgCSE).addCGElement(cgVariable);
+		//	analyzer.getCodeGenerator().getNameResolution(cgCSE).addCGElement(cgVariable);
 		//	nameManager.queueValueName(cgVariable, null, "_cse");		// let post-order nameHint resolution find a name
 			for (SimpleAnalysis simpleAnalysis : simpleAnalyses) {
 				CGValuedElement commonElement = simpleAnalysis.getElement();
@@ -173,7 +173,7 @@ public class CommonAnalysis extends AbstractAnalysis
 		cgVariableExp.setTypeId(cgVariable.getTypeId());
 		cgVariableExp.setAst(cgVariable.getAst());
 		cgVariableExp.setReferredVariable(cgVariable);
-		cgVariable.getNameResolution().addCGElement(cgVariableExp);
+	//	cgVariable.getNameResolution().addCGElement(cgVariableExp);
 		CGUtil.replace(cgElement, cgVariableExp);
 	}
 

@@ -55,6 +55,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGTupleExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGUnboxExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGUnlimited;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.util.AbstractExtendingCGModelVisitor;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.BagType;
@@ -114,6 +115,8 @@ import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.ids.UnspecifiedId;
 import org.eclipse.ocl.pivot.ids.WildcardId;
+import org.eclipse.ocl.pivot.library.LibraryOperation;
+import org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -326,8 +329,7 @@ public class NameManagerHelper
 
 		@Override
 		public @NonNull String visitCGBoxExp(@NonNull CGBoxExp object) {
-//			return "BOXED_" + context.getNameHint(object.getSourceValue());
-			return visiting(object);			// NameVariant should be eagerly declared
+			return "BOXED_" + context.getNameHint(object.getSourceValue());
 		}
 
 		@Override
@@ -342,8 +344,7 @@ public class NameManagerHelper
 
 		@Override
 		public @NonNull String visitCGCatchExp(@NonNull CGCatchExp object) {
-//			return "CAUGHT_" + context.getNameHint(object.getSourceValue());
-			return visiting(object);			// NameVariant should be eagerly declared
+			return "CAUGHT_" + context.getNameHint(object.getSourceValue());
 		}
 
 		@Override
@@ -447,7 +448,13 @@ public class NameManagerHelper
 		public @NonNull String visitCGLibraryOperationCallExp(@NonNull CGLibraryOperationCallExp object) {
 			Element asElement = object.getAst();
 			if (asElement == null) {		// Synthetic operation call such as excluding()
-				return context.getNameableHint(object);
+				LibraryOperation libraryOperation = object.getLibraryOperation();
+				if (libraryOperation instanceof CollectionExcludingOperation) {
+					return "excluding";
+				}
+				else {
+					return "op";
+				}
 			}
 			return super.visitCGLibraryOperationCallExp(object);
 		}
@@ -575,15 +582,17 @@ public class NameManagerHelper
 //			return visitCGNamedElement(object);		// Leapfrog getNamedValue reirection
 //		}
 
-	//	@Override
-	//	public @NonNull String visitCGVariableExp(@NonNull CGVariableExp object) {
+		@Override
+		public @NonNull String visitCGVariableExp(@NonNull CGVariableExp object) {
+			return IF_NAME_HINT_PREFIX + context.getNameHint(CGUtil.getReferredVariable(object));
+		//	return visiting(object);			// XXX whyisn't this called
 		//	assert object.basicGetNameResolution() ==
 		//	CGVariable cgVariable = CGUtil.getReferredVariable(object);
 		//	String name = cgVariable.accept(this);
 		//	return context.getNameHint(cgVariable);
 		//	return visiting(object);			// CGVariableExp should redirect to CGVariable when created
 	//		return super.visitCGVariableExp(object);			// CGVariableExp should redirect to CGVariable when created
-	//	}
+		}
 
 		@Override
 		public @NonNull String visiting(@NonNull CGElement visitable) {
