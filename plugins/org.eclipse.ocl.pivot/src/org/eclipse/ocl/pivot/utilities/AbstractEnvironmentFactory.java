@@ -148,6 +148,17 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	private /*LazyNonNull*/ Map<@NonNull String, @NonNull LanguageSupport> language2support = null;
 
 	/**
+	 * Private non-null object used to denote a missing language2support value.
+	 */
+	private static @NonNull LanguageSupport NO_SUCH_LANGUAGE = new LanguageSupport()
+	{
+		@Override
+		public @Nullable Invocations resolveInvocations(@NonNull Type requiredSourceType, boolean hasExplicitSourceExp, @NonNull String qualifiedOperationName) {
+			throw new IllegalStateException();
+		}
+	};
+
+	/**
 	 * Leak debugging aid. Set non-null to diagnose EnvironmentFactory construction and finalization.
 	 *
 	 * @since 1.14
@@ -883,9 +894,9 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		LanguageSupport languageSupport = language2support2.get(language);
 		if (languageSupport == null) {
 			languageSupport = LanguageSupport.getLanguageSupport(language, this);
-			language2support2.put(language, languageSupport);
+			language2support2.put(language, languageSupport != null ? languageSupport : NO_SUCH_LANGUAGE);
 		}
-		return languageSupport;
+		return languageSupport != NO_SUCH_LANGUAGE ? languageSupport : null;
 	}
 
 	@Override
