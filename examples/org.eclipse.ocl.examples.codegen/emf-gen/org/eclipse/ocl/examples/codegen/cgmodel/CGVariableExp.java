@@ -10,9 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.cgmodel;
 
-import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager.NameVariant;
-
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>CG Variable Exp</b></em>'.
@@ -58,7 +55,4 @@ public interface CGVariableExp extends CGValuedElement {
 	 */
 	void setReferredVariable(CGVariable value);
 
-	void replaceNameResolutionWithVariant(@NonNull NameVariant nameVariant);
-
-	void resetNameResolution();
 } // CGVariableExp

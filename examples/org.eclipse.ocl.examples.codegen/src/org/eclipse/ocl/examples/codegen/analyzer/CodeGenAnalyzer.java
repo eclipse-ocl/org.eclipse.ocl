@@ -266,7 +266,7 @@ public class CodeGenAnalyzer
 		return cgNull;
 	}
 
-	public @NonNull CGParameter createCGParameter(@NonNull BaseNameResolution nameResolution, @NonNull CGTypeId typeId, boolean isRequired) {
+	public @NonNull CGParameter createCGParameter(@NonNull NameResolution nameResolution, @NonNull CGTypeId typeId, boolean isRequired) {
 		CGParameter cgParameter = CGModelFactory.eINSTANCE.createCGParameter();
 		nameResolution.addCGElement(cgParameter);
 		cgParameter.setTypeId(typeId);

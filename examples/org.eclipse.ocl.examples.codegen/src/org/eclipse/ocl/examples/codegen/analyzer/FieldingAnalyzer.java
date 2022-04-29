@@ -19,7 +19,6 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager.NameVariant;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCatchExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstant;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
@@ -42,7 +41,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.util.AbstractExtendingCGModelVisitor;
-import org.eclipse.ocl.examples.codegen.generator.CodeGenerator;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
@@ -209,12 +207,12 @@ public class FieldingAnalyzer
 		protected void insertCatch(@NonNull CGValuedElement cgChild) {
 			assert !(cgChild instanceof CGCatchExp);
 			if (!cgChild.isNonInvalid()) {
-				CodeGenerator codeGenerator = context.getCodeGenerator();
+//				CodeGenerator codeGenerator = context.getCodeGenerator();
 				CGCatchExp cgCatchExp = CGModelFactory.eINSTANCE.createCGCatchExp();
-				NameResolution uncaughtNameResolution = codeGenerator.getNameResolution(cgChild);
-				NameVariant caughtNameVariant = codeGenerator.getCAUGHT_NameVariant();
-				NameResolution caughtNameResolution = uncaughtNameResolution.addNameVariant(caughtNameVariant);
-				caughtNameResolution.addCGElement(cgCatchExp);
+//				NameResolution uncaughtNameResolution = codeGenerator.getNameResolution(cgChild);
+//				NameVariant caughtNameVariant = codeGenerator.getCAUGHT_NameVariant();
+//				NameResolution caughtNameResolution = uncaughtNameResolution.addNameVariant(caughtNameVariant);
+//				caughtNameResolution.addCGElement(cgCatchExp);
 				cgCatchExp.setCaught(true);
 				CGUtil.wrap(cgCatchExp, cgChild);
 			}
@@ -458,10 +456,10 @@ public class FieldingAnalyzer
 			CGVariable referredVariable = cgElement.getReferredVariable();
 			boolean isCaught = referredVariable.isCaught() || externalVariables.contains(referredVariable);
 			cgElement.setCaught(isCaught);
-			if (isCaught) {
-				NameVariant caughtNameVariant = context.getCodeGenerator().getCAUGHT_NameVariant();
-				cgElement.replaceNameResolutionWithVariant(caughtNameVariant);
-			}
+//			if (isCaught) {
+//				NameVariant caughtNameVariant = context.getCodeGenerator().getCAUGHT_NameVariant();
+//				cgElement.replaceNameResolutionWithVariant(caughtNameVariant);
+//			}
 			return isCaught;
 		}
 	}

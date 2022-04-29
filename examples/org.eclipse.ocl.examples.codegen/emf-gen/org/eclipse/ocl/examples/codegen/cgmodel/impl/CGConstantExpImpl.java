@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
@@ -286,6 +287,12 @@ public class CGConstantExpImpl extends CGValuedElementImpl implements CGConstant
 	@Override
 	public boolean isUncommonable() {
 		return (referredConstant != null) && referredConstant.isUncommonable();
+	}
+
+	@Override
+	public void setNameResolution(@NonNull NameResolution nameResolution) {
+		// TODO Auto-generated method stub
+		super.setNameResolution(nameResolution);
 	}
 
 } //CGConstantExpImpl

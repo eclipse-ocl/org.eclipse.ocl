@@ -20,7 +20,6 @@ import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.DependencyVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.FieldingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
-import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager.NameVariant;
 import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 import org.eclipse.ocl.examples.codegen.analyzer.ReferencesVisitor;
 import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
@@ -96,9 +95,4 @@ public interface CodeGenerator
 	 * Return true if cgValue could be represented by a primitive value. i.e. if it cannot convey a null or invalid value.
 	 */
 	boolean maybePrimitive(@NonNull CGValuedElement cgValue);
-
-	@NonNull NameVariant getBOXED_NameVariant();
-	@NonNull NameVariant getCAUGHT_NameVariant();
-//	@NonNull NameVariant getGUARDED_NameVariant();
-	@NonNull NameVariant getSAFE_NameVariant();
 }

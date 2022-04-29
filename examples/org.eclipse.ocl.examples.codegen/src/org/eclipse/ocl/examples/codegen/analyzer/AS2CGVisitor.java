@@ -491,7 +491,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			cgVariable = getVariable(asVariable);
 		}
 		cgVariableExp.setReferredVariable(cgVariable);
-		cgVariable.getNameResolution().addCGElement(cgVariableExp);
+	//	cgVariable.getNameResolution().addCGElement(cgVariableExp);
 		return cgVariableExp;
 	}
 
@@ -987,8 +987,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		cgOperationCallExp.setCgOperation(cgOperation);
 		OCLExpression asSource = callExp.getOwnedSource();
 		cgOperationCallExp.setTypeId(context.getTypeId(asSource.getTypeId()));
-		NameResolution callNameResolution = getNameManager().declareLazyName(cgOperationCallExp);
-		callNameResolution.addNameVariant(codeGenerator.getSAFE_NameVariant());
 		cgOperationCallExp.setRequired(true);
 		cgOperationCallExp.getCgArguments().add(cgSource);
 		CGConstantExp cgArgument = CGModelFactory.eINSTANCE.createCGConstantExp();
@@ -999,9 +997,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	}
 
 	protected @NonNull CGIfExp generateSafeNavigationGuard(@NonNull CallExp callExp, @NonNull CGVariableExp cgVariableExp, @NonNull CGValuedElement cgUnsafeExp) {
-		NameResolution unsafeNameResolution = getNameManager().declareLazyName(cgUnsafeExp);
-		NameResolution safeNameResolution = unsafeNameResolution.addNameVariant(codeGenerator.getSAFE_NameVariant());
-		//
 		CGConstantExp cgNullExpression = context.createCGConstantExp(callExp, context.getNull());
 		//
 		CGIsEqual2Exp cgCondition = CGModelFactory.eINSTANCE.createCGIsEqual2Exp();
@@ -1016,7 +1011,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		//
 		CGIfExp cgIfExp = createCGIfExp(cgCondition, cgThenExpression, cgUnsafeExp);
 		initAst(cgIfExp, callExp);
-		safeNameResolution.addCGElement(cgIfExp);
 		//
 		return cgIfExp;
 	}
@@ -1199,7 +1193,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		}
 		return cgParameter;
 	}
-	public @NonNull CGParameter getParameter(@NonNull Variable aParameter, @NonNull BaseNameResolution nameResolution) {
+	public @NonNull CGParameter getParameter(@NonNull Variable aParameter, @NonNull NameResolution nameResolution) {
 		CGParameter cgParameter = variablesStack.getParameter(aParameter);
 		if (cgParameter == null) {
 			cgParameter = CGModelFactory.eINSTANCE.createCGParameter();
@@ -1496,7 +1490,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			//
 			CGValuedElement cgElement = cgInit;
 			while (cgElement.basicGetNameResolution() == null) {
-				variableNameResolution.addCGElement(cgElement);
+			//	variableNameResolution.addCGElement(cgElement);			// XXX
 				if (cgElement instanceof CGLetExp) {
 					cgElement = CGUtil.getIn((CGLetExp)cgElement);
 				}
