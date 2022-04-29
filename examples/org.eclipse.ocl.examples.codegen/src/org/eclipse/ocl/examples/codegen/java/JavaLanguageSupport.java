@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.asm5.ASM5JavaAnnotationReader;
+import org.eclipse.ocl.examples.codegen.library.AbstractNativeProperty;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
@@ -39,9 +40,7 @@ import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.AbstractOperation;
-import org.eclipse.ocl.pivot.library.AbstractProperty;
 import org.eclipse.ocl.pivot.library.NativeOperation;
-import org.eclipse.ocl.pivot.library.NativeProperty;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.Invocations;
@@ -131,7 +130,7 @@ public class JavaLanguageSupport extends LanguageSupport
 		}
 	}
 
-	public static class JavaNativeProperty extends AbstractProperty implements NativeProperty
+	public static class JavaNativeProperty extends AbstractNativeProperty
 	{
 		protected final @NonNull Field field;
 

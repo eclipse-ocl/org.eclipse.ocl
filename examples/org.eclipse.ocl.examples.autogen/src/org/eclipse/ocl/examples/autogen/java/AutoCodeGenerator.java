@@ -36,7 +36,7 @@ import org.eclipse.ocl.examples.codegen.java.CG2JavaPreVisitor;
 import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
 import org.eclipse.ocl.examples.codegen.java.ImportUtils;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
-import org.eclipse.ocl.examples.codegen.library.NativeProperty;
+import org.eclipse.ocl.examples.codegen.library.AbstractNativeProperty;
 import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreGenModelGeneratorAdapter;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
@@ -276,7 +276,7 @@ public abstract class AutoCodeGenerator extends JavaCodeGenerator
 	protected @NonNull Property createNativeProperty(@NonNull String name, @NonNull Type asElementType,
 			boolean isReadOnly, boolean isRequired) {
 		Property asProperty = PivotUtil.createProperty(name, asElementType);
-		asProperty.setImplementation(NativeProperty.INSTANCE);
+		asProperty.setImplementation(AbstractNativeProperty.INSTANCE);
 		asProperty.setIsReadOnly(isReadOnly);
 		asProperty.setIsRequired(isReadOnly);
 		return asProperty;
