@@ -25,7 +25,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGConstant;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElementId;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
@@ -285,7 +284,7 @@ public class CodeGenAnalyzer
 		return cgVariableExp;
 	}
 
-	public @NonNull CGExecutorOperation createExecutorOperation(@NonNull Operation asOperation) {
+/*	public @NonNull CGExecutorOperation createExecutorOperation(@NonNull Operation asOperation) {
 		OperationId operationId = asOperation.getOperationId();
 		CGExecutorOperation cgOperation = CGModelFactory.eINSTANCE.createCGExecutorOperation();
 		CGElementId cgOperationId = getElementId(operationId);
@@ -295,7 +294,7 @@ public class CodeGenAnalyzer
 		globalNameManager.declareLazyName(cgOperation);
 		cgOperation.getDependsOn().add(cgOperationId);
 		return cgOperation;
-	}
+	} */
 
 	public @NonNull CGExecutorProperty createExecutorOppositeProperty(@NonNull Property asProperty) {
 		PropertyId propertyId = asProperty.getPropertyId();

@@ -49,8 +49,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElementId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorCompositionProperty;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOperation;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
@@ -1672,7 +1670,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		return true;
 	}
 
-	@Override
+/*	@Override
 	public @NonNull Boolean visitCGExecutorOperation(@NonNull CGExecutorOperation cgExecutorOperation) {
 		js.appendDeclaration(cgExecutorOperation);
 		js.append(" = ");
@@ -1702,9 +1700,9 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		js.appendClassCast(cgExecutorOperation, castBody);
 		js.append(";\n");
 		return true;
-	}
+	} */
 
-	@Override
+/*	@Override
 	public @NonNull Boolean visitCGExecutorOperationCallExp(@NonNull CGExecutorOperationCallExp cgOperationCallExp) {
 		Operation pOperation = cgOperationCallExp.getReferredOperation();
 		CGValuedElement cgThis = cgOperationCallExp.getCgThis();
@@ -1755,7 +1753,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		js.appendClassCast(cgOperationCallExp, castBody);
 		js.append(";\n");
 		return true;
-	}
+	} */
 
 	@Override
 	public @NonNull Boolean visitCGExecutorProperty(@NonNull CGExecutorProperty cgExecutorProperty) {

@@ -1956,9 +1956,9 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		if (asTemplateableElement instanceof Type) {
 			cgTemplateableElement = context.createExecutorType((Type)asTemplateableElement);
 		}
-		else if (asTemplateableElement instanceof Operation) {
-			cgTemplateableElement = context.createExecutorOperation((Operation)asTemplateableElement);
-		}
+	//	else if (asTemplateableElement instanceof Operation) {
+	//		cgTemplateableElement = context.createExecutorOperation((Operation)asTemplateableElement);
+	//	}
 		else {
 			codeGenerator.addProblem(new UnsupportedOperationException("visitTypeExp for non-Type Templateparameter"));
 			return null;

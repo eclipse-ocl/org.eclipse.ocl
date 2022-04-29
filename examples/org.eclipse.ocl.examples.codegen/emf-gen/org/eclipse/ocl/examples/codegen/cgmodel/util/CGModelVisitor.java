@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
- * 
+ *
  * </copyright>
  *
  * This code is auto-generated
@@ -71,8 +71,6 @@ public interface CGModelVisitor<R>
 	R visitCGElementId(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGElementId object);
 	R visitCGExecutorCompositionProperty(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGExecutorCompositionProperty object);
 	R visitCGExecutorNavigationProperty(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGExecutorNavigationProperty object);
-	R visitCGExecutorOperation(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGExecutorOperation object);
-	R visitCGExecutorOperationCallExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGExecutorOperationCallExp object);
 	R visitCGExecutorOppositeProperty(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGExecutorOppositeProperty object);
 	R visitCGExecutorOppositePropertyCallExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGExecutorOppositePropertyCallExp object);
 	R visitCGExecutorProperty(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGExecutorProperty object);

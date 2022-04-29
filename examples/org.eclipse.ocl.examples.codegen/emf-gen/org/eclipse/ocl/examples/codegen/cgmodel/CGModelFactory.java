@@ -221,24 +221,6 @@ public interface CGModelFactory extends EFactory {
 	@NonNull CGExecutorOppositeProperty createCGExecutorOppositeProperty();
 
 	/**
-	 * Returns a new object of class '<em>CG Executor Operation</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>CG Executor Operation</em>'.
-	 * @generated
-	 */
-	@NonNull CGExecutorOperation createCGExecutorOperation();
-
-	/**
-	 * Returns a new object of class '<em>CG Executor Operation Call Exp</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>CG Executor Operation Call Exp</em>'.
-	 * @generated
-	 */
-	@NonNull CGExecutorOperationCallExp createCGExecutorOperationCallExp();
-
-	/**
 	 * Returns a new object of class '<em>CG Executor Opposite Property Call Exp</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

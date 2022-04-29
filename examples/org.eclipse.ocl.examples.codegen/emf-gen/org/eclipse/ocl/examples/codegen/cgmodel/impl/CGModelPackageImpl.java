@@ -49,8 +49,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElementId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorCompositionProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorNavigationProperty;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOperation;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOppositeProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOppositePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorProperty;
@@ -3848,12 +3846,6 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		initEClass(cgExecutorNavigationPropertyEClass, CGExecutorNavigationProperty.class, "CGExecutorNavigationProperty", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(cgExecutorOppositePropertyEClass, CGExecutorOppositeProperty.class, "CGExecutorOppositeProperty", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-		initEClass(cgExecutorOperationEClass, CGExecutorOperation.class, "CGExecutorOperation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getCGExecutorOperation_UnderlyingOperationId(), this.getCGElementId(), null, "underlyingOperationId", null, 0, 1, CGExecutorOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(cgExecutorOperationCallExpEClass, CGExecutorOperationCallExp.class, "CGExecutorOperationCallExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getCGExecutorOperationCallExp_ExecutorOperation(), this.getCGExecutorOperation(), null, "executorOperation", null, 1, 1, CGExecutorOperationCallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(cgExecutorOppositePropertyCallExpEClass, CGExecutorOppositePropertyCallExp.class, "CGExecutorOppositePropertyCallExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getCGExecutorOppositePropertyCallExp_ExecutorProperty(), this.getCGExecutorProperty(), null, "executorProperty", null, 1, 1, CGExecutorOppositePropertyCallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

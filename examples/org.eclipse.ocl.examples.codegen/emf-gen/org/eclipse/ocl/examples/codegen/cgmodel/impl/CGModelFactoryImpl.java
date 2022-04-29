@@ -46,8 +46,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGEcorePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElementId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorCompositionProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorNavigationProperty;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOperation;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOppositeProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOppositePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorPropertyCallExp;
@@ -184,8 +182,6 @@ public class CGModelFactoryImpl extends EFactoryImpl implements CGModelFactory {
 			case 26: return createCGExecutorCompositionProperty();
 			case 27: return createCGExecutorNavigationProperty();
 			case 28: return createCGExecutorOppositeProperty();
-			case 29: return createCGExecutorOperation();
-			case 30: return createCGExecutorOperationCallExp();
 			case 31: return createCGExecutorOppositePropertyCallExp();
 			case 33: return createCGExecutorPropertyCallExp();
 			case 34: return createCGExecutorShadowPart();
@@ -656,28 +652,6 @@ public class CGModelFactoryImpl extends EFactoryImpl implements CGModelFactory {
 	public @NonNull CGExecutorOppositeProperty createCGExecutorOppositeProperty() {
 		CGExecutorOppositePropertyImpl cgExecutorOppositeProperty = new CGExecutorOppositePropertyImpl();
 		return cgExecutorOppositeProperty;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public @NonNull CGExecutorOperation createCGExecutorOperation() {
-		CGExecutorOperationImpl cgExecutorOperation = new CGExecutorOperationImpl();
-		return cgExecutorOperation;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public @NonNull CGExecutorOperationCallExp createCGExecutorOperationCallExp() {
-		CGExecutorOperationCallExpImpl cgExecutorOperationCallExp = new CGExecutorOperationCallExpImpl();
-		return cgExecutorOperationCallExp;
 	}
 
 	/**

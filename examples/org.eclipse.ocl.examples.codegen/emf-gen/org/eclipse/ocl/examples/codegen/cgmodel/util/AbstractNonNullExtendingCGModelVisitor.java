@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
- * 
+ *
  * </copyright>
  *
  * This code is auto-generated
@@ -196,16 +196,6 @@ public abstract class AbstractNonNullExtendingCGModelVisitor<R, C>
 	@Override
 	public @NonNull R visitCGExecutorNavigationProperty(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGExecutorNavigationProperty object) {
 		return visitCGExecutorProperty(object);
-	}
-
-	@Override
-	public @NonNull R visitCGExecutorOperation(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGExecutorOperation object) {
-		return visitCGValuedElement(object);
-	}
-
-	@Override
-	public @NonNull R visitCGExecutorOperationCallExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGExecutorOperationCallExp object) {
-		return visitCGOperationCallExp(object);
 	}
 
 	@Override

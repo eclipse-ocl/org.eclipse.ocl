@@ -14,7 +14,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.cgmodel.*;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGAccumulator;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGAssertNonNullExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBoolean;
@@ -43,8 +42,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElementId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorCompositionProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorNavigationProperty;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOperation;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOppositeProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOppositePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorProperty;
@@ -96,6 +93,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGReal;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGSettableVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowPart;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGSourcedCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGString;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTemplateParameterExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGThrowExp;
@@ -490,28 +488,6 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = caseCGTypedElement(cgExecutorOppositeProperty);
 				if (result == null) result = caseCGNamedElement(cgExecutorOppositeProperty);
 				if (result == null) result = caseCGElement(cgExecutorOppositeProperty);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case 29: {
-				CGExecutorOperation cgExecutorOperation = (CGExecutorOperation)theEObject;
-				T result = caseCGExecutorOperation(cgExecutorOperation);
-				if (result == null) result = caseCGValuedElement(cgExecutorOperation);
-				if (result == null) result = caseCGTypedElement(cgExecutorOperation);
-				if (result == null) result = caseCGNamedElement(cgExecutorOperation);
-				if (result == null) result = caseCGElement(cgExecutorOperation);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case 30: {
-				CGExecutorOperationCallExp cgExecutorOperationCallExp = (CGExecutorOperationCallExp)theEObject;
-				T result = caseCGExecutorOperationCallExp(cgExecutorOperationCallExp);
-				if (result == null) result = caseCGOperationCallExp(cgExecutorOperationCallExp);
-				if (result == null) result = caseCGCallExp(cgExecutorOperationCallExp);
-				if (result == null) result = caseCGValuedElement(cgExecutorOperationCallExp);
-				if (result == null) result = caseCGTypedElement(cgExecutorOperationCallExp);
-				if (result == null) result = caseCGNamedElement(cgExecutorOperationCallExp);
-				if (result == null) result = caseCGElement(cgExecutorOperationCallExp);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -2082,36 +2058,6 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseCGExecutorOppositeProperty(CGExecutorOppositeProperty object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>CG Executor Operation</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>CG Executor Operation</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseCGExecutorOperation(CGExecutorOperation object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>CG Executor Operation Call Exp</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>CG Executor Operation Call Exp</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseCGExecutorOperationCallExp(CGExecutorOperationCallExp object) {
 		return null;
 	}
 

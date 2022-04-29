@@ -43,8 +43,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOppositePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcorePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElementId;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOperation;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOppositePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorPropertyCallExp;
@@ -2304,7 +2302,6 @@ public class CGValuedElementModelSpec extends ModelSpec
 			new CGValuedElementModelSpec(CGOperationCallExp.class, "referredOperation",	null     , null     , null     , Nul.OPRTN, Inv.OPRTN, null     , null     , null     , null    , null     , null     , null     , null     , null     , null     , null     , Eq.EQUIV);
 			new CGValuedElementModelSpec(CGCachedOperationCallExp.class, null,			Box.BOX  , null     , null     , null     , null     , null     , null     , null     , null    , null     , null     , null     , null     , null     , null     , null     , null    );
 			new CGValuedElementModelSpec(CGEcoreOperationCallExp.class, null,			Box.E_OP , null     , null     , Nul.NEVER, null     , null     , null     , null     , null    , null     , null     , null     , null     , null     , null     , null     , null    );
-			new CGValuedElementModelSpec(CGExecutorOperationCallExp.class, null,		Box.BOX  , null     , null     , null     , null     , null     , null     , null     , null    , null     , null     , null     , null     , null     , null     , null     , null    );
 			new CGValuedElementModelSpec(CGForeignOperationCallExp.class, null,			Box.BOX  , null     , null     , null     , Inv.NEVER, null     , null     , null     , null    , null     , null     , null     , null     , null     , null     , null     , null    );
 			new CGValuedElementModelSpec(CGLibraryOperationCallExp.class, null,			Box.BOX  , null     , null     , null     , null     , null     , null     , null     , null    , null     , null     , null     , null     , null     , null     , null     , null    );
 			new CGValuedElementModelSpec(CGNativeOperationCallExp.class, null,			Box.NAT  , null     , null     , null     , Inv.NATOP, null     , null     , null     , null    , null     , null     , null     , null     , null     , null     , null     , null    );
@@ -2335,7 +2332,6 @@ public class CGValuedElementModelSpec extends ModelSpec
 			new CGValuedElementModelSpec(CGCollectionExp.class, "CGCollectionPart",		Box.BOX  , Ths.PARTS, null     , Nul.NEVER, Inv.PARTS, Glo.PARTS, null     , null     , null    , Con.PARTS, null     , null     , null     , Ctl.LORG , null     , null     , Eq.EQUIV);
 			new CGValuedElementModelSpec(CGCollectionPart.class, null,					Box.RANGE, Ths.CPART, null     , Nul.CPART, Inv.CPART, Glo.CPART, Inl.CPART, null     , null    , Con.CPART, null     , null     , null     , null     , Com.FALSE, null     , Eq.EQUIV);
 			new CGValuedElementModelSpec(CGConstantExp.class, "referredConstant",		Box.DELEG, Ths.DELEG, null     , null     , null     , Glo.DELEG, null     , null     , null    , null     , Val.DELEG, null     , null     , null     , Com.DELEG, null     , Eq.DELEG);
-			new CGValuedElementModelSpec(CGExecutorOperation.class, null,				Box.BOX  , null     , null     , null     , null     , Glo.FALSE, null     , null     , null    , Con.TRUE , null     , null     , Ctx.TRUE , null     , Com.MUST , null     , Eq.UNSUP);
 			new CGValuedElementModelSpec(CGExecutorProperty.class, null,				Box.BOX  , null     , null     , Nul.NEVER, Inv.NEVER, Glo.FALSE, Inl.FALSE, null     , Ct.FALSE, Con.TRUE , null     , null     , Ctx.TRUE , Ctl.CNTRL, Com.MUST , null     , Eq.UNSUP);
 			new CGValuedElementModelSpec(CGExecutorShadowPart.class, null,				Box.BOX  , null     , null     , null     , null     , null     , null     , null     , null    , null     , null     , null     , null     , null     , null     , null     , Eq.AST);
 			new CGValuedElementModelSpec(CGExecutorType.class, null,					Box.BOX  , null     , null     , Nul.NEVER, Inv.NEVER, Glo.FALSE, null     , null     , null    , Con.TRUE , null     , null     , null     , null     , Com.MUST , null     , Eq.TYPE );

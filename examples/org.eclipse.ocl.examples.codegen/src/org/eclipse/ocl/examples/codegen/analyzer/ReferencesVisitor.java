@@ -21,7 +21,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElementId;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIsEqual2Exp;
@@ -102,11 +101,6 @@ public class ReferencesVisitor extends AbstractExtendingCGModelVisitor<@NonNull 
 	@Override
 	public @NonNull List<@Nullable Object> visitCGElementId(@NonNull CGElementId cgElement) {
 		return append(super.visitCGElementId(cgElement), cgElement.getASTypeId());
-	}
-
-	@Override
-	public @NonNull List<@Nullable Object> visitCGExecutorOperation(@NonNull CGExecutorOperation cgElement) {
-		return append(super.visitCGExecutorOperation(cgElement), cgElement.getUnderlyingOperationId());
 	}
 
 	@Override

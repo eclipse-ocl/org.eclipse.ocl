@@ -24,8 +24,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElementId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorNavigationProperty;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOperation;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOppositePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorPropertyCallExp;
@@ -287,7 +285,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 		return super.visitCGExecutorNavigationProperty(cgExecutorProperty);
 	}
 
-	@Override
+/*	@Override
 	public @Nullable Object visitCGExecutorOperation(@NonNull CGExecutorOperation cgExecutorOperation) {
 		cgExecutorOperation.setTypeId(analyzer.getTypeId(JavaConstants.EXECUTOR_OPERATION_TYPE_ID));
 		installIdResolverVariable(cgExecutorOperation);
@@ -296,16 +294,16 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 			cgOperationId.accept(this);
 		}
 		return super.visitCGExecutorOperation(cgExecutorOperation);
-	}
+	} */
 
-	@Override
+/*	@Override
 	public @Nullable Object visitCGExecutorOperationCallExp(@NonNull CGExecutorOperationCallExp cgExecutorOperationCallExp) {
 		CGExecutorOperation cgExecutorOperation = cgExecutorOperationCallExp.getExecutorOperation();
 		if (cgExecutorOperation != null) {		// FIXME this is contained so ignored by super
 			cgExecutorOperation.accept(this);
 		}
 		return super.visitCGExecutorOperationCallExp(cgExecutorOperationCallExp);
-	}
+	}  */
 
 	@Override
 	public @Nullable Object visitCGExecutorOppositePropertyCallExp(@NonNull CGExecutorOppositePropertyCallExp cgExecutorPropertyCallExp) {
