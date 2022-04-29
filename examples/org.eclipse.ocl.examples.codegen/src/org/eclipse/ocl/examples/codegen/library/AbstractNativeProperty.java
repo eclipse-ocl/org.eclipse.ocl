@@ -15,16 +15,17 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.AbstractProperty;
+import org.eclipse.ocl.pivot.library.NativeProperty;
 
 /**
  * The instance of NativeProperty supports evaluation of a property using native language facilities
  * (i.e X.nativeProperty) when code generated).
  */
-public class NativeProperty extends AbstractProperty
+public abstract class AbstractNativeProperty extends AbstractProperty implements NativeProperty
 {
-	public static final @NonNull NativeProperty INSTANCE = new NativeProperty();
+	public static final @NonNull AbstractNativeProperty INSTANCE = new AbstractNativeProperty() {};
 
-	public NativeProperty() {}
+	protected AbstractNativeProperty() {}
 
 	@Override
 	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
