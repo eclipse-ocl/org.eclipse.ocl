@@ -11,10 +11,14 @@
 package org.eclipse.ocl.examples.codegen.analyzer;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager.NameVariant;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
@@ -30,12 +34,17 @@ public class NestedNameManager extends NameManager
 {
 	protected final @NonNull NameManager parent;
 	protected final @NonNull CGNamedElement cgScope;
-	private @Nullable List<@NonNull BaseNameResolution> reservedNameResolutions = null;
+	private @Nullable List<@NonNull NameResolution> reservedNameResolutions = null;
 
 	/**
 	 * The value name assignments.
 	 */
 	private @Nullable Context context = null;		// Non-null once value name allocation is permitted.
+
+	/**
+	 * Additional variants of resolvedName for which further unique names are required.
+	 */
+	private @NonNull Map<@NonNull CGValuedElement, @Nullable Map<@NonNull NameVariant, @Nullable String>> element2nameVariant2name = new HashMap<>();
 
 	public NestedNameManager(@NonNull NameManager parent, @NonNull CGNamedElement cgScope) {
 		super(parent, parent.helper);
@@ -45,18 +54,62 @@ public class NestedNameManager extends NameManager
 		parent.addChild(this);
 	}
 
+	public void addNameVariant(@NonNull CGValuedElement cgElement, @NonNull NameVariant nameVariant) {
+	//	String resolvedName = getNameResolution().getResolvedName();
+	//	assert resolvedName == null;
+	//	assert (resolvedName == null) || ((NestedNameManager)getNameManager()).isReserved(this) : "Cannot addNameVariant after name is resolved";
+		Map<@NonNull NameVariant, @Nullable String> nameVariant2name = element2nameVariant2name.get(cgElement);
+		if (nameVariant2name == null) {
+			nameVariant2name = new HashMap<>();
+			element2nameVariant2name.put(cgElement, nameVariant2name);
+		}
+		String old = nameVariant2name.put(nameVariant, null);
+		assert old == null;
+	}
+
+	public void assignExtraNames(@NonNull Context context) {
+		for (Entry<@NonNull CGValuedElement, @Nullable Map<@NonNull NameVariant, @Nullable String>> entry1 : element2nameVariant2name.entrySet()) {
+			Map<@NonNull NameVariant, @Nullable String> nameVariant2name = entry1.getValue();
+			if (nameVariant2name != null) {
+				CGValuedElement cgElement = entry1.getKey();
+				assert cgElement.eContainer() != null;		// Not eliminated by CSE
+				NameResolution nameResolution = cgElement.basicGetNameResolution();
+				if (nameResolution == null) {
+					nameResolution = declareLazyName(cgElement);
+					nameResolution.resolveNameHint();;
+				}
+				nameResolution.resolveIn(context);
+				String resolvedName = nameResolution.getResolvedName();
+				for (Entry<@NonNull NameVariant, @Nullable String> entry2 : nameVariant2name.entrySet()) {
+					NameVariant nameVariant = entry2.getKey();
+					String name = entry2.getValue();
+					assert name == null;
+					String variantNameHint = nameVariant.getName(resolvedName);
+					String variantName = context.allocateUniqueName(variantNameHint, cgElement);
+					nameVariant2name.put(nameVariant, variantName);
+				}
+			}
+		}
+	}
+
 	public void assignNames() {
 		Context context2 = context;
 		assert context2 == null;
 		this.context = context2 = new Context(this);
+		assignReservedNames(context2);
+		assignLocalNames(context2);
+		assignExtraNames(context2);
+		assignNestedNames();
+	}
+
+	protected void assignReservedNames(@NonNull Context context) {
 		if (reservedNameResolutions != null) {
-			for (@NonNull BaseNameResolution nameResolution : reservedNameResolutions) {
+			for (@NonNull NameResolution nameResolution : reservedNameResolutions) {
 				String resolvedName = nameResolution.getResolvedName();
 				CGValuedElement primaryElement = nameResolution.getPrimaryElement();
-				context2.reserveName(resolvedName, primaryElement);
+				context.reserveName(resolvedName, primaryElement);
 			}
 		}
-		assignNames(context2);
 	}
 
 	@Override
@@ -78,18 +131,18 @@ public class NestedNameManager extends NameManager
 			return nameResolution;
 		}
 		String nameHint = helper.getNameHint(cgElement);
-		return new BaseNameResolution(this, cgElement, nameHint);
+		return new NameResolution(this, cgElement, nameHint);
 	}
 
 	@Override
-	public @NonNull BaseNameResolution declareReservedName(@NonNull CGValuedElement cgElement, @NonNull String nameHint) {
+	public @NonNull NameResolution declareReservedName(@NonNull CGValuedElement cgElement, @NonNull String nameHint) {
 		assert !cgElement.isGlobal();
 		assert cgElement.getNamedValue() == cgElement;
 		NameResolution nameResolution2 = cgElement.basicGetNameResolution();
 		assert nameResolution2 == null;
-		BaseNameResolution baseNameResolution = new BaseNameResolution(this, cgElement, nameHint);
+		NameResolution baseNameResolution = new NameResolution(this, cgElement, nameHint);
 		baseNameResolution.setResolvedName(nameHint);
-		List<@NonNull BaseNameResolution> reservedNameResolutions2 = reservedNameResolutions;
+		List<@NonNull NameResolution> reservedNameResolutions2 = reservedNameResolutions;
 		if (reservedNameResolutions2 == null) {
 			reservedNameResolutions = reservedNameResolutions2 = new ArrayList<>();
 		}
@@ -122,6 +175,14 @@ public class NestedNameManager extends NameManager
 		return unsafeNameResolution;
 	}
 
+	public @NonNull String getVariantResolvedName(@NonNull CGValuedElement cgElement, @NonNull NameVariant nameVariant) {
+		Map<@NonNull NameVariant, @Nullable String> nameVariant2name = element2nameVariant2name.get(cgElement);
+		assert nameVariant2name != null;
+		String name = nameVariant2name.get(nameVariant);
+		assert name != null;
+		return name;
+	}
+
 	@Override
 	public boolean isGlobal() {
 		return false;
@@ -129,6 +190,13 @@ public class NestedNameManager extends NameManager
 
 	public boolean isReserved(@NonNull NameResolution nameResolution) {
 		return (reservedNameResolutions != null) && reservedNameResolutions.contains(nameResolution);
+	}
+
+	public void setNameVariant(@NonNull CGValuedElement cgElement, @NonNull NameVariant nameVariant, @NonNull String variantName) {
+		Map<@NonNull NameVariant, @Nullable String> nameVariant2name = element2nameVariant2name.get(cgElement);
+		assert nameVariant2name != null;
+		String old = nameVariant2name.put(nameVariant, variantName);
+		assert old == null;
 	}
 
 	@Override

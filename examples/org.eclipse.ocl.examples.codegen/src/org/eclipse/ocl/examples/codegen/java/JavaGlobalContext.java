@@ -19,8 +19,8 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.analyzer.BaseNameResolution;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
+import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
@@ -49,22 +49,22 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 	//	Java reserved word. Access should therefore use globalContext.getYYY rather than JavaConstants.YYY
 	//	to minimize eiting if a new Java reserved word interferes.
 	//
-	protected final @NonNull BaseNameResolution anyName;
-//	protected final @NonNull BaseNameResolution eName;
-	protected final @NonNull BaseNameResolution evaluateName;
-	protected final @NonNull BaseNameResolution evaluationCacheName;
-	protected final @NonNull BaseNameResolution executorName;
-	protected final @NonNull BaseNameResolution getCachedEvaluationResult;
-	protected final @NonNull BaseNameResolution idResolverName;
-	protected final @NonNull BaseNameResolution initValueName;
-	protected final @NonNull BaseNameResolution instanceName;
-	protected final @NonNull BaseNameResolution modelManagerName;
-	protected final @NonNull BaseNameResolution selfName;
-	protected final @NonNull BaseNameResolution sourceAndArgumentValuesName;
-	protected final @NonNull BaseNameResolution standardLibraryVariableName;
-	protected final @NonNull BaseNameResolution thisName;
-	protected final @NonNull BaseNameResolution typeIdName;
-	protected final @NonNull BaseNameResolution valueName;
+	protected final @NonNull NameResolution anyName;
+//	protected final @NonNull NameResolution eName;
+	protected final @NonNull NameResolution evaluateName;
+	protected final @NonNull NameResolution evaluationCacheName;
+	protected final @NonNull NameResolution executorName;
+	protected final @NonNull NameResolution getCachedEvaluationResult;
+	protected final @NonNull NameResolution idResolverName;
+	protected final @NonNull NameResolution initValueName;
+	protected final @NonNull NameResolution instanceName;
+	protected final @NonNull NameResolution modelManagerName;
+	protected final @NonNull NameResolution selfName;
+	protected final @NonNull NameResolution sourceAndArgumentValuesName;
+	protected final @NonNull NameResolution standardLibraryVariableName;
+	protected final @NonNull NameResolution thisName;
+	protected final @NonNull NameResolution typeIdName;
+	protected final @NonNull NameResolution valueName;
 
 	public JavaGlobalContext(@NonNull CG codeGenerator) {
 		super(codeGenerator);
@@ -151,7 +151,7 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 		return new JavaLocalContext<CG>(this, (JavaLocalContext<@NonNull ? extends CG>)outerContext, cgNamedElement, asNamedElement);
 	}
 
-	public @NonNull BaseNameResolution getAnyNameResolution() {
+	public @NonNull NameResolution getAnyNameResolution() {
 		return anyName;
 	}
 
@@ -164,7 +164,7 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 		return evaluateName.getResolvedName();
 	}
 
-	public @NonNull BaseNameResolution getEvaluateNameResolution() {
+	public @NonNull NameResolution getEvaluateNameResolution() {
 		return evaluateName;
 	}
 
@@ -176,7 +176,7 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 		return executorName.getResolvedName();
 	}
 
-	public @NonNull BaseNameResolution getExecutorNameResolution() {
+	public @NonNull NameResolution getExecutorNameResolution() {
 		return executorName;
 	}
 
@@ -192,7 +192,7 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 		return idResolverName.getResolvedName();
 	}
 
-	public @NonNull BaseNameResolution getIdResolverNameResolution() {
+	public @NonNull NameResolution getIdResolverNameResolution() {
 		return idResolverName;
 	}
 
@@ -214,7 +214,7 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 		return instanceName.getResolvedName();
 	}
 
-	public @NonNull BaseNameResolution getInstanceNameResolution() {
+	public @NonNull NameResolution getInstanceNameResolution() {
 		return instanceName;
 	}
 
@@ -227,7 +227,7 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 		return modelManagerName.getResolvedName();
 	}
 
-	public @NonNull BaseNameResolution getModelManagerNameResolution() {
+	public @NonNull NameResolution getModelManagerNameResolution() {
 		return modelManagerName;
 	}
 
@@ -258,7 +258,7 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 		return selfName.getResolvedName();
 	}
 
-	public @NonNull BaseNameResolution getSelfNameResolution() {
+	public @NonNull NameResolution getSelfNameResolution() {
 		return selfName;
 	}
 
@@ -266,15 +266,15 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 		return sourceAndArgumentValuesName.getResolvedName();
 	}
 
-	public @NonNull BaseNameResolution getStandardLibraryVariableNameResolution() {
+	public @NonNull NameResolution getStandardLibraryVariableNameResolution() {
 		return standardLibraryVariableName;
 	}
 
-	public @NonNull BaseNameResolution getThisNameResolution() {
+	public @NonNull NameResolution getThisNameResolution() {
 		return thisName;
 	}
 
-	public @NonNull BaseNameResolution getTypeIdNameResolution() {
+	public @NonNull NameResolution getTypeIdNameResolution() {
 		return typeIdName;
 	}
 
@@ -286,8 +286,12 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 		assert cgNamedElement.getAst() != null;
 //		LocalContext localContext = new DebugLocalContext(outerContext, cgNamedElement, asNamedElement); //codeGenerator.getGlobalContext().createLocalContext(cgNamedElement);
 		JavaLocalContext<@NonNull ? extends CG> localContext = createLocalContext((JavaLocalContext<@NonNull ? extends CG>) outerContext, cgNamedElement, asNamedElement); //codeGenerator.getGlobalContext().createLocalContext(cgNamedElement);
-		JavaLocalContext<@NonNull ? extends CG> old = localContexts.put(cgNamedElement, localContext);
-		assert old == null;
+		setLocalContext(cgNamedElement, localContext);
 		return localContext;
+	}
+
+	public void setLocalContext(@NonNull CGNamedElement cgNamedElement, @NonNull JavaLocalContext<@NonNull ? extends CG> localContext) {
+		JavaLocalContext<?> old = localContexts.put(cgNamedElement, localContext);
+		assert old == null;
 	}
 }

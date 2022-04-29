@@ -21,6 +21,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -225,13 +226,9 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	private /*@LazyNonNull*/ ASM5JavaAnnotationReader annotationReader = null;
 
 	private final @NonNull NameVariant BODY_NameVariant;
-	private final @NonNull NameVariant BOXED_NameVariant;
-	private final @NonNull NameVariant CAUGHT_NameVariant;
-//	private final @NonNull NameVariant GUARDED_NameVariant;		// GUARD is a prefix throw - no new variable
 	private final @NonNull NameVariant IMPL_NameVariant;
 	private final @NonNull NameVariant ITER_NameVariant;
 	private final @NonNull NameVariant MGR_NameVariant;
-	private final @NonNull NameVariant SAFE_NameVariant;
 	private final @NonNull NameVariant THROWN_NameVariant;
 	private final @NonNull NameVariant TYPE_NameVariant;
 
@@ -244,13 +241,9 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	public JavaCodeGenerator(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable GenModel genModel) {
 		super(environmentFactory, genModel);
 		BODY_NameVariant = globalNameManager.addNameVariantPrefix("BODY_");
-		BOXED_NameVariant = globalNameManager.addNameVariantPrefix("BOXED_");
-		CAUGHT_NameVariant = globalNameManager.addNameVariantPrefix("CAUGHT_");
-//		GUARDED_NameVariant = globalNameManager.addNameVariantPrefix("GUARDED_");
 		IMPL_NameVariant = globalNameManager.addNameVariantPrefix("IMPL_");
 		ITER_NameVariant = globalNameManager.addNameVariantPrefix("ITER_");
 		MGR_NameVariant = globalNameManager.addNameVariantPrefix("MGR_");
-		SAFE_NameVariant = globalNameManager.addNameVariantPrefix("SAFE_");
 		THROWN_NameVariant = globalNameManager.addNameVariantPrefix("THROWN_");
 		TYPE_NameVariant = globalNameManager.addNameVariantPrefix("TYPE_");
 	}
@@ -263,6 +256,10 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	@Override
 	public @NonNull CommonSubexpressionEliminator createCommonSubexpressionEliminator() {
 		return new CommonSubexpressionEliminator(this);
+	}
+
+	public @NonNull CG2JavaNameVisitor createCG2JavaNameVisitor() {
+		return new CG2JavaNameVisitor(getGlobalContext());
 	}
 
 	public @NonNull CG2JavaPreVisitor createCG2JavaPreVisitor() {
@@ -337,14 +334,14 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		}
 	//	else if (cgElement instanceof CGCatchExp) {
 	//		NameResolution sourceNameResolution = ((CGCatchExp)cgElement).getSource().basicGetNameResolution();
-	//		assert sourceNameResolution == nameResolution.getBaseNameResolution();
+	//		assert sourceNameResolution == nameResolution.getNameResolution();
 	//	}
-		else if (nameResolution != nameResolution.getBaseNameResolution()) {
-			// variant is ok
-		}
-		else if (nameResolution.hasVariants()) {
-			// with-variants is ok
-		}
+	//	else if (nameResolution != nameResolution.getNameResolution()) {
+	//		// variant is ok
+	//	}
+	//	else if (nameResolution.hasVariants()) {
+	//		// with-variants is ok
+	//	}
 		else if (cgElement instanceof CGConstantExp) {
 			NameResolution referredNameResolution = ((CGConstantExp)cgElement).getReferredValue().basicGetNameResolution();
 			assert referredNameResolution == nameResolution;
@@ -355,7 +352,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		}
 		else if (cgElement instanceof CGVariableExp) {
 			NameResolution variableNameResolution = ((CGVariableExp)cgElement).getReferredValue().basicGetNameResolution();
-			assert (variableNameResolution == nameResolution) || (variableNameResolution == nameResolution.getBaseNameResolution());
+			assert (variableNameResolution == nameResolution) || (variableNameResolution == nameResolution);
 		}
 		else {
 			EObject eContainer = cgElement.eContainer();
@@ -364,7 +361,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 			}
 			else if (eContainer instanceof CGCatchExp) {
 				NameResolution catchResolution = ((CGCatchExp)eContainer).basicGetNameResolution();
-				assert (catchResolution != null) && (catchResolution.getBaseNameResolution() == nameResolution);
+				assert (catchResolution != null) && (catchResolution == nameResolution);
 			}
 			else if (eContainer instanceof CGGuardExp) {
 				NameResolution guardResolution = ((CGGuardExp)eContainer).basicGetNameResolution();
@@ -378,7 +375,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 				if (containerNameResolution != containerNameResolution) {
 					System.out.println("Bad " + NameUtil.debugSimpleName(nameResolution) + " for " + NameUtil.debugSimpleName(cgElement) + " below " + NameUtil.debugSimpleName(((CGValuedElement)eContainer).basicGetNameResolution()) + " for " + NameUtil.debugSimpleName(eContainer));		// XXX YYY
 				}
-				assert (nameResolution.getBaseNameResolution() == containerNameResolution);
+				assert (nameResolution == containerNameResolution);
 			}
 			else {
 			//	assert false : "Unexpected nameResolution for a " + cgValuedElement2.eClass().getName();		// XXX YYY
@@ -394,11 +391,6 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	}
 
 	@Override
-	public @NonNull NameVariant getBOXED_NameVariant() {
-		return BOXED_NameVariant;
-	}
-
-	@Override
 	public @NonNull BoxedDescriptor getBoxedDescriptor(@NonNull ElementId elementId) {
 		BoxedDescriptor boxedDescriptor = boxedDescriptors.get(elementId);
 		if (boxedDescriptor != null) {
@@ -408,11 +400,6 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		assert boxedDescriptor != null;
 		boxedDescriptors.put(elementId, boxedDescriptor);
 		return boxedDescriptor;
-	}
-
-	@Override
-	public @NonNull NameVariant getCAUGHT_NameVariant() {
-		return CAUGHT_NameVariant;
 	}
 
 	public @NonNull CGModelResourceFactory getCGResourceFactory() {
@@ -440,11 +427,6 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 
 	@Override
 	public abstract @NonNull JavaGlobalContext<@NonNull ? extends JavaCodeGenerator> getGlobalContext();
-
-//	@Override
-//	public @NonNull NameVariant getGUARDED_NameVariant() {
-//		return GUARDED_NameVariant;
-//	}
 
 	@Override
 	public @NonNull GlobalPlace getGlobalPlace() {
@@ -599,11 +581,6 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	public @NonNull String getQualifiedForeignClassName(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		assert false : "Unsupported getQualifiedForeignClassName";
 		return PivotUtil.getName(asClass);
-	}
-
-	@Override
-	public @NonNull NameVariant getSAFE_NameVariant() {
-		return SAFE_NameVariant;
 	}
 
 	public @NonNull NameVariant getTHROWN_NameVariant() {
@@ -763,6 +740,8 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		}
 		CommonSubexpressionEliminator cseEliminator = createCommonSubexpressionEliminator();
 		cseEliminator.optimize(cgPackage);
+		CG2JavaNameVisitor cg2nameVisitor = createCG2JavaNameVisitor();
+		cgPackage.accept(cg2nameVisitor);
 	}
 
 	/**
@@ -799,7 +778,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	}
 
 	protected void visitInPostOrder(@NonNull CGElement cgElement) {
-		visitInPostOrder2(cgElement);
+		visitInPostOrder2(cgElement, null);
 		for (EObject eObject : new TreeIterable(cgElement, true)) {		// XXX debugging
 			if ((eObject instanceof CGValuedElement) && !((CGValuedElement)eObject).isInlined()) {
 				NameResolution nameResolution = ((CGValuedElement)eObject).basicGetNameResolution();
@@ -808,8 +787,11 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		}
 	}
 
-	protected void visitInPostOrder2(@NonNull CGElement cgElement) {
+	protected void visitInPostOrder2(@NonNull CGElement cgElement, @Nullable NameResolution parentNameResolution) {
 		if (cgElement instanceof CGValuedElement) {
+			if ("cu = .oclAsType(executor, u, TYP_SysML_ValueTypes_QUDV_c_c_QUDV_c_c_ConversionBasedUnit)".equals(cgElement.toString())) {
+				getClass();		// XXX
+			}
 			CGValuedElement cgValuedElement2 = (CGValuedElement)cgElement;
 			NameResolution nameResolution = cgValuedElement2.basicGetNameResolution();
 		//	assert (nameResolution == null) || debugCheckNameResolution(cgValuedElement2, nameResolution);
@@ -817,23 +799,60 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		JavaGlobalContext<@NonNull ? extends JavaCodeGenerator> globalContext = getGlobalContext();
 		for (EObject eObject : cgElement.eContents()) {					// XXX Surely preorder - no post order to satisfy bottom up dependency evaluation
 			if (eObject instanceof CGElement) {
-				visitInPostOrder2((CGElement)eObject);
+				CGElement cgChild = (CGElement)eObject;
+				EReference eContainmentFeature = cgChild.eContainmentFeature();
+				if (eContainmentFeature == CGModelPackage.Literals.CG_VARIABLE__INIT) {
+					NameResolution nameResolution = ((CGVariable)cgElement).basicGetNameResolution();
+					if (nameResolution == null) {
+						nameResolution = getGlobalContext().getLocalContext((CGVariable)cgElement).getNameManager().declareLazyName((CGVariable)cgElement);
+					}
+					visitInPostOrder2(cgChild, nameResolution);
+				}
+				else if (eContainmentFeature == CGModelPackage.Literals.CG_LET_EXP__INIT) {
+					visitInPostOrder2(cgChild, null);
+				}
+				else if (eContainmentFeature == CGModelPackage.Literals.CG_LET_EXP__IN) {
+					visitInPostOrder2(cgChild, parentNameResolution);
+				}
+				else {
+					visitInPostOrder2(cgChild, null);
+				}
 			}
 		}
 		if (cgElement instanceof CGValuedElement) {
 			CGValuedElement cgValuedElement2 = (CGValuedElement)cgElement;
-			NameResolution nameResolution = cgValuedElement2.basicGetNameResolution();
 			if (!cgValuedElement2.isInlined()) {
+				NameResolution nameResolution = cgValuedElement2.basicGetNameResolution();
 				if (nameResolution == null) {
-					JavaLocalContext<?> localContext = globalContext.basicGetLocalContext(cgValuedElement2);
-					NameManager nameManager = (localContext != null) && !cgValuedElement2.isGlobal() ? localContext.getNameManager() : globalNameManager;
-					nameResolution = nameManager.declareLazyName(cgValuedElement2);
+					if ((parentNameResolution != null) && !cgValuedElement2.isGlobal()) {
+						parentNameResolution.addCGElement(cgValuedElement2);
+					}
+					else {
+					//	assert false;			// XXX wip
+						NameManager nameManager = globalNameManager.bascGetScope(cgValuedElement2);
+						if (nameManager == null) {
+							JavaLocalContext<?> localContext = globalContext.basicGetLocalContext(cgValuedElement2);
+							nameManager = (localContext != null) && !cgValuedElement2.isGlobal() ? localContext.getNameManager() : globalNameManager;
+						}
+						nameResolution = nameManager.declareLazyName(cgValuedElement2);
+						nameResolution.resolveNameHint();
+					}
 				}
-				nameResolution.resolveNameHint();
+				else {
+				//	if (parentNameResolution != null) {
+				//		nameResolution.setDelegateTo(parentNameResolution);
+				//	}
+				//	else {
+				//		if (nameResolution.isUnresolved()) {
+				//			getClass();
+				//		}
+				//	}
+					nameResolution.resolveNameHint();
+				}
 			}
 			for (EObject eObject : ((CGValuedElement)cgElement).getOwns()) {					// XXX Surely preorder - no post order to satisfy bottom up dependency evaluation
 				if (eObject instanceof CGElement) {
-					visitInPostOrder2((CGElement)eObject);
+					visitInPostOrder2((CGElement)eObject, null);
 					if (eObject instanceof CGValuedElement) {
 						CGValuedElement cgValuedElement = (CGValuedElement)eObject;
 						if ((cgValuedElement.basicGetNameResolution() == null) && !cgValuedElement.isInlined()) {

@@ -245,11 +245,12 @@ public class CGLibraryOperationCallExpImpl extends CGOperationCallExpImpl implem
 
 	@Override
 	public @NonNull CGValuedElement getFirstArgument() {
-		return getCgArguments().get(0);
+		return ClassUtil.nonNullState(getCgArguments().get(0));
 	}
 
 	@Override
 	public @NonNull CGValuedElement getSecondArgument() {
-		return getCgArguments().get(1);
+		return ClassUtil.nonNullState(getCgArguments().get(1));
 	}
+
 } //CGLibraryOperationCallExpImpl

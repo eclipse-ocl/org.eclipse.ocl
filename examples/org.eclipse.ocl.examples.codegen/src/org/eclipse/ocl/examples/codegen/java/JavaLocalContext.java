@@ -12,8 +12,8 @@ package org.eclipse.ocl.examples.codegen.java;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.analyzer.BaseNameResolution;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
+import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.calling.SupportOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
@@ -117,7 +117,7 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 
 	protected @NonNull CGParameter createAnyParameter() {
 		assert isStatic;
-		BaseNameResolution anyName = globalContext.getAnyNameResolution();
+		NameResolution anyName = globalContext.getAnyNameResolution();
 		CGParameter anyParameter = analyzer.createCGParameter(anyName, analyzer.getTypeId(asType.getTypeId()), false);
 		anyParameter.setNonInvalid();
 		return anyParameter;
@@ -125,7 +125,7 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 
 	protected @NonNull CGParameter createExecutorParameter() {
 	//	assert executorIsParameter;
-		BaseNameResolution executorName = globalContext.getExecutorNameResolution();
+		NameResolution executorName = globalContext.getExecutorNameResolution();
 		CGParameter executorParameter = analyzer.createCGParameter(executorName, analyzer.getTypeId(JavaConstants.EXECUTOR_TYPE_ID), true);
 	//	executorParameter.setValueName(executorName);
 		executorParameter.setNonInvalid();
@@ -136,8 +136,8 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 	protected @NonNull CGVariable createExecutorVariable() {
 	//	assert !executorIsParameter;
 		CGNativeOperationCallExp executorInit = analyzer.createCGNativeOperationCallExp(JavaConstants.PIVOT_UTIL_GET_EXECUTOR_GET_METHOD, SupportOperationCallingConvention.INSTANCE);
-		BaseNameResolution executorNameResolution = globalContext.getExecutorNameResolution();
-		executorNameResolution.addCGElement(executorInit);
+		NameResolution executorNameResolution = globalContext.getExecutorNameResolution();
+	//	executorNameResolution.addCGElement(executorInit);
 		executorInit.setTypeId(analyzer.getTypeId(JavaConstants.EXECUTOR_TYPE_ID));
 		CGValuedElement contextParameter;
 		if (!isStatic) {
@@ -172,7 +172,7 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 
 	public @NonNull CGVariable createIdResolverVariable() {
 		CGNativeOperationCallExp idResolverInit = analyzer.createCGNativeOperationCallExp(JavaConstants.EXECUTOR_GET_ID_RESOLVER_METHOD, SupportOperationCallingConvention.INSTANCE);
-		BaseNameResolution idResolverNameResolution = globalContext.getIdResolverNameResolution();
+		NameResolution idResolverNameResolution = globalContext.getIdResolverNameResolution();
 		idResolverNameResolution.addCGElement(idResolverInit);
 		idResolverInit.setTypeId(analyzer.getTypeId(JavaConstants.ID_RESOLVER_TYPE_ID));
 		idResolverInit.setCgThis(analyzer.createCGVariableExp(getExecutorVariable()));
@@ -189,7 +189,7 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 
 	public @NonNull CGVariable createModelManagerVariable() {
 		CGNativeOperationCallExp modelManagerInit = analyzer.createCGNativeOperationCallExp(JavaConstants.EXECUTOR_GET_MODEL_MANAGER_METHOD, SupportOperationCallingConvention.INSTANCE);
-		BaseNameResolution modelManagerNameResolution = globalContext.getModelManagerNameResolution();
+		NameResolution modelManagerNameResolution = globalContext.getModelManagerNameResolution();
 		modelManagerNameResolution.addCGElement(modelManagerInit);
 		modelManagerInit.setTypeId(analyzer.getTypeId(JavaConstants.MODEL_MANAGER_TYPE_ID));
 		modelManagerInit.setCgThis(analyzer.createCGVariableExp(getExecutorVariable()));
@@ -205,7 +205,7 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 	}
 
 	public @NonNull CGVariable createQualifiedThisVariable() {
-		BaseNameResolution qualifiedThisNameResolution = globalNameManager.declareGlobalName(null, asType.getName() + "_" + JavaConstants.THIS_NAME);
+		NameResolution qualifiedThisNameResolution = globalNameManager.declareGlobalName(null, asType.getName() + "_" + JavaConstants.THIS_NAME);
 		CGVariable qualifiedThisVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();
 		qualifiedThisVariable.setTypeId(analyzer.getTypeId(asType.getTypeId()));
 		qualifiedThisVariable.setInit(getThisParameter());
@@ -221,7 +221,7 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 		Operation referredOperation = CGUtil.getAST(((CGOperation)scope));
 		OperationId operationId = referredOperation.getOperationId();
 		boolean sourceMayBeNull = analyzer.hasOclVoidOperation(operationId);	// FIXME redundant since LibraryOperationCallingConvention.createParaeters invokes hasOclVoidOperation
-		BaseNameResolution selfName = globalContext.getSelfNameResolution();
+		NameResolution selfName = globalContext.getSelfNameResolution();
 		CGParameter selfParameter = analyzer.createCGParameter(selfName, analyzer.getTypeId(asType.getTypeId()), !sourceMayBeNull);
 		selfParameter.setIsSelf(true);
 		selfParameter.setNonInvalid();
@@ -231,7 +231,7 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 
 	public @NonNull CGVariable createStandardLibraryVariable() {
 		CGNativeOperationCallExp standardLibraryInit = analyzer.createCGNativeOperationCallExp(JavaConstants.EXECUTOR_GET_STANDARD_LIBRARY_METHOD, SupportOperationCallingConvention.INSTANCE);
-		BaseNameResolution standardLibraryNameResolution = globalContext.getStandardLibraryVariableNameResolution();
+		NameResolution standardLibraryNameResolution = globalContext.getStandardLibraryVariableNameResolution();
 		standardLibraryNameResolution.addCGElement(standardLibraryInit);
 		standardLibraryInit.setTypeId(analyzer.getTypeId(JavaConstants.STANDARD_LIBRARY_TYPE_ID));
 		standardLibraryInit.setCgThis(analyzer.createCGVariableExp(getExecutorVariable()));
@@ -248,7 +248,7 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 
 	protected @NonNull CGParameter createThisParameter() {
 		assert !isStatic;
-		BaseNameResolution thisName = globalContext.getThisNameResolution();
+		NameResolution thisName = globalContext.getThisNameResolution();
 		CGParameter thisParameter = analyzer.createCGParameter(thisName, analyzer.getTypeId(asType.getTypeId()), true);
 		thisParameter.setIsThis(true);
 		thisParameter.setNonInvalid();
@@ -258,7 +258,7 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 
 //	@Deprecated /* @deprecated no longer used */
 	protected @NonNull CGParameter createTypeIdParameter() {
-		BaseNameResolution typeIdNameResolution = globalContext.getTypeIdNameResolution();
+		NameResolution typeIdNameResolution = globalContext.getTypeIdNameResolution();
 		CGParameter typeIdParameter = analyzer.createCGParameter(typeIdNameResolution, analyzer.getTypeId(JavaConstants.TYPE_ID_TYPE_ID), true);
 	//	typeIdParameter.setValueName(typeIdName);
 		typeIdParameter.setNonInvalid();
