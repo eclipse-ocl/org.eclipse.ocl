@@ -1022,12 +1022,12 @@ implements Property {
 		final /*@NonInvalid*/ @Nullable Object container = ClassifierOclContainerOperation.INSTANCE.evaluate(executor, this);
 		/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
 		try {
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Class_2 = idResolver.getClass(PivotTables.CLSSid_Class, null);
-			final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, container, TYP_Class_2).booleanValue();
+			final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Class_0 = idResolver.getClass(PivotTables.CLSSid_Class, null);
+			final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, container, TYP_Class_0).booleanValue();
 			CAUGHT_oclIsKindOf = oclIsKindOf;
 		}
-		catch (Exception THROWN_oclIsKindOf) {
-			CAUGHT_oclIsKindOf = ValueUtil.createInvalidValue(THROWN_oclIsKindOf);
+		catch (Exception THROWN_CAUGHT_oclIsKindOf) {
+			CAUGHT_oclIsKindOf = ValueUtil.createInvalidValue(THROWN_CAUGHT_oclIsKindOf);
 		}
 		final /*@Thrown*/ @Nullable Boolean and;
 		if (CAUGHT_oclIsKindOf == ValueUtil.FALSE_VALUE) {
@@ -1036,8 +1036,8 @@ implements Property {
 		else {
 			/*@Caught*/ @NonNull Object CAUGHT_includes;
 			try {
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Class_1 = idResolver.getClass(PivotTables.CLSSid_Class, null);
-				final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Class oclAsType = (org.eclipse.ocl.pivot.@Nullable Class)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, container, TYP_Class_1);
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Class_3 = idResolver.getClass(PivotTables.CLSSid_Class, null);
+				final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Class oclAsType = (org.eclipse.ocl.pivot.@Nullable Class)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, container, TYP_Class_3);
 				if (oclAsType == null) {
 					throw new InvalidValueException("Null source for \'Class::ownedProperties\'");
 				}
@@ -1046,8 +1046,8 @@ implements Property {
 				final /*@Thrown*/ boolean includes = CollectionIncludesOperation.INSTANCE.evaluate(BOXED_ownedProperties, this).booleanValue();
 				CAUGHT_includes = includes;
 			}
-			catch (Exception THROWN_includes) {
-				CAUGHT_includes = ValueUtil.createInvalidValue(THROWN_includes);
+			catch (Exception THROWN_CAUGHT_includes) {
+				CAUGHT_includes = ValueUtil.createInvalidValue(THROWN_CAUGHT_includes);
 			}
 			if (CAUGHT_includes == ValueUtil.FALSE_VALUE) {
 				and = ValueUtil.FALSE_VALUE;
@@ -1102,18 +1102,18 @@ implements Property {
 				IF_le = true;
 			}
 			else {
-				/*@Caught*/ @Nullable Object CAUGHT_result;
+				/*@Caught*/ @Nullable Object result;
 				try {
 					/*@Caught*/ @Nullable Object CAUGHT_and;
 					try {
 						final /*@NonInvalid*/ @Nullable LanguageExpression ownedExpression_0 = this.getOwnedExpression();
-						final /*@NonInvalid*/ boolean IsEQ_ = ownedExpression_0 != null;
+						final /*@NonInvalid*/ boolean IsEQ__0 = ownedExpression_0 != null;
 						final /*@Thrown*/ @Nullable Boolean and;
-						if (!IsEQ_) {
+						if (!IsEQ__0) {
 							and = ValueUtil.FALSE_VALUE;
 						}
 						else {
-							/*@Caught*/ @NonNull Object CAUGHT_IsEQ__0;
+							/*@Caught*/ @NonNull Object CAUGHT_IsEQ_;
 							try {
 								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_ExpressionInOCL = idResolver.getClass(PivotTables.CLSSid_ExpressionInOCL, null);
 								final /*@Thrown*/ @Nullable ExpressionInOCL oclAsType = (@Nullable ExpressionInOCL)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, ownedExpression_0, TYP_ExpressionInOCL);
@@ -1121,30 +1121,30 @@ implements Property {
 									throw new InvalidValueException("Null source for \'ExpressionInOCL::ownedBody\'");
 								}
 								final /*@Thrown*/ @Nullable OCLExpression ownedBody = oclAsType.getOwnedBody();
-								final /*@Thrown*/ boolean IsEQ__0 = ownedBody != null;
-								CAUGHT_IsEQ__0 = IsEQ__0;
+								final /*@Thrown*/ boolean IsEQ_ = ownedBody != null;
+								CAUGHT_IsEQ_ = IsEQ_;
 							}
-							catch (Exception THROWN_IsEQ__0) {
-								CAUGHT_IsEQ__0 = ValueUtil.createInvalidValue(THROWN_IsEQ__0);
+							catch (Exception THROWN_CAUGHT_IsEQ_) {
+								CAUGHT_IsEQ_ = ValueUtil.createInvalidValue(THROWN_CAUGHT_IsEQ_);
 							}
-							if (CAUGHT_IsEQ__0 == ValueUtil.FALSE_VALUE) {
+							if (CAUGHT_IsEQ_ == ValueUtil.FALSE_VALUE) {
 								and = ValueUtil.FALSE_VALUE;
 							}
 							else {
-								if (CAUGHT_IsEQ__0 instanceof InvalidValueException) {
-									throw (InvalidValueException)CAUGHT_IsEQ__0;
+								if (CAUGHT_IsEQ_ instanceof InvalidValueException) {
+									throw (InvalidValueException)CAUGHT_IsEQ_;
 								}
 								and = ValueUtil.TRUE_VALUE;
 							}
 						}
 						CAUGHT_and = and;
 					}
-					catch (Exception THROWN_and) {
-						CAUGHT_and = ValueUtil.createInvalidValue(THROWN_and);
+					catch (Exception THROWN_CAUGHT_and) {
+						CAUGHT_and = ValueUtil.createInvalidValue(THROWN_CAUGHT_and);
 					}
-					final /*@Thrown*/ @Nullable Boolean result;
+					final /*@Thrown*/ @Nullable Boolean implies;
 					if (CAUGHT_and == ValueUtil.FALSE_VALUE) {
-						result = ValueUtil.TRUE_VALUE;
+						implies = ValueUtil.TRUE_VALUE;
 					}
 					else {
 						/*@Caught*/ @NonNull Object CAUGHT_CompatibleBody;
@@ -1153,11 +1153,11 @@ implements Property {
 							final /*@Thrown*/ boolean CompatibleBody = this.CompatibleBody(ownedExpression_1);
 							CAUGHT_CompatibleBody = CompatibleBody;
 						}
-						catch (Exception THROWN_CompatibleBody) {
-							CAUGHT_CompatibleBody = ValueUtil.createInvalidValue(THROWN_CompatibleBody);
+						catch (Exception THROWN_CAUGHT_CompatibleBody) {
+							CAUGHT_CompatibleBody = ValueUtil.createInvalidValue(THROWN_CAUGHT_CompatibleBody);
 						}
 						if (CAUGHT_CompatibleBody == ValueUtil.TRUE_VALUE) {
-							result = ValueUtil.TRUE_VALUE;
+							implies = ValueUtil.TRUE_VALUE;
 						}
 						else {
 							if (CAUGHT_and instanceof InvalidValueException) {
@@ -1167,19 +1167,19 @@ implements Property {
 								throw (InvalidValueException)CAUGHT_CompatibleBody;
 							}
 							if (CAUGHT_and == null) {
-								result = null;
+								implies = null;
 							}
 							else {
-								result = ValueUtil.FALSE_VALUE;
+								implies = ValueUtil.FALSE_VALUE;
 							}
 						}
 					}
-					CAUGHT_result = result;
+					result = implies;
 				}
 				catch (Exception THROWN_result) {
-					CAUGHT_result = ValueUtil.createInvalidValue(THROWN_result);
+					result = ValueUtil.createInvalidValue(THROWN_result);
 				}
-				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, CAUGHT_result, PivotTables.INT_0).booleanValue();
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, result, PivotTables.INT_0).booleanValue();
 				IF_le = logDiagnostic;
 			}
 			return IF_le;
@@ -1220,77 +1220,77 @@ implements Property {
 				IF_le = true;
 			}
 			else {
-				/*@Caught*/ @Nullable Object CAUGHT_result;
+				/*@Caught*/ @Nullable Object result;
 				try {
 					final /*@NonInvalid*/ boolean isStatic = this.isIsStatic();
-					final /*@Thrown*/ @Nullable Boolean result;
+					final /*@Thrown*/ @Nullable Boolean implies;
 					if (!isStatic) {
-						result = ValueUtil.TRUE_VALUE;
+						implies = ValueUtil.TRUE_VALUE;
 					}
 					else {
-						/*@Caught*/ @Nullable Object CAUGHT_or_0;
+						/*@Caught*/ @Nullable Object CAUGHT_or;
 						try {
 							final /*@NonInvalid*/ @Nullable LanguageExpression ownedExpression_0 = this.getOwnedExpression();
-							final /*@NonInvalid*/ boolean IsEQ__1 = ownedExpression_0 != null;
-							final /*@NonInvalid*/ @Nullable Boolean or;
-							if (IsEQ__1) {
-								or = ValueUtil.TRUE_VALUE;
-							}
-							else {
-								final /*@NonInvalid*/ @Nullable String defaultValueString_0 = this.getDefaultValueString();
-								final /*@NonInvalid*/ boolean IsEQ_ = defaultValueString_0 != null;
-								if (IsEQ_) {
-									or = ValueUtil.TRUE_VALUE;
-								}
-								else {
-									or = ValueUtil.FALSE_VALUE;
-								}
-							}
-							final /*@Thrown*/ @Nullable Boolean or_0;
-							if (or == ValueUtil.TRUE_VALUE) {
+							final /*@NonInvalid*/ boolean IsEQ_ = ownedExpression_0 != null;
+							final /*@NonInvalid*/ @Nullable Boolean or_0;
+							if (IsEQ_) {
 								or_0 = ValueUtil.TRUE_VALUE;
 							}
 							else {
-								final /*@NonInvalid*/ @Nullable String implementationClass = this.getImplementationClass();
-								final /*@NonInvalid*/ boolean IsEQ__0 = implementationClass != null;
+								final /*@NonInvalid*/ @Nullable String defaultValueString_0 = this.getDefaultValueString();
+								final /*@NonInvalid*/ boolean IsEQ__0 = defaultValueString_0 != null;
 								if (IsEQ__0) {
 									or_0 = ValueUtil.TRUE_VALUE;
 								}
 								else {
-									if (or == null) {
-										or_0 = null;
+									or_0 = ValueUtil.FALSE_VALUE;
+								}
+							}
+							final /*@Thrown*/ @Nullable Boolean or;
+							if (or_0 == ValueUtil.TRUE_VALUE) {
+								or = ValueUtil.TRUE_VALUE;
+							}
+							else {
+								final /*@NonInvalid*/ @Nullable String implementationClass = this.getImplementationClass();
+								final /*@NonInvalid*/ boolean IsEQ__1 = implementationClass != null;
+								if (IsEQ__1) {
+									or = ValueUtil.TRUE_VALUE;
+								}
+								else {
+									if (or_0 == null) {
+										or = null;
 									}
 									else {
-										or_0 = ValueUtil.FALSE_VALUE;
+										or = ValueUtil.FALSE_VALUE;
 									}
 								}
 							}
-							CAUGHT_or_0 = or_0;
+							CAUGHT_or = or;
 						}
-						catch (Exception THROWN_or_0) {
-							CAUGHT_or_0 = ValueUtil.createInvalidValue(THROWN_or_0);
+						catch (Exception THROWN_CAUGHT_or) {
+							CAUGHT_or = ValueUtil.createInvalidValue(THROWN_CAUGHT_or);
 						}
-						if (CAUGHT_or_0 == ValueUtil.TRUE_VALUE) {
-							result = ValueUtil.TRUE_VALUE;
+						if (CAUGHT_or == ValueUtil.TRUE_VALUE) {
+							implies = ValueUtil.TRUE_VALUE;
 						}
 						else {
-							if (CAUGHT_or_0 instanceof InvalidValueException) {
-								throw (InvalidValueException)CAUGHT_or_0;
+							if (CAUGHT_or instanceof InvalidValueException) {
+								throw (InvalidValueException)CAUGHT_or;
 							}
-							if (CAUGHT_or_0 == null) {
-								result = null;
+							if (CAUGHT_or == null) {
+								implies = null;
 							}
 							else {
-								result = ValueUtil.FALSE_VALUE;
+								implies = ValueUtil.FALSE_VALUE;
 							}
 						}
 					}
-					CAUGHT_result = result;
+					result = implies;
 				}
 				catch (Exception THROWN_result) {
-					CAUGHT_result = ValueUtil.createInvalidValue(THROWN_result);
+					result = ValueUtil.createInvalidValue(THROWN_result);
 				}
-				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, CAUGHT_result, PivotTables.INT_0).booleanValue();
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, result, PivotTables.INT_0).booleanValue();
 				IF_le = logDiagnostic;
 			}
 			return IF_le;

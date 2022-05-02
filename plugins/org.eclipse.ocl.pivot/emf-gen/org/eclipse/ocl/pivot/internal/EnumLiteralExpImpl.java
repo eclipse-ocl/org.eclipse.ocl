@@ -177,28 +177,28 @@ public class EnumLiteralExpImpl
 				IF_le = true;
 			}
 			else {
-				/*@Caught*/ @NonNull Object CAUGHT_result;
+				/*@Caught*/ @NonNull Object result;
 				try {
 					final /*@NonInvalid*/ @Nullable Type type = this.getType();
 					final /*@NonInvalid*/ @Nullable EnumerationLiteral referredLiteral_0 = this.getReferredLiteral();
 					final /*@NonInvalid*/ @NonNull Object IsEQ2_ = referredLiteral_0 == null;
-					/*@Thrown*/ @Nullable Enumeration SAFE_owningEnumeration;
+					/*@Thrown*/ @Nullable Enumeration IF_IsEQ2_;
 					if (IsEQ2_ == Boolean.TRUE) {
-						SAFE_owningEnumeration = null;
+						IF_IsEQ2_ = null;
 					}
 					else {
 						assert referredLiteral_0 != null;
 						@SuppressWarnings("null")
 						final /*@Thrown*/ @NonNull Enumeration owningEnumeration = referredLiteral_0.getOwningEnumeration();
-						SAFE_owningEnumeration = owningEnumeration;
+						IF_IsEQ2_ = owningEnumeration;
 					}
-					final /*@Thrown*/ boolean result = (type != null) && (SAFE_owningEnumeration != null) ? (type.getTypeId() == SAFE_owningEnumeration.getTypeId()) : false;
-					CAUGHT_result = result;
+					final /*@Thrown*/ boolean IsEQ_ = (type != null) && (IF_IsEQ2_ != null) ? (type.getTypeId() == IF_IsEQ2_.getTypeId()) : false;
+					result = IsEQ_;
 				}
 				catch (Exception THROWN_result) {
-					CAUGHT_result = ValueUtil.createInvalidValue(THROWN_result);
+					result = ValueUtil.createInvalidValue(THROWN_result);
 				}
-				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, CAUGHT_result, PivotTables.INT_0).booleanValue();
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, result, PivotTables.INT_0).booleanValue();
 				IF_le = logDiagnostic;
 			}
 			return IF_le;

@@ -115,27 +115,27 @@ public class LetVariableImpl extends VariableImpl implements LetVariable
 				IF_le = true;
 			}
 			else {
-				/*@Caught*/ @NonNull Object CAUGHT_result;
+				/*@Caught*/ @NonNull Object result;
 				try {
 					final /*@NonInvalid*/ @Nullable OCLExpression ownedInit = this.getOwnedInit();
 					final /*@NonInvalid*/ @NonNull Object IsEQ2_ = ownedInit == null;
-					/*@Thrown*/ @Nullable Boolean SAFE_isRequired;
+					/*@Thrown*/ @Nullable Boolean IF_IsEQ2_;
 					if (IsEQ2_ == Boolean.TRUE) {
-						SAFE_isRequired = null;
+						IF_IsEQ2_ = null;
 					}
 					else {
 						assert ownedInit != null;
-						final /*@Thrown*/ boolean isRequired = ownedInit.isIsRequired();
-						SAFE_isRequired = isRequired;
+						final /*@Thrown*/ boolean isRequired_0 = ownedInit.isIsRequired();
+						IF_IsEQ2_ = isRequired_0;
 					}
-					final /*@NonInvalid*/ boolean isRequired_0 = this.isIsRequired();
-					final /*@Thrown*/ boolean result = (SAFE_isRequired == Boolean.TRUE) == isRequired_0;
-					CAUGHT_result = result;
+					final /*@NonInvalid*/ boolean isRequired = this.isIsRequired();
+					final /*@Thrown*/ boolean IsEQ_ = (IF_IsEQ2_ == Boolean.TRUE) == isRequired;
+					result = IsEQ_;
 				}
 				catch (Exception THROWN_result) {
-					CAUGHT_result = ValueUtil.createInvalidValue(THROWN_result);
+					result = ValueUtil.createInvalidValue(THROWN_result);
 				}
-				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, CAUGHT_result, PivotTables.INT_0).booleanValue();
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, result, PivotTables.INT_0).booleanValue();
 				IF_le = logDiagnostic;
 			}
 			return IF_le;
@@ -177,18 +177,17 @@ public class LetVariableImpl extends VariableImpl implements LetVariable
 				IF_le = true;
 			}
 			else {
-				/*@Caught*/ @Nullable Object CAUGHT_result;
+				/*@Caught*/ @Nullable Object result;
 				try {
-					final /*@NonInvalid*/ @Nullable OCLExpression ownedInit_0 = this.getOwnedInit();
-					final /*@NonInvalid*/ boolean IsEQ_ = ownedInit_0 != null;
-					final /*@Thrown*/ @Nullable Boolean result;
+					final /*@NonInvalid*/ @Nullable OCLExpression ownedInit = this.getOwnedInit();
+					final /*@NonInvalid*/ boolean IsEQ_ = ownedInit != null;
+					final /*@Thrown*/ @Nullable Boolean implies;
 					if (!IsEQ_) {
-						result = ValueUtil.TRUE_VALUE;
+						implies = ValueUtil.TRUE_VALUE;
 					}
 					else {
-						/*@Caught*/ @Nullable Object CAUGHT_SAFE_conformsTo;
+						/*@Caught*/ @Nullable Object CAUGHT_IF_IsEQ2_;
 						try {
-							final /*@NonInvalid*/ @Nullable OCLExpression ownedInit = this.getOwnedInit();
 							if (ownedInit == null) {
 								throw new InvalidValueException("Null source for \'TypedElement::type\'");
 							}
@@ -197,13 +196,13 @@ public class LetVariableImpl extends VariableImpl implements LetVariable
 							try {
 								CAUGHT_type = type;
 							}
-							catch (Exception THROWN_type) {
-								CAUGHT_type = ValueUtil.createInvalidValue(THROWN_type);
+							catch (Exception THROWN_CAUGHT_type) {
+								CAUGHT_type = ValueUtil.createInvalidValue(THROWN_CAUGHT_type);
 							}
 							final /*@NonInvalid*/ @NonNull Object IsEQ2_ = CAUGHT_type == null;
-							/*@Thrown*/ @Nullable Boolean SAFE_conformsTo;
+							/*@Thrown*/ @Nullable Boolean IF_IsEQ2_;
 							if (IsEQ2_ == Boolean.TRUE) {
-								SAFE_conformsTo = null;
+								IF_IsEQ2_ = null;
 							}
 							else {
 								final /*@NonInvalid*/ @Nullable Type type_0 = this.getType();
@@ -211,34 +210,34 @@ public class LetVariableImpl extends VariableImpl implements LetVariable
 									throw new InvalidValueException("Null argument");
 								}
 								final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, type_0).booleanValue();
-								SAFE_conformsTo = conformsTo;
+								IF_IsEQ2_ = conformsTo;
 							}
-							CAUGHT_SAFE_conformsTo = SAFE_conformsTo;
+							CAUGHT_IF_IsEQ2_ = IF_IsEQ2_;
 						}
-						catch (Exception THROWN_SAFE_conformsTo) {
-							CAUGHT_SAFE_conformsTo = ValueUtil.createInvalidValue(THROWN_SAFE_conformsTo);
+						catch (Exception THROWN_CAUGHT_IF_IsEQ2_) {
+							CAUGHT_IF_IsEQ2_ = ValueUtil.createInvalidValue(THROWN_CAUGHT_IF_IsEQ2_);
 						}
-						if (CAUGHT_SAFE_conformsTo == ValueUtil.TRUE_VALUE) {
-							result = ValueUtil.TRUE_VALUE;
+						if (CAUGHT_IF_IsEQ2_ == ValueUtil.TRUE_VALUE) {
+							implies = ValueUtil.TRUE_VALUE;
 						}
 						else {
-							if (CAUGHT_SAFE_conformsTo instanceof InvalidValueException) {
-								throw (InvalidValueException)CAUGHT_SAFE_conformsTo;
+							if (CAUGHT_IF_IsEQ2_ instanceof InvalidValueException) {
+								throw (InvalidValueException)CAUGHT_IF_IsEQ2_;
 							}
-							if (CAUGHT_SAFE_conformsTo == null) {
-								result = null;
+							if (CAUGHT_IF_IsEQ2_ == null) {
+								implies = null;
 							}
 							else {
-								result = ValueUtil.FALSE_VALUE;
+								implies = ValueUtil.FALSE_VALUE;
 							}
 						}
 					}
-					CAUGHT_result = result;
+					result = implies;
 				}
 				catch (Exception THROWN_result) {
-					CAUGHT_result = ValueUtil.createInvalidValue(THROWN_result);
+					result = ValueUtil.createInvalidValue(THROWN_result);
 				}
-				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, CAUGHT_result, PivotTables.INT_0).booleanValue();
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, result, PivotTables.INT_0).booleanValue();
 				IF_le = logDiagnostic;
 			}
 			return IF_le;
