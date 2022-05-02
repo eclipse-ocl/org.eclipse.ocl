@@ -215,7 +215,7 @@ public abstract class AbstractNonNullExtendingCGModelVisitor<R, C>
 
 	@Override
 	public @NonNull R visitCGExecutorProperty(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGExecutorProperty object) {
-		return visitCGValuedElement(object);
+		return visitCGProperty(object);
 	}
 
 	@Override

@@ -474,6 +474,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				CGExecutorCompositionProperty cgExecutorCompositionProperty = (CGExecutorCompositionProperty)theEObject;
 				T result = caseCGExecutorCompositionProperty(cgExecutorCompositionProperty);
 				if (result == null) result = caseCGExecutorProperty(cgExecutorCompositionProperty);
+				if (result == null) result = caseCGProperty(cgExecutorCompositionProperty);
 				if (result == null) result = caseCGValuedElement(cgExecutorCompositionProperty);
 				if (result == null) result = caseCGTypedElement(cgExecutorCompositionProperty);
 				if (result == null) result = caseCGNamedElement(cgExecutorCompositionProperty);
@@ -485,6 +486,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				CGExecutorNavigationProperty cgExecutorNavigationProperty = (CGExecutorNavigationProperty)theEObject;
 				T result = caseCGExecutorNavigationProperty(cgExecutorNavigationProperty);
 				if (result == null) result = caseCGExecutorProperty(cgExecutorNavigationProperty);
+				if (result == null) result = caseCGProperty(cgExecutorNavigationProperty);
 				if (result == null) result = caseCGValuedElement(cgExecutorNavigationProperty);
 				if (result == null) result = caseCGTypedElement(cgExecutorNavigationProperty);
 				if (result == null) result = caseCGNamedElement(cgExecutorNavigationProperty);
@@ -496,6 +498,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				CGExecutorOppositeProperty cgExecutorOppositeProperty = (CGExecutorOppositeProperty)theEObject;
 				T result = caseCGExecutorOppositeProperty(cgExecutorOppositeProperty);
 				if (result == null) result = caseCGExecutorProperty(cgExecutorOppositeProperty);
+				if (result == null) result = caseCGProperty(cgExecutorOppositeProperty);
 				if (result == null) result = caseCGValuedElement(cgExecutorOppositeProperty);
 				if (result == null) result = caseCGTypedElement(cgExecutorOppositeProperty);
 				if (result == null) result = caseCGNamedElement(cgExecutorOppositeProperty);
@@ -520,6 +523,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 			case 31: {
 				CGExecutorProperty cgExecutorProperty = (CGExecutorProperty)theEObject;
 				T result = caseCGExecutorProperty(cgExecutorProperty);
+				if (result == null) result = caseCGProperty(cgExecutorProperty);
 				if (result == null) result = caseCGValuedElement(cgExecutorProperty);
 				if (result == null) result = caseCGTypedElement(cgExecutorProperty);
 				if (result == null) result = caseCGNamedElement(cgExecutorProperty);
@@ -545,6 +549,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				CGExecutorShadowPart cgExecutorShadowPart = (CGExecutorShadowPart)theEObject;
 				T result = caseCGExecutorShadowPart(cgExecutorShadowPart);
 				if (result == null) result = caseCGExecutorProperty(cgExecutorShadowPart);
+				if (result == null) result = caseCGProperty(cgExecutorShadowPart);
 				if (result == null) result = caseCGValuedElement(cgExecutorShadowPart);
 				if (result == null) result = caseCGTypedElement(cgExecutorShadowPart);
 				if (result == null) result = caseCGNamedElement(cgExecutorShadowPart);

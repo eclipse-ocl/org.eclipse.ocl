@@ -3366,8 +3366,8 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		createEReference(cgExecutorOppositePropertyCallExpEClass, 11);
 
 		cgExecutorPropertyEClass = createEClass(31);
-		createEReference(cgExecutorPropertyEClass, 6);
-		createEReference(cgExecutorPropertyEClass, 7);
+		createEReference(cgExecutorPropertyEClass, 9);
+		createEReference(cgExecutorPropertyEClass, 10);
 
 		cgExecutorPropertyCallExpEClass = createEClass(32);
 		createEReference(cgExecutorPropertyCallExpEClass, 11);
@@ -3650,7 +3650,7 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		cgExecutorNavigationPropertyEClass.getESuperTypes().add(this.getCGExecutorProperty());
 		cgExecutorOppositePropertyEClass.getESuperTypes().add(this.getCGExecutorProperty());
 		cgExecutorOppositePropertyCallExpEClass.getESuperTypes().add(this.getCGOppositePropertyCallExp());
-		cgExecutorPropertyEClass.getESuperTypes().add(this.getCGValuedElement());
+		cgExecutorPropertyEClass.getESuperTypes().add(this.getCGProperty());
 		cgExecutorPropertyCallExpEClass.getESuperTypes().add(this.getCGPropertyCallExp());
 		cgExecutorShadowPartEClass.getESuperTypes().add(this.getCGExecutorProperty());
 		cgExecutorTypeEClass.getESuperTypes().add(this.getCGValuedElement());

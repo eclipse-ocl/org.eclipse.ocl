@@ -241,7 +241,7 @@
         eType="#//CGExecutorProperty" resolveProxies="false"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGExecutorProperty" abstract="true"
-      eSuperTypes="#//CGValuedElement">
+      eSuperTypes="#//CGProperty">
     <eStructuralFeatures xsi:type="ecore:EReference" name="initExpression" eType="#//CGValuedElement"
         containment="true" resolveProxies="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="underlyingPropertyId" eType="#//CGElementId"
