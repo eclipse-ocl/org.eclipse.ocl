@@ -59,6 +59,7 @@ public interface CGModelVisitor<R>
 	R visitCGCollectionPart(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGCollectionPart object);
 	R visitCGConstant(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGConstant object);
 	R visitCGConstantExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGConstantExp object);
+	R visitCGConstrainedProperty(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGConstrainedProperty object);
 	R visitCGConstraint(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGConstraint object);
 	R visitCGEcoreClassShadowExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGEcoreClassShadowExp object);
 	R visitCGEcoreDataTypeShadowExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGEcoreDataTypeShadowExp object);

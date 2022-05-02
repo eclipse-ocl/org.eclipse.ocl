@@ -865,6 +865,16 @@ public interface CGModelPackage extends EPackage {
 	EReference getCGConstantExp_ReferredConstant();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGConstrainedProperty <em>CG Constrained Property</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>CG Constrained Property</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGConstrainedProperty
+	 * @generated
+	 */
+	EClass getCGConstrainedProperty();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint <em>CG Constraint</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1345,48 +1355,6 @@ public interface CGModelPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getCGExecutorOppositeProperty();
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOperation <em>CG Executor Operation</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>CG Executor Operation</em>'.
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOperation
-	 * @generated
-	 */
-	EClass getCGExecutorOperation();
-
-	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOperation#getUnderlyingOperationId <em>Underlying Operation Id</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Underlying Operation Id</em>'.
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOperation#getUnderlyingOperationId()
-	 * @see #getCGExecutorOperation()
-	 * @generated
-	 */
-	EReference getCGExecutorOperation_UnderlyingOperationId();
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOperationCallExp <em>CG Executor Operation Call Exp</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>CG Executor Operation Call Exp</em>'.
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOperationCallExp
-	 * @generated
-	 */
-	EClass getCGExecutorOperationCallExp();
-
-	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOperationCallExp#getExecutorOperation <em>Executor Operation</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Executor Operation</em>'.
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOperationCallExp#getExecutorOperation()
-	 * @see #getCGExecutorOperationCallExp()
-	 * @generated
-	 */
-	EReference getCGExecutorOperationCallExp_ExecutorOperation();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOppositePropertyCallExp <em>CG Executor Opposite Property Call Exp</em>}'.
@@ -3156,6 +3124,16 @@ public interface CGModelPackage extends EPackage {
 		EReference CG_CONSTANT_EXP__REFERRED_CONSTANT = eINSTANCE.getCGConstantExp_ReferredConstant();
 
 		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGConstrainedPropertyImpl <em>CG Constrained Property</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGConstrainedPropertyImpl
+		 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getCGConstrainedProperty()
+		 * @generated
+		 */
+		EClass CG_CONSTRAINED_PROPERTY = eINSTANCE.getCGConstrainedProperty();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGConstraintImpl <em>CG Constraint</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -3570,42 +3548,6 @@ public interface CGModelPackage extends EPackage {
 		 * @generated
 		 */
 		EClass CG_EXECUTOR_OPPOSITE_PROPERTY = eINSTANCE.getCGExecutorOppositeProperty();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGExecutorOperationImpl <em>CG Executor Operation</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGExecutorOperationImpl
-		 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getCGExecutorOperation()
-		 * @generated
-		 */
-		EClass CG_EXECUTOR_OPERATION = eINSTANCE.getCGExecutorOperation();
-
-		/**
-		 * The meta object literal for the '<em><b>Underlying Operation Id</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference CG_EXECUTOR_OPERATION__UNDERLYING_OPERATION_ID = eINSTANCE.getCGExecutorOperation_UnderlyingOperationId();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGExecutorOperationCallExpImpl <em>CG Executor Operation Call Exp</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGExecutorOperationCallExpImpl
-		 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getCGExecutorOperationCallExp()
-		 * @generated
-		 */
-		EClass CG_EXECUTOR_OPERATION_CALL_EXP = eINSTANCE.getCGExecutorOperationCallExp();
-
-		/**
-		 * The meta object literal for the '<em><b>Executor Operation</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference CG_EXECUTOR_OPERATION_CALL_EXP__EXECUTOR_OPERATION = eINSTANCE.getCGExecutorOperationCallExp_ExecutorOperation();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGExecutorOppositePropertyCallExpImpl <em>CG Executor Opposite Property Call Exp</em>}' class.

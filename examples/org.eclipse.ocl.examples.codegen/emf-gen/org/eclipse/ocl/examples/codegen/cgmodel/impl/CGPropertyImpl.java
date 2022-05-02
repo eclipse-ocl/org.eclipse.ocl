@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -38,14 +38,14 @@ import org.eclipse.ocl.examples.codegen.cse.OuterStackPlace;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGPropertyImpl#getCallingConvention <em>Calling Convention</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGPropertyImpl#getContainingClass <em>Containing Class</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGPropertyImpl#getBody <em>Body</em>}</li>
- *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGPropertyImpl#getCallingConvention <em>Calling Convention</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class CGPropertyImpl extends CGValuedElementImpl implements CGProperty {
+public abstract class CGPropertyImpl extends CGValuedElementImpl implements CGProperty {
 	/**
 	 * The number of structural features of the '<em>CG Property</em>' class.
 	 * <!-- begin-user-doc -->
@@ -54,16 +54,6 @@ public class CGPropertyImpl extends CGValuedElementImpl implements CGProperty {
 	 * @ordered
 	 */
 	public static final int CG_PROPERTY_FEATURE_COUNT = CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 3;
-	/**
-	 * The cached value of the '{@link #getBody() <em>Body</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getBody()
-	 * @generated
-	 * @ordered
-	 */
-	protected CGValuedElement body;
-
 	/**
 	 * The default value of the '{@link #getCallingConvention() <em>Calling Convention</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -82,6 +72,16 @@ public class CGPropertyImpl extends CGValuedElementImpl implements CGProperty {
 	 * @ordered
 	 */
 	protected PropertyCallingConvention callingConvention = CALLING_CONVENTION_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getBody() <em>Body</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getBody()
+	 * @generated
+	 * @ordered
+	 */
+	protected CGValuedElement body;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -109,7 +109,7 @@ public class CGPropertyImpl extends CGValuedElementImpl implements CGProperty {
 	 */
 	@Override
 	public CGClass getContainingClass() {
-		if (eContainerFeatureID() != (6)) return null;
+		if (eContainerFeatureID() != (7)) return null;
 		return (CGClass)eInternalContainer();
 	}
 
@@ -119,7 +119,7 @@ public class CGPropertyImpl extends CGValuedElementImpl implements CGProperty {
 	 * @generated
 	 */
 	public NotificationChain basicSetContainingClass(CGClass newContainingClass, NotificationChain msgs) {
-		msgs = eBasicSetContainer((InternalEObject)newContainingClass, 6, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newContainingClass, 7, msgs);
 		return msgs;
 	}
 
@@ -130,7 +130,7 @@ public class CGPropertyImpl extends CGValuedElementImpl implements CGProperty {
 	 */
 	@Override
 	public void setContainingClass(CGClass newContainingClass) {
-		if (newContainingClass != eInternalContainer() || (eContainerFeatureID() != (6) && newContainingClass != null)) {
+		if (newContainingClass != eInternalContainer() || (eContainerFeatureID() != (7) && newContainingClass != null)) {
 			if (EcoreUtil.isAncestor(this, newContainingClass))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
 			NotificationChain msgs = null;
@@ -142,7 +142,7 @@ public class CGPropertyImpl extends CGValuedElementImpl implements CGProperty {
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 6, newContainingClass, newContainingClass));
+			eNotify(new ENotificationImpl(this, Notification.SET, 7, newContainingClass, newContainingClass));
 	}
 
 	/**
@@ -164,7 +164,7 @@ public class CGPropertyImpl extends CGValuedElementImpl implements CGProperty {
 		CGValuedElement oldBody = body;
 		body = newBody;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 7, oldBody, newBody);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 8, oldBody, newBody);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -180,14 +180,14 @@ public class CGPropertyImpl extends CGValuedElementImpl implements CGProperty {
 		if (newBody != body) {
 			NotificationChain msgs = null;
 			if (body != null)
-				msgs = ((InternalEObject)body).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (7), null, msgs);
+				msgs = ((InternalEObject)body).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (8), null, msgs);
 			if (newBody != null)
-				msgs = ((InternalEObject)newBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (7), null, msgs);
+				msgs = ((InternalEObject)newBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (8), null, msgs);
 			msgs = basicSetBody(newBody, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 7, newBody, newBody));
+			eNotify(new ENotificationImpl(this, Notification.SET, 8, newBody, newBody));
 	}
 
 	/**
@@ -210,7 +210,7 @@ public class CGPropertyImpl extends CGValuedElementImpl implements CGProperty {
 		PropertyCallingConvention oldCallingConvention = callingConvention;
 		callingConvention = newCallingConvention;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 8, oldCallingConvention, callingConvention));
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldCallingConvention, callingConvention));
 	}
 
 	/**
@@ -221,7 +221,7 @@ public class CGPropertyImpl extends CGValuedElementImpl implements CGProperty {
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case 6:
+			case 7:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetContainingClass((CGClass)otherEnd, msgs);
@@ -237,9 +237,9 @@ public class CGPropertyImpl extends CGValuedElementImpl implements CGProperty {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case 6:
-				return basicSetContainingClass(null, msgs);
 			case 7:
+				return basicSetContainingClass(null, msgs);
+			case 8:
 				return basicSetBody(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -253,7 +253,7 @@ public class CGPropertyImpl extends CGValuedElementImpl implements CGProperty {
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID()) {
-			case 6:
+			case 7:
 				return eInternalContainer().eInverseRemove(this, 4, CGClass.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
@@ -268,11 +268,11 @@ public class CGPropertyImpl extends CGValuedElementImpl implements CGProperty {
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case 6:
-				return getContainingClass();
-			case 7:
-				return getBody();
-			case 8:
 				return getCallingConvention();
+			case 7:
+				return getContainingClass();
+			case 8:
+				return getBody();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -286,13 +286,13 @@ public class CGPropertyImpl extends CGValuedElementImpl implements CGProperty {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case 6:
-				setContainingClass((CGClass)newValue);
+				setCallingConvention((PropertyCallingConvention)newValue);
 				return;
 			case 7:
-				setBody((CGValuedElement)newValue);
+				setContainingClass((CGClass)newValue);
 				return;
 			case 8:
-				setCallingConvention((PropertyCallingConvention)newValue);
+				setBody((CGValuedElement)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -307,13 +307,13 @@ public class CGPropertyImpl extends CGValuedElementImpl implements CGProperty {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case 6:
-				setContainingClass((CGClass)null);
+				setCallingConvention(CALLING_CONVENTION_EDEFAULT);
 				return;
 			case 7:
-				setBody((CGValuedElement)null);
+				setContainingClass((CGClass)null);
 				return;
 			case 8:
-				setCallingConvention(CALLING_CONVENTION_EDEFAULT);
+				setBody((CGValuedElement)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -328,11 +328,11 @@ public class CGPropertyImpl extends CGValuedElementImpl implements CGProperty {
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case 6:
-				return getContainingClass() != null;
-			case 7:
-				return body != null;
-			case 8:
 				return CALLING_CONVENTION_EDEFAULT == null ? callingConvention != null : !CALLING_CONVENTION_EDEFAULT.equals(callingConvention);
+			case 7:
+				return getContainingClass() != null;
+			case 8:
+				return body != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -351,15 +351,6 @@ public class CGPropertyImpl extends CGValuedElementImpl implements CGProperty {
 		result.append(callingConvention);
 		result.append(')');
 		return result.toString();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * @generated
-	 */
-	@Override
-	public <R> R accept(@NonNull CGModelVisitor<R> visitor) {
-		return visitor.visitCGProperty(this);
 	}
 
 	/**

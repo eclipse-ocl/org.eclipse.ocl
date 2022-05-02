@@ -356,6 +356,15 @@ public interface CGModelFactory extends EFactory {
 	@NonNull CGConstantExp createCGConstantExp();
 
 	/**
+	 * Returns a new object of class '<em>CG Constrained Property</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>CG Constrained Property</em>'.
+	 * @generated
+	 */
+	@NonNull CGConstrainedProperty createCGConstrainedProperty();
+
+	/**
 	 * Returns a new object of class '<em>CG Constraint</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -579,15 +588,6 @@ public interface CGModelFactory extends EFactory {
 	 * @generated
 	 */
 	@NonNull CGParameter createCGParameter();
-
-	/**
-	 * Returns a new object of class '<em>CG Property</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>CG Property</em>'.
-	 * @generated
-	 */
-	@NonNull CGProperty createCGProperty();
 
 	/**
 	 * Returns a new object of class '<em>CG Real</em>'.

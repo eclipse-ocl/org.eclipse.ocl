@@ -139,6 +139,11 @@ public abstract class AbstractNonNullExtendingCGModelVisitor<R, C>
 	}
 
 	@Override
+	public @NonNull R visitCGConstrainedProperty(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGConstrainedProperty object) {
+		return visitCGProperty(object);
+	}
+
+	@Override
 	public @NonNull R visitCGConstraint(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGConstraint object) {
 		return visitCGCallable(object);
 	}

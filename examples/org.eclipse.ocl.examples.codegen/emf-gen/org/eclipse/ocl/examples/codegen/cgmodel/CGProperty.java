@@ -22,9 +22,9 @@ import org.eclipse.ocl.examples.codegen.calling.PropertyCallingConvention;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGProperty#getCallingConvention <em>Calling Convention</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGProperty#getContainingClass <em>Containing Class</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGProperty#getBody <em>Body</em>}</li>
- *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGProperty#getCallingConvention <em>Calling Convention</em>}</li>
  * </ul>
  *
  * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGProperty()
@@ -35,10 +35,6 @@ public interface CGProperty extends CGValuedElement {
 	 * Returns the value of the '<em><b>Containing Class</b></em>' container reference.
 	 * It is bidirectional and its opposite is '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGClass#getProperties <em>Properties</em>}'.
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Containing Class</em>' container reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Containing Class</em>' container reference.
 	 * @see #setContainingClass(CGClass)

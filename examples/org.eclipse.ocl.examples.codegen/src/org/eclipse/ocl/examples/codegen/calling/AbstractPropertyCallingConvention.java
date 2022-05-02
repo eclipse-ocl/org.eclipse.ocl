@@ -26,7 +26,7 @@ public abstract class AbstractPropertyCallingConvention implements PropertyCalli
 {
 	@Override
 	public @NonNull CGProperty createCGProperty(@NonNull AS2CGVisitor as2cgVisitor, @NonNull Property asProperty) {
-		return CGModelFactory.eINSTANCE.createCGProperty();  // Overrides may add state
+		return CGModelFactory.eINSTANCE.createCGConstrainedProperty();  // XXX Overrides may add state
 	}
 
 	@Override

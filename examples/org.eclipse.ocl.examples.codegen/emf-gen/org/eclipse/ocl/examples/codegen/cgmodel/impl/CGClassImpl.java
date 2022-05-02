@@ -230,7 +230,7 @@ public class CGClassImpl extends CGNamedElementImpl implements CGClass {
 	@SuppressWarnings("null")
 	public @NonNull List<CGProperty> getProperties() {
 		if (properties == null) {
-			properties = new EObjectContainmentWithInverseEList<CGProperty>(CGProperty.class, this, 4, 6);
+			properties = new EObjectContainmentWithInverseEList<CGProperty>(CGProperty.class, this, 4, 7);
 		}
 		return properties;
 	}

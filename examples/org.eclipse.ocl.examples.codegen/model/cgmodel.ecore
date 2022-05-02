@@ -159,6 +159,11 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CGConstrainedProperty" eSuperTypes="#//CGProperty">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A property that must be accessed using the native calling convention."/>
+    </eAnnotations>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGConstraint" eSuperTypes="#//CGCallable">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A CGConstraint defines a constraint such as a class invariant."/>
@@ -586,7 +591,9 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="CGProperty" eSuperTypes="#//CGValuedElement">
+  <eClassifiers xsi:type="ecore:EClass" name="CGProperty" abstract="true" eSuperTypes="#//CGValuedElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="callingConvention" lowerBound="1"
+        eType="#//PropertyCallingConvention" transient="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="containingClass" lowerBound="1"
         eType="#//CGClass" resolveProxies="false" eOpposite="#//CGClass/properties"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="body" eType="#//CGValuedElement"
@@ -595,8 +602,6 @@
         <details key="documentation" value="The optional initializer or derivation."/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="callingConvention" lowerBound="1"
-        eType="#//PropertyCallingConvention" transient="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGPropertyCallExp" abstract="true" eSuperTypes="#//CGNavigationCallExp"/>
   <eClassifiers xsi:type="ecore:EClass" name="CGReal" eSuperTypes="#//CGNumber">

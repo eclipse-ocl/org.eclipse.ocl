@@ -1789,13 +1789,13 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		}
 		else if (propertyImplementation instanceof ConstrainedProperty) {
 		//	return generateConstrainedProperty(element);
-			cgProperty = CGModelFactory.eINSTANCE.createCGProperty();
+			cgProperty = CGModelFactory.eINSTANCE.createCGConstrainedProperty();		// XXX
 		}
 		else if (propertyImplementation instanceof StaticProperty) {
 			return generateForeignProperty(element);
 		}
 		else {
-			cgProperty = CGModelFactory.eINSTANCE.createCGProperty();
+			cgProperty = CGModelFactory.eINSTANCE.createCGConstrainedProperty();		// XXX
 		}
 		pushDeclarationContext(cgProperty, element);
 		cgProperty.setRequired(element.isIsRequired());
