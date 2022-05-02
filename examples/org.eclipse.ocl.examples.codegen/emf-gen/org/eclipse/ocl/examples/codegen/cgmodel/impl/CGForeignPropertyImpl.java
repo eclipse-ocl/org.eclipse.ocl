@@ -46,7 +46,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
  *
  * @generated
  */
-public class CGForeignPropertyImpl extends CGPropertyImpl implements CGForeignProperty {
+public class CGForeignPropertyImpl extends CGBodiedPropertyImpl implements CGForeignProperty {
 	/**
 	 * The number of structural features of the '<em>CG Foreign Property</em>' class.
 	 * <!-- begin-user-doc -->
@@ -54,7 +54,7 @@ public class CGForeignPropertyImpl extends CGPropertyImpl implements CGForeignPr
 	 * @generated
 	 * @ordered
 	 */
-	public static final int CG_FOREIGN_PROPERTY_FEATURE_COUNT = CGPropertyImpl.CG_PROPERTY_FEATURE_COUNT + 1;
+	public static final int CG_FOREIGN_PROPERTY_FEATURE_COUNT = CGBodiedPropertyImpl.CG_BODIED_PROPERTY_FEATURE_COUNT + 1;
 
 
 	/**
@@ -199,6 +199,24 @@ public class CGForeignPropertyImpl extends CGPropertyImpl implements CGForeignPr
 	 * @generated
 	 */
 	@Override
+	public boolean isBoxed() {
+		return true;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
+	public boolean isEcore() {
+		return false;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
 	public boolean isNonNull() {
 		return isRequired();
 	}
@@ -209,6 +227,15 @@ public class CGForeignPropertyImpl extends CGPropertyImpl implements CGForeignPr
 	 */
 	@Override
 	public boolean isNull() {
+		return false;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
+	public boolean isUnboxed() {
 		return false;
 	}
 

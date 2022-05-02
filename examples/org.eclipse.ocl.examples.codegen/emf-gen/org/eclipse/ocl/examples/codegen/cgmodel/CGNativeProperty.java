@@ -23,7 +23,7 @@ package org.eclipse.ocl.examples.codegen.cgmodel;
  * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGNativeProperty()
  * @generated
  */
-public interface CGNativeProperty extends CGProperty {
+public interface CGNativeProperty extends CGBodiedProperty {
 
 	/**
 	 * Set the non-null status.

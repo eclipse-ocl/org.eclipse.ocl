@@ -36,7 +36,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
  *
  * @generated
  */
-public class CGConstrainedPropertyImpl extends CGPropertyImpl implements CGConstrainedProperty {
+public class CGConstrainedPropertyImpl extends CGBodiedPropertyImpl implements CGConstrainedProperty {
 	/**
 	 * The number of structural features of the '<em>CG Constrained Property</em>' class.
 	 * <!-- begin-user-doc -->
@@ -44,7 +44,7 @@ public class CGConstrainedPropertyImpl extends CGPropertyImpl implements CGConst
 	 * @generated
 	 * @ordered
 	 */
-	public static final int CG_CONSTRAINED_PROPERTY_FEATURE_COUNT = CGPropertyImpl.CG_PROPERTY_FEATURE_COUNT + 0;
+	public static final int CG_CONSTRAINED_PROPERTY_FEATURE_COUNT = CGBodiedPropertyImpl.CG_BODIED_PROPERTY_FEATURE_COUNT + 0;
 
 
 	/**

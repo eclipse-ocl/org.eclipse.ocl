@@ -196,7 +196,7 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGProperty cgProperty) {
 		Property asProperty = CGUtil.getAST(cgProperty);
 		Iterable<@NonNull CGParameter> cgParameters = CGUtil.getParameters((CGForeignProperty)cgProperty);
-		CGValuedElement cgInitExpression = cg2javaVisitor.getExpression(cgProperty.getBody());
+		CGValuedElement cgInitExpression = cg2javaVisitor.getExpression(((CGForeignProperty)cgProperty).getBody());
 		js.append("public static ");
 		js.appendTypeDeclaration(cgProperty);
 		js.append(" " + JavaConstants.FOREIGN_PROPERTY_PREFIX);

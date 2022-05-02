@@ -50,6 +50,11 @@ public abstract class AbstractNullCGModelVisitor<@Nullable R, C>
 	}
 
 	@Override
+	public R visitCGBodiedProperty(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGBodiedProperty object) {
+		return null;
+	}
+
+	@Override
 	public R visitCGBoolean(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGBoolean object) {
 		return null;
 	}

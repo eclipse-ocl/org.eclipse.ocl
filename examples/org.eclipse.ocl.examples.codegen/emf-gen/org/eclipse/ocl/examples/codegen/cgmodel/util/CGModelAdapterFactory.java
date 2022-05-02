@@ -177,6 +177,10 @@ public class CGModelAdapterFactory extends AdapterFactoryImpl {
 				return createCGAssertNonNullExpAdapter();
 			}
 			@Override
+			public Adapter caseCGBodiedProperty(CGBodiedProperty object) {
+				return createCGBodiedPropertyAdapter();
+			}
+			@Override
 			public Adapter caseCGBoolean(CGBoolean object) {
 				return createCGBooleanAdapter();
 			}
@@ -593,6 +597,20 @@ public class CGModelAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createCGAssertNonNullExpAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGBodiedProperty <em>CG Bodied Property</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGBodiedProperty
+	 * @generated
+	 */
+	public Adapter createCGBodiedPropertyAdapter() {
 		return null;
 	}
 

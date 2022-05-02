@@ -40,7 +40,6 @@ import org.eclipse.ocl.examples.codegen.cse.OuterStackPlace;
  * <ul>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGPropertyImpl#getCallingConvention <em>Calling Convention</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGPropertyImpl#getContainingClass <em>Containing Class</em>}</li>
- *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGPropertyImpl#getBody <em>Body</em>}</li>
  * </ul>
  *
  * @generated
@@ -53,7 +52,7 @@ public abstract class CGPropertyImpl extends CGValuedElementImpl implements CGPr
 	 * @generated
 	 * @ordered
 	 */
-	public static final int CG_PROPERTY_FEATURE_COUNT = CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 3;
+	public static final int CG_PROPERTY_FEATURE_COUNT = CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2;
 	/**
 	 * The default value of the '{@link #getCallingConvention() <em>Calling Convention</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -72,16 +71,6 @@ public abstract class CGPropertyImpl extends CGValuedElementImpl implements CGPr
 	 * @ordered
 	 */
 	protected PropertyCallingConvention callingConvention = CALLING_CONVENTION_EDEFAULT;
-
-	/**
-	 * The cached value of the '{@link #getBody() <em>Body</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getBody()
-	 * @generated
-	 * @ordered
-	 */
-	protected CGValuedElement body;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -151,51 +140,6 @@ public abstract class CGPropertyImpl extends CGValuedElementImpl implements CGPr
 	 * @generated
 	 */
 	@Override
-	public CGValuedElement getBody() {
-		return body;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetBody(CGValuedElement newBody, NotificationChain msgs) {
-		CGValuedElement oldBody = body;
-		body = newBody;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 8, oldBody, newBody);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setBody(CGValuedElement newBody) {
-		if (newBody != body) {
-			NotificationChain msgs = null;
-			if (body != null)
-				msgs = ((InternalEObject)body).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (8), null, msgs);
-			if (newBody != null)
-				msgs = ((InternalEObject)newBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (8), null, msgs);
-			msgs = basicSetBody(newBody, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 8, newBody, newBody));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public PropertyCallingConvention getCallingConvention() {
 		return callingConvention;
 	}
@@ -239,8 +183,6 @@ public abstract class CGPropertyImpl extends CGValuedElementImpl implements CGPr
 		switch (featureID) {
 			case 7:
 				return basicSetContainingClass(null, msgs);
-			case 8:
-				return basicSetBody(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -271,8 +213,6 @@ public abstract class CGPropertyImpl extends CGValuedElementImpl implements CGPr
 				return getCallingConvention();
 			case 7:
 				return getContainingClass();
-			case 8:
-				return getBody();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -290,9 +230,6 @@ public abstract class CGPropertyImpl extends CGValuedElementImpl implements CGPr
 				return;
 			case 7:
 				setContainingClass((CGClass)newValue);
-				return;
-			case 8:
-				setBody((CGValuedElement)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -312,9 +249,6 @@ public abstract class CGPropertyImpl extends CGValuedElementImpl implements CGPr
 			case 7:
 				setContainingClass((CGClass)null);
 				return;
-			case 8:
-				setBody((CGValuedElement)null);
-				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -331,8 +265,6 @@ public abstract class CGPropertyImpl extends CGValuedElementImpl implements CGPr
 				return CALLING_CONVENTION_EDEFAULT == null ? callingConvention != null : !CALLING_CONVENTION_EDEFAULT.equals(callingConvention);
 			case 7:
 				return getContainingClass() != null;
-			case 8:
-				return body != null;
 		}
 		return super.eIsSet(featureID);
 	}

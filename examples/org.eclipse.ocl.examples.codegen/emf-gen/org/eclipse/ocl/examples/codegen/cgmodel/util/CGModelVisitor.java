@@ -45,6 +45,7 @@ public interface CGModelVisitor<R>
 
 	R visitCGAccumulator(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGAccumulator object);
 	R visitCGAssertNonNullExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGAssertNonNullExp object);
+	R visitCGBodiedProperty(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGBodiedProperty object);
 	R visitCGBoolean(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGBoolean object);
 	R visitCGBoxExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGBoxExp object);
 	R visitCGBuiltInIterationCallExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGBuiltInIterationCallExp object);

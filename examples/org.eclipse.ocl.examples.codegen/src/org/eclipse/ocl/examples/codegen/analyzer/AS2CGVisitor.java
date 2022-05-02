@@ -34,6 +34,7 @@ import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.PropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.SupportOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGAccumulator;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGBodiedProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBuiltInIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperationCallExp;
@@ -1807,7 +1808,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 				if (contextVariable != null) {
 					getSelfParameter(contextVariable);
 				}
-				cgProperty.setBody(doVisit(CGValuedElement.class, query.getOwnedBody()));
+				((CGBodiedProperty)cgProperty).setBody(doVisit(CGValuedElement.class, query.getOwnedBody()));
 			} catch (ParserException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();		// XXX

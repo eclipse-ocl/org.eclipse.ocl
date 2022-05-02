@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGBodiedProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBuiltInIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallable;
@@ -296,7 +297,7 @@ public class CGUtil
 		return ClassUtil.nonNullState((Property)cgProperty.getAst());
 	}
 
-	public static @NonNull CGValuedElement getBody(@NonNull CGProperty cgProperty) {
+	public static @NonNull CGValuedElement getBody(@NonNull CGBodiedProperty cgProperty) {
 		return ClassUtil.nonNullState(cgProperty.getBody());
 	}
 

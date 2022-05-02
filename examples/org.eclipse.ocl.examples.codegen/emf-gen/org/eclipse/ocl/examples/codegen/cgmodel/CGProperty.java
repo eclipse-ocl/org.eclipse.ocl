@@ -24,7 +24,6 @@ import org.eclipse.ocl.examples.codegen.calling.PropertyCallingConvention;
  * <ul>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGProperty#getCallingConvention <em>Calling Convention</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGProperty#getContainingClass <em>Containing Class</em>}</li>
- *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGProperty#getBody <em>Body</em>}</li>
  * </ul>
  *
  * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGProperty()
@@ -53,30 +52,6 @@ public interface CGProperty extends CGValuedElement {
 	 * @generated
 	 */
 	void setContainingClass(CGClass value);
-
-	/**
-	 * Returns the value of the '<em><b>Body</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * The optional initializer or derivation.
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Body</em>' containment reference.
-	 * @see #setBody(CGValuedElement)
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGProperty_Body()
-	 * @generated
-	 */
-	CGValuedElement getBody();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGProperty#getBody <em>Body</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Body</em>' containment reference.
-	 * @see #getBody()
-	 * @generated
-	 */
-	void setBody(CGValuedElement value);
 
 	/**
 	 * Returns the value of the '<em><b>Calling Convention</b></em>' attribute.

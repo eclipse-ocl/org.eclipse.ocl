@@ -50,6 +50,11 @@ public abstract class AbstractExtendingCGModelVisitor<R, C>
 	}
 
 	@Override
+	public R visitCGBodiedProperty(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGBodiedProperty object) {
+		return visitCGProperty(object);
+	}
+
+	@Override
 	public R visitCGBoolean(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGBoolean object) {
 		return visitCGConstant(object);
 	}
@@ -121,7 +126,7 @@ public abstract class AbstractExtendingCGModelVisitor<R, C>
 
 	@Override
 	public R visitCGConstrainedProperty(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGConstrainedProperty object) {
-		return visitCGProperty(object);
+		return visitCGBodiedProperty(object);
 	}
 
 	@Override
@@ -226,7 +231,7 @@ public abstract class AbstractExtendingCGModelVisitor<R, C>
 
 	@Override
 	public R visitCGForeignProperty(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGForeignProperty object) {
-		return visitCGProperty(object);
+		return visitCGBodiedProperty(object);
 	}
 
 	@Override
@@ -356,7 +361,7 @@ public abstract class AbstractExtendingCGModelVisitor<R, C>
 
 	@Override
 	public R visitCGNativeProperty(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGNativeProperty object) {
-		return visitCGProperty(object);
+		return visitCGBodiedProperty(object);
 	}
 
 	@Override

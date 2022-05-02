@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGBodiedProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
@@ -157,7 +158,7 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 				}
 			}
 			for (CGProperty cgProperty : cgClass.getProperties()) {
-				CGValuedElement cgBody = cgProperty.getBody();
+				CGValuedElement cgBody = ((CGBodiedProperty)cgProperty).getBody();
 				if (cgBody != null) {
 					FeatureBody body = generatePropertyBody(cgProperty, cgBody);
 					bodies.put(body.getURI(), body);
@@ -377,7 +378,7 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 		assert asProperty.isIsStatic();
 		String className = "SP_" + context.getForeignClassName(PivotUtil.getOwningClass(asProperty));
 		LanguageExpression expressionInOCL = asProperty.getOwnedExpression();
-		CGValuedElement cgBody = cgProperty.getBody();
+		CGValuedElement cgBody = ((CGBodiedProperty)cgProperty).getBody();
 		assert cgBody != null;
 		String title = PrettyPrinter.printName(asProperty);
 		js.append("\n");

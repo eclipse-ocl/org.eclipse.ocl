@@ -107,7 +107,7 @@ public abstract class CGExecutorPropertyImpl extends CGPropertyImpl implements C
 		CGValuedElement oldInitExpression = initExpression;
 		initExpression = newInitExpression;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 9, oldInitExpression, newInitExpression);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 8, oldInitExpression, newInitExpression);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -123,14 +123,14 @@ public abstract class CGExecutorPropertyImpl extends CGPropertyImpl implements C
 		if (newInitExpression != initExpression) {
 			NotificationChain msgs = null;
 			if (initExpression != null)
-				msgs = ((InternalEObject)initExpression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (9), null, msgs);
+				msgs = ((InternalEObject)initExpression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (8), null, msgs);
 			if (newInitExpression != null)
-				msgs = ((InternalEObject)newInitExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (9), null, msgs);
+				msgs = ((InternalEObject)newInitExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (8), null, msgs);
 			msgs = basicSetInitExpression(newInitExpression, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 9, newInitExpression, newInitExpression));
+			eNotify(new ENotificationImpl(this, Notification.SET, 8, newInitExpression, newInitExpression));
 	}
 
 	/**
@@ -153,7 +153,7 @@ public abstract class CGExecutorPropertyImpl extends CGPropertyImpl implements C
 		CGElementId oldUnderlyingPropertyId = underlyingPropertyId;
 		underlyingPropertyId = newUnderlyingPropertyId;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 10, oldUnderlyingPropertyId, underlyingPropertyId));
+			eNotify(new ENotificationImpl(this, Notification.SET, 9, oldUnderlyingPropertyId, underlyingPropertyId));
 	}
 
 	/**
@@ -164,7 +164,7 @@ public abstract class CGExecutorPropertyImpl extends CGPropertyImpl implements C
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case 9:
+			case 8:
 				return basicSetInitExpression(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -178,9 +178,9 @@ public abstract class CGExecutorPropertyImpl extends CGPropertyImpl implements C
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 9:
+			case 8:
 				return getInitExpression();
-			case 10:
+			case 9:
 				return getUnderlyingPropertyId();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -194,10 +194,10 @@ public abstract class CGExecutorPropertyImpl extends CGPropertyImpl implements C
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 9:
+			case 8:
 				setInitExpression((CGValuedElement)newValue);
 				return;
-			case 10:
+			case 9:
 				setUnderlyingPropertyId((CGElementId)newValue);
 				return;
 		}
@@ -212,10 +212,10 @@ public abstract class CGExecutorPropertyImpl extends CGPropertyImpl implements C
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 9:
+			case 8:
 				setInitExpression((CGValuedElement)null);
 				return;
-			case 10:
+			case 9:
 				setUnderlyingPropertyId((CGElementId)null);
 				return;
 		}
@@ -230,9 +230,9 @@ public abstract class CGExecutorPropertyImpl extends CGPropertyImpl implements C
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 9:
+			case 8:
 				return initExpression != null;
-			case 10:
+			case 9:
 				return underlyingPropertyId != null;
 		}
 		return super.eIsSet(featureID);

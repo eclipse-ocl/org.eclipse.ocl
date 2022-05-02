@@ -16,6 +16,7 @@ import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.calling.SupportOperationCallingConvention;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGBodiedProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
@@ -23,7 +24,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
@@ -282,8 +282,8 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 		else if (cgScope instanceof CGOperation) {
 			return ((CGOperation)cgScope).getBody();
 		}
-		else if (cgScope instanceof CGProperty) {
-			return ((CGProperty)cgScope).getBody();
+		else if (cgScope instanceof CGBodiedProperty) {
+			return ((CGBodiedProperty)cgScope).getBody();
 		}
 		assert false;;
 		return null;

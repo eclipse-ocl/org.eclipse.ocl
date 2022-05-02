@@ -103,6 +103,27 @@ public interface CGModelPackage extends EPackage {
 	EClass getCGAssertNonNullExp();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGBodiedProperty <em>CG Bodied Property</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>CG Bodied Property</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGBodiedProperty
+	 * @generated
+	 */
+	EClass getCGBodiedProperty();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGBodiedProperty#getBody <em>Body</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Body</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGBodiedProperty#getBody()
+	 * @see #getCGBodiedProperty()
+	 * @generated
+	 */
+	EReference getCGBodiedProperty_Body();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGBoolean <em>CG Boolean</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1909,17 +1930,6 @@ public interface CGModelPackage extends EPackage {
 	EReference getCGProperty_ContainingClass();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGProperty#getBody <em>Body</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Body</em>'.
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGProperty#getBody()
-	 * @see #getCGProperty()
-	 * @generated
-	 */
-	EReference getCGProperty_Body();
-
-	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGProperty#getCallingConvention <em>Calling Convention</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2486,6 +2496,24 @@ public interface CGModelPackage extends EPackage {
 		 * @generated
 		 */
 		EClass CG_ASSERT_NON_NULL_EXP = eINSTANCE.getCGAssertNonNullExp();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGBodiedPropertyImpl <em>CG Bodied Property</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGBodiedPropertyImpl
+		 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getCGBodiedProperty()
+		 * @generated
+		 */
+		EClass CG_BODIED_PROPERTY = eINSTANCE.getCGBodiedProperty();
+
+		/**
+		 * The meta object literal for the '<em><b>Body</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CG_BODIED_PROPERTY__BODY = eINSTANCE.getCGBodiedProperty_Body();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGBooleanImpl <em>CG Boolean</em>}' class.
@@ -4004,14 +4032,6 @@ public interface CGModelPackage extends EPackage {
 		 * @generated
 		 */
 		EReference CG_PROPERTY__CONTAINING_CLASS = eINSTANCE.getCGProperty_ContainingClass();
-
-		/**
-		 * The meta object literal for the '<em><b>Body</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference CG_PROPERTY__BODY = eINSTANCE.getCGProperty_Body();
 
 		/**
 		 * The meta object literal for the '<em><b>Calling Convention</b></em>' attribute feature.

@@ -28,5 +28,5 @@ package org.eclipse.ocl.examples.codegen.cgmodel;
  * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGConstrainedProperty()
  * @generated
  */
-public interface CGConstrainedProperty extends CGProperty {
+public interface CGConstrainedProperty extends CGBodiedProperty {
 } // CGConstrainedProperty
