@@ -19,6 +19,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGBoxExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBuiltInIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCollectionExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGConstrainedProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
@@ -40,8 +41,8 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGMapExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGMapPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTemplateParameterExp;
@@ -238,6 +239,17 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 			referredConstant.accept(this);
 		}
 		return null;
+	}
+
+	@Override
+	public @Nullable Object visitCGConstrainedProperty(@NonNull CGConstrainedProperty cgProperty) {
+		JavaLocalContext<?> savedLocalContext = pushLocalContext(cgProperty);
+		try {
+			return super.visitCGConstrainedProperty(cgProperty);
+		}
+		finally {
+			popLocalContext(savedLocalContext);
+		}
 	}
 
 	@Override
@@ -453,10 +465,10 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 	}
 
 	@Override
-	public @Nullable Object visitCGOperation(@NonNull CGOperation cgOperation) {
-		JavaLocalContext<?> savedLocalContext = pushLocalContext(cgOperation);
+	public @Nullable Object visitCGNativeProperty(@NonNull CGNativeProperty cgProperty) {
+		JavaLocalContext<?> savedLocalContext = pushLocalContext(cgProperty);
 		try {
-			return super.visitCGOperation(cgOperation);
+			return super.visitCGNativeProperty(cgProperty);
 		}
 		finally {
 			popLocalContext(savedLocalContext);
@@ -464,10 +476,10 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 	}
 
 	@Override
-	public @Nullable Object visitCGProperty(@NonNull CGProperty cgProperty) {
-		JavaLocalContext<?> savedLocalContext = pushLocalContext(cgProperty);
+	public @Nullable Object visitCGOperation(@NonNull CGOperation cgOperation) {
+		JavaLocalContext<?> savedLocalContext = pushLocalContext(cgOperation);
 		try {
-			return super.visitCGProperty(cgProperty);
+			return super.visitCGOperation(cgOperation);
 		}
 		finally {
 			popLocalContext(savedLocalContext);

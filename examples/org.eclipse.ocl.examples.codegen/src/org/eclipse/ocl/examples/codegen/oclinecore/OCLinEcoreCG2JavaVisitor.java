@@ -612,10 +612,4 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 	public @NonNull Boolean visitCGPackage(@NonNull CGPackage cgPackage) {
 		return true;
 	}
-
-	@Override
-	public @NonNull Boolean visitCGProperty(@NonNull CGProperty cgProperty) {
-		// TODO Auto-generated method stub
-		return super.visitCGProperty(cgProperty);
-	}
 }

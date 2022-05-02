@@ -32,6 +32,9 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGConstrainedProperty;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
@@ -99,6 +102,60 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		}
 
 		@Override
+		public @Nullable Object visitCGConstrainedProperty(@NonNull CGConstrainedProperty cgProperty) {
+			super.visitCGConstrainedProperty(cgProperty);
+			Property asProperty = CGUtil.getAST(cgProperty);
+			EObject eObject = asProperty.getESObject();
+			LibraryFeature implementation = asProperty.getImplementation();
+			if (implementation instanceof StaticProperty) {
+				rewriteAsBoxed(cgProperty.getBody());
+			}
+			else if (eObject instanceof ETypedElement) {
+				EClassifier eType = ((ETypedElement)eObject).getEType();
+				if (eType != null) {
+					rewriteAsEcore(cgProperty.getBody(), eType);
+				}
+			}
+			return null;
+		}
+
+		@Override
+		public @Nullable Object visitCGForeignProperty(@NonNull CGForeignProperty cgProperty) {
+			super.visitCGForeignProperty(cgProperty);
+			Property asProperty = CGUtil.getAST(cgProperty);
+			EObject eObject = asProperty.getESObject();
+			LibraryFeature implementation = asProperty.getImplementation();
+			if (implementation instanceof StaticProperty) {
+				rewriteAsBoxed(cgProperty.getBody());
+			}
+			else if (eObject instanceof ETypedElement) {
+				EClassifier eType = ((ETypedElement)eObject).getEType();
+				if (eType != null) {
+					rewriteAsEcore(cgProperty.getBody(), eType);
+				}
+			}
+			return null;
+		}
+
+		@Override
+		public @Nullable Object visitCGNativeProperty(@NonNull CGNativeProperty cgProperty) {
+			super.visitCGNativeProperty(cgProperty);
+			Property asProperty = CGUtil.getAST(cgProperty);
+			EObject eObject = asProperty.getESObject();
+			LibraryFeature implementation = asProperty.getImplementation();
+			if (implementation instanceof StaticProperty) {
+				rewriteAsBoxed(cgProperty.getBody());
+			}
+			else if (eObject instanceof ETypedElement) {
+				EClassifier eType = ((ETypedElement)eObject).getEType();
+				if (eType != null) {
+					rewriteAsEcore(cgProperty.getBody(), eType);
+				}
+			}
+			return null;
+		}
+
+		@Override
 		public @Nullable Object visitCGOperation(@NonNull CGOperation cgOperation) {
 			super.visitCGOperation(cgOperation);
 			Element asOperation = cgOperation.getAst();
@@ -116,19 +173,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 
 		@Override
 		public @Nullable Object visitCGProperty(@NonNull CGProperty cgProperty) {
-			super.visitCGProperty(cgProperty);
-			Property asProperty = CGUtil.getAST(cgProperty);
-			EObject eObject = asProperty.getESObject();
-			LibraryFeature implementation = asProperty.getImplementation();
-			if (implementation instanceof StaticProperty) {
-				rewriteAsBoxed(cgProperty.getBody());
-			}
-			else if (eObject instanceof ETypedElement) {
-				EClassifier eType = ((ETypedElement)eObject).getEType();
-				if (eType != null) {
-					rewriteAsEcore(cgProperty.getBody(), eType);
-				}
-			}
+			super.visitCGProperty(cgProperty);			// XXX
 			return null;
 		}
 	}

@@ -43,6 +43,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCollectionExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCollectionPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGConstrainedProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreDataTypeShadowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreExp;
@@ -52,6 +53,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorCompositionProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGGuardExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIfExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInteger;
@@ -69,6 +71,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGMapExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGMapPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperation;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNull;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
@@ -1499,6 +1502,17 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	}
 
 	@Override
+	public @NonNull Boolean visitCGConstrainedProperty(@NonNull CGConstrainedProperty cgProperty) {
+		localContext = globalContext.getLocalContext(cgProperty);
+		try {
+			return cgProperty.getCallingConvention().generateJavaDeclaration(this, js, cgProperty);
+		}
+		finally {
+			localContext = null;
+		}
+	}
+
+	@Override
 	public @NonNull Boolean visitCGConstraint(@NonNull CGConstraint cgConstraint) {
 		localContext = globalContext.getLocalContext(cgConstraint);
 		try {
@@ -1769,6 +1783,17 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		js.appendIdReference(cgExecutorType.getUnderlyingTypeId().getElementId());
 		js.append(", null);\n");
 		return true;
+	}
+
+	@Override
+	public @NonNull Boolean visitCGForeignProperty(@NonNull CGForeignProperty cgProperty) {
+		localContext = globalContext.getLocalContext(cgProperty);
+		try {
+			return cgProperty.getCallingConvention().generateJavaDeclaration(this, js, cgProperty);
+		}
+		finally {
+			localContext = null;
+		}
 	}
 
 	@Override
@@ -2304,6 +2329,17 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	}
 
 	@Override
+	public @NonNull Boolean visitCGNativeProperty(@NonNull CGNativeProperty cgProperty) {
+		localContext = globalContext.getLocalContext(cgProperty);
+		try {
+			return cgProperty.getCallingConvention().generateJavaDeclaration(this, js, cgProperty);
+		}
+		finally {
+			localContext = null;
+		}
+	}
+
+	@Override
 	public @NonNull Boolean visitCGNavigationCallExp(@NonNull CGNavigationCallExp cgGNavigationCallExp) {
 		return cgGNavigationCallExp.getCgProperty().getCallingConvention().generateJavaCall(this, js, cgGNavigationCallExp);
 	/*	if (cgGNavigationCallExp instanceof CGEcorePropertyCallExp) {
@@ -2373,23 +2409,8 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	}
 
 	@Override
-	public @NonNull Boolean visitCGProperty(@NonNull CGProperty cgProperty) {
-		localContext = globalContext.getLocalContext(cgProperty);
-		try {
-			return cgProperty.getCallingConvention().generateJavaDeclaration(this, js, cgProperty);
-		/*	if (cgProperty instanceof CGForeignProperty) {
-				return ForeignPropertyCallingConvention.INSTANCE.generateJavaDeclaration(this, js, cgProperty);
-			}
-			if (cgProperty instanceof CGNativeProperty) {
-				return NativePropertyCallingConvention.INSTANCE.generateJavaDeclaration(this, js, cgProperty);
-			}
-			Boolean flowContinues = super.visitCGProperty(cgProperty);
-			assert flowContinues != null;
-			return flowContinues; */
-		}
-		finally {
-			localContext = null;
-		}
+	public @NonNull Boolean visitCGProperty(@NonNull CGProperty object) {
+		return visiting(object);				// XXX
 	}
 
 	@Override

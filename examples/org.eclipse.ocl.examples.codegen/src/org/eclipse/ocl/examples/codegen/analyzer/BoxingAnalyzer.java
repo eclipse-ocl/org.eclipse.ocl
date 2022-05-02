@@ -24,6 +24,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCastExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGConstrainedProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOppositePropertyCallExp;
@@ -45,12 +46,12 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperation;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
@@ -321,6 +322,18 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	}
 
 	@Override
+	public @Nullable Object visitCGConstrainedProperty(@NonNull CGConstrainedProperty cgProperty) {
+		super.visitCGConstrainedProperty(cgProperty);
+		if (cgProperty.isRequired()) {
+			CGValuedElement body = cgProperty.getBody();
+			if (body != null) {
+				rewriteAsGuarded(body, false, "body for '" + cgProperty.getAst() + "'");
+			}
+		}
+		return null;
+	}
+
+	@Override
 	public @Nullable Object visitCGEcoreOperation(@NonNull CGEcoreOperation cgElement) {
 		super.visitCGEcoreOperation(cgElement);
 		CGValuedElement body = cgElement.getBody();
@@ -484,6 +497,18 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	public @Nullable Object visitCGNativeOperation(@NonNull CGNativeOperation cgNativeOperation) {
 		super.visitCGNativeOperation(cgNativeOperation);
 		rewriteAsUnboxed(cgNativeOperation.getBody());
+		return null;
+	}
+
+	@Override
+	public @Nullable Object visitCGNativeProperty(@NonNull CGNativeProperty cgProperty) {
+		super.visitCGNativeProperty(cgProperty);
+		if (cgProperty.isRequired()) {
+			CGValuedElement body = cgProperty.getBody();
+			if (body != null) {
+				rewriteAsGuarded(body, false, "body for '" + cgProperty.getAst() + "'");
+			}
+		}
 		return null;
 	}
 
@@ -659,18 +684,6 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 			}
 		}
 		return null; */
-	}
-
-	@Override
-	public @Nullable Object visitCGProperty(@NonNull CGProperty cgElement) {
-		super.visitCGProperty(cgElement);
-		if (cgElement.isRequired()) {
-			CGValuedElement body = cgElement.getBody();
-			if (body != null) {
-				rewriteAsGuarded(body, false, "body for '" + cgElement.getAst() + "'");
-			}
-		}
-		return null;
 	}
 
 	@Override
