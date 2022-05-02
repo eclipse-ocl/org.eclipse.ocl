@@ -705,16 +705,16 @@ implements org.eclipse.ocl.pivot.Class {
 				IF_le = true;
 			}
 			else {
-				/*@Caught*/ @NonNull Object CAUGHT_result;
+				/*@Caught*/ @NonNull Object result;
 				try {
 					final /*@NonInvalid*/ @NonNull List<Constraint> ownedInvariants_0 = this.getOwnedInvariants();
-					final /*@NonInvalid*/ @NonNull SetValue BOXED_ownedInvariants_0 = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Constraint, ownedInvariants_0);
+					final /*@NonInvalid*/ @NonNull SetValue BOXED_ownedInvariants = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Constraint, ownedInvariants_0);
 					/*@Thrown*/ @NonNull Accumulator accumulator = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Constraint);
-					@NonNull Iterator<Object> ITER__1 = BOXED_ownedInvariants_0.iterator();
-					/*@Thrown*/ boolean result;
+					@NonNull Iterator<Object> ITER__1 = BOXED_ownedInvariants.iterator();
+					/*@Thrown*/ boolean isUnique;
 					while (true) {
 						if (!ITER__1.hasNext()) {
-							result = true;
+							isUnique = true;
 							break;
 						}
 						@SuppressWarnings("null")
@@ -725,19 +725,19 @@ implements org.eclipse.ocl.pivot.Class {
 						final /*@NonInvalid*/ @Nullable String name = _1.getName();
 						//
 						if (accumulator.includes(name) == ValueUtil.TRUE_VALUE) {
-							result = false;
+							isUnique = false;
 							break;			// Abort after second find
 						}
 						else {
 							accumulator.add(name);
 						}
 					}
-					CAUGHT_result = result;
+					result = isUnique;
 				}
 				catch (Exception THROWN_result) {
-					CAUGHT_result = ValueUtil.createInvalidValue(THROWN_result);
+					result = ValueUtil.createInvalidValue(THROWN_result);
 				}
-				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, CAUGHT_result, PivotTables.INT_0).booleanValue();
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, result, PivotTables.INT_0).booleanValue();
 				IF_le = logDiagnostic;
 			}
 			return IF_le;
