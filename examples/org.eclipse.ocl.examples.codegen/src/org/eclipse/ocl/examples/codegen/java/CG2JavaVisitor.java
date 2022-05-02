@@ -48,7 +48,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreDataTypeShadowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElementId;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorCompositionProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
@@ -1659,7 +1658,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		return true;
 	}
 
-	@Override
+/*	@Override
 	public @NonNull Boolean visitCGExecutorCompositionProperty(@NonNull CGExecutorCompositionProperty cgExecutorProperty) {
 		js.appendDeclaration(cgExecutorProperty);
 		js.append(" = new ");
@@ -1668,9 +1667,9 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		js.appendIdReference(cgExecutorProperty.getUnderlyingPropertyId().getElementId());
 		js.append(");\n");
 		return true;
-	}
+	} */
 
-	@Override
+/*	@Override
 	public @NonNull Boolean visitCGExecutorShadowPart(@NonNull CGExecutorShadowPart cgExecutorShadowPart) {
 		js.appendDeclaration(cgExecutorShadowPart);
 		js.append(" = ");
@@ -1679,7 +1678,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		js.appendIdReference(cgExecutorShadowPart.getUnderlyingPropertyId().getElementId());
 		js.append(");\n");
 		return true;
-	}
+	} */
 
 /*	@Override
 	public @NonNull Boolean visitCGExecutorOperation(@NonNull CGExecutorOperation cgExecutorOperation) {
@@ -1768,6 +1767,9 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 	@Override
 	public @NonNull Boolean visitCGExecutorProperty(@NonNull CGExecutorProperty cgExecutorProperty) {
+	//	if (cgExecutorProperty instanceof CGExecutorCompositionProperty) {
+	//		return ExecutorCompositionPropertyCallingConvention.INSTANCE.generateJavaDeclaration(this, js, cgExecutorProperty);
+	//	}
 		return cgExecutorProperty.getCallingConvention().generateJavaDeclaration(this, js, cgExecutorProperty);
 	}
 

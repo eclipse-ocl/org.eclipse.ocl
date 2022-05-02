@@ -13,7 +13,6 @@ package org.eclipse.ocl.examples.codegen.calling;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorNavigationProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOppositeProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOppositePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorProperty;
@@ -133,7 +132,7 @@ public class ExecutorOppositePropertyCallingConvention extends AbstractPropertyC
 		return true;
 	}
 
-	protected boolean generateForwardJavaDeclaration(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGExecutorNavigationProperty cgProperty) {
+/*	private boolean generateForwardJavaDeclaration(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGExecutorNavigationProperty cgProperty) {
 		js.appendDeclaration(cgProperty);
 		js.append(" = new ");
 		js.appendClassReference(null, cgProperty);
@@ -141,17 +140,17 @@ public class ExecutorOppositePropertyCallingConvention extends AbstractPropertyC
 		js.appendIdReference(cgProperty.getUnderlyingPropertyId().getElementId());
 		js.append(");\n");
 		return true;
-	}
+	} */
 
 	@Override
 	public boolean generateJavaDeclaration(	@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGProperty cgProperty) {
 		assert cgProperty instanceof CGExecutorOppositeProperty;
-		if (cgProperty instanceof CGExecutorNavigationProperty) {
-			return generateForwardJavaDeclaration(cg2javaVisitor, js, (CGExecutorNavigationProperty)cgProperty);
-		}
-		else {
+	//	if (cgProperty instanceof CGExecutorNavigationProperty) {
+	//		return generateForwardJavaDeclaration(cg2javaVisitor, js, (CGExecutorNavigationProperty)cgProperty);
+	//	}
+	//	else {
 			return generateOppositeJavaDeclaration(cg2javaVisitor, js, (CGExecutorOppositeProperty)cgProperty);
-		}
+	//	}
 	}
 
 	@Override
@@ -195,7 +194,7 @@ public class ExecutorOppositePropertyCallingConvention extends AbstractPropertyC
 		return true;
 	}
 
-	protected boolean generateOppositeJavaDeclaration(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGExecutorOppositeProperty cgProperty) {
+	private boolean generateOppositeJavaDeclaration(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGExecutorOppositeProperty cgProperty) {
 		Property asProperty = (Property) cgProperty.getAst();
 		Property asOppositeProperty = asProperty.getOpposite();
 		js.appendDeclaration(cgProperty);

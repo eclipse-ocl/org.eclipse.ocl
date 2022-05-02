@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.calling.ExecutorShadowPartCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.ForeignPropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.NativeOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
@@ -1894,6 +1895,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		Property referredProperty = element.getReferredProperty();
 		if (referredProperty != null) {
 			CGExecutorShadowPart cgExecutorShadowPart = context.createExecutorShadowPart(referredProperty);
+			cgExecutorShadowPart.setCallingConvention(ExecutorShadowPartCallingConvention.INSTANCE);
 			cgShadowPart.setExecutorPart(cgExecutorShadowPart);
 		}
 		return cgShadowPart;
