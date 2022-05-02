@@ -194,69 +194,68 @@ implements TupleLiteralPart {
 				IF_le = true;
 			}
 			else {
-				/*@Caught*/ @Nullable Object CAUGHT_result;
+				/*@Caught*/ @Nullable Object result;
 				try {
 					/*@Caught*/ @Nullable Object CAUGHT_and;
 					try {
-						final /*@NonInvalid*/ @Nullable OCLExpression ownedInit_1 = this.getOwnedInit();
-						final /*@NonInvalid*/ boolean IsEQ_ = ownedInit_1 != null;
+						final /*@NonInvalid*/ @Nullable OCLExpression ownedInit_0 = this.getOwnedInit();
+						final /*@NonInvalid*/ boolean IsEQ__0 = ownedInit_0 != null;
 						final /*@Thrown*/ @Nullable Boolean and;
-						if (!IsEQ_) {
+						if (!IsEQ__0) {
 							and = ValueUtil.FALSE_VALUE;
 						}
 						else {
-							/*@Caught*/ @NonNull Object CAUGHT_IsEQ__0;
+							/*@Caught*/ @NonNull Object CAUGHT_IsEQ_;
 							try {
-								final /*@NonInvalid*/ @Nullable OCLExpression ownedInit_2 = this.getOwnedInit();
-								if (ownedInit_2 == null) {
+								if (ownedInit_0 == null) {
 									throw new InvalidValueException("Null source for \'TypedElement::type\'");
 								}
-								final /*@Thrown*/ @Nullable Type type_1 = ownedInit_2.getType();
-								final /*@Thrown*/ boolean IsEQ__0 = type_1 != null;
-								CAUGHT_IsEQ__0 = IsEQ__0;
+								final /*@Thrown*/ @Nullable Type type = ownedInit_0.getType();
+								final /*@Thrown*/ boolean IsEQ_ = type != null;
+								CAUGHT_IsEQ_ = IsEQ_;
 							}
-							catch (Exception THROWN_IsEQ__0) {
-								CAUGHT_IsEQ__0 = ValueUtil.createInvalidValue(THROWN_IsEQ__0);
+							catch (Exception THROWN_CAUGHT_IsEQ_) {
+								CAUGHT_IsEQ_ = ValueUtil.createInvalidValue(THROWN_CAUGHT_IsEQ_);
 							}
-							if (CAUGHT_IsEQ__0 == ValueUtil.FALSE_VALUE) {
+							if (CAUGHT_IsEQ_ == ValueUtil.FALSE_VALUE) {
 								and = ValueUtil.FALSE_VALUE;
 							}
 							else {
-								if (CAUGHT_IsEQ__0 instanceof InvalidValueException) {
-									throw (InvalidValueException)CAUGHT_IsEQ__0;
+								if (CAUGHT_IsEQ_ instanceof InvalidValueException) {
+									throw (InvalidValueException)CAUGHT_IsEQ_;
 								}
 								and = ValueUtil.TRUE_VALUE;
 							}
 						}
 						CAUGHT_and = and;
 					}
-					catch (Exception THROWN_and) {
-						CAUGHT_and = ValueUtil.createInvalidValue(THROWN_and);
+					catch (Exception THROWN_CAUGHT_and) {
+						CAUGHT_and = ValueUtil.createInvalidValue(THROWN_CAUGHT_and);
 					}
-					final /*@Thrown*/ @Nullable Boolean result;
+					final /*@Thrown*/ @Nullable Boolean implies;
 					if (CAUGHT_and == ValueUtil.FALSE_VALUE) {
-						result = ValueUtil.TRUE_VALUE;
+						implies = ValueUtil.TRUE_VALUE;
 					}
 					else {
 						/*@Caught*/ @NonNull Object CAUGHT_conformsTo;
 						try {
-							final /*@NonInvalid*/ @Nullable OCLExpression ownedInit_0 = this.getOwnedInit();
-							if (ownedInit_0 == null) {
+							final /*@NonInvalid*/ @Nullable OCLExpression ownedInit_1 = this.getOwnedInit();
+							if (ownedInit_1 == null) {
 								throw new InvalidValueException("Null source for \'TypedElement::type\'");
 							}
-							final /*@Thrown*/ @Nullable Type type_0 = ownedInit_0.getType();
-							final /*@NonInvalid*/ @Nullable Type type = this.getType();
+							final /*@Thrown*/ @Nullable Type type_0 = ownedInit_1.getType();
+							final /*@NonInvalid*/ @Nullable Type type_1 = this.getType();
 							if (type_0 == null) {
 								throw new InvalidValueException("Null argument");
 							}
-							final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type_0, type).booleanValue();
+							final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type_0, type_1).booleanValue();
 							CAUGHT_conformsTo = conformsTo;
 						}
-						catch (Exception THROWN_conformsTo) {
-							CAUGHT_conformsTo = ValueUtil.createInvalidValue(THROWN_conformsTo);
+						catch (Exception THROWN_CAUGHT_conformsTo) {
+							CAUGHT_conformsTo = ValueUtil.createInvalidValue(THROWN_CAUGHT_conformsTo);
 						}
 						if (CAUGHT_conformsTo == ValueUtil.TRUE_VALUE) {
-							result = ValueUtil.TRUE_VALUE;
+							implies = ValueUtil.TRUE_VALUE;
 						}
 						else {
 							if (CAUGHT_and instanceof InvalidValueException) {
@@ -266,19 +265,19 @@ implements TupleLiteralPart {
 								throw (InvalidValueException)CAUGHT_conformsTo;
 							}
 							if (CAUGHT_and == null) {
-								result = null;
+								implies = null;
 							}
 							else {
-								result = ValueUtil.FALSE_VALUE;
+								implies = ValueUtil.FALSE_VALUE;
 							}
 						}
 					}
-					CAUGHT_result = result;
+					result = implies;
 				}
 				catch (Exception THROWN_result) {
-					CAUGHT_result = ValueUtil.createInvalidValue(THROWN_result);
+					result = ValueUtil.createInvalidValue(THROWN_result);
 				}
-				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, CAUGHT_result, PivotTables.INT_0).booleanValue();
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, result, PivotTables.INT_0).booleanValue();
 				IF_le = logDiagnostic;
 			}
 			return IF_le;
@@ -320,9 +319,9 @@ implements TupleLiteralPart {
 				IF_le = true;
 			}
 			else {
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OclInvalid_0 = idResolver.getClass(TypeId.OCL_INVALID, null);
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OclInvalid_5 = idResolver.getClass(TypeId.OCL_INVALID, null);
 				final /*@NonInvalid*/ @Nullable Type type = this.getType();
-				final /*@NonInvalid*/ @NonNull InvalidType CAST_TYP_OclInvalid = (InvalidType)TYP_OclInvalid_0;
+				final /*@NonInvalid*/ @NonNull InvalidType CAST_TYP_OclInvalid = (InvalidType)TYP_OclInvalid_5;
 				final /*@NonInvalid*/ boolean result = (type != null) ? (type.getTypeId() != CAST_TYP_OclInvalid.getTypeId()) : true;
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, result, PivotTables.INT_0).booleanValue();
 				IF_le = logDiagnostic;

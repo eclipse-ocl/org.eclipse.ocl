@@ -199,15 +199,15 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 				IF_le = true;
 			}
 			else {
-				/*@Caught*/ @Nullable Object CAUGHT_result;
+				/*@Caught*/ @Nullable Object result;
 				try {
 					@SuppressWarnings("null")
 					final /*@NonInvalid*/ @NonNull OCLExpression ownedInit_0 = this.getOwnedInit();
 					final /*@NonInvalid*/ @Nullable Type type = ownedInit_0.getType();
 					final /*@NonInvalid*/ @NonNull Object IsEQ2_ = type == null;
-					/*@Thrown*/ @Nullable Boolean SAFE_conformsTo;
+					/*@Thrown*/ @Nullable Boolean IF_IsEQ2_;
 					if (IsEQ2_ == Boolean.TRUE) {
-						SAFE_conformsTo = null;
+						IF_IsEQ2_ = null;
 					}
 					else {
 						final /*@NonInvalid*/ @Nullable Type type_0 = this.getType();
@@ -215,15 +215,14 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 							throw new InvalidValueException("Null argument");
 						}
 						final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, type_0).booleanValue();
-						SAFE_conformsTo = conformsTo;
+						IF_IsEQ2_ = conformsTo;
 					}
-					final /*@Thrown*/ @Nullable Boolean result = SAFE_conformsTo;
-					CAUGHT_result = result;
+					result = IF_IsEQ2_;
 				}
 				catch (Exception THROWN_result) {
-					CAUGHT_result = ValueUtil.createInvalidValue(THROWN_result);
+					result = ValueUtil.createInvalidValue(THROWN_result);
 				}
-				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, CAUGHT_result, PivotTables.INT_0).booleanValue();
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, result, PivotTables.INT_0).booleanValue();
 				IF_le = logDiagnostic;
 			}
 			return IF_le;
@@ -265,9 +264,9 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 				IF_le = true;
 			}
 			else {
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OclInvalid_6 = idResolver.getClass(TypeId.OCL_INVALID, null);
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OclInvalid_7 = idResolver.getClass(TypeId.OCL_INVALID, null);
 				final /*@NonInvalid*/ @Nullable Type type = this.getType();
-				final /*@NonInvalid*/ @NonNull InvalidType CAST_TYP_OclInvalid = (InvalidType)TYP_OclInvalid_6;
+				final /*@NonInvalid*/ @NonNull InvalidType CAST_TYP_OclInvalid = (InvalidType)TYP_OclInvalid_7;
 				final /*@NonInvalid*/ boolean result = (type != null) ? (type.getTypeId() != CAST_TYP_OclInvalid.getTypeId()) : true;
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, result, PivotTables.INT_0).booleanValue();
 				IF_le = logDiagnostic;

@@ -790,18 +790,18 @@ implements Operation {
 				IF_le = true;
 			}
 			else {
-				/*@Caught*/ @Nullable Object CAUGHT_result;
+				/*@Caught*/ @Nullable Object result;
 				try {
 					/*@Caught*/ @Nullable Object CAUGHT_and;
 					try {
 						final /*@NonInvalid*/ @Nullable LanguageExpression bodyExpression_0 = this.getBodyExpression();
-						final /*@NonInvalid*/ boolean IsEQ_ = bodyExpression_0 != null;
+						final /*@NonInvalid*/ boolean IsEQ__0 = bodyExpression_0 != null;
 						final /*@Thrown*/ @Nullable Boolean and;
-						if (!IsEQ_) {
+						if (!IsEQ__0) {
 							and = ValueUtil.FALSE_VALUE;
 						}
 						else {
-							/*@Caught*/ @NonNull Object CAUGHT_IsEQ__0;
+							/*@Caught*/ @NonNull Object CAUGHT_IsEQ_;
 							try {
 								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_ExpressionInOCL_0 = idResolver.getClass(PivotTables.CLSSid_ExpressionInOCL, null);
 								final /*@Thrown*/ @Nullable ExpressionInOCL oclAsType = (@Nullable ExpressionInOCL)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, bodyExpression_0, TYP_ExpressionInOCL_0);
@@ -809,30 +809,30 @@ implements Operation {
 									throw new InvalidValueException("Null source for \'ExpressionInOCL::ownedBody\'");
 								}
 								final /*@Thrown*/ @Nullable OCLExpression ownedBody = oclAsType.getOwnedBody();
-								final /*@Thrown*/ boolean IsEQ__0 = ownedBody != null;
-								CAUGHT_IsEQ__0 = IsEQ__0;
+								final /*@Thrown*/ boolean IsEQ_ = ownedBody != null;
+								CAUGHT_IsEQ_ = IsEQ_;
 							}
-							catch (Exception THROWN_IsEQ__0) {
-								CAUGHT_IsEQ__0 = ValueUtil.createInvalidValue(THROWN_IsEQ__0);
+							catch (Exception THROWN_CAUGHT_IsEQ_) {
+								CAUGHT_IsEQ_ = ValueUtil.createInvalidValue(THROWN_CAUGHT_IsEQ_);
 							}
-							if (CAUGHT_IsEQ__0 == ValueUtil.FALSE_VALUE) {
+							if (CAUGHT_IsEQ_ == ValueUtil.FALSE_VALUE) {
 								and = ValueUtil.FALSE_VALUE;
 							}
 							else {
-								if (CAUGHT_IsEQ__0 instanceof InvalidValueException) {
-									throw (InvalidValueException)CAUGHT_IsEQ__0;
+								if (CAUGHT_IsEQ_ instanceof InvalidValueException) {
+									throw (InvalidValueException)CAUGHT_IsEQ_;
 								}
 								and = ValueUtil.TRUE_VALUE;
 							}
 						}
 						CAUGHT_and = and;
 					}
-					catch (Exception THROWN_and) {
-						CAUGHT_and = ValueUtil.createInvalidValue(THROWN_and);
+					catch (Exception THROWN_CAUGHT_and) {
+						CAUGHT_and = ValueUtil.createInvalidValue(THROWN_CAUGHT_and);
 					}
-					final /*@Thrown*/ @Nullable Boolean result;
+					final /*@Thrown*/ @Nullable Boolean implies;
 					if (CAUGHT_and == ValueUtil.FALSE_VALUE) {
-						result = ValueUtil.TRUE_VALUE;
+						implies = ValueUtil.TRUE_VALUE;
 					}
 					else {
 						/*@Caught*/ @NonNull Object CAUGHT_CompatibleBody;
@@ -841,11 +841,11 @@ implements Operation {
 							final /*@Thrown*/ boolean CompatibleBody = this.CompatibleBody(bodyExpression_1);
 							CAUGHT_CompatibleBody = CompatibleBody;
 						}
-						catch (Exception THROWN_CompatibleBody) {
-							CAUGHT_CompatibleBody = ValueUtil.createInvalidValue(THROWN_CompatibleBody);
+						catch (Exception THROWN_CAUGHT_CompatibleBody) {
+							CAUGHT_CompatibleBody = ValueUtil.createInvalidValue(THROWN_CAUGHT_CompatibleBody);
 						}
 						if (CAUGHT_CompatibleBody == ValueUtil.TRUE_VALUE) {
-							result = ValueUtil.TRUE_VALUE;
+							implies = ValueUtil.TRUE_VALUE;
 						}
 						else {
 							if (CAUGHT_and instanceof InvalidValueException) {
@@ -855,19 +855,19 @@ implements Operation {
 								throw (InvalidValueException)CAUGHT_CompatibleBody;
 							}
 							if (CAUGHT_and == null) {
-								result = null;
+								implies = null;
 							}
 							else {
-								result = ValueUtil.FALSE_VALUE;
+								implies = ValueUtil.FALSE_VALUE;
 							}
 						}
 					}
-					CAUGHT_result = result;
+					result = implies;
 				}
 				catch (Exception THROWN_result) {
-					CAUGHT_result = ValueUtil.createInvalidValue(THROWN_result);
+					result = ValueUtil.createInvalidValue(THROWN_result);
 				}
-				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, CAUGHT_result, PivotTables.INT_0).booleanValue();
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, result, PivotTables.INT_0).booleanValue();
 				IF_le = logDiagnostic;
 			}
 			return IF_le;
@@ -923,16 +923,16 @@ implements Operation {
 				IF_le = true;
 			}
 			else {
-				/*@Caught*/ @NonNull Object CAUGHT_result;
+				/*@Caught*/ @NonNull Object result;
 				try {
 					final /*@NonInvalid*/ @NonNull List<Constraint> ownedPreconditions_0 = this.getOwnedPreconditions();
-					final /*@NonInvalid*/ @NonNull SetValue BOXED_ownedPreconditions_0 = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Constraint, ownedPreconditions_0);
+					final /*@NonInvalid*/ @NonNull SetValue BOXED_ownedPreconditions = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Constraint, ownedPreconditions_0);
 					/*@Thrown*/ @NonNull Accumulator accumulator = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Constraint);
-					@NonNull Iterator<Object> ITER__1 = BOXED_ownedPreconditions_0.iterator();
-					/*@Thrown*/ boolean result;
+					@NonNull Iterator<Object> ITER__1 = BOXED_ownedPreconditions.iterator();
+					/*@Thrown*/ boolean isUnique;
 					while (true) {
 						if (!ITER__1.hasNext()) {
-							result = true;
+							isUnique = true;
 							break;
 						}
 						@SuppressWarnings("null")
@@ -943,19 +943,19 @@ implements Operation {
 						final /*@NonInvalid*/ @Nullable String name = _1.getName();
 						//
 						if (accumulator.includes(name) == ValueUtil.TRUE_VALUE) {
-							result = false;
+							isUnique = false;
 							break;			// Abort after second find
 						}
 						else {
 							accumulator.add(name);
 						}
 					}
-					CAUGHT_result = result;
+					result = isUnique;
 				}
 				catch (Exception THROWN_result) {
-					CAUGHT_result = ValueUtil.createInvalidValue(THROWN_result);
+					result = ValueUtil.createInvalidValue(THROWN_result);
 				}
-				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, CAUGHT_result, PivotTables.INT_0).booleanValue();
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, result, PivotTables.INT_0).booleanValue();
 				IF_le = logDiagnostic;
 			}
 			return IF_le;
@@ -997,16 +997,16 @@ implements Operation {
 				IF_le = true;
 			}
 			else {
-				/*@Caught*/ @NonNull Object CAUGHT_result;
+				/*@Caught*/ @NonNull Object result;
 				try {
 					final /*@NonInvalid*/ @NonNull List<Constraint> ownedPostconditions_0 = this.getOwnedPostconditions();
-					final /*@NonInvalid*/ @NonNull SetValue BOXED_ownedPostconditions_0 = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Constraint, ownedPostconditions_0);
+					final /*@NonInvalid*/ @NonNull SetValue BOXED_ownedPostconditions = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Constraint, ownedPostconditions_0);
 					/*@Thrown*/ @NonNull Accumulator accumulator = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Constraint);
-					@NonNull Iterator<Object> ITER__1 = BOXED_ownedPostconditions_0.iterator();
-					/*@Thrown*/ boolean result;
+					@NonNull Iterator<Object> ITER__1 = BOXED_ownedPostconditions.iterator();
+					/*@Thrown*/ boolean isUnique;
 					while (true) {
 						if (!ITER__1.hasNext()) {
-							result = true;
+							isUnique = true;
 							break;
 						}
 						@SuppressWarnings("null")
@@ -1017,19 +1017,19 @@ implements Operation {
 						final /*@NonInvalid*/ @Nullable String name = _1.getName();
 						//
 						if (accumulator.includes(name) == ValueUtil.TRUE_VALUE) {
-							result = false;
+							isUnique = false;
 							break;			// Abort after second find
 						}
 						else {
 							accumulator.add(name);
 						}
 					}
-					CAUGHT_result = result;
+					result = isUnique;
 				}
 				catch (Exception THROWN_result) {
-					CAUGHT_result = ValueUtil.createInvalidValue(THROWN_result);
+					result = ValueUtil.createInvalidValue(THROWN_result);
 				}
-				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, CAUGHT_result, PivotTables.INT_0).booleanValue();
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, result, PivotTables.INT_0).booleanValue();
 				IF_le = logDiagnostic;
 			}
 			return IF_le;
