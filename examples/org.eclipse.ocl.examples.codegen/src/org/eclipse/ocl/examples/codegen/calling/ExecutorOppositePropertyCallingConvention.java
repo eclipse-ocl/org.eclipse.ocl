@@ -61,6 +61,7 @@ public class ExecutorOppositePropertyCallingConvention extends AbstractPropertyC
 		assert (libraryProperty instanceof CompositionProperty) || (libraryProperty instanceof ImplicitNonCompositionProperty) || (libraryProperty instanceof ExtensionProperty);
 		CGExecutorOppositePropertyCallExp cgPropertyCallExp = CGModelFactory.eINSTANCE.createCGExecutorOppositePropertyCallExp();
 		CGExecutorProperty cgExecutorProperty = as2cgVisitor.getAnalyzer().createExecutorOppositeProperty(asProperty);
+		cgExecutorProperty.setCallingConvention(this);
 		cgPropertyCallExp.setExecutorProperty(cgExecutorProperty);
 		cgPropertyCallExp.getOwns().add(cgExecutorProperty);
 		cgPropertyCallExp.setReferredProperty(asProperty);
@@ -142,8 +143,9 @@ public class ExecutorOppositePropertyCallingConvention extends AbstractPropertyC
 		return true;
 	}
 
-//	@Override
-	public boolean generateJavaDeclaration(	@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGExecutorProperty cgProperty) {
+	@Override
+	public boolean generateJavaDeclaration(	@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGProperty cgProperty) {
+		assert cgProperty instanceof CGExecutorOppositeProperty;
 		if (cgProperty instanceof CGExecutorNavigationProperty) {
 			return generateForwardJavaDeclaration(cg2javaVisitor, js, (CGExecutorNavigationProperty)cgProperty);
 		}

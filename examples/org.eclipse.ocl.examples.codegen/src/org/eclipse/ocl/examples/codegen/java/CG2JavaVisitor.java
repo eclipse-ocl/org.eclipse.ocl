@@ -29,7 +29,6 @@ import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager.NameVariant;
 import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
-import org.eclipse.ocl.examples.codegen.calling.ExecutorPropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGAssertNonNullExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBodiedProperty;
@@ -1769,7 +1768,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 	@Override
 	public @NonNull Boolean visitCGExecutorProperty(@NonNull CGExecutorProperty cgExecutorProperty) {
-		return ExecutorPropertyCallingConvention.INSTANCE.generateJavaDeclaration(this, js, cgExecutorProperty);
+		return cgExecutorProperty.getCallingConvention().generateJavaDeclaration(this, js, cgExecutorProperty);
 	}
 
 	@Override
@@ -2382,11 +2381,6 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	@Override
 	public @NonNull Boolean visitCGParameter(@NonNull CGParameter object) {
 		return true;			// Parameters are declared by their Operation
-	}
-
-	@Override
-	public @NonNull Boolean visitCGProperty(@NonNull CGProperty object) {
-		return visiting(object);				// XXX
 	}
 
 	@Override

@@ -76,6 +76,7 @@ public class ExecutorPropertyCallingConvention extends AbstractPropertyCallingCo
 		boolean isRequired = asProperty.isIsRequired();
 		CGExecutorPropertyCallExp cgExecutorPropertyCallExp = CGModelFactory.eINSTANCE.createCGExecutorPropertyCallExp();
 		CGExecutorProperty cgExecutorProperty = analyzer.createExecutorProperty(asProperty);
+		cgExecutorProperty.setCallingConvention(this);
 		cgExecutorPropertyCallExp.setExecutorProperty(cgExecutorProperty);
 		cgExecutorPropertyCallExp.getOwns().add(cgExecutorProperty);
 		cgExecutorPropertyCallExp.setCgProperty(cgProperty);
@@ -137,8 +138,9 @@ public class ExecutorPropertyCallingConvention extends AbstractPropertyCallingCo
 		return true;
 	}
 
-//	@Override
-	public boolean generateJavaDeclaration(	@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGExecutorProperty cgProperty) {
+	@Override
+	public boolean generateJavaDeclaration(	@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGProperty cgProperty) {
+		assert cgProperty instanceof CGExecutorNavigationProperty;
 		if (cgProperty instanceof CGExecutorNavigationProperty) {
 			return generateForwardJavaDeclaration(cg2javaVisitor, js, (CGExecutorNavigationProperty)cgProperty);
 		}
