@@ -19,6 +19,7 @@ import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignOperationCallExp;
@@ -31,11 +32,18 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.generator.GenModelException;
 import org.eclipse.ocl.examples.codegen.generator.GenModelHelper;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
+import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
+import org.eclipse.ocl.examples.codegen.java.JavaConstants;
+import org.eclipse.ocl.examples.codegen.java.JavaGlobalContext;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
+import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
+import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -51,7 +59,7 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 {
 	public static final @NonNull ForeignOperationCallingConvention INSTANCE = new ForeignOperationCallingConvention();
 
-	@Override
+/*	@Override
 	protected void appendDeclaration(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
 		appendCommentWithOCL(js, cgOperation);
 		//
@@ -62,6 +70,22 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 		js.appendClassReference(cgOperation.isRequired() ? true : null, cgOperation);
 		js.append(" op_");
 		js.appendValueName(cgOperation);
+	} */
+
+	protected void appendForeignOperationName(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
+		JavaCodeGenerator codeGenerator = cg2javaVisitor.getCodeGenerator();
+		CGOperation cgOperation = CGUtil.getOperation(cgOperationCallExp);
+		Operation asReferredOperation = CGUtil.getReferredOperation(cgOperationCallExp);
+		org.eclipse.ocl.pivot.Class asReferredClass = PivotUtil.getOwningClass(asReferredOperation);
+		CGClass cgReferringClass = CGUtil.getContainingClass(cgOperationCallExp);
+		assert cgReferringClass != null;
+		String flattenedClassName = codeGenerator.getQualifiedForeignClassName(asReferredClass);
+		js.append(flattenedClassName);
+		String operationName = JavaConstants.FOREIGN_OPERATION_PREFIX + cgOperation.getName();
+		js.append("." + operationName + ".");
+		js.append(codeGenerator.getGlobalContext().getEvaluateName());
+		js.append("Too");
+	//	js.append(PivotUtil.getName(asReferredOperation));
 	}
 
 	@Override
@@ -123,6 +147,8 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 		analyzer.addForeignFeature(asOperation);
 		CGForeignOperationCallExp cgForeignOperationCallExp = CGModelFactory.eINSTANCE.createCGForeignOperationCallExp();
 		addExecutorArgument(as2cgVisitor, cgForeignOperationCallExp);
+		addTypeIdArgument(as2cgVisitor, cgForeignOperationCallExp, asOperation.getTypeId());
+		addExpressionInOCLParameters(as2cgVisitor, cgOperation, (ExpressionInOCL) asOperation.getBodyExpression());
 		init(as2cgVisitor, cgForeignOperationCallExp, asOperationCallExp, cgOperation, isRequired);
 		return cgForeignOperationCallExp;
 	}
@@ -131,6 +157,10 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 	public void createCGParameters(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL expressionInOCL) {
 		assert expressionInOCL != null;
 		addExecutorParameter(as2cgVisitor, cgOperation);
+	//	addTyParameter(as2cgVisitor, cgOperation);
+		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
+		cgParameters.add(as2cgVisitor.getTypeIdParameter());
+		cgParameters.add(as2cgVisitor.getSelfParameter(expressionInOCL.getOwnedContext()));
 		super.createCGParameters(as2cgVisitor, cgOperation, expressionInOCL);
 	}
 
@@ -157,6 +187,91 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 		} */
 		generateArgumentList(cg2JavaVisitor, js, cgOperationCallExp);
 		js.append(");\n");
+		return true;
+	}
+
+	@Override
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+		JavaGlobalContext<@NonNull ? extends JavaCodeGenerator> globalContext = cg2javaVisitor.getCodeGenerator().getGlobalContext();
+		GenModelHelper genModelHelper = cg2javaVisitor.getGenModelHelper();
+		List<CGParameter> cgParameters = cgOperation.getParameters();
+		String operationName = JavaConstants.FOREIGN_OPERATION_PREFIX + cgOperation.getName();
+		assert operationName != null;
+		js.appendCommentWithOCL(null, cgOperation.getAst());
+	//	assert false;		// XXX
+		js.append("public static class ");
+		js.append(operationName);
+		js.append(" extends ");
+		js.appendClassReference(null, genModelHelper.getAbstractOperationClass(cgParameters.size()-3)); // executor, typeId, self
+		js.pushClassBody(operationName);
+		js.append("public static final ");
+		js.appendIsRequired(true);
+		js.append(" ");
+		js.append(operationName);
+		js.append(" ");
+		js.append(globalContext.getInstanceName());
+		js.append(" = new ");
+		js.append(operationName);
+		js.append("();\n");
+		js.append("\n");
+		//
+		js.append("@Override\n");
+		js.append("public ");
+		boolean cgOperationIsInvalid = cgOperation.getInvalidValue() != null;
+		js.appendIsCaught(!cgOperationIsInvalid, cgOperationIsInvalid);
+		js.append(" ");
+		js.appendClassReference(cgOperation.isRequired() ? true : null, cgOperation);
+		js.append(" ");
+		js.append(globalContext.getEvaluateName());
+		js.append("(");
+		js.appendClassReference(true, Executor.class);
+		js.append(" executor, ");
+		js.appendClassReference(true, TypedElement.class);
+		js.append(" typedElement, ");
+		js.appendClassReference(null, Object.class);
+		js.append("[] sourceAndArguments) {\n");
+		js.pushIndentation(null);
+		js.append("return ");
+		js.append(globalContext.getEvaluateName());
+		js.append("Too(executor, typedElement.getTypeId());\n");
+	//	js.append("Too(executor, typedElement.getTypeId(), sourceAndArguments[0]);\n");
+		js.popIndentation();
+		js.append("}\n\n");
+		//				js.append("public static final ");
+		//				CGValuedElement evaluatorParameter = localContext2.getEvaluatorParameter(cgOperation);
+		//				CGParameter typeIdParameter = localContext2.getTypeIdParameter(cgOperation);
+		CGValuedElement body = cg2javaVisitor.getExpression(cgOperation.getBody());
+		//
+		Element ast = cgOperation.getAst();
+		if (ast instanceof Operation) {
+			LanguageExpression expressionInOCL = ((Operation)ast).getBodyExpression();
+		//	if (ast instanceof Operation) {
+		//		String title = PrettyPrinter.printName(ast);
+				js.appendCommentWithOCL(null/*title+"\n"*/, expressionInOCL);
+		//	}
+		}
+		//
+		js.append("public static ");
+		js.appendIsCaught(!cgOperationIsInvalid, cgOperationIsInvalid);
+		js.append(" ");
+		js.appendClassReference(cgOperation.isRequired() ? true : null, cgOperation);
+		js.append(" ");
+		js.append(globalContext.getEvaluateName());
+		js.append("Too(");
+		boolean isFirst = true;
+		for (@SuppressWarnings("null")@NonNull CGParameter cgParameter : cgParameters) {
+			if (!isFirst) {
+				js.append(", ");
+			}
+			js.appendDeclaration(cgParameter);
+			isFirst = false;
+		}
+		js.append(") {\n");
+		js.pushIndentation(null);
+		cg2javaVisitor.appendReturn(body);
+		js.popIndentation();
+		js.append("}\n");
+		js.popClassBody(false);
 		return true;
 	}
 

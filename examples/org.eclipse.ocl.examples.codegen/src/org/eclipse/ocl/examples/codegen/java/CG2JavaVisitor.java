@@ -64,7 +64,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGIterator;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLetExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryIterateCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryIterationCallExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGMapExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGMapPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperation;
@@ -2173,7 +2172,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		return appendLoopCall(cgIterationCallExp, null);
 	}
 
-	@Override
+/*	@Override
 	public @NonNull Boolean visitCGLibraryOperation(@NonNull CGLibraryOperation cgOperation) {
 		localContext = globalContext.getLocalContext(cgOperation);
 		try {
@@ -2207,7 +2206,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 				LanguageExpression expressionInOCL = ((Operation)ast).getBodyExpression();
 			//	if (ast instanceof Operation) {
 			//		String title = PrettyPrinter.printName(ast);
-					js.appendCommentWithOCL(null/*title+"\n"*/, expressionInOCL);
+					js.appendCommentWithOCL(null/ *title+"\n"* /, expressionInOCL);
 			//	}
 			}
 			//
@@ -2239,7 +2238,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			localContext = null;
 		}
 		return true;
-	}
+	} */
 
 	@Override
 	public @NonNull Boolean visitCGMapExp(@NonNull CGMapExp cgMapExp) {

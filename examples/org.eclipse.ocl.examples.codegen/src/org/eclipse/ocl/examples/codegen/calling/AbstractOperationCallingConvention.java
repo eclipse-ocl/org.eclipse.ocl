@@ -17,7 +17,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
@@ -41,7 +40,6 @@ import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  *  AbstractOperationCallingConvention defines the default support for an operation declaration or call.
@@ -73,6 +71,12 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 			cgParameters.add(cgParameter);
 		}
 	}
+//	protected void addSelfArgument(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperationCallExp cgOperationCallExp, Operation asOperation) {
+//		CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();
+//		CGVariable selfVariable = as2cgVisitor.getSelfParameter(asOperation.getBodyExpression());
+//		cgOperationCallExp.getCgArguments().add(analyzer.createCGVariableExp(selfVariable));
+//	}
+
 
 	protected void addTypeIdArgument(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperationCallExp cgOperationCallExp, @NonNull TypeId asTypeId) {
 		CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();
@@ -127,18 +131,6 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 			js.append("op_");
 		}
 		js.appendValueName(cgOperation);
-	}
-
-	protected void appendForeignOperationName(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
-		JavaCodeGenerator codeGenerator = cg2javaVisitor.getCodeGenerator();
-		Operation asReferredOperation = CGUtil.getReferredOperation(cgOperationCallExp);
-		org.eclipse.ocl.pivot.Class asReferredClass = PivotUtil.getOwningClass(asReferredOperation);
-		CGClass cgReferringClass = CGUtil.getContainingClass(cgOperationCallExp);
-		assert cgReferringClass != null;
-		String flattenedClassName = codeGenerator.getQualifiedForeignClassName(asReferredClass);
-		js.append(flattenedClassName);
-		js.append(".op_");
-		js.append(PivotUtil.getName(asReferredOperation));
 	}
 
 /*	Original merged function  temporaily retained in case derivations need review.

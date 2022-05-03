@@ -423,7 +423,7 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 	}
 
 	public @NonNull CGParameter getTypeIdParameter() {
-		assert !isStatic;
+	//	assert !isStatic;
 		CGParameter typeIdParameter2 = typeIdParameter;
 		if (typeIdParameter2 == null) {
 			typeIdParameter = typeIdParameter2 = createTypeIdParameter();
