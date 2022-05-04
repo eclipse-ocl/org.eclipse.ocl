@@ -126,17 +126,17 @@ public class EcoreOperationCallingConvention extends AbstractOperationCallingCon
 	}
 
 	@Override
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor<?> cg2JavaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
 	//	Operation asOperation = cgOperationCallExp.getReferredOperation();
 		CGOperation cgOperation = CGUtil.getOperation(cgOperationCallExp);
 		Operation asOperation = CGUtil.getAST(cgOperation);
-		CodeGenAnalyzer analyzer = cg2JavaVisitor.getAnalyzer();
-		GenModelHelper genModelHelper = cg2JavaVisitor.getGenModelHelper();
-		JavaCodeGenerator codeGenerator = cg2JavaVisitor.getCodeGenerator();
+		CodeGenAnalyzer analyzer = cg2javaVisitor.getAnalyzer();
+		GenModelHelper genModelHelper = cg2javaVisitor.getGenModelHelper();
+		JavaCodeGenerator codeGenerator = cg2javaVisitor.getCodeGenerator();
 		CGTypeId cgTypeId = analyzer.getTypeId(asOperation.getOwningClass().getTypeId());
 		//		TypeDescriptor requiredTypeDescriptor = context.getUnboxedDescriptor(cgTypeId.getElementId());
 		TypeDescriptor requiredTypeDescriptor = codeGenerator.getUnboxedDescriptor(ClassUtil.nonNullState(cgTypeId.getElementId()));
-	//	CGValuedElement cgThis = cg2JavaVisitor.getExpression(cgOperationCallExp.getCgThis());
+	//	CGValuedElement cgThis = cg2javaVisitor.getExpression(cgOperationCallExp.getCgThis());
 		List<CGValuedElement> cgArguments = cgOperationCallExp.getCgArguments();
 	//	List<@NonNullParameter> asParameters = asOperation.getOwnedParameters();
 		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
@@ -144,7 +144,7 @@ public class EcoreOperationCallingConvention extends AbstractOperationCallingCon
 	//	if (!js.appendLocalStatements(cgThis)) {
 	//		return false;
 	//	}
-		if (!generateLocals(cg2JavaVisitor, js, cgOperationCallExp)) {
+		if (!generateLocals(cg2javaVisitor, js, cgOperationCallExp)) {
 			return false;
 		}
 		//
@@ -159,7 +159,7 @@ public class EcoreOperationCallingConvention extends AbstractOperationCallingCon
 		//		}
 		Element asOperationCallExp = cgOperationCallExp.getAst();
 		Boolean ecoreIsRequired = asOperationCallExp instanceof OperationCallExp ? codeGenerator.isNonNull((OperationCallExp) asOperationCallExp) : null;
-		cg2JavaVisitor.appendSuppressWarningsNull(cgOperationCallExp, ecoreIsRequired);
+		cg2javaVisitor.appendSuppressWarningsNull(cgOperationCallExp, ecoreIsRequired);
 		js.appendDeclaration(cgOperationCallExp);
 		js.append(" = ");
 		int iMax = Math.min(cgParameters.size(), cgArguments.size());
@@ -176,7 +176,7 @@ public class EcoreOperationCallingConvention extends AbstractOperationCallingCon
 				if (i > 1) {
 					js.append(", ");
 				}
-				CGValuedElement argument = cg2JavaVisitor.getExpression(cgArgument);
+				CGValuedElement argument = cg2javaVisitor.getExpression(cgArgument);
 			//	Parameter asParameter = ClassUtil.nonNullState(asParameters.get(i));
 				Parameter asParameter = CGUtil.getParameter(cgParameter);
 				GenParameter genParameter = genModelHelper.getGenParameter(asParameter);

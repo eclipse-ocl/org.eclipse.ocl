@@ -265,7 +265,7 @@ public class JavaStream
 				s.append(string);
 			}
 			else {
-				if ("CAUGHT_sourceType".equals(string)) {
+				if (string.contains("op_")) {
 					getClass();		// XXX
 				}
 				int sLength = s.length();

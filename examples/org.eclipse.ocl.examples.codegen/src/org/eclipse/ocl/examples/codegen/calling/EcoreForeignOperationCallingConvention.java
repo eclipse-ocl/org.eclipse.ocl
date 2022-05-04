@@ -15,21 +15,14 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
-import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
-import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
-import org.eclipse.ocl.examples.codegen.java.JavaStream;
-import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  *  EcoreForeignOperationCallingConvention defines the support for the call of an operation for which an EOPeration is
@@ -42,7 +35,7 @@ public class EcoreForeignOperationCallingConvention extends ForeignOperationCall
 {
 	public static final @NonNull EcoreForeignOperationCallingConvention INSTANCE = new EcoreForeignOperationCallingConvention();
 
-	@Override
+/*	@Override
 	protected void appendForeignOperationName(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
 		JavaCodeGenerator codeGenerator = cg2javaVisitor.getCodeGenerator();
 		Operation asReferredOperation = CGUtil.getReferredOperation(cgOperationCallExp);
@@ -53,27 +46,6 @@ public class EcoreForeignOperationCallingConvention extends ForeignOperationCall
 		js.append(flattenedClassName);
 		js.append(".op_");
 		js.append(PivotUtil.getName(asReferredOperation));
-	}
-
-/*	@Override
-	public @NonNull CGOperation createCGOperationWithoutBody(@NonNull AS2CGVisitor as2cgVisitor, @NonNull Operation asOperation) {
-		PivotMetamodelManager metamodelManager = as2cgVisitor.getMetamodelManager();
-		GenModelHelper genModelHelper = as2cgVisitor.getGenModelHelper();
-		LibraryFeature libraryOperation = metamodelManager.getImplementation(asOperation);
-		assert libraryOperation instanceof EObjectOperation;
-		EOperation eOperation = (EOperation) asOperation.getESObject();
-		assert eOperation != null;
-		assert (!PivotUtil.isStatic(eOperation));
-		try {
-			genModelHelper.getGenOperation(eOperation);
-			CGEcoreOperation cgEcoreOperation = CGModelFactory.eINSTANCE.createCGEcoreOperation();
-			cgEcoreOperation.setEOperation(eOperation);
-			return cgEcoreOperation;
-		}
-		catch (GenModelException e) {
-			// No genmodel so fallback
-		}
-		return CGModelFactory.eINSTANCE.createCGLibraryOperation();
 	} */
 
 	@Override		// XXX cf super
@@ -91,30 +63,4 @@ public class EcoreForeignOperationCallingConvention extends ForeignOperationCall
 		init(as2cgVisitor, cgForeignOperationCallExp, asOperationCallExp, cgOperation, isRequired);
 		return cgForeignOperationCallExp;
 	}
-
-/*	@Override
-	public void createCGParameters(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL expressionInOCL) {
-		assert expressionInOCL != null;
-		addExecutorParameter(as2cgVisitor, cgOperation);
-		addExpressionInOCLParameters(as2cgVisitor, cgOperation, expressionInOCL);
-	} */
-
-	@Override	// XXX cf super
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor<?> cg2JavaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
-		if (!generateLocals(cg2JavaVisitor, js, cgOperationCallExp)) {
-			return false;
-		}
-		js.appendDeclaration(cgOperationCallExp);
-		js.append(" = ");
-		appendForeignOperationName(cg2JavaVisitor, js, cgOperationCallExp);
-		js.append("(");
-		generateArgumentList(cg2JavaVisitor, js, cgOperationCallExp);
-		js.append(");\n");
-		return true;
-	}
-
-/*	@Override
-	public boolean isBoxed() {
-		return true;
-	} */
 }

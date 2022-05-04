@@ -27,6 +27,7 @@ import org.eclipse.ocl.examples.codegen.calling.EcoreForeignOperationCallingConv
 import org.eclipse.ocl.examples.codegen.calling.EcoreOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.EcoreOppositePropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.EcorePropertyCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.ExecutorCompositionPropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.ExecutorOppositePropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.ExecutorPropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.ForeignOperationCallingConvention;
@@ -217,7 +218,19 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 		else if (libraryProperty instanceof OclElementOclContainerProperty) {
 			return EcorePropertyCallingConvention.INSTANCE;
 		}
-		else if ((libraryProperty instanceof CompositionProperty) || (libraryProperty instanceof ImplicitNonCompositionProperty)) {
+		else if (libraryProperty instanceof CompositionProperty) {
+		/*	EStructuralFeature eStructuralFeature = (EStructuralFeature) asProperty.getESObject();
+			if (eStructuralFeature != null) {
+				try {
+					getGenModelHelper().getGetAccessor(eStructuralFeature);
+					return EcoreOppositePropertyCallingConvention.INSTANCE;
+				} catch (GenModelException e) {
+					addProblem(e);		// FIXME drop through to better default
+				}
+			} */
+			return ExecutorCompositionPropertyCallingConvention.INSTANCE;
+		}
+		else if (/*(libraryProperty instanceof CompositionProperty) ||*/ (libraryProperty instanceof ImplicitNonCompositionProperty)) {
 			EStructuralFeature eStructuralFeature = (EStructuralFeature) asProperty.getESObject();
 			if (eStructuralFeature != null) {
 				try {

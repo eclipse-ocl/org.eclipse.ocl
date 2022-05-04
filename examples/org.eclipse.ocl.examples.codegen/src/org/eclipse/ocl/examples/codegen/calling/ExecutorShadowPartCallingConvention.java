@@ -56,7 +56,7 @@ public class ExecutorShadowPartCallingConvention extends AbstractPropertyCalling
 	}
 
 	@Override
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor<?> cg2JavaVisitor,
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor<?> cg2javaVisitor,
 			@NonNull JavaStream js,
 			@NonNull CGNavigationCallExp cgPropertyCallExp) {
 		// TODO Auto-generated method stub

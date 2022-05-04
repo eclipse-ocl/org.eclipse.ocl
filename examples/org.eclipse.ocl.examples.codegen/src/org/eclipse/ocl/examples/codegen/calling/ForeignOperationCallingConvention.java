@@ -28,6 +28,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.generator.GenModelException;
 import org.eclipse.ocl.examples.codegen.generator.GenModelHelper;
@@ -36,6 +37,7 @@ import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.java.JavaGlobalContext;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
+import org.eclipse.ocl.examples.codegen.java.JavaStream.SubStream;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -45,6 +47,8 @@ import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.OperationId;
+import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.library.AbstractOperation;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -81,11 +85,8 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 		assert cgReferringClass != null;
 		String flattenedClassName = codeGenerator.getQualifiedForeignClassName(asReferredClass);
 		js.append(flattenedClassName);
-		String operationName = JavaConstants.FOREIGN_OPERATION_PREFIX + cgOperation.getName();
-		js.append("." + operationName + ".");
-		js.append(codeGenerator.getGlobalContext().getEvaluateName());
-		js.append("Too");
-	//	js.append(PivotUtil.getName(asReferredOperation));
+		js.append(".");
+		js.appendValueName(cgOperation);
 	}
 
 	@Override
@@ -147,7 +148,7 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 		analyzer.addForeignFeature(asOperation);
 		CGForeignOperationCallExp cgForeignOperationCallExp = CGModelFactory.eINSTANCE.createCGForeignOperationCallExp();
 		addExecutorArgument(as2cgVisitor, cgForeignOperationCallExp);
-		addTypeIdArgument(as2cgVisitor, cgForeignOperationCallExp, asOperation.getTypeId());
+	//	addTypeIdArgument(as2cgVisitor, cgForeignOperationCallExp, asOperation.getTypeId());
 		addExpressionInOCLParameters(as2cgVisitor, cgOperation, (ExpressionInOCL) asOperation.getBodyExpression());
 		init(as2cgVisitor, cgForeignOperationCallExp, asOperationCallExp, cgOperation, isRequired);
 		return cgForeignOperationCallExp;
@@ -158,43 +159,41 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 		assert expressionInOCL != null;
 		addExecutorParameter(as2cgVisitor, cgOperation);
 	//	addTyParameter(as2cgVisitor, cgOperation);
-		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
-		cgParameters.add(as2cgVisitor.getTypeIdParameter());
-		cgParameters.add(as2cgVisitor.getSelfParameter(expressionInOCL.getOwnedContext()));
+	//	List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
+	//	cgParameters.add(as2cgVisitor.getTypeIdParameter());
+	//	cgParameters.add(as2cgVisitor.getSelfParameter(expressionInOCL.getOwnedContext()));
 		super.createCGParameters(as2cgVisitor, cgOperation, expressionInOCL);
 	}
 
 	@Override
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor<?> cg2JavaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
-		if (!generateLocals(cg2JavaVisitor, js, cgOperationCallExp)) {
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
+		if (!generateLocals(cg2javaVisitor, js, cgOperationCallExp)) {
 			return false;
 		}
 		js.appendDeclaration(cgOperationCallExp);
 		js.append(" = ");
-		appendForeignOperationName(cg2JavaVisitor, js, cgOperationCallExp);
+		appendForeignOperationName(cg2javaVisitor, js, cgOperationCallExp);
 		js.append("(");
-	/*	int iMax = Math.min(cgParameters.size(), cgArguments.size());
-		for (int i = 0; i < iMax; i++) {
-			if (i > 0) { // || !isStatic) {
-				js.append(", ");
-			}
-			CGValuedElement cgArgument = cgArguments.get(i);
-			CGParameter cgParameter = cgParameters.get(i);
-			CGTypeId cgTypeId = cgParameter.getTypeId();
-			TypeDescriptor parameterTypeDescriptor = codeGenerator.getUnboxedDescriptor(ClassUtil.nonNullState(cgTypeId.getElementId()));
-			CGValuedElement argument = cg2JavaVisitor.getExpression(cgArgument);
-			js.appendReferenceTo(parameterTypeDescriptor, argument);
-		} */
-		generateArgumentList(cg2JavaVisitor, js, cgOperationCallExp);
+		generateArgumentList(cg2javaVisitor, js, cgOperationCallExp);
 		js.append(");\n");
 		return true;
 	}
 
 	@Override
 	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
-		JavaGlobalContext<@NonNull ? extends JavaCodeGenerator> globalContext = cg2javaVisitor.getCodeGenerator().getGlobalContext();
-		GenModelHelper genModelHelper = cg2javaVisitor.getGenModelHelper();
-		List<CGParameter> cgParameters = cgOperation.getParameters();
+		generateJavaClass(cg2javaVisitor, js, cgOperation);
+		js.append("\n");
+		generateJavaFunction(cg2javaVisitor, js, cgOperation);
+		return true;
+	}
+
+	/**
+	 * Generate a nested class to provide the polymorphic invocation interface.
+	 */
+	protected void generateJavaClass(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+		JavaCodeGenerator codeGenerator = cg2javaVisitor.getCodeGenerator();
+		JavaGlobalContext<@NonNull ? extends JavaCodeGenerator> globalContext = codeGenerator.getGlobalContext();
+		Iterable<@NonNull CGParameter> cgParameters = CGUtil.getParameters(cgOperation);
 		String operationName = JavaConstants.FOREIGN_OPERATION_PREFIX + cgOperation.getName();
 		assert operationName != null;
 		js.appendCommentWithOCL(null, cgOperation.getAst());
@@ -202,7 +201,7 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 		js.append("public static class ");
 		js.append(operationName);
 		js.append(" extends ");
-		js.appendClassReference(null, genModelHelper.getAbstractOperationClass(cgParameters.size()-3)); // executor, typeId, self
+		js.appendClassReference(null, AbstractOperation.class);
 		js.pushClassBody(operationName);
 		js.append("public static final ");
 		js.appendIsRequired(true);
@@ -228,18 +227,67 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 		js.append(" executor, ");
 		js.appendClassReference(true, TypedElement.class);
 		js.append(" typedElement, ");
-		js.appendClassReference(null, Object.class);
-		js.append("[] sourceAndArguments) {\n");
+		js.appendClassReference(false, Object.class);
+		js.append(" ");
+		js.appendIsRequired(true);
+		js.append(" [] sourceAndArguments) {\n");
 		js.pushIndentation(null);
+
+		int i = 0;
+		for (@NonNull CGParameter cgParameter : cgParameters) {
+			CGTypeId cgTypeId = cgParameter.getTypeId();
+			TypeId asTypeId = cgTypeId.getASTypeId();
+			if (asTypeId == JavaConstants.EXECUTOR_TYPE_ID) {
+			}
+			else if (asTypeId == JavaConstants.TYPE_ID_TYPE_ID) {
+			}
+			else {
+				final int ii = i++;
+				js.append("@SuppressWarnings(\"null\")\n");
+				js.appendDeclaration(cgParameter);
+				js.append(" = ");
+				SubStream castBody = new SubStream() {
+					@Override
+					public void append() {
+						js.append("sourceAndArguments[" + ii + "]");
+					}
+				};
+				js.appendClassCast(cgParameter, castBody);
+				js.append(";\n");
+			}
+		}
 		js.append("return ");
-		js.append(globalContext.getEvaluateName());
-		js.append("Too(executor, typedElement.getTypeId());\n");
-	//	js.append("Too(executor, typedElement.getTypeId(), sourceAndArguments[0]);\n");
+		js.appendValueName(cgOperation);
+		js.append("(");
+		boolean isFirst = true;
+		for (@NonNull CGParameter cgParameter : cgParameters) {
+			if (!isFirst) {
+				js.append(", ");
+			}
+			CGTypeId cgTypeId = cgParameter.getTypeId();
+			TypeId asTypeId = cgTypeId.getASTypeId();
+			if (asTypeId == JavaConstants.EXECUTOR_TYPE_ID) {
+				js.append("executor");
+			}
+			else if (asTypeId == JavaConstants.TYPE_ID_TYPE_ID) {
+				js.append("typedElement.getTypeId()");
+			}
+			else {
+				js.appendValueName(cgParameter);
+			}
+			isFirst = false;
+		}
+		js.append(");\n");
 		js.popIndentation();
-		js.append("}\n\n");
-		//				js.append("public static final ");
-		//				CGValuedElement evaluatorParameter = localContext2.getEvaluatorParameter(cgOperation);
-		//				CGParameter typeIdParameter = localContext2.getTypeIdParameter(cgOperation);
+		js.append("}\n");
+		js.popClassBody(false);
+	}
+
+	/**
+	 * Generate a static function to implement the foreign operation.
+	 */
+	protected void generateJavaFunction(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+		boolean cgOperationIsInvalid = cgOperation.getInvalidValue() != null;
 		CGValuedElement body = cg2javaVisitor.getExpression(cgOperation.getBody());
 		//
 		Element ast = cgOperation.getAst();
@@ -250,16 +298,15 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 				js.appendCommentWithOCL(null/*title+"\n"*/, expressionInOCL);
 		//	}
 		}
-		//
 		js.append("public static ");
 		js.appendIsCaught(!cgOperationIsInvalid, cgOperationIsInvalid);
 		js.append(" ");
 		js.appendClassReference(cgOperation.isRequired() ? true : null, cgOperation);
 		js.append(" ");
-		js.append(globalContext.getEvaluateName());
-		js.append("Too(");
+		js.appendValueName(cgOperation);
+		js.append("(");
 		boolean isFirst = true;
-		for (@SuppressWarnings("null")@NonNull CGParameter cgParameter : cgParameters) {
+		for (@NonNull CGParameter cgParameter : CGUtil.getParameters(cgOperation)) {
 			if (!isFirst) {
 				js.append(", ");
 			}
@@ -271,8 +318,6 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 		cg2javaVisitor.appendReturn(body);
 		js.popIndentation();
 		js.append("}\n");
-		js.popClassBody(false);
-		return true;
 	}
 
 	@Override

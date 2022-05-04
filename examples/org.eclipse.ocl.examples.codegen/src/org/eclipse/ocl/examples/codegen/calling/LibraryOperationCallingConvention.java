@@ -162,11 +162,11 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 	}
 
 	@Override
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor<?> cg2JavaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
 		CGLibraryOperationCallExp cgLibraryOperationCallExp = (CGLibraryOperationCallExp)cgOperationCallExp;
 		assert cgOperationCallExp.getCgThis() == null;
 		final LibraryOperation libraryOperation = ClassUtil.nonNullState(cgLibraryOperationCallExp.getLibraryOperation());
-		LibraryOperationHandler libraryOperationHandler = cg2JavaVisitor.basicGetLibraryOperationHandler(libraryOperation.getClass());
+		LibraryOperationHandler libraryOperationHandler = cg2javaVisitor.basicGetLibraryOperationHandler(libraryOperation.getClass());
 		if (libraryOperationHandler != null) {
 			return libraryOperationHandler.generate(cgLibraryOperationCallExp);		// XXX BuiltIn ??
 		}
@@ -175,11 +175,11 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 		CGOperation cgOperation = cgOperationCallExp.getCgOperation();
 		Method jMethod = libraryOperation.getEvaluateMethod(CGUtil.getAST(cgOperation));
 		Class<?> actualReturnClass = jMethod.getReturnType();
-		Boolean actualNullity = cg2JavaVisitor.getCodeGenerator().getIsNonNull(jMethod);
+		Boolean actualNullity = cg2javaVisitor.getCodeGenerator().getIsNonNull(jMethod);
 		boolean actualIsNonNull = actualNullity == Boolean.TRUE;
 	//	boolean actualIsNullable = actualNullity == Boolean.FALSE;
 		boolean expectedIsNonNull = cgOperationCallExp.isNonNull();
-		if (!generateLocals(cg2JavaVisitor, js, cgOperationCallExp)) {
+		if (!generateLocals(cg2javaVisitor, js, cgOperationCallExp)) {
 			return false;
 		}
 		List<@NonNull CGParameter> cgParameters = ClassUtil.nullFree(cgOperation.getParameters());
@@ -230,7 +230,7 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 				}
 			}
 		}
-	//	Boolean returnNullity = cg2JavaVisitor.getCodeGenerator().getIsNonNull(jMethod);
+	//	Boolean returnNullity = cg2javaVisitor.getCodeGenerator().getIsNonNull(jMethod);
 		if (expectedIsNonNull && !actualIsNonNull) {
 			js.appendSuppressWarningsNull(true);
 		}
@@ -245,7 +245,7 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 		{
 			@Override
 			public void append() {
-				JavaGlobalContext<@NonNull ? extends JavaCodeGenerator> globalContext = cg2JavaVisitor.getCodeGenerator().getGlobalContext();
+				JavaGlobalContext<@NonNull ? extends JavaCodeGenerator> globalContext = cg2javaVisitor.getCodeGenerator().getGlobalContext();
 				js.appendClassReference(null, libraryOperation.getClass());
 				js.append(".");
 				js.append(globalContext.getInstanceName());

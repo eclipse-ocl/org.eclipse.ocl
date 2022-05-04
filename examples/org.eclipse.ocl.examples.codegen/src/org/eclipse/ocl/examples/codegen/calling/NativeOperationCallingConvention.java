@@ -73,15 +73,15 @@ public class NativeOperationCallingConvention extends AbstractOperationCallingCo
 	}
 
 	@Override
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor<?> cg2JavaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
 		CGNativeOperationCallExp cgNativeOperationCallExp = (CGNativeOperationCallExp)cgOperationCallExp;
 		CGValuedElement cgThis = cgNativeOperationCallExp.getCgThis();
-		CGValuedElement cgThis2 = cgThis != null ? cg2JavaVisitor.getExpression(cgThis) :  null;
+		CGValuedElement cgThis2 = cgThis != null ? cg2javaVisitor.getExpression(cgThis) :  null;
 		//
 		if ((cgThis2 != null) && !js.appendLocalStatements(cgThis2)) {
 			return false;
 		}
-		if (!generateLocals(cg2JavaVisitor, js, cgOperationCallExp)) {
+		if (!generateLocals(cg2javaVisitor, js, cgOperationCallExp)) {
 			return false;
 		}
 		//
@@ -106,7 +106,7 @@ public class NativeOperationCallingConvention extends AbstractOperationCallingCo
 			}
 			Class<?> jParameterType = jParameterTypes[i];
 			CGValuedElement cgArgument = cgArguments.get(i);
-			CGValuedElement argument = cg2JavaVisitor.getExpression(cgArgument);
+			CGValuedElement argument = cg2javaVisitor.getExpression(cgArgument);
 			js.appendValueName(argument);
 			if (jParameterType == Object[].class) {
 				js.append(".toArray(new Object[");

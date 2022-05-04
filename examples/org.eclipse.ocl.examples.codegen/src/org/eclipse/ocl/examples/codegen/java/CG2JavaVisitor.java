@@ -1766,9 +1766,6 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 	@Override
 	public @NonNull Boolean visitCGExecutorProperty(@NonNull CGExecutorProperty cgExecutorProperty) {
-	//	if (cgExecutorProperty instanceof CGExecutorCompositionProperty) {
-	//		return ExecutorCompositionPropertyCallingConvention.INSTANCE.generateJavaDeclaration(this, js, cgExecutorProperty);
-	//	}
 		return cgExecutorProperty.getCallingConvention().generateJavaDeclaration(this, js, cgExecutorProperty);
 	}
 
