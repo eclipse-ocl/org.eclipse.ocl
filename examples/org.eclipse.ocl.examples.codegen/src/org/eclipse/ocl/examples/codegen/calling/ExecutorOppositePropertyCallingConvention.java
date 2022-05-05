@@ -13,6 +13,7 @@ package org.eclipse.ocl.examples.codegen.calling;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
+import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOppositeProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOppositePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorProperty;
@@ -20,6 +21,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGTypedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.generator.CodeGenerator;
 import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
@@ -203,5 +205,16 @@ public class ExecutorOppositePropertyCallingConvention extends AbstractPropertyC
 		js.appendIdReference(asOppositeProperty.getPropertyId());
 		js.append(");\n");
 		return true;
+	}
+
+	@Override
+	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGNavigationCallExp cgNavigationCallExp) {
+		super.rewriteWithBoxingAndGuards(boxingAnalyzer, cgNavigationCallExp);
+		CGExecutorOppositePropertyCallExp cgExecutorOppositePropertyCallExp = (CGExecutorOppositePropertyCallExp) cgNavigationCallExp;
+		boxingAnalyzer.rewriteAsUnboxed(cgExecutorOppositePropertyCallExp.getSource());
+		CGTypedElement cgParent = (CGTypedElement)cgExecutorOppositePropertyCallExp.getParent();
+		if (cgParent != null) {
+			boxingAnalyzer.rewriteAsBoxed(cgExecutorOppositePropertyCallExp);
+		}
 	}
 }

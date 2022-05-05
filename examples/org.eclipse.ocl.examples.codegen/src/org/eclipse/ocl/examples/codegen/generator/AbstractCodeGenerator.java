@@ -23,6 +23,7 @@ import org.eclipse.ocl.examples.codegen.analyzer.AnalysisVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.calling.BuiltInOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.ConstrainedOperationCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.ConstrainedPropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.EcoreForeignOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.EcoreOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.EcoreOppositePropertyCallingConvention;
@@ -251,7 +252,7 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 		else if (libraryProperty instanceof TuplePartProperty) {
 			return TuplePropertyCallingConvention.INSTANCE;
 		}
-		else if (libraryProperty instanceof ConstrainedProperty) {
+		else if (libraryProperty instanceof ConstrainedProperty) {		// Includes StereotypeProperty
 			EStructuralFeature eStructuralFeature = (EStructuralFeature) asProperty.getESObject();
 			if (eStructuralFeature != null) {
 				try {
@@ -261,7 +262,7 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 					addProblem(e);		// FIXME drop through to better default
 				}
 			}
-			return ExecutorPropertyCallingConvention.INSTANCE;
+			return ConstrainedPropertyCallingConvention.INSTANCE;
 		}
 		else if (libraryProperty instanceof ExplicitNavigationProperty) {
 				//	|| (libraryProperty instanceof CompositionProperty)

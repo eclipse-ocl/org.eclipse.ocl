@@ -639,6 +639,13 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		return (EPackage) eInstance;
 	}
 
+	protected org.eclipse.ocl.pivot.Package doLoadTables(@NonNull ExplicitClassLoader classLoader, @NonNull String qualifiedModelTablesName) throws Exception {
+		Class<?> testClass = classLoader.loadClass(qualifiedModelTablesName);
+		//		System.out.println("Loaded " + testClass.getName());
+		Object eInstance = testClass.getDeclaredField("PACKAGE").get(null);
+		return (org.eclipse.ocl.pivot.Package) eInstance;
+	}
+
 	protected void doUMLCompile(@NonNull TestOCL ocl, @NonNull String testProjectName) throws Exception {
 		JavaClasspath classpath = JavaFileUtil.createDefaultOCLClasspath();
 		classpath.addClass(org.eclipse.uml2.types.TypesPackage.class);
@@ -2092,9 +2099,11 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				TestOCL ocl2 = createOCL();
 
 				String qualifiedPackageName = testProjectName + "." + testFileStem + "Package";
+				String qualifiedTablesName = testProjectName + "." + testFileStem + "Tables";
 				File classFilePath = getTestProject().getOutputFolder(JavaFileUtil.TEST_BIN_FOLDER_NAME + "/").getFile();
 				List<@NonNull String> packagePaths = JavaFileUtil.gatherPackageNames(classFilePath, null);
 				ExplicitClassLoader classLoader = new ExplicitClassLoader(classFilePath, packagePaths, getClass().getClassLoader());
+				org.eclipse.ocl.pivot.Package ePackage1 = doLoadTables(classLoader, qualifiedTablesName);
 				EPackage ePackage = doLoadPackage(classLoader, qualifiedPackageName);
 				EClass eClass = (EClass) ePackage.getEClassifier("Statics");
 			//	EStructuralFeature eStructuralFeature = eClass.getEStructuralFeature("name");

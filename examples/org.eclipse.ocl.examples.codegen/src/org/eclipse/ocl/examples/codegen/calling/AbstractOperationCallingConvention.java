@@ -17,7 +17,9 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOperation;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGInvalid;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
@@ -37,6 +39,7 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Variable;
+import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -321,9 +324,83 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 	}
 
 	@Override
-	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer,@NonNull CGOperationCallExp cgOperationCallExp) {
-		throw new UnsupportedOperationException("Missing/No support for " + getClass().getSimpleName() + ".rewriteWithBoxingAndGuards");	// XXX
+	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGOperation cgOperation) {
+		if (cgOperation.isRequired()) {
+			CGValuedElement body = cgOperation.getBody();
+			if (body != null) {
+				boxingAnalyzer.rewriteAsGuarded(body, false, "body for '" + cgOperation.getAst() + "'");
+			}
+		}
 	}
+
+	// Default guards and boxes al terms. DErived implementations for unboxed/ecore/simple-boxed
+	@Override
+	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer,@NonNull CGOperationCallExp cgOperationCallExp) {
+		CGOperation cgOperation = CGUtil.getOperation(cgOperationCallExp);
+		Operation asOperation = CGUtil.getAST(cgOperation);
+	//	Operation referredOperation = cgLibraryOperationCallExp.getReferredOperation();
+		org.eclipse.ocl.pivot.Class asClass = asOperation.getOwningClass();
+		if ("specializeIn".equals(asOperation.getName())) {
+			getClass();		// XXX
+		}
+		OperationId operationId = asOperation.getOperationId();
+		CodeGenAnalyzer analyzer = boxingAnalyzer.getAnalyzer();
+		boolean sourceMayBeNull = analyzer.hasOclVoidOperation(operationId);
+
+		List<@NonNull CGValuedElement> cgArguments = CGUtil.getArgumentsList(cgOperationCallExp);
+		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
+		int iMax = cgArguments.size();
+		assert iMax == cgParameters.size();
+		for (int i = 0; i < iMax; i++) {			// Avoid CME from rewrite
+			CGParameter cgParameter = cgParameters.get(i);
+			CGValuedElement cgArgument = cgArguments.get(i);
+			if (i == 0) {
+				CGValuedElement cgSource = cgArgument;
+				if (!sourceMayBeNull) {
+					if (cgSource.isNull()) {
+//						CGInvalid cgInvalid = context.getInvalid("null value1 for source parameter");
+						CGInvalid cgInvalid = analyzer.getInvalid("''" + asClass.getName() + "'' rather than ''OclVoid'' value required");
+						CGConstantExp cgLiteralExp = analyzer.createCGConstantExp(CGUtil.getAST(cgOperationCallExp), cgInvalid);
+						CGUtil.replace(cgOperationCallExp, cgLiteralExp);
+						return;
+					}
+				}
+			}
+			else if (!asOperation.isIsValidating()) {
+				Parameter asParameter = CGUtil.basicGetParameter(cgParameter);
+				if ((asParameter != null) && asParameter.isIsRequired()) {
+					if (cgArgument.isNull()) {
+	//					CGInvalid cgInvalid = context.getInvalid("null value2 for " + asParameter.getName() + " parameter");
+						CGInvalid cgInvalid = analyzer.getInvalid("''" + asParameter.getType().getName() + "'' rather than ''OclVoid'' value required");
+						CGConstantExp cgLiteralExp = analyzer.createCGConstantExp(CGUtil.getAST(cgOperationCallExp), cgInvalid);
+						CGUtil.replace(cgOperationCallExp, cgLiteralExp);
+						return;
+					}
+				}
+			}
+		}
+
+		for (int i = 0; i < iMax; i++) {			// Avoid CME from rewrite
+			CGParameter cgParameter = cgParameters.get(i);
+			CGValuedElement cgArgument = cgArguments.get(i);
+			boxingAnalyzer.rewriteAsBoxed(cgArgument);
+			if (i == 0) {
+				if (!sourceMayBeNull && !cgArgument.isNonNull()) {
+//					rewriteAsGuarded(cgSource, false, "value3 for source parameter");
+					boxingAnalyzer.rewriteAsGuarded(cgArgument, false, "''" + asClass.getName() + "'' rather than ''OclVoid'' value required");
+				}
+			}
+			else {
+				Parameter asParameter = CGUtil.basicGetParameter(cgParameter);
+			//	if ((asParameter != null) && asParameter.isIsRequired() && !cgArgument.isNonNull()) {
+				if (cgParameter.isRequired() && !cgArgument.isNonNull()) {
+//					rewriteAsGuarded(cgArgument, false, "value4 for " + asParameter.getName() + " parameter");
+					boxingAnalyzer.rewriteAsGuarded(cgArgument, false, "''" + cgParameter.getTypeId() + "'' rather than ''OclVoid'' value required");
+				}
+			}
+		}
+	}
+
 
 	@Override
 	public @NonNull String toString() {

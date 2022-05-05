@@ -203,9 +203,19 @@ public class EcoreOperationCallingConvention extends AbstractOperationCallingCon
 	}
 
 	@Override
+	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGOperation cgOperation) {
+		CGEcoreOperation cgEcoreOperation = (CGEcoreOperation)cgOperation;
+		super.rewriteWithBoxingAndGuards(boxingAnalyzer, cgEcoreOperation);
+		CGValuedElement body = cgEcoreOperation.getBody();
+		if (body != null) {
+			boxingAnalyzer.rewriteAsEcore(body, cgEcoreOperation.getEOperation().getEType());
+		}
+	}
+
+	@Override
 	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGOperationCallExp cgOperationCallExp) {
 		CGEcoreOperationCallExp cgEcoreOperationCallExp = (CGEcoreOperationCallExp)cgOperationCallExp;
-		if ("specializeIn".equals(cgOperationCallExp.getReferredOperation().getName())) {
+		if ("specializeIn".equals(cgEcoreOperationCallExp.getReferredOperation().getName())) {
 			getClass();		// XXX
 		}
 		CGOperation cgOperation = CGUtil.getOperation(cgEcoreOperationCallExp);

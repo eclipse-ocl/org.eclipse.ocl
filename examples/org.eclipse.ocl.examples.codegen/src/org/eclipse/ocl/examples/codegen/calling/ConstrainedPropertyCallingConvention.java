@@ -10,31 +10,34 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.calling;
 
+import java.util.List;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorNavigationProperty;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOppositePropertyCallExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorProperty;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorPropertyCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGConstrainedProperty;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGElementId;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGTypedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.generator.CodeGenerator;
-import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
-import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
-import org.eclipse.ocl.examples.codegen.java.JavaGlobalContext;
+import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.java.JavaStream.SubStream;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.NavigationCallExp;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.internal.library.ConstrainedProperty;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  *  ForeignPropertyCallingConvention defines the support for the call of a property realized by an
@@ -42,9 +45,9 @@ import org.eclipse.ocl.pivot.library.LibraryProperty;
  *   *  </br>
  *  e.g. as XXXTables.FOREIGN_qualified_class.FC_class.INSTANCE.evaluate(executor, arguments)
  */
-public class ExecutorPropertyCallingConvention extends AbstractPropertyCallingConvention
+public class ConstrainedPropertyCallingConvention extends AbstractPropertyCallingConvention		// XXX cf ForeignPropertyCallingConvention
 {
-	public static final @NonNull ExecutorPropertyCallingConvention INSTANCE = new ExecutorPropertyCallingConvention();
+	public static final @NonNull ConstrainedPropertyCallingConvention INSTANCE = new ConstrainedPropertyCallingConvention();
 
 /*	@Override
 	public @NonNull CGValuedElement createCGOppositePropertyCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGProperty cgProperty,
@@ -75,6 +78,26 @@ public class ExecutorPropertyCallingConvention extends AbstractPropertyCallingCo
 		CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();
 		Property asProperty = CGUtil.getAST(cgProperty);
 		boolean isRequired = asProperty.isIsRequired();
+		assert libraryProperty instanceof ConstrainedProperty;
+	//	assert cgSource == null;
+		CGForeignPropertyCallExp cgPropertyCallExp = CGModelFactory.eINSTANCE.createCGForeignPropertyCallExp();
+		CGElementId cgPropertyId = analyzer.getElementId(asProperty.getPropertyId());
+		cgPropertyCallExp.getOwns().add(cgPropertyId);
+		cgPropertyCallExp.setCgProperty(cgProperty);
+		cgPropertyCallExp.setReferredProperty(asProperty);
+		as2cgVisitor.initAst(cgPropertyCallExp, asPropertyCallExp);
+		cgPropertyCallExp.setRequired(isRequired || codeGenerator.isPrimitive(cgPropertyCallExp));
+		cgPropertyCallExp.setSource(cgSource);
+		return cgPropertyCallExp;
+	}
+
+/*	@Override
+	public @NonNull CGValuedElement createCGNavigationCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGProperty cgProperty,
+			@NonNull LibraryProperty libraryProperty, @Nullable CGValuedElement cgSource, @NonNull NavigationCallExp asPropertyCallExp) {
+		CodeGenerator codeGenerator = as2cgVisitor.getCodeGenerator();
+		CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();
+		Property asProperty = CGUtil.getAST(cgProperty);
+		boolean isRequired = asProperty.isIsRequired();
 		CGExecutorPropertyCallExp cgExecutorPropertyCallExp = CGModelFactory.eINSTANCE.createCGExecutorPropertyCallExp();
 		CGExecutorProperty cgExecutorProperty = analyzer.createExecutorProperty(asProperty);
 		cgExecutorProperty.setCallingConvention(this);
@@ -87,9 +110,93 @@ public class ExecutorPropertyCallingConvention extends AbstractPropertyCallingCo
 		cgExecutorPropertyCallExp.setRequired(isRequired || codeGenerator.isPrimitive(cgExecutorPropertyCallExp));
 		cgExecutorPropertyCallExp.setSource(cgSource);
 		return cgExecutorPropertyCallExp;
+	} */
+
+	@Override
+	public @NonNull CGProperty createCGProperty(@NonNull AS2CGVisitor as2cgVisitor, @NonNull Property asProperty) {
+	//	CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();
+	//	analyzer.addForeignFeature(asProperty);
+		return CGModelFactory.eINSTANCE.createCGConstrainedProperty();
 	}
 
-	protected boolean generateForwardJavaCall(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGExecutorPropertyCallExp cgPropertyCallExp) {
+/*	@Override
+	public void createImplementation(@NonNull AS2CGVisitor as2cgVisitor, @NonNull JavaLocalContext<?> localContext, @NonNull CGProperty cgProperty) {
+	//	assert false;
+		super.createImplementation(as2cgVisitor, localContext, cgProperty);
+	} */
+
+	@Override
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGNavigationCallExp cgPropertyCallExp) {
+		CGForeignPropertyCallExp cgForeignPropertyCallExp = (CGForeignPropertyCallExp) cgPropertyCallExp;
+		Property asProperty = CGUtil.getReferredProperty(cgPropertyCallExp);
+		org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asProperty);
+		String foreignClassName = cg2javaVisitor.getCodeGenerator().getQualifiedForeignClassName(asClass);
+		String propertyName = PivotUtil.getName(asProperty);
+		CGValuedElement cgSource = cgForeignPropertyCallExp.getSource();
+		if (cgSource != null) {
+			CGValuedElement source = cg2javaVisitor.getExpression(cgSource);
+			//
+			if (!js.appendLocalStatements(source)) {
+				return false;
+			}
+		}
+		//
+		js.appendDeclaration(cgForeignPropertyCallExp);
+		js.append(" = ");
+		SubStream castBody = new SubStream() {
+			@Override
+			public void append() {
+				js.appendClassReference(null, foreignClassName);
+				js.append("." + JavaConstants.FOREIGN_PROPERTY_PREFIX);
+				js.append(propertyName);
+				js.append("(");
+				if (cgSource != null) {
+					js.appendValueName(cgSource);
+				}
+				else if (asProperty.isIsStatic()) {
+					CGOperation cgOperation = CGUtil.basicGetContainingOperation(cgForeignPropertyCallExp);
+					if (cgOperation != null) {
+						List<CGParameter> cgParameters = cgOperation.getParameters();
+						js.appendValueName(cgParameters.get(0));		// executor
+						js.append(", ");
+						js.appendValueName(cgParameters.get(2));		// self
+					}
+					else {
+						CGProperty cgProperty = CGUtil.basicGetContainingProperty(cgForeignPropertyCallExp);
+						if (cgProperty instanceof CGForeignProperty) {
+							Iterable<@NonNull CGParameter> cgParameters = CGUtil.getParameters((CGForeignProperty)cgProperty);
+							boolean isFirst = true;
+							for (@NonNull CGParameter cgParameter : cgParameters) {
+								if (!isFirst) {
+									js.append(", ");
+								}
+								js.appendValueName(cgParameter);
+								isFirst = false;
+							}
+						}
+					}
+				}
+				js.append(")");
+			}
+		};
+		js.appendClassCast(cgForeignPropertyCallExp, castBody);
+		js.append(";\n");
+		return true;
+	}
+
+	@Override
+	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGProperty cgProperty) {
+		super.rewriteWithBoxingAndGuards(boxingAnalyzer, cgProperty);
+		CGConstrainedProperty cgConstrainedProperty = (CGConstrainedProperty)cgProperty;
+		if (cgConstrainedProperty.isRequired()) {
+			CGValuedElement body = cgConstrainedProperty.getBody();
+			if (body != null) {
+				boxingAnalyzer.rewriteAsGuarded(body, false, "body for '" + cgConstrainedProperty.getAst() + "'");
+			}
+		}
+	}
+
+/*	protected boolean generateForwardJavaCall(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGExecutorPropertyCallExp cgPropertyCallExp) {
 		CGValuedElement asSource = cgPropertyCallExp.getSource();
 		CGValuedElement cgSource = asSource != null ? cg2javaVisitor.getExpression(asSource) : null;
 		if ((cgSource != null) && !js.appendLocalStatements(cgSource)) {
@@ -127,9 +234,9 @@ public class ExecutorPropertyCallingConvention extends AbstractPropertyCallingCo
 		typeDescriptor.appendCast(js, isRequired, null, castBody);
 		js.append(";\n");
 		return true;
-	}
+	} */
 
-	private boolean generateForwardJavaDeclaration(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGExecutorNavigationProperty cgProperty) {
+/*	private boolean generateForwardJavaDeclaration(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGExecutorNavigationProperty cgProperty) {
 		js.appendDeclaration(cgProperty);
 		js.append(" = new ");
 		js.appendClassReference(null, cgProperty);
@@ -137,9 +244,9 @@ public class ExecutorPropertyCallingConvention extends AbstractPropertyCallingCo
 		js.appendIdReference(cgProperty.getUnderlyingPropertyId().getElementId());
 		js.append(");\n");
 		return true;
-	}
+	} */
 
-	@Override
+/*	@Override
 	public boolean generateJavaDeclaration(	@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGProperty cgProperty) {
 		assert cgProperty instanceof CGExecutorNavigationProperty;
 	//	if (cgProperty instanceof CGExecutorNavigationProperty) {
@@ -148,9 +255,9 @@ public class ExecutorPropertyCallingConvention extends AbstractPropertyCallingCo
 	//	else {
 	//		return generateOppositeJavaDeclaration(cg2javaVisitor, js, (CGExecutorOppositeProperty)cgProperty);
 	//	}
-	}
+	} */
 
-	@Override
+/*	@Override
 	public boolean generateJavaCall(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGNavigationCallExp cgPropertyCallExp) {
 		if (cgPropertyCallExp instanceof CGExecutorPropertyCallExp) {
 			return generateForwardJavaCall(cg2javaVisitor, js, (CGExecutorPropertyCallExp)cgPropertyCallExp);
@@ -158,9 +265,9 @@ public class ExecutorPropertyCallingConvention extends AbstractPropertyCallingCo
 		else {
 			return generateOppositeJavaCall(cg2javaVisitor, js, (CGExecutorOppositePropertyCallExp)cgPropertyCallExp);
 		}
-	}
+	} */
 
-	protected boolean generateOppositeJavaCall(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGExecutorOppositePropertyCallExp cgPropertyCallExp) {
+/*	protected boolean generateOppositeJavaCall(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGExecutorOppositePropertyCallExp cgPropertyCallExp) {
 		CGValuedElement source = cg2javaVisitor.getExpression(cgPropertyCallExp.getSource());
 		//
 		if (!js.appendLocalStatements(source)) {
@@ -189,7 +296,7 @@ public class ExecutorPropertyCallingConvention extends AbstractPropertyCallingCo
 		js.appendClassCast(cgPropertyCallExp, castBody);
 		js.append(";\n");
 		return true;
-	}
+	} */
 
 /*	private boolean generateOppositeJavaDeclaration(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGExecutorOppositeProperty cgProperty) {
 		Property asProperty = (Property) cgProperty.getAst();
@@ -202,15 +309,4 @@ public class ExecutorPropertyCallingConvention extends AbstractPropertyCallingCo
 		js.append(");\n");
 		return true;
 	} */
-
-	@Override
-	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGNavigationCallExp cgNavigationCallExp) {
-		super.rewriteWithBoxingAndGuards(boxingAnalyzer, cgNavigationCallExp);
-		CGExecutorPropertyCallExp cgExecutorPropertyCallExp = (CGExecutorPropertyCallExp) cgNavigationCallExp;
-		boxingAnalyzer.rewriteAsUnboxed(cgExecutorPropertyCallExp.getSource());				// XXX boxed ???
-		CGTypedElement cgParent = (CGTypedElement) cgExecutorPropertyCallExp.getParent();
-		if (cgParent != null) {
-			boxingAnalyzer.rewriteAsBoxed(cgExecutorPropertyCallExp);
-		}
-	}
 }

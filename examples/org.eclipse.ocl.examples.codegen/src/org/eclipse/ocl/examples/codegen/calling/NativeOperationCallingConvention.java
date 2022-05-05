@@ -20,6 +20,7 @@ import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
@@ -129,17 +130,24 @@ public class NativeOperationCallingConvention extends AbstractOperationCallingCo
 	}
 
 	@Override
+	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGOperation cgOperation) {
+		CGNativeOperation cgNativeOperation = (CGNativeOperation)cgOperation;
+		super.rewriteWithBoxingAndGuards(boxingAnalyzer, cgNativeOperation);
+		boxingAnalyzer.rewriteAsUnboxed(cgNativeOperation.getBody());
+	}
+
+	@Override
 	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGOperationCallExp cgOperationCallExp) {
-		CGNativeOperationCallExp cgNativeOperationCallExp = (CGNativeOperationCallExp)cgOperationCallExp;
-		CGOperation cgOperation = CGUtil.getOperation(cgNativeOperationCallExp);
+		assert cgOperationCallExp  instanceof CGNativeOperationCallExp;
+		CGOperation cgOperation = CGUtil.getOperation(cgOperationCallExp);
 		Operation asOperation = CGUtil.getAST(cgOperation);
 		// No boxing for cgThis
-		List<@NonNull CGValuedElement> cgArguments = CGUtil.getArgumentsList(cgNativeOperationCallExp);
+		List<@NonNull CGValuedElement> cgArguments = CGUtil.getArgumentsList(cgOperationCallExp);
 		int iMax = cgArguments.size();
 		for (int i = 0; i < iMax; i++) {			// Avoid CME from rewrite
 			CGValuedElement cgArgument = cgArguments.get(i);
 			if (i == 0) {
-				boxingAnalyzer.rewriteAsGuarded(cgArgument, boxingAnalyzer.isSafe(cgNativeOperationCallExp), "source for '" + asOperation + "'");
+				boxingAnalyzer.rewriteAsGuarded(cgArgument, boxingAnalyzer.isSafe(cgOperationCallExp), "source for '" + asOperation + "'");
 			}
 			boxingAnalyzer.rewriteAsUnboxed(cgArgument);
 		}

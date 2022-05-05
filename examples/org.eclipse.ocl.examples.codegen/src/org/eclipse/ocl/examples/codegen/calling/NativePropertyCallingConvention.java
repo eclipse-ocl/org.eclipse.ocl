@@ -13,6 +13,7 @@ package org.eclipse.ocl.examples.codegen.calling;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
+import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativePropertyCallExp;
@@ -95,5 +96,17 @@ public class NativePropertyCallingConvention extends AbstractPropertyCallingConv
 		js.appendDeclaration(cgProperty);
 		js.append(";\n");
 		return true;
+	}
+
+	@Override
+	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGProperty cgProperty) {
+		super.rewriteWithBoxingAndGuards(boxingAnalyzer, cgProperty);
+		CGNativeProperty cgNativeProperty = (CGNativeProperty)cgProperty;
+		if (cgNativeProperty.isRequired()) {
+			CGValuedElement body = cgNativeProperty.getBody();
+			if (body != null) {
+				boxingAnalyzer.rewriteAsGuarded(body, false, "body for '" + cgNativeProperty.getAst() + "'");
+			}
+		}
 	}
 }

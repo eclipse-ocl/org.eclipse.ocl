@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
+import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOppositePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcorePropertyCallExp;
@@ -154,5 +155,15 @@ public class EcoreOppositePropertyCallingConvention extends AbstractPropertyCall
 		appendEcoreGet(cg2javaVisitor, js, source, asProperty);
 		js.append(";\n");
 		return true;
+	}
+
+	@Override
+	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGNavigationCallExp cgNavigationCallExp) {
+		super.rewriteWithBoxingAndGuards(boxingAnalyzer, cgNavigationCallExp);
+		CGEcoreOppositePropertyCallExp cgEcoreOppositePropertyCallExp = (CGEcoreOppositePropertyCallExp) cgNavigationCallExp;
+		boxingAnalyzer.rewriteAsEcore(cgEcoreOppositePropertyCallExp.getSource(), cgEcoreOppositePropertyCallExp.getEStructuralFeature().getEType());
+		if (cgEcoreOppositePropertyCallExp.getEStructuralFeature().isMany()) {
+			boxingAnalyzer.rewriteAsAssertNonNulled(cgEcoreOppositePropertyCallExp);
+		}
 	}
 }

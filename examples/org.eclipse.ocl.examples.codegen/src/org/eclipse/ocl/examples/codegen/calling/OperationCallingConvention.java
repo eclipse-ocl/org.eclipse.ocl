@@ -65,5 +65,6 @@ public interface OperationCallingConvention extends CallingConvention
 	 */
 	boolean mayThrowException();
 
+	void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGOperation cgOperation);
 	void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGOperationCallExp cgOperationCallExp);
 }
