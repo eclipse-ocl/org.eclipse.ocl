@@ -37,6 +37,8 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.internal.library.ConstrainedProperty;
 import org.eclipse.ocl.pivot.internal.library.ExplicitNavigationProperty;
+import org.eclipse.ocl.pivot.internal.library.ForeignProperty;
+import org.eclipse.ocl.pivot.internal.library.StereotypeProperty;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.library.oclany.OclElementOclContainerProperty;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
@@ -97,11 +99,21 @@ public class EcorePropertyCallingConvention extends AbstractPropertyCallingConve
 		if (libraryProperty instanceof OclElementOclContainerProperty) {
 			eStructuralFeature = OCLstdlibPackage.Literals.OCL_ELEMENT__OCL_CONTAINER;
 		}
-		else if (libraryProperty instanceof ConstrainedProperty) {
+		else if (libraryProperty instanceof StereotypeProperty) {
 			eStructuralFeature = (EStructuralFeature) asProperty.getESObject();
 			if (eStructuralFeature != null) {
 				isRequired = asProperty.isIsRequired();
 			}
+		}
+		else if (libraryProperty instanceof ForeignProperty) {
+			eStructuralFeature = (EStructuralFeature) asProperty.getESObject();
+			assert eStructuralFeature == null;
+			isRequired = asProperty.isIsRequired();
+		}
+		else if (libraryProperty instanceof ConstrainedProperty) {
+			eStructuralFeature = (EStructuralFeature) asProperty.getESObject();
+		//	assert eStructuralFeature != null;
+			isRequired = asProperty.isIsRequired();
 		}
 		else if (libraryProperty instanceof ExplicitNavigationProperty) {
 				//	|| (libraryProperty instanceof CompositionProperty)

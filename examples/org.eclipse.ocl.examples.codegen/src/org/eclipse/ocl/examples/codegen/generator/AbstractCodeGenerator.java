@@ -55,8 +55,10 @@ import org.eclipse.ocl.pivot.internal.library.ConstrainedProperty;
 import org.eclipse.ocl.pivot.internal.library.EInvokeOperation;
 import org.eclipse.ocl.pivot.internal.library.ExplicitNavigationProperty;
 import org.eclipse.ocl.pivot.internal.library.ExtensionProperty;
+import org.eclipse.ocl.pivot.internal.library.ForeignProperty;
 import org.eclipse.ocl.pivot.internal.library.ImplicitNonCompositionProperty;
 import org.eclipse.ocl.pivot.internal.library.StaticProperty;
+import org.eclipse.ocl.pivot.internal.library.StereotypeProperty;
 import org.eclipse.ocl.pivot.internal.library.TuplePartProperty;
 import org.eclipse.ocl.pivot.internal.manager.FinalAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
@@ -252,7 +254,24 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 		else if (libraryProperty instanceof TuplePartProperty) {
 			return TuplePropertyCallingConvention.INSTANCE;
 		}
-		else if (libraryProperty instanceof ConstrainedProperty) {		// Includes StereotypeProperty
+		else if (libraryProperty instanceof ForeignProperty) {
+			EStructuralFeature eStructuralFeature = (EStructuralFeature)asProperty.getESObject();
+			assert eStructuralFeature == null;
+			return ForeignPropertyCallingConvention.INSTANCE;
+		}
+		else if (libraryProperty instanceof StereotypeProperty) {
+			EStructuralFeature eStructuralFeature = (EStructuralFeature)asProperty.getESObject();
+			if (eStructuralFeature != null) {
+				try {
+					getGenModelHelper().getGetAccessor(eStructuralFeature);
+					return EcorePropertyCallingConvention.INSTANCE;
+				} catch (GenModelException e) {
+					addProblem(e);		// FIXME drop through to better default
+				}
+			}
+			return ConstrainedPropertyCallingConvention.INSTANCE;
+		}
+		else if (libraryProperty instanceof ConstrainedProperty) {
 			EStructuralFeature eStructuralFeature = (EStructuralFeature) asProperty.getESObject();
 			if (eStructuralFeature != null) {
 				try {
