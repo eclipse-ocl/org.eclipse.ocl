@@ -697,6 +697,10 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<@Nullable 
 		Operation oper = operationCallExp.getReferredOperation();
 		Type sourceType = operationCallExp.getOwnedSource() != null ? operationCallExp.getOwnedSource().getType() : null;
 		append(PivotUtil.getNavigationOperator(false/*operationCallExp.isIsSafe()*/, PivotUtil.isAggregate(sourceType)));
+		if (oper.isIsStatic()) {
+			appendName(oper.getOwningClass());
+			append("::");
+		}
 		appendName(oper);
 		append("(");
 		String prefix = "";//$NON-NLS-1$

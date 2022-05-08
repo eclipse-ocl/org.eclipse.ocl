@@ -53,7 +53,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  *   *  </br>
  *  e.g. as XXXTables.FOREIGN_qualified_class.FC_class.INSTANCE.evaluate(executor, arguments)
  */
-public class ForeignOperationCallingConvention extends AbstractOperationCallingConvention
+public class ForeignOperationCallingConvention extends AbstractOperationCallingConvention	// cf ConstrainedOperationCallingConvention
 {
 	public static final @NonNull ForeignOperationCallingConvention INSTANCE = new ForeignOperationCallingConvention();
 

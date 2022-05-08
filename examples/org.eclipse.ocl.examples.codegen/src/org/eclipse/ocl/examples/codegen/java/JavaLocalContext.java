@@ -19,6 +19,7 @@ import org.eclipse.ocl.examples.codegen.calling.SupportOperationCallingConventio
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBodiedProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
@@ -218,15 +219,31 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 	protected @NonNull CGParameter createSelfParameter() {
 	//	assert !isStatic;
 		CGNamedElement scope = getScope();
-		Operation referredOperation = CGUtil.getAST(((CGOperation)scope));
-		OperationId operationId = referredOperation.getOperationId();
-		boolean sourceMayBeNull = analyzer.hasOclVoidOperation(operationId);	// FIXME redundant since LibraryOperationCallingConvention.createParaeters invokes hasOclVoidOperation
-		NameResolution selfName = globalContext.getSelfNameResolution();
-		CGParameter selfParameter = analyzer.createCGParameter(selfName, analyzer.getTypeId(asType.getTypeId()), !sourceMayBeNull);
-		selfParameter.setIsSelf(true);
-		selfParameter.setNonInvalid();
-		selfParameter.setNonNull();
-		return selfParameter;
+		if (scope instanceof CGForeignProperty) {
+		//	Property referredProperty = CGUtil.getAST(((CGForeignProperty)scope));
+		//	OperationId operationId = referredOperation.getOperationId();
+			boolean sourceMayBeNull = false; //analyzer.hasOclVoidOperation(operationId);	// FIXME redundant since LibraryOperationCallingConvention.createParaeters invokes hasOclVoidOperation
+			NameResolution selfName = globalContext.getSelfNameResolution();
+			CGParameter selfParameter = analyzer.createCGParameter(selfName, analyzer.getTypeId(asType.getTypeId()), !sourceMayBeNull);
+			selfParameter.setIsSelf(true);
+			selfParameter.setNonInvalid();
+			selfParameter.setNonNull();
+			return selfParameter;
+		}
+		else if (scope instanceof CGOperation) {
+			Operation referredOperation = CGUtil.getAST(((CGOperation)scope));
+			OperationId operationId = referredOperation.getOperationId();
+			boolean sourceMayBeNull = analyzer.hasOclVoidOperation(operationId);	// FIXME redundant since LibraryOperationCallingConvention.createParaeters invokes hasOclVoidOperation
+			NameResolution selfName = globalContext.getSelfNameResolution();
+			CGParameter selfParameter = analyzer.createCGParameter(selfName, analyzer.getTypeId(asType.getTypeId()), !sourceMayBeNull);
+			selfParameter.setIsSelf(true);
+			selfParameter.setNonInvalid();
+			selfParameter.setNonNull();
+			return selfParameter;
+		}
+		else {
+			throw new UnsupportedOperationException(getClass().getSimpleName() + ".createSelfParameter for " + scope.eClass().getName());
+		}
 	}
 
 	public @NonNull CGVariable createStandardLibraryVariable() {

@@ -21,7 +21,9 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
+import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
+import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.OCLExpression;
@@ -38,9 +40,22 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  *  If defined as part of an OCL stdlib, he operation is ioked when called. If defined as part of a
  *  Complete OCL document or OCLinEcore enrichment, the operations is invoked via a cache to avoid re-execution.
  */
-public class ConstrainedOperationCallingConvention extends AbstractOperationCallingConvention
+public class ConstrainedOperationCallingConvention extends AbstractOperationCallingConvention	// CF ForeignOperationCallingConvention
 {
 	public static final @NonNull ConstrainedOperationCallingConvention INSTANCE = new ConstrainedOperationCallingConvention();
+
+	protected void appendForeignOperationName(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
+		JavaCodeGenerator codeGenerator = cg2javaVisitor.getCodeGenerator();
+		CGOperation cgOperation = CGUtil.getOperation(cgOperationCallExp);
+		Operation asReferredOperation = CGUtil.getReferredOperation(cgOperationCallExp);
+		org.eclipse.ocl.pivot.Class asReferredClass = PivotUtil.getOwningClass(asReferredOperation);
+		CGClass cgReferringClass = CGUtil.getContainingClass(cgOperationCallExp);
+		assert cgReferringClass != null;
+		String flattenedClassName = codeGenerator.getQualifiedForeignClassName(asReferredClass);
+		js.append(flattenedClassName);
+		js.append(".");
+		js.appendValueName(cgOperation);
+	}
 
 	@Override
 	public @NonNull CGOperation createCGOperationWithoutBody(@NonNull AS2CGVisitor as2cgVisitor, @NonNull Operation asOperation) {
@@ -113,8 +128,23 @@ public class ConstrainedOperationCallingConvention extends AbstractOperationCall
 		}
 	}
 
+//	@Override
+//	public boolean generateJavaCall(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
+//		throw new UnsupportedOperationException();		// XXX
+//	}
+
 	@Override
 	public boolean generateJavaCall(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
-		throw new UnsupportedOperationException();		// XXX
+		// XXX should have been ForeignOperationCallingConvention
+		if (!generateLocals(cg2javaVisitor, js, cgOperationCallExp)) {
+			return false;
+		}
+		js.appendDeclaration(cgOperationCallExp);
+		js.append(" = ");
+		appendForeignOperationName(cg2javaVisitor, js, cgOperationCallExp);
+		js.append("(");
+		generateArgumentList(cg2javaVisitor, js, cgOperationCallExp);
+		js.append(");\n");
+		return true;
 	}
 }
