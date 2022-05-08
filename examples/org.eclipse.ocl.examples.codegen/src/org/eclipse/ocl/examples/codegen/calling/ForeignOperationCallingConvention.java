@@ -111,14 +111,15 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 		assert false : "Fallback overload for " + this;		// XXX
 		return CGModelFactory.eINSTANCE.createCGLibraryOperation(); */
 	//	PivotMetamodelManager metamodelManager = as2cgVisitor.getMetamodelManager();
-		GenModelHelper genModelHelper = as2cgVisitor.getGenModelHelper();
+	//	GenModelHelper genModelHelper = as2cgVisitor.getGenModelHelper();
 	//	LibraryFeature libraryOperation = metamodelManager.getImplementation(asOperation);
 	//	assert libraryOperation instanceof ForeignOperation;	-- ForeignOperationCallingConvention
 	//	assert libraryOperation instanceof EObjectOperation;	-- EcoreForeignOperationCallingConvention
 		EOperation eOperation = (EOperation) asOperation.getESObject();
-		assert eOperation != null;
-		if (!PivotUtil.isStatic(eOperation)) {
+	//	assert (eOperation == null) || asOperation.isIsStatic();
+		if ((eOperation != null) && !PivotUtil.isStatic(eOperation)) {
 			try {
+				GenModelHelper genModelHelper = as2cgVisitor.getGenModelHelper();
 				genModelHelper.getGenOperation(eOperation);
 				CGEcoreOperation cgEcoreOperation = CGModelFactory.eINSTANCE.createCGEcoreOperation();
 				cgEcoreOperation.setEOperation(eOperation);

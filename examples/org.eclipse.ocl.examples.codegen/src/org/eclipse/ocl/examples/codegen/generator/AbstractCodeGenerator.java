@@ -23,6 +23,7 @@ import org.eclipse.ocl.examples.codegen.analyzer.AnalysisVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.calling.BuiltInOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.ConstrainedOperationCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.ConstrainedPropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.EcoreForeignOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.EcoreOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.EcoreOppositePropertyCallingConvention;
@@ -272,13 +273,12 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 		}
 		else if (libraryProperty instanceof ConstrainedProperty) {
 			EStructuralFeature eStructuralFeature = (EStructuralFeature) asProperty.getESObject();
-			if (eStructuralFeature != null) {
-				try {
-					getGenModelHelper().getGetAccessor(eStructuralFeature);
-					return EcorePropertyCallingConvention.INSTANCE;
-				} catch (GenModelException e) {
-					addProblem(e);		// FIXME drop through to better default
-				}
+			assert eStructuralFeature != null;
+			try {
+				getGenModelHelper().getGetAccessor(eStructuralFeature);
+				return EcorePropertyCallingConvention.INSTANCE;
+			} catch (GenModelException e) {
+				addProblem(e);		// FIXME drop through to better default
 			}
 			return ForeignPropertyCallingConvention.INSTANCE;
 		}

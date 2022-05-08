@@ -99,6 +99,7 @@ import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.library.ConstrainedOperation;
 import org.eclipse.ocl.pivot.internal.library.EInvokeOperation;
+import org.eclipse.ocl.pivot.internal.library.ForeignOperation;
 import org.eclipse.ocl.pivot.internal.library.ImplementationManager;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
@@ -1266,7 +1267,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 					if (owningType != null) {
 						try {
 							ExpressionInOCL query = ((EnvironmentFactoryInternalExtension)environmentFactory).parseSpecification(specification);
-							implementation = new ConstrainedOperation(query);
+							implementation = operation.getESObject() instanceof EOperation ? new ConstrainedOperation(query) : new ForeignOperation(query);
 						} catch (ParserException e) {
 							// TODO Auto-generated catch block
 							//							e.printStackTrace();
