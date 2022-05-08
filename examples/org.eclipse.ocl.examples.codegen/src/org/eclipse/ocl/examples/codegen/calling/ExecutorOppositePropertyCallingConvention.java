@@ -133,25 +133,10 @@ public class ExecutorOppositePropertyCallingConvention extends AbstractPropertyC
 		return true;
 	}
 
-/*	private boolean generateForwardJavaDeclaration(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGExecutorNavigationProperty cgProperty) {
-		js.appendDeclaration(cgProperty);
-		js.append(" = new ");
-		js.appendClassReference(null, cgProperty);
-		js.append("(");
-		js.appendIdReference(cgProperty.getUnderlyingPropertyId().getElementId());
-		js.append(");\n");
-		return true;
-	} */
-
 	@Override
 	public boolean generateJavaDeclaration(	@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGProperty cgProperty) {
 		assert cgProperty instanceof CGExecutorOppositeProperty;
-	//	if (cgProperty instanceof CGExecutorNavigationProperty) {
-	//		return generateForwardJavaDeclaration(cg2javaVisitor, js, (CGExecutorNavigationProperty)cgProperty);
-	//	}
-	//	else {
-			return generateOppositeJavaDeclaration(cg2javaVisitor, js, (CGExecutorOppositeProperty)cgProperty);
-	//	}
+		return generateOppositeJavaDeclaration(cg2javaVisitor, js, (CGExecutorOppositeProperty)cgProperty);
 	}
 
 	@Override
