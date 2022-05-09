@@ -304,6 +304,9 @@ public abstract class NameManager
 				String attempt = validHint + "_" + Integer.toString(count);
 				if (!name2object.containsKey(attempt)) {		// Assumes that reserved names do not end in _ count
 					name2counter2.put(validHint, ++count);
+					if ("self_0".equals(attempt)) {
+						getClass();			// XXX
+					}
 					return attempt;
 				}
 			}
