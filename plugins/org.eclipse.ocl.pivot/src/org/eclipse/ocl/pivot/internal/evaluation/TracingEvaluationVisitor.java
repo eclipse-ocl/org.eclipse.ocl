@@ -25,6 +25,8 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.IfExp;
 import org.eclipse.ocl.pivot.IntegerLiteralExp;
 import org.eclipse.ocl.pivot.InvalidLiteralExp;
+import org.eclipse.ocl.pivot.IterateExp;
+import org.eclipse.ocl.pivot.IteratorExp;
 import org.eclipse.ocl.pivot.LetExp;
 import org.eclipse.ocl.pivot.MapLiteralExp;
 import org.eclipse.ocl.pivot.MapLiteralPart;
@@ -84,7 +86,7 @@ public class TracingEvaluationVisitor extends EvaluationVisitorDecorator impleme
 		try {
 			HelperUtil.trace("Evaluate: " + expression); //$NON-NLS-1$
 			HelperUtil.trace("Result  : " + //$NON-NLS-1$
-					(value != null ? TypeId.OCL_INVALID_NAME : String.valueOf(value)));
+					(value == null ? TypeId.OCL_INVALID_NAME : String.valueOf(value)));
 		} catch (Exception e) {
 			// tracing must not interfere with evaluation
 		} catch (AssertionError e) {
@@ -147,6 +149,16 @@ public class TracingEvaluationVisitor extends EvaluationVisitorDecorator impleme
 	@Override
 	public @Nullable Object visitInvalidLiteralExp(@NonNull InvalidLiteralExp literalExp) {
 		return trace(literalExp, delegate.visitInvalidLiteralExp(literalExp));
+	}
+
+	@Override
+	public Object visitIterateExp(@NonNull IterateExp iterateExp) {
+		return trace(iterateExp, delegate.visitIterateExp(iterateExp));
+	}
+
+	@Override
+	public Object visitIteratorExp(@NonNull IteratorExp iteratorExp) {
+		return trace(iteratorExp, delegate.visitIteratorExp(iteratorExp));
 	}
 
 	@Override
