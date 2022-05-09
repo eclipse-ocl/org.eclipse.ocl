@@ -81,8 +81,4 @@ public class ConstrainedProperty extends AbstractProperty
 			executor.popEvaluationEnvironment();
 		}
 	}
-
-//	public EStructuralFeature getEStructuralFeature() {
-//		return (EStructuralFeature) property.getESObject();
-//	}
 }

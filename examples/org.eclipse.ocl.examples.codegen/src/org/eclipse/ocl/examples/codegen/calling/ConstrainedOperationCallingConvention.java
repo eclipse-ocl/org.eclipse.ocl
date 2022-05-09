@@ -128,11 +128,6 @@ public class ConstrainedOperationCallingConvention extends AbstractOperationCall
 		}
 	}
 
-//	@Override
-//	public boolean generateJavaCall(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
-//		throw new UnsupportedOperationException();		// XXX
-//	}
-
 	@Override
 	public boolean generateJavaCall(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
 		// XXX should have been ForeignOperationCallingConvention

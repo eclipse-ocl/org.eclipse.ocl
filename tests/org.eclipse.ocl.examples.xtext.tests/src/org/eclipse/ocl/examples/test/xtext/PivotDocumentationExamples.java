@@ -258,7 +258,7 @@ public class PivotDocumentationExamples extends XtextTestCase
 		// use getBooks() from the document in another query to find a book
 		ExpressionInOCL expression = ocl.createQuery(EXTLibraryPackage.Literals.LIBRARY,
 				"getBooks('Bleak House')->asSequence()->first()");
-		ocl.setEvaluationTracingEnabled(true);
+
 		Book book = (Book) ocl.evaluate(library, expression);
 		debugPrintf("Got book: %s%n\n", book);
 
