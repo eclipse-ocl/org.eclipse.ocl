@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.calling;
 
-import java.util.List;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
@@ -29,6 +27,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.generator.CodeGenerator;
@@ -40,6 +39,7 @@ import org.eclipse.ocl.examples.codegen.java.JavaStream.SubStream;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.NavigationCallExp;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.ForeignProperty;
 import org.eclipse.ocl.pivot.internal.library.StaticProperty;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
@@ -125,7 +125,8 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 
 	@Override
 	public boolean generateJavaCall(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGNavigationCallExp cgPropertyCallExp) {
-		CGForeignPropertyCallExp cgForeignPropertyCallExp = (CGForeignPropertyCallExp) cgPropertyCallExp;
+		CGForeignPropertyCallExp cgForeignPropertyCallExp = (CGForeignPropertyCallExp) cgPropertyCallExp;		// XXX never happens
+		CGForeignProperty cgProperty = (CGForeignProperty)CGUtil.getProperty(cgPropertyCallExp);
 		Property asProperty = CGUtil.getReferredProperty(cgPropertyCallExp);
 		org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asProperty);
 		String foreignClassName = cg2javaVisitor.getCodeGenerator().getQualifiedForeignClassName(asClass);
@@ -144,35 +145,53 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 		SubStream castBody = new SubStream() {
 			@Override
 			public void append() {
+				CGOperation cgContainingOperation = CGUtil.basicGetContainingOperation(cgPropertyCallExp);
+				Iterable<@NonNull CGParameter> cgContainingParameters = null;
+				if (cgContainingOperation != null) {
+					cgContainingParameters = CGUtil.getParameters(cgContainingOperation);
+				}
+				else {
+					CGProperty cgContainingProperty = CGUtil.basicGetContainingProperty(cgPropertyCallExp);
+					if (cgContainingProperty instanceof CGForeignProperty) {
+						cgContainingParameters = CGUtil.getParameters((CGForeignProperty)cgContainingProperty);
+					}
+				}
 				js.appendClassReference(null, foreignClassName);
 				js.append("." + JavaConstants.FOREIGN_PROPERTY_PREFIX);
 				js.append(propertyName);
 				js.append("(");
-				if (cgSource != null) {
-					js.appendValueName(cgSource);
-				}
-				else if (asProperty.isIsStatic()) {
-					CGOperation cgOperation = CGUtil.basicGetContainingOperation(cgForeignPropertyCallExp);
-					if (cgOperation != null) {
-						List<CGParameter> cgParameters = cgOperation.getParameters();
-						js.appendValueName(cgParameters.get(0));		// executor
+				boolean isFirst = true;
+				for (@NonNull CGParameter cgParameter : CGUtil.getParameters(cgProperty)) {
+					if (!isFirst) {
 						js.append(", ");
-						js.appendValueName(cgParameters.get(2));		// self
 					}
-					else {
-						CGProperty cgProperty = CGUtil.basicGetContainingProperty(cgForeignPropertyCallExp);
-						if (cgProperty instanceof CGForeignProperty) {
-							Iterable<@NonNull CGParameter> cgParameters = CGUtil.getParameters((CGForeignProperty)cgProperty);
-							boolean isFirst = true;
-							for (@NonNull CGParameter cgParameter : cgParameters) {
-								if (!isFirst) {
-									js.append(", ");
-								}
-								js.appendValueName(cgParameter);
-								isFirst = false;
-							}
+					CGTypeId cgTypeId = cgParameter.getTypeId();
+					TypeId asTypeId = cgTypeId.getASTypeId();
+					if (asTypeId == JavaConstants.EXECUTOR_TYPE_ID) {
+						CGParameter cgContainingParameter = getContainingParameter(cgContainingParameters, JavaConstants.EXECUTOR_TYPE_ID);
+						if (cgContainingParameter != null) {
+							js.appendValueName(cgContainingParameter);
+						}
+						else {
+							js.append(cg2javaVisitor.getCodeGenerator().getGlobalContext().getExecutorName());
 						}
 					}
+					else if (asTypeId == TypeId.OCL_ANY) {
+						CGParameter cgContainingParameter = getContainingParameter(cgContainingParameters, TypeId.OCL_ANY);
+						if (cgContainingParameter == null) {
+							cgContainingParameter = getContainingParameter(cgContainingParameters, TypeId.OCL_VOID);
+						}
+						if (cgContainingParameter != null) {
+							js.appendValueName(cgContainingParameter);
+						}
+						else {
+							js.append(cg2javaVisitor.getCodeGenerator().getGlobalContext().getSelfName());
+						}
+					}
+					else {
+						js.appendValueName(cgParameter);
+					}
+					isFirst = false;
 				}
 				js.append(")");
 			}
@@ -211,6 +230,19 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 		js.popIndentation();
 		js.append("}\n");
 		return true;
+	}
+
+	private @Nullable CGParameter getContainingParameter(@Nullable Iterable<@NonNull CGParameter> cgParameters, @NonNull TypeId requiredTypeId) {
+		if (cgParameters != null) {
+			for (@NonNull CGParameter cgParameter : cgParameters) {
+				CGTypeId cgTypeId = cgParameter.getTypeId();
+				TypeId asTypeId = cgTypeId.getASTypeId();
+				if (asTypeId == requiredTypeId) {
+					return cgParameter;
+				}
+			}
+		}
+		return null;
 	}
 
 	@Override

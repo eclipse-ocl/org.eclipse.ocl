@@ -444,6 +444,10 @@ public class CGUtil
 		return ClassUtil.nullFree(cgTupleExp.getParts());
 	}
 
+	public static @NonNull CGProperty getProperty(@NonNull CGNavigationCallExp cgNavigationCallExp) {
+		return ClassUtil.nonNullState(cgNavigationCallExp.getCgProperty());
+	}
+
 	public static @NonNull CGValuedElement getReferredConstant(@NonNull CGConstantExp cgConstantExp) {
 		return ClassUtil.nonNullState(cgConstantExp.getReferredConstant());
 	}

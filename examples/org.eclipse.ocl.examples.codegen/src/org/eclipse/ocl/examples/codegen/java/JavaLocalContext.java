@@ -36,6 +36,7 @@ import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.OperationId;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
@@ -65,7 +66,7 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 
 	@Deprecated /* @deprecated specify executorIsParameter */
 	public JavaLocalContext(@NonNull JavaGlobalContext<@NonNull ? extends CG> globalContext, @NonNull CGElement cgScope) {
-		this(globalContext, null, (CGNamedElement)cgScope, (NamedElement)((CGNamedElement)cgScope).getAst());
+		this(globalContext, null, (CGNamedElement)cgScope, ClassUtil.nonNullState((NamedElement)((CGNamedElement)cgScope).getAst()));
 	}
 
 	public JavaLocalContext(@NonNull JavaGlobalContext<@NonNull ? extends CG> globalContext, @Nullable JavaLocalContext<@NonNull ? extends CG> outerContext,
@@ -119,7 +120,7 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 	protected @NonNull CGParameter createAnyParameter() {
 		assert isStatic;
 		NameResolution anyName = globalContext.getAnyNameResolution();
-		CGParameter anyParameter = analyzer.createCGParameter(anyName, analyzer.getTypeId(asType.getTypeId()), false);
+		CGParameter anyParameter = analyzer.createCGParameter(anyName, analyzer.getTypeId(TypeId.OCL_ANY), false);
 		anyParameter.setNonInvalid();
 		return anyParameter;
 	}
