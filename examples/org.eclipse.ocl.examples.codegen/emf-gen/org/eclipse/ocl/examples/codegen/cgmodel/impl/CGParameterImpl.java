@@ -33,7 +33,6 @@ import org.eclipse.ocl.examples.codegen.cse.AbstractPlace;
 import org.eclipse.ocl.examples.codegen.cse.StackPlace;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Variable;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -107,7 +106,6 @@ public class CGParameterImpl extends CGVariableImpl implements CGParameter {
 	 */
 	protected CGParameterImpl() {
 		super();
-		System.out.println("Create " + NameUtil.debugSimpleName(this));
 	}
 
 	/**
@@ -441,12 +439,6 @@ public class CGParameterImpl extends CGVariableImpl implements CGParameter {
 	public boolean isUnboxed() {
 		CGCallable callable = getCallable();
 		return (init != null) ? init.isUnboxed() : callable != null ? callable.isUnboxed() : false;
-	}
-
-	@Override
-	protected void eBasicSetContainer(InternalEObject newContainer) {
-		super.eBasicSetContainer(newContainer);
-		System.out.println("eBasicSetContainer " + NameUtil.debugSimpleName(this) + " : " + NameUtil.debugSimpleName(newContainer));
 	}
 
 } //CGParameterImpl

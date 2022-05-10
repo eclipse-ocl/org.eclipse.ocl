@@ -81,7 +81,7 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 			@Nullable CGValuedElement cgSource, @NonNull OperationCallExp asOperationCallExp) {
 	//	CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();
 		Operation asOperation = ClassUtil.nonNullState(asOperationCallExp.getReferredOperation());
-		System.out.println("createCGOperationCallExp: to " + asOperation);
+	//	System.out.println("createCGOperationCallExp: to " + asOperation);
 		assert (cgSource == null) == asOperation.isIsStatic();
 		Method jMethod = libraryOperation.getEvaluateMethod(asOperation);
 	//	assert (cgSource == null) == Modifier.isStatic(jMethod.getModifiers());

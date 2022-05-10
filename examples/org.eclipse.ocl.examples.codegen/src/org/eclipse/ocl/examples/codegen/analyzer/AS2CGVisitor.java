@@ -245,7 +245,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		}
 
 		public void putParameter(@NonNull VariableDeclaration asParameter, @NonNull CGParameter cgParameter) {
-			System.out.println("putParameter: " + asParameter + " in " + asParameter.eContainer() + " => " + NameUtil.debugSimpleName(cgParameter));
+		//	System.out.println("putParameter: " + asParameter + " in " + asParameter.eContainer() + " => " + NameUtil.debugSimpleName(cgParameter));
 			cgParameters.put(asParameter, cgParameter);
 			cgVariables.put(asParameter, cgParameter);
 		}
