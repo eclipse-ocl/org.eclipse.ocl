@@ -14,11 +14,13 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
+import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignOperationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
@@ -313,6 +315,13 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 		cg2javaVisitor.appendReturn(body);
 		js.popIndentation();
 		js.append("}\n");
+	}
+
+	@Override
+	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGOperation cgOperation) {
+		CGLibraryOperation cgForeignOperation = (CGLibraryOperation)cgOperation;
+		super.rewriteWithBoxingAndGuards(boxingAnalyzer, cgForeignOperation);
+		boxingAnalyzer.rewriteAsBoxed(cgForeignOperation.getBody());
 	}
 
 /*	@Override

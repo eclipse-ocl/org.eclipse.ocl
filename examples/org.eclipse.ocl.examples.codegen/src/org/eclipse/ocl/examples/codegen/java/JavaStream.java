@@ -265,7 +265,7 @@ public class JavaStream
 				s.append(string);
 			}
 			else {
-				if (string.contains("collectBy")) {
+				if (string.contains("ECORE_INT_55")) {
 					getClass();		// XXX
 				}
 				int sLength = s.length();

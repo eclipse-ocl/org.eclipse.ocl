@@ -53,7 +53,6 @@ import org.eclipse.ocl.pivot.CollectionLiteralExp;
 import org.eclipse.ocl.pivot.CollectionLiteralPart;
 import org.eclipse.ocl.pivot.CollectionRange;
 import org.eclipse.ocl.pivot.Constraint;
-import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.IfExp;
@@ -158,7 +157,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		@Override
 		public @Nullable Object visitCGOperation(@NonNull CGOperation cgOperation) {
 			super.visitCGOperation(cgOperation);
-			Element asOperation = cgOperation.getAst();
+		/*	Element asOperation = cgOperation.getAst();
 			if (asOperation instanceof Operation) {
 				EObject eObject = ((Operation)asOperation).getESObject();
 				if (eObject instanceof ETypedElement) {
@@ -167,7 +166,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 						rewriteAsEcore(cgOperation.getBody(), eType);
 					}
 				}
-			}
+			} */
 			return null;
 		}
 
