@@ -17,8 +17,8 @@ import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
-import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
+import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
@@ -87,6 +87,7 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		AS2CGVisitor as2cgVisitor = new JUnitAS2CGVisitor(cgAnalyzer);
 		CGOperation cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
 		JUnitOperationCallingConvention junitCallingConvention = JUnitOperationCallingConvention.INSTANCE;
+		//	junitCallingConvention.createCGOperationWithoutBody(as2cgVisitor, asOperation);		// no root asOperation
 		cgOperation.setCallingConvention(junitCallingConvention);
 		as2cgVisitor.pushLocalContext(cgOperation, expInOcl);
 		junitCallingConvention.createCGParameters(as2cgVisitor, cgOperation, expInOcl);

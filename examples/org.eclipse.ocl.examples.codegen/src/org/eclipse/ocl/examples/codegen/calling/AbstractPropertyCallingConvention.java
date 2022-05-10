@@ -11,6 +11,7 @@
 package org.eclipse.ocl.examples.codegen.calling;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBodiedProperty;
@@ -36,6 +37,9 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
  */
 public abstract class AbstractPropertyCallingConvention implements PropertyCallingConvention
 {
+	@Override
+	public void createCGParameters(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGProperty cgProperty, @Nullable ExpressionInOCL initExpression) {}
+
 	@Override
 	public @NonNull CGProperty createCGProperty(@NonNull AS2CGVisitor as2cgVisitor, @NonNull Property asProperty) {
 		return CGModelFactory.eINSTANCE.createCGConstrainedProperty();  // XXX Overrides may add state

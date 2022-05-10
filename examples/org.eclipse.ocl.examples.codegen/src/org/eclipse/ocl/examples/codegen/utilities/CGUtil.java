@@ -440,6 +440,10 @@ public class CGUtil
 		return ClassUtil.nullFree(cgOperation.getParameters());
 	}
 
+	public static @NonNull List<CGParameter> getParametersList(@NonNull CGForeignProperty cgForeignProperty) {
+		return ClassUtil.nullFree(cgForeignProperty.getParameters());
+	}
+
 	public static Iterable<@NonNull CGTuplePart> getParts(@NonNull CGTupleExp cgTupleExp) {
 		return ClassUtil.nullFree(cgTupleExp.getParts());
 	}

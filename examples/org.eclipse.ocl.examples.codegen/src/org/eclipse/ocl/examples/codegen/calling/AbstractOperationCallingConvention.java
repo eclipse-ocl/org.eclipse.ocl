@@ -215,16 +215,16 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 	}
 
 	@Override
-	public void createCGParameters(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL expressionInOCL) {
-		if (expressionInOCL != null) {
-			Variable contextVariable = expressionInOCL.getOwnedContext();
+	public void createCGParameters(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL bodyExpression) {
+		if (bodyExpression != null) {
+			Variable contextVariable = bodyExpression.getOwnedContext();
 			if (contextVariable != null) {
 				CGParameter cgParameter = as2cgVisitor.getSelfParameter(contextVariable);
 				//			cgParameter.setTypeId(context.getTypeId(JavaConstants.getJavaTypeId(Object.class)));
 				//			cgParameter.setRequired(contextVariable.isIsRequired());
 				cgOperation.getParameters().add(cgParameter);
 			}
-			for (@NonNull Variable parameterVariable : ClassUtil.nullFree(expressionInOCL.getOwnedParameters())) {
+			for (@NonNull Variable parameterVariable : ClassUtil.nullFree(bodyExpression.getOwnedParameters())) {
 				CGParameter cgParameter;
 				if (cgOperation instanceof CGEcoreOperation) {
 					cgParameter = as2cgVisitor.getParameter(parameterVariable, parameterVariable.getName());

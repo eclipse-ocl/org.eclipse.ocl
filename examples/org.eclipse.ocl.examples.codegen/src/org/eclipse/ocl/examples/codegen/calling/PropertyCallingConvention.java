@@ -20,6 +20,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaLocalContext;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.NavigationCallExp;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
@@ -37,6 +38,11 @@ public interface PropertyCallingConvention extends CallingConvention
 	 */
 	@NonNull CGValuedElement createCGNavigationCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGProperty cgProperty, @NonNull LibraryProperty libraryProperty,
 			@Nullable CGValuedElement cgSource, @NonNull NavigationCallExp asPropertyCallExp);
+
+	/**
+	 * Elaborate the CGProperty with the parameters appropriate to initExpression.
+	 */
+	void createCGParameters(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGProperty cgProperty, @Nullable ExpressionInOCL initExpression);
 
 	@NonNull CGProperty createCGProperty(@NonNull AS2CGVisitor as2cgVisitor, @NonNull Property asProperty);
 

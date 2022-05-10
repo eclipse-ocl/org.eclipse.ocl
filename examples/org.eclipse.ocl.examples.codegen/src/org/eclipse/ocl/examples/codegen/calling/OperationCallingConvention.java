@@ -44,9 +44,9 @@ public interface OperationCallingConvention extends CallingConvention
 			@Nullable CGValuedElement cgSource, @NonNull OperationCallExp asOperationCallExp);
 
 	/**
-	 * Elaborate the CGOperation with the parameters appropriate to query.
+	 * Elaborate the CGOperation with the parameters appropriate to bodyExpression.
 	 */
-	void createCGParameters(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL query);
+	void createCGParameters(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL bodyExpression);
 
 	/**
 	 * Generate the Java code for an Operation call.

@@ -696,7 +696,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	}
 
 	/**
-	 * Generate / share the CG declaration for asOperation with a known libraryProperty implementation approach.
+	 * Generate / share the CG declaration for asOperation.
 	 */
 	protected @NonNull CGOperation generateOperationDeclaration(@NonNull Operation asOperation) {	// XXX rationalize as generateOperationDeclaration with later createImplementation
 		CGOperation cgOperation = context.basicGetOperation(asOperation);
@@ -711,7 +711,8 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 					context.addForeignFeature(asOperation);
 				}
 				cgOperation = createCGOperationWithoutBody(asOperation, callingConvention);
-				pushDeclarationContext(cgOperation, asOperation);
+				getNameManager().declarePreferredName(cgOperation);
+				pushContext(cgOperation, asOperation);
 				ExpressionInOCL query = null;
 				LanguageExpression specification = asOperation.getBodyExpression();
 				if (specification != null) {
@@ -897,7 +898,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	}
 
 	/**
-	 * Generate / share the CG declaration for asProprty with a known libraryProperty implementation approach.
+	 * Generate / share the CG declaration for asProprty.
 	 */
 	protected final @NonNull CGProperty generatePropertyDeclaration(@NonNull Property asProperty) {
 		CGProperty cgProperty = context.basicGetProperty(asProperty);
@@ -910,6 +911,20 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			cgProperty.setRequired(asProperty.isIsRequired());
 			cgProperty.setCallingConvention(callingConvention);
 			context.addProperty(cgProperty);
+			getNameManager().declarePreferredName(cgProperty);
+			pushContext(cgProperty, asProperty);
+			ExpressionInOCL query = null;
+			LanguageExpression specification = asProperty.getOwnedExpression();
+			if (specification != null) {
+				try {
+					query = environmentFactory.parseSpecification(specification);		// Redundant already parsed
+				} catch (ParserException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			callingConvention.createCGParameters(this, cgProperty, query);
+			popLocalContext();
 		}
 		return cgProperty;
 	}
@@ -1719,7 +1734,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	public final @NonNull CGProperty visitProperty(@NonNull Property asProperty) {
 		CGProperty cgProperty = generatePropertyDeclaration(asProperty);
 		PropertyCallingConvention callingConvention = cgProperty.getCallingConvention();
-		pushDeclarationContext(cgProperty, asProperty);
+		pushContext(cgProperty, asProperty);
 		callingConvention.createImplementation(this, getLocalContext(), cgProperty);
 		popLocalContext();
 		return cgProperty;
