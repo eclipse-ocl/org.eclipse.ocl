@@ -309,20 +309,21 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		final Class<?> managerClass; 	// FIXME ExecutorMultipleIterationManager
 		final Class<?> operationClass;
 		final boolean passesCoIterators;
+		boolean useMultiple = isMap || (coIterators.size() > 0) || (arity > 1);
 		if (isMap) {
 			managerClass = ExecutorMultipleMapIterationManager.class;
 			operationClass = AbstractSimpleOperation.class;
 			passesCoIterators = true;
 		}
-		else if ((arity == 1) && (coIterators.size() == 0)) {
-			managerClass = ExecutorSingleIterationManager.class;
-			operationClass = AbstractBinaryOperation.class;
-			passesCoIterators = false;
-		}
-		else {
+		else if (useMultiple) {
 			managerClass = ExecutorMultipleIterationManager.class;
 			operationClass = AbstractSimpleOperation.class;
 			passesCoIterators = true;
+		}
+		else {
+			managerClass = ExecutorSingleIterationManager.class;
+			operationClass = AbstractBinaryOperation.class;
+			passesCoIterators = false;
 		}
 		final LibraryIteration libraryIteration = ClassUtil.nonNullState(cgIterationCallExp.getLibraryIteration());
 		final Method actualMethod = libraryIteration.getEvaluateMethod(referredIteration);
@@ -426,7 +427,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		js.appendClassReference(true, TypeId.class);
 		js.append(" ");
 		js.append(globalContext.getTypeIdNameResolution().getResolvedName());
-		if (isMap || (arity > 1)) {
+		if (useMultiple) {
 			js.append(", final ");
 			js.appendIsRequired(false);
 			js.append(" Object ");
@@ -460,7 +461,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		}
 		js.append(") {\n");
 		js.pushIndentation(null);
-		if (isMap || (arity > 1)) {
+		if (useMultiple) {
 			int argIndex = 0;			// Skip source
 			Boolean isRequired = context.isRequired(source);
 			if (isRequired == Boolean.TRUE) {
@@ -528,7 +529,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		//		js.appendReferenceTo(evaluatorParameter);
 		js.append(executorName);
 		js.append(", ");
-		if (isMap || (arity > 1)) {
+		if (useMultiple) {
 			js.append(arity + ", ");
 		}
 		if (passesCoIterators) {

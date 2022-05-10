@@ -265,7 +265,7 @@ public class JavaStream
 				s.append(string);
 			}
 			else {
-				if (string.contains("op_")) {
+				if (string.contains("collectBy")) {
 					getClass();		// XXX
 				}
 				int sLength = s.length();
