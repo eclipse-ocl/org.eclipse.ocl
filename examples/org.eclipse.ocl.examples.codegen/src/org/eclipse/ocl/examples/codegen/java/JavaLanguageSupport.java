@@ -27,6 +27,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.asm5.ASM5JavaAnnotationReader;
 import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.StandardLibrary;
@@ -325,7 +326,7 @@ public class JavaLanguageSupport extends LanguageSupport
 			String className = qualifiedOperationName.substring(0, lastDot);
 			String methodName = qualifiedOperationName.substring(lastDot+1);
 			try {
-				List<@NonNull Operation> invocations = null;
+				List<@NonNull NamedElement> invocations = null;
 				boolean hasNonStaticMethodNameMatches = false;
 				boolean hasStaticMethodNameMatches = false;
 				Class<?> loadedClass = Thread.currentThread().getContextClassLoader().loadClass(className);
