@@ -1308,8 +1308,8 @@ implements org.eclipse.ocl.pivot.Class {
 				IF_le = true;
 			}
 			else {
-				final /*@NonInvalid*/ @Nullable String name = this.getName();
-				final /*@NonInvalid*/ boolean result = name != null;
+				final /*@NonInvalid*/ @Nullable String name_0 = this.getName();
+				final /*@NonInvalid*/ boolean result = name_0 != null;
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, result, PivotTables.INT_0).booleanValue();
 				IF_le = logDiagnostic;
 			}

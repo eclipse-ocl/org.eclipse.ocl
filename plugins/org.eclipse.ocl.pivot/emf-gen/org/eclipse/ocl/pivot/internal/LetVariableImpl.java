@@ -191,10 +191,10 @@ public class LetVariableImpl extends VariableImpl implements LetVariable
 							if (ownedInit == null) {
 								throw new InvalidValueException("Null source for \'TypedElement::type\'");
 							}
-							final /*@Thrown*/ @Nullable Type type_0 = ownedInit.getType();
+							final /*@Thrown*/ @Nullable Type type = ownedInit.getType();
 							/*@Caught*/ @Nullable Object CAUGHT_type;
 							try {
-								CAUGHT_type = type_0;
+								CAUGHT_type = type;
 							}
 							catch (Exception THROWN_CAUGHT_type) {
 								CAUGHT_type = ValueUtil.createInvalidValue(THROWN_CAUGHT_type);
@@ -205,11 +205,11 @@ public class LetVariableImpl extends VariableImpl implements LetVariable
 								IF_IsEQ2_ = null;
 							}
 							else {
-								final /*@NonInvalid*/ @Nullable Type type = this.getType();
-								if (type_0 == null) {
-									throw new InvalidValueException("Null argument");
+								if (type == null) {
+									throw new InvalidValueException("Null \'\'$metamodel$::Type\'\' rather than \'\'OclVoid\'\' value required");
 								}
-								final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type_0, type).booleanValue();
+								final /*@NonInvalid*/ @Nullable Type type_0 = this.getType();
+								final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, type_0).booleanValue();
 								IF_IsEQ2_ = conformsTo;
 							}
 							CAUGHT_IF_IsEQ2_ = IF_IsEQ2_;

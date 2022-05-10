@@ -196,18 +196,18 @@ implements TypedElement {
 		 * bodySpecification.type?.conformsTo(self.type)
 		 */
 		final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this);
-		final /*@NonInvalid*/ @Nullable Type type_1 = bodySpecification.getType();
-		final /*@NonInvalid*/ @NonNull Object IsEQ2_ = type_1 == null;
+		final /*@NonInvalid*/ @Nullable Type type = bodySpecification.getType();
+		final /*@NonInvalid*/ @NonNull Object IsEQ2_ = type == null;
 		/*@Thrown*/ @Nullable Boolean IF_IsEQ2_;
 		if (IsEQ2_ == Boolean.TRUE) {
 			IF_IsEQ2_ = null;
 		}
 		else {
-			final /*@NonInvalid*/ @Nullable Type type_0 = this.getType();
-			if (type_1 == null) {
-				throw new InvalidValueException("Null argument");
+			if (type == null) {
+				throw new InvalidValueException("Null \'\'$metamodel$::Type\'\' rather than \'\'OclVoid\'\' value required");
 			}
-			final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type_1, type_0).booleanValue();
+			final /*@NonInvalid*/ @Nullable Type type_0 = this.getType();
+			final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, type_0).booleanValue();
 			IF_IsEQ2_ = conformsTo;
 		}
 		if (IF_IsEQ2_ == null) {

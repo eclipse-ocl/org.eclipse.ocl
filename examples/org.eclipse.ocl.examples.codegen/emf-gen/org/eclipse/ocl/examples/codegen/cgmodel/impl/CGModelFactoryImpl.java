@@ -275,13 +275,13 @@ public class CGModelFactoryImpl extends EFactoryImpl implements CGModelFactory {
 			case 109:
 				return createPropertyFromString(eDataType, initialValue);
 			case 110:
-				return createTuplePartIdFromString(eDataType, initialValue);
-			case 111:
-				return createTypeFromString(eDataType, initialValue);
-			case 112:
-				return createTypeIdFromString(eDataType, initialValue);
-			case 113:
 				return createPropertyCallingConventionFromString(eDataType, initialValue);
+			case 111:
+				return createTuplePartIdFromString(eDataType, initialValue);
+			case 112:
+				return createTypeFromString(eDataType, initialValue);
+			case 113:
+				return createTypeIdFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -324,13 +324,13 @@ public class CGModelFactoryImpl extends EFactoryImpl implements CGModelFactory {
 			case 109:
 				return convertPropertyToString(eDataType, instanceValue);
 			case 110:
-				return convertTuplePartIdToString(eDataType, instanceValue);
-			case 111:
-				return convertTypeToString(eDataType, instanceValue);
-			case 112:
-				return convertTypeIdToString(eDataType, instanceValue);
-			case 113:
 				return convertPropertyCallingConventionToString(eDataType, instanceValue);
+			case 111:
+				return convertTuplePartIdToString(eDataType, instanceValue);
+			case 112:
+				return convertTypeToString(eDataType, instanceValue);
+			case 113:
+				return convertTypeIdToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}

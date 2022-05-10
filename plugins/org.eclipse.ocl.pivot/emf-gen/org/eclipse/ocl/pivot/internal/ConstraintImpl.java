@@ -481,23 +481,23 @@ implements Constraint {
 			else {
 				/*@Caught*/ @Nullable Object result;
 				try {
-					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Boolean_1 = idResolver.getClass(TypeId.BOOLEAN, null);
+					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Boolean_0 = idResolver.getClass(TypeId.BOOLEAN, null);
 					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OclVoid = idResolver.getClass(TypeId.OCL_VOID, null);
 					@SuppressWarnings("null")
 					final /*@NonInvalid*/ @NonNull LanguageExpression ownedSpecification_0 = this.getOwnedSpecification();
 					final /*@NonInvalid*/ @Nullable Type type = ownedSpecification_0.getType();
 					final /*@NonInvalid*/ @Nullable Boolean and;
-					final /*@NonInvalid*/ boolean IsEQ__0 = type != null;
-					and = IsEQ__0;
+					final /*@NonInvalid*/ boolean IsEQ_ = type != null;
+					and = IsEQ_;
 					final /*@Thrown*/ @Nullable Boolean implies;
 					if (and == ValueUtil.FALSE_VALUE) {
 						implies = ValueUtil.TRUE_VALUE;
 					}
 					else {
-						final /*@NonInvalid*/ @NonNull BooleanType CAST_TYP_Boolean = (BooleanType)TYP_Boolean_1;
-						final /*@NonInvalid*/ boolean IsEQ_ = (type != null) ? (type.getTypeId() == CAST_TYP_Boolean.getTypeId()) : false;
+						final /*@NonInvalid*/ @NonNull BooleanType CAST_TYP_Boolean = (BooleanType)TYP_Boolean_0;
+						final /*@NonInvalid*/ boolean IsEQ__0 = (type != null) ? (type.getTypeId() == CAST_TYP_Boolean.getTypeId()) : false;
 						final /*@NonInvalid*/ @Nullable Boolean or;
-						if (IsEQ_) {
+						if (IsEQ__0) {
 							or = ValueUtil.TRUE_VALUE;
 						}
 						else {

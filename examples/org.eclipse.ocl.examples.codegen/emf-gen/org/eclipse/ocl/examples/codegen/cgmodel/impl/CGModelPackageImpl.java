@@ -3606,10 +3606,10 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		operationEDataType = createEDataType(107);
 		operationCallingConventionEDataType = createEDataType(108);
 		propertyEDataType = createEDataType(109);
-		tuplePartIdEDataType = createEDataType(110);
-		typeEDataType = createEDataType(111);
-		typeIdEDataType = createEDataType(112);
-		propertyCallingConventionEDataType = createEDataType(113);
+		propertyCallingConventionEDataType = createEDataType(110);
+		tuplePartIdEDataType = createEDataType(111);
+		typeEDataType = createEDataType(112);
+		typeIdEDataType = createEDataType(113);
 	}
 
 	/**
@@ -4055,10 +4055,10 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		initEDataType(operationEDataType, Operation.class, "Operation", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(operationCallingConventionEDataType, OperationCallingConvention.class, "OperationCallingConvention", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(propertyEDataType, Property.class, "Property", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(propertyCallingConventionEDataType, PropertyCallingConvention.class, "PropertyCallingConvention", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(tuplePartIdEDataType, TuplePartId.class, "TuplePartId", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(typeEDataType, Type.class, "Type", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(typeIdEDataType, TypeId.class, "TypeId", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
-		initEDataType(propertyCallingConventionEDataType, PropertyCallingConvention.class, "PropertyCallingConvention", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 
 		// Create resource
 		createResource(eNS_URI);

@@ -129,8 +129,8 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 							}
 							else {
 								assert ownedInit != null;
-								final /*@Thrown*/ boolean isRequired_0 = ownedInit.isIsRequired();
-								IF_IsEQ2_ = isRequired_0;
+								final /*@Thrown*/ boolean isRequired = ownedInit.isIsRequired();
+								IF_IsEQ2_ = isRequired;
 							}
 							CAUGHT_IF_IsEQ2_ = IF_IsEQ2_;
 						}
@@ -162,13 +162,13 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 						implies = ValueUtil.TRUE_VALUE;
 					}
 					else {
-						final /*@NonInvalid*/ boolean isRequired = this.isIsRequired();
+						final /*@NonInvalid*/ boolean isRequired_0 = this.isIsRequired();
 						final /*@NonInvalid*/ @Nullable Boolean not_0;
-						if (!isRequired) {
+						if (!isRequired_0) {
 							not_0 = ValueUtil.TRUE_VALUE;
 						}
 						else {
-							if (isRequired) {
+							if (isRequired_0) {
 								not_0 = ValueUtil.FALSE_VALUE;
 							}
 							else {
@@ -251,10 +251,10 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 							if (ownedInit == null) {
 								throw new InvalidValueException("Null source for \'TypedElement::type\'");
 							}
-							final /*@Thrown*/ @Nullable Type type_0 = ownedInit.getType();
+							final /*@Thrown*/ @Nullable Type type = ownedInit.getType();
 							/*@Caught*/ @Nullable Object CAUGHT_type;
 							try {
-								CAUGHT_type = type_0;
+								CAUGHT_type = type;
 							}
 							catch (Exception THROWN_CAUGHT_type) {
 								CAUGHT_type = ValueUtil.createInvalidValue(THROWN_CAUGHT_type);
@@ -265,11 +265,11 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 								IF_IsEQ2_ = null;
 							}
 							else {
-								final /*@NonInvalid*/ @Nullable Type type = this.getType();
-								if (type_0 == null) {
-									throw new InvalidValueException("Null argument");
+								if (type == null) {
+									throw new InvalidValueException("Null \'\'$metamodel$::Type\'\' rather than \'\'OclVoid\'\' value required");
 								}
-								final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type_0, type).booleanValue();
+								final /*@NonInvalid*/ @Nullable Type type_0 = this.getType();
+								final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, type_0).booleanValue();
 								IF_IsEQ2_ = conformsTo;
 							}
 							CAUGHT_IF_IsEQ2_ = IF_IsEQ2_;

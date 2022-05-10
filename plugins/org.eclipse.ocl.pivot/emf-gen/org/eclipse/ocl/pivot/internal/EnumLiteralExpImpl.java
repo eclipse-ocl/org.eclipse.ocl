@@ -189,8 +189,8 @@ public class EnumLiteralExpImpl
 					else {
 						assert referredLiteral_0 != null;
 						@SuppressWarnings("null")
-						final /*@Thrown*/ @NonNull Enumeration owningEnumeration = referredLiteral_0.getOwningEnumeration();
-						IF_IsEQ2_ = owningEnumeration;
+						final /*@Thrown*/ @NonNull Enumeration owningEnumeration_0 = referredLiteral_0.getOwningEnumeration();
+						IF_IsEQ2_ = owningEnumeration_0;
 					}
 					final /*@Thrown*/ boolean IsEQ_ = (type != null) && (IF_IsEQ2_ != null) ? (type.getTypeId() == IF_IsEQ2_.getTypeId()) : false;
 					result = IsEQ_;

@@ -37,10 +37,10 @@
     <genDataTypes ecoreDataType="cgmodel.ecore#//Operation"/>
     <genDataTypes ecoreDataType="cgmodel.ecore#//OperationCallingConvention"/>
     <genDataTypes ecoreDataType="cgmodel.ecore#//Property"/>
+    <genDataTypes ecoreDataType="cgmodel.ecore#//PropertyCallingConvention"/>
     <genDataTypes ecoreDataType="cgmodel.ecore#//TuplePartId"/>
     <genDataTypes ecoreDataType="cgmodel.ecore#//Type"/>
     <genDataTypes ecoreDataType="cgmodel.ecore#//TypeId"/>
-    <genDataTypes ecoreDataType="cgmodel.ecore#//PropertyCallingConvention"/>
     <genClasses ecoreClass="cgmodel.ecore#//CGAccumulator"/>
     <genClasses ecoreClass="cgmodel.ecore#//CGAssertNonNullExp"/>
     <genClasses image="false" ecoreClass="cgmodel.ecore#//CGBodiedProperty">
