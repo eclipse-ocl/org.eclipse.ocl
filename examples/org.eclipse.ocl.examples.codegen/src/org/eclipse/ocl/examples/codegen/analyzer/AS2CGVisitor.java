@@ -244,9 +244,10 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			}
 		}
 
-		public void putParameter(@NonNull VariableDeclaration aParameter, @NonNull CGParameter cgParameter) {
-			cgParameters.put(aParameter, cgParameter);
-			cgVariables.put(aParameter, cgParameter);
+		public void putParameter(@NonNull VariableDeclaration asParameter, @NonNull CGParameter cgParameter) {
+			System.out.println("putParameter: " + asParameter + " in " + asParameter.eContainer() + " => " + NameUtil.debugSimpleName(cgParameter));
+			cgParameters.put(asParameter, cgParameter);
+			cgVariables.put(asParameter, cgParameter);
 		}
 
 		public void putVariable(@NonNull VariableDeclaration asVariable, @NonNull CGVariable cgVariable) {
@@ -255,9 +256,9 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	}
 
 	/**
-	 * Mapping from an AS Variable to a CG Variable, maintained as a stack that is pushed when inline operations are exapanded.
+	 * Mapping from an AS Variable to a CG Variable, maintained as a stack that is pushed when inline operations are expanded.
 	 */
-	private @NonNull Variables variablesStack = new Variables(null);
+	private @NonNull Variables variablesStack = new Variables(null);	// XXX not a stack
 
 	public AS2CGVisitor(@NonNull CodeGenAnalyzer analyzer) {
 		super(analyzer);
