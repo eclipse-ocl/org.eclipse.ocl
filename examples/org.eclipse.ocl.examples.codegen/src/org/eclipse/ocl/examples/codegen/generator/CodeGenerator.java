@@ -37,7 +37,6 @@ import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.library.LibraryProperty;
 
 public interface CodeGenerator
 {
@@ -52,7 +51,7 @@ public interface CodeGenerator
 	@NonNull CodeGenAnalyzer getAnalyzer();
 	@NonNull BoxedDescriptor getBoxedDescriptor(@NonNull ElementId elementId);
 	@NonNull OperationCallingConvention getCallingConvention(@NonNull Operation asOperation);
-	@NonNull PropertyCallingConvention getCallingConvention(@NonNull Property asProperty, @NonNull LibraryProperty libraryProperty);
+	@NonNull PropertyCallingConvention getCallingConvention(@NonNull Property asProperty);
 	@Nullable String getConstantsClass();
 	@NonNull String getDefaultIndent();
 	@NonNull EcoreDescriptor getEcoreDescriptor(@NonNull ElementId elementId, @Nullable Class<?> instanceClass);

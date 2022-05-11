@@ -903,8 +903,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	protected final @NonNull CGProperty generatePropertyDeclaration(@NonNull Property asProperty) {
 		CGProperty cgProperty = context.basicGetProperty(asProperty);
 		if (cgProperty == null) {
-			LibraryProperty libraryProperty = metamodelManager.getImplementation(null, null, asProperty);
-			PropertyCallingConvention callingConvention = codeGenerator.getCallingConvention(asProperty, libraryProperty);
+			PropertyCallingConvention callingConvention = codeGenerator.getCallingConvention(asProperty);
 			cgProperty = callingConvention.createCGProperty(this, asProperty);
 			cgProperty.setAst(asProperty);
 			cgProperty.setTypeId(context.getTypeId(asProperty.getTypeId()));

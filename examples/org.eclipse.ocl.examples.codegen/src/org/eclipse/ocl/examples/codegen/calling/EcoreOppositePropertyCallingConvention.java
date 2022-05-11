@@ -158,12 +158,16 @@ public class EcoreOppositePropertyCallingConvention extends AbstractPropertyCall
 	}
 
 	@Override
-	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGNavigationCallExp cgNavigationCallExp) {
-		super.rewriteWithBoxingAndGuards(boxingAnalyzer, cgNavigationCallExp);
+	protected void rewriteWithResultBoxing(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGNavigationCallExp cgNavigationCallExp) {
 		CGEcoreOppositePropertyCallExp cgEcoreOppositePropertyCallExp = (CGEcoreOppositePropertyCallExp) cgNavigationCallExp;
-		boxingAnalyzer.rewriteAsEcore(cgEcoreOppositePropertyCallExp.getSource(), cgEcoreOppositePropertyCallExp.getEStructuralFeature().getEType());
 		if (cgEcoreOppositePropertyCallExp.getEStructuralFeature().isMany()) {
 			boxingAnalyzer.rewriteAsAssertNonNulled(cgEcoreOppositePropertyCallExp);
 		}
+	}
+
+	@Override
+	protected void rewriteWithSourceBoxing(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGNavigationCallExp cgNavigationCallExp) {
+		CGEcoreOppositePropertyCallExp cgEcoreOppositePropertyCallExp = (CGEcoreOppositePropertyCallExp) cgNavigationCallExp;
+		boxingAnalyzer.rewriteAsEcore(cgEcoreOppositePropertyCallExp.getSource(), cgEcoreOppositePropertyCallExp.getEStructuralFeature().getEType());
 	}
 }

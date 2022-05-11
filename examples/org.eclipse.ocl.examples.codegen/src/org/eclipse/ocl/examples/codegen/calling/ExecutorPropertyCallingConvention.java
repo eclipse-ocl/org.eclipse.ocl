@@ -204,13 +204,17 @@ public class ExecutorPropertyCallingConvention extends AbstractPropertyCallingCo
 	} */
 
 	@Override
-	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGNavigationCallExp cgNavigationCallExp) {
-		super.rewriteWithBoxingAndGuards(boxingAnalyzer, cgNavigationCallExp);
+	protected void rewriteWithResultBoxing(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGNavigationCallExp cgNavigationCallExp) {
 		CGExecutorPropertyCallExp cgExecutorPropertyCallExp = (CGExecutorPropertyCallExp) cgNavigationCallExp;
-		boxingAnalyzer.rewriteAsUnboxed(cgExecutorPropertyCallExp.getSource());				// XXX boxed ???
 		CGTypedElement cgParent = (CGTypedElement) cgExecutorPropertyCallExp.getParent();
 		if (cgParent != null) {
 			boxingAnalyzer.rewriteAsBoxed(cgExecutorPropertyCallExp);
 		}
+	}
+
+	@Override
+	protected void rewriteWithSourceBoxing(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGNavigationCallExp cgNavigationCallExp) {
+		CGExecutorPropertyCallExp cgExecutorPropertyCallExp = (CGExecutorPropertyCallExp) cgNavigationCallExp;
+		boxingAnalyzer.rewriteAsUnboxed(cgExecutorPropertyCallExp.getSource());				// XXX boxed ???
 	}
 }

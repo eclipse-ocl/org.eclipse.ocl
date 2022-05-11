@@ -166,12 +166,16 @@ public class EcorePropertyCallingConvention extends AbstractPropertyCallingConve
 	}
 
 	@Override
-	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGNavigationCallExp cgNavigationCallExp) {
-		super.rewriteWithBoxingAndGuards(boxingAnalyzer, cgNavigationCallExp);
+	protected void rewriteWithResultBoxing(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGNavigationCallExp cgNavigationCallExp) {
 		CGEcorePropertyCallExp cgEcorePropertyCallExp = (CGEcorePropertyCallExp) cgNavigationCallExp;
-		boxingAnalyzer.rewriteAsEcore(cgEcorePropertyCallExp.getSource(), cgEcorePropertyCallExp.getEStructuralFeature().getEContainingClass());
 		if (cgEcorePropertyCallExp.getEStructuralFeature().isMany()) {
 			boxingAnalyzer.rewriteAsAssertNonNulled(cgEcorePropertyCallExp);
 		}
+	}
+
+	@Override
+	protected void rewriteWithSourceBoxing(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGNavigationCallExp cgNavigationCallExp) {
+		CGEcorePropertyCallExp cgEcorePropertyCallExp = (CGEcorePropertyCallExp) cgNavigationCallExp;
+		boxingAnalyzer.rewriteAsEcore(cgEcorePropertyCallExp.getSource(), cgEcorePropertyCallExp.getEStructuralFeature().getEContainingClass());
 	}
 }

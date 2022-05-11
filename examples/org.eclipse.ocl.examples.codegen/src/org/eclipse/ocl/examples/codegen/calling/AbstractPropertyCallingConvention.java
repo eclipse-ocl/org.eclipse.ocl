@@ -93,6 +93,16 @@ public abstract class AbstractPropertyCallingConvention implements PropertyCalli
 			referredPropertyName = ValueUtil.getElementIdName(referredPropertyId);
 		}
 		boxingAnalyzer.rewriteAsGuarded(cgNavigationCallExp.getSource(), boxingAnalyzer.isSafe(cgNavigationCallExp), "source for '" + referredPropertyName + "'");
+		rewriteWithSourceBoxing(boxingAnalyzer, cgNavigationCallExp);
+		rewriteWithResultBoxing(boxingAnalyzer, cgNavigationCallExp);
+	}
+
+	protected void rewriteWithResultBoxing(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGNavigationCallExp cgNavigationCallExp) {
+		// XXX change to abstract to mandate handling
+	}
+
+	protected void rewriteWithSourceBoxing(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGNavigationCallExp cgNavigationCallExp) {
+		// XXX change to abstract to mandate handling
 	}
 
 	@Override

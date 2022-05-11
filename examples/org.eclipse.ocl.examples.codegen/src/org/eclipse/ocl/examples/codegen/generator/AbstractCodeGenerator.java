@@ -214,7 +214,8 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 	}
 
 	@Override
-	public @NonNull PropertyCallingConvention getCallingConvention(@NonNull Property asProperty, @NonNull LibraryProperty libraryProperty) {
+	public @NonNull PropertyCallingConvention getCallingConvention(@NonNull Property asProperty) {
+		LibraryProperty libraryProperty = metamodelManager.getImplementation(null, null, asProperty);
 		if (libraryProperty instanceof NativeProperty) {
 			return NativePropertyCallingConvention.INSTANCE;
 		}

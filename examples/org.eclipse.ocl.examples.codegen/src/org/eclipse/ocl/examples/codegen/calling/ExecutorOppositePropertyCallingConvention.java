@@ -193,13 +193,18 @@ public class ExecutorOppositePropertyCallingConvention extends AbstractPropertyC
 	}
 
 	@Override
-	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGNavigationCallExp cgNavigationCallExp) {
-		super.rewriteWithBoxingAndGuards(boxingAnalyzer, cgNavigationCallExp);
-		CGExecutorOppositePropertyCallExp cgExecutorOppositePropertyCallExp = (CGExecutorOppositePropertyCallExp) cgNavigationCallExp;
-		boxingAnalyzer.rewriteAsUnboxed(cgExecutorOppositePropertyCallExp.getSource());
-		CGTypedElement cgParent = (CGTypedElement)cgExecutorOppositePropertyCallExp.getParent();
+	protected void rewriteWithResultBoxing(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGNavigationCallExp cgNavigationCallExp) {
+		CGTypedElement cgParent = (CGTypedElement)cgNavigationCallExp.getParent();
 		if (cgParent != null) {
-			boxingAnalyzer.rewriteAsBoxed(cgExecutorOppositePropertyCallExp);
+			boxingAnalyzer.rewriteAsBoxed(cgNavigationCallExp);
+		}
+	}
+
+	@Override
+	protected void rewriteWithSourceBoxing(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGNavigationCallExp cgNavigationCallExp) {
+		CGValuedElement cgSource = cgNavigationCallExp.getSource();
+		if (cgSource != null) {
+			boxingAnalyzer.rewriteAsUnboxed(cgSource);
 		}
 	}
 }
