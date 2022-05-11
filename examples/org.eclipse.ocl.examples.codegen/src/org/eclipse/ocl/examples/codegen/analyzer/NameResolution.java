@@ -51,6 +51,11 @@ public class NameResolution
 	private static final @NonNull String UNRESOLVED = "«UNRESOLVED»";
 
 	/**
+	 * A non-null placeholder for a nameHint whose resolution will not be used.
+	 */
+	public static final @NonNull String NOT_NEEDED = "«NOT_NEEDED»";
+
+	/**
 	 * The namespace at and below whch this resolved name and all its variants must be unique.
 	 */
 	protected final @NonNull NameManager nameManager;
@@ -206,6 +211,9 @@ public class NameResolution
 			assert primaryElement2 != null;
 			nameHint = nameManager.getNameHint(primaryElement2);
 			if ("_171_UNRESOLVED_187".equals(nameHint)) {			// XXX
+				nameManager.getNameHint(primaryElement2);
+			}
+			if ("XXX_171_UNRESOLVED_187".equals(nameHint)) {			// XXX
 				nameManager.getNameHint(primaryElement2);
 			}
 			assert !"_171_UNRESOLVED_187".equals(nameHint);

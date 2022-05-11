@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGFinalVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInvalid;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
@@ -359,6 +360,12 @@ public abstract class CGVariableImpl extends CGValuedElementImpl implements CGVa
 	@Override
 	public void setNonNull() {
 		nonNull = true;
+	}
+
+	@Override
+	public void setNameResolution(@NonNull NameResolution nameResolution) {
+		// TODO Auto-generated method stub
+		super.setNameResolution(nameResolution);
 	}
 
 } //CGVariableImpl

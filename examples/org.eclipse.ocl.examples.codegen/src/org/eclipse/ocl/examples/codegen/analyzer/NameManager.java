@@ -268,6 +268,9 @@ public abstract class NameManager
 		}
 
 		protected @NonNull String allocateUniqueName(@NonNull String nameHint, @NonNull Object anObject) {
+			if (nameHint == NameResolution.NOT_NEEDED) {
+				return nameHint;
+			}
 			String validHint = getValidJavaIdentifier(nameHint, false, anObject);
 			boolean isJavaReservedName = reservedJavaNames.contains(validHint);
 			boolean isNative = (anObject instanceof CGValuedElement) && isNative((CGValuedElement)anObject);
