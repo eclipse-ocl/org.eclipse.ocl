@@ -1314,7 +1314,10 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 					if (owningType != null) {
 						try {
 							ExpressionInOCL query = ((EnvironmentFactoryInternalExtension)environmentFactory).parseSpecification(specification);
-							implementation = operation.getESObject() instanceof EOperation ? new ConstrainedOperation(query) : new ForeignOperation(query);
+						//	CompleteClass completeClass = getCompleteClass(owningType);
+						//	Operation primaryOperation =  getPrimaryOperation(operation);
+						//	implementation = operation.getESObject() instanceof EOperation ? new ConstrainedOperation(query) : new ForeignOperation(query);
+							implementation = new ConstrainedOperation(query);
 						} catch (ParserException e) {
 							// TODO Auto-generated catch block
 							//							e.printStackTrace();
