@@ -29,6 +29,7 @@ import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager.NameVariant;
 import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
+import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGAssertNonNullExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBodiedProperty;
@@ -904,8 +905,15 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		return cgElement.getResolvedName();
 	}
 
-	protected @NonNull String getVariantResolvedName(@NonNull CGValuedElement cgElement, @NonNull NameVariant nameVariant) {
-		return localContext.getNameManager().getVariantResolvedName(cgElement, nameVariant);
+	public @NonNull String getVariantResolvedName(@NonNull CGValuedElement cgElement, @NonNull NameVariant nameVariant) {
+		NestedNameManager nameManager = localContext.getNameManager();
+		String variantResolvedName = nameManager.basicGetVariantResolvedName(cgElement, nameVariant);
+		if (variantResolvedName == null) {
+			nameManager = localContext.getGlobalContext().getLocalContext(cgElement).getNameManager();
+			variantResolvedName = nameManager.basicGetVariantResolvedName(cgElement, nameVariant);
+			assert variantResolvedName != null;
+		}
+		return variantResolvedName;
 	}
 
 //	protected @NonNull String getValueName(@NonNull CGValuedElement cgElement) {

@@ -112,6 +112,11 @@ public class NestedNameManager extends NameManager
 		}
 	}
 
+	public @Nullable String basicGetVariantResolvedName(@NonNull CGValuedElement cgElement, @NonNull NameVariant nameVariant) {
+		Map<@NonNull NameVariant, @Nullable String> nameVariant2name = element2nameVariant2name.get(cgElement);
+		return nameVariant2name != null ? nameVariant2name.get(nameVariant) : null;
+	}
+
 	@Override
 	public @NonNull NameResolution declareLazyName(@NonNull CGValuedElement cgElement) {
 		if (cgElement.isGlobal()) {
@@ -175,13 +180,13 @@ public class NestedNameManager extends NameManager
 		return unsafeNameResolution;
 	}
 
-	public @NonNull String getVariantResolvedName(@NonNull CGValuedElement cgElement, @NonNull NameVariant nameVariant) {
+/*	public @NonNull String getVariantResolvedName(@NonNull CGValuedElement cgElement, @NonNull NameVariant nameVariant) {
 		Map<@NonNull NameVariant, @Nullable String> nameVariant2name = element2nameVariant2name.get(cgElement);
 		assert nameVariant2name != null;
 		String name = nameVariant2name.get(nameVariant);
 		assert name != null;
 		return name;
-	}
+	} */
 
 	@Override
 	public boolean isGlobal() {

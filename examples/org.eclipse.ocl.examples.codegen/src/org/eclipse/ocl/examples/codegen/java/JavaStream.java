@@ -265,7 +265,7 @@ public class JavaStream
 				s.append(string);
 			}
 			else {
-				if (string.contains("ECORE_INT_55")) {
+				if (string.contains("FTOR_hsv2rgb")) {
 					getClass();		// XXX
 				}
 				int sLength = s.length();
