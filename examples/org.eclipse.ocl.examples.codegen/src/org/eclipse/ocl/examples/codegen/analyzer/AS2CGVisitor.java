@@ -682,8 +682,9 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	protected @NonNull CGValuedElement generateOperationCallExp(@Nullable CGValuedElement cgSource, @NonNull OperationCallExp asOperationCallExp) {
 		Operation asOperation = ClassUtil.nonNullState(asOperationCallExp.getReferredOperation());
-		LibraryOperation libraryOperation = (LibraryOperation)metamodelManager.getImplementation(asOperation);
+	//	LibraryOperation libraryOperation = (LibraryOperation)metamodelManager.getImplementation(asOperation);
 		CGOperation cgOperation = generateOperationDeclaration(asOperation);
+		LibraryOperation libraryOperation = (LibraryOperation)metamodelManager.getImplementation(asOperation);
 		OperationCallingConvention callingConvention = cgOperation.getCallingConvention();
 		CGValuedElement cgCallExp = callingConvention.createCGOperationCallExp(this, cgOperation, libraryOperation, cgSource, asOperationCallExp);
 	//	if (cgCallExp instanceof CGOperationCallExp) {		// inlined code is not a CallExp

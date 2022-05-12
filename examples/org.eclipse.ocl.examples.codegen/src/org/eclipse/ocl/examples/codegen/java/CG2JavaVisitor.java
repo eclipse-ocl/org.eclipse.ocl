@@ -48,7 +48,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreDataTypeShadowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElementId;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGGuardExp;
@@ -1765,10 +1764,10 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		return true;
 	} */
 
-	@Override
+/*	@Override
 	public @NonNull Boolean visitCGExecutorProperty(@NonNull CGExecutorProperty cgExecutorProperty) {
 		return cgExecutorProperty.getCallingConvention().generateJavaDeclaration(this, js, cgExecutorProperty);
-	}
+	} */
 
 	@Override
 	public @NonNull Boolean visitCGExecutorType(@NonNull CGExecutorType cgExecutorType) {
@@ -2383,6 +2382,11 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	}
 
 	@Override
+	public @NonNull Boolean visitCGProperty(@NonNull CGProperty cgProperty) {
+		return cgProperty.getCallingConvention().generateJavaDeclaration(this, js, cgProperty);
+	}
+
+	@Override
 	public @NonNull Boolean visitCGReal(@NonNull CGReal object) {
 		js.appendDeclaration(object);
 		js.append(" = ");
@@ -2478,7 +2482,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			return false;
 		}
 		//
-		js.appendValueName(cgExecutorShadowPart);
+		js.appendValueName(cgExecutorShadowPart);			// XXX use super
 		js.append(".initValue(");
 		js.appendValueName(cgShadowPart.getShadowExp());
 		js.append(", ");
