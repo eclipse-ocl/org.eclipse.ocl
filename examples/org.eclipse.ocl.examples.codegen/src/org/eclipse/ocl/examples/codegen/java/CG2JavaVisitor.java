@@ -1313,7 +1313,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		js.append(globalContext.getEvaluateName());
 		//		js.append(cgOperationCallExp.getReferredOperation().getName());
 		js.append("(");
-		assert thisIsSelf;
+	//	assert thisIsSelf;
 		if (!thisIsSelf) {
 		//	js.appendValueName(source);
 		}

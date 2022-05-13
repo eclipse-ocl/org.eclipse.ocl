@@ -13,7 +13,6 @@ package org.eclipse.ocl.examples.codegen.calling;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
@@ -107,8 +106,8 @@ public class ConstrainedOperationCallingConvention extends AbstractOperationCall
 				if (cgOperationCallExp2 != null) {
 					return cgOperationCallExp2;
 				} else if (currentClass != null) {
-					CGCallExp cgCallExp = as2cgVisitor.cachedOperationCall(asOperationCallExp, currentClass, cgSource, finalOperation, null);
-			// XXX		cgCallExp.setCgOperation(cgOperation);
+					CGOperationCallExp cgCallExp = as2cgVisitor.cachedOperationCall(asOperationCallExp, currentClass, cgSource, finalOperation, null);
+					cgCallExp.setCgOperation(cgOperation);
 					return cgCallExp;
 				} else {
 					CGOperationCallExp cgCallExp = constrainedOperationCall(as2cgVisitor, asOperationCallExp, cgSource, finalOperation, (ConstrainedOperation)libraryOperation);

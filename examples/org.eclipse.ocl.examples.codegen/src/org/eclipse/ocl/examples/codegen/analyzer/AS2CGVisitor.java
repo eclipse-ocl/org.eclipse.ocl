@@ -37,7 +37,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGAccumulator;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBuiltInIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperationCallExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCastExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCollectionExp;
@@ -288,7 +287,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	}
 
 	// CachedOperationCallingConvention
-	public @NonNull CGCallExp cachedOperationCall(@NonNull OperationCallExp element, @NonNull CGClass currentClass, CGValuedElement cgSource,
+	public @NonNull CGOperationCallExp cachedOperationCall(@NonNull OperationCallExp element, @NonNull CGClass currentClass, CGValuedElement cgSource,
 			@NonNull Operation asOperation, @Nullable Iterable<@NonNull Operation> asOverrideOperations) {
 		List<@NonNull Operation> asNewOperations = new ArrayList<>();
 		List<@NonNull CGCachedOperation> cgOperations = new ArrayList<>();

@@ -265,7 +265,7 @@ public class JavaStream
 				s.append(string);
 			}
 			else {
-				if (string.contains("FTOR_hsv2rgb")) {
+				if (string.contains("NOT_NEEDED")) {
 					getClass();		// XXX
 				}
 				int sLength = s.length();
