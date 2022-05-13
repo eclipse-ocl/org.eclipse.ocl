@@ -15,7 +15,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -79,7 +78,7 @@ public class NestedNameManager extends NameManager
 					nameResolution = declareLazyName(cgElement);
 					nameResolution.resolveNameHint();;
 				}
-				nameResolution.resolveIn(context);
+				nameResolution.resolveIn(context, cgElement);
 				String resolvedName = nameResolution.getResolvedName();
 				for (Entry<@NonNull NameVariant, @Nullable String> entry2 : nameVariant2name.entrySet()) {
 					NameVariant nameVariant = entry2.getKey();
@@ -93,14 +92,14 @@ public class NestedNameManager extends NameManager
 		}
 	}
 
-	public void assignNames(@NonNull Map<@NonNull NameManager, @NonNull Set<@NonNull NameResolution>> nameManager2nameResolution) {
+	public void assignNames(@NonNull Map<@NonNull NameManager, @NonNull List<@NonNull CGValuedElement>> nameManager2namedElements) {
 		Context context2 = context;
 		assert context2 == null;
 		this.context = context2 = new Context(this);
 		assignReservedNames(context2);
-		assignLocalNames(context2, nameManager2nameResolution);
+		assignLocalNames(context2, nameManager2namedElements);
 		assignExtraNames(context2);
-		assignNestedNames(nameManager2nameResolution);
+		assignNestedNames(nameManager2namedElements);
 	}
 
 	protected void assignReservedNames(@NonNull Context context) {

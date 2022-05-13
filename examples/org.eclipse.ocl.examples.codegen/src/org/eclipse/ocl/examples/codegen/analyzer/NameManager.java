@@ -401,22 +401,23 @@ public abstract class NameManager
 //		assert old == null;
 //	}
 
-	protected void assignLocalNames(@NonNull Context context, @NonNull Map<@NonNull NameManager, @NonNull Set<@NonNull NameResolution>> nameManager2nameResolution) {
-		Iterable<@NonNull NameResolution> nameResolutions = nameManager2nameResolution.get(this);
+	protected void assignLocalNames(@NonNull Context context, @NonNull Map<@NonNull NameManager, @NonNull List<@NonNull CGValuedElement>> nameManager2namedElements) {
+		Iterable<@NonNull CGValuedElement> namedElements = nameManager2namedElements.get(this);
 		// XXX		Collections.sort(nameResolutions);
-		if (nameResolutions != null) {
-			for (@NonNull NameResolution nameResolution : nameResolutions) {
+		if (namedElements != null) {
+			for (@NonNull CGValuedElement namedElement : namedElements) {
+				NameResolution nameResolution = namedElement.getNameResolution();
 			//	if (nameResolution.basicGetResolvedName() == null) {
-				nameResolution.resolveIn(context);
+				nameResolution.resolveIn(context, namedElement);
 			//	}
 			}
 		}
 	}
 
-	protected void assignNestedNames(@NonNull Map<@NonNull NameManager, @NonNull Set<@NonNull NameResolution>> nameManager2nameResolution) {
+	protected void assignNestedNames(@NonNull Map<@NonNull NameManager, @NonNull List<@NonNull CGValuedElement>> nameManager2namedElements) {
 		if (children != null) {
 			for (@NonNull NestedNameManager child : children) {
-				child.assignNames(nameManager2nameResolution);
+				child.assignNames(nameManager2namedElements);
 			}
 		}
 	}

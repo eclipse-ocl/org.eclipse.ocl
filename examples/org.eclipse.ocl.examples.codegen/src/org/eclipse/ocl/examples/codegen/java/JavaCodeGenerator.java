@@ -11,12 +11,11 @@
 package org.eclipse.ocl.examples.codegen.java;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.emf.common.util.URI;
@@ -386,17 +385,19 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	}
 
 	// Fold into visitInPOstOrder
-	private void gatherNames(@NonNull CGValuedElement cgElement, @NonNull Map<@NonNull NameManager, @NonNull Set<@NonNull NameResolution>> nameManager2nameResolution) {
+	private void gatherNames(@NonNull CGValuedElement cgElement, @NonNull Map<@NonNull NameManager, @NonNull List<@NonNull CGValuedElement>> nameManager2namedElements) {
 		NameResolution nameResolution = cgElement.basicGetNameResolution();
 		assert nameResolution != null;
 		NameManager nameManager = nameResolution.getNameManager();
-		Set<@NonNull NameResolution> nameResolutions = nameManager2nameResolution.get(nameManager);
-		if (nameResolutions == null) {
-			nameResolutions = new HashSet<>();
-			nameManager2nameResolution.put(nameManager, nameResolutions);
+		List<@NonNull CGValuedElement> namedElements = nameManager2namedElements.get(nameManager);
+		if (namedElements == null) {
+			namedElements = new ArrayList<>();
+			nameManager2namedElements.put(nameManager, namedElements);
 		}
-		nameResolutions.add(nameResolution);
-		System.out.println("gatherNames " + NameUtil.debugSimpleName(cgElement) + " : " + NameUtil.debugSimpleName(nameResolution) + " in " + NameUtil.debugSimpleName(nameManager));
+		namedElements.add(cgElement);
+		if (NameResolution.NAMES_GATHER.isActive()) {
+			NameResolution.NAMES_GATHER.println(NameUtil.debugSimpleName(cgElement) + " : " + NameUtil.debugSimpleName(nameResolution) + " in " + NameUtil.debugSimpleName(nameManager));
+		}
 	}
 
 	public @NonNull NameVariant getBODY_NameVariant() {
@@ -778,17 +779,28 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 				visitInPostOrder(global);
 			}
 		}
-		for (@NonNull CGNamedElement cgNamedElment : getAnalyzer().getOrphans()) {
+		Iterable<@NonNull CGNamedElement> orphans = getAnalyzer().getOrphans();
+		for (@NonNull CGNamedElement cgNamedElment : orphans) {
 			visitInPostOrder(cgNamedElment);
 		}
 	//	System.out.println("-----------------resolveNames--------------------");
 		visitInPostOrder(cgPackage);
-		Map<@NonNull NameManager, @NonNull Set<@NonNull NameResolution>> nameManager2nameResolution = new HashMap<>();
-		for (@NonNull CGNamedElement cgNamedElement : getAnalyzer().getOrphans()) {
+		Map<@NonNull NameManager, @NonNull List<@NonNull CGValuedElement>> nameManager2namedElements = new HashMap<>();
+		if (sortedGlobals != null) {
+			for (@NonNull CGNamedElement cgNamedElement : sortedGlobals) {
+				if (cgNamedElement instanceof CGValuedElement) {
+					CGValuedElement cgElement = (CGValuedElement)cgNamedElement;
+					if (!cgElement.isInlined()) {
+						gatherNames(cgElement, nameManager2namedElements);
+					}
+				}
+			}
+		}
+		for (@NonNull CGNamedElement cgNamedElement : orphans) {
 			if (cgNamedElement instanceof CGValuedElement) {
 				CGValuedElement cgElement = (CGValuedElement)cgNamedElement;
 				if (!cgElement.isInlined()) {
-					gatherNames(cgElement, nameManager2nameResolution);
+					gatherNames(cgElement, nameManager2namedElements);
 				}
 			}
 		}
@@ -796,11 +808,11 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 			if (eObject instanceof CGValuedElement) {
 				CGValuedElement cgElement = (CGValuedElement)eObject;
 				if (!cgElement.isInlined()) {
-					gatherNames(cgElement, nameManager2nameResolution);
+					gatherNames(cgElement, nameManager2namedElements);
 				}
 			}
 		}
-		globalNameManager.assignNames(nameManager2nameResolution);
+		globalNameManager.assignNames(nameManager2namedElements);
 		CGValuedElementImpl.ALLOW_GET_VALUE_NAME = true;
 	}
 
