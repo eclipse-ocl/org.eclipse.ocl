@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -92,14 +93,14 @@ public class NestedNameManager extends NameManager
 		}
 	}
 
-	public void assignNames() {
+	public void assignNames(@NonNull Map<@NonNull NameManager, @NonNull Set<@NonNull NameResolution>> nameManager2nameResolution) {
 		Context context2 = context;
 		assert context2 == null;
 		this.context = context2 = new Context(this);
 		assignReservedNames(context2);
-		assignLocalNames(context2);
+		assignLocalNames(context2, nameManager2nameResolution);
 		assignExtraNames(context2);
-		assignNestedNames();
+		assignNestedNames(nameManager2nameResolution);
 	}
 
 	protected void assignReservedNames(@NonNull Context context) {

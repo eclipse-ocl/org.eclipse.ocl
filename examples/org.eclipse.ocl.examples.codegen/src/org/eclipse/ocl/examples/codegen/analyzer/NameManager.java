@@ -369,12 +369,12 @@ public abstract class NameManager
 	/**
 	 * The NameResolution for each element declared in this NameManager.
 	 */
-	private final @NonNull Map<@NonNull CGValuedElement, @NonNull NameResolution> element2nameResolution = new HashMap<>();
+//	private final @NonNull Map<@NonNull CGValuedElement, @NonNull NameResolution> element2nameResolution = new HashMap<>();
 
 	/**
 	 * All the NameResolutions declared in this NameManager. This avoid repeats from re-used names, or omissions from globl names.
 	 */
-	private final @NonNull List<@NonNull NameResolution> nameResolutions = new ArrayList<>();
+//	private final @NonNull List<@NonNull NameResolution> nameResolutions = new ArrayList<>();
 
 	protected NameManager(@Nullable NameManager parent, @NonNull NameManagerHelper helper) {
 		this.globalNameManager = parent != null ? parent.globalNameManager : (GlobalNameManager)this;
@@ -390,31 +390,33 @@ public abstract class NameManager
 		children2.add(sibling);
 	}
 
-	public void addNameResolution(@NonNull NameResolution nameResolution) {
-		nameResolutions.add(nameResolution);
-	}
+//	public void addNameResolution(@NonNull NameResolution nameResolution) {
+//		nameResolutions.add(nameResolution);
+//	}
 
-	public void addNameResolution(@NonNull CGValuedElement cgElement) {
-		NameResolution nameResolution = cgElement.getNameResolution();
-		assert nameResolution.getNameManager() == this;
-		NameResolution old = element2nameResolution.put(cgElement, nameResolution);
-		assert old == null;
-	}
+//	public void addNameResolution(@NonNull CGValuedElement cgElement) {
+//		NameResolution nameResolution = cgElement.getNameResolution();
+//		assert nameResolution.getNameManager() == this;
+//		NameResolution old = element2nameResolution.put(cgElement, nameResolution);
+//		assert old == null;
+//	}
 
-	protected void assignLocalNames(@NonNull Context context) {
-		List<@NonNull NameResolution> nameResolutions = new ArrayList<>(element2nameResolution.values());
+	protected void assignLocalNames(@NonNull Context context, @NonNull Map<@NonNull NameManager, @NonNull Set<@NonNull NameResolution>> nameManager2nameResolution) {
+		Iterable<@NonNull NameResolution> nameResolutions = nameManager2nameResolution.get(this);
 		// XXX		Collections.sort(nameResolutions);
-		for (@NonNull NameResolution nameResolution : nameResolutions) {
-		//	if (nameResolution.basicGetResolvedName() == null) {
-			nameResolution.resolveIn(context);
-		//	}
+		if (nameResolutions != null) {
+			for (@NonNull NameResolution nameResolution : nameResolutions) {
+			//	if (nameResolution.basicGetResolvedName() == null) {
+				nameResolution.resolveIn(context);
+			//	}
+			}
 		}
 	}
 
-	protected void assignNestedNames() {
+	protected void assignNestedNames(@NonNull Map<@NonNull NameManager, @NonNull Set<@NonNull NameResolution>> nameManager2nameResolution) {
 		if (children != null) {
 			for (@NonNull NestedNameManager child : children) {
-				child.assignNames();
+				child.assignNames(nameManager2nameResolution);
 			}
 		}
 	}

@@ -13,8 +13,10 @@ package org.eclipse.ocl.examples.codegen.java;
 import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.emf.common.util.URI;
@@ -381,6 +383,20 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 			}
 		}
 		return true;
+	}
+
+	// Fold into visitInPOstOrder
+	private void gatherNames(@NonNull CGValuedElement cgElement, @NonNull Map<@NonNull NameManager, @NonNull Set<@NonNull NameResolution>> nameManager2nameResolution) {
+		NameResolution nameResolution = cgElement.basicGetNameResolution();
+		assert nameResolution != null;
+		NameManager nameManager = nameResolution.getNameManager();
+		Set<@NonNull NameResolution> nameResolutions = nameManager2nameResolution.get(nameManager);
+		if (nameResolutions == null) {
+			nameResolutions = new HashSet<>();
+			nameManager2nameResolution.put(nameManager, nameResolutions);
+		}
+		nameResolutions.add(nameResolution);
+		System.out.println("gatherNames " + NameUtil.debugSimpleName(cgElement) + " : " + NameUtil.debugSimpleName(nameResolution) + " in " + NameUtil.debugSimpleName(nameManager));
 	}
 
 	public @NonNull NameVariant getBODY_NameVariant() {
@@ -767,7 +783,24 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		}
 	//	System.out.println("-----------------resolveNames--------------------");
 		visitInPostOrder(cgPackage);
-		globalNameManager.assignNames();
+		Map<@NonNull NameManager, @NonNull Set<@NonNull NameResolution>> nameManager2nameResolution = new HashMap<>();
+		for (@NonNull CGNamedElement cgNamedElement : getAnalyzer().getOrphans()) {
+			if (cgNamedElement instanceof CGValuedElement) {
+				CGValuedElement cgElement = (CGValuedElement)cgNamedElement;
+				if (!cgElement.isInlined()) {
+					gatherNames(cgElement, nameManager2nameResolution);
+				}
+			}
+		}
+		for (EObject eObject : new TreeIterable(cgPackage, true)) {		// XXX debugging
+			if (eObject instanceof CGValuedElement) {
+				CGValuedElement cgElement = (CGValuedElement)eObject;
+				if (!cgElement.isInlined()) {
+					gatherNames(cgElement, nameManager2nameResolution);
+				}
+			}
+		}
+		globalNameManager.assignNames(nameManager2nameResolution);
 		CGValuedElementImpl.ALLOW_GET_VALUE_NAME = true;
 	}
 

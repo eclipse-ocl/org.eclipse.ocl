@@ -13,6 +13,7 @@ package org.eclipse.ocl.examples.codegen.analyzer;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -141,9 +142,9 @@ public class GlobalNameManager extends NameManager
 		return nameVariant;
 	}
 
-	public void assignNames() {
-		assignLocalNames(context);
-		assignNestedNames();
+	public void assignNames(@NonNull Map<@NonNull NameManager, @NonNull Set<@NonNull NameResolution>> nameManager2nameResolution) {
+		assignLocalNames(context, nameManager2nameResolution);
+		assignNestedNames(nameManager2nameResolution);
 	}
 
 	public @Nullable NameManager bascGetScope(@NonNull CGNamedElement cgElement) {
