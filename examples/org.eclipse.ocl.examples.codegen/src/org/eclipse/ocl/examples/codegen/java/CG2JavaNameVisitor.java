@@ -18,6 +18,7 @@ import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBuiltInIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCatchExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstrainedProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
@@ -62,9 +63,9 @@ public class CG2JavaNameVisitor extends AbstractExtendingCGModelVisitor<@Nullabl
 		return localContext = savedLocalContext;
 	}
 
-	protected @Nullable JavaLocalContext<?> pushLocalContext(@NonNull CGNamedElement cgNamedlement) {
+	protected @Nullable JavaLocalContext<?> pushLocalContext(@NonNull CGNamedElement cgNamedElement) {
 		JavaLocalContext<?> savedLocalContext = localContext;
-		localContext = context.getLocalContext(cgNamedlement);
+		localContext = context.getLocalContext(cgNamedElement);
 		return savedLocalContext;
 	}
 
@@ -78,6 +79,22 @@ public class CG2JavaNameVisitor extends AbstractExtendingCGModelVisitor<@Nullabl
 		NestedNameManager nameManager = getNameManager();
 		nameManager.addNameVariant(cgCatchExp, codeGenerator.getTHROWN_NameVariant());
 		return super.visitCGCatchExp(cgCatchExp);
+	}
+
+	@Override
+	public @Nullable Object visitCGClass(@NonNull CGClass cgClass) {
+		if (cgClass.getAst() != null) {
+			JavaLocalContext<?> savedLocalContext = pushLocalContext(cgClass);
+			try {
+				return super.visitCGClass(cgClass);
+			}
+			finally {
+				popLocalContext(savedLocalContext);
+			}
+		}
+		else {
+			return super.visitCGClass(cgClass);
+		}
 	}
 
 	@Override

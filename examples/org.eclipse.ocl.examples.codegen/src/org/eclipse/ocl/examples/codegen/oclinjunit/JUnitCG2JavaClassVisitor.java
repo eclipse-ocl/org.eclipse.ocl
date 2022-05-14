@@ -91,7 +91,7 @@ public class JUnitCG2JavaClassVisitor extends CG2JavaVisitor<@NonNull JUnitCodeG
 		}
 		else {
 			String title = cgClass.getName() + " provides the Java implementation for the additional non-Ecore features of\n";
-			js.appendCommentWithOCL(title, CGUtil.getAST(cgClass));
+			js.appendCommentWithOCL(title, cgClass.getAst());
 			js.append("public static class " + className);
 			js.pushClassBody(className);
 			boolean first = true;

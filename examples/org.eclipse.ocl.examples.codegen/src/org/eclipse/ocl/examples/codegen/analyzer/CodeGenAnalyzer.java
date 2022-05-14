@@ -187,7 +187,7 @@ public class CodeGenAnalyzer
 				importNameManager.reserveLocalName(foreignClassName);
 				cgStaticClass = CGModelFactory.eINSTANCE.createCGClass();
 				cgStaticClass.setName(foreignClassName);
-				cgStaticClass.setAst(foreignClass);
+			//	cgStaticClass.setAst(foreignClass);  -- the real class has the AS element
 				cgForeignClasses.add(cgStaticClass);
 				name2class.put(foreignClassName, cgStaticClass);
 			}

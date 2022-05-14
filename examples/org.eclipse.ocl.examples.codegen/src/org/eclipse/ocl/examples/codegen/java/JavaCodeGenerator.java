@@ -230,7 +230,6 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	private final @NonNull NameVariant THROWN_NameVariant;
 	private final @NonNull NameVariant TYPE_NameVariant;
 
-
 	@Deprecated /* @deprecated pass a genmodel - necessary for UML support */
 	public JavaCodeGenerator(@NonNull EnvironmentFactoryInternal environmentFactory) {
 		this(environmentFactory, null);
