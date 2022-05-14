@@ -38,6 +38,8 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  *  ConstrainedOperationCallingConvention defines the support for the call of a Complete OCL-defined operation.
  *  If defined as part of an OCL stdlib, he operation is ioked when called. If defined as part of a
  *  Complete OCL document or OCLinEcore enrichment, the operations is invoked via a cache to avoid re-execution.
+ *
+ *  -- only used by QVTd
  */
 public class ConstrainedOperationCallingConvention extends AbstractOperationCallingConvention	// CF ForeignOperationCallingConvention
 {
