@@ -62,12 +62,8 @@ public class ConstrainedOperationCallingConvention extends AbstractOperationCall
 	public @NonNull CGOperation createCGOperationWithoutBody(@NonNull AS2CGVisitor as2cgVisitor, @NonNull Operation asOperation) {
 		assert as2cgVisitor.getMetamodelManager().getImplementation(asOperation) instanceof ConstrainedOperation;
 		org.eclipse.ocl.pivot.Package asPackage = PivotUtil.getOwningPackage(PivotUtil.getOwningClass(asOperation));
-		if (asPackage instanceof Library) {
-			return CGModelFactory.eINSTANCE.createCGLibraryOperation();
-		}
-		else {
-			return CGModelFactory.eINSTANCE.createCGCachedOperation();
-		}
+		assert !(asPackage instanceof Library);
+		return CGModelFactory.eINSTANCE.createCGLibraryOperation();
 	}
 
 	protected @NonNull CGOperationCallExp constrainedOperationCall(@NonNull AS2CGVisitor as2cgVisitor, @NonNull OperationCallExp element,

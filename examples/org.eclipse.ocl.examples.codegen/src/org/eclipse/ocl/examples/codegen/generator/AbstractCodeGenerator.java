@@ -22,6 +22,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AnalysisVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.calling.BuiltInOperationCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.CachedOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.ConstrainedOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.ConstrainedPropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.EcoreForeignOperationCallingConvention;
@@ -45,6 +46,7 @@ import org.eclipse.ocl.examples.codegen.java.JavaLanguageSupport;
 import org.eclipse.ocl.examples.codegen.library.NativeProperty;
 import org.eclipse.ocl.examples.codegen.library.NativeVisitorOperation;
 import org.eclipse.ocl.pivot.LanguageExpression;
+import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.internal.ecore.EObjectOperation;
@@ -192,10 +194,13 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 			throw new UnsupportedOperationException();
 		}
 		if (libraryOperation instanceof ConstrainedOperation) {
-		//	OCLExpression asSource = asOperationCallExp.getOwnedSource();
-		//	if (asSource != null) {
+			org.eclipse.ocl.pivot.Package asPackage = asOperation.getOwningClass().getOwningPackage();
+			if (asPackage instanceof Library) {
 				return ConstrainedOperationCallingConvention.INSTANCE;
-		//	}
+			}
+			else {
+				return CachedOperationCallingConvention.INSTANCE;
+			}
 		}
 		if ((libraryOperation instanceof EObjectOperation) || (libraryOperation instanceof EInvokeOperation)) {
 			if (EcoreOperationCallingConvention.INSTANCE.canHandle(this, asOperation)) {
