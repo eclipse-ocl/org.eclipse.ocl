@@ -66,6 +66,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryIterateCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGMapExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGMapPart;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNull;
@@ -905,7 +906,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		return cgElement.getResolvedName();
 	}
 
-	public @NonNull String getVariantResolvedName(@NonNull CGValuedElement cgElement, @NonNull NameVariant nameVariant) {
+	public @NonNull String getVariantResolvedName(@NonNull CGNamedElement cgElement, @NonNull NameVariant nameVariant) {
 		NestedNameManager nameManager = localContext.getNameManager();
 		String variantResolvedName = nameManager.basicGetVariantResolvedName(cgElement, nameVariant);
 		if (variantResolvedName == null) {

@@ -44,7 +44,7 @@ public class NestedNameManager extends NameManager
 	/**
 	 * Additional variants of resolvedName for which further unique names are required.
 	 */
-	private @NonNull Map<@NonNull CGValuedElement, @Nullable Map<@NonNull NameVariant, @Nullable String>> element2nameVariant2name = new HashMap<>();
+	private @NonNull Map<@NonNull CGNamedElement, @Nullable Map<@NonNull NameVariant, @Nullable String>> element2nameVariant2name = new HashMap<>();
 
 	public NestedNameManager(@NonNull NameManager parent, @NonNull CGNamedElement cgScope) {
 		super(parent, parent.helper);
@@ -54,7 +54,7 @@ public class NestedNameManager extends NameManager
 		parent.addChild(this);
 	}
 
-	public void addNameVariant(@NonNull CGValuedElement cgElement, @NonNull NameVariant nameVariant) {
+	public void addNameVariant(@NonNull CGNamedElement cgElement, @NonNull NameVariant nameVariant) {
 	//	String resolvedName = getNameResolution().getResolvedName();
 	//	assert resolvedName == null;
 	//	assert (resolvedName == null) || ((NestedNameManager)getNameManager()).isReserved(this) : "Cannot addNameVariant after name is resolved";
@@ -68,18 +68,25 @@ public class NestedNameManager extends NameManager
 	}
 
 	public void assignExtraNames(@NonNull Context context) {
-		for (Entry<@NonNull CGValuedElement, @Nullable Map<@NonNull NameVariant, @Nullable String>> entry1 : element2nameVariant2name.entrySet()) {
+		for (Entry<@NonNull CGNamedElement, @Nullable Map<@NonNull NameVariant, @Nullable String>> entry1 : element2nameVariant2name.entrySet()) {
 			Map<@NonNull NameVariant, @Nullable String> nameVariant2name = entry1.getValue();
 			if (nameVariant2name != null) {
-				CGValuedElement cgElement = entry1.getKey();
-				assert cgElement.eContainer() != null;		// Not eliminated by CSE
-				NameResolution nameResolution = cgElement.basicGetNameResolution();
-				if (nameResolution == null) {
-					nameResolution = declareLazyName(cgElement);
-					nameResolution.resolveNameHint();;
+				CGNamedElement cgElement = entry1.getKey();
+				assert cgElement.eContainer() != null;		// Not eliminated by CSE		-- ?? obsolete
+				String resolvedName;
+				if (cgElement instanceof CGValuedElement) {
+					CGValuedElement cgValuedElement = (CGValuedElement)cgElement;
+					NameResolution nameResolution = cgValuedElement.basicGetNameResolution();
+					if (nameResolution == null) {
+						nameResolution = declareLazyName(cgValuedElement);
+						nameResolution.resolveNameHint();;
+					}
+					nameResolution.resolveIn(context, cgValuedElement);
+					resolvedName = nameResolution.getResolvedName();
 				}
-				nameResolution.resolveIn(context, cgElement);
-				String resolvedName = nameResolution.getResolvedName();
+				else {
+					resolvedName = cgElement.getName();
+				}
 				for (Entry<@NonNull NameVariant, @Nullable String> entry2 : nameVariant2name.entrySet()) {
 					NameVariant nameVariant = entry2.getKey();
 					String name = entry2.getValue();
@@ -112,7 +119,7 @@ public class NestedNameManager extends NameManager
 		}
 	}
 
-	public @Nullable String basicGetVariantResolvedName(@NonNull CGValuedElement cgElement, @NonNull NameVariant nameVariant) {
+	public @Nullable String basicGetVariantResolvedName(@NonNull CGNamedElement cgElement, @NonNull NameVariant nameVariant) {
 		Map<@NonNull NameVariant, @Nullable String> nameVariant2name = element2nameVariant2name.get(cgElement);
 		return nameVariant2name != null ? nameVariant2name.get(nameVariant) : null;
 	}
