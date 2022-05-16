@@ -123,7 +123,6 @@ public class CodeGenAnalyzer
 	private @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull CGClass> asClass2cgClass = new HashMap<>();
 	private @NonNull Map<@NonNull Operation, @NonNull CGOperation> asOperation2cgOperation = new HashMap<>();
 	private @NonNull Map<@NonNull Property, @NonNull CGProperty> asProperty2cgProperty = new HashMap<>();
-	private @NonNull List<@NonNull CGNamedElement> cgOrphans = new ArrayList<>();
 
 	public CodeGenAnalyzer(@NonNull CodeGenerator codeGenerator) {
 		this.codeGenerator = codeGenerator;
@@ -152,7 +151,6 @@ public class CodeGenAnalyzer
 	public void addCGOperation(@NonNull CGOperation cgOperation) {
 		Operation asOperation = CGUtil.getAST(cgOperation);
 		CGOperation old = asOperation2cgOperation.put(asOperation, cgOperation);
-		cgOrphans.add(cgOperation);
 		assert old == null;
 		OperationCallingConvention callingConvention = cgOperation.getCallingConvention();
 		if (callingConvention.needsGeneration()) {
@@ -164,7 +162,6 @@ public class CodeGenAnalyzer
 	public void addCGProperty(@NonNull CGProperty cgProperty) {
 		Property asProperty = CGUtil.getAST(cgProperty);
 		CGProperty old = asProperty2cgProperty.put(asProperty, cgProperty);
-		cgOrphans.add(cgProperty);
 		assert old == null;
 		PropertyCallingConvention callingConvention = cgProperty.getCallingConvention();
 		if (callingConvention.needsGeneration()) {
@@ -516,10 +513,6 @@ public class CodeGenAnalyzer
 
 	public @NonNull CGNull getNull() {
 		return cgNull;
-	}
-
-	public @NonNull Iterable<@NonNull CGNamedElement> getOrphans() {
-		return cgOrphans;
 	}
 
 	public @NonNull CGOperation getOperation(@NonNull Operation asOperation) {

@@ -778,10 +778,6 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 				visitInPostOrder(global);
 			}
 		}
-		Iterable<@NonNull CGNamedElement> orphans = getAnalyzer().getOrphans();
-		for (@NonNull CGNamedElement cgNamedElment : orphans) {
-			visitInPostOrder(cgNamedElment);
-		}
 	//	System.out.println("-----------------resolveNames--------------------");
 		visitInPostOrder(cgPackage);
 		Map<@NonNull NameManager, @NonNull List<@NonNull CGValuedElement>> nameManager2namedElements = new HashMap<>();
@@ -792,14 +788,6 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 					if (!cgElement.isInlined()) {
 						gatherNames(cgElement, nameManager2namedElements);
 					}
-				}
-			}
-		}
-		for (@NonNull CGNamedElement cgNamedElement : orphans) {
-			if (cgNamedElement instanceof CGValuedElement) {
-				CGValuedElement cgElement = (CGValuedElement)cgNamedElement;
-				if (!cgElement.isInlined()) {
-					gatherNames(cgElement, nameManager2namedElements);
 				}
 			}
 		}
