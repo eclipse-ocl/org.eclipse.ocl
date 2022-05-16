@@ -250,6 +250,11 @@ public abstract class AbstractExtendingCGModelVisitor<R, C>
 	}
 
 	@Override
+	public R visitCGInlinedOperation(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGInlinedOperation object) {
+		return visitCGOperation(object);
+	}
+
+	@Override
 	public R visitCGInteger(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGInteger object) {
 		return visitCGNumber(object);
 	}

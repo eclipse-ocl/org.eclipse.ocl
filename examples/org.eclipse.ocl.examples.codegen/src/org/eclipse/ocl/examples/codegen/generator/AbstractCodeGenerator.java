@@ -16,14 +16,15 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AnalysisVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.calling.BuiltInOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.CachedOperationCallingConvention;
-import org.eclipse.ocl.examples.codegen.calling.ConstrainedOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.ConstrainedPropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.EcoreForeignOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.EcoreOperationCallingConvention;
@@ -34,6 +35,7 @@ import org.eclipse.ocl.examples.codegen.calling.ExecutorOppositePropertyCallingC
 import org.eclipse.ocl.examples.codegen.calling.ExecutorPropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.ForeignOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.ForeignPropertyCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.InlinedOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.LibraryOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.LibraryPropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.NativeOperationCallingConvention;
@@ -41,10 +43,12 @@ import org.eclipse.ocl.examples.codegen.calling.NativePropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.PropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.TuplePropertyCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.VolatileOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
 import org.eclipse.ocl.examples.codegen.java.JavaLanguageSupport;
 import org.eclipse.ocl.examples.codegen.library.NativeProperty;
 import org.eclipse.ocl.examples.codegen.library.NativeVisitorOperation;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.Operation;
@@ -76,6 +80,7 @@ import org.eclipse.ocl.pivot.library.map.MapKeyTypeProperty;
 import org.eclipse.ocl.pivot.library.map.MapValueTypeProperty;
 import org.eclipse.ocl.pivot.library.oclany.OclElementOclContainerProperty;
 import org.eclipse.ocl.pivot.library.oclany.OclElementOclContentsProperty;
+import org.eclipse.ocl.pivot.utilities.ParserException;
 
 public abstract class AbstractCodeGenerator implements CodeGenerator
 {
@@ -196,9 +201,21 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 		if (libraryOperation instanceof ConstrainedOperation) {
 			org.eclipse.ocl.pivot.Package asPackage = asOperation.getOwningClass().getOwningPackage();
 			if (asPackage instanceof Library) {
-				return ConstrainedOperationCallingConvention.INSTANCE;
+				return VolatileOperationCallingConvention.INSTANCE;
 			}
 			else {
+				LanguageExpression bodyExpression = asOperation.getBodyExpression();
+				if (bodyExpression != null) {
+					FinalAnalysis finalAnalysis = metamodelManager.getFinalAnalysis();
+					Set<@NonNull Operation> referencedFinalOperations = new HashSet<>();
+					getTransitivelyReferencedFinalOperations(referencedFinalOperations, finalAnalysis, bodyExpression);
+					if (!referencedFinalOperations.contains(asOperation)) {
+						Iterable<@NonNull Operation> referencedNonFinalOperations = getReferencedNonFinalOperations(finalAnalysis, bodyExpression);
+						if (referencedNonFinalOperations == null) {			// simple heavy heuristic
+							return InlinedOperationCallingConvention.INSTANCE;
+						}
+					}
+				}
 				return CachedOperationCallingConvention.INSTANCE;
 			}
 		}
@@ -361,6 +378,82 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 	@Override
 	public @Nullable List<@NonNull Exception> getProblems() {
 		return problems;
+	}
+
+	/**
+	 * Return all final operations directly referenced by opaqueExpression, or null if none.
+	 * @since 1.3
+	 */
+	protected @Nullable Iterable<@NonNull Operation> getReferencedFinalOperations(@NonNull FinalAnalysis finalAnalysis, @NonNull LanguageExpression specification) {
+		ExpressionInOCL prototype = null;
+		try {
+			prototype = environmentFactory.parseSpecification(specification);
+		}
+		catch (ParserException e) {
+			// FIXME log error
+			e.printStackTrace();
+		}
+		if (prototype == null) {
+			return null;
+		}
+		Set<@NonNull Operation> referencedOperations = null;
+		for (EObject crossReference : EcoreUtil.ExternalCrossReferencer.find(prototype).keySet()) {
+			if (crossReference instanceof Operation) {
+				Operation operation = (Operation) crossReference;
+				if (finalAnalysis.isFinal(operation)) {
+					if (referencedOperations == null) {
+						referencedOperations = new HashSet<>();
+					}
+					referencedOperations.add(operation);
+				}
+			}
+		}
+		return referencedOperations;
+	}
+
+	/*protected*/ public @Nullable Iterable<@NonNull Operation> getReferencedNonFinalOperations(@NonNull FinalAnalysis finalAnalysis, @NonNull LanguageExpression specification) {
+		ExpressionInOCL prototype = null;
+		try {
+			prototype = environmentFactory.parseSpecification(specification);
+		}
+		catch (ParserException e) {
+			// FIXME log error
+			e.printStackTrace();
+		}
+		if (prototype == null) {
+			return null;
+		}
+		Set<@NonNull Operation> referencedOperations = null;
+		for (EObject crossReference : EcoreUtil.ExternalCrossReferencer.find(prototype).keySet()) {
+			if (crossReference instanceof Operation) {
+				Operation operation = (Operation) crossReference;
+				if (!finalAnalysis.isFinal(operation)) {
+					if (referencedOperations == null) {
+						referencedOperations = new HashSet<>();
+					}
+					referencedOperations.add(operation);
+				}
+			}
+		}
+		return referencedOperations;
+	}
+
+	/**
+	 * Return all final operations transitively referenced by opaqueExpression, or null if none.
+	 * @since 1.3
+	 */
+	/*protected*/ public void getTransitivelyReferencedFinalOperations(@NonNull Set<@NonNull Operation> alreadyReferencedFinalOperations, @NonNull FinalAnalysis finalAnalysis, @NonNull LanguageExpression expressionInOCL) {
+		Iterable<@NonNull Operation> newlyReferencedFinalOperations = getReferencedFinalOperations(finalAnalysis, expressionInOCL);
+		if (newlyReferencedFinalOperations != null) {
+			for (@NonNull Operation newlyReferencedFinalOperation : newlyReferencedFinalOperations) {
+				if (alreadyReferencedFinalOperations.add(newlyReferencedFinalOperation)) {
+					LanguageExpression anotherExpressionInOCL = newlyReferencedFinalOperation.getBodyExpression();
+					if (anotherExpressionInOCL != null) {
+						getTransitivelyReferencedFinalOperations(alreadyReferencedFinalOperations, finalAnalysis, anotherExpressionInOCL);
+					}
+				}
+			}
+		}
 	}
 
 	@Override

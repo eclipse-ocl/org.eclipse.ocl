@@ -104,7 +104,9 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 	}
 
 	protected void appendDeclaration(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
-		assert false : "Missing overload for " + cgOperation.getCallingConvention().getClass().getSimpleName();
+		js.append("generateJavaDeclaration " + this);
+	//	return true;
+	//	assert false : "Missing overload for " + cgOperation.getCallingConvention().getClass().getSimpleName();
 		boolean isForeign = false;
 		Element ast = cgOperation.getAst();
 		assert (ast instanceof Operation); {

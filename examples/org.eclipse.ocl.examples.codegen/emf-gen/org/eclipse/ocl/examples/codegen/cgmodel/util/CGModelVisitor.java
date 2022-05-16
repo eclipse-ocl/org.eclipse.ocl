@@ -85,6 +85,7 @@ public interface CGModelVisitor<R>
 	R visitCGForeignPropertyCallExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGForeignPropertyCallExp object);
 	R visitCGGuardExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGGuardExp object);
 	R visitCGIfExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGIfExp object);
+	R visitCGInlinedOperation(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGInlinedOperation object);
 	R visitCGInteger(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGInteger object);
 	R visitCGInvalid(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGInvalid object);
 	R visitCGIsEqual2Exp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGIsEqual2Exp object);

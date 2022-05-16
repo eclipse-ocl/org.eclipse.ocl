@@ -1526,6 +1526,16 @@ public interface CGModelPackage extends EPackage {
 	EReference getCGIfExp_ElseExpression();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGInlinedOperation <em>CG Inlined Operation</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>CG Inlined Operation</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGInlinedOperation
+	 * @generated
+	 */
+	EClass getCGInlinedOperation();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement <em>CG Named Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3700,6 +3710,16 @@ public interface CGModelPackage extends EPackage {
 		 * @generated
 		 */
 		EReference CG_IF_EXP__ELSE_EXPRESSION = eINSTANCE.getCGIfExp_ElseExpression();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGInlinedOperationImpl <em>CG Inlined Operation</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGInlinedOperationImpl
+		 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getCGInlinedOperation()
+		 * @generated
+		 */
+		EClass CG_INLINED_OPERATION = eINSTANCE.getCGInlinedOperation();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGNamedElementImpl <em>CG Named Element</em>}' class.
