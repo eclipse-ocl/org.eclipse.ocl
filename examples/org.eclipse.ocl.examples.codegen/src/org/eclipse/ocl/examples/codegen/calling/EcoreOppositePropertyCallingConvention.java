@@ -158,6 +158,11 @@ public class EcoreOppositePropertyCallingConvention extends AbstractPropertyCall
 	}
 
 	@Override
+	public boolean needsGeneration() {
+		return false;
+	}
+
+	@Override
 	protected void rewriteWithResultBoxing(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGNavigationCallExp cgNavigationCallExp) {
 		CGEcoreOppositePropertyCallExp cgEcoreOppositePropertyCallExp = (CGEcoreOppositePropertyCallExp) cgNavigationCallExp;
 		if (cgEcoreOppositePropertyCallExp.getEStructuralFeature().isMany()) {

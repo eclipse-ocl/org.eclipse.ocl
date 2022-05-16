@@ -18,6 +18,7 @@ import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.calling.LibraryOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -71,5 +72,20 @@ public class JUnitOperationCallingConvention extends LibraryOperationCallingConv
 			CGParameter cgParameter = as2cgVisitor.getParameter(parameterVariable, (String)null);
 			cgParameters.add(cgParameter);
 		}
+	}
+
+	@Override
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+		CGValuedElement body = cg2javaVisitor.getExpression(cgOperation.getBody());
+		//
+		appendDeclaration(cg2javaVisitor, js, cgOperation);
+		appendParameterList(js, cgOperation);
+		appendBody(cg2javaVisitor, js, body);
+		return true;
+	}
+
+	@Override
+	public boolean needsGeneration() {
+		return true;
 	}
 }

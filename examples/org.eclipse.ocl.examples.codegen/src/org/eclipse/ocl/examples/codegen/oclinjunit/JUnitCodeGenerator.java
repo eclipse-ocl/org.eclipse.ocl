@@ -72,13 +72,14 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 	protected @NonNull CGPackage createCGPackage(@NonNull ExpressionInOCL expInOcl,
 			@NonNull String packageName, @NonNull String className) {
 		NameResolution evaluateNameResolution = globalContext.getEvaluateNameResolution();
-		NameResolution typeIdNameResolution = globalContext.getTypeIdNameResolution();
+	//	NameResolution typeIdNameResolution = globalContext.getTypeIdNameResolution();
 		CGPackage cgPackage = CGModelFactory.eINSTANCE.createCGPackage();
 		cgPackage.setName(packageName);
 		//
 		CGClass cgClass = CGModelFactory.eINSTANCE.createCGClass();
 		cgClass.setName(className);
 		cgPackage.getClasses().add(cgClass);
+		cgAnalyzer.setCGRootClass(cgClass);
 		//
 		Variable contextVariable = expInOcl.getOwnedContext();
 		if (contextVariable != null) {

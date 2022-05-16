@@ -203,6 +203,11 @@ public class EcoreOperationCallingConvention extends AbstractOperationCallingCon
 	}
 
 	@Override
+	public boolean needsGeneration() {
+		return false;
+	}
+
+	@Override
 	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGOperation cgOperation) {
 		CGEcoreOperation cgEcoreOperation = (CGEcoreOperation)cgOperation;
 		super.rewriteWithBoxingAndGuards(boxingAnalyzer, cgEcoreOperation);

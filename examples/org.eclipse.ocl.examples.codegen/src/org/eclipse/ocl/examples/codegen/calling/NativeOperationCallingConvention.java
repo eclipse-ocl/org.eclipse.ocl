@@ -130,6 +130,11 @@ public class NativeOperationCallingConvention extends AbstractOperationCallingCo
 	}
 
 	@Override
+	public boolean needsGeneration() {
+		return false;
+	}
+
+	@Override
 	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGOperation cgOperation) {
 		CGNativeOperation cgNativeOperation = (CGNativeOperation)cgOperation;
 		super.rewriteWithBoxingAndGuards(boxingAnalyzer, cgNativeOperation);

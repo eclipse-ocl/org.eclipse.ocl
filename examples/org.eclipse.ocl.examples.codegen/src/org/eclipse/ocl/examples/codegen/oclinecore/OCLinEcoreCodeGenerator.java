@@ -32,8 +32,10 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstrainedProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
@@ -532,6 +534,8 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		//		CommonSubexpressionEliminator.CSE_PULL_UP.setState(true);
 		//		CommonSubexpressionEliminator.CSE_PUSH_UP.setState(true);
 		//		CommonSubexpressionEliminator.CSE_REWRITE.setState(true);
+		CGClass cgClass = CGModelFactory.eINSTANCE.createCGClass();
+		cgAnalyzer.setCGRootClass(cgClass);
 	}
 
 	@Override

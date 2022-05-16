@@ -284,6 +284,7 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 
 	public @NonNull LocalContext initLocalContext(@Nullable LocalContext outerContext, @NonNull CGNamedElement cgNamedElement, @NonNull NamedElement asNamedElement) {
 		assert cgNamedElement.getAst() != null;
+		assert cgNamedElement.getAst() == asNamedElement;
 //		LocalContext localContext = new DebugLocalContext(outerContext, cgNamedElement, asNamedElement); //codeGenerator.getGlobalContext().createLocalContext(cgNamedElement);
 		JavaLocalContext<@NonNull ? extends CG> localContext = createLocalContext((JavaLocalContext<@NonNull ? extends CG>) outerContext, cgNamedElement, asNamedElement); //codeGenerator.getGlobalContext().createLocalContext(cgNamedElement);
 		setLocalContext(cgNamedElement, localContext);

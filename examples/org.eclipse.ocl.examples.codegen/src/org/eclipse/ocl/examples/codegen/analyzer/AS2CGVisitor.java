@@ -442,7 +442,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		cgOperation.setCallingConvention(callingConvention);
 		CGOperation oldCGOperation = asFinalOperation2cgOperation.put(asOperation, cgOperation);
 		assert oldCGOperation == null;
-		context.addOperation(cgOperation);
+		context.addCGOperation(cgOperation);
 		return cgOperation;
 	}
 
@@ -556,7 +556,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		cgOperation.getFinalOperations().addAll(cgOperations);
 		CGOperation oldCGOperation = asVirtualOperation2cgOperation.put(asOperation, cgOperation);
 		assert oldCGOperation == null;
-		context.addOperation(cgOperation);
+		context.addCGOperation(cgOperation);
 		popLocalContext();
 		return cgOperation;
 	}
@@ -701,12 +701,12 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	protected @NonNull CGOperation generateOperationDeclaration(@NonNull Operation asOperation) {	// XXX rationalize as generateOperationDeclaration with later createImplementation
 		CGOperation cgOperation = context.basicGetOperation(asOperation);
 		if (cgOperation == null) {
+			OperationCallingConvention callingConvention = codeGenerator.getCallingConvention(asOperation);
 			org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asOperation);
-			pushClassContext(asClass);
+			pushClassContext(asClass, callingConvention.needsGeneration());
 			cgOperation = asFinalOperation2cgOperation.get(asOperation);
 			if (cgOperation == null) {
 				LibraryOperation libraryOperation = (LibraryOperation)metamodelManager.getImplementation(asOperation);
-				OperationCallingConvention callingConvention = codeGenerator.getCallingConvention(asOperation);
 				if (libraryOperation instanceof ForeignOperation) {			// XXX this parses stdlib bodies unnecessarily
 					context.addForeignFeature(asOperation);
 				}
@@ -909,7 +909,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			cgProperty.setTypeId(context.getTypeId(asProperty.getTypeId()));
 			cgProperty.setRequired(asProperty.isIsRequired());
 			cgProperty.setCallingConvention(callingConvention);
-			context.addProperty(cgProperty);
+			context.addCGProperty(cgProperty);
 			getNameManager().declarePreferredName(cgProperty);
 			pushContext(cgProperty, asProperty);
 			ExpressionInOCL query = null;
@@ -1395,16 +1395,19 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return contextStack.pop();
 	}
 
-	protected @NonNull LocalContext pushClassContext(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+	protected @NonNull LocalContext pushClassContext(org.eclipse.ocl.pivot.@NonNull Class asClass, boolean needsGeneration) {
 		CGClass cgClass = context.basicGetClass(asClass);
 		if (cgClass == null) {
 			cgClass = CGModelFactory.eINSTANCE.createCGClass();
 			cgClass.setAst(asClass);
-			context.addClass(cgClass);
+			context.addCGClass(cgClass, needsGeneration);
+		}
+		else {
+			assert cgClass.getAst() == asClass;
 		}
 		contextStackStack.push(contextStack);
 		contextStack = new Stack<>();
-		cgClass.setAst(asClass);
+	//	cgClass.setAst(asClass);
 		cgClass.setName(asClass.getName());
 		return pushContext(cgClass, asClass);
 	}
@@ -1480,7 +1483,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	 */
 	@Override
 	public @NonNull CGClass visitClass(org.eclipse.ocl.pivot.@NonNull Class element) {
-		LocalContext classContext = pushClassContext(element);
+		LocalContext classContext = pushClassContext(element, false);
 		CGClass cgClass = (CGClass)classContext.getScope();
 		for (@NonNull Constraint asConstraint : ClassUtil.nullFree(element.getOwnedInvariants())) {
 			CGConstraint cgConstraint = doVisit(CGConstraint.class, asConstraint);

@@ -19,6 +19,7 @@ import java.util.Map;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.PropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBoolean;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstant;
@@ -112,6 +113,7 @@ public class CodeGenAnalyzer
 	private /*@LazyNonNull*/ CGUnlimited cgUnlimited = null;
 	private /*@LazyNonNull*/ CGInvalid cgInvalid = null;
 	protected final @NonNull CGNull cgNull;
+	private /*@LazyNonNull*/ CGClass cgRootClass = null;
 	private final @NonNull Map<@NonNull Number, @NonNull CGInteger> cgIntegers = new HashMap<>();
 	private final @NonNull Map<@NonNull Number, @NonNull CGReal> cgReals = new HashMap<>();
 	private final @NonNull Map<@NonNull String, @NonNull CGString> cgStrings = new HashMap<>();
@@ -126,9 +128,9 @@ public class CodeGenAnalyzer
 	public CodeGenAnalyzer(@NonNull CodeGenerator codeGenerator) {
 		this.codeGenerator = codeGenerator;
 		this.globalNameManager = codeGenerator.getGlobalNameManager();
-		cgFalse = createCGBoolean(false);
-		cgTrue = createCGBoolean(true);
-		cgNull = createCGNull();
+		this.cgFalse = createCGBoolean(false);
+		this.cgTrue = createCGBoolean(true);
+		this.cgNull = createCGNull();
 	}
 
 	public void addForeignFeature(@NonNull Feature asFeature) {
@@ -139,24 +141,38 @@ public class CodeGenAnalyzer
 		foreignFeatures2.add(asFeature);
 	}
 
-	public void addClass(@NonNull CGClass cgClass) {
+	public void addCGClass(@NonNull CGClass cgClass, boolean needsGeneration) {
 		org.eclipse.ocl.pivot.Class asClass = CGUtil.getAST(cgClass);
 		CGClass old = asClass2cgClass.put(asClass, cgClass);
 		assert old == null;
+		if (needsGeneration) {
+			assert cgRootClass != null;
+			cgRootClass.getClasses().add(cgClass);
+		}
 	}
 
-	public void addOperation(@NonNull CGOperation cgOperation) {
+	public void addCGOperation(@NonNull CGOperation cgOperation) {
 		Operation asOperation = CGUtil.getAST(cgOperation);
 		CGOperation old = asOperation2cgOperation.put(asOperation, cgOperation);
 		cgOrphans.add(cgOperation);
 		assert old == null;
+		OperationCallingConvention callingConvention = cgOperation.getCallingConvention();
+		if (callingConvention.needsGeneration()) {
+			assert cgRootClass != null;
+			cgRootClass.getOperations().add(cgOperation);
+		}
 	}
 
-	public void addProperty(@NonNull CGProperty cgProperty) {
+	public void addCGProperty(@NonNull CGProperty cgProperty) {
 		Property asProperty = CGUtil.getAST(cgProperty);
 		CGProperty old = asProperty2cgProperty.put(asProperty, cgProperty);
 		cgOrphans.add(cgProperty);
 		assert old == null;
+		PropertyCallingConvention callingConvention = cgProperty.getCallingConvention();
+		if (callingConvention.needsGeneration()) {
+			assert cgRootClass != null;
+			cgRootClass.getProperties().add(cgProperty);
+		}
 	}
 
 	public void analyze(@NonNull CGElement cgRoot) {
@@ -491,7 +507,7 @@ public class CodeGenAnalyzer
 				cgParameter.setRequired(isRequired);
 				cgParameters.add(cgParameter);
 			}
-			addOperation(cgNativeOperation);
+			addCGOperation(cgNativeOperation);
 		}
 		return asOperation;
 	}
@@ -601,5 +617,10 @@ public class CodeGenAnalyzer
 		newElement.setTypeId(oldElement.getTypeId());
 		newElement.setAst(oldElement.getAst());
 		CGUtil.replace(oldElement, newElement);
+	}
+
+	public void setCGRootClass(@NonNull CGClass cgClass) {
+		assert cgRootClass == null;
+		cgRootClass = cgClass;
 	}
 }

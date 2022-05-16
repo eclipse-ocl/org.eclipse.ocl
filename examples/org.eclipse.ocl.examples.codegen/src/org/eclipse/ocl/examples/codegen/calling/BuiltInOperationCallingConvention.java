@@ -115,4 +115,9 @@ public class BuiltInOperationCallingConvention extends AbstractOperationCallingC
 	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
 		throw new UnsupportedOperationException();		// Built-in operations are declared inline
 	}
+
+	@Override
+	public boolean needsGeneration() {
+		return false;
+	}
 }

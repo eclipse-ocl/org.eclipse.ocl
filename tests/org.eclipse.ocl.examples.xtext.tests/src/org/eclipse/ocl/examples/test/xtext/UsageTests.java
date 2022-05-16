@@ -1008,7 +1008,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 						"import ecore : 'http://www.eclipse.org/emf/2002/Ecore#/';\n"
 								+ "package bug567919 : bug567919 = 'http://bug567919'\n"
 								+ "{\n"
-								+ "    class Backlog\n"
+								+ "	class Backlog\n"
 								+ "	{\n"
 								+ "		property workItems : WorkItem[+|1] { ordered composes };\n"
 								+ "	}\n"

@@ -16,4 +16,10 @@ package org.eclipse.ocl.examples.codegen.calling;
  */
 public interface CallingConvention
 {
+	/**
+	 * Return true if this feature needs generation ass part of user code (rather than being referenced from built-in functionality).
+	 */
+	default boolean needsGeneration() {
+		return true;
+	}
 }

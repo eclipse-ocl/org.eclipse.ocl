@@ -272,6 +272,16 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 	}
 
 	@Override
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+		throw new UnsupportedOperationException();		// Library operations are declared natively
+	}
+
+	@Override
+	public boolean needsGeneration() {
+		return false;
+	}
+
+	@Override
 	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGOperation cgOperation) {
 		CGLibraryOperation cgLibraryOperation = (CGLibraryOperation)cgOperation;
 		super.rewriteWithBoxingAndGuards(boxingAnalyzer, cgLibraryOperation);

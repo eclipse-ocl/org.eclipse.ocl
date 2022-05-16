@@ -90,12 +90,22 @@ public class NativePropertyCallingConvention extends AbstractPropertyCallingConv
 		return true;
 	}
 
+//	@Override
+//	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGProperty cgProperty) {
+//		js.append("protected ");
+//		js.appendDeclaration(cgProperty);
+//		js.append(";\n");
+//		return true;
+//	}
+
 	@Override
 	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGProperty cgProperty) {
-		js.append("protected ");
-		js.appendDeclaration(cgProperty);
-		js.append(";\n");
-		return true;
+		throw new UnsupportedOperationException();		// Native operations are declared natively
+	}
+
+	@Override
+	public boolean needsGeneration() {
+		return false;
 	}
 
 	@Override

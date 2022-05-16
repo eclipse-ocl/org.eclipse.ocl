@@ -166,6 +166,11 @@ public class EcorePropertyCallingConvention extends AbstractPropertyCallingConve
 	}
 
 	@Override
+	public boolean needsGeneration() {
+		return false;
+	}
+
+	@Override
 	protected void rewriteWithResultBoxing(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGNavigationCallExp cgNavigationCallExp) {
 		CGEcorePropertyCallExp cgEcorePropertyCallExp = (CGEcorePropertyCallExp) cgNavigationCallExp;
 		if (cgEcorePropertyCallExp.getEStructuralFeature().isMany()) {
