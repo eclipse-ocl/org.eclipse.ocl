@@ -100,7 +100,7 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 	}
 
 	@Override
-	public @Nullable JavaLocalContext<@NonNull ? extends CG> basicGetLocalContext(@NonNull CGNamedElement cgElement) {
+	public @Nullable JavaLocalContext<@NonNull ? extends CG> basicFindLocalContext(@NonNull CGNamedElement cgElement) {
 		for (CGElement cgScope = cgElement; cgScope != null; cgScope = cgScope.getParent()) {
 			JavaLocalContext<@NonNull ? extends CG> localContext = localContexts.get(cgScope);
 			if (localContext != null) {
@@ -108,6 +108,11 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public @Nullable JavaLocalContext<@NonNull ? extends CG> basicGetLocalContext(@NonNull CGNamedElement cgElement) {
+		return localContexts.get(cgElement);
 	}
 
 /*	@Override
@@ -149,6 +154,11 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 
 	public @NonNull JavaLocalContext<@NonNull ? extends CG> createLocalContext(@Nullable JavaLocalContext<@NonNull ?> outerContext, @NonNull CGNamedElement cgNamedElement, @NonNull NamedElement asNamedElement) {
 		return new JavaLocalContext<CG>(this, (JavaLocalContext<@NonNull ? extends CG>)outerContext, cgNamedElement, asNamedElement);
+	}
+
+	@Override
+	public @NonNull JavaLocalContext<@NonNull ? extends CG> findLocalContext(@NonNull CGNamedElement cgElement) {
+		return ClassUtil.nonNullState(basicFindLocalContext(cgElement));
 	}
 
 	public @NonNull NameResolution getAnyNameResolution() {

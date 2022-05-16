@@ -333,7 +333,7 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 		}
 	}
 
-	// Default guards and boxes al terms. DErived implementations for unboxed/ecore/simple-boxed
+	// Default guards and boxes al terms. Derived implementations for unboxed/ecore/simple-boxed
 	@Override
 	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer,@NonNull CGOperationCallExp cgOperationCallExp) {
 		CGOperation cgOperation = CGUtil.getOperation(cgOperationCallExp);

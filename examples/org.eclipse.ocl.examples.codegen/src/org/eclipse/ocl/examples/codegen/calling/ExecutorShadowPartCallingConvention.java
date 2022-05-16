@@ -38,7 +38,7 @@ public class ExecutorShadowPartCallingConvention extends AbstractPropertyCalling
 		CGExecutorShadowPart cgExecutorShadowPart = (CGExecutorShadowPart)cgProperty;
 		js.appendDeclaration(cgExecutorShadowPart);
 		js.append(" = ");
-		js.appendValueName(cg2javaVisitor.getCodeGenerator().getGlobalContext().getLocalContext(cgExecutorShadowPart).getIdResolverVariable());
+		js.appendValueName(cg2javaVisitor.getCodeGenerator().getGlobalContext().findLocalContext(cgExecutorShadowPart).getIdResolverVariable());
 		js.append(".getProperty(");
 		js.appendIdReference(cgExecutorShadowPart.getUnderlyingPropertyId().getElementId());
 		js.append(");\n");

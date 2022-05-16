@@ -65,7 +65,7 @@ public class CG2JavaNameVisitor extends AbstractExtendingCGModelVisitor<@Nullabl
 
 	protected @Nullable JavaLocalContext<?> pushLocalContext(@NonNull CGNamedElement cgNamedElement) {
 		JavaLocalContext<?> savedLocalContext = localContext;
-		localContext = context.getLocalContext(cgNamedElement);
+		localContext = context.findLocalContext(cgNamedElement);
 		return savedLocalContext;
 	}
 

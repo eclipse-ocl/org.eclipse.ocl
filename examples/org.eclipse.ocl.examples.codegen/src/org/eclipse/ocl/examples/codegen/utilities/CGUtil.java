@@ -305,6 +305,10 @@ public class CGUtil
 		return ClassUtil.nullFree(cgPackage.getClasses());
 	}
 
+	public static @NonNull List<@NonNull CGClass> getClassesList(@NonNull CGClass cgClass) {
+		return ClassUtil.nullFree(cgClass.getClasses());
+	}
+
 	public static @NonNull List<@NonNull CGIterator> getCoIteratorsList(@NonNull CGIterationCallExp cgIterationCallExp) {
 		return ClassUtil.nullFree(cgIterationCallExp.getCoIterators());
 	}

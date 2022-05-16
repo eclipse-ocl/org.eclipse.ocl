@@ -475,7 +475,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 		CGVariable cgVariable;
 		if ((asVariable instanceof Parameter) && isThis((Parameter)asVariable)) {
-			JavaLocalContext<?> localContext = (JavaLocalContext<?>)codeGenerator.getGlobalContext().getLocalContext(getCurrentClass());
+			JavaLocalContext<?> localContext = (JavaLocalContext<?>)codeGenerator.getGlobalContext().findLocalContext(getCurrentClass());
 			if (isQualifiedThis(asVariableExp, (Parameter)asVariable)) {
 				cgVariable = localContext.getQualifiedThisVariable();
 			}
@@ -701,11 +701,11 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	protected @NonNull CGOperation generateOperationDeclaration(@NonNull Operation asOperation) {	// XXX rationalize as generateOperationDeclaration with later createImplementation
 		CGOperation cgOperation = context.basicGetOperation(asOperation);
 		if (cgOperation == null) {
-			OperationCallingConvention callingConvention = codeGenerator.getCallingConvention(asOperation);
 			org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asOperation);
-			pushClassContext(asClass, callingConvention.needsGeneration());
+			pushClassContext(asClass);
 			cgOperation = asFinalOperation2cgOperation.get(asOperation);
 			if (cgOperation == null) {
+				OperationCallingConvention callingConvention = codeGenerator.getCallingConvention(asOperation);
 				LibraryOperation libraryOperation = (LibraryOperation)metamodelManager.getImplementation(asOperation);
 				if (libraryOperation instanceof ForeignOperation) {			// XXX this parses stdlib bodies unnecessarily
 					context.addForeignFeature(asOperation);
@@ -1395,12 +1395,12 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return contextStack.pop();
 	}
 
-	protected @NonNull LocalContext pushClassContext(org.eclipse.ocl.pivot.@NonNull Class asClass, boolean needsGeneration) {
+	protected @NonNull LocalContext pushClassContext(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		CGClass cgClass = context.basicGetClass(asClass);
 		if (cgClass == null) {
 			cgClass = CGModelFactory.eINSTANCE.createCGClass();
 			cgClass.setAst(asClass);
-			context.addCGClass(cgClass, needsGeneration);
+			context.addCGClass(cgClass);
 		}
 		else {
 			assert cgClass.getAst() == asClass;
@@ -1483,7 +1483,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	 */
 	@Override
 	public @NonNull CGClass visitClass(org.eclipse.ocl.pivot.@NonNull Class element) {
-		LocalContext classContext = pushClassContext(element, false);
+		LocalContext classContext = pushClassContext(element);
 		CGClass cgClass = (CGClass)classContext.getScope();
 		for (@NonNull Constraint asConstraint : ClassUtil.nullFree(element.getOwnedInvariants())) {
 			CGConstraint cgConstraint = doVisit(CGConstraint.class, asConstraint);

@@ -510,7 +510,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		}
 		JavaLocalContext<@NonNull ?> savedLocalContext = localContext;
 		try {
-			localContext = globalContext.getLocalContext(cgIterationCallExp);
+			localContext = globalContext.findLocalContext(cgIterationCallExp);
 			appendReturn(body);
 		}
 		finally {
@@ -910,7 +910,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		NestedNameManager nameManager = localContext.getNameManager();
 		String variantResolvedName = nameManager.basicGetVariantResolvedName(cgElement, nameVariant);
 		if (variantResolvedName == null) {
-			nameManager = localContext.getGlobalContext().getLocalContext(cgElement).getNameManager();
+			nameManager = localContext.getGlobalContext().findLocalContext(cgElement).getNameManager();
 			variantResolvedName = nameManager.basicGetVariantResolvedName(cgElement, nameVariant);
 			assert variantResolvedName != null;
 		}
@@ -976,6 +976,25 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		return metamodelManager.conformsTo(type, TemplateParameterSubstitutions.EMPTY, oclTypeType, TemplateParameterSubstitutions.EMPTY);
 	}
 
+	protected boolean isEmpty(@NonNull CGClass cgClass) {
+		if (cgClass.getOperations().size() > 0) {
+			return false;
+		}
+		if (cgClass.getProperties().size() > 0) {
+			return false;
+		}
+		List<@NonNull CGClass> cgClasses = CGUtil.getClassesList(cgClass);
+		if (cgClasses.size() > 0) {
+			for (CGClass cgNestedClass : cgClasses) {
+				if (!isEmpty(cgNestedClass)) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+
 	protected boolean isEnumerationLiteral(@NonNull CGValuedElement cgValue) {
 		Element ast = cgValue.getAst();
 		if (!(ast instanceof TypedElement)) {
@@ -1024,7 +1043,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 	@Override
 	public @NonNull Boolean visitCGBodiedProperty(@NonNull CGBodiedProperty cgProperty) {
-		localContext = globalContext.getLocalContext(cgProperty);
+		localContext = globalContext.findLocalContext(cgProperty);
 		try {
 			return cgProperty.getCallingConvention().generateJavaDeclaration(this, js, cgProperty);
 		}
@@ -1110,7 +1129,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		js.append(";\n");
 		JavaLocalContext<@NonNull ?> savedLocalContext = localContext;
 		try {
-			localContext = globalContext.getLocalContext(cgIterationCallExp);
+			localContext = globalContext.findLocalContext(cgIterationCallExp);
 			//
 			//	Declare loop head
 			//
@@ -1228,7 +1247,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	public @NonNull Boolean visitCGCachedOperation(@NonNull CGCachedOperation cgOperation) {
 		Operation asOperation = (Operation) cgOperation.getAst();
 		assert asOperation != null;
-		localContext = globalContext.basicGetLocalContext(cgOperation);
+		localContext = globalContext.basicFindLocalContext(cgOperation);
 		boolean isVirtualDispatcher = isVirtualDispatcher(cgOperation);
 		try {
 			String operationClassName = getNativeOperationClassName(cgOperation);
@@ -1381,56 +1400,57 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 	@Override
 	public @NonNull Boolean visitCGClass(@NonNull CGClass cgClass) {
-		CGPackage containingPackage = cgClass.getContainingPackage();
-		if (containingPackage != null) {
-			js.appendClassHeader(containingPackage);
-		}
-		String className = cgClass.getName();
-		js.append("public");
-		if (containingPackage == null) {
-			js.append(" static");
-		}
-		js.append(" class " + className);
-		List<CGClass> cgSuperTypes = cgClass.getSuperTypes();
-		boolean isFirst = true;
-		for (CGClass cgSuperType : cgSuperTypes) {
-			if (!cgSuperType.isInterface()) {
-				if (isFirst) {
-					js.append("\n\textends ");
-				}
-				else {
-					js.append(", ");
-				}
-				js.appendClassReference(cgSuperType);
-				isFirst = false;
+		if (!isEmpty(cgClass)) {
+			CGPackage containingPackage = cgClass.getContainingPackage();
+			if (containingPackage != null) {
+				js.appendClassHeader(containingPackage);
 			}
-		}
-		isFirst = true;
-		for (CGClass cgSuperType : cgSuperTypes) {
-			if (cgSuperType.isInterface()) {
-				if (isFirst) {
-					js.append("\n\timplements ");
-				}
-				else {
-					js.append(", ");
-				}
-				js.appendClassReference(cgSuperType);
-				isFirst = false;
+			String className = cgClass.getName();
+			js.append("public");
+			if (containingPackage == null) {
+				js.append(" static");
 			}
+			js.append(" class " + className);
+			List<CGClass> cgSuperTypes = cgClass.getSuperTypes();
+			boolean isFirst = true;
+			for (CGClass cgSuperType : cgSuperTypes) {
+				if (!cgSuperType.isInterface()) {
+					if (isFirst) {
+						js.append("\n\textends ");
+					}
+					else {
+						js.append(", ");
+					}
+					js.appendClassReference(cgSuperType);
+					isFirst = false;
+				}
+			}
+			isFirst = true;
+			for (CGClass cgSuperType : cgSuperTypes) {
+				if (cgSuperType.isInterface()) {
+					if (isFirst) {
+						js.append("\n\timplements ");
+					}
+					else {
+						js.append(", ");
+					}
+					js.appendClassReference(cgSuperType);
+					isFirst = false;
+				}
+			}
+			js.append("\n");
+			js.append("{\n");
+			js.pushIndentation(null);
+			boolean needsBlankLine = false;
+			needsBlankLine = doClassStatics(cgClass, needsBlankLine);
+			needsBlankLine = doClassFields(cgClass, needsBlankLine);
+			needsBlankLine = doClassMethods(cgClass, needsBlankLine);
+			needsBlankLine = doNestedClasses(cgClass, needsBlankLine);
+			js.popIndentation();
+			js.append("}\n");
 		}
-		js.append("\n");
-		js.append("{\n");
-		js.pushIndentation(null);
-		boolean needsBlankLine = false;
-		needsBlankLine = doClassStatics(cgClass, needsBlankLine);
-		needsBlankLine = doClassFields(cgClass, needsBlankLine);
-		needsBlankLine = doClassMethods(cgClass, needsBlankLine);
-		needsBlankLine = doNestedClasses(cgClass, needsBlankLine);
-		js.popIndentation();
-		js.append("}\n");
 		return true;
 	}
-
 	@Override
 	public @NonNull Boolean visitCGCollectionExp(@NonNull CGCollectionExp cgCollectionExp) {
 		int ranges = 0;
@@ -1518,7 +1538,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 	@Override
 	public @NonNull Boolean visitCGConstraint(@NonNull CGConstraint cgConstraint) {
-		localContext = globalContext.getLocalContext(cgConstraint);
+		localContext = globalContext.findLocalContext(cgConstraint);
 		try {
 			Boolean flowContinues = super.visitCGConstraint(cgConstraint);
 			assert flowContinues != null;
@@ -2295,7 +2315,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	public @NonNull Boolean visitCGNativeOperation(@NonNull CGNativeOperation cgOperation) {
 		Operation asOperation = (Operation) cgOperation.getAst();
 		assert asOperation != null;
-		localContext = globalContext.getLocalContext(cgOperation);
+		localContext = globalContext.findLocalContext(cgOperation);
 		try {
 			String operationClassName = getNativeOperationClassName(cgOperation);
 			LanguageExpression expressionInOCL = asOperation.getBodyExpression();
@@ -2356,7 +2376,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 	@Override
 	public @NonNull Boolean visitCGOperation(@NonNull CGOperation cgOperation) {
-		localContext = globalContext.getLocalContext(cgOperation);
+		localContext = globalContext.findLocalContext(cgOperation);
 		try {
 			OperationCallingConvention callingConvention = cgOperation.getCallingConvention();
 			callingConvention.generateJavaDeclaration(this, js, cgOperation);

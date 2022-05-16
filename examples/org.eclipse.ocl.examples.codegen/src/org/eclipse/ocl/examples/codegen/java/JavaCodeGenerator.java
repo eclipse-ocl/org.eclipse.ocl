@@ -585,7 +585,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	public @NonNull NameResolution getNameResolution(@NonNull CGValuedElement cgElement) {
 		NameResolution nameResolution = cgElement.basicGetNameResolution(); //.getNameVariant(guardedNameVariant);
 		if (nameResolution == null) {
-			NestedNameManager nameManager = getGlobalContext().getLocalContext(cgElement).getNameManager();
+			NestedNameManager nameManager = getGlobalContext().findLocalContext(cgElement).getNameManager();
 			nameResolution = nameManager.declareLazyName(cgElement);
 		}
 		return nameResolution;
@@ -842,7 +842,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 				if (eContainmentFeature == CGModelPackage.Literals.CG_VARIABLE__INIT) {
 					NameResolution nameResolution = ((CGVariable)cgElement).basicGetNameResolution();
 					if (nameResolution == null) {
-						nameResolution = getGlobalContext().getLocalContext((CGVariable)cgElement).getNameManager().declareLazyName((CGVariable)cgElement);
+						nameResolution = getGlobalContext().findLocalContext((CGVariable)cgElement).getNameManager().declareLazyName((CGVariable)cgElement);
 					}
 					visitInPostOrder2(cgChild, nameResolution);
 				}
@@ -869,7 +869,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 					//	assert false;			// XXX wip
 						NameManager nameManager = globalNameManager.bascGetScope(cgValuedElement2);
 						if (nameManager == null) {
-							JavaLocalContext<?> localContext = globalContext.basicGetLocalContext(cgValuedElement2);
+							JavaLocalContext<?> localContext = globalContext.basicFindLocalContext(cgValuedElement2);
 							nameManager = (localContext != null) && !cgValuedElement2.isGlobal() ? localContext.getNameManager() : globalNameManager;
 						}
 						nameResolution = nameManager.declareLazyName(cgValuedElement2);
@@ -894,7 +894,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 					if (eObject instanceof CGValuedElement) {
 						CGValuedElement cgValuedElement = (CGValuedElement)eObject;
 						if ((cgValuedElement.basicGetNameResolution() == null) && !cgValuedElement.isInlined()) {
-							JavaLocalContext<?> localContext = globalContext.basicGetLocalContext(cgValuedElement);
+							JavaLocalContext<?> localContext = globalContext.basicFindLocalContext(cgValuedElement);
 							NameManager nameManager = localContext != null ? localContext.getNameManager() : globalNameManager;
 							nameManager.declareLazyName(cgValuedElement);
 						}

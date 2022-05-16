@@ -186,7 +186,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 
 	protected @Nullable JavaLocalContext<?> pushLocalContext(@NonNull CGNamedElement cgNamedlement) {
 		JavaLocalContext<?> savedLocalContext = localContext;
-		localContext = context.getLocalContext(cgNamedlement);
+		localContext = context.findLocalContext(cgNamedlement);
 		if (savedLocalContext == null) {
 			treeContext = localContext;
 		}

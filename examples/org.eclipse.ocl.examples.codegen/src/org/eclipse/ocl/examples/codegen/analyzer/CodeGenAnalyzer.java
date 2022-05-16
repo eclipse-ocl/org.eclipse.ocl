@@ -141,14 +141,12 @@ public class CodeGenAnalyzer
 		foreignFeatures2.add(asFeature);
 	}
 
-	public void addCGClass(@NonNull CGClass cgClass, boolean needsGeneration) {
+	public void addCGClass(@NonNull CGClass cgClass) {
 		org.eclipse.ocl.pivot.Class asClass = CGUtil.getAST(cgClass);
 		CGClass old = asClass2cgClass.put(asClass, cgClass);
 		assert old == null;
-		if (needsGeneration) {
-			assert cgRootClass != null;
-			cgRootClass.getClasses().add(cgClass);
-		}
+		assert cgRootClass != null;
+		cgRootClass.getClasses().add(cgClass);
 	}
 
 	public void addCGOperation(@NonNull CGOperation cgOperation) {

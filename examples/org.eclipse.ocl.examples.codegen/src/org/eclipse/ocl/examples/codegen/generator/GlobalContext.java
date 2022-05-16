@@ -17,8 +17,9 @@ import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
 
 public interface GlobalContext
 {
+	@Nullable LocalContext basicFindLocalContext(@NonNull CGNamedElement asElement);
 	@Nullable LocalContext basicGetLocalContext(@NonNull CGNamedElement asElement);
-//	@NonNull LocalContext createLocalContext(@NonNull CGNamedElement cgElement);
+	@NonNull LocalContext findLocalContext(@NonNull CGNamedElement asElement);
 	@NonNull ImportNameManager getImportNameManager();
 	@NonNull LocalContext getLocalContext(@NonNull CGNamedElement asElement);
 }

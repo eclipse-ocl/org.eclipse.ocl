@@ -402,7 +402,7 @@ public class AnalysisVisitor extends AbstractExtendingCGModelVisitor<@Nullable O
 		TypeExp pTypeExp = (TypeExp) cgTemplateParameterExp.getAst();
 		Type referredType = pTypeExp.getReferredType();
 		if (referredType != null) {
-			LocalContext localContext = context.getCodeGenerator().getGlobalContext().basicGetLocalContext(cgTemplateParameterExp);
+			LocalContext localContext = context.getCodeGenerator().getGlobalContext().basicFindLocalContext(cgTemplateParameterExp);
 			if (localContext != null) {
 				CGValuedElement cgTemplateableElement = cgTemplateParameterExp.getTemplateableElement();
 				//				cgTypeExp.setTypeId(cgExecutorType.getUnderlyingTypeId());
@@ -426,7 +426,7 @@ public class AnalysisVisitor extends AbstractExtendingCGModelVisitor<@Nullable O
 		TypeExp pTypeExp = (TypeExp) cgTypeExp.getAst();
 		Type referredType = pTypeExp.getReferredType();
 		if (referredType != null) {
-			LocalContext localContext = context.getCodeGenerator().getGlobalContext().basicGetLocalContext(cgTypeExp);
+			LocalContext localContext = context.getCodeGenerator().getGlobalContext().basicFindLocalContext(cgTypeExp);
 			if (localContext != null) {
 				CGExecutorType cgExecutorType = cgTypeExp.getExecutorType();
 				//				cgTypeExp.setTypeId(cgExecutorType.getUnderlyingTypeId());

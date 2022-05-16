@@ -265,7 +265,7 @@ public class JavaStream
 				s.append(string);
 			}
 			else {
-				if (string.contains("NOT_NEEDED")) {
+				if (string.contains("OclComparable")) {
 					getClass();		// XXX
 				}
 				int sLength = s.length();
