@@ -47,7 +47,7 @@ public class InlinedOperationCallingConvention extends ConstrainedOperationCalli
 	public static final @NonNull InlinedOperationCallingConvention INSTANCE = new InlinedOperationCallingConvention();
 
 	@Override
-	public @NonNull CGOperation createCGOperationWithoutBody(@NonNull AS2CGVisitor as2cgVisitor, @NonNull Operation asOperation) {
+	public @NonNull CGOperation createCGOperationWithoutBody(@NonNull AS2CGVisitor as2cgVisitor, @Nullable Type asSourceType, @NonNull Operation asOperation) {
 		return CGModelFactory.eINSTANCE.createCGInlinedOperation();
 	}
 
@@ -135,5 +135,10 @@ public class InlinedOperationCallingConvention extends ConstrainedOperationCalli
 	@Override
 	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
 		throw new IllegalStateException("Inlined operation cannot be declared");
+	}
+
+	@Override
+	public boolean needsGeneration() {
+		return false;
 	}
 }

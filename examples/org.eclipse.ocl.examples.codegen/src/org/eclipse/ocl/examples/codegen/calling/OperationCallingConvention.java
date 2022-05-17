@@ -22,6 +22,7 @@ import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 
 /**
@@ -33,7 +34,7 @@ public interface OperationCallingConvention extends CallingConvention
 	/**
 	 * Create the appropriate CGOperation less parameters and body.
 	 */
-	@NonNull CGOperation createCGOperationWithoutBody(@NonNull AS2CGVisitor as2cgVisitor, @NonNull Operation asOperation);
+	@NonNull CGOperation createCGOperationWithoutBody(@NonNull AS2CGVisitor as2cgVisitor, @Nullable Type asSourceType, @NonNull Operation asOperation);
 
 	/**
 	 * Create the appropriate CGOperationCallExp for asOperationCallExp with cgSource, or return null

@@ -432,8 +432,8 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return cgCallExp;
 	}
 
-	/*protected*/ public @NonNull CGOperation createCGOperationWithoutBody(@NonNull Operation asOperation, @NonNull OperationCallingConvention callingConvention) {
-		CGOperation cgOperation = callingConvention.createCGOperationWithoutBody(this, asOperation);
+	/*protected*/ public @NonNull CGOperation createCGOperationWithoutBody(@Nullable Type asSourceType, @NonNull Operation asOperation, @NonNull OperationCallingConvention callingConvention) {
+		CGOperation cgOperation = callingConvention.createCGOperationWithoutBody(this, asSourceType, asOperation);
 		if (cgOperation.getAst() == null) {
 			installOperation(asOperation, cgOperation, callingConvention);
 		}
@@ -676,9 +676,11 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	}
 
 	protected @NonNull CGValuedElement generateOperationCallExp(@Nullable CGValuedElement cgSource, @NonNull OperationCallExp asOperationCallExp) {
+		OCLExpression asSource = asOperationCallExp.getOwnedSource();
+		Type asSourceType = asSource != null ? asSource.getType() : null;
 		Operation asOperation = ClassUtil.nonNullState(asOperationCallExp.getReferredOperation());
 	//	LibraryOperation libraryOperation = (LibraryOperation)metamodelManager.getImplementation(asOperation);
-		CGOperation cgOperation = generateOperationDeclaration(asOperation);
+		CGOperation cgOperation = generateOperationDeclaration(asSourceType, asOperation);
 		OperationCallingConvention callingConvention = cgOperation.getCallingConvention();
 		LibraryOperation libraryOperation = (LibraryOperation)metamodelManager.getImplementation(asOperation);
 		CGValuedElement cgCallExp = callingConvention.createCGOperationCallExp(this, cgOperation, libraryOperation, cgSource, asOperationCallExp);
@@ -693,8 +695,9 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	/**
 	 * Generate / share the CG declaration for asOperation.
+	 * @param asSourceType
 	 */
-	protected @NonNull CGOperation generateOperationDeclaration(@NonNull Operation asOperation) {	// XXX rationalize as generateOperationDeclaration with later createImplementation
+	protected @NonNull CGOperation generateOperationDeclaration(@Nullable Type asSourceType, @NonNull Operation asOperation) {	// XXX rationalize as generateOperationDeclaration with later createImplementation
 		CGOperation cgOperation = context.basicGetOperation(asOperation);
 		if (cgOperation == null) {
 			org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asOperation);
@@ -706,7 +709,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 				if (libraryOperation instanceof ForeignOperation) {			// XXX this parses stdlib bodies unnecessarily
 					context.addForeignFeature(asOperation);
 				}
-				cgOperation = createCGOperationWithoutBody(asOperation, callingConvention);
+				cgOperation = createCGOperationWithoutBody(asSourceType, asOperation, callingConvention);
 				getNameManager().declarePreferredName(cgOperation);
 				pushContext(cgOperation, asOperation);
 				ExpressionInOCL query = null;
@@ -928,10 +931,11 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		CGLibraryOperationCallExp cgOperationCallExp = createCGLibraryOperationCallExp(CollectionExcludingOperation.INSTANCE);
 		StandardLibraryInternal standardLibrary = environmentFactory.getStandardLibrary();
 		Operation asExcludingOperation = standardLibrary.getCollectionExcludingOperation();
-		cgOperationCallExp.setReferredOperation(asExcludingOperation);
-		CGOperation cgOperation = generateOperationDeclaration(asExcludingOperation);
-		cgOperationCallExp.setCgOperation(cgOperation);
 		OCLExpression asSource = callExp.getOwnedSource();
+		assert asSource != null;
+		cgOperationCallExp.setReferredOperation(asExcludingOperation);
+		CGOperation cgOperation = generateOperationDeclaration(asSource.getType(), asExcludingOperation);
+		cgOperationCallExp.setCgOperation(cgOperation);
 		cgOperationCallExp.setTypeId(context.getTypeId(asSource.getTypeId()));
 		cgOperationCallExp.setRequired(true);
 		cgOperationCallExp.getCgArguments().add(cgSource);
@@ -1609,7 +1613,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	@Override
 	public @Nullable CGOperation visitOperation(@NonNull Operation asOperation) {
-		CGOperation cgOperation = generateOperationDeclaration(asOperation);
+		CGOperation cgOperation = generateOperationDeclaration(null, asOperation);
 		pushContext(cgOperation, asOperation);
 		LanguageExpression specification = asOperation.getBodyExpression();
 		if (specification instanceof ExpressionInOCL) {			// Should already be parsed

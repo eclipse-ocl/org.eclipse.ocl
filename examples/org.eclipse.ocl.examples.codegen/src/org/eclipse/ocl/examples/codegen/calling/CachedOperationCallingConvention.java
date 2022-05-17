@@ -47,6 +47,8 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.internal.library.ConstrainedOperation;
 import org.eclipse.ocl.pivot.internal.library.executor.AbstractDispatchOperation;
 import org.eclipse.ocl.pivot.internal.library.executor.AbstractEvaluationOperation;
+import org.eclipse.ocl.pivot.internal.manager.FinalAnalysis;
+import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -66,18 +68,19 @@ public class CachedOperationCallingConvention extends ConstrainedOperationCallin
 	public static final @NonNull CachedOperationCallingConvention INSTANCE = new CachedOperationCallingConvention();
 
 	// CachedOperationCallingConvention
-	public @NonNull CGOperationCallExp cachedOperationCall(@NonNull AS2CGVisitor as2cgVisitor, @NonNull OperationCallExp element, @NonNull CGClass currentClass, CGValuedElement cgSource,
+	public @NonNull CGOperationCallExp cachedOperationCall(@NonNull AS2CGVisitor as2cgVisitor, @NonNull OperationCallExp asOperationCallExp, @NonNull CGClass currentClass, CGValuedElement cgSource,
 			@NonNull Operation asOperation, @Nullable Iterable<@NonNull Operation> asOverrideOperations) {
-		List<@NonNull CGCachedOperation> cgOperations = generateDeclarationHierarchy(as2cgVisitor, currentClass, asOperation, asOverrideOperations);
+		//	List<@NonNull CGCachedOperation> cgOperations = generateDeclarationHierarchy(as2cgVisitor, currentClass, asOperation, asOverrideOperations);
+		List<@NonNull CGCachedOperation> cgOperations = new ArrayList<>();			// XXX
 		CGCachedOperationCallExp cgOperationCallExp = CGModelFactory.eINSTANCE.createCGCachedOperationCallExp();
 		List<CGValuedElement> cgArguments = cgOperationCallExp.getCgArguments();
 		cgArguments.add(cgSource);
 		cgOperationCallExp.setThisIsSelf(false);
-		for (@NonNull OCLExpression pArgument : ClassUtil.nullFree(element.getOwnedArguments())) {
-			CGValuedElement cgArgument = as2cgVisitor.doVisit(CGValuedElement.class, pArgument);
+		for (@NonNull OCLExpression asArgument : ClassUtil.nullFree(asOperationCallExp.getOwnedArguments())) {
+			CGValuedElement cgArgument = as2cgVisitor.doVisit(CGValuedElement.class, asArgument);
 			cgArguments.add(cgArgument);
 		}
-		as2cgVisitor.initAst(cgOperationCallExp, element);
+		as2cgVisitor.initAst(cgOperationCallExp, asOperationCallExp);
 		cgOperationCallExp.setReferredOperation(asOperation);
 		if (asOverrideOperations != null) {
 			CGOperation cgOperation = as2cgVisitor.getVirtualOperation2cgOperation(asOperation);
@@ -90,15 +93,21 @@ public class CachedOperationCallingConvention extends ConstrainedOperationCallin
 	}
 
 	@Override
-	public @NonNull CGOperation createCGOperationWithoutBody(@NonNull AS2CGVisitor as2cgVisitor, @NonNull Operation asOperation) {
-		assert as2cgVisitor.getMetamodelManager().getImplementation(asOperation) instanceof ConstrainedOperation;
+	public @NonNull CGOperation createCGOperationWithoutBody(@NonNull AS2CGVisitor as2cgVisitor, @Nullable Type asSourceType, @NonNull Operation asOperation) {
+		PivotMetamodelManager metamodelManager = as2cgVisitor.getMetamodelManager();
+		assert metamodelManager.getImplementation(asOperation) instanceof ConstrainedOperation;
 		org.eclipse.ocl.pivot.Package asPackage = PivotUtil.getOwningPackage(PivotUtil.getOwningClass(asOperation));
 		assert !(asPackage instanceof Library);
 
-		Iterable<@NonNull Operation> asOverrideOperations = null;
-		CGClass currentClass = as2cgVisitor.getCurrentClass();
-		generateDeclarationHierarchy(as2cgVisitor, currentClass, asOperation, asOverrideOperations);
+		generateDeclarationHierarchy(as2cgVisitor, asSourceType, asOperation);
+	//	Iterable<@NonNull Operation> asOverrideOperations = null;
+	//	CGClass currentClass = as2cgVisitor.getCurrentClass();
+	//	generateDeclarationHierarchy(as2cgVisitor, currentClass, asOperation, asOverrideOperations);
 
+	//	if (currentClass != null) {
+	//		Iterable<@NonNull Operation> overrides = metamodelManager.getFinalAnalysis().getOverrides(asOperation);
+	//		return cachedOperationCall(element, currentClass2, cgSource, asOperation, overrides);
+	//	}
 
 		CGOperation cgOperation = as2cgVisitor.getFinalOperation2cgOperation(asOperation);
 		assert cgOperation != null;
@@ -121,6 +130,11 @@ public class CachedOperationCallingConvention extends ConstrainedOperationCallin
 		Operation finalOperation = null;	// FIXME cast
 		if (asSource != null) {
 			Type sourceType = asSource.getType();
+
+			Iterable<@NonNull Operation> asOverrideOperations = as2cgVisitor.getMetamodelManager().getFinalAnalysis().getOverrides(asOperation);
+			List<@NonNull CGCachedOperation> ops = generateDeclarationHierarchy(as2cgVisitor, sourceType, asOperation);
+
+
 			finalOperation = as2cgVisitor.getCodeGenerator().isFinal(asOperation, (org.eclipse.ocl.pivot.Class)sourceType);	// FIXME cast
 		}
 		CGClass currentClass = as2cgVisitor.basicGetCurrentClass();
@@ -325,19 +339,25 @@ public class CachedOperationCallingConvention extends ConstrainedOperationCallin
 		return true;
 	} */
 
-	protected List<@NonNull CGCachedOperation> generateDeclarationHierarchy(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGClass currentClass,
-			@NonNull Operation asOperation, @Nullable Iterable<@NonNull Operation> asOverrideOperations) {
+	protected @NonNull List<@NonNull CGCachedOperation> generateDeclarationHierarchy(@NonNull AS2CGVisitor as2cgVisitor,
+			@Nullable Type sourceType, @NonNull Operation asOperation) {
 		CodeGenerator codeGenerator = as2cgVisitor.getCodeGenerator();
 		CodeGenAnalyzer analyzer = codeGenerator.getAnalyzer();
+	//	Type sourceType = ClassUtil.nonNullState(asSource.getType());
+	//	Operation finalOperation = codeGenerator.isFinal(asOperation, (org.eclipse.ocl.pivot.Class)sourceType);	// FIXME cast
+		PivotMetamodelManager metamodelManager = codeGenerator.getEnvironmentFactory().getMetamodelManager();
+		FinalAnalysis finalAnalysis = metamodelManager.getFinalAnalysis();
+		Operation finalOperation = (sourceType != null) ? finalAnalysis.isFinal(asOperation, metamodelManager.getCompleteClass(sourceType)) : null;
+		Iterable<@NonNull Operation> asOverrideOperations = finalAnalysis.getOverrides(asOperation);
 		List<@NonNull Operation> asNewOperations = new ArrayList<>();
 		List<@NonNull CGCachedOperation> cgOperations = new ArrayList<>();
-		if (asOverrideOperations != null) {
+	//	if (asOverrideOperations != null) {
 			assert Iterables.contains(asOverrideOperations, asOperation);
 			for (@NonNull Operation asOverride : asOverrideOperations) {
 				CGOperation cgOperation = as2cgVisitor.getFinalOperation2cgOperation(asOverride);
 				if (cgOperation == null) {
 					OperationCallingConvention callingConvention = codeGenerator.getCallingConvention(asOverride);
-					cgOperation = as2cgVisitor.createCGOperationWithoutBody(asOverride, callingConvention);
+					cgOperation = as2cgVisitor.createCGOperationWithoutBody(sourceType, asOverride, callingConvention);
 					assert cgOperation != null;
 					as2cgVisitor.pushLocalContext(cgOperation, asOverride);
 					as2cgVisitor.popLocalContext();
@@ -346,8 +366,8 @@ public class CachedOperationCallingConvention extends ConstrainedOperationCallin
 				cgOperations.add((CGCachedOperation) cgOperation);
 				analyzer.addForeignFeature(asOperation);
 			}
-		}
-		else {
+	//	}
+	/*	else {
 			CGOperation cgOperation = as2cgVisitor.getFinalOperation2cgOperation(asOperation);
 			if (cgOperation == null) {
 				cgOperation = CGModelFactory.eINSTANCE.createCGCachedOperation();
@@ -356,11 +376,11 @@ public class CachedOperationCallingConvention extends ConstrainedOperationCallin
 				cgOperations.add((CGCachedOperation) cgOperation);
 				analyzer.addForeignFeature(asOperation);
 			}
-		}
-	//	for (@NonNull Operation asNewOperation : asNewOperations) {
-	//		CGOperation cgOperation = as2cgVisitor.visitOperation(asNewOperation);
+		} */
+		for (@NonNull Operation asNewOperation : asNewOperations) {
+			CGOperation cgOperation = as2cgVisitor.visitOperation(asNewOperation);
 	//		currentClass.getOperations().add(cgOperation);
-	//	}
+		}
 		return cgOperations;
 	}
 
