@@ -84,7 +84,7 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 	protected void addTypeIdArgument(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperationCallExp cgOperationCallExp, @NonNull TypeId asTypeId) {
 		CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();
 		List<CGValuedElement> cgArguments = cgOperationCallExp.getCgArguments();
-		CGTypeId cgTypeId = analyzer.getTypeId(asTypeId);
+		CGTypeId cgTypeId = analyzer.getCGTypeId(asTypeId);
 		cgArguments.add(analyzer.createCGConstantExp(cgTypeId));
 	}
 
@@ -308,7 +308,7 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 		cgOperationCallExp.setReferredOperation(asOperation);
 		cgOperationCallExp.setAst(asOperationCallExp);
 		TypeId asTypeId = asOperationCallExp.getTypeId();
-		cgOperationCallExp.setTypeId(as2cgVisitor.getAnalyzer().getTypeId(asTypeId));
+		cgOperationCallExp.setTypeId(as2cgVisitor.getAnalyzer().getCGTypeId(asTypeId));
 		cgOperationCallExp.setCgOperation(cgOperation);
 		cgOperationCallExp.setInvalidating(asOperation.isIsInvalidating());
 		cgOperationCallExp.setValidating(asOperation.isIsValidating());
@@ -361,7 +361,7 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 				if (!sourceMayBeNull) {
 					if (cgSource.isNull()) {
 //						CGInvalid cgInvalid = context.getInvalid("null value1 for source parameter");
-						CGInvalid cgInvalid = analyzer.getInvalid("''" + asClass.getName() + "'' rather than ''OclVoid'' value required");
+						CGInvalid cgInvalid = analyzer.getCGInvalid("''" + asClass.getName() + "'' rather than ''OclVoid'' value required");
 						CGConstantExp cgLiteralExp = analyzer.createCGConstantExp(CGUtil.getAST(cgOperationCallExp), cgInvalid);
 						CGUtil.replace(cgOperationCallExp, cgLiteralExp);
 						return;
@@ -373,7 +373,7 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 				if ((asParameter != null) && asParameter.isIsRequired()) {
 					if (cgArgument.isNull()) {
 	//					CGInvalid cgInvalid = context.getInvalid("null value2 for " + asParameter.getName() + " parameter");
-						CGInvalid cgInvalid = analyzer.getInvalid("''" + asParameter.getType().getName() + "'' rather than ''OclVoid'' value required");
+						CGInvalid cgInvalid = analyzer.getCGInvalid("''" + asParameter.getType().getName() + "'' rather than ''OclVoid'' value required");
 						CGConstantExp cgLiteralExp = analyzer.createCGConstantExp(CGUtil.getAST(cgOperationCallExp), cgInvalid);
 						CGUtil.replace(cgOperationCallExp, cgLiteralExp);
 						return;

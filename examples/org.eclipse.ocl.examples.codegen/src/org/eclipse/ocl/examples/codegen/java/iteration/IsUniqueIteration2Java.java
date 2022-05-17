@@ -39,7 +39,7 @@ public class IsUniqueIteration2Java extends AbstractAccumulation2Java
 
 	@Override
 	public boolean appendFinalValue(@NonNull JavaStream js, @NonNull CGBuiltInIterationCallExp cgIterationCallExp) {
-		return js.appendAssignment(cgIterationCallExp, js.getCodeGenerator().getAnalyzer().getBoolean(true));
+		return js.appendAssignment(cgIterationCallExp, js.getCodeGenerator().getAnalyzer().getCGBoolean(true));
 	}
 
 	@Override
@@ -76,6 +76,6 @@ public class IsUniqueIteration2Java extends AbstractAccumulation2Java
 	@Override
 	public @Nullable CGTypeId getAccumulatorTypeId(@NonNull CodeGenAnalyzer analyzer, @NonNull CGBuiltInIterationCallExp cgIterationCallExp) {
 		Class<?> accumulatorClass = getAccumulatorClass(analyzer, TypeId.SET);
-		return analyzer.getTypeId(JavaConstants.getJavaTypeId(accumulatorClass));
+		return analyzer.getCGTypeId(JavaConstants.getJavaTypeId(accumulatorClass));
 	}
 }

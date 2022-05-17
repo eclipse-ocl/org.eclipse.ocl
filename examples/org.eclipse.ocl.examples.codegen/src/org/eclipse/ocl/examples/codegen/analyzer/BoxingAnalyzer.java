@@ -226,7 +226,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 			CGExecutorType cgExecutorType = context.createExecutorType(asType);
 			cgCastExp.setExecutorType(cgExecutorType);
 		}
-		cgCastExp.setTypeId(codeGenerator.getAnalyzer().getTypeId(pivot.getTypeId()));
+		cgCastExp.setTypeId(codeGenerator.getAnalyzer().getCGTypeId(pivot.getTypeId()));
 		return cgCastExp;
 	}
 

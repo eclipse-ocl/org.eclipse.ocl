@@ -134,7 +134,7 @@ public class EcoreOperationCallingConvention extends AbstractOperationCallingCon
 		CodeGenAnalyzer analyzer = cg2javaVisitor.getAnalyzer();
 		GenModelHelper genModelHelper = cg2javaVisitor.getGenModelHelper();
 		JavaCodeGenerator codeGenerator = cg2javaVisitor.getCodeGenerator();
-		CGTypeId cgTypeId = analyzer.getTypeId(asOperation.getOwningClass().getTypeId());
+		CGTypeId cgTypeId = analyzer.getCGTypeId(asOperation.getOwningClass().getTypeId());
 		//		TypeDescriptor requiredTypeDescriptor = context.getUnboxedDescriptor(cgTypeId.getElementId());
 		TypeDescriptor requiredTypeDescriptor = codeGenerator.getUnboxedDescriptor(ClassUtil.nonNullState(cgTypeId.getElementId()));
 	//	CGValuedElement cgThis = cg2javaVisitor.getExpression(cgOperationCallExp.getCgThis());
@@ -187,7 +187,7 @@ public class EcoreOperationCallingConvention extends AbstractOperationCallingCon
 					typeDescriptor.appendEcoreValue(js, rawBoundType, argument);
 				}
 				else {	// ? never happens
-					CGTypeId cgParameterTypeId = analyzer.getTypeId(asParameter.getTypeId());
+					CGTypeId cgParameterTypeId = analyzer.getCGTypeId(asParameter.getTypeId());
 					TypeDescriptor parameterTypeDescriptor = codeGenerator.getUnboxedDescriptor(ClassUtil.nonNullState(cgParameterTypeId.getElementId()));
 					js.appendReferenceTo(parameterTypeDescriptor, argument);
 

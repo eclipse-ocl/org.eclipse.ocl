@@ -67,8 +67,7 @@ public class CachedOperationCallingConvention extends ConstrainedOperationCallin
 {
 	public static final @NonNull CachedOperationCallingConvention INSTANCE = new CachedOperationCallingConvention();
 
-	// CachedOperationCallingConvention
-	public @NonNull CGOperationCallExp cachedOperationCall(@NonNull AS2CGVisitor as2cgVisitor, @NonNull OperationCallExp asOperationCallExp, @NonNull CGClass currentClass, CGValuedElement cgSource,
+	protected @NonNull CGOperationCallExp cachedOperationCall(@NonNull AS2CGVisitor as2cgVisitor, @NonNull OperationCallExp asOperationCallExp, @NonNull CGClass currentClass, CGValuedElement cgSource,
 			@NonNull Operation asOperation, @Nullable Iterable<@NonNull Operation> asOverrideOperations) {
 		//	List<@NonNull CGCachedOperation> cgOperations = generateDeclarationHierarchy(as2cgVisitor, currentClass, asOperation, asOverrideOperations);
 		List<@NonNull CGCachedOperation> cgOperations = new ArrayList<>();			// XXX
@@ -83,7 +82,7 @@ public class CachedOperationCallingConvention extends ConstrainedOperationCallin
 		as2cgVisitor.initAst(cgOperationCallExp, asOperationCallExp);
 		cgOperationCallExp.setReferredOperation(asOperation);
 		if (asOverrideOperations != null) {
-			CGOperation cgOperation = as2cgVisitor.getVirtualOperation2cgOperation(asOperation);
+			CGOperation cgOperation = as2cgVisitor.getAnalyzer().basicGetVirtualCGOperation(asOperation);
 			if (cgOperation == null) {
 				cgOperation = as2cgVisitor.createVirtualCGOperationWithoutBody(asOperation, cgOperations);
 				currentClass.getOperations().add(cgOperation);
@@ -109,7 +108,7 @@ public class CachedOperationCallingConvention extends ConstrainedOperationCallin
 	//		return cachedOperationCall(element, currentClass2, cgSource, asOperation, overrides);
 	//	}
 
-		CGOperation cgOperation = as2cgVisitor.getFinalOperation2cgOperation(asOperation);
+		CGOperation cgOperation = as2cgVisitor.getAnalyzer().basicGetFinalCGOperation(asOperation);
 		assert cgOperation != null;
 		return cgOperation;
 
@@ -354,7 +353,7 @@ public class CachedOperationCallingConvention extends ConstrainedOperationCallin
 	//	if (asOverrideOperations != null) {
 			assert Iterables.contains(asOverrideOperations, asOperation);
 			for (@NonNull Operation asOverride : asOverrideOperations) {
-				CGOperation cgOperation = as2cgVisitor.getFinalOperation2cgOperation(asOverride);
+				CGOperation cgOperation = analyzer.basicGetFinalCGOperation(asOverride);
 				if (cgOperation == null) {
 					OperationCallingConvention callingConvention = codeGenerator.getCallingConvention(asOverride);
 					cgOperation = as2cgVisitor.createCGOperationWithoutBody(sourceType, asOverride, callingConvention);

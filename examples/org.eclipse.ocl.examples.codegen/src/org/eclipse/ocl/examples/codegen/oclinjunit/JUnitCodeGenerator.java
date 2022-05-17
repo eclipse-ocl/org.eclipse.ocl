@@ -96,7 +96,7 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		Type type = expInOcl.getType();
 		assert type != null;
 		TypeId asTypeId = type/*.behavioralType()*/.getTypeId();
-		cgOperation.setTypeId(cgAnalyzer.getTypeId(asTypeId));
+		cgOperation.setTypeId(cgAnalyzer.getCGTypeId(asTypeId));
 		evaluateNameResolution.addCGElement(cgOperation);
 		CGValuedElement cgBody = (CGValuedElement) ClassUtil.nonNullState(expInOcl.accept(as2cgVisitor));
 		cgOperation.setBody(cgBody);

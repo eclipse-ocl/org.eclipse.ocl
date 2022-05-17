@@ -682,7 +682,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	}
 
 	public @NonNull CGValuedElement getExpression(@Nullable CGValuedElement cgExpression) {
-		return analyzer.getExpression(cgExpression);
+		return analyzer.getCGExpression(cgExpression);
 	}
 
 	public @NonNull GenModelHelper getGenModelHelper() {

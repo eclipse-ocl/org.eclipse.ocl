@@ -73,7 +73,7 @@ public class ConstrainedPropertyCallingConvention extends AbstractPropertyCallin
 		assert libraryProperty instanceof ConstrainedProperty;
 	//	assert cgSource == null;
 		CGForeignPropertyCallExp cgPropertyCallExp = CGModelFactory.eINSTANCE.createCGForeignPropertyCallExp();
-		CGElementId cgPropertyId = analyzer.getElementId(asProperty.getPropertyId());
+		CGElementId cgPropertyId = analyzer.getCGElementId(asProperty.getPropertyId());
 		cgPropertyCallExp.getOwns().add(cgPropertyId);
 		cgPropertyCallExp.setCgProperty(cgProperty);
 		cgPropertyCallExp.setReferredProperty(asProperty);

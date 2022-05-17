@@ -144,8 +144,8 @@ public class DependencyVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 	}
 
 	private void addElementIdDependency(@NonNull ElementId elementId, @NonNull ElementId dependsOn) {
-		CGElementId cgElementId = context.getElementId(elementId);
-		CGElementId cgDependsOn = context.getElementId(dependsOn);
+		CGElementId cgElementId = context.getCGElementId(elementId);
+		CGElementId cgDependsOn = context.getCGElementId(dependsOn);
 		dependsOn.accept(id2DependencyVisitor);
 		addDependency(cgElementId, cgDependsOn);
 	}

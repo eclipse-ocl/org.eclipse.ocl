@@ -83,7 +83,7 @@ public class ExecutorPropertyCallingConvention extends AbstractPropertyCallingCo
 		cgExecutorPropertyCallExp.setCgProperty(cgProperty);
 		cgExecutorPropertyCallExp.setReferredProperty(asProperty);
 		cgExecutorPropertyCallExp.setAst(asPropertyCallExp);
-		cgExecutorPropertyCallExp.setTypeId(analyzer.getTypeId(asPropertyCallExp.getTypeId()));
+		cgExecutorPropertyCallExp.setTypeId(analyzer.getCGTypeId(asPropertyCallExp.getTypeId()));
 		cgExecutorPropertyCallExp.setRequired(isRequired || codeGenerator.isPrimitive(cgExecutorPropertyCallExp));
 		cgExecutorPropertyCallExp.setSource(cgSource);
 		return cgExecutorPropertyCallExp;

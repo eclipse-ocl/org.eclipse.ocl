@@ -908,7 +908,7 @@ public class JavaStream
 			elementId.accept(id2JavaExpressionVisitor);
 		}
 		else {
-			appendValueName(analyzer.getElementId(elementId));
+			appendValueName(analyzer.getCGElementId(elementId));
 		}
 	}
 

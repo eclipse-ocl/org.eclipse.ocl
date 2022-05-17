@@ -38,7 +38,7 @@ public class JavaDependencyVisitor extends DependencyVisitor
 	public @Nullable Object visitCGBoxExp(@NonNull CGBoxExp cgBoxExp) {
 		TypeId typeId = cgBoxExp.getSource().getASTypeId();
 		if (typeId != null) {
-			addDependency(cgBoxExp, context.getElementId(typeId));
+			addDependency(cgBoxExp, context.getCGElementId(typeId));
 			typeId.accept(id2DependencyVisitor);						// FIXME this should be automatic (needed for OclAny testNotEqual)
 		}
 		return super.visitCGBoxExp(cgBoxExp);
@@ -48,7 +48,7 @@ public class JavaDependencyVisitor extends DependencyVisitor
 	public @Nullable Object visitCGEcoreExp(@NonNull CGEcoreExp cgEcoreExp) {
 		TypeId typeId = cgEcoreExp.getSource().getASTypeId();
 		if (typeId != null) {
-			addDependency(cgEcoreExp, context.getElementId(typeId));
+			addDependency(cgEcoreExp, context.getCGElementId(typeId));
 			typeId.accept(id2DependencyVisitor);						// FIXME this should be automatic (needed for OclAny testNotEqual)
 		}
 		return super.visitCGEcoreExp(cgEcoreExp);

@@ -70,7 +70,7 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 			|| (libraryProperty instanceof ForeignProperty);		// test_static_id
 	//	assert cgSource == null;
 		CGForeignPropertyCallExp cgPropertyCallExp = CGModelFactory.eINSTANCE.createCGForeignPropertyCallExp();
-		CGElementId cgPropertyId = analyzer.getElementId(asProperty.getPropertyId());
+		CGElementId cgPropertyId = analyzer.getCGElementId(asProperty.getPropertyId());
 		cgPropertyCallExp.getOwns().add(cgPropertyId);
 		cgPropertyCallExp.setCgProperty(cgProperty);
 		cgPropertyCallExp.setReferredProperty(asProperty);
@@ -121,7 +121,7 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 		CGValuedElement cgInitValue = as2cgVisitor.getInitExpression(/*cgParameter,*/ asProperty);
 		assert cgInitValue != null;
 		CGVariable modelManagerVariable = localContext.getModelManagerVariable();
-		CGElementId cgPropertyId = analyzer.getElementId(asProperty.getPropertyId());
+		CGElementId cgPropertyId = analyzer.getCGElementId(asProperty.getPropertyId());
 	//	CGTypeId cacheTypeId = context.getTypeId(asProperty.getTypeId());
 		CGExecutorType cgCastType = analyzer.createExecutorType(PivotUtil.getType(asProperty));
 		CGNativeOperationCallExp basicGetValueInit = as2cgVisitor.createCGBoxedNativeOperationCallExp(analyzer.createCGVariableExp(modelManagerVariable), JavaConstants.MODEL_MANAGER_BASIC_GET_FOREIGN_PROPERTY_VALUE_METHOD,

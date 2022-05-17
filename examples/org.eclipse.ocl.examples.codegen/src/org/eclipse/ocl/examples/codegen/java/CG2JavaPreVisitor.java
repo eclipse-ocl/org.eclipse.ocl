@@ -107,7 +107,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 		//			;
 		//		}
 		else {
-			CGElementId elementId = analyzer.getElementId(typeId);
+			CGElementId elementId = analyzer.getCGElementId(typeId);
 			CGElementId cgTypeId = elementId;
 			CGConstantExp cgConstantExp = CGModelFactory.eINSTANCE.createCGConstantExp();
 			cgConstantExp.setReferredConstant(cgTypeId);
@@ -542,7 +542,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 
 	@Override
 	public @Nullable Object visitCGUnboxExp(@NonNull CGUnboxExp cgUnboxExp) {
-		CGValuedElement source = analyzer.getExpression(cgUnboxExp.getSource());
+		CGValuedElement source = analyzer.getCGExpression(cgUnboxExp.getSource());
 		TypeDescriptor boxedTypeDescriptor = codeGenerator.getTypeDescriptor(source);
 		if (boxedTypeDescriptor.isAssignableTo(CollectionValue.class)
 				|| boxedTypeDescriptor.isAssignableTo(EnumerationLiteralId.class)) {
