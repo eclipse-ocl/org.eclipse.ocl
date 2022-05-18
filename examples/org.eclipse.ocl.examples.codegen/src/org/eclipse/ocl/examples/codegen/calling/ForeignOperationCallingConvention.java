@@ -143,7 +143,7 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 		assert cgSource == null;
 		assert asOperation.isIsStatic();
 		CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();
-		analyzer.addForeignFeature(asOperation);
+		analyzer.addExternalFeature(asOperation);
 		CGForeignOperationCallExp cgForeignOperationCallExp = CGModelFactory.eINSTANCE.createCGForeignOperationCallExp();
 		addExecutorArgument(as2cgVisitor, cgForeignOperationCallExp);
 	//	addTypeIdArgument(as2cgVisitor, cgForeignOperationCallExp, asOperation.getTypeId());

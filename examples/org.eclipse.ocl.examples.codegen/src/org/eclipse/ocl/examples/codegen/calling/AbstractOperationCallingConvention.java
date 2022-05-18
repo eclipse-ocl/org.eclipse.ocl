@@ -38,6 +38,7 @@ import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Parameter;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -107,11 +108,11 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 		js.append("generateJavaDeclaration " + this);
 	//	return true;
 	//	assert false : "Missing overload for " + cgOperation.getCallingConvention().getClass().getSimpleName();
-		boolean isForeign = false;
+		boolean isExternal = false;
 		Element ast = cgOperation.getAst();
 		assert (ast instanceof Operation); {
 			Operation asOperation = (Operation)ast;
-			isForeign = cg2javaVisitor.getAnalyzer().isForeign(asOperation);//cgOperation instanceof CGFo;
+			isExternal = cg2javaVisitor.getAnalyzer().isExternal(asOperation);//cgOperation instanceof CGFo;
 			LanguageExpression expressionInOCL = asOperation.getBodyExpression();
 			if (ast instanceof Operation) {
 				String title = PrettyPrinter.printName(asOperation);
@@ -120,11 +121,11 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 		}
 		//
 		//
-		if (!isForeign) {
+		if (!isExternal) {
 			js.append("@Override\n");
 		}
 		js.append("public ");
-		if (isForeign) {
+		if (isExternal) {
 			js.append("static ");
 		}
 		boolean cgOperationIsInvalid = cgOperation.getInvalidValue() != null;
@@ -132,7 +133,7 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 		js.append(" ");
 		js.appendClassReference(cgOperation.isRequired() ? true : null, cgOperation);
 		js.append(" ");
-		if (isForeign) {
+		if (isExternal) {
 			js.append("op_");
 		}
 		js.appendValueName(cgOperation);
@@ -228,7 +229,7 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 			}
 			for (@NonNull Variable parameterVariable : ClassUtil.nullFree(bodyExpression.getOwnedParameters())) {
 				CGParameter cgParameter;
-				if (cgOperation instanceof CGEcoreOperation) {
+				if (cgOperation instanceof CGEcoreOperation) {		// XXX use CallingConvention
 					cgParameter = as2cgVisitor.getParameter(parameterVariable, parameterVariable.getName());
 				}
 				else {
@@ -272,6 +273,15 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 			CGValuedElement argument = cg2javaVisitor.getExpression(cgArgument);
 			js.appendReferenceTo(parameterTypeDescriptor, argument);
 		}
+	}
+
+	@Override
+	public @NonNull CGOperation generateDeclarationHierarchy(@NonNull AS2CGVisitor as2cgVisitor, @Nullable Type asSourceType, @NonNull Operation asOperation) {
+		CGOperation cgOperation = createCGOperationWithoutBody(as2cgVisitor, asSourceType, asOperation);
+		if (cgOperation.getAst() == null) {
+			as2cgVisitor.getAnalyzer().installOperation(asOperation, cgOperation, this);
+		}
+		return cgOperation;
 	}
 
 	@Override

@@ -54,7 +54,7 @@ public class EcoreForeignOperationCallingConvention extends ForeignOperationCall
 		Operation asOperation = ClassUtil.nonNullState(asOperationCallExp.getReferredOperation());
 		boolean isRequired = asOperation.isIsRequired();
 		CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();
-		analyzer.addForeignFeature(asOperation);
+		analyzer.addExternalFeature(asOperation);
 		CGForeignOperationCallExp cgForeignOperationCallExp = CGModelFactory.eINSTANCE.createCGForeignOperationCallExp();
 		addExecutorArgument(as2cgVisitor, cgForeignOperationCallExp);
 		if (cgSource != null) {

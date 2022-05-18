@@ -104,7 +104,7 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 	@Override
 	public @NonNull CGProperty createCGProperty(@NonNull AS2CGVisitor as2cgVisitor, @NonNull Property asProperty) {
 		CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();
-		analyzer.addForeignFeature(asProperty);
+		analyzer.addExternalFeature(asProperty);
 		return CGModelFactory.eINSTANCE.createCGForeignProperty();
 	}
 

@@ -568,7 +568,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 	//		Iterable<@NonNull CGValuedElement> sortedGlobals = prepareGlobals();
 			String constantsText = cg2java.generateConstants(sortedGlobals);
 			constantsTexts.put(genPackage, constantsText);
-			Iterable<@NonNull Feature> foreignFeatures2 = cgAnalyzer.getForeignFeatures();
+			Iterable<@NonNull Feature> foreignFeatures2 = cgAnalyzer.getExternalFeatures();
 			if (foreignFeatures2 != null) {
 				for (@NonNull Feature foreignFeature : foreignFeatures2) {
 					if (foreignFeature instanceof Operation) {

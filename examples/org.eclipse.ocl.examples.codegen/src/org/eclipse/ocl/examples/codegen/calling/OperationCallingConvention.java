@@ -51,6 +51,11 @@ public interface OperationCallingConvention extends CallingConvention
 	void createCGParameters(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL bodyExpression);
 
 	/**
+	 * Install all the CG operation declaration equivalents for asOperation. Returns the direct equivalent.
+	 */
+	@NonNull CGOperation generateDeclarationHierarchy(@NonNull AS2CGVisitor as2cgVisitor, @Nullable Type asSourceType, @NonNull Operation asOperation);
+
+	/**
 	 * Generate the Java code for an Operation call.
 	 * Returns true if control flow continues, false if an exception throw has been synthesized.
 	 */

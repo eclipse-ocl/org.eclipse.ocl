@@ -119,15 +119,37 @@ public class CodeGenAnalyzer
 	private /*@LazyNonNull*/ CGUnlimited cgUnlimited = null;
 	private /*@LazyNonNull*/ CGInvalid cgInvalid = null;
 	protected final @NonNull CGNull cgNull;
-	private /*@LazyNonNull*/ CGClass cgRootClass = null;
 	private final @NonNull Map<@NonNull Number, @NonNull CGInteger> cgIntegers = new HashMap<>();
 	private final @NonNull Map<@NonNull Number, @NonNull CGReal> cgReals = new HashMap<>();
 	private final @NonNull Map<@NonNull String, @NonNull CGString> cgStrings = new HashMap<>();
 	private /*@LazyNonNull*/ Map<@NonNull ExpressionInOCL, @NonNull CommonSubExpressionAnalysis> expression2cseAnalsis = null;
-	// UniqueList allows recursive discovery of more foreign Features
-	private /*@LazyNonNull*/ UniqueList<@NonNull Feature> foreignFeatures = null;
+
+	/**
+	 * The root of the generated CG hierarchy.
+	 */
+	private /*@LazyNonNull*/ CGClass cgRootClass = null;
+
+	/**
+	 * The referenced AS Features that are not part of the source hierarchy. Their CG representations are folded into
+	 * the CG hierarchy.
+	 * </br>
+	 * A UniqueList allows recursive discovery of more external Features
+	 */
+	private /*@LazyNonNull*/ UniqueList<@NonNull Feature> externalFeatures = null;
+
+	/**
+	 * Mapping from each AS Class to its corresponding CG Class.
+	 */
 	private @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull CGClass> asClass2cgClass = new HashMap<>();
+
+	/**
+	 * Mapping from each AS Operation to its corresponding CG Operation.
+	 */
 	private @NonNull Map<@NonNull Operation, @NonNull CGOperation> asOperation2cgOperation = new HashMap<>();
+
+	/**
+	 * Mapping from each AS Property to its corresponding CG Property.
+	 */
 	private @NonNull Map<@NonNull Property, @NonNull CGProperty> asProperty2cgProperty = new HashMap<>();
 
 	/**
@@ -176,12 +198,12 @@ public class CodeGenAnalyzer
 		}
 	}
 
-	public void addForeignFeature(@NonNull Feature asFeature) {
-		UniqueList<@NonNull Feature> foreignFeatures2 = foreignFeatures;
-		if (foreignFeatures2 == null) {
-			foreignFeatures = foreignFeatures2 = new UniqueList<>();
+	public void addExternalFeature(@NonNull Feature asFeature) {
+		UniqueList<@NonNull Feature> externalFeatures2 = externalFeatures;
+		if (externalFeatures2 == null) {
+			externalFeatures = externalFeatures2 = new UniqueList<>();
 		}
-		foreignFeatures2.add(asFeature);
+		externalFeatures2.add(asFeature);
 	}
 
 	public void addVirtualCGOperation(@NonNull Operation asOperation, @NonNull CGCachedOperation cgOperation) {
@@ -203,38 +225,38 @@ public class CodeGenAnalyzer
 	}
 
 	public @Nullable Iterable<@NonNull CGClass> analyzeForeignFeatures(@NonNull AS2CGVisitor as2cgVisitor) {
-		UniqueList<@NonNull Feature> foreignFeatures = getForeignFeatures();
-		if (foreignFeatures == null) {
+		UniqueList<@NonNull Feature> externalFeatures = getExternalFeatures();
+		if (externalFeatures == null) {
 			return null;
 		}
-		List<@NonNull CGClass> cgForeignClasses = new ArrayList<>();
+		List<@NonNull CGClass> cgExternalClasses = new ArrayList<>();
 		ImportNameManager importNameManager = codeGenerator.getImportNameManager();
 		Map <@NonNull String, @NonNull CGClass> name2class = new HashMap<>();
-		for (int i = 0; i < foreignFeatures.size(); i++) {
-			@NonNull Feature foreignFeature = foreignFeatures.get(i);
-			org.eclipse.ocl.pivot.Class foreignClass = PivotUtil.getOwningClass(foreignFeature);
-			String foreignClassName = codeGenerator.getForeignClassName(foreignClass);
-			CGClass cgStaticClass = name2class.get(foreignClassName);
+		for (int i = 0; i < externalFeatures.size(); i++) {
+			@NonNull Feature externalFeature = externalFeatures.get(i);
+			org.eclipse.ocl.pivot.Class externalClass = PivotUtil.getOwningClass(externalFeature);
+			String externalClassName = codeGenerator.getForeignClassName(externalClass);
+			CGClass cgStaticClass = name2class.get(externalClassName);
 			if (cgStaticClass == null) {
-				importNameManager.reserveLocalName(foreignClassName);
+				importNameManager.reserveLocalName(externalClassName);
 				cgStaticClass = CGModelFactory.eINSTANCE.createCGClass();
-				cgStaticClass.setName(foreignClassName);
+				cgStaticClass.setName(externalClassName);
 			//	cgStaticClass.setAst(foreignClass);  -- the real class has the AS element
-				cgForeignClasses.add(cgStaticClass);
-				name2class.put(foreignClassName, cgStaticClass);
+				cgExternalClasses.add(cgStaticClass);
+				name2class.put(externalClassName, cgStaticClass);
 			}
-			CGNamedElement cgForeignFeature = foreignFeature.accept(as2cgVisitor);
-			if (cgForeignFeature instanceof CGOperation) {
-				cgStaticClass.getOperations().add((CGOperation) cgForeignFeature);
+			CGNamedElement cgExternalFeature = externalFeature.accept(as2cgVisitor);
+			if (cgExternalFeature instanceof CGOperation) {
+				cgStaticClass.getOperations().add((CGOperation) cgExternalFeature);
 			}
-			else if (cgForeignFeature instanceof CGProperty) {
-				cgStaticClass.getProperties().add((CGProperty) cgForeignFeature);
+			else if (cgExternalFeature instanceof CGProperty) {
+				cgStaticClass.getProperties().add((CGProperty) cgExternalFeature);
 			}
-			else if (cgForeignFeature != null) {
-				throw new UnsupportedOperationException("Expected a foreign feature rather than a " + cgForeignFeature.getClass().getSimpleName());
+			else if (cgExternalFeature != null) {
+				throw new UnsupportedOperationException("Expected an external feature rather than a " + cgExternalFeature.getClass().getSimpleName());
 			}
 		}
-		return cgForeignClasses;
+		return cgExternalClasses;
 	}
 
 	public @Nullable CGClass basicGetCGClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
@@ -591,8 +613,8 @@ public class CodeGenAnalyzer
 		return codeGenerator;
 	}
 
-	public @Nullable UniqueList<@NonNull Feature> getForeignFeatures() {
-		return foreignFeatures;
+	public @Nullable UniqueList<@NonNull Feature> getExternalFeatures() {
+		return externalFeatures;
 	}
 
 	public @NonNull GlobalNameManager getGlobalNameManager() {
@@ -663,8 +685,8 @@ public class CodeGenAnalyzer
 		return cgOperation;
 	}
 
-	public boolean isForeign(@NonNull Feature asFeature) {
-		return (foreignFeatures != null) && foreignFeatures.contains(asFeature);
+	public boolean isExternal(@NonNull Feature asFeature) {
+		return (externalFeatures != null) && externalFeatures.contains(asFeature);
 	}
 
 	/**

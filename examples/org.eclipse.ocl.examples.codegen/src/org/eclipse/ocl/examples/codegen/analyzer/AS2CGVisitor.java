@@ -549,7 +549,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 					OperationCallingConvention callingConvention = codeGenerator.getCallingConvention(asOperation);
 					LibraryOperation libraryOperation = (LibraryOperation)metamodelManager.getImplementation(asOperation);
 					if (libraryOperation instanceof ForeignOperation) {			// XXX this parses stdlib bodies unnecessarily
-						context.addForeignFeature(asOperation);
+						context.addExternalFeature(asOperation);
 					}
 					cgOperation = callingConvention.createCGOperationWithoutBody(this, asSourceType, asOperation);
 					if (cgOperation.getAst() == null) {
