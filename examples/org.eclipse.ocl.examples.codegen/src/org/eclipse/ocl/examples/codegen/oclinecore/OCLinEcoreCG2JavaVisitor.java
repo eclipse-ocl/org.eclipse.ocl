@@ -144,10 +144,10 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 					localContext = globalContext.basicFindLocalContext(cgConstraint);
 					String bodyText = generateValidatorBody(cgBody, asConstraint, asClass);
 					String fragmentURI = getFragmentURI(asClass) + "==" + getRuleName(asConstraint);
-					String foreignPackageName = genPackage.getReflectionPackageName();//getGlobalContext().getTablesClassName();
-					assert foreignPackageName != null;
-					String foreignClassName = context.getForeignClassName(asClass);
-					bodies.put(fragmentURI, new FeatureBody(fragmentURI, asConstraint, FeatureLocality.ECORE_IMPL, foreignPackageName, foreignClassName, bodyText));
+					String externalPackageName = genPackage.getReflectionPackageName();//getGlobalContext().getTablesClassName();
+					assert externalPackageName != null;
+					String externalClassName = context.getExternalClassName(asClass);
+					bodies.put(fragmentURI, new FeatureBody(fragmentURI, asConstraint, FeatureLocality.ECORE_IMPL, externalPackageName, externalClassName, bodyText));
 				}
 			}
 			for (@NonNull CGOperation cgOperation : ClassUtil.nullFree(cgClass.getOperations())) {
@@ -228,7 +228,7 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 			cgOperation.accept(this);
 			bodyText = toString();
 			packageName = genPackage.getReflectionPackageName();
-			className = context.getForeignClassName(asClass);
+			className = context.getExternalClassName(asClass);
 		}
 		else if (featureLocality == FeatureLocality.FOREIGN_IMPL) {
 			localContext = globalContext.basicFindLocalContext(cgOperation);
@@ -237,7 +237,7 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 			cgOperation.accept(this);
 			bodyText = toString();
 			packageName = genPackage.getReflectionPackageName();
-			className = context.getForeignClassName(asClass);
+			className = context.getExternalClassName(asClass);
 		}
 		else if (featureLocality == FeatureLocality.ECORE_IMPL) {
 			featureLocality = FeatureLocality.ECORE_IMPL;
@@ -245,7 +245,7 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 			localContext = globalContext.basicFindLocalContext(cgOperation);
 			bodyText = generateBody(cgOperation.getParameters(), cgBody, returnClassName);
 			packageName = genPackage.getReflectionPackageName();//getGlobalContext().getTablesClassName();
-			className = context.getForeignClassName(asClass);
+			className = context.getExternalClassName(asClass);
 		}
 		else {
 			assert false;
@@ -272,7 +272,7 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 			cgProperty.accept(this);
 			bodyText = toString();
 			packageName = genPackage.getReflectionPackageName();
-			className = context.getForeignClassName(asClass);
+			className = context.getExternalClassName(asClass);
 		}
 		else if (featureLocality == FeatureLocality.FOREIGN_STATIC) {
 			localContext = globalContext.basicFindLocalContext(cgProperty);
@@ -281,7 +281,7 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 			cgProperty.accept(this);
 			bodyText = toString();
 			packageName = genPackage.getReflectionPackageName();
-			className = context.getForeignClassName(asClass);
+			className = context.getExternalClassName(asClass);
 		}
 		else if (featureLocality == FeatureLocality.ECORE_IMPL) {
 			localContext = globalContext.findLocalContext(cgProperty);
@@ -311,7 +311,7 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 		Operation asOperation = CGUtil.getAST(cgOperation);
 		assert asOperation != null;
 		assert asOperation.isIsStatic();
-		String className = "SO_" + context.getForeignClassName(PivotUtil.getOwningClass(asOperation));
+		String className = "SO_" + context.getExternalClassName(PivotUtil.getOwningClass(asOperation));
 		List<CGParameter> cgParameters = cgOperation.getParameters();
 		LanguageExpression expressionInOCL = asOperation.getBodyExpression();
 		CGValuedElement cgBody = cgOperation.getBody();
@@ -365,9 +365,9 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 		assert js.peekClassNameStack() == null;
 		String bodyText = toString();
 		String fragmentURI = getFragmentURI(asOperation);
-		String foreignPackageName = getGlobalContext().getTablesClassName();
+		String externalPackageName = getGlobalContext().getTablesClassName();
 		FeatureLocality featureLocality = FeatureLocality.FOREIGN_STATIC;
-		return new FeatureBody(fragmentURI, asOperation, featureLocality, foreignPackageName, className, bodyText);
+		return new FeatureBody(fragmentURI, asOperation, featureLocality, externalPackageName, className, bodyText);
 	}
 
 	protected @NonNull FeatureBody generateStaticProperty(@NonNull CGProperty cgProperty) {
@@ -376,7 +376,7 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 		//
 		Property asProperty = CGUtil.getAST(cgProperty);
 		assert asProperty.isIsStatic();
-		String className = "SP_" + context.getForeignClassName(PivotUtil.getOwningClass(asProperty));
+		String className = "SP_" + context.getExternalClassName(PivotUtil.getOwningClass(asProperty));
 		LanguageExpression expressionInOCL = asProperty.getOwnedExpression();
 		CGValuedElement cgBody = ((CGBodiedProperty)cgProperty).getBody();
 		assert cgBody != null;
@@ -434,9 +434,9 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 		assert js.peekClassNameStack() == null;
 		String bodyText = toString();
 		String fragmentURI = getFragmentURI(asProperty);
-		String foreignPackageName = getGlobalContext().getTablesClassName();
+		String externalPackageName = getGlobalContext().getTablesClassName();
 		FeatureLocality featureLocality = FeatureLocality.FOREIGN_STATIC;
-		return new FeatureBody(fragmentURI, asProperty, featureLocality, foreignPackageName, className, bodyText);
+		return new FeatureBody(fragmentURI, asProperty, featureLocality, externalPackageName, className, bodyText);
 	}
 
 	private void appendIdPath(@NonNull Element element) {

@@ -192,7 +192,7 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 		JavaCodeGenerator codeGenerator = cg2javaVisitor.getCodeGenerator();
 		JavaGlobalContext<@NonNull ? extends JavaCodeGenerator> globalContext = codeGenerator.getGlobalContext();
 		Iterable<@NonNull CGParameter> cgParameters = CGUtil.getParameters(cgOperation);
-		String operationName = JavaConstants.FOREIGN_OPERATION_PREFIX + cgOperation.getName();
+		String operationName = JavaConstants.EXTERNAL_OPERATION_PREFIX + cgOperation.getName();
 		assert operationName != null;
 		js.appendCommentWithOCL(null, cgOperation.getAst());
 	//	assert false;		// XXX

@@ -613,7 +613,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		CodeGenString s = new CodeGenString(environmentFactory.getMetamodelManager(), false);
 		s.append(genModelHelper.getQualifiedTableClassName(genPackage));
 		s.append(".");
-		s.append(JavaConstants.FOREIGN_CLASS_PREFIX);
+		s.append(JavaConstants.EXTERNAL_CLASS_PREFIX);
 		s.appendAndEncodeQualifiedName(asClass);
 		return s.toString();
 	}

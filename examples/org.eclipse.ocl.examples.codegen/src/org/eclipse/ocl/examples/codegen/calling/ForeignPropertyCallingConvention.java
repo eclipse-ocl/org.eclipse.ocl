@@ -182,7 +182,7 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 					}
 				}
 				js.appendClassReference(null, foreignClassName);
-				js.append("." + JavaConstants.FOREIGN_PROPERTY_PREFIX);
+				js.append("." + JavaConstants.EXTERNAL_PROPERTY_PREFIX);
 				js.append(propertyName);
 				js.append("(");
 				boolean isFirst = true;
@@ -233,7 +233,7 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 		CGValuedElement cgInitExpression = cg2javaVisitor.getExpression(((CGForeignProperty)cgProperty).getBody());
 		js.append("public static ");
 		js.appendTypeDeclaration(cgProperty);
-		js.append(" " + JavaConstants.FOREIGN_PROPERTY_PREFIX);
+		js.append(" " + JavaConstants.EXTERNAL_PROPERTY_PREFIX);
 		js.append(asProperty.getName());		// FIXME valid Java name
 		js.append("(");
 		boolean isFirst = true;

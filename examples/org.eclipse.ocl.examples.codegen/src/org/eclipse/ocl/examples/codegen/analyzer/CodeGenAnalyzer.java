@@ -224,7 +224,7 @@ public class CodeGenAnalyzer
 		fieldingAnalyzer.analyze(cgRoot, false);
 	}
 
-	public @Nullable Iterable<@NonNull CGClass> analyzeForeignFeatures(@NonNull AS2CGVisitor as2cgVisitor) {
+	public @Nullable Iterable<@NonNull CGClass> analyzeExternalFeatures(@NonNull AS2CGVisitor as2cgVisitor) {
 		UniqueList<@NonNull Feature> externalFeatures = getExternalFeatures();
 		if (externalFeatures == null) {
 			return null;
@@ -234,27 +234,31 @@ public class CodeGenAnalyzer
 		Map <@NonNull String, @NonNull CGClass> name2class = new HashMap<>();
 		for (int i = 0; i < externalFeatures.size(); i++) {
 			@NonNull Feature externalFeature = externalFeatures.get(i);
-			org.eclipse.ocl.pivot.Class externalClass = PivotUtil.getOwningClass(externalFeature);
-			String externalClassName = codeGenerator.getForeignClassName(externalClass);
-			CGClass cgStaticClass = name2class.get(externalClassName);
-			if (cgStaticClass == null) {
+			org.eclipse.ocl.pivot.Class asExternalClass = PivotUtil.getOwningClass(externalFeature);
+			String externalClassName = codeGenerator.getExternalClassName(asExternalClass);
+			CGClass cgExternalClass = name2class.get(externalClassName);
+			if (cgExternalClass == null) {
 				importNameManager.reserveLocalName(externalClassName);
-				cgStaticClass = CGModelFactory.eINSTANCE.createCGClass();
-				cgStaticClass.setName(externalClassName);
+				cgExternalClass = CGModelFactory.eINSTANCE.createCGClass();
+				cgExternalClass.setName(externalClassName);
 			//	cgStaticClass.setAst(foreignClass);  -- the real class has the AS element
-				cgExternalClasses.add(cgStaticClass);
-				name2class.put(externalClassName, cgStaticClass);
+				cgExternalClasses.add(cgExternalClass);
+				name2class.put(externalClassName, cgExternalClass);
 			}
 			CGNamedElement cgExternalFeature = externalFeature.accept(as2cgVisitor);
 			if (cgExternalFeature instanceof CGOperation) {
-				cgStaticClass.getOperations().add((CGOperation) cgExternalFeature);
+				cgExternalClass.getOperations().add((CGOperation) cgExternalFeature);
 			}
 			else if (cgExternalFeature instanceof CGProperty) {
-				cgStaticClass.getProperties().add((CGProperty) cgExternalFeature);
+				cgExternalClass.getProperties().add((CGProperty) cgExternalFeature);
 			}
 			else if (cgExternalFeature != null) {
 				throw new UnsupportedOperationException("Expected an external feature rather than a " + cgExternalFeature.getClass().getSimpleName());
 			}
+		}
+		List<CGClass> cgNestedClasses = cgRootClass.getClasses();
+		for (@NonNull CGClass cgExternalClass : cgExternalClasses) {
+			cgNestedClasses.add(cgExternalClass);
 		}
 		return cgExternalClasses;
 	}

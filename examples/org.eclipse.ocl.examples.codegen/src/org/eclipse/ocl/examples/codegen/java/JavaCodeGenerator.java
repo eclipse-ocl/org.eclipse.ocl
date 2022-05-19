@@ -431,9 +431,9 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	}
 
 	@Override
-	public @NonNull String getForeignClassName(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+	public @NonNull String getExternalClassName(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		CodeGenString s = new CodeGenString(environmentFactory.getMetamodelManager(), false);
-		s.append(JavaConstants.FOREIGN_CLASS_PREFIX);
+		s.append(JavaConstants.EXTERNAL_CLASS_PREFIX);
 		s.appendAndEncodeQualifiedName(asClass);
 		return s.toString();
 	}

@@ -301,6 +301,10 @@ public class CGUtil
 		return ClassUtil.nonNullState(cgProperty.getBody());
 	}
 
+	public static @NonNull Iterable<@NonNull CGClass> getClasses(@NonNull CGClass cgClass) {
+		return ClassUtil.nullFree(cgClass.getClasses());
+	}
+
 	public static @NonNull Iterable<@NonNull CGClass> getClasses(@NonNull CGPackage cgPackage) {
 		return ClassUtil.nullFree(cgPackage.getClasses());
 	}

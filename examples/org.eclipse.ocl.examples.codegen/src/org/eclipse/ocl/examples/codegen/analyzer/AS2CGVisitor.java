@@ -550,6 +550,19 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 					LibraryOperation libraryOperation = (LibraryOperation)metamodelManager.getImplementation(asOperation);
 					if (libraryOperation instanceof ForeignOperation) {			// XXX this parses stdlib bodies unnecessarily
 						context.addExternalFeature(asOperation);
+/*=======
+				cgOperation = createCGOperationWithoutBody(asSourceType, asOperation, callingConvention);
+				getNameManager().declarePreferredName(cgOperation);
+			//	pushContext(cgOperation, asOperation);
+				ExpressionInOCL query = (ExpressionInOCL)asOperation.getBodyExpression();
+			/*	LanguageExpression specification = asOperation.getBodyExpression();
+				if (specification != null) {
+					try {
+						query = environmentFactory.parseSpecification(specification);
+					} catch (ParserException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+>>>>>>> 499abd0 wip cached */
 					}
 					cgOperation = callingConvention.createCGOperationWithoutBody(this, asSourceType, asOperation);
 					if (cgOperation.getAst() == null) {
@@ -572,6 +585,13 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 				} finally {
 					popLocalContext(savedPreClassContext);
 				}
+/*=======
+				} * /
+				pushContext(cgOperation, asOperation);
+				callingConvention.createCGParameters(this, cgOperation, query);
+				popLocalContext();
+			//	popLocalContext();
+>>>>>>> 499abd0 wip cached */
 			}
 		}
 		return cgOperation;

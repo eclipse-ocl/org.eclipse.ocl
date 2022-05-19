@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.oclinjunit;
 
-import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
@@ -77,10 +76,10 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		CGPackage cgPackage = CGModelFactory.eINSTANCE.createCGPackage();
 		cgPackage.setName(packageName);
 		//
-		CGClass cgClass = CGModelFactory.eINSTANCE.createCGClass();
-		cgClass.setName(className);
-		cgPackage.getClasses().add(cgClass);
-		cgAnalyzer.setCGRootClass(cgClass);
+		CGClass cgRootClass = CGModelFactory.eINSTANCE.createCGClass();
+		cgRootClass.setName(className);
+		cgPackage.getClasses().add(cgRootClass);
+		cgAnalyzer.setCGRootClass(cgRootClass);
 		//
 		Variable contextVariable = expInOcl.getOwnedContext();
 		if (contextVariable != null) {
@@ -102,15 +101,17 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		evaluateNameResolution.addCGElement(cgOperation);
 		CGValuedElement cgBody = (CGValuedElement) ClassUtil.nonNullState(expInOcl.accept(as2cgVisitor));
 		cgOperation.setBody(cgBody);
-		cgClass.getOperations().add(cgOperation);
+	//	cgClass.getOperations().add(cgOperation);
 
-		Iterable<@NonNull CGClass> cgForeignClasses = cgAnalyzer.analyzeForeignFeatures(as2cgVisitor);
-		if (cgForeignClasses != null) {
-			List<CGClass> cgNestedClasses = cgClass.getClasses();
-			for (@NonNull CGClass cgForeignClass : cgForeignClasses) {
-				cgNestedClasses.add(cgForeignClass);
-			}
-		}
+	//	Iterable<@NonNull CGClass> cgForeignClasses = cgAnalyzer.analyzeForeignFeatures(as2cgVisitor);
+	//	if (cgForeignClasses != null) {
+	//		List<CGClass> cgNestedClasses = cgClass.getClasses();
+	//		for (@NonNull CGClass cgForeignClass : cgForeignClasses) {
+	//			cgNestedClasses.add(cgForeignClass);
+	//		}
+	//	}
+		cgRootClass.getOperations().add(cgOperation);
+		cgAnalyzer.analyzeExternalFeatures(as2cgVisitor);
 		as2cgVisitor.popLocalContext(savedLocalContext);
 		as2cgVisitor.freeze();
 		return cgPackage;
@@ -155,7 +156,7 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		CodeGenString s = new CodeGenString(environmentFactory.getMetamodelManager(), false);
 	//	s.append(genModelHelper.getQualifiedTableClassName(genPackage));
 	//	s.append(".");
-		s.append(JavaConstants.FOREIGN_CLASS_PREFIX);
+		s.append(JavaConstants.EXTERNAL_CLASS_PREFIX);
 		s.appendAndEncodeQualifiedName(asClass);
 		return s.toString();
 	}
