@@ -202,8 +202,8 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 				/*@Caught*/ @Nullable Object result;
 				try {
 					@SuppressWarnings("null")
-					final /*@NonInvalid*/ @NonNull OCLExpression ownedInit = this.getOwnedInit();
-					final /*@NonInvalid*/ @Nullable Type type = ownedInit.getType();
+					final /*@NonInvalid*/ @NonNull OCLExpression ownedInit_0 = this.getOwnedInit();
+					final /*@NonInvalid*/ @Nullable Type type = ownedInit_0.getType();
 					final /*@NonInvalid*/ @NonNull Object IsEQ2_ = type == null;
 					/*@Thrown*/ @Nullable Boolean IF_IsEQ2_;
 					if (IsEQ2_ == Boolean.TRUE) {
@@ -211,7 +211,7 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 					}
 					else {
 						if (type == null) {
-							throw new InvalidValueException("Null \'\'$metamodel$::Type\'\' rather than \'\'OclVoid\'\' value required");
+							throw new InvalidValueException("Null \'\'$metamodel$::IteratorExp\'\' rather than \'\'OclVoid\'\' value required");
 						}
 						final /*@NonInvalid*/ @Nullable Type type_0 = this.getType();
 						final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, type_0).booleanValue();
@@ -264,9 +264,9 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 				IF_le = true;
 			}
 			else {
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OclInvalid_9 = idResolver.getClass(TypeId.OCL_INVALID, null);
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OclInvalid_5 = idResolver.getClass(TypeId.OCL_INVALID, null);
 				final /*@NonInvalid*/ @Nullable Type type = this.getType();
-				final /*@NonInvalid*/ @NonNull InvalidType CAST_TYP_OclInvalid = (InvalidType)TYP_OclInvalid_9;
+				final /*@NonInvalid*/ @NonNull InvalidType CAST_TYP_OclInvalid = (InvalidType)TYP_OclInvalid_5;
 				final /*@NonInvalid*/ boolean result = (type != null) ? (type.getTypeId() != CAST_TYP_OclInvalid.getTypeId()) : true;
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, result, PivotTables.INT_0).booleanValue();
 				IF_le = logDiagnostic;

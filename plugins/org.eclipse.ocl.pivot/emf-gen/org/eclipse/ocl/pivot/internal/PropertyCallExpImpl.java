@@ -554,33 +554,33 @@ implements PropertyCallExp {
 				try {
 					/*@Caught*/ @Nullable Object CAUGHT_not;
 					try {
-						/*@Caught*/ @Nullable Object CAUGHT_IF_IsEQ2__0;
+						/*@Caught*/ @Nullable Object CAUGHT_IF_IsEQ2_;
 						try {
-							final /*@NonInvalid*/ @Nullable Property referredProperty = this.getReferredProperty();
-							final /*@NonInvalid*/ @NonNull Object IsEQ2__0 = referredProperty == null;
+							final /*@NonInvalid*/ @Nullable Property referredProperty_0 = this.getReferredProperty();
+							final /*@NonInvalid*/ @NonNull Object IsEQ2_ = referredProperty_0 == null;
 							/*@Thrown*/ @Nullable Boolean IF_IsEQ2_;
-							if (IsEQ2__0 == Boolean.TRUE) {
+							if (IsEQ2_ == Boolean.TRUE) {
 								IF_IsEQ2_ = null;
 							}
 							else {
-								assert referredProperty != null;
-								final /*@Thrown*/ boolean isStatic = referredProperty.isIsStatic();
+								assert referredProperty_0 != null;
+								final /*@Thrown*/ boolean isStatic = referredProperty_0.isIsStatic();
 								IF_IsEQ2_ = isStatic;
 							}
-							CAUGHT_IF_IsEQ2__0 = IF_IsEQ2_;
+							CAUGHT_IF_IsEQ2_ = IF_IsEQ2_;
 						}
-						catch (Exception THROWN_CAUGHT_IF_IsEQ2__0) {
-							CAUGHT_IF_IsEQ2__0 = ValueUtil.createInvalidValue(THROWN_CAUGHT_IF_IsEQ2__0);
+						catch (Exception THROWN_CAUGHT_IF_IsEQ2_) {
+							CAUGHT_IF_IsEQ2_ = ValueUtil.createInvalidValue(THROWN_CAUGHT_IF_IsEQ2_);
 						}
-						if (CAUGHT_IF_IsEQ2__0 instanceof InvalidValueException) {
-							throw (InvalidValueException)CAUGHT_IF_IsEQ2__0;
+						if (CAUGHT_IF_IsEQ2_ instanceof InvalidValueException) {
+							throw (InvalidValueException)CAUGHT_IF_IsEQ2_;
 						}
 						final /*@Thrown*/ @Nullable Boolean not;
-						if (CAUGHT_IF_IsEQ2__0 == ValueUtil.FALSE_VALUE) {
+						if (CAUGHT_IF_IsEQ2_ == ValueUtil.FALSE_VALUE) {
 							not = ValueUtil.TRUE_VALUE;
 						}
 						else {
-							if (CAUGHT_IF_IsEQ2__0 == ValueUtil.TRUE_VALUE) {
+							if (CAUGHT_IF_IsEQ2_ == ValueUtil.TRUE_VALUE) {
 								not = ValueUtil.FALSE_VALUE;
 							}
 							else {
@@ -597,12 +597,12 @@ implements PropertyCallExp {
 						implies = ValueUtil.TRUE_VALUE;
 					}
 					else {
-						/*@Caught*/ @Nullable Object CAUGHT_IF_IsEQ2_;
+						/*@Caught*/ @Nullable Object CAUGHT_IF_IsEQ2__0;
 						try {
 							final /*@NonInvalid*/ @Nullable OCLExpression ownedSource = this.getOwnedSource();
-							final /*@NonInvalid*/ @NonNull Object IsEQ2_ = ownedSource == null;
+							final /*@NonInvalid*/ @NonNull Object IsEQ2__0 = ownedSource == null;
 							/*@Thrown*/ @Nullable Type IF_IsEQ2__1;
-							if (IsEQ2_ == Boolean.TRUE) {
+							if (IsEQ2__0 == Boolean.TRUE) {
 								IF_IsEQ2__1 = null;
 							}
 							else {
@@ -624,29 +624,29 @@ implements PropertyCallExp {
 							}
 							else {
 								if (IF_IsEQ2__1 == null) {
-									throw new InvalidValueException("Null \'\'$metamodel$::Type\'\' rather than \'\'OclVoid\'\' value required");
+									throw new InvalidValueException("Null \'\'$metamodel$::IteratorExp\'\' rather than \'\'OclVoid\'\' value required");
 								}
 								@SuppressWarnings("null")
 								final /*@NonInvalid*/ @NonNull Type getSpecializedReferredPropertyOwningType_0 = this.getSpecializedReferredPropertyOwningType();
 								final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, IF_IsEQ2__1, getSpecializedReferredPropertyOwningType_0).booleanValue();
 								IF_IsEQ2__0 = conformsTo;
 							}
-							CAUGHT_IF_IsEQ2_ = IF_IsEQ2__0;
+							CAUGHT_IF_IsEQ2__0 = IF_IsEQ2__0;
 						}
-						catch (Exception THROWN_CAUGHT_IF_IsEQ2_) {
-							CAUGHT_IF_IsEQ2_ = ValueUtil.createInvalidValue(THROWN_CAUGHT_IF_IsEQ2_);
+						catch (Exception THROWN_CAUGHT_IF_IsEQ2__0) {
+							CAUGHT_IF_IsEQ2__0 = ValueUtil.createInvalidValue(THROWN_CAUGHT_IF_IsEQ2__0);
 						}
-						if (CAUGHT_IF_IsEQ2_ == ValueUtil.TRUE_VALUE) {
+						if (CAUGHT_IF_IsEQ2__0 == ValueUtil.TRUE_VALUE) {
 							implies = ValueUtil.TRUE_VALUE;
 						}
 						else {
 							if (CAUGHT_not instanceof InvalidValueException) {
 								throw (InvalidValueException)CAUGHT_not;
 							}
-							if (CAUGHT_IF_IsEQ2_ instanceof InvalidValueException) {
-								throw (InvalidValueException)CAUGHT_IF_IsEQ2_;
+							if (CAUGHT_IF_IsEQ2__0 instanceof InvalidValueException) {
+								throw (InvalidValueException)CAUGHT_IF_IsEQ2__0;
 							}
-							if ((CAUGHT_not == null) || (CAUGHT_IF_IsEQ2_ == null)) {
+							if ((CAUGHT_not == null) || (CAUGHT_IF_IsEQ2__0 == null)) {
 								implies = null;
 							}
 							else {

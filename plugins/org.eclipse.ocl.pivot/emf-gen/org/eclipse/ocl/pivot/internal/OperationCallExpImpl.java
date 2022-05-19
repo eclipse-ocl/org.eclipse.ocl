@@ -713,8 +713,8 @@ implements OperationCallExp {
 							final /*@Thrown*/ boolean isTypeof = parameter.isIsTypeof();
 							/*@Thrown*/ @Nullable Type requiredType;
 							if (isTypeof) {
-								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Class_0 = idResolver.getClass(PivotTables.CLSSid_Class, null);
-								requiredType = TYP_Class_0;
+								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Class = idResolver.getClass(PivotTables.CLSSid_Class, null);
+								requiredType = TYP_Class;
 							}
 							else {
 								/*@Caught*/ @Nullable Object CAUGHT_parameterType;
@@ -755,7 +755,7 @@ implements OperationCallExp {
 							}
 							else {
 								if (type == null) {
-									throw new InvalidValueException("Null \'\'$metamodel$::Type\'\' rather than \'\'OclVoid\'\' value required");
+									throw new InvalidValueException("Null \'\'$metamodel$::IteratorExp\'\' rather than \'\'OclVoid\'\' value required");
 								}
 								final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, requiredType).booleanValue();
 								IF_IsEQ2_ = conformsTo;
@@ -974,8 +974,8 @@ implements OperationCallExp {
 						try {
 							/*@Caught*/ @Nullable Object CAUGHT_and;
 							try {
-								final /*@NonInvalid*/ @Nullable OCLExpression ownedSource_0 = this.getOwnedSource();
-								final /*@NonInvalid*/ boolean IsEQ_ = ownedSource_0 != null;
+								final /*@NonInvalid*/ @Nullable OCLExpression ownedSource = this.getOwnedSource();
+								final /*@NonInvalid*/ boolean IsEQ_ = ownedSource != null;
 								final /*@Thrown*/ @Nullable Boolean and;
 								if (!IsEQ_) {
 									and = ValueUtil.FALSE_VALUE;
@@ -1018,11 +1018,11 @@ implements OperationCallExp {
 							else {
 								/*@Caught*/ @NonNull Object CAUGHT_isNonNull;
 								try {
-									final /*@NonInvalid*/ @Nullable OCLExpression ownedSource = this.getOwnedSource();
-									if (ownedSource == null) {
+									final /*@NonInvalid*/ @Nullable OCLExpression ownedSource_0 = this.getOwnedSource();
+									if (ownedSource_0 == null) {
 										throw new InvalidValueException("Null source for \'pivot::OCLExpression::isNonNull() : Boolean[1]\'");
 									}
-									final /*@Thrown*/ boolean isNonNull = ownedSource.isNonNull();
+									final /*@Thrown*/ boolean isNonNull = ownedSource_0.isNonNull();
 									CAUGHT_isNonNull = isNonNull;
 								}
 								catch (Exception THROWN_CAUGHT_isNonNull) {
@@ -1117,18 +1117,18 @@ implements OperationCallExp {
 			else {
 				/*@Caught*/ @NonNull Object result;
 				try {
-					final /*@NonInvalid*/ @NonNull List<OCLExpression> ownedArguments = this.getOwnedArguments();
-					final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedArguments = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_OCLExpression, ownedArguments);
+					final /*@NonInvalid*/ @NonNull List<OCLExpression> ownedArguments_0 = this.getOwnedArguments();
+					final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedArguments = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_OCLExpression, ownedArguments_0);
 					final /*@NonInvalid*/ @NonNull IntegerValue size = CollectionSizeOperation.INSTANCE.evaluate(BOXED_ownedArguments);
-					final /*@NonInvalid*/ @Nullable Operation referredOperation = this.getReferredOperation();
-					final /*@NonInvalid*/ @NonNull Object IsEQ2_ = referredOperation == null;
+					final /*@NonInvalid*/ @Nullable Operation referredOperation_0 = this.getReferredOperation();
+					final /*@NonInvalid*/ @NonNull Object IsEQ2_ = referredOperation_0 == null;
 					/*@Thrown*/ @Nullable OrderedSetValue IF_IsEQ2_;
 					if (IsEQ2_ == Boolean.TRUE) {
 						IF_IsEQ2_ = null;
 					}
 					else {
-						assert referredOperation != null;
-						final /*@Thrown*/ @NonNull List<Parameter> ownedParameters = referredOperation.getOwnedParameters();
+						assert referredOperation_0 != null;
+						final /*@Thrown*/ @NonNull List<Parameter> ownedParameters = referredOperation_0.getOwnedParameters();
 						final /*@Thrown*/ @NonNull OrderedSetValue BOXED_ownedParameters = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Parameter, ownedParameters);
 						IF_IsEQ2_ = BOXED_ownedParameters;
 					}
