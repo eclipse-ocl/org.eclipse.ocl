@@ -570,17 +570,17 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 					}
 					getNameManager().declarePreferredName(cgOperation);
 					LocalContext savedClassContext = pushLocalContext(cgOperation, asOperation);
-					ExpressionInOCL query = null;
+				//	ExpressionInOCL query = null;
 					LanguageExpression specification = asOperation.getBodyExpression();
-					if (specification != null) {
-						try {
-							query = environmentFactory.parseSpecification(specification);
-						} catch (ParserException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-					callingConvention.createCGParameters(this, cgOperation, query);
+				//	if (specification != null) {
+				//		try {
+				//			query = environmentFactory.parseSpecification(specification);
+				//		} catch (ParserException e) {
+				//			// TODO Auto-generated catch block
+				//			e.printStackTrace();
+				//		}
+				//	}
+					callingConvention.createCGParameters(this, cgOperation, (ExpressionInOCL)specification);	// Already parsed
 					popLocalContext(savedClassContext);
 				} finally {
 					popLocalContext(savedPreClassContext);

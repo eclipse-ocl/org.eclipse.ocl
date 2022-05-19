@@ -99,13 +99,13 @@ public class CachedOperationCallingConvention extends ConstrainedOperationCallin
 		assert metamodelManager.getImplementation(asOperation) instanceof ConstrainedOperation;
 		org.eclipse.ocl.pivot.Package asPackage = PivotUtil.getOwningPackage(PivotUtil.getOwningClass(asOperation));
 		assert !(asPackage instanceof Library);
-		return CGModelFactory.eINSTANCE.createCGCachedOperation();
+	//	return CGModelFactory.eINSTANCE.createCGCachedOperation();
 
-	//	CGOperation cgOperation = CGModelFactory.eINSTANCE.createCGCachedOperation();
-	//	analyzer.installOperation(asOperation, cgOperation, this);
+		CGOperation cgOperation = CGModelFactory.eINSTANCE.createCGCachedOperation();
+		analyzer.installOperation(asOperation, cgOperation, this);
 	//	asNewOperations.add(asOperation);
 	//	cgOperations.add((CGCachedOperation) cgOperation);
-	//	analyzer.addForeignFeature(asOperation);
+		analyzer.addExternalFeature(asOperation);
 
 
 
@@ -122,7 +122,7 @@ public class CachedOperationCallingConvention extends ConstrainedOperationCallin
 
 	//	CGOperation cgOperation2 = analyzer.basicGetFinalCGOperation(asOperation);
 	//	assert cgOperation2 == cgOperation;
-	//	return cgOperation;
+		return cgOperation;
 
 
 
@@ -513,5 +513,10 @@ public class CachedOperationCallingConvention extends ConstrainedOperationCallin
 	//		localContext = null;
 	//	}
 		return true;
+	}
+
+	@Override
+	public boolean needsNestedClass() {
+		return false;
 	}
 }
