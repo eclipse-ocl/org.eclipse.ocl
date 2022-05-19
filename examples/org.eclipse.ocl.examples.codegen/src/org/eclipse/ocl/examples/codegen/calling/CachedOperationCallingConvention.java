@@ -95,11 +95,22 @@ public class CachedOperationCallingConvention extends ConstrainedOperationCallin
 	@Override
 	public @NonNull CGOperation createCGOperationWithoutBody(@NonNull AS2CGVisitor as2cgVisitor, @Nullable Type asSourceType, @NonNull Operation asOperation) {
 		PivotMetamodelManager metamodelManager = as2cgVisitor.getMetamodelManager();
+		CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();
 		assert metamodelManager.getImplementation(asOperation) instanceof ConstrainedOperation;
 		org.eclipse.ocl.pivot.Package asPackage = PivotUtil.getOwningPackage(PivotUtil.getOwningClass(asOperation));
 		assert !(asPackage instanceof Library);
 
-		generateDeclarationHierarchy(as2cgVisitor, asSourceType, asOperation);
+
+		CGOperation cgOperation = CGModelFactory.eINSTANCE.createCGCachedOperation();
+		analyzer.installOperation(asOperation, cgOperation, this);
+	//	asNewOperations.add(asOperation);
+	//	cgOperations.add((CGCachedOperation) cgOperation);
+	//	analyzer.addForeignFeature(asOperation);
+
+
+
+
+	//	generateDeclarationHierarchy(as2cgVisitor, asSourceType, asOperation);
 	//	Iterable<@NonNull Operation> asOverrideOperations = null;
 	//	CGClass currentClass = as2cgVisitor.getCurrentClass();
 	//	generateDeclarationHierarchy(as2cgVisitor, currentClass, asOperation, asOverrideOperations);
@@ -109,8 +120,8 @@ public class CachedOperationCallingConvention extends ConstrainedOperationCallin
 	//		return cachedOperationCall(element, currentClass2, cgSource, asOperation, overrides);
 	//	}
 
-		CGOperation cgOperation = as2cgVisitor.getAnalyzer().basicGetFinalCGOperation(asOperation);
-		assert cgOperation != null;
+	//	CGOperation cgOperation2 = analyzer.basicGetFinalCGOperation(asOperation);
+	//	assert cgOperation2 == cgOperation;
 		return cgOperation;
 
 
@@ -363,7 +374,7 @@ public class CachedOperationCallingConvention extends ConstrainedOperationCallin
 					}
 					assert cgOperation != null;
 					as2cgVisitor.initAst(cgOperation, asOverride);
-					LocalContext savedLocalContext = as2cgVisitor.pushLocalContext(cgOperation, asOverride);
+					LocalContext savedLocalContext = as2cgVisitor.pushLocalContext(cgOperation, asOverride);	// XXX redundant ??
 					as2cgVisitor.popLocalContext(savedLocalContext);
 					asNewOperations.add(asOverride);
 				}
