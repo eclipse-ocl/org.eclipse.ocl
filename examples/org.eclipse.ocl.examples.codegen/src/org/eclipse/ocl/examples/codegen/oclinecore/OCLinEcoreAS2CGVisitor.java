@@ -20,6 +20,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.examples.codegen.generator.LocalContext;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
@@ -94,15 +95,18 @@ public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 	} */
 
 	@Override
-	public @Nullable CGConstraint visitConstraint(@NonNull Constraint element) {
+	public @Nullable CGConstraint visitConstraint(@NonNull Constraint asConstraint) {
 		CGConstraint cgConstraint = CGModelFactory.eINSTANCE.createCGConstraint();
-		pushDeclarationContext(cgConstraint, element);
-		LanguageExpression specification = element.getOwnedSpecification();
+		LanguageExpression specification = asConstraint.getOwnedSpecification();
 		if (specification != null) {
+			assert cgConstraint.basicGetNameResolution() == null;
+			cgConstraint.setAst(asConstraint);
+			getNameManager().declarePreferredName(cgConstraint);
+			LocalContext savedLocalContext = pushLocalContext(cgConstraint, asConstraint);
 			try {
 				ExpressionInOCL oldQuery = environmentFactory.parseSpecification(specification);
-				String constraintName = PivotUtil.getName(element);
-				EObject eContainer = element.eContainer();
+				String constraintName = PivotUtil.getName(asConstraint);
+				EObject eContainer = asConstraint.eContainer();
 				if (eContainer instanceof NamedElement) {
 					String containerName = ((NamedElement)eContainer).getName();
 					if (containerName != null) {
@@ -124,9 +128,10 @@ public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 				cgConstraint.setBody(doVisit(CGValuedElement.class, asSynthesizedExpression));
 			} catch (ParserException e) {
 				throw new WrappedException(e);
+			} finally {
+				popLocalContext(savedLocalContext);
 			}
 		}
-		popLocalContext();
 		return cgConstraint;
 	}
 }

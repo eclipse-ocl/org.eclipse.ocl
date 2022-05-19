@@ -128,23 +128,23 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 			asProperty.isIsStatic() ? analyzer.createCGConstantExp(analyzer.createCGNull()) : analyzer.createCGVariableExp(cgSelfParameter), analyzer.createCGConstantExp(cgPropertyId));
 	//	basicGetValueInit.setTypeId(cacheTypeId);
 		basicGetValueInit.setValueIsBoxed(true);
-		CGValuedElement castBasicGetValueInit = as2cgVisitor.createCGCastExp(cgCastType, basicGetValueInit);
+		CGValuedElement castBasicGetValueInit = analyzer.createCGCastExp(cgCastType, basicGetValueInit);
 		CGFinalVariable basicGetValueVariable = as2cgVisitor.createCGFinalVariable(castBasicGetValueInit);
 		nameManager.declareLazyName(basicGetValueVariable);
-		CGValuedElement cgCondition = as2cgVisitor.createCGIsEqual(analyzer.createCGVariableExp(basicGetValueVariable), analyzer.createCGNull());
+		CGValuedElement cgCondition = analyzer.createCGIsEqual(analyzer.createCGVariableExp(basicGetValueVariable), analyzer.createCGNull());
 		CGNativeOperationCallExp getValue = as2cgVisitor.createCGBoxedNativeOperationCallExp(analyzer.createCGVariableExp(modelManagerVariable), JavaConstants.MODEL_MANAGER_GET_FOREIGN_PROPERTY_VALUE_METHOD,
 			asProperty.isIsStatic() ? analyzer.createCGConstantExp(analyzer.createCGNull()) : analyzer.createCGVariableExp(cgSelfParameter), analyzer.createCGConstantExp(cgPropertyId), cgInitValue);
 	//	getValue.setTypeId(cacheTypeId);
 		getValue.setValueIsBoxed(true);
-		CGValuedElement castGetValue = as2cgVisitor.createCGCastExp(cgCastType, getValue);
+		CGValuedElement castGetValue = analyzer.createCGCastExp(cgCastType, getValue);
 		if (asProperty.isIsRequired()) {
 			getValue.setRequired(true);
 		}
-		CGValuedElement ifValue = as2cgVisitor.createCGIfExp(cgCondition, castGetValue, analyzer.createCGVariableExp(basicGetValueVariable));
+		CGValuedElement ifValue = analyzer.createCGIfExp(cgCondition, castGetValue, analyzer.createCGVariableExp(basicGetValueVariable));
 		if (asProperty.isIsRequired()) {
 			ifValue.setRequired(true);
 		}
-		CGValuedElement withBasicGetValue = as2cgVisitor.createCGLetExp(basicGetValueVariable, ifValue);
+		CGValuedElement withBasicGetValue = analyzer.createCGLetExp(basicGetValueVariable, ifValue);
 		cgForeignProperty.setBody(withBasicGetValue);
 	}
 

@@ -24,6 +24,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.examples.codegen.generator.LocalContext;
 import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
 import org.eclipse.ocl.examples.codegen.java.ImportUtils;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
@@ -90,7 +91,8 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		JUnitOperationCallingConvention junitCallingConvention = JUnitOperationCallingConvention.INSTANCE;
 		//	junitCallingConvention.createCGOperationWithoutBody(as2cgVisitor, asOperation);		// no root asOperation
 		cgOperation.setCallingConvention(junitCallingConvention);
-		as2cgVisitor.pushLocalContext(cgOperation, expInOcl);
+		as2cgVisitor.initAst(cgOperation, expInOcl);
+		LocalContext savedLocalContext = as2cgVisitor.pushLocalContext(cgOperation, expInOcl);
 		junitCallingConvention.createCGParameters(as2cgVisitor, cgOperation, expInOcl);
 	//	cgOperation.setAst(expInOcl);
 		Type type = expInOcl.getType();
@@ -109,7 +111,7 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 				cgNestedClasses.add(cgForeignClass);
 			}
 		}
-		as2cgVisitor.popLocalContext();
+		as2cgVisitor.popLocalContext(savedLocalContext);
 		as2cgVisitor.freeze();
 		return cgPackage;
 	}

@@ -132,7 +132,8 @@ public class VolatileOperationCallingConvention extends ConstrainedOperationCall
 
 	protected @NonNull CGOperationCallExp volatileOperationCall(@NonNull AS2CGVisitor as2cgVisitor, @NonNull OperationCallExp element,
 			CGValuedElement cgSource, @NonNull Operation finalOperation, @NonNull ConstrainedOperation constrainedOperation) {
-		@NonNull CGLibraryOperationCallExp cgOperationCallExp = as2cgVisitor.createCGLibraryOperationCallExp(constrainedOperation);
+		CGLibraryOperationCallExp cgOperationCallExp = CGModelFactory.eINSTANCE.createCGLibraryOperationCallExp();
+		cgOperationCallExp.setLibraryOperation(constrainedOperation);
 		if (cgSource != null) {
 			cgOperationCallExp.getCgArguments().add(cgSource);
 		}

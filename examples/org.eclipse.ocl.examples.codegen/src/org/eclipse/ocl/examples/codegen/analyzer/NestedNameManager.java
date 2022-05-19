@@ -19,6 +19,7 @@ import java.util.Map.Entry;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager.NameVariant;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
@@ -160,6 +161,16 @@ public class NestedNameManager extends NameManager
 		}
 		reservedNameResolutions2.add(baseNameResolution);
 		return baseNameResolution;
+	}
+
+	public @Nullable CGClass findCGScope() {
+		for (NestedNameManager nameManager = this; nameManager != null; nameManager = nameManager.parent instanceof NestedNameManager ? (NestedNameManager)nameManager.parent : null) {
+			CGNamedElement cgScope = nameManager.findCGScope();
+			if (cgScope instanceof CGClass) {
+				return (CGClass) cgScope;
+			}
+		}
+		return null;
 	}
 
 	@Override

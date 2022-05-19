@@ -27,6 +27,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.generator.CodeGenerator;
+import org.eclipse.ocl.examples.codegen.generator.LocalContext;
 import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
@@ -356,10 +357,14 @@ public class CachedOperationCallingConvention extends ConstrainedOperationCallin
 				CGOperation cgOperation = analyzer.basicGetFinalCGOperation(asOverride);
 				if (cgOperation == null) {
 					OperationCallingConvention callingConvention = codeGenerator.getCallingConvention(asOverride);
-					cgOperation = as2cgVisitor.createCGOperationWithoutBody(sourceType, asOverride, callingConvention);
+					cgOperation = callingConvention.createCGOperationWithoutBody(as2cgVisitor, sourceType, asOverride);
+					if (cgOperation.getAst() == null) {
+						analyzer.installOperation(asOverride, cgOperation, callingConvention);
+					}
 					assert cgOperation != null;
-					as2cgVisitor.pushLocalContext(cgOperation, asOverride);
-					as2cgVisitor.popLocalContext();
+					as2cgVisitor.initAst(cgOperation, asOverride);
+					LocalContext savedLocalContext = as2cgVisitor.pushLocalContext(cgOperation, asOverride);
+					as2cgVisitor.popLocalContext(savedLocalContext);
 					asNewOperations.add(asOverride);
 				}
 				cgOperations.add((CGCachedOperation) cgOperation);

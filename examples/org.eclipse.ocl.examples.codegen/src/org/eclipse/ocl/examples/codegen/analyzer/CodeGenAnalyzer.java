@@ -22,6 +22,7 @@ import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.PropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBoolean;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGCastExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstant;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
@@ -30,8 +31,12 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGElementId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGFinalVariable;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGIfExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInteger;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInvalid;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGIsEqualExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGLetExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperation;
@@ -260,6 +265,14 @@ public class CodeGenAnalyzer
 		return cgBoolean;
 	}
 
+	public @NonNull CGCastExp createCGCastExp(@NonNull CGExecutorType cgExecutorType, @NonNull CGValuedElement cgValue) {
+		CGCastExp cgCastExp = CGModelFactory.eINSTANCE.createCGCastExp();
+		cgCastExp.setSource(cgValue);
+		cgCastExp.setExecutorType(cgExecutorType);
+		cgCastExp.setTypeId(codeGenerator.getAnalyzer().getCGTypeId(CGUtil.getAST(cgExecutorType).getTypeId()));
+		return cgCastExp;
+	}
+
 	public @NonNull CGValuedElement createCGConstantExp(@NonNull CGConstant cgConstant) {
 		CGConstantExp cgConstantExp = CGModelFactory.eINSTANCE.createCGConstantExp();
 		cgConstantExp.setAst(cgConstant.getAst());
@@ -274,6 +287,24 @@ public class CodeGenAnalyzer
 		cgConstantExp.setReferredConstant(cgConstant);
 		cgConstantExp.setTypeId(getCGTypeId(element.getTypeId()));
 		return cgConstantExp;
+	}
+
+	public @NonNull CGValuedElement createCGIsEqual(@NonNull CGValuedElement cgLeft, @NonNull CGValuedElement cgRight) {
+		CGIsEqualExp cgIsEqual = CGModelFactory.eINSTANCE.createCGIsEqualExp();
+		cgIsEqual.setSource(cgLeft);
+		cgIsEqual.setArgument(cgRight);
+		cgIsEqual.setTypeId(getCGTypeId(TypeId.BOOLEAN));
+		cgIsEqual.setRequired(true);
+		return cgIsEqual;
+	}
+
+	public @NonNull CGLetExp createCGLetExp(@NonNull CGFinalVariable cgVariable, @NonNull CGValuedElement cgIn) {
+		CGLetExp cgLetExp = CGModelFactory.eINSTANCE.createCGLetExp();
+		cgLetExp.setInit(cgVariable);
+		cgLetExp.setIn(cgIn);
+		cgLetExp.setTypeId(cgIn.getTypeId());
+		cgLetExp.setRequired(cgIn.isRequired());
+		return cgLetExp;
 	}
 
 	public @NonNull CGNativeOperationCallExp createCGNativeOperationCallExp(@NonNull Method method, @NonNull OperationCallingConvention callingConvention) {		// XXX @NonNull
@@ -444,6 +475,16 @@ public class CodeGenAnalyzer
 			cgExpression = cgLiteralExp;
 		};
 		return cgExpression;
+	}
+
+	public @NonNull CGIfExp createCGIfExp(@NonNull CGValuedElement cgCondition, @NonNull CGValuedElement cgThenExpression, @NonNull CGValuedElement cgElseExpression) {
+		CGIfExp cgIfExp = CGModelFactory.eINSTANCE.createCGIfExp();
+		cgIfExp.setCondition(cgCondition);
+		cgIfExp.setThenExpression(cgThenExpression);
+		cgIfExp.setElseExpression(cgElseExpression);
+		cgIfExp.setTypeId(cgThenExpression.getTypeId());		// FIXME common type
+		cgIfExp.setRequired(cgThenExpression.isRequired() && cgElseExpression.isRequired());
+		return cgIfExp;
 	}
 
 	public @NonNull CGInteger getCGInteger(@NonNull Number aNumber) {

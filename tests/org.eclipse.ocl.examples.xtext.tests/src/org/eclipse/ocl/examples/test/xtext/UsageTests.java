@@ -62,7 +62,6 @@ import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.emf.mwe.core.ConfigurationException;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 import org.eclipse.ocl.examples.codegen.dynamic.ExplicitClassLoader;
 import org.eclipse.ocl.examples.codegen.dynamic.JavaClasspath;
 import org.eclipse.ocl.examples.codegen.dynamic.JavaFileUtil;
@@ -773,8 +772,8 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	}
 
 	public void testBug415782() throws Throwable {
-		NameResolution.NAMES_GATHER.setState(true);
-		NameResolution.NAMES_RESOLVE.setState(true);
+	//	NameResolution.NAMES_GATHER.setState(true);
+	//	NameResolution.NAMES_RESOLVE.setState(true);
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws Exception {
