@@ -261,8 +261,8 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return variablesStack.getParameter(aParameter);
 	}
 
-	public @NonNull CGNativeOperationCallExp createCGBoxedNativeOperationCallExp(@Nullable CGValuedElement cgThis, @NonNull Method method, @NonNull CGValuedElement... cgArguments) {
-		CGNativeOperationCallExp cgCallExp = context.createCGNativeOperationCallExp(method, SupportOperationCallingConvention.INSTANCE);
+	public @NonNull CGNativeOperationCallExp createCGBoxedNativeOperationCallExp(@Nullable CGValuedElement cgThis, @NonNull Method jMethod, @NonNull CGValuedElement... cgArguments) {
+		CGNativeOperationCallExp cgCallExp = context.createCGNativeOperationCallExp(jMethod, SupportOperationCallingConvention.INSTANCE);
 		cgCallExp.setCgThis(cgThis);
 		if (cgArguments != null) {
 			List<CGValuedElement> cgArguments2 = cgCallExp.getCgArguments();
@@ -270,9 +270,11 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 				cgArguments2.add(cgArgument);
 			}
 		}
-		cgCallExp.setRequired(((JavaCodeGenerator)codeGenerator).getIsNonNull(method) == Boolean.TRUE);
+		cgCallExp.setRequired(((JavaCodeGenerator)codeGenerator).getIsNonNull(jMethod) == Boolean.TRUE);
 	//	cgCallExp.setInvalidating(false));
-		cgCallExp.setTypeId(context.getCGTypeId(new JavaTypeId(method.getReturnType())));		// XXX cache
+		Class<?> jReturnType = jMethod.getReturnType();
+		assert jReturnType != null;
+		cgCallExp.setTypeId(context.getCGTypeId(new JavaTypeId(jReturnType)));		// XXX cache
 		return cgCallExp;
 	}
 
@@ -386,11 +388,11 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return cgOperation;
 	}
 
-	public @NonNull <T extends CGElement> T doVisit(@NonNull Class<T> requiredClass, @Nullable Element pElement) {
-		if (pElement == null) {
+	public @NonNull <T extends CGElement> T doVisit(@NonNull Class<T> requiredClass, @Nullable Element asElement) {
+		if (asElement == null) {
 			throw new NullPointerException("null source for mapping to " + requiredClass.getName());
 		}
-		CGNamedElement cgElement = pElement.accept(this);
+		CGNamedElement cgElement = asElement.accept(this);
 		if (cgElement == null) {
 			throw new NullPointerException("null result of mapping to " + requiredClass.getName());
 		}
@@ -549,20 +551,8 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 					OperationCallingConvention callingConvention = codeGenerator.getCallingConvention(asOperation);
 					LibraryOperation libraryOperation = (LibraryOperation)metamodelManager.getImplementation(asOperation);
 					if (libraryOperation instanceof ForeignOperation) {			// XXX this parses stdlib bodies unnecessarily
-						context.addExternalFeature(asOperation);
-/*=======
-				cgOperation = createCGOperationWithoutBody(asSourceType, asOperation, callingConvention);
-				getNameManager().declarePreferredName(cgOperation);
-			//	pushContext(cgOperation, asOperation);
-				ExpressionInOCL query = (ExpressionInOCL)asOperation.getBodyExpression();
-			/*	LanguageExpression specification = asOperation.getBodyExpression();
-				if (specification != null) {
-					try {
-						query = environmentFactory.parseSpecification(specification);
-					} catch (ParserException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
->>>>>>> 499abd0 wip cached */
+						context.addExternalFeature(asOperation);		// XXX move to OperationCallingConvention
+						assert context.isExternal(asOperation);		// XXX move to OperationCallingConvention
 					}
 					cgOperation = callingConvention.createCGOperationWithoutBody(this, asSourceType, asOperation);
 					if (cgOperation.getAst() == null) {
@@ -570,28 +560,21 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 					}
 					getNameManager().declarePreferredName(cgOperation);
 					LocalContext savedClassContext = pushLocalContext(cgOperation, asOperation);
-				//	ExpressionInOCL query = null;
-					LanguageExpression specification = asOperation.getBodyExpression();
-				//	if (specification != null) {
-				//		try {
-				//			query = environmentFactory.parseSpecification(specification);
-				//		} catch (ParserException e) {
-				//			// TODO Auto-generated catch block
-				//			e.printStackTrace();
-				//		}
-				//	}
-					callingConvention.createCGParameters(this, cgOperation, (ExpressionInOCL)specification);	// Already parsed
+					ExpressionInOCL asExpressionInOCL = null;
+					LanguageExpression asSpecification = asOperation.getBodyExpression();
+					if (asSpecification != null) {
+						try {
+							asExpressionInOCL = environmentFactory.parseSpecification(asSpecification);
+						} catch (ParserException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					callingConvention.createCGParameters(this, cgOperation, asExpressionInOCL);
 					popLocalContext(savedClassContext);
 				} finally {
 					popLocalContext(savedPreClassContext);
 				}
-/*=======
-				} * /
-				pushContext(cgOperation, asOperation);
-				callingConvention.createCGParameters(this, cgOperation, query);
-				popLocalContext();
-			//	popLocalContext();
->>>>>>> 499abd0 wip cached */
 			}
 		}
 		return cgOperation;
@@ -1418,6 +1401,9 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	@Override
 	public @Nullable CGOperation visitOperation(@NonNull Operation asOperation) {
+		if (asOperation.toString().contains("allOwnedElements")) {
+			getClass();		// XXX
+		}
 		CGOperation cgOperation = generateOperationDeclaration(null, asOperation);
 		LocalContext savedLocalContext = pushLocalContext(cgOperation, asOperation);
 		LanguageExpression specification = asOperation.getBodyExpression();
