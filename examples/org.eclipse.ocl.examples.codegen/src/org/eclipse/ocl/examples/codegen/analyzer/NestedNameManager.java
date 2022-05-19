@@ -165,7 +165,7 @@ public class NestedNameManager extends NameManager
 
 	public @Nullable CGClass findCGScope() {
 		for (NestedNameManager nameManager = this; nameManager != null; nameManager = nameManager.parent instanceof NestedNameManager ? (NestedNameManager)nameManager.parent : null) {
-			CGNamedElement cgScope = nameManager.findCGScope();
+			CGNamedElement cgScope = nameManager.cgScope;
 			if (cgScope instanceof CGClass) {
 				return (CGClass) cgScope;
 			}
