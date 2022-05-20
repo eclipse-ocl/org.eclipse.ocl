@@ -520,7 +520,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	@Override
 	public @Nullable Object visitCGOperation(@NonNull CGOperation cgOperation) {
 		super.visitCGOperation(cgOperation);
-		//		if ("isAttribute".cgOperation(cgElement.getName())) {
+		//		if ("isAttribute".cgOperation(cgElement.getName())) {		// XXX
 		//			System.out.println("visitCGOperation for " + cgElement.getAst().toString());
 		//		}
 		OperationCallingConvention callingConvention = cgOperation.getCallingConvention();

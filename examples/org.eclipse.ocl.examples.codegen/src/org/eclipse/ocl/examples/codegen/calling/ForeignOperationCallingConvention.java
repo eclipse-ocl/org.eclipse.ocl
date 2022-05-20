@@ -88,51 +88,24 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 
 	@Override
 	public @NonNull CGOperation createCGOperationWithoutBody(@NonNull AS2CGVisitor as2cgVisitor, @Nullable Type asSourceType, @NonNull Operation asOperation) {
- /*		PivotMetamodelManager metamodelManager = as2cgVisitor.getMetamodelManager();
-		GenModelHelper genModelHelper = as2cgVisitor.getGenModelHelper();
-		LibraryFeature libraryOperation = metamodelManager.getImplementation(asOperation);
-		assert !(libraryOperation instanceof EObjectOperation);
-		assert (libraryOperation instanceof ForeignOperation);
+		CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();
 		EOperation eOperation = (EOperation) asOperation.getESObject();
-		if (eOperation != null) {
-			boolean isForeign = PivotUtil.isStatic(eOperation);
-			if (isForeign) {
-				return CGModelFactory.eINSTANCE.createCGLibraryOperation();
-			}
-			else {
-				try {
-					genModelHelper.getGenOperation(eOperation);
-					CGEcoreOperation cgEcoreOperation = CGModelFactory.eINSTANCE.createCGEcoreOperation();
-					cgEcoreOperation.setEOperation(eOperation);
-					return cgEcoreOperation;
-				}
-				catch (GenModelException e) {
-					return CGModelFactory.eINSTANCE.createCGLibraryOperation();
-				}
-			}
-		}
-		assert false : "Fallback overload for " + this;		// XXX
-		return CGModelFactory.eINSTANCE.createCGLibraryOperation(); */
-	//	PivotMetamodelManager metamodelManager = as2cgVisitor.getMetamodelManager();
-	//	GenModelHelper genModelHelper = as2cgVisitor.getGenModelHelper();
-	//	LibraryFeature libraryOperation = metamodelManager.getImplementation(asOperation);
-	//	assert libraryOperation instanceof ForeignOperation;	-- ForeignOperationCallingConvention
-	//	assert libraryOperation instanceof EObjectOperation;	-- EcoreForeignOperationCallingConvention
-		EOperation eOperation = (EOperation) asOperation.getESObject();
-	//	assert (eOperation == null) || asOperation.isIsStatic();
 		if ((eOperation != null) && !PivotUtil.isStatic(eOperation)) {
 			try {
 				GenModelHelper genModelHelper = as2cgVisitor.getGenModelHelper();
 				genModelHelper.getGenOperation(eOperation);
 				CGEcoreOperation cgEcoreOperation = CGModelFactory.eINSTANCE.createCGEcoreOperation();
 				cgEcoreOperation.setEOperation(eOperation);
+				analyzer.addExternalFeature(asOperation);
 				return cgEcoreOperation;
 			}
 			catch (GenModelException e) {
 				// No genmodel so fallback
 			}
 		}
-		return CGModelFactory.eINSTANCE.createCGLibraryOperation();
+		CGLibraryOperation cgLibraryOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
+		analyzer.addExternalFeature(asOperation);
+		return cgLibraryOperation;
 	}
 
 	@Override

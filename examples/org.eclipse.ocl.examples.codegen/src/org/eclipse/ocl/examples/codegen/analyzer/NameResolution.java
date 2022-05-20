@@ -153,7 +153,7 @@ public class NameResolution
 		if (nameHint.contains("manyDates")) {
 			getClass();		// XXX
 		}
-		if ("PROPid_aBool".equals(nameHint)) {
+		if ("IMPPROPid_t3forwardList".equals(nameHint)) {
 			getClass();			// XXX
 		}
 		if ("CAUGHT_gt".equals(nameHint)) {

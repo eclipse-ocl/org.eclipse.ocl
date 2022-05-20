@@ -512,7 +512,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		OCLExpression asSource = asOperationCallExp.getOwnedSource();
 		Type asSourceType = asSource != null ? asSource.getType() : null;
 		Operation asOperation = ClassUtil.nonNullState(asOperationCallExp.getReferredOperation());
-	//	LibraryOperation libraryOperation = (LibraryOperation)metamodelManager.getImplementation(asOperation);
 		CGOperation cgOperation = generateOperationDeclaration(asSourceType, asOperation);
 		OperationCallingConvention callingConvention = cgOperation.getCallingConvention();
 		LibraryOperation libraryOperation = (LibraryOperation)metamodelManager.getImplementation(asOperation);
@@ -549,12 +548,12 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 				LocalContext savedPreClassContext = pushLocalContext(cgClass, asClass);
 				try {
 					OperationCallingConvention callingConvention = codeGenerator.getCallingConvention(asOperation);
+					cgOperation = callingConvention.createCGOperationWithoutBody(this, asSourceType, asOperation);
 					LibraryOperation libraryOperation = (LibraryOperation)metamodelManager.getImplementation(asOperation);
 					if (libraryOperation instanceof ForeignOperation) {			// XXX this parses stdlib bodies unnecessarily
-						context.addExternalFeature(asOperation);		// XXX move to OperationCallingConvention
+					//	context.addExternalFeature(asOperation);		// XXX move to OperationCallingConvention
 						assert context.isExternal(asOperation);		// XXX move to OperationCallingConvention
 					}
-					cgOperation = callingConvention.createCGOperationWithoutBody(this, asSourceType, asOperation);
 					if (cgOperation.getAst() == null) {
 						context.installOperation(asOperation, cgOperation, callingConvention);
 					}
@@ -586,51 +585,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		PropertyCallingConvention callingConvention = cgProperty.getCallingConvention();
 		LibraryProperty libraryProperty = metamodelManager.getImplementation(null, null, asProperty);
 		return callingConvention.createCGNavigationCallExp(this, cgProperty, libraryProperty, cgSource, asOppositePropertyCallExp);
-	/*	Property asOppositeProperty = ClassUtil.nonNullModel(element.getReferredProperty());
-		Property asProperty = ClassUtil.nonNullModel(asOppositeProperty.getOpposite());
-		boolean isRequired = asProperty.isIsRequired();
-		LibraryProperty libraryProperty = metamodelManager.getImplementation(element, null, asProperty);
-		CGOppositePropertyCallExp cgPropertyCallExp = null;
-		if ((libraryProperty instanceof CompositionProperty) || (libraryProperty instanceof ImplicitNonCompositionProperty)) {
-			EStructuralFeature eStructuralFeature = (EStructuralFeature) asProperty.getESObject();
-			if (eStructuralFeature != null) {
-				try {
-					genModelHelper.getGetAccessor(eStructuralFeature);
-					CGEcoreOppositePropertyCallExp cgEcorePropertyCallExp = CGModelFactory.eINSTANCE.createCGEcoreOppositePropertyCallExp();
-					cgEcorePropertyCallExp.setEStructuralFeature(eStructuralFeature);
-					Boolean ecoreIsRequired = codeGenerator.isNonNull(asProperty);
-					if (ecoreIsRequired != null) {
-						isRequired = ecoreIsRequired;
-					}
-					cgPropertyCallExp = cgEcorePropertyCallExp;
-				} catch (GenModelException e) {
-					codeGenerator.addProblem(e);
-				}
-			}
-		}
-		else if (libraryProperty instanceof ExtensionProperty){
-			CGExecutorOppositePropertyCallExp cgExecutorPropertyCallExp = CGModelFactory.eINSTANCE.createCGExecutorOppositePropertyCallExp();
-			CGExecutorProperty cgExecutorProperty = context.createExecutorOppositeProperty(asProperty);
-			cgExecutorPropertyCallExp.setExecutorProperty(cgExecutorProperty);
-			cgExecutorPropertyCallExp.getOwns().add(cgExecutorProperty);
-			cgPropertyCallExp = cgExecutorPropertyCallExp;
-		}
-		else {
-			// throw new UnsupportedOperationException("AS2CGVisitor.generateOppositePropertyCallExp for " + libraryProperty.getClass().getSimpleName());
-			assert false : "Unsupported AS2CGVisitor.generateOppositePropertyCallExp for " + libraryProperty.getClass().getSimpleName();
-		}
-		if (cgPropertyCallExp == null) {
-			CGExecutorOppositePropertyCallExp cgExecutorPropertyCallExp = CGModelFactory.eINSTANCE.createCGExecutorOppositePropertyCallExp();
-			CGExecutorProperty cgExecutorProperty = context.createExecutorOppositeProperty(asProperty);
-			cgExecutorPropertyCallExp.setExecutorProperty(cgExecutorProperty);
-			cgExecutorPropertyCallExp.getOwns().add(cgExecutorProperty);
-			cgPropertyCallExp = cgExecutorPropertyCallExp;
-		}
-		cgPropertyCallExp.setReferredProperty(asProperty);
-		initAst(cgPropertyCallExp, element);
-		cgPropertyCallExp.setRequired(isRequired);
-		cgPropertyCallExp.setSource(cgSource);
-		return cgPropertyCallExp; */
 	}
 
 	protected @NonNull CGValuedElement generatePropertyCallExp(@Nullable CGValuedElement cgSource, @NonNull PropertyCallExp asPropertyCallExp) {
@@ -639,111 +593,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		PropertyCallingConvention callingConvention = cgProperty.getCallingConvention();
 		LibraryProperty libraryProperty = metamodelManager.getImplementation(null, null, asProperty);
 		return callingConvention.createCGNavigationCallExp(this, cgProperty, libraryProperty, cgSource, asPropertyCallExp);
-	/*	if (cgValuedElement != null) {	// XXX
-			return cgValuedElement;
-		}
-		assert false;
-		boolean isRequired = asProperty.isIsRequired();
-		CGPropertyCallExp cgPropertyCallExp = null;
-		if (libraryProperty instanceof NativeProperty) {
-			CGNativePropertyCallExp cgNativePropertyCallExp = CGModelFactory.eINSTANCE.createCGNativePropertyCallExp();
-			cgPropertyCallExp = cgNativePropertyCallExp;
-		}
-		else if (libraryProperty instanceof OclElementOclContainerProperty) {
-			CGEcorePropertyCallExp cgEcorePropertyCallExp = CGModelFactory.eINSTANCE.createCGEcorePropertyCallExp();
-			cgEcorePropertyCallExp.setEStructuralFeature(OCLstdlibPackage.Literals.OCL_ELEMENT__OCL_CONTAINER);
-			cgPropertyCallExp = cgEcorePropertyCallExp;
-		}
-		else if (libraryProperty instanceof StaticProperty) {
-			assert cgSource == null;
-			context.addForeignFeature(asProperty);
-			CGForeignPropertyCallExp cgForeignPropertyCallExp = CGModelFactory.eINSTANCE.createCGForeignPropertyCallExp();
-			CGElementId cgPropertyId = context.getElementId(asProperty.getPropertyId());
-			cgForeignPropertyCallExp.getOwns().add(cgPropertyId);
-		//	CGValuedElement initExpression = getInitExpression(element);
-		//	if (initExpression != null) {
-		//		cgForeignPropertyCallExp.setInitExpression(initExpression);
-		//	}
-			cgPropertyCallExp = cgForeignPropertyCallExp;
-		}
-		else if (libraryProperty instanceof TuplePartProperty) {
-			CGTuplePartCallExp cgTuplePartCallExp = CGModelFactory.eINSTANCE.createCGTuplePartCallExp();
-			cgTuplePartCallExp.setAstTuplePartId(IdManager.getTuplePartId(asProperty));
-			cgPropertyCallExp = cgTuplePartCallExp;
-		}
-	//	else if (isEcoreProperty(libraryProperty)) {
-		else if (libraryProperty instanceof ConstrainedProperty) {
-			EStructuralFeature eStructuralFeature = (EStructuralFeature) asProperty.getESObject();
-			if (eStructuralFeature != null) {
-				try {
-					genModelHelper.getGetAccessor(eStructuralFeature);
-					CGEcorePropertyCallExp cgEcorePropertyCallExp = CGModelFactory.eINSTANCE.createCGEcorePropertyCallExp();
-					cgEcorePropertyCallExp.setEStructuralFeature(eStructuralFeature);
-					//					Boolean ecoreIsRequired = codeGenerator.isNonNull(asProperty);
-					//					if (ecoreIsRequired != null) {
-					//						isRequired = ecoreIsRequired;
-					//					}
-					isRequired = asProperty.isIsRequired();
-					cgPropertyCallExp = cgEcorePropertyCallExp;
-				} catch (GenModelException e) {
-					codeGenerator.addProblem(e);		// FIXME drop through to better default
-				}
-			}
-	/*	assert cgSource != null;
-			context.addForeignFeature(asProperty);
-			CGForeignPropertyCallExp cgForeignPropertyCallExp = CGModelFactory.eINSTANCE.createCGForeignPropertyCallExp();
-			CGElementId cgPropertyId = context.getElementId(asProperty.getPropertyId());
-			cgForeignPropertyCallExp.getOwns().add(cgPropertyId);
-		//	CGValuedElement initExpression = getInitExpression(element);
-		//	if (initExpression != null) {
-		//		cgForeignPropertyCallExp.setInitExpression(initExpression);
-		//	}
-			cgPropertyCallExp = cgForeignPropertyCallExp; * /
-		}
-		else if (libraryProperty instanceof ExplicitNavigationProperty) {
-				//	|| (libraryProperty instanceof CompositionProperty)
-				//	|| (libraryProperty instanceof ImplicitNonCompositionProperty)		// FIXME surely this isn't Ecore
-				//	|| (libraryProperty instanceof StaticProperty)
-				//	|| (libraryProperty instanceof StereotypeProperty)) {
-			@NonNull EStructuralFeature eStructuralFeature = (EStructuralFeature) asProperty.getESObject();
-			try {
-				genModelHelper.getGetAccessor(eStructuralFeature);
-				CGEcorePropertyCallExp cgEcorePropertyCallExp = CGModelFactory.eINSTANCE.createCGEcorePropertyCallExp();
-				cgEcorePropertyCallExp.setEStructuralFeature(eStructuralFeature);
-				cgPropertyCallExp = cgEcorePropertyCallExp;
-			} catch (GenModelException e) {			// There is no genmodel so
-				codeGenerator.addProblem(e);		// FIXME drop through to better default without a problem
-			}
-		}
-		else if ((libraryProperty instanceof OclElementOclContentsProperty)
-				  || (libraryProperty instanceof CollectionElementTypeProperty)
-				  || (libraryProperty instanceof CollectionLowerProperty)
-				  || (libraryProperty instanceof CollectionUpperProperty)
-				  || (libraryProperty instanceof MapKeyTypeProperty)
-				  || (libraryProperty instanceof MapValueTypeProperty)) {
-			CGLibraryPropertyCallExp cgLibraryPropertyCallExp = CGModelFactory.eINSTANCE.createCGLibraryPropertyCallExp();
-			cgLibraryPropertyCallExp.setLibraryProperty(libraryProperty);
-			cgPropertyCallExp = cgLibraryPropertyCallExp;
-		}
-		else {
-		//	throw new UnsupportedOperationException("AS2CGVisitor.generatePropertyCallExp for " + libraryProperty.getClass().getSimpleName());
-			assert false : "UnsupportedOperation AS2CGVisitor.generatePropertyCallExp for " + libraryProperty.getClass().getSimpleName();
-			CGLibraryPropertyCallExp cgLibraryPropertyCallExp = CGModelFactory.eINSTANCE.createCGLibraryPropertyCallExp();
-			cgLibraryPropertyCallExp.setLibraryProperty(libraryProperty);
-			cgPropertyCallExp = cgLibraryPropertyCallExp;
-		}
-		if (cgPropertyCallExp == null) {
-			CGExecutorPropertyCallExp cgExecutorPropertyCallExp = CGModelFactory.eINSTANCE.createCGExecutorPropertyCallExp();
-			CGExecutorProperty cgExecutorProperty = context.createExecutorProperty(asProperty);
-			cgExecutorPropertyCallExp.setExecutorProperty(cgExecutorProperty);
-			cgExecutorPropertyCallExp.getOwns().add(cgExecutorProperty);
-			cgPropertyCallExp = cgExecutorPropertyCallExp;
-		}
-		cgPropertyCallExp.setReferredProperty(asProperty);
-		initAst(cgPropertyCallExp, asPropertyCallExp);
-		cgPropertyCallExp.setRequired(isRequired || codeGenerator.isPrimitive(cgPropertyCallExp));
-		cgPropertyCallExp.setSource(cgSource);
-		return cgPropertyCallExp; */
 	}
 
 	/**
