@@ -22,6 +22,7 @@ package org.eclipse.ocl.examples.codegen.cgmodel;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorPropertyCallExp#getExecutorProperty <em>Executor Property</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorPropertyCallExp#getCgArgument <em>Cg Argument</em>}</li>
  * </ul>
  *
  * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGExecutorPropertyCallExp()
@@ -53,4 +54,28 @@ public interface CGExecutorPropertyCallExp extends CGPropertyCallExp {
 	 * @generated
 	 */
 	void setExecutorProperty(CGExecutorProperty value);
+
+	/**
+	 * Returns the value of the '<em><b>Cg Argument</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Extra argument optionally identifying a dynamically resolved Property
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Cg Argument</em>' containment reference.
+	 * @see #setCgArgument(CGValuedElement)
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGExecutorPropertyCallExp_CgArgument()
+	 * @generated
+	 */
+	CGValuedElement getCgArgument();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorPropertyCallExp#getCgArgument <em>Cg Argument</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Cg Argument</em>' containment reference.
+	 * @see #getCgArgument()
+	 * @generated
+	 */
+	void setCgArgument(CGValuedElement value);
 } // CGExecutorPropertyCallExp

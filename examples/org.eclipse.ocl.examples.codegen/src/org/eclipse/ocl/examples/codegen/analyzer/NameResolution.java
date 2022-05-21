@@ -18,10 +18,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.CodeGenConstants;
 import org.eclipse.ocl.examples.codegen.analyzer.NameManager.Context;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBuiltInIterationCallExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGCallable;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -102,15 +99,15 @@ public class NameResolution
 		if (primaryElement == null) {
 			assert nameHint != null : "Expected NameResolution for null";
 		}
-		else {
+	/*	else {			-- too fussy
 			boolean expectNameHint = nameManager.isGlobal() || (primaryElement instanceof CGCallable) || (primaryElement instanceof CGProperty) || (primaryElement instanceof CGVariable);
 			if (expectNameHint) {
-				assert nameHint != null  : "Expected NameResolution for " + primaryElement.getClass().getName();
+				assert nameHint != null : "Expected NameResolution for " + primaryElement.getClass().getName();
 			}
 			else {
 				assert nameHint == null : "Unexpected NameResolution for " + primaryElement.getClass().getName();
 			}
-		}
+		} */
 		assert !(primaryElement instanceof CGVariableExp) : "Should have redirected to getNamedValue()";
 		if ((primaryElement != null) && "u.oclAsType(SysML_ValueTypes_QUDV::QUDV::ConversionBasedUnit)".equals(String.valueOf(primaryElement.getAst()))) {
 			getClass();		// XXX
@@ -156,7 +153,7 @@ public class NameResolution
 		if ("IMPPROPid_t3forwardList".equals(nameHint)) {
 			getClass();			// XXX
 		}
-		if ("CAUGHT_gt".equals(nameHint)) {
+		if ("create".equals(nameHint)) {
 			getClass();			// XXX
 		}
 		return true;

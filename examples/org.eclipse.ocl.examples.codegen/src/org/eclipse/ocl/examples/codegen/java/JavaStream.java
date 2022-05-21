@@ -265,7 +265,7 @@ public class JavaStream
 				s.append(string);
 			}
 			else {
-				if (string.contains("OclComparable")) {
+				if (string.contains("PropertyId")) {
 					getClass();		// XXX
 				}
 				int sLength = s.length();

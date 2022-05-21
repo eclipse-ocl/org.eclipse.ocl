@@ -120,6 +120,7 @@ public class CodeGenAnalyzer
 	private /*@LazyNonNull*/ CGInvalid cgInvalid = null;
 	protected final @NonNull CGNull cgNull;
 	private final @NonNull Map<@NonNull Number, @NonNull CGInteger> cgIntegers = new HashMap<>();
+//	private final @NonNull Map<@NonNull Property, @NonNull CGProperty> cgProperties = new HashMap<>();
 	private final @NonNull Map<@NonNull Number, @NonNull CGReal> cgReals = new HashMap<>();
 	private final @NonNull Map<@NonNull String, @NonNull CGString> cgStrings = new HashMap<>();
 	private /*@LazyNonNull*/ Map<@NonNull ExpressionInOCL, @NonNull CommonSubExpressionAnalysis> expression2cseAnalsis = null;
@@ -204,6 +205,10 @@ public class CodeGenAnalyzer
 			externalFeatures = externalFeatures2 = new UniqueList<>();
 		}
 		externalFeatures2.add(asFeature);
+	}
+
+	public void addGlobal(@NonNull CGValuedElement cgGlobal) {
+		codeGenerator.getGlobalContext().addGlobal(cgGlobal);
 	}
 
 	public void addVirtualCGOperation(@NonNull Operation asOperation, @NonNull CGCachedOperation cgOperation) {
@@ -309,6 +314,16 @@ public class CodeGenAnalyzer
 		return cgConstantExp;
 	}
 
+	public @NonNull CGIfExp createCGIfExp(@NonNull CGValuedElement cgCondition, @NonNull CGValuedElement cgThenExpression, @NonNull CGValuedElement cgElseExpression) {
+		CGIfExp cgIfExp = CGModelFactory.eINSTANCE.createCGIfExp();
+		cgIfExp.setCondition(cgCondition);
+		cgIfExp.setThenExpression(cgThenExpression);
+		cgIfExp.setElseExpression(cgElseExpression);
+		cgIfExp.setTypeId(cgThenExpression.getTypeId());		// FIXME common type
+		cgIfExp.setRequired(cgThenExpression.isRequired() && cgElseExpression.isRequired());
+		return cgIfExp;
+	}
+
 	public @NonNull CGValuedElement createCGIsEqual(@NonNull CGValuedElement cgLeft, @NonNull CGValuedElement cgRight) {
 		CGIsEqualExp cgIsEqual = CGModelFactory.eINSTANCE.createCGIsEqualExp();
 		cgIsEqual.setSource(cgLeft);
@@ -328,7 +343,7 @@ public class CodeGenAnalyzer
 	}
 
 	public @NonNull CGNativeOperationCallExp createCGNativeOperationCallExp(@NonNull Method method, @NonNull OperationCallingConvention callingConvention) {		// XXX @NonNull
-		assert method != null;
+	//	assert method != null;
 		CGNativeOperationCallExp cgNativeOperationCallExp = CGModelFactory.eINSTANCE.createCGNativeOperationCallExp();
 		cgNativeOperationCallExp.setMethod(method);		// Use cc
 		Operation asOperation = getNativeOperation(method, callingConvention);
@@ -512,16 +527,6 @@ public class CodeGenAnalyzer
 			cgExpression = cgLiteralExp;
 		};
 		return cgExpression;
-	}
-
-	public @NonNull CGIfExp createCGIfExp(@NonNull CGValuedElement cgCondition, @NonNull CGValuedElement cgThenExpression, @NonNull CGValuedElement cgElseExpression) {
-		CGIfExp cgIfExp = CGModelFactory.eINSTANCE.createCGIfExp();
-		cgIfExp.setCondition(cgCondition);
-		cgIfExp.setThenExpression(cgThenExpression);
-		cgIfExp.setElseExpression(cgElseExpression);
-		cgIfExp.setTypeId(cgThenExpression.getTypeId());		// FIXME common type
-		cgIfExp.setRequired(cgThenExpression.isRequired() && cgElseExpression.isRequired());
-		return cgIfExp;
 	}
 
 	public @NonNull CGInteger getCGInteger(@NonNull Number aNumber) {

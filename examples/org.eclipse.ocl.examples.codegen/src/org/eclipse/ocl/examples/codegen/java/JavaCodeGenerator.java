@@ -814,10 +814,10 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	}
 
 	protected void visitInPostOrder2(@NonNull CGElement cgElement, @Nullable NameResolution parentNameResolution) {
-		if (cgElement instanceof CGValuedElement) {
-			if ("cu = .oclAsType(executor, u, TYP_SysML_ValueTypes_QUDV_c_c_QUDV_c_c_ConversionBasedUnit)".equals(cgElement.toString())) {
+		if (cgElement instanceof CGVariable) {
+		//	if ("cu = .oclAsType(executor, u, TYP_SysML_ValueTypes_QUDV_c_c_QUDV_c_c_ConversionBasedUnit)".equals(cgElement.toString())) {
 				getClass();		// XXX
-			}
+		//	}
 			CGValuedElement cgValuedElement2 = (CGValuedElement)cgElement;
 			NameResolution nameResolution = cgValuedElement2.basicGetNameResolution();
 		//	assert (nameResolution == null) || debugCheckNameResolution(cgValuedElement2, nameResolution);

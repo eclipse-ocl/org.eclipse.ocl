@@ -4,14 +4,16 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.cgmodel.impl;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorProperty;
@@ -29,6 +31,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGExecutorPropertyCallExpImpl#getExecutorProperty <em>Executor Property</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGExecutorPropertyCallExpImpl#getCgArgument <em>Cg Argument</em>}</li>
  * </ul>
  *
  * @generated
@@ -41,7 +44,7 @@ public class CGExecutorPropertyCallExpImpl extends CGPropertyCallExpImpl impleme
 	 * @generated
 	 * @ordered
 	 */
-	public static final int CG_EXECUTOR_PROPERTY_CALL_EXP_FEATURE_COUNT = CGPropertyCallExpImpl.CG_PROPERTY_CALL_EXP_FEATURE_COUNT + 1;
+	public static final int CG_EXECUTOR_PROPERTY_CALL_EXP_FEATURE_COUNT = CGPropertyCallExpImpl.CG_PROPERTY_CALL_EXP_FEATURE_COUNT + 2;
 	/**
 	 * The cached value of the '{@link #getExecutorProperty() <em>Executor Property</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -51,6 +54,16 @@ public class CGExecutorPropertyCallExpImpl extends CGPropertyCallExpImpl impleme
 	 * @ordered
 	 */
 	protected CGExecutorProperty executorProperty;
+
+	/**
+	 * The cached value of the '{@link #getCgArgument() <em>Cg Argument</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCgArgument()
+	 * @generated
+	 * @ordered
+	 */
+	protected CGValuedElement cgArgument;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -100,10 +113,71 @@ public class CGExecutorPropertyCallExpImpl extends CGPropertyCallExpImpl impleme
 	 * @generated
 	 */
 	@Override
+	public CGValuedElement getCgArgument() {
+		return cgArgument;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetCgArgument(CGValuedElement newCgArgument, NotificationChain msgs) {
+		CGValuedElement oldCgArgument = cgArgument;
+		cgArgument = newCgArgument;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 12, oldCgArgument, newCgArgument);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setCgArgument(CGValuedElement newCgArgument) {
+		if (newCgArgument != cgArgument) {
+			NotificationChain msgs = null;
+			if (cgArgument != null)
+				msgs = ((InternalEObject)cgArgument).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (12), null, msgs);
+			if (newCgArgument != null)
+				msgs = ((InternalEObject)newCgArgument).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (12), null, msgs);
+			msgs = basicSetCgArgument(newCgArgument, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, 12, newCgArgument, newCgArgument));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case 12:
+				return basicSetCgArgument(null, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case 11:
 				return getExecutorProperty();
+			case 12:
+				return getCgArgument();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -118,6 +192,9 @@ public class CGExecutorPropertyCallExpImpl extends CGPropertyCallExpImpl impleme
 		switch (featureID) {
 			case 11:
 				setExecutorProperty((CGExecutorProperty)newValue);
+				return;
+			case 12:
+				setCgArgument((CGValuedElement)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -134,6 +211,9 @@ public class CGExecutorPropertyCallExpImpl extends CGPropertyCallExpImpl impleme
 			case 11:
 				setExecutorProperty((CGExecutorProperty)null);
 				return;
+			case 12:
+				setCgArgument((CGValuedElement)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -148,6 +228,8 @@ public class CGExecutorPropertyCallExpImpl extends CGPropertyCallExpImpl impleme
 		switch (featureID) {
 			case 11:
 				return executorProperty != null;
+			case 12:
+				return cgArgument != null;
 		}
 		return super.eIsSet(featureID);
 	}

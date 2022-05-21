@@ -319,7 +319,7 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 					addProblem(e);		// FIXME drop through to better default
 				}
 			}
-			return ExecutorPropertyCallingConvention.INSTANCE;
+			return ExecutorPropertyCallingConvention.INSTANCE;		// Used by e.g. test_oclAsSet_351512 - JUnit of dynamic Ecore
 		}
 		else if ((libraryProperty instanceof OclElementOclContentsProperty)
 				  || (libraryProperty instanceof CollectionElementTypeProperty)

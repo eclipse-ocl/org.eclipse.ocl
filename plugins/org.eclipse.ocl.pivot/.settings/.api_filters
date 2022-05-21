@@ -1644,6 +1644,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/library/UnboxedExplicitNavigationProperty.java" type="org.eclipse.ocl.pivot.internal.library.UnboxedExplicitNavigationProperty">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.library.UnboxedExplicitNavigationProperty"/>
+                <message_argument value="CREATE_METHOD"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/internal/resource/ASResourceImpl.java" type="org.eclipse.ocl.pivot.internal.resource.ASResourceImpl">
         <filter id="336658481">
             <message_arguments>

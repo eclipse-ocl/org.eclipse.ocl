@@ -1862,6 +1862,16 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 	 * @generated
 	 */
 	@Override
+	public EReference getCGExecutorPropertyCallExp_CgArgument() {
+		return (EReference)cgExecutorPropertyCallExpEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EClass getCGExecutorShadowPart() {
 		return cgExecutorShadowPartEClass;
 	}
@@ -3410,6 +3420,7 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 
 		cgExecutorPropertyCallExpEClass = createEClass(33);
 		createEReference(cgExecutorPropertyCallExpEClass, 11);
+		createEReference(cgExecutorPropertyCallExpEClass, 12);
 
 		cgExecutorShadowPartEClass = createEClass(34);
 
@@ -3862,6 +3873,7 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 
 		initEClass(cgExecutorPropertyCallExpEClass, CGExecutorPropertyCallExp.class, "CGExecutorPropertyCallExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getCGExecutorPropertyCallExp_ExecutorProperty(), this.getCGExecutorProperty(), null, "executorProperty", null, 1, 1, CGExecutorPropertyCallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getCGExecutorPropertyCallExp_CgArgument(), this.getCGValuedElement(), null, "cgArgument", null, 0, 1, CGExecutorPropertyCallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(cgExecutorShadowPartEClass, CGExecutorShadowPart.class, "CGExecutorShadowPart", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

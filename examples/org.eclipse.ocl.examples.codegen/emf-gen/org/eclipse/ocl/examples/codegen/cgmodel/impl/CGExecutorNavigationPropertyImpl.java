@@ -61,4 +61,13 @@ public class CGExecutorNavigationPropertyImpl extends CGExecutorPropertyImpl imp
 		return visitor.visitCGExecutorNavigationProperty(this);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
+	public boolean isInlined() {
+		return true;
+	}
+
 } //CGExecutorNavigationPropertyImpl

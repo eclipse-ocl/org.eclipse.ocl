@@ -278,7 +278,7 @@ public abstract class NameManager
 				if (anObject != NOT_AN_OBJECT) {
 					Object oldElement = name2object.get(validHint);
 					if (oldElement == null) {									// New allocation
-						if ("diagnostics".equals(validHint)) {
+						if ("create".equals(validHint)) {
 							getClass();			// XXX
 						}
 						name2object.put(validHint, anObject);

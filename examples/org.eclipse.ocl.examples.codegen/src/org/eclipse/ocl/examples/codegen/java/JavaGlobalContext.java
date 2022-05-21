@@ -91,7 +91,8 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 		this.valueName = globalNameManager.declareGlobalName(null, "value");
 	}
 
-	protected void addGlobal(@NonNull CGValuedElement cgGlobal) {
+	@Override
+	public void addGlobal(@NonNull CGValuedElement cgGlobal) {
 		globals.add(cgGlobal);
 	}
 

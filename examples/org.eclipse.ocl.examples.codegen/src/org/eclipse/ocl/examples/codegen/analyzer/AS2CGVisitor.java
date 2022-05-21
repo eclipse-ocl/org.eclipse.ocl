@@ -279,7 +279,8 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	}
 
 	public @NonNull CGFinalVariable createCGFinalVariable(@NonNull CGValuedElement cgInit) {
-		NameResolution nameResolution = getNameManager().getNameResolution(cgInit);
+		NestedNameManager nameManager = getNameManager();
+		NameResolution nameResolution = nameManager.getNameResolution(cgInit);
 		CGFinalVariable cgVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();
 		cgVariable.setAst(cgInit.getAst());
 		cgVariable.setTypeId(cgInit.getTypeId());
@@ -596,7 +597,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	}
 
 	/**
-	 * Generate / share the CG declaration for asProprty.
+	 * Generate / share the CG declaration for asProperty.
 	 */
 	protected final @NonNull CGProperty generatePropertyDeclaration(@NonNull Property asProperty) {
 		CGProperty cgProperty = context.basicGetCGProperty(asProperty);
