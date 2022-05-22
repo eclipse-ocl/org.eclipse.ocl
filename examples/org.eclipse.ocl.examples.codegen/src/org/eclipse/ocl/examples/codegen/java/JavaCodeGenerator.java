@@ -828,9 +828,10 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 				CGElement cgChild = (CGElement)eObject;
 				EReference eContainmentFeature = cgChild.eContainmentFeature();
 				if (eContainmentFeature == CGModelPackage.Literals.CG_VARIABLE__INIT) {
-					NameResolution nameResolution = ((CGVariable)cgElement).basicGetNameResolution();
+					CGVariable cgVariable = (@NonNull CGVariable)cgElement;
+					NameResolution nameResolution = cgVariable.basicGetNameResolution();
 					if (nameResolution == null) {
-						nameResolution = getGlobalContext().findLocalContext((CGVariable)cgElement).getNameManager().declareLazyName((CGVariable)cgElement);
+						nameResolution = getGlobalContext().findLocalContext(cgVariable).getNameManager().declareLazyName(cgVariable);
 					}
 					visitInPostOrder2(cgChild, nameResolution);
 				}
@@ -839,6 +840,9 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 				}
 				else if (eContainmentFeature == CGModelPackage.Literals.CG_LET_EXP__IN) {
 					visitInPostOrder2(cgChild, parentNameResolution);
+				}
+				else if ((eContainmentFeature == CGModelPackage.Literals.CG_SOURCED_CALL_EXP__SOURCE) && (cgElement instanceof CGGuardExp)) {
+					visitInPostOrder2(cgChild, parentNameResolution);	// Guard is an if predicate name re-use
 				}
 				else {
 					visitInPostOrder2(cgChild, null);
