@@ -118,7 +118,7 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 	public void createCGParameters(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL expressionInOCL) {
 	//	assert expressionInOCL == null;		-- some library operations also have OCL bodies
 		Operation asOperation = CGUtil.getAST(cgOperation);
-		JavaLocalContext<?> localContext = as2cgVisitor.getLocalContext();
+		JavaLocalContext localContext = as2cgVisitor.getLocalContext();
 		List<CGParameter> cgParameters = cgOperation.getParameters();
 		LibraryOperation libraryOperation = (LibraryOperation)as2cgVisitor.getMetamodelManager().getImplementation(asOperation);
 		Method jMethod = libraryOperation.getEvaluateMethod(asOperation);
@@ -247,7 +247,7 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 		{
 			@Override
 			public void append() {
-				JavaGlobalContext<@NonNull ? extends JavaCodeGenerator> globalContext = cg2javaVisitor.getCodeGenerator().getGlobalContext();
+				JavaGlobalContext globalContext = cg2javaVisitor.getCodeGenerator().getGlobalContext();
 				js.appendClassReference(null, libraryOperation.getClass());
 				js.append(".");
 				js.append(globalContext.getInstanceName());

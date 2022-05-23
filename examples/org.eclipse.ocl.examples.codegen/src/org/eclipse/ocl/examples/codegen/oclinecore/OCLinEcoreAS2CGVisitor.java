@@ -34,9 +34,9 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 {
-	protected final @NonNull JavaGlobalContext<@NonNull OCLinEcoreCodeGenerator> globalContext;
+	protected final @NonNull JavaGlobalContext globalContext;
 
-	public OCLinEcoreAS2CGVisitor(@NonNull CodeGenAnalyzer analyzer, @NonNull JavaGlobalContext<@NonNull OCLinEcoreCodeGenerator> globalContext) {
+	public OCLinEcoreAS2CGVisitor(@NonNull CodeGenAnalyzer analyzer, @NonNull JavaGlobalContext globalContext) {
 		super(analyzer);
 		this.globalContext = globalContext;
 //		EnvironmentFactoryInternal environmentFactory = analyzer.getCodeGenerator().getEnvironmentFactory();

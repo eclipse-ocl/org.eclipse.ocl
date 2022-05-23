@@ -53,7 +53,7 @@ public class UnboxedMapDescriptor extends /*AbstractCollectionDescriptor*/Abstra
 	}
 
 	@Override
-	public @NonNull Boolean appendBox(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext, @NonNull CGBoxExp cgBoxExp, @NonNull CGValuedElement unboxedValue) {
+	public @NonNull Boolean appendBox(@NonNull JavaStream js, @NonNull JavaLocalContext localContext, @NonNull CGBoxExp cgBoxExp, @NonNull CGValuedElement unboxedValue) {
 		TypeId typeId = unboxedValue.getASTypeId();
 		MapTypeId mapTypeId = typeId instanceof MapTypeId ? (MapTypeId)typeId : null;
 		if (js.getCodeGenerator().isRequired(cgBoxExp) == Boolean.TRUE) {
@@ -77,7 +77,7 @@ public class UnboxedMapDescriptor extends /*AbstractCollectionDescriptor*/Abstra
 	}
 
 	@Override
-	public @NonNull Boolean appendEcore(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext, @NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement unboxedValue) {
+	public @NonNull Boolean appendEcore(@NonNull JavaStream js, @NonNull JavaLocalContext localContext, @NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement unboxedValue) {
 		// FIXME It seems unlikely that we should ever want to create an EMap. Rather we might want to unbox a MapValue into an existing EMap.
 		// return appendEcoreLegacy(js, localContext, cgEcoreExp, unboxedValue);
 		throw new UnsupportedOperationException("UnboxedMapDescriptor::appendEcore");

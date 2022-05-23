@@ -39,7 +39,7 @@ public interface TypeDescriptor
 	/**
 	 * Append the appropriate statements to js to create the boxed value for cgBboxExp from its unboxedValue.
 	 */
-	@NonNull Boolean appendBox(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext,
+	@NonNull Boolean appendBox(@NonNull JavaStream js, @NonNull JavaLocalContext localContext,
 			@NonNull CGBoxExp cgBoxExp, @NonNull CGValuedElement unboxedValue);
 
 	/**
@@ -55,7 +55,7 @@ public interface TypeDescriptor
 	/**
 	 * Append the appropriate statements to js to create the ecore value for cgEcoreExp from its boxedValue.
 	 */
-	@NonNull Boolean appendEcoreStatements(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext2,
+	@NonNull Boolean appendEcoreStatements(@NonNull JavaStream js, @NonNull JavaLocalContext localContext2,
 			@NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement boxedValue);
 
 	/**
@@ -79,7 +79,7 @@ public interface TypeDescriptor
 	/**
 	 * Append the appropriate statements to js to create the unboxed value for cgUnboxExp from its boxedValue.
 	 */
-	@NonNull Boolean appendUnboxStatements(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext,
+	@NonNull Boolean appendUnboxStatements(@NonNull JavaStream js, @NonNull JavaLocalContext localContext,
 			@NonNull CGUnboxExp cgUnboxExp, @NonNull CGValuedElement boxedValue);
 
 	/**

@@ -35,7 +35,7 @@ public abstract class AbstractValueDescriptor extends AbstractDescriptor
 		this.javaClass = javaClass;
 	}
 
-	public @NonNull Boolean appendEcore(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext, @NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement unboxedValue) {
+	public @NonNull Boolean appendEcore(@NonNull JavaStream js, @NonNull JavaLocalContext localContext, @NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement unboxedValue) {
 		String functionName = null;
 		if (javaClass == BigDecimal.class) {
 			functionName = "bigDecimalValueOf";

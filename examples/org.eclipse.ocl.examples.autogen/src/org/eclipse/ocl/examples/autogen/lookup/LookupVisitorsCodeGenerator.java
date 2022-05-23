@@ -81,7 +81,7 @@ public abstract class LookupVisitorsCodeGenerator extends AutoVisitorsCodeGenera
 	protected final @NonNull String packageName;
 	protected final @NonNull String visitorClassName;
 
-	protected final @NonNull JavaGlobalContext<@NonNull LookupVisitorsCodeGenerator> classContext;
+	protected final @NonNull JavaGlobalContext classContext;
 	protected final @NonNull AS2CGVisitor as2cgVisitor;
 
 	protected final @NonNull String envOperationName;
@@ -114,7 +114,7 @@ public abstract class LookupVisitorsCodeGenerator extends AutoVisitorsCodeGenera
 		this.packageName = getSourcePackageName();
 		this.visitorClassName = getLookupVisitorClassName(getProjectPrefix());
 
-		this.classContext = new JavaGlobalContext<@NonNull LookupVisitorsCodeGenerator>(this);
+		this.classContext = new JavaGlobalContext(this);
 		this.as2cgVisitor = createAS2CGVisitor();
 		//
 		//	Find expected AS elements
@@ -139,7 +139,7 @@ public abstract class LookupVisitorsCodeGenerator extends AutoVisitorsCodeGenera
 		//
 		//	Create new AS Visitor helper properties
 		//
-		JavaGlobalContext<@NonNull LookupVisitorsCodeGenerator> globalContext = getGlobalContext();
+		JavaGlobalContext globalContext = getGlobalContext();
 		this.asEvaluatorProperty = createNativeProperty(globalContext.getExecutorName(), Executor.class, true, true);
 		this.asIdResolverProperty = createNativeProperty(globalContext.getIdResolverName(), IdResolver.class, true, true);
 		List<Property> asVisitorProperties = asVisitorClass.getOwnedProperties();
@@ -317,7 +317,7 @@ public abstract class LookupVisitorsCodeGenerator extends AutoVisitorsCodeGenera
 	}
 
 	@Override
-	public @NonNull JavaGlobalContext<@NonNull LookupVisitorsCodeGenerator> getGlobalContext() {
+	public @NonNull JavaGlobalContext getGlobalContext() {
 		return classContext;
 	}
 

@@ -25,7 +25,7 @@ public interface EcoreDescriptor extends TypeDescriptor
 	/**
 	 * Append a statement to create the cgEcoreExp value by converting unboxedValue as specified by this EcoreDescriptor.
 	 */
-	@NonNull Boolean appendEcore(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext,
+	@NonNull Boolean appendEcore(@NonNull JavaStream js, @NonNull JavaLocalContext localContext,
 			@NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement unboxedValue);
 
 	/**

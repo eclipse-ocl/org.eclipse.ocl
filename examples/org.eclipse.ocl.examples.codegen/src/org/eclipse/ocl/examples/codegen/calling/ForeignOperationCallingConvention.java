@@ -165,7 +165,7 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 	 */
 	protected void generateJavaClass(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
 		JavaCodeGenerator codeGenerator = cg2javaVisitor.getCodeGenerator();
-		JavaGlobalContext<@NonNull ? extends JavaCodeGenerator> globalContext = codeGenerator.getGlobalContext();
+		JavaGlobalContext globalContext = codeGenerator.getGlobalContext();
 		Iterable<@NonNull CGParameter> cgParameters = CGUtil.getParameters(cgOperation);
 		String operationName = JavaConstants.EXTERNAL_OPERATION_PREFIX + cgOperation.getName();
 		assert operationName != null;

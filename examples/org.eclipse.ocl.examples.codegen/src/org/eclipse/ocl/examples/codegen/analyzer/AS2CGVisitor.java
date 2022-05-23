@@ -323,7 +323,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 		CGVariable cgVariable;
 		if ((asVariable instanceof Parameter) && isThis((Parameter)asVariable)) {
-			JavaLocalContext<?> localContext = (JavaLocalContext<?>)codeGenerator.getGlobalContext().findLocalContext(getCurrentClass());
+			JavaLocalContext localContext = (JavaLocalContext)codeGenerator.getGlobalContext().findLocalContext(getCurrentClass());
 			if (isQualifiedThis(asVariableExp, (Parameter)asVariable)) {
 				cgVariable = localContext.getQualifiedThisVariable();
 			}
@@ -678,12 +678,12 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	public @NonNull CGParameter getExecutorParameter() {
 		LocalContext localContext = getLocalContext();
-		return ((JavaLocalContext<?>)localContext).getExecutorParameter();
+		return ((JavaLocalContext)localContext).getExecutorParameter();
 	}
 
 	public @NonNull CGVariable getExecutorVariable() {
 		LocalContext localContext = getLocalContext();
-		return ((JavaLocalContext<?>)localContext).getExecutorVariable();
+		return ((JavaLocalContext)localContext).getExecutorVariable();
 	}
 
 	public @NonNull GenModelHelper getGenModelHelper() {
@@ -752,9 +752,9 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return cgIterator;
 	}
 
-	public @NonNull JavaLocalContext<?> getLocalContext() {
+	public @NonNull JavaLocalContext getLocalContext() {
 		assert localContext != null;
-		return (JavaLocalContext<?>)localContext;
+		return (JavaLocalContext)localContext;
 	}
 
 	public @NonNull CGVariable getLocalVariable(@NonNull VariableDeclaration asVariable) {
@@ -853,7 +853,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		if (cgParameter == null) {
 			cgParameter = CGModelFactory.eINSTANCE.createCGParameter();
 			initAst(cgParameter, aParameter);
-			((JavaGlobalContext<?>)codeGenerator.getGlobalContext()).getSelfNameResolution().addCGElement(cgParameter);
+			((JavaGlobalContext)codeGenerator.getGlobalContext()).getSelfNameResolution().addCGElement(cgParameter);
 			addParameter(aParameter, cgParameter);
 			cgParameter.setRequired(aParameter.isIsRequired());
 			if (aParameter.isIsRequired()) {
@@ -868,7 +868,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		if (cgParameter == null) {
 			cgParameter = CGModelFactory.eINSTANCE.createCGParameter();
 			initAst(cgParameter, aParameter);
-			((JavaGlobalContext<?>)codeGenerator.getGlobalContext()).getThisNameResolution().addCGElement(cgParameter);
+			((JavaGlobalContext)codeGenerator.getGlobalContext()).getThisNameResolution().addCGElement(cgParameter);
 			addParameter(aParameter, cgParameter);
 			cgParameter.setRequired(aParameter.isIsRequired());
 			if (aParameter.isIsRequired()) {
@@ -881,7 +881,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	public @NonNull CGParameter getTypeIdParameter() {
 		LocalContext localContext = getLocalContext();
-		CGParameter typeIdParameter = ((JavaLocalContext<?>)localContext).getTypeIdParameter();
+		CGParameter typeIdParameter = ((JavaLocalContext)localContext).getTypeIdParameter();
 		assert typeIdParameter.eContainer() == null;
 		addParameter(CGUtil.getAST(typeIdParameter), typeIdParameter);
 		return typeIdParameter;
@@ -990,7 +990,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	public @Nullable LocalContext pushLocalContext(@NonNull CGNamedElement cgElement, @NonNull NamedElement asElement) {
 		LocalContext savedLocalContext = localContext;
-		JavaGlobalContext<@NonNull ? extends JavaCodeGenerator> globalContext = ((JavaCodeGenerator)codeGenerator).getGlobalContext();
+		JavaGlobalContext globalContext = ((JavaCodeGenerator)codeGenerator).getGlobalContext();
 		LocalContext localContext2 = globalContext.basicGetLocalContext(cgElement);
 		if (localContext2 == null) {
 			localContext2 = globalContext.initLocalContext(savedLocalContext, cgElement, asElement);

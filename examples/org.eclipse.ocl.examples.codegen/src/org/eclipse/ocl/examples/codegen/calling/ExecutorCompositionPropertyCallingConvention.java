@@ -22,7 +22,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.generator.CodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
-import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaGlobalContext;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.java.JavaStream.SubStream;
@@ -89,7 +88,7 @@ public class ExecutorCompositionPropertyCallingConvention extends AbstractProper
 			return false;
 		}
 		//
-		final JavaGlobalContext<@NonNull ? extends JavaCodeGenerator> globalContext = cg2javaVisitor.getCodeGenerator().getGlobalContext();
+		final JavaGlobalContext globalContext = cg2javaVisitor.getCodeGenerator().getGlobalContext();
 		js.appendDeclaration(cgPropertyCallExp);
 		js.append(" = ");
 		SubStream castBody = new SubStream() {

@@ -45,7 +45,7 @@ public class FutureEnumerationValueDescriptor extends BoxedValueDescriptor imple
 	//	}
 
 	@Override
-	public @NonNull Boolean appendEcoreStatements(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext,
+	public @NonNull Boolean appendEcoreStatements(@NonNull JavaStream js, @NonNull JavaLocalContext localContext,
 			@NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement boxedValue) {
 		EClassifier eClassifier = cgEcoreExp.getEClassifier();
 		Class<?> ecoreClass = eClassifier != null ? eClassifier.getInstanceClass() : null;
@@ -69,7 +69,7 @@ public class FutureEnumerationValueDescriptor extends BoxedValueDescriptor imple
 	}
 
 	@Override
-	public @NonNull Boolean appendEcore(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext,
+	public @NonNull Boolean appendEcore(@NonNull JavaStream js, @NonNull JavaLocalContext localContext,
 			@NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement unboxedValue) {
 //		return super.appendEcore(js, localContext, cgEcoreExp, unboxedValue);
 		js.appendDeclaration(cgEcoreExp);

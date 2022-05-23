@@ -46,7 +46,7 @@ public interface PropertyCallingConvention extends CallingConvention
 
 	@NonNull CGProperty createCGProperty(@NonNull AS2CGVisitor as2cgVisitor, @NonNull Property asProperty);
 
-	void createImplementation(@NonNull AS2CGVisitor as2cgVisitor, @NonNull JavaLocalContext<?> localContext, @NonNull CGProperty cgProperty);
+	void createImplementation(@NonNull AS2CGVisitor as2cgVisitor, @NonNull JavaLocalContext localContext, @NonNull CGProperty cgProperty);
 
 	/**
 	 * Generate the Java code for a Property call.

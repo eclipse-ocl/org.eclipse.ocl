@@ -667,7 +667,7 @@ public class CodeGenAnalyzer
 			cgNativeOperation.setRequired(asOperation.isIsRequired());
 			cgNativeOperation.setCallingConvention(callingConvention);
 			cgNativeOperation.setAst(asOperation);
-			JavaGlobalContext<?> globalContext = (JavaGlobalContext<?>)codeGenerator.getGlobalContext();
+			JavaGlobalContext globalContext = (JavaGlobalContext)codeGenerator.getGlobalContext();
 			LocalContext localContext = globalContext.initLocalContext(null, cgNativeOperation, asOperation);
 			List<CGParameter> cgParameters = cgNativeOperation.getParameters();
 			NestedNameManager nameManager = localContext.getNameManager();

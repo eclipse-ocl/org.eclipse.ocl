@@ -39,13 +39,13 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
  * A CG2JavaNameVisitor prepares for Java code generation by priming the allocation of unqiue names by the
  * name resolver/assigner..
  */
-public class CG2JavaNameVisitor extends AbstractExtendingCGModelVisitor<@Nullable Object, @NonNull JavaGlobalContext<@NonNull ? extends JavaCodeGenerator>>
+public class CG2JavaNameVisitor extends AbstractExtendingCGModelVisitor<@Nullable Object, @NonNull JavaGlobalContext>
 {
 	protected final @NonNull JavaCodeGenerator codeGenerator;
 	protected final @NonNull GlobalNameManager globalNameManager;
-	private @Nullable JavaLocalContext<@NonNull ?> localContext;
+	private @Nullable JavaLocalContext localContext;
 
-	public CG2JavaNameVisitor(@NonNull JavaGlobalContext<@NonNull ? extends JavaCodeGenerator> globalContext) {
+	public CG2JavaNameVisitor(@NonNull JavaGlobalContext globalContext) {
 		super(globalContext);
 		this.codeGenerator = globalContext.getCodeGenerator();
 		this.globalNameManager = codeGenerator.getGlobalNameManager();
@@ -55,16 +55,16 @@ public class CG2JavaNameVisitor extends AbstractExtendingCGModelVisitor<@Nullabl
 		return ClassUtil.nonNullState(localContext).getNameManager();
 	}
 
-	protected JavaLocalContext<@NonNull ?> popLocalContext(@Nullable JavaLocalContext<?> savedLocalContext) {
+	protected JavaLocalContext popLocalContext(@Nullable JavaLocalContext savedLocalContext) {
 		if (savedLocalContext == null) {
-			JavaLocalContext<@NonNull ?> localContext2 = localContext;
+			JavaLocalContext localContext2 = localContext;
 			assert localContext2 != null;
 		}
 		return localContext = savedLocalContext;
 	}
 
-	protected @Nullable JavaLocalContext<?> pushLocalContext(@NonNull CGNamedElement cgNamedElement) {
-		JavaLocalContext<?> savedLocalContext = localContext;
+	protected @Nullable JavaLocalContext pushLocalContext(@NonNull CGNamedElement cgNamedElement) {
+		JavaLocalContext savedLocalContext = localContext;
 		localContext = context.findLocalContext(cgNamedElement);
 		return savedLocalContext;
 	}
@@ -84,7 +84,7 @@ public class CG2JavaNameVisitor extends AbstractExtendingCGModelVisitor<@Nullabl
 	@Override
 	public @Nullable Object visitCGClass(@NonNull CGClass cgClass) {
 		if (cgClass.getAst() != null) {
-			JavaLocalContext<?> savedLocalContext = pushLocalContext(cgClass);
+			JavaLocalContext savedLocalContext = pushLocalContext(cgClass);
 			try {
 				return super.visitCGClass(cgClass);
 			}
@@ -99,7 +99,7 @@ public class CG2JavaNameVisitor extends AbstractExtendingCGModelVisitor<@Nullabl
 
 	@Override
 	public @Nullable Object visitCGConstrainedProperty(@NonNull CGConstrainedProperty cgProperty) {
-		JavaLocalContext<?> savedLocalContext = pushLocalContext(cgProperty);
+		JavaLocalContext savedLocalContext = pushLocalContext(cgProperty);
 		try {
 			return super.visitCGConstrainedProperty(cgProperty);
 		}
@@ -110,7 +110,7 @@ public class CG2JavaNameVisitor extends AbstractExtendingCGModelVisitor<@Nullabl
 
 	@Override
 	public @Nullable Object visitCGConstraint(@NonNull CGConstraint cgConstraint) {
-		JavaLocalContext<?> savedLocalContext = pushLocalContext(cgConstraint);
+		JavaLocalContext savedLocalContext = pushLocalContext(cgConstraint);
 		try {
 			return super.visitCGConstraint(cgConstraint);
 		}
@@ -132,7 +132,7 @@ public class CG2JavaNameVisitor extends AbstractExtendingCGModelVisitor<@Nullabl
 
 	@Override
 	public @Nullable Object visitCGForeignProperty(@NonNull CGForeignProperty cgForeignProperty) {
-		JavaLocalContext<?> savedLocalContext = pushLocalContext(cgForeignProperty);
+		JavaLocalContext savedLocalContext = pushLocalContext(cgForeignProperty);
 		try {
 			return super.visitCGProperty(cgForeignProperty);
 		}
@@ -159,7 +159,7 @@ public class CG2JavaNameVisitor extends AbstractExtendingCGModelVisitor<@Nullabl
 		outerNameManager.addNameVariant(cgIterationCallExp, codeGenerator.getMGR_NameVariant());
 		outerNameManager.addNameVariant(cgIterationCallExp, codeGenerator.getTYPE_NameVariant());
 		NestedNameManager innerNameManager;
-		JavaLocalContext<@NonNull ?> savedLocalContext = null;
+		JavaLocalContext savedLocalContext = null;
 		if (iterationHelper == null) {					// No helper nests iterators/accumulators in a nested function.
 			savedLocalContext = pushLocalContext(cgIterationCallExp);
 			innerNameManager = getNameManager();
@@ -197,7 +197,7 @@ public class CG2JavaNameVisitor extends AbstractExtendingCGModelVisitor<@Nullabl
 
 	@Override
 	public @Nullable Object visitCGNativeProperty(@NonNull CGNativeProperty cgProperty) {
-		JavaLocalContext<?> savedLocalContext = pushLocalContext(cgProperty);
+		JavaLocalContext savedLocalContext = pushLocalContext(cgProperty);
 		try {
 			return super.visitCGNativeProperty(cgProperty);
 		}
@@ -208,7 +208,7 @@ public class CG2JavaNameVisitor extends AbstractExtendingCGModelVisitor<@Nullabl
 
 	@Override
 	public @Nullable Object visitCGOperation(@NonNull CGOperation cgOperation) {
-		JavaLocalContext<?> savedLocalContext = pushLocalContext(cgOperation);
+		JavaLocalContext savedLocalContext = pushLocalContext(cgOperation);
 		try {
 			return super.visitCGOperation(cgOperation);
 		}

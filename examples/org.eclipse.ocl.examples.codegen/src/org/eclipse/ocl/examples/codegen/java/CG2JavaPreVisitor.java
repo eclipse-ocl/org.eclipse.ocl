@@ -81,15 +81,15 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
  * A CG2JavaPreVisitor prepares for Java code generation by performing a tree traversal
  * to gather all imports and global constants and establish the dependenccies used by the CSE.
  */
-public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable Object, @NonNull JavaGlobalContext<@NonNull ? extends JavaCodeGenerator>>
+public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable Object, @NonNull JavaGlobalContext>
 {
 	protected final @NonNull JavaCodeGenerator codeGenerator;
 	protected final @NonNull GenModelHelper genModelHelper;
 	protected final @NonNull CodeGenAnalyzer analyzer;
-	private @Nullable JavaLocalContext<@NonNull ?> treeContext;
-	private @Nullable JavaLocalContext<@NonNull ?> localContext;
+	private @Nullable JavaLocalContext treeContext;
+	private @Nullable JavaLocalContext localContext;
 
-	public CG2JavaPreVisitor(@NonNull JavaGlobalContext<@NonNull ? extends JavaCodeGenerator> globalContext) {
+	public CG2JavaPreVisitor(@NonNull JavaGlobalContext globalContext) {
 		super(globalContext);
 		this.codeGenerator = globalContext.getCodeGenerator();
 		this.analyzer = codeGenerator.getAnalyzer();
@@ -153,7 +153,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 		return codeGenerator;
 	}
 
-	protected @NonNull JavaLocalContext<@NonNull ?> getTreeContext() {
+	protected @NonNull JavaLocalContext getTreeContext() {
 		return ClassUtil.nonNullState(treeContext);
 	}
 
@@ -169,9 +169,9 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 		return getTreeContext().getStandardLibraryVariable();
 	}
 
-	protected JavaLocalContext<@NonNull ?> popLocalContext(@Nullable JavaLocalContext<?> savedLocalContext) {
+	protected JavaLocalContext popLocalContext(@Nullable JavaLocalContext savedLocalContext) {
 		if (savedLocalContext == null) {
-			JavaLocalContext<@NonNull ?> localContext2 = localContext;
+			JavaLocalContext localContext2 = localContext;
 			assert localContext2 != null;
 			CGValuedElement cgTree = localContext2.getBody();
 			if (cgTree != null) {
@@ -184,8 +184,8 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 		return localContext = savedLocalContext;
 	}
 
-	protected @Nullable JavaLocalContext<?> pushLocalContext(@NonNull CGNamedElement cgNamedlement) {
-		JavaLocalContext<?> savedLocalContext = localContext;
+	protected @Nullable JavaLocalContext pushLocalContext(@NonNull CGNamedElement cgNamedlement) {
+		JavaLocalContext savedLocalContext = localContext;
 		localContext = context.findLocalContext(cgNamedlement);
 		if (savedLocalContext == null) {
 			treeContext = localContext;
@@ -243,7 +243,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 
 	@Override
 	public @Nullable Object visitCGConstrainedProperty(@NonNull CGConstrainedProperty cgProperty) {
-		JavaLocalContext<?> savedLocalContext = pushLocalContext(cgProperty);
+		JavaLocalContext savedLocalContext = pushLocalContext(cgProperty);
 		try {
 			return super.visitCGConstrainedProperty(cgProperty);
 		}
@@ -254,7 +254,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 
 	@Override
 	public @Nullable Object visitCGConstraint(@NonNull CGConstraint cgConstraint) {
-		JavaLocalContext<?> savedLocalContext = pushLocalContext(cgConstraint);
+		JavaLocalContext savedLocalContext = pushLocalContext(cgConstraint);
 		try {
 			return super.visitCGConstraint(cgConstraint);
 		}
@@ -356,7 +356,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 
 	@Override
 	public @Nullable Object visitCGForeignProperty(@NonNull CGForeignProperty cgForeignProperty) {
-		JavaLocalContext<?> savedLocalContext = pushLocalContext(cgForeignProperty);
+		JavaLocalContext savedLocalContext = pushLocalContext(cgForeignProperty);
 		try {
 			installExecutorVariable(cgForeignProperty);
 			return super.visitCGProperty(cgForeignProperty);
@@ -376,7 +376,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 		if (cgSource != null) {
 			cgSource.accept(this);
 		}
-		JavaLocalContext<@NonNull ?> savedLocalContext = null;
+		JavaLocalContext savedLocalContext = null;
 		if (iterationHelper == null) {					// No helper nests iterators/accumulators in a nested function.
 			savedLocalContext = pushLocalContext(cgIterationCallExp);
 		}
@@ -466,7 +466,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 
 	@Override
 	public @Nullable Object visitCGNativeProperty(@NonNull CGNativeProperty cgProperty) {
-		JavaLocalContext<?> savedLocalContext = pushLocalContext(cgProperty);
+		JavaLocalContext savedLocalContext = pushLocalContext(cgProperty);
 		try {
 			return super.visitCGNativeProperty(cgProperty);
 		}
@@ -477,7 +477,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 
 	@Override
 	public @Nullable Object visitCGOperation(@NonNull CGOperation cgOperation) {
-		JavaLocalContext<?> savedLocalContext = pushLocalContext(cgOperation);
+		JavaLocalContext savedLocalContext = pushLocalContext(cgOperation);
 		try {
 			return super.visitCGOperation(cgOperation);
 		}

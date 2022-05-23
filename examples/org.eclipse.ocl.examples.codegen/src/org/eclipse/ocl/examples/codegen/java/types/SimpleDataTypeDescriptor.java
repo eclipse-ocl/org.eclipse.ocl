@@ -44,7 +44,7 @@ public class SimpleDataTypeDescriptor extends AbstractDescriptor implements Simp
 	}
 
 	@Override
-	public @NonNull Boolean appendEcore(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext, @NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement unboxedValue) {
+	public @NonNull Boolean appendEcore(@NonNull JavaStream js, @NonNull JavaLocalContext localContext, @NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement unboxedValue) {
 		return appendEcoreLegacy(js, localContext, cgEcoreExp, unboxedValue);
 	}
 

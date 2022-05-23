@@ -110,7 +110,7 @@ public class ExecutorOppositePropertyCallingConvention extends AbstractPropertyC
 		}
 		js.appendDeclaration(cgPropertyCallExp);
 		js.append(" = ");
-		final JavaGlobalContext<@NonNull ? extends JavaCodeGenerator> globalContext = codeGenerator.getGlobalContext();
+		final JavaGlobalContext globalContext = codeGenerator.getGlobalContext();
 		TypeDescriptor typeDescriptor = codeGenerator.getTypeDescriptor(cgPropertyCallExp);
 		JavaStream.SubStream castBody = new JavaStream.SubStream() {
 			@Override
@@ -156,7 +156,7 @@ public class ExecutorOppositePropertyCallingConvention extends AbstractPropertyC
 			return false;
 		}
 		//
-		final JavaGlobalContext<@NonNull ? extends JavaCodeGenerator> globalContext = cg2javaVisitor.getCodeGenerator().getGlobalContext();
+		final JavaGlobalContext globalContext = cg2javaVisitor.getCodeGenerator().getGlobalContext();
 		js.appendDeclaration(cgPropertyCallExp);
 		js.append(" = ");
 		SubStream castBody = new SubStream() {

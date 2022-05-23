@@ -69,7 +69,7 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 	public static final @NonNull String MATCHES_OP_NAME = "matches";
 	public static final @NonNull String ELEMENT_NAME = "element";
 
-	protected final @NonNull JavaGlobalContext<@NonNull LookupFilterGenerator> classContext;
+	protected final @NonNull JavaGlobalContext classContext;
 	protected final @NonNull AS2CGVisitor as2cgVisitor;
 	protected final @NonNull String lookupPackageName;
 	protected final @Nullable String superLookupPackageName;
@@ -102,7 +102,7 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 		this.baseLookupPackage = baseLookupPackage != null ? baseLookupPackage :
 			superLookupPackageName != null ? superLookupPackageName :
 				lookupPackageName;
-		this.classContext = new JavaGlobalContext<@NonNull LookupFilterGenerator>(this);
+		this.classContext = new JavaGlobalContext(this);
 		this.as2cgVisitor = createAS2CGVisitor();
 		this.asPackages = createASPackages();
 		globalNameManager.declareGlobalName(null, APPLIES_FILTER_OP_PREFIX);
@@ -111,7 +111,7 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 	}
 
 	private @NonNull List<org.eclipse.ocl.pivot.Package> createASPackages() {
-		JavaGlobalContext<@NonNull LookupFilterGenerator> globalContext = getGlobalContext();
+		JavaGlobalContext globalContext = getGlobalContext();
 		List<org.eclipse.ocl.pivot.Package> result = new ArrayList<org.eclipse.ocl.pivot.Package>();
 		List<Operation> filteringOps = gatherFilteringOps(asPackage);
 
@@ -340,7 +340,7 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 
 
 	@Override
-	public @NonNull JavaGlobalContext<@NonNull LookupFilterGenerator> getGlobalContext() {
+	public @NonNull JavaGlobalContext getGlobalContext() {
 		return classContext;
 	}
 

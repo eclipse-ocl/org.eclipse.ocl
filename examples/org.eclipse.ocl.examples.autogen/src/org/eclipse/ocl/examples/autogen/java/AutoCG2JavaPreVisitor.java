@@ -16,7 +16,7 @@ import org.eclipse.ocl.examples.codegen.java.JavaGlobalContext;
 
 public class AutoCG2JavaPreVisitor extends CG2JavaPreVisitor
 {
-	public AutoCG2JavaPreVisitor(@NonNull JavaGlobalContext<@NonNull ?> javaContext) {
+	public AutoCG2JavaPreVisitor(@NonNull JavaGlobalContext javaContext) {
 		super(javaContext);
 	}
 

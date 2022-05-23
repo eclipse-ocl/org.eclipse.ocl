@@ -62,7 +62,7 @@ public abstract class AbstractCachedOperationCallingConvention extends Constrain
 	}
 
 	protected void doCachedOperationEvaluate(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
-		JavaGlobalContext<@NonNull ? extends JavaCodeGenerator> globalContext = cg2javaVisitor.getCodeGenerator().getGlobalContext();
+		JavaGlobalContext globalContext = cg2javaVisitor.getCodeGenerator().getGlobalContext();
 		List<@NonNull CGParameter> cgParameters = ClassUtil.nullFree(cgOperation.getParameters());
 		Boolean isRequiredReturn = cgOperation.isRequired() ? true : null;
 		if (cgOperation.isEcore() && (cgOperation.getASTypeId() instanceof CollectionTypeId)) {
@@ -114,7 +114,7 @@ public abstract class AbstractCachedOperationCallingConvention extends Constrain
 	@Override
 	public boolean generateJavaCall(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
 		JavaCodeGenerator codeGenerator = cg2javaVisitor.getCodeGenerator();
-		JavaGlobalContext<@NonNull ? extends JavaCodeGenerator> globalContext = codeGenerator.getGlobalContext();
+		JavaGlobalContext globalContext = codeGenerator.getGlobalContext();
 		CGCachedOperationCallExp cgCachedOperationCallExp = (CGCachedOperationCallExp)cgOperationCallExp;
 		CGCachedOperation cgOperation = (CGCachedOperation)CGUtil.getOperation(cgCachedOperationCallExp);
 		Operation asOperation = CGUtil.getAST(cgOperation);

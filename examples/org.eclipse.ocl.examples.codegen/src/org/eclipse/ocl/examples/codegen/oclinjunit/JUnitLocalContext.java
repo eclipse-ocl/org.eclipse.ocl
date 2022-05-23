@@ -22,9 +22,9 @@ import org.eclipse.ocl.pivot.NamedElement;
 /**
  * A JavaLocalContext maintains the Java-specific context for generation of code from a CGOperation.
  */
-public class JUnitLocalContext extends JavaLocalContext<@NonNull JUnitCodeGenerator>
+public class JUnitLocalContext extends JavaLocalContext
 {
-	public JUnitLocalContext(@NonNull JavaGlobalContext<@NonNull JUnitCodeGenerator> globalContext, @Nullable JUnitLocalContext outerContext, @NonNull CGNamedElement cgScope, @NonNull NamedElement asScope) {
+	public JUnitLocalContext(@NonNull JavaGlobalContext globalContext, @Nullable JavaLocalContext outerContext, @NonNull CGNamedElement cgScope, @NonNull NamedElement asScope) {
 		super(globalContext, outerContext, cgScope, asScope);
 	}
 

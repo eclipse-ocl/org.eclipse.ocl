@@ -63,7 +63,7 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		}
 	}
 
-	protected final @NonNull JavaGlobalContext<@NonNull JUnitCodeGenerator> globalContext = new JavaGlobalContext(this);
+	protected final @NonNull JavaGlobalContext globalContext = new JavaGlobalContext(this);
 	protected final @NonNull CodeGenAnalyzer cgAnalyzer;
 
 	protected JUnitCodeGenerator(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable GenModel genModel, boolean useNullAnnotations) {
@@ -121,8 +121,8 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 	}
 
 	@Override
-	public @NonNull JUnitLocalContext createLocalContext(@Nullable JavaLocalContext<@NonNull ?> outerContext, @NonNull CGNamedElement cgNamedElement, @NonNull NamedElement asNamedElement) {
-		return new JUnitLocalContext(getGlobalContext(), (JUnitLocalContext)outerContext, cgNamedElement, asNamedElement);
+	public @NonNull JavaLocalContext createLocalContext(@Nullable JavaLocalContext outerContext, @NonNull CGNamedElement cgNamedElement, @NonNull NamedElement asNamedElement) {
+		return new JUnitLocalContext(getGlobalContext(), outerContext, cgNamedElement, asNamedElement);
 	}
 
 	protected @NonNull String generate(@NonNull ExpressionInOCL expInOcl, @NonNull String packageName, @NonNull String className) {
@@ -148,7 +148,7 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 	}
 
 	@Override
-	public @NonNull JavaGlobalContext<@NonNull JUnitCodeGenerator> getGlobalContext() {
+	public @NonNull JavaGlobalContext getGlobalContext() {
 		return globalContext;
 	}
 

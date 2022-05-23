@@ -44,13 +44,13 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 /**
  * A JavaLocalContext maintains the Java-specific context for generation of coide from a CGOperation.
  */
-public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> implements LocalContext
+public class JavaLocalContext implements LocalContext
 {
-	protected @NonNull CG codeGenerator;
+	protected @NonNull JavaCodeGenerator codeGenerator;
 	protected @NonNull CodeGenAnalyzer analyzer;
-	protected final @NonNull JavaGlobalContext<@NonNull ? extends CG> globalContext;
+	protected final @NonNull JavaGlobalContext globalContext;
 	protected final @NonNull GlobalNameManager globalNameManager;
-	protected final @Nullable JavaLocalContext<@NonNull ? extends CG> outerContext;
+	protected final @Nullable JavaLocalContext outerContext;
 	protected final @NonNull CGNamedElement cgScope;
 	protected final @NonNull NamedElement asScope;
 	protected final @NonNull Type asType;
@@ -68,11 +68,11 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> implements 
 	private /*@LazyNonNull*/ CGParameter anyParameter = null;				// A local parameter spelled "any" to be added to the static signature
 
 	@Deprecated /* @deprecated specify executorIsParameter */
-	public JavaLocalContext(@NonNull JavaGlobalContext<@NonNull ? extends CG> globalContext, @NonNull CGElement cgScope) {
+	public JavaLocalContext(@NonNull JavaGlobalContext globalContext, @NonNull CGElement cgScope) {
 		this(globalContext, null, (CGNamedElement)cgScope, ClassUtil.nonNullState((NamedElement)((CGNamedElement)cgScope).getAst()));
 	}
 
-	public JavaLocalContext(@NonNull JavaGlobalContext<@NonNull ? extends CG> globalContext, @Nullable JavaLocalContext<@NonNull ? extends CG> outerContext,
+	public JavaLocalContext(@NonNull JavaGlobalContext globalContext, @Nullable JavaLocalContext outerContext,
 			@NonNull CGNamedElement cgScope, @NonNull NamedElement asScope) {
 		this.codeGenerator = globalContext.getCodeGenerator();
 		this.analyzer = codeGenerator.getAnalyzer();
@@ -315,7 +315,7 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> implements 
 		return null;
 	}
 
-	public @NonNull CG getCodeGenerator() {
+	public @NonNull JavaCodeGenerator getCodeGenerator() {
 		return codeGenerator;
 	}
 
@@ -340,7 +340,7 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> implements 
 		return executorVariable2;
 	}
 
-	public @NonNull JavaGlobalContext<@NonNull ? extends CG> getGlobalContext() {
+	public @NonNull JavaGlobalContext getGlobalContext() {
 		return globalContext;
 	}
 
@@ -378,7 +378,7 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> implements 
 		return nameManager;
 	}
 
-	public @NonNull JavaLocalContext<@NonNull ? extends CG> getOuterContext() {
+	public @NonNull JavaLocalContext getOuterContext() {
 		return outerContext != null ? outerContext.getOuterContext() : this;
 	}
 

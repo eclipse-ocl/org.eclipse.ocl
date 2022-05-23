@@ -174,7 +174,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		}
 	}
 
-	protected final @NonNull JavaGlobalContext<@NonNull ?> globalContext;
+	protected final @NonNull JavaGlobalContext globalContext;
 	protected final @NonNull GlobalNameManager globalNameManager;
 	protected final @NonNull GenModelHelper genModelHelper;
 	protected final @NonNull CodeGenAnalyzer analyzer;
@@ -186,7 +186,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	/**
 	 * The local Java context for the current operation.
 	 */
-	protected JavaLocalContext<@NonNull ?> localContext;
+	protected JavaLocalContext localContext;
 
 	public CG2JavaVisitor(@NonNull CG codeGenerator) {
 		super(codeGenerator);
@@ -498,7 +498,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 				}
 			}
 		}
-		JavaLocalContext<@NonNull ?> savedLocalContext = localContext;
+		JavaLocalContext savedLocalContext = localContext;
 		try {
 			localContext = globalContext.findLocalContext(cgIterationCallExp);
 			appendReturn(body);
@@ -726,6 +726,10 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		return null;
 	}
 
+	protected @NonNull JavaLocalContext getLocalContext() {
+		return ClassUtil.nonNullState(localContext);
+	}
+
 	protected @NonNull String getResolvedName(@NonNull CGValuedElement cgElement) {
 		return cgElement.getResolvedName();
 	}
@@ -888,7 +892,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	public @NonNull Boolean visitCGBoxExp(@NonNull CGBoxExp cgBoxExp) {
 		CGValuedElement unboxedValue = getExpression(cgBoxExp.getSource());
 		TypeDescriptor unboxedTypeDescriptor = context.getTypeDescriptor(unboxedValue);
-		JavaLocalContext<@NonNull ?>localContext2 = localContext;
+		JavaLocalContext localContext2 = localContext;
 		assert localContext2 != null;
 		//
 		if (!js.appendLocalStatements(unboxedValue)) {
@@ -947,7 +951,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		//
 		js.appendDeclaration(cgIterationCallExp);
 		js.append(";\n");
-		JavaLocalContext<@NonNull ?> savedLocalContext = localContext;
+		JavaLocalContext savedLocalContext = localContext;
 		try {
 			localContext = globalContext.findLocalContext(cgIterationCallExp);
 			//
@@ -1321,7 +1325,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	public @NonNull Boolean visitCGEcoreExp(@NonNull CGEcoreExp cgEcoreExp) {
 		CGValuedElement boxedValue = getExpression(cgEcoreExp.getSource());
 		TypeDescriptor boxedTypeDescriptor = context.getTypeDescriptor(boxedValue);
-		JavaLocalContext<@NonNull ?>localContext2 = localContext;
+		JavaLocalContext localContext2 = localContext;
 		assert localContext2 != null;
 		//
 		if (!js.appendLocalStatements(boxedValue)) {
@@ -2340,7 +2344,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	public @NonNull Boolean visitCGUnboxExp(@NonNull CGUnboxExp cgUnboxExp) {
 		CGValuedElement boxedValue = getExpression(cgUnboxExp.getSource());
 		TypeDescriptor boxedTypeDescriptor = context.getTypeDescriptor(boxedValue);
-		JavaLocalContext<@NonNull ?> localContext2 = localContext;
+		JavaLocalContext localContext2 = localContext;
 		assert localContext2 != null;
 		//
 		if (!js.appendLocalStatements(boxedValue)) {

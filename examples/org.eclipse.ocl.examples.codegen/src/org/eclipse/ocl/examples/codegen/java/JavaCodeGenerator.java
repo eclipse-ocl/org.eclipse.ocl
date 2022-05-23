@@ -312,8 +312,8 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		return new JavaStream(this, cg2javaVisitor);
 	}
 
-	public @NonNull JavaLocalContext<@NonNull ?> createLocalContext(@Nullable JavaLocalContext<@NonNull ?> outerContext, @NonNull CGNamedElement cgNamedElement, @NonNull NamedElement asNamedElement) {
-		return new JavaLocalContext<@NonNull JavaCodeGenerator>(getGlobalContext(), outerContext, cgNamedElement, asNamedElement);
+	public @NonNull JavaLocalContext createLocalContext(@Nullable JavaLocalContext outerContext, @NonNull CGNamedElement cgNamedElement, @NonNull NamedElement asNamedElement) {
+		return new JavaLocalContext(getGlobalContext(), outerContext, cgNamedElement, asNamedElement);
 	}
 
 	protected @NonNull NameManagerHelper createNameManagerHelper() {
@@ -444,7 +444,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	}
 
 	@Override
-	public abstract @NonNull JavaGlobalContext<@NonNull ? extends JavaCodeGenerator> getGlobalContext();
+	public abstract @NonNull JavaGlobalContext getGlobalContext();
 
 	@Override
 	public @NonNull GlobalPlace getGlobalPlace() {
@@ -827,7 +827,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 			NameResolution nameResolution = cgValuedElement2.basicGetNameResolution();
 		//	assert (nameResolution == null) || debugCheckNameResolution(cgValuedElement2, nameResolution);
 		}
-		JavaGlobalContext<@NonNull ? extends JavaCodeGenerator> globalContext = getGlobalContext();
+		JavaGlobalContext globalContext = getGlobalContext();
 		for (EObject eObject : cgElement.eContents()) {					// XXX Surely preorder - no post order to satisfy bottom up dependency evaluation
 			if (eObject instanceof CGElement) {
 				CGElement cgChild = (CGElement)eObject;
@@ -866,7 +866,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 					//	assert false;			// XXX wip
 						NameManager nameManager = globalNameManager.bascGetScope(cgValuedElement2);
 						if (nameManager == null) {
-							JavaLocalContext<?> localContext = globalContext.basicFindLocalContext(cgValuedElement2);
+							JavaLocalContext localContext = globalContext.basicFindLocalContext(cgValuedElement2);
 							nameManager = (localContext != null) && !cgValuedElement2.isGlobal() ? localContext.getNameManager() : globalNameManager;
 						}
 						nameResolution = nameManager.declareLazyName(cgValuedElement2);
@@ -891,7 +891,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 					if (eObject instanceof CGValuedElement) {
 						CGValuedElement cgValuedElement = (CGValuedElement)eObject;
 						if ((cgValuedElement.basicGetNameResolution() == null) && !cgValuedElement.isInlined()) {
-							JavaLocalContext<?> localContext = globalContext.basicFindLocalContext(cgValuedElement);
+							JavaLocalContext localContext = globalContext.basicFindLocalContext(cgValuedElement);
 							NameManager nameManager = localContext != null ? localContext.getNameManager() : globalNameManager;
 							nameManager.declareLazyName(cgValuedElement);
 						}

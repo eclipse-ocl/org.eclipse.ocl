@@ -568,12 +568,8 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 		return genPackage;
 	}
 
-	protected @NonNull JavaGlobalContext<@NonNull OCLinEcoreCodeGenerator> getGlobalContext() {
-		return (JavaGlobalContext<@NonNull OCLinEcoreCodeGenerator>)globalContext;
-	}
-
-	protected @NonNull OCLinEcoreLocalContext getLocalContext() {
-		return ClassUtil.nonNullState((OCLinEcoreLocalContext) localContext);
+	protected @NonNull JavaGlobalContext getGlobalContext() {
+		return globalContext;
 	}
 
 	protected String getRuleName(@NonNull Constraint constraint) {

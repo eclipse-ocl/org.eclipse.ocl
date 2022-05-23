@@ -83,7 +83,7 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 	@Override
 	public void createCGParameters(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGProperty cgProperty, @Nullable ExpressionInOCL initExpression) {
 		CGForeignProperty cgForeignProperty = (CGForeignProperty)cgProperty;
-		JavaLocalContext<?> localContext = as2cgVisitor.getLocalContext();
+		JavaLocalContext localContext = as2cgVisitor.getLocalContext();
 		List<CGParameter> cgParameters = cgForeignProperty.getParameters();
 		cgParameters.add(localContext.getExecutorParameter());
 		if (initExpression != null) {
@@ -109,7 +109,7 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 	}
 
 	@Override
-	public void createImplementation(@NonNull AS2CGVisitor as2cgVisitor, @NonNull JavaLocalContext<?> localContext, @NonNull CGProperty cgProperty) {
+	public void createImplementation(@NonNull AS2CGVisitor as2cgVisitor, @NonNull JavaLocalContext localContext, @NonNull CGProperty cgProperty) {
 		CGForeignProperty cgForeignProperty = (CGForeignProperty)cgProperty;
 		CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();
 		Property asProperty = CGUtil.getAST(cgForeignProperty);

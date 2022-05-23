@@ -107,7 +107,7 @@ public class ExecutorPropertyCallingConvention extends AbstractPropertyCallingCo
 		}
 		js.appendDeclaration(cgExecutorPropertyCallExp);
 		js.append(" = ");
-		final JavaGlobalContext<@NonNull ? extends JavaCodeGenerator> globalContext = codeGenerator.getGlobalContext();
+		final JavaGlobalContext globalContext = codeGenerator.getGlobalContext();
 		TypeDescriptor typeDescriptor = codeGenerator.getTypeDescriptor(cgExecutorPropertyCallExp);
 		JavaStream.SubStream castBody = new JavaStream.SubStream() {
 			@Override

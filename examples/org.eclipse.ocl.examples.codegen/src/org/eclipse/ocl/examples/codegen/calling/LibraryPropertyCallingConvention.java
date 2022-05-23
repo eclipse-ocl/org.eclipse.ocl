@@ -148,7 +148,7 @@ public class LibraryPropertyCallingConvention extends AbstractPropertyCallingCon
 		//			js.appendClassReference(null, ClassUtil.class);
 		//			js.append(".nonNullState(");
 		//		}
-		final JavaGlobalContext<@NonNull ? extends JavaCodeGenerator> globalContext = codeGenerator.getGlobalContext();
+		final JavaGlobalContext globalContext = codeGenerator.getGlobalContext();
 		SubStream castBody = new SubStream() {
 			@Override
 			public void append() {

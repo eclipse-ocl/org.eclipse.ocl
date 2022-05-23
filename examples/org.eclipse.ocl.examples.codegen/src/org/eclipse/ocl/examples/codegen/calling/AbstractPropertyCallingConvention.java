@@ -46,7 +46,7 @@ public abstract class AbstractPropertyCallingConvention implements PropertyCalli
 	}
 
 	@Override
-	public void createImplementation(@NonNull AS2CGVisitor as2cgVisitor, @NonNull JavaLocalContext<?> localContext, @NonNull CGProperty cgProperty) {
+	public void createImplementation(@NonNull AS2CGVisitor as2cgVisitor, @NonNull JavaLocalContext localContext, @NonNull CGProperty cgProperty) {
 	//	assert (this instanceof StereotypePropertyCallingConvention)
 	//		|| (this instanceof ConstrainedPropertyCallingConvention)
 	//		|| (this instanceof NativePropertyCallingConvention)
