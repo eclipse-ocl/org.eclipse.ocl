@@ -36,6 +36,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaPreVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
+import org.eclipse.ocl.examples.codegen.java.JavaGlobalContext;
 import org.eclipse.ocl.examples.codegen.utilities.RereferencingCopier;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -63,7 +64,12 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  */
 public class LookupFilterGenerator extends AutoCodeGenerator
 {
-	protected final @NonNull LookupFilterClassContext classContext;
+	public static final @NonNull String APPLIES_FILTER_OP_PREFIX = "_appliesFilter_";
+
+	public static final @NonNull String MATCHES_OP_NAME = "matches";
+	public static final @NonNull String ELEMENT_NAME = "element";
+
+	protected final @NonNull JavaGlobalContext<@NonNull LookupFilterGenerator> classContext;
 	protected final @NonNull AS2CGVisitor as2cgVisitor;
 	protected final @NonNull String lookupPackageName;
 	protected final @Nullable String superLookupPackageName;
@@ -96,13 +102,16 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 		this.baseLookupPackage = baseLookupPackage != null ? baseLookupPackage :
 			superLookupPackageName != null ? superLookupPackageName :
 				lookupPackageName;
-		this.classContext = new LookupFilterClassContext(this, asPackage);
+		this.classContext = new JavaGlobalContext<@NonNull LookupFilterGenerator>(this);
 		this.as2cgVisitor = createAS2CGVisitor();
 		this.asPackages = createASPackages();
+		globalNameManager.declareGlobalName(null, APPLIES_FILTER_OP_PREFIX);
+		globalNameManager.declareGlobalName(null, ELEMENT_NAME);
+		globalNameManager.declareGlobalName(null, MATCHES_OP_NAME);
 	}
 
 	private @NonNull List<org.eclipse.ocl.pivot.Package> createASPackages() {
-		LookupFilterClassContext globalContext = getGlobalContext();
+		JavaGlobalContext<@NonNull LookupFilterGenerator> globalContext = getGlobalContext();
 		List<org.eclipse.ocl.pivot.Package> result = new ArrayList<org.eclipse.ocl.pivot.Package>();
 		List<Operation> filteringOps = gatherFilteringOps(asPackage);
 
@@ -144,7 +153,7 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 
 		Type filteringOpType = filteringOp.getType();
 		assert filteringOpType != null;
-		Operation asOperation = PivotUtil.createOperation("_" + LookupFilterClassContext.MATCHES_OP_NAME, filteringOpType, null, null);
+		Operation asOperation = PivotUtil.createOperation("_" + MATCHES_OP_NAME, filteringOpType, null, null);
 		asOperation.setBodyExpression(newExpressionInOCL);
 		// Filtering op params are translated as asClass properties
 		LetExp letRoot = null;
@@ -175,7 +184,7 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 
 		// Filtering op context is translated as asOperation parameter
 		org.eclipse.ocl.pivot.Class asType = ClassUtil.nonNullState(filteringOp.getOwningClass());
-		Variable asParamVar = helper.createParameterVariable(LookupFilterClassContext.ELEMENT_NAME, asType,true);
+		Variable asParamVar = helper.createParameterVariable(ELEMENT_NAME, asType,true);
 		newExpressionInOCL.getOwnedParameters().add(asParamVar);
 		redefinitions.put(oldExpressionInOCL.getOwnedContext(), asParamVar);
 
@@ -205,7 +214,7 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 		return asPackage.getOwnedClasses().stream()
 				.map(c -> c.getOwnedOperations())
 				.flatMap(o -> o.stream())
-				.filter(o -> o.getName().startsWith(LookupFilterClassContext.APPLIES_FILTER_OP_PREFIX))	// interested op
+				.filter(o -> o.getName().startsWith(APPLIES_FILTER_OP_PREFIX))	// interested op
 				//.map(o -> o.getName().substring(o.getName().indexOf(LookupFilterClassContext.APPLIES_FILTER_OP_PREFIX))) // type name is after appliesFilter prefix
 				.collect(Collectors.toList());
 
@@ -331,7 +340,7 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 
 
 	@Override
-	public @NonNull LookupFilterClassContext getGlobalContext() {
+	public @NonNull JavaGlobalContext<@NonNull LookupFilterGenerator> getGlobalContext() {
 		return classContext;
 	}
 

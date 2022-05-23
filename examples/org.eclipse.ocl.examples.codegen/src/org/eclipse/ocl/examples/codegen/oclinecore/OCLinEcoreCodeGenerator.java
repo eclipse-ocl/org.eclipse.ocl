@@ -36,6 +36,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstrainedProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
@@ -45,6 +46,8 @@ import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
 import org.eclipse.ocl.examples.codegen.java.ImportUtils;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
+import org.eclipse.ocl.examples.codegen.java.JavaGlobalContext;
+import org.eclipse.ocl.examples.codegen.java.JavaLocalContext;
 import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreTablesUtils.CodeGenString;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.AnyType;
@@ -502,7 +505,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		generator.generate(uri2body, constantsTexts, foreignFeaures);
 	}
 
-	protected final @NonNull OCLinEcoreGlobalContext globalContext;
+	protected final @NonNull JavaGlobalContext<@NonNull OCLinEcoreCodeGenerator> globalContext;
 	protected final @NonNull StandardLibraryInternal standardLibrary;
 	protected final @NonNull CodeGenAnalyzer cgAnalyzer;
 	protected final @NonNull GenPackage genPackage;
@@ -522,7 +525,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		getOptions().setUseNullAnnotations(OCLinEcoreGenModelGeneratorAdapter.useNullAnnotations(genModel));
 		this.cgAnalyzer = new CodeGenAnalyzer(this);
 		this.genPackage = genPackage;
-		this.globalContext = new OCLinEcoreGlobalContext(this, genPackage);
+		this.globalContext = new JavaGlobalContext(this);
 		asHelper = new PivotHelper(environmentFactory);
 		this.oclAnyType = standardLibrary.getOclAnyType();
 		this.booleanType = standardLibrary.getBooleanType();
@@ -546,6 +549,11 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 	@Override
 	public @NonNull ImportNameManager createImportNameManager() {
 		return new OCLinEcoreImportNameManager();
+	}
+
+	@Override
+	public @NonNull OCLinEcoreLocalContext createLocalContext(@Nullable JavaLocalContext<@NonNull ?> outerContext, @NonNull CGNamedElement cgNamedElement, @NonNull NamedElement asNamedElement) {
+		return new OCLinEcoreLocalContext(getGlobalContext(), (OCLinEcoreLocalContext)outerContext, cgNamedElement, asNamedElement);
 	}
 
 	protected void generate(@NonNull Map<@NonNull String, @NonNull FeatureBody> uri2body, @NonNull Map<GenPackage, String> constantsTexts, @NonNull Map<@NonNull Feature, @NonNull GenTypedElement> foreignFeatures) {
@@ -604,7 +612,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 	}
 
 	@Override
-	public @NonNull OCLinEcoreGlobalContext getGlobalContext() {
+	public @NonNull JavaGlobalContext<@NonNull OCLinEcoreCodeGenerator> getGlobalContext() {
 		return globalContext;
 	}
 
@@ -616,6 +624,10 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		s.append(JavaConstants.EXTERNAL_CLASS_PREFIX);
 		s.appendAndEncodeQualifiedName(asClass);
 		return s.toString();
+	}
+
+	public @NonNull String getTablesClassName() {
+		return getGenModelHelper().getTablesClassName(genPackage);
 	}
 
 	protected @NonNull ExpressionInOCL rewriteQuery(@NonNull ExpressionInOCL oldQuery) {

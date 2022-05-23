@@ -81,7 +81,7 @@ public class LookupUnqualifiedCodeGenerator extends LookupVisitorsCodeGenerator 
 			@Nullable GenPackage superGenPackage,
 			@Nullable GenPackage baseGenPackage) {
 		this(environmentFactory, asPackage, asSuperPackage, asBasePackage, genPackage,
-			superGenPackage, baseGenPackage, LookupVisitorsClassContext.UNQUALIFIED_ENV_NAME);
+			superGenPackage, baseGenPackage, LookupVisitorsCodeGenerator.UNQUALIFIED_ENV_NAME);
 	}
 
 	protected LookupUnqualifiedCodeGenerator(
@@ -98,13 +98,13 @@ public class LookupUnqualifiedCodeGenerator extends LookupVisitorsCodeGenerator 
 		org.eclipse.ocl.pivot.Class asOclElement = metamodelManager.getStandardLibrary().getOclElementType();
 		CompleteClass asElementCompleteClass = metamodelManager.getCompletePackage(metamodelManager.getStandardLibrary().getPackage()).getCompleteClass(asOclElement);
 
-		String parentEnvOpName = ClassUtil.nonNull(envOperationName.replace(LookupVisitorsClassContext.UNQUALIFIED_ENV_NAME, LookupVisitorsClassContext.PARENT_ENV_NAME));
+		String parentEnvOpName = ClassUtil.nonNull(envOperationName.replace(LookupVisitorsCodeGenerator.UNQUALIFIED_ENV_NAME, LookupVisitorsCodeGenerator.PARENT_ENV_NAME));
 		OperationId parentEnvOperationId = asOclElement.getTypeId().getOperationId(0, parentEnvOpName , emptyParametersId);
 		this.asElementParentEnvOperation = ClassUtil.nonNullState(asElementCompleteClass.getOperation(parentEnvOperationId));
 		CompleteClass asEnvironmentCompleteClass = metamodelManager.getCompleteClass(asEnvironmentType);
-		OperationId nestedEnvOperationId = asEnvironmentType.getTypeId().getOperationId(0, LookupVisitorsClassContext.NESTED_ENV_NAME, emptyParametersId);
+		OperationId nestedEnvOperationId = asEnvironmentType.getTypeId().getOperationId(0, LookupVisitorsCodeGenerator.NESTED_ENV_NAME, emptyParametersId);
 		this.asEnvironmentNestedEnvOperation = ClassUtil.nonNullState(asEnvironmentCompleteClass.getOperation(nestedEnvOperationId));
-		OperationId hasFinalResultOperationId = asEnvironmentType.getTypeId().getOperationId(0, LookupVisitorsClassContext.HAS_FINAL_RESULT_NAME, emptyParametersId);
+		OperationId hasFinalResultOperationId = asEnvironmentType.getTypeId().getOperationId(0, LookupVisitorsCodeGenerator.HAS_FINAL_RESULT_NAME, emptyParametersId);
 		this.asEnvironmentHasFinalResultOperation = ClassUtil.nonNullState(asEnvironmentCompleteClass.getOperation(hasFinalResultOperationId));
 	}
 
@@ -119,14 +119,14 @@ public class LookupUnqualifiedCodeGenerator extends LookupVisitorsCodeGenerator 
 	@NonNull
 	protected String getLookupVisitorClassName(@NonNull String prefix) {
 		// Extract type name.
-		String typeName = extractTypeNameFromEnvOp(LookupVisitorsClassContext.UNQUALIFIED_ENV_NAME);
+		String typeName = extractTypeNameFromEnvOp(LookupVisitorsCodeGenerator.UNQUALIFIED_ENV_NAME);
 		return prefix + "Unqualified" + typeName + "LookupVisitor";
 	}
 
 	@Override
 	protected List<Property> createAdditionalASProperties() {
 		Type asOclElement = metamodelManager.getStandardLibrary().getOclElementType();
-		this.asChildProperty = createNativeProperty(LookupVisitorsClassContext.CHILD_NAME, asOclElement, false, true);
+		this.asChildProperty = createNativeProperty(LookupVisitorsCodeGenerator.CHILD_NAME, asOclElement, false, true);
 		return Collections.singletonList(asChildProperty);
 	}
 
@@ -135,10 +135,10 @@ public class LookupUnqualifiedCodeGenerator extends LookupVisitorsCodeGenerator 
 		List<Operation> result = new ArrayList<Operation>();
 		Type asOclElement = metamodelManager.getStandardLibrary().getOclElementType();
 		this.asVisitorEnvOperation = PivotUtil.createOperation(envOperationName, asEnvironmentType, null, null);
-		asVisitorEnvOperation.getOwnedParameters().add(PivotUtil.createParameter(LookupVisitorsClassContext.ELEMENT_NAME, asOclElement, true));
-		asVisitorEnvOperation.getOwnedParameters().add(PivotUtil.createParameter(LookupVisitorsClassContext.CHILD_NAME, asOclElement, false));
-		this.asVisitorParentEnvOperation = PivotUtil.createOperation(LookupVisitorsClassContext.PARENT_ENV_NAME, asEnvironmentType, null, null);
-		asVisitorParentEnvOperation.getOwnedParameters().add(PivotUtil.createParameter(LookupVisitorsClassContext.ELEMENT_NAME, asOclElement, true));
+		asVisitorEnvOperation.getOwnedParameters().add(PivotUtil.createParameter(LookupVisitorsCodeGenerator.ELEMENT_NAME, asOclElement, true));
+		asVisitorEnvOperation.getOwnedParameters().add(PivotUtil.createParameter(LookupVisitorsCodeGenerator.CHILD_NAME, asOclElement, false));
+		this.asVisitorParentEnvOperation = PivotUtil.createOperation(LookupVisitorsCodeGenerator.PARENT_ENV_NAME, asEnvironmentType, null, null);
+		asVisitorParentEnvOperation.getOwnedParameters().add(PivotUtil.createParameter(LookupVisitorsCodeGenerator.ELEMENT_NAME, asOclElement, true));
 		asVisitorParentEnvOperation.setImplementation(NativeStaticOperation.INSTANCE);
 		asVisitorParentEnvOperation.setIsRequired(false);
 		result.add(asVisitorEnvOperation);
@@ -276,12 +276,12 @@ public class LookupUnqualifiedCodeGenerator extends LookupVisitorsCodeGenerator 
 		ExpressionInOCL envExpressionInOCL = getExpressionInOCL(operation);
 		//
 		org.eclipse.ocl.pivot.Class asType = ClassUtil.nonNullState(operation.getOwningClass());
-		Variable asElement = helper.createParameterVariable(LookupVisitorsClassContext.ELEMENT_NAME, asType, true);
+		Variable asElement = helper.createParameterVariable(LookupVisitorsCodeGenerator.ELEMENT_NAME, asType, true);
 		reDefinitions.put(envExpressionInOCL.getOwnedContext(), asElement);
 		//
 		VariableExp asChildSource = createThisVariableExp(asThisVariable);
 		PropertyCallExp asChildAccess = PivotUtil.createPropertyCallExp(asChildSource, ClassUtil.nonNullState(asChildProperty));
-		Variable asChild = helper.createLetVariable(LookupVisitorsClassContext.CHILD_NAME, asChildAccess);
+		Variable asChild = helper.createLetVariable(LookupVisitorsCodeGenerator.CHILD_NAME, asChildAccess);
 		reDefinitions.put(envExpressionInOCL.getOwnedParameters().get(0), asChild);
 		//
 		Operation asOperation = createVisitorOperation("visit" + asType.getName(), operation.getType());

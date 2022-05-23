@@ -13,6 +13,7 @@ package org.eclipse.ocl.examples.codegen.oclinecore;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
+import org.eclipse.ocl.examples.codegen.java.JavaGlobalContext;
 import org.eclipse.ocl.examples.codegen.java.JavaLocalContext;
 import org.eclipse.ocl.pivot.NamedElement;
 
@@ -21,12 +22,12 @@ import org.eclipse.ocl.pivot.NamedElement;
  */
 public class OCLinEcoreLocalContext extends JavaLocalContext<@NonNull OCLinEcoreCodeGenerator>
 {
-	public OCLinEcoreLocalContext(@NonNull OCLinEcoreGlobalContext globalContext, @Nullable OCLinEcoreLocalContext outerContext, @NonNull CGNamedElement cgScope, @NonNull NamedElement asScope) {
+	public OCLinEcoreLocalContext(@NonNull JavaGlobalContext<@NonNull OCLinEcoreCodeGenerator> globalContext, @Nullable OCLinEcoreLocalContext outerContext, @NonNull CGNamedElement cgScope, @NonNull NamedElement asScope) {
 		super(globalContext, outerContext, cgScope, asScope);
 	}
 
 	@Override
-	public @NonNull OCLinEcoreGlobalContext getGlobalContext() {
-		return (OCLinEcoreGlobalContext) globalContext;
+	public @NonNull JavaGlobalContext<@NonNull OCLinEcoreCodeGenerator> getGlobalContext() {
+		return (JavaGlobalContext<@NonNull OCLinEcoreCodeGenerator>)globalContext;
 	}
 }

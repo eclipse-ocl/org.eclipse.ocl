@@ -42,7 +42,7 @@ public class LookupQualifiedCodeGenerator extends LookupVisitorsCodeGenerator {
 			@Nullable GenPackage superGenPackage,
 			@Nullable GenPackage baseGenPackage) {
 		this(environmentFactory, asPackage, asSuperPackage, asBasePackage, genPackage,
-			superGenPackage, baseGenPackage, LookupVisitorsClassContext.QUALIFIED_ENV_NAME);
+			superGenPackage, baseGenPackage, LookupVisitorsCodeGenerator.QUALIFIED_ENV_NAME);
 	}
 
 	protected LookupQualifiedCodeGenerator(
@@ -65,7 +65,7 @@ public class LookupQualifiedCodeGenerator extends LookupVisitorsCodeGenerator {
 
 	@Override
 	protected @NonNull String getLookupVisitorClassName(@NonNull String prefix) {
-		String typeName = extractTypeNameFromEnvOp(LookupVisitorsClassContext.QUALIFIED_ENV_NAME);
+		String typeName = extractTypeNameFromEnvOp(LookupVisitorsCodeGenerator.QUALIFIED_ENV_NAME);
 		return prefix + "Qualified" + typeName + "LookupVisitor";
 	}
 
@@ -91,7 +91,7 @@ public class LookupQualifiedCodeGenerator extends LookupVisitorsCodeGenerator {
 		ExpressionInOCL envExpressionInOCL = getExpressionInOCL(operation);
 		//
 		org.eclipse.ocl.pivot.Class asType = ClassUtil.nonNullState(operation.getOwningClass());
-		Variable asElement = helper.createParameterVariable(LookupVisitorsClassContext.ELEMENT_NAME, asType, true);
+		Variable asElement = helper.createParameterVariable(LookupVisitorsCodeGenerator.ELEMENT_NAME, asType, true);
 		reDefinitions.put(envExpressionInOCL.getOwnedContext(), asElement);
 
 		//rewrite LookupEnvironment ShadowExp as accessing the context variable (it might be the init of let variable)

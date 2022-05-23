@@ -19,6 +19,7 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
@@ -35,8 +36,10 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 /**
  * A JavaGlobalContext maintains the Java-specific global context for generation of code.
  */
-public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends AbstractJavaContext<CG> implements GlobalContext
+public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> implements GlobalContext
 {
+	protected @NonNull CG codeGenerator;
+	protected @NonNull CodeGenAnalyzer analyzer;
 	protected final @NonNull GlobalNameManager globalNameManager;
 	protected final @NonNull ImportNameManager importNameManager;
 
@@ -67,7 +70,8 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 	protected final @NonNull NameResolution valueName;
 
 	public JavaGlobalContext(@NonNull CG codeGenerator) {
-		super(codeGenerator);
+		this.codeGenerator = codeGenerator;
+		this.analyzer = codeGenerator.getAnalyzer();
 		this.globalNameManager = codeGenerator.getGlobalNameManager();
 		this.importNameManager = codeGenerator.createImportNameManager();
 		//
@@ -153,13 +157,17 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 		return localContext;
 	} */
 
-	public @NonNull JavaLocalContext<@NonNull ? extends CG> createLocalContext(@Nullable JavaLocalContext<@NonNull ?> outerContext, @NonNull CGNamedElement cgNamedElement, @NonNull NamedElement asNamedElement) {
-		return new JavaLocalContext<CG>(this, (JavaLocalContext<@NonNull ? extends CG>)outerContext, cgNamedElement, asNamedElement);
-	}
+//	public @NonNull JavaLocalContext<@NonNull ? extends CG> createLocalContext(@Nullable JavaLocalContext<@NonNull ?> outerContext, @NonNull CGNamedElement cgNamedElement, @NonNull NamedElement asNamedElement) {
+//		return new JavaLocalContext<CG>(this, (JavaLocalContext<@NonNull ? extends CG>)outerContext, cgNamedElement, asNamedElement);
+//	}
 
 	@Override
 	public @NonNull JavaLocalContext<@NonNull ? extends CG> findLocalContext(@NonNull CGNamedElement cgElement) {
 		return ClassUtil.nonNullState(basicFindLocalContext(cgElement));
+	}
+
+	public @NonNull CodeGenAnalyzer getAnalyzer() {
+		return analyzer;
 	}
 
 	public @NonNull NameResolution getAnyNameResolution() {
@@ -169,6 +177,10 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 	public @Nullable EClass getEClass(@NonNull ElementId elementId) {
 		IdVisitor<@Nullable EClass> id2EClassVisitor = codeGenerator.getId2EClassVisitor();
 		return elementId.accept(id2EClassVisitor);
+	}
+
+	public @NonNull CG getCodeGenerator() {
+		return codeGenerator;
 	}
 
 	public @NonNull String getEvaluateName() {
@@ -297,7 +309,8 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 		assert cgNamedElement.getAst() != null;
 		assert cgNamedElement.getAst() == asNamedElement;
 //		LocalContext localContext = new DebugLocalContext(outerContext, cgNamedElement, asNamedElement); //codeGenerator.getGlobalContext().createLocalContext(cgNamedElement);
-		JavaLocalContext<@NonNull ? extends CG> localContext = createLocalContext((JavaLocalContext<@NonNull ? extends CG>) outerContext, cgNamedElement, asNamedElement); //codeGenerator.getGlobalContext().createLocalContext(cgNamedElement);
+//		JavaLocalContext<@NonNull ? extends CG> localContext = createLocalContext((JavaLocalContext<@NonNull ? extends CG>) outerContext, cgNamedElement, asNamedElement); //codeGenerator.getGlobalContext().createLocalContext(cgNamedElement);
+		JavaLocalContext<@NonNull ? extends CG> localContext = (JavaLocalContext<@NonNull ? extends @NonNull CG>) codeGenerator.createLocalContext((JavaLocalContext<@NonNull ? extends CG>) outerContext, cgNamedElement, asNamedElement);
 		setLocalContext(cgNamedElement, localContext);
 		return localContext;
 	}

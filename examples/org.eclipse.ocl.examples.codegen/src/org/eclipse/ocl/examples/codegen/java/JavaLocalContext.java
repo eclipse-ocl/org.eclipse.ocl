@@ -12,6 +12,7 @@ package org.eclipse.ocl.examples.codegen.java;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
@@ -43,8 +44,10 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 /**
  * A JavaLocalContext maintains the Java-specific context for generation of coide from a CGOperation.
  */
-public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends AbstractJavaContext<CG> implements LocalContext
+public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> implements LocalContext
 {
+	protected @NonNull CG codeGenerator;
+	protected @NonNull CodeGenAnalyzer analyzer;
 	protected final @NonNull JavaGlobalContext<@NonNull ? extends CG> globalContext;
 	protected final @NonNull GlobalNameManager globalNameManager;
 	protected final @Nullable JavaLocalContext<@NonNull ? extends CG> outerContext;
@@ -71,7 +74,8 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 
 	public JavaLocalContext(@NonNull JavaGlobalContext<@NonNull ? extends CG> globalContext, @Nullable JavaLocalContext<@NonNull ? extends CG> outerContext,
 			@NonNull CGNamedElement cgScope, @NonNull NamedElement asScope) {
-		super(globalContext.getCodeGenerator());
+		this.codeGenerator = globalContext.getCodeGenerator();
+		this.analyzer = codeGenerator.getAnalyzer();
 		this.globalContext = globalContext;
 		this.globalNameManager = codeGenerator.getGlobalNameManager();
 		this.outerContext = outerContext;
@@ -284,6 +288,10 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 		return typeIdParameter;
 	}
 
+	public @NonNull CodeGenAnalyzer getAnalyzer() {
+		return analyzer;
+	}
+
 	public @NonNull CGParameter getAnyParameter() {
 	//	assert !isStatic;
 		CGParameter anyParameter2 = anyParameter;
@@ -305,6 +313,10 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 		}
 		assert false;;
 		return null;
+	}
+
+	public @NonNull CG getCodeGenerator() {
+		return codeGenerator;
 	}
 
 	public @NonNull CGParameter getExecutorParameter() {

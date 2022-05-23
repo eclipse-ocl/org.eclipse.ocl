@@ -39,14 +39,14 @@ public abstract class LookupVisitorsCG2JavaVisitor<@NonNull C extends LookupVisi
 	protected void doConstructor(@NonNull CGClass cgClass) {
 		js.append("public " + cgClass.getName() + "(");
 		js.appendClassReference(true, context.getEnvironmentClass());
-		js.append(" " + LookupVisitorsClassContext.CONTEXT_NAME);
+		js.append(" " + LookupVisitorsCodeGenerator.CONTEXT_NAME);
 		doAdditionalConstructorParameters(cgClass);
 		js.append(") {\n");
 		js.pushIndentation(null);
-		js.append("super(" + LookupVisitorsClassContext.CONTEXT_NAME + ");\n");
+		js.append("super(" + LookupVisitorsCodeGenerator.CONTEXT_NAME + ");\n");
 		js.append("this." + globalContext.getExecutorName() + " = ");
 		js.appendClassReference(null, ClassUtil.class);
-		js.append(".nonNull(" + LookupVisitorsClassContext.CONTEXT_NAME + ".getExecutor());\n");
+		js.append(".nonNull(" + LookupVisitorsCodeGenerator.CONTEXT_NAME + ".getExecutor());\n");
 		js.append("this." + JavaConstants.ID_RESOLVER_NAME + " = " + globalContext.getExecutorName() + ".getIdResolver();\n");
 		doAdditionalFieldsInitialization(cgClass);
 		js.popIndentation();
@@ -80,7 +80,7 @@ public abstract class LookupVisitorsCG2JavaVisitor<@NonNull C extends LookupVisi
 		js.pushIndentation(null);
 		js.append("return new ");
 		js.appendClassReference(null, superLookupVisitorClassName);
-		js.append("("+LookupVisitorsClassContext.CONTEXT_NAME);
+		js.append("("+LookupVisitorsCodeGenerator.CONTEXT_NAME);
 		doAdditionalSuperLookupVisitorArgs(cgClass);
 		js.append(");");
 		js.popIndentation();

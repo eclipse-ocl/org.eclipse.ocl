@@ -82,6 +82,7 @@ import org.eclipse.ocl.examples.codegen.utilities.AbstractCGModelResourceFactory
 import org.eclipse.ocl.examples.codegen.utilities.CGModelResource;
 import org.eclipse.ocl.examples.codegen.utilities.CGModelResourceFactory;
 import org.eclipse.ocl.pivot.Iteration;
+import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Property;
@@ -309,6 +310,10 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 
 	public @NonNull JavaStream createJavaStream(@NonNull CG2JavaVisitor<@NonNull ?> cg2javaVisitor) {
 		return new JavaStream(this, cg2javaVisitor);
+	}
+
+	public @NonNull JavaLocalContext<@NonNull ?> createLocalContext(@Nullable JavaLocalContext<@NonNull ?> outerContext, @NonNull CGNamedElement cgNamedElement, @NonNull NamedElement asNamedElement) {
+		return new JavaLocalContext<@NonNull JavaCodeGenerator>(getGlobalContext(), outerContext, cgNamedElement, asNamedElement);
 	}
 
 	protected @NonNull NameManagerHelper createNameManagerHelper() {

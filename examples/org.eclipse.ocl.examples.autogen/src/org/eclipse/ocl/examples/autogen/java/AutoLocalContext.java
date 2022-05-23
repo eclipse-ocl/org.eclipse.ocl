@@ -13,6 +13,7 @@ package org.eclipse.ocl.examples.autogen.java;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
+import org.eclipse.ocl.examples.codegen.java.JavaGlobalContext;
 import org.eclipse.ocl.examples.codegen.java.JavaLocalContext;
 import org.eclipse.ocl.pivot.NamedElement;
 
@@ -21,14 +22,14 @@ import org.eclipse.ocl.pivot.NamedElement;
  */
 public class AutoLocalContext<@NonNull CG extends AutoCodeGenerator> extends JavaLocalContext<CG>
 {
-	public AutoLocalContext(@NonNull AutoGlobalContext<CG> globalContext, @Nullable AutoLocalContext<@NonNull CG> outerContext,
+	public AutoLocalContext(@NonNull JavaGlobalContext<CG> globalContext, @Nullable AutoLocalContext<@NonNull CG> outerContext,
 			@NonNull CGNamedElement cgScope, @NonNull NamedElement asScope) {
 		super(globalContext, outerContext, cgScope, asScope);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public @NonNull AutoGlobalContext<CG> getGlobalContext() {
-		return (AutoGlobalContext<CG>) globalContext;
+	public @NonNull JavaGlobalContext<CG> getGlobalContext() {
+		return (JavaGlobalContext<CG>) globalContext;
 	}
 }

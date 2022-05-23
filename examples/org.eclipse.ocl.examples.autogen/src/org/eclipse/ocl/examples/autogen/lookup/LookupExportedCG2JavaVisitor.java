@@ -48,7 +48,7 @@ public class LookupExportedCG2JavaVisitor extends LookupVisitorsCG2JavaVisitor<@
 			@NonNull CGClass cgClass) {
 		js.append(", ");
 		js.appendClassReference(true, Object.class);
-		js.append(" " + LookupVisitorsClassContext.INMPORTER_NAME);
+		js.append(" " + LookupVisitorsCodeGenerator.INMPORTER_NAME);
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class LookupExportedCG2JavaVisitor extends LookupVisitorsCG2JavaVisitor<@
 			@NonNull CGClass cgClass) {
 		js.append("this.");
 		js.appendReferenceTo(context.getImporterProperty());
-		js.append(" = " +  LookupVisitorsClassContext.INMPORTER_NAME + ";\n");
+		js.append(" = " +  LookupVisitorsCodeGenerator.INMPORTER_NAME + ";\n");
 	}
 
 	@Override

@@ -38,6 +38,7 @@ import org.eclipse.ocl.examples.codegen.generator.GenModelHelper;
 import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
+import org.eclipse.ocl.examples.codegen.java.JavaGlobalContext;
 import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreCodeGenerator.FeatureBody;
 import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreCodeGenerator.FeatureLocality;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
@@ -89,7 +90,7 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 
 	@Override
 	protected void appendGlobalPrefix() {
-		js.append(getGlobalContext().getTablesClassName());
+		js.append(getCodeGenerator().getTablesClassName());
 		js.append(".");
 	}
 
@@ -365,7 +366,7 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 		assert js.peekClassNameStack() == null;
 		String bodyText = toString();
 		String fragmentURI = getFragmentURI(asOperation);
-		String externalPackageName = getGlobalContext().getTablesClassName();
+		String externalPackageName = getCodeGenerator().getTablesClassName();
 		FeatureLocality featureLocality = FeatureLocality.FOREIGN_STATIC;
 		return new FeatureBody(fragmentURI, asOperation, featureLocality, externalPackageName, className, bodyText);
 	}
@@ -434,7 +435,7 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 		assert js.peekClassNameStack() == null;
 		String bodyText = toString();
 		String fragmentURI = getFragmentURI(asProperty);
-		String externalPackageName = getGlobalContext().getTablesClassName();
+		String externalPackageName = getCodeGenerator().getTablesClassName();
 		FeatureLocality featureLocality = FeatureLocality.FOREIGN_STATIC;
 		return new FeatureBody(fragmentURI, asProperty, featureLocality, externalPackageName, className, bodyText);
 	}
@@ -567,8 +568,8 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 		return genPackage;
 	}
 
-	protected @NonNull OCLinEcoreGlobalContext getGlobalContext() {
-		return (OCLinEcoreGlobalContext) globalContext;
+	protected @NonNull JavaGlobalContext<@NonNull OCLinEcoreCodeGenerator> getGlobalContext() {
+		return (JavaGlobalContext<@NonNull OCLinEcoreCodeGenerator>)globalContext;
 	}
 
 	protected @NonNull OCLinEcoreLocalContext getLocalContext() {
