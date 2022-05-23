@@ -265,7 +265,7 @@ public class JavaStream
 				s.append(string);
 			}
 			else {
-				if (string.contains("PropertyId")) {
+				if (string.contains("ast_0")) {
 					getClass();		// XXX
 				}
 				int sLength = s.length();

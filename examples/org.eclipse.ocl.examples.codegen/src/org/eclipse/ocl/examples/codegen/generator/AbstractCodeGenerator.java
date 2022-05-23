@@ -35,7 +35,6 @@ import org.eclipse.ocl.examples.codegen.calling.ExecutorOppositePropertyCallingC
 import org.eclipse.ocl.examples.codegen.calling.ExecutorPropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.ForeignOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.ForeignPropertyCallingConvention;
-import org.eclipse.ocl.examples.codegen.calling.InlinedOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.LibraryOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.LibraryPropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.NativeOperationCallingConvention;
@@ -43,6 +42,7 @@ import org.eclipse.ocl.examples.codegen.calling.NativePropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.PropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.TuplePropertyCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.VirtualOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.VolatileOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
 import org.eclipse.ocl.examples.codegen.java.JavaLanguageSupport;
@@ -81,6 +81,8 @@ import org.eclipse.ocl.pivot.library.map.MapValueTypeProperty;
 import org.eclipse.ocl.pivot.library.oclany.OclElementOclContainerProperty;
 import org.eclipse.ocl.pivot.library.oclany.OclElementOclContentsProperty;
 import org.eclipse.ocl.pivot.utilities.ParserException;
+
+import com.google.common.collect.Iterables;
 
 public abstract class AbstractCodeGenerator implements CodeGenerator
 {
@@ -175,7 +177,7 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 	}
 
 	@Override
-	public @NonNull OperationCallingConvention getCallingConvention(@NonNull Operation asOperation) {
+	public @NonNull OperationCallingConvention getCallingConvention(@NonNull Operation asOperation, boolean isFinal) {
 		LibraryOperation libraryOperation = (LibraryOperation)metamodelManager.getImplementation(asOperation);
 		if (BuiltInOperationCallingConvention.INSTANCE.canHandle(libraryOperation)) {
 			return BuiltInOperationCallingConvention.INSTANCE;
@@ -199,22 +201,31 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 			throw new UnsupportedOperationException();
 		}
 		if (libraryOperation instanceof ConstrainedOperation) {
+			if ("OclElement::_unqualified_env_Class(OclElement[1]) : lookup::LookupEnvironment[1]".equals(libraryOperation.toString())) {
+				getClass();			// XXX
+			}
 			org.eclipse.ocl.pivot.Package asPackage = asOperation.getOwningClass().getOwningPackage();
 			if (asPackage instanceof Library) {
-				return VolatileOperationCallingConvention.INSTANCE;
+				return VolatileOperationCallingConvention.INSTANCE;			// Library operations handle polymorphism internally
 			}
 			else {
+				FinalAnalysis finalAnalysis = metamodelManager.getFinalAnalysis();
+				if (!isFinal) {
+					Iterable<@NonNull Operation> asOverrides = finalAnalysis.getOverrides(asOperation);
+					if (Iterables.size(asOverrides) > 1) {
+						return VirtualOperationCallingConvention.INSTANCE;		// Need a polymorphic dispatcher
+					}
+				}
 				LanguageExpression bodyExpression = asOperation.getBodyExpression();
 				if (bodyExpression != null) {
-					FinalAnalysis finalAnalysis = metamodelManager.getFinalAnalysis();
-					Set<@NonNull Operation> referencedFinalOperations = new HashSet<>();
-					getTransitivelyReferencedFinalOperations(referencedFinalOperations, finalAnalysis, bodyExpression);
-					if (!referencedFinalOperations.contains(asOperation)) {
-						Iterable<@NonNull Operation> referencedNonFinalOperations = getReferencedNonFinalOperations(finalAnalysis, bodyExpression);
-						if (referencedNonFinalOperations == null) {			// simple heavy heuristic
-							return InlinedOperationCallingConvention.INSTANCE;
-						}
-					}
+				//	Set<@NonNull Operation> referencedFinalOperations = new HashSet<>();			// XXX Too soon - not all CG operations visible yet
+				//	getTransitivelyReferencedFinalOperations(referencedFinalOperations, finalAnalysis, bodyExpression);
+				//	if (!referencedFinalOperations.contains(asOperation)) {
+				//		Iterable<@NonNull Operation> referencedNonFinalOperations = getReferencedNonFinalOperations(finalAnalysis, bodyExpression);
+				//		if (referencedNonFinalOperations == null) {			// simple heavy heuristic
+				//		// XXX	return InlinedOperationCallingConvention.INSTANCE;
+				//		}
+				//	}
 				}
 				return CachedOperationCallingConvention.INSTANCE;
 			}

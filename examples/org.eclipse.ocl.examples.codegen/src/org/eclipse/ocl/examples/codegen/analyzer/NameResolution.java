@@ -153,7 +153,7 @@ public class NameResolution
 		if ("IMPPROPid_t3forwardList".equals(nameHint)) {
 			getClass();			// XXX
 		}
-		if ("create".equals(nameHint)) {
+		if ("ast".equals(nameHint)) {
 			getClass();			// XXX
 		}
 		return true;

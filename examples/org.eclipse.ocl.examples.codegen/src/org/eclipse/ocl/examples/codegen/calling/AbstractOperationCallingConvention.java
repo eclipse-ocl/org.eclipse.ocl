@@ -278,9 +278,8 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 	@Override
 	public @NonNull CGOperation generateDeclarationHierarchy(@NonNull AS2CGVisitor as2cgVisitor, @Nullable Type asSourceType, @NonNull Operation asOperation) {
 		CGOperation cgOperation = createCGOperationWithoutBody(as2cgVisitor, asSourceType, asOperation);
-		if (cgOperation.getAst() == null) {
-			as2cgVisitor.getAnalyzer().installOperation(asOperation, cgOperation, this);
-		}
+		assert cgOperation.getAst() == null;
+		as2cgVisitor.getAnalyzer().installOperation(asOperation, cgOperation, this);
 		return cgOperation;
 	}
 

@@ -158,7 +158,7 @@ public class CodeGenAnalyzer
 	 * the currentClass. The stack of partial conversions avoids an infinite number of operations
 	 * being created for a recursive call.
 	 */
-	private final @NonNull Map<@NonNull Operation, @NonNull CGOperation> asFinalOperation2cgOperation = new HashMap<>();
+//	private final @NonNull Map<@NonNull Operation, @NonNull CGOperation> asFinalOperation2cgOperation = new HashMap<>();
 	private final @NonNull Map<@NonNull Operation, @NonNull CGOperation> asVirtualOperation2cgOperation = new HashMap<>();
 
 	public CodeGenAnalyzer(@NonNull CodeGenerator codeGenerator) {
@@ -274,9 +274,9 @@ public class CodeGenAnalyzer
 		return asProperty2cgProperty.get(asProperty);
 	}
 
-	public @Nullable CGOperation basicGetFinalCGOperation(@NonNull Operation asOperation) {
-		return asFinalOperation2cgOperation.get(asOperation);
-	}
+//	public @Nullable CGOperation basicGetFinalCGOperation(@NonNull Operation asOperation) {
+//		return asFinalOperation2cgOperation.get(asOperation);
+//	}
 
 	public @Nullable CGOperation basicGetVirtualCGOperation(@NonNull Operation asOperation) {
 		return asVirtualOperation2cgOperation.get(asOperation);
@@ -699,8 +699,8 @@ public class CodeGenAnalyzer
 		cgOperation.setTypeId(getCGTypeId(asOperation.getTypeId()));
 		cgOperation.setRequired(asOperation.isIsRequired());
 		cgOperation.setCallingConvention(callingConvention);
-		CGOperation oldCGOperation = asFinalOperation2cgOperation.put(asOperation, cgOperation);
-		assert oldCGOperation == null;
+	//	CGOperation oldCGOperation = asFinalOperation2cgOperation.put(asOperation, cgOperation);
+	//	assert oldCGOperation == null;
 		addCGOperation(cgOperation);
 		return cgOperation;
 	}

@@ -32,7 +32,6 @@ import org.eclipse.ocl.examples.codegen.calling.PropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.SupportOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGAccumulator;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBuiltInIterationCallExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCollectionExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCollectionPart;
@@ -364,7 +363,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		}
 	}
 
-	/*protected*/ public @NonNull CGOperation createVirtualCGOperationWithoutBody(@NonNull Operation asOperation, @NonNull List<@NonNull CGCachedOperation> cgOperations) {
+	/*protected public @NonNull CGOperation createVirtualCGOperationWithoutBody(@NonNull Operation asOperation, @NonNull List<@NonNull CGCachedOperation> cgOperations) {
 		CGCachedOperation cgOperation = CGModelFactory.eINSTANCE.createCGCachedOperation();
 		initAst(cgOperation, asOperation);
 		LocalContext savedLocalContext = pushLocalContext(cgOperation, asOperation);
@@ -387,7 +386,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		context.addVirtualCGOperation(asOperation, cgOperation);
 		popLocalContext(savedLocalContext);
 		return cgOperation;
-	}
+	} */
 
 	public @NonNull <T extends CGElement> T doVisit(@NonNull Class<T> requiredClass, @Nullable Element asElement) {
 		if (asElement == null) {
@@ -513,7 +512,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		OCLExpression asSource = asOperationCallExp.getOwnedSource();
 		Type asSourceType = asSource != null ? asSource.getType() : null;
 		Operation asOperation = ClassUtil.nonNullState(asOperationCallExp.getReferredOperation());
-		CGOperation cgOperation = generateOperationDeclaration(asSourceType, asOperation);
+		CGOperation cgOperation = generateOperationDeclaration(asSourceType, asOperation, false);
 		OperationCallingConvention callingConvention = cgOperation.getCallingConvention();
 		LibraryOperation libraryOperation = (LibraryOperation)metamodelManager.getImplementation(asOperation);
 		CGValuedElement cgCallExp = callingConvention.createCGOperationCallExp(this, cgOperation, libraryOperation, cgSource, asOperationCallExp);
@@ -530,51 +529,53 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	 * Generate / share the CG declaration for asOperation.
 	 * @param asSourceType
 	 */
-	protected @NonNull CGOperation generateOperationDeclaration(@Nullable Type asSourceType, @NonNull Operation asOperation) {	// XXX rationalize as generateOperationDeclaration with later createImplementation
+	public @NonNull CGOperation generateOperationDeclaration(@Nullable Type asSourceType, @NonNull Operation asOperation, boolean isFinal) {	// XXX rationalize as generateOperationDeclaration with later createImplementation
+		if (!isFinal) {
+			CGOperation cgVirtualOperation = context.basicGetVirtualCGOperation(asOperation);
+			if (cgVirtualOperation != null) {
+				return cgVirtualOperation;
+			}
+		}
 		CGOperation cgOperation = context.basicGetCGOperation(asOperation);
 		if (cgOperation == null) {
 			org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asOperation);
-			cgOperation = context.basicGetFinalCGOperation(asOperation);
-			if (cgOperation == null) {
-				CGClass cgClass = context.basicGetCGClass(asClass);
-				if (cgClass == null) {
-					cgClass = CGModelFactory.eINSTANCE.createCGClass();
-					cgClass.setAst(asClass);
-					cgClass.setName(asClass.getName());
-					context.addCGClass(cgClass);
+			CGClass cgClass = context.basicGetCGClass(asClass);
+			if (cgClass == null) {
+				cgClass = CGModelFactory.eINSTANCE.createCGClass();
+				cgClass.setAst(asClass);
+				cgClass.setName(asClass.getName());
+				context.addCGClass(cgClass);
+			}
+			else {
+				assert cgClass.getAst() == asClass;
+			}
+			LocalContext savedPreClassContext = pushLocalContext(cgClass, asClass);
+			try {
+				OperationCallingConvention callingConvention = codeGenerator.getCallingConvention(asOperation, isFinal);
+				cgOperation = callingConvention.createCGOperationWithoutBody(this, asSourceType, asOperation);
+				LibraryOperation libraryOperation = (LibraryOperation)metamodelManager.getImplementation(asOperation);
+				if (libraryOperation instanceof ForeignOperation) {			// XXX this parses stdlib bodies unnecessarily
+				//	context.addExternalFeature(asOperation);		// XXX move to OperationCallingConvention
+					assert context.isExternal(asOperation);		// XXX move to OperationCallingConvention
 				}
-				else {
-					assert cgClass.getAst() == asClass;
+				assert cgOperation.getAst() == null;
+				context.installOperation(asOperation, cgOperation, callingConvention);
+				getNameManager().declarePreferredName(cgOperation);
+				LocalContext savedClassContext = pushLocalContext(cgOperation, asOperation);
+				ExpressionInOCL asExpressionInOCL = null;
+				LanguageExpression asSpecification = asOperation.getBodyExpression();
+				if (asSpecification != null) {
+					try {
+						asExpressionInOCL = environmentFactory.parseSpecification(asSpecification);
+					} catch (ParserException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
-				LocalContext savedPreClassContext = pushLocalContext(cgClass, asClass);
-				try {
-					OperationCallingConvention callingConvention = codeGenerator.getCallingConvention(asOperation);
-					cgOperation = callingConvention.createCGOperationWithoutBody(this, asSourceType, asOperation);
-					LibraryOperation libraryOperation = (LibraryOperation)metamodelManager.getImplementation(asOperation);
-					if (libraryOperation instanceof ForeignOperation) {			// XXX this parses stdlib bodies unnecessarily
-					//	context.addExternalFeature(asOperation);		// XXX move to OperationCallingConvention
-						assert context.isExternal(asOperation);		// XXX move to OperationCallingConvention
-					}
-					if (cgOperation.getAst() == null) {
-						context.installOperation(asOperation, cgOperation, callingConvention);
-					}
-					getNameManager().declarePreferredName(cgOperation);
-					LocalContext savedClassContext = pushLocalContext(cgOperation, asOperation);
-					ExpressionInOCL asExpressionInOCL = null;
-					LanguageExpression asSpecification = asOperation.getBodyExpression();
-					if (asSpecification != null) {
-						try {
-							asExpressionInOCL = environmentFactory.parseSpecification(asSpecification);
-						} catch (ParserException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-					callingConvention.createCGParameters(this, cgOperation, asExpressionInOCL);
-					popLocalContext(savedClassContext);
-				} finally {
-					popLocalContext(savedPreClassContext);
-				}
+				callingConvention.createCGParameters(this, cgOperation, asExpressionInOCL);
+				popLocalContext(savedClassContext);
+			} finally {
+				popLocalContext(savedPreClassContext);
 			}
 		}
 		return cgOperation;
@@ -635,7 +636,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		OCLExpression asSource = callExp.getOwnedSource();
 		assert asSource != null;
 		cgOperationCallExp.setReferredOperation(asExcludingOperation);
-		CGOperation cgOperation = generateOperationDeclaration(asSource.getType(), asExcludingOperation);
+		CGOperation cgOperation = generateOperationDeclaration(asSource.getType(), asExcludingOperation, true);
 		cgOperationCallExp.setCgOperation(cgOperation);
 		cgOperationCallExp.setTypeId(context.getCGTypeId(asSource.getTypeId()));
 		cgOperationCallExp.setRequired(true);
@@ -1254,7 +1255,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		if (asOperation.toString().contains("allOwnedElements")) {
 			getClass();		// XXX
 		}
-		CGOperation cgOperation = generateOperationDeclaration(null, asOperation);
+		CGOperation cgOperation = generateOperationDeclaration(null, asOperation, false);
 		LocalContext savedLocalContext = pushLocalContext(cgOperation, asOperation);
 		LanguageExpression specification = asOperation.getBodyExpression();
 		if (specification instanceof ExpressionInOCL) {			// Should already be parsed

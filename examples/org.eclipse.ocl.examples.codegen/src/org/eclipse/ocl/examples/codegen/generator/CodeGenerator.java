@@ -50,7 +50,16 @@ public interface CodeGenerator
 	@NonNull ReferencesVisitor createReferencesVisitor();
 	@NonNull CodeGenAnalyzer getAnalyzer();
 	@NonNull BoxedDescriptor getBoxedDescriptor(@NonNull ElementId elementId);
-	@NonNull OperationCallingConvention getCallingConvention(@NonNull Operation asOperation);
+
+	/**
+	 * Determine the calling convention appropriate to asOperation. If isFinal is false and asOperatin has overrides
+	 * a dynamic dispatching calling convention is retirned. Otherwise a direct calling convention.
+	 */
+	@NonNull OperationCallingConvention getCallingConvention(@NonNull Operation asOperation, boolean isFinal);
+
+	/**
+	 * Determine the calling convention appropriate to asProperty.
+	 */
 	@NonNull PropertyCallingConvention getCallingConvention(@NonNull Property asProperty);
 	@Nullable String getConstantsClass();
 	@NonNull String getDefaultIndent();

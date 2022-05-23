@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.calling;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -71,7 +70,7 @@ public class CachedOperationCallingConvention extends ConstrainedOperationCallin
 	protected @NonNull CGOperationCallExp cachedOperationCall(@NonNull AS2CGVisitor as2cgVisitor, @NonNull OperationCallExp asOperationCallExp, @NonNull CGClass currentClass, CGValuedElement cgSource,
 			@NonNull Operation asOperation, @Nullable Iterable<@NonNull Operation> asOverrideOperations) {
 		//	List<@NonNull CGCachedOperation> cgOperations = generateDeclarationHierarchy(as2cgVisitor, currentClass, asOperation, asOverrideOperations);
-		List<@NonNull CGCachedOperation> cgOperations = new ArrayList<>();			// XXX
+	//	List<@NonNull CGCachedOperation> cgOperations = new ArrayList<>();			// XXX
 		CGCachedOperationCallExp cgOperationCallExp = CGModelFactory.eINSTANCE.createCGCachedOperationCallExp();
 		List<CGValuedElement> cgArguments = cgOperationCallExp.getCgArguments();
 		cgArguments.add(cgSource);
@@ -82,13 +81,13 @@ public class CachedOperationCallingConvention extends ConstrainedOperationCallin
 		}
 		as2cgVisitor.initAst(cgOperationCallExp, asOperationCallExp);
 		cgOperationCallExp.setReferredOperation(asOperation);
-		if (asOverrideOperations != null) {
-			CGOperation cgOperation = as2cgVisitor.getAnalyzer().basicGetVirtualCGOperation(asOperation);
-			if (cgOperation == null) {
-				cgOperation = as2cgVisitor.createVirtualCGOperationWithoutBody(asOperation, cgOperations);
-				currentClass.getOperations().add(cgOperation);
-			}
-		}
+	//	if (asOverrideOperations != null) {
+	//		CGOperation cgOperation = as2cgVisitor.getAnalyzer().basicGetVirtualCGOperation(asOperation);
+	//		if (cgOperation == null) {
+	//			cgOperation = as2cgVisitor.createVirtualCGOperationWithoutBody(asOperation, cgOperations);
+	//			currentClass.getOperations().add(cgOperation);
+	//		}
+	//	}
 		return cgOperationCallExp;
 	}
 
@@ -147,8 +146,8 @@ public class CachedOperationCallingConvention extends ConstrainedOperationCallin
 		if (finalOperation != null) {
 			LanguageExpression bodyExpression = asOperation.getBodyExpression();
 			assert bodyExpression != null;
-			CGValuedElement cgOperationCallExp2 = as2cgVisitor.inlineOperationCall(asOperationCallExp, bodyExpression);
-			assert cgOperationCallExp2 == null;
+		// XXX	CGValuedElement cgOperationCallExp2 = as2cgVisitor.inlineOperationCall(asOperationCallExp, bodyExpression);
+		// XXX	assert cgOperationCallExp2 == null;
 			cgCallExp = cachedOperationCall(as2cgVisitor, asOperationCallExp, currentClass, cgSource, finalOperation, null);
 		} else {
 			Iterable<@NonNull Operation> overrides = as2cgVisitor.getMetamodelManager().getFinalAnalysis().getOverrides(asOperation);
@@ -344,7 +343,7 @@ public class CachedOperationCallingConvention extends ConstrainedOperationCallin
 	} */
 
 	@Override
-	public @NonNull CGOperation generateDeclarationHierarchy(@NonNull AS2CGVisitor as2cgVisitor, @Nullable Type sourceType, @NonNull Operation asOperation) {
+	public @NonNull CGOperation generateDeclarationHierarchy(@NonNull AS2CGVisitor as2cgVisitor, @Nullable Type sourceType, @NonNull Operation asOperation) {		// XXX obsoleted by VirtualOperationCallingConvention
 		CodeGenerator codeGenerator = as2cgVisitor.getCodeGenerator();
 		CodeGenAnalyzer analyzer = codeGenerator.getAnalyzer();
 	//	Type sourceType = ClassUtil.nonNullState(asSource.getType());
@@ -368,6 +367,7 @@ public class CachedOperationCallingConvention extends ConstrainedOperationCallin
 					OperationCallingConvention callingConvention = this; //codeGenerator.getCallingConvention(asOverride);
 					cgOperation = callingConvention.createCGOperationWithoutBody(as2cgVisitor, sourceType, asOverride);
 					assert cgOperation != null;
+					assert cgOperation.getAst() == null;
 //					as2cgVisitor.initAst(cgOperation, asOverride);
 					LocalContext savedLocalContext = as2cgVisitor.pushLocalContext(cgOperation, asOverride);	// XXX redundant ??
 //					as2cgVisitor.popLocalContext(savedLocalContext);
