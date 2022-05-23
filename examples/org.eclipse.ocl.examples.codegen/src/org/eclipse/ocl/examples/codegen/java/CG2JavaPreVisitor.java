@@ -15,6 +15,7 @@ import java.util.List;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
+import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBoxExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBuiltInIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCollectionExp;
@@ -81,17 +82,17 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
  * A CG2JavaPreVisitor prepares for Java code generation by performing a tree traversal
  * to gather all imports and global constants and establish the dependenccies used by the CSE.
  */
-public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable Object, @NonNull JavaGlobalContext>
+public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable Object, @NonNull JavaCodeGenerator>
 {
-	protected final @NonNull JavaCodeGenerator codeGenerator;
+	protected final @NonNull GlobalNameManager globalNameManager;
 	protected final @NonNull GenModelHelper genModelHelper;
 	protected final @NonNull CodeGenAnalyzer analyzer;
 	private @Nullable JavaLocalContext treeContext;
 	private @Nullable JavaLocalContext localContext;
 
-	public CG2JavaPreVisitor(@NonNull JavaGlobalContext globalContext) {
-		super(globalContext);
-		this.codeGenerator = globalContext.getCodeGenerator();
+	public CG2JavaPreVisitor(@NonNull JavaCodeGenerator codeGenerator) {
+		super(codeGenerator);
+		this.globalNameManager = codeGenerator.getGlobalNameManager();
 		this.analyzer = codeGenerator.getAnalyzer();
 		this.genModelHelper = codeGenerator.getGenModelHelper();
 	}
@@ -141,7 +142,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 	protected void doValuedElement(@NonNull CGValuedElement cgValuedElement) {
 		CGValuedElement value = cgValuedElement.getNamedValue();
 		if (value.isGlobal()) {
-			context.addGlobal(value);
+			globalNameManager.addGlobal(value);
 		}
 		TypeId asTypeId = cgValuedElement.getASTypeId();
 		if (asTypeId != null) {
@@ -150,7 +151,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 	}
 
 	public @NonNull JavaCodeGenerator getCodeGenerator() {
-		return codeGenerator;
+		return context;
 	}
 
 	protected @NonNull JavaLocalContext getTreeContext() {
@@ -186,7 +187,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 
 	protected @Nullable JavaLocalContext pushLocalContext(@NonNull CGNamedElement cgNamedlement) {
 		JavaLocalContext savedLocalContext = localContext;
-		localContext = context.findLocalContext(cgNamedlement);
+		localContext = globalNameManager.findLocalContext(cgNamedlement);
 		if (savedLocalContext == null) {
 			treeContext = localContext;
 		}
@@ -202,7 +203,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 	public @Nullable Object visitCGBoxExp(@NonNull CGBoxExp cgBoxExp) {
 		CGValuedElement unboxedValue = cgBoxExp.getSource();
 		if (unboxedValue != null) {
-			TypeDescriptor unboxedTypeDescriptor = codeGenerator.getTypeDescriptor(unboxedValue);
+			TypeDescriptor unboxedTypeDescriptor = context.getTypeDescriptor(unboxedValue);
 			if (unboxedTypeDescriptor.isAssignableTo(Iterable.class)) {
 				installIdResolverVariable(cgBoxExp);
 			}
@@ -267,7 +268,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 	public @Nullable Object visitCGEcoreExp(@NonNull CGEcoreExp cgEcoreExp) {
 		CGValuedElement ecoreValue = cgEcoreExp.getSource();
 		if (ecoreValue != null) {
-			TypeDescriptor boxedTypeDescriptor = codeGenerator.getTypeDescriptor(ecoreValue);
+			TypeDescriptor boxedTypeDescriptor = context.getTypeDescriptor(ecoreValue);
 			if (boxedTypeDescriptor.isAssignableTo(Iterable.class)
 					|| boxedTypeDescriptor.isAssignableTo(EnumerationLiteralId.class)) {
 				installIdResolverVariable(cgEcoreExp);
@@ -369,7 +370,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 	@Override
 	public @Nullable Object visitCGIterationCallExp(@NonNull CGIterationCallExp cgIterationCallExp) {
 		Iteration asIteration = ClassUtil.nonNullState(cgIterationCallExp.getReferredIteration());
-		IterationHelper iterationHelper = codeGenerator.getIterationHelper(asIteration);
+		IterationHelper iterationHelper = context.getIterationHelper(asIteration);
 		doValuedElement(cgIterationCallExp);				// Resolve name in outer context
 		doTypedElement(cgIterationCallExp);
 		CGValuedElement cgSource = cgIterationCallExp.getSource();
@@ -543,7 +544,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 	@Override
 	public @Nullable Object visitCGUnboxExp(@NonNull CGUnboxExp cgUnboxExp) {
 		CGValuedElement source = analyzer.getCGExpression(cgUnboxExp.getSource());
-		TypeDescriptor boxedTypeDescriptor = codeGenerator.getTypeDescriptor(source);
+		TypeDescriptor boxedTypeDescriptor = context.getTypeDescriptor(source);
 		if (boxedTypeDescriptor.isAssignableTo(CollectionValue.class)
 				|| boxedTypeDescriptor.isAssignableTo(EnumerationLiteralId.class)) {
 			installIdResolverVariable(cgUnboxExp);

@@ -13,6 +13,7 @@ package org.eclipse.ocl.examples.codegen.calling;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
@@ -23,7 +24,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
-import org.eclipse.ocl.examples.codegen.java.JavaGlobalContext;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.Operation;
@@ -62,7 +62,7 @@ public abstract class AbstractCachedOperationCallingConvention extends Constrain
 	}
 
 	protected void doCachedOperationEvaluate(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
-		JavaGlobalContext globalContext = cg2javaVisitor.getCodeGenerator().getGlobalContext();
+		GlobalNameManager globalNameManager = cg2javaVisitor.getCodeGenerator().getGlobalNameManager();
 		List<@NonNull CGParameter> cgParameters = ClassUtil.nullFree(cgOperation.getParameters());
 		Boolean isRequiredReturn = cgOperation.isRequired() ? true : null;
 		if (cgOperation.isEcore() && (cgOperation.getASTypeId() instanceof CollectionTypeId)) {
@@ -77,7 +77,7 @@ public abstract class AbstractCachedOperationCallingConvention extends Constrain
 		//				js.append(" ");
 		js.appendClassReference(isRequiredReturn, cgOperation);
 		js.append(" ");
-		js.append(globalContext.getEvaluateName());
+		js.append(globalNameManager.getEvaluateName());
 		js.append("(");
 		boolean isFirst = true;
 		for (@NonNull CGParameter cgParameter : cgParameters) {
@@ -92,9 +92,9 @@ public abstract class AbstractCachedOperationCallingConvention extends Constrain
 		js.append("return (");
 		js.appendClassReference(isRequiredReturn, cgOperation);
 		js.append(")");
-		js.append(globalContext.getEvaluationCacheName());
+		js.append(globalNameManager.getEvaluationCacheName());
 		js.append(".");
-		js.append(globalContext.getGetCachedEvaluationResultName());
+		js.append(globalNameManager.getGetCachedEvaluationResultName());
 		js.append("(this, caller, new ");
 		js.appendClassReference(false, Object.class);
 		js.append("[]{");
@@ -114,7 +114,7 @@ public abstract class AbstractCachedOperationCallingConvention extends Constrain
 	@Override
 	public boolean generateJavaCall(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
 		JavaCodeGenerator codeGenerator = cg2javaVisitor.getCodeGenerator();
-		JavaGlobalContext globalContext = codeGenerator.getGlobalContext();
+		GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
 		CGCachedOperationCallExp cgCachedOperationCallExp = (CGCachedOperationCallExp)cgOperationCallExp;
 		CGCachedOperation cgOperation = (CGCachedOperation)CGUtil.getOperation(cgCachedOperationCallExp);
 		Operation asOperation = CGUtil.getAST(cgOperation);
@@ -149,7 +149,7 @@ public abstract class AbstractCachedOperationCallingConvention extends Constrain
 		} */
 		js.append(getNativeOperationInstanceName(asOperation));
 		js.append(".");
-		js.append(globalContext.getEvaluateName());
+		js.append(globalNameManager.getEvaluateName());
 		//		js.append(cgOperationCallExp.getReferredOperation().getName());
 		js.append("(");
 	//	assert thisIsSelf;

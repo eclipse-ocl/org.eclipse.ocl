@@ -39,15 +39,13 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
  * A CG2JavaNameVisitor prepares for Java code generation by priming the allocation of unqiue names by the
  * name resolver/assigner..
  */
-public class CG2JavaNameVisitor extends AbstractExtendingCGModelVisitor<@Nullable Object, @NonNull JavaGlobalContext>
+public class CG2JavaNameVisitor extends AbstractExtendingCGModelVisitor<@Nullable Object, @NonNull JavaCodeGenerator>
 {
-	protected final @NonNull JavaCodeGenerator codeGenerator;
 	protected final @NonNull GlobalNameManager globalNameManager;
 	private @Nullable JavaLocalContext localContext;
 
-	public CG2JavaNameVisitor(@NonNull JavaGlobalContext globalContext) {
-		super(globalContext);
-		this.codeGenerator = globalContext.getCodeGenerator();
+	public CG2JavaNameVisitor(@NonNull JavaCodeGenerator codeGenerator) {
+		super(codeGenerator);
 		this.globalNameManager = codeGenerator.getGlobalNameManager();
 	}
 
@@ -65,7 +63,7 @@ public class CG2JavaNameVisitor extends AbstractExtendingCGModelVisitor<@Nullabl
 
 	protected @Nullable JavaLocalContext pushLocalContext(@NonNull CGNamedElement cgNamedElement) {
 		JavaLocalContext savedLocalContext = localContext;
-		localContext = context.findLocalContext(cgNamedElement);
+		localContext = globalNameManager.findLocalContext(cgNamedElement);
 		return savedLocalContext;
 	}
 
@@ -77,7 +75,7 @@ public class CG2JavaNameVisitor extends AbstractExtendingCGModelVisitor<@Nullabl
 	@Override
 	public @Nullable Object visitCGCatchExp(@NonNull CGCatchExp cgCatchExp) {
 		NestedNameManager nameManager = getNameManager();
-		nameManager.addNameVariant(cgCatchExp, codeGenerator.getTHROWN_NameVariant());
+		nameManager.addNameVariant(cgCatchExp, context.getTHROWN_NameVariant());
 		return super.visitCGCatchExp(cgCatchExp);
 	}
 
@@ -144,7 +142,7 @@ public class CG2JavaNameVisitor extends AbstractExtendingCGModelVisitor<@Nullabl
 	@Override
 	public @Nullable Object visitCGIterationCallExp(@NonNull CGIterationCallExp cgIterationCallExp) {
 		Iteration asIteration = ClassUtil.nonNullState(cgIterationCallExp.getReferredIteration());
-		IterationHelper iterationHelper = codeGenerator.getIterationHelper(asIteration);
+		IterationHelper iterationHelper = context.getIterationHelper(asIteration);
 		CGValuedElement cgSource = cgIterationCallExp.getSource();
 		NestedNameManager outerNameManager = getNameManager();
 		if (cgSource != null) {
@@ -154,10 +152,10 @@ public class CG2JavaNameVisitor extends AbstractExtendingCGModelVisitor<@Nullabl
 			cgSource.accept(this);
 		}
 		globalNameManager.declareScope(cgIterationCallExp, outerNameManager);	// result must be declared in outer namespace
-		outerNameManager.addNameVariant(cgIterationCallExp, codeGenerator.getBODY_NameVariant());
-		outerNameManager.addNameVariant(cgIterationCallExp, codeGenerator.getIMPL_NameVariant());
-		outerNameManager.addNameVariant(cgIterationCallExp, codeGenerator.getMGR_NameVariant());
-		outerNameManager.addNameVariant(cgIterationCallExp, codeGenerator.getTYPE_NameVariant());
+		outerNameManager.addNameVariant(cgIterationCallExp, context.getBODY_NameVariant());
+		outerNameManager.addNameVariant(cgIterationCallExp, context.getIMPL_NameVariant());
+		outerNameManager.addNameVariant(cgIterationCallExp, context.getMGR_NameVariant());
+		outerNameManager.addNameVariant(cgIterationCallExp, context.getTYPE_NameVariant());
 		NestedNameManager innerNameManager;
 		JavaLocalContext savedLocalContext = null;
 		if (iterationHelper == null) {					// No helper nests iterators/accumulators in a nested function.
@@ -168,7 +166,7 @@ public class CG2JavaNameVisitor extends AbstractExtendingCGModelVisitor<@Nullabl
 			innerNameManager = outerNameManager;
 		}
 		for (CGIterator cgIterator : CGUtil.getIterators(cgIterationCallExp)) {
-			innerNameManager.addNameVariant(cgIterator, codeGenerator.getITER_NameVariant());
+			innerNameManager.addNameVariant(cgIterator, context.getITER_NameVariant());
 			cgIterator.accept(this);
 		}
 		if (cgIterationCallExp instanceof CGBuiltInIterationCallExp) {

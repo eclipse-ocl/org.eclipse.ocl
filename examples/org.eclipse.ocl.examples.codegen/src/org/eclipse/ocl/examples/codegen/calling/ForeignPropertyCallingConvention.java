@@ -17,6 +17,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
+import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElementId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
@@ -150,6 +151,7 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 
 	@Override
 	public boolean generateJavaCall(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGNavigationCallExp cgPropertyCallExp) {
+		GlobalNameManager globalNameManager = cg2javaVisitor.getCodeGenerator().getGlobalNameManager();
 		CGForeignPropertyCallExp cgForeignPropertyCallExp = (CGForeignPropertyCallExp) cgPropertyCallExp;		// XXX never happens
 		CGForeignProperty cgProperty = (CGForeignProperty)CGUtil.getProperty(cgPropertyCallExp);
 		Property asProperty = CGUtil.getReferredProperty(cgPropertyCallExp);
@@ -198,7 +200,7 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 							js.appendValueName(cgContainingParameter);
 						}
 						else {
-							js.append(cg2javaVisitor.getCodeGenerator().getGlobalContext().getExecutorName());
+							js.append(globalNameManager.getExecutorName());
 						}
 					}
 					else if (asTypeId == TypeId.OCL_ANY) {
@@ -210,7 +212,7 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 							js.appendValueName(cgContainingParameter);
 						}
 						else {
-							js.append(cg2javaVisitor.getCodeGenerator().getGlobalContext().getSelfName());
+							js.append(globalNameManager.getSelfName());
 						}
 					}
 					else {

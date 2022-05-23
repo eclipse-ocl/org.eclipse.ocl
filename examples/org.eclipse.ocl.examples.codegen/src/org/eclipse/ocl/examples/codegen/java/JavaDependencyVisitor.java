@@ -12,7 +12,6 @@ package org.eclipse.ocl.examples.codegen.java;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.DependencyVisitor;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBoxExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreExp;
@@ -25,12 +24,10 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 
 public class JavaDependencyVisitor extends DependencyVisitor
 {
-	protected final @NonNull JavaGlobalContext globalContext;
 	protected final JavaLocalContext localContext;
 
-	public JavaDependencyVisitor(@NonNull CodeGenAnalyzer analyzer, @NonNull JavaGlobalContext globalContext, @NonNull GlobalPlace globalPlace) {
-        super(analyzer, globalPlace);
-        this.globalContext = globalContext;
+	public JavaDependencyVisitor(@NonNull JavaCodeGenerator codeGenerator, @NonNull GlobalPlace globalPlace) {
+        super(codeGenerator, globalPlace);
         this.localContext = null;
 	}
 
@@ -38,7 +35,7 @@ public class JavaDependencyVisitor extends DependencyVisitor
 	public @Nullable Object visitCGBoxExp(@NonNull CGBoxExp cgBoxExp) {
 		TypeId typeId = cgBoxExp.getSource().getASTypeId();
 		if (typeId != null) {
-			addDependency(cgBoxExp, context.getCGElementId(typeId));
+			addDependency(cgBoxExp, analyzer.getCGElementId(typeId));
 			typeId.accept(id2DependencyVisitor);						// FIXME this should be automatic (needed for OclAny testNotEqual)
 		}
 		return super.visitCGBoxExp(cgBoxExp);
@@ -48,7 +45,7 @@ public class JavaDependencyVisitor extends DependencyVisitor
 	public @Nullable Object visitCGEcoreExp(@NonNull CGEcoreExp cgEcoreExp) {
 		TypeId typeId = cgEcoreExp.getSource().getASTypeId();
 		if (typeId != null) {
-			addDependency(cgEcoreExp, context.getCGElementId(typeId));
+			addDependency(cgEcoreExp, analyzer.getCGElementId(typeId));
 			typeId.accept(id2DependencyVisitor);						// FIXME this should be automatic (needed for OclAny testNotEqual)
 		}
 		return super.visitCGEcoreExp(cgEcoreExp);

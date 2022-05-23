@@ -21,6 +21,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
+import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Operation;
@@ -57,14 +58,15 @@ public class JUnitOperationCallingConvention extends LibraryOperationCallingConv
 	@Override
 	public void createCGParameters(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL expressionInOCL) {
 		assert expressionInOCL != null;
+		JavaCodeGenerator codeGenerator = as2cgVisitor.getCodeGenerator();
 		Variable contextVariable = expressionInOCL.getOwnedContext();
 		if (contextVariable != null) {
 			contextVariable.setIsRequired(false); 				// May be null for test
 		}
 		JUnitLocalContext localContext = (JUnitLocalContext)as2cgVisitor.getLocalContext();
 		List<CGParameter> cgParameters = cgOperation.getParameters();
-		cgParameters.add(localContext.createExecutorParameter());
-		cgParameters.add(localContext.createTypeIdParameter());
+		cgParameters.add(codeGenerator.createExecutorParameter());
+		cgParameters.add(codeGenerator.createTypeIdParameter());
 		if (contextVariable != null) {
 			CGParameter cgContext = as2cgVisitor.getParameter(contextVariable, (String)null);			// getSelf ???
 			cgContext.setIsSelf(true);

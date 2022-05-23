@@ -12,7 +12,6 @@ package org.eclipse.ocl.examples.codegen.oclinjunit;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
-import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -24,8 +23,8 @@ import org.eclipse.ocl.pivot.ids.TypeId;
  */
 public final class JUnitAS2CGVisitor extends AS2CGVisitor
 {
-	public JUnitAS2CGVisitor(@NonNull CodeGenAnalyzer analyzer) {
-		super(analyzer);
+	public JUnitAS2CGVisitor(@NonNull JUnitCodeGenerator codeGenerator) {
+		super(codeGenerator);
 	}
 
 	@Override
@@ -33,7 +32,7 @@ public final class JUnitAS2CGVisitor extends AS2CGVisitor
 		Variable contextVariable = element.getOwnedContext();
 		if (contextVariable != null) {
 			CGVariable cgContext = getParameter(contextVariable, (String)null);
-			cgContext.setTypeId(context.getCGTypeId(TypeId.OCL_VOID));			// FIXME Java-specific
+			cgContext.setTypeId(analyzer.getCGTypeId(TypeId.OCL_VOID));			// FIXME Java-specific
 			cgContext.setNonInvalid();
 //			cgContext.setNonNull();
 		}

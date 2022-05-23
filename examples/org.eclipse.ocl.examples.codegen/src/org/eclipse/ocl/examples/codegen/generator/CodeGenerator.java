@@ -67,7 +67,7 @@ public interface CodeGenerator
 	@NonNull EnvironmentFactoryInternal getEnvironmentFactory();
 	@NonNull String getExternalClassName(org.eclipse.ocl.pivot.@NonNull Class asClass);
 	@NonNull GenModelHelper getGenModelHelper();
-	@NonNull GlobalContext getGlobalContext();
+//	@NonNull GlobalContext getGlobalContext();
 	@NonNull GlobalPlace getGlobalPlace();
 	@NonNull ImportNameManager getImportNameManager();
 	@Nullable IterationHelper getIterationHelper(@NonNull Iteration iteration);

@@ -117,7 +117,7 @@ public abstract class AutoCodeGenerator extends JavaCodeGenerator
 
 
 	protected @NonNull AS2CGVisitor createAS2CGVisitor() {
-		return new AS2CGVisitor(cgAnalyzer);
+		return new AS2CGVisitor(this);
 	}
 
 	@Override

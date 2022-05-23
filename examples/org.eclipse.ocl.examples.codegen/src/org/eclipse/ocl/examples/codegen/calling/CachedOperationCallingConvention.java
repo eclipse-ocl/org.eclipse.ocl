@@ -207,7 +207,7 @@ public class CachedOperationCallingConvention extends AbstractCachedOperationCal
 		js.append(" basicEvaluate(");
 		js.appendClassReference(true, Executor.class);
 		js.append(" ");
-		js.append(cg2javaVisitor.getCodeGenerator().getGlobalContext().getExecutorName());
+		js.append(cg2javaVisitor.getCodeGenerator().getGlobalNameManager().getExecutorName());
 		js.append(", ");
 		js.appendClassReference(true, TypedElement.class);
 		js.append(" ");

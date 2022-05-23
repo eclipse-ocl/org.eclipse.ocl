@@ -13,6 +13,7 @@ package org.eclipse.ocl.examples.codegen.calling;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
+import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorCompositionProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOppositePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorProperty;
@@ -22,7 +23,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.generator.CodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
-import org.eclipse.ocl.examples.codegen.java.JavaGlobalContext;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.java.JavaStream.SubStream;
 import org.eclipse.ocl.pivot.NavigationCallExp;
@@ -81,6 +81,7 @@ public class ExecutorCompositionPropertyCallingConvention extends AbstractProper
 
 	@Override
 	public boolean generateJavaCall(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGNavigationCallExp cgPropertyCallExp) {
+		GlobalNameManager globalNameManager = cg2javaVisitor.getCodeGenerator().getGlobalNameManager();
 		CGExecutorOppositePropertyCallExp cgExecutorOppositePropertyCallExp = (CGExecutorOppositePropertyCallExp)cgPropertyCallExp;
 		CGValuedElement source = cg2javaVisitor.getExpression(cgExecutorOppositePropertyCallExp.getSource());
 		//
@@ -88,7 +89,6 @@ public class ExecutorCompositionPropertyCallingConvention extends AbstractProper
 			return false;
 		}
 		//
-		final JavaGlobalContext globalContext = cg2javaVisitor.getCodeGenerator().getGlobalContext();
 		js.appendDeclaration(cgPropertyCallExp);
 		js.append(" = ");
 		SubStream castBody = new SubStream() {
@@ -96,10 +96,10 @@ public class ExecutorCompositionPropertyCallingConvention extends AbstractProper
 			public void append() {
 				js.appendReferenceTo(cgExecutorOppositePropertyCallExp.getExecutorProperty());
 				js.append(".");
-				js.append(globalContext.getEvaluateName());
+				js.append(globalNameManager.getEvaluateName());
 				js.append("(");
 				//		js.append(getValueName(localContext.getEvaluatorParameter(cgPropertyCallExp)));
-				js.append(globalContext.getExecutorName());
+				js.append(globalNameManager.getExecutorName());
 				js.append(", ");
 				js.appendIdReference(cgPropertyCallExp.getASTypeId());
 				js.append(", ");

@@ -174,7 +174,6 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		}
 	}
 
-	protected final @NonNull JavaGlobalContext globalContext;
 	protected final @NonNull GlobalNameManager globalNameManager;
 	protected final @NonNull GenModelHelper genModelHelper;
 	protected final @NonNull CodeGenAnalyzer analyzer;
@@ -190,7 +189,6 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 	public CG2JavaVisitor(@NonNull CG codeGenerator) {
 		super(codeGenerator);
-		this.globalContext = codeGenerator.getGlobalContext();
 		this.globalNameManager = codeGenerator.getGlobalNameManager();
 		this.genModelHelper = context.getGenModelHelper();
 		this.analyzer = context.getAnalyzer();
@@ -214,7 +212,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	}
 
 	protected @NonNull String addImport(@Nullable Boolean isRequired, @NonNull String className) {
-		return globalContext.addImport(isRequired, className);
+		return globalNameManager.addImport(isRequired, className);
 	}
 
 	/**
@@ -323,7 +321,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		boolean expectedIsNonNull = cgIterationCallExp.isNonNull();
 		final String astName = getResolvedName(cgIterationCallExp);
 		final String bodyName = getVariantResolvedName(cgIterationCallExp, context.getBODY_NameVariant());
-		final String executorName = globalContext.getExecutorName();
+		final String executorName = globalNameManager.getExecutorName();
 		final String implementationName = getVariantResolvedName(cgIterationCallExp, context.getIMPL_NameVariant());
 		final String managerName = getVariantResolvedName(cgIterationCallExp, context.getMGR_NameVariant());
 		final String staticTypeName = getVariantResolvedName(cgIterationCallExp, context.getTYPE_NameVariant());
@@ -406,7 +404,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		js.append("public ");
 		js.appendIsRequired(false);
 		js.append(" Object ");
-		js.append(globalContext.getEvaluateName());
+		js.append(globalNameManager.getEvaluateName());
 		js.append("(final ");
 		//		js.appendDeclaration(evaluatorParameter);
 		js.appendClassReference(true, Executor.class);
@@ -417,7 +415,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		//		js.appendDeclaration(localContext.getTypeIdParameter(cgIterateCallExp));
 		js.appendClassReference(true, TypeId.class);
 		js.append(" ");
-		js.append(globalContext.getTypeIdNameResolution().getResolvedName());
+		js.append(globalNameManager.getTypeIdNameResolution().getResolvedName());
 		if (useMultiple) {
 			js.append(", final ");
 			js.appendIsRequired(false);
@@ -500,7 +498,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		}
 		JavaLocalContext savedLocalContext = localContext;
 		try {
-			localContext = globalContext.findLocalContext(cgIterationCallExp);
+			localContext = globalNameManager.findLocalContext(cgIterationCallExp);
 			appendReturn(body);
 		}
 		finally {
@@ -692,7 +690,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	}
 
 	public @NonNull ImportNameManager getImportNameManager() {
-		return globalContext.getImportNameManager();
+		return context.getImportNameManager();
 	}
 
 	protected @Nullable Class<?> getLeastDerivedClass(Class<?> requiredClass, @NonNull String getAccessor) {
@@ -738,7 +736,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		NestedNameManager nameManager = localContext.getNameManager();
 		String variantResolvedName = nameManager.basicGetVariantResolvedName(cgElement, nameVariant);
 		if (variantResolvedName == null) {
-			nameManager = localContext.getGlobalContext().findLocalContext(cgElement).getNameManager();
+			nameManager = globalNameManager.findLocalContext(cgElement).getNameManager();
 			variantResolvedName = nameManager.basicGetVariantResolvedName(cgElement, nameVariant);
 			assert variantResolvedName != null;
 		}
@@ -746,7 +744,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	}
 
 //	protected @NonNull String getValueName(@NonNull CGValuedElement cgElement) {
-//		String valueName = localContext != null ? localContext.getValueName(cgElement) : globalContext.getValueName(cgElement);
+//		String valueName = localContext != null ? localContext.getValueName(cgElement) : context.getValueName(cgElement);
 //		return valueName;
 //	}
 
@@ -867,7 +865,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 	@Override
 	public @NonNull Boolean visitCGBodiedProperty(@NonNull CGBodiedProperty cgProperty) {
-		localContext = globalContext.findLocalContext(cgProperty);
+		localContext = globalNameManager.findLocalContext(cgProperty);
 		try {
 			return cgProperty.getCallingConvention().generateJavaDeclaration(this, js, cgProperty);
 		}
@@ -953,7 +951,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		js.append(";\n");
 		JavaLocalContext savedLocalContext = localContext;
 		try {
-			localContext = globalContext.findLocalContext(cgIterationCallExp);
+			localContext = globalNameManager.findLocalContext(cgIterationCallExp);
 			//
 			//	Declare loop head
 			//
@@ -1252,7 +1250,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 	@Override
 	public @NonNull Boolean visitCGConstraint(@NonNull CGConstraint cgConstraint) {
-		localContext = globalContext.findLocalContext(cgConstraint);
+		localContext = globalNameManager.findLocalContext(cgConstraint);
 		try {
 			Boolean flowContinues = super.visitCGConstraint(cgConstraint);
 			assert flowContinues != null;
@@ -1479,10 +1477,10 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			public void append() {
 				js.appendReferenceTo(cgOperationCallExp.getExecutorOperation());
 				js.append(".");
-				js.append(globalContext.getEvaluateName());
+				js.append(context.getEvaluateName());
 				js.append("(");
 				//		js.append(getValueName(localContext.getEvaluatorParameter(cgOperationCallExp)));
-				js.append(globalContext.getExecutorName());
+				js.append(context.getExecutorName());
 				js.append(", ");
 				js.appendIdReference(cgOperationCallExp.getASTypeId());
 				if (cgSource != null) {
@@ -1914,7 +1912,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 /*	@Override
 	public @NonNull Boolean visitCGLibraryOperation(@NonNull CGLibraryOperation cgOperation) {
-		localContext = globalContext.getLocalContext(cgOperation);
+		localContext = context.getLocalContext(cgOperation);
 		try {
 			List<CGParameter> cgParameters = cgOperation.getParameters();
 			String operationName = JavaConstants.FOREIGN_OPERATION_PREFIX + cgOperation.getName();
@@ -1931,7 +1929,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			js.append(" ");
 			js.append(operationName);
 			js.append(" ");
-			js.append(globalContext.getInstanceName());
+			js.append(context.getInstanceName());
 			js.append(" = new ");
 			js.append(operationName);
 			js.append("();\n");
@@ -2090,7 +2088,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 	@Override
 	public @NonNull Boolean visitCGOperation(@NonNull CGOperation cgOperation) {
-		localContext = globalContext.findLocalContext(cgOperation);
+		localContext = globalNameManager.findLocalContext(cgOperation);
 		try {
 			OperationCallingConvention callingConvention = cgOperation.getCallingConvention();
 			callingConvention.generateJavaDeclaration(this, js, cgOperation);

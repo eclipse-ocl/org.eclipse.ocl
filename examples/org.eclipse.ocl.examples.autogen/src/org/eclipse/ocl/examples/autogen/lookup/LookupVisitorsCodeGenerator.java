@@ -34,7 +34,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaPreVisitor;
-import org.eclipse.ocl.examples.codegen.java.JavaGlobalContext;
 import org.eclipse.ocl.examples.codegen.library.NativeVisitorOperation;
 import org.eclipse.ocl.examples.codegen.utilities.RereferencingCopier;
 import org.eclipse.ocl.pivot.CompleteClass;
@@ -81,7 +80,6 @@ public abstract class LookupVisitorsCodeGenerator extends AutoVisitorsCodeGenera
 	protected final @NonNull String packageName;
 	protected final @NonNull String visitorClassName;
 
-	protected final @NonNull JavaGlobalContext classContext;
 	protected final @NonNull AS2CGVisitor as2cgVisitor;
 
 	protected final @NonNull String envOperationName;
@@ -114,7 +112,6 @@ public abstract class LookupVisitorsCodeGenerator extends AutoVisitorsCodeGenera
 		this.packageName = getSourcePackageName();
 		this.visitorClassName = getLookupVisitorClassName(getProjectPrefix());
 
-		this.classContext = new JavaGlobalContext(this);
 		this.as2cgVisitor = createAS2CGVisitor();
 		//
 		//	Find expected AS elements
@@ -139,9 +136,8 @@ public abstract class LookupVisitorsCodeGenerator extends AutoVisitorsCodeGenera
 		//
 		//	Create new AS Visitor helper properties
 		//
-		JavaGlobalContext globalContext = getGlobalContext();
-		this.asEvaluatorProperty = createNativeProperty(globalContext.getExecutorName(), Executor.class, true, true);
-		this.asIdResolverProperty = createNativeProperty(globalContext.getIdResolverName(), IdResolver.class, true, true);
+		this.asEvaluatorProperty = createNativeProperty(globalNameManager.getExecutorName(), Executor.class, true, true);
+		this.asIdResolverProperty = createNativeProperty(globalNameManager.getIdResolverName(), IdResolver.class, true, true);
 		List<Property> asVisitorProperties = asVisitorClass.getOwnedProperties();
 		asVisitorProperties.add(asEvaluatorProperty);
 		asVisitorProperties.add(asIdResolverProperty);
@@ -189,7 +185,7 @@ public abstract class LookupVisitorsCodeGenerator extends AutoVisitorsCodeGenera
 
 	@Override
 	public @NonNull CG2JavaPreVisitor createCG2JavaPreVisitor() {
-		return new AutoCG2JavaPreVisitor(classContext);
+		return new AutoCG2JavaPreVisitor(this);
 	}
 
 	/**
@@ -314,11 +310,6 @@ public abstract class LookupVisitorsCodeGenerator extends AutoVisitorsCodeGenera
 
 	public @NonNull CGValuedElement getEvaluatorVariable() {
 		return ClassUtil.nonNullState(cgEvaluatorVariable);
-	}
-
-	@Override
-	public @NonNull JavaGlobalContext getGlobalContext() {
-		return classContext;
 	}
 
 	@Override

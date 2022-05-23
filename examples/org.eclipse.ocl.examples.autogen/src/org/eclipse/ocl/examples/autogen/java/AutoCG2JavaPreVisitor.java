@@ -12,12 +12,16 @@ package org.eclipse.ocl.examples.autogen.java;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaPreVisitor;
-import org.eclipse.ocl.examples.codegen.java.JavaGlobalContext;
 
 public class AutoCG2JavaPreVisitor extends CG2JavaPreVisitor
 {
-	public AutoCG2JavaPreVisitor(@NonNull JavaGlobalContext javaContext) {
-		super(javaContext);
+	public AutoCG2JavaPreVisitor(@NonNull AutoCodeGenerator codeGenerator) {
+		super(codeGenerator);
+	}
+
+	@Override
+	public @NonNull AutoCodeGenerator getCodeGenerator() {
+		return (@NonNull AutoCodeGenerator)context;
 	}
 
 //	@Override

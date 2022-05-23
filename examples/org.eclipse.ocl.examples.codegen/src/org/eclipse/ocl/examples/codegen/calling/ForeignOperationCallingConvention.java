@@ -16,6 +16,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
+import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOperation;
@@ -32,7 +33,6 @@ import org.eclipse.ocl.examples.codegen.generator.GenModelHelper;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
-import org.eclipse.ocl.examples.codegen.java.JavaGlobalContext;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.java.JavaStream.SubStream;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
@@ -165,7 +165,7 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 	 */
 	protected void generateJavaClass(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
 		JavaCodeGenerator codeGenerator = cg2javaVisitor.getCodeGenerator();
-		JavaGlobalContext globalContext = codeGenerator.getGlobalContext();
+		GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
 		Iterable<@NonNull CGParameter> cgParameters = CGUtil.getParameters(cgOperation);
 		String operationName = JavaConstants.EXTERNAL_OPERATION_PREFIX + cgOperation.getName();
 		assert operationName != null;
@@ -181,7 +181,7 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 		js.append(" ");
 		js.append(operationName);
 		js.append(" ");
-		js.append(globalContext.getInstanceName());
+		js.append(globalNameManager.getInstanceName());
 		js.append(" = new ");
 		js.append(operationName);
 		js.append("();\n");
@@ -194,7 +194,7 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 		js.append(" ");
 		js.appendClassReference(cgOperation.isRequired() ? true : null, cgOperation);
 		js.append(" ");
-		js.append(globalContext.getEvaluateName());
+		js.append(globalNameManager.getEvaluateName());
 		js.append("(");
 		js.appendClassReference(true, Executor.class);
 		js.append(" executor, ");

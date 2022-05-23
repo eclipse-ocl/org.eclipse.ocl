@@ -49,6 +49,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTupleExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
@@ -257,11 +258,11 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	}
 
 	public @NonNull CG2JavaNameVisitor createCG2JavaNameVisitor() {
-		return new CG2JavaNameVisitor(getGlobalContext());
+		return new CG2JavaNameVisitor(this);
 	}
 
 	public @NonNull CG2JavaPreVisitor createCG2JavaPreVisitor() {
-		return new CG2JavaPreVisitor(getGlobalContext());
+		return new CG2JavaPreVisitor(this);
 	}
 
 	protected void createConstrainedOperations(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGClass cgClass) {
@@ -277,7 +278,17 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 
 	@Override
 	public @NonNull DependencyVisitor createDependencyVisitor() {
-		return new JavaDependencyVisitor(getAnalyzer(), getGlobalContext(), getGlobalPlace());
+		return new JavaDependencyVisitor(this, getGlobalPlace());
+	}
+
+	public @NonNull CGParameter createExecutorParameter() {
+	//	assert executorIsParameter;
+		NameResolution executorName = globalNameManager.getExecutorNameResolution();
+		CGParameter executorParameter = getAnalyzer().createCGParameter(executorName, getAnalyzer().getCGTypeId(JavaConstants.EXECUTOR_TYPE_ID), true);
+	//	executorParameter.setValueName(executorName);
+		executorParameter.setNonInvalid();
+		executorParameter.setNonNull();
+		return executorParameter;
 	}
 
 	@Override
@@ -292,7 +303,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 
 	@Override
 	protected @NonNull GlobalNameManager createGlobalNameManager() {
-		return new GlobalNameManager(createNameManagerHelper());
+		return new GlobalNameManager(this, createNameManagerHelper());
 	}
 
 	protected @NonNull Id2EClassVisitor createId2EClassVisitor() {
@@ -313,7 +324,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	}
 
 	public @NonNull JavaLocalContext createLocalContext(@Nullable JavaLocalContext outerContext, @NonNull CGNamedElement cgNamedElement, @NonNull NamedElement asNamedElement) {
-		return new JavaLocalContext(getGlobalContext(), outerContext, cgNamedElement, asNamedElement);
+		return new JavaLocalContext(this, outerContext, cgNamedElement, asNamedElement);
 	}
 
 	protected @NonNull NameManagerHelper createNameManagerHelper() {
@@ -323,6 +334,16 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	@Override
 	public @NonNull ReferencesVisitor createReferencesVisitor() {
 		return ReferencesVisitor.INSTANCE;
+	}
+
+//	@Deprecated /* @deprecated no longer used */
+	public @NonNull CGParameter createTypeIdParameter() {
+		NameResolution typeIdNameResolution = globalNameManager.getTypeIdNameResolution();
+		CGParameter typeIdParameter = getAnalyzer().createCGParameter(typeIdNameResolution, getAnalyzer().getCGTypeId(JavaConstants.TYPE_ID_TYPE_ID), true);
+	//	typeIdParameter.setValueName(typeIdName);
+		typeIdParameter.setNonInvalid();
+		typeIdParameter.setNonNull();
+		return typeIdParameter;
 	}
 
 	/**
@@ -442,9 +463,6 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		s.appendAndEncodeQualifiedName(asClass);
 		return s.toString();
 	}
-
-	@Override
-	public abstract @NonNull JavaGlobalContext getGlobalContext();
 
 	@Override
 	public @NonNull GlobalPlace getGlobalPlace() {
@@ -590,7 +608,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	public @NonNull NameResolution getNameResolution(@NonNull CGValuedElement cgElement) {
 		NameResolution nameResolution = cgElement.basicGetNameResolution(); //.getNameVariant(guardedNameVariant);
 		if (nameResolution == null) {
-			NestedNameManager nameManager = getGlobalContext().findLocalContext(cgElement).getNameManager();
+			NestedNameManager nameManager = globalNameManager.findLocalContext(cgElement).getNameManager();
 			nameResolution = nameManager.declareLazyName(cgElement);
 		}
 		return nameResolution;
@@ -764,7 +782,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	 */
 	public @Nullable List<@NonNull CGValuedElement> prepareGlobals() {
 		DependencyVisitor dependencyVisitor = createDependencyVisitor();
-		Collection<@NonNull CGValuedElement> globals = getGlobalContext().getGlobals();
+		Collection<@NonNull CGValuedElement> globals = globalNameManager.getGlobals();
 		for (@NonNull CGValuedElement cgGlobal : globals) {
 			assert cgGlobal.isGlobal();
 		}
@@ -827,7 +845,6 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 			NameResolution nameResolution = cgValuedElement2.basicGetNameResolution();
 		//	assert (nameResolution == null) || debugCheckNameResolution(cgValuedElement2, nameResolution);
 		}
-		JavaGlobalContext globalContext = getGlobalContext();
 		for (EObject eObject : cgElement.eContents()) {					// XXX Surely preorder - no post order to satisfy bottom up dependency evaluation
 			if (eObject instanceof CGElement) {
 				CGElement cgChild = (CGElement)eObject;
@@ -836,7 +853,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 					CGVariable cgVariable = (@NonNull CGVariable)cgElement;
 					NameResolution nameResolution = cgVariable.basicGetNameResolution();
 					if (nameResolution == null) {
-						nameResolution = getGlobalContext().findLocalContext(cgVariable).getNameManager().declareLazyName(cgVariable);
+						nameResolution = globalNameManager.findLocalContext(cgVariable).getNameManager().declareLazyName(cgVariable);
 					}
 					visitInPostOrder2(cgChild, nameResolution);
 				}
@@ -866,7 +883,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 					//	assert false;			// XXX wip
 						NameManager nameManager = globalNameManager.bascGetScope(cgValuedElement2);
 						if (nameManager == null) {
-							JavaLocalContext localContext = globalContext.basicFindLocalContext(cgValuedElement2);
+							JavaLocalContext localContext = globalNameManager.basicFindLocalContext(cgValuedElement2);
 							nameManager = (localContext != null) && !cgValuedElement2.isGlobal() ? localContext.getNameManager() : globalNameManager;
 						}
 						nameResolution = nameManager.declareLazyName(cgValuedElement2);
@@ -891,7 +908,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 					if (eObject instanceof CGValuedElement) {
 						CGValuedElement cgValuedElement = (CGValuedElement)eObject;
 						if ((cgValuedElement.basicGetNameResolution() == null) && !cgValuedElement.isInlined()) {
-							JavaLocalContext localContext = globalContext.basicFindLocalContext(cgValuedElement);
+							JavaLocalContext localContext = globalNameManager.basicFindLocalContext(cgValuedElement);
 							NameManager nameManager = localContext != null ? localContext.getNameManager() : globalNameManager;
 							nameManager.declareLazyName(cgValuedElement);
 						}

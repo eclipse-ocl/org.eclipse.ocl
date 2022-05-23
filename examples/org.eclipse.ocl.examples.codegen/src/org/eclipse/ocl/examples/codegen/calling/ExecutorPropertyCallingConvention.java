@@ -17,6 +17,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
+import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElementId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorNavigationProperty;
@@ -33,7 +34,6 @@ import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
-import org.eclipse.ocl.examples.codegen.java.JavaGlobalContext;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.NavigationCallExp;
@@ -101,13 +101,13 @@ public class ExecutorPropertyCallingConvention extends AbstractPropertyCallingCo
 		Boolean ecoreIsRequired = Boolean.FALSE;						// CP properties evaluate is nullable -- FIXME compute rather than assume
 		//	boolean isPrimitive = js.isPrimitive(cgPropertyCallExp);
 		JavaCodeGenerator codeGenerator = cg2javaVisitor.getCodeGenerator();
+		GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
 		Boolean isRequired = codeGenerator.isRequired(cgExecutorPropertyCallExp);
 		if ((isRequired == Boolean.TRUE) && (ecoreIsRequired != Boolean.TRUE)) {
 			js.appendSuppressWarningsNull(true);
 		}
 		js.appendDeclaration(cgExecutorPropertyCallExp);
 		js.append(" = ");
-		final JavaGlobalContext globalContext = codeGenerator.getGlobalContext();
 		TypeDescriptor typeDescriptor = codeGenerator.getTypeDescriptor(cgExecutorPropertyCallExp);
 		JavaStream.SubStream castBody = new JavaStream.SubStream() {
 			@Override
@@ -119,9 +119,9 @@ public class ExecutorPropertyCallingConvention extends AbstractPropertyCallingCo
 					js.appendReferenceTo(cgExecutorPropertyCallExp.getExecutorProperty());
 				}
 				js.append(".");
-				js.append(globalContext.getEvaluateName());
+				js.append(globalNameManager.getEvaluateName());
 				js.append("(");
-				js.append(globalContext.getExecutorName());
+				js.append(globalNameManager.getExecutorName());
 				js.append(", ");
 				js.appendIdReference(cgExecutorPropertyCallExp.getASTypeId());
 				js.append(", ");

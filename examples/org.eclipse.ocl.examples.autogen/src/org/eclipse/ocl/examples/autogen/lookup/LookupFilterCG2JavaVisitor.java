@@ -49,7 +49,7 @@ public class LookupFilterCG2JavaVisitor extends AutoCG2JavaVisitor<@NonNull Look
 		js.append("protected final ");
 		js.appendClassReference(true, EvaluationCache.class);
 		js.append(" ");
-		js.append(globalContext.getEvaluationCacheName());
+		js.append(globalNameManager.getEvaluationCacheName());
 		js.append(";\n");
 		return super.doClassFields(cgClass, false);
 	}
@@ -98,7 +98,7 @@ public class LookupFilterCG2JavaVisitor extends AutoCG2JavaVisitor<@NonNull Look
 
 	@Override
 	protected void doConstructor(@NonNull CGClass cgClass) {
-		String executorName = globalContext.getExecutorName();
+		String executorName = globalNameManager.getExecutorName();
 		js.append("public " + cgClass.getName() + "(");
 		js.appendClassReference(true, Executor.class);
 		js.append(" "+ executorName);
@@ -113,9 +113,9 @@ public class LookupFilterCG2JavaVisitor extends AutoCG2JavaVisitor<@NonNull Look
 
 		addFilterPropsInit(cgClass);
 		js.append("this." + executorName + " = " + executorName + ";\n");
-		js.append("this." + globalContext.getIdResolverName() + " = " + executorName + ".getIdResolver();\n");
+		js.append("this." + globalNameManager.getIdResolverName() + " = " + executorName + ".getIdResolver();\n");
 		js.append("this.");
-		js.append(globalContext.getEvaluationCacheName());
+		js.append(globalNameManager.getEvaluationCacheName());
 		js.append(" = ((");
 		js.appendClassReference(null, ExecutorInternalExtension.class);
 		js.append(")" + executorName + ").getEvaluationCache();\n");

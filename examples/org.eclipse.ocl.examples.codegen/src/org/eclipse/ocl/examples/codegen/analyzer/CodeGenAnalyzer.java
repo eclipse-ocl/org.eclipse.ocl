@@ -53,12 +53,11 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGUnlimited;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
-import org.eclipse.ocl.examples.codegen.generator.CodeGenerator;
 import org.eclipse.ocl.examples.codegen.generator.GenModelHelper;
 import org.eclipse.ocl.examples.codegen.generator.LocalContext;
 import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
+import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
-import org.eclipse.ocl.examples.codegen.java.JavaGlobalContext;
 import org.eclipse.ocl.examples.codegen.java.JavaLanguageSupport;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.CompleteClass;
@@ -113,7 +112,7 @@ import org.eclipse.ocl.pivot.utilities.UniqueList;
  */
 public class CodeGenAnalyzer
 {
-	protected final @NonNull CodeGenerator codeGenerator;
+	protected final @NonNull JavaCodeGenerator codeGenerator;
 	protected final @NonNull GlobalNameManager globalNameManager;
 	private final @NonNull Map<@NonNull ElementId, @NonNull CGElementId> cgElementIds = new HashMap<>();
 	protected final @NonNull CGBoolean cgFalse;
@@ -160,7 +159,7 @@ public class CodeGenAnalyzer
 	 */
 	private final @NonNull Map<@NonNull Operation, @NonNull CGOperation> asVirtualOperation2cgOperation = new HashMap<>();
 
-	public CodeGenAnalyzer(@NonNull CodeGenerator codeGenerator) {
+	public CodeGenAnalyzer(@NonNull JavaCodeGenerator codeGenerator) {
 		this.codeGenerator = codeGenerator;
 		this.globalNameManager = codeGenerator.getGlobalNameManager();
 		this.cgFalse = createCGBoolean(false);
@@ -208,7 +207,7 @@ public class CodeGenAnalyzer
 	}
 
 	public void addGlobal(@NonNull CGValuedElement cgGlobal) {
-		codeGenerator.getGlobalContext().addGlobal(cgGlobal);
+		globalNameManager.addGlobal(cgGlobal);
 	}
 
 	public void addVirtualCGOperation(@NonNull Operation asOperation, @NonNull CGCachedOperation cgOperation) {
@@ -628,7 +627,7 @@ public class CodeGenAnalyzer
 		return cgUnlimited2;
 	}
 
-	public @NonNull CodeGenerator getCodeGenerator() {
+	public @NonNull JavaCodeGenerator getCodeGenerator() {
 		return codeGenerator;
 	}
 
@@ -667,8 +666,7 @@ public class CodeGenAnalyzer
 			cgNativeOperation.setRequired(asOperation.isIsRequired());
 			cgNativeOperation.setCallingConvention(callingConvention);
 			cgNativeOperation.setAst(asOperation);
-			JavaGlobalContext globalContext = (JavaGlobalContext)codeGenerator.getGlobalContext();
-			LocalContext localContext = globalContext.initLocalContext(null, cgNativeOperation, asOperation);
+			LocalContext localContext = globalNameManager.initLocalContext(null, cgNativeOperation, asOperation);
 			List<CGParameter> cgParameters = cgNativeOperation.getParameters();
 			NestedNameManager nameManager = localContext.getNameManager();
 			for (org.eclipse.ocl.pivot.Parameter asParameter : asOperation.getOwnedParameters()) {

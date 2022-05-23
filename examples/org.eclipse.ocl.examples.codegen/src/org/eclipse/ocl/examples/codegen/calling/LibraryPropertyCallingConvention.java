@@ -15,6 +15,7 @@ import java.lang.reflect.Method;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
+import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
@@ -24,7 +25,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.generator.CodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
-import org.eclipse.ocl.examples.codegen.java.JavaGlobalContext;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.java.JavaStream.SubStream;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
@@ -127,6 +127,7 @@ public class LibraryPropertyCallingConvention extends AbstractPropertyCallingCon
 	@Override
 	public boolean generateJavaCall(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGNavigationCallExp cgPropertyCallExp) {
 		JavaCodeGenerator codeGenerator = cg2javaVisitor.getCodeGenerator();
+		GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
 		CGLibraryPropertyCallExp cgLibraryPropertyCallExp = (CGLibraryPropertyCallExp) cgPropertyCallExp;
 		CGValuedElement source = cg2javaVisitor.getExpression(cgPropertyCallExp.getSource());
 		LibraryProperty libraryProperty = ClassUtil.nonNullState(cgLibraryPropertyCallExp.getLibraryProperty());
@@ -148,20 +149,19 @@ public class LibraryPropertyCallingConvention extends AbstractPropertyCallingCon
 		//			js.appendClassReference(null, ClassUtil.class);
 		//			js.append(".nonNullState(");
 		//		}
-		final JavaGlobalContext globalContext = codeGenerator.getGlobalContext();
 		SubStream castBody = new SubStream() {
 			@Override
 			public void append() {
 				js.appendClassReference(null, libraryProperty.getClass());
 				//		CGOperation cgOperation = ClassUtil.nonNullState(CGUtils.getContainingOperation(cgPropertyCallExp));
 				js.append(".");
-				js.append(globalContext.getInstanceName());
+				js.append(globalNameManager.getInstanceName());
 				js.append(".");
-				js.append(globalContext.getEvaluateName());
+				js.append(globalNameManager.getEvaluateName());
 				js.append("(");
 				//		if (!(libraryOperation instanceof LibrarySimpleOperation)) {
 				//			js.append(getValueName(localContext.getEvaluatorParameter(cgPropertyCallExp)));
-				js.append(globalContext.getExecutorName());
+				js.append(globalNameManager.getExecutorName());
 				js.append(", ");
 				//			if (!(libraryProperty instanceof LibraryUntypedOperation)) {
 				//				CGTypeVariable typeVariable = localContext.getTypeVariable(resultType);

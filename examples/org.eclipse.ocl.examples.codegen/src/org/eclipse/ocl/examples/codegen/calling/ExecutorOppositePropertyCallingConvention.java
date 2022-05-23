@@ -14,6 +14,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
+import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOppositeProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOppositePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorProperty;
@@ -27,7 +28,6 @@ import org.eclipse.ocl.examples.codegen.generator.CodeGenerator;
 import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
-import org.eclipse.ocl.examples.codegen.java.JavaGlobalContext;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.java.JavaStream.SubStream;
 import org.eclipse.ocl.pivot.NavigationCallExp;
@@ -104,23 +104,23 @@ public class ExecutorOppositePropertyCallingConvention extends AbstractPropertyC
 		Boolean ecoreIsRequired = Boolean.FALSE;						// CP properties evaluate is nullable -- FIXME compute rather than assume
 		//	boolean isPrimitive = js.isPrimitive(cgPropertyCallExp);
 		JavaCodeGenerator codeGenerator = cg2javaVisitor.getCodeGenerator();
+		GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
 		Boolean isRequired = codeGenerator.isRequired(cgPropertyCallExp);
 		if ((isRequired == Boolean.TRUE) && (ecoreIsRequired != Boolean.TRUE)) {
 			js.appendSuppressWarningsNull(true);
 		}
 		js.appendDeclaration(cgPropertyCallExp);
 		js.append(" = ");
-		final JavaGlobalContext globalContext = codeGenerator.getGlobalContext();
 		TypeDescriptor typeDescriptor = codeGenerator.getTypeDescriptor(cgPropertyCallExp);
 		JavaStream.SubStream castBody = new JavaStream.SubStream() {
 			@Override
 			public void append() {
 				js.appendReferenceTo(cgPropertyCallExp.getExecutorProperty());
 				js.append(".");
-				js.append(globalContext.getEvaluateName());
+				js.append(globalNameManager.getEvaluateName());
 				js.append("(");
 				//		js.append(getValueName(localContext.getEvaluatorParameter(cgPropertyCallExp)));
-				js.append(globalContext.getExecutorName());
+				js.append(globalNameManager.getExecutorName());
 				js.append(", ");
 				js.appendIdReference(cgPropertyCallExp.getASTypeId());
 				js.append(", ");
@@ -150,13 +150,13 @@ public class ExecutorOppositePropertyCallingConvention extends AbstractPropertyC
 	}
 
 	protected boolean generateOppositeJavaCall(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGExecutorOppositePropertyCallExp cgPropertyCallExp) {
+		GlobalNameManager globalNameManager = cg2javaVisitor.getCodeGenerator().getGlobalNameManager();
 		CGValuedElement source = cg2javaVisitor.getExpression(cgPropertyCallExp.getSource());
 		//
 		if (!js.appendLocalStatements(source)) {
 			return false;
 		}
 		//
-		final JavaGlobalContext globalContext = cg2javaVisitor.getCodeGenerator().getGlobalContext();
 		js.appendDeclaration(cgPropertyCallExp);
 		js.append(" = ");
 		SubStream castBody = new SubStream() {
@@ -164,10 +164,10 @@ public class ExecutorOppositePropertyCallingConvention extends AbstractPropertyC
 			public void append() {
 				js.appendReferenceTo(cgPropertyCallExp.getExecutorProperty());
 				js.append(".");
-				js.append(globalContext.getEvaluateName());
+				js.append(globalNameManager.getEvaluateName());
 				js.append("(");
 				//		js.append(getValueName(localContext.getEvaluatorParameter(cgPropertyCallExp)));
-				js.append(globalContext.getExecutorName());
+				js.append(globalNameManager.getExecutorName());
 				js.append(", ");
 				js.appendIdReference(cgPropertyCallExp.getASTypeId());
 				js.append(", ");

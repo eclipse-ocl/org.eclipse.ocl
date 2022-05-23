@@ -19,6 +19,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
+import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperationCallExp;
@@ -28,8 +29,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
-import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
-import org.eclipse.ocl.examples.codegen.java.JavaGlobalContext;
 import org.eclipse.ocl.examples.codegen.java.JavaLocalContext;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.java.operation.LibraryOperationHandler;
@@ -122,7 +121,7 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 		List<CGParameter> cgParameters = cgOperation.getParameters();
 		LibraryOperation libraryOperation = (LibraryOperation)as2cgVisitor.getMetamodelManager().getImplementation(asOperation);
 		Method jMethod = libraryOperation.getEvaluateMethod(asOperation);
-		cgOperation.setRequired(((JavaCodeGenerator)as2cgVisitor.getCodeGenerator()).getIsNonNull(jMethod) == Boolean.TRUE);
+		cgOperation.setRequired(as2cgVisitor.getCodeGenerator().getIsNonNull(jMethod) == Boolean.TRUE);
 		List<@NonNull Parameter> asParameters = ClassUtil.nullFree(asOperation.getOwnedParameters());
 		int i = asOperation.isIsStatic() ? 0 : -1;
 		if (Modifier.isStatic(jMethod.getModifiers())) {
@@ -247,12 +246,12 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 		{
 			@Override
 			public void append() {
-				JavaGlobalContext globalContext = cg2javaVisitor.getCodeGenerator().getGlobalContext();
+				GlobalNameManager globalNameManager = cg2javaVisitor.getCodeGenerator().getGlobalNameManager();
 				js.appendClassReference(null, libraryOperation.getClass());
 				js.append(".");
-				js.append(globalContext.getInstanceName());
+				js.append(globalNameManager.getInstanceName());
 				js.append(".");
-				js.append(globalContext.getEvaluateName());
+				js.append(globalNameManager.getEvaluateName());
 				js.append("(");
 				boolean needsComma = false;
 				for (@NonNull CGValuedElement cgArgument : cgArguments) {

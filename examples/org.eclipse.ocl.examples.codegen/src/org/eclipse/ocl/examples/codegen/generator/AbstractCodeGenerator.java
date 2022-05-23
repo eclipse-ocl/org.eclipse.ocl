@@ -366,10 +366,9 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 	public @NonNull GlobalNameManager getGlobalNameManager() {
 		return globalNameManager;
 	}
-
 	@Override
 	public @NonNull ImportNameManager getImportNameManager() {
-		return getGlobalContext().getImportNameManager();
+		return globalNameManager.getImportNameManager();
 	}
 
 /*	@Override

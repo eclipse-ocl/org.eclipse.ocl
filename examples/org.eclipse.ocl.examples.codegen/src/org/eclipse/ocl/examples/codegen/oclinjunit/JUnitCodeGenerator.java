@@ -29,7 +29,6 @@ import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
 import org.eclipse.ocl.examples.codegen.java.ImportUtils;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
-import org.eclipse.ocl.examples.codegen.java.JavaGlobalContext;
 import org.eclipse.ocl.examples.codegen.java.JavaImportNameManager;
 import org.eclipse.ocl.examples.codegen.java.JavaLocalContext;
 import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreTablesUtils.CodeGenString;
@@ -63,7 +62,6 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		}
 	}
 
-	protected final @NonNull JavaGlobalContext globalContext = new JavaGlobalContext(this);
 	protected final @NonNull CodeGenAnalyzer cgAnalyzer;
 
 	protected JUnitCodeGenerator(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable GenModel genModel, boolean useNullAnnotations) {
@@ -74,7 +72,7 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 
 	protected @NonNull CGPackage createCGPackage(@NonNull ExpressionInOCL expInOcl,
 			@NonNull String packageName, @NonNull String className) {
-		NameResolution evaluateNameResolution = globalContext.getEvaluateNameResolution();
+		NameResolution evaluateNameResolution = globalNameManager.getEvaluateNameResolution();
 	//	NameResolution typeIdNameResolution = globalContext.getTypeIdNameResolution();
 		CGPackage cgPackage = CGModelFactory.eINSTANCE.createCGPackage();
 		cgPackage.setName(packageName);
@@ -88,7 +86,7 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		if (contextVariable != null) {
 			contextVariable.setIsRequired(false); // May be null for test
 		}
-		AS2CGVisitor as2cgVisitor = new JUnitAS2CGVisitor(cgAnalyzer);
+		AS2CGVisitor as2cgVisitor = new JUnitAS2CGVisitor(this);
 		CGOperation cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
 		JUnitOperationCallingConvention junitCallingConvention = JUnitOperationCallingConvention.INSTANCE;
 		//	junitCallingConvention.createCGOperationWithoutBody(as2cgVisitor, asOperation);		// no root asOperation
@@ -122,7 +120,7 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 
 	@Override
 	public @NonNull JavaLocalContext createLocalContext(@Nullable JavaLocalContext outerContext, @NonNull CGNamedElement cgNamedElement, @NonNull NamedElement asNamedElement) {
-		return new JUnitLocalContext(getGlobalContext(), outerContext, cgNamedElement, asNamedElement);
+		return new JUnitLocalContext(this, outerContext, cgNamedElement, asNamedElement);
 	}
 
 	protected @NonNull String generate(@NonNull ExpressionInOCL expInOcl, @NonNull String packageName, @NonNull String className) {
@@ -145,11 +143,6 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 	@Override
 	public @NonNull CodeGenAnalyzer getAnalyzer() {
 		return cgAnalyzer;
-	}
-
-	@Override
-	public @NonNull JavaGlobalContext getGlobalContext() {
-		return globalContext;
 	}
 
 	@Override

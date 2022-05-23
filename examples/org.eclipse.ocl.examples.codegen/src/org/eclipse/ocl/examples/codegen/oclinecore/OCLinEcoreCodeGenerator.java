@@ -45,7 +45,6 @@ import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
 import org.eclipse.ocl.examples.codegen.java.ImportUtils;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
-import org.eclipse.ocl.examples.codegen.java.JavaGlobalContext;
 import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreTablesUtils.CodeGenString;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.AnyType;
@@ -503,7 +502,6 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		generator.generate(uri2body, constantsTexts, foreignFeaures);
 	}
 
-	protected final @NonNull JavaGlobalContext globalContext;
 	protected final @NonNull StandardLibraryInternal standardLibrary;
 	protected final @NonNull CodeGenAnalyzer cgAnalyzer;
 	protected final @NonNull GenPackage genPackage;
@@ -523,7 +521,6 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		getOptions().setUseNullAnnotations(OCLinEcoreGenModelGeneratorAdapter.useNullAnnotations(genModel));
 		this.cgAnalyzer = new CodeGenAnalyzer(this);
 		this.genPackage = genPackage;
-		this.globalContext = new JavaGlobalContext(this);
 		asHelper = new PivotHelper(environmentFactory);
 		this.oclAnyType = standardLibrary.getOclAnyType();
 		this.booleanType = standardLibrary.getBooleanType();
@@ -555,7 +552,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 			EPackage ecorePackage = genPackage.getEcorePackage();
 			org.eclipse.ocl.pivot.Package asPackage = metamodelManager.getASOfEcore(org.eclipse.ocl.pivot.Package.class, ecorePackage);
 			assert asPackage != null;
-			AS2CGVisitor as2cgVisitor = new OCLinEcoreAS2CGVisitor(cgAnalyzer, globalContext);
+			AS2CGVisitor as2cgVisitor = new OCLinEcoreAS2CGVisitor(this);
 			CGPackage cgPackage = (CGPackage) ClassUtil.nonNullState(asPackage.accept(as2cgVisitor));
 			as2cgVisitor.freeze();
 			optimize(cgPackage);
@@ -603,12 +600,6 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 	public @NonNull CodeGenAnalyzer getAnalyzer() {
 		return cgAnalyzer;
 	}
-
-	@Override
-	public @NonNull JavaGlobalContext getGlobalContext() {
-		return globalContext;
-	}
-
 	@Override
 	public @NonNull String getQualifiedForeignClassName(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		CodeGenString s = new CodeGenString(environmentFactory.getMetamodelManager(), false);
