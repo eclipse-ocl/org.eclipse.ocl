@@ -13,10 +13,12 @@ package org.eclipse.ocl.examples.codegen.calling;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
+import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIsEqualExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIsInvalidExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIsUndefinedExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
@@ -60,14 +62,16 @@ public class BuiltInOperationCallingConvention extends AbstractOperationCallingC
 	}
 
 	@Override
-	public @NonNull CGOperation createCGOperationWithoutBody(@NonNull AS2CGVisitor as2cgVisitor, @Nullable Type asSourceType, @NonNull Operation asOperation) {
+	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @Nullable Type asSourceType, @NonNull Operation asOperation) {
 //		return fallbackCreateCGOperationWithoutBody(as2cgVisitor, asOperation);
- 		PivotMetamodelManager metamodelManager = as2cgVisitor.getMetamodelManager();
+ 		PivotMetamodelManager metamodelManager = analyzer.getMetamodelManager();
 		LibraryFeature libraryOperation = metamodelManager.getImplementation(asOperation);
 		assert !(libraryOperation instanceof EObjectOperation);
 		assert !(libraryOperation instanceof ForeignOperation);
 		assert !(libraryOperation instanceof ConstrainedOperation);
-		return CGModelFactory.eINSTANCE.createCGLibraryOperation();
+		CGLibraryOperation cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
+		analyzer.installOperation(asOperation, cgOperation, this);
+		return cgOperation;
 	}
 
 	@Override

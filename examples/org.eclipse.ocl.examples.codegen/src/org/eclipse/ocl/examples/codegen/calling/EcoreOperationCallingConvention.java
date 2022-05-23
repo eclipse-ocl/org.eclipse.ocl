@@ -71,9 +71,9 @@ public class EcoreOperationCallingConvention extends AbstractOperationCallingCon
 	}
 
 	@Override
-	public @NonNull CGOperation createCGOperationWithoutBody(@NonNull AS2CGVisitor as2cgVisitor, @Nullable Type asSourceType, @NonNull Operation asOperation) {
-		PivotMetamodelManager metamodelManager = as2cgVisitor.getMetamodelManager();
-		GenModelHelper genModelHelper = as2cgVisitor.getGenModelHelper();
+	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @Nullable Type asSourceType, @NonNull Operation asOperation) {
+		PivotMetamodelManager metamodelManager = analyzer.getMetamodelManager();
+		GenModelHelper genModelHelper = analyzer.getGenModelHelper();
 		LibraryFeature libraryOperation = metamodelManager.getImplementation(asOperation);
 		EOperation eOperation;
 		if (libraryOperation instanceof EInvokeOperation) {
@@ -86,18 +86,23 @@ public class EcoreOperationCallingConvention extends AbstractOperationCallingCon
 		}
 		assert (eOperation != null);
 		assert !PivotUtil.isStatic(eOperation);
+		CGOperation cgOperation = null;
 		try {
 			genModelHelper.getGenOperation(eOperation);
 			CGEcoreOperation cgEcoreOperation = CGModelFactory.eINSTANCE.createCGEcoreOperation();
 			cgEcoreOperation.setEOperation(eOperation);
-			return cgEcoreOperation;
+			cgOperation = cgEcoreOperation;
 		}
 		catch (GenModelException e) {
 			// No genmodel so fallback
 		}
-	//	assert false : "Fallback overload for " + this;		// XXX
-		System.out.println("Fallback overload for " + this);		// XXX
-		return CGModelFactory.eINSTANCE.createCGLibraryOperation();
+		if (cgOperation == null) {
+			//	assert false : "Fallback overload for " + this;		// XXX
+			System.out.println("Fallback overload for " + this);		// XXX
+			cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
+		}
+		analyzer.installOperation(asOperation, cgOperation, this);
+		return cgOperation;
 	}
 
 	@Override

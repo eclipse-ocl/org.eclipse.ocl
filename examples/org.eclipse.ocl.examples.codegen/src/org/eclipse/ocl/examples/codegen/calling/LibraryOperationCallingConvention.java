@@ -18,6 +18,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
+import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperationCallExp;
@@ -68,13 +69,15 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 	public static final @NonNull LibraryOperationCallingConvention INSTANCE = new LibraryOperationCallingConvention();
 
 	@Override
-	public @NonNull CGOperation createCGOperationWithoutBody(@NonNull AS2CGVisitor as2cgVisitor, @Nullable Type asSourceType, @NonNull Operation asOperation) {
- 		PivotMetamodelManager metamodelManager = as2cgVisitor.getMetamodelManager();
+	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @Nullable Type asSourceType, @NonNull Operation asOperation) {
+ 		PivotMetamodelManager metamodelManager = analyzer.getMetamodelManager();
 		LibraryFeature libraryOperation = metamodelManager.getImplementation(asOperation);
 		assert !(libraryOperation instanceof EObjectOperation);
 		assert !(libraryOperation instanceof ForeignOperation);
 		assert !(libraryOperation instanceof ConstrainedOperation);
-		return CGModelFactory.eINSTANCE.createCGLibraryOperation();
+		CGLibraryOperation cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
+		analyzer.installOperation(asOperation, cgOperation, this);
+		return cgOperation;
 	}
 
 	@Override

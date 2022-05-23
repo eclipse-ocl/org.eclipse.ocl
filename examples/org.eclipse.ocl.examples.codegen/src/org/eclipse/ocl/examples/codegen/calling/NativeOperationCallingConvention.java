@@ -18,6 +18,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
+import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperation;
@@ -51,11 +52,13 @@ public class NativeOperationCallingConvention extends AbstractOperationCallingCo
 	public static final @NonNull NativeOperationCallingConvention INSTANCE = new NativeOperationCallingConvention();
 
 	@Override
-	public @NonNull CGOperation createCGOperationWithoutBody(@NonNull AS2CGVisitor as2cgVisitor, @Nullable Type asSourceType, @NonNull Operation asOperation) {
-		PivotMetamodelManager metamodelManager = as2cgVisitor.getMetamodelManager();
+	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @Nullable Type asSourceType, @NonNull Operation asOperation) {
+		PivotMetamodelManager metamodelManager = analyzer.getMetamodelManager();
 		LibraryFeature libraryOperation = metamodelManager.getImplementation(asOperation);
 		assert (libraryOperation instanceof NativeOperation) || (libraryOperation instanceof NativeStaticOperation) || (libraryOperation instanceof NativeVisitorOperation);
-		return CGModelFactory.eINSTANCE.createCGNativeOperation();
+		CGNativeOperation cgOperation = CGModelFactory.eINSTANCE.createCGNativeOperation();
+		analyzer.installOperation(asOperation, cgOperation, this);
+		return cgOperation;
 	}
 
 	@Override

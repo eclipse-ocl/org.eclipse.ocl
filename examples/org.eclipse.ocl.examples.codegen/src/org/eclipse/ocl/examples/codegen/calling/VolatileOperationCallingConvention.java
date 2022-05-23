@@ -13,7 +13,9 @@ package org.eclipse.ocl.examples.codegen.calling;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
+import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
@@ -60,8 +62,10 @@ public class VolatileOperationCallingConvention extends ConstrainedOperationCall
 		CGClass currentClass = as2cgVisitor.basicGetCurrentClass();
 		assert currentClass == null;
 		CGOperationCallExp cgCallExp = null;
+		assert finalOperation != null;
 		if (finalOperation != null) {
 			LanguageExpression bodyExpression = asOperation.getBodyExpression();
+			assert bodyExpression != null;
 			if (bodyExpression != null) {
 				CGValuedElement cgOperationCallExp2 = as2cgVisitor.inlineOperationCall(asOperationCallExp, bodyExpression);
 				assert cgOperationCallExp2 == null;
@@ -77,11 +81,13 @@ public class VolatileOperationCallingConvention extends ConstrainedOperationCall
 	}
 
 	@Override
-	public @NonNull CGOperation createCGOperationWithoutBody(@NonNull AS2CGVisitor as2cgVisitor, @Nullable Type asSourceType, @NonNull Operation asOperation) {
-		assert as2cgVisitor.getMetamodelManager().getImplementation(asOperation) instanceof ConstrainedOperation;
+	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @Nullable Type asSourceType, @NonNull Operation asOperation) {
+		assert analyzer.getMetamodelManager().getImplementation(asOperation) instanceof ConstrainedOperation;
 		org.eclipse.ocl.pivot.Package asPackage = PivotUtil.getOwningPackage(PivotUtil.getOwningClass(asOperation));
 		assert !(asPackage instanceof Library);
-		return CGModelFactory.eINSTANCE.createCGLibraryOperation();
+		CGLibraryOperation cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
+		analyzer.installOperation(asOperation, cgOperation, this);
+		return cgOperation;
 	}
 
 	@Override

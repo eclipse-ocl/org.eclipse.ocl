@@ -36,7 +36,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGBodiedProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBoolean;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBoxExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBuiltInIterationCallExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCastExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCatchExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
@@ -111,7 +110,6 @@ import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.MapType;
-import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
@@ -728,33 +726,6 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		return null;
 	}
 
-	@Deprecated
-	/*protected*/ public @NonNull String getNativeOperationClassName(@NonNull CGOperation cgOperation) {	// FIXME unique
-		Operation asOperation = (Operation) cgOperation.getAst();
-		assert asOperation != null;
-		if (isVirtualDispatcher(cgOperation)) {
-			return "VCACHE_" + getNativeOperationName(asOperation);
-		}
-		else {
-			return "CACHE_" + getNativeOperationName(asOperation);
-		}
-	}
-
-	@Deprecated
-	/*protected*/ public @NonNull String getNativeOperationDirectInstanceName(@NonNull Operation asOperation) {	// FIXME unique
-		return "INST_" + getNativeOperationName(asOperation);
-	}
-
-	@Deprecated
-	/*protected*/ public @NonNull String getNativeOperationInstanceName(@NonNull Operation asOperation) {	// FIXME unique
-		return "INSTANCE_" + getNativeOperationName(asOperation);
-	}
-
-	@Deprecated
-	/*protected*/ public @NonNull String getNativeOperationName(@NonNull Operation asOperation) {	// FIXME unique
-		return ClassUtil.nonNullState(asOperation.getOwningClass()).getName() + "_" + asOperation.getName();
-	}
-
 	protected @NonNull String getResolvedName(@NonNull CGValuedElement cgElement) {
 		return cgElement.getResolvedName();
 	}
@@ -855,11 +826,6 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		}
 		Type type = ((TypedElement)ast).getType();
 		return type instanceof Enumeration;
-	}
-
-	@Deprecated
-	/*protected*/ public boolean isVirtualDispatcher(@NonNull CGOperation cgOperation) {
-		return (cgOperation instanceof CGCachedOperation) && (((CGCachedOperation)cgOperation).getFinalOperations().size() > 0);
 	}
 
 	@Override

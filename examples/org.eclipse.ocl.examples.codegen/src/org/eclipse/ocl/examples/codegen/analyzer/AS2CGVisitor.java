@@ -60,7 +60,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
@@ -139,7 +138,6 @@ import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
-import org.eclipse.ocl.pivot.internal.library.ForeignOperation;
 import org.eclipse.ocl.pivot.internal.manager.FinalAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
@@ -521,8 +519,8 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		//	cgOperationCallExp.setCallingConvention(callingConvention);
 	//		cgOperationCallExp.setOperation(cgOperation);
 	//	}
-		assert !(cgCallExp instanceof CGOperationCallExp) || (((CGOperationCallExp)cgCallExp).getCgOperation() == cgOperation);
-		return cgCallExp;
+	//	assert !(cgCallExp instanceof CGOperationCallExp) || (((CGOperationCallExp)cgCallExp).getCgOperation() == cgOperation);
+		return cgCallExp;								// inlined code is not a CallExp
 	}
 
 	/**
@@ -552,14 +550,9 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			LocalContext savedPreClassContext = pushLocalContext(cgClass, asClass);
 			try {
 				OperationCallingConvention callingConvention = codeGenerator.getCallingConvention(asOperation, isFinal);
-				cgOperation = callingConvention.createCGOperationWithoutBody(this, asSourceType, asOperation);
-				LibraryOperation libraryOperation = (LibraryOperation)metamodelManager.getImplementation(asOperation);
-				if (libraryOperation instanceof ForeignOperation) {			// XXX this parses stdlib bodies unnecessarily
-				//	context.addExternalFeature(asOperation);		// XXX move to OperationCallingConvention
-					assert context.isExternal(asOperation);		// XXX move to OperationCallingConvention
-				}
-				assert cgOperation.getAst() == null;
-				context.installOperation(asOperation, cgOperation, callingConvention);
+				cgOperation = callingConvention.createCGOperation(this, asSourceType, asOperation);
+				assert cgOperation.getAst() != null;
+				assert cgOperation.getCallingConvention() == callingConvention;
 				getNameManager().declarePreferredName(cgOperation);
 				LocalContext savedClassContext = pushLocalContext(cgOperation, asOperation);
 				ExpressionInOCL asExpressionInOCL = null;

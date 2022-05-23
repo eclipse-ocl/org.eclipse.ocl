@@ -217,8 +217,18 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 		js.append(")");
 	}
 
+	@Override	@Deprecated
+	public /*final*/ @NonNull CGOperation createCGOperation(@NonNull AS2CGVisitor as2cgVisitor, @Nullable Type asSourceType, @NonNull Operation asOperation) {
+		return createCGOperation(as2cgVisitor.getAnalyzer(), asSourceType, asOperation);
+	}
+
 	@Override
 	public void createCGParameters(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL bodyExpression) {
+//		return createCGParameters(as2cgVisitor.getAnalyzer(), cgOperation, bodyExpression);
+//	}
+//
+//	@Override
+//	public void createCGParameters(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL bodyExpression) {
 		if (bodyExpression != null) {
 			Variable contextVariable = bodyExpression.getOwnedContext();
 			if (contextVariable != null) {
@@ -275,13 +285,10 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 		}
 	}
 
-	@Override
-	public @NonNull CGOperation generateDeclarationHierarchy(@NonNull AS2CGVisitor as2cgVisitor, @Nullable Type asSourceType, @NonNull Operation asOperation) {
-		CGOperation cgOperation = createCGOperationWithoutBody(as2cgVisitor, asSourceType, asOperation);
-		assert cgOperation.getAst() == null;
-		as2cgVisitor.getAnalyzer().installOperation(asOperation, cgOperation, this);
-		return cgOperation;
-	}
+//	@Override
+//	public @NonNull CGOperation generateDeclarationHierarchy(@NonNull AS2CGVisitor as2cgVisitor, @Nullable Type asSourceType, @NonNull Operation asOperation) {
+//		return createCGOperation(as2cgVisitor, asSourceType, asOperation);
+//	}
 
 	@Override
 	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {

@@ -14,6 +14,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
+import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
@@ -34,8 +35,9 @@ public interface OperationCallingConvention extends CallingConvention
 	/**
 	 * Create the appropriate CGOperation less parameters and body.
 	 */
-	// XXX chnage to CodeGenAnalyzer
-	@NonNull CGOperation createCGOperationWithoutBody(@NonNull AS2CGVisitor as2cgVisitor, @Nullable Type asSourceType, @NonNull Operation asOperation);
+	@Deprecated // XXX changing to CodeGenAnalyzer
+	@NonNull CGOperation createCGOperation(@NonNull AS2CGVisitor as2cgVisitor, @Nullable Type asSourceType, @NonNull Operation asOperation);
+	@NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @Nullable Type asSourceType, @NonNull Operation asOperation);
 
 	/**
 	 * Create the appropriate CGOperationCallExp for asOperationCallExp with cgSource, or return null
@@ -48,12 +50,14 @@ public interface OperationCallingConvention extends CallingConvention
 	/**
 	 * Elaborate the CGOperation with the parameters appropriate to bodyExpression.
 	 */
+//	@Deprecated // XXX changing to CodeGenAnalyzer
 	void createCGParameters(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL bodyExpression);
+//	void createCGParameters(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL bodyExpression);
 
 	/**
 	 * Install all the CG operation declaration equivalents for asOperation. Returns the direct equivalent.
 	 */
-	@NonNull CGOperation generateDeclarationHierarchy(@NonNull AS2CGVisitor as2cgVisitor, @Nullable Type asSourceType, @NonNull Operation asOperation);
+//	@NonNull CGOperation generateDeclarationHierarchy(@NonNull AS2CGVisitor as2cgVisitor, @Nullable Type asSourceType, @NonNull Operation asOperation);
 
 	/**
 	 * Generate the Java code for an Operation call.

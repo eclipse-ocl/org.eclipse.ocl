@@ -16,6 +16,7 @@ import java.util.List;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.autogen.java.AutoCG2JavaVisitor;
+import org.eclipse.ocl.examples.codegen.calling.AbstractCachedOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
@@ -78,7 +79,7 @@ public class LookupFilterCG2JavaVisitor extends AutoCG2JavaVisitor<@NonNull Look
 				js.append(") {\n");
 				js.pushIndentation(null);
 				js.append("return ");
-				js.append(getNativeOperationInstanceName(asOperation));
+				js.append(AbstractCachedOperationCallingConvention.getNativeOperationInstanceName(asOperation));
 				js.append(".evaluate(");
 				isFirst = true;
 				for (@NonNull CGParameter cgParameter : cgParameters) {

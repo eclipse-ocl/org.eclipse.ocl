@@ -87,25 +87,27 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 	}
 
 	@Override
-	public @NonNull CGOperation createCGOperationWithoutBody(@NonNull AS2CGVisitor as2cgVisitor, @Nullable Type asSourceType, @NonNull Operation asOperation) {
-		CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();
+	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @Nullable Type asSourceType, @NonNull Operation asOperation) {
+		CGOperation cgOperation = null;
 		EOperation eOperation = (EOperation) asOperation.getESObject();
 		if ((eOperation != null) && !PivotUtil.isStatic(eOperation)) {
 			try {
-				GenModelHelper genModelHelper = as2cgVisitor.getGenModelHelper();
+				GenModelHelper genModelHelper = analyzer.getGenModelHelper();
 				genModelHelper.getGenOperation(eOperation);
 				CGEcoreOperation cgEcoreOperation = CGModelFactory.eINSTANCE.createCGEcoreOperation();
 				cgEcoreOperation.setEOperation(eOperation);
-				analyzer.addExternalFeature(asOperation);
-				return cgEcoreOperation;
+				cgOperation = cgEcoreOperation;
 			}
 			catch (GenModelException e) {
 				// No genmodel so fallback
 			}
 		}
-		CGLibraryOperation cgLibraryOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
+		if (cgOperation == null) {
+			cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
+		}
 		analyzer.addExternalFeature(asOperation);
-		return cgLibraryOperation;
+		analyzer.installOperation(asOperation, cgOperation, this);
+		return cgOperation;
 	}
 
 	@Override

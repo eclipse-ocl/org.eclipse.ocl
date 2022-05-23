@@ -20,6 +20,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.PropertyCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.VirtualOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBoolean;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCastExp;
@@ -53,6 +54,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.examples.codegen.generator.CodeGenerator;
+import org.eclipse.ocl.examples.codegen.generator.GenModelHelper;
 import org.eclipse.ocl.examples.codegen.generator.LocalContext;
 import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
@@ -154,11 +156,8 @@ public class CodeGenAnalyzer
 	private @NonNull Map<@NonNull Property, @NonNull CGProperty> asProperty2cgProperty = new HashMap<>();
 
 	/**
-	 * The native operations that are being converted and so do not yet appear as operations of
-	 * the currentClass. The stack of partial conversions avoids an infinite number of operations
-	 * being created for a recursive call.
+	 * Mapping from each AS Operation that has overrides to its corresponding virtual dispatching CG Operation.
 	 */
-//	private final @NonNull Map<@NonNull Operation, @NonNull CGOperation> asFinalOperation2cgOperation = new HashMap<>();
 	private final @NonNull Map<@NonNull Operation, @NonNull CGOperation> asVirtualOperation2cgOperation = new HashMap<>();
 
 	public CodeGenAnalyzer(@NonNull CodeGenerator codeGenerator) {
@@ -178,6 +177,7 @@ public class CodeGenAnalyzer
 	}
 
 	public void addCGOperation(@NonNull CGOperation cgOperation) {
+		assert cgOperation.getCallingConvention() != VirtualOperationCallingConvention.INSTANCE;
 		Operation asOperation = CGUtil.getAST(cgOperation);
 		CGOperation old = asOperation2cgOperation.put(asOperation, cgOperation);
 		assert old == null;
@@ -212,10 +212,13 @@ public class CodeGenAnalyzer
 	}
 
 	public void addVirtualCGOperation(@NonNull Operation asOperation, @NonNull CGCachedOperation cgOperation) {
-		assert cgOperation.getAst() == asOperation;
-		CGOperation oldCGOperation = asVirtualOperation2cgOperation.put(asOperation, cgOperation);
+	//	assert cgOperation.getAst() == asOperation;
+		assert cgOperation.getCallingConvention() == VirtualOperationCallingConvention.INSTANCE;
+		CGOperation oldCGOperation = basicGetCGOperation(asOperation);
+		assert (oldCGOperation != null) && (oldCGOperation != cgOperation);
+		oldCGOperation = asVirtualOperation2cgOperation.put(asOperation, cgOperation);
 		assert oldCGOperation == null;
-		addCGOperation(cgOperation);
+	//	addCGOperation(cgOperation);
 	}
 
 	public void analyze(@NonNull CGElement cgRoot) {
@@ -273,10 +276,6 @@ public class CodeGenAnalyzer
 	public @Nullable CGProperty basicGetCGProperty(@NonNull Property asProperty) {
 		return asProperty2cgProperty.get(asProperty);
 	}
-
-//	public @Nullable CGOperation basicGetFinalCGOperation(@NonNull Operation asOperation) {
-//		return asFinalOperation2cgOperation.get(asOperation);
-//	}
 
 	public @Nullable CGOperation basicGetVirtualCGOperation(@NonNull Operation asOperation) {
 		return asVirtualOperation2cgOperation.get(asOperation);
@@ -637,12 +636,20 @@ public class CodeGenAnalyzer
 		return externalFeatures;
 	}
 
+	public GenModelHelper getGenModelHelper() {
+		return codeGenerator.getGenModelHelper();
+	}
+
 	public @NonNull GlobalNameManager getGlobalNameManager() {
 		return ClassUtil.nonNullState(globalNameManager);
 	}
 
 	private @NonNull JavaLanguageSupport getJavaLanguageSupport() {
 		return (JavaLanguageSupport)ClassUtil.nonNullState(codeGenerator.getEnvironmentFactory().getLanguageSupport("java"));
+	}
+
+	public @NonNull PivotMetamodelManager getMetamodelManager() {
+		return codeGenerator.getEnvironmentFactory().getMetamodelManager();
 	}
 
 	/*
@@ -674,7 +681,7 @@ public class CodeGenAnalyzer
 				cgParameter.setRequired(isRequired);
 				cgParameters.add(cgParameter);
 			}
-			addCGOperation(cgNativeOperation);
+			addCGOperation(cgNativeOperation);		// XXX Use installOperation and then inline addCGOperation
 		}
 		return asOperation;
 	}
@@ -695,13 +702,18 @@ public class CodeGenAnalyzer
 	}
 
 	public @NonNull CGOperation installOperation(@NonNull Operation asOperation, @NonNull CGOperation cgOperation, @NonNull OperationCallingConvention callingConvention) {
+		assert cgOperation.getAst() == null;
+		assert cgOperation.getCallingConvention() == null;
 		cgOperation.setAst(asOperation);
 		cgOperation.setTypeId(getCGTypeId(asOperation.getTypeId()));
 		cgOperation.setRequired(asOperation.isIsRequired());
 		cgOperation.setCallingConvention(callingConvention);
-	//	CGOperation oldCGOperation = asFinalOperation2cgOperation.put(asOperation, cgOperation);
-	//	assert oldCGOperation == null;
-		addCGOperation(cgOperation);
+		if (callingConvention == VirtualOperationCallingConvention.INSTANCE) {		// XXX move to OperationCallingConvention
+			addVirtualCGOperation(asOperation, (CGCachedOperation)cgOperation);
+		}
+		else {
+			addCGOperation(cgOperation);
+		}
 		return cgOperation;
 	}
 
