@@ -177,7 +177,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 			assert localContext2 != null;
 			CGValuedElement cgTree = localContext2.getNameManager().getBody();
 			if (cgTree != null) {
-				cgTree = localContext2.wrapLetVariables(cgTree);
+				cgTree = localContext2.getNameManager().wrapLetVariables(cgTree);
 			}
 		}
 		if (savedLocalContext == null) {

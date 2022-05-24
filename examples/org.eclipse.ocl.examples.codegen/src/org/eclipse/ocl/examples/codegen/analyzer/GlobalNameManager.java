@@ -411,10 +411,10 @@ public class GlobalNameManager extends NameManager
 		return valueName.getResolvedName();
 	}
 
-	public @NonNull LocalContext initLocalContext(@Nullable LocalContext outerContext, @NonNull CGNamedElement cgScope) {
+	public @NonNull JavaLocalContext initLocalContext(@Nullable LocalContext outerContext, @NonNull CGNamedElement cgScope) {
 		NameManager outerNameManager;
 		if (outerContext != null) {
-			outerNameManager = outerContext.getNameManager();
+			outerNameManager = ((JavaLocalContext)outerContext).getNameManager();
 		}
 		else {
 			outerNameManager = this;

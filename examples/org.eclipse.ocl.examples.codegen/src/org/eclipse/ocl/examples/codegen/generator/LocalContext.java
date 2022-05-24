@@ -10,12 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.generator;
 
-import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
-
 public interface LocalContext
 {
-	@NonNull NestedNameManager getNameManager();
-	@NonNull CGNamedElement getScope();
 }

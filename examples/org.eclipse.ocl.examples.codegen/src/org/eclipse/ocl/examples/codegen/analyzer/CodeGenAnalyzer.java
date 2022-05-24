@@ -18,6 +18,7 @@ import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager.JavaLocalContext;
 import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.PropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.VirtualOperationCallingConvention;
@@ -54,7 +55,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.examples.codegen.generator.GenModelHelper;
-import org.eclipse.ocl.examples.codegen.generator.LocalContext;
 import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
@@ -666,7 +666,7 @@ public class CodeGenAnalyzer
 			cgNativeOperation.setRequired(asOperation.isIsRequired());
 			cgNativeOperation.setCallingConvention(callingConvention);
 			cgNativeOperation.setAst(asOperation);
-			LocalContext localContext = globalNameManager.initLocalContext(null, cgNativeOperation);
+			JavaLocalContext localContext = globalNameManager.initLocalContext(null, cgNativeOperation);
 			List<CGParameter> cgParameters = cgNativeOperation.getParameters();
 			NestedNameManager nameManager = localContext.getNameManager();
 			for (org.eclipse.ocl.pivot.Parameter asParameter : asOperation.getOwnedParameters()) {

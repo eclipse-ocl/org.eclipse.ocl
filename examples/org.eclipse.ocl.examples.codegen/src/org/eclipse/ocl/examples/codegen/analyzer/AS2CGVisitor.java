@@ -164,7 +164,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	protected final @NonNull PivotMetamodelManager metamodelManager;
 	protected final @NonNull GenModelHelper genModelHelper;
 
-	private @Nullable LocalContext localContext = null;		// The current context
+	private @Nullable JavaLocalContext localContext = null;		// The current context
 
 	public static final class CGTuplePartNameComparator implements Comparator<@NonNull CGTuplePart>
 	{
@@ -753,7 +753,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	public @NonNull JavaLocalContext getLocalContext() {
 		assert localContext != null;
-		return (JavaLocalContext)localContext;
+		return localContext;
 	}
 
 	public @NonNull CGVariable getLocalVariable(@NonNull VariableDeclaration asVariable) {
@@ -984,16 +984,16 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	}
 
 	public void popLocalContext(@Nullable LocalContext savedLocalContext) {
-		localContext = savedLocalContext;
+		localContext = (JavaLocalContext) savedLocalContext;
 	}
 
 	public @Nullable LocalContext pushLocalContext(@NonNull CGNamedElement cgElement) {
-		LocalContext savedLocalContext = localContext;
+		JavaLocalContext savedLocalContext = localContext;
 		LocalContext localContext2 = globalNameManager.basicGetLocalContext(cgElement);
 		if (localContext2 == null) {
 			localContext2 = globalNameManager.initLocalContext(savedLocalContext, cgElement);
 		}
-		localContext = localContext2;
+		localContext = (JavaLocalContext) localContext2;
 		return savedLocalContext;
 	}
 

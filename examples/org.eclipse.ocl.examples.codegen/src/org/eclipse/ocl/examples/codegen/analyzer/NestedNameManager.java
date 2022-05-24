@@ -32,7 +32,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.examples.codegen.generator.LocalContext;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
@@ -64,80 +63,13 @@ public class NestedNameManager extends NameManager
 			this.nameManager = innerNameManager;
 		}
 
-		public @Nullable JavaLocalContext basicGetOuterContext() {
-			NameManager parentNameManager = nameManager.parent;
-			return (parentNameManager instanceof NestedNameManager) ? ((NestedNameManager)parentNameManager).localContext : null;
-		}
-
-		public @NonNull CodeGenAnalyzer getAnalyzer() {
-			return nameManager.analyzer;
-		}
-
-		@Override
 		public @NonNull NestedNameManager getNameManager() {
 			return nameManager;
 		}
 
-		public @NonNull JavaLocalContext getOuterContext() {
-			JavaLocalContext outerContext2 = basicGetOuterContext();
-			return ClassUtil.nonNullState(outerContext2);
-		}
-
-		public @NonNull CGValuedElement getOwned(@NonNull CGValuedElement cgValuedElement, @NonNull String name) {
-			for (CGValuedElement cgOwned : cgValuedElement.getOwns()) {
-				if (name.equals(cgOwned.getName())) {
-					return cgOwned;
-				}
-				if (cgOwned instanceof CGVariableExp) {
-					CGVariable cgVariable = ((CGVariableExp)cgOwned).getReferredVariable();
-					if (cgVariable != null) {
-						CGValuedElement cgInit = cgVariable.getInit();
-						if (name.equals(cgInit.getName())) {
-							return cgInit;
-						}
-					}
-				}
-			}
-			throw new IllegalStateException("No '" + name + "' in " + cgValuedElement);
-		}
-
-		@Override
-		public @NonNull CGNamedElement getScope() {
-			return nameManager.cgScope;
-		}
-
-//		@Deprecated /* @deprecated unnecessary argument */
-//		public @NonNull CGVariable getStandardLibraryVariable(@NonNull CGValuedElement cgValuedElement) {
-//			return getStandardLibraryVariable();
-//		}
-
 		@Override
 		public @NonNull String toString() {
 			return nameManager.toString();
-		}
-
-		public @NonNull CGValuedElement wrapLetVariables(@NonNull CGValuedElement cgTree) {
-			CGVariable qualifiedThisVariable = nameManager.basicGetQualifiedThisVariable();
-			if (qualifiedThisVariable != null) {
-				cgTree = CGUtil.rewriteAsLet(cgTree, qualifiedThisVariable);
-			}
-			CGVariable standardLibraryVariable = nameManager.basicGetStandardLibraryVariable();
-			if (standardLibraryVariable != null) {
-				cgTree = CGUtil.rewriteAsLet(cgTree, standardLibraryVariable);
-			}
-			CGVariable modelManagerVariable = nameManager.basicGetModelManagerVariable();
-			if (modelManagerVariable != null) {
-				cgTree = CGUtil.rewriteAsLet(cgTree, modelManagerVariable);
-			}
-			CGVariable idResolverVariable = nameManager.basicGetIdResolverVariable();
-			if (idResolverVariable != null) {
-				cgTree = CGUtil.rewriteAsLet(cgTree, idResolverVariable);
-			}
-			CGVariable executorVariable = nameManager.basicGetExecutorVariable();
-			if (executorVariable != null) {
-				cgTree = CGUtil.rewriteAsLet(cgTree, executorVariable);
-			}
-			return cgTree;
 		}
 	}
 
@@ -191,7 +123,7 @@ public class NestedNameManager extends NameManager
 			this.asType = ClassUtil.nonNullState(PivotUtil.getContainingType(asScope));
 		}
 		else {
-			this.asType = ((NestedNameManager)parent).asType();
+			this.asType = ((NestedNameManager)parent).asType;
 		}
 
 		boolean staticFeature = (asScope instanceof Feature) && ((Feature)asScope).isIsStatic();
@@ -202,8 +134,6 @@ public class NestedNameManager extends NameManager
 
 
 		this.localContext = createLocalContext(parent);
-		JavaLocalContext outerContext = localContext.basicGetOuterContext();
-		assert (outerContext == null) || (outerContext.nameManager == parent);
 	}
 
 	public void addNameVariant(@NonNull CGNamedElement cgElement, @NonNull NameVariant nameVariant) {
@@ -549,7 +479,7 @@ public class NestedNameManager extends NameManager
 
 	public @NonNull CGVariable getExecutorVariable() {
 		if (asScope instanceof CallExp) {
-			return localContext.getOuterContext().nameManager.getExecutorVariable();
+			return ((NestedNameManager)parent).getExecutorVariable();
 		}
 		CGVariable executorVariable2 = executorVariable;
 		if (executorVariable2 == null) {
@@ -560,8 +490,7 @@ public class NestedNameManager extends NameManager
 
 	public @NonNull CGVariable getIdResolverVariable() {
 		if (asScope instanceof CallExp) {
-			JavaLocalContext outerContext = localContext.getOuterContext();
-			return outerContext.nameManager.getIdResolverVariable();
+			return ((NestedNameManager)parent).getIdResolverVariable();
 		}
 		CGVariable idResolverVariable2 = idResolverVariable;
 		if (idResolverVariable2 == null) {
@@ -582,10 +511,14 @@ public class NestedNameManager extends NameManager
 		return null;
 	}
 
+	@Deprecated
+	public @NonNull JavaLocalContext getLocalContext() {
+		return localContext;
+	}
+
 	public @NonNull CGVariable getModelManagerVariable() {
 		if (asScope instanceof CallExp) {
-			JavaLocalContext outerContext = localContext.getOuterContext();
-			return outerContext.nameManager.getModelManagerVariable();
+			return ((NestedNameManager)parent).getModelManagerVariable();
 		}
 		CGVariable modelManagerVariable2 = modelManagerVariable;
 		if (modelManagerVariable2 == null) {
@@ -604,7 +537,7 @@ public class NestedNameManager extends NameManager
 
 	public @NonNull CGVariable getQualifiedThisVariable() {
 		if (asScope instanceof CallExp) {
-			return localContext.getOuterContext().nameManager.getQualifiedThisVariable();
+			return ((NestedNameManager)parent).getQualifiedThisVariable();
 		}
 		CGVariable qualifiedThisVariable2 = qualifiedThisVariable;
 		if (qualifiedThisVariable2 == null) {
@@ -624,7 +557,7 @@ public class NestedNameManager extends NameManager
 
 	public @NonNull CGVariable getStandardLibraryVariable() {
 		if (asScope instanceof CallExp) {
-			return localContext.getOuterContext().nameManager.getStandardLibraryVariable();
+			return ((NestedNameManager)parent).getStandardLibraryVariable();
 		}
 		CGVariable standardLibraryVariable2 = standardLibraryVariable;
 		if (standardLibraryVariable2 == null) {
@@ -680,28 +613,27 @@ public class NestedNameManager extends NameManager
 		return "locals-" + cgScope.eClass().getName() + "-" + CGUtil.getAST(cgScope).getName();
 	}
 
-	@Deprecated
-	public boolean isStatic() {
-		return isStatic;
-	}
-
-	@Deprecated
-	public @NonNull Type asType() {
-		return asType;
-	}
-
-	@Deprecated
-	public @NonNull CGNamedElement cgScope() {
-		return cgScope;
-	}
-
-	@Deprecated
-	public @NonNull NamedElement asScope() {
-		return asScope;
-	}
-
-	@Deprecated
-	public @NonNull JavaLocalContext getLocalContext() {
-		return localContext;
+	public @NonNull CGValuedElement wrapLetVariables(@NonNull CGValuedElement cgTree) {
+		CGVariable qualifiedThisVariable = basicGetQualifiedThisVariable();
+		if (qualifiedThisVariable != null) {
+			cgTree = CGUtil.rewriteAsLet(cgTree, qualifiedThisVariable);
+		}
+		CGVariable standardLibraryVariable = basicGetStandardLibraryVariable();
+		if (standardLibraryVariable != null) {
+			cgTree = CGUtil.rewriteAsLet(cgTree, standardLibraryVariable);
+		}
+		CGVariable modelManagerVariable = basicGetModelManagerVariable();
+		if (modelManagerVariable != null) {
+			cgTree = CGUtil.rewriteAsLet(cgTree, modelManagerVariable);
+		}
+		CGVariable idResolverVariable = basicGetIdResolverVariable();
+		if (idResolverVariable != null) {
+			cgTree = CGUtil.rewriteAsLet(cgTree, idResolverVariable);
+		}
+		CGVariable executorVariable = basicGetExecutorVariable();
+		if (executorVariable != null) {
+			cgTree = CGUtil.rewriteAsLet(cgTree, executorVariable);
+		}
+		return cgTree;
 	}
 }
