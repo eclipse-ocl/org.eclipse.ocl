@@ -160,7 +160,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 	}
 
 	protected @Nullable CGVariable installExecutorVariable(@NonNull CGValuedElement cgElement) {
-		return getTreeContext().getExecutorVariable();
+		return getTreeContext().getNameManager().getExecutorVariable();
 	}
 
 	protected @NonNull CGVariable installIdResolverVariable(@NonNull CGValuedElement cgElement) {

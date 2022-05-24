@@ -324,7 +324,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		if ((asVariable instanceof Parameter) && isThis((Parameter)asVariable)) {
 			JavaLocalContext localContext = globalNameManager.findLocalContext(getCurrentClass());
 			if (isQualifiedThis(asVariableExp, (Parameter)asVariable)) {
-				cgVariable = localContext.getQualifiedThisVariable();
+				cgVariable = localContext.getNameManager().getQualifiedThisVariable();
 			}
 			else {
 				cgVariable = localContext.getNameManager().getThisParameter();
@@ -682,7 +682,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	public @NonNull CGVariable getExecutorVariable() {
 		LocalContext localContext = getLocalContext();
-		return ((JavaLocalContext)localContext).getExecutorVariable();
+		return ((JavaLocalContext)localContext).getNameManager().getExecutorVariable();
 	}
 
 	public @NonNull GenModelHelper getGenModelHelper() {
@@ -880,7 +880,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	public @NonNull CGParameter getTypeIdParameter() {
 		LocalContext localContext = getLocalContext();
-		CGParameter typeIdParameter = ((JavaLocalContext)localContext).getTypeIdParameter();
+		CGParameter typeIdParameter = ((JavaLocalContext)localContext).getNameManager().getTypeIdParameter();
 		assert typeIdParameter.eContainer() == null;
 		addParameter(CGUtil.getAST(typeIdParameter), typeIdParameter);
 		return typeIdParameter;

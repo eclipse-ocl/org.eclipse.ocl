@@ -63,7 +63,6 @@ public class JUnitOperationCallingConvention extends LibraryOperationCallingConv
 		if (contextVariable != null) {
 			contextVariable.setIsRequired(false); 				// May be null for test
 		}
-		JUnitLocalContext localContext = (JUnitLocalContext)as2cgVisitor.getLocalContext();
 		List<CGParameter> cgParameters = cgOperation.getParameters();
 		cgParameters.add(codeGenerator.createExecutorParameter());
 		cgParameters.add(codeGenerator.createTypeIdParameter());

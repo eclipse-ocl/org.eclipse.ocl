@@ -21,7 +21,6 @@ import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
-import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager.JavaLocalContext;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperationCallExp;
@@ -118,7 +117,6 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 	public void createCGParameters(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL expressionInOCL) {
 	//	assert expressionInOCL == null;		-- some library operations also have OCL bodies
 		Operation asOperation = CGUtil.getAST(cgOperation);
-		JavaLocalContext localContext = as2cgVisitor.getLocalContext();
 		NestedNameManager nameManager = as2cgVisitor.getNameManager();
 		List<CGParameter> cgParameters = cgOperation.getParameters();
 		LibraryOperation libraryOperation = (LibraryOperation)as2cgVisitor.getMetamodelManager().getImplementation(asOperation);
@@ -134,7 +132,7 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 				cgParameters.add(nameManager.getExecutorParameter());
 			}
 			else if (jParameterType == TypeId.class) {
-				cgParameters.add(localContext.getTypeIdParameter());
+				cgParameters.add(nameManager.getTypeIdParameter());
 			}
 			else if (jParameterType == Object.class)  {
 				if (i < 0) {

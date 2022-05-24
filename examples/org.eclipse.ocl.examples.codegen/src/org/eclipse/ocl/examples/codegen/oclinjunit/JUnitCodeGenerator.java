@@ -62,18 +62,6 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		}
 	}
 
-	protected static class JUnitNestedNameManager extends NestedNameManager
-	{
-		protected JUnitNestedNameManager(@NonNull JavaCodeGenerator codeGenerator, @NonNull NameManager parent, @NonNull CGNamedElement cgScope) {
-			super(codeGenerator, parent, cgScope);
-		}
-
-		@Override
-		public @NonNull JavaLocalContext createLocalContext(@NonNull NameManager outerNameManager) {
-			return new JUnitLocalContext(outerNameManager, this);
-		}
-	}
-
 	protected final @NonNull CodeGenAnalyzer cgAnalyzer;
 
 	protected JUnitCodeGenerator(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable GenModel genModel, boolean useNullAnnotations) {

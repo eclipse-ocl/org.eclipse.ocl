@@ -751,7 +751,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 	@Deprecated /* @deprecated no longer used */
 	protected @Nullable CGVariable installExecutorVariable(@NonNull CGValuedElement cgValuedElement) {
-		return localContext.getExecutorVariable();
+		return localContext.getNameManager().getExecutorVariable();
 	}
 
 	@Deprecated /* @deprecated no longer used */

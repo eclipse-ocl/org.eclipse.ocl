@@ -69,67 +69,8 @@ public class NestedNameManager extends NameManager
 			return (parentNameManager instanceof NestedNameManager) ? ((NestedNameManager)parentNameManager).localContext : null;
 		}
 
-		protected @NonNull CGVariable createExecutorVariable() {
-		//	assert !executorIsParameter;
-			CGNativeOperationCallExp executorInit = nameManager.analyzer.createCGNativeOperationCallExp(JavaConstants.PIVOT_UTIL_GET_EXECUTOR_GET_METHOD, SupportOperationCallingConvention.INSTANCE);
-			NameResolution executorNameResolution = nameManager.globalNameManager.getExecutorNameResolution();
-		//	executorNameResolution.addCGElement(executorInit);
-			executorInit.setTypeId(nameManager.analyzer.getCGTypeId(JavaConstants.EXECUTOR_TYPE_ID));
-			CGValuedElement contextParameter;
-			if (!nameManager.isStatic) {
-				contextParameter = nameManager.analyzer.createCGVariableExp(nameManager.getThisParameter());
-			}
-			else {
-				CGParameter selfParameter = nameManager.basicGetSelfParameter();
-				if (selfParameter != null) {
-					contextParameter = nameManager.analyzer.createCGVariableExp(selfParameter);
-				}
-				else {
-					CGParameter anyParameter = nameManager.basicGetAnyParameter();
-					if (anyParameter != null) {
-						contextParameter = nameManager.analyzer.createCGVariableExp(anyParameter);
-					}
-					else {
-						contextParameter = nameManager.analyzer.createCGNull();
-					}
-				}
-			}
-			executorInit.getCgArguments().add(contextParameter);
-			executorInit.setRequired(true);
-			executorInit.setInvalidating(false);
-			CGVariable executorVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();
-			executorVariable.setTypeId(nameManager.analyzer.getCGTypeId(JavaConstants.EXECUTOR_TYPE_ID));
-			executorVariable.setInit(executorInit);
-			executorVariable.setNonInvalid();
-			executorVariable.setNonNull();
-			executorNameResolution.addCGElement(executorVariable);
-			return executorVariable;
-		}
-
-		public @NonNull CGVariable createQualifiedThisVariable() {
-			NameResolution qualifiedThisNameResolution = nameManager.globalNameManager.declareGlobalName(null, nameManager.asType.getName() + "_" + JavaConstants.THIS_NAME);
-			CGVariable qualifiedThisVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();
-			qualifiedThisVariable.setTypeId(nameManager.analyzer.getCGTypeId(nameManager.asType.getTypeId()));
-			qualifiedThisVariable.setInit(nameManager.getThisParameter());
-			qualifiedThisVariable.setNonInvalid();
-			qualifiedThisVariable.setNonNull();
-			qualifiedThisNameResolution.addCGElement(qualifiedThisVariable);
-			return qualifiedThisVariable;
-		}
-
 		public @NonNull CodeGenAnalyzer getAnalyzer() {
 			return nameManager.analyzer;
-		}
-
-		public @NonNull CGVariable getExecutorVariable() {
-			if (nameManager.asScope instanceof CallExp) {
-				return getOuterContext().getExecutorVariable();
-			}
-			CGVariable executorVariable2 = nameManager.executorVariable;
-			if (executorVariable2 == null) {
-				nameManager.executorVariable = executorVariable2 = createExecutorVariable();
-			}
-			return executorVariable2;
 		}
 
 		@Override
@@ -137,7 +78,7 @@ public class NestedNameManager extends NameManager
 			return nameManager;
 		}
 
-		protected @NonNull JavaLocalContext getOuterContext() {
+		public @NonNull JavaLocalContext getOuterContext() {
 			JavaLocalContext outerContext2 = basicGetOuterContext();
 			return ClassUtil.nonNullState(outerContext2);
 		}
@@ -160,17 +101,6 @@ public class NestedNameManager extends NameManager
 			throw new IllegalStateException("No '" + name + "' in " + cgValuedElement);
 		}
 
-		public @NonNull CGVariable getQualifiedThisVariable() {
-			if (nameManager.asScope instanceof CallExp) {
-				return getOuterContext().getQualifiedThisVariable();
-			}
-			CGVariable qualifiedThisVariable2 = nameManager.qualifiedThisVariable;
-			if (qualifiedThisVariable2 == null) {
-				nameManager.qualifiedThisVariable = qualifiedThisVariable2 = createQualifiedThisVariable();
-			}
-			return qualifiedThisVariable2;
-		}
-
 		@Override
 		public @NonNull CGNamedElement getScope() {
 			return nameManager.cgScope;
@@ -180,15 +110,6 @@ public class NestedNameManager extends NameManager
 //		public @NonNull CGVariable getStandardLibraryVariable(@NonNull CGValuedElement cgValuedElement) {
 //			return getStandardLibraryVariable();
 //		}
-
-		public @NonNull CGParameter getTypeIdParameter() {
-		//	assert !isStatic;
-			CGParameter typeIdParameter2 = nameManager.typeIdParameter;
-			if (typeIdParameter2 == null) {
-				nameManager.typeIdParameter = typeIdParameter2 = nameManager.codeGenerator.createTypeIdParameter();
-			}
-			return typeIdParameter2;
-		}
 
 		@Override
 		public @NonNull String toString() {
@@ -391,12 +312,49 @@ public class NestedNameManager extends NameManager
 		return anyParameter;
 	}
 
+	protected @NonNull CGVariable createExecutorVariable() {
+	//	assert !executorIsParameter;
+		CGNativeOperationCallExp executorInit = analyzer.createCGNativeOperationCallExp(JavaConstants.PIVOT_UTIL_GET_EXECUTOR_GET_METHOD, SupportOperationCallingConvention.INSTANCE);
+		NameResolution executorNameResolution = globalNameManager.getExecutorNameResolution();
+	//	executorNameResolution.addCGElement(executorInit);
+		executorInit.setTypeId(analyzer.getCGTypeId(JavaConstants.EXECUTOR_TYPE_ID));
+		CGValuedElement contextParameter;
+		if (!isStatic) {
+			contextParameter = analyzer.createCGVariableExp(getThisParameter());
+		}
+		else {
+			CGParameter selfParameter = basicGetSelfParameter();
+			if (selfParameter != null) {
+				contextParameter = analyzer.createCGVariableExp(selfParameter);
+			}
+			else {
+				CGParameter anyParameter = basicGetAnyParameter();
+				if (anyParameter != null) {
+					contextParameter = analyzer.createCGVariableExp(anyParameter);
+				}
+				else {
+					contextParameter = analyzer.createCGNull();
+				}
+			}
+		}
+		executorInit.getCgArguments().add(contextParameter);
+		executorInit.setRequired(true);
+		executorInit.setInvalidating(false);
+		CGVariable executorVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();
+		executorVariable.setTypeId(analyzer.getCGTypeId(JavaConstants.EXECUTOR_TYPE_ID));
+		executorVariable.setInit(executorInit);
+		executorVariable.setNonInvalid();
+		executorVariable.setNonNull();
+		executorNameResolution.addCGElement(executorVariable);
+		return executorVariable;
+	}
+
 	public @NonNull CGVariable createIdResolverVariable() {
 		CGNativeOperationCallExp idResolverInit = analyzer.createCGNativeOperationCallExp(JavaConstants.EXECUTOR_GET_ID_RESOLVER_METHOD, SupportOperationCallingConvention.INSTANCE);
 		NameResolution idResolverNameResolution = globalNameManager.getIdResolverNameResolution();
 		idResolverNameResolution.addCGElement(idResolverInit);
 		idResolverInit.setTypeId(analyzer.getCGTypeId(JavaConstants.ID_RESOLVER_TYPE_ID));
-		idResolverInit.setCgThis(analyzer.createCGVariableExp(localContext.getExecutorVariable()));
+		idResolverInit.setCgThis(analyzer.createCGVariableExp(getExecutorVariable()));
 		idResolverInit.setRequired(true);
 		idResolverInit.setInvalidating(false);
 		CGVariable idResolverVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();
@@ -413,7 +371,7 @@ public class NestedNameManager extends NameManager
 		NameResolution modelManagerNameResolution = globalNameManager.getModelManagerNameResolution();
 		modelManagerNameResolution.addCGElement(modelManagerInit);
 		modelManagerInit.setTypeId(analyzer.getCGTypeId(JavaConstants.MODEL_MANAGER_TYPE_ID));
-		modelManagerInit.setCgThis(analyzer.createCGVariableExp(localContext.getExecutorVariable()));
+		modelManagerInit.setCgThis(analyzer.createCGVariableExp(getExecutorVariable()));
 		modelManagerInit.setRequired(true);
 		modelManagerInit.setInvalidating(false);
 		CGVariable modelManagerVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();
@@ -427,6 +385,17 @@ public class NestedNameManager extends NameManager
 
 	protected @NonNull JavaLocalContext createLocalContext(@NonNull NameManager outerNameManager) {
 		return new JavaLocalContext(outerNameManager, this);
+	}
+
+	public @NonNull CGVariable createQualifiedThisVariable() {
+		NameResolution qualifiedThisNameResolution = globalNameManager.declareGlobalName(null, asType.getName() + "_" + JavaConstants.THIS_NAME);
+		CGVariable qualifiedThisVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();
+		qualifiedThisVariable.setTypeId(analyzer.getCGTypeId(asType.getTypeId()));
+		qualifiedThisVariable.setInit(getThisParameter());
+		qualifiedThisVariable.setNonInvalid();
+		qualifiedThisVariable.setNonNull();
+		qualifiedThisNameResolution.addCGElement(qualifiedThisVariable);
+		return qualifiedThisVariable;
 	}
 
 	protected @NonNull CGParameter createSelfParameter() {
@@ -463,7 +432,7 @@ public class NestedNameManager extends NameManager
 		NameResolution standardLibraryNameResolution = globalNameManager.getStandardLibraryVariableNameResolution();
 		standardLibraryNameResolution.addCGElement(standardLibraryInit);
 		standardLibraryInit.setTypeId(analyzer.getCGTypeId(JavaConstants.STANDARD_LIBRARY_TYPE_ID));
-		standardLibraryInit.setCgThis(analyzer.createCGVariableExp(localContext.getExecutorVariable()));
+		standardLibraryInit.setCgThis(analyzer.createCGVariableExp(getExecutorVariable()));
 		standardLibraryInit.setRequired(true);
 		standardLibraryInit.setInvalidating(false);
 		CGVariable standardLibraryVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();
@@ -578,6 +547,17 @@ public class NestedNameManager extends NameManager
 		return (CGParameter)executorVariable2;
 	}
 
+	public @NonNull CGVariable getExecutorVariable() {
+		if (asScope instanceof CallExp) {
+			return localContext.getOuterContext().nameManager.getExecutorVariable();
+		}
+		CGVariable executorVariable2 = executorVariable;
+		if (executorVariable2 == null) {
+			executorVariable = executorVariable2 = createExecutorVariable();
+		}
+		return executorVariable2;
+	}
+
 	public @NonNull CGVariable getIdResolverVariable() {
 		if (asScope instanceof CallExp) {
 			JavaLocalContext outerContext = localContext.getOuterContext();
@@ -622,6 +602,17 @@ public class NestedNameManager extends NameManager
 		return unsafeNameResolution;
 	}
 
+	public @NonNull CGVariable getQualifiedThisVariable() {
+		if (asScope instanceof CallExp) {
+			return localContext.getOuterContext().nameManager.getQualifiedThisVariable();
+		}
+		CGVariable qualifiedThisVariable2 = qualifiedThisVariable;
+		if (qualifiedThisVariable2 == null) {
+			qualifiedThisVariable = qualifiedThisVariable2 = createQualifiedThisVariable();
+		}
+		return qualifiedThisVariable2;
+	}
+
 	public @NonNull CGParameter getSelfParameter() {
 	//	assert !isStatic;
 		CGParameter selfParameter2 = selfParameter;
@@ -649,6 +640,15 @@ public class NestedNameManager extends NameManager
 			thisParameter = thisParameter2 = createThisParameter();
 		}
 		return thisParameter2;
+	}
+
+	public @NonNull CGParameter getTypeIdParameter() {
+	//	assert !isStatic;
+		CGParameter typeIdParameter2 = typeIdParameter;
+		if (typeIdParameter2 == null) {
+			typeIdParameter = typeIdParameter2 = codeGenerator.createTypeIdParameter();
+		}
+		return typeIdParameter2;
 	}
 
 /*	public @NonNull String getVariantResolvedName(@NonNull CGValuedElement cgElement, @NonNull NameVariant nameVariant) {
