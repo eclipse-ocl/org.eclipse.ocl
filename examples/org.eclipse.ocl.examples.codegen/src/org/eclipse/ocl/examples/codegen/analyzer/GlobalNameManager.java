@@ -228,9 +228,18 @@ public class GlobalNameManager extends NameManager
 		return null;
 	}
 
-	public @Nullable JavaLocalContext basicGetLocalContext(@NonNull CGNamedElement cgElement) {
-		NestedNameManager nestedNameManager = cgScope2nestedNameManager.get(cgElement);
-		return nestedNameManager != null ? nestedNameManager.getLocalContext() : null;
+	public @Nullable NestedNameManager basicFindNameManager(@NonNull CGNamedElement cgElement) {
+		for (CGElement cgScope = cgElement; cgScope != null; cgScope = cgScope.getParent()) {
+			NestedNameManager nestedNameManager = cgScope2nestedNameManager.get(cgScope);
+			if (nestedNameManager != null) {
+				return nestedNameManager;
+			}
+		}
+		return null;
+	}
+
+	public @Nullable NestedNameManager basicGetNameManager(@NonNull CGNamedElement cgElement) {
+		return cgScope2nestedNameManager.get(cgElement);
 	}
 
 	public @Nullable NameManager bascGetScope(@NonNull CGNamedElement cgElement) {
@@ -271,20 +280,13 @@ public class GlobalNameManager extends NameManager
 		assert (old == null) || (old == nameManager);
 	}
 
-	public @NonNull JavaLocalContext findLocalContext(@NonNull CGNamedElement cgElement) {
-		return ClassUtil.nonNullState(basicFindLocalContext(cgElement));
+	public @NonNull JavaLocalContext findLocalContext(@NonNull CGNamedElement cgScope) {
+		return ClassUtil.nonNullState(basicFindLocalContext(cgScope));
 	}
 
-
-
-
-
-
-
-//	@Deprecated /* deprecated use getImportManager */
-//	public @NonNull Set<@NonNull String> getImports() {
-//		return importNameManager.getLong2ShortImportNames().keySet();
-//	}
+	public @NonNull NestedNameManager findNameManager(@NonNull CGNamedElement cgScope) {
+		return ClassUtil.nonNullState(basicFindNameManager(cgScope));
+	}
 
 	public @NonNull CodeGenAnalyzer getAnalyzer() {
 		return analyzer;
@@ -360,18 +362,9 @@ public class GlobalNameManager extends NameManager
 		return instanceName;
 	}
 
-	//	@Deprecated /* deprecated use getImportManager */
-	//	public @NonNull Set<@NonNull String> getImports() {
-	//		return importNameManager.getLong2ShortImportNames().keySet();
-	//	}
-
-		@Override
-		protected @NonNull String getLazyNameHint(@NonNull CGValuedElement cgNamedValue) {
-			return helper.getNameHint(cgNamedValue);
-		}
-
-	public @NonNull JavaLocalContext getLocalContext(@NonNull CGNamedElement cgElement) {
-		return ClassUtil.nonNullState(basicGetLocalContext(cgElement));
+	@Override
+	protected @NonNull String getLazyNameHint(@NonNull CGValuedElement cgNamedValue) {
+		return helper.getNameHint(cgNamedValue);
 	}
 
 	public @NonNull String getModelManagerName() {
@@ -381,10 +374,6 @@ public class GlobalNameManager extends NameManager
 	public @NonNull NameResolution getModelManagerNameResolution() {
 		return modelManagerName;
 	}
-
-//	public @NonNull GlobalNameManager getNameManager() {
-//		return globalNameManager;
-//	}
 
 	public @NonNull String getReservedName(@NonNull String name) {
 		return ClassUtil.nonNullState(name2reservedNameResolutions.get(name)).getResolvedName();

@@ -608,7 +608,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	public @NonNull NameResolution getNameResolution(@NonNull CGValuedElement cgElement) {
 		NameResolution nameResolution = cgElement.basicGetNameResolution(); //.getNameVariant(guardedNameVariant);
 		if (nameResolution == null) {
-			NestedNameManager nameManager = globalNameManager.findLocalContext(cgElement).getNameManager();
+			NestedNameManager nameManager = globalNameManager.findNameManager(cgElement);
 			nameResolution = nameManager.declareLazyName(cgElement);
 		}
 		return nameResolution;
@@ -853,7 +853,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 					CGVariable cgVariable = (@NonNull CGVariable)cgElement;
 					NameResolution nameResolution = cgVariable.basicGetNameResolution();
 					if (nameResolution == null) {
-						nameResolution = globalNameManager.findLocalContext(cgVariable).getNameManager().declareLazyName(cgVariable);
+						nameResolution = globalNameManager.findNameManager(cgVariable).declareLazyName(cgVariable);
 					}
 					visitInPostOrder2(cgChild, nameResolution);
 				}

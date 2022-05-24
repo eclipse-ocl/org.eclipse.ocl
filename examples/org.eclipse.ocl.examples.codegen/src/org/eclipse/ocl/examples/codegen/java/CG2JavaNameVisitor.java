@@ -16,7 +16,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
-import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager.JavaLocalContext;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBuiltInIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCatchExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
@@ -43,7 +42,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 public class CG2JavaNameVisitor extends AbstractExtendingCGModelVisitor<@Nullable Object, @NonNull JavaCodeGenerator>
 {
 	protected final @NonNull GlobalNameManager globalNameManager;
-	private @Nullable JavaLocalContext localContext;
+	private @Nullable NestedNameManager currentNameManager;
 
 	public CG2JavaNameVisitor(@NonNull JavaCodeGenerator codeGenerator) {
 		super(codeGenerator);
@@ -51,21 +50,21 @@ public class CG2JavaNameVisitor extends AbstractExtendingCGModelVisitor<@Nullabl
 	}
 
 	protected @NonNull NestedNameManager getNameManager() {
-		return ClassUtil.nonNullState(localContext).getNameManager();
+		return ClassUtil.nonNullState(currentNameManager);
 	}
 
-	protected JavaLocalContext popLocalContext(@Nullable JavaLocalContext savedLocalContext) {
-		if (savedLocalContext == null) {
-			JavaLocalContext localContext2 = localContext;
-			assert localContext2 != null;
+	protected void popNameManager(@Nullable NestedNameManager savedNameManager) {
+		if (savedNameManager == null) {
+			NestedNameManager currentNameManager2 = currentNameManager;
+			assert currentNameManager2 != null;
 		}
-		return localContext = savedLocalContext;
+		currentNameManager = savedNameManager;
 	}
 
-	protected @Nullable JavaLocalContext pushLocalContext(@NonNull CGNamedElement cgNamedElement) {
-		JavaLocalContext savedLocalContext = localContext;
-		localContext = globalNameManager.findLocalContext(cgNamedElement);
-		return savedLocalContext;
+	protected @Nullable NestedNameManager pushNameManager(@NonNull CGNamedElement cgNamedElement) {
+		NestedNameManager savedNameManager = currentNameManager;
+		currentNameManager = globalNameManager.findNameManager(cgNamedElement);
+		return savedNameManager;
 	}
 
 	@Override
@@ -83,12 +82,12 @@ public class CG2JavaNameVisitor extends AbstractExtendingCGModelVisitor<@Nullabl
 	@Override
 	public @Nullable Object visitCGClass(@NonNull CGClass cgClass) {
 		if (cgClass.getAst() != null) {
-			JavaLocalContext savedLocalContext = pushLocalContext(cgClass);
+			NestedNameManager savedNameManager = pushNameManager(cgClass);
 			try {
 				return super.visitCGClass(cgClass);
 			}
 			finally {
-				popLocalContext(savedLocalContext);
+				popNameManager(savedNameManager);
 			}
 		}
 		else {
@@ -98,23 +97,23 @@ public class CG2JavaNameVisitor extends AbstractExtendingCGModelVisitor<@Nullabl
 
 	@Override
 	public @Nullable Object visitCGConstrainedProperty(@NonNull CGConstrainedProperty cgProperty) {
-		JavaLocalContext savedLocalContext = pushLocalContext(cgProperty);
+		NestedNameManager savedNameManager = pushNameManager(cgProperty);
 		try {
 			return super.visitCGConstrainedProperty(cgProperty);
 		}
 		finally {
-			popLocalContext(savedLocalContext);
+			popNameManager(savedNameManager);
 		}
 	}
 
 	@Override
 	public @Nullable Object visitCGConstraint(@NonNull CGConstraint cgConstraint) {
-		JavaLocalContext savedLocalContext = pushLocalContext(cgConstraint);
+		NestedNameManager savedNameManager = pushNameManager(cgConstraint);
 		try {
 			return super.visitCGConstraint(cgConstraint);
 		}
 		finally {
-			popLocalContext(savedLocalContext);
+			popNameManager(savedNameManager);
 		}
 	}
 
@@ -131,12 +130,12 @@ public class CG2JavaNameVisitor extends AbstractExtendingCGModelVisitor<@Nullabl
 
 	@Override
 	public @Nullable Object visitCGForeignProperty(@NonNull CGForeignProperty cgForeignProperty) {
-		JavaLocalContext savedLocalContext = pushLocalContext(cgForeignProperty);
+		NestedNameManager savedNameManager = pushNameManager(cgForeignProperty);
 		try {
 			return super.visitCGProperty(cgForeignProperty);
 		}
 		finally {
-			popLocalContext(savedLocalContext);
+			popNameManager(savedNameManager);
 		}
 	}
 
@@ -158,9 +157,9 @@ public class CG2JavaNameVisitor extends AbstractExtendingCGModelVisitor<@Nullabl
 		outerNameManager.addNameVariant(cgIterationCallExp, context.getMGR_NameVariant());
 		outerNameManager.addNameVariant(cgIterationCallExp, context.getTYPE_NameVariant());
 		NestedNameManager innerNameManager;
-		JavaLocalContext savedLocalContext = null;
+		NestedNameManager savedNameManager = null;
 		if (iterationHelper == null) {					// No helper nests iterators/accumulators in a nested function.
-			savedLocalContext = pushLocalContext(cgIterationCallExp);
+			savedNameManager = pushNameManager(cgIterationCallExp);
 			innerNameManager = getNameManager();
 		}
 		else {
@@ -178,10 +177,10 @@ public class CG2JavaNameVisitor extends AbstractExtendingCGModelVisitor<@Nullabl
 			}
 		}
 		if (iterationHelper != null) {					// No helper only has a nested scope for the body.
-			savedLocalContext = pushLocalContext(cgIterationCallExp);
+			savedNameManager = pushNameManager(cgIterationCallExp);
 			innerNameManager = getNameManager();
 		}
-		assert savedLocalContext != null;
+		assert savedNameManager != null;
 		try {
 			CGValuedElement cgBody = cgIterationCallExp.getBody();
 			if (cgBody != null) {
@@ -190,29 +189,29 @@ public class CG2JavaNameVisitor extends AbstractExtendingCGModelVisitor<@Nullabl
 			return null;
 		}
 		finally {
-			popLocalContext(savedLocalContext);
+			popNameManager(savedNameManager);
 		}
 	}
 
 	@Override
 	public @Nullable Object visitCGNativeProperty(@NonNull CGNativeProperty cgProperty) {
-		JavaLocalContext savedLocalContext = pushLocalContext(cgProperty);
+		NestedNameManager savedNameManager = pushNameManager(cgProperty);
 		try {
 			return super.visitCGNativeProperty(cgProperty);
 		}
 		finally {
-			popLocalContext(savedLocalContext);
+			popNameManager(savedNameManager);
 		}
 	}
 
 	@Override
 	public @Nullable Object visitCGOperation(@NonNull CGOperation cgOperation) {
-		JavaLocalContext savedLocalContext = pushLocalContext(cgOperation);
+		NestedNameManager savedNameManager = pushNameManager(cgOperation);
 		try {
 			return super.visitCGOperation(cgOperation);
 		}
 		finally {
-			popLocalContext(savedLocalContext);
+			popNameManager(savedNameManager);
 		}
 	}
 }

@@ -322,12 +322,12 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 		CGVariable cgVariable;
 		if ((asVariable instanceof Parameter) && isThis((Parameter)asVariable)) {
-			JavaLocalContext localContext = globalNameManager.findLocalContext(getCurrentClass());
+			NestedNameManager nameManager = globalNameManager.findNameManager(getCurrentClass());
 			if (isQualifiedThis(asVariableExp, (Parameter)asVariable)) {
-				cgVariable = localContext.getNameManager().getQualifiedThisVariable();
+				cgVariable = nameManager.getQualifiedThisVariable();
 			}
 			else {
-				cgVariable = localContext.getNameManager().getThisParameter();
+				cgVariable = nameManager.getThisParameter();
 			}
 		}
 		else {
@@ -990,12 +990,9 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	public @Nullable NestedNameManager pushNameManager(@NonNull CGNamedElement cgElement) {
 		NestedNameManager savedNameManager = currentNameManager;
-		LocalContext localContext2 = globalNameManager.basicGetLocalContext(cgElement);
-		if (localContext2 == null) {
+		currentNameManager = globalNameManager.basicGetNameManager(cgElement);
+		if (currentNameManager == null) {
 			currentNameManager = globalNameManager.createNestedNameManager(savedNameManager, cgElement);
-		}
-		else {
-			currentNameManager = ((JavaLocalContext)localContext2).getNameManager();
 		}
 		return savedNameManager;
 	}

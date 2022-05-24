@@ -16,7 +16,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
-import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager.JavaLocalContext;
+import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBoxExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBuiltInIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCollectionExp;
@@ -88,8 +88,8 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 	protected final @NonNull GlobalNameManager globalNameManager;
 	protected final @NonNull GenModelHelper genModelHelper;
 	protected final @NonNull CodeGenAnalyzer analyzer;
-	private @Nullable JavaLocalContext treeContext;
-	private @Nullable JavaLocalContext localContext;
+	private @Nullable NestedNameManager treeNameManager;
+	private @Nullable NestedNameManager currentNameManager;
 
 	public CG2JavaPreVisitor(@NonNull JavaCodeGenerator codeGenerator) {
 		super(codeGenerator);
@@ -155,42 +155,42 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 		return context;
 	}
 
-	protected @NonNull JavaLocalContext getTreeContext() {
-		return ClassUtil.nonNullState(treeContext);
+	protected @NonNull NestedNameManager getTreeNameManager() {
+		return ClassUtil.nonNullState(treeNameManager);
 	}
 
 	protected @Nullable CGVariable installExecutorVariable(@NonNull CGValuedElement cgElement) {
-		return getTreeContext().getNameManager().getExecutorVariable();
+		return getTreeNameManager().getExecutorVariable();
 	}
 
 	protected @NonNull CGVariable installIdResolverVariable(@NonNull CGValuedElement cgElement) {
-		return getTreeContext().getNameManager().getIdResolverVariable();
+		return getTreeNameManager().getIdResolverVariable();
 	}
 
 	protected @NonNull CGVariable installStandardLibraryVariable(@NonNull CGValuedElement cgElement) {
-		return getTreeContext().getNameManager().getStandardLibraryVariable();
+		return getTreeNameManager().getStandardLibraryVariable();
 	}
 
-	protected JavaLocalContext popLocalContext(@Nullable JavaLocalContext savedLocalContext) {
+	protected void popNameManager(@Nullable NestedNameManager savedLocalContext) {
 		if (savedLocalContext == null) {
-			JavaLocalContext localContext2 = localContext;
-			assert localContext2 != null;
-			CGValuedElement cgTree = localContext2.getNameManager().getBody();
+			NestedNameManager currentNameManager2 = currentNameManager;
+			assert currentNameManager2 != null;
+			CGValuedElement cgTree = currentNameManager2.getBody();
 			if (cgTree != null) {
-				cgTree = localContext2.getNameManager().wrapLetVariables(cgTree);
+				cgTree = currentNameManager2.wrapLetVariables(cgTree);
 			}
 		}
 		if (savedLocalContext == null) {
-			treeContext = null;
+			treeNameManager = null;
 		}
-		return localContext = savedLocalContext;
+		currentNameManager = savedLocalContext;
 	}
 
-	protected @Nullable JavaLocalContext pushLocalContext(@NonNull CGNamedElement cgNamedlement) {
-		JavaLocalContext savedLocalContext = localContext;
-		localContext = globalNameManager.findLocalContext(cgNamedlement);
+	protected @Nullable NestedNameManager pushNameManager(@NonNull CGNamedElement cgNamedlement) {
+		NestedNameManager savedLocalContext = currentNameManager;
+		currentNameManager = globalNameManager.findNameManager(cgNamedlement);
 		if (savedLocalContext == null) {
-			treeContext = localContext;
+			treeNameManager = currentNameManager;
 		}
 		return savedLocalContext;
 	}
@@ -245,23 +245,23 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 
 	@Override
 	public @Nullable Object visitCGConstrainedProperty(@NonNull CGConstrainedProperty cgProperty) {
-		JavaLocalContext savedLocalContext = pushLocalContext(cgProperty);
+		NestedNameManager savedNameManager = pushNameManager(cgProperty);
 		try {
 			return super.visitCGConstrainedProperty(cgProperty);
 		}
 		finally {
-			popLocalContext(savedLocalContext);
+			popNameManager(savedNameManager);
 		}
 	}
 
 	@Override
 	public @Nullable Object visitCGConstraint(@NonNull CGConstraint cgConstraint) {
-		JavaLocalContext savedLocalContext = pushLocalContext(cgConstraint);
+		NestedNameManager savedNameManager = pushNameManager(cgConstraint);
 		try {
 			return super.visitCGConstraint(cgConstraint);
 		}
 		finally {
-			popLocalContext(savedLocalContext);
+			popNameManager(savedNameManager);
 		}
 	}
 
@@ -358,13 +358,13 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 
 	@Override
 	public @Nullable Object visitCGForeignProperty(@NonNull CGForeignProperty cgForeignProperty) {
-		JavaLocalContext savedLocalContext = pushLocalContext(cgForeignProperty);
+		NestedNameManager savedNameManager = pushNameManager(cgForeignProperty);
 		try {
 			installExecutorVariable(cgForeignProperty);
 			return super.visitCGProperty(cgForeignProperty);
 		}
 		finally {
-			popLocalContext(savedLocalContext);
+			popNameManager(savedNameManager);
 		}
 	}
 
@@ -378,9 +378,9 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 		if (cgSource != null) {
 			cgSource.accept(this);
 		}
-		JavaLocalContext savedLocalContext = null;
+		NestedNameManager savedNameManager = null;
 		if (iterationHelper == null) {					// No helper nests iterators/accumulators in a nested function.
-			savedLocalContext = pushLocalContext(cgIterationCallExp);
+			savedNameManager = pushNameManager(cgIterationCallExp);
 		}
 		for (CGIterator cgIterator : CGUtil.getIterators(cgIterationCallExp)) {
 			cgIterator.accept(this);
@@ -392,9 +392,9 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 			}
 		}
 		if (iterationHelper != null) {					// No helper only has a nested scope for the body.
-			savedLocalContext = pushLocalContext(cgIterationCallExp);
+			savedNameManager = pushNameManager(cgIterationCallExp);
 		}
-		assert savedLocalContext != null;
+		assert savedNameManager != null;
 		try {
 			CGValuedElement cgBody = cgIterationCallExp.getBody();
 			if (cgBody != null) {
@@ -403,7 +403,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 			return null;
 		}
 		finally {
-			popLocalContext(savedLocalContext);
+			popNameManager(savedNameManager);
 		}
 	}
 
@@ -468,23 +468,23 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 
 	@Override
 	public @Nullable Object visitCGNativeProperty(@NonNull CGNativeProperty cgProperty) {
-		JavaLocalContext savedLocalContext = pushLocalContext(cgProperty);
+		NestedNameManager savedNameManager = pushNameManager(cgProperty);
 		try {
 			return super.visitCGNativeProperty(cgProperty);
 		}
 		finally {
-			popLocalContext(savedLocalContext);
+			popNameManager(savedNameManager);
 		}
 	}
 
 	@Override
 	public @Nullable Object visitCGOperation(@NonNull CGOperation cgOperation) {
-		JavaLocalContext savedLocalContext = pushLocalContext(cgOperation);
+		NestedNameManager savedNameManager = pushNameManager(cgOperation);
 		try {
 			return super.visitCGOperation(cgOperation);
 		}
 		finally {
-			popLocalContext(savedLocalContext);
+			popNameManager(savedNameManager);
 		}
 	}
 
@@ -501,7 +501,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 	public @Nullable Object visitCGShadowPart(@NonNull CGShadowPart cgShadowPart) {
 		CGExecutorShadowPart cgExecutorConstructorPart = cgShadowPart.getExecutorPart();
 		cgExecutorConstructorPart.accept(this);
-		//		localContext.addLocalVariable(cgExecutorConstructorPart);
+		//		currentNameManager.addLocalVariable(cgExecutorConstructorPart);
 		installIdResolverVariable(cgExecutorConstructorPart);
 		cgShadowPart.getOwns().add(cgExecutorConstructorPart);
 		cgShadowPart.getDependsOn().add(cgExecutorConstructorPart);
