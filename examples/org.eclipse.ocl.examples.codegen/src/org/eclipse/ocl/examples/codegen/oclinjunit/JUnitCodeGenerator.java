@@ -35,7 +35,6 @@ import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.java.JavaImportNameManager;
 import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreTablesUtils.CodeGenString;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
-import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -67,8 +66,8 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 	protected static class JUnitNestedNameManager extends NestedNameManager
 	{
 		protected JUnitNestedNameManager(@NonNull JavaCodeGenerator codeGenerator, @NonNull NameManager parent, @NonNull JavaLocalContext localContext,
-				@NonNull CGNamedElement cgScope, @NonNull NamedElement asScope, @NonNull Type asType, boolean isStatic) {
-			super(codeGenerator, parent, localContext, cgScope, asScope, asType, isStatic);
+				@NonNull CGNamedElement cgScope, @NonNull Type asType) {
+			super(codeGenerator, parent, localContext, cgScope, asType);
 		}
 	}
 
@@ -102,7 +101,7 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		//	junitCallingConvention.createCGOperationWithoutBody(as2cgVisitor, asOperation);		// no root asOperation
 		cgOperation.setCallingConvention(junitCallingConvention);
 		as2cgVisitor.initAst(cgOperation, expInOcl);
-		LocalContext savedLocalContext = as2cgVisitor.pushLocalContext(cgOperation, expInOcl);
+		LocalContext savedLocalContext = as2cgVisitor.pushLocalContext(cgOperation);
 		junitCallingConvention.createCGParameters(as2cgVisitor, cgOperation, expInOcl);
 	//	cgOperation.setAst(expInOcl);
 		Type type = expInOcl.getType();
@@ -130,14 +129,14 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 
 	@Override
 	public @NonNull JavaLocalContext createLocalContext(@Nullable JavaLocalContext outerContext, @NonNull NameManager outerNameManager,
-			@NonNull CGNamedElement cgNamedElement, @NonNull NamedElement asNamedElement, @NonNull Type asType) {
-		return new JUnitLocalContext(this, outerContext, outerNameManager, cgNamedElement, asNamedElement, asType);
+			@NonNull CGNamedElement cgScope, @NonNull Type asType) {
+		return new JUnitLocalContext(this, outerContext, outerNameManager, cgScope, asType);
 	}
 
 	@Override
 	public @NonNull NestedNameManager createNestedNameManager(@NonNull NameManager outerNameManager, @NonNull JavaLocalContext localContext,
-			@NonNull CGNamedElement cgScope, @NonNull NamedElement asScope, @NonNull Type asType, boolean isStatic) {
-		return new JUnitNestedNameManager(this, outerNameManager, localContext, cgScope, asScope, asType, isStatic);
+			@NonNull CGNamedElement cgScope, @NonNull Type asType) {
+		return new JUnitNestedNameManager(this, outerNameManager, localContext, cgScope, asType);
 	}
 
 	protected @NonNull String generate(@NonNull ExpressionInOCL expInOcl, @NonNull String packageName, @NonNull String className) {

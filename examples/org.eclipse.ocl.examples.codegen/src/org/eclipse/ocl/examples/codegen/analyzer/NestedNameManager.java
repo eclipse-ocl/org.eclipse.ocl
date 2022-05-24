@@ -61,11 +61,9 @@ public class NestedNameManager extends NameManager
 		protected final @NonNull NestedNameManager nameManager;
 
 		public JavaLocalContext(@NonNull JavaCodeGenerator codeGenerator, @Nullable JavaLocalContext outerContext, @NonNull NameManager outerNameManager,
-				@NonNull CGNamedElement cgScope, @NonNull NamedElement asScope, @NonNull Type asType) {
+				@NonNull CGNamedElement cgScope, @NonNull Type asType) {
 			this.outerContext = outerContext;
-			boolean staticFeature = (asScope instanceof Feature) && ((Feature)asScope).isIsStatic();
-			boolean isStatic = /*(asScope == null) ||*/ staticFeature;
-			this.nameManager = codeGenerator.createNestedNameManager(outerNameManager, this, cgScope, asScope, asType, isStatic);
+			this.nameManager = codeGenerator.createNestedNameManager(outerNameManager, this, cgScope, asType);
 			NameManager parentNameManager = nameManager.parent;
 			assert (parentNameManager instanceof NestedNameManager) ?  (outerContext == ((NestedNameManager)parentNameManager).localContext) : (outerContext == null);
 		}
@@ -386,7 +384,7 @@ public class NestedNameManager extends NameManager
 	private /*@LazyNonNull*/ CGParameter anyParameter = null;				// A local parameter spelled "any" to be added to the static signature
 
 	public NestedNameManager(@NonNull JavaCodeGenerator codeGenerator, @NonNull NameManager parent, @NonNull JavaLocalContext localContext,
-			@NonNull CGNamedElement cgScope, @NonNull NamedElement asScope, @NonNull Type asType, boolean isStatic) {
+			@NonNull CGNamedElement cgScope, @NonNull Type asType) {
 		super(parent, parent.helper);
 
 
@@ -397,8 +395,10 @@ public class NestedNameManager extends NameManager
 
 		this.parent = parent;
 		this.cgScope = cgScope;
-		this.asScope = asScope;
+		this.asScope = CGUtil.getAST(cgScope);
 		this.asType = asType;
+		boolean staticFeature = (asScope instanceof Feature) && ((Feature)asScope).isIsStatic();
+		boolean isStatic = /*(asScope == null) ||*/ staticFeature;
 		this.isStatic = isStatic;
 		assert !(parent instanceof NestedNameManager) || (((NestedNameManager)parent).cgScope != cgScope);		// XXX
 		parent.addChild(this);

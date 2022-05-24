@@ -84,7 +84,6 @@ import org.eclipse.ocl.examples.codegen.utilities.AbstractCGModelResourceFactory
 import org.eclipse.ocl.examples.codegen.utilities.CGModelResource;
 import org.eclipse.ocl.examples.codegen.utilities.CGModelResourceFactory;
 import org.eclipse.ocl.pivot.Iteration;
-import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Property;
@@ -326,8 +325,8 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	}
 
 	public @NonNull JavaLocalContext createLocalContext(@Nullable JavaLocalContext outerContext, @NonNull NameManager outerNameManager,
-			@NonNull CGNamedElement cgNamedElement, @NonNull NamedElement asNamedElement, @NonNull Type asType) {
-		return new JavaLocalContext(this, outerContext, outerNameManager, cgNamedElement, asNamedElement, asType);
+			@NonNull CGNamedElement cgNamedElement, @NonNull Type asType) {
+		return new JavaLocalContext(this, outerContext, outerNameManager, cgNamedElement, asType);
 	}
 
 	protected @NonNull NameManagerHelper createNameManagerHelper() {
@@ -335,8 +334,8 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	}
 
 	public @NonNull NestedNameManager createNestedNameManager(@NonNull NameManager outerNameManager, @NonNull JavaLocalContext localContext,
-			@NonNull CGNamedElement cgScope, @NonNull NamedElement asScope, @NonNull Type asType, boolean isStatic) {
-		return new NestedNameManager(this, outerNameManager, localContext, cgScope, asScope, asType, isStatic);
+			@NonNull CGNamedElement cgScope, @NonNull Type asType) {
+		return new NestedNameManager(this, outerNameManager, localContext, cgScope, asType);
 	}
 
 	@Override

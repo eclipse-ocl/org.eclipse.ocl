@@ -666,7 +666,7 @@ public class CodeGenAnalyzer
 			cgNativeOperation.setRequired(asOperation.isIsRequired());
 			cgNativeOperation.setCallingConvention(callingConvention);
 			cgNativeOperation.setAst(asOperation);
-			LocalContext localContext = globalNameManager.initLocalContext(null, cgNativeOperation, asOperation);
+			LocalContext localContext = globalNameManager.initLocalContext(null, cgNativeOperation);
 			List<CGParameter> cgParameters = cgNativeOperation.getParameters();
 			NestedNameManager nameManager = localContext.getNameManager();
 			for (org.eclipse.ocl.pivot.Parameter asParameter : asOperation.getOwnedParameters()) {

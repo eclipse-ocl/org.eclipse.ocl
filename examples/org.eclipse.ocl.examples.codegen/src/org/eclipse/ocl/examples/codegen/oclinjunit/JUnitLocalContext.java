@@ -16,7 +16,6 @@ import org.eclipse.ocl.examples.codegen.analyzer.NameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager.JavaLocalContext;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
-import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Type;
 
 /**
@@ -25,8 +24,8 @@ import org.eclipse.ocl.pivot.Type;
 public class JUnitLocalContext extends JavaLocalContext
 {
 	public JUnitLocalContext(@NonNull JUnitCodeGenerator codeGenerator, @Nullable JavaLocalContext outerContext, @NonNull NameManager outerNameManager,
-			@NonNull CGNamedElement cgScope, @NonNull NamedElement asScope, @NonNull Type asType) {
-		super(codeGenerator, outerContext, outerNameManager, cgScope, asScope, asType);
+			@NonNull CGNamedElement cgScope, @NonNull Type asType) {
+		super(codeGenerator, outerContext, outerNameManager, cgScope, asType);
 	}
 
 	@Override

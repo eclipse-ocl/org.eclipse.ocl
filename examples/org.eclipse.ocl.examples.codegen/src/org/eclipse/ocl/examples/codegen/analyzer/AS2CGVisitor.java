@@ -106,7 +106,6 @@ import org.eclipse.ocl.pivot.LetExp;
 import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.MapLiteralExp;
 import org.eclipse.ocl.pivot.MapLiteralPart;
-import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.NullLiteralExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
@@ -433,7 +432,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		LocalContext savedLocalContext = null;
 		if (iterationHelper == null) {			// No helper: iterators are arguments of a nested context
 			initAst(cgIterationCallExp, asLoopExp);
-			savedLocalContext = pushLocalContext(cgIterationCallExp, asLoopExp);
+			savedLocalContext = pushLocalContext(cgIterationCallExp);
 		}
 		for (@NonNull Variable iterator : PivotUtil.getOwnedIterators(asLoopExp)) {
 			CGIterator cgIterator = getIterator(iterator);
@@ -484,7 +483,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		}
 		if (iterationHelper != null) {			// Helper: iterators are part of invocation context
 			initAst(cgIterationCallExp, asLoopExp);
-			savedLocalContext = pushLocalContext(cgIterationCallExp, asLoopExp);
+			savedLocalContext = pushLocalContext(cgIterationCallExp);
 		}
 		//
 		//	Body
@@ -547,14 +546,14 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			else {
 				assert cgClass.getAst() == asClass;
 			}
-			LocalContext savedPreClassContext = pushLocalContext(cgClass, asClass);
+			LocalContext savedPreClassContext = pushLocalContext(cgClass);
 			try {
 				OperationCallingConvention callingConvention = context.getCallingConvention(asOperation, isFinal);
 				cgOperation = callingConvention.createCGOperation(this, asSourceType, asOperation);
 				assert cgOperation.getAst() != null;
 				assert cgOperation.getCallingConvention() == callingConvention;
 				getNameManager().declarePreferredName(cgOperation);
-				LocalContext savedClassContext = pushLocalContext(cgOperation, asOperation);
+				LocalContext savedClassContext = pushLocalContext(cgOperation);
 				ExpressionInOCL asExpressionInOCL = null;
 				LanguageExpression asSpecification = asOperation.getBodyExpression();
 				if (asSpecification != null) {
@@ -604,7 +603,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			cgProperty.setCallingConvention(callingConvention);
 			analyzer.addCGProperty(cgProperty);
 			getNameManager().declarePreferredName(cgProperty);
-			LocalContext savedLocalContext = pushLocalContext(cgProperty, asProperty);
+			LocalContext savedLocalContext = pushLocalContext(cgProperty);
 			ExpressionInOCL query = null;
 			LanguageExpression specification = asProperty.getOwnedExpression();
 			if (specification != null) {
@@ -988,11 +987,11 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		localContext = savedLocalContext;
 	}
 
-	public @Nullable LocalContext pushLocalContext(@NonNull CGNamedElement cgElement, @NonNull NamedElement asElement) {
+	public @Nullable LocalContext pushLocalContext(@NonNull CGNamedElement cgElement) {
 		LocalContext savedLocalContext = localContext;
 		LocalContext localContext2 = globalNameManager.basicGetLocalContext(cgElement);
 		if (localContext2 == null) {
-			localContext2 = globalNameManager.initLocalContext(savedLocalContext, cgElement, asElement);
+			localContext2 = globalNameManager.initLocalContext(savedLocalContext, cgElement);
 		}
 		localContext = localContext2;
 		return savedLocalContext;
@@ -1056,7 +1055,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		else {
 			assert cgClass.getAst() == asClass;
 		}
-		LocalContext savedLocalContext = pushLocalContext(cgClass, asClass);
+		LocalContext savedLocalContext = pushLocalContext(cgClass);
 		for (@NonNull Constraint asConstraint : ClassUtil.nullFree(asClass.getOwnedInvariants())) {
 			CGConstraint cgConstraint = doVisit(CGConstraint.class, asConstraint);
 			cgClass.getInvariants().add(cgConstraint);
@@ -1110,7 +1109,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			assert cgConstraint.basicGetNameResolution() == null;
 			cgConstraint.setAst(asConstraint);
 			getNameManager().declarePreferredName(cgConstraint);
-			LocalContext savedLocalContext = pushLocalContext(cgConstraint, asConstraint);
+			LocalContext savedLocalContext = pushLocalContext(cgConstraint);
 			try {
 				ExpressionInOCL query = environmentFactory.parseSpecification(specification);
 				Variable contextVariable = query.getOwnedContext();
@@ -1248,7 +1247,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			getClass();		// XXX
 		}
 		CGOperation cgOperation = generateOperationDeclaration(null, asOperation, false);
-		LocalContext savedLocalContext = pushLocalContext(cgOperation, asOperation);
+		LocalContext savedLocalContext = pushLocalContext(cgOperation);
 		LanguageExpression specification = asOperation.getBodyExpression();
 		if (specification instanceof ExpressionInOCL) {			// Should already be parsed
 			cgOperation.setBody(doVisit(CGValuedElement.class, ((ExpressionInOCL)specification).getOwnedBody()));
@@ -1315,7 +1314,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	public final @NonNull CGProperty visitProperty(@NonNull Property asProperty) {
 		CGProperty cgProperty = generatePropertyDeclaration(asProperty);
 		PropertyCallingConvention callingConvention = cgProperty.getCallingConvention();
-		LocalContext savedLocalContext = pushLocalContext(cgProperty, asProperty);
+		LocalContext savedLocalContext = pushLocalContext(cgProperty);
 		callingConvention.createImplementation(this, getLocalContext(), cgProperty);
 		popLocalContext(savedLocalContext);
 		return cgProperty;
