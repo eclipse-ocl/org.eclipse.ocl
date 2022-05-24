@@ -14,7 +14,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
-import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager.JavaLocalContext;
+import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
@@ -46,7 +46,7 @@ public interface PropertyCallingConvention extends CallingConvention
 
 	@NonNull CGProperty createCGProperty(@NonNull AS2CGVisitor as2cgVisitor, @NonNull Property asProperty);
 
-	void createImplementation(@NonNull AS2CGVisitor as2cgVisitor, @NonNull JavaLocalContext localContext, @NonNull CGProperty cgProperty);
+	void createImplementation(@NonNull AS2CGVisitor as2cgVisitor, @NonNull NestedNameManager localNameManager, @NonNull CGProperty cgProperty);
 
 	/**
 	 * Generate the Java code for a Property call.

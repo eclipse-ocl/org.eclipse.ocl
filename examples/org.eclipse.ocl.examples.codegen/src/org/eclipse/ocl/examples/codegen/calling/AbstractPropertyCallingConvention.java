@@ -14,7 +14,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
-import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager.JavaLocalContext;
+import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBodiedProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
@@ -46,7 +46,7 @@ public abstract class AbstractPropertyCallingConvention implements PropertyCalli
 	}
 
 	@Override
-	public void createImplementation(@NonNull AS2CGVisitor as2cgVisitor, @NonNull JavaLocalContext localContext, @NonNull CGProperty cgProperty) {
+	public void createImplementation(@NonNull AS2CGVisitor as2cgVisitor, @NonNull NestedNameManager localNameManager, @NonNull CGProperty cgProperty) {
 	//	assert (this instanceof StereotypePropertyCallingConvention)
 	//		|| (this instanceof ConstrainedPropertyCallingConvention)
 	//		|| (this instanceof NativePropertyCallingConvention)

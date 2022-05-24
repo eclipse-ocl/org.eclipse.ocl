@@ -32,7 +32,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
-import org.eclipse.ocl.examples.codegen.generator.LocalContext;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
@@ -47,37 +46,14 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
- * A NameManager provides suggestions for names and maintains caches of used names so that model elements are consistently
- * named without collisions.
+ * A NestedNameManager provides suggestions for names and maintains caches of used names so that model elements are consistently
+ * named without collisions at some node in the name nesting hierarchy..
  */
 public class NestedNameManager extends NameManager
 {
-	/**
-	 * A JavaLocalContext maintains the Java-specific context for generation of coide from a CGOperation.
-	 */
-	public static class JavaLocalContext implements LocalContext
-	{
-		protected final @NonNull NestedNameManager nameManager;
-
-		public JavaLocalContext(@NonNull NameManager outerNameManager, @NonNull NestedNameManager innerNameManager) {
-			this.nameManager = innerNameManager;
-		}
-
-		public @NonNull NestedNameManager getNameManager() {
-			return nameManager;
-		}
-
-		@Override
-		public @NonNull String toString() {
-			return nameManager.toString();
-		}
-	}
-
 	protected final @NonNull JavaCodeGenerator codeGenerator;
 	protected final @NonNull CodeGenAnalyzer analyzer;
 	protected final @NonNull GlobalNameManager globalNameManager;
-	protected final @NonNull JavaLocalContext localContext;
-
 	protected final @NonNull NameManager parent;
 	protected final @NonNull CGNamedElement cgScope;
 	protected final @NonNull NamedElement asScope;
@@ -96,7 +72,8 @@ public class NestedNameManager extends NameManager
 	 */
 	private @NonNull Map<@NonNull CGNamedElement, @Nullable Map<@NonNull NameVariant, @Nullable String>> element2nameVariant2name = new HashMap<>();
 
-	private /*@LazyNonNull*/ CGVariable executorVariable = null;			// Passed executor paramter / caached local thread lookup
+	private /*@LazyNonNull*/ CGParameter anyParameter = null;				// A local parameter spelled "any" to be added to the static signature
+	private /*@LazyNonNull*/ CGVariable executorVariable = null;			// Passed executor parameter / caached local thread lookup
 	private /*@LazyNonNull*/ CGVariable idResolverVariable = null;			// A convenience cache of execitpr.getIdResolver()
 	private /*@LazyNonNull*/ CGVariable modelManagerVariable = null;		// A convenience cache of execitpr.getModelManager()
 	private /*@LazyNonNull*/ CGVariable qualifiedThisVariable = null;		// An unambiguous spelling of this for external access.
@@ -104,36 +81,25 @@ public class NestedNameManager extends NameManager
 	private /*@LazyNonNull*/ CGParameter selfParameter = null;				// A local parameter spelled "self" to be added to the signature
 	private /*@LazyNonNull*/ CGParameter thisParameter = null;				// A local orphan parameter spelled "this"
 	private /*@LazyNonNull*/ CGParameter typeIdParameter = null;			// A local orphan parameter spelled "typeId"
-	private /*@LazyNonNull*/ CGParameter anyParameter = null;				// A local parameter spelled "any" to be added to the static signature
 
 	public NestedNameManager(@NonNull JavaCodeGenerator codeGenerator, @NonNull NameManager parent, @NonNull CGNamedElement cgScope) {
 		super(parent, parent.helper);
-
-
 		this.codeGenerator = codeGenerator;
 		this.analyzer = codeGenerator.getAnalyzer();
 		this.globalNameManager = codeGenerator.getGlobalNameManager();
-	//	this.localContext = localContext;
-
 		this.parent = parent;
 		this.cgScope = cgScope;
 		this.asScope = CGUtil.getAST(cgScope);
-
 		if (parent instanceof GlobalNameManager) {
 			this.asType = ClassUtil.nonNullState(PivotUtil.getContainingType(asScope));
 		}
 		else {
 			this.asType = ((NestedNameManager)parent).asType;
 		}
-
 		boolean staticFeature = (asScope instanceof Feature) && ((Feature)asScope).isIsStatic();
-		boolean isStatic = /*(asScope == null) ||*/ staticFeature;
-		this.isStatic = isStatic;
+		this.isStatic = /*(asScope == null) ||*/ staticFeature;
 		assert !(parent instanceof NestedNameManager) || (((NestedNameManager)parent).cgScope != cgScope);		// XXX
 		parent.addChild(this);
-
-
-		this.localContext = createLocalContext(parent);
 	}
 
 	public void addNameVariant(@NonNull CGNamedElement cgElement, @NonNull NameVariant nameVariant) {
@@ -243,7 +209,6 @@ public class NestedNameManager extends NameManager
 	}
 
 	protected @NonNull CGVariable createExecutorVariable() {
-	//	assert !executorIsParameter;
 		CGNativeOperationCallExp executorInit = analyzer.createCGNativeOperationCallExp(JavaConstants.PIVOT_UTIL_GET_EXECUTOR_GET_METHOD, SupportOperationCallingConvention.INSTANCE);
 		NameResolution executorNameResolution = globalNameManager.getExecutorNameResolution();
 	//	executorNameResolution.addCGElement(executorInit);
@@ -311,10 +276,6 @@ public class NestedNameManager extends NameManager
 		modelManagerVariable.setNonNull();
 		modelManagerNameResolution.addCGElement(modelManagerVariable);
 		return modelManagerVariable;
-	}
-
-	protected @NonNull JavaLocalContext createLocalContext(@NonNull NameManager outerNameManager) {
-		return new JavaLocalContext(outerNameManager, this);
 	}
 
 	public @NonNull CGVariable createQualifiedThisVariable() {
@@ -469,7 +430,6 @@ public class NestedNameManager extends NameManager
 	}
 
 	public @NonNull CGParameter getExecutorParameter() {
-	//	assert executorIsParameter;
 		CGVariable executorVariable2 = executorVariable;
 		if (executorVariable2 == null) {
 			executorVariable = executorVariable2 = codeGenerator.createExecutorParameter();
@@ -509,11 +469,6 @@ public class NestedNameManager extends NameManager
 			return getNameHint(cgNamedValue);
 		}
 		return null;
-	}
-
-	@Deprecated
-	public @NonNull JavaLocalContext getLocalContext() {
-		return localContext;
 	}
 
 	public @NonNull CGVariable getModelManagerVariable() {

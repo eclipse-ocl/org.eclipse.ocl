@@ -12,7 +12,7 @@ package org.eclipse.ocl.examples.codegen.java.types;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager.JavaLocalContext;
+import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBoxExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
@@ -30,7 +30,7 @@ public class BooleanPrimitiveDescriptor extends AbstractPrimitiveDescriptor
 	}
 
 	@Override
-	public @NonNull Boolean appendBox(@NonNull JavaStream js, @NonNull JavaLocalContext localContext, @NonNull CGBoxExp cgBoxExp, @NonNull CGValuedElement unboxedValue) {
+	public @NonNull Boolean appendBox(@NonNull JavaStream js, @NonNull NestedNameManager localNameManager, @NonNull CGBoxExp cgBoxExp, @NonNull CGValuedElement unboxedValue) {
 		js.appendDeclaration(cgBoxExp);
 		js.append(" = ");
 		js.appendReferenceTo(unboxedValue);
@@ -45,7 +45,7 @@ public class BooleanPrimitiveDescriptor extends AbstractPrimitiveDescriptor
 	}
 
 	@Override
-	public @NonNull Boolean appendEcore(@NonNull JavaStream js, @NonNull JavaLocalContext localContext, @NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement unboxedValue) {
+	public @NonNull Boolean appendEcore(@NonNull JavaStream js, @NonNull NestedNameManager localNameManager, @NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement unboxedValue) {
 		js.appendDeclaration(cgEcoreExp);
 		js.append(" = ");
 		assert unboxedValue.isNonNull();

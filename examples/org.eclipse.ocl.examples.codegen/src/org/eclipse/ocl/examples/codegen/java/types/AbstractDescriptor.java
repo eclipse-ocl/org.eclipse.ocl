@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager.JavaLocalContext;
+import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBoxExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGUnboxExp;
@@ -68,7 +68,7 @@ public abstract class AbstractDescriptor implements TypeDescriptor
 	}
 
 	@Override			// FIXME why isn't most of this in derived Descriptors?
-	public @NonNull Boolean appendBox(@NonNull JavaStream js, @NonNull JavaLocalContext localContext, @NonNull CGBoxExp cgBoxExp, @NonNull CGValuedElement unboxedValue) {
+	public @NonNull Boolean appendBox(@NonNull JavaStream js, @NonNull NestedNameManager localNameManager, @NonNull CGBoxExp cgBoxExp, @NonNull CGValuedElement unboxedValue) {
 		TypeId typeId = unboxedValue.getASTypeId();
 		js.appendDeclaration(cgBoxExp);
 		js.append(" = ");
@@ -154,7 +154,7 @@ public abstract class AbstractDescriptor implements TypeDescriptor
 	}
 
 	@Deprecated		// This generic code used to be inherited as appendEcore
-	protected @NonNull Boolean appendEcoreLegacy(@NonNull JavaStream js, @NonNull JavaLocalContext localContext, @NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement unboxedValue) {
+	protected @NonNull Boolean appendEcoreLegacy(@NonNull JavaStream js, @NonNull NestedNameManager localNameManager, @NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement unboxedValue) {
 
 		TypeId typeId = unboxedValue.getASTypeId();
 		js.appendDeclaration(cgEcoreExp);
@@ -238,12 +238,12 @@ public abstract class AbstractDescriptor implements TypeDescriptor
 	}
 
 	@Override
-	public @NonNull Boolean appendEcoreStatements(@NonNull JavaStream js, @NonNull JavaLocalContext localContext,
+	public @NonNull Boolean appendEcoreStatements(@NonNull JavaStream js, @NonNull NestedNameManager localNameManager,
 			@NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement boxedValue) {
 		EClassifier eClassifier = cgEcoreExp.getEClassifier();
 		Class<?> ecoreClass = eClassifier != null ? eClassifier.getInstanceClass() : null;
 		EcoreDescriptor ecoreDescriptor = getEcoreDescriptor(js.getCodeGenerator(), ecoreClass);
-		return ecoreDescriptor.appendEcore(js, localContext, cgEcoreExp, boxedValue);
+		return ecoreDescriptor.appendEcore(js, localNameManager, cgEcoreExp, boxedValue);
 		/*		UnboxedDescriptor unboxedTypeDescriptor = getUnboxedDescriptor(js.getCodeGenerator());
 		CollectionDescriptor collectionDescriptor = unboxedTypeDescriptor.asCollectionDescriptor();
 		if (collectionDescriptor != null) {
@@ -338,7 +338,7 @@ public abstract class AbstractDescriptor implements TypeDescriptor
 	}
 
 	@Override
-	public @NonNull Boolean appendUnboxStatements(@NonNull JavaStream js, @NonNull JavaLocalContext localContext,
+	public @NonNull Boolean appendUnboxStatements(@NonNull JavaStream js, @NonNull NestedNameManager localNameManager,
 			@NonNull CGUnboxExp cgUnboxExp, @NonNull CGValuedElement boxedValue) {
 		UnboxedDescriptor unboxedTypeDescriptor = getUnboxedDescriptor(js.getCodeGenerator());
 		CollectionDescriptor collectionDescriptor = unboxedTypeDescriptor.asCollectionDescriptor();

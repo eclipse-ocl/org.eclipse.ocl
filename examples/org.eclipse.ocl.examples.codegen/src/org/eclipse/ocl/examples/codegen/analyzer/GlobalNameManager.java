@@ -20,7 +20,7 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager.JavaLocalContext;
+//import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager.JavaLocalContext;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
@@ -218,16 +218,6 @@ public class GlobalNameManager extends NameManager
 		assignNestedNames(nameManager2namedElements);
 	}
 
-	public @Nullable JavaLocalContext basicFindLocalContext(@NonNull CGNamedElement cgElement) {
-		for (CGElement cgScope = cgElement; cgScope != null; cgScope = cgScope.getParent()) {
-			NestedNameManager localContext = cgScope2nestedNameManager.get(cgScope);
-			if (localContext != null) {
-				return localContext.getLocalContext();
-			}
-		}
-		return null;
-	}
-
 	public @Nullable NestedNameManager basicFindNameManager(@NonNull CGNamedElement cgElement) {
 		for (CGElement cgScope = cgElement; cgScope != null; cgScope = cgScope.getParent()) {
 			NestedNameManager nestedNameManager = cgScope2nestedNameManager.get(cgScope);
@@ -278,10 +268,6 @@ public class GlobalNameManager extends NameManager
 	public void declareScope(@NonNull CGNamedElement cgElement, @NonNull NameManager nameManager) {
 		NameManager old = element2nameManager.put(cgElement, nameManager);
 		assert (old == null) || (old == nameManager);
-	}
-
-	public @NonNull JavaLocalContext findLocalContext(@NonNull CGNamedElement cgScope) {
-		return ClassUtil.nonNullState(basicFindLocalContext(cgScope));
 	}
 
 	public @NonNull NestedNameManager findNameManager(@NonNull CGNamedElement cgScope) {
@@ -410,9 +396,6 @@ public class GlobalNameManager extends NameManager
 	@Override
 	public boolean isGlobal() {
 		return true;
-	}
-
-	public void setLocalContext(@NonNull CGNamedElement cgNamedElement, @NonNull JavaLocalContext localContext) {
 	}
 
 	@Override

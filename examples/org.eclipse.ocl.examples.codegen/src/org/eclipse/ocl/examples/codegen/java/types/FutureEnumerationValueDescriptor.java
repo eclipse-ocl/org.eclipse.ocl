@@ -14,7 +14,7 @@ import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager.JavaLocalContext;
+import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
@@ -45,7 +45,7 @@ public class FutureEnumerationValueDescriptor extends BoxedValueDescriptor imple
 	//	}
 
 	@Override
-	public @NonNull Boolean appendEcoreStatements(@NonNull JavaStream js, @NonNull JavaLocalContext localContext,
+	public @NonNull Boolean appendEcoreStatements(@NonNull JavaStream js, @NonNull NestedNameManager localNameManager,
 			@NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement boxedValue) {
 		EClassifier eClassifier = cgEcoreExp.getEClassifier();
 		Class<?> ecoreClass = eClassifier != null ? eClassifier.getInstanceClass() : null;
@@ -59,7 +59,7 @@ public class FutureEnumerationValueDescriptor extends BoxedValueDescriptor imple
 		js.append(" = (");
 		js.appendClassReference(null, className);
 		js.append(")");
-		js.appendReferenceTo(localContext.getNameManager().getIdResolverVariable());
+		js.appendReferenceTo(localNameManager.getIdResolverVariable());
 		js.append(".ecoreValueOf(");
 		js.appendClassReference(null, Enumerator.class);
 		js.append(".class, ");
@@ -69,14 +69,14 @@ public class FutureEnumerationValueDescriptor extends BoxedValueDescriptor imple
 	}
 
 	@Override
-	public @NonNull Boolean appendEcore(@NonNull JavaStream js, @NonNull JavaLocalContext localContext,
+	public @NonNull Boolean appendEcore(@NonNull JavaStream js, @NonNull NestedNameManager localNameManager,
 			@NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement unboxedValue) {
 //		return super.appendEcore(js, localContext, cgEcoreExp, unboxedValue);
 		js.appendDeclaration(cgEcoreExp);
 		js.append(" = (");
 		js.appendClassReference(null, className);
 		js.append(")");
-		js.appendReferenceTo(localContext.getNameManager().getIdResolverVariable());
+		js.appendReferenceTo(localNameManager.getIdResolverVariable());
 		js.append(".ecoreValueOf(");
 		js.appendClassReference(null, Enumerator.class);
 		js.append(".class, ");

@@ -11,7 +11,7 @@
 package org.eclipse.ocl.examples.codegen.java.types;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager.JavaLocalContext;
+import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGUnboxExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
@@ -28,7 +28,7 @@ public class RealValueDescriptor extends BoxedValueDescriptor
 	}
 
 /*	@Override
-	public @NonNull Boolean appendEcore(@NonNull JavaStream js, @NonNull JavaLocalContext localContext, @NonNull CGEcoreExp cgEcoreExp,
+	public @NonNull Boolean appendEcore(@NonNull JavaStream js, @NonNull NestedNameManager localNameManager, @NonNull CGEcoreExp cgEcoreExp,
 			@NonNull CGValuedElement unboxedValue) {
 		js.appendDeclaration(cgEcoreExp);
 		js.append(" = ");
@@ -45,7 +45,7 @@ public class RealValueDescriptor extends BoxedValueDescriptor
 	} */
 
 	@Override
-	public @NonNull Boolean appendUnboxStatements(@NonNull JavaStream js, @NonNull JavaLocalContext localContext,
+	public @NonNull Boolean appendUnboxStatements(@NonNull JavaStream js, @NonNull NestedNameManager localNameManager,
 			@NonNull CGUnboxExp cgUnboxExp, @NonNull CGValuedElement boxedValue) {
 		js.appendDeclaration(cgUnboxExp);
 		js.append(" = ");

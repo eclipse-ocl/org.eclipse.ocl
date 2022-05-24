@@ -13,7 +13,7 @@ package org.eclipse.ocl.examples.codegen.java;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.DependencyVisitor;
-import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager.JavaLocalContext;
+import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBoxExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
@@ -25,11 +25,11 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 
 public class JavaDependencyVisitor extends DependencyVisitor
 {
-	protected final JavaLocalContext localContext;
+	protected final NestedNameManager localNameManager;
 
 	public JavaDependencyVisitor(@NonNull JavaCodeGenerator codeGenerator, @NonNull GlobalPlace globalPlace) {
         super(codeGenerator, globalPlace);
-        this.localContext = null;
+        this.localNameManager = null;
 	}
 
 	@Override

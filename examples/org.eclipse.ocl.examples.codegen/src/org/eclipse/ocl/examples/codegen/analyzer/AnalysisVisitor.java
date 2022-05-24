@@ -38,7 +38,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.util.AbstractExtendingCGModelVisitor;
-import org.eclipse.ocl.examples.codegen.generator.LocalContext;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypeExp;
@@ -402,8 +401,8 @@ public class AnalysisVisitor extends AbstractExtendingCGModelVisitor<@Nullable O
 		TypeExp pTypeExp = (TypeExp) cgTemplateParameterExp.getAst();
 		Type referredType = pTypeExp.getReferredType();
 		if (referredType != null) {
-			LocalContext localContext = context.getGlobalNameManager().basicFindLocalContext(cgTemplateParameterExp);
-			if (localContext != null) {
+			NestedNameManager localNameManager = context.getGlobalNameManager().basicFindNameManager(cgTemplateParameterExp);
+			if (localNameManager != null) {
 				CGValuedElement cgTemplateableElement = cgTemplateParameterExp.getTemplateableElement();
 				//				cgTypeExp.setTypeId(cgExecutorType.getUnderlyingTypeId());
 				cgTemplateParameterExp.getDependsOn().add(cgTemplateableElement);
@@ -426,8 +425,8 @@ public class AnalysisVisitor extends AbstractExtendingCGModelVisitor<@Nullable O
 		TypeExp pTypeExp = (TypeExp) cgTypeExp.getAst();
 		Type referredType = pTypeExp.getReferredType();
 		if (referredType != null) {
-			LocalContext localContext = context.getGlobalNameManager().basicFindLocalContext(cgTypeExp);
-			if (localContext != null) {
+			NestedNameManager localNameManager = context.getGlobalNameManager().basicFindNameManager(cgTypeExp);
+			if (localNameManager != null) {
 				CGExecutorType cgExecutorType = cgTypeExp.getExecutorType();
 				//				cgTypeExp.setTypeId(cgExecutorType.getUnderlyingTypeId());
 				cgTypeExp.getDependsOn().add(cgExecutorType);

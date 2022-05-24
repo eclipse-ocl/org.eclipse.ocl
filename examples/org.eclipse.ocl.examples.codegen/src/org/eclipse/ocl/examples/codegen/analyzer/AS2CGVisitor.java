@@ -26,7 +26,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager.JavaLocalContext;
 import org.eclipse.ocl.examples.codegen.calling.ExecutorShadowPartCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.PropertyCallingConvention;
@@ -79,7 +78,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.examples.codegen.generator.AbstractCodeGenerator;
 import org.eclipse.ocl.examples.codegen.generator.GenModelHelper;
 import org.eclipse.ocl.examples.codegen.generator.IterationHelper;
-import org.eclipse.ocl.examples.codegen.generator.LocalContext;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.java.types.JavaTypeId;
@@ -676,13 +674,11 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	}
 
 	public @NonNull CGParameter getExecutorParameter() {
-		LocalContext localContext = getLocalContext();
-		return ((JavaLocalContext)localContext).getNameManager().getExecutorParameter();
+		return getNameManager().getExecutorParameter();
 	}
 
 	public @NonNull CGVariable getExecutorVariable() {
-		LocalContext localContext = getLocalContext();
-		return ((JavaLocalContext)localContext).getNameManager().getExecutorVariable();
+		return getNameManager().getExecutorVariable();
 	}
 
 	public @NonNull GenModelHelper getGenModelHelper() {
@@ -751,12 +747,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return cgIterator;
 	}
 
-	@Deprecated
-	public @NonNull JavaLocalContext getLocalContext() {
-		assert currentNameManager != null;
-		return currentNameManager.getLocalContext();
-	}
-
 	public @NonNull CGVariable getLocalVariable(@NonNull VariableDeclaration asVariable) {
 		CGVariable cgVariable = variablesStack.getLocalVariable(asVariable);
 		if (cgVariable == null) {
@@ -773,7 +763,8 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	}
 
 	public @NonNull NestedNameManager getNameManager() {
-		return getLocalContext().getNameManager();
+		assert currentNameManager != null;
+		return currentNameManager;
 	}
 
 /*	protected @NonNull CGIterator getNullableIterator(@NonNull Variable iterator) {
@@ -880,8 +871,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	}
 
 	public @NonNull CGParameter getTypeIdParameter() {
-		LocalContext localContext = getLocalContext();
-		CGParameter typeIdParameter = ((JavaLocalContext)localContext).getNameManager().getTypeIdParameter();
+		CGParameter typeIdParameter = getNameManager().getTypeIdParameter();
 		assert typeIdParameter.eContainer() == null;
 		addParameter(CGUtil.getAST(typeIdParameter), typeIdParameter);
 		return typeIdParameter;
@@ -1315,7 +1305,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		CGProperty cgProperty = generatePropertyDeclaration(asProperty);
 		PropertyCallingConvention callingConvention = cgProperty.getCallingConvention();
 		NestedNameManager savedNameManager = pushNameManager(cgProperty);
-		callingConvention.createImplementation(this, getLocalContext(), cgProperty);
+		callingConvention.createImplementation(this, getNameManager(), cgProperty);
 		popNameManager(savedNameManager);
 		return cgProperty;
 	}

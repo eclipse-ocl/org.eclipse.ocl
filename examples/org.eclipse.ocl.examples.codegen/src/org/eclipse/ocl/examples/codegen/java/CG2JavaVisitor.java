@@ -892,7 +892,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		if (!js.appendLocalStatements(unboxedValue)) {
 			return false;
 		}
-		return unboxedTypeDescriptor.appendBox(js, currentNameManager2.getLocalContext(), cgBoxExp, unboxedValue);
+		return unboxedTypeDescriptor.appendBox(js, currentNameManager2, cgBoxExp, unboxedValue);
 	}
 
 	@Override
@@ -1374,7 +1374,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			}
 		} */
 		//		return boxedTypeDescriptor.getEcoreDescriptor(context, null).appendEcore(js, currentNameManager2, cgEcoreExp, boxedValue);
-		return boxedTypeDescriptor.appendEcoreStatements(js, currentNameManager2.getLocalContext(), cgEcoreExp, boxedValue);
+		return boxedTypeDescriptor.appendEcoreStatements(js, currentNameManager2, cgEcoreExp, boxedValue);
 	}
 
 	@Override
@@ -2344,7 +2344,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		if (!js.appendLocalStatements(boxedValue)) {
 			return false;
 		}
-		return boxedTypeDescriptor.appendUnboxStatements(js, currentNameManager2.getLocalContext(), cgUnboxExp, boxedValue);
+		return boxedTypeDescriptor.appendUnboxStatements(js, currentNameManager2, cgUnboxExp, boxedValue);
 	}
 
 	@Override

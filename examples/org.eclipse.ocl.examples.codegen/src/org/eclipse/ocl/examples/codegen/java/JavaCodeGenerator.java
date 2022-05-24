@@ -36,7 +36,6 @@ import org.eclipse.ocl.examples.codegen.analyzer.NameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.NameManagerHelper;
 import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
-import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager.JavaLocalContext;
 import org.eclipse.ocl.examples.codegen.analyzer.ReferencesVisitor;
 import org.eclipse.ocl.examples.codegen.asm5.ASM5JavaAnnotationReader;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCatchExp;
@@ -883,8 +882,8 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 					//	assert false;			// XXX wip
 						NameManager nameManager = globalNameManager.bascGetScope(cgValuedElement2);
 						if (nameManager == null) {
-							JavaLocalContext localContext = globalNameManager.basicFindLocalContext(cgValuedElement2);
-							nameManager = (localContext != null) && !cgValuedElement2.isGlobal() ? localContext.getNameManager() : globalNameManager;
+							NestedNameManager localNameManager = globalNameManager.basicFindNameManager(cgValuedElement2);
+							nameManager = (localNameManager != null) && !cgValuedElement2.isGlobal() ? localNameManager : globalNameManager;
 						}
 						nameResolution = nameManager.declareLazyName(cgValuedElement2);
 						nameResolution.resolveNameHint();
@@ -908,8 +907,8 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 					if (eObject instanceof CGValuedElement) {
 						CGValuedElement cgValuedElement = (CGValuedElement)eObject;
 						if ((cgValuedElement.basicGetNameResolution() == null) && !cgValuedElement.isInlined()) {
-							JavaLocalContext localContext = globalNameManager.basicFindLocalContext(cgValuedElement);
-							NameManager nameManager = localContext != null ? localContext.getNameManager() : globalNameManager;
+							NestedNameManager localNameManager = globalNameManager.basicFindNameManager(cgValuedElement);
+							NameManager nameManager = localNameManager != null ? localNameManager : globalNameManager;
 							nameManager.declareLazyName(cgValuedElement);
 						}
 					}

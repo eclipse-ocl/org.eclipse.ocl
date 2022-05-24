@@ -19,7 +19,6 @@ import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
-import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager.JavaLocalContext;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElementId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGFinalVariable;
@@ -110,18 +109,18 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 	}
 
 	@Override
-	public void createImplementation(@NonNull AS2CGVisitor as2cgVisitor, @NonNull JavaLocalContext localContext, @NonNull CGProperty cgProperty) {
+	public void createImplementation(@NonNull AS2CGVisitor as2cgVisitor, @NonNull NestedNameManager localNameManager, @NonNull CGProperty cgProperty) {
 		CGForeignProperty cgForeignProperty = (CGForeignProperty)cgProperty;
 		CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();
 		Property asProperty = CGUtil.getAST(cgForeignProperty);
-		NestedNameManager nameManager = as2cgVisitor.getNameManager();
+		assert localNameManager == as2cgVisitor.getNameManager();
 //		CGParameter cgParameter = asProperty.isIsStatic() ? localContext.getAnyParameter() : localContext.getSelfParameter();
 //		cgForeignProperty.getParameters().add(localContext.getExecutorParameter());
 //		cgForeignProperty.getParameters().add(cgParameter);
 		CGParameter cgSelfParameter = CGUtil.getParametersList(cgForeignProperty).get(1);
 		CGValuedElement cgInitValue = as2cgVisitor.getInitExpression(/*cgParameter,*/ asProperty);
 		assert cgInitValue != null;
-		CGVariable modelManagerVariable = localContext.getNameManager().getModelManagerVariable();
+		CGVariable modelManagerVariable = localNameManager.getModelManagerVariable();
 		CGElementId cgPropertyId = analyzer.getCGElementId(asProperty.getPropertyId());
 	//	CGTypeId cacheTypeId = context.getTypeId(asProperty.getTypeId());
 		CGExecutorType cgCastType = analyzer.createExecutorType(PivotUtil.getType(asProperty));
@@ -131,7 +130,7 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 		basicGetValueInit.setValueIsBoxed(true);
 		CGValuedElement castBasicGetValueInit = analyzer.createCGCastExp(cgCastType, basicGetValueInit);
 		CGFinalVariable basicGetValueVariable = as2cgVisitor.createCGFinalVariable(castBasicGetValueInit);
-		nameManager.declareLazyName(basicGetValueVariable);
+		localNameManager.declareLazyName(basicGetValueVariable);
 		CGValuedElement cgCondition = analyzer.createCGIsEqual(analyzer.createCGVariableExp(basicGetValueVariable), analyzer.createCGNull());
 		CGNativeOperationCallExp getValue = as2cgVisitor.createCGBoxedNativeOperationCallExp(analyzer.createCGVariableExp(modelManagerVariable), JavaConstants.MODEL_MANAGER_GET_FOREIGN_PROPERTY_VALUE_METHOD,
 			asProperty.isIsStatic() ? analyzer.createCGConstantExp(analyzer.createCGNull()) : analyzer.createCGVariableExp(cgSelfParameter), analyzer.createCGConstantExp(cgPropertyId), cgInitValue);
