@@ -323,10 +323,6 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		return new JavaStream(this, cg2javaVisitor);
 	}
 
-	public @NonNull JavaLocalContext createLocalContext(@NonNull NameManager outerNameManager, @NonNull NestedNameManager innerNameManager) {
-		return new JavaLocalContext(outerNameManager, innerNameManager);
-	}
-
 	protected @NonNull NameManagerHelper createNameManagerHelper() {
 		return new NameManagerHelper();
 	}

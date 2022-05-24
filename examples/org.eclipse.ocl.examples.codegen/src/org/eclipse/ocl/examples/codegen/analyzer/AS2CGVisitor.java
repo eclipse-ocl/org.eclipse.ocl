@@ -327,7 +327,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 				cgVariable = localContext.getQualifiedThisVariable();
 			}
 			else {
-				cgVariable = localContext.getThisParameter();
+				cgVariable = localContext.getNameManager().getThisParameter();
 			}
 		}
 		else {
@@ -677,7 +677,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	public @NonNull CGParameter getExecutorParameter() {
 		LocalContext localContext = getLocalContext();
-		return ((JavaLocalContext)localContext).getExecutorParameter();
+		return ((JavaLocalContext)localContext).getNameManager().getExecutorParameter();
 	}
 
 	public @NonNull CGVariable getExecutorVariable() {

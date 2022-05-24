@@ -27,6 +27,6 @@ public class JUnitLocalContext extends JavaLocalContext
 
 	@Override
 	public @NonNull CGVariable getExecutorVariable() {
-		return getExecutorParameter();
+		return nameManager.getExecutorParameter();
 	}
 }

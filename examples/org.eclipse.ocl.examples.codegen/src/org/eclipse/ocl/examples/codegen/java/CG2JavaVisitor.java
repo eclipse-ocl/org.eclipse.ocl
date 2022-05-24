@@ -352,7 +352,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		js.append(" " + implementationName + " = (");
 		js.appendClassReference(null, LibraryIteration.LibraryIterationExtension.class);
 		js.append( ")" + staticTypeName + ".lookupImplementation(");
-		js.appendReferenceTo(localContext.getStandardLibraryVariable());
+		js.appendReferenceTo(localContext.getNameManager().getStandardLibraryVariable());
 		js.append(", ");
 		js.appendQualifiedLiteralName(referredIteration);
 		js.append(");\n");
@@ -761,7 +761,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 	@Deprecated /* @deprecated no longer used */
 	protected @NonNull CGVariable installStandardLibraryVariable(@NonNull CGValuedElement cgValuedElement) {
-		return localContext.createStandardLibraryVariable();
+		return localContext.getNameManager().createStandardLibraryVariable();
 	}
 
 	protected boolean isBoxedElement(@NonNull CGValuedElement cgValue) {

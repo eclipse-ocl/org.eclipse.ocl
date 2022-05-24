@@ -20,7 +20,6 @@ import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.NameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
-import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager.JavaLocalContext;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
@@ -67,6 +66,11 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 	{
 		protected JUnitNestedNameManager(@NonNull JavaCodeGenerator codeGenerator, @NonNull NameManager parent, @NonNull CGNamedElement cgScope) {
 			super(codeGenerator, parent, cgScope);
+		}
+
+		@Override
+		public @NonNull JavaLocalContext createLocalContext(@NonNull NameManager outerNameManager) {
+			return new JUnitLocalContext(outerNameManager, this);
 		}
 	}
 
@@ -124,11 +128,6 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		as2cgVisitor.popLocalContext(savedLocalContext);
 		as2cgVisitor.freeze();
 		return cgPackage;
-	}
-
-	@Override
-	public @NonNull JavaLocalContext createLocalContext(@NonNull NameManager outerNameManager, @NonNull NestedNameManager innerNameManager) {
-		return new JUnitLocalContext(outerNameManager, innerNameManager);
 	}
 
 	@Override

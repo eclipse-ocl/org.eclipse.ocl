@@ -20,6 +20,7 @@ import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
+import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager.JavaLocalContext;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperation;
@@ -118,6 +119,7 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 	//	assert expressionInOCL == null;		-- some library operations also have OCL bodies
 		Operation asOperation = CGUtil.getAST(cgOperation);
 		JavaLocalContext localContext = as2cgVisitor.getLocalContext();
+		NestedNameManager nameManager = as2cgVisitor.getNameManager();
 		List<CGParameter> cgParameters = cgOperation.getParameters();
 		LibraryOperation libraryOperation = (LibraryOperation)as2cgVisitor.getMetamodelManager().getImplementation(asOperation);
 		Method jMethod = libraryOperation.getEvaluateMethod(asOperation);
@@ -125,11 +127,11 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 		List<@NonNull Parameter> asParameters = ClassUtil.nullFree(asOperation.getOwnedParameters());
 		int i = asOperation.isIsStatic() ? 0 : -1;
 		if (Modifier.isStatic(jMethod.getModifiers())) {
-			cgParameters.add(localContext.getThisParameter());
+			cgParameters.add(nameManager.getThisParameter());
 		}
 		for (Class<?> jParameterType : jMethod.getParameterTypes()) {
 			if (jParameterType == Executor.class) {
-				cgParameters.add(localContext.getExecutorParameter());
+				cgParameters.add(nameManager.getExecutorParameter());
 			}
 			else if (jParameterType == TypeId.class) {
 				cgParameters.add(localContext.getTypeIdParameter());
@@ -141,7 +143,7 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 						selfParameter = as2cgVisitor.getSelfParameter(PivotUtil.getOwnedContext(expressionInOCL));
 					}
 					else {
-						selfParameter = localContext.getSelfParameter();
+						selfParameter = nameManager.getSelfParameter();
 					}
 					if (as2cgVisitor.getAnalyzer().hasOclVoidOperation(asOperation.getOperationId())) {
 						selfParameter.setRequired(false);

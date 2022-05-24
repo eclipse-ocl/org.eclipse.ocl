@@ -253,7 +253,7 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 		else {
 			Operation asOperation = CGUtil.getAST(cgOperation);
 			if (!asOperation.isIsStatic()) {
-				CGParameter cgParameter = as2cgVisitor.getLocalContext().getSelfParameter();
+				CGParameter cgParameter = as2cgVisitor.getNameManager().getSelfParameter();
 				//			cgParameter.setTypeId(context.getTypeId(JavaConstants.getJavaTypeId(Object.class)));
 				//			cgParameter.setRequired(contextVariable.isIsRequired());
 				cgOperation.getParameters().add(cgParameter);

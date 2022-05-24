@@ -168,14 +168,14 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 	}
 
 	protected @NonNull CGVariable installStandardLibraryVariable(@NonNull CGValuedElement cgElement) {
-		return getTreeContext().getStandardLibraryVariable();
+		return getTreeContext().getNameManager().getStandardLibraryVariable();
 	}
 
 	protected JavaLocalContext popLocalContext(@Nullable JavaLocalContext savedLocalContext) {
 		if (savedLocalContext == null) {
 			JavaLocalContext localContext2 = localContext;
 			assert localContext2 != null;
-			CGValuedElement cgTree = localContext2.getBody();
+			CGValuedElement cgTree = localContext2.getNameManager().getBody();
 			if (cgTree != null) {
 				cgTree = localContext2.wrapLetVariables(cgTree);
 			}
