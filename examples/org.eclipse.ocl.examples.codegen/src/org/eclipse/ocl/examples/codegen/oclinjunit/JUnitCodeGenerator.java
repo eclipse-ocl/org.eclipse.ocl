@@ -129,8 +129,9 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 	}
 
 	@Override
-	public @NonNull JavaLocalContext createLocalContext(@Nullable JavaLocalContext outerContext, @NonNull CGNamedElement cgNamedElement, @NonNull NamedElement asNamedElement) {
-		return new JUnitLocalContext(this, outerContext, cgNamedElement, asNamedElement);
+	public @NonNull JavaLocalContext createLocalContext(@Nullable JavaLocalContext outerContext, @NonNull NameManager outerNameManager,
+			@NonNull CGNamedElement cgNamedElement, @NonNull NamedElement asNamedElement, @NonNull Type asType) {
+		return new JUnitLocalContext(this, outerContext, outerNameManager, cgNamedElement, asNamedElement, asType);
 	}
 
 	@Override

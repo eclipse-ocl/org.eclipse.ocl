@@ -325,8 +325,9 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		return new JavaStream(this, cg2javaVisitor);
 	}
 
-	public @NonNull JavaLocalContext createLocalContext(@Nullable JavaLocalContext outerContext, @NonNull CGNamedElement cgNamedElement, @NonNull NamedElement asNamedElement) {
-		return new JavaLocalContext(this, outerContext, cgNamedElement, asNamedElement);
+	public @NonNull JavaLocalContext createLocalContext(@Nullable JavaLocalContext outerContext, @NonNull NameManager outerNameManager,
+			@NonNull CGNamedElement cgNamedElement, @NonNull NamedElement asNamedElement, @NonNull Type asType) {
+		return new JavaLocalContext(this, outerContext, outerNameManager, cgNamedElement, asNamedElement, asType);
 	}
 
 	protected @NonNull NameManagerHelper createNameManagerHelper() {

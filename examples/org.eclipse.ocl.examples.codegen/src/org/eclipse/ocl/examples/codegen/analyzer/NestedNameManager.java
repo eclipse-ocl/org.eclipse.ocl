@@ -45,7 +45,6 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  * A NameManager provides suggestions for names and maintains caches of used names so that model elements are consistently
@@ -61,21 +60,11 @@ public class NestedNameManager extends NameManager
 		protected final @Nullable JavaLocalContext outerContext;
 		protected final @NonNull NestedNameManager nameManager;
 
-		public JavaLocalContext(@NonNull JavaCodeGenerator codeGenerator, @Nullable JavaLocalContext outerContext,
-				@NonNull CGNamedElement cgScope, @NonNull NamedElement asScope) {
+		public JavaLocalContext(@NonNull JavaCodeGenerator codeGenerator, @Nullable JavaLocalContext outerContext, @NonNull NameManager outerNameManager,
+				@NonNull CGNamedElement cgScope, @NonNull NamedElement asScope, @NonNull Type asType) {
 			this.outerContext = outerContext;
 			boolean staticFeature = (asScope instanceof Feature) && ((Feature)asScope).isIsStatic();
 			boolean isStatic = /*(asScope == null) ||*/ staticFeature;
-			@NonNull Type asType;
-			NameManager outerNameManager;
-			if (outerContext != null) {
-				asType = outerContext.nameManager.asType;
-				outerNameManager = outerContext.getNameManager();
-			}
-			else {
-				asType = ClassUtil.nonNullState(PivotUtil.getContainingType(asScope));
-				outerNameManager = codeGenerator.getGlobalNameManager();
-			}
 			this.nameManager = codeGenerator.createNestedNameManager(outerNameManager, this, cgScope, asScope, asType, isStatic);
 			NameManager parentNameManager = nameManager.parent;
 			assert (parentNameManager instanceof NestedNameManager) ?  (outerContext == ((NestedNameManager)parentNameManager).localContext) : (outerContext == null);
