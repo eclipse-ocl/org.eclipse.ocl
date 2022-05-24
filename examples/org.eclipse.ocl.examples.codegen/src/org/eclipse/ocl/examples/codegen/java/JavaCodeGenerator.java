@@ -88,6 +88,7 @@ import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.library.LibraryIteration;
@@ -330,6 +331,11 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 
 	protected @NonNull NameManagerHelper createNameManagerHelper() {
 		return new NameManagerHelper();
+	}
+
+	public @NonNull NestedNameManager createNestedNameManager(@NonNull NameManager outerNameManager, @NonNull JavaLocalContext localContext,
+			@NonNull CGNamedElement cgScope, @NonNull NamedElement asScope, @NonNull Type asType, boolean isStatic) {
+		return new NestedNameManager(this, outerNameManager, localContext, cgScope, asScope, asType, isStatic);
 	}
 
 	@Override

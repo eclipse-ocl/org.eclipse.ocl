@@ -17,7 +17,9 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
+import org.eclipse.ocl.examples.codegen.analyzer.NameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
+import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager.JavaLocalContext;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
@@ -59,6 +61,14 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		}
 		finally {
 			completeEnvironment.setCodeGeneration(savedIsCodeGenerator);
+		}
+	}
+
+	protected static class JUnitNestedNameManager extends NestedNameManager
+	{
+		protected JUnitNestedNameManager(@NonNull JavaCodeGenerator codeGenerator, @NonNull NameManager parent, @NonNull JavaLocalContext localContext,
+				@NonNull CGNamedElement cgScope, @NonNull NamedElement asScope, @NonNull Type asType, boolean isStatic) {
+			super(codeGenerator, parent, localContext, cgScope, asScope, asType, isStatic);
 		}
 	}
 
@@ -121,6 +131,12 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 	@Override
 	public @NonNull JavaLocalContext createLocalContext(@Nullable JavaLocalContext outerContext, @NonNull CGNamedElement cgNamedElement, @NonNull NamedElement asNamedElement) {
 		return new JUnitLocalContext(this, outerContext, cgNamedElement, asNamedElement);
+	}
+
+	@Override
+	public @NonNull NestedNameManager createNestedNameManager(@NonNull NameManager outerNameManager, @NonNull JavaLocalContext localContext,
+			@NonNull CGNamedElement cgScope, @NonNull NamedElement asScope, @NonNull Type asType, boolean isStatic) {
+		return new JUnitNestedNameManager(this, outerNameManager, localContext, cgScope, asScope, asType, isStatic);
 	}
 
 	protected @NonNull String generate(@NonNull ExpressionInOCL expInOcl, @NonNull String packageName, @NonNull String className) {

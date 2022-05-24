@@ -164,7 +164,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 	}
 
 	protected @NonNull CGVariable installIdResolverVariable(@NonNull CGValuedElement cgElement) {
-		return getTreeContext().getIdResolverVariable();
+		return getTreeContext().getNameManager().getIdResolverVariable();
 	}
 
 	protected @NonNull CGVariable installStandardLibraryVariable(@NonNull CGValuedElement cgElement) {

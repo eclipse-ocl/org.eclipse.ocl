@@ -50,7 +50,7 @@ public class BoxedMapDescriptor extends AbstractValueDescriptor implements Boxed
 			js.append(" = ");
 			js.appendValueName(boxedValue);
 			js.append(".asUnboxedObjects(");
-			js.appendReferenceTo(localContext.getIdResolverVariable());
+			js.appendReferenceTo(localContext.getNameManager().getIdResolverVariable());
 			js.append(");\n");
 			//
 			js.append("assert ");

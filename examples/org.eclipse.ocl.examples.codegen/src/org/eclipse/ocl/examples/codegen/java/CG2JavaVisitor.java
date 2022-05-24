@@ -756,7 +756,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 	@Deprecated /* @deprecated no longer used */
 	protected @Nullable CGVariable installIdResolverVariable(@NonNull CGValuedElement cgValuedElement) {
-		return localContext.createIdResolverVariable();
+		return localContext.getNameManager().createIdResolverVariable();
 	}
 
 	@Deprecated /* @deprecated no longer used */
@@ -1515,7 +1515,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	public @NonNull Boolean visitCGExecutorType(@NonNull CGExecutorType cgExecutorType) {
 		js.appendDeclaration(cgExecutorType);
 		js.append(" = ");
-		js.appendValueName(localContext.getIdResolverVariable());
+		js.appendValueName(localContext.getNameManager().getIdResolverVariable());
 		js.append(".getClass(");
 		js.appendIdReference(cgExecutorType.getUnderlyingTypeId().getElementId());
 		js.append(", null);\n");

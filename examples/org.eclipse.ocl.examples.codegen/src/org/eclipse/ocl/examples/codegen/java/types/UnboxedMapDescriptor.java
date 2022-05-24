@@ -65,7 +65,7 @@ public class UnboxedMapDescriptor extends /*AbstractCollectionDescriptor*/Abstra
 			js.appendReferenceTo(unboxedValue);
 			js.append(" == null ? null : ");
 		}
-		js.appendReferenceTo(localContext.getIdResolverVariable());
+		js.appendReferenceTo(localContext.getNameManager().getIdResolverVariable());
 		js.append(".createMapOfAll(");
 		js.appendIdReference(mapTypeId != null ? mapTypeId.getKeyTypeId() : null);
 		js.append(", ");
