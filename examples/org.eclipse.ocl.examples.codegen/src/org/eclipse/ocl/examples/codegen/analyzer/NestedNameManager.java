@@ -45,6 +45,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  * A NameManager provides suggestions for names and maintains caches of used names so that model elements are consistently
@@ -57,15 +58,17 @@ public class NestedNameManager extends NameManager
 	 */
 	public static class JavaLocalContext implements LocalContext
 	{
-		protected final @Nullable JavaLocalContext outerContext;
 		protected final @NonNull NestedNameManager nameManager;
+		protected final @Nullable JavaLocalContext outerContext;
 
-		public JavaLocalContext(@NonNull JavaCodeGenerator codeGenerator, @Nullable JavaLocalContext outerContext, @NonNull NameManager outerNameManager,
-				@NonNull CGNamedElement cgScope, @NonNull Type asType) {
-			this.outerContext = outerContext;
-			this.nameManager = codeGenerator.createNestedNameManager(outerNameManager, this, cgScope, asType);
+		public JavaLocalContext(@NonNull NameManager outerNameManager, @NonNull NestedNameManager innerNameManager) {
+			this.nameManager = innerNameManager;
 			NameManager parentNameManager = nameManager.parent;
-			assert (parentNameManager instanceof NestedNameManager) ?  (outerContext == ((NestedNameManager)parentNameManager).localContext) : (outerContext == null);
+			this.outerContext = (parentNameManager instanceof NestedNameManager) ? ((NestedNameManager)parentNameManager).localContext : null;
+		}
+
+		public @Nullable JavaLocalContext basicGetOuterContext() {
+			return outerContext;
 		}
 
 		protected @NonNull CGParameter createAnyParameter() {
@@ -239,7 +242,8 @@ public class NestedNameManager extends NameManager
 		}
 
 		public @NonNull JavaLocalContext getOuterContext() {
-			return outerContext != null ? outerContext.getOuterContext() : this;
+			JavaLocalContext outerContext2 = basicGetOuterContext();
+			return outerContext2 != null ? outerContext2.getOuterContext() : this;
 		}
 
 		public @NonNull CGValuedElement getOwned(@NonNull CGValuedElement cgValuedElement, @NonNull String name) {
@@ -355,6 +359,7 @@ public class NestedNameManager extends NameManager
 	protected final @NonNull CodeGenAnalyzer analyzer;
 	protected final @NonNull GlobalNameManager globalNameManager;
 	protected final @NonNull JavaLocalContext localContext;
+
 	protected final @NonNull NameManager parent;
 	protected final @NonNull CGNamedElement cgScope;
 	protected final @NonNull NamedElement asScope;
@@ -383,26 +388,34 @@ public class NestedNameManager extends NameManager
 	private /*@LazyNonNull*/ CGParameter typeIdParameter = null;			// A local orphan parameter spelled "typeId"
 	private /*@LazyNonNull*/ CGParameter anyParameter = null;				// A local parameter spelled "any" to be added to the static signature
 
-	public NestedNameManager(@NonNull JavaCodeGenerator codeGenerator, @NonNull NameManager parent, @NonNull JavaLocalContext localContext,
-			@NonNull CGNamedElement cgScope, @NonNull Type asType) {
+	public NestedNameManager(@NonNull JavaCodeGenerator codeGenerator, @NonNull NameManager parent, @NonNull CGNamedElement cgScope) {
 		super(parent, parent.helper);
 
 
 		this.codeGenerator = codeGenerator;
 		this.analyzer = codeGenerator.getAnalyzer();
 		this.globalNameManager = codeGenerator.getGlobalNameManager();
-		this.localContext = localContext;
+	//	this.localContext = localContext;
 
 		this.parent = parent;
 		this.cgScope = cgScope;
 		this.asScope = CGUtil.getAST(cgScope);
-		this.asType = asType;
+
+		if (parent instanceof GlobalNameManager) {
+			this.asType = ClassUtil.nonNullState(PivotUtil.getContainingType(asScope));
+		}
+		else {
+			this.asType = ((NestedNameManager)parent).asType();
+		}
+
 		boolean staticFeature = (asScope instanceof Feature) && ((Feature)asScope).isIsStatic();
 		boolean isStatic = /*(asScope == null) ||*/ staticFeature;
 		this.isStatic = isStatic;
 		assert !(parent instanceof NestedNameManager) || (((NestedNameManager)parent).cgScope != cgScope);		// XXX
 		parent.addChild(this);
 
+
+		this.localContext = codeGenerator.createLocalContext(parent, this);
 		JavaLocalContext outerContext = localContext.outerContext;
 		assert (outerContext == null) || (outerContext.nameManager == parent);
 	}
@@ -675,19 +688,28 @@ public class NestedNameManager extends NameManager
 		return "locals-" + cgScope.eClass().getName() + "-" + CGUtil.getAST(cgScope).getName();
 	}
 
+	@Deprecated
 	public boolean isStatic() {
 		return isStatic;
 	}
 
+	@Deprecated
 	public @NonNull Type asType() {
 		return asType;
 	}
 
+	@Deprecated
 	public @NonNull CGNamedElement cgScope() {
 		return cgScope;
 	}
 
+	@Deprecated
 	public @NonNull NamedElement asScope() {
 		return asScope;
+	}
+
+	@Deprecated
+	public @NonNull JavaLocalContext getLocalContext() {
+		return localContext;
 	}
 }

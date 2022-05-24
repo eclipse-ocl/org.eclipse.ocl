@@ -87,7 +87,6 @@ import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.library.LibraryIteration;
@@ -324,18 +323,16 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		return new JavaStream(this, cg2javaVisitor);
 	}
 
-	public @NonNull JavaLocalContext createLocalContext(@Nullable JavaLocalContext outerContext, @NonNull NameManager outerNameManager,
-			@NonNull CGNamedElement cgNamedElement, @NonNull Type asType) {
-		return new JavaLocalContext(this, outerContext, outerNameManager, cgNamedElement, asType);
+	public @NonNull JavaLocalContext createLocalContext(@NonNull NameManager outerNameManager, @NonNull NestedNameManager innerNameManager) {
+		return new JavaLocalContext(outerNameManager, innerNameManager);
 	}
 
 	protected @NonNull NameManagerHelper createNameManagerHelper() {
 		return new NameManagerHelper();
 	}
 
-	public @NonNull NestedNameManager createNestedNameManager(@NonNull NameManager outerNameManager, @NonNull JavaLocalContext localContext,
-			@NonNull CGNamedElement cgScope, @NonNull Type asType) {
-		return new NestedNameManager(this, outerNameManager, localContext, cgScope, asType);
+	public @NonNull NestedNameManager createNestedNameManager(@NonNull NameManager outerNameManager, @NonNull CGNamedElement cgScope) {
+		return new NestedNameManager(this, outerNameManager, cgScope);
 	}
 
 	@Override

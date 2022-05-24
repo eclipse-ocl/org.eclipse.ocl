@@ -28,14 +28,10 @@ import org.eclipse.ocl.examples.codegen.generator.LocalContext;
 import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
-import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
-import org.eclipse.ocl.pivot.NamedElement;
-import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.IdVisitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.UniqueList;
 
 /**
@@ -416,18 +412,15 @@ public class GlobalNameManager extends NameManager
 	}
 
 	public @NonNull LocalContext initLocalContext(@Nullable LocalContext outerContext, @NonNull CGNamedElement cgScope) {
-		@NonNull NamedElement asScope = CGUtil.getAST(cgScope);
-		@NonNull Type asType;
 		NameManager outerNameManager;
 		if (outerContext != null) {
 			outerNameManager = outerContext.getNameManager();
-			asType = ((NestedNameManager)outerNameManager).asType();
 		}
 		else {
 			outerNameManager = this;
-			asType = ClassUtil.nonNullState(PivotUtil.getContainingType(asScope));
 		}
-		JavaLocalContext localContext = codeGenerator.createLocalContext((JavaLocalContext)outerContext, outerNameManager, cgScope, asType);
+		NestedNameManager nestedNameManager = codeGenerator.createNestedNameManager(outerNameManager, cgScope);
+		JavaLocalContext localContext = nestedNameManager.getLocalContext();
 		setLocalContext(cgScope, localContext);
 		return localContext;
 	}

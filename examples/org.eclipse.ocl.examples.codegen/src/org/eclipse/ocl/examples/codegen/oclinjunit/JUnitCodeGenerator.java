@@ -65,9 +65,8 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 
 	protected static class JUnitNestedNameManager extends NestedNameManager
 	{
-		protected JUnitNestedNameManager(@NonNull JavaCodeGenerator codeGenerator, @NonNull NameManager parent, @NonNull JavaLocalContext localContext,
-				@NonNull CGNamedElement cgScope, @NonNull Type asType) {
-			super(codeGenerator, parent, localContext, cgScope, asType);
+		protected JUnitNestedNameManager(@NonNull JavaCodeGenerator codeGenerator, @NonNull NameManager parent, @NonNull CGNamedElement cgScope) {
+			super(codeGenerator, parent, cgScope);
 		}
 	}
 
@@ -128,15 +127,13 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 	}
 
 	@Override
-	public @NonNull JavaLocalContext createLocalContext(@Nullable JavaLocalContext outerContext, @NonNull NameManager outerNameManager,
-			@NonNull CGNamedElement cgScope, @NonNull Type asType) {
-		return new JUnitLocalContext(this, outerContext, outerNameManager, cgScope, asType);
+	public @NonNull JavaLocalContext createLocalContext(@NonNull NameManager outerNameManager, @NonNull NestedNameManager innerNameManager) {
+		return new JUnitLocalContext(outerNameManager, innerNameManager);
 	}
 
 	@Override
-	public @NonNull NestedNameManager createNestedNameManager(@NonNull NameManager outerNameManager, @NonNull JavaLocalContext localContext,
-			@NonNull CGNamedElement cgScope, @NonNull Type asType) {
-		return new JUnitNestedNameManager(this, outerNameManager, localContext, cgScope, asType);
+	public @NonNull NestedNameManager createNestedNameManager(@NonNull NameManager outerNameManager, @NonNull CGNamedElement cgScope) {
+		return new JUnitNestedNameManager(this, outerNameManager, cgScope);
 	}
 
 	protected @NonNull String generate(@NonNull ExpressionInOCL expInOcl, @NonNull String packageName, @NonNull String className) {
