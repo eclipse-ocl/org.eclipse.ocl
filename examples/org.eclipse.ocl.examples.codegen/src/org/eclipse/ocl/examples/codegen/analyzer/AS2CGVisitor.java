@@ -164,7 +164,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	protected final @NonNull PivotMetamodelManager metamodelManager;
 	protected final @NonNull GenModelHelper genModelHelper;
 
-	private @Nullable JavaLocalContext localContext = null;		// The current context
+	private @Nullable NestedNameManager currentNameManager = null;		// The current context
 
 	public static final class CGTuplePartNameComparator implements Comparator<@NonNull CGTuplePart>
 	{
@@ -250,7 +250,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	}
 
 	public @Nullable CGClass basicGetCurrentClass() {
-		return localContext != null ? localContext.getNameManager().findCGScope() : null;
+		return currentNameManager != null ? currentNameManager.findCGScope() : null;
 	}
 
 	public @Nullable CGVariable basicGetParameter(@NonNull Variable aParameter) {
@@ -405,7 +405,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	 * Perform any actions / checks necessary once the visit is done.
 	 */
 	public void freeze() {
-		assert localContext == null;
+		assert currentNameManager == null;
 	}
 
 	protected @NonNull CGIterationCallExp generateLoopExp(@NonNull CGValuedElement cgSource, @NonNull LoopExp asLoopExp) {
@@ -429,10 +429,10 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		//
 		//	Iterators / co-iterators
 		//
-		LocalContext savedLocalContext = null;
+		NestedNameManager savedNameManager = null;
 		if (iterationHelper == null) {			// No helper: iterators are arguments of a nested context
 			initAst(cgIterationCallExp, asLoopExp);
-			savedLocalContext = pushLocalContext(cgIterationCallExp);
+			savedNameManager = pushNameManager(cgIterationCallExp);
 		}
 		for (@NonNull Variable iterator : PivotUtil.getOwnedIterators(asLoopExp)) {
 			CGIterator cgIterator = getIterator(iterator);
@@ -483,7 +483,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		}
 		if (iterationHelper != null) {			// Helper: iterators are part of invocation context
 			initAst(cgIterationCallExp, asLoopExp);
-			savedLocalContext = pushLocalContext(cgIterationCallExp);
+			savedNameManager = pushNameManager(cgIterationCallExp);
 		}
 		//
 		//	Body
@@ -501,7 +501,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		}
 		//			cgBuiltInIterationCallExp.setNonNull();
 		cgIterationCallExp.setRequired(isRequired);
-		popLocalContext(savedLocalContext);
+		popNameManager(savedNameManager);
 		return cgIterationCallExp;
 	}
 
@@ -546,14 +546,14 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			else {
 				assert cgClass.getAst() == asClass;
 			}
-			LocalContext savedPreClassContext = pushLocalContext(cgClass);
+			NestedNameManager savedPreClassNameManager = pushNameManager(cgClass);
 			try {
 				OperationCallingConvention callingConvention = context.getCallingConvention(asOperation, isFinal);
 				cgOperation = callingConvention.createCGOperation(this, asSourceType, asOperation);
 				assert cgOperation.getAst() != null;
 				assert cgOperation.getCallingConvention() == callingConvention;
 				getNameManager().declarePreferredName(cgOperation);
-				LocalContext savedClassContext = pushLocalContext(cgOperation);
+				NestedNameManager savedClassNameManager = pushNameManager(cgOperation);
 				ExpressionInOCL asExpressionInOCL = null;
 				LanguageExpression asSpecification = asOperation.getBodyExpression();
 				if (asSpecification != null) {
@@ -565,9 +565,9 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 					}
 				}
 				callingConvention.createCGParameters(this, cgOperation, asExpressionInOCL);
-				popLocalContext(savedClassContext);
+				popNameManager(savedClassNameManager);
 			} finally {
-				popLocalContext(savedPreClassContext);
+				popNameManager(savedPreClassNameManager);
 			}
 		}
 		return cgOperation;
@@ -603,7 +603,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			cgProperty.setCallingConvention(callingConvention);
 			analyzer.addCGProperty(cgProperty);
 			getNameManager().declarePreferredName(cgProperty);
-			LocalContext savedLocalContext = pushLocalContext(cgProperty);
+			NestedNameManager savedNameManager = pushNameManager(cgProperty);
 			ExpressionInOCL query = null;
 			LanguageExpression specification = asProperty.getOwnedExpression();
 			if (specification != null) {
@@ -615,7 +615,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 				}
 			}
 			callingConvention.createCGParameters(this, cgProperty, query);
-			popLocalContext(savedLocalContext);
+			popNameManager(savedNameManager);
 		}
 		return cgProperty;
 	}
@@ -751,9 +751,10 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return cgIterator;
 	}
 
+	@Deprecated
 	public @NonNull JavaLocalContext getLocalContext() {
-		assert localContext != null;
-		return localContext;
+		assert currentNameManager != null;
+		return currentNameManager.getLocalContext();
 	}
 
 	public @NonNull CGVariable getLocalVariable(@NonNull VariableDeclaration asVariable) {
@@ -983,18 +984,20 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return JavaConstants.THIS_NAME.equals(asParameter.getName());
 	}
 
-	public void popLocalContext(@Nullable LocalContext savedLocalContext) {
-		localContext = (JavaLocalContext) savedLocalContext;
+	public void popNameManager(@Nullable NestedNameManager savedNameManager) {
+		currentNameManager = savedNameManager;
 	}
 
-	public @Nullable LocalContext pushLocalContext(@NonNull CGNamedElement cgElement) {
-		JavaLocalContext savedLocalContext = localContext;
+	public @Nullable NestedNameManager pushNameManager(@NonNull CGNamedElement cgElement) {
+		NestedNameManager savedNameManager = currentNameManager;
 		LocalContext localContext2 = globalNameManager.basicGetLocalContext(cgElement);
 		if (localContext2 == null) {
-			localContext2 = globalNameManager.initLocalContext(savedLocalContext, cgElement);
+			currentNameManager = globalNameManager.createNestedNameManager(savedNameManager, cgElement);
 		}
-		localContext = (JavaLocalContext) localContext2;
-		return savedLocalContext;
+		else {
+			currentNameManager = ((JavaLocalContext)localContext2).getNameManager();
+		}
+		return savedNameManager;
 	}
 
 	protected void setCGVariableInit(@NonNull CGVariable cgVariable, @NonNull CGValuedElement cgInit) {
@@ -1055,7 +1058,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		else {
 			assert cgClass.getAst() == asClass;
 		}
-		LocalContext savedLocalContext = pushLocalContext(cgClass);
+		NestedNameManager savedNameManager = pushNameManager(cgClass);
 		for (@NonNull Constraint asConstraint : ClassUtil.nullFree(asClass.getOwnedInvariants())) {
 			CGConstraint cgConstraint = doVisit(CGConstraint.class, asConstraint);
 			cgClass.getInvariants().add(cgConstraint);
@@ -1068,7 +1071,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			CGProperty cgProperty = doVisit(CGProperty.class, asProperty);
 			cgClass.getProperties().add(cgProperty);
 		}
-		popLocalContext(savedLocalContext);
+		popNameManager(savedNameManager);
 		return cgClass;
 	}
 
@@ -1109,7 +1112,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			assert cgConstraint.basicGetNameResolution() == null;
 			cgConstraint.setAst(asConstraint);
 			getNameManager().declarePreferredName(cgConstraint);
-			LocalContext savedLocalContext = pushLocalContext(cgConstraint);
+			NestedNameManager savedNameManager = pushNameManager(cgConstraint);
 			try {
 				ExpressionInOCL query = environmentFactory.parseSpecification(specification);
 				Variable contextVariable = query.getOwnedContext();
@@ -1126,7 +1129,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} finally {
-				popLocalContext(savedLocalContext);
+				popNameManager(savedNameManager);
 			}
 		}
 		return cgConstraint;
@@ -1247,12 +1250,12 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			getClass();		// XXX
 		}
 		CGOperation cgOperation = generateOperationDeclaration(null, asOperation, false);
-		LocalContext savedLocalContext = pushLocalContext(cgOperation);
+		NestedNameManager savedNameManager = pushNameManager(cgOperation);
 		LanguageExpression specification = asOperation.getBodyExpression();
 		if (specification instanceof ExpressionInOCL) {			// Should already be parsed
 			cgOperation.setBody(doVisit(CGValuedElement.class, ((ExpressionInOCL)specification).getOwnedBody()));
 		}
-		popLocalContext(savedLocalContext);
+		popNameManager(savedNameManager);
 		return cgOperation;
 	}
 
@@ -1314,9 +1317,9 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	public final @NonNull CGProperty visitProperty(@NonNull Property asProperty) {
 		CGProperty cgProperty = generatePropertyDeclaration(asProperty);
 		PropertyCallingConvention callingConvention = cgProperty.getCallingConvention();
-		LocalContext savedLocalContext = pushLocalContext(cgProperty);
+		NestedNameManager savedNameManager = pushNameManager(cgProperty);
 		callingConvention.createImplementation(this, getLocalContext(), cgProperty);
-		popLocalContext(savedLocalContext);
+		popNameManager(savedNameManager);
 		return cgProperty;
 	}
 

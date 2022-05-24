@@ -18,7 +18,6 @@ import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager.JavaLocalContext;
 import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.PropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.VirtualOperationCallingConvention;
@@ -666,9 +665,8 @@ public class CodeGenAnalyzer
 			cgNativeOperation.setRequired(asOperation.isIsRequired());
 			cgNativeOperation.setCallingConvention(callingConvention);
 			cgNativeOperation.setAst(asOperation);
-			JavaLocalContext localContext = globalNameManager.initLocalContext(null, cgNativeOperation);
+			NestedNameManager nameManager = globalNameManager.createNestedNameManager(null, cgNativeOperation);
 			List<CGParameter> cgParameters = cgNativeOperation.getParameters();
-			NestedNameManager nameManager = localContext.getNameManager();
 			for (org.eclipse.ocl.pivot.Parameter asParameter : asOperation.getOwnedParameters()) {
 				Type asParameterType = asParameter.getType();
 				boolean isRequired = asParameter.isIsRequired();

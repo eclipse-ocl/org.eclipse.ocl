@@ -15,11 +15,11 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
+import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
-import org.eclipse.ocl.examples.codegen.generator.LocalContext;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
@@ -101,7 +101,7 @@ public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 			assert cgConstraint.basicGetNameResolution() == null;
 			cgConstraint.setAst(asConstraint);
 			getNameManager().declarePreferredName(cgConstraint);
-			LocalContext savedLocalContext = pushLocalContext(cgConstraint);
+			NestedNameManager savedNameManager = pushNameManager(cgConstraint);
 			try {
 				ExpressionInOCL oldQuery = environmentFactory.parseSpecification(specification);
 				String constraintName = PivotUtil.getName(asConstraint);
@@ -128,7 +128,7 @@ public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 			} catch (ParserException e) {
 				throw new WrappedException(e);
 			} finally {
-				popLocalContext(savedLocalContext);
+				popNameManager(savedNameManager);
 			}
 		}
 		return cgConstraint;

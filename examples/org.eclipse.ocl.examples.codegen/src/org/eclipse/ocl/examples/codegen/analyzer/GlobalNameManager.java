@@ -24,7 +24,6 @@ import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager.JavaLocalCont
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
-import org.eclipse.ocl.examples.codegen.generator.LocalContext;
 import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
@@ -120,7 +119,7 @@ public class GlobalNameManager extends NameManager
 	protected final @NonNull CodeGenAnalyzer analyzer;
 	protected final @NonNull ImportNameManager importNameManager;
 
-	private @NonNull Map<@NonNull CGElement, @NonNull JavaLocalContext> localContexts = new HashMap<>();
+	private @NonNull Map<@NonNull CGElement, @NonNull NestedNameManager> cgScope2nestedNameManager = new HashMap<>();
 	private @NonNull Set<@NonNull CGValuedElement> globals = new HashSet<>();
 
 	/**
@@ -221,20 +220,28 @@ public class GlobalNameManager extends NameManager
 
 	public @Nullable JavaLocalContext basicFindLocalContext(@NonNull CGNamedElement cgElement) {
 		for (CGElement cgScope = cgElement; cgScope != null; cgScope = cgScope.getParent()) {
-			JavaLocalContext localContext = localContexts.get(cgScope);
+			NestedNameManager localContext = cgScope2nestedNameManager.get(cgScope);
 			if (localContext != null) {
-				return localContext;
+				return localContext.getLocalContext();
 			}
 		}
 		return null;
 	}
 
 	public @Nullable JavaLocalContext basicGetLocalContext(@NonNull CGNamedElement cgElement) {
-		return localContexts.get(cgElement);
+		NestedNameManager nestedNameManager = cgScope2nestedNameManager.get(cgElement);
+		return nestedNameManager != null ? nestedNameManager.getLocalContext() : null;
 	}
 
 	public @Nullable NameManager bascGetScope(@NonNull CGNamedElement cgElement) {
 		return element2nameManager.get(cgElement);
+	}
+
+	public @NonNull NestedNameManager createNestedNameManager(@Nullable NestedNameManager outerNameManager, @NonNull CGNamedElement cgScope) {
+		NestedNameManager nestedNameManager = codeGenerator.createNestedNameManager(outerNameManager != null ? outerNameManager : this, cgScope);
+		NestedNameManager old = cgScope2nestedNameManager.put(cgScope, nestedNameManager);
+		assert old == null;
+		return nestedNameManager;
 	}
 
 	/**
@@ -411,28 +418,12 @@ public class GlobalNameManager extends NameManager
 		return valueName.getResolvedName();
 	}
 
-	public @NonNull JavaLocalContext initLocalContext(@Nullable LocalContext outerContext, @NonNull CGNamedElement cgScope) {
-		NameManager outerNameManager;
-		if (outerContext != null) {
-			outerNameManager = ((JavaLocalContext)outerContext).getNameManager();
-		}
-		else {
-			outerNameManager = this;
-		}
-		NestedNameManager nestedNameManager = codeGenerator.createNestedNameManager(outerNameManager, cgScope);
-		JavaLocalContext localContext = nestedNameManager.getLocalContext();
-		setLocalContext(cgScope, localContext);
-		return localContext;
-	}
-
 	@Override
 	public boolean isGlobal() {
 		return true;
 	}
 
 	public void setLocalContext(@NonNull CGNamedElement cgNamedElement, @NonNull JavaLocalContext localContext) {
-		JavaLocalContext old = localContexts.put(cgNamedElement, localContext);
-		assert old == null;
 	}
 
 	@Override
