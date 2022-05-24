@@ -20,10 +20,14 @@ import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager.JavaLocalContext;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
+import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.NestedTypeId;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.RootPackageId;
@@ -422,8 +426,9 @@ public abstract class NameManager
 		}
 	}
 
-	public @NonNull NestedNameManager createNestedNameManager(@NonNull CGNamedElement cgScope) {
-		return new NestedNameManager(this, cgScope);
+	public @NonNull NestedNameManager createNestedNameManager(@NonNull JavaCodeGenerator codeGenerator, @NonNull JavaLocalContext localContext,
+			@NonNull CGNamedElement cgScope, @NonNull NamedElement asScope, @NonNull Type asType, boolean isStatic) {
+		return new NestedNameManager(codeGenerator, this, localContext, cgScope, asScope, asType, isStatic);
 	}
 
 	/**
