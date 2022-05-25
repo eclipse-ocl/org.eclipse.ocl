@@ -16,9 +16,9 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
 
@@ -30,7 +30,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGExecutorPropertyCallExpImpl#getExecutorProperty <em>Executor Property</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGExecutorPropertyCallExpImpl#getCgArgument <em>Cg Argument</em>}</li>
  * </ul>
  *
@@ -44,17 +43,7 @@ public class CGExecutorPropertyCallExpImpl extends CGPropertyCallExpImpl impleme
 	 * @generated
 	 * @ordered
 	 */
-	public static final int CG_EXECUTOR_PROPERTY_CALL_EXP_FEATURE_COUNT = CGPropertyCallExpImpl.CG_PROPERTY_CALL_EXP_FEATURE_COUNT + 2;
-	/**
-	 * The cached value of the '{@link #getExecutorProperty() <em>Executor Property</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getExecutorProperty()
-	 * @generated
-	 * @ordered
-	 */
-	protected CGExecutorProperty executorProperty;
-
+	public static final int CG_EXECUTOR_PROPERTY_CALL_EXP_FEATURE_COUNT = CGPropertyCallExpImpl.CG_PROPERTY_CALL_EXP_FEATURE_COUNT + 1;
 	/**
 	 * The cached value of the '{@link #getCgArgument() <em>Cg Argument</em>}' containment reference.
 	 * <!-- begin-user-doc -->
@@ -90,29 +79,6 @@ public class CGExecutorPropertyCallExpImpl extends CGPropertyCallExpImpl impleme
 	 * @generated
 	 */
 	@Override
-	public CGExecutorProperty getExecutorProperty() {
-		return executorProperty;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setExecutorProperty(CGExecutorProperty newExecutorProperty) {
-		CGExecutorProperty oldExecutorProperty = executorProperty;
-		executorProperty = newExecutorProperty;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 11, oldExecutorProperty, executorProperty));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public CGValuedElement getCgArgument() {
 		return cgArgument;
 	}
@@ -126,7 +92,7 @@ public class CGExecutorPropertyCallExpImpl extends CGPropertyCallExpImpl impleme
 		CGValuedElement oldCgArgument = cgArgument;
 		cgArgument = newCgArgument;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 12, oldCgArgument, newCgArgument);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 11, oldCgArgument, newCgArgument);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -142,14 +108,14 @@ public class CGExecutorPropertyCallExpImpl extends CGPropertyCallExpImpl impleme
 		if (newCgArgument != cgArgument) {
 			NotificationChain msgs = null;
 			if (cgArgument != null)
-				msgs = ((InternalEObject)cgArgument).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (12), null, msgs);
+				msgs = ((InternalEObject)cgArgument).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (11), null, msgs);
 			if (newCgArgument != null)
-				msgs = ((InternalEObject)newCgArgument).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (12), null, msgs);
+				msgs = ((InternalEObject)newCgArgument).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (11), null, msgs);
 			msgs = basicSetCgArgument(newCgArgument, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 12, newCgArgument, newCgArgument));
+			eNotify(new ENotificationImpl(this, Notification.SET, 11, newCgArgument, newCgArgument));
 	}
 
 	/**
@@ -160,7 +126,7 @@ public class CGExecutorPropertyCallExpImpl extends CGPropertyCallExpImpl impleme
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case 12:
+			case 11:
 				return basicSetCgArgument(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -175,8 +141,6 @@ public class CGExecutorPropertyCallExpImpl extends CGPropertyCallExpImpl impleme
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case 11:
-				return getExecutorProperty();
-			case 12:
 				return getCgArgument();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -191,9 +155,6 @@ public class CGExecutorPropertyCallExpImpl extends CGPropertyCallExpImpl impleme
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case 11:
-				setExecutorProperty((CGExecutorProperty)newValue);
-				return;
-			case 12:
 				setCgArgument((CGValuedElement)newValue);
 				return;
 		}
@@ -209,9 +170,6 @@ public class CGExecutorPropertyCallExpImpl extends CGPropertyCallExpImpl impleme
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case 11:
-				setExecutorProperty((CGExecutorProperty)null);
-				return;
-			case 12:
 				setCgArgument((CGValuedElement)null);
 				return;
 		}
@@ -227,8 +185,6 @@ public class CGExecutorPropertyCallExpImpl extends CGPropertyCallExpImpl impleme
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case 11:
-				return executorProperty != null;
-			case 12:
 				return cgArgument != null;
 		}
 		return super.eIsSet(featureID);
@@ -276,8 +232,8 @@ public class CGExecutorPropertyCallExpImpl extends CGPropertyCallExpImpl impleme
 	 */
 	@Override
 	public boolean rewriteAs(@NonNull CGValuedElement oldValue, @NonNull CGValuedElement newValue) {
-		if (oldValue == executorProperty) {
-			setExecutorProperty((CGExecutorProperty)newValue);
+		if (oldValue == cgProperty) {
+			setCgProperty((CGProperty)newValue);
 			return true;
 		}
 		return false;

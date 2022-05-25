@@ -134,7 +134,6 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGExecutorProperty/underlyingPropertyId"/>
     </genClasses>
     <genClasses ecoreClass="cgmodel.ecore#//CGExecutorPropertyCallExp">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGExecutorPropertyCallExp/executorProperty"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGExecutorPropertyCallExp/cgArgument"/>
     </genClasses>
     <genClasses ecoreClass="cgmodel.ecore#//CGExecutorShadowPart"/>

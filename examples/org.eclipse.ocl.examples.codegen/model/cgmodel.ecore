@@ -256,8 +256,6 @@
         resolveProxies="false"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGExecutorPropertyCallExp" eSuperTypes="#//CGPropertyCallExp">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="executorProperty" lowerBound="1"
-        eType="#//CGExecutorProperty" resolveProxies="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="cgArgument" eType="#//CGValuedElement"
         containment="true" resolveProxies="false">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">

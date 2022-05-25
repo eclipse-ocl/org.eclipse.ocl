@@ -1441,17 +1441,6 @@ public interface CGModelPackage extends EPackage {
 	EClass getCGExecutorPropertyCallExp();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorPropertyCallExp#getExecutorProperty <em>Executor Property</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Executor Property</em>'.
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorPropertyCallExp#getExecutorProperty()
-	 * @see #getCGExecutorPropertyCallExp()
-	 * @generated
-	 */
-	EReference getCGExecutorPropertyCallExp_ExecutorProperty();
-
-	/**
 	 * Returns the meta object for the containment reference '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorPropertyCallExp#getCgArgument <em>Cg Argument</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3651,14 +3640,6 @@ public interface CGModelPackage extends EPackage {
 		 * @generated
 		 */
 		EClass CG_EXECUTOR_PROPERTY_CALL_EXP = eINSTANCE.getCGExecutorPropertyCallExp();
-
-		/**
-		 * The meta object literal for the '<em><b>Executor Property</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference CG_EXECUTOR_PROPERTY_CALL_EXP__EXECUTOR_PROPERTY = eINSTANCE.getCGExecutorPropertyCallExp_ExecutorProperty();
 
 		/**
 		 * The meta object literal for the '<em><b>Cg Argument</b></em>' containment reference feature.
