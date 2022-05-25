@@ -491,6 +491,16 @@ public class NestedNameManager extends NameManager
 		return cgVariable;
 	}
 
+/*	public @NonNull NestedNameManager getClassNameManager() {
+		if (asScope == asType) {
+			return this;
+		}
+		if (parent instanceof NestedNameManager) {
+			return ((NestedNameManager)parent).getClassNameManager();
+		}
+		throw new IllegalStateException("No class scope");
+	} */
+
 	public @NonNull JavaCodeGenerator getCodeGenerator() {
 		return codeGenerator;
 	}
@@ -633,7 +643,7 @@ public class NestedNameManager extends NameManager
 	} */
 
 	public @NonNull CGVariable getQualifiedThisVariable() {
-		if (asScope instanceof CallExp) {
+		if (asScope != asType) {
 			return ((NestedNameManager)parent).getQualifiedThisVariable();
 		}
 		CGVariable qualifiedThisVariable2 = qualifiedThisVariable;

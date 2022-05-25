@@ -226,35 +226,28 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return cgLetExp;
 	}
 
-	protected @NonNull CGVariable createCGVariable(@NonNull Variable contextVariable, @NonNull OCLExpression source) {
-		CGVariable cgVariable = getNameManager().createCGVariable(contextVariable);
-		CGValuedElement cgInit = doVisit(CGValuedElement.class, source);
-		setCGVariableInit(cgVariable, cgInit);
-		return cgVariable;
-	}
-
 	public @NonNull CGVariableExp createCGVariableExp(@NonNull VariableExp asVariableExp) {
 		VariableDeclaration asVariable = PivotUtil.getReferredVariable(asVariableExp);
 		CGVariableExp cgVariableExp = CGModelFactory.eINSTANCE.createCGVariableExp();
-		initAst(cgVariableExp, asVariableExp);
+		cgVariableExp.setAst(asVariableExp);
+		cgVariableExp.setTypeId(analyzer.getCGTypeId(asVariableExp.getTypeId()));
 		NestedNameManager nameManager = getNameManager();
-		CGVariable cgVariable;
-		if ((asVariable instanceof Parameter) && isThis((Parameter)asVariable)) {
-			CGClass currentClass = nameManager.findCGScope();
-			assert currentClass != null;
-			NestedNameManager scopeNameManager = globalNameManager.findNameManager(currentClass); // XXX use nameManager ancestor
-			if (isQualifiedThis(asVariableExp, (Parameter)asVariable)) {
-				cgVariable = scopeNameManager.getQualifiedThisVariable();
-			}
-			else {
-				cgVariable = scopeNameManager.getThisParameter();
+		CGVariable cgVariable = null;
+		if (asVariable instanceof Parameter) {		// XXX Is this irregularity stll necessary ??
+			Parameter asParameter = (Parameter)asVariable;
+			if (isThis(asParameter)) {
+				if (isQualifiedThis(asVariableExp, asParameter)) {
+					cgVariable = nameManager.getQualifiedThisVariable();
+				}
+				else {
+					cgVariable = nameManager.getThisParameter();
+				}
 			}
 		}
-		else {
+		if (cgVariable == null) {
 			cgVariable = nameManager.getCGVariable(asVariable);
 		}
 		cgVariableExp.setReferredVariable(cgVariable);
-	//	cgVariable.getNameResolution().addCGElement(cgVariableExp);
 		return cgVariableExp;
 	}
 
