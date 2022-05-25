@@ -105,8 +105,7 @@ public class ConstrainedPropertyCallingConvention extends AbstractPropertyCallin
 	} */
 
 	@Override
-	public @NonNull CGProperty createCGProperty(@NonNull AS2CGVisitor as2cgVisitor, @NonNull Property asProperty) {
-	//	CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();
+	public @NonNull CGProperty createCGProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull Property asProperty) {
 	//	analyzer.addForeignFeature(asProperty);
 		return CGModelFactory.eINSTANCE.createCGConstrainedProperty();
 	}

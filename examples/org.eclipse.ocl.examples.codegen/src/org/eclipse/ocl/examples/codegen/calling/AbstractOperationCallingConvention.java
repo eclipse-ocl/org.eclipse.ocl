@@ -66,7 +66,7 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 		Variable contextVariable = expressionInOCL.getOwnedContext();
 	//	assert isStatic(cgOperation) == (contextVariable == null);
 		if (contextVariable != null) {
-			cgParameters.add(as2cgVisitor.getSelfParameter(contextVariable));
+			cgParameters.add(as2cgVisitor.getNameManager().getSelfParameter(contextVariable));
 		}
 		boolean hasExternalNames = cgOperation instanceof CGEcoreOperation;		// Ecore has genmodel-defined names
 		for (@NonNull Variable parameterVariable : ClassUtil.nullFree(expressionInOCL.getOwnedParameters())) {
@@ -232,7 +232,7 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 		if (bodyExpression != null) {
 			Variable contextVariable = bodyExpression.getOwnedContext();
 			if (contextVariable != null) {
-				CGParameter cgParameter = as2cgVisitor.getSelfParameter(contextVariable);
+				CGParameter cgParameter = as2cgVisitor.getNameManager().getSelfParameter(contextVariable);
 				//			cgParameter.setTypeId(context.getTypeId(JavaConstants.getJavaTypeId(Object.class)));
 				//			cgParameter.setRequired(contextVariable.isIsRequired());
 				cgOperation.getParameters().add(cgParameter);

@@ -182,7 +182,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	}
 
 	protected void addParameter(@NonNull VariableDeclaration asVariable, @NonNull CGParameter cgParameter) {
-		getNameManager().putVariable(asVariable, cgParameter);
+		getNameManager().addVariable(asVariable, cgParameter);
 	}
 
 	public @Nullable CGClass basicGetCurrentClass() {
@@ -235,7 +235,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		if (cgVariable == null) {
 			CGFinalVariable cgVariable2 = CGModelFactory.eINSTANCE.createCGFinalVariable();
 			cgVariable = cgVariable2;
-			nameManager.putVariable(asVariable, cgVariable);
+			nameManager.addVariable(asVariable, cgVariable);
 		}
 		else {
 			assert cgVariable.eContainer() == null;
@@ -278,7 +278,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	protected void createParameters(@NonNull CGOperation cgOperation, @NonNull ExpressionInOCL expressionInOCL) {
 		Variable contextVariable = expressionInOCL.getOwnedContext();
 		if (contextVariable != null) {
-			CGParameter cgParameter = getSelfParameter(contextVariable);
+			CGParameter cgParameter = getNameManager().getSelfParameter(contextVariable);
 			//			cgParameter.setTypeId(analyzer.getTypeId(JavaConstants.getJavaTypeId(Object.class)));
 			//			cgParameter.setRequired(contextVariable.isIsRequired());
 			cgOperation.getParameters().add(cgParameter);
@@ -533,14 +533,16 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		CGProperty cgProperty = analyzer.basicGetCGProperty(asProperty);
 		if (cgProperty == null) {
 			PropertyCallingConvention callingConvention = context.getCallingConvention(asProperty);
-			cgProperty = callingConvention.createCGProperty(this, asProperty);
+			cgProperty = callingConvention.createCGProperty(analyzer, asProperty);
 			cgProperty.setAst(asProperty);
 			cgProperty.setTypeId(analyzer.getCGTypeId(asProperty.getTypeId()));
 			cgProperty.setRequired(asProperty.isIsRequired());
 			cgProperty.setCallingConvention(callingConvention);
 			analyzer.addCGProperty(cgProperty);
-			getNameManager().declarePreferredName(cgProperty);
+		//	getNameManager().declarePreferredName(cgProperty);
 			NestedNameManager savedNameManager = pushNameManager(cgProperty);
+			assert savedNameManager != null;
+			savedNameManager.declarePreferredName(cgProperty);
 			ExpressionInOCL query = null;
 			LanguageExpression specification = asProperty.getOwnedExpression();
 			if (specification != null) {
@@ -551,7 +553,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 					e.printStackTrace();
 				}
 			}
-			callingConvention.createCGParameters(this, cgProperty, query);
+			callingConvention.createCGParameters(getNameManager(), cgProperty, query);
 			popNameManager(savedNameManager);
 		}
 		return cgProperty;
@@ -682,7 +684,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			cgIterator.setAst(asVariable);
 			cgIterator.setTypeId(analyzer.getCGTypeId(TypeId.OCL_VOID));			// FIXME Java-specific type of polymorphic operation parameter
 			nameManager.declarePreferredName(cgIterator);
-			nameManager.putVariable(asVariable, cgIterator);
+			nameManager.addVariable(asVariable, cgIterator);
 		}
 		return cgIterator;
 	}
@@ -694,7 +696,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			cgVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();
 			initAst(cgVariable, asVariable);
 			nameManager.declareLazyName(cgVariable);
-			nameManager.putVariable(asVariable, cgVariable);
+			nameManager.addVariable(asVariable, cgVariable);
 		}
 		return cgVariable;
 	}
@@ -777,39 +779,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			if (aParameter.isIsRequired()) {
 				cgParameter.setNonNull();
 			}
-		}
-		return cgParameter;
-	}
-
-	public @NonNull CGParameter getSelfParameter(@NonNull VariableDeclaration aParameter) {
-		NestedNameManager nameManager = getNameManager();
-		CGParameter cgParameter = nameManager.basicGetParameter(aParameter);
-		if (cgParameter == null) {
-			cgParameter = CGModelFactory.eINSTANCE.createCGParameter();
-			initAst(cgParameter, aParameter);
-			globalNameManager.getSelfNameResolution().addCGElement(cgParameter);
-			addParameter(aParameter, cgParameter);
-			cgParameter.setRequired(aParameter.isIsRequired());
-			if (aParameter.isIsRequired()) {
-				cgParameter.setNonNull();
-			}
-		}
-		return cgParameter;
-	}
-
-	public @NonNull CGParameter getThisParameter(@NonNull VariableDeclaration aParameter) {
-		NestedNameManager nameManager = getNameManager();
-		CGParameter cgParameter = nameManager.basicGetParameter(aParameter);
-		if (cgParameter == null) {
-			cgParameter = CGModelFactory.eINSTANCE.createCGParameter();
-			initAst(cgParameter, aParameter);
-			globalNameManager.getThisNameResolution().addCGElement(cgParameter);
-			addParameter(aParameter, cgParameter);
-			cgParameter.setRequired(aParameter.isIsRequired());
-			if (aParameter.isIsRequired()) {
-				cgParameter.setNonNull();
-			}
-			cgParameter.setIsSelf(true);
 		}
 		return cgParameter;
 	}
@@ -1246,7 +1215,8 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		CGProperty cgProperty = generatePropertyDeclaration(asProperty);
 		PropertyCallingConvention callingConvention = cgProperty.getCallingConvention();
 		NestedNameManager savedNameManager = pushNameManager(cgProperty);
-		callingConvention.createImplementation(this, getNameManager(), cgProperty);
+		// parse ownedExpression here to simplify createImplementation arguments
+		callingConvention.createImplementation(this, cgProperty);
 		popNameManager(savedNameManager);
 		return cgProperty;
 	}

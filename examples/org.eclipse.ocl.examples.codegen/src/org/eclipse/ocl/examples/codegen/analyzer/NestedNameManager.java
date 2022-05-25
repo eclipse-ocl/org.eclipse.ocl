@@ -121,6 +121,12 @@ public class NestedNameManager extends NameManager
 		assert old == null;
 	}
 
+	public void addVariable(@NonNull VariableDeclaration asVariable, @NonNull CGVariable cgVariable) {
+		// XXX verify scope / class consistency
+		CGVariable old = cgVariables.put(asVariable, cgVariable);
+		assert old == null;
+	}
+
 	public void assignExtraNames(@NonNull Context context) {
 		for (Entry<@NonNull CGNamedElement, @Nullable Map<@NonNull NameVariant, @Nullable String>> entry1 : element2nameVariant2name.entrySet()) {
 			Map<@NonNull NameVariant, @Nullable String> nameVariant2name = entry1.getValue();
@@ -139,7 +145,7 @@ public class NestedNameManager extends NameManager
 					resolvedName = nameResolution.getResolvedName();
 				}
 				else {
-					resolvedName = cgElement.getName();
+					resolvedName = CGUtil.getName(cgElement);
 				}
 				for (Entry<@NonNull NameVariant, @Nullable String> entry2 : nameVariant2name.entrySet()) {
 					NameVariant nameVariant = entry2.getKey();
@@ -549,6 +555,23 @@ public class NestedNameManager extends NameManager
 		return selfParameter2;
 	}
 
+	public @NonNull CGParameter getSelfParameter(@NonNull VariableDeclaration asParameter) {		// XXX Why with/without arg variants
+		CGParameter cgParameter = basicGetParameter(asParameter);
+		if (cgParameter == null) {
+			cgParameter = CGModelFactory.eINSTANCE.createCGParameter();
+			cgParameter.setAst(asParameter);
+			cgParameter.setTypeId(analyzer.getCGTypeId(asParameter.getTypeId()));
+			globalNameManager.getSelfNameResolution().addCGElement(cgParameter);
+			addVariable(asParameter, cgParameter);
+			boolean isRequired = asParameter.isIsRequired();
+			cgParameter.setRequired(isRequired);
+			if (isRequired) {
+				cgParameter.setNonNull();
+			}
+		}
+		return cgParameter;
+	}
+
 	public @NonNull CGVariable getStandardLibraryVariable() {
 		if (asScope instanceof CallExp) {
 			return ((NestedNameManager)parent).getStandardLibraryVariable();
@@ -567,6 +590,23 @@ public class NestedNameManager extends NameManager
 			thisParameter = thisParameter2 = createThisParameter();
 		}
 		return thisParameter2;
+	}
+
+	public @NonNull CGParameter getThisParameter(@NonNull VariableDeclaration asParameter) {		// XXX Why with/without arg variants
+		CGParameter cgParameter = basicGetParameter(asParameter);
+		if (cgParameter == null) {
+			cgParameter = CGModelFactory.eINSTANCE.createCGParameter();
+			cgParameter.setAst(asParameter);
+			cgParameter.setTypeId(analyzer.getCGTypeId(asParameter.getTypeId()));
+			globalNameManager.getThisNameResolution().addCGElement(cgParameter);
+			addVariable(asParameter, cgParameter);
+			cgParameter.setRequired(asParameter.isIsRequired());
+			if (asParameter.isIsRequired()) {
+				cgParameter.setNonNull();
+			}
+			cgParameter.setIsSelf(true);
+		}
+		return cgParameter;
 	}
 
 	public @NonNull CGParameter getTypeIdParameter() {
@@ -595,15 +635,6 @@ public class NestedNameManager extends NameManager
 
 	public boolean isReserved(@NonNull NameResolution nameResolution) {
 		return (reservedNameResolutions != null) && reservedNameResolutions.contains(nameResolution);
-	}
-
-	public void putParameter(@NonNull VariableDeclaration asParameter, @NonNull CGParameter cgParameter) {
-	//	System.out.println("putParameter: " + asParameter + " in " + asParameter.eContainer() + " => " + NameUtil.debugSimpleName(cgParameter));
-		cgVariables.put(asParameter, cgParameter);
-	}
-
-	public void putVariable(@NonNull VariableDeclaration asVariable, @NonNull CGVariable cgVariable) {
-		cgVariables.put(asVariable, cgVariable);
 	}
 
 	public void setNameVariant(@NonNull CGValuedElement cgElement, @NonNull NameVariant nameVariant, @NonNull String variantName) {

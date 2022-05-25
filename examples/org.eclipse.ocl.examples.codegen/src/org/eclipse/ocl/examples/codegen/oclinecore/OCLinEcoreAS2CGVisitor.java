@@ -26,7 +26,6 @@ import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Variable;
-import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
@@ -70,17 +69,6 @@ public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 		return (OCLinEcoreCodeGenerator)context;
 	}
 
-	@Override
-	public @NonNull CGParameter getSelfParameter(@NonNull VariableDeclaration aParameter) {
-		CGParameter cgParameter = super.getThisParameter(aParameter);
-	//	assert (PivotConstants.SELF_NAME.equals(aParameter.getName())) {
-	//	globalContext.getThisNameResolution().addSecondaryElement(cgParameter);
-	//	globalContext.getSelfNameResolution().addSecondaryElement(cgParameter);
-		//	cgParameter.setValueName(JavaConstants.THIS_NAME);
-	//	}
-		return cgParameter;
-	}
-
 /*	@Override
 	public @NonNull CGClass visitClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		List<Constraint> asConstraints = asClass.getOwnedConstraints();
@@ -117,7 +105,7 @@ public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 			//	OCLinEcoreLocalContext localContext = (OCLinEcoreLocalContext) globalContext.basicGetLocalContext(cgConstraint);
 				Variable contextVariable = asSynthesizedQuery.getOwnedContext();
 				if (contextVariable != null) {
-					CGParameter cgParameter = getSelfParameter(contextVariable);
+					CGParameter cgParameter = getNameManager().getSelfParameter(contextVariable);
 					cgConstraint.getParameters().add(cgParameter);
 				}
 				for (@NonNull Variable parameterVariable : PivotUtil.getOwnedParameters(asSynthesizedQuery)) {

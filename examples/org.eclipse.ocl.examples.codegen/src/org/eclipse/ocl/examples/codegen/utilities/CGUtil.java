@@ -448,7 +448,7 @@ public class CGUtil
 		return ClassUtil.nullFree(cgOperation.getParameters());
 	}
 
-	public static @NonNull List<CGParameter> getParametersList(@NonNull CGForeignProperty cgForeignProperty) {
+	public static @NonNull List<@NonNull CGParameter> getParametersList(@NonNull CGForeignProperty cgForeignProperty) {
 		return ClassUtil.nullFree(cgForeignProperty.getParameters());
 	}
 

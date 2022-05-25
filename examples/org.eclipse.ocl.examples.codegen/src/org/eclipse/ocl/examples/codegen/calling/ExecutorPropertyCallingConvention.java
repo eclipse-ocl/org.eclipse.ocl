@@ -53,7 +53,7 @@ public class ExecutorPropertyCallingConvention extends AbstractPropertyCallingCo
 	public static final @NonNull ExecutorPropertyCallingConvention INSTANCE = new ExecutorPropertyCallingConvention();
 
 	@Override
-	public @NonNull CGProperty createCGProperty(@NonNull AS2CGVisitor as2cgVisitor, @NonNull Property asProperty) {
+	public @NonNull CGProperty createCGProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull Property asProperty) {
 	//	return as2cgVisitor.getAnalyzer().getCGExecutorNavigationProperty(asProperty, this);
 		return CGModelFactory.eINSTANCE.createCGExecutorNavigationProperty();
 	}

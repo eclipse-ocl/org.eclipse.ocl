@@ -14,6 +14,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
+import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBodiedProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
@@ -38,19 +39,20 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
 public abstract class AbstractPropertyCallingConvention implements PropertyCallingConvention
 {
 	@Override
-	public void createCGParameters(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGProperty cgProperty, @Nullable ExpressionInOCL initExpression) {}
+	public void createCGParameters(@NonNull NestedNameManager nameManager, @NonNull CGProperty cgProperty, @Nullable ExpressionInOCL initExpression) {}
 
 	@Override
-	public @NonNull CGProperty createCGProperty(@NonNull AS2CGVisitor as2cgVisitor, @NonNull Property asProperty) {
+	public @NonNull CGProperty createCGProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull Property asProperty) {
 		return CGModelFactory.eINSTANCE.createCGConstrainedProperty();  // XXX Overrides may add state
 	}
 
 	@Override
-	public void createImplementation(@NonNull AS2CGVisitor as2cgVisitor, @NonNull NestedNameManager localNameManager, @NonNull CGProperty cgProperty) {
+	public void createImplementation(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGProperty cgProperty) {
 	//	assert (this instanceof StereotypePropertyCallingConvention)
 	//		|| (this instanceof ConstrainedPropertyCallingConvention)
 	//		|| (this instanceof NativePropertyCallingConvention)
 	//		|| (this instanceof ForeignPropertyCallingConvention);
+		NestedNameManager nameManager = as2cgVisitor.getNameManager();
 		Property asProperty = CGUtil.getAST(cgProperty);
 		cgProperty.setRequired(asProperty.isIsRequired());
 		LanguageExpression specification = asProperty.getOwnedExpression();
@@ -59,7 +61,7 @@ public abstract class AbstractPropertyCallingConvention implements PropertyCalli
 				ExpressionInOCL query = as2cgVisitor.getEnvironmentFactory().parseSpecification(specification);
 				Variable contextVariable = query.getOwnedContext();
 				if (contextVariable != null) {
-					as2cgVisitor.getSelfParameter(contextVariable);
+					nameManager.getSelfParameter(contextVariable);
 				}
 				((CGBodiedProperty)cgProperty).setBody(as2cgVisitor.doVisit(CGValuedElement.class, query.getOwnedBody()));
 			} catch (ParserException e) {

@@ -138,7 +138,7 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 				if (i < 0) {
 					CGParameter selfParameter;
 					if (expressionInOCL != null) {
-						selfParameter = as2cgVisitor.getSelfParameter(PivotUtil.getOwnedContext(expressionInOCL));
+						selfParameter = nameManager.getSelfParameter(PivotUtil.getOwnedContext(expressionInOCL));
 					}
 					else {
 						selfParameter = nameManager.getSelfParameter();

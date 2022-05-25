@@ -81,15 +81,14 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 	}
 
 	@Override
-	public void createCGParameters(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGProperty cgProperty, @Nullable ExpressionInOCL initExpression) {
+	public void createCGParameters(@NonNull NestedNameManager nameManager, @NonNull CGProperty cgProperty, @Nullable ExpressionInOCL initExpression) {
 		CGForeignProperty cgForeignProperty = (CGForeignProperty)cgProperty;
-		NestedNameManager nameManager = as2cgVisitor.getNameManager();
 		List<CGParameter> cgParameters = cgForeignProperty.getParameters();
 		cgParameters.add(nameManager.getExecutorParameter());
 		if (initExpression != null) {
 			Variable contextVariable = initExpression.getOwnedContext();
 			if (contextVariable != null) {
-				cgParameters.add(as2cgVisitor.getSelfParameter(contextVariable));
+				cgParameters.add(nameManager.getSelfParameter(contextVariable));
 			}
 			else {
 				cgParameters.add(nameManager.getAnyParameter());
@@ -102,25 +101,24 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 	}
 
 	@Override
-	public @NonNull CGProperty createCGProperty(@NonNull AS2CGVisitor as2cgVisitor, @NonNull Property asProperty) {
-		CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();
+	public @NonNull CGProperty createCGProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull Property asProperty) {
 		analyzer.addExternalFeature(asProperty);
 		return CGModelFactory.eINSTANCE.createCGForeignProperty();
 	}
 
 	@Override
-	public void createImplementation(@NonNull AS2CGVisitor as2cgVisitor, @NonNull NestedNameManager localNameManager, @NonNull CGProperty cgProperty) {
+	public void createImplementation(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGProperty cgProperty) {
+		NestedNameManager nameManager = as2cgVisitor.getNameManager();
 		CGForeignProperty cgForeignProperty = (CGForeignProperty)cgProperty;
 		CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();
 		Property asProperty = CGUtil.getAST(cgForeignProperty);
-		assert localNameManager == as2cgVisitor.getNameManager();
 //		CGParameter cgParameter = asProperty.isIsStatic() ? localContext.getAnyParameter() : localContext.getSelfParameter();
 //		cgForeignProperty.getParameters().add(localContext.getExecutorParameter());
 //		cgForeignProperty.getParameters().add(cgParameter);
 		CGParameter cgSelfParameter = CGUtil.getParametersList(cgForeignProperty).get(1);
 		CGValuedElement cgInitValue = as2cgVisitor.getInitExpression(/*cgParameter,*/ asProperty);
 		assert cgInitValue != null;
-		CGVariable modelManagerVariable = localNameManager.getModelManagerVariable();
+		CGVariable modelManagerVariable = nameManager.getModelManagerVariable();
 		CGElementId cgPropertyId = analyzer.getCGElementId(asProperty.getPropertyId());
 	//	CGTypeId cacheTypeId = context.getTypeId(asProperty.getTypeId());
 		CGExecutorType cgCastType = analyzer.createExecutorType(PivotUtil.getType(asProperty));
@@ -130,7 +128,7 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 		basicGetValueInit.setValueIsBoxed(true);
 		CGValuedElement castBasicGetValueInit = analyzer.createCGCastExp(cgCastType, basicGetValueInit);
 		CGFinalVariable basicGetValueVariable = as2cgVisitor.createCGFinalVariable(castBasicGetValueInit);
-		localNameManager.declareLazyName(basicGetValueVariable);
+		nameManager.declareLazyName(basicGetValueVariable);
 		CGValuedElement cgCondition = analyzer.createCGIsEqual(analyzer.createCGVariableExp(basicGetValueVariable), analyzer.createCGNull());
 		CGNativeOperationCallExp getValue = as2cgVisitor.createCGBoxedNativeOperationCallExp(analyzer.createCGVariableExp(modelManagerVariable), JavaConstants.MODEL_MANAGER_GET_FOREIGN_PROPERTY_VALUE_METHOD,
 			asProperty.isIsStatic() ? analyzer.createCGConstantExp(analyzer.createCGNull()) : analyzer.createCGVariableExp(cgSelfParameter), analyzer.createCGConstantExp(cgPropertyId), cgInitValue);
