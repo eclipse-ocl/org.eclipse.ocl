@@ -40,6 +40,7 @@ import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -71,6 +72,11 @@ public class NestedNameManager extends NameManager
 	 * Additional variants of resolvedName for which further unique names are required.
 	 */
 	private @NonNull Map<@NonNull CGNamedElement, @Nullable Map<@NonNull NameVariant, @Nullable String>> element2nameVariant2name = new HashMap<>();
+
+	/**
+	 * Mapping from an AS Variable to the CG Variable defined in this cgScope.
+	 */
+	private @NonNull Map<@NonNull VariableDeclaration, @NonNull CGVariable> cgVariables = new HashMap<>();
 
 	private /*@LazyNonNull*/ CGParameter anyParameter = null;				// A local parameter spelled "any" to be added to the static signature
 	private /*@LazyNonNull*/ CGVariable executorVariable = null;			// Passed executor parameter / caached local thread lookup
@@ -177,10 +183,30 @@ public class NestedNameManager extends NameManager
 
 	public @Nullable CGVariable basicGetIdResolverVariable() {
 		return idResolverVariable;
-}
+	}
+
+	public @Nullable CGVariable basicGetLocalVariable(@NonNull VariableDeclaration asVariable) {
+		return cgVariables.get(asVariable);
+	}
 
 	public @Nullable CGVariable basicGetModelManagerVariable() {
 		return modelManagerVariable;
+	}
+
+	public @Nullable CGParameter basicGetParameter(@NonNull VariableDeclaration asVariable) {
+		CGVariable cgVariable = cgVariables.get(asVariable);
+		if (cgVariable instanceof CGParameter) {
+			return (CGParameter)cgVariable;
+		}
+		else if (cgVariable != null) {
+			throw new IllegalStateException(cgVariable + " is not  a CGParameter");
+		}
+		else if (parent instanceof NestedNameManager) {				// XXX polymorphize
+			return ((NestedNameManager)parent).basicGetParameter(asVariable);
+		}
+		else {
+			return null;
+		}
 	}
 
 	public @Nullable CGVariable basicGetQualifiedThisVariable() {
@@ -193,6 +219,19 @@ public class NestedNameManager extends NameManager
 
 	public @Nullable CGVariable basicGetStandardLibraryVariable() {
 		return standardLibraryVariable;
+	}
+
+	public @Nullable CGVariable basicGetVariable(@NonNull VariableDeclaration asVariable) {
+		CGVariable cgVariable = cgVariables.get(asVariable);
+		if (cgVariable != null) {
+			return cgVariable;
+		}
+		else if (parent instanceof NestedNameManager) {				// XXX polymorphize
+			return ((NestedNameManager)parent).basicGetVariable(asVariable);
+		}
+		else {
+			return null;
+		}
 	}
 
 	public @Nullable String basicGetVariantResolvedName(@NonNull CGNamedElement cgElement, @NonNull NameVariant nameVariant) {
@@ -539,6 +578,8 @@ public class NestedNameManager extends NameManager
 		return typeIdParameter2;
 	}
 
+
+
 /*	public @NonNull String getVariantResolvedName(@NonNull CGValuedElement cgElement, @NonNull NameVariant nameVariant) {
 		Map<@NonNull NameVariant, @Nullable String> nameVariant2name = element2nameVariant2name.get(cgElement);
 		assert nameVariant2name != null;
@@ -554,6 +595,15 @@ public class NestedNameManager extends NameManager
 
 	public boolean isReserved(@NonNull NameResolution nameResolution) {
 		return (reservedNameResolutions != null) && reservedNameResolutions.contains(nameResolution);
+	}
+
+	public void putParameter(@NonNull VariableDeclaration asParameter, @NonNull CGParameter cgParameter) {
+	//	System.out.println("putParameter: " + asParameter + " in " + asParameter.eContainer() + " => " + NameUtil.debugSimpleName(cgParameter));
+		cgVariables.put(asParameter, cgParameter);
+	}
+
+	public void putVariable(@NonNull VariableDeclaration asVariable, @NonNull CGVariable cgVariable) {
+		cgVariables.put(asVariable, cgVariable);
 	}
 
 	public void setNameVariant(@NonNull CGValuedElement cgElement, @NonNull NameVariant nameVariant, @NonNull String variantName) {
