@@ -267,6 +267,16 @@ public class NestedNameManager extends NameManager
 		return cgVariable;
 	}
 
+	public @NonNull CGFinalVariable createCGVariable(@NonNull CGValuedElement cgInit) {
+		NameResolution nameResolution = getNameResolution(cgInit);
+		CGFinalVariable cgVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();
+		cgVariable.setAst(cgInit.getAst());
+		cgVariable.setTypeId(cgInit.getTypeId());
+		cgVariable.setInit(cgInit);
+		nameResolution.addCGElement(cgVariable);
+		return cgVariable;
+	}
+
 	protected @NonNull CGVariable createExecutorVariable() {
 		CGNativeOperationCallExp executorInit = analyzer.createCGNativeOperationCallExp(JavaConstants.PIVOT_UTIL_GET_EXECUTOR_GET_METHOD, SupportOperationCallingConvention.INSTANCE);
 		NameResolution executorNameResolution = globalNameManager.getExecutorNameResolution();

@@ -38,7 +38,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreClassShadowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreDataTypeShadowExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
@@ -77,7 +76,6 @@ import org.eclipse.ocl.examples.codegen.generator.AbstractCodeGenerator;
 import org.eclipse.ocl.examples.codegen.generator.GenModelHelper;
 import org.eclipse.ocl.examples.codegen.generator.IterationHelper;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
-import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.java.types.JavaTypeId;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.BooleanLiteralExp;
@@ -107,7 +105,6 @@ import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.OppositePropertyCallExp;
-import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.RealLiteralExp;
@@ -182,14 +179,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		genModelHelper = codeGenerator.getGenModelHelper();
 	}
 
-	protected void addParameter(@NonNull VariableDeclaration asVariable, @NonNull CGParameter cgParameter) {
-		getNameManager().addVariable(asVariable, cgParameter);
-	}
-
-//	public @Nullable CGClass basicGetCurrentClass() {
-//		return currentNameManager != null ? currentNameManager.findCGScope() : null;
-//	}
-
 	public @NonNull CGNativeOperationCallExp createCGBoxedNativeOperationCallExp(@Nullable CGValuedElement cgThis, @NonNull Method jMethod, @NonNull CGValuedElement... cgArguments) {
 		CGNativeOperationCallExp cgCallExp = analyzer.createCGNativeOperationCallExp(jMethod, SupportOperationCallingConvention.INSTANCE);
 		cgCallExp.setCgThis(cgThis);
@@ -207,51 +196,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return cgCallExp;
 	}
 
-	public @NonNull CGFinalVariable createCGFinalVariable(@NonNull CGValuedElement cgInit) {
-		NestedNameManager nameManager = getNameManager();
-		NameResolution nameResolution = nameManager.getNameResolution(cgInit);
-		CGFinalVariable cgVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();
-		cgVariable.setAst(cgInit.getAst());
-		cgVariable.setTypeId(cgInit.getTypeId());
-		cgVariable.setInit(cgInit);
-		nameResolution.addCGElement(cgVariable);
-		return cgVariable;
-	}
-
-	protected @NonNull CGLetExp createCGLetExp(@NonNull TypedElement asElement, @NonNull CGFinalVariable cgVariable, @NonNull CGValuedElement cgIn) {
-		CGLetExp cgLetExp = CGModelFactory.eINSTANCE.createCGLetExp();
-		cgLetExp.setInit(cgVariable);
-		cgLetExp.setIn(cgIn);
-		initAst(cgLetExp, asElement);
-		return cgLetExp;
-	}
-
-	public @NonNull CGVariableExp createCGVariableExp(@NonNull VariableExp asVariableExp) {
-		VariableDeclaration asVariable = PivotUtil.getReferredVariable(asVariableExp);
-		CGVariableExp cgVariableExp = CGModelFactory.eINSTANCE.createCGVariableExp();
-		cgVariableExp.setAst(asVariableExp);
-		cgVariableExp.setTypeId(analyzer.getCGTypeId(asVariableExp.getTypeId()));
-		NestedNameManager nameManager = getNameManager();
-		CGVariable cgVariable = null;
-		if (asVariable instanceof Parameter) {		// XXX Is this irregularity stll necessary ??
-			Parameter asParameter = (Parameter)asVariable;
-			if (isThis(asParameter)) {
-				if (isQualifiedThis(asVariableExp, asParameter)) {
-					cgVariable = nameManager.getQualifiedThisVariable();
-				}
-				else {
-					cgVariable = nameManager.getThisParameter();
-				}
-			}
-		}
-		if (cgVariable == null) {
-			cgVariable = nameManager.getCGVariable(asVariable);
-		}
-		cgVariableExp.setReferredVariable(cgVariable);
-		return cgVariableExp;
-	}
-
-	protected void createParameters(@NonNull CGOperation cgOperation, @NonNull ExpressionInOCL expressionInOCL) {
+/*	protected void createParameters(@NonNull CGOperation cgOperation, @NonNull ExpressionInOCL expressionInOCL) {
 		NestedNameManager nameManager = getNameManager();
 		Variable contextVariable = expressionInOCL.getOwnedContext();
 		if (contextVariable != null) {
@@ -272,7 +217,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			//			cgParameter.setRequired(parameterVariable.isIsRequired());
 			cgOperation.getParameters().add(cgParameter);
 		}
-	}
+	} */
 
 	/*protected public @NonNull CGOperation createVirtualCGOperationWithoutBody(@NonNull Operation asOperation, @NonNull List<@NonNull CGCachedOperation> cgOperations) {
 		CGCachedOperation cgOperation = CGModelFactory.eINSTANCE.createCGCachedOperation();
@@ -638,7 +583,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			}
 			if (cgConstant != null) {
 				initExpression = analyzer.createCGConstantExp(asProperty, cgConstant);
-
 			}
 		}
 		return initExpression;
@@ -733,17 +677,17 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	/**
 	 * Return true if the asVariableExp reference to asParameter is a reference to 'this' and needs mapping to the qualifiedThisVariable equivalent.
-	 */
+	 *
 	protected boolean isQualifiedThis(@NonNull VariableExp asVariableExp, @NonNull Parameter asParameter) {
 		return false;
-	}
+	} */
 
 	/**
 	 * Return true if asParameter is a 'this' parameter.
-	 */
+	 *
 	protected boolean isThis(@NonNull Parameter asParameter) {
 		return JavaConstants.THIS_NAME.equals(asParameter.getName());
-	}
+	} */
 
 	public  @Nullable NestedNameManager popNameManager() {
 		nameManagerStack.pop();
@@ -956,7 +900,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		CGValuedElement cgInit = doVisit(CGValuedElement.class, asVariable.getOwnedInit());
 		setCGVariableInit(cgVariable, cgInit);;
 		CGValuedElement cgIn = doVisit(CGValuedElement.class, asLetExp.getOwnedIn());
-		CGLetExp cgLetExp = createCGLetExp(asLetExp, cgVariable, cgIn);
+		CGLetExp cgLetExp = analyzer.createCGLetExp(asLetExp, cgVariable, cgIn);
 		NameResolution inNameResolution = cgIn.basicGetNameResolution();
 		if (inNameResolution != null) {
 			inNameResolution.addCGElement(cgLetExp);
@@ -1039,12 +983,12 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			return generateOperationCallExp(cgSource, asOperationCallExp);
 		}
 		boolean hasVariable = cgSource instanceof CGVariableExp;
-		CGVariable cgVariable = hasVariable ? CGUtil.getReferredVariable((CGVariableExp)cgSource) : createCGFinalVariable(cgSource);
+		CGVariable cgVariable = hasVariable ? CGUtil.getReferredVariable((CGVariableExp)cgSource) : getNameManager().createCGVariable(cgSource);
 		CGVariableExp cgVariableExp1 = analyzer.createCGVariableExp(cgVariable);
 		CGVariableExp cgVariableExp2 = analyzer.createCGVariableExp(cgVariable);
 		CGValuedElement cgUnsafeExp = generateOperationCallExp(cgVariableExp1, asOperationCallExp);
 		CGIfExp cgIfExp = generateSafeNavigationGuard(asOperationCallExp, cgVariableExp2, cgUnsafeExp);
-		return hasVariable ? cgIfExp : createCGLetExp(asOperationCallExp, (CGFinalVariable)cgVariable, cgIfExp);
+		return hasVariable ? cgIfExp : analyzer.createCGLetExp(asOperationCallExp, (CGFinalVariable)cgVariable, cgIfExp);
 	}
 
 	@Override
@@ -1055,12 +999,12 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			return generateOppositePropertyCallExp(cgSource, asOppositePropertyCallExp);
 		}
 		boolean hasVariable = cgSource instanceof CGVariableExp;
-		CGVariable cgVariable = hasVariable ? CGUtil.getReferredVariable((CGVariableExp)cgSource) : createCGFinalVariable(cgSource);
+		CGVariable cgVariable = hasVariable ? CGUtil.getReferredVariable((CGVariableExp)cgSource) : getNameManager().createCGVariable(cgSource);
 		CGVariableExp cgVariableExp1 = analyzer.createCGVariableExp(cgVariable);
 		CGVariableExp cgVariableExp2 = analyzer.createCGVariableExp(cgVariable);
 		CGValuedElement cgUnsafeExp = generateOppositePropertyCallExp(cgVariableExp1, asOppositePropertyCallExp);
 		CGIfExp cgIfExp = generateSafeNavigationGuard(asOppositePropertyCallExp, cgVariableExp2, cgUnsafeExp);
-		return hasVariable ? cgIfExp : createCGLetExp(asOppositePropertyCallExp, (CGFinalVariable)cgVariable, cgIfExp);
+		return hasVariable ? cgIfExp : analyzer.createCGLetExp(asOppositePropertyCallExp, (CGFinalVariable)cgVariable, cgIfExp);
 	}
 
 	@Override
@@ -1097,12 +1041,12 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			return generatePropertyCallExp(cgSource, asPropertyCallExp);
 		}
 		boolean hasVariable = cgSource instanceof CGVariableExp;
-		CGVariable cgVariable = hasVariable ? CGUtil.getReferredVariable((CGVariableExp)cgSource) : createCGFinalVariable(cgSource);
+		CGVariable cgVariable = hasVariable ? CGUtil.getReferredVariable((CGVariableExp)cgSource) : getNameManager().createCGVariable(cgSource);
 		CGVariableExp cgVariableExp1 = analyzer.createCGVariableExp(cgVariable);
 		CGVariableExp cgVariableExp2 = analyzer.createCGVariableExp(cgVariable);
 		CGValuedElement cgUnsafeExp = generatePropertyCallExp(cgVariableExp1, asPropertyCallExp);
 		CGIfExp cgIfExp = generateSafeNavigationGuard(asPropertyCallExp, cgVariableExp2, cgUnsafeExp);
-		return hasVariable ? cgIfExp : createCGLetExp(asPropertyCallExp, (CGFinalVariable)cgVariable, cgIfExp);
+		return hasVariable ? cgIfExp : analyzer.createCGLetExp(asPropertyCallExp, (CGFinalVariable)cgVariable, cgIfExp);
 	}
 
 	@Override
@@ -1270,12 +1214,30 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	@Override
 	public @Nullable CGValuedElement visitVariableExp(@NonNull VariableExp asVariableExp) {
-		CGVariableExp cgVariableExp = createCGVariableExp(asVariableExp);
+		VariableDeclaration asVariable = PivotUtil.getReferredVariable(asVariableExp);
+		CGVariable cgVariable = getNameManager().getCGVariable(asVariable);
+		CGVariableExp cgVariableExp = CGModelFactory.eINSTANCE.createCGVariableExp();
+		cgVariableExp.setAst(asVariableExp);
+		cgVariableExp.setTypeId(analyzer.getCGTypeId(asVariableExp.getTypeId()));
+		/*	if (asVariable instanceof Parameter) { --- moved to a QVTi getCGVariable overload
+				// QVTi's ImperativeTransformation.ownedContext has a "this" parameter ?? a QVTi getCGVariable overload
+				Parameter asParameter = (Parameter)asVariable;
+				if (isThis(asParameter)) {
+					if (isQualifiedThis(asVariableExp, asParameter)) {
+						throw new UnsupportedOperationException();
+//						cgVariable = nameManager.getQualifiedThisVariable();
+					}
+					else {
+						throw new UnsupportedOperationException();
+//						cgVariable = nameManager.getThisParameter();
+					}
+				}
+			} */
+		cgVariableExp.setReferredVariable(cgVariable);
 		return cgVariableExp;
 	}
 
 	@Override
-
 	public @Nullable CGValuedElement visiting(@NonNull Visitable visitable) {
 		throw new UnsupportedOperationException(getClass().getSimpleName() + ": " + visitable.getClass().getSimpleName());
 	}

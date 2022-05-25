@@ -339,6 +339,15 @@ public class CodeGenAnalyzer
 		return cgLetExp;
 	}
 
+	protected @NonNull CGLetExp createCGLetExp(@NonNull TypedElement asElement, @NonNull CGFinalVariable cgVariable, @NonNull CGValuedElement cgIn) {
+		CGLetExp cgLetExp = CGModelFactory.eINSTANCE.createCGLetExp();
+		cgLetExp.setInit(cgVariable);
+		cgLetExp.setIn(cgIn);
+		cgLetExp.setAst(asElement);
+		cgLetExp.setTypeId(getCGTypeId(asElement.getTypeId()));
+		return cgLetExp;
+	}
+
 	public @NonNull CGNativeOperationCallExp createCGNativeOperationCallExp(@NonNull Method method, @NonNull OperationCallingConvention callingConvention) {		// XXX @NonNull
 	//	assert method != null;
 		CGNativeOperationCallExp cgNativeOperationCallExp = CGModelFactory.eINSTANCE.createCGNativeOperationCallExp();
