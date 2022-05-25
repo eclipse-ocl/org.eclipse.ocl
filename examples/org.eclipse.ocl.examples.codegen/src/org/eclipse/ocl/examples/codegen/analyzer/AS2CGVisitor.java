@@ -176,7 +176,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	protected static class Variables
 	{
-		private @Nullable Variables outerVariables;
 		/*
 		 * The AS to CG parameter map assists in construction of ExpressionInOcl before/without an Operation.
 		 */
@@ -184,8 +183,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 		private @NonNull Map<@NonNull VariableDeclaration, @NonNull CGVariable> cgVariables = new HashMap<>();
 
-		public Variables(@Nullable Variables outerVariables) {
-			this.outerVariables = outerVariables;
+		public Variables() {
 		}
 
 		public CGVariable getLocalVariable(@NonNull VariableDeclaration asVariable) {
@@ -197,9 +195,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			if (cgVariable != null) {
 				return cgVariable;
 			}
-			else if (outerVariables != null) {
-				return outerVariables.getParameter(asVariable);
-			}
 			else {
 				return null;
 			}
@@ -209,9 +204,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			CGVariable cgVariable = cgVariables.get(asVariable);
 			if (cgVariable != null) {
 				return cgVariable;
-			}
-			else if (outerVariables != null) {
-				return outerVariables.getVariable(asVariable);
 			}
 			else {
 				return null;
@@ -232,7 +224,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	/**
 	 * Mapping from an AS Variable to a CG Variable, maintained as a stack that is pushed when inline operations are expanded.
 	 */
-	private @NonNull Variables variablesStack = new Variables(null);	// XXX this is the only remaining state in AS2CG. Move to ?? LocalContext
+	private @NonNull Variables variablesStack = new Variables();	// XXX this is the only remaining state in AS2CG. Move to ?? LocalContext
 
 	public AS2CGVisitor(@NonNull JavaCodeGenerator codeGenerator) {
 		super(codeGenerator);

@@ -419,6 +419,10 @@ public class CodeGenAnalyzer
 	public @NonNull CGExecutorProperty createExecutorProperty(@NonNull Property asProperty) {
 		assert !asProperty.isIsStatic();			// static is inlined
 		// XXX asProperty.esObject == null => ForeignProperty
+		PropertyCallingConvention callingConvention = codeGenerator.getCallingConvention(asProperty);
+	//	callingConvention.createCGProperty(null, asProperty);	// XXX need non AS2CG
+
+
 		PropertyId propertyId = asProperty.getPropertyId();
 		CGElementId cgPropertyId = getCGElementId(propertyId);
 		CGExecutorProperty cgProperty = CGModelFactory.eINSTANCE.createCGExecutorNavigationProperty();
@@ -432,6 +436,7 @@ public class CodeGenAnalyzer
 	}
 
 	public @NonNull CGExecutorShadowPart createExecutorShadowPart(@NonNull Property asProperty) {
+		PropertyCallingConvention callingConvention = codeGenerator.getCallingConvention(asProperty);
 		PropertyId propertyId = asProperty.getPropertyId();
 		CGExecutorShadowPart cgPart = CGModelFactory.eINSTANCE.createCGExecutorShadowPart();
 		CGElementId cgPropertyId = getCGElementId(propertyId);
