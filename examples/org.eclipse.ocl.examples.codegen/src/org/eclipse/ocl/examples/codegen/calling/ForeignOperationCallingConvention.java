@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.calling;
 
+import java.util.List;
+
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -28,6 +30,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.generator.GenModelException;
 import org.eclipse.ocl.examples.codegen.generator.GenModelHelper;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
@@ -120,8 +123,9 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 		CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();
 		analyzer.addExternalFeature(asOperation);
 		CGForeignOperationCallExp cgForeignOperationCallExp = CGModelFactory.eINSTANCE.createCGForeignOperationCallExp();
-		addExecutorArgument(as2cgVisitor, cgForeignOperationCallExp);
-	//	addTypeIdArgument(as2cgVisitor, cgForeignOperationCallExp, asOperation.getTypeId());
+		CGVariable executorVariable = as2cgVisitor.getNameManager().getExecutorVariable();
+		cgForeignOperationCallExp.getCgArguments().add(analyzer.createCGVariableExp(executorVariable));
+		//	addTypeIdArgument(as2cgVisitor, cgForeignOperationCallExp, asOperation.getTypeId());
 		addExpressionInOCLParameters(as2cgVisitor, cgOperation, (ExpressionInOCL) asOperation.getBodyExpression());
 		init(as2cgVisitor, cgForeignOperationCallExp, asOperationCallExp, cgOperation, isRequired);
 		return cgForeignOperationCallExp;
@@ -130,11 +134,8 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 	@Override
 	public void createCGParameters(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL expressionInOCL) {
 		assert expressionInOCL != null;
-		addExecutorParameter(as2cgVisitor, cgOperation);
-	//	addTyParameter(as2cgVisitor, cgOperation);
-	//	List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
-	//	cgParameters.add(as2cgVisitor.getTypeIdParameter());
-	//	cgParameters.add(as2cgVisitor.getSelfParameter(expressionInOCL.getOwnedContext()));
+		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
+		cgParameters.add(as2cgVisitor.getNameManager().getExecutorParameter());
 		super.createCGParameters(as2cgVisitor, cgOperation, expressionInOCL);
 	}
 

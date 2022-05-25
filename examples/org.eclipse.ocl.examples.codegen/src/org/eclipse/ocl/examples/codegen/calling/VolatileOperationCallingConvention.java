@@ -59,7 +59,7 @@ public class VolatileOperationCallingConvention extends ConstrainedOperationCall
 			Type sourceType = asSource.getType();
 			finalOperation = as2cgVisitor.getCodeGenerator().isFinal(asOperation, (org.eclipse.ocl.pivot.Class)sourceType);	// FIXME cast
 		}
-		CGClass currentClass = as2cgVisitor.basicGetCurrentClass();
+		CGClass currentClass = as2cgVisitor.getNameManager().findCGScope();
 		assert currentClass == null;
 		CGOperationCallExp cgCallExp = null;
 		assert finalOperation != null;

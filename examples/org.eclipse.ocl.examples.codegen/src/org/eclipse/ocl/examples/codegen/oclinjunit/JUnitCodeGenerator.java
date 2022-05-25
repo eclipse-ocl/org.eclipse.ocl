@@ -91,7 +91,7 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		//	junitCallingConvention.createCGOperationWithoutBody(as2cgVisitor, asOperation);		// no root asOperation
 		cgOperation.setCallingConvention(junitCallingConvention);
 		as2cgVisitor.initAst(cgOperation, expInOcl);
-		NestedNameManager savedNameManager = as2cgVisitor.pushNameManager(cgOperation);
+		as2cgVisitor.pushNameManager(cgOperation);
 		junitCallingConvention.createCGParameters(as2cgVisitor, cgOperation, expInOcl);
 	//	cgOperation.setAst(expInOcl);
 		Type type = expInOcl.getType();
@@ -112,7 +112,7 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 	//	}
 		cgRootClass.getOperations().add(cgOperation);
 		cgAnalyzer.analyzeExternalFeatures(as2cgVisitor);
-		as2cgVisitor.popNameManager(savedNameManager);
+		as2cgVisitor.popNameManager();
 		as2cgVisitor.freeze();
 		return cgPackage;
 	}

@@ -26,7 +26,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
@@ -51,17 +50,6 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
  */
 public abstract class AbstractOperationCallingConvention implements OperationCallingConvention
 {
-	protected void addExecutorArgument(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperationCallExp cgOperationCallExp) {
-		CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();
-		CGVariable executorVariable = as2cgVisitor.getExecutorVariable();
-		cgOperationCallExp.getCgArguments().add(analyzer.createCGVariableExp(executorVariable));
-	}
-
-	protected void addExecutorParameter(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation) {
-		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
-		cgParameters.add(as2cgVisitor.getExecutorParameter());
-	}
-
 	protected void addExpressionInOCLParameters(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @NonNull ExpressionInOCL expressionInOCL) {
 		NestedNameManager nameManager = as2cgVisitor.getNameManager();
 		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);

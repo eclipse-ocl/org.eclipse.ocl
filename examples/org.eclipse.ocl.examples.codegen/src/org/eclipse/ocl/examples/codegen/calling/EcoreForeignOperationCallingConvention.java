@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.calling;
 
+import java.util.List;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
@@ -19,6 +21,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
@@ -56,9 +59,11 @@ public class EcoreForeignOperationCallingConvention extends ForeignOperationCall
 		CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();
 		analyzer.addExternalFeature(asOperation);
 		CGForeignOperationCallExp cgForeignOperationCallExp = CGModelFactory.eINSTANCE.createCGForeignOperationCallExp();
-		addExecutorArgument(as2cgVisitor, cgForeignOperationCallExp);
+		List<CGValuedElement> cgArguments = cgForeignOperationCallExp.getCgArguments();
+		CGVariable executorVariable = as2cgVisitor.getNameManager().getExecutorVariable();
+		cgArguments.add(analyzer.createCGVariableExp(executorVariable));
 		if (cgSource != null) {
-			cgForeignOperationCallExp.getCgArguments().add(cgSource);
+			cgArguments.add(cgSource);
 		}
 		init(as2cgVisitor, cgForeignOperationCallExp, asOperationCallExp, cgOperation, isRequired);
 		return cgForeignOperationCallExp;

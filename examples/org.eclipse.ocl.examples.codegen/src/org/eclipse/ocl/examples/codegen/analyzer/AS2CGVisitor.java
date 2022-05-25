@@ -17,6 +17,7 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.Stack;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
@@ -159,7 +160,8 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	protected final @NonNull PivotMetamodelManager metamodelManager;
 	protected final @NonNull GenModelHelper genModelHelper;
 
-	private @Nullable NestedNameManager currentNameManager = null;		// The current context
+	private @NonNull Stack<@NonNull NestedNameManager> nameManagerStack = new Stack<>();
+	private @Nullable NestedNameManager currentNameManager = null;		// == nameManagerStack.peek()
 
 	public static final class CGTuplePartNameComparator implements Comparator<@NonNull CGTuplePart>
 	{
@@ -184,13 +186,9 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		getNameManager().addVariable(asVariable, cgParameter);
 	}
 
-	public @Nullable CGClass basicGetCurrentClass() {
-		return currentNameManager != null ? currentNameManager.findCGScope() : null;
-	}
-
-	public @Nullable CGVariable basicGetParameter(@NonNull Variable aParameter) {
-		return getNameManager().basicGetParameter(aParameter);
-	}
+//	public @Nullable CGClass basicGetCurrentClass() {
+//		return currentNameManager != null ? currentNameManager.findCGScope() : null;
+//	}
 
 	public @NonNull CGNativeOperationCallExp createCGBoxedNativeOperationCallExp(@Nullable CGValuedElement cgThis, @NonNull Method jMethod, @NonNull CGValuedElement... cgArguments) {
 		CGNativeOperationCallExp cgCallExp = analyzer.createCGNativeOperationCallExp(jMethod, SupportOperationCallingConvention.INSTANCE);
@@ -228,24 +226,8 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return cgLetExp;
 	}
 
-	public @NonNull CGVariable createCGVariable(@NonNull VariableDeclaration asVariable) {
-		NestedNameManager nameManager = getNameManager();
-		CGVariable cgVariable = nameManager.basicGetVariable(asVariable);
-		if (cgVariable == null) {
-			CGFinalVariable cgVariable2 = CGModelFactory.eINSTANCE.createCGFinalVariable();
-			cgVariable = cgVariable2;
-			nameManager.addVariable(asVariable, cgVariable);
-		}
-		else {
-			assert cgVariable.eContainer() == null;
-		}
-		initAst(cgVariable, asVariable);
-		getNameManager().declarePreferredName(cgVariable);
-		return cgVariable;
-	}
-
 	protected @NonNull CGVariable createCGVariable(@NonNull Variable contextVariable, @NonNull OCLExpression source) {
-		CGVariable cgVariable = createCGVariable(contextVariable);
+		CGVariable cgVariable = getNameManager().createCGVariable(contextVariable);
 		CGValuedElement cgInit = doVisit(CGValuedElement.class, source);
 		setCGVariableInit(cgVariable, cgInit);
 		return cgVariable;
@@ -255,19 +237,21 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		VariableDeclaration asVariable = PivotUtil.getReferredVariable(asVariableExp);
 		CGVariableExp cgVariableExp = CGModelFactory.eINSTANCE.createCGVariableExp();
 		initAst(cgVariableExp, asVariableExp);
-
+		NestedNameManager nameManager = getNameManager();
 		CGVariable cgVariable;
 		if ((asVariable instanceof Parameter) && isThis((Parameter)asVariable)) {
-			NestedNameManager nameManager = globalNameManager.findNameManager(getCurrentClass());
+			CGClass currentClass = nameManager.findCGScope();
+			assert currentClass != null;
+			NestedNameManager scopeNameManager = globalNameManager.findNameManager(currentClass); // XXX use nameManager ancestor
 			if (isQualifiedThis(asVariableExp, (Parameter)asVariable)) {
-				cgVariable = nameManager.getQualifiedThisVariable();
+				cgVariable = scopeNameManager.getQualifiedThisVariable();
 			}
 			else {
-				cgVariable = nameManager.getThisParameter();
+				cgVariable = scopeNameManager.getThisParameter();
 			}
 		}
 		else {
-			cgVariable = getVariable(asVariable);
+			cgVariable = nameManager.getCGVariable(asVariable);
 		}
 		cgVariableExp.setReferredVariable(cgVariable);
 	//	cgVariable.getNameResolution().addCGElement(cgVariableExp);
@@ -366,20 +350,23 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		//
 		//	Iterators / co-iterators
 		//
-		NestedNameManager savedNameManager = null;
+		NestedNameManager nameManager;
 		if (iterationHelper == null) {			// No helper: iterators are arguments of a nested context
 			initAst(cgIterationCallExp, asLoopExp);
-			savedNameManager = pushNameManager(cgIterationCallExp);
+			nameManager = pushNameManager(cgIterationCallExp);
+		}
+		else {
+			nameManager = getNameManager();
 		}
 		for (@NonNull Variable iterator : PivotUtil.getOwnedIterators(asLoopExp)) {
-			CGIterator cgIterator = getIterator(iterator);
+			CGIterator cgIterator = nameManager.getIterator(iterator);
 			if (iterationHelper != null) {
 				setNullableIterator(cgIterator, iterator);
 			}
 			cgIterationCallExp.getIterators().add(cgIterator);
 		}
 		for (@NonNull Variable coIterator : PivotUtil.getOwnedCoIterators(asLoopExp)) {
-			CGIterator cgCoIterator = getIterator(coIterator);
+			CGIterator cgCoIterator = nameManager.getIterator(coIterator);
 			if (iterationHelper != null) {
 				setNullableIterator(cgCoIterator, coIterator);
 			}
@@ -387,7 +374,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		}
 		if (asLoopExp instanceof IterateExp) {
 			Variable accumulator = PivotUtil.getOwnedResult((IterateExp)asLoopExp);
-			CGIterator cgAccumulator = getIterator(accumulator);
+			CGIterator cgAccumulator = nameManager.getIterator(accumulator);
 			if (iterationHelper != null) {
 				//				cgBuiltInIterationCallExp.setNonNull();
 				setNullableIterator(cgAccumulator, accumulator);
@@ -413,14 +400,14 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 					if (!asIteration.isIsValidating()) {
 						cgAccumulator.setNonInvalid();
 					}
-					getNameManager().declarePreferredName(cgAccumulator);
+					nameManager.declarePreferredName(cgAccumulator);
 					cgBuiltInIterationCallExp.setAccumulator(cgAccumulator);
 				}
 			}
 		}
 		if (iterationHelper != null) {			// Helper: iterators are part of invocation context
 			initAst(cgIterationCallExp, asLoopExp);
-			savedNameManager = pushNameManager(cgIterationCallExp);
+			pushNameManager(cgIterationCallExp);
 		}
 		//
 		//	Body
@@ -438,7 +425,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		}
 		//			cgBuiltInIterationCallExp.setNonNull();
 		cgIterationCallExp.setRequired(isRequired);
-		popNameManager(savedNameManager);
+		popNameManager();
 		return cgIterationCallExp;
 	}
 
@@ -483,14 +470,14 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			else {
 				assert cgClass.getAst() == asClass;
 			}
-			NestedNameManager savedPreClassNameManager = pushNameManager(cgClass);
+			NestedNameManager classNameManager = pushNameManager(cgClass);
 			try {
 				OperationCallingConvention callingConvention = context.getCallingConvention(asOperation, isFinal);
 				cgOperation = callingConvention.createCGOperation(this, asSourceType, asOperation);
 				assert cgOperation.getAst() != null;
 				assert cgOperation.getCallingConvention() == callingConvention;
-				getNameManager().declarePreferredName(cgOperation);
-				NestedNameManager savedClassNameManager = pushNameManager(cgOperation);
+				classNameManager.declarePreferredName(cgOperation);
+				pushNameManager(cgOperation);
 				ExpressionInOCL asExpressionInOCL = null;
 				LanguageExpression asSpecification = asOperation.getBodyExpression();
 				if (asSpecification != null) {
@@ -502,9 +489,9 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 					}
 				}
 				callingConvention.createCGParameters(this, cgOperation, asExpressionInOCL);
-				popNameManager(savedClassNameManager);
+				popNameManager();
 			} finally {
-				popNameManager(savedPreClassNameManager);
+				popNameManager();
 			}
 		}
 		return cgOperation;
@@ -539,10 +526,10 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			cgProperty.setRequired(asProperty.isIsRequired());
 			cgProperty.setCallingConvention(callingConvention);
 			analyzer.addCGProperty(cgProperty);
-		//	getNameManager().declarePreferredName(cgProperty);
-			NestedNameManager savedNameManager = pushNameManager(cgProperty);
-			assert savedNameManager != null;
-			savedNameManager.declarePreferredName(cgProperty);
+			NestedNameManager outerNameManager = getNameManager();
+			assert outerNameManager != null;
+			NestedNameManager innerNameManager = pushNameManager(cgProperty);
+			outerNameManager.declarePreferredName(cgProperty);
 			ExpressionInOCL query = null;
 			LanguageExpression specification = asProperty.getOwnedExpression();
 			if (specification != null) {
@@ -553,8 +540,8 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 					e.printStackTrace();
 				}
 			}
-			callingConvention.createCGParameters(getNameManager(), cgProperty, query);
-			popNameManager(savedNameManager);
+			callingConvention.createCGParameters(innerNameManager, cgProperty, query);
+			popNameManager();
 		}
 		return cgProperty;
 	}
@@ -606,20 +593,8 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return context;
 	}
 
-	public @NonNull CGClass getCurrentClass() {
-		return ClassUtil.nonNullState(basicGetCurrentClass());
-	}
-
 	public @NonNull EnvironmentFactoryInternalExtension getEnvironmentFactory() {
 		return environmentFactory;
-	}
-
-	public @NonNull CGParameter getExecutorParameter() {
-		return getNameManager().getExecutorParameter();
-	}
-
-	public @NonNull CGVariable getExecutorVariable() {
-		return getNameManager().getExecutorVariable();
 	}
 
 	public @NonNull GenModelHelper getGenModelHelper() {
@@ -676,31 +651,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return initExpression;
 	}
 
-	public @NonNull CGIterator getIterator(@NonNull VariableDeclaration asVariable) {
-		NestedNameManager nameManager = getNameManager();
-		CGIterator cgIterator = (CGIterator)nameManager.basicGetVariable(asVariable);
-		if (cgIterator == null) {
-			cgIterator = CGModelFactory.eINSTANCE.createCGIterator();
-			cgIterator.setAst(asVariable);
-			cgIterator.setTypeId(analyzer.getCGTypeId(TypeId.OCL_VOID));			// FIXME Java-specific type of polymorphic operation parameter
-			nameManager.declarePreferredName(cgIterator);
-			nameManager.addVariable(asVariable, cgIterator);
-		}
-		return cgIterator;
-	}
-
-	public @NonNull CGVariable getLocalVariable(@NonNull VariableDeclaration asVariable) {
-		NestedNameManager nameManager = getNameManager();
-		CGVariable cgVariable = nameManager.basicGetLocalVariable(asVariable);
-		if (cgVariable == null) {
-			cgVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();
-			initAst(cgVariable, asVariable);
-			nameManager.declareLazyName(cgVariable);
-			nameManager.addVariable(asVariable, cgVariable);
-		}
-		return cgVariable;
-	}
-
 	public @NonNull PivotMetamodelManager getMetamodelManager() {
 		return metamodelManager;
 	}
@@ -720,19 +670,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		cgIterator.setNonInvalid();
 		return cgIterator;
 	} */
-
-	public @NonNull CGVariable getVariable(@NonNull VariableDeclaration asVariable) {
-		NestedNameManager nameManager = getNameManager();
-		CGVariable cgVariable = nameManager.basicGetVariable(asVariable);
-		if (cgVariable == null) {
-			cgVariable = createCGVariable(asVariable);
-			if (asVariable.isIsRequired()) {
-				cgVariable.setNonInvalid();
-				cgVariable.setNonNull();
-			}
-		}
-		return cgVariable;
-	}
 
 	public void initAst(@NonNull CGValuedElement cgElement, @NonNull TypedElement asElement) {
 		cgElement.setAst(asElement);
@@ -815,17 +752,20 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return JavaConstants.THIS_NAME.equals(asParameter.getName());
 	}
 
-	public void popNameManager(@Nullable NestedNameManager savedNameManager) {
-		currentNameManager = savedNameManager;
+	public  @Nullable NestedNameManager popNameManager() {
+		nameManagerStack.pop();
+		currentNameManager = nameManagerStack.isEmpty() ? null : nameManagerStack.peek();
+		return currentNameManager;
 	}
 
-	public @Nullable NestedNameManager pushNameManager(@NonNull CGNamedElement cgElement) {
-		NestedNameManager savedNameManager = currentNameManager;
-		currentNameManager = globalNameManager.basicGetNameManager(cgElement);
-		if (currentNameManager == null) {
-			currentNameManager = globalNameManager.createNestedNameManager(savedNameManager, cgElement);
+	public @NonNull NestedNameManager pushNameManager(@NonNull CGNamedElement cgNamedElement) {
+		NestedNameManager nameManager = globalNameManager.basicGetNameManager(cgNamedElement);
+		if (nameManager == null) {
+			nameManager = globalNameManager.createNestedNameManager(currentNameManager, cgNamedElement);
 		}
-		return savedNameManager;
+		currentNameManager = nameManager;
+		nameManagerStack.push(nameManager);
+		return nameManager;
 	}
 
 	protected void setCGVariableInit(@NonNull CGVariable cgVariable, @NonNull CGValuedElement cgInit) {
@@ -886,7 +826,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		else {
 			assert cgClass.getAst() == asClass;
 		}
-		NestedNameManager savedNameManager = pushNameManager(cgClass);
+		pushNameManager(cgClass);
 		for (@NonNull Constraint asConstraint : ClassUtil.nullFree(asClass.getOwnedInvariants())) {
 			CGConstraint cgConstraint = doVisit(CGConstraint.class, asConstraint);
 			cgClass.getInvariants().add(cgConstraint);
@@ -899,7 +839,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			CGProperty cgProperty = doVisit(CGProperty.class, asProperty);
 			cgClass.getProperties().add(cgProperty);
 		}
-		popNameManager(savedNameManager);
+		popNameManager();
 		return cgClass;
 	}
 
@@ -940,17 +880,16 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			assert cgConstraint.basicGetNameResolution() == null;
 			cgConstraint.setAst(asConstraint);
 			getNameManager().declarePreferredName(cgConstraint);
-			NestedNameManager savedNameManager = pushNameManager(cgConstraint);
+			NestedNameManager innerNameManager = pushNameManager(cgConstraint);
 			try {
-				NestedNameManager nameManager = getNameManager();
 				ExpressionInOCL query = environmentFactory.parseSpecification(specification);
 				Variable contextVariable = query.getOwnedContext();
 				if (contextVariable != null) {
-					CGParameter cgParameter = nameManager.getParameter(contextVariable, null);
+					CGParameter cgParameter = innerNameManager.getParameter(contextVariable, null);
 					cgConstraint.getParameters().add(cgParameter);
 				}
 				for (@NonNull Variable parameterVariable : ClassUtil.nullFree(query.getOwnedParameters())) {
-					CGParameter cgParameter = nameManager.getParameter(parameterVariable, null);
+					CGParameter cgParameter = innerNameManager.getParameter(parameterVariable, null);
 					cgConstraint.getParameters().add(cgParameter);
 				}
 				cgConstraint.setBody(doVisit(CGValuedElement.class, query.getOwnedBody()));
@@ -958,7 +897,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} finally {
-				popNameManager(savedNameManager);
+				popNameManager();
 			}
 		}
 		return cgConstraint;
@@ -1020,7 +959,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	@Override
 	public @Nullable CGLetExp visitLetExp(@NonNull LetExp asLetExp) {
 		Variable asVariable = PivotUtil.getOwnedVariable(asLetExp);
-		CGFinalVariable cgVariable = (CGFinalVariable) createCGVariable(asVariable);		// FIXME Lose cast
+		CGFinalVariable cgVariable = getNameManager().createCGVariable(asVariable);		// FIXME Lose cast
 		CGValuedElement cgInit = doVisit(CGValuedElement.class, asVariable.getOwnedInit());
 		setCGVariableInit(cgVariable, cgInit);;
 		CGValuedElement cgIn = doVisit(CGValuedElement.class, asLetExp.getOwnedIn());
@@ -1080,12 +1019,12 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			getClass();		// XXX
 		}
 		CGOperation cgOperation = generateOperationDeclaration(null, asOperation, false);
-		NestedNameManager savedNameManager = pushNameManager(cgOperation);
+		pushNameManager(cgOperation);
 		LanguageExpression specification = asOperation.getBodyExpression();
 		if (specification instanceof ExpressionInOCL) {			// Should already be parsed
 			cgOperation.setBody(doVisit(CGValuedElement.class, ((ExpressionInOCL)specification).getOwnedBody()));
 		}
-		popNameManager(savedNameManager);
+		popNameManager();
 		return cgOperation;
 	}
 
@@ -1147,10 +1086,10 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	public final @NonNull CGProperty visitProperty(@NonNull Property asProperty) {
 		CGProperty cgProperty = generatePropertyDeclaration(asProperty);
 		PropertyCallingConvention callingConvention = cgProperty.getCallingConvention();
-		NestedNameManager savedNameManager = pushNameManager(cgProperty);
+		pushNameManager(cgProperty);
 		// parse ownedExpression here to simplify createImplementation arguments
 		callingConvention.createImplementation(this, cgProperty);
-		popNameManager(savedNameManager);
+		popNameManager();
 		return cgProperty;
 	}
 

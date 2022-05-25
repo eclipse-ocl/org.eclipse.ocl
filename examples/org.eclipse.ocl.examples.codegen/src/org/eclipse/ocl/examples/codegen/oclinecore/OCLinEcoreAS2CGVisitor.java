@@ -89,7 +89,7 @@ public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 			assert cgConstraint.basicGetNameResolution() == null;
 			cgConstraint.setAst(asConstraint);
 			getNameManager().declarePreferredName(cgConstraint);
-			NestedNameManager savedNameManager = pushNameManager(cgConstraint);
+			pushNameManager(cgConstraint);
 			NestedNameManager nameManager = getNameManager();
 			try {
 				ExpressionInOCL oldQuery = environmentFactory.parseSpecification(specification);
@@ -117,7 +117,7 @@ public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 			} catch (ParserException e) {
 				throw new WrappedException(e);
 			} finally {
-				popNameManager(savedNameManager);
+				popNameManager();
 			}
 		}
 		return cgConstraint;

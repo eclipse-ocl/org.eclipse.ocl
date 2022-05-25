@@ -104,7 +104,7 @@ public class CachedOperationCallingConvention extends AbstractCachedOperationCal
 		Type sourceType = asSource != null ? asSource.getType() : null;
 	//	generateDeclarationHierarchy(as2cgVisitor, sourceType, asOperation);
 		Operation finalOperation = sourceType!= null ? as2cgVisitor.getCodeGenerator().isFinal(asOperation, (org.eclipse.ocl.pivot.Class)sourceType) : asOperation;	// FIXME cast
-		CGClass currentClass = as2cgVisitor.basicGetCurrentClass();
+		CGClass currentClass = as2cgVisitor.getNameManager().findCGScope();
 		assert currentClass != null;
 	//	CGOperationCallExp cgCallExp;
 		assert (finalOperation != null);

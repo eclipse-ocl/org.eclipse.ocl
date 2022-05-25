@@ -24,7 +24,9 @@ import org.eclipse.ocl.examples.codegen.calling.SupportOperationCallingConventio
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBodiedProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGFinalVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGIterator;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
@@ -255,6 +257,16 @@ public class NestedNameManager extends NameManager
 		return anyParameter;
 	}
 
+	public @NonNull CGFinalVariable createCGVariable(@NonNull VariableDeclaration asVariable) {
+		assert basicGetVariable(asVariable) == null;
+		CGFinalVariable cgVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();
+		cgVariable.setAst(asVariable);
+		cgVariable.setTypeId(analyzer.getCGTypeId(asVariable.getTypeId()));
+		declarePreferredName(cgVariable);
+		addVariable(asVariable, cgVariable);
+		return cgVariable;
+	}
+
 	protected @NonNull CGVariable createExecutorVariable() {
 		CGNativeOperationCallExp executorInit = analyzer.createCGNativeOperationCallExp(JavaConstants.PIVOT_UTIL_GET_EXECUTOR_GET_METHOD, SupportOperationCallingConvention.INSTANCE);
 		NameResolution executorNameResolution = globalNameManager.getExecutorNameResolution();
@@ -467,6 +479,18 @@ public class NestedNameManager extends NameManager
 		return null;
 	}
 
+	public @NonNull CGVariable getCGVariable(@NonNull VariableDeclaration asVariable) {
+		CGVariable cgVariable = basicGetVariable(asVariable);
+		if (cgVariable == null) {
+			cgVariable = createCGVariable(asVariable);
+			if (asVariable.isIsRequired()) {
+				cgVariable.setNonInvalid();
+				cgVariable.setNonNull();
+			}
+		}
+		return cgVariable;
+	}
+
 	public @NonNull JavaCodeGenerator getCodeGenerator() {
 		return codeGenerator;
 	}
@@ -504,6 +528,18 @@ public class NestedNameManager extends NameManager
 			idResolverVariable = idResolverVariable2 = createIdResolverVariable();
 		}
 		return idResolverVariable2;
+	}
+
+	public @NonNull CGIterator getIterator(@NonNull VariableDeclaration asVariable) {
+		CGIterator cgIterator = (CGIterator)basicGetVariable(asVariable);
+		if (cgIterator == null) {
+			cgIterator = CGModelFactory.eINSTANCE.createCGIterator();
+			cgIterator.setAst(asVariable);
+			cgIterator.setTypeId(analyzer.getCGTypeId(TypeId.OCL_VOID));			// FIXME Java-specific type of polymorphic operation parameter
+			declarePreferredName(cgIterator);
+			addVariable(asVariable, cgIterator);
+		}
+		return cgIterator;
 	}
 
 	@Override

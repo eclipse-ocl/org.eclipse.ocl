@@ -11,6 +11,7 @@
 package org.eclipse.ocl.examples.codegen.java;
 
 import java.util.List;
+import java.util.Stack;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -88,8 +89,9 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 	protected final @NonNull GlobalNameManager globalNameManager;
 	protected final @NonNull GenModelHelper genModelHelper;
 	protected final @NonNull CodeGenAnalyzer analyzer;
-	private @Nullable NestedNameManager treeNameManager;
-	private @Nullable NestedNameManager currentNameManager;
+	private @NonNull Stack<@NonNull NestedNameManager> nameManagerStack = new Stack<>();
+	private @Nullable NestedNameManager currentNameManager = null;		// == nameManagerStack.peek()
+	private @Nullable NestedNameManager treeNameManager = null;
 
 	public CG2JavaPreVisitor(@NonNull JavaCodeGenerator codeGenerator) {
 		super(codeGenerator);
@@ -171,28 +173,31 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 		return getTreeNameManager().getStandardLibraryVariable();
 	}
 
-	protected void popNameManager(@Nullable NestedNameManager savedLocalContext) {
-		if (savedLocalContext == null) {
-			NestedNameManager currentNameManager2 = currentNameManager;
-			assert currentNameManager2 != null;
-			CGValuedElement cgTree = currentNameManager2.getBody();
+	protected @Nullable NestedNameManager popNameManager() {
+		NestedNameManager innerNameManager = currentNameManager;
+		assert innerNameManager != null;
+		nameManagerStack.pop();
+		NestedNameManager outerNameManager = (nameManagerStack.isEmpty() ? null : nameManagerStack.peek());
+		currentNameManager = outerNameManager;
+		if (outerNameManager == null) {
+			CGValuedElement cgTree = innerNameManager.getBody();
 			if (cgTree != null) {
-				cgTree = currentNameManager2.wrapLetVariables(cgTree);
+				cgTree = innerNameManager.wrapLetVariables(cgTree);
 			}
-		}
-		if (savedLocalContext == null) {
 			treeNameManager = null;
 		}
-		currentNameManager = savedLocalContext;
+		return currentNameManager;
 	}
 
-	protected @Nullable NestedNameManager pushNameManager(@NonNull CGNamedElement cgNamedlement) {
-		NestedNameManager savedLocalContext = currentNameManager;
-		currentNameManager = globalNameManager.findNameManager(cgNamedlement);
-		if (savedLocalContext == null) {
-			treeNameManager = currentNameManager;
+	protected @NonNull NestedNameManager pushNameManager(@NonNull CGNamedElement cgNamedlement) {
+		NestedNameManager outerNameManager = currentNameManager;
+		NestedNameManager innerNameManager = globalNameManager.findNameManager(cgNamedlement);
+		currentNameManager = innerNameManager;
+		nameManagerStack.push(innerNameManager);
+		if (outerNameManager == null) {
+			treeNameManager = innerNameManager;
 		}
-		return savedLocalContext;
+		return innerNameManager;
 	}
 
 	@Override
@@ -245,23 +250,23 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 
 	@Override
 	public @Nullable Object visitCGConstrainedProperty(@NonNull CGConstrainedProperty cgProperty) {
-		NestedNameManager savedNameManager = pushNameManager(cgProperty);
+		pushNameManager(cgProperty);
 		try {
 			return super.visitCGConstrainedProperty(cgProperty);
 		}
 		finally {
-			popNameManager(savedNameManager);
+			popNameManager();
 		}
 	}
 
 	@Override
 	public @Nullable Object visitCGConstraint(@NonNull CGConstraint cgConstraint) {
-		NestedNameManager savedNameManager = pushNameManager(cgConstraint);
+		pushNameManager(cgConstraint);
 		try {
 			return super.visitCGConstraint(cgConstraint);
 		}
 		finally {
-			popNameManager(savedNameManager);
+			popNameManager();
 		}
 	}
 
@@ -358,13 +363,13 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 
 	@Override
 	public @Nullable Object visitCGForeignProperty(@NonNull CGForeignProperty cgForeignProperty) {
-		NestedNameManager savedNameManager = pushNameManager(cgForeignProperty);
+		pushNameManager(cgForeignProperty);
 		try {
 			installExecutorVariable(cgForeignProperty);
 			return super.visitCGProperty(cgForeignProperty);
 		}
 		finally {
-			popNameManager(savedNameManager);
+			popNameManager();
 		}
 	}
 
@@ -378,9 +383,8 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 		if (cgSource != null) {
 			cgSource.accept(this);
 		}
-		NestedNameManager savedNameManager = null;
 		if (iterationHelper == null) {					// No helper nests iterators/accumulators in a nested function.
-			savedNameManager = pushNameManager(cgIterationCallExp);
+			pushNameManager(cgIterationCallExp);
 		}
 		for (CGIterator cgIterator : CGUtil.getIterators(cgIterationCallExp)) {
 			cgIterator.accept(this);
@@ -392,9 +396,8 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 			}
 		}
 		if (iterationHelper != null) {					// No helper only has a nested scope for the body.
-			savedNameManager = pushNameManager(cgIterationCallExp);
+			pushNameManager(cgIterationCallExp);
 		}
-		assert savedNameManager != null;
 		try {
 			CGValuedElement cgBody = cgIterationCallExp.getBody();
 			if (cgBody != null) {
@@ -403,7 +406,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 			return null;
 		}
 		finally {
-			popNameManager(savedNameManager);
+			popNameManager();
 		}
 	}
 
@@ -468,23 +471,23 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 
 	@Override
 	public @Nullable Object visitCGNativeProperty(@NonNull CGNativeProperty cgProperty) {
-		NestedNameManager savedNameManager = pushNameManager(cgProperty);
+		pushNameManager(cgProperty);
 		try {
 			return super.visitCGNativeProperty(cgProperty);
 		}
 		finally {
-			popNameManager(savedNameManager);
+			popNameManager();
 		}
 	}
 
 	@Override
 	public @Nullable Object visitCGOperation(@NonNull CGOperation cgOperation) {
-		NestedNameManager savedNameManager = pushNameManager(cgOperation);
+		pushNameManager(cgOperation);
 		try {
 			return super.visitCGOperation(cgOperation);
 		}
 		finally {
-			popNameManager(savedNameManager);
+			popNameManager();
 		}
 	}
 
