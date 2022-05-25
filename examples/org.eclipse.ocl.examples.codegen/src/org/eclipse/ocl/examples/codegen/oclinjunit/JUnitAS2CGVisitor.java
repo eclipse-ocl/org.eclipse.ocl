@@ -12,6 +12,7 @@ package org.eclipse.ocl.examples.codegen.oclinjunit;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
+import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -29,15 +30,16 @@ public final class JUnitAS2CGVisitor extends AS2CGVisitor
 
 	@Override
 	public @NonNull CGValuedElement visitExpressionInOCL(@NonNull ExpressionInOCL element) {
+		NestedNameManager nameManager = getNameManager();
 		Variable contextVariable = element.getOwnedContext();
 		if (contextVariable != null) {
-			CGVariable cgContext = getParameter(contextVariable, (String)null);
+			CGVariable cgContext = nameManager.getParameter(contextVariable, (String)null);
 			cgContext.setTypeId(analyzer.getCGTypeId(TypeId.OCL_VOID));			// FIXME Java-specific
 			cgContext.setNonInvalid();
 //			cgContext.setNonNull();
 		}
 		for (@SuppressWarnings("null")@NonNull Variable parameterVariable : element.getOwnedParameters()) {
-			@SuppressWarnings("unused") CGVariable cgParameter = getParameter(parameterVariable, (String)null);
+			@SuppressWarnings("unused") CGVariable cgParameter = nameManager.getParameter(parameterVariable, (String)null);
 		}
 		CGValuedElement cgBody = doVisit(CGValuedElement.class, element.getOwnedBody());
 //		cgOperation.getDependsOn().add(cgBody);

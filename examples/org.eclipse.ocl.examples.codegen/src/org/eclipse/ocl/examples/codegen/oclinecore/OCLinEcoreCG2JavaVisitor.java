@@ -73,7 +73,7 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
  * An OCLinEcoreCG2JavaVisitor supports generation of the OCL embedded in an Ecore model
  * into the Java bodies of the code producxed by GenModel.
  */
-public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcoreCodeGenerator>
+public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor
 {
 	protected final @NonNull GenPackage genPackage;
 	protected final @NonNull CGPackage cgPackage;
@@ -514,6 +514,11 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 			js.append("}\n");
 		}
 		return toString();
+	}
+
+	@Override
+	public @NonNull OCLinEcoreCodeGenerator getCodeGenerator() {
+		return (OCLinEcoreCodeGenerator)context;
 	}
 
 	protected @NonNull FeatureLocality getFeatureLocality(@NonNull Operation asOperation) {

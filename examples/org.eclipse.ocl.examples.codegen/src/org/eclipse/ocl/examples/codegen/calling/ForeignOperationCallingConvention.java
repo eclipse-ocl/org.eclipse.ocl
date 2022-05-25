@@ -61,7 +61,7 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 	public static final @NonNull ForeignOperationCallingConvention INSTANCE = new ForeignOperationCallingConvention();
 
 /*	@Override
-	protected void appendDeclaration(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+	protected void appendDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
 		appendCommentWithOCL(js, cgOperation);
 		//
 		js.append("public static ");
@@ -73,7 +73,7 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 		js.appendValueName(cgOperation);
 	} */
 
-	protected void appendForeignOperationName(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
+	protected void appendForeignOperationName(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
 		JavaCodeGenerator codeGenerator = cg2javaVisitor.getCodeGenerator();
 		CGOperation cgOperation = CGUtil.getOperation(cgOperationCallExp);
 		Operation asReferredOperation = CGUtil.getReferredOperation(cgOperationCallExp);
@@ -139,7 +139,7 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 	}
 
 	@Override
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
 		if (!generateLocals(cg2javaVisitor, js, cgOperationCallExp)) {
 			return false;
 		}
@@ -153,7 +153,7 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 	}
 
 	@Override
-	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
 		generateJavaClass(cg2javaVisitor, js, cgOperation);
 		js.append("\n");
 		generateJavaFunction(cg2javaVisitor, js, cgOperation);
@@ -163,7 +163,7 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 	/**
 	 * Generate a nested class to provide the polymorphic invocation interface.
 	 */
-	protected void generateJavaClass(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+	protected void generateJavaClass(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
 		JavaCodeGenerator codeGenerator = cg2javaVisitor.getCodeGenerator();
 		GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
 		Iterable<@NonNull CGParameter> cgParameters = CGUtil.getParameters(cgOperation);
@@ -259,7 +259,7 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 	/**
 	 * Generate a static function to implement the foreign operation.
 	 */
-	protected void generateJavaFunction(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+	protected void generateJavaFunction(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
 		boolean cgOperationIsInvalid = cgOperation.getInvalidValue() != null;
 		CGValuedElement body = cg2javaVisitor.getExpression(cgOperation.getBody());
 		//

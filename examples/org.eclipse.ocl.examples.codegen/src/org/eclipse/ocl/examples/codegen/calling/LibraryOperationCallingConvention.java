@@ -151,7 +151,7 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 				}
 				else {
 					Parameter aParameter = asParameters.get(i++);
-					CGParameter cgParameter = as2cgVisitor.getParameter(aParameter, (String)null);
+					CGParameter cgParameter = nameManager.getParameter(aParameter, (String)null);
 					cgParameters.add(cgParameter);
 				}
 			}
@@ -163,7 +163,7 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 	}
 
 	@Override
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
 		CGLibraryOperationCallExp cgLibraryOperationCallExp = (CGLibraryOperationCallExp)cgOperationCallExp;
 		assert cgOperationCallExp.getCgThis() == null;
 		final LibraryOperation libraryOperation = ClassUtil.nonNullState(cgLibraryOperationCallExp.getLibraryOperation());
@@ -275,7 +275,7 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 	}
 
 	@Override
-	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
 		throw new UnsupportedOperationException();		// Library operations are declared natively
 	}
 

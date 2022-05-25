@@ -96,7 +96,7 @@ public class VolatileOperationCallingConvention extends ConstrainedOperationCall
 	}
 
 	@Override
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
 		// XXX should have been ForeignOperationCallingConvention
 		if (!generateLocals(cg2javaVisitor, js, cgOperationCallExp)) {
 			return false;
@@ -132,7 +132,7 @@ public class VolatileOperationCallingConvention extends ConstrainedOperationCall
 	}
 
 	@Override
-	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
 		return super.generateJavaDeclaration(cg2javaVisitor, js, cgOperation);
 	}
 

@@ -21,7 +21,6 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.calling.ExecutorShadowPartCallingConvention;
@@ -276,9 +275,10 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	}
 
 	protected void createParameters(@NonNull CGOperation cgOperation, @NonNull ExpressionInOCL expressionInOCL) {
+		NestedNameManager nameManager = getNameManager();
 		Variable contextVariable = expressionInOCL.getOwnedContext();
 		if (contextVariable != null) {
-			CGParameter cgParameter = getNameManager().getSelfParameter(contextVariable);
+			CGParameter cgParameter = nameManager.getSelfParameter(contextVariable);
 			//			cgParameter.setTypeId(analyzer.getTypeId(JavaConstants.getJavaTypeId(Object.class)));
 			//			cgParameter.setRequired(contextVariable.isIsRequired());
 			cgOperation.getParameters().add(cgParameter);
@@ -286,10 +286,10 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		for (@NonNull Variable parameterVariable : ClassUtil.nullFree(expressionInOCL.getOwnedParameters())) {
 			CGParameter cgParameter;
 			if (cgOperation instanceof CGEcoreOperation) {
-				cgParameter = getParameter(parameterVariable, parameterVariable.getName());
+				cgParameter = nameManager.getParameter(parameterVariable, parameterVariable.getName());
 			}
 			else {
-				cgParameter = getParameter(parameterVariable, (String)null);
+				cgParameter = nameManager.getParameter(parameterVariable, null);
 			}
 			//			cgParameter.setTypeId(analyzer.getTypeId(JavaConstants.getJavaTypeId(Object.class)));
 			//			cgParameter.setRequired(parameterVariable.isIsRequired());
@@ -640,7 +640,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 				ExpressionInOCL query = environmentFactory.parseSpecification(specification);
 				Variable contextVariable = query.getOwnedContext();
 				if (contextVariable != null) {
-					getParameter(contextVariable, (String)null);
+					getNameManager().getParameter(contextVariable, (String)null);
 				}
 				initExpression = doVisit(CGValuedElement.class, query.getOwnedBody());
 			} catch (ParserException e) {
@@ -720,75 +720,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		cgIterator.setNonInvalid();
 		return cgIterator;
 	} */
-
-	@Deprecated // add explicitName argument
-	public @NonNull CGParameter getParameter(@NonNull Variable aParameter) {
-		return getParameter(aParameter, (String)null);
-	}
-	public @NonNull CGParameter getParameter(@NonNull VariableDeclaration aParameter, @Nullable String explicitName) {
-		NestedNameManager nameManager = getNameManager();
-		CGParameter cgParameter = nameManager.basicGetParameter(aParameter);
-		if (cgParameter == null) {
-			cgParameter = CGModelFactory.eINSTANCE.createCGParameter();
-			initAst(cgParameter, aParameter);
-			if (explicitName == null) {
-			//	analyzer.setNames(cgParameter, aParameter);
-
-			//	String name = analyzer.getGlobalNameManager().getNameHint(aParameter);
-				//	String name = globalNameManager.helper.getNameHint(anObject);
-				//	cgValue.setName(name);
-				//	cgValue.setValueName(name);
-				nameManager.declarePreferredName(cgParameter);
-
-
-			//	NameResolution nameResolution = cgParameter.getNameResolution();
-			//	nameResolution.setResolvedName(parameterVariable.getName());
-			//	getNameManager().addNameResolution(nameResolution);
-			}
-			else {
-				assert explicitName.equals(aParameter.getName());
-				Operation asOperation = PivotUtil.getContainingOperation(aParameter);
-				Constraint asConstraint = PivotUtil.getContainingConstraint(aParameter);
-				assert ((asOperation != null) && (asOperation.getESObject() instanceof EOperation)) || ((asConstraint != null) && (asConstraint.getESObject() instanceof EOperation));
-			//	assert is-ecore-parameter
-			//	cgParameter.setName(explicitName);
-			//	cgParameter.setValueName(explicitName);
-				/*NameResolution nameResolution =*/ nameManager.declareReservedName(cgParameter, explicitName);
-			//	nameResolution.setResolvedName(explicitName);
-			}
-			//			cgParameter.setTypeId(analyzer.getTypeId(aParameter.getTypeId()));
-			addParameter(aParameter, cgParameter);
-			cgParameter.setRequired(aParameter.isIsRequired());
-			if (aParameter.isIsRequired()) {
-				cgParameter.setNonNull();
-			}
-		}
-		return cgParameter;
-	}
-	public @NonNull CGParameter getParameter(@NonNull Variable aParameter, @NonNull NameResolution nameResolution) {
-		NestedNameManager nameManager = getNameManager();
-		CGParameter cgParameter = nameManager.basicGetParameter(aParameter);
-		if (cgParameter == null) {
-			cgParameter = CGModelFactory.eINSTANCE.createCGParameter();
-			cgParameter.setName(aParameter.getName());
-			nameResolution.addCGElement(cgParameter);
-			initAst(cgParameter, aParameter);
-			nameManager.declareLazyName(cgParameter);
-			addParameter(aParameter, cgParameter);
-			cgParameter.setRequired(aParameter.isIsRequired());
-			if (aParameter.isIsRequired()) {
-				cgParameter.setNonNull();
-			}
-		}
-		return cgParameter;
-	}
-
-	public @NonNull CGParameter getTypeIdParameter() {
-		CGParameter typeIdParameter = getNameManager().getTypeIdParameter();
-		assert typeIdParameter.eContainer() == null;
-		addParameter(CGUtil.getAST(typeIdParameter), typeIdParameter);
-		return typeIdParameter;
-	}
 
 	public @NonNull CGVariable getVariable(@NonNull VariableDeclaration asVariable) {
 		NestedNameManager nameManager = getNameManager();
@@ -1011,14 +942,15 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			getNameManager().declarePreferredName(cgConstraint);
 			NestedNameManager savedNameManager = pushNameManager(cgConstraint);
 			try {
+				NestedNameManager nameManager = getNameManager();
 				ExpressionInOCL query = environmentFactory.parseSpecification(specification);
 				Variable contextVariable = query.getOwnedContext();
 				if (contextVariable != null) {
-					CGParameter cgParameter = getParameter(contextVariable, (String)null);
+					CGParameter cgParameter = nameManager.getParameter(contextVariable, null);
 					cgConstraint.getParameters().add(cgParameter);
 				}
 				for (@NonNull Variable parameterVariable : ClassUtil.nullFree(query.getOwnedParameters())) {
-					CGParameter cgParameter = getParameter(parameterVariable, (String)null);
+					CGParameter cgParameter = nameManager.getParameter(parameterVariable, null);
 					cgConstraint.getParameters().add(cgParameter);
 				}
 				cgConstraint.setBody(doVisit(CGValuedElement.class, query.getOwnedBody()));
@@ -1044,14 +976,15 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	@Override
 	public @Nullable CGValuedElement visitExpressionInOCL(@NonNull ExpressionInOCL query) {
 		assert query.getOwnedBody() != null;
+		NestedNameManager nameManager = getNameManager();
 		Variable contextVariable = query.getOwnedContext();
 		if (contextVariable != null) {
-			CGVariable cgContext = getParameter(contextVariable, (String)null);
+			CGVariable cgContext = nameManager.getParameter(contextVariable, null);
 			cgContext.setNonInvalid();
 			//			cgContext.setNonNull();
 		}
 		for (@NonNull Variable parameterVariable : ClassUtil.nullFree(query.getOwnedParameters())) {
-			@SuppressWarnings("unused") CGVariable cgParameter = getParameter(parameterVariable, (String)null);
+			@SuppressWarnings("unused") CGVariable cgParameter = nameManager.getParameter(parameterVariable, null);
 		}
 		CGValuedElement cgBody = doVisit(CGValuedElement.class, query.getOwnedBody());
 		//		cgOperation.getDependsOn().add(cgBody);

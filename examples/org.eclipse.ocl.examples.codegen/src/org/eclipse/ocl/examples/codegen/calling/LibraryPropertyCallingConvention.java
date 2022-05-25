@@ -125,7 +125,7 @@ public class LibraryPropertyCallingConvention extends AbstractPropertyCallingCon
 	}
 
 	@Override
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGNavigationCallExp cgPropertyCallExp) {
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGNavigationCallExp cgPropertyCallExp) {
 		JavaCodeGenerator codeGenerator = cg2javaVisitor.getCodeGenerator();
 		GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
 		CGLibraryPropertyCallExp cgLibraryPropertyCallExp = (CGLibraryPropertyCallExp) cgPropertyCallExp;

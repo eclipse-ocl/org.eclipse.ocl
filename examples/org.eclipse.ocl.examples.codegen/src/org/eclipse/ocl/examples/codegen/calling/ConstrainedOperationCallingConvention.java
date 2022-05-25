@@ -30,7 +30,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  */
 public abstract class ConstrainedOperationCallingConvention extends AbstractOperationCallingConvention	// CF ForeignOperationCallingConvention
 {
-	protected void appendForeignOperationName(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
+	protected void appendForeignOperationName(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
 		JavaCodeGenerator codeGenerator = cg2javaVisitor.getCodeGenerator();
 		CGOperation cgOperation = CGUtil.getOperation(cgOperationCallExp);
 		Operation asReferredOperation = CGUtil.getReferredOperation(cgOperationCallExp);

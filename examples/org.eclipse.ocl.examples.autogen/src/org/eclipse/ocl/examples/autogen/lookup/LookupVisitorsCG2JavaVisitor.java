@@ -27,10 +27,10 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
  * LookupCG2JavaVisitor refines the regular generation of Java code from an optimized Auto CG transformation tree
  * to add contributions that are inadequately represented by the CG model.
  */
-public abstract class LookupVisitorsCG2JavaVisitor<@NonNull C extends LookupVisitorsCodeGenerator> extends AutoVisitorsCG2JavaVisitor<C>
+public abstract class LookupVisitorsCG2JavaVisitor extends AutoVisitorsCG2JavaVisitor
 {
 
-	public LookupVisitorsCG2JavaVisitor(@NonNull C codeGenerator, @NonNull CGPackage cgPackage,
+	public LookupVisitorsCG2JavaVisitor(@NonNull LookupVisitorsCodeGenerator codeGenerator, @NonNull CGPackage cgPackage,
 			@Nullable List<CGValuedElement> sortedGlobals) {
 		super(codeGenerator, cgPackage, sortedGlobals);
 	}
@@ -38,7 +38,7 @@ public abstract class LookupVisitorsCG2JavaVisitor<@NonNull C extends LookupVisi
 	@Override
 	protected void doConstructor(@NonNull CGClass cgClass) {
 		js.append("public " + cgClass.getName() + "(");
-		js.appendClassReference(true, context.getEnvironmentClass());
+		js.appendClassReference(true, getCodeGenerator().getEnvironmentClass());
 		js.append(" " + LookupVisitorsCodeGenerator.CONTEXT_NAME);
 		doAdditionalConstructorParameters(cgClass);
 		js.append(") {\n");
@@ -66,7 +66,7 @@ public abstract class LookupVisitorsCG2JavaVisitor<@NonNull C extends LookupVisi
 	@Override
 	protected void doMoreClassMethods(@NonNull CGClass cgClass) {
 		doVisiting(cgClass); // We will do the doVisiting for all languages (also derived ones)
-		if (!context.isBaseVisitorsGeneration()) {
+		if (!getCodeGenerator().isBaseVisitorsGeneration()) {
 			doCreateSuperLangVisitor(cgClass);
 		}
 	}
@@ -88,7 +88,7 @@ public abstract class LookupVisitorsCG2JavaVisitor<@NonNull C extends LookupVisi
 	}
 
 	protected String getSuperLookupVisitorClassName() {
-		return context.getSuperLookupVisitorClassName();
+		return getCodeGenerator().getSuperLookupVisitorClassName();
 	}
 
 	protected void doAdditionalConstructorParameters(@NonNull CGClass cgClass) {
@@ -108,4 +108,9 @@ public abstract class LookupVisitorsCG2JavaVisitor<@NonNull C extends LookupVisi
 	 * @param cgClass
 	 */
 	abstract protected void doInternalVisiting(@NonNull CGClass cgClass);
+
+	@Override
+	public @NonNull LookupVisitorsCodeGenerator getCodeGenerator() {
+		return (LookupVisitorsCodeGenerator)context;
+	}
 }

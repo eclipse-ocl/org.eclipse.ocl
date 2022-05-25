@@ -156,7 +156,7 @@ import com.google.common.collect.Iterables;
  * Visits return true if the generated flow of control flows out of the generated code,
  * false if an unconditional exception is thrown.
  */
-public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> extends AbstractExtendingCGModelVisitor<@NonNull Boolean, CG>
+public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@NonNull Boolean, @NonNull JavaCodeGenerator>
 {
 	protected class ArgumentSubStream implements SubStream
 	{
@@ -187,7 +187,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	 */
 	protected NestedNameManager currentNameManager;
 
-	public CG2JavaVisitor(@NonNull CG codeGenerator) {
+	public CG2JavaVisitor(@NonNull JavaCodeGenerator codeGenerator) {
 		super(codeGenerator);
 		this.globalNameManager = codeGenerator.getGlobalNameManager();
 		this.genModelHelper = context.getGenModelHelper();
@@ -655,7 +655,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		return analyzer;
 	}
 
-	public @NonNull CG getCodeGenerator() {
+	public @NonNull JavaCodeGenerator getCodeGenerator() {
 		return context;
 	}
 

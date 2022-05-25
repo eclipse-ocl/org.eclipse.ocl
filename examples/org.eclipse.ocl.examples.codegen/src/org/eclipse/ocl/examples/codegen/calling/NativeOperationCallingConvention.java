@@ -78,7 +78,7 @@ public class NativeOperationCallingConvention extends AbstractOperationCallingCo
 	}
 
 	@Override
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
 		CGNativeOperationCallExp cgNativeOperationCallExp = (CGNativeOperationCallExp)cgOperationCallExp;
 		CGValuedElement cgThis = cgNativeOperationCallExp.getCgThis();
 		CGValuedElement cgThis2 = cgThis != null ? cg2javaVisitor.getExpression(cgThis) :  null;
@@ -124,7 +124,7 @@ public class NativeOperationCallingConvention extends AbstractOperationCallingCo
 	}
 
 	@Override
-	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
 		throw new UnsupportedOperationException();		// Native operations are declared natively
 	}
 

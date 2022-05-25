@@ -14,7 +14,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
-import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
@@ -35,9 +34,8 @@ public interface OperationCallingConvention extends CallingConvention
 	/**
 	 * Create the appropriate CGOperation less parameters and body.
 	 */
-	@Deprecated // XXX changing to CodeGenAnalyzer
 	@NonNull CGOperation createCGOperation(@NonNull AS2CGVisitor as2cgVisitor, @Nullable Type asSourceType, @NonNull Operation asOperation);
-	@NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @Nullable Type asSourceType, @NonNull Operation asOperation);
+//	@NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @Nullable Type asSourceType, @NonNull Operation asOperation);
 
 	/**
 	 * Create the appropriate CGOperationCallExp for asOperationCallExp with cgSource, or return null
@@ -50,7 +48,6 @@ public interface OperationCallingConvention extends CallingConvention
 	/**
 	 * Elaborate the CGOperation with the parameters appropriate to bodyExpression.
 	 */
-//	@Deprecated // XXX changing to CodeGenAnalyzer
 	void createCGParameters(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL bodyExpression);
 //	void createCGParameters(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL bodyExpression);
 
@@ -63,13 +60,13 @@ public interface OperationCallingConvention extends CallingConvention
 	 * Generate the Java code for an Operation call.
 	 * Returns true if control flow continues, false if an exception throw has been synthesized.
 	 */
-	boolean generateJavaCall(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp);
+	boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp);
 
 	/**
 	 * Generate the Java code for an Operation declaration.
 	 * Returns true if control flow continues, false if an exception throw has been synthesized.
 	 */
-	boolean generateJavaDeclaration(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation);
+	boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation);
 
 	/**
 	 * Return true if the invoked operation may throw an exception, that the caller must handle as an OCL invalid.

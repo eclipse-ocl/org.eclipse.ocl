@@ -117,7 +117,7 @@ public class ConstrainedPropertyCallingConvention extends AbstractPropertyCallin
 	} */
 
 	@Override
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGNavigationCallExp cgPropertyCallExp) {
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGNavigationCallExp cgPropertyCallExp) {
 		throw new UnsupportedOperationException();		// XXX
 	/*	CGForeignPropertyCallExp cgForeignPropertyCallExp = (CGForeignPropertyCallExp) cgPropertyCallExp;		// XXX never happens
 		Property asProperty = CGUtil.getReferredProperty(cgPropertyCallExp);
@@ -188,7 +188,7 @@ public class ConstrainedPropertyCallingConvention extends AbstractPropertyCallin
 		}
 	}
 
-/*	protected boolean generateForwardJavaCall(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGExecutorPropertyCallExp cgPropertyCallExp) {
+/*	protected boolean generateForwardJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGExecutorPropertyCallExp cgPropertyCallExp) {
 		CGValuedElement asSource = cgPropertyCallExp.getSource();
 		CGValuedElement cgSource = asSource != null ? cg2javaVisitor.getExpression(asSource) : null;
 		if ((cgSource != null) && !js.appendLocalStatements(cgSource)) {
@@ -228,7 +228,7 @@ public class ConstrainedPropertyCallingConvention extends AbstractPropertyCallin
 		return true;
 	} */
 
-/*	private boolean generateForwardJavaDeclaration(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGExecutorNavigationProperty cgProperty) {
+/*	private boolean generateForwardJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGExecutorNavigationProperty cgProperty) {
 		js.appendDeclaration(cgProperty);
 		js.append(" = new ");
 		js.appendClassReference(null, cgProperty);
@@ -239,7 +239,7 @@ public class ConstrainedPropertyCallingConvention extends AbstractPropertyCallin
 	} */
 
 /*	@Override
-	public boolean generateJavaDeclaration(	@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGProperty cgProperty) {
+	public boolean generateJavaDeclaration(	@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGProperty cgProperty) {
 		assert cgProperty instanceof CGExecutorNavigationProperty;
 	//	if (cgProperty instanceof CGExecutorNavigationProperty) {
 			return generateForwardJavaDeclaration(cg2javaVisitor, js, (CGExecutorNavigationProperty)cgProperty);
@@ -250,7 +250,7 @@ public class ConstrainedPropertyCallingConvention extends AbstractPropertyCallin
 	} */
 
 /*	@Override
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGNavigationCallExp cgPropertyCallExp) {
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGNavigationCallExp cgPropertyCallExp) {
 		if (cgPropertyCallExp instanceof CGExecutorPropertyCallExp) {
 			return generateForwardJavaCall(cg2javaVisitor, js, (CGExecutorPropertyCallExp)cgPropertyCallExp);
 		}
@@ -259,7 +259,7 @@ public class ConstrainedPropertyCallingConvention extends AbstractPropertyCallin
 		}
 	} */
 
-/*	protected boolean generateOppositeJavaCall(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGExecutorOppositePropertyCallExp cgPropertyCallExp) {
+/*	protected boolean generateOppositeJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGExecutorOppositePropertyCallExp cgPropertyCallExp) {
 		CGValuedElement source = cg2javaVisitor.getExpression(cgPropertyCallExp.getSource());
 		//
 		if (!js.appendLocalStatements(source)) {
@@ -290,7 +290,7 @@ public class ConstrainedPropertyCallingConvention extends AbstractPropertyCallin
 		return true;
 	} */
 
-/*	private boolean generateOppositeJavaDeclaration(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGExecutorOppositeProperty cgProperty) {
+/*	private boolean generateOppositeJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGExecutorOppositeProperty cgProperty) {
 		Property asProperty = (Property) cgProperty.getAst();
 		Property asOppositeProperty = asProperty.getOpposite();
 		js.appendDeclaration(cgProperty);

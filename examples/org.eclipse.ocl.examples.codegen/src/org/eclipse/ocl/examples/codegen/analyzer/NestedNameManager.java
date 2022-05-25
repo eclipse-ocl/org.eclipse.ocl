@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager.NameVariant;
@@ -36,6 +37,7 @@ import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.CallExp;
+import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
@@ -535,6 +537,65 @@ public class NestedNameManager extends NameManager
 		return unsafeNameResolution;
 	}
 
+	public @NonNull CGParameter getParameter(@NonNull VariableDeclaration asParameter, @Nullable String explicitName) {
+		CGParameter cgParameter = basicGetParameter(asParameter);
+		if (cgParameter == null) {
+			cgParameter = CGModelFactory.eINSTANCE.createCGParameter();
+			cgParameter.setAst(asParameter);
+			cgParameter.setTypeId(analyzer.getCGTypeId(asParameter.getTypeId()));
+			if (explicitName == null) {
+			//	analyzer.setNames(cgParameter, aParameter);
+
+			//	String name = analyzer.getGlobalNameManager().getNameHint(aParameter);
+				//	String name = globalNameManager.helper.getNameHint(anObject);
+				//	cgValue.setName(name);
+				//	cgValue.setValueName(name);
+				declarePreferredName(cgParameter);
+
+
+			//	NameResolution nameResolution = cgParameter.getNameResolution();
+			//	nameResolution.setResolvedName(parameterVariable.getName());
+			//	getNameManager().addNameResolution(nameResolution);
+			}
+			else {
+				assert explicitName.equals(asParameter.getName());
+				Operation asOperation = PivotUtil.getContainingOperation(asParameter);
+				Constraint asConstraint = PivotUtil.getContainingConstraint(asParameter);
+				assert ((asOperation != null) && (asOperation.getESObject() instanceof EOperation)) || ((asConstraint != null) && (asConstraint.getESObject() instanceof EOperation));
+			//	assert is-ecore-parameter
+			//	cgParameter.setName(explicitName);
+			//	cgParameter.setValueName(explicitName);
+				/*NameResolution nameResolution =*/ declareReservedName(cgParameter, explicitName);
+			//	nameResolution.setResolvedName(explicitName);
+			}
+			//			cgParameter.setTypeId(analyzer.getTypeId(aParameter.getTypeId()));
+			addVariable(asParameter, cgParameter);
+			cgParameter.setRequired(asParameter.isIsRequired());
+			if (asParameter.isIsRequired()) {
+				cgParameter.setNonNull();
+			}
+		}
+		return cgParameter;
+	}
+
+/*	public @NonNull CGParameter getParameter(@NonNull Variable asParameter, @NonNull NameResolution nameResolution) {
+		CGParameter cgParameter = basicGetParameter(asParameter);
+		if (cgParameter == null) {
+			cgParameter = CGModelFactory.eINSTANCE.createCGParameter();
+			cgParameter.setName(asParameter.getName());
+			nameResolution.addCGElement(cgParameter);
+			cgParameter.setAst(asParameter);
+			cgParameter.setTypeId(analyzer.getCGTypeId(asParameter.getTypeId()));
+			declareLazyName(cgParameter);
+			addVariable(asParameter, cgParameter);
+			cgParameter.setRequired(asParameter.isIsRequired());
+			if (asParameter.isIsRequired()) {
+				cgParameter.setNonNull();
+			}
+		}
+		return cgParameter;
+	} */
+
 	public @NonNull CGVariable getQualifiedThisVariable() {
 		if (asScope instanceof CallExp) {
 			return ((NestedNameManager)parent).getQualifiedThisVariable();
@@ -618,7 +679,16 @@ public class NestedNameManager extends NameManager
 		return typeIdParameter2;
 	}
 
-
+/*	public @NonNull CGParameter getTypeIdParameter() {		-- no addVariable - no AST
+		//	assert !isStatic;
+		CGParameter typeIdParameter2 = typeIdParameter;
+		if (typeIdParameter2 == null) {
+			typeIdParameter = typeIdParameter2 = codeGenerator.createTypeIdParameter();
+		}
+		assert typeIdParameter2.eContainer() == null;
+		addVariable(CGUtil.getAST(typeIdParameter2), typeIdParameter2);
+		return typeIdParameter2;
+	} */
 
 /*	public @NonNull String getVariantResolvedName(@NonNull CGValuedElement cgElement, @NonNull NameVariant nameVariant) {
 		Map<@NonNull NameVariant, @Nullable String> nameVariant2name = element2nameVariant2name.get(cgElement);

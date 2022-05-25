@@ -25,7 +25,7 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 /**
  * A CG2JavaClassVisitor supports generation of an OCL expression as the LibraryOperation INSTANCE of a Java Class.
  */
-public class JUnitCG2JavaClassVisitor extends CG2JavaVisitor<@NonNull JUnitCodeGenerator>
+public class JUnitCG2JavaClassVisitor extends CG2JavaVisitor
 {
 	protected final @NonNull ExpressionInOCL expInOcl;
 	protected final @Nullable Iterable<@NonNull CGValuedElement> sortedGlobals;
@@ -35,6 +35,11 @@ public class JUnitCG2JavaClassVisitor extends CG2JavaVisitor<@NonNull JUnitCodeG
 		super(codeGenerator);
 		this.expInOcl = expInOcl;
 		this.sortedGlobals = sortedGlobals;
+	}
+
+	@Override
+	public @NonNull JUnitCodeGenerator getCodeGenerator() {
+		return (JUnitCodeGenerator)context;
 	}
 
 	@Override

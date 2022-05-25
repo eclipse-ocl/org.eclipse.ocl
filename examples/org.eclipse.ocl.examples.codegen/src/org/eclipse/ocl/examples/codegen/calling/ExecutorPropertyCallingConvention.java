@@ -88,7 +88,7 @@ public class ExecutorPropertyCallingConvention extends AbstractPropertyCallingCo
 	}
 
 	@Override
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGNavigationCallExp cgPropertyCallExp) {
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGNavigationCallExp cgPropertyCallExp) {
 		assert cgPropertyCallExp instanceof CGExecutorPropertyCallExp;
 		CGExecutorPropertyCallExp cgExecutorPropertyCallExp = (CGExecutorPropertyCallExp)cgPropertyCallExp;
 		CGValuedElement asSource = cgExecutorPropertyCallExp.getSource();
@@ -135,7 +135,7 @@ public class ExecutorPropertyCallingConvention extends AbstractPropertyCallingCo
 	}
 
 	@Override
-	public boolean generateJavaDeclaration(	@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGProperty cgProperty) {
+	public boolean generateJavaDeclaration(	@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGProperty cgProperty) {
 		assert cgProperty instanceof CGExecutorNavigationProperty;
 		CGExecutorNavigationProperty cgExecutorNavigationProperty = (CGExecutorNavigationProperty)cgProperty;
 		js.appendDeclaration(cgExecutorNavigationProperty);

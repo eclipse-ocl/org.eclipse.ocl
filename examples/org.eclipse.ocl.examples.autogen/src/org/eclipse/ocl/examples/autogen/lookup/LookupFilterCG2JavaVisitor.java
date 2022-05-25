@@ -34,7 +34,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
  * LookupCG2JavaVisitor refines the regular generation of Java code from an optimized Auto CG transformation tree
  * to add contributions that are inadequately represented by the CG model.
  */
-public class LookupFilterCG2JavaVisitor extends AutoCG2JavaVisitor<@NonNull LookupFilterGenerator>
+public class LookupFilterCG2JavaVisitor extends AutoCG2JavaVisitor
 {
 	public LookupFilterCG2JavaVisitor(@NonNull LookupFilterGenerator codeGenerator, @NonNull CGPackage cgPackage,
 			@Nullable List<CGValuedElement> sortedGlobals) {
@@ -126,14 +126,14 @@ public class LookupFilterCG2JavaVisitor extends AutoCG2JavaVisitor<@NonNull Look
 
 
 	private void addFilterParameters(CGClass cgClass) {
-		for (CGProperty filteringVar : context.getFilteringVars(cgClass)) {
+		for (CGProperty filteringVar : getCodeGenerator().getFilteringVars(cgClass)) {
 			js.append(",");
 			js.appendDeclaration(filteringVar);
 		}
 	}
 
 	private void addFilterPropsInit(CGClass cgClass) {
-		for (CGProperty filteringVar : context.getFilteringVars(cgClass)) {
+		for (CGProperty filteringVar : getCodeGenerator().getFilteringVars(cgClass)) {
 			String varName = filteringVar.getResolvedName();
 			js.append("this.");
 			js.append(varName);
@@ -141,6 +141,11 @@ public class LookupFilterCG2JavaVisitor extends AutoCG2JavaVisitor<@NonNull Look
 			js.append(varName);
 			js.append(";\n");
 		}
+	}
+
+	@Override
+	public @NonNull LookupFilterGenerator getCodeGenerator() {
+		return (LookupFilterGenerator)context;
 	}
 
 	private CGValuedElement getFilteredType(CGClass cgClass) {

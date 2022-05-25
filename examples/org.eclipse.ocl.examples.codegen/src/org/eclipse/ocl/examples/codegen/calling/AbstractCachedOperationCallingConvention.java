@@ -46,7 +46,7 @@ public abstract class AbstractCachedOperationCallingConvention extends Constrain
 		return ClassUtil.nonNullState(asOperation.getOwningClass()).getName() + "_" + asOperation.getName();
 	}
 
-	protected void doCachedOperationClassInstance(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+	protected void doCachedOperationClassInstance(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
 		Operation asOperation = (Operation) cgOperation.getAst();
 		assert asOperation != null;
 		String name = getNativeOperationClassName(cgOperation);
@@ -61,7 +61,7 @@ public abstract class AbstractCachedOperationCallingConvention extends Constrain
 		js.append("();\n");
 	}
 
-	protected void doCachedOperationEvaluate(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+	protected void doCachedOperationEvaluate(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
 		GlobalNameManager globalNameManager = cg2javaVisitor.getCodeGenerator().getGlobalNameManager();
 		List<@NonNull CGParameter> cgParameters = ClassUtil.nullFree(cgOperation.getParameters());
 		Boolean isRequiredReturn = cgOperation.isRequired() ? true : null;
@@ -112,7 +112,7 @@ public abstract class AbstractCachedOperationCallingConvention extends Constrain
 	}
 
 	@Override
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
 		JavaCodeGenerator codeGenerator = cg2javaVisitor.getCodeGenerator();
 		GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
 		CGCachedOperationCallExp cgCachedOperationCallExp = (CGCachedOperationCallExp)cgOperationCallExp;

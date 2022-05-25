@@ -161,7 +161,7 @@ public class CachedOperationCallingConvention extends AbstractCachedOperationCal
 
 
 /*	@Override
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
 		// XXX should have been ForeignOperationCallingConvention
 		if (!generateLocals(cg2javaVisitor, js, cgOperationCallExp)) {
 			return false;
@@ -196,7 +196,7 @@ public class CachedOperationCallingConvention extends AbstractCachedOperationCal
 		return true;
 	} */
 
-	protected void doCachedOperationBasicEvaluate(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+	protected void doCachedOperationBasicEvaluate(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
 		List<@NonNull CGParameter> cgParameters = ClassUtil.nullFree(cgOperation.getParameters());
 		CGValuedElement body = cg2javaVisitor.getExpression(cgOperation.getBody());
 		js.append("@Override\n");
@@ -242,7 +242,7 @@ public class CachedOperationCallingConvention extends AbstractCachedOperationCal
 		js.append("}\n");
 	}
 
-	protected void doCachedOperationClassDirectInstance(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+	protected void doCachedOperationClassDirectInstance(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
 		Operation asOperation = (Operation) cgOperation.getAst();
 		assert asOperation != null;
 		String name = getNativeOperationClassName(cgOperation);
@@ -315,7 +315,7 @@ public class CachedOperationCallingConvention extends AbstractCachedOperationCal
 	} */
 
 	@Override
-	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
 		CGCachedOperation cgCachedOperation = (CGCachedOperation)cgOperation;
 		Operation asOperation = CGUtil.getAST(cgCachedOperation);
 		assert cgCachedOperation.getFinalOperations().size() <= 0;

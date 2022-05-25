@@ -43,7 +43,7 @@ public class ExecutorCompositionPropertyCallingConvention extends AbstractProper
 	public static final @NonNull ExecutorCompositionPropertyCallingConvention INSTANCE = new ExecutorCompositionPropertyCallingConvention();
 
 	@Override
-	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGProperty cgProperty) {
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGProperty cgProperty) {
 		assert cgProperty instanceof CGExecutorCompositionProperty;
 		CGExecutorCompositionProperty cgExecutorCompositionProperty = (CGExecutorCompositionProperty)cgProperty;
 		js.appendDeclaration(cgExecutorCompositionProperty);
@@ -80,7 +80,7 @@ public class ExecutorCompositionPropertyCallingConvention extends AbstractProper
 	}
 
 	@Override
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGNavigationCallExp cgPropertyCallExp) {
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGNavigationCallExp cgPropertyCallExp) {
 		GlobalNameManager globalNameManager = cg2javaVisitor.getCodeGenerator().getGlobalNameManager();
 		CGExecutorOppositePropertyCallExp cgExecutorOppositePropertyCallExp = (CGExecutorOppositePropertyCallExp)cgPropertyCallExp;
 		CGValuedElement source = cg2javaVisitor.getExpression(cgExecutorOppositePropertyCallExp.getSource());

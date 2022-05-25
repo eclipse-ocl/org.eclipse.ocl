@@ -167,7 +167,7 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 		throw new UnsupportedOperationException();
 	}
 
-	protected void doCachedOperationDispatchInstaller(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGCachedOperation cgOperation) {
+	protected void doCachedOperationDispatchInstaller(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGCachedOperation cgOperation) {
 		js.append("private ");
 		js.append(getNativeOperationClassName(cgOperation));
 		js.append("() {\n");
@@ -185,7 +185,7 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 	}
 
 	@Override
-	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
 		CGCachedOperation cgCachedOperation = (CGCachedOperation)cgOperation;
 		assert cgCachedOperation.getFinalOperations().size() > 0;
 		String operationClassName = getNativeOperationClassName(cgCachedOperation);

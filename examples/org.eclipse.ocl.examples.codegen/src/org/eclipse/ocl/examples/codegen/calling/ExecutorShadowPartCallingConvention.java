@@ -33,7 +33,7 @@ public class ExecutorShadowPartCallingConvention extends AbstractPropertyCalling
 	public static final @NonNull ExecutorShadowPartCallingConvention INSTANCE = new ExecutorShadowPartCallingConvention();
 
 	@Override
-	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGProperty cgProperty) {
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGProperty cgProperty) {
 		assert cgProperty instanceof CGExecutorShadowPart;
 		CGExecutorShadowPart cgExecutorShadowPart = (CGExecutorShadowPart)cgProperty;
 		js.appendDeclaration(cgExecutorShadowPart);
@@ -56,7 +56,7 @@ public class ExecutorShadowPartCallingConvention extends AbstractPropertyCalling
 	}
 
 	@Override
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor<?> cg2javaVisitor,
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor,
 			@NonNull JavaStream js,
 			@NonNull CGNavigationCallExp cgPropertyCallExp) {
 		// TODO Auto-generated method stub

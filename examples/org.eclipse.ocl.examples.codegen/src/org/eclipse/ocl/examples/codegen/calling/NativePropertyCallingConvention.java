@@ -69,7 +69,7 @@ public class NativePropertyCallingConvention extends AbstractPropertyCallingConv
 	}
 
 	@Override
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGNavigationCallExp cgPropertyCallExp) {
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGNavigationCallExp cgPropertyCallExp) {
 		CGValuedElement source = cg2javaVisitor.getExpression(cgPropertyCallExp.getSource());
 		//
 		if (!js.appendLocalStatements(source)) {
@@ -92,7 +92,7 @@ public class NativePropertyCallingConvention extends AbstractPropertyCallingConv
 	}
 
 //	@Override
-//	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGProperty cgProperty) {
+//	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGProperty cgProperty) {
 //		js.append("protected ");
 //		js.appendDeclaration(cgProperty);
 //		js.append(";\n");
@@ -100,7 +100,7 @@ public class NativePropertyCallingConvention extends AbstractPropertyCallingConv
 //	}
 
 	@Override
-	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor<?> cg2javaVisitor, @NonNull JavaStream js, @NonNull CGProperty cgProperty) {
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGProperty cgProperty) {
 		throw new UnsupportedOperationException();		// Native operations are declared natively
 	}
 

@@ -18,7 +18,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 
-public class LookupExportedCG2JavaVisitor extends LookupVisitorsCG2JavaVisitor<@NonNull LookupExportedVisitorCodeGenerator> {
+public class LookupExportedCG2JavaVisitor extends LookupVisitorsCG2JavaVisitor {
 
 	public LookupExportedCG2JavaVisitor(
 			@NonNull LookupExportedVisitorCodeGenerator codeGenerator,
@@ -30,12 +30,13 @@ public class LookupExportedCG2JavaVisitor extends LookupVisitorsCG2JavaVisitor<@
 	@Override
 	protected void doInternalVisiting(@NonNull CGClass cgClass) {
 		// We we return the context
+		LookupExportedVisitorCodeGenerator codeGenerator = getCodeGenerator();
 		js.append("\n");
 		js.append("@Override\n");
 		js.append("protected ");
-		js.appendClassReference(false, context.getVisitorResultClass());
+		js.appendClassReference(false, codeGenerator.getVisitorResultClass());
 		js.append(" doVisiting(");
-		js.appendClassReference(true, context.getVisitableClass());
+		js.appendClassReference(true, codeGenerator.getVisitableClass());
 		js.append(" visitable) {\n");
 		js.pushIndentation(null);
 		js.append("return context;\n");
@@ -55,7 +56,7 @@ public class LookupExportedCG2JavaVisitor extends LookupVisitorsCG2JavaVisitor<@
 	protected void doAdditionalFieldsInitialization(
 			@NonNull CGClass cgClass) {
 		js.append("this.");
-		js.appendReferenceTo(context.getImporterProperty());
+		js.appendReferenceTo(getCodeGenerator().getImporterProperty());
 		js.append(" = " +  LookupVisitorsCodeGenerator.INMPORTER_NAME + ";\n");
 	}
 
@@ -63,7 +64,11 @@ public class LookupExportedCG2JavaVisitor extends LookupVisitorsCG2JavaVisitor<@
 	protected void doAdditionalSuperLookupVisitorArgs(
 			@NonNull CGClass cgClass) {
 		js.append(",");
-		js.appendReferenceTo(context.getImporterProperty());
+		js.appendReferenceTo(getCodeGenerator().getImporterProperty());
 	}
 
+	@Override
+	public @NonNull LookupExportedVisitorCodeGenerator getCodeGenerator() {
+		return (LookupExportedVisitorCodeGenerator)context;
+	}
 }

@@ -90,6 +90,7 @@ public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 			cgConstraint.setAst(asConstraint);
 			getNameManager().declarePreferredName(cgConstraint);
 			NestedNameManager savedNameManager = pushNameManager(cgConstraint);
+			NestedNameManager nameManager = getNameManager();
 			try {
 				ExpressionInOCL oldQuery = environmentFactory.parseSpecification(specification);
 				String constraintName = PivotUtil.getName(asConstraint);
@@ -105,11 +106,11 @@ public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 			//	OCLinEcoreLocalContext localContext = (OCLinEcoreLocalContext) globalContext.basicGetLocalContext(cgConstraint);
 				Variable contextVariable = asSynthesizedQuery.getOwnedContext();
 				if (contextVariable != null) {
-					CGParameter cgParameter = getNameManager().getSelfParameter(contextVariable);
+					CGParameter cgParameter = nameManager.getSelfParameter(contextVariable);
 					cgConstraint.getParameters().add(cgParameter);
 				}
 				for (@NonNull Variable parameterVariable : PivotUtil.getOwnedParameters(asSynthesizedQuery)) {
-					CGParameter cgParameter = getParameter(parameterVariable, parameterVariable.getName());
+					CGParameter cgParameter = nameManager.getParameter(parameterVariable, parameterVariable.getName());
 					cgConstraint.getParameters().add(cgParameter);
 				}
 				cgConstraint.setBody(doVisit(CGValuedElement.class, asSynthesizedExpression));
