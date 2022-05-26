@@ -115,7 +115,7 @@ public class ExecutorOppositePropertyCallingConvention extends AbstractPropertyC
 		JavaStream.SubStream castBody = new JavaStream.SubStream() {
 			@Override
 			public void append() {
-				js.appendReferenceTo(cgPropertyCallExp.getExecutorProperty());
+				js.appendReferenceTo(cgPropertyCallExp.getCgProperty());
 				js.append(".");
 				js.append(globalNameManager.getEvaluateName());
 				js.append("(");
