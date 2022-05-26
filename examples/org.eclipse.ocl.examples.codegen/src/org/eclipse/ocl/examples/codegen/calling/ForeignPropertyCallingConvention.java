@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.calling;
 
+import java.lang.reflect.Method;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -38,6 +39,7 @@ import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.java.JavaStream.SubStream;
+import org.eclipse.ocl.examples.codegen.java.types.JavaTypeId;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.NavigationCallExp;
@@ -122,7 +124,7 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 		CGElementId cgPropertyId = analyzer.getCGElementId(asProperty.getPropertyId());
 	//	CGTypeId cacheTypeId = context.getTypeId(asProperty.getTypeId());
 		CGExecutorType cgCastType = analyzer.createExecutorType(PivotUtil.getType(asProperty));
-		CGNativeOperationCallExp basicGetValueInit = as2cgVisitor.createCGBoxedNativeOperationCallExp(analyzer.createCGVariableExp(modelManagerVariable), JavaConstants.MODEL_MANAGER_BASIC_GET_FOREIGN_PROPERTY_VALUE_METHOD,
+		CGNativeOperationCallExp basicGetValueInit = createCGBoxedNativeOperationCallExp(as2cgVisitor, analyzer.createCGVariableExp(modelManagerVariable), JavaConstants.MODEL_MANAGER_BASIC_GET_FOREIGN_PROPERTY_VALUE_METHOD,
 			asProperty.isIsStatic() ? analyzer.createCGConstantExp(analyzer.createCGNull()) : analyzer.createCGVariableExp(cgSelfParameter), analyzer.createCGConstantExp(cgPropertyId));
 	//	basicGetValueInit.setTypeId(cacheTypeId);
 		basicGetValueInit.setValueIsBoxed(true);
@@ -130,7 +132,7 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 		CGFinalVariable basicGetValueVariable = as2cgVisitor.getNameManager().createCGVariable(castBasicGetValueInit);
 		nameManager.declareLazyName(basicGetValueVariable);
 		CGValuedElement cgCondition = analyzer.createCGIsEqual(analyzer.createCGVariableExp(basicGetValueVariable), analyzer.createCGNull());
-		CGNativeOperationCallExp getValue = as2cgVisitor.createCGBoxedNativeOperationCallExp(analyzer.createCGVariableExp(modelManagerVariable), JavaConstants.MODEL_MANAGER_GET_FOREIGN_PROPERTY_VALUE_METHOD,
+		CGNativeOperationCallExp getValue = createCGBoxedNativeOperationCallExp(as2cgVisitor, analyzer.createCGVariableExp(modelManagerVariable), JavaConstants.MODEL_MANAGER_GET_FOREIGN_PROPERTY_VALUE_METHOD,
 			asProperty.isIsStatic() ? analyzer.createCGConstantExp(analyzer.createCGNull()) : analyzer.createCGVariableExp(cgSelfParameter), analyzer.createCGConstantExp(cgPropertyId), cgInitValue);
 	//	getValue.setTypeId(cacheTypeId);
 		getValue.setValueIsBoxed(true);
@@ -144,6 +146,23 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 		}
 		CGValuedElement withBasicGetValue = analyzer.createCGLetExp(basicGetValueVariable, ifValue);
 		cgForeignProperty.setBody(withBasicGetValue);
+	}
+
+	private @NonNull CGNativeOperationCallExp createCGBoxedNativeOperationCallExp(@NonNull AS2CGVisitor as2cgVisitor, @Nullable CGValuedElement cgThis, @NonNull Method jMethod, @NonNull CGValuedElement... cgArguments) {
+		CGNativeOperationCallExp cgCallExp = as2cgVisitor.getAnalyzer().createCGNativeOperationCallExp(jMethod, SupportOperationCallingConvention.INSTANCE);
+		cgCallExp.setCgThis(cgThis);
+		if (cgArguments != null) {
+			List<CGValuedElement> cgArguments2 = cgCallExp.getCgArguments();
+			for (@NonNull CGValuedElement cgArgument : cgArguments) {
+				cgArguments2.add(cgArgument);
+			}
+		}
+		cgCallExp.setRequired(as2cgVisitor.getCodeGenerator().getIsNonNull(jMethod) == Boolean.TRUE);
+	//	cgCallExp.setInvalidating(false));
+		Class<?> jReturnType = jMethod.getReturnType();
+		assert jReturnType != null;
+		cgCallExp.setTypeId(as2cgVisitor.getAnalyzer().getCGTypeId(new JavaTypeId(jReturnType)));		// XXX cache
+		return cgCallExp;
 	}
 
 	@Override
