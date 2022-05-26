@@ -19,7 +19,6 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCatchExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstant;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
@@ -231,7 +230,7 @@ public class FieldingAnalyzer
 			if (cgChild != null) {
 				Boolean isCaught = cgChild.accept(this);
 				assert isCaught != null;
-				if (isCaught == Boolean.FALSE) {
+				if ((isCaught == Boolean.FALSE) && !cgChild.isNonInvalid()) {
 					insertCatch(cgChild);
 				}
 			}
@@ -241,7 +240,7 @@ public class FieldingAnalyzer
 			if (cgChild != null) {
 				Boolean isCaught = cgChild.accept(this);
 				assert isCaught != null;
-				if (isCaught == Boolean.TRUE) {
+				if ((isCaught == Boolean.TRUE) && !cgChild.isNonInvalid()) {
 					insertThrow(cgChild);
 				}
 			}
@@ -255,14 +254,6 @@ public class FieldingAnalyzer
 		@Override
 		public @NonNull Boolean visiting(@NonNull CGElement visitable) {
 			throw new UnsupportedOperationException(getClass().getSimpleName() + ": " + visitable.getClass().getSimpleName());
-		}
-
-		@Override
-		public @NonNull Boolean visitCGCachedOperation(@NonNull CGCachedOperation object) {
-			if ("OclElement::unqualified_env_Class() : lookup::LookupEnvironment[1]".equals(object.getAst().toString())) {
-				getClass();		// XXX
-			}
-			return super.visitCGCachedOperation(object);
 		}
 
 		@Override
