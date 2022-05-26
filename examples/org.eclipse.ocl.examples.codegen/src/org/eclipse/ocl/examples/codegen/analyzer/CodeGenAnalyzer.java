@@ -30,7 +30,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElementId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorProperty;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGFinalVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIfExp;
@@ -425,7 +424,7 @@ public class CodeGenAnalyzer
 		return cgProperty;
 	}
 
-	@Deprecated /* @deprecated use callingConvention */
+/*	@Deprecated / * @deprecated use callingConvention * /
 	public @NonNull CGExecutorProperty createExecutorProperty(@NonNull Property asProperty) {
 		assert !asProperty.isIsStatic();			// static is inlined
 		// XXX asProperty.esObject == null => ForeignProperty
@@ -439,20 +438,7 @@ public class CodeGenAnalyzer
 		cgProperty.setTypeId(getCGTypeId(javaPropertyTypeId));
 		cgProperty.getDependsOn().add(cgPropertyId);
 		return cgProperty;
-	}
-
-	public @NonNull CGExecutorShadowPart createExecutorShadowPart(@NonNull Property asProperty) {
-		PropertyCallingConvention callingConvention = codeGenerator.getCallingConvention(asProperty);
-		PropertyId propertyId = asProperty.getPropertyId();
-		CGExecutorShadowPart cgPart = CGModelFactory.eINSTANCE.createCGExecutorShadowPart();
-		CGElementId cgPropertyId = getCGElementId(propertyId);
-		cgPart.setUnderlyingPropertyId(cgPropertyId);
-		cgPart.setAst(asProperty);
-		globalNameManager.declareLazyName(cgPart);
-		cgPart.setTypeId(getCGTypeId(JavaConstants.PROPERTY_TYPE_ID));
-		cgPart.getDependsOn().add(cgPropertyId);
-		return cgPart;
-	}
+	} */
 
 	public @NonNull CGExecutorType createExecutorType(@NonNull Type asType) {
 		TypeId typeId = asType.getTypeId();

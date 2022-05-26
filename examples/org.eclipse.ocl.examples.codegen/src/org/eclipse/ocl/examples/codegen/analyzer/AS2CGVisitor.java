@@ -39,6 +39,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreClassShadowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreDataTypeShadowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGElementId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGFinalVariable;
@@ -76,6 +77,7 @@ import org.eclipse.ocl.examples.codegen.generator.AbstractCodeGenerator;
 import org.eclipse.ocl.examples.codegen.generator.GenModelHelper;
 import org.eclipse.ocl.examples.codegen.generator.IterationHelper;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
+import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.java.types.JavaTypeId;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.BooleanLiteralExp;
@@ -125,6 +127,7 @@ import org.eclipse.ocl.pivot.UnspecifiedValueExp;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
+import org.eclipse.ocl.pivot.ids.PropertyId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
@@ -437,7 +440,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	protected @NonNull CGValuedElement generateOppositePropertyCallExp(@NonNull CGValuedElement cgSource, @NonNull OppositePropertyCallExp asOppositePropertyCallExp) {
 		Property asProperty = PivotUtil.getReferredProperty(asOppositePropertyCallExp);
-		CGProperty cgProperty = generatePropertyDeclaration(asProperty);
+		CGProperty cgProperty = generatePropertyDeclaration(asProperty, null);
 		PropertyCallingConvention callingConvention = cgProperty.getCallingConvention();
 		LibraryProperty libraryProperty = metamodelManager.getImplementation(null, null, asProperty);
 		return callingConvention.createCGNavigationCallExp(this, cgProperty, libraryProperty, cgSource, asOppositePropertyCallExp);
@@ -445,7 +448,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	protected @NonNull CGValuedElement generatePropertyCallExp(@Nullable CGValuedElement cgSource, @NonNull PropertyCallExp asPropertyCallExp) {
 		Property asProperty = PivotUtil.getReferredProperty(asPropertyCallExp);
-		CGProperty cgProperty = generatePropertyDeclaration(asProperty);
+		CGProperty cgProperty = generatePropertyDeclaration(asProperty, null);
 		PropertyCallingConvention callingConvention = cgProperty.getCallingConvention();
 		LibraryProperty libraryProperty = metamodelManager.getImplementation(null, null, asProperty);
 		return callingConvention.createCGNavigationCallExp(this, cgProperty, libraryProperty, cgSource, asPropertyCallExp);
@@ -453,11 +456,14 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	/**
 	 * Generate / share the CG declaration for asProperty.
+	 * @param callingConvention
 	 */
-	protected final @NonNull CGProperty generatePropertyDeclaration(@NonNull Property asProperty) {
+	protected final @NonNull CGProperty generatePropertyDeclaration(@NonNull Property asProperty, @Nullable PropertyCallingConvention callingConvention) {
 		CGProperty cgProperty = analyzer.basicGetCGProperty(asProperty);
 		if (cgProperty == null) {
-			PropertyCallingConvention callingConvention = context.getCallingConvention(asProperty);
+			if (callingConvention == null) {
+				callingConvention = context.getCallingConvention(asProperty);
+			}
 			cgProperty = callingConvention.createCGProperty(analyzer, asProperty);
 			cgProperty.setAst(asProperty);
 			cgProperty.setTypeId(analyzer.getCGTypeId(asProperty.getTypeId()));
@@ -1021,7 +1027,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	@Override
 	public final @NonNull CGProperty visitProperty(@NonNull Property asProperty) {
-		CGProperty cgProperty = generatePropertyDeclaration(asProperty);
+		CGProperty cgProperty = generatePropertyDeclaration(asProperty, null);
 		PropertyCallingConvention callingConvention = cgProperty.getCallingConvention();
 		pushNameManager(cgProperty);
 		// parse ownedExpression here to simplify createImplementation arguments
@@ -1100,13 +1106,24 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	@Override
 	public @Nullable CGShadowPart visitShadowPart(@NonNull ShadowPart element) {
+	//	throw new UnsupportedOperationException();
 		CGShadowPart cgShadowPart = CGModelFactory.eINSTANCE.createCGShadowPart();
 		initAst(cgShadowPart, element);
 		cgShadowPart.setInit(doVisit(CGValuedElement.class, element.getOwnedInit()));
-		Property referredProperty = element.getReferredProperty();
-		if (referredProperty != null) {
-			CGExecutorShadowPart cgExecutorShadowPart = analyzer.createExecutorShadowPart(referredProperty);
+		Property asProperty = element.getReferredProperty();
+		if (asProperty != null) {
+		//	CGExecutorShadowPart cgExecutorShadowPart = createExecutorShadowPart(asProperty);
+		//	cgExecutorShadowPart.setCallingConvention(ExecutorShadowPartCallingConvention.INSTANCE);
+		//	CGExecutorShadowPart cgExecutorShadowPart = (CGExecutorShadowPart)generatePropertyDeclaration(asProperty, ExecutorShadowPartCallingConvention.INSTANCE);
+			PropertyId propertyId = asProperty.getPropertyId();
+			CGExecutorShadowPart cgExecutorShadowPart = CGModelFactory.eINSTANCE.createCGExecutorShadowPart();
+			CGElementId cgPropertyId = analyzer.getCGElementId(propertyId);
+			cgExecutorShadowPart.setUnderlyingPropertyId(cgPropertyId);
+			cgExecutorShadowPart.setAst(asProperty);
+			globalNameManager.declareLazyName(cgExecutorShadowPart);
+			cgExecutorShadowPart.setTypeId(analyzer.getCGTypeId(JavaConstants.PROPERTY_TYPE_ID));
 			cgExecutorShadowPart.setCallingConvention(ExecutorShadowPartCallingConvention.INSTANCE);
+			cgExecutorShadowPart.getDependsOn().add(cgPropertyId);
 			cgShadowPart.setExecutorPart(cgExecutorShadowPart);
 		}
 		return cgShadowPart;
