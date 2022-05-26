@@ -344,13 +344,13 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 	}
 
 	// Default guards and boxes al terms. Derived implementations for unboxed/ecore/simple-boxed
-	@Override
+	@Override		// XXX review for all derived implementations
 	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer,@NonNull CGOperationCallExp cgOperationCallExp) {
 		CGOperation cgOperation = CGUtil.getOperation(cgOperationCallExp);
 		Operation asOperation = CGUtil.getAST(cgOperation);
 	//	Operation referredOperation = cgLibraryOperationCallExp.getReferredOperation();
 		org.eclipse.ocl.pivot.Class asClass = asOperation.getOwningClass();
-		if ("specializeIn".equals(asOperation.getName())) {
+		if ("_unqualified_env_Class".equals(asOperation.getName())) {
 			getClass();		// XXX
 		}
 		OperationId operationId = asOperation.getOperationId();

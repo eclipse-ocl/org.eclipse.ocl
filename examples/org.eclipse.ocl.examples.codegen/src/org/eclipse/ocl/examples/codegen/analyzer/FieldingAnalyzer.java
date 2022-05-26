@@ -19,6 +19,7 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCatchExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstant;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
@@ -257,6 +258,14 @@ public class FieldingAnalyzer
 		}
 
 		@Override
+		public @NonNull Boolean visitCGCachedOperation(@NonNull CGCachedOperation object) {
+			if ("OclElement::unqualified_env_Class() : lookup::LookupEnvironment[1]".equals(object.getAst().toString())) {
+				getClass();		// XXX
+			}
+			return super.visitCGCachedOperation(object);
+		}
+
+		@Override
 		public @NonNull Boolean visitCGConstant(@NonNull CGConstant cgConstant) {
 			return false;
 		}
@@ -431,6 +440,7 @@ public class FieldingAnalyzer
 		public @NonNull Boolean visitCGValuedElement(@NonNull CGValuedElement cgElement) {
 			boolean isCaught = super.visitCGValuedElement(cgElement) == Boolean.TRUE;
 			cgElement.setCaught(isCaught);
+		//	super.visitCGValuedElement(cgElement);		// XXX
 			return isCaught;
 		}
 

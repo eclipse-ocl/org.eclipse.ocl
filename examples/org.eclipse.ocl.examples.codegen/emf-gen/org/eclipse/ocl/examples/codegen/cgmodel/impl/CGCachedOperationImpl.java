@@ -260,15 +260,19 @@ public class CGCachedOperationImpl extends CGOperationImpl implements CGCachedOp
 
 	@Override
 	public void setBody(CGValuedElement newBody) {
-		//	System.out.println(this + "\n\tast = " + ast + "\n\tbody = " + newBody);
-	//	System.out.println(ast + "\n\t\t\t\twas: " + body + "\n\t\t\t\tnow: " + newBody);
-		if (body == null) {
-			System.out.println(ast);
-			if (ast.toString().contains("lookupPackage")) {
-				getClass();			// XXX
-			}
+		if ("OclElement::unqualified_env_Class() : lookup::LookupEnvironment[1]".equals(ast.toString())) {
+			getClass();		// XXX
 		}
 		super.setBody(newBody);
+	}
+
+	@Override
+	public void setCaught(boolean isCaught) {
+		System.out.println("caught = " + isCaught + " for " + ast);
+		if (isCaught) {
+			getClass();		// XXX
+		}
+		super.setCaught(isCaught);
 	}
 
 } //CGCachedOperationImpl

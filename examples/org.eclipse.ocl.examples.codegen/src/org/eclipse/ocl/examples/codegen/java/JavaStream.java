@@ -265,7 +265,7 @@ public class JavaStream
 				s.append(string);
 			}
 			else {
-				if (string.contains("CACHE_Visitable_lookupPackage")) {
+				if (string.contains("getCachedEvaluationResult")) {
 					getClass();		// XXX
 				}
 				int sLength = s.length();

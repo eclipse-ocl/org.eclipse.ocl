@@ -13,6 +13,7 @@ package org.eclipse.ocl.examples.codegen.calling;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperationCallExp;
@@ -62,6 +63,9 @@ public abstract class AbstractCachedOperationCallingConvention extends Constrain
 	}
 
 	protected void doCachedOperationEvaluate(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+		if ("_classescs2as_qvtm_qvtcas::classescs2as_qvtm_qvtcas.CACHED_OP_OclElement_c_c_unqualified_env_Class_o_e_32_c_32_lookup_c_c_LookupEnvironment_91_1_93($metamodel$::OclElement) : 'http://cs2as/tests/example2/env/1.0'::LookupEnvironment".equals(cgOperation.toString())) {
+			getClass();		// XXX
+		}
 		GlobalNameManager globalNameManager = cg2javaVisitor.getCodeGenerator().getGlobalNameManager();
 		List<@NonNull CGParameter> cgParameters = ClassUtil.nullFree(cgOperation.getParameters());
 		Boolean isRequiredReturn = cgOperation.isRequired() ? true : null;
@@ -179,5 +183,19 @@ public abstract class AbstractCachedOperationCallingConvention extends Constrain
 	@Override
 	public boolean needsNestedClass() {
 		return false;
+	}
+
+	@Override
+	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGOperationCallExp cgOperationCallExp) {
+		CGCachedOperationCallExp cpCachedOperationCallExp = (CGCachedOperationCallExp)cgOperationCallExp;
+		List<CGValuedElement> cgArguments = cpCachedOperationCallExp.getCgArguments();
+		int iMax = cgArguments.size();
+		for (int i = 0; i < iMax; i++) {			// Avoid CME from rewrite
+			CGValuedElement cgArgument = cgArguments.get(i);
+			if (i == 0) {
+				boxingAnalyzer.rewriteAsGuarded(cgArgument, boxingAnalyzer.isSafe(cpCachedOperationCallExp), "source for '" + cpCachedOperationCallExp.getReferredOperation() + "'");
+			}
+			boxingAnalyzer.rewriteAsBoxed(cgArgument);
+		}
 	}
 }
