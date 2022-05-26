@@ -35,6 +35,7 @@ import org.eclipse.ocl.examples.codegen.calling.ExecutorOppositePropertyCallingC
 import org.eclipse.ocl.examples.codegen.calling.ExecutorPropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.ForeignOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.ForeignPropertyCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.InlinedOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.LibraryOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.LibraryPropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.NativeOperationCallingConvention;
@@ -177,7 +178,7 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 	}
 
 	@Override
-	public @NonNull OperationCallingConvention getCallingConvention(@NonNull Operation asOperation, boolean isFinal) {
+	public @NonNull OperationCallingConvention getCallingConvention(@NonNull Operation asOperation, boolean requireFinal) {
 		LibraryOperation libraryOperation = (LibraryOperation)metamodelManager.getImplementation(asOperation);
 		if (BuiltInOperationCallingConvention.INSTANCE.canHandle(libraryOperation)) {
 			return BuiltInOperationCallingConvention.INSTANCE;
@@ -201,7 +202,10 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 			throw new UnsupportedOperationException();
 		}
 		if (libraryOperation instanceof ConstrainedOperation) {
-			if ("OclElement::_unqualified_env_Class(OclElement[1]) : lookup::LookupEnvironment[1]".equals(libraryOperation.toString())) {
+			if ("classes::Visitable::_lookupUnqualifiedPackage(String[1]) : classes::Package[?]".equals(libraryOperation.toString())) {
+				getClass();			// XXX
+			}
+			if ("classes::Package::_unqualified_env_Class(OclElement[1]) : lookup::LookupEnvironment[1]".equals(libraryOperation.toString())) {
 				getClass();			// XXX
 			}
 			org.eclipse.ocl.pivot.Package asPackage = asOperation.getOwningClass().getOwningPackage();
@@ -210,22 +214,23 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 			}
 			else {
 				FinalAnalysis finalAnalysis = metamodelManager.getFinalAnalysis();
-				if (!isFinal) {
+				if (!requireFinal) {
 					Iterable<@NonNull Operation> asOverrides = finalAnalysis.getOverrides(asOperation);
 					if (Iterables.size(asOverrides) > 1) {
 						return VirtualOperationCallingConvention.INSTANCE;		// Need a polymorphic dispatcher
 					}
-				}
-				LanguageExpression bodyExpression = asOperation.getBodyExpression();
-				if (bodyExpression != null) {
-				//	Set<@NonNull Operation> referencedFinalOperations = new HashSet<>();			// XXX Too soon - not all CG operations visible yet
-				//	getTransitivelyReferencedFinalOperations(referencedFinalOperations, finalAnalysis, bodyExpression);
-				//	if (!referencedFinalOperations.contains(asOperation)) {
-				//		Iterable<@NonNull Operation> referencedNonFinalOperations = getReferencedNonFinalOperations(finalAnalysis, bodyExpression);
-				//		if (referencedNonFinalOperations == null) {			// simple heavy heuristic
-				//		// XXX	return InlinedOperationCallingConvention.INSTANCE;
-				//		}
-				//	}
+					LanguageExpression bodyExpression = asOperation.getBodyExpression();
+					if (bodyExpression != null) {
+						Set<@NonNull Operation> referencedFinalOperations = new HashSet<>();
+						getTransitivelyReferencedFinalOperations(referencedFinalOperations, finalAnalysis, bodyExpression);
+						if (!referencedFinalOperations.contains(asOperation)) {
+							Iterable<@NonNull Operation> referencedNonFinalOperations = getReferencedNonFinalOperations(finalAnalysis, bodyExpression);
+							if (referencedNonFinalOperations == null) {
+								// a simple heavy heuristic might avoid some unpleasant bloat
+								return InlinedOperationCallingConvention.INSTANCE;
+							}
+						}
+					}
 				}
 				return CachedOperationCallingConvention.INSTANCE;
 			}

@@ -265,7 +265,7 @@ public class JavaStream
 				s.append(string);
 			}
 			else {
-				if (string.contains("NumericPlusOperation")) {
+				if (string.contains("CACHE_Visitable_lookupPackage")) {
 					getClass();		// XXX
 				}
 				int sLength = s.length();

@@ -51,10 +51,10 @@ public interface CodeGenerator
 	@NonNull BoxedDescriptor getBoxedDescriptor(@NonNull ElementId elementId);
 
 	/**
-	 * Determine the calling convention appropriate to asOperation. If isFinal is false and asOperatin has overrides
-	 * a dynamic dispatching calling convention is retirned. Otherwise a direct calling convention.
+	 * Determine the calling convention appropriate to asOperation. If requireFinal is false and asOperation has overrides
+	 * a dynamic dispatching calling convention is returned. ... inline ... Otherwise a direct calling convention.
 	 */
-	@NonNull OperationCallingConvention getCallingConvention(@NonNull Operation asOperation, boolean isFinal);
+	@NonNull OperationCallingConvention getCallingConvention(@NonNull Operation asOperation, boolean requireFinal);
 
 	/**
 	 * Determine the calling convention appropriate to asProperty.

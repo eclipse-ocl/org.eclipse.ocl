@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
 
 /**
@@ -255,6 +256,19 @@ public class CGCachedOperationImpl extends CGOperationImpl implements CGCachedOp
 	@Override
 	public boolean isUnboxed() {
 		return false;
+	}
+
+	@Override
+	public void setBody(CGValuedElement newBody) {
+		//	System.out.println(this + "\n\tast = " + ast + "\n\tbody = " + newBody);
+	//	System.out.println(ast + "\n\t\t\t\twas: " + body + "\n\t\t\t\tnow: " + newBody);
+		if (body == null) {
+			System.out.println(ast);
+			if (ast.toString().contains("lookupPackage")) {
+				getClass();			// XXX
+			}
+		}
+		super.setBody(newBody);
 	}
 
 } //CGCachedOperationImpl

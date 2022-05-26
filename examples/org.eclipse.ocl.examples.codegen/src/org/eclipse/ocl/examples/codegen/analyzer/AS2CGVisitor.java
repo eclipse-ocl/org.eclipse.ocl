@@ -370,8 +370,8 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	 * Generate / share the CG declaration for asOperation.
 	 * @param asSourceType
 	 */
-	public @NonNull CGOperation generateOperationDeclaration(@Nullable Type asSourceType, @NonNull Operation asOperation, boolean isFinal) {	// XXX rationalize as generateOperationDeclaration with later createImplementation
-		if (!isFinal) {
+	public @NonNull CGOperation generateOperationDeclaration(@Nullable Type asSourceType, @NonNull Operation asOperation, boolean requireFinal) {	// XXX rationalize as generateOperationDeclaration with later createImplementation
+		if (!requireFinal) {
 			CGOperation cgVirtualOperation = analyzer.basicGetVirtualCGOperation(asOperation);
 			if (cgVirtualOperation != null) {
 				return cgVirtualOperation;
@@ -392,7 +392,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			}
 			NestedNameManager classNameManager = pushNameManager(cgClass);
 			try {
-				OperationCallingConvention callingConvention = context.getCallingConvention(asOperation, isFinal);
+				OperationCallingConvention callingConvention = context.getCallingConvention(asOperation, requireFinal);
 				cgOperation = callingConvention.createCGOperation(this, asSourceType, asOperation);
 				assert cgOperation.getAst() != null;
 				assert cgOperation.getCallingConvention() == callingConvention;
