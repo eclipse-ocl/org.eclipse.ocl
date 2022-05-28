@@ -26,7 +26,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
 
 /**
@@ -256,23 +255,6 @@ public class CGCachedOperationImpl extends CGOperationImpl implements CGCachedOp
 	@Override
 	public boolean isUnboxed() {
 		return false;
-	}
-
-	@Override
-	public void setBody(CGValuedElement newBody) {
-		if ("OclElement::unqualified_env_Class() : lookup::LookupEnvironment[1]".equals(ast.toString())) {
-			getClass();		// XXX
-		}
-		super.setBody(newBody);
-	}
-
-	@Override
-	public void setCaught(boolean isCaught) {
-		System.out.println("caught = " + isCaught + " for " + ast);
-		if (isCaught) {
-			getClass();		// XXX
-		}
-		super.setCaught(isCaught);
 	}
 
 } //CGCachedOperationImpl

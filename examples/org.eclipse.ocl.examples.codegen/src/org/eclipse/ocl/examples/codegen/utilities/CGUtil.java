@@ -301,6 +301,14 @@ public class CGUtil
 		return ClassUtil.nonNullState(cgProperty.getBody());
 	}
 
+	public static @NonNull CGValuedElement getBody(@NonNull CGCallable cgCallable) {
+		return ClassUtil.nonNullState(cgCallable.getBody());
+	}
+
+	public static @NonNull CGValuedElement getBody(@NonNull CGIterationCallExp cgElement) {
+		return ClassUtil.nonNullState(cgElement.getBody());
+	}
+
 	public static @NonNull Iterable<@NonNull CGClass> getClasses(@NonNull CGClass cgClass) {
 		return ClassUtil.nullFree(cgClass.getClasses());
 	}
@@ -311,6 +319,10 @@ public class CGUtil
 
 	public static @NonNull List<@NonNull CGClass> getClassesList(@NonNull CGClass cgClass) {
 		return ClassUtil.nullFree(cgClass.getClasses());
+	}
+
+	public static @NonNull Iterable<@NonNull CGIterator> getCoIterators(@NonNull CGIterationCallExp cgIterationCallExp) {
+		return ClassUtil.nullFree(cgIterationCallExp.getCoIterators());
 	}
 
 	public static @NonNull List<@NonNull CGIterator> getCoIteratorsList(@NonNull CGIterationCallExp cgIterationCallExp) {
@@ -366,6 +378,10 @@ public class CGUtil
 
 	public static @NonNull CGValuedElement getIn(@NonNull CGLetExp cgLetExp) {
 		return ClassUtil.nonNullState(cgLetExp.getIn());
+	}
+
+	public static @NonNull CGVariable getInit(@NonNull CGLetExp cgLetExp) {
+		return ClassUtil.nonNullState(cgLetExp.getInit());
 	}
 
 	public static @NonNull CGValuedElement getInit(@NonNull CGTuplePart cgTuplePart) {
