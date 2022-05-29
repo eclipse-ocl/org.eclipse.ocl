@@ -265,7 +265,7 @@ public class JavaStream
 				s.append(string);
 			}
 			else {
-				if (string.contains("getCachedEvaluationResult")) {
+				if (string.contains("oclContainer")) {
 					getClass();		// XXX
 				}
 				int sLength = s.length();

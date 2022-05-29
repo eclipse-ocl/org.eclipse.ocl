@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.analyzer;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCatchExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
@@ -35,7 +36,7 @@ import org.eclipse.ocl.pivot.Operation;
 
 /**
  * A FieldingAnalyzer identifies the necessary catches and throws to accommodate the alternative mechanisms
- * for 'returning' an invalid value. For which there are three possibilities and two representations.
+ * for 'returning' an invalid value, for which there are three possibilities and two representations.
  * <h4>Thrown Representation</h4>
  * Using the Java exception mechanism enables the invalid to pass through many intermediate AST nodes
  * without individual handling at each node. This form of 'return' is preferred but does not support passing
@@ -45,12 +46,12 @@ import org.eclipse.ocl.pivot.Operation;
  * Passing an OCL invalid value directly emulates the OCL semantics and enables a receiving AST node to process
  * the invalid value.
  * <h4>Valid</h4>
- * A 'return' that cannot be invalid is always valid and needs no conversion to caught or thrown since there
+ * A 'return' that cannot be invalid is always valid and needs no conversion to caught or thrown representations since there
  * is no invalid to 'return'.
  * <h3>Invalid Value</h3>
- * Whether caught or thrown the 'invalid' OCL return is an instanceof InvalidValueException making conversion
+ * Whether caught or thrown the 'invalid' OCL return is an instance of InvalidValueException making conversion
  * between the two representations straightforward. Really bad execution may result in arbitrary Java exceptions
- * that are may be left to propgate when we are confidemnt that they are not needed yet. Eventually these raw Java
+ * that may be left to propagate when we are confident that they are not needed yet. Eventually these raw Java
  * exceptions are wrapped in an InvalidValueException.
  * <p>
  * <h2>Caught or Thrown Consumer Requirements</h2>
@@ -60,16 +61,18 @@ import org.eclipse.ocl.pivot.Operation;
  * A thrown value must be converted to caught when a recipient requires the caught representation.
  * <h4>Final result</h4>
  * Outer environments such as EMF's eGet() do not expect Java exceptions to occur, but if they do then there is a
- * problem for which an exception is consistent. Conversely EMF's validate() used to fail globally is a single
- * constraint crashes. Here OCL must ensure that all exceptions are caught and reported as constraint failures.
- * The fragility of EMF's validate
- * has improved recently.
+ * problem for which an exception is consistent. Conversely EMF's validate() used to fail globally if a single
+ * constraint crashes. Here OCL must ensure that all exceptions are caught and converted to constraint failures.
+ * The fragility of EMF's validate has improved recently.
  * <br>
  * Outer environments such as a QVT mapping may pursue the policy that any failure is catastrophic and so require
  * that all invalid values are thrown out as exceptions.
  * <h4>Validating operations</h4>
  * Operations that may convert an invalid input into a not-invalid output, such as oclIsInvalid() or and()/or()/implies()
  * require that invalid inputs use the caught representation.
+ * <h4>Invalidating operations</h4>
+ * Operations that may return an invalid output even though all inputs are valid, such as at() or and()/or()/implies()
+ * throw their invalid result.
  * <h4>Null values</h4>
  * Whether a null value is acceptable depends on the recipent. Property calls treat a null source as an invalid value.
  * Operation calls that lack an OclVoid overload treat a null source as an invalid value.
@@ -78,9 +81,6 @@ import org.eclipse.ocl.pivot.Operation;
  * The result of one computation my be passed to further computations by caching the result in the let variable.
  * The cached value must satisfy the requirements of each recipient, thus if any recipient is a validating operation
  * the let variable must use the caught representation, since a thrown value would bypass the caching.
- * <h3>Optimization</h3>
- * The init input of a let variable does not need to be caught if an invalid value is guaranteed to make the in input
- * invalid as well; a crash on the in input can be propagated without further ado.
  * <p>
  * <h2>Algorithm</h2>
  * <p>
@@ -127,6 +127,9 @@ public class FieldingAnalyzer
 	 * and assumed that only dodgy external accesses could cause invalid; dodgy internal accesses are handled internally.
 	 *
 	 * However invalid can arise despite all external variables being valid; divide-by-zero / index-out-of-bounds etc.
+	 *
+	 * An optimization attempted to propagate an invalid let variable init provided the corresponding let-in
+	 * would return it. This uses a lazy rather than mandatory catch on the let-init. Might be worth another go.
 	 */
 	/**
 	 * Perform the tree descent/ascent returning IS_CAUGHT / IS_THROWN / IS_VALID according to the mechanism by
@@ -165,8 +168,9 @@ public class FieldingAnalyzer
 
 		@Override
 		public @NonNull ReturnState visit(@NonNull CGElement cgElement) {
+			EObject oldEContainer = cgElement.eContainer();
 			ReturnState returnState = cgElement.accept(this);
-			if (cgElement instanceof CGValuedElement) {
+			if ((cgElement instanceof CGValuedElement) && (cgElement.eContainer() == oldEContainer)) {	// skip if already wrapped
 				CGValuedElement cgValuedElement = (CGValuedElement)cgElement;
 				if (!cgValuedElement.isNonInvalid()) {
 					if (requiredReturn == ReturnState.IS_CAUGHT) {
@@ -212,6 +216,12 @@ public class FieldingAnalyzer
 		public @NonNull ReturnState visitCGConstantExp(@NonNull CGConstantExp object) {
 			return object.isNonInvalid() ? ReturnState.IS_VALID : ReturnState.IS_CAUGHT;
 		}
+
+		// The mapping of exception to false is handled by OCLinEcoreCG2JavaVisitor.generateValidatorBody
+		// once there is less CG2Java magic a mustBeCaught should enforced here.
+	/*	public @NonNull ReturnState visitCGConstraint(@NonNull CGConstraint cgConstraint) {
+			return super.visitCGConstraint(object);
+		}  */
 
 		/**
 		 * By default the result IS_THROWN if any child IS_THROWN else IS_CAUGHT if any child IS_CAUGHT else IS_VALID.
@@ -259,17 +269,9 @@ public class FieldingAnalyzer
 			}
 			AnalysisVisitor bodyAnalysisVisitor = asIteration.isIsValidating() ? context.mustBeCaught : context.mayBeThrown;
 			ReturnState returnState = bodyAnalysisVisitor.visit(CGUtil.getBody(cgElement));
-		/*	if (asIteration.isIsInvalidating()) {			// Explicitly may-be-invalid result
-				return IS_THROWN;
-			}
-			else */ // if (asIteration.isIsValidating()) {		// Explicitly must be caught input
-		//		return requiredReturn;
-		//	}
-		//	else {											// Default could be accidentally bad Java
-		//		return ReturnState.IS_THROWN;
-		//	}
-			cgElement.setCaught(returnState.isCaught());
-			return returnState;
+			// Although individual body evaluations may be caught and accumulated, the accumularedc result is thrown.
+			cgElement.setCaught(false);
+			return returnState == ReturnState.IS_VALID ? ReturnState.IS_VALID : ReturnState.IS_THROWN;
 		}
 
 		@Override
@@ -282,10 +284,12 @@ public class FieldingAnalyzer
 
 		@Override
 		public @NonNull ReturnState visitCGLetExp(@NonNull CGLetExp cgLetExp) {
-			context.mustBeCaught.visit(CGUtil.getInit(cgLetExp));		// let will have to be caught anyway.
-			ReturnState returnState = visit(CGUtil.getIn(cgLetExp));
-			cgLetExp.setCaught(returnState.isCaught());
-			return returnState;
+			CGVariable cgVariable = CGUtil.getInit(cgLetExp);
+			ReturnState initReturnState = context.mustBeCaught.visit(CGUtil.getInit(cgVariable));		// let will have to be caught anyway.
+			cgVariable.setCaught(initReturnState.isCaught());
+			ReturnState inReturnState = visit(CGUtil.getIn(cgLetExp));
+			cgLetExp.setCaught(inReturnState.isCaught());
+			return inReturnState;
 		}
 
 		@Override
@@ -329,7 +333,7 @@ public class FieldingAnalyzer
 				returnState = ReturnState.IS_THROWN;
 			}
 			cgOperationCallExp.setCaught(returnState.isCaught());
-			return returnState;
+			return returnState;								// ??? simplify like IterateExp
 		}
 
 		@Override
@@ -366,7 +370,7 @@ public class FieldingAnalyzer
 					context.insertThrow(cgVariableExp);
 				}
 			}
-			cgVariableExp.setCaught(requiredReturn.isCaught());
+			cgVariableExp.setCaught(cgVariable.isCaught());
 			return requiredReturn;
 		}
 	}

@@ -122,6 +122,9 @@ public class NameResolution
 
 	public void addCGElement(@NonNull CGValuedElement cgElement) {
 		assert !inhibitNameResolution || (nameManager instanceof GlobalNameManager);
+		if (String.valueOf(primaryElement).contains("oclContainer")) {
+			getClass();		// XXX
+		}
 		List<@NonNull CGValuedElement> cgElements2 = cgElements;
 		if (cgElements2 == null) {
 			cgElements = cgElements2 = new ArrayList<>();

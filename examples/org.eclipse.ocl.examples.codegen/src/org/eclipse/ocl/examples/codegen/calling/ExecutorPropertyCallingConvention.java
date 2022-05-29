@@ -68,7 +68,7 @@ public class ExecutorPropertyCallingConvention extends AbstractPropertyCallingCo
 		analyzer.addGlobal(cgPropertyId);
 		boolean isRequired = asProperty.isIsRequired();
 		Method jMethod = UnboxedExplicitNavigationProperty.CREATE_METHOD;
-		NativeOperationCallingConvention nativeOperationCallingConvention = NativeOperationCallingConvention.INSTANCE;
+		OperationCallingConvention nativeOperationCallingConvention = SupportOperationCallingConvention.INSTANCE;
 		CGNativeOperationCallExp cgNativeOperationCallExp = analyzer.createCGNativeOperationCallExp(jMethod, nativeOperationCallingConvention);
 		cgNativeOperationCallExp.getCgArguments().add(analyzer.createCGConstantExp(cgPropertyId));
 		cgNativeOperationCallExp.setTypeId(analyzer.getCGTypeId(JavaConstants.UNBOXED_EXPLICIT_NAVIGATION_PROPERTY_TYPE_ID));

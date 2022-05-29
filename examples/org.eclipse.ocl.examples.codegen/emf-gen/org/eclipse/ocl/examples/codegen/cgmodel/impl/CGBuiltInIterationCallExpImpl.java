@@ -254,11 +254,11 @@ public class CGBuiltInIterationCallExpImpl extends CGIterationCallExpImpl implem
 
 	/**
 	 * {@inheritDoc}
-	 * @generated
+	 * @generated NOT XXX
 	 */
 	@Override
 	public void setCaught(boolean isCaught) {
-		assert !isCaught;
+	//	assert !isCaught;		// test_cg_tuple_access uses a invalitating any()
 	}
 
 	/**

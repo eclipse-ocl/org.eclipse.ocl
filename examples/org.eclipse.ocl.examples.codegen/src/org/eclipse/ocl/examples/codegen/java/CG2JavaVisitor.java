@@ -2292,6 +2292,15 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 				js.append(";\n");
 				js.popIndentation();
 				js.append("}\n");
+				js.appendDeclaration(cgThrowExp);
+				js.append(" = ");
+				js.appendClassCast(cgThrowExp, new SubStream() {
+					@Override
+					public void append() {
+						js.appendValueName(cgSource);
+					}
+				});
+				js.append(";\n");
 			}
 		}
 		return true;
