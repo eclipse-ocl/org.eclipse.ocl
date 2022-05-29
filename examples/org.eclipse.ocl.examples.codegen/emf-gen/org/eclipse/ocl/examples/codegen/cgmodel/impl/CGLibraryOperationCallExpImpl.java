@@ -215,7 +215,7 @@ public class CGLibraryOperationCallExpImpl extends CGOperationCallExpImpl implem
 	 * @generated NOT XXX
 	 */
 	@Override
-	public boolean isNonInvalid() {
+	public boolean isNonInvalid() {			// XXX more cases e.g.invalidValue
 		if (referredOperation == null) {
 			return false;
 		}
@@ -235,7 +235,7 @@ public class CGLibraryOperationCallExpImpl extends CGOperationCallExpImpl implem
 				// normal use case - nonInvalid if all inputs nonInvalid
 			}
 		}
-		for (@NonNull CGValuedElement argument : ClassUtil.nullFree(getCgArguments())) {
+		for (@NonNull CGValuedElement argument : ClassUtil.nullFree(getCgArguments())) {		// Need to redirect to operation implementation for e.g. not() on a constant
 			if (!argument.isNonNull() || !argument.isNonInvalid()) {
 				return false;
 			}

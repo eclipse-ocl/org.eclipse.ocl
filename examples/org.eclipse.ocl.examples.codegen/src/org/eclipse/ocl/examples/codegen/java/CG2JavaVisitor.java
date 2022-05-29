@@ -1080,7 +1080,23 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 			js.append("try {\n");
 			js.pushIndentation(null);
 			if (!js.appendLocalStatements(cgSource)) {
-				return false;
+				js.popIndentation();
+				js.append("} catch (");				// FIXME it would be nice to tidy this - occurs for overt invalid return but e.g. testBooleanNot lacks not invalid synthesis
+				js.appendClassReference(null, Throwable.class);
+				js.append(" ");
+				js.append(thrownName);
+				js.append(") {\n");
+				js.pushIndentation(null);
+				js.appendValueName(cgCatchExp);
+				js.append(" = ");
+				js.append(thrownName);
+				js.append(";\n");
+			//	js.append("throw ");
+			//	js.append(thrownName);
+			//	js.append(";\n");
+				js.popIndentation();
+				js.append("}\n");
+				return true;
 			}
 			js.appendValueName(cgCatchExp);
 			js.append(" = ");

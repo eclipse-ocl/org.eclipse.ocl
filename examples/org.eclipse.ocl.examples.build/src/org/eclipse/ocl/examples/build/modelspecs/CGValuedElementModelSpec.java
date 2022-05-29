@@ -594,7 +594,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 		};
 
 		public static MethodSpec isCaught = new MyMethodSpec(CGValuedElement.class, "boolean isCaught()", null,
-				"Returns true if any exception associated with this value has been caught and consequently the value may be an InvalidValueException.\nReturns true if any exception has been thrown.")
+				"Returns true if any exception associated with this value has been caught and consequently the value may be an InvalidValueException.\nThe generated code must therefore use Object to accommodate a valid or invalid value.")
 		{
 			@Override
 			protected @Nullable String getBody(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
