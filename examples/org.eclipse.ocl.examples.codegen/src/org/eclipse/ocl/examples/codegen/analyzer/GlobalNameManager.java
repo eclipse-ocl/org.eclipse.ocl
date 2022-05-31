@@ -302,6 +302,27 @@ public class GlobalNameManager extends NameManager
 	}
 
 	/**
+	 * Declare that cgElement must eventually have a distinct name that can default to its natural value once all other
+	 * name preferences have been satisfied. This is the normal form of name resolution.
+	 */
+	public @NonNull NameResolution declareLazyName(@NonNull CGValuedElement cgElement) {		// XXX redundant
+		NameResolution nameResolution = cgElement.basicGetNameResolution();
+		if (nameResolution != null) {
+			return nameResolution;
+		}
+		CGValuedElement cgNamedValue = cgElement.getNamedValue();
+		nameResolution = cgNamedValue.basicGetNameResolution();
+		if (nameResolution == null) {
+			String nameHint = helper.getNameHint(cgNamedValue);
+			nameResolution = new NameResolution(this, cgNamedValue, nameHint);
+		}
+		if (cgElement != cgNamedValue) {
+			nameResolution.addCGElement(cgElement);
+		}
+		return nameResolution;
+	}
+
+	/**
 	 * Declare that cgElement has a name which should immediately equate to nameHint.
 	 * This is typically used to ensure that reserved Java names are used only for their Java purpose.
 	 */
@@ -431,11 +452,6 @@ public class GlobalNameManager extends NameManager
 
 	public @NonNull NameResolution getInstanceNameResolution() {
 		return instanceName;
-	}
-
-	@Override
-	protected @NonNull String getLazyNameHint(@NonNull CGValuedElement cgNamedValue) {
-		return helper.getNameHint(cgNamedValue);
 	}
 
 	public @NonNull String getModelManagerName() {
