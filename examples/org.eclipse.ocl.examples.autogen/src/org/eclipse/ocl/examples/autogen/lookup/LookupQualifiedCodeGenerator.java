@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.autogen.lookup;
 
-import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
@@ -56,9 +55,7 @@ public class LookupQualifiedCodeGenerator extends LookupVisitorsCodeGenerator {
 	}
 
 	@Override
-	protected @NonNull AutoCG2JavaVisitor createCG2JavaVisitor(
-			@NonNull CGPackage cgPackage,
-			@Nullable List<CGValuedElement> sortedGlobals) {
+	protected @NonNull AutoCG2JavaVisitor createCG2JavaVisitor(@NonNull CGPackage cgPackage, @Nullable Iterable<@NonNull CGValuedElement> sortedGlobals) {
 		return new LookupQualifiedCG2JavaVisitor(this, cgPackage, sortedGlobals);
 	}
 

@@ -268,6 +268,7 @@ public abstract class NameManager
 
 		protected @NonNull String allocateUniqueName(@NonNull String nameHint, @NonNull Object anObject) {
 			if (nameHint == NameResolution.NOT_NEEDED) {
+				assert debugAllocatedName(nameHint);
 				return nameHint;
 			}
 			String validHint = getValidJavaIdentifier(nameHint, false, anObject);
@@ -277,13 +278,12 @@ public abstract class NameManager
 				if (anObject != NOT_AN_OBJECT) {
 					Object oldElement = name2object.get(validHint);
 					if (oldElement == null) {									// New allocation
-						if ("create".equals(validHint)) {
-							getClass();			// XXX
-						}
 						name2object.put(validHint, anObject);
+						assert debugAllocatedName(validHint);
 						return validHint;
 					}
 					else if (oldElement == anObject) {							// Re-allocation of object
+						assert debugAllocatedName(validHint);
 						return validHint;
 					}
 					else {
@@ -292,6 +292,7 @@ public abstract class NameManager
 				}
 				else {
 					if (!name2object.containsKey(validHint)) {
+						assert debugAllocatedName(validHint);
 						return validHint;
 					}
 				}
@@ -309,9 +310,17 @@ public abstract class NameManager
 					if ("self_0".equals(attempt)) {
 						getClass();			// XXX
 					}
+					assert debugAllocatedName(attempt);
 					return attempt;
 				}
 			}
+		}
+
+		private boolean debugAllocatedName(@NonNull String name) {
+			if (name.startsWith("create")) {
+				getClass();			// XXX
+			}
+			return true;
 		}
 
 		public boolean hasChildren() {
@@ -425,7 +434,7 @@ public abstract class NameManager
 	 * Declare that cgElement must eventually have a distinct name that can default to its natural value once all other
 	 * name preferences have been satisfied. This is the normal form of name resolution.
 	 */
-	public @NonNull NameResolution declareLazyName(@NonNull CGValuedElement cgElement) {
+	public @NonNull NameResolution declareLazyName(@NonNull CGValuedElement cgElement) {		// XXX redundant
 		NameResolution nameResolution = cgElement.basicGetNameResolution();
 		if (nameResolution != null) {
 			return nameResolution;

@@ -58,13 +58,16 @@ public class NestedNameManager extends NameManager
 {
 	protected final @NonNull JavaCodeGenerator codeGenerator;
 	protected final @NonNull CodeGenAnalyzer analyzer;
-	protected final @NonNull GlobalNameManager globalNameManager;
 	protected final @NonNull NameManager parent;
 	protected final @NonNull CGNamedElement cgScope;
 	protected final @NonNull NamedElement asScope;
 	protected final @NonNull Type asType;
 	protected final boolean isStatic;
 
+	/**
+	 * Names that must be used within a nested namespace. Typically these are Ecore assigned property/operation/parameter
+	 * names whose spelling is not adjustable.
+	 */
 	private @Nullable List<@NonNull NameResolution> reservedNameResolutions = null;
 
 	/**
@@ -73,7 +76,7 @@ public class NestedNameManager extends NameManager
 	private @Nullable Context context = null;		// Non-null once value name allocation is permitted.
 
 	/**
-	 * Additional variants of resolvedName for which further unique names are required.
+	 * Additional variants of an element's resolvedName for which further unique names are required.
 	 */
 	private @NonNull Map<@NonNull CGNamedElement, @Nullable Map<@NonNull NameVariant, @Nullable String>> element2nameVariant2name = new HashMap<>();
 
@@ -96,7 +99,6 @@ public class NestedNameManager extends NameManager
 		super(parent, parent.helper);
 		this.codeGenerator = codeGenerator;
 		this.analyzer = codeGenerator.getAnalyzer();
-		this.globalNameManager = codeGenerator.getGlobalNameManager();
 		this.parent = parent;
 		this.cgScope = cgScope;
 		this.asScope = CGUtil.getAST(cgScope);
@@ -131,7 +133,10 @@ public class NestedNameManager extends NameManager
 		assert old == null;
 	}
 
-	public void assignExtraNames(@NonNull Context context) {
+	/**
+	 * Assign all the secondary names that prefix a primary name.
+	 */
+	protected void assignExtraNames(@NonNull Context context) {
 		for (Entry<@NonNull CGNamedElement, @Nullable Map<@NonNull NameVariant, @Nullable String>> entry1 : element2nameVariant2name.entrySet()) {
 			Map<@NonNull NameVariant, @Nullable String> nameVariant2name = entry1.getValue();
 			if (nameVariant2name != null) {
@@ -173,6 +178,9 @@ public class NestedNameManager extends NameManager
 		assignNestedNames(nameManager2namedElements);
 	}
 
+	/**
+	 * Assign all the reserved names (first).
+	 */
 	protected void assignReservedNames(@NonNull Context context) {
 		if (reservedNameResolutions != null) {
 			for (@NonNull NameResolution nameResolution : reservedNameResolutions) {
@@ -262,18 +270,18 @@ public class NestedNameManager extends NameManager
 		CGFinalVariable cgVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();
 		cgVariable.setAst(asVariable);
 		cgVariable.setTypeId(analyzer.getCGTypeId(asVariable.getTypeId()));
-		declarePreferredName(cgVariable);
+//		declarePreferredName(cgVariable);
 		addVariable(asVariable, cgVariable);
 		return cgVariable;
 	}
 
 	public @NonNull CGFinalVariable createCGVariable(@NonNull CGValuedElement cgInit) {
-		NameResolution nameResolution = getNameResolution(cgInit);
+//		NameResolution nameResolution = getNameResolution(cgInit);
 		CGFinalVariable cgVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();
 		cgVariable.setAst(cgInit.getAst());
 		cgVariable.setTypeId(cgInit.getTypeId());
 		cgVariable.setInit(cgInit);
-		nameResolution.addCGElement(cgVariable);
+//		nameResolution.addCGElement(cgVariable);
 		return cgVariable;
 	}
 
@@ -556,7 +564,7 @@ public class NestedNameManager extends NameManager
 			cgIterator = CGModelFactory.eINSTANCE.createCGIterator();
 			cgIterator.setAst(asVariable);
 			cgIterator.setTypeId(analyzer.getCGTypeId(TypeId.OCL_VOID));			// FIXME Java-specific type of polymorphic operation parameter
-			declarePreferredName(cgIterator);
+//			declarePreferredName(cgIterator);
 			addVariable(asVariable, cgIterator);
 		}
 		return cgIterator;
@@ -606,7 +614,7 @@ public class NestedNameManager extends NameManager
 				//	String name = globalNameManager.helper.getNameHint(anObject);
 				//	cgValue.setName(name);
 				//	cgValue.setValueName(name);
-				declarePreferredName(cgParameter);
+//				declarePreferredName(cgParameter);
 
 
 			//	NameResolution nameResolution = cgParameter.getNameResolution();
@@ -621,7 +629,7 @@ public class NestedNameManager extends NameManager
 			//	assert is-ecore-parameter
 			//	cgParameter.setName(explicitName);
 			//	cgParameter.setValueName(explicitName);
-				/*NameResolution nameResolution =*/ declareReservedName(cgParameter, explicitName);
+//				/*NameResolution nameResolution =*/ declareReservedName(cgParameter, explicitName);
 			//	nameResolution.setResolvedName(explicitName);
 			}
 			//			cgParameter.setTypeId(analyzer.getTypeId(aParameter.getTypeId()));
@@ -651,6 +659,10 @@ public class NestedNameManager extends NameManager
 		}
 		return cgParameter;
 	} */
+
+	public @NonNull NameManager getParent() {
+		return parent;
+	}
 
 	public @NonNull CGVariable getQualifiedThisVariable() {
 		if (asScope != asType) {

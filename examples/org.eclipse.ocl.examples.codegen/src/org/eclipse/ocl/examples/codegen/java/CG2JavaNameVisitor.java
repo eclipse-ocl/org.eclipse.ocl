@@ -62,7 +62,7 @@ public class CG2JavaNameVisitor extends AbstractExtendingCGModelVisitor<@Nullabl
 	}
 
 	protected @NonNull NestedNameManager pushNameManager(@NonNull CGNamedElement cgNamedElement) {
-		NestedNameManager nameManager = globalNameManager.findNameManager(cgNamedElement);
+		NestedNameManager nameManager = globalNameManager.getNestedNameManager(cgNamedElement);
 		currentNameManager = nameManager;
 		nameManagerStack.push(nameManager);
 		return nameManager;
@@ -148,19 +148,18 @@ public class CG2JavaNameVisitor extends AbstractExtendingCGModelVisitor<@Nullabl
 		NestedNameManager outerNameManager = getNameManager();
 		if (cgSource != null) {
 			if (!cgSource.isGlobal()) {
-				globalNameManager.declareScope(cgSource, outerNameManager);		// source must be declared in outer namespace
+				globalNameManager.addNameManager(cgSource, outerNameManager);		// source must be declared in outer namespace
 			}
 			cgSource.accept(this);
 		}
-		globalNameManager.declareScope(cgIterationCallExp, outerNameManager);	// result must be declared in outer namespace
+		globalNameManager.addNameManager(cgIterationCallExp, outerNameManager);	// result must be declared in outer namespace
 		outerNameManager.addNameVariant(cgIterationCallExp, context.getBODY_NameVariant());
 		outerNameManager.addNameVariant(cgIterationCallExp, context.getIMPL_NameVariant());
 		outerNameManager.addNameVariant(cgIterationCallExp, context.getMGR_NameVariant());
 		outerNameManager.addNameVariant(cgIterationCallExp, context.getTYPE_NameVariant());
 		NestedNameManager innerNameManager;
 		if (iterationHelper == null) {					// No helper nests iterators/accumulators in a nested function.
-			pushNameManager(cgIterationCallExp);
-			innerNameManager = getNameManager();
+			innerNameManager = pushNameManager(cgIterationCallExp);
 		}
 		else {
 			innerNameManager = outerNameManager;
@@ -172,13 +171,12 @@ public class CG2JavaNameVisitor extends AbstractExtendingCGModelVisitor<@Nullabl
 		if (cgIterationCallExp instanceof CGBuiltInIterationCallExp) {
 			CGIterator cgAccumulator = ((CGBuiltInIterationCallExp)cgIterationCallExp).getAccumulator();
 			if (cgAccumulator != null) {
-				globalNameManager.declareScope(cgAccumulator, innerNameManager);
+				globalNameManager.addNameManager(cgAccumulator, innerNameManager);
 				cgAccumulator.accept(this);
 			}
 		}
 		if (iterationHelper != null) {					// No helper only has a nested scope for the body.
-			pushNameManager(cgIterationCallExp);
-			innerNameManager = getNameManager();
+			innerNameManager = pushNameManager(cgIterationCallExp);
 		}
 		try {
 			CGValuedElement cgBody = cgIterationCallExp.getBody();

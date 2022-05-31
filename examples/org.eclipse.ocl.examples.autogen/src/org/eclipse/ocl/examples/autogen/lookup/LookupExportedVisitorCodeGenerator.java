@@ -66,9 +66,7 @@ public class LookupExportedVisitorCodeGenerator extends LookupVisitorsCodeGenera
 	}
 
 	@Override
-	protected @NonNull AutoCG2JavaVisitor createCG2JavaVisitor(
-			@NonNull CGPackage cgPackage,
-			@Nullable List<CGValuedElement> sortedGlobals) {
+	protected @NonNull AutoCG2JavaVisitor createCG2JavaVisitor(@NonNull CGPackage cgPackage, @Nullable Iterable<@NonNull CGValuedElement> sortedGlobals) {
 		return new LookupExportedCG2JavaVisitor(this, cgPackage, sortedGlobals);
 	}
 

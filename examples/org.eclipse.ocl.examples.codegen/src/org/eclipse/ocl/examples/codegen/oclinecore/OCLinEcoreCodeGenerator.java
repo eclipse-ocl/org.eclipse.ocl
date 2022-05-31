@@ -564,8 +564,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 			CGPackage cgPackage = (CGPackage) ClassUtil.nonNullState(asPackage.accept(as2cgVisitor));
 			as2cgVisitor.freeze();
 			optimize(cgPackage);
-			Iterable<@NonNull CGValuedElement> sortedGlobals = prepareGlobals();		// XXX support globals within cgRootClass
-			resolveNames(sortedGlobals, cgPackage);
+			Iterable<@NonNull CGValuedElement> sortedGlobals = pregenerate(cgPackage);
 			OCLinEcoreCG2JavaVisitor cg2java = new OCLinEcoreCG2JavaVisitor(this, genPackage, cgPackage);
 			Map<@NonNull String, @NonNull FeatureBody> results = cg2java.generateBodies();
 			for (Map.Entry<@NonNull String, @NonNull FeatureBody> entry : results.entrySet()) {

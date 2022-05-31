@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.autogen.lookup;
 
-import java.util.List;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
@@ -23,7 +21,7 @@ public class LookupExportedCG2JavaVisitor extends LookupVisitorsCG2JavaVisitor {
 	public LookupExportedCG2JavaVisitor(
 			@NonNull LookupExportedVisitorCodeGenerator codeGenerator,
 			@NonNull CGPackage cgPackage,
-			@Nullable List<CGValuedElement> sortedGlobals) {
+			@Nullable Iterable<@NonNull CGValuedElement> sortedGlobals) {
 		super(codeGenerator, cgPackage, sortedGlobals);
 	}
 

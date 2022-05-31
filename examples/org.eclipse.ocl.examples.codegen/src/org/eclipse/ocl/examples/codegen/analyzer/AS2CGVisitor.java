@@ -320,7 +320,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 					if (!asIteration.isIsValidating()) {
 						cgAccumulator.setNonInvalid();
 					}
-					nameManager.declarePreferredName(cgAccumulator);
+//					nameManager.declarePreferredName(cgAccumulator);
 					cgBuiltInIterationCallExp.setAccumulator(cgAccumulator);
 				}
 			}
@@ -396,7 +396,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 				cgOperation = callingConvention.createCGOperation(this, asSourceType, asOperation);
 				assert cgOperation.getAst() != null;
 				assert cgOperation.getCallingConvention() == callingConvention;
-				classNameManager.declarePreferredName(cgOperation);
+//				classNameManager.declarePreferredName(cgOperation);
 				pushNameManager(cgOperation);
 				ExpressionInOCL asExpressionInOCL = null;
 				LanguageExpression asSpecification = asOperation.getBodyExpression();
@@ -452,7 +452,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			NestedNameManager outerNameManager = getNameManager();
 			assert outerNameManager != null;
 			NestedNameManager innerNameManager = pushNameManager(cgProperty);
-			outerNameManager.declarePreferredName(cgProperty);
+//			outerNameManager.declarePreferredName(cgProperty);
 			ExpressionInOCL query = null;
 			LanguageExpression specification = asProperty.getOwnedExpression();
 			if (specification != null) {
@@ -681,10 +681,11 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	}
 
 	public @NonNull NestedNameManager pushNameManager(@NonNull CGNamedElement cgNamedElement) {
-		NestedNameManager nameManager = globalNameManager.basicGetNameManager(cgNamedElement);
-		if (nameManager == null) {
+		NestedNameManager nameManager = globalNameManager.basicGetNestedNameManager(cgNamedElement);
+		if (nameManager == null) {			//
 			nameManager = globalNameManager.createNestedNameManager(currentNameManager, cgNamedElement);
 		}
+		else {}			// First push for operation declaration then another push for operation body
 		currentNameManager = nameManager;
 		nameManagerStack.push(nameManager);
 		return nameManager;

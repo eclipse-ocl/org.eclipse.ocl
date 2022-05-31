@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.autogen.lookup;
 
-import java.util.List;
-
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -24,7 +22,7 @@ public class LookupUnqualifiedCG2JavaVisitor extends LookupVisitorsCG2JavaVisito
 	public LookupUnqualifiedCG2JavaVisitor(
 			@NonNull LookupUnqualifiedCodeGenerator codeGenerator,
 			@NonNull CGPackage cgPackage,
-			@Nullable List<CGValuedElement> sortedGlobals) {
+			@Nullable Iterable<@NonNull CGValuedElement> sortedGlobals) {
 		super(codeGenerator, cgPackage, sortedGlobals);
 	}
 

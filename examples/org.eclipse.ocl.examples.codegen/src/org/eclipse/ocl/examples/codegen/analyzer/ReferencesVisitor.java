@@ -32,12 +32,14 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOppositePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPropertyCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGSourcedCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTemplateParameterExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.util.AbstractExtendingCGModelVisitor;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.TypeExp;
 
@@ -160,7 +162,12 @@ public class ReferencesVisitor extends AbstractExtendingCGModelVisitor<@NonNull 
 
 	@Override
 	public @NonNull List<@Nullable Object> visitCGNamedElement(@NonNull CGNamedElement cgElement) {
-		return append(super.visitCGNamedElement(cgElement), cgElement.getName());
+		List<@Nullable Object> elements = super.visitCGNamedElement(cgElement);
+		Element ast = cgElement.getAst();
+		if (ast instanceof NamedElement) {
+			elements.add(((NamedElement)ast).getName());
+		}
+		return elements;
 	}
 
 	@Override
@@ -178,6 +185,11 @@ public class ReferencesVisitor extends AbstractExtendingCGModelVisitor<@NonNull 
 	@Override
 	public @NonNull List<@Nullable Object> visitCGPropertyCallExp(@NonNull CGPropertyCallExp cgElement) {
 		return append(super.visitCGPropertyCallExp(cgElement), cgElement.getReferredProperty());
+	}
+
+	@Override
+	public @NonNull List<@Nullable Object> visitCGSourcedCallExp(@NonNull CGSourcedCallExp cgSourcedCallExp) {
+		return append(super.visitCGSourcedCallExp(cgSourcedCallExp), cgSourcedCallExp.getSource());
 	}
 
 	@Override

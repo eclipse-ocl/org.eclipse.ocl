@@ -192,7 +192,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 
 	protected @NonNull NestedNameManager pushNameManager(@NonNull CGNamedElement cgNamedlement) {
 		NestedNameManager outerNameManager = currentNameManager;
-		NestedNameManager innerNameManager = globalNameManager.findNameManager(cgNamedlement);
+		NestedNameManager innerNameManager = globalNameManager.getNestedNameManager(cgNamedlement);
 		currentNameManager = innerNameManager;
 		nameManagerStack.push(innerNameManager);
 		if (outerNameManager == null) {

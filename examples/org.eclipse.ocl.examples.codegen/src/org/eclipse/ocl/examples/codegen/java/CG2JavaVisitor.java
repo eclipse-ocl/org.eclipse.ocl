@@ -498,7 +498,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		}
 		NestedNameManager savedNameManager = currentNameManager;
 		try {
-			currentNameManager = globalNameManager.findNameManager(cgIterationCallExp);
+			currentNameManager = globalNameManager.getNestedNameManager(cgIterationCallExp);
 			appendReturn(body);
 		}
 		finally {
@@ -732,7 +732,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		NestedNameManager nameManager = currentNameManager;
 		String variantResolvedName = nameManager.basicGetVariantResolvedName(cgElement, nameVariant);
 		if (variantResolvedName == null) {
-			nameManager = globalNameManager.findNameManager(cgElement);
+			nameManager = globalNameManager.findNestedNameManager(cgElement);
 			variantResolvedName = nameManager.basicGetVariantResolvedName(cgElement, nameVariant);
 			assert variantResolvedName != null;
 		}
@@ -861,7 +861,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 
 	@Override
 	public @NonNull Boolean visitCGBodiedProperty(@NonNull CGBodiedProperty cgProperty) {
-		currentNameManager = globalNameManager.findNameManager(cgProperty);
+		currentNameManager = globalNameManager.getNestedNameManager(cgProperty);
 		try {
 			return cgProperty.getCallingConvention().generateJavaDeclaration(this, js, cgProperty);
 		}
@@ -947,7 +947,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		js.append(";\n");
 		NestedNameManager savedNameManager = currentNameManager;
 		try {
-			currentNameManager = globalNameManager.findNameManager(cgIterationCallExp);
+			currentNameManager = globalNameManager.getNestedNameManager(cgIterationCallExp);
 			//
 			//	Declare loop head
 			//
@@ -1246,7 +1246,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 
 	@Override
 	public @NonNull Boolean visitCGConstraint(@NonNull CGConstraint cgConstraint) {
-		currentNameManager = globalNameManager.findNameManager(cgConstraint);
+		currentNameManager = globalNameManager.getNestedNameManager(cgConstraint);
 		try {
 			Boolean flowContinues = super.visitCGConstraint(cgConstraint);
 			assert flowContinues != null;
@@ -2084,7 +2084,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 
 	@Override
 	public @NonNull Boolean visitCGOperation(@NonNull CGOperation cgOperation) {
-		currentNameManager = globalNameManager.findNameManager(cgOperation);
+		currentNameManager = globalNameManager.getNestedNameManager(cgOperation);
 		try {
 			OperationCallingConvention callingConvention = cgOperation.getCallingConvention();
 			callingConvention.generateJavaDeclaration(this, js, cgOperation);

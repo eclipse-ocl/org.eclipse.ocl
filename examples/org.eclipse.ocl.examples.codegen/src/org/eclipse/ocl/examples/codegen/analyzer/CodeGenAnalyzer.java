@@ -382,7 +382,7 @@ public class CodeGenAnalyzer
 		cgVariableExp.setReferredVariable(cgVariable);
 		cgVariableExp.setTypeId(cgVariable.getTypeId());
 	//	cgVariableExp.setRequired(cgVariable.getIs);
-		cgVariable.getNameResolution().addCGElement(cgVariableExp);
+//		cgVariable.getNameResolution().addCGElement(cgVariableExp);
 		return cgVariableExp;
 	}
 
@@ -669,7 +669,7 @@ public class CodeGenAnalyzer
 				boolean isRequired = asParameter.isIsRequired();
 				CGParameter cgParameter = CGModelFactory.eINSTANCE.createCGParameter();
 				cgParameter.setAst(asParameter);
-				nameManager.declarePreferredName(cgParameter);
+//				nameManager.declarePreferredName(cgParameter);
 				cgParameter.setTypeId(getCGTypeId(asParameterType.getTypeId()));
 				cgParameter.setRequired(isRequired);
 				cgParameters.add(cgParameter);

@@ -110,7 +110,7 @@ public class LookupUnqualifiedCodeGenerator extends LookupVisitorsCodeGenerator 
 	@Override
 	protected @NonNull AutoCG2JavaVisitor createCG2JavaVisitor(
 			@NonNull CGPackage cgPackage,
-			@Nullable List<CGValuedElement> sortedGlobals) {
+			@Nullable Iterable<@NonNull CGValuedElement> sortedGlobals) {
 		return new LookupUnqualifiedCG2JavaVisitor(this, cgPackage, sortedGlobals);
 	}
 

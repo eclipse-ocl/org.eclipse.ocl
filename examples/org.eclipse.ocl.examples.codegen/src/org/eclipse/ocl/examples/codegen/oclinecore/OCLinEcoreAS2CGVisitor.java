@@ -88,7 +88,7 @@ public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 		if (specification != null) {
 			assert cgConstraint.basicGetNameResolution() == null;
 			cgConstraint.setAst(asConstraint);
-			getNameManager().declarePreferredName(cgConstraint);
+//			getNameManager().declarePreferredName(cgConstraint);
 			pushNameManager(cgConstraint);
 			NestedNameManager nameManager = getNameManager();
 			try {

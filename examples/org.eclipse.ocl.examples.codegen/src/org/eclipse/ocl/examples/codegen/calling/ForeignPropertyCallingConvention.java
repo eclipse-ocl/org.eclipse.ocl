@@ -130,7 +130,7 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 		basicGetValueInit.setValueIsBoxed(true);
 		CGValuedElement castBasicGetValueInit = analyzer.createCGCastExp(cgCastType, basicGetValueInit);
 		CGFinalVariable basicGetValueVariable = as2cgVisitor.getNameManager().createCGVariable(castBasicGetValueInit);
-		nameManager.declareLazyName(basicGetValueVariable);
+//		nameManager.declareLazyName(basicGetValueVariable);
 		CGValuedElement cgCondition = analyzer.createCGIsEqual(analyzer.createCGVariableExp(basicGetValueVariable), analyzer.createCGNull());
 		CGNativeOperationCallExp getValue = createCGBoxedNativeOperationCallExp(as2cgVisitor, analyzer.createCGVariableExp(modelManagerVariable), JavaConstants.MODEL_MANAGER_GET_FOREIGN_PROPERTY_VALUE_METHOD,
 			asProperty.isIsStatic() ? analyzer.createCGConstantExp(analyzer.createCGNull()) : analyzer.createCGVariableExp(cgSelfParameter), analyzer.createCGConstantExp(cgPropertyId), cgInitValue);

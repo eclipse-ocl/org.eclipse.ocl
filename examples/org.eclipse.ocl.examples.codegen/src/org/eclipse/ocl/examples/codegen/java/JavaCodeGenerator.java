@@ -47,6 +47,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGGuardExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
@@ -408,7 +409,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		return true;
 	}
 
-	// Fold into visitInPOstOrder
+	// Fold into visitInPostOrder
 	private void gatherNames(@NonNull CGValuedElement cgElement, @NonNull Map<@NonNull NameManager, @NonNull List<@NonNull CGValuedElement>> nameManager2namedElements) {
 		NameResolution nameResolution = cgElement.basicGetNameResolution();
 		assert nameResolution != null;
@@ -607,7 +608,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	public @NonNull NameResolution getNameResolution(@NonNull CGValuedElement cgElement) {
 		NameResolution nameResolution = cgElement.basicGetNameResolution(); //.getNameVariant(guardedNameVariant);
 		if (nameResolution == null) {
-			NestedNameManager nameManager = globalNameManager.findNameManager(cgElement);
+			NestedNameManager nameManager = globalNameManager.findNestedNameManager(cgElement);
 			nameResolution = nameManager.declareLazyName(cgElement);
 		}
 		return nameResolution;
@@ -762,9 +763,10 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	}
 
 	/**
-	 * Perform the overall optimization of the CG tree.
+	 * Perform the overall optimization of the CG tree culminating in CSE rewrites.
 	 */
 	protected void optimize(@NonNull CGPackage cgPackage) {
+		NameResolution.inhibitNameResolution = true;
 		CGModelResource resource = getCGResourceFactory().createResource(URI.createURI("cg.xmi"));
 		resource.getContents().add(cgPackage);
 		getAnalyzer().analyze(cgPackage);
@@ -772,14 +774,24 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		cgPackage.accept(cg2PreVisitor);
 		CommonSubexpressionEliminator cseEliminator = createCommonSubexpressionEliminator();
 		cseEliminator.optimize(cgPackage);
+	}
+
+	/**
+	 * Perform additional analysis of the final optimized CG tree; no rewrites occur.
+	 * Globals are identified and a hierarchy of name spaces is established to ensure that hierarchy unique names can be resolved.
+	 */
+	protected @Nullable Iterable<@NonNull CGValuedElement> pregenerate(@NonNull CGPackage cgPackage) {
 		CG2JavaNameVisitor cg2nameVisitor = createCG2JavaNameVisitor();
 		cgPackage.accept(cg2nameVisitor);
+		Iterable<@NonNull CGValuedElement> sortedGlobals = prepareGlobals();
+		resolveUniqueNames(sortedGlobals, cgPackage);
+		return sortedGlobals;
 	}
 
 	/**
 	 * After overall optimization, return a sorted list of global declarations.
 	 */
-	public @Nullable List<@NonNull CGValuedElement> prepareGlobals() {
+	private @Nullable List<@NonNull CGValuedElement> prepareGlobals() {
 		DependencyVisitor dependencyVisitor = createDependencyVisitor();
 		Collection<@NonNull CGValuedElement> globals = globalNameManager.getGlobals();
 		for (@NonNull CGValuedElement cgGlobal : globals) {
@@ -790,18 +802,120 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		return sortedGlobals;
 	}
 
-	protected void resolveNames(@Nullable Iterable<@NonNull CGValuedElement> sortedGlobals, @NonNull CGPackage cgPackage) {
+	/**
+	 * Propagate the parennt name hint down to the descendants of cgElement so that initializers for variables use a name
+	 * based on the user's name for the variable rather than a totally synthetic name for the functionality.
+	 */
+	protected void propagateNameResolution(@NonNull CGElement cgElement, @Nullable NameResolution parentNameResolution) {
+		for (EObject eObject : cgElement.eContents()) {					// XXX Surely preorder - no post order to satisfy bottom up dependency evaluation
+			if (eObject instanceof CGElement) {
+				CGElement cgChild = (CGElement)eObject;
+				EReference eContainmentFeature = cgChild.eContainmentFeature();
+				if (eContainmentFeature == CGModelPackage.Literals.CG_VARIABLE__INIT) {
+					CGVariable cgVariable = (@NonNull CGVariable)cgElement;
+					NameResolution nameResolution = cgVariable.basicGetNameResolution();
+					if (nameResolution == null) {
+						if (cgVariable.toString().contains("create('pkg'::A::bs)")) {
+							getClass();		// XXX
+						}
+						nameResolution = globalNameManager.findNestedNameManager(cgVariable).declareLazyName(cgVariable);
+					}
+					propagateNameResolution(cgChild, nameResolution);
+				}
+				else if (eContainmentFeature == CGModelPackage.Literals.CG_LET_EXP__INIT) {
+					propagateNameResolution(cgChild, null);
+				}
+				else if (eContainmentFeature == CGModelPackage.Literals.CG_LET_EXP__IN) {
+					propagateNameResolution(cgChild, parentNameResolution);
+				}
+				else if ((eContainmentFeature == CGModelPackage.Literals.CG_SOURCED_CALL_EXP__SOURCE) && (cgElement instanceof CGGuardExp)) {
+					propagateNameResolution(cgChild, parentNameResolution);	// Guard is an if predicate name re-use
+				}
+				else {
+					propagateNameResolution(cgChild, null);
+				}
+			}
+		}
+		if (cgElement instanceof CGValuedElement) {
+			if (cgElement instanceof CGNativeOperationCallExp) {
+				getClass();		// XXX
+			}
+			CGValuedElement cgValuedElement2 = (CGValuedElement)cgElement;
+			if (!cgValuedElement2.isInlined()) {
+				NameResolution nameResolution = cgValuedElement2.basicGetNameResolution();
+				if (nameResolution == null) {
+					if ((parentNameResolution != null) && !cgValuedElement2.isGlobal()) {
+						parentNameResolution.addCGElement(cgValuedElement2);
+					}
+					else {
+					//	assert false;			// XXX wip
+					//	NameManager nameManager = globalNameManager.basicGetNestedNameManager(cgValuedElement2);
+					//	if (nameManager == null) {
+							NameManager nameManager = globalNameManager.findNameManager(cgValuedElement2);
+						//	nameManager = (localNameManager != null) && !cgValuedElement2.isGlobal() ? localNameManager : globalNameManager;
+					//	}
+						nameResolution = nameManager.declareLazyName(cgValuedElement2);
+						nameResolution.resolveNameHint();
+					}
+				}
+				else {
+				//	if (parentNameResolution != null) {
+				//		nameResolution.setDelegateTo(parentNameResolution);
+				//	}
+				//	else {
+				//		if (nameResolution.isUnresolved()) {
+				//			getClass();
+				//		}
+				//	}
+					nameResolution.resolveNameHint();
+				}
+			}
+			for (EObject eObject : ((CGValuedElement)cgElement).getOwns()) {					// XXX Surely preorder - no post order to satisfy bottom up dependency evaluation
+				if (eObject instanceof CGElement) {
+					propagateNameResolution((CGElement)eObject, null);
+					if (eObject instanceof CGValuedElement) {
+						CGValuedElement cgValuedElement = (CGValuedElement)eObject;
+						if ((cgValuedElement.basicGetNameResolution() == null) && !cgValuedElement.isInlined()) {
+							NestedNameManager localNameManager = globalNameManager.findNestedNameManager(cgValuedElement);
+							NameManager nameManager = localNameManager != null ? localNameManager : globalNameManager;
+							nameManager.declareLazyName(cgValuedElement);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * Propagate name hints down the cgElement hierarchy  that initializers for variables use a name
+	 * based on the user's name for the variable rather than a totally synthetic name for the functionality.
+	 */
+	protected void propagateNames(@NonNull CGElement cgElement) {
+		propagateNameResolution(cgElement, null);
+		for (EObject eObject : new TreeIterable(cgElement, true)) {		// XXX debugging
+			if ((eObject instanceof CGValuedElement) && !((CGValuedElement)eObject).isInlined()) {
+				NameResolution nameResolution = ((CGValuedElement)eObject).basicGetNameResolution();
+				assert nameResolution != null;
+			}
+		}
+	}
+
+	/**
+	 * Resolve the name hints as hierarchically unique names throughout the sortedGlobals and cgPackage hierarchy.
+	 */
+	private void resolveUniqueNames(@Nullable Iterable<@NonNull CGValuedElement> sortedGlobals, @NonNull CGPackage cgPackage) {
+		NameResolution.inhibitNameResolution = false;
 		if (sortedGlobals != null) {
 			for (@NonNull CGValuedElement global : sortedGlobals) {
 				if (global instanceof CGTupleExp) {
 					getClass();		// XXX
 				}
 				// too soon assert global.getNameResolution().getNameManager().isGlobal();
-				visitInPostOrder(global);
+				propagateNames(global);
 			}
 		}
 	//	System.out.println("-----------------resolveNames--------------------");
-		visitInPostOrder(cgPackage);
+		propagateNames(cgPackage);
 		Map<@NonNull NameManager, @NonNull List<@NonNull CGValuedElement>> nameManager2namedElements = new HashMap<>();
 		if (sortedGlobals != null) {
 			for (@NonNull CGNamedElement cgNamedElement : sortedGlobals) {
@@ -823,97 +937,6 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		}
 		globalNameManager.assignNames(nameManager2namedElements);
 		CGValuedElementImpl.ALLOW_GET_VALUE_NAME = true;
-	}
-
-	protected void visitInPostOrder(@NonNull CGElement cgElement) {
-		visitInPostOrder2(cgElement, null);
-		for (EObject eObject : new TreeIterable(cgElement, true)) {		// XXX debugging
-			if ((eObject instanceof CGValuedElement) && !((CGValuedElement)eObject).isInlined()) {
-				NameResolution nameResolution = ((CGValuedElement)eObject).basicGetNameResolution();
-				assert nameResolution != null;
-			}
-		}
-	}
-
-	protected void visitInPostOrder2(@NonNull CGElement cgElement, @Nullable NameResolution parentNameResolution) {
-		if (cgElement instanceof CGVariable) {
-		//	if ("cu = .oclAsType(executor, u, TYP_SysML_ValueTypes_QUDV_c_c_QUDV_c_c_ConversionBasedUnit)".equals(cgElement.toString())) {
-				getClass();		// XXX
-		//	}
-			CGValuedElement cgValuedElement2 = (CGValuedElement)cgElement;
-			NameResolution nameResolution = cgValuedElement2.basicGetNameResolution();
-		//	assert (nameResolution == null) || debugCheckNameResolution(cgValuedElement2, nameResolution);
-		}
-		for (EObject eObject : cgElement.eContents()) {					// XXX Surely preorder - no post order to satisfy bottom up dependency evaluation
-			if (eObject instanceof CGElement) {
-				CGElement cgChild = (CGElement)eObject;
-				EReference eContainmentFeature = cgChild.eContainmentFeature();
-				if (eContainmentFeature == CGModelPackage.Literals.CG_VARIABLE__INIT) {
-					CGVariable cgVariable = (@NonNull CGVariable)cgElement;
-					NameResolution nameResolution = cgVariable.basicGetNameResolution();
-					if (nameResolution == null) {
-						nameResolution = globalNameManager.findNameManager(cgVariable).declareLazyName(cgVariable);
-					}
-					visitInPostOrder2(cgChild, nameResolution);
-				}
-				else if (eContainmentFeature == CGModelPackage.Literals.CG_LET_EXP__INIT) {
-					visitInPostOrder2(cgChild, null);
-				}
-				else if (eContainmentFeature == CGModelPackage.Literals.CG_LET_EXP__IN) {
-					visitInPostOrder2(cgChild, parentNameResolution);
-				}
-				else if ((eContainmentFeature == CGModelPackage.Literals.CG_SOURCED_CALL_EXP__SOURCE) && (cgElement instanceof CGGuardExp)) {
-					visitInPostOrder2(cgChild, parentNameResolution);	// Guard is an if predicate name re-use
-				}
-				else {
-					visitInPostOrder2(cgChild, null);
-				}
-			}
-		}
-		if (cgElement instanceof CGValuedElement) {
-			CGValuedElement cgValuedElement2 = (CGValuedElement)cgElement;
-			if (!cgValuedElement2.isInlined()) {
-				NameResolution nameResolution = cgValuedElement2.basicGetNameResolution();
-				if (nameResolution == null) {
-					if ((parentNameResolution != null) && !cgValuedElement2.isGlobal()) {
-						parentNameResolution.addCGElement(cgValuedElement2);
-					}
-					else {
-					//	assert false;			// XXX wip
-						NameManager nameManager = globalNameManager.bascGetScope(cgValuedElement2);
-						if (nameManager == null) {
-							NestedNameManager localNameManager = globalNameManager.basicFindNameManager(cgValuedElement2);
-							nameManager = (localNameManager != null) && !cgValuedElement2.isGlobal() ? localNameManager : globalNameManager;
-						}
-						nameResolution = nameManager.declareLazyName(cgValuedElement2);
-						nameResolution.resolveNameHint();
-					}
-				}
-				else {
-				//	if (parentNameResolution != null) {
-				//		nameResolution.setDelegateTo(parentNameResolution);
-				//	}
-				//	else {
-				//		if (nameResolution.isUnresolved()) {
-				//			getClass();
-				//		}
-				//	}
-					nameResolution.resolveNameHint();
-				}
-			}
-			for (EObject eObject : ((CGValuedElement)cgElement).getOwns()) {					// XXX Surely preorder - no post order to satisfy bottom up dependency evaluation
-				if (eObject instanceof CGElement) {
-					visitInPostOrder2((CGElement)eObject, null);
-					if (eObject instanceof CGValuedElement) {
-						CGValuedElement cgValuedElement = (CGValuedElement)eObject;
-						if ((cgValuedElement.basicGetNameResolution() == null) && !cgValuedElement.isInlined()) {
-							NestedNameManager localNameManager = globalNameManager.basicFindNameManager(cgValuedElement);
-							NameManager nameManager = localNameManager != null ? localNameManager : globalNameManager;
-							nameManager.declareLazyName(cgValuedElement);
-						}
-					}
-				}
-			}
-		}
+		NameResolution.inhibitNameResolution = true;
 	}
 }

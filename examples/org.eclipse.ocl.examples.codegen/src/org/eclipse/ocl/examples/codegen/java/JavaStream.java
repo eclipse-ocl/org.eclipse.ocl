@@ -265,7 +265,7 @@ public class JavaStream
 				s.append(string);
 			}
 			else {
-				if (string.contains("ast_0")) {
+				if (string.contains("NumericPlusOperation")) {
 					getClass();		// XXX
 				}
 				int sLength = s.length();

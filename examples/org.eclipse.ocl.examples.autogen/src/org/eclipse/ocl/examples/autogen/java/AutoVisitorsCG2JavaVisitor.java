@@ -11,8 +11,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.autogen.java;
 
-import java.util.List;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
@@ -27,7 +25,7 @@ public abstract class AutoVisitorsCG2JavaVisitor extends AutoCG2JavaVisitor
 {
 
 	public AutoVisitorsCG2JavaVisitor(@NonNull AutoVisitorsCodeGenerator codeGenerator, @NonNull CGPackage cgPackage,
-			@Nullable List<CGValuedElement> sortedGlobals) {
+			@Nullable Iterable<CGValuedElement> sortedGlobals) {
 		super(codeGenerator, cgPackage, sortedGlobals);
 
 	}

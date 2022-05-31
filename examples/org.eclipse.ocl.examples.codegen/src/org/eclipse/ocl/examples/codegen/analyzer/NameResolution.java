@@ -17,7 +17,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.CodeGenConstants;
 import org.eclipse.ocl.examples.codegen.analyzer.NameManager.Context;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGBuiltInIterationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -30,7 +30,7 @@ import org.eclipse.ocl.pivot.utilities.TracingOption;
  * The need for a neme is first declared and an actual name, hierarchically unique within the NameManager unique,
  * is assigned just before the CG2Java generation.
  *  </p>
- *  Declarations occur at various timres.
+ *  Declarations occur at various times.
  *  </br>Java reserved words are excluded.
  *  </br>However certain reserved words such as "this" my be assigned for precisely their Java purpose.
  *  </br>Global names may be declared in the GlobalNameManager.
@@ -48,6 +48,7 @@ public class NameResolution
 	public static final @NonNull TracingOption NAMES_GATHER = new TracingOption(CodeGenConstants.PLUGIN_ID, "names/gather");
 	public static final @NonNull TracingOption NAMES_RESOLVE = new TracingOption(CodeGenConstants.PLUGIN_ID, "names/resolve");
 
+	public static boolean inhibitNameResolution = true;
 	/**
 	 * A non-null placeholder for a nameHint whose resolution is deferred until the CG containment tree is sound.
 	 */
@@ -87,10 +88,10 @@ public class NameResolution
 		this.nameManager = nameManager;
 		this.primaryElement = primaryElement;
 		assert (primaryElement != null) || (nameHint != null);
-		if (nameManager instanceof NestedNameManager) {
-			getClass();		// XXX)
+		if (primaryElement instanceof CGNativeOperationCallExp) {
+			getClass();		// XXX
 		}
-		if (primaryElement instanceof CGBuiltInIterationCallExp) {
+		if (nameManager instanceof NestedNameManager) {
 			getClass();		// XXX)
 		}
 		this.nameHint = nameHint != null ? nameHint : UNRESOLVED;
@@ -120,6 +121,7 @@ public class NameResolution
 	}
 
 	public void addCGElement(@NonNull CGValuedElement cgElement) {
+		assert !inhibitNameResolution || (nameManager instanceof GlobalNameManager);
 		List<@NonNull CGValuedElement> cgElements2 = cgElements;
 		if (cgElements2 == null) {
 			cgElements = cgElements2 = new ArrayList<>();
@@ -153,7 +155,7 @@ public class NameResolution
 		if ("IMPPROPid_d3atlExpression".equals(nameHint)) {
 			getClass();			// XXX
 		}
-		if ("ast".equals(nameHint)) {
+		if ("create".equals(nameHint)) {
 			getClass();			// XXX
 		}
 		return true;
@@ -238,6 +240,7 @@ public class NameResolution
 	}
 
 	public void resolveNameHint() {
+		assert !inhibitNameResolution || (nameManager instanceof GlobalNameManager);
 		if (nameHint == UNRESOLVED) {
 			CGValuedElement primaryElement2 = primaryElement;
 			assert primaryElement2 != null;
@@ -254,7 +257,8 @@ public class NameResolution
 	}
 
 	protected void setResolvedName(@NonNull String resolvedName) {
-		if ("allInstances".equals(resolvedName)) {
+		assert !inhibitNameResolution || (nameManager instanceof GlobalNameManager);
+		if ("create".equals(resolvedName)) {
 			getClass();		// XXX
 		}
 		assert !resolvedName.contains("UNRESOLVED");
