@@ -29,6 +29,8 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGIsInvalidExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIsKindOfExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNativePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOppositePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPropertyCallExp;
@@ -167,6 +169,20 @@ public class ReferencesVisitor extends AbstractExtendingCGModelVisitor<@NonNull 
 		if (ast instanceof NamedElement) {
 			elements.add(((NamedElement)ast).getName());
 		}
+		return elements;
+	}
+
+	@Override
+	public @NonNull List<@Nullable Object> visitCGNativeOperationCallExp(@NonNull CGNativeOperationCallExp cgNativeOperationCallExp) {
+		List<@Nullable Object> elements = super.visitCGNativeOperationCallExp(cgNativeOperationCallExp);
+		elements.add(cgNativeOperationCallExp.getMethod());
+		return elements;
+	}
+
+	@Override
+	public @NonNull List<@Nullable Object> visitCGNativePropertyCallExp(@NonNull CGNativePropertyCallExp cgNativePropertyCallExp) {
+		List<@Nullable Object> elements = super.visitCGNativePropertyCallExp(cgNativePropertyCallExp);
+		elements.add(cgNativePropertyCallExp.getField());
 		return elements;
 	}
 
