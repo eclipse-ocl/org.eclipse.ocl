@@ -144,6 +144,7 @@ public class NestedNameManager extends NameManager
 				if (cgElement instanceof CGValuedElement) {
 					CGValuedElement cgValuedElement = (CGValuedElement)cgElement;
 					NameResolution nameResolution = getNameResolution(cgValuedElement);
+					nameResolution.resolveNameHint();;
 					nameResolution.resolveIn(context, cgValuedElement);
 					resolvedName = nameResolution.getResolvedName();
 				}

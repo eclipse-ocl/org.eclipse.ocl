@@ -231,20 +231,6 @@ public class GlobalNameManager extends NameManager
 		assignNestedNames(nameManager2namedElements);
 	}
 
-/*	public @Nullable NestedNameManager zzbasicFindNameManager(@NonNull CGNamedElement cgElement) {
-		for (CGElement cgScope = cgElement; cgScope != null; cgScope = cgScope.getParent()) {
-			NestedNameManager nestedNameManager = cgElement2nestedNameManager.get(cgScope);
-			if (nestedNameManager != null) {
-				return nestedNameManager;
-			}
-		}
-		return null;
-	} */
-
-/*	public @Nullable NestedNameManager zzbasicGetNameManager(@NonNull CGNamedElement cgElement) {
-		return cgElement2nestedNameManager.get(cgElement);
-	} */
-
 	/**
 	 * Return the NestedNameManager is which cgNamedElement should be defined or null if global.
 	 */
@@ -275,10 +261,6 @@ public class GlobalNameManager extends NameManager
 		return cgElement2nestedNameManager.get(cgElement);
 	}
 
-//	public @Nullable NameManager basicGetScope(@NonNull CGNamedElement cgElement) {			// XXX cf basicGetNameManager
-//		return element2nameManager.get(cgElement);
-//	}
-
 	public @NonNull NestedNameManager createNestedNameManager(@Nullable NestedNameManager outerNameManager, @NonNull CGNamedElement cgScope) {
 		if (cgScope instanceof CGBuiltInIterationCallExp) {
 			getClass();		// XXX
@@ -305,7 +287,6 @@ public class GlobalNameManager extends NameManager
 	 * Declare that cgElement has a name which should immediately equate to nameHint.
 	 * This is typically used to ensure that reserved Java names are used only for their Java purpose.
 	 */
-//	@Override
 	public @NonNull NameResolution declareReservedName(@Nullable CGValuedElement cgElement, @NonNull String nameHint) {
 		NameResolution baseNameResolution = new NameResolution(this, cgElement, nameHint);
 		assert reservedJavaNames.contains(nameHint);

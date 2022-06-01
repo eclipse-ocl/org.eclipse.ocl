@@ -2370,7 +2370,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 					if (varNameResolution != initNameResolution) {
 						boolean hasAccess = false;
 						assert false;
-						Iterable<@NonNull CGValuedElement> cgElements = varNameResolution.getCGElements();
+						Iterable<@NonNull CGValuedElement> cgElements = null; // XXX varNameResolution.getCGElements();
 						if (cgElements != null) {
 							for (CGValuedElement cgElement : cgElements) {
 								if (cgElement instanceof CGVariableExp) {

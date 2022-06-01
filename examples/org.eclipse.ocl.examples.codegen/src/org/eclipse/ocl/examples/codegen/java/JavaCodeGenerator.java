@@ -845,26 +845,23 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 			if (!cgValuedElement2.isInlined()) {
 				NameResolution nameResolution = cgValuedElement2.basicGetNameResolution();
 				if (nameResolution == null) {
-					if ((parentNameResolution != null) && !cgValuedElement2.isGlobal()) {
+					if (cgValuedElement2.isGlobal()) {
+						nameResolution = globalNameManager.getNameResolution(cgValuedElement2);
+					}
+					else if (parentNameResolution != null) {
 						parentNameResolution.addCGElement(cgValuedElement2);
 					}
 					else {
-					//	assert false;			// XXX wip
-					//	NameManager nameManager = globalNameManager.basicGetNestedNameManager(cgValuedElement2);
-					//	if (nameManager == null) {
-							NestedNameManager nameManager = globalNameManager.basicFindNestedNameManager(cgValuedElement2);
-						//	nameManager = (localNameManager != null) && !cgValuedElement2.isGlobal() ? localNameManager : globalNameManager;
-					//	}
-							if ((nameManager != null) && !cgValuedElement2.isGlobal()) {
-								nameResolution = nameManager.getNameResolution(cgValuedElement2);
-							}
-							else {
-								nameResolution = globalNameManager.getNameResolution(cgValuedElement2);
-							}
-						nameResolution.resolveNameHint();
+						NestedNameManager nameManager = globalNameManager.basicFindNestedNameManager(cgValuedElement2);
+						if (nameManager != null) {
+							nameResolution = nameManager.getNameResolution(cgValuedElement2);
+						}
+						else {
+							nameResolution = globalNameManager.getNameResolution(cgValuedElement2);
+						}
 					}
 				}
-				else {
+				if (nameResolution != null) {
 					nameResolution.resolveNameHint();
 				}
 			}

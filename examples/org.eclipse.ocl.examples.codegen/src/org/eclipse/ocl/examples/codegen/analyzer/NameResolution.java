@@ -82,7 +82,7 @@ public class NameResolution
 	/**
 	 * Additional CGElements that propagate the unchanged value to be accessed by the resolved name.
 	 */
-	private @Nullable List<@NonNull CGValuedElement> cgElements = null;
+	private @Nullable List<@NonNull CGValuedElement> cgElements = null;		// XXX obsolete
 
 	public NameResolution(@NonNull NameManager nameManager, @Nullable CGValuedElement primaryElement, @Nullable String nameHint) {
 		this.nameManager = nameManager;
