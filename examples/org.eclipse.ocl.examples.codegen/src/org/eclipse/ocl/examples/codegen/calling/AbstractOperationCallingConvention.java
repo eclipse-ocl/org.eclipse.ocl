@@ -329,11 +329,6 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 	}
 
 	@Override
-	public boolean mayThrowException() {
-		return false;
-	}
-
-	@Override
 	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGOperation cgOperation) {
 		if (cgOperation.isRequired()) {
 			CGValuedElement body = cgOperation.getBody();

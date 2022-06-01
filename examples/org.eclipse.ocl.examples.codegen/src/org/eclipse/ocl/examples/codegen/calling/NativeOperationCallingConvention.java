@@ -129,11 +129,6 @@ public class NativeOperationCallingConvention extends AbstractOperationCallingCo
 	}
 
 	@Override
-	public boolean mayThrowException() {
-		return true;
-	}
-
-	@Override
 	public boolean needsGeneration() {
 		return false;
 	}

@@ -30,11 +30,6 @@ public class SupportOperationCallingConvention extends NativeOperationCallingCon
 	public static final @NonNull SupportOperationCallingConvention INSTANCE = new SupportOperationCallingConvention();
 
 	@Override
-	public boolean mayThrowException() {
-		return false;
-	}
-
-	@Override
 	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGOperationCallExp cgOperationCallExp) {
 		assert cgOperationCallExp instanceof CGNativeOperationCallExp;
 		// No boxing for cgThis

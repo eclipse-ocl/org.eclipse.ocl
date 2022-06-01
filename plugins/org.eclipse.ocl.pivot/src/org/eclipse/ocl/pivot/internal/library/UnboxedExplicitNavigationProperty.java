@@ -28,7 +28,8 @@ public class UnboxedExplicitNavigationProperty extends AbstractProperty
 	/**
 	 * @since 1.18
 	 */
-	public static @NonNull UnboxedExplicitNavigationProperty create(@NonNull PropertyId propertyId) {
+	public static @NonNull UnboxedExplicitNavigationProperty create(@NonNull PropertyId propertyId)
+			throws VirtualMachineError { // Explicitly just VirtualMachineError is used to signal nothrow.
 		return new UnboxedExplicitNavigationProperty(propertyId);
 	}
 

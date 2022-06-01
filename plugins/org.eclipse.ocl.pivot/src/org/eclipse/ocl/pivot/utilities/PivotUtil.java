@@ -1315,7 +1315,8 @@ public class PivotUtil
 	 *
 	 * @since 1.7
 	 */
-	public static @NonNull Executor getExecutor(@Nullable EObject eObject) {
+	public static /*@NoThrow*/ @NonNull Executor getExecutor(@Nullable EObject eObject)
+			throws VirtualMachineError {	// Just VirtualMachineError explicitly means @NoThrow CG-wise
 		Executor executor = ThreadLocalExecutor.basicGetExecutor();
 		if (executor != null) {
 			return executor;

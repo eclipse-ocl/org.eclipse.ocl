@@ -52,11 +52,6 @@ public interface OperationCallingConvention extends CallingConvention
 //	void createCGParameters(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL bodyExpression);
 
 	/**
-	 * Install all the CG operation declaration equivalents for asOperation. Returns the direct equivalent.
-	 */
-//	@NonNull CGOperation generateDeclarationHierarchy(@NonNull AS2CGVisitor as2cgVisitor, @Nullable Type asSourceType, @NonNull Operation asOperation);
-
-	/**
 	 * Generate the Java code for an Operation call.
 	 * Returns true if control flow continues, false if an exception throw has been synthesized.
 	 */
@@ -67,11 +62,6 @@ public interface OperationCallingConvention extends CallingConvention
 	 * Returns true if control flow continues, false if an exception throw has been synthesized.
 	 */
 	boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation);
-
-	/**
-	 * Return true if the invoked operation may throw an exception, that the caller must handle as an OCL invalid.
-	 */
-	boolean mayThrowException();
 
 	void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGOperation cgOperation);
 	void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGOperationCallExp cgOperationCallExp);
