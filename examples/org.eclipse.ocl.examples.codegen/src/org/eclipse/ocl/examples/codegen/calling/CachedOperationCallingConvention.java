@@ -16,6 +16,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
+import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
@@ -104,7 +105,8 @@ public class CachedOperationCallingConvention extends AbstractCachedOperationCal
 		Type sourceType = asSource != null ? asSource.getType() : null;
 	//	generateDeclarationHierarchy(as2cgVisitor, sourceType, asOperation);
 		Operation finalOperation = sourceType!= null ? as2cgVisitor.getCodeGenerator().isFinal(asOperation, (org.eclipse.ocl.pivot.Class)sourceType) : asOperation;	// FIXME cast
-		CGClass currentClass = as2cgVisitor.getNameManager().findCGScope();
+		NestedNameManager nameManager = as2cgVisitor.getNameManager();
+		CGClass currentClass = nameManager.findCGScope();
 		assert currentClass != null;
 	//	CGOperationCallExp cgCallExp;
 		assert (finalOperation != null);

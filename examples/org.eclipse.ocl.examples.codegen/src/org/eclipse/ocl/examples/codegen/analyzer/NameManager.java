@@ -430,12 +430,6 @@ public abstract class NameManager
 		}
 	}
 
-	/**
-	 * Declare that cgElement has a name which should immediately default to nameHint.
-	 * This is typically used to provide an eager name reservation for an Ecore operation parameter.
-	 */
-	public abstract @NonNull NameResolution declareReservedName(@NonNull CGValuedElement cgElement, @NonNull String nameHint);
-
 	@Deprecated // not needed
 	protected abstract @NonNull Context getContext();
 
@@ -447,10 +441,7 @@ public abstract class NameManager
 		return ClassUtil.nonNullState(helper.getNameHint(anObject));
 	}
 
-	public abstract boolean isGlobal();
+	public abstract @NonNull NameResolution getNameResolution(@NonNull CGValuedElement cgElement);
 
-//	public void removeNameResolution(@NonNull CGValuedElement cgElement) {
-//		NameResolution old = element2nameResolution.remove(cgElement);
-//		assert old != null;
-//	}
+	public abstract boolean isGlobal();
 }

@@ -20,7 +20,6 @@ import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.DependencyVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.FieldingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
-import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 import org.eclipse.ocl.examples.codegen.analyzer.ReferencesVisitor;
 import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.PropertyCallingConvention;
@@ -72,7 +71,7 @@ public interface CodeGenerator
 	@NonNull ImportNameManager getImportNameManager();
 	@Nullable IterationHelper getIterationHelper(@NonNull Iteration iteration);
 	@NonNull GlobalNameManager getGlobalNameManager();
-	@NonNull NameResolution getNameResolution(@NonNull CGValuedElement cgChild);
+//	@NonNull NameResolution getNameResolution(@NonNull CGValuedElement cgChild);
 	@NonNull CodeGenOptions getOptions();
 	@Nullable List<@NonNull Exception> getProblems();
 	@NonNull TypeDescriptor getTypeDescriptor(@NonNull CGValuedElement cgElement);

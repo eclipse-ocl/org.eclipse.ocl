@@ -802,7 +802,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		if (specification != null) {
 			assert cgConstraint.basicGetNameResolution() == null;
 			cgConstraint.setAst(asConstraint);
-			getNameManager().declarePreferredName(cgConstraint);
+		//	getNameManager().declarePreferredName(cgConstraint);
 			NestedNameManager innerNameManager = pushNameManager(cgConstraint);
 			try {
 				ExpressionInOCL query = environmentFactory.parseSpecification(specification);
@@ -1100,7 +1100,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			CGElementId cgPropertyId = analyzer.getCGElementId(propertyId);
 			cgExecutorShadowPart.setUnderlyingPropertyId(cgPropertyId);
 			cgExecutorShadowPart.setAst(asProperty);
-			globalNameManager.declareLazyName(cgExecutorShadowPart);
+			globalNameManager.getNameResolution(cgExecutorShadowPart);
 			cgExecutorShadowPart.setTypeId(analyzer.getCGTypeId(JavaConstants.PROPERTY_TYPE_ID));
 			cgExecutorShadowPart.setCallingConvention(ExecutorShadowPartCallingConvention.INSTANCE);
 			cgExecutorShadowPart.getDependsOn().add(cgPropertyId);

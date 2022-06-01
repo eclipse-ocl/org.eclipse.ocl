@@ -604,7 +604,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		return MGR_NameVariant;
 	}
 
-	@Override
+/*	@Override
 	public @NonNull NameResolution getNameResolution(@NonNull CGValuedElement cgElement) {
 		NameResolution nameResolution = cgElement.basicGetNameResolution(); //.getNameVariant(guardedNameVariant);
 		if (nameResolution == null) {
@@ -612,7 +612,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 			nameResolution = nameManager.declareLazyName2(cgElement);
 		}
 		return nameResolution;
-	}
+	} */
 
 	public @NonNull String getQualifiedForeignClassName(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		assert false : "Unsupported getQualifiedForeignClassName";
@@ -818,7 +818,8 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 						if (cgVariable.toString().contains("create('pkg'::A::bs)")) {
 							getClass();		// XXX
 						}
-						nameResolution = globalNameManager.findNestedNameManager(cgVariable).declareLazyName2(cgVariable);
+						NestedNameManager nestedNameManager = globalNameManager.findNestedNameManager(cgVariable);
+						nameResolution = nestedNameManager.getNameResolution(cgVariable);
 					}
 					propagateNameResolution(cgChild, nameResolution);
 				}
@@ -855,23 +856,15 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 						//	nameManager = (localNameManager != null) && !cgValuedElement2.isGlobal() ? localNameManager : globalNameManager;
 					//	}
 							if ((nameManager != null) && !cgValuedElement2.isGlobal()) {
-								nameResolution = nameManager.declareLazyName2(cgValuedElement2);
+								nameResolution = nameManager.getNameResolution(cgValuedElement2);
 							}
 							else {
-								nameResolution = globalNameManager.declareLazyName(cgValuedElement2);
+								nameResolution = globalNameManager.getNameResolution(cgValuedElement2);
 							}
 						nameResolution.resolveNameHint();
 					}
 				}
 				else {
-				//	if (parentNameResolution != null) {
-				//		nameResolution.setDelegateTo(parentNameResolution);
-				//	}
-				//	else {
-				//		if (nameResolution.isUnresolved()) {
-				//			getClass();
-				//		}
-				//	}
 					nameResolution.resolveNameHint();
 				}
 			}
@@ -882,14 +875,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 						CGValuedElement cgValuedElement = (CGValuedElement)eObject;
 						if ((cgValuedElement.basicGetNameResolution() == null) && !cgValuedElement.isInlined()) {
 							NestedNameManager localNameManager = globalNameManager.findNestedNameManager(cgValuedElement);
-						//	NameManager nameManager = localNameManager != null ? localNameManager : globalNameManager;
-						//	nameManager.declareLazyName(cgValuedElement);
-							if (localNameManager != null) {
-								localNameManager.declareLazyName2(cgValuedElement);
-							}
-							else {
-								globalNameManager.declareLazyName(cgValuedElement);
-							}
+							localNameManager.getNameResolution(cgValuedElement);		// XXX redundant ??
 						}
 					}
 				}
