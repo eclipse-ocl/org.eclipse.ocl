@@ -21,6 +21,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterator;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLetExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
@@ -293,6 +294,12 @@ public class FieldingAnalyzer
 		}
 
 		@Override
+		public @NonNull ReturnState visitCGNavigationCallExp(@NonNull CGNavigationCallExp object) {
+			super.visitCGNavigationCallExp(object);
+			return ReturnState.IS_THROWN;			// XXX non-derived attributes need not throw ???
+		}
+
+		@Override
 		public @NonNull ReturnState visitCGOperation(@NonNull CGOperation cgOperation) {
 			for (CGParameter cgParameter : CGUtil.getParameters(cgOperation)) {		// XXX use callingConvention
 				visit(cgParameter);
@@ -458,6 +465,7 @@ public class FieldingAnalyzer
 
 	protected void insertThrow(@NonNull CGValuedElement cgChild) {
 		assert !(cgChild instanceof CGThrowExp) : "double throw is redundant";
+	//	assert cgChild.isCaught() : "cannot throw if not caught";
 		if (!cgChild.isNonInvalid()) {
 			CGThrowExp cgThrowExp = CGModelFactory.eINSTANCE.createCGThrowExp();
 			cgThrowExp.setCaught(false);
