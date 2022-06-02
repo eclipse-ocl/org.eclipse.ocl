@@ -277,7 +277,10 @@ public class FieldingAnalyzer
 
 		@Override
 		public @NonNull ReturnState visitCGIterator(@NonNull CGIterator cgIterator) {
-			assert cgIterator.getInit() == null;
+		//	assert cgIterator.getInit() == null;			-- CGAccumulator as used by QVTi's BufferStatement may have no init
+			if (!cgIterator.isNonInvalid()) {
+				cgIterator.isNonInvalid();		// XXX
+			}
 			assert cgIterator.isNonInvalid();
 			cgIterator.setCaught(false);
 			return ReturnState.IS_VALID;
@@ -368,10 +371,16 @@ public class FieldingAnalyzer
 		@Override
 		public @NonNull ReturnState visitCGVariableExp(@NonNull CGVariableExp cgVariableExp) {
 			CGVariable cgVariable = CGUtil.getReferredVariable(cgVariableExp);
-			if (!cgVariable.isNonInvalid()) {			// Ifthe CGVariable could be invalid
+			if (!cgVariable.isNonInvalid()) {			// If the CGVariable could be invalid
 				if (!cgVariable.isCaught()) {
-					context.insertCatch(CGUtil.getInit(cgVariable));
-					cgVariable.setCaught(true);
+					CGValuedElement cgInit = cgVariable.getInit();
+					if (cgInit != null) {
+						context.insertCatch(cgInit);
+						cgVariable.setCaught(true);
+					}
+					else {
+						assert false;
+					}
 				}
 				if (requiredReturn == ReturnState.IS_THROWN) {
 					context.insertThrow(cgVariableExp);
