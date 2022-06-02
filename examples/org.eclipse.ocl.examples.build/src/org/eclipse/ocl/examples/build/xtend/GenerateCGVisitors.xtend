@@ -12,8 +12,10 @@ package org.eclipse.ocl.examples.build.xtend
 
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage
+import org.eclipse.ocl.examples.codegen.analyzer.FieldingAnalyzer.ReturnState
+import org.eclipse.ocl.examples.codegen.analyzer.FieldingAnalyzer
 
- class GenerateCGVisitors extends GenerateVisitorsXtend
+class GenerateCGVisitors extends GenerateVisitorsXtend
 {
 	override void generateVisitors(/*@NonNull*/ GenPackage genPackage) {
 		var EPackage ePackage = genPackage.getEcorePackage();
@@ -23,5 +25,8 @@ import org.eclipse.emf.codegen.ecore.genmodel.GenPackage
 		/* ePackage.generateDecorableVisitorInterface("org.eclipse.ocl.xtext.base.util.BaseCSVisitor"); */
 		ePackage.generateAbstractVisitor();
 		ePackage.generateAbstractNullVisitor();
+		if (isDerived()) {
+			ePackage.generateAbstractGenericVisitor("QVTiFieldingAnalyzer", typeof(ReturnState), typeof(FieldingAnalyzer));
+		}
 	}
 }

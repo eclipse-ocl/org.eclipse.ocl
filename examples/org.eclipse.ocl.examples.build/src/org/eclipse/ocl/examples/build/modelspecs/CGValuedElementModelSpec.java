@@ -1930,6 +1930,13 @@ public class CGValuedElementModelSpec extends ModelSpec
 	public static interface Rew {
 		@Nullable String generateRewriteAs(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel);
 
+		public static final @NonNull Rew OPROP = new Rew() { @Override public @Nullable String generateRewriteAs(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
+			return "if (oldValue == executorProperty) {\n" +
+					"			setExecutorProperty((" + classRef(CGExecutorProperty.class) + ")newValue);\n" +
+					"			return true;\n" +
+					"		}\n" +
+					"		return false;";
+		}};
 		public static final @NonNull Rew PART = new Rew() { @Override public @Nullable String generateRewriteAs(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 			return "if (oldValue == executorPart) {\n" +
 					"			setExecutorPart((" + classRef(CGExecutorShadowPart.class) + ")newValue);\n" +
@@ -1938,8 +1945,8 @@ public class CGValuedElementModelSpec extends ModelSpec
 					"		return false;";
 		}};
 		public static final @NonNull Rew PROP = new Rew() { @Override public @Nullable String generateRewriteAs(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-			return "if (oldValue == executorProperty) {\n" +
-					"			setExecutorProperty((" + classRef(CGExecutorProperty.class) + ")newValue);\n" +
+			return "if (oldValue == cgProperty) {\n" +
+					"			setCgProperty((" + classRef(CGProperty.class) + ")newValue);\n" +
 					"			return true;\n" +
 					"		}\n" +
 					"		return false;";
@@ -2310,8 +2317,8 @@ public class CGValuedElementModelSpec extends ModelSpec
 			new CGValuedElementModelSpec(CGNavigationCallExp.class, "referredProperty",	null     , null     , null     , Nul.FEAT , Inv.PRPTY, null     , null     , null     , null    , null     , null     , null     , null     , null     , null     , null     , Eq.EQUIV);
 			new CGValuedElementModelSpec(CGEcoreOppositePropertyCallExp.class, null,	Box.E_PRO, null     , null     , Nul.ECORE, null     , null     , null     , null     , null    , null     , null     , null     , null     , null     , null     , null     , null    );
 			new CGValuedElementModelSpec(CGEcorePropertyCallExp.class, null,			Box.E_PRC, null     , null     , Nul.ECORE, null     , null     , null     , null     , null    , null     , null     , null     , null     , null     , null     , null     , null    );
-			new CGValuedElementModelSpec(CGExecutorOppositePropertyCallExp.class, null,	Box.UNBOX, null     , null     , null     , null     , null     , null     , null     , null    , null     , null     , null     , null     , null     , null     , Rew.PROP , null    );
-			new CGValuedElementModelSpec(CGExecutorPropertyCallExp.class, null,			Box.UNBOX, null     , null     , null     , null     , null     , null     , null     , null    , null     , null     , null     , null     , null     , null     , Rew.PROP , null    );
+			new CGValuedElementModelSpec(CGExecutorOppositePropertyCallExp.class, null,	Box.UNBOX, null     , null     , null     , null     , null     , null     , null     , null    , null     , null     , null     , null     , null     , null     , Rew.OPROP, null    );
+			new CGValuedElementModelSpec(CGExecutorPropertyCallExp.class, null,			Box.UNBOX, null     , null     , null     , null     , null     , null     , null     , null    , null     , null     , null     , null     , null     , null     , Rew.PROP, null    );
 			new CGValuedElementModelSpec(CGForeignPropertyCallExp.class, null,			Box.BOX  , null     , null     , null     , Inv.NEVER, null     , null     , null     , null    , null     , null     , null     , null     , null     , null     , null     , null    );
 			new CGValuedElementModelSpec(CGLibraryPropertyCallExp.class, null,			Box.BOX  , null     , null     , null     , null     , null     , null     , null     , null    , null     , null     , null     , null     , null     , null     , null     , null    );
 			new CGValuedElementModelSpec(CGNativePropertyCallExp.class, null,			Box.UNBOX, null     , null     , null     , null     , null     , null     , null     , null    , null     , null     , null     , null     , null     , null     , null     , null    );
