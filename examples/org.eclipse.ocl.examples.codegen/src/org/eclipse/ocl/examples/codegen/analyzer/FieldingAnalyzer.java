@@ -14,10 +14,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCatchExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGThrowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
-import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 
 /**
  * A FieldingAnalyzer identifies the necessary catches and throws to accommodate the alternative mechanisms
@@ -177,26 +174,6 @@ public class FieldingAnalyzer
 		}
 		return cgCaughtVariable;
 	} */
-
-	protected void insertCatch(@NonNull CGValuedElement cgChild) {
-		assert !(cgChild instanceof CGCatchExp) : "double catch is redundant";
-		assert !(cgChild instanceof CGVariableExp) : "must catch variable not its access";
-		if (!cgChild.isNonInvalid()) {
-			CGCatchExp cgCatchExp = CGModelFactory.eINSTANCE.createCGCatchExp();
-			cgCatchExp.setCaught(true);
-			CGUtil.wrap(cgCatchExp, cgChild);
-		}
-	}
-
-	protected void insertThrow(@NonNull CGValuedElement cgChild) {
-		assert !(cgChild instanceof CGThrowExp) : "double throw is redundant";
-	//	assert cgChild.isCaught() : "cannot throw if not caught";
-		if (!cgChild.isNonInvalid()) {
-			CGThrowExp cgThrowExp = CGModelFactory.eINSTANCE.createCGThrowExp();
-			cgThrowExp.setCaught(false);
-			CGUtil.wrap(cgThrowExp, cgChild);
-		}
-	}
 
 /*	protected boolean isValidating(EObject eObject) {
 		if (eObject instanceof OperationCallExp) {

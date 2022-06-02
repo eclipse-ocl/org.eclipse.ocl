@@ -13,6 +13,7 @@ package org.eclipse.ocl.examples.codegen.analyzer;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.analyzer.FieldingAnalyzer.ReturnState;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGCatchExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIsInvalidExp;
@@ -20,11 +21,13 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGIsUndefinedExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterator;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLetExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGSourcedCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGThrowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
@@ -62,6 +65,26 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 		this.requiredReturn = requiredReturn;
 	}
 
+	protected void insertCatch(@NonNull CGValuedElement cgChild) {
+		assert !(cgChild instanceof CGCatchExp) : "double catch is redundant";
+		assert !(cgChild instanceof CGVariableExp) : "must catch variable not its access";
+		if (!cgChild.isNonInvalid()) {
+			CGCatchExp cgCatchExp = CGModelFactory.eINSTANCE.createCGCatchExp();
+			cgCatchExp.setCaught(true);
+			CGUtil.wrap(cgCatchExp, cgChild);
+		}
+	}
+
+	protected void insertThrow(@NonNull CGValuedElement cgChild) {
+		assert !(cgChild instanceof CGThrowExp) : "double throw is redundant";
+	//	assert cgChild.isCaught() : "cannot throw if not caught";
+		if (!cgChild.isNonInvalid()) {
+			CGThrowExp cgThrowExp = CGModelFactory.eINSTANCE.createCGThrowExp();
+			cgThrowExp.setCaught(false);
+			CGUtil.wrap(cgThrowExp, cgChild);
+		}
+	}
+
 	protected @NonNull ReturnState requiredReturn() {
 		return requiredReturn;
 	}
@@ -86,14 +109,14 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 			if (!cgValuedElement.isNonInvalid()) {
 				if (requiredReturn == ReturnState.IS_CAUGHT) {
 					if (!returnState.isSuitableFor(ReturnState.IS_CAUGHT)) {
-						context.insertCatch(cgValuedElement);
+						insertCatch(cgValuedElement);
 						cgValuedElement.setCaught(true);
 						return ReturnState.IS_CAUGHT;
 					}
 				}
 				else if (requiredReturn == ReturnState.IS_THROWN) {
 					if (!returnState.isSuitableFor(ReturnState.IS_THROWN)) {
-						context.insertThrow(cgValuedElement);
+						insertThrow(cgValuedElement);
 						cgValuedElement.setCaught(false);
 						return ReturnState.IS_THROWN;
 					}
@@ -187,10 +210,7 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 
 	@Override
 	public @NonNull ReturnState visitCGIterator(@NonNull CGIterator cgIterator) {
-	//	assert cgIterator.getInit() == null;			-- CGAccumulator as used by QVTi's BufferStatement may have no init
-		if (!cgIterator.isNonInvalid()) {
-			cgIterator.isNonInvalid();		// XXX
-		}
+		assert cgIterator.getInit() == null;
 		assert cgIterator.isNonInvalid();
 		cgIterator.setCaught(false);
 		return ReturnState.IS_VALID;
@@ -285,7 +305,7 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 			if (!cgVariable.isCaught()) {
 				CGValuedElement cgInit = cgVariable.getInit();
 				if (cgInit != null) {
-					context.insertCatch(cgInit);
+					insertCatch(cgInit);
 					cgVariable.setCaught(true);
 				}
 				else {
@@ -293,7 +313,7 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 				}
 			}
 			if (requiredReturn == ReturnState.IS_THROWN) {
-				context.insertThrow(cgVariableExp);
+				insertThrow(cgVariableExp);
 			}
 		}
 		cgVariableExp.setCaught(cgVariable.isCaught());

@@ -77,16 +77,17 @@ abstract class GenerateVisitorsXtend extends GenerateVisitors
 	/*
 	 * Abstract«projectPrefix»«generic»Visitor
 	 */
-	protected def void generateAbstractFieldingAnalyzerVisitor(/*@NonNull*/ EPackage ePackage, /*@NonNull*/ String generic, /*@NonNull*/ Class<?> returnClass, /*@NonNull*/ Class<?> contextClass) {
+	protected def void generateAbstractGenericVisitor2(/*@NonNull*/ EPackage ePackage, /*@NonNull*/ Iterable</*@NonNull*/ Class<?>> importClasses,
+		/*@NonNull*/ String generic, /*@NonNull*/ String returnType, /*@NonNull*/ String ctorTypes, /*@NonNull*/ String ctorArgs) {
 		var boolean isDerived = isDerived();
 		var boolean needsOverride = needsOverride();
 		var MergeWriter writer = new MergeWriter(outputFolder + "Abstract" + projectPrefix + generic + "Visitor.java");
 		writer.append('''
 			«ePackage.generateHeader(visitorPackageName)»
 
-			import «returnClass.getName().replace("$", ".")»;
-			import «org.eclipse.jdt.annotation.NonNull.getName()»;
-			import «contextClass.getName()»;
+			«FOR importClass : importClasses»
+			import «importClass.getName().replace("$", ".")»;
+			«ENDFOR»
 			«IF isDerived»import «superVisitorPackageName»ities.«superProjectPrefix»«generic»Visitor;«ENDIF»
 
 			/**
@@ -98,15 +99,10 @@ abstract class GenerateVisitorsXtend extends GenerateVisitors
 			 */
 			public abstract class Abstract«projectPrefix»«generic»Visitor
 				«IF isDerived»extends «superProjectPrefix»«generic»Visitor«ENDIF»
-				implements «visitorClassName»<«emitNonNull(returnClass.getSimpleName())»>
+				implements «visitorClassName»<«returnType»>
 			{
-				/**
-				 * Initializes me with an initial value for my result.
-				 *
-				 * @param context my initial result value
-				 */
-				protected Abstract«projectPrefix»«generic»Visitor(«emitNonNull(contextClass.getSimpleName())» context, @NonNull ReturnState requiredReturn) {
-					super(context, requiredReturn);
+				protected Abstract«projectPrefix»«generic»Visitor(«ctorTypes») {
+					super(«ctorArgs»);
 				}
 				«FOR eClass : getSortedEClasses(ePackage)»
 				«var EClass firstSuperClass = eClass.firstSuperClass(eClass)»
@@ -114,7 +110,7 @@ abstract class GenerateVisitorsXtend extends GenerateVisitors
 				«IF needsOverride»
 				@Override
 				«ENDIF»
-				public «emitNonNull(returnClass.getSimpleName())» visit«eClass.name»(«emitNonNull(modelPackageName + "." + getTemplatedName(eClass))» object) {
+				public «returnType» visit«eClass.name»(«emitNonNull(modelPackageName + "." + getTemplatedName(eClass))» object) {
 					«IF firstSuperClass == eClass»
 					return visiting(object);
 					«ELSE»

@@ -1155,7 +1155,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 	}
 
 	/**
-	 * The algorithm options for getInvaliValue()/isInvalid()/isNonInvalid()/setNonInvalid()/setNonInvalidValue()
+	 * The algorithm options for getInvalidValue()/isInvalid()/isNonInvalid()/setNonInvalid()/setNonInvalidValue()
 	 */
 	public interface Inv {
 		@Nullable String generateGetInvalidValue(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel);
@@ -1554,7 +1554,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 			}
 		};
 
-		public static MethodSpec setNonInvalidValue = new MyMethodSpec(CGAccumulator.class, "void setNonInvalid(boolean nonInvalid)", "boolean nonInvalid = false",
+		public static MethodSpec setNonInvalidValue = new MyMethodSpec(CGAccumulator.class, "void setNonInvalid(boolean nonInvalid)", null,
 				"Set the non-invalid status.")
 		{
 			@Override
