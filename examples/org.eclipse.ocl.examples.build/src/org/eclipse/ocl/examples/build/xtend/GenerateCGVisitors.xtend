@@ -26,7 +26,7 @@ class GenerateCGVisitors extends GenerateVisitorsXtend
 		ePackage.generateAbstractVisitor();
 		ePackage.generateAbstractNullVisitor();
 		if (isDerived()) {
-			ePackage.generateAbstractGenericVisitor("QVTiFieldingAnalyzer", typeof(ReturnState), typeof(FieldingAnalyzer));
+			ePackage.generateAbstractFieldingAnalyzerVisitor("FieldingAnalysis", typeof(ReturnState), typeof(FieldingAnalyzer));
 		}
 	}
 }

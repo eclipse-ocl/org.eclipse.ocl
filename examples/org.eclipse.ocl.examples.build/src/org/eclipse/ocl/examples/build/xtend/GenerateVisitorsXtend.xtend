@@ -31,8 +31,8 @@ abstract class GenerateVisitorsXtend extends GenerateVisitors
 			«ePackage.generateHeader(visitorPackageName)»
 
 			import «returnClass.getName()»;
-			import org.eclipse.jdt.annotation.NonNull;
-			import org.eclipse.jdt.annotation.Nullable;
+			import «org.eclipse.jdt.annotation.NonNull.getName()»;
+			import «org.eclipse.jdt.annotation.Nullable.getName()»;
 			import «contextClass.getName()»;
 			«IF isDerived»import «superVisitorPackageName»ities.«superProjectPrefix»«generic»Visitor;«ENDIF»
 
@@ -75,6 +75,59 @@ abstract class GenerateVisitorsXtend extends GenerateVisitors
 	}
 
 	/*
+	 * Abstract«projectPrefix»«generic»Visitor
+	 */
+	protected def void generateAbstractFieldingAnalyzerVisitor(/*@NonNull*/ EPackage ePackage, /*@NonNull*/ String generic, /*@NonNull*/ Class<?> returnClass, /*@NonNull*/ Class<?> contextClass) {
+		var boolean isDerived = isDerived();
+		var boolean needsOverride = needsOverride();
+		var MergeWriter writer = new MergeWriter(outputFolder + "Abstract" + projectPrefix + generic + "Visitor.java");
+		writer.append('''
+			«ePackage.generateHeader(visitorPackageName)»
+
+			import «returnClass.getName().replace("$", ".")»;
+			import «org.eclipse.jdt.annotation.NonNull.getName()»;
+			import «contextClass.getName()»;
+			«IF isDerived»import «superVisitorPackageName»ities.«superProjectPrefix»«generic»Visitor;«ENDIF»
+
+			/**
+			 * An Abstract«projectPrefix»«generic»Visitor provides a default implementation for each
+			 * visitXxx method that delegates to the visitYyy method of the first
+			 * super class, (or transitively its first super class' first super class
+			 * until a non-interface super-class is found). In the absence of any
+			 * suitable first super class, the method delegates to visiting().
+			 */
+			public abstract class Abstract«projectPrefix»«generic»Visitor
+				«IF isDerived»extends «superProjectPrefix»«generic»Visitor«ENDIF»
+				implements «visitorClassName»<«emitNonNull(returnClass.getSimpleName())»>
+			{
+				/**
+				 * Initializes me with an initial value for my result.
+				 *
+				 * @param context my initial result value
+				 */
+				protected Abstract«projectPrefix»«generic»Visitor(«emitNonNull(contextClass.getSimpleName())» context, @NonNull ReturnState requiredReturn) {
+					super(context, requiredReturn);
+				}
+				«FOR eClass : getSortedEClasses(ePackage)»
+				«var EClass firstSuperClass = eClass.firstSuperClass(eClass)»
+
+				«IF needsOverride»
+				@Override
+				«ENDIF»
+				public «emitNonNull(returnClass.getSimpleName())» visit«eClass.name»(«emitNonNull(modelPackageName + "." + getTemplatedName(eClass))» object) {
+					«IF firstSuperClass == eClass»
+					return visiting(object);
+					«ELSE»
+					return visit«firstSuperClass.name»(object);
+					«ENDIF»
+				}
+				«ENDFOR»
+			}
+		''');
+		writer.close();
+	}
+
+	/*
 	 * AbstractDelegatingVisitor
 	 */
 	protected def void generateAbstractDelegatingVisitor(/*@NonNull*/ EPackage ePackage) {
@@ -84,7 +137,7 @@ abstract class GenerateVisitorsXtend extends GenerateVisitors
 		writer.append('''
 			«ePackage.generateHeader(visitorPackageName)»
 
-			import org.eclipse.jdt.annotation.NonNull;
+			import «org.eclipse.jdt.annotation.NonNull.getName()»;
 
 			/**
 			 * An AbstractDelegating«visitorClassName» delegates all visits.
@@ -152,8 +205,8 @@ abstract class GenerateVisitorsXtend extends GenerateVisitors
 		writer.append('''
 			«ePackage.generateHeader(visitorPackageName)»
 
-			import org.eclipse.jdt.annotation.NonNull;
-			import org.eclipse.jdt.annotation.Nullable;
+			import «org.eclipse.jdt.annotation.NonNull.getName()»;
+			import «org.eclipse.jdt.annotation.Nullable.getName()»;
 			import «superVisitorPackageName».AbstractDelegating«superVisitorClassName»;
 			import «superVisitorPackageName».«superVisitorClassName»;
 
@@ -232,7 +285,7 @@ abstract class GenerateVisitorsXtend extends GenerateVisitors
 		writer.append('''
 			«ePackage.generateHeader(visitorPackageName)»
 
-			import org.eclipse.jdt.annotation.NonNull;
+			import «org.eclipse.jdt.annotation.NonNull.getName()»;
 
 			/**
 			 * An AbstractExtending«visitorClassName» provides a default implementation for each
@@ -282,7 +335,7 @@ abstract class GenerateVisitorsXtend extends GenerateVisitors
 		writer.append('''
 			«ePackage.generateHeader(visitorPackageName)»
 
-			import org.eclipse.jdt.annotation.NonNull;
+			import «org.eclipse.jdt.annotation.NonNull.getName()»;
 
 			/**
 			 * An AbstractMerged«visitorClassName» merges all visits direct to visiting().
@@ -319,7 +372,7 @@ abstract class GenerateVisitorsXtend extends GenerateVisitors
 		writer.append('''
 			«ePackage.generateHeader(visitorPackageName)»
 
-			import org.eclipse.jdt.annotation.NonNull;
+			import «org.eclipse.jdt.annotation.NonNull.getName()»;
 
 			/**
 			 * An AbstractExtendingNonNull«visitorClassName» provides a default implementation for each
@@ -401,8 +454,8 @@ abstract class GenerateVisitorsXtend extends GenerateVisitors
 		writer.append('''
 			«ePackage.generateHeader(visitorPackageName)»
 
-			import org.eclipse.jdt.annotation.NonNull;
-			import org.eclipse.jdt.annotation.Nullable;
+			import «org.eclipse.jdt.annotation.NonNull.getName()»;
+			import «org.eclipse.jdt.annotation.Nullable.getName()»;
 
 			/**
 			 * An AbstractNull«visitorClassName» provides a default implementation for each
@@ -451,8 +504,8 @@ abstract class GenerateVisitorsXtend extends GenerateVisitors
 			«ePackage.generateHeader(visitorPackageName)»
 
 			import «returnClass.getName()»;
-			import org.eclipse.jdt.annotation.NonNull;
-			import org.eclipse.jdt.annotation.Nullable;
+			import «org.eclipse.jdt.annotation.NonNull.getName()»;
+			import «org.eclipse.jdt.annotation.Nullable.getName()»;
 			import «contextClass.getName()»;
 			«IF isDerived && !superProjectPrefix.equals("")»import «superVisitorPackageName»ities.«superProjectPrefix»«generic»Visitor;«ENDIF»
 			«IF isDerived && superProjectPrefix.equals("")»import «FlowAnalysis.getName()»;«ENDIF»
@@ -506,8 +559,8 @@ abstract class GenerateVisitorsXtend extends GenerateVisitors
 			«ePackage.generateHeader(visitorPackageName)»
 
 			import «returnClass.getName()»;
-			import org.eclipse.jdt.annotation.NonNull;
-			import org.eclipse.jdt.annotation.Nullable;
+			import «org.eclipse.jdt.annotation.NonNull.getName()»;
+			import «org.eclipse.jdt.annotation.Nullable.getName()»;
 			import «Type.getName()»;
 			import «contextClass.getName()»;
 			«IF isDerived && !superProjectPrefix.equals("")»import «superVisitorPackageName»ities.«superProjectPrefix»«generic»Visitor;«ENDIF»
@@ -562,8 +615,8 @@ abstract class GenerateVisitorsXtend extends GenerateVisitors
 			«ePackage.generateHeader(visitorPackageName)»
 
 			«IF !isDerived»
-			import org.eclipse.jdt.annotation.NonNull;
-			import org.eclipse.jdt.annotation.Nullable;
+			import «org.eclipse.jdt.annotation.NonNull.getName()»;
+			import «org.eclipse.jdt.annotation.Nullable.getName()»;
 			«ENDIF»
 
 			/*
@@ -651,8 +704,8 @@ abstract class GenerateVisitorsXtend extends GenerateVisitors
 		writer.append('''
 			«ePackage.generateHeader(visitorPackageName)»
 
-			import org.eclipse.jdt.annotation.NonNull;
-			import org.eclipse.jdt.annotation.Nullable;
+			import «org.eclipse.jdt.annotation.NonNull.getName()»;
+			import «org.eclipse.jdt.annotation.Nullable.getName()»;
 
 			/**
 			 * An AbstractWrapping«visitorClassName» delegates all visits wrapping the delegation in a call to a preVisit function and a postVisit function.
@@ -755,7 +808,7 @@ abstract class GenerateVisitorsXtend extends GenerateVisitors
 		writer.append('''
 			«ePackage.generateHeader(visitorPackageName)»
 
-			import org.eclipse.jdt.annotation.NonNull;
+			import «org.eclipse.jdt.annotation.NonNull.getName()»;
 
 			/**
 			 */
@@ -805,8 +858,8 @@ abstract class GenerateVisitorsXtend extends GenerateVisitors
 		writer.append('''
 			«ePackage.generateHeader(visitablePackageName2)»
 
-			import org.eclipse.emf.ecore.EClass;
-			import org.eclipse.jdt.annotation.NonNull;
+			import «org.eclipse.emf.ecore.EClass.getName()»;
+			import «org.eclipse.jdt.annotation.NonNull.getName()»;
 
 			public interface «visitableClassName2»
 			{
@@ -846,9 +899,9 @@ abstract class GenerateVisitorsXtend extends GenerateVisitors
 		writer.append('''
 			«ePackage.generateHeader(visitorPackageName)»
 
-			import org.eclipse.jdt.annotation.NonNull;
+			import «org.eclipse.jdt.annotation.NonNull.getName()»;
 			«IF !isDerived»
-			import org.eclipse.jdt.annotation.Nullable;
+			import «org.eclipse.jdt.annotation.Nullable.getName()»;
 			«ENDIF»
 
 			/**
