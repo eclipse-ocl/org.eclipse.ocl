@@ -23,5 +23,4 @@ public class CGModelFieldingAnalysisVisitor extends FieldingAnalysisVisitor
 	public CGModelFieldingAnalysisVisitor(@NonNull FieldingAnalyzer context, @NonNull ReturnState requiredReturn) {
 		super(context, requiredReturn);
 	}
-
 }

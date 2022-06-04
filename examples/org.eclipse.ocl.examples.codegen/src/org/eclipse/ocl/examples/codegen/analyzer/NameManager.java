@@ -317,7 +317,7 @@ public abstract class NameManager
 		}
 
 		private boolean debugAllocatedName(@NonNull String name) {
-			if (name.startsWith("create")) {
+			if (name.startsWith("objectsOfKind")) {
 				getClass();			// XXX
 			}
 			return true;

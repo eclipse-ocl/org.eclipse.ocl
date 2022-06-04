@@ -125,11 +125,6 @@ public class FieldingAnalyzer
 	 */
 	protected final @NonNull FieldingAnalysisVisitor mustBeThrown = createAnalysisVisitor(ReturnState.IS_THROWN);
 
-	/**
-	 * The CGVariable with a CGCatchExp iitializer for each possibly invalid CGVariable that is accessed in a mustBeCaught fashion.
-	 */
-//	private final @NonNull Map<@NonNull CGVariable, @NonNull CGFinalVariable> variable2caughtVariable = new HashMap<>();
-
 	public FieldingAnalyzer(@NonNull CodeGenAnalyzer analyzer) {
 		this.analyzer = analyzer;
 	}

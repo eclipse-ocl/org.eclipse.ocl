@@ -265,7 +265,7 @@ public class JavaStream
 				s.append(string);
 			}
 			else {
-				if (string.contains("oclContainer")) {
+				if (string.contains("objectsOfKind")) {
 					getClass();		// XXX
 				}
 				int sLength = s.length();

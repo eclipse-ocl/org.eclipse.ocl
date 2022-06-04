@@ -65,6 +65,22 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 		this.requiredReturn = requiredReturn;
 	}
 
+	protected @NonNull FieldingAnalysisVisitor getMayBeThrownVisitor() {
+		return context.mayBeThrown;
+	}
+
+	protected @NonNull FieldingAnalysisVisitor getMustBeCaughtVisitor() {
+		return context.mustBeCaught;
+	}
+
+	protected @NonNull FieldingAnalysisVisitor getMustBeThrownVisitor() {
+		return context.mustBeThrown;
+	}
+
+	protected @NonNull FieldingAnalysisVisitor getNestedVisitor(@NonNull Operation asOperation) {
+		return asOperation.isIsValidating() ? context.mustBeCaught : context.mayBeThrown;
+	}
+
 	protected void insertCatch(@NonNull CGValuedElement cgChild) {
 		assert !(cgChild instanceof CGCatchExp) : "double catch is redundant";
 		assert !(cgChild instanceof CGVariableExp) : "must catch variable not its access";
@@ -201,7 +217,7 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 		for (CGIterator cgCoIterator : CGUtil.getCoIterators(cgElement)) {
 			context.mustBeThrown.visit(cgCoIterator);
 		}
-		FieldingAnalysisVisitor bodyAnalysisVisitor = asIteration.isIsValidating() ? context.mustBeCaught : context.mayBeThrown;
+		FieldingAnalysisVisitor bodyAnalysisVisitor = getNestedVisitor(asIteration);
 		ReturnState returnState = bodyAnalysisVisitor.visit(CGUtil.getBody(cgElement));
 		// Although individual body evaluations may be caught and accumulated, the accumularedc result is thrown.
 		cgElement.setCaught(false);
