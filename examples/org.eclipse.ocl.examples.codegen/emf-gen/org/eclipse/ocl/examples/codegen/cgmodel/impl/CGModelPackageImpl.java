@@ -2122,8 +2122,18 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 	 * @generated
 	 */
 	@Override
-	public EAttribute getCGIterationCallExp_ReferredIteration() {
-		return (EAttribute)cgIterationCallExpEClass.getEStructuralFeatures().get(0);
+	public EReference getCGIterationCallExp_ReferredIteration() {
+		return (EReference)cgIterationCallExpEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EAttribute getCGIterationCallExp_AsIteration() {
+		return (EAttribute)cgIterationCallExpEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -2143,7 +2153,7 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 	 */
 	@Override
 	public EReference getCGIterationCallExp_Body() {
-		return (EReference)cgIterationCallExpEClass.getEStructuralFeatures().get(2);
+		return (EReference)cgIterationCallExpEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -2153,7 +2163,7 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 	 */
 	@Override
 	public EReference getCGIterationCallExp_CoIterators() {
-		return (EReference)cgIterationCallExpEClass.getEStructuralFeatures().get(3);
+		return (EReference)cgIterationCallExpEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -2522,8 +2532,8 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 	 * @generated
 	 */
 	@Override
-	public EAttribute getCGNavigationCallExp_ReferredProperty() {
-		return (EAttribute)cgNavigationCallExpEClass.getEStructuralFeatures().get(0);
+	public EReference getCGNavigationCallExp_ReferredProperty() {
+		return (EReference)cgNavigationCallExpEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -2532,8 +2542,8 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 	 * @generated
 	 */
 	@Override
-	public EReference getCGNavigationCallExp_CgProperty() {
-		return (EReference)cgNavigationCallExpEClass.getEStructuralFeatures().get(1);
+	public EAttribute getCGNavigationCallExp_AsProperty() {
+		return (EAttribute)cgNavigationCallExpEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -2632,8 +2642,8 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 	 * @generated
 	 */
 	@Override
-	public EReference getCGOperationCallExp_CgArguments() {
-		return (EReference)cgOperationCallExpEClass.getEStructuralFeatures().get(2);
+	public EReference getCGOperationCallExp_ReferredOperation() {
+		return (EReference)cgOperationCallExpEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -2642,18 +2652,18 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 	 * @generated
 	 */
 	@Override
-	public EAttribute getCGOperationCallExp_ReferredOperation() {
-		return (EAttribute)cgOperationCallExpEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EReference getCGOperationCallExp_CgOperation() {
+	public EReference getCGOperationCallExp_Arguments() {
 		return (EReference)cgOperationCallExpEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EAttribute getCGOperationCallExp_AsOperation() {
+		return (EAttribute)cgOperationCallExpEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -3318,7 +3328,7 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		cgBoxExpEClass = createEClass(4);
 
 		cgBuiltInIterationCallExpEClass = createEClass(5);
-		createEReference(cgBuiltInIterationCallExpEClass, 13);
+		createEReference(cgBuiltInIterationCallExpEClass, 14);
 
 		cgCachedOperationEClass = createEClass(6);
 		createEReference(cgCachedOperationEClass, 12);
@@ -3457,10 +3467,11 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		cgIsUndefinedExpEClass = createEClass(49);
 
 		cgIterationCallExpEClass = createEClass(50);
-		createEAttribute(cgIterationCallExpEClass, 9);
+		createEReference(cgIterationCallExpEClass, 9);
 		createEReference(cgIterationCallExpEClass, 10);
 		createEReference(cgIterationCallExpEClass, 11);
 		createEReference(cgIterationCallExpEClass, 12);
+		createEAttribute(cgIterationCallExpEClass, 13);
 
 		cgIteratorEClass = createEClass(51);
 
@@ -3469,10 +3480,10 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		createEReference(cgLetExpEClass, 7);
 
 		cgLibraryIterateCallExpEClass = createEClass(53);
-		createEReference(cgLibraryIterateCallExpEClass, 14);
+		createEReference(cgLibraryIterateCallExpEClass, 15);
 
 		cgLibraryIterationCallExpEClass = createEClass(54);
-		createEAttribute(cgLibraryIterationCallExpEClass, 13);
+		createEAttribute(cgLibraryIterationCallExpEClass, 14);
 
 		cgLibraryOperationEClass = createEClass(55);
 
@@ -3514,8 +3525,8 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		createEAttribute(cgNativePropertyCallExpEClass, 11);
 
 		cgNavigationCallExpEClass = createEClass(67);
-		createEAttribute(cgNavigationCallExpEClass, 9);
-		createEReference(cgNavigationCallExpEClass, 10);
+		createEReference(cgNavigationCallExpEClass, 9);
+		createEAttribute(cgNavigationCallExpEClass, 10);
 
 		cgNullEClass = createEClass(68);
 
@@ -3529,9 +3540,9 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		createEAttribute(cgOperationEClass, 11);
 
 		cgOperationCallExpEClass = createEClass(71);
-		createEAttribute(cgOperationCallExpEClass, 8);
+		createEReference(cgOperationCallExpEClass, 8);
 		createEReference(cgOperationCallExpEClass, 9);
-		createEReference(cgOperationCallExpEClass, 10);
+		createEAttribute(cgOperationCallExpEClass, 10);
 
 		cgOppositePropertyCallExpEClass = createEClass(72);
 
@@ -3909,10 +3920,11 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		initEClass(cgIsUndefinedExpEClass, CGIsUndefinedExp.class, "CGIsUndefinedExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(cgIterationCallExpEClass, CGIterationCallExp.class, "CGIterationCallExp", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getCGIterationCallExp_ReferredIteration(), this.getIteration(), "referredIteration", null, 1, 1, CGIterationCallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getCGIterationCallExp_ReferredIteration(), this.getCGOperation(), null, "referredIteration", null, 1, 1, CGIterationCallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getCGIterationCallExp_Iterators(), this.getCGIterator(), null, "iterators", null, 0, -1, CGIterationCallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getCGIterationCallExp_Body(), this.getCGValuedElement(), null, "body", null, 1, 1, CGIterationCallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getCGIterationCallExp_CoIterators(), this.getCGIterator(), null, "coIterators", null, 0, -1, CGIterationCallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getCGIterationCallExp_Body(), this.getCGValuedElement(), null, "body", null, 1, 1, CGIterationCallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCGIterationCallExp_AsIteration(), this.getIteration(), "asIteration", null, 1, 1, CGIterationCallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(cgIteratorEClass, CGIterator.class, "CGIterator", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -3966,8 +3978,8 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		initEAttribute(getCGNativePropertyCallExp_Field(), this.getField(), "field", null, 1, 1, CGNativePropertyCallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(cgNavigationCallExpEClass, CGNavigationCallExp.class, "CGNavigationCallExp", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getCGNavigationCallExp_ReferredProperty(), this.getProperty(), "referredProperty", null, 1, 1, CGNavigationCallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getCGNavigationCallExp_CgProperty(), this.getCGProperty(), null, "cgProperty", null, 1, 1, CGNavigationCallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getCGNavigationCallExp_ReferredProperty(), this.getCGProperty(), null, "referredProperty", null, 1, 1, CGNavigationCallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCGNavigationCallExp_AsProperty(), this.getProperty(), "asProperty", null, 1, 1, CGNavigationCallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(cgNullEClass, CGNull.class, "CGNull", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -3981,9 +3993,9 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		initEAttribute(getCGOperation_CallingConvention(), this.getOperationCallingConvention(), "callingConvention", null, 1, 1, CGOperation.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(cgOperationCallExpEClass, CGOperationCallExp.class, "CGOperationCallExp", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getCGOperationCallExp_ReferredOperation(), this.getOperation(), "referredOperation", null, 1, 1, CGOperationCallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getCGOperationCallExp_CgOperation(), this.getCGOperation(), null, "cgOperation", null, 1, 1, CGOperationCallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getCGOperationCallExp_CgArguments(), this.getCGValuedElement(), null, "cgArguments", null, 0, -1, CGOperationCallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getCGOperationCallExp_ReferredOperation(), this.getCGOperation(), null, "referredOperation", null, 1, 1, CGOperationCallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getCGOperationCallExp_Arguments(), this.getCGValuedElement(), null, "arguments", null, 0, -1, CGOperationCallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCGOperationCallExp_AsOperation(), this.getOperation(), "asOperation", null, 1, 1, CGOperationCallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(cgOppositePropertyCallExpEClass, CGOppositePropertyCallExp.class, "CGOppositePropertyCallExp", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

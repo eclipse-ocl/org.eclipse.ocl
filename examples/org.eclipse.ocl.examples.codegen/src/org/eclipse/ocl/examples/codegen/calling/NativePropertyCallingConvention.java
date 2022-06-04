@@ -48,8 +48,8 @@ public class NativePropertyCallingConvention extends AbstractPropertyCallingConv
 		boolean isRequired = asProperty.isIsRequired();
 		assert libraryProperty instanceof NativeProperty;
 		CGNativePropertyCallExp cgPropertyCallExp = CGModelFactory.eINSTANCE.createCGNativePropertyCallExp();
-		cgPropertyCallExp.setCgProperty(cgProperty);
-		cgPropertyCallExp.setReferredProperty(asProperty);
+		cgPropertyCallExp.setReferredProperty(cgProperty);
+		cgPropertyCallExp.setAsProperty(asProperty);
 		as2cgVisitor.initAst(cgPropertyCallExp, asPropertyCallExp);
 		cgPropertyCallExp.setRequired(isRequired || codeGenerator.isPrimitive(cgPropertyCallExp));
 		cgPropertyCallExp.setSource(cgSource);
@@ -83,7 +83,7 @@ public class NativePropertyCallingConvention extends AbstractPropertyCallingConv
 			public void append() {
 				js.appendValueName(source);
 				js.append(".");
-				js.append(cgPropertyCallExp.getReferredProperty().getName());
+				js.append(cgPropertyCallExp.getAsProperty().getName());
 			}
 		};
 		js.appendClassCast(cgPropertyCallExp, castBody);

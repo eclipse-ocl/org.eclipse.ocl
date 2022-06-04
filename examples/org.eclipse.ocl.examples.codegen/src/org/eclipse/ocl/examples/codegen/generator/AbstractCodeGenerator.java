@@ -23,6 +23,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AnalysisVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
+import org.eclipse.ocl.examples.codegen.calling.BuiltInIterationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.BuiltInOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.CachedOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.ConstrainedPropertyCallingConvention;
@@ -50,6 +51,7 @@ import org.eclipse.ocl.examples.codegen.java.JavaLanguageSupport;
 import org.eclipse.ocl.examples.codegen.library.NativeProperty;
 import org.eclipse.ocl.examples.codegen.library.NativeVisitorOperation;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.Operation;
@@ -179,9 +181,12 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 
 	@Override
 	public @NonNull OperationCallingConvention getCallingConvention(@NonNull Operation asOperation, boolean requireFinal) {
+		if (asOperation instanceof Iteration) {
+			return BuiltInIterationCallingConvention.INSTANCE;
+		}
 		LibraryOperation libraryOperation = (LibraryOperation)metamodelManager.getImplementation(asOperation);
 		if (BuiltInOperationCallingConvention.INSTANCE.canHandle(libraryOperation)) {
-			return BuiltInOperationCallingConvention.INSTANCE;
+				return BuiltInOperationCallingConvention.INSTANCE;
 		}
 		if (libraryOperation instanceof AbstractStaticOperation) {
 			return ForeignOperationCallingConvention.INSTANCE;

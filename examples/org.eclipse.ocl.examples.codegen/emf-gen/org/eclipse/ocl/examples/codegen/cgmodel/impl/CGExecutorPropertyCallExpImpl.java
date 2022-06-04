@@ -232,8 +232,8 @@ public class CGExecutorPropertyCallExpImpl extends CGPropertyCallExpImpl impleme
 	 */
 	@Override
 	public boolean rewriteAs(@NonNull CGValuedElement oldValue, @NonNull CGValuedElement newValue) {
-		if (oldValue == cgProperty) {
-			setCgProperty((CGProperty)newValue);
+		if (oldValue == referredProperty) {
+			setReferredProperty((CGProperty)newValue);
 			return true;
 		}
 		return false;

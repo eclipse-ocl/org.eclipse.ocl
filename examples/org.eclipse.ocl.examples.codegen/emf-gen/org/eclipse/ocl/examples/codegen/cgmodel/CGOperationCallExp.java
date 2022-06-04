@@ -24,8 +24,8 @@ import org.eclipse.ocl.pivot.Operation;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getReferredOperation <em>Referred Operation</em>}</li>
- *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getCgOperation <em>Cg Operation</em>}</li>
- *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getCgArguments <em>Cg Arguments</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getArguments <em>Arguments</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getAsOperation <em>As Operation</em>}</li>
  * </ul>
  *
  * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGOperationCallExp()
@@ -33,67 +33,60 @@ import org.eclipse.ocl.pivot.Operation;
  */
 public interface CGOperationCallExp extends CGCallExp {
 	/**
-	 * Returns the value of the '<em><b>Cg Arguments</b></em>' containment reference list.
+	 * Returns the value of the '<em><b>Referred Operation</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Referred Operation</em>' reference.
+	 * @see #setReferredOperation(CGOperation)
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGOperationCallExp_ReferredOperation()
+	 * @generated
+	 */
+	CGOperation getReferredOperation();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getReferredOperation <em>Referred Operation</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Referred Operation</em>' reference.
+	 * @see #getReferredOperation()
+	 * @generated
+	 */
+	void setReferredOperation(CGOperation value);
+
+	/**
+	 * Returns the value of the '<em><b>Arguments</b></em>' containment reference list.
 	 * The list contents are of type {@link org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
 	 * All argument expressions for the call often corresponding to executor then typeid then source/self then arguments
 	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Cg Arguments</em>' containment reference list.
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGOperationCallExp_CgArguments()
+	 * @return the value of the '<em>Arguments</em>' containment reference list.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGOperationCallExp_Arguments()
 	 * @generated
 	 */
-	List<CGValuedElement> getCgArguments();
+	List<CGValuedElement> getArguments();
 
 	/**
-	 * Returns the value of the '<em><b>Referred Operation</b></em>' attribute.
+	 * Returns the value of the '<em><b>As Operation</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Referred Operation</em>' reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Referred Operation</em>' attribute.
-	 * @see #setReferredOperation(Operation)
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGOperationCallExp_ReferredOperation()
+	 * @return the value of the '<em>As Operation</em>' attribute.
+	 * @see #setAsOperation(Operation)
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGOperationCallExp_AsOperation()
 	 * @generated
 	 */
-	Operation getReferredOperation();
+	Operation getAsOperation();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getReferredOperation <em>Referred Operation</em>}' attribute.
+	 * Sets the value of the '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getAsOperation <em>As Operation</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Referred Operation</em>' attribute.
-	 * @see #getReferredOperation()
+	 * @param value the new value of the '<em>As Operation</em>' attribute.
+	 * @see #getAsOperation()
 	 * @generated
 	 */
-	void setReferredOperation(Operation value);
-
-	/**
-	 * Returns the value of the '<em><b>Cg Operation</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * The this expression for the call when invoking a native or ecore implementation.
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Cg Operation</em>' reference.
-	 * @see #setCgOperation(CGOperation)
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGOperationCallExp_CgOperation()
-	 * @generated
-	 */
-	CGOperation getCgOperation();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getCgOperation <em>Cg Operation</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Cg Operation</em>' reference.
-	 * @see #getCgOperation()
-	 * @generated
-	 */
-	void setCgOperation(CGOperation value);
+	void setAsOperation(Operation value);
 
 	default CGValuedElement getCgThis() { return null; }
 } // CGOperationCallExp

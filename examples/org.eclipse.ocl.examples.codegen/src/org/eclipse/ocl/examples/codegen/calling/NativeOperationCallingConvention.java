@@ -91,7 +91,7 @@ public class NativeOperationCallingConvention extends AbstractOperationCallingCo
 		}
 		//
 		Method jMethod = cgNativeOperationCallExp.getMethod();
-		List<CGValuedElement> cgArguments = cgNativeOperationCallExp.getCgArguments();
+		List<CGValuedElement> cgArguments = cgNativeOperationCallExp.getArguments();
 		Class<?>[] jParameterTypes = jMethod.getParameterTypes();
 		js.appendDeclaration(cgNativeOperationCallExp);
 		js.append(" = ");

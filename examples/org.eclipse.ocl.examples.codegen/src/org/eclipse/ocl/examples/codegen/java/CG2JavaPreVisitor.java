@@ -345,7 +345,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 
 	@Override
 	public @Nullable Object visitCGExecutorPropertyCallExp(@NonNull CGExecutorPropertyCallExp cgExecutorPropertyCallExp) {
-		CGProperty cgProperty = cgExecutorPropertyCallExp.getCgProperty();
+		CGProperty cgProperty = cgExecutorPropertyCallExp.getReferredProperty();
 		if (cgProperty != null) {
 			cgProperty.accept(this);
 		}
@@ -376,7 +376,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 
 	@Override
 	public @Nullable Object visitCGIterationCallExp(@NonNull CGIterationCallExp cgIterationCallExp) {
-		Iteration asIteration = ClassUtil.nonNullState(cgIterationCallExp.getReferredIteration());
+		Iteration asIteration = ClassUtil.nonNullState(cgIterationCallExp.getAsIteration());
 		IterationHelper iterationHelper = context.getIterationHelper(asIteration);
 		doValuedElement(cgIterationCallExp);				// Resolve name in outer context
 		doTypedElement(cgIterationCallExp);

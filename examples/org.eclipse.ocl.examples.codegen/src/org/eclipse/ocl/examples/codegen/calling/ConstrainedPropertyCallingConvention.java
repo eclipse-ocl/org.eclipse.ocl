@@ -59,7 +59,7 @@ public class ConstrainedPropertyCallingConvention extends AbstractPropertyCallin
 		as2cgVisitor.initAst(cgPropertyCallExp, asOppositePropertyCallExp);
 		cgPropertyCallExp.setRequired(isRequired);
 		cgPropertyCallExp.setSource(cgSource);
-		cgPropertyCallExp.setCgProperty(cgProperty);
+		cgPropertyCallExp.setReferredProperty(cgProperty);
 		return cgPropertyCallExp;
 	} */
 
@@ -75,8 +75,8 @@ public class ConstrainedPropertyCallingConvention extends AbstractPropertyCallin
 		CGForeignPropertyCallExp cgPropertyCallExp = CGModelFactory.eINSTANCE.createCGForeignPropertyCallExp();
 		CGElementId cgPropertyId = analyzer.getCGElementId(asProperty.getPropertyId());
 		cgPropertyCallExp.getOwns().add(cgPropertyId);
-		cgPropertyCallExp.setCgProperty(cgProperty);
-		cgPropertyCallExp.setReferredProperty(asProperty);
+		cgPropertyCallExp.setReferredProperty(cgProperty);
+		cgPropertyCallExp.setAsProperty(asProperty);
 		as2cgVisitor.initAst(cgPropertyCallExp, asPropertyCallExp);
 		cgPropertyCallExp.setRequired(isRequired || codeGenerator.isPrimitive(cgPropertyCallExp));
 		cgPropertyCallExp.setSource(cgSource);
@@ -95,7 +95,7 @@ public class ConstrainedPropertyCallingConvention extends AbstractPropertyCallin
 		cgExecutorProperty.setCallingConvention(this);
 		cgExecutorPropertyCallExp.setExecutorProperty(cgExecutorProperty);
 		cgExecutorPropertyCallExp.getOwns().add(cgExecutorProperty);
-		cgExecutorPropertyCallExp.setCgProperty(cgProperty);
+		cgExecutorPropertyCallExp.setReferredProperty(cgProperty);
 		cgExecutorPropertyCallExp.setReferredProperty(asProperty);
 		cgExecutorPropertyCallExp.setAst(asPropertyCallExp);
 		cgExecutorPropertyCallExp.setTypeId(analyzer.getTypeId(asPropertyCallExp.getTypeId()));

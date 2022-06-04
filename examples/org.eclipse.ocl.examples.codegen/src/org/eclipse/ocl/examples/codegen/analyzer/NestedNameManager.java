@@ -304,7 +304,7 @@ public class NestedNameManager extends NameManager
 				}
 			}
 		}
-		executorInit.getCgArguments().add(contextParameter);
+		executorInit.getArguments().add(contextParameter);
 		executorInit.setRequired(true);
 		executorInit.setInvalidating(false);
 		CGVariable executorVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();

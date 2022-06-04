@@ -74,8 +74,8 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 		CGForeignPropertyCallExp cgPropertyCallExp = CGModelFactory.eINSTANCE.createCGForeignPropertyCallExp();
 		CGElementId cgPropertyId = analyzer.getCGElementId(asProperty.getPropertyId());
 		cgPropertyCallExp.getOwns().add(cgPropertyId);
-		cgPropertyCallExp.setCgProperty(cgProperty);
-		cgPropertyCallExp.setReferredProperty(asProperty);
+		cgPropertyCallExp.setReferredProperty(cgProperty);
+		cgPropertyCallExp.setAsProperty(asProperty);
 		as2cgVisitor.initAst(cgPropertyCallExp, asPropertyCallExp);
 		cgPropertyCallExp.setRequired(isRequired || codeGenerator.isPrimitive(cgPropertyCallExp));
 		cgPropertyCallExp.setSource(cgSource);
@@ -152,7 +152,7 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 		CGNativeOperationCallExp cgCallExp = as2cgVisitor.getAnalyzer().createCGNativeOperationCallExp(jMethod, SupportOperationCallingConvention.INSTANCE);
 		cgCallExp.setCgThis(cgThis);
 		if (cgArguments != null) {
-			List<CGValuedElement> cgArguments2 = cgCallExp.getCgArguments();
+			List<CGValuedElement> cgArguments2 = cgCallExp.getArguments();
 			for (@NonNull CGValuedElement cgArgument : cgArguments) {
 				cgArguments2.add(cgArgument);
 			}
@@ -170,7 +170,7 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 		GlobalNameManager globalNameManager = cg2javaVisitor.getCodeGenerator().getGlobalNameManager();
 		CGForeignPropertyCallExp cgForeignPropertyCallExp = (CGForeignPropertyCallExp) cgPropertyCallExp;		// XXX never happens
 		CGForeignProperty cgProperty = (CGForeignProperty)CGUtil.getProperty(cgPropertyCallExp);
-		Property asProperty = CGUtil.getReferredProperty(cgPropertyCallExp);
+		Property asProperty = CGUtil.getAsProperty(cgPropertyCallExp);
 		org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asProperty);
 		String foreignClassName = cg2javaVisitor.getCodeGenerator().getQualifiedForeignClassName(asClass);
 		String propertyName = PivotUtil.getName(asProperty);

@@ -123,7 +123,7 @@ public class EcoreOperationCallingConvention extends AbstractOperationCallingCon
 				isRequired = ecoreIsRequired;
 			}
 		//	cgEcoreOperationCallExp.setCgThis(cgSource);
-			cgEcoreOperationCallExp.getCgArguments().add(cgSource);
+			cgEcoreOperationCallExp.getArguments().add(cgSource);
 			init(as2cgVisitor, cgEcoreOperationCallExp, asOperationCallExp, cgOperation, isRequired);
 			return cgEcoreOperationCallExp;
 		} catch (GenModelException e) {
@@ -143,7 +143,7 @@ public class EcoreOperationCallingConvention extends AbstractOperationCallingCon
 		//		TypeDescriptor requiredTypeDescriptor = context.getUnboxedDescriptor(cgTypeId.getElementId());
 		TypeDescriptor requiredTypeDescriptor = codeGenerator.getUnboxedDescriptor(ClassUtil.nonNullState(cgTypeId.getElementId()));
 	//	CGValuedElement cgThis = cg2javaVisitor.getExpression(cgOperationCallExp.getCgThis());
-		List<CGValuedElement> cgArguments = cgOperationCallExp.getCgArguments();
+		List<CGValuedElement> cgArguments = cgOperationCallExp.getArguments();
 	//	List<@NonNullParameter> asParameters = asOperation.getOwnedParameters();
 		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
 		//
@@ -226,7 +226,7 @@ public class EcoreOperationCallingConvention extends AbstractOperationCallingCon
 	@Override
 	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGOperationCallExp cgOperationCallExp) {
 		CGEcoreOperationCallExp cgEcoreOperationCallExp = (CGEcoreOperationCallExp)cgOperationCallExp;
-		if ("specializeIn".equals(cgEcoreOperationCallExp.getReferredOperation().getName())) {
+		if ("specializeIn".equals(cgEcoreOperationCallExp.getAsOperation().getName())) {
 			getClass();		// XXX
 		}
 		CGOperation cgOperation = CGUtil.getOperation(cgEcoreOperationCallExp);

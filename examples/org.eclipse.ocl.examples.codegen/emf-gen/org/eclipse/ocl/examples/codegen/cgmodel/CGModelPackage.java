@@ -769,15 +769,26 @@ public interface CGModelPackage extends EPackage {
 	EClass getCGIterationCallExp();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp#getReferredIteration <em>Referred Iteration</em>}'.
+	 * Returns the meta object for the reference '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp#getReferredIteration <em>Referred Iteration</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Referred Iteration</em>'.
+	 * @return the meta object for the reference '<em>Referred Iteration</em>'.
 	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp#getReferredIteration()
 	 * @see #getCGIterationCallExp()
 	 * @generated
 	 */
-	EAttribute getCGIterationCallExp_ReferredIteration();
+	EReference getCGIterationCallExp_ReferredIteration();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp#getAsIteration <em>As Iteration</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>As Iteration</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp#getAsIteration()
+	 * @see #getCGIterationCallExp()
+	 * @generated
+	 */
+	EAttribute getCGIterationCallExp_AsIteration();
 
 	/**
 	 * Returns the meta object for the containment reference list '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp#getIterators <em>Iterators</em>}'.
@@ -1673,26 +1684,26 @@ public interface CGModelPackage extends EPackage {
 	EClass getCGNavigationCallExp();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp#getReferredProperty <em>Referred Property</em>}'.
+	 * Returns the meta object for the reference '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp#getReferredProperty <em>Referred Property</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Referred Property</em>'.
+	 * @return the meta object for the reference '<em>Referred Property</em>'.
 	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp#getReferredProperty()
 	 * @see #getCGNavigationCallExp()
 	 * @generated
 	 */
-	EAttribute getCGNavigationCallExp_ReferredProperty();
+	EReference getCGNavigationCallExp_ReferredProperty();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp#getCgProperty <em>Cg Property</em>}'.
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp#getAsProperty <em>As Property</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Cg Property</em>'.
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp#getCgProperty()
+	 * @return the meta object for the attribute '<em>As Property</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp#getAsProperty()
 	 * @see #getCGNavigationCallExp()
 	 * @generated
 	 */
-	EReference getCGNavigationCallExp_CgProperty();
+	EAttribute getCGNavigationCallExp_AsProperty();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNull <em>CG Null</em>}'.
@@ -1790,37 +1801,37 @@ public interface CGModelPackage extends EPackage {
 	EClass getCGOperationCallExp();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getCgArguments <em>Cg Arguments</em>}'.
+	 * Returns the meta object for the reference '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getReferredOperation <em>Referred Operation</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Cg Arguments</em>'.
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getCgArguments()
-	 * @see #getCGOperationCallExp()
-	 * @generated
-	 */
-	EReference getCGOperationCallExp_CgArguments();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getReferredOperation <em>Referred Operation</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Referred Operation</em>'.
+	 * @return the meta object for the reference '<em>Referred Operation</em>'.
 	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getReferredOperation()
 	 * @see #getCGOperationCallExp()
 	 * @generated
 	 */
-	EAttribute getCGOperationCallExp_ReferredOperation();
+	EReference getCGOperationCallExp_ReferredOperation();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getCgOperation <em>Cg Operation</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getArguments <em>Arguments</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Cg Operation</em>'.
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getCgOperation()
+	 * @return the meta object for the containment reference list '<em>Arguments</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getArguments()
 	 * @see #getCGOperationCallExp()
 	 * @generated
 	 */
-	EReference getCGOperationCallExp_CgOperation();
+	EReference getCGOperationCallExp_Arguments();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getAsOperation <em>As Operation</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>As Operation</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getAsOperation()
+	 * @see #getCGOperationCallExp()
+	 * @generated
+	 */
+	EAttribute getCGOperationCallExp_AsOperation();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOppositePropertyCallExp <em>CG Opposite Property Call Exp</em>}'.
@@ -3066,12 +3077,20 @@ public interface CGModelPackage extends EPackage {
 		EClass CG_ITERATION_CALL_EXP = eINSTANCE.getCGIterationCallExp();
 
 		/**
-		 * The meta object literal for the '<em><b>Referred Iteration</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Referred Iteration</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute CG_ITERATION_CALL_EXP__REFERRED_ITERATION = eINSTANCE.getCGIterationCallExp_ReferredIteration();
+		EReference CG_ITERATION_CALL_EXP__REFERRED_ITERATION = eINSTANCE.getCGIterationCallExp_ReferredIteration();
+
+		/**
+		 * The meta object literal for the '<em><b>As Iteration</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CG_ITERATION_CALL_EXP__AS_ITERATION = eINSTANCE.getCGIterationCallExp_AsIteration();
 
 		/**
 		 * The meta object literal for the '<em><b>Iterators</b></em>' containment reference list feature.
@@ -3838,20 +3857,20 @@ public interface CGModelPackage extends EPackage {
 		EClass CG_NAVIGATION_CALL_EXP = eINSTANCE.getCGNavigationCallExp();
 
 		/**
-		 * The meta object literal for the '<em><b>Referred Property</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Referred Property</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute CG_NAVIGATION_CALL_EXP__REFERRED_PROPERTY = eINSTANCE.getCGNavigationCallExp_ReferredProperty();
+		EReference CG_NAVIGATION_CALL_EXP__REFERRED_PROPERTY = eINSTANCE.getCGNavigationCallExp_ReferredProperty();
 
 		/**
-		 * The meta object literal for the '<em><b>Cg Property</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>As Property</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference CG_NAVIGATION_CALL_EXP__CG_PROPERTY = eINSTANCE.getCGNavigationCallExp_CgProperty();
+		EAttribute CG_NAVIGATION_CALL_EXP__AS_PROPERTY = eINSTANCE.getCGNavigationCallExp_AsProperty();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGNullImpl <em>CG Null</em>}' class.
@@ -3934,28 +3953,28 @@ public interface CGModelPackage extends EPackage {
 		EClass CG_OPERATION_CALL_EXP = eINSTANCE.getCGOperationCallExp();
 
 		/**
-		 * The meta object literal for the '<em><b>Cg Arguments</b></em>' containment reference list feature.
+		 * The meta object literal for the '<em><b>Referred Operation</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference CG_OPERATION_CALL_EXP__CG_ARGUMENTS = eINSTANCE.getCGOperationCallExp_CgArguments();
+		EReference CG_OPERATION_CALL_EXP__REFERRED_OPERATION = eINSTANCE.getCGOperationCallExp_ReferredOperation();
 
 		/**
-		 * The meta object literal for the '<em><b>Referred Operation</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Arguments</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute CG_OPERATION_CALL_EXP__REFERRED_OPERATION = eINSTANCE.getCGOperationCallExp_ReferredOperation();
+		EReference CG_OPERATION_CALL_EXP__ARGUMENTS = eINSTANCE.getCGOperationCallExp_Arguments();
 
 		/**
-		 * The meta object literal for the '<em><b>Cg Operation</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>As Operation</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference CG_OPERATION_CALL_EXP__CG_OPERATION = eINSTANCE.getCGOperationCallExp_CgOperation();
+		EAttribute CG_OPERATION_CALL_EXP__AS_OPERATION = eINSTANCE.getCGOperationCallExp_AsOperation();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGOppositePropertyCallExpImpl <em>CG Opposite Property Call Exp</em>}' class.

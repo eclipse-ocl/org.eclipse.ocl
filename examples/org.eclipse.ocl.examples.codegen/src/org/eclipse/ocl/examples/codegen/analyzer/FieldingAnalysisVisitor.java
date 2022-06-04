@@ -209,7 +209,7 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 
 	@Override
 	public @NonNull ReturnState visitCGIterationCallExp(@NonNull CGIterationCallExp cgElement) {
-		Iteration asIteration = cgElement.getReferredIteration();
+		Iteration asIteration = cgElement.getAsIteration();
 		context.mustBeThrown.visit(CGUtil.getSource(cgElement));
 		for (CGIterator cgIterator : CGUtil.getIterators(cgElement)) {
 			context.mustBeThrown.visit(cgIterator);

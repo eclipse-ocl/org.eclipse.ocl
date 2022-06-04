@@ -64,11 +64,11 @@ public class ExecutorOppositePropertyCallingConvention extends AbstractPropertyC
 		cgExecutorProperty.setCallingConvention(this);
 		cgPropertyCallExp.setExecutorProperty(cgExecutorProperty);
 		cgPropertyCallExp.getOwns().add(cgExecutorProperty);
-		cgPropertyCallExp.setReferredProperty(asProperty);
+		cgPropertyCallExp.setAsProperty(asProperty);
 		as2cgVisitor.initAst(cgPropertyCallExp, asOppositePropertyCallExp);
 		cgPropertyCallExp.setRequired(isRequired);
 		cgPropertyCallExp.setSource(cgSource);
-		cgPropertyCallExp.setCgProperty(cgProperty);
+		cgPropertyCallExp.setReferredProperty(cgProperty);
 		return cgPropertyCallExp;
 	}
 
@@ -115,7 +115,7 @@ public class ExecutorOppositePropertyCallingConvention extends AbstractPropertyC
 		JavaStream.SubStream castBody = new JavaStream.SubStream() {
 			@Override
 			public void append() {
-				js.appendReferenceTo(cgPropertyCallExp.getCgProperty());
+				js.appendReferenceTo(cgPropertyCallExp.getReferredProperty());
 				js.append(".");
 				js.append(globalNameManager.getEvaluateName());
 				js.append("(");

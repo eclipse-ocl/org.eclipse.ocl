@@ -238,7 +238,7 @@ public class CGUtil
 	}
 
 	public static @NonNull List<@NonNull CGValuedElement> getArgumentsList(@NonNull CGOperationCallExp cgOperationCallExp) {
-		return ClassUtil.nullFree(cgOperationCallExp.getCgArguments());
+		return ClassUtil.nullFree(cgOperationCallExp.getArguments());
 	}
 
 	public static @NonNull OCLExpression getAST(@NonNull CGCallExp cgCallExp) {
@@ -295,6 +295,18 @@ public class CGUtil
 
 	public static @NonNull Property getAST(@NonNull CGProperty cgProperty) {
 		return ClassUtil.nonNullState((Property)cgProperty.getAst());
+	}
+
+	public static @NonNull Iteration getAsIteration(@NonNull CGIterationCallExp cgIterationCallExp) {
+		return ClassUtil.nonNullState(cgIterationCallExp.getAsIteration());
+	}
+
+	public static @NonNull Operation getAsOperation(@NonNull CGOperationCallExp cgOperationCallExp) {
+		return ClassUtil.nonNullState(cgOperationCallExp.getAsOperation());
+	}
+
+	public static  @NonNull Property getAsProperty(@NonNull CGNavigationCallExp cgNavigationCallExp) {
+		return ClassUtil.nonNullState(cgNavigationCallExp.getAsProperty());
 	}
 
 	public static @NonNull CGValuedElement getBody(@NonNull CGBodiedProperty cgProperty) {
@@ -409,7 +421,7 @@ public class CGUtil
 	}
 
 	public static @NonNull CGOperation getOperation(@NonNull CGOperationCallExp cgOperationCallExp) {
-		return ClassUtil.nonNullState(cgOperationCallExp.getCgOperation());
+		return ClassUtil.nonNullState(cgOperationCallExp.getReferredOperation());
 	}
 
 	public static @NonNull Parameter getParameter(@NonNull CGParameter cgParameter) {
@@ -473,22 +485,22 @@ public class CGUtil
 	}
 
 	public static @NonNull CGProperty getProperty(@NonNull CGNavigationCallExp cgNavigationCallExp) {
-		return ClassUtil.nonNullState(cgNavigationCallExp.getCgProperty());
+		return ClassUtil.nonNullState(cgNavigationCallExp.getReferredProperty());
 	}
 
 	public static @NonNull CGValuedElement getReferredConstant(@NonNull CGConstantExp cgConstantExp) {
 		return ClassUtil.nonNullState(cgConstantExp.getReferredConstant());
 	}
 
-	public static @NonNull Iteration getReferredIteration(@NonNull CGIterationCallExp cgIterationCallExp) {
+	public static @NonNull CGOperation getReferredIteration(@NonNull CGIterationCallExp cgIterationCallExp) {
 		return ClassUtil.nonNullState(cgIterationCallExp.getReferredIteration());
 	}
 
-	public static @NonNull Operation getReferredOperation(@NonNull CGOperationCallExp cgOperationCallExp) {
+	public static @NonNull CGOperation getReferredOperation(@NonNull CGOperationCallExp cgOperationCallExp) {
 		return ClassUtil.nonNullState(cgOperationCallExp.getReferredOperation());
 	}
 
-	public static  @NonNull Property getReferredProperty(@NonNull CGNavigationCallExp cgNavigationCallExp) {
+	public static  @NonNull CGProperty getReferredProperty(@NonNull CGNavigationCallExp cgNavigationCallExp) {
 		return ClassUtil.nonNullState(cgNavigationCallExp.getReferredProperty());
 	}
 

@@ -33,7 +33,7 @@ public abstract class ConstrainedOperationCallingConvention extends AbstractOper
 	protected void appendForeignOperationName(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
 		JavaCodeGenerator codeGenerator = cg2javaVisitor.getCodeGenerator();
 		CGOperation cgOperation = CGUtil.getOperation(cgOperationCallExp);
-		Operation asReferredOperation = CGUtil.getReferredOperation(cgOperationCallExp);
+		Operation asReferredOperation = CGUtil.getAsOperation(cgOperationCallExp);
 		org.eclipse.ocl.pivot.Class asReferredClass = PivotUtil.getOwningClass(asReferredOperation);
 		CGClass cgReferringClass = CGUtil.getContainingClass(cgOperationCallExp);
 		assert cgReferringClass != null;

@@ -134,8 +134,8 @@ public class EcorePropertyCallingConvention extends AbstractPropertyCallingConve
 			cgExecutorPropertyCallExp.getOwns().add(cgExecutorProperty);
 			cgPropertyCallExp = cgExecutorPropertyCallExp;
 		} */
-		cgPropertyCallExp.setCgProperty(cgProperty);
-		cgPropertyCallExp.setReferredProperty(asProperty);
+		cgPropertyCallExp.setReferredProperty(cgProperty);
+		cgPropertyCallExp.setAsProperty(asProperty);
 		cgPropertyCallExp.setAst(asPropertyCallExp);
 		cgPropertyCallExp.setTypeId(analyzer.getCGTypeId(asPropertyCallExp.getTypeId()));
 		cgPropertyCallExp.setRequired(isRequired || codeGenerator.isPrimitive(cgPropertyCallExp));
@@ -146,7 +146,7 @@ public class EcorePropertyCallingConvention extends AbstractPropertyCallingConve
 	@Override
 	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGNavigationCallExp cgPropertyCallExp) {
 		CGEcorePropertyCallExp cgEcorePropertyCallExp = (CGEcorePropertyCallExp) cgPropertyCallExp;
-		Property asProperty = ClassUtil.nonNullState(cgPropertyCallExp.getReferredProperty());
+		Property asProperty = ClassUtil.nonNullState(cgPropertyCallExp.getAsProperty());
 		assert cg2javaVisitor.getESObject(asProperty) == ClassUtil.nonNullState(cgEcorePropertyCallExp.getEStructuralFeature());
 		//
 		CGValuedElement source = cg2javaVisitor.getExpression(cgPropertyCallExp.getSource());

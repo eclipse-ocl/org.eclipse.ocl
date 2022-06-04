@@ -901,7 +901,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		CGIterator cgIterator = CGUtil.getIterator(cgIterationCallExp, 0);
 		CGIterator cgCoIterator = cgIterationCallExp.getCoIterators().size() > 0 ? cgIterationCallExp.getCoIterators().get(0) : null;
 		String iteratorName = getVariantResolvedName(cgIterator, context.getITER_NameVariant());
-		Iteration2Java iterationHelper = context.getIterationHelper(ClassUtil.nonNullState(cgIterationCallExp.getReferredIteration()));
+		Iteration2Java iterationHelper = context.getIterationHelper(ClassUtil.nonNullState(cgIterationCallExp.getAsIteration()));
 		assert iterationHelper != null;
 		boolean flowContinues = false;
 		boolean isMap = cgSource.getASTypeId() instanceof MapTypeId;
@@ -2064,7 +2064,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 
 	@Override
 	public @NonNull Boolean visitCGNavigationCallExp(@NonNull CGNavigationCallExp cgGNavigationCallExp) {
-		return cgGNavigationCallExp.getCgProperty().getCallingConvention().generateJavaCall(this, js, cgGNavigationCallExp);
+		return cgGNavigationCallExp.getReferredProperty().getCallingConvention().generateJavaCall(this, js, cgGNavigationCallExp);
 	/*	if (cgGNavigationCallExp instanceof CGEcorePropertyCallExp) {
 			return EcorePropertyCallingConvention.INSTANCE.generateJavaCall(this, js, cgGNavigationCallExp);
 		}
@@ -2110,7 +2110,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 
 	@Override
 	public @NonNull Boolean visitCGOperationCallExp(@NonNull CGOperationCallExp cgOperationCallExp) {
-		CGOperation cgOperation = cgOperationCallExp.getCgOperation();
+		CGOperation cgOperation = cgOperationCallExp.getReferredOperation();
 		OperationCallingConvention callingConvention = cgOperation.getCallingConvention();
 		return callingConvention.generateJavaCall(this, js, cgOperationCallExp);
 	}

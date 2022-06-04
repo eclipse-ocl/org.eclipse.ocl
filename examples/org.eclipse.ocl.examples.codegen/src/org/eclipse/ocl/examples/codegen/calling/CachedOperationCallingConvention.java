@@ -117,7 +117,7 @@ public class CachedOperationCallingConvention extends AbstractCachedOperationCal
 		// XXX	assert cgOperationCallExp2 == null;
 		//	cgCallExp = cachedOperationCall(as2cgVisitor, asOperationCallExp, currentClass, cgSource, finalOperation/*, null*/);
 			CGCachedOperationCallExp cgOperationCallExp = CGModelFactory.eINSTANCE.createCGCachedOperationCallExp();
-			List<CGValuedElement> cgArguments = cgOperationCallExp.getCgArguments();
+			List<CGValuedElement> cgArguments = cgOperationCallExp.getArguments();
 			cgArguments.add(cgSource);
 			cgOperationCallExp.setThisIsSelf(false);
 			for (@NonNull OCLExpression asArgument : ClassUtil.nullFree(asOperationCallExp.getOwnedArguments())) {
@@ -125,12 +125,11 @@ public class CachedOperationCallingConvention extends AbstractCachedOperationCal
 				cgArguments.add(cgArgument);
 			}
 			as2cgVisitor.initAst(cgOperationCallExp, asOperationCallExp);
-			cgOperationCallExp.setReferredOperation(asOperation);
 	//	} else {
 	//		Iterable<@NonNull Operation> overrides = as2cgVisitor.getMetamodelManager().getFinalAnalysis().getOverrides(asOperation);
 	//		cgCallExp = cachedOperationCall(as2cgVisitor, asOperationCallExp, currentClass, cgSource, asOperation, overrides);
 	//	}
-			cgOperationCallExp.setCgOperation(cgOperation);
+			cgOperationCallExp.setReferredOperation(cgOperation);
 		return cgOperationCallExp;
 	}
 

@@ -74,7 +74,7 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 
 	protected void addTypeIdArgument(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperationCallExp cgOperationCallExp, @NonNull TypeId asTypeId) {
 		CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();
-		List<CGValuedElement> cgArguments = cgOperationCallExp.getCgArguments();
+		List<CGValuedElement> cgArguments = cgOperationCallExp.getArguments();
 		CGTypeId cgTypeId = analyzer.getCGTypeId(asTypeId);
 		cgArguments.add(analyzer.createCGConstantExp(cgTypeId));
 	}
@@ -313,17 +313,17 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 	//		isRequired2 = ecoreIsRequired;
 	//	}
 	//	assert isRequired == isRequired2;
-		cgOperationCallExp.setReferredOperation(asOperation);
+		cgOperationCallExp.setAsOperation(asOperation);
 		cgOperationCallExp.setAst(asOperationCallExp);
 		TypeId asTypeId = asOperationCallExp.getTypeId();
 		cgOperationCallExp.setTypeId(as2cgVisitor.getAnalyzer().getCGTypeId(asTypeId));
-		cgOperationCallExp.setCgOperation(cgOperation);
+		cgOperationCallExp.setReferredOperation(cgOperation);
 		cgOperationCallExp.setInvalidating(asOperation.isIsInvalidating());
 		cgOperationCallExp.setValidating(asOperation.isIsValidating());
 		cgOperationCallExp.setRequired(isRequired);
 		for (@NonNull OCLExpression asArgument : ClassUtil.nullFree(asOperationCallExp.getOwnedArguments())) {
 			CGValuedElement cgArgument = as2cgVisitor.doVisit(CGValuedElement.class, asArgument);
-			cgOperationCallExp.getCgArguments().add(cgArgument);
+			cgOperationCallExp.getArguments().add(cgArgument);
 		}
 	//	as2cgVisitor.getNameManager().declareStandardName(cgOperationCallExp);
 	}

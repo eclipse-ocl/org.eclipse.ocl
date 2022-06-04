@@ -79,7 +79,7 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 	protected void appendForeignOperationName(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
 		JavaCodeGenerator codeGenerator = cg2javaVisitor.getCodeGenerator();
 		CGOperation cgOperation = CGUtil.getOperation(cgOperationCallExp);
-		Operation asReferredOperation = CGUtil.getReferredOperation(cgOperationCallExp);
+		Operation asReferredOperation = CGUtil.getAsOperation(cgOperationCallExp);
 		org.eclipse.ocl.pivot.Class asReferredClass = PivotUtil.getOwningClass(asReferredOperation);
 		CGClass cgReferringClass = CGUtil.getContainingClass(cgOperationCallExp);
 		assert cgReferringClass != null;
@@ -124,7 +124,7 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 		analyzer.addExternalFeature(asOperation);
 		CGForeignOperationCallExp cgForeignOperationCallExp = CGModelFactory.eINSTANCE.createCGForeignOperationCallExp();
 		CGVariable executorVariable = as2cgVisitor.getNameManager().getExecutorVariable();
-		cgForeignOperationCallExp.getCgArguments().add(analyzer.createCGVariableExp(executorVariable));
+		cgForeignOperationCallExp.getArguments().add(analyzer.createCGVariableExp(executorVariable));
 		//	addTypeIdArgument(as2cgVisitor, cgForeignOperationCallExp, asOperation.getTypeId());
 		addExpressionInOCLParameters(as2cgVisitor, cgOperation, (ExpressionInOCL) asOperation.getBodyExpression());
 		init(as2cgVisitor, cgForeignOperationCallExp, asOperationCallExp, cgOperation, isRequired);

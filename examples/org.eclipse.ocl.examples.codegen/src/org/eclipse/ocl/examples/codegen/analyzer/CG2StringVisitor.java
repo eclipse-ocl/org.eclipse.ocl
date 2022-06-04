@@ -317,7 +317,7 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<@Nullable 
 	public @Nullable String visitCGBuiltInIterationCallExp(@NonNull CGBuiltInIterationCallExp cgExp) {
 		safeVisit(cgExp.getSource());
 		append("->");
-		appendName(cgExp.getReferredIteration());
+		appendName(cgExp.getAsIteration());
 		append("("); //$NON-NLS-1$
 		boolean isFirst = true;
 		List<CGIterator> cgIterators = cgExp.getIterators();
@@ -595,7 +595,7 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<@Nullable 
 			append(name);
 			append("(");
 			String prefix = "";//$NON-NLS-1$
-			for (CGValuedElement argument : oc.getCgArguments()) {
+			for (CGValuedElement argument : oc.getArguments()) {
 				append(prefix);
 				safeVisit(argument);
 				prefix = ", ";//$NON-NLS-1$
@@ -663,7 +663,7 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<@Nullable 
 		append(method.getName());
 		append("(");
 		String prefix = "";//$NON-NLS-1$
-		for (CGValuedElement argument : oc.getCgArguments()) {
+		for (CGValuedElement argument : oc.getArguments()) {
 			append(prefix);
 			safeVisit(argument);
 			prefix = ", ";//$NON-NLS-1$
@@ -704,7 +704,7 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<@Nullable 
 		appendName(oper);
 		append("(");
 		String prefix = "";//$NON-NLS-1$
-		for (CGValuedElement argument : oc.getCgArguments()) {
+		for (CGValuedElement argument : oc.getArguments()) {
 			append(prefix);
 			safeVisit(argument);
 			prefix = ", ";//$NON-NLS-1$

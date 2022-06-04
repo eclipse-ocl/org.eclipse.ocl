@@ -159,7 +159,7 @@ public class ReferencesVisitor extends AbstractExtendingCGModelVisitor<@NonNull 
 
 	@Override
 	public @NonNull List<@Nullable Object> visitCGIterationCallExp(@NonNull CGIterationCallExp cgElement) {
-		return append(super.visitCGIterationCallExp(cgElement), cgElement.getReferredIteration(), cgElement.getBody());
+		return append(super.visitCGIterationCallExp(cgElement), cgElement.getAsIteration(), cgElement.getBody());
 	}
 
 	@Override
@@ -188,19 +188,19 @@ public class ReferencesVisitor extends AbstractExtendingCGModelVisitor<@NonNull 
 
 	@Override
 	public @NonNull List<@Nullable Object> visitCGOperationCallExp(@NonNull CGOperationCallExp cgElement) {
-		List<@Nullable Object> elements = append(super.visitCGOperationCallExp(cgElement), cgElement.getReferredOperation());
-		elements.addAll(cgElement.getCgArguments());
+		List<@Nullable Object> elements = append(super.visitCGOperationCallExp(cgElement), cgElement.getAsOperation());
+		elements.addAll(cgElement.getArguments());
 		return elements;
 	}
 
 	@Override
 	public @NonNull List<@Nullable Object> visitCGOppositePropertyCallExp(@NonNull CGOppositePropertyCallExp cgElement) {
-		return append(super.visitCGOppositePropertyCallExp(cgElement), cgElement.getReferredProperty());
+		return append(super.visitCGOppositePropertyCallExp(cgElement), cgElement.getAsProperty());
 	}
 
 	@Override
 	public @NonNull List<@Nullable Object> visitCGPropertyCallExp(@NonNull CGPropertyCallExp cgElement) {
-		return append(super.visitCGPropertyCallExp(cgElement), cgElement.getReferredProperty());
+		return append(super.visitCGPropertyCallExp(cgElement), cgElement.getAsProperty());
 	}
 
 	@Override

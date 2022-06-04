@@ -71,11 +71,11 @@ public class ExecutorCompositionPropertyCallingConvention extends AbstractProper
 		cgExecutorProperty.setCallingConvention(this);
 		cgPropertyCallExp.setExecutorProperty(cgExecutorProperty);
 		cgPropertyCallExp.getOwns().add(cgExecutorProperty);
-		cgPropertyCallExp.setReferredProperty(asProperty);
+		cgPropertyCallExp.setAsProperty(asProperty);
 		as2cgVisitor.initAst(cgPropertyCallExp, asOppositePropertyCallExp);
 		cgPropertyCallExp.setRequired(isRequired);
 		cgPropertyCallExp.setSource(cgSource);
-		cgPropertyCallExp.setCgProperty(cgProperty);
+		cgPropertyCallExp.setReferredProperty(cgProperty);
 		return cgPropertyCallExp;
 	}
 

@@ -51,16 +51,16 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 		CGCachedOperationCallExp cgOperationCallExp = CGModelFactory.eINSTANCE.createCGCachedOperationCallExp();
 	//	cgOperationCallExp.setSource(cgSource);
 		if (cgSource != null) {
-			cgOperationCallExp.getCgArguments().add(cgSource);
+			cgOperationCallExp.getArguments().add(cgSource);
 		}
 		cgOperationCallExp.setThisIsSelf(false);
 		for (@NonNull OCLExpression pArgument : ClassUtil.nullFree(asOperationCallExp.getOwnedArguments())) {
 			CGValuedElement cgArgument = as2cgVisitor.doVisit(CGValuedElement.class, pArgument);
-			cgOperationCallExp.getCgArguments().add(cgArgument);
+			cgOperationCallExp.getArguments().add(cgArgument);
 		}
 		cgOperationCallExp.setAst(asOperationCallExp);
 		cgOperationCallExp.setTypeId(as2cgVisitor.getAnalyzer().getCGTypeId(asOperationCallExp.getTypeId()));
-		cgOperationCallExp.setCgOperation(cgOperation);
+		cgOperationCallExp.setReferredOperation(cgOperation);
 		return cgOperationCallExp;
 /*		OCLExpression asSource = asOperationCallExp.getOwnedSource();
 	//	assert asSource != null;

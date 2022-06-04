@@ -28,8 +28,8 @@ public class ImpliesOperation2Handler extends AbstractLibraryOperationHandler
 
 		@Override
 		public @NonNull Boolean generate(@NonNull CGLibraryOperationCallExp cgOperationCallExp) {
-			assert !cgOperationCallExp.getReferredOperation().isIsInvalidating();
-			assert cgOperationCallExp.getReferredOperation().isIsValidating();
+			assert !cgOperationCallExp.getAsOperation().isIsInvalidating();
+			assert cgOperationCallExp.getAsOperation().isIsValidating();
 			boolean hasDeclaration = false;
 			//
 			//	Trivial source cases

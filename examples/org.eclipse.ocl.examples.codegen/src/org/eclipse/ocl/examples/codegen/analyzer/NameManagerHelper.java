@@ -475,7 +475,7 @@ public class NameManagerHelper
 		public @NonNull String visitCGNativeOperationCallExp(@NonNull CGNativeOperationCallExp cgNativeOperationCallExp) {
 			Method method = cgNativeOperationCallExp.getMethod();
 			if (method == UnboxedExplicitNavigationProperty.CREATE_METHOD) {
-				return "IMP" + context.getNameHint(cgNativeOperationCallExp.getCgArguments().get(0));
+				return "IMP" + context.getNameHint(cgNativeOperationCallExp.getArguments().get(0));
 			}
 			else {
 				return method.getName();

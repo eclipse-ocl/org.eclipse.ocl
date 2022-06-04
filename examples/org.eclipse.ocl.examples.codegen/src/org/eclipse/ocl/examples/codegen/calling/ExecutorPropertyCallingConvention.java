@@ -70,14 +70,14 @@ public class ExecutorPropertyCallingConvention extends AbstractPropertyCallingCo
 		Method jMethod = UnboxedExplicitNavigationProperty.CREATE_METHOD;
 		OperationCallingConvention supportOperationCallingConvention = SupportOperationCallingConvention.INSTANCE;
 		CGNativeOperationCallExp cgNativeOperationCallExp = analyzer.createCGNativeOperationCallExp(jMethod, supportOperationCallingConvention);
-		cgNativeOperationCallExp.getCgArguments().add(analyzer.createCGConstantExp(cgPropertyId));
+		cgNativeOperationCallExp.getArguments().add(analyzer.createCGConstantExp(cgPropertyId));
 		cgNativeOperationCallExp.setTypeId(analyzer.getCGTypeId(JavaConstants.UNBOXED_EXPLICIT_NAVIGATION_PROPERTY_TYPE_ID));
 //		NameResolution nameResolution = cgProperty.getNameResolution();
 //		nameResolution.addCGElement(cgNativeOperationCallExp);
 		CGFinalVariable cgVariable = as2cgVisitor.getNameManager().createCGVariable(cgNativeOperationCallExp);
 		CGExecutorPropertyCallExp cgExecutorPropertyCallExp = CGModelFactory.eINSTANCE.createCGExecutorPropertyCallExp();
-		cgExecutorPropertyCallExp.setCgProperty(cgProperty);
-		cgExecutorPropertyCallExp.setReferredProperty(asProperty);
+		cgExecutorPropertyCallExp.setReferredProperty(cgProperty);
+		cgExecutorPropertyCallExp.setAsProperty(asProperty);
 		cgExecutorPropertyCallExp.setAst(asPropertyCallExp);
 		cgExecutorPropertyCallExp.setTypeId(analyzer.getCGTypeId(asPropertyCallExp.getTypeId()));
 		cgExecutorPropertyCallExp.setRequired(isRequired || codeGenerator.isPrimitive(cgExecutorPropertyCallExp));
@@ -115,7 +115,7 @@ public class ExecutorPropertyCallingConvention extends AbstractPropertyCallingCo
 					js.appendValueName(cgExecutorPropertyCallExp.getCgArgument());
 				}
 				else {
-					js.appendReferenceTo(cgExecutorPropertyCallExp.getCgProperty());
+					js.appendReferenceTo(cgExecutorPropertyCallExp.getReferredProperty());
 				}
 				js.append(".");
 				js.append(globalNameManager.getEvaluateName());

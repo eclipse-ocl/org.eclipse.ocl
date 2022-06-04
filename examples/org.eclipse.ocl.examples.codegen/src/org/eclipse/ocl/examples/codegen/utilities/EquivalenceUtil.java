@@ -378,8 +378,8 @@ public class EquivalenceUtil
 				return null;			// Different sources do not guarantee different results
 			}
 		}
-		List<CGValuedElement> theseArguments = thisValue.getCgArguments();
-		List<CGValuedElement> thoseArguments = thatValue.getCgArguments();
+		List<CGValuedElement> theseArguments = thisValue.getArguments();
+		List<CGValuedElement> thoseArguments = thatValue.getArguments();
 		int iSize = theseArguments.size();
 		if (iSize != thoseArguments.size()) {
 			return null;				// Different argument lists do not guarantee different results

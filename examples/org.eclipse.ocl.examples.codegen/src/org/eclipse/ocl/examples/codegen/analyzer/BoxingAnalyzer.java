@@ -273,10 +273,10 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	@Override
 	public @Nullable Object visitCGBuiltInIterationCallExp(@NonNull CGBuiltInIterationCallExp cgElement) {
 		super.visitCGBuiltInIterationCallExp(cgElement);
-		rewriteAsBoxed(rewriteAsGuarded(cgElement.getSource(), isSafe(cgElement), "source for '" + cgElement.getReferredIteration() + "'"));
+		rewriteAsBoxed(rewriteAsGuarded(cgElement.getSource(), isSafe(cgElement), "source for '" + cgElement.getAsIteration() + "'"));
 		CGValuedElement cgBody = cgElement.getBody();
 		if (cgBody.isRequired()) {
-			rewriteAsBoxed(rewriteAsGuarded(cgBody, false, "body for '" + cgElement.getReferredIteration() + "'"));
+			rewriteAsBoxed(rewriteAsGuarded(cgBody, false, "body for '" + cgElement.getAsIteration() + "'"));
 		}
 		else {
 			rewriteAsBoxed(cgBody);
@@ -295,12 +295,12 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	public @Nullable Object visitCGCachedOperationCallExp(@NonNull CGCachedOperationCallExp cgElement) {
 		super.visitCGCachedOperationCallExp(cgElement);
 		assert cgElement.getCgThis() == null;
-		List<CGValuedElement> cgArguments = cgElement.getCgArguments();
+		List<CGValuedElement> cgArguments = cgElement.getArguments();
 		int iMax = cgArguments.size();
 		for (int i = 0; i < iMax; i++) {			// Avoid CME from rewrite
 			CGValuedElement cgArgument = cgArguments.get(i);
 			if (i == 0) {
-				rewriteAsGuarded(cgArgument, isSafe(cgElement), "source for '" + cgElement.getReferredOperation() + "'");
+				rewriteAsGuarded(cgArgument, isSafe(cgElement), "source for '" + cgElement.getAsOperation() + "'");
 			}
 			rewriteAsBoxed(cgArgument);
 		}
@@ -457,7 +457,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	@Override
 	public @Nullable Object visitCGLibraryIterateCallExp(@NonNull CGLibraryIterateCallExp cgElement) {
 		super.visitCGLibraryIterateCallExp(cgElement);
-		rewriteAsGuarded(cgElement.getSource(), isSafe(cgElement), "source for '" + cgElement.getReferredIteration() + "'");
+		rewriteAsGuarded(cgElement.getSource(), isSafe(cgElement), "source for '" + cgElement.getAsIteration() + "'");
 		rewriteAsBoxed(cgElement.getSource());
 		LibraryIteration libraryIteration = cgElement.getLibraryIteration();
 		if (!(libraryIteration instanceof IterateIteration)) {
@@ -469,7 +469,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	@Override
 	public @Nullable Object visitCGLibraryIterationCallExp(@NonNull CGLibraryIterationCallExp cgElement) {
 		super.visitCGLibraryIterationCallExp(cgElement);
-		rewriteAsGuarded(cgElement.getSource(), isSafe(cgElement), "source for '" + cgElement.getReferredIteration() + "'");
+		rewriteAsGuarded(cgElement.getSource(), isSafe(cgElement), "source for '" + cgElement.getAsIteration() + "'");
 		rewriteAsBoxed(cgElement.getSource());
 		LibraryIteration libraryIteration = cgElement.getLibraryIteration();
 		if (!(libraryIteration instanceof IterateIteration)) {
@@ -512,7 +512,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	@Override
 	public @Nullable Object visitCGNavigationCallExp(@NonNull CGNavigationCallExp cgNavigationCallExp) {
 		super.visitCGNavigationCallExp(cgNavigationCallExp);
-		PropertyCallingConvention callingConvention = cgNavigationCallExp.getCgProperty().getCallingConvention();
+		PropertyCallingConvention callingConvention = cgNavigationCallExp.getReferredProperty().getCallingConvention();
 		callingConvention.rewriteWithBoxingAndGuards(this, cgNavigationCallExp);
 		return null;
 	}
@@ -531,7 +531,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	@Override
 	public @Nullable Object visitCGOperationCallExp(@NonNull CGOperationCallExp cgElement) {
 		super.visitCGOperationCallExp(cgElement);;
-		CGOperation cgOperation = cgElement.getCgOperation();
+		CGOperation cgOperation = cgElement.getReferredOperation();
 		if ("specializeIn".equals(cgOperation.getName())) {
 			getClass();		// XXX
 		}

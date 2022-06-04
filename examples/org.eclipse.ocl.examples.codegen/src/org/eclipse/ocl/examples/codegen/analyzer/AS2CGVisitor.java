@@ -249,6 +249,51 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		assert currentNameManager == null;
 	}
 
+	/**
+	 * Generate / share the CG declaration for asOperation.
+	 * @param asSourceType
+	 */
+	public @NonNull CGOperation generateIterationDeclaration(@Nullable Type asSourceType, @NonNull Iteration asIteration) {	// XXX rationalize as generateOperationDeclaration with later createImplementation
+		CGOperation cgOperation = analyzer.basicGetCGOperation(asIteration);
+		if (cgOperation == null) {
+			org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asIteration);
+			CGClass cgClass = analyzer.basicGetCGClass(asClass);
+			if (cgClass == null) {
+				cgClass = CGModelFactory.eINSTANCE.createCGClass();
+				cgClass.setAst(asClass);
+				cgClass.setName(asClass.getName());
+				analyzer.addCGClass(cgClass);
+			}
+			else {
+				assert cgClass.getAst() == asClass;
+			}
+			pushNameManager(cgClass);
+			try {
+				OperationCallingConvention callingConvention = context.getCallingConvention(asIteration, true);
+				cgOperation = callingConvention.createCGOperation(this, asSourceType, asIteration);
+				assert cgOperation.getAst() != null;
+				assert cgOperation.getCallingConvention() == callingConvention;
+//				classNameManager.declarePreferredName(cgOperation);
+				pushNameManager(cgOperation);
+				ExpressionInOCL asExpressionInOCL = null;
+				LanguageExpression asSpecification = asIteration.getBodyExpression();
+				if (asSpecification != null) {
+					try {
+						asExpressionInOCL = environmentFactory.parseSpecification(asSpecification);
+					} catch (ParserException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				callingConvention.createCGParameters(this, cgOperation, asExpressionInOCL);
+				popNameManager();
+			} finally {
+				popNameManager();
+			}
+		}
+		return cgOperation;
+	}
+
 	protected @NonNull CGIterationCallExp generateLoopExp(@NonNull CGValuedElement cgSource, @NonNull LoopExp asLoopExp) {
 		Iteration asIteration = PivotUtil.getReferredIteration(asLoopExp);
 		IterationHelper iterationHelper = context.getIterationHelper(asIteration);
@@ -262,8 +307,12 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			cgLibraryIterationCallExp.setLibraryIteration(libraryIteration);
 			cgIterationCallExp = cgLibraryIterationCallExp;
 		}
+		OCLExpression asSource = asLoopExp.getOwnedSource();
+		Type asSourceType = asSource != null ? asSource.getType() : null;
+		CGOperation cgOperation = generateIterationDeclaration(asSourceType, asIteration);
 		initAst(cgIterationCallExp, asLoopExp);
-		cgIterationCallExp.setReferredIteration(asIteration);
+		cgIterationCallExp.setAsIteration(asIteration);
+		cgIterationCallExp.setReferredIteration(cgOperation);
 		cgIterationCallExp.setInvalidating(asIteration.isIsInvalidating());
 		cgIterationCallExp.setValidating(asIteration.isIsValidating());
 		cgIterationCallExp.setSource(cgSource);
@@ -476,16 +525,15 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		Operation asExcludingOperation = standardLibrary.getCollectionExcludingOperation();
 		OCLExpression asSource = callExp.getOwnedSource();
 		assert asSource != null;
-		cgOperationCallExp.setReferredOperation(asExcludingOperation);
 		CGOperation cgOperation = generateOperationDeclaration(asSource.getType(), asExcludingOperation, true);
-		cgOperationCallExp.setCgOperation(cgOperation);
+		cgOperationCallExp.setReferredOperation(cgOperation);
 		cgOperationCallExp.setTypeId(analyzer.getCGTypeId(asSource.getTypeId()));
 		cgOperationCallExp.setRequired(true);
-		cgOperationCallExp.getCgArguments().add(cgSource);
+		cgOperationCallExp.getArguments().add(cgSource);
 		CGConstantExp cgArgument = CGModelFactory.eINSTANCE.createCGConstantExp();
 		cgArgument.setReferredConstant(analyzer.getCGNull());
 		cgArgument.setTypeId(analyzer.getCGTypeId(TypeId.OCL_VOID));
-		cgOperationCallExp.getCgArguments().add(cgArgument);
+		cgOperationCallExp.getArguments().add(cgArgument);
 		return cgOperationCallExp;
 	}
 

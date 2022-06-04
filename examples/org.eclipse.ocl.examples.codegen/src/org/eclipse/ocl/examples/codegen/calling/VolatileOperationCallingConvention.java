@@ -23,6 +23,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
+import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Library;
@@ -54,29 +55,31 @@ public class VolatileOperationCallingConvention extends ConstrainedOperationCall
 		OCLExpression asSource = asOperationCallExp.getOwnedSource();
 	//	assert asSource != null;
 		Operation asOperation = ClassUtil.nonNullState(asOperationCallExp.getReferredOperation());
-		Operation finalOperation = null;	// FIXME cast
+		Operation asFinalOperation = null;	// FIXME cast
 		if (asSource != null) {
 			Type sourceType = asSource.getType();
-			finalOperation = as2cgVisitor.getCodeGenerator().isFinal(asOperation, (org.eclipse.ocl.pivot.Class)sourceType);	// FIXME cast
+			asFinalOperation = as2cgVisitor.getCodeGenerator().isFinal(asOperation, (org.eclipse.ocl.pivot.Class)sourceType);	// FIXME cast
 		}
 		CGClass currentClass = as2cgVisitor.getNameManager().findCGScope();
 		assert currentClass == null;
 		CGOperationCallExp cgCallExp = null;
-		assert finalOperation != null;
-		if (finalOperation != null) {
+		assert asFinalOperation != null;
+		if (asFinalOperation != null) {
 			LanguageExpression bodyExpression = asOperation.getBodyExpression();
 			assert bodyExpression != null;
 			if (bodyExpression != null) {
 				CGValuedElement cgOperationCallExp2 = as2cgVisitor.inlineOperationCall(asOperationCallExp, bodyExpression);
 				assert cgOperationCallExp2 == null;
-				cgCallExp = volatileOperationCall(as2cgVisitor, asOperationCallExp, cgSource, finalOperation, (ConstrainedOperation)libraryOperation);
+				CGOperation cgFinalOperation = as2cgVisitor.getAnalyzer().getCGOperation(asOperation);
+				cgCallExp = volatileOperationCall(as2cgVisitor, asOperationCallExp, cgSource, cgFinalOperation, (ConstrainedOperation)libraryOperation);
 			}
 		}
 		if (cgCallExp == null) {
 			Operation baseOperation = asOperation;	// FIXME
-			cgCallExp = volatileOperationCall(as2cgVisitor, asOperationCallExp, cgSource, baseOperation, (ConstrainedOperation)libraryOperation);
+			CGOperation cgBaseOperation = cgOperation; //as2cgVisitor.getAnalyzer().getCGOperation(baseOperation);
+			cgCallExp = volatileOperationCall(as2cgVisitor, asOperationCallExp, cgSource, cgBaseOperation, (ConstrainedOperation)libraryOperation);
 		}
-		cgCallExp.setCgOperation(cgOperation);
+		cgCallExp.setReferredOperation(cgOperation);
 		return cgCallExp;
 	}
 
@@ -137,21 +140,22 @@ public class VolatileOperationCallingConvention extends ConstrainedOperationCall
 	}
 
 	protected @NonNull CGOperationCallExp volatileOperationCall(@NonNull AS2CGVisitor as2cgVisitor, @NonNull OperationCallExp element,
-			CGValuedElement cgSource, @NonNull Operation finalOperation, @NonNull ConstrainedOperation constrainedOperation) {
+			CGValuedElement cgSource, @NonNull CGOperation cgFinalOperation, @NonNull ConstrainedOperation constrainedOperation) {
 		CGLibraryOperationCallExp cgOperationCallExp = CGModelFactory.eINSTANCE.createCGLibraryOperationCallExp();
 		cgOperationCallExp.setLibraryOperation(constrainedOperation);
 		if (cgSource != null) {
-			cgOperationCallExp.getCgArguments().add(cgSource);
+			cgOperationCallExp.getArguments().add(cgSource);
 		}
 		//		cgOperationCallExp.setThisIsSelf(false);
 		for (@NonNull OCLExpression pArgument : ClassUtil.nullFree(element.getOwnedArguments())) {
 			CGValuedElement cgArgument = as2cgVisitor.doVisit(CGValuedElement.class, pArgument);
-			cgOperationCallExp.getCgArguments().add(cgArgument);
+			cgOperationCallExp.getArguments().add(cgArgument);
 		}
 		as2cgVisitor.initAst(cgOperationCallExp, element);
 	//	as2cgVisitor.declareLazyName(cgOperationCallExp);
-		cgOperationCallExp.setReferredOperation(finalOperation);
-		if (as2cgVisitor.getCodeGenerator().addConstrainedOperation(finalOperation)) {
+	//	cgOperationCallExp.setReferredOperation(finalOperation);
+		cgOperationCallExp.setReferredOperation(cgFinalOperation);
+		if (as2cgVisitor.getCodeGenerator().addConstrainedOperation(CGUtil.getAST(cgFinalOperation))) {
 		}
 		return cgOperationCallExp;
 	}

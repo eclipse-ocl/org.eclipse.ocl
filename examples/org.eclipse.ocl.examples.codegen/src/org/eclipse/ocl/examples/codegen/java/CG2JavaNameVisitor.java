@@ -144,7 +144,7 @@ public class CG2JavaNameVisitor extends AbstractExtendingCGModelVisitor<@Nullabl
 
 	@Override
 	public @Nullable Object visitCGIterationCallExp(@NonNull CGIterationCallExp cgIterationCallExp) {
-		Iteration asIteration = ClassUtil.nonNullState(cgIterationCallExp.getReferredIteration());
+		Iteration asIteration = ClassUtil.nonNullState(cgIterationCallExp.getAsIteration());
 		IterationHelper iterationHelper = context.getIterationHelper(asIteration);
 		CGValuedElement cgSource = cgIterationCallExp.getSource();
 		NestedNameManager outerNameManager = getNameManager();

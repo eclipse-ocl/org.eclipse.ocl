@@ -94,11 +94,11 @@ public class LibraryPropertyCallingConvention extends AbstractPropertyCallingCon
 			cgExecutorPropertyCallExp.getOwns().add(cgExecutorProperty);
 			cgPropertyCallExp = cgExecutorPropertyCallExp;
 		}
-		cgPropertyCallExp.setReferredProperty(asProperty);
+		cgPropertyCallExp.setAsProperty(asProperty);
 		as2cgVisitor.initAst(cgPropertyCallExp, asOppositePropertyCallExp);
 		cgPropertyCallExp.setRequired(isRequired);
 		cgPropertyCallExp.setSource(cgSource);
-		cgPropertyCallExp.setCgProperty(cgProperty);
+		cgPropertyCallExp.setReferredProperty(cgProperty);
 		return cgPropertyCallExp;
 	} */
 
@@ -115,9 +115,9 @@ public class LibraryPropertyCallingConvention extends AbstractPropertyCallingCon
 			 || (libraryProperty instanceof MapKeyTypeProperty)
 			 || (libraryProperty instanceof MapValueTypeProperty));
 		CGLibraryPropertyCallExp cgPropertyCallExp = CGModelFactory.eINSTANCE.createCGLibraryPropertyCallExp();
-		cgPropertyCallExp.setCgProperty(cgProperty);
+		cgPropertyCallExp.setReferredProperty(cgProperty);
 		cgPropertyCallExp.setLibraryProperty(libraryProperty);
-		cgPropertyCallExp.setReferredProperty(asProperty);
+		cgPropertyCallExp.setAsProperty(asProperty);
 		as2cgVisitor.initAst(cgPropertyCallExp, asPropertyCallExp);
 		cgPropertyCallExp.setRequired(isRequired || codeGenerator.isPrimitive(cgPropertyCallExp));
 		cgPropertyCallExp.setSource(cgSource);
@@ -131,7 +131,7 @@ public class LibraryPropertyCallingConvention extends AbstractPropertyCallingCon
 		CGLibraryPropertyCallExp cgLibraryPropertyCallExp = (CGLibraryPropertyCallExp) cgPropertyCallExp;
 		CGValuedElement source = cg2javaVisitor.getExpression(cgPropertyCallExp.getSource());
 		LibraryProperty libraryProperty = ClassUtil.nonNullState(cgLibraryPropertyCallExp.getLibraryProperty());
-		Method actualMethod = libraryProperty.getEvaluateMethod(CGUtil.getReferredProperty(cgPropertyCallExp));
+		Method actualMethod = libraryProperty.getEvaluateMethod(CGUtil.getAsProperty(cgPropertyCallExp));
 		Class<?> actualReturnClass = actualMethod.getReturnType();
 		boolean actualIsNonNull = codeGenerator.getIsNonNull(actualMethod) == Boolean.TRUE;
 		boolean expectedIsNonNull = cgPropertyCallExp.isNonNull();

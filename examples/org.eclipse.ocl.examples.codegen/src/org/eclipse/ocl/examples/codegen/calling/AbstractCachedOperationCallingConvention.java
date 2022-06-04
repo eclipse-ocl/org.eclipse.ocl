@@ -125,7 +125,7 @@ public abstract class AbstractCachedOperationCallingConvention extends Constrain
 	//	boolean thisIsSelf = cgCachedOperationCallExp.isThisIsSelf();			// XXX obsolete ??? ---- false
 		assert cgOperationCallExp.getCgThis() == null;
 	//	CGValuedElement source = getExpression(cgOperationCallExp.getSource());
-		List<CGValuedElement> cgArguments = cgOperationCallExp.getCgArguments();
+		List<CGValuedElement> cgArguments = cgOperationCallExp.getArguments();
 	//	List<Parameter> asParameters = asOperation.getOwnedParameters();
 		//
 	//	if (!js.appendLocalStatements(source)) {
@@ -188,12 +188,12 @@ public abstract class AbstractCachedOperationCallingConvention extends Constrain
 	@Override
 	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGOperationCallExp cgOperationCallExp) {
 		CGCachedOperationCallExp cpCachedOperationCallExp = (CGCachedOperationCallExp)cgOperationCallExp;
-		List<CGValuedElement> cgArguments = cpCachedOperationCallExp.getCgArguments();
+		List<CGValuedElement> cgArguments = cpCachedOperationCallExp.getArguments();
 		int iMax = cgArguments.size();
 		for (int i = 0; i < iMax; i++) {			// Avoid CME from rewrite
 			CGValuedElement cgArgument = cgArguments.get(i);
 			if (i == 0) {
-				boxingAnalyzer.rewriteAsGuarded(cgArgument, boxingAnalyzer.isSafe(cpCachedOperationCallExp), "source for '" + cpCachedOperationCallExp.getReferredOperation() + "'");
+				boxingAnalyzer.rewriteAsGuarded(cgArgument, boxingAnalyzer.isSafe(cpCachedOperationCallExp), "source for '" + cpCachedOperationCallExp.getAsOperation() + "'");
 			}
 			boxingAnalyzer.rewriteAsBoxed(cgArgument);
 		}

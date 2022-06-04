@@ -91,7 +91,7 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 	//	assert (cgSource == null) == Modifier.isStatic(jMethod.getModifiers());
 		CGLibraryOperationCallExp cgOperationCallExp = CGModelFactory.eINSTANCE.createCGLibraryOperationCallExp();
 		cgOperationCallExp.setLibraryOperation(libraryOperation);
-		List<CGValuedElement> cgArguments = cgOperationCallExp.getCgArguments();
+		List<CGValuedElement> cgArguments = cgOperationCallExp.getArguments();
 		for (Class<?> jParameterType : jMethod.getParameterTypes()) {
 			if (jParameterType == Executor.class) {
 				CGVariable executorVariable = as2cgVisitor.getNameManager().getExecutorVariable();
@@ -173,9 +173,9 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 		if (libraryOperationHandler != null) {
 			return libraryOperationHandler.generate(cgLibraryOperationCallExp);		// XXX BuiltIn ??
 		}
-		final List<@NonNull CGValuedElement> cgArguments = ClassUtil.nullFree(cgOperationCallExp.getCgArguments());
+		final List<@NonNull CGValuedElement> cgArguments = ClassUtil.nullFree(cgOperationCallExp.getArguments());
 		int iMax = cgArguments.size();
-		CGOperation cgOperation = cgOperationCallExp.getCgOperation();
+		CGOperation cgOperation = cgOperationCallExp.getReferredOperation();
 		Method jMethod = libraryOperation.getEvaluateMethod(CGUtil.getAST(cgOperation));
 		Class<?> actualReturnClass = jMethod.getReturnType();
 		Boolean actualNullity = cg2javaVisitor.getCodeGenerator().getIsNonNull(jMethod);

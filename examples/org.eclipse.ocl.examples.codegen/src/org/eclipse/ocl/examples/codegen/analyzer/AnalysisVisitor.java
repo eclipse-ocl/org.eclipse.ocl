@@ -314,7 +314,7 @@ public class AnalysisVisitor extends AbstractExtendingCGModelVisitor<@Nullable O
 		if (!cgOperationCallExp.isValidating()) {
 			CGInvalid cgInvalidValue = cgThis2 != null ? cgThis2.getInvalidValue() : null;		// XXX cgTHis / cgSource
 			if (cgInvalidValue == null) {
-				for (@SuppressWarnings("null")@NonNull CGValuedElement cgArgument : cgOperationCallExp.getCgArguments()) {
+				for (@SuppressWarnings("null")@NonNull CGValuedElement cgArgument : cgOperationCallExp.getArguments()) {
 					cgInvalidValue = cgArgument.getInvalidValue();
 					if (cgInvalidValue != null) {
 						break;
@@ -359,7 +359,7 @@ public class AnalysisVisitor extends AbstractExtendingCGModelVisitor<@Nullable O
 		//		context.addNamedElement(referredProperty);
 		CGValuedElement source = cgPropertyCallExp.getSource();
 		if (source == null) {		// FIXME CGNative/ForeignPropertyCallExp
-			assert cgPropertyCallExp.getReferredProperty().isIsStatic();
+			assert cgPropertyCallExp.getAsProperty().isIsStatic();
 		}
 		else {
 			CGValuedElement cgSource = context.getCGExpression(source);

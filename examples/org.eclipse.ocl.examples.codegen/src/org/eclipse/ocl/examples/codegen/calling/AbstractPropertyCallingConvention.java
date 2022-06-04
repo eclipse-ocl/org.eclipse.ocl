@@ -84,7 +84,7 @@ public abstract class AbstractPropertyCallingConvention implements PropertyCalli
 
 	@Override
 	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGNavigationCallExp cgNavigationCallExp) {
-		Property referredProperty = cgNavigationCallExp.getReferredProperty();
+		Property referredProperty = cgNavigationCallExp.getAsProperty();
 		String referredPropertyName;
 		if (referredProperty == null) {
 			referredPropertyName = "unknown";
