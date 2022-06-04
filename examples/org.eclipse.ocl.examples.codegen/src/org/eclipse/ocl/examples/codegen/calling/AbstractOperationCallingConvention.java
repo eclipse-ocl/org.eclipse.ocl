@@ -17,6 +17,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
+import org.eclipse.ocl.examples.codegen.analyzer.FieldingAnalyzer.ReturnState;
 import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOperation;
@@ -302,6 +303,13 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 		}
 		return true;
 	}
+
+	@Override
+	public @NonNull ReturnState getRequiredReturn(@NonNull CGOperation cgOperation) {
+		Operation asOperation = CGUtil.getAST(cgOperation);
+		return asOperation.isIsValidating() ? ReturnState.IS_CAUGHT : ReturnState.IS_THROWN;		// XXX Optimize in derivations
+	}
+
 
 	protected void init(@NonNull AS2CGVisitor as2cgVisitor,
 			@NonNull CGOperationCallExp cgOperationCallExp, @NonNull OperationCallExp asOperationCallExp,

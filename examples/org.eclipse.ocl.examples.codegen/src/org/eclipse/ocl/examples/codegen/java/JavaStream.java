@@ -265,7 +265,7 @@ public class JavaStream
 				s.append(string);
 			}
 			else {
-				if (string.contains("objectsOfKind")) {
+				if (string.contains("INSTANCE_Visitable__lookupClass")) {
 					getClass();		// XXX
 				}
 				int sLength = s.length();

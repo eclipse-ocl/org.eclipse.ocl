@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2022 Willijnk Transformations and others.
+ * Copyright (c) 2022 Willink Transformations and others.
  * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -13,6 +13,7 @@ package org.eclipse.ocl.examples.codegen.analyzer;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.analyzer.FieldingAnalyzer.ReturnState;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCatchExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
@@ -77,8 +78,13 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 		return context.mustBeThrown;
 	}
 
-	protected @NonNull FieldingAnalysisVisitor getNestedVisitor(@NonNull Operation asOperation) {
-		return asOperation.isIsValidating() ? context.mustBeCaught : context.mayBeThrown;
+	protected @NonNull FieldingAnalysisVisitor getNestedVisitor(@NonNull CGOperation cgOperation) {
+		ReturnState returnState = cgOperation.getCallingConvention().getRequiredReturn(cgOperation);
+		switch (returnState) {
+			case IS_CAUGHT: return context.mustBeCaught;
+			case IS_THROWN: return context.mustBeThrown;
+			default: return context.mayBeThrown;
+		}
 	}
 
 	protected void insertCatch(@NonNull CGValuedElement cgChild) {
@@ -119,6 +125,9 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 	@Override
 	public @NonNull ReturnState visit(@NonNull CGElement cgElement) {
 		EObject oldEContainer = cgElement.eContainer();
+		if (cgElement instanceof CGCachedOperationCallExp) {
+			getClass();		// XXX
+		}
 		ReturnState returnState = cgElement.accept(this);
 		if ((cgElement instanceof CGValuedElement) && (cgElement.eContainer() == oldEContainer)) {	// skip if already wrapped
 			CGValuedElement cgValuedElement = (CGValuedElement)cgElement;
@@ -208,19 +217,19 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 	}
 
 	@Override
-	public @NonNull ReturnState visitCGIterationCallExp(@NonNull CGIterationCallExp cgElement) {
-		Iteration asIteration = cgElement.getAsIteration();
-		context.mustBeThrown.visit(CGUtil.getSource(cgElement));
-		for (CGIterator cgIterator : CGUtil.getIterators(cgElement)) {
+	public @NonNull ReturnState visitCGIterationCallExp(@NonNull CGIterationCallExp cgIterationCallExp) {
+		Iteration asIteration = cgIterationCallExp.getAsIteration();
+		context.mustBeThrown.visit(CGUtil.getSource(cgIterationCallExp));
+		for (CGIterator cgIterator : CGUtil.getIterators(cgIterationCallExp)) {
 			context.mustBeThrown.visit(cgIterator);
 		}
-		for (CGIterator cgCoIterator : CGUtil.getCoIterators(cgElement)) {
+		for (CGIterator cgCoIterator : CGUtil.getCoIterators(cgIterationCallExp)) {
 			context.mustBeThrown.visit(cgCoIterator);
 		}
-		FieldingAnalysisVisitor bodyAnalysisVisitor = getNestedVisitor(asIteration);
-		ReturnState returnState = bodyAnalysisVisitor.visit(CGUtil.getBody(cgElement));
+		FieldingAnalysisVisitor bodyAnalysisVisitor = getNestedVisitor(CGUtil.getReferredIteration(cgIterationCallExp));
+		ReturnState returnState = bodyAnalysisVisitor.visit(CGUtil.getBody(cgIterationCallExp));
 		// Although individual body evaluations may be caught and accumulated, the accumularedc result is thrown.
-		cgElement.setCaught(false);
+		cgIterationCallExp.setCaught(false);
 		return returnState == ReturnState.IS_VALID ? ReturnState.IS_VALID : ReturnState.IS_THROWN;
 	}
 
@@ -271,7 +280,7 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 	public @NonNull ReturnState visitCGOperationCallExp(@NonNull CGOperationCallExp cgOperationCallExp) {
 		CGOperation cgOperation = CGUtil.getOperation(cgOperationCallExp);
 		Operation asOperation = CGUtil.getAST(cgOperation);
-		FieldingAnalysisVisitor childVisitor = asOperation.isIsValidating() ? context.mustBeCaught : context.mustBeThrown;
+		FieldingAnalysisVisitor childVisitor = getNestedVisitor(cgOperation);// asOperation.isIsValidating() ? context.mustBeCaught : context.mustBeThrown;
 		ReturnState requiredChildReturn = childVisitor.requiredReturn();
 		for (CGValuedElement cgArgument : CGUtil.getArguments(cgOperationCallExp)) {
 			ReturnState returnState = childVisitor.visit(cgArgument);
